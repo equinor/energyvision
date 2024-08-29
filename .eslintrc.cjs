@@ -42,6 +42,7 @@ module.exports = {
     ],
     // This rule was so noicy so let's turn it off and see how that works
     '@typescript-eslint/explicit-module-boundary-types': 'off',
+    '@typescript-eslint/ban-ts-comment': ['error', { 'ts-ignore': 'allow-with-description' }],
     'import/newline-after-import': ['error'],
     'import/no-unresolved': ['error', { ignore: ['^@'] }],
     'react/no-array-index-key': ['error'],

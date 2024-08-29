@@ -16,6 +16,7 @@ import {
   url,
   height,
   action,
+  transcript,
 } from './iframe/sharedIframeFields'
 
 const ingressContentType = configureBlockContent({
@@ -74,6 +75,7 @@ export default {
     height,
     description,
     action,
+    transcript,
     {
       title: 'Background',
       description: 'Pick a colour for the background. Default is white.',

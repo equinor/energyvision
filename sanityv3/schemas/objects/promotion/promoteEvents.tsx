@@ -2,7 +2,8 @@ import type { Reference, Rule, ValidationContext } from 'sanity'
 import { filterByRouteEvents } from '../../../helpers/referenceFilters'
 import { Flags } from '../../../src/lib/datasetHelpers'
 import routes from '../../routes'
-import { EventPromotionInput, EventPromotionPreview } from '../../components/EventPromotion'
+import { EventPromotionPreview } from '../../components/EventPromotion'
+import { EventPromotionInput } from '../../components/EventPromotion/EventPromotionInput'
 
 export type EventPromotion = {
   _key: string
@@ -11,6 +12,7 @@ export type EventPromotion = {
   manuallySelectEvents?: boolean
   promotedEvents?: Reference[]
   promotePastEvents?: boolean
+  promoteSingleUpcomingEvent?: boolean
   pastEventsCount?: number
   useTags?: boolean
 }
@@ -42,6 +44,20 @@ export default {
       type: 'number',
       description: 'Leave empty to show all the past events (max limit 50).',
       validation: (Rule: Rule) => Rule.integer().positive().greaterThan(0).lessThan(50),
+    },
+    {
+      name: 'upcomingEventsCount',
+      title: 'How many number of future events to show?',
+      type: 'number',
+      description: 'Leave empty to show all the future events (max limit 50).',
+      validation: (Rule: Rule) => Rule.integer().positive().greaterThan(0).lessThan(50),
+    },
+    {
+      name: 'promoteSingleUpcomingEvent',
+      type: 'boolean',
+      title: 'Promote singe upcoming event',
+      initialValue: false,
+      hidden: ({ parent }: { parent: EventPromotion }) => parent?.manuallySelectEvents,
     },
     {
       name: 'useTags',
@@ -102,6 +118,7 @@ export default {
       promotedEvents: 'promotedEvents',
       manuallySelectEvents: 'manuallySelectEvents',
       promotePastEvents: 'promotePastEvents',
+      promoteSingleUpcomingEvent: 'promoteSingleUpcomingEvent',
       pastEventsCount: 'pastEventsCount',
     },
   },

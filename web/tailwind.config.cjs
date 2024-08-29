@@ -20,7 +20,9 @@ module.exports = {
     './core/**/*.{js,ts,tsx}',
     './sections/**/*.{js,ts,tsx}',
     './icons/**/*.{js,ts,tsx}',
+    './pages/**/*.{js,ts,tsx}',
   ],
+  safelist: ['modal-enter', 'modal-enter-done', 'modal-exit-active', 'modal-exit'],
   /*
   Now instead of dark:{class} classes being applied based on prefers-color-scheme, 
   they will be applied whenever the dark class is present earlier in the HTML tree.
@@ -31,6 +33,11 @@ module.exports = {
   darkMode: 'selector',
   theme: {
     extend: {
+      screens: {
+        md: '750px',
+        '3xl': '1600px',
+        '4xl': '1920px',
+      },
       colors: ({ theme }) => ({
         current: 'currentColor',
         'moss-green': {
@@ -69,15 +76,6 @@ module.exports = {
           60: 'hsl(206, 9%, 84%)',
           50: 'hsl(210, 8%, 90%)',
         },
-        navy: {
-          40: '#C2DAEB',
-          50: '#A8C3DB',
-          60: '#7294BB',
-          70: '#49709C',
-          80: '#2A4D74',
-          90: '#234057',
-          100: '#243746',
-        },
         'mist-blue': {
           100: colors['mist-blue'][100],
           60: 'hsl(200, 56%, 94%)',
@@ -88,6 +86,7 @@ module.exports = {
         'spruce-wood': {
           100: 'hsl(25, 100%, 92%)',
           90: colors['spruce-wood'][90],
+          70: 'hsl(26, 100%, 97%)',
         },
         'heritage-red': {
           100: 'hsl(343, 100%, 25%)',
@@ -103,15 +102,6 @@ module.exports = {
           70: 'hsl(0, 86%, 86%)',
           60: 'hsl(0, 88%, 94%)',
         },
-        teal: {
-          40: '#C3E4CE',
-          50: '#AAD5BB',
-          60: '#85B7A5',
-          70: '#63A893',
-          80: '#458C83',
-          90: '#0E7C78',
-          100: '#007079',
-        },
         slate: {
           //--default-text
           80: 'rgba(61, 61, 61, 1)',
@@ -124,7 +114,9 @@ module.exports = {
           //--bg-mid-green
           50: colors.green[50],
         },
+        //midnight-sun
         yellow: {
+          60: '#FDE88C',
           //--mid-yellow
           //--bg-mid-yellow
           50: colors.yellow[50],
@@ -132,6 +124,7 @@ module.exports = {
         blue: {
           //--mid-blue
           //--bg-mid-blue
+          //north-sea-70
           50: colors.blue[50],
         },
         orange: {
@@ -160,15 +153,48 @@ module.exports = {
           20: 'theme(colors.white.100)/20',
           10: 'theme(colors.white.100)/10',
         },
+        'north-sea': {
+          100: '#243746',
+          90: '#051b33',
+          80: '#2A4D74',
+          70: '#49709C',
+          60: '#7294BB',
+          50: '#A8C3DB',
+          40: '#DFF5FF',
+        },
+        'norwegian-woods': {
+          100: '#007079',
+          90: '#458C83',
+          80: '#85B7A5',
+          70: '#AAD5BB',
+          60: '#C3E4CE',
+          50: '#D6F0DE',
+          40: '#E6FAEC',
+        },
+        'sand-and-summer': {
+          100: '#7D0023',
+          90: '#DF6D62',
+          80: '#E9947C',
+          70: '#EEA990',
+          60: '#F8D1AF',
+          50: '#FFE7D6',
+        },
+        'autumn-storm': {
+          60: '#86A7AC',
+          50: '#B5C7C9',
+          40: '#C2D4D6',
+          30: '#D3DFDE',
+          20: '#E3EDEA',
+        },
+
+        'modal-background': {
+          100: 'hsla(212, 82%, 11%, 1)',
+        },
       }),
-      //https://www.joshwcomeau.com/shadow-palette/
-      // medium elevation fig
-      //oomph: default -> 0.3 hover: -> 0.5
-      //crispy:0.7,resolution:0.75, default light position
       boxShadowColor: {
         'moss-green-50': '190deg 9% 67%',
         'moss-green-50-interact': '190deg 9% 60%',
-        'white-100': '0deg 0% 63%',
+        'white-100': '0deg 0% 64%',
         'white-100-interact': '0deg 0% 63%',
         'blue-50': '212deg 40% 29%',
         'blue-50-interact': '212deg 40% 25%',
@@ -220,6 +246,9 @@ module.exports = {
         '5xl': ['clamp(calc(51.97 / 16 * 1rem), 2.55vw + 2.64rem, calc(91.31 / 16 * 1rem))'],
         '6xl': ['clamp(calc(58.05 / 16 * 1rem), 2.94vw + 2.925rem, calc(103.39 / 16 * 1rem))'],
       },
+      size: {
+        'arrow-right': '1.58rem',
+      },
       fontWeight: {
         semibolder: 650,
         //--fontWeight-bold: tw -> semibold
@@ -227,6 +256,7 @@ module.exports = {
         //--fontWeight-regular: tw -> normal
       },
       lineHeight: {
+        text: '2.3rem',
         //--lineHeight-1
         inherit: 'inherit',
         //--lineHeight-2
@@ -242,9 +272,14 @@ module.exports = {
       },
       maxWidth: {
         viewport: '1920px',
+        //When large font, prose(65ch) might not be the best
+        text: '760px',
       },
       minWidth: {
         viewport: '375',
+      },
+      borderRadius: {
+        xs: '0.1rem',
       },
       padding: {
         'layout-sm': 'clamp(16px, calc(-38.3689px + 14.4984vw), 250px)',
@@ -252,17 +287,23 @@ module.exports = {
         'layout-lg': 'clamp(16px, calc(-101.4757px + 31.3269vw), 500px)',
         'page-content': 'theme(spacing.20)',
       },
-      //https://www.joshwcomeau.com/css/designing-shadows/
-      boxShadow: {},
+      boxShadow: {
+        card: 'rgba(0, 0, 0, 0.08) 0px 1px 3px,1px -1px 2px 0px rgba(0, 0, 0, 0.07), rgba(0, 0, 0, 0.20) 0px 1px 2px',
+        'card-interact': 'rgba(0, 0, 0, 0.14) 0px 1px 3px, rgba(0, 0, 0, 0.36) 0px 1px 2px',
+      },
       aspectRatio: {
         '4/5': '0.8',
         '5/4': '1.25',
+        '9/16': '0.56',
       },
       margin: {
         'layout-sm': 'clamp(16px, calc(-38.3689px + 14.4984vw), 250px)',
         'layout-md': 'clamp(16px, calc(-69.4369px + 22.7832vw), 368px)',
         'layout-lg': 'clamp(16px, calc(-101.4757px + 31.3269vw), 500px)',
         'page-content': 'theme(spacing.20)',
+      },
+      transitionTimingFunction: {
+        scroll: 'cubic-bezier(0.645, 0.045, 0.355, 1)', //'cubic-bezier(0.23, 1, 0.32, 1)',
       },
       keyframes: {
         reveal: {
@@ -281,11 +322,18 @@ module.exports = {
           '0%, 100%': { opacity: '0' },
           '20%, 80%': { opacity: '1' },
         },
+        move: {
+          to: {
+            transform: 'translateX(calc(-100%+100vw))',
+          },
+        },
       },
       animation: {
         fadeInOut: 'fade linear both',
         fadeOut: 'auto linear fadeOut both',
         zoomIn: 'auto linear zoom-in both',
+        move: 'auto linear move forwards',
+        'spin-slow': 'spin 3s linear infinite',
       },
       typography: (theme) => ({
         DEFAULT: {
@@ -297,13 +345,15 @@ module.exports = {
                 fontSize: theme('fontSize.xl'),
                 lineHeight: theme('lineHeight.inherit'),
                 fontWeight: theme('fontWeight.normal'),
+                marginTop: theme('spacing.2'),
                 marginBottom: theme('spacing.8'),
               },
               h3: {
-                fontSize: theme('fontSize.lg'),
+                fontSize: theme('fontSize.md'),
                 lineHeight: theme('lineHeight.inherit'),
                 fontWeight: theme('fontWeight.normal'),
-                marginBottom: theme('spacing.4'),
+                marginTop: theme('spacing.2'),
+                marginBottom: theme('spacing.0'),
               },
               'ul ul, ul ol, ol ul, ol ol': {
                 paddingLeft: em(38, 24),
@@ -348,20 +398,13 @@ module.exports = {
         article: {
           css: {
             h2: {
-              fontSize: theme('fontSize.md'),
-              lineHeight: theme('lineHeight.inherit'),
-              fontWeight: theme('fontWeight.medium'),
+              fontSize: theme('fontSize.lg'),
               marginTop: theme('spacing.2'),
               marginBottom: theme('spacing.2'),
               paddingLeft: theme('padding.layout-lg'),
               paddingRight: theme('padding.layout-lg'),
             },
             h3: {
-              fontSize: theme('fontSize.base'),
-              lineHeight: theme('lineHeight.inherit'),
-              fontWeight: theme('fontWeight.medium'),
-              marginTop: theme('spacing.2'),
-              marginBottom: theme('spacing.0'),
               paddingLeft: theme('padding.layout-lg'),
               paddingRight: theme('padding.layout-lg'),
             },
@@ -404,7 +447,7 @@ module.exports = {
           css: {
             color: theme('colors.current'),
             p: {
-              fontSize: theme('fontSize.md'),
+              textWrap: 'balance',
               marginTop: '0',
               marginBottom: '0',
             },
@@ -434,13 +477,16 @@ module.exports = {
             'outline-style': 'dashed',
             'outline-width': '2px',
             'outline-offset': '3px',
-            'outline-color': theme('colors.moss-green.100'),
+            'outline-color': theme('colors.norwegian-woods.100'),
           },
           '.envis-outline-invert': {
             'outline-style': 'dashed',
             'outline-width': '2px',
             'outline-offset': '3px',
             'outline-color': theme('colors.white.100'),
+          },
+          '.break-word': {
+            wordBreak: 'break-word',
           },
         })
     }),

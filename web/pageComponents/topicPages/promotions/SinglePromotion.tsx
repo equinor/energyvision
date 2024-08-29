@@ -1,21 +1,8 @@
-import styled from 'styled-components'
-import PeopleCard from '../../cards/PeopleCard/PeopleCard'
-import EventCard from '../../cards/EventsCard'
-import NewsCard from '../../cards/NewsCard'
-import TopicPageCard from '../../cards/TopicPageCard'
-
 import type { PeopleCardData, EventCardData, CardData } from '../../../types/types'
+import { EventCard } from '@sections/cards/EventCard'
+import PeopleCard from '@sections/cards/PeopleCard/PeopleCard'
+import PromotionCard from '@sections/cards/PromotionCard/PromotionCard'
 
-const LandscapeWrapper = styled.div`
-  /* max-width: 350px; */
-  padding: 0 var(--space-xLarge);
-  margin-left: auto;
-  margin-right: auto;
-  @media (min-width: 700px) {
-    padding: 0 var(--layout-paddingHorizontal-large);
-    max-width: var(--maxViewportWidth);
-  }
-`
 type CardProps = CardData | PeopleCardData | EventCardData
 
 type SinglePromotionData = {
@@ -28,21 +15,21 @@ const SinglePromotion = ({ promotion, hasSectionTitle = false }: SinglePromotion
     switch (data.type) {
       case 'news':
       case 'localNews':
-        return <NewsCard data={data as CardData} />
+        return <PromotionCard data={data as CardData} hasSectionTitle={hasSectionTitle} variant="single" />
       case 'topics':
       case 'magazine':
-        return <TopicPageCard data={data as CardData} />
+        return <PromotionCard data={data as CardData} hasSectionTitle={hasSectionTitle} variant="single" />
       case 'people':
-        return <PeopleCard orientation="landscape" data={data as PeopleCardData} hasSectionTitle={hasSectionTitle} />
+        return <PeopleCard data={data as PeopleCardData} hasSectionTitle={hasSectionTitle} variant="single" />
       case 'events':
-        return <EventCard data={data as EventCardData} orientation="landscape" hasSectionTitle={hasSectionTitle} />
+        return <EventCard data={data as EventCardData} hasSectionTitle={hasSectionTitle} variant="single" />
       default:
         console.warn('Missing card type for ', data)
         return <div />
     }
   }
 
-  return <LandscapeWrapper>{getCard(promotion)}</LandscapeWrapper>
+  return <>{getCard(promotion)}</>
 }
 
 export default SinglePromotion

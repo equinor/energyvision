@@ -1,22 +1,6 @@
-import styled from 'styled-components'
-import NewsCard from '../../cards/NewsCard'
-import TopicPageCard from '../../cards/TopicPageCard'
-import FeaturedEventCard from '../../cards/FeaturedEventCard'
-import type { FeaturedContentData } from '../../../types/types'
-
-const Promoted = styled.div`
-  margin-top: var(--space-medium);
-  /*   We decided to hide the featured content on mobile
- */
-  display: none;
-  @media (min-width: 1300px) {
-    display: block;
-    width: calc(18 * var(--space-medium));
-    margin-top: 0;
-    padding-left: var(--space-medium);
-    border-left: 1px solid var(--grey-30);
-  }
-`
+import type { EventCardData, FeaturedContentData } from '../../../types/types'
+import PromotionCard from '@sections/cards/PromotionCard/PromotionCard'
+import { EventCard } from '@sections/cards/EventCard'
 
 type Props = {
   data: FeaturedContentData
@@ -25,29 +9,33 @@ type Props = {
 const FeaturedContent = ({ data }: Props) => {
   if (!data.type) return null
 
-  const isNews = (type: string): boolean => type === 'news' || type === 'localNews'
   const isEvent = (data: FeaturedContentData): boolean => data?.routeContentType === 'event'
-
-  if (isNews(data.type)) {
-    return (
-      <Promoted>
-        <NewsCard data={data} fitToContent />
-      </Promoted>
-    )
-  }
+  //To destructure and get rid of 2 but keep rest
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { routeContentType, type, ...restData } = data
+  const containerClassName = 'hidden xl:block pl-6 border-l border-autumn-storm-50 w-[16vw]'
 
   if (isEvent(data)) {
     return (
-      <Promoted>
-        <FeaturedEventCard data={data} />
-      </Promoted>
+      <div className={containerClassName}>
+        <EventCard
+          data={
+            {
+              type: 'events',
+              ...restData,
+            } as EventCardData
+          }
+          hasSectionTitle={false}
+          className="h-fit"
+        />
+      </div>
     )
   }
 
   return (
-    <Promoted>
-      <TopicPageCard data={data} />
-    </Promoted>
+    <div className={containerClassName}>
+      <PromotionCard data={data} hasSectionTitle={false} className="h-fit" />
+    </div>
   )
 }
 

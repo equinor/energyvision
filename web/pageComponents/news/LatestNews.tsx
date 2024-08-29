@@ -1,38 +1,66 @@
-import { Heading } from '@components'
-import styled from 'styled-components'
-import NewsCard from '../cards/NewsCard'
 import type { CardData } from '../../types/types'
 import { FormattedMessage } from 'react-intl'
-import { Carousel } from '../shared/Carousel'
-
-const StyledHeading = styled(Heading)`
-  margin: var(--space-xLarge);
-`
-
-const StyledNewsCard = styled(NewsCard)`
-  width: 100%;
-  --card-maxWidth: 400px;
-  --card-minWidth: 280px;
-  min-width: var(--card-minWidth);
-  max-width: var(--card-maxWidth);
-`
+import { FormattedDate } from '@components/FormattedDateTime'
+import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
+import Card from '@sections/cards/Card'
+import Blocks from '../../pageComponents/shared/portableText/Blocks'
+import { Typography } from '@core/Typography'
 
 type LatestNewsProp = {
   data: CardData[]
 }
 
 const LatestNews = ({ data }: LatestNewsProp) => {
+  const isMobile = useMediaQuery(`(max-width: 1023px)`)
+
   return (
-    <>
-      <StyledHeading size="xl" level="h2" center>
+    <section
+      className="px-4 lg:px-layout-sm
+    max-w-viewport
+    my-3xl
+    mx-auto
+    flex
+    flex-col
+    items-center
+    "
+    >
+      <Typography variant="xl" as="h2" className="mb-10">
         <FormattedMessage id="latest_news" defaultMessage="Latest News" />
-      </StyledHeading>
-      <Carousel horizontalPadding>
-        {data.map((newsItem: CardData) => (
-          <StyledNewsCard data={newsItem} key={newsItem.id} />
-        ))}
-      </Carousel>
-    </>
+      </Typography>
+      <ul className="max-lg:w-full grid grid-cols-1 auto-rows-fr gap-x-6 gap-y-3 lg:grid-cols-3">
+        {data.map((newsItem: CardData) => {
+          return (
+            <li key={newsItem.id} className="">
+              <Card
+                href={newsItem?.slug}
+                image={newsItem?.heroImage?.image}
+                variant={isMobile ? 'compact' : 'primary'}
+                className="h-full"
+              >
+                <Card.Content variant={isMobile ? 'compact' : 'primary'}>
+                  <Card.Header
+                    {...(typeof newsItem?.title === 'string'
+                      ? {
+                          title: newsItem?.title,
+                        }
+                      : {
+                          titleBlock: newsItem?.title,
+                        })}
+                    {...(newsItem?.publishDateTime && {
+                      eyebrow: <FormattedDate datetime={newsItem?.publishDateTime} uppercase />,
+                    })}
+                    variant={isMobile ? 'compact' : 'primary'}
+                  />
+                  {newsItem?.ingress && (
+                    <Blocks value={newsItem?.ingress} className={`break-word grow hidden lg:block`} clampLines={5} />
+                  )}
+                </Card.Content>
+              </Card>
+            </li>
+          )
+        })}
+      </ul>
+    </section>
   )
 }
 

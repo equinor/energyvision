@@ -13,7 +13,9 @@ import IngressText from './portableText/IngressText'
 import { VideoJS } from '@components/VideoJsPlayer'
 import { twMerge } from 'tailwind-merge'
 import { Heading } from '@core/Typography'
-import CallToActions from '@sections/CallToActions'
+import TranscriptAndActions from './TranscriptAndActions'
+import { PortableTextBlock } from '@portabletext/types'
+import Blocks from './portableText/Blocks'
 
 const DynamicVideoJsComponent = dynamic<React.ComponentProps<typeof VideoJS>>(
   () => import('../../components/src/VideoJsPlayer').then((mod) => mod.VideoJS),
@@ -23,7 +25,7 @@ const DynamicVideoJsComponent = dynamic<React.ComponentProps<typeof VideoJS>>(
   },
 )
 
-const getHeightWidth = (aspectRatio: string, height?: number) => {
+const getHeightWidth = (aspectRatio: string, height?: number | string) => {
   if (!height) {
     switch (aspectRatio) {
       case VideoPlayerRatios['1:1']:
@@ -32,9 +34,11 @@ const getHeightWidth = (aspectRatio: string, height?: number) => {
         return 'h-[56.25%] w-full'
       case VideoPlayerRatios['9:16']:
         return 'h-[569px] w-[320px] sm:h-[600px] sm:w-[337.5px]'
+      default:
+        return 'w-full h-full'
     }
   }
-  return `h-[${height}px] w-full`
+  return `h-[${typeof height == 'string' ? height : `${height}px`}] w-full`
 }
 
 const getThumbnailRatio = (aspectRatio: string, height?: number) => {
@@ -62,27 +66,76 @@ const getThumbnailRatio = (aspectRatio: string, height?: number) => {
   }
 }
 
+type VideoComponentWithCaptionType = {
+  video: VideoType
+  videoControls: VideoControlsType
+  designOptions: VideoDesignOptionsType
+  useFillMode?: boolean
+  className?: string
+  captionClassName?: string
+  title?: PortableTextBlock[]
+}
+export const VideoComponentWithCaption = ({
+  video,
+  title,
+  videoControls,
+  designOptions,
+  useFillMode = false,
+  className = '',
+  captionClassName = '',
+}: VideoComponentWithCaptionType) => {
+  const { width: w, height: h } = getThumbnailRatio(designOptions.aspectRatio)
+  return (
+    <figure
+      className={twMerge(
+        `${useFillMode ? 'h-full w-full' : getHeightWidth(designOptions.aspectRatio, designOptions.height)} 
+        [&video::-webkit-media-controls-fullscreen-button]:hidden relative mx-auto my-0
+        `,
+        className,
+      )}
+    >
+      <DynamicVideoJsComponent
+        className="object-cover"
+        src={video.url}
+        title={video.title}
+        poster={urlFor(video.thumbnail).width(w).height(h).url()}
+        playsInline
+        aspectRatio={designOptions.aspectRatio}
+        useBrandTheme={designOptions?.useBrandTheme}
+        useFillMode={useFillMode}
+        {...videoControls}
+      />
+      <figcaption className={twMerge(`text-md ${title ? 'py-2' : ''}`, captionClassName)}>
+        {title && <Blocks value={title} />}
+      </figcaption>
+    </figure>
+  )
+}
+
 type VideoJsComponentType = {
   video: VideoType
   videoControls: VideoControlsType
   designOptions: VideoDesignOptionsType
-  height?: string
   useFillMode?: boolean
+  className?: string
 }
-
 export const VideoJsComponent = ({
   video,
   videoControls,
   designOptions,
   useFillMode = false,
+  className = '',
 }: VideoJsComponentType) => {
   const { width: w, height: h } = getThumbnailRatio(designOptions.aspectRatio)
   return (
     <figure
-      className={`
+      className={twMerge(
+        `
         ${useFillMode ? 'h-full w-full' : getHeightWidth(designOptions.aspectRatio, designOptions.height)} 
         [&video::-webkit-media-controls-fullscreen-button]:hidden relative mx-auto my-0
-        `}
+        `,
+        className,
+      )}
     >
       <DynamicVideoJsComponent
         className="object-cover"
@@ -100,8 +153,9 @@ export const VideoJsComponent = ({
 }
 
 const VideoPlayer = ({ anchor, data, className }: { data: VideoPlayerData; anchor?: string; className?: string }) => {
-  const { title, ingress, action, video, videoControls, designOptions } = data
+  const { title, ingress, action, video, videoControls, designOptions, transcript } = data
   const { width } = designOptions
+
   return (
     <BackgroundContainer {...designOptions.background} id={anchor} renderFragmentWhenPossible>
       <div
@@ -112,8 +166,8 @@ const VideoPlayer = ({ anchor, data, className }: { data: VideoPlayerData; ancho
       >
         {title && <Heading value={title} as="h2" variant="xl" className="mb-2 pb-2" />}
         {ingress && <IngressText value={ingress} className="mb-lg" />}
-        {action && action.label && <CallToActions callToActions={[action]} overrideButtonStyle={false} />}
         <VideoJsComponent video={video} designOptions={designOptions} videoControls={videoControls} />
+        <TranscriptAndActions action={action} transcript={transcript} ariaTitle={video.title} />
       </div>
     </BackgroundContainer>
   )

@@ -12,9 +12,9 @@ import {
   FormSubmitFailureBox,
 } from '@components'
 import { BaseSyntheticEvent, useState } from 'react'
-import FriendlyCaptcha from './FriendlyCaptcha'
+import FriendlyCaptcha from '../FriendlyCaptcha'
 import styled from 'styled-components'
-import { CareersContactFormCatalogType } from '../../../types'
+import getCatalogType from './getRequestType'
 
 type FormValues = {
   name: string
@@ -43,7 +43,7 @@ const CareersContactForm = () => {
       body: JSON.stringify({
         data,
         frcCaptchaSolution: (event?.target as any)['frc-captcha-solution'].value,
-        catalogType: getCatalog(data.category),
+        catalogType: getCatalogType(intl, data.category, data.candidateType),
       }),
       headers: {
         'Content-Type': 'application/json',
@@ -52,18 +52,6 @@ const CareersContactForm = () => {
     })
     setSuccessfullySubmitted(res.status == 200)
     setServerError(res.status != 200)
-  }
-  const getCatalog = (category: string): CareersContactFormCatalogType | null => {
-    if (
-      category.includes(
-        intl.formatMessage({
-          id: 'careers_contact_form_suspected_recruitment_scam',
-          defaultMessage: 'Suspected recruitment scam',
-        }),
-      )
-    )
-      return 'suspectedRecruitmentScamRequest'
-    else return 'others'
   }
 
   const {
@@ -153,10 +141,23 @@ const CareersContactForm = () => {
                 <FormTextField
                   {...props}
                   id={props.name}
-                  label={intl.formatMessage({
-                    id: 'careers_contact_form_phone',
-                    defaultMessage: 'Phone Number',
-                  })}
+                  label={
+                    <>
+                      <span>
+                        {intl.formatMessage({
+                          id: 'careers_contact_form_phone',
+                          defaultMessage: 'Phone Number',
+                        })}
+                      </span>
+                      <br />
+                      <span className="text-xs">
+                        {intl.formatMessage({
+                          id: 'country_code_format',
+                          defaultMessage: 'e.g. +47',
+                        })}
+                      </span>
+                    </>
+                  }
                   placeholder={intl.formatMessage({
                     id: 'careers_contact_form_phone_placeholder',
                     defaultMessage: 'Country code and phone number',
@@ -359,6 +360,9 @@ const CareersContactForm = () => {
                 />
               )}
             />
+            <div className="pb-4 text-xs italic">
+              <FormattedMessage id="all_fields_mandatory" defaultMessage="All fields with *  are mandatory" />
+            </div>
             <StyledCheckBox
               label={intl.formatMessage({
                 id: 'career_fair_form_supporting_documents',

@@ -56,6 +56,7 @@ export const LoopingVideo = ({ video }: { video: LoopingVideoData }) => {
           loop
           muted
           autoPlay
+          playButton={false}
           title={title}
           poster={thumbnailURL.src}
           src={url}

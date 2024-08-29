@@ -1,4 +1,5 @@
 import type { ImageWithAlt } from './imageWithAlt'
+import type { Rule } from 'sanity'
 
 export type ImageWithAltAndCaption = {
   _type: 'imageWithAltAndCaption'

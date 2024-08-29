@@ -11,7 +11,7 @@ export type ExternalRedirectsType = {
 
 export const redirects = /* groq */ `
   *[_type == "redirect" && (from == $slug || from == $slugWithLocale) && ${noDrafts}][0]{
-    "lang": _lang,
+    "lang": lang,
     "to": to->slug.current
   }
 `

@@ -15,6 +15,7 @@ const Description = () => {
     </Box>
   )
 }
+import { lang } from './langField'
 
 export default {
   title: 'Redirect',
@@ -22,6 +23,7 @@ export default {
   type: 'document',
   icon: () => EdsIcon(directions),
   fields: [
+    lang,
     {
       name: 'description',
       type: 'string',

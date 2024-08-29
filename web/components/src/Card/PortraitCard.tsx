@@ -1,5 +1,6 @@
 import { forwardRef, HTMLAttributes, CSSProperties } from 'react'
 import styled from 'styled-components'
+import { twMerge } from 'tailwind-merge'
 
 export type CardProps = {
   /** What kind of card is this (we'll probably add more options to this list) */
@@ -11,7 +12,6 @@ export const StyledPortraitCard = styled.div`
   height: var(--card-height, auto);
   display: flex;
   flex-direction: column;
-  box-shadow: var(--card-shadow, none);
   background-color: var(--card-background, transparent);
   gap: var(--card-gap, var(--space-large));
   padding: var(--card-padding, 0 0 var(--space-xLarge) 0);
@@ -24,7 +24,7 @@ export const StyledPortraitCard = styled.div`
 `
 
 export const PortraitCard = forwardRef<HTMLDivElement, CardProps>(function Card(
-  { type = 'news', textOnly = false, style, children, ...rest },
+  { type = 'news', textOnly = false, style, children, className = '', ...rest },
   ref,
 ) {
   return (
@@ -41,6 +41,7 @@ export const PortraitCard = forwardRef<HTMLDivElement, CardProps>(function Card(
             } as CSSProperties
           }
           {...rest}
+          className={twMerge('shadow-card', className)}
         >
           {children}
         </StyledPortraitCard>
@@ -55,6 +56,7 @@ export const PortraitCard = forwardRef<HTMLDivElement, CardProps>(function Card(
             } as CSSProperties
           }
           {...rest}
+          className={twMerge('shadow-card', className)}
         >
           {children}
         </StyledPortraitCard>

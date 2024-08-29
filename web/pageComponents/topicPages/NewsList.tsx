@@ -1,28 +1,14 @@
 import styled from 'styled-components'
-import NewsCard from '../cards/NewsCard'
 import TitleText from '../shared/portableText/TitleText'
 import { Pagination } from '../shared/search/simplePagination/Pagination'
 import type { NewsListData } from '../../types/types'
 import { useState } from 'react'
 import { twMerge } from 'tailwind-merge'
+import PromotionCard from '@sections/cards/PromotionCard/PromotionCard'
 
 const StyledHeading = styled(TitleText)`
   text-align: var(--promotion-titleAlign, center);
   margin-bottom: var(--space-xLarge);
-`
-
-const Articles = styled.div`
-  --card-minWidth: 250px;
-  --row-gap: var(--space-xLarge);
-  --column-gap: var(--space-medium);
-  @media (min-width: 1000px) {
-    --card-minWidth: 340px;
-  }
-
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--card-minWidth)), 1fr));
-  grid-row-gap: var(--row-gap);
-  grid-column-gap: var(--column-gap);
 `
 
 const NewsList = ({
@@ -52,11 +38,11 @@ const NewsList = ({
   return (
     <div id={anchor} className={twMerge(`pb-page-content px-layout-lg max-w-viewport mx-auto`, className)}>
       {title && <StyledHeading value={title} level="h2" size="xl" />}
-      <Articles {...rest}>
+      <div className="grid gap-x-6 gap-y-8 sm:grid-cols-2 xl:grid-cols-3" {...rest}>
         {pagedArticles.map((article) => (
-          <NewsCard key={article.id} data={article} />
+          <PromotionCard key={article.id} data={article} hasSectionTitle={!!title} />
         ))}
-      </Articles>
+      </div>
       <Pagination totalPages={totalPages} onPageChange={(pageNumber: number) => handlePageChange(pageNumber)} />
     </div>
   )

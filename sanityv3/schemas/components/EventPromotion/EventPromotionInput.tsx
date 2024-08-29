@@ -1,4 +1,4 @@
-import { Text, Card, Grid, Stack, Heading, Radio, Inline, Flex } from '@sanity/ui'
+import { Text, Card, Grid, Stack, Heading, Radio, Inline, Flex, Switch, TextInput } from '@sanity/ui'
 import { set, MemberField } from 'sanity'
 import { getObjectMemberField } from '../utils/getObjectMemberField'
 import type { ObjectInputProps } from 'sanity'
@@ -14,14 +14,13 @@ const InlinePreview = ({ value }: { value: EventPromotion | undefined }) => {
   const time = value?.promotePastEvents ? 'past' : 'upcoming'
   const number = value?.promotePastEvents ? value?.pastEventsCount || '50 (max)' : ''
   const withTags = value?.useTags ? 'from selected tags' : ''
+  const automaticPromotion = value?.promoteSingleUpcomingEvent
+    ? 'Automatically promoting single upcoming event'
+    : `Automatically promoting ${number} ${time} events ${withTags}`
 
   return (
     <Card padding={[4]} radius={2} shadow={1} tone="primary" marginTop={3} marginBottom={3}>
-      <Text>
-        {value?.manuallySelectEvents
-          ? 'Manually promoting selected events'
-          : `Automatically promoting ${number} ${time} events ${withTags}`}
-      </Text>
+      <Text>{value?.manuallySelectEvents ? 'Manually promoting selected events' : automaticPromotion}</Text>
     </Card>
   )
 }
@@ -32,10 +31,11 @@ export const EventPromotionInput = (props: EventPromotionInputProps) => {
   const useTags = getObjectMemberField(members, 'useTags')
   const promotePastEvents = getObjectMemberField(members, 'promotePastEvents')
   const pastEventsCount = getObjectMemberField(members, 'pastEventsCount')
+  const upcomingEventsCount = getObjectMemberField(members, 'upcomingEventsCount')
   const selectedTags = getObjectMemberField(members, 'tags')
   const promotedEvents = getObjectMemberField(members, 'promotedEvents')
 
-  if (!promotePastEvents || !pastEventsCount || !useTags || !selectedTags || !promotedEvents)
+  if (!promotePastEvents || !pastEventsCount || !upcomingEventsCount || !useTags || !selectedTags || !promotedEvents)
     return renderDefault(props)
 
   return (
@@ -86,7 +86,7 @@ export const EventPromotionInput = (props: EventPromotionInputProps) => {
 
       {!value?.manuallySelectEvents && (
         <>
-          <Grid columns={3} gap={3}>
+          <Grid columns={2} gap={3}>
             <MemberField
               member={useTags}
               renderInput={renderInput}
@@ -101,16 +101,38 @@ export const EventPromotionInput = (props: EventPromotionInputProps) => {
               renderItem={renderItem}
               renderPreview={renderPreview}
             />
-            {value?.promotePastEvents && (
-              <MemberField
-                member={pastEventsCount}
-                renderInput={renderInput}
-                renderField={renderField}
-                renderItem={renderItem}
-                renderPreview={renderPreview}
-              />
-            )}
           </Grid>
+          {value?.promotePastEvents && (
+            <MemberField
+              member={pastEventsCount}
+              renderInput={renderInput}
+              renderField={renderField}
+              renderItem={renderItem}
+              renderPreview={renderPreview}
+            />
+          )}
+          {!value?.promotePastEvents && (
+            <MemberField
+              member={upcomingEventsCount}
+              renderInput={renderInput}
+              renderField={renderField}
+              renderItem={renderItem}
+              renderPreview={renderPreview}
+            />
+          )}
+          <Card padding={2} radius={2} shadow={1}>
+            <Inline space={2}>
+              <Switch
+                id="selectSingleUpcomingPromotion"
+                checked={value?.promoteSingleUpcomingEvent}
+                onChange={() => onChange(set(!value?.promoteSingleUpcomingEvent, ['promoteSingleUpcomingEvent']))}
+              />
+              <Text as="label" htmlFor="selectSingleUpcomingPromotion">
+                Promote single upcoming event
+              </Text>
+            </Inline>
+          </Card>
+
           {value?.useTags && (
             <MemberField
               member={selectedTags}

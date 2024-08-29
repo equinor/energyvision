@@ -131,7 +131,9 @@ export type PeopleCardData = {
 export type EventPromotionSettings = {
   manuallySelectEvents: boolean
   promotePastEvents: boolean
+  promoteSingleUpcomingEvent: boolean
   pastEventsCount?: number
+  upcomingEventsCount?: number
 }
 
 export type EventCardData = {
@@ -141,6 +143,7 @@ export type EventCardData = {
   slug: string
   location?: string
   eventDate: EventDateType
+  ingress?: PortableTextBlock[]
 }
 
 export type NewsSchema = {
@@ -533,6 +536,7 @@ export type IFrameData = {
   title?: PortableTextBlock[]
   ingress?: PortableTextBlock[]
   description?: PortableTextBlock[]
+  transcript?: PortableTextBlock[]
   action?: LinkData
   frameTitle: string
   url: string
@@ -569,6 +573,7 @@ export type PromotionData = {
     type: PromotionType
     eventPromotionSettings?: EventPromotionSettings
   }
+  viewAllLink?: LinkData
   useHorizontalScroll?: boolean | undefined
   designOptions?: DesignOptions
 }
@@ -722,7 +727,7 @@ export type VideoControlsType = {
 
 export type VideoDesignOptionsType = {
   aspectRatio: VideoPlayerRatios
-  height?: number
+  height?: number | string
   width?: 'normal' | 'extraWide'
   useBrandTheme?: boolean
 }
@@ -736,24 +741,25 @@ export type VideoPlayerData = {
   title?: PortableTextBlock[]
   ingress?: PortableTextBlock[]
   action?: LinkData
+  transcript?: PortableTextBlock[]
+}
+export type VideoPlayerCarouselItem = {
+  id: string
+  video: VideoType
+  title?: PortableTextBlock[]
+  hideVideoTitle?: boolean
+  aspectRatio?: VideoPlayerRatios
 }
 
 export type VideoPlayerCarouselData = {
   id: string
   type: string
-  items: {
-    id: string
-    title: PortableTextBlock[]
-    video: {
-      title: string
-      url: string
-      thumbnail: ImageWithAlt
-    }
-  }[]
+  items: VideoPlayerCarouselItem[]
   designOptions: DesignOptions & {
     aspectRatio: VideoPlayerRatios
   }
   title?: PortableTextBlock[]
+  ingress?: PortableTextBlock[]
 }
 
 export type LoopingVideoRatio = '1:2' | 'narrow'
@@ -764,12 +770,17 @@ export type LoopingVideoData = {
   url: string
   ratio: LoopingVideoRatio
 }
+export type ImageCarouselItem = {
+  id: string
+} & ImageWithCaptionData
 
 export type ImageCarouselData = {
   type: 'imageCarousel'
   id: string
   title?: PortableTextBlock[]
-  items: ImageWithCaptionData[]
+  ingress?: PortableTextBlock[]
+  hideTitle?: boolean
+  items: ImageCarouselItem[]
   options: {
     autoplay: boolean
     delay: number
@@ -801,7 +812,7 @@ export type IframeCarouselData = {
 
 export type ContactFormCatalogType = 'humanRightsInformationRequest' | 'loginIssues'
 
-export type CareersContactFormCatalogType = 'suspectedRecruitmentScamRequest' | 'others'
+export type CareersContactFormCatalogType = 'suspectedRecruitmentScamRequest' | 'emergingTalentsQueries' | 'others'
 
 export type KeyNumberItemData = {
   type: 'keyNumberItem'
@@ -862,14 +873,22 @@ export type ThreeColumns = {
   id: string
   columns?: GridContentType[]
 }
+type GridTextBlockContentAlignment = 'left' | 'right' | 'center' | 'bottom-left' | 'bottom-center'
 
 export type GridTextBlockData = {
   id: string
   type: 'gridTextBlock'
   action?: LinkData
+  overline?: string
+  useThemedTitle?: boolean
+  title?: PortableTextBlock[]
+  themedTitle?: PortableTextBlock[]
   content?: PortableTextBlock[]
-  textAlignment?: ContentAlignmentTypes
-  theme?: number
+  contentAlignment?: GridTextBlockContentAlignment
+  contentTheme?: any
+  titleThemeFromLarger?: any
+  theme?: any
+  imageBackground?: ImageBackground
 }
 
 export type CampaignBannerData = {
@@ -883,7 +902,10 @@ export type GridTeaserData = {
   id: string
   image: ImageWithAlt
   rowType?: RowType
-  content?: PortableTextBlock
+  useExtendedThemes?: boolean
+  content?: PortableTextBlock[]
+  themedContent?: PortableTextBlock[]
+  themeFromLarger?: any
   quote?: string
   author?: string
   authorTitle?: string
@@ -891,15 +913,4 @@ export type GridTeaserData = {
   imagePosition?: TeaserImagePosition
   action?: LinkData
   theme?: number
-}
-export type PodcastTeaserData = {
-  id: string
-  type: 'podcastTeaser'
-  spotifyLink?: string
-  appleLink?: string
-  linkTitle?: string
-  podcastName?: PortableTextBlock[]
-  podcastEpisode?: PortableTextBlock[]
-  image: ImageWithAlt
-  designOptions: DesignOptions
 }
