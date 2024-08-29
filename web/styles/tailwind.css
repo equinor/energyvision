@@ -108,7 +108,8 @@
     transition: opacity calc(var(--modal-transition-duration) / 2) var(--modal-transition-easing)
         calc(var(--modal-transition-duration) / 2),
       transform var(--modal-transition-duration) var(--modal-transition-easing),
-      clip-path var(--modal-transition-duration) var(--modal-transition-easing);
+      clip-path var(--modal-transition-duration) var(--modal-transition-easing), display 0.7s allow-discrete,
+      overlay 0.7s allow-discrete;
   }
 }
 
@@ -217,7 +218,23 @@
 
   @supports selector(::backdrop) {
     .bd-blurred::backdrop {
+      --transition-duration: 0.4s;
+      --transition-easing: cubic-bezier(0.45, 0, 0.55, 1);
+
+      transition: background-color 0s linear var(--transition-duration),
+        backdrop-filter calc(var(--transition-duration) * 2 / 3) var(--transition-easing)
+          calc(var(--transition-duration) / 3),
+        display 0.7s allow-discrete, overlay 0.7s allow-discrete;
+    }
+    .bd-blurred[open]::backdrop {
       @apply backdrop-blur-md bg-north-sea-90/50;
+    }
+
+    /*   Before-open state  */
+    @starting-style {
+      .bd-blurred[open]::backdrop {
+        @apply backdrop-blur-none bg-transparent;
+      }
     }
   }
 }
