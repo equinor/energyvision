@@ -2,6 +2,15 @@ import { directions, world } from '@equinor/eds-icons'
 import type { Rule, ValidationContext } from 'sanity'
 import { EdsIcon } from '../../icons'
 import { apiVersion } from '../../sanity.client'
+import { Box, Text } from '@sanity/ui'
+
+const Description = () => {
+  return (
+    <Box>
+      <Text>Remember to inform the dev team that a new external redirect has been added.</Text>
+    </Box>
+  )
+}
 
 export default {
   title: 'External Redirect',
@@ -9,6 +18,13 @@ export default {
   type: 'document',
   icon: () => EdsIcon(directions),
   fields: [
+    {
+      name: 'description',
+      type: 'string',
+      components: {
+        input: Description,
+      },
+    },
     {
       title: 'From:',
       description: 'Example: /en/this-is/an-example',

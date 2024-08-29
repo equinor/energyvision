@@ -11,11 +11,13 @@ import { defaultLanguage } from '../languages'
 import Header from '../pageComponents/shared/Header'
 import { FormattedMessage } from 'react-intl'
 import getIntl from '../common/helpers/getIntl'
-import { getStaticBuildRoutePaths } from '../common/helpers/getPaths'
+import { getStaticBuildRoutePaths, pathExistsInSanity } from '../common/helpers/getPaths'
 import getPageSlugs from '../common/helpers/getPageSlugs'
 import { getComponentsData } from '../lib/fetchData'
 import { useContext, useEffect } from 'react'
 import { PreviewContext } from '../lib/contexts/PreviewContext'
+import archivedNews from '../lib/archive/archivedNewsPaths.json'
+import { Flags } from '../common/helpers/datasetHelpers'
 
 const MagazinePage = dynamic(() => import('../pageComponents/pageTemplates/MagazinePage'))
 const LandingPage = dynamic(() => import('../pageComponents/pageTemplates/LandingPage'))
@@ -96,7 +98,6 @@ Page.getLayout = (page: AppProps) => {
 export const getStaticProps: GetStaticProps = async ({ params, preview = false, locale = defaultLanguage.locale }) => {
   const { query, queryParams } = await getQueryFromSlug(params?.slug as string[], locale)
   const intl = await getIntl(locale, preview)
-
   const { menuData, pageData, footerData } = await getComponentsData(
     {
       query,

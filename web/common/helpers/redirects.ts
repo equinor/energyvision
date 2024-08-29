@@ -1,5 +1,11 @@
 import { getClient } from '../../lib/sanity.server'
-import { redirects, externalRedirects, RedirectsType, ExternalRedirectsType } from '../../lib/queries/redirects'
+import {
+  redirects,
+  externalRedirects,
+  allExternalRedirects,
+  RedirectsType,
+  ExternalRedirectsType,
+} from '../../lib/queries/redirects'
 
 export const getRedirectUrl = async (slug: string, locale: string): Promise<RedirectsType> => {
   return getClient(false).fetch(redirects, { slug: slug, slugWithLocale: `/${locale}${slug}` })
@@ -7,6 +13,10 @@ export const getRedirectUrl = async (slug: string, locale: string): Promise<Redi
 
 export const getExternalRedirectUrl = async (slug: string, locale: string): Promise<ExternalRedirectsType> => {
   return getClient(false).fetch(externalRedirects, { slug: slug, slugWithLocale: `/${locale}${slug}` })
+}
+
+export const getAllExternalRedirects = async (): Promise<ExternalRedirectsType> => {
+  return getClient(false).fetch(allExternalRedirects)
 }
 
 export const getDnsRedirect = (host: string, pathname: string) => {

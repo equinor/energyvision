@@ -6,7 +6,16 @@ import routes from '../routes'
 import { EdsIcon } from '../../icons'
 import { directions } from '@equinor/eds-icons'
 import { apiVersion } from '../../sanity.client'
+import { Box, Text } from '@sanity/ui'
 import { lang } from './langField'
+
+const Description = () => {
+  return (
+    <Box>
+      <Text>Remember to inform the dev team that a new external redirect has been added.</Text>
+    </Box>
+  )
+}
 
 export default {
   title: 'Redirect',
@@ -15,6 +24,13 @@ export default {
   icon: () => EdsIcon(directions),
   fields: [
     lang,
+    {
+      name: 'description',
+      type: 'string',
+      components: {
+        input: Description,
+      },
+    },
     {
       title: 'From:',
       description: 'Example: /this-is/an-example',
