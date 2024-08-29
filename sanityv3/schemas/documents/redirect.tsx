@@ -7,6 +7,7 @@ import { EdsIcon } from '../../icons'
 import { directions } from '@equinor/eds-icons'
 import { apiVersion } from '../../sanity.client'
 import { Box, Text } from '@sanity/ui'
+import { lang } from './langField'
 
 const Description = () => {
   return (
@@ -15,7 +16,6 @@ const Description = () => {
     </Box>
   )
 }
-import { lang } from './langField'
 
 export default {
   title: 'Redirect',
