@@ -15,7 +15,7 @@ const blockContentType = configureBlockContent({
   smallText: false,
 })
 
-export type Factbox = {
+export type ImageForText = {
   _type: 'imageForText'
   content?: PortableTextBlock[]
   image?: ImageWithAlt

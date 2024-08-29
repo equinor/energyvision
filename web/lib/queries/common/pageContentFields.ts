@@ -582,7 +582,7 @@ _type == "keyNumbers" =>{
     "type": _type,
     "id": _key,
     "content": content[]{..., ${markDefs}},
-    "aspectRatio": coalesce(aspectRatio, '10:3'),
+    "aspectRatio": coalesce(aspectRatio, '16:9'),
     "image": image {
       ...,
       "extension": asset-> extension
