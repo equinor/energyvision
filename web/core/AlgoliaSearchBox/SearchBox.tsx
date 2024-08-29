@@ -112,6 +112,7 @@ export function SearchBox({
           className={envisTwMerge(
             `flex-grow
             rounded-s-xs
+            rounded-e-none
             focus:outline-none
             text-white-100
             pl-6
