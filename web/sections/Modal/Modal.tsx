@@ -55,7 +55,7 @@ const Modal = forwardRef<HTMLDialogElement, ModalProps>(function Modal(
       <div
         className={envisTwMerge(
           `w-[90vw] 
-          md:w-[997px] 
+          lg:w-[997px] 
           max-h-[90vh]
           relative
           flex 
@@ -82,7 +82,7 @@ const Modal = forwardRef<HTMLDialogElement, ModalProps>(function Modal(
         >
           <TransformableIcon iconData={close} className="w-full h-auto" />
         </Button>
-        <div className="md:px-12 py-12">{children}</div>
+        <div className="pl-2 pr-12 md:px-12 py-12">{children}</div>
       </div>
     </dialog>
   )
