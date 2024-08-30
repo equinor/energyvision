@@ -22,7 +22,7 @@ const footerComponentFields = /* groq */ `
     ...,
     "extension": asset-> extension
   },
-  "action": action[0]{
+  "actions": [action[0]]{
     ${linkSelectorFields},
     ${downloadableFileFields},
     ${downloadableImageFields},

@@ -45,11 +45,8 @@ const TeaserImage = ({ image }: { image: ImageWithAlt }) => {
 }
 
 const Teaser = ({ data, anchor }: TeaserProps) => {
-  const { title, overline, text, image, action, designOptions, isBigText, useResourceLinks } = data
+  const { title, overline, text, image, actions, designOptions, isBigText, useResourceLinks } = data
   const { imageSize, imagePosition, ...restOptions } = designOptions
-
-  // Convert the single action object to an array
-  const actions = action ? [action] : []
 
   if ([title, overline, text, image?.asset, actions].every((i) => !i)) {
     return null
@@ -83,12 +80,10 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
               {text && <IngressText value={text} />}
             </>
           )}
-          {actions && actions.length > 0 && (
+          {actions && (
             <div className="flex flex-col gap-8">
-              {actions.map((action) => {
-                const url = getUrlFromAction(action)
-
-                if (!url) return null;
+              {actions?.map((action) => {
+                const url = action && getUrlFromAction(action)
 
                 return useResourceLinks ? (
                   <ResourceLink
@@ -106,7 +101,6 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
                     key={action.id}
                     {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
                     type={action.type}
-                    className="no-underline text-primary hover:text-primary-dark"
                   >
                     {`${action.label} ${action.extension ? `(${action.extension.toUpperCase()})` : ''}`}
                   </ReadMoreLink>

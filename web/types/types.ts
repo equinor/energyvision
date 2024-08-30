@@ -326,7 +326,6 @@ export type TeaserData = {
   useResourceLinks?: boolean
   image: ImageWithAlt
   actions?: LinkData[]
-  action?: LinkData
   designOptions: DesignOptions & {
     imagePosition?: TeaserImagePosition
     imageSize?: TeaserImageSize
