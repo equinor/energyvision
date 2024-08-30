@@ -1,49 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { SubscribeFormParameters } from '../../../types/types'
-import styled from 'styled-components'
 import { Icon } from '@equinor/eds-core-react'
 import { useForm, Controller } from 'react-hook-form'
 import { error_filled } from '@equinor/eds-icons'
 import { useRouter } from 'next/router'
 import { FormattedMessage, useIntl } from 'react-intl'
-import { FormButton, FormSubmitSuccessBox, FormTextField, FormSubmitFailureBox, Checkbox } from '@components'
+import { FormSubmitSuccessBox, FormTextField, FormSubmitFailureBox, Checkbox } from '@components'
 import { BaseSyntheticEvent, useState } from 'react'
 import FriendlyCaptcha from './FriendlyCaptcha'
-
-const StyledFieldset = styled.fieldset`
-  border: 0;
-  padding: 0;
-  margin-inline-start: 0;
-  margin-inline-end: 0;
-  padding-block-start: 0;
-  padding-inline-start: 0;
-  padding-inline-end: 0;
-  padding-block-end: 0;
-`
-
-const UnstyledList = styled.ul`
-  margin: -12px;
-  padding: var(--space-large) 0 var(--space-large) 0px;
-  list-style-type: none;
-  column-count: 2;
-  @media (max-width: 920px) {
-    column-count: 1;
-  }
-`
-const ErrorStyledDiv = styled.div`
-  font-weight: var(--fontWeight-regular);
-  font-size: var(--typeScale-2);
-  color: var(--clear-red-100);
-  align-items: center;
-  display: flex;
-`
-const StyledIcon = styled(Icon)`
-  margin-left: var(--space-small);
-`
-const StyledLegend = styled.legend`
-  font-weight: var(--fontWeight-regular);
-  font-size: var(--typeScale-2);
-`
+import { Button } from '@core/Button'
 
 type FormValues = {
   firstName: string
@@ -54,77 +19,108 @@ type FormValues = {
 const SubscribeForm = () => {
   const router = useRouter()
   const intl = useIntl()
-  const [submitButtonEnabled, setSubmitButtonEnabled] = useState(false)
   const [isServerError, setServerError] = useState(false)
+  const [isFriendlyChallengeDone, setIsFriendlyChallengeDone] = useState(false)
   const [isSuccessfullySubmitted, setSuccessfullySubmitted] = useState(false)
-
-  const onSubmit = async (data: FormValues, event?: BaseSyntheticEvent) => {
-    const allCategories = data.categories.includes('all')
-    const subscribeFormParamers: SubscribeFormParameters = {
-      firstName: data.firstName,
-      email: data.email,
-      crudeOilAssays: allCategories || data.categories.includes('crudeOilAssays'),
-      generalNews: allCategories || data.categories.includes('generalNews'),
-      stockMarketAnnouncements: allCategories || data.categories.includes('stockMarketAnnouncements'),
-      magazineStories: allCategories || data.categories.includes('magazineStories'),
-      languageCode: router.locale == 'en' ? 'en' : 'no',
-    }
-
-    const res = await fetch('/api/subscribe-form', {
-      body: JSON.stringify({
-        subscribeFormParamers,
-        frcCaptchaSolution: (event?.target as any)['frc-captcha-solution'].value,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      method: 'POST',
-    })
-    setServerError(res.status != 200)
-    setSuccessfullySubmitted(res.status == 200)
-  }
 
   const {
     handleSubmit,
     reset,
     control,
     register,
+    setError,
     formState: { errors, isSubmitting, isSubmitted, isSubmitSuccessful },
-  } = useForm({ defaultValues: { firstName: '', email: '', categories: [] } })
+  } = useForm({
+    defaultValues: {
+      firstName: '',
+      email: '',
+      categories: [],
+      notCompletedCaptcha: '',
+    },
+  })
+
+  const onSubmit = async (data: FormValues, event?: BaseSyntheticEvent) => {
+    if (isFriendlyChallengeDone) {
+      const allCategories = data.categories.includes('all')
+      const subscribeFormParamers: SubscribeFormParameters = {
+        firstName: data.firstName,
+        email: data.email,
+        crudeOilAssays: allCategories || data.categories.includes('crudeOilAssays'),
+        generalNews: allCategories || data.categories.includes('generalNews'),
+        stockMarketAnnouncements: allCategories || data.categories.includes('stockMarketAnnouncements'),
+        magazineStories: allCategories || data.categories.includes('magazineStories'),
+        languageCode: router.locale == 'en' ? 'en' : 'no',
+      }
+
+      const res = await fetch('/api/subscribe-form', {
+        body: JSON.stringify({
+          subscribeFormParamers,
+          frcCaptchaSolution: (event?.target as any)['frc-captcha-solution'].value,
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        method: 'POST',
+      })
+      setServerError(res.status != 200)
+      setSuccessfullySubmitted(res.status == 200)
+    } else {
+      setError('notCompletedCaptcha', { type: 'custom', message: 'Anti-Robot Verification is required' })
+    }
+  }
 
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
       onReset={() => {
         reset()
-        setSubmitButtonEnabled(false)
         setSuccessfullySubmitted(false)
+        setIsFriendlyChallengeDone(false)
       }}
+      className="pt-6 flex flex-col gap-4"
     >
       {!isSuccessfullySubmitted && !isServerError && (
         <>
-          <StyledFieldset>
+          <div className="pb-4 text-base">
+            <FormattedMessage id="all_fields_mandatory" defaultMessage="All fields with *  are mandatory" />
+          </div>
+          <fieldset>
             {!errors.categories && (
-              <StyledLegend id="atleast-one-category-required">
+              <legend className="text-base font-semibold max-w-text" id="atleast-one-category-required">
                 <FormattedMessage
                   id="subscribe_form_choose"
                   defaultMessage="Please choose one or more of the following"
                 />
-              </StyledLegend>
+                *
+              </legend>
             )}
             {errors.categories && (
-              <ErrorStyledDiv role="alert" id="atleast-one-category-required">
-                <StyledLegend>
+              <div
+                className="text-clear-red-100 text-base font-semibold flex gap-2"
+                role="alert"
+                id="atleast-one-category-required"
+              >
+                <legend>
                   <FormattedMessage
                     id="subscribe_form_choose"
                     defaultMessage="Please choose one or more of the following"
                   />
-                </StyledLegend>
-                <StyledIcon data={error_filled} aria-hidden="true" />
-              </ErrorStyledDiv>
+                </legend>
+                <Icon data={error_filled} aria-hidden="true" />
+              </div>
             )}
 
-            <UnstyledList>
+            <ul className="columns-1 lg:columns-2">
+              {/*             <li>
+                <Checkbox
+                  label={intl.formatMessage({
+                    id: 'select_all',
+                    defaultMessage: 'Select all',
+                  })}
+                  value="all"
+                  onChange={handleSelectAll}
+                />
+              </li> */}
               <li>
                 <Checkbox
                   label={intl.formatMessage({
@@ -192,8 +188,8 @@ const SubscribeForm = () => {
                   {...register('categories')}
                 />
               </li>
-            </UnstyledList>
-          </StyledFieldset>
+            </ul>
+          </fieldset>
           <Controller
             name="firstName"
             control={control}
@@ -207,10 +203,10 @@ const SubscribeForm = () => {
               <FormTextField
                 {...props}
                 id={props.name}
-                label={intl.formatMessage({
+                label={`${intl.formatMessage({
                   id: 'subscribe_form_first_name',
                   defaultMessage: 'First name',
-                })}
+                })}*`}
                 inputRef={ref}
                 aria-required="true"
                 inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
@@ -239,10 +235,10 @@ const SubscribeForm = () => {
               <FormTextField
                 {...props}
                 id={props.name}
-                label={intl.formatMessage({
+                label={`${intl.formatMessage({
                   id: 'subscribe_form_email',
                   defaultMessage: 'Email',
-                })}
+                })}*`}
                 inputRef={ref}
                 inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
                 helperText={error?.message}
@@ -251,25 +247,27 @@ const SubscribeForm = () => {
               />
             )}
           />
-          <div className="pb-4 text-xs italic">
-            <FormattedMessage id="all_fields_mandatory" defaultMessage="All fields with *  are mandatory" />
-          </div>
+          {errors.notCompletedCaptcha && (
+            <p role="alert" className="text-clear-red-100 flex gap-2 font-semibold">
+              {errors.notCompletedCaptcha.message}
+              <Icon data={error_filled} aria-hidden="true" />
+            </p>
+          )}
           <FriendlyCaptcha
             doneCallback={() => {
-              setSubmitButtonEnabled(true)
+              setIsFriendlyChallengeDone(true)
             }}
             errorCallback={(error: any) => {
               console.error('FriendlyCaptcha encountered an error', error)
-              setSubmitButtonEnabled(true)
             }}
           />
-          <FormButton type="submit" disabled={!submitButtonEnabled}>
+          <Button type="submit" className="mt-4">
             {isSubmitting ? (
               <FormattedMessage id="form_sending" defaultMessage={'Sending...'}></FormattedMessage>
             ) : (
               <FormattedMessage id="subscribe_form_cta" defaultMessage={'Subscribe'} />
             )}
-          </FormButton>
+          </Button>
         </>
       )}
       {isSubmitSuccessful && !isServerError && <FormSubmitSuccessBox type="reset" />}
@@ -279,7 +277,6 @@ const SubscribeForm = () => {
           onClick={() => {
             reset(undefined, { keepValues: true })
             setServerError(false)
-            setSubmitButtonEnabled(false)
           }}
         />
       )}
