@@ -114,6 +114,6 @@
     "postcss-import": "^16.0.1",
     "autoprefixer": "^10.4.17",
     "vite": "^5.2.10",
-    "webpack": "^5.88.2"
+    "webpack": "^5.94.0"
   }
 }
