@@ -6,6 +6,7 @@ import { Flags } from '../../src/lib/datasetHelpers'
 import { ExternalLinkRenderer, SubScriptRenderer, SuperScriptRenderer } from '../components'
 import routes from '../routes'
 import { defaultColors } from '../defaultColors'
+import { strictExternal, warnHttpExternal, warnHttpOrNotValidSlugExternal } from '../validations/validateSlug'
 
 export type BlockContentProps = {
   h2?: boolean
@@ -194,7 +195,12 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockDef
       {
         name: 'href',
         type: 'url',
-        validation: (Rule: any) => Rule.uri({ scheme: ['http', 'https', 'tel', 'mailto'] }),
+        validation: (Rule: any) =>
+          Rule.uri({ scheme: ['http', 'https', 'tel', 'mailto'] })
+            .custom((value: any, context: ValidationContext) => {
+              return warnHttpOrNotValidSlugExternal(value, context)
+            })
+            .warning(),
       },
     ],
   }
