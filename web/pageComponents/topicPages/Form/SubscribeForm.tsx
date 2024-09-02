@@ -32,7 +32,6 @@ const SubscribeForm = () => {
     formState: { errors, isSubmitting, isSubmitted, isSubmitSuccessful },
   } = useForm({
     defaultValues: {
-      firstName: '',
       email: '',
       categories: [],
       notCompletedCaptcha: '',
@@ -40,33 +39,28 @@ const SubscribeForm = () => {
   })
 
   const onSubmit = async (data: FormValues, event?: BaseSyntheticEvent) => {
-    if (isFriendlyChallengeDone) {
-      const allCategories = data.categories.includes('all')
-      const subscribeFormParamers: SubscribeFormParameters = {
-        firstName: data.firstName,
-        email: data.email,
-        crudeOilAssays: allCategories || data.categories.includes('crudeOilAssays'),
-        generalNews: allCategories || data.categories.includes('generalNews'),
-        stockMarketAnnouncements: allCategories || data.categories.includes('stockMarketAnnouncements'),
-        magazineStories: allCategories || data.categories.includes('magazineStories'),
-        languageCode: router.locale == 'en' ? 'en' : 'no',
-      }
-
-      const res = await fetch('/api/subscribe-form', {
-        body: JSON.stringify({
-          subscribeFormParamers,
-          frcCaptchaSolution: (event?.target as any)['frc-captcha-solution'].value,
-        }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        method: 'POST',
-      })
-      setServerError(res.status != 200)
-      setSuccessfullySubmitted(res.status == 200)
-    } else {
-      setError('notCompletedCaptcha', { type: 'custom', message: 'Anti-Robot Verification is required' })
+    //if (isFriendlyChallengeDone) {
+    const subscribeFormParamers: SubscribeFormParameters = {
+      email: data.email,
+      categories: data.categories,
+      languageCode: router.locale == 'en' ? 'en' : 'no',
     }
+
+    const res = await fetch('/api/subscribe-form', {
+      body: JSON.stringify({
+        subscribeFormParamers,
+        frcCaptchaSolution: (event?.target as any)['frc-captcha-solution'].value,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      method: 'POST',
+    })
+    setServerError(res.status != 200)
+    setSuccessfullySubmitted(res.status == 200)
+    /*} else {
+      setError('notCompletedCaptcha', { type: 'custom', message: 'Anti-Robot Verification is required' })
+    }*/
   }
 
   return (
@@ -190,31 +184,6 @@ const SubscribeForm = () => {
               </li>
             </ul>
           </fieldset>
-          <Controller
-            name="firstName"
-            control={control}
-            rules={{
-              required: intl.formatMessage({
-                id: 'subscribe_form_name_validation',
-                defaultMessage: 'Please fill out your name',
-              }),
-            }}
-            render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
-              <FormTextField
-                {...props}
-                id={props.name}
-                label={`${intl.formatMessage({
-                  id: 'subscribe_form_first_name',
-                  defaultMessage: 'First name',
-                })}*`}
-                inputRef={ref}
-                aria-required="true"
-                inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
-                helperText={error?.message}
-                {...(invalid && { variant: 'error' })}
-              />
-            )}
-          />
           <Controller
             name="email"
             control={control}

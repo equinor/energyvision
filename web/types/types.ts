@@ -618,12 +618,8 @@ export type LoginResult = {
 }
 
 export type SubscribeFormParameters = {
-  firstName: string
   email: string
-  crudeOilAssays?: boolean
-  generalNews?: boolean
-  magazineStories?: boolean
-  stockMarketAnnouncements?: boolean
+  categories?: any[]
   languageCode: string
 }
 
