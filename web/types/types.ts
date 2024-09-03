@@ -349,7 +349,7 @@ export type TableHeaderData = {
   headerCell: PortableTextBlock[]
 }
 
-export type FigureRatio = 'original' | '9:16'
+export type FigureRatio = 'original' | '16:9'
 
 export type CellData = {
   id: string
