@@ -26,7 +26,6 @@ const DEFAULT_MAX_WIDTH = 1440
 
 const Image = ({ image, aspectRatio, sizes = DEFAULT_SIZES, maxWidth = DEFAULT_MAX_WIDTH, fill, ...rest }: Props) => {
   const imageProps = useSanityLoader(image, maxWidth, aspectRatio)
-  console.log('image iamge', image)
   if (!image?.asset) return <></>
   const { width, height, src } = imageProps
 

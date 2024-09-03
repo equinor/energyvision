@@ -21,8 +21,6 @@ const NewsSections = forwardRef<HTMLDivElement, NewsSectionsProps>(function News
     return <FormattedMessage id="newsroom_no_hits" defaultMessage="Your search returned no results" />
   }
 
-  console.log('fallbackImages', fallbackImages)
-
   return (
     <div ref={ref} className={envisTwMerge(`flex flex-col gap-4`, className)}>
       {items.map((hit, index) => {
