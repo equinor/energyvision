@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { validateFormRequest } from './forms/validateFormRequest'
 
-const STONESHOT_SUBSCRIPTION_FORM_URL = 'https://api.stoneshot.com/v1/contacts'
+const STONESHOT_SUBSCRIPTION_FORM_URL = 'https://api.stoneshot.com/v1/contacts/createOrUpdate'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   /*   const result = await validateFormRequest(req, 'subscribe form')
@@ -61,9 +61,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     },
   })
     .then((response) => {
+      console.log('response', response)
       console.log('response status', response.status)
       console.log('response.text', response.statusText)
-      if (response.status === 401 || response.status === 400) {
+      if (response.status === 401 || response.status === 400 || response.status === 500) {
         console.log('Failed to subscribe')
         res.status(500).end()
       }
