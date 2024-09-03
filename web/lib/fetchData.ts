@@ -57,10 +57,7 @@ export const getNewsroomData = async (
   fetchQuery: { query: string; queryParams: NewsroomQueryParams },
   preview = false,
 ) => {
-  console.log('preview', preview)
   const client = getClient(preview)
-  console.log('client', client)
   const results = await client.fetch(fetchQuery.query, fetchQuery.queryParams)
-  console.log('results', results)
   return results
 }

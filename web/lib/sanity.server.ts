@@ -3,44 +3,22 @@
  * utilities we use on the client side, we are able to tree-shake (remove)
  * code that is not used on the client side.
  */
-//import { createClient } from '@sanity/client'
-import { createClient } from 'next-sanity'
+import { createClient } from '@sanity/client'
 import { sanityConfig } from './config'
 
-export const sanityClient = createClient({
-  ...sanityConfig,
-  perspective: 'published',
-})
+export const sanityClient = createClient(sanityConfig)
 
 export const sanityClientWithEquinorCDN = createClient({
   ...sanityConfig,
-  perspective: 'published',
   apiHost: 'https://cdn.equinor.com',
 })
 
-/* export const previewClient = createClient({
+export const previewClient = createClient({
   ...sanityConfig,
-  perspective: 'previewDrafts',
   useCdn: false,
 })
- */
-//export const getClient = (preview: boolean) => (preview ? previewClient : sanityClient)
 
-export function getClient(preview: boolean) {
-  const client = createClient({
-    ...sanityConfig,
-    perspective: 'published',
-  })
-
-  if (preview) {
-    return client.withConfig({
-      useCdn: false,
-      ignoreBrowserTokenWarning: true,
-      perspective: 'previewDrafts',
-    })
-  }
-  return client
-}
+export const getClient = (preview: boolean) => (preview ? previewClient : sanityClient)
 
 /* export function overlayDrafts(docs) {
   const documents = docs || []

@@ -19,7 +19,6 @@ const NewsItem = forwardRef<HTMLLIElement, NewsListItemProps>(function NewsItem(
 ) {
   const { slug, pageTitle, publishDateTime, heroImage } = data || {}
 
-  console.log('heroImage', heroImage)
   return (
     <section ref={ref} className={envisTwMerge('', className)} {...rest}>
       <BaseLink href={slug} className="group grid grid-cols-[1fr_25vw] lg:grid-cols-[1fr_10vw] gap-4 lg:gap-6">
