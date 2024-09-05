@@ -58,15 +58,7 @@ export type ControlledSearchBoxProps = ComponentProps<'div'> & {
   value: string
 }
 
-const ControlledSearchBox = ({
-  inputRef,
-
-  onChange,
-  onReset,
-  onSubmit,
-  value,
-  ...props
-}: ControlledSearchBoxProps) => {
+const ControlledSearchBox = ({ inputRef, onChange, onReset, onSubmit, value, ...props }: ControlledSearchBoxProps) => {
   const intl = useIntl()
 
   function handleSubmit(event: React.FormEvent) {
