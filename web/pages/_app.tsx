@@ -7,7 +7,6 @@ import { GlobalStyle, GlobalFontStyle } from '../styles/globalStyles'
 import '../styles/tailwind.css'
 import { useEffect } from 'react'
 import { GTM_ID, pageview } from '../lib/gtm'
-import 'focus-visible'
 import Script from 'next/script'
 import { ErrorBoundary } from 'react-error-boundary'
 import { ErrorFallback } from '../pageComponents/pageTemplates/ErrorFallback'
@@ -21,7 +20,7 @@ import { SWRConfig } from 'swr'
 // import { reactPlugin } from '../common'
 import { PreviewContextProvider } from '../lib/contexts/PreviewContext'
 import { defaultLanguage } from '../languages'
-import { StyledSkipLink } from '@components'
+import { ButtonLink, Link } from '@core/Link'
 
 /**
  * TODO:
@@ -128,7 +127,9 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
           <GlobalStyle />
           <GlobalFontStyle />
           {IS_LIVE && <CookieBot locale={router.locale} />}
-          <StyledSkipLink href="#mainTitle">Skip to content</StyledSkipLink>
+          <ButtonLink className="m-md p-md" href="#mainTitle">
+            Skip to content
+          </ButtonLink>
           <PreviewContextProvider>{getLayout(<Component {...pageProps} />)}</PreviewContextProvider>
         </>
       </ErrorBoundary>

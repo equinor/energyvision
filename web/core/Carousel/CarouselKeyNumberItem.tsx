@@ -1,11 +1,11 @@
 import envisTwMerge from '../../twMerge'
 import { DisplayModes } from './Carousel'
 import { forwardRef, HTMLAttributes } from 'react'
-import { EventCard } from '@sections/cards/EventCard'
-import { EventCardData } from '../../types/types'
+import { KeyNumberItemData } from '../../types/types'
+import KeyNumberItem from '@sections/KeyNumber/KeyNumberItem'
 
 type CarouselEventItemProps = {
-  event: EventCardData
+  keyNumber: KeyNumberItemData
   displayMode?: DisplayModes
   className?: string
   active?: boolean
@@ -13,14 +13,15 @@ type CarouselEventItemProps = {
   innerRef?: () => void
 } & Omit<HTMLAttributes<HTMLLIElement>, 'title'>
 
-export const CarouselEventItem = forwardRef<HTMLLIElement, CarouselEventItemProps>(function CarouselEventItem(
-  { event, displayMode = 'scroll', hasSectionTitle = false, className = '', active = false, ...rest },
+export const CarouselKeyNumberItem = forwardRef<HTMLLIElement, CarouselEventItemProps>(function CarouselEventItem(
+  { keyNumber, displayMode = 'scroll', className = '', active = false, ...rest },
   ref,
 ) {
   return (
     <li
       {...rest}
       ref={ref}
+      key={keyNumber.id}
       aria-current={active}
       aria-roledescription="slide"
       className={envisTwMerge(
@@ -33,7 +34,14 @@ export const CarouselEventItem = forwardRef<HTMLLIElement, CarouselEventItemProp
         className,
       )}
     >
-      <EventCard data={event} hasSectionTitle={hasSectionTitle} variant="carousel" />
+      <KeyNumberItem
+        id={keyNumber.id}
+        type={keyNumber.type}
+        keyNumber={keyNumber.keyNumber}
+        description={keyNumber.description}
+        unit={keyNumber.unit}
+        isScrollable
+      />
     </li>
   )
 })
