@@ -71,9 +71,6 @@ const ContactEquinorForm = (props: ContactEquinorFormProps) => {
   })
 
   const onSubmit = async (data: FormValues, event?: BaseSyntheticEvent) => {
-    console.log('on submit', data)
-    console.log('event', event)
-    console.log('isFriendlyChallengeDone', isFriendlyChallengeDone)
     if (isFriendlyChallengeDone) {
       const res = await fetch('/api/forms/service-now-contact-us', {
         body: JSON.stringify({
