@@ -164,6 +164,7 @@ const CareersContactForm = () => {
                     id: 'country_code_format',
                     defaultMessage: 'Enter phone number with country code',
                   })}
+                  type="tel"
                   inputRef={ref}
                   inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
                   helperText={error?.message}
