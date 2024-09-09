@@ -21,7 +21,7 @@ import { SWRConfig } from 'swr'
 // import { reactPlugin } from '../common'
 import { PreviewContextProvider } from '../lib/contexts/PreviewContext'
 import { defaultLanguage } from '../languages'
-import { StyledSkipLink } from '@components'
+import { SkipLink } from '@components'
 
 /**
  * TODO:
@@ -128,7 +128,7 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
           <GlobalStyle />
           <GlobalFontStyle />
           {IS_LIVE && <CookieBot locale={router.locale} />}
-          <StyledSkipLink href="#mainTitle">Skip to content</StyledSkipLink>
+          <SkipLink />
           <PreviewContextProvider>{getLayout(<Component {...pageProps} />)}</PreviewContextProvider>
         </>
       </ErrorBoundary>
