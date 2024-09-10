@@ -618,13 +618,9 @@ export type LoginResult = {
 }
 
 export type SubscribeFormParameters = {
-  firstName: string
   email: string
-  crudeOilAssays?: boolean
-  generalNews?: boolean
-  magazineStories?: boolean
-  stockMarketAnnouncements?: boolean
   languageCode: string
+  categories: string[]
 }
 
 export type EventSchema = {

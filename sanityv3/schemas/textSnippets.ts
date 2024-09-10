@@ -749,6 +749,11 @@ const snippets: textSnippet = {
     defaultValue: 'Back to content',
     group: groups.others,
   },
+  select_all: {
+    title: 'Select all',
+    defaultValue: 'Select all',
+    group: groups.others,
+  },
 }
 
 type textSnippetGroup = { title: string; hidden?: boolean }

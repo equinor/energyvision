@@ -10,7 +10,6 @@ import FriendlyCaptcha from './FriendlyCaptcha'
 import { Button } from '@core/Button'
 
 type FormValues = {
-  firstName: string
   email: string
   categories: string[]
 }
@@ -32,31 +31,26 @@ const SubscribeForm = () => {
   } = useForm({ defaultValues: { firstName: '', email: '', categories: [] } })
 
   const onSubmit = async (data: FormValues, event?: BaseSyntheticEvent) => {
-    if (isFriendlyChallengeDone) {
-      const allCategories = data.categories.includes('all')
-      const subscribeFormParamers: SubscribeFormParameters = {
-        firstName: data.firstName,
-        email: data.email,
-        crudeOilAssays: allCategories || data.categories.includes('crudeOilAssays'),
-        generalNews: allCategories || data.categories.includes('generalNews'),
-        stockMarketAnnouncements: allCategories || data.categories.includes('stockMarketAnnouncements'),
-        magazineStories: allCategories || data.categories.includes('magazineStories'),
-        languageCode: router.locale == 'en' ? 'en' : 'no',
-      }
+    //if (isFriendlyChallengeDone) {
+    const subscribeFormParamers: SubscribeFormParameters = {
+      email: data.email,
+      categories: data.categories,
+      languageCode: router.locale == 'en' ? 'en' : 'no',
+    }
 
-      const res = await fetch('/api/subscribe-form', {
-        body: JSON.stringify({
-          subscribeFormParamers,
-          frcCaptchaSolution: (event?.target as any)['frc-captcha-solution'].value,
-        }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        method: 'POST',
-      })
-      setServerError(res.status != 200)
-      setSuccessfullySubmitted(res.status == 200)
-    } else {
+    const res = await fetch('/api/subscribe-form', {
+      body: JSON.stringify({
+        subscribeFormParamers,
+        frcCaptchaSolution: (event?.target as any)['frc-captcha-solution'].value,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      method: 'POST',
+    })
+    setServerError(res.status != 200)
+    setSuccessfullySubmitted(res.status == 200)
+    /*} else {
       //@ts-ignore: TODO: types
       setError('root.notCompletedCaptcha', {
         type: 'custom',
@@ -65,7 +59,7 @@ const SubscribeForm = () => {
           defaultMessage: 'Anti-Robot verification is required',
         }),
       })
-    }
+    }*/
   }
 
   return (
