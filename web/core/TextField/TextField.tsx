@@ -50,7 +50,9 @@ const Field = forwardRef<HTMLTextAreaElement | HTMLInputElement, FieldProps>(fun
   )
 })
 
-/** Temporary. Until feature request to export textarea in EDS or description feature added to EDS Textfield */
+/** Temporary. Until feature request
+ *  https://github.com/equinor/design-system/issues/3622
+ *  is resolved */
 export const TextField = forwardRef<HTMLDivElement, TextFieldProps>(function TextField(
   {
     id,
