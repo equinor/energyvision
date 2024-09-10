@@ -4,19 +4,18 @@ import { validateFormRequest } from './forms/validateFormRequest'
 const STONESHOT_SUBSCRIPTION_FORM_URL = 'https://api.stoneshot.com/v1/contacts/createOrUpdate'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  /*   const result = await validateFormRequest(req, 'subscribe form')
+  const result = await validateFormRequest(req, 'subscribe form')
   if (result.status !== 200) {
     return res.status(result.status).json({ msg: result.message })
-  } */
-  console.log('subscription formhandler', req.body.subscribeFormParamers)
+  }
 
   const data = req.body
   //Stoneshot tag ids for categories
-  const tagIds = {
-    generalNews: '18460',
-    stockMarketAnnouncements: '18462',
-    crudeOilAssays: '18463',
-    magazineStories: '18461',
+  const tagIds: Record<string, string> = {
+    generalNews: process.env.STONESHOT_TAG_ID_GENERAL_NEWS ?? '',
+    stockMarketAnnouncements: process.env.STONESHOT_TAG_ID_STOCKMARKET_ANNOUNCEMENTS ?? '',
+    crudeOilAssays: process.env.STONESHOT_TAG_ID_CRUDE_OIL_ASSAYS ?? '',
+    magazineStories: process.env.STONESHOT_TAG_ID_MAGAZINE_STORIES ?? '',
   }
 
   let categories = []
@@ -36,14 +35,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const selectedLang = data.subscribeFormParamers.languageCode
 
-  console.log(
-    'body',
-    JSON.stringify({
-      email: data.subscribeFormParamers.email,
-      segmentations: [{ segmentation_id: 91502, segment_id: selectedLang === 'en' ? '9378080' : '9378081' }],
-      content_preferences: categories,
-    }),
-  )
   await fetch(STONESHOT_SUBSCRIPTION_FORM_URL, {
     method: 'POST',
     body: JSON.stringify({
@@ -52,6 +43,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       content_preferences: categories,
     }),
     headers: {
+      //@ts-ignore: TODO
       Authorization: 'Basic ' + btoa(process.env.STONESHOT_SUBSCRIPTION_FORM_CREDENTIALS),
       'Content-Type': 'application/json',
     },
