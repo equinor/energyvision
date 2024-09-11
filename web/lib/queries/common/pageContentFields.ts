@@ -113,6 +113,7 @@ _type == "keyNumbers" =>{
     },
     "designOptions": {
       ${background},
+      "aspectRatio": coalesce(aspectRatio, '16:9'),
     },
   },
   _type == "textWithIconArray"=>{
