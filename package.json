@@ -2,7 +2,7 @@
   "name": "energy-vision",
   "private": true,
   "engines": {
-    "pnpm": ">=6"
+    "pnpm": ">=9"
   },
   "type": "module",
   "scripts": {
