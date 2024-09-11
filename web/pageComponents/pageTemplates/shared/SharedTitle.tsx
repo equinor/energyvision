@@ -11,7 +11,6 @@ const SharedTitle = ({ sharedTitle, background }: SharedTitleProps) => {
     <BackgroundContainer background={background}>
       <Heading
         value={sharedTitle}
-        id="mainTitle"
         as="h1"
         variant="3xl"
         className="py-11 my-0 px-layout-lg max-w-viewport mx-auto text-pretty"
