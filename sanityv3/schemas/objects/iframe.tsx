@@ -2,11 +2,11 @@
 // It features description, ingress and c2a in addition to the basic iframe fields
 
 import { code } from '@equinor/eds-icons'
-import type { PortableTextBlock, Rule } from 'sanity'
+import type { PortableTextBlock } from 'sanity'
 import type { ColorSelectorValue } from '../components/ColorSelector'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
-import { configureBlockContent, configureTitleBlockContent } from '../editors'
+import { configureBlockContent } from '../editors'
 import {
   title,
   frameTitle,

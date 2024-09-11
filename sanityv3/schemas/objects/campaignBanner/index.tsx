@@ -3,7 +3,7 @@ import blocksToText from '../../../helpers/blocksToText'
 import { configureBlockContent } from '../../editors'
 import { validateCharCounterEditor } from '../../validations/validateCharCounterEditor'
 
-import type { Image, PortableTextBlock, Reference, Rule, ValidationContext } from 'sanity'
+import type { Image, PortableTextBlock, Reference, Rule } from 'sanity'
 import type { ColorSelectorValue } from '../../components/ColorSelector'
 
 const blockConfigTitle = {
@@ -18,19 +18,8 @@ const blockConfigTitle = {
   largeText: true,
   extraLargeText: true,
 }
-const blockConfigContent = {
-  h2: false,
-  h3: false,
-  h4: false,
-  internalLink: false,
-  externalLink: false,
-  attachment: false,
-  lists: false,
-  smallText: true,
-}
 
 const blockTitleType = configureBlockContent({ ...blockConfigTitle })
-const blockContentType = configureBlockContent({ ...blockConfigContent })
 
 export type CampaignBanner = {
   _type: 'campaignBanner'
@@ -66,7 +55,7 @@ export default {
       type: 'array',
       of: [blockTitleType],
       validation: (Rule: Rule) =>
-        Rule.custom((value: PortableTextBlock[], ctx: ValidationContext) => {
+        Rule.custom((value: PortableTextBlock[]) => {
           return validateCharCounterEditor(value, 600)
         }).warning(),
     },

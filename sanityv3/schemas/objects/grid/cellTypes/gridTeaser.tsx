@@ -81,7 +81,7 @@ export default {
       of: [blockContentType],
       hidden: ({ parent }: GridTeaserDocument) => parent.useExtendedThemes,
       validation: (Rule: Rule) =>
-        Rule.custom((value: PortableTextBlock[], ctx: ValidationContext) => {
+        Rule.custom((value: PortableTextBlock[]) => {
           return validateCharCounterEditor(value, 600)
         }).warning(),
     },
@@ -92,7 +92,7 @@ export default {
       of: [themedTitleContentType],
       hidden: ({ parent }: GridTeaserDocument) => !parent.useExtendedThemes,
       validation: (Rule: Rule) =>
-        Rule.custom((value: PortableTextBlock[], ctx: ValidationContext) => {
+        Rule.custom((value: PortableTextBlock[]) => {
           return validateCharCounterEditor(value, 600)
         }).warning(),
     },
