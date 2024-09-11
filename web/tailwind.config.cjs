@@ -335,6 +335,9 @@ module.exports = {
         move: 'auto linear move forwards',
         'spin-slow': 'spin 3s linear infinite',
       },
+      flex: {
+        fr: '1 1 1',
+      },
       typography: (theme) => ({
         DEFAULT: {
           css: [
@@ -458,7 +461,7 @@ module.exports = {
   },
   plugins: [
     require('@tailwindcss/typography'),
-    plugin(function ({ addVariant, matchVariant, addUtilities, theme, config, e }) {
+    plugin(function ({ addVariant, matchVariant, addUtilities, theme }) {
       matchVariant(
         'nth',
         (value) => {
@@ -487,6 +490,9 @@ module.exports = {
           },
           '.break-word': {
             wordBreak: 'break-word',
+          },
+          '.auto-fill-fr': {
+            gridTemplateColumns: `repeat(auto-fill, minmax(80px,1fr))`,
           },
         })
     }),
