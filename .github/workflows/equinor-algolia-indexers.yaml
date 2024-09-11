@@ -34,14 +34,14 @@ jobs:
       DOCKER_BUILDKIT: 1
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Install pnpm 📦
         id: install-pnpm
         uses: pnpm/action-setup@v4
         with:
           version: '9.10.0'
       - name: Cache pnpm modules 💾
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 18
           # cache: 'npm'
@@ -73,14 +73,14 @@ jobs:
       name: ${{ github.event.inputs.environment || (github.ref == 'refs/heads/main' && 'production') || 'development'}}
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Install pnpm 📦
         id: install-pnpm
         uses: pnpm/action-setup@v4
         with:
           version: '9.10.0'
       - name: Cache pnpm modules 💾
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 18
           # cache: 'npm'

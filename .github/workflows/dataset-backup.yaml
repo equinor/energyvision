@@ -24,7 +24,7 @@ jobs:
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - id: set-matrix
         name: Read satellites by choice
         run: |
@@ -49,14 +49,14 @@ jobs:
         dataset: ${{ (github.event.inputs.dataset != 'all' && github.event_name == 'workflow_dispatch' && fromJson(github.event.inputs.dataset)) || fromJson(needs.read-satellites.outputs.matrix) }}
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Install pnpm 📦
         id: install-pnpm
         uses: pnpm/action-setup@v4
         with:
           version: '9.10.0'
       - name: Cache pnpm modules 💾
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 18
           cache: 'pnpm'
