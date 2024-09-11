@@ -279,7 +279,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
       {...(hasSectionTitle && {
         role: 'region',
       })}
-      {...(labelledbyId && {
+      {...(typeof labelledbyId !== undefined && {
         'aria-labelledby': labelledbyId,
       })}
       {...(!labelledbyId &&
