@@ -1,0 +1,6 @@
+/*
+* To change toggle color of sanity ui
+*/
+[data-ui='Switch'] input:checked + * {
+  --switch-bg-color: #0f9d58 !important;
+}

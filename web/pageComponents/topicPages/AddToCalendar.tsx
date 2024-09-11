@@ -41,7 +41,7 @@ const isUpcoming = (eventDate: Date): boolean => {
 const createICS = (eventData: ICSProps): string | boolean => {
   return ics.createEvent(eventData, (error: Error, value: string) => {
     if (error) {
-      console.error('An error occured while generating ICS file.', error)
+      console.error('An error occurred while generating ICS file.', error)
       return false
     }
 
@@ -78,7 +78,7 @@ const AddToCalendar = ({ eventDate, title, location }: AddToCalendarProps) => {
         end: padMonth(toUTCDateParts(end)), // ICS lib expects start & end to be an array
         endInputType: 'utc',
         title: title,
-        location: location,
+        location: location || '',
       }
 
       setFileData(createICS(eventData))

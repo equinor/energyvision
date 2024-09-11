@@ -53,10 +53,16 @@ export type ImageCarouselData = {
   type: 'imageCarousel'
   id: string
   title?: PortableTextBlock[]
-  items: ImageWithCaptionData[]
+  ingress?: PortableTextBlock[]
+  hideTitle?: boolean
+  items: ImageCarouselItem[]
   options: {
     autoplay: boolean
     delay: number
   }
   designOptions: DesignOptions
 }
+
+export type ImageCarouselItem = {
+  id: string
+} & ImageWithCaptionData

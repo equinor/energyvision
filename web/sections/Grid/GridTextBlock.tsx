@@ -8,6 +8,7 @@ import { BackgroundContainer } from '@components/Backgrounds'
 import { Heading, Typography } from '@core/Typography'
 import { RowType } from './mapGridContent'
 import envisTwMerge from '../../twMerge'
+import { forwardRef } from 'react'
 
 type GridTextBlockProps = {
   data: GridTextBlockData
@@ -15,7 +16,10 @@ type GridTextBlockProps = {
   className?: string
 }
 
-const GridTextBlock = ({ data, className, rowType }: GridTextBlockProps) => {
+const GridTextBlock = forwardRef<HTMLDivElement, GridTextBlockProps>(function GridTextBlock(
+  { data, className, rowType },
+  ref,
+) {
   const {
     action,
     overline,
@@ -141,7 +145,7 @@ const GridTextBlock = ({ data, className, rowType }: GridTextBlockProps) => {
 
   const serializerClassnames = {
     largeText: `leading-tight text-balance ${titleTextColor}`,
-    normal: `text-lg leading-snug text-balance ${titleTextColor}`,
+    normal: `text-2xl leading-snug text-balance ${titleTextColor}`,
   }
 
   const mainContent = (
@@ -206,6 +210,7 @@ const GridTextBlock = ({ data, className, rowType }: GridTextBlockProps) => {
 
   return imageBackground?.image ? (
     <BackgroundContainer
+      ref={ref}
       {...imageBgOptions}
       className={`h-full aspect-auto`}
       dontSplit
@@ -231,6 +236,7 @@ const GridTextBlock = ({ data, className, rowType }: GridTextBlockProps) => {
     </BackgroundContainer>
   ) : (
     <div
+      ref={ref}
       className={`p-10 lg:p-12 relative w-full h-full flex overflow-y-auto ${bgColor} ${
         contentAlignmentUtilities[contentAlignment ?? 'center']
       }`}
@@ -238,6 +244,6 @@ const GridTextBlock = ({ data, className, rowType }: GridTextBlockProps) => {
       {mainContent}
     </div>
   )
-}
+})
 
 export default GridTextBlock

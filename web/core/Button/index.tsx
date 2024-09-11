@@ -1,12 +1,14 @@
 import { IconType } from '@equinor/eds-core-react/dist/types/components/Icon/Icon.types'
 import { ButtonHTMLAttributes, forwardRef } from 'react'
-import { twMerge } from 'tailwind-merge'
+import envisTwMerge from '../../twMerge'
 
 export const commonButtonStyling = `
 w-fit
 text-sm
-px-5
-py-3
+px-3
+py-2
+lg:px-5
+lg:py-3
 rounded-md
 focus:outline-none
 focus-visible:envis-outline
@@ -18,7 +20,7 @@ items-center
 gap-3
 `
 
-export type Variants = 'contained' | 'outlined' | 'ghost'
+export type Variants = 'contained' | 'outlined' | 'ghost' | 'contained-secondary' | 'outlined-secondary'
 
 /** Use for common button styling in Button,IconButton, Link/ButtonLink */
 export const getVariant = (variant: Variants): string => {
@@ -47,6 +49,28 @@ export const getVariant = (variant: Variants): string => {
       dark:hover:bg-white-transparent
       dark:focus-visible:outline-white-100
       `
+    case 'outlined-secondary':
+      return `
+      border
+      border-north-sea-100
+      text-black-80 
+      hover:bg-slate-blue-100
+      hover:text-white-100
+      focus:outline-none
+      focus-visible:outline-slate-blue-95
+      dark:text-white-100
+      dark:border-white-100
+      dark:hover:bg-white-transparent
+      dark:focus-visible:outline-white-100
+      `
+    case 'contained-secondary':
+      return `bg-slate-blue-95 
+      text-white-100 
+      hover:bg-slate-blue-100
+      hover:text-white-100
+      focus:outline-none
+      focus-visible:outline-slate-blue-95
+    `
     case 'contained':
     default:
       return `bg-norwegian-woods-100 
@@ -77,7 +101,12 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ variant = 'contained', type = 'button', children, icon: Icon, className = '', ...rest }, ref) => {
     const variantClassNames = getVariant(variant)
 
-    const buttonClassNames = twMerge(commonButtonStyling, variantClassNames, `${Icon ? 'flex gap-2' : ''}`, className)
+    const buttonClassNames = envisTwMerge(
+      commonButtonStyling,
+      variantClassNames,
+      `${Icon ? 'flex gap-2' : ''}`,
+      className,
+    )
 
     return (
       <button ref={ref} type={type} className={buttonClassNames} {...rest}>

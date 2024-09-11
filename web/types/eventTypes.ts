@@ -12,4 +12,5 @@ export type EventPromotionSettings = {
   promotePastEvents: boolean
   promoteSingleUpcomingEvent: boolean
   pastEventsCount?: number
+  upcomingEventsCount?: number
 }

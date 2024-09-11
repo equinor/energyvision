@@ -36,6 +36,7 @@ export const VideoJS: React.FC<VideoJSProps> = ({
   allowFullScreen,
   ...rest
 }) => {
+  const [isLoading, setIsLoading] = useState<boolean>(true)
   const [player, setPlayer] = useState<Player | null>(null)
   const [isPlaying, setIsPlaying] = useState(autoPlay)
 
@@ -93,6 +94,7 @@ export const VideoJS: React.FC<VideoJSProps> = ({
       },
       () => {
         onReady && onReady(player)
+        onReady && setIsLoading(false)
       },
     )
 

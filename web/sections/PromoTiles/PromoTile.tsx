@@ -4,6 +4,7 @@ import { ColorKeyTokens, colorKeyToUtilityMap } from '../../styles/colorKeyToUti
 import { BaseLinkProps } from '@core/Link'
 import { ArrowRight } from '../../icons'
 import { PromoTileData } from '../../types/index'
+import { forwardRef } from 'react'
 
 export type FakeReadMoreProps = {
   children?: React.ReactNode
@@ -53,8 +54,12 @@ export const FakeReadMoreLink = ({ type = 'internalUrl', children }: FakeReadMor
     </div>
   )
 }
+type PromoTileProps = PromoTileData
 
-export const PromoTile = ({ id, designOptions, image, title, action, linkLabelAsTitle }: PromoTileData) => {
+export const PromoTile = forwardRef<HTMLAnchorElement, PromoTileProps>(function PromoTile(
+  { id, designOptions, image, title, action, linkLabelAsTitle },
+  ref,
+) {
   const url = getUrlFromAction(action)
   const { background } = designOptions
   const colorName =
@@ -72,6 +77,7 @@ export const PromoTile = ({ id, designOptions, image, title, action, linkLabelAs
       //eslint-disable-next-line @typescript-eslint/ban-ts-comment
       //@ts-ignore
       href={url}
+      ref={ref}
       image={image}
       variant="secondary"
       className="w-full h-full md:max-w-[100%]"
@@ -92,4 +98,4 @@ export const PromoTile = ({ id, designOptions, image, title, action, linkLabelAs
       </Card.Content>
     </Card>
   )
-}
+})
