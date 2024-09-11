@@ -3,7 +3,7 @@ import { getUrlFromAction } from '../../common/helpers'
 import { useState } from 'react'
 import { PortableTextBlock } from '@portabletext/types'
 import { ButtonLink } from '@core/Link'
-import { commonButtonStyling, getVariant } from '@core/Button'
+import { Button, getVariant } from '@core/Button'
 import { getLocaleFromName } from '../../lib/localization'
 import Modal from '@sections/Modal/Modal'
 import RichText from './portableText/RichText'
@@ -11,7 +11,6 @@ import { add_circle_filled } from '@equinor/eds-icons'
 import { twMerge } from 'tailwind-merge'
 import { TransformableIcon } from '../../icons/TransformableIcon'
 import { useIntl } from 'react-intl'
-import { title } from 'process'
 
 type TranscriptAndActionsProps = {
   className?: string
@@ -46,14 +45,16 @@ const TranscriptAndActions = ({ action, transcript, className, ariaTitle }: Tran
 
       {transcript && (
         <>
-          <button
+          <Button
+            variant="contained-secondary"
             onClick={handleOpen}
+            aria-haspopup="dialog"
             aria-label={`${readTranscript} ${ariaTitle}`}
-            className={`w-full mb-8 ${commonButtonStyling} ${getVariant('contained-secondary')}`}
+            className={`w-full mb-8`}
           >
             <span className="grow">{readTranscript}</span>
-            <TransformableIcon className={'scale-90 lg:scale-100'} iconData={add_circle_filled} />
-          </button>
+            <TransformableIcon iconData={add_circle_filled} />
+          </Button>
           <Modal isOpen={isOpen} onClose={handleClose} title={ariaTitle}>
             <RichText value={transcript} />
           </Modal>

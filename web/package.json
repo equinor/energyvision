@@ -26,7 +26,7 @@
     "@chakra-ui/skip-nav": "^2.0.12",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
-    "@equinor/eds-core-react": "0.37.0",
+    "@equinor/eds-core-react": "0.39.0",
     "@equinor/eds-icons": "^0.19.1",
     "@equinor/eds-tokens": "^0.9.0",
     "@equinor/eds-utils": "^0.8.4",
@@ -76,8 +76,7 @@
     "tailwind-merge": "^2.2.1",
     "uuid": "^9.0.0",
     "video.js": "^8.17.3",
-    "xml2js": "^0.6.0",
-    "react-transition-group": "^4.4.5"
+    "xml2js": "^0.6.0"
   },
   "devDependencies": {
     "@algolia/client-search": "^4.16.0",
