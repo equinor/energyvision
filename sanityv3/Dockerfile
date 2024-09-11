@@ -2,7 +2,7 @@
 FROM node:lts-alpine AS builder
 
 ENV NODE_OPTIONS="--max_old_space_size=8192"
-RUN npm install -g pnpm@8.5.1
+RUN npm install -g pnpm@9.10.0
 
 WORKDIR /opt/app
 

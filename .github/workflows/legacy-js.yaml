@@ -27,7 +27,7 @@ jobs:
       name: ${{ github.event.inputs.environment }}
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Build legacy js
         id: build-legacy-js
         working-directory: ./legacy/js

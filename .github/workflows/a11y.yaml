@@ -25,7 +25,7 @@ jobs:
           local-testing: start
           local-identifier: random
       - name: Checkout 🛎️
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Cache pnpm modules 💾
         uses: actions/cache@v3
         env:
@@ -39,7 +39,7 @@ jobs:
         id: install-pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: '8.5.1'
+          version: '9.10.0'
       - name: Install dependencies 🔧
         id: install-dependencies
         run: |
