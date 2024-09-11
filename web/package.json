@@ -43,7 +43,6 @@
     "@radix-ui/react-accordion": "^1.2.0",
     "@types/easy-soap-request": "^5.6.0",
     "@types/uuid": "^8.3.4",
-    "@types/react-transition-group": "^4.4.10",
     "@types/xml2js": "^0.4.11",
     "algoliasearch": "^4.16.0",
     "date-fns": "^2.29.3",
@@ -80,8 +79,7 @@
     "tailwind-merge": "^2.2.1",
     "uuid": "^9.0.0",
     "video.js": "^8.17.3",
-    "xml2js": "^0.6.0",
-    "react-transition-group": "^4.4.5"
+    "xml2js": "^0.6.0"
   },
   "devDependencies": {
     "@algolia/client-search": "^4.16.0",

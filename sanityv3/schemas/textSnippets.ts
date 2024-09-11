@@ -816,6 +816,11 @@ const snippets: textSnippet = {
     defaultValue: 'Back to content',
     group: groups.others,
   },
+  close: {
+    title: 'Close',
+    defaultValue: 'Close',
+    group: groups.others,
+  },
   next: {
     title: 'Next',
     defaultValue: 'Next',
