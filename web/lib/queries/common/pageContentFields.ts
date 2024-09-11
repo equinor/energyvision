@@ -113,6 +113,7 @@ _type == "keyNumbers" =>{
     },
     "designOptions": {
       ${background},
+      "aspectRatio": coalesce(aspectRatio, '16:9'),
     },
   },
   _type == "textWithIconArray"=>{
@@ -212,6 +213,10 @@ _type == "keyNumbers" =>{
       ${markDefs},
     },
     description[]{
+      ...,
+      ${markDefs},
+    },
+    "transcript":transcript.text[]{
       ...,
       ${markDefs},
     },
@@ -355,6 +360,7 @@ _type == "keyNumbers" =>{
           manuallySelectEvents,
           promotePastEvents,
           pastEventsCount,
+          upcomingEventsCount,
           promoteSingleUpcomingEvent
         },
         !manuallySelectEvents => {
@@ -362,12 +368,12 @@ _type == "keyNumbers" =>{
          // @TODO: This query is not done yet
           (!promotePastEvents || !defined(promotePastEvents)) => {
             !useTags => {
-              "promotions": ${futureEventsQuery(false)}[0...3]{
+              "promotions": ${futureEventsQuery(false)}[]{
                 ${eventPromotionFields}
               },
             },
             useTags => {
-              "promotions": ${futureEventsQuery(true)}[0...3]{
+              "promotions": ${futureEventsQuery(true)}[]{
                 ${eventPromotionFields}
               },
             },
@@ -572,6 +578,18 @@ _type == "keyNumbers" =>{
       "backgroundUtility":coalesce(backgroundColor.key, ""),
       }
     },
+  },
+  _type == "anchorLinkList" => {
+    "type": _type,
+    "id": _key,
+    title,
+    columns,
+    "anchorList":anchorList[]{
+      "type": _type,
+      "id": _key,
+      title,
+      anchorReference,
+    }
   },
 `
 
