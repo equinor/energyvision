@@ -44,30 +44,13 @@ export const ButtonLink = forwardRef<HTMLAnchorElement, ButtonLinkProps>(functio
   )
 })
 
-export const StyledSkipLink = styled(ButtonLink)`
-  user-select: none;
-  border: 0;
-  margin: -1px;
-  padding: 0;
-  outline: 0;
-  overflow: hidden;
-  position: absolute;
-  clip: rect(0 0 0 0);
-
-  &:focus {
-    clip: auto;
-    width: auto;
-    height: auto;
-    background: white;
-    border: 1px solid black;
-    margin: var(--space-medium);
-    border-radius: 7px;
-    padding: var(--space-medium);
-  }
-
-  &:hover {
-    color: var(--button-text-hover);
-    background-color: var(--button-background-hover);
-    border-color: var(--button-border-color-hover);
-  }
-`
+export const SkipLink = () => {
+  return (
+    <NextLink
+      href="#mainTitle"
+      className="sr-only focus:not-sr-only focus:z-50 focus:absolute focus:bg-white focus:border-black focus:bg-moss-green-100 focus:text-white-100 focus:m-6 focus:rounded focus:p-4 transition"
+    >
+      skip to content
+    </NextLink>
+  )
+}
