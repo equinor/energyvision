@@ -1,7 +1,7 @@
 import { AnchorHTMLAttributes, forwardRef } from 'react'
 import { default as NextLink, LinkProps } from 'next/link'
 import { twMerge } from 'tailwind-merge'
-import { LinkType } from '../../types/types'
+import { LinkType } from '../../types/index'
 
 export type BaseLinkProps = {
   /** What kind of content is it  */

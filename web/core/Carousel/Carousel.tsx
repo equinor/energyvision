@@ -1,4 +1,4 @@
-import { VideoPlayerCarouselItem, ImageCarouselItem, EventCardData } from '../../types/types'
+import { VideoPlayerCarouselItem, ImageCarouselItem, EventCardData } from '../../types/index'
 import {
   ElementType,
   forwardRef,

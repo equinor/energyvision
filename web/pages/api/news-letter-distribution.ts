@@ -1,6 +1,6 @@
 import { distribute } from './subscription'
 import { languages } from '../../languages'
-import { NewsDistributionParameters } from '../../types/types'
+import { NewsDistributionParameters } from '../../types/index'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { isValidSignature, SIGNATURE_HEADER_NAME } from '@sanity/webhook'
 import getRawBody from 'raw-body'

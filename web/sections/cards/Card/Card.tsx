@@ -2,8 +2,8 @@ import { forwardRef, HTMLAttributes } from 'react'
 import { default as NextLink, LinkProps } from 'next/link'
 import { twMerge } from 'tailwind-merge'
 import Image, { Ratios } from '../../../pageComponents/shared/SanityImage'
-import { ImageWithAlt } from '../../../types/types'
 import envisTwMerge from '../../../twMerge'
+import { ImageWithAlt } from '../../../types/index'
 
 export type Variants = 'primary' | 'secondary' | 'compact' | 'single'
 export type CardProps = {

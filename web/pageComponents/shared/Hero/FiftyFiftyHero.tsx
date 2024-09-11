@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import Image from '../SanityImage'
 import TitleText from '../portableText/TitleText'
-import type { HeroType } from '../../../types/types'
+import type { HeroType } from '../../../types/index'
 import { BackgroundContainer } from '@components'
 import { ReadMoreLink } from '@core/Link'
 import Blocks from '../portableText/Blocks'
