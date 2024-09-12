@@ -1,7 +1,8 @@
-import { Button, Text, Heading, Link } from '@components'
+import { Button, Text, Heading } from '@components'
 import styled from 'styled-components'
 import { GlobalStyle, GlobalFontStyle } from '../../styles/globalStyles'
 import type { FallbackProps } from 'react-error-boundary'
+import { Link } from '@core/Link'
 
 const Wrapper = styled.section`
   padding: clamp(40px, calc(14.3125px + 11.0032vw), 210px) clamp(16px, calc(-69.1942px + 22.7184vw), 367px);

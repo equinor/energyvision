@@ -1,33 +1,7 @@
-import { CSSProperties } from 'react'
-import styled from 'styled-components'
-import { Icon, Typography, TypographyProps } from '@equinor/eds-core-react'
+import { Icon } from '@equinor/eds-core-react'
 import { add, minimize } from '@equinor/eds-icons'
-import { outlineTemplate, Tokens } from '@utils'
 import { AccordionButton, useAccordionItemState } from '@chakra-ui/react'
-
-const { outline } = Tokens
-
-const StyledButton = styled(AccordionButton)`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  background: transparent;
-  padding: var(--space-medium) 0;
-  border: none;
-  cursor: pointer;
-  color: var(--default-text);
-
-  outline: none;
-  &[data-focus-visible-added]:focus {
-    ${outlineTemplate(outline)}
-  }
-`
-
-const StyledTypography = styled(Typography)`
-  font-weight: var(--font-weight);
-  font-size: var(--typeScale-1);
-`
+import { Typography, TypographyProps } from '@core/Typography'
 
 type SimpleHeaderProps = TypographyProps
 
@@ -36,19 +10,16 @@ export const SimpleHeader = ({ children, ...rest }: SimpleHeaderProps) => {
 
   return (
     <Typography as="h2" {...rest}>
-      <StyledButton>
-        <StyledTypography
-          forwardedAs="span"
-          style={
-            {
-              '--font-weight': isOpen ? '700' : '400',
-            } as CSSProperties
-          }
-        >
+      <AccordionButton
+        className={
+          'flex items-center focus-visible:envis-outline outline-none justify-between w-full bg-transparent py-md border-none cursor-pointer'
+        }
+      >
+        <Typography as="span" className={`${isOpen ? 'font-bold' : 'font-normal'}`}>
           {children}
-        </StyledTypography>
-        {isOpen ? <Icon data={minimize} /> : <Icon data={add} />}
-      </StyledButton>
+        </Typography>
+        <Icon data={isOpen ? minimize : add} />
+      </AccordionButton>
     </Typography>
   )
 }

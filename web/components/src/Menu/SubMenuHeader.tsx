@@ -1,91 +1,33 @@
-import { forwardRef, CSSProperties } from 'react'
-import styled from 'styled-components'
+import { forwardRef } from 'react'
 import { AccordionButton, useAccordionItemState, AccordionButtonProps } from '@chakra-ui/react'
-import { Icon, Typography, TypographyProps } from '@equinor/eds-core-react'
+import { Icon } from '@equinor/eds-core-react'
 import { add, minimize } from '@equinor/eds-icons'
-import { outlineTemplate, Tokens } from '@utils'
+import { Typography } from '@core/Typography'
 
-const { outline } = Tokens
-
-const StyledButton = styled(AccordionButton)`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  background: transparent;
-  padding: var(--space-medium) 0;
-  border: none;
-  cursor: pointer;
-  color: var(--default-text);
-  /* We add the focus ring manually for keyboard users */
-  outline: none;
-  &[data-focus-visible-added]:focus {
-    ${outlineTemplate(outline)}
-  }
-  @media (min-width: 1300px) {
-    padding: var(--space-small) calc(var(--space-small) + var(--space-xSmall));
-  }
-`
-
-const StyledIcon = styled(Icon)`
-  @media (min-width: 1300px) {
-    display: none;
-  }
-`
-
-const StyledHeader = styled(Typography)`
-  @media (min-width: 1300px) {
-    padding: 0;
-    border-bottom-color: var(--border-bottom-color);
-    border-bottom-style: solid;
-    border-bottom-width: 2px;
-    &:hover {
-      background-color: var(--moss-green-70);
-    }
-  }
-`
-const StyledTypography = styled(Typography)`
-  font-weight: var(--font-weight);
-  @media (min-width: 1300px) {
-    font-weight: 400;
-  }
-`
-
-export type SubMenuHeaderProps = {
-  headingLevel?: 'h2' | 'h3' | 'h4' | 'h5'
-} & AccordionButtonProps &
-  TypographyProps
+export type SubMenuHeaderProps = AccordionButtonProps
 
 export const SubMenuHeader = forwardRef<HTMLButtonElement, SubMenuHeaderProps>(function SubMenuHeader(
-  { children, style },
+  { children },
   ref,
 ) {
   const { isOpen } = useAccordionItemState()
+  const border = isOpen ? 'xl:border-b-moss-green-95' : 'xl:border-b-transparent'
 
   return (
-    <StyledHeader
-      forwardedAs="h2"
-      style={
-        {
-          ...style,
-          '--border-bottom-color': isOpen ? 'var(--moss-green-95)' : 'transparent ',
-        } as CSSProperties
-      }
+    <Typography
+      variant="h2"
+      value={children}
+      className={`${border} py-0 xl:hover:bg-[var(--moss-green-70)] xl:border-solid xl:border-b-2`}
     >
-      <StyledButton ref={ref}>
-        <StyledTypography
-          forwardedAs="span"
-          style={
-            {
-              '--font-weight': isOpen ? '700' : '400',
-              fontSize: 'var(--typeScale-1)', // TODO: Update EDS Typography component
-            } as CSSProperties
-          }
-        >
+      <AccordionButton
+        className={` border-0 flex items-center justify-between w-full bg-transparent py-md border-none cursor-pointer text-default-text outline-none focus-visible:envis-outline xl:py-sm xl:px-xs+sm`}
+        ref={ref}
+      >
+        <Typography as="span" className={`${isOpen ? 'font-bold' : 'font-normal'} xl:font-normal`}>
           {children}
-        </StyledTypography>
-        {isOpen ? <StyledIcon data={minimize} /> : <StyledIcon data={add} />}
-      </StyledButton>
-    </StyledHeader>
+        </Typography>
+        <Icon data={isOpen ? minimize : add} className="xl:hidden" />
+      </AccordionButton>
+    </Typography>
   )
 })

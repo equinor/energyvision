@@ -1,8 +1,5 @@
 import { HTMLAttributes } from 'react'
 import styled from 'styled-components'
-import { outlineTemplate, Tokens } from '@utils'
-
-const { outline } = Tokens
 
 export const AspectImagePlaceholder = styled.div`
   background-color: hsl(0, 0%, 86%);
@@ -47,17 +44,4 @@ export const Wrapper = styled.div`
   grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
   grid-row-gap: 4rem;
   grid-column-gap: 2rem;
-`
-
-/* Where should this be located. Should Card link be an actual component, or 
-a more generic wrapper link component */
-export const CardLink = styled.div`
-  text-decoration: none;
-  color: inherit;
-  &:hover {
-    cursor: pointer;
-  }
-  &[data-focus-visible-added]:focus {
-    ${outlineTemplate(outline)}
-  }
 `
