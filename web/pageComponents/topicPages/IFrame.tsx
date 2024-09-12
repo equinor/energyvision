@@ -23,7 +23,7 @@ const Ingress = styled.div`
 
 const IFrame = ({
   anchor,
-  data: { title, ingress, frameTitle, url, description, cookiePolicy = 'none', designOptions, action, transcript },
+  data: { title, ingress, frameTitle, url, description, cookiePolicy = ['none'], designOptions, action, transcript },
   className,
   ...rest
 }: {

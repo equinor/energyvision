@@ -5,7 +5,9 @@ export const iframeCarouselFields = /* groq */ `
     "id": _key,
     "type": _type,
     title,
-    items[]{..., "action": action[0]{
+    items[]{...,
+    cookiePolicy,
+     "action": action[0]{
       ${linkSelectorFields},
     },},
     "designOptions": {

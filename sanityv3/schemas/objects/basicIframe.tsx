@@ -8,6 +8,7 @@ import blocksToText from '../../helpers/blocksToText'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import { configureTitleBlockContent } from '../editors'
 import type { ColorSelectorValue } from '../components/ColorSelector'
+import { cookiePolicy } from './iframe/sharedIframeFields'
 
 const titleContentType = configureTitleBlockContent()
 
@@ -73,25 +74,7 @@ export default {
           return (parent?.title || parent?.frameTitle) && value === undefined ? 'Required' : true
         }),
     },
-    {
-      name: 'cookiePolicy',
-      type: 'string',
-      title: 'Cookie policy',
-      description: 'Select which cookie policy applies to this iframe.',
-      fieldset: 'iframe',
-
-      options: {
-        list: [
-          { title: 'None', value: 'none' },
-          { title: 'Marketing', value: 'marketing' },
-          { title: 'Statistics', value: 'statistics' },
-        ],
-        layout: 'dropdown',
-      },
-      initialValue: 'none',
-      validation: (Rule: Rule) => Rule.required(),
-    },
-
+    cookiePolicy,
     {
       name: 'aspectRatio',
       type: 'string',
