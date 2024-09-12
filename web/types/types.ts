@@ -914,6 +914,13 @@ export type GridTeaserData = {
   action?: LinkData
   theme?: number
 }
+export type ImageForTextData = {
+  type: 'imageForText'
+  id: string
+  image: ImageWithAlt
+  content?: PortableTextBlock[]
+  aspectRatio?: '16:9' | 'fullWidth'
+}
 export type AnchorLinkListData = {
   id: string
   type: 'anchorLinkList'

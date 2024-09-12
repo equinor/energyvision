@@ -52,6 +52,7 @@ import {
   GridData,
   CampaignBannerData,
   DesignOptions,
+  ImageForTextData,
   AnchorLinkListData,
 } from '../../../types/types'
 import { getColorForTheme } from '../../shared/textTeaser/theme'
@@ -60,6 +61,7 @@ import { CampaignBanner } from '@sections/CampaignBanner'
 import { BackgroundContainerProps } from '@components/Backgrounds'
 import VideoPlayerCarousel from '@sections/VideoPlayerCarousel/VideoPlayerCarousel'
 import ImageCarousel from '@sections/ImageCarousel/ImageCarousel'
+import ImageForText from '@sections/ImageForText/ImageForText'
 import { AnchorLinkList } from '@sections/AnchorLinkList'
 
 type DefaultComponent = {
@@ -341,6 +343,8 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
         return <Grid key={c.id} data={c as GridData} anchor={anchorReference} className={topSpacingClassName} />
       case 'campaignBanner':
         return <CampaignBanner key={c.id} data={c as CampaignBannerData} />
+      case 'imageForText':
+        return <ImageForText key={c.id} data={c as ImageForTextData} />
       case 'anchorLinkList':
         return (
           <AnchorLinkList
