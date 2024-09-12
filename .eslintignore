@@ -5,3 +5,4 @@ legacy/js/dist
 legacy/css
 web/public/legacy/legacy.minified.js
 legacy
+dist

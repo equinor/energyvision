@@ -1,100 +1,91 @@
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions*/
-import { add_circle_filled } from '@equinor/eds-icons'
+import { close } from '@equinor/eds-icons'
 import { TransformableIcon } from '../../icons/TransformableIcon'
-import { useEffect, useRef, useState } from 'react'
-import { CSSTransition } from 'react-transition-group'
+import { forwardRef, useEffect, useMemo, useRef } from 'react'
+import { useIntl } from 'react-intl'
+import { mergeRefs } from '@equinor/eds-utils'
+import { Button } from '@core/Button'
+import envisTwMerge from '../../twMerge'
 
 export type ModalProps = {
   isOpen: boolean
   onClose: () => void
   title: string
   children: React.ReactNode
+  dialogClassName?: string
+  className?: string
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
-  const modalRef = useRef<HTMLDivElement>(null)
-  const closeButtonRef = useRef<HTMLButtonElement>(null)
-  const nodeRef = useRef(null)
-  const [open, setOpen] = useState<boolean>(false)
+const Modal = forwardRef<HTMLDialogElement, ModalProps>(function Modal(
+  { isOpen, onClose, title, children, dialogClassName = '', className = '' },
+  ref,
+) {
+  const modalRef = useRef<HTMLDialogElement>(null)
+  const combinedDialogRef = useMemo(() => mergeRefs<HTMLDialogElement>(modalRef, ref), [modalRef, ref])
+  const intl = useIntl()
 
   useEffect(() => {
-    if (open) {
-      const previouslyFocusedElement = document.activeElement as HTMLElement
-      closeButtonRef.current?.focus()
-      const scrollBarWidth = window.innerWidth - document.body.offsetWidth
-      document.body.style.margin = `0px ${scrollBarWidth}px 0px 0px`
-      document.body.style.overflow = 'hidden'
-
-      return () => {
-        document.body.style.margin = ``
-        document.body.style.overflow = ''
-        previouslyFocusedElement?.focus()
-      }
+    if (isOpen) {
+      modalRef?.current?.showModal()
+    } else {
+      modalRef?.current?.close()
     }
-  }, [open])
+  }, [isOpen])
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDialogElement>) => {
     if (event.key === 'Escape') {
       onClose()
-    }
-
-    if (event.key === 'Tab') {
-      const focusableModalElements = modalRef.current?.querySelectorAll(
-        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
-      )
-      const firstElement = focusableModalElements?.[0] as HTMLElement
-      const lastElement = focusableModalElements?.[focusableModalElements.length - 1] as HTMLElement
-
-      if (event.shiftKey) {
-        if (document.activeElement === firstElement) {
-          event.preventDefault()
-          lastElement?.focus()
-        }
-      } else {
-        if (document.activeElement === lastElement) {
-          event.preventDefault()
-          firstElement?.focus()
-        }
-      }
     }
   }
 
   return (
-    <CSSTransition
-      in={isOpen}
-      nodeRef={nodeRef}
-      classNames="modal"
-      timeout={300}
-      unmountOnExit
-      onEntered={() => setOpen(true)}
-      onExited={() => setOpen(false)}
+    <dialog
+      ref={combinedDialogRef}
+      className={envisTwMerge(
+        `
+        p-0
+        modal
+        modal-transition
+        bd-blurred
+      `,
+        dialogClassName,
+      )}
+      aria-label={title}
+      onKeyDown={handleKeyDown}
     >
       <div
-        className={`fixed inset-0 flex justify-center bg-north-sea-90 w-full overflow-y-auto bg-opacity-80`}
-        role="dialog"
-        aria-modal="true"
-        aria-label={title}
-        ref={nodeRef}
-        onKeyDown={handleKeyDown}
+        className={envisTwMerge(
+          `w-[90vw] 
+          lg:w-[997px] 
+          max-h-[90vh]
+          relative
+          flex 
+          flex-col 
+          items-start
+          py-4 
+          px-4 
+          overscroll-contain
+          overflow-y-auto
+          rounded-lg
+          md:shadow-lg
+          `,
+          className,
+        )}
+        // Scrollable, needs to be keyboard accessible
+        // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+        tabIndex={0}
       >
-        <div className="md:rounded-lg md:shadow-lg w-full md:w-[997px] md:mx-auto h-max md:my-24 relative">
-          <div ref={modalRef} tabIndex={-1} className="bg-white-100 relative">
-            <div className="flex justify-end sticky top-0 right-0 pt-8 md:pr-8 pr-4 bg-white">
-              <button
-                ref={closeButtonRef}
-                className="text-gray-600 hover:text-gray-900"
-                onClick={onClose}
-                aria-label="Close modal"
-              >
-                <TransformableIcon iconData={add_circle_filled} className="rotate-45 md:scale-150" />
-              </button>
-            </div>
-            <div className="md:pt-16 md:p-24 p-12">{children}</div>
-          </div>
-        </div>
+        <Button
+          variant="ghost"
+          className="ml-auto sticky top-0 p-3"
+          onClick={onClose}
+          aria-label={intl.formatMessage({ id: 'close', defaultMessage: 'Close' })}
+        >
+          <TransformableIcon iconData={close} className="w-full h-auto" />
+        </Button>
+        <div className="pl-2 pr-12 md:px-12 py-12">{children}</div>
       </div>
-    </CSSTransition>
+    </dialog>
   )
-}
+})
 
 export default Modal

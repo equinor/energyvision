@@ -20,7 +20,7 @@ import { SWRConfig } from 'swr'
 // import { reactPlugin } from '../common'
 import { PreviewContextProvider } from '../lib/contexts/PreviewContext'
 import { defaultLanguage } from '../languages'
-import { ButtonLink, Link } from '@core/Link'
+import { default as NextLink } from 'next/link'
 
 /**
  * TODO:
@@ -127,9 +127,12 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
           <GlobalStyle />
           <GlobalFontStyle />
           {IS_LIVE && <CookieBot locale={router.locale} />}
-          <ButtonLink className="m-md p-md" href="#mainTitle">
-            Skip to content
-          </ButtonLink>
+          <NextLink
+            href="#mainTitle"
+            className="sr-only focus:not-sr-only focus:z-50 focus:absolute focus:bg-white focus:border-black focus:bg-moss-green-100 focus:text-white-100 focus:m-6 focus:rounded focus:p-4 transition"
+          >
+            skip to content
+          </NextLink>
           <PreviewContextProvider>{getLayout(<Component {...pageProps} />)}</PreviewContextProvider>
         </>
       </ErrorBoundary>
