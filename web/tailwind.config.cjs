@@ -20,8 +20,8 @@ module.exports = {
     './core/**/*.{js,ts,tsx}',
     './sections/**/*.{js,ts,tsx}',
     './icons/**/*.{js,ts,tsx}',
+    './pages/**/*.{js,ts,tsx}',
   ],
-  safelist: ['modal-enter', 'modal-enter-done', 'modal-exit-active', 'modal-exit'],
   /*
   Now instead of dark:{class} classes being applied based on prefers-color-scheme, 
   they will be applied whenever the dark class is present earlier in the HTML tree.
@@ -277,6 +277,9 @@ module.exports = {
       minWidth: {
         viewport: '375',
       },
+      borderRadius: {
+        xs: '0.1rem',
+      },
       padding: {
         'layout-sm': 'clamp(16px, calc(-38.3689px + 14.4984vw), 250px)',
         'layout-md': 'clamp(16px, calc(-69.4369px + 22.7832vw), 368px)',
@@ -299,7 +302,10 @@ module.exports = {
         'page-content': 'theme(spacing.20)',
       },
       transitionTimingFunction: {
-        scroll: 'cubic-bezier(0.645, 0.045, 0.355, 1)', //'cubic-bezier(0.23, 1, 0.32, 1)',
+        scroll: 'cubic-bezier(0.645, 0.045, 0.355, 1)',
+      },
+      transitionDuration: {
+        400: '400ms',
       },
       keyframes: {
         reveal: {
@@ -330,6 +336,9 @@ module.exports = {
         zoomIn: 'auto linear zoom-in both',
         move: 'auto linear move forwards',
         'spin-slow': 'spin 3s linear infinite',
+      },
+      flex: {
+        fr: '1 1 1',
       },
       typography: (theme) => ({
         DEFAULT: {
@@ -454,7 +463,7 @@ module.exports = {
   },
   plugins: [
     require('@tailwindcss/typography'),
-    plugin(function ({ addVariant, matchVariant, addUtilities, theme, config, e }) {
+    plugin(function ({ addVariant, matchVariant, addUtilities, theme }) {
       matchVariant(
         'nth',
         (value) => {
@@ -483,6 +492,9 @@ module.exports = {
           },
           '.break-word': {
             wordBreak: 'break-word',
+          },
+          '.auto-fill-fr': {
+            gridTemplateColumns: `repeat(auto-fill, minmax(80px,1fr))`,
           },
         })
     }),

@@ -5,8 +5,6 @@ import type { GetStaticProps } from 'next/types'
 import { defaultLanguage } from '../../languages'
 import { getIsoFromLocale } from '../../lib/localization'
 import getIntl from '../../common/helpers/getIntl'
-import styled from 'styled-components'
-import { Button } from '@components'
 import { Icon } from '@equinor/eds-core-react'
 import { close } from '@equinor/eds-icons'
 import { TopbarDropdown } from '../../pageComponents/shared/siteMenu/TopbarDropdown'
@@ -15,24 +13,6 @@ import { LogoLink } from '../../pageComponents/shared/LogoLink'
 import Search from '../../pageComponents/search/Search'
 import { useRouter } from 'next/router'
 import { FloatingOverlay } from '@floating-ui/react'
-
-const InvertedButton = styled(Button)`
-  color: var(--white-100);
-  &:hover {
-    color: var(--slate-blue-95);
-    background-color: var(--moss-green-60);
-  }
-  &:focus-visible,
-  &[data-focus-visible-added]:focus {
-    outline-color: var(--mist-blue-100);
-  }
-`
-
-const SearchContainer = styled.div`
-  padding: var(--space-large);
-  max-width: 700px;
-  margin: 0 auto;
-`
 
 export default function SearchPage() {
   const router = useRouter()
@@ -47,20 +27,31 @@ export default function SearchPage() {
         <TopbarDropdown background={{ backgroundColor: 'Slate Blue 95' }}>
           <NavTopbar>
             <LogoLink />
-            <InvertedButton
-              variant="ghost_icon"
+            <button
+              type="button"
               aria-expanded={true}
               aria-label="Close search"
               onClick={() => {
                 router.back()
               }}
+              className={`
+                p-3
+                rounded-full 
+                text-white-100
+                hover:bg-moss-green-50
+                hover:text-slate-blue-95
+                focus:outline-none
+                focus-visible:envis-outline-invert
+                active:scale-99
+                active:bg-white-100/20
+                `}
             >
               <Icon size={24} data={close} />
-            </InvertedButton>
+            </button>
           </NavTopbar>
-          <SearchContainer>
+          <div className="p-8 max-w-[700px] mx-auto">
             <Search />
-          </SearchContainer>
+          </div>
         </TopbarDropdown>
       </FloatingOverlay>
     </>

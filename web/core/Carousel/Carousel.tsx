@@ -19,7 +19,6 @@ import { PortableTextBlock } from '@portabletext/types'
 import { toPlainText } from '@portabletext/react'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
 import { CarouselEventItem } from './CarouselEventItem'
-import { ScrollbarEvents } from 'swiper/types'
 
 export type DisplayModes = 'single' | 'scroll'
 export type Layouts = 'full' | 'default'
@@ -49,7 +48,6 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
     items,
     variant = 'video',
     displayMode = 'scroll',
-    //layout = 'full',
     autoRotation = false,
     labelledbyId,
     title,
@@ -60,14 +58,13 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
   ref,
 ) {
   const CarouselTag = hasSectionTitle ? (`div` as ElementType) : (`section` as ElementType)
-  //TODO translations
   const carouselItemsId = useId()
   const controlsId = useId()
   const sliderRef = useRef<HTMLUListElement>(null)
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
   //a prefers-reduced-motion user setting must always override autoplay
   const prefersReducedMotion = usePrefersReducedMotion()
-  const internalAutoRotation = prefersReducedMotion ? false : autoRotation
+  const internalAutoRotation = prefersReducedMotion ? false : autoRotation && displayMode === 'single'
   const [currentIndex, setCurrentIndex] = useState(0)
   const [currentXPosition, setCurrentXPosition] = useState(0)
   const [currentListTranslateX, setCurrentListTranslateX] = useState(0)
@@ -223,7 +220,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
     image: `${
       displayMode === 'single'
         ? 'grid transition-transform ease-scroll delay-0 duration-[800ms]'
-        : 'flex gap-3 md:gap-8 lg:gap-12 w-full h-full overflow-y-hidden'
+        : 'flex gap-3 md:gap-8 w-full h-full overflow-y-hidden no-scrollbar'
     }`,
     event: `flex gap-3 lg:gap-6 w-full h-full overflow-y-hidden no-scrollbar`,
   }
@@ -258,10 +255,8 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
                 style: {
                   transform: `translate3d(${itemsXPositions[i]}px, 0px, 0px)`,
                 },
+                onFocus: () => cancelTimeout(),
               })}
-            onFocus={() => {
-              cancelTimeout()
-            }}
           />
         )
       case 'event':
@@ -284,7 +279,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
       {...(hasSectionTitle && {
         role: 'region',
       })}
-      {...(labelledbyId && {
+      {...(typeof labelledbyId !== undefined && {
         'aria-labelledby': labelledbyId,
       })}
       {...(!labelledbyId &&
@@ -369,8 +364,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
         ref={sliderRef}
         id={carouselItemsId}
         className={envisTwMerge(
-          `transparent-scrollbar
-          transition-all
+          `transition-all
           duration-300
           m-auto
           ${variant === 'event' ? 'p-[2px]' : ''}

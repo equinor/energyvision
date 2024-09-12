@@ -145,7 +145,7 @@ const GridTextBlock = forwardRef<HTMLDivElement, GridTextBlockProps>(function Gr
 
   const serializerClassnames = {
     largeText: `leading-tight text-balance ${titleTextColor}`,
-    normal: `text-lg leading-snug text-balance ${titleTextColor}`,
+    normal: `text-2xl leading-snug text-balance ${titleTextColor}`,
   }
 
   const mainContent = (

@@ -739,6 +739,16 @@ const snippets: textSnippet = {
     defaultValue: 'Back to content',
     group: groups.others,
   },
+  close: {
+    title: 'Close',
+    defaultValue: 'Close',
+    group: groups.others,
+  },
+  switch_to: {
+    title: 'Switch to',
+    defaultValue: 'Switch to',
+    group: groups.others,
+  },
 }
 
 type textSnippetGroup = { title: string; hidden?: boolean }

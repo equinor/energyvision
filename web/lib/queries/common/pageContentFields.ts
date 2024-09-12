@@ -113,6 +113,7 @@ _type == "keyNumbers" =>{
     },
     "designOptions": {
       ${background},
+      "aspectRatio": coalesce(aspectRatio, '16:9'),
     },
   },
   _type == "textWithIconArray"=>{
@@ -577,6 +578,18 @@ _type == "keyNumbers" =>{
       "backgroundUtility":coalesce(backgroundColor.key, ""),
       }
     },
+  },
+  _type == "anchorLinkList" => {
+    "type": _type,
+    "id": _key,
+    title,
+    columns,
+    "anchorList":anchorList[]{
+      "type": _type,
+      "id": _key,
+      title,
+      anchorReference,
+    }
   },
 `
 
