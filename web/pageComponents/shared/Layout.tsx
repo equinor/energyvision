@@ -6,25 +6,23 @@ import { defaultLanguage } from '../../languages'
 import { getIsoFromLocale } from '../../lib/localization'
 import styled from 'styled-components'
 
-const LayoutWrapper = styled.div<{ useFullPage: boolean }>`
-  ${({ useFullPage }) =>
-    useFullPage && {
+const LayoutWrapper = styled.div<{ $useFullPage: boolean }>`
+  ${({ $useFullPage }) =>
+    $useFullPage && {
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'space-between',
       height: 'calc(100vh - var(--topbar-height))',
     }}
 `
-const ChildrenWrapper = styled.div<{ useFullPage: boolean }>`
-  ${({ useFullPage }) =>
-    useFullPage && {
+const ChildrenWrapper = styled.div<{ $useFullPage: boolean }>`
+  ${({ $useFullPage }) =>
+    $useFullPage && {
       height: '100%',
     }}
 `
 
 export type LayoutProps = {
-  /* Prewiew or not */
-  preview?: boolean
   // eslint-disable-next-line
   footerData?: { footerColumns: FooterColumns[] }
   intl?: {
@@ -46,8 +44,8 @@ export const Layout = ({ useFullPage = false, children, footerData, intl, ...res
       defaultLocale={getIsoFromLocale(defaultLocale)}
       messages={intl?.messages}
     >
-      <LayoutWrapper useFullPage={useFullPage} {...rest}>
-        <ChildrenWrapper useFullPage>{children}</ChildrenWrapper>
+      <LayoutWrapper $useFullPage={useFullPage} {...rest}>
+        <ChildrenWrapper $useFullPage>{children}</ChildrenWrapper>
         <Footer footerData={footerData} />
       </LayoutWrapper>
     </IntlProvider>

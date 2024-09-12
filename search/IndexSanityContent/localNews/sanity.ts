@@ -33,6 +33,7 @@ export const query = /* groq */ `*[_type == "localNews" && lang == $lang && !(_i
     title,
     "text": pt::text(content)
   },
+  heroImage,
   "docToClear": _id match $id
 }
 `

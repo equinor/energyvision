@@ -17,7 +17,7 @@ type Props = {
 
 const VisuallyHidden = ({ children, as = 'label', ...rest }: Props) => {
   return (
-    <Hidden as={as} {...rest}>
+    <Hidden forwardedAs={as} {...rest}>
       {children}
     </Hidden>
   )

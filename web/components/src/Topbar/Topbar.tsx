@@ -2,7 +2,7 @@
 import styled from 'styled-components'
 import { useState, useEffect, useRef, HTMLAttributes } from 'react'
 
-const Bar = styled.div<{ hasDropShadow: boolean }>`
+const Bar = styled.div<{ $hasDropShadow: boolean }>`
   display: flex;
   align-items: center;
   width: 100%;
@@ -13,7 +13,7 @@ const Bar = styled.div<{ hasDropShadow: boolean }>`
   transition: top 0.3s;
   z-index: 10;
   background-color: var(--white-100);
-  ${({ hasDropShadow }) => hasDropShadow && `box-shadow: var(--topBar-box-shadow);`}
+  ${({ $hasDropShadow }) => $hasDropShadow && `box-shadow: var(--topBar-box-shadow);`}
 `
 
 export const Topbar = ({ children, ...rest }: HTMLAttributes<HTMLDivElement>) => {
@@ -81,7 +81,7 @@ export const Topbar = ({ children, ...rest }: HTMLAttributes<HTMLDivElement>) =>
   }, [isVisible])
 
   return (
-    <Bar ref={ref} style={{ top: isVisible ? 0 : -height }} hasDropShadow={hasDropShadow} {...rest}>
+    <Bar ref={ref} style={{ top: isVisible ? 0 : -height }} $hasDropShadow={hasDropShadow} {...rest}>
       {children}
     </Bar>
   )

@@ -13,7 +13,7 @@ export const StyledTeaser = styled.article`
   overflow-y: hidden;
 `
 
-const TeaserWrapper = styled.div<TeaserProps>`
+const TeaserWrapper = styled.div<{ $imagePosition?: ImagePosition }>`
   --max-content-width: 1440px;
 
   display: grid;
@@ -29,8 +29,8 @@ const TeaserWrapper = styled.div<TeaserProps>`
     grid-template-columns: repeat(2, 50%);
     grid-template-rows: min-content;
     grid-template-areas: 'image content';
-    ${({ imagePosition }) =>
-      imagePosition === 'right' && {
+    ${({ $imagePosition }) =>
+      $imagePosition === 'right' && {
         gridTemplateAreas: '"content image"',
       }}
   }
@@ -42,7 +42,7 @@ export const Teaser = forwardRef<HTMLDivElement, TeaserProps>(function Teaser(
 ) {
   return (
     <StyledTeaser ref={ref} {...rest}>
-      <TeaserWrapper imagePosition={imagePosition}>{children}</TeaserWrapper>
+      <TeaserWrapper $imagePosition={imagePosition}>{children}</TeaserWrapper>
     </StyledTeaser>
   )
 })
