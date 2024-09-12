@@ -14,7 +14,8 @@
     "azurite": "azurite",
     "prestart": "npm run build",
     "start": "func start",
-    "test": "jest"
+    "test": "jest",
+    "clean": "rm -rf node_modules pnpm-lock.yaml"
   },
   "keywords": [
     "search",

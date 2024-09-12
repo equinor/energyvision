@@ -5,7 +5,8 @@
     "selenium-webdriver": "^4.0.0-beta.1"
   },
   "scripts": {
-    "test": "node ./tests/equinor-news-WCAG-Chrome.js"
+    "test": "node ./tests/equinor-news-WCAG-Chrome.js",
+    "clean": "rm -rf node_modules pnpm-lock.yaml"
   },
   "devDependencies": {
     "@percy/cli": "^1.0.0-beta.47",

@@ -4,6 +4,7 @@
   "engines": {
     "pnpm": ">=6"
   },
+  "packageManager": "pnpm@8.5.1",
   "type": "module",
   "scripts": {
     "setup-project": "pnpm m i",
@@ -29,7 +30,8 @@
     "v3:dev": "pnpm sanityv3 dev",
     "v3:docker": "DOCKER_BUILDKIT=1 docker build --build-arg ARG_SANITY_DATASET=global-development -t envis/v3 -f sanityv3/Dockerfile .",
     "v3:run": "docker run -p 3333:3333 envis/v3",
-    "lint-staged": "lint-staged -c ./lint-staged-config.js"
+    "lint-staged": "lint-staged -c ./lint-staged-config.js",
+    "clean": "rm -rf node_modules pnpm-lock.yaml && pnpm --filter ./web clean && pnpm --filter ./sanityv3 clean && pnpm --filter ./e2e clean && pnpm pnpm --filter ./search clean"
   },
   "dependencies": {
     "husky": "^7.0.4",
