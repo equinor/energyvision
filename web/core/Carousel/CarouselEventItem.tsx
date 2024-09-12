@@ -3,7 +3,6 @@ import { DisplayModes } from './Carousel'
 import { forwardRef, HTMLAttributes } from 'react'
 import { EventCard } from '@sections/cards/EventCard'
 import { EventCardData } from '../../types/types'
-//import { usePrefersReducedMotion } from '../../common/hooks/usePrefersReducedMotion'
 
 type CarouselEventItemProps = {
   event: EventCardData
