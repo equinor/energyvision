@@ -1,12 +1,16 @@
 {
-  "cssvar.files": [
-    "./web/styles/settings.ts"
-  ],
+  "cssvar.files": ["./web/styles/settings.ts"],
   "azureFunctions.deploySubpath": ".",
   "azureFunctions.postDeployTask": "npm install (functions)",
   "azureFunctions.projectLanguage": "TypeScript",
   "azureFunctions.projectRuntime": "~4",
   "debug.internalConsoleOptions": "neverOpen",
   "azureFunctions.preDeployTask": "npm prune (functions)",
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "search.exclude": {
+    // Avoid polluting search results with lockfile content
+    "pnpm-lock.yaml": true
+  },
+  // Ensure VSCode uses pnpm instead of npm
+  "npm.packageManager": "pnpm"
 }
