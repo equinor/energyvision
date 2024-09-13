@@ -21,8 +21,8 @@ const NewsItem = forwardRef<HTMLLIElement, NewsListItemProps>(function NewsItem(
 
   return (
     <section ref={ref} className={envisTwMerge('', className)} {...rest}>
-      <BaseLink href={slug} className="group grid grid-cols-[1fr_25vw] lg:grid-cols-[1fr_10vw] gap-4 lg:gap-6">
-        <div>
+      <BaseLink href={slug} className="group flex justify-between gap-4 lg:gap-6">
+        <div className="max-w-[65%]">
           {publishDateTime && (
             <FormattedDate datetime={publishDateTime} uppercase className="text-xs font-normal leading-normal pb-1" />
           )}
@@ -32,7 +32,7 @@ const NewsItem = forwardRef<HTMLLIElement, NewsListItemProps>(function NewsItem(
             </Typography>
           )}
         </div>
-        <div className="lg:w-[173px] h-full aspect-5/4 lg:aspect-video relative">
+        <div className="w-[30%] lg:w-[173px] lg:h-full aspect-5/4 lg:aspect-video relative">
           {(heroImage?.image?.asset || fallbackImage) && (
             <Image
               //@ts-ignore: TODO Fix SanityImage to take SanityImageObject
