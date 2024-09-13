@@ -39,7 +39,6 @@ export const EventPromotionPreview = (props: EventPromotionPreviewProps) => {
     return setTitle(`Showing ${number} ${time} ${promoteSingleUpcomingEvent ? 'event' : 'events'} ${withTags}`)
   }, [manuallySelectEvents, promotedEvents, useTags, tags, pastEventsCount, promoteSingleUpcomingEvent])
 
-  console.log('title', title)
   return (
     <Flex align="center">
       <Box flex={1}>

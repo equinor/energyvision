@@ -44,7 +44,6 @@ export const CardContent = forwardRef<HTMLDivElement, CardContentProps>(function
     `
     size-arrow-right
     text-energy-red-100
-    dark:text-white-100
     mr-2
     group-hover/card:translate-x-2
     transition-all

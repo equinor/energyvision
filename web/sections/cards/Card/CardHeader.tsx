@@ -61,6 +61,7 @@ export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(function C
     ${variantTitle[variant]}
     max-w-prose
     text-pretty
+    dark:text-slate-80
   `,
     titleClassName,
   )
