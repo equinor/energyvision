@@ -32,7 +32,7 @@ const NewsItem = forwardRef<HTMLLIElement, NewsListItemProps>(function NewsItem(
             </Typography>
           )}
         </div>
-        <div className="w-[30%] lg:w-[173px] lg:h-full aspect-5/4 lg:aspect-video relative">
+        <div className="w-[30%] lg:h-full aspect-5/4 lg:aspect-video relative">
           {(heroImage?.image?.asset || fallbackImage) && (
             <Image
               //@ts-ignore: TODO Fix SanityImage to take SanityImageObject
