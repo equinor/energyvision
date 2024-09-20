@@ -33,7 +33,8 @@ module.exports = {
   theme: {
     extend: {
       screens: {
-        md: '750px',
+        md: '700px',
+        xl: '1300px',
         '3xl': '1600px',
         '4xl': '1920px',
       },
@@ -213,6 +214,7 @@ module.exports = {
         //--space-4xLarge -> spacing.28
         xs: 'calc((4 / 16) * theme(fontSize.base))',
         sm: 'calc((8 / 16) * theme(fontSize.base))',
+        'xs+sm': 'calc((12 / 16) * theme(fontSize.base))',
         md: 'calc((16 / 16) * theme(fontSize.base))',
         lg: 'calc((24 / 16) * theme(fontSize.base))',
         xl: 'calc((32 / 16) * theme(fontSize.base))',
@@ -273,6 +275,7 @@ module.exports = {
         viewport: '1920px',
         //When large font, prose(65ch) might not be the best
         text: '760px',
+        menuText: 'calc(35 * var(--space-medium))',
       },
       minWidth: {
         viewport: '375',
@@ -459,6 +462,14 @@ module.exports = {
           },
         },
       }),
+
+      transitionProperty: ['motion-safe'],
+    },
+  },
+  variants: {
+    extend: {
+      borderColor: ['aria-current'],
+      backgroundColor: ['aria-current'],
     },
   },
   plugins: [
