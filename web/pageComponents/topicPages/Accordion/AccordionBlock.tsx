@@ -5,7 +5,7 @@ import IngressText from '../../shared/portableText/IngressText'
 import Accordion from './Accordion'
 import { FAQPageJsonLd } from 'next-seo'
 
-import type { AccordionData, AccordionListData } from '../../../types/types'
+import type { AccordionData, AccordionListData } from '../../../types/index'
 import { toPlainText } from '@portabletext/react'
 import { Heading, Typography } from '../../../core/Typography'
 import { twMerge } from 'tailwind-merge'

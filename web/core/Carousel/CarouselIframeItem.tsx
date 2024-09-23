@@ -1,5 +1,5 @@
 import envisTwMerge from '../../twMerge'
-import { IFrameCarouselItemData } from '../../types/types'
+import { IFrameCarouselItemData } from '../../types/index'
 import { DisplayModes } from './Carousel'
 import { forwardRef, HTMLAttributes } from 'react'
 import { Heading, Paragraph } from '@core/Typography'

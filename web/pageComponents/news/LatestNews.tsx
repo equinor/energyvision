@@ -1,4 +1,4 @@
-import type { CardData } from '../../types/types'
+import type { CardData } from '../../types/index'
 import { FormattedMessage } from 'react-intl'
 import { FormattedDate } from '@components/FormattedDateTime'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'

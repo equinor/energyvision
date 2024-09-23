@@ -1,6 +1,6 @@
 import IFrame from '../../iframe/IFrame'
 import type { PortableTextBlock } from '@portabletext/types'
-import type { IFrameData } from 'types/types'
+import type { IFrameData } from 'types/index'
 import styled from 'styled-components'
 import { twMerge } from 'tailwind-merge'
 import { useId } from '@equinor/eds-utils'

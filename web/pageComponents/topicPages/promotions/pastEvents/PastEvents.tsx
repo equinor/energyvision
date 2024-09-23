@@ -1,4 +1,4 @@
-import type { EventCardData, EventPromotionSettings } from '../../../../types/types'
+import type { EventCardData, EventPromotionSettings } from '../../../../types/index'
 import PastEventsListItem from './PastEventsListItem'
 
 type PastEventsProp = {

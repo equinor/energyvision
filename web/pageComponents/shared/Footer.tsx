@@ -1,6 +1,6 @@
 import { forwardRef } from 'react'
 import { Facebook, Instagram, Linkedin, Twitter, Youtube } from '../../icons'
-import type { FooterLinkData, SomeType, FooterColumns } from '../../types/types'
+import type { FooterLinkData, SomeType, FooterColumns } from '../../types/index'
 import { default as NextLink } from 'next/link'
 
 

@@ -1,4 +1,4 @@
-import type { CardListItemData } from '../../../types/types'
+import type { CardListItemData } from '../../../types/index'
 import { Typography, Paragraph } from '@core/Typography'
 import { twMerge } from 'tailwind-merge'
 import { HTMLAttributes, forwardRef } from 'react'

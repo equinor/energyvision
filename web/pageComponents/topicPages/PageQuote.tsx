@@ -1,5 +1,5 @@
 import Quote from '../shared/Quote'
-import type { QuoteData } from '../../types/types'
+import type { QuoteData } from '../../types/index'
 import { BackgroundContainer } from '@components'
 import { twMerge } from 'tailwind-merge'
 

@@ -1,6 +1,6 @@
 import { forwardRef, HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { CampaignBannerData } from '../../types/types'
+import { CampaignBannerData } from '../../types/index'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
 import { PortableTextBlock } from '@portabletext/types'
 import isEmpty from '../../pageComponents/shared/portableText/helpers/isEmpty'

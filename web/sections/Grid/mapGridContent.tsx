@@ -1,5 +1,5 @@
 import { ComponentProps } from '../../pageComponents/pageTemplates/shared/SharedPageContent'
-import { FigureData, IFrameData, VideoPlayerData } from '../../types/types'
+import { FigureData, IFrameData, VideoPlayerData } from '../../types/index'
 import IFrame from '../../pageComponents/topicPages/IFrame'
 import { VideoJsComponent } from '../../pageComponents/shared/VideoPlayer'
 import GridTextBlock from './GridTextBlock'

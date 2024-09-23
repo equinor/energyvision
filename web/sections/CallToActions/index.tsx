@@ -1,6 +1,6 @@
 import { List } from '@core/List'
 import { ResourceLink, ButtonLink } from '@core/Link'
-import type { LinkData } from '../../types/types'
+import type { LinkData } from '../../types/index'
 import { getUrlFromAction } from '../../common/helpers'
 import { getLocaleFromName } from '../../lib/localization'
 import { twMerge } from 'tailwind-merge'

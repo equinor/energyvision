@@ -1,4 +1,4 @@
-import { ImageForTextData } from '../../types/types'
+import { ImageForTextData } from '../../types/index'
 import { forwardRef } from 'react'
 import Image, { Ratios } from '../../pageComponents/shared/SanityImage'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'

@@ -1,6 +1,6 @@
 import envisTwMerge from '../../twMerge'
 import Image from '../../pageComponents/shared/SanityImage'
-import { ImageWithAlt, ImageWithCaptionData } from '../../types/types'
+import { ImageWithAlt, ImageWithCaptionData } from '../../types/index'
 import { DisplayModes } from './Carousel'
 import { forwardRef, HTMLAttributes } from 'react'
 

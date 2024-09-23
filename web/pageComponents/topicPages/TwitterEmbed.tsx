@@ -1,4 +1,4 @@
-import { TwitterEmbedData } from '../../types/types'
+import { TwitterEmbedData } from '../../types/index'
 import RequestConsentContainer from '../../pageComponents/shared/iframe/RequestConsentContainer'
 import { TwitterTimelineEmbed, TwitterTweetEmbed } from 'react-twitter-embed'
 import { BackgroundContainer } from '@components'

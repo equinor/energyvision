@@ -4,7 +4,7 @@ import type {
   EventCardData,
   PromotionType,
   EventPromotionSettings,
-} from '../../../types/types'
+} from '../../../types/index'
 import MultipleEventCards from './MultipleEventCards'
 
 import PeopleCard from '@sections/cards/PeopleCard/PeopleCard'

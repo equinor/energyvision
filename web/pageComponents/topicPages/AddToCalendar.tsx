@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { isAfter } from 'date-fns'
 import { getEventDates, toUTCDateParts } from '../../common/helpers/dateUtilities'
 
-import type { EventDateType } from '../../types/types'
+import type { EventDateType } from '../../types/index'
 import { useIntl } from 'react-intl'
 import { Button } from '@core/Button'
 

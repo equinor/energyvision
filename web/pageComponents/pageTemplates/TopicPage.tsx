@@ -1,6 +1,6 @@
 import { toPlainText } from '@portabletext/react'
 import useSharedTitleStyles from '../../lib/hooks/useSharedTitleStyles'
-import { HeroTypes, TopicPageSchema } from '../../types/types'
+import { HeroTypes, TopicPageSchema } from '../../types/index'
 import Seo from '../shared/Seo'
 import { SharedBanner } from './shared/SharedBanner'
 import { PageContent } from './shared/SharedPageContent'

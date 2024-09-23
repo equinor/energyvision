@@ -1,4 +1,4 @@
-import type { PromoTileArrayData, PromoTileData } from '../../types/types'
+import type { PromoTileArrayData, PromoTileData } from '../../types/index'
 import { PromoTile } from './PromoTile'
 import { twMerge } from 'tailwind-merge'
 

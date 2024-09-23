@@ -1,6 +1,6 @@
 import { HTMLAttributes } from 'react'
 import Footer from './Footer'
-import type { FooterColumns } from '../../types/types'
+import type { FooterColumns } from '../../types/index'
 import { IntlProvider } from 'react-intl'
 import { defaultLanguage } from '../../languages'
 import { getIsoFromLocale } from '../../lib/localization'

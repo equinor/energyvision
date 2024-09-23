@@ -1,4 +1,4 @@
-import type { FullWidthImageData } from '../../types/types'
+import type { FullWidthImageData } from '../../types/index'
 import Image, { Ratios } from '../shared/SanityImage'
 import { StyledCaption } from '../shared/image/StyledCaption'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'

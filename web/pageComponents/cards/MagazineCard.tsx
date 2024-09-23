@@ -2,7 +2,7 @@ import { Card } from '@components'
 import { CSSProperties } from 'react'
 import styled from 'styled-components'
 import Image, { Ratios } from '../shared/SanityImage'
-import { MagazineCardData } from '../../types/types'
+import { MagazineCardData } from '../../types/index'
 
 const { Title, Header, Action, Arrow, Media, CardLink } = Card
 

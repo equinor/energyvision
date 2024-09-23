@@ -7,7 +7,7 @@ import TitleText from '../shared/portableText/TitleText'
 import { Link } from '@core/Link'
 
 import { getLocaleFromName } from '../../lib/localization'
-import type { CellData, LinkData, TableData } from '../../types/types'
+import type { CellData, LinkData, TableData } from '../../types/index'
 import { PortableTextBlock } from '@portabletext/types'
 import { PortableText } from '@portabletext/react'
 import defaultSerializers from '../shared/portableText/helpers/defaultSerializers'

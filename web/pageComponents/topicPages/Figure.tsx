@@ -1,4 +1,4 @@
-import type { FigureData } from '../../types/types'
+import type { FigureData } from '../../types/index'
 import { BackgroundContainer, FigureCaption } from '@components'
 import Image, { Ratios } from '../shared/SanityImage'
 

@@ -1,5 +1,5 @@
 import { Heading, Typography } from '@core/Typography'
-import { EventCardData } from '../../../../types/types'
+import { EventCardData } from '../../../../types/index'
 import { forwardRef, HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { getEventDates } from '../../../../common/helpers/dateUtilities'
