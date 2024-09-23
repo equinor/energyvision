@@ -3,15 +3,19 @@ import downloadableImageFields from './actions/downloadableImageFields'
 import linkSelectorFields from './actions/linkSelectorFields'
 import markDefs from './blockEditorMarks'
 
-export const iframeForNewsQuery = /* groq */ `defined(iframe) {
-  title,
-  frameTitle,
-  url,
-  "designOptions": {
-    "aspectRatio": coalesce(aspectRatio, '16:9'),
-    height,
-  },
-}`
+export const iframeForNewsQuery = /* groq */ `
+  iframe {
+    title,
+    frameTitle,
+    url,
+    "designOptions": {
+      "aspectRatio": coalesce(aspectRatio, '16:9'),
+      height
+    },
+    cookiePolicy
+  }
+`
+
 
 export const contentForNewsQuery = /* groq */ `content[] {
     ...,
