@@ -41,3 +41,18 @@ export const withSlugValidation = (options: any) => {
       }
     : options
 }
+
+const stringIsSlug = /^[a-z0-9]+(-[a-z0-9]+)*$/
+const httpRegex = /^(?:http:\/\/|).*$/
+export const warnHttpOrNotValidSlugExternal = (slug: string, context: ValidationContext) => {
+  const isHttp = httpRegex.test(slug)
+  const validSlug = stringIsSlug.test(slug)
+  let message = ''
+  if (isHttp) {
+    message = 'Use https in url. '
+  }
+  if (!validSlug) {
+    message = message.concat(`Should only contain lowercase letters [a-z], numbers [0-9], and dashes ("-")`)
+  }
+  return isHttp || !validSlug ? message : true
+}
