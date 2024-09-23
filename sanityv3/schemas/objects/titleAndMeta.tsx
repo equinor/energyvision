@@ -1,26 +1,6 @@
-import { useCallback } from 'react'
-import { Stack, TextArea, Label } from '@sanity/ui'
-import { set, unset, Rule } from 'sanity'
+import { Rule } from 'sanity'
 import { SchemaType } from '../../types'
-
-export const TextAreaWithChars = (props: any) => {
-  const { elementProps, onChange, value = '' } = props
-
-  const handleChange = useCallback(
-    (event: any) => {
-      const nextValue = event.currentTarget.value
-      onChange(nextValue ? set(nextValue) : unset())
-    },
-    [onChange],
-  )
-
-  return (
-    <Stack space={2}>
-      <TextArea {...elementProps} onChange={handleChange} value={value} rows={5} />
-      <Label size={1}>Characters: {value.length}</Label>
-    </Stack>
-  )
-}
+import { CharCounterEditor } from '../components/CharCounterEditor'
 
 export default {
   title: 'Fields for title and description meta',
@@ -52,7 +32,7 @@ export default {
       It shows up in search results and in social media. Should be max. 160 chars`,
       type: 'text',
       components: {
-        input: TextAreaWithChars,
+        input: CharCounterEditor,
       },
     },
   ],
