@@ -39,7 +39,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     method: 'POST',
     body: JSON.stringify({
       email: data.subscribeFormParamers.email,
-      segmentations: [{ segmentation_id: 91502, segment_id: selectedLang === 'en' ? '9378080' : '9378081' }],
+      segmentations: [
+        {
+          segmentation_id: 91502,
+          segment_id: selectedLang === 'en' ? '9378080' : '9378081',
+        },
+        {
+          segmentation_id: 91504,
+          segment_id: 9378091,
+        },
+      ],
       content_preferences: categories,
     }),
     headers: {
