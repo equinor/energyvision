@@ -1,4 +1,4 @@
-import { useRef, useState, ChangeEvent, ComponentProps, useId } from 'react'
+import { useRef, useState, ChangeEvent, ComponentProps, useId, SetStateAction, Dispatch } from 'react'
 import { useSearchBox, UseSearchBoxProps } from 'react-instantsearch'
 import { close, search } from '@equinor/eds-icons'
 import { useIntl } from 'react-intl'
@@ -14,6 +14,8 @@ export type SearchBoxProps = {
   labelClassName?: string
   label?: string
   placeholder?: string
+  //For newsroom
+  setIsQuickSearch?: Dispatch<SetStateAction<boolean>>
 } & ComponentProps<'div'> &
   UseSearchBoxProps
 
@@ -32,6 +34,7 @@ export function SearchBox({
   labelClassName = '',
   label,
   placeholder,
+  setIsQuickSearch,
   ...rest
 }: SearchBoxProps) {
   const intl = useIntl()
@@ -49,6 +52,7 @@ export function SearchBox({
     event.preventDefault()
     event.stopPropagation()
     refine(value)
+    setIsQuickSearch && setIsQuickSearch(true)
   }
 
   function onChange(event: ChangeEvent<HTMLInputElement>) {

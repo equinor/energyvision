@@ -17,18 +17,18 @@ const NewsItem = forwardRef<HTMLLIElement, NewsListItemProps>(function NewsItem(
   { data, fallbackImage, className = '', ...rest },
   ref,
 ) {
-  const { slug, pageTitle, publishDateTime, heroImage } = data || {}
+  const { slug, title, publishDateTime, heroImage } = data || {}
 
   return (
     <section ref={ref} className={envisTwMerge('', className)} {...rest}>
       <BaseLink href={slug} className="group flex justify-between gap-4 lg:gap-6">
         <div className="max-w-[65%]">
           {publishDateTime && (
-            <FormattedDate datetime={publishDateTime} uppercase className="text-xs font-normal leading-normal pb-1" />
+            <FormattedDate datetime={publishDateTime} uppercase className="text-2xs font-normal leading-normal pb-1" />
           )}
-          {pageTitle && (
+          {title && (
             <Typography as="h2" variant="base" className="max-w-text text-pretty group-hover:underline">
-              {pageTitle}
+              {title}
             </Typography>
           )}
         </div>

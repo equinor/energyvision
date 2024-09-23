@@ -50,14 +50,28 @@ export const getNewsroomComponentsData = async (page: { query: string; queryPara
 }
 type NewsroomQueryParams = {
   lang?: string
-  tags?: any[]
-  countryTags?: any[]
+  tags?: string[]
+  countryTags?: string[]
+  years?: string[]
 }
 export const getNewsroomData = async (
   fetchQuery: { query: string; queryParams: NewsroomQueryParams },
   preview = false,
 ) => {
   const client = getClient(preview)
-  const results = await client.fetch(fetchQuery.query, fetchQuery.queryParams)
-  return results
+  console.log('fetchQuery.queryParams', fetchQuery.queryParams)
+  try {
+    const results = await client.fetch(fetchQuery.query, fetchQuery.queryParams)
+    console.log('results from sanity', results)
+    return {
+      isSuccess: true,
+      data: results,
+    }
+  } catch (error) {
+    console.log('Error when fetching from Sanity', error)
+    return {
+      isError: true,
+      data: [],
+    }
+  }
 }

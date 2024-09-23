@@ -926,3 +926,5 @@ export type AnchorLinkListData = {
     anchorReference?: string
   }[]
 }
+
+export type SanityNewsTag = { id?: string; key: string; title?: string; connectedNews?: number }

@@ -10,6 +10,7 @@ import type {
   BackgroundColours,
   CardData,
   LinkData,
+  SanityNewsTag,
 } from './types'
 import { PortableTextBlock } from '@portabletext/types'
 import { SanityImageObject } from '@sanity/image-url/lib/types/types'
@@ -28,8 +29,9 @@ export type AlgoliaIndexPageType = {
 }
 
 export type NewsRoomNewsItem = {
+  id: string
   slug: string
-  pageTitle: string
+  title: string
   publishDateTime?: string
   heroImage: ImageWithCaptionData
   ingress?: string
@@ -39,11 +41,16 @@ export type NewsRoomPageType = {
   seoAndSome: SeoData
   title: PortableTextBlock[]
   ingress?: PortableTextBlock[]
-  newsList?: NewsRoomNewsItem[]
+  news?: NewsRoomNewsItem[]
   subscriptionLink?: { slug: string; type: string; lang: string }
   subscriptionLinkTitle?: string
   localNewsPages?: LinkData[]
   fallbackImages?: SanityImageObject[]
+  tags: {
+    topic: SanityNewsTag[]
+    country: SanityNewsTag[]
+    year: SanityNewsTag[]
+  }
 }
 
 export type MagazineIndexPageType = {

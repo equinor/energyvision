@@ -1,39 +1,36 @@
 import { GetServerSideProps } from 'next'
-import { InstantSearchSSRProvider, getServerState } from 'react-instantsearch'
 import type { AppProps } from 'next/app'
 import { IntlProvider } from 'react-intl'
 import Footer from '../../pageComponents/shared/Footer'
 import Header from '../../pageComponents/shared/Header'
-import { newsroomQuery } from '../../lib/queries/newsroom'
+import {
+  allNewsCountryTags,
+  allNewsDocuments,
+  allNewsTopicTags,
+  allNewsYearTags,
+  newsroomQuery,
+} from '../../lib/queries/newsroom'
 import getIntl from '../../common/helpers/getIntl'
 import { getNameFromLocale, getIsoFromLocale } from '../../lib/localization'
 import { defaultLanguage } from '../../languages'
 import { AlgoliaIndexPageType, NewsRoomPageType } from '../../types'
-import { getComponentsData } from '../../lib/fetchData'
-import { renderToString } from 'react-dom/server'
+import { getComponentsData, getNewsroomData } from '../../lib/fetchData'
 import NewsRoomTemplate from '@templates/newsroom/Newsroom'
+import { findGroqOnNewsroomFilters, formatNewsroomQueryFilter } from 'pages/api/news/selection'
 
-export default function NewsRoom({ isServerRendered = false, serverState, data, url }: AlgoliaIndexPageType) {
+export default function NewsRoom({ data }: AlgoliaIndexPageType) {
   const defaultLocale = defaultLanguage.locale
   const { pageData, slug, intl } = data
   const locale = data?.intl?.locale || defaultLocale
 
   return (
-    <InstantSearchSSRProvider {...serverState}>
-      <IntlProvider
-        locale={getIsoFromLocale(locale)}
-        defaultLocale={getIsoFromLocale(defaultLocale)}
-        messages={intl?.messages}
-      >
-        <NewsRoomTemplate
-          isServerRendered={isServerRendered}
-          locale={locale}
-          pageData={pageData as NewsRoomPageType}
-          slug={slug}
-          url={url}
-        />
-      </IntlProvider>
-    </InstantSearchSSRProvider>
+    <IntlProvider
+      locale={getIsoFromLocale(locale)}
+      defaultLocale={getIsoFromLocale(defaultLocale)}
+      messages={intl?.messages}
+    >
+      <NewsRoomTemplate locale={locale} pageData={pageData as NewsRoomPageType} slug={slug} />
+    </IntlProvider>
   )
 }
 
@@ -66,7 +63,7 @@ NewsRoom.getLayout = (page: AppProps) => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ req, preview = false, locale = 'en' }) => {
+export const getServerSideProps: GetServerSideProps = async ({ req, preview = false, locale = 'en', query }) => {
   // For the time being, let's just give 404 for satellites
   // We will also return 404 if the locale is not English.
   // This is a hack and and we should improve this at some point
@@ -94,30 +91,69 @@ export const getServerSideProps: GetServerSideProps = async ({ req, preview = fa
     },
     preview,
   )
+  const [{ data: topicTags }, { data: countryTags }, { data: yearTags }] = await Promise.all([
+    getNewsroomData({
+      query: allNewsTopicTags,
+      queryParams,
+    }),
+    getNewsroomData({
+      query: allNewsCountryTags,
+      queryParams,
+    }),
+    getNewsroomData({
+      query: allNewsYearTags,
+      queryParams,
+    }),
+  ])
 
-  const url = new URL(req.headers.referer || `https://${req.headers.host}${req.url}`).toString()
-  const serverState = await getServerState(
-    <NewsRoom
-      isServerRendered
-      data={{
-        intl,
-        pageData,
-        slug,
-      }}
-      url={url}
-    />,
-    { renderToString },
-  )
+  const filteredYearTags = yearTags?.filter((n: string) => n)
+  const uniqueYears = [...new Set<string>(filteredYearTags)]?.map((year: string) => {
+    return {
+      key: year,
+      title: year,
+      connectedNews: filteredYearTags.filter((y: string) => y === year)?.length,
+    }
+  })
+
+  let newsList = []
+  if (query) {
+    const { topic, country, year } = formatNewsroomQueryFilter(query)
+    const { data } = await getNewsroomData({
+      query: findGroqOnNewsroomFilters(topic, country, year),
+      queryParams: {
+        ...queryParams,
+        tags: topic,
+        countryTags: country,
+        years: year,
+      },
+    })
+    console.log(`return news on topic ${topic.toString()}, country: ${country.toString()}, year: ${year.toString()}`)
+    newsList = data
+  } else {
+    const { data } = await getNewsroomData({
+      query: allNewsDocuments,
+      queryParams,
+    })
+    newsList = data
+  }
+  const sortedNewsList = newsList.sort((a: any, b: any) => new Date(b.publishDateTime) - new Date(a.publishDateTime))
+  console.log('sortedNewsList', sortedNewsList)
 
   return {
     props: {
-      serverState,
-      url,
       data: {
         menuData,
         footerData,
         intl,
-        pageData,
+        pageData: {
+          ...pageData,
+          tags: {
+            topic: topicTags,
+            country: countryTags,
+            year: uniqueYears,
+          },
+          news: sortedNewsList,
+        },
         slug,
       },
     },
