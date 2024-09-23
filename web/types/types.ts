@@ -349,7 +349,7 @@ export type TableHeaderData = {
   headerCell: PortableTextBlock[]
 }
 
-export type FigureRatio = 'original' | '9:16'
+export type FigureRatio = 'original' | '16:9'
 
 export type CellData = {
   id: string
@@ -909,4 +909,16 @@ export type GridTeaserData = {
   imagePosition?: TeaserImagePosition
   action?: LinkData
   theme?: number
+}
+export type AnchorLinkListData = {
+  id: string
+  type: 'anchorLinkList'
+  title?: string
+  columns?: string
+  anchorList?: {
+    id: string
+    type: 'anchorLinkReference'
+    title?: string
+    anchorReference?: string
+  }[]
 }

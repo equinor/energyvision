@@ -749,6 +749,16 @@ const snippets: textSnippet = {
     defaultValue: 'Back to content',
     group: groups.others,
   },
+  close: {
+    title: 'Close',
+    defaultValue: 'Close',
+    group: groups.others,
+  },
+  switch_to: {
+    title: 'Switch to',
+    defaultValue: 'Switch to',
+    group: groups.others,
+  },
   select_all: {
     title: 'Select all',
     defaultValue: 'Select all',
