@@ -120,16 +120,16 @@ export default {
     },
     prepare(selection) {
       const { title, media, description, publishedDate, firstPublishedAt, isCustomDate } = selection
+      const currentDate = new Date()
       const date =
-        publishedDate && isCustomDate
-          ? formatDate(publishedDate)
-          : firstPublishedAt
-          ? formatDate(firstPublishedAt)
-          : 'Not Published'
+        publishedDate && isCustomDate ? new Date(publishedDate) : firstPublishedAt ? new Date(firstPublishedAt) : null
+
+      const displayDate = date && date <= currentDate ? formatDate(date) : 'Not Published'
+
       const ingressBlock = (description || []).find((ingressBlock) => ingressBlock._type === 'block')
       return {
         title,
-        subtitle: `Published date: ${date}`,
+        subtitle: `Published date: ${displayDate}`,
         description: ingressBlock
           ? ingressBlock.children
               .filter((child) => child._type === 'span')
