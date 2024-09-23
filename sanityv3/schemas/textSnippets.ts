@@ -16,8 +16,8 @@ export const groups = {
 }
 const snippets: textSnippet = {
   country_code_format: {
-    title: 'e.g. +47',
-    defaultValue: 'e.g. +47',
+    title: 'Enter country code with phone number',
+    defaultValue: 'Enter  country code with phone number',
     group: groups.form,
   },
   all_fields_mandatory: {
@@ -667,6 +667,16 @@ const snippets: textSnippet = {
     defaultValue: 'Reopen the form',
     group: groups.form,
   },
+  form_validation_maxChars: {
+    title: 'Max X chars',
+    defaultValue: 'Max {maxChars} characters',
+    group: groups.form,
+  },
+  form_antirobot_validation_required: {
+    title: 'Anti-Robot verification is required',
+    defaultValue: 'Anti-Robot verification is required',
+    group: groups.form,
+  },
   newsroom_topic_filter: {
     title: 'Topic filter heading',
     defaultValue: 'Topic',
@@ -747,6 +757,11 @@ const snippets: textSnippet = {
   switch_to: {
     title: 'Switch to',
     defaultValue: 'Switch to',
+    group: groups.others,
+  },
+  select_all: {
+    title: 'Select all',
+    defaultValue: 'Select all',
     group: groups.others,
   },
 }

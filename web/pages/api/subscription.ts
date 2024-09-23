@@ -37,7 +37,7 @@ const authenticate = async () => {
   return { apiSecret, instId }
 }
 
-const createSignUpRequest = async (loginResult: LoginResult, formParameters: SubscribeFormParameters) => {
+/* const createSignUpRequest = async (loginResult: LoginResult, formParameters: SubscribeFormParameters) => {
   const additionalParameters = `
   {
     "stock_market": "${formParameters.stockMarketAnnouncements ? 'Y' : 'N'}",
@@ -66,7 +66,7 @@ const createSignUpRequest = async (loginResult: LoginResult, formParameters: Sub
     }
   })
   return response.statusCode == 200
-}
+} */
 
 const createDistributeRequest = async (loginResult: LoginResult, parameters: NewsDistributionParameters) => {
   const envelope = `<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"><s:Body><Subscription___Distribute xmlns="http://tempuri.org/"><clientSecret>${clientSecret}</clientSecret><apiSecret>${loginResult.apiSecret}</apiSecret><instId>${loginResult.instId}</instId><timeStamp>${parameters.timeStamp}</timeStamp><Title><![CDATA[${parameters.title}]]></Title><Ingress><![CDATA[${parameters.ingress}]]></Ingress><newsURL><![CDATA[${parameters.link}]]></newsURL><newsType><![CDATA[${parameters.newsType}]]></newsType><language><![CDATA[${parameters.languageCode}]]></language><additionalParams/></Subscription___Distribute></s:Body></s:Envelope>`
@@ -97,11 +97,11 @@ const createDistributeRequest = async (loginResult: LoginResult, parameters: New
   return response.statusCode == 200
 }
 
-export const signUp = async (formParameters: SubscribeFormParameters) => {
+/* export const signUp = async (formParameters: SubscribeFormParameters) => {
   const loginResult = await authenticate()
   if (loginResult.apiSecret != '' && loginResult.instId != '') return createSignUpRequest(loginResult, formParameters)
   else return false
-}
+} */
 
 export const distribute = async (parameters: NewsDistributionParameters) => {
   const loginResult = await authenticate()
