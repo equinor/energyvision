@@ -3,7 +3,7 @@ import { chevron_left, chevron_right, first_page, last_page } from '@equinor/eds
 import { useContext, useEffect, useRef } from 'react'
 import { usePagination, UsePaginationProps } from 'react-instantsearch'
 import { usePrefersReducedMotion } from '../../../../common/hooks/usePrefersReducedMotion'
-import { PaginationContext } from './PaginationContext'
+import { PaginationContext } from '../../../../common/contexts/PaginationContext'
 import { PaginationItem } from './PaginationItem'
 import envisTwMerge from '../../../../twMerge'
 import { useIntl } from 'react-intl'

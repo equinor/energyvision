@@ -1,32 +1,40 @@
 import {
-  allNewsDocuments,
   getNewsByCountryAndAnotherCriteria,
   getNewsBySingleCriteria,
   getNewsByThreeCriteria,
   getNewsByTopicAndAnotherCriteria,
   getNewsByYearAndAnotherCriteria,
+  getNewsDocuments,
 } from '../../../lib/queries/newsroom'
 import { sanityClient } from '../../../lib/sanity.server'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { getNameFromLocale } from '../../../lib/localization'
 
-const getGroqCombo = (isSingle: boolean, isTripple: boolean, isTopic: boolean, isCountry: boolean, isYear: boolean) => {
+const getGroqCombo = (
+  isSingle: boolean,
+  isTripple: boolean,
+  isTopic: boolean,
+  isCountry: boolean,
+  isYear: boolean,
+  hasFirstId?: boolean,
+  hasLastId?: boolean,
+) => {
   if (isSingle) {
-    return getNewsBySingleCriteria
+    return getNewsBySingleCriteria(hasFirstId, hasLastId)
   }
   if (isTripple) {
-    return getNewsByThreeCriteria
+    return getNewsByThreeCriteria(hasFirstId, hasLastId)
   }
   if (isTopic) {
-    return getNewsByTopicAndAnotherCriteria
+    return getNewsByTopicAndAnotherCriteria(hasFirstId, hasLastId)
   }
   if (isCountry) {
-    return getNewsByCountryAndAnotherCriteria
+    return getNewsByCountryAndAnotherCriteria(hasFirstId, hasLastId)
   }
   if (isYear) {
-    return getNewsByYearAndAnotherCriteria
+    return getNewsByYearAndAnotherCriteria(hasFirstId, hasLastId)
   }
-  return allNewsDocuments
+  return getNewsDocuments(hasFirstId, hasLastId)
 }
 const isEmpty = (arr: (string | undefined)[]) => {
   return arr?.length === 0
@@ -47,7 +55,13 @@ export const formatNewsroomQueryFilter = (query: any) => {
   }
 }
 
-export const findGroqOnNewsroomFilters = (topic: string[], country: string[], year: string[]) => {
+export const findGroqOnNewsroomFilters = (
+  topic: string[],
+  country: string[],
+  year: string[],
+  hasFirstId?: boolean,
+  hasLastId?: boolean,
+) => {
   const isSingle = [topic, country, year].filter((arr) => !isEmpty(arr))?.length === 1
   const isTripple = [topic, country, year].filter((arr) => !isEmpty(arr))?.length === 3
   const isTopic = topic?.length > 0
@@ -57,7 +71,7 @@ export const findGroqOnNewsroomFilters = (topic: string[], country: string[], ye
   console.log(
     `isSingle:${isSingle}, isTripple: ${isTripple}, isTopic:${isTopic}, isCountry:${isCountry}, isYear:${isYear}`,
   )
-  const groqQuery = getGroqCombo(isSingle, isTripple, isTopic, isCountry, isYear)
+  const groqQuery = getGroqCombo(isSingle, isTripple, isTopic, isCountry, isYear, hasFirstId, hasLastId)
 
   return groqQuery
 }

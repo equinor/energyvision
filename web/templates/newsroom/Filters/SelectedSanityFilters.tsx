@@ -1,13 +1,13 @@
 import { TransformableIcon } from '../../../icons/TransformableIcon'
 import { isModifierClick } from '../../../pageComponents/shared/search/simplePagination/PaginationItem'
-import { forwardRef, HTMLAttributes } from 'react'
+import { forwardRef, HTMLAttributes, useMemo } from 'react'
 import { close_circle_outlined, close } from '@equinor/eds-icons'
 import { Typography } from '@core/Typography'
 import { FormattedMessage } from 'react-intl'
 import envisTwMerge from '../../../twMerge'
 import { SanityNewsTag } from '../../../types/types'
-import { SearchTags } from '../Newsroom'
-import { TagsProps, tagVariants } from './NewsroomSanityFilters'
+import { SearchTags, tagVariants } from '../Newsroom'
+import { TagsProps } from './NewsroomSanityFilters'
 
 type SelectedSanityFiltersProps = {
   search: SearchTags
@@ -20,27 +20,29 @@ const SelectedSanityFilters = forwardRef<HTMLDivElement, SelectedSanityFiltersPr
   { search, tags, className = '', onRemove, onClear },
   ref,
 ) {
-  const flattenedTags: SanityNewsTag[] = tags
-    ? Object.keys(tags).reduce(function (r, k) {
-        //@ts-ignore: TODO
-        return r.concat(tags[k])
-      }, [])
-    : []
-
-  const flattenedItems = Object.entries(search)
-    ?.map(([key, value]) => {
-      return value.map((v) => {
-        return {
+  console.log('search', search)
+  const selectedItems = useMemo(() => {
+    const flattenedTags: SanityNewsTag[] = tags
+      ? Object.keys(tags).reduce(function (r, k) {
           //@ts-ignore: TODO
-          label: flattenedTags.find((t: SanityNewsTag) => t.key === v).title ?? '-',
-          key: v,
-          filterName: key as tagVariants,
-        }
+          return r.concat(tags[k])
+        }, [])
+      : []
+    return Object.entries(search)
+      ?.map(([key, value]) => {
+        return value.map((v) => {
+          return {
+            //@ts-ignore: TODO
+            label: flattenedTags.find((t: SanityNewsTag) => t.key === v).title ?? '-',
+            key: v,
+            filterName: key as tagVariants,
+          }
+        })
       })
-    })
-    .flatMap((item) => item)
+      .flatMap((item) => item)
+  }, [search, tags])
 
-  return flattenedItems?.length > 0 ? (
+  return selectedItems?.length > 0 ? (
     <div ref={ref} className={envisTwMerge('border border-norwegian-woods-100 p-4 flex flex-col gap-2', className)}>
       <div className="flex justify-between">
         <Typography as="h2" variant="h6" className="">
@@ -56,7 +58,7 @@ const SelectedSanityFilters = forwardRef<HTMLDivElement, SelectedSanityFiltersPr
         </button>
       </div>
       <ul className="flex flex-wrap gap-4">
-        {flattenedItems.map((item) => (
+        {selectedItems.map((item) => (
           <li key={item.key} className="">
             <button
               type="button"

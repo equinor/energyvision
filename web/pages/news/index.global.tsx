@@ -8,6 +8,7 @@ import {
   allNewsDocuments,
   allNewsTopicTags,
   allNewsYearTags,
+  getNewsDocuments,
   newsroomQuery,
 } from '../../lib/queries/newsroom'
 import getIntl from '../../common/helpers/getIntl'
@@ -131,13 +132,12 @@ export const getServerSideProps: GetServerSideProps = async ({ req, preview = fa
     newsList = data
   } else {
     const { data } = await getNewsroomData({
-      query: allNewsDocuments,
+      query: getNewsDocuments(),
       queryParams,
     })
     newsList = data
   }
   const sortedNewsList = newsList.sort((a: any, b: any) => new Date(b.publishDateTime) - new Date(a.publishDateTime))
-  console.log('sortedNewsList', sortedNewsList)
 
   return {
     props: {

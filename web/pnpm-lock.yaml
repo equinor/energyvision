@@ -112,9 +112,6 @@ dependencies:
   next-seo:
     specifier: ^6.0.0
     version: 6.0.0(next@13.5.6)(react-dom@18.3.1)(react@18.3.1)
-  nuqs:
-    specifier: 1.19.1
-    version: 1.19.1(next@13.5.6)
   only-allow:
     specifier: ^1.1.1
     version: 1.1.1
@@ -11405,10 +11402,6 @@ packages:
       through2: 3.0.2
     dev: false
 
-  /mitt@3.0.1:
-    resolution: {integrity: sha512-vKivATfr97l2/QBCYAkXYDbrIWPM2IIKEl7YPhjCvKlG3kE2gm+uBo6nEXK3M5/Ffh/FLpKExzOQ3JJoJGFKBw==}
-    dev: false
-
   /mkdirp-classic@0.5.3:
     resolution: {integrity: sha512-gKLcREMhtuZRwRAfqP3RFW+TK4JqApVBtOIftVgjuABpAtpxhPGaDcfvbhNvD0B8iD1oUr/txX35NjcaY6Ns/A==}
     dev: false
@@ -11684,15 +11677,6 @@ packages:
     resolution: {integrity: sha512-lqjrjmaOoAnWfMmBPL+XNnynZh2+swxiX3WUE0s4yEHI6m+AwrK2UZOimIRl3X/4QctVqS8AiZjFqyOGrMXb/w==}
     dependencies:
       boolbase: 1.0.0
-    dev: false
-
-  /nuqs@1.19.1(next@13.5.6):
-    resolution: {integrity: sha512-oixldNThB1wbu6B5K961++7wpTz/EZFPWnraGmIQhibDT+YxRJNplWMIoPJgL4dlsiSDVI5bbUWKpzsIWVh3Pg==}
-    peerDependencies:
-      next: '>=13.4 <14.0.2 || ^14.0.3'
-    dependencies:
-      mitt: 3.0.1
-      next: 13.5.6(@babel/core@7.21.4)(react-dom@18.3.1)(react@18.3.1)
     dev: false
 
   /nwsapi@2.2.12:

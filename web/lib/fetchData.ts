@@ -53,6 +53,8 @@ type NewsroomQueryParams = {
   tags?: string[]
   countryTags?: string[]
   years?: string[]
+  index?: number
+  lastId?: string
 }
 export const getNewsroomData = async (
   fetchQuery: { query: string; queryParams: NewsroomQueryParams },
