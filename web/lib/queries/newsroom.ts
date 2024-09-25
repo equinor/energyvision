@@ -6,59 +6,13 @@ import { lastUpdatedTimeQuery, publishDateTimeQuery } from './common/publishDate
 import { seoAndSomeFields } from './common/seoAndSomeFields'
 import slugsForNewsAndMagazine from './slugsForNewsAndMagazine'
 
-// need to order this on _id because of pagination
-export const allNewsDocuments = /* groq */ `
-*[_type == "news" && ${sameLang} && ${noDrafts} ] | order(_id)[0...50] {
-"id": _id,
-"updatedAt": _updatedAt,
-title,
-heroImage,
-"tags":tags[]->{
-  "label": key.current
-},
-"countryTags":countryTags[]->{
-  "label": key.current
-},
-"publishDateTime": ${publishDateTimeQuery},
-${slugsForNewsAndMagazine},
-${ingressForNewsQuery},
-}`
-
-//&& (${publishDateTimeQuery} < $lastPublishedAt || (${publishDateTimeQuery} == $lastPublishedAt && _id < $lastId))
-const prevDirectionFilter = /* groq */ `
-&& _id < $lastId
-`
-//&& (${publishDateTimeQuery} > $lastPublishedAt || (${publishDateTimeQuery} == $lastPublishedAt && _id > $lastId))
-const nextDirectionFilter = /* groq */ `
-&& _id > $lastId
-`
-// dir
-export const getNewsDocuments = (hasFirstId = false, hasLastId = false) => /* groq */ `
-  *[_type == "news" && ${sameLang} && ${noDrafts}
-  ${hasLastId ? nextDirectionFilter : ''}
-  ${hasFirstId ? prevDirectionFilter : ''}] | order(_id)[0...20] {
-  "id": _id,
-  "updatedAt": _updatedAt,
-  title,
-  heroImage,
-  "tags":tags[]->{
-    "label": key.current
-  },
-  "countryTags":countryTags[]->{
-    "label": key.current
-  },
-  "publishDateTime": ${publishDateTimeQuery},
-  ${slugsForNewsAndMagazine},
-  ${ingressForNewsQuery},
-  }`
-
 //Order these after connecting articles, can find this in groq too?
 export const allNewsTopicTags = /* groq */ `
 *[_type == "tag" && ${noDrafts}]{
 "id": _id,
 "key": key.current,
 "title":title[$lang],
-"connectedNews": count(*[_type=='news' && references(^._id)])
+"connectedNews": count(*[_type=='news' && ${sameLang} && ${noDrafts} && references(^._id)])
 }`
 
 export const allNewsCountryTags = /* groq */ `
@@ -66,11 +20,11 @@ export const allNewsCountryTags = /* groq */ `
 "id": _id,
 "key": key.current,
 "title":title[$lang],
-"connectedNews": count(*[_type=='news' && references(^._id)])
+"connectedNews": count(*[_type=='news' && ${sameLang} && ${noDrafts} && references(^._id)])
 }`
 
 export const allNewsYearTags = /* groq */ `{
-    "newsYears": *[_type == "news" && ${sameLang} ] | order(${publishDateTimeQuery} desc)
+    "newsYears": *[_type == "news" && ${sameLang} && ${noDrafts} ] | order(${publishDateTimeQuery} desc)
     {"years":string::split(${publishDateTimeQuery}, '-')[0]}.years,
   }.newsYears`
 
@@ -94,16 +48,55 @@ export const newsroomQuery = /* groq */ `
     "fallbackImages": imageThumbnailFallbacks[]{...}
   }`
 
-export const getNewsBySingleCriteria = (hasFirstId = false, hasLastId = false) => /* groq */ `
+export const allNewsDocuments = /* groq */ `
+*[_type == "news" && ${sameLang} && ${noDrafts} ] | order(${publishDateTimeQuery} desc)[0...20] {
+"id": _id,
+"updatedAt": _updatedAt,
+title,
+heroImage,
+"tags":tags[]->{
+  "label": key.current
+},
+"countryTags":countryTags[]->{
+  "label": key.current
+},
+"publishDateTime": ${publishDateTimeQuery},
+${slugsForNewsAndMagazine},
+${ingressForNewsQuery},
+}`
+
+const topicFilter = /* groq */ `
+&& count(tags[_ref in $tags[]]) > 0
+`
+const countryFilter = /* groq */ `
+&& count(countryTags[_ref in $countryTags[]]) > 0
+`
+const yearFilter = /* groq */ `
+&& string::split(${publishDateTimeQuery},'-')[0] in $years
+`
+//&& (${publishDateTimeQuery} < $lastPublishedAt || (${publishDateTimeQuery} == $lastPublishedAt && _id < $lastId))
+const prevDirectionFilter = /* groq */ `
+&& (${publishDateTimeQuery} < $lastPublishedAt || (${publishDateTimeQuery} == $lastPublishedAt && _id < $lastId))
+`
+//&& (${publishDateTimeQuery} > $lastPublishedAt || (${publishDateTimeQuery} == $lastPublishedAt && _id > $lastId))
+const nextDirectionFilter = /* groq */ `
+&& (${publishDateTimeQuery} > $lastPublishedAt || (${publishDateTimeQuery} == $lastPublishedAt && _id > $lastId))
+`
+
+export const getNewsByFilters = (
+  hasTopic = false,
+  hasCountry = false,
+  hasYear = false,
+  hasFirstId = false,
+  hasLastId = false,
+) => /* groq */ `
   *[_type == 'news' && ${sameLang} && ${noDrafts}
   ${hasLastId ? nextDirectionFilter : ''}
   ${hasFirstId ? prevDirectionFilter : ''}
-  &&  
-  ( count(tags[_ref in $tags[]]) > 0 || 
-    count(countryTags[_ref in $countryTags[]]) > 0 || 
-    string::split(${publishDateTimeQuery},'-')[0] match $years[]
-  )
-  ] | order(_id)[0...20]{
+  ${hasTopic ? topicFilter : ''}
+  ${hasCountry ? countryFilter : ''}
+  ${hasYear ? yearFilter : ''}
+  ] | order(${publishDateTimeQuery} desc)[0...20]{
     "type": _type,
     "id": _id,
     "updatedAt":  ${lastUpdatedTimeQuery},
@@ -112,85 +105,11 @@ export const getNewsBySingleCriteria = (hasFirstId = false, hasLastId = false) =
     "publishDateTime": ${publishDateTimeQuery},
     "slug": slug.current,
     ${ingressForNewsQuery},
-  }
-`
-export const getNewsByTopicAndAnotherCriteria = (hasFirstId = false, hasLastId = false) => /* groq */ `
-  *[_type == 'news' && ${sameLang} && ${noDrafts}
-  ${hasLastId ? nextDirectionFilter : ''}
-  ${hasFirstId ? prevDirectionFilter : ''} &&
-  ( count(tags[_ref in $tags[]]) > 0 && 
-    (string::split(${publishDateTimeQuery},'-')[0] match $years[] ||
-      count(countryTags[_ref in $countryTags[]]) > 0)
-  )
-  ] | order(_id)[0...20]{
-    "type": _type,
-    "id": _id,
-    "updatedAt":  ${lastUpdatedTimeQuery},
-    title,
-    heroImage,
-    "publishDateTime": ${publishDateTimeQuery},
-    "slug": slug.current,
-    ${ingressForNewsQuery},
-  }
-`
-export const getNewsByCountryAndAnotherCriteria = (hasFirstId = false, hasLastId = false) => /* groq */ `
-  *[_type == 'news' && ${sameLang} && ${noDrafts}
-  ${hasLastId ? nextDirectionFilter : ''}
-  ${hasFirstId ? prevDirectionFilter : ''}
-  &&
-  ( count(countryTags[_ref in $countryTags[]]) > 0 && 
-    (string::split(${publishDateTimeQuery},'-')[0] match $years[] ||
-      count(tags[_ref in $tags[]]) > 0)
-  )
-  ] | order(_id)[0...20]{
-    "type": _type,
-    "id": _id,
-    "updatedAt":  ${lastUpdatedTimeQuery},
-    title,
-    heroImage,
-    "publishDateTime": ${publishDateTimeQuery},
-    "slug": slug.current,
-    ${ingressForNewsQuery},
-  }
-`
-export const getNewsByYearAndAnotherCriteria = (hasFirstId = false, hasLastId = false) => /* groq */ `
-  *[_type == 'news' && ${sameLang} && ${noDrafts}
-  ${hasLastId ? nextDirectionFilter : ''}
-  ${hasFirstId ? prevDirectionFilter : ''} 
-  &&  
-  ( string::split(${publishDateTimeQuery},'-')[0] match $years[] && 
-    (count(countryTags[_ref in $countryTags[]]) > 0 || 
-    count(tags[_ref in $tags[]]) > 0
-    )
-  )
-  ]| order(_id)[0...20]{
-    "type": _type,
-    "id": _id,
-    "updatedAt":  ${lastUpdatedTimeQuery},
-    title,
-    heroImage,
-    "publishDateTime": ${publishDateTimeQuery},
-    "slug": slug.current,
-    ${ingressForNewsQuery},
-  }
-`
-export const getNewsByThreeCriteria = (hasFirstId = false, hasLastId = false) => /* groq */ `
-  *[_type == 'news' && ${sameLang} && ${noDrafts}
-  ${hasLastId ? nextDirectionFilter : ''}
-  ${hasFirstId ? prevDirectionFilter : ''}
-  &&  
-  (string::split(${publishDateTimeQuery},'-')[0] match $years[] &&
-    count(tags[_ref in $tags[]]) > 0 && 
-    count(countryTags[_ref in $countryTags[]]) > 0
-  )
-  ]| order(_id)[0...20]{
-    "type": _type,
-    "id": _id,
-    "updatedAt":  ${lastUpdatedTimeQuery},
-    title,
-    heroImage,
-    "publishDateTime": ${publishDateTimeQuery},
-    "slug": slug.current,
-    ${ingressForNewsQuery},
+    "tags":tags[]->{
+    "label": key.current
+  },
+  "countryTags":countryTags[]->{
+    "label": key.current
+  },
   }
 `

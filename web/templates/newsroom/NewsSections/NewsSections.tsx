@@ -11,10 +11,11 @@ type NewsSectionsProps = {
   fallbackImages?: SanityImageObject[]
   news?: NewsRoomNewsItem[]
   hasQuickSearch: boolean
+  search?: any
 } & React.ComponentProps<'div'>
 
 const NewsSections = forwardRef<HTMLDivElement, NewsSectionsProps>(function NewsSections(
-  { fallbackImages, className = '', news, hasQuickSearch = false },
+  { fallbackImages, className = '', news, search, hasQuickSearch = false },
   ref,
 ) {
   const { items } = useHits()
@@ -54,6 +55,7 @@ const NewsSections = forwardRef<HTMLDivElement, NewsSectionsProps>(function News
             return index === 0 ? (
               <NewsHeadliner
                 key={item.id}
+                search={search}
                 data={item}
                 {...(!item?.heroImage?.image?.asset &&
                   fallbackImages && {
@@ -64,6 +66,7 @@ const NewsSections = forwardRef<HTMLDivElement, NewsSectionsProps>(function News
               <NewsItem
                 key={item.id}
                 data={item}
+                search={search}
                 {...(!item?.heroImage?.image?.asset &&
                   fallbackImages && {
                     fallbackImage: fallbackImages[Math.floor(Math.random() * fallbackImages?.length)],

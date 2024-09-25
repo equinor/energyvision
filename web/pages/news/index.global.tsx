@@ -5,10 +5,10 @@ import Footer from '../../pageComponents/shared/Footer'
 import Header from '../../pageComponents/shared/Header'
 import {
   allNewsCountryTags,
-  allNewsDocuments,
   allNewsTopicTags,
   allNewsYearTags,
-  getNewsDocuments,
+  getNewsByFilters,
+  allNewsDocuments,
   newsroomQuery,
 } from '../../lib/queries/newsroom'
 import getIntl from '../../common/helpers/getIntl'
@@ -17,7 +17,7 @@ import { defaultLanguage } from '../../languages'
 import { AlgoliaIndexPageType, NewsRoomPageType } from '../../types'
 import { getComponentsData, getNewsroomData } from '../../lib/fetchData'
 import NewsRoomTemplate from '@templates/newsroom/Newsroom'
-import { findGroqOnNewsroomFilters, formatNewsroomQueryFilter } from 'pages/api/news/selection'
+import { formatNewsroomQueryFilter, isNotEmpty } from '../../pages/api/news/selection'
 
 export default function NewsRoom({ data }: AlgoliaIndexPageType) {
   const defaultLocale = defaultLanguage.locale
@@ -118,13 +118,16 @@ export const getServerSideProps: GetServerSideProps = async ({ req, preview = fa
 
   let newsList = []
   if (query) {
+    console.log('query', query)
     const { topic, country, year } = formatNewsroomQueryFilter(query)
+    const topicIds = topic?.map((t) => topicTags.find((tagTopic: any) => tagTopic.key === t)?.id)
+    const countryIds = country?.map((t) => countryTags.find((tagCountry: any) => tagCountry.key === t)?.id)
     const { data } = await getNewsroomData({
-      query: findGroqOnNewsroomFilters(topic, country, year),
+      query: getNewsByFilters(isNotEmpty(topic), isNotEmpty(country), isNotEmpty(year), false, false),
       queryParams: {
         ...queryParams,
-        tags: topic,
-        countryTags: country,
+        tags: topicIds,
+        countryTags: countryIds,
         years: year,
       },
     })
@@ -132,12 +135,12 @@ export const getServerSideProps: GetServerSideProps = async ({ req, preview = fa
     newsList = data
   } else {
     const { data } = await getNewsroomData({
-      query: getNewsDocuments(),
+      query: allNewsDocuments,
       queryParams,
     })
     newsList = data
   }
-  const sortedNewsList = newsList.sort((a: any, b: any) => new Date(b.publishDateTime) - new Date(a.publishDateTime))
+  console.log('newsList', newsList)
 
   return {
     props: {
@@ -147,12 +150,13 @@ export const getServerSideProps: GetServerSideProps = async ({ req, preview = fa
         intl,
         pageData: {
           ...pageData,
+          query,
           tags: {
             topic: topicTags,
             country: countryTags,
             year: uniqueYears,
           },
-          news: sortedNewsList,
+          news: newsList,
         },
         slug,
       },

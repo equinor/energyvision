@@ -1,6 +1,6 @@
 import { forwardRef, useRef, useState } from 'react'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
-import type { NewsRoomPageType, SanityNewsTag } from '../../types'
+import type { NewsRoomNewsItem, NewsRoomPageType, SanityNewsTag } from '../../types'
 import { Heading, Typography } from '@core/Typography'
 import { ResourceLink } from '@core/Link'
 import { getIsoFromLocale, getNameFromLocale } from '../../lib/localization'
@@ -24,6 +24,7 @@ import { SimpleAlgoliaPagination } from './SimpleAlgoliaPagination'
 import useRouterClearParams from '../../pageComponents/hooks/useRouterClearParams'
 import NewsSectionsSkeleton from './NewsSections/NewsSectionsSkeleton'
 import { PaginationContextProvider } from '../../common/contexts/PaginationContext'
+import { toArray } from '../../pages/api/news/selection'
 
 type NewsRoomTemplateProps = {
   locale?: string
@@ -62,6 +63,10 @@ const queriedSearchClient: SearchClient = {
   },
 }
 
+const sortNews = (news: NewsRoomNewsItem[]) => {
+  return news.sort((a: any, b: any) => new Date(b.publishDateTime) - new Date(a.publishDateTime))
+}
+
 const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function NewsRoomTemplate(
   { locale, pageData, slug },
   ref,
@@ -76,6 +81,7 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
     fallbackImages,
     tags,
     news = [],
+    query,
   } = pageData || {}
   const intl = useIntl()
   const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
@@ -86,21 +92,20 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
   const [isLoading, setIsLoading] = useState(false)
   const replaceUrl = useRouterReplace()
   const clearUrlParams = useRouterClearParams()
-  console.log('news', news)
   const [lastId, setLastId] = useState(news.length > 0 ? news[news?.length - 1]?.id : null)
   const [firstId, setFirstId] = useState(news.length > 0 ? news[0]?.id : null)
-  /*   const [firstPublished, setFirstPublished] = useState(news[0]?.firstPublishedAt ?? news[0]?.publishDateTime ?? null)
+  const [firstPublished, setFirstPublished] = useState(news[0]?.firstPublishedAt ?? news[0]?.publishDateTime ?? null)
   const [lastPublished, setLastPublished] = useState(
     news[news?.length - 1]?.firstPublishedAt ?? news[news?.length - 1]?.publishDateTime ?? null,
-  ) */
+  )
   const [newsList, setNewsList] = useState(news ?? [])
   const [search, setSearch] = useState<SearchTags>({
-    topic: [],
-    country: [],
-    year: [],
+    topic: toArray(query?.topic),
+    country: toArray(query?.country),
+    year: toArray(query?.year),
   })
-  console.log('news', news)
-  console.log('search', search)
+  console.log('NewsRoomTemplate news', news)
+  console.log('NewsRoomTemplate search', search)
 
   const updateSearchURL = (search: SearchTags) => {
     if (search.topic?.length === 0 && search.country?.length === 0 && search.year.length === 0) {
@@ -145,13 +150,21 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
     setNewsList(filteredNews ?? [])
     setFirstId(filteredNews?.length > 0 ? filteredNews[0].id : null)
     setLastId(filteredNews?.length > 0 ? filteredNews[filteredNews.length - 1].id : null)
+    setFirstPublished(
+      filteredNews?.length > 0 ? filteredNews[0]?.firstPublishedAt ?? filteredNews[0]?.publishDateTime : null,
+    )
+    setLastPublished(
+      filteredNews?.length > 0
+        ? filteredNews[filteredNews?.length - 1]?.firstPublishedAt ??
+            filteredNews[filteredNews?.length - 1]?.publishDateTime
+        : null,
+    )
   }
   const getFilteredNews = async (search: { topic: string[]; country: string[]; year: string[] }) => {
     const query = formatQuery(search)
     const urlParams = stringify(query)
-
+    console.log('get selection news')
     const res = await fetch(`/api/news/selection?${urlParams}`)
-    console.log('get news from sanity', res)
     let filteredNews = []
     try {
       const response = await res.json()
@@ -163,15 +176,17 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
     setIsLoading(false)
   }
 
-  const getNextNews = async (search: { topic: string[]; country: string[]; year: string[] }) => {
+  const getNextNews = async () => {
     setIsLoading(true)
     let query = formatQuery(search)
+    console.log('getNextNews query', query)
     query = {
       ...query,
       lastId: lastId,
+      lastPublishedAt: lastPublished,
     }
     const urlParams = stringify(query)
-
+    console.log('get next news')
     const res = await fetch(`/api/news/next?${urlParams}`)
     console.log('get news from sanity', res)
     let filteredNews = []
@@ -184,15 +199,16 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
     setSearchStates(filteredNews)
     setIsLoading(false)
   }
-  const getPreviousNews = async (search: { topic: string[]; country: string[]; year: string[] }) => {
+  const getPreviousNews = async () => {
     setIsLoading(true)
     let query = formatQuery(search)
     query = {
       ...query,
       lastId: firstId,
+      lastPublishedAt: firstPublished,
     }
     const urlParams = stringify(query)
-
+    console.log('get previous news')
     const res = await fetch(`/api/news/previous?${urlParams}`)
     console.log('get news from sanity', res)
     let filteredNews = []
@@ -214,6 +230,7 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
       year: [],
     })
     clearUrlParams()
+    console.log('get all news')
     const res = await fetch(`/api/news/all`)
     console.log('get news from sanity', res)
     let filteredNews = []
@@ -358,7 +375,12 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
                   <NewsSectionsSkeleton />
                 ) : (
                   <>
-                    <NewsSections fallbackImages={fallbackImages} news={newsList} hasQuickSearch={hasQuickSearch} />
+                    <NewsSections
+                      search={search}
+                      fallbackImages={fallbackImages}
+                      news={newsList}
+                      hasQuickSearch={hasQuickSearch}
+                    />
                     {hasQuickSearch ? (
                       <SimpleAlgoliaPagination />
                     ) : (

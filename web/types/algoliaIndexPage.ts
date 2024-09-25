@@ -33,8 +33,12 @@ export type NewsRoomNewsItem = {
   slug: string
   title: string
   publishDateTime?: string
+  firstPublishedAt?: string
   heroImage: ImageWithCaptionData
   ingress?: string
+  /* Temp - to control filter */
+  tags?: any
+  countryTags?: any
 }
 
 export type NewsRoomPageType = {
@@ -46,6 +50,7 @@ export type NewsRoomPageType = {
   subscriptionLinkTitle?: string
   localNewsPages?: LinkData[]
   fallbackImages?: SanityImageObject[]
+  query: any
   tags: {
     topic: SanityNewsTag[]
     country: SanityNewsTag[]

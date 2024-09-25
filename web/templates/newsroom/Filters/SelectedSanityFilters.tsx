@@ -20,7 +20,7 @@ const SelectedSanityFilters = forwardRef<HTMLDivElement, SelectedSanityFiltersPr
   { search, tags, className = '', onRemove, onClear },
   ref,
 ) {
-  console.log('search', search)
+  console.log('SelectedSanityFilters search', search)
   const selectedItems = useMemo(() => {
     const flattenedTags: SanityNewsTag[] = tags
       ? Object.keys(tags).reduce(function (r, k) {
