@@ -124,6 +124,7 @@ export type BlockProps = {
   /** Use to clamp lines on number */
   clampLines?: number
   includeFootnotes?: boolean
+  noInvert?: boolean
 } & PortableTextProps
 
 const inlineBlockTypes = ['block', 'positionedInlineImage', 'pullQuote', 'basicIframe']
@@ -139,6 +140,7 @@ export default function Blocks({
   id,
   clampLines,
   includeFootnotes = false,
+  noInvert = false,
 }: BlockProps) {
   let div: PortableTextBlock[] = []
   return (
@@ -158,7 +160,11 @@ export default function Blocks({
             div = []
 
             return (
-              <div key={block._key} className={twMerge(`prose ${proseClassName} dark:prose-invert`, className)} id={id}>
+              <div
+                key={block._key}
+                className={twMerge(`prose ${proseClassName} ${noInvert ? '' : `dark:prose-invert`}`, className)}
+                id={id}
+              >
                 <PortableText
                   value={value}
                   //@ts-ignore
