@@ -82,7 +82,11 @@ export const publishDateTime = [
       Rule.custom((value: PublishDateTimeType, context: ValidationContext) => {
         const { parent } = context as { parent: PublishDateTimeType }
         if (!parent.customPublicationDate || value) {
-          return true
+          const publishedDate = new Date(value.toString())
+          const today = new Date()
+          if (publishedDate < today) {
+            return true
+          } else return 'The date must be in the past'
         } else {
           return 'Field is required'
         }
