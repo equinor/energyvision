@@ -81,20 +81,33 @@ export const publishDateTime = [
     validation: (Rule: Rule) =>
       Rule.custom((value: PublishDateTimeType, context: ValidationContext) => {
         const { parent } = context as { parent: PublishDateTimeType }
-        if (!parent.customPublicationDate || value) {
-          const publishedDate = new Date(value.toString())
-          const today = new Date()
-          const publishedDateNoTime = new Date(
-            publishedDate.getFullYear(),
-            publishedDate.getMonth(),
-            publishedDate.getDate(),
-          )
-          const todayNoTime = new Date(today.getFullYear(), today.getMonth(), today.getDate())
-          if (publishedDateNoTime <= todayNoTime) {
-            return true
-          } else return 'The date can’t be in the future'
-        } else {
+        // If customPublicationDate is false, skip validation
+        if (!parent.customPublicationDate) {
+          return true
+        }
+
+        // If customPublicationDate is true and no value is provided, return an error
+        if (!value) {
           return 'Field is required'
+        }
+
+        // Parse the selected publish date and today's date
+        const publishedDate = new Date(value.toString())
+        const today = new Date()
+
+        // Set time to 00:00:00 for both dates, so only the date part is compared
+        const publishedDateNoTime = new Date(
+          publishedDate.getFullYear(),
+          publishedDate.getMonth(),
+          publishedDate.getDate(),
+        )
+        const todayNoTime = new Date(today.getFullYear(), today.getMonth(), today.getDate())
+
+        // Allow publication if the selected date is today or in the past
+        if (publishedDateNoTime <= todayNoTime) {
+          return true // Valid date
+        } else {
+          return 'The date can’t be in the future'
         }
       }),
   },
