@@ -6,8 +6,11 @@ import sharedHeroFields from './header/sharedHeaderFields'
 import { EdsIcon } from '../../icons'
 import { paste } from '@equinor/eds-icons'
 import { lang } from './langField'
+import { withConditionalVisibility } from '../utils/withConditionalVisibility'
+import { fieldVisibilityRules } from '../utils/fieldVisibilityRules'
+import { DocumentDefinition } from 'sanity'
 
-export default {
+const pageSchema = {
   type: 'document',
   name: 'page',
   title: 'Topic page',
@@ -113,3 +116,5 @@ export default {
     },
   },
 }
+
+export default withConditionalVisibility(pageSchema as DocumentDefinition, fieldVisibilityRules)
