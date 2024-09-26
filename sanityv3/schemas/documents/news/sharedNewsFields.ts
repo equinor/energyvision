@@ -84,9 +84,15 @@ export const publishDateTime = [
         if (!parent.customPublicationDate || value) {
           const publishedDate = new Date(value.toString())
           const today = new Date()
-          if (publishedDate < today) {
+          const publishedDateNoTime = new Date(
+            publishedDate.getFullYear(),
+            publishedDate.getMonth(),
+            publishedDate.getDate(),
+          )
+          const todayNoTime = new Date(today.getFullYear(), today.getMonth(), today.getDate())
+          if (publishedDateNoTime <= todayNoTime) {
             return true
-          } else return 'The date must be in the past'
+          } else return 'The date can’t be in the future'
         } else {
           return 'Field is required'
         }
