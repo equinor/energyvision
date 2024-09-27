@@ -196,11 +196,11 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockDef
         name: 'href',
         type: 'url',
         validation: (Rule: any) =>
-          Rule.uri({ scheme: ['http', 'https', 'tel', 'mailto'] })
+          Rule.uri({ scheme: ['https', 'tel', 'mailto'] })
             .custom((value: any, context: ValidationContext) => {
               return warnHttpOrNotValidSlugExternal(value, context)
             })
-            .warning(),
+            .error(),
       },
     ],
   }
