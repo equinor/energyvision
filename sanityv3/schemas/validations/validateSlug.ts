@@ -1,6 +1,7 @@
 import { ValidationContext } from 'sanity'
 import { apiVersion } from '../../sanity.client'
 import { Flags } from '../../src/lib/datasetHelpers'
+import { isEquinorUrl } from './checkEquinorUrls'
 
 const validateIsUniqueWithinLocale = async (slug: string, context: ValidationContext) => {
   const { document, getClient } = context
@@ -42,17 +43,26 @@ export const withSlugValidation = (options: any) => {
     : options
 }
 
-const stringIsSlug = /^[a-z0-9]+(-[a-z0-9]+)*$/
-const httpRegex = /^(?:http:\/\/|).*$/
+const stringIsSlug =
+  /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&\/\/=]*)/
+const httpRegex = /^http:\/\/[^\s]+$/
 export const warnHttpOrNotValidSlugExternal = (slug: string, context: ValidationContext) => {
+  if (!slug) return true
+  if (!slug.startsWith('http')) return true // ignore mailto , tel
   const isHttp = httpRegex.test(slug)
   const validSlug = stringIsSlug.test(slug)
+  const isInvalidEquinorUrl = slug !== slug.toLowerCase() && isEquinorUrl(slug)
+
   let message = ''
   if (isHttp) {
     message = 'Use https in url. '
   }
   if (!validSlug) {
-    message = message.concat(`Should only contain lowercase letters [a-z], numbers [0-9], and dashes ("-")`)
+    message = message.concat(`Not a valid url.`)
   }
-  return isHttp || !validSlug ? message : true
+
+  if (isInvalidEquinorUrl) {
+    message = message.concat('Equinor urls should contain lowercase letters only.')
+  }
+  return isHttp || !validSlug || isInvalidEquinorUrl ? message : true
 }
