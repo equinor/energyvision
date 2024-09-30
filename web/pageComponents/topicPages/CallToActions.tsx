@@ -1,7 +1,7 @@
 import { Fragment } from 'react'
 import { List } from '@components'
-import type { LinkData } from '../../types/types'
 import { ButtonLink, ReadMoreLink } from '@core/Link'
+import type { LinkData } from '../../types/index'
 import { getUrlFromAction } from '../../common/helpers'
 import { getLocaleFromName } from '../../lib/localization'
 

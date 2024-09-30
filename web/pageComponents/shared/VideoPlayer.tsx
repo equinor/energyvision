@@ -6,7 +6,7 @@ import {
   VideoPlayerRatios,
   VideoType,
   VideoDesignOptionsType,
-} from '../../types/types'
+} from '../../types/index'
 import { BackgroundContainer } from '@components'
 import { urlFor } from '../../common/helpers'
 import IngressText from './portableText/IngressText'

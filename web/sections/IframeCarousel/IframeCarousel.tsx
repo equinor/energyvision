@@ -1,6 +1,6 @@
 import { BackgroundContainer } from '@components'
 import { Heading } from '@core/Typography'
-import type { IframeCarouselData } from '../../types/types'
+import type { IframeCarouselData } from '../../types/index'
 import { twMerge } from 'tailwind-merge'
 import { Carousel } from '@core/Carousel/Carousel'
 

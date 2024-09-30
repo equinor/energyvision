@@ -4,7 +4,7 @@ import { List, Menu } from '@components'
 import { Link } from '@core/Link'
 import { SimplePanel } from './SimplePanel'
 import { SimpleHeader } from './SimpleHeader'
-import type { SimpleGroupData } from '../../../../types/types'
+import type { SimpleGroupData } from '../../../../types/index'
 
 const { SubMenu } = Menu
 const { Item } = List

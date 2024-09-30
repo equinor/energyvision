@@ -10,7 +10,7 @@ import { Link } from '@core/Link'
 import { SimpleMenuItem } from './SimpleMenuItem'
 import { getAllSitesLink } from '../../../../common/helpers/getAllSitesLink'
 
-import type { SimpleMenuData, SimpleGroupData } from '../../../../types/types'
+import type { SimpleMenuData, SimpleGroupData } from '../../../../types/index'
 
 import { TopbarDropdown } from '../TopbarDropdown'
 import { LogoLink } from '../../LogoLink'

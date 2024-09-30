@@ -1,7 +1,7 @@
 import envisTwMerge from '../../twMerge'
 import { DisplayModes } from './Carousel'
 import { forwardRef, HTMLAttributes } from 'react'
-import { KeyNumberItemData } from '../../types/types'
+import { KeyNumberItemData } from '../../types/index'
 import KeyNumberItem from '@sections/KeyNumber/KeyNumberItem'
 
 type CarouselEventItemProps = {
