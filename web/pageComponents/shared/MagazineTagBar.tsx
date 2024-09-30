@@ -15,34 +15,6 @@ export type TagLink = {
   active: boolean
 } & AnchorHTMLAttributes<HTMLAnchorElement>
 
-const StyledLink = styled(Link).attrs((props: { $active: boolean }) => props)`
-  display: inline-block;
-  position: relative;
-  font-weight: ${(props) => (props.$active ? 'bold' : 'normal')};
-  &:hover {
-    font-weight: bold;
-  }
-
-  &:before {
-    display: block;
-    content: attr(data-title);
-    font-weight: bold;
-    height: 0;
-    overflow: hidden;
-    visibility: hidden;
-  }
-  &:after {
-    content: '';
-    position: absolute;
-    border-left: 2px solid var(--energy-red-100);
-    right: calc(var(--space-xLarge) * -0.5);
-    height: 100%;
-  }
-
-  &:last-child:after {
-    display: none;
-  }
-`
 const Wrapper = styled.div`
   display: flex;
   align-content: center;

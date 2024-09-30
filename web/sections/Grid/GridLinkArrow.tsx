@@ -5,7 +5,6 @@ import { BaseLink } from '@core/Link'
 import { getLocaleFromName } from '../../lib/localization'
 import { ArrowRight } from '../../icons'
 import { LinkData } from '../../types/index'
-import { getColorForTheme } from '../../pageComponents/shared/textTeaser/theme'
 import { forwardRef } from 'react'
 
 type GridLinkArrowProps = {

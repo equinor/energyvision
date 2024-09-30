@@ -1,4 +1,3 @@
-import { defineType, defineField } from 'sanity'
 import { configureBlockContent } from '../editors/blockContentType'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 

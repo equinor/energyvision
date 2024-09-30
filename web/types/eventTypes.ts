@@ -1,5 +1,3 @@
-import { PeopleCardData, RelatedLinksData, PortableTextBlock, SeoData, ContactListData, IFrameData } from './index'
-
 export type EventDateType = {
   date: string
   startTime?: string
