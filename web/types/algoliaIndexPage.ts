@@ -41,6 +41,12 @@ export type NewsRoomNewsItem = {
   countryTags?: any
 }
 
+export type NewsRoomTags = {
+  topic: SanityNewsTag[]
+  country: SanityNewsTag[]
+  year: SanityNewsTag[]
+}
+
 export type NewsRoomPageType = {
   seoAndSome: SeoData
   title: PortableTextBlock[]
@@ -51,11 +57,7 @@ export type NewsRoomPageType = {
   localNewsPages?: LinkData[]
   fallbackImages?: SanityImageObject[]
   query: any
-  tags: {
-    topic: SanityNewsTag[]
-    country: SanityNewsTag[]
-    year: SanityNewsTag[]
-  }
+  tags: NewsRoomTags
 }
 
 export type MagazineIndexPageType = {

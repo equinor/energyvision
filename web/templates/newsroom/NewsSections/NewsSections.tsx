@@ -28,7 +28,10 @@ const NewsSections = forwardRef<HTMLDivElement, NewsSectionsProps>(function News
       <NewsHeadliner
         key={hit.objectID}
         //@ts-ignore: TODO Hit<BaseHit> into a NewsRoomNewsItem
-        data={hit}
+        data={{
+          ...hit,
+          title: hit.pageTitle,
+        }}
         {...(!hit?.heroImage?.image?.asset &&
           fallbackImages && {
             fallbackImage: fallbackImages[Math.floor(Math.random() * fallbackImages?.length)],
@@ -38,7 +41,10 @@ const NewsSections = forwardRef<HTMLDivElement, NewsSectionsProps>(function News
       <NewsItem
         key={hit.objectID}
         //@ts-ignore: TODO Hit<BaseHit> into a NewsRoomNewsItem
-        data={hit}
+        data={{
+          ...hit,
+          title: hit.pageTitle,
+        }}
         {...(!hit?.heroImage?.image?.asset &&
           fallbackImages && {
             fallbackImage: fallbackImages[Math.floor(Math.random() * fallbackImages?.length)],

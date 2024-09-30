@@ -10,6 +10,9 @@ import {
   getNewsByFilters,
   allNewsDocuments,
   newsroomQuery,
+  allNewsTopicTagsWithFilter,
+  allNewsCountryTagsWithFilter,
+  allNewsYearTagsWithFilter,
 } from '../../lib/queries/newsroom'
 import getIntl from '../../common/helpers/getIntl'
 import { getNameFromLocale, getIsoFromLocale } from '../../lib/localization'
@@ -78,12 +81,11 @@ export const getServerSideProps: GetServerSideProps = async ({ req, preview = fa
 
   const lang = getNameFromLocale(locale)
   const intl = await getIntl(locale, false)
-
-  const queryParams = {
+  let queryParams = {
     lang,
   }
-
   const slug = req.url
+  let tags = null
 
   const { menuData, pageData, footerData } = await getComponentsData(
     {
@@ -92,55 +94,100 @@ export const getServerSideProps: GetServerSideProps = async ({ req, preview = fa
     },
     preview,
   )
-  const [{ data: topicTags }, { data: countryTags }, { data: yearTags }] = await Promise.all([
-    getNewsroomData({
-      query: allNewsTopicTags,
-      queryParams,
-    }),
-    getNewsroomData({
-      query: allNewsCountryTags,
-      queryParams,
-    }),
-    getNewsroomData({
-      query: allNewsYearTags,
-      queryParams,
-    }),
-  ])
-
-  const filteredYearTags = yearTags?.filter((n: string) => n)
-  const uniqueYears = [...new Set<string>(filteredYearTags)]?.map((year: string) => {
-    return {
-      key: year,
-      title: year,
-      connectedNews: filteredYearTags.filter((y: string) => y === year)?.length,
-    }
-  })
 
   let newsList = []
-  if (query) {
-    console.log('query', query)
+  console.log('Has query', query)
+  if (query?.topic || query?.country || query?.year) {
     const { topic, country, year } = formatNewsroomQueryFilter(query)
-    const topicIds = topic?.map((t) => topicTags.find((tagTopic: any) => tagTopic.key === t)?.id)
-    const countryIds = country?.map((t) => countryTags.find((tagCountry: any) => tagCountry.key === t)?.id)
-    const { data } = await getNewsroomData({
-      query: getNewsByFilters(isNotEmpty(topic), isNotEmpty(country), isNotEmpty(year), false, false),
-      queryParams: {
-        ...queryParams,
-        tags: topicIds,
-        countryTags: countryIds,
-        years: year,
-      },
+    const hasTopic = isNotEmpty(topic)
+    const hasCountry = isNotEmpty(country)
+    const hasYear = isNotEmpty(year)
+
+    queryParams = {
+      ...queryParams,
+      tags: topic,
+      countryTags: country,
+      years: year,
+    }
+
+    const [{ data: topicTags }, { data: countryTags }, { data: yearTags }] = await Promise.all([
+      getNewsroomData({
+        query: allNewsTopicTagsWithFilter(hasTopic, hasCountry, hasYear),
+        queryParams,
+      }),
+      getNewsroomData({
+        query: allNewsCountryTagsWithFilter(hasTopic, hasCountry, hasYear),
+        queryParams,
+      }),
+      getNewsroomData({
+        query: allNewsYearTagsWithFilter(hasTopic, hasCountry, hasYear),
+        queryParams,
+      }),
+    ])
+
+    const filteredYearTags = yearTags?.filter((n: string) => n)
+    const uniqueYears = [...new Set<string>(filteredYearTags)]?.map((year: string) => {
+      return {
+        key: year,
+        title: year,
+        connectedNews: filteredYearTags.filter((y: string) => y === year)?.length,
+      }
     })
+
+    const newsGroq = getNewsByFilters(isNotEmpty(topic), isNotEmpty(country), isNotEmpty(year), false, false)
+    console.log('Fetch news selection on', newsGroq)
+    console.log('Fetch queryparams', queryParams)
     console.log(`return news on topic ${topic.toString()}, country: ${country.toString()}, year: ${year.toString()}`)
+    const { data } = await getNewsroomData({
+      query: newsGroq,
+      queryParams,
+    })
+
     newsList = data
+    console.log('data', data)
+    tags = {
+      topic: topicTags,
+      country: countryTags,
+      year: uniqueYears,
+    }
   } else {
     const { data } = await getNewsroomData({
       query: allNewsDocuments,
       queryParams,
     })
     newsList = data
+    console.log('Has query: queryParams ', queryParams)
+
+    const [{ data: topicTags }, { data: countryTags }, { data: yearTags }] = await Promise.all([
+      getNewsroomData({
+        query: allNewsTopicTags,
+        queryParams,
+      }),
+      getNewsroomData({
+        query: allNewsCountryTags,
+        queryParams,
+      }),
+      getNewsroomData({
+        query: allNewsYearTags,
+        queryParams,
+      }),
+    ])
+
+    const filteredYearTags = yearTags?.filter((n: string) => n)
+    const uniqueYears = [...new Set<string>(filteredYearTags)]?.map((year: string) => {
+      return {
+        key: year,
+        title: year,
+        connectedNews: filteredYearTags.filter((y: string) => y === year)?.length,
+      }
+    })
+
+    tags = {
+      topic: topicTags,
+      country: countryTags,
+      year: uniqueYears,
+    }
   }
-  console.log('newsList', newsList)
 
   return {
     props: {
@@ -151,11 +198,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, preview = fa
         pageData: {
           ...pageData,
           query,
-          tags: {
-            topic: topicTags,
-            country: countryTags,
-            year: uniqueYears,
-          },
+          tags,
           news: newsList,
         },
         slug,

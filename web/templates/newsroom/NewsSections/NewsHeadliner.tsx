@@ -19,7 +19,7 @@ const NewsHeadliner = forwardRef<HTMLLIElement, NewsHeadlinerProps>(function New
   ref,
 ) {
   const { slug, title, ingress, publishDateTime, heroImage, tags, countryTags } = data
-  console.log('tags', tags)
+
   return (
     <section ref={ref} {...rest} className={envisTwMerge('', className)}>
       <BaseLink href={slug} className="group flex flex-col gap-2 pb-6">
@@ -45,11 +45,12 @@ const NewsHeadliner = forwardRef<HTMLLIElement, NewsHeadlinerProps>(function New
             {title}
           </Typography>
         )}
-        {ingress && (
+        {Array.isArray(ingress) ? (
           <Blocks value={ingress} className="text-sm max-w-prose" />
-          /*           <Typography variant="body" className="text-sm max-w-prose`">
+        ) : (
+          <Typography variant="body" className="text-sm max-w-prose`">
             {ingress}
-          </Typography> */
+          </Typography>
         )}
         <div className="pt-8 flex gap-3 text-xs">
           {tags?.map((tag: any, i: number) => {

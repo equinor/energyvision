@@ -73,7 +73,7 @@ export const SimpleAlgoliaPagination = ({
             id: 'next',
             defaultMessage: 'Next',
           })}
-          mode="previous"
+          mode="next"
           disabled={isLastPage}
           onClick={(event) => {
             if (isModifierClick(event)) {

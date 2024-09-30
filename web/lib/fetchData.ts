@@ -61,10 +61,8 @@ export const getNewsroomData = async (
   preview = false,
 ) => {
   const client = getClient(preview)
-  console.log('fetchQuery.queryParams', fetchQuery.queryParams)
   try {
     const results = await client.fetch(fetchQuery.query, fetchQuery.queryParams)
-    console.log('results from sanity', results)
     return {
       isSuccess: true,
       data: results,

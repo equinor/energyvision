@@ -6,9 +6,10 @@ import { useIntl } from 'react-intl'
 export type QuickSearchProps = {
   className?: string
   onSearch: Dispatch<SetStateAction<boolean>>
+  onClear?: () => void
 } & SearchBoxProps
 
-const QuickSearch = forwardRef<HTMLDivElement, QuickSearchProps>(function QuickSearch({ onSearch }, ref) {
+const QuickSearch = forwardRef<HTMLDivElement, QuickSearchProps>(function QuickSearch({ onSearch, onClear }, ref) {
   const intl = useIntl()
 
   return (
@@ -20,6 +21,7 @@ const QuickSearch = forwardRef<HTMLDivElement, QuickSearchProps>(function QuickS
         })}
         setIsQuickSearch={onSearch}
         placeholder={intl.formatMessage({ id: 'search_quick_search', defaultMessage: 'Quick search' })}
+        onClear={onClear}
       />
     </div>
   )

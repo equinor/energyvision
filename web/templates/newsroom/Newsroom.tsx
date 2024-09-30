@@ -1,6 +1,6 @@
 import { forwardRef, useRef, useState } from 'react'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
-import type { NewsRoomNewsItem, NewsRoomPageType, SanityNewsTag } from '../../types'
+import type { NewsRoomNewsItem, NewsRoomPageType, NewsRoomTags, SanityNewsTag } from '../../types'
 import { Heading, Typography } from '@core/Typography'
 import { ResourceLink } from '@core/Link'
 import { getIsoFromLocale, getNameFromLocale } from '../../lib/localization'
@@ -92,20 +92,26 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
   const [isLoading, setIsLoading] = useState(false)
   const replaceUrl = useRouterReplace()
   const clearUrlParams = useRouterClearParams()
-  const [lastId, setLastId] = useState(news.length > 0 ? news[news?.length - 1]?.id : null)
-  const [firstId, setFirstId] = useState(news.length > 0 ? news[0]?.id : null)
-  const [firstPublished, setFirstPublished] = useState(news[0]?.firstPublishedAt ?? news[0]?.publishDateTime ?? null)
+  const [lastId, setLastId] = useState(news?.length > 0 ? news[news?.length - 1]?.id : null)
+  const [firstId, setFirstId] = useState(news?.length > 0 ? news[0]?.id : null)
+  const [firstPublished, setFirstPublished] = useState(
+    news?.[0]?.firstPublishedAt ?? news?.[0]?.publishDateTime ?? null,
+  )
   const [lastPublished, setLastPublished] = useState(
-    news[news?.length - 1]?.firstPublishedAt ?? news[news?.length - 1]?.publishDateTime ?? null,
+    news?.[news?.length - 1]?.firstPublishedAt ?? news?.[news?.length - 1]?.publishDateTime ?? null,
   )
   const [newsList, setNewsList] = useState(news ?? [])
+  const [newsroomTags, setNewsroomTags] = useState<NewsRoomTags | undefined>(tags)
   const [search, setSearch] = useState<SearchTags>({
     topic: toArray(query?.topic),
     country: toArray(query?.country),
     year: toArray(query?.year),
   })
-  console.log('NewsRoomTemplate news', news)
-  console.log('NewsRoomTemplate search', search)
+  console.log('NewsRoom news', news)
+  console.log('NewsRoom search', search)
+  console.log('NewsRoom tags', tags)
+  console.log('NewsRoom firstPublished', firstPublished)
+  console.log('NewsRoom lastPublished', lastPublished)
 
   const updateSearchURL = (search: SearchTags) => {
     if (search.topic?.length === 0 && search.country?.length === 0 && search.year.length === 0) {
@@ -135,9 +141,11 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
     getFilteredNews(updatedSearch)
   }
   const formatQuery = (search: { topic: string[]; country: string[]; year: string[] }) => {
-    const topicIds = search?.topic?.map((t) => tags?.topic.find((tagTopic: SanityNewsTag) => tagTopic.key === t)?.id)
+    const topicIds = search?.topic?.map(
+      (t) => newsroomTags?.topic.find((tagTopic: SanityNewsTag) => tagTopic.key === t)?.id,
+    )
     const countryIds = search?.country?.map(
-      (t) => tags?.country.find((tagCountry: SanityNewsTag) => tagCountry.key === t)?.id,
+      (t) => newsroomTags?.country.find((tagCountry: SanityNewsTag) => tagCountry.key === t)?.id,
     )
     return {
       lang: getNameFromLocale(intl.locale),
@@ -161,24 +169,27 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
     )
   }
   const getFilteredNews = async (search: { topic: string[]; country: string[]; year: string[] }) => {
-    const query = formatQuery(search)
-    const urlParams = stringify(query)
+    //const query = formatQuery(search)
+    const urlParams = stringify(search)
     console.log('get selection news')
     const res = await fetch(`/api/news/selection?${urlParams}`)
-    let filteredNews = []
+    let filteredNews
+    let filteredTags
     try {
       const response = await res.json()
       filteredNews = response.news
+      filteredTags = response.tags
     } catch (e) {
       console.log('Error', e)
     }
     setSearchStates(filteredNews)
+    setNewsroomTags(filteredTags)
     setIsLoading(false)
   }
 
   const getNextNews = async () => {
     setIsLoading(true)
-    let query = formatQuery(search)
+    let query = search //formatQuery(search)
     console.log('getNextNews query', query)
     query = {
       ...query,
@@ -201,7 +212,7 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
   }
   const getPreviousNews = async () => {
     setIsLoading(true)
-    let query = formatQuery(search)
+    let query = search //formatQuery(search)
     query = {
       ...query,
       lastId: firstId,
@@ -232,16 +243,22 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
     clearUrlParams()
     console.log('get all news')
     const res = await fetch(`/api/news/all`)
-    console.log('get news from sanity', res)
-    let filteredNews = []
+    let allNews = []
+    let allTags = {}
     try {
       const response = await res.json()
-      filteredNews = response.news
+      allNews = response.news
+      allTags = response.tags
     } catch (e) {
       console.log('Error', e)
     }
-    setSearchStates(filteredNews)
+    setNewsroomTags(allTags)
+    setSearchStates(allNews)
     setIsLoading(false)
+  }
+  const handleQuickSearchClear = () => {
+    setHasQuickSearch(false)
+    handleClear()
   }
 
   // eslint-disable-next-line
@@ -325,7 +342,7 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
                 {title && <Heading value={title} as="h1" variant="h2" />}
                 {ingress && <Blocks value={ingress} />}
                 <div className="w-full flex flex-col gap-8 lg:flex-row lg:justify-between items-center">
-                  <QuickSearch onSearch={setHasQuickSearch} />
+                  <QuickSearch onSearch={setHasQuickSearch} onClear={handleQuickSearchClear} />
                   <List
                     role="navigation"
                     className="max-lg:w-full"
@@ -360,7 +377,7 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
             <div className="w-full flex flex-col lg:grid lg:grid-cols-[27%_1fr] gap-8 lg:gap-12 pb-12 lg:px-layout-sm mx-auto max-w-viewport">
               <aside className="lg:self-start lg:sticky lg:top-6 flex flex-col gap-4 lg:gap-6 max-lg:px-layout-sm">
                 <NewsRoomSanityFilters
-                  tags={tags}
+                  tags={newsroomTags}
                   search={search}
                   onSearch={handleSearch}
                   onClear={handleClear}
@@ -371,7 +388,7 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
                 <Typography id="newsroom_news" as="h2" className="sr-only">
                   <FormattedMessage id="newsroom_newslist_header" defaultMessage="News" />
                 </Typography>
-                {isLoading || news?.length === 0 ? (
+                {isLoading ? (
                   <NewsSectionsSkeleton />
                 ) : (
                   <>

@@ -20,7 +20,6 @@ const SelectedSanityFilters = forwardRef<HTMLDivElement, SelectedSanityFiltersPr
   { search, tags, className = '', onRemove, onClear },
   ref,
 ) {
-  console.log('SelectedSanityFilters search', search)
   const selectedItems = useMemo(() => {
     const flattenedTags: SanityNewsTag[] = tags
       ? Object.keys(tags).reduce(function (r, k) {
@@ -28,12 +27,14 @@ const SelectedSanityFilters = forwardRef<HTMLDivElement, SelectedSanityFiltersPr
           return r.concat(tags[k])
         }, [])
       : []
+    console.log('flattenedTags', flattenedTags)
     return Object.entries(search)
       ?.map(([key, value]) => {
         return value.map((v) => {
+          console.log('v', v)
           return {
             //@ts-ignore: TODO
-            label: flattenedTags.find((t: SanityNewsTag) => t.key === v).title ?? '-',
+            label: flattenedTags.find((t: SanityNewsTag) => t.key === v)?.title ?? '-',
             key: v,
             filterName: key as tagVariants,
           }

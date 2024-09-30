@@ -16,6 +16,7 @@ export type SearchBoxProps = {
   placeholder?: string
   //For newsroom
   setIsQuickSearch?: Dispatch<SetStateAction<boolean>>
+  onClear?: () => void
 } & ComponentProps<'div'> &
   UseSearchBoxProps
 
@@ -35,6 +36,7 @@ export function SearchBox({
   label,
   placeholder,
   setIsQuickSearch,
+  onClear,
   ...rest
 }: SearchBoxProps) {
   const intl = useIntl()
@@ -46,6 +48,7 @@ export function SearchBox({
   function handleReset() {
     setValue('')
     clear()
+    onClear && onClear()
   }
 
   function onSubmit(event: React.FormEvent) {
