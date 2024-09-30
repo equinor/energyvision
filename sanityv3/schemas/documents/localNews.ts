@@ -144,14 +144,21 @@ export default {
       media: 'heroImage.image',
       description: 'ingress',
       publishedDate: 'publishDateTime',
+      firstPublishedAt: 'firstPublishedAt',
+      isCustomDate: 'customPublicationDate',
     },
     prepare(selection: any) {
-      const { title, media, description, publishedDate } = selection
-      const date = publishedDate ? formatDate(publishedDate) : 'Ikke oppgitt'
+      const { title, media, description, publishedDate, firstPublishedAt, isCustomDate } = selection
+      const currentDate = new Date()
+      const date =
+        publishedDate && isCustomDate ? new Date(publishedDate) : firstPublishedAt ? new Date(firstPublishedAt) : null
+
+      const displayDate = date && date <= currentDate ? formatDate(date) : 'Not Published'
+
       const ingressBlock = (description || []).find((ingressBlock: any) => ingressBlock._type === 'block')
       return {
         title,
-        subtitle: `Published date: ${date}`,
+        subtitle: `Published date: ${displayDate}`,
         description: ingressBlock
           ? ingressBlock.children
               .filter((child: any) => child._type === 'span')
