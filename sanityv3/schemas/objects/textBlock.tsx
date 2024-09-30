@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { text_field } from '@equinor/eds-icons'
-import type { PortableTextBlock, Reference, Rule, SanityDocument, ValidationContext } from 'sanity'
+import type { PortableTextBlock, Reference, Rule, ValidationContext } from 'sanity'
 import type { ColorSelectorValue } from '../components/ColorSelector'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
@@ -127,9 +127,7 @@ export default {
       },
       of: [titleContentType],
       validation: (Rule: Rule) =>
-        Rule.custom((value: PortableTextBlock[], ctx: ValidationContext) =>
-          !value ? 'A title is recommended' : true,
-        ).warning(),
+        Rule.custom((value: PortableTextBlock[]) => (!value ? 'A title is recommended' : true)).warning(),
     },
     {
       title: 'Use brand theme for title',

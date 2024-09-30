@@ -1,4 +1,3 @@
-import { configureBlockContent } from '../../editors'
 import { PortableTextBlock } from 'sanity'
 import { EdsIcon } from '../../../icons'
 import { table_chart } from '@equinor/eds-icons'

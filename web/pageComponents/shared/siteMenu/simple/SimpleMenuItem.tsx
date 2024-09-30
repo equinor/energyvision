@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
-import { Link, List, Menu } from '@components'
+import { List, Menu } from '@components'
+import { Link } from '@core/Link'
 import { SimplePanel } from './SimplePanel'
 import { SimpleHeader } from './SimpleHeader'
 import type { SimpleGroupData } from '../../../../types/index'
@@ -42,17 +43,11 @@ export const SimpleMenuItem = ({ item, index }: MenuGroupType) => {
       {label && <SimpleHeader>{label}</SimpleHeader>}
       <SimplePanel>
         <PanelContentWrapper>
-          {!!readMoreLink?.link?.slug && (
-            <ReadMore href={readMoreLink.link?.slug} variant="readMore">
-              {readMoreLink.label}
-            </ReadMore>
-          )}
+          {!!readMoreLink?.link?.slug && <ReadMore href={readMoreLink.link?.slug}>{readMoreLink.label}</ReadMore>}
           <List aria-label={label} unstyled>
             {links?.map((link) => (
               <Item key={link.id}>
-                <StyledSubMenuGroupLink href={link?.link?.slug || '/'} underline={false}>
-                  {link.label}
-                </StyledSubMenuGroupLink>
+                <StyledSubMenuGroupLink href={link?.link?.slug || '/'}>{link.label}</StyledSubMenuGroupLink>
               </Item>
             ))}
           </List>

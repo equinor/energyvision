@@ -3,7 +3,6 @@ import { VideoPlayerCarouselItem, VideoPlayerRatios } from '../../types/index'
 import { DisplayModes } from './Carousel'
 import { VideoComponentWithCaption } from '../../pageComponents/shared/VideoPlayer'
 import { forwardRef, HTMLAttributes } from 'react'
-//import { usePrefersReducedMotion } from '../../common/hooks/usePrefersReducedMotion'
 
 type CarouselVideoItemProps = {
   displayMode?: DisplayModes

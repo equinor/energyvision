@@ -5,7 +5,8 @@ import styled from 'styled-components'
 import { useRouter } from 'next/router'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { SimpleMenuWrapper } from './SimpleMenuWrapper'
-import { MenuButton, Link } from '@components'
+import { MenuButton } from '@components'
+import { Link } from '@core/Link'
 import { SimpleMenuItem } from './SimpleMenuItem'
 import { getAllSitesLink } from '../../../../common/helpers/getAllSitesLink'
 
@@ -105,10 +106,7 @@ const SimpleSiteMenu = ({ data, ...rest }: MenuProps) => {
                         }
                         return (
                           <li key={item.id}>
-                            <MenuLink variant="contentLink" href={(item.link && item.link.slug) || '/'}>
-                              {' '}
-                              {item.label}{' '}
-                            </MenuLink>
+                            <MenuLink href={(item.link && item.link.slug) || '/'}> {item.label} </MenuLink>
                           </li>
                         )
                       }

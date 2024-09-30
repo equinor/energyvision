@@ -1,9 +1,10 @@
-import { BackgroundContainer, FormattedDate, Link, Table as EnvisTable, Text } from '@components'
+import { BackgroundContainer, FormattedDate, Table as EnvisTable, Text } from '@components'
 import styled from 'styled-components'
 import isEmpty from '../shared/portableText/helpers/isEmpty'
 import IngressText from '../shared/portableText/IngressText'
 import RichText from '../shared/portableText/RichText'
 import TitleText from '../shared/portableText/TitleText'
+import { Link } from '@core/Link'
 
 import { getLocaleFromName } from '../../lib/localization'
 import type { CellData, LinkData, TableData } from '../../types/index'

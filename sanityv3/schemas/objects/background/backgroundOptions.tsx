@@ -1,4 +1,4 @@
-import { defineType, defineField, Rule } from 'sanity'
+import { defineType, defineField } from 'sanity'
 
 export default defineType({
   type: 'object',
@@ -21,10 +21,10 @@ export default defineType({
       ].filter((e) => e),
       options: { sortable: false },
       validation: (Rule) => [
-        Rule.custom((background, context) => {
+        Rule.custom((background) => {
           return background?.length > 1 ? 'Only 1 background item' : true
         }),
-        Rule.custom((background, context) => {
+        Rule.custom((background) => {
           if (background?.[0]._type === 'backgroundImage') {
             return background[0]?.image?.asset ? true : 'Image required'
           }

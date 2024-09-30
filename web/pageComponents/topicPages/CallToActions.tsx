@@ -1,8 +1,7 @@
 import { Fragment } from 'react'
 import { List } from '@components'
+import { ButtonLink, ReadMoreLink } from '@core/Link'
 import type { LinkData } from '../../types/index'
-import { ButtonLink } from '../shared/ButtonLink'
-import { ReadMoreLink } from '@core/Link'
 import { getUrlFromAction } from '../../common/helpers'
 import { getLocaleFromName } from '../../lib/localization'
 
@@ -20,7 +19,7 @@ const CallToActions = ({ callToActions, overrideButtonStyle, splitList }: CallTo
   // If we have only one link and the publisher has not made an active choice of overriding the style
   // in Sanity the default style is a button style
   return callToActions.length === 1 && !overrideButtonStyle ? (
-    <ButtonLink action={callToActions[0]} className="w-max" />
+    <ButtonLink href={callToActions[0] && (getUrlFromAction(callToActions[0]) as string)} className="w-max" />
   ) : (
     <List unstyled splitList={splitList}>
       {callToActions.map((callToAction: LinkData) => {

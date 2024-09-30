@@ -149,7 +149,7 @@ export type TableHeaderData = {
   headerCell: PortableTextBlock[]
 }
 
-export type FigureRatio = 'original' | '9:16'
+export type FigureRatio = 'original' | '16:9'
 
 export type CellData = {
   id: string
@@ -234,7 +234,7 @@ export type PromoTileArrayData = {
   useHorizontalScroll: boolean
 }
 
-export type CookiePolicy = 'none' | 'marketing' | 'statistics'
+export type CookieType = 'none' | 'marketing' | 'statistics' | 'preferences'
 
 export type IFrameData = {
   id?: string
@@ -247,7 +247,7 @@ export type IFrameData = {
   action?: LinkData
   frameTitle: string
   url: string
-  cookiePolicy: CookiePolicy
+  cookiePolicy: CookieType[]
   designOptions: DesignOptions & {
     aspectRatio: string
     height?: number
@@ -399,7 +399,7 @@ export type IFrameCarouselItemData = {
   description?: PortableTextBlock[]
   frameTitle: string
   url: string
-  cookiePolicy: CookiePolicy
+  cookiePolicy: CookieType[]
   aspectRatio: string
   height?: number
   action?: LinkData
@@ -453,4 +453,16 @@ export type PodcastTeaserData = {
   podcastEpisode?: PortableTextBlock[]
   image: ImageWithAlt
   designOptions: DesignOptions
+}
+export type AnchorLinkListData = {
+  id: string
+  type: 'anchorLinkList'
+  title?: string
+  columns?: string
+  anchorList?: {
+    id: string
+    type: 'anchorLinkReference'
+    title?: string
+    anchorReference?: string
+  }[]
 }

@@ -3,6 +3,7 @@ import { Text, Button, Heading, BackgroundContainer } from '@components'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { useRouter } from 'next/router'
 import { defaultLanguage } from '../../../languages'
+import { CookieType } from '../../../types'
 
 declare global {
   interface Window {
@@ -72,7 +73,7 @@ const LeftAlignedButton = styled(Button)`
 
 type RequestConsentContainerProps = {
   hasSectionTitle?: boolean
-  cookiePolicy: string
+  cookiePolicy: CookieType[]
 }
 
 const handleCookiebotRenew = (locale?: string) => {
@@ -91,10 +92,33 @@ const handleCookiebotRenew = (locale?: string) => {
 const RequestConsentContainer = ({ hasSectionTitle = true, cookiePolicy }: RequestConsentContainerProps) => {
   const router = useRouter()
   const intl = useIntl()
-  const typeOfCookie =
-    cookiePolicy === 'statistics'
-      ? intl.formatMessage({ id: 'cookie_type_statistics', defaultMessage: 'statistic' })
-      : intl.formatMessage({ id: 'cookie_type_marketing', defaultMessage: 'marketing' })
+  const getCookieInformationText = (cookiePolicy: CookieType[]) => {
+    if (cookiePolicy.length === 1) {
+      return intl.formatMessage(
+        { id: 'cookie_consent', defaultMessage: 'Cookie consent' },
+        {
+          typeOfCookies: intl.formatMessage({ id: `cookie_type_${cookiePolicy[0]}`, defaultMessage: 'statistic' }),
+        },
+      )
+    }
+    if (cookiePolicy.length === 2) {
+      return intl.formatMessage(
+        { id: 'cookie_consent_two', defaultMessage: 'Cookie consent' },
+        {
+          type1: intl.formatMessage({ id: `cookie_type_${cookiePolicy[0]}`, defaultMessage: 'statistic' }),
+          type2: intl.formatMessage({ id: `cookie_type_${cookiePolicy[1]}`, defaultMessage: 'statistic' }),
+        },
+      )
+    }
+    return intl.formatMessage(
+      { id: 'cookie_consent_many', defaultMessage: 'Cookie consent' },
+      {
+        type1: intl.formatMessage({ id: `cookie_type_${cookiePolicy[0]}`, defaultMessage: 'statistic' }),
+        type2: intl.formatMessage({ id: `cookie_type_${cookiePolicy[1]}`, defaultMessage: 'statistic' }),
+        type3: intl.formatMessage({ id: `cookie_type_${cookiePolicy[2]}`, defaultMessage: 'statistic' }),
+      },
+    )
+  }
   return (
     <StyledDiv>
       <CookieHeader background={{ backgroundColor: 'Slate Blue 95' }}>
@@ -145,15 +169,7 @@ const RequestConsentContainer = ({ hasSectionTitle = true, cookiePolicy }: Reque
         </SVG>
       </Icon>
       <Content background={{ backgroundColor: 'White' }}>
-        <Text>
-          <FormattedMessage
-            id="cookie_consent"
-            defaultMessage="Cookie settings"
-            values={{
-              typeOfCookies: typeOfCookie,
-            }}
-          />
-        </Text>
+        <Text>{getCookieInformationText(cookiePolicy)}</Text>
         <LeftAlignedButton onClick={() => handleCookiebotRenew(router?.locale)} color="secondary" variant="outlined">
           <FormattedMessage id="cookie_settings" defaultMessage="Cookie settings" />
         </LeftAlignedButton>

@@ -42,7 +42,7 @@ const MultipleEventCards = ({
       {eventPromotionSettings?.promotePastEvents && <PastEvents events={data} hasSectionTitle={hasSectionTitle} />}
       {!eventPromotionSettings?.promotePastEvents && (
         <>
-          {data?.length <= 4 || isMobile ? (
+          {data?.length <= 3 || isMobile ? (
             <ul
               className={` 
                 grid 
