@@ -8,7 +8,7 @@ import {
   PluginOptions,
   SchemaTypeDefinition,
   Template,
-} from 'sanity'
+ buildLegacyTheme } from 'sanity'
 
 import type {
   InputProps,
@@ -39,7 +39,6 @@ import { createCustomDuplicateAction } from './actions/CustomDuplicateAction'
 import { LangBadge } from './schemas/components/LangBadge'
 import './customStyles.css'
 import { partialStudioTheme } from './studioTheme'
-import { buildLegacyTheme } from 'sanity'
 import { copyAction } from './actions/fieldActions/CustomCopyFieldAction'
 
 export const customTheme = buildLegacyTheme(partialStudioTheme)

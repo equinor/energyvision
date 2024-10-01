@@ -1,23 +1,19 @@
 import { table_chart } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 import { Heading, Text, Box } from '@sanity/ui'
-import styled from 'styled-components'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import { configureTitleBlockContent } from '../editors'
 
-const StyledText = styled(Text)`
-  margin: 1em 0;
-`
 const titleContentType = configureTitleBlockContent()
 // eslint-disable-next-line react/display-name
 const ApiDescription = () => {
   return (
     <Box>
       <Heading size={2}>How to use</Heading>
-      <StyledText>
+      <Text style={{ margin: '1em 0' }}>
         This component will automatically display cookies identified in the website. No configuration is required. This
         component is to be used on Cookie Policy page.
-      </StyledText>
+      </Text>
     </Box>
   )
 }

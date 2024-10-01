@@ -13,16 +13,6 @@ const { SubMenu, SubMenuHeader, SubMenuPanel, SubMenuGroups } = Menu
 const PositionedSubMenuPanel = styled(SubMenuPanel)`
   top: 265px;
 `
-
-const StyledSection = styled.div`
-  max-width: calc(35 * var(--space-medium));
-
-  @media (min-width: 1300px) {
-    display: block;
-    padding: 0 var(--space-large) var(--space-xxLarge) 0;
-  }
-`
-
 const Grid = styled.div`
   @media (min-width: 1300px) {
     display: grid;

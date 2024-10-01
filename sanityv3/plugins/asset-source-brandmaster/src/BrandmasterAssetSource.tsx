@@ -1,15 +1,10 @@
 import { useEffect, useCallback, forwardRef, useState, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { Dialog } from '@sanity/ui'
-import styled from 'styled-components'
 
 const BM_EVENT_NAME = 'dam:plugin-assets-selected-event'
 const BM_URL = process.env.SANITY_STUDIO_BRANDMASTER_URL || ''
 const BM_SOURCE = BM_URL + process.env.SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE || ''
-
-const Content = styled.div`
-  margin: 2em;
-`
 
 const BrandmasterAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   const { onSelect, onClose } = props
@@ -81,17 +76,17 @@ const BrandmasterAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
       {container && createPortal(props.children, container)}
 
       {BM_SOURCE ? (
-        <Content>
+        <div style={{ margin: '32px' }}>
           <p>Select an image from Brandmaster in the popup window.</p>
           <p>Once selected, the upload process should start automatically.</p>
-        </Content>
+        </div>
       ) : (
-        <Content>
+        <div style={{ margin: '32px' }}>
           <p>
             No Brandmaster source URL found. Please define the URL and path in the enviromental variables to load the
             iframe.
           </p>
-        </Content>
+        </div>
       )}
     </Dialog>
   )

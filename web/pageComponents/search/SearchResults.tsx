@@ -1,5 +1,5 @@
 import { Tabs } from '@components'
-import { RefObject, useContext, useEffect, useState } from 'react'
+import { RefObject, useEffect, useState, useContext } from 'react'
 import styled from 'styled-components'
 import EventHit from './EventHit'
 import Hits from './Hits'

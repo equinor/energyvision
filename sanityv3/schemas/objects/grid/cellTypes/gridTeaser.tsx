@@ -3,7 +3,7 @@ import blocksToText from '../../../../helpers/blocksToText'
 import { configureBlockContent, configureThemedTitleBlockContent } from '../../../editors'
 import { validateCharCounterEditor } from '../../../validations/validateCharCounterEditor'
 
-import type { PortableTextBlock, Reference, Rule, ValidationContext } from 'sanity'
+import type { PortableTextBlock, Reference, Rule } from 'sanity'
 import type { DownloadableImage } from './../../downloadableImage'
 import type { DownloadableFile } from '../../files'
 import type { ImageWithAlt } from '../../imageWithAlt'

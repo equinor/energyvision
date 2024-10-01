@@ -1,22 +1,17 @@
 import { dollar } from '@equinor/eds-icons'
 import { Box, Heading, Text } from '@sanity/ui'
-import styled from 'styled-components'
 import { EdsIcon } from '../../icons'
 import type { ColorSelectorValue } from '../components/ColorSelector'
-
-const StyledText = styled(Text)`
-  margin: 1em 0;
-`
 
 // eslint-disable-next-line react/display-name
 const ApiDescription = () => {
   return (
     <Box>
       <Heading size={2}>How to use</Heading>
-      <StyledText>
+      <Text style={{ margin: '4px 0' }}>
         This component will automatically display up to date Equinor stock values from the OSE and NYSE. No
         configuration is required.
-      </StyledText>
+      </Text>
     </Box>
   )
 }

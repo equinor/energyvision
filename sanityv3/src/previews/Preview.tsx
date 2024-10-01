@@ -1,14 +1,6 @@
 import resolveProductionUrl from '../../resolveProductionUrl'
-import styled from 'styled-components'
 import { dataset } from '../lib/datasetHelpers'
 import { PreviewWrapper } from './PreviewWrapper'
-
-const Frame = styled.iframe`
-  border: 0;
-  height: 100%;
-  left: 0;
-  width: 100%;
-`
 
 const REQUIRES_SLUG = ['news', 'localNews', 'magazine']
 
@@ -33,7 +25,16 @@ export default function Preview({ document }: any) {
 
   return (
     <PreviewWrapper src={url} shareable={dataset !== 'secret'}>
-      <Frame src={url} title="preview" frameBorder={'0'} />
+      <iframe
+        src={url}
+        title="preview"
+        style={{
+          border: '0',
+          height: '100%',
+          width: '100%',
+          left: 0,
+        }}
+      />
     </PreviewWrapper>
   )
 }

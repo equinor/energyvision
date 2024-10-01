@@ -18,7 +18,7 @@ type CarouselIframeItemProps = {
 } & IFrameCarouselItemData &
   Omit<HTMLAttributes<HTMLLIElement>, 'title'>
 
-export const CarouselIframeItem = forwardRef<HTMLLIElement, CarouselIframeItemProps>(function CarouselVideoItem(
+export const CarouselIframeItem = forwardRef<HTMLLIElement, CarouselIframeItemProps>(function CarouselIframeItem(
   {
     title,
     description,

@@ -87,7 +87,7 @@ export const FotowareWidget = forwardRef<HTMLDivElement, FotowareWidgetProps>((p
       ref={ref}
     >
       <Content>
-        <StyledIframe src={url} title="Fotoware" frameBorder="0" ref={iframeRef}></StyledIframe>
+        <StyledIframe src={url} title="Fotoware" ref={iframeRef}></StyledIframe>
       </Content>
     </FullScreenDialog>
   )

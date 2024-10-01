@@ -456,6 +456,7 @@ export type ImageForTextData = {
   image: ImageWithAlt
   content?: PortableTextBlock[]
   aspectRatio?: '16:9' | 'fullWidth'
+  designOptions: DesignOptions
 }
 export type AnchorLinkListData = {
   id: string

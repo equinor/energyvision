@@ -1,11 +1,8 @@
 import { CopyIcon } from '@sanity/icons'
-import { Toast, useToast } from '@sanity/ui'
+import { useToast } from '@sanity/ui'
 import { useCallback } from 'react'
 
-import { defineDocumentFieldAction } from 'sanity'
-import { useTranslation } from 'sanity'
-import { useCopyPaste } from 'sanity'
-import { useGetFormValue } from 'sanity'
+import { defineDocumentFieldAction, useTranslation, useCopyPaste, useGetFormValue } from 'sanity'
 import { type FormDocumentValue } from 'sanity'
 
 export const copyAction = defineDocumentFieldAction({
