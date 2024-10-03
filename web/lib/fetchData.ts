@@ -5,7 +5,6 @@ import { filterDataToSingleItem } from './filterDataToSingleItem'
 import { footerQuery } from './queries/footer'
 import { simpleMenuQuery } from './queries/simpleMenu'
 import { menuQuery as globalMenuQuery } from './queries/menu'
-import { allNewsCountryTags, allNewsDocuments, allNewsTopicTags } from './queries/newsroom'
 
 export const getComponentsData = async (page: { query: string; queryParams: QueryParams }, preview = false) => {
   const client = getClient(preview)
@@ -21,33 +20,7 @@ export const getComponentsData = async (page: { query: string; queryParams: Quer
 
   return { menuData, pageData, footerData }
 }
-export const getNewsroomComponentsData = async (page: { query: string; queryParams: QueryParams }, preview = false) => {
-  const client = getClient(preview)
 
-  const menuQuery = Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery
-  const menuDataWithDrafts = await client.fetch(menuQuery, page.queryParams)
-  const pageDataWithDrafts = await client.fetch(page.query, page.queryParams)
-  const newsList = await client.fetch(allNewsDocuments, page.queryParams)
-  const newsTopicTagList = await client.fetch(allNewsTopicTags, page.queryParams)
-  const newsCountryTagList = await client.fetch(allNewsCountryTags, page.queryParams)
-  const footerDataWithDrafts = await client.fetch(footerQuery, page.queryParams)
-
-  const menuData = filterDataToSingleItem(menuDataWithDrafts, preview)
-  const componentsPageData = filterDataToSingleItem(pageDataWithDrafts, preview)
-  const pageData = {
-    ...componentsPageData,
-    newsList,
-    newsTopicTagList,
-    newsCountryTagList,
-  }
-  const footerData = filterDataToSingleItem(footerDataWithDrafts, preview)
-
-  return {
-    menuData,
-    pageData,
-    footerData,
-  }
-}
 type NewsroomQueryParams = {
   lang?: string
   tags?: string[]

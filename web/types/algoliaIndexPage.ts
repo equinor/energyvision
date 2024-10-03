@@ -8,9 +8,7 @@ import type {
   HeroType,
   ImageWithCaptionData,
   BackgroundColours,
-  CardData,
   LinkData,
-  SanityNewsTag,
 } from './types'
 import { PortableTextBlock } from '@portabletext/types'
 import { SanityImageObject } from '@sanity/image-url/lib/types/types'
@@ -36,28 +34,16 @@ export type NewsRoomNewsItem = {
   firstPublishedAt?: string
   heroImage: ImageWithCaptionData
   ingress?: string
-  /* Temp - to control filter */
-  tags?: any
-  countryTags?: any
-}
-
-export type NewsRoomTags = {
-  topic: SanityNewsTag[]
-  country: SanityNewsTag[]
-  year: SanityNewsTag[]
 }
 
 export type NewsRoomPageType = {
   seoAndSome: SeoData
   title: PortableTextBlock[]
   ingress?: PortableTextBlock[]
-  news?: NewsRoomNewsItem[]
   subscriptionLink?: { slug: string; type: string; lang: string }
   subscriptionLinkTitle?: string
   localNewsPages?: LinkData[]
   fallbackImages?: SanityImageObject[]
-  query: any
-  tags: NewsRoomTags
 }
 
 export type MagazineIndexPageType = {

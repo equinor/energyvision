@@ -1,6 +1,6 @@
 import { Typography } from '@core/Typography'
 import { Checkbox } from '@equinor/eds-core-react'
-import { Dispatch, SetStateAction, useId } from 'react'
+import { useId } from 'react'
 import { useRefinementList, UseRefinementListProps } from 'react-instantsearch'
 
 export type RefinementListFilterProps = {
@@ -9,25 +9,15 @@ export type RefinementListFilterProps = {
   variant?: 'list' | 'accordion'
   /* Required when variant is list */
   filterName?: string
-  onSearch: Dispatch<SetStateAction<boolean>>
 } & React.ComponentProps<'div'> &
   UseRefinementListProps
 
-const RefinementListFilter = ({
-  variant = 'list',
-  filterName,
-  labelledBy,
-  onSearch,
-  ...rest
-}: RefinementListFilterProps) => {
+const RefinementListFilter = ({ variant = 'list', filterName, labelledBy, ...rest }: RefinementListFilterProps) => {
   const { items, refine } = useRefinementList(rest)
   const headingId = useId()
-  console.log('RefinementListFilter', filterName)
-  console.log('RefinementListFilter items', items)
 
   const handleChange = (value: string) => {
     refine(value)
-    onSearch && onSearch(true)
   }
   return items.length > 0 ? (
     <div

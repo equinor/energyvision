@@ -1,24 +1,22 @@
 import { GetServerSideProps } from 'next'
+import { InstantSearchSSRProvider, getServerState } from 'react-instantsearch'
 import type { AppProps } from 'next/app'
 import { IntlProvider } from 'react-intl'
-import { renderToString } from 'react-dom/server'
 import Footer from '../../pageComponents/shared/Footer'
 import Header from '../../pageComponents/shared/Header'
-import { getNewsByFilters, allNewsDocuments, newsroomQuery } from '../../lib/queries/newsroom'
+import { newsroomQuery } from '../../lib/queries/newsroom'
 import getIntl from '../../common/helpers/getIntl'
 import { getNameFromLocale, getIsoFromLocale } from '../../lib/localization'
 import { defaultLanguage } from '../../languages'
 import { AlgoliaIndexPageType, NewsRoomPageType } from '../../types'
-import { getComponentsData, getNewsroomData } from '../../lib/fetchData'
+import { getComponentsData } from '../../lib/fetchData'
+import { renderToString } from 'react-dom/server'
 import NewsRoomTemplate from '@templates/newsroom/Newsroom'
-import { formatNewsroomQueryFilter, isNotEmpty } from '../../pages/api/news/selection'
-import { getServerState, InstantSearchSSRProvider } from 'react-instantsearch'
 
-export default function NewsRoom({ serverState, isServerRendered = false, data, url }: AlgoliaIndexPageType) {
+export default function NewsRoom({ isServerRendered = false, serverState, data, url }: AlgoliaIndexPageType) {
   const defaultLocale = defaultLanguage.locale
   const { pageData, slug, intl } = data
   const locale = data?.intl?.locale || defaultLocale
-  console.log('serverstate', serverState)
 
   return (
     <InstantSearchSSRProvider {...serverState}>
@@ -29,10 +27,10 @@ export default function NewsRoom({ serverState, isServerRendered = false, data, 
       >
         <NewsRoomTemplate
           isServerRendered={isServerRendered}
-          url={url}
           locale={locale}
           pageData={pageData as NewsRoomPageType}
           slug={slug}
+          url={url}
         />
       </IntlProvider>
     </InstantSearchSSRProvider>
@@ -68,7 +66,7 @@ NewsRoom.getLayout = (page: AppProps) => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ req, preview = false, locale = 'en', query }) => {
+export const getServerSideProps: GetServerSideProps = async ({ req, preview = false, locale = 'en' }) => {
   // For the time being, let's just give 404 for satellites
   // We will also return 404 if the locale is not English.
   // This is a hack and and we should improve this at some point
@@ -82,10 +80,13 @@ export const getServerSideProps: GetServerSideProps = async ({ req, preview = fa
 
   const lang = getNameFromLocale(locale)
   const intl = await getIntl(locale, false)
-  let queryParams = {
+
+  const queryParams = {
     lang,
   }
+
   const slug = req.url
+
   const { menuData, pageData, footerData } = await getComponentsData(
     {
       query: newsroomQuery,
@@ -94,47 +95,13 @@ export const getServerSideProps: GetServerSideProps = async ({ req, preview = fa
     preview,
   )
 
-  let newsList = []
-  console.log('Has query', query)
-  if (query?.topic || query?.country || query?.year) {
-    const { topic, country, year } = formatNewsroomQueryFilter(query)
-
-    queryParams = {
-      ...queryParams,
-      tags: topic,
-      countryTags: country,
-      years: year,
-    }
-
-    const newsGroq = getNewsByFilters(isNotEmpty(topic), isNotEmpty(country), isNotEmpty(year), false, false)
-    console.log('Fetch news selection on', newsGroq)
-    console.log('Fetch queryparams', queryParams)
-    console.log(`return news on topic ${topic.toString()}, country: ${country.toString()}, year: ${year.toString()}`)
-    const { data } = await getNewsroomData({
-      query: newsGroq,
-      queryParams,
-    })
-
-    newsList = data
-  } else {
-    const { data } = await getNewsroomData({
-      query: allNewsDocuments,
-      queryParams,
-    })
-    newsList = data
-  }
-
   const url = new URL(req.headers.referer || `https://${req.headers.host}${req.url}`).toString()
-  console.log('url', url)
   const serverState = await getServerState(
     <NewsRoom
       isServerRendered
       data={{
         intl,
-        pageData: {
-          ...pageData,
-          news: newsList,
-        },
+        pageData,
         slug,
       }}
       url={url}
@@ -142,7 +109,6 @@ export const getServerSideProps: GetServerSideProps = async ({ req, preview = fa
     { renderToString },
   )
 
-  console.log('returning serverState', serverState)
   return {
     props: {
       serverState,
@@ -151,10 +117,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, preview = fa
         menuData,
         footerData,
         intl,
-        pageData: {
-          ...pageData,
-          news: newsList,
-        },
+        pageData,
         slug,
       },
     },

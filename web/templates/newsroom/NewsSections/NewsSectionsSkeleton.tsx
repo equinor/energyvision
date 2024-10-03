@@ -18,7 +18,7 @@ const NewsSectionsSkeleton = forwardRef<HTMLDivElement, NewsSectionsSkeletonProp
           <div className="h-10 w-full bg-grey-40 rounded" />
         </div>
       </div>
-      {Array.from({ length: 5 }, (v, i) => i).map((item) => (
+      {Array.from({ length: 5 }, (_v, i) => i).map((item) => (
         <div key={item} className="animate-pulse duration-1000 flex justify-between gap-4 lg:gap-6">
           <div className="w-2/3 flex flex-col gap-4">
             <div className="h-3 w-1/3 bg-grey-40 rounded" />

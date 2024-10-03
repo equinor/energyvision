@@ -1,4 +1,4 @@
-import { Dispatch, forwardRef, HTMLAttributes, SetStateAction } from 'react'
+import { forwardRef, HTMLAttributes } from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
 import envisTwMerge from '../../../twMerge'
 import { useMediaQuery } from '../../../lib/hooks/useMediaQuery'
@@ -6,17 +6,14 @@ import { Accordion } from '@core/Accordion'
 import RefinementListFilter from './RefinementListFilter'
 import SelectedFilters from './SelectedFilters'
 
-type NewsRoomFiltersProps = {
-  onSearch: Dispatch<SetStateAction<boolean>>
-} & HTMLAttributes<HTMLDivElement>
+type NewsRoomFiltersProps = HTMLAttributes<HTMLDivElement>
 
 const NewsRoomFilters = forwardRef<HTMLDivElement, NewsRoomFiltersProps>(function NewsRoomFilters(
-  { onSearch, className = '' },
+  { className = '' },
   ref,
 ) {
   const intl = useIntl()
   const isMobile = useMediaQuery(`(max-width: 768px)`)
-  console.log('newsroom filters')
   return (
     <div ref={ref} className={envisTwMerge(`flex flex-col gap-4`, className)}>
       <a
@@ -44,7 +41,6 @@ const NewsRoomFilters = forwardRef<HTMLDivElement, NewsRoomFiltersProps>(functio
           <RefinementListFilter
             limit={50}
             attribute="topicTags"
-            onSearch={onSearch}
             filterName={intl.formatMessage({
               id: 'newsroom_topic_filter',
               defaultMessage: 'Topic',
@@ -52,7 +48,6 @@ const NewsRoomFilters = forwardRef<HTMLDivElement, NewsRoomFiltersProps>(functio
           />
           <RefinementListFilter
             attribute="countryTags"
-            onSearch={onSearch}
             filterName={intl.formatMessage({
               id: 'newsroom_country_filter',
               defaultMessage: 'Country',
@@ -60,7 +55,6 @@ const NewsRoomFilters = forwardRef<HTMLDivElement, NewsRoomFiltersProps>(functio
           />
           <RefinementListFilter
             sortBy={['name:desc']}
-            onSearch={onSearch}
             filterName={intl.formatMessage({
               id: 'newsroom_year_filter',
               defaultMessage: 'Year',
@@ -79,7 +73,7 @@ const NewsRoomFilters = forwardRef<HTMLDivElement, NewsRoomFiltersProps>(functio
               })}
             </Accordion.Header>
             <Accordion.Content className="py-4" forceMount={true}>
-              <RefinementListFilter variant="accordion" limit={50} attribute="topicTags" onSearch={onSearch} />
+              <RefinementListFilter variant="accordion" limit={50} attribute="topicTags" />
             </Accordion.Content>
           </Accordion.Item>
           <Accordion.Item value="filter-country">
@@ -90,7 +84,7 @@ const NewsRoomFilters = forwardRef<HTMLDivElement, NewsRoomFiltersProps>(functio
               })}
             </Accordion.Header>
             <Accordion.Content className="py-4" forceMount={true}>
-              <RefinementListFilter variant="accordion" attribute="countryTags" onSearch={onSearch} />
+              <RefinementListFilter variant="accordion" attribute="countryTags" />
             </Accordion.Content>
           </Accordion.Item>
           <Accordion.Item value="filter-year">
@@ -101,13 +95,7 @@ const NewsRoomFilters = forwardRef<HTMLDivElement, NewsRoomFiltersProps>(functio
               })}
             </Accordion.Header>
             <Accordion.Content className="py-4" forceMount={true}>
-              <RefinementListFilter
-                variant="accordion"
-                sortBy={['name:desc']}
-                attribute="year"
-                limit={50}
-                onSearch={onSearch}
-              />
+              <RefinementListFilter variant="accordion" sortBy={['name:desc']} attribute="year" limit={50} />
             </Accordion.Content>
           </Accordion.Item>
         </Accordion>
