@@ -43,8 +43,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const tagsGroq = allNewsTopicTagsWithFilter(isNotEmpty(topic), isNotEmpty(country), isNotEmpty(year))
   const countryTagsGroq = allNewsCountryTagsWithFilter(isNotEmpty(topic), isNotEmpty(country), isNotEmpty(year))
   const yearsGroq = allNewsYearTagsWithFilter(isNotEmpty(topic), isNotEmpty(country), isNotEmpty(year))
+  console.log('Fetch news with filter', newsGroq)
   console.log('Fetch tags with filter', tagsGroq)
-  console.log('Fetch selection on', newsGroq)
   console.log('Fetch selection query', {
     lang,
     tags: topic,
@@ -60,7 +60,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       years: year,
     })
 
-    const [{ data: topicTags }, { data: countryTags }, { data: yearTags }] = await Promise.all([
+    const [topicTags, countryTags, yearTags] = await Promise.all([
       sanityClient.fetch(tagsGroq, {
         lang,
         tags: topic,

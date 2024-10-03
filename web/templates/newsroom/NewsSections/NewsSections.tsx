@@ -10,12 +10,11 @@ import { useHits } from 'react-instantsearch'
 type NewsSectionsProps = {
   fallbackImages?: SanityImageObject[]
   news?: NewsRoomNewsItem[]
-  hasQuickSearch: boolean
-  search?: any
+  hideSanityNews: boolean
 } & React.ComponentProps<'div'>
 
 const NewsSections = forwardRef<HTMLDivElement, NewsSectionsProps>(function NewsSections(
-  { fallbackImages, className = '', news, search, hasQuickSearch = false },
+  { fallbackImages, className = '', news, hideSanityNews = false },
   ref,
 ) {
   const { items } = useHits()
@@ -55,13 +54,12 @@ const NewsSections = forwardRef<HTMLDivElement, NewsSectionsProps>(function News
 
   return (
     <div ref={ref} className={envisTwMerge(`flex flex-col gap-4`, className)}>
-      {hasQuickSearch
+      {hideSanityNews
         ? getAlgoliaNews
         : news.map((item: NewsRoomNewsItem, index: number) => {
             return index === 0 ? (
               <NewsHeadliner
                 key={item.id}
-                search={search}
                 data={item}
                 {...(!item?.heroImage?.image?.asset &&
                   fallbackImages && {
@@ -72,7 +70,6 @@ const NewsSections = forwardRef<HTMLDivElement, NewsSectionsProps>(function News
               <NewsItem
                 key={item.id}
                 data={item}
-                search={search}
                 {...(!item?.heroImage?.image?.asset &&
                   fallbackImages && {
                     fallbackImage: fallbackImages[Math.floor(Math.random() * fallbackImages?.length)],

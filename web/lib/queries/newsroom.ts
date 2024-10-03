@@ -14,17 +14,6 @@ export const allNewsTopicTags = /* groq */ `
 "title":title[$lang],
 "connectedNews": count(*[_type=='news' && ${sameLang} && ${noDrafts} && references(^._id)])
 }`
-export const allNewsTopicTagsWithFilter = (hasTopic = false, hasCountry = false, hasYear = false) => /* groq */ `
-*[_type == "tag" && ${noDrafts}]{
-"id": _id,
-"key": key.current,
-"title":title[$lang],
-"connectedNews": count(*[_type=='news' && ${sameLang} && ${noDrafts}
-  ${hasTopic ? topicFilter : ''}
-  ${hasCountry ? countryFilter : ''}
-  ${hasYear ? yearFilter : ''}
-])
-}`
 
 export const allNewsCountryTags = /* groq */ `
 *[_type == "countryTag" && ${noDrafts}] {
@@ -33,33 +22,11 @@ export const allNewsCountryTags = /* groq */ `
 "title":title[$lang],
 "connectedNews": count(*[_type=='news' && ${sameLang} && ${noDrafts} && references(^._id)])
 }`
-export const allNewsCountryTagsWithFilter = (hasTopic = false, hasCountry = false, hasYear = false) => /* groq */ `
-*[_type == "countryTag" && ${noDrafts}]{
-"id": _id,
-"key": key.current,
-"title":title[$lang],
-"connectedNews": count(*[_type=='news' && ${sameLang} && ${noDrafts}&& references(^._id) 
-  ${hasTopic ? topicFilter : ''}
-  ${hasCountry ? countryFilter : ''}
-  ${hasYear ? yearFilter : ''}
-])
-}`
 
 export const allNewsYearTags = /* groq */ `{
     "newsYears": *[_type == "news" && ${sameLang} && ${noDrafts} ] | order(${publishDateTimeQuery} desc)
     {"years":string::split(${publishDateTimeQuery}, '-')[0]}.years,
   }.newsYears`
-
-export const allNewsYearTagsWithFilter = (hasTopic = false, hasCountry = false, hasYear = false) => /* groq */ `
-{
-    "newsYears": *[_type == "news" && ${sameLang} && ${noDrafts}
-      ${hasTopic ? topicFilter : ''}
-      ${hasCountry ? countryFilter : ''}
-      ${hasYear ? yearFilter : ''} 
-  ] | order(${publishDateTimeQuery} desc)
-    {"years":string::split(${publishDateTimeQuery}, '-')[0]}.years,
-  }.newsYears
-  `
 
 export const newsroomQuery = /* groq */ `
   *[_type == "newsroom" && ${sameLang}] {
@@ -101,6 +68,7 @@ ${ingressForNewsQuery},
 //&& tags._ref == ^.tagsParam[]._id
 // && count(tags[_ref in $tags[]]) == length($tags[])
 //&& references(^.tagsParam[]._id)
+//  && array::join(tags[]._ref, "") == array::join(^.tagsParam[]._id, "")
 const topicFilter = /* groq */ `
 && references(^.tagsParam[]._id)
 `
@@ -119,6 +87,49 @@ const prevDirectionFilter = /* groq */ `
 const nextDirectionFilter = /* groq */ `
 && (${publishDateTimeQuery} < $lastPublishedAt || (${publishDateTimeQuery} == $lastPublishedAt && _id > $lastId))
 `
+
+export const allNewsTopicTagsWithFilter = (hasTopic = false, hasCountry = false, hasYear = false) => /* groq */ `
+{
+ "tagsParam": *[_type == 'tag'
+                && !(_id in path('drafts.**'))
+                && key.current in $tags
+               ]{ _id, "key": key.current },
+ "countryTagsParam": *[_type == 'countryTag' && key.current in $countryTags]{ _id, "key": key.current },
+}{
+  tagsParam,
+  countryTagsParam,
+  "tags": *[_type == "tag" && ${noDrafts}]{
+"id": _id,
+"key": key.current,
+"title":title[$lang],
+"connectedNews":  *[_type=='news' && lang == $lang && !(_id in path('drafts.**')) 
+        && ^._id in tags[]._ref
+        && ^.^.tagsParam[]._id in tags[]._ref
+        && ^.^.countryTagsParam[]._id in countryTags[]._ref
+    ]
+}
+}.tags`
+export const allNewsCountryTagsWithFilter = (hasTopic = false, hasCountry = false, hasYear = false) => /* groq */ `
+*[_type == "countryTag" && ${noDrafts}]{
+"id": _id,
+"key": key.current,
+"title":title[$lang],
+"connectedNews": count(*[_type=='news' && ${sameLang} && ${noDrafts}&& references(^._id) 
+  ${hasTopic ? topicFilter : ''}
+  ${hasCountry ? countryFilter : ''}
+  ${hasYear ? yearFilter : ''}
+])
+}`
+export const allNewsYearTagsWithFilter = (hasTopic = false, hasCountry = false, hasYear = false) => /* groq */ `
+{
+    "newsYears": *[_type == "news" && ${sameLang} && ${noDrafts}
+      ${hasTopic ? topicFilter : ''}
+      ${hasCountry ? countryFilter : ''}
+      ${hasYear ? yearFilter : ''} 
+  ] | order(${publishDateTimeQuery} desc)
+    {"years":string::split(${publishDateTimeQuery}, '-')[0]}.years,
+  }.newsYears
+  `
 
 export const getNewsByFiltersV2 = (
   hasTopic = false,
