@@ -1,6 +1,6 @@
 import { forwardRef } from 'react'
-import styled from 'styled-components'
-import { Icon, Typography } from '@equinor/eds-core-react'
+import { Icon } from '@equinor/eds-core-react'
+import { Typography } from '@core/Typography'
 import { add_circle_outlined, remove_outlined, add_circle_filled, remove } from '@equinor/eds-icons'
 
 import {
@@ -8,68 +8,10 @@ import {
   useAccordionItemState,
   AccordionButtonProps as ChakraAccordionButtonProps,
 } from '@chakra-ui/react'
-import { outlineTemplate, Tokens } from '@utils'
-
-const { outline } = Tokens
 
 export type AccordionHeaderProps = {
   headingLevel?: 'h2' | 'h3' | 'h4' | 'h5'
 } & ChakraAccordionButtonProps
-
-const StyledCAccordionButton = styled(AccordionButton)`
-  display: flex;
-  align-items: center;
-  width: 100%;
-  background: transparent;
-  padding: var(--space-medium) 0;
-  border: none;
-  cursor: pointer;
-  &[data-focus-visible-added]:focus {
-    ${outlineTemplate(outline)}
-  }
-`
-
-const FilledIcon = styled(Icon)``
-
-const OutlineIcon = styled(Icon)``
-
-const StyledIcon = styled.span`
-  flex: 0 0 var(--space-xLarge);
-  line-height: 16px;
-  & ${FilledIcon}, & ${OutlineIcon} {
-    fill: var(--accordion-icon-color);
-  }
-`
-const StyledHeader = styled(Typography)`
-  margin: 0;
-  & ${FilledIcon} {
-    display: none;
-  }
-  &:hover ${FilledIcon} {
-    display: inline-flex;
-  }
-  &:hover ${OutlineIcon} {
-    display: none;
-  }
-`
-
-const StyledTypography = styled(Typography)<{ $isExpanded?: boolean }>`
-  font-size: var(--typeScale-1);
-  line-height: var(--lineHeight-2);
-  display: inline-block;
-  padding-top: var(--space-2);
-  text-align: left;
-  @media (prefers-reduced-motion: no-preference) {
-    transition: font-weight 0.1s ease-in-out;
-  }
-
-  color: var(--color-on-background);
-
-  ${({ $isExpanded }) =>
-    $isExpanded && {
-      fontWeight: 700,
-    }}
-`
 
 export const Header = forwardRef<HTMLButtonElement, AccordionHeaderProps>(function Header(
   { headingLevel = 'h3', children, ...rest },
@@ -77,25 +19,36 @@ export const Header = forwardRef<HTMLButtonElement, AccordionHeaderProps>(functi
 ) {
   const iconSize = 24
   const { isOpen } = useAccordionItemState()
+  const fillColor = `fill-[var(--accordion-icon-color)]`
 
   return (
-    <StyledHeader forwardedAs={headingLevel}>
-      <StyledCAccordionButton ref={ref} style={{ paddingLeft: 0, paddingTop: '1em', paddingBottom: '1em' }} {...rest}>
-        {isOpen ? (
-          <StyledIcon>
-            <OutlineIcon size={iconSize} data={remove_outlined} />
-            <FilledIcon size={iconSize} data={remove} />
-          </StyledIcon>
-        ) : (
-          <StyledIcon>
-            <OutlineIcon size={iconSize} data={add_circle_outlined} />
-            <FilledIcon size={iconSize} data={add_circle_filled} />
-          </StyledIcon>
-        )}
-        <StyledTypography $isExpanded={isOpen} forwardedAs="span">
+    <Typography as={headingLevel}>
+      <AccordionButton
+        ref={ref}
+        className="flex items-center w-full bg-transparent sm:py-6 border-none cursor-pointer focus-visible:envis-outline"
+        {...rest}
+      >
+        <span className="leading-[16px] flex-[0_0_var(--space-xLarge)]">
+          <Icon
+            className={`${fillColor} ${isOpen ? '!hidden' : 'hover:!inline'}`}
+            size={iconSize}
+            data={isOpen ? remove_outlined : add_circle_outlined}
+          />
+          <Icon
+            className={`${fillColor} ${isOpen ? 'hover:!inline' : '!hidden'}`}
+            size={iconSize}
+            data={isOpen ? remove : add_circle_filled}
+          />
+        </span>
+        <Typography
+          as="span"
+          className={`motion-safe:transition-[font-weight] motion-safe:duration-100 motion-safe:ease-in-out ${
+            isOpen ? 'font-bold' : 'font-normal'
+          } pt-[var(--space-2)] leading-earthy`}
+        >
           {children}
-        </StyledTypography>
-      </StyledCAccordionButton>
-    </StyledHeader>
+        </Typography>
+      </AccordionButton>
+    </Typography>
   )
 })

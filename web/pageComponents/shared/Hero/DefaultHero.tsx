@@ -1,4 +1,4 @@
-import type { ImageWithCaptionData } from '../../../types/types'
+import type { ImageWithCaptionData } from '../../../types/index'
 import styled from 'styled-components'
 import DefaulHeroImage from './DefaultHeroImage'
 import { PortableTextBlock } from '@portabletext/types'

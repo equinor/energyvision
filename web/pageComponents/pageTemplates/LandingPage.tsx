@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import type { LandingPageSchema } from '../../types/types'
+import type { LandingPageSchema } from '../../types/index'
 import IngressText from '../shared/portableText/IngressText'
 import TitleText from '../shared/portableText/TitleText'
 import ContentGroup from '../landingPages/ContentGroup'

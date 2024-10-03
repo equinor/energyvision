@@ -1,15 +1,15 @@
 import { InstantSearchServerState } from 'react-instantsearch'
 import type {
-  MenuData,
   FooterColumns,
   IntlData,
   TeaserData,
-  SeoData,
   HeroType,
   ImageWithCaptionData,
+  SeoData,
   BackgroundColours,
+  MenuData,
   LinkData,
-} from './types'
+} from './index'
 import { PortableTextBlock } from '@portabletext/types'
 import { SanityImageObject } from '@sanity/image-url/lib/types/types'
 

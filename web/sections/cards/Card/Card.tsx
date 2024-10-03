@@ -2,7 +2,7 @@ import { forwardRef, HTMLAttributes } from 'react'
 import { default as NextLink, LinkProps } from 'next/link'
 import { twMerge } from 'tailwind-merge'
 import Image, { Ratios } from '../../../pageComponents/shared/SanityImage'
-import { ImageWithAlt } from '../../../types/types'
+import { ImageWithAlt } from '../../../types/index'
 import envisTwMerge from '../../../twMerge'
 
 export type Variants = 'primary' | 'secondary' | 'compact' | 'single'
@@ -79,7 +79,7 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
       text-slate-80
       focus:outline-none
       focus-visible:envis-outline
-      dark:text-white-100
+      dark:text-slate-80
       dark:focus-visible:envis-outline-invert
       `,
         className,

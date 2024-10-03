@@ -13,9 +13,6 @@ dependencies:
   '@chakra-ui/react':
     specifier: ^2.8.2
     version: 2.8.2(@emotion/react@11.0.0)(@emotion/styled@11.0.0)(@types/react@18.3.3)(framer-motion@11.2.12)(react-dom@18.3.1)(react@18.3.1)
-  '@chakra-ui/skip-nav':
-    specifier: ^2.0.12
-    version: 2.0.12(@chakra-ui/system@2.6.2)(react@18.3.1)
   '@emotion/react':
     specifier: ^11
     version: 11.0.0(@babel/core@7.21.4)(@types/react@18.3.3)(react@18.3.1)
@@ -79,9 +76,6 @@ dependencies:
   easy-soap-request:
     specifier: ^5.4.0
     version: 5.4.0
-  focus-visible:
-    specifier: ^5.2.0
-    version: 5.2.0
   framer-motion:
     specifier: ^11.2.12
     version: 11.2.12(react-dom@18.3.1)(react@18.3.1)
@@ -2764,16 +2758,6 @@ packages:
       '@chakra-ui/media-query': 3.3.0(@chakra-ui/system@2.6.2)(react@18.3.1)
       '@chakra-ui/react-use-previous': 2.1.0(react@18.3.1)
       '@chakra-ui/shared-utils': 2.0.5
-      '@chakra-ui/system': 2.6.2(@emotion/react@11.0.0)(@emotion/styled@11.0.0)(react@18.3.1)
-      react: 18.3.1
-    dev: false
-
-  /@chakra-ui/skip-nav@2.0.12(@chakra-ui/system@2.6.2)(react@18.3.1):
-    resolution: {integrity: sha512-4p1rVml+3hVc87BlXxVCEnf1r9cLzUR6DAVC+s7n857pLQBdC2HsMhlt4NwgoJGchDdZz/lnr7sMS0HzTRV45g==}
-    peerDependencies:
-      '@chakra-ui/system': '>=2.0.0'
-      react: '>=18'
-    dependencies:
       '@chakra-ui/system': 2.6.2(@emotion/react@11.0.0)(@emotion/styled@11.0.0)(react@18.3.1)
       react: 18.3.1
     dev: false
@@ -9413,10 +9397,6 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       tslib: 2.7.0
-    dev: false
-
-  /focus-visible@5.2.0:
-    resolution: {integrity: sha512-Rwix9pBtC1Nuy5wysTmKy+UjbDJpIfg8eHjw0rjZ1mX4GNLz1Bmd16uDpI3Gk1i70Fgcs8Csg2lPm8HULFg9DQ==}
     dev: false
 
   /follow-redirects@1.15.9(debug@4.3.7):

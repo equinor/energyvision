@@ -1,4 +1,4 @@
-import type { ImageWithCaptionData } from '../../../types/types'
+import type { ImageWithCaptionData } from '../../../types/index'
 import Image, { Ratios } from '../SanityImage'
 import { Caption } from '../image/Caption'
 

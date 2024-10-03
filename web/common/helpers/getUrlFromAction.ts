@@ -1,4 +1,4 @@
-import type { LinkData } from '../../types/types'
+import type { LinkData } from '../../types/index'
 
 export const getUrlFromAction = ({
   link,

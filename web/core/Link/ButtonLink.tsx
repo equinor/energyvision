@@ -1,7 +1,7 @@
 import { forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { BaseLink, BaseLinkProps } from './BaseLink'
-import { LinkType } from '../../types/types'
+import { LinkType } from '../../types/index'
 import { ButtonProps, commonButtonStyling, getVariant } from '../Button'
 
 export type ButtonLinkProps = {

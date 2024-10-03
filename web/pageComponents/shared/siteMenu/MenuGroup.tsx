@@ -1,53 +1,17 @@
 import { Fragment } from 'react'
 import styled from 'styled-components'
 import RichText from '../portableText/RichText'
-import { Link, List, Menu } from '@components'
-import type { MenuLinkData, SubMenuData, SubMenuGroupData } from '../../../types/types'
+import { Link, ReadMoreLink } from '@core/Link'
+import { Menu } from '@components'
+import type { MenuLinkData, SubMenuData, SubMenuGroupData } from '../../../types/index'
 import { SubMenuGroupHeading, SubMenuGroupList } from './SubMenuGroup'
 import FeaturedContent from './FeaturedContent'
 import { useRouter } from 'next/router'
 
 const { SubMenu, SubMenuHeader, SubMenuPanel, SubMenuGroups } = Menu
-const { Item } = List
-
-const StyledItem = styled(Item)`
-  @media (min-width: 1300px) {
-    /*  We want a slightly smaller font size here, em on purpose */
-    font-size: var(--typeScale-05);
-  }
-`
 
 const PositionedSubMenuPanel = styled(SubMenuPanel)`
   top: 265px;
-`
-
-const StyledSubMenuGroupLink = styled(Link)`
-  display: flex;
-  padding: calc(var(--space-small) + var(--space-xSmall)) var(--space-medium);
-  @media (min-width: 1300px) {
-    font-size: var(--typeScale-1);
-    padding-left: var(--space-medium);
-    margin-left: calc(var(--space-medium) * -1);
-  }
-  :hover {
-    background-color: var(--grey-10);
-  }
-  &[aria-current]:not([aria-current='false']) {
-    border-left: var(--moss-green-95) solid 3px;
-    background-color: var(--grey-10);
-  }
-`
-
-const ReadMore = styled(Link)`
-  padding: calc(var(--space-small) + var(--space-xSmall)) 0;
-`
-
-const TextContainer = styled.div`
-  @media (max-width: 1299px) {
-    p:last-child {
-      margin-bottom: 0;
-    }
-  }
 `
 
 const StyledSection = styled.div`
@@ -93,16 +57,10 @@ export const MenuGroup = ({ topLevelItem, index }: MenuGroupType) => {
       <PositionedSubMenuPanel>
         <Grid>
           <div>
-            <StyledSection>
-              {intro && (
-                <TextContainer>
-                  <RichText value={intro} />
-                </TextContainer>
-              )}
-              <ReadMore href={topLevelHref} variant="readMore">
-                {topLevelLink?.label}
-              </ReadMore>
-            </StyledSection>
+            <div className="max-w-menuText xl:pr-lg xl:pb-2xl">
+              {intro && <RichText value={intro} />}
+              <ReadMoreLink href={topLevelHref}>{topLevelLink?.label}</ReadMoreLink>
+            </div>
             {groups && groups.length > 0 && (
               <SubMenuGroups>
                 {groups.map((groupItem: SubMenuGroupData) => {
@@ -115,15 +73,15 @@ export const MenuGroup = ({ topLevelItem, index }: MenuGroupType) => {
                       )}
                       <SubMenuGroupList aria-label={groupItem.label || topLevelLink?.label} unstyled>
                         {groupItem.links?.map((link: MenuLinkData) => (
-                          <StyledItem key={link.id}>
-                            <StyledSubMenuGroupLink
-                              underline={false}
+                          <li key={link.id}>
+                            <Link
+                              className={`flex aria-current:bg-grey-10 hover:bg-grey-10 w-auto no-underline px-md py-xs+sm xl:ml-[calc(var(--space-medium)_*_(-1))]  aria-current:border-l-[3px] aria-current:border-moss-green-95`}
                               href={getLink(link)}
                               aria-current={router.asPath == link?.link?.slug ? 'page' : 'false'}
                             >
                               {link.label}
-                            </StyledSubMenuGroupLink>
-                          </StyledItem>
+                            </Link>
+                          </li>
                         ))}
                       </SubMenuGroupList>
                     </Fragment>

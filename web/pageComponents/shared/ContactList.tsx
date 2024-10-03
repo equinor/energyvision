@@ -1,4 +1,4 @@
-import type { ContactListData } from '../../types/types'
+import type { ContactListData } from '../../types/index'
 import { Text, Heading } from '@components'
 import { removeWhiteSpace } from '../../common/helpers/removeWhiteSpace'
 import { twMerge } from 'tailwind-merge'

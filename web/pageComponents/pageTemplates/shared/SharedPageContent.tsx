@@ -15,10 +15,10 @@ import NewsList from '../../topicPages/NewsList'
 import StockValues from '../../topicPages/StockValues'
 import CookieDeclaration from '../../topicPages/CookieDeclaration'
 import TwitterEmbed from '../../topicPages/TwitterEmbed'
-import IframeCarousel from '../../shared/IframeCarousel/IframeCarousel'
+import IframeCarousel from '@sections/IframeCarousel/IframeCarousel'
 import VideoPlayer from '../../shared/VideoPlayer'
 import TextTeaser from '../../shared/textTeaser/TextTeaser'
-import KeyNumbers from '../../topicPages/KeyNumbers/KeyNumbers'
+import KeyNumbers from '../../../sections/KeyNumber/KeyNumber'
 import CardsList from '../../../sections/cards/CardsList/CardsList'
 import {
   AnchorLinkData,
@@ -53,7 +53,7 @@ import {
   CampaignBannerData,
   DesignOptions,
   AnchorLinkListData,
-} from '../../../types/types'
+} from '../../../types/index'
 import { getColorForTheme } from '../../shared/textTeaser/theme'
 import Grid from '@sections/Grid/Grid'
 import { CampaignBanner } from '@sections/CampaignBanner'
