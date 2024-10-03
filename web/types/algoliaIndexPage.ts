@@ -27,9 +27,11 @@ export type AlgoliaIndexPageType = {
 }
 
 export type NewsRoomNewsItem = {
+  id: string
   slug: string
-  pageTitle: string
+  title: string
   publishDateTime?: string
+  firstPublishedAt?: string
   heroImage: ImageWithCaptionData
   ingress?: string
 }
@@ -38,7 +40,6 @@ export type NewsRoomPageType = {
   seoAndSome: SeoData
   title: PortableTextBlock[]
   ingress?: PortableTextBlock[]
-  newsList?: NewsRoomNewsItem[]
   subscriptionLink?: { slug: string; type: string; lang: string }
   subscriptionLinkTitle?: string
   localNewsPages?: LinkData[]

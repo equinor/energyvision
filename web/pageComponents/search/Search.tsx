@@ -10,10 +10,10 @@ import { useRef } from 'react'
 import styled from 'styled-components'
 import { Pagination } from '../shared/search/pagination/Pagination'
 import usePaginationPadding from '../../lib/hooks/usePaginationPadding'
-import { PaginationContextProvider } from '../../pageComponents/shared/search/pagination/PaginationContext'
 import { useIntl } from 'react-intl'
 import { SearchClient } from 'algoliasearch/lite'
 import { SearchBox } from '@core/AlgoliaSearchBox/SearchBox'
+import { PaginationContextProvider } from '../../common/contexts/PaginationContext'
 
 const SearchResults = dynamic(() => import('./SearchResults'))
 

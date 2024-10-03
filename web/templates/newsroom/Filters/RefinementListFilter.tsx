@@ -15,6 +15,10 @@ export type RefinementListFilterProps = {
 const RefinementListFilter = ({ variant = 'list', filterName, labelledBy, ...rest }: RefinementListFilterProps) => {
   const { items, refine } = useRefinementList(rest)
   const headingId = useId()
+
+  const handleChange = (value: string) => {
+    refine(value)
+  }
   return items.length > 0 ? (
     <div
       className={`${
@@ -44,7 +48,7 @@ const RefinementListFilter = ({ variant = 'list', filterName, labelledBy, ...res
                 value={item.value}
                 label={`${item.label} (${item.count})`}
                 checked={item.isRefined}
-                onChange={() => refine(item.value)}
+                onChange={() => handleChange(item.value)}
               />
             </li>
           ))}

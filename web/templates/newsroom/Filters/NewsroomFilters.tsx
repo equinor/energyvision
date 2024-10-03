@@ -14,7 +14,6 @@ const NewsRoomFilters = forwardRef<HTMLDivElement, NewsRoomFiltersProps>(functio
 ) {
   const intl = useIntl()
   const isMobile = useMediaQuery(`(max-width: 768px)`)
-
   return (
     <div ref={ref} className={envisTwMerge(`flex flex-col gap-4`, className)}>
       <a

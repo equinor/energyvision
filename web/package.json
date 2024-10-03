@@ -10,6 +10,7 @@
   },
   "scripts": {
     "dev": "next dev",
+    "info": "next info",
     "build": "next build",
     "start": "next start",
     "test": "jest",

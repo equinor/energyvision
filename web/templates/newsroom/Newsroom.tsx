@@ -14,10 +14,10 @@ import { Configure, InstantSearch } from 'react-instantsearch'
 import { FormattedMessage, useIntl } from 'react-intl'
 import NewsSections from './NewsSections/NewsSections'
 import QuickSearch from './QuickSearch/QuickSearch'
-import { searchClient } from '../../lib/algolia'
-import { PaginationContextProvider } from '../../pageComponents/shared/search/pagination/PaginationContext'
+import { searchClient as client } from '../../lib/algolia'
 import { Pagination } from '../../pageComponents/shared/search/pagination/Pagination'
 import { List } from '@core/List'
+import { PaginationContextProvider } from '../../common/contexts/PaginationContext'
 
 type NewsRoomTemplateProps = {
   isServerRendered?: boolean
@@ -26,8 +26,6 @@ type NewsRoomTemplateProps = {
   slug?: string
   url?: string
 }
-
-//const client = algoliasearch(algolia.applicationId, algolia.searchApiKey)
 
 const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function NewsRoomTemplate(
   { isServerRendered, locale, pageData, slug, url },
@@ -139,13 +137,13 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
         <InstantSearch
           searchClient={
             isServerRendered
-              ? searchClient({
+              ? client({
                   headers: {
                     //@ts-ignore: TODO
                     Referer: url,
                   },
                 })
-              : searchClient(undefined)
+              : client(undefined)
           }
           future={{ preserveSharedStateOnUnmount: false }}
           indexName={indexName}

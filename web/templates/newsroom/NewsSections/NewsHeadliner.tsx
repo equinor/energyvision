@@ -6,6 +6,7 @@ import Image, { Ratios } from '../../../pageComponents/shared/SanityImage'
 import envisTwMerge from '../../../twMerge'
 import { NewsRoomNewsItem } from '../../../types/algoliaIndexPage'
 import { SanityImageObject } from '@sanity/image-url/lib/types/types'
+import Blocks from '../../../pageComponents/shared/portableText/Blocks'
 
 export type NewsHeadlinerProps = {
   data: NewsRoomNewsItem
@@ -16,11 +17,11 @@ const NewsHeadliner = forwardRef<HTMLLIElement, NewsHeadlinerProps>(function New
   { data, fallbackImage, className = '', ...rest },
   ref,
 ) {
-  const { slug, pageTitle, ingress, publishDateTime, heroImage } = data
+  const { slug, title, ingress, publishDateTime, heroImage } = data
 
   return (
     <section ref={ref} {...rest} className={envisTwMerge('', className)}>
-      <BaseLink href={slug} className="group flex flex-col gap-2 pb-12">
+      <BaseLink href={slug} className="group flex flex-col gap-2 pb-6">
         {(heroImage?.image?.asset || fallbackImage) && (
           <div className="aspect-video relative max-h-[324px] mb-2">
             <Image
@@ -36,14 +37,16 @@ const NewsHeadliner = forwardRef<HTMLLIElement, NewsHeadlinerProps>(function New
           </div>
         )}
         {publishDateTime && (
-          <FormattedDate datetime={publishDateTime} uppercase className="text-xs font-normal leading-normal" />
+          <FormattedDate datetime={publishDateTime} uppercase className="text-2xs font-normal leading-normal" />
         )}
-        {pageTitle && (
+        {title && (
           <Typography as="h2" variant="md" className="group-hover:underline">
-            {pageTitle}
+            {title}
           </Typography>
         )}
-        {ingress && (
+        {Array.isArray(ingress) ? (
+          <Blocks value={ingress} className="text-sm max-w-prose" />
+        ) : (
           <Typography variant="body" className="text-sm max-w-prose`">
             {ingress}
           </Typography>
