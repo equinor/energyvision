@@ -4,7 +4,8 @@ import NewsHeadliner from './NewsHeadliner'
 import NewsItem from './NewsItem'
 import envisTwMerge from '../../../twMerge'
 import { SanityImageObject } from '@sanity/image-url/lib/types/types'
-import { useHits } from 'react-instantsearch'
+import { useHits, useInstantSearch } from 'react-instantsearch'
+import NewsSectionsSkeleton from './NewsSectionsSkeleton'
 
 type NewsSectionsProps = {
   fallbackImages?: SanityImageObject[]
@@ -15,12 +16,13 @@ const NewsSections = forwardRef<HTMLDivElement, NewsSectionsProps>(function News
   ref,
 ) {
   const { items } = useHits()
+  const { status } = useInstantSearch()
 
   if (!items || items.length === 0) {
     return <FormattedMessage id="newsroom_no_hits" defaultMessage="Your search returned no results" />
   }
 
-  return (
+  return status !== 'loading' && status !== 'stalled' ? (
     <div ref={ref} className={envisTwMerge(`flex flex-col gap-4`, className)}>
       {items.map((hit, index) => {
         return index === 0 ? (
@@ -52,6 +54,8 @@ const NewsSections = forwardRef<HTMLDivElement, NewsSectionsProps>(function News
         )
       })}
     </div>
+  ) : (
+    <NewsSectionsSkeleton />
   )
 })
 
