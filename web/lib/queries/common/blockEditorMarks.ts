@@ -16,16 +16,16 @@ const referenceFields = /* groq */ `
 `
 
 const markDefs = /* groq */ `
-  "markDefs": markDefs[]{
-    ...,
-    _type == "internalLink" => {
-      "internalLink": select(
-        linkToOtherLanguage == true =>
-          referenceToOtherLanguange->${referenceFields},
+  markDefs[]{
+      ...,
+      _type == "internalLink" => {
+        "internalLink": select(
+          linkToOtherLanguage == true =>
+            referenceToOtherLanguange->${referenceFields}, 
           reference->${referenceFields},
         )
     },
-  }
+    }
 `
 
 export default markDefs
