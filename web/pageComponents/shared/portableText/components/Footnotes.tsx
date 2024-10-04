@@ -14,9 +14,8 @@ function Footnotes({ blocks }: { blocks: PortableTextBlock[] }) {
     // make an array of the mark definitions of those blocks
     //@ts-ignore
     .reduce((acc, curr) => {
-      //TODO: look into more correct reduce
-      //@ts-ignore
-      return [...acc, ...curr?.markDefs]
+      const markDefs = Array.isArray(curr?.markDefs) ? curr.markDefs : []
+      return [...acc, ...markDefs]
     }, [])
     // find all the footnote mark definitions
     //@ts-ignore
