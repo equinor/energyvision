@@ -9,6 +9,8 @@ import CareersContactForm from './careersContactForm/CareersContactForm'
 import type { FormData } from '../../../types/types'
 import { twMerge } from 'tailwind-merge'
 import CallToActions from '@sections/CallToActions'
+import PensionForm from './PensionForm'
+import React from 'react'
 
 const StyledHeading = styled(TitleText)`
   padding: 0 0 var(--space-large) 0;
@@ -32,6 +34,8 @@ const Form = ({ data, anchor, className }: { data: FormData; anchor?: string; cl
         return <CareerFairForm />
       case 'careersContactForm':
         return <CareersContactForm />
+      case 'pensionForm':
+        return <PensionForm />
       case 'orderReportsForm':
         return (
           <>

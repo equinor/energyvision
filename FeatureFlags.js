@@ -44,6 +44,7 @@ const CAREERS_CONTACT_FORM = [...GLOBAL_PROD, ...GLOBAL_DEV]
 const CONTACT_EQUINOR_FORM = [...GLOBAL_PROD, ...GLOBAL_DEV]
 const ORDER_REPORT_FORM = [...GLOBAL_PROD, ...GLOBAL_DEV]
 const CAREER_FAIR_AND_VISITS_FORM = [...GLOBAL_PROD, ...GLOBAL_DEV, 'brazil']
+const PENSION_FORM = [...GLOBAL_PROD, ...GLOBAL_DEV]
 
 const FANCY_MENU = [...GLOBAL_PROD, ...GLOBAL_DEV]
 /* LANDING_PAGE requires FANCY_MENU to work */
@@ -73,13 +74,15 @@ export default (dataset) => ({
     CAREER_FAIR_AND_VISITS_FORM.includes(dataset) ||
     CONTACT_EQUINOR_FORM.includes(dataset) ||
     ORDER_REPORT_FORM.includes(dataset) ||
-    SUBSCRIBE_FORM.includes(dataset),
+    SUBSCRIBE_FORM.includes(dataset) ||
+    PENSION_FORM.includes(dataset),
 
   HAS_SUBSCRIBE_FORM: SUBSCRIBE_FORM.includes(dataset),
   HAS_CAREERS_CONTACT_FORM: CAREERS_CONTACT_FORM.includes(dataset),
   HAS_CAREER_FAIR_AND_VISITS_FORM: CAREER_FAIR_AND_VISITS_FORM.includes(dataset),
   HAS_ORDER_REPORT_FORM: ORDER_REPORT_FORM.includes(dataset),
   HAS_CONTACT_EQUINOR_FORM: CONTACT_EQUINOR_FORM.includes(dataset),
+  HAS_PENSION_FORM: PENSION_FORM.includes(dataset),
 
   HAS_FANCY_MENU: FANCY_MENU.includes(dataset),
   /* LANDING_PAGE requires FANCY_MENU to work */
