@@ -1,9 +1,10 @@
 import { pipe } from 'fp-ts/lib/function'
 import * as A from 'fp-ts/lib/Array'
 import * as O from 'fp-ts/lib/Option'
-import { ImageWithAlt, MagazineArticle } from './sanity'
+import { MagazineArticle } from './sanity'
 import { AccordionIndex, MagazineIndex, TextBlockIndex } from '../../common'
 import { mappedAccordions, mappedTextBlocks } from '../common/mappers'
+import { ImageWithAlt } from '../common/types'
 
 const getHeroImage = (article: MagazineArticle): ImageWithAlt | null => {
   if (article?.heroFigure?.image?.asset) {

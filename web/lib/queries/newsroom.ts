@@ -1,3 +1,4 @@
+import linkSelectorFields, { linkReferenceFields } from './common/actions/linkSelectorFields'
 import markDefs from './common/blockEditorMarks'
 import { sameLang } from './common/langAndDrafts'
 import { seoAndSomeFields } from './common/seoAndSomeFields'
@@ -11,5 +12,13 @@ export const newsroomQuery = /* groq */ `
       ...,
       ${markDefs},
     },
-    backgroundImage
-  }`
+    subscriptionHeading,
+    "subscriptionLink": subscriptionLink->${linkReferenceFields},
+    subscriptionLinkTitle,
+    localNewsPagesHeading,
+    localNewsPages[]{
+      ${linkSelectorFields},
+    },
+    backgroundImage,
+    "fallbackImages": imageThumbnailFallbacks[]{...}
+}`

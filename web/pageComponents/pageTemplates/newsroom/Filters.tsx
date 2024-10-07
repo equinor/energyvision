@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import FilterHeader from './FilterHeader'
 import { RefinementList } from './RefinementList'
 import { Accordion, AccordionItem, AccordionPanel } from '@chakra-ui/react'
-import { SearchBox } from '../../../pageComponents/search/SearchBox'
+import { SearchBox } from '../../../core/AlgoliaSearchBox/SearchBox'
 
 const StyledAccordion = styled(Accordion)`
   @media (min-width: 800px) {

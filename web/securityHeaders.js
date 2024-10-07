@@ -66,6 +66,7 @@ const selfSrcUrls = [
   'https://bcdn.screen9.com',
   'https://qcdn.screen9.com',
   'https://h61q9gi9.api.sanity.io',
+  'https://h61q9gi9.apicdn.sanity.io/',
   'https://tools.eurolandir.com',
   'https://inferred.litix.io/',
   'https://*.algolia.net',

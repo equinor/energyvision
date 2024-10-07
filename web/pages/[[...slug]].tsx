@@ -84,7 +84,7 @@ Page.getLayout = (page: AppProps) => {
   const slugs = getPageSlugs(data)
 
   return (
-    <Layout footerData={data?.footerData} intl={data?.intl} preview={preview}>
+    <Layout footerData={data?.footerData} intl={data?.intl}>
       <>
         <Header slugs={slugs} menuData={data?.menuData} />
         {page}
@@ -95,6 +95,7 @@ Page.getLayout = (page: AppProps) => {
 
 export const getStaticProps: GetStaticProps = async ({ params, preview = false, locale = defaultLanguage.locale }) => {
   const { query, queryParams } = await getQueryFromSlug(params?.slug as string[], locale)
+
   const intl = await getIntl(locale, preview)
 
   const { menuData, pageData, footerData } = await getComponentsData(
