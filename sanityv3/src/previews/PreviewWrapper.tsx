@@ -1,21 +1,6 @@
-import styled from 'styled-components'
 import { ReactNode } from 'react'
 import { useToast, Button, Tooltip, Box, Text } from '@sanity/ui'
 import { CopyIcon } from '@sanity/icons'
-
-export const StyledWrapper = styled.div`
-  height: 100%;
-  width: 100%;
-  p {
-    padding: 1em;
-  }
-`
-
-const StyledButton = styled(Button)`
-  position: absolute;
-  right: 11px;
-  top: 8px;
-`
 
 type Props = {
   src: string
@@ -34,7 +19,7 @@ export const PreviewWrapper = ({ src, children, shareable = true }: Props) => {
   }
 
   return (
-    <StyledWrapper>
+    <div style={{ height: '100%', width: '100%' }}>
       {shareable && (
         <Tooltip
           content={
@@ -47,10 +32,20 @@ export const PreviewWrapper = ({ src, children, shareable = true }: Props) => {
           placement="left"
           portal
         >
-          <StyledButton tone="primary" radius={6} icon={CopyIcon} onClick={handleClick} />
+          <Button
+            tone="primary"
+            radius={6}
+            icon={CopyIcon}
+            onClick={handleClick}
+            style={{
+              position: 'absolute',
+              right: '10px',
+              top: '6px',
+            }}
+          />
         </Tooltip>
       )}
       {children}
-    </StyledWrapper>
+    </div>
   )
 }
