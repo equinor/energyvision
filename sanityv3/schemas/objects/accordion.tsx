@@ -5,7 +5,6 @@ import { AccordionComponent } from '../../icons'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import { configureTitleBlockContent } from '../editors'
 import { configureBlockContent } from '../editors/blockContentType'
-import { validateComponentAnchor } from '../validations/validateAnchorReference'
 import type { ColorSelectorValue } from '../components/ColorSelector'
 
 export type Accordion = {
