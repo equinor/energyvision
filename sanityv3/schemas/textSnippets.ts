@@ -10,6 +10,7 @@ export const groups = {
   contactForm: { title: 'Contact form', hidden: !Flags.HAS_CONTACT_EQUINOR_FORM },
   careerContactForm: { title: 'Careers Contact Form', hidden: !Flags.HAS_CAREERS_CONTACT_FORM },
   orderAnnualReportsForm: { title: 'Order annual reports form', hidden: !Flags.HAS_ORDER_REPORT_FORM },
+  pensionForm: { title: 'Pension form', hidden: !Flags.HAS_PENSION_FORM },
   form: { title: 'Form', hidden: !Flags.HAS_FORMS },
   cookie: { title: 'Cookie' },
   others: { title: 'Others' },
@@ -304,6 +305,98 @@ const snippets: textSnippet = {
     defaultValue: 'Submit form',
     group: groups.contactForm,
   },
+  pension_form_name: {
+    title: 'Name',
+    defaultValue: 'Name *',
+    group: groups.pensionForm,
+  },
+  pension_form_name_placeholder: {
+    title: 'Name Placeholder',
+    defaultValue: 'Jane Doe',
+    group: groups.pensionForm,
+  },
+  pension_form_name_validation: {
+    title: 'Name validation',
+    defaultValue: 'Please fill out your name',
+    group: groups.pensionForm,
+  },
+  
+  pension_form_email: {
+    title: 'Email',
+    defaultValue: 'Email *',
+    group: groups.pensionForm,
+  },
+  pension_form_email_validation: {
+    title: 'Email validation',
+    defaultValue: 'Please fill out a valid email address',
+    group: groups.pensionForm,
+  },
+  
+  pension_form_phone: {
+    title: 'Phone',
+    defaultValue: 'Phone *',
+    group: groups.pensionForm,
+  },
+  pension_form_phone_placeholder: {
+    title: 'Phone Placeholder',
+    defaultValue: '123-456-7890',
+    group: groups.pensionForm,
+  },
+  pension_form_phone_validation: {
+    title: 'Phone validation',
+    defaultValue: 'Please fill out your phone number',
+    group: groups.pensionForm,
+  },
+  
+  pension_form_category: {
+    title: 'Category',
+    defaultValue: 'Category',
+    group: groups.pensionForm,
+  },
+  pension_form_category_pension: {
+    title: 'Pension Category',
+    defaultValue: 'Pension',
+    group: groups.pensionForm,
+  },
+  pension_form_category_travel_insurance: {
+    title: 'Travel Insurance Category',
+    defaultValue: 'Travel Insurance',
+    group: groups.pensionForm,
+  },
+  pension_form_category_other: {
+    title: 'Other Pension/Insurance Related Category',
+    defaultValue: 'Other Pension/Insurance Related',
+    group: groups.pensionForm,
+  },
+  
+  pension_form_what_is_your_request: {
+    title: 'What is your request?',
+    defaultValue: 'What is your request?',
+    group: groups.pensionForm,
+  },
+  pension_form_what_is_your_request_placeholder: {
+    title: `Requests Placeholder`,
+    defaultValue: `Please don't enter any personal information`,
+    group: groups.pensionForm,
+  },
+  pension_form_what_is_your_request_validation: {
+    title: 'Requests Validation',
+    defaultValue: 'Please let us know how we may help you',
+    group: groups.pensionForm,
+  },
+  
+  pension_form_submit: {
+    title: 'Submit Button Text',
+    defaultValue: 'Submit Form',
+    group: groups.pensionForm,
+  },
+
+  pension_form_all_fields_mandatory: {
+    title: 'All fields with * are mandatory',
+    defaultValue: 'All fields with * are mandatory',
+    group: groups.pensionForm,
+  },
+
   career_fair_form_organisation: {
     title: 'Organisation',
     defaultValue: 'School / Organisation',
