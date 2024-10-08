@@ -163,7 +163,6 @@ _type == "keyNumbers" =>{
         ${markDefs},
       }
     },
-    anchor,
     "designOptions": {
       ${background},
     }

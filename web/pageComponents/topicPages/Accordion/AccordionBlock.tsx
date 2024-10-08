@@ -41,7 +41,7 @@ const AccordionBlock = ({ data, anchor, className }: AccordionBlockProps) => {
 
   return (
     <>
-      <StyledTextBlockWrapper {...designOptions} id={anchor || data.anchor} renderFragmentWhenPossible>
+      <StyledTextBlockWrapper {...designOptions} id={anchor} renderFragmentWhenPossible>
         <div
           className={twMerge(
             `flex flex-col gap-6 max-w-viewport mx-auto pb-page-content px-layout-lg [&_svg]:inline [&_svg]:align-baseline`,
