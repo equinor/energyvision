@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 import { isAfter } from 'date-fns'
 import { getEventDates, toUTCDateParts } from '../../common/helpers/dateUtilities'
-
 import type { EventDateType } from '../../types/index'
 import { useIntl } from 'react-intl'
-import { Button } from '@core/Button'
+import { twMerge } from 'tailwind-merge'
+import { commonButtonStyling, getVariant } from '@core/Button'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const ics = require('ics')
@@ -80,7 +80,6 @@ const AddToCalendar = ({ eventDate, title, location }: AddToCalendarProps) => {
         title: title,
         location: location || '',
       }
-
       setFileData(createICS(eventData))
     }
   }, [eventDate, location, title])
@@ -95,14 +94,15 @@ const AddToCalendar = ({ eventDate, title, location }: AddToCalendarProps) => {
     { eventTitle: title },
   )
   return (
-    <Button
+    <a
       aria-label={atcAriaLabel}
       id="atc"
+      className={twMerge(commonButtonStyling, getVariant('contained'))}
       {...(fileData && { href: fileData as string, download: `${title.replace(/ /g, '_')}.ics` })}
     >
       {/*  <Icon data={add} /> */}
       {atc}
-    </Button>
+    </a>
   )
 }
 
