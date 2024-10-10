@@ -9,6 +9,7 @@ import { AnchorLinkDescription } from './anchorReferenceField'
 // eslint-disable-next-line import/no-unresolved
 import { defaultLanguage } from '../../languages'
 import { apiVersion } from '../../sanity.client'
+import { warnHttpOrNotValidSlugExternal } from '../validations/validateSlug'
 
 export type ReferenceTarget = {
   type: string
@@ -114,11 +115,17 @@ export const getLinkSelectorFields = (labelFieldset?: string, flag?: string) => 
       description: 'Use this field to link to an external site.',
       type: 'url',
       validation: (Rule: Rule) =>
-        Rule.uri({ scheme: ['http', 'https', 'tel', 'mailto'] }).custom((value: any, context: ValidationContext) => {
+        Rule.uri({ scheme: ['https', 'tel', 'mailto'] }).custom((value: any, context: ValidationContext) => {
           const { parent } = context as { parent: LinkSelector }
           if (isHidden(parent)) return true
           const connectedField = parent?.linkToOtherLanguage ? parent?.referenceToOtherLanguage : parent?.reference
-          return validateInternalOrExternalUrl(value, connectedField)
+          const internalValidation = validateInternalOrExternalUrl(value, connectedField)
+          //If message from internalValidation return that if not continue to check external url
+          if (internalValidation) {
+            return warnHttpOrNotValidSlugExternal(value, context)
+          } else {
+            return internalValidation
+          }
         }),
       hidden: ({ parent }: { parent: LinkSelector }) => isHidden(parent),
     },
