@@ -330,24 +330,7 @@ const snippets: textSnippet = {
     title: 'Email validation',
     defaultValue: 'Please fill out a valid email address',
     group: groups.pensionForm,
-  },
-  
-  pension_form_phone: {
-    title: 'Phone',
-    defaultValue: 'Phone *',
-    group: groups.pensionForm,
-  },
-  pension_form_phone_placeholder: {
-    title: 'Phone Placeholder',
-    defaultValue: '123-456-7890',
-    group: groups.pensionForm,
-  },
-  pension_form_phone_validation: {
-    title: 'Phone validation',
-    defaultValue: 'Please fill out your phone number',
-    group: groups.pensionForm,
-  },
-  
+  },  
   pension_form_category: {
     title: 'Category',
     defaultValue: 'Category',

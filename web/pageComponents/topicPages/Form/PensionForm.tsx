@@ -157,40 +157,6 @@ const PensionForm = () => {
               }}
             />
 
-            {/* Phone field */}
-            <Controller
-              name="phone"
-              control={control}
-              rules={{
-                required: intl.formatMessage({
-                  id: 'pension_form_phone_validation',
-                  defaultMessage: 'Please fill out your phone number',
-                }),
-              }}
-              render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => {
-                const { name } = props
-                return (
-                  <FormTextField
-                    {...props}
-                    id={name}
-                    label={intl.formatMessage({
-                      id: 'pension_form_phone',
-                      defaultMessage: 'Phone',
-                    })}
-                    placeholder={intl.formatMessage({
-                      id: 'pension_form_phone_placeholder',
-                      defaultMessage: '123-456-7890',
-                    })}
-                    inputRef={ref}
-                    aria-required="true"
-                    inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
-                    helperText={error?.message}
-                    {...(invalid && { variant: 'error' })}
-                  />
-                )
-              }}
-            />
-
             {/* Pension Category field */}
             <Controller
               name="pensionCategory"
