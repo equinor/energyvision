@@ -4,7 +4,6 @@ import { sendRequestToServiceNow } from './service-now-base'
 import { validateFormRequest } from './validateFormRequest'
 
 const getCatalogIdentifier = (catalogType: PensionFormCatalogType | null) => {
-    console.log(catalogType)
     switch (catalogType) {
       case 'pension':
         return '6777904f938a2950eaf1f4527cba1048';
