@@ -7,7 +7,6 @@ import { FormButton, FormTextField, FormSelect, FormSubmitSuccessBox, FormSubmit
 import { BaseSyntheticEvent, useState } from 'react'
 import FriendlyCaptcha from './FriendlyCaptcha'
 import { PensionFormCatalogType } from '../../../types'
-import React from 'react'
 
 type PensionFormValues = {
   name: string

@@ -10,7 +10,6 @@ import type { FormData } from '../../../types/index'
 import { twMerge } from 'tailwind-merge'
 import CallToActions from '@sections/CallToActions'
 import PensionForm from './PensionForm'
-import React from 'react'
 
 const StyledHeading = styled(TitleText)`
   padding: 0 0 var(--space-large) 0;
