@@ -4,7 +4,7 @@ import {
   EventCardData,
   KeyNumberItemData,
   IFrameCarouselItemData,
-} from '../../types/types'
+} from '../../types/index'
 import {
   ElementType,
   forwardRef,

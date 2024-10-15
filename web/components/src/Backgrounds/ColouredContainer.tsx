@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { normal, inverted } from '../../../styles/themes'
 import { getContainerColor, isInvertedStyle } from '../../utils/backgroundColours'
 import { forwardRef, HTMLAttributes, CSSProperties } from 'react'
-import { BackgroundColours } from '../../../types/types'
+import { BackgroundColours } from '../../../types/index'
 import { ColorKeyTokens, colorKeyToUtilityMap } from '../../../styles/colorKeyToUtilityMap'
 import { twMerge } from 'tailwind-merge'
 

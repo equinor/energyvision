@@ -1,6 +1,6 @@
 import { getYear, getMonth, getDate, getHours, getMinutes, getSeconds } from 'date-fns'
 import { zonedTimeToUtc } from 'date-fns-tz'
-import { EventDateType } from '../../../web/types/types'
+import { EventDateType } from '../../../web/types/index'
 
 export const toDateParts = (datetime: Date): number[] => {
   return [

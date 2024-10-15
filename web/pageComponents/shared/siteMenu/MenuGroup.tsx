@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import RichText from '../portableText/RichText'
 import { Link, ReadMoreLink } from '@core/Link'
 import { Menu } from '@components'
-import type { MenuLinkData, SubMenuData, SubMenuGroupData } from '../../../types/types'
+import type { MenuLinkData, SubMenuData, SubMenuGroupData } from '../../../types/index'
 import { SubMenuGroupHeading, SubMenuGroupList } from './SubMenuGroup'
 import FeaturedContent from './FeaturedContent'
 import { useRouter } from 'next/router'
@@ -13,16 +13,6 @@ const { SubMenu, SubMenuHeader, SubMenuPanel, SubMenuGroups } = Menu
 const PositionedSubMenuPanel = styled(SubMenuPanel)`
   top: 265px;
 `
-
-const StyledSection = styled.div`
-  max-width: calc(35 * var(--space-medium));
-
-  @media (min-width: 1300px) {
-    display: block;
-    padding: 0 var(--space-large) var(--space-xxLarge) 0;
-  }
-`
-
 const Grid = styled.div`
   @media (min-width: 1300px) {
     display: grid;

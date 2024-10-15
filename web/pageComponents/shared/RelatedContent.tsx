@@ -1,6 +1,6 @@
 import { Fragment, HTMLAttributes } from 'react'
 import { Heading, List } from '@components'
-import type { RelatedLinksData, LinkData } from '../../types/types'
+import type { RelatedLinksData, LinkData } from '../../types/index'
 import { ResourceLink } from '@core/Link'
 import { getUrlFromAction } from '../../common/helpers'
 import { getLocaleFromName } from '../../lib/localization'

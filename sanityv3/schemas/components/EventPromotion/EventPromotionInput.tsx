@@ -1,4 +1,4 @@
-import { Text, Card, Grid, Stack, Heading, Radio, Inline, Flex, Switch, TextInput } from '@sanity/ui'
+import { Text, Card, Grid, Stack, Heading, Radio, Inline, Flex, Switch } from '@sanity/ui'
 import { set, MemberField } from 'sanity'
 import { getObjectMemberField } from '../utils/getObjectMemberField'
 import type { ObjectInputProps } from 'sanity'

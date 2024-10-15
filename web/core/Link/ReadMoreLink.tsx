@@ -2,7 +2,7 @@ import { forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { BaseLink, BaseLinkProps } from './BaseLink'
 import { ArrowRight } from '../../icons'
-import { LinkType } from '../../types/types'
+import { LinkType } from '../../types/index'
 
 export type ReadMoreLinkProps = {
   /** Overriding styles for the icon  */

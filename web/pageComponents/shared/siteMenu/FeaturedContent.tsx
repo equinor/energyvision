@@ -1,4 +1,4 @@
-import type { EventCardData, FeaturedContentData } from '../../../types/types'
+import type { EventCardData, FeaturedContentData } from '../../../types/index'
 import PromotionCard from '@sections/cards/PromotionCard/PromotionCard'
 import { EventCard } from '@sections/cards/EventCard'
 

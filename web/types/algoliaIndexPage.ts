@@ -1,14 +1,14 @@
 import { InstantSearchServerState } from 'react-instantsearch'
 import type {
-  MenuData,
   FooterColumns,
   IntlData,
   TeaserData,
-  SeoData,
   HeroType,
   ImageWithCaptionData,
+  SeoData,
   BackgroundColours,
-} from './types'
+  MenuData,
+} from './index'
 import { PortableTextBlock } from '@portabletext/types'
 
 export type AlgoliaIndexPageType = {
