@@ -46,6 +46,8 @@ jobs:
         id: modify-radix
         run: |
           # Install pre-requisite
+          python3 -m venv venv
+          source venv/bin/activate
           python -m pip install --user ruamel.yaml
           python ci/upgradeEnvironment.py web ${{ env.IMAGE_TAG_SHA }} ${{ secrets.ENV }}
           git config --global user.name 'github'
