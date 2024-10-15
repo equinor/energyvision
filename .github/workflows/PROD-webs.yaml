@@ -39,7 +39,9 @@ jobs:
         id: modify-radix
         run: |
           # Install pre-requisite
-          python -m pip install --user ruamel.yaml
+          python3 -m venv venv
+          source venv/bin/activate
+          python -m pip install ruamel.yaml
           python ci/promoteToProduction.py web ${{ github.event.inputs.site }}
           git config --global user.name 'github'
           git config --global user.email 'padms@users.noreply.github.com'
