@@ -187,5 +187,5 @@ export const getMetaTitleSuffix = (dataset) => {
 }
 
 export const getAllDomainUrls = () => {
-  return Object.keys(datasets).map((dataset) => websiteDomains[dataset].url)
+  return Object.keys(datasets).map((dataset) => websiteDomains[dataset]?.url)
 }
