@@ -254,7 +254,7 @@ const CareerFairForm = () => {
                       id: 'career_fair_form_visit_equinor',
                       defaultMessage: 'Would like to visit Equinor office or facility',
                     }) && (
-                    <p className='-mt-10' id="select-helper-text">
+                    <p className='-mt-2' id="select-helper-text">
                       {intl.formatMessage({
                         id: 'career_fair_form_visit_equinor_helper_text',
                         defaultMessage:
