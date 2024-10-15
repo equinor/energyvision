@@ -22,6 +22,7 @@ type FormType =
   | 'careersContactForm'
   | 'orderReportsForm'
   | 'careerFairAndVisitsForm'
+  | 'pensionForm'
 
 const ingressContentType = configureBlockContent({
   h2: false,
@@ -67,6 +68,7 @@ export default {
             title: 'Career fairs and visits',
             value: 'careerFairAndVisitsForm',
           },
+          Flags.HAS_PENSION_FORM && { title: 'Pension form', value: 'pensionForm' },
         ].filter((e) => e),
         layout: 'dropdown',
       },
@@ -110,6 +112,8 @@ export default {
           return 'Careers contact form'
         } else if (type == 'orderReportsForm') {
           return 'Order reports'
+        } else if(type == 'pensionForm') {
+          return 'Pension form'
         }
         return 'Career fairs and visits'
       }
