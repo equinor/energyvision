@@ -766,6 +766,11 @@ const snippets: textSnippet = {
     defaultValue: 'Switch to',
     group: groups.others,
   },
+  filter: {
+    title: 'Filter',
+    defaultValue: 'Filter',
+    group: groups.others,
+  },
 }
 
 type textSnippetGroup = { title: string; hidden?: boolean }

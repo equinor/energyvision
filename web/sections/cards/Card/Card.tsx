@@ -38,13 +38,13 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
   shadow-card 
   rounded-sm 
   active:shadow-card-interact
-  min-w-[220px]
-  md:max-w-[400px]`
+  min-w-card-minWidth
+  md:max-w-card-maxWidth`
 
   const variantClassNames = {
     primary: `${commonStyling}`,
     secondary: `${commonStyling} rounded-md overflow-hidden`,
-    compact: `h-full flex gap-4 min-w-[200px] xl:max-w-[300px] 3xl:max-w-[400px]`,
+    compact: `h-full flex gap-4 min-w-[200px] xl:max-w-[300px] 3xl:max-w-card-maxWidth`,
     single: `grid grid-cols-[40%_1fr] min-h-[450px] shadow-card rounded-sm active:shadow-card-interact`,
   }
   const variantAspectRatio = {

@@ -21,6 +21,7 @@ module.exports = {
     './sections/**/*.{js,ts,tsx}',
     './icons/**/*.{js,ts,tsx}',
     './pages/**/*.{js,ts,tsx}',
+    './templates/**/*.{js,ts,tsx}',
   ],
   /*
   Now instead of dark:{class} classes being applied based on prefers-color-scheme, 
@@ -221,6 +222,8 @@ module.exports = {
         '2xl': 'calc((40 / 16) * theme(fontSize.base))',
         '3xl': 'calc((56 / 16) * theme(fontSize.base))',
         '4xl': 'calc((96 / 16) * theme(fontSize.base))',
+        'card-minWidth': '220px',
+        'card-maxWidth': '400px',
       }),
       fontSize: {
         //--typeScale-00
@@ -462,8 +465,11 @@ module.exports = {
           },
         },
       }),
-
       transitionProperty: ['motion-safe'],
+      gridTemplateColumns: {
+        'auto-fill-fr': `repeat(auto-fill, minmax(80px,1fr))`,
+        card: `repeat(auto-fill, minmax(min(100%, theme(spacing.card-minWidth)), theme(spacing.card-maxWidth)))`,
+      },
     },
   },
   variants: {
@@ -503,9 +509,6 @@ module.exports = {
           },
           '.break-word': {
             wordBreak: 'break-word',
-          },
-          '.auto-fill-fr': {
-            gridTemplateColumns: `repeat(auto-fill, minmax(80px,1fr))`,
           },
         })
     }),

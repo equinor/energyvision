@@ -47,6 +47,7 @@ const TeaserImage = ({ image }: { image: ImageWithAlt }) => {
 const Teaser = ({ data, anchor }: TeaserProps) => {
   const { title, overline, text, image, actions, designOptions, isBigText, useResourceLinks } = data
   const { imageSize, imagePosition, ...restOptions } = designOptions
+  console.log('restOptions', restOptions)
 
   if ([title, overline, text, image?.asset, actions].every((i) => !i)) {
     return null

@@ -4,18 +4,18 @@
 @import './components/videojs.css';
 @import 'tailwindcss/utilities';
 
-:root {
-  /* Image carousel card withs */
-  --image-carousel-card-w-sm: 275px;
-  --image-carousel-card-w-md: 692px;
-  --image-carousel-card-w-lg: 980px;
-
-  /* Modal */
-  --modal-transition-duration: 0.4s;
-  --modal-transition-easing: cubic-bezier(0.45, 0, 0.55, 1);
-}
-
 @layer base {
+  :root {
+    /* Image carousel card withs */
+    --image-carousel-card-w-sm: 275px;
+    --image-carousel-card-w-md: 692px;
+    --image-carousel-card-w-lg: 980px;
+
+    /* Modal */
+    --modal-transition-duration: 0.4s;
+    --modal-transition-easing: cubic-bezier(0.45, 0, 0.55, 1);
+  }
+
   p,
   h1,
   h2,
@@ -166,6 +166,12 @@
   }
   .black-center-gradient {
     background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4));
+    /*     background-image: linear-gradient(theme('colors.north-sea.90 / 50%'), theme('colors.north-sea.90 / 50%')),
+      linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)); */
+  }
+  .black-blue-center-gradient {
+    background-image: linear-gradient(theme('colors.slate-blue.95 / 50%'), theme('colors.slate-blue.95 / 50%')),
+      linear-gradient(rgba(0, 0, 0, 0.36), rgba(0, 0, 0, 0.36));
   }
   .black-to-top-gradient {
     background-image: linear-gradient(
