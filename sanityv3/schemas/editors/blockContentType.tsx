@@ -57,15 +57,6 @@ export const ExtraLargeTextRender = (props: any) => {
   const { children } = props
   return <span style={{ fontSize: `${em(56, 16)}`, fontWeight: '600' }}>{children}</span>
 }
-const Level2BaseStyle = (props: any) => {
-  const { children } = props
-  return <h2 style={{ fontSize: `${em(18, 16)}`, fontWeight: '600' }}>{children} </h2>
-}
-
-const Level3BaseStyle = (props: any) => {
-  const { children } = props
-  return <h3 style={{ fontSize: `${em(16, 16)}`, fontWeight: '600' }}>{children} </h3>
-}
 
 // H1 not allowed in block content since it should be a document title.
 export const configureBlockContent = (options: BlockContentProps = {}): BlockDefinition => {

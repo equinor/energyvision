@@ -4,24 +4,19 @@ import { Rule } from 'sanity'
 import { validateComponentAnchor } from '../validations/validateAnchorReference'
 import { EdsIcon } from '../../icons'
 import { Heading, Text, Box } from '@sanity/ui'
-import styled from 'styled-components'
 
 export type AnchorLink = {
   _type: 'anchorLink'
 }
 
-const StyledText = styled(Text)`
-  margin: 1em 0;
-`
-
 const Description = () => {
   return (
     <Box>
       <Heading size={2}>How to use</Heading>
-      <StyledText>
+      <Text style={{ margin: '1em 0' }}>
         Add this component before the component for which you want to have an anchor reference. The anchor reference
         will be ignored when there is no component following it.
-      </StyledText>
+      </Text>
     </Box>
   )
 }
