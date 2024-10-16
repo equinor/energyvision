@@ -34,11 +34,13 @@ function useConsentState(consentType: CookieType[], callback: () => void, cleanu
     const isLocalHost = host.includes('localhost')
     const enableConsentLogic = !isLocalHost && (Flags.IS_DEV || !host.includes('radix.equinor.com'))
     if (enableConsentLogic && consent) {
+      console.log('Consented ' + consentType)
       callback()
       return () => {
+        console.log('Not Consented ' + consentType)
         if (cleanup) cleanup()
       }
     }
-  }, [router.asPath, consent, callback, cleanup])
+  }, [router.asPath, consent, callback, cleanup, consentType])
 }
 export default useConsentState
