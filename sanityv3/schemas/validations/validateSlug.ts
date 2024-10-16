@@ -51,7 +51,8 @@ export const warnHttpOrNotValidSlugExternal = (slug: string) => {
   if (!slug.startsWith('http')) return true // ignore mailto , tel
   const isHttp = httpRegex.test(slug)
   const validSlug = stringIsSlug.test(slug)
-  const isInvalidEquinorUrl = slug !== slug.toLowerCase() && isEquinorUrl(slug)
+  const slugWithOutQueryParam = slug.split('?')[0]
+  const isInvalidEquinorUrl = slugWithOutQueryParam !== slugWithOutQueryParam.toLowerCase() && isEquinorUrl(slug)
 
   let message = ''
   if (isHttp) {
