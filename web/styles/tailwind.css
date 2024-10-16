@@ -166,8 +166,6 @@
   }
   .black-center-gradient {
     background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4));
-    /*     background-image: linear-gradient(theme('colors.north-sea.90 / 50%'), theme('colors.north-sea.90 / 50%')),
-      linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)); */
   }
   .black-blue-center-gradient {
     background-image: linear-gradient(theme('colors.slate-blue.95 / 50%'), theme('colors.slate-blue.95 / 50%')),
