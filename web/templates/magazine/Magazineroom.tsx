@@ -15,6 +15,7 @@ import MagazineCard from '@sections/cards/MagazineCard/MagazineCard'
 import { SimplePagination } from '@core/SimplePagination/SimplePagination'
 import { Ratios } from '../../pageComponents/shared/SanityImage'
 import CardSkeleton from '@sections/cards/CardSkeleton/CardSkeleton'
+import { PaginationContextProvider } from '../../common/contexts/PaginationContext'
 
 type MagazineIndexTemplateProps = {
   pageData: MagazineIndexPageType
@@ -31,7 +32,7 @@ const chunkArray = (array: any[], chunkSize: number) => {
 
 const MagazineRoom = ({ pageData, slug }: MagazineIndexTemplateProps) => {
   const { ingress, title, hero, seoAndSome, magazineTags, magazineArticles, footerComponent } = pageData || {}
-  const resultsRef = useRef<HTMLUListElement>(null)
+  const resultsRef = useRef<HTMLDivElement>(null)
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
   const parentSlug =
@@ -42,21 +43,14 @@ const MagazineRoom = ({ pageData, slug }: MagazineIndexTemplateProps) => {
   const pagedList = useMemo(() => chunkArray(magazineList, 12), [magazineList])
   const [page, setPage] = useState(0)
 
-  const scrollToTop = () => {
-    if (resultsRef?.current) {
-      resultsRef.current.scrollIntoView({ behavior: 'smooth' })
-    }
-  }
   const getNext = async () => {
     setIsLoading(true)
     setPage(page + 1)
-    scrollToTop()
     setIsLoading(false)
   }
   const getPrevious = async () => {
     setIsLoading(true)
     setPage(page - 1)
-    scrollToTop()
     setIsLoading(false)
   }
 
@@ -114,9 +108,9 @@ const MagazineRoom = ({ pageData, slug }: MagazineIndexTemplateProps) => {
           </>
         )}
         {magazineTags && <MagazineTagBar tags={magazineTags} href={parentSlug} onClick={handleClickTag} />}
-        <ul
-          ref={resultsRef}
-          className="
+        <PaginationContextProvider defaultRef={resultsRef}>
+          <ul
+            className="
           py-12
           w-full
           mx-auto
@@ -129,29 +123,30 @@ const MagazineRoom = ({ pageData, slug }: MagazineIndexTemplateProps) => {
           grid-cols-card
           auto-rows-fr
           scroll-mt-24"
-        >
-          {isLoading &&
-            Array.from({ length: 5 }, (_v, i) => i).map((item) => (
-              <li key={item}>
-                <CardSkeleton hideEyebrow hideIngress />
-              </li>
-            ))}
-          {!isLoading &&
-            pagedList[page].map((article) => (
-              <li key={article.id}>
-                <MagazineCard data={article} />
-              </li>
-            ))}
-        </ul>
-        {magazineList?.length > 12 && (
-          <SimplePagination
-            onNextPage={getNext}
-            onPreviousPage={getPrevious}
-            isFirstPage={page === 0}
-            isLastPage={page === pagedList.length - 1}
-            className="justify-center pt-12"
-          />
-        )}
+          >
+            {isLoading &&
+              Array.from({ length: 5 }, (_v, i) => i).map((item) => (
+                <li key={item}>
+                  <CardSkeleton hideEyebrow hideIngress />
+                </li>
+              ))}
+            {!isLoading &&
+              pagedList[page].map((article) => (
+                <li key={article.id}>
+                  <MagazineCard data={article} />
+                </li>
+              ))}
+          </ul>
+          {magazineList?.length > 12 && (
+            <SimplePagination
+              onNextPage={getNext}
+              onPreviousPage={getPrevious}
+              isFirstPage={page === 0}
+              isLastPage={page === pagedList.length - 1}
+              className="justify-center pt-12"
+            />
+          )}
+        </PaginationContextProvider>
         <div className="pt-24">{footerComponent && <Teaser data={footerComponent} />}</div>
       </main>
     </>
