@@ -8,6 +8,7 @@ import type {
   SeoData,
   BackgroundColours,
   MenuData,
+  MagazineCardData,
 } from './index'
 import { PortableTextBlock } from '@portabletext/types'
 
@@ -38,8 +39,10 @@ export type MagazineIndexPageType = {
     content: PortableTextBlock[]
     background: BackgroundColours
   }
+  query?: any
+  magazineArticles: MagazineCardData[]
   heroImage: ImageWithCaptionData
   footerComponent?: TeaserData
-  magazineTags: string[]
+  magazineTags: { id: string; title: string; key: string }[]
   background: BackgroundColours
 }

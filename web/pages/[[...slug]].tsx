@@ -17,7 +17,7 @@ import { getComponentsData } from '../lib/fetchData'
 import { useContext, useEffect } from 'react'
 import { PreviewContext } from '../lib/contexts/PreviewContext'
 
-const MagazinePage = dynamic(() => import('../pageComponents/pageTemplates/MagazinePage'))
+const MagazinePage = dynamic(() => import('../templates/magazine/MagazinePage'))
 const LandingPage = dynamic(() => import('../pageComponents/pageTemplates/LandingPage'))
 const EventPage = dynamic(() => import('../pageComponents/pageTemplates/Event'))
 const NewsPage = dynamic(() => import('../pageComponents/pageTemplates/News'))
