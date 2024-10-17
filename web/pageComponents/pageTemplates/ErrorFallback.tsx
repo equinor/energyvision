@@ -90,13 +90,13 @@ export const ErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => {
           Error Details
         </Heading>
         <StyledCode>
-          <StyledPre>{error.message}</StyledPre>
+          <StyledPre tabIndex={0}>{error.message}</StyledPre>
         </StyledCode>
         <StyledDetails>
           <StyledSummary>Expand to Show Error Stack Traces</StyledSummary>
           <Heading level="h3">Stack Trace</Heading>
           <StyledCode>
-            <StyledPre>{sliceErrorStack(error.stack)}</StyledPre>
+            <StyledPre tabIndex={0}>{sliceErrorStack(error.stack)}</StyledPre>
           </StyledCode>
         </StyledDetails>
       </ContentWrapper>
