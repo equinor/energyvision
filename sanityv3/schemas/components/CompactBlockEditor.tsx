@@ -5,17 +5,17 @@ import styled from 'styled-components'
 
 // How future proof will this be?
 // - not so far #753
-const Wrapper = styled.div`
-  div[data-wrapper] > div {
-    height: unset;
+const Container = styled.div`
+  [data-testid='pt-editor'][data-fullscreen='false'] {
+    height: 100px;
   }
 `
 
 const SingleLineEditor = forwardRef((props: any, ref) => {
   return (
-    <Wrapper>
+    <Container>
       <BlockEditor ref={ref} {...props} />
-    </Wrapper>
+    </Container>
   )
 })
 export default SingleLineEditor

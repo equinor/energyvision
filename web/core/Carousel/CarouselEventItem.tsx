@@ -2,8 +2,7 @@ import envisTwMerge from '../../twMerge'
 import { DisplayModes } from './Carousel'
 import { forwardRef, HTMLAttributes } from 'react'
 import { EventCard } from '@sections/cards/EventCard'
-import { EventCardData } from '../../types/types'
-//import { usePrefersReducedMotion } from '../../common/hooks/usePrefersReducedMotion'
+import { EventCardData } from '../../types/index'
 
 type CarouselEventItemProps = {
   event: EventCardData

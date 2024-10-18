@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import type { IFrameData } from '../../types/types'
+import type { IFrameData } from '../../types/index'
 import { BackgroundContainer, FigureCaption } from '@components'
 import CoreIFrame from '../shared/iframe/IFrame'
 import IngressText from '../shared/portableText/IngressText'
@@ -23,7 +23,7 @@ const Ingress = styled.div`
 
 const IFrame = ({
   anchor,
-  data: { title, ingress, frameTitle, url, description, cookiePolicy = 'none', designOptions, action, transcript },
+  data: { title, ingress, frameTitle, url, description, cookiePolicy = ['none'], designOptions, action, transcript },
   className,
   ...rest
 }: {

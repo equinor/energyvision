@@ -13,6 +13,7 @@ export enum Ratios {
   THREE_TO_TEN = 0.3,
   NINETEEN_TO_FORTY = 0.475,
   ONE_TO_TWO = 0.5,
+  SIXTEEN_TO_NINE = 1.77,
   NINE_TO_SIXTEEN = 0.5625,
   THREE_TO_FOUR = 0.75,
   FOUR_TO_FIVE = 0.8,

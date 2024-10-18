@@ -2,7 +2,7 @@ import { useMediaQuery } from '../../../lib/hooks/useMediaQuery'
 import Card from '@sections/cards/Card'
 import { FormattedDate } from '@components/FormattedDateTime'
 import Blocks from '../../../pageComponents/shared/portableText/Blocks'
-import type { CardData } from '../../../types/types'
+import type { CardData } from '../../../types/index'
 import { forwardRef, HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
 
@@ -50,6 +50,7 @@ const PromotionCard = forwardRef<HTMLAnchorElement, PromotionCardProps>(function
         />
         {ingress && (
           <Blocks
+            noInvert
             value={ingress}
             className={`break-word max-w-prose grow ${
               type !== 'news' && type !== 'localNews' ? '' : 'hidden lg:block'

@@ -6,7 +6,7 @@ import { BackgroundContainer } from '@components'
 import styled from 'styled-components'
 import TitleText from '../portableText/TitleText'
 import { CarouselItem } from './ImageCarouselItem'
-import type { ImageCarouselData } from '../../../types/types'
+import type { ImageCarouselData } from '../../../types/index'
 
 import 'swiper/css'
 import 'swiper/css/pagination'

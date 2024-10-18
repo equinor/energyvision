@@ -3,7 +3,7 @@ import Image, { Ratios } from '../SanityImage'
 import { Caption } from '../image/Caption'
 import { EdsProvider } from '@equinor/eds-core-react'
 import { NavButton } from './Navigation'
-import type { ImageWithAlt } from '../../../types/types'
+import type { ImageWithAlt } from '../../../types/index'
 
 const StyledFigure = styled.figure`
   margin: 0;

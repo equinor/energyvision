@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import type { IFrameData } from '../../../types/types'
+import type { IFrameData } from '../../../types/index'
 import { BackgroundContainer } from '@components'
 import TitleText from '../portableText/TitleText'
 import IFrame from './IFrame'
@@ -16,7 +16,7 @@ const Container = styled.div`
 `
 
 const BasicIFrame = ({ data, ...rest }: { data: IFrameData }) => {
-  const { title, frameTitle, url, cookiePolicy = 'none', designOptions } = data || {}
+  const { title, frameTitle, url, cookiePolicy = ['none'], designOptions } = data || {}
   if (!url) return null
 
   const { height, aspectRatio, background } = designOptions

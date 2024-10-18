@@ -1,4 +1,4 @@
-import { TwitterEmbedData } from '../../types/types'
+import { TwitterEmbedData } from '../../types/index'
 import RequestConsentContainer from '../../pageComponents/shared/iframe/RequestConsentContainer'
 import { TwitterTimelineEmbed, TwitterTweetEmbed } from 'react-twitter-embed'
 import { BackgroundContainer } from '@components'
@@ -57,7 +57,7 @@ const TwitterEmbed = ({ data, anchor, className }: TwitterEmbedProps) => {
             <Embed />
           </div>
           <div className="cookieconsent-optout-marketing">
-            <RequestConsentContainer cookiePolicy="marketing" />
+            <RequestConsentContainer cookiePolicy={['marketing']} />
           </div>
         </div>
       </BackgroundContainer>

@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { Heading } from '@components'
 import SimpleCard from '../cards/SimpleCard'
 
-import type { SubMenuGroupData } from '../../types/types'
+import type { SubMenuGroupData } from '../../types/index'
 
 const GroupWrapper = styled.div`
   margin: var(--space-3xLarge) 0;

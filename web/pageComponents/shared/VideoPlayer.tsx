@@ -6,7 +6,7 @@ import {
   VideoPlayerRatios,
   VideoType,
   VideoDesignOptionsType,
-} from '../../types/types'
+} from '../../types/index'
 import { BackgroundContainer } from '@components'
 import { urlFor } from '../../common/helpers'
 import IngressText from './portableText/IngressText'
@@ -94,17 +94,19 @@ export const VideoComponentWithCaption = ({
         className,
       )}
     >
-      <DynamicVideoJsComponent
-        className="object-cover"
-        src={video.url}
-        title={video.title}
-        poster={urlFor(video.thumbnail).width(w).height(h).url()}
-        playsInline
-        aspectRatio={designOptions.aspectRatio}
-        useBrandTheme={designOptions?.useBrandTheme}
-        useFillMode={useFillMode}
-        {...videoControls}
-      />
+      {video && (
+        <DynamicVideoJsComponent
+          className="object-cover"
+          src={video.url}
+          title={video.title}
+          poster={urlFor(video.thumbnail).width(w).height(h).url()}
+          playsInline
+          aspectRatio={designOptions.aspectRatio}
+          useBrandTheme={designOptions?.useBrandTheme}
+          useFillMode={useFillMode}
+          {...videoControls}
+        />
+      )}
       <figcaption className={twMerge(`text-md ${title ? 'py-2' : ''}`, captionClassName)}>
         {title && <Blocks value={title} />}
       </figcaption>

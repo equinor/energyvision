@@ -1,4 +1,4 @@
-import type { SubscribeFormParameters } from '../../../types/types'
+import type { SubscribeFormParameters } from '../../../types/index'
 import { Icon } from '@equinor/eds-core-react'
 import { useForm, Controller } from 'react-hook-form'
 import { error_filled } from '@equinor/eds-icons'
