@@ -47,7 +47,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function 
   const leftAdornmentStyles = {
     style: { alignItems: 'flex-start' },
   }
-  const rigthAdornmentStyles = {
+  const rightAdornmentStyles = {
     style: {
       alignItems: 'flex-start',
       pointerEvents: 'none' as CSSProperties['pointerEvents'],
@@ -57,7 +57,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function 
   return (
     <Input
       as="textarea"
-      rightAdornmentsProps={rigthAdornmentStyles}
+      rightAdornmentsProps={rightAdornmentStyles}
       leftAdornmentsProps={leftAdornmentStyles}
       {...inputProps}
     />
