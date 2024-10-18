@@ -13,7 +13,9 @@ export type TextareaProps = {
 } & SharedTextFieldProps &
   TextareaHTMLAttributes<HTMLTextAreaElement>
 
-/** Temporary. Until feature request to export textarea in EDS or description feature added to EDS Textfield */
+/** Temporary. Until feature request,
+ * https://github.com/equinor/design-system/issues/3622,
+ * is resolved */
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function Textarea(
   { variant, disabled = false, type = 'text', rowsMax = 10, className = '', ...other },
   ref,
@@ -45,7 +47,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function 
   const leftAdornmentStyles = {
     style: { alignItems: 'flex-start' },
   }
-  const rigthAdornmentStyles = {
+  const rightAdornmentStyles = {
     style: {
       alignItems: 'flex-start',
       pointerEvents: 'none' as CSSProperties['pointerEvents'],
@@ -55,7 +57,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function 
   return (
     <Input
       as="textarea"
-      rightAdornmentsProps={rigthAdornmentStyles}
+      rightAdornmentsProps={rightAdornmentStyles}
       leftAdornmentsProps={leftAdornmentStyles}
       {...inputProps}
     />
