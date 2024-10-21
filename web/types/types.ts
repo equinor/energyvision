@@ -186,6 +186,8 @@ export type TextWithIconItem = {
 export type TextWithIconArrayData = {
   type: string
   id: string
+  title?: PortableTextBlock[]
+  hideTitle?: boolean
   group: TextWithIconItem[]
   designOptions: DesignOptions
 }
