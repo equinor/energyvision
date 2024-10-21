@@ -30,9 +30,10 @@ export const TextWithIcon = forwardRef<HTMLDivElement, TextWithIconProps>(
             height="150"
             alt={image?.isDecorative ? '' : image?.alt || ''}
             role={image?.isDecorative ? 'presentation' : undefined}
-            style={{ width: '150px', height: '150px', margin: 'auto' }}
             className={envisTwMerge(
-              `self-center
+              `size-[150px]
+              m-auto
+              self-center
               `,
               iconClassName,
             )}
