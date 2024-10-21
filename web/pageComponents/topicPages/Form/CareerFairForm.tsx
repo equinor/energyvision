@@ -11,7 +11,6 @@ import {
   FormSubmitSuccessBox,
   FormSubmitFailureBox,
 } from '@components'
-import styled from 'styled-components'
 import { BaseSyntheticEvent, useState } from 'react'
 import FriendlyCaptcha from './FriendlyCaptcha'
 
@@ -26,15 +25,6 @@ type FormValues = {
   supportingDocuments: string
   preferredLang: string
 }
-
-const StyledHelper = styled.p`
-  margin-top: calc(var(--space-small) * -1);
-  font-size: var(--typeScale-0);
-`
-
-const StyledCheckBox = styled(Checkbox)`
-  padding-bottom: var(--space-medium);
-`
 
 const CareerFairForm = () => {
   const intl = useIntl()
@@ -264,13 +254,13 @@ const CareerFairForm = () => {
                       id: 'career_fair_form_visit_equinor',
                       defaultMessage: 'Would like to visit Equinor office or facility',
                     }) && (
-                    <StyledHelper id="select-helper-text">
+                    <p className='-mt-2' id="select-helper-text">
                       {intl.formatMessage({
                         id: 'career_fair_form_visit_equinor_helper_text',
                         defaultMessage:
                           'Please be aware that we only offer visits to a few selected locations. Please specify your preferred location and we will revert to you as soon as we can.',
                       })}
-                    </StyledHelper>
+                    </p>
                   )}
                 </>
               )}
@@ -319,10 +309,8 @@ const CareerFairForm = () => {
                 />
               )}
             />
-            <div className="pb-4 text-xs italic">
-              <FormattedMessage id="all_fields_mandatory" defaultMessage="All fields with *  are mandatory" />
-            </div>
-            <StyledCheckBox
+            <Checkbox
+              className='pb-4'
               label={intl.formatMessage({
                 id: 'career_fair_form_supporting_documents',
                 defaultMessage:
