@@ -465,3 +465,13 @@ export type AnchorLinkListData = {
     anchorReference?: string
   }[]
 }
+export type StickyTextBlocksData = {
+  type: string
+  id: string
+  group: {
+    id: string
+    title?: string
+    content: PortableTextBlock[]
+  }[]
+  designOptions: DesignOptions
+}

@@ -590,6 +590,22 @@ _type == "keyNumbers" =>{
       anchorReference,
     }
   },
+  _type == "stickyTextBlocks"=>{
+    "type": _type,
+    "id": _key,
+    "group": blockGroup[]{
+      "id": _key,
+      title,
+      content[]{
+        ...,
+        ${markDefs},
+      }
+    },
+
+    "designOptions": {
+      ${background},
+    },
+  },
 `
 
 export default pageContentFields
