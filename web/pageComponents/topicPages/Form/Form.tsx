@@ -1,4 +1,3 @@
-import styled from 'styled-components'
 import TitleText from '../../shared/portableText/TitleText'
 import IngressText from '../../shared/portableText/IngressText'
 import ContactEquinorForm from './ContactEquinorForm'
@@ -11,14 +10,7 @@ import { twMerge } from 'tailwind-merge'
 import CallToActions from '@sections/CallToActions'
 import PensionForm from './PensionForm'
 
-const StyledHeading = styled(TitleText)`
-  padding: 0 0 var(--space-large) 0;
-`
 
-const ListStyled = styled.div`
-  padding-bottom: var(--space-3xLarge);
-  font-size: var(--typeScale-1);
-`
 
 const Form = ({ data, anchor, className }: { data: FormData; anchor?: string; className?: string }) => {
   const { title, ingress, downloads } = data
@@ -40,9 +32,9 @@ const Form = ({ data, anchor, className }: { data: FormData; anchor?: string; cl
           <>
             <>
               {downloads && (
-                <ListStyled>
+                <div className='pb-10'>
                   {downloads.length > 0 && <CallToActions callToActions={downloads} overrideButtonStyle />}
-                </ListStyled>
+                </div>
               )}
             </>
             <OrderReportsForm />
@@ -53,7 +45,7 @@ const Form = ({ data, anchor, className }: { data: FormData; anchor?: string; cl
 
   return (
     <div className={twMerge(`pb-page-content px-layout-lg max-w-viewport mx-auto`, className)} id={anchor}>
-      {title && <StyledHeading value={title} />}
+      {title && <TitleText className='px-0 pt-0 pr-6' value={title} />}
       {ingress && <IngressText value={ingress}></IngressText>}
 
       {renderForm(variant)}
