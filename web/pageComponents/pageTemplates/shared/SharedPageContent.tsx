@@ -53,6 +53,7 @@ import {
   CampaignBannerData,
   DesignOptions,
   AnchorLinkListData,
+  CollapsibleTextBlocksData,
 } from '../../../types/index'
 import { getColorForTheme } from '../../shared/textTeaser/theme'
 import Grid from '@sections/Grid/Grid'
@@ -61,6 +62,7 @@ import { BackgroundContainerProps } from '@components/Backgrounds'
 import VideoPlayerCarousel from '@sections/VideoPlayerCarousel/VideoPlayerCarousel'
 import ImageCarousel from '@sections/ImageCarousel/ImageCarousel'
 import { AnchorLinkList } from '@sections/AnchorLinkList'
+import { CollapsibleTextBlocks } from '@sections/CollapsibleTextBlocks'
 
 type DefaultComponent = {
   id?: string
@@ -346,6 +348,15 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
           <AnchorLinkList
             key={c.id}
             data={c as AnchorLinkListData}
+            anchor={anchorReference}
+            className={topSpacingClassName}
+          />
+        )
+      case 'collapsibleTextBlocks':
+        return (
+          <CollapsibleTextBlocks
+            key={c.id}
+            data={c as CollapsibleTextBlocksData}
             anchor={anchorReference}
             className={topSpacingClassName}
           />

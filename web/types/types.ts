@@ -466,3 +466,13 @@ export type AnchorLinkListData = {
     anchorReference?: string
   }[]
 }
+export type CollapsibleTextBlocksData = {
+  type: string
+  id: string
+  group: {
+    id: string
+    title?: string
+    content: PortableTextBlock[]
+  }[]
+  designOptions: DesignOptions
+}
