@@ -119,6 +119,11 @@ _type == "keyNumbers" =>{
   _type == "textWithIconArray"=>{
     "type": _type,
     "id": _key,
+    title[]{
+        ...,
+        ${markDefs},
+      },
+    hideTitle,
     "group": group[]{
       "id": _key,
       title,
