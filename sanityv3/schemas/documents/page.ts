@@ -82,7 +82,7 @@ export default {
         Flags.HAS_TWITTER_FEED && { type: 'twitterEmbed' },
         { type: 'cookieDeclaration' },
         { type: 'anchorLinkList' },
-        { type: 'collapsibleTextBlocks' },
+        { type: 'stickyTextBlocks' },
       ].filter((e) => e),
     },
   ].filter((e) => e),

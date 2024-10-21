@@ -1,5 +1,4 @@
 import { view_module } from '@equinor/eds-icons'
-import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
 import { SchemaType } from '../../types'
 import { configureBlockContent } from '../editors'
@@ -13,8 +12,8 @@ const blockContentType = configureBlockContent({
 
 export default {
   type: 'object',
-  name: 'collapsibleTextBlocks',
-  title: 'Collapsible text blocks',
+  name: 'stickyTextBlocks',
+  title: 'Sticky text blocks',
   fieldsets: [
     {
       name: 'design',
@@ -36,8 +35,7 @@ export default {
               name: 'title',
               title: 'Title heading',
               type: 'string',
-              description:
-                'Heading that will stay sticky until side content is scrolled by and collapse when scrolled past',
+              description: 'Heading that will stay sticky until side content is scrolled by',
             },
             {
               name: 'content',
@@ -64,7 +62,7 @@ export default {
     },
     prepare({ group }: any) {
       return {
-        title: 'Collapsible and sticky textblocks',
+        title: 'Sticky textblocks',
         subtitle: `${group ? group.length : 0} textblocks`,
         media: <div>{EdsIcon(view_module)}</div>,
       }

@@ -466,7 +466,7 @@ export type AnchorLinkListData = {
     anchorReference?: string
   }[]
 }
-export type CollapsibleTextBlocksData = {
+export type StickyTextBlocksData = {
   type: string
   id: string
   group: {

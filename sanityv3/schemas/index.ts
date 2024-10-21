@@ -81,7 +81,7 @@ import gridColorTheme from './objects/grid/theme'
 import transcript from './objects/transcript'
 import anchorLinkList from './objects/anchorLinkList/anchorLinkList'
 import anchorLinkReference from './objects/anchorLinkList/anchorLinkReference'
-import collapsibleTextBlocks from './objects/collapsibleTextBlocks'
+import stickyTextBlocks from './objects/stickyTextBlocks'
 
 const {
   pageNotFound,
@@ -209,7 +209,7 @@ const RemainingSchemas = [
   transcript,
   anchorLinkList,
   anchorLinkReference,
-  collapsibleTextBlocks,
+  stickyTextBlocks,
 ]
 
 // Then we give our schema to the builder and provide the result to Sanity

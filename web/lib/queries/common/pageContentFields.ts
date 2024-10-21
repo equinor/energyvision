@@ -591,7 +591,7 @@ _type == "keyNumbers" =>{
       anchorReference,
     }
   },
-  _type == "collapsibleTextBlocks"=>{
+  _type == "stickyTextBlocks"=>{
     "type": _type,
     "id": _key,
     "group": blockGroup[]{

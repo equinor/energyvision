@@ -3,14 +3,14 @@ import { Typography } from '@core/Typography'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
 import { twMerge } from 'tailwind-merge'
 import { PortableTextBlock } from '@portabletext/types'
-import { CollapsibleTextBlocksData } from '../../types/types'
+import { StickyTextBlocksData } from '../../types/types'
 
-export type CollapsibleTextBlocksProps = {
-  data: CollapsibleTextBlocksData
+export type StickyTextBlocksProps = {
+  data: StickyTextBlocksData
   anchor?: string
   className?: string
 }
-const CollapsibleTextBlocks = ({ data, anchor, className }: CollapsibleTextBlocksProps) => {
+const StickyTextBlocks = ({ data, anchor, className }: StickyTextBlocksProps) => {
   const { group, designOptions } = data
   return (
     <BackgroundContainer {...designOptions} className={twMerge(`pb-page-content px-layout-sm`, className)} id={anchor}>
@@ -36,4 +36,4 @@ const CollapsibleTextBlocks = ({ data, anchor, className }: CollapsibleTextBlock
   )
 }
 
-export default CollapsibleTextBlocks
+export default StickyTextBlocks
