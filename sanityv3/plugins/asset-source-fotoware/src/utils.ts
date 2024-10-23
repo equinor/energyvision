@@ -15,7 +15,7 @@ export const getAuthURL = (requestState: string): string | false => {
 
   const CLIENT_ID = process.env.SANITY_STUDIO_FOTOWARE_CLIENT_ID
   const TENANT_URL = process.env.SANITY_STUDIO_FOTOWARE_TENANT_URL
-
+  console.log('WHich client id?', CLIENT_ID)
   return `${TENANT_URL}/fotoweb/oauth2/authorize?response_type=token&client_id=${CLIENT_ID}&state=${requestState}`
 }
 

@@ -40,9 +40,11 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   const handleAuthEvent = useCallback(
     (event: any) => {
       const validateAuthEvent = () => {
-        if (event.origin !== REDIRECT_ORIGIN) {
+        console.log('event.origin', event.origin)
+        console.log('REDIRECT_ORIGIN', REDIRECT_ORIGIN)
+        /*         if (event.origin !== REDIRECT_ORIGIN) {
           return handleRequestError(`Invalid event origin: ${event.origin}`, setError, 'auth', newWindow)
-        }
+        } */
 
         if (event.data?.error) {
           const { error, error_description } = event.data
@@ -82,12 +84,12 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
 
   const handleWidgetEvent = useCallback(
     (event: any) => {
-      if (!event || !event.data || event.origin === REDIRECT_ORIGIN) return false
+      /*       if (!event || !event.data || event.origin === REDIRECT_ORIGIN) return false
 
       if (event.origin !== TENANT_URL) {
         console.log('Fotoware: invalid event origin', event.origin)
         return false
-      }
+      } */
 
       const { data } = event
 
@@ -133,6 +135,8 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
           const description = assetDescription?.value
             ? [assetDescription?.value, personShownInTheImage].join('\n')
             : personShownInTheImage
+
+          console.log('asset?.metadata', asset?.metadata)
 
           onSelect([
             {
@@ -194,8 +198,9 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
 
   useEffect(() => {
     const authURL = getAuthURL(requestState)
-
+    console.log('has accessToken', accessToken)
     if (!accessToken && container && authURL) {
+      console.log('open auth url in window', authURL)
       newWindow.current = window.open(authURL, 'Fotoware', 'width=1200,height=800,left=200,top=200')
 
       if (newWindow.current) {
