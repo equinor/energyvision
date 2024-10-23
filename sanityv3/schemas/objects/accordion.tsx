@@ -5,7 +5,6 @@ import { AccordionComponent } from '../../icons'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import { configureTitleBlockContent } from '../editors'
 import { configureBlockContent } from '../editors/blockContentType'
-import { validateComponentAnchor } from '../validations/validateAnchorReference'
 import type { ColorSelectorValue } from '../components/ColorSelector'
 
 export type Accordion = {
@@ -79,18 +78,6 @@ export default {
       options: {
         hotspot: true,
       },
-    },
-    {
-      name: 'anchor',
-      type: 'anchorReferenceField',
-      title: 'Anchor reference',
-      validation: (Rule: Rule) => [
-        Rule.max(0).warning('Clear this field and use anchor link component instead.'),
-        // @ts-ignore
-        Rule.custom((value: string, context: any) => validateComponentAnchor(value, context)),
-      ],
-      fieldset: 'anchor',
-      readOnly: ({ value }: { value?: string }) => !value,
     },
     {
       title: 'Accordion items',
