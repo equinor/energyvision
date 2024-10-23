@@ -3,10 +3,11 @@ import { Icon } from '@equinor/eds-core-react'
 import { useForm, Controller } from 'react-hook-form'
 import { error_filled } from '@equinor/eds-icons'
 import { FormattedMessage, useIntl } from 'react-intl'
-import { FormButton, FormTextField, FormSelect, FormSubmitSuccessBox, FormSubmitFailureBox } from '@components'
+import { FormTextField, FormSelect, FormSubmitSuccessBox, FormSubmitFailureBox } from '@components'
 import { BaseSyntheticEvent, useState } from 'react'
 import FriendlyCaptcha from './FriendlyCaptcha'
 import { PensionFormCatalogType } from '../../../types'
+import { Button } from '@core/Button'
 
 type PensionFormValues = {
   name: string
@@ -18,25 +19,35 @@ type PensionFormValues = {
 
 const PensionForm = () => {
   const intl = useIntl()
-  const [submitButtonEnabled, setSubmitButtonEnabled] = useState(false)
   const [isServerError, setServerError] = useState(false)
+  const [isFriendlyChallengeDone, setIsFriendlyChallengeDone] = useState(false)
   const [isSuccessfullySubmitted, setSuccessfullySubmitted] = useState(false)
 
   const onSubmit = async (data: PensionFormValues, event?: BaseSyntheticEvent) => {
-    const res = await fetch('/api/forms/service-now-pension', {
-      body: JSON.stringify({
-        data,
-        frcCaptchaSolution: (event?.target as any)['frc-captcha-solution'].value,
-        catalogType: getCatalog(data.pensionCategory),
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      method: 'POST',
-    })
-
-    setServerError(res.status != 200)
-    setSuccessfullySubmitted(res.status == 200)
+    if (isFriendlyChallengeDone) {
+      const res = await fetch('/api/forms/service-now-pension', {
+        body: JSON.stringify({
+          data,
+          frcCaptchaSolution: (event?.target as any)['frc-captcha-solution'].value,
+          catalogType: getCatalog(data.pensionCategory),
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        method: 'POST',
+      })
+      setServerError(res.status != 200)
+      setSuccessfullySubmitted(res.status == 200)
+    } else {
+      //@ts-ignore: TODO: types
+      setError('root.notCompletedCaptcha', {
+        type: 'custom',
+        message: intl.formatMessage({
+          id: 'form_antirobot_validation_required',
+          defaultMessage: 'Anti-Robot verification is required',
+        }),
+      })
+    }
   }
 
   const getCatalog = (category: string): PensionFormCatalogType | null => {
@@ -57,31 +68,37 @@ const PensionForm = () => {
       return 'otherPensionInsuranceRelated'
     else return null
   }
-
   const {
     handleSubmit,
     control,
     reset,
-    formState: { isSubmitted, isSubmitting, isSubmitSuccessful },
+    setError,
+    formState: { errors, isSubmitted, isSubmitting, isSubmitSuccessful },
   } = useForm<PensionFormValues>({
     defaultValues: {
       name: '',
       email: '',
       phone: '',
-      pensionCategory: intl.formatMessage({id: 'pension_form_select_topic', defaultMessage: 'Select topic'}),
+      pensionCategory: intl.formatMessage({ id: 'pension_form_select_topic', defaultMessage: 'Select topic' }),
       requests: '',
     },
   })
 
   return (
     <>
+      {!isSuccessfullySubmitted && !isServerError && (
+        <div className="pb-6 text-base">
+          <FormattedMessage id="all_fields_mandatory" defaultMessage="All fields with *  are mandatory" />
+        </div>
+      )}
       <form
         onSubmit={handleSubmit(onSubmit)}
         onReset={() => {
           reset()
-          setSubmitButtonEnabled(false)
+          setIsFriendlyChallengeDone(false)
           setSuccessfullySubmitted(false)
         }}
+        className="flex flex-col gap-12"
       >
         {!isSuccessfullySubmitted && !isServerError && (
           <>
@@ -227,33 +244,45 @@ const PensionForm = () => {
                 )
               }}
             />
-
-            <div className="pb-4 text-xs italic">
-              <FormattedMessage id="all_fields_mandatory" defaultMessage="All fields with * are mandatory" />
+            <div className="flex flex-col gap-2">
+              <FriendlyCaptcha
+                doneCallback={() => {
+                  setIsFriendlyChallengeDone(true)
+                }}
+                errorCallback={(error: any) => {
+                  console.error('FriendlyCaptcha encountered an error', error)
+                  setIsFriendlyChallengeDone(true)
+                }}
+              />
+              {/*@ts-ignore: TODO: types*/}
+              {errors?.root?.notCompletedCaptcha && (
+                <p role="alert" className="text-clear-red-100 flex gap-2 font-semibold">
+                  {/*@ts-ignore: TODO: types*/}
+                  <span className="mt-1">{errors.root.notCompletedCaptcha.message}</span>
+                  <Icon data={error_filled} aria-hidden="true" />
+                </p>
+              )}
             </div>
-
-            <FriendlyCaptcha
-              doneCallback={() => {
-                setSubmitButtonEnabled(true)
-              }}
-              errorCallback={(error: any) => {
-                console.error('FriendlyCaptcha encountered an error', error)
-                setSubmitButtonEnabled(true)
-              }}
-            />
-
-            <FormButton type="submit" disabled={!submitButtonEnabled}>
+            <Button type="submit">
               {isSubmitting ? (
-                <FormattedMessage id="form_sending" defaultMessage={'Sending...'} />
+                <FormattedMessage id="form_sending" defaultMessage={'Sending...'}></FormattedMessage>
               ) : (
                 <FormattedMessage id="pension_form_cta" defaultMessage="Submit Form" />
               )}
-            </FormButton>
+            </Button>
           </>
         )}
 
-        {isSubmitSuccessful && <FormSubmitSuccessBox />}
-        {isServerError && <FormSubmitFailureBox />}
+        {isSubmitSuccessful && !isServerError && <FormSubmitSuccessBox type="reset" />}
+        {isSubmitted && isServerError && (
+          <FormSubmitFailureBox
+            type="button"
+            onClick={() => {
+              reset(undefined, { keepValues: true })
+              setServerError(false)
+            }}
+          />
+        )}
       </form>
     </>
   )
