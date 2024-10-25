@@ -3,7 +3,7 @@ import { getUrlFromAction } from '../../common/helpers'
 import { ColorKeyTokens, colorKeyToUtilityMap } from '../../styles/colorKeyToUtilityMap'
 import { BaseLinkProps } from '@core/Link'
 import { ArrowRight } from '../../icons'
-import { PromoTileData } from '../../types/types'
+import { PromoTileData } from '../../types/index'
 import { forwardRef } from 'react'
 
 export type FakeReadMoreProps = {

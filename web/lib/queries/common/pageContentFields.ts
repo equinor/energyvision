@@ -113,6 +113,7 @@ _type == "keyNumbers" =>{
     },
     "designOptions": {
       ${background},
+      "aspectRatio": coalesce(aspectRatio, '16:9'),
     },
   },
   _type == "textWithIconArray"=>{
@@ -162,7 +163,6 @@ _type == "keyNumbers" =>{
         ${markDefs},
       }
     },
-    anchor,
     "designOptions": {
       ${background},
     }
@@ -224,7 +224,7 @@ _type == "keyNumbers" =>{
       ${linkSelectorFields},
     },
     url,
-    "cookiePolicy": coalesce(cookiePolicy, 'none'),
+   cookiePolicy,
     "designOptions": {
       "aspectRatio": coalesce(aspectRatio, '16:9'),
       ${background},
@@ -577,6 +577,18 @@ _type == "keyNumbers" =>{
       "backgroundUtility":coalesce(backgroundColor.key, ""),
       }
     },
+  },
+  _type == "anchorLinkList" => {
+    "type": _type,
+    "id": _key,
+    title,
+    columns,
+    "anchorList":anchorList[]{
+      "type": _type,
+      "id": _key,
+      title,
+      anchorReference,
+    }
   },
 `
 

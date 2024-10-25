@@ -1,4 +1,4 @@
-import type { BackgroundColours } from '../../types/types'
+import type { BackgroundColours } from '../../types/index'
 
 export type StyleVariants =
   | '--bg-default'

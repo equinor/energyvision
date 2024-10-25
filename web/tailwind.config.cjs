@@ -22,7 +22,6 @@ module.exports = {
     './icons/**/*.{js,ts,tsx}',
     './pages/**/*.{js,ts,tsx}',
   ],
-  safelist: ['modal-enter', 'modal-enter-done', 'modal-exit-active', 'modal-exit'],
   /*
   Now instead of dark:{class} classes being applied based on prefers-color-scheme, 
   they will be applied whenever the dark class is present earlier in the HTML tree.
@@ -34,7 +33,8 @@ module.exports = {
   theme: {
     extend: {
       screens: {
-        md: '750px',
+        md: '700px',
+        xl: '1300px',
         '3xl': '1600px',
         '4xl': '1920px',
       },
@@ -214,6 +214,7 @@ module.exports = {
         //--space-4xLarge -> spacing.28
         xs: 'calc((4 / 16) * theme(fontSize.base))',
         sm: 'calc((8 / 16) * theme(fontSize.base))',
+        'xs+sm': 'calc((12 / 16) * theme(fontSize.base))',
         md: 'calc((16 / 16) * theme(fontSize.base))',
         lg: 'calc((24 / 16) * theme(fontSize.base))',
         xl: 'calc((32 / 16) * theme(fontSize.base))',
@@ -274,6 +275,7 @@ module.exports = {
         viewport: '1920px',
         //When large font, prose(65ch) might not be the best
         text: '760px',
+        menuText: 'calc(35 * var(--space-medium))',
       },
       minWidth: {
         viewport: '375',
@@ -303,7 +305,10 @@ module.exports = {
         'page-content': 'theme(spacing.20)',
       },
       transitionTimingFunction: {
-        scroll: 'cubic-bezier(0.645, 0.045, 0.355, 1)', //'cubic-bezier(0.23, 1, 0.32, 1)',
+        scroll: 'cubic-bezier(0.645, 0.045, 0.355, 1)',
+      },
+      transitionDuration: {
+        400: '400ms',
       },
       keyframes: {
         reveal: {
@@ -334,6 +339,9 @@ module.exports = {
         zoomIn: 'auto linear zoom-in both',
         move: 'auto linear move forwards',
         'spin-slow': 'spin 3s linear infinite',
+      },
+      flex: {
+        fr: '1 1 1',
       },
       typography: (theme) => ({
         DEFAULT: {
@@ -454,11 +462,19 @@ module.exports = {
           },
         },
       }),
+
+      transitionProperty: ['motion-safe'],
+    },
+  },
+  variants: {
+    extend: {
+      borderColor: ['aria-current'],
+      backgroundColor: ['aria-current'],
     },
   },
   plugins: [
     require('@tailwindcss/typography'),
-    plugin(function ({ addVariant, matchVariant, addUtilities, theme, config, e }) {
+    plugin(function ({ addVariant, matchVariant, addUtilities, theme }) {
       matchVariant(
         'nth',
         (value) => {
@@ -487,6 +503,9 @@ module.exports = {
           },
           '.break-word': {
             wordBreak: 'break-word',
+          },
+          '.auto-fill-fr': {
+            gridTemplateColumns: `repeat(auto-fill, minmax(80px,1fr))`,
           },
         })
     }),

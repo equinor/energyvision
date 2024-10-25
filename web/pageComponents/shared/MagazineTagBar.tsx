@@ -1,6 +1,6 @@
 import { AnchorHTMLAttributes, forwardRef } from 'react'
 import styled from 'styled-components'
-import { Link } from '@components'
+import { Link } from '@core/Link'
 import { useIntl } from 'react-intl'
 
 export type MagazineTagBarProps = {
@@ -15,34 +15,6 @@ export type TagLink = {
   active: boolean
 } & AnchorHTMLAttributes<HTMLAnchorElement>
 
-const StyledLink = styled(Link).attrs((props: { $active: boolean }) => props)`
-  display: inline-block;
-  position: relative;
-  font-weight: ${(props) => (props.$active ? 'bold' : 'normal')};
-  &:hover {
-    font-weight: bold;
-  }
-
-  &:before {
-    display: block;
-    content: attr(data-title);
-    font-weight: bold;
-    height: 0;
-    overflow: hidden;
-    visibility: hidden;
-  }
-  &:after {
-    content: '';
-    position: absolute;
-    border-left: 2px solid var(--energy-red-100);
-    right: calc(var(--space-xLarge) * -0.5);
-    height: 100%;
-  }
-
-  &:last-child:after {
-    display: none;
-  }
-`
 const Wrapper = styled.div`
   display: flex;
   align-content: center;
@@ -81,13 +53,13 @@ const MagazineTagBar = forwardRef<HTMLDivElement, MagazineTagBarProps>(function 
   const intl = useIntl()
   allTagLink.label = intl.formatMessage({ id: 'magazine_tag_filter_all', defaultMessage: 'ALL' })
   allTagLink.active = defaultActive
+  const linkClassNames = `inline-block text-base lg:text-xs relative no-underline hover:font-bold before:block before:content-[attr(data-title)] before:font-bold before:h-0 before:overflow-hidden before:invisible after:content-[''] after:absolute after:border-l-2 after:border-energy-red-100 after:right-[calc(var(--space-xLarge)_*-0.5)] after:h-full last:after:hidden`
   return (
     <Wrapper ref={ref} className="mb-8 mx-auto">
       <TagWrapper>
-        <StyledLink
-          $active={allTagLink.active}
+        <Link
           href={href}
-          underline={false}
+          className={`${allTagLink.active ? 'font-bold' : 'font-normal'} ${linkClassNames}`}
           data-title={allTagLink.label}
           onClick={(event) => {
             if (onClick) {
@@ -98,11 +70,10 @@ const MagazineTagBar = forwardRef<HTMLDivElement, MagazineTagBarProps>(function 
           }}
         >
           {allTagLink.label}
-        </StyledLink>
+        </Link>
         {tags.map((it: TagLink) => (
-          <StyledLink
-            $active={it.active}
-            underline={false}
+          <Link
+            className={`${it.active ? 'font-bold' : 'font-normal'} ${linkClassNames}`}
             href={`${href}${`?tag=${it.label}`}`}
             key={`key_${it.label}`}
             data-title={it.label}
@@ -115,7 +86,7 @@ const MagazineTagBar = forwardRef<HTMLDivElement, MagazineTagBarProps>(function 
             }}
           >
             {it.label}
-          </StyledLink>
+          </Link>
         ))}
       </TagWrapper>
     </Wrapper>

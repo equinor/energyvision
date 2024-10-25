@@ -1,47 +1,30 @@
 import { TeaserImagePosition, TeaserImageSize } from '@components'
 import { PortableTextBlock } from '@portabletext/types'
-import {
-  SanityImageCrop,
-  SanityImageHotspot,
-  SanityImageObject,
-  SanityImageSource,
-} from '@sanity/image-url/lib/types/types'
-import { ColorKeyTokens } from '../styles/colorKeyToUtilityMap'
-import { RowType } from '@sections/Grid/mapGridContent'
+import type {
+  ImageWithCaptionData,
+  ImageWithAlt,
+  LinkData,
+  LinkType,
+  EventDateType,
+  EventPromotionSettings,
+  CardData,
+  EventCardData,
+  PeopleCardData,
+  BackgroundColours,
+  DesignOptions,
+  LoopingVideoData,
+  VideoPlayerData,
+  VideoPlayerCarouselData,
+  FullWidthVideoData,
+  GridData,
+  FullWidthImageData,
+  FigureData,
+} from './index'
 
-export type CaptionData = {
-  attribution?: string
-  caption?: string
-}
-
-export type ImageWithCaptionData = {
-  _type: 'imageWithAltAndCaption'
-  _key?: string
-  image: ImageWithAlt
-  asset: SanityImageObject
-} & CaptionData
-
-export type LinkType =
-  | 'internalUrl'
-  | 'externalUrl'
-  | 'downloadableFile'
-  | 'downloadableImage'
-  | 'dateField'
-  | 'textField'
-  | 'numberField'
-  | 'linkSelector'
-
-export type LinkData = {
-  type?: LinkType
-  id?: string
-  label: string
-  ariaLabel?: string
-  link?: { slug: string; type: string; lang: string }
-  href?: string
-  extension?: string
-  fileName?: string
-  anchorReference?: string
-  filename?: string
+export type IntlData = {
+  locale: string
+  defaultLocale: string
+  messages: Record<string, string>
 }
 
 export type SeoData = {
@@ -50,118 +33,12 @@ export type SeoData = {
   openGraphImage?: ImageWithAlt
 }
 
-export type RelatedLinksData = {
-  title: string
-  links: LinkData[]
-}
-
-export type IntlData = {
-  locale: string
-  defaultLocale: string
-  messages: Record<string, string>
-}
-
-export type ImageWithAlt = {
-  isDecorative: boolean
-  alt?: string
-  asset: SanityImageObject
-  crop?: SanityImageCrop
-  hotspot?: SanityImageHotspot
-  _type: 'imageWithAlt'
-  extension?: string
-}
-
-export type ErrorPageData = {
-  documentTitle?: string
-  metaDescription?: string
-  backgroundImage: SanityImageSource
-  title?: PortableTextBlock[]
-  text?: PortableTextBlock[]
-}
-
-export type CardTypes = 'news' | 'topics' | 'people' | 'events'
-
-export type EventDateType = {
-  date: string
-  startTime?: string
-  endTime?: string
-  timezone: string
-}
-
-export type CardData = {
-  type?: 'news' | 'topics' | 'localNews' | 'magazine'
-  id: string
-  slug: string
-  title: string | PortableTextBlock[]
-  publishDateTime?: string
-  heroImage: ImageWithCaptionData
-  openGraphImage?: ImageWithAlt
-  ingress?: PortableTextBlock[]
-  heroType?: HeroTypes
-}
-
-export type MagazineCardData = {
-  slug: string
-  title: string | PortableTextBlock[]
-  tags?: string[]
-  heroImage?: ImageWithAlt
-}
-
 export type FeaturedContentData = {
   type?: string // news, localNews, route_${locale}
   routeContentType?: 'page' | 'event'
   location?: string
   eventDate?: EventDateType
 } & CardData
-
-export type PeopleCardData = {
-  type?: 'people'
-  id: string
-  image?: ImageWithAlt
-  name: string
-  title?: string
-  department?: string
-  email?: string
-  phone?: string
-  isLink: boolean
-  cv?: LinkData
-  enableStructuredMarkup?: boolean
-}
-
-export type EventPromotionSettings = {
-  manuallySelectEvents: boolean
-  promotePastEvents: boolean
-  promoteSingleUpcomingEvent: boolean
-  pastEventsCount?: number
-  upcomingEventsCount?: number
-}
-
-export type EventCardData = {
-  id: string
-  type: 'events'
-  title: PortableTextBlock[]
-  slug: string
-  location?: string
-  eventDate: EventDateType
-  ingress?: PortableTextBlock[]
-}
-
-export type NewsSchema = {
-  slug: string
-  title: string
-  documentTitle?: string
-  metaDescription?: string
-  openGraphImage?: ImageWithAlt
-  id: string
-  updatedAt: string
-  publishDateTime: string
-  heroImage: ImageWithCaptionData
-  ingress: PortableTextBlock[]
-  content: PortableTextBlock[]
-  relatedLinks: RelatedLinksData
-  iframe: IFrameData
-  latestNews: CardData[]
-}
 
 export type PortableTextChild = {
   _key: string
@@ -215,83 +92,6 @@ export type ContentType =
   | VideoPlayerCarouselData
   | GridData
   | CampaignBannerData
-
-export type Breadcrumb = {
-  label: string
-  slug: string
-  type?: string
-}
-
-export type PageSchema = {
-  slug: string
-  title: PortableTextBlock[]
-  hero: HeroType
-  template: Templates
-  seoAndSome: SeoData
-  content?: ContentType[]
-  id: string
-  type: string
-  isCampaign?: boolean
-  breadcrumbs: {
-    enableBreadcrumbs: boolean
-    useCustomBreadcrumbs: boolean
-    defaultBreadcrumbs: Breadcrumb[]
-    customBreadcrumbs: Breadcrumb[]
-  }
-}
-
-export type TopicPageSchema = PageSchema
-
-export type MagazinePageSchema = PageSchema & {
-  magazineTags?: string[]
-  footerComponent?: {
-    data?: TeaserData
-  }
-  hideFooterComponent?: boolean
-}
-
-export type LandingPageSchema = {
-  id: string
-  slug: string
-  title: PortableTextBlock[]
-  ingress: PortableTextBlock[]
-  subGroups: SubMenuGroupData[]
-  template: Templates
-  seoAndSome: SeoData
-}
-export type ContentAlignmentTypes = 'left' | 'right' | 'center'
-
-export type ImageBackground = {
-  image: ImageWithAlt | SanityImageObject
-  useAnimation?: boolean
-  useLight?: boolean
-  contentAlignment: ContentAlignmentTypes
-}
-
-export type BackgroundColours =
-  | 'White'
-  | 'Moss Green'
-  | 'Moss Green Light'
-  | 'Spruce Wood'
-  | 'Mist Blue'
-  | 'Slate Blue'
-  | 'Mid Green'
-  | 'Mid Yellow'
-  | 'Mid Blue'
-  | 'Mid Orange'
-  | 'Slate Blue 95'
-
-export type BackgroundTypes = 'backgroundColor' | 'backgroundImage'
-
-export type DesignOptions = {
-  background: {
-    type?: BackgroundTypes
-    backgroundColor?: BackgroundColours
-    backgroundImage?: ImageBackground
-    backgroundUtility?: keyof ColorKeyTokens
-    dark: boolean
-  }
-}
 
 export type TextBlockData = {
   type: string
@@ -349,7 +149,7 @@ export type TableHeaderData = {
   headerCell: PortableTextBlock[]
 }
 
-export type FigureRatio = 'original' | '9:16'
+export type FigureRatio = 'original' | '16:9'
 
 export type CellData = {
   id: string
@@ -374,42 +174,6 @@ export type TableData = {
   tableHeaders: TableHeaderData[]
   tableRows: Row[]
   designOptions: DesignOptions & { theme: TableThemes }
-}
-
-export type FullWidthImageData = {
-  type: string
-  id: string
-  image: ImageWithCaptionData
-  designOptions: DesignOptions & {
-    aspectRatio: number
-  }
-}
-
-export type FullWidthVideoData = {
-  type: string
-  id: string
-  video: {
-    title: string
-    url: string
-    thumbnail: ImageWithAlt
-  }
-  spacing?: boolean
-  title?: PortableTextBlock[]
-  action?: LinkData
-  designOptions: DesignOptions & {
-    aspectRatio: FullWidthVideoRatio
-  }
-}
-
-export type FullWidthVideoRatio = 'fullScreen' | 'narrow' | '2:1'
-
-export type FigureData = {
-  type: string
-  id: string
-  figure: ImageWithCaptionData
-  designOptions: DesignOptions & {
-    aspectRatio?: FigureRatio
-  }
 }
 
 export type TextWithIconItem = {
@@ -449,7 +213,6 @@ export type AccordionData = {
   title: PortableTextBlock[]
   ingress: PortableTextBlock[]
   accordion: AccordionListData[]
-  anchor?: string
   designOptions: DesignOptions
   enableStructuredMarkup?: boolean
 }
@@ -470,64 +233,7 @@ export type PromoTileArrayData = {
   useHorizontalScroll: boolean
 }
 
-export type MenuLinkData = {
-  label: string
-  href?: string
-  id?: string
-  link?: {
-    type: string
-    slug: string
-  }
-}
-
-export type SubMenuGroupLinkData = MenuLinkData & {
-  image: ImageWithAlt
-}
-
-export type SubMenuGroupData = {
-  id: string
-  label: string
-  links: SubMenuGroupLinkData[]
-}
-
-export type SubMenuData = {
-  id: string
-  topLevelLink: MenuLinkData
-  intro: PortableTextBlock[]
-  groups: SubMenuGroupData[]
-  featuredContent: CardData
-}
-
-export type MenuData = {
-  subMenus: SubMenuData[]
-}
-
-export type SimpleMenuLink = {
-  id?: string
-  label: string
-  link: {
-    slug: string
-    type: string
-  }
-}
-
-export type SimpleGroupData = {
-  id: string
-  label: string
-  type: 'simpleMenuGroup' | 'simpleMenuLink'
-  readMoreLink?: SimpleMenuLink
-  links?: SimpleMenuLink[]
-  link?: {
-    slug: string
-    type: string
-  }
-}
-
-export type SimpleMenuData = {
-  groups: SimpleGroupData[]
-}
-
-export type CookiePolicy = 'none' | 'marketing' | 'statistics'
+export type CookieType = 'none' | 'marketing' | 'statistics' | 'preferences'
 
 export type IFrameData = {
   id?: string
@@ -540,7 +246,7 @@ export type IFrameData = {
   action?: LinkData
   frameTitle: string
   url: string
-  cookiePolicy: CookiePolicy
+  cookiePolicy: CookieType[]
   designOptions: DesignOptions & {
     aspectRatio: string
     height?: number
@@ -627,26 +333,6 @@ export type SubscribeFormParameters = {
   languageCode: string
 }
 
-export type EventSchema = {
-  id: string
-  title: PortableTextBlock[]
-  slug: string
-  seoAndSome: SeoData
-  content: {
-    location?: string
-    eventDate: EventDateType
-    ingress?: PortableTextBlock[]
-    content?: PortableTextBlock[]
-    iframe?: IFrameData
-    promotedPeople?: {
-      title?: PortableTextBlock[]
-      people?: PeopleCardData[]
-    }
-    contactList?: ContactListData
-    relatedLinks?: RelatedLinksData
-  }
-}
-
 export type NewsDistributionParameters = {
   timeStamp: string
   title: string
@@ -704,90 +390,6 @@ export type AnchorLinkData = {
   anchorReference: string
 }
 
-export enum VideoPlayerRatios {
-  '16:9' = '16:9',
-  '9:16' = '9:16',
-  '1:1' = '1:1',
-}
-
-export type VideoType = {
-  title: string
-  url: string
-  thumbnail: ImageWithAlt
-}
-
-export type VideoControlsType = {
-  playButton?: boolean
-  controls?: boolean
-  loop?: boolean
-  allowFullScreen?: boolean
-  autoPlay?: boolean
-  muted?: boolean
-}
-
-export type VideoDesignOptionsType = {
-  aspectRatio: VideoPlayerRatios
-  height?: number | string
-  width?: 'normal' | 'extraWide'
-  useBrandTheme?: boolean
-}
-
-export type VideoPlayerData = {
-  id: string
-  type: string
-  video: VideoType
-  videoControls: VideoControlsType
-  designOptions: DesignOptions & VideoDesignOptionsType
-  title?: PortableTextBlock[]
-  ingress?: PortableTextBlock[]
-  action?: LinkData
-  transcript?: PortableTextBlock[]
-}
-export type VideoPlayerCarouselItem = {
-  id: string
-  video: VideoType
-  title?: PortableTextBlock[]
-  hideVideoTitle?: boolean
-  aspectRatio?: VideoPlayerRatios
-}
-
-export type VideoPlayerCarouselData = {
-  id: string
-  type: string
-  items: VideoPlayerCarouselItem[]
-  designOptions: DesignOptions & {
-    aspectRatio: VideoPlayerRatios
-  }
-  title?: PortableTextBlock[]
-  ingress?: PortableTextBlock[]
-}
-
-export type LoopingVideoRatio = '1:2' | 'narrow'
-
-export type LoopingVideoData = {
-  title: string
-  thumbnail: ImageWithAlt
-  url: string
-  ratio: LoopingVideoRatio
-}
-export type ImageCarouselItem = {
-  id: string
-} & ImageWithCaptionData
-
-export type ImageCarouselData = {
-  type: 'imageCarousel'
-  id: string
-  title?: PortableTextBlock[]
-  ingress?: PortableTextBlock[]
-  hideTitle?: boolean
-  items: ImageCarouselItem[]
-  options: {
-    autoplay: boolean
-    delay: number
-  }
-  designOptions: DesignOptions
-}
-
 export type IFrameCarouselItemData = {
   id?: string
   type?: string
@@ -796,7 +398,7 @@ export type IFrameCarouselItemData = {
   description?: PortableTextBlock[]
   frameTitle: string
   url: string
-  cookiePolicy: CookiePolicy
+  cookiePolicy: CookieType[]
   aspectRatio: string
   height?: number
   action?: LinkData
@@ -833,84 +435,33 @@ export type KeyNumbersData = {
   action?: LinkData
 }
 
-export type CardsListData = {
-  type: 'cardsList'
-  id: string
-  title?: PortableTextBlock[]
-  cards?: CardListItemData[]
-  designOptions: DesignOptions
-}
-export type CardListItemData = {
-  id: string
-  type: 'card'
-  title?: string
-  content?: PortableTextBlock[]
-}
-
-export type GridRowType = Span3 | Span2And1 | ThreeColumns
-
-export type GridData = {
-  type: 'grid'
-  id: string
-  gridRows?: GridRowType[]
-}
-
-export type GridContentType = FigureData | IFrameData | VideoPlayerData | GridTextBlockData | GridTeaserData
-
-export type Span3 = {
-  type: 'span3'
-  id: string
-  content?: GridContentType[]
-}
-export type Span2And1 = {
-  type: 'span2and1'
-  id: string
-  singleColumn?: GridContentType[]
-  span2?: GridContentType[]
-}
-export type ThreeColumns = {
-  type: 'threeColumns'
-  id: string
-  columns?: GridContentType[]
-}
-type GridTextBlockContentAlignment = 'left' | 'right' | 'center' | 'bottom-left' | 'bottom-center'
-
-export type GridTextBlockData = {
-  id: string
-  type: 'gridTextBlock'
-  action?: LinkData
-  overline?: string
-  useThemedTitle?: boolean
-  title?: PortableTextBlock[]
-  themedTitle?: PortableTextBlock[]
-  content?: PortableTextBlock[]
-  contentAlignment?: GridTextBlockContentAlignment
-  contentTheme?: any
-  titleThemeFromLarger?: any
-  theme?: any
-  imageBackground?: ImageBackground
-}
-
 export type CampaignBannerData = {
   type: 'campaignBanner'
   id: string
   title: PortableTextBlock[]
   designOptions: DesignOptions
 }
-export type GridTeaserData = {
-  type: 'gridTeaser'
+
+export type PodcastTeaserData = {
   id: string
+  type: 'podcastTeaser'
+  spotifyLink?: string
+  appleLink?: string
+  linkTitle?: string
+  podcastName?: PortableTextBlock[]
+  podcastEpisode?: PortableTextBlock[]
   image: ImageWithAlt
-  rowType?: RowType
-  useExtendedThemes?: boolean
-  content?: PortableTextBlock[]
-  themedContent?: PortableTextBlock[]
-  themeFromLarger?: any
-  quote?: string
-  author?: string
-  authorTitle?: string
-  background?: BackgroundColours
-  imagePosition?: TeaserImagePosition
-  action?: LinkData
-  theme?: number
+  designOptions: DesignOptions
+}
+export type AnchorLinkListData = {
+  id: string
+  type: 'anchorLinkList'
+  title?: string
+  columns?: string
+  anchorList?: {
+    id: string
+    type: 'anchorLinkReference'
+    title?: string
+    anchorReference?: string
+  }[]
 }

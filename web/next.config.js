@@ -42,7 +42,6 @@ export default withBundle(
       optimizePackageImports: [
         '@components',
         '@chakra-ui',
-        '@chakra-ui/skip-nav',
         '@emotion/react',
         '@emotion/styled',
         '@equinor/eds-core-react',

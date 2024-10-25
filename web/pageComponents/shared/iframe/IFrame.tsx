@@ -1,7 +1,10 @@
-import { HTMLAttributes, useContext } from 'react'
+import { HTMLAttributes, useContext, useState } from 'react'
 import { PreviewContext } from '../../../lib/contexts/PreviewContext'
 import styled from 'styled-components'
 import RequestConsentContainer from './RequestConsentContainer'
+import useConsentState from '../../../lib/hooks/useConsentState'
+import { CookieType } from '../../../types'
+import useConsent from '../../../lib/hooks/useConsent'
 
 const IFrameContainer = styled.div<{ aspectRatioPadding: string }>`
   position: relative;
@@ -31,7 +34,7 @@ const calculatePadding = (aspectRatio: string): string => {
 type IFrameProps = {
   frameTitle: string
   url: string
-  cookiePolicy: string
+  cookiePolicy: CookieType[]
   height?: number
   aspectRatio: string
   hasSectionTitle: boolean
@@ -43,13 +46,24 @@ const IFrame = ({
   hasSectionTitle = true,
   frameTitle,
   url,
-  cookiePolicy = 'none',
+  cookiePolicy = ['none'],
   aspectRatio,
   height,
   className = '',
   describedBy,
 }: IFrameProps) => {
   const { isPreview } = useContext(PreviewContext)
+  const [consented, setConsented] = useState(useConsent(cookiePolicy))
+
+  useConsentState(
+    cookiePolicy,
+    () => {
+      setConsented(true)
+    },
+    () => {
+      setConsented(false)
+    },
+  )
 
   if (!url) return null
 
@@ -65,22 +79,20 @@ const IFrame = ({
 
   return (
     <>
-      <div className={`cookieconsent-optin-${cookiePolicy} ${className}`}>
-        <IFrameContainer aria-describedby={describedBy} aspectRatioPadding={containerPadding}>
-          <StyledIFrame
-            allowFullScreen
-            src={url}
-            title={frameTitle}
-            loading="lazy"
-            data-cookieconsent={cookiePolicy}
-          ></StyledIFrame>
-        </IFrameContainer>
-      </div>
-      {cookiePolicy !== 'none' && (
-        <div className={`cookieconsent-optout-${cookiePolicy}`}>
-          <RequestConsentContainer hasSectionTitle={hasSectionTitle} cookiePolicy={cookiePolicy} />
+      {consented && (
+        <div className={className}>
+          <IFrameContainer aria-describedby={describedBy} aspectRatioPadding={containerPadding}>
+            <StyledIFrame
+              allowFullScreen
+              src={url}
+              title={frameTitle}
+              loading="lazy"
+              data-cookieconsent={cookiePolicy}
+            ></StyledIFrame>
+          </IFrameContainer>
         </div>
       )}
+      {!consented && <RequestConsentContainer hasSectionTitle={hasSectionTitle} cookiePolicy={cookiePolicy} />}
     </>
   )
 }

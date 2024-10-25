@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import TitleText from '../shared/portableText/TitleText'
 import { Pagination } from '../shared/search/simplePagination/Pagination'
-import type { NewsListData } from '../../types/types'
+import type { NewsListData } from '../../types/index'
 import { useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import PromotionCard from '@sections/cards/PromotionCard/PromotionCard'
