@@ -115,7 +115,7 @@ export const getLinkSelectorFields = (labelFieldset?: string, flag?: string) => 
       description: 'Use this field to link to an external site.',
       type: 'url',
       validation: (Rule: Rule) =>
-        Rule.uri({ scheme: ['https', 'tel', 'mailto'] }).custom((value: any, context: ValidationContext) => {
+        Rule.uri({ scheme: ['http', 'https', 'tel', 'mailto'] }).custom((value: any, context: ValidationContext) => {
           const { parent } = context as { parent: LinkSelector }
           if (isHidden(parent)) return true
           const connectedField = parent?.linkToOtherLanguage ? parent?.referenceToOtherLanguage : parent?.reference
