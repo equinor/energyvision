@@ -4,11 +4,12 @@ import { List } from '@core/List'
 
 export type BreadcrumbsProps = HTMLAttributes<HTMLOListElement>
 
-export const BreadcrumbsList = forwardRef<HTMLOListElement, BreadcrumbsProps>(function Breadcrumbs(
-  { children, className = ''},
+export const BreadcrumbsList = forwardRef<HTMLDivElement, BreadcrumbsProps>(function Breadcrumbs(
+  { children, className = '' }, 
+  ref 
 ) {
   return (
-    <List className={twMerge('p-0 list-none text-sm leading-8', className)}>
+    <List ref={ref} className={twMerge('p-0 list-none text-sm leading-8', className)}>
       {children}
     </List>
   )
