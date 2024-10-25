@@ -213,7 +213,6 @@ export type AccordionData = {
   title: PortableTextBlock[]
   ingress: PortableTextBlock[]
   accordion: AccordionListData[]
-  anchor?: string
   designOptions: DesignOptions
   enableStructuredMarkup?: boolean
 }
