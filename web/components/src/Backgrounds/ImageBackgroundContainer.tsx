@@ -28,6 +28,7 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
       overrideGradient = false,
       dontSplit = false,
       aspectRatio,
+      ...rest
     },
     ref,
   ) {
@@ -87,6 +88,7 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
             '--color-on-background': `var(--inverted-text)`,
           } as CSSProperties
         }
+        {...rest}
       >
         {/** Scrim */}
         <div
@@ -103,7 +105,7 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
         </div>
       </div>
     ) : isMobile && !dontSplit ? (
-      <div ref={ref}>
+      <div ref={ref} {...rest}>
         <div
           className={twMerge(`aspect-video`, backgroundClassNames)}
           style={{
@@ -119,6 +121,7 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
         style={{
           backgroundImage: `url(${src})`,
         }}
+        {...rest}
       >
         {/** Scrim */}
         <div
