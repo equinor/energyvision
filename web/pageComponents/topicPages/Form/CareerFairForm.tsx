@@ -94,7 +94,7 @@ const CareerFairForm = () => {
   return (
     <>
       {!isSuccessfullySubmitted && !isServerError && (
-        <div className="pb-6 text-base">
+        <div className="pb-6 text-sm">
           <FormattedMessage id="all_fields_mandatory" defaultMessage="All fields with *  are mandatory" />
         </div>
       )}

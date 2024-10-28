@@ -92,7 +92,7 @@ const CareersContactForm = () => {
   return (
     <>
       {!isSuccessfullySubmitted && !isServerError && (
-        <div className="pb-6 text-base">
+        <div className="pb-6 text-sm">
           <FormattedMessage id="all_fields_mandatory" defaultMessage="All fields with *  are mandatory" />
         </div>
       )}
@@ -124,10 +124,6 @@ const CareersContactForm = () => {
                     id: 'careers_contact_form_name',
                     defaultMessage: 'Your Name',
                   })}*`}
-                  placeholder={intl.formatMessage({
-                    id: 'careers_contact_form_name_placeholder',
-                    defaultMessage: 'Jane Doe',
-                  })}
                   inputRef={ref}
                   aria-required="true"
                   inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
@@ -365,7 +361,7 @@ const CareersContactForm = () => {
             />
             <StyledCheckBox
               label={intl.formatMessage({
-                id: 'career_fair_form_supporting_documents',
+                id: 'careers_contact_form_supporting_documents',
                 defaultMessage:
                   'Tick the box if you would like to send supporting documents, and we will get in touch with you',
               })}

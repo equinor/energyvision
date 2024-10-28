@@ -636,7 +636,7 @@ const snippets: textSnippet = {
   careers_contact_form_supporting_documents: {
     title: 'Supporting Documents checkbox',
     defaultValue: 'Tick the box if you would like to send supporting documents, and we will get in touch with you',
-    group: groups.careerFairForm,
+    group: groups.careerContactForm,
   },
 
   form_sending: {
