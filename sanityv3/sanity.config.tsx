@@ -28,7 +28,7 @@ import { DeleteTranslationAction } from './actions/customDelete/DeleteTranslatio
 import { documentInternationalization } from '@equinor/document-internationalization'
 import { FotowareAssetSource } from './plugins/asset-source-fotoware'
 import { BrandmasterAssetSource } from './plugins/asset-source-brandmaster'
-import { SetAndPublishAction } from './actions/PublishAction'
+import { SetAndPublishAction } from './actions/CustomPublishAction'
 import { dataset, projectId } from './sanity.client'
 import { DatabaseIcon } from '@sanity/icons'
 import { crossDatasetDuplicator } from '@sanity/cross-dataset-duplicator'
