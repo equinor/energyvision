@@ -60,14 +60,14 @@ const MagazinePage = ({ data }: MagazinePageProps) => {
           <SharedTitle sharedTitle={data.title} background={titleStyles.background} />
         )}
         {data.hero.type !== HeroTypes.DEFAULT && (
-          <div className="max-w-viewport px-layout-lg mx-auto pb-10">
+          <div className="max-w-viewport px-layout-lg mx-auto pb-6">
             {tags && tags?.length > 0 && (
               <ul className="flex items-center divide-x-2 divide-energy-red-100">
                 {tags.map((tag: string) => {
                   return (
                     <span
                       key={`magazine_tag_key_${tag}`}
-                      className="inline-block text-base pl-6 pr-6 first:pl-0 lg:text-xs"
+                      className="inline-block text-sm font-medium pl-3 pr-3 first:pl-0 lg:text-xs"
                     >
                       {tag}
                     </span>

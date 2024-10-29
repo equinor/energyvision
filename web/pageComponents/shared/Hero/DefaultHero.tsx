@@ -64,7 +64,7 @@ export const DefaultHero = ({ title, image, isBigTitle, bigTitle, tags }: Props)
                 return (
                   <span
                     key={`magazine_tag_key_${tag}`}
-                    className="inline-block text-base pl-6 pr-6 first:pl-0 lg:text-xs"
+                    className="inline-block text-sm font-medium pl-3 pr-3 first:pl-0 lg:text-xs"
                   >
                     {tag}
                   </span>
