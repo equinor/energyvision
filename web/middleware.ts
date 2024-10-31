@@ -57,12 +57,13 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(dnsRedirect, PERMANENT_REDIRECT)
   }
 
-  // Check if it is a WWW redirect
-  const wwwRedirect = getWWWRedirect(host, pathname)
-  if (wwwRedirect) {
-    return NextResponse.redirect(wwwRedirect, PERMANENT_REDIRECT)
+  // Skip WWW redirect for Radix URLs
+  if (host === process.env.NEXT_PUBLIC_RADIX_URL || process.env.RADIX_CANONICAL_DOMAIN_NAME) {
+    const wwwRedirect = getWWWRedirect(host, pathname)
+    if (wwwRedirect) {
+      return NextResponse.redirect(wwwRedirect, PERMANENT_REDIRECT)
+    }
   }
-
   // Redirect external links to news which is now archived if link doesn't exist in Sanity
   if (Flags.HAS_ARCHIVED_NEWS && pathname.startsWith('/news') && !pathname.startsWith('/news/archive')) {
     const existsInSanity = await pathExistsInSanity(pathname, isPreview)
