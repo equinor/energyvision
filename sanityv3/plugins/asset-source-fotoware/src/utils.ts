@@ -7,7 +7,28 @@ export const HAS_ENV_VARS =
 
 export const FotowareEvents = ['selectionWidgetCancel', 'assetSelected', 'assetExported']
 
-export const getAuthURL = (requestState: string): string | false => {
+const createCryptoRandomValues = async () => {
+  // Create byte array and fill with 1 random number and get cryptographically strong random values
+  const code_verifier = window.crypto.getRandomValues(new Uint8Array(1))
+  const hashBuffer = await window.crypto.subtle.digest('SHA-256', code_verifier) // hash to SHA-256
+  return hashBuffer
+}
+const createCodeVerifier = async () => {
+  try {
+    const buffer = await createCryptoRandomValues()
+    console.log('resolved!', buffer)
+    return window
+      .btoa(String.fromCharCode(...new Uint8Array(buffer)))
+      .replace(/\+/g, '-')
+      .replace(/\//g, '_')
+      .replace(/=+$/, '')
+  } catch (e) {
+    console.error(e)
+    return null
+  }
+}
+export const getAuthURL = async (requestState: string): Promise<string | false> => {
+  console.log('getAuthURL method')
   if (!HAS_ENV_VARS) {
     console.warn('Required Fotoware .env variables are not defined. Make sure they are set in the .env file(s)')
     return false
@@ -15,8 +36,17 @@ export const getAuthURL = (requestState: string): string | false => {
 
   const CLIENT_ID = process.env.SANITY_STUDIO_FOTOWARE_CLIENT_ID
   const TENANT_URL = process.env.SANITY_STUDIO_FOTOWARE_TENANT_URL
-  console.log('WHich client id?', CLIENT_ID)
-  return `${TENANT_URL}/fotoweb/oauth2/authorize?response_type=token&client_id=${CLIENT_ID}&state=${requestState}`
+  const REDIRECT_URI = process.env.SANITY_STUDIO_FOTOWARE_REDIRECT_ORIGIN
+  const CODE_CHALLENGE = createCodeVerifier()
+  console.log('CODE_CHALLENGE', CODE_CHALLENGE)
+
+  if (!CODE_CHALLENGE) {
+    console.error('Failed to generate code challenge')
+    return false
+  }
+
+  return `${TENANT_URL}/fotoweb/oauth2/authorize?response_type=token&client_id=${CLIENT_ID}&state=${requestState}&redirect_uri=${REDIRECT_URI}&code_challenge=${CODE_CHALLENGE}&
+    code_challenge_method=S256`
 }
 
 export const getAccessToken = (): string | false => {

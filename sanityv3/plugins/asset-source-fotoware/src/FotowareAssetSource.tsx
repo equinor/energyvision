@@ -106,6 +106,36 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
       if (data.event === 'assetExported') {
         const exportedImage = event.data.export.export
 
+        console.log('asset?.metadata', asset?.metadata)
+        const assetTitle = asset && asset?.builtinFields.find((item: FWAttributeField) => item.field === 'title')
+        const assetDescription =
+          asset && asset?.builtinFields.find((item: FWAttributeField) => item.field === 'description')
+        const assetId = asset?.metadata?.[187]?.value
+        const personShownInTheImage = asset?.metadata?.[368]?.value?.join(', ')
+        const description = assetDescription?.value
+          ? [assetDescription?.value, personShownInTheImage].join('\n')
+          : personShownInTheImage
+
+        const assetExpirationDate = new Date() // asset?.metadata?.[187]?.value
+
+        onSelect([
+          {
+            kind: 'url',
+            value: exportedImage.image.highCompression,
+            assetDocumentProps: {
+              originalFilename: asset?.filename || '',
+              source: {
+                name: 'fotoware',
+                id: assetId || asset?.uniqueid || exportedImage.image.highCompression,
+                url: exportedImage.source,
+              },
+              title: assetTitle?.value,
+              description: description,
+              expirationDate: assetExpirationDate,
+            },
+          },
+        ])
+
         const getBase64 = async (uri: string, source: string) => {
           const url = getExportURL(uri)
           setLoading(true)
@@ -156,7 +186,7 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
           ])
         }
 
-        getBase64(exportedImage.image.highCompression, exportedImage.source)
+        //getBase64(exportedImage.image.highCompression, exportedImage.source)
       }
     },
     [onSelect, onClose, asset],
@@ -197,26 +227,27 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   }, [handleAuthEvent])
 
   useEffect(() => {
-    const authURL = getAuthURL(requestState)
-    console.log('has accessToken', accessToken)
-    if (!accessToken && container && authURL) {
-      console.log('open auth url in window', authURL)
-      newWindow.current = window.open(authURL, 'Fotoware', 'width=1200,height=800,left=200,top=200')
-
-      if (newWindow.current) {
-        newWindow.current.document.body.appendChild(container)
-      }
-
-      return () => {
+    const getAuthLink = async () => {
+      const authURL = await getAuthURL(requestState)
+      console.log('has accessToken', accessToken)
+      if (!accessToken && container && authURL) {
+        console.log('open auth url in window', authURL)
+        newWindow.current = window.open(authURL, 'Fotoware', 'width=1200,height=800,left=200,top=200')
         if (newWindow.current) {
-          newWindow.current.close()
+          newWindow.current.document.body.appendChild(container)
+        }
+        return () => {
+          if (newWindow.current) {
+            newWindow.current.close()
+          }
         }
       }
+      if (accessToken && newWindow.current) {
+        newWindow.current.close()
+      }
     }
 
-    if (accessToken && newWindow.current) {
-      newWindow.current.close()
-    }
+    getAuthLink()
   }, [container, requestState, handleAuthEvent, accessToken])
 
   if (!HAS_ENV_VARS) {
