@@ -59,8 +59,9 @@ export async function middleware(request: NextRequest) {
 
   // Skip WWW redirect for Radix URLs and localhost
   if (
-    (host !== process.env.RADIX_PUBLIC_DOMAIN_NAME && host !== process.env.RADIX_CANONICAL_DOMAIN_NAME) ||
-    (host !== 'localhost:3000' && !host.includes('www'))
+    host !== process.env.RADIX_PUBLIC_DOMAIN_NAME &&
+    host !== process.env.RADIX_CANONICAL_DOMAIN_NAME &&
+    host !== 'localhost:3000'
   ) {
     const wwwRedirect = getWWWRedirect(host, pathname)
     if (wwwRedirect) {
