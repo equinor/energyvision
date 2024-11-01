@@ -1,11 +1,11 @@
 /* eslint-disable react/display-name */
-import { forwardRef } from 'react'
 import { configureBlockContent } from '../editors'
 import type { PortableTextBlock } from 'sanity'
 import { Stack, Text, Card } from '@sanity/ui'
 import blocksToText from '../../helpers/blocksToText'
 
-const CardField = forwardRef((props: any) => {
+const CardField = (props: any) => {
+  const { renderDefault } = props
   return (
     <Stack>
       <Card padding={3} borderLeft>
@@ -14,10 +14,10 @@ const CardField = forwardRef((props: any) => {
           content will be rendered.
         </Text>
       </Card>
-      <>{props.renderDefault(props)}</>
+      <>{renderDefault(props)}</>
     </Stack>
   )
-})
+}
 
 const blockConfig = {
   h2: false,
