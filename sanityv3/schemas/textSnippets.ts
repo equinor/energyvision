@@ -12,6 +12,7 @@ export const groups = {
   orderAnnualReportsForm: { title: 'Order annual reports form', hidden: !Flags.HAS_ORDER_REPORT_FORM },
   form: { title: 'Form', hidden: !Flags.HAS_FORMS },
   cookie: { title: 'Cookie' },
+  carousel: { title: 'Carousel' },
   others: { title: 'Others' },
 }
 const snippets: textSnippet = {
@@ -765,6 +766,11 @@ const snippets: textSnippet = {
     title: 'Switch to',
     defaultValue: 'Switch to',
     group: groups.others,
+  },
+  carousel_controls: {
+    title: 'Carousel controls',
+    defaultValue: 'Carousel controls',
+    group: groups.carousel,
   },
 }
 
