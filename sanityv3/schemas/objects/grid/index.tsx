@@ -1,6 +1,7 @@
 import { PortableTextBlock } from 'sanity'
 import { EdsIcon } from '../../../icons'
 import { table_chart } from '@equinor/eds-icons'
+import blocksToText from '../../../helpers/blocksToText'
 
 export type Grid = {
   _type: 'grid'
@@ -51,10 +52,9 @@ export default {
       title: 'title',
     },
     prepare({ title = [] }: { title: PortableTextBlock[] }) {
-      const plainTitle = 'Grid'
-
+      const plainTitle = blocksToText(title)
       return {
-        title: plainTitle,
+        title: plainTitle || 'Grid',
         subtitle: 'Grid component',
         media: () => EdsIcon(table_chart),
       }
