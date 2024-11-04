@@ -33,6 +33,7 @@ export type NewsRoomNewsItem = {
   publishDateTime?: string
   firstPublishedAt?: string
   heroImage: ImageWithCaptionData
+  thumbnailUrl?: string
   ingress?: string
 }
 

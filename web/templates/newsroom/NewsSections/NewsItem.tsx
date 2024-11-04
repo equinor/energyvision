@@ -1,5 +1,6 @@
 import { FormattedDate } from '@components/FormattedDateTime'
 import { forwardRef, HTMLAttributes } from 'react'
+import Img from 'next/image'
 import { BaseLink } from '@core/Link'
 import { Typography } from '@core/Typography'
 import Image, { Ratios } from '../../../pageComponents/shared/SanityImage'
@@ -17,12 +18,12 @@ const NewsItem = forwardRef<HTMLLIElement, NewsListItemProps>(function NewsItem(
   { data, fallbackImage, className = '', ...rest },
   ref,
 ) {
-  const { slug, title, publishDateTime, heroImage } = data || {}
+  const { slug, title, publishDateTime, heroImage, thumbnailUrl } = data || {}
 
   return (
     <section ref={ref} className={envisTwMerge('', className)} {...rest}>
       <BaseLink href={slug} className="group flex justify-between gap-4 lg:gap-6">
-        <div className=" max-w-[65%]">
+        <div className="max-w-[65%]">
           {publishDateTime && (
             <FormattedDate datetime={publishDateTime} uppercase className="text-2xs font-normal leading-normal pb-1" />
           )}
@@ -33,16 +34,33 @@ const NewsItem = forwardRef<HTMLLIElement, NewsListItemProps>(function NewsItem(
           )}
         </div>
         <div className="w-[30%] lg:h-full aspect-5/4 lg:aspect-video relative">
-          {(heroImage?.image?.asset || fallbackImage) && (
-            <Image
-              //@ts-ignore: TODO Fix SanityImage to take SanityImageObject
-              image={heroImage?.image?.asset ? heroImage?.image : fallbackImage}
-              aria-hidden
-              aspectRatio={Ratios.NINE_TO_SIXTEEN}
-              sizes="(max-width: 800px) 100vw, 800px"
-              fill
-              className="rounded-xs"
-            />
+          {(heroImage?.image?.asset || fallbackImage || thumbnailUrl) && (
+            <>
+              {thumbnailUrl ? (
+                <div className="relative rounded-xs">
+                  <Img
+                    src={thumbnailUrl}
+                    alt=""
+                    style={{ objectFit: 'cover' }}
+                    fill
+                    sizes="(max-width: 800px) 100vw, 800px"
+                    role={'presentation'}
+                  />
+                </div>
+              ) : (
+                (heroImage?.image?.asset || fallbackImage) && (
+                  <Image
+                    //@ts-ignore: TODO Fix SanityImage to take SanityImageObject
+                    image={heroImage?.image?.asset ? heroImage?.image : fallbackImage}
+                    aria-hidden
+                    aspectRatio={Ratios.NINE_TO_SIXTEEN}
+                    sizes="(max-width: 800px) 100vw, 800px"
+                    fill
+                    className="rounded-xs"
+                  />
+                )
+              )}
+            </>
           )}
         </div>
       </BaseLink>
