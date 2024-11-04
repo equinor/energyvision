@@ -5,7 +5,7 @@ import type { NewsArticle } from './sanity'
 
 type MapDataType = (article: NewsArticle) => NewsIndex[]
 export const mapData: MapDataType = (article) => {
-  const { publishDateTime, topicTags, countryTags, title, ingress, slug, factboxes } = article
+  const { publishDateTime, topicTags, countryTags, title, ingress, slug, factboxes, heroImage } = article
   // Hu hei hvor det går
   const year = publishDateTime ? new Date(publishDateTime).getFullYear() : ''
   return pipe(
@@ -24,6 +24,7 @@ export const mapData: MapDataType = (article) => {
           topicTags,
           countryTags,
           year,
+          heroImage,
         } as NewsIndex),
     ),
     A.concat(
@@ -40,6 +41,7 @@ export const mapData: MapDataType = (article) => {
             topicTags,
             countryTags,
             year,
+            heroImage,
           } as NewsIndex),
       ),
     ),

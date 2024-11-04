@@ -3,18 +3,12 @@ import { Icon } from '@equinor/eds-core-react'
 import { useForm, Controller } from 'react-hook-form'
 import { error_filled } from '@equinor/eds-icons'
 import { FormattedMessage, useIntl } from 'react-intl'
-import {
-  FormButton,
-  FormTextField,
-  Checkbox,
-  FormSelect,
-  FormSubmitSuccessBox,
-  FormSubmitFailureBox,
-} from '@components'
+import { FormTextField, Checkbox, FormSelect, FormSubmitSuccessBox, FormSubmitFailureBox } from '@components'
 import { BaseSyntheticEvent, useState } from 'react'
 import FriendlyCaptcha from '../FriendlyCaptcha'
-import styled from 'styled-components'
 import getCatalogType from './getRequestType'
+import { TextField } from '@core/TextField/TextField'
+import { Button } from '@core/Button'
 
 type FormValues = {
   name: string
@@ -28,38 +22,19 @@ type FormValues = {
   supportingDocuments: string
 }
 
-const StyledCheckBox = styled(Checkbox)`
-  padding-bottom: var(--space-medium);
-`
-
 const CareersContactForm = () => {
   const intl = useIntl()
-  const [submitButtonEnabled, setSubmitButtonEnabled] = useState(false)
+  const [isFriendlyChallengeDone, setIsFriendlyChallengeDone] = useState(false)
   const [isServerError, setServerError] = useState(false)
   const [isSuccessfullySubmitted, setSuccessfullySubmitted] = useState(false)
-  const onSubmit = async (data: FormValues, event?: BaseSyntheticEvent) => {
-    data.preferredLang = intl.locale
-    const res = await fetch('/api/forms/service-now-careers-contact', {
-      body: JSON.stringify({
-        data,
-        frcCaptchaSolution: (event?.target as any)['frc-captcha-solution'].value,
-        catalogType: getCatalogType(intl, data.category, data.candidateType),
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      method: 'POST',
-    })
-    setSuccessfullySubmitted(res.status == 200)
-    setServerError(res.status != 200)
-  }
 
   const {
     handleSubmit,
     control,
     reset,
     register,
-    formState: { isSubmitted, isSubmitting, isSubmitSuccessful },
+    formState: { errors, isSubmitted, isSubmitting, isSubmitSuccessful },
+    setError,
   } = useForm({
     defaultValues: {
       name: '',
@@ -80,15 +55,50 @@ const CareersContactForm = () => {
       supportingDocuments: '',
     },
   })
+
+  const onSubmit = async (data: FormValues, event?: BaseSyntheticEvent) => {
+    data.preferredLang = intl.locale
+    if (isFriendlyChallengeDone) {
+      const res = await fetch('/api/forms/service-now-careers-contact', {
+        body: JSON.stringify({
+          data,
+          frcCaptchaSolution: (event?.target as any)['frc-captcha-solution'].value,
+          catalogType: getCatalogType(intl, data.category, data.candidateType),
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        method: 'POST',
+      })
+      setSuccessfullySubmitted(res.status == 200)
+      setServerError(res.status != 200)
+    } else {
+      //@ts-ignore: TODO: types
+      setError('root.notCompletedCaptcha', {
+        type: 'custom',
+        message: intl.formatMessage({
+          id: 'form_antirobot_validation_required',
+          defaultMessage: 'Anti-Robot verification is required',
+        }),
+      })
+    }
+  }
+
   return (
     <>
+      {!isSuccessfullySubmitted && !isServerError && (
+        <div className="pb-6 text-sm">
+          <FormattedMessage id="all_fields_mandatory" defaultMessage="All fields with *  are mandatory" />
+        </div>
+      )}
       <form
         onSubmit={handleSubmit(onSubmit)}
         onReset={() => {
           reset()
-          setSubmitButtonEnabled(false)
+          setIsFriendlyChallengeDone(false)
           setSuccessfullySubmitted(false)
         }}
+        className="flex flex-col gap-12"
       >
         {!isSuccessfullySubmitted && !isServerError && (
           <>
@@ -105,14 +115,10 @@ const CareersContactForm = () => {
                 <FormTextField
                   {...props}
                   id={props.name}
-                  label={intl.formatMessage({
+                  label={`${intl.formatMessage({
                     id: 'careers_contact_form_name',
                     defaultMessage: 'Your Name',
-                  })}
-                  placeholder={intl.formatMessage({
-                    id: 'careers_contact_form_name_placeholder',
-                    defaultMessage: 'Jane Doe',
-                  })}
+                  })}*`}
                   inputRef={ref}
                   aria-required="true"
                   inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
@@ -138,30 +144,18 @@ const CareersContactForm = () => {
                 },
               }}
               render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
-                <FormTextField
+                <TextField
                   {...props}
                   id={props.name}
-                  label={
-                    <>
-                      <span>
-                        {intl.formatMessage({
-                          id: 'careers_contact_form_phone',
-                          defaultMessage: 'Phone Number',
-                        })}
-                      </span>
-                      <br />
-                      <span className="text-xs">
-                        {intl.formatMessage({
-                          id: 'country_code_format',
-                          defaultMessage: 'e.g. +47',
-                        })}
-                      </span>
-                    </>
-                  }
-                  placeholder={intl.formatMessage({
-                    id: 'careers_contact_form_phone_placeholder',
-                    defaultMessage: 'Country code and phone number',
+                  label={`${intl.formatMessage({
+                    id: 'careers_contact_form_phone',
+                    defaultMessage: 'Phone Number',
+                  })}*`}
+                  description={intl.formatMessage({
+                    id: 'country_code_format',
+                    defaultMessage: 'Enter phone number with country code',
                   })}
+                  type="tel"
                   inputRef={ref}
                   inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
                   helperText={error?.message}
@@ -266,14 +260,14 @@ const CareersContactForm = () => {
                 }),
               }}
               render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
-                <FormTextField
+                <TextField
                   {...props}
                   id={props.name}
-                  label={intl.formatMessage({
+                  label={`${intl.formatMessage({
                     id: 'careers_contact_form_location',
                     defaultMessage: 'Location',
-                  })}
-                  placeholder={intl.formatMessage({
+                  })}*`}
+                  description={intl.formatMessage({
                     id: 'careers_contact_form_location_placeholder',
                     defaultMessage: 'Country/city',
                   })}
@@ -346,10 +340,10 @@ const CareersContactForm = () => {
                 <FormTextField
                   {...props}
                   id={props.name}
-                  label={intl.formatMessage({
+                  label={`${intl.formatMessage({
                     id: 'careers_contact_form_questions',
                     defaultMessage: 'Type your questions',
-                  })}
+                  })}*`}
                   inputRef={ref}
                   multiline
                   rowsMax={10}
@@ -360,35 +354,42 @@ const CareersContactForm = () => {
                 />
               )}
             />
-            <div className="pb-4 text-xs italic">
-              <FormattedMessage id="all_fields_mandatory" defaultMessage="All fields with *  are mandatory" />
-            </div>
-            <StyledCheckBox
+            <Checkbox
+              className="pb-4"
               label={intl.formatMessage({
-                id: 'career_fair_form_supporting_documents',
+                id: 'careers_contact_form_supporting_documents',
                 defaultMessage:
                   'Tick the box if you would like to send supporting documents, and we will get in touch with you',
               })}
               value="Yes"
               {...register('supportingDocuments')}
             />
-
-            <FriendlyCaptcha
-              doneCallback={() => {
-                setSubmitButtonEnabled(true)
-              }}
-              errorCallback={(error: any) => {
-                console.error('FriendlyCaptcha encountered an error', error)
-                setSubmitButtonEnabled(true)
-              }}
-            />
-            <FormButton type="submit" disabled={!submitButtonEnabled}>
+            <div className="flex flex-col gap-2">
+              <FriendlyCaptcha
+                doneCallback={() => {
+                  setIsFriendlyChallengeDone(true)
+                }}
+                errorCallback={(error: any) => {
+                  console.error('FriendlyCaptcha encountered an error', error)
+                  setIsFriendlyChallengeDone(true)
+                }}
+              />
+              {/*@ts-ignore: TODO: types*/}
+              {errors?.root?.notCompletedCaptcha && (
+                <p role="alert" className="text-clear-red-100 flex gap-2 font-semibold">
+                  {/*@ts-ignore: TODO: types*/}
+                  <span className="mt-1">{errors.root.notCompletedCaptcha.message}</span>
+                  <Icon data={error_filled} aria-hidden="true" />
+                </p>
+              )}
+            </div>
+            <Button type="submit">
               {isSubmitting ? (
                 <FormattedMessage id="form_sending" defaultMessage={'Sending...'}></FormattedMessage>
               ) : (
                 <FormattedMessage id="careers_contact_form_cta" defaultMessage="Submit Form" />
               )}
-            </FormButton>
+            </Button>
           </>
         )}
         {isSubmitSuccessful && !isServerError && <FormSubmitSuccessBox type="reset" />}
@@ -398,7 +399,6 @@ const CareersContactForm = () => {
             onClick={() => {
               reset(undefined, { keepValues: true })
               setServerError(false)
-              setSubmitButtonEnabled(false)
             }}
           />
         )}

@@ -19,6 +19,7 @@ module.exports = {
     './pageComponents/**/*.{js,ts,tsx}',
     './core/**/*.{js,ts,tsx}',
     './sections/**/*.{js,ts,tsx}',
+    './templates/**/*.{js,ts,tsx}',
     './icons/**/*.{js,ts,tsx}',
     './pages/**/*.{js,ts,tsx}',
   ],
@@ -332,6 +333,14 @@ module.exports = {
             transform: 'translateX(calc(-100%+100vw))',
           },
         },
+        slideUp: {
+          '0%': { height: 0 },
+          '100%': { height: 'var(--radix-accordion-content-height)' },
+        },
+        slideDown: {
+          '0%': { height: 'var(--radix-accordion-content-height)' },
+          '100%': { height: 0 },
+        },
       },
       animation: {
         fadeInOut: 'fade linear both',
@@ -339,6 +348,12 @@ module.exports = {
         zoomIn: 'auto linear zoom-in both',
         move: 'auto linear move forwards',
         'spin-slow': 'spin 3s linear infinite',
+        slideUp: 'slideUp 3s ease-out',
+        slideDown: 'slideDown 3s ease-out',
+      },
+      data: {
+        open: 'state~="open"',
+        closed: 'state~="closed"',
       },
       flex: {
         fr: '1 1 1',
