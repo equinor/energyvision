@@ -88,7 +88,7 @@ export default withBundle({
       },
       {
         source: 'https://envisstoragedev.blob.core.windows.net/:slug*',
-        destination: `https://s166-cdne-envis-legacy-prod.azureedge.net/:slug*`,
+        destination: `${archiveServerHostname}/:slug*`,
       },
     ].filter((e) => e)
   },
