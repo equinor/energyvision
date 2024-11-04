@@ -10,22 +10,22 @@ export type TeaserMediaProps = {
   center?: boolean
 } & HTMLAttributes<HTMLDivElement>
 
-const StyledMedia = styled.div<TeaserMediaProps>`
+const StyledMedia = styled.div<{ $center?: boolean; $fixedHeight?: boolean; $size?: 'small' | 'full' }>`
   grid-area: image;
   position: relative;
   /* @TODO: Discuss this image height */
-  width: ${(props) => (props.size === 'small' ? '55%' : '100%')};
-  ${({ size }) =>
-    size &&
-    size === 'small' && {
+  width: ${({ $size }) => ($size === 'small' ? '55%' : '100%')};
+  ${({ $size }) =>
+    $size &&
+    $size === 'small' && {
       paddingTop: 'var(--space-xxLarge)',
     }}
-  ${({ fixedHeight }) =>
-    fixedHeight && {
+  ${({ $fixedHeight }) =>
+    $fixedHeight && {
       height: '400px',
     }}
-  ${({ center }) =>
-    center && {
+  ${({ $center }) =>
+    $center && {
       alignSelf: 'center',
       justifySelf: 'center',
       textAlign: 'center',
@@ -42,7 +42,7 @@ export const Media = forwardRef<HTMLDivElement, TeaserMediaProps>(function Media
   ref,
 ) {
   return (
-    <StyledMedia size={size} center={center} fixedHeight={fixedHeight} ref={ref} {...rest}>
+    <StyledMedia $size={size} $center={center} $fixedHeight={fixedHeight} ref={ref} {...rest}>
       {children}
     </StyledMedia>
   )

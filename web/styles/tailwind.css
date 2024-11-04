@@ -37,6 +37,19 @@
 }
 
 @layer components {
+  .clickbound-area {
+    @apply before:cursor-pointer 
+    before:content-[''] 
+    before:absolute 
+    before:w-[48px]
+    before:aspect-square
+    before:top-1/2
+    before:left-1/2
+    before:translate-y-[-50%]
+    before:translate-x-[-50%]
+    before:rounded-[100%];
+  }
+
   article {
     counter-reset: footnotes;
   }
@@ -232,6 +245,23 @@
       .bd-blurred[open]::backdrop {
         @apply backdrop-blur-none bg-transparent;
       }
+    }
+  }
+
+  @supports (scrollbar-color: auto) {
+    .scrolltrack-transparent {
+      scrollbar-color: rgba(0, 0, 0, 0);
+    }
+  }
+  @supports selector(::-webkit-scrollbar) {
+    .transparent-v-scrollbar::-webkit-scrollbar {
+      @apply bg-white-100 dark:bg-transparent w-3;
+    }
+    .transparent-v-scrollbar::-webkit-scrollbar-track {
+      @apply bg-white-100 dark:bg-transparent;
+    }
+    .transparent-v-scrollbar::-webkit-scrollbar-thumb {
+      @apply w-[2px] bg-grey-40 hover:bg-grey-70 dark:bg-white-100 dark:hover:bg-white-100/70 rounded-lg;
     }
   }
 }

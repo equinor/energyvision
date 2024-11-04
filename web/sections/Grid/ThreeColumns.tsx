@@ -1,5 +1,5 @@
 import { twMerge } from 'tailwind-merge'
-import { Fragment, HTMLAttributes, forwardRef } from 'react'
+import { Fragment, HTMLAttributes } from 'react'
 import { mapGridContent } from './mapGridContent'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
 
@@ -8,17 +8,13 @@ export type ThreeColumnsProps = {
   className?: string
 } & HTMLAttributes<HTMLDivElement>
 
-const ThreeColumns = forwardRef<HTMLDivElement, ThreeColumnsProps>(function ThreeColumns(
-  { data, className = '' },
-  ref,
-) {
+const ThreeColumns = ({ data, className = '' }: ThreeColumnsProps) => {
   const { columns = [] } = data
   const borderStyling = `w-full h-full border border-moss-green-60`
   const minHeight = 'min-h-[350px] lg:min-h-[600px]'
   const isMobile = useMediaQuery(`(max-width: 800px)`)
   return (
-    //@ts-ignore: Will be refactored and removed in new newsroom branch
-    <Fragment ref={ref}>
+    <Fragment>
       {columns.map((column: any) => {
         return (
           <div key={column?.id} className={twMerge(minHeight, borderStyling, className)}>
@@ -28,6 +24,6 @@ const ThreeColumns = forwardRef<HTMLDivElement, ThreeColumnsProps>(function Thre
       })}
     </Fragment>
   )
-})
+}
 
 export default ThreeColumns
