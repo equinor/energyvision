@@ -6,7 +6,6 @@ import { FormattedMessage, useIntl } from 'react-intl'
 import { FormTextField, Checkbox, FormSelect, FormSubmitSuccessBox, FormSubmitFailureBox } from '@components'
 import { BaseSyntheticEvent, useState } from 'react'
 import FriendlyCaptcha from '../FriendlyCaptcha'
-import styled from 'styled-components'
 import getCatalogType from './getRequestType'
 import { TextField } from '@core/TextField/TextField'
 import { Button } from '@core/Button'
@@ -22,10 +21,6 @@ type FormValues = {
   candidateType: string
   supportingDocuments: string
 }
-
-const StyledCheckBox = styled(Checkbox)`
-  padding-bottom: var(--space-medium);
-`
 
 const CareersContactForm = () => {
   const intl = useIntl()
@@ -359,7 +354,8 @@ const CareersContactForm = () => {
                 />
               )}
             />
-            <StyledCheckBox
+            <Checkbox
+              className="pb-4"
               label={intl.formatMessage({
                 id: 'careers_contact_form_supporting_documents',
                 defaultMessage:
