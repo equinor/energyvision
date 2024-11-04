@@ -11,9 +11,8 @@ import { UnpaddedText } from './newsroom/StyledComponents'
 import { useRef } from 'react'
 import usePaginationPadding from '../../lib/hooks/usePaginationPadding'
 import Seo from '../../pageComponents/shared/Seo'
-import { HeroTypes } from '../../types/types'
+import { HeroTypes } from '../../types/index'
 import MagazineIndexText from '../shared/portableText/MagazineIndexText'
-import { PaginationContextProvider } from '../shared/search/pagination/PaginationContext'
 import Teaser from '../shared/Teaser'
 import { SharedBanner } from './shared/SharedBanner'
 import SharedTitle from './shared/SharedTitle'
@@ -21,6 +20,7 @@ import singletonRouter from 'next/router'
 import type { UiState } from 'instantsearch.js'
 import { Configure, InstantSearch } from 'react-instantsearch'
 import { createInstantSearchRouterNext } from 'react-instantsearch-router-nextjs'
+import { PaginationContextProvider } from '../../common/contexts/PaginationContext'
 
 const IngressWrapper = styled.div`
   max-width: 1186px; /* 1920 - (2 * 367) */

@@ -61,12 +61,13 @@ export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(function C
     ${variantTitle[variant]}
     max-w-prose
     text-pretty
+    dark:text-slate-80
   `,
     titleClassName,
   )
 
   return eyebrow ? (
-    <hgroup ref={ref} className={twMerge('flex flex-col gap-2', className)} {...rest}>
+    <hgroup ref={ref} className={twMerge('w-full text-pretty flex flex-col gap-2', className)} {...rest}>
       <p className={twMerge(`text-xs font-medium uppercase leading-normal`, eyebrowClassName)}>{eyebrow}</p>
       {title && (
         <Typography

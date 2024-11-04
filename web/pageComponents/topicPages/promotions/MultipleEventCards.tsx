@@ -1,6 +1,6 @@
 import { useMediaQuery } from '../../../lib/hooks/useMediaQuery'
 import { getEventDates } from '../../../common/helpers/dateUtilities'
-import type { EventCardData, EventPromotionSettings } from '../../../types/types'
+import type { EventCardData, EventPromotionSettings } from '../../../types/index'
 import { EventCard } from '@sections/cards/EventCard'
 import PastEvents from './pastEvents/PastEvents'
 import { Carousel } from '@core/Carousel/Carousel'
@@ -42,7 +42,7 @@ const MultipleEventCards = ({
       {eventPromotionSettings?.promotePastEvents && <PastEvents events={data} hasSectionTitle={hasSectionTitle} />}
       {!eventPromotionSettings?.promotePastEvents && (
         <>
-          {data?.length <= 4 || isMobile ? (
+          {data?.length <= 3 || isMobile ? (
             <ul
               className={` 
                 grid 

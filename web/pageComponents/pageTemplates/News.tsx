@@ -11,7 +11,7 @@ import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
 import BasicIFrame from '../shared/iframe/BasicIFrame'
 import { getFullUrl } from '../../common/helpers/getFullUrl'
 import { metaTitleSuffix } from '../../languages'
-import type { NewsSchema } from '../../types/types'
+import type { NewsSchema } from '../../types/index'
 import { toPlainText } from '@portabletext/react'
 import Blocks from '../shared/portableText/Blocks'
 import { twMerge } from 'tailwind-merge'
@@ -136,6 +136,12 @@ const NewsPage = ({ data: news }: ArticleProps) => {
 
   const openGraphImages = getOpenGraphImages((openGraphImage?.asset ? openGraphImage : null) || heroImage?.image)
   /*   appInsights.trackPageView({ name: slug, uri: fullUrl }) */
+
+  const formattedContent = content.map(block => ({
+    ...block,
+    markDefs: block.markDefs || [], 
+  }));
+
   return (
     <>
       <NextSeo
@@ -152,11 +158,6 @@ const NewsPage = ({ data: news }: ArticleProps) => {
           url: fullUrl,
           images: openGraphImages,
         }}
-        // twitter={{
-        //   handle: '@handle',
-        //   site: '@site',
-        //   cardType: 'summary_large_image',
-        // }}
       ></NextSeo>
       <NewsArticleJsonLd
         url={fullUrl}
@@ -210,14 +211,14 @@ const NewsPage = ({ data: news }: ArticleProps) => {
               </LeadParagraph>
             )}
 
-            {content && content.length > 0 && (
+          {content && content.length > 0 && (
               <Blocks
-                value={content}
+                value={formattedContent}
                 proseClassName="prose-article"
                 className="p-0 max-w-viewport mx-auto"
                 includeFootnotes
               />
-            )}
+            )} 
             <div className="mt-8 mb-2 px-layout-lg max-w-viewport mx-auto">
               <Footnotes blocks={[...ingress, ...content]} />
             </div>

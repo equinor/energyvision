@@ -1,5 +1,5 @@
 import { NextSeo, WebPageJsonLd } from 'next-seo'
-import { ImageWithAlt } from '../../types/types'
+import { ImageWithAlt } from '../../types/index'
 import { metaTitleSuffix } from '../../languages'
 import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
 import { toPlainText } from '@portabletext/react'

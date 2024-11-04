@@ -2,7 +2,8 @@ import { forwardRef, HTMLAttributes } from 'react'
 import { default as NextLink, LinkProps } from 'next/link'
 import { twMerge } from 'tailwind-merge'
 import Image, { Ratios } from '../../../pageComponents/shared/SanityImage'
-import { ImageWithAlt } from '../../../types/types'
+import { ImageWithAlt } from '../../../types/index'
+import envisTwMerge from '../../../twMerge'
 
 export type Variants = 'primary' | 'secondary' | 'compact' | 'single'
 export type CardProps = {
@@ -50,19 +51,19 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
   const variantAspectRatio = {
     primary: Ratios.NINE_TO_SIXTEEN,
     secondary: Ratios.FIVE_TO_FOUR,
-    compact: Ratios.NINE_TO_SIXTEEN,
+    compact: Ratios.FIVE_TO_FOUR,
     single: Ratios.FIVE_TO_FOUR,
   }
   const imageRatio = {
     primary: 'aspect-video',
     secondary: 'aspect-5/4',
-    compact: '',
+    compact: 'aspect-5/4',
     single: '',
   }
   const imageVariantClassNames = {
     primary: `max-md:max-h-[212px]`,
     secondary: `rounded-t-md max-md:max-h-[212px]`,
-    compact: 'w-[25%] h-auto max-md:max-h-[212px]',
+    compact: 'w-[25vw] h-auto max-md:max-h-[212px] rounded-sm',
     single: 'w-auto h-full',
   }
 
@@ -78,7 +79,7 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
       text-slate-80
       focus:outline-none
       focus-visible:envis-outline
-      dark:text-white-100
+      dark:text-slate-80
       dark:focus-visible:envis-outline-invert
       `,
         className,
@@ -87,8 +88,9 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
     >
       {image && (
         <div
-          className={twMerge(
+          className={envisTwMerge(
             `relative
+            
           ${imageVariantClassNames[variant]}
           ${imageRatio[variant]}
           `,
@@ -100,6 +102,7 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
             fill
             maxWidth={600}
             aspectRatio={variantAspectRatio[variant]}
+            className={`${variant === 'compact' ? 'rounded-xs' : ''}`}
             sizes="(max-width: 800px) 100vw, 800px"
           />
         </div>

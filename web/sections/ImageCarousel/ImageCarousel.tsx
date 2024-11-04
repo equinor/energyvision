@@ -1,6 +1,6 @@
 import { Heading, Paragraph } from '@core/Typography'
 import envisTwMerge from '../../twMerge'
-import { ImageCarouselData } from '../../types/types'
+import { ImageCarouselData } from '../../types/index'
 import { BackgroundContainer } from '@components'
 import { Carousel } from '@core/Carousel/Carousel'
 import { forwardRef, useId } from 'react'
@@ -21,25 +21,26 @@ const ImageCarousel = forwardRef<HTMLUListElement, ImageCarouselProps>(function 
 
   return (
     <BackgroundContainer background={background} id={anchor} className={envisTwMerge(`pb-page-content`, className)}>
-      <div className="w-full flex flex-col px-layout-lg max-w-viewport mx-auto pb-8">
-        {title && !hideTitle && (
-          <Heading
-            as="h2"
-            id={headingId}
-            value={title}
-            className={`${ingress ? 'pb-6' : ''} text-xl max-w-text text-pretty`}
-          />
-        )}
-        {ingress && <Paragraph value={ingress} className="max-w-text text-pretty" />}
-      </div>
+      {((title && !hideTitle) || ingress) && (
+        <div className="w-full flex flex-col px-layout-lg max-w-viewport mx-auto pb-8">
+          {title && !hideTitle && (
+            <Heading
+              as="h2"
+              id={headingId}
+              value={title}
+              className={`${ingress ? 'pb-6' : ''} text-xl max-w-text text-pretty`}
+            />
+          )}
+          {ingress && <Paragraph value={ingress} className="max-w-text text-pretty" />}
+        </div>
+      )}
       <Carousel
         ref={ref}
         items={items}
-        displayMode="single"
+        displayMode={items?.length < 3 ? 'scroll' : 'single'}
         variant="image"
-        layout="full"
-        hasSectionTitle={!!title}
-        labelledbyId={title ? headingId : undefined}
+        hasSectionTitle={title && !hideTitle}
+        labelledbyId={title && !hideTitle ? headingId : undefined}
         title={title}
         autoRotation={options?.autoplay}
       />

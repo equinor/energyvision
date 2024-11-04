@@ -2,7 +2,7 @@ import { twMerge } from 'tailwind-merge'
 import { getUrlFromAction } from '../../common/helpers'
 import GridLinkArrow from './GridLinkArrow'
 import { getColorForTheme } from '../../pageComponents/shared/textTeaser/theme'
-import { BackgroundTypes, GridTextBlockData } from '../../types/types'
+import { BackgroundTypes, GridTextBlockData } from '../../types/index'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
 import { BackgroundContainer } from '@components/Backgrounds'
 import { Heading, Typography } from '@core/Typography'
@@ -145,7 +145,7 @@ const GridTextBlock = forwardRef<HTMLDivElement, GridTextBlockProps>(function Gr
 
   const serializerClassnames = {
     largeText: `leading-tight text-balance ${titleTextColor}`,
-    normal: `text-lg leading-snug text-balance ${titleTextColor}`,
+    normal: `text-2xl leading-snug text-balance ${titleTextColor}`,
   }
 
   const mainContent = (

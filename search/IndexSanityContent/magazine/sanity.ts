@@ -5,6 +5,7 @@ import { SanityClient } from '@sanity/client'
 import { Language } from '../../common'
 import { MappableAccordionType, MappableTextBlockType } from '../common/mappers'
 import { plainTextExcludingStrikeThrough } from '../../common/queryHelpers'
+import { ImageWithAlt, ImageWithAltAndCaption } from '../common/types'
 
 export enum HeroTypes {
   DEFAULT = 'default',
@@ -61,37 +62,6 @@ const getQueryParams = (language: Language, id: string) => ({
   lang: language.internalCode,
   id: id,
 })
-
-export type ImageWithAlt = {
-  _type: 'imageWithAlt'
-  alt: string
-  isDecorative?: boolean
-  asset: {
-    _ref: string
-    _type: 'reference'
-  }
-  crop?: {
-    _type: 'sanity.imageCrop'
-    bottom: number
-    left: number
-    right: number
-    top: number
-  }
-  hotspot?: {
-    _type: 'sanity.imageHotspot'
-    height: number
-    width: number
-    x: number
-    y: number
-  }
-}
-
-export type ImageWithAltAndCaption = {
-  _type: 'imageWithAltAndCaption'
-  attribution?: string
-  caption?: string
-  image: ImageWithAlt
-}
 
 export type MagazineArticle = {
   slug: string

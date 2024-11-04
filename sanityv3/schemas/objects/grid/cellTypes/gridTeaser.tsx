@@ -3,7 +3,7 @@ import blocksToText from '../../../../helpers/blocksToText'
 import { configureBlockContent, configureThemedTitleBlockContent } from '../../../editors'
 import { validateCharCounterEditor } from '../../../validations/validateCharCounterEditor'
 
-import type { PortableTextBlock, Reference, Rule, ValidationContext } from 'sanity'
+import type { PortableTextBlock, Reference, Rule } from 'sanity'
 import type { DownloadableImage } from './../../downloadableImage'
 import type { DownloadableFile } from '../../files'
 import type { ImageWithAlt } from '../../imageWithAlt'
@@ -81,7 +81,7 @@ export default {
       of: [blockContentType],
       hidden: ({ parent }: GridTeaserDocument) => parent.useExtendedThemes,
       validation: (Rule: Rule) =>
-        Rule.custom((value: PortableTextBlock[], ctx: ValidationContext) => {
+        Rule.custom((value: PortableTextBlock[]) => {
           return validateCharCounterEditor(value, 600)
         }).warning(),
     },
@@ -92,7 +92,7 @@ export default {
       of: [themedTitleContentType],
       hidden: ({ parent }: GridTeaserDocument) => !parent.useExtendedThemes,
       validation: (Rule: Rule) =>
-        Rule.custom((value: PortableTextBlock[], ctx: ValidationContext) => {
+        Rule.custom((value: PortableTextBlock[]) => {
           return validateCharCounterEditor(value, 600)
         }).warning(),
     },

@@ -13,7 +13,6 @@ import {
 } from '@components'
 import { BaseSyntheticEvent, useState } from 'react'
 import FriendlyCaptcha from '../FriendlyCaptcha'
-import styled from 'styled-components'
 import getCatalogType from './getRequestType'
 
 type FormValues = {
@@ -27,10 +26,6 @@ type FormValues = {
   candidateType: string
   supportingDocuments: string
 }
-
-const StyledCheckBox = styled(Checkbox)`
-  padding-bottom: var(--space-medium);
-`
 
 const CareersContactForm = () => {
   const intl = useIntl()
@@ -363,7 +358,8 @@ const CareersContactForm = () => {
             <div className="pb-4 text-xs italic">
               <FormattedMessage id="all_fields_mandatory" defaultMessage="All fields with *  are mandatory" />
             </div>
-            <StyledCheckBox
+            <Checkbox
+              className='pb-4'
               label={intl.formatMessage({
                 id: 'career_fair_form_supporting_documents',
                 defaultMessage:

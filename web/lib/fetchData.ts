@@ -20,3 +20,31 @@ export const getComponentsData = async (page: { query: string; queryParams: Quer
 
   return { menuData, pageData, footerData }
 }
+
+type NewsroomQueryParams = {
+  lang?: string
+  tags?: string[]
+  countryTags?: string[]
+  years?: string[]
+  index?: number
+  lastId?: string
+}
+export const getNewsroomData = async (
+  fetchQuery: { query: string; queryParams: NewsroomQueryParams },
+  preview = false,
+) => {
+  const client = getClient(preview)
+  try {
+    const results = await client.fetch(fetchQuery.query, fetchQuery.queryParams)
+    return {
+      isSuccess: true,
+      data: results,
+    }
+  } catch (error) {
+    console.log('Error when fetching from Sanity', error)
+    return {
+      isError: true,
+      data: [],
+    }
+  }
+}

@@ -1,11 +1,6 @@
 import { useEffect, useState } from 'react'
-import styled from 'styled-components'
 import { sanityClient } from '../../../sanity.client'
 // eslint-disable-next-line import/no-unresolved
-
-const Warning = styled.div`
-  padding: 2em;
-`
 
 type File = {
   url: string
@@ -38,11 +33,11 @@ export default function FilePreview(props: any) {
   }
 
   if (loading) {
-    return <Warning>Loading...</Warning>
+    return <div style={{ padding: '32px' }}>Loading...</div>
   }
 
   if (!displayed?.asset?.asset || !file) {
-    return <Warning>A file attachment is required in order to preview.</Warning>
+    return <div style={{ padding: '32px' }}>A file attachment is required in order to preview.</div>
   }
 
   if (file && file.extension === 'pdf') {
@@ -50,5 +45,5 @@ export default function FilePreview(props: any) {
   }
 
   // TODO: add preview for other file types
-  return <Warning>Only PDF files can be previewed at this time.</Warning>
+  return <div style={{ padding: '32px' }}>Only PDF files can be previewed at this time.</div>
 }

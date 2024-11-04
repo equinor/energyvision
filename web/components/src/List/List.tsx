@@ -8,7 +8,7 @@ export type ListProps = {
   splitList?: boolean
 } & EdsListProps
 
-const StyledList = styled(EdsList)<ListProps>`
+const StyledList = styled(EdsList)<{ $unstyled?: boolean; $centered?: boolean; $splitList?: boolean }>`
   font-size: var(--typeScale-1);
   line-height: var(--lineHeight-3);
   /* EDS list removes margin */
@@ -16,20 +16,20 @@ const StyledList = styled(EdsList)<ListProps>`
   margin-right: var(--space-medium);
   padding-left: var(--space-medium);
   list-style-position: outside;
-  ${({ unstyled }) =>
-    unstyled && {
+  ${({ $unstyled }) =>
+    $unstyled && {
       margin: 0,
       padding: 0,
       listStyle: 'none',
     }}
-  ${({ centered }) =>
-    centered && {
+  ${({ $centered }) =>
+    $centered && {
       display: 'grid',
       placeContent: 'center',
     }}
     @media (min-width: 800px) {
-    ${({ splitList }) =>
-      splitList && {
+    ${({ $splitList }) =>
+      $splitList && {
         display: 'grid',
         gridTemplateColumns: 'repeat(2, 1fr)',
         gridColumnGap: `var(--space-xLarge)`,
@@ -45,9 +45,9 @@ export const List = forwardRef<HTMLUListElement | HTMLOListElement, ListProps>(f
   return (
     <StyledList
       ref={ref}
-      unstyled={unstyled}
-      centered={centered}
-      splitList={splitList}
+      $unstyled={unstyled}
+      $centered={centered}
+      $splitList={splitList}
       style={
         {
           ...style,

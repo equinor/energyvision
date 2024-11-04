@@ -81,6 +81,16 @@ const snippets: textSnippet = {
     defaultValue: 'Search',
     group: groups.search,
   },
+  search_quick_search: {
+    title: 'Quick search',
+    defaultValue: 'Quick search',
+    group: groups.search,
+  },
+  search_quick_search_label: {
+    title: 'Quick search label',
+    defaultValue: 'Search among Equinor corporate-level news releases',
+    group: groups.search,
+  },
   search_news_tab: {
     title: 'News tab name',
     defaultValue: 'News',
@@ -114,6 +124,31 @@ const snippets: textSnippet = {
   search_no_results_generic: {
     title: 'No search results, generic',
     defaultValue: 'Sorry, no results were found. Please try again with some different keywords.',
+    group: groups.search,
+  },
+  search_submit: {
+    title: 'Submit search',
+    defaultValue: 'Submit search',
+    group: groups.search,
+  },
+  search_reset: {
+    title: 'Reset',
+    defaultValue: 'Reset',
+    group: groups.search,
+  },
+  search_filter_by: {
+    title: 'Filter by',
+    defaultValue: 'Filter by',
+    group: groups.search,
+  },
+  search_pagination_first_page: {
+    title: 'First page',
+    defaultValue: 'First page',
+    group: groups.search,
+  },
+  search_pagination_last_page: {
+    title: 'Last page',
+    defaultValue: 'Last page',
     group: groups.search,
   },
   copyright: {
@@ -191,6 +226,11 @@ const snippets: textSnippet = {
     defaultValue: 'statistics',
     group: groups.cookie,
   },
+  cookie_type_preferences: {
+    title: 'Type preferences',
+    defaultValue: 'preferences',
+    group: groups.cookie,
+  },
   cookie_consent_header: {
     title: 'Consent header',
     defaultValue: 'Accept Cookies',
@@ -200,6 +240,18 @@ const snippets: textSnippet = {
     title: 'Information text',
     defaultValue:
       'Want the full picture? We’d love to share this content with you, but first you must accept {typeOfCookie} cookies by enabling them in our cookie settings.',
+    group: groups.cookie,
+  },
+  cookie_consent_two: {
+    title: 'Information text - for two types of cookies',
+    defaultValue:
+      'Want the full picture? We’d love to share this content with you, but first you must accept {type1} and {type2} cookies by enabling them in our cookie settings.',
+    group: groups.cookie,
+  },
+  cookie_consent_many: {
+    title: 'Information text - for all types of cookies ',
+    defaultValue:
+      'Want the full picture? We’d love to share this content with you, but first you must accept {type1}, {type2} and {type3} cookies by enabling them in our cookie settings.',
     group: groups.cookie,
   },
   contact_form_name: {
@@ -672,6 +724,21 @@ const snippets: textSnippet = {
     defaultValue: 'Topic',
     group: groups.newsroom,
   },
+  newsroom_filters_label: {
+    title: 'Filters label',
+    defaultValue: 'Filter by:',
+    group: groups.newsroom,
+  },
+  newsroom_filters_selected: {
+    title: 'Selected',
+    defaultValue: 'Selected',
+    group: groups.newsroom,
+  },
+  newsroom_filters_clear_all: {
+    title: 'Clear all',
+    defaultValue: 'Clear all',
+    group: groups.newsroom,
+  },
   newsroom_country_filter: {
     title: 'Country filter heading',
     defaultValue: 'Country',
@@ -701,6 +768,16 @@ const snippets: textSnippet = {
   newsroom_no_hits: {
     title: 'No hits',
     defaultValue: 'Your search returned no results',
+    group: groups.newsroom,
+  },
+  newsroom_related_links: {
+    title: 'Related links',
+    defaultValue: 'Related links',
+    group: groups.newsroom,
+  },
+  newsroom_skip_to_news: {
+    title: 'Skip to list of news',
+    defaultValue: 'Skip to list of news',
     group: groups.newsroom,
   },
   magazineindex_list_header: {
@@ -737,6 +814,36 @@ const snippets: textSnippet = {
   back_to_content: {
     title: 'Back to content',
     defaultValue: 'Back to content',
+    group: groups.others,
+  },
+  close: {
+    title: 'Close',
+    defaultValue: 'Close',
+    group: groups.others,
+  },
+  switch_to: {
+    title: 'Switch to',
+    defaultValue: 'Switch to',
+    group: groups.others,
+  },
+  next: {
+    title: 'Next',
+    defaultValue: 'Next',
+    group: groups.others,
+  },
+  previous: {
+    title: 'Previous',
+    defaultValue: 'Previous',
+    group: groups.others,
+  },
+  page: {
+    title: 'Page',
+    defaultValue: 'Page',
+    group: groups.others,
+  },
+  remove: {
+    title: 'Remove',
+    defaultValue: 'Remove',
     group: groups.others,
   },
 }

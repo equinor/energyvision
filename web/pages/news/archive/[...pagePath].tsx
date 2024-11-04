@@ -24,7 +24,7 @@ import { simpleMenuQuery } from '../../../lib/queries/simpleMenu'
 import { getClient } from '../../../lib/sanity.server'
 import Header from '../../../pageComponents/shared/Header'
 import { Layout } from '../../../pageComponents/shared/Layout'
-import type { MenuData, SimpleMenuData } from '../../../types/types'
+import type { MenuData, SimpleMenuData } from '../../../types/index'
 
 const { publicRuntimeConfig } = getConfig()
 

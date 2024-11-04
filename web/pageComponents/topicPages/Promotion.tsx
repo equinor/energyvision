@@ -2,7 +2,7 @@ import { BackgroundContainer } from '@components'
 import SinglePromotion from './promotions/SinglePromotion'
 import MultiplePromotions from './promotions/MultiplePromotions'
 import IngressText from '../shared/portableText/IngressText'
-import type { PromotionData } from '../../types/types'
+import type { PromotionData } from '../../types/index'
 import { twMerge } from 'tailwind-merge'
 import { ButtonLink } from '@core/Link'
 import { Heading } from '@core/Typography'
@@ -50,7 +50,7 @@ const Promotion = ({
             <IngressText value={ingress} />
           </div>
         )}
-        {promotions?.length === 1 ? (
+        {promotions?.length === 1 || promoteSingleUpcomingEvent ? (
           <SinglePromotion promotion={promotions[0]} hasSectionTitle={!!title} />
         ) : (
           <MultiplePromotions

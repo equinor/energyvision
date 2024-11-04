@@ -1,10 +1,9 @@
-import { useState } from 'react'
 import { useIntl } from 'react-intl'
 import styled from 'styled-components'
 import FilterHeader from './FilterHeader'
 import { RefinementList } from './RefinementList'
-import UncontrolledSearchBox from './UncontrolledSearchBox'
 import { Accordion, AccordionItem, AccordionPanel } from '@chakra-ui/react'
+import { SearchBox } from '../../../core/AlgoliaSearchBox/SearchBox'
 
 const StyledAccordion = styled(Accordion)`
   @media (min-width: 800px) {
@@ -32,7 +31,11 @@ const Filters = ({ ...rest }) => {
   return (
     <StyledFilters {...rest}>
       <SearchBoxContainer>
-        <UncontrolledSearchBox />
+        <SearchBox
+          className="bg-white-100 border-grey-40 text-slate-80 focus-visible:envis-outline"
+          submitClassName="bg-norwegian-woods-100 text-white-100 hover:bg-slate-blue-95"
+          resetClassName="text-grey-50 border-grey-40"
+        />
       </SearchBoxContainer>
       <StyledAccordion id="filters" allowMultiple>
         <AccordionItem>

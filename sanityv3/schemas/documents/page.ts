@@ -82,6 +82,7 @@ export default {
         { type: 'stockValuesApi' },
         Flags.HAS_TWITTER_FEED && { type: 'twitterEmbed' },
         { type: 'cookieDeclaration' },
+        { type: 'anchorLinkList' },
       ].filter((e) => e),
     },
   ].filter((e) => e),

@@ -1,4 +1,10 @@
-import { VideoPlayerCarouselItem, ImageCarouselItem, EventCardData } from '../../types/types'
+import {
+  VideoPlayerCarouselItem,
+  ImageCarouselItem,
+  EventCardData,
+  KeyNumberItemData,
+  IFrameCarouselItemData,
+} from '../../types/index'
 import {
   ElementType,
   forwardRef,
@@ -19,12 +25,18 @@ import { PortableTextBlock } from '@portabletext/types'
 import { toPlainText } from '@portabletext/react'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
 import { CarouselEventItem } from './CarouselEventItem'
-import { ScrollbarEvents } from 'swiper/types'
+import { CarouselKeyNumberItem } from './CarouselKeyNumberItem'
+import { CarouselIframeItem } from './CarouselIframeItem'
 
 export type DisplayModes = 'single' | 'scroll'
 export type Layouts = 'full' | 'default'
-type CarouselItemTypes = VideoPlayerCarouselItem | ImageCarouselItem | EventCardData
-type Variants = 'video' | 'image' | 'event'
+type CarouselItemTypes =
+  | VideoPlayerCarouselItem
+  | ImageCarouselItem
+  | EventCardData
+  | KeyNumberItemData
+  | IFrameCarouselItemData
+type Variants = 'video' | 'image' | 'event' | 'keyNumber' | 'iframe'
 
 type CarouselProps = {
   items: CarouselItemTypes[]
@@ -49,7 +61,6 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
     items,
     variant = 'video',
     displayMode = 'scroll',
-    //layout = 'full',
     autoRotation = false,
     labelledbyId,
     title,
@@ -60,14 +71,13 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
   ref,
 ) {
   const CarouselTag = hasSectionTitle ? (`div` as ElementType) : (`section` as ElementType)
-  //TODO translations
   const carouselItemsId = useId()
   const controlsId = useId()
   const sliderRef = useRef<HTMLUListElement>(null)
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
   //a prefers-reduced-motion user setting must always override autoplay
   const prefersReducedMotion = usePrefersReducedMotion()
-  const internalAutoRotation = prefersReducedMotion ? false : autoRotation
+  const internalAutoRotation = prefersReducedMotion ? false : autoRotation && displayMode === 'single'
   const [currentIndex, setCurrentIndex] = useState(0)
   const [currentXPosition, setCurrentXPosition] = useState(0)
   const [currentListTranslateX, setCurrentListTranslateX] = useState(0)
@@ -87,7 +97,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
   const initialPositions = useMemo(() => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
-    return items.map((item, i) => {
+    return items?.map((item, i) => {
       if (i === items.length - 1) {
         return -TRANSLATE_X_AMOUNT
       }
@@ -223,9 +233,11 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
     image: `${
       displayMode === 'single'
         ? 'grid transition-transform ease-scroll delay-0 duration-[800ms]'
-        : 'flex gap-3 md:gap-8 lg:gap-12 w-full h-full overflow-y-hidden'
+        : 'flex gap-3 md:gap-8 w-full h-full overflow-y-hidden no-scrollbar'
     }`,
     event: `flex gap-3 lg:gap-6 w-full h-full overflow-y-hidden no-scrollbar`,
+    keyNumber: `flex w-full gap-3xl`,
+    iframe: `flex mx-0 gap-md lg:px-0 px-6 lg:no-scrollbar`,
   }
   const listDisplayModeClassName = {
     scroll: 'snap-mandatory snap-x overflow-x-scroll',
@@ -258,10 +270,8 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
                 style: {
                   transform: `translate3d(${itemsXPositions[i]}px, 0px, 0px)`,
                 },
+                onFocus: () => cancelTimeout(),
               })}
-            onFocus={() => {
-              cancelTimeout()
-            }}
           />
         )
       case 'event':
@@ -275,6 +285,35 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
             hasSectionTitle={hasSectionTitle}
           />
         )
+      case 'keyNumber':
+        return (
+          <CarouselKeyNumberItem
+            key={item.id}
+            keyNumber={item as KeyNumberItemData}
+            displayMode={displayMode}
+            aria-label={ariaLabel}
+            active={i === currentIndex}
+            hasSectionTitle={hasSectionTitle}
+          />
+        )
+      case 'iframe':
+        return (
+          <CarouselIframeItem
+            className="pt-lg"
+            key={item.id}
+            noOfSiblings={items.length}
+            displayMode={displayMode}
+            aria-label={ariaLabel}
+            active={i === currentIndex}
+            title={(item as IFrameCarouselItemData).title}
+            action={(item as IFrameCarouselItemData).action}
+            description={(item as IFrameCarouselItemData).description}
+            frameTitle={(item as IFrameCarouselItemData).frameTitle}
+            url={(item as IFrameCarouselItemData).url}
+            cookiePolicy={(item as IFrameCarouselItemData).cookiePolicy}
+            aspectRatio={(item as IFrameCarouselItemData).aspectRatio}
+          />
+        )
     }
   }
 
@@ -284,7 +323,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
       {...(hasSectionTitle && {
         role: 'region',
       })}
-      {...(labelledbyId && {
+      {...(typeof labelledbyId !== undefined && {
         'aria-labelledby': labelledbyId,
       })}
       {...(!labelledbyId &&
@@ -301,6 +340,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
             ? 'overflow-hidden grid grid-flow-row'
             : 'px-6 lg:px-layout-sm flex flex-col-reverse max-w-viewport'
         }
+        
         `,
         className,
       )}
@@ -313,7 +353,9 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
           variant === 'image' && displayMode === 'single'
             ? 'w-[var(--image-carousel-card-w-sm)] md:w-[var(--image-carousel-card-w-md)] lg:w-[var(--image-carousel-card-w-lg)] mx-auto col-start-1 col-end-1 row-start-2 row-end-2'
             : ''
-        } pt-6 pb-2 flex ${internalAutoRotation ? 'justify-between' : 'justify-end'}`}
+        } pt-6 pb-2 ${items.length === 2 ? 'lg:hidden' : ''} flex ${
+          internalAutoRotation ? 'justify-between' : 'justify-end'
+        }`}
       >
         <div id={controlsId} className="sr-only">{`Carousel controls`}</div>
         {internalAutoRotation && (
@@ -369,8 +411,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
         ref={sliderRef}
         id={carouselItemsId}
         className={envisTwMerge(
-          `transparent-scrollbar
-          transition-all
+          `transition-all
           duration-300
           m-auto
           ${variant === 'event' ? 'p-[2px]' : ''}

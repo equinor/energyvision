@@ -79,6 +79,8 @@ import gridTeaser from './objects/grid/cellTypes/gridTeaser'
 import threeColumns from './objects/grid/rowTypes/3columns'
 import gridColorTheme from './objects/grid/theme'
 import transcript from './objects/transcript'
+import anchorLinkList from './objects/anchorLinkList/anchorLinkList'
+import anchorLinkReference from './objects/anchorLinkList/anchorLinkReference'
 import imageForText from './objects/imageForText'
 
 const {
@@ -205,6 +207,8 @@ const RemainingSchemas = [
   threeColumns,
   gridColorTheme,
   transcript,
+  anchorLinkList,
+  anchorLinkReference,
   imageForText,
 ]
 
