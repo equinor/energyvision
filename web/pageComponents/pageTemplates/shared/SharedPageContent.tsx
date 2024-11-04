@@ -3,7 +3,6 @@ import TextBlock from '../../topicPages/TextBlock'
 import FullWidthImage from '../../topicPages/FullWidthImage'
 import FullWidthVideo from '../../topicPages/FullWidthVideo'
 import Figure from '../../topicPages/Figure'
-import TextWithIconArray from '../../topicPages/TextWithIconArray'
 import PageQuote from '../../topicPages/PageQuote'
 import AccordionBlock from '../../topicPages/Accordion/AccordionBlock'
 import PromoTileArray from '../../../sections/PromoTiles/PromoTileArray'
@@ -63,6 +62,7 @@ import VideoPlayerCarousel from '@sections/VideoPlayerCarousel/VideoPlayerCarous
 import ImageCarousel from '@sections/ImageCarousel/ImageCarousel'
 import { AnchorLinkList } from '@sections/AnchorLinkList'
 import ImageForText from '@sections/ImageForText/ImageForText'
+import TextWithIconArray from '@sections/TextWithIconArray/TextWithIconArray'
 
 type DefaultComponent = {
   id?: string
