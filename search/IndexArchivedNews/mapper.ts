@@ -33,6 +33,6 @@ export const mapData: MapDataType = (article) => {
     ],
     countryTags: [country.trim()].filter(identity),
     year,
-    thumbnailUrl: thumbnailURL,
+    thumbnailUrl: thumbnailURL ? thumbnailURL : null,
   } as NewsIndex
 }
