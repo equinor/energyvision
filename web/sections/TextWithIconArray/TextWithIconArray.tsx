@@ -42,6 +42,7 @@ const TextWithIconArray = ({ data, anchor, className = '', listClassName = '' }:
           const { icon, title, text, id } = item
           return (
             <li key={id}>
+              {/*@ts-ignore: TODO check why  content?: PortableTextBlock[] does not match text: PortableTextBlock[]  */}
               <TextWithIcon image={icon} title={title} content={text} />
             </li>
           )
