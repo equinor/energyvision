@@ -40,11 +40,13 @@ export const TextWithIcon = forwardRef<HTMLDivElement, TextWithIconProps>(
           />
         )}
         {title && (
-          <Typography as="h2" variant="h3">
+          <Typography as="h2" variant="h3" className="text-pretty text-center max-w-80">
             {title}
           </Typography>
         )}
-        {content && <Blocks value={content} className="text-pretty text-center" />}
+        {content && (
+          <Blocks value={content} className={`${!title ? 'text-md' : ''} max-w-80 text-pretty text-center`} />
+        )}
       </div>
     )
   },
