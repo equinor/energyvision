@@ -330,6 +330,9 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
         title && {
           'aria-label': toPlainText(title),
         })}
+      {...(displayMode === 'scroll' && {
+        tabIndex: 0,
+      })}
       aria-roledescription="carousel"
       className={envisTwMerge(
         `w-full

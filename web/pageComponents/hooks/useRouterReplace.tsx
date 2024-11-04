@@ -34,5 +34,4 @@ const useRouterReplace = () => {
     })
   }
 }
-
 export default useRouterReplace
