@@ -26,7 +26,7 @@ const NewsHeadliner = forwardRef<HTMLLIElement, NewsHeadlinerProps>(function New
           <div className="aspect-video relative max-h-[324px] mb-2">
             {thumbnailUrl ? (
               <img
-                className="relative rounded-xs"
+                className="relative rounded-xs h-full w-full"
                 src={thumbnailUrl}
                 alt=""
                 style={{ objectFit: 'cover' }}
