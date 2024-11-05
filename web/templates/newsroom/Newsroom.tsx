@@ -1,4 +1,4 @@
-import { forwardRef, useRef } from 'react'
+import { forwardRef, useMemo, useRef } from 'react'
 import singletonRouter from 'next/router'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
 import type { NewsRoomPageType } from '../../types'
@@ -130,25 +130,23 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
     },
   }
 
+  const searchClient = useMemo(() => {
+    return isServerRendered
+      ? client({ headers: { 
+      //@ts-ignore: TODO
+        Referer: url } })
+      : client(undefined);
+  }, [isServerRendered, url]);
+  
   return (
     <PaginationContextProvider defaultRef={resultsRef}>
       <Seo seoAndSome={seoAndSome} slug={slug} pageTitle={title} />
       <main ref={ref} className="">
-        <InstantSearch
-          searchClient={
-            isServerRendered
-              ? client({
-                  headers: {
-                    //@ts-ignore: TODO
-                    Referer: url,
-                  },
-                })
-              : client(undefined)
-          }
-          future={{ preserveSharedStateOnUnmount: false }}
-          indexName={indexName}
-          routing={routing}
-        >
+      <InstantSearch
+        searchClient={searchClient}
+        future={{ preserveSharedStateOnUnmount: false }}
+        indexName={indexName}
+        routing={routing}>
           <Configure
             facetingAfterDistinct
             maxFacetHits={50}
