@@ -106,7 +106,7 @@ const ContactEquinorForm = (props: ContactEquinorFormProps) => {
   return (
     <>
       {!isSuccessfullySubmitted && !isServerError && (
-        <div className="pb-6 text-base">
+        <div className="pb-6 text-sm">
           <FormattedMessage id="all_fields_mandatory" defaultMessage="All fields with *  are mandatory" />
         </div>
       )}
@@ -140,10 +140,6 @@ const ContactEquinorForm = (props: ContactEquinorFormProps) => {
                       id: 'contact_form_name',
                       defaultMessage: 'Name',
                     })}*`}
-                    placeholder={intl.formatMessage({
-                      id: 'contact_form_name_placeholder',
-                      defaultMessage: 'Jane Doe',
-                    })}
                     inputRef={ref}
                     aria-required="true"
                     inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}

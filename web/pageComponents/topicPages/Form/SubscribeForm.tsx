@@ -71,7 +71,7 @@ const SubscribeForm = () => {
   return (
     <>
       {!isSuccessfullySubmitted && !isServerError && (
-        <div className="pt-8 pb-6 text-base">
+        <div className="pt-8 pb-6 text-sm">
           <FormattedMessage id="all_fields_mandatory" defaultMessage="All fields with *  are mandatory" />
         </div>
       )}

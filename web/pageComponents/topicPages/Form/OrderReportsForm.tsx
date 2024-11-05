@@ -107,7 +107,7 @@ const OrderReportsForm = () => {
   return (
     <>
       {!isSuccessfullySubmitted && !isServerError && (
-        <div className="pb-6 text-base">
+        <div className="pb-6 text-sm">
           <FormattedMessage id="all_fields_mandatory" defaultMessage="All fields with *  are mandatory" />
         </div>
       )}
@@ -169,10 +169,6 @@ const OrderReportsForm = () => {
                     id: 'order_reports_form_name',
                     defaultMessage: 'Name',
                   })}*`}
-                  placeholder={intl.formatMessage({
-                    id: 'order_reports_form_name_placeholder',
-                    defaultMessage: 'Jane Doe',
-                  })}
                   inputRef={ref}
                   aria-required="true"
                   inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}

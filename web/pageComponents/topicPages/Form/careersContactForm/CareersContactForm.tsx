@@ -6,7 +6,6 @@ import { FormattedMessage, useIntl } from 'react-intl'
 import { FormTextField, Checkbox, FormSelect, FormSubmitSuccessBox, FormSubmitFailureBox } from '@components'
 import { BaseSyntheticEvent, useState } from 'react'
 import FriendlyCaptcha from '../FriendlyCaptcha'
-import styled from 'styled-components'
 import getCatalogType from './getRequestType'
 import { TextField } from '@core/TextField/TextField'
 import { Button } from '@core/Button'
@@ -22,10 +21,6 @@ type FormValues = {
   candidateType: string
   supportingDocuments: string
 }
-
-const StyledCheckBox = styled(Checkbox)`
-  padding-bottom: var(--space-medium);
-`
 
 const CareersContactForm = () => {
   const intl = useIntl()
@@ -92,7 +87,7 @@ const CareersContactForm = () => {
   return (
     <>
       {!isSuccessfullySubmitted && !isServerError && (
-        <div className="pb-6 text-base">
+        <div className="pb-6 text-sm">
           <FormattedMessage id="all_fields_mandatory" defaultMessage="All fields with *  are mandatory" />
         </div>
       )}
@@ -124,10 +119,6 @@ const CareersContactForm = () => {
                     id: 'careers_contact_form_name',
                     defaultMessage: 'Your Name',
                   })}*`}
-                  placeholder={intl.formatMessage({
-                    id: 'careers_contact_form_name_placeholder',
-                    defaultMessage: 'Jane Doe',
-                  })}
                   inputRef={ref}
                   aria-required="true"
                   inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
@@ -363,9 +354,10 @@ const CareersContactForm = () => {
                 />
               )}
             />
-            <StyledCheckBox
+            <Checkbox
+              className="pb-4"
               label={intl.formatMessage({
-                id: 'career_fair_form_supporting_documents',
+                id: 'careers_contact_form_supporting_documents',
                 defaultMessage:
                   'Tick the box if you would like to send supporting documents, and we will get in touch with you',
               })}

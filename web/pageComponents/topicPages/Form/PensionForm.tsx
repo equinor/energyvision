@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Icon } from '@equinor/eds-core-react'
 import { useForm, Controller } from 'react-hook-form'
 import { error_filled } from '@equinor/eds-icons'
@@ -8,6 +7,7 @@ import { BaseSyntheticEvent, useState } from 'react'
 import FriendlyCaptcha from './FriendlyCaptcha'
 import { PensionFormCatalogType } from '../../../types'
 import { Button } from '@core/Button'
+import { TextField } from '@core/TextField/TextField'
 
 type PensionFormValues = {
   name: string
@@ -87,7 +87,7 @@ const PensionForm = () => {
   return (
     <>
       {!isSuccessfullySubmitted && !isServerError && (
-        <div className="pb-6 text-base">
+        <div className="pb-6 text-sm">
           <FormattedMessage id="all_fields_mandatory" defaultMessage="All fields with *  are mandatory" />
         </div>
       )}
@@ -222,7 +222,7 @@ const PensionForm = () => {
               render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => {
                 const { name } = props
                 return (
-                  <FormTextField
+                  <TextField
                     {...props}
                     id={name}
                     placeholder={intl.formatMessage({
