@@ -1,6 +1,5 @@
 import { FormattedDate } from '@components/FormattedDateTime'
 import { forwardRef, HTMLAttributes } from 'react'
-import Img from 'next/image'
 import { BaseLink } from '@core/Link'
 import { Typography } from '@core/Typography'
 import Image, { Ratios } from '../../../pageComponents/shared/SanityImage'
@@ -37,16 +36,14 @@ const NewsItem = forwardRef<HTMLLIElement, NewsListItemProps>(function NewsItem(
           {(heroImage?.image?.asset || fallbackImage || thumbnailUrl) && (
             <>
               {thumbnailUrl ? (
-                <div className="relative rounded-xs">
-                  <Img
-                    src={thumbnailUrl}
-                    alt=""
-                    style={{ objectFit: 'cover' }}
-                    fill
-                    sizes="(max-width: 800px) 100vw, 800px"
-                    role={'presentation'}
-                  />
-                </div>
+                <img
+                  className="relative rounded-xs"
+                  src={thumbnailUrl}
+                  alt=""
+                  style={{ objectFit: 'cover' }}
+                  sizes="(max-width: 800px) 100vw, 800px"
+                  role={'presentation'}
+                />
               ) : (
                 (heroImage?.image?.asset || fallbackImage) && (
                   <Image
