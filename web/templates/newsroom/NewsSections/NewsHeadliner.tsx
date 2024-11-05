@@ -17,12 +17,12 @@ const NewsHeadliner = forwardRef<HTMLLIElement, NewsHeadlinerProps>(function New
   { data, fallbackImage, className = '', ...rest },
   ref,
 ) {
-  const { slug, title, ingress, publishDateTime, heroImage } = data
+  const { slug, title, ingress, publishDateTime, heroImage, thumbnailUrl } = data
 
   return (
     <section ref={ref} {...rest} className={envisTwMerge('', className)}>
       <BaseLink href={slug} className="group flex flex-col gap-2 pb-6">
-        {(heroImage?.image?.asset || fallbackImage) && (
+        {(heroImage?.image?.asset || fallbackImage || thumbnailUrl) && (
           <div className="aspect-video relative max-h-[324px] mb-2">
             {thumbnailUrl ? (
               <img
