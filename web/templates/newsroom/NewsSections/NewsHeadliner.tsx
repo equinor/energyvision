@@ -24,16 +24,29 @@ const NewsHeadliner = forwardRef<HTMLLIElement, NewsHeadlinerProps>(function New
       <BaseLink href={slug} className="group flex flex-col gap-2 pb-6">
         {(heroImage?.image?.asset || fallbackImage) && (
           <div className="aspect-video relative max-h-[324px] mb-2">
-            <Image
-              //@ts-ignore: TODO Fix SanityImage to take SanityImageObject
-              image={heroImage?.image?.asset ? heroImage?.image : fallbackImage}
-              fill
-              priority
-              aspectRatio={Ratios.NINE_TO_SIXTEEN}
-              sizes="(max-width: 800px) 100vw, 1440px"
-              className="rounded-xs"
-              aria-hidden
-            />
+            {thumbnailUrl ? (
+              <img
+                className="relative rounded-xs"
+                src={thumbnailUrl}
+                alt=""
+                style={{ objectFit: 'cover' }}
+                sizes="(max-width: 800px) 100vw, 800px"
+                role={'presentation'}
+              />
+            ) : (
+              (heroImage?.image?.asset || fallbackImage) && (
+                <Image
+                  //@ts-ignore: TODO Fix SanityImage to take SanityImageObject
+                  image={heroImage?.image?.asset ? heroImage?.image : fallbackImage}
+                  aria-hidden
+                  priority
+                  aspectRatio={Ratios.NINE_TO_SIXTEEN}
+                  sizes="(max-width: 800px) 100vw, 800px"
+                  fill
+                  className="rounded-xs"
+                />
+              )
+            )}
           </div>
         )}
         {publishDateTime && (
