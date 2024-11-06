@@ -1,14 +1,14 @@
 import { BackgroundContainer } from '@components'
 import styled from 'styled-components'
 import { Flags } from '../../common/helpers/datasetHelpers'
-import { searchClient } from '../../lib/algolia'
+import { searchClient as createSearchClient } from '../../lib/algolia'
 import { getIsoFromLocale } from '../../lib/localization'
 import type { MagazineIndexPageType } from '../../types'
 import { Hits } from '../searchIndexPages/magazineIndex/Hits'
 import { MagazineTagFilter } from '../searchIndexPages/magazineIndex/MagazineTagFilter'
 import { Pagination } from '../shared/search/pagination/Pagination'
 import { UnpaddedText } from './newsroom/StyledComponents'
-import { useRef } from 'react'
+import { useMemo, useRef } from 'react'
 import usePaginationPadding from '../../lib/hooks/usePaginationPadding'
 import Seo from '../../pageComponents/shared/Seo'
 import { HeroTypes } from '../../types/index'
@@ -23,7 +23,7 @@ import { createInstantSearchRouterNext } from 'react-instantsearch-router-nextjs
 import { PaginationContextProvider } from '../../common/contexts/PaginationContext'
 
 const IngressWrapper = styled.div`
-  max-width: 1186px; /* 1920 - (2 * 367) */
+  max-width: 1186px;
   margin: 0 auto;
 `
 
@@ -73,6 +73,18 @@ const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug, u
 
   const resultsRef = useRef<HTMLDivElement>(null)
 
+  const searchClient = useMemo(() => {
+    return createSearchClient(
+      isServerRendered
+        ? {
+            headers: {
+              Referer: url,
+            },
+          }
+        : undefined
+    )
+  }, [isServerRendered, url])
+
   return (
     <PaginationContextProvider defaultRef={resultsRef}>
       <Seo seoAndSome={seoAndSome} slug={slug} pageTitle={title} />
@@ -92,15 +104,7 @@ const MagazineIndexPage = ({ isServerRendered = false, locale, pageData, slug, u
         </BackgroundContainer>
 
         <InstantSearch
-          searchClient={
-            isServerRendered
-              ? searchClient({
-                  headers: {
-                    Referer: url,
-                  },
-                })
-              : searchClient(undefined)
-          }
+          searchClient={searchClient}
           future={{ preserveSharedStateOnUnmount: false }}
           indexName={indexName}
           routing={{
