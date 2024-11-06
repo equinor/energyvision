@@ -8,10 +8,10 @@ import { newsroomQuery } from '../../lib/queries/newsroom'
 import getIntl from '../../common/helpers/getIntl'
 import { getNameFromLocale, getIsoFromLocale } from '../../lib/localization'
 import { defaultLanguage } from '../../languages'
-import NewsRoomPage from '../../pageComponents/pageTemplates/NewsRoomPage'
 import { AlgoliaIndexPageType, NewsRoomPageType } from '../../types'
 import { getComponentsData } from '../../lib/fetchData'
 import { renderToString } from 'react-dom/server'
+import NewsRoomTemplate from '@templates/newsroom/Newsroom'
 
 export default function NewsRoom({ isServerRendered = false, serverState, data, url }: AlgoliaIndexPageType) {
   const defaultLocale = defaultLanguage.locale
@@ -25,7 +25,7 @@ export default function NewsRoom({ isServerRendered = false, serverState, data, 
         defaultLocale={getIsoFromLocale(defaultLocale)}
         messages={intl?.messages}
       >
-        <NewsRoomPage
+        <NewsRoomTemplate
           isServerRendered={isServerRendered}
           locale={locale}
           pageData={pageData as NewsRoomPageType}
@@ -95,6 +95,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, preview = fa
     preview,
   )
 
+  console.log(JSON.stringify(req.headers))
   const url = new URL(req.headers.referer || `https://${req.headers.host}${req.url}`).toString()
   const serverState = await getServerState(
     <NewsRoom

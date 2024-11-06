@@ -8,9 +8,11 @@ import type {
   SeoData,
   BackgroundColours,
   MenuData,
+  LinkData,
   MagazineCardData,
 } from './index'
 import { PortableTextBlock } from '@portabletext/types'
+import { SanityImageObject } from '@sanity/image-url/lib/types/types'
 
 export type AlgoliaIndexPageType = {
   isServerRendered?: boolean
@@ -25,10 +27,25 @@ export type AlgoliaIndexPageType = {
   }
 }
 
+export type NewsRoomNewsItem = {
+  id: string
+  slug: string
+  title: string
+  publishDateTime?: string
+  firstPublishedAt?: string
+  heroImage: ImageWithCaptionData
+  thumbnailUrl?: string
+  ingress?: string
+}
+
 export type NewsRoomPageType = {
   seoAndSome: SeoData
   title: PortableTextBlock[]
   ingress?: PortableTextBlock[]
+  subscriptionLink?: { slug: string; type: string; lang: string }
+  subscriptionLinkTitle?: string
+  localNewsPages?: LinkData[]
+  fallbackImages?: SanityImageObject[]
 }
 
 export type MagazineIndexPageType = {

@@ -187,6 +187,8 @@ export type TextWithIconItem = {
 export type TextWithIconArrayData = {
   type: string
   id: string
+  title?: PortableTextBlock[]
+  hideTitle?: boolean
   group: TextWithIconItem[]
   designOptions: DesignOptions
 }
@@ -416,7 +418,7 @@ export type IframeCarouselData = {
 export type ContactFormCatalogType = 'humanRightsInformationRequest' | 'loginIssues'
 
 export type CareersContactFormCatalogType = 'suspectedRecruitmentScamRequest' | 'emergingTalentsQueries' | 'others'
-
+export type PensionFormCatalogType=  'pension'|'travelInsurance'|'otherPensionInsuranceRelated';
 export type KeyNumberItemData = {
   type: 'keyNumberItem'
   id: string
@@ -465,4 +467,11 @@ export type AnchorLinkListData = {
     title?: string
     anchorReference?: string
   }[]
+}
+export type ImageForTextData = {
+  type: 'imageForText'
+  id: string
+  image: ImageWithAlt
+  content?: PortableTextBlock[]
+  aspectRatio?: '16:9' | 'fullWidth'
 }

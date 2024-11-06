@@ -10,14 +10,15 @@ export const groups = {
   contactForm: { title: 'Contact form', hidden: !Flags.HAS_CONTACT_EQUINOR_FORM },
   careerContactForm: { title: 'Careers Contact Form', hidden: !Flags.HAS_CAREERS_CONTACT_FORM },
   orderAnnualReportsForm: { title: 'Order annual reports form', hidden: !Flags.HAS_ORDER_REPORT_FORM },
+  pensionForm: { title: 'Pension form', hidden: !Flags.HAS_PENSION_FORM },
   form: { title: 'Form', hidden: !Flags.HAS_FORMS },
   cookie: { title: 'Cookie' },
   others: { title: 'Others' },
 }
 const snippets: textSnippet = {
   country_code_format: {
-    title: 'e.g. +47',
-    defaultValue: 'e.g. +47',
+    title: 'Enter country code with phone number',
+    defaultValue: 'Enter  country code with phone number',
     group: groups.form,
   },
   all_fields_mandatory: {
@@ -81,6 +82,16 @@ const snippets: textSnippet = {
     defaultValue: 'Search',
     group: groups.search,
   },
+  search_quick_search: {
+    title: 'Quick search',
+    defaultValue: 'Quick search',
+    group: groups.search,
+  },
+  search_quick_search_label: {
+    title: 'Quick search label',
+    defaultValue: 'Search among Equinor corporate-level news releases',
+    group: groups.search,
+  },
   search_news_tab: {
     title: 'News tab name',
     defaultValue: 'News',
@@ -114,6 +125,31 @@ const snippets: textSnippet = {
   search_no_results_generic: {
     title: 'No search results, generic',
     defaultValue: 'Sorry, no results were found. Please try again with some different keywords.',
+    group: groups.search,
+  },
+  search_submit: {
+    title: 'Submit search',
+    defaultValue: 'Submit search',
+    group: groups.search,
+  },
+  search_reset: {
+    title: 'Reset',
+    defaultValue: 'Reset',
+    group: groups.search,
+  },
+  search_filter_by: {
+    title: 'Filter by',
+    defaultValue: 'Filter by',
+    group: groups.search,
+  },
+  search_pagination_first_page: {
+    title: 'First page',
+    defaultValue: 'First page',
+    group: groups.search,
+  },
+  search_pagination_last_page: {
+    title: 'Last page',
+    defaultValue: 'Last page',
     group: groups.search,
   },
   copyright: {
@@ -304,6 +340,81 @@ const snippets: textSnippet = {
     defaultValue: 'Submit form',
     group: groups.contactForm,
   },
+  pension_form_name: {
+    title: 'Name',
+    defaultValue: 'Name *',
+    group: groups.pensionForm,
+  },
+  pension_form_name_placeholder: {
+    title: 'Name Placeholder',
+    defaultValue: 'Jane Doe',
+    group: groups.pensionForm,
+  },
+  pension_form_name_validation: {
+    title: 'Name validation',
+    defaultValue: 'Please fill out your name',
+    group: groups.pensionForm,
+  },
+
+  pension_form_email: {
+    title: 'Email',
+    defaultValue: 'Email *',
+    group: groups.pensionForm,
+  },
+  pension_form_email_validation: {
+    title: 'Email validation',
+    defaultValue: 'Please fill out a valid email address',
+    group: groups.pensionForm,
+  },
+  pension_form_category: {
+    title: 'Category',
+    defaultValue: 'Category',
+    group: groups.pensionForm,
+  },
+  pension_form_category_pension: {
+    title: 'Pension Category',
+    defaultValue: 'Pension',
+    group: groups.pensionForm,
+  },
+  pension_form_category_travel_insurance: {
+    title: 'Travel Insurance Category',
+    defaultValue: 'Travel Insurance',
+    group: groups.pensionForm,
+  },
+  pension_form_category_other: {
+    title: 'Other Pension/Insurance Related Category',
+    defaultValue: 'Other Pension/Insurance Related',
+    group: groups.pensionForm,
+  },
+
+  pension_form_what_is_your_request: {
+    title: 'What is your request?',
+    defaultValue: 'What is your request?',
+    group: groups.pensionForm,
+  },
+  pension_form_what_is_your_request_placeholder: {
+    title: `Requests Placeholder`,
+    defaultValue: `Please don't enter any personal information`,
+    group: groups.pensionForm,
+  },
+  pension_form_what_is_your_request_validation: {
+    title: 'Requests Validation',
+    defaultValue: 'Please let us know how we may help you',
+    group: groups.pensionForm,
+  },
+
+  pension_form_submit: {
+    title: 'Submit Button Text',
+    defaultValue: 'Submit Form',
+    group: groups.pensionForm,
+  },
+
+  pension_form_all_fields_mandatory: {
+    title: 'All fields with * are mandatory',
+    defaultValue: 'All fields with * are mandatory',
+    group: groups.pensionForm,
+  },
+
   career_fair_form_organisation: {
     title: 'Organisation',
     defaultValue: 'School / Organisation',
@@ -636,7 +747,7 @@ const snippets: textSnippet = {
   careers_contact_form_supporting_documents: {
     title: 'Supporting Documents checkbox',
     defaultValue: 'Tick the box if you would like to send supporting documents, and we will get in touch with you',
-    group: groups.careerFairForm,
+    group: groups.careerContactForm,
   },
 
   form_sending: {
@@ -684,9 +795,34 @@ const snippets: textSnippet = {
     defaultValue: 'Reopen the form',
     group: groups.form,
   },
+  form_validation_maxChars: {
+    title: 'Max X chars',
+    defaultValue: 'Max {maxChars} characters',
+    group: groups.form,
+  },
+  form_antirobot_validation_required: {
+    title: 'Anti-Robot verification is required',
+    defaultValue: 'Anti-Robot verification is required',
+    group: groups.form,
+  },
   newsroom_topic_filter: {
     title: 'Topic filter heading',
     defaultValue: 'Topic',
+    group: groups.newsroom,
+  },
+  newsroom_filters_label: {
+    title: 'Filters label',
+    defaultValue: 'Filter by:',
+    group: groups.newsroom,
+  },
+  newsroom_filters_selected: {
+    title: 'Selected',
+    defaultValue: 'Selected',
+    group: groups.newsroom,
+  },
+  newsroom_filters_clear_all: {
+    title: 'Clear all',
+    defaultValue: 'Clear all',
     group: groups.newsroom,
   },
   newsroom_country_filter: {
@@ -718,6 +854,16 @@ const snippets: textSnippet = {
   newsroom_no_hits: {
     title: 'No hits',
     defaultValue: 'Your search returned no results',
+    group: groups.newsroom,
+  },
+  newsroom_related_links: {
+    title: 'Related links',
+    defaultValue: 'Related links',
+    group: groups.newsroom,
+  },
+  newsroom_skip_to_news: {
+    title: 'Skip to list of news',
+    defaultValue: 'Skip to list of news',
     group: groups.newsroom,
   },
   magazineindex_list_header: {
@@ -764,6 +910,26 @@ const snippets: textSnippet = {
   switch_to: {
     title: 'Switch to',
     defaultValue: 'Switch to',
+    group: groups.others,
+  },
+  next: {
+    title: 'Next',
+    defaultValue: 'Next',
+    group: groups.others,
+  },
+  previous: {
+    title: 'Previous',
+    defaultValue: 'Previous',
+    group: groups.others,
+  },
+  page: {
+    title: 'Page',
+    defaultValue: 'Page',
+    group: groups.others,
+  },
+  remove: {
+    title: 'Remove',
+    defaultValue: 'Remove',
     group: groups.others,
   },
   filter: {
