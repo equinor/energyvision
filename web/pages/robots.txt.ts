@@ -20,7 +20,7 @@ export const crawlableDomains = [
 
 const robots = (domain: string) => `User-agent: *
 ${crawlableDomains.includes(domain) ? 'Allow' : 'Disallow'}: /
-${domain === 'www.equinor.com' ? 'Disallow: /search \nDisallow: /search.html Disallow: /*?*' : ''}
+${domain === 'www.equinor.com' ? 'Disallow: /search \nDisallow: /search.html \nDisallow: /*?*' : ''}
 Sitemap: ${domain.startsWith('www') ? `https://${domain}` : domain}/sitemap.xml
 `
 
