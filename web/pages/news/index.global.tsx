@@ -95,6 +95,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, preview = fa
     preview,
   )
 
+  console.log(JSON.stringify(req.headers))
   const url = new URL(req.headers.referer || `https://${req.headers.host}${req.url}`).toString()
   const serverState = await getServerState(
     <NewsRoom
