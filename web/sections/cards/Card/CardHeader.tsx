@@ -1,8 +1,8 @@
 import { PortableTextBlock } from '@portabletext/types'
 import { Heading, Typography, TypographyVariants } from '@core/Typography'
 import { forwardRef, HTMLAttributes } from 'react'
-import { twMerge } from 'tailwind-merge'
 import { Variants } from './Card'
+import envisTwMerge from '../../../twMerge'
 
 export type CardHeaderProps = {
   /** Title string content */
@@ -15,9 +15,9 @@ export type CardHeaderProps = {
   titleLevel?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5'
   /* Use together with title level to set level = as and variant different */
   titleVariant?: TypographyVariants
-  /* Override styling on hgroup if eyebrow else merged with titleClassName */
+  /* Override styling on hgroup if eyebrow */
   className?: string
-  /* Override styling on typography element.ClassName can be used if not eyebrow  */
+  /* Override styling on typography element. */
   titleClassName?: string
   /* Shows a paragraph above title in hgroup  */
   eyebrow?: React.ReactNode
@@ -55,7 +55,7 @@ export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(function C
     single: `text-lg leading-planetary`,
   }
 
-  const titleClassNames = twMerge(
+  const titleClassNames = envisTwMerge(
     `group-hover/card:underline
     group-focus-visible/card:underline
     ${variantTitle[variant]}
@@ -67,8 +67,8 @@ export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(function C
   )
 
   return eyebrow ? (
-    <hgroup ref={ref} className={twMerge('w-full text-pretty flex flex-col gap-2', className)} {...rest}>
-      <p className={twMerge(`text-xs font-medium uppercase leading-normal`, eyebrowClassName)}>{eyebrow}</p>
+    <hgroup ref={ref} className={envisTwMerge('w-full text-pretty flex flex-col gap-2', className)} {...rest}>
+      <p className={envisTwMerge(`text-xs font-medium uppercase leading-normal`, eyebrowClassName)}>{eyebrow}</p>
       {title && (
         <Typography
           {...(titleVariant && { as: titleLevel })}

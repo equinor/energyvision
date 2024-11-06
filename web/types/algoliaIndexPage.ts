@@ -9,6 +9,7 @@ import type {
   BackgroundColours,
   MenuData,
   LinkData,
+  MagazineCardData,
 } from './index'
 import { PortableTextBlock } from '@portabletext/types'
 import { SanityImageObject } from '@sanity/image-url/lib/types/types'
@@ -55,8 +56,10 @@ export type MagazineIndexPageType = {
     content: PortableTextBlock[]
     background: BackgroundColours
   }
+  query?: any
+  magazineArticles: MagazineCardData[]
   heroImage: ImageWithCaptionData
   footerComponent?: TeaserData
-  magazineTags: string[]
+  magazineTags: { id: string; title: string; key: string }[]
   background: BackgroundColours
 }

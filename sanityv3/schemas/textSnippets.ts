@@ -355,7 +355,7 @@ const snippets: textSnippet = {
     defaultValue: 'Please fill out your name',
     group: groups.pensionForm,
   },
-  
+
   pension_form_email: {
     title: 'Email',
     defaultValue: 'Email *',
@@ -365,7 +365,7 @@ const snippets: textSnippet = {
     title: 'Email validation',
     defaultValue: 'Please fill out a valid email address',
     group: groups.pensionForm,
-  },  
+  },
   pension_form_category: {
     title: 'Category',
     defaultValue: 'Category',
@@ -386,7 +386,7 @@ const snippets: textSnippet = {
     defaultValue: 'Other Pension/Insurance Related',
     group: groups.pensionForm,
   },
-  
+
   pension_form_what_is_your_request: {
     title: 'What is your request?',
     defaultValue: 'What is your request?',
@@ -402,7 +402,7 @@ const snippets: textSnippet = {
     defaultValue: 'Please let us know how we may help you',
     group: groups.pensionForm,
   },
-  
+
   pension_form_submit: {
     title: 'Submit Button Text',
     defaultValue: 'Submit Form',
@@ -930,6 +930,11 @@ const snippets: textSnippet = {
   remove: {
     title: 'Remove',
     defaultValue: 'Remove',
+    group: groups.others,
+  },
+  filter: {
+    title: 'Filter',
+    defaultValue: 'Filter',
     group: groups.others,
   },
 }

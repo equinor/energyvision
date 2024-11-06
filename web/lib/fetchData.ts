@@ -21,18 +21,14 @@ export const getComponentsData = async (page: { query: string; queryParams: Quer
   return { menuData, pageData, footerData }
 }
 
-type NewsroomQueryParams = {
+export type MagazineQueryParams = {
   lang?: string
-  tags?: string[]
-  countryTags?: string[]
-  years?: string[]
-  index?: number
+  tag?: string | undefined
   lastId?: string
+  lastPublishedAt?: string
 }
-export const getNewsroomData = async (
-  fetchQuery: { query: string; queryParams: NewsroomQueryParams },
-  preview = false,
-) => {
+
+export const getData = async (fetchQuery: { query: string; queryParams: MagazineQueryParams }, preview = false) => {
   const client = getClient(preview)
   try {
     const results = await client.fetch(fetchQuery.query, fetchQuery.queryParams)
