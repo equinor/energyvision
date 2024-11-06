@@ -126,7 +126,7 @@ const ContactEquinorForm = (props: ContactEquinorFormProps) => {
               control={control}
               rules={{
                 required: intl.formatMessage({
-                  id: 'contact_form_name_validation',
+                  id: 'name_validation',
                   defaultMessage: 'Please fill out your name',
                 }),
               }}
@@ -137,7 +137,7 @@ const ContactEquinorForm = (props: ContactEquinorFormProps) => {
                     {...props}
                     id={name}
                     label={`${intl.formatMessage({
-                      id: 'contact_form_name',
+                      id: 'name',
                       defaultMessage: 'Name',
                     })}*`}
                     inputRef={ref}
@@ -154,13 +154,13 @@ const ContactEquinorForm = (props: ContactEquinorFormProps) => {
               control={control}
               rules={{
                 required: intl.formatMessage({
-                  id: 'contact_form_email_validation',
+                  id: 'email_validation',
                   defaultMessage: 'Please fill out a valid email address',
                 }),
                 pattern: {
                   value: /^[\w!#$%&'*+/=?`{|}~^-]+(?:\.[\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}$/g,
                   message: intl.formatMessage({
-                    id: 'contact_form_email_validation',
+                    id: 'email_validation',
                     defaultMessage: 'Please fill out a valid email address',
                   }),
                 },
@@ -172,7 +172,7 @@ const ContactEquinorForm = (props: ContactEquinorFormProps) => {
                     {...props}
                     id={name}
                     label={`${intl.formatMessage({
-                      id: 'contact_form_email',
+                      id: 'email',
                       defaultMessage: 'Email',
                     })}*`}
                     inputRef={ref}
@@ -195,7 +195,7 @@ const ContactEquinorForm = (props: ContactEquinorFormProps) => {
                     selectRef={ref}
                     id={name}
                     disabled={isHumanRightsRequest}
-                    label={intl.formatMessage({ id: 'contact_form_category', defaultMessage: 'Category' })}
+                    label={intl.formatMessage({ id: 'category', defaultMessage: 'Category' })}
                   >
                     <option>
                       {intl.formatMessage({ id: 'contact_form_ask_us', defaultMessage: 'Ask us a question' })}
@@ -254,7 +254,7 @@ const ContactEquinorForm = (props: ContactEquinorFormProps) => {
                     {...props}
                     id={name}
                     description={intl.formatMessage({
-                      id: 'contact_form_how_to_help_placeholder',
+                      id: 'dont_enter_personal_info',
                       defaultMessage: `Please don't enter any personal information`,
                     })}
                     label={`${intl.formatMessage({

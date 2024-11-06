@@ -107,7 +107,7 @@ const CareersContactForm = () => {
               control={control}
               rules={{
                 required: intl.formatMessage({
-                  id: 'careers_contact_form_name_validation',
+                  id: 'name_validation',
                   defaultMessage: 'Please fill out your name',
                 }),
               }}
@@ -116,7 +116,7 @@ const CareersContactForm = () => {
                   {...props}
                   id={props.name}
                   label={`${intl.formatMessage({
-                    id: 'careers_contact_form_name',
+                    id: 'name',
                     defaultMessage: 'Your Name',
                   })}*`}
                   inputRef={ref}
@@ -169,13 +169,13 @@ const CareersContactForm = () => {
               control={control}
               rules={{
                 required: intl.formatMessage({
-                  id: 'careers_contact_form_email_validation',
+                  id: 'email_validation',
                   defaultMessage: 'Please fill out a valid email address',
                 }),
                 pattern: {
                   value: /^[\w!#$%&'*+/=?`{|}~^-]+(?:\.[\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}$/g,
                   message: intl.formatMessage({
-                    id: 'careers_contact_form_email_validation',
+                    id: 'email_validation',
                     defaultMessage: 'Please fill out a valid email address',
                   }),
                 },
@@ -204,7 +204,7 @@ const CareersContactForm = () => {
                   {...props}
                   selectRef={ref}
                   id={props.name}
-                  label={intl.formatMessage({ id: 'careers_contact_form_category', defaultMessage: 'Category' })}
+                  label={intl.formatMessage({ id: 'category', defaultMessage: 'Category' })}
                 >
                   <option>
                     {intl.formatMessage({

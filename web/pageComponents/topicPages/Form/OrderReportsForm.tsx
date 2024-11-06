@@ -157,7 +157,7 @@ const OrderReportsForm = () => {
               control={control}
               rules={{
                 required: intl.formatMessage({
-                  id: 'order_reports_form_name_validation',
+                  id: 'name_validation',
                   defaultMessage: 'Please enter your name',
                 }),
               }}
@@ -166,7 +166,7 @@ const OrderReportsForm = () => {
                   {...props}
                   id={props.name}
                   label={`${intl.formatMessage({
-                    id: 'order_reports_form_name',
+                    id: 'name',
                     defaultMessage: 'Name',
                   })}*`}
                   inputRef={ref}
@@ -182,13 +182,13 @@ const OrderReportsForm = () => {
               control={control}
               rules={{
                 required: intl.formatMessage({
-                  id: 'order_reports_form_email_validation',
+                  id: 'email_validation',
                   defaultMessage: 'Please fill out a valid email address',
                 }),
                 pattern: {
                   value: /^[\w!#$%&'*+/=?`{|}~^-]+(?:\.[\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}$/g,
                   message: intl.formatMessage({
-                    id: 'order_reports_form_email_validation',
+                    id: 'email_validation',
                     defaultMessage: 'Please fill out a valid email address',
                   }),
                 },
@@ -198,7 +198,7 @@ const OrderReportsForm = () => {
                   {...props}
                   id={props.name}
                   label={`${intl.formatMessage({
-                    id: 'order_reports_form_email',
+                    id: 'email',
                     defaultMessage: 'Email',
                   })}*`}
                   inputRef={ref}
