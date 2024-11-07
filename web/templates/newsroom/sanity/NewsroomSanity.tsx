@@ -51,6 +51,7 @@ const NewsRoomTemplateSanity = forwardRef<HTMLElement, NewsRoomTemplateProps>(fu
       newsArticles?.[newsArticles?.length - 1]?.publishDateTime ??
       null,
   )
+
   const [newsList, setNewsList] = useState(newsArticles ?? [])
 
   const setSearchStates = (filteredNews: any) => {
