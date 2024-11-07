@@ -169,10 +169,8 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   useEffect(() => {
     if (accessToken) {
       if (!asset || !asset.href) {
-        console.log('has access token, but not asset, set iframe url to selection widget')
         setIframeURL(getSelectionWidgetURL(accessToken))
       } else {
-        console.log('has access token and asset, set iframe url to export widget')
         setIframeURL(getExportWidgetURL(accessToken, asset.href as string))
       }
     }
@@ -185,6 +183,7 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   }, [accessToken, handleAuthEvent])
 
   useEffect(() => {
+    //should not add listener before access token is present?
     window.addEventListener('message', handleWidgetEvent)
     setContainer(document.createElement('div'))
 
