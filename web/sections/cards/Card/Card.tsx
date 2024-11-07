@@ -5,7 +5,7 @@ import Image, { Ratios } from '../../../pageComponents/shared/SanityImage'
 import { ImageWithAlt } from '../../../types/index'
 import envisTwMerge from '../../../twMerge'
 
-export type Variants = 'primary' | 'secondary' | 'compact' | 'single'
+export type Variants = 'primary' | 'secondary' | 'compact' | 'single' | 'outlined'
 export type CardProps = {
   /** Variant to use
    * @default primary
@@ -47,24 +47,28 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
     secondary: `${commonStyling} rounded-md overflow-hidden`,
     compact: `h-full flex gap-4 min-w-[200px] xl:max-w-[300px] 3xl:max-w-card-maxWidth`,
     single: `grid grid-cols-[40%_1fr] min-h-[450px] shadow-card rounded-sm active:shadow-card-interact`,
+    outlined: 'flex flex-col min-w-card-minWidth md:max-w-card-maxWidth border border-grey-50',
   }
   const variantAspectRatio = {
     primary: Ratios.NINE_TO_SIXTEEN,
     secondary: Ratios.FIVE_TO_FOUR,
     compact: Ratios.FIVE_TO_FOUR,
     single: Ratios.FIVE_TO_FOUR,
+    outlined: Ratios.NINE_TO_SIXTEEN,
   }
   const imageRatio = {
     primary: 'aspect-video',
     secondary: 'aspect-5/4',
     compact: 'aspect-5/4',
     single: '',
+    outlined: 'aspect-video',
   }
   const imageVariantClassNames = {
     primary: `max-md:max-h-[212px]`,
     secondary: `rounded-t-md max-md:max-h-[212px]`,
     compact: 'w-[25vw] h-auto max-md:max-h-[212px] rounded-sm',
     single: 'w-auto h-full',
+    outlined: `max-md:max-h-[212px]`,
   }
 
   return (
