@@ -9,8 +9,10 @@ import { List } from '@core/List'
 import { PaginationContextProvider } from '../../../common/contexts/PaginationContext'
 import NewsSectionsSanity from './NewsSectionsSanity'
 import { stringify } from 'querystring'
+import { useRouter } from 'next/router'
 import { SimplePagination } from '@core/SimplePagination/SimplePagination'
 import NewsSectionsSkeleton from '../NewsSections/NewsSectionsSkeleton'
+import { getNameFromLocale } from '../../../lib/localization'
 
 type NewsRoomTemplateProps = {
   isServerRendered?: boolean
@@ -35,7 +37,8 @@ const NewsRoomTemplateSanity = forwardRef<HTMLElement, NewsRoomTemplateProps>(fu
     fallbackImages,
   } = pageData || {}
   const intl = useIntl()
-
+  const router = useRouter()
+  const { locale } = router
   const resultsRef = useRef<HTMLDivElement>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [lastId, setLastId] = useState(newsArticles?.length > 0 ? newsArticles[newsArticles?.length - 1]?.id : null)
@@ -68,6 +71,7 @@ const NewsRoomTemplateSanity = forwardRef<HTMLElement, NewsRoomTemplateProps>(fu
   const getNextNews = async () => {
     setIsLoading(true)
     const query = {
+      lang: getNameFromLocale(locale),
       lastId: lastId,
       lastPublishedAt: lastPublished,
     }
@@ -86,6 +90,7 @@ const NewsRoomTemplateSanity = forwardRef<HTMLElement, NewsRoomTemplateProps>(fu
   const getPreviousNews = async () => {
     setIsLoading(true)
     const query = {
+      lang: getNameFromLocale(locale),
       lastId: firstId,
       lastPublishedAt: firstPublished,
     }

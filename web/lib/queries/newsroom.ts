@@ -35,7 +35,7 @@ const nextDirectionFilter = /* groq */ `
 `
 
 export const allNewsDocuments = /* groq */ `
-*[_type == "news" && ${sameLang} && ${noDrafts} ] | order(${publishDateTimeQuery} desc)[0...20] {
+*[_type == "news" && ${sameLang} && ${noDrafts} ] | order(${publishDateTimeQuery} desc)[0...30] {
 "id": _id,
 "updatedAt": _updatedAt,
 title,
@@ -58,7 +58,7 @@ export const getNewsArticlesByPage = (hasFirstId = false, hasLastId = false) => 
 *[_type == 'news' && ${sameLang} && ${noDrafts}
   ${hasLastId ? nextDirectionFilter : ''}
   ${hasFirstId ? prevDirectionFilter : ''}
-  ] | order(${publishDateTimeQuery} desc)[0...20]{
+  ] | order(${publishDateTimeQuery} desc)[0...30]{
 "id": _id,
 "updatedAt": _updatedAt,
 "slug": slug.current,
