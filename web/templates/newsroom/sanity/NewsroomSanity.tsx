@@ -51,7 +51,6 @@ const NewsRoomTemplateSanity = forwardRef<HTMLElement, NewsRoomTemplateProps>(fu
   const [newsList, setNewsList] = useState(newsArticles ?? [])
 
   const setSearchStates = (filteredNews: any) => {
-    console.log('set search state', filteredNews)
     setNewsList(filteredNews)
     setFirstId(filteredNews?.length > 0 ? filteredNews[0].id : null)
     setLastId(filteredNews?.length > 0 ? filteredNews[filteredNews.length - 1].id : null)
@@ -73,14 +72,11 @@ const NewsRoomTemplateSanity = forwardRef<HTMLElement, NewsRoomTemplateProps>(fu
       lastPublishedAt: lastPublished,
     }
     const urlParams = stringify(query)
-    console.log('get next news')
     const res = await fetch(`/api/news/next?${urlParams}`)
-    console.log('get news from sanity', res)
     let filteredNews = []
     try {
       const response = await res.json()
       filteredNews = response.news
-      console.log('filteredNews', filteredNews)
     } catch (e) {
       console.log('Error', e)
     }
@@ -94,9 +90,7 @@ const NewsRoomTemplateSanity = forwardRef<HTMLElement, NewsRoomTemplateProps>(fu
       lastPublishedAt: firstPublished,
     }
     const urlParams = stringify(query)
-    console.log('get previous news')
     const res = await fetch(`/api/news/prev?${urlParams}`)
-    console.log('get news from sanity', res)
     let filteredNews = []
     try {
       const response = await res.json()
@@ -108,7 +102,6 @@ const NewsRoomTemplateSanity = forwardRef<HTMLElement, NewsRoomTemplateProps>(fu
     setIsLoading(false)
   }
 
-  console.log('newslist', newsList)
   return (
     <PaginationContextProvider defaultRef={resultsRef}>
       <Seo seoAndSome={seoAndSome} slug={slug} pageTitle={title} />

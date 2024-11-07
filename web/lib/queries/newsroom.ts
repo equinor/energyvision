@@ -27,15 +27,15 @@ export const newsroomQuery = /* groq */ `
 }`
 
 const prevDirectionFilter = /* groq */ `
-&& (coalesce(publishDateTime,firstPublishedAt, _createdAt) < $lastPublishedAt || (coalesce(publishDateTime,firstPublishedAt, _createdAt) == $lastPublishedAt && _id < $lastId))
+&& (${publishDateTimeQuery} > $lastPublishedAt || (${publishDateTimeQuery} == $lastPublishedAt && _id > $lastId))
 `
 
 const nextDirectionFilter = /* groq */ `
-&& (coalesce(publishDateTime,firstPublishedAt, _createdAt) > $lastPublishedAt || (coalesce(publishDateTime,firstPublishedAt, _createdAt) == $lastPublishedAt && _id > $lastId))
+&& (${publishDateTimeQuery} < $lastPublishedAt || (${publishDateTimeQuery} == $lastPublishedAt && _id < $lastId))
 `
 
 export const allNewsDocuments = /* groq */ `
-*[_type == "news" && ${sameLang} && ${noDrafts} ] | order(${publishDateTimeQuery} desc)[0...5] {
+*[_type == "news" && ${sameLang} && ${noDrafts} ] | order(${publishDateTimeQuery} desc)[0...20] {
 "id": _id,
 "updatedAt": _updatedAt,
 title,
@@ -58,7 +58,7 @@ export const getNewsArticlesByPage = (hasFirstId = false, hasLastId = false) => 
 *[_type == 'news' && ${sameLang} && ${noDrafts}
   ${hasLastId ? nextDirectionFilter : ''}
   ${hasFirstId ? prevDirectionFilter : ''}
-  ] | order(${publishDateTimeQuery} desc)[0...5]{
+  ] | order(${publishDateTimeQuery} desc)[0...20]{
 "id": _id,
 "updatedAt": _updatedAt,
 "slug": slug.current,
