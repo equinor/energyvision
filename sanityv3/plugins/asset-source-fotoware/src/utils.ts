@@ -20,6 +20,7 @@ export const getAuthURL = (requestState: string): string | false => {
 }
 
 export const getAccessToken = (): string | false => {
+  console.log('getAccessToken')
   const accessToken = localStorage.getItem('FotowareToken')
 
   if (!accessToken) return false
@@ -43,6 +44,7 @@ type FotowareAuthData = {
 }
 
 export const storeAccessToken = (data: FotowareAuthData): void => {
+  console.log('storeAccessToken', data.access_token)
   const now = Math.floor(new Date().getTime() / 1000.0)
 
   const tokenData = {

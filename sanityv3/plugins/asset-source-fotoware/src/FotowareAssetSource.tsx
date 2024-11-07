@@ -40,9 +40,13 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   const handleAuthEvent = useCallback(
     (event: any) => {
       const validateAuthEvent = () => {
-        if (event.origin !== REDIRECT_ORIGIN) {
+        console.log('handleAuthEvent', event)
+        //the origin here seems to be the studio domain url. for prod this can be the radix url for studio or the equinor.sanity.studio.
+        //For dev this would be localhost or the staging radix studio url.
+        // Is this step necessary?
+        /*         if (event.origin !== REDIRECT_ORIGIN) {
           return handleRequestError(`Invalid event origin: ${event.origin}`, setError, 'auth', newWindow)
-        }
+        } */
 
         if (event.data?.error) {
           const { error, error_description } = event.data
@@ -74,6 +78,7 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
       if (!validateAuthEvent()) return false
 
       storeAccessToken(event.data)
+      console.log('SETTING ACCESSTOKEN, CLOSING CURRENT WINDOW')
       setAccessToken(event.data.access_token)
       newWindow.current.close()
     },
@@ -82,9 +87,11 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
 
   const handleWidgetEvent = useCallback(
     (event: any) => {
+      console.log('handleWidgetEvent', event)
       if (!event || !event.data || event.origin === REDIRECT_ORIGIN) return false
 
       if (event.origin !== TENANT_URL) {
+        console.log('origin is different than tenant')
         console.log('Fotoware: invalid event origin', event.origin)
         return false
       }
@@ -105,6 +112,7 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
         const exportedImage = event.data.export.export
 
         const getBase64 = async (uri: string, source: string) => {
+          console.log('getBase64')
           const url = getExportURL(uri)
           setLoading(true)
 
@@ -161,8 +169,10 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   useEffect(() => {
     if (accessToken) {
       if (!asset || !asset.href) {
+        console.log('has access token, but not asset, set iframe url to selection widget')
         setIframeURL(getSelectionWidgetURL(accessToken))
       } else {
+        console.log('has access token and asset, set iframe url to export widget')
         setIframeURL(getExportWidgetURL(accessToken, asset.href as string))
       }
     }
@@ -236,7 +246,7 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   if (accessToken && iframeURL && !loading) {
     return <FotowareWidget onClose={onClose} url={iframeURL} iframeRef={iframeRef} />
   }
-
+  console.log('has accesstoken', !!accessToken)
   return (
     <Dialog width={0} id="fotowareAssetSource" header="Select image from Fotoware" onClose={onClose} ref={ref}>
       {container && !accessToken && createPortal(props.children, container)}
