@@ -20,9 +20,12 @@ const NewsItemSanity = forwardRef<HTMLLIElement, NewsListItemProps>(function New
   const { slug, title, publishDateTime, heroImage, thumbnailUrl, tags, countryTags } = data || {}
 
   return (
-    <section ref={ref} className={envisTwMerge('border-b border-grey-30', className)} {...rest}>
-      <BaseLink href={slug} className="h-full group grid grid-cols-[60%_30%] justify-between gap-4 lg:gap-6">
-        <div className="flex flex-col py-6">
+    <section ref={ref} className={envisTwMerge('md:border-b md:border-grey-30', className)} {...rest}>
+      <BaseLink
+        href={slug}
+        className="h-full group flex flex-col-reverse md:grid md:grid-cols-[60%_30%] md:justify-between gap-4 lg:gap-6"
+      >
+        <div className="flex flex-col py-2 md:py-6">
           {publishDateTime && (
             <FormattedDate datetime={publishDateTime} uppercase className="text-2xs font-normal leading-normal pb-1" />
           )}
@@ -31,10 +34,10 @@ const NewsItemSanity = forwardRef<HTMLLIElement, NewsListItemProps>(function New
               {title}
             </Typography>
           )}
-          <div className="pb-4 flex gap-3 text-xs divide-x-2 divide-energy-red-100">
+          <div className="pb-4 flex flex-wrap gap-y-4 text-xs divide-x-2 divide-energy-red-100">
             {tags?.map((tag: any, i: number) => {
               return (
-                <span key={tag?.label} className={`inline-block text-grey-60 pl-3 pr-3 first:pl-0`}>
+                <span key={tag?.label} className={`inline-block text-grey-70 pl-3 pr-3 first:pl-0 whitespace-nowrap`}>
                   {tag?.label}
                   {i < tags.length - 1 && <span className="sr-only">,</span>}
                 </span>
@@ -43,7 +46,7 @@ const NewsItemSanity = forwardRef<HTMLLIElement, NewsListItemProps>(function New
             {countryTags?.length > 0 && <span className="sr-only">,</span>}
             {countryTags?.map((country: any, i: number) => {
               return (
-                <span key={country?.label} className="inline-block text-grey-60 pl-3 pr-3 first:pl-0">
+                <span key={country?.label} className="inline-block text-grey-70 pl-3 pr-3 first:pl-0 whitespace-nowrap">
                   {country?.label}
                   {i < countryTags.length - 1 && <span className="sr-only">,</span>}
                 </span>
@@ -51,7 +54,7 @@ const NewsItemSanity = forwardRef<HTMLLIElement, NewsListItemProps>(function New
             })}
           </div>
         </div>
-        <div className=" relative object-cover">
+        <div className="w-full max-md:max-h-[212px] h-full aspect-video md:aspect-auto relative object-cover">
           {(heroImage?.image?.asset || fallbackImage || thumbnailUrl) && (
             <>
               {thumbnailUrl ? (

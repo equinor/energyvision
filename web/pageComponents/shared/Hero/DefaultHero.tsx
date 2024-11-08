@@ -59,12 +59,12 @@ export const DefaultHero = ({ title, image, isBigTitle, bigTitle, tags }: Props)
       {tags && tags?.length > 0 && (
         <div className="px-layout-md pb-12">
           {tags && tags?.length > 0 && (
-            <ul className="flex items-center divide-x-2 divide-energy-red-100">
+            <ul className="flex flex-wrap gap-y-4 divide-x-2 divide-energy-red-100">
               {tags.map((tag: string) => {
                 return (
                   <span
                     key={`magazine_tag_key_${tag}`}
-                    className="inline-block text-sm font-medium pl-3 pr-3 first:pl-0 lg:text-xs"
+                    className="inline-block text-sm font-medium pl-3 pr-3 first:pl-0 lg:text-xs whitespace-nowrap"
                   >
                     {tag}
                   </span>
