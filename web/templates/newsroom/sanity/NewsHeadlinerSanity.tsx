@@ -23,7 +23,7 @@ const NewsHeadlinerSanity = forwardRef<HTMLLIElement, NewsHeadlinerProps>(functi
     <section ref={ref} {...rest} className={envisTwMerge('', className)}>
       <BaseLink href={slug} className="group flex flex-col gap-2 pb-6">
         {(heroImage?.image?.asset || fallbackImage) && (
-          <div className="aspect-video relative max-h-[324px] mb-2">
+          <div className="max-h-[212px] aspect-video md:aspect-video relative md:max-h-[324px] mb-2">
             <Image
               //@ts-ignore: TODO Fix SanityImage to take SanityImageObject
               image={heroImage?.image?.asset ? heroImage?.image : fallbackImage}
@@ -44,10 +44,13 @@ const NewsHeadlinerSanity = forwardRef<HTMLLIElement, NewsHeadlinerProps>(functi
             {title}
           </Typography>
         )}
-        <div className="pb-2 flex gap-3 text-xs divide-x-2 divide-energy-red-100">
+        <div className="pb-2 flex flex-wrap gap-y-4 text-xs divide-x-2 divide-energy-red-100">
           {tags?.map((tag: any, i: number) => {
             return (
-              <span key={tag.label} className=" text-xs inline-block text-grey-60 pl-3 pr-3 first:pl-0">
+              <span
+                key={tag.label}
+                className=" text-xs inline-block text-grey-70 pl-3 pr-3 first:pl-0 whitespace-nowrap"
+              >
                 {tag.label}
                 {i < tags.length - 1 && <span className="sr-only">,</span>}
               </span>
@@ -56,7 +59,7 @@ const NewsHeadlinerSanity = forwardRef<HTMLLIElement, NewsHeadlinerProps>(functi
           {countryTags?.length > 0 && <span className="sr-only">,</span>}
           {countryTags?.map((country: any, i: number) => {
             return (
-              <span key={country.label} className=" inline-block text-grey-60 pl-3 pr-3 first:pl-0">
+              <span key={country.label} className=" inline-block text-grey-70 pl-3 pr-3 first:pl-0 whitespace-nowrap">
                 {country.label}
                 {i < countryTags.length - 1 && <span className="sr-only">,</span>}
               </span>

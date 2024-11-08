@@ -131,7 +131,7 @@ const MagazineRoom = ({ pageData, slug }: MagazineIndexTemplateProps) => {
                 </li>
               ))}
             {!isLoading &&
-              pagedList[page].map((article) => (
+              pagedList?.[page]?.map((article) => (
                 <li key={article.id}>
                   <MagazineCard data={article} />
                 </li>
