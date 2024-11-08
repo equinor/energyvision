@@ -1,6 +1,6 @@
 import { forwardRef, useRef, useState } from 'react'
 import Blocks from '../../../pageComponents/shared/portableText/Blocks'
-import type { NewsRoomPageType } from '../../../types'
+import type { NewsRoomNewsItem, NewsRoomPageType } from '../../../types'
 import { Heading, Typography } from '@core/Typography'
 import { ResourceLink } from '@core/Link'
 import Seo from '../../../pageComponents/shared/Seo'
@@ -51,11 +51,13 @@ const NewsRoomTemplateSanity = forwardRef<HTMLElement, NewsRoomTemplateProps>(fu
       newsArticles?.[newsArticles?.length - 1]?.publishDateTime ??
       null,
   )
-
-  const [newsList, setNewsList] = useState(newsArticles ?? [])
+  const filterCrudeAssays = (list: NewsRoomNewsItem[]) => {
+    return list?.filter((item: NewsRoomNewsItem) => item?.tags?.some((tag: any) => tag.key !== 'crude-oil-assays'))
+  }
+  const [newsList, setNewsList] = useState(filterCrudeAssays(newsArticles) ?? [])
 
   const setSearchStates = (filteredNews: any) => {
-    setNewsList(filteredNews)
+    setNewsList(filterCrudeAssays(filteredNews))
     setFirstId(filteredNews?.length > 0 ? filteredNews[0].id : null)
     setLastId(filteredNews?.length > 0 ? filteredNews[filteredNews.length - 1].id : null)
     setFirstPublished(
