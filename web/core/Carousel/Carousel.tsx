@@ -300,7 +300,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
         return (
           <CarouselIframeItem
             className="pt-lg"
-            key={item.id}
+            key={(item as IFrameCarouselItemData)._key}
             noOfSiblings={items.length}
             displayMode={displayMode}
             aria-label={ariaLabel}
