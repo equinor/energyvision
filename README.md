@@ -75,7 +75,7 @@ Due to compatibility issues, npm is used for the Search Indexers. The reason bei
 
 ## Legacy packages
 
-The `legacy` folder contains packages related to static content from the AEM based equinor.com website and the legacy CSS/JavaScript needed to run this static content. These packages are rarely updated and rely on outdated and/or deprecated dependencies. This causes issues when using a node version higher than node v14 on certain platforms (for example node-sass does not compile). When working on these packages, be sure to switch to node v14 to build the packages.
+The `legacy` folder contains packages related to static content from the AEM-based equinor.com website and the legacy CSS/JavaScript needed to run this static content. These packages are rarely updated and rely on outdated and/or deprecated dependencies. This causes issues when using a node version higher than v14 on certain platforms (for example, `node-sass` does not compile). When working on these packages, be sure to switch to node v14 to build the packages.
 
 The legacy packages are currently excluded from the pnpm workspace (see `pnpm-workspace.yaml`) so will not have their dependencies installed when running `pnpm setup-project` / `pnpm m i` / `pnpm recursive install` from the project root.
 
