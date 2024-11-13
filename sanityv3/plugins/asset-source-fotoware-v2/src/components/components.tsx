@@ -1,10 +1,6 @@
 import { ReactNode, forwardRef } from 'react'
-import { Dialog, Box } from '@sanity/ui'
+import { Dialog, Box, Button } from '@sanity/ui'
 import styled from 'styled-components'
-
-export const Content = styled.div`
-  margin: 1.5em;
-`
 
 const StyledBox = styled(Box)`
   p {
@@ -16,6 +12,9 @@ const StyledBox = styled(Box)`
     padding: 1em;
     white-space: break-spaces;
   }
+`
+export const StyledButton = styled(Button)`
+  width: fit-content;
 `
 
 export const StyledIframe = styled.iframe`
@@ -34,17 +33,7 @@ export const LoadingContent = styled.div`
   grid-gap: 1rem;
 `
 
-/**
- * Yes, the z-index value is ridiculous.
- * Yes, the important! is annoying.
- * Unfortunately, it's the only way to override the default styling and get the desired result.
- */
-export const FullScreenDialog = styled(Dialog)`
-  position: fixed !important;
-  padding: 2rem;
-  background: rgba(0, 0, 0, 0.6);
-  z-index: 99999999 !important;
-`
+export const FullScreenDialog = styled(Dialog)``
 
 type ErrorMessageProps = {
   onClose: any

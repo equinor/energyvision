@@ -8,7 +8,8 @@ import {
   PluginOptions,
   SchemaTypeDefinition,
   Template,
- buildLegacyTheme } from 'sanity'
+  buildLegacyTheme,
+} from 'sanity'
 
 import type {
   InputProps,
@@ -25,7 +26,7 @@ import { initialValueTemplates } from './initialValueTemplates'
 import { CharCounterEditor } from './schemas/components/CharCounterEditor'
 import { DeleteTranslationAction } from './actions/customDelete/DeleteTranslationAction'
 import { documentInternationalization } from '@equinor/document-internationalization'
-import { FotowareAssetSource } from './plugins/asset-source-fotoware'
+import { FotowareAssetSource } from './plugins/asset-source-fotoware-v2'
 import { BrandmasterAssetSource } from './plugins/asset-source-brandmaster'
 import { createCustomPublishAction } from './actions/CustomPublishAction'
 import { dataset, projectId } from './sanity.client'

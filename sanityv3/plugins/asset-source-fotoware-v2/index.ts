@@ -1,5 +1,5 @@
-import FotowarePlugin from './src/FotowareAssetSource'
-import Icon from './src/Icon'
+import FotowarePlugin from './src/components/FotowareAssetSource'
+import Icon from './src/components/Icon'
 import { definePlugin } from 'sanity'
 import type { AssetSource } from 'sanity'
 
