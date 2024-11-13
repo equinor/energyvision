@@ -40,13 +40,9 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   const handleAuthEvent = useCallback(
     (event: any) => {
       const validateAuthEvent = () => {
-        console.log('handleAuthEvent', event)
-        //the origin here seems to be the studio domain url. for prod this can be the radix url for studio or the equinor.sanity.studio.
-        //For dev this would be localhost or the staging radix studio url.
-        // Is this step necessary?
-        /*         if (event.origin !== REDIRECT_ORIGIN) {
+        if (event.origin !== REDIRECT_ORIGIN) {
           return handleRequestError(`Invalid event origin: ${event.origin}`, setError, 'auth', newWindow)
-        } */
+        }
 
         if (event.data?.error) {
           const { error, error_description } = event.data
@@ -78,7 +74,6 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
       if (!validateAuthEvent()) return false
 
       storeAccessToken(event.data)
-      console.log('SETTING ACCESSTOKEN, CLOSING CURRENT WINDOW')
       setAccessToken(event.data.access_token)
       newWindow.current.close()
     },
@@ -87,11 +82,9 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
 
   const handleWidgetEvent = useCallback(
     (event: any) => {
-      console.log('handleWidgetEvent', event)
       if (!event || !event.data || event.origin === REDIRECT_ORIGIN) return false
 
       if (event.origin !== TENANT_URL) {
-        console.log('origin is different than tenant')
         console.log('Fotoware: invalid event origin', event.origin)
         return false
       }

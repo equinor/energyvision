@@ -29,6 +29,9 @@ inputs:
     description: 'Tenant URL for Fotoware application'
     required: true
   fotowareRedirectOrigin:
+    description: 'Redirect Origin for Fotoware auth'
+    required: true
+  fotowareRedirectUri:
     description: 'Redirect URL for Fotoware auth'
     required: true
   fotowareAfExportUrl:
@@ -105,6 +108,7 @@ runs:
           --build-arg ARG_FOTOWARE_CLIENT_ID="${{ inputs.fotowareClientId }}" \
           --build-arg ARG_FOTOWARE_TENANT_URL="${{ inputs.fotowareTenantUrl }}" \
           --build-arg ARG_FOTOWARE_REDIRECT_ORIGIN="${{ inputs.fotowareRedirectOrigin }}" \
+          --build-arg ARG_FOTOWARE_REDIRECT_URI="${{ inputs.fotowareRedirectUri }}" \
           --build-arg ARG_FOTOWARE_AF_EXPORT_URL="${{ inputs.fotowareAfExportUrl }}" \
           --build-arg ARG_FOTOWARE_AF_EXPORT_KEY="${{ inputs.fotowareAfExportKey }}" \
           --build-arg ARG_SCREEN9_ACCOUNT_ID="${{ inputs.screen9accountId }}" \
