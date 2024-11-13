@@ -21,7 +21,6 @@ export const getAuthURL = (requestState: string): string | false => {
 }
 
 export const getAccessToken = (): string | false => {
-  console.log('getAccessToken')
   const accessToken = localStorage.getItem('FotowareToken')
 
   if (!accessToken) return false

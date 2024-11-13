@@ -105,7 +105,6 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
         const exportedImage = event.data.export.export
 
         const getBase64 = async (uri: string, source: string) => {
-          console.log('getBase64')
           const url = getExportURL(uri)
           setLoading(true)
 
@@ -238,7 +237,7 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   if (accessToken && iframeURL && !loading) {
     return <FotowareWidget onClose={onClose} url={iframeURL} iframeRef={iframeRef} />
   }
-  console.log('has accesstoken', !!accessToken)
+
   return (
     <Dialog width={0} id="fotowareAssetSource" header="Select image from Fotoware" onClose={onClose} ref={ref}>
       {container && !accessToken && createPortal(props.children, container)}
