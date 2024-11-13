@@ -31,9 +31,6 @@ inputs:
   fotowareRedirectOrigin:
     description: 'Redirect Origin for Fotoware auth'
     required: true
-  fotowareRedirectUri:
-    description: 'Redirect URL for Fotoware auth'
-    required: true
   fotowareAfExportUrl:
     description: 'Azure Function img export URL'
     required: true

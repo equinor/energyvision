@@ -40,9 +40,9 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   const handleAuthEvent = useCallback(
     (event: any) => {
       const validateAuthEvent = () => {
-        if (event.origin !== REDIRECT_ORIGIN) {
+        /*         if (event.origin !== REDIRECT_ORIGIN) {
           return handleRequestError(`Invalid event origin: ${event.origin}`, setError, 'auth', newWindow)
-        }
+        } */
 
         if (event.data?.error) {
           const { error, error_description } = event.data
