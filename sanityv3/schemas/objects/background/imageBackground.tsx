@@ -33,10 +33,6 @@ export default defineType({
       name: 'useAnimation',
       type: 'boolean',
       description: 'Animates content over the background image.',
-      hidden: ({ parent }: any) => {
-        console.log('parent in image background', parent)
-        return false
-      },
     }),
     defineField({
       title: 'Apply light gradient',
