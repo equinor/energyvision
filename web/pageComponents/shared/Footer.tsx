@@ -2,6 +2,7 @@ import { forwardRef } from 'react'
 import { Facebook, Instagram, Linkedin, Twitter, Youtube } from '../../icons'
 import type { FooterLinkData, SomeType, FooterColumns } from '../../types/index'
 import { default as NextLink } from 'next/link'
+import { BaseLink } from '@core/Link'
 
 function getSomeSvg(someType: SomeType) {
   const iconMap = {
@@ -60,6 +61,25 @@ const Footer = forwardRef<HTMLDivElement, FooterProps>(function Footer({ footerD
             </div>
           </section>
         ))}
+        <section className="flex flex-col max-md:py-4 max-md:w-4/5">
+          <div className="flex flex-col">
+            <BaseLink
+              href="#"
+              onClick={(e) => {
+                e.preventDefault()
+                window.scrollTo({ top: 0, behavior: 'smooth' })
+              }}
+              className="to-top-link relative after:content-[''] 
+              after:absolute after:left-0 after:right-0 after:bottom-[-2px] after:h-[1px] 
+              after:bg-current after:scale-x-0 after:transition-transform after:duration-300 
+              after:ease-in-out hover:after:scale-x-100 text-sm text-white
+            hover:text-moss-green-90 focus-visible:envis-outline px-0 py-1"
+              aria-label="To top"
+            >
+              To top
+            </BaseLink>
+          </div>
+        </section>
       </div>
       <div className="flex md:justify-center justify-start pl-4 pt-12 pb-3">
         <span className="text-2xs text-white-100">Copyright {new Date().getFullYear()} Equinor ASA</span>
