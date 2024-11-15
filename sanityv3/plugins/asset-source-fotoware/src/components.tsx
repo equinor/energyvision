@@ -33,6 +33,17 @@ export const LoadingContent = styled.div`
   gap: 1rem;
   grid-gap: 1rem;
 `
+export const ImageContainer = styled.div`
+  width: 800px;
+  height: auto;
+  position: relative;
+`
+
+export const StyledImage = styled.img`
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+`
 
 /**
  * Yes, the z-index value is ridiculous.

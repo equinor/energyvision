@@ -1,25 +1,21 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { useEffect, useCallback, forwardRef, useState, useRef, useMemo } from 'react'
-import { Card, Dialog, Text, Button, Flex, Box } from '@sanity/ui'
+import { Card, Dialog, Text, Flex, Box, Spinner } from '@sanity/ui'
 import { uuid } from '@sanity/uuid'
 import {
   getAuthURL,
   storeAccessToken,
   getAccessToken,
   checkAuthData,
-  getExportURL,
   HAS_ENV_VARS,
   getSelectionWidgetURL,
-  getExportWidgetURL,
   FotowareEvents,
-  handleRequestError,
   getRenditionURL,
-  parseToken,
 } from '../utils/utils'
-import { ErrorMessage, LoadingContent, FotowareWidget, StyledIframe, StyledButton } from './components'
+import { StyledIframe, StyledButton } from './components'
 import { FWAttributeField, FWAsset } from '../../types'
-import useLocalStorage, { validateToken } from '../hooks/useLocalStorage'
 import { createPortal } from 'react-dom'
+import { ImageContainer, StyledImage } from '../../../asset-source-fotoware/src/components'
 
 const TENANT_URL = process.env.SANITY_STUDIO_FOTOWARE_TENANT_URL
 const REDIRECT_ORIGIN = process.env.SANITY_STUDIO_FOTOWARE_REDIRECT_ORIGIN
@@ -33,6 +29,7 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   const [asset, setAsset] = useState<FWAsset | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [isLogin, setIsLogin] = useState(false)
+  const [showSelectionIframe, setShowSelectionIframe] = useState(false)
   const [loadingText, setLoadingText] = useState('')
   const [hasError, setHasError] = useState(!HAS_ENV_VARS)
   const [errorText, setErrorText] = useState(
@@ -96,6 +93,8 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
         setToken(event.data.access_token)
         console.log('set is login false')
         setIsLogin(false)
+        console.log('set show selection iframe true')
+        setShowSelectionIframe(true)
         console.log('close auth window')
         newWindow.current.close()
       } else {
@@ -179,26 +178,31 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
         onClose()
       }
 
-      if (data.event === 'assetSelected') {
-        setAsset(data.asset)
+      if (data.event === 'assetSelected' && data.asset) {
+        const selectedAsset = data.asset
+        setAsset(selectedAsset)
+        const assetTitle = selectedAsset?.builtinFields.find((item: FWAttributeField) => item.field === 'title')
+        const assetDescription = selectedAsset?.builtinFields.find(
+          (item: FWAttributeField) => item.field === 'description',
+        )
+        const assetId = selectedAsset?.metadata?.[187]?.value
+        const personShownInTheImage = selectedAsset?.metadata?.[368]?.value?.join(', ')
+        const description = assetDescription?.value
+          ? [assetDescription?.value, personShownInTheImage].join('\n')
+          : personShownInTheImage
+
+        const assetExpirationDate = selectedAsset?.metadata?.[428]?.value //valid to date
         console.log('event.data.asset.renditions', event.data.asset.renditions)
         const renditionUrl = event.data.asset.renditions?.find((rendition: any) => rendition.original).href
         console.log('renditionUrl', renditionUrl)
         const asset = getRendition(renditionUrl)
         console.log('downloaded asset', asset)
+        setIsLoading(true)
+        setLoadingText(`Downloading ${assetTitle} from Fotoware... Please hold`)
+        setShowSelectionIframe(false)
 
         //await api rendition download and set
-        /*
-        const assetTitle = asset && asset?.builtinFields.find((item: FWAttributeField) => item.field === 'title')
-        const assetDescription =
-          asset && asset?.builtinFields.find((item: FWAttributeField) => item.field === 'description')
-        const assetId = asset?.metadata?.[187]?.value
-        const personShownInTheImage = asset?.metadata?.[368]?.value?.join(', ')
-        const description = assetDescription?.value
-          ? [assetDescription?.value, personShownInTheImage].join('\n')
-          : personShownInTheImage
-
-        const assetExpirationDate = new Date() // asset?.metadata?.[187]?.value         
+        /*   
 onSelect([
           {
             kind: 'url',
@@ -272,16 +276,16 @@ onSelect([
     }
   }, [handleWidgetEvent])
 
-  console.log('render', isLogin)
   return (
     <Dialog
-      width={1400}
-      height={800}
       id="fotoware_import_dialog"
       header="Import image from Fotoware"
       onClose={onClose}
+      open
+      width={token ? 4 : 1}
+      height={800}
       ref={ref}
-      zOffset={1000}
+      zOffset={9999}
     >
       <Box padding={4}>
         {hasError && (
@@ -295,7 +299,7 @@ onSelect([
           <Flex direction="column" align={'center'} gap={6}>
             {!isLogin && (
               <>
-                <Text align="center" size={[2, 2, 3, 4]}>
+                <Text align="center" size={[2, 2, 3, 3]}>
                   We could not find an access token for Fotoware,
                   <br />
                   please log in below and a new window will open to log you in.
@@ -316,23 +320,24 @@ onSelect([
           </Flex>
         )}
         {isLoading && (
-          <Card padding={[3, 3, 4]} radius={2} shadow={1}>
-            <Text align="center" size={[2, 2, 3, 4]}>
-              {loadingText}
-            </Text>
-          </Card>
+          <Flex direction="column" align={'center'} gap={6}>
+            {asset && asset?.previews && (
+              <ImageContainer>
+                <StyledImage src={`${TENANT_URL}${asset.previews[0]?.href}`} />
+              </ImageContainer>
+            )}
+            <Flex direction="row" align={'center'} gap={6}>
+              <Spinner muted />
+              <Text align="center" size={[2, 2, 3, 4]}>
+                {loadingText}
+              </Text>
+            </Flex>
+          </Flex>
         )}
       </Box>
-      {token && selectionIframeUrl && (
+      {token && selectionIframeUrl && showSelectionIframe && (
         <div ref={selectionContainerRef} id={`selectionIframe-${requestState}`}>
-          <StyledIframe
-            /*             onLoad={() => {
-            setLoadingText(null)
-          }} */
-            width="100%"
-            title="Select assets from Fotoware"
-            src={selectionIframeUrl}
-          />
+          <StyledIframe width="100%" title="Select assets from Fotoware" src={selectionIframeUrl} />
         </div>
       )}
     </Dialog>
