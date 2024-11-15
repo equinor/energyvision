@@ -14,6 +14,7 @@ export const groups = {
   form: { title: 'Form', hidden: !Flags.HAS_FORMS },
   cookie: { title: 'Cookie' },
   others: { title: 'Others' },
+  common: { title: 'Common' },
 }
 const snippets: textSnippet = {
   country_code_format: {
@@ -162,24 +163,9 @@ const snippets: textSnippet = {
     defaultValue: 'Please choose one or more of the following',
     group: groups.subscribeForm,
   },
-  subscribe_form_first_name: {
-    title: 'First name',
-    defaultValue: 'First name',
-    group: groups.subscribeForm,
-  },
-  subscribe_form_name_validation: {
-    title: 'Name validation',
-    defaultValue: 'Please fill out your name',
-    group: groups.subscribeForm,
-  },
   subscribe_form_email: {
     title: 'Email',
     defaultValue: 'Email',
-    group: groups.subscribeForm,
-  },
-  subscribe_form_email_validation: {
-    title: 'Email validation',
-    defaultValue: 'Please fill out a valid email address',
     group: groups.subscribeForm,
   },
   subscribe_form_general_news: {
@@ -255,29 +241,9 @@ const snippets: textSnippet = {
       'Want the full picture? We’d love to share this content with you, but first you must accept {type1}, {type2} and {type3} cookies by enabling them in our cookie settings.',
     group: groups.cookie,
   },
-  contact_form_name: {
-    title: 'Name',
-    defaultValue: 'Name *',
-    group: groups.contactForm,
-  },
-  contact_form_name_placeholder: {
-    title: 'Name Placeholder',
-    defaultValue: 'Jane Doe',
-    group: groups.contactForm,
-  },
   contact_form_email: {
     title: 'Email',
     defaultValue: 'Email *',
-    group: groups.contactForm,
-  },
-  contact_form_name_validation: {
-    title: 'Name validation',
-    defaultValue: 'Please fill out your name',
-    group: groups.contactForm,
-  },
-  contact_form_email_validation: {
-    title: 'Email validation',
-    defaultValue: 'Please fill out a valid email address',
     group: groups.contactForm,
   },
   contact_form_category: {
@@ -288,11 +254,6 @@ const snippets: textSnippet = {
   contact_form_how_to_help: {
     title: 'How can we help you?',
     defaultValue: 'How can we help you?',
-    group: groups.contactForm,
-  },
-  contact_form_how_to_help_placeholder: {
-    title: `Please don't enter any personal information`,
-    defaultValue: `Please don't enter any personal information`,
     group: groups.contactForm,
   },
   contact_form_how_to_help_validation: {
@@ -340,37 +301,6 @@ const snippets: textSnippet = {
     defaultValue: 'Submit form',
     group: groups.contactForm,
   },
-  pension_form_name: {
-    title: 'Name',
-    defaultValue: 'Name *',
-    group: groups.pensionForm,
-  },
-  pension_form_name_placeholder: {
-    title: 'Name Placeholder',
-    defaultValue: 'Jane Doe',
-    group: groups.pensionForm,
-  },
-  pension_form_name_validation: {
-    title: 'Name validation',
-    defaultValue: 'Please fill out your name',
-    group: groups.pensionForm,
-  },
-
-  pension_form_email: {
-    title: 'Email',
-    defaultValue: 'Email *',
-    group: groups.pensionForm,
-  },
-  pension_form_email_validation: {
-    title: 'Email validation',
-    defaultValue: 'Please fill out a valid email address',
-    group: groups.pensionForm,
-  },
-  pension_form_category: {
-    title: 'Category',
-    defaultValue: 'Category',
-    group: groups.pensionForm,
-  },
   pension_form_category_pension: {
     title: 'Pension Category',
     defaultValue: 'Pension',
@@ -386,15 +316,9 @@ const snippets: textSnippet = {
     defaultValue: 'Other Pension/Insurance Related',
     group: groups.pensionForm,
   },
-
   pension_form_what_is_your_request: {
     title: 'What is your request?',
     defaultValue: 'What is your request?',
-    group: groups.pensionForm,
-  },
-  pension_form_what_is_your_request_placeholder: {
-    title: `Requests Placeholder`,
-    defaultValue: `Please don't enter any personal information`,
     group: groups.pensionForm,
   },
   pension_form_what_is_your_request_validation: {
@@ -402,19 +326,11 @@ const snippets: textSnippet = {
     defaultValue: 'Please let us know how we may help you',
     group: groups.pensionForm,
   },
-
   pension_form_submit: {
     title: 'Submit Button Text',
     defaultValue: 'Submit Form',
     group: groups.pensionForm,
   },
-
-  pension_form_all_fields_mandatory: {
-    title: 'All fields with * are mandatory',
-    defaultValue: 'All fields with * are mandatory',
-    group: groups.pensionForm,
-  },
-
   career_fair_form_organisation: {
     title: 'Organisation',
     defaultValue: 'School / Organisation',
@@ -454,11 +370,6 @@ const snippets: textSnippet = {
   career_fair_form_email: {
     title: 'Email',
     defaultValue: 'Email',
-    group: groups.careerFairForm,
-  },
-  career_fair_form_email_validation: {
-    title: 'Email validation',
-    defaultValue: 'Please fill out a valid email address',
     group: groups.careerFairForm,
   },
   career_fair_form_event: {
@@ -512,34 +423,6 @@ const snippets: textSnippet = {
     defaultValue: 'Submit form',
     group: groups.careerFairForm,
   },
-
-  order_reports_form_name: {
-    title: 'Name',
-    defaultValue: 'Name',
-    group: groups.orderAnnualReportsForm,
-  },
-
-  order_reports_form_name_validation: {
-    title: 'Enter name',
-    defaultValue: 'Please enter your name',
-    group: groups.orderAnnualReportsForm,
-  },
-  order_reports_form_name_placeholder: {
-    title: 'Name placeholder',
-    defaultValue: 'Jane Doe',
-    group: groups.orderAnnualReportsForm,
-  },
-
-  order_reports_form_email: {
-    title: 'Email',
-    defaultValue: 'Email',
-    group: groups.orderAnnualReportsForm,
-  },
-  order_reports_form_email_validation: {
-    title: 'Email validation',
-    defaultValue: 'Please fill out a valid email address',
-    group: groups.orderAnnualReportsForm,
-  },
   order_reports_form_company: {
     title: 'Company',
     defaultValue: 'Company',
@@ -590,13 +473,11 @@ const snippets: textSnippet = {
     defaultValue: 'Please enter your country',
     group: groups.orderAnnualReportsForm,
   },
-
   order_reports_form_cta: {
     title: 'CTA',
     defaultValue: 'Order printed copies',
     group: groups.orderAnnualReportsForm,
   },
-
   order_reports_form_choose: {
     title: 'Choose validation',
     defaultValue: 'Please select atleast one of the reports',
@@ -611,37 +492,6 @@ const snippets: textSnippet = {
     title: 'Annual report (norwegian version) option',
     defaultValue: 'Annual report (norwegian version)',
     group: groups.orderAnnualReportsForm,
-  },
-  careers_contact_form_name: {
-    title: 'Name',
-    defaultValue: 'Your Name *',
-    group: groups.careerContactForm,
-  },
-
-  careers_contact_form_name_placeholder: {
-    title: 'Name Placeholder',
-    defaultValue: 'Jane Doe',
-    group: groups.careerContactForm,
-  },
-  careers_contact_form_email: {
-    title: 'Email',
-    defaultValue: 'Email',
-    group: groups.careerContactForm,
-  },
-  careers_contact_form_name_validation: {
-    title: 'Name validation',
-    defaultValue: 'Please fill out your name',
-    group: groups.careerContactForm,
-  },
-  careers_contact_form_email_validation: {
-    title: 'Email validation',
-    defaultValue: 'Please fill out a valid email address',
-    group: groups.careerContactForm,
-  },
-  careers_contact_form_category: {
-    title: 'Category',
-    defaultValue: 'Category',
-    group: groups.careerContactForm,
   },
   careers_contact_form_questions: {
     title: 'Type your questions',
@@ -749,7 +599,6 @@ const snippets: textSnippet = {
     defaultValue: 'Tick the box if you would like to send supporting documents, and we will get in touch with you',
     group: groups.careerContactForm,
   },
-
   form_sending: {
     title: 'Sending...',
     defaultValue: 'Sending...',
@@ -936,6 +785,36 @@ const snippets: textSnippet = {
     title: 'Filter',
     defaultValue: 'Filter',
     group: groups.others,
+  },
+  name: {
+    title: 'Name',
+    defaultValue: 'Name',
+    group: groups.common,
+  },
+  email: {
+    title: 'Email',
+    defaultValue: 'Email',
+    group: groups.common,
+  },
+  category: {
+    title: 'Category',
+    defaultValue: 'Category',
+    group: groups.common,
+  },
+  name_validation: {
+    title: 'Name validation',
+    defaultValue: 'Please fill out your name',
+    group: groups.common,
+  },
+  email_validation: {
+    title: 'Email validation',
+    defaultValue: 'Please fill out a valid email address',
+    group: groups.common,
+  },
+  dont_enter_personal_info: {
+    title: `Please don't enter any personal information`,
+    defaultValue: `Please don't enter any personal information`,
+    group: groups.common,
   },
 }
 
