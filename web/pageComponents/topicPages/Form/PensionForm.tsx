@@ -180,7 +180,7 @@ const PensionForm = () => {
                     selectRef={ref}
                     id={name}
                     label={intl.formatMessage({
-                      id: 'pension_form_category',
+                      id: 'category',
                       defaultMessage: 'Category',
                     })}
                   >
