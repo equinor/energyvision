@@ -7,6 +7,8 @@ import downloadableImageFields from './common/actions/downloadableImageFields'
 import markDefs from './common/blockEditorMarks'
 import { seoAndSomeFields } from './common/seoAndSomeFields'
 import { sameLang, fixPreviewForDrafts, noDrafts } from './common/langAndDrafts'
+import { publishDateTimeQuery } from './common/publishDateTime'
+import background from './common/background'
 
 const footerComponentFields = /* groq */ `
   title,
@@ -15,7 +17,7 @@ const footerComponentFields = /* groq */ `
     ${markDefs},
   },
   "designOptions": {
-    "background": coalesce(background.title, 'White'),
+    ${background},
     "imagePosition": coalesce(imagePosition, 'left'),
   },
   "image": image{
@@ -29,7 +31,11 @@ const footerComponentFields = /* groq */ `
   },
 `
 
-const promotedmagazineTags = /* groq */ `"": *[_type == "magazineIndex" && ${sameLang} && ${noDrafts}][0] {"magazineTags":promotedMagazineTags[]->title[$lang]}`
+const promotedmagazineTags = /* groq */ `"": *[_type == "magazineIndex" && ${sameLang} && ${noDrafts}][0] {"magazineTags":promotedMagazineTags[]->{
+  "id": _id,
+  "key": key.current,
+  "title":title[$lang],
+}}`
 
 export const magazineQuery = /* groq */ `
 *[_type == "magazine" && slug.current == $slug && ${fixPreviewForDrafts}] {
@@ -40,6 +46,7 @@ export const magazineQuery = /* groq */ `
     "hero": ${heroFields},
     "template": _type,
     ${promotedmagazineTags},
+    "tags": magazineTags[]->title[$lang],
     "content": content[] {
           ${pageContentFields}
       },
@@ -65,8 +72,62 @@ export const magazineIndexQuery = /* groq */ `
       },
       "background": coalesce(ingressBackground.title, 'White'),
     },
-    "magazineTags": promotedMagazineTags[]->title[$lang],
+    "magazineTags": promotedMagazineTags[]->{
+      "id": _id,
+      "key": key.current,
+      "title":title[$lang],
+    },
     "footerComponent": footerComponent{
       ${footerComponentFields}
     }
-  }`
+}`
+
+export const allMagazineDocuments = /* groq */ `
+*[_type == "magazine" && ${sameLang} && ${noDrafts} ] | order(${publishDateTimeQuery} desc){
+    "id": _id,
+    "slug": slug.current,
+    title[]{
+    ...,
+    ${markDefs},
+  },
+  "hero": ${heroFields}
+}`
+
+//&& (${publishDateTimeQuery} < $lastPublishedAt || (${publishDateTimeQuery} == $lastPublishedAt && _id < $lastId))
+const prevDirectionFilter = /* groq */ `
+&& (${publishDateTimeQuery} > $lastPublishedAt || (${publishDateTimeQuery} == $lastPublishedAt && _id > $lastId))
+`
+//&& (${publishDateTimeQuery} > $lastPublishedAt || (${publishDateTimeQuery} == $lastPublishedAt && _id > $lastId))
+const nextDirectionFilter = /* groq */ `
+&& (${publishDateTimeQuery} < $lastPublishedAt || (${publishDateTimeQuery} == $lastPublishedAt && _id < $lastId))
+`
+
+export const getMagazineArticlesByTag = (hasFirstId = false, hasLastId = false) => /* groq */ `
+{
+ "tagsParam": *[_type == 'magazineTag'
+                && !(_id in path('drafts.**'))
+                && key.current == $tag]
+                { _id, "key": key.current },
+}{
+  "articles": *[_type == 'magazine' && ${sameLang} && ${noDrafts}
+    && references(^.tagsParam[]._id)
+  ${hasLastId ? nextDirectionFilter : ''}
+  ${hasFirstId ? prevDirectionFilter : ''}
+  ] | order(${publishDateTimeQuery} desc){
+    "id": _id,
+    "slug": slug.current,
+    title[]{
+      ...,
+      ${markDefs},
+    },
+    "hero": ${heroFields}
+  }
+}.articles
+`
+
+export const allMagazineTags = /* groq */ `
+*[_type == "magazineTag" && ${noDrafts}]{
+"id": _id,
+"key": key.current,
+"title":title[$lang],
+}`

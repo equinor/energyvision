@@ -781,6 +781,11 @@ const snippets: textSnippet = {
     defaultValue: 'Remove',
     group: groups.others,
   },
+  filter: {
+    title: 'Filter',
+    defaultValue: 'Filter',
+    group: groups.others,
+  },
   name: {
     title: 'Name',
     defaultValue: 'Name',
