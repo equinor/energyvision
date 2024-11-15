@@ -781,6 +781,11 @@ const snippets: textSnippet = {
     defaultValue: 'Remove',
     group: groups.others,
   },
+  filter: {
+    title: 'Filter',
+    defaultValue: 'Filter',
+    group: groups.others,
+  },
   name: {
     title: 'Name',
     defaultValue: 'Name',
@@ -810,11 +815,6 @@ const snippets: textSnippet = {
     title: `Please don't enter any personal information`,
     defaultValue: `Please don't enter any personal information`,
     group: groups.common,
-  },
-  filter: {
-    title: 'Filter',
-    defaultValue: 'Filter',
-    group: groups.others,
   },
 }
 
