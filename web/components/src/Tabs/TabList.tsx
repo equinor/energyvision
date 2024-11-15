@@ -1,12 +1,15 @@
-import { forwardRef } from 'react'
-import { TabList as CTabList, TabListProps as CTabListProps } from '@chakra-ui/react'
+import { forwardRef } from 'react';
+import * as RadixTabs from '@radix-ui/react-tabs';
 
-export type TabListProps = CTabListProps
+export type TabListProps = RadixTabs.TabsListProps;
 
-export const TabList = forwardRef<HTMLDivElement, TabListProps>(function TabList({ children, ...rest }, ref) {
+export const TabList = forwardRef<HTMLDivElement, TabListProps>(function TabList(
+  { children, ...rest },
+  ref
+) {
   return (
-    <CTabList ref={ref} {...rest} style={{ border: 'none', flexWrap: 'wrap' }}>
+    <RadixTabs.List ref={ref} {...rest}>
       {children}
-    </CTabList>
-  )
-})
+    </RadixTabs.List>
+  );
+});

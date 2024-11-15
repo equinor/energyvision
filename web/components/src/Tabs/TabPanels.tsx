@@ -1,12 +1,15 @@
-import { forwardRef } from 'react'
-import { TabPanels as CTabPanels, TabPanelsProps as CTabPanelsProps } from '@chakra-ui/react'
+import { forwardRef } from 'react';
+import * as RadixTabs from '@radix-ui/react-tabs';
 
-export type TabPanelsProps = CTabPanelsProps
+export type TabPanelsProps = { children: React.ReactNode };
 
-export const TabPanels = forwardRef<HTMLDivElement, TabPanelsProps>(function TabPanels({ children, ...rest }, ref) {
+export const TabPanels = forwardRef<HTMLDivElement, TabPanelsProps>(function TabPanels(
+  { children, ...rest },
+  ref
+) {
   return (
-    <CTabPanels ref={ref} {...rest}>
+    <div ref={ref} {...rest}>
       {children}
-    </CTabPanels>
-  )
-})
+    </div>
+  );
+});

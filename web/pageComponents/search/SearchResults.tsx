@@ -53,14 +53,6 @@ const SearchResults = (props: SearchResultsProps) => {
     }
   }, [userClicked, scopedResults, options, results?.__isArtificial, indexUiState.query, currentRefinement, refine])
 
-  const handleTabChange = (index: number) => {
-    setUserClicked(true)
-    const activeIndex = options[index]
-    if (activeIndex) {
-      refine(activeIndex.value)
-    }
-  }
-
   const getHitProps = (tab: string) => {
     switch (tab) {
       case 'Magazine':
@@ -79,10 +71,10 @@ const SearchResults = (props: SearchResultsProps) => {
     <>
       {hasQuery && (
         <Results ref={resultsRef}>
-          <Tabs index={activeTab || 0} onChange={handleTabChange}>
+          <Tabs >
             <TabList>
               {options.map((item) => (
-                <Tab key={item.label}>
+                <Tab key={item.label} value={item.label}>
                   <TabText>
                     {item.label}
                     <HitsContainer>
@@ -99,7 +91,7 @@ const SearchResults = (props: SearchResultsProps) => {
             </TabList>
             <TabPanels>
               {options.map((it) => (
-                <TabPanel key={it.label}>
+                <TabPanel key={it.label} value={it.label}>
                   <TotalResultsStat hitsPerPage={HITS_PER_PAGE} />
                   <Hits hitComponent={getHitProps(it.label)} />
                 </TabPanel>
