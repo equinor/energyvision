@@ -1,3 +1,4 @@
+import linkSelectorFields from './actions/linkSelectorFields'
 import background from './background'
 
 export const imageCarouselFields = /* groq */ `
@@ -15,8 +16,10 @@ export const imageCarouselFields = /* groq */ `
       delay
     },
     captionPositionUnderImage,
-    link,
-    "designOptions": {
+"action": action[0]{
+${linkSelectorFields},
+},
+  "designOptions": {
      ${background}
     },
 `

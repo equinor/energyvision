@@ -1,8 +1,11 @@
 import envisTwMerge from '../../twMerge'
 import Image from '../../pageComponents/shared/SanityImage'
-import { ImageWithAlt, ImageWithCaptionData } from '../../types/index'
+import { ImageWithAlt, ImageWithCaptionData, LinkData } from '../../types/index'
 import { DisplayModes } from './Carousel'
 import { forwardRef, HTMLAttributes } from 'react'
+import { ButtonLink } from '@core/Link'
+import { getUrlFromAction } from '../../common/helpers/getUrlFromAction'
+import { getLocaleFromName } from '../../lib/localization'
 
 type CarouselImageItemProps = {
   image?: ImageWithAlt | ImageWithCaptionData
@@ -13,11 +16,11 @@ type CarouselImageItemProps = {
   attribution?: string
   active?: boolean
   captionPositionUnderImage?: boolean
-  link?: string
+  action?: LinkData
 } & HTMLAttributes<HTMLLIElement>
 
 export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProps>(function CarouselImageItem(
-  { active = false, image, caption, attribution, displayMode = 'single', className = '', link, captionPositionUnderImage, ...rest },
+  { active = false, image, caption, attribution, displayMode = 'single', className = '', action, captionPositionUnderImage, ...rest },
   ref,
 ) {
   return (
@@ -68,6 +71,18 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
               {attribution && <span className="text-sm">{attribution}</span>}
             </div>
           </figcaption>
+        
+          {action && action.label && (
+          <ButtonLink
+            href={getUrlFromAction(action) || ''}
+            aria-label={action?.ariaLabel}
+            variant="outlined-secondary"
+            className={`w-full md:mb-8 mb-4 justify-center mt-xl `}
+            locale={action?.type === 'internalUrl' ? getLocaleFromName(action?.link?.lang) : undefined}
+          >
+            {action.label}
+          </ButtonLink>
+        )}
         </figure>
       ) : (
         <Image maxWidth={1420} image={image as ImageWithAlt} fill className="rounded-md" />
@@ -75,3 +90,4 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
     </li>
   )
 })
+

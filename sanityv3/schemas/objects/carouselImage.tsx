@@ -28,7 +28,7 @@ export default {
     initialValue: false,
   },
     {
-      name: 'link',
+      name: 'action',
       title: 'Link',
       type: 'linkSelector',
       description: 'Optional link associated with the image.',
