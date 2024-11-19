@@ -14,6 +14,8 @@ export const imageCarouselFields = /* groq */ `
       autoplay,
       delay
     },
+    captionPositionUnderImage,
+    link,
     "designOptions": {
      ${background}
     },

@@ -12,10 +12,12 @@ type CarouselImageItemProps = {
   caption?: string
   attribution?: string
   active?: boolean
+  captionPositionUnderImage?: boolean
+  link?: string
 } & HTMLAttributes<HTMLLIElement>
 
 export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProps>(function CarouselImageItem(
-  { active = false, image, caption, attribution, displayMode = 'single', className = '', ...rest },
+  { active = false, image, caption, attribution, displayMode = 'single', className = '', link, captionPositionUnderImage, ...rest },
   ref,
 ) {
   return (
