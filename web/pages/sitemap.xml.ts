@@ -56,7 +56,7 @@ const getSitemapIndex = (domain: string, locales: string[]) =>
     </sitemapindex>`
 
 export const getServerSideProps: GetServerSideProps = async ({ query, req, res }) => {
-  let locale = ''
+  const locale = String(query?.lang || defaultLanguage.locale)
   let paths: PathType[]
   let domain = String(req.headers.host)
 
@@ -69,8 +69,6 @@ export const getServerSideProps: GetServerSideProps = async ({ query, req, res }
   domain = domain.startsWith('www') ? `https://${domain}` : domain
 
   const locales = languages.map((lang) => lang.locale)
-
-  const isMultilanguage = locales.length > 1
 
   const routeSlugs = await getRoutePaths(locales)
   const newsSlugs = Flags.HAS_NEWS ? await getNewsPaths(locales) : []
@@ -90,31 +88,20 @@ export const getServerSideProps: GetServerSideProps = async ({ query, req, res }
     ...(archivedNewsSlugs as PathType[]),
   ]
 
-  if (isMultilanguage) {
-    locale = String(query?.lang)
-    paths = allSlugs.filter((route) => route.locale === locale)
+  if (locale && locales.includes(locale)) {
+    paths = allSlugs.filter((route) => route.locale === locale || !route.locale)
+
+    const sitemap = getSitemapUrls(domain, paths)
+
+    res.setHeader('Content-Type', 'text/xml')
+    res.write(sitemap)
+    res.end()
   } else {
-    locale = defaultLanguage.locale
-    paths = allSlugs
-  }
-
-  const shouldFetchUrls = !isMultilanguage || locales.includes(locale)
-
-  if (!shouldFetchUrls) {
+    // Serve the sitemap index
     res.setHeader('Content-Type', 'text/xml')
     res.write(getSitemapIndex(domain, locales))
     res.end()
-
-    return {
-      props: {},
-    }
   }
-
-  const sitemap = getSitemapUrls(domain, paths)
-
-  res.setHeader('Content-Type', 'text/xml')
-  res.write(sitemap)
-  res.end()
 
   return {
     props: {},
