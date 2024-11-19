@@ -25,6 +25,7 @@ import fullWidthVideo from './objects/fullWidthVideo'
 import iframe from './objects/iframe'
 import imageWithAlt from './objects/imageWithAlt'
 import imageWithAltAndCaption from './objects/imageWithAltAndCaption'
+import carouselImage from './objects/carouselImage'
 import largeTable from './objects/largeTable'
 import linkSelector from './objects/linkSelector'
 import menuGroup from './objects/menuGroup'
@@ -139,6 +140,7 @@ const RemainingSchemas = [
   internalServerError,
   imageWithAlt,
   imageWithAltAndCaption,
+  carouselImage,
   pullQuote,
   factbox,
   relatedLinks,
