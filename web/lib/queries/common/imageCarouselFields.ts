@@ -8,7 +8,8 @@ export const imageCarouselFields = /* groq */ `
     hideTitle,
     items[] {
     "id": _key,
-    ...
+    ...,
+    captionPositionUnderImage,
     },
     "options": {
       autoplay,

@@ -19,6 +19,9 @@ const ImageCarousel = forwardRef<HTMLUListElement, ImageCarouselProps>(function 
   const { background } = designOptions
   const headingId = useId()
 
+
+  console.log('ImageCarousel', { items })
+
   return (
     <BackgroundContainer background={background} id={anchor} className={envisTwMerge(`pb-page-content`, className)}>
       {((title && !hideTitle) || ingress) && (
@@ -36,7 +39,9 @@ const ImageCarousel = forwardRef<HTMLUListElement, ImageCarouselProps>(function 
       )}
       <Carousel
         ref={ref}
-        items={items}
+        items={items.map((item) => ({
+          ...item,
+        }))}
         displayMode={items?.length < 3 ? 'scroll' : 'single'}
         variant="image"
         hasSectionTitle={title && !hideTitle}

@@ -50,6 +50,7 @@ type CarouselProps = {
   autoRotation?: boolean
   hasSectionTitle?: boolean
   title?: PortableTextBlock[]
+  captionPositionUnderImage?: boolean
 } & Omit<HTMLAttributes<HTMLDivElement>, 'title'>
 
 const TRANSLATE_X_AMOUNT_LG = 1000
@@ -245,9 +246,9 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
   }
 
   const getCarouselItem = (item: CarouselItemTypes, i: number) => {
-    const ariaLabel = `${i + 1} of ${items?.length}`
+    const ariaLabel = `${i + 1} of ${items?.length}`;
     switch (variant) {
-      case 'video':
+      case 'video': {
         return (
           <CarouselVideoItem
             key={item.id}
@@ -256,25 +257,49 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
             aria-label={ariaLabel}
             active={i === currentIndex}
           />
-        )
-      case 'image':
+        );
+      }
+      case 'image': {
+        const { caption, attribution, captionPositionUnderImage } = item as ImageCarouselItem;
         return (
-          <CarouselImageItem
-            key={item.id}
-            {...(item as ImageCarouselItem)}
-            displayMode={displayMode}
-            aria-label={ariaLabel}
-            active={i === currentIndex}
-            {...(variant === 'image' &&
-              displayMode === 'single' && {
-                style: {
-                  transform: `translate3d(${itemsXPositions[i]}px, 0px, 0px)`,
-                },
-                onFocus: () => cancelTimeout(),
-              })}
-          />
-        )
-      case 'event':
+          <>
+            <CarouselImageItem
+              key={item.id}
+              {...(item as ImageCarouselItem)}
+              displayMode={displayMode}
+              aria-label={ariaLabel}
+              active={i === currentIndex}
+              {...(variant === 'image' &&
+                displayMode === 'single' && {
+                  style: {
+                    transform: `translate3d(${itemsXPositions[i]}px, 0px, 0px)`,
+                  },
+                  onFocus: () => cancelTimeout(),
+                })}
+            />
+            {captionPositionUnderImage && (caption || attribution) ? (
+              <figcaption
+                className={envisTwMerge(
+                  `${i === currentIndex ? 'block' : 'hidden'} `,
+                  ' bottom-0',
+                )}
+              >
+                <div
+                  className={`bg-spruce-wood-70/75 text-slate-80 px-8 pt-6 w-fit flex flex-col max-w-xl ${
+                    attribution ? 'pb-4' : 'pb-6'
+                  }`}
+                >
+                  {caption && <span className={`text-sm ${attribution ? 'pb-3' : ''}`}>{caption}</span>}
+                  {attribution && <span className="text-xs">{attribution}</span>}
+                </div>
+              </figcaption>
+            ) : (
+              ''
+            )}
+          </>
+        );
+      }
+      case 'event': {
         return (
           <CarouselEventItem
             key={item.id}
@@ -284,8 +309,9 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
             active={i === currentIndex}
             hasSectionTitle={hasSectionTitle}
           />
-        )
-      case 'keyNumber':
+        );
+      }
+      case 'keyNumber': {
         return (
           <CarouselKeyNumberItem
             key={item.id}
@@ -295,8 +321,9 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
             active={i === currentIndex}
             hasSectionTitle={hasSectionTitle}
           />
-        )
-      case 'iframe':
+        );
+      }
+      case 'iframe': {
         return (
           <CarouselIframeItem
             className="pt-lg"
@@ -313,9 +340,13 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
             cookiePolicy={(item as IFrameCarouselItemData).cookiePolicy}
             aspectRatio={(item as IFrameCarouselItemData).aspectRatio}
           />
-        )
+        );
+      }
+      default: {
+        return null;
+      }
     }
-  }
+  };
 
   return (
     <CarouselTag

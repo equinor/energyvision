@@ -5,6 +5,7 @@ import { PortableTextBlock } from '@portabletext/types'
 export type CaptionData = {
   attribution?: string
   caption?: string
+  captionPositionUnderImage?: boolean
 }
 
 export type ImageWithAlt = {
@@ -22,6 +23,7 @@ export type ImageWithCaptionData = {
   _key?: string
   image: ImageWithAlt
   asset: SanityImageObject
+  captionPositionUnderImage?: boolean
 } & CaptionData
 
 export type ImageBackground = {
@@ -65,4 +67,5 @@ export type ImageCarouselData = {
 
 export type ImageCarouselItem = {
   id: string
+  captionPositionUnderImage?: boolean
 } & ImageWithCaptionData

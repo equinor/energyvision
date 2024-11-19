@@ -12,12 +12,14 @@ type CarouselImageItemProps = {
   caption?: string
   attribution?: string
   active?: boolean
+  captionPositionUnderImage?: boolean
 } & HTMLAttributes<HTMLLIElement>
 
 export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProps>(function CarouselImageItem(
-  { active = false, image, caption, attribution, displayMode = 'single', className = '', ...rest },
+  { active = false, image, caption, attribution, displayMode = 'single', className = '', captionPositionUnderImage,  ...rest },
   ref,
 ) {
+  console.log('CarouselImageItem', {caption, captionPositionUnderImage })
   return (
     <li
       {...rest}
@@ -49,7 +51,7 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
         className,
       )}
     >
-      {caption || attribution ? (
+      {!captionPositionUnderImage && (caption || attribution) ? (
         <figure className="relative w-full h-full">
           <Image maxWidth={1420} image={image as ImageWithAlt} fill className="rounded-md" />
           <figcaption

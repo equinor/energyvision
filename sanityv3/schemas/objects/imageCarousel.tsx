@@ -5,6 +5,7 @@ import { library_image } from '@equinor/eds-icons'
 import blocksToText from '../../helpers/blocksToText'
 import type { Rule } from 'sanity'
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
+import { getImageWithAltAndCaptionFields } from './imageWithAltAndCaption'
 
 const titleContentType = configureTitleBlockContent()
 const ingressBlockContentType = configureBlockContent({
@@ -56,7 +57,7 @@ export default {
       type: 'boolean',
       name: 'hideTitle',
       title: 'Hide title',
-      description: 'Hides the title, but screen readers will read title of carousel',
+      description: 'Hides the title, but screen readers will read the title of the carousel.',
     },
     {
       name: 'ingress',
@@ -71,13 +72,34 @@ export default {
       name: 'items',
       description: 'Add images for the carousel',
       title: 'Carousel items',
-      of: [{ type: 'imageWithAltAndCaption' }],
+      of: [
+        {
+          type: 'object',
+          name: 'imageWithAltAndCaption',
+          title: 'Image with Alt and Caption',
+          fields: getImageWithAltAndCaptionFields(true),
+          preview: {
+            select: {
+              imageUrl: 'image.asset.url',
+              alt: 'image.alt',
+              caption: 'caption',
+            },
+            prepare({ imageUrl, caption, alt }: { imageUrl: string; alt: string; caption: string }) {
+              return {
+                title: alt || 'No alt text',
+                subtitle: caption || 'No caption provided',
+                media: imageUrl ? <img src={imageUrl} alt={alt || ''} style={{ height: '100%' }} /> : null,
+              }
+            },
+          },
+        },
+      ],
       validation: (Rule: Rule) => Rule.required().min(2),
     },
     {
       type: 'number',
       name: 'delay',
-      title: 'Delay( Not in use anymore )',
+      title: 'Delay (Not in use anymore)',
       description: 'Time in seconds that an image should be visible for before transitioning to the next.',
       initialValue: 3,
       fieldset: 'carouselOptions',
