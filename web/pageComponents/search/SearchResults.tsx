@@ -1,6 +1,5 @@
-import { Tabs } from '@components'
-import { RefObject, useEffect, useState, useContext } from 'react'
-import styled from 'styled-components'
+import { Tabs } from '@core/Tabs'
+import { RefObject, useEffect, useState } from 'react'
 import EventHit from './EventHit'
 import Hits from './Hits'
 import MagazineHit from './MagazineHit'
@@ -9,17 +8,7 @@ import TopicHit from './TopicHit'
 import TotalResultsStat from './TotalResultsStat'
 import { useSortBy, UseSortByProps, useHits, useInstantSearch } from 'react-instantsearch'
 
-const Results = styled.div`
-  margin-top: var(--space-xLarge);
-`
-
-const TabText = styled.span`
-  font-size: var(--typeScale-05);
-`
-const HitsContainer = styled.span`
-  margin-left: var(--space-4);
-`
-const { Tab, TabList, TabPanel, TabPanels } = Tabs
+const { TabList, Tab, TabPanel } = Tabs
 
 // Sven: I don't understand how we can revieve this number, it's configured
 // in the Configure component, so how could we get it from there
@@ -70,35 +59,31 @@ const SearchResults = (props: SearchResultsProps) => {
   return (
     <>
       {hasQuery && (
-        <Results ref={resultsRef}>
-          <Tabs >
+        <div ref={resultsRef} className="dark mt-10">
+          <Tabs value={options[activeTab].label || options[0].label}>
             <TabList>
               {options.map((item) => (
-                <Tab key={item.label} value={item.label}>
-                  <TabText>
-                    {item.label}
-                    <HitsContainer>
-                      (
-                      {
-                        scopedResults.find((it) => it.indexId === item.value && it.indexId === it.results?.index)
-                          ?.results?.nbHits
-                      }
-                      )
-                    </HitsContainer>
-                  </TabText>
+                <Tab key={item.label} value={item.label} className="text-sm flex gap-2">
+                  {item.label}
+                  <span>
+                    (
+                    {
+                      scopedResults.find((it) => it.indexId === item.value && it.indexId === it.results?.index)?.results
+                        ?.nbHits
+                    }
+                    )
+                  </span>
                 </Tab>
               ))}
             </TabList>
-            <TabPanels>
-              {options.map((it) => (
-                <TabPanel key={it.label} value={it.label}>
-                  <TotalResultsStat hitsPerPage={HITS_PER_PAGE} />
-                  <Hits hitComponent={getHitProps(it.label)} />
-                </TabPanel>
-              ))}
-            </TabPanels>
+            {options.map((it) => (
+              <TabPanel key={it.label} value={it.label}>
+                <TotalResultsStat hitsPerPage={HITS_PER_PAGE} />
+                <Hits hitComponent={getHitProps(it.label)} />
+              </TabPanel>
+            ))}
           </Tabs>
-        </Results>
+        </div>
       )}
     </>
   )
