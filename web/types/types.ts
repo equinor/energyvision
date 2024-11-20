@@ -417,8 +417,12 @@ export type IframeCarouselData = {
 
 export type ContactFormCatalogType = 'humanRightsInformationRequest' | 'loginIssues'
 
-export type CareersContactFormCatalogType = 'suspectedRecruitmentScamRequest' | 'emergingTalentsQueries' | 'others'
-export type PensionFormCatalogType=  'pension'|'travelInsurance'|'otherPensionInsuranceRelated';
+export type CareersContactFormCatalogType =
+  | 'suspectedRecruitmentScamRequest'
+  | 'onboarding'
+  | 'emergingTalentsQueries'
+  | 'others'
+export type PensionFormCatalogType = 'pension' | 'travelInsurance' | 'otherPensionInsuranceRelated'
 export type KeyNumberItemData = {
   type: 'keyNumberItem'
   id: string

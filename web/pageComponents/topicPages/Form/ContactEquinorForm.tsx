@@ -63,10 +63,7 @@ const ContactEquinorForm = (props: ContactEquinorFormProps) => {
             id: 'contact_form_human_rights_information_request',
             defaultMessage: 'Human Rights Information Request',
           })
-        : intl.formatMessage({
-            id: 'contact_form_ask_us',
-            defaultMessage: 'Ask us a question',
-          }),
+        : '',
     },
   })
 
@@ -197,6 +194,12 @@ const ContactEquinorForm = (props: ContactEquinorFormProps) => {
                     disabled={isHumanRightsRequest}
                     label={intl.formatMessage({ id: 'category', defaultMessage: 'Category' })}
                   >
+                    <option value="">
+                      {intl.formatMessage({
+                        id: 'form_please_select_an_option',
+                        defaultMessage: 'Please select an option',
+                      })}
+                    </option>
                     <option>
                       {intl.formatMessage({ id: 'contact_form_ask_us', defaultMessage: 'Ask us a question' })}
                     </option>
