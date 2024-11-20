@@ -208,7 +208,7 @@ const CareerFairForm = () => {
                   {...props}
                   id={props.name}
                   label={intl.formatMessage({
-                    id: 'career_fair_form_email',
+                    id: 'email',
                     defaultMessage: 'Email',
                   })}
                   inputRef={ref}

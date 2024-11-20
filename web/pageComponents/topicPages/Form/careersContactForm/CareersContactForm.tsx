@@ -185,7 +185,7 @@ const CareersContactForm = () => {
                   {...props}
                   id={props.name}
                   label={intl.formatMessage({
-                    id: 'careers_contact_form_email',
+                    id: 'email',
                     defaultMessage: 'Email',
                   })}
                   inputRef={ref}
