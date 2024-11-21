@@ -48,6 +48,8 @@ const CareersContactForm = () => {
       candidateType: '',
       supportingDocuments: '',
     },
+    mode: 'onBlur',
+    reValidateMode: 'onBlur',
   })
 
   const watchCategory = useWatch({
@@ -67,21 +69,21 @@ const CareersContactForm = () => {
 
   const onSubmit = async (data: FormValues, event?: BaseSyntheticEvent) => {
     data.preferredLang = intl.locale
-    /*     if (isFriendlyChallengeDone) { */
-    const res = await fetch('/api/forms/service-now-careers-contact', {
-      body: JSON.stringify({
-        data,
-        frcCaptchaSolution: (event?.target as any)['frc-captcha-solution'].value,
-        catalogType: getCatalogType(intl, data.category, data.candidateType),
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      method: 'POST',
-    })
-    setSuccessfullySubmitted(res.status == 200)
-    setServerError(res.status != 200)
-    /*     } else {
+    if (isFriendlyChallengeDone) {
+      const res = await fetch('/api/forms/service-now-careers-contact', {
+        body: JSON.stringify({
+          data,
+          frcCaptchaSolution: (event?.target as any)['frc-captcha-solution'].value,
+          catalogType: getCatalogType(intl, data.category, data.candidateType),
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        method: 'POST',
+      })
+      setSuccessfullySubmitted(res.status == 200)
+      setServerError(res.status != 200)
+    } else {
       //@ts-ignore: TODO: types
       setError('root.notCompletedCaptcha', {
         type: 'custom',
@@ -90,7 +92,7 @@ const CareersContactForm = () => {
           defaultMessage: 'Anti-Robot verification is required',
         }),
       })
-    } */
+    }
   }
 
   return (
@@ -255,11 +257,14 @@ const CareersContactForm = () => {
               rules={{
                 validate: {
                   require: (value) => {
-                    if (!value && setPositionIdMandatory)
+                    console.log('value', value)
+                    if (!value && setPositionIdMandatory) {
+                      console.log('not validated required field')
                       return intl.formatMessage({
                         id: 'careers_contact_form_positionId_validation',
                         defaultMessage: 'Please enter a position ID or name ',
                       })
+                    }
                     return true
                   },
                 },
