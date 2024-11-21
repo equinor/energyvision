@@ -255,7 +255,6 @@ const CareersContactForm = () => {
               rules={{
                 validate: {
                   require: (value) => {
-                    console.log('value', value)
                     if (!value && setPositionIdMandatory) {
                       console.log('not validated required field')
                       return intl.formatMessage({
