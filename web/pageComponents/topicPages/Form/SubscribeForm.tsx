@@ -93,6 +93,7 @@ const SubscribeForm = () => {
                     id="subscribe_form_choose"
                     defaultMessage="Please choose one or more of the following"
                   />
+                  *
                 </legend>
               )}
               {errors.categories && (
