@@ -163,11 +163,6 @@ const snippets: textSnippet = {
     defaultValue: 'Please choose one or more of the following',
     group: groups.subscribeForm,
   },
-  subscribe_form_email: {
-    title: 'Email',
-    defaultValue: 'Email',
-    group: groups.subscribeForm,
-  },
   subscribe_form_general_news: {
     title: 'General News',
     defaultValue: 'General News',
@@ -241,11 +236,6 @@ const snippets: textSnippet = {
       'Want the full picture? We’d love to share this content with you, but first you must accept {type1}, {type2} and {type3} cookies by enabling them in our cookie settings.',
     group: groups.cookie,
   },
-  contact_form_email: {
-    title: 'Email',
-    defaultValue: 'Email *',
-    group: groups.contactForm,
-  },
   contact_form_category: {
     title: 'Category',
     defaultValue: 'Category',
@@ -303,6 +293,11 @@ const snippets: textSnippet = {
   },
   pension_form_category_pension: {
     title: 'Pension Category',
+    defaultValue: 'Pension',
+    group: groups.pensionForm,
+  }, 
+  pension_form_select_topic: {
+    title: 'Default Pension Category',
     defaultValue: 'Pension',
     group: groups.pensionForm,
   },
@@ -365,11 +360,6 @@ const snippets: textSnippet = {
   career_fair_form_phone_validation: {
     title: 'Phone Number validation',
     defaultValue: 'Please enter your phone number',
-    group: groups.careerFairForm,
-  },
-  career_fair_form_email: {
-    title: 'Email',
-    defaultValue: 'Email',
     group: groups.careerFairForm,
   },
   career_fair_form_event: {

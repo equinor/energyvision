@@ -184,10 +184,10 @@ const CareersContactForm = () => {
                 <FormTextField
                   {...props}
                   id={props.name}
-                  label={intl.formatMessage({
-                    id: 'careers_contact_form_email',
+                  label={`${intl.formatMessage({
+                    id: 'email',
                     defaultMessage: 'Email',
-                  })}
+                  })}*`}
                   inputRef={ref}
                   inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
                   helperText={error?.message}
