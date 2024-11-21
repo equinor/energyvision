@@ -48,8 +48,6 @@ const CareersContactForm = () => {
       candidateType: '',
       supportingDocuments: '',
     },
-    mode: 'onBlur',
-    reValidateMode: 'onBlur',
   })
 
   const watchCategory = useWatch({
