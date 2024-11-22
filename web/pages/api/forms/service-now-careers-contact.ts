@@ -8,7 +8,7 @@ const getCatalogIdentifier = (catalogType: CareersContactFormCatalogType | null)
     case 'suspectedRecruitmentScamRequest':
       return 'b04a9748832d8610347af830feaad382'
     case 'onboarding':
-      return '3Dae5a5e8dc3a58250f77b32fe05013191'
+      return '3D59e02ac8375a3640615af01643990e7c'
     case 'emergingTalentsQueries':
       return '3971e24c375a3640615af01643990ebf'
     default:
