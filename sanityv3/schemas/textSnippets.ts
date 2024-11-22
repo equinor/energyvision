@@ -493,9 +493,9 @@ const snippets: textSnippet = {
     defaultValue: 'Location',
     group: groups.careerContactForm,
   },
-  careers_contact_form_thesis_writing: {
-    title: 'Thesis writing',
-    defaultValue: 'Thesis writing',
+  careers_contact_form_onboarding: {
+    title: 'Onboarding',
+    defaultValue: 'Onboarding',
     group: groups.careerContactForm,
   },
   careers_contact_form_questions_related_to_position: {
@@ -521,6 +521,11 @@ const snippets: textSnippet = {
   careers_contact_form_phone_validation: {
     title: 'Phone Number validation',
     defaultValue: 'Please enter your phone number',
+    group: groups.careerContactForm,
+  },
+  careers_contact_form_positionId_validation: {
+    title: 'Position ID validation',
+    defaultValue: 'Please enter a position ID or name',
     group: groups.careerContactForm,
   },
   careers_contact_form_phone_placeholder: {
@@ -592,6 +597,11 @@ const snippets: textSnippet = {
   form_sending: {
     title: 'Sending...',
     defaultValue: 'Sending...',
+    group: groups.form,
+  },
+  form_please_select_an_option: {
+    title: 'Please select an option',
+    defaultValue: 'Please select an option',
     group: groups.form,
   },
   form_failure_title: {

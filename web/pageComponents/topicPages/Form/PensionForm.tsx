@@ -79,7 +79,7 @@ const PensionForm = () => {
       name: '',
       email: '',
       phone: '',
-      pensionCategory: intl.formatMessage({ id: 'pension_form_select_topic', defaultMessage: 'Select topic' }),
+      pensionCategory: '',
       requests: '',
     },
   })
@@ -185,7 +185,10 @@ const PensionForm = () => {
                     })}
                   >
                     <option value="">
-                      {intl.formatMessage({ id: 'pension_form_select_topic', defaultMessage: 'Select topic' })}
+                      {intl.formatMessage({
+                        id: 'form_please_select_an_option',
+                        defaultMessage: 'Please select an option',
+                      })}
                     </option>
                     <option value="pension">
                       {intl.formatMessage({ id: 'pension_form_category_pension', defaultMessage: 'Pension' })}
