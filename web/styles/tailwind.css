@@ -4,18 +4,18 @@
 @import './components/videojs.css';
 @import 'tailwindcss/utilities';
 
-:root {
-  /* Image carousel card withs */
-  --image-carousel-card-w-sm: 275px;
-  --image-carousel-card-w-md: 692px;
-  --image-carousel-card-w-lg: 980px;
-
-  /* Modal */
-  --modal-transition-duration: 0.4s;
-  --modal-transition-easing: cubic-bezier(0.45, 0, 0.55, 1);
-}
-
 @layer base {
+  :root {
+    /* Image carousel card withs */
+    --image-carousel-card-w-sm: 275px;
+    --image-carousel-card-w-md: 692px;
+    --image-carousel-card-w-lg: 980px;
+
+    /* Modal */
+    --modal-transition-duration: 0.4s;
+    --modal-transition-easing: cubic-bezier(0.45, 0, 0.55, 1);
+  }
+
   p,
   h1,
   h2,
@@ -37,6 +37,19 @@
 }
 
 @layer components {
+  .clickbound-area {
+    @apply before:cursor-pointer 
+    before:content-[''] 
+    before:absolute 
+    before:w-[48px]
+    before:aspect-square
+    before:top-1/2
+    before:left-1/2
+    before:translate-y-[-50%]
+    before:translate-x-[-50%]
+    before:rounded-[100%];
+  }
+
   article {
     counter-reset: footnotes;
   }
@@ -167,6 +180,10 @@
   .black-center-gradient {
     background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4));
   }
+  .black-blue-center-gradient {
+    background-image: linear-gradient(theme('colors.slate-blue.95 / 50%'), theme('colors.slate-blue.95 / 50%')),
+      linear-gradient(rgba(0, 0, 0, 0.36), rgba(0, 0, 0, 0.36));
+  }
   .black-to-top-gradient {
     background-image: linear-gradient(
       to top,
@@ -232,6 +249,23 @@
       .bd-blurred[open]::backdrop {
         @apply backdrop-blur-none bg-transparent;
       }
+    }
+  }
+
+  @supports (scrollbar-color: auto) {
+    .scrolltrack-transparent {
+      scrollbar-color: rgba(0, 0, 0, 0);
+    }
+  }
+  @supports selector(::-webkit-scrollbar) {
+    .transparent-v-scrollbar::-webkit-scrollbar {
+      @apply bg-white-100 dark:bg-transparent w-3;
+    }
+    .transparent-v-scrollbar::-webkit-scrollbar-track {
+      @apply bg-white-100 dark:bg-transparent;
+    }
+    .transparent-v-scrollbar::-webkit-scrollbar-thumb {
+      @apply w-[2px] bg-grey-40 hover:bg-grey-70 dark:bg-white-100 dark:hover:bg-white-100/70 rounded-lg;
     }
   }
 }

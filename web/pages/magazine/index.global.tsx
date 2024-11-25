@@ -1,38 +1,28 @@
 import { GetServerSideProps } from 'next'
-import { InstantSearchSSRProvider, getServerState } from 'react-instantsearch'
 import type { AppProps } from 'next/app'
 import { IntlProvider } from 'react-intl'
 import Footer from '../../pageComponents/shared/Footer'
 import Header from '../../pageComponents/shared/Header'
-import { magazineIndexQuery } from '../../lib/queries/magazine'
+import { allMagazineDocuments, getMagazineArticlesByTag, magazineIndexQuery } from '../../lib/queries/magazine'
 import getIntl from '../../common/helpers/getIntl'
 import { getNameFromLocale, getIsoFromLocale } from '../../lib/localization'
 import { defaultLanguage } from '../../languages'
-import MagazineIndexPage from '../../pageComponents/pageTemplates/MagazineIndexPage'
 import { AlgoliaIndexPageType, MagazineIndexPageType } from '../../types'
-import { getComponentsData } from '../../lib/fetchData'
-import { renderToString } from 'react-dom/server'
+import { getComponentsData, getData, MagazineQueryParams } from '../../lib/fetchData'
+import MagazineRoom from '../../templates/magazine/Magazineroom'
 
-export default function MagazineIndex({ isServerRendered = false, serverState, data, url }: AlgoliaIndexPageType) {
+export default function MagazineIndex({ data }: AlgoliaIndexPageType) {
   const defaultLocale = defaultLanguage.locale
   const { pageData, slug, intl } = data
   const locale = intl?.locale || defaultLocale
   return (
-    <InstantSearchSSRProvider {...serverState}>
-      <IntlProvider
-        locale={getIsoFromLocale(locale)}
-        defaultLocale={getIsoFromLocale(defaultLocale)}
-        messages={intl?.messages}
-      >
-        <MagazineIndexPage
-          isServerRendered={isServerRendered}
-          locale={locale}
-          pageData={pageData as MagazineIndexPageType}
-          slug={slug}
-          url={url}
-        />
-      </IntlProvider>
-    </InstantSearchSSRProvider>
+    <IntlProvider
+      locale={getIsoFromLocale(locale)}
+      defaultLocale={getIsoFromLocale(defaultLocale)}
+      messages={intl?.messages}
+    >
+      <MagazineRoom pageData={pageData as MagazineIndexPageType} slug={slug} />
+    </IntlProvider>
   )
 }
 
@@ -56,6 +46,9 @@ MagazineIndex.getLayout = (page: AppProps) => {
       defaultLocale={getIsoFromLocale(defaultLocale)}
       messages={data?.intl?.messages}
     >
+      {/*
+       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore */}
       <>
         <Header slugs={slugs} menuData={data?.menuData} />
         {page}
@@ -65,7 +58,7 @@ MagazineIndex.getLayout = (page: AppProps) => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ req, preview = false, locale = 'en' }) => {
+export const getServerSideProps: GetServerSideProps = async ({ req, preview = false, locale = 'en', query }) => {
   if (locale !== 'en') {
     return {
       notFound: true,
@@ -75,7 +68,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, preview = fa
   const lang = getNameFromLocale(locale)
   const intl = await getIntl(locale, false)
 
-  const queryParams = {
+  let queryParams: MagazineQueryParams = {
     lang,
   }
 
@@ -89,29 +82,38 @@ export const getServerSideProps: GetServerSideProps = async ({ req, preview = fa
     preview,
   )
 
-  const url = new URL(req.headers.referer || `https://${req.headers.host}${req.url}`).toString()
-  const serverState = await getServerState(
-    <MagazineIndex
-      isServerRendered
-      data={{
-        intl,
-        pageData,
-        slug,
-      }}
-      url={url}
-    />,
-    { renderToString },
-  )
+  let magazineList = []
+  if (query?.tag) {
+    queryParams = {
+      ...queryParams,
+      tag: query.tag as string,
+    }
+    const magazineGroq = getMagazineArticlesByTag(false, false)
+    const { data } = await getData({
+      query: magazineGroq,
+      queryParams,
+    })
+
+    magazineList = data
+  } else {
+    const { data } = await getData({
+      query: allMagazineDocuments,
+      queryParams,
+    })
+    magazineList = data
+  }
 
   return {
     props: {
-      serverState,
-      url,
       data: {
         menuData,
         footerData,
         intl,
-        pageData,
+        pageData: {
+          ...pageData,
+          magazineArticles: magazineList,
+          query,
+        },
         slug,
       },
     },

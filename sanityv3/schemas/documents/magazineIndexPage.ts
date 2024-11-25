@@ -1,12 +1,17 @@
 import blocksToText from '../../helpers/blocksToText'
 import { configureBlockContent } from '../editors/blockContentType'
+import CompactBlockEditor from '../components/CompactBlockEditor'
 import MagazineFooterComponent from '../objects/magazineFooterComponent'
-import sharedHeroFields from './header/sharedHeaderFields'
 import { EdsIcon } from '../../icons'
 import { bookmarks } from '@equinor/eds-icons'
 
 import type { PortableTextBlock, Rule } from 'sanity'
 import { lang } from './langField'
+import { HeroTypes } from '../HeroTypes'
+import { configureTitleBlockContent } from '../editors'
+import { ValidationContext } from '../../types/schemaTypes'
+
+const titleContentType = configureTitleBlockContent()
 
 const textContentType = configureBlockContent({
   h2: true,
@@ -53,7 +58,60 @@ export default {
       description: 'You can override the hero image as the SoMe image by uploading another image here.',
       fieldset: 'metadata',
     },
-    ...sharedHeroFields,
+    {
+      name: 'title',
+      type: 'array',
+      title: 'Title',
+      components: {
+        input: CompactBlockEditor,
+      },
+      of: [titleContentType],
+      fieldset: 'header',
+      validation: (Rule: Rule) => Rule.required(),
+    },
+    {
+      title: 'Type',
+      name: 'heroType',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Default', value: HeroTypes.DEFAULT },
+          { title: 'Full Image', value: HeroTypes.FULL_WIDTH_IMAGE },
+          { title: 'Background image', value: HeroTypes.BACKGROUND_IMAGE },
+        ].filter((e) => e),
+      },
+      initialValue: 'default',
+      fieldset: 'header',
+    },
+    {
+      title: 'Hero image',
+      name: 'heroFigure',
+      type: 'imageWithAltAndCaption',
+      fieldset: 'header',
+    },
+    {
+      title: 'Hero image ratio',
+      name: 'heroRatio',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Tall', value: 'tall' },
+          { title: '2:1(deprecated)', value: '0.5' },
+          { title: 'Narrow', value: 'narrow' },
+        ],
+      },
+      hidden: ({ parent }: DocumentType) => {
+        return parent?.heroType !== HeroTypes.FULL_WIDTH_IMAGE
+      },
+      validation: (Rule: Rule) =>
+        Rule.custom((value: string, context: ValidationContext) => {
+          const { parent } = context as unknown as DocumentType
+          if (parent?.heroType === HeroTypes.FULL_WIDTH_IMAGE && !value) return 'Field is required'
+          return true
+        }),
+      initialValue: '0.5',
+      fieldset: 'header',
+    },
     {
       title: 'Text',
       name: 'ingress',

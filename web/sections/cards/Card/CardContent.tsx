@@ -41,8 +41,7 @@ export const CardContent = forwardRef<HTMLDivElement, CardContentProps>(function
     single: 'self-end mt-auto max-lg:hidden',
   }
   const iconClassNames = twMerge(
-    `
-    size-arrow-right
+    `size-arrow-right
     text-energy-red-100
     mr-2
     group-hover/card:translate-x-2

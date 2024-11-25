@@ -1,12 +1,13 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Icon } from '@equinor/eds-core-react'
 import { useForm, Controller } from 'react-hook-form'
 import { error_filled } from '@equinor/eds-icons'
 import { FormattedMessage, useIntl } from 'react-intl'
-import { FormButton, FormTextField, FormSelect, FormSubmitSuccessBox, FormSubmitFailureBox } from '@components'
+import { FormTextField, FormSelect, FormSubmitSuccessBox, FormSubmitFailureBox } from '@components'
 import { BaseSyntheticEvent, useState } from 'react'
 import FriendlyCaptcha from './FriendlyCaptcha'
 import { ContactFormCatalogType } from '../../../types'
+import { Button } from '@core/Button'
+import { TextField } from '@core/TextField/TextField'
 
 type ContactEquinorFormProps = {
   isHumanRightsRequest?: boolean
@@ -21,30 +22,9 @@ type FormValues = {
 const ContactEquinorForm = (props: ContactEquinorFormProps) => {
   const intl = useIntl()
   const { isHumanRightsRequest } = props
-  const [submitButtonEnabled, setSubmitButtonEnabled] = useState(false)
   const [isServerError, setServerError] = useState(false)
+  const [isFriendlyChallengeDone, setIsFriendlyChallengeDone] = useState(false)
   const [isSuccessfullySubmitted, setSuccessfullySubmitted] = useState(false)
-  const onSubmit = async (data: FormValues, event?: BaseSyntheticEvent) => {
-    const res = await fetch('/api/forms/service-now-contact-us', {
-      body: JSON.stringify({
-        data,
-        frcCaptchaSolution: (event?.target as any)['frc-captcha-solution'].value,
-        isHumanRightsInformationRequest: data.category.includes(
-          intl.formatMessage({
-            id: 'contact_form_human_rights_information_request',
-            defaultMessage: 'Human Rights Information Request',
-          }),
-        ),
-        catalogType: getCatalog(data.category),
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      method: 'POST',
-    })
-    setServerError(res.status != 200)
-    setSuccessfullySubmitted(res.status == 200)
-  }
 
   const getCatalog = (category: string): ContactFormCatalogType | null => {
     if (
@@ -67,12 +47,12 @@ const ContactEquinorForm = (props: ContactEquinorFormProps) => {
       return 'loginIssues'
     else return null
   }
-
   const {
     handleSubmit,
     control,
     reset,
-    formState: { isSubmitted, isSubmitting, isSubmitSuccessful },
+    setError,
+    formState: { errors, isSubmitted, isSubmitting, isSubmitSuccessful },
   } = useForm({
     defaultValues: {
       name: '',
@@ -89,15 +69,55 @@ const ContactEquinorForm = (props: ContactEquinorFormProps) => {
           }),
     },
   })
+
+  const onSubmit = async (data: FormValues, event?: BaseSyntheticEvent) => {
+    if (isFriendlyChallengeDone) {
+      const res = await fetch('/api/forms/service-now-contact-us', {
+        body: JSON.stringify({
+          data,
+          frcCaptchaSolution: (event?.target as any)['frc-captcha-solution'].value,
+          isHumanRightsInformationRequest: data.category.includes(
+            intl.formatMessage({
+              id: 'contact_form_human_rights_information_request',
+              defaultMessage: 'Human Rights Information Request',
+            }),
+          ),
+          catalogType: getCatalog(data.category),
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        method: 'POST',
+      })
+      setServerError(res.status != 200)
+      setSuccessfullySubmitted(res.status == 200)
+    } else {
+      //@ts-ignore: TODO: types
+      setError('root.notCompletedCaptcha', {
+        type: 'custom',
+        message: intl.formatMessage({
+          id: 'form_antirobot_validation_required',
+          defaultMessage: 'Anti-Robot verification is required',
+        }),
+      })
+    }
+  }
+
   return (
     <>
+      {!isSuccessfullySubmitted && !isServerError && (
+        <div className="pb-6 text-sm">
+          <FormattedMessage id="all_fields_mandatory" defaultMessage="All fields with *  are mandatory" />
+        </div>
+      )}
       <form
         onSubmit={handleSubmit(onSubmit)}
         onReset={() => {
           reset()
-          setSubmitButtonEnabled(false)
+          setIsFriendlyChallengeDone(false)
           setSuccessfullySubmitted(false)
         }}
+        className="flex flex-col gap-12"
       >
         {!isSuccessfullySubmitted && !isServerError && (
           <>
@@ -106,7 +126,7 @@ const ContactEquinorForm = (props: ContactEquinorFormProps) => {
               control={control}
               rules={{
                 required: intl.formatMessage({
-                  id: 'contact_form_name_validation',
+                  id: 'name_validation',
                   defaultMessage: 'Please fill out your name',
                 }),
               }}
@@ -116,14 +136,10 @@ const ContactEquinorForm = (props: ContactEquinorFormProps) => {
                   <FormTextField
                     {...props}
                     id={name}
-                    label={intl.formatMessage({
-                      id: 'contact_form_name',
+                    label={`${intl.formatMessage({
+                      id: 'name',
                       defaultMessage: 'Name',
-                    })}
-                    placeholder={intl.formatMessage({
-                      id: 'contact_form_name_placeholder',
-                      defaultMessage: 'Jane Doe',
-                    })}
+                    })}*`}
                     inputRef={ref}
                     aria-required="true"
                     inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
@@ -138,13 +154,13 @@ const ContactEquinorForm = (props: ContactEquinorFormProps) => {
               control={control}
               rules={{
                 required: intl.formatMessage({
-                  id: 'contact_form_email_validation',
+                  id: 'email_validation',
                   defaultMessage: 'Please fill out a valid email address',
                 }),
                 pattern: {
                   value: /^[\w!#$%&'*+/=?`{|}~^-]+(?:\.[\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}$/g,
                   message: intl.formatMessage({
-                    id: 'contact_form_email_validation',
+                    id: 'email_validation',
                     defaultMessage: 'Please fill out a valid email address',
                   }),
                 },
@@ -155,10 +171,10 @@ const ContactEquinorForm = (props: ContactEquinorFormProps) => {
                   <FormTextField
                     {...props}
                     id={name}
-                    label={intl.formatMessage({
-                      id: 'contact_form_email',
+                    label={`${intl.formatMessage({
+                      id: 'email',
                       defaultMessage: 'Email',
-                    })}
+                    })}*`}
                     inputRef={ref}
                     inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
                     helperText={error?.message}
@@ -179,7 +195,7 @@ const ContactEquinorForm = (props: ContactEquinorFormProps) => {
                     selectRef={ref}
                     id={name}
                     disabled={isHumanRightsRequest}
-                    label={intl.formatMessage({ id: 'contact_form_category', defaultMessage: 'Category' })}
+                    label={intl.formatMessage({ id: 'category', defaultMessage: 'Category' })}
                   >
                     <option>
                       {intl.formatMessage({ id: 'contact_form_ask_us', defaultMessage: 'Ask us a question' })}
@@ -234,17 +250,17 @@ const ContactEquinorForm = (props: ContactEquinorFormProps) => {
               render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => {
                 const { name } = props
                 return (
-                  <FormTextField
+                  <TextField
                     {...props}
                     id={name}
-                    placeholder={intl.formatMessage({
-                      id: 'contact_form_how_to_help_placeholder',
+                    description={intl.formatMessage({
+                      id: 'dont_enter_personal_info',
                       defaultMessage: `Please don't enter any personal information`,
                     })}
-                    label={intl.formatMessage({
+                    label={`${intl.formatMessage({
                       id: 'contact_form_how_to_help',
                       defaultMessage: 'How can we help you?',
-                    })}
+                    })}*`}
                     inputRef={ref}
                     multiline
                     rowsMax={10}
@@ -256,25 +272,32 @@ const ContactEquinorForm = (props: ContactEquinorFormProps) => {
                 )
               }}
             />
-            <div className="pb-4 text-xs italic">
-              <FormattedMessage id="all_fields_mandatory" defaultMessage="All fields with *  are mandatory" />
+            <div className="flex flex-col gap-2">
+              <FriendlyCaptcha
+                doneCallback={() => {
+                  setIsFriendlyChallengeDone(true)
+                }}
+                errorCallback={(error: any) => {
+                  console.error('FriendlyCaptcha encountered an error', error)
+                  setIsFriendlyChallengeDone(true)
+                }}
+              />
+              {/*@ts-ignore: TODO: types*/}
+              {errors?.root?.notCompletedCaptcha && (
+                <p role="alert" className="text-clear-red-100 flex gap-2 font-semibold">
+                  {/*@ts-ignore: TODO: types*/}
+                  <span className="mt-1">{errors.root.notCompletedCaptcha.message}</span>
+                  <Icon data={error_filled} aria-hidden="true" />
+                </p>
+              )}
             </div>
-            <FriendlyCaptcha
-              doneCallback={() => {
-                setSubmitButtonEnabled(true)
-              }}
-              errorCallback={(error: any) => {
-                console.error('FriendlyCaptcha encountered an error', error)
-                setSubmitButtonEnabled(true)
-              }}
-            />
-            <FormButton type="submit" disabled={!submitButtonEnabled}>
+            <Button type="submit">
               {isSubmitting ? (
                 <FormattedMessage id="form_sending" defaultMessage={'Sending...'}></FormattedMessage>
               ) : (
                 <FormattedMessage id="contact_form_cta" defaultMessage="Submit Form" />
               )}
-            </FormButton>
+            </Button>
           </>
         )}
         {isSubmitSuccessful && !isServerError && <FormSubmitSuccessBox type="reset" />}
@@ -284,7 +307,6 @@ const ContactEquinorForm = (props: ContactEquinorFormProps) => {
             onClick={() => {
               reset(undefined, { keepValues: true })
               setServerError(false)
-              setSubmitButtonEnabled(false)
             }}
           />
         )}
