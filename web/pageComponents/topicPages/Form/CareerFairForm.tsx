@@ -41,10 +41,7 @@ const CareerFairForm = () => {
       email: '',
       contactPerson: '',
       phone: '',
-      event: intl.formatMessage({
-        id: 'career_fair_form_invite_career_fair',
-        defaultMessage: 'Invite Equinor to a career fair or student event',
-      }),
+      event: '',
       eventDescription: '',
       website: '',
       supportingDocuments: '',
@@ -112,10 +109,10 @@ const CareerFairForm = () => {
                 <FormTextField
                   {...props}
                   id={props.name}
-                  label={intl.formatMessage({
+                  label={`${intl.formatMessage({
                     id: 'career_fair_form_organisation',
                     defaultMessage: 'School / Organisation',
-                  })}
+                  })}*`}
                   inputRef={ref}
                   aria-required="true"
                   inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
@@ -137,10 +134,10 @@ const CareerFairForm = () => {
                 <FormTextField
                   {...props}
                   id={props.name}
-                  label={intl.formatMessage({
+                  label={`${intl.formatMessage({
                     id: 'career_fair_form_contact_person',
                     defaultMessage: 'Contact Person',
-                  })}
+                  })}*`}
                   inputRef={ref}
                   aria-required="true"
                   inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
@@ -169,10 +166,10 @@ const CareerFairForm = () => {
                 <TextField
                   {...props}
                   id={props.name}
-                  label={intl.formatMessage({
+                  label={`${intl.formatMessage({
                     id: 'career_fair_form_phone',
                     defaultMessage: 'Phone Number',
-                  })}
+                  })}*`}
                   description={intl.formatMessage({
                     id: 'country_code_format',
                     defaultMessage: 'Enter phone number with country code',
@@ -192,13 +189,13 @@ const CareerFairForm = () => {
               control={control}
               rules={{
                 required: intl.formatMessage({
-                  id: 'career_fair_form_email_validation',
+                  id: 'email_validation',
                   defaultMessage: 'Please fill out a valid email address',
                 }),
                 pattern: {
                   value: /^[\w!#$%&'*+/=?`{|}~^-]+(?:\.[\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}$/g,
                   message: intl.formatMessage({
-                    id: 'career_fair_form_email_validation',
+                    id: 'email_validation',
                     defaultMessage: 'Please fill out a valid email address',
                   }),
                 },
@@ -207,10 +204,10 @@ const CareerFairForm = () => {
                 <FormTextField
                   {...props}
                   id={props.name}
-                  label={intl.formatMessage({
-                    id: 'career_fair_form_email',
+                  label={`${intl.formatMessage({
+                    id: 'email',
                     defaultMessage: 'Email',
-                  })}
+                  })}*`}
                   inputRef={ref}
                   inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
                   helperText={error?.message}
@@ -231,6 +228,12 @@ const CareerFairForm = () => {
                     aria-describedby="select-helper-text-${id}"
                     label={intl.formatMessage({ id: 'career_fair_form_event', defaultMessage: 'Event' })}
                   >
+                    <option value="">
+                      {intl.formatMessage({
+                        id: 'form_please_select_an_option',
+                        defaultMessage: 'Please select an option',
+                      })}
+                    </option>
                     <option>
                       {intl.formatMessage({
                         id: 'career_fair_form_invite_career_fair',
@@ -284,10 +287,10 @@ const CareerFairForm = () => {
                   rowsMax={10}
                   maxLength={3400}
                   aria-required="true"
-                  label={intl.formatMessage({
+                  label={`${intl.formatMessage({
                     id: 'career_fair_form_event_description',
                     defaultMessage: 'Event Description',
-                  })}
+                  })}*`}
                   description={intl.formatMessage(
                     {
                       id: 'form_validation_maxChars',

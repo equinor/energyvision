@@ -79,7 +79,7 @@ const PensionForm = () => {
       name: '',
       email: '',
       phone: '',
-      pensionCategory: intl.formatMessage({ id: 'pension_form_select_topic', defaultMessage: 'Select topic' }),
+      pensionCategory: '',
       requests: '',
     },
   })
@@ -108,7 +108,7 @@ const PensionForm = () => {
               control={control}
               rules={{
                 required: intl.formatMessage({
-                  id: 'pension_form_name_validation',
+                  id: 'name_validation',
                   defaultMessage: 'Please fill out your name',
                 }),
               }}
@@ -118,14 +118,10 @@ const PensionForm = () => {
                   <FormTextField
                     {...props}
                     id={name}
-                    label={intl.formatMessage({
-                      id: 'pension_form_name',
+                    label={`${intl.formatMessage({
+                      id: 'name',
                       defaultMessage: 'Name',
-                    })}
-                    placeholder={intl.formatMessage({
-                      id: 'pension_form_name_placeholder',
-                      defaultMessage: 'Jane Doe',
-                    })}
+                    })}*`}
                     inputRef={ref}
                     aria-required="true"
                     inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
@@ -142,13 +138,13 @@ const PensionForm = () => {
               control={control}
               rules={{
                 required: intl.formatMessage({
-                  id: 'pension_form_email_validation',
+                  id: 'email_validation',
                   defaultMessage: 'Please fill out a valid email address',
                 }),
                 pattern: {
                   value: /^[\w!#$%&'*+/=?`{|}~^-]+(?:\.[\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}$/g,
                   message: intl.formatMessage({
-                    id: 'pension_form_email_validation',
+                    id: 'email_validation',
                     defaultMessage: 'Please fill out a valid email address',
                   }),
                 },
@@ -159,10 +155,10 @@ const PensionForm = () => {
                   <FormTextField
                     {...props}
                     id={name}
-                    label={intl.formatMessage({
-                      id: 'pension_form_email',
+                    label={`${intl.formatMessage({
+                      id: 'email',
                       defaultMessage: 'Email',
-                    })}
+                    })}*`}
                     inputRef={ref}
                     inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
                     helperText={error?.message}
@@ -172,7 +168,6 @@ const PensionForm = () => {
                 )
               }}
             />
-
             {/* Pension Category field */}
             <Controller
               name="pensionCategory"
@@ -185,22 +180,25 @@ const PensionForm = () => {
                     selectRef={ref}
                     id={name}
                     label={intl.formatMessage({
-                      id: 'pension_form_category',
+                      id: 'category',
                       defaultMessage: 'Category',
                     })}
                   >
                     <option value="">
-                      {intl.formatMessage({ id: 'pension_form_select_topic', defaultMessage: 'Select topic' })}
+                      {intl.formatMessage({
+                        id: 'form_please_select_an_option',
+                        defaultMessage: 'Please select an option',
+                      })}
                     </option>
                     <option value="pension">
-                      {intl.formatMessage({ id: 'pension_form_pension', defaultMessage: 'Pension' })}
+                      {intl.formatMessage({ id: 'pension_form_category_pension', defaultMessage: 'Pension' })}
                     </option>
                     <option value="travelInsurance">
-                      {intl.formatMessage({ id: 'pension_form_travel_insurance', defaultMessage: 'Travel Insurance' })}
+                      {intl.formatMessage({ id: 'pension_form_category_travel_insurance', defaultMessage: 'Travel Insurance' })}
                     </option>
                     <option value="otherPensionInsuranceRelated">
                       {intl.formatMessage({
-                        id: 'pension_form_other_pension_insurance_related',
+                        id: 'pension_form_category_other',
                         defaultMessage: 'Other Pension/Insurance Related',
                       })}
                     </option>
@@ -225,14 +223,14 @@ const PensionForm = () => {
                   <TextField
                     {...props}
                     id={name}
-                    placeholder={intl.formatMessage({
-                      id: 'pension_form_what_is_your_request_placeholder',
+                    description={intl.formatMessage({
+                      id: 'dont_enter_personal_info',
                       defaultMessage: `Please don't enter any personal information`,
                     })}
-                    label={intl.formatMessage({
+                    label={`${intl.formatMessage({
                       id: 'pension_form_what_is_your_request',
                       defaultMessage: 'What is your request?',
-                    })}
+                    })}*`}
                     inputRef={ref}
                     multiline
                     rowsMax={10}
@@ -267,7 +265,7 @@ const PensionForm = () => {
               {isSubmitting ? (
                 <FormattedMessage id="form_sending" defaultMessage={'Sending...'}></FormattedMessage>
               ) : (
-                <FormattedMessage id="pension_form_cta" defaultMessage="Submit Form" />
+                <FormattedMessage id="pension_form_submit" defaultMessage="Submit Form" />
               )}
             </Button>
           </>
