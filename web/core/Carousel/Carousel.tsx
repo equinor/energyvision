@@ -300,7 +300,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
         return (
           <CarouselIframeItem
             className="pt-lg"
-            key={item.id}
+            key={(item as IFrameCarouselItemData)._key}
             noOfSiblings={items.length}
             displayMode={displayMode}
             aria-label={ariaLabel}
@@ -356,7 +356,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
           variant === 'image' && displayMode === 'single'
             ? 'w-[var(--image-carousel-card-w-sm)] md:w-[var(--image-carousel-card-w-md)] lg:w-[var(--image-carousel-card-w-lg)] mx-auto col-start-1 col-end-1 row-start-2 row-end-2'
             : ''
-        } pt-6 pb-2 ${items.length === 2 ? 'lg:hidden' : ''} flex ${
+        } pt-6 pb-2 ${items.length === 3 ? 'lg:hidden' : ''} flex ${
           internalAutoRotation ? 'justify-between' : 'justify-end'
         }`}
       >
