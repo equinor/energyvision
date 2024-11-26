@@ -27,6 +27,7 @@ import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
 import { CarouselEventItem } from './CarouselEventItem'
 import { CarouselKeyNumberItem } from './CarouselKeyNumberItem'
 import { CarouselIframeItem } from './CarouselIframeItem'
+import { FormattedMessage } from 'react-intl'
 
 export type DisplayModes = 'single' | 'scroll'
 export type Layouts = 'full' | 'default'
@@ -360,7 +361,9 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
           internalAutoRotation ? 'justify-between' : 'justify-end'
         }`}
       >
-        <div id={controlsId} className="sr-only">{`Carousel controls`}</div>
+        <div id={controlsId} className="sr-only">
+          <FormattedMessage id="carousel_controls" defaultMessage="Carousel controls" />
+        </div>
         {internalAutoRotation && (
           <MediaButton
             key={`play_pause_button_${currentIndex}`}
@@ -378,7 +381,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
             title={`Go to previous`}
             aria-controls={carouselItemsId}
             mode="previous"
-            disabled={displayMode === 'scroll' && scrollPosition === 'start'}
+            disabled={(displayMode === 'scroll' && scrollPosition === 'start') ?? false}
             onClick={() => {
               if (variant === 'image' && displayMode === 'single') {
                 loopSlidePrev()
@@ -395,7 +398,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
             title={`Go to next`}
             mode="next"
             aria-controls={carouselItemsId}
-            disabled={displayMode === 'scroll' && scrollPosition === 'end'}
+            disabled={(displayMode === 'scroll' && scrollPosition === 'end') ?? false}
             onClick={() => {
               if (variant === 'image' && displayMode === 'single') {
                 loopSlideNext()
