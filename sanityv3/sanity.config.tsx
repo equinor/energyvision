@@ -8,7 +8,8 @@ import {
   PluginOptions,
   SchemaTypeDefinition,
   Template,
- buildLegacyTheme } from 'sanity'
+  buildLegacyTheme,
+} from 'sanity'
 
 import type {
   InputProps,
@@ -27,7 +28,7 @@ import { DeleteTranslationAction } from './actions/customDelete/DeleteTranslatio
 import { documentInternationalization } from '@equinor/document-internationalization'
 import { FotowareAssetSource } from './plugins/asset-source-fotoware'
 import { BrandmasterAssetSource } from './plugins/asset-source-brandmaster'
-import { createCustomPublishAction } from './actions/CustomPublishAction'
+import { SetAndPublishAction } from './actions/CustomPublishAction'
 import { dataset, projectId } from './sanity.client'
 import { DatabaseIcon } from '@sanity/icons'
 import { crossDatasetDuplicator } from '@sanity/cross-dataset-duplicator'
@@ -123,7 +124,7 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret = fals
         .map((originalAction) => {
           switch (originalAction.action) {
             case 'publish':
-              return createCustomPublishAction(originalAction, context)
+              return ['news', 'localNews'].includes(context.schemaType) ? SetAndPublishAction : originalAction
             case 'duplicate':
               return createCustomDuplicateAction(originalAction)
             default:

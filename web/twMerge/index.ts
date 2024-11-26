@@ -13,6 +13,10 @@ const envisTwMerge = extendTailwindMerge({
       size: ['arrow-right'],
       lineHeight: ['text', 'earthy', 'misty', 'cloudy', 'planetary', 'inherit'],
     },
+    // ↓ Add values to existing class groups or define new ones
+    classGroups: {},
+    // ↓ Here you can define additional conflicts across class groups
+    conflictingClassGroups: {},
   },
 })
 

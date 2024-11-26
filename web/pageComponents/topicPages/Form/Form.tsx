@@ -8,6 +8,7 @@ import CareersContactForm from './careersContactForm/CareersContactForm'
 import type { FormData } from '../../../types/index'
 import { twMerge } from 'tailwind-merge'
 import CallToActions from '@sections/CallToActions'
+import PensionForm from './PensionForm'
 
 
 
@@ -24,6 +25,8 @@ const Form = ({ data, anchor, className }: { data: FormData; anchor?: string; cl
         return <CareerFairForm />
       case 'careersContactForm':
         return <CareersContactForm />
+      case 'pensionForm':
+        return <PensionForm />
       case 'orderReportsForm':
         return (
           <>

@@ -1,50 +1,11 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import styled from 'styled-components'
 import { Icon } from '@equinor/eds-core-react'
 import { useForm, Controller } from 'react-hook-form'
 import { error_filled } from '@equinor/eds-icons'
 import { FormattedMessage, useIntl } from 'react-intl'
-import { FormButton, FormTextField, FormSubmitFailureBox, FormSubmitSuccessBox, Checkbox } from '@components'
+import { FormTextField, FormSubmitFailureBox, FormSubmitSuccessBox, Checkbox } from '@components'
 import { BaseSyntheticEvent, useState } from 'react'
 import FriendlyCaptcha from './FriendlyCaptcha'
-
-const UnstyledList = styled.ul`
-  list-style-type: none;
-  column-count: 1;
-  padding: 0 var(--space-medium) 0 0;
-  margin: var(--space-medium) 0 var(--space-medium) -12px;
-`
-const StyledFieldset = styled.fieldset`
-  border: 0;
-  padding: 0;
-  margin-inline-start: 0;
-  margin-inline-end: 0;
-  padding-block-start: 0;
-  padding-inline-start: 0;
-  padding-inline-end: 0;
-  padding-block-end: 0;
-`
-const StyledLegend = styled.legend`
-  font-weight: var(--fontWeight-regular);
-  font-size: var(--typeScale-2);
-`
-const ErrorDiv = styled.div`
-  display: flex;
-`
-const ErrorStyledList = styled(UnstyledList)`
-  border: var(--eds_button__border_width) var(--clear-red-100) solid;
-`
-const StyledIcon = styled(Icon)`
-  margin-left: var(--space-small);
-  color: var(--clear-red-100);
-  margin-top: var(--space-medium);
-`
-const StyledHelper = styled.p`
-  margin: calc(var(--space-small) * -1) 0 var(--space-medium) 8px;
-  color: var(--clear-red-100);
-  font-weight: 500;
-  font-size: var(--typeScale-0);
-`
+import { Button } from '@core/Button'
 
 type FormValues = {
   name: string
@@ -59,23 +20,9 @@ type FormValues = {
 
 const OrderReportsForm = () => {
   const intl = useIntl()
-  const [submitButtonEnabled, setSubmitButtonEnabled] = useState(false)
+  const [isFriendlyChallengeDone, setIsFriendlyChallengeDone] = useState(false)
   const [isServerError, setServerError] = useState(false)
   const [isSuccessfullySubmitted, setSuccessfullySubmitted] = useState(false)
-  const onSubmit = async (data: FormValues, event?: BaseSyntheticEvent) => {
-    const res = await fetch('/api/forms/service-now-order-reports', {
-      body: JSON.stringify({
-        data,
-        frcCaptchaSolution: (event?.target as any)['frc-captcha-solution'].value,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      method: 'POST',
-    })
-    setServerError(res.status != 200)
-    setSuccessfullySubmitted(res.status == 200)
-  }
 
   const Checkboxes = () => {
     return (
@@ -110,11 +57,13 @@ const OrderReportsForm = () => {
       </>
     )
   }
+
   const {
     handleSubmit,
     control,
     reset,
     register,
+    setError,
     formState: { errors, isSubmitSuccessful, isSubmitted, isSubmitting },
   } = useForm({
     defaultValues: {
@@ -128,267 +77,305 @@ const OrderReportsForm = () => {
       country: '',
     },
   })
+
+  const onSubmit = async (data: FormValues, event?: BaseSyntheticEvent) => {
+    if (isFriendlyChallengeDone) {
+      const res = await fetch('/api/forms/service-now-order-reports', {
+        body: JSON.stringify({
+          data,
+          frcCaptchaSolution: (event?.target as any)['frc-captcha-solution'].value,
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        method: 'POST',
+      })
+      setServerError(res.status != 200)
+      setSuccessfullySubmitted(res.status == 200)
+    } else {
+      //@ts-ignore: TODO: types
+      setError('root.notCompletedCaptcha', {
+        type: 'custom',
+        message: intl.formatMessage({
+          id: 'form_antirobot_validation_required',
+          defaultMessage: 'Anti-Robot verification is required',
+        }),
+      })
+    }
+  }
+
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      onReset={() => {
-        reset()
-        setSubmitButtonEnabled(false)
-        setSuccessfullySubmitted(false)
-      }}
-    >
+    <>
       {!isSuccessfullySubmitted && !isServerError && (
-        <>
-          <StyledFieldset>
-            <StyledLegend>
-              <FormattedMessage
-                id="order_reports_form_choose"
-                defaultMessage="Please choose atleast one of the following reports"
-              />
-            </StyledLegend>
-            {errors.reports && (
-              <>
-                <ErrorDiv id="atleast-one-report-required">
-                  <ErrorStyledList>
-                    <Checkboxes />
-                  </ErrorStyledList>
-                  <StyledIcon data={error_filled} aria-hidden="true" />
-                </ErrorDiv>
-                <StyledHelper id="atleast-one-report-required" role="alert">
+        <div className="pb-6 text-sm">
+          <FormattedMessage id="all_fields_mandatory" defaultMessage="All fields with *  are mandatory" />
+        </div>
+      )}
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        onReset={() => {
+          reset()
+          setIsFriendlyChallengeDone(false)
+          setSuccessfullySubmitted(false)
+        }}
+        className="flex flex-col gap-12"
+      >
+        {!isSuccessfullySubmitted && !isServerError && (
+          <>
+            <fieldset className="p-0 pb-4">
+              {!errors.reports && (
+                <legend className="text-base font-semibold max-w-text">
                   <FormattedMessage
                     id="order_reports_form_choose"
-                    defaultMessage="Please select atleast one of the reports"
+                    defaultMessage="Please choose atleast one of the following reports"
                   />
-                </StyledHelper>
-              </>
-            )}
-            {!errors.reports && (
-              <UnstyledList>
+                  {`*`}
+                </legend>
+              )}
+              {errors.reports && (
+                <div
+                  className="text-clear-red-100 text-sm font-semibold items-center flex gap-2"
+                  role="alert"
+                  id="atleast-one-report-required"
+                >
+                  <Icon data={error_filled} aria-hidden="true" />
+                  <legend className="leading-none mt-1">
+                    <FormattedMessage
+                      id="order_reports_form_choose"
+                      defaultMessage="Please select atleast one of the reports"
+                    />
+                    {`*`}
+                  </legend>
+                </div>
+              )}
+              <ul>
                 <Checkboxes />
-              </UnstyledList>
-            )}
-          </StyledFieldset>
-          <Controller
-            name="name"
-            control={control}
-            rules={{
-              required: intl.formatMessage({
-                id: 'order_reports_form_name_validation',
-                defaultMessage: 'Please enter your name',
-              }),
-            }}
-            render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
-              <FormTextField
-                {...props}
-                id={props.name}
-                label={intl.formatMessage({
-                  id: 'order_reports_form_name',
-                  defaultMessage: 'Name',
-                })}
-                placeholder={intl.formatMessage({
-                  id: 'order_reports_form_name_placeholder',
-                  defaultMessage: 'Jane Doe',
-                })}
-                inputRef={ref}
-                aria-required="true"
-                inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
-                helperText={error?.message}
-                {...(invalid && { variant: 'error' })}
-              />
-            )}
-          />
-          <Controller
-            name="email"
-            control={control}
-            rules={{
-              required: intl.formatMessage({
-                id: 'order_reports_form_email_validation',
-                defaultMessage: 'Please fill out a valid email address',
-              }),
-              pattern: {
-                value: /^[\w!#$%&'*+/=?`{|}~^-]+(?:\.[\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}$/g,
-                message: intl.formatMessage({
-                  id: 'order_reports_form_email_validation',
+              </ul>
+            </fieldset>
+            <Controller
+              name="name"
+              control={control}
+              rules={{
+                required: intl.formatMessage({
+                  id: 'name_validation',
+                  defaultMessage: 'Please enter your name',
+                }),
+              }}
+              render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
+                <FormTextField
+                  {...props}
+                  id={props.name}
+                  label={`${intl.formatMessage({
+                    id: 'name',
+                    defaultMessage: 'Name',
+                  })}*`}
+                  inputRef={ref}
+                  aria-required="true"
+                  inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
+                  helperText={error?.message}
+                  {...(invalid && { variant: 'error' })}
+                />
+              )}
+            />
+            <Controller
+              name="email"
+              control={control}
+              rules={{
+                required: intl.formatMessage({
+                  id: 'email_validation',
                   defaultMessage: 'Please fill out a valid email address',
                 }),
-              },
-            }}
-            render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
-              <FormTextField
-                {...props}
-                id={props.name}
-                label={intl.formatMessage({
-                  id: 'order_reports_form_email',
-                  defaultMessage: 'Email',
-                })}
-                inputRef={ref}
-                inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
-                helperText={error?.message}
-                aria-required="true"
-                {...(invalid && { variant: 'error' })}
-              />
-            )}
-          />
-          <Controller
-            name="company"
-            control={control}
-            rules={{
-              required: intl.formatMessage({
-                id: 'order_reports_form_company_validation',
-                defaultMessage: 'Please enter your company',
-              }),
-            }}
-            render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
-              <FormTextField
-                {...props}
-                id={props.name}
-                label={intl.formatMessage({
-                  id: 'order_reports_form_company',
-                  defaultMessage: 'Company',
-                })}
-                inputRef={ref}
-                aria-required="true"
-                inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
-                helperText={error?.message}
-                {...(invalid && { variant: 'error' })}
-              />
-            )}
-          />
-          <Controller
-            name="address"
-            control={control}
-            rules={{
-              required: intl.formatMessage({
-                id: 'order_reports_form_address_validation',
-                defaultMessage: 'Please enter your address',
-              }),
-            }}
-            render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
-              <FormTextField
-                {...props}
-                id={props.name}
-                label={intl.formatMessage({
-                  id: 'order_reports_form_address',
-                  defaultMessage: 'Address',
-                })}
-                inputRef={ref}
-                inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
-                helperText={error?.message}
-                aria-required="true"
-                {...(invalid && { variant: 'error' })}
-              />
-            )}
-          />
+                pattern: {
+                  value: /^[\w!#$%&'*+/=?`{|}~^-]+(?:\.[\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}$/g,
+                  message: intl.formatMessage({
+                    id: 'email_validation',
+                    defaultMessage: 'Please fill out a valid email address',
+                  }),
+                },
+              }}
+              render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
+                <FormTextField
+                  {...props}
+                  id={props.name}
+                  label={`${intl.formatMessage({
+                    id: 'email',
+                    defaultMessage: 'Email',
+                  })}*`}
+                  inputRef={ref}
+                  inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
+                  helperText={error?.message}
+                  aria-required="true"
+                  {...(invalid && { variant: 'error' })}
+                />
+              )}
+            />
+            <Controller
+              name="company"
+              control={control}
+              rules={{
+                required: intl.formatMessage({
+                  id: 'order_reports_form_company_validation',
+                  defaultMessage: 'Please enter your company',
+                }),
+              }}
+              render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
+                <FormTextField
+                  {...props}
+                  id={props.name}
+                  label={`${intl.formatMessage({
+                    id: 'order_reports_form_company',
+                    defaultMessage: 'Company',
+                  })}*`}
+                  inputRef={ref}
+                  aria-required="true"
+                  inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
+                  helperText={error?.message}
+                  {...(invalid && { variant: 'error' })}
+                />
+              )}
+            />
+            <Controller
+              name="address"
+              control={control}
+              rules={{
+                required: intl.formatMessage({
+                  id: 'order_reports_form_address_validation',
+                  defaultMessage: 'Please enter your address',
+                }),
+              }}
+              render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
+                <FormTextField
+                  {...props}
+                  id={props.name}
+                  label={`${intl.formatMessage({
+                    id: 'order_reports_form_address',
+                    defaultMessage: 'Address',
+                  })}*`}
+                  inputRef={ref}
+                  inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
+                  helperText={error?.message}
+                  aria-required="true"
+                  {...(invalid && { variant: 'error' })}
+                />
+              )}
+            />
 
-          <Controller
-            name="zipcode"
-            control={control}
-            rules={{
-              required: intl.formatMessage({
-                id: 'order_reports_form_zipcode_validation',
-                defaultMessage: 'Please enter your post number/Zip code',
-              }),
-            }}
-            render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
-              <FormTextField
-                {...props}
-                id={props.name}
-                label={intl.formatMessage({
-                  id: 'order_reports_form_zipcode',
-                  defaultMessage: 'Post number/Zip code',
-                })}
-                inputRef={ref}
-                inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
-                helperText={error?.message}
-                aria-required="true"
-                {...(invalid && { variant: 'error' })}
-              />
-            )}
-          />
+            <Controller
+              name="zipcode"
+              control={control}
+              rules={{
+                required: intl.formatMessage({
+                  id: 'order_reports_form_zipcode_validation',
+                  defaultMessage: 'Please enter your post number/Zip code',
+                }),
+              }}
+              render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
+                <FormTextField
+                  {...props}
+                  id={props.name}
+                  label={`${intl.formatMessage({
+                    id: 'order_reports_form_zipcode',
+                    defaultMessage: 'Post number/Zip code',
+                  })}*`}
+                  inputRef={ref}
+                  inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
+                  helperText={error?.message}
+                  aria-required="true"
+                  {...(invalid && { variant: 'error' })}
+                />
+              )}
+            />
 
-          <Controller
-            name="city"
-            control={control}
-            rules={{
-              required: intl.formatMessage({
-                id: 'order_reports_form_city_validation',
-                defaultMessage: 'Please enter your city',
-              }),
-            }}
-            render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
-              <FormTextField
-                {...props}
-                id={props.name}
-                aria-required="true"
-                label={intl.formatMessage({
-                  id: 'order_reports_form_city',
-                  defaultMessage: 'City',
-                })}
-                inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
-                helperText={error?.message}
-                inputRef={ref}
-                {...(invalid && { variant: 'error' })}
+            <Controller
+              name="city"
+              control={control}
+              rules={{
+                required: intl.formatMessage({
+                  id: 'order_reports_form_city_validation',
+                  defaultMessage: 'Please enter your city',
+                }),
+              }}
+              render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
+                <FormTextField
+                  {...props}
+                  id={props.name}
+                  aria-required="true"
+                  label={`${intl.formatMessage({
+                    id: 'order_reports_form_city',
+                    defaultMessage: 'City',
+                  })}*`}
+                  inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
+                  helperText={error?.message}
+                  inputRef={ref}
+                  {...(invalid && { variant: 'error' })}
+                />
+              )}
+            />
+            <Controller
+              name="country"
+              control={control}
+              rules={{
+                required: intl.formatMessage({
+                  id: 'order_reports_form_country_validation',
+                  defaultMessage: 'Please enter your country',
+                }),
+              }}
+              render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
+                <FormTextField
+                  {...props}
+                  id={props.name}
+                  label={`${intl.formatMessage({
+                    id: 'order_reports_form_country',
+                    defaultMessage: 'Country',
+                  })}*`}
+                  aria-required="true"
+                  inputRef={ref}
+                  inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
+                  helperText={error?.message}
+                  {...(invalid && { variant: 'error' })}
+                />
+              )}
+            />
+            <div className="flex flex-col gap-2">
+              <FriendlyCaptcha
+                doneCallback={() => {
+                  setIsFriendlyChallengeDone(true)
+                }}
+                errorCallback={(error: any) => {
+                  console.error('FriendlyCaptcha encountered an error', error)
+                  setIsFriendlyChallengeDone(true)
+                }}
               />
-            )}
-          />
-          <Controller
-            name="country"
-            control={control}
-            rules={{
-              required: intl.formatMessage({
-                id: 'order_reports_form_country_validation',
-                defaultMessage: 'Please enter your country',
-              }),
-            }}
-            render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
-              <FormTextField
-                {...props}
-                id={props.name}
-                label={intl.formatMessage({
-                  id: 'order_reports_form_country',
-                  defaultMessage: 'Country',
-                })}
-                aria-required="true"
-                inputRef={ref}
-                inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
-                helperText={error?.message}
-                {...(invalid && { variant: 'error' })}
-              />
-            )}
-          />
-          <div className="pb-4 text-xs italic">
-            <FormattedMessage id="all_fields_mandatory" defaultMessage="All fields with *  are mandatory" />
-          </div>
-          <FriendlyCaptcha
-            doneCallback={() => {
-              setSubmitButtonEnabled(true)
-            }}
-            errorCallback={(error: any) => {
-              console.error('FriendlyCaptcha encountered an error', error)
-              setSubmitButtonEnabled(true)
+              {/*@ts-ignore: TODO: types*/}
+              {errors?.root?.notCompletedCaptcha && (
+                <p role="alert" className="text-clear-red-100 flex gap-2 font-semibold">
+                  {/*@ts-ignore: TODO: types*/}
+                  <span className="mt-1">{errors.root.notCompletedCaptcha.message}</span>
+                  <Icon data={error_filled} aria-hidden="true" />
+                </p>
+              )}
+            </div>
+            <Button type="submit">
+              {isSubmitting ? (
+                <FormattedMessage id="form_sending" defaultMessage={'Sending...'}></FormattedMessage>
+              ) : (
+                <FormattedMessage id="order_reports_form_cta" defaultMessage="Order printed copies" />
+              )}
+            </Button>
+          </>
+        )}
+        {isSubmitSuccessful && !isServerError && <FormSubmitSuccessBox type="reset" />}
+        {isSubmitted && isServerError && (
+          <FormSubmitFailureBox
+            type="button"
+            onClick={() => {
+              reset(undefined, { keepValues: true })
+              setServerError(false)
             }}
           />
-          <FormButton type="submit" disabled={!submitButtonEnabled}>
-            {isSubmitting ? (
-              <FormattedMessage id="form_sending" defaultMessage={'Sending...'}></FormattedMessage>
-            ) : (
-              <FormattedMessage id="order_reports_form_cta" defaultMessage="Order printed copies" />
-            )}
-          </FormButton>
-        </>
-      )}
-      {isSubmitSuccessful && !isServerError && <FormSubmitSuccessBox type="reset" />}
-      {isSubmitted && isServerError && (
-        <FormSubmitFailureBox
-          type="button"
-          onClick={() => {
-            reset(undefined, { keepValues: true })
-            setServerError(false)
-            setSubmitButtonEnabled(false)
-          }}
-        />
-      )}
-    </form>
+        )}
+      </form>
+    </>
   )
 }
 export default OrderReportsForm

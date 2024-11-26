@@ -8,6 +8,9 @@ type ImageBackgroundContainerProps = {
   scrimClassName?: string
   /* On mobile dont split background image and content */
   dontSplit?: boolean
+  /* Provide gradient in scrimClassname and disable default */
+  overrideGradient?: boolean
+  aspectRatio?: number
 } & ImageBackground &
   HTMLAttributes<HTMLDivElement>
 const DEFAULT_MAX_WIDTH = 1920
@@ -22,12 +25,14 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
       children,
       className = '',
       scrimClassName = '',
+      overrideGradient = false,
       dontSplit = false,
+      aspectRatio,
       ...rest
     },
     ref,
   ) {
-    const props = useSanityLoader(image, DEFAULT_MAX_WIDTH, undefined)
+    const props = useSanityLoader(image, DEFAULT_MAX_WIDTH, aspectRatio)
     const src = props?.src
     const isMobile = useMediaQuery(`(max-width: 800px)`)
 
@@ -66,9 +71,12 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
       'bottom-center': 'black-to-top-gradient',
     }
 
-    const animatedScrimGradient = useLight
-      ? `${lightGradientForContentAlignment[contentAlignment]}`
-      : `black-center-gradient ${darkGradientForContentAlignment[contentAlignment]}`
+    let animatedScrimGradient = ''
+    if (!overrideGradient) {
+      animatedScrimGradient = useLight
+        ? `${lightGradientForContentAlignment[contentAlignment]}`
+        : `black-center-gradient ${darkGradientForContentAlignment[contentAlignment]}`
+    }
 
     return useAnimation && !isMobile ? (
       <div
@@ -119,10 +127,10 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
         <div
           className={twMerge(
             `h-full
-          py-40 
-          lg:py-52
-          relative
-          ${animatedScrimGradient}`,
+            py-40
+            lg:py-52
+            relative
+            ${animatedScrimGradient}`,
             scrimClassName,
           )}
         >
