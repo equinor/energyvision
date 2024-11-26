@@ -11,7 +11,7 @@ import * as T from 'fp-ts/lib/Task'
 import { init, getClient, getFileList, copyFile } from './blobStorage'
 import { ContainerClient } from '@azure/storage-blob'
 import { update, generateIndexName, getEnvironment, languageFromIso, languageOrDefault, NewsIndex } from '../common'
-import { indexSettings } from './algolia'
+import { indexSettings } from '../IndexSanityContent/common/news/algolia'
 import { mapData } from './mapper'
 import { loadJson } from './fileStorage'
 
