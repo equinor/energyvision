@@ -1,18 +1,23 @@
 import { forwardRef, HTMLAttributes } from 'react'
+import { twMerge } from 'tailwind-merge'
 
-export type BreadcrumbsListItemProps = HTMLAttributes<HTMLLIElement>
+export type BreadcrumbsListItemProps = HTMLAttributes<HTMLLIElement> & {
+  active?: boolean
+}
 
-export const BreadcrumbsListItem = forwardRef<HTMLLIElement, BreadcrumbsListItemProps>(function Breadcrumbs(
-  { children, ...rest },
-  ref,
-) {
-  return (
-    <li
-      ref={ref}
-      {...rest}
-      className="inline-block pr-2 font-bold text-grey-90 after:content-['>'] after:pl-2 last:font-medium last:text-slate-blue-90 last:after:content-[''] first-letter:capitalize"
-    >
-      {children}
-    </li>
-  )
-})
+export const BreadcrumbsListItem = forwardRef<HTMLLIElement, BreadcrumbsListItemProps>(
+  ({ children, active, ...rest }, ref) => {
+    return (
+      <li
+        ref={ref}
+        {...rest}
+        className={twMerge(
+          'inline-block pr-2 text-grey-90 after:content-[">"] after:pl-2 last:after:content-[""]',
+          active ? 'font-medium text-slate-blue-90' : 'font-bold'
+        )}
+      >
+        {children}
+      </li>
+    )
+  }
+)
