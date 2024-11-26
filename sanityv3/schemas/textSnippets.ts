@@ -13,6 +13,7 @@ export const groups = {
   pensionForm: { title: 'Pension form', hidden: !Flags.HAS_PENSION_FORM },
   form: { title: 'Form', hidden: !Flags.HAS_FORMS },
   cookie: { title: 'Cookie' },
+  carousel: { title: 'Carousel' },
   others: { title: 'Others' },
   common: { title: 'Common' },
 }
@@ -295,7 +296,7 @@ const snippets: textSnippet = {
     title: 'Pension Category',
     defaultValue: 'Pension',
     group: groups.pensionForm,
-  }, 
+  },
   pension_form_select_topic: {
     title: 'Default Pension Category',
     defaultValue: 'Pension',
@@ -815,6 +816,11 @@ const snippets: textSnippet = {
     title: `Please don't enter any personal information`,
     defaultValue: `Please don't enter any personal information`,
     group: groups.common,
+  },
+  carousel_controls: {
+    title: 'Carousel controls',
+    defaultValue: 'Carousel controls',
+    group: groups.carousel,
   },
 }
 
