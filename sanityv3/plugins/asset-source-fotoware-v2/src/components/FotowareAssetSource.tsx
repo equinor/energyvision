@@ -11,6 +11,9 @@ import {
   getSelectionWidgetURL,
   FotowareEvents,
   getRenditionURL,
+  handleRequestError,
+  getApiAccessURL,
+  checkAPIAuthData,
 } from '../utils/utils'
 import { StyledIframe, StyledButton } from './components'
 import { FWAttributeField, FWAsset } from '../../types'
@@ -22,8 +25,8 @@ const REDIRECT_ORIGIN = process.env.SANITY_STUDIO_FOTOWARE_REDIRECT_ORIGIN
 
 const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   const { onSelect, onClose } = props
-  //const [token, setToken] = useLocalStorage()
-  const [token, setToken] = useState<string | false>(getAccessToken())
+  const [selectionToken, setSelectionToken] = useState<string | false>(getAccessToken('SelectionFotowareToken'))
+  const [apiToken, setApiToken] = useState<string | false>(getAccessToken('ApiFotowareToken'))
   const [container, setContainer] = useState<HTMLDivElement | null>(null)
   const requestState = useMemo(() => uuid(), [])
   const [asset, setAsset] = useState<FWAsset | null>(null)
@@ -36,18 +39,16 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
     !HAS_ENV_VARS ? 'One or more required enviroment variables are not defined. Please contact support.' : '',
   )
   const newWindow = useRef<Window | null>(null)
-  console.log('TOKEN', token)
   const selectionIframeUrl = useMemo(() => {
-    if (token) {
-      console.log('token', token)
-      const url = getSelectionWidgetURL(token)
+    if (selectionToken) {
+      console.log('selection token', selectionToken)
+      const url = getSelectionWidgetURL(selectionToken)
       console.log('has token, get selection widget url', url)
       return url
     } else {
       return null
     }
-  }, [token])
-
+  }, [selectionToken])
   const selectionContainerRef = useRef<HTMLDivElement>(null)
 
   // Login & store access token
@@ -89,8 +90,8 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
       console.log('validateEvent', validateEvent)
       if (validateEvent) {
         console.log('Set token', event.data)
-        storeAccessToken(event.data)
-        setToken(event.data.access_token)
+        storeAccessToken('SelectionFotowareToken', event.data)
+        setSelectionToken(event.data.access_token)
         console.log('set is login false')
         setIsLogin(false)
         console.log('set show selection iframe true')
@@ -104,6 +105,47 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
       return false
     }
   }, [])
+
+  // Login API & store access token
+  const getApiAccessToken = async () => {
+    if (apiToken) return
+
+    const apiUrl = getApiAccessURL()
+
+    const response = await fetch(apiUrl)
+      .catch((error) => {
+        console.error('An error occured while api access', error)
+        setHasError(true)
+        setErrorText(`Api error: ${error}`)
+      })
+      .then((res) => {
+        if (res && res.status !== 200) {
+          console.error('An error occured while retrieving api access', res.statusText)
+          setHasError(true)
+          setErrorText(`Api error: ${res.statusText}`)
+        }
+        return res
+      })
+
+    if (!response || response.status !== 200) return
+
+    const data = await response.json()
+
+    if (!data?.access_token) {
+      setHasError(true)
+      setErrorText('Missing api access token. Make sure you have permission to access Fotoware and try again.')
+      return
+    }
+
+    if (!checkAPIAuthData(data)) {
+      setHasError(true)
+      setErrorText('Invalid event data.')
+      return
+    }
+
+    storeAccessToken('ApiFotowareToken', data)
+    setApiToken(data.access_token)
+  }
 
   const downloadRenditionAsset = async (url: string) => {
     try {
@@ -195,14 +237,18 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
         console.log('event.data.asset.renditions', event.data.asset.renditions)
         const renditionUrl = event.data.asset.renditions?.find((rendition: any) => rendition.original).href
         console.log('renditionUrl', renditionUrl)
-        const asset = getRendition(renditionUrl)
-        console.log('downloaded asset', asset)
-        setIsLoading(true)
-        setLoadingText(`Downloading ${assetTitle} from Fotoware... Please hold`)
+        if (!apiToken) {
+          setHasError(true)
+          setErrorText('Missing api access token,downloading is not possible. Please check api access')
+        }
         setShowSelectionIframe(false)
-
-        //await api rendition download and set
-        /*   
+        if (apiToken) {
+          const asset = getRendition(renditionUrl)
+          console.log('downloaded asset', asset)
+          setIsLoading(true)
+          setLoadingText(`Downloading ${assetTitle} from Fotoware... Please hold`)
+          //await api rendition download and set
+          /*   
 onSelect([
           {
             kind: 'url',
@@ -220,6 +266,7 @@ onSelect([
             },
           },
         ]) */
+        }
       }
     },
     [onSelect, onClose, asset],
@@ -256,17 +303,23 @@ onSelect([
   }, [handleAuthEvent])
 
   useEffect(() => {
-    if (token) {
-      window.removeEventListener('message', handleAuthEvent)
+    if (!apiToken) {
+      getApiAccessToken()
     }
-  }, [token, handleAuthEvent])
+  }, [apiToken, getApiAccessToken])
 
   useEffect(() => {
-    if (token && newWindow.current) {
+    if (selectionToken) {
+      window.removeEventListener('message', handleAuthEvent)
+    }
+  }, [selectionToken, handleAuthEvent])
+
+  useEffect(() => {
+    if (selectionToken && newWindow.current) {
       setIsLogin(false)
       newWindow.current.close()
     }
-  }, [token])
+  }, [selectionToken])
 
   useEffect(() => {
     window.addEventListener('message', handleWidgetEvent)
@@ -282,7 +335,7 @@ onSelect([
       header="Import image from Fotoware"
       onClose={onClose}
       open
-      width={token ? 4 : 1}
+      width={selectionToken ? 4 : 1}
       height={800}
       ref={ref}
       zOffset={9999}
@@ -295,7 +348,7 @@ onSelect([
             </Text>
           </Card>
         )}
-        {!token && (
+        {!selectionToken && (
           <Flex direction="column" align={'center'} gap={6}>
             {!isLogin && (
               <>
@@ -319,6 +372,15 @@ onSelect([
             {container && createPortal(props.children, container)}
           </Flex>
         )}
+        {!apiToken && (
+          <Flex direction="column" align={'center'} gap={6}>
+            <Text align="center" size={[2, 2, 3, 3]}>
+              Have not got access token for api from AF, please hold or try again.
+              <br />
+              If no luck, please contact support.
+            </Text>
+          </Flex>
+        )}
         {isLoading && (
           <Flex direction="column" align={'center'} gap={6}>
             {asset && asset?.previews && (
@@ -335,7 +397,7 @@ onSelect([
           </Flex>
         )}
       </Box>
-      {token && selectionIframeUrl && showSelectionIframe && (
+      {selectionToken && selectionIframeUrl && showSelectionIframe && (
         <div ref={selectionContainerRef} id={`selectionIframe-${requestState}`}>
           <StyledIframe width="100%" title="Select assets from Fotoware" src={selectionIframeUrl} />
         </div>

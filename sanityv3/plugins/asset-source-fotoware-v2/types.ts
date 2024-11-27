@@ -46,3 +46,5 @@ export type FWAttributeField = {
   required: boolean
   value: any
 }
+
+export type TokenType = 'SelectionFotowareToken' | 'ApiFotowareToken'
