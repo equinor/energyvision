@@ -15,17 +15,15 @@ export const Tab = forwardRef<HTMLButtonElement, TabProps>(function Tab({ childr
         py-2
         pl-3
         pr-8
-        border-b
+        border-0
         hover:underline
-        hover:underline-offset-4
+        underline-offset-2
+        decoration-1
         border-slate-80
         dark:border-white-100
         hover:cursor-pointer
         data-active:font-medium
-        data-active:border-l
-        data-active:border-r
-        data-active:border-b-0
-        data-active:first:border-l-0
+        data-active:border-b-2
         focus:envis-outline
         dark:focus:envis-outline-invert
     `,

@@ -54,13 +54,25 @@ const SearchResults = (props: SearchResultsProps) => {
         return TopicHit
     }
   }
+  const handleTabChange = (value: string) => {
+    setUserClicked(true)
+    const activeIndex = options.find((option) => option.label === value)
+    if (activeIndex) {
+      refine(activeIndex.value)
+    }
+  }
+
   const activeTab = options.findIndex((it) => it.value === currentRefinement)
   const hasQuery = results && results.query !== ''
   return (
     <>
       {hasQuery && (
         <div ref={resultsRef} className="dark mt-10">
-          <Tabs value={options[activeTab].label || options[0].label}>
+          <Tabs
+            value={options[activeTab].label || options[0].label}
+            activationMode="manual"
+            onValueChange={handleTabChange}
+          >
             <TabList>
               {options.map((item) => (
                 <Tab key={item.label} value={item.label} className="text-sm flex gap-2">
