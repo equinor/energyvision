@@ -7,6 +7,7 @@ import NewsHit from './NewsHit'
 import TopicHit from './TopicHit'
 import TotalResultsStat from './TotalResultsStat'
 import { useSortBy, UseSortByProps, useHits, useInstantSearch } from 'react-instantsearch'
+import { FormattedMessage, useIntl } from 'react-intl'
 
 const { TabList, Tab, TabPanel } = Tabs
 
@@ -20,7 +21,7 @@ type SearchResultsProps = {
 const SearchResults = (props: SearchResultsProps) => {
   const { resultsRef } = props
   const { refine, currentRefinement, options } = useSortBy(props)
-
+  const intl = useIntl()
   const { results } = useHits()
   const { scopedResults, indexUiState } = useInstantSearch()
   const [userClicked, setUserClicked] = useState(false)
@@ -73,9 +74,14 @@ const SearchResults = (props: SearchResultsProps) => {
             activationMode="manual"
             onValueChange={handleTabChange}
           >
-            <TabList>
+            <TabList aria-label={intl.formatMessage({ id: 'categories', defaultMessage: 'Categories' })}>
               {options.map((item) => (
-                <Tab key={item.label} value={item.label} className="text-sm flex gap-2">
+                <Tab
+                  id={`tab-trigger-${item.label}`}
+                  key={item.label}
+                  value={item.label}
+                  className="text-sm flex gap-2"
+                >
                   {item.label}
                   <span>
                     (
@@ -89,7 +95,7 @@ const SearchResults = (props: SearchResultsProps) => {
               ))}
             </TabList>
             {options.map((it) => (
-              <TabPanel key={it.label} value={it.label}>
+              <TabPanel key={it.label} value={it.label} aria-labelledby={`tab-trigger-${it.label}`}>
                 <TotalResultsStat hitsPerPage={HITS_PER_PAGE} />
                 <Hits hitComponent={getHitProps(it.label)} />
               </TabPanel>

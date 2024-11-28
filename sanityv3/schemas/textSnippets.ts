@@ -816,6 +816,11 @@ const snippets: textSnippet = {
     defaultValue: `Please don't enter any personal information`,
     group: groups.common,
   },
+  categories: {
+    title: 'Categories',
+    defaultValue: 'Categories',
+    group: groups.common,
+  },
 }
 
 type textSnippetGroup = { title: string; hidden?: boolean }
