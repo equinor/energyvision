@@ -10,7 +10,7 @@ export const LogoLink = ({ ...rest }: LogoLinkProps) => {
       href="/"
       aria-label="Equinor home page"
       {...rest}
-      className="flex items-center justify-self-start h-full focus:outline-none focus-visible:envis-outline"
+      className="flex items-center justify-self-start h-full focus:outline-none focus-visible:envis-outline dark:focus-visible:envis-outline-invert"
       prefetch={false}
     >
       <LogoSecondary className="-mt-[12%]" />

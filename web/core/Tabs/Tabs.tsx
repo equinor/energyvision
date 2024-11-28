@@ -1,12 +1,12 @@
 import { forwardRef } from 'react'
-import { Tabs as CTabs, TabsProps as CTabsProps } from '@chakra-ui/react'
+import * as RadixTabs from '@radix-ui/react-tabs'
 
-export type TabsProps = CTabsProps
+export type TabsProps = RadixTabs.TabsProps
 
 export const Tabs = forwardRef<HTMLDivElement, TabsProps>(function Tabs({ children, ...rest }, ref) {
   return (
-    <CTabs ref={ref} {...rest}>
+    <RadixTabs.Root ref={ref} {...rest}>
       {children}
-    </CTabs>
+    </RadixTabs.Root>
   )
 })

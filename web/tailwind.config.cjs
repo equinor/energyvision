@@ -357,6 +357,10 @@ module.exports = {
       data: {
         open: 'state~="open"',
         closed: 'state~="closed"',
+        active: 'state~="active"',
+        vertical: 'orientation~="vertical"',
+        horizontal: 'orientation~="horizontal"',
+        selected: 'selected~="true"',
       },
       flex: {
         fr: '1 1 1',

@@ -1,6 +1,5 @@
-import { Tabs } from '@components'
-import { RefObject, useEffect, useState, useContext } from 'react'
-import styled from 'styled-components'
+import { Tabs } from '@core/Tabs'
+import { RefObject, useEffect, useState } from 'react'
 import EventHit from './EventHit'
 import Hits from './Hits'
 import MagazineHit from './MagazineHit'
@@ -8,18 +7,9 @@ import NewsHit from './NewsHit'
 import TopicHit from './TopicHit'
 import TotalResultsStat from './TotalResultsStat'
 import { useSortBy, UseSortByProps, useHits, useInstantSearch } from 'react-instantsearch'
+import { FormattedMessage, useIntl } from 'react-intl'
 
-const Results = styled.div`
-  margin-top: var(--space-xLarge);
-`
-
-const TabText = styled.span`
-  font-size: var(--typeScale-05);
-`
-const HitsContainer = styled.span`
-  margin-left: var(--space-4);
-`
-const { Tab, TabList, TabPanel, TabPanels } = Tabs
+const { TabList, Tab, TabPanel } = Tabs
 
 // Sven: I don't understand how we can revieve this number, it's configured
 // in the Configure component, so how could we get it from there
@@ -31,7 +21,7 @@ type SearchResultsProps = {
 const SearchResults = (props: SearchResultsProps) => {
   const { resultsRef } = props
   const { refine, currentRefinement, options } = useSortBy(props)
-
+  const intl = useIntl()
   const { results } = useHits()
   const { scopedResults, indexUiState } = useInstantSearch()
   const [userClicked, setUserClicked] = useState(false)
@@ -53,14 +43,6 @@ const SearchResults = (props: SearchResultsProps) => {
     }
   }, [userClicked, scopedResults, options, results?.__isArtificial, indexUiState.query, currentRefinement, refine])
 
-  const handleTabChange = (index: number) => {
-    setUserClicked(true)
-    const activeIndex = options[index]
-    if (activeIndex) {
-      refine(activeIndex.value)
-    }
-  }
-
   const getHitProps = (tab: string) => {
     switch (tab) {
       case 'Magazine':
@@ -73,40 +55,53 @@ const SearchResults = (props: SearchResultsProps) => {
         return TopicHit
     }
   }
+  const handleTabChange = (value: string) => {
+    setUserClicked(true)
+    const activeIndex = options.find((option) => option.label === value)
+    if (activeIndex) {
+      refine(activeIndex.value)
+    }
+  }
+
   const activeTab = options.findIndex((it) => it.value === currentRefinement)
   const hasQuery = results && results.query !== ''
   return (
     <>
       {hasQuery && (
-        <Results ref={resultsRef}>
-          <Tabs index={activeTab || 0} onChange={handleTabChange}>
-            <TabList>
+        <div ref={resultsRef} className="dark mt-10">
+          <Tabs
+            value={options[activeTab].label || options[0].label}
+            activationMode="manual"
+            onValueChange={handleTabChange}
+          >
+            <TabList aria-label={intl.formatMessage({ id: 'categories', defaultMessage: 'Categories' })}>
               {options.map((item) => (
-                <Tab key={item.label}>
-                  <TabText>
-                    {item.label}
-                    <HitsContainer>
-                      (
-                      {
-                        scopedResults.find((it) => it.indexId === item.value && it.indexId === it.results?.index)
-                          ?.results?.nbHits
-                      }
-                      )
-                    </HitsContainer>
-                  </TabText>
+                <Tab
+                  id={`tab-trigger-${item.label}`}
+                  key={item.label}
+                  value={item.label}
+                  className="text-sm flex gap-2"
+                >
+                  {item.label}
+                  <span>
+                    (
+                    {
+                      scopedResults.find((it) => it.indexId === item.value && it.indexId === it.results?.index)?.results
+                        ?.nbHits
+                    }
+                    )
+                  </span>
                 </Tab>
               ))}
             </TabList>
-            <TabPanels>
-              {options.map((it) => (
-                <TabPanel key={it.label}>
-                  <TotalResultsStat hitsPerPage={HITS_PER_PAGE} />
-                  <Hits hitComponent={getHitProps(it.label)} />
-                </TabPanel>
-              ))}
-            </TabPanels>
+            {options.map((it) => (
+              <TabPanel key={it.label} value={it.label} aria-labelledby={`tab-trigger-${it.label}`}>
+                <TotalResultsStat hitsPerPage={HITS_PER_PAGE} />
+                <Hits hitComponent={getHitProps(it.label)} />
+              </TabPanel>
+            ))}
           </Tabs>
-        </Results>
+        </div>
       )}
     </>
   )
