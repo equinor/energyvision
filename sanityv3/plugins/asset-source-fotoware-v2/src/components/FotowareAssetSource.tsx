@@ -147,12 +147,19 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
     setApiToken(data.access_token)
   }
 
+  //REvalidate expirationDate /fotoweb/archives/{archiveid}/{folderid}/{asset}
+
   const downloadRenditionAsset = async (url: string) => {
     try {
       const response = await fetch(url)
       //if (!response || response.status !== 200) return
       console.log('response', response)
       const data = await response.json()
+
+      // kall tilbake til export bag <date Sanity:dataset> -> Metadata field 870
+      // PATCH /fotoweb/archives/{archiveid}/{folderid}/{asset}
+      // kan vi bruke archiveHREF fra asset representation to /{archiveid}/{folderid}/
+
       console.log('data', data)
       return data
     } catch (error) {
