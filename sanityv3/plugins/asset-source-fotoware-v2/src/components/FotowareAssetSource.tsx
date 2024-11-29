@@ -159,6 +159,7 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
       // kall tilbake til export bag <date Sanity:dataset> -> Metadata field 870
       // PATCH /fotoweb/archives/{archiveid}/{folderid}/{asset}
       // kan vi bruke archiveHREF fra asset representation to /{archiveid}/{folderid}/
+      //Use the "href" or "linkstance" property value and store it. This url is used for getting the asset representation and update metadata.
 
       console.log('data', data)
       return data
