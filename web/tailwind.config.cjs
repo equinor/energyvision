@@ -485,6 +485,9 @@ module.exports = {
         'auto-fill-fr': `repeat(auto-fill, minmax(80px,1fr))`,
         card: `repeat(auto-fill, minmax(min(100%, theme(spacing.card-minWidth)), theme(spacing.card-maxWidth)))`,
       },
+      scrollMargin: {
+        topbar: '100px',
+      },
     },
   },
   variants: {

@@ -2,11 +2,14 @@ import { CSSProperties, forwardRef, useEffect, useMemo, useRef, useState } from 
 import { AccordionContent, AccordionContentProps as _AccordionContentProps } from '@radix-ui/react-accordion'
 import envisTwMerge from '../../twMerge'
 import { mergeRefs } from '@equinor/eds-utils'
+import { Variants } from './Accordion'
 
-export type AccordionContentProps = _AccordionContentProps
+export type AccordionContentProps = {
+  variant: Variants
+} & _AccordionContentProps
 
 export const Content = forwardRef<HTMLDivElement, AccordionContentProps>(function Content(
-  { children, className = '', forceMount, ...rest },
+  { variant = 'primary', children, className = '', forceMount, ...rest },
   forwardedRef,
 ) {
   const contentRef = useRef<HTMLDivElement>(null)
@@ -28,6 +31,21 @@ export const Content = forwardRef<HTMLDivElement, AccordionContentProps>(functio
     }
   }, [collapsedHeight, contentRef, forceMount])
 
+  const variantClassName: Partial<Record<Variants, string>> = {
+    primary: 'border-b border-grey-40',
+    secondary: '',
+  }
+
+  const getVariantBody = () => {
+    switch (variant) {
+      case 'primary':
+        return <div></div>
+
+      default:
+        return <>{children}</>
+    }
+  }
+
   return (
     <AccordionContent
       ref={combinedContentRef}
@@ -37,7 +55,11 @@ export const Content = forwardRef<HTMLDivElement, AccordionContentProps>(functio
           '--radix-collapsible-content-height': `${collapsedHeight}px`,
         } as CSSProperties,
       })}
-      className={envisTwMerge(`${forceMount ? 'data-closed:hidden' : ''}`, className)}
+      className={envisTwMerge(
+        `${forceMount ? 'data-closed:hidden' : ''}
+        ${variantClassName[variant]}`,
+        className,
+      )}
       {...rest}
     >
       {children}

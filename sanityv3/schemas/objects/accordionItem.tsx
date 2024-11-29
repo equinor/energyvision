@@ -28,6 +28,16 @@ export default {
       validation: (Rule: Rule) => Rule.required().error(),
     },
     {
+      title: 'Image',
+      name: 'image',
+      type: 'image',
+      description: 'Image will be presented as landscape format',
+      options: {
+        hotspot: true,
+        collapsed: false,
+      },
+    },
+    {
       title: 'Content',
       name: 'content',
       type: 'array',
