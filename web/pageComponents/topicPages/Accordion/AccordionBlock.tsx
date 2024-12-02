@@ -5,7 +5,7 @@ import IngressText from '../../shared/portableText/IngressText'
 import Accordion from './Accordion'
 import { FAQPageJsonLd } from 'next-seo'
 
-import type { AccordionData, AccordionListData } from '../../../types/types'
+import type { AccordionData, AccordionListData } from '../../../types/index'
 import { toPlainText } from '@portabletext/react'
 import { Heading, Typography } from '../../../core/Typography'
 import { twMerge } from 'tailwind-merge'
@@ -41,7 +41,7 @@ const AccordionBlock = ({ data, anchor, className }: AccordionBlockProps) => {
 
   return (
     <>
-      <StyledTextBlockWrapper {...designOptions} id={anchor || data.anchor} renderFragmentWhenPossible>
+      <StyledTextBlockWrapper {...designOptions} id={anchor} renderFragmentWhenPossible>
         <div
           className={twMerge(
             `flex flex-col gap-6 max-w-viewport mx-auto pb-page-content px-layout-lg [&_svg]:inline [&_svg]:align-baseline`,

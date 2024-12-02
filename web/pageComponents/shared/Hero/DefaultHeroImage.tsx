@@ -1,4 +1,4 @@
-import type { ImageWithCaptionData } from '../../../types/types'
+import type { ImageWithCaptionData } from '../../../types/index'
 import Image, { Ratios } from '../SanityImage'
 import { Caption } from '../image/Caption'
 
@@ -25,6 +25,7 @@ const DefaulHeroImage = ({ data }: HeroImageProps) => {
           1420px
         "
         priority
+        className="rounded-xs"
       />
       <Caption caption={caption} attribution={attribution} />
     </figure>

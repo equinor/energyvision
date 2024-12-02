@@ -10,14 +10,17 @@ export const groups = {
   contactForm: { title: 'Contact form', hidden: !Flags.HAS_CONTACT_EQUINOR_FORM },
   careerContactForm: { title: 'Careers Contact Form', hidden: !Flags.HAS_CAREERS_CONTACT_FORM },
   orderAnnualReportsForm: { title: 'Order annual reports form', hidden: !Flags.HAS_ORDER_REPORT_FORM },
+  pensionForm: { title: 'Pension form', hidden: !Flags.HAS_PENSION_FORM },
   form: { title: 'Form', hidden: !Flags.HAS_FORMS },
   cookie: { title: 'Cookie' },
+  carousel: { title: 'Carousel' },
   others: { title: 'Others' },
+  common: { title: 'Common' },
 }
 const snippets: textSnippet = {
   country_code_format: {
-    title: 'e.g. +47',
-    defaultValue: 'e.g. +47',
+    title: 'Enter country code with phone number',
+    defaultValue: 'Enter  country code with phone number',
     group: groups.form,
   },
   all_fields_mandatory: {
@@ -81,6 +84,16 @@ const snippets: textSnippet = {
     defaultValue: 'Search',
     group: groups.search,
   },
+  search_quick_search: {
+    title: 'Quick search',
+    defaultValue: 'Quick search',
+    group: groups.search,
+  },
+  search_quick_search_label: {
+    title: 'Quick search label',
+    defaultValue: 'Search among Equinor corporate-level news releases',
+    group: groups.search,
+  },
   search_news_tab: {
     title: 'News tab name',
     defaultValue: 'News',
@@ -116,6 +129,31 @@ const snippets: textSnippet = {
     defaultValue: 'Sorry, no results were found. Please try again with some different keywords.',
     group: groups.search,
   },
+  search_submit: {
+    title: 'Submit search',
+    defaultValue: 'Submit search',
+    group: groups.search,
+  },
+  search_reset: {
+    title: 'Reset',
+    defaultValue: 'Reset',
+    group: groups.search,
+  },
+  search_filter_by: {
+    title: 'Filter by',
+    defaultValue: 'Filter by',
+    group: groups.search,
+  },
+  search_pagination_first_page: {
+    title: 'First page',
+    defaultValue: 'First page',
+    group: groups.search,
+  },
+  search_pagination_last_page: {
+    title: 'Last page',
+    defaultValue: 'Last page',
+    group: groups.search,
+  },
   copyright: {
     title: 'Copyright',
     defaultValue: 'Copyright 2022 Equinor ASA',
@@ -124,26 +162,6 @@ const snippets: textSnippet = {
   subscribe_form_choose: {
     title: 'Choose validation',
     defaultValue: 'Please choose one or more of the following',
-    group: groups.subscribeForm,
-  },
-  subscribe_form_first_name: {
-    title: 'First name',
-    defaultValue: 'First name',
-    group: groups.subscribeForm,
-  },
-  subscribe_form_name_validation: {
-    title: 'Name validation',
-    defaultValue: 'Please fill out your name',
-    group: groups.subscribeForm,
-  },
-  subscribe_form_email: {
-    title: 'Email',
-    defaultValue: 'Email',
-    group: groups.subscribeForm,
-  },
-  subscribe_form_email_validation: {
-    title: 'Email validation',
-    defaultValue: 'Please fill out a valid email address',
     group: groups.subscribeForm,
   },
   subscribe_form_general_news: {
@@ -219,31 +237,6 @@ const snippets: textSnippet = {
       'Want the full picture? We’d love to share this content with you, but first you must accept {type1}, {type2} and {type3} cookies by enabling them in our cookie settings.',
     group: groups.cookie,
   },
-  contact_form_name: {
-    title: 'Name',
-    defaultValue: 'Name *',
-    group: groups.contactForm,
-  },
-  contact_form_name_placeholder: {
-    title: 'Name Placeholder',
-    defaultValue: 'Jane Doe',
-    group: groups.contactForm,
-  },
-  contact_form_email: {
-    title: 'Email',
-    defaultValue: 'Email *',
-    group: groups.contactForm,
-  },
-  contact_form_name_validation: {
-    title: 'Name validation',
-    defaultValue: 'Please fill out your name',
-    group: groups.contactForm,
-  },
-  contact_form_email_validation: {
-    title: 'Email validation',
-    defaultValue: 'Please fill out a valid email address',
-    group: groups.contactForm,
-  },
   contact_form_category: {
     title: 'Category',
     defaultValue: 'Category',
@@ -252,11 +245,6 @@ const snippets: textSnippet = {
   contact_form_how_to_help: {
     title: 'How can we help you?',
     defaultValue: 'How can we help you?',
-    group: groups.contactForm,
-  },
-  contact_form_how_to_help_placeholder: {
-    title: `Please don't enter any personal information`,
-    defaultValue: `Please don't enter any personal information`,
     group: groups.contactForm,
   },
   contact_form_how_to_help_validation: {
@@ -304,6 +292,41 @@ const snippets: textSnippet = {
     defaultValue: 'Submit form',
     group: groups.contactForm,
   },
+  pension_form_category_pension: {
+    title: 'Pension Category',
+    defaultValue: 'Pension',
+    group: groups.pensionForm,
+  },
+  pension_form_select_topic: {
+    title: 'Default Pension Category',
+    defaultValue: 'Pension',
+    group: groups.pensionForm,
+  },
+  pension_form_category_travel_insurance: {
+    title: 'Travel Insurance Category',
+    defaultValue: 'Travel Insurance',
+    group: groups.pensionForm,
+  },
+  pension_form_category_other: {
+    title: 'Other Pension/Insurance Related Category',
+    defaultValue: 'Other Pension/Insurance Related',
+    group: groups.pensionForm,
+  },
+  pension_form_what_is_your_request: {
+    title: 'What is your request?',
+    defaultValue: 'What is your request?',
+    group: groups.pensionForm,
+  },
+  pension_form_what_is_your_request_validation: {
+    title: 'Requests Validation',
+    defaultValue: 'Please let us know how we may help you',
+    group: groups.pensionForm,
+  },
+  pension_form_submit: {
+    title: 'Submit Button Text',
+    defaultValue: 'Submit Form',
+    group: groups.pensionForm,
+  },
   career_fair_form_organisation: {
     title: 'Organisation',
     defaultValue: 'School / Organisation',
@@ -338,16 +361,6 @@ const snippets: textSnippet = {
   career_fair_form_phone_validation: {
     title: 'Phone Number validation',
     defaultValue: 'Please enter your phone number',
-    group: groups.careerFairForm,
-  },
-  career_fair_form_email: {
-    title: 'Email',
-    defaultValue: 'Email',
-    group: groups.careerFairForm,
-  },
-  career_fair_form_email_validation: {
-    title: 'Email validation',
-    defaultValue: 'Please fill out a valid email address',
     group: groups.careerFairForm,
   },
   career_fair_form_event: {
@@ -401,34 +414,6 @@ const snippets: textSnippet = {
     defaultValue: 'Submit form',
     group: groups.careerFairForm,
   },
-
-  order_reports_form_name: {
-    title: 'Name',
-    defaultValue: 'Name',
-    group: groups.orderAnnualReportsForm,
-  },
-
-  order_reports_form_name_validation: {
-    title: 'Enter name',
-    defaultValue: 'Please enter your name',
-    group: groups.orderAnnualReportsForm,
-  },
-  order_reports_form_name_placeholder: {
-    title: 'Name placeholder',
-    defaultValue: 'Jane Doe',
-    group: groups.orderAnnualReportsForm,
-  },
-
-  order_reports_form_email: {
-    title: 'Email',
-    defaultValue: 'Email',
-    group: groups.orderAnnualReportsForm,
-  },
-  order_reports_form_email_validation: {
-    title: 'Email validation',
-    defaultValue: 'Please fill out a valid email address',
-    group: groups.orderAnnualReportsForm,
-  },
   order_reports_form_company: {
     title: 'Company',
     defaultValue: 'Company',
@@ -479,13 +464,11 @@ const snippets: textSnippet = {
     defaultValue: 'Please enter your country',
     group: groups.orderAnnualReportsForm,
   },
-
   order_reports_form_cta: {
     title: 'CTA',
     defaultValue: 'Order printed copies',
     group: groups.orderAnnualReportsForm,
   },
-
   order_reports_form_choose: {
     title: 'Choose validation',
     defaultValue: 'Please select atleast one of the reports',
@@ -501,37 +484,6 @@ const snippets: textSnippet = {
     defaultValue: 'Annual report (norwegian version)',
     group: groups.orderAnnualReportsForm,
   },
-  careers_contact_form_name: {
-    title: 'Name',
-    defaultValue: 'Your Name *',
-    group: groups.careerContactForm,
-  },
-
-  careers_contact_form_name_placeholder: {
-    title: 'Name Placeholder',
-    defaultValue: 'Jane Doe',
-    group: groups.careerContactForm,
-  },
-  careers_contact_form_email: {
-    title: 'Email',
-    defaultValue: 'Email',
-    group: groups.careerContactForm,
-  },
-  careers_contact_form_name_validation: {
-    title: 'Name validation',
-    defaultValue: 'Please fill out your name',
-    group: groups.careerContactForm,
-  },
-  careers_contact_form_email_validation: {
-    title: 'Email validation',
-    defaultValue: 'Please fill out a valid email address',
-    group: groups.careerContactForm,
-  },
-  careers_contact_form_category: {
-    title: 'Category',
-    defaultValue: 'Category',
-    group: groups.careerContactForm,
-  },
   careers_contact_form_questions: {
     title: 'Type your questions',
     defaultValue: 'Type your questions',
@@ -542,9 +494,9 @@ const snippets: textSnippet = {
     defaultValue: 'Location',
     group: groups.careerContactForm,
   },
-  careers_contact_form_thesis_writing: {
-    title: 'Thesis writing',
-    defaultValue: 'Thesis writing',
+  careers_contact_form_onboarding: {
+    title: 'Onboarding',
+    defaultValue: 'Onboarding',
     group: groups.careerContactForm,
   },
   careers_contact_form_questions_related_to_position: {
@@ -570,6 +522,11 @@ const snippets: textSnippet = {
   careers_contact_form_phone_validation: {
     title: 'Phone Number validation',
     defaultValue: 'Please enter your phone number',
+    group: groups.careerContactForm,
+  },
+  careers_contact_form_positionId_validation: {
+    title: 'Position ID validation',
+    defaultValue: 'Please enter a position ID or name',
     group: groups.careerContactForm,
   },
   careers_contact_form_phone_placeholder: {
@@ -636,12 +593,16 @@ const snippets: textSnippet = {
   careers_contact_form_supporting_documents: {
     title: 'Supporting Documents checkbox',
     defaultValue: 'Tick the box if you would like to send supporting documents, and we will get in touch with you',
-    group: groups.careerFairForm,
+    group: groups.careerContactForm,
   },
-
   form_sending: {
     title: 'Sending...',
     defaultValue: 'Sending...',
+    group: groups.form,
+  },
+  form_please_select_an_option: {
+    title: 'Please select an option',
+    defaultValue: 'Please select an option',
     group: groups.form,
   },
   form_failure_title: {
@@ -684,9 +645,34 @@ const snippets: textSnippet = {
     defaultValue: 'Reopen the form',
     group: groups.form,
   },
+  form_validation_maxChars: {
+    title: 'Max X chars',
+    defaultValue: 'Max {maxChars} characters',
+    group: groups.form,
+  },
+  form_antirobot_validation_required: {
+    title: 'Anti-Robot verification is required',
+    defaultValue: 'Anti-Robot verification is required',
+    group: groups.form,
+  },
   newsroom_topic_filter: {
     title: 'Topic filter heading',
     defaultValue: 'Topic',
+    group: groups.newsroom,
+  },
+  newsroom_filters_label: {
+    title: 'Filters label',
+    defaultValue: 'Filter by:',
+    group: groups.newsroom,
+  },
+  newsroom_filters_selected: {
+    title: 'Selected',
+    defaultValue: 'Selected',
+    group: groups.newsroom,
+  },
+  newsroom_filters_clear_all: {
+    title: 'Clear all',
+    defaultValue: 'Clear all',
     group: groups.newsroom,
   },
   newsroom_country_filter: {
@@ -718,6 +704,16 @@ const snippets: textSnippet = {
   newsroom_no_hits: {
     title: 'No hits',
     defaultValue: 'Your search returned no results',
+    group: groups.newsroom,
+  },
+  newsroom_related_links: {
+    title: 'Related links',
+    defaultValue: 'Related links',
+    group: groups.newsroom,
+  },
+  newsroom_skip_to_news: {
+    title: 'Skip to list of news',
+    defaultValue: 'Skip to list of news',
     group: groups.newsroom,
   },
   magazineindex_list_header: {
@@ -765,6 +761,66 @@ const snippets: textSnippet = {
     title: 'Switch to',
     defaultValue: 'Switch to',
     group: groups.others,
+  },
+  next: {
+    title: 'Next',
+    defaultValue: 'Next',
+    group: groups.others,
+  },
+  previous: {
+    title: 'Previous',
+    defaultValue: 'Previous',
+    group: groups.others,
+  },
+  page: {
+    title: 'Page',
+    defaultValue: 'Page',
+    group: groups.others,
+  },
+  remove: {
+    title: 'Remove',
+    defaultValue: 'Remove',
+    group: groups.others,
+  },
+  filter: {
+    title: 'Filter',
+    defaultValue: 'Filter',
+    group: groups.others,
+  },
+  name: {
+    title: 'Name',
+    defaultValue: 'Name',
+    group: groups.common,
+  },
+  email: {
+    title: 'Email',
+    defaultValue: 'Email',
+    group: groups.common,
+  },
+  category: {
+    title: 'Category',
+    defaultValue: 'Category',
+    group: groups.common,
+  },
+  name_validation: {
+    title: 'Name validation',
+    defaultValue: 'Please fill out your name',
+    group: groups.common,
+  },
+  email_validation: {
+    title: 'Email validation',
+    defaultValue: 'Please fill out a valid email address',
+    group: groups.common,
+  },
+  dont_enter_personal_info: {
+    title: `Please don't enter any personal information`,
+    defaultValue: `Please don't enter any personal information`,
+    group: groups.common,
+  },
+  carousel_controls: {
+    title: 'Carousel controls',
+    defaultValue: 'Carousel controls',
+    group: groups.carousel,
   },
 }
 

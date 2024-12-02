@@ -6,6 +6,7 @@ import { Flags } from '../../src/lib/datasetHelpers'
 import { ExternalLinkRenderer, SubScriptRenderer, SuperScriptRenderer } from '../components'
 import routes from '../routes'
 import { defaultColors } from '../defaultColors'
+import { strictExternal, warnHttpExternal, warnHttpOrNotValidSlugExternal } from '../validations/validateSlug'
 
 export type BlockContentProps = {
   h2?: boolean
@@ -56,15 +57,6 @@ export const LargeTextRender = (props: any) => {
 export const ExtraLargeTextRender = (props: any) => {
   const { children } = props
   return <span style={{ fontSize: `${em(56, 16)}`, fontWeight: '600' }}>{children}</span>
-}
-const Level2BaseStyle = (props: any) => {
-  const { children } = props
-  return <h2 style={{ fontSize: `${em(18, 16)}`, fontWeight: '600' }}>{children} </h2>
-}
-
-const Level3BaseStyle = (props: any) => {
-  const { children } = props
-  return <h3 style={{ fontSize: `${em(16, 16)}`, fontWeight: '600' }}>{children} </h3>
 }
 
 // H1 not allowed in block content since it should be a document title.
@@ -190,7 +182,12 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockDef
       {
         name: 'href',
         type: 'url',
-        validation: (Rule: any) => Rule.uri({ scheme: ['http', 'https', 'tel', 'mailto'] }),
+        validation: (Rule: any) =>
+          Rule.uri({ scheme: ['http', 'https', 'tel', 'mailto'] })
+            .custom((value: any, context: ValidationContext) => {
+              return warnHttpOrNotValidSlugExternal(value, context)
+            })
+            .error(),
       },
     ],
   }

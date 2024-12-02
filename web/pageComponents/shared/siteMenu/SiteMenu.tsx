@@ -12,7 +12,7 @@ import { getAllSitesLink } from '../../../common/helpers/getAllSitesLink'
 import { LogoLink } from '../LogoLink'
 import { Link } from '@core/Link'
 
-import type { MenuData, SubMenuData } from '../../../types/types'
+import type { MenuData, SubMenuData } from '../../../types/index'
 import { FormattedMessage, useIntl } from 'react-intl'
 
 const AllSitesLink = styled(Link)`

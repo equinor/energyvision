@@ -8,6 +8,9 @@ const StyledEdsNativeSelectField = styled(EdsNativeSelect)`
   select {
     font-size: var(--typeScale-1);
   }
+  label {
+    color: var(--default-text);
+  }
 `
 
 export const FormSelect = forwardRef<HTMLDivElement, NativeSelectProps>(function EdsNativeSelect(

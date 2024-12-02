@@ -1,7 +1,11 @@
 import { view_module } from '@equinor/eds-icons'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
+import CompactBlockEditor from '../components/CompactBlockEditor'
 import { SchemaType } from '../../types'
+import { configureTitleBlockContent } from '../editors'
+
+const titleContentType = configureTitleBlockContent()
 
 export default {
   type: 'object',
@@ -14,6 +18,20 @@ export default {
     },
   ],
   fields: [
+    {
+      name: 'title',
+      type: 'array',
+      inputComponent: CompactBlockEditor,
+      of: [titleContentType],
+      title: 'Title',
+      description: 'The list of icon/text should have a heading, can be hidden below',
+    },
+    {
+      name: 'hideTitle',
+      type: 'boolean',
+      title: 'Hide title',
+      description: 'Hides title, but is available for screen readers and gives an meaningful heading for the list',
+    },
     {
       type: 'array',
       name: 'group',

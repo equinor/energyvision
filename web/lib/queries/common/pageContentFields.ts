@@ -119,6 +119,11 @@ _type == "keyNumbers" =>{
   _type == "textWithIconArray"=>{
     "type": _type,
     "id": _key,
+    title[]{
+        ...,
+        ${markDefs},
+      },
+    hideTitle,
     "group": group[]{
       "id": _key,
       title,
@@ -163,7 +168,6 @@ _type == "keyNumbers" =>{
         ${markDefs},
       }
     },
-    anchor,
     "designOptions": {
       ${background},
     }
@@ -590,6 +594,16 @@ _type == "keyNumbers" =>{
       title,
       anchorReference,
     }
+  },
+  _type == "imageForText" => {
+    "type": _type,
+    "id": _key,
+    "content": content[]{..., ${markDefs}},
+    "aspectRatio": coalesce(aspectRatio, '16:9'),
+    "image": image {
+      ...,
+      "extension": asset-> extension
+    },
   },
 `
 

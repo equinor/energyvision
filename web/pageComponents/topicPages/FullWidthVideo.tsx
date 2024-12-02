@@ -1,4 +1,4 @@
-import { FullWidthVideoData, FullWidthVideoRatio } from '../../types/types'
+import { FullWidthVideoData, FullWidthVideoRatio } from '../../types/index'
 import styled from 'styled-components'
 import { BackgroundContainer } from '@components'
 import { VideoJS } from '../../components/src/VideoJsPlayer'

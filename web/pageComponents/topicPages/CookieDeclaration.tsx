@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import { BackgroundContainer } from '@components'
 import TitleText from '../../pageComponents/shared/portableText/TitleText'
-import { CookieDeclarationData } from '../../types/types'
+import { CookieDeclarationData } from '../../types/index'
 import { twMerge } from 'tailwind-merge'
 
 type CookieDeclarationProps = {

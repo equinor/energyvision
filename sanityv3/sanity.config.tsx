@@ -8,6 +8,7 @@ import {
   PluginOptions,
   SchemaTypeDefinition,
   Template,
+  buildLegacyTheme,
 } from 'sanity'
 
 import type {
@@ -18,7 +19,7 @@ import type {
   DocumentBadgeComponent,
   DocumentFieldAction,
 } from 'sanity'
-import { deskTool, StructureBuilder } from 'sanity/desk'
+import { structureTool } from 'sanity/structure'
 import deskStructure, { defaultDocumentNodeResolver } from './deskStructure'
 import { schemaTypes } from './schemas'
 import { initialValueTemplates } from './initialValueTemplates'
@@ -27,7 +28,7 @@ import { DeleteTranslationAction } from './actions/customDelete/DeleteTranslatio
 import { documentInternationalization } from '@equinor/document-internationalization'
 import { FotowareAssetSource } from './plugins/asset-source-fotoware'
 import { BrandmasterAssetSource } from './plugins/asset-source-brandmaster'
-import { createCustomPublishAction } from './actions/CustomPublishAction'
+import { SetAndPublishAction } from './actions/CustomPublishAction'
 import { dataset, projectId } from './sanity.client'
 import { DatabaseIcon } from '@sanity/icons'
 import { crossDatasetDuplicator } from '@sanity/cross-dataset-duplicator'
@@ -39,7 +40,6 @@ import { createCustomDuplicateAction } from './actions/CustomDuplicateAction'
 import { LangBadge } from './schemas/components/LangBadge'
 import './customStyles.css'
 import { partialStudioTheme } from './studioTheme'
-import { buildLegacyTheme } from 'sanity'
 import { copyAction } from './actions/fieldActions/CustomCopyFieldAction'
 
 export const customTheme = buildLegacyTheme(partialStudioTheme)
@@ -89,8 +89,8 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret = fals
   },
   plugins: [
     documentInternationalization(i18n),
-    deskTool({
-      structure: (S: StructureBuilder, context: ConfigContext) => {
+    structureTool({
+      structure: (S, context: ConfigContext) => {
         return deskStructure(S, context)
       },
       defaultDocumentNode: defaultDocumentNodeResolver,
@@ -124,7 +124,7 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret = fals
         .map((originalAction) => {
           switch (originalAction.action) {
             case 'publish':
-              return createCustomPublishAction(originalAction, context)
+              return ['news', 'localNews'].includes(context.schemaType) ? SetAndPublishAction : originalAction
             case 'duplicate':
               return createCustomDuplicateAction(originalAction)
             default:

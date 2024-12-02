@@ -1,8 +1,7 @@
 import { forwardRef } from 'react'
 import { Facebook, Instagram, Linkedin, Twitter, Youtube } from '../../icons'
-import type { FooterLinkData, SomeType, FooterColumns } from '../../types/types'
+import type { FooterLinkData, SomeType, FooterColumns } from '../../types/index'
 import { default as NextLink } from 'next/link'
-
 
 function getSomeSvg(someType: SomeType) {
   const iconMap = {
@@ -32,9 +31,9 @@ const Footer = forwardRef<HTMLDivElement, FooterProps>(function Footer({ footerD
     <footer className="min-h-12 clear-both text-white-100 bg-slate-blue-95 py-4 px-0" ref={ref} {...rest}>
       <div className="flex flex-row flex-wrap my-0 mx-auto justify-between px-layout-sm pb-2 max-w-screen-2xl max-md:flex-col">
         {footerData?.footerColumns?.map(({ header, linkList }) => (
-          <section className="flex flex-col max-md:py-4 max-md:w-4/5" key={header}> 
-            <h3 className="text-md font-medium text-white-100 px-0 py-2 leading-1">{header}</h3>
-            <div className="grid grid-cols-2 gap-y-2 gap-x-4 items-start md:flex md:flex-col md:grid-y-0">
+          <section className="flex flex-col max-md:py-4 max-md:w-4/5" key={header}>
+            <h2 className="text-md font-medium text-white-100 px-0 py-2 leading-planetary">{header}</h2>
+            <div className="grid grid-cols-2 gap-y-2 gap-x-8 items-start md:flex md:flex-col md:grid-y-0">
               {linkList?.map((link: FooterLinkData) => {
                 const { id, type, someType, label, url } = link
                 const icon = type === 'someLink' && someType ? getSomeSvg(someType) : null

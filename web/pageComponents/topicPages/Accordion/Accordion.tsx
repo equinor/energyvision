@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { ParsedUrlQuery } from 'querystring'
 import useRouterReplace from '../../hooks/useRouterReplace'
 import { Accordion as EnvisAccordion } from '@components'
-import type { AccordionListData } from '../../../types/types'
+import type { AccordionListData } from '../../../types/index'
 import Blocks from '../../../pageComponents/shared/portableText/Blocks'
 
 const { Item, Header, Panel } = EnvisAccordion

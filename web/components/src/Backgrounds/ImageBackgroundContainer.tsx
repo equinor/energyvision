@@ -1,6 +1,6 @@
 import { forwardRef, HTMLAttributes, CSSProperties } from 'react'
 import { useSanityLoader } from '../../../lib/hooks/useSanityLoader'
-import { ImageBackground } from '../../../types/types'
+import { ImageBackground } from '../../../types/index'
 import { twMerge } from 'tailwind-merge'
 import { useMediaQuery } from '../../../lib/hooks/useMediaQuery'
 
@@ -8,6 +8,9 @@ type ImageBackgroundContainerProps = {
   scrimClassName?: string
   /* On mobile dont split background image and content */
   dontSplit?: boolean
+  /* Provide gradient in scrimClassname and disable default */
+  overrideGradient?: boolean
+  aspectRatio?: number
 } & ImageBackground &
   HTMLAttributes<HTMLDivElement>
 const DEFAULT_MAX_WIDTH = 1920
@@ -22,11 +25,14 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
       children,
       className = '',
       scrimClassName = '',
+      overrideGradient = false,
       dontSplit = false,
+      aspectRatio,
+      ...rest
     },
     ref,
   ) {
-    const props = useSanityLoader(image, DEFAULT_MAX_WIDTH, undefined)
+    const props = useSanityLoader(image, DEFAULT_MAX_WIDTH, aspectRatio)
     const src = props?.src
     const isMobile = useMediaQuery(`(max-width: 800px)`)
 
@@ -65,9 +71,12 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
       'bottom-center': 'black-to-top-gradient',
     }
 
-    const animatedScrimGradient = useLight
-      ? `${lightGradientForContentAlignment[contentAlignment]}`
-      : `black-center-gradient ${darkGradientForContentAlignment[contentAlignment]}`
+    let animatedScrimGradient = ''
+    if (!overrideGradient) {
+      animatedScrimGradient = useLight
+        ? `${lightGradientForContentAlignment[contentAlignment]}`
+        : `black-center-gradient ${darkGradientForContentAlignment[contentAlignment]}`
+    }
 
     return useAnimation && !isMobile ? (
       <div
@@ -79,6 +88,7 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
             '--color-on-background': `var(--inverted-text)`,
           } as CSSProperties
         }
+        {...rest}
       >
         {/** Scrim */}
         <div
@@ -95,7 +105,7 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
         </div>
       </div>
     ) : isMobile && !dontSplit ? (
-      <div ref={ref}>
+      <div ref={ref} {...rest}>
         <div
           className={twMerge(`aspect-video`, backgroundClassNames)}
           style={{
@@ -111,15 +121,16 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
         style={{
           backgroundImage: `url(${src})`,
         }}
+        {...rest}
       >
         {/** Scrim */}
         <div
           className={twMerge(
             `h-full
-          py-40 
-          lg:py-52
-          relative
-          ${animatedScrimGradient}`,
+            py-40
+            lg:py-52
+            relative
+            ${animatedScrimGradient}`,
             scrimClassName,
           )}
         >

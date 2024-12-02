@@ -1,11 +1,10 @@
 import { Tabs } from '@components'
-import { RefObject, useContext, useEffect, useState } from 'react'
+import { RefObject, useEffect, useState, useContext } from 'react'
 import styled from 'styled-components'
 import EventHit from './EventHit'
 import Hits from './Hits'
 import MagazineHit from './MagazineHit'
 import NewsHit from './NewsHit'
-import { SearchContext } from './SearchContext'
 import TopicHit from './TopicHit'
 import TotalResultsStat from './TotalResultsStat'
 import { useSortBy, UseSortByProps, useHits, useInstantSearch } from 'react-instantsearch'
@@ -35,11 +34,9 @@ const SearchResults = (props: SearchResultsProps) => {
 
   const { results } = useHits()
   const { scopedResults, indexUiState } = useInstantSearch()
-  const { userTyped } = useContext(SearchContext)
   const [userClicked, setUserClicked] = useState(false)
 
   useEffect(() => {
-    if (!userTyped) return
     const indexWithHits = scopedResults.slice(1).filter((it) => it.results?.nbHits > 0 && it.results?.query)
     const firstIndexWithHits = options
       .map((it) => it.value)
@@ -54,7 +51,7 @@ const SearchResults = (props: SearchResultsProps) => {
     ) {
       refine(firstIndexWithHits)
     }
-  }, [userTyped, userClicked, scopedResults])
+  }, [userClicked, scopedResults, options, results?.__isArtificial, indexUiState.query, currentRefinement, refine])
 
   const handleTabChange = (index: number) => {
     setUserClicked(true)

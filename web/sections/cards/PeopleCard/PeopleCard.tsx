@@ -5,7 +5,7 @@ import { BaseLink, ButtonLink } from '@core/Link'
 import Image, { Ratios } from '../../../pageComponents/shared/SanityImage'
 import { getLocaleFromName } from '../../../lib/localization'
 import { getUrlFromAction, urlFor } from '../../../common/helpers'
-import { PeopleCardData } from '../../../types/types'
+import { PeopleCardData } from '../../../types/index'
 import { SocialProfileJsonLd } from 'next-seo'
 
 export type PeopleCardProps = {

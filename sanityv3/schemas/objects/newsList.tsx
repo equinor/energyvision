@@ -3,32 +3,33 @@ import { EdsIcon } from '../../icons'
 import { list } from '@equinor/eds-icons'
 import { configureTitleBlockContent } from '../editors'
 import CompactBlockEditor from '../components/CompactBlockEditor'
-import { Heading, Text, Box } from '@sanity/ui'
-import styled from 'styled-components'
+import { Card, Text, Box, Stack } from '@sanity/ui'
 import type { Rule } from 'sanity'
 
 const titleContentType = configureTitleBlockContent()
 
-const StyledText = styled(Text)`
-  margin: 1em 0;
-`
-
 // eslint-disable-next-line react/display-name
 const ComponentDescription = () => {
   return (
-    <Box>
-      <Heading size={1}>How to use</Heading>
-      <StyledText>
-        This component will automatically generate a list of news articles based on the tags you select.
-      </StyledText>
-      <StyledText>
-        <span role="img" aria-label="warning icon" style={{ marginRight: '5px' }}>
-          ⚠️
-        </span>
-        Please note that there is no limit on this list: it will generate a list of <strong>all</strong> articles that
-        match the selected tag(s).
-      </StyledText>
-    </Box>
+    <Card padding={4}>
+      <Box padding={[3, 3, 4, 5]} style={{ outline: '1px solid gray' }}>
+        <Stack space={[3, 3, 4, 5]}>
+          <Text align="center" size={[2, 2, 3, 4]}>
+            How to use
+          </Text>
+          <Text align="left" size={[1, 1, 2]}>
+            This component will automatically generate a list of news articles based on the tags you select.
+          </Text>
+          <Text align="left" size={[1, 1, 2]}>
+            <span role="img" aria-label="warning icon" style={{ marginRight: '5px' }}>
+              ⚠️
+            </span>
+            Please note that there is no limit on this list: it will generate a list of <strong>all</strong> articles
+            that match the selected tag(s).
+          </Text>
+        </Stack>
+      </Box>
+    </Card>
   )
 }
 

@@ -84,6 +84,7 @@ import anchorLinkReference from './objects/anchorLinkList/anchorLinkReference'
 import { withConditionalVisibility } from './utils/withConditionalReadOnly'
 import { schemaReadOnlyRules } from './utils/schemaReadOnlyRules'
 import { BaseSchemaDefinition } from 'sanity'
+import imageForText from './objects/imageForText'
 
 const {
   pageNotFound,
@@ -211,6 +212,7 @@ const RemainingSchemas = [
   transcript,
   anchorLinkList,
   anchorLinkReference,
+  imageForText,
 ]
 
 // Then we give our schema to the builder and provide the result to Sanity
