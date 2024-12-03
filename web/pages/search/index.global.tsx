@@ -9,7 +9,7 @@ import { Icon } from '@equinor/eds-core-react'
 import { close } from '@equinor/eds-icons'
 import { TopbarDropdown } from '../../pageComponents/shared/siteMenu/TopbarDropdown'
 import { NavTopbar } from '../../pageComponents/shared/siteMenu/NavTopbar'
-import { LogoLink } from '../../pageComponents/shared/LogoLink'
+import { LogoLink } from '../../core/Link/LogoLink'
 import Search from '../../pageComponents/search/Search'
 import { useRouter } from 'next/router'
 import { FloatingOverlay } from '@floating-ui/react'
@@ -24,7 +24,7 @@ export default function SearchPage() {
     <>
       <NextSeo title={searchTitle}></NextSeo>
       <FloatingOverlay lockScroll>
-        <TopbarDropdown background={{ backgroundColor: 'Slate Blue 95' }}>
+        <TopbarDropdown variant="dark">
           <NavTopbar>
             <LogoLink />
             <button

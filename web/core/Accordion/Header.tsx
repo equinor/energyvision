@@ -33,6 +33,7 @@ export const Header = forwardRef<HTMLButtonElement, AccordionHeaderProps>(functi
   const headerVariantClassName: Partial<Record<Variants, string>> = {
     primary: '',
     secondary: '',
+    plain: '',
   }
   const variantClassName: Partial<Record<Variants, string>> = {
     primary: `flex 
@@ -45,10 +46,12 @@ export const Header = forwardRef<HTMLButtonElement, AccordionHeaderProps>(functi
       focus-visible:envis-outline
       dark:focus-visible:envis-outline-invert`,
     secondary: 'group/trigger w-full flex justify-between border-b py-3 border-moss-green-90',
+    plain: '',
   }
   const iconVariantClassName: Partial<Record<Variants, string>> = {
     primary: '',
     secondary: 'rotate-180 group-data-closed/trigger:rotate-0',
+    plain: '',
   }
 
   const getVariantBody = () => {
@@ -60,7 +63,7 @@ export const Header = forwardRef<HTMLButtonElement, AccordionHeaderProps>(functi
             <TransformableIcon className={iconVariantClassName[variant]} iconData={chevron_down} />
           </>
         )
-      default:
+      case 'primary':
         return (
           <>
             <span className="grid pr-4">
@@ -128,6 +131,8 @@ export const Header = forwardRef<HTMLButtonElement, AccordionHeaderProps>(functi
             </Typography>
           </>
         )
+      default:
+        return <>{children}</>
     }
   }
 

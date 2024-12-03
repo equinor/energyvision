@@ -18,38 +18,11 @@ export const Content = forwardRef<HTMLDivElement, AccordionContentProps>(functio
     [contentRef, forwardedRef],
   )
 
-  /*   const [collapsedHeight, setCollapsedHeight] = useState<number>()
-  useEffect(() => {
-    if (!contentRef.current) {
-      return
-    }
-    if (contentRef.current && forceMount) {
-      const currentHeight = contentRef.current.clientHeight
-      const height = Math.max(collapsedHeight ?? 0, currentHeight)
-      setCollapsedHeight(height)
-    }
-  }, [collapsedHeight, contentRef, forceMount]) */
-
   const variantClassName: Partial<Record<Variants, string>> = {
-    primary: '',
-    secondary: '',
+    primary: 'motion-safe:data-closed:animate-slideDown motion-safe:data-open:animate-slideUp',
+    secondary: 'motion-safe:data-closed:animate-slideDown motion-safe:data-open:animate-slideUp',
+    plain: '',
   }
-
-  /**
-  * pt-0 
-         ml-2.5
-         border-l
-         border-dashed
-         border-energy-red-100
-         pl-7
-         pr-4
-         pb-6
-         mb-6
-         [&p]:last:mb-0
-         flex
-         flex-col
-         gap-6
-  */
 
   const getVariantBody = () => {
     switch (variant) {
@@ -81,20 +54,9 @@ export const Content = forwardRef<HTMLDivElement, AccordionContentProps>(functio
   return (
     <AccordionContent
       ref={combinedContentRef}
-      /*       forceMount={forceMount} */
-      /*       {...(forceMount && {
-        style: {
-          '--radix-collapsible-content-height': `${height}px`,
-        } as CSSProperties,
-      })} 
-        
-              motion-safe:data-open:animate-slideUp
-        motion-safe:data-closed:animate-slideDown
-      */
       className={envisTwMerge(
         `overflow-hidden
-        motion-safe:data-closed:animate-slideDown
-        motion-safe:data-open:animate-slideUp
+
         ${variantClassName[variant]}`,
         className,
       )}
