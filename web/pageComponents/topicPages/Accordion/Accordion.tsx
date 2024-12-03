@@ -34,6 +34,7 @@ type AccordionProps = {
 }
 
 const Accordion = ({ data, id, hasTitle = true, queryParamName }: AccordionProps) => {
+  console.log('hallo')
   const router = useRouter()
   const replaceUrl = useRouterReplace()
   // Query is an empty object initially https://nextjs.org/docs/routing/dynamic-routes#caveats
@@ -51,6 +52,7 @@ const Accordion = ({ data, id, hasTitle = true, queryParamName }: AccordionProps
     } else {
       expandedItems = [...indices, toggledIndex].sort()
     }
+    console.log('replace url expandedItems', expandedItems)
     replaceUrl({ [queryParamName]: expandedItems })
   }
 

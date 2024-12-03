@@ -9,6 +9,8 @@ interface AccordionMultipleProps extends _Accordion.AccordionMultipleProps {
   type: 'multiple'
 }
 
+export type Variants = 'primary' | 'secondary'
+
 export type AccordionProps = {
   className?: string
 } & (AccordionSingleProps | AccordionMultipleProps)

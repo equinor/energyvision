@@ -49,7 +49,7 @@ const PastEventsListItem = forwardRef<HTMLAnchorElement, PastEventsListItemProps
           <FormattedDateParts value={start} year="numeric" month="short" day="2-digit">
             {(parts) => {
               return (
-                <div className="flex flex-col gap-4 justify-start items-center">
+                <div className="flex flex-col gap-4 justify-start items-center text-center">
                   <span className="text-md">{`${parts[0].value} ${parts[2].value}`}</span>
                   <span className="text-sm">{parts[4].value}</span>
                 </div>

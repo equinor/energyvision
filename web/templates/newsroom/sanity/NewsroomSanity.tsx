@@ -37,7 +37,6 @@ const NewsRoomTemplateSanity = forwardRef<HTMLElement, NewsRoomTemplateProps>(fu
     fallbackImages,
   } = pageData || {}
 
-  console.log('localNewsPages', localNewsPages)
   const intl = useIntl()
   const router = useRouter()
   const { locale } = router

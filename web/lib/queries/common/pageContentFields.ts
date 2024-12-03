@@ -163,10 +163,14 @@ _type == "keyNumbers" =>{
     "accordion": accordion[]{
       "id": _key,
       title,
+      image,
       content[]{
         ...,
         ${markDefs},
-      }
+      },
+      links[]{
+      ${linkSelectorFields},
+    },
     },
     "designOptions": {
       ${background},
