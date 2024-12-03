@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Icon } from '@equinor/eds-core-react'
-import { useForm, Controller } from 'react-hook-form'
+import { useForm, Controller, useWatch } from 'react-hook-form'
 import { error_filled } from '@equinor/eds-icons'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { FormTextField, Checkbox, FormSelect, FormSubmitSuccessBox, FormSubmitFailureBox } from '@components'
-import { BaseSyntheticEvent, useState } from 'react'
+import { BaseSyntheticEvent, useMemo, useState } from 'react'
 import FriendlyCaptcha from '../FriendlyCaptcha'
 import getCatalogType from './getRequestType'
 import { TextField } from '@core/TextField/TextField'
@@ -43,18 +43,27 @@ const CareersContactForm = () => {
       location: '',
       phone: '',
       questions: '',
-      category: intl.formatMessage({
-        id: 'careers_contact_form_thesis_writing',
-        defaultMessage: 'Thesis writing',
-      }),
+      category: '',
       preferredLang: '',
-      candidateType: intl.formatMessage({
-        id: 'careers_contact_form_experienced_professionals',
-        defaultMessage: 'Experienced professionals',
-      }),
+      candidateType: '',
       supportingDocuments: '',
     },
   })
+
+  const watchCategory = useWatch({
+    name: 'category',
+    control,
+  })
+
+  const setPositionIdMandatory = useMemo(() => {
+    return (
+      watchCategory !==
+        intl.formatMessage({
+          id: 'careers_contact_form_suspected_recruitment_scam',
+          defaultMessage: 'Suspected recruitment scam',
+        }) && watchCategory !== ''
+    )
+  }, [intl, watchCategory])
 
   const onSubmit = async (data: FormValues, event?: BaseSyntheticEvent) => {
     data.preferredLang = intl.locale
@@ -184,10 +193,10 @@ const CareersContactForm = () => {
                 <FormTextField
                   {...props}
                   id={props.name}
-                  label={intl.formatMessage({
-                    id: 'careers_contact_form_email',
+                  label={`${intl.formatMessage({
+                    id: 'email',
                     defaultMessage: 'Email',
-                  })}
+                  })}*`}
                   inputRef={ref}
                   inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
                   helperText={error?.message}
@@ -206,10 +215,16 @@ const CareersContactForm = () => {
                   id={props.name}
                   label={intl.formatMessage({ id: 'category', defaultMessage: 'Category' })}
                 >
+                  <option value="">
+                    {intl.formatMessage({
+                      id: 'form_please_select_an_option',
+                      defaultMessage: 'Please select an option',
+                    })}
+                  </option>
                   <option>
                     {intl.formatMessage({
-                      id: 'careers_contact_form_thesis_writing',
-                      defaultMessage: 'Thesis writing',
+                      id: 'careers_contact_form_onboarding',
+                      defaultMessage: 'Onboarding',
                     })}
                   </option>
                   <option>
@@ -237,14 +252,34 @@ const CareersContactForm = () => {
             <Controller
               name="positionId"
               control={control}
-              render={({ field: { ref, ...props } }) => (
+              rules={{
+                validate: {
+                  require: (value) => {
+                    if (!value && setPositionIdMandatory) {
+                      console.log('not validated required field')
+                      return intl.formatMessage({
+                        id: 'careers_contact_form_positionId_validation',
+                        defaultMessage: 'Please enter a position ID or name ',
+                      })
+                    }
+                    return true
+                  },
+                },
+              }}
+              render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
                 <FormTextField
                   {...props}
                   id={props.name}
-                  label={intl.formatMessage({
+                  label={`${intl.formatMessage({
                     id: 'careers_contact_form_position',
                     defaultMessage: 'Position ID/name',
+                  })}${setPositionIdMandatory ? '*' : ''}`}
+                  inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
+                  helperText={error?.message}
+                  {...(setPositionIdMandatory && {
+                    'aria-required': true,
                   })}
+                  {...(invalid && { variant: 'error' })}
                   inputRef={ref}
                 />
               )}
@@ -293,6 +328,12 @@ const CareersContactForm = () => {
                     defaultMessage: 'Candidate type',
                   })}
                 >
+                  <option value="">
+                    {intl.formatMessage({
+                      id: 'form_please_select_an_option',
+                      defaultMessage: 'Please select an option',
+                    })}
+                  </option>
                   <option>
                     {intl.formatMessage({
                       id: 'careers_contact_form_experienced_professionals',

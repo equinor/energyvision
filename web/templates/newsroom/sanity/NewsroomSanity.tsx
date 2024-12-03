@@ -36,6 +36,7 @@ const NewsRoomTemplateSanity = forwardRef<HTMLElement, NewsRoomTemplateProps>(fu
     localNewsPages,
     fallbackImages,
   } = pageData || {}
+
   const intl = useIntl()
   const router = useRouter()
   const { locale } = router
@@ -116,10 +117,10 @@ const NewsRoomTemplateSanity = forwardRef<HTMLElement, NewsRoomTemplateProps>(fu
       <main ref={ref} className="">
         <div className="flex flex-col gap-8 lg:gap-12">
           <div className="bg-slate-blue-95 dark py-24">
-            <div className="flex flex-col gap-4  grid-rows-2 mx-auto px-layout-sm max-w-viewport">
-              {title && <Heading value={title} as="h1" variant="h2" />}
+            <div className="flex flex-col gap-4 lg:grid lg:grid-cols-2 lg:grid-rows-[auto_1fr] mx-auto px-layout-sm max-w-viewport">
+              {title && <Heading value={title} as="h1" variant="h2" className="lg:col-span-2" />}
               {ingress && <Blocks value={ingress} />}
-              <div className="w-full flex flex-col gap-8 lg:flex-row lg:justify-between items-center">
+              <div className="w-full flex flex-col gap-8 items-center">
                 <List
                   role="navigation"
                   className="max-lg:w-full"
@@ -139,9 +140,13 @@ const NewsRoomTemplateSanity = forwardRef<HTMLElement, NewsRoomTemplateProps>(fu
                   {localNewsPages &&
                     localNewsPages?.length > 0 &&
                     localNewsPages?.map((localNewsPage) => {
-                      return localNewsPage?.link?.slug ? (
+                      return localNewsPage?.link?.slug || localNewsPage?.href ? (
                         <List.Item key={localNewsPage.id} className="w-full">
-                          <ResourceLink type={localNewsPage.type} href={localNewsPage?.link?.slug} className="w-full">
+                          <ResourceLink
+                            type={localNewsPage.type}
+                            href={localNewsPage?.link?.slug || (localNewsPage?.href as string)}
+                            className="w-full"
+                          >
                             {localNewsPage?.label}
                           </ResourceLink>
                         </List.Item>
