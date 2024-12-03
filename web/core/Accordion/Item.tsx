@@ -4,7 +4,7 @@ import envisTwMerge from '../../twMerge'
 import { Variants } from './Accordion'
 
 export type AccordionItemProps = {
-  variant: Variants
+  variant?: Variants
 } & _AccordionItemProps
 
 export const Item = forwardRef<HTMLDivElement, AccordionItemProps>(function Item(
@@ -12,7 +12,7 @@ export const Item = forwardRef<HTMLDivElement, AccordionItemProps>(function Item
   forwardedRef,
 ) {
   const variantClassName: Partial<Record<Variants, string>> = {
-    primary: 'border-b border-grey-40',
+    primary: 'border-b border-grey-40 dark:border-white-100',
     secondary: '',
   }
   return (

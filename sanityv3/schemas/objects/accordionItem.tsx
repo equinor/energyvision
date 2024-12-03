@@ -14,6 +14,8 @@ const contentType = configureBlockContent({
   h3: false,
   h4: false,
   attachment: false,
+  internalLink: false,
+  externalLink: false,
 })
 
 export default {
@@ -42,6 +44,12 @@ export default {
       name: 'content',
       type: 'array',
       of: [contentType],
+    },
+    {
+      name: 'links',
+      type: 'array',
+      title: 'Links',
+      of: [{ type: 'linkSelector', title: 'Link' }],
     },
   ],
   preview: {

@@ -351,12 +351,13 @@ module.exports = {
         zoomIn: 'auto linear zoom-in both',
         move: 'auto linear move forwards',
         'spin-slow': 'spin 3s linear infinite',
-        slideUp: 'slideUp 3s ease-out',
-        slideDown: 'slideDown 3s ease-out',
+        slideUp: 'slideUp 0.2s ease-out',
+        slideDown: 'slideDown 0.2s ease-out',
       },
       data: {
         open: 'state~="open"',
         closed: 'state~="closed"',
+        expanded: 'expanded~="true"',
       },
       flex: {
         fr: '1 1 1',
@@ -487,6 +488,9 @@ module.exports = {
       },
       scrollMargin: {
         topbar: '100px',
+      },
+      aria: {
+        current: 'current="page"',
       },
     },
   },

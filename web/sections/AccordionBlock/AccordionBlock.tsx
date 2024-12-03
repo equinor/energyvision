@@ -51,7 +51,7 @@ const AccordionBlock = ({ data, anchor, className }: AccordionBlockProps) => {
             ))}
           {ingress && <IngressText value={ingress} />}
           {accordion && accordion.length > 0 && (
-            <Accordion data={accordion} id={id} hasTitle={!!title} queryParamName={id} />
+            <Accordion data={accordion} id={id} hasSectionTitle={!!title} queryParamName={id} />
           )}
         </div>
       </BackgroundContainer>

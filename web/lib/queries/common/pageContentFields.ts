@@ -167,7 +167,10 @@ _type == "keyNumbers" =>{
       content[]{
         ...,
         ${markDefs},
-      }
+      },
+      links[]{
+      ${linkSelectorFields},
+    },
     },
     "designOptions": {
       ${background},
