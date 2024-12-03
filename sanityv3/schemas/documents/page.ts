@@ -6,8 +6,12 @@ import sharedHeroFields from './header/sharedHeaderFields'
 import { EdsIcon } from '../../icons'
 import { paste } from '@equinor/eds-icons'
 import { lang } from './langField'
+import { withConditionalVisibility } from '../utils/withConditionalVisibility'
+import { fieldVisibilityRules } from '../utils/fieldVisibilityRules'
+import { DocumentDefinition } from 'sanity'
+import { getDesignerOnlySchemas } from '../utils/schemaReadOnlyRules'
 
-export default {
+const pageSchema = {
   type: 'document',
   name: 'page',
   title: 'Topic page',
@@ -53,6 +57,16 @@ export default {
       name: 'content',
       type: 'array',
       title: 'Page sections',
+      components: {
+        field: (props: any) => {
+          const { renderDefault, value, actions } = props
+          const shouldDisableCopy = value.some((it: any) => getDesignerOnlySchemas().includes(it._type))
+          return renderDefault({
+            ...props,
+            actions: shouldDisableCopy ? actions.filter((e: any) => e.name != 'copyField') : actions,
+          })
+        },
+      },
       of: [
         { type: 'textBlock' },
         { type: 'teaser' },
@@ -112,3 +126,5 @@ export default {
     },
   },
 }
+
+export default withConditionalVisibility(pageSchema as DocumentDefinition, fieldVisibilityRules)

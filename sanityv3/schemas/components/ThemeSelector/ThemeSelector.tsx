@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import { themeColors, getColorForTheme } from './themeColors'
 import { EdsIcon } from '../../../icons'
 import { text_field } from '@equinor/eds-icons'
+import { ReadOnlyWrapper } from '../common/ReadOnlyWrapper'
 
 const Circle = styled.div<{ active: boolean }>`
   display: inline-block;
@@ -63,7 +64,7 @@ const ColorCircle = ({ color, active, onClickHandler }: ColorCircleProps) => {
 
 type ThemeSelectorProps = ObjectInputProps
 
-export const ThemeSelector = ({ value, onChange, schemaType }: ThemeSelectorProps) => {
+export const ThemeSelector = ({ value, onChange, schemaType, readOnly }: ThemeSelectorProps) => {
   const { options } = schemaType
   const colors = (options?.colors as ThemeSelectorValue[]) || themeColors
   const theSelectorUniqueId = useId()
@@ -79,8 +80,8 @@ export const ThemeSelector = ({ value, onChange, schemaType }: ThemeSelectorProp
   )
 
   return (
-    <Stack space={3}>
-      {colors && (
+    <ReadOnlyWrapper readOnly={readOnly}>
+      <Stack space={3}>
         <Card>
           <Flex direction={'row'} wrap={'wrap'}>
             {colors.map((colorItem: ThemeSelectorValue) => {
@@ -96,8 +97,8 @@ export const ThemeSelector = ({ value, onChange, schemaType }: ThemeSelectorProp
             })}
           </Flex>
         </Card>
-      )}
-    </Stack>
+      </Stack>
+    </ReadOnlyWrapper>
   )
 }
 

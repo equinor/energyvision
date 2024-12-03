@@ -1,7 +1,8 @@
-import { Box, Inline } from '@sanity/ui'
+import { Box, Inline, Stack } from '@sanity/ui'
 import { ReactNode, useCallback, useState } from 'react'
-import { PatchEvent, set } from 'sanity'
+import { PatchEvent, set, StringInputProps } from 'sanity'
 import styled from 'styled-components'
+import { ReadOnlyWrapper } from './common/ReadOnlyWrapper'
 
 type StyledBoxProps = {
   children: ReactNode
@@ -38,9 +39,16 @@ type RadioIconSelectorProps = {
   currentValue: string
   defaultValue: string
   onChange: any
-}
+} & StringInputProps
 
-export const RadioIconSelector = ({ name, options, currentValue, defaultValue, onChange }: RadioIconSelectorProps) => {
+export const RadioIconSelector = ({
+  name,
+  options,
+  currentValue,
+  defaultValue,
+  onChange,
+  readOnly,
+}: RadioIconSelectorProps) => {
   const [value, setValue] = useState(currentValue || defaultValue)
 
   const handleChange = useCallback(
@@ -53,22 +61,26 @@ export const RadioIconSelector = ({ name, options, currentValue, defaultValue, o
   )
 
   return (
-    <Inline space={3}>
-      {options.map((option: RadioIconSelectorOption) => (
-        <div key={`container_${option.value}`}>
-          <StyledRadio
-            type="radio"
-            checked={value === option.value}
-            onChange={handleChange}
-            name={name}
-            value={option.value}
-            id={`id_${option.value.replace(/ /g, '')}`}
-          />
-          <label htmlFor={`id_${option.value.replace(/ /g, '')}`}>
-            <StyledBox>{option.icon()}</StyledBox>
-          </label>
-        </div>
-      ))}
-    </Inline>
+    <ReadOnlyWrapper readOnly={readOnly}>
+      <Stack space={3}>
+        <Inline space={3}>
+          {options.map((option: RadioIconSelectorOption) => (
+            <div key={`container_${option.value}`}>
+              <StyledRadio
+                type="radio"
+                checked={value === option.value}
+                onChange={handleChange}
+                name={name}
+                value={option.value}
+                id={`id_${option.value.replace(/ /g, '')}`}
+              />
+              <label htmlFor={`id_${option.value.replace(/ /g, '')}`}>
+                <StyledBox>{option.icon()}</StyledBox>
+              </label>
+            </div>
+          ))}
+        </Inline>
+      </Stack>
+    </ReadOnlyWrapper>
   )
 }

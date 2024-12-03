@@ -81,6 +81,9 @@ import gridColorTheme from './objects/grid/theme'
 import transcript from './objects/transcript'
 import anchorLinkList from './objects/anchorLinkList/anchorLinkList'
 import anchorLinkReference from './objects/anchorLinkList/anchorLinkReference'
+import { withConditionalVisibility } from './utils/withConditionalReadOnly'
+import { schemaReadOnlyRules } from './utils/schemaReadOnlyRules'
+import { BaseSchemaDefinition } from 'sanity'
 import imageForText from './objects/imageForText'
 
 const {
@@ -223,4 +226,4 @@ export const schemaTypes = [
   ...NewsSchemas,
   ...NewsRoomSchema,
   ...RemainingSchemas,
-]
+].map((schema) => withConditionalVisibility(schema as BaseSchemaDefinition, schemaReadOnlyRules))

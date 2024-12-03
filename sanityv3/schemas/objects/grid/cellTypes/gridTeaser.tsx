@@ -142,7 +142,7 @@ export default {
         'On span 3 one can select which side the image will be on for larger screens. On mobile and single column the image will be above',
       type: 'string',
       components: {
-        input: function ({ onChange, value }: { onChange: any; value: string }) {
+        input: function ({ onChange, value, readOnly }: { onChange: any; value: string; readOnly: boolean }) {
           return (
             <RadioIconSelector
               name="imageAlignmentSelector"
@@ -150,6 +150,7 @@ export default {
               defaultValue="left"
               currentValue={value}
               onChange={onChange}
+              readOnly={readOnly}
             />
           )
         },
