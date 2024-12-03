@@ -51,7 +51,7 @@ export default defineType({
       type: 'string',
       initialValue: 'left',
       components: {
-        input: function ({ onChange, value }: { onChange: any; value: string }) {
+        input: function ({ onChange, value, readOnly }: { onChange: any; value: string; readonly: Boolean }) {
           return (
             <RadioIconSelector
               name="imageAlignmentSelector"
@@ -59,6 +59,7 @@ export default defineType({
               defaultValue={'left'}
               currentValue={value}
               onChange={onChange}
+              readOnly={readOnly}
             />
           )
         },

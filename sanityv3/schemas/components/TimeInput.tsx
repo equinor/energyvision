@@ -46,7 +46,7 @@ type TimeType = {
 }
 
 const TimeInput = (props: ObjectInputProps<string>) => {
-  const { value, onChange, elementProps } = props
+  const { value, onChange, elementProps, readOnly } = props
   const [time, setTime] = useState(formatTime(value))
 
   const updateValue = useCallback(
@@ -92,6 +92,7 @@ const TimeInput = (props: ObjectInputProps<string>) => {
           aria-label="Select hour"
           value={value?.split(':')[0] ?? 'Pad'}
           onChange={handleHoursChange}
+          readOnly={readOnly}
         >
           {[EMPTY, ...HOURS_24].map((h) => (
             <option key={h} value={`${h}`.padStart(2, '0')}>
@@ -109,6 +110,7 @@ const TimeInput = (props: ObjectInputProps<string>) => {
           aria-label="Select minutes"
           value={value?.split(':')[1] ?? EMPTY}
           onChange={handleMinutesChange}
+          readOnly={readOnly}
         >
           {[EMPTY, ...MINUTES].map((m) => (
             <option key={m} value={`${m}`.padStart(2, '0')}>
@@ -118,7 +120,7 @@ const TimeInput = (props: ObjectInputProps<string>) => {
         </Select>
       </Box>
       <Box paddingLeft={2}>
-        <Button icon={ResetIcon} text="Clear" onClick={handleReset} />
+        <Button readOnly={readOnly} icon={ResetIcon} text="Clear" onClick={handleReset} />
       </Box>
     </Flex>
   )

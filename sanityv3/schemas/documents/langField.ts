@@ -1,5 +1,6 @@
-import { defineField } from 'sanity'
+import { defineField, FieldProps } from 'sanity'
 import LangInput from '../components/LangInput'
+import { ComponentType } from 'react'
 
 export const lang = defineField({
   title: 'Language',
@@ -10,6 +11,10 @@ export const lang = defineField({
   hidden: false,
   components: {
     input: LangInput,
+    field: (props: any) => {
+      const { renderDefault } = props
+      return renderDefault({ ...props, actions: [] })
+    },
   },
   validation: (Rule) => Rule.required().error('Please select the language for this document'),
 })

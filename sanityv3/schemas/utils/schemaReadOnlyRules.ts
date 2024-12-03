@@ -1,5 +1,9 @@
 export type SchemaReadOnlyRule = Record<string, string[]>
 export const schemaReadOnlyRules: SchemaReadOnlyRule = {
-  grid: ['admin'],
-  campaignBanner: ['admin'], // change admin to designer after role is created.
+  grid: ['designer'],
+  campaignBanner: ['designer'], // change admin to designer after role is created.
+}
+
+export const getDesignerOnlySchemas = () => {
+  return Object.keys(schemaReadOnlyRules)
 }

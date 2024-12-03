@@ -4,7 +4,8 @@ import type { PortableTextBlock, Reference, Rule } from 'sanity'
 import type { ColorSelectorValue } from '../../../components/ColorSelector'
 import CompactBlockEditor from '../../../components/CompactBlockEditor'
 import blocksToText from '../../../../helpers/blocksToText'
-import { EdsIcon ,
+import {
+  EdsIcon,
   ContentRightImage,
   ContentLeftImage,
   ContentCenterImage,
@@ -151,7 +152,7 @@ export default {
       type: 'string',
       initialValue: 'left',
       components: {
-        input: function ({ onChange, value }: { onChange: any; value: string }) {
+        input: function ({ onChange, value, readOnly }: { onChange: any; value: string; readOnly: boolean }) {
           return (
             <RadioIconSelector
               name="imageAlignmentSelector"
@@ -159,6 +160,7 @@ export default {
               defaultValue={'left'}
               currentValue={value}
               onChange={onChange}
+              readOnly={readOnly}
             />
           )
         },

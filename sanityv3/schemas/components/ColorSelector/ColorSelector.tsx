@@ -4,6 +4,7 @@ import { set } from 'sanity'
 import type { ObjectInputProps } from 'sanity'
 import styled from 'styled-components'
 import { defaultColors } from '../../defaultColors'
+import { ReadOnlyWrapper } from '../common/ReadOnlyWrapper'
 
 const Circle = styled.div<{ active: boolean }>`
   display: inline-block;
@@ -57,7 +58,7 @@ const ColorCircle = ({ color, active, onClickHandler }: ColorCircleProps) => (
 
 type ColorSelectorProps = ObjectInputProps
 
-export const ColorSelector = ({ value, onChange, schemaType }: ColorSelectorProps) => {
+export const ColorSelector = ({ value, onChange, schemaType, readOnly }: ColorSelectorProps) => {
   const { options } = schemaType
   const colors = (options?.colors as ColorSelectorValue[]) || defaultColors
 
@@ -74,26 +75,28 @@ export const ColorSelector = ({ value, onChange, schemaType }: ColorSelectorProp
   )
 
   return (
-    <Stack space={3}>
-      {colors && (
-        <Card>
-          <Flex direction={'row'} wrap={'wrap'}>
-            {colors
-              .filter((colorItem: ColorSelectorValue) => !colorItem?.onlyTextColor)
-              .map((colorItem: ColorSelectorValue) => {
-                return (
-                  <ColorCircle
-                    key={colorItem.value}
-                    color={colorItem}
-                    active={colorItem.value === value?.value}
-                    onClickHandler={handleSelect}
-                  />
-                )
-              })}
-          </Flex>
-        </Card>
-      )}
-    </Stack>
+    <ReadOnlyWrapper readOnly={readOnly}>
+      <Stack space={3}>
+        {colors && (
+          <Card>
+            <Flex direction={'row'} wrap={'wrap'}>
+              {colors
+                .filter((colorItem: ColorSelectorValue) => !colorItem?.onlyTextColor)
+                .map((colorItem: ColorSelectorValue) => {
+                  return (
+                    <ColorCircle
+                      key={colorItem.value}
+                      color={colorItem}
+                      active={colorItem.value === value?.value}
+                      onClickHandler={handleSelect}
+                    />
+                  )
+                })}
+            </Flex>
+          </Card>
+        )}
+      </Stack>
+    </ReadOnlyWrapper>
   )
 }
 

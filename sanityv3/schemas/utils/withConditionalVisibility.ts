@@ -16,7 +16,7 @@ export const withConditionalVisibility = (
       if (roles) {
         return {
           ...field,
-          readOnly: () => !shouldShowFieldBasedOnRole(roles),
+          readOnly: ({ currentUser }) => !shouldShowFieldBasedOnRole(currentUser?.roles ?? [], roles),
         }
       }
       return field

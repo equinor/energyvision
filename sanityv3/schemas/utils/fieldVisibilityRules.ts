@@ -1,5 +1,5 @@
 export type FieldVisibilityRule = Record<string, string[]>
 
 export const fieldVisibilityRules = {
-  isCampaign: ['admin'], // Visible only to admins add the field names ..
+  isCampaign: ['designer'], // Visible only to designer add the field names ..
 }

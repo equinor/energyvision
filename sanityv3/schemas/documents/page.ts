@@ -9,6 +9,7 @@ import { lang } from './langField'
 import { withConditionalVisibility } from '../utils/withConditionalVisibility'
 import { fieldVisibilityRules } from '../utils/fieldVisibilityRules'
 import { DocumentDefinition } from 'sanity'
+import { getDesignerOnlySchemas } from '../utils/schemaReadOnlyRules'
 
 const pageSchema = {
   type: 'document',
@@ -56,6 +57,16 @@ const pageSchema = {
       name: 'content',
       type: 'array',
       title: 'Page sections',
+      components: {
+        field: (props: any) => {
+          const { renderDefault, value, actions } = props
+          const shouldDisableCopy = value.some((it: any) => getDesignerOnlySchemas().includes(it._type))
+          return renderDefault({
+            ...props,
+            actions: shouldDisableCopy ? actions.filter((e: any) => e.name != 'copyField') : actions,
+          })
+        },
+      },
       of: [
         { type: 'textBlock' },
         { type: 'teaser' },
