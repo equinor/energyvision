@@ -1,4 +1,4 @@
-import { BaseSchemaDefinition, DocumentDefinition, ObjectDefinition } from 'sanity'
+import { BaseSchemaDefinition } from 'sanity'
 import { shouldShowFieldBasedOnRole } from './fieldVisibility'
 import { SchemaReadOnlyRule } from './schemaReadOnlyRules'
 
