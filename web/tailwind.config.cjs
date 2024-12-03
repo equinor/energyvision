@@ -361,6 +361,9 @@ module.exports = {
       flex: {
         fr: '1 1 1',
       },
+      aria: {
+        current: 'current="page"',
+      },
       typography: (theme) => ({
         DEFAULT: {
           css: [
@@ -485,12 +488,6 @@ module.exports = {
         'auto-fill-fr': `repeat(auto-fill, minmax(80px,1fr))`,
         card: `repeat(auto-fill, minmax(min(100%, theme(spacing.card-minWidth)), theme(spacing.card-maxWidth)))`,
       },
-    },
-  },
-  variants: {
-    extend: {
-      borderColor: ['aria-current'],
-      backgroundColor: ['aria-current'],
     },
   },
   plugins: [
