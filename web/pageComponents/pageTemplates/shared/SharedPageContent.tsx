@@ -4,7 +4,6 @@ import FullWidthImage from '../../topicPages/FullWidthImage'
 import FullWidthVideo from '../../topicPages/FullWidthVideo'
 import Figure from '../../topicPages/Figure'
 import PageQuote from '../../topicPages/PageQuote'
-import AccordionBlock from '../../topicPages/Accordion/AccordionBlock'
 import PromoTileArray from '../../../sections/PromoTiles/PromoTileArray'
 import IFrame from '../../topicPages/IFrame'
 import Promotion from '../../topicPages/Promotion'
@@ -63,6 +62,7 @@ import ImageCarousel from '@sections/ImageCarousel/ImageCarousel'
 import { AnchorLinkList } from '@sections/AnchorLinkList'
 import ImageForText from '@sections/ImageForText/ImageForText'
 import TextWithIconArray from '@sections/TextWithIconArray/TextWithIconArray'
+import AccordionBlock from '@sections/AccordionBlock/AccordionBlock'
 
 type DefaultComponent = {
   id?: string

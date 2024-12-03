@@ -11,7 +11,7 @@ import { getAllSitesLink } from '../../../../common/helpers/getAllSitesLink'
 import type { SimpleMenuData, SimpleGroupData } from '../../../../types/index'
 
 import { TopbarDropdown } from '../TopbarDropdown'
-import { LogoLink } from '../../../../core/Link/LogoLink'
+import { LogoLink } from '../../LogoLink'
 import { NavTopbar } from '../NavTopbar'
 import { FloatingFocusManager, FloatingOverlay, useDismiss, useFloating, useInteractions } from '@floating-ui/react'
 import { Accordion } from '@chakra-ui/react'
@@ -68,33 +68,24 @@ const SimpleSiteMenu = ({ data, ...rest }: MenuProps) => {
                   <LogoLink />
                   <MenuButton title={title} aria-expanded={true} expanded onClick={() => setIsOpen(false)}></MenuButton>
                 </NavTopbar>
-                <div className="px-6">
-                  <Accordion as="ul" className="max-w-screen-lg mx-auto" allowToggle id="menu-accordion">
-                    {menuItems?.map((item: SimpleGroupData, idx: number) => {
-                      if (item?.type === 'simpleMenuGroup') {
-                        return <SimpleMenuItem item={item} key={item.id} index={idx} />
-                      } else if (item?.type === 'simpleMenuLink') {
-                        // Is this really necessary?
-                        if (item.link && !item.link.slug) {
-                          console.warn('Missing slug for simple menu link')
+                <div className='px-6'>
+                <Accordion as="ul" className='max-w-screen-lg mx-auto' allowToggle id="menu-accordion">
+                  {menuItems?.map((item: SimpleGroupData, idx: number) => {
+                        if (item?.type === 'simpleMenuGroup') {
+                          return <SimpleMenuItem item={item} key={item.id} index={idx} />
+                        } else if (item?.type === 'simpleMenuLink') {
+                          // Is this really necessary?
+                          if (item.link && !item.link.slug) {
+                            console.warn('Missing slug for simple menu link')
+                          }
+                          return (
+                            <li key={item.id}>
+                              <Link className='list-none no-underline w-full mt-2 mx-0 mr-0 hover:bg-grey-10 py-xs+sm' href={(item.link && item.link.slug) || '/'}> {item.label} </Link>
+                              </li>
+                          )
                         }
-                        return (
-                          <li key={item.id}>
-                            <Link
-                              className="list-none no-underline w-full mt-2 mx-0 mr-0 hover:bg-grey-10 py-xs+sm"
-                              href={(item.link && item.link.slug) || '/'}
-                            >
-                              {' '}
-                              {item.label}{' '}
-                            </Link>
-                          </li>
-                        )
-                      }
-                    })}
-                    <Link
-                      className="list-none no-underline w-full mt-2 mx-0 mr-0 hover:bg-grey-10 py-xs+sm"
-                      href={allSitesURL}
-                    >
+                      })}
+                    <Link className='list-none no-underline w-full mt-2 mx-0 mr-0 hover:bg-grey-10 py-xs+sm' href={allSitesURL}>
                       <FormattedMessage id="all_sites" defaultMessage="All sites" />
                     </Link>
                   </Accordion>

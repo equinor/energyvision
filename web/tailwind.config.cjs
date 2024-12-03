@@ -351,12 +351,13 @@ module.exports = {
         zoomIn: 'auto linear zoom-in both',
         move: 'auto linear move forwards',
         'spin-slow': 'spin 3s linear infinite',
-        slideUp: 'slideUp 3s ease-out',
-        slideDown: 'slideDown 3s ease-out',
+        slideUp: 'slideUp 0.2s ease-out',
+        slideDown: 'slideDown 0.2s ease-out',
       },
       data: {
         open: 'state~="open"',
         closed: 'state~="closed"',
+        expanded: 'expanded~="true"',
       },
       flex: {
         fr: '1 1 1',
@@ -487,6 +488,12 @@ module.exports = {
       gridTemplateColumns: {
         'auto-fill-fr': `repeat(auto-fill, minmax(80px,1fr))`,
         card: `repeat(auto-fill, minmax(min(100%, theme(spacing.card-minWidth)), theme(spacing.card-maxWidth)))`,
+      },
+      scrollMargin: {
+        topbar: '100px',
+      },
+      aria: {
+        current: 'current="page"',
       },
     },
   },

@@ -1,12 +1,15 @@
-import { CSSProperties, forwardRef, useEffect, useMemo, useRef, useState } from 'react'
+import { forwardRef, useMemo, useRef } from 'react'
 import { AccordionContent, AccordionContentProps as _AccordionContentProps } from '@radix-ui/react-accordion'
 import envisTwMerge from '../../twMerge'
 import { mergeRefs } from '@equinor/eds-utils'
+import { Variants } from './Accordion'
 
-export type AccordionContentProps = _AccordionContentProps
+export type AccordionContentProps = {
+  variant?: Variants
+} & _AccordionContentProps
 
 export const Content = forwardRef<HTMLDivElement, AccordionContentProps>(function Content(
-  { children, className = '', forceMount, ...rest },
+  { variant = 'primary', children, className = '', ...rest },
   forwardedRef,
 ) {
   const contentRef = useRef<HTMLDivElement>(null)
@@ -14,33 +17,52 @@ export const Content = forwardRef<HTMLDivElement, AccordionContentProps>(functio
     () => mergeRefs<HTMLDivElement>(contentRef, forwardedRef),
     [contentRef, forwardedRef],
   )
-  const [collapsedHeight, setCollapsedHeight] = useState<number>()
 
-  useEffect(() => {
-    if (!contentRef.current) {
-      return
-    }
-    if (contentRef.current && forceMount) {
-      const currentHeight = contentRef.current.clientHeight
-      const height = Math.max(collapsedHeight ?? 0, currentHeight)
+  const variantClassName: Partial<Record<Variants, string>> = {
+    primary: 'motion-safe:data-closed:animate-slideDown motion-safe:data-open:animate-slideUp',
+    secondary: 'motion-safe:data-closed:animate-slideDown motion-safe:data-open:animate-slideUp',
+    plain: '',
+  }
 
-      setCollapsedHeight(height)
+  const getVariantBody = () => {
+    switch (variant) {
+      case 'primary':
+        return (
+          <div
+            className={`pt-0 
+         ml-2.5
+         border-l
+         border-dashed
+         border-energy-red-100
+         pl-7
+         pr-4
+         pb-6
+         mb-6
+         flex
+         flex-col
+         gap-6`}
+          >
+            {children}
+          </div>
+        )
+
+      default:
+        return <>{children}</>
     }
-  }, [collapsedHeight, contentRef, forceMount])
+  }
 
   return (
     <AccordionContent
       ref={combinedContentRef}
-      forceMount={forceMount}
-      {...(forceMount && {
-        style: {
-          '--radix-collapsible-content-height': `${collapsedHeight}px`,
-        } as CSSProperties,
-      })}
-      className={envisTwMerge(`${forceMount ? 'data-closed:hidden' : ''}`, className)}
+      className={envisTwMerge(
+        `overflow-hidden
+
+        ${variantClassName[variant]}`,
+        className,
+      )}
       {...rest}
     >
-      {children}
+      {getVariantBody()}
     </AccordionContent>
   )
 })

@@ -6,10 +6,8 @@ import { default as NextLink } from 'next/link'
 import { Topbar, BackgroundContainer } from '@components'
 import { AllSlugsType, LocalizationSwitch } from './LocalizationSwitch'
 import type { MenuData, SimpleMenuData } from '../../types/index'
-import SiteMenu from './siteMenu/SiteMenu'
 import SimpleSiteMenu from './siteMenu/simple/SimpleSiteMenu'
 import { Flags } from '../../common/helpers/datasetHelpers'
-import { LogoLink } from './LogoLink'
 import { languages, defaultLanguage } from '../../languages'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { search } from '@equinor/eds-icons'
@@ -18,7 +16,8 @@ import Head from 'next/head'
 import getConfig from 'next/config'
 import { getAllSitesLink } from '../../common/helpers/getAllSitesLink'
 import { Icon } from '@equinor/eds-core-react'
-import { ButtonLink } from '@core/Link'
+import { ButtonLink, LogoLink } from '@core/Link'
+import SiteMenu from '@sections/SiteMenu/SiteMenu'
 
 const TopbarOffset = createGlobalStyle`
   body {
@@ -37,9 +36,6 @@ const TopbarContainer = styled(Topbar.InnerContainer)`
   align-items: center;
   grid-column-gap: var(--space-large);
   column-gap: var(--space-large);
-`
-const LogoLinkInGrid = styled(LogoLink)`
-  grid-area: logo;
 `
 
 /* This div is needed because of the grid layout to wrap focus lock panes.
@@ -160,7 +156,7 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
       <BackgroundContainer>
         <Topbar>
           <TopbarContainer>
-            <LogoLinkInGrid />
+            <LogoLink className="[grid-area:logo]" />
             <ControlsContainer
               style={
                 {

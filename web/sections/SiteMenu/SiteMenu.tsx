@@ -2,16 +2,13 @@ import { useEffect, useCallback, useState } from 'react'
 import { useFloating, useInteractions, useDismiss, FloatingOverlay, FloatingFocusManager } from '@floating-ui/react'
 import { useRouter } from 'next/router'
 import { Menu, MenuButton } from '@core/MenuAccordion'
-import { MenuGroup } from './MenuGroup'
+import { MenuItem } from './MenuItem'
 import { TopbarDropdown } from './TopbarDropdown'
-import { MenuContainer } from './MenuContainer'
 import { NavTopbar } from './NavTopbar'
-import { getAllSitesLink } from '../../../common/helpers/getAllSitesLink'
+import { getAllSitesLink } from '../../common/helpers/getAllSitesLink'
+import { Link, LogoLink } from '@core/Link'
 
-import { LogoLink } from '../../../core/Link/LogoLink'
-import { Link } from '@core/Link'
-
-import type { MenuData, SubMenuData } from '../../../types/index'
+import type { MenuData, SubMenuData } from '../../types/index'
 import { FormattedMessage, useIntl } from 'react-intl'
 
 export type MenuProps = {
@@ -77,10 +74,13 @@ const SiteMenu = ({ data, ...rest }: MenuProps) => {
                     onClick={() => setIsOpen(false)}
                   />
                 </NavTopbar>
-                <MenuContainer>
-                  <Menu type="single" defaultValue={getCurrentMenuItemIndex(menuItems)}>
-                    {menuItems.map((topLevelItem: SubMenuData, idx) => {
-                      return <MenuGroup key={topLevelItem.id} index={idx} topLevelItem={topLevelItem} />
+                <div
+                  className="text-base bg-transparent px-8 xl:bg-moss-green-50 xl:mt-10 xl:mx-8 xl:flex xl:justify-between items-center"
+                  {...rest}
+                >
+                  <Menu defaultValue={getCurrentMenuItemIndex(menuItems)}>
+                    {menuItems.map((item: SubMenuData, idx: number) => {
+                      return <MenuItem key={item.id} index={idx} item={item} />
                     })}
                   </Menu>
 
@@ -103,7 +103,7 @@ const SiteMenu = ({ data, ...rest }: MenuProps) => {
                   >
                     <FormattedMessage id="all_sites" defaultMessage="All sites" />
                   </Link>
-                </MenuContainer>
+                </div>
               </nav>
             </TopbarDropdown>
           </FloatingOverlay>

@@ -1,6 +1,6 @@
 import { BackgroundContainer, BackgroundContainerProps } from '@components/Backgrounds'
 import { ReactNode } from 'react'
-import envisTwMerge from '../../../twMerge'
+import envisTwMerge from '../../twMerge'
 
 type Props = {
   variant?: 'light' | 'dark'

@@ -822,6 +822,11 @@ const snippets: textSnippet = {
     defaultValue: 'Carousel controls',
     group: groups.carousel,
   },
+  logolink_title: {
+    title: 'Equinor logo link',
+    defaultValue: 'Equinor homepage',
+    group: groups.common,
+  },
 }
 
 type textSnippetGroup = { title: string; hidden?: boolean }
