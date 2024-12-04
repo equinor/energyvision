@@ -327,6 +327,11 @@ const snippets: textSnippet = {
     defaultValue: 'Submit Form',
     group: groups.pensionForm,
   },
+  footer_to_top_button: {
+    title: 'To top button',
+    defaultValue: 'To top',
+    group: groups.others,
+  },
   career_fair_form_organisation: {
     title: 'Organisation',
     defaultValue: 'School / Organisation',
