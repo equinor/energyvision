@@ -2,7 +2,8 @@ import { forwardRef } from 'react'
 import { Facebook, Instagram, Linkedin, Twitter, Youtube } from '../../icons'
 import type { FooterLinkData, SomeType, FooterColumns } from '../../types/index'
 import { default as NextLink } from 'next/link'
-import { BaseLink } from '@core/Link'
+import { useIntl } from 'react-intl'
+import { LinkButton } from '@core/Button'
 
 function getSomeSvg(someType: SomeType) {
   const iconMap = {
@@ -13,9 +14,8 @@ function getSomeSvg(someType: SomeType) {
     youtube: <Youtube width={24} />,
   }
 
-  if (!(someType in iconMap)) console.warn('Unable to get social icon for footer: Unknown SoMe type passed')
-
-  return iconMap[someType] || null
+  if (!(someType in iconMap)) console.warn('Unable to get social icon for footer: Unknown SoMe type passed') 
+    return iconMap[someType] || null
 }
 
 function getLink(linkData: FooterLinkData) {
@@ -28,6 +28,7 @@ type FooterProps = {
 }
 
 const Footer = forwardRef<HTMLDivElement, FooterProps>(function Footer({ footerData, ...rest }, ref) {
+  const intl = useIntl()
   return (
     <footer className="min-h-12 clear-both text-white-100 bg-slate-blue-95 py-4 px-0" ref={ref} {...rest}>
       <div className="flex flex-row flex-wrap my-0 mx-auto justify-between px-layout-sm pb-2 max-w-screen-2xl max-md:flex-col">
@@ -61,25 +62,14 @@ const Footer = forwardRef<HTMLDivElement, FooterProps>(function Footer({ footerD
             </div>
           </section>
         ))}
-        <section className="flex flex-col max-md:py-4 max-md:w-4/5">
-          <div className="flex flex-col">
-            <BaseLink
-              href="#"
-              onClick={(e) => {
-                e.preventDefault()
-                window.scrollTo({ top: 0, behavior: 'smooth' })
-              }}
-              className="to-top-link relative after:content-[''] 
-              after:absolute after:left-0 after:right-0 after:bottom-[-2px] after:h-[1px] 
-              after:bg-current after:scale-x-0 after:transition-transform after:duration-300 
-              after:ease-in-out hover:after:scale-x-100 text-sm text-white
-            hover:text-moss-green-90 focus-visible:envis-outline px-0 py-1"
-              aria-label="To top"
-            >
-              To top
-            </BaseLink>
-          </div>
-        </section>
+        <section 
+      className="flex flex-col max-md:py-4 max-md:w-4/5">
+  <LinkButton
+    onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+    className={`group text-sm px-0 py-2 text-white-100 underline underline-offset-8 hover:underline hover:text-moss-green-90`}  >
+    {intl.formatMessage({ id: 'footer_to_top_button', defaultMessage: 'To top' })}
+  </LinkButton>
+</section>
       </div>
       <div className="flex md:justify-center justify-start pl-4 pt-12 pb-3">
         <span className="text-2xs text-white-100">Copyright {new Date().getFullYear()} Equinor ASA</span>
