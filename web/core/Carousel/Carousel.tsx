@@ -266,6 +266,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
             displayMode={displayMode}
             aria-label={ariaLabel}
             active={i === currentIndex}
+            action={(item as ImageCarouselItem).action}
             {...(variant === 'image' &&
               displayMode === 'single' && {
                 style: {

@@ -9,6 +9,9 @@ export const imageCarouselFields = /* groq */ `
     hideTitle,
     items[] {
     "id": _key,
+    "action": action[0]{
+      ${linkSelectorFields},
+    },
     ...
     },
     "options": {
@@ -16,9 +19,6 @@ export const imageCarouselFields = /* groq */ `
       delay
     },
     captionPositionUnderImage,
-"action": action[0]{
-${linkSelectorFields},
-},
   "designOptions": {
      ${background}
     },
