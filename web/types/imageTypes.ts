@@ -65,4 +65,6 @@ export type ImageCarouselData = {
 
 export type ImageCarouselItem = {
   id: string
+  captionPositionUnderImage?: boolean
+  action?: any
 } & ImageWithCaptionData

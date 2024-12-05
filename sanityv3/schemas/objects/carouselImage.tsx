@@ -1,10 +1,10 @@
-import { ImageWithAltAndCaption } from './imageWithAltAndCaption'
+import { ImageWithAlt } from './imageWithAlt'
 
 export type CarouselImage = {
   _type: 'carouselImage'
-  image: ImageWithAltAndCaption
-  caption?: string
-  attribution?: string
+  image: ImageWithAlt
+  captionPositionUnderImage?: boolean
+  action?: any
 }
 
 export default {
@@ -17,8 +17,18 @@ export default {
   fields: [
     {
       name: 'image',
-      title: 'Image with alt and Caption',
-      type: 'imageWithAltAndCaption',
+      title: 'Image with alt',
+      type: 'imageWithAlt',
+    },
+    {
+      name: 'caption',
+      title: 'Image caption',
+      type: 'string',
+    },
+    {
+      name: 'attribution',
+      title: 'Credit',
+      type: 'string',
     },
   {
     type: 'boolean',
@@ -36,9 +46,9 @@ export default {
   ],
   preview: {
     select: {
-      imageUrl: 'image.image.asset.url',
-      alt: 'image.image.alt',
-      caption: 'image.caption',
+      imageUrl: 'image.asset.url',
+      alt: 'image.alt',
+      caption: 'caption',
     },
     prepare({ imageUrl, caption, alt }: { imageUrl: string; alt: string; caption: string }) {
       return {

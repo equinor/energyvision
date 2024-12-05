@@ -3,9 +3,7 @@ import Image from '../../pageComponents/shared/SanityImage'
 import { ImageWithAlt, ImageWithCaptionData, LinkData } from '../../types/index'
 import { DisplayModes } from './Carousel'
 import { forwardRef, HTMLAttributes } from 'react'
-import { ButtonLink } from '@core/Link'
-import { getUrlFromAction } from '../../common/helpers/getUrlFromAction'
-import { getLocaleFromName } from '../../lib/localization'
+import GridLinkArrow from '@sections/Grid/GridLinkArrow'
 
 type CarouselImageItemProps = {
   image?: ImageWithAlt | ImageWithCaptionData
@@ -71,21 +69,14 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
               {attribution && <span className="text-sm">{attribution}</span>}
             </div>
           </figcaption>
-        
-          {action && action.label && (
-          <ButtonLink
-            href={getUrlFromAction(action) || ''}
-            aria-label={action?.ariaLabel}
-            variant="outlined-secondary"
-            className={`w-full md:mb-8 mb-4 justify-center mt-xl `}
-            locale={action?.type === 'internalUrl' ? getLocaleFromName(action?.link?.lang) : undefined}
-          >
-            {action.label}
-          </ButtonLink>
-        )}
+          <GridLinkArrow action={action}/>
         </figure>
       ) : (
-        <Image maxWidth={1420} image={image as ImageWithAlt} fill className="rounded-md" />
+        <>
+    <Image maxWidth={1420} image={image as ImageWithAlt} fill className="rounded-md" />
+    <GridLinkArrow action={action} />
+
+        </>
       )}
     </li>
   )
