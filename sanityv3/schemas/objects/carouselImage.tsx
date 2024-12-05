@@ -1,10 +1,11 @@
 import { ImageWithAlt } from './imageWithAlt'
+import type { Reference } from 'sanity'
 
 export type CarouselImage = {
   _type: 'carouselImage'
   image: ImageWithAlt
   captionPositionUnderImage?: boolean
-  action?: any
+  action?: Reference[]
 }
 
 export default {
@@ -40,7 +41,8 @@ export default {
     {
       name: 'action',
       title: 'Link',
-      type: 'linkSelector',
+      type: 'array',
+      of: [{ type: 'linkSelector', title: 'Link' }], 
       description: 'Optional link associated with the image.',
     },
   ],
