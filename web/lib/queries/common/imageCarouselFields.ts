@@ -7,12 +7,12 @@ export const imageCarouselFields = /* groq */ `
     title,
     ingress,
     hideTitle,
-    items[] {
+    items[]{
+      ...,
     "id": _key,
-    "action": action[0]{
+    action[0]{
       ${linkSelectorFields},
-    },
-    ...
+    }
     },
     "options": {
       autoplay,

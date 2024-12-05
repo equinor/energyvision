@@ -18,7 +18,17 @@ type CarouselImageItemProps = {
 } & HTMLAttributes<HTMLLIElement>
 
 export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProps>(function CarouselImageItem(
-  { active = false, image, caption, attribution, displayMode = 'single', className = '', action, captionPositionUnderImage, ...rest },
+  {
+    active = false,
+    image,
+    caption,
+    attribution,
+    displayMode = 'single',
+    className = '',
+    action,
+    captionPositionUnderImage,
+    ...rest
+  },
   ref,
 ) {
   return (
@@ -69,16 +79,14 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
               {attribution && <span className="text-sm">{attribution}</span>}
             </div>
           </figcaption>
-          <GridLinkArrow action={action}/>
+          <GridLinkArrow action={action} />
         </figure>
       ) : (
         <>
-    <Image maxWidth={1420} image={image as ImageWithAlt} fill className="rounded-md" />
-    <GridLinkArrow action={action} />
-
+          <Image maxWidth={1420} image={image as ImageWithAlt} fill className="rounded-md" />
+          <GridLinkArrow action={action} />
         </>
       )}
     </li>
   )
 })
-
