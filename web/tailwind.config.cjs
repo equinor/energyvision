@@ -366,6 +366,9 @@ module.exports = {
       flex: {
         fr: '1 1 1',
       },
+      aria: {
+        current: 'current="page"',
+      },
       typography: (theme) => ({
         DEFAULT: {
           css: [
@@ -496,12 +499,6 @@ module.exports = {
       aria: {
         current: 'current="page"',
       },
-    },
-  },
-  variants: {
-    extend: {
-      borderColor: ['aria-current'],
-      backgroundColor: ['aria-current'],
     },
   },
   plugins: [
