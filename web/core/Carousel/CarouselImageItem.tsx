@@ -79,12 +79,12 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
               {attribution && <span className="text-sm">{attribution}</span>}
             </div>
           </figcaption>
-          <GridLinkArrow action={action} />
+          <GridLinkArrow action={action} rounded />
         </figure>
       ) : (
         <>
           <Image maxWidth={1420} image={image as ImageWithAlt} fill className="rounded-md" />
-          <GridLinkArrow action={action} />
+          <GridLinkArrow action={action} rounded />
         </>
       )}
     </li>
