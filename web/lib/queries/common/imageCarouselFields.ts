@@ -1,3 +1,4 @@
+import linkSelectorFields from './actions/linkSelectorFields'
 import background from './background'
 
 export const imageCarouselFields = /* groq */ `
@@ -6,15 +7,19 @@ export const imageCarouselFields = /* groq */ `
     title,
     ingress,
     hideTitle,
-    items[] {
+    items[]{
+      ...,
     "id": _key,
-    ...
+    action[0]{
+      ${linkSelectorFields},
+    }
     },
     "options": {
       autoplay,
       delay
     },
-    "designOptions": {
+    captionPositionUnderImage,
+  "designOptions": {
      ${background}
     },
 `
