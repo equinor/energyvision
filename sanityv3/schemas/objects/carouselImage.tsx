@@ -1,5 +1,7 @@
 import { ImageWithAlt } from './imageWithAlt'
 import type { Reference } from 'sanity'
+import { Rule } from 'sanity'
+
 
 export type CarouselImage = {
   _type: 'carouselImage'
@@ -44,6 +46,7 @@ export default {
       type: 'array',
       of: [{ type: 'linkSelector', title: 'Link' }], 
       description: 'Optional link associated with the image.',
+      validation: (Rule: Rule) => Rule.max(1).error('Only one action is permitted'),
     },
   ],
   preview: {
