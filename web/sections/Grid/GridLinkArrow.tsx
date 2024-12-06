@@ -11,16 +11,16 @@ type GridLinkArrowProps = {
   action?: LinkData;
   className?: string;
   bgColor?: string;
-  rounded?: boolean;
+  variant?: "square" | "circle" ;
 };
 
 const GridLinkArrow = forwardRef<HTMLDivElement, GridLinkArrowProps>(function GridLinkArrow(
-  { action, className = '', bgColor, rounded = false },
+  { action, className = '', bgColor, variant = 'square' },
   ref,
 ) {
   const url = action && getUrlFromAction(action);
 
-  const variantClassName = () => {
+  const bgClassName = () => {
     switch (bgColor) {
       case 'bg-yellow-50':
       case 'bg-green-50':
@@ -38,7 +38,14 @@ const GridLinkArrow = forwardRef<HTMLDivElement, GridLinkArrowProps>(function Gr
     }
   };
 
-  const roundedClassName = rounded ? 'm-1 p-2 hover:rounded-full' : '';
+  const variantClassName = () => {
+    switch (variant) {
+      case 'circle':
+        return `m-1 p-2 hover:rounded-full`;
+      default:
+        return ``;
+    }
+  }
 
   return (
     <>
@@ -59,16 +66,16 @@ const GridLinkArrow = forwardRef<HTMLDivElement, GridLinkArrowProps>(function Gr
               py-2
               px-4
               focus:outline-none
+              ${bgClassName()}
               ${variantClassName()}
               focus-visible:envis-outline
               dark:focus-visible:envis-outline`,
-              roundedClassName,
             )}
           >
             <span className="sr-only">{`${action.label} ${
               action.extension ? `(${action.extension.toUpperCase()})` : ''
             }`}</span>
-            <ArrowRight className={rounded ? 'size-7' :`size-10`} />
+            <ArrowRight className={variant === 'circle' ? 'size-7' :`size-10`} />
           </BaseLink>
         </div>
       )}
