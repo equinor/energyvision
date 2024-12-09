@@ -1,4 +1,4 @@
-import { forwardRef, useMemo, useRef } from 'react'
+import { forwardRef, useRef } from 'react'
 import singletonRouter from 'next/router'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
 import type { NewsRoomPageType } from '../../types'
@@ -20,15 +20,13 @@ import { List } from '@core/List'
 import { PaginationContextProvider } from '../../common/contexts/PaginationContext'
 
 type NewsRoomTemplateProps = {
-  isServerRendered?: boolean
   locale?: string
   pageData?: NewsRoomPageType | undefined
   slug?: string
-  url?: string
 }
 
 const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function NewsRoomTemplate(
-  { isServerRendered, locale, pageData, slug, url },
+  { locale, pageData, slug },
   ref,
 ) {
   const { ingress, title, seoAndSome, subscriptionLink, subscriptionLinkTitle, localNewsPages, fallbackImages } =
@@ -89,7 +87,7 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
   const routing = {
     router: createInstantSearchRouterNext({
       singletonRouter,
-      serverUrl: url,
+      // serverUrl: `http://localhost:3000/${isoCode === 'nb-NO' ? 'no/nyheter' : 'news'}`, // uncomment this line for local development
       routerOptions: {
         createURL: createURL,
         parseURL: parseURL,
@@ -130,23 +128,17 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
     },
   }
 
-  const searchClient = useMemo(() => {
-    return isServerRendered
-      ? client({ headers: { 
-      //@ts-ignore: TODO
-        Referer: url } })
-      : client(undefined);
-  }, [isServerRendered, url]);
-  
+  const searchClient = client()
   return (
     <PaginationContextProvider defaultRef={resultsRef}>
       <Seo seoAndSome={seoAndSome} slug={slug} pageTitle={title} />
       <main ref={ref} className="">
-      <InstantSearch
-        searchClient={searchClient}
-        future={{ preserveSharedStateOnUnmount: false }}
-        indexName={indexName}
-        routing={routing}>
+        <InstantSearch
+          searchClient={searchClient}
+          future={{ preserveSharedStateOnUnmount: false }}
+          indexName={indexName}
+          routing={routing}
+        >
           <Configure
             facetingAfterDistinct
             maxFacetHits={50}
