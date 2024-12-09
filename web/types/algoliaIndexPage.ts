@@ -15,7 +15,9 @@ import { PortableTextBlock } from '@portabletext/types'
 import { SanityImageObject } from '@sanity/image-url/lib/types/types'
 
 export type AlgoliaIndexPageType = {
+  isServerRendered?: boolean
   serverState?: InstantSearchServerState
+  url: string
   data: {
     menuData?: MenuData
     footerData?: { footerColumns: FooterColumns[] }
@@ -34,6 +36,8 @@ export type NewsRoomNewsItem = {
   heroImage: ImageWithCaptionData
   thumbnailUrl?: string
   ingress?: string
+  tags?: any
+  countryTags?: any
 }
 
 export type NewsRoomPageType = {
@@ -42,6 +46,7 @@ export type NewsRoomPageType = {
   ingress?: PortableTextBlock[]
   subscriptionLink?: { slug: string; type: string; lang: string }
   subscriptionLinkTitle?: string
+  newsArticles: NewsRoomNewsItem[]
   localNewsPages?: LinkData[]
   fallbackImages?: SanityImageObject[]
 }
