@@ -32,6 +32,13 @@ export default async function handler(req, res) {
       })
     }
 
+    const revalidateNewsroomPages = async () => {
+      console.log(new Date(), 'Revalidating: /news')
+      res.revalidate(`/news`)
+      console.log(new Date(), 'Revalidating: /no/nyheter')
+      res.revalidate('/no/nyheter')
+    }
+
     if (['page', 'landingPage', 'event'].includes(data._type)) {
       const routes = await sanityClient.fetch(
         groq`*[_type match "route_*" && content._ref == $id]{"slug": slug.current}`,
@@ -53,6 +60,8 @@ export default async function handler(req, res) {
       console.log(new Date(), 'Revalidating: ', data?.slug)
       if (data.slug) await res.revalidate(data.slug)
       await revalidateHomePages()
+      // revalidate newsroom pages
+      if (data._type === 'news') await revalidateNewsroomPages()
       return res.json({ revalidated: true, slug: data.slug })
     }
   } catch (err) {
