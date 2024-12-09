@@ -87,7 +87,7 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
   const routing = {
     router: createInstantSearchRouterNext({
       singletonRouter,
-      // serverUrl: `http://localhost:3000/${isoCode === 'nb-NO' ? 'no/nyheter' : 'news'}`, // uncomment this line for local development
+      serverUrl: `https://www.equinor.com${isoCode === 'nb-NO' ? '/no/nyheter' : '/news'}`, // temporary fix for url to be available during build time
       routerOptions: {
         createURL: createURL,
         parseURL: parseURL,
