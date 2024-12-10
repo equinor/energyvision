@@ -17,7 +17,7 @@ const AnchorLinkList = forwardRef<HTMLElement, AnchorLinkListProps>(function Anc
   const { title, anchorList = [], columns } = data
 
   const getFlow = () => {
-    const commonGridStyling = 'grid auto-fill-fr lg:place-items-start'
+    const commonGridStyling = 'grid lg:place-items-start grid-cols-3'
     switch (columns) {
       case '3':
         return `${commonGridStyling} lg:grid-cols-3`
@@ -29,7 +29,7 @@ const AnchorLinkList = forwardRef<HTMLElement, AnchorLinkListProps>(function Anc
         return `${commonGridStyling} lg:grid-cols-6`
       default:
       case 'flex':
-        return 'grid auto-fill-fr justify-start'
+        return 'grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] justify-start'
     }
   }
   return (
