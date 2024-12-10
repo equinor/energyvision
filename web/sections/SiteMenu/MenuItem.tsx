@@ -7,7 +7,7 @@ import { useRouter } from 'next/router'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
 import { Typography } from '@core/Typography'
 
-const { MenuItem: _MenuItem, MenuHeader, MenuContent, MenuItemColumnsContainer } = Menu
+const { MenuItem: _MenuItem, MenuHeader, MenuContent } = Menu
 
 function getLink(linkData: MenuLinkData) {
   // Fallback to home page, if this happens it is an error somewhere
@@ -32,16 +32,25 @@ export const MenuItem = ({ item, index }: MenuGroupType) => {
 
   return (
     <_MenuItem value={`${index}`}>
-      <MenuHeader topLevelLink={menuItemHref} topLevelLabel={topLevelLink?.label} />
+      <MenuHeader>{topLevelLink?.label}</MenuHeader>
       <MenuContent className="">
-        <div className="xl:grid xl:grid-cols-[1fr_min-content]">
-          <div>
-            <div className="max-w-menuText xl:pr-lg xl:pb-2xl">
-              {intro && <Blocks value={intro} />}
-              <ReadMoreLink href={menuItemHref}>{topLevelLink?.label}</ReadMoreLink>
-            </div>
+        <div className="max-xl:mt-8 px-4 xl:px-layout-md xl:mx-auto">
+          <div className="w-full flex flex-col gap-2 pb-6">
+            {intro && <Blocks value={intro} />}
+            <ReadMoreLink href={menuItemHref}>{topLevelLink?.label}</ReadMoreLink>
+          </div>
+          <div className="flex-grow py-4 xl:py-10 border-y border-grey-30">
             {groups && groups.length > 0 && (
-              <MenuItemColumnsContainer>
+              <div
+                className="flex
+                flex-col
+                xl:grid
+                xl:grid-cols-[repeat(auto-fill,_minmax(8em,1fr)))]
+                xl:grid-rows-[min-content_min-content] 
+                xl:gap-y-2 
+                xl:gap-x-20 
+                xl:grid-flow-col"
+              >
                 {groups.map((groupItem: SubMenuGroupData) => {
                   return (
                     <Fragment key={groupItem.id}>
@@ -50,36 +59,34 @@ export const MenuItem = ({ item, index }: MenuGroupType) => {
                           as="h3"
                           variant="h5"
                           className={`uppercase
+                            max-xl:pb-2
                             text-moss-green-95
                             font-semibolder
-                            tracking-[0.15em]
                             text-sm
-                            leading-earthy
-                            pt-10 
-                            px-6
-                            pb-6
+                            leading-earthy 
                             xl:font-semibold
-                            xl:text-2xs
-                            xl:p-0
+                            xl:text-xs
                         `}
                         >
                           {groupItem.label}
                         </Typography>
                       )}
                       <ul
-                        className="xl:flex xl:flex-col xl:flex-wrap xl:h-full xl:max-w-[calc(13_*_theme(spacing.md))]"
+                        className="flex flex-col xl:flex-wrap xl:h-full max-xl:pb-6"
                         aria-label={groupItem.label || topLevelLink?.label}
                       >
                         {groupItem.links?.map((link: MenuLinkData) => (
                           <li key={link.id}>
                             <Link
-                              className={`flex 
+                              className={` 
                                 aria-current:bg-grey-10
-                                hover:bg-grey-10
-                                w-auto no-underline
-                                px-md 
-                                py-xs+sm
-                                xl:ml-[calc(var(--space-medium)_*_(-1))]
+                                aria-current:px-2
+                                aria-current:-ml-2
+                                py-2
+                                hover:underline 
+                                underline-offset-2
+                                text-sm
+                                no-underline
                                 aria-current:border-l-[3px]
                                 aria-current:border-moss-green-95`}
                               href={getLink(link)}
@@ -93,9 +100,11 @@ export const MenuItem = ({ item, index }: MenuGroupType) => {
                     </Fragment>
                   )
                 })}
-              </MenuItemColumnsContainer>
+              </div>
             )}
           </div>
+        </div>
+        <div className="xl:px-layout-md xl:mx-auto px-4 pt-4 xl:pt-10 pb-12">
           {featuredContent && <FeaturedContent data={featuredContent} />}
         </div>
       </MenuContent>

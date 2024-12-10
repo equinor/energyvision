@@ -33,30 +33,57 @@ export const Header = forwardRef<HTMLButtonElement, AccordionHeaderProps>(functi
   const headerVariantClassName: Partial<Record<Variants, string>> = {
     primary: '',
     secondary: '',
+    menu: '',
     plain: '',
   }
   const variantClassName: Partial<Record<Variants, string>> = {
     primary: `flex 
-      items-center
-      w-full
-      bg-transparent
-      sm:py-6
-      border-none
-      cursor-pointer
-      focus-visible:envis-outline
-      dark:focus-visible:envis-outline-invert`,
-    secondary: 'group/trigger w-full flex justify-between border-b py-3 border-moss-green-90',
+    items-center
+    w-full
+    bg-transparent
+    py-4
+    xl:py-6
+    border-none`,
+    secondary: 'w-full flex justify-between border-b py-3 border-moss-green-90',
+    menu: `
+    py-4
+    px-2
+    xl:px-6
+    xl:my-4
+    w-full
+    flex
+    items-center
+    justify-between
+    text-base
+    xl:text-sm
+    bg-transparent
+    hover:underline
+    underline-offset-2
+    aria-current:bg-grey-10
+    border-b
+    border-grey-20
+    xl:border-t-0
+    xl:border-transparent
+    xl:border-b-2
+    data-open:xl:border-moss-green-95
+    aria-current:border-moss-green-95
+    font-normal 
+    data-open:font-bold 
+    data-open:xl:font-normal
+    leading-none`,
     plain: '',
   }
   const iconVariantClassName: Partial<Record<Variants, string>> = {
     primary: '',
-    secondary: 'rotate-180 group-data-closed/trigger:rotate-0',
+    secondary: 'rotate-180 group-data-closed/trigger:rotate-0 text-grey-70',
+    menu: 'rotate-180 group-data-closed/trigger:rotate-0 xl:hidden text-grey-70',
     plain: '',
   }
 
   const getVariantBody = () => {
     switch (variant) {
       case 'secondary':
+      case 'menu':
         return (
           <>
             {children}
@@ -142,7 +169,11 @@ export const Header = forwardRef<HTMLButtonElement, AccordionHeaderProps>(functi
         <AccordionTrigger
           ref={ref}
           className={envisTwMerge(
-            `group
+            `group/trigger
+            cursor-pointer
+            focus:outline-none
+            focus-visible:envis-outline
+            dark:focus-visible:envis-outline-invert
           ${variantClassName[variant]}
           `,
             className,

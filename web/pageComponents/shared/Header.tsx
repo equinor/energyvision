@@ -6,7 +6,6 @@ import { default as NextLink } from 'next/link'
 import { Topbar, BackgroundContainer } from '@components'
 import { AllSlugsType, LocalizationSwitch } from './LocalizationSwitch'
 import type { MenuData, SimpleMenuData } from '../../types/index'
-import SimpleSiteMenu from './siteMenu/simple/SimpleSiteMenu'
 import { Flags } from '../../common/helpers/datasetHelpers'
 import { languages, defaultLanguage } from '../../languages'
 import { FormattedMessage, useIntl } from 'react-intl'
@@ -189,7 +188,7 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
                 </ControlChild>
               ) : (
                 <ControlChild>
-                  <SimpleSiteMenu data={menuData as SimpleMenuData} />
+                  <SiteMenu variant="simple" data={menuData as SimpleMenuData} />
                 </ControlChild>
               )}
             </ControlsContainer>

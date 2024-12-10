@@ -1,25 +1,32 @@
 import { Icon } from '@equinor/eds-core-react'
 import { add, minimize } from '@equinor/eds-icons'
-import { AccordionButton, useAccordionItemState } from '@chakra-ui/react'
 import { Typography, TypographyProps } from '@core/Typography'
+import { Accordion } from '@core/Accordion'
 
 type SimpleHeaderProps = TypographyProps
 
 export const SimpleHeader = ({ children, ...rest }: SimpleHeaderProps) => {
-  const { isOpen } = useAccordionItemState()
-
   return (
     <Typography as="h2" {...rest}>
-      <AccordionButton
-        className={
-          'flex items-center focus-visible:envis-outline outline-none justify-between w-full bg-transparent py-md border-none cursor-pointer'
-        }
+      <Accordion.Header
+        className="group 
+        flex 
+        items-center 
+        focus-visible:envis-outline 
+        outline-none 
+        justify-between 
+        w-full 
+        bg-transparent 
+        py-md 
+        border-none 
+        cursor-pointer"
       >
-        <Typography as="span" className={`${isOpen ? 'font-bold' : 'font-normal'}`}>
+        <Typography as="span" className="font-normal group-open:font-bold">
           {children}
         </Typography>
-        <Icon data={isOpen ? minimize : add} />
-      </AccordionButton>
+        <Icon data={minimize} className="hidden group-open:block" />
+        <Icon data={add} className="group-open:hidden" />
+      </Accordion.Header>
     </Typography>
   )
 }

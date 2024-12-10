@@ -14,7 +14,7 @@ export const MenuButton = forwardRef<HTMLButtonElement, MenuButtonProps>(functio
     <button
       ref={ref}
       aria-label={title}
-      data-open={expanded}
+      data-state={expanded ? 'open' : 'closed'}
       className={`
         group
         min-w-12

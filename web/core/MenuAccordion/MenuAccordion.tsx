@@ -1,33 +1,37 @@
-import * as _Accordion from '@radix-ui/react-accordion'
+import { Accordion, AccordionSingleProps } from '@core/Accordion'
+import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
 import { forwardRef } from 'react'
+
+export type Variants = 'default' | 'simple'
 
 export type MenuAccordionProps = {
   id?: string
-} & Omit<_Accordion.AccordionSingleProps, 'type'>
-
-/* const StyledAccordion = styled(Accordion)`
-  @media (min-width: 700px) {
-    margin: var(--menu-paddingVertical) 0 0 var(--menu-paddingHorizontal);
-    width: var(--minViewportWidth);?
-  }
-` */
+  variant?: Variants
+} & Omit<AccordionSingleProps, 'type'>
 
 export const MenuAccordion = forwardRef<HTMLDivElement, MenuAccordionProps>(function MenuAccordion(
-  { children, ...rest },
+  { children, variant = 'default', ...rest },
   ref,
 ) {
+  const isMobile = useMediaQuery(`(max-width: 800px)`)
+
+  const variantClassName: Partial<Record<Variants, string>> = {
+    default: 'w-auto mx-auto flex flex-col xl:flex-row',
+    simple: 'flex flex-col',
+  }
+
   return (
-    <_Accordion.Root
+    <Accordion
       {...rest}
       type="single"
-      orientation="horizontal"
       ref={ref}
       id="menu-accordion"
-      role="menu"
       asChild
-      className="w-auto text-base m-0 p-0 list-none md:mt-layout-md md:ml-layout-md xl:mt-0 xl:ml-auto xl:flex"
+      collapsible
+      orientation={isMobile ? 'vertical' : 'horizontal'}
+      className={`${variantClassName[variant]}`}
     >
       <ul>{children}</ul>
-    </_Accordion.Root>
+    </Accordion>
   )
 })

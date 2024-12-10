@@ -827,6 +827,11 @@ const snippets: textSnippet = {
     defaultValue: 'Equinor homepage',
     group: groups.common,
   },
+  featured_content: {
+    title: 'Featured content',
+    defaultValue: 'Featured content',
+    group: groups.common,
+  },
 }
 
 type textSnippetGroup = { title: string; hidden?: boolean }

@@ -1,23 +1,18 @@
 import { forwardRef } from 'react'
-import { AccordionContent, AccordionContentProps } from '@radix-ui/react-accordion'
-import envisTwMerge from '../../twMerge'
+import { Variants } from './MenuAccordion'
+import { Accordion, AccordionContentProps } from '@core/Accordion'
 
-export type MenuContentProps = AccordionContentProps
+export type MenuContentProps = {
+  variant?: Variants
+} & Omit<AccordionContentProps, 'variant'>
 
 export const MenuContent = forwardRef<HTMLDivElement, MenuContentProps>(function SubMenuPanel(
-  { className = '', children, ...rest },
+  { className = '', variant = 'default', children, ...rest },
   ref,
 ) {
   return (
-    <AccordionContent
-      ref={ref}
-      className={envisTwMerge(
-        `bg-white-100 xl:absolute xl:left-0 xl:right-0 py-6 max-w-[1700px] mx-auto top:265px`,
-        className,
-      )}
-      {...rest}
-    >
-      <div className="pb-10 xl:px-16">{children}</div>
-    </AccordionContent>
+    <Accordion.Content variant={variant === 'simple' ? 'secondary' : 'menu'} ref={ref} className={className} {...rest}>
+      {children}
+    </Accordion.Content>
   )
 })

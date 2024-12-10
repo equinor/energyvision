@@ -20,20 +20,15 @@ export const MenuIcon = (className = '') => {
   group-data-open:nth-2:-rotate-45
   group-data-open:nth-2:top-[25px]
   group-data-open:nth-2:left-[5px]
-  group-data-open:group-hover:nth-1:top-[9px]
-  group-data-open:group-hover:nth-2:top-[21px]
   `
   return (
     <span
       className={envisTwMerge(
-        `
-    relative
-    overflow-auto
-    hidden 
-    group-data-open:block 
-    w-[30px]
-    h-[30px]
-  `,
+        `relative
+        overflow-hidden
+        w-[30px]
+        h-[30px]
+        `,
         className,
       )}
       aria-hidden="true"
