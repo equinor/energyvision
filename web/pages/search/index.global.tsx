@@ -7,12 +7,12 @@ import { getIsoFromLocale } from '../../lib/localization'
 import getIntl from '../../common/helpers/getIntl'
 import { Icon } from '@equinor/eds-core-react'
 import { close } from '@equinor/eds-icons'
-import { TopbarDropdown } from '../../pageComponents/shared/siteMenu/TopbarDropdown'
-import { NavTopbar } from '../../pageComponents/shared/siteMenu/NavTopbar'
 import { LogoLink } from '../../core/Link/LogoLink'
 import Search from '../../pageComponents/search/Search'
 import { useRouter } from 'next/router'
 import { FloatingOverlay } from '@floating-ui/react'
+import { TopbarDropdown } from '@sections/SiteMenu/TopbarDropdown'
+import { NavTopbar } from '@sections/SiteMenu/NavTopbar'
 
 export default function SearchPage() {
   const router = useRouter()

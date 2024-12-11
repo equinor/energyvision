@@ -1,5 +1,4 @@
 import { forwardRef, ButtonHTMLAttributes } from 'react'
-import { MenuIcon } from './MenuIcon'
 
 export type MenuButtonProps = {
   expanded?: boolean
@@ -10,6 +9,27 @@ export const MenuButton = forwardRef<HTMLButtonElement, MenuButtonProps>(functio
   { expanded = false, title, ...rest },
   ref,
 ) {
+  const lineClassName = `
+  block
+  absolute
+  h-[2.5px]
+  w-full
+  bg-slate-80
+  rounded-[3px]
+  l-0
+  transition-all duration-[250ms]
+  nth-1:top-2.5
+  nth-1:origin-[left_center]
+  nth-2:top-[18px]
+  nth-2:origin-[left_center]
+  group-data-open:nth-1:rotate-45
+  group-data-open:nth-1:top-1
+  group-data-open:nth-1:left-[5px]
+  group-data-open:nth-2:-rotate-45
+  group-data-open:nth-2:top-[25px]
+  group-data-open:nth-2:left-[5px]
+  `
+
   return (
     <button
       ref={ref}
@@ -44,7 +64,18 @@ export const MenuButton = forwardRef<HTMLButtonElement, MenuButtonProps>(functio
       {...rest}
     >
       <span className="leading-[1em] hidden break-keep sm:block">{title}</span>
-      <MenuIcon />
+      {/* ICON  */}
+      <span
+        className={`relative
+        overflow-hidden
+        w-[30px]
+        h-[30px]
+        `}
+        aria-hidden="true"
+      >
+        <span className={lineClassName}></span>
+        <span className={lineClassName}></span>
+      </span>
     </button>
   )
 })

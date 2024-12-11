@@ -9,7 +9,7 @@ export interface AccordionMultipleProps extends _Accordion.AccordionMultipleProp
   type: 'multiple'
 }
 
-export type Variants = 'primary' | 'secondary' | 'menu' | 'plain'
+export type Variants = 'primary' | 'menu'
 
 /**
  * Accordion

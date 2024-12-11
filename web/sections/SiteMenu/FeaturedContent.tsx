@@ -3,33 +3,19 @@ import { EventCard } from '@sections/cards/EventCard'
 import { Banner } from '@core/Banner/Banner'
 import { FormattedMessage } from 'react-intl'
 import { Typography } from '@core/Typography'
+import { PortableTextBlock } from '@portabletext/types'
 
 type Props = {
-  data: FeaturedContentData
+  featuredContent: FeaturedContentData
+  featuredCTALabel?: string
+  featuredIngress: PortableTextBlock[] | undefined
 }
 
-const FeaturedContent = ({ data }: Props) => {
-  if (!data.type) return null
+const FeaturedContent = ({ featuredContent, featuredCTALabel, featuredIngress }: Props) => {
+  if (!featuredContent.type) return null
 
   const isEvent = (data: FeaturedContentData): boolean => data?.routeContentType === 'event'
-  //To destructure and get rid of 2 but keep rest
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { routeContentType, type, heroImage, title, ingress, publishDateTime, slug } = data
-
-  if (isEvent(data)) {
-    return (
-      <EventCard
-        data={
-          {
-            type: 'events',
-            ...data,
-          } as EventCardData
-        }
-        hasSectionTitle={false}
-        className="h-fit"
-      />
-    )
-  }
+  const { type, heroImage, title, ingress, slug } = featuredContent
 
   return (
     <div className="">
@@ -41,24 +27,37 @@ const FeaturedContent = ({ data }: Props) => {
             font-semibolder
             text-sm
             leading-earthy
-            pb-2
-            xl:pt-10 
-            xl:px-6
+            pt-2
+            pb-4
             xl:pb-6
             xl:font-semibold
             xl:text-xs
-            xl:p-0
             `}
       >
         <FormattedMessage id="featured_content" defaultMessage="Featured" />
       </Typography>
-      <Banner
-        image={heroImage.image}
-        variant={type === 'news' || type === 'localNews' ? 'secondary' : 'primary'}
-        title={title}
-        ingress={ingress}
-        slug={slug}
-      />
+      {isEvent(featuredContent) ? (
+        <EventCard
+          data={
+            {
+              type: 'events',
+              ...featuredContent,
+            } as EventCardData
+          }
+          hasSectionTitle={false}
+          className="h-fit"
+        />
+      ) : (
+        <Banner
+          image={heroImage.image}
+          variant={type === 'news' || type === 'localNews' ? 'secondary' : 'primary'}
+          //@ts-ignore:TODO - find out why any[] and not portabletext[]
+          title={title}
+          ingress={ingress ?? featuredIngress}
+          ctaLink={slug}
+          ctaLabel={featuredCTALabel}
+        />
+      )}
     </div>
   )
 }

@@ -13,8 +13,6 @@ export const Item = forwardRef<HTMLDivElement, AccordionItemProps>(function Item
 ) {
   const variantClassName: Partial<Record<Variants, string>> = {
     primary: 'border-b border-grey-40 dark:border-white-100',
-    secondary: '',
-    plain: '',
     menu: '',
   }
   return (

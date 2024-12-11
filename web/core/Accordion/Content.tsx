@@ -1,7 +1,6 @@
-import { forwardRef, useMemo, useRef } from 'react'
+import { forwardRef } from 'react'
 import { AccordionContent, AccordionContentProps as _AccordionContentProps } from '@radix-ui/react-accordion'
 import envisTwMerge from '../../twMerge'
-import { mergeRefs } from '@equinor/eds-utils'
 import { Variants } from './Accordion'
 import { motion } from 'framer-motion'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
@@ -19,24 +18,17 @@ export const Content = forwardRef<HTMLDivElement, AccordionContentProps>(functio
   { variant = 'primary', children, className = '', ...rest },
   ref,
 ) {
-  /*   const contentRef = useRef<HTMLDivElement>(null)
-  const combinedContentRef = useMemo(
-    () => mergeRefs<HTMLDivElement>(contentRef, forwardedRef),
-    [contentRef, forwardedRef],
-  ) */
   const isMobile = useMediaQuery(`(max-width: 800px)`)
 
   const commonSlideUpDown = `overflow-hidden motion-safe:data-closed:animate-slideDown motion-safe:data-open:animate-slideUp`
 
   const variantClassName: Partial<Record<Variants, string>> = {
     primary: `${commonSlideUpDown}`,
-    secondary: `${commonSlideUpDown}`,
     menu: `
     max-lg:overflow-hidden
     max-lg:motion-safe:data-closed:animate-slideDown
     max-lg:motion-safe:data-open:animate-slideUp
     `,
-    plain: '',
   }
 
   /**
@@ -56,12 +48,6 @@ export const Content = forwardRef<HTMLDivElement, AccordionContentProps>(functio
 
   const getVariantBody = () => {
     switch (variant) {
-      case 'primary':
-        return (
-          <div className="pt-0 ml-2.5 border-l border-dashed border-energy-red-100 pl-7 pr-4 pb-6 mb-6 flex flex-col gap-6">
-            {children}
-          </div>
-        )
       case 'menu':
         return isMobile ? (
           <>{children}</>
@@ -79,7 +65,11 @@ export const Content = forwardRef<HTMLDivElement, AccordionContentProps>(functio
         )
 
       default:
-        return <>{children}</>
+        return (
+          <div className="pt-0 ml-2.5 border-l border-dashed border-slate-80 pl-7 pr-4 pb-6 mb-6 flex flex-col gap-6">
+            {children}
+          </div>
+        )
     }
   }
 

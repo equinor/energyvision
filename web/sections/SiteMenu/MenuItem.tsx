@@ -1,5 +1,5 @@
 import { Fragment } from 'react'
-import { Link, ReadMoreLink } from '@core/Link'
+import { Link, ResourceLink } from '@core/Link'
 import { Menu } from '@core/MenuAccordion'
 import type { MenuLinkData, SubMenuData, SubMenuGroupData } from '../../types/index'
 import FeaturedContent from './FeaturedContent'
@@ -25,7 +25,7 @@ type MenuGroupType = {
 }
 
 export const MenuItem = ({ item, index }: MenuGroupType) => {
-  const { topLevelLink, groups, intro, featuredContent } = item
+  const { topLevelLink, groups, intro, featuredContent, featuredCTALabel, featuredIngress } = item
 
   const menuItemHref = getLink(topLevelLink)
   const router = useRouter()
@@ -34,12 +34,14 @@ export const MenuItem = ({ item, index }: MenuGroupType) => {
     <_MenuItem value={`${index}`}>
       <MenuHeader>{topLevelLink?.label}</MenuHeader>
       <MenuContent className="">
-        <div className="max-xl:mt-8 px-4 xl:px-layout-md xl:mx-auto">
+        <div className="max-xl:mt-8 px-4 xl:px-layout-sm xl:mx-auto">
           <div className="w-full flex flex-col gap-2 pb-6">
             {intro && <Blocks value={intro} />}
-            <ReadMoreLink href={menuItemHref}>{topLevelLink?.label}</ReadMoreLink>
+            <ResourceLink href={menuItemHref} className="w-fit">
+              {topLevelLink?.label}
+            </ResourceLink>
           </div>
-          <div className="flex-grow py-4 xl:py-10 border-y border-grey-30">
+          <div className="flex-grow py-4 xl:py-10 border-b border-grey-30">
             {groups && groups.length > 0 && (
               <div
                 className="flex
@@ -62,7 +64,7 @@ export const MenuItem = ({ item, index }: MenuGroupType) => {
                             max-xl:pb-2
                             text-moss-green-95
                             font-semibolder
-                            text-sm
+                            text-xs
                             leading-earthy 
                             xl:font-semibold
                             xl:text-xs
@@ -104,8 +106,14 @@ export const MenuItem = ({ item, index }: MenuGroupType) => {
             )}
           </div>
         </div>
-        <div className="xl:px-layout-md xl:mx-auto px-4 pt-4 xl:pt-10 pb-12">
-          {featuredContent && <FeaturedContent data={featuredContent} />}
+        <div className="xl:px-layout-sm xl:mx-auto px-4 pt-4 xl:pt-6 pb-12">
+          {featuredContent && (
+            <FeaturedContent
+              featuredContent={featuredContent}
+              featuredIngress={featuredIngress}
+              featuredCTALabel={featuredCTALabel}
+            />
+          )}
         </div>
       </MenuContent>
     </_MenuItem>

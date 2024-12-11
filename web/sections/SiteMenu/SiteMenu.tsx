@@ -36,7 +36,6 @@ const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
     return data && variant === 'simple' ? (data as SimpleMenuData).groups : (data as MenuData).subMenus
   }, [data, variant])
 
-  console.log('menuItems', menuItems)
   const handleRouteChange = useCallback(() => {
     setIsOpen(false)
   }, [])

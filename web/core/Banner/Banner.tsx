@@ -1,17 +1,14 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { forwardRef, HTMLAttributes } from 'react'
-import { getUrlFromAction } from '../../common/helpers'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
 import { PortableTextBlock } from '@portabletext/types'
-import { ImageWithAlt, LinkData } from '../../types'
+import { ImageWithAlt } from '../../types'
 import { ColorKeyTokens } from '../../styles/colorKeyToUtilityMap'
-import { BaseLink, ReadMoreLink } from '@core/Link'
+import { BaseLink, ResourceLink } from '@core/Link'
 import Image, { Ratios } from '../../pageComponents/shared/SanityImage'
-import { getLocaleFromName } from '../../lib/localization'
 import { Heading, Typography } from '@core/Typography'
 import envisTwMerge from '../../twMerge'
 import IngressText from '../../pageComponents/shared/portableText/IngressText'
-import { ArrowRight } from '../../icons'
 
 export type Variants = 'primary' | 'secondary'
 
@@ -21,8 +18,8 @@ export type BannerProps = {
   ingress?: PortableTextBlock[]
   content?: PortableTextBlock[]
   image?: ImageWithAlt
-  action?: LinkData
-  slug?: string
+  ctaLabel?: string
+  ctaLink?: string
   className?: string
   /* Override styling on typography element. */
   titleClassName?: string
@@ -30,22 +27,9 @@ export type BannerProps = {
 } & HTMLAttributes<HTMLDivElement>
 
 export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
-  { title, ingress, content, image, action, slug, className = '', variant = 'primary', titleClassName = '' },
+  { title, ingress, content, image, ctaLabel, ctaLink, className = '', variant = 'primary', titleClassName = '' },
   ref,
 ) {
-  const url = action && getUrlFromAction(action)
-
-  const iconClassNames = envisTwMerge(
-    `size-arrow-right
-    text-energy-red-100
-    mr-2
-    group-hover:translate-x-2
-    transition-all
-    duration-300
-    mt-6
-  `,
-  )
-
   const contentVariantClassName: Partial<Record<Variants, string>> = {
     primary: 'group flex flex-col pt-4 pb-6 xl:pb-16',
     secondary: 'group flex flex-col pt-4 pb-6 xl:pb-16',
@@ -55,28 +39,27 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
     secondary: 'text-base pb-4',
   }
   const titleClassNames = envisTwMerge(
-    `group-hover:underline
-    peer-hover:underline
+    `${!ctaLabel ? 'group-hover:underline peer-hover:underline' : ''}
     ${titleVariantClassName[variant]}`,
     titleClassName,
   )
 
+  const titleElement = (
+    <>
+      {typeof title === 'string' ? (
+        <Typography as="h2" variant="h4" className={titleClassNames}>
+          {title}
+        </Typography>
+      ) : (
+        //@ts-ignore: Checked earlier for undefined title
+        <Heading as="h2" variant="h4" className={titleClassNames} value={title} />
+      )}
+    </>
+  )
+
   const contentElements = (
     <>
-      {title && (
-        <>
-          {typeof title === 'string' ? (
-            <Typography as="h2" variant="h4" className={titleClassNames}>
-              {title}
-            </Typography>
-          ) : (
-            <Heading as="h2" variant="h4" className={titleClassNames} value={title} />
-          )}
-        </>
-      )}
-      {ingress && (
-        <IngressText value={ingress} clampLines={3} className={`${variant === 'secondary' ? 'text-xs' : ''}`} />
-      )}
+      {ingress && <IngressText value={ingress} clampLines={3} className={`text-sm py-2`} />}
       {content && variant !== 'secondary' && <Blocks value={content} />}
     </>
   )
@@ -88,28 +71,32 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
         className,
       )}
     >
-      {action && (
+      {ctaLink && (
         <div className={`${contentVariantClassName[variant]}`}>
-          {contentElements}
-          {action && (
-            <ReadMoreLink
-              href={url as string}
-              {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
-              type={action.type}
-              className="peer pt-6"
-            >
-              {`${action.label} ${action.extension ? `(${action.extension.toUpperCase()})` : ''}`}
-            </ReadMoreLink>
+          {ctaLabel ? (
+            <>
+              {title && titleElement}
+              {contentElements}
+              <ResourceLink href={ctaLink} type="internalUrl" className="w-fit">
+                {ctaLabel}
+              </ResourceLink>
+            </>
+          ) : (
+            <>
+              <BaseLink href={ctaLink} type="internalUrl">
+                {titleElement ?? 'Missing title'}
+              </BaseLink>
+              {contentElements}
+            </>
           )}
         </div>
       )}
-      {slug && (
-        <BaseLink href={slug} className={`${contentVariantClassName[variant]}`}>
+      {!ctaLink && (
+        <div className={`${contentVariantClassName[variant]}`}>
+          {title && titleElement}
           {contentElements}
-          {!action && slug && <ArrowRight className={iconClassNames} />}
-        </BaseLink>
+        </div>
       )}
-      {!action && !slug && <div className={`${contentVariantClassName[variant]}`}>{contentElements}</div>}
       <div className="relative w-full h-full">
         {image && (
           <Image
