@@ -33,7 +33,7 @@ export const Header = forwardRef<HTMLButtonElement, AccordionHeaderProps>(functi
   const headerVariantClassName: Partial<Record<Variants, string>> = {
     primary: '',
     menu: '',
-    simple_menu: '',
+    simpleMenu: '',
   }
   const variantClassName: Partial<Record<Variants, string>> = {
     primary: ` 
@@ -62,7 +62,7 @@ export const Header = forwardRef<HTMLButtonElement, AccordionHeaderProps>(functi
     xl:border-b-2
     data-open:xl:border-moss-green-95
     data-open:xl:font-normal`,
-    simple_menu: `py-3
+    simpleMenu: `py-3
     px-2
     items-center
     text-base
@@ -76,7 +76,7 @@ export const Header = forwardRef<HTMLButtonElement, AccordionHeaderProps>(functi
   const textVariantClassName: Partial<Record<Variants, string>> = {
     primary: 'text-base',
     menu: 'text-base xl:text-sm',
-    simple_menu: 'text-base xl:text-sm',
+    simpleMenu: 'text-base xl:text-sm',
   }
 
   return (

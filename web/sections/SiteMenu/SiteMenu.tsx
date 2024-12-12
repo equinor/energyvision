@@ -49,7 +49,7 @@ const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
   const allSitesURL = getAllSitesLink('internal', router?.locale || 'en')
 
   const getCurrentMenuItemIndex = () => {
-    const temp = menuItems
+    return menuItems
       .findIndex((menuItem) => {
         if (variant === 'simple') {
           if ('link' in menuItem && menuItem?.link) {
@@ -65,8 +65,6 @@ const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
         }
       })
       .toString()
-    console.log('temo', temp)
-    return temp
   }
 
   const variantClassName: Partial<Record<Variants, string>> = {
@@ -116,13 +114,12 @@ const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
                     ${
                       variant === 'simple'
                         ? 'py-4 xl:py-6 text-sm'
-                        : `py-6
-                      px-2
-                      xl:px-6
-                      xl:my-4
-                      xl:py-4
-                      text-base
-                      `
+                        : `py-6 
+                        px-2
+                        xl:px-6
+                        xl:my-4
+                        xl:py-4
+                        text-base`
                     }
                     xl:text-sm
                     leading-none

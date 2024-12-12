@@ -8,7 +8,7 @@ export type MenuItemProps = {
 
 export const MenuItem = ({ children, variant = 'default', ...rest }: MenuItemProps) => {
   return (
-    <Accordion.Item variant={variant === 'simple' ? 'simple_menu' : 'menu'} asChild {...rest}>
+    <Accordion.Item variant={variant === 'simple' ? 'simpleMenu' : 'menu'} asChild {...rest}>
       <li>{children}</li>
     </Accordion.Item>
   )

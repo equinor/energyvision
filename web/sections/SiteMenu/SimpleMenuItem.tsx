@@ -79,7 +79,7 @@ export const SimpleMenuItem = ({ item, index }: MenuGroupType) => {
                     `}
               >
                 {links?.map((link: any) => (
-                  <li className="" key={link.id}>
+                  <li key={link.id}>
                     <Link
                       className={`aria-current:bg-grey-10
                           aria-current:px-2
@@ -91,18 +91,6 @@ export const SimpleMenuItem = ({ item, index }: MenuGroupType) => {
                           hover:underline 
                           underline-offset-2
                           text-sm`}
-                      /**
-                     * flex 
-                      aria-current:bg-grey-10
-                      hover:bg-grey-10
-                      m-0
-                      no-underline
-                      px-md
-                      py-xs+sm
-                      xl:ml-[calc(var(--space-medium)_*_(-1))]
-                      aria-current:border-l-[3px]
-                      aria-current:border-moss-green-95
-                     */
                       href={link?.link?.slug || '/'}
                       aria-current={router?.asPath == link?.link?.slug ? 'page' : 'false'}
                     >

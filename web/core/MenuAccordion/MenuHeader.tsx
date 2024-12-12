@@ -19,7 +19,7 @@ export const MenuHeader = forwardRef<HTMLButtonElement, MenuHeaderProps>(functio
   return (
     <Accordion.Header
       ref={ref}
-      variant={variant === 'simple' ? 'simple_menu' : 'menu'}
+      variant={variant === 'simple' ? 'simpleMenu' : 'menu'}
       className={envisTwMerge(`${variantClassName[variant]}`, className)}
     >
       {children}

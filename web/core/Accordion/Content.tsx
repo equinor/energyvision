@@ -28,25 +28,10 @@ export const Content = forwardRef<HTMLDivElement, AccordionContentProps>(functio
     max-lg:motion-safe:data-closed:animate-slideDown
     max-lg:motion-safe:data-open:animate-slideUp
     `,
-    simple_menu: `max-lg:overflow-hidden
+    simpleMenu: `max-lg:overflow-hidden
     max-lg:motion-safe:data-closed:animate-slideDown
     max-lg:motion-safe:data-open:animate-slideUp`,
   }
-
-  /**
-   *     
-   *     motion-safe:data-open:xl:animate-fadeIn
-    motion-safe:data-closed:xl:animate-fadeOut
-   * xl:absolute
-    xl:left-0
-    xl:top-[260px]
-    xl:right-0
-
-    xl:transition-visibility
-    xl:duration-300
-    xl:ease-in-out
-    overflow-hidden
-   */
 
   const getVariantBody = () => {
     switch (variant) {
@@ -65,7 +50,7 @@ export const Content = forwardRef<HTMLDivElement, AccordionContentProps>(functio
             {children}
           </motion.div>
         )
-      case 'simple_menu':
+      case 'simpleMenu':
         return <div className="pl-4 py-6 xl:py-10">{children}</div>
 
       default:
