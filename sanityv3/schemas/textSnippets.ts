@@ -832,6 +832,16 @@ const snippets: textSnippet = {
     defaultValue: 'Categories',
     group: groups.common,
   },
+  logolink_title: {
+    title: 'Equinor logo link',
+    defaultValue: 'Equinor homepage',
+    group: groups.common,
+  },
+  featured_content: {
+    title: 'Featured content',
+    defaultValue: 'Featured content',
+    group: groups.common,
+  },
 }
 
 type textSnippetGroup = { title: string; hidden?: boolean }

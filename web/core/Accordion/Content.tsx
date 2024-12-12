@@ -1,8 +1,14 @@
-import { forwardRef, useMemo, useRef } from 'react'
+import { forwardRef } from 'react'
 import { AccordionContent, AccordionContentProps as _AccordionContentProps } from '@radix-ui/react-accordion'
 import envisTwMerge from '../../twMerge'
-import { mergeRefs } from '@equinor/eds-utils'
 import { Variants } from './Accordion'
+import { motion } from 'framer-motion'
+import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
+
+const contentVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1 },
+}
 
 export type AccordionContentProps = {
   variant?: Variants
@@ -10,95 +16,61 @@ export type AccordionContentProps = {
 
 export const Content = forwardRef<HTMLDivElement, AccordionContentProps>(function Content(
   { variant = 'primary', children, className = '', ...rest },
-  forwardedRef,
+  ref,
 ) {
-  const contentRef = useRef<HTMLDivElement>(null)
-  const combinedContentRef = useMemo(
-    () => mergeRefs<HTMLDivElement>(contentRef, forwardedRef),
-    [contentRef, forwardedRef],
-  )
+  const isMobile = useMediaQuery(`(max-width: 800px)`)
 
-  /*   const [collapsedHeight, setCollapsedHeight] = useState<number>()
-  useEffect(() => {
-    if (!contentRef.current) {
-      return
-    }
-    if (contentRef.current && forceMount) {
-      const currentHeight = contentRef.current.clientHeight
-      const height = Math.max(collapsedHeight ?? 0, currentHeight)
-      setCollapsedHeight(height)
-    }
-  }, [collapsedHeight, contentRef, forceMount]) */
+  const commonSlideUpDown = `overflow-hidden motion-safe:data-closed:animate-slideDown motion-safe:data-open:animate-slideUp`
 
   const variantClassName: Partial<Record<Variants, string>> = {
-    primary: '',
-    secondary: '',
+    primary: `${commonSlideUpDown}`,
+    menu: `max-lg:overflow-hidden
+    max-lg:motion-safe:data-closed:animate-slideDown
+    max-lg:motion-safe:data-open:animate-slideUp
+    `,
+    simpleMenu: `max-lg:overflow-hidden
+    max-lg:motion-safe:data-closed:animate-slideDown
+    max-lg:motion-safe:data-open:animate-slideUp`,
   }
-
-  /**
-  * pt-0 
-         ml-2.5
-         border-l
-         border-dashed
-         border-energy-red-100
-         pl-7
-         pr-4
-         pb-6
-         mb-6
-         [&p]:last:mb-0
-         flex
-         flex-col
-         gap-6
-  */
 
   const getVariantBody = () => {
     switch (variant) {
-      case 'primary':
-        return (
-          <div
-            className={`pt-0 
-         ml-2.5
-         border-l
-         border-dashed
-         border-energy-red-100
-         pl-7
-         pr-4
-         pb-6
-         mb-6
-         flex
-         flex-col
-         gap-6`}
+      case 'menu':
+        return isMobile ? (
+          <>{children}</>
+        ) : (
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+            variants={contentVariants}
+            transition={{ duration: 0.3 }}
+            className="mx-auto max-w-viewport bg-white-100 absolute left-0 top-[260px] right-0"
           >
+            {children}
+          </motion.div>
+        )
+      case 'simpleMenu':
+        return <div className="pl-4 py-6 xl:py-10">{children}</div>
+
+      default:
+        return (
+          <div className="pt-0 ml-2.5 border-l border-dashed border-slate-80 pl-7 pr-4 pb-6 mb-6 flex flex-col gap-6">
             {children}
           </div>
         )
-
-      default:
-        return <>{children}</>
     }
   }
 
   return (
     <AccordionContent
-      ref={combinedContentRef}
-      /*       forceMount={forceMount} */
-      /*       {...(forceMount && {
-        style: {
-          '--radix-collapsible-content-height': `${height}px`,
-        } as CSSProperties,
-      })} 
-        
-              motion-safe:data-open:animate-slideUp
-        motion-safe:data-closed:animate-slideDown
-      */
-      className={envisTwMerge(
-        `overflow-hidden
-        motion-safe:data-closed:animate-slideDown
-        motion-safe:data-open:animate-slideUp
-        ${variantClassName[variant]}`,
-        className,
-      )}
       {...rest}
+      ref={ref}
+      {...(variant === 'menu' &&
+        !isMobile && {
+          asChild: true,
+        })}
+      className={envisTwMerge(`${variantClassName[variant]}`, className)}
     >
       {getVariantBody()}
     </AccordionContent>
