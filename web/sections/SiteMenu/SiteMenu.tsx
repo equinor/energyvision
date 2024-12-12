@@ -51,8 +51,13 @@ const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
   const getCurrentMenuItemIndex = () => {
     const temp = menuItems
       .findIndex((menuItem) => {
-        if (variant === 'simple' && 'links' in menuItem && menuItem.links) {
-          return menuItem.links.some((link) => link.link?.slug === router.asPath)
+        if (variant === 'simple') {
+          if ('link' in menuItem && menuItem?.link) {
+            return menuItem.link.slug === router.asPath
+          }
+          if ('links' in menuItem && menuItem?.links) {
+            return menuItem.links.some((link) => link.link?.slug === router.asPath)
+          }
         } else if (variant === 'default' && 'groups' in menuItem && menuItem.groups) {
           return menuItem.groups?.some((group) => group.links.some((link) => link.link?.slug === router.asPath))
         } else {
@@ -62,6 +67,11 @@ const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
       .toString()
     console.log('temo', temp)
     return temp
+  }
+
+  const variantClassName: Partial<Record<Variants, string>> = {
+    default: 'h-full px-8 xl:bg-moss-green-50 xl:mt-8 xl:mx-8 xl:flex xl:justify-between items-center',
+    simple: 'px-layout-sm flex flex-col mx-auto xl:px-layout-lg xl:w-fit',
   }
 
   return (
@@ -90,10 +100,7 @@ const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
                     onClick={() => setIsOpen(false)}
                   />
                 </NavTopbar>
-                <div
-                  className="h-full px-8 xl:bg-moss-green-50 xl:mt-8 xl:mx-8 xl:flex xl:justify-between items-center"
-                  {...rest}
-                >
+                <div className={variantClassName[variant]} {...rest}>
                   <Menu variant={variant} defaultValue={getCurrentMenuItemIndex()}>
                     {menuItems.map((item, idx: number) => {
                       return variant === 'simple' ? (
@@ -106,12 +113,17 @@ const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
 
                   <Link
                     className={`
-                    py-6
-                    xl:py-4
-                    px-2
-                    xl:px-6
-                    xl:my-4
-                    text-base
+                    ${
+                      variant === 'simple'
+                        ? 'py-4 xl:py-6 text-sm'
+                        : `py-6
+                      px-2
+                      xl:px-6
+                      xl:my-4
+                      xl:py-4
+                      text-base
+                      `
+                    }
                     xl:text-sm
                     leading-none
                     no-underline 

@@ -1,12 +1,8 @@
-import { Link, ReadMoreLink } from '@core/Link'
+import { Link, ResourceLink } from '@core/Link'
 import type { SimpleGroupData } from '../../types/index'
 import { Menu } from '@core/MenuAccordion'
-
-/* const SimpleSubMenu = styled(SubMenu)`
-  @media (min-width: 1300px) {
-    border-bottom: 0.5px solid var(--grey-40);
-  }
-` */
+import { useRouter } from 'next/router'
+import { useId } from 'react'
 
 const { MenuItem, MenuHeader, MenuContent } = Menu
 
@@ -17,35 +13,86 @@ type MenuGroupType = {
 
 export const SimpleMenuItem = ({ item, index }: MenuGroupType) => {
   const { type, label, links = [], readMoreLink } = item
+  const router = useRouter()
+  const id = useId()
 
   if (item?.type === 'simpleMenuLink' && item.link && !item.link.slug) {
     console.warn('Missing slug for simple menu link')
   }
+
   return (
-    <MenuItem value={`${index}`}>
-      {label && <MenuHeader>{label}</MenuHeader>}
-      <MenuContent className="md:max-w-screen-3xl mx-0 my-auto">
-        {type === 'simpleMenuLink' ? (
-          <>
-            <Link
-              className="list-none no-underline w-full mt-2 mx-0 mr-0 hover:bg-grey-10 py-xs+sm"
-              href={(item.link && item.link.slug) || '/'}
-            >
-              {item.label}
-            </Link>
-          </>
-        ) : (
-          <div className="pb-6">
-            <div className="max-w-menuText xl:pr-lg pb-sm">
-              {!!readMoreLink?.link?.slug && (
-                <ReadMoreLink href={readMoreLink.link?.slug}>{readMoreLink.label}</ReadMoreLink>
-              )}
-            </div>
-            <ul aria-label={label} className="flex flex-col flex-wrap">
-              {links?.map((link: any) => (
-                <li className="m-0" key={link.id}>
-                  <Link
-                    className={`flex 
+    <>
+      {type === 'simpleMenuLink' ? (
+        <>
+          <Link
+            {...(item?.link &&
+              item.link.slug === router.asPath && {
+                'aria-current': 'page',
+              })}
+            className={`w-full
+              border-b
+              border-grey-40
+              aria-current:bg-grey-10
+              aria-current:px-2
+              aria-current:-ml-2
+              aria-current:font-semibold
+              aria-current:border-l-[3px]
+              aria-current:border-moss-green-95
+              py-4
+              hover:underline 
+              underline-offset-2
+              text-sm
+              no-underline`}
+            href={(item.link && item.link.slug) || '/'}
+          >
+            {item.label}
+          </Link>
+        </>
+      ) : (
+        <>
+          <MenuItem value={`${index}`} variant="simple">
+            {label && (
+              <MenuHeader id={id} variant="simple">
+                {label}
+              </MenuHeader>
+            )}
+            <MenuContent variant="simple" className="">
+              <div className="">
+                {!!readMoreLink?.link?.slug && (
+                  <ResourceLink href={readMoreLink.link?.slug} className="w-fit pt-0">
+                    {readMoreLink.label}
+                  </ResourceLink>
+                )}
+              </div>
+              <ul
+                aria-labelledby={id}
+                className={`flex flex-col flex-wrap
+                    ${
+                      readMoreLink?.link?.slug
+                        ? `mt-8 border-l 
+                    border-dashed
+                    border-slate-80
+                    pl-4
+                    pb-4`
+                        : ''
+                    }
+                    `}
+              >
+                {links?.map((link: any) => (
+                  <li className="" key={link.id}>
+                    <Link
+                      className={`aria-current:bg-grey-10
+                          aria-current:px-2
+                          aria-current:-ml-2
+                          aria-current:border-l-[3px]
+                          aria-current:border-moss-green-95
+                          py-4
+                          no-underline
+                          hover:underline 
+                          underline-offset-2
+                          text-sm`}
+                      /**
+                     * flex 
                       aria-current:bg-grey-10
                       hover:bg-grey-10
                       m-0
@@ -55,38 +102,19 @@ export const SimpleMenuItem = ({ item, index }: MenuGroupType) => {
                       xl:ml-[calc(var(--space-medium)_*_(-1))]
                       aria-current:border-l-[3px]
                       aria-current:border-moss-green-95
-                      `}
-                    href={link?.link?.slug || '/'}
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-      </MenuContent>
-    </MenuItem>
+                     */
+                      href={link?.link?.slug || '/'}
+                      aria-current={router?.asPath == link?.link?.slug ? 'page' : 'false'}
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </MenuContent>
+          </MenuItem>
+        </>
+      )}
+    </>
   )
 }
-
-/* if (item?.type === 'simpleMenuGroup') {
-  return <SimpleMenuItem item={item} key={item.id} index={idx} />
-} else if (item?.type === 'simpleMenuLink') {
-  // Is this really necessary?
-  if (item.link && !item.link.slug) {
-    console.warn('Missing slug for simple menu link')
-  }
-  return (
-    <li key={item.id}>
-      <Link
-        className="list-none no-underline w-full mt-2 mx-0 mr-0 hover:bg-grey-10 py-xs+sm"
-        href={(item.link && item.link.slug) || '/'}
-      >
-        {' '}
-        {item.label}{' '}
-      </Link>
-    </li>
-  )
-}
-})} */

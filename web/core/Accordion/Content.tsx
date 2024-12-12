@@ -24,11 +24,13 @@ export const Content = forwardRef<HTMLDivElement, AccordionContentProps>(functio
 
   const variantClassName: Partial<Record<Variants, string>> = {
     primary: `${commonSlideUpDown}`,
-    menu: `
-    max-lg:overflow-hidden
+    menu: `max-lg:overflow-hidden
     max-lg:motion-safe:data-closed:animate-slideDown
     max-lg:motion-safe:data-open:animate-slideUp
     `,
+    simple_menu: `max-lg:overflow-hidden
+    max-lg:motion-safe:data-closed:animate-slideDown
+    max-lg:motion-safe:data-open:animate-slideUp`,
   }
 
   /**
@@ -63,6 +65,8 @@ export const Content = forwardRef<HTMLDivElement, AccordionContentProps>(functio
             {children}
           </motion.div>
         )
+      case 'simple_menu':
+        return <div className="pl-4 py-6 xl:py-10">{children}</div>
 
       default:
         return (
