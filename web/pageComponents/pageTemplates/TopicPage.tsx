@@ -5,7 +5,7 @@ import Seo from '../shared/Seo'
 import { SharedBanner } from './shared/SharedBanner'
 import { PageContent } from './shared/SharedPageContent'
 import SharedTitle from './shared/SharedTitle'
-import { Breadcrumbs } from '../topicPages/Breadcrumbs'
+import { Breadcrumbs } from '@core/Breadcrumbs'
 
 type TopicPageProps = {
   data: TopicPageSchema
