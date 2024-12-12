@@ -71,7 +71,9 @@ export default {
       name: 'items',
       description: 'Add images for the carousel',
       title: 'Carousel items',
-      of: [{ type: 'imageWithAltAndCaption' }],
+      of: [{ type: 'imageWithAltAndCaption' },
+           { type: 'carouselImage' }
+      ],
       validation: (Rule: Rule) => Rule.required().min(2),
     },
     {
