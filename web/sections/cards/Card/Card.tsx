@@ -90,7 +90,6 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
         <div
           className={envisTwMerge(
             `relative
-            
           ${imageVariantClassNames[variant]}
           ${imageRatio[variant]}
           `,
