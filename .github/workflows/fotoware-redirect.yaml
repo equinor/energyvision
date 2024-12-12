@@ -26,7 +26,8 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: 'equinor/energyvision-fotoware-redirect'
-          ssh-key: '${{ secrets.DEPLOY_FUNCTION_KEY }}'
+          ref: main
+          token: ${{ secrets.PADMS_PAT }}
       - name: Install pnpm 📦
         id: install-pnpm
         uses: pnpm/action-setup@v4
