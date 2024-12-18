@@ -1,59 +1,9 @@
 import Card from '@sections/cards/Card'
 import { getUrlFromAction } from '../../common/helpers'
 import { ColorKeyTokens, colorKeyToUtilityMap } from '../../styles/colorKeyToUtilityMap'
-import { BaseLinkProps } from '@core/Link'
-import { ArrowRight } from '../../icons'
 import { PromoTileData } from '../../types/index'
 import { forwardRef } from 'react'
 
-export type FakeReadMoreProps = {
-  children?: React.ReactNode
-} & Pick<BaseLinkProps, 'type'>
-
-/** Fake link based on Read more link style */
-export const FakeReadMoreLink = ({ type = 'internalUrl', children }: FakeReadMoreProps) => {
-  const classNames = `
-    group
-    inline-flex
-    align-baseline
-    w-fit
-    text-slate-80
-    text-sm
-    leading-0
-  `
-  const contentClassNames = `
-  relative
-  after:content-['']
-  after:block
-  after:absolute
-  after:bottom-0
-  after:left-0
-  after:border-b
-  after:border-slate-80
-  dark:after:border-white-100
-  after:w-[0%]
-  after:transition-all
-  after:duration-300
-  group-hover/card:after:w-full
-  `
-  const iconClassNames = `
-    size-arrow-right
-    text-energy-red-100
-    ${type === 'externalUrl' ? '-rotate-45' : ''}
-    dark:text-white-100
-    ml-2
-    group-hover/card:translate-x-2
-    transition-all
-    duration-300
-  `
-
-  return (
-    <div className={classNames}>
-      <span className={contentClassNames}>{children}</span>
-      <ArrowRight className={iconClassNames} />
-    </div>
-  )
-}
 type PromoTileProps = PromoTileData
 
 export const PromoTile = forwardRef<HTMLAnchorElement, PromoTileProps>(function PromoTile(
@@ -61,6 +11,7 @@ export const PromoTile = forwardRef<HTMLAnchorElement, PromoTileProps>(function 
   ref,
 ) {
   const url = getUrlFromAction(action)
+
   const { background } = designOptions
   const colorName =
     Object.keys(colorKeyToUtilityMap).find(
@@ -74,27 +25,18 @@ export const PromoTile = forwardRef<HTMLAnchorElement, PromoTileProps>(function 
   return (
     <Card
       {...(id && { id: id })}
-      //eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      //@ts-ignore
+      //@ts-ignore:TODO
       href={url}
       ref={ref}
       image={image}
       variant="secondary"
-      className="w-full h-full md:max-w-[100%]"
+      className={`w-full h-full md:max-w-[100%] ${background?.dark ? 'dark' : ''} `}
     >
-      <Card.Content
-        {...(!linkLabelAsTitle && { noArrow: true })}
-        {...(linkLabelAsTitle && { variant: 'secondary' })}
-        className={`${twBg}`}
-      >
-        {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-        {/** @ts-ignore */}
+      <Card.Content variant="secondary" className={`${twBg}`}>
         <Card.Header
           {...(!linkLabelAsTitle && { titleBlock: title })}
           {...(linkLabelAsTitle && { title: action.label })}
-          titleClassName={linkLabelAsTitle ? '' : 'group-hover/card:no-underline'}
         />
-        {!linkLabelAsTitle && <FakeReadMoreLink type={action.type}>{action.label}</FakeReadMoreLink>}
       </Card.Content>
     </Card>
   )

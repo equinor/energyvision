@@ -1,9 +1,8 @@
-import { List } from '@core/List'
-import { ResourceLink, ButtonLink } from '@core/Link'
+import { ResourceLink } from '@core/Link'
 import type { LinkData } from '../../types/index'
 import { getUrlFromAction } from '../../common/helpers'
 import { getLocaleFromName } from '../../lib/localization'
-import { twMerge } from 'tailwind-merge'
+import envisTwMerge from '../../twMerge'
 
 type CallToActionsProps = {
   callToActions: LinkData[]
@@ -12,59 +11,60 @@ type CallToActionsProps = {
   className?: string
 }
 
-const CallToActions = ({ callToActions = [], overrideButtonStyle, splitList, className }: CallToActionsProps) => {
+const CallToActions = ({ callToActions = [], splitList, className }: CallToActionsProps) => {
   if (!callToActions) return null
 
   const getSingleAction = () => {
     const { label, extension, type, link } = callToActions[0]
     const url = getUrlFromAction(callToActions[0])
     if (!url) {
-      console.warn(`CallToActions: Missing URL on 'ButtonLink' link with type: '${type}' and label: '${label}'`)
+      console.warn(`CallToActions: Missing URL on Call to action link with type: '${type}' and label: '${label}'`)
       return null
     }
-    const linkContent = `${label} ${extension ? `(${extension.toUpperCase()})` : ''}`
 
-    return overrideButtonStyle ? (
+    return (
       <ResourceLink
         href={url}
+        extension={extension}
+        showExtensionIcon={true}
         {...(link?.lang && { locale: getLocaleFromName(link?.lang) })}
         type={type}
-        className="w-fit"
+        variant="fit"
       >
-        {linkContent}
+        {label}
       </ResourceLink>
-    ) : (
-      <ButtonLink
-        {...(type === 'internalUrl' && { locale: getLocaleFromName(link?.lang) })}
-        href={url}
-        type={type}
-        className={twMerge(className, 'mb-8 block')}
-      >
-        {linkContent}
-      </ButtonLink>
     )
   }
 
   return callToActions?.length === 1 ? (
     getSingleAction()
   ) : (
-    <List split={splitList} className={className} listClassName={'list-none'}>
+    <ul
+      className={envisTwMerge(
+        `grid grid-cols-[max-content] ${splitList ? 'md:grid md:grid-cols-2 gap-x-8 gap-y-6 items-end' : ''}
+     `,
+        className,
+      )}
+    >
       {callToActions.map((callToAction: LinkData) => {
         const url = getUrlFromAction(callToAction)
         return url ? (
-          <List.Item key={callToAction.id}>
+          <li key={callToAction.id}>
             {/*  If the URL is a static AEM page it should behave as an internal link in the web */}
             <ResourceLink
               href={url}
               {...(callToAction.link?.lang && { locale: getLocaleFromName(callToAction.link?.lang) })}
               type={callToAction.type}
+              extension={callToAction.extension}
+              showExtensionIcon={true}
+              variant="default"
             >
-              {`${callToAction?.label} ${callToAction?.extension ? `(${callToAction?.extension.toUpperCase()})` : ''}`}
+              {`${callToAction?.label}`}
             </ResourceLink>
-          </List.Item>
+          </li>
         ) : null
       })}
-    </List>
+    </ul>
   )
 }
 

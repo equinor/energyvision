@@ -1,7 +1,7 @@
 import { Typography } from '@core/Typography'
 import { forwardRef, HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { BaseLink, ButtonLink } from '@core/Link'
+import { BaseLink, ButtonLink, ResourceLink } from '@core/Link'
 import Image, { Ratios } from '../../../pageComponents/shared/SanityImage'
 import { getLocaleFromName } from '../../../lib/localization'
 import { getUrlFromAction, urlFor } from '../../../common/helpers'
@@ -27,7 +27,7 @@ const PeopleCard = forwardRef<HTMLDivElement, PeopleCardProps>(function PeopleCa
   const linkClassNames = 'text-norwegian-woods-100 no-underline hover:underline text-sm'
 
   const variantClassNames = {
-    default: `grid-cols-1 grid-rows-[max-content_1fr] max-w-[300px] justify-items-center items-start gap-0`,
+    default: `grid-cols-1 grid-rows-[max-content_1fr] md:max-w-card-maxWidth justify-items-center items-start gap-0`,
     single: `grid-cols-[30%_60%] grid-rows-1 gap-4 lg:gap-8 items-start lg:items-center`,
   }
 
@@ -95,15 +95,13 @@ const PeopleCard = forwardRef<HTMLDivElement, PeopleCardProps>(function PeopleCa
             }  gap-2 pt-6`}
           >
             {isLink && cv && cvUrl ? (
-              <ButtonLink
+              <ResourceLink
                 href={cvUrl}
-                aria-label={cv?.ariaLabel}
-                variant="outlined"
-                className=""
                 locale={cv?.type === 'internalUrl' ? getLocaleFromName(cv?.link?.lang) : undefined}
+                variant="compact"
               >
                 {cv?.label}
-              </ButtonLink>
+              </ResourceLink>
             ) : (
               <>
                 {email && (

@@ -14,7 +14,7 @@ const PromoTileArray = ({
   if (!data.group) return null
 
   return (
-    <section id={anchor} className={twMerge(`pb-page-content px-4 lg:px-layout-lg max-w-viewport mx-auto`, className)}>
+    <section id={anchor} className={twMerge(`pb-page-content px-layout-lg max-w-viewport mx-auto`, className)}>
       <ul
         className={`
         flex
