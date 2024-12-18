@@ -11,7 +11,6 @@ import Script from 'next/script'
 import { ErrorBoundary } from 'react-error-boundary'
 import { ErrorFallback } from '../pageComponents/pageTemplates/ErrorFallback'
 import useConsentState from '../lib/hooks/useConsentState'
-import { loadSiteImproveScript, cleanUpSiteImproveScript } from '../pageComponents/SiteImprove'
 import { enableDynatrace, disableDynatrace } from '../pageComponents/Dynatrace'
 import { SWRConfig } from 'swr'
 
@@ -21,6 +20,7 @@ import { SWRConfig } from 'swr'
 import { PreviewContextProvider } from '../lib/contexts/PreviewContext'
 import { defaultLanguage } from '../languages'
 import { default as NextLink } from 'next/link'
+import { useProd } from '../lib/hooks/useProd'
 
 /**
  * TODO:
@@ -69,6 +69,7 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
   const router = useRouter()
   const getLayout = Component.getLayout || ((page: ReactNode): ReactNode => page)
   const IS_LIVE = process.env.NODE_ENV !== 'development'
+  const isProd = useProd()
 
   useEffect(() => {
     if (!GTM_ID) return
@@ -92,12 +93,10 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
   }, [router.asPath])
 
   const enableStatisticsCookies = () => {
-    loadSiteImproveScript()
     enableDynatrace()
   }
 
   const disableStatisticsCookies = () => {
-    cleanUpSiteImproveScript()
     disableDynatrace()
   }
 
@@ -126,6 +125,7 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
           </Head>
           <GlobalStyle />
           <GlobalFontStyle />
+          {isProd && <Script src="https://siteimproveanalytics.com/js/siteanalyze_6003171.js" id="siteimprove" async />}
           {IS_LIVE && <CookieBot locale={router.locale} />}
           <NextLink
             href="#mainTitle"
