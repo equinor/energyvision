@@ -4,7 +4,7 @@ import MultiplePromotions from './promotions/MultiplePromotions'
 import IngressText from '../shared/portableText/IngressText'
 import type { PromotionData } from '../../types/index'
 import { twMerge } from 'tailwind-merge'
-import { ButtonLink } from '@core/Link'
+import { ResourceLink } from '@core/Link'
 import { Heading } from '@core/Typography'
 import { useId } from 'react'
 
@@ -27,48 +27,52 @@ const Promotion = ({
 
   return (
     <BackgroundContainer {...designOptions} id={anchor} renderFragmentWhenPossible>
-      <div
-        className={twMerge(
-          `pb-page-content px-4 ${
+      <div className={twMerge(`pb-page-content max-w-viewport mx-auto flex flex-col`, className)} {...rest}>
+        {title && (
+          <Heading
+            id={sectionTitleId}
+            value={title}
+            as="h2"
+            variant="xl"
+            className={`w-full px-layout-lg ${!ingress && viewAllLink?.link?.slug ? 'mb-5' : 'mb-10'}`}
+          />
+        )}
+        {ingress && (
+          <div className={`px-layout-lg ${viewAllLink?.link?.slug ? 'mb-12 xl:mb-16' : 'mb-12 xl:mb-20'}`}>
+            <IngressText value={ingress} />
+          </div>
+        )}
+        {viewAllLink?.link?.slug && (
+          <div className="px-layout-lg mb-12 xl:mb-20">
+            <ResourceLink type="internalUrl" variant="fit" href={viewAllLink?.link?.slug}>
+              {viewAllLink?.label}
+            </ResourceLink>
+          </div>
+        )}
+        <div
+          className={`${
             (variant === 'promoteEvents' &&
               (promoteSingleUpcomingEvent ||
                 promotions?.length === 1 ||
                 data?.content?.eventPromotionSettings?.promotePastEvents)) ||
             (variant === 'promotePeople' && promotions?.length === 1)
-              ? 'lg:px-layout-lg'
-              : 'lg:px-layout-sm'
-          } max-w-viewport mx-auto flex flex-col items-center`,
-          className,
-        )}
-        {...rest}
-      >
-        {title && (
-          <Heading id={sectionTitleId} value={title} as="h2" variant="xl" className="w-fit mb-10 text-center" />
-        )}
-        {ingress && (
-          <div className="mb-24">
-            <IngressText value={ingress} />
-          </div>
-        )}
-        {promotions?.length === 1 || promoteSingleUpcomingEvent ? (
-          <SinglePromotion promotion={promotions[0]} hasSectionTitle={!!title} />
-        ) : (
-          <MultiplePromotions
-            data={promotions}
-            variant={variant}
-            hasSectionTitle={!!title}
-            eventPromotionSettings={content?.eventPromotionSettings}
-            useHorizontalScroll={useHorizontalScroll}
-            labelledbyId={sectionTitleId}
-          />
-        )}
-        {viewAllLink?.link?.slug && (
-          <div className="px-8 flex justify-center mt-12">
-            <ButtonLink variant="outlined" href={viewAllLink?.link?.slug} className="px-layout-lg md:px-layout-sm">
-              {viewAllLink?.label}
-            </ButtonLink>
-          </div>
-        )}
+              ? 'px-layout-lg'
+              : 'px-layout-lg xl:px-layout-sm'
+          }`}
+        >
+          {promotions?.length === 1 || promoteSingleUpcomingEvent ? (
+            <SinglePromotion promotion={promotions[0]} hasSectionTitle={!!title} />
+          ) : (
+            <MultiplePromotions
+              data={promotions}
+              variant={variant}
+              hasSectionTitle={!!title}
+              eventPromotionSettings={content?.eventPromotionSettings}
+              useHorizontalScroll={useHorizontalScroll}
+              labelledbyId={sectionTitleId}
+            />
+          )}
+        </div>
       </div>
     </BackgroundContainer>
   )

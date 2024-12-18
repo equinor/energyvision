@@ -11,7 +11,7 @@ import { toPlainText } from '@portabletext/react'
 import { PortableTextBlock } from '@portabletext/types'
 import { FormattedMessage, useIntl } from 'react-intl'
 import AddToCalendar from '../../../pageComponents/topicPages/AddToCalendar'
-import { ButtonLink } from '@core/Link'
+import { BaseLink, ButtonLink, ResourceLink } from '@core/Link'
 import Blocks from '../../../pageComponents/shared/portableText/Blocks'
 
 export type EventCardProps = {
@@ -63,7 +63,9 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
       )}
       {...rest}
     >
-      <Heading value={title} as={hasSectionTitle ? 'h3' : 'h2'} variant="h5" className="mb-1" />
+      <BaseLink href={slug} className="hover:underline">
+        <Heading value={title} as={hasSectionTitle ? 'h3' : 'h2'} variant="h5" className="mb-1" />
+      </BaseLink>
       <div
         className={`${
           variant === 'single' ? 'w-fit' : ''
@@ -100,11 +102,11 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
         )}
       </div>
       {variant === 'single' && ingress && <Blocks value={ingress} className="mt-4 text-sm max-w-prose text-pretty" />}
-      <div className="mt-4 lg:mt-8 flex gap-6">
+      <div className="mt-4 lg:mt-8">
         <AddToCalendar eventDate={eventDate} location={location} title={plainTitle} />
-        <ButtonLink variant="outlined" href={slug} aria-label={`${details} ${plainTitle}`}>
+        {/*         <ResourceLink variant="compact" href={slug}>
           {details}
-        </ButtonLink>
+        </ResourceLink> */}
       </div>
     </div>
   )

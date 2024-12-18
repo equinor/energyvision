@@ -3,7 +3,7 @@ import Image from '../SanityImage'
 import TitleText from '../portableText/TitleText'
 import type { HeroType } from '../../../types/index'
 import { BackgroundContainer } from '@components'
-import { ReadMoreLink } from '@core/Link'
+import { ResourceLink } from '@core/Link'
 import Blocks from '../portableText/Blocks'
 import { getUrlFromAction } from '../../../common/helpers'
 import { getLocaleFromName } from '../../../lib/localization'
@@ -79,13 +79,13 @@ export const FiftyFiftyHero = ({ title, ingress, link: action, background, figur
             </StyledIngress>
           )}
           {action && !isBigTitle && (
-            <ReadMoreLink
+            <ResourceLink
               href={url as string}
               {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
               type={action.type}
             >
               {`${action.label} ${action.extension ? `(${action.extension.toUpperCase()})` : ''}`}
-            </ReadMoreLink>
+            </ResourceLink>
           )}
         </StyledContent>
       </StyledHero>

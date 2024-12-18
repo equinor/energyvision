@@ -164,9 +164,7 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
                   >
                     <List.Item className="w-full">
                       {subscriptionLink?.slug && (
-                        <ResourceLink href={subscriptionLink.slug} className="w-full">
-                          {subscriptionLinkTitle}
-                        </ResourceLink>
+                        <ResourceLink href={subscriptionLink.slug}>{subscriptionLinkTitle}</ResourceLink>
                       )}
                     </List.Item>
                     {localNewsPages &&
@@ -174,7 +172,7 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
                       localNewsPages?.map((localNewsPage) => {
                         return localNewsPage?.link?.slug ? (
                           <List.Item key={localNewsPage.id} className="w-full">
-                            <ResourceLink type={localNewsPage.type} href={localNewsPage?.link?.slug} className="w-full">
+                            <ResourceLink type={localNewsPage.type} href={localNewsPage?.link?.slug}>
                               {localNewsPage?.label}
                             </ResourceLink>
                           </List.Item>

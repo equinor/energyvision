@@ -7,7 +7,7 @@ import { getColorForTheme } from './theme'
 import { CSSProperties } from 'react'
 
 import { twMerge } from 'tailwind-merge'
-import { ReadMoreLink } from '@core/Link'
+import { ResourceLink } from '@core/Link'
 import { getUrlFromAction } from '../../../common/helpers/getUrlFromAction'
 import { getLocaleFromName } from '../../../lib/localization'
 
@@ -95,13 +95,13 @@ const TextTeaser = ({ data, anchor, className }: TextTeaserProps) => {
             </IngressWrapper>
           )}
           {action && (
-            <ReadMoreLink
+            <ResourceLink
               href={url as string}
               {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
               type={action.type}
             >
               {`${action.label} ${action.extension ? `(${action.extension.toUpperCase()})` : ''}`}
-            </ReadMoreLink>
+            </ResourceLink>
           )}
         </StyledContent>
       </TeaserWrapper>
