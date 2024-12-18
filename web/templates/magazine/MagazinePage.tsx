@@ -14,33 +14,29 @@ type MagazinePageProps = {
 
 const MagazinePage = ({ data }: MagazinePageProps) => {
   const router = useRouter()
-  const parentSlug = router.locale === router.defaultLocale 
-  ? router.asPath.split('?')[0]
-  : `/${router.locale}${router.asPath.split('?')[0]}`;
+  const parentSlug =
+    (router.locale !== router.defaultLocale ? `/${router.locale}` : '') +
+    router.asPath.substring(router.asPath.indexOf('/'), router.asPath.lastIndexOf('/'))
 
   const { hideFooterComponent, footerComponent, tags } = data
 
   const titleStyles = useSharedTitleStyles(data?.hero?.type, data?.content?.[0])
 
   const handleClickTag = (tagValue: string) => {
-    const currentPath = router.locale === router.defaultLocale
-      ? router.asPath.split('?')[0]
-      : `/${router.locale}${router.asPath.split('?')[0]}`;
-  
     if (tagValue === 'ALL') {
       delete router.query.filter
       router.push({
-        pathname: currentPath,
-      });
+        pathname: parentSlug,
+      })
     } else {
       router.push({
-        pathname: currentPath,
+        pathname: parentSlug,
         query: {
           tag: tagValue,
         },
-      });
+      })
     }
-  };  
+  }
 
   return (
     <>
