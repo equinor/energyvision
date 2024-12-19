@@ -25,39 +25,41 @@ const Promotion = ({
   const promoteSingleUpcomingEvent = data?.content?.eventPromotionSettings?.promoteSingleUpcomingEvent
   const sectionTitleId = useId()
 
+  const paddingClassName = `px-layout-sm 3xl:px-layout-lg`
+
   return (
     <BackgroundContainer {...designOptions} id={anchor} renderFragmentWhenPossible>
-      <div className={twMerge(`pb-page-content max-w-viewport mx-auto flex flex-col`, className)} {...rest}>
+      <div className={twMerge(`pb-page-content max-w-viewport mx-auto flex flex-col gap-6`, className)} {...rest}>
         {title && (
           <Heading
             id={sectionTitleId}
             value={title}
             as="h2"
             variant="xl"
-            className={`w-full px-layout-lg ${!ingress && viewAllLink?.link?.slug ? 'mb-5' : 'mb-10'}`}
+            className={`w-full ${paddingClassName} ${!ingress && viewAllLink?.link?.slug ? '' : ''}`}
           />
         )}
         {ingress && (
-          <div className={`px-layout-lg ${viewAllLink?.link?.slug ? 'mb-12 xl:mb-16' : 'mb-12 xl:mb-20'}`}>
+          <div className={`${paddingClassName} ${viewAllLink?.link?.slug ? '' : ''}`}>
             <IngressText value={ingress} />
           </div>
         )}
         {viewAllLink?.link?.slug && (
-          <div className="px-layout-lg mb-12 xl:mb-20">
+          <div className={`${paddingClassName}`}>
             <ResourceLink type="internalUrl" variant="fit" href={viewAllLink?.link?.slug}>
               {viewAllLink?.label}
             </ResourceLink>
           </div>
         )}
         <div
-          className={`${
+          className={`pt-6 ${
             (variant === 'promoteEvents' &&
               (promoteSingleUpcomingEvent ||
                 promotions?.length === 1 ||
                 data?.content?.eventPromotionSettings?.promotePastEvents)) ||
             (variant === 'promotePeople' && promotions?.length === 1)
-              ? 'px-layout-lg'
-              : 'px-layout-lg xl:px-layout-sm'
+              ? 'px-layout-sm md:px-layout-lg'
+              : `px-layout-sm 3xl:px-layout-md`
           }`}
         >
           {promotions?.length === 1 || promoteSingleUpcomingEvent ? (

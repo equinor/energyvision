@@ -41,7 +41,7 @@ const CallToActions = ({ callToActions = [], splitList, className }: CallToActio
   ) : (
     <ul
       className={envisTwMerge(
-        `grid grid-cols-[max-content] ${splitList ? 'md:grid md:grid-cols-2 gap-x-8 gap-y-6 items-end' : ''}
+        `grid grid-cols-[max-content] gap-x-8 gap-y-6 ${splitList ? 'md:grid md:grid-cols-2 items-end' : ''}
      `,
         className,
       )}

@@ -111,8 +111,7 @@ const MultiplePromotions = ({
       content-center
       grid-cols-1
       auto-rows-fr
-      xl:grid-cols-[repeat(3,theme(spacing.card-maxWidth))]
-      xl:grid-rows-1`)}
+      ${data?.length === 3 ? 'md:grid-cols-3' : 'md:grid-cols-2 2xl:grid-cols-3'}`)}
     >
       <>
         {data.map((item) => {
