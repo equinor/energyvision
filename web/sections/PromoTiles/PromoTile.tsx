@@ -30,7 +30,7 @@ export const PromoTile = forwardRef<HTMLAnchorElement, PromoTileProps>(function 
       ref={ref}
       image={image}
       variant="secondary"
-      className={`w-full h-full md:max-w-[100%] ${background?.dark ? 'dark' : ''} `}
+      className={`${background?.dark ? 'dark' : ''} `}
     >
       <Card.Content variant="secondary" className={`${twBg}`}>
         <Card.Header

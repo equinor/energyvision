@@ -7,12 +7,16 @@ import { TransformableIcon } from '../../icons/TransformableIcon'
 import { add, calendar } from '@equinor/eds-icons'
 import { PiFilePdfThin } from 'react-icons/pi'
 
-export type Variants = 'default' | 'fit' | 'compact'
+export type Variants = 'default' | 'fit'
 
 export type ResourceLinkProps = {
   variant?: Variants
   /** Overriding styles for the icon  */
   iconClassName?: string
+  /** Overriding styles for the text */
+  textClassName?: string
+  /** When using aria-label on the link, e.g add to calendar  */
+  ariaHideText?: boolean
   /** What kind of content is it  */
   type?: LinkType
   /* Link extension */
@@ -29,32 +33,14 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
     extension,
     className = '',
     iconClassName = '',
+    textClassName = '',
     showExtensionIcon = false,
+    ariaHideText = false,
     href = '',
     ...rest
   },
   ref,
 ) {
-  const variantClassName: Partial<Record<Variants, string>> = {
-    default: 'w-full pt-5',
-    fit: 'w-fit pt-5',
-    compact: 'w-fit pt-4',
-  }
-
-  const baseResourceLinkClassNames = `group
-    relative
-    flex
-    flex-col
-    justify-end
-    gap-0
-    text-slate-blue-95
-    dark:text-white-100
-    border-b
-    border-grey-50
-    dark:border-white-100
-    no-underline
-  `
-
   const iconRotation: Record<string, string> = {
     externalUrl: '-rotate-45',
     downloadableFile: 'rotate-90',
@@ -68,11 +54,11 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
       case 'downloadableImage':
         return 'group-hover:translate-y-0.5'
       case 'anchorLink':
-        return 'group-hover:translate-y-2'
+        return 'translate-y-0.5 group-hover:translate-y-2'
       case 'icsLink':
-        return ''
+        return 'translate-y-0.5'
       default:
-        return 'group-hover:translate-x-2'
+        return 'translate-y-0.5 group-hover:translate-x-2'
     }
   }
 
@@ -89,75 +75,120 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
     `,
       iconClassName,
     )
+    const marginClassName = `ml-6 xl:ml-8`
 
     switch (type) {
       case 'downloadableFile':
       case 'downloadableImage':
         return (
-          <span className="flex flex-col px-1">
+          <div className={`flex flex-col px-1 ${marginClassName} translate-y-[1px]`}>
             <ArrowRight className={iconClassNames} />
-            <span className="bg-energy-red-100 h-[2px] w-full" />
-          </span>
+            <div className="bg-energy-red-100 h-[2px] w-full" />
+          </div>
         )
       case 'icsLink':
-        return <TransformableIcon iconData={add} className={iconClassNames} />
+        return <TransformableIcon iconData={add} className={`${marginClassName} ${iconClassNames}`} />
       default:
-        return <ArrowRight className={iconClassNames} />
+        return <ArrowRight className={`${marginClassName} ${iconClassNames}`} />
     }
   }
 
+  const variantClassName: Partial<Record<Variants, string>> = {
+    default: 'w-full pt-3',
+    fit: 'w-fit pt-3',
+  }
+
   const contentVariantClassName: Partial<Record<Variants, string>> = {
-    default: 'pb-3 pr-2 gap-6 xl:gap-16',
-    fit: 'pb-3 pr-2 gap-6 xl:gap-16', //gap-14
-    compact: 'text-sm pb-2 gap-6',
+    default: 'pb-3 pr-2',
+    fit: 'pb-3 pr-2',
   }
 
   const classNames = envisTwMerge(
-    `${baseResourceLinkClassNames}
+    `group
+    relative
+    flex
+    flex-col
+    justify-end
+    gap-0
+    text-slate-blue-95
+    dark:text-white-100
+    border-b
+    border-grey-50
+    dark:border-white-100
+    no-underline
     ${variantClassName[variant]}
   `,
     className,
   )
 
   const getContentElements = () => {
+    const textClassNames = envisTwMerge(`pt-1 grow leading-none`, textClassName)
     switch (type) {
       case 'downloadableFile':
         return extension && extension.toUpperCase() === 'PDF' && showExtensionIcon ? (
-          <span className="flex gap-2">
-            <PiFilePdfThin />
-            {children}
-          </span>
+          <>
+            <PiFilePdfThin size={24} className="mr-2" />
+            <div
+              className={textClassNames}
+              {...(ariaHideText && {
+                'aria-hidden': true,
+              })}
+            >
+              {children}
+            </div>
+          </>
         ) : (
-          <>{children}</>
+          <div
+            className={textClassNames}
+            {...(ariaHideText && {
+              'aria-hidden': true,
+            })}
+          >
+            {children}
+          </div>
         )
       case 'icsLink':
         return (
-          <span className="flex gap-2">
-            <TransformableIcon iconData={calendar} />
-            {children}
-          </span>
+          <>
+            <TransformableIcon iconData={calendar} className="mr-2" />
+            <div
+              className={textClassNames}
+              {...(ariaHideText && {
+                'aria-hidden': true,
+              })}
+            >
+              {children}
+            </div>
+          </>
         )
       default:
-        return <>{children}</>
+        return (
+          <div
+            className={textClassNames}
+            {...(ariaHideText && {
+              'aria-hidden': true,
+            })}
+          >
+            {children}
+          </div>
+        )
     }
   }
   return (
     <BaseLink className={classNames} type={type} ref={ref} href={href} {...rest}>
-      <span
+      <div
         className={envisTwMerge(
-          `grid 
-        grid-cols-[1fr_max-content]
-        text-start
+          `h-full flex
+          justify-start
         items-center
-        leading-tight
         ${contentVariantClassName[variant]}`,
         )}
       >
         {getContentElements()}
         {extension && !showExtensionIcon ? `(${extension.toUpperCase()})` : ''}
         {getArrowElement(type, iconClassName)}
-      </span>
-      <span className="w-[0%] h-[1px] bg-grey-40 transition-all duration-300 group-hover:w-full" />
+      </div>
+      <div className="w-[0%] h-[1px] bg-grey-40 transition-all duration-300 group-hover:w-full" />
     </BaseLink>
   )
 })

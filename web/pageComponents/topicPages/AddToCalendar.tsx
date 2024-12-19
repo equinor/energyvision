@@ -3,8 +3,6 @@ import { isAfter } from 'date-fns'
 import { getEventDates, toUTCDateParts } from '../../common/helpers/dateUtilities'
 import type { EventDateType } from '../../types/index'
 import { useIntl } from 'react-intl'
-import { twMerge } from 'tailwind-merge'
-import { commonButtonStyling, getVariant } from '@core/Button'
 import { ResourceLink } from '@core/Link'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -100,9 +98,10 @@ const AddToCalendar = ({ eventDate, title, location }: AddToCalendarProps) => {
       download={`${title.replace(/ /g, '_')}.ics`}
       type="icsLink"
       aria-label={atcAriaLabel}
-      variant="compact"
+      variant="fit"
+      ariaHideText
     >
-      <span aria-hidden>{atc}</span>
+      {atc}
     </ResourceLink>
   ) : null
 }
