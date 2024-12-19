@@ -29,7 +29,7 @@ const AnchorLinkList = forwardRef<HTMLElement, AnchorLinkListProps>(function Anc
         return `${commonGridStyling} lg:grid-cols-6`
       default:
       case 'flex':
-        return 'grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] justify-start'
+        return 'grid auto-fill-fr justify-start'
     }
   }
   return (
