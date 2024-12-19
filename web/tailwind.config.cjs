@@ -223,8 +223,6 @@ module.exports = {
         '2xl': 'calc((40 / 16) * theme(fontSize.base))',
         '3xl': 'calc((56 / 16) * theme(fontSize.base))',
         '4xl': 'calc((96 / 16) * theme(fontSize.base))',
-        'card-minWidth': '300px', //220px
-        'card-maxWidth': '', //400px
       }),
       fontSize: {
         //--typeScale-00
