@@ -50,7 +50,7 @@ jobs:
 
       - name: Package Azure Function release build
         id: package-artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ vars.AZ_FOTOWARE_FUNC_APP_NAME }}
           path: ${{ env.BUILD_ARTIFACT_PATH }}
