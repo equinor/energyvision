@@ -130,7 +130,6 @@ jobs:
           fotowareAfExportKey: ${{ secrets.SANITY_STUDIO_FOTOWARE_AF_EXPORT_KEY }}
           screen9accountId: ${{ secrets.SANITY_STUDIO_SCREEN9_ACCOUNT_ID }}
           screen9token: ${{ secrets.SANITY_STUDIO_SCREEN9_TOKEN }}
-          deployToBothClusters: true
           environment: ${{ secrets.ENV }}
       - uses: act10ns/slack@v1
         with:

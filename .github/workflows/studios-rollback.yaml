@@ -265,19 +265,6 @@ jobs:
             -a equinor-web-sites
             -e ${{ secrets.ENV }}
             -f
-      # BACKUP CLUSTER ROLLBACK
-      - name: Deploy to Radix backup  🚀
-        id: deploy-backup
-        uses: equinor/radix-github-actions@master
-        with:
-          args: >
-            create job
-            deploy
-            --token-environment
-            --context production
-            -a equinor-web-sites
-            -e ${{ secrets.ENV }}
-            -f
 
       - uses: act10ns/slack@v2
         with:
