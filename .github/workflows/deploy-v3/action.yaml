@@ -52,9 +52,6 @@ inputs:
   screen9token:
     description: 'Screen9 API token'
     required: true
-  deployToBothClusters:
-    description: 'Deploy app to both Radix clusters'
-    required: false
 runs:
   using: 'composite'
   steps:
