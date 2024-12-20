@@ -112,9 +112,9 @@ jobs:
         id: get-token
         uses: ./.github/workflows/get-auth-token/
 
-      # MAIN CLUSTER
-      - name: Deploy to Radix backup🚀
-        id: deploy-backup
+      # MAIN PRODUCTION CLUSTER
+      - name: Deploy to Radix 🚀
+        id: deploy-main
         uses: equinor/radix-github-actions@master
         with:
           args: >
