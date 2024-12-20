@@ -58,11 +58,11 @@ const MagazineRoom = ({ pageData, slug }: MagazineIndexTemplateProps) => {
     if (tagValue === 'ALL') {
       delete router.query.filter
       router.push({
-        pathname: parentSlug,
+        pathname: router.pathname,
       })
     } else {
       router.push({
-        pathname: parentSlug,
+        pathname: `${router.query.locale ? `/${router.query.locale}` : ''}${router.pathname}`,
         query: {
           tag: tagValue,
         },
