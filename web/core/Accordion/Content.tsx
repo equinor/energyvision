@@ -18,19 +18,19 @@ export const Content = forwardRef<HTMLDivElement, AccordionContentProps>(functio
   { variant = 'primary', children, className = '', ...rest },
   ref,
 ) {
-  const isMobile = useMediaQuery(`(max-width: 800px)`)
+  const isMobile = useMediaQuery(`(max-width: 1300px)`)
 
   const commonSlideUpDown = `overflow-hidden motion-safe:data-closed:animate-slideDown motion-safe:data-open:animate-slideUp`
 
   const variantClassName: Partial<Record<Variants, string>> = {
     primary: `${commonSlideUpDown}`,
-    menu: `max-lg:overflow-hidden
-    max-lg:motion-safe:data-closed:animate-slideDown
-    max-lg:motion-safe:data-open:animate-slideUp
+    menu: `max-xl:overflow-hidden
+    max-xl:motion-safe:data-closed:animate-slideDown
+    max-xl:motion-safe:data-open:animate-slideUp
     `,
-    simpleMenu: `max-lg:overflow-hidden
-    max-lg:motion-safe:data-closed:animate-slideDown
-    max-lg:motion-safe:data-open:animate-slideUp`,
+    simpleMenu: `max-xl:overflow-hidden
+    max-xl:motion-safe:data-closed:animate-slideDown
+    max-xl:motion-safe:data-open:animate-slideUp`,
   }
 
   const getVariantBody = () => {
