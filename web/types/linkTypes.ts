@@ -7,6 +7,8 @@ export type LinkType =
   | 'textField'
   | 'numberField'
   | 'linkSelector'
+  | 'anchorLink'
+  | 'icsLink'
 
 export type LinkData = {
   type?: LinkType
@@ -20,7 +22,6 @@ export type LinkData = {
   anchorReference?: string
   filename?: string
 }
-
 
 export type RelatedLinksData = {
   title: string

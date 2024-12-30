@@ -223,8 +223,6 @@ module.exports = {
         '2xl': 'calc((40 / 16) * theme(fontSize.base))',
         '3xl': 'calc((56 / 16) * theme(fontSize.base))',
         '4xl': 'calc((96 / 16) * theme(fontSize.base))',
-        'card-minWidth': '220px',
-        'card-maxWidth': '400px',
       }),
       fontSize: {
         //--typeScale-00
@@ -301,6 +299,7 @@ module.exports = {
         '4/5': '0.8',
         '5/4': '1.25',
         '9/16': '0.56',
+        '4/3': '4/3',
       },
       margin: {
         'layout-sm': 'clamp(16px, calc(-38.3689px + 14.4984vw), 250px)',
@@ -486,6 +485,7 @@ module.exports = {
       transitionProperty: ['motion-safe'],
       gridTemplateColumns: {
         'auto-fill-fr': `repeat(auto-fill, minmax(80px,1fr))`,
+        'auto-fill-auto': `repeat(auto-fill, minmax(0, auto))`,
         card: `repeat(auto-fill, minmax(min(100%, theme(spacing.card-minWidth)), theme(spacing.card-maxWidth)))`,
       },
     },

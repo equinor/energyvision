@@ -11,32 +11,29 @@ type LatestNewsProp = {
 }
 
 const LatestNews = ({ data }: LatestNewsProp) => {
-  const isMobile = useMediaQuery(`(max-width: 1023px)`)
+  const isMobile = useMediaQuery(`(max-width: 800px)`)
 
   return (
     <section
-      className="px-4 lg:px-layout-sm
-    max-w-viewport
-    my-3xl
-    mx-auto
-    flex
-    flex-col
-    items-center
+      className=" 
+      max-w-viewport
+      px-layout-sm
+      3xl:px-layout-md
+      my-3xl
+      mx-auto
+      flex
+      flex-col
+      items-center
     "
     >
       <Typography variant="xl" as="h2" className="mb-10">
         <FormattedMessage id="latest_news" defaultMessage="Latest News" />
       </Typography>
-      <ul className="max-lg:w-full grid grid-cols-1 auto-rows-fr gap-x-6 gap-y-3 lg:grid-cols-3">
+      <ul className="max-lg:w-full grid grid-cols-1 auto-rows-fr gap-x-6 gap-y-3 md:grid-flow-col md:auto-cols-fr">
         {data.map((newsItem: CardData) => {
           return (
             <li key={newsItem.id} className="">
-              <Card
-                href={newsItem?.slug}
-                image={newsItem?.heroImage?.image}
-                variant={isMobile ? 'compact' : 'primary'}
-                className="h-full"
-              >
+              <Card href={newsItem?.slug} image={newsItem?.heroImage?.image} variant={isMobile ? 'compact' : 'primary'}>
                 <Card.Content variant={isMobile ? 'compact' : 'primary'}>
                   <Card.Header
                     {...(typeof newsItem?.title === 'string'

@@ -36,7 +36,10 @@ const NewsList = ({
   }
 
   return (
-    <div id={anchor} className={twMerge(`pb-page-content px-layout-lg max-w-viewport mx-auto`, className)}>
+    <div
+      id={anchor}
+      className={twMerge(`pb-page-content px-layout-sm 3xl:px-layout-md max-w-viewport mx-auto`, className)}
+    >
       {title && <StyledHeading value={title} level="h2" size="xl" />}
       <div className="grid gap-x-6 gap-y-8 sm:grid-cols-2 xl:grid-cols-3" {...rest}>
         {pagedArticles.map((article) => (

@@ -36,27 +36,43 @@ export const BaseLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(function Ba
         className,
       )
 
-  return type === 'externalUrl' ? (
-    // https://web.dev/articles/referrer-best-practices
-    // strict-origin-when-cross-origin only share the origin
-    // and thus protects privacy but gives Referrer origin
-    // for SEO
-    // eslint-disable-next-line react/jsx-no-target-blank
-    <a
-      className={classNames}
-      ref={ref}
-      href={href}
-      target="_blank"
-      {...rest}
-      rel="noopener"
-      referrerPolicy="strict-origin-when-cross-origin"
-    >
-      {children}
-    </a>
-  ) : (
-    <NextLink ref={ref} href={href} prefetch={false} className={classNames} {...rest}>
-      {children}
-    </NextLink>
-  )
+  const getLinkElement = () => {
+    switch (type) {
+      case 'externalUrl':
+        return (
+          // https://web.dev/articles/referrer-best-practices
+          // strict-origin-when-cross-origin only share the origin
+          // and thus protects privacy but gives Referrer origin
+          // for SEO
+          // eslint-disable-next-line react/jsx-no-target-blank
+          <a
+            className={classNames}
+            ref={ref}
+            href={href}
+            target="_blank"
+            {...rest}
+            rel="noopener"
+            referrerPolicy="strict-origin-when-cross-origin"
+          >
+            {children}
+          </a>
+        )
+      case 'icsLink':
+        return (
+          <a className={classNames} ref={ref} href={href} {...rest}>
+            {children}
+          </a>
+        )
+
+      default:
+        return (
+          <NextLink ref={ref} href={href} prefetch={false} className={classNames} {...rest}>
+            {children}
+          </NextLink>
+        )
+    }
+  }
+
+  return getLinkElement()
 })
 export default BaseLink

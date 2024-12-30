@@ -1,20 +1,12 @@
-import { Eyebrow, BackgroundContainer } from '@components'
+import { BackgroundContainer, Eyebrow } from '@components'
 import { Heading } from '../../core/Typography'
 import IngressText from '../shared/portableText/IngressText'
 import Image, { Ratios } from '../shared/SanityImage'
-import styled from 'styled-components'
 import type { TextBlockData } from '../../types/index'
 //import CallToActions from './CallToActions'
 import CallToActions from '../../sections/CallToActions'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
 import { twMerge } from 'tailwind-merge'
-
-export const StyledTextBlockWrapper = styled(BackgroundContainer)<{ id: string | undefined }>`
-  ${({ id }) =>
-    id && {
-      scrollMarginTop: 'var(--topbar-height)',
-    }}
-`
 
 type TextBlockProps = {
   data: TextBlockData
@@ -32,7 +24,6 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
     designOptions,
     callToActions,
     splitList,
-    overrideButtonStyle = false,
     isBigText,
     useBrandTheme = false,
   } = data
@@ -81,7 +72,7 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
   }
 
   return (
-    <StyledTextBlockWrapper {...bgContainerOptions} id={anchor} renderFragmentWhenPossible>
+    <BackgroundContainer {...bgContainerOptions} id={anchor} renderFragmentWhenPossible>
       <div
         className={`flex flex-col gap-6 ${
           designOptions?.background?.type === 'backgroundImage' ? backgroundImageContentClassNames : contentClassNames
@@ -118,15 +109,9 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
         )}
         {text && <Blocks value={text} className={`${callToActions ? 'mb-4' : ''}`} />}
 
-        {callToActions && (
-          <CallToActions
-            callToActions={callToActions}
-            overrideButtonStyle={overrideButtonStyle}
-            splitList={splitList}
-          />
-        )}
+        {callToActions && <CallToActions callToActions={callToActions} splitList={splitList} />}
       </div>
-    </StyledTextBlockWrapper>
+    </BackgroundContainer>
   )
 }
 
