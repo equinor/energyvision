@@ -59,19 +59,6 @@ jobs:
         id: get-token
         uses: ./.github/workflows/get-auth-token/
 
-      - name: Deploy to Radix backup 🚀
-        id: deploy-backup
-        uses: equinor/radix-github-actions@master
-        with:
-          args: >
-            create job
-            deploy
-            --token-environment
-            --context production
-            -a equinor-web-sites
-            -e ${{ secrets.ENV }}
-            -f
-
       - name: Deploy to Radix 🚀
         id: deploy-main
         uses: equinor/radix-github-actions@master
@@ -172,8 +159,43 @@ jobs:
           steps: ${{ toJson(steps) }}
         if: failure()
 
+  deploy-satellite-studios:
+    needs: deploy-studios
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      DOCKER_BUILDKIT: 1
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+
+      - name: Get token 🔑
+        id: get-token
+        uses: ./.github/workflows/get-auth-token/
+
+      - name: Deploy to Radix 🚀
+        id: deploy
+        uses: equinor/radix-github-actions@master
+        with:
+          args: >
+            create job
+            deploy
+            --token-environment
+            --context platform2
+            -a equinor-web-sites
+            -e ${{ secrets.ENV }}
+            -f
+
+      - uses: act10ns/slack@v2
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()
+
   store-image-tags:
-    needs: [deploy-webs, deploy-studios]
+    needs: [deploy-webs, deploy-satellite-studios]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout internal 🛎️
