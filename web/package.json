@@ -80,8 +80,8 @@
   "devDependencies": {
     "@algolia/client-search": "^4.16.0",
     "@babel/core": "^7.21.4",
+    "@equinor/energyvision-tailwind-preset": "workspace:*",
     "@next/eslint-plugin-next": "^13.4.7",
-    "@tailwindcss/typography": "^0.5.10",
     "@testing-library/jest-dom": "^6.1.4",
     "@testing-library/react": "^14.0.0",
     "@types/http-proxy": "^1.17.10",

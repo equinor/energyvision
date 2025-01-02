@@ -4,4 +4,4 @@ packages:
   - 'sanityv3'
   - 'search'
   - '!legacy'
-  - 'packages'
+  - 'packages/*'
