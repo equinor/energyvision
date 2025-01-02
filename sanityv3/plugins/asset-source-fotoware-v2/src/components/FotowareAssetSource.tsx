@@ -142,7 +142,7 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
       setErrorText('Invalid event data.')
       return
     }
-
+    console.log('store access token', data.access_token)
     storeAccessToken('ApiFotowareToken', data)
     setApiToken(data.access_token)
   }
