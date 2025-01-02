@@ -1,0 +1,69 @@
+name: Release
+
+on:
+  push:
+    paths:
+      - '.changeset/**'
+      - 'packages/**'
+    branches:
+      - main
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+    timeout-minutes: 20
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js and Yarn cache
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: yarn
+
+      - name: Install Dependencies
+        run: yarn
+
+      - name: Create Release Pull Request or Publish to npm
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          # This expects you to have a script called release which does a build for your packages and calls changeset publish
+          publish: yarn release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Creating .npmrc
+        run: |
+          cat << EOF > "$HOME/.npmrc"
+            @equinor:registry=https://npm.pkg.github.com
+            //npm.pkg.github.com/:_authToken=$NPM_TOKEN
+          EOF
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish to GPR
+        if: steps.changesets.outputs.published == 'true'
+        id: changesets-gpr
+        uses: changesets/action@v1
+        with:
+          publish: yarn changeset publish
+          createGithubReleases: false
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_AUTOMATION }}
+          GITHUB_TOKEN: ${{ secrets.GIT_REPO }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTOMATION }}
+
+      - name: Send a Slack notification if a publish happens
+        uses: act10ns/slack@v2
+        with:
+          status: ${{ job.status }}
+          message: A new version of ${GITHUB_REPOSITORY} packages published!
+        if: steps.changesets.outputs.published == 'true'

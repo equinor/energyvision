@@ -31,7 +31,7 @@
     "v3:run": "docker run -p 3333:3333 envis/v3",
     "lint-staged": "lint-staged -c ./lint-staged-config.js",
     "packages": "pnpm --filter ./packages/**",
-    "publish": "pnpm packages build && changesets publish"
+    "release": "pnpm packages build && changesets publish"
   },
   "dependencies": {
     "husky": "^7.0.4",
