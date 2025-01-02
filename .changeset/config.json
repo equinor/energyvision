@@ -1,0 +1,11 @@
+{
+  "$schema": "https://unpkg.com/@changesets/config@3.0.5/schema.json",
+  "changelog": ["@svitejs/changesets-changelog-github-compact", { "repo": "equinor/energyvision" }],
+  "commit": false,
+  "fixed": [["@equinor/energyvision-tailwind-preset"]],
+  "linked": [],
+  "access": "public",
+  "baseBranch": "main",
+  "updateInternalDependencies": "patch",
+  "ignore": ["e2e", "legacy", "radix", "sanityv3", "search", "web"]
+}

@@ -1,9 +1,8 @@
 import { createGlobalStyle } from 'styled-components'
-import { normalize } from 'styled-normalize'
 import { colors, typography, spacings, componentSettings, strictLineBreak } from './settings'
 import { generic } from './generic'
 import { elements } from './elements'
-import { cookieBot, algolia } from './components'
+import { algolia } from './components'
 import { normal } from './themes'
 
 /* We use ITCSS to structure the (few) global styles we need */
@@ -18,12 +17,9 @@ export const GlobalStyle = createGlobalStyle`
   ${spacings}
   ${componentSettings}
   /* Generic */
-  ${normalize}
   ${generic}
   /* Elements */
   ${elements}
-  /* Components */
-  ${cookieBot}
   /* This is temporary. Will be different with the hooks version of the lib*/
   ${algolia}
 `

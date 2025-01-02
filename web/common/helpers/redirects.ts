@@ -9,6 +9,13 @@ export const getExternalRedirectUrl = async (slug: string, locale: string): Prom
   return getClient(false).fetch(externalRedirects, { slug: slug, slugWithLocale: `/${locale}${slug}` })
 }
 
+export const getWWWRedirect = (host: string, pathname: string): string | undefined => {
+  if (!host.includes("www")) {
+    return `https://www.${host}${pathname}`;
+  }
+  return undefined;
+};
+
 export const getDnsRedirect = (host: string, pathname: string) => {
   const dns = host.replace('http://', '').replace('https://', '').replace('www.', '')
 

@@ -37,9 +37,7 @@ describe('fileStorage', () => {
         expect(res.topicTags).toEqual(['tag1', 'tag2', 'General news'])
         expect(res.countryTags).toEqual(['Norway'])
         expect(res.text).toEqual('A lot of \n content')
-        expect(res.thumbnailUrl).toEqual(
-          'https://envisstoragedev.blob.core.windows.net/equinor-archive-content/link/to/url/of/image.png',
-        )
+        expect(res.thumbnailUrl).toEqual('/link/to/url/of/image.png')
       })
     })
 

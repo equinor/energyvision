@@ -185,3 +185,7 @@ export const getDomain = (dataset) => websiteDomains[dataset]?.url || 'Domain no
 export const getMetaTitleSuffix = (dataset) => {
   return websiteDomains[dataset]?.meta || 'Equinor'
 }
+
+export const getAllDomainUrls = () => {
+  return Object.keys(datasets).map((dataset) => websiteDomains[dataset]?.url)
+}

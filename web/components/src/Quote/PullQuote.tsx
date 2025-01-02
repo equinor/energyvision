@@ -9,7 +9,7 @@ export type PullQuoteProps = {
 } & HTMLAttributes<HTMLDivElement>
 
 type ContainerProps = {
-  hasImage: boolean
+  $hasImage: boolean
   imagePosition: ImagePosition
 }
 
@@ -20,8 +20,8 @@ const Container = styled.figure<ContainerProps>`
   position: relative;
   grid-template-rows: min-content min-content;
   grid-template-columns: calc(5 * var(--space-medium)) var(--space-medium) 1fr; // TODO: Inconsistent spacing
-  grid-template-areas: ${({ hasImage }) =>
-    hasImage
+  grid-template-areas: ${({ $hasImage }) =>
+    $hasImage
       ? `
       'media spacing author'
       'quote quote quote'
@@ -32,19 +32,19 @@ const Container = styled.figure<ContainerProps>`
     `};
 
   @media (min-width: 800px) {
-    grid-template-columns: ${({ imagePosition, hasImage }) =>
-      hasImage && imagePosition === 'left'
+    grid-template-columns: ${({ imagePosition, $hasImage }) =>
+      $hasImage && imagePosition === 'left'
         ? `calc(11 * var(--space-medium)) var(--space-medium) 1fr`
-        : hasImage
+        : $hasImage
         ? `1fr var(--space-medium) calc(11 * var(--space-medium))`
         : `1fr var(--space-4xLarge) calc(5 * var(--space-medium))`};
-    grid-template-areas: ${({ imagePosition, hasImage }) =>
-      hasImage && imagePosition === 'left'
+    grid-template-areas: ${({ imagePosition, $hasImage }) =>
+      $hasImage && imagePosition === 'left'
         ? `
         'media spacing quote'
         'media spacing author'
         `
-        : hasImage
+        : $hasImage
         ? `
         'quote spacing media'
         'author spacing media'
@@ -62,7 +62,7 @@ export const PullQuote = forwardRef<HTMLDivElement, PullQuoteProps>(function Pul
 ) {
   const hasImage = Children.toArray(children).some((child) => isValidElement(child) && child.type === Media)
   return (
-    <Container imagePosition={imagePosition} hasImage={hasImage} ref={ref}>
+    <Container imagePosition={imagePosition} $hasImage={hasImage} ref={ref}>
       {children}
     </Container>
   )

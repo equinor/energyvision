@@ -172,6 +172,18 @@ module.exports = {
           100: 'hsla(212, 82%, 11%, 1)',
         },
       }),
+      boxShadowColor: {
+        'moss-green-50': '190deg 9% 67%',
+        'moss-green-50-interact': '190deg 9% 60%',
+        'white-100': '0deg 0% 64%',
+        'white-100-interact': '0deg 0% 63%',
+        'blue-50': '212deg 40% 29%',
+        'blue-50-interact': '212deg 40% 25%',
+        'orange-50': '28deg 42% 57%',
+        'orange-50-interact': '28deg 42% 51%',
+        'mist-blue-100': '199deg 23% 62%',
+        'mist-blue-100-interact': '199deg 23% 56%',
+      },
       spacing: ({ theme }) => ({
         //--space-xSmall -> spacing.2
         //--space-small -> spacing.4
@@ -190,6 +202,8 @@ module.exports = {
         '2xl': 'calc((40 / 16) * theme(fontSize.base))',
         '3xl': 'calc((56 / 16) * theme(fontSize.base))',
         '4xl': 'calc((96 / 16) * theme(fontSize.base))',
+        'card-minWidth': '220px',
+        'card-maxWidth': '400px',
       }),
       fontSize: {
         //--typeScale-00
@@ -301,6 +315,14 @@ module.exports = {
             transform: 'translateX(calc(-100%+100vw))',
           },
         },
+        slideUp: {
+          '0%': { height: 0 },
+          '100%': { height: 'var(--radix-accordion-content-height)' },
+        },
+        slideDown: {
+          '0%': { height: 'var(--radix-accordion-content-height)' },
+          '100%': { height: 0 },
+        },
       },
       animation: {
         fadeInOut: 'fade linear both',
@@ -308,9 +330,18 @@ module.exports = {
         zoomIn: 'auto linear zoom-in both',
         move: 'auto linear move forwards',
         'spin-slow': 'spin 3s linear infinite',
+        slideUp: 'slideUp 3s ease-out',
+        slideDown: 'slideDown 3s ease-out',
+      },
+      data: {
+        open: 'state~="open"',
+        closed: 'state~="closed"',
       },
       flex: {
         fr: '1 1 1',
+      },
+      aria: {
+        current: 'current="page"',
       },
       typography: (theme) => ({
         DEFAULT: {
@@ -431,14 +462,11 @@ module.exports = {
           },
         },
       }),
-
       transitionProperty: ['motion-safe'],
-    },
-  },
-  variants: {
-    extend: {
-      borderColor: ['aria-current'],
-      backgroundColor: ['aria-current'],
+      gridTemplateColumns: {
+        'auto-fill-fr': `repeat(auto-fill, minmax(80px,1fr))`,
+        card: `repeat(auto-fill, minmax(min(100%, theme(spacing.card-minWidth)), theme(spacing.card-maxWidth)))`,
+      },
     },
   },
   plugins: [

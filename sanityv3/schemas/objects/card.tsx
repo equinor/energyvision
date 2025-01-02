@@ -1,23 +1,21 @@
 /* eslint-disable react/display-name */
-import { forwardRef } from 'react'
 import { configureBlockContent } from '../editors'
 import type { PortableTextBlock } from 'sanity'
-import { Stack, Text, Card } from '@sanity/ui'
+import { Text, Card, Box } from '@sanity/ui'
 import blocksToText from '../../helpers/blocksToText'
 
-const CardField = forwardRef((props: any) => {
+const CardField = (props: any) => {
+  const { renderDefault } = props
   return (
-    <Stack>
-      <Card padding={3} borderLeft>
-        <Text muted size={2} align={'left'}>
+    <Box>
+        <Text muted size={2} align="left" style={{marginBottom: 20}}>
           If only title are used it will render only title as statement. If content below are used, both title and
           content will be rendered.
         </Text>
-      </Card>
-      <>{props.renderDefault(props)}</>
-    </Stack>
+      <>{renderDefault(props)}</>
+    </Box>
   )
-})
+}
 
 const blockConfig = {
   h2: false,

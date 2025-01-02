@@ -1,12 +1,11 @@
 {
-  "cssvar.files": [
-    "./web/styles/settings.ts"
-  ],
+  "cssvar.files": ["./web/styles/settings.ts"],
   "azureFunctions.deploySubpath": ".",
   "azureFunctions.postDeployTask": "npm install (functions)",
   "azureFunctions.projectLanguage": "TypeScript",
   "azureFunctions.projectRuntime": "~4",
   "debug.internalConsoleOptions": "neverOpen",
   "azureFunctions.preDeployTask": "npm prune (functions)",
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "compile-hero.disable-compile-files-on-did-save-code": false
 }

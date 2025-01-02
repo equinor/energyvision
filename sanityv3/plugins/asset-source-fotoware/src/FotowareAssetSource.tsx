@@ -40,9 +40,9 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   const handleAuthEvent = useCallback(
     (event: any) => {
       const validateAuthEvent = () => {
-        if (event.origin !== REDIRECT_ORIGIN) {
+        /*         if (event.origin !== REDIRECT_ORIGIN) {
           return handleRequestError(`Invalid event origin: ${event.origin}`, setError, 'auth', newWindow)
-        }
+        } */
 
         if (event.data?.error) {
           const { error, error_description } = event.data
@@ -175,6 +175,7 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   }, [accessToken, handleAuthEvent])
 
   useEffect(() => {
+    //should not add listener before access token is present?
     window.addEventListener('message', handleWidgetEvent)
     setContainer(document.createElement('div'))
 

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { getRedirectUrl, getDnsRedirect, getExternalRedirectUrl } from './common/helpers/redirects'
+import { getRedirectUrl, getDnsRedirect, getExternalRedirectUrl, getWWWRedirect } from './common/helpers/redirects'
 import { NextRequest, NextResponse } from 'next/server'
 import { getLocaleFromName } from './lib/localization'
 import { Flags } from './common/helpers/datasetHelpers'
@@ -50,12 +50,23 @@ export async function middleware(request: NextRequest) {
   if ((PUBLIC_FILE.test(pathname) && !isDotHtml) || pathname.includes('/api/')) {
     return undefined
   }
-
   // Check if it is a DNS redirect
   const host = String(request.headers.get('host'))
   const dnsRedirect = getDnsRedirect(host, pathname)
   if (dnsRedirect) {
     return NextResponse.redirect(dnsRedirect, PERMANENT_REDIRECT)
+  }
+
+  // Skip WWW redirect for Radix URLs and localhost
+  if (
+    host !== process.env.RADIX_PUBLIC_DOMAIN_NAME &&
+    host !== process.env.RADIX_CANONICAL_DOMAIN_NAME &&
+    host !== 'localhost:3000'
+  ) {
+    const wwwRedirect = getWWWRedirect(host, pathname)
+    if (wwwRedirect) {
+      return NextResponse.redirect(wwwRedirect, PERMANENT_REDIRECT)
+    }
   }
 
   // Redirect external links to news which is now archived if link doesn't exist in Sanity

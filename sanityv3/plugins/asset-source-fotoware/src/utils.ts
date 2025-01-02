@@ -15,8 +15,8 @@ export const getAuthURL = (requestState: string): string | false => {
 
   const CLIENT_ID = process.env.SANITY_STUDIO_FOTOWARE_CLIENT_ID
   const TENANT_URL = process.env.SANITY_STUDIO_FOTOWARE_TENANT_URL
-
-  return `${TENANT_URL}/fotoweb/oauth2/authorize?response_type=token&client_id=${CLIENT_ID}&state=${requestState}`
+  const REDIRECT_URI = process.env.SANITY_STUDIO_FOTOWARE_REDIRECT_ORIGIN
+  return `${TENANT_URL}/fotoweb/oauth2/authorize?response_type=token&client_id=${CLIENT_ID}&state=${requestState}&redirect_uri=${REDIRECT_URI}`
 }
 
 export const getAccessToken = (): string | false => {

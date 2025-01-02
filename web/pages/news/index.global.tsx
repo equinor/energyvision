@@ -1,39 +1,29 @@
 import { GetServerSideProps } from 'next'
-import { InstantSearchSSRProvider, getServerState } from 'react-instantsearch'
 import type { AppProps } from 'next/app'
 import { IntlProvider } from 'react-intl'
 import Footer from '../../pageComponents/shared/Footer'
 import Header from '../../pageComponents/shared/Header'
-import { newsroomQuery } from '../../lib/queries/newsroom'
+import { allNewsDocuments, newsroomQuery } from '../../lib/queries/newsroom'
 import getIntl from '../../common/helpers/getIntl'
 import { getNameFromLocale, getIsoFromLocale } from '../../lib/localization'
 import { defaultLanguage } from '../../languages'
-import NewsRoomPage from '../../pageComponents/pageTemplates/NewsRoomPage'
 import { AlgoliaIndexPageType, NewsRoomPageType } from '../../types'
-import { getComponentsData } from '../../lib/fetchData'
-import { renderToString } from 'react-dom/server'
+import { getComponentsData, getData } from '../../lib/fetchData'
+import NewsRoomTemplateSanity from '@templates/newsroom/sanity/NewsroomSanity'
 
-export default function NewsRoom({ isServerRendered = false, serverState, data, url }: AlgoliaIndexPageType) {
+export default function NewsRoom({ data }: AlgoliaIndexPageType) {
   const defaultLocale = defaultLanguage.locale
   const { pageData, slug, intl } = data
   const locale = data?.intl?.locale || defaultLocale
 
   return (
-    <InstantSearchSSRProvider {...serverState}>
-      <IntlProvider
-        locale={getIsoFromLocale(locale)}
-        defaultLocale={getIsoFromLocale(defaultLocale)}
-        messages={intl?.messages}
-      >
-        <NewsRoomPage
-          isServerRendered={isServerRendered}
-          locale={locale}
-          pageData={pageData as NewsRoomPageType}
-          slug={slug}
-          url={url}
-        />
-      </IntlProvider>
-    </InstantSearchSSRProvider>
+    <IntlProvider
+      locale={getIsoFromLocale(locale)}
+      defaultLocale={getIsoFromLocale(defaultLocale)}
+      messages={intl?.messages}
+    >
+      <NewsRoomTemplateSanity locale={locale} pageData={pageData as NewsRoomPageType} slug={slug} />
+    </IntlProvider>
   )
 }
 
@@ -95,29 +85,24 @@ export const getServerSideProps: GetServerSideProps = async ({ req, preview = fa
     preview,
   )
 
+  console.log(JSON.stringify(req.headers))
   const url = new URL(req.headers.referer || `https://${req.headers.host}${req.url}`).toString()
-  const serverState = await getServerState(
-    <NewsRoom
-      isServerRendered
-      data={{
-        intl,
-        pageData,
-        slug,
-      }}
-      url={url}
-    />,
-    { renderToString },
-  )
+  const { data } = await getData({
+    query: allNewsDocuments,
+    queryParams,
+  })
 
   return {
     props: {
-      serverState,
       url,
       data: {
         menuData,
         footerData,
         intl,
-        pageData,
+        pageData: {
+          ...pageData,
+          newsArticles: data,
+        },
         slug,
       },
     },
