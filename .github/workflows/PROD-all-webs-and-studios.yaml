@@ -1,10 +1,9 @@
-name: PROD - Deploy All Studios and Webs
+name: PROD - Deploy all webs and studios
 on:
   workflow_dispatch:
 permissions:
   id-token: write
 jobs:
-  # Update Radix config for both studios and webs
   update-radix-config:
     runs-on: ubuntu-latest
     env:
@@ -17,37 +16,23 @@ jobs:
           repository: 'equinor/energyvision-internal'
           ref: main
           token: ${{ secrets.PADMS_PAT }}
-      - name: Promote preprod tag to prod (studios) 🗒️
+      - name: Promote preprod tag to prod 🗒️
         if: github.ref == 'refs/heads/main'
         shell: bash
-        id: promote-studios
+        id: modify-radix
         run: |
-          python3 -m venv venv
-          source venv/bin/activate
-          python -m pip install ruamel.yaml
-          python ci/promoteAllToProduction.py studio
-          git config --global user.name 'github'
-          git config --global user.email 'padms@users.noreply.github.com'
-          git remote set-url origin https://x-access-token:${{ secrets.PADMS_PAT }}@github.com/equinor/energyvision-internal
-          if [[ `git status --porcelain` ]]; then
-            git commit -am "🚀 Deploy all studios to production"
-            git pull --rebase origin main
-            git push origin HEAD:main
-          fi
-      - name: Promote preprod tag to prod (webs) 🗒️
-        if: github.ref == 'refs/heads/main'
-        shell: bash
-        id: promote-webs
-        run: |
+          # Install pre-requisite
           python3 -m venv venv
           source venv/bin/activate
           python -m pip install ruamel.yaml
           python ci/promoteAllToProduction.py web
+          python ci/promoteAllToProduction.py studio
           git config --global user.name 'github'
           git config --global user.email 'padms@users.noreply.github.com'
           git remote set-url origin https://x-access-token:${{ secrets.PADMS_PAT }}@github.com/equinor/energyvision-internal
-          if [[ `git status --porcelain` ]]; then
-            git commit -am "🚀 Deploy all web sites to production"
+          if [[ `git status --porcelain` ]]
+          then
+            git commit -am "🚀 Deploy all web sites and studios to production"
             git pull --rebase origin main
             git push origin HEAD:main
           fi
@@ -57,20 +42,68 @@ jobs:
           steps: ${{ toJson(steps) }}
         if: failure()
 
-  # Deploy all studios
+  deploy-webs:
+    needs: update-radix-config
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://equinor.com
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      DOCKER_BUILDKIT: 1
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+
+      - name: Get token 🔑
+        id: get-token
+        uses: ./.github/workflows/get-auth-token/
+
+      - name: Deploy to Radix backup 🚀
+        id: deploy-backup
+        uses: equinor/radix-github-actions@master
+        with:
+          args: >
+            create job
+            deploy
+            --token-environment
+            --context production
+            -a equinor-web-sites
+            -e ${{ secrets.ENV }}
+            -f
+
+      - name: Deploy to Radix 🚀
+        id: deploy-main
+        uses: equinor/radix-github-actions@master
+        with:
+          args: >
+            create job
+            deploy
+            --token-environment
+            --context platform2
+            -a equinor-web-sites
+            -e ${{ secrets.ENV }}
+            -f
+
+      - uses: act10ns/slack@v2
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()
+
   deploy-studios:
     needs: update-radix-config
     runs-on: ubuntu-latest
     environment:
       name: production
+      url: https://equinor.sanity.studio
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-      SANITY_STUDIO_API_PROJECT_ID: w3b4om14
-      SANITY_STUDIO_MUTATION_TOKEN: ${{ secrets.SANITY_STUDIO_SECRET_MUTATION_TOKEN }}
-      SANITY_STUDIO_PREVIEW_SECRET: ${{ secrets.SANITY_STUDIO_SECRET_PREVIEW_SECRET }}
       SANITY_STUDIO_BRANDMASTER_URL: ${{ secrets.SANITY_STUDIO_BRANDMASTER_URL }}
       SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE: ${{ secrets.SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE }}
-      SANITY_STUDIO_API_DATASET: secret
+      SANITY_STUDIO_PREVIEW_SECRET: ${{ secrets.SANITY_STUDIO_PREVIEW_SECRET }}
+      SANITY_STUDIO_HISTORY_API_TOKEN: ${{ secrets.SANITY_STUDIO_HISTORY_API_TOKEN }}
+      SANITY_STUDIO_API_DATASET: global
       SANITY_STUDIO_FOTOWARE_CLIENT_ID: ${{ secrets.SANITY_STUDIO_FOTOWARE_CLIENT_ID }}
       SANITY_STUDIO_FOTOWARE_TENANT_URL: ${{ secrets.SANITY_STUDIO_FOTOWARE_TENANT_URL }}
       SANITY_STUDIO_FOTOWARE_REDIRECT_ORIGIN: ${{ secrets.SANITY_STUDIO_FOTOWARE_REDIRECT_ORIGIN }}
@@ -87,63 +120,60 @@ jobs:
           repository: 'equinor/energyvision-internal'
           ref: main
           token: ${{ secrets.PADMS_PAT }}
-      - name: Install dependencies and deploy studios
+      - name: Get preprod sha 🏷️
+        id: get-preprod-sha
+        shell: bash
+        run: |
+          python -m pip install --user ruamel.yaml
+          echo "sha=$(python ci/returnComponentVersion.py preprod studio-global)" >> $GITHUB_OUTPUT
+      - name: Checkout 🛎️
+        id: checkout-main
+        uses: actions/checkout@v3
+        with:
+          repository: 'equinor/energyvision'
+          fetch-depth: 0
+      - name: Get long sha ️🏷️
+        id: get-long-sha
+        shell: bash
+        run: |
+          echo "sha=$(git rev-parse ${{ steps.get-preprod-sha.outputs.sha }})" >> $GITHUB_OUTPUT
+      - name: Checkout 🛎️
+        id: checkout-specific-branch
+        uses: actions/checkout@v3
+        with:
+          repository: 'equinor/energyvision'
+          fetch-depth: 0
+          ref: '${{ steps.get-long-sha.outputs.sha }}'
+      - name: Install pnpm 📦
+        id: install-pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: '8.5.1'
+      - name: Cache pnpm modules 💾
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'pnpm'
+      - name: Install dependencies 🔧
+        id: install-dependencies
         run: |
           pnpm install
           pnpm sanityv3 install
-          pnpm run deploy --workspace sanityv3
+      - name: Deploy 🚀
+        id: deploy
+        working-directory: ./sanityv3
+        run: |
+          pnpm run deploy
+        env:
+          SANITY_AUTH_TOKEN: ${{ secrets.SANITY_DEPLOY }}
       - uses: act10ns/slack@v2
         with:
           status: ${{ job.status }}
           steps: ${{ toJson(steps) }}
         if: failure()
 
-  # Deploy all webs
-  deploy-webs:
-    needs: update-radix-config
-    runs-on: ubuntu-latest
-    environment:
-      name: production
-      url: https://equinor.com
-    env:
-      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-      DOCKER_BUILDKIT: 1
-    steps:
-      - name: Checkout internal 🛎️
-        uses: actions/checkout@v3
-      - name: Deploy to Radix backup 🚀
-        id: deploy-backup
-        uses: equinor/radix-github-actions@master
-        with:
-          args: >
-            create job
-            deploy
-            --token-environment
-            --context production
-            -a equinor-web-sites
-            -e ${{ secrets.ENV }}
-            -f
-      - name: Deploy to Radix main 🚀
-        id: deploy-main
-        uses: equinor/radix-github-actions@master
-        with:
-          args: >
-            create job
-            deploy
-            --token-environment
-            --context platform2
-            -a equinor-web-sites
-            -e ${{ secrets.ENV }}
-            -f
-      - uses: act10ns/slack@v2
-        with:
-          status: ${{ job.status }}
-          steps: ${{ toJson(steps) }}
-        if: failure()
-
-  # Store image tags
   store-image-tags:
-    needs: [deploy-studios, deploy-webs]
+    needs: [deploy-webs, deploy-studios]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout internal 🛎️
@@ -157,11 +187,13 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '14'
-      - name: Install dependencies and store image tags
+      - name: Install dependencies
         run: |
           npm install js-yaml
-          node ci/storeImageTags.js studio
+      - name: Run script for 'web' and 'studio'
+        run: |
           node ci/storeImageTags.js web
+          node ci/storeImageTags.js studio
       - name: Commit and push changes
         run: |
           git config --global user.name 'github'
