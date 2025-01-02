@@ -1,11 +1,11 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import styled, { createGlobalStyle } from 'styled-components'
+import { createGlobalStyle } from 'styled-components'
 import { CSSProperties } from 'react'
 import { useRouter } from 'next/router'
 import { default as NextLink } from 'next/link'
 import { Topbar, BackgroundContainer } from '@components'
 import { AllSlugsType, LocalizationSwitch } from './LocalizationSwitch'
-import type { MenuData, SimpleMenuData } from '../../types/index'
+import type { MenuData, SimpleMenuData, StickyMenuData } from '../../types/index'
 import SiteMenu from './siteMenu/SiteMenu'
 import SimpleSiteMenu from './siteMenu/simple/SimpleSiteMenu'
 import { Flags } from '../../common/helpers/datasetHelpers'
@@ -19,60 +19,17 @@ import getConfig from 'next/config'
 import { getAllSitesLink } from '../../common/helpers/getAllSitesLink'
 import { Icon } from '@equinor/eds-core-react'
 import { ButtonLink } from '@core/Link'
+import StickyMenuLink from '@core/Link/StickyMenuLink'
 
 const TopbarOffset = createGlobalStyle`
   body {
     padding-top: var(--topbar-height);
   }
 `
-
-const HeaderRelative = styled.header`
-  position: relative;
-`
-
-const TopbarContainer = styled(Topbar.InnerContainer)`
-  display: grid;
-  grid-template-areas: 'logo menu';
-  grid-template-rows: 1fr;
-  align-items: center;
-  grid-column-gap: var(--space-large);
-  column-gap: var(--space-large);
-`
-const LogoLinkInGrid = styled(LogoLink)`
-  grid-area: logo;
-`
-
-/* This div is needed because of the grid layout to wrap focus lock panes.
-  We might look into to improve this at some point. */
-const ControlChild = styled.div``
-
-const ControlsContainer = styled.div`
-  grid-area: menu;
-  justify-self: right;
-  display: grid;
-  grid-template-columns: repeat(var(--columns), auto);
-  grid-column-gap: var(--space-small);
-  column-gap: var(--space-small);
-  align-items: center;
-
-  @media (min-width: 600px) {
-    grid-column-gap: var(--space-medium);
-    column-gap: var(--space-medium);
-  }
-`
-
-const StyledAllSites = styled(NextLink)`
-  cursor: pointer;
-  font-size: var(--typeScale-1);
-  text-decoration: none;
-  &:hover {
-    text-decoration: underline;
-  }
-`
-
 export type HeaderProps = {
   menuData?: MenuData | SimpleMenuData
   slugs: AllSlugsType
+  stickyMenuData?: StickyMenuData
 }
 
 const HeadTags = ({ slugs }: { slugs: AllSlugsType }) => {
@@ -126,13 +83,13 @@ const HeadTags = ({ slugs }: { slugs: AllSlugsType }) => {
 const AllSites = () => {
   const allSitesURL = getAllSitesLink('external')
   return (
-    <StyledAllSites href={allSitesURL} prefetch={false}>
+    <NextLink className="cursor-pointer text-base no-underline hover:underline" href={allSitesURL} prefetch={false}>
       <FormattedMessage id="all_sites" defaultMessage="All Sites" />
-    </StyledAllSites>
+    </NextLink>
   )
 }
 
-const Header = ({ slugs, menuData }: HeaderProps) => {
+const Header = ({ slugs, menuData, stickyMenuData }: HeaderProps) => {
   const router = useRouter()
   const localization = {
     activeLocale: router.locale || defaultLanguage.locale,
@@ -153,23 +110,27 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
   const intl = useIntl()
   const searchLabel = intl.formatMessage({ id: 'search', defaultMessage: 'Search' })
 
+  const anchorReference = stickyMenuData?.links.find((it) => it.type == 'anchorLinkReference')
+  const resourceLink = stickyMenuData?.links.find((it) => it.type == 'downloadableFile')
+
   return (
-    <HeaderRelative>
+    <div className="sticky top-0 z-10">
       <HeadTags slugs={slugs} />
       <TopbarOffset />
       <BackgroundContainer>
         <Topbar>
-          <TopbarContainer>
-            <LogoLinkInGrid />
-            <ControlsContainer
+          <Topbar.InnerContainer className="grid grid-areas-logo_menu grid-rows-1 items-center gap-x-large ">
+            <LogoLink className="grid-area-logo" />
+            <div
               style={
                 {
                   '--columns': columns,
                 } as CSSProperties
               }
+              className="grid grid-area-menu justify-self-end grid-cols-[repeat(var(--columns),auto)] gap-x-small items-center sm:gap-x-medium"
             >
               {hasSearch && (
-                <ControlChild>
+                <div>
                   <ButtonLink
                     variant="ghost"
                     aria-expanded="true"
@@ -180,7 +141,7 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
                     <Icon size={24} data={search} />
                     <FormattedMessage id="search" />
                   </ButtonLink>
-                </ControlChild>
+                </div>
               )}
               {hasMoreThanOneLanguage && (
                 <LocalizationSwitch activeLocale={localization.activeLocale} allSlugs={validSlugs} />
@@ -188,19 +149,33 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
               {shouldDisplayAllSites ? (
                 <AllSites />
               ) : menuData && Flags.HAS_FANCY_MENU ? (
-                <ControlChild>
+                <div>
                   <SiteMenu data={menuData as MenuData} />
-                </ControlChild>
+                </div>
               ) : (
-                <ControlChild>
+                <div>
                   <SimpleSiteMenu data={menuData as SimpleMenuData} />
-                </ControlChild>
+                </div>
               )}
-            </ControlsContainer>
-          </TopbarContainer>
+            </div>
+          </Topbar.InnerContainer>
         </Topbar>
+        {stickyMenuData && (
+          <div className="w-full bg-moss-green-50 p-4 grid grid-cols-2 lg:grid-cols-5 gap-2 lg:px-16 lg:gap-16 shadow-top-bar z-40">
+            <div className="text-center font-bold lg:col-span-3 text-md col-span-2"> {stickyMenuData?.title}</div>
+            <StickyMenuLink className="mr-4" href={`#${anchorReference?.anchorReference}`}>
+              {anchorReference?.title}
+            </StickyMenuLink>
+            {resourceLink && (
+              <StickyMenuLink href={resourceLink.href} isDownloadable>
+                {' '}
+                {resourceLink.label}
+              </StickyMenuLink>
+            )}
+          </div>
+        )}
       </BackgroundContainer>
-    </HeaderRelative>
+    </div>
   )
 }
 
