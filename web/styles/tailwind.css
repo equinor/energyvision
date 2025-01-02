@@ -269,4 +269,28 @@
       @apply w-[2px] bg-grey-40 hover:bg-grey-70 dark:bg-white-100 dark:hover:bg-white-100/70 rounded-lg;
     }
   }
+
+  /* Custom grid-area utilities */
+  .grid-area-logo {
+    grid-area: logo;
+  }
+  .grid-area-menu {
+    grid-area: menu;
+  }
+
+  /* Custom properties for spacing (if not already defined) */
+  .gap-x-large {
+    column-gap: var(--space-large);
+  }
+  .gap-x-small {
+    column-gap: var(--space-small);
+  }
+  .gap-x-medium {
+    column-gap: var(--space-medium);
+  }
+
+  /* Custom grid-template-areas utility */
+  .grid-areas-logo_menu {
+    grid-template-areas: 'logo menu';
+  }
 }

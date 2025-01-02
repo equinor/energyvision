@@ -82,6 +82,7 @@ import transcript from './objects/transcript'
 import anchorLinkList from './objects/anchorLinkList/anchorLinkList'
 import anchorLinkReference from './objects/anchorLinkList/anchorLinkReference'
 import imageForText from './objects/imageForText'
+import stickyMenu from './objects/stickyMenu'
 
 const {
   pageNotFound,
@@ -210,6 +211,7 @@ const RemainingSchemas = [
   anchorLinkList,
   anchorLinkReference,
   imageForText,
+  stickyMenu,
 ]
 
 // Then we give our schema to the builder and provide the result to Sanity

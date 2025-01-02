@@ -14,6 +14,7 @@ import { keyNumbersFields } from './keyNumbersFields'
 import { noDrafts, sameLang } from './langAndDrafts'
 import promoteMagazine from './promotions/promoteMagazine'
 import { lastUpdatedTimeQuery, publishDateTimeQuery } from './publishDateTime'
+import { anchorLinkReferenceFields } from './anchorLinkReferenceFields'
 
 const pageContentFields = /* groq */ `
 _type == "keyNumbers" =>{
@@ -589,10 +590,7 @@ _type == "keyNumbers" =>{
     title,
     columns,
     "anchorList":anchorList[]{
-      "type": _type,
-      "id": _key,
-      title,
-      anchorReference,
+     ${anchorLinkReferenceFields}
     }
   },
   _type == "imageForText" => {

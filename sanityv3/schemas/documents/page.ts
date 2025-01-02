@@ -42,6 +42,11 @@ export default {
       description: 'You can override the hero image as the SoMe image by uploading another image here.',
       fieldset: 'metadata',
     },
+    {
+      name: 'stickyMenu',
+      title: 'Sticky Menu',
+      type: 'stickyMenu',
+    },
     ...sharedHeroFields,
     {
       title: 'Is Campain',
