@@ -49,7 +49,7 @@ const AnchorLinkList = forwardRef<HTMLElement, AnchorLinkListProps>(function Anc
           {anchorList?.map((anchorLink: { id: string; title?: string; anchorReference?: string }) => {
             const anchor = anchorLink?.anchorReference ? `#${anchorLink?.anchorReference}` : ''
             return (
-              <li key={`anchor_link_${anchorLink?.id}`} className="w-full flex justify-center">
+              <li key={`anchor_link_${anchorLink?.id}`} className="w-full flex justify-start">
                 <ButtonLink variant="ghost" href={anchor} className="w-max text-moss-green-100">
                   {anchorLink?.title}
                 </ButtonLink>
