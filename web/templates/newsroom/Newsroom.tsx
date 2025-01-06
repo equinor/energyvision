@@ -132,21 +132,25 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
 
   const searchClient = useMemo(() => {
     return isServerRendered
-      ? client({ headers: { 
-      //@ts-ignore: TODO
-        Referer: url } })
-      : client(undefined);
-  }, [isServerRendered, url]);
-  
+      ? client({
+          headers: {
+            //@ts-ignore: TODO
+            Referer: url,
+          },
+        })
+      : client(undefined)
+  }, [isServerRendered, url])
+
   return (
     <PaginationContextProvider defaultRef={resultsRef}>
       <Seo seoAndSome={seoAndSome} slug={slug} pageTitle={title} />
       <main ref={ref} className="">
-      <InstantSearch
-        searchClient={searchClient}
-        future={{ preserveSharedStateOnUnmount: false }}
-        indexName={indexName}
-        routing={routing}>
+        <InstantSearch
+          searchClient={searchClient}
+          future={{ preserveSharedStateOnUnmount: false }}
+          indexName={indexName}
+          routing={routing}
+        >
           <Configure
             facetingAfterDistinct
             maxFacetHits={50}
@@ -172,9 +176,7 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
                   >
                     <List.Item className="w-full">
                       {subscriptionLink?.slug && (
-                        <ResourceLink href={subscriptionLink.slug} className="w-full">
-                          {subscriptionLinkTitle}
-                        </ResourceLink>
+                        <ResourceLink href={subscriptionLink.slug}>{subscriptionLinkTitle}</ResourceLink>
                       )}
                     </List.Item>
                     {localNewsPages &&
@@ -182,7 +184,7 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
                       localNewsPages?.map((localNewsPage) => {
                         return localNewsPage?.link?.slug ? (
                           <List.Item key={localNewsPage.id} className="w-full">
-                            <ResourceLink type={localNewsPage.type} href={localNewsPage?.link?.slug} className="w-full">
+                            <ResourceLink type={localNewsPage.type} href={localNewsPage?.link?.slug}>
                               {localNewsPage?.label}
                             </ResourceLink>
                           </List.Item>

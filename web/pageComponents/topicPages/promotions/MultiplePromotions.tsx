@@ -34,14 +34,14 @@ const MultiplePromotions = ({
       case 'news':
       case 'localNews':
         return (
-          <li key={data?.id}>
+          <li key={data?.id} className="flex justify-center">
             <PromotionCard data={data as CardData} hasSectionTitle={hasSectionTitle} />
           </li>
         )
       case 'topics':
       case 'magazine':
         return (
-          <li key={data?.id}>
+          <li key={data?.id} className="flex justify-center">
             <PromotionCard data={data as CardData} hasSectionTitle={hasSectionTitle} />
           </li>
         )
@@ -110,9 +110,8 @@ const MultiplePromotions = ({
       justify-center
       content-center
       grid-cols-1
-      auto-rows-auto
-      md:grid-cols-3
-      md:grid-rows-1`)}
+      auto-rows-fr
+      ${data?.length === 3 ? 'md:grid-cols-3' : 'md:grid-cols-2 2xl:grid-cols-3'}`)}
     >
       <>
         {data.map((item) => {

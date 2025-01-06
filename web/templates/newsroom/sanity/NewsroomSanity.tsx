@@ -132,9 +132,7 @@ const NewsRoomTemplateSanity = forwardRef<HTMLElement, NewsRoomTemplateProps>(fu
                 >
                   <List.Item className="w-full">
                     {subscriptionLink?.slug && (
-                      <ResourceLink href={subscriptionLink.slug} className="w-full">
-                        {subscriptionLinkTitle}
-                      </ResourceLink>
+                      <ResourceLink href={subscriptionLink.slug}>{subscriptionLinkTitle}</ResourceLink>
                     )}
                   </List.Item>
                   {localNewsPages &&
@@ -145,7 +143,6 @@ const NewsRoomTemplateSanity = forwardRef<HTMLElement, NewsRoomTemplateProps>(fu
                           <ResourceLink
                             type={localNewsPage.type}
                             href={localNewsPage?.link?.slug || (localNewsPage?.href as string)}
-                            className="w-full"
                           >
                             {localNewsPage?.label}
                           </ResourceLink>

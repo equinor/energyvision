@@ -1,7 +1,7 @@
 import { Fragment } from 'react'
 import styled from 'styled-components'
 import RichText from '../portableText/RichText'
-import { Link, ReadMoreLink } from '@core/Link'
+import { Link, ResourceLink } from '@core/Link'
 import { Menu } from '@components'
 import type { MenuLinkData, SubMenuData, SubMenuGroupData } from '../../../types/index'
 import { SubMenuGroupHeading, SubMenuGroupList } from './SubMenuGroup'
@@ -49,7 +49,7 @@ export const MenuGroup = ({ topLevelItem, index }: MenuGroupType) => {
           <div>
             <div className="max-w-menuText xl:pr-lg xl:pb-2xl">
               {intro && <RichText value={intro} />}
-              <ReadMoreLink href={topLevelHref}>{topLevelLink?.label}</ReadMoreLink>
+              <ResourceLink href={topLevelHref}>{topLevelLink?.label}</ResourceLink>
             </div>
             {groups && groups.length > 0 && (
               <SubMenuGroups>
