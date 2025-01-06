@@ -95,4 +95,8 @@ const dnsRedirects = [
     from: 'eu2nsea.eu',
     to: '/energy/eu2nsea',
   },
+  {
+    from: 'morgendagenshelter.no',
+    to: '/no/om-oss/sponsing-og-stotte',
+  }
 ]
