@@ -1,7 +1,7 @@
 import { TransformableIcon } from '../../../icons/TransformableIcon'
 import { isModifierClick } from '../../../pageComponents/shared/search/simplePagination/PaginationItem'
 import { forwardRef, HTMLAttributes } from 'react'
-import { useClearRefinements, useCurrentRefinements, UseRefinementListProps, useSearchBox } from 'react-instantsearch'
+import { useClearRefinements, useCurrentRefinements, UseRefinementListProps } from 'react-instantsearch'
 import { close_circle_outlined, close } from '@equinor/eds-icons'
 import { Typography } from '@core/Typography'
 import { FormattedMessage } from 'react-intl'
