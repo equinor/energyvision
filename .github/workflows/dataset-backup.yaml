@@ -74,7 +74,7 @@ jobs:
           pnpm sanity dataset export ${{ matrix.dataset }} ${{ env.BUILD_ARTIFACT_PATH }}/${{ matrix.dataset }}.tar.gz
       - name: Upload backup.tar.gz
         id: upload-backup
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: backup-tarball
           path: ${{ env.BUILD_ARTIFACT_PATH }}/${{ matrix.dataset }}.tar.gz
