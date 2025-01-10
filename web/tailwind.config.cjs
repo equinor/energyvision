@@ -498,7 +498,7 @@ module.exports = {
       gridTemplateColumns: {
         'auto-fill-fr': `repeat(auto-fill,minmax(150px,1fr))`,
         'auto-fill-auto': `repeat(auto-fill, minmax(0, auto))`,
-        card: `repeat(auto-fill, minmax(min(100%, 220px)`,
+        card: `repeat(auto-fill,minmax(min(100%,220px),400px))`,
       },
       scrollMargin: {
         topbar: '100px',
