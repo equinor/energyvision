@@ -486,7 +486,7 @@ module.exports = {
       transitionProperty: ['motion-safe'],
       gridTemplateColumns: {
         'auto-fill-fr': `repeat(auto-fill, minmax(80px,1fr))`,
-        card: `repeat(auto-fill, minmax(min(100%, 220px)`,
+        card: `repeat(auto-fill,minmax(min(100%,220px),400px))`,
       },
     },
   },
