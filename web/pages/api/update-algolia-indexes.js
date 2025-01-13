@@ -14,6 +14,18 @@ export const config = {
   },
 }
 
+const updateAlgoliaIndex = async (body) => {
+  const headersList = {
+    Accept: '*/*',
+  }
+  const response = await fetch(ALGOLIA_FUNCTION_URL, {
+    method: 'POST',
+    headers: headersList,
+    body,
+  })
+  return response
+}
+
 export default async function handler(req, res) {
   const signature = req.headers[SIGNATURE_HEADER_NAME]
   const body = (await getRawBody(req)).toString()
@@ -23,6 +35,25 @@ export default async function handler(req, res) {
     return res.status(401).json({ success: false, msg: 'Unauthorized!' })
   }
   const data = JSON.parse(body)
+
+  const revalidateNewsroomPages = async () => {
+    console.log(new Date(), 'Revalidating: /news')
+    res.revalidate(`/news`)
+    console.log(new Date(), 'Revalidating: /no/nyheter')
+    res.revalidate('/no/nyheter')
+  }
+
+  if (data._type === 'news') {
+    // wait for news index and revalidate...
+    const response = updateAlgoliaIndex(body)
+    if (response.status == 204) {
+      // revalidate newsroom pages
+      await revalidateNewsroomPages()
+      return res.status(200).json('Index updated and newsroom revalidated')
+    } else {
+      return res.status(400).json(response.body)
+    }
+  }
   const result = await sanityClient.fetch(
     groq`*[_type match "route_*" && content._ref == $id && excludeFromSearch != true][0]{"slug": slug.current}`,
     {
@@ -32,14 +63,7 @@ export default async function handler(req, res) {
   try {
     if (result?.slug) {
       // slug exists for the topic or event
-      const headersList = {
-        Accept: '*/*',
-      }
-      const response = await fetch(ALGOLIA_FUNCTION_URL, {
-        method: 'POST',
-        headers: headersList,
-        body,
-      })
+      const response = updateAlgoliaIndex(body)
       if (response.status == 204) {
         return res.status(200).json('Index updated')
       } else {
