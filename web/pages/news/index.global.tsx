@@ -79,13 +79,12 @@ export const getStaticProps: GetStaticProps = async ({ preview = false, locale =
   const intl = await getIntl(locale, false)
 
   const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
-  const isoCode = getIsoFromLocale(locale)
-  const indexName = `${envPrefix}_NEWS_${isoCode}`
+  const indexName = `${envPrefix}_NEWS_en-GB`
 
   const searchClient = algoliasearch(algolia.applicationId, algolia.searchApiKey)
   const index = searchClient.initIndex(indexName)
   const { hits } = await index.search('', {
-    hitsPerPage: 10,
+    hitsPerPage: 50,
     facetFilters: ['type:news', 'topicTags:-Crude Oil Assays'],
   })
 
