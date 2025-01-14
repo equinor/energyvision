@@ -31,7 +31,7 @@ export default async function handler(req, res) {
   const body = (await getRawBody(req)).toString()
 
   if (!isValidSignature(body, signature, SANITY_API_TOKEN)) {
-    console.log(req, 'Unauthorized request: Revalidate Endpoint')
+    console.log(req, 'Unauthorized request: Update Algolia indexes Endpoint')
     return res.status(401).json({ success: false, msg: 'Unauthorized!' })
   }
   const data = JSON.parse(body)
@@ -45,8 +45,9 @@ export default async function handler(req, res) {
 
   if (data._type === 'news') {
     // wait for news index and revalidate...
-    const response = updateAlgoliaIndex(body)
+    const response = await updateAlgoliaIndex(body)
     if (response.status == 204) {
+      console.log('Algolia Indexing Success , Revalidating newsroom')
       // revalidate newsroom pages
       await revalidateNewsroomPages()
       return res.status(200).json('Index updated and newsroom revalidated')
