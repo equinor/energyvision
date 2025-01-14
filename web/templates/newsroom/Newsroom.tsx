@@ -159,7 +159,7 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
   return (
     <PaginationContextProvider defaultRef={resultsRef}>
       <Seo seoAndSome={seoAndSome} slug={slug} pageTitle={title} />
-      <main ref={ref} className="">
+      <main ref={ref}>
         <InstantSearch
           searchClient={queriedSearchClient}
           future={{ preserveSharedStateOnUnmount: false }}
@@ -213,7 +213,7 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
               <aside className="lg:self-start lg:sticky lg:top-6 flex flex-col gap-4 lg:gap-6 max-lg:px-layout-sm">
                 {!advancedSearch && (
                   <Button
-                    onClick={(e) => {
+                    onClick={() => {
                       setAdvancedSearch(true)
                     }}
                   >
