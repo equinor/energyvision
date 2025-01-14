@@ -18,7 +18,8 @@ import { searchClient as client } from '../../lib/algolia'
 import { Pagination } from '../../pageComponents/shared/search/pagination/Pagination'
 import { List } from '@core/List'
 import { PaginationContextProvider } from '../../common/contexts/PaginationContext'
-import { Button } from '@equinor/eds-core-react'
+import { TransformableIcon } from '../../icons/TransformableIcon'
+import { filter_alt } from '@equinor/eds-icons'
 
 type NewsRoomTemplateProps = {
   locale?: string
@@ -212,13 +213,26 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
             <div className="w-full flex flex-col lg:grid lg:grid-cols-[27%_1fr] gap-8 lg:gap-12 pb-12 lg:px-layout-sm mx-auto max-w-viewport">
               <aside className="lg:self-start lg:sticky lg:top-6 flex flex-col gap-4 lg:gap-6 max-lg:px-layout-sm">
                 {!advancedSearch && (
-                  <Button
+                  <button
+                    className={`
+  inline-block 
+  text-base
+  mx-5 
+  lg:text-xs 
+  relative 
+  no-underline 
+  hover:underline 
+  hover:underline-offset-4
+  whitespace-nowrap`}
                     onClick={() => {
                       setAdvancedSearch(true)
                     }}
                   >
-                    Do advansed search
-                  </Button>
+                    <div className='flex gap-1 font-medium text-sm items-center -mt-0.5"'>
+                      <TransformableIcon iconData={filter_alt} className="text-grey-50 size-5 -mt-1" />
+                      <FormattedMessage id="filter" defaultMessage="Filter" />
+                    </div>
+                  </button>
                 )}
 
                 <NewsRoomFilters />
