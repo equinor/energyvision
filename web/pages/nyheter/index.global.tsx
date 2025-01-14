@@ -12,6 +12,9 @@ import { AlgoliaIndexPageType, NewsRoomPageType } from '../../types'
 import { getComponentsData } from '../../lib/fetchData'
 import NewsRoomTemplate from '@templates/newsroom/Newsroom'
 import { getServerState, InstantSearchSSRProvider } from 'react-instantsearch'
+import algoliasearch from 'algoliasearch'
+import { algolia } from '../../lib/config'
+import { Flags } from '../../common/helpers/datasetHelpers'
 
 export default function NorwegianNewsRoom({ data, serverState }: AlgoliaIndexPageType) {
   const defaultLocale = defaultLanguage.locale
@@ -25,7 +28,7 @@ export default function NorwegianNewsRoom({ data, serverState }: AlgoliaIndexPag
         defaultLocale={getIsoFromLocale(defaultLocale)}
         messages={intl?.messages}
       >
-        <NewsRoomTemplate locale={locale} pageData={pageData as NewsRoomPageType} slug={slug} />
+        <NewsRoomTemplate locale={locale} pageData={pageData as NewsRoomPageType} hits={data.hits} slug={slug} />
       </IntlProvider>
     </InstantSearchSSRProvider>
   )
@@ -75,6 +78,16 @@ export const getStaticProps: GetStaticProps = async ({ preview = false, locale =
   const lang = getNameFromLocale(locale)
   const intl = await getIntl(locale, false)
 
+  const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
+  const indexName = `${envPrefix}_NEWS_nb-NO`
+
+  const searchClient = algoliasearch(algolia.applicationId, algolia.searchApiKey)
+  const index = searchClient.initIndex(indexName)
+  const { hits } = await index.search('', {
+    hitsPerPage: 50,
+    facetFilters: ['type:news', 'topicTags:-Crude Oil Assays'],
+  })
+
   const queryParams = {
     lang,
   }
@@ -87,9 +100,12 @@ export const getStaticProps: GetStaticProps = async ({ preview = false, locale =
     preview,
   )
 
-  const serverState = await getServerState(<NorwegianNewsRoom data={{ menuData, footerData, pageData, intl }} />, {
-    renderToString,
-  })
+  const serverState = await getServerState(
+    <NorwegianNewsRoom data={{ menuData, footerData, pageData, intl, hits }} />,
+    {
+      renderToString,
+    },
+  )
   return {
     props: {
       data: {
@@ -97,6 +113,7 @@ export const getStaticProps: GetStaticProps = async ({ preview = false, locale =
         footerData,
         intl,
         pageData,
+        hits,
       },
       serverState,
     },

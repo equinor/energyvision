@@ -1,4 +1,4 @@
-import { forwardRef, useRef } from 'react'
+import { forwardRef, useRef, useState } from 'react'
 import singletonRouter from 'next/router'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
 import type { NewsRoomPageType } from '../../types'
@@ -8,7 +8,7 @@ import { ResourceLink } from '@core/Link'
 import { getIsoFromLocale } from '../../lib/localization'
 import { Flags } from '../../common/helpers/datasetHelpers'
 import { createInstantSearchRouterNext } from 'react-instantsearch-router-nextjs'
-import { UiState } from 'instantsearch.js'
+import { AlgoliaHit, SearchClient, UiState } from 'instantsearch.js'
 import Seo from '../../pageComponents/shared/Seo'
 import { Configure, InstantSearch } from 'react-instantsearch'
 import { FormattedMessage, useIntl } from 'react-intl'
@@ -18,15 +18,17 @@ import { searchClient as client } from '../../lib/algolia'
 import { Pagination } from '../../pageComponents/shared/search/pagination/Pagination'
 import { List } from '@core/List'
 import { PaginationContextProvider } from '../../common/contexts/PaginationContext'
+import { Button } from '@equinor/eds-core-react'
 
 type NewsRoomTemplateProps = {
   locale?: string
   pageData?: NewsRoomPageType | undefined
   slug?: string
+  hits?: AlgoliaHit[]
 }
 
 const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function NewsRoomTemplate(
-  { locale, pageData, slug },
+  { locale, pageData, slug, hits },
   ref,
 ) {
   const { ingress, title, seoAndSome, subscriptionLink, subscriptionLinkTitle, localNewsPages, fallbackImages } =
@@ -36,6 +38,7 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
   const isoCode = getIsoFromLocale(locale)
   const indexName = `${envPrefix}_NEWS_${isoCode}`
   const resultsRef = useRef<HTMLDivElement>(null)
+  const [advancedSearch, setAdvancedSearch] = useState(false)
 
   // eslint-disable-next-line
   // @ts-ignore: @TODO: The types are not correct
@@ -129,12 +132,36 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
   }
 
   const searchClient = client()
+
+  const queriedSearchClient: SearchClient = {
+    ...searchClient,
+    search(requests: any) {
+      if (requests.every(({ params }: any) => !params.query) && !advancedSearch) {
+        return Promise.resolve({
+          results: requests.map(() => ({
+            hits: hits,
+            nbHits: hits?.length,
+            nbPages: 0,
+            page: 0,
+            processingTimeMS: 0,
+            hitsPerPage: 0,
+            exhaustiveNbHits: false,
+            query: '',
+            params: '',
+          })),
+        })
+      }
+
+      return searchClient.search(requests)
+    },
+  }
+
   return (
     <PaginationContextProvider defaultRef={resultsRef}>
       <Seo seoAndSome={seoAndSome} slug={slug} pageTitle={title} />
-      <main ref={ref} className="">
+      <main ref={ref}>
         <InstantSearch
-          searchClient={searchClient}
+          searchClient={queriedSearchClient}
           future={{ preserveSharedStateOnUnmount: false }}
           indexName={indexName}
           routing={routing}
@@ -164,9 +191,7 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
                   >
                     <List.Item className="w-full">
                       {subscriptionLink?.slug && (
-                        <ResourceLink href={subscriptionLink.slug} className="w-full">
-                          {subscriptionLinkTitle}
-                        </ResourceLink>
+                        <ResourceLink href={subscriptionLink.slug}>{subscriptionLinkTitle}</ResourceLink>
                       )}
                     </List.Item>
                     {localNewsPages &&
@@ -174,7 +199,7 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
                       localNewsPages?.map((localNewsPage) => {
                         return localNewsPage?.link?.slug ? (
                           <List.Item key={localNewsPage.id} className="w-full">
-                            <ResourceLink type={localNewsPage.type} href={localNewsPage?.link?.slug} className="w-full">
+                            <ResourceLink type={localNewsPage.type} href={localNewsPage?.link?.slug}>
                               {localNewsPage?.label}
                             </ResourceLink>
                           </List.Item>
@@ -186,6 +211,16 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
             </div>
             <div className="w-full flex flex-col lg:grid lg:grid-cols-[27%_1fr] gap-8 lg:gap-12 pb-12 lg:px-layout-sm mx-auto max-w-viewport">
               <aside className="lg:self-start lg:sticky lg:top-6 flex flex-col gap-4 lg:gap-6 max-lg:px-layout-sm">
+                {!advancedSearch && (
+                  <Button
+                    onClick={() => {
+                      setAdvancedSearch(true)
+                    }}
+                  >
+                    Do advansed search
+                  </Button>
+                )}
+
                 <NewsRoomFilters />
               </aside>
               <div className="flex flex-col max-lg:px-4">

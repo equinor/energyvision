@@ -13,6 +13,7 @@ import type {
 } from './index'
 import { PortableTextBlock } from '@portabletext/types'
 import { SanityImageObject } from '@sanity/image-url/lib/types/types'
+import { AlgoliaHit, Hit } from 'instantsearch.js'
 
 export type AlgoliaIndexPageType = {
   serverState?: InstantSearchServerState
@@ -22,6 +23,7 @@ export type AlgoliaIndexPageType = {
     intl: IntlData
     pageData: MagazineIndexPageType | NewsRoomPageType
     slug?: string
+    hits?: AlgoliaHit[]
   }
 }
 
