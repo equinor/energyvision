@@ -8,7 +8,7 @@ import { ResourceLink } from '@core/Link'
 import { getIsoFromLocale } from '../../lib/localization'
 import { Flags } from '../../common/helpers/datasetHelpers'
 import { createInstantSearchRouterNext } from 'react-instantsearch-router-nextjs'
-import { Hit, SearchClient, UiState } from 'instantsearch.js'
+import { AlgoliaHit, SearchClient, UiState } from 'instantsearch.js'
 import Seo from '../../pageComponents/shared/Seo'
 import { Configure, InstantSearch } from 'react-instantsearch'
 import { FormattedMessage, useIntl } from 'react-intl'
@@ -24,7 +24,7 @@ type NewsRoomTemplateProps = {
   locale?: string
   pageData?: NewsRoomPageType | undefined
   slug?: string
-  hits?: Hit
+  hits?: AlgoliaHit[]
 }
 
 const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function NewsRoomTemplate(
