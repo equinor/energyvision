@@ -49,7 +49,7 @@ export default async function handler(req, res) {
     if (response.status == 204) {
       console.log('Algolia Indexing Success , Revalidating newsroom')
       // revalidate newsroom pages
-      await revalidateNewsroomPages()
+      //await revalidateNewsroomPages()
       return res.status(200).json('Index updated and newsroom revalidated')
     } else {
       return res.status(400).json(response.body)
