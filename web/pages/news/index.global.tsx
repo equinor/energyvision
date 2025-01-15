@@ -28,7 +28,12 @@ export default function NewsRoom({ data, serverState }: AlgoliaIndexPageType) {
         defaultLocale={getIsoFromLocale(defaultLocale)}
         messages={intl?.messages}
       >
-        <NewsRoomTemplate locale={locale} pageData={pageData as NewsRoomPageType} hits={data.hits} slug={slug} />
+        <NewsRoomTemplate
+          locale={locale}
+          pageData={pageData as NewsRoomPageType}
+          initialSearchResponse={data.response}
+          slug={slug}
+        />
       </IntlProvider>
     </InstantSearchSSRProvider>
   )
@@ -83,9 +88,11 @@ export const getStaticProps: GetStaticProps = async ({ preview = false, locale =
 
   const searchClient = algoliasearch(algolia.applicationId, algolia.searchApiKey)
   const index = searchClient.initIndex(indexName)
-  const { hits } = await index.search('', {
+  const response = await index.search('', {
     hitsPerPage: 50,
     facetFilters: ['type:news', 'topicTags:-Crude Oil Assays'],
+    facetingAfterDistinct: true,
+    facets: ['countryTags', 'topicTags', 'year'],
   })
 
   const queryParams = {
@@ -100,7 +107,7 @@ export const getStaticProps: GetStaticProps = async ({ preview = false, locale =
     preview,
   )
 
-  const serverState = await getServerState(<NewsRoom data={{ menuData, pageData, footerData, intl, hits }} />, {
+  const serverState = await getServerState(<NewsRoom data={{ menuData, pageData, footerData, intl, response }} />, {
     renderToString,
   })
   return {
@@ -110,7 +117,7 @@ export const getStaticProps: GetStaticProps = async ({ preview = false, locale =
         footerData,
         intl,
         pageData,
-        hits,
+        response,
       },
       serverState,
     },

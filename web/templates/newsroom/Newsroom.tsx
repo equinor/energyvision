@@ -1,4 +1,4 @@
-import { forwardRef, useRef, useState } from 'react'
+import { forwardRef, useRef } from 'react'
 import singletonRouter from 'next/router'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
 import type { NewsRoomPageType } from '../../types'
@@ -8,7 +8,7 @@ import { ResourceLink } from '@core/Link'
 import { getIsoFromLocale } from '../../lib/localization'
 import { Flags } from '../../common/helpers/datasetHelpers'
 import { createInstantSearchRouterNext } from 'react-instantsearch-router-nextjs'
-import { AlgoliaHit, SearchClient, UiState } from 'instantsearch.js'
+import { SearchClient, SearchResponse, UiState } from 'instantsearch.js'
 import Seo from '../../pageComponents/shared/Seo'
 import { Configure, InstantSearch } from 'react-instantsearch'
 import { FormattedMessage, useIntl } from 'react-intl'
@@ -18,18 +18,16 @@ import { searchClient as client } from '../../lib/algolia'
 import { Pagination } from '../../pageComponents/shared/search/pagination/Pagination'
 import { List } from '@core/List'
 import { PaginationContextProvider } from '../../common/contexts/PaginationContext'
-import { TransformableIcon } from '../../icons/TransformableIcon'
-import { filter_alt } from '@equinor/eds-icons'
 
 type NewsRoomTemplateProps = {
   locale?: string
   pageData?: NewsRoomPageType | undefined
   slug?: string
-  hits?: AlgoliaHit[]
+  initialSearchResponse: SearchResponse<any>
 }
 
 const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function NewsRoomTemplate(
-  { locale, pageData, slug, hits },
+  { locale, pageData, slug, initialSearchResponse },
   ref,
 ) {
   const { ingress, title, seoAndSome, subscriptionLink, subscriptionLinkTitle, localNewsPages, fallbackImages } =
@@ -39,7 +37,6 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
   const isoCode = getIsoFromLocale(locale)
   const indexName = `${envPrefix}_NEWS_${isoCode}`
   const resultsRef = useRef<HTMLDivElement>(null)
-  const [advancedSearch, setAdvancedSearch] = useState(false)
 
   // eslint-disable-next-line
   // @ts-ignore: @TODO: The types are not correct
@@ -137,19 +134,9 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
   const queriedSearchClient: SearchClient = {
     ...searchClient,
     search(requests: any) {
-      if (requests.every(({ params }: any) => !params.query) && !advancedSearch) {
+      if (requests.every(({ params }: any) => !params.query)) {
         return Promise.resolve({
-          results: requests.map(() => ({
-            hits: hits,
-            nbHits: hits?.length,
-            nbPages: 0,
-            page: 0,
-            processingTimeMS: 0,
-            hitsPerPage: 0,
-            exhaustiveNbHits: false,
-            query: '',
-            params: '',
-          })),
+          results: requests.map(() => initialSearchResponse),
         })
       }
 
@@ -212,29 +199,6 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
             </div>
             <div className="w-full flex flex-col lg:grid lg:grid-cols-[27%_1fr] gap-8 lg:gap-12 pb-12 lg:px-layout-sm mx-auto max-w-viewport">
               <aside className="lg:self-start lg:sticky lg:top-6 flex flex-col gap-4 lg:gap-6 max-lg:px-layout-sm">
-                {!advancedSearch && (
-                  <button
-                    className={`
-  inline-block 
-  text-base
-  mx-5 
-  lg:text-xs 
-  relative 
-  no-underline 
-  hover:underline 
-  hover:underline-offset-4
-  whitespace-nowrap`}
-                    onClick={() => {
-                      setAdvancedSearch(true)
-                    }}
-                  >
-                    <div className='flex gap-1 font-medium text-sm items-center -mt-0.5"'>
-                      <TransformableIcon iconData={filter_alt} className="text-grey-50 size-5 -mt-1" />
-                      <FormattedMessage id="filter" defaultMessage="Filter" />
-                    </div>
-                  </button>
-                )}
-
                 <NewsRoomFilters />
               </aside>
               <div className="flex flex-col max-lg:px-4">
