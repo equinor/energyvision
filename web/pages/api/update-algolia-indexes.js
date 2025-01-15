@@ -48,7 +48,9 @@ export default async function handler(req, res) {
     const response = await updateAlgoliaIndex(body)
     if (response.status == 204) {
       console.log('Algolia Indexing Success , Revalidating newsroom')
-      // revalidate newsroom pages
+      // wait for a second revalidate newsroom pages
+      const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
+      await sleep(1000) // wait for a second to let algolia index temporary fix as we dont know the status yet
       await revalidateNewsroomPages()
       return res.status(200).json('Index updated and newsroom revalidated')
     } else {
