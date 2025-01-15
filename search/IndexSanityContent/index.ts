@@ -44,7 +44,22 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
 
   const getDocId = O.getOrElse(() => 'no id')(O.fromNullable(req.body?.docToClear))
 
-  pipe(getIndex, (indexArray) => indexArray.map((index) => indexTasks[index](language)(getDocId)().catch(logger.error)))
+  pipe(getIndex, (indexArray) =>
+    indexArray.map((index) =>
+      indexTasks[index](language)(getDocId)().then(
+        () => {
+          return {
+            status: 200,
+            jsonBody: 'Successfully indexed',
+          }
+        },
+        (e) => {
+          logger.error(e)
+          return { status: 400, jsonBody: 'Error indexing content' }
+        },
+      ),
+    ),
+  )
 }
 
 export default httpTrigger
