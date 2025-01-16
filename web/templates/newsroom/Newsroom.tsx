@@ -134,7 +134,8 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
   const queriedSearchClient: SearchClient = {
     ...searchClient,
     search(requests: any) {
-      if (requests.every(({ params }: any) => !params.query)) {
+      // if query is empty and facet filters is 2  - type - news and not crude eoil assays
+      if (requests.every(({ params }: any) => !params.query && params.facetFilters.length == 2)) {
         return Promise.resolve({
           results: requests.map(() => initialSearchResponse),
         })
