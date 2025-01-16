@@ -24,13 +24,17 @@ const buildJsonLdElements = (crumbs: Breadcrumb[], router: ReturnType<typeof use
   }))
 }
 
-const capitalize = (text: string): string => text[0].toUpperCase() + text.slice(1)
+const capitalize = (text: string): string => text?.[0].toUpperCase() + text?.slice(1)
 
 const parseBreadcrumbs = (crumbs: Breadcrumb[]) => {
-  return crumbs.map((item) => ({
-    ...item,
-    label: capitalize(item.label),
-  }))
+  return crumbs
+    .filter((item) => item?.slug && item?.label)
+    .map((item) => {
+      return {
+        ...item,
+        label: capitalize(item.label),
+      }
+    })
 }
 
 export const Breadcrumbs = ({
