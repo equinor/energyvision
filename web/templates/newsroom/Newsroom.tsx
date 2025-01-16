@@ -134,7 +134,7 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
   const queriedSearchClient: SearchClient = {
     ...searchClient,
     search(requests: any) {
-      if (requests.every(({ params }: any) => !params.query)) {
+      if (requests.every(({ params }: any) => !params.query && params?.facetFilters?.flat().length > 2)) {
         return Promise.resolve({
           results: requests.map(() => initialSearchResponse),
         })
