@@ -1,25 +1,13 @@
 import { BackgroundContainer } from '@components'
-import styled from 'styled-components'
-import Image, { Ratios } from '../../shared/SanityImage'
-import IngressText from '../../shared/portableText/IngressText'
 import Accordion from './Accordion'
 import { FAQPageJsonLd } from 'next-seo'
 
-import type { AccordionData, AccordionListData } from '../../../types/index'
+import type { AccordionData, AccordionListData } from '../../types/index'
 import { toPlainText } from '@portabletext/react'
-import { Heading, Typography } from '../../../core/Typography'
+import { Heading, Typography } from '../../core/Typography'
 import { twMerge } from 'tailwind-merge'
-
-export const StyledTextBlockWrapper = styled(BackgroundContainer)<{ id: string | undefined }>`
-  ${({ id }) =>
-    id && {
-      scrollMarginTop: 'var(--topbar-height)',
-    }}
-`
-
-const Img = styled(Image)`
-  border-radius: 50%;
-`
+import IngressText from '../../pageComponents/shared/portableText/IngressText'
+import Image, { Ratios } from '../../pageComponents/shared/SanityImage'
 
 type AccordionBlockProps = {
   data: AccordionData
@@ -41,7 +29,7 @@ const AccordionBlock = ({ data, anchor, className }: AccordionBlockProps) => {
 
   return (
     <>
-      <StyledTextBlockWrapper {...designOptions} id={anchor} renderFragmentWhenPossible>
+      <BackgroundContainer {...designOptions} id={anchor} renderFragmentWhenPossible>
         <div
           className={twMerge(
             `flex flex-col gap-6 max-w-viewport mx-auto pb-page-content px-layout-lg [&_svg]:inline [&_svg]:align-baseline`,
@@ -50,7 +38,7 @@ const AccordionBlock = ({ data, anchor, className }: AccordionBlockProps) => {
         >
           {image?.asset && (
             <div className="w-[200px]">
-              <Img image={image} maxWidth={200} aspectRatio={Ratios.ONE_TO_ONE} />
+              <Image image={image} maxWidth={200} aspectRatio={Ratios.ONE_TO_ONE} className="rounded-full" />
             </div>
           )}
           {title &&
@@ -63,10 +51,10 @@ const AccordionBlock = ({ data, anchor, className }: AccordionBlockProps) => {
             ))}
           {ingress && <IngressText value={ingress} />}
           {accordion && accordion.length > 0 && (
-            <Accordion data={accordion} id={id} hasTitle={!!title} queryParamName={id} />
+            <Accordion data={accordion} id={id} hasSectionTitle={!!title} queryParamName={id} />
           )}
         </div>
-      </StyledTextBlockWrapper>
+      </BackgroundContainer>
       {enableStructuredMarkup && accordion && <FAQPageJsonLd mainEntity={buildJsonLdElements(accordion)} />}
     </>
   )

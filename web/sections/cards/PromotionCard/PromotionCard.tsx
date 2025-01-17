@@ -10,6 +10,10 @@ export type PromotionCardProps = {
   data: CardData
   hasSectionTitle: boolean
   variant?: 'default' | 'single'
+  /** Override background image styling for card element */
+  imageClassName?: string
+  /* Override styling on card header title element */
+  titleClassName?: string
 } & HTMLAttributes<HTMLAnchorElement>
 
 /**
@@ -18,7 +22,7 @@ export type PromotionCardProps = {
  * Remember to wrap in ul and li if in a list.
  * */
 const PromotionCard = forwardRef<HTMLAnchorElement, PromotionCardProps>(function PromotionCard(
-  { data, className = '', variant = 'default', hasSectionTitle = true },
+  { data, className = '', imageClassName = '', titleClassName = '', variant = 'default', hasSectionTitle = true },
   ref,
 ) {
   const isMobile = useMediaQuery(`(max-width: 768px)`)
@@ -31,6 +35,7 @@ const PromotionCard = forwardRef<HTMLAnchorElement, PromotionCardProps>(function
       image={heroImage?.image}
       variant={variant === 'single' && !isMobile ? 'single' : 'primary'}
       className={twMerge(`w-full h-full`, className)}
+      imageClassName={imageClassName}
       key={id}
     >
       <Card.Content variant={variant === 'single' && !isMobile ? 'single' : 'primary'}>
@@ -47,6 +52,7 @@ const PromotionCard = forwardRef<HTMLAnchorElement, PromotionCardProps>(function
           {...(publishDateTime && {
             eyebrow: <FormattedDate datetime={publishDateTime} uppercase />,
           })}
+          titleClassName={titleClassName}
         />
         {ingress && (
           <Blocks
