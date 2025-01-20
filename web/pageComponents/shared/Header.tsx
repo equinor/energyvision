@@ -119,15 +119,12 @@ const Header = ({ slugs, menuData, stickyMenuData }: HeaderProps) => {
       <TopbarOffset />
       <BackgroundContainer>
         <Topbar>
-          <Topbar.InnerContainer className="grid grid-areas-logo_menu grid-rows-1 items-center gap-x-large ">
-            <LogoLink className="grid-area-logo" />
+          <Topbar.InnerContainer className="grid [grid-template-areas:'logo_menu'] grid-rows-1 items-center gap-x-8">
+            <LogoLink className="[grid-area:logo]" />
             <div
-              style={
-                {
-                  '--columns': columns,
-                } as CSSProperties
-              }
-              className="grid grid-area-menu justify-self-end grid-cols-[repeat(var(--columns),auto)] gap-x-small items-center sm:gap-x-medium"
+              className={`grid [grid-area:menu] justify-self-end ${
+                columns == 3 ? 'grid-cols-auto-3' : columns == 2 ? 'grid-cols-auto-2' : 'grid-cols-1'
+              } gap-x-4 items-center sm:gap-x-61`}
             >
               {hasSearch && (
                 <div>
