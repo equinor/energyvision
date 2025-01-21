@@ -126,7 +126,6 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
       case 'downloadableFile':
         return extension && extension.toUpperCase() === 'PDF' && showExtensionIcon ? (
           <>
-            <ArrowRight size={24} className="mr-2 rotate-90" />
             <div
               className={textClassNames}
               {...(ariaHideText && {
