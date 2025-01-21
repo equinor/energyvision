@@ -2,7 +2,7 @@ import { forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { BaseLink, BaseLinkProps } from './BaseLink'
 import { TransformableIcon } from '../../icons/TransformableIcon'
-import { arrow_down, download, library_pdf } from '@equinor/eds-icons'
+import { arrow_down, library_pdf } from '@equinor/eds-icons'
 
 export type StickMenuLinkProps = {
   isDownloadable?: boolean
@@ -35,12 +35,22 @@ export const StickyMenuLink = forwardRef<HTMLAnchorElement, StickMenuLinkProps>(
     <BaseLink className={classNames} ref={ref} href={href} {...rest}>
       {isDownloadable && <TransformableIcon iconData={library_pdf} className="mr-1" />}
       <span className={contentClassNames}>{children}</span>
-      <TransformableIcon
-        iconData={isDownloadable ? download : arrow_down}
-        className="text-energy-red-100
+      {isDownloadable && (
+        <TransformableIcon
+          iconData={arrow_down}
+          className="text-energy-red-100
+    dark:text-white-100 h-[22px] border-energy-red-100 border-b-[2px]
+    ml-2"
+        />
+      )}
+      {!isDownloadable && (
+        <TransformableIcon
+          iconData={arrow_down}
+          className="text-energy-red-100
     dark:text-white-100
     ml-2"
-      />
+        />
+      )}
     </BaseLink>
   )
 })
