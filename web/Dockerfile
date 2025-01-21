@@ -6,6 +6,7 @@ FROM ${ARG_DYNATRACE_IMAGE} AS dynatrace
 FROM node:18-alpine AS deps
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 RUN apk add --no-cache libc6-compat
+RUN corepack enable
 WORKDIR /app
 ENV NODE_OPTIONS="--max_old_space_size=8192"
 
