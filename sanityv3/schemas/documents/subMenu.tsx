@@ -9,6 +9,7 @@ import routes from '../routes'
 import { filterByRoute, filterByRouteNewsMagazineAndTitle } from '../../helpers/referenceFilters'
 import { Flags } from '../../src/lib/datasetHelpers'
 import { lang } from './langField'
+import { description } from '../objects/iframe/sharedIframeFields'
 
 export type SubMenu = {
   _type: 'subMenu'
@@ -40,6 +41,14 @@ export default {
     {
       title: 'Top level/landing page link',
       name: 'link',
+      options: {
+        collapsible: true,
+        collapsed: false,
+      },
+    },
+    {
+      title: 'Featured content',
+      name: 'featured',
       options: {
         collapsible: true,
         collapsed: false,
@@ -103,6 +112,24 @@ export default {
         filter: filterByRouteNewsMagazineAndTitle,
         disableNew: true,
       },
+      fieldset: 'featured',
+    },
+    {
+      name: 'featuredIngress',
+      title: 'Featured ingress',
+      description:
+        'If the featured content does not have ingress and is not event, you can add an ingress here (max. 215 chars)',
+      type: 'array',
+      of: [introBlockContentType],
+      validation: (Rule: Rule) => Rule.custom((value: any) => validateCharCounterEditor(value, 215, true)),
+      fieldset: 'featured',
+    },
+    {
+      name: 'featuredCTALabel',
+      title: 'Featured CTA label text',
+      description: 'The label text appearing with the CTA arrow link style if not event',
+      fieldset: 'featured',
+      type: 'string',
     },
     {
       name: 'intro',

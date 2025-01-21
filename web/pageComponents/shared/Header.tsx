@@ -1,15 +1,11 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { createGlobalStyle } from 'styled-components'
-import { CSSProperties } from 'react'
 import { useRouter } from 'next/router'
 import { default as NextLink } from 'next/link'
 import { Topbar, BackgroundContainer } from '@components'
 import { AllSlugsType, LocalizationSwitch } from './LocalizationSwitch'
 import type { MenuData, SimpleMenuData, StickyMenuData } from '../../types/index'
-import SiteMenu from './siteMenu/SiteMenu'
-import SimpleSiteMenu from './siteMenu/simple/SimpleSiteMenu'
 import { Flags } from '../../common/helpers/datasetHelpers'
-import { LogoLink } from './LogoLink'
 import { languages, defaultLanguage } from '../../languages'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { search } from '@equinor/eds-icons'
@@ -18,8 +14,8 @@ import Head from 'next/head'
 import getConfig from 'next/config'
 import { getAllSitesLink } from '../../common/helpers/getAllSitesLink'
 import { Icon } from '@equinor/eds-core-react'
-import { ButtonLink } from '@core/Link'
-import StickyMenuLink from '@core/Link/StickyMenuLink'
+import { ButtonLink, LogoLink, StickyMenuLink } from '@core/Link'
+import SiteMenu from '@sections/SiteMenu/SiteMenu'
 
 const TopbarOffset = createGlobalStyle`
   body {
@@ -151,7 +147,7 @@ const Header = ({ slugs, menuData, stickyMenuData }: HeaderProps) => {
                 </div>
               ) : (
                 <div>
-                  <SimpleSiteMenu data={menuData as SimpleMenuData} />
+                  <SiteMenu variant="simple" data={menuData as SimpleMenuData} />
                 </div>
               )}
             </div>

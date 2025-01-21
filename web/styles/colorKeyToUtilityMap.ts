@@ -44,6 +44,11 @@ export const colorKeyToUtilityMap = {
     background: 'bg-orange-50',
     text: 'text-orange-50',
   },
+  'slate-blue-95': {
+    backgroundName: 'Slate Blue 95',
+    background: 'bg-slate-blue-95',
+    text: 'text-white-100',
+  },
 }
 export type ColorKeyTokens = {
   [P1 in keyof typeof colorKeyToUtilityMap]: string
