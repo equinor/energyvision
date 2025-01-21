@@ -14,6 +14,8 @@ const contentType = configureBlockContent({
   h3: false,
   h4: false,
   attachment: false,
+  internalLink: false,
+  externalLink: false,
 })
 
 export default {
@@ -28,10 +30,26 @@ export default {
       validation: (Rule: Rule) => Rule.required().error(),
     },
     {
+      title: 'Image',
+      name: 'image',
+      type: 'image',
+      description: 'Image will be presented as landscape format',
+      options: {
+        hotspot: true,
+        collapsed: false,
+      },
+    },
+    {
       title: 'Content',
       name: 'content',
       type: 'array',
       of: [contentType],
+    },
+    {
+      name: 'links',
+      type: 'array',
+      title: 'Links',
+      of: [{ type: 'linkSelector', title: 'Link' }],
     },
   ],
   preview: {

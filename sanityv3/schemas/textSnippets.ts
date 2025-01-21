@@ -327,6 +327,11 @@ const snippets: textSnippet = {
     defaultValue: 'Submit Form',
     group: groups.pensionForm,
   },
+  footer_to_top_button: {
+    title: 'To top button',
+    defaultValue: 'To top',
+    group: groups.others,
+  },
   career_fair_form_organisation: {
     title: 'Organisation',
     defaultValue: 'School / Organisation',
@@ -821,6 +826,16 @@ const snippets: textSnippet = {
     title: 'Carousel controls',
     defaultValue: 'Carousel controls',
     group: groups.carousel,
+  },
+  logolink_title: {
+    title: 'Equinor logo link',
+    defaultValue: 'Equinor homepage',
+    group: groups.common,
+  },
+  featured_content: {
+    title: 'Featured content',
+    defaultValue: 'Featured content',
+    group: groups.common,
   },
 }
 

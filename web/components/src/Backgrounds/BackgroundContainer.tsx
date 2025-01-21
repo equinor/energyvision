@@ -5,6 +5,7 @@ import type { BackgroundColours, BackgroundTypes, ImageBackground } from '../../
 import { ColouredContainer } from './ColouredContainer'
 import { ImageBackgroundContainer } from './ImageBackgroundContainer'
 import { ColorKeyTokens } from '../../../styles/colorKeyToUtilityMap'
+import envisTwMerge from '../../../twMerge'
 
 const StyledImageBackground = styled(ImageBackgroundContainer)<{ $isInverted: boolean }>`
   ${({ $isInverted }) => ($isInverted ? inverted : normal)}
@@ -57,7 +58,7 @@ export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContaine
           ref={ref}
           id={id}
           {...backgroundImage}
-          className={className}
+          className={envisTwMerge(`${id ? 'scroll-mt-topbar' : ''}`, className)}
           scrimClassName={scrimClassName}
           dontSplit={dontSplit}
         >
@@ -77,7 +78,7 @@ export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContaine
               id={id}
               {...restBackground}
               style={style}
-              className={`${className} ${twClassName}`}
+              className={envisTwMerge(`${id ? 'scroll-mt-topbar' : ''}`, className, twClassName)}
               {...rest}
             >
               {children}

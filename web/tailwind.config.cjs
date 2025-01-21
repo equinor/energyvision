@@ -307,6 +307,9 @@ module.exports = {
         'layout-lg': 'clamp(16px, calc(-101.4757px + 31.3269vw), 500px)',
         'page-content': 'theme(spacing.20)',
       },
+      transitionProperty: {
+        'motion-safe': 'motion-safe',
+      },
       transitionTimingFunction: {
         scroll: 'cubic-bezier(0.645, 0.045, 0.355, 1)',
       },
@@ -315,6 +318,10 @@ module.exports = {
       },
       keyframes: {
         reveal: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        fadeIn: {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' },
         },
@@ -346,16 +353,18 @@ module.exports = {
       },
       animation: {
         fadeInOut: 'fade linear both',
+        fadeIn: 'auto linear fadeIn both',
         fadeOut: 'auto linear fadeOut both',
         zoomIn: 'auto linear zoom-in both',
         move: 'auto linear move forwards',
         'spin-slow': 'spin 3s linear infinite',
-        slideUp: 'slideUp 3s ease-out',
-        slideDown: 'slideDown 3s ease-out',
+        slideUp: 'slideUp 0.2s ease-out',
+        slideDown: 'slideDown 0.2s ease-out',
       },
       data: {
         open: 'state~="open"',
         closed: 'state~="closed"',
+        expanded: 'expanded~="true"',
       },
       flex: {
         fr: '1 1 1',
@@ -482,11 +491,13 @@ module.exports = {
           },
         },
       }),
-      transitionProperty: ['motion-safe'],
       gridTemplateColumns: {
         'auto-fill-fr': `repeat(auto-fill, minmax(80px,1fr))`,
         'auto-fill-auto': `repeat(auto-fill, minmax(0, auto))`,
-        card: `repeat(auto-fill, minmax(min(100%, theme(spacing.card-minWidth)), theme(spacing.card-maxWidth)))`,
+        card: `repeat(auto-fill,minmax(min(100%,220px),400px))`,
+      },
+      scrollMargin: {
+        topbar: '100px',
       },
     },
   },
