@@ -3,22 +3,30 @@ ARG ARG_DYNATRACE_IMAGE='node:16-alpine'
 #spa-equinor.kanari.com/e/<environment>/linux/oneagent-codemodules-musl:all
 FROM ${ARG_DYNATRACE_IMAGE} AS dynatrace
 
-FROM node:18-alpine AS deps
+FROM node:18-alpine AS base
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+ENV NODE_OPTIONS="--max_old_space_size=8192"
+RUN corepack enable
+COPY . /app
+WORKDIR /app
+
+# Install dependencies only when needed
+FROM base AS deps
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
-ENV NODE_OPTIONS="--max_old_space_size=8192"
 
 COPY package.json pnpm-lock.yaml ./
 COPY web/package.json web/pnpm-lock.yaml web/
 COPY web/patches web/patches
 
 RUN \
-  if [ -f pnpm-lock.yaml ]; then yarn global add pnpm@8.5.1 && pnpm m i --frozen-lockfile;\
+  if [ -f pnpm-lock.yaml ]; then pnpm m i --frozen-lockfile;\
   else echo "Lockfile not found." && exit 1; \
   fi
 
-FROM node:18-alpine AS builder
+FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY --from=deps /app/web/node_modules ./web/node_modules
@@ -45,10 +53,10 @@ ENV NEXT_PUBLIC_FRIENDLY_CAPTCHA_PUZZLE_ENDPOINT ${ARG_FRIENDLY_CAPTCHA_PUZZLE_E
 # https://nextjs.org/telemetry
 ENV NEXT_TELEMETRY_DISABLED 1
 
-RUN cd web && yarn build
+RUN pnpm web build
 
 # Production image, copy all the files and run next
-FROM node:18-alpine AS runner
+FROM base AS runner
 WORKDIR /app
 
 ENV NODE_ENV production
