@@ -2,7 +2,7 @@ import { KeyNumbersData } from '../../types'
 import { BackgroundContainer } from '@components/Backgrounds'
 import { Heading, Paragraph } from '@core/Typography'
 import KeyNumberItem from './KeyNumberItem'
-import { ReadMoreLink } from '@core/Link'
+import { ResourceLink } from '@core/Link'
 import { Carousel } from '@core/Carousel/Carousel'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
 import { twMerge } from 'tailwind-merge'
@@ -37,13 +37,13 @@ const KeyNumber = ({ data, anchor, className }: KeyNumbersProps) => {
 
       {disclaimer && <Paragraph value={disclaimer} className="max-w-text pb-lg text-sm" />}
       {action && (
-        <ReadMoreLink
+        <ResourceLink
           href={url as string}
           {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
           type={action.type}
         >
           {`${action.label} ${action.extension ? `(${action.extension.toUpperCase()})` : ''}`}
-        </ReadMoreLink>
+        </ResourceLink>
       )}
     </BackgroundContainer>
   )

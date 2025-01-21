@@ -108,7 +108,6 @@ export type TextBlockData = {
   ingress: PortableTextBlock[]
   callToActions?: LinkData[]
   splitList?: boolean
-  overrideButtonStyle?: boolean
   designOptions: DesignOptions
 }
 
@@ -126,7 +125,6 @@ export type TeaserData = {
   text: PortableTextBlock[]
   overline?: string
   isBigText?: boolean
-  useResourceLinks?: boolean
   image: ImageWithAlt
   actions?: LinkData[]
   designOptions: DesignOptions & {

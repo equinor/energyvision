@@ -9,6 +9,8 @@ export type LinkType =
   | 'textField'
   | 'numberField'
   | 'linkSelector'
+  | 'anchorLink'
+  | 'icsLink'
 
 export type LinkData = {
   type?: LinkType
