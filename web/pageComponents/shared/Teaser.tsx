@@ -5,7 +5,7 @@ import { getUrlFromAction, urlFor } from '../../common/helpers'
 import Img from 'next/image'
 import Image from './SanityImage'
 import type { TeaserData, ImageWithAlt } from '../../types/index'
-import { ReadMoreLink, ResourceLink } from '../../core/Link'
+import { ResourceLink } from '../../core/Link'
 import { Heading } from '../../core/Typography'
 import { getLocaleFromName } from '../../lib/localization'
 
@@ -45,7 +45,7 @@ const TeaserImage = ({ image }: { image: ImageWithAlt }) => {
 }
 
 const Teaser = ({ data, anchor }: TeaserProps) => {
-  const { title, overline, text, image, actions, designOptions, isBigText, useResourceLinks } = data
+  const { title, overline, text, image, actions, designOptions, isBigText } = data
   const { imageSize, imagePosition, ...restOptions } = designOptions
 
   if ([title, overline, text, image?.asset, actions].every((i) => !i)) {
@@ -85,25 +85,18 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
               {actions?.map((action) => {
                 const url = action && getUrlFromAction(action)
 
-                return useResourceLinks ? (
+                return (
                   <ResourceLink
                     href={url as string}
                     {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
                     type={action.type}
                     key={action.id}
-                    className="w-fit"
+                    variant="fit"
+                    extension={action.extension}
+                    showExtensionIcon
                   >
-                    {`${action.label} ${action.extension ? `(${action.extension.toUpperCase()})` : ''}`}
+                    {`${action.label}`}
                   </ResourceLink>
-                ) : (
-                  <ReadMoreLink
-                    href={url as string}
-                    key={action.id}
-                    {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
-                    type={action.type}
-                  >
-                    {`${action.label} ${action.extension ? `(${action.extension.toUpperCase()})` : ''}`}
-                  </ReadMoreLink>
                 )
               })}
             </div>

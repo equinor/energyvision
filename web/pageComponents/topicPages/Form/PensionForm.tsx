@@ -79,7 +79,7 @@ const PensionForm = () => {
       name: '',
       email: '',
       phone: '',
-      pensionCategory: intl.formatMessage({ id: 'pension_form_select_topic', defaultMessage: 'Select topic' }),
+      pensionCategory: '',
       requests: '',
     },
   })
@@ -144,7 +144,7 @@ const PensionForm = () => {
                 pattern: {
                   value: /^[\w!#$%&'*+/=?`{|}~^-]+(?:\.[\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}$/g,
                   message: intl.formatMessage({
-                    id: 'pension_form_email_validation',
+                    id: 'email_validation',
                     defaultMessage: 'Please fill out a valid email address',
                   }),
                 },
@@ -185,17 +185,20 @@ const PensionForm = () => {
                     })}
                   >
                     <option value="">
-                      {intl.formatMessage({ id: 'pension_form_select_topic', defaultMessage: 'Select topic' })}
+                      {intl.formatMessage({
+                        id: 'form_please_select_an_option',
+                        defaultMessage: 'Please select an option',
+                      })}
                     </option>
                     <option value="pension">
-                      {intl.formatMessage({ id: 'pension_form_pension', defaultMessage: 'Pension' })}
+                      {intl.formatMessage({ id: 'pension_form_category_pension', defaultMessage: 'Pension' })}
                     </option>
                     <option value="travelInsurance">
-                      {intl.formatMessage({ id: 'pension_form_travel_insurance', defaultMessage: 'Travel Insurance' })}
+                      {intl.formatMessage({ id: 'pension_form_category_travel_insurance', defaultMessage: 'Travel Insurance' })}
                     </option>
                     <option value="otherPensionInsuranceRelated">
                       {intl.formatMessage({
-                        id: 'pension_form_other_pension_insurance_related',
+                        id: 'pension_form_category_other',
                         defaultMessage: 'Other Pension/Insurance Related',
                       })}
                     </option>
@@ -262,7 +265,7 @@ const PensionForm = () => {
               {isSubmitting ? (
                 <FormattedMessage id="form_sending" defaultMessage={'Sending...'}></FormattedMessage>
               ) : (
-                <FormattedMessage id="pension_form_cta" defaultMessage="Submit Form" />
+                <FormattedMessage id="pension_form_submit" defaultMessage="Submit Form" />
               )}
             </Button>
           </>

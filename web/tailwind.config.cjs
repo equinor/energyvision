@@ -223,8 +223,6 @@ module.exports = {
         '2xl': 'calc((40 / 16) * theme(fontSize.base))',
         '3xl': 'calc((56 / 16) * theme(fontSize.base))',
         '4xl': 'calc((96 / 16) * theme(fontSize.base))',
-        'card-minWidth': '220px',
-        'card-maxWidth': '400px',
       }),
       fontSize: {
         //--typeScale-00
@@ -301,12 +299,16 @@ module.exports = {
         '4/5': '0.8',
         '5/4': '1.25',
         '9/16': '0.56',
+        '4/3': '4/3',
       },
       margin: {
         'layout-sm': 'clamp(16px, calc(-38.3689px + 14.4984vw), 250px)',
         'layout-md': 'clamp(16px, calc(-69.4369px + 22.7832vw), 368px)',
         'layout-lg': 'clamp(16px, calc(-101.4757px + 31.3269vw), 500px)',
         'page-content': 'theme(spacing.20)',
+      },
+      transitionProperty: {
+        'motion-safe': 'motion-safe',
       },
       transitionTimingFunction: {
         scroll: 'cubic-bezier(0.645, 0.045, 0.355, 1)',
@@ -316,6 +318,10 @@ module.exports = {
       },
       keyframes: {
         reveal: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        fadeIn: {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' },
         },
@@ -347,12 +353,13 @@ module.exports = {
       },
       animation: {
         fadeInOut: 'fade linear both',
+        fadeIn: 'auto linear fadeIn both',
         fadeOut: 'auto linear fadeOut both',
         zoomIn: 'auto linear zoom-in both',
         move: 'auto linear move forwards',
         'spin-slow': 'spin 3s linear infinite',
-        slideUp: 'slideUp 3s ease-out',
-        slideDown: 'slideDown 3s ease-out',
+        slideUp: 'slideUp 0.2s ease-out',
+        slideDown: 'slideDown 0.2s ease-out',
       },
       data: {
         open: 'state~="open"',
@@ -361,9 +368,13 @@ module.exports = {
         vertical: 'orientation~="vertical"',
         horizontal: 'orientation~="horizontal"',
         selected: 'selected~="true"',
+        expanded: 'expanded~="true"',
       },
       flex: {
         fr: '1 1 1',
+      },
+      aria: {
+        current: 'current="page"',
       },
       typography: (theme) => ({
         DEFAULT: {
@@ -484,17 +495,13 @@ module.exports = {
           },
         },
       }),
-      transitionProperty: ['motion-safe'],
       gridTemplateColumns: {
         'auto-fill-fr': `repeat(auto-fill, minmax(80px,1fr))`,
-        card: `repeat(auto-fill, minmax(min(100%, theme(spacing.card-minWidth)), theme(spacing.card-maxWidth)))`,
+        card: `repeat(auto-fill,minmax(min(100%,220px),400px))`,
       },
-    },
-  },
-  variants: {
-    extend: {
-      borderColor: ['aria-current'],
-      backgroundColor: ['aria-current'],
+      scrollMargin: {
+        topbar: '100px',
+      },
     },
   },
   plugins: [

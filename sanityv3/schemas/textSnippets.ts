@@ -13,6 +13,7 @@ export const groups = {
   pensionForm: { title: 'Pension form', hidden: !Flags.HAS_PENSION_FORM },
   form: { title: 'Form', hidden: !Flags.HAS_FORMS },
   cookie: { title: 'Cookie' },
+  carousel: { title: 'Carousel' },
   others: { title: 'Others' },
   common: { title: 'Common' },
 }
@@ -163,11 +164,6 @@ const snippets: textSnippet = {
     defaultValue: 'Please choose one or more of the following',
     group: groups.subscribeForm,
   },
-  subscribe_form_email: {
-    title: 'Email',
-    defaultValue: 'Email',
-    group: groups.subscribeForm,
-  },
   subscribe_form_general_news: {
     title: 'General News',
     defaultValue: 'General News',
@@ -241,11 +237,6 @@ const snippets: textSnippet = {
       'Want the full picture? We’d love to share this content with you, but first you must accept {type1}, {type2} and {type3} cookies by enabling them in our cookie settings.',
     group: groups.cookie,
   },
-  contact_form_email: {
-    title: 'Email',
-    defaultValue: 'Email *',
-    group: groups.contactForm,
-  },
   contact_form_category: {
     title: 'Category',
     defaultValue: 'Category',
@@ -306,6 +297,11 @@ const snippets: textSnippet = {
     defaultValue: 'Pension',
     group: groups.pensionForm,
   },
+  pension_form_select_topic: {
+    title: 'Default Pension Category',
+    defaultValue: 'Pension',
+    group: groups.pensionForm,
+  },
   pension_form_category_travel_insurance: {
     title: 'Travel Insurance Category',
     defaultValue: 'Travel Insurance',
@@ -330,6 +326,11 @@ const snippets: textSnippet = {
     title: 'Submit Button Text',
     defaultValue: 'Submit Form',
     group: groups.pensionForm,
+  },
+  footer_to_top_button: {
+    title: 'To top button',
+    defaultValue: 'To top',
+    group: groups.others,
   },
   career_fair_form_organisation: {
     title: 'Organisation',
@@ -365,11 +366,6 @@ const snippets: textSnippet = {
   career_fair_form_phone_validation: {
     title: 'Phone Number validation',
     defaultValue: 'Please enter your phone number',
-    group: groups.careerFairForm,
-  },
-  career_fair_form_email: {
-    title: 'Email',
-    defaultValue: 'Email',
     group: groups.careerFairForm,
   },
   career_fair_form_event: {
@@ -503,9 +499,9 @@ const snippets: textSnippet = {
     defaultValue: 'Location',
     group: groups.careerContactForm,
   },
-  careers_contact_form_thesis_writing: {
-    title: 'Thesis writing',
-    defaultValue: 'Thesis writing',
+  careers_contact_form_onboarding: {
+    title: 'Onboarding',
+    defaultValue: 'Onboarding',
     group: groups.careerContactForm,
   },
   careers_contact_form_questions_related_to_position: {
@@ -531,6 +527,11 @@ const snippets: textSnippet = {
   careers_contact_form_phone_validation: {
     title: 'Phone Number validation',
     defaultValue: 'Please enter your phone number',
+    group: groups.careerContactForm,
+  },
+  careers_contact_form_positionId_validation: {
+    title: 'Position ID validation',
+    defaultValue: 'Please enter a position ID or name',
     group: groups.careerContactForm,
   },
   careers_contact_form_phone_placeholder: {
@@ -602,6 +603,11 @@ const snippets: textSnippet = {
   form_sending: {
     title: 'Sending...',
     defaultValue: 'Sending...',
+    group: groups.form,
+  },
+  form_please_select_an_option: {
+    title: 'Please select an option',
+    defaultValue: 'Please select an option',
     group: groups.form,
   },
   form_failure_title: {
@@ -819,6 +825,21 @@ const snippets: textSnippet = {
   categories: {
     title: 'Categories',
     defaultValue: 'Categories',
+    group: groups.common,
+  },
+  carousel_controls: {
+    title: 'Carousel controls',
+    defaultValue: 'Carousel controls',
+    group: groups.carousel,
+  },
+  logolink_title: {
+    title: 'Equinor logo link',
+    defaultValue: 'Equinor homepage',
+    group: groups.common,
+  },
+  featured_content: {
+    title: 'Featured content',
+    defaultValue: 'Featured content',
     group: groups.common,
   },
 }

@@ -1,9 +1,10 @@
+import { SanityImageObject } from '@sanity/image-url/lib/types/types'
 import { useSanityLoader } from '../../lib/hooks/useSanityLoader'
 import Img, { ImageProps } from 'next/image'
 import type { ImageWithAlt } from 'types'
 
 type Props = Omit<ImageProps, 'src' | 'alt'> & {
-  image: ImageWithAlt
+  image: ImageWithAlt | SanityImageObject
   maxWidth?: number
   aspectRatio?: number
   alt?: string
@@ -19,6 +20,7 @@ export enum Ratios {
   FOUR_TO_FIVE = 0.8,
   ONE_TO_ONE = 1,
   FIVE_TO_FOUR = 1.25,
+  FOUR_TO_THREE = 1.33,
 }
 
 const DEFAULT_SIZES = '(max-width: 800px) 100vw, 800px'
@@ -46,7 +48,15 @@ const Image = ({ image, aspectRatio, sizes = DEFAULT_SIZES, maxWidth = DEFAULT_M
     }
   }
 
-  return <Img {...rest} {...props} src={src} alt={image.isDecorative ? '' : image.alt ?? ''} sizes={sizes} />
+  const getAltText = () => {
+    if ('alt' in image && image.alt) {
+      return image.alt
+    } else {
+      return ''
+    }
+  }
+
+  return <Img {...rest} {...props} src={src} alt={getAltText()} sizes={sizes} />
 }
 
 export default Image

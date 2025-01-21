@@ -1,5 +1,6 @@
 import { TeaserImagePosition, TeaserImageSize } from '@components'
 import { PortableTextBlock } from '@portabletext/types'
+import { SanityImageObject } from '@sanity/image-url/lib/types/types'
 import type {
   ImageWithCaptionData,
   ImageWithAlt,
@@ -106,7 +107,6 @@ export type TextBlockData = {
   ingress: PortableTextBlock[]
   callToActions?: LinkData[]
   splitList?: boolean
-  overrideButtonStyle?: boolean
   designOptions: DesignOptions
 }
 
@@ -124,7 +124,6 @@ export type TeaserData = {
   text: PortableTextBlock[]
   overline?: string
   isBigText?: boolean
-  useResourceLinks?: boolean
   image: ImageWithAlt
   actions?: LinkData[]
   designOptions: DesignOptions & {
@@ -206,7 +205,9 @@ export type QuoteData = {
 export type AccordionListData = {
   id: string
   title: string
+  image?: SanityImageObject
   content: PortableTextBlock[]
+  links: LinkData[]
 }
 
 export type AccordionData = {
@@ -417,8 +418,12 @@ export type IframeCarouselData = {
 
 export type ContactFormCatalogType = 'humanRightsInformationRequest' | 'loginIssues'
 
-export type CareersContactFormCatalogType = 'suspectedRecruitmentScamRequest' | 'emergingTalentsQueries' | 'others'
-export type PensionFormCatalogType=  'pension'|'travelInsurance'|'otherPensionInsuranceRelated';
+export type CareersContactFormCatalogType =
+  | 'suspectedRecruitmentScamRequest'
+  | 'onboarding'
+  | 'emergingTalentsQueries'
+  | 'others'
+export type PensionFormCatalogType = 'pension' | 'travelInsurance' | 'otherPensionInsuranceRelated'
 export type KeyNumberItemData = {
   type: 'keyNumberItem'
   id: string
