@@ -52,6 +52,7 @@ const localNewsStructure = (S, context) => {
                           _ref: tag._id,
                           _type: 'reference',
                         },
+                        lang: 'en_GB'
                       }).documentId(documentId),
                     ),
                 ),
