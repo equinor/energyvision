@@ -1,5 +1,6 @@
 import { TeaserImagePosition, TeaserImageSize } from '@components'
 import { PortableTextBlock } from '@portabletext/types'
+import { SanityImageObject } from '@sanity/image-url/lib/types/types'
 import type {
   ImageWithCaptionData,
   ImageWithAlt,
@@ -206,7 +207,9 @@ export type QuoteData = {
 export type AccordionListData = {
   id: string
   title: string
+  image?: SanityImageObject
   content: PortableTextBlock[]
+  links: LinkData[]
 }
 
 export type AccordionData = {

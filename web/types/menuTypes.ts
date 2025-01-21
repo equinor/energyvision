@@ -27,6 +27,8 @@ export type SubMenuData = {
   intro: PortableTextBlock[]
   groups: SubMenuGroupData[]
   featuredContent: CardData
+  featuredIngress?: PortableTextBlock[]
+  featuredCTALabel?: string
 }
 
 export type MenuData = {
