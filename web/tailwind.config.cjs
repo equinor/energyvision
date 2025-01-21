@@ -493,7 +493,6 @@ module.exports = {
       }),
       gridTemplateColumns: {
         'auto-fill-fr': `repeat(auto-fill, minmax(80px,1fr))`,
-        'auto-fill-auto': `repeat(auto-fill, minmax(0, auto))`,
         card: `repeat(auto-fill,minmax(min(100%,220px),400px))`,
       },
       scrollMargin: {
