@@ -34,12 +34,12 @@ export const StickyMenuLink = forwardRef<HTMLAnchorElement, StickMenuLinkProps>(
   return (
     <BaseLink className={classNames} ref={ref} href={href} {...rest}>
       {isDownloadable && <TransformableIcon iconData={library_pdf} className="mr-1" />}
-      <span className={contentClassNames}>{children}</span>
+      <div className={contentClassNames}>{children}</div>
       {isDownloadable && (
         <TransformableIcon
           iconData={arrow_down}
           className="text-energy-red-100
-    dark:text-white-100 h-[22px] border-energy-red-100 border-b-[2px] ml-4"
+    dark:text-white-100 h-[22px] border-energy-red-100 border-b-2 ml-4"
         />
       )}
       {!isDownloadable && (
