@@ -154,14 +154,15 @@ const Header = ({ slugs, menuData, stickyMenuData }: HeaderProps) => {
           </Topbar.InnerContainer>
         </Topbar>
         {stickyMenuData && (
-          <div className="w-full items-center bg-moss-green-50 p-4 grid grid-cols-2 lg:grid-cols-5 gap-2 lg:px-16 lg:gap-16 shadow-top-bar z-40">
-            <div className="text-center font-bold lg:col-span-3 text-md col-span-2"> {stickyMenuData?.title}</div>
+          <div
+            className={`hidden lg:grid w-full items-center bg-${stickyMenuData.background} p-4 grid-cols-2 lg:grid-cols-5 gap-2 lg:px-16 lg:gap-16 shadow-top-bar z-40`}
+          >
+            <div className="text-center font-medium lg:col-span-3 text-md col-span-2"> {stickyMenuData?.title}</div>
             <StickyMenuLink className="mr-4 place-self-end self-center" href={`#${anchorReference?.anchorReference}`}>
               {anchorReference?.title}
             </StickyMenuLink>
             {resourceLink && (
               <StickyMenuLink href={resourceLink.href} isDownloadable>
-                {' '}
                 {resourceLink.label}
               </StickyMenuLink>
             )}

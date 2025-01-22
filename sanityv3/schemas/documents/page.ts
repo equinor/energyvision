@@ -6,6 +6,7 @@ import sharedHeroFields from './header/sharedHeaderFields'
 import { EdsIcon } from '../../icons'
 import { paste } from '@equinor/eds-icons'
 import { lang } from './langField'
+import { description } from '../objects/iframe/sharedIframeFields'
 
 export default {
   type: 'document',
@@ -24,6 +25,14 @@ export default {
       options: {
         collapsible: true,
         collapsed: true,
+      },
+    },
+    {
+      title: 'Sticky Menu',
+      name: 'stickymenu',
+      options: {
+        collapsible: true,
+        collaped: true,
       },
     },
   ],
@@ -46,6 +55,7 @@ export default {
       name: 'stickyMenu',
       title: 'Sticky Menu',
       type: 'stickyMenu',
+      fieldset: 'stickymenu',
     },
     ...sharedHeroFields,
     {

@@ -489,4 +489,5 @@ export type StickyMenuData = {
   type: 'stickyMenu'
   title: string
   links: StickyMenuLinkType[]
+  background: string
 }

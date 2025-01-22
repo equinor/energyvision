@@ -39,8 +39,7 @@ export const StickyMenuLink = forwardRef<HTMLAnchorElement, StickMenuLinkProps>(
         <TransformableIcon
           iconData={arrow_down}
           className="text-energy-red-100
-    dark:text-white-100 h-[22px] border-energy-red-100 border-b-[2px]
-    ml-2"
+    dark:text-white-100 h-[22px] border-energy-red-100 border-b-[2px] ml-4"
         />
       )}
       {!isDownloadable && (
@@ -48,7 +47,7 @@ export const StickyMenuLink = forwardRef<HTMLAnchorElement, StickMenuLinkProps>(
           iconData={arrow_down}
           className="text-energy-red-100
     dark:text-white-100
-    ml-2"
+    ml-4"
         />
       )}
     </BaseLink>
