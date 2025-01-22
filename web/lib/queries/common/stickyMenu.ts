@@ -8,6 +8,7 @@ content->stickyMenu{
 "links": links[]{
    ${downloadableFileFields},
   ${anchorLinkReferenceFields}
-}
+},
+"background": coalesce(backgroundColor.key, 'white-100'),
 }
 `
