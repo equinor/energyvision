@@ -69,11 +69,10 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
                 captionPositionUnderImage
                   ? 'w-full text-slate-80 pl-2 pr-8 flex flex-col max-w-text'
                   : 'bg-spruce-wood-70/75 text-slate-80 px-8 pt-6 w-fit flex flex-col max-w-text',
-                attribution ? 'pb-4' : 'pb-6'
               )}
             >
-              {caption && <span className={`text-lg ${attribution ? 'pb-3' : ''}`}>{caption}</span>}
-              {attribution && <span className="text-sm">{attribution}</span>}
+              {caption && <span className={`text-lg ${attribution ? 'pb-2' : 'pb-14'}`}>{caption}</span>}
+              {attribution && <span className={`text-sm ${caption ? 'pb-8' : 'pb-14'}`}>{attribution}</span>}
             </div>
           </figcaption>
         </figure>
