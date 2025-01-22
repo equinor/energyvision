@@ -1,8 +1,9 @@
 import envisTwMerge from '../../twMerge'
 import Image from '../../pageComponents/shared/SanityImage'
-import { ImageWithAlt, ImageWithCaptionData } from '../../types/index'
+import { ImageWithAlt, ImageWithCaptionData, LinkData } from '../../types/index'
 import { DisplayModes } from './Carousel'
 import { forwardRef, HTMLAttributes } from 'react'
+import GridLinkArrow from '@sections/Grid/GridLinkArrow'
 
 type CarouselImageItemProps = {
   image?: ImageWithAlt | ImageWithCaptionData
@@ -12,10 +13,12 @@ type CarouselImageItemProps = {
   caption?: string
   attribution?: string
   active?: boolean
+  captionPositionUnderImage?: boolean
+  action?: LinkData
 } & HTMLAttributes<HTMLLIElement>
 
 export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProps>(function CarouselImageItem(
-  { active = false, image, caption, attribution, displayMode = 'single', className = '', ...rest },
+  { active = false, image, caption, attribution, displayMode = 'single', className = '', action, captionPositionUnderImage, ...rest },
   ref,
 ) {
   return (
@@ -52,13 +55,15 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
       {caption || attribution ? (
         <figure className="relative w-full h-full">
           <Image maxWidth={1420} image={image as ImageWithAlt} fill className="rounded-md" />
+          <GridLinkArrow action={action} variant="circle" />
           <figcaption
             className={`${
               active ? 'block' : 'hidden'
-            } absolute bottom-0 left-4 right-4 lg:left-8 lg:right-8 mb-4 lg:mb-8`}
+            } absolute -bottom-[158px] min-w-[40%] max-w-[60%] left-4 right-4 lg:left-16 lg:right-8 mb-4 lg:mb-8
+             `}
           >
             <div
-              className={`bg-spruce-wood-70/75 text-slate-80 px-8 pt-6 w-fit flex flex-col max-w-text ${
+              className={`w-full text-slate-80 pl-2 pr-8 flex flex-col max-w-text ${
                 attribution ? 'pb-4' : 'pb-6'
               }`}
             >
@@ -68,7 +73,10 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
           </figcaption>
         </figure>
       ) : (
+        <div>
         <Image maxWidth={1420} image={image as ImageWithAlt} fill className="rounded-md" />
+        <GridLinkArrow action={action} variant="circle" />
+        </div>
       )}
     </li>
   )

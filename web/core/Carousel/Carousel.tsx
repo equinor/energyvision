@@ -341,7 +341,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
         mx-auto
         ${
           variant === 'image' && displayMode === 'single'
-            ? 'overflow-hidden grid grid-flow-row'
+            ? 'grid grid-flow-row'
             : 'px-6 lg:px-layout-sm flex flex-col-reverse max-w-viewport'
         }
         
@@ -353,7 +353,8 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
       <div
         role="group"
         aria-labelledby={controlsId}
-        className={`${
+        className={`
+          ${
           variant === 'image' && displayMode === 'single'
             ? 'w-[var(--image-carousel-card-w-sm)] md:w-[var(--image-carousel-card-w-md)] lg:w-[var(--image-carousel-card-w-lg)] mx-auto col-start-1 col-end-1 row-start-2 row-end-2'
             : ''
