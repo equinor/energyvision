@@ -59,13 +59,18 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
           <figcaption
             className={`${
               active ? 'block' : 'hidden'
-            } absolute -bottom-[158px] min-w-[40%] max-w-[60%] left-4 right-4 lg:left-16 lg:right-8 mb-4 lg:mb-8
+            } ${
+              captionPositionUnderImage ? '-bottom-[158px] min-w-[40%] max-w-[60%] lg:left-16' : 'bottom-0 lg:left-8'
+            } absolute left-4 right-4 lg:right-8 mb-4 lg:mb-8
              `}
           >
             <div
-              className={`w-full text-slate-80 pl-2 pr-8 flex flex-col max-w-text ${
+              className={envisTwMerge(
+                captionPositionUnderImage
+                  ? 'w-full text-slate-80 pl-2 pr-8 flex flex-col max-w-text'
+                  : 'bg-spruce-wood-70/75 text-slate-80 px-8 pt-6 w-fit flex flex-col max-w-text',
                 attribution ? 'pb-4' : 'pb-6'
-              }`}
+              )}
             >
               {caption && <span className={`text-lg ${attribution ? 'pb-3' : ''}`}>{caption}</span>}
               {attribution && <span className="text-sm">{attribution}</span>}
