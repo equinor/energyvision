@@ -112,6 +112,7 @@ const Header = ({ slugs, menuData, stickyMenuData }: HeaderProps) => {
 
   const stickyMenuKey = (stickyMenuData?.background as keyof ColorKeyTokens) || ('white-100' as keyof ColorKeyTokens)
   const twBg = colorKeyToUtilityMap[stickyMenuKey]?.background
+  const hasOnlySingleLink = !(anchorReference && resourceLink)
 
   return (
     <div className="sticky top-0 z-10">
@@ -159,17 +160,27 @@ const Header = ({ slugs, menuData, stickyMenuData }: HeaderProps) => {
         </Topbar>
         {stickyMenuData && (
           <div
-            className={`hidden lg:grid w-full items-center ${twBg} p-4 grid-cols-2 lg:grid-cols-5 gap-2 lg:px-16 lg:gap-16 shadow-top-bar z-40`}
+            className={` hidden lg:block ${twBg} w-full shadow-top-bar z-40  px-[var(--layout-paddingHorizontal-small)]`}
           >
-            <div className="text-center font-medium lg:col-span-3 text-md col-span-2"> {stickyMenuData?.title}</div>
-            <StickyMenuLink className="mr-4 place-self-end self-center" href={`#${anchorReference?.anchorReference}`}>
-              {anchorReference?.title}
-            </StickyMenuLink>
-            {resourceLink && (
-              <StickyMenuLink href={resourceLink.href} isDownloadable>
-                {resourceLink.label}
-              </StickyMenuLink>
-            )}
+            <div className={`lg:grid grid-cols-3 max-w-[var(--topbar-innerMaxWidth)]  py-4 `}>
+              <div className={`text-start font-medium text-md self-center ${hasOnlySingleLink ? 'col-span-2' : ''}`}>
+                {' '}
+                {stickyMenuData?.title}
+              </div>
+              {anchorReference && (
+                <StickyMenuLink
+                  className="mr-4 place-self-end self-center"
+                  href={`#${anchorReference.anchorReference}`}
+                >
+                  {anchorReference.title}
+                </StickyMenuLink>
+              )}
+              {resourceLink && (
+                <StickyMenuLink className="mr-4 place-self-end self-center" href={resourceLink.href} isDownloadable>
+                  {resourceLink.label}
+                </StickyMenuLink>
+              )}
+            </div>
           </div>
         )}
       </BackgroundContainer>
