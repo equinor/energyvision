@@ -358,7 +358,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
           variant === 'image' && displayMode === 'single'
             ? 'w-[var(--image-carousel-card-w-sm)] md:w-[var(--image-carousel-card-w-md)] lg:w-[var(--image-carousel-card-w-lg)] mx-auto col-start-1 col-end-1 row-start-2 row-end-2'
             : ''
-        } pt-6 pb-2 ${items.length === 3 ? 'lg:hidden' : ''} flex ${
+        } pt-2 sm:pt-6 pb-2 ${items.length === 3 ? 'lg:hidden' : ''} flex ${
           internalAutoRotation ? 'justify-between' : 'justify-end'
         }`}
       >
