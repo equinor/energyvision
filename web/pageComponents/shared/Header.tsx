@@ -16,6 +16,7 @@ import { getAllSitesLink } from '../../common/helpers/getAllSitesLink'
 import { Icon } from '@equinor/eds-core-react'
 import { ButtonLink, LogoLink, StickyMenuLink } from '@core/Link'
 import SiteMenu from '@sections/SiteMenu/SiteMenu'
+import { ColorKeyTokens, colorKeyToUtilityMap } from '../../styles/colorKeyToUtilityMap'
 
 const TopbarOffset = createGlobalStyle`
   body {
@@ -109,6 +110,9 @@ const Header = ({ slugs, menuData, stickyMenuData }: HeaderProps) => {
   const anchorReference = stickyMenuData?.links.find((it) => it.type == 'anchorLinkReference')
   const resourceLink = stickyMenuData?.links.find((it) => it.type == 'downloadableFile')
 
+  const stickyMenuKey = (stickyMenuData?.background as keyof ColorKeyTokens) || ('white-100' as keyof ColorKeyTokens)
+  const twBg = colorKeyToUtilityMap[stickyMenuKey]?.background
+
   return (
     <div className="sticky top-0 z-10">
       <HeadTags slugs={slugs} />
@@ -155,7 +159,7 @@ const Header = ({ slugs, menuData, stickyMenuData }: HeaderProps) => {
         </Topbar>
         {stickyMenuData && (
           <div
-            className={`hidden lg:grid w-full items-center bg-${stickyMenuData.background} p-4 grid-cols-2 lg:grid-cols-5 gap-2 lg:px-16 lg:gap-16 shadow-top-bar z-40`}
+            className={`hidden lg:grid w-full items-center ${twBg} p-4 grid-cols-2 lg:grid-cols-5 gap-2 lg:px-16 lg:gap-16 shadow-top-bar z-40`}
           >
             <div className="text-center font-medium lg:col-span-3 text-md col-span-2"> {stickyMenuData?.title}</div>
             <StickyMenuLink className="mr-4 place-self-end self-center" href={`#${anchorReference?.anchorReference}`}>
