@@ -342,8 +342,8 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
         ${
           variant === 'image' && displayMode === 'single'
             ? 'grid grid-flow-row'
-            : 'px-6 lg:px-layout-sm flex flex-col-reverse max-w-viewport'
-        }
+            : 'px-6 lg:px-layout-sm flex flex-col sm:flex-col-reverse max-w-viewport'
+            }
         
         `,
         className,
@@ -356,7 +356,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
         className={`
           ${
           variant === 'image' && displayMode === 'single'
-            ? 'w-[var(--image-carousel-card-w-sm)] md:w-[var(--image-carousel-card-w-md)] lg:w-[var(--image-carousel-card-w-lg)] mx-auto col-start-1 col-end-1 row-start-2 row-end-2'
+            ? 'w-[var(--image-carousel-card-w-sm)] md:w-[var(--image-carousel-card-w-md)] lg:w-[var(--image-carousel-card-w-lg)] mx-auto col-start-1 col-end-1 row-start-1 row-end-1 sm:row-start-2 sm:row-end-2'
             : ''
         } pt-2 sm:pt-6 pb-2 ${items.length === 3 ? 'lg:hidden' : ''} flex ${
           internalAutoRotation ? 'justify-between' : 'justify-end'
