@@ -1,0 +1,84 @@
+# This workflow runs whenever a pull request in the repository is marked as "ready for review".
+name: Move issue/PR to ✅  Done status
+description: 'Move issue'
+runs:
+  using: 'composite'
+  steps:
+    # Sets environment variables for this step.
+    #
+    # If you are using a personal access token, replace `YOUR_TOKEN` with the name of the secret that contains your personal access token.
+    #
+    # Replace `YOUR_ORGANIZATION` with the name of your organization. For example, `octo-org`.
+    #
+    # Replace `YOUR_PROJECT_NUMBER` with your project number. To find the project number, look at the project URL. For example, `https://github.com/orgs/octo-org/projects/5` has a project number of 5.
+    - name: Get project data
+      shell: 'bash'
+      env:
+        GH_TOKEN: ${{ secrets.PADMS_PAT }}
+        ORGANIZATION: 'equinor'
+        PROJECT_NUMBER: 965
+      # Uses [GitHub CLI](https://cli.github.com/manual/) to query the API for the ID of the project and return the name and ID of the first 20 fields in the project. `fields` returns a union and the query uses inline fragments (`... on`) to return information about any `ProjectV2Field` and `ProjectV2SingleSelectField` fields. The response is stored in a file called `project_data.json`.
+      run: |
+        gh api graphql -f query='
+          query($org: String!, $number: Int!) {
+            organization(login: $org){
+              projectV2(number: $number) {
+                id
+                fields(first:20) {
+                  nodes {
+                    ... on ProjectV2Field {
+                      id
+                      name
+                    }
+                    ... on ProjectV2SingleSelectField {
+                      id
+                      name
+                      options {
+                        id
+                        name
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }' -f org=$ORGANIZATION -F number=$PROJECT_NUMBER > project_data.json
+
+        # Parses the response from the API query and stores the relevant IDs as environment variables. Modify this to get the ID for different fields or options. For example:
+        #
+        # - To get the ID of a field called `Team`, add `echo 'TEAM_FIELD_ID='$(jq '.data.organization.projectV2.fields.nodes[] | select(.name== "Team") | .id' project_data.json) >> $GITHUB_ENV`.
+        # - To get the ID of an option called `Octoteam` for the `Team` single select field, add `echo 'OCTOTEAM_OPTION_ID='$(jq '.data.organization.projectV2.fields.nodes[] | select(.name== "Team") |.options[] | select(.name=="Octoteam") |.id' project_data.json) >> $GITHUB_ENV`.
+        #
+        # **Note:** This workflow assumes that you have a project with a single select field called "Status" that includes an option called "✅  Done" and a date field called "Date posted". You must modify this section to match the fields that are present in your table.
+
+        echo 'PROJECT_ID='$(jq '.data.organization.projectV2.id' project_data.json) >> $GITHUB_ENV
+        echo 'STATUS_FIELD_ID='$(jq '.data.organization.projectV2.fields.nodes[] | select(.name== "Status") | .id' project_data.json) >> $GITHUB_ENV
+        echo 'RELEASE_OPTION_ID='$(jq '.data.organization.projectV2.fields.nodes[] | select(.name== "Status") | .options[] | select(.name=="🚀 Release") |.id' project_data.json) >> $GITHUB_ENV
+        echo 'DONE_OPTION_ID='$(jq '.data.organization.projectV2.fields.nodes[] | select(.name== "Status") | .options[] | select(.name=="✅  Done") |.id' project_data.json) >> $GITHUB_ENV
+
+    # Sets environment variables for this step. Replace `YOUR_TOKEN` with the name of the secret that contains your personal access token.
+    # - name: Set fields
+    #   env:
+    #     GH_TOKEN: ${{ secrets.PADMS_PAT }}
+    #   # Sets the value of the `Status` field to `🚀 Release`.
+    #   run: |
+    #     gh api graphql -f query='
+    #       mutation (
+    #         $project: ID!
+    #         $item: ID!
+    #         $status_field: ID!
+    #         $status_value: String!
+    #       ) {
+    #         set_status: updateProjectV2ItemFieldValue(input: {
+    #           projectId: $project
+    #           itemId: $item
+    #           fieldId: $status_field
+    #           value: {
+    #             singleSelectOptionId: $status_value
+    #             }
+    #         }) {
+    #           projectV2Item {
+    #             id
+    #             }
+    #         }
+    #       }' -f project=$PROJECT_ID -f item=$ITEM_ID -f status_field=$STATUS_FIELD_ID -f status_value=${{ env.RELEASE_OPTION_ID }} --silent

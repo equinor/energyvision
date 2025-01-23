@@ -1,0 +1,11 @@
+name: 'Test workflow for setting up project workflows'
+on:
+  workflow_dispatch:
+
+jobs:
+  get-list:
+    runs-on: 'ubuntu-latest'
+    steps:
+      - name: 'GEt list'
+        id: 'get-list'
+        uses: ./.github/workflows/project/
