@@ -223,8 +223,6 @@ module.exports = {
         '2xl': 'calc((40 / 16) * theme(fontSize.base))',
         '3xl': 'calc((56 / 16) * theme(fontSize.base))',
         '4xl': 'calc((96 / 16) * theme(fontSize.base))',
-        'card-minWidth': '220px',
-        'card-maxWidth': '400px',
       }),
       fontSize: {
         //--typeScale-00
@@ -301,6 +299,7 @@ module.exports = {
         '4/5': '0.8',
         '5/4': '1.25',
         '9/16': '0.56',
+        '4/3': '4/3',
       },
       margin: {
         'layout-sm': 'clamp(16px, calc(-38.3689px + 14.4984vw), 250px)',
@@ -365,6 +364,10 @@ module.exports = {
       data: {
         open: 'state~="open"',
         closed: 'state~="closed"',
+        active: 'state~="active"',
+        vertical: 'orientation~="vertical"',
+        horizontal: 'orientation~="horizontal"',
+        selected: 'selected~="true"',
         expanded: 'expanded~="true"',
       },
       flex: {
@@ -498,9 +501,6 @@ module.exports = {
       },
       scrollMargin: {
         topbar: '100px',
-      },
-      aria: {
-        current: 'current="page"',
       },
     },
   },

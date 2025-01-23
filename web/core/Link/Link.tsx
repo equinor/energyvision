@@ -18,7 +18,8 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
     items-center
     gap-2.5
     underline
-    hover:no-underline
+    hover:text-norwegian-woods-100
+    dark:hover:text-slate-blue-95
   `,
     className,
   )
@@ -26,7 +27,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
   return (
     <BaseLink className={classNames} type={type} ref={ref} href={href} {...rest}>
       {children}
-      {type === 'externalUrl' && <ArrowRight className="inline-block pt-1 -rotate-45 origin-bottom-left" />}
+      {type === 'externalUrl' && <ArrowRight className="text-no inline-block pt-1 -rotate-45 origin-bottom-left" />}
     </BaseLink>
   )
 })
