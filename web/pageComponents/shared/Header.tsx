@@ -159,9 +159,7 @@ const Header = ({ slugs, menuData, stickyMenuData }: HeaderProps) => {
           </Topbar.InnerContainer>
         </Topbar>
         {stickyMenuData && (
-          <div
-            className={` hidden lg:block ${twBg} w-full shadow-top-bar z-40  px-[var(--layout-paddingHorizontal-small)]`}
-          >
+          <div className={` hidden lg:block ${twBg} w-full shadow-top-bar z-40  px-layout-sm`}>
             <div className={`lg:grid grid-cols-3 max-w-[var(--topbar-innerMaxWidth)]  py-4 `}>
               <div className={`text-start font-medium text-md self-center ${hasOnlySingleLink ? 'col-span-2' : ''}`}>
                 {' '}
