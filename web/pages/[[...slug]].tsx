@@ -86,7 +86,7 @@ Page.getLayout = (page: AppProps) => {
   return (
     <Layout footerData={data?.footerData} intl={data?.intl}>
       <>
-        <Header slugs={slugs} menuData={data?.menuData} />
+        <Header slugs={slugs} menuData={data?.menuData} stickyMenuData={data?.pageData?.stickyMenu} />
         {page}
       </>
     </Layout>
