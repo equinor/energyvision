@@ -296,6 +296,7 @@ module.exports = {
         card: 'rgba(0, 0, 0, 0.08) 0px 1px 3px,1px -1px 2px 0px rgba(0, 0, 0, 0.07), rgba(0, 0, 0, 0.20) 0px 1px 2px',
         'card-interact': 'rgba(0, 0, 0, 0.14) 0px 1px 3px, rgba(0, 0, 0, 0.36) 0px 1px 2px',
         'top-bar': '0 0 15px 10px rgba(41, 62, 64, 0.15)',
+        test: '0 -6px 10px 5px rgba(0,0,0,0.5)',
       },
       aspectRatio: {
         '4/5': '0.8',
