@@ -4,6 +4,7 @@ import { eventContentFields } from './common/eventContentFields'
 import { heroFields } from './common/heroFields'
 import { seoAndSomeFields } from './common/seoAndSomeFields'
 import { breadcrumbsQuery } from './common/breadcrumbs'
+import { stickyMenu } from './common/stickyMenu'
 
 const allSlugsQuery = /* groq */ `
     "currentSlug": {
@@ -22,6 +23,7 @@ export const routeQuery = /* groq */ `
     ${allSlugsQuery},
     "title": content->title,
     "seoAndSome": content->${seoAndSomeFields},
+    ${stickyMenu},
     "hero": content->${heroFields},
     "template": content->_type,
     content->_type == "page" => {

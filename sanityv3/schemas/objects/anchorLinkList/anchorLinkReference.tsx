@@ -1,6 +1,7 @@
 import { anchor } from '@equinor/eds-icons'
 import { EdsIcon } from '../../../icons'
 import { AnchorLinkDescription } from '../anchorReferenceField'
+import { Rule } from 'sanity'
 
 export type AnchorLinkReference = {
   _type: 'anchorLinkReference'
@@ -16,6 +17,7 @@ export default {
       name: 'title',
       description: 'Visible title for the anchor link in the list of anchors',
       type: 'string',
+      validation: (Rule: Rule) => Rule.required(),
     },
     {
       name: 'anchorReference',

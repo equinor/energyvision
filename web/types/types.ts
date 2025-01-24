@@ -20,6 +20,7 @@ import type {
   GridData,
   FullWidthImageData,
   FigureData,
+  StickyMenuLinkType,
 } from './index'
 
 export type IntlData = {
@@ -461,17 +462,20 @@ export type PodcastTeaserData = {
   image: ImageWithAlt
   designOptions: DesignOptions
 }
+
+export type AnchorLinkReference = {
+  id: string
+  type: 'anchorLinkReference'
+  title?: string
+  anchorReference?: string
+}
+
 export type AnchorLinkListData = {
   id: string
   type: 'anchorLinkList'
   title?: string
   columns?: string
-  anchorList?: {
-    id: string
-    type: 'anchorLinkReference'
-    title?: string
-    anchorReference?: string
-  }[]
+  anchorList?: AnchorLinkReference[]
 }
 export type ImageForTextData = {
   type: 'imageForText'
@@ -479,4 +483,11 @@ export type ImageForTextData = {
   image: ImageWithAlt
   content?: PortableTextBlock[]
   aspectRatio?: '16:9' | 'fullWidth'
+}
+
+export type StickyMenuData = {
+  type: 'stickyMenu'
+  title: string
+  links: StickyMenuLinkType[]
+  background: string
 }
