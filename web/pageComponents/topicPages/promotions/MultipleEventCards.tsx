@@ -52,7 +52,8 @@ const MultipleEventCards = ({
                 justify-center
                 content-center
                 auto-rows-auto
-                md:${data.length === 2 ? 'grid-cols-2 grid-rows-1' : 'grid-cols-3 grid-rows-1'}`}
+                md:grid-cols-2
+                2xl:grid-cols-3`}
             >
               {data.map((item) => {
                 return (

@@ -6,6 +6,7 @@ import sharedHeroFields from './header/sharedHeaderFields'
 import { EdsIcon } from '../../icons'
 import { paste } from '@equinor/eds-icons'
 import { lang } from './langField'
+import { description } from '../objects/iframe/sharedIframeFields'
 
 export default {
   type: 'document',
@@ -26,6 +27,14 @@ export default {
         collapsed: true,
       },
     },
+    {
+      title: 'Sticky Menu',
+      name: 'stickymenu',
+      options: {
+        collapsible: true,
+        collaped: true,
+      },
+    },
   ],
   fields: [
     lang,
@@ -41,6 +50,12 @@ export default {
       type: 'imageWithAlt',
       description: 'You can override the hero image as the SoMe image by uploading another image here.',
       fieldset: 'metadata',
+    },
+    {
+      name: 'stickyMenu',
+      title: 'Sticky Menu',
+      type: 'stickyMenu',
+      fieldset: 'stickymenu',
     },
     ...sharedHeroFields,
     {

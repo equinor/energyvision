@@ -11,6 +11,8 @@ jobs:
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       NEXT_PUBLIC_ARCHIVE_CONTENT_LINK: ${{ vars.ARCHIVE_CONTENT_LINK }}
+      NEXT_PUBLIC_ALGOLIA_APP_ID: ${{ secrets.ALGOLIA_APP_ID }}
+      NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY: ${{ secrets.ALGOLIA_SEARCH_API_KEY }}
     steps:
       - name: BrowserStack Env Setup 🌎 # Invokes the setup-env action
         id: setup-browserstack-environment

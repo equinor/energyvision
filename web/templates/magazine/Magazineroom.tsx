@@ -35,9 +35,7 @@ const MagazineRoom = ({ pageData, slug }: MagazineIndexTemplateProps) => {
   const resultsRef = useRef<HTMLDivElement>(null)
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
-  const parentSlug =
-    (router.locale !== router.defaultLocale ? `/${router.locale}` : '') +
-    router.asPath.substring(router.asPath.indexOf('/'), router.asPath.lastIndexOf('/'))
+  const parentSlug = `${router.locale !== router.defaultLocale ? `/${router.locale}` : ''}${router.pathname}`
 
   const magazineList = useMemo(() => magazineArticles, [magazineArticles])
   const pagedList = useMemo(() => chunkArray(magazineList, 12), [magazineList])

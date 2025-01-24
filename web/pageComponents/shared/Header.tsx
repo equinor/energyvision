@@ -1,15 +1,11 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import styled, { createGlobalStyle } from 'styled-components'
-import { CSSProperties } from 'react'
+import { createGlobalStyle } from 'styled-components'
 import { useRouter } from 'next/router'
 import { default as NextLink } from 'next/link'
 import { Topbar, BackgroundContainer } from '@components'
 import { AllSlugsType, LocalizationSwitch } from './LocalizationSwitch'
-import type { MenuData, SimpleMenuData } from '../../types/index'
-import SiteMenu from './siteMenu/SiteMenu'
-import SimpleSiteMenu from './siteMenu/simple/SimpleSiteMenu'
+import type { MenuData, SimpleMenuData, StickyMenuData } from '../../types/index'
 import { Flags } from '../../common/helpers/datasetHelpers'
-import { LogoLink } from './LogoLink'
 import { languages, defaultLanguage } from '../../languages'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { search } from '@equinor/eds-icons'
@@ -18,61 +14,19 @@ import Head from 'next/head'
 import getConfig from 'next/config'
 import { getAllSitesLink } from '../../common/helpers/getAllSitesLink'
 import { Icon } from '@equinor/eds-core-react'
-import { ButtonLink } from '@core/Link'
+import { ButtonLink, LogoLink, StickyMenuLink } from '@core/Link'
+import SiteMenu from '@sections/SiteMenu/SiteMenu'
+import { ColorKeyTokens, colorKeyToUtilityMap } from '../../styles/colorKeyToUtilityMap'
 
 const TopbarOffset = createGlobalStyle`
   body {
     padding-top: var(--topbar-height);
   }
 `
-
-const HeaderRelative = styled.header`
-  position: relative;
-`
-
-const TopbarContainer = styled(Topbar.InnerContainer)`
-  display: grid;
-  grid-template-areas: 'logo menu';
-  grid-template-rows: 1fr;
-  align-items: center;
-  grid-column-gap: var(--space-large);
-  column-gap: var(--space-large);
-`
-const LogoLinkInGrid = styled(LogoLink)`
-  grid-area: logo;
-`
-
-/* This div is needed because of the grid layout to wrap focus lock panes.
-  We might look into to improve this at some point. */
-const ControlChild = styled.div``
-
-const ControlsContainer = styled.div`
-  grid-area: menu;
-  justify-self: right;
-  display: grid;
-  grid-template-columns: repeat(var(--columns), auto);
-  grid-column-gap: var(--space-small);
-  column-gap: var(--space-small);
-  align-items: center;
-
-  @media (min-width: 600px) {
-    grid-column-gap: var(--space-medium);
-    column-gap: var(--space-medium);
-  }
-`
-
-const StyledAllSites = styled(NextLink)`
-  cursor: pointer;
-  font-size: var(--typeScale-1);
-  text-decoration: none;
-  &:hover {
-    text-decoration: underline;
-  }
-`
-
 export type HeaderProps = {
   menuData?: MenuData | SimpleMenuData
   slugs: AllSlugsType
+  stickyMenuData?: StickyMenuData
 }
 
 const HeadTags = ({ slugs }: { slugs: AllSlugsType }) => {
@@ -126,13 +80,13 @@ const HeadTags = ({ slugs }: { slugs: AllSlugsType }) => {
 const AllSites = () => {
   const allSitesURL = getAllSitesLink('external')
   return (
-    <StyledAllSites href={allSitesURL} prefetch={false}>
+    <NextLink className="cursor-pointer text-base no-underline hover:underline" href={allSitesURL} prefetch={false}>
       <FormattedMessage id="all_sites" defaultMessage="All Sites" />
-    </StyledAllSites>
+    </NextLink>
   )
 }
 
-const Header = ({ slugs, menuData }: HeaderProps) => {
+const Header = ({ slugs, menuData, stickyMenuData }: HeaderProps) => {
   const router = useRouter()
   const localization = {
     activeLocale: router.locale || defaultLanguage.locale,
@@ -153,23 +107,28 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
   const intl = useIntl()
   const searchLabel = intl.formatMessage({ id: 'search', defaultMessage: 'Search' })
 
+  const anchorReference = stickyMenuData?.links.find((it) => it.type == 'anchorLinkReference')
+  const resourceLink = stickyMenuData?.links.find((it) => it.type == 'downloadableFile')
+
+  const stickyMenuKey = (stickyMenuData?.background as keyof ColorKeyTokens) || ('white-100' as keyof ColorKeyTokens)
+  const twBg = colorKeyToUtilityMap[stickyMenuKey]?.background
+  const hasOnlySingleLink = !(anchorReference && resourceLink)
+
   return (
-    <HeaderRelative>
+    <div className="sticky top-0 z-10">
       <HeadTags slugs={slugs} />
       <TopbarOffset />
       <BackgroundContainer>
         <Topbar>
-          <TopbarContainer>
-            <LogoLinkInGrid />
-            <ControlsContainer
-              style={
-                {
-                  '--columns': columns,
-                } as CSSProperties
-              }
+          <Topbar.InnerContainer className="grid [grid-template-areas:'logo_menu'] grid-rows-1 items-center gap-x-8">
+            <LogoLink className="[grid-area:logo]" />
+            <div
+              className={`grid [grid-area:menu] justify-self-end ${
+                columns == 3 ? 'grid-cols-auto-3' : columns == 2 ? 'grid-cols-auto-2' : 'grid-cols-1'
+              } gap-x-4 items-center sm:gap-x-61`}
             >
               {hasSearch && (
-                <ControlChild>
+                <div>
                   <ButtonLink
                     variant="ghost"
                     aria-expanded="true"
@@ -180,7 +139,7 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
                     <Icon size={24} data={search} />
                     <FormattedMessage id="search" />
                   </ButtonLink>
-                </ControlChild>
+                </div>
               )}
               {hasMoreThanOneLanguage && (
                 <LocalizationSwitch activeLocale={localization.activeLocale} allSlugs={validSlugs} />
@@ -188,19 +147,42 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
               {shouldDisplayAllSites ? (
                 <AllSites />
               ) : menuData && Flags.HAS_FANCY_MENU ? (
-                <ControlChild>
+                <div>
                   <SiteMenu data={menuData as MenuData} />
-                </ControlChild>
+                </div>
               ) : (
-                <ControlChild>
-                  <SimpleSiteMenu data={menuData as SimpleMenuData} />
-                </ControlChild>
+                <div>
+                  <SiteMenu variant="simple" data={menuData as SimpleMenuData} />
+                </div>
               )}
-            </ControlsContainer>
-          </TopbarContainer>
+            </div>
+          </Topbar.InnerContainer>
         </Topbar>
+        {stickyMenuData && (
+          <div className={` hidden lg:block ${twBg} w-full shadow-top-bar z-40  px-layout-sm`}>
+            <div className={`lg:grid grid-cols-3 max-w-[var(--topbar-innerMaxWidth)]  py-4 `}>
+              <div className={`text-start font-medium text-md self-center ${hasOnlySingleLink ? 'col-span-2' : ''}`}>
+                {' '}
+                {stickyMenuData?.title}
+              </div>
+              {anchorReference && (
+                <StickyMenuLink
+                  className="mr-4 place-self-end self-center"
+                  href={`#${anchorReference.anchorReference}`}
+                >
+                  {anchorReference.title}
+                </StickyMenuLink>
+              )}
+              {resourceLink && (
+                <StickyMenuLink className="mr-4 place-self-end self-center" href={resourceLink.href} isDownloadable>
+                  {resourceLink.label}
+                </StickyMenuLink>
+              )}
+            </div>
+          </div>
+        )}
       </BackgroundContainer>
-    </HeaderRelative>
+    </div>
   )
 }
 

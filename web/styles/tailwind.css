@@ -2,6 +2,7 @@
 @import 'tailwindcss/components';
 @import 'video.js/dist/video-js.css';
 @import './components/videojs.css';
+@import './components/cookiebot.css';
 @import 'tailwindcss/utilities';
 
 @layer base {

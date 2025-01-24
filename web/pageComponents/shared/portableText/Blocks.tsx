@@ -122,7 +122,7 @@ export type BlockProps = {
    */
   id?: string
   /** Use to clamp lines on number */
-  clampLines?: number
+  clampLines?: 3 | 4 | 5
   includeFootnotes?: boolean
   noInvert?: boolean
 } & PortableTextProps

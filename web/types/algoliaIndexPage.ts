@@ -13,17 +13,17 @@ import type {
 } from './index'
 import { PortableTextBlock } from '@portabletext/types'
 import { SanityImageObject } from '@sanity/image-url/lib/types/types'
+import { SearchResponse } from 'instantsearch.js'
 
 export type AlgoliaIndexPageType = {
-  isServerRendered?: boolean
   serverState?: InstantSearchServerState
-  url: string
   data: {
     menuData?: MenuData
     footerData?: { footerColumns: FooterColumns[] }
     intl: IntlData
     pageData: MagazineIndexPageType | NewsRoomPageType
     slug?: string
+    response: SearchResponse<any>
   }
 }
 
@@ -36,8 +36,6 @@ export type NewsRoomNewsItem = {
   heroImage: ImageWithCaptionData
   thumbnailUrl?: string
   ingress?: string
-  tags?: any
-  countryTags?: any
 }
 
 export type NewsRoomPageType = {
@@ -46,7 +44,6 @@ export type NewsRoomPageType = {
   ingress?: PortableTextBlock[]
   subscriptionLink?: { slug: string; type: string; lang: string }
   subscriptionLinkTitle?: string
-  newsArticles: NewsRoomNewsItem[]
   localNewsPages?: LinkData[]
   fallbackImages?: SanityImageObject[]
 }

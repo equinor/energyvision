@@ -100,7 +100,7 @@ jobs:
           popd
       - name: Package Azure Function release build
         id: package-artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ vars.AZ_ALGOLIA_FUNC_APP_NAME }}
           path: ${{ env.BUILD_ARTIFACT_PATH }}
@@ -131,7 +131,7 @@ jobs:
       # Fetch published code
       - name: Download Azure function release build
         id: download-artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4.1.7
         with:
           name: ${{ vars.AZ_ALGOLIA_FUNC_APP_NAME }}
           path: ${{ env.BUILD_ARTIFACT_PATH }}
