@@ -17,7 +17,7 @@ const AnchorLinkList = forwardRef<HTMLElement, AnchorLinkListProps>(function Anc
   const { title, anchorList = [], columns } = data
 
   const getFlow = () => {
-    const commonGridStyling = 'grid auto-fill-fr lg:place-items-start'
+    const commonGridStyling = 'grid lg:place-items-start grid-cols-3'
     switch (columns) {
       case '3':
         return `${commonGridStyling} lg:grid-cols-3`
@@ -29,7 +29,7 @@ const AnchorLinkList = forwardRef<HTMLElement, AnchorLinkListProps>(function Anc
         return `${commonGridStyling} lg:grid-cols-6`
       default:
       case 'flex':
-        return 'grid auto-fill-fr justify-start'
+        return 'grid grid-cols-auto-fill-fr justify-start'
     }
   }
   return (
@@ -49,7 +49,7 @@ const AnchorLinkList = forwardRef<HTMLElement, AnchorLinkListProps>(function Anc
           {anchorList?.map((anchorLink: { id: string; title?: string; anchorReference?: string }) => {
             const anchor = anchorLink?.anchorReference ? `#${anchorLink?.anchorReference}` : ''
             return (
-              <li key={`anchor_link_${anchorLink?.id}`} className="w-full flex justify-center">
+              <li key={`anchor_link_${anchorLink?.id}`} className="w-full flex justify-start">
                 <ButtonLink variant="ghost" href={anchor} className="w-max text-moss-green-100">
                   {anchorLink?.title}
                 </ButtonLink>
