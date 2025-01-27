@@ -2,6 +2,7 @@ import { forwardRef, HTMLAttributes, useEffect, useMemo, useRef, useState } from
 import { mergeRefs } from '@equinor/eds-utils'
 import { StickyMenuData } from '../../types/index'
 import StickyMenu from '@sections/StickyMenu/StickyMenu'
+import { useIntl } from 'react-intl'
 
 export type TopbarProps = {
   stickyMenuData?: StickyMenuData
@@ -13,7 +14,7 @@ export const Topbar = forwardRef<HTMLDivElement, TopbarProps>(function Topbar(
 ) {
   const topbarRef = useRef<HTMLDivElement>(null)
   const combinedTopbarRef = useMemo(() => mergeRefs<HTMLDivElement>(topbarRef, ref), [topbarRef, ref])
-
+  const intl = useIntl()
   const [height, setHeight] = useState(0)
   const [prevScrollPos, setPrevScrollPos] = useState(0)
   const [isVisible, setIsVisible] = useState(true)
@@ -80,29 +81,35 @@ export const Topbar = forwardRef<HTMLDivElement, TopbarProps>(function Topbar(
     }
   }, [isVisible, topbarRef])
 
-  const animateScrollUpClassName = `
-  [will-change:transform]
-  [transition-behavior:allow-discrete]
-  animate-height
-  ${isVisible ? 'top-0' : '-top-[var(--topbar-height)]'} 
-  [transition-property:height]
-  [transition-property:padding]
-  ease-in-out 
-  duration-400 
-  `
-
   return (
     <>
-      <div
+      <nav
         ref={combinedTopbarRef}
-        className={`w-screen sticky bg-white-100 z-40 ${animateScrollUpClassName}
-      ${hasDropShadow ? 'shadow-top-bar' : ''}`}
+        aria-label={intl.formatMessage({
+          id: 'global',
+          defaultMessage: 'Global',
+        })}
+        role="navigation"
+        className={`
+          w-screen 
+          ${stickyMenuData ? 'sticky' : 'fixed'} 
+          bg-white-100
+          z-40
+          animate-height
+          [transition-property:top]
+          ease-in-out  
+          duration-300
+          ${isVisible ? 'top-0' : '-top-[var(--topbar-height)]'} 
+          ${hasDropShadow ? 'shadow-top-bar' : ''}`}
         {...rest}
       >
         <div className="px-layout-sm max-w-viewport mx-auto flex items-center justify-between py-4">{children}</div>
-      </div>
+      </nav>
       {stickyMenuData && (
-        <StickyMenu stickyMenuData={stickyMenuData} className={`${isVisible ? 'top-[80px] pt-2' : 'top-0'}`} />
+        <StickyMenu
+          stickyMenuData={stickyMenuData}
+          className={`${isVisible ? 'top-[calc(var(--topbar-height)-1px)] pt-2' : 'top-0'}`}
+        />
       )}
     </>
   )

@@ -847,6 +847,11 @@ const snippets: textSnippet = {
     defaultValue: 'Local',
     group: groups.common,
   },
+  global: {
+    title: 'Global',
+    defaultValue: 'Global',
+    group: groups.common,
+  },
 }
 
 type textSnippetGroup = { title: string; hidden?: boolean }

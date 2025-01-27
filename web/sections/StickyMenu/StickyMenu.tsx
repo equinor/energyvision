@@ -22,13 +22,27 @@ export const StickyMenu = forwardRef<HTMLElement, StickyMenuProps>(function Stic
 
   return (
     <nav
+      {...rest}
       ref={ref}
       aria-label={intl.formatMessage({
         id: 'local',
         defaultMessage: 'Local',
       })}
       role="navigation"
-      className={envisTwMerge(`sticky top-0 [will-change:transform] ${twBg} w-full shadow-md z-10 py-4`, className)}
+      className={envisTwMerge(
+        `
+        sticky
+        top-0
+        [transition-property:top]
+        ease-in-out  
+        duration-300
+        ${twBg} 
+        w-full
+        shadow-md
+        z-10
+        py-4`,
+        className,
+      )}
     >
       <div className={`flex flex-col lg:flex-row gap-y-3 lg:justify-between px-layout-sm max-w-viewport mx-auto`}>
         <div className={`text-start font-medium text-base`}>{stickyMenuData?.title}</div>
