@@ -9,8 +9,6 @@ const round = (num) =>
     .toFixed(7)
     .replace(/(\.[0-9]+?)0+$/, '$1')
     .replace(/\.0$/, '')
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const rem = (px) => `${round(px / 16)}rem`
 const em = (px, base) => `${round(px / base)}em`
 
 module.exports = {
@@ -193,19 +191,6 @@ module.exports = {
           100: 'hsla(212, 82%, 11%, 1)',
         },
       }),
-
-      boxShadowColor: {
-        'moss-green-50': '190deg 9% 67%',
-        'moss-green-50-interact': '190deg 9% 60%',
-        'white-100': '0deg 0% 64%',
-        'white-100-interact': '0deg 0% 63%',
-        'blue-50': '212deg 40% 29%',
-        'blue-50-interact': '212deg 40% 25%',
-        'orange-50': '28deg 42% 57%',
-        'orange-50-interact': '28deg 42% 51%',
-        'mist-blue-100': '199deg 23% 62%',
-        'mist-blue-100-interact': '199deg 23% 56%',
-      },
       spacing: ({ theme }) => ({
         //--space-xSmall -> spacing.2
         //--space-small -> spacing.4
@@ -295,8 +280,6 @@ module.exports = {
       boxShadow: {
         card: 'rgba(0, 0, 0, 0.08) 0px 1px 3px,1px -1px 2px 0px rgba(0, 0, 0, 0.07), rgba(0, 0, 0, 0.20) 0px 1px 2px',
         'card-interact': 'rgba(0, 0, 0, 0.14) 0px 1px 3px, rgba(0, 0, 0, 0.36) 0px 1px 2px',
-        'top-bar': '0 0 15px 10px rgba(41, 62, 64, 0.15)',
-        test: '0 -6px 10px 5px rgba(0,0,0,0.5)',
       },
       aspectRatio: {
         '4/5': '0.8',
@@ -506,7 +489,7 @@ module.exports = {
         card: `repeat(auto-fill,minmax(min(100%,220px),400px))`,
       },
       scrollMargin: {
-        topbar: '100px',
+        topbar: '85px',
       },
     },
   },

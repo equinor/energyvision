@@ -274,7 +274,6 @@
 
   @starting-style {
     .topbar-height {
-      /*top: var(--topbar-height);*/
       top: 0;
     }
   }
