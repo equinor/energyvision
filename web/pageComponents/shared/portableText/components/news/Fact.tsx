@@ -15,6 +15,7 @@ type FactboxProps = {
   image: ImageWithAlt
   imagePosition: FactImagePosition
   dynamicHeight: boolean
+  isSingleColumn?: boolean
 }
 
 type BlockProps = {
@@ -25,7 +26,7 @@ type BlockProps = {
 
 export const Fact = (block: BlockProps) => {
   const { value, className } = block
-  const { title, content, background, image, imagePosition, dynamicHeight } = value
+  const { title, content, background, image, imagePosition, dynamicHeight, isSingleColumn } = value
 
   const bgTitle = (background ? background?.title : 'White') as BackgroundColours
   if (!content || content.length === 0) {
@@ -36,7 +37,7 @@ export const Fact = (block: BlockProps) => {
 
   const plainText = content ? toPlainText(content as PortableTextBlock[]) : ''
 
-  const hasColumns = !imageSrc && plainText.length > 800
+  const hasColumns = !imageSrc && !isSingleColumn && plainText.length > 800
   const hasImage = imageSrc ? true : false
   const hasBgColor = bgTitle !== 'White'
 

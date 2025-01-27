@@ -55,6 +55,12 @@ export default {
       of: [blockContentType],
     },
     {
+      name: 'isSingleColumn',
+      type: 'boolean',
+      title: 'Single column layout',
+      description: 'Toggle to use a single-column layout instead of the default two-column layout. This will have no effect if image is selected',
+     },
+    {
       name: 'image',
       title: 'Image',
       type: 'imageWithAlt',
