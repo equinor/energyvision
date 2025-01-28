@@ -33,13 +33,6 @@ export default {
       title: 'Credit',
       type: 'string',
     },
-  {
-    type: 'boolean',
-    name: 'captionPositionUnderImage',
-    title: 'Position caption and credit under image',
-    description: 'Toggle to display caption and credit under the image.',
-    initialValue: false,
-  },
     {
       name: 'action',
       title: 'Link',

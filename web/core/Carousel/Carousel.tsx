@@ -51,6 +51,7 @@ type CarouselProps = {
   autoRotation?: boolean
   hasSectionTitle?: boolean
   title?: PortableTextBlock[]
+  captionPositionUnderImage?: boolean
 } & Omit<HTMLAttributes<HTMLDivElement>, 'title'>
 
 const TRANSLATE_X_AMOUNT_LG = 1000
@@ -68,7 +69,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
     className = '',
     listClassName = '',
     hasSectionTitle = false,
-  },
+    captionPositionUnderImage},
   ref,
 ) {
   const CarouselTag = hasSectionTitle ? (`div` as ElementType) : (`section` as ElementType)
@@ -266,6 +267,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
             displayMode={displayMode}
             aria-label={ariaLabel}
             active={i === currentIndex}
+            captionPositionUnderImage={captionPositionUnderImage} 
             {...(variant === 'image' &&
               displayMode === 'single' && {
                 style: {

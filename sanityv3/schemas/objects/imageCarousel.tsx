@@ -76,6 +76,13 @@ export default {
       validation: (Rule: Rule) => Rule.required().min(2),
     },
     {
+      type: 'boolean',
+      name: 'captionPositionUnderImage',
+      title: 'Position caption and credit under image',
+      description: 'Toggle to display caption and credit under the images.',
+      initialValue: false,
+    },
+    {
       type: 'number',
       name: 'delay',
       title: 'Delay( Not in use anymore )',
