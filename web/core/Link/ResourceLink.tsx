@@ -5,6 +5,7 @@ import { ArrowRight } from '../../icons'
 import envisTwMerge from '../../twMerge'
 import { TransformableIcon } from '../../icons/TransformableIcon'
 import { add, calendar } from '@equinor/eds-icons'
+import { PiFilePdfThin } from 'react-icons/pi'
 
 export type Variants = 'default' | 'fit'
 
@@ -126,6 +127,7 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
       case 'downloadableFile':
         return extension && extension.toUpperCase() === 'PDF' && showExtensionIcon ? (
           <>
+            <PiFilePdfThin size={24} className="mr-2" />
             <div
               className={textClassNames}
               {...(ariaHideText && {
