@@ -34,7 +34,6 @@ const block: BlockType = {
   h2: h2Heading,
   h3: h3Heading,
   normal: ({ children }: Props) => <Text>{children}</Text>,
-  smallText: ({ children }: Props) => <Text size="small">{children}</Text>,
 }
 
 const marks: MarkType = {
@@ -57,6 +56,7 @@ const defaultSerializers: PortableTextReactComponents = {
   block: {
     ...defaultComponents.block,
     ...block,
+    smallText: ({ children }: Props) => <Text size="small">{children}</Text>,
   } as BlockType,
   marks: {
     ...defaultComponents.marks,
