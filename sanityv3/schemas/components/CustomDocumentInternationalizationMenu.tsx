@@ -23,8 +23,8 @@ export default function CustomDocumentInternationalizationMenu(props: DocumentIn
           if (mutation.type === 'childList') {
             const buttons = targetNode?.querySelectorAll('button')
             if (buttons && buttons?.length > 1 && buttons[0].innerText == 'Manage Translations') {
-              buttons[0].disabled = enableManageTranslation || false
-              buttons[0].setAttribute('data-disabled', enableManageTranslation ? 'true' : 'false')
+              buttons[0].disabled = !enableManageTranslation || true
+              buttons[0].setAttribute('data-disabled', enableManageTranslation ? 'false' : 'true')
             }
           }
         })
