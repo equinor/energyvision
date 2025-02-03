@@ -17,6 +17,7 @@ runs:
     #
     # Replace `YOUR_PROJECT_NUMBER` with your project number. To find the project number, look at the project URL. For example, `https://github.com/orgs/octo-org/projects/5` has a project number of 5.
     - name: Get project data
+      id: get-project-data
       shell: 'bash'
       env:
         GH_TOKEN: ${{ inputs.token }}
@@ -87,3 +88,16 @@ runs:
     #             }
     #         }
     #       }' -f project=$PROJECT_ID -f item=$ITEM_ID -f status_field=$STATUS_FIELD_ID -f status_value=${{ env.RELEASE_OPTION_ID }} --silent
+
+    - name: Post a message in a channel
+      uses: slackapi/slack-github-action@v2.0.0
+      with:
+        webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
+        webhook-type: incoming-webhook
+        payload: |
+          text: "*GitHub Action build result*: ${{ job.status }}"
+          blocks:
+          - type: "section"
+            text:
+              type: "mrkdwn"
+              text: "Project Id: ${{ get-project-data.outputs.PROJECT_ID}} Done id: ${{ get-project-data.outputs.DONE_OPTION_ID }}"
