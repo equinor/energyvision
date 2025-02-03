@@ -11,6 +11,7 @@ const blockContentType = configureBlockContent({
   h2: false,
   h3: true,
   h4: false,
+  highlight: true,
   attachment: false,
 })
 
