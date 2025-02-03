@@ -5,9 +5,6 @@ inputs:
   token:
     description: 'A Github PAT'
     required: true
-  slack_url:
-    description: 'Slack webhook url'
-    required: true
 runs:
   using: 'composite'
   steps:
