@@ -90,16 +90,3 @@ runs:
     #             }
     #         }
     #       }' -f project=$PROJECT_ID -f item=$ITEM_ID -f status_field=$STATUS_FIELD_ID -f status_value=${{ env.RELEASE_OPTION_ID }} --silent
-
-    - name: Post a message in a channel
-      uses: slackapi/slack-github-action@v2.0.0
-      with:
-        webhook: ${{ inputs.slack_url }}
-        webhook-type: incoming-webhook
-        payload: |
-          text: "*GitHub Action build result*: ${{ job.status }}"
-          blocks:
-          - type: "section"
-            text:
-              type: "mrkdwn"
-              text: "Project Id: ${{ get-project-data.outputs.PROJECT_ID}} Done id: ${{ get-project-data.outputs.DONE_OPTION_ID }}"

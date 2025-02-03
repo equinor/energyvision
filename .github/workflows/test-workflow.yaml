@@ -15,3 +15,16 @@ jobs:
           token: ${{ secrets.PADMS_PAT_READ_PACKAGE }}
           slack_url: ${{ secrets.SLACK_WEBHOOK_URL }}
         uses: ./.github/workflows/project/
+
+      - name: Post a message in a channel
+        uses: slackapi/slack-github-action@v2.0.0
+        with:
+          webhook: ${{ inputs.slack_url }}
+          webhook-type: incoming-webhook
+          payload: |
+            text: "*GitHub Action build result*: ${{ job.status }}"
+            blocks:
+            - type: "section"
+              text:
+                type: "mrkdwn"
+                text: "Project Id: ${{ env.PROJECT_ID}} Done id: ${{ env.DONE_OPTION_ID }}"
