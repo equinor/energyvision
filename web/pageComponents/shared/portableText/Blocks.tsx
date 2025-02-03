@@ -8,7 +8,7 @@ import {
   PortableTextTypeComponent,
 } from '@portabletext/react'
 import { PortableTextBlock, PortableTextBlockStyle } from '@portabletext/types'
-import { FigureWithLayout, Quote, Fact, ExternalLink, InternalLink, BasicIframe } from './components'
+import { FigureWithLayout, Quote, Fact, ExternalLink, InternalLink, BasicIframe, Highlight } from './components'
 import { twMerge } from 'tailwind-merge'
 import { FormattedMessage } from 'react-intl'
 
@@ -50,6 +50,9 @@ const defaultSerializers = {
       return <InternalLink value={value}>{children}</InternalLink>
     },
     footnote: () => null,
+    highlight: ({ children }: TypeProps) => {
+      return <Highlight>{children}</Highlight>
+    },
   },
 }
 const footnoteSerializer = {
