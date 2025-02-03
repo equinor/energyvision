@@ -5,7 +5,9 @@ inputs:
   token:
     description: 'A Github PAT'
     required: true
-
+  slack_url:
+    description: 'Slack webhook url'
+    required: true
 runs:
   using: 'composite'
   steps:
@@ -92,7 +94,7 @@ runs:
     - name: Post a message in a channel
       uses: slackapi/slack-github-action@v2.0.0
       with:
-        webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
+        webhook: ${{ inputs.slack_url }}
         webhook-type: incoming-webhook
         payload: |
           text: "*GitHub Action build result*: ${{ job.status }}"

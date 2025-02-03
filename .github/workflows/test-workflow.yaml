@@ -13,4 +13,5 @@ jobs:
         id: 'get-list'
         with:
           token: ${{ secrets.PADMS_PAT_READ_PACKAGE }}
+          slack_url: ${{ secrets.SLACK_WEBHOOK_URL }}
         uses: ./.github/workflows/project/
