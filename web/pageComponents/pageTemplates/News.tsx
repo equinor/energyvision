@@ -204,7 +204,7 @@ const NewsPage = ({ data: news }: ArticleProps) => {
                 )}
               </HeaderInner>
             </Header>
-            <Image>{heroImage && <DefaulHeroImage data={heroImage} />}</Image>
+            {heroImage.asset && <Image><DefaulHeroImage data={heroImage} /></Image>}
             {ingress && ingress.length > 0 && (
               <LeadParagraph>
                 <IngressText value={ingress} includeFootnotes />
