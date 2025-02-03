@@ -6,6 +6,10 @@ jobs:
   get-list:
     runs-on: 'ubuntu-latest'
     steps:
-      - name: 'GEt list'
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+        with:
+          ref: staging
+      - name: 'Get list'
         id: 'get-list'
         uses: ./.github/workflows/project/
