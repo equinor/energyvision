@@ -4,9 +4,6 @@ import { Image } from './Image'
 import { Content } from './Content'
 
 export type FactImagePosition = 'left' | 'right'
-// @TODO: Color mapping must be more generic than this!!!
-// Find a better way to do this.
-// Create a proper type for colors
 
 type FactBoxCompoundProps = typeof FactBoxWrapper & {
   Image: typeof Image
