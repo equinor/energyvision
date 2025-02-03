@@ -12,5 +12,5 @@ jobs:
       - name: 'Get list'
         id: 'get-list'
         with:
-          token: ${{ secrets.PADMS_PAT }}
+          token: ${{ secrets.PADMS_PAT_READ_PACKAGE }}
         uses: ./.github/workflows/project/
