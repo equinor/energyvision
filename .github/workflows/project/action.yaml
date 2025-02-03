@@ -1,6 +1,11 @@
 # This workflow runs whenever a pull request in the repository is marked as "ready for review".
 name: Move issue/PR to ✅  Done status
 description: 'Move issue'
+inputs:
+  token:
+    description: 'A Github PAT'
+    required: true
+
 runs:
   using: 'composite'
   steps:
@@ -14,7 +19,7 @@ runs:
     - name: Get project data
       shell: 'bash'
       env:
-        GH_TOKEN: ${{ secrets.PADMS_PAT }}
+        GH_TOKEN: ${{ inputs.token }}
         ORGANIZATION: 'equinor'
         PROJECT_NUMBER: 965
       # Uses [GitHub CLI](https://cli.github.com/manual/) to query the API for the ID of the project and return the name and ID of the first 20 fields in the project. `fields` returns a union and the query uses inline fragments (`... on`) to return information about any `ProjectV2Field` and `ProjectV2SingleSelectField` fields. The response is stored in a file called `project_data.json`.
