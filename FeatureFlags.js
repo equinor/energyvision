@@ -15,8 +15,6 @@ const SATELLITES = [
   'poland',
   'southkorea',
   'storage',
-  'sheringham',
-  'dudgeon',
 ]
 const NEWS = [
   ...GLOBAL_DEV,
@@ -27,8 +25,6 @@ const NEWS = [
   'germany',
   'southkorea',
   'celticsea',
-  'dudgeon',
-  'sheringham',
 ]
 const ARCHIVED_NEWS = [...GLOBAL_PROD, ...GLOBAL_DEV]
 const NEWS_SUBSCRIPTION = [...GLOBAL_PROD, ...GLOBAL_DEV]
