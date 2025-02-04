@@ -47,6 +47,7 @@ runs:
               }
               items(first:50){
                nodes{
+                id
                 fieldValueByName( name: "Status") {
              			    ... on ProjectV2ItemFieldSingleSelectValue {
               			    	status: name
@@ -69,7 +70,7 @@ runs:
         echo 'STATUS_FIELD_ID='$(jq '.data.organization.projectV2.fields.nodes[] | select(.name== "Status") | .id' project_data.json) >> $GITHUB_ENV
         echo 'RELEASE_OPTION_ID='$(jq '.data.organization.projectV2.fields.nodes[] | select(.name== "Status") | .options[] | select(.name=="🚀 Release") |.id' project_data.json) >> $GITHUB_ENV
         echo 'DONE_OPTION_ID='$(jq '.data.organization.projectV2.fields.nodes[] | select(.name== "Status") | .options[] | select(.name=="✅  Done") |.id' project_data.json) >> $GITHUB_ENV
-        echo 'STATUS_NAME ='$(jq '.data.organization.projectV2.items.nodes[] | .id' project_data.json) >> $GITHUB_ENV
+        echo 'ITEM_IDS ='$(jq -c '[.data.organization.projectV2.items.nodes[] | select(.status== "🚀 Release")| .id]' project_data.json) >> $GITHUB_ENV
 
     # - name: Get all items in status release
     #   shell: bash

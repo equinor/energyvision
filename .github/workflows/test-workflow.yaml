@@ -26,4 +26,4 @@ jobs:
             - type: "section"
               text:
                 type: "mrkdwn"
-                text: "```${{ env.PROJECT_ID }} ${{ env.STATUS_FIELD_ID }}```"
+                text: ${{ env.ITEM_IDS }}
