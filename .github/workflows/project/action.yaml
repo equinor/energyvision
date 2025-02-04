@@ -47,10 +47,10 @@ runs:
                 }
                 items(first:50){
                  edges{
-                 nodes{
-                  id
-                  name
-                  }
+                 node{
+            fieldValueByName(name: "Status"){
+             __typename
+            }
                  }
                  
                 }
