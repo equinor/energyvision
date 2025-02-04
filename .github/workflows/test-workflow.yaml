@@ -26,4 +26,4 @@ jobs:
             - type: "section"
               text:
                 type: "mrkdwn"
-                text: ``` ${{ env.PROJECT_JSON }}```
+                text: "```${{ env.PROJECT_JSON }}```"
