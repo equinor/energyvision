@@ -8,7 +8,17 @@ import {
   PortableTextTypeComponent,
 } from '@portabletext/react'
 import { PortableTextBlock, PortableTextBlockStyle } from '@portabletext/types'
-import { FigureWithLayout, Quote, Fact, ExternalLink, InternalLink, BasicIframe, Highlight } from './components'
+import {
+  FigureWithLayout,
+  Quote,
+  Fact,
+  ExternalLink,
+  InternalLink,
+  BasicIframe,
+  Highlight,
+  BulletList,
+  NumberedList,
+} from './components'
 import { twMerge } from 'tailwind-merge'
 import { FormattedMessage } from 'react-intl'
 
@@ -53,6 +63,11 @@ const defaultSerializers = {
     highlight: ({ children }: TypeProps) => {
       return <Highlight>{children}</Highlight>
     },
+    strong: ({ children }: any) => <strong className="font-bold text-inherit">{children}</strong>,
+  },
+  list: {
+    bullet: BulletList,
+    number: NumberedList,
   },
 }
 const footnoteSerializer = {
@@ -183,6 +198,7 @@ export default function Blocks({
                       ...marksComponents,
                       ...(includeFootnotes && footnoteSerializer),
                     },
+                    list: { ...defaultSerializers.list },
                   }}
                 />
               </div>
