@@ -53,6 +53,7 @@ const defaultSerializers = {
     highlight: ({ children }: TypeProps) => {
       return <Highlight>{children}</Highlight>
     },
+    strong: ({ children }: any) => <strong className="font-bold text-inherit">{children}</strong>,
   },
 }
 const footnoteSerializer = {
