@@ -48,8 +48,8 @@ runs:
                 items(first:50){
                  edges{
                  node{
-            fieldValueByName(name: "Status"){
-             __typename
+             ... on ProjectV2ItemFieldSingleSelectValue {
+              status: name
             }
                  }
                  
@@ -74,39 +74,39 @@ runs:
         echo 'DONE_OPTION_ID='$(jq '.data.organization.projectV2.fields.nodes[] | select(.name== "Status") | .options[] | select(.name=="✅  Done") |.id' project_data.json) >> $GITHUB_ENV
         echo 'PROJECT_JSON = project_data.json' >> $GITHUB_ENV
 
-    - name: Get all items in status release
-      shell: bash
-      env:
-        GH_TOKEN: ${{ inputs.token }}
-      # Get all the items with status "🚀 Release"
-      run: |
-        gh api graphql -f query='
-        '
+    # - name: Get all items in status release
+    #   shell: bash
+    #   env:
+    #     GH_TOKEN: ${{ inputs.token }}
+    #   # Get all the items with status "🚀 Release"
+    #   run: |
+    #     gh api graphql -f query='
+    #     '
 
-    #Sets environment variables for this step. Replace `YOUR_TOKEN` with the name of the secret that contains your personal access token.
-    - name: Set fields
-      shell: bash
-      env:
-        GH_TOKEN: ${{ inputs.token }}
-      # Sets the value of the `Status` field to `✅  Done`.
-      run: |
-        gh api graphql -f query='
-          mutation (
-            $project: ID!
-            $item: ID!
-            $status_field: ID!
-            $status_value: String!
-          ) {
-            set_status: updateProjectV2ItemFieldValue(input: {
-              projectId: $project
-              itemId: $item
-              fieldId: $status_field
-              value: {
-                singleSelectOptionId: $status_value
-                }
-            }) {
-              projectV2Item {
-                id
-                }
-            }
-          }' -f project=$PROJECT_ID -f item=$ITEM_ID -f status_field=$STATUS_FIELD_ID -f status_value=${{ env.DONE_OPTION_ID }} --silent
+    # #Sets environment variables for this step. Replace `YOUR_TOKEN` with the name of the secret that contains your personal access token.
+    # - name: Set fields
+    #   shell: bash
+    #   env:
+    #     GH_TOKEN: ${{ inputs.token }}
+    #   # Sets the value of the `Status` field to `✅  Done`.
+    #   run: |
+    #     gh api graphql -f query='
+    #       mutation (
+    #         $project: ID!
+    #         $item: ID!
+    #         $status_field: ID!
+    #         $status_value: String!
+    #       ) {
+    #         set_status: updateProjectV2ItemFieldValue(input: {
+    #           projectId: $project
+    #           itemId: $item
+    #           fieldId: $status_field
+    #           value: {
+    #             singleSelectOptionId: $status_value
+    #             }
+    #         }) {
+    #           projectV2Item {
+    #             id
+    #             }
+    #         }
+    #       }' -f project=$PROJECT_ID -f item=$ITEM_ID -f status_field=$STATUS_FIELD_ID -f status_value=${{ env.DONE_OPTION_ID }} --silent
