@@ -4,7 +4,7 @@ import envisTwMerge from '../../twMerge'
 
 export type TabListProps = {
   /* Provides a label that describes the purpose of the set of tabs. */
-  'aria-label': string
+  'aria-label'?: string
 } & RadixTabs.TabsListProps
 
 export const TabList = forwardRef<HTMLDivElement, TabListProps>(function TabList(

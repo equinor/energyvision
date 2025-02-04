@@ -63,6 +63,8 @@ import { AnchorLinkList } from '@sections/AnchorLinkList'
 import ImageForText from '@sections/ImageForText/ImageForText'
 import TextWithIconArray from '@sections/TextWithIconArray/TextWithIconArray'
 import AccordionBlock from '@sections/AccordionBlock/AccordionBlock'
+import TabsBlock from '@sections/TabsBlock/TabsBlock'
+import { getColorForTabsTheme } from '@sections/TabsBlock/tabThemes'
 
 type DefaultComponent = {
   id?: string
@@ -109,6 +111,9 @@ type PageContentProps = {
  */
 const getBackgroundOptions = (component: ComponentProps) => {
   //@ts-ignore
+  if (component?.type === 'tabs') {
+    return getColorForTabsTheme(component?.designOptions?.theme?.value)
+  }
   return component?.designOptions?.background || getColorForTheme(component?.designOptions?.theme)
 }
 
@@ -354,6 +359,8 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
         )
       case 'imageForText':
         return <ImageForText key={c.id} data={c as ImageForTextData} />
+      case 'tabs':
+        return <TabsBlock key={c.id} data={c as any} className={topSpacingClassName} />
       default:
         return null
     }
