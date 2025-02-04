@@ -107,11 +107,11 @@ const Header = ({ slugs, menuData, stickyMenuData }: HeaderProps) => {
   const intl = useIntl()
   const searchLabel = intl.formatMessage({ id: 'search', defaultMessage: 'Search' })
 
-  const anchorReference = stickyMenuData?.links.find((it) => it.type == 'anchorLinkReference')
-  const resourceLink = stickyMenuData?.links.find((it) => it.type == 'downloadableFile')
+  const anchorReference = stickyMenuData?.links && stickyMenuData?.links?.find((it) => it.type == 'anchorLinkReference')
+  const resourceLink = stickyMenuData?.links && stickyMenuData?.links?.find((it) => it.type == 'downloadableFile')
 
   const stickyMenuKey = (stickyMenuData?.background as keyof ColorKeyTokens) || ('white-100' as keyof ColorKeyTokens)
-  const twBg = colorKeyToUtilityMap[stickyMenuKey]?.background
+  const twBg = colorKeyToUtilityMap[stickyMenuKey]?.background ?? 'bg-white-100'
   const hasOnlySingleLink = !(anchorReference && resourceLink)
 
   return (
