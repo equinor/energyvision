@@ -204,7 +204,7 @@ const NewsPage = ({ data: news }: ArticleProps) => {
                 )}
               </HeaderInner>
             </Header>
-            {heroImage && (
+            {heroImage.image.asset && (
               <Image>
                 <DefaulHeroImage data={heroImage} />
               </Image>
