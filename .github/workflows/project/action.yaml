@@ -25,41 +25,38 @@ runs:
       # Uses [GitHub CLI](https://cli.github.com/manual/) to query the API for the ID of the project and return the name and ID of the first 20 fields in the project. `fields` returns a union and the query uses inline fragments (`... on`) to return information about any `ProjectV2Field` and `ProjectV2SingleSelectField` fields. The response is stored in a file called `project_data.json`.
       run: |
         gh api graphql -f query='
-          query($org: String!, $number: Int!) {
+            query($org: String!, $number: Int!) {
             organization(login: $org){
               projectV2(number: $number) {
-                id
-                fields(first:20) {
-                  nodes {
-                    ... on ProjectV2Field {
+              id
+              fields(first:20) {
+                nodes {
+                  ... on ProjectV2Field {
+                    id
+                    name
+                }
+                  ... on ProjectV2SingleSelectField {
+                    id
+                    name
+                    options {
                       id
                       name
-                    }
-                    ... on ProjectV2SingleSelectField {
-                      id
-                      name
-                      options {
-                        id
-                        name
-                      }
                     }
                   }
                 }
-                items(first:50){
-                 edges{
-                 node{
-             ... on ProjectV2ItemFieldSingleSelectValue {
-              status: name
-            }
-                 }
-                 
-                }
-               
-
-
               }
-            }
-          }' -f org=$ORGANIZATION -F number=$PROJECT_NUMBER > project_data.json
+              items(first:50){
+               nodes{
+                fieldValueByName( name: "Status") {
+             			    ... on ProjectV2ItemFieldSingleSelectValue {
+              			    	status: name
+           						     }
+          		          }
+          }
+        }
+         }
+         }
+         }' -f org=$ORGANIZATION -F number=$PROJECT_NUMBER > project_data.json
 
         # Parses the response from the API query and stores the relevant IDs as environment variables. Modify this to get the ID for different fields or options. For example:
         #
