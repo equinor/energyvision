@@ -85,8 +85,8 @@ runs:
       # Get all the items with status "🚀 Release"
       run: |
         gh project item-list 965 --owner equinor --format=json | jq  '.items[] | select(.status=="🚀 Release" and .content.type == "Issue") | {id: .id ,url :.content.url}' >>items.json
-        echo "ITEMS=$(cat items.json)" >> $GITHUB_ENV
-        echo "ITEM_IDS=$(echo \"$ITEMS\" | jq '[[]| .id]')" >> $GITHUB_ENV
+        echo 'ITEMS = '$(jq '.' items.json) >> $GITHUB_ENV
+        echo 'ITEM_IDS = '$(jq  '.|map(.id)' items.json) >> $GITHUB_ENV
 
     # #Sets environment variables for this step. Replace `YOUR_TOKEN` with the name of the secret that contains your personal access token.
     - name: Set fields
