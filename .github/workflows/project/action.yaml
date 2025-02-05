@@ -84,9 +84,9 @@ runs:
     - name: Authenticate GitHub CLI
       shell: bash
       run: |
-        echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
+        echo "${{ inputs.token }}" | gh auth login --with-token
       env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GH_TOKEN: ${{ inputs.token }}
 
     - name: Get all items in status release
       shell: bash
