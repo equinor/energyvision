@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import { Flags } from '../../common/helpers/datasetHelpers'
 import { CookieType } from '../../types'
 import { checkCookieConsent } from '../../common/helpers/checkCookieConsent'
+import { useProd } from './useProd'
 
 //COOKIEBOT
 declare global {
@@ -15,6 +15,7 @@ declare global {
 function useConsentState(consentType: CookieType[], callback: () => void, cleanup?: () => void) {
   const [consent, changeConsent] = useState<boolean>(false)
   const router = useRouter()
+  const enableConsentLogic = useProd()
 
   useEffect(() => {
     const manageCookies = () => {
@@ -30,15 +31,12 @@ function useConsentState(consentType: CookieType[], callback: () => void, cleanu
 
   useEffect(() => {
     // Disable Radix.equinor.com due to SiteImprove (possibly) collecting wrong data
-    const host = window?.location.origin
-    const isLocalHost = host.includes('localhost')
-    const enableConsentLogic = !isLocalHost && (Flags.IS_DEV || !host.includes('radix.equinor.com'))
     if (enableConsentLogic && consent) {
       callback()
       return () => {
         if (cleanup) cleanup()
       }
     }
-  }, [router.asPath, consent, callback, cleanup])
+  }, [router.asPath, consent, callback, cleanup, enableConsentLogic])
 }
 export default useConsentState
