@@ -1,11 +1,11 @@
 import { getYear, getMonth, getDate, getHours, getMinutes, getSeconds } from 'date-fns'
-import { zonedTimeToUtc } from 'date-fns-tz'
 import { EventDateType } from '../../../web/types/index'
+import { zonedTimeToUtc } from 'date-fns-tz'
 
 export const toDateParts = (datetime: Date): number[] => {
   return [
     getYear(datetime),
-    getMonth(datetime),
+    getMonth(datetime) + 1,
     getDate(datetime),
     getHours(datetime),
     getMinutes(datetime),
@@ -16,7 +16,7 @@ export const toDateParts = (datetime: Date): number[] => {
 export const toUTCDateParts = (datetime: Date): number[] => {
   return [
     datetime.getUTCFullYear(),
-    datetime.getUTCMonth(),
+    datetime.getUTCMonth() + 1,
     datetime.getUTCDate(),
     datetime.getUTCHours(),
     datetime.getUTCMinutes(),
@@ -27,11 +27,9 @@ export const toUTCDateParts = (datetime: Date): number[] => {
 export const getEventDates = (eventDate: EventDateType | undefined) => {
   if (!eventDate) {
     console.warn('Missing eventDate object for event')
-    // This is indeed not optimal
     return { start: null, end: null }
   }
   const { date, startTime, endTime, timezone } = eventDate
-
   if (!date) return { start: null, end: null }
 
   const universalDate = date.replace(/-/g, '/')
