@@ -48,7 +48,7 @@ runs:
               items(first:50){
                nodes{
                 id
-                fieldValues{
+                fieldValues(first:20){
                 nodes{
                   ... on ProjectV2ItemFieldSingleSelectValue
                 {
