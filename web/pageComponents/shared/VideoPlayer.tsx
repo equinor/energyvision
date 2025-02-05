@@ -143,7 +143,7 @@ export const VideoJsComponent = ({
         className="object-cover"
         src={video.url}
         title={video.title}
-        poster={urlFor(video.thumbnail).width(w).height(h).url()}
+        poster={video.thumbnail && urlFor(video.thumbnail).width(w).height(h).url()}
         playsInline
         aspectRatio={designOptions.aspectRatio}
         useBrandTheme={designOptions?.useBrandTheme}
