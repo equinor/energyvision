@@ -107,11 +107,11 @@ const Header = ({ slugs, menuData, stickyMenuData }: HeaderProps) => {
   const intl = useIntl()
   const searchLabel = intl.formatMessage({ id: 'search', defaultMessage: 'Search' })
 
-  const anchorReference = stickyMenuData?.links.find((it) => it.type == 'anchorLinkReference')
-  const resourceLink = stickyMenuData?.links.find((it) => it.type == 'downloadableFile')
+  const anchorReference = stickyMenuData?.links && stickyMenuData?.links?.find((it) => it.type == 'anchorLinkReference')
+  const resourceLink = stickyMenuData?.links && stickyMenuData?.links?.find((it) => it.type == 'downloadableFile')
 
   const stickyMenuKey = (stickyMenuData?.background as keyof ColorKeyTokens) || ('white-100' as keyof ColorKeyTokens)
-  const twBg = colorKeyToUtilityMap[stickyMenuKey]?.background
+  const twBg = colorKeyToUtilityMap[stickyMenuKey]?.background ?? 'bg-white-100'
   const hasOnlySingleLink = !(anchorReference && resourceLink)
 
   return (
@@ -158,7 +158,7 @@ const Header = ({ slugs, menuData, stickyMenuData }: HeaderProps) => {
             </div>
           </Topbar.InnerContainer>
         </Topbar>
-        {stickyMenuData && (
+        {stickyMenuData && stickyMenuData?.links && (
           <div className={` hidden lg:block ${twBg} w-full shadow-top-bar z-40  px-layout-sm`}>
             <div className={`lg:grid grid-cols-3 max-w-[var(--topbar-innerMaxWidth)]  py-4 `}>
               <div className={`text-start font-medium text-md self-center ${hasOnlySingleLink ? 'col-span-2' : ''}`}>
