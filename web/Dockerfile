@@ -8,6 +8,7 @@ ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 ENV NODE_OPTIONS="--max_old_space_size=8192"
 RUN corepack enable
+RUN corepack prepare pnpm@8.5.1 --activate
 COPY . /app
 WORKDIR /app
 
