@@ -51,6 +51,7 @@ type CarouselProps = {
   autoRotation?: boolean
   hasSectionTitle?: boolean
   title?: PortableTextBlock[]
+  captionPositionUnderImage?: boolean
 } & Omit<HTMLAttributes<HTMLDivElement>, 'title'>
 
 const TRANSLATE_X_AMOUNT_LG = 1000
@@ -68,7 +69,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
     className = '',
     listClassName = '',
     hasSectionTitle = false,
-  },
+    captionPositionUnderImage},
   ref,
 ) {
   const CarouselTag = hasSectionTitle ? (`div` as ElementType) : (`section` as ElementType)
@@ -233,7 +234,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
     video: 'flex gap-3 lg:gap-12 w-full h-full overflow-y-hidden no-scrollbar',
     image: `${
       displayMode === 'single'
-        ? 'grid transition-transform ease-scroll delay-0 duration-[800ms]'
+        ? `grid transition-transform ease-scroll delay-0 duration-[800ms]`
         : 'flex gap-3 md:gap-8 w-full h-full overflow-y-hidden no-scrollbar'
     }`,
     event: `flex gap-3 lg:gap-6 w-full h-full overflow-y-hidden no-scrollbar`,
@@ -266,6 +267,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
             displayMode={displayMode}
             aria-label={ariaLabel}
             active={i === currentIndex}
+            captionPositionUnderImage={captionPositionUnderImage} 
             {...(variant === 'image' &&
               displayMode === 'single' && {
                 style: {
@@ -341,7 +343,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
         mx-auto
         ${
           variant === 'image' && displayMode === 'single'
-            ? 'overflow-hidden grid grid-flow-row'
+            ? 'grid grid-cols-1 grid-rows-auto carousel-top-bottom-grid-area'
             : 'px-6 lg:px-layout-sm flex flex-col-reverse max-w-viewport'
         }
         
@@ -353,13 +355,27 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
       <div
         role="group"
         aria-labelledby={controlsId}
-        className={`${
-          variant === 'image' && displayMode === 'single'
-            ? 'w-[var(--image-carousel-card-w-sm)] md:w-[var(--image-carousel-card-w-md)] lg:w-[var(--image-carousel-card-w-lg)] mx-auto col-start-1 col-end-1 row-start-2 row-end-2'
-            : ''
-        } pt-6 pb-2 ${items.length === 3 ? 'lg:hidden' : ''} flex ${
-          internalAutoRotation ? 'justify-between' : 'justify-end'
-        }`}
+        className={`
+          grid
+          grid-cols-[80px_auto_150px]
+          grid-rows-1
+          carousel-controls-grid-area
+          pt-6
+          lg:pt-2
+          pb-2
+          ${items.length === 3 ? 'lg:hidden' : ''}
+          ${internalAutoRotation ? 'justify-between' : 'justify-end'}
+          ${
+            variant === 'image' && displayMode === 'single'
+              ? `
+            mx-auto
+            [grid-area:top]
+            lg:[grid-area:bottom]
+            w-[var(--image-carousel-card-w-sm)] 
+            md:w-[var(--image-carousel-card-w-md)] 
+            lg:w-[var(--image-carousel-card-w-lg)]`
+              : ''
+          }`}
       >
         <div id={controlsId} className="sr-only">
           <FormattedMessage id="carousel_controls" defaultMessage="Carousel controls" />
@@ -374,9 +390,10 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
             }}
             paused={pauseAutoRotation}
             useTimer
+            className="[grid-area:left]"
           />
         )}
-        <div className="flex gap-3 items-center">
+        <div className="[grid-area:right] flex gap-3 items-center">
           <MediaButton
             title={`Go to previous`}
             aria-controls={carouselItemsId}

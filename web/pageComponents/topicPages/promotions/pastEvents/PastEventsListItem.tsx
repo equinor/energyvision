@@ -3,9 +3,7 @@ import { EventCardData } from '../../../../types/index'
 import { forwardRef, HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { getEventDates } from '../../../../common/helpers/dateUtilities'
-import { toPlainText } from '@portabletext/react'
-import { PortableTextBlock } from '@portabletext/types'
-import { FormattedDateParts, useIntl } from 'react-intl'
+import { FormattedDateParts } from 'react-intl'
 import { BaseLink } from '@core/Link'
 import { Icon } from '@equinor/eds-core-react'
 import { world } from '@equinor/eds-icons'
@@ -19,12 +17,8 @@ const PastEventsListItem = forwardRef<HTMLAnchorElement, PastEventsListItemProps
   { event, className = '', hasSectionTitle = true, ...rest },
   ref,
 ) {
-  const intl = useIntl()
-  const details = intl.formatMessage({ id: 'details', defaultMessage: 'Details' })
-
   const { title, eventDate, location, slug } = event
   const { start } = getEventDates(eventDate)
-  const plainTitle = title ? toPlainText(title as PortableTextBlock[]) : ''
 
   return (
     <BaseLink

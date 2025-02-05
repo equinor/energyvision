@@ -125,6 +125,15 @@
       clip-path var(--modal-transition-duration) var(--modal-transition-easing), display 0.7s allow-discrete,
       overlay 0.7s allow-discrete;
   }
+  /* Carousel */
+  .carousel-top-bottom-grid-area {
+    grid-template-areas:
+      'top'
+      'bottom';
+  }
+  .carousel-controls-grid-area {
+    grid-template-areas: 'left center right';
+  }
 }
 
 @layer utilities {

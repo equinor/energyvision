@@ -71,8 +71,16 @@ export default {
       name: 'items',
       description: 'Add images for the carousel',
       title: 'Carousel items',
-      of: [{ type: 'imageWithAltAndCaption' }],
+      of: [{ type: 'imageWithAltAndCaption' },
+           { type: 'carouselImage' }],
       validation: (Rule: Rule) => Rule.required().min(2),
+    },
+    {
+      type: 'boolean',
+      name: 'captionPositionUnderImage',
+      title: 'Position caption and credit under image',
+      description: 'Toggle to display caption and credit under the images.',
+      initialValue: false,
     },
     {
       type: 'number',
