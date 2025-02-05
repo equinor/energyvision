@@ -81,14 +81,15 @@ runs:
         echo 'ITEM_IDS ='$(jq -c '[.data.organization.projectV2.items.nodes[] | select(.status== "🚀 Release")| .id]' project_data.json) >> $GITHUB_ENV
         echo 'FIELDS ='$(jq -c '[.data.organization.projectV2.items.nodes[] | .fieldValues.nodes[] | .name]' project_data.json) >> $GITHUB_ENV
 
-    # - name: Get all items in status release
-    #   shell: bash
-    #   env:
-    #     GH_TOKEN: ${{ inputs.token }}
-    #   # Get all the items with status "🚀 Release"
-    #   run: |
-    #     gh api graphql -f query='
-    #     '
+    - name: Get all items in status release
+      shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.token }}
+      # Get all the items with status "🚀 Release"
+      run: |
+        gh project item-list --owner equinor 965 --format=json | jq '.items[] |
+         select(.status=="🚀 Release" and .content.type == "Issue") | {id: .id ,url :.content.url}' >>items.json
+        echo 'ITEMS = '$(jq -s '.' items.json) >> $GITHUB_ENV
 
     # #Sets environment variables for this step. Replace `YOUR_TOKEN` with the name of the secret that contains your personal access token.
     # - name: Set fields
