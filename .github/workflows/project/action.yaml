@@ -87,7 +87,7 @@ runs:
         GH_TOKEN: ${{ inputs.token }}
       # Get all the items with status "🚀 Release"
       run: |
-        gh project item-list 965 --owner equinor --format=json | jq '.items[] |
+        gh project item-list 965 --format=json | jq '.items[] |
          select(.status=="🚀 Release" and .content.type == "Issue") | {id: .id ,url :.content.url}' >>items.json
         echo 'ITEMS = '$(jq -s '.' items.json) >> $GITHUB_ENV
 
