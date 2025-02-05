@@ -26,4 +26,4 @@ jobs:
             - type: "section"
               text:
                 type: "mrkdwn"
-                text: ${{ env.DONE_OPTION_ID }}
+                text: ${{ env.ITEM_IDS }}
