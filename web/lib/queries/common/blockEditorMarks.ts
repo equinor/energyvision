@@ -16,7 +16,7 @@ const referenceFields = /* groq */ `
 `
 
 const markDefs = /* groq */ `
-  markDefs[]{
+  "markDefs": coalesce(markDefs[]{
       ...,
       _type == "internalLink" => {
         "internalLink": select(
@@ -25,7 +25,7 @@ const markDefs = /* groq */ `
           reference->${referenceFields},
         )
     },
-    }
+    },[])
 `
 
 export default markDefs
