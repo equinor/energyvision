@@ -24,6 +24,7 @@ runs:
         PROJECT_NUMBER: 965
       # Uses [GitHub CLI](https://cli.github.com/manual/) to query the API for the ID of the project and return the name and ID of the first 20 fields in the project. `fields` returns a union and the query uses inline fragments (`... on`) to return information about any `ProjectV2Field` and `ProjectV2SingleSelectField` fields. The response is stored in a file called `project_data.json`.
       run: |
+        echo "ORGANIZATION: $ORGANIZATION"
         gh api graphql -f query='
             query($org: String!, $number: Int!) {
             organization(login: $org){
@@ -98,6 +99,7 @@ runs:
         GH_TOKEN: ${{ inputs.token }}
         RAW_ITEMS: ${{ env.RAW_ITEMS }}
         OUT: ${{ steps.items.outputs.RAW_ITEMS_OUTPUT}}
+
       # Sets the value of the `Status` field to `✅  Done`.
       run: |
         IFS=: read -r -a arr <<< "$RAW_ITEMS"
