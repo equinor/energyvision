@@ -98,7 +98,7 @@ runs:
       run: |
         for id in $ITEM_IDS
         do
-        gh api graphql -f query='
+        GH_DEBUG=api gh api graphql -f query='
           mutation (
             $project: ID!
             $item: ID!
