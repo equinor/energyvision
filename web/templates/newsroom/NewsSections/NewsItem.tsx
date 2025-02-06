@@ -1,4 +1,4 @@
-import { FormattedDate } from '@components/FormattedDateTime'
+import { FormattedDate, FormattedTime } from '@components/FormattedDateTime'
 import { forwardRef, HTMLAttributes } from 'react'
 import { BaseLink } from '@core/Link'
 import { Typography } from '@core/Typography'
@@ -24,7 +24,20 @@ const NewsItem = forwardRef<HTMLLIElement, NewsListItemProps>(function NewsItem(
       <BaseLink href={slug} className="group flex justify-between gap-4 lg:gap-6">
         <div className="max-w-[65%]">
           {publishDateTime && (
-            <FormattedDate datetime={publishDateTime} uppercase className="text-2xs font-normal leading-normal pb-1" />
+            <div>
+              <FormattedDate
+                datetime={publishDateTime}
+                uppercase
+                className="text-2xs font-normal leading-normal pb-1"
+              />
+              <span className="mx-2 text-2xs font-normal leading-normal pb-1">|</span>
+              <FormattedTime
+                small
+                timezone
+                datetime={publishDateTime}
+                className="text-2xs font-normal leading-normal pb-1"
+              />
+            </div>
           )}
           {title && (
             <Typography as="h2" variant="base" className="max-w-text text-pretty group-hover:underline">

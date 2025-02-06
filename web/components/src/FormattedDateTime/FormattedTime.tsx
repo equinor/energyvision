@@ -1,7 +1,6 @@
 import { HTMLAttributes } from 'react'
 import { FormattedTime as ReactIntlTime } from 'react-intl'
 import { StyledDate, TimeIcon } from './shared'
-import styled from 'styled-components'
 
 export type FormattedTimeProps = {
   datetime: string
@@ -9,11 +8,6 @@ export type FormattedTimeProps = {
   timezone?: boolean
   small?: boolean
 } & HTMLAttributes<HTMLSpanElement>
-
-const SmallText = styled.span<{ small?: boolean }>`
-  font-size: ${(props) => (props.small ? 'var(--typeScale-0)' : 'var(--typeScale-1)')};
-  margin-top: ${(props) => (props.small ? 'var(--space-3)' : '0')};
-`
 
 export const FormattedTime = ({
   datetime,
@@ -26,7 +20,7 @@ export const FormattedTime = ({
   return (
     <StyledDate {...rest}>
       {icon && <TimeIcon />}
-      <SmallText small={small}>
+      <span className={`${small ? 'text-2xs mt-1' : 'text-xs mt-0'}`}>
         <time suppressHydrationWarning dateTime={datetime}>
           <ReactIntlTime value={date} />
         </time>
@@ -35,7 +29,7 @@ export const FormattedTime = ({
             ({date.toLocaleTimeString('es-NO', { timeZoneName: 'short' }).split(' ')[1]})
           </span>
         )}
-      </SmallText>
+      </span>
     </StyledDate>
   )
 }
