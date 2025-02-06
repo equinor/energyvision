@@ -78,12 +78,15 @@ runs:
         echo 'PROJECT_ID='$(jq '.data.organization.projectV2.id' project_data.json) >> $GITHUB_ENV
         echo 'STATUS_FIELD_ID='$(jq '.data.organization.projectV2.fields.nodes[] | select(.name== "Status") | .id' project_data.json) >> $GITHUB_ENV
         echo 'DONE_OPTION_ID='$(jq '.data.organization.projectV2.fields.nodes[] | select(.name== "Status") | .options[] | select(.name=="✅  Done") |.id' project_data.json) >> $GITHUB_ENV
+        echo "done id : $DONE_OPTION_ID"
+        echo $PROJECT_ID
 
     - name: Get all items in status release
       id: items
       shell: bash
       env:
         GH_TOKEN: ${{ inputs.token }}
+        ORGANIZATION: ${{ env.ORGANIZATION }}
       # Get all the items with status "🚀 Release"
       run: |
         gh project item-list 965 --owner equinor --format=json | jq '.items[] | select(.status=="🚀 Release" and .content.type == "Issue") | {id: .id ,url :.content.url}' >>items.json
