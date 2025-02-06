@@ -97,10 +97,6 @@ runs:
 
       # Sets the value of the `Status` field to `✅  Done`.
       run: |
-        for id in $RAW_ITEMS 
-        do 
-        echo "$id --"
-        done
         for id in $(echo "$ITEM_IDS" | jq -r '.[]')
         do
         echo "Moving $id"
