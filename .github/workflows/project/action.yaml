@@ -99,7 +99,7 @@ runs:
       run: |
         for id in $RAW_ITEMS 
         do 
-        exho "$id"
+        echo "$id --"
         done
         for id in $(echo "$ITEM_IDS" | jq -r '.')
         do
