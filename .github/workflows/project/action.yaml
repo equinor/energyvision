@@ -96,8 +96,9 @@ runs:
 
       # Sets the value of the `Status` field to `✅  Done`.
       run: |
-        for id in $ITEM_IDS
+        for id in $(echo "$ITEM_IDS" | jq -r '.')
         do
+        echo "Moving $id"
         GH_DEBUG=api gh api graphql -f query='
           mutation (
             $project: ID!
