@@ -51,18 +51,18 @@ export default {
       description: 'You can override the hero image as the SoMe image by uploading another image here.',
       fieldset: 'metadata',
     },
-    {
-      name: 'stickyMenu',
-      title: 'Sticky Menu',
-      type: 'stickyMenu',
-      fieldset: 'stickymenu',
-    },
     ...sharedHeroFields,
     {
       title: 'Is Campain',
       name: 'isCampaign',
       description: 'Set this to true if the page should be treated as campaign. the header title h1 will be hidden.',
       type: 'boolean',
+    },
+    {
+      name: 'stickyMenu',
+      title: 'Sticky Menu',
+      type: 'stickyMenu',
+      fieldset: 'stickymenu',
     },
     {
       name: 'content',
