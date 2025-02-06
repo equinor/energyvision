@@ -97,7 +97,7 @@ runs:
 
       # Sets the value of the `Status` field to `✅  Done`.
       run: |
-        for item in $(echo "$ITEM_IDS" | jq -r '.[]'); do
+        echo "$ITEM_IDS" | jq -r '.[]' | while read item; do
           echo "Processing ITEM_ID: $item"
         done
       # run: |

@@ -8,6 +8,8 @@ jobs:
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
+        with:
+          ref: padms/2755
 
       - name: 'Get list'
         id: 'get-list'
