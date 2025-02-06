@@ -109,7 +109,9 @@ export const Topbar = forwardRef<HTMLDivElement, TopbarProps>(function Topbar(
       {showSticky && (
         <StickyMenu
           stickyMenuData={stickyMenuData}
-          className={`${isVisible ? 'top-[calc(var(--topbar-height)-1px)] pt-2' : 'top-0'}`}
+          className={`${
+            isVisible ? 'top-[calc(var(--topbar-height)-5px)] lg:top-[calc(var(--topbar-height)-2px)] pt-2' : 'top-0'
+          }`}
         />
       )}
     </>
