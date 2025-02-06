@@ -1,7 +1,6 @@
 import { text_field } from '@equinor/eds-icons'
 import { defineField, type PortableTextBlock, type Rule } from 'sanity'
 import { EdsIcon } from '../../../icons'
-import { configureBlockContent } from '../../editors/blockContentType'
 import { capitalizeFirstLetter } from '../../../helpers/formatters'
 
 export type TabsItem = {
@@ -9,22 +8,6 @@ export type TabsItem = {
   title?: string
   content?: PortableTextBlock[]
 }
-
-const titleContentType = configureBlockContent({
-  h2: false,
-  h3: false,
-  h4: false,
-  attachment: false,
-  internalLink: false,
-  externalLink: false,
-  lists: false,
-})
-const blockContentType = configureBlockContent({
-  h2: false,
-  h3: false,
-  h4: false,
-  attachment: false,
-})
 
 export default {
   title: 'Tabs item',

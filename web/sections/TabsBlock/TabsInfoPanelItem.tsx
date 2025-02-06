@@ -1,5 +1,4 @@
 import { twMerge } from 'tailwind-merge'
-import { getColorForTabsTheme } from './tabThemes'
 import { forwardRef } from 'react'
 import { PortableTextBlock } from '@portabletext/types'
 import { ResourceLink } from '@core/Link'
@@ -30,14 +29,14 @@ const TabsInfoPanelItem = forwardRef<HTMLDivElement, TabsInfoPanelItemProps>(fun
       className={twMerge(
         `relative ${
           imageVariant === 'sideImage'
-            ? 'flex flex-col-reverse lg:grid lg:grid-cols-2 gap-12 items-center px-16 py-12'
+            ? 'flex flex-col-reverse lg:grid lg:grid-cols-2 gap-12 items-start px-16 py-12'
             : ''
         }`,
         className,
       )}
     >
       {image?.asset && imageVariant === 'backgroundImage' && (
-        <Image aria-hidden image={image} fill className="z-[1] object-bottom" />
+        <Image aria-hidden image={image} fill className="z-[1] object-center" />
       )}
       <div
         className={`relative 
@@ -46,7 +45,7 @@ const TabsInfoPanelItem = forwardRef<HTMLDivElement, TabsInfoPanelItemProps>(fun
           ${
             imageVariant === 'sideImage'
               ? ''
-              : 'lg:grid lg:grid-cols-2 px-8 lg:px-12 pt-12 pb-16 lg:pt-16 lg:pb-24 z-10'
+              : 'lg:grid lg:grid-cols-2 px-8 lg:px-12 pt-12 pb-16 lg:pt-16 lg:pb-40 z-10'
           }
            gap-x-12 lg:gap-x-20 gap-y-12 `}
       >

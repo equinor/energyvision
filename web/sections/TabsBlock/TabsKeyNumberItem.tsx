@@ -17,12 +17,16 @@ const TabsKeyNumberItem = forwardRef<HTMLDivElement, TabsKeyNumberItemProps>(fun
   const { cardBackground } = getColorForTabsTheme(theme ?? 0)
 
   return (
-    <div ref={ref} className={twMerge(`w-full h-full ${cardBackground} rounded-md px-4 lg:px-6 py-4`, className)}>
-      <div className="flex gap-x-2 gap-y-1 items-baseline text-pretty">
-        <div className="font-semibold text-lg lg:text-2xl">{keyNumber}</div>
-        {unit && <div className=" text-md lg:text-lg">{unit}</div>}
-      </div>
-      {description && <div className="pt-2 text-pretty">{description}</div>}
+    <div
+      ref={ref}
+      className={twMerge(
+        `w-full h-full ${cardBackground} grid grid-cols-1 grid-rows-[max-content_25%_auto] items-stretch rounded-md px-4 lg:px-6 py-6`,
+        className,
+      )}
+    >
+      <div className="text-2xl leading-none">{keyNumber}</div>
+      <div className="text-base">{unit ? unit : ''}</div>
+      {description && <div className="pt-2 text-wrap">{description}</div>}
     </div>
   )
 })

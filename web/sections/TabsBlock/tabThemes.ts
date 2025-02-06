@@ -9,12 +9,12 @@ export const getColorForTabsTheme = (pattern?: number): TabsThemeColors => {
     case 0:
       return {
         background: 'bg-mist-blue-100',
-        cardBackground: 'bg-blue-50',
+        cardBackground: 'bg-white-100',
       }
     case 1:
       return {
-        background: 'bg-orange-50',
-        cardBackground: 'bg-sand-and-summer-50',
+        background: 'bg-sand-and-summer-50',
+        cardBackground: 'bg-orange-50',
       }
     case 2:
       return {

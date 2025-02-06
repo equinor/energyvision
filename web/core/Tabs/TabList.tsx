@@ -12,7 +12,12 @@ export const TabList = forwardRef<HTMLDivElement, TabListProps>(function TabList
   ref,
 ) {
   return (
-    <RadixTabs.List ref={ref} className={envisTwMerge(`flex flex-wrap`, className)} aria-label={ariaLabel} {...rest}>
+    <RadixTabs.List
+      ref={ref}
+      className={envisTwMerge(`flex flex-wrap transition-all`, className)}
+      aria-label={ariaLabel}
+      {...rest}
+    >
       {children}
     </RadixTabs.List>
   )
