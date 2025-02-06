@@ -25,6 +25,58 @@ export type ResourceLinkProps = {
   showExtensionIcon?: boolean
 } & Omit<BaseLinkProps, 'type'>
 
+export const iconRotation: Record<string, string> = {
+  externalUrl: '-rotate-45',
+  downloadableFile: 'rotate-90',
+  downloadableImage: 'rotate-90',
+  internalUrl: '',
+}
+
+export const getArrowAnimation = (type: LinkType) => {
+  switch (type) {
+    case 'downloadableFile':
+    case 'downloadableImage':
+      return 'group-hover:translate-y-0.5'
+    case 'anchorLink':
+      return 'translate-y-0.5 group-hover:translate-y-2'
+    case 'icsLink':
+      return 'translate-y-0.5'
+    default:
+      return 'translate-y-0.5 group-hover:translate-x-2'
+  }
+}
+
+export const getArrowElement = (type: LinkType, iconClassName: string) => {
+  const iconClassNames = envisTwMerge(
+    `size-arrow-right
+    text-energy-red-100
+    dark:text-white-100
+    justify-self-end
+    ${iconRotation[type]}
+    ${getArrowAnimation(type)}
+    transition-all
+    duration-300
+  `,
+    iconClassName,
+  )
+  const marginClassName = `ml-6 xl:ml-8`
+
+  switch (type) {
+    case 'downloadableFile':
+    case 'downloadableImage':
+      return (
+        <div className={`flex flex-col px-1 ${marginClassName} translate-y-[1px]`}>
+          <ArrowRight className={iconClassNames} />
+          <div className="bg-energy-red-100 h-[2px] w-full" />
+        </div>
+      )
+    case 'icsLink':
+      return <TransformableIcon iconData={add} className={`${marginClassName} ${iconClassNames}`} />
+    default:
+      return <ArrowRight className={`${marginClassName} ${iconClassNames}`} />
+  }
+}
+
 export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(function ResourceLink(
   {
     variant = 'default',
@@ -41,58 +93,6 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
   },
   ref,
 ) {
-  const iconRotation: Record<string, string> = {
-    externalUrl: '-rotate-45',
-    downloadableFile: 'rotate-90',
-    downloadableImage: 'rotate-90',
-    internalUrl: '',
-  }
-
-  const getArrowAnimation = (type: LinkType) => {
-    switch (type) {
-      case 'downloadableFile':
-      case 'downloadableImage':
-        return 'group-hover:translate-y-0.5'
-      case 'anchorLink':
-        return 'translate-y-0.5 group-hover:translate-y-2'
-      case 'icsLink':
-        return 'translate-y-0.5'
-      default:
-        return 'translate-y-0.5 group-hover:translate-x-2'
-    }
-  }
-
-  const getArrowElement = (type: LinkType, iconClassName: string) => {
-    const iconClassNames = envisTwMerge(
-      `size-arrow-right
-      text-energy-red-100
-      dark:text-white-100
-      justify-self-end
-      ${iconRotation[type]}
-      ${getArrowAnimation(type)}
-      transition-all
-      duration-300
-    `,
-      iconClassName,
-    )
-    const marginClassName = `ml-6 xl:ml-8`
-
-    switch (type) {
-      case 'downloadableFile':
-      case 'downloadableImage':
-        return (
-          <div className={`flex flex-col px-1 ${marginClassName} translate-y-[1px]`}>
-            <ArrowRight className={iconClassNames} />
-            <div className="bg-energy-red-100 h-[2px] w-full" />
-          </div>
-        )
-      case 'icsLink':
-        return <TransformableIcon iconData={add} className={`${marginClassName} ${iconClassNames}`} />
-      default:
-        return <ArrowRight className={`${marginClassName} ${iconClassNames}`} />
-    }
-  }
-
   const variantClassName: Partial<Record<Variants, string>> = {
     default: 'w-full pt-3',
     fit: 'w-fit pt-3',

@@ -5,7 +5,7 @@ import { zonedTimeToUtc } from 'date-fns-tz'
 export const toDateParts = (datetime: Date): number[] => {
   return [
     getYear(datetime),
-    getMonth(datetime),
+    getMonth(datetime) + 1,
     getDate(datetime),
     getHours(datetime),
     getMinutes(datetime),
@@ -16,7 +16,7 @@ export const toDateParts = (datetime: Date): number[] => {
 export const toUTCDateParts = (datetime: Date): number[] => {
   return [
     datetime.getUTCFullYear(),
-    datetime.getUTCMonth(),
+    datetime.getUTCMonth() + 1,
     datetime.getUTCDate(),
     datetime.getUTCHours(),
     datetime.getUTCMinutes(),
