@@ -25,7 +25,7 @@ import { schemaTypes } from './schemas'
 import { initialValueTemplates } from './initialValueTemplates'
 import { CharCounterEditor } from './schemas/components/CharCounterEditor'
 import { DeleteTranslationAction } from './actions/customDelete/DeleteTranslationAction'
-import { documentInternationalization } from '@equinor/document-internationalization'
+import { documentInternationalization } from '@sanity/document-internationalization'
 import { FotowareAssetSource } from './plugins/asset-source-fotoware'
 import { BrandmasterAssetSource } from './plugins/asset-source-brandmaster'
 import { SetAndPublishAction } from './actions/CustomPublishAction'
@@ -41,6 +41,7 @@ import { LangBadge } from './schemas/components/LangBadge'
 import './customStyles.css'
 import { partialStudioTheme } from './studioTheme'
 import { copyAction } from './actions/fieldActions/CustomCopyFieldAction'
+import CustomDocumentInternationalizationMenu from './schemas/components/CustomDocumentInternationalizationMenu'
 
 export const customTheme = buildLegacyTheme(partialStudioTheme)
 
@@ -114,6 +115,16 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret = fals
     templates: (prev: Template<any, any>[]) => [...filterTemplates(prev), ...initialValueTemplates],
   },
   document: {
+    unstable_languageFilter: (prev: DocumentActionComponent[], ctx: any) => {
+      const { schemaType, documentId } = ctx
+      return schemaTypes.map((it) => it.name).includes(schemaType) && documentId
+        ? [
+            (props: any) => {
+              return CustomDocumentInternationalizationMenu({ ...props, documentId })
+            },
+          ]
+        : prev
+    },
     actions: (prev: DocumentActionComponent[], context: any) => {
       if (isSecret) prev.push(ResetCrossDatasetToken)
       if (i18n.schemaTypes.includes(context.schemaType)) prev.push(DeleteTranslationAction)
