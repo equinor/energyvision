@@ -79,6 +79,7 @@ runs:
         echo 'DONE_OPTION_ID='$(jq '.data.organization.projectV2.fields.nodes[] | select(.name== "Status") | .options[] | select(.name=="✅  Done") |.id' project_data.json) >> $GITHUB_ENV
 
     - name: Get all items in status release
+      id: items
       shell: bash
       env:
         GH_TOKEN: ${{ inputs.token }}
@@ -88,13 +89,15 @@ runs:
         echo 'ITEMS = '$(jq -s '.' items.json) >> $GITHUB_ENV
         echo 'ITEM_IDS = '$(jq -s '[.[]|.id]' items.json) >> $GITHUB_ENV
         echo 'RAW_ITEMS = '$(jq '.|.id' items.json) >> $GITHUB_ENV
+        echo 'RAW_ITEMS_OUTPUT = ' $(jq '.|.id' items.json) >> $GITHUB_OUTPUT
 
     # #Sets environment variables for this step. Replace `YOUR_TOKEN` with the name of the secret that contains your personal access token.
     - name: Set fields
       shell: bash
       env:
         GH_TOKEN: ${{ inputs.token }}
-
+        RAW_ITEMS: ${{ env.RAW_ITEMS }}
+        OUT: ${{ steps.items.outputs.RAW_ITEMS_OUTPUT}}
       # Sets the value of the `Status` field to `✅  Done`.
       run: |
         IFS=: read -r -a arr <<< "$RAW_ITEMS"
@@ -104,6 +107,7 @@ runs:
         echo ${{ env.RAW_ITEMS}}
         echo "${{ env.RAW_ITEMS}}"
         echo "ORGANIZATION: $ORGANIZATION"
+        echo "OUTPUT : $OUT"
 
         for id in "${arr[@]}"; do
          echo "Moving $id"
@@ -126,5 +130,5 @@ runs:
                  id
                  }
              }
-           }' -f project=$PROJECT_ID -f item=$id -f status_field=$STATUS_FIELD_ID -f status_value=${{ env.DONE_OPTION_ID }} --silent
+           }' -f project=$PROJECT_ID -f item=$id -f status_field=$STATUS_FIELD_ID -f status_value=$DONE_OPTION_ID --silent
         done
