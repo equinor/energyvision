@@ -19,6 +19,7 @@ export const Topbar = forwardRef<HTMLDivElement, TopbarProps>(function Topbar(
   const [prevScrollPos, setPrevScrollPos] = useState(0)
   const [isVisible, setIsVisible] = useState(true)
   const [hasDropShadow, setHasDropShadow] = useState(false)
+  const showSticky = stickyMenuData && stickyMenuData?.links && stickyMenuData?.links?.length > 0
 
   useEffect(() => {
     if (topbarRef && topbarRef?.current) {
@@ -92,7 +93,7 @@ export const Topbar = forwardRef<HTMLDivElement, TopbarProps>(function Topbar(
         role="navigation"
         className={`
           w-screen 
-          ${stickyMenuData ? 'sticky' : 'fixed'} 
+          ${showSticky ? 'sticky' : 'fixed'} 
           bg-white-100
           z-40
           animate-height
@@ -105,7 +106,7 @@ export const Topbar = forwardRef<HTMLDivElement, TopbarProps>(function Topbar(
       >
         <div className="px-layout-sm max-w-viewport mx-auto flex items-center justify-between py-4">{children}</div>
       </nav>
-      {stickyMenuData && (
+      {showSticky && (
         <StickyMenu
           stickyMenuData={stickyMenuData}
           className={`${isVisible ? 'top-[calc(var(--topbar-height)-1px)] pt-2' : 'top-0'}`}
