@@ -32,20 +32,16 @@ export const getEventDates = (eventDate: EventDateType | undefined) => {
   const { date, startTime, endTime, timezone } = eventDate
   if (!date) return { start: null, end: null }
 
-  const universalDate = date.replace(/-/g, '/')
-
   if (startTime && endTime) {
-    const start = zonedTimeToUtc(new Date(universalDate + ' ' + startTime), timezone).toString()
-    const end = zonedTimeToUtc(new Date(universalDate + ' ' + endTime), timezone).toString()
-
-    return { start: start, end: end }
+    const start = zonedTimeToUtc(new Date(`${date}T${startTime}`), timezone).toISOString()
+    const end = zonedTimeToUtc(new Date(`${date}T${endTime}`), timezone).toISOString()
+    return { start, end }
   } else {
     const [YYYY, MM, DD] = date.split('-').map(Number)
     const start = new Date()
-    start.setDate(DD)
-    start.setMonth(MM - 1)
-    start.setFullYear(YYYY)
+    start.setFullYear(YYYY, MM - 1, DD) 
     start.setHours(12, 0, 0, 0)
-    return { start: start.toString(), end: null }
+
+    return { start: start.toISOString(), end: null }
   }
 }
