@@ -103,7 +103,7 @@ runs:
         echo "$RAW_ITEMS"
         echo ${{ env.RAW_ITEMS}}
         echo "${{ env.RAW_ITEMS}}"
-        echo $ORGANIZATION
+        echo "ORGANIZATION: $ORGANIZATION"
 
         for id in "${arr[@]}"; do
          echo "Moving $id"
