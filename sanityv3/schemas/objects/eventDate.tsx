@@ -22,12 +22,8 @@ export default {
   fields: [
     {
       name: 'date',
-      type: 'date',
+      type: 'datetime',
       title: 'Date',
-      description: 'DD-MM-YYYY',
-      options: {
-        dateFormat: 'DD-MM-YYYY',
-      },
       validation: (Rule: Rule) => Rule.required(),
     },
     {
