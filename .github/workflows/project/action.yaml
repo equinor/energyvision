@@ -101,7 +101,7 @@ runs:
         do 
         echo "$id --"
         done
-        for id in $(echo "$ITEM_IDS" | jq -r '.')
+        for id in $(echo "$ITEM_IDS" | jq -r '.[]')
         do
         echo "Moving $id"
         GH_DEBUG=api gh api graphql -f query='
