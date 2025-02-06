@@ -97,8 +97,8 @@ runs:
 
       # Sets the value of the `Status` field to `✅  Done`.
       run: |
-        echo $ITEM_IDS
-        echo $RAW_ITEMS 
+        echo " ${{ env.ITEM_IDS}} "
+        echo ${{ env.RAW_ITEMS }}
         for item in $RAW_ITEMS; do
          echo "$item running...";
         done 
