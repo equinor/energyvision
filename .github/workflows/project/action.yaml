@@ -97,7 +97,8 @@ runs:
 
       # Sets the value of the `Status` field to `✅  Done`.
       run: |
-        for id in "${RAW_ITEMS[@]}"; do
+        declare -a arr=($RAW_TEMS)
+        for id in "${arr[@]}"; do
          echo "Moving $id"
          GH_DEBUG=api gh api graphql -f query='
            mutation (
