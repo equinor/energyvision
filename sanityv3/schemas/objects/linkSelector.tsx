@@ -78,7 +78,7 @@ export const getLinkSelectorFields = (labelFieldset?: string, flag?: string) => 
           if (value?._ref) {
             const perspective = getVersionFromId(document._id)
             // use experimental version for now until release perspective is available
-            const referenceLang = await context.getClient({ apiVersion: apiVersion }).fetch(
+            const referenceLang = await context.getClient({ apiVersion: 'vX' }).fetch(
               /* groq */ `*[_id == $id][0]{"lang": coalesce(content->lang, lang)}.lang`,
               {
                 id: value._ref,
