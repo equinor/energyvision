@@ -355,7 +355,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
         aria-labelledby={controlsId}
         className={`${
           variant === 'image' && displayMode === 'single'
-            ? 'w-[var(--image-carousel-card-w-sm)] md:w-[var(--image-carousel-card-w-md)] lg:w-[var(--image-carousel-card-w-lg)] mx-auto col-start-1 col-end-1 row-start-2 row-end-2'
+            ? 'w-image-carousel-card-w-sm md:w-image-carousel-card-w-md lg:w-image-carousel-card-w-lg mx-auto col-start-1 col-end-1 row-start-2 row-end-2'
             : ''
         } pt-6 pb-2 ${items.length === 3 ? 'lg:hidden' : ''} flex ${
           internalAutoRotation ? 'justify-between' : 'justify-end'

@@ -209,9 +209,9 @@ module.exports = {
         '2xl': 'calc((40 / 16) * theme(fontSize.base))',
         '3xl': 'calc((56 / 16) * theme(fontSize.base))',
         '4xl': 'calc((96 / 16) * theme(fontSize.base))',
-        'image-carousel-card-sm': '275px',
-        'image-carousel-card-md': '692px',
-        'image-carousel-card-lg': '980px',
+        'image-carousel-card-w-sm': '275px',
+        'image-carousel-card-w-md': '692px',
+        'image-carousel-card-w-lg': '980px',
       }),
       fontSize: {
         //--typeScale-00

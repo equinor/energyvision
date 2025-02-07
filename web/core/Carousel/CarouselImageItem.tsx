@@ -43,7 +43,7 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
         ${
           displayMode === 'scroll'
             ? 'w-[80%] snap-center scroll-ml-6'
-            : 'w-[var(--image-carousel-card-w-sm)] md:w-[var(--image-carousel-card-w-md)] lg:w-[var(--image-carousel-card-w-lg)] ms-2 me-2 col-start-1 col-end-1 row-start-1 row-end-1'
+            : 'w-image-carousel-card-w-sm md:w-image-carousel-card-w-md lg:w-image-carousel-card-w-lg ms-2 me-2 col-start-1 col-end-1 row-start-1 row-end-1'
         }
         `,
         className,
