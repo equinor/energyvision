@@ -52,6 +52,8 @@ export const getArrowElement = (type: LinkType, iconClassName: string) => {
     text-energy-red-100
     dark:text-white-100
     justify-self-end
+    min-h-arrow-right
+    min-w-arrow-right
     ${iconRotation[type]}
     ${getArrowAnimation(type)}
     transition-all
@@ -127,7 +129,7 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
       case 'downloadableFile':
         return extension && extension.toUpperCase() === 'PDF' && showExtensionIcon ? (
           <>
-            <PiFilePdfThin size={24} className="mr-2" />
+            <PiFilePdfThin size={24} className="mr-2 min-w-6 min-h-6" />
             <div
               className={textClassNames}
               {...(ariaHideText && {
@@ -145,6 +147,9 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
             })}
           >
             {children}
+            {(extension && !showExtensionIcon) || (extension && extension.toUpperCase() !== 'PDF' && showExtensionIcon)
+              ? `(${extension.toUpperCase()})`
+              : ''}
           </div>
         )
       case 'icsLink':
@@ -170,6 +175,7 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
             })}
           >
             {children}
+            {extension ? `(${extension.toUpperCase()})` : ''}
           </div>
         )
     }
@@ -178,14 +184,14 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
     <BaseLink className={classNames} type={type} ref={ref} href={href} {...rest}>
       <div
         className={envisTwMerge(
-          `h-full flex
+          `h-full
+          w-inherit flex
           justify-start
         items-center
         ${contentVariantClassName[variant]}`,
         )}
       >
         {getContentElements()}
-        {extension && !showExtensionIcon ? `(${extension.toUpperCase()})` : ''}
         {getArrowElement(type, iconClassName)}
       </div>
       <div className="w-[0%] h-[1px] bg-grey-40 transition-all duration-300 group-hover:w-full" />

@@ -22,8 +22,8 @@ import { footerQuery } from '../../../lib/queries/footer'
 import { menuQuery as globalMenuQuery } from '../../../lib/queries/menu'
 import { simpleMenuQuery } from '../../../lib/queries/simpleMenu'
 import { getClient } from '../../../lib/sanity.server'
-import Header from '../../../pageComponents/shared/Header'
-import { Layout } from '../../../pageComponents/shared/Layout'
+import Header from '../../../sections/Header/Header'
+import { Layout } from '../../../sections/Layout/Layout'
 import type { MenuData, SimpleMenuData } from '../../../types/index'
 
 const { publicRuntimeConfig } = getConfig()

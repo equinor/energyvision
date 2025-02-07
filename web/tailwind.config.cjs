@@ -209,6 +209,7 @@ module.exports = {
         '2xl': 'calc((40 / 16) * theme(fontSize.base))',
         '3xl': 'calc((56 / 16) * theme(fontSize.base))',
         '4xl': 'calc((96 / 16) * theme(fontSize.base))',
+        topbar: '85px',
       }),
       fontSize: {
         //--typeScale-00
@@ -267,6 +268,10 @@ module.exports = {
       },
       minWidth: {
         viewport: '375',
+        'arrow-right': '1.58rem',
+      },
+      minHeight: {
+        'arrow-right': '1.58rem',
       },
       borderRadius: {
         xs: '0.1rem',
