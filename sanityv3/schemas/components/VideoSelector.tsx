@@ -42,14 +42,14 @@ const VideoSelector = forwardRef(function VideoSelector(
     setContainer(document.createElement('div'))
   }, [])
 
-  const closeModal = () => {
-    newWindow?.current?.close()
-    window.removeEventListener('message', handleMediaBankEvent)
-  }
-
   const handleMediaBankEvent = useCallback(
     async (event: MessageEvent) => {
       if (!event || !event.data || event.origin !== MEDIABANK_DOMAIN) return false
+
+      const closeModal = () => {
+        newWindow?.current?.close()
+        window.removeEventListener('message', handleMediaBankEvent)
+      }
 
       const message = JSON.parse(event.data)
 

@@ -1,16 +1,16 @@
 import { link } from '@equinor/eds-icons'
-import { getVersionFromId, isDraftPerspective, type Reference, type Rule, type ValidationContext } from 'sanity'
+import { getVersionFromId, type Reference, type Rule, type ValidationContext } from 'sanity'
 import { filterByPages, filterByPagesInOtherLanguages } from '../../helpers/referenceFilters'
 import { EdsIcon } from '../../icons'
 import { Flags } from '../../src/lib/datasetHelpers'
 import routes from '../routes'
 import { validateInternalOrExternalUrl } from '../validations/validateInternalOrExternalUrl'
 import { AnchorLinkDescription } from './anchorReferenceField'
-// eslint-disable-next-line import/no-unresolved
 import { defaultLanguage } from '../../languages'
 import { apiVersion } from '../../sanity.client'
 import { warnHttpOrNotValidSlugExternal } from '../validations/validateSlug'
-import { ClientPerspective, ReleaseId } from '@sanity/client'
+// eslint-disable-next-line import/namespace
+import { ClientPerspective } from '@sanity/client'
 
 export type ReferenceTarget = {
   type: string
@@ -78,12 +78,12 @@ export const getLinkSelectorFields = (labelFieldset?: string, flag?: string) => 
           if (value?._ref) {
             const perspective = getVersionFromId(document._id)
             // use experimental version for now until release perspective is available
-            const referenceLang = await context.getClient({ apiVersion: 'vX' }).fetch(
+            const referenceLang = await context.getClient({ apiVersion: apiVersion }).fetch(
               /* groq */ `*[_id == $id][0]{"lang": coalesce(content->lang, lang)}.lang`,
               {
                 id: value._ref,
               },
-              { perspective: perspective ? (Array(perspective) as ClientPerspective) : undefined },
+              { perspective: perspective ? (Array(perspective) as unknown as ClientPerspective) : undefined },
             )
             if (document.lang ? document.lang !== referenceLang : defaultLanguage.name !== referenceLang)
               return 'Reference must have the same language as the document'

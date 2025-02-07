@@ -141,12 +141,6 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret = fals
     unstable_fieldActions: (previous: DocumentFieldAction[]) => {
       return previous.map((it) => (it.name === 'copyField' ? copyAction : it))
     },
-    releases: {
-      enabled: true,
-    },
-    scheduledPublishing: {
-      enabled: false,
-    },
   },
   auth: createAuthStore({
     projectId: projectIdParam,
@@ -162,6 +156,12 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret = fals
       },
     ],
   }),
+  releases: {
+    enabled: true,
+  },
+  scheduledPublishing: {
+    enabled: false,
+  },
 })
 
 export default dataset === 'secret'

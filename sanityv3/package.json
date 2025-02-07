@@ -20,7 +20,7 @@
     "@reach/auto-id": "^0.18.0",
     "@sanity/asset-utils": "^1.3.0",
     "@equinor/document-internationalization": "^3.0.0",
-    "@sanity/client": "^6.24.0",
+    "@sanity/client": "^6.27.2",
     "@sanity/cross-dataset-duplicator": "^1.3.0",
     "@sanity/icons": "^3.5.0",
     "@sanity/ui": "^2.9.0",

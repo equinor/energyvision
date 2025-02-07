@@ -6,7 +6,6 @@ import sharedHeroFields from './header/sharedHeaderFields'
 import { EdsIcon } from '../../icons'
 import { paste } from '@equinor/eds-icons'
 import { lang } from './langField'
-import { description } from '../objects/iframe/sharedIframeFields'
 
 export default {
   type: 'document',

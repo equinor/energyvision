@@ -14,8 +14,8 @@ dependencies:
     specifier: ^1.3.0
     version: 1.3.0
   '@sanity/client':
-    specifier: ^6.24.0
-    version: 6.24.0
+    specifier: ^6.27.2
+    version: 6.27.2(debug@4.4.0)
   '@sanity/cross-dataset-duplicator':
     specifier: ^1.3.0
     version: 1.3.0(@sanity/ui@2.9.0)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(sanity@3.74.1)(styled-components@6.1.0)(typescript@4.0.2)
@@ -4567,17 +4567,6 @@ packages:
       - typescript
     dev: false
 
-  /@sanity/client@6.24.0:
-    resolution: {integrity: sha512-OoM8W46WRZp8tBI01d2i/tWJlQhMFIdn+nuPNalTCbl6qc7U84pSxA2ai/rAS5/7nA6x9lZibuEquQnM7X4aaQ==}
-    engines: {node: '>=14.18'}
-    dependencies:
-      '@sanity/eventsource': 5.0.2
-      get-it: 8.6.5
-      rxjs: 7.8.1
-    transitivePeerDependencies:
-      - debug
-    dev: false
-
   /@sanity/client@6.27.2(debug@4.3.7):
     resolution: {integrity: sha512-x5KaN5atPnEFa3GGSH3YKSAYh1MAECvEs9o+NSLd5W19imxvSxPquQBv0Q60Zdsg6iaTJPAAa79Ak5Xyg2FHvA==}
     engines: {node: '>=14.18'}
@@ -8279,21 +8268,6 @@ packages:
       has-proto: 1.0.3
       has-symbols: 1.0.3
       hasown: 2.0.2
-
-  /get-it@8.6.5:
-    resolution: {integrity: sha512-o1hjPwrb/icm3WJbCweTSq8mKuDfJlqwbFauI+Pdgid99at/BFaBXFBJZE+uqvHyOVARE4z680S44vrDm8SsCw==}
-    engines: {node: '>=14.0.0'}
-    dependencies:
-      '@types/follow-redirects': 1.14.4
-      '@types/progress-stream': 2.0.5
-      decompress-response: 7.0.0
-      follow-redirects: 1.15.9(debug@4.4.0)
-      is-retry-allowed: 2.2.0
-      progress-stream: 2.0.0
-      tunnel-agent: 0.6.0
-    transitivePeerDependencies:
-      - debug
-    dev: false
 
   /get-it@8.6.7(debug@4.3.7):
     resolution: {integrity: sha512-AMEotvykAlcEPTPmYeZPqr9w3K53Ni8z1tplo1mwNS8T4i/gr5T7mSfvaLhhIQhF+0thIH901kLdDA5d5bvDGA==}

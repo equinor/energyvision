@@ -12,7 +12,7 @@ export function SetAndPublishAction(props: DocumentActionProps) {
     if (isPublishing && !props.draft) {
       setIsPublishing(false)
     }
-  }, [props.draft])
+  }, [props.draft, isPublishing])
 
   return {
     disabled: publish.disabled || dialogOpen,

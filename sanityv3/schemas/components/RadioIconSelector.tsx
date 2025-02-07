@@ -1,7 +1,7 @@
 import { Box, Inline } from '@sanity/ui'
 import { ReactNode, useCallback, useState } from 'react'
 import { PatchEvent, set } from 'sanity'
-import styled from 'styled-components'
+import { styled } from 'styled-components'
 
 type StyledBoxProps = {
   children: ReactNode

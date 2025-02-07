@@ -18,7 +18,7 @@ const ApiDescription = () => {
   )
 }
 
-export type cookieDeclaration = {
+export type CookieDeclaration = {
   _type: 'cookieDeclaration'
   description: string
 }
