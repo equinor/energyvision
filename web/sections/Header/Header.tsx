@@ -121,7 +121,7 @@ const Header = ({ slugs, menuData, stickyMenuData }: HeaderProps) => {
                 className="w-full p-2 md:px-5 md:py-3 clickbound-area"
               >
                 <Icon size={24} data={search} />
-                <span className="sr-only md:inline-block">
+                <span className="max-md:sr-only">
                   <FormattedMessage id="search" />
                 </span>
               </ButtonLink>
