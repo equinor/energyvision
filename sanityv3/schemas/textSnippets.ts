@@ -842,6 +842,16 @@ const snippets: textSnippet = {
     defaultValue: 'Featured content',
     group: groups.common,
   },
+  local: {
+    title: 'Local',
+    defaultValue: 'Local',
+    group: groups.common,
+  },
+  global: {
+    title: 'Global',
+    defaultValue: 'Global',
+    group: groups.common,
+  },
 }
 
 type textSnippetGroup = { title: string; hidden?: boolean }

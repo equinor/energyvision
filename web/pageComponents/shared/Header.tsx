@@ -1,11 +1,9 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import styled, { createGlobalStyle } from 'styled-components'
-import { CSSProperties } from 'react'
 import { useRouter } from 'next/router'
 import { default as NextLink } from 'next/link'
-import { Topbar, BackgroundContainer } from '@components'
+import { BackgroundContainer } from '@components'
 import { AllSlugsType, LocalizationSwitch } from './LocalizationSwitch'
-import type { MenuData, SimpleMenuData } from '../../types/index'
+import type { MenuData, SimpleMenuData, StickyMenuData } from '../../types/index'
 import { Flags } from '../../common/helpers/datasetHelpers'
 import { languages, defaultLanguage } from '../../languages'
 import { FormattedMessage, useIntl } from 'react-intl'
@@ -17,57 +15,12 @@ import { getAllSitesLink } from '../../common/helpers/getAllSitesLink'
 import { Icon } from '@equinor/eds-core-react'
 import { ButtonLink, LogoLink } from '@core/Link'
 import SiteMenu from '@sections/SiteMenu/SiteMenu'
-
-const TopbarOffset = createGlobalStyle`
-  body {
-    padding-top: var(--topbar-height);
-  }
-`
-
-const HeaderRelative = styled.header`
-  position: relative;
-`
-
-const TopbarContainer = styled(Topbar.InnerContainer)`
-  display: grid;
-  grid-template-areas: 'logo menu';
-  grid-template-rows: 1fr;
-  align-items: center;
-  grid-column-gap: var(--space-large);
-  column-gap: var(--space-large);
-`
-
-/* This div is needed because of the grid layout to wrap focus lock panes.
-  We might look into to improve this at some point. */
-const ControlChild = styled.div``
-
-const ControlsContainer = styled.div`
-  grid-area: menu;
-  justify-self: right;
-  display: grid;
-  grid-template-columns: repeat(var(--columns), auto);
-  grid-column-gap: var(--space-small);
-  column-gap: var(--space-small);
-  align-items: center;
-
-  @media (min-width: 600px) {
-    grid-column-gap: var(--space-medium);
-    column-gap: var(--space-medium);
-  }
-`
-
-const StyledAllSites = styled(NextLink)`
-  cursor: pointer;
-  font-size: var(--typeScale-1);
-  text-decoration: none;
-  &:hover {
-    text-decoration: underline;
-  }
-`
+import Topbar from '@core/Topbar/Topbar'
 
 export type HeaderProps = {
   menuData?: MenuData | SimpleMenuData
   slugs: AllSlugsType
+  stickyMenuData?: StickyMenuData
 }
 
 const HeadTags = ({ slugs }: { slugs: AllSlugsType }) => {
@@ -121,13 +74,13 @@ const HeadTags = ({ slugs }: { slugs: AllSlugsType }) => {
 const AllSites = () => {
   const allSitesURL = getAllSitesLink('external')
   return (
-    <StyledAllSites href={allSitesURL} prefetch={false}>
+    <NextLink className="cursor-pointer text-base no-underline hover:underline" href={allSitesURL} prefetch={false}>
       <FormattedMessage id="all_sites" defaultMessage="All Sites" />
-    </StyledAllSites>
+    </NextLink>
   )
 }
 
-const Header = ({ slugs, menuData }: HeaderProps) => {
+const Header = ({ slugs, menuData, stickyMenuData }: HeaderProps) => {
   const router = useRouter()
   const localization = {
     activeLocale: router.locale || defaultLanguage.locale,
@@ -149,53 +102,46 @@ const Header = ({ slugs, menuData }: HeaderProps) => {
   const searchLabel = intl.formatMessage({ id: 'search', defaultMessage: 'Search' })
 
   return (
-    <HeaderRelative>
+    <>
       <HeadTags slugs={slugs} />
-      <TopbarOffset />
-      <BackgroundContainer>
-        <Topbar>
-          <TopbarContainer>
-            <LogoLink className="[grid-area:logo]" />
-            <ControlsContainer
-              style={
-                {
-                  '--columns': columns,
-                } as CSSProperties
-              }
-            >
-              {hasSearch && (
-                <ControlChild>
-                  <ButtonLink
-                    variant="ghost"
-                    aria-expanded="true"
-                    aria-label={searchLabel}
-                    href="/search"
-                    className="p-2 md:px-5 md:py-3"
-                  >
-                    <Icon size={24} data={search} />
-                    <FormattedMessage id="search" />
-                  </ButtonLink>
-                </ControlChild>
-              )}
-              {hasMoreThanOneLanguage && (
-                <LocalizationSwitch activeLocale={localization.activeLocale} allSlugs={validSlugs} />
-              )}
-              {shouldDisplayAllSites ? (
-                <AllSites />
-              ) : menuData && Flags.HAS_FANCY_MENU ? (
-                <ControlChild>
-                  <SiteMenu data={menuData as MenuData} />
-                </ControlChild>
-              ) : (
-                <ControlChild>
-                  <SiteMenu variant="simple" data={menuData as SimpleMenuData} />
-                </ControlChild>
-              )}
-            </ControlsContainer>
-          </TopbarContainer>
-        </Topbar>
-      </BackgroundContainer>
-    </HeaderRelative>
+      <Topbar stickyMenuData={stickyMenuData}>
+        <LogoLink />
+        <div
+          className={`grid ${
+            columns == 3 ? 'grid-cols-auto-3' : columns == 2 ? 'grid-cols-auto-2' : 'grid-cols-1'
+          } gap-x-4 items-center sm:gap-x-61`}
+        >
+          {hasSearch && (
+            <div>
+              <ButtonLink
+                variant="ghost"
+                aria-expanded="true"
+                aria-label={searchLabel}
+                href="/search"
+                className="p-2 md:px-5 md:py-3"
+              >
+                <Icon size={24} data={search} />
+                <FormattedMessage id="search" />
+              </ButtonLink>
+            </div>
+          )}
+          {hasMoreThanOneLanguage && (
+            <LocalizationSwitch activeLocale={localization.activeLocale} allSlugs={validSlugs} />
+          )}
+          {shouldDisplayAllSites ? (
+            <AllSites />
+          ) : menuData && Flags.HAS_FANCY_MENU ? (
+            <div>
+              <SiteMenu data={menuData as MenuData} />
+            </div>
+          ) : (
+            <div>
+              <SiteMenu variant="simple" data={menuData as SimpleMenuData} />
+            </div>
+          )}
+        </div>
+      </Topbar>
+    </>
   )
 }
 
