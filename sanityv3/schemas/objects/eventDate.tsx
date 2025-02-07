@@ -22,8 +22,12 @@ export default {
   fields: [
     {
       name: 'date',
-      type: 'datetime',
+      type: 'date',
       title: 'Date',
+      description: 'Deprecated, use start and end time above',
+      options: {
+        dateFormat: 'DD-MM-YYYY',
+      },
       validation: (Rule: Rule) => Rule.required(),
     },
     {

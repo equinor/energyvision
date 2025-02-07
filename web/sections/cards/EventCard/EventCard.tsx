@@ -13,6 +13,7 @@ import { FormattedMessage } from 'react-intl'
 import AddToCalendar from '../../../pageComponents/topicPages/AddToCalendar'
 import { BaseLink } from '@core/Link'
 import Blocks from '../../../pageComponents/shared/portableText/Blocks'
+import { format, parseISO } from 'date-fns'
 
 type Variants = 'default' | 'single' | 'carousel'
 export type EventCardProps = {
@@ -29,7 +30,7 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
   { data, className = '', variant = 'default', hasSectionTitle = true, ...rest },
   ref,
 ) {
-  const { title, location, eventDate, slug, ingress } = data
+  const { title, location, eventDate, slug, ingress, startDatetime, endDatetime } = data
   const { start, end } = getEventDates(eventDate)
   const plainTitle = title ? toPlainText(title as PortableTextBlock[]) : ''
   const metaClassNames = `h-full grid grid-cols-[24px_auto] gap-sm items-center py-2`

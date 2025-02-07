@@ -8,6 +8,7 @@ import type { EventDate } from '../objects/eventDate'
 import type { RelatedLinksArray } from '../objects/relatedLinks'
 import { lang } from './langField'
 import basicIframe from '../objects/basicIframe'
+import { description } from '../objects/iframe/sharedIframeFields'
 
 const titleContentType = configureTitleBlockContent()
 const blockContentType = configureBlockContent()
@@ -107,6 +108,16 @@ export default {
       name: 'location',
       type: 'string',
       title: 'Location',
+    },
+    {
+      name: 'startDatetime',
+      type: 'datetime',
+      title: 'Start datetime',
+    },
+    {
+      name: 'endDatetime',
+      type: 'datetime',
+      title: 'End datetime',
     },
     {
       title: 'Date information',

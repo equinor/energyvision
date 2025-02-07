@@ -53,6 +53,8 @@ export type EventCardData = {
   slug: string
   location?: string
   eventDate: EventDateType
+  startDatetime: string
+  endDatetime: string
   ingress?: PortableTextBlock[]
 }
 

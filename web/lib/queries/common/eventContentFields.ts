@@ -7,6 +7,8 @@ import background from './background'
 export const eventContentFields = /* groq */ `
   location,
   eventDate,
+  startDatetime,
+  endDatetime,
   ingress[]{
     ...,
     ${markDefs},
