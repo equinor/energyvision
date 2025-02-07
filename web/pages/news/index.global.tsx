@@ -74,13 +74,12 @@ export const getStaticProps: GetStaticProps = async ({ preview = false, locale =
   // We will also return 404 if the locale is not English.
   // This is a hack and and we should improve this at some point
   // See https://github.com/vercel/next.js/discussions/18485
-
-  if (locale !== 'en') {
+  // Only build when newsroom allowed, satellites has english
+  if (locale !== 'en' || !Flags.HAS_NEWSROOM) {
     return {
       notFound: true,
     }
   }
-
   const lang = getNameFromLocale(locale)
   const intl = await getIntl(locale, false)
 
