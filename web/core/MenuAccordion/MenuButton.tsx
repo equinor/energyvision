@@ -52,7 +52,7 @@ export const MenuButton = forwardRef<HTMLButtonElement, MenuButtonProps>(functio
         outline-none
         text-slate-80
         text-base
-        font-medium
+        font-normal
         leading-[1em]
         md:grid-cols-[min-content_1fr]
         hover:bg-moss-green-60
