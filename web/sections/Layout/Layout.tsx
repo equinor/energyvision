@@ -15,9 +15,17 @@ export type LayoutProps = {
     messages: Record<string, string>
   }
   children: React.ReactNode
+  hasSticky?: boolean
 } & HTMLAttributes<HTMLDivElement>
 
-export const Layout = ({ children, footerData, intl, className = '', ...rest }: LayoutProps): JSX.Element => {
+export const Layout = ({
+  hasSticky = false,
+  children,
+  footerData,
+  intl,
+  className = '',
+  ...rest
+}: LayoutProps): JSX.Element => {
   const defaultLocale = defaultLanguage.locale
   const locale = intl?.locale || defaultLocale
 
@@ -27,7 +35,7 @@ export const Layout = ({ children, footerData, intl, className = '', ...rest }: 
       defaultLocale={getIsoFromLocale(defaultLocale)}
       messages={intl?.messages}
     >
-      <div className={envisTwMerge(``, className)} {...rest}>
+      <div className={envisTwMerge(`${hasSticky ? '' : 'pt-topbar'}`, className)} {...rest}>
         {children}
         <Footer footerData={footerData} />
       </div>
