@@ -92,6 +92,8 @@ export const Topbar = forwardRef<HTMLDivElement, TopbarProps>(function Topbar(
         })}
         role="navigation"
         className={`
+          h-topbar
+          overflow-hidden
           w-screen 
           ${showSticky ? 'sticky' : 'fixed'} 
           bg-white-100
@@ -100,19 +102,14 @@ export const Topbar = forwardRef<HTMLDivElement, TopbarProps>(function Topbar(
           [transition-property:top]
           ease-in-out  
           duration-300
-          ${isVisible ? 'top-0' : '-top-[var(--topbar-height)]'} 
+          ${isVisible ? 'top-0' : '-top-topbar'} 
           ${hasDropShadow ? 'shadow-md' : ''}`}
         {...rest}
       >
         <div className="px-layout-sm max-w-viewport mx-auto flex items-center justify-between py-4">{children}</div>
       </nav>
       {showSticky && (
-        <StickyMenu
-          stickyMenuData={stickyMenuData}
-          className={`${
-            isVisible ? 'top-[calc(var(--topbar-height)-5px)] lg:top-[calc(var(--topbar-height)-2px)] pt-2' : 'top-0'
-          }`}
-        />
+        <StickyMenu stickyMenuData={stickyMenuData} className={`${isVisible ? 'top-topbar pt-2' : 'top-0'}`} />
       )}
     </>
   )
