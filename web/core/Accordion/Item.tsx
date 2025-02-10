@@ -1,15 +1,23 @@
 import { forwardRef } from 'react'
 import { AccordionItem, AccordionItemProps as _AccordionItemProps } from '@radix-ui/react-accordion'
 import envisTwMerge from '../../twMerge'
+import { Variants } from './Accordion'
 
-export type AccordionItemProps = _AccordionItemProps
+export type AccordionItemProps = {
+  variant?: Variants
+} & _AccordionItemProps
 
 export const Item = forwardRef<HTMLDivElement, AccordionItemProps>(function Item(
-  { children, className = '', ...rest },
+  { variant = 'primary', children, className = '', ...rest },
   forwardedRef,
 ) {
+  const variantClassName: Partial<Record<Variants, string>> = {
+    primary: 'border-b border-grey-40 dark:border-white-100',
+    menu: '',
+    simpleMenu: 'border-b border-grey-40 dark:border-white-100',
+  }
   return (
-    <AccordionItem ref={forwardedRef} {...rest} className={envisTwMerge(``, className)}>
+    <AccordionItem ref={forwardedRef} {...rest} className={envisTwMerge(`${variantClassName[variant]}`, className)}>
       {children}
     </AccordionItem>
   )

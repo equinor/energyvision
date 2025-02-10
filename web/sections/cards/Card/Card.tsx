@@ -35,35 +35,37 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
 ) {
   const commonStyling = `
   flex 
-  flex-col 
+  flex-col
+  gap-0
   shadow-card 
   rounded-sm 
   active:shadow-card-interact
-  min-w-card-minWidth
-  md:max-w-card-maxWidth`
+  w-full
+  h-full
+  `
 
   const variantClassNames = {
     primary: `${commonStyling}`,
-    secondary: `${commonStyling} rounded-md overflow-hidden`,
-    compact: `h-full flex gap-4 min-w-[200px] xl:max-w-[300px] 3xl:max-w-card-maxWidth`,
+    secondary: `${commonStyling}`,
+    compact: `w-full h-full rounded-sm flex gap-4`,
     single: `grid grid-cols-[40%_1fr] min-h-[450px] shadow-card rounded-sm active:shadow-card-interact`,
   }
   const variantAspectRatio = {
     primary: Ratios.NINE_TO_SIXTEEN,
-    secondary: Ratios.FIVE_TO_FOUR,
+    secondary: Ratios.FOUR_TO_THREE,
     compact: Ratios.FIVE_TO_FOUR,
     single: Ratios.FIVE_TO_FOUR,
   }
   const imageRatio = {
     primary: 'aspect-video',
-    secondary: 'aspect-5/4',
+    secondary: 'aspect-4/3',
     compact: 'aspect-5/4',
     single: '',
   }
   const imageVariantClassNames = {
-    primary: `max-md:max-h-[212px]`,
-    secondary: `rounded-t-md max-md:max-h-[212px]`,
-    compact: 'w-[25vw] h-auto max-md:max-h-[212px] rounded-sm',
+    primary: `rounded-t-sm *:rounded-t-sm`,
+    secondary: `rounded-t-sm *:rounded-t-sm`,
+    compact: 'rounded-sm w-[25vw] h-auto *:rounded-sm',
     single: 'w-auto h-full',
   }
 
@@ -74,13 +76,13 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
       prefetch={false}
       className={twMerge(
         `group/card
+        bg-white-100
+        text-slate-80
+        focus:outline-none
+        focus-visible:envis-outline
+        dark:text-slate-80
+        dark:focus-visible:envis-outline-invert
         ${variantClassNames[variant]}
-      bg-white-100
-      text-slate-80
-      focus:outline-none
-      focus-visible:envis-outline
-      dark:text-slate-80
-      dark:focus-visible:envis-outline-invert
       `,
         className,
       )}
@@ -90,7 +92,7 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
         <div
           className={envisTwMerge(
             `relative
-            
+            w-full
           ${imageVariantClassNames[variant]}
           ${imageRatio[variant]}
           `,
@@ -102,7 +104,6 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
             fill
             maxWidth={600}
             aspectRatio={variantAspectRatio[variant]}
-            className={`${variant === 'compact' ? 'rounded-xs' : ''}`}
             sizes="(max-width: 800px) 100vw, 800px"
           />
         </div>

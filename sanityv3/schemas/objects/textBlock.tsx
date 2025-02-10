@@ -11,6 +11,7 @@ const blockContentType = configureBlockContent({
   h2: false,
   h3: true,
   h4: false,
+  highlight: true,
   attachment: false,
 })
 
@@ -51,7 +52,6 @@ type TextBlock = {
   bigText?: PortableTextBlock[]
   action?: Reference[]
   splitList?: boolean
-  overrideButtonStyle?: boolean
   background?: ColorSelectorValue
 }
 
@@ -192,18 +192,6 @@ export default {
       initialValue: false,
       description:
         'You can also display links/downloads as two columns if there are a lot of links. Ensure that titles are short enough to do this.',
-    },
-    {
-      title: 'Use link style',
-      name: 'overrideButtonStyle',
-      type: 'boolean',
-      fieldset: 'actions',
-      initialValue: false,
-      description:
-        'You can override the default button style to link style. This can only be done if you have one link, and should be used with caution.',
-      readOnly: ({ parent }: { parent: TextBlock }) => {
-        return !(parent.action && parent?.action.length === 1)
-      },
     },
     {
       name: 'designOptions',

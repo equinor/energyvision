@@ -15,6 +15,9 @@
     /* Modal */
     --modal-transition-duration: 0.4s;
     --modal-transition-easing: cubic-bezier(0.45, 0, 0.55, 1);
+
+    /* Remove when fixing 404 page */
+    --topbar-height: 85px;
   }
 
   p,
@@ -276,6 +279,12 @@
     }
     .transparent-v-scrollbar::-webkit-scrollbar-thumb {
       @apply w-[2px] bg-grey-40 hover:bg-grey-70 dark:bg-white-100 dark:hover:bg-white-100/70 rounded-lg;
+    }
+  }
+
+  @starting-style {
+    .topbar-height {
+      top: 0;
     }
   }
 }

@@ -76,7 +76,7 @@ jobs:
         id: upload-backup
         uses: actions/upload-artifact@v4
         with:
-          name: backup-tarball
+          name: backup-tarball-${{ matrix.dataset}}
           path: ${{ env.BUILD_ARTIFACT_PATH }}/${{ matrix.dataset }}.tar.gz
           # Fails the workflow if no files are found; defaults to 'warn'
           if-no-files-found: error

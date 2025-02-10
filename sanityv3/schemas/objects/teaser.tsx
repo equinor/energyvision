@@ -153,12 +153,6 @@ export default {
       validation: (Rule: Rule) => Rule.max(2).error('Only two action is permitted'),
     },
     {
-      title: 'Use resource link style',
-      description: 'Default is read more link style',
-      name: 'useResourceLinks',
-      type: 'boolean',
-    },
-    {
       name: 'image',
       title: 'Image',
       type: 'imageWithAlt',

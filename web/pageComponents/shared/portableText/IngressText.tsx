@@ -1,12 +1,13 @@
-import { PortableTextProps } from '@portabletext/react'
-import Blocks from './Blocks'
+import Blocks, { BlockProps } from './Blocks'
 import { twMerge } from 'tailwind-merge'
 
 type IngressTextProps = {
   centered?: boolean
   className?: string
   includeFootnotes?: boolean
-} & PortableTextProps
+  /** Use to clamp lines on number */
+  clampLines?: number
+} & BlockProps
 
 const IngressText = ({ value, centered = false, components = {}, className = '', ...rest }: IngressTextProps) => {
   return (
