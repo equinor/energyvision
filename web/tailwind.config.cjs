@@ -212,6 +212,7 @@ module.exports = {
         'image-carousel-card-w-sm': '275px',
         'image-carousel-card-w-md': '692px',
         'image-carousel-card-w-lg': '980px',
+        topbar: '85px',
       }),
       fontSize: {
         //--typeScale-00
