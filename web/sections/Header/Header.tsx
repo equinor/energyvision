@@ -2,7 +2,7 @@
 import { useRouter } from 'next/router'
 import { default as NextLink } from 'next/link'
 import { BackgroundContainer } from '@components'
-import { AllSlugsType, LocalizationSwitch } from './LocalizationSwitch'
+import { AllSlugsType, LocalizationSwitch } from '../../pageComponents/shared/LocalizationSwitch'
 import type { MenuData, SimpleMenuData, StickyMenuData } from '../../types/index'
 import { Flags } from '../../common/helpers/datasetHelpers'
 import { languages, defaultLanguage } from '../../languages'
@@ -115,13 +115,15 @@ const Header = ({ slugs, menuData, stickyMenuData }: HeaderProps) => {
             <div>
               <ButtonLink
                 variant="ghost"
-                aria-expanded="true"
+                aria-expanded="false"
                 aria-label={searchLabel}
                 href="/search"
-                className="p-2 md:px-5 md:py-3"
+                className="w-full p-2 md:px-5 md:py-3 clickbound-area"
               >
                 <Icon size={24} data={search} />
-                <FormattedMessage id="search" />
+                <span className="max-md:sr-only">
+                  <FormattedMessage id="search" />
+                </span>
               </ButtonLink>
             </div>
           )}

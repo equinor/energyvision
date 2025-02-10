@@ -212,6 +212,7 @@ module.exports = {
         'image-carousel-card-w-sm': '275px',
         'image-carousel-card-w-md': '692px',
         'image-carousel-card-w-lg': '980px',
+        topbar: '85px',
       }),
       fontSize: {
         //--typeScale-00
@@ -270,6 +271,10 @@ module.exports = {
       },
       minWidth: {
         viewport: '375',
+        'arrow-right': '1.58rem',
+      },
+      minHeight: {
+        'arrow-right': '1.58rem',
       },
       borderRadius: {
         xs: '0.1rem',

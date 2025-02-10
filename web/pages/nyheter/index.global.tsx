@@ -1,8 +1,8 @@
 import { GetStaticProps } from 'next'
 import type { AppProps } from 'next/app'
 import { IntlProvider } from 'react-intl'
-import Footer from '../../pageComponents/shared/Footer'
-import Header from '../../pageComponents/shared/Header'
+import Footer from '../../sections/Footer/Footer'
+import Header from '../../sections/Header/Header'
 import { renderToString } from 'react-dom/server'
 import { newsroomQuery } from '../../lib/queries/newsroom'
 import getIntl from '../../common/helpers/getIntl'
@@ -59,11 +59,12 @@ NorwegianNewsRoom.getLayout = (page: AppProps) => {
       defaultLocale={getIsoFromLocale(defaultLocale)}
       messages={data?.intl?.messages}
     >
-      <>
+      <div className="pt-topbar">
+        {/*@ts-ignore: TODO */}
         <Header slugs={slugs} menuData={data?.menuData} />
         {page}
         <Footer footerData={data?.footerData} />
-      </>
+      </div>
     </IntlProvider>
   )
 }

@@ -11,6 +11,7 @@
     --modal-transition-duration: 0.4s;
     --modal-transition-easing: cubic-bezier(0.45, 0, 0.55, 1);
 
+    /* Remove when fixing 404 page */
     --topbar-height: 85px;
   }
 
