@@ -97,6 +97,7 @@ export const Header = forwardRef<HTMLButtonElement, AccordionHeaderProps>(functi
             dark:focus-visible:envis-outline-invert
             flex
             justify-start
+            text-left
           ${variantClassName[variant]}
           `,
             className,

@@ -39,8 +39,8 @@ export const SimplePagination = ({
   }
 
   return (
-    <ul className={envisTwMerge(`max-w-viewport flex flex-wrap gap-2 my-2`, className)} {...rest}>
-      <div className="flex gap-3 items-center">
+    <ul className={envisTwMerge(`max-w-viewport flex-wrap my-2 flex gap-3 items-center`, className)} {...rest}>
+      <li>
         <MediaButton
           title={intl.formatMessage({
             id: 'previous',
@@ -51,6 +51,8 @@ export const SimplePagination = ({
           onClick={handlePrevPagination}
           className=""
         />
+      </li>
+      <li>
         <MediaButton
           title={intl.formatMessage({
             id: 'next',
@@ -61,7 +63,7 @@ export const SimplePagination = ({
           onClick={handleNextPagination}
           className=""
         />
-      </div>
+      </li>
     </ul>
   )
 }

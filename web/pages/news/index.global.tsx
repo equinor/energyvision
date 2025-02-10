@@ -1,8 +1,8 @@
 import { GetStaticProps } from 'next'
 import type { AppProps } from 'next/app'
 import { IntlProvider } from 'react-intl'
-import Footer from '../../pageComponents/shared/Footer'
-import Header from '../../pageComponents/shared/Header'
+import Footer from '../../sections/Footer/Footer'
+import Header from '../../sections/Header/Header'
 import { renderToString } from 'react-dom/server'
 import { newsroomQuery } from '../../lib/queries/newsroom'
 import getIntl from '../../common/helpers/getIntl'
@@ -59,11 +59,12 @@ NewsRoom.getLayout = (page: AppProps) => {
       defaultLocale={getIsoFromLocale(defaultLocale)}
       messages={data?.intl?.messages}
     >
-      <>
+      <div className="pt-topbar">
+        {/*@ts-ignore: TODO */}
         <Header slugs={slugs} menuData={data?.menuData} />
         {page}
         <Footer footerData={data?.footerData} />
-      </>
+      </div>
     </IntlProvider>
   )
 }
@@ -73,13 +74,12 @@ export const getStaticProps: GetStaticProps = async ({ preview = false, locale =
   // We will also return 404 if the locale is not English.
   // This is a hack and and we should improve this at some point
   // See https://github.com/vercel/next.js/discussions/18485
-
-  if (locale !== 'en') {
+  // Only build when newsroom allowed, satellites has english
+  if (locale !== 'en' || !Flags.HAS_NEWSROOM) {
     return {
       notFound: true,
     }
   }
-
   const lang = getNameFromLocale(locale)
   const intl = await getIntl(locale, false)
 

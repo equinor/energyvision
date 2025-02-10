@@ -19,7 +19,7 @@ export const LogoLink = ({ className, ...rest }: LogoLinkProps) => {
       )}
       prefetch={false}
     >
-      <LogoSecondary className="-mt-[12%]" />
+      <LogoSecondary className="-mt-[5%]" />
     </NextLink>
   )
 }
