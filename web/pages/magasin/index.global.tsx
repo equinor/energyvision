@@ -46,14 +46,12 @@ MagazineIndexNorwegian.getLayout = (page: AppProps) => {
       defaultLocale={getIsoFromLocale(defaultLocale)}
       messages={data?.intl?.messages}
     >
-      {/*
-       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore */}
-      <>
+      <div className="pt-topbar">
+        {/*@ts-ignore: TODO */}
         <Header slugs={slugs} menuData={data?.menuData} />
         {page}
         <Footer footerData={data?.footerData} />
-      </>
+      </div>
     </IntlProvider>
   )
 }

@@ -86,7 +86,7 @@ Page.getLayout = (page: AppProps) => {
     data?.pageData?.stickyMenu && data?.pageData?.stickyMenu?.links && data?.pageData?.stickyMenu?.links?.length > 0
 
   return (
-    <Layout footerData={data?.footerData} intl={data?.intl} className={`${hasSticky ? '' : 'pt-topbar'}`}>
+    <Layout footerData={data?.footerData} intl={data?.intl} hasSticky={hasSticky}>
       <>
         <Header slugs={slugs} menuData={data?.menuData} stickyMenuData={data?.pageData?.stickyMenu} />
         {page}
