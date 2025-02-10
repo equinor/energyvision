@@ -69,7 +69,8 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
     className = '',
     listClassName = '',
     hasSectionTitle = false,
-    captionPositionUnderImage},
+    captionPositionUnderImage,
+  },
   ref,
 ) {
   const CarouselTag = hasSectionTitle ? (`div` as ElementType) : (`section` as ElementType)
@@ -267,7 +268,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
             displayMode={displayMode}
             aria-label={ariaLabel}
             active={i === currentIndex}
-            captionPositionUnderImage={captionPositionUnderImage} 
+            captionPositionUnderImage={captionPositionUnderImage}
             {...(variant === 'image' &&
               displayMode === 'single' && {
                 style: {
@@ -341,6 +342,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
         `w-full
         relative
         mx-auto
+      ${captionPositionUnderImage && 'mb-10 md:mb-2'}
         ${
           variant === 'image' && displayMode === 'single'
             ? 'grid grid-cols-1 grid-rows-auto carousel-top-bottom-grid-area'
@@ -357,7 +359,6 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
         aria-labelledby={controlsId}
         className={`
           grid
-          grid-cols-[80px_auto_150px]
           grid-rows-1
           carousel-controls-grid-area
           pt-6

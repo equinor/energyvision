@@ -79,8 +79,8 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
               captionPositionUnderImage
                 ? `
                   h-16
-                  -bottom-[150px] 
-                  sm:-bottom-[85px] 
+                  -bottom-[70px] 
+                  md:-bottom-[85px] 
                   min-w-full
                   max-w-full
                   sm:min-w-[40%] 
@@ -100,8 +100,8 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
             >
               {caption && (
                 <span
-                  className={`${captionPositionUnderImage ? 'text-sm line-clamp-1 sm:line-clamp-1' : 'text-lg'} mb-5 ${
-                    attribution && !captionPositionUnderImage ? 'md:mb-3 line-clamp-2' : ''
+                  className={`${captionPositionUnderImage ? 'text-sm line-clamp-1 sm:line-clamp-1 mb-2' : 'text-lg'}  ${
+                    attribution && !captionPositionUnderImage ? 'md:mb-3 line-clamp-2 mb-5' : ''
                   }`}
                 >
                   {caption}
