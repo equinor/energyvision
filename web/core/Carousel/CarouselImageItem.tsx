@@ -73,36 +73,35 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
           <Image maxWidth={1420} image={image as ImageWithAlt} fill className="rounded-md" />
           <GridLinkArrow action={action} variant="circle" />
           <figcaption
-            className={`
-              ${active ? 'block' : 'hidden'} 
-              ${
-                captionPositionUnderImage
-                  ? `
-                -bottom-[198px] 
-                sm:-bottom-[158px] 
-                mb-4 
-                min-w-full
-                max-w-full
-                sm:min-w-[40%] 
-                sm:max-w-[60%] 
-                lg:left-16
-                lg:w-[calc(100%-80px-150px)]
+            className={envisTwMerge(
+              `absolute left-4 right-4 lg:right-8`,
+              active ? 'block' : 'hidden',
+              captionPositionUnderImage
+                ? `
+                  h-16
+                  -bottom-[150px] 
+                  sm:-bottom-[85px] 
+                  min-w-full
+                  max-w-full
+                  sm:min-w-[40%] 
+                  sm:max-w-[60%] 
+                  lg:left-16
+                  lg:w-[calc(100%-80px-150px)]
                 `
-                  : 'bottom-0 lg:left-8'
-              } absolute left-4 right-4 lg:right-8 mb-12 lg:mb-8
-             `}
+                : `bottom-0 lg:left-8 mb-4 lg:mb-8`,
+            )}
           >
             <div
               className={envisTwMerge(
                 captionPositionUnderImage
-                  ? 'w-full text-slate-80 pl-2 pr-8 flex flex-col max-w-text'
+                  ? 'w-full text-slate-80 pl-2 pr-8 flex flex-col h-max'
                   : 'bg-spruce-wood-70/75 text-slate-80  px-8 pt-6 w-fit flex flex-col max-w-text',
               )}
             >
               {caption && (
                 <span
                   className={`${captionPositionUnderImage ? 'text-sm line-clamp-1 sm:line-clamp-1' : 'text-lg'} ${
-                    attribution ? 'pb-2' : 'pb-14'
+                    attribution && !captionPositionUnderImage ? 'pb-3' : 'pb-6'
                   }`}
                 >
                   {caption}
@@ -111,7 +110,7 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
               {attribution && (
                 <span
                   className={`${captionPositionUnderImage ? 'line-clamp-3' : 'text-lg'} text-sm line-clamp-3 ${
-                    caption ? 'pb-8' : 'pb-16'
+                    caption && !captionPositionUnderImage ? 'pb-8' : 'pb-6'
                   }`}
                 >
                   {attribution}
