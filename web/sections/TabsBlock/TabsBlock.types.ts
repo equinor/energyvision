@@ -11,27 +11,30 @@ export type TabsKeyNumbers = {
   id?: string
   type?: 'tabsKeyNumbers'
   items?: TabsKeyNumber[]
-  disclaimer: PortableTextBlock[]
+  disclaimer?: PortableTextBlock[]
 }
+export type InfoPanelKeyInfo = {
+  id?: string
+  type?: string
+  title?: string
+  keyFigure?: string
+  explanation?: string
+}
+export type InfoPanelImageVariant = 'sideImage' | 'backgroundImage'
+
 export type TabsInfoPanel = {
   id?: string
   type?: 'tabsInfoPanel'
   image?: ImageWithAlt
-  imageVariant?: 'sideImage' | 'backgroundImage'
+  imageVariant?: InfoPanelImageVariant
   title: PortableTextBlock[]
   text: PortableTextBlock[]
-  keyInfo?: {
-    id?: string
-    type?: string
-    title?: string
-    keyFigure?: string
-    explanation?: string
-  }[]
+  keyInfo?: InfoPanelKeyInfo[]
   action?: LinkData
 }
 export type TabItem = {
-  id?: string
+  id: string
   type?: string
-  title: PortableTextBlock[]
+  title: string
   panel: TabsKeyNumbers | TabsInfoPanel
 }

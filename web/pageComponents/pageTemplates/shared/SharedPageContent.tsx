@@ -360,7 +360,7 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
       case 'imageForText':
         return <ImageForText key={c.id} data={c as ImageForTextData} />
       case 'tabs':
-        return <TabsBlock key={c.id} data={c as any} className={topSpacingClassName} />
+        return <TabsBlock key={c.id} {...(c as any)} className={topSpacingClassName} />
       default:
         return null
     }

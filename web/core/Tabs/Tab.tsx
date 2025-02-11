@@ -16,6 +16,8 @@ export const Tab = forwardRef<HTMLButtonElement, TabProps>(function Tab(
       ref={ref}
       className={envisTwMerge(
         `group
+        min-w-[50px]
+        h-full
         text-slate-80
         dark:text-white-100
         bg-transparent
@@ -33,7 +35,7 @@ export const Tab = forwardRef<HTMLButtonElement, TabProps>(function Tab(
       )}
       {...rest}
     >
-      <div className={envisTwMerge(`py-2 px-6`, contentClassName)}>{children}</div>
+      <div className={envisTwMerge(`py-2 px-6 h-full flex items-center`, contentClassName)}>{children}</div>
       {/* Border underline to get rounded*/}
       <div
         className={envisTwMerge(

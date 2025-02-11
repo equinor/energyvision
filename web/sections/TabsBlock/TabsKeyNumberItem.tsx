@@ -8,6 +8,8 @@ type TabsKeyNumberItemProps = {
   unit?: string
   description?: string
   className?: string
+  /* On mobile flex wraps if 3 or less, else show as scroll */
+  'data-dir'?: string
 }
 
 const TabsKeyNumberItem = forwardRef<HTMLDivElement, TabsKeyNumberItemProps>(function TabsKeyNumberItem(
@@ -20,7 +22,17 @@ const TabsKeyNumberItem = forwardRef<HTMLDivElement, TabsKeyNumberItemProps>(fun
     <div
       ref={ref}
       className={twMerge(
-        `w-full h-full ${cardBackground} grid grid-cols-1 grid-rows-[max-content_25%_auto] items-stretch rounded-md px-4 lg:px-6 py-6`,
+        `w-full
+        h-full
+        ${cardBackground} 
+        grid
+        grid-cols-1
+        data-[dir=row]:grid-rows-[max-content_25%_auto]
+        items-stretch
+        rounded-md
+        px-4
+        lg:px-6
+        py-6`,
         className,
       )}
     >

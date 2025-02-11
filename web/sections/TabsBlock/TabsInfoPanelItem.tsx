@@ -7,29 +7,40 @@ import { getLocaleFromName } from '../../lib/localization'
 import { Heading } from '@core/Typography'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
 import Image from '../../pageComponents/shared/SanityImage'
+import { ImageWithAlt, LinkData } from '../../types'
+import { InfoPanelImageVariant, InfoPanelKeyInfo } from './TabsBlock.types'
 
 type TabsInfoPanelItemProps = {
   theme?: number
-  image?: any
-  imageVariant?: any
+  image?: ImageWithAlt
+  imageVariant?: InfoPanelImageVariant
   title?: PortableTextBlock[]
   text?: PortableTextBlock[]
-  keyInfo?: any[]
-  action?: any[]
+  keyInfo?: InfoPanelKeyInfo[]
+  action?: LinkData
   className?: string
 }
 
 const TabsInfoPanelItem = forwardRef<HTMLDivElement, TabsInfoPanelItemProps>(function TabsInfoPanelItem(
-  { image, imageVariant, title, text, keyInfo, action, className = '', ...rest },
+  { image, imageVariant, title, text, keyInfo, action, className = '' },
   ref,
 ) {
+  const url = action ? getUrlFromAction(action) : undefined
   return (
     <div
       ref={ref}
       className={twMerge(
-        `relative ${
+        `relative 
+        ${
           imageVariant === 'sideImage'
-            ? 'flex flex-col-reverse lg:grid lg:grid-cols-2 gap-12 items-start px-16 py-12'
+            ? `flex 
+            flex-col-reverse 
+            lg:grid 
+            lg:grid-cols-2 
+            gap-12 
+            items-start 
+            px-16 
+            py-12`
             : ''
         }`,
         className,
@@ -54,9 +65,9 @@ const TabsInfoPanelItem = forwardRef<HTMLDivElement, TabsInfoPanelItemProps>(fun
             {title && <Heading value={title} as="h3" variant="h5" className={``} />}
             {text && <Blocks value={text} className={`text-sm`} />}
           </div>
-          {action && (
+          {action && url && (
             <ResourceLink
-              href={getUrlFromAction(action)}
+              href={url}
               {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
               type={action.type}
               extension={action.extension}
