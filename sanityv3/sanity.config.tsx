@@ -158,6 +158,7 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret = fals
     scheduledPublishing: {
       enabled: false,
     },
+    tasks: { enabled: false },
   },
   auth: createAuthStore({
     projectId: projectIdParam,
