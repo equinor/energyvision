@@ -34,7 +34,7 @@ export const getAuthURL = async (requestState: string) => {
 
   const CLIENT_ID = process.env.SANITY_STUDIO_FOTOWARE_CLIENT_ID
   const TENANT_URL = process.env.SANITY_STUDIO_FOTOWARE_TENANT_URL
-  const REDIRECT_URI = process.env.SANITY_STUDIO_FOTOWARE_REDIRECT_ORIGIN
+  const REDIRECT_URI = process.env.SANITY_STUDIO_FOTOWARE_REDIRECT_URI
   const CODE_CHALLENGE = await createCodeChallenge().then((buffer: any) => {
     console.log('digest then buffer', buffer)
     return buffer
