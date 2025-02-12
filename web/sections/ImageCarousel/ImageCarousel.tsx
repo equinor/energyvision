@@ -15,7 +15,7 @@ const ImageCarousel = forwardRef<HTMLUListElement, ImageCarouselProps>(function 
   { anchor, data, className },
   ref,
 ) {
-  const { title, hideTitle, ingress, items, designOptions, options, captionPositionUnderImage } = data
+  const { title, hideTitle, ingress, items, designOptions, options } = data
   const { background } = designOptions
   const headingId = useId()
 
@@ -37,13 +37,12 @@ const ImageCarousel = forwardRef<HTMLUListElement, ImageCarouselProps>(function 
       <Carousel
         ref={ref}
         items={items}
-        displayMode={items?.length < 3 ? 'scroll' : 'single'}
+        displayMode={options?.singleMode && options?.singleMode ? 'single' : 'scroll'}
         variant="image"
         hasSectionTitle={title && !hideTitle}
         labelledbyId={title && !hideTitle ? headingId : undefined}
         title={title}
         autoRotation={options?.autoplay}
-        captionPositionUnderImage={captionPositionUnderImage}
       />
     </BackgroundContainer>
   )

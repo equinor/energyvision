@@ -1,12 +1,10 @@
 import envisTwMerge from '../../twMerge'
-import { DisplayModes } from './Carousel'
 import { forwardRef, HTMLAttributes } from 'react'
 import { KeyNumberItemData } from '../../types/index'
 import KeyNumberItem from '@sections/KeyNumber/KeyNumberItem'
 
 type CarouselEventItemProps = {
   keyNumber: KeyNumberItemData
-  displayMode?: DisplayModes
   className?: string
   active?: boolean
   hasSectionTitle?: boolean
@@ -14,13 +12,15 @@ type CarouselEventItemProps = {
 } & Omit<HTMLAttributes<HTMLLIElement>, 'title'>
 
 export const CarouselKeyNumberItem = forwardRef<HTMLLIElement, CarouselEventItemProps>(function CarouselEventItem(
-  { keyNumber, displayMode = 'scroll', className = '', active = false, ...rest },
+  { keyNumber, className = '', active = false, ...rest },
   ref,
 ) {
   return (
     <li
       {...rest}
       ref={ref}
+      // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+      tabIndex={active ? 0 : -1}
       key={keyNumber.id}
       aria-current={active}
       aria-roledescription="slide"
@@ -29,7 +29,8 @@ export const CarouselKeyNumberItem = forwardRef<HTMLLIElement, CarouselEventItem
         shrink-0
         grow
         relative
-        ${displayMode === 'scroll' ? 'snap-center scroll-ml-6' : ''}
+        snap-center
+        scroll-ml-6
         `,
         className,
       )}

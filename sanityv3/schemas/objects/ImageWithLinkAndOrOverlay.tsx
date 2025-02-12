@@ -1,6 +1,6 @@
 import { ImageWithAlt } from './imageWithAlt'
 import type { PortableTextBlock, Reference } from 'sanity'
-import { defineField, Rule } from 'sanity'
+import { Rule } from 'sanity'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import { configureBlockContent, configureTitleBlockContent } from '../editors'
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
@@ -17,17 +17,18 @@ const blockConfig = {
 
 const blockContentType = configureBlockContent({ ...blockConfig })
 
-export type CarouselImage = {
-  _type: 'imageWithLinkOrOverlay'
+export type CarouselImageWithLinkAndOrOverlay = {
+  _type: 'imageWithLinkAndOrOverlay'
   image: ImageWithAlt
-  captionPositionUnderImage?: boolean
+  captionTeaserTitle?: string
+  captionTitle?: PortableTextBlock[]
+  captionText?: PortableTextBlock[]
   action?: Reference[]
-  captionType?: string
 }
 
 export default {
-  name: 'imageWithLinkOrOverlay',
-  title: 'Image with overlay and/or link',
+  name: 'imageWithLinkAndOrOverlay',
+  title: 'Image with link and/or overlay',
   type: 'object',
   options: {
     collapsed: false,
@@ -42,8 +43,15 @@ export default {
       },
     },
     {
+      name: 'captionTeaserTitle',
+      title: 'Caption teaser title',
+      description: 'Teaser title to introduce overlay content',
+      type: 'string',
+    },
+    {
       name: 'captionTitle',
       title: 'Caption title',
+      description: 'Displays title in overlay',
       type: 'array',
       components: {
         input: CompactBlockEditor,
@@ -53,33 +61,34 @@ export default {
     {
       name: 'captionText',
       title: 'Caption content',
+      description: 'Displays title in overlay',
       type: 'array',
       of: [blockContentType],
       validation: (Rule: Rule) =>
         Rule.custom((value: PortableTextBlock[]) => {
-          return validateCharCounterEditor(value, 600)
+          return validateCharCounterEditor(value, 600, true)
         }).error(),
     },
     {
       name: 'action',
       title: 'CTA Link',
+      description:
+        'Optional. Displays link label and arrow on image when used alone. Displays in overlay, label is hidden, when used with caption title or content.',
       type: 'array',
       of: [{ type: 'linkSelector', title: 'Link' }],
-      description: 'Optional link associated with the image.',
       validation: (Rule: Rule) => Rule.max(1).error('Only one action is permitted'),
     },
   ],
   preview: {
     select: {
       imageUrl: 'image.asset.url',
-      alt: 'image.alt',
-      caption: 'caption',
+      captionTeaserTitle: 'captionTeaserTitle',
     },
-    prepare({ imageUrl, caption, alt }: { imageUrl: string; alt: string; caption: string }) {
+    prepare({ imageUrl, captionTeaserTitle }: { imageUrl: string; captionTeaserTitle: string }) {
       return {
-        title: alt || 'No alt text',
-        subtitle: caption || 'No caption',
-        media: <img src={imageUrl} alt={alt} style={{ height: '100%' }} />,
+        title: 'Image with link and or overlay',
+        subtitle: captionTeaserTitle || '',
+        media: <img src={imageUrl} alt="" style={{ height: '100%' }} />,
       }
     },
   },

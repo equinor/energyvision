@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import {
   VideoPlayerCarouselItem,
   ImageCarouselItem,
@@ -51,7 +52,6 @@ type CarouselProps = {
   autoRotation?: boolean
   hasSectionTitle?: boolean
   title?: PortableTextBlock[]
-  captionPositionUnderImage?: boolean
 } & Omit<HTMLAttributes<HTMLDivElement>, 'title'>
 
 const TRANSLATE_X_AMOUNT_LG = 1000
@@ -69,7 +69,6 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
     className = '',
     listClassName = '',
     hasSectionTitle = false,
-    captionPositionUnderImage,
   },
   ref,
 ) {
@@ -80,15 +79,22 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
   //a prefers-reduced-motion user setting must always override autoplay
   const prefersReducedMotion = usePrefersReducedMotion()
-  const internalAutoRotation = prefersReducedMotion ? false : autoRotation && displayMode === 'single'
+  const internalAutoRotation = prefersReducedMotion
+    ? false
+    : autoRotation && variant === 'image' && displayMode === 'single'
+  console.log(`${title && toPlainText(title)} has internalautoroation ${internalAutoRotation}`)
+  console.log('items', items)
   const [currentIndex, setCurrentIndex] = useState(0)
   const [currentXPosition, setCurrentXPosition] = useState(0)
   const [currentListTranslateX, setCurrentListTranslateX] = useState(0)
   const [pauseAutoRotation, setPauseAutoRotation] = useState(false)
+  const [wasUserInteraction, setWasUserInteraction] = useState(false)
   let TRANSLATE_X_AMOUNT = TRANSLATE_X_AMOUNT_SM
   const isMedium = useMediaQuery(`(min-width: 768px)`)
   const isLarge = useMediaQuery(`(min-width: 1024px)`)
   const [scrollPosition, setScrollPosition] = useState<'start' | 'middle' | 'end'>('start')
+  //@ts-ignore:TODO
+  const isImageCarouselWithRichTextBelow = items.some((item) => item?.type === 'imageWithRichTextBelow')
 
   if (isMedium) {
     TRANSLATE_X_AMOUNT = TRANSLATE_X_AMOUNT_MD
@@ -190,9 +196,10 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
     const newIndex = isFirst ? items?.length - 1 : currentIndex - 1
     const newXPosition = currentXPosition - TRANSLATE_X_AMOUNT
     const lowestLastItemTranslateXPosition = Math.min(...itemsXPositions)
+
     if (newXPosition === lowestLastItemTranslateXPosition) {
       const newPositions = itemsXPositions.map((position, i) => {
-        if (newIndex === 0 && i === 3) {
+        if (newIndex === 0 && i === items?.length - 1) {
           return lowestLastItemTranslateXPosition - TRANSLATE_X_AMOUNT
         } else if (i === newIndex - 1) {
           return lowestLastItemTranslateXPosition - TRANSLATE_X_AMOUNT
@@ -207,6 +214,18 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
     setCurrentIndex(newIndex)
     setCurrentXPosition(newXPosition)
   }, [TRANSLATE_X_AMOUNT, currentIndex, currentListTranslateX, currentXPosition, items?.length, itemsXPositions])
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLUListElement>) => {
+    console.log('event key', event.key)
+    if (event.key === 'ArrowRight') {
+      setWasUserInteraction(true)
+      loopSlideNext()
+    }
+    if (event.key === 'ArrowLeft') {
+      loopSlidePrev()
+      setWasUserInteraction(true)
+    }
+  }
 
   useEffect(() => {
     if (internalAutoRotation && !pauseAutoRotation) {
@@ -230,21 +249,26 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
   const cancelTimeout = () => {
     timeoutRef.current && clearTimeout(timeoutRef.current)
   }
+  //  no-scrollbar
+  const commonListContainerClassName = `flex 
+  gap-3 
+  lg:gap-6 
+  w-full 
+  h-max 
+  overflow-x-auto
+  scroll-pl-lg
+  snap-x`
 
   const listVariantClassName = {
-    video: 'flex gap-3 lg:gap-12 w-full h-full overflow-y-hidden no-scrollbar',
+    video: commonListContainerClassName,
     image: `${
       displayMode === 'single'
         ? `grid transition-transform ease-scroll delay-0 duration-[800ms]`
-        : 'flex gap-3 md:gap-8 w-full h-full overflow-y-hidden no-scrollbar'
+        : commonListContainerClassName
     }`,
-    event: `flex gap-3 lg:gap-6 w-full h-full overflow-y-hidden no-scrollbar`,
-    keyNumber: `flex w-full gap-3xl`,
-    iframe: `flex mx-0 gap-md lg:px-0 px-6 lg:no-scrollbar`,
-  }
-  const listDisplayModeClassName = {
-    scroll: 'snap-mandatory snap-x overflow-x-scroll',
-    single: ``,
+    event: commonListContainerClassName,
+    keyNumber: commonListContainerClassName,
+    iframe: commonListContainerClassName,
   }
 
   const getCarouselItem = (item: CarouselItemTypes, i: number) => {
@@ -268,13 +292,20 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
             displayMode={displayMode}
             aria-label={ariaLabel}
             active={i === currentIndex}
-            captionPositionUnderImage={captionPositionUnderImage}
             {...(variant === 'image' &&
               displayMode === 'single' && {
                 style: {
                   transform: `translate3d(${itemsXPositions[i]}px, 0px, 0px)`,
                 },
-                onFocus: () => cancelTimeout(),
+                wasUserPress: wasUserInteraction,
+                onMouseOver: () => {
+                  console.log('mouse over on image, cancel timeout')
+                  cancelTimeout()
+                },
+                onFocus: () => {
+                  console.log('focus on image, cancel timout')
+                  cancelTimeout()
+                },
               })}
           />
         )
@@ -309,13 +340,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
             displayMode={displayMode}
             aria-label={ariaLabel}
             active={i === currentIndex}
-            title={(item as IFrameCarouselItemData).title}
-            action={(item as IFrameCarouselItemData).action}
-            description={(item as IFrameCarouselItemData).description}
-            frameTitle={(item as IFrameCarouselItemData).frameTitle}
-            url={(item as IFrameCarouselItemData).url}
-            cookiePolicy={(item as IFrameCarouselItemData).cookiePolicy}
-            aspectRatio={(item as IFrameCarouselItemData).aspectRatio}
+            {...(item as IFrameCarouselItemData)}
           />
         )
     }
@@ -334,54 +359,49 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
         title && {
           'aria-label': toPlainText(title),
         })}
-      {...(displayMode === 'scroll' && {
-        tabIndex: 0,
-      })}
       aria-roledescription="carousel"
       className={envisTwMerge(
         `w-full
         relative
         mx-auto
-      ${captionPositionUnderImage && 'mb-10 md:mb-2'}
         ${
-          variant === 'image' && displayMode === 'single'
-            ? 'grid grid-cols-1 grid-rows-auto carousel-top-bottom-grid-area'
-            : 'px-6 lg:px-layout-sm flex flex-col-reverse max-w-viewport'
+          variant === 'image'
+            ? `flex ${isImageCarouselWithRichTextBelow ? 'flex-col' : 'flex-col-reverse'}`
+            : 'flex flex-col-reverse'
         }
+        ${variant === 'image' && displayMode === 'single' ? `overflow-x-hidden` : ''}
         
         `,
         className,
       )}
     >
-      {/* Controls - should be before slide in DOM but not visually */}
+      {/* Controls - should be before slide in DOM but not visually 
+      TODO: hide controls when only 2 images/items
+      why this: ${items.length === 3 ? 'lg:hidden' : ''}
+      */}
       <div
         role="group"
         aria-labelledby={controlsId}
         className={`
-          grid
-          grid-rows-1
-          carousel-controls-grid-area
-          pt-6
-          lg:pt-2
-          pb-2
-          ${items.length === 3 ? 'lg:hidden' : ''}
+          ${items?.length < 3 ? 'hidden' : ''}
+          pt-6 
+          pb-2 
+          flex 
           ${internalAutoRotation ? 'justify-between' : 'justify-end'}
           ${
             variant === 'image' && displayMode === 'single'
-              ? `
-            mx-auto
-            [grid-area:top]
-            lg:[grid-area:bottom]
-            w-[var(--image-carousel-card-w-sm)] 
-            md:w-[var(--image-carousel-card-w-md)] 
-            lg:w-[var(--image-carousel-card-w-lg)]`
-              : ''
-          }`}
+              ? `mx-auto
+            w-image-carousel-card-w-sm
+            md:w-image-carousel-card-w-md
+            lg:w-image-carousel-card-w-lg
+            `
+              : 'px-layout-lg'
+          } `}
       >
         <div id={controlsId} className="sr-only">
           <FormattedMessage id="carousel_controls" defaultMessage="Carousel controls" />
         </div>
-        {internalAutoRotation && (
+        {internalAutoRotation && variant === 'image' && displayMode === 'single' && (
           <MediaButton
             key={`play_pause_button_${currentIndex}`}
             title={pauseAutoRotation ? `Play our image gallery.` : `Pause image gallery`}
@@ -394,7 +414,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
             className="[grid-area:left]"
           />
         )}
-        <div className="[grid-area:right] flex gap-3 items-center">
+        <div className="flex gap-3 items-center">
           <MediaButton
             title={`Go to previous`}
             aria-controls={carouselItemsId}
@@ -434,12 +454,15 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
       <ul
         ref={sliderRef}
         id={carouselItemsId}
+        role="group"
         className={envisTwMerge(
           `transition-all
           duration-300
           m-auto
+          focus:outline-dashed
+          focus:outline-grey-60
+          focus:outline-1
           ${variant === 'event' ? 'p-[2px]' : ''}
-          ${listDisplayModeClassName[displayMode]}
           ${listVariantClassName[variant]}
         `,
           listClassName,
@@ -449,8 +472,9 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
             style: {
               transform: `translate3d(${currentListTranslateX}px, 0px, 0px)`,
             },
+            'aria-live': pauseAutoRotation ? 'polite' : 'off',
+            onKeyDown: handleKeyDown,
           })}
-        aria-live={pauseAutoRotation ? 'polite' : 'off'}
       >
         {items?.map((item, i) => {
           return getCarouselItem(item, i)

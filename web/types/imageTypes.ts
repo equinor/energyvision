@@ -1,4 +1,4 @@
-import { ContentAlignmentTypes, FigureRatio, DesignOptions } from './index'
+import { ContentAlignmentTypes, FigureRatio, DesignOptions, LinkData } from './index'
 import { SanityImageCrop, SanityImageHotspot, SanityImageObject } from '@sanity/image-url/lib/types/types'
 import { PortableTextBlock } from '@portabletext/types'
 
@@ -19,6 +19,7 @@ export type ImageWithAlt = {
 
 export type ImageWithCaptionData = {
   _type: 'imageWithAltAndCaption'
+  type: 'imageWithAltAndCaption'
   _key?: string
   image: ImageWithAlt
   asset: SanityImageObject
@@ -48,6 +49,16 @@ export type FigureData = {
     aspectRatio?: FigureRatio
   }
 }
+export type ImageWithLinkOrOverlay = {
+  id: string
+  type: 'imageWithLinkOrOverlay'
+  image: SanityImageObject
+  action?: LinkData
+  captionTitle?: PortableTextBlock[]
+  captionText?: PortableTextBlock[]
+}
+
+export type ImageCarouselItem = ImageWithCaptionData | ImageWithLinkOrOverlay
 
 export type ImageCarouselData = {
   type: 'imageCarousel'
@@ -58,13 +69,9 @@ export type ImageCarouselData = {
   items: ImageCarouselItem[]
   captionPositionUnderImage?: boolean
   options: {
-    autoplay: boolean
-    delay: number
+    singleMode?: boolean
+    autoplay?: boolean
+    delay?: number
   }
   designOptions: DesignOptions
 }
-
-export type ImageCarouselItem = {
-  id: string
-  action?: any
-} & ImageWithCaptionData

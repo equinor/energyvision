@@ -21,13 +21,12 @@ const ingressBlockContentType = configureBlockContent({
 
 export default {
   name: 'videoPlayerCarousel',
-  title: 'Horizontal scroll video player',
+  title: 'Video carousel',
   type: 'object',
   fieldsets: [
     {
       title: 'Design options',
       name: 'design',
-      description: 'Some options for design',
       options: {
         collapsible: true,
         collapsed: false,
@@ -58,7 +57,7 @@ export default {
               name: 'title',
               type: 'array',
               title: 'Title',
-              description: 'The (optional) title/heading shown beneath the video.',
+              description: 'Optional title/heading shown beneath the video.',
               components: { input: CompactBlockEditor },
               of: [titleContentType],
             },

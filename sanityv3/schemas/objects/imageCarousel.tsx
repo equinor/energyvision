@@ -69,18 +69,46 @@ export default {
     {
       type: 'array',
       name: 'items',
-      description: 'Add images for the carousel',
+      description: 'Add images for the carousel. Use same type of items.',
       title: 'Carousel items',
-      of: [{ type: 'imageWithAltAndCaption' },
-           { type: 'carouselImage' }],
+      of: [
+        { type: 'imageWithAltAndCaption' },
+        { type: 'imageWithRichTextBelow' },
+        { type: 'imageWithLinkAndOrOverlay' },
+      ],
       validation: (Rule: Rule) => Rule.required().min(2),
     },
     {
       type: 'boolean',
-      name: 'captionPositionUnderImage',
-      title: 'Position caption and credit under image',
-      description: 'Toggle to display caption and credit under the images.',
+      name: 'singleMode',
+      title: 'Single mode',
+      description: 'Displays the image carousel as one image at the time. Default is scroll container',
       initialValue: false,
+      fieldset: 'carouselOptions',
+      validation: (Rule: Rule) =>
+        Rule.custom((value: any, context) => {
+          if (!value) {
+            return true
+          }
+          //@ts-ignore
+          return value && context?.parent?.items?.length >= 3 ? true : 'Single mode requires at least 3 images'
+        }),
+    },
+    {
+      type: 'boolean',
+      name: 'autoplay',
+      title: 'Autoplay',
+      description: 'Whether the carousel should autoplay or not.',
+      initialValue: false,
+      fieldset: 'carouselOptions',
+      hidden: ({ parent }: { parent: any }) => !parent?.singleMode,
+    },
+    {
+      title: 'Background',
+      description: 'Pick a colour for the background. Default is white.',
+      name: 'background',
+      type: 'colorlist',
+      fieldset: 'design',
     },
     {
       type: 'number',
@@ -91,21 +119,6 @@ export default {
       fieldset: 'carouselOptions',
       validation: (Rule: Rule) => Rule.required().min(2),
       readOnly: ({ value }: { value?: string }) => !value,
-    },
-    {
-      type: 'boolean',
-      name: 'autoplay',
-      title: 'Autoplay',
-      description: 'Whether the carousel should autoplay or not.',
-      initialValue: true,
-      fieldset: 'carouselOptions',
-    },
-    {
-      title: 'Background',
-      description: 'Pick a colour for the background. Default is white.',
-      name: 'background',
-      type: 'colorlist',
-      fieldset: 'design',
     },
   ],
   preview: {

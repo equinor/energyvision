@@ -197,6 +197,9 @@
     background-image: linear-gradient(theme('colors.slate-blue.95 / 50%'), theme('colors.slate-blue.95 / 50%')),
       linear-gradient(rgba(0, 0, 0, 0.36), rgba(0, 0, 0, 0.36));
   }
+  .fade-in-black-gradient {
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.55) 50%, rgba(0, 0, 0, 0.7) 80%);
+  }
   .black-to-top-gradient {
     background-image: linear-gradient(
       to top,
@@ -285,6 +288,13 @@
   @starting-style {
     .topbar-height {
       top: 0;
+    }
+  }
+  @starting-style {
+    .fadeInVisibilityOpacityDisplay {
+      visibility: visible;
+      opacity: 0;
+      display: hidden;
     }
   }
 }

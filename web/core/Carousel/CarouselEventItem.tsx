@@ -1,12 +1,10 @@
 import envisTwMerge from '../../twMerge'
-import { DisplayModes } from './Carousel'
 import { forwardRef, HTMLAttributes } from 'react'
 import { EventCard } from '@sections/cards/EventCard'
 import { EventCardData } from '../../types/index'
 
 type CarouselEventItemProps = {
   event: EventCardData
-  displayMode?: DisplayModes
   className?: string
   active?: boolean
   hasSectionTitle?: boolean
@@ -14,7 +12,7 @@ type CarouselEventItemProps = {
 } & Omit<HTMLAttributes<HTMLLIElement>, 'title'>
 
 export const CarouselEventItem = forwardRef<HTMLLIElement, CarouselEventItemProps>(function CarouselEventItem(
-  { event, displayMode = 'scroll', hasSectionTitle = false, className = '', active = false, ...rest },
+  { event, hasSectionTitle = false, className = '', active = false, ...rest },
   ref,
 ) {
   return (
@@ -22,13 +20,13 @@ export const CarouselEventItem = forwardRef<HTMLLIElement, CarouselEventItemProp
       {...rest}
       ref={ref}
       aria-current={active}
-      aria-roledescription="slide"
       className={envisTwMerge(
         `transform-all
         shrink-0
         grow
         relative
-        ${displayMode === 'scroll' ? 'snap-center scroll-ml-6' : ''}
+        snap-center
+        scroll-ml-6
         `,
         className,
       )}

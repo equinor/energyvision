@@ -1,129 +1,193 @@
 import envisTwMerge from '../../twMerge'
 import Image from '../../pageComponents/shared/SanityImage'
-import { ImageWithAlt, ImageWithCaptionData, LinkData } from '../../types/index'
+import { ImageWithAlt, LinkData } from '../../types/index'
 import { DisplayModes } from './Carousel'
-import { forwardRef, HTMLAttributes } from 'react'
-import GridLinkArrow from '@sections/Grid/GridLinkArrow'
+import { forwardRef, HTMLAttributes, useEffect, useMemo, useRef } from 'react'
+import { PortableTextBlock } from '@portabletext/types'
+import { SanityImageObject } from '@sanity/image-url/lib/types/types'
+import { BaseLink } from '@core/Link'
+import { getUrlFromAction } from '../../common/helpers'
+import { getLocaleFromName } from '../../lib/localization'
+import { ArrowRight } from '../../icons'
+import { ImageWithOverlay } from '@core/Image/ImageWithOverlay'
+import Blocks from '../../pageComponents/shared/portableText/Blocks'
+import { mergeRefs } from '@equinor/eds-utils'
 
 type CarouselImageItemProps = {
-  image?: ImageWithAlt | ImageWithCaptionData
+  type: string
+  image?: ImageWithAlt | SanityImageObject
   displayMode?: DisplayModes
   className?: string
   aspectRatio?: string
-  caption?: string
+  caption?: PortableTextBlock[] | string
   attribution?: string
+  captionTeaserTitle?: string
+  captionTitle?: PortableTextBlock[]
+  captionText?: PortableTextBlock[]
   active?: boolean
-  captionPositionUnderImage?: boolean
   action?: LinkData
+  wasUserPress?: boolean
 } & HTMLAttributes<HTMLLIElement>
 
 export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProps>(function CarouselImageItem(
   {
+    type,
     active = false,
+    wasUserPress = false,
     image,
     caption,
     attribution,
+    captionTitle,
+    captionText,
+    captionTeaserTitle,
     displayMode = 'single',
     className = '',
     action,
-    captionPositionUnderImage,
     ...rest
   },
   ref,
 ) {
+  console.log('Image carousel type', type)
+  const itemRef = useRef<HTMLLIElement>(null)
+  const combinedItemRef = useMemo(() => mergeRefs<HTMLLIElement>(itemRef, ref), [itemRef, ref])
+  const isJustImage = type === 'imageWithAltAndCaption' && !caption && !attribution
+  const isImageWithSimpleCaption = type === 'imageWithAltAndCaption' && (!!caption || !!attribution)
+  const isImageWithRichTextCaption = type === 'imageWithRichTextBelow' && !!caption
+  const isImageWithJustLink = type === 'imageWithLinkAndOrOverlay' && action && (!captionTitle || !captionText)
+  const isImageWithOverlay = type === 'imageWithLinkAndOrOverlay' && (!!captionTitle || !!captionText)
+
+  const url = action && getUrlFromAction(action)
+
+  useEffect(() => {
+    console.log('active', active)
+    console.log('wasUserPress', wasUserPress)
+    if (active && itemRef?.current && wasUserPress) {
+      itemRef?.current?.focus()
+    }
+  }, [active, wasUserPress])
+
+  const getBody = () => {
+    if (isJustImage) {
+      return (
+        <div className="relative w-full h-full rounded-md">
+          <Image maxWidth={1420} image={image as ImageWithAlt} fill className="rounded-md" />
+        </div>
+      )
+    }
+    if (isImageWithSimpleCaption) {
+      return (
+        <figure className="relative w-full h-full rounded-md flex items-end">
+          <Image maxWidth={1420} image={image as ImageWithAlt} fill className="rounded-md" />
+          <figcaption
+            className={`w-full rounded-b-md z-[1] fade-in-black-gradient fadeInVisibilityOpacityDisplay transition-all ${
+              active ? 'block' : 'hidden'
+            }`}
+          >
+            <div className={`w-full h-fit pt-20 pb-6 px-8`}>
+              <span className="w-2/3 flex flex-col gap-1 ">
+                {caption && <span className={`text-white-100 text-left text-lg`}>{caption as string}</span>}
+                {attribution && <span className={`text-white-100 text-base`}>{attribution}</span>}
+              </span>
+            </div>
+          </figcaption>
+        </figure>
+      )
+    }
+    if (isImageWithJustLink) {
+      return (
+        <figure className="relative w-full h-full">
+          <Image maxWidth={1420} image={image as ImageWithAlt} fill className="rounded-md" />
+          <div className="h-full w-full fade-in-black-gradient pt-20 flex items-end rounded-b-md">
+            <BaseLink
+              href={url as string}
+              {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
+              type={action.type}
+              className="group flex gap-2"
+            >
+              <span className="text-white-100 text-left text-lg">{action.label}</span>
+              <ArrowRight className={`group-hover:translate-y-2 size-10`} />
+            </BaseLink>
+          </div>
+        </figure>
+      )
+    }
+    if (isImageWithOverlay) {
+      return (
+        <ImageWithOverlay
+          teaserTitle={captionTeaserTitle}
+          title={captionTitle as PortableTextBlock[]}
+          text={captionText}
+          image={image}
+          action={action}
+          captionClassname={`${active ? 'opacity-100' : 'opacity-0'}`}
+        />
+      )
+    }
+    if (isImageWithRichTextCaption) {
+      return (
+        <figure className="w-full h-full flex flex-col">
+          <div className={`relative w-full aspect-4/5 md:aspect-video rounded-md`}>
+            <Image maxWidth={1420} image={image as ImageWithAlt} fill className="rounded-md" />
+          </div>
+          <figcaption
+            className={`max-w-text py-6 px-8 fadeInVisibilityOpacityDisplay transition-all ${
+              active ? 'block' : 'hidden'
+            }`}
+          >
+            {caption && <Blocks value={caption} />}
+          </figcaption>
+        </figure>
+      )
+    }
+  }
+
   return (
     <li
       {...rest}
-      ref={ref}
+      ref={combinedItemRef}
+      // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+      tabIndex={active ? 0 : -1}
       aria-current={active}
       aria-hidden={!active}
-      aria-roledescription="slide"
       className={envisTwMerge(
         `
-        aspect-4/5
-        md:aspect-video
         relative
         h-full
+        w-image-carousel-card-w-sm 
+        md:w-image-carousel-card-w-md 
+        lg:w-image-carousel-card-w-lg
+        ${type !== 'imageWithRichTextBelow' ? 'aspect-4/5 md:aspect-video' : ''}
         ${
           displayMode === 'single'
             ? `
-        transition-opacity
-        duration-1000
-        ease-[ease]`
-            : 'shrink-0'
+            focus:outline-dashed
+            focus:outline-2
+            focus:outline-grey-50
+            dark:focus:outline-white-100
+            focus:outline-offset-2
+            transition-opacity
+            duration-1000
+            ease-[ease]
+            ${!active ? 'opacity-30' : ''}
+        `
+            : 'first:ml-lg lg:first:ml-layout-sm last:mr-lg lg:last-mr-layout-sm shrink-0'
         }
-        ${!active && displayMode === 'single' ? 'opacity-30' : ''}
         ${
           displayMode === 'scroll'
-            ? 'w-[80%] snap-center scroll-ml-6'
-            : `w-[var(--image-carousel-card-w-sm)] 
-            md:w-[var(--image-carousel-card-w-md)] 
-            lg:w-[var(--image-carousel-card-w-lg)] 
+            ? `snap-center snap-mandatory`
+            : `
             ms-2 
             me-2 
-            [grid-area:bottom]
-            lg:[grid-area:top]`
+            col-start-1 
+            col-end-1 
+            row-start-1 
+            row-end-1`
         }
         `,
         className,
       )}
     >
-      {caption || attribution ? (
-        <figure className="relative w-full h-full">
-          <Image maxWidth={1420} image={image as ImageWithAlt} fill className="rounded-md" />
-          <GridLinkArrow action={action} variant="circle" />
-          <figcaption
-            className={envisTwMerge(
-              `absolute left-4 right-4 lg:right-8`,
-              active ? 'block' : 'hidden',
-              captionPositionUnderImage
-                ? `
-                  h-16
-                  -bottom-[70px] 
-                  md:-bottom-[85px] 
-                  min-w-full
-                  max-w-full
-                  sm:min-w-[40%] 
-                  sm:max-w-[60%] 
-                  lg:left-16
-                  lg:w-[calc(100%-80px-150px)]
-                `
-                : `bottom-0 lg:left-8 mb-4 lg:mb-8`,
-            )}
-          >
-            <div
-              className={envisTwMerge(
-                captionPositionUnderImage
-                  ? 'w-full text-slate-80 pl-2 pr-8 flex flex-col h-max'
-                  : 'bg-spruce-wood-70/75 text-slate-80  px-8 pt-6 w-fit flex flex-col max-w-text',
-              )}
-            >
-              {caption && (
-                <span
-                  className={`${captionPositionUnderImage ? 'text-sm line-clamp-1 sm:line-clamp-1 mb-2' : 'text-lg'}  ${
-                    attribution && !captionPositionUnderImage ? 'md:mb-3 line-clamp-2 mb-5' : ''
-                  }`}
-                >
-                  {caption}
-                </span>
-              )}
-              {attribution && (
-                <span
-                  className={`${captionPositionUnderImage ? 'line-clamp-3' : 'text-lg'} mb-5 text-sm line-clamp-3 
-                    ${caption && !captionPositionUnderImage ? ' mb-2 md:mb-8 line-clamp-3' : ''}`}
-                >
-                  {attribution}
-                </span>
-              )}
-            </div>
-          </figcaption>
-        </figure>
-      ) : (
-        <div>
-          <Image maxWidth={1420} image={image as ImageWithAlt} fill className="rounded-md" />
-          <GridLinkArrow action={action} variant="circle" />
-        </div>
-      )}
+      {getBody()}
     </li>
   )
 })

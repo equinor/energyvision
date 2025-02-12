@@ -210,6 +210,12 @@ module.exports = {
         '3xl': 'calc((56 / 16) * theme(fontSize.base))',
         '4xl': 'calc((96 / 16) * theme(fontSize.base))',
         topbar: '85px',
+        'image-carousel-card-w-sm': '275px',
+        'image-carousel-card-w-md': '692px',
+        'image-carousel-card-w-lg': '980px',
+        'layout-sm': 'clamp(16px, calc(-38.3689px + 14.4984vw), 250px)',
+        'layout-md': 'clamp(16px, calc(-69.4369px + 22.7832vw), 368px)',
+        'layout-lg': 'clamp(16px, calc(-101.4757px + 31.3269vw), 500px)',
       }),
       fontSize: {
         //--typeScale-00
@@ -277,9 +283,6 @@ module.exports = {
         xs: '0.1rem',
       },
       padding: {
-        'layout-sm': 'clamp(16px, calc(-38.3689px + 14.4984vw), 250px)',
-        'layout-md': 'clamp(16px, calc(-69.4369px + 22.7832vw), 368px)',
-        'layout-lg': 'clamp(16px, calc(-101.4757px + 31.3269vw), 500px)',
         'page-content': 'theme(spacing.20)',
       },
       boxShadow: {
@@ -293,9 +296,6 @@ module.exports = {
         '4/3': '4/3',
       },
       margin: {
-        'layout-sm': 'clamp(16px, calc(-38.3689px + 14.4984vw), 250px)',
-        'layout-md': 'clamp(16px, calc(-69.4369px + 22.7832vw), 368px)',
-        'layout-lg': 'clamp(16px, calc(-101.4757px + 31.3269vw), 500px)',
         'page-content': 'theme(spacing.20)',
       },
       transitionProperty: {
