@@ -12,7 +12,6 @@ const round = (num) =>
 const em = (px, base) => `${round(px / base)}em`
 
 module.exports = {
-  purge: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
   content: [
     './components/**/*.{js,ts,tsx}',
     './pageComponents/**/*.{js,ts,tsx}',
