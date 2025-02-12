@@ -209,6 +209,9 @@ module.exports = {
         '2xl': 'calc((40 / 16) * theme(fontSize.base))',
         '3xl': 'calc((56 / 16) * theme(fontSize.base))',
         '4xl': 'calc((96 / 16) * theme(fontSize.base))',
+        'image-carousel-card-w-sm': '275px',
+        'image-carousel-card-w-md': '692px',
+        'image-carousel-card-w-lg': '980px',
         topbar: '85px',
       }),
       fontSize: {
@@ -264,7 +267,7 @@ module.exports = {
         viewport: '1920px',
         //When large font, prose(65ch) might not be the best
         text: '760px',
-        menuText: 'calc(35 * var(--space-medium))',
+        menuText: 'calc(35 * theme(spacing.6))',
       },
       minWidth: {
         viewport: '375',
