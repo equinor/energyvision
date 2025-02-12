@@ -58,11 +58,12 @@ Custom500.getLayout = (page: AppProps) => {
         messages={data?.intl?.messages}
       >
         <Grid>
-          <>
+          <div className="pt-topbar">
+            {/*@ts-ignore: TODO */}
             <Header slugs={slugs} menuData={data?.menuData} />
             {page}
             <Footer footerData={data?.footerData} />
-          </>
+          </div>
         </Grid>
       </IntlProvider>
     </>
