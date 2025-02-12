@@ -1,4 +1,4 @@
-import { forwardRef, useMemo, useRef } from 'react'
+import { forwardRef, useRef } from 'react'
 import singletonRouter from 'next/router'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
 import type { NewsRoomPageType } from '../../types'
@@ -8,7 +8,7 @@ import { ResourceLink } from '@core/Link'
 import { getIsoFromLocale } from '../../lib/localization'
 import { Flags } from '../../common/helpers/datasetHelpers'
 import { createInstantSearchRouterNext } from 'react-instantsearch-router-nextjs'
-import { UiState } from 'instantsearch.js'
+import { SearchClient, SearchResponse, UiState } from 'instantsearch.js'
 import Seo from '../../pageComponents/shared/Seo'
 import { Configure, InstantSearch } from 'react-instantsearch'
 import { FormattedMessage, useIntl } from 'react-intl'
@@ -20,15 +20,14 @@ import { List } from '@core/List'
 import { PaginationContextProvider } from '../../common/contexts/PaginationContext'
 
 type NewsRoomTemplateProps = {
-  isServerRendered?: boolean
   locale?: string
   pageData?: NewsRoomPageType | undefined
   slug?: string
-  url?: string
+  initialSearchResponse: SearchResponse<any>
 }
 
 const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function NewsRoomTemplate(
-  { isServerRendered, locale, pageData, slug, url },
+  { locale, pageData, slug, initialSearchResponse },
   ref,
 ) {
   const { ingress, title, seoAndSome, subscriptionLink, subscriptionLinkTitle, localNewsPages, fallbackImages } =
@@ -89,7 +88,7 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
   const routing = {
     router: createInstantSearchRouterNext({
       singletonRouter,
-      serverUrl: url,
+      serverUrl: `https://www.equinor.com${isoCode === 'nb-NO' ? '/no/nyheter' : '/news'}`, // temporary fix for url to be available during build time
       routerOptions: {
         createURL: createURL,
         parseURL: parseURL,
@@ -130,23 +129,31 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
     },
   }
 
-  const searchClient = useMemo(() => {
-    return isServerRendered
-      ? client({ headers: { 
-      //@ts-ignore: TODO
-        Referer: url } })
-      : client(undefined);
-  }, [isServerRendered, url]);
-  
+  const searchClient = client()
+
+  const queriedSearchClient: SearchClient = {
+    ...searchClient,
+    search(requests: any) {
+      if (requests.every(({ params }: any) => !params.query && params?.facetFilters?.flat().length > 2)) {
+        return Promise.resolve({
+          results: requests.map(() => initialSearchResponse),
+        })
+      }
+
+      return searchClient.search(requests)
+    },
+  }
+
   return (
     <PaginationContextProvider defaultRef={resultsRef}>
       <Seo seoAndSome={seoAndSome} slug={slug} pageTitle={title} />
-      <main ref={ref} className="">
-      <InstantSearch
-        searchClient={searchClient}
-        future={{ preserveSharedStateOnUnmount: false }}
-        indexName={indexName}
-        routing={routing}>
+      <main ref={ref}>
+        <InstantSearch
+          searchClient={queriedSearchClient}
+          future={{ preserveSharedStateOnUnmount: false }}
+          indexName={indexName}
+          routing={routing}
+        >
           <Configure
             facetingAfterDistinct
             maxFacetHits={50}
@@ -172,9 +179,7 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
                   >
                     <List.Item className="w-full">
                       {subscriptionLink?.slug && (
-                        <ResourceLink href={subscriptionLink.slug} className="w-full">
-                          {subscriptionLinkTitle}
-                        </ResourceLink>
+                        <ResourceLink href={subscriptionLink.slug}>{subscriptionLinkTitle}</ResourceLink>
                       )}
                     </List.Item>
                     {localNewsPages &&
@@ -182,7 +187,7 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
                       localNewsPages?.map((localNewsPage) => {
                         return localNewsPage?.link?.slug ? (
                           <List.Item key={localNewsPage.id} className="w-full">
-                            <ResourceLink type={localNewsPage.type} href={localNewsPage?.link?.slug} className="w-full">
+                            <ResourceLink type={localNewsPage.type} href={localNewsPage?.link?.slug}>
                               {localNewsPage?.label}
                             </ResourceLink>
                           </List.Item>

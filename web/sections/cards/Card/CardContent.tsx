@@ -30,19 +30,20 @@ export const CardContent = forwardRef<HTMLDivElement, CardContentProps>(function
   const commonStyling = `pt-6 md:pt-8 pb-6 px-6`
   const variantClassNames = {
     primary: `${commonStyling} flex-col items-start`,
-    secondary: `${commonStyling} pb-12 lg:pb-16 flex-row items-center justify-between items-center`,
+    secondary: `${commonStyling} flex-col items-start`,
     compact: `pb-4 pt-2`,
     single: `${commonStyling} px-10 flex-col items-start`,
   }
   const variantLinkClassNames = {
     primary: `self-end mt-auto max-lg:hidden`,
-    secondary: `max-lg:hidden`,
+    secondary: `self-end mt-auto max-lg:hidden`,
     compact: `max-xl:hidden`,
     single: 'self-end mt-auto max-lg:hidden',
   }
   const iconClassNames = twMerge(
     `size-arrow-right
     text-energy-red-100
+    dark:text-white-100
     mr-2
     group-hover/card:translate-x-2
     transition-all

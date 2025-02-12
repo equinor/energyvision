@@ -1,0 +1,23 @@
+#CybotCookiebotDialog a,
+#CybotCookiebotDialog div,
+#CybotCookiebotDialogBodyContentControls,
+#CybotCookiebotDialogBodyContentTitle {
+  font-family: Equinor !important;
+}
+
+#CybotCookiebotDialogBodyLevelButtonLevelOptinAllowallSelection:hover,
+#CybotCookiebotDialogBodyLevelButtonLevelOptinDeclineAll:hover {
+  @apply bg-moss-green-60 !important;
+}
+
+#CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll:hover {
+  @apply bg-moss-green-100 !important;
+}
+
+#CybotCookiebotDialogBodyButtonAccept:hover {
+  @apply bg-moss-green-60 !important;
+}
+
+#CybotCookiebotDialogHeader {
+  @apply hidden !important;
+}

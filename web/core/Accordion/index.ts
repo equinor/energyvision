@@ -1,4 +1,4 @@
-import { Accordion as AccordionWrapper, AccordionProps } from './Accordion'
+import { Accordion as AccordionWrapper, AccordionSingleProps, AccordionMultipleProps } from './Accordion'
 import { Item, AccordionItemProps } from './Item'
 import { Content, AccordionContentProps } from './Content'
 import { Header, AccordionHeaderProps } from './Header'
@@ -16,4 +16,10 @@ Accordion.Header = Header
 Accordion.Content = Content
 
 export { Accordion }
-export type { AccordionProps, AccordionHeaderProps, AccordionItemProps, AccordionContentProps }
+export type {
+  AccordionSingleProps,
+  AccordionMultipleProps,
+  AccordionHeaderProps,
+  AccordionItemProps,
+  AccordionContentProps,
+}

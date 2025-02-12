@@ -48,6 +48,8 @@ export const menuQuery = /* groq */ `
         "location": content->location,
       }
     },
+    featuredIngress,
+    featuredCTALabel,
 	}
 }
 `

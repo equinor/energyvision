@@ -137,10 +137,10 @@ const NewsPage = ({ data: news }: ArticleProps) => {
   const openGraphImages = getOpenGraphImages((openGraphImage?.asset ? openGraphImage : null) || heroImage?.image)
   /*   appInsights.trackPageView({ name: slug, uri: fullUrl }) */
 
-  const formattedContent = content.map(block => ({
+  const formattedContent = content.map((block) => ({
     ...block,
-    markDefs: block.markDefs || [], 
-  }));
+    markDefs: block.markDefs || [],
+  }))
 
   return (
     <>
@@ -204,21 +204,25 @@ const NewsPage = ({ data: news }: ArticleProps) => {
                 )}
               </HeaderInner>
             </Header>
-            <Image>{heroImage && <DefaulHeroImage data={heroImage} />}</Image>
+            {heroImage.image.asset && (
+              <Image>
+                <DefaulHeroImage data={heroImage} />
+              </Image>
+            )}
             {ingress && ingress.length > 0 && (
               <LeadParagraph>
                 <IngressText value={ingress} includeFootnotes />
               </LeadParagraph>
             )}
 
-          {content && content.length > 0 && (
+            {content && content.length > 0 && (
               <Blocks
                 value={formattedContent}
                 proseClassName="prose-article"
                 className="p-0 max-w-viewport mx-auto"
                 includeFootnotes
               />
-            )} 
+            )}
             <div className="mt-8 mb-2 px-layout-lg max-w-viewport mx-auto">
               <Footnotes blocks={[...ingress, ...content]} />
             </div>

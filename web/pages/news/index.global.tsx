@@ -1,29 +1,41 @@
-import { GetServerSideProps } from 'next'
+import { GetStaticProps } from 'next'
 import type { AppProps } from 'next/app'
 import { IntlProvider } from 'react-intl'
-import Footer from '../../pageComponents/shared/Footer'
-import Header from '../../pageComponents/shared/Header'
-import { allNewsDocuments, newsroomQuery } from '../../lib/queries/newsroom'
+import Footer from '../../sections/Footer/Footer'
+import Header from '../../sections/Header/Header'
+import { renderToString } from 'react-dom/server'
+import { newsroomQuery } from '../../lib/queries/newsroom'
 import getIntl from '../../common/helpers/getIntl'
 import { getNameFromLocale, getIsoFromLocale } from '../../lib/localization'
 import { defaultLanguage } from '../../languages'
 import { AlgoliaIndexPageType, NewsRoomPageType } from '../../types'
-import { getComponentsData, getData } from '../../lib/fetchData'
-import NewsRoomTemplateSanity from '@templates/newsroom/sanity/NewsroomSanity'
+import { getComponentsData } from '../../lib/fetchData'
+import NewsRoomTemplate from '@templates/newsroom/Newsroom'
+import { getServerState, InstantSearchSSRProvider } from 'react-instantsearch'
+import { Flags } from '../../common/helpers/datasetHelpers'
+import algoliasearch from 'algoliasearch/lite'
+import { algolia } from '../../lib/config'
 
-export default function NewsRoom({ data }: AlgoliaIndexPageType) {
+export default function NewsRoom({ data, serverState }: AlgoliaIndexPageType) {
   const defaultLocale = defaultLanguage.locale
   const { pageData, slug, intl } = data
   const locale = data?.intl?.locale || defaultLocale
 
   return (
-    <IntlProvider
-      locale={getIsoFromLocale(locale)}
-      defaultLocale={getIsoFromLocale(defaultLocale)}
-      messages={intl?.messages}
-    >
-      <NewsRoomTemplateSanity locale={locale} pageData={pageData as NewsRoomPageType} slug={slug} />
-    </IntlProvider>
+    <InstantSearchSSRProvider {...serverState}>
+      <IntlProvider
+        locale={getIsoFromLocale(locale)}
+        defaultLocale={getIsoFromLocale(defaultLocale)}
+        messages={intl?.messages}
+      >
+        <NewsRoomTemplate
+          locale={locale}
+          pageData={pageData as NewsRoomPageType}
+          initialSearchResponse={data.response}
+          slug={slug}
+        />
+      </IntlProvider>
+    </InstantSearchSSRProvider>
   )
 }
 
@@ -47,35 +59,45 @@ NewsRoom.getLayout = (page: AppProps) => {
       defaultLocale={getIsoFromLocale(defaultLocale)}
       messages={data?.intl?.messages}
     >
-      <>
+      <div className="pt-topbar">
+        {/*@ts-ignore: TODO */}
         <Header slugs={slugs} menuData={data?.menuData} />
         {page}
         <Footer footerData={data?.footerData} />
-      </>
+      </div>
     </IntlProvider>
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ req, preview = false, locale = 'en' }) => {
+export const getStaticProps: GetStaticProps = async ({ preview = false, locale = 'en' }) => {
   // For the time being, let's just give 404 for satellites
   // We will also return 404 if the locale is not English.
   // This is a hack and and we should improve this at some point
   // See https://github.com/vercel/next.js/discussions/18485
-
-  if (locale !== 'en') {
+  // Only build when newsroom allowed, satellites has english
+  if (locale !== 'en' || !Flags.HAS_NEWSROOM) {
     return {
       notFound: true,
     }
   }
-
   const lang = getNameFromLocale(locale)
   const intl = await getIntl(locale, false)
+
+  const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
+  const indexName = `${envPrefix}_NEWS_en-GB`
+
+  const searchClient = algoliasearch(algolia.applicationId, algolia.searchApiKey)
+  const index = searchClient.initIndex(indexName)
+  const response = await index.search('', {
+    hitsPerPage: 50,
+    facetFilters: ['type:news', 'topicTags:-Crude Oil Assays'],
+    facetingAfterDistinct: true,
+    facets: ['countryTags', 'topicTags', 'year'],
+  })
 
   const queryParams = {
     lang,
   }
-
-  const slug = req.url
 
   const { menuData, pageData, footerData } = await getComponentsData(
     {
@@ -85,26 +107,19 @@ export const getServerSideProps: GetServerSideProps = async ({ req, preview = fa
     preview,
   )
 
-  console.log(JSON.stringify(req.headers))
-  const url = new URL(req.headers.referer || `https://${req.headers.host}${req.url}`).toString()
-  const { data } = await getData({
-    query: allNewsDocuments,
-    queryParams,
+  const serverState = await getServerState(<NewsRoom data={{ menuData, pageData, footerData, intl, response }} />, {
+    renderToString,
   })
-
   return {
     props: {
-      url,
       data: {
         menuData,
         footerData,
         intl,
-        pageData: {
-          ...pageData,
-          newsArticles: data,
-        },
-        slug,
+        pageData,
+        response,
       },
+      serverState,
     },
   }
 }

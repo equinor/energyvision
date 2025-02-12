@@ -6,9 +6,9 @@ import ErrorPage from 'next/error'
 import dynamic from 'next/dynamic'
 /* import { useAppInsightsContext } from '@microsoft/applicationinsights-react-js' */
 import { getQueryFromSlug } from '../lib/queryFromSlug'
-import { Layout } from '../pageComponents/shared/Layout'
+import { Layout } from '../sections/Layout/Layout'
 import { defaultLanguage } from '../languages'
-import Header from '../pageComponents/shared/Header'
+import Header from '../sections/Header/Header'
 import { FormattedMessage } from 'react-intl'
 import getIntl from '../common/helpers/getIntl'
 import { getStaticBuildRoutePaths } from '../common/helpers/getPaths'
@@ -82,11 +82,13 @@ Page.getLayout = (page: AppProps) => {
   const { data, preview } = props
 
   const slugs = getPageSlugs(data)
+  const hasSticky =
+    data?.pageData?.stickyMenu && data?.pageData?.stickyMenu?.links && data?.pageData?.stickyMenu?.links?.length > 0
 
   return (
-    <Layout footerData={data?.footerData} intl={data?.intl}>
+    <Layout footerData={data?.footerData} intl={data?.intl} hasSticky={hasSticky}>
       <>
-        <Header slugs={slugs} menuData={data?.menuData} />
+        <Header slugs={slugs} menuData={data?.menuData} stickyMenuData={data?.pageData?.stickyMenu} />
         {page}
       </>
     </Layout>

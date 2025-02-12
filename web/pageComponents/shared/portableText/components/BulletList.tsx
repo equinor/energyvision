@@ -1,12 +1,22 @@
-import { List } from '@components'
-import styled from 'styled-components'
-
-const StyledList = styled(List)`
-  &:not(li > ul) {
-    margin-bottom: var(--space-medium);
-  }
-`
+import * as React from 'react'
 
 export const BulletList = ({ children }: { children?: React.ReactNode }) => {
-  return <StyledList>{children}</StyledList>
+  return (
+    <ul className="list-disc">
+      {React.Children.map(children, (listItem) => {
+        if (!React.isValidElement(listItem)) return listItem
+
+        const hasHighlight = React.Children.toArray(listItem.props.children).some((child) => {
+          if (React.isValidElement(child)) {
+            return child.props?.markType === 'highlight'
+          }
+          return false
+        })
+
+        return (
+          <li className={hasHighlight ? 'marker:text-red-600' : 'marker:text-inherit'}>{listItem.props.children}</li>
+        )
+      })}
+    </ul>
+  )
 }
