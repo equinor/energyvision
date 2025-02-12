@@ -46,6 +46,7 @@ export default withBundle({
       'video.js',
     ],
   },
+  swcMinify: true,
   transpilePackages: ['friendly-challenge'],
   eslint: {
     // Warning: Dangerously allow production builds to successfully complete even if
