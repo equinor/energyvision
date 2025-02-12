@@ -6,6 +6,7 @@ import {
   HeroTypes,
   EventDateType,
   DesignOptions,
+  HeroType,
 } from './index'
 
 export type CardTypes = 'news' | 'topics' | 'people' | 'events'
@@ -23,10 +24,12 @@ export type CardData = {
 }
 
 export type MagazineCardData = {
+  id?: string
   slug: string
   title: string | PortableTextBlock[]
-  tags?: string[]
-  heroImage?: ImageWithAlt
+  firstPublishedAt?: string
+  publishDateTime?: string
+  hero?: HeroType
 }
 
 export type PeopleCardData = {

@@ -209,6 +209,7 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   }, [accessToken, handleAuthEvent])
 
   useEffect(() => {
+    //should not add listener before access token is present?
     window.addEventListener('message', handleWidgetEvent)
     setContainer(document.createElement('div'))
 

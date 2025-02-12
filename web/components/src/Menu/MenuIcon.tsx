@@ -13,7 +13,7 @@ const ExpandedStyle = css`
   }
 `
 
-const Icon = styled.span<{ expanded: boolean }>`
+const Icon = styled.span<{ $expanded: boolean }>`
   width: 30px;
   height: 30px;
   position: relative;
@@ -39,11 +39,11 @@ const Icon = styled.span<{ expanded: boolean }>`
     transform-origin: left center;
   }
 
-  ${({ expanded }) => expanded && ExpandedStyle}
+  ${({ $expanded }) => $expanded && ExpandedStyle}
 `
 
 export const MenuIcon = ({ expanded }: { expanded: boolean }) => (
-  <Icon className="menuIcon" expanded={expanded} aria-hidden="true">
+  <Icon className="menuIcon" $expanded={expanded} aria-hidden="true">
     <span></span>
     <span></span>
   </Icon>

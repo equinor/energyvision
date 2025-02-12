@@ -10,9 +10,11 @@ type BannerProps = {
   hero: HeroType
   hideImageCaption?: boolean
   captionBg?: BackgroundColours
+  /* Magazine */
+  tags?: string[]
 }
 
-export const SharedBanner = ({ title, hero, hideImageCaption, captionBg }: BannerProps) => {
+export const SharedBanner = ({ title, hero, hideImageCaption, captionBg, tags }: BannerProps) => {
   switch (hero.type) {
     case HeroTypes.FULL_WIDTH_IMAGE:
       return (
@@ -38,6 +40,8 @@ export const SharedBanner = ({ title, hero, hideImageCaption, captionBg }: Banne
     case HeroTypes.LOOPING_VIDEO:
       return <LoopingVideo video={hero.loopingVideo as LoopingVideoData} />
     default:
-      return <DefaultHero title={title} image={hero.figure} isBigTitle={hero.isBigTitle} bigTitle={hero.title} />
+      return (
+        <DefaultHero title={title} image={hero.figure} isBigTitle={hero.isBigTitle} bigTitle={hero.title} tags={tags} />
+      )
   }
 }

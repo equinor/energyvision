@@ -1,84 +1,56 @@
-import { useState } from 'react'
-import {
-  DocumentActionComponent,
-  DocumentActionConfirmDialogProps,
-  DocumentActionDescription,
-  DocumentActionProps,
-  DocumentActionsContext,
-  SanityClient,
-} from 'sanity'
-import { apiVersion } from '../sanity.client'
-import { useToast } from '@sanity/ui'
+import { useState, useEffect } from 'react'
+import { DocumentActionConfirmDialogProps, DocumentActionProps, useDocumentOperation } from 'sanity'
 
 const FIRST_PUBLISHED_AT_FIELD_NAME = 'firstPublishedAt'
 const LAST_MODIFIED_AT_FIELD_NAME = 'lastModifiedAt'
 
-const requiresConfirm = ['news', 'localNews']
-const requiresFirstPublished = ['news', 'localNews']
+export function SetAndPublishAction(props: DocumentActionProps) {
+  const { patch, publish } = useDocumentOperation(props.id, props.type)
+  const [isPublishing, setIsPublishing] = useState(false)
+  const [dialogOpen, setDialogOpen] = useState(false)
 
-const updateCustomPublishFields = async (id: string, client: SanityClient, setFirstPublish: boolean) => {
-  const currentTimeStamp = new Date().toISOString()
-  const patch = client.patch(id).set({ [LAST_MODIFIED_AT_FIELD_NAME]: currentTimeStamp })
-  if (setFirstPublish) patch.set({ [FIRST_PUBLISHED_AT_FIELD_NAME]: currentTimeStamp })
-
-  await patch.commit().catch((e) => {
-    throw e
-  })
-}
-
-export function createCustomPublishAction(originalAction: DocumentActionComponent, context: DocumentActionsContext) {
-  const client = context.getClient({ apiVersion: apiVersion })
-  return (props: DocumentActionProps) => {
-    const [dialogOpen, setDialogOpen] = useState(false)
-    const originalResult = originalAction(props as DocumentActionProps) as DocumentActionDescription
-    const toast = useToast()
-
-    const handlePublish = async () => {
-      try {
-        if (requiresFirstPublished.includes(props.type)) {
-          await updateCustomPublishFields(
-            props.draft?._id || props.id,
-            client,
-            !props.published?.[FIRST_PUBLISHED_AT_FIELD_NAME],
-          )
-        }
-        originalResult.onHandle && originalResult.onHandle()
-        setDialogOpen(false)
-      } catch (e) {
-        console.error(e)
-        toast.push({
-          duration: 7000,
-          status: 'error',
-          title: 'Failed to publish, you probably miss the mutation token. Check console for details.',
-        })
-        setDialogOpen(false)
-      }
+  useEffect(() => {
+    // if the isPublishing state was set to true and the draft has changed
+    // to become `null` the document has been published
+    if (isPublishing && !props.draft) {
+      setIsPublishing(false)
     }
+  }, [props.draft])
 
-    const confirmationBox = requiresConfirm.includes(props.type)
-      ? {
-          onHandle: () => {
-            setDialogOpen(true)
-          },
-          dialog:
-            dialogOpen &&
-            props.draft &&
-            ({
-              type: 'confirm',
-              onCancel: () => {
-                props.onComplete()
-                setDialogOpen(false)
-              },
-              onConfirm: handlePublish,
-              message: 'Are you sure you want to publish?',
-            } as DocumentActionConfirmDialogProps),
-        }
-      : {}
+  return {
+    disabled: publish.disabled || dialogOpen,
+    label: isPublishing ? 'Publishing…' : `Publish`,
+    onHandle: () => {
+      // This will update the button text
+      setDialogOpen(true)
+    },
+    dialog:
+      dialogOpen &&
+      props.draft &&
+      ({
+        type: 'confirm',
+        onCancel: () => {
+          props.onComplete()
+          setDialogOpen(false)
+        },
+        onConfirm: () => {
+          const currentTimeStamp = new Date().toISOString()
+          // set lastModifiedAt date.
+          patch.execute([{ set: { [LAST_MODIFIED_AT_FIELD_NAME]: currentTimeStamp } }])
 
-    return {
-      ...originalResult,
-      onHandle: handlePublish,
-      ...confirmationBox,
-    }
+          //set firstPublishedAt date if not published.
+          if (!props.published?.[FIRST_PUBLISHED_AT_FIELD_NAME])
+            patch.execute([{ set: { [FIRST_PUBLISHED_AT_FIELD_NAME]: currentTimeStamp } }])
+
+          // Perform the publish
+          publish.execute()
+
+          // Signal that the action is completed
+          props.onComplete()
+
+          setDialogOpen(false)
+        },
+        message: 'Are you sure you want to publish?',
+      } as DocumentActionConfirmDialogProps),
   }
 }

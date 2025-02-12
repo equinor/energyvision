@@ -6,6 +6,8 @@ import { file } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 import type { PortableTextBlock, Rule } from 'sanity'
 import { lang } from './langField'
+import routes from '../routes'
+import { filterByRoute } from '../../helpers/referenceFilters'
 
 const titleContentType = configureTitleBlockContent()
 const textContentType = configureBlockContent({
@@ -65,6 +67,42 @@ export default {
       name: 'ingress',
       type: 'array',
       of: [textContentType],
+    },
+    {
+      name: 'subscriptionLink',
+      title: 'Link to the email subscription page',
+      type: 'reference',
+      to: routes,
+      options: {
+        filter: filterByRoute,
+      },
+    },
+    {
+      name: 'subscriptionLinkTitle',
+      title: 'Title for the subscription link',
+      type: 'string',
+    },
+    {
+      title: 'List of local news pages',
+      name: 'localNewsPages',
+      type: 'array',
+      of: [{ type: 'linkSelector', title: 'Link' }],
+    },
+    {
+      title: 'Image thumbnail fallbacks',
+      name: 'imageThumbnailFallbacks',
+      type: 'array',
+      of: [
+        {
+          type: 'image',
+          title: 'Fallback image',
+          options: {
+            hotspot: true,
+            collapsed: false,
+          },
+        },
+      ],
+      validation: (Rule: Rule) => Rule.max(3),
     },
   ],
   preview: {

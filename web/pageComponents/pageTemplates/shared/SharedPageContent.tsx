@@ -3,9 +3,7 @@ import TextBlock from '../../topicPages/TextBlock'
 import FullWidthImage from '../../topicPages/FullWidthImage'
 import FullWidthVideo from '../../topicPages/FullWidthVideo'
 import Figure from '../../topicPages/Figure'
-import TextWithIconArray from '../../topicPages/TextWithIconArray'
 import PageQuote from '../../topicPages/PageQuote'
-import AccordionBlock from '../../topicPages/Accordion/AccordionBlock'
 import PromoTileArray from '../../../sections/PromoTiles/PromoTileArray'
 import IFrame from '../../topicPages/IFrame'
 import Promotion from '../../topicPages/Promotion'
@@ -53,6 +51,7 @@ import {
   CampaignBannerData,
   DesignOptions,
   AnchorLinkListData,
+  ImageForTextData,
 } from '../../../types/index'
 import { getColorForTheme } from '../../shared/textTeaser/theme'
 import Grid from '@sections/Grid/Grid'
@@ -61,6 +60,9 @@ import { BackgroundContainerProps } from '@components/Backgrounds'
 import VideoPlayerCarousel from '@sections/VideoPlayerCarousel/VideoPlayerCarousel'
 import ImageCarousel from '@sections/ImageCarousel/ImageCarousel'
 import { AnchorLinkList } from '@sections/AnchorLinkList'
+import ImageForText from '@sections/ImageForText/ImageForText'
+import TextWithIconArray from '@sections/TextWithIconArray/TextWithIconArray'
+import AccordionBlock from '@sections/AccordionBlock/AccordionBlock'
 
 type DefaultComponent = {
   id?: string
@@ -350,6 +352,8 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
             className={topSpacingClassName}
           />
         )
+      case 'imageForText':
+        return <ImageForText key={c.id} data={c as ImageForTextData} />
       default:
         return null
     }

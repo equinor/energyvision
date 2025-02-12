@@ -28,7 +28,7 @@ export type ImageBackground = {
   image: ImageWithAlt | SanityImageObject
   useAnimation?: boolean
   useLight?: boolean
-  contentAlignment: ContentAlignmentTypes
+  contentAlignment?: ContentAlignmentTypes
 }
 
 export type FullWidthImageData = {

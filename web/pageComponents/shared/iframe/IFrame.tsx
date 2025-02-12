@@ -6,11 +6,11 @@ import useConsentState from '../../../lib/hooks/useConsentState'
 import { CookieType } from '../../../types'
 import useConsent from '../../../lib/hooks/useConsent'
 
-const IFrameContainer = styled.div<{ aspectRatioPadding: string }>`
+const IFrameContainer = styled.div<{ $aspectRatioPadding: string }>`
   position: relative;
   width: 100%;
   overflow: hidden;
-  padding-bottom: ${({ aspectRatioPadding }) => aspectRatioPadding};
+  padding-bottom: ${({ $aspectRatioPadding }) => $aspectRatioPadding};
 `
 
 const StyledIFrame = styled.iframe`
@@ -71,7 +71,7 @@ const IFrame = ({
 
   if (isPreview) {
     return (
-      <IFrameContainer aspectRatioPadding={containerPadding}>
+      <IFrameContainer $aspectRatioPadding={containerPadding}>
         <StyledIFrame allowFullScreen loading="lazy" src={url} title={frameTitle} />
       </IFrameContainer>
     )
@@ -81,7 +81,7 @@ const IFrame = ({
     <>
       {consented && (
         <div className={className}>
-          <IFrameContainer aria-describedby={describedBy} aspectRatioPadding={containerPadding}>
+          <IFrameContainer aria-describedby={describedBy} $aspectRatioPadding={containerPadding}>
             <StyledIFrame
               allowFullScreen
               src={url}

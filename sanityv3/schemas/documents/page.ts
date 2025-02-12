@@ -6,6 +6,7 @@ import sharedHeroFields from './header/sharedHeaderFields'
 import { EdsIcon } from '../../icons'
 import { paste } from '@equinor/eds-icons'
 import { lang } from './langField'
+import { description } from '../objects/iframe/sharedIframeFields'
 
 export default {
   type: 'document',
@@ -24,6 +25,14 @@ export default {
       options: {
         collapsible: true,
         collapsed: true,
+      },
+    },
+    {
+      title: 'Sticky Menu',
+      name: 'stickymenu',
+      options: {
+        collapsible: true,
+        collaped: true,
       },
     },
   ],
@@ -50,6 +59,12 @@ export default {
       type: 'boolean',
     },
     {
+      name: 'stickyMenu',
+      title: 'Sticky Menu',
+      type: 'stickyMenu',
+      fieldset: 'stickymenu',
+    },
+    {
       name: 'content',
       type: 'array',
       title: 'Page sections',
@@ -74,6 +89,7 @@ export default {
         { type: 'videoPlayer' },
         { type: 'videoPlayerCarousel' },
         { type: 'table' },
+        { type: 'imageForText' },
         Flags.HAS_CAMPAIGN_BLOCKS && { type: 'grid' },
         Flags.HAS_CAMPAIGN_BLOCKS && { type: 'campaignBanner' },
         Flags.HAS_FORMS && { type: 'form' },
@@ -89,9 +105,7 @@ export default {
     {
       title: 'Title ',
       name: 'titleAsc',
-      // Yes, this will add a warning in the console, but we still need the [0] since it's a rich text editor
-      // Might be worth to look into if it is a better way of sorting rich text editors
-      by: [{ field: 'title[0].children[0].text', direction: 'asc' }],
+      by: [{ field: 'title', direction: 'asc' }],
     },
   ],
   preview: {

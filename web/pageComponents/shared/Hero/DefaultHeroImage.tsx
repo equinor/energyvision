@@ -25,6 +25,7 @@ const DefaulHeroImage = ({ data }: HeroImageProps) => {
           1420px
         "
         priority
+        className="rounded-xs"
       />
       <Caption caption={caption} attribution={attribution} />
     </figure>

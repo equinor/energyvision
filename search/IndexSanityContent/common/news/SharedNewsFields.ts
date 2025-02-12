@@ -1,4 +1,5 @@
 import { Page } from '../../../common'
+import { ImageWithAltAndCaption } from '../types'
 
 export type SharedNewsFields = Page & {
   title: string
@@ -18,4 +19,5 @@ export type SharedNewsFields = Page & {
     text: string
   }[]
   _id: string
+  heroImage?: ImageWithAltAndCaption
 }

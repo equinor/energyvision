@@ -3,4 +3,5 @@ export enum HeroTypes {
   FIFTY_FIFTY = 'fiftyFifty',
   FULL_WIDTH_IMAGE = 'fullWidthImage',
   LOOPING_VIDEO = 'loopingVideo',
+  BACKGROUND_IMAGE = 'backgroundImage',
 }

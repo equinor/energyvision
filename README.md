@@ -82,3 +82,7 @@ The legacy packages are currently excluded from the pnpm workspace (see `pnpm-wo
 ## Feature flags
 
 We use a trunk-based development approach in this project, where developers commit directly to the main branch and deployments are done regularly. To help accomodate the review/acceptance process, we use feature flags that will conditionally enable/disable certain functionality. These feature flags are based on the currently active [Sanity dataset](https://www.sanity.io/docs/datasets). This allows us to have features that are not yet ready for production enabled in the development dataset, while being disabled in the production dataset.
+
+## Contributing
+
+If you want to report a bug, please create an issue in GitHub unless it is a security issue. If it is a security issue, please follow our Security Reporting Policy in SECURITY.md file.

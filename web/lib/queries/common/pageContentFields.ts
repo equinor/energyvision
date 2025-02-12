@@ -14,6 +14,7 @@ import { keyNumbersFields } from './keyNumbersFields'
 import { noDrafts, sameLang } from './langAndDrafts'
 import promoteMagazine from './promotions/promoteMagazine'
 import { lastUpdatedTimeQuery, publishDateTimeQuery } from './publishDateTime'
+import { anchorLinkReferenceFields } from './anchorLinkReferenceFields'
 
 const pageContentFields = /* groq */ `
 _type == "keyNumbers" =>{
@@ -119,6 +120,11 @@ _type == "keyNumbers" =>{
   _type == "textWithIconArray"=>{
     "type": _type,
     "id": _key,
+    title[]{
+        ...,
+        ${markDefs},
+      },
+    hideTitle,
     "group": group[]{
       "id": _key,
       title,
@@ -158,10 +164,14 @@ _type == "keyNumbers" =>{
     "accordion": accordion[]{
       "id": _key,
       title,
+      image,
       content[]{
         ...,
         ${markDefs},
-      }
+      },
+      links[]{
+      ${linkSelectorFields},
+    },
     },
     "designOptions": {
       ${background},
@@ -584,11 +594,18 @@ _type == "keyNumbers" =>{
     title,
     columns,
     "anchorList":anchorList[]{
-      "type": _type,
-      "id": _key,
-      title,
-      anchorReference,
+     ${anchorLinkReferenceFields}
     }
+  },
+  _type == "imageForText" => {
+    "type": _type,
+    "id": _key,
+    "content": content[]{..., ${markDefs}},
+    "aspectRatio": coalesce(aspectRatio, '16:9'),
+    "image": image {
+      ...,
+      "extension": asset-> extension
+    },
   },
 `
 

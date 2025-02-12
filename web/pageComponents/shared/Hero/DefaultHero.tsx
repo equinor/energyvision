@@ -42,9 +42,11 @@ type Props = {
   image?: ImageWithCaptionData
   isBigTitle?: boolean
   bigTitle?: PortableTextBlock[]
+  /* Magazine */
+  tags?: string[]
 }
 
-export const DefaultHero = ({ title, image, isBigTitle, bigTitle }: Props) => {
+export const DefaultHero = ({ title, image, isBigTitle, bigTitle, tags }: Props) => {
   return (
     <>
       {isBigTitle && (
@@ -54,6 +56,24 @@ export const DefaultHero = ({ title, image, isBigTitle, bigTitle }: Props) => {
         </>
       )}
       {!isBigTitle && <HeroBanner>{title && <StyledHeading value={title} level="h1" size="3xl" />}</HeroBanner>}
+      {tags && tags?.length > 0 && (
+        <div className="px-layout-md pb-12">
+          {tags && tags?.length > 0 && (
+            <ul className="flex flex-wrap gap-y-4 divide-x-2 divide-energy-red-100">
+              {tags.map((tag: string) => {
+                return (
+                  <span
+                    key={`magazine_tag_key_${tag}`}
+                    className="inline-block text-sm font-medium pl-3 pr-3 first:pl-0 lg:text-xs whitespace-nowrap"
+                  >
+                    {tag}
+                  </span>
+                )
+              })}
+            </ul>
+          )}
+        </div>
+      )}
       <ImageWrapper>{image && <DefaulHeroImage data={image} />}</ImageWrapper>
     </>
   )

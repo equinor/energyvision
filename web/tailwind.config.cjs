@@ -9,8 +9,6 @@ const round = (num) =>
     .toFixed(7)
     .replace(/(\.[0-9]+?)0+$/, '$1')
     .replace(/\.0$/, '')
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const rem = (px) => `${round(px / 16)}rem`
 const em = (px, base) => `${round(px / base)}em`
 
 module.exports = {
@@ -19,8 +17,10 @@ module.exports = {
     './pageComponents/**/*.{js,ts,tsx}',
     './core/**/*.{js,ts,tsx}',
     './sections/**/*.{js,ts,tsx}',
+    './templates/**/*.{js,ts,tsx}',
     './icons/**/*.{js,ts,tsx}',
     './pages/**/*.{js,ts,tsx}',
+    './templates/**/*.{js,ts,tsx}',
   ],
   /*
   Now instead of dark:{class} classes being applied based on prefers-color-scheme, 
@@ -191,18 +191,6 @@ module.exports = {
           100: 'hsla(212, 82%, 11%, 1)',
         },
       }),
-      boxShadowColor: {
-        'moss-green-50': '190deg 9% 67%',
-        'moss-green-50-interact': '190deg 9% 60%',
-        'white-100': '0deg 0% 64%',
-        'white-100-interact': '0deg 0% 63%',
-        'blue-50': '212deg 40% 29%',
-        'blue-50-interact': '212deg 40% 25%',
-        'orange-50': '28deg 42% 57%',
-        'orange-50-interact': '28deg 42% 51%',
-        'mist-blue-100': '199deg 23% 62%',
-        'mist-blue-100-interact': '199deg 23% 56%',
-      },
       spacing: ({ theme }) => ({
         //--space-xSmall -> spacing.2
         //--space-small -> spacing.4
@@ -221,6 +209,7 @@ module.exports = {
         '2xl': 'calc((40 / 16) * theme(fontSize.base))',
         '3xl': 'calc((56 / 16) * theme(fontSize.base))',
         '4xl': 'calc((96 / 16) * theme(fontSize.base))',
+        topbar: '85px',
       }),
       fontSize: {
         //--typeScale-00
@@ -279,6 +268,10 @@ module.exports = {
       },
       minWidth: {
         viewport: '375',
+        'arrow-right': '1.58rem',
+      },
+      minHeight: {
+        'arrow-right': '1.58rem',
       },
       borderRadius: {
         xs: '0.1rem',
@@ -297,12 +290,16 @@ module.exports = {
         '4/5': '0.8',
         '5/4': '1.25',
         '9/16': '0.56',
+        '4/3': '4/3',
       },
       margin: {
         'layout-sm': 'clamp(16px, calc(-38.3689px + 14.4984vw), 250px)',
         'layout-md': 'clamp(16px, calc(-69.4369px + 22.7832vw), 368px)',
         'layout-lg': 'clamp(16px, calc(-101.4757px + 31.3269vw), 500px)',
         'page-content': 'theme(spacing.20)',
+      },
+      transitionProperty: {
+        'motion-safe': 'motion-safe',
       },
       transitionTimingFunction: {
         scroll: 'cubic-bezier(0.645, 0.045, 0.355, 1)',
@@ -312,6 +309,10 @@ module.exports = {
       },
       keyframes: {
         reveal: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        fadeIn: {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' },
         },
@@ -332,16 +333,39 @@ module.exports = {
             transform: 'translateX(calc(-100%+100vw))',
           },
         },
+        slideUp: {
+          '0%': { height: 0 },
+          '100%': { height: 'var(--radix-accordion-content-height)' },
+        },
+        slideDown: {
+          '0%': { height: 'var(--radix-accordion-content-height)' },
+          '100%': { height: 0 },
+        },
       },
       animation: {
         fadeInOut: 'fade linear both',
+        fadeIn: 'auto linear fadeIn both',
         fadeOut: 'auto linear fadeOut both',
         zoomIn: 'auto linear zoom-in both',
         move: 'auto linear move forwards',
         'spin-slow': 'spin 3s linear infinite',
+        slideUp: 'slideUp 0.2s ease-out',
+        slideDown: 'slideDown 0.2s ease-out',
+      },
+      data: {
+        open: 'state~="open"',
+        closed: 'state~="closed"',
+        active: 'state~="active"',
+        vertical: 'orientation~="vertical"',
+        horizontal: 'orientation~="horizontal"',
+        selected: 'selected~="true"',
+        expanded: 'expanded~="true"',
       },
       flex: {
         fr: '1 1 1',
+      },
+      aria: {
+        current: 'current="page"',
       },
       typography: (theme) => ({
         DEFAULT: {
@@ -462,14 +486,16 @@ module.exports = {
           },
         },
       }),
-
-      transitionProperty: ['motion-safe'],
-    },
-  },
-  variants: {
-    extend: {
-      borderColor: ['aria-current'],
-      backgroundColor: ['aria-current'],
+      gridTemplateColumns: {
+        'auto-1': 'repeat(1,auto)',
+        'auto-2': 'repeat(2,auto)',
+        'auto-3': 'repeat(3,auto)',
+        'auto-fill-fr': `repeat(auto-fill, minmax(80px,1fr))`,
+        card: `repeat(auto-fill,minmax(min(100%,220px),400px))`,
+      },
+      scrollMargin: {
+        topbar: '85px',
+      },
     },
   },
   plugins: [
@@ -503,9 +529,6 @@ module.exports = {
           },
           '.break-word': {
             wordBreak: 'break-word',
-          },
-          '.auto-fill-fr': {
-            gridTemplateColumns: `repeat(auto-fill, minmax(80px,1fr))`,
           },
         })
     }),

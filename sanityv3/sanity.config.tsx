@@ -19,16 +19,16 @@ import type {
   DocumentBadgeComponent,
   DocumentFieldAction,
 } from 'sanity'
-import { deskTool, StructureBuilder } from 'sanity/desk'
+import { structureTool } from 'sanity/structure'
 import deskStructure, { defaultDocumentNodeResolver } from './deskStructure'
 import { schemaTypes } from './schemas'
 import { initialValueTemplates } from './initialValueTemplates'
 import { CharCounterEditor } from './schemas/components/CharCounterEditor'
 import { DeleteTranslationAction } from './actions/customDelete/DeleteTranslationAction'
-import { documentInternationalization } from '@equinor/document-internationalization'
 import { FotowareAssetSource } from './plugins/asset-source-fotoware-v2'
+import { documentInternationalization } from '@sanity/document-internationalization'
 import { BrandmasterAssetSource } from './plugins/asset-source-brandmaster'
-import { createCustomPublishAction } from './actions/CustomPublishAction'
+import { SetAndPublishAction } from './actions/CustomPublishAction'
 import { dataset, projectId } from './sanity.client'
 import { DatabaseIcon } from '@sanity/icons'
 import { crossDatasetDuplicator } from '@sanity/cross-dataset-duplicator'
@@ -41,6 +41,7 @@ import { LangBadge } from './schemas/components/LangBadge'
 import './customStyles.css'
 import { partialStudioTheme } from './studioTheme'
 import { copyAction } from './actions/fieldActions/CustomCopyFieldAction'
+import CustomDocumentInternationalizationMenu from './schemas/components/CustomDocumentInternationalizationMenu'
 
 export const customTheme = buildLegacyTheme(partialStudioTheme)
 
@@ -89,8 +90,8 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret = fals
   },
   plugins: [
     documentInternationalization(i18n),
-    deskTool({
-      structure: (S: StructureBuilder, context: ConfigContext) => {
+    structureTool({
+      structure: (S, context: ConfigContext) => {
         return deskStructure(S, context)
       },
       defaultDocumentNode: defaultDocumentNodeResolver,
@@ -114,6 +115,16 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret = fals
     templates: (prev: Template<any, any>[]) => [...filterTemplates(prev), ...initialValueTemplates],
   },
   document: {
+    unstable_languageFilter: (prev: DocumentActionComponent[], ctx: any) => {
+      const { schemaType, documentId } = ctx
+      return schemaTypes.map((it) => it.name).includes(schemaType) && documentId
+        ? [
+            (props: any) => {
+              return CustomDocumentInternationalizationMenu({ ...props, documentId })
+            },
+          ]
+        : prev
+    },
     actions: (prev: DocumentActionComponent[], context: any) => {
       if (isSecret) prev.push(ResetCrossDatasetToken)
       if (i18n.schemaTypes.includes(context.schemaType)) prev.push(DeleteTranslationAction)
@@ -124,7 +135,7 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret = fals
         .map((originalAction) => {
           switch (originalAction.action) {
             case 'publish':
-              return createCustomPublishAction(originalAction, context)
+              return ['news', 'localNews'].includes(context.schemaType) ? SetAndPublishAction : originalAction
             case 'duplicate':
               return createCustomDuplicateAction(originalAction)
             default:

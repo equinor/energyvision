@@ -3,7 +3,7 @@ import { lazy } from 'react'
 import { usePreview } from '../../lib/sanity'
 import ErrorPage from 'next/error'
 
-const MagazinePage = lazy(() => import('./MagazinePage'))
+const MagazinePage = lazy(() => import('../../templates/magazine/MagazinePage'))
 const LandingPage = lazy(() => import('./LandingPage'))
 const EventPage = lazy(() => import('./Event'))
 const NewsPage = lazy(() => import('./News'))

@@ -58,6 +58,7 @@ export type NewsIndex = {
   countryTags: string[]
   thumbnailUrl: string
   localNewsTag: string
+  heroImage: object
 }
 
 export type MagazineIndex = {

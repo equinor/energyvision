@@ -17,7 +17,7 @@ const StyledButtonText = styled.span`
   }
 `
 
-const StyledMenuButton = styled.button<{ expanded: boolean }>`
+const StyledMenuButton = styled.button<{ $expanded: boolean }>`
   min-width: 48px;
   min-height: 48px;
   position: relative;
@@ -41,8 +41,8 @@ const StyledMenuButton = styled.button<{ expanded: boolean }>`
     grid-template-columns: min-content 1fr;
   }
 
-  ${({ expanded }) =>
-    !expanded &&
+  ${({ $expanded }) =>
+    !$expanded &&
     `
       &:hover .menuIcon {
         span:nth-child(1) {
@@ -61,7 +61,7 @@ export const MenuButton = forwardRef<HTMLButtonElement, MenuButtonProps>(functio
 ) {
   return (
     <StyledMenuButton
-      expanded={expanded}
+      $expanded={expanded}
       ref={ref}
       aria-label={title}
       className="focus:outline-none focus-visible:envis-outline hover:bg-moss-green-60 rounded-md py-2 px-3"

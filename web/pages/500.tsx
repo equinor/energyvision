@@ -12,8 +12,8 @@ import { ErrorPageData, MenuData, FooterColumns, IntlData } from '../types/index
 import { getComponentsData } from '../lib/fetchData'
 
 const ErrorPage = dynamic(() => import('../pageComponents/pageTemplates/ErrorPage'))
-const Footer = dynamic(() => import('../pageComponents/shared/Footer'))
-const Header = dynamic(() => import('../pageComponents/shared/Header'))
+const Footer = dynamic(() => import('../sections/Footer/Footer'))
+const Header = dynamic(() => import('../sections/Header/Header'))
 
 const Grid = styled.div`
   display: grid;

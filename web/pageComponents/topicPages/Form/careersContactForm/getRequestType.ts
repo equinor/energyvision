@@ -10,6 +10,10 @@ export default function getCatalogType(
     id: 'careers_contact_form_suspected_recruitment_scam',
     defaultMessage: 'Suspected recruitment scam',
   })
+  const onboarding = intl.formatMessage({
+    id: 'careers_contact_form_onboarding',
+    defaultMessage: 'Onboarding',
+  })
 
   const graduates = intl.formatMessage({
     id: ' careers_contact_form_graduates',
@@ -26,6 +30,7 @@ export default function getCatalogType(
   })
 
   if (category.includes(suspectedRecruitmentScam)) return 'suspectedRecruitmentScamRequest'
+  else if (category.includes(onboarding)) return 'onboarding'
   else if (candidateType.includes(graduates) || candidateType.includes(interns) || candidateType.includes(apprentices))
     return 'emergingTalentsQueries'
   else return 'others'
