@@ -15,7 +15,7 @@ type KeyNumbersProps = {
   className?: string
 }
 const KeyNumber = ({ data, anchor, className }: KeyNumbersProps) => {
-  const { title, items, designOptions, ingress, action, disclaimer, useHorizontalScroll } = data
+  const { title, hideTitle, items, designOptions, ingress, action, disclaimer, useHorizontalScroll } = data
   const url = action && getUrlFromAction(action)
   const isMobile = useMediaQuery(`(max-width: 800px)`)
 
@@ -23,7 +23,7 @@ const KeyNumber = ({ data, anchor, className }: KeyNumbersProps) => {
 
   return (
     <BackgroundContainer {...designOptions} className={twMerge(`pb-page-content px-layout-sm`, className)} id={anchor}>
-      {title && <Heading value={title} variant="h3" as="h2" className="pb-lg" />}
+      {title && <Heading value={title} variant="h3" as="h2" className={hideTitle ? 'sr-only' : 'pb-lg'} />}
       {ingress && <Paragraph value={ingress} className="max-w-text text-pretty pb-xl" />}
 
       {renderScroll && <Carousel items={items} displayMode="scroll" variant="keyNumber"></Carousel>}

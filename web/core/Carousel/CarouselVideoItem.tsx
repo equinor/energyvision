@@ -1,11 +1,9 @@
 import envisTwMerge from '../../twMerge'
 import { VideoPlayerCarouselItem, VideoPlayerRatios } from '../../types/index'
-import { DisplayModes } from './Carousel'
 import { VideoComponentWithCaption } from '../../pageComponents/shared/VideoPlayer'
 import { forwardRef, HTMLAttributes } from 'react'
 
 type CarouselVideoItemProps = {
-  displayMode?: DisplayModes
   className?: string
   active?: boolean
   innerRef?: () => void
@@ -13,15 +11,7 @@ type CarouselVideoItemProps = {
   Omit<HTMLAttributes<HTMLLIElement>, 'title'>
 
 export const CarouselVideoItem = forwardRef<HTMLLIElement, CarouselVideoItemProps>(function CarouselVideoItem(
-  {
-    video,
-    title,
-    displayMode = 'scroll',
-    aspectRatio = VideoPlayerRatios['16:9'],
-    className = '',
-    active = false,
-    ...rest
-  },
+  { video, title, aspectRatio = VideoPlayerRatios['16:9'], className = '', active = false, ...rest },
   ref,
 ) {
   const aspectRatioUtilityClass = {
@@ -34,7 +24,6 @@ export const CarouselVideoItem = forwardRef<HTMLLIElement, CarouselVideoItemProp
       {...rest}
       ref={ref}
       aria-current={active}
-      aria-roledescription="slide"
       className={envisTwMerge(
         `
         transform-all
@@ -42,7 +31,8 @@ export const CarouselVideoItem = forwardRef<HTMLLIElement, CarouselVideoItemProp
         relative
         ${aspectRatioUtilityClass[aspectRatio]}
         ${aspectRatio === VideoPlayerRatios['9:16'] ? 'w-fit' : 'w-[80%]'}
-      ${displayMode === 'scroll' ? 'snap-center scroll-ml-6' : ''}
+        snap-center 
+        scroll-ml-6
         `,
         className,
       )}

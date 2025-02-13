@@ -12,11 +12,13 @@ import {
   height,
   action,
 } from './iframe/sharedIframeFields'
+import { carouselWidth, singleMode } from './carousel/sharedCarouselFields'
 
 const carouselItemFields = [title, frameTitle, description, cookiePolicy, aspectRatio, url, height, action]
+
 export default {
   name: 'iframeCarousel',
-  title: 'Horizontal scroll iframe',
+  title: 'Iframe Carousel',
   type: 'object',
   fieldsets: [
     {
@@ -31,6 +33,12 @@ export default {
   ],
   fields: [
     title,
+    {
+      type: 'boolean',
+      name: 'hideTitle',
+      title: 'Hide title',
+      description: 'Hides the title, but screen readers will read title of carousel',
+    },
     {
       type: 'array',
       name: 'items',
@@ -64,6 +72,8 @@ export default {
       ],
       validation: (Rule: Rule) => Rule.required().min(2),
     },
+    singleMode,
+    carouselWidth,
     {
       title: 'Background',
       description: 'Pick a colour for the background. Default is white.',

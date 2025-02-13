@@ -5,9 +5,10 @@ import { forwardRef, HTMLAttributes } from 'react'
 import { Heading, Paragraph } from '@core/Typography'
 import Iframe from '../../pageComponents/shared/iframe/IFrame'
 import { FigureCaption } from '@components/FigureCaption'
-import { ButtonLink } from '@core/Link'
+import { ButtonLink, ResourceLink } from '@core/Link'
 import { getUrlFromAction } from '../../common/helpers/getUrlFromAction'
 import { getLocaleFromName } from '../../lib/localization'
+import Blocks from 'pageComponents/shared/portableText/Blocks'
 
 type CarouselIframeItemProps = {
   displayMode?: DisplayModes
@@ -37,26 +38,25 @@ export const CarouselIframeItem = forwardRef<HTMLLIElement, CarouselIframeItemPr
   ref,
 ) {
   const itemWidth = noOfSiblings > 2 ? 'w-full lg:w-[45%]' : noOfSiblings === 2 ? 'w-full md:w-[48.5%]' : 'w-full'
+
   return (
     <li
       {...rest}
       ref={ref}
       aria-current={active}
-      aria-roledescription="slide"
       className={envisTwMerge(
-        `transform-all
-                    shrink-0
-                    relative
-                       ${itemWidth}
-                  ${displayMode === 'scroll' ? 'snap-center scroll-ml-6' : ''}
-                    `,
+        `transition-all
+        shrink-0
+        relative
+        ${itemWidth}
+        snap-center 
+        scroll-ml-6`,
         className,
       )}
     >
       <>
-        {title && <Heading value={title} className="text-md pb-lg" />}
-        {description ? (
-          <figure>
+        {title || description || action?.link ? (
+          <figure className="w-full h-full flex flex-col">
             <Iframe
               frameTitle={frameTitle}
               url={url}
@@ -65,9 +65,21 @@ export const CarouselIframeItem = forwardRef<HTMLLIElement, CarouselIframeItemPr
               height={height}
               hasSectionTitle={!!title}
             />
-            <FigureCaption size="medium">
-              <Paragraph value={description} />
-            </FigureCaption>
+            <figcaption className="py-6 px-2 max-w-text w-full h-full flex flex-col last:self-end gap-2 grow">
+              {title && <Heading value={title} className="text-md pb-3" />}
+              {description && <Blocks value={description} />}
+              {action && action.label && (
+                <ResourceLink
+                  href={getUrlFromAction(action) || ''}
+                  aria-label={action?.ariaLabel}
+                  variant="fit"
+                  className="mt-auto"
+                  locale={action?.type === 'internalUrl' ? getLocaleFromName(action?.link?.lang) : undefined}
+                >
+                  {action.label}
+                </ResourceLink>
+              )}
+            </figcaption>
           </figure>
         ) : (
           <Iframe
@@ -78,17 +90,6 @@ export const CarouselIframeItem = forwardRef<HTMLLIElement, CarouselIframeItemPr
             height={height}
             hasSectionTitle={!!title}
           />
-        )}
-        {action && action.label && (
-          <ButtonLink
-            href={getUrlFromAction(action) || ''}
-            aria-label={action?.ariaLabel}
-            variant="outlined-secondary"
-            className={`w-full md:mb-8 mb-4 justify-center mt-xl `}
-            locale={action?.type === 'internalUrl' ? getLocaleFromName(action?.link?.lang) : undefined}
-          >
-            {action.label}
-          </ButtonLink>
         )}
       </>
     </li>

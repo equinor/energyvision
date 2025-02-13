@@ -37,7 +37,7 @@ const ImageCarousel = forwardRef<HTMLUListElement, ImageCarouselProps>(function 
       <Carousel
         ref={ref}
         items={items}
-        displayMode={items?.length < 3 ? 'scroll' : 'single'}
+        displayMode={options?.singleMode && options?.singleMode ? 'single' : 'scroll'}
         variant="image"
         hasSectionTitle={title && !hideTitle}
         labelledbyId={title && !hideTitle ? headingId : undefined}

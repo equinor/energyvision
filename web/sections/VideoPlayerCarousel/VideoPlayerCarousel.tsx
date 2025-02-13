@@ -15,7 +15,7 @@ const VideoPlayerCarousel = forwardRef<HTMLUListElement, VideoPlayerCarouselProp
   { anchor, data, className },
   ref,
 ) {
-  const { title, ingress, items, designOptions } = data
+  const { title, hideTitle, ingress, items, singleMode, useFullWidthScroll, designOptions } = data
   const { background, aspectRatio } = designOptions
   const headingId = useId()
 
@@ -27,7 +27,7 @@ const VideoPlayerCarousel = forwardRef<HTMLUListElement, VideoPlayerCarouselProp
             id={headingId}
             as="h2"
             value={title}
-            className={`${ingress ? 'pb-6' : ''} text-xl max-w-text text-pretty`}
+            className={hideTitle ? 'sr-only' : `${ingress ? 'pb-6' : ''} text-xl max-w-text text-pretty`}
           />
         )}
         {ingress && <Paragraph value={ingress} className="max-w-text text-pretty" />}
@@ -39,6 +39,10 @@ const VideoPlayerCarousel = forwardRef<HTMLUListElement, VideoPlayerCarouselProp
             ...item,
             aspectRatio: aspectRatio,
           }
+        })}
+        displayMode={singleMode && singleMode ? 'single' : 'scroll'}
+        {...(!singleMode && {
+          layout: useFullWidthScroll ? 'full' : 'default',
         })}
         hasSectionTitle={!!title}
         variant="video"
