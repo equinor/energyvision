@@ -466,6 +466,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
       case 'image':
         return (
           <CarouselImageItem
+            //@ts-ignore:TOdo
             key={item?.id ?? item?._key ?? `image_carousel_${sliderRef.current}_item_${i}`}
             {...(item as ImageCarouselItem)}
             displayMode={displayMode}
@@ -486,7 +487,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
       case 'event':
         return getEventVariantBody(item as EventCardData, i)
       case 'keyNumber':
-        return getKeyNumberVariantBody(item as KeyNumberItemData, i)
+        return getKeyNumberVariantBody(item as KeyNumberItemData)
       case 'iframe':
         return getIframeVariantBody(item as IFrameCarouselItemData, i)
     }
