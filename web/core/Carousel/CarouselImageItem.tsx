@@ -116,6 +116,7 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
       return (
         <ImageWithOverlay
           teaserTitle={captionTeaserTitle}
+          //@ts-ignore:TODO
           title={captionTitle as PortableTextBlock[]}
           text={captionText}
           image={image}
@@ -135,7 +136,12 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
           <figcaption
             className={`max-w-text py-6 px-8 ${displayMode === 'single' ? singleClassname : scrollClassname}`}
           >
-            {caption && <Blocks value={caption} />}
+            {caption && (
+              <Blocks
+                //@ts-ignore:TODO
+                value={caption}
+              />
+            )}
           </figcaption>
         </figure>
       )
