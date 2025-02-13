@@ -37,6 +37,6 @@ export const imageCarouselFields = /* groq */ `
       delay
     },
   "designOptions": {
-     ${background}
+    ${background}
     },
 `

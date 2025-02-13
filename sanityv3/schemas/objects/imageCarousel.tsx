@@ -5,6 +5,7 @@ import { library_image } from '@equinor/eds-icons'
 import blocksToText from '../../helpers/blocksToText'
 import type { Rule } from 'sanity'
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
+import { autoPlay, singleMode } from './carousel/sharedCarouselFields'
 
 const titleContentType = configureTitleBlockContent()
 const ingressBlockContentType = configureBlockContent({
@@ -78,31 +79,8 @@ export default {
       ],
       validation: (Rule: Rule) => Rule.required().min(2),
     },
-    {
-      type: 'boolean',
-      name: 'singleMode',
-      title: 'Single mode',
-      description: 'Displays the image carousel as one image at the time. Default is scroll container',
-      initialValue: false,
-      fieldset: 'carouselOptions',
-      validation: (Rule: Rule) =>
-        Rule.custom((value: any, context) => {
-          if (!value) {
-            return true
-          }
-          //@ts-ignore
-          return value && context?.parent?.items?.length >= 3 ? true : 'Single mode requires at least 3 images'
-        }),
-    },
-    {
-      type: 'boolean',
-      name: 'autoplay',
-      title: 'Autoplay',
-      description: 'Whether the carousel should autoplay or not.',
-      initialValue: false,
-      fieldset: 'carouselOptions',
-      hidden: ({ parent }: { parent: any }) => !parent?.singleMode,
-    },
+    singleMode,
+    autoPlay,
     {
       title: 'Background',
       description: 'Pick a colour for the background. Default is white.',

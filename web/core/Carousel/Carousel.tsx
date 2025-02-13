@@ -5,6 +5,7 @@ import {
   EventCardData,
   KeyNumberItemData,
   IFrameCarouselItemData,
+  VideoPlayerRatios,
 } from '../../types/index'
 import {
   ElementType,
@@ -19,33 +20,88 @@ import {
 } from 'react'
 import envisTwMerge from '../../twMerge'
 import { MediaButton } from '@core/MediaButton/MediaButton'
-import { CarouselVideoItem } from './CarouselVideoItem'
 import { CarouselImageItem } from './CarouselImageItem'
 import { usePrefersReducedMotion } from '../../common/hooks/usePrefersReducedMotion'
 import { PortableTextBlock } from '@portabletext/types'
 import { toPlainText } from '@portabletext/react'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
-import { CarouselEventItem } from './CarouselEventItem'
-import { CarouselKeyNumberItem } from './CarouselKeyNumberItem'
-import { CarouselIframeItem } from './CarouselIframeItem'
 import { FormattedMessage } from 'react-intl'
+import { CarouselAspectRatios, CarouselItem } from './CarouselItem'
+import IFrame from '../../pageComponents/shared/iframe/IFrame'
+import { EventCard } from '@sections/cards/EventCard'
+import { VideoJsComponent } from '../../pageComponents/shared/VideoPlayer'
+import KeyNumberItem from '@sections/KeyNumber/KeyNumberItem'
 
 export type DisplayModes = 'single' | 'scroll'
 export type Layouts = 'full' | 'default'
+
+export const getUtilityForAspectRatio = (aspectRatio: string) => {
+  switch (aspectRatio) {
+    case '16:9':
+      return 'aspect-video'
+    case '4:3':
+      return 'aspect-4/3'
+    case '9:16':
+      return 'aspect-9/16'
+    case '1:1':
+      return 'aspect-square'
+
+    default:
+      return 'aspect-video'
+  }
+}
+
+export const getWidthsForAspectRatio = (aspectRatio: string, itemLength: number, displayMode: DisplayModes) => {
+  if (displayMode === 'single') {
+    return
+  }
+  if (itemLength <= 3) {
+    switch (aspectRatio) {
+      case '16:9':
+        return 'w-[75vw] md:w-[70vw] lg:w-[62vw] max-w-[1030px]'
+      case '4:3':
+        return 'w-[65vw] md:w-[42vw] lg:w-[43vw]'
+      case '9:16':
+        return 'w-[55vw] md:w-[33vw] lg:w-[30vw]'
+      case '1:1':
+        return 'w-[55vw] md:w-[33vw] lg:w-[30vw]'
+
+      default:
+        return 'w-[45vw] md:w-[33vw] lg:w-[30vw]'
+    }
+  } else {
+    switch (aspectRatio) {
+      case '16:9':
+        return 'w-[55vw] md:w-[33vw] lg:w-[30vw]'
+      case '4:3':
+        return 'w-[55vw] md:w-[33vw] lg:w-[30vw]'
+      case '9:16':
+        return 'w-[55vw] md:w-[33vw] lg:w-[30vw]'
+      case '1:1':
+        return 'w-[55vw] md:w-[33vw] lg:w-[30vw]'
+
+      default:
+        return 'w-[45vw] md:w-[33vw] lg:w-[30vw]'
+    }
+  }
+}
+
 type CarouselItemTypes =
   | VideoPlayerCarouselItem
   | ImageCarouselItem
   | EventCardData
   | KeyNumberItemData
   | IFrameCarouselItemData
+
 type Variants = 'video' | 'image' | 'event' | 'keyNumber' | 'iframe'
 
 type CarouselProps = {
   items: CarouselItemTypes[]
   variant?: Variants
   displayMode?: DisplayModes
+  //For scroll container
   layout?: Layouts
-  /* If carousel has a title over it */
+  /* If carousel has a title/sectionTitle over it */
   labelledbyId?: string
   className?: string
   listClassName?: string
@@ -61,7 +117,7 @@ const TRANSLATE_X_AMOUNT_MD = 712
 export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel(
   {
     items,
-    variant = 'video',
+    variant = 'image',
     displayMode = 'scroll',
     autoRotation = false,
     labelledbyId,
@@ -69,6 +125,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
     className = '',
     listClassName = '',
     hasSectionTitle = false,
+    layout = 'default',
   },
   ref,
 ) {
@@ -82,8 +139,6 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
   const internalAutoRotation = prefersReducedMotion
     ? false
     : autoRotation && variant === 'image' && displayMode === 'single'
-  console.log(`${title && toPlainText(title)} has internalautoroation ${internalAutoRotation}`)
-  console.log('items', items)
   const [currentIndex, setCurrentIndex] = useState(0)
   const [currentXPosition, setCurrentXPosition] = useState(0)
   const [currentListTranslateX, setCurrentListTranslateX] = useState(0)
@@ -93,8 +148,6 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
   const isMedium = useMediaQuery(`(min-width: 768px)`)
   const isLarge = useMediaQuery(`(min-width: 1024px)`)
   const [scrollPosition, setScrollPosition] = useState<'start' | 'middle' | 'end'>('start')
-  //@ts-ignore:TODO
-  const isImageCarouselWithRichTextBelow = items.some((item) => item?.type === 'imageWithRichTextBelow')
 
   if (isMedium) {
     TRANSLATE_X_AMOUNT = TRANSLATE_X_AMOUNT_MD
@@ -102,7 +155,6 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
   if (isLarge) {
     TRANSLATE_X_AMOUNT = TRANSLATE_X_AMOUNT_LG
   }
-
   const initialPositions = useMemo(() => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
@@ -183,15 +235,16 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
       })
       setItemsXPositions(newPositions)
     }
-
     //move the ul slider
     const newTranslateX = currentListTranslateX - TRANSLATE_X_AMOUNT
+    console.log('move slider', newTranslateX)
     setCurrentListTranslateX(newTranslateX)
     setCurrentIndex(newIndex)
     setCurrentXPosition(newXPosition)
   }, [TRANSLATE_X_AMOUNT, currentIndex, currentListTranslateX, currentXPosition, items?.length, itemsXPositions])
 
   const loopSlidePrev = useCallback(() => {
+    console.log('loopSlidePrev')
     const isFirst = currentIndex === 0
     const newIndex = isFirst ? items?.length - 1 : currentIndex - 1
     const newXPosition = currentXPosition - TRANSLATE_X_AMOUNT
@@ -249,45 +302,171 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
   const cancelTimeout = () => {
     timeoutRef.current && clearTimeout(timeoutRef.current)
   }
+
   //  no-scrollbar
-  const commonListContainerClassName = `flex 
+  const commonScrollListContainerClassName = `
+  ${layout === 'default' ? `max-w-smContainer horizontal-scrollbar` : 'w-full scroll-pl-lg no-scrollbar'}
+  flex 
   gap-3 
   lg:gap-6 
-  w-full 
   h-max 
   overflow-x-auto
-  scroll-pl-lg
-  snap-x`
+  snap-x
+  pb-6`
+  const commonSingleListContainerClassName = `grid transition-transform ease-scroll delay-0 duration-[800ms]`
 
-  const listVariantClassName = {
-    video: commonListContainerClassName,
-    image: `${
-      displayMode === 'single'
-        ? `grid transition-transform ease-scroll delay-0 duration-[800ms]`
-        : commonListContainerClassName
-    }`,
-    event: commonListContainerClassName,
-    keyNumber: commonListContainerClassName,
-    iframe: commonListContainerClassName,
+  const customListVariantClassName = {
+    video: '',
+    image: '',
+    event: 'p-[2px]',
+    keyNumber: '',
+    iframe: '',
   }
 
+  const getCarouselItemVariant = () => {
+    if (displayMode === 'single') {
+      if (variant === 'iframe') {
+        return 'richTextBelow'
+      }
+      //@ts-ignore: TODO type cast item
+      if (variant === 'video' && items.some((item) => item.title)) {
+        return 'richTextBelow'
+      }
+      //@ts-ignore: TODO type cast item
+      if (variant === 'image' && items.some((item) => item.type === 'imageWithRichTextBelow')) {
+        return 'richTextBelow'
+      }
+    } else {
+      return 'default'
+    }
+  }
+
+  const getIframeVariantBody = (itemData: IFrameCarouselItemData, index: number) => {
+    const { title, description, action, ...iframeData } = itemData
+    const element = (
+      <IFrame
+        frameTitle={iframeData?.frameTitle}
+        url={iframeData?.url}
+        cookiePolicy={iframeData?.cookiePolicy}
+        aspectRatio={iframeData?.aspectRatio ?? '16:9'}
+        height={iframeData?.height}
+        hasSectionTitle={!!title}
+      />
+    )
+
+    return (
+      <CarouselItem
+        key={iframeData._key}
+        displayMode={displayMode}
+        active={index === currentIndex}
+        //@ts-ignore:TODO- didnt work with type assertion as PortableTextBlock[]
+        title={title}
+        //@ts-ignore:TODO- didnt work with type assertion as PortableTextBlock[]
+        content={description}
+        action={action}
+        layout={layout}
+        aspectRatio={iframeData?.aspectRatio as CarouselAspectRatios}
+        {...(displayMode === 'single' && {
+          style: {
+            transform: `translate3d(${itemsXPositions[index]}px, 0px, 0px)`,
+          },
+        })}
+        className={getWidthsForAspectRatio(iframeData?.aspectRatio as string, items?.length, displayMode)}
+      >
+        {element}
+      </CarouselItem>
+    )
+  }
+  const getVideoVariantBody = (itemData: VideoPlayerCarouselItem, index: number) => {
+    const { title, video, aspectRatio, id, ...videoData } = itemData
+
+    const element = (
+      <VideoJsComponent
+        video={video}
+        designOptions={{
+          aspectRatio: aspectRatio ?? VideoPlayerRatios['9:16'],
+        }}
+        useFillMode={true}
+        videoControls={{
+          playButton: true,
+          controls: true,
+        }}
+        className={`
+          ${getUtilityForAspectRatio(aspectRatio as string)}
+          object-cover
+          `}
+      />
+    )
+
+    return (
+      <CarouselItem
+        key={id}
+        displayMode={displayMode}
+        active={index === currentIndex}
+        variant={title ? 'richTextBelow' : 'default'}
+        aspectRatio={aspectRatio}
+        //@ts-ignore:TODO- didnt work with type assertion as PortableTextBlock[]
+        title={title}
+        //@ts-ignore:TODO- didnt work with type assertion as PortableTextBlock[]
+        layout={layout}
+        className={getWidthsForAspectRatio(aspectRatio as string, items?.length, displayMode)}
+        {...(displayMode === 'single' && {
+          style: {
+            transform: `translate3d(${itemsXPositions[index]}px, 0px, 0px)`,
+          },
+        })}
+      >
+        {element}
+      </CarouselItem>
+    )
+  }
+  const getEventVariantBody = (itemData: EventCardData, index: number) => {
+    const element = <EventCard hasSectionTitle={hasSectionTitle} data={itemData} variant="carousel" />
+
+    return (
+      <CarouselItem
+        key={itemData.id}
+        displayMode={displayMode}
+        variant="default"
+        customListItemWidth={true}
+        className={`
+          ${displayMode === 'scroll' ? `w-event-carousel-card-w` : ''}
+        `}
+        {...(displayMode === 'single' && {
+          style: {
+            transform: `translate3d(${itemsXPositions[index]}px, 0px, 0px)`,
+          },
+        })}
+      >
+        {element}
+      </CarouselItem>
+    )
+  }
+
+  const getKeyNumberVariantBody = (itemData: KeyNumberItemData) => {
+    const element = <KeyNumberItem {...itemData} isScrollable />
+
+    return (
+      <CarouselItem
+        key={itemData.id}
+        displayMode="scroll"
+        variant="default"
+        customListItemWidth={true}
+        className={`w-[37vw]`}
+      >
+        {element}
+      </CarouselItem>
+    )
+  }
   const getCarouselItem = (item: CarouselItemTypes, i: number) => {
     const ariaLabel = `${i + 1} of ${items?.length}`
     switch (variant) {
       case 'video':
-        return (
-          <CarouselVideoItem
-            key={item.id}
-            {...(item as VideoPlayerCarouselItem)}
-            displayMode={displayMode}
-            aria-label={ariaLabel}
-            active={i === currentIndex}
-          />
-        )
+        return getVideoVariantBody(item as VideoPlayerCarouselItem, i)
       case 'image':
         return (
           <CarouselImageItem
-            key={item.id}
+            key={item?.id ?? item?._key ?? `image_carousel_${sliderRef.current}_item_${i}`}
             {...(item as ImageCarouselItem)}
             displayMode={displayMode}
             aria-label={ariaLabel}
@@ -298,51 +477,18 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
                   transform: `translate3d(${itemsXPositions[i]}px, 0px, 0px)`,
                 },
                 wasUserPress: wasUserInteraction,
-                onMouseOver: () => {
-                  console.log('mouse over on image, cancel timeout')
-                  cancelTimeout()
-                },
                 onFocus: () => {
-                  console.log('focus on image, cancel timout')
                   cancelTimeout()
                 },
               })}
           />
         )
       case 'event':
-        return (
-          <CarouselEventItem
-            key={item.id}
-            event={item as EventCardData}
-            displayMode={displayMode}
-            aria-label={ariaLabel}
-            active={i === currentIndex}
-            hasSectionTitle={hasSectionTitle}
-          />
-        )
+        return getEventVariantBody(item as EventCardData, i)
       case 'keyNumber':
-        return (
-          <CarouselKeyNumberItem
-            key={item.id}
-            keyNumber={item as KeyNumberItemData}
-            displayMode={displayMode}
-            aria-label={ariaLabel}
-            active={i === currentIndex}
-            hasSectionTitle={hasSectionTitle}
-          />
-        )
+        return getKeyNumberVariantBody(item as KeyNumberItemData, i)
       case 'iframe':
-        return (
-          <CarouselIframeItem
-            className="pt-lg"
-            key={(item as IFrameCarouselItemData)._key}
-            noOfSiblings={items.length}
-            displayMode={displayMode}
-            aria-label={ariaLabel}
-            active={i === currentIndex}
-            {...(item as IFrameCarouselItemData)}
-          />
-        )
+        return getIframeVariantBody(item as IFrameCarouselItemData, i)
     }
   }
 
@@ -364,93 +510,84 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
         `w-full
         relative
         mx-auto
-        ${
-          variant === 'image'
-            ? `flex ${isImageCarouselWithRichTextBelow ? 'flex-col' : 'flex-col-reverse'}`
-            : 'flex flex-col-reverse'
-        }
-        ${variant === 'image' && displayMode === 'single' ? `overflow-x-hidden` : ''}
+        flex
+        overflow-y-visible
+        ${getCarouselItemVariant() === 'richTextBelow' ? 'flex-col' : 'flex-col-reverse'}
+        ${displayMode === 'single' ? `overflow-x-hidden` : ''}
         
         `,
         className,
       )}
     >
-      {/* Controls - should be before slide in DOM but not visually 
-      TODO: hide controls when only 2 images/items
-      why this: ${items.length === 3 ? 'lg:hidden' : ''}
-      */}
-      <div
-        role="group"
-        aria-labelledby={controlsId}
-        className={`
-          ${items?.length < 3 ? 'hidden' : ''}
+      {/* Controls - should be before slide in DOM but not visually
+       */}
+      {displayMode === 'single' && (
+        <div
+          role="group"
+          aria-labelledby={controlsId}
+          className={`
           pt-6 
           pb-2 
           flex 
           ${internalAutoRotation ? 'justify-between' : 'justify-end'}
-          ${
-            variant === 'image' && displayMode === 'single'
-              ? `mx-auto
-            w-image-carousel-card-w-sm
-            md:w-image-carousel-card-w-md
-            lg:w-image-carousel-card-w-lg
-            `
-              : 'px-layout-lg'
-          } `}
-      >
-        <div id={controlsId} className="sr-only">
-          <FormattedMessage id="carousel_controls" defaultMessage="Carousel controls" />
-        </div>
-        {internalAutoRotation && variant === 'image' && displayMode === 'single' && (
-          <MediaButton
-            key={`play_pause_button_${currentIndex}`}
-            title={pauseAutoRotation ? `Play our image gallery.` : `Pause image gallery`}
-            mode={pauseAutoRotation ? 'play' : 'pause'}
-            onClick={() => {
-              setPauseAutoRotation(!pauseAutoRotation)
-            }}
-            paused={pauseAutoRotation}
-            useTimer
-            className="[grid-area:left]"
-          />
-        )}
-        <div className="flex gap-3 items-center">
-          <MediaButton
-            title={`Go to previous`}
-            aria-controls={carouselItemsId}
-            mode="previous"
-            disabled={(displayMode === 'scroll' && scrollPosition === 'start') ?? false}
-            onClick={() => {
-              if (variant === 'image' && displayMode === 'single') {
-                loopSlidePrev()
-                if (!pauseAutoRotation) {
-                  setPauseAutoRotation(true)
+            mx-auto
+            w-single-carousel-card-w-sm
+            md:w-single-carousel-card-w-md
+            lg:w-single-carousel-card-w-lg`}
+        >
+          <div id={controlsId} className="sr-only">
+            <FormattedMessage id="carousel_controls" defaultMessage="Carousel controls" />
+          </div>
+          {/** Only image should have autoplay */}
+          {internalAutoRotation && variant === 'image' && displayMode === 'single' && (
+            <MediaButton
+              key={`play_pause_button_${currentIndex}`}
+              title={pauseAutoRotation ? `Play our image gallery.` : `Pause image gallery`}
+              mode={pauseAutoRotation ? 'play' : 'pause'}
+              onClick={() => {
+                setPauseAutoRotation(!pauseAutoRotation)
+              }}
+              paused={pauseAutoRotation}
+              useTimer
+              className="[grid-area:left]"
+            />
+          )}
+          <div className="flex gap-3 items-center">
+            <MediaButton
+              title={`Go to previous`}
+              aria-controls={carouselItemsId}
+              mode="previous"
+              onClick={() => {
+                if (displayMode === 'single') {
+                  loopSlidePrev()
+                  if (variant === 'image' && !pauseAutoRotation) {
+                    setPauseAutoRotation(true)
+                  }
+                } else {
+                  prevSlide()
                 }
-              } else {
-                prevSlide()
-              }
-            }}
-            className="hover:border-autumn-storm-60"
-          />
-          <MediaButton
-            title={`Go to next`}
-            mode="next"
-            aria-controls={carouselItemsId}
-            disabled={(displayMode === 'scroll' && scrollPosition === 'end') ?? false}
-            onClick={() => {
-              if (variant === 'image' && displayMode === 'single') {
-                loopSlideNext()
-                if (!pauseAutoRotation) {
-                  setPauseAutoRotation(true)
+              }}
+              className="hover:border-autumn-storm-60"
+            />
+            <MediaButton
+              title={`Go to next`}
+              mode="next"
+              aria-controls={carouselItemsId}
+              onClick={() => {
+                if (displayMode === 'single') {
+                  loopSlideNext()
+                  if (variant === 'image' && !pauseAutoRotation) {
+                    setPauseAutoRotation(true)
+                  }
+                } else {
+                  nextSlide()
                 }
-              } else {
-                nextSlide()
-              }
-            }}
-            className="hover:border-autumn-storm-60"
-          />
+              }}
+              className="hover:border-autumn-storm-60"
+            />
+          </div>
         </div>
-      </div>
+      )}
       <ul
         ref={sliderRef}
         id={carouselItemsId}
@@ -462,19 +599,18 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
           focus:outline-dashed
           focus:outline-grey-60
           focus:outline-1
-          ${variant === 'event' ? 'p-[2px]' : ''}
-          ${listVariantClassName[variant]}
+          ${displayMode === 'single' ? commonSingleListContainerClassName : commonScrollListContainerClassName}
+          ${customListVariantClassName[variant]}
         `,
           listClassName,
         )}
-        {...(variant === 'image' &&
-          displayMode === 'single' && {
-            style: {
-              transform: `translate3d(${currentListTranslateX}px, 0px, 0px)`,
-            },
-            'aria-live': pauseAutoRotation ? 'polite' : 'off',
-            onKeyDown: handleKeyDown,
-          })}
+        {...(displayMode === 'single' && {
+          style: {
+            transform: `translate3d(${currentListTranslateX}px, 0px, 0px)`,
+          },
+          'aria-live': pauseAutoRotation ? 'polite' : 'off',
+          onKeyDown: handleKeyDown,
+        })}
       >
         {items?.map((item, i) => {
           return getCarouselItem(item, i)

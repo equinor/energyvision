@@ -56,7 +56,10 @@ export type VideoPlayerCarouselData = {
   designOptions: DesignOptions & {
     aspectRatio: VideoPlayerRatios
   }
+  singleMode?: boolean
+  useFullWidthScroll?: boolean
   title?: PortableTextBlock[]
+  hideTitle?: boolean
   ingress?: PortableTextBlock[]
 }
 

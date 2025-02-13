@@ -210,12 +210,13 @@ module.exports = {
         '3xl': 'calc((56 / 16) * theme(fontSize.base))',
         '4xl': 'calc((96 / 16) * theme(fontSize.base))',
         topbar: '85px',
-        'image-carousel-card-w-sm': '275px',
-        'image-carousel-card-w-md': '692px',
-        'image-carousel-card-w-lg': '980px',
         'layout-sm': 'clamp(16px, calc(-38.3689px + 14.4984vw), 250px)',
         'layout-md': 'clamp(16px, calc(-69.4369px + 22.7832vw), 368px)',
         'layout-lg': 'clamp(16px, calc(-101.4757px + 31.3269vw), 500px)',
+        'single-carousel-card-w-sm': '275px',
+        'single-carousel-card-w-md': '692px',
+        'single-carousel-card-w-lg': '980px',
+        'event-carousel-card-w': '383px',
       }),
       fontSize: {
         //--typeScale-00
@@ -271,6 +272,7 @@ module.exports = {
         //When large font, prose(65ch) might not be the best
         text: '760px',
         menuText: 'calc(35 * var(--space-medium))',
+        smContainer: 'calc(100vw - theme(spacing.layout-sm) - theme(spacing.layout-sm))',
       },
       minWidth: {
         viewport: '375',
@@ -341,6 +343,10 @@ module.exports = {
           '0%': { height: 'var(--radix-accordion-content-height)' },
           '100%': { height: 0 },
         },
+        adjustObjectPosition: {
+          '0%': { 'object-position': '100% 0' },
+          '100%': { 'object-position': '0 0' },
+        },
       },
       animation: {
         fadeInOut: 'fade linear both',
@@ -351,6 +357,7 @@ module.exports = {
         'spin-slow': 'spin 3s linear infinite',
         slideUp: 'slideUp 0.2s ease-out',
         slideDown: 'slideDown 0.2s ease-out',
+        adjustObjectPosition: 'adjustObjectPosition linear both',
       },
       data: {
         open: 'state~="open"',

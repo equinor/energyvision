@@ -11,6 +11,7 @@ import Blocks from '../../pageComponents/shared/portableText/Blocks'
 import { ResourceLink } from '@core/Link'
 import { getUrlFromAction } from '../../common/helpers'
 import { getLocaleFromName } from '../../lib/localization'
+import { DisplayModes } from '@core/Carousel/Carousel'
 
 export type ImageWithOverlayProps = {
   image?: SanityImageObject
@@ -21,6 +22,7 @@ export type ImageWithOverlayProps = {
   /** When in carousel use this to control active hidden or block */
   captionClassname?: string
   action?: LinkData
+  displayMode?: DisplayModes
 } & HTMLAttributes<HTMLDivElement>
 
 export const ImageWithOverlay = forwardRef<HTMLDivElement, ImageWithOverlayProps>(function ImageWithOverlay(
@@ -58,7 +60,7 @@ export const ImageWithOverlay = forwardRef<HTMLDivElement, ImageWithOverlayProps
 
   return (
     <figure ref={ref} className={envisTwMerge(`relative w-full h-full rounded-md`, className)}>
-      <Image maxWidth={1420} image={image as ImageWithAlt} fill className="rounded-md" />
+      <Image maxWidth={1420} image={image as ImageWithAlt} fill className={`rounded-md`} />
       <figcaption className={envisTwMerge(`w-full h-full`, captionClassname)}>
         <div
           className={`absolute
@@ -75,10 +77,10 @@ export const ImageWithOverlay = forwardRef<HTMLDivElement, ImageWithOverlayProps
           <div
             className={` h-fit rounded-b-md ${
               showOverlay ? 'justify-end' : 'justify-between fade-in-black-gradient'
-            } flex  items-end py-6 px-8`}
+            } flex items-end py-6 px-8`}
           >
             {teaserTitle && (
-              <div className={`text-white-100 text-left text-lg w-2/3 pt-20 ${showOverlay ? 'hidden' : 'block'}`}>
+              <div className={`text-white-100 text-left text-lg w-2/3 pt-40 ${showOverlay ? 'hidden' : 'block'}`}>
                 {teaserTitle}
               </div>
             )}

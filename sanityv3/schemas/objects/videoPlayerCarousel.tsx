@@ -7,6 +7,7 @@ import { configureBlockContent, configureTitleBlockContent } from '../editors'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import { defaultColors } from '../defaultColors'
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
+import { carouselWidth, singleMode } from './carousel/sharedCarouselFields'
 
 const titleContentType = configureTitleBlockContent()
 const ingressBlockContentType = configureBlockContent({
@@ -36,6 +37,12 @@ export default {
   fields: [
     title,
     {
+      type: 'boolean',
+      name: 'hideTitle',
+      title: 'Hide title',
+      description: 'Hides the title, but screen readers will read title of carousel',
+    },
+    {
       name: 'ingress',
       title: 'Ingress',
       description: 'Optional short description. Max 400 characters',
@@ -47,7 +54,7 @@ export default {
       type: 'array',
       name: 'items',
       description: 'Add more videos',
-      title: 'Scrollable video items',
+      title: 'Video items',
       of: [
         {
           title: 'Video item',
@@ -95,6 +102,8 @@ export default {
       ],
       validation: (Rule: Rule) => Rule.required().min(2),
     },
+    singleMode,
+    carouselWidth,
     {
       name: 'aspectRatio',
       type: 'string',
@@ -130,8 +139,8 @@ export default {
       const length = items ? items.length : 0
 
       return {
-        title: title ? blocksToText(title) : 'Untitled horizontal scroll video',
-        subtitle: `Horizontal scroll video carousel with ${length} items`,
+        title: title ? blocksToText(title) : 'Untitled video carousel',
+        subtitle: `Video carousel with ${length} items`,
         media: EdsIcon(play_circle),
       }
     },

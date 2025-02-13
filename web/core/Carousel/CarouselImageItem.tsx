@@ -47,7 +47,6 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
   },
   ref,
 ) {
-  console.log('Image carousel type', type)
   const itemRef = useRef<HTMLLIElement>(null)
   const combinedItemRef = useMemo(() => mergeRefs<HTMLLIElement>(itemRef, ref), [itemRef, ref])
   const isJustImage = type === 'imageWithAltAndCaption' && !caption && !attribution
@@ -59,8 +58,6 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
   const url = action && getUrlFromAction(action)
 
   useEffect(() => {
-    console.log('active', active)
-    console.log('wasUserPress', wasUserPress)
     if (active && itemRef?.current && wasUserPress) {
       itemRef?.current?.focus()
     }
@@ -69,7 +66,12 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
   const getBody = () => {
     if (isJustImage) {
       return (
-        <div className="relative w-full h-full rounded-md">
+        <div
+          className={`relative 
+            w-full 
+            h-full 
+            rounded-md`}
+        >
           <Image maxWidth={1420} image={image as ImageWithAlt} fill className="rounded-md" />
         </div>
       )
@@ -77,11 +79,10 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
     if (isImageWithSimpleCaption) {
       return (
         <figure className="relative w-full h-full rounded-md flex items-end">
-          <Image maxWidth={1420} image={image as ImageWithAlt} fill className="rounded-md" />
+          <Image maxWidth={1420} image={image as ImageWithAlt} fill className={`rounded-md`} />
           <figcaption
-            className={`w-full rounded-b-md z-[1] fade-in-black-gradient fadeInVisibilityOpacityDisplay transition-all ${
-              active ? 'block' : 'hidden'
-            }`}
+            className={`w-full rounded-b-md z-[1] fade-in-black-gradient fadeInVisibilityOpacityDisplay transition-all 
+            ${displayMode === 'single' ? (active ? 'block' : 'hidden') : ''}`}
           >
             <div className={`w-full h-fit pt-20 pb-6 px-8`}>
               <span className="w-2/3 flex flex-col gap-1 ">
@@ -96,7 +97,7 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
     if (isImageWithJustLink) {
       return (
         <figure className="relative w-full h-full">
-          <Image maxWidth={1420} image={image as ImageWithAlt} fill className="rounded-md" />
+          <Image maxWidth={1420} image={image as ImageWithAlt} fill className={`rounded-md`} />
           <div className="h-full w-full fade-in-black-gradient pt-20 flex items-end rounded-b-md">
             <BaseLink
               href={url as string}
@@ -124,15 +125,15 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
       )
     }
     if (isImageWithRichTextCaption) {
+      const singleClassname = `fadeInVisibilityOpacityDisplay transition-all ${active ? 'block' : 'hidden'}`
+      const scrollClassname = ``
       return (
         <figure className="w-full h-full flex flex-col">
           <div className={`relative w-full aspect-4/5 md:aspect-video rounded-md`}>
             <Image maxWidth={1420} image={image as ImageWithAlt} fill className="rounded-md" />
           </div>
           <figcaption
-            className={`max-w-text py-6 px-8 fadeInVisibilityOpacityDisplay transition-all ${
-              active ? 'block' : 'hidden'
-            }`}
+            className={`max-w-text py-6 px-8 ${displayMode === 'single' ? singleClassname : scrollClassname}`}
           >
             {caption && <Blocks value={caption} />}
           </figcaption>
@@ -140,6 +141,11 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
       )
     }
   }
+
+  const scrollListItemWidthsClassNames = `w-[75vw] md:w-[70vw] lg:w-[62vw] max-w-[1030px]`
+  const singleListItemWidthsClassNames = `w-single-carousel-card-w-sm 
+        md:w-single-carousel-card-w-md 
+        lg:w-single-carousel-card-w-lg`
 
   return (
     <li
@@ -153,10 +159,8 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
         `
         relative
         h-full
-        w-image-carousel-card-w-sm 
-        md:w-image-carousel-card-w-md 
-        lg:w-image-carousel-card-w-lg
-        ${type !== 'imageWithRichTextBelow' ? 'aspect-4/5 md:aspect-video' : ''}
+        ${isImageWithRichTextCaption ? '' : 'aspect-video min-h-[250px]'}
+        ${displayMode === 'single' ? singleListItemWidthsClassNames : scrollListItemWidthsClassNames}
         ${
           displayMode === 'single'
             ? `
@@ -169,19 +173,17 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
             duration-1000
             ease-[ease]
             ${!active ? 'opacity-30' : ''}
-        `
-            : 'first:ml-lg lg:first:ml-layout-sm last:mr-lg lg:last-mr-layout-sm shrink-0'
-        }
-        ${
-          displayMode === 'scroll'
-            ? `snap-center snap-mandatory`
-            : `
             ms-2 
             me-2 
             col-start-1 
             col-end-1 
             row-start-1 
-            row-end-1`
+            row-end-1
+        `
+            : `snap-center 
+          snap-mandatory
+          shrink-0
+            `
         }
         `,
         className,
