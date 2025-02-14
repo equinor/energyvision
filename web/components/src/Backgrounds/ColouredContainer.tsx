@@ -10,6 +10,8 @@ type ColouredContainerProps = {
   backgroundColor?: BackgroundColours
   backgroundUtility?: keyof ColorKeyTokens
   dark?: boolean
+  /** Set return element as section */
+  asSection?: boolean
 } & HTMLAttributes<HTMLDivElement>
 
 type ColourContainerProps = {
@@ -23,9 +25,15 @@ const ColourContainer = styled.div<ColourContainerProps>`
   ${({ $isInverted }) => ($isInverted ? inverted : normal)}
   ${({ $hasUtility }) => ($hasUtility ? '' : 'background-color: var(--background-color);')}
 `
+const ColourSectionContainer = styled.section<ColourContainerProps>`
+  container: size;
+  color: var(--color-on-background);
+  ${({ $isInverted }) => ($isInverted ? inverted : normal)}
+  ${({ $hasUtility }) => ($hasUtility ? '' : 'background-color: var(--background-color);')}
+`
 
 export const ColouredContainer = forwardRef<HTMLDivElement, ColouredContainerProps>(function BackgroundContainer(
-  { backgroundColor = 'White', backgroundUtility, dark, style, children, className = '', ...rest },
+  { backgroundColor = 'White', backgroundUtility, dark, style, children, className = '', asSection = false, ...rest },
   ref,
 ) {
   const styleVariant = getContainerColor(backgroundColor)
@@ -35,8 +43,10 @@ export const ColouredContainer = forwardRef<HTMLDivElement, ColouredContainerPro
     dark || backgroundColor === 'Mid Blue' || backgroundColor === 'Slate Blue' || backgroundColor === 'Slate Blue 95'
   const textColor = isDark ? '--inverted-text' : '--default-text'
 
+  const ReturnElement = asSection ? ColourSectionContainer : ColourContainer
+
   return (
-    <ColourContainer
+    <ReturnElement
       className={twMerge(
         `${className} background${styleVariant} ${isDark ? 'dark' : ''} ${
           backgroundUtility ? colorKeyToUtilityMap[backgroundUtility]?.background : ''
@@ -55,6 +65,6 @@ export const ColouredContainer = forwardRef<HTMLDivElement, ColouredContainerPro
       {...rest}
     >
       {children}
-    </ColourContainer>
+    </ReturnElement>
   )
 })
