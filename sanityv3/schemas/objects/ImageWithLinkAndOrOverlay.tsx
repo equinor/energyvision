@@ -66,7 +66,7 @@ export default {
       of: [blockContentType],
       validation: (Rule: Rule) =>
         Rule.custom((value: PortableTextBlock[]) => {
-          return validateCharCounterEditor(value, 600, true)
+          return validateCharCounterEditor(value, 200, true)
         }).error(),
     },
     {

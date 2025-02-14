@@ -216,6 +216,9 @@ module.exports = {
         'single-carousel-card-w-sm': '275px',
         'single-carousel-card-w-md': '692px',
         'single-carousel-card-w-lg': '980px',
+        'single-carousel-card-h-sm': '400px',
+        'single-carousel-card-h-md': '430px',
+        'single-carousel-card-h-lg': '516px',
         'event-carousel-card-w': '383px',
       }),
       fontSize: {

@@ -100,10 +100,8 @@ export default {
           },
         },
       ],
-      validation: (Rule: Rule) => Rule.required().min(2),
+      validation: (Rule: Rule) => Rule.required().min(3),
     },
-    singleMode,
-    carouselWidth,
     {
       name: 'aspectRatio',
       type: 'string',
@@ -119,6 +117,15 @@ export default {
       initialValue: '16:9',
       fieldset: 'design',
       validation: (Rule: Rule) => Rule.required(),
+    },
+    {
+      type: 'boolean',
+      name: 'scrollMode',
+      title: 'Scroll mode',
+      description: 'Displays the carousel as scroll container',
+      initialValue: false,
+      fieldset: 'design',
+      hidden: ({ parent }: { parent: any }) => parent?.aspectRatio !== '9:16',
     },
     {
       title: 'Background',

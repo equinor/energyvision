@@ -15,12 +15,17 @@ const VideoPlayerCarousel = forwardRef<HTMLUListElement, VideoPlayerCarouselProp
   { anchor, data, className },
   ref,
 ) {
-  const { title, hideTitle, ingress, items, singleMode, useFullWidthScroll, designOptions } = data
+  const { title, hideTitle, ingress, items, scrollMode, designOptions } = data
   const { background, aspectRatio } = designOptions
   const headingId = useId()
 
   return (
-    <BackgroundContainer background={background} id={anchor} className={envisTwMerge(`pb-page-content`, className)}>
+    <BackgroundContainer
+      asSection={true}
+      background={background}
+      id={anchor}
+      className={envisTwMerge(`pb-page-content`, className)}
+    >
       <div className="w-full flex flex-col px-layout-lg mx-auto max-w-viewport pb-8">
         {title && (
           <Heading
@@ -40,10 +45,7 @@ const VideoPlayerCarousel = forwardRef<HTMLUListElement, VideoPlayerCarouselProp
             aspectRatio: aspectRatio,
           }
         })}
-        displayMode={singleMode && singleMode ? 'single' : 'scroll'}
-        {...(!singleMode && {
-          layout: useFullWidthScroll ? 'full' : 'default',
-        })}
+        displayMode={scrollMode && scrollMode ? 'scroll' : 'single'}
         hasSectionTitle={!!title}
         variant="video"
         labelledbyId={title ? headingId : undefined}

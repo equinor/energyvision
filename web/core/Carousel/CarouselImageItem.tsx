@@ -57,6 +57,10 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
 
   const url = action && getUrlFromAction(action)
 
+  const singleHeights = `min-h-single-carousel-card-h-sm
+  md:min-h-single-carousel-card-h-md
+  lg:min-h-single-carousel-card-h-lg`
+
   useEffect(() => {
     if (active && itemRef?.current && wasUserPress) {
       itemRef?.current?.focus()
@@ -66,12 +70,7 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
   const getBody = () => {
     if (isJustImage) {
       return (
-        <div
-          className={`relative 
-            w-full 
-            h-full 
-            rounded-md`}
-        >
+        <div className={`relative w-full h-full rounded-md`}>
           <Image maxWidth={1420} image={image as ImageWithAlt} fill className="rounded-md" />
         </div>
       )
@@ -79,7 +78,7 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
     if (isImageWithSimpleCaption) {
       return (
         <figure className="relative w-full h-full rounded-md flex items-end">
-          <Image maxWidth={1420} image={image as ImageWithAlt} fill className={`rounded-md`} />
+          <Image maxWidth={1420} image={image as ImageWithAlt} fill className={`rounded-md ${singleHeights}`} />
           <figcaption
             className={`w-full rounded-b-md z-[1] fade-in-black-gradient fadeInVisibilityOpacityDisplay transition-all 
             ${displayMode === 'single' ? (active ? 'block' : 'hidden') : ''}`}
@@ -97,7 +96,7 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
     if (isImageWithJustLink) {
       return (
         <figure className="relative w-full h-full">
-          <Image maxWidth={1420} image={image as ImageWithAlt} fill className={`rounded-md`} />
+          <Image maxWidth={1420} image={image as ImageWithAlt} fill className={`${singleHeights} rounded-md`} />
           <div className="h-full w-full fade-in-black-gradient pt-20 flex items-end rounded-b-md">
             <BaseLink
               href={url as string}
@@ -130,11 +129,13 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
       const scrollClassname = ``
       return (
         <figure className="w-full h-full flex flex-col">
-          <div className={`relative w-full aspect-4/5 md:aspect-video rounded-md`}>
+          <div className={`relative w-full rounded-md ${singleHeights}`}>
             <Image maxWidth={1420} image={image as ImageWithAlt} fill className="rounded-md" />
           </div>
           <figcaption
-            className={`max-w-text py-6 px-8 ${displayMode === 'single' ? singleClassname : scrollClassname}`}
+            className={`h-fit max-w-text p-4 lg:py-6 lg:px-8 ${
+              displayMode === 'single' ? singleClassname : scrollClassname
+            }`}
           >
             {caption && (
               <Blocks
@@ -164,8 +165,7 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
       className={envisTwMerge(
         `
         relative
-        h-full
-        ${isImageWithRichTextCaption ? '' : 'aspect-video min-h-[250px]'}
+        ${isImageWithRichTextCaption ? 'h-full' : singleHeights}
         ${displayMode === 'single' ? singleListItemWidthsClassNames : scrollListItemWidthsClassNames}
         ${
           displayMode === 'single'

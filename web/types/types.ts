@@ -415,8 +415,6 @@ export type IframeCarouselData = {
   title?: PortableTextBlock[]
   hideTitle?: boolean
   items: IFrameCarouselItemData[]
-  singleMode?: boolean
-  useFullWidthScroll?: boolean
   designOptions: DesignOptions
 }
 

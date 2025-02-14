@@ -2,7 +2,7 @@ import { LinkData } from '../../types'
 import envisTwMerge from '../../twMerge'
 import { forwardRef, HTMLAttributes, ReactNode, useEffect, useId, useMemo, useRef } from 'react'
 import { PortableTextBlock } from '@portabletext/types'
-import { DisplayModes, getUtilityForAspectRatio, Layouts } from './Carousel'
+import { DisplayModes } from './Carousel'
 import { Heading, Typography } from '@core/Typography'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
 import { ResourceLink } from '@core/Link'
@@ -29,14 +29,14 @@ type CarouselItemProps = {
   action?: LinkData
   /* With richTextBelow or default. */
   attribution?: string
-  /* Scroll container */
-  layout?: Layouts
   /** Single container */
   wasUserPress?: boolean
   /* Only scroll: Sets widths based on aspect ratios type */
   aspectRatio?: CarouselAspectRatios
   /* Only scroll: To bypass getElementAspectRatio */
   customListItemWidth?: boolean
+  /* Override heights in the richTextBelow */
+  overrideHeights?: boolean
 } & HTMLAttributes<HTMLLIElement>
 
 /* Carousel item
@@ -47,8 +47,8 @@ export const CarouselItem = forwardRef<HTMLLIElement, CarouselItemProps>(functio
   {
     variant = 'richTextBelow',
     displayMode = 'scroll',
-    layout = 'default',
     wasUserPress = false,
+    overrideHeights = false,
     children,
     title,
     content,
@@ -56,8 +56,6 @@ export const CarouselItem = forwardRef<HTMLLIElement, CarouselItemProps>(functio
     action,
     attribution,
     className = '',
-    aspectRatio = '16:9',
-    customListItemWidth,
     ...rest
   },
   ref,
@@ -69,13 +67,13 @@ export const CarouselItem = forwardRef<HTMLLIElement, CarouselItemProps>(functio
   const getTitleElement = () => {
     if (title && (title === 'string' || typeof title === 'string')) {
       return (
-        <Typography as="h3" variant="h4">
+        <Typography as="h3" variant="h6">
           {title}
         </Typography>
       )
     }
     if (title && Array.isArray(title)) {
-      return <Heading as="h3" variant="h4" value={title} />
+      return <Heading as="h3" variant="h6" value={title} />
     }
     return null
   }
@@ -90,12 +88,14 @@ export const CarouselItem = forwardRef<HTMLLIElement, CarouselItemProps>(functio
     return null
   }
 
-  const getElementAspectRatio = () => {
-    if (customListItemWidth || displayMode === 'single') {
-      return
-    }
-    return getUtilityForAspectRatio(aspectRatio)
-  }
+  const singleWidths = `
+  w-single-carousel-card-w-sm
+  md:w-single-carousel-card-w-md
+  lg:w-single-carousel-card-w-lg`
+  const singleHeigths = `
+  min-h-single-carousel-card-h-sm
+  md:min-h-single-carousel-card-h-md
+  lg:min-h-single-carousel-card-h-lg`
 
   const scrollVariantClassNames = `
   group
@@ -105,14 +105,15 @@ export const CarouselItem = forwardRef<HTMLLIElement, CarouselItemProps>(functio
   relative
   snap-center
   pb-6
-  ${layout === 'full' ? 'first:ml-lg lg:first:ml-layout-sm last:mr-lg lg:last:mr-layout-sm' : ''}`
+  last:mr-lg 
+  lg:last:mr-layout-sm
+  max-h-[500px] 
+  lg:max-h-[740px]`
 
   const singleVariantClassNames = `
   relative
   h-full
-  w-single-carousel-card-w-sm 
-  md:w-single-carousel-card-w-md 
-  lg:w-single-carousel-card-w-lg
+  ${variant === 'richTextBelow' ? '' : `${singleWidths} ${singleHeigths}`}
   ms-2 
   me-2 
   col-start-1 
@@ -128,7 +129,6 @@ export const CarouselItem = forwardRef<HTMLLIElement, CarouselItemProps>(functio
   duration-1000
   ease-[ease]
   ${!active ? 'opacity-30' : ''}
-   ${variant !== 'richTextBelow' ? 'aspect-4/5 md:aspect-video' : ''}
   `
 
   const getVariantBody = () => {
@@ -138,25 +138,33 @@ export const CarouselItem = forwardRef<HTMLLIElement, CarouselItemProps>(functio
         const singleClassNames = `${active ? 'block' : 'hidden'}`
 
         return (
-          <figure className="w-full h-full flex flex-col">
-            <div className={getElementAspectRatio()}>{children}</div>
+          <figure className={`flex flex-col ${displayMode === 'single' ? `${singleWidths}` : ''}`}>
+            <div
+              className={`${
+                displayMode === 'scroll'
+                  ? 'aspect-9/16'
+                  : `
+              ${overrideHeights ? 'aspect-video' : `${singleHeigths} aspect-9/16 md:aspect-video`}`
+              }`}
+            >
+              {children}
+            </div>
             <figcaption
-              className={`pt-6 
-            pr-4  
-            w-full
-            h-full
-            ${displayMode === 'single' && singleClassNames}
-            ${displayMode === 'scroll' && scrollClassNames}
+              className={`pt-4 
+                pr-4  
+                w-full
+                h-fit
+                ${displayMode === 'single' ? singleClassNames : scrollClassNames}
             `}
             >
               <div
                 className={`w-full 
-              h-full 
+              h-fit 
               flex 
               flex-col
               gap-2
               last:self-end
-              grow max-w-text`}
+              max-w-text`}
               >
                 {getTitleElement()}
                 {getContentElement()}
@@ -178,7 +186,7 @@ export const CarouselItem = forwardRef<HTMLLIElement, CarouselItemProps>(functio
         )
       }
       default:
-        return <div className={`relative w-full h-full ${getElementAspectRatio()}`}>{children}</div>
+        return <>{children}</>
     }
   }
 
@@ -201,8 +209,7 @@ export const CarouselItem = forwardRef<HTMLLIElement, CarouselItemProps>(functio
         tabIndex: active ? 0 : -1,
       })}
       className={envisTwMerge(
-        `${displayMode === 'single' ? singleVariantClassNames : scrollVariantClassNames}
-        `,
+        `${displayMode === 'single' ? singleVariantClassNames : scrollVariantClassNames}`,
         className,
       )}
     >

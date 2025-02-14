@@ -12,7 +12,6 @@ import {
   height,
   action,
 } from './iframe/sharedIframeFields'
-import { carouselWidth, singleMode } from './carousel/sharedCarouselFields'
 
 const carouselItemFields = [title, frameTitle, description, cookiePolicy, aspectRatio, url, height, action]
 
@@ -43,7 +42,7 @@ export default {
       type: 'array',
       name: 'items',
       description: 'Add more iframes',
-      title: 'Scrollable iframe items',
+      title: 'Iframe items',
       of: [
         {
           title: 'Iframe item',
@@ -70,10 +69,8 @@ export default {
           fields: [...carouselItemFields],
         },
       ],
-      validation: (Rule: Rule) => Rule.required().min(2),
+      validation: (Rule: Rule) => Rule.required().min(3),
     },
-    singleMode,
-    carouselWidth,
     {
       title: 'Background',
       description: 'Pick a colour for the background. Default is white.',

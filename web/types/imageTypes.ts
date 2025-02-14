@@ -67,9 +67,7 @@ export type ImageCarouselData = {
   ingress?: PortableTextBlock[]
   hideTitle?: boolean
   items: ImageCarouselItem[]
-  captionPositionUnderImage?: boolean
   options: {
-    singleMode?: boolean
     autoplay?: boolean
     delay?: number
   }

@@ -77,9 +77,8 @@ export default {
         { type: 'imageWithRichTextBelow' },
         { type: 'imageWithLinkAndOrOverlay' },
       ],
-      validation: (Rule: Rule) => Rule.required().min(2),
+      validation: (Rule: Rule) => Rule.required().min(3),
     },
-    singleMode,
     autoPlay,
     {
       title: 'Background',

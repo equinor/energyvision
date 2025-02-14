@@ -48,18 +48,18 @@ export const ImageWithOverlay = forwardRef<HTMLDivElement, ImageWithOverlayProps
   const titleElement = (
     <>
       {typeof title === 'string' ? (
-        <Typography as="h2" variant="h4" className="">
+        <Typography as="h2" variant="h4" className="text-md lg:text-lg">
           {title}
         </Typography>
       ) : (
         //@ts-ignore: Checked earlier for undefined title
-        <Heading as="h2" variant="h4" className="" value={title} />
+        <Heading as="h2" variant="h4" className="text-md lg:text-lg" value={title} />
       )}
     </>
   )
 
   return (
-    <figure ref={ref} className={envisTwMerge(`relative w-full h-full rounded-md`, className)}>
+    <figure ref={ref} className={envisTwMerge(`w-full h-full rounded-md`, className)}>
       <Image maxWidth={1420} image={image as ImageWithAlt} fill className={`rounded-md`} />
       <figcaption className={envisTwMerge(`w-full h-full`, captionClassname)}>
         <div
@@ -88,14 +88,16 @@ export const ImageWithOverlay = forwardRef<HTMLDivElement, ImageWithOverlayProps
           <div
             id={overlayId}
             className={`
-              py-6
-              px-8
+              py-2
+              px-4
+              lg:py-6
+              lg:px-8
               max-w-text
               ${showOverlay ? 'opacity-100' : 'opacity-0'} ${showOverlay ? 'visible' : 'invisible'}
               `}
           >
-            <div className={`pb-6`}>{title && titleElement}</div>
-            {text && <Blocks value={text} className={`${action ? 'pb-4' : ''}`} />}
+            <div className={`pb-1 lg:pb-6`}>{title && titleElement}</div>
+            {text && <Blocks value={text} className={`text-sm md:text-base ${action ? 'pb-1 lg:pb-4' : ''}`} />}
             {action && (
               <ResourceLink
                 href={url as string}
@@ -124,8 +126,9 @@ export const ImageWithOverlay = forwardRef<HTMLDivElement, ImageWithOverlayProps
               flex
               justify-end
               items-end
-              py-6 
-              px-8
+              p-1.5
+              lg:py-6 
+              lg:px-8
               `}
         >
           <span className="sr-only">Show me more</span>
@@ -135,9 +138,11 @@ export const ImageWithOverlay = forwardRef<HTMLDivElement, ImageWithOverlayProps
               flex
               justify-center 
               items-center
-              size-4
+              size-3
+              md:size-4
               rounded-full
-              p-6
+              p-5
+              md:p-6
               text-2xl
               focus:outline-none
               focus-visible:envis-outline-invert            
@@ -159,10 +164,14 @@ export const ImageWithOverlay = forwardRef<HTMLDivElement, ImageWithOverlayProps
                   *:duration-[250ms]
                   relative 
                   overflow-hidden
-                  min-w-6
-                  w-6
-                  min-h-6
-                  h-6 
+                  min-w-4
+                  md:min-w-6
+                  w-4
+                  md:w-6
+                  min-h-4
+                  md:min-h-6
+                  h-4
+                  md:h-6 
                   flex
                   flex-col
                   justify-center
