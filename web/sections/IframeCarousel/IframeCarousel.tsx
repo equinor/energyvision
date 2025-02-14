@@ -11,11 +11,11 @@ type IframeCarouselProps = {
 }
 
 const IframeCarousel = ({ data, anchor, className, ...rest }: IframeCarouselProps) => {
-  const { title, hideTitle, items, singleMode, useFullWidthScroll, designOptions } = data
+  const { title, hideTitle, items, designOptions } = data
   const { background } = designOptions
 
   return (
-    <BackgroundContainer background={background} {...rest} id={anchor}>
+    <BackgroundContainer asSection={true} background={background} {...rest} id={anchor}>
       <div className={twMerge(`pb-page-content`, className)}>
         {title && (
           <Heading
@@ -25,14 +25,7 @@ const IframeCarousel = ({ data, anchor, className, ...rest }: IframeCarouselProp
             className={hideTitle ? 'sr-only' : 'pb-lg text-center  max-w-viewport mx-auto px-layout-sm'}
           />
         )}
-        <Carousel
-          items={items}
-          displayMode={singleMode && singleMode ? 'single' : 'scroll'}
-          variant="iframe"
-          {...(!singleMode && {
-            layout: useFullWidthScroll ? 'full' : 'default',
-          })}
-        />
+        <Carousel items={items} displayMode="single" variant="iframe" />
       </div>
     </BackgroundContainer>
   )

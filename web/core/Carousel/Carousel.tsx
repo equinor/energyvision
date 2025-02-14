@@ -51,41 +51,6 @@ export const getUtilityForAspectRatio = (aspectRatio: string) => {
   }
 }
 
-export const getWidthsForAspectRatio = (aspectRatio: string, itemLength: number, displayMode: DisplayModes) => {
-  if (displayMode === 'single') {
-    return
-  }
-  if (itemLength <= 3) {
-    switch (aspectRatio) {
-      case '16:9':
-        return 'w-[75vw] md:w-[70vw] lg:w-[62vw] max-w-[1030px]'
-      case '4:3':
-        return 'w-[65vw] md:w-[42vw] lg:w-[43vw]'
-      case '9:16':
-        return 'w-[55vw] md:w-[33vw] lg:w-[30vw]'
-      case '1:1':
-        return 'w-[55vw] md:w-[33vw] lg:w-[30vw]'
-
-      default:
-        return 'w-[45vw] md:w-[33vw] lg:w-[30vw]'
-    }
-  } else {
-    switch (aspectRatio) {
-      case '16:9':
-        return 'w-[55vw] md:w-[33vw] lg:w-[30vw]'
-      case '4:3':
-        return 'w-[55vw] md:w-[33vw] lg:w-[30vw]'
-      case '9:16':
-        return 'w-[55vw] md:w-[33vw] lg:w-[30vw]'
-      case '1:1':
-        return 'w-[55vw] md:w-[33vw] lg:w-[30vw]'
-
-      default:
-        return 'w-[45vw] md:w-[33vw] lg:w-[30vw]'
-    }
-  }
-}
-
 type CarouselItemTypes =
   | VideoPlayerCarouselItem
   | ImageCarouselItem
@@ -99,8 +64,6 @@ type CarouselProps = {
   items: CarouselItemTypes[]
   variant?: Variants
   displayMode?: DisplayModes
-  //For scroll container
-  layout?: Layouts
   /* If carousel has a title/sectionTitle over it */
   labelledbyId?: string
   className?: string
@@ -125,7 +88,6 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
     className = '',
     listClassName = '',
     hasSectionTitle = false,
-    layout = 'default',
   },
   ref,
 ) {
@@ -148,6 +110,9 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
   const isMedium = useMediaQuery(`(min-width: 768px)`)
   const isLarge = useMediaQuery(`(min-width: 1024px)`)
   const [scrollPosition, setScrollPosition] = useState<'start' | 'middle' | 'end'>('start')
+
+  const carouselGridTop = `col-start-1 col-end-1 row-start-1 row-end-1`
+  const carouselGridBottom = `col-start-1 col-end-1 row-start-2 row-end-2`
 
   if (isMedium) {
     TRANSLATE_X_AMOUNT = TRANSLATE_X_AMOUNT_MD
@@ -209,7 +174,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
       })
       const calculatedYPos = Math.abs(sliderRef?.current.scrollLeft + calculatedOffset)
       const maxW = sliderRef?.current.scrollWidth - sliderRef?.current.clientWidth
-      const isAtEnd = calculatedYPos >= maxW - itemWidth / 2
+      const isAtEnd = calculatedYPos >= maxW - itemWidth / 2 + 5 //+ 5 for outlines and some overflow
       if (scrollPosition === 'start') {
         setScrollPosition('middle')
       }
@@ -237,7 +202,6 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
     }
     //move the ul slider
     const newTranslateX = currentListTranslateX - TRANSLATE_X_AMOUNT
-    console.log('move slider', newTranslateX)
     setCurrentListTranslateX(newTranslateX)
     setCurrentIndex(newIndex)
     setCurrentXPosition(newXPosition)
@@ -303,26 +267,6 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
     timeoutRef.current && clearTimeout(timeoutRef.current)
   }
 
-  //  no-scrollbar
-  const commonScrollListContainerClassName = `
-  ${layout === 'default' ? `max-w-smContainer horizontal-scrollbar` : 'w-full scroll-pl-lg no-scrollbar'}
-  flex 
-  gap-3 
-  lg:gap-6 
-  h-max 
-  overflow-x-auto
-  snap-x
-  pb-6`
-  const commonSingleListContainerClassName = `grid transition-transform ease-scroll delay-0 duration-[800ms]`
-
-  const customListVariantClassName = {
-    video: '',
-    image: '',
-    event: 'p-[2px]',
-    keyNumber: '',
-    iframe: '',
-  }
-
   const getCarouselItemVariant = () => {
     if (displayMode === 'single') {
       if (variant === 'iframe') {
@@ -348,7 +292,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
         frameTitle={iframeData?.frameTitle}
         url={iframeData?.url}
         cookiePolicy={iframeData?.cookiePolicy}
-        aspectRatio={iframeData?.aspectRatio ?? '16:9'}
+        aspectRatio={'16:9'}
         height={iframeData?.height}
         hasSectionTitle={!!title}
       />
@@ -364,27 +308,26 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
         //@ts-ignore:TODO- didnt work with type assertion as PortableTextBlock[]
         content={description}
         action={action}
-        layout={layout}
+        overrideHeights={true}
         aspectRatio={iframeData?.aspectRatio as CarouselAspectRatios}
         {...(displayMode === 'single' && {
           style: {
             transform: `translate3d(${itemsXPositions[index]}px, 0px, 0px)`,
           },
         })}
-        className={getWidthsForAspectRatio(iframeData?.aspectRatio as string, items?.length, displayMode)}
       >
         {element}
       </CarouselItem>
     )
   }
   const getVideoVariantBody = (itemData: VideoPlayerCarouselItem, index: number) => {
-    const { title, video, aspectRatio, id, ...videoData } = itemData
+    const { title, video, id } = itemData
 
     const element = (
       <VideoJsComponent
         video={video}
         designOptions={{
-          aspectRatio: aspectRatio ?? VideoPlayerRatios['9:16'],
+          aspectRatio: displayMode === 'single' ? VideoPlayerRatios['16:9'] : VideoPlayerRatios['9:16'],
         }}
         useFillMode={true}
         videoControls={{
@@ -392,7 +335,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
           controls: true,
         }}
         className={`
-          ${getUtilityForAspectRatio(aspectRatio as string)}
+        ${displayMode === 'single' ? '' : 'aspect-9/16'}
           object-cover
           `}
       />
@@ -404,12 +347,9 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
         displayMode={displayMode}
         active={index === currentIndex}
         variant={title ? 'richTextBelow' : 'default'}
-        aspectRatio={aspectRatio}
         //@ts-ignore:TODO- didnt work with type assertion as PortableTextBlock[]
         title={title}
-        //@ts-ignore:TODO- didnt work with type assertion as PortableTextBlock[]
-        layout={layout}
-        className={getWidthsForAspectRatio(aspectRatio as string, items?.length, displayMode)}
+        className={`${displayMode === 'scroll' ? 'h-full w-[260px] md:w-[372px] lg:w-[405px]' : ''}`}
         {...(displayMode === 'single' && {
           style: {
             transform: `translate3d(${itemsXPositions[index]}px, 0px, 0px)`,
@@ -472,16 +412,15 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
             displayMode={displayMode}
             aria-label={ariaLabel}
             active={i === currentIndex}
-            {...(variant === 'image' &&
-              displayMode === 'single' && {
-                style: {
-                  transform: `translate3d(${itemsXPositions[i]}px, 0px, 0px)`,
-                },
-                wasUserPress: wasUserInteraction,
-                onFocus: () => {
-                  cancelTimeout()
-                },
-              })}
+            {...(displayMode === 'single' && {
+              style: {
+                transform: `translate3d(${itemsXPositions[i]}px, 0px, 0px)`,
+              },
+              wasUserPress: wasUserInteraction,
+              onFocus: () => {
+                cancelTimeout()
+              },
+            })}
           />
         )
       case 'event':
@@ -493,48 +432,80 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
     }
   }
 
+  const customListVariantClassName = {
+    video: '',
+    image: '',
+    event: 'p-[2px]',
+    keyNumber: '',
+    iframe: '',
+  }
+
+  //  no-scrollbar
+  const commonScrollListContainerClassName = `
+    no-scrollbar
+    flex 
+    gap-3 
+    lg:gap-6 
+    h-full 
+    overflow-x-auto
+    snap-x
+    pb-6`
+
+  const commonSingleListContainerClassName = `
+    grid 
+    transition-transform 
+    ease-scroll 
+    delay-0 
+    duration-[800ms]
+    ${getCarouselItemVariant() === 'richTextBelow' ? carouselGridBottom : carouselGridTop}
+    `
+
   return (
     <CarouselTag
       ref={ref}
-      {...(hasSectionTitle && {
-        role: 'region',
-      })}
-      {...(typeof labelledbyId !== undefined && {
-        'aria-labelledby': labelledbyId,
-      })}
-      {...(!labelledbyId &&
-        title && {
-          'aria-label': toPlainText(title),
-        })}
-      aria-roledescription="carousel"
       className={envisTwMerge(
-        `w-full
-        relative
-        mx-auto
-        flex
-        overflow-y-visible
-        ${getCarouselItemVariant() === 'richTextBelow' ? 'flex-col' : 'flex-col-reverse'}
-        ${displayMode === 'single' ? `overflow-x-hidden` : ''}
-        
-        `,
+        `${
+          displayMode === 'single'
+            ? 'relative overflow-hidden flex flex-col'
+            : 'px-4 md:p-0 w-full mx-auto lg:px-layout-sm max-w-viewport'
+        }`,
         className,
       )}
     >
-      {/* Controls - should be before slide in DOM but not visually
-       */}
-      {displayMode === 'single' && (
+      <div
+        role="group"
+        {...(typeof labelledbyId !== undefined && {
+          'aria-labelledby': labelledbyId,
+        })}
+        {...(!labelledbyId &&
+          title && {
+            'aria-label': toPlainText(title),
+          })}
+        className={envisTwMerge(
+          `${displayMode === 'single' ? `relative mx-auto grid grid-flow-row` : 'flex flex-col-reverse'}`,
+          className,
+        )}
+      >
+        {/* Controls - should be before slide in DOM but not visually
+         */}
         <div
-          role="group"
           aria-labelledby={controlsId}
           className={`
           pt-6 
           pb-2 
           flex 
           ${internalAutoRotation ? 'justify-between' : 'justify-end'}
-            mx-auto
-            w-single-carousel-card-w-sm
-            md:w-single-carousel-card-w-md
-            lg:w-single-carousel-card-w-lg`}
+          ${
+            displayMode === 'single'
+              ? `mx-auto
+              w-single-carousel-card-w-sm
+              md:w-single-carousel-card-w-md
+              lg:w-single-carousel-card-w-lg
+              `
+              : ''
+          }
+          ${getCarouselItemVariant() === 'richTextBelow' ? carouselGridTop : carouselGridBottom}
+          `}
         >
           <div id={controlsId} className="sr-only">
             <FormattedMessage id="carousel_controls" defaultMessage="Carousel controls" />
@@ -558,6 +529,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
               title={`Go to previous`}
               aria-controls={carouselItemsId}
               mode="previous"
+              disabled={(displayMode === 'scroll' && scrollPosition === 'start') ?? false}
               onClick={() => {
                 if (displayMode === 'single') {
                   loopSlidePrev()
@@ -574,6 +546,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
               title={`Go to next`}
               mode="next"
               aria-controls={carouselItemsId}
+              disabled={(displayMode === 'scroll' && scrollPosition === 'end') ?? false}
               onClick={() => {
                 if (displayMode === 'single') {
                   loopSlideNext()
@@ -588,35 +561,35 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
             />
           </div>
         </div>
-      )}
-      <ul
-        ref={sliderRef}
-        id={carouselItemsId}
-        role="group"
-        className={envisTwMerge(
-          `transition-all
+        <ul
+          ref={sliderRef}
+          id={carouselItemsId}
+          className={envisTwMerge(
+            `transition-all
           duration-300
           m-auto
+          w-full
           focus:outline-dashed
           focus:outline-grey-60
           focus:outline-1
           ${displayMode === 'single' ? commonSingleListContainerClassName : commonScrollListContainerClassName}
           ${customListVariantClassName[variant]}
         `,
-          listClassName,
-        )}
-        {...(displayMode === 'single' && {
-          style: {
-            transform: `translate3d(${currentListTranslateX}px, 0px, 0px)`,
-          },
-          'aria-live': pauseAutoRotation ? 'polite' : 'off',
-          onKeyDown: handleKeyDown,
-        })}
-      >
-        {items?.map((item, i) => {
-          return getCarouselItem(item, i)
-        })}
-      </ul>
+            listClassName,
+          )}
+          {...(displayMode === 'single' && {
+            style: {
+              transform: `translate3d(${currentListTranslateX}px, 0px, 0px)`,
+            },
+            'aria-live': pauseAutoRotation ? 'polite' : 'off',
+            onKeyDown: handleKeyDown,
+          })}
+        >
+          {items?.map((item, i) => {
+            return getCarouselItem(item, i)
+          })}
+        </ul>
+      </div>
     </CarouselTag>
   )
 })
