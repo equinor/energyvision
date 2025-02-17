@@ -20,7 +20,7 @@ export const FormattedTime = ({
   return (
     <StyledDate {...rest}>
       {icon && <TimeIcon />}
-      <span className={`${small ? 'text-2xs mt-1' : 'text-xs mt-0'}`}>
+      <span className={`${small ? 'text-2xs mt-1' : 'mt-0'}`}>
         <time suppressHydrationWarning dateTime={datetime}>
           <ReactIntlTime value={date} />
         </time>
