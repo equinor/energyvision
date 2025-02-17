@@ -18,6 +18,7 @@ const NewsItem = forwardRef<HTMLLIElement, NewsListItemProps>(function NewsItem(
   ref,
 ) {
   const { slug, title, publishDateTime, heroImage, thumbnailUrl } = data || {}
+  if (!slug) return null
 
   return (
     <section ref={ref} className={envisTwMerge('', className)} {...rest}>
