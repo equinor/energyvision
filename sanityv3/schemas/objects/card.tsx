@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 import { configureBlockContent } from '../editors'
-import type { PortableTextBlock } from 'sanity'
+import type { PortableTextBlock, Rule } from 'sanity'
 import { Text, Card, Box } from '@sanity/ui'
 import blocksToText from '../../helpers/blocksToText'
 
@@ -49,6 +49,14 @@ export default {
     {
       name: 'title',
       type: 'text',
+      validation: (Rule: Rule) =>
+        Rule.required()
+          .custom((value) => {
+            if (typeof value !== 'string' || value.trim() === '') {
+              return 'Card title cannot be empty or contain only blank spaces.';
+            }
+            return true;
+          }),
     },
     {
       name: 'content',
