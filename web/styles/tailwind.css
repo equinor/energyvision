@@ -237,39 +237,6 @@
   .box-shadow-crisp-interact {
     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.08) 0px 3px 4px 0px;
   }
-  /* Modern browsers with `scrollbar-*` support */
-
-  /* Legacy browsers with `::-webkit-scrollbar-*` support */
-  @supports selector(::-webkit-scrollbar) {
-    .transparent-scrollbar::-webkit-scrollbar {
-      @apply bg-transparent h-2 my-2;
-    }
-    .transparent-scrollbar::-webkit-scrollbar-track {
-      @apply my-[2px];
-    }
-    .transparent-scrollbar::-webkit-scrollbar-thumb {
-      @apply bg-grey-40 hover:bg-grey-70 dark:bg-white-100 dark:hover:bg-white-100/70 rounded-lg;
-    }
-    /* Hide scrollbar for Chrome, Safari and Opera */
-    .no-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
-
-    .horizontal-scrollbar::-webkit-scrollbar {
-      border-radius: 100vh;
-      height: 10px;
-    }
-
-    .horizontal-scrollbar::-webkit-scrollbar-track {
-      @apply bg-grey-20/50;
-      border-radius: 100vh;
-    }
-
-    .horizontal-scrollbar::-webkit-scrollbar-thumb {
-      @apply bg-north-sea-100/20 hover:bg-north-sea-100/40;
-      border-radius: 100vh;
-    }
-  }
 
   /* Hide scrollbar for IE, Edge and Firefox */
   .no-scrollbar {
@@ -293,6 +260,46 @@
       .bd-blurred[open]::backdrop {
         @apply backdrop-blur-none bg-transparent;
       }
+    }
+  }
+
+  @supports (scrollbar-color: auto) {
+    .scrolltrack-transparent {
+      scrollbar-color: rgba(0, 0, 0, 0);
+    }
+  }
+  @supports selector(::-webkit-scrollbar) {
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .envis-scrollbar::-webkit-scrollbar {
+      @apply h-2.5 bg-grey-20;
+    }
+    .envis-scrollbar::-webkit-scrollbar-track {
+      @apply h-2.5 bg-grey-20;
+    }
+    .envis-scrollbar::-webkit-scrollbar-thumb {
+      @apply h-2.5 bg-grey-50 hover:bg-grey-60 rounded-xs;
+    }
+    .envis-scrollbar-mist-blue::-webkit-scrollbar-track {
+      @apply h-2.5 bg-white-100;
+    }
+    .envis-scrollbar-mist-blue::-webkit-scrollbar-thumb {
+      @apply h-2.5 bg-north-sea-50 hover:bg-north-sea-60 rounded-xs;
+    }
+    .envis-scrollbar-mid-orange::-webkit-scrollbar-track {
+      @apply h-2.5 bg-white-100;
+    }
+    .envis-scrollbar-mid-orange::-webkit-scrollbar-thumb {
+      @apply h-2.5 bg-sand-and-summer-60 hover:bg-sand-and-summer-70 rounded-xs;
+    }
+    .envis-scrollbar-moss-green::-webkit-scrollbar-track {
+      @apply h-2.5 bg-white-100;
+    }
+    .envis-scrollbar-moss-green::-webkit-scrollbar-thumb {
+      @apply h-2.5 bg-green-50 hover:bg-norwegian-woods-70 rounded-xs;
     }
   }
 

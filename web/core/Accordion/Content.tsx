@@ -18,7 +18,7 @@ export const Content = forwardRef<HTMLDivElement, AccordionContentProps>(functio
   { variant = 'primary', children, className = '', ...rest },
   ref,
 ) {
-  const isMobile = useMediaQuery(`(max-width: 1300px)`)
+  const useComplex = useMediaQuery(`(min-width: 1300px)`)
 
   const commonSlideUpDown = `overflow-hidden motion-safe:data-closed:animate-slideDown motion-safe:data-open:animate-slideUp`
 
@@ -36,9 +36,7 @@ export const Content = forwardRef<HTMLDivElement, AccordionContentProps>(functio
   const getVariantBody = () => {
     switch (variant) {
       case 'menu':
-        return isMobile ? (
-          <>{children}</>
-        ) : (
+        return useComplex ? (
           <motion.div
             initial="hidden"
             animate="visible"
@@ -49,6 +47,8 @@ export const Content = forwardRef<HTMLDivElement, AccordionContentProps>(functio
           >
             {children}
           </motion.div>
+        ) : (
+          <>{children}</>
         )
       case 'simpleMenu':
         return <div className="pl-4 py-6 xl:py-10">{children}</div>
@@ -67,7 +67,7 @@ export const Content = forwardRef<HTMLDivElement, AccordionContentProps>(functio
       {...rest}
       ref={ref}
       {...(variant === 'menu' &&
-        !isMobile && {
+        useComplex && {
           asChild: true,
         })}
       className={envisTwMerge(`${variantClassName[variant]}`, className)}

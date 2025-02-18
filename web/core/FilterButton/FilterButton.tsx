@@ -103,7 +103,7 @@ const FilterButton = forwardRef<HTMLDivElement, FilterButtonProps>(function Filt
             className="text-sm bg-white-100 border border-x-autumn-storm-60 
           border-y-autumn-storm-60 rounded-b-[0.42rem] z-[1400]"
           >
-            <div className="overflow-y-auto min-w-[250px] max-h-[350px] transparent-v-scrollbar">
+            <div className="overflow-y-auto min-w-[250px] max-h-[350px] envis-scrollbar">
               {optionsList && <OptionList onChange={handleChange} optionsList={optionsList} />}
             </div>
             <div className="w-full flex rounded-b-md">

@@ -86,6 +86,11 @@ import anchorLinkReference from './objects/anchorLinkList/anchorLinkReference'
 import imageForText from './objects/imageForText'
 import stickyMenu from './objects/stickyMenu'
 import imageWithRichText from './objects/ImageWithRichText'
+import tabs from './objects/tabs/tabs'
+import tabsItem from './objects/tabs/tabsItem'
+import tabsBackground from './objects/tabs/tabsBackground'
+import tabsInfoPanel from './objects/tabs/tabsInfoPanel'
+import tabsKeyNumbers from './objects/tabs/tabsKeyNumbers'
 
 const {
   pageNotFound,
@@ -218,6 +223,11 @@ const RemainingSchemas = [
   stickyMenu,
   imageWithLinkAndOrOverlay,
   imageWithRichText,
+  tabs,
+  tabsItem,
+  tabsBackground,
+  tabsInfoPanel,
+  tabsKeyNumbers,
 ]
 
 // Then we give our schema to the builder and provide the result to Sanity
