@@ -49,7 +49,7 @@ export const TabList = forwardRef<HTMLDivElement, TabListProps>(function TabList
         flex
         flex-nowrap
         gap-0
-        lg:justify-center
+        ${isOverflowing ? '' : 'justify-center'}
         envis-scrollbar
         `,
         className,
