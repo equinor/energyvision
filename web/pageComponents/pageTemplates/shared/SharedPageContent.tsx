@@ -63,7 +63,7 @@ import { AnchorLinkList } from '@sections/AnchorLinkList'
 import ImageForText from '@sections/ImageForText/ImageForText'
 import TextWithIconArray from '@sections/TextWithIconArray/TextWithIconArray'
 import AccordionBlock from '@sections/AccordionBlock/AccordionBlock'
-import TabsBlock from '@sections/TabsBlock/TabsBlock'
+import TabsBlock, { TabsBlockProps } from '@sections/TabsBlock/TabsBlock'
 import { getColorForTabsTheme } from '@sections/TabsBlock/tabThemes'
 
 type DefaultComponent = {
@@ -95,6 +95,7 @@ export type ComponentProps =
   | TextTeaserData
   | KeyNumbersData
   | DefaultComponent
+  | TabsBlockProps
 
 type PageContentProps = {
   data: TopicPageSchema | MagazinePageSchema
@@ -112,8 +113,10 @@ type PageContentProps = {
 const getBackgroundOptions = (component: ComponentProps) => {
   //@ts-ignore
   if (component?.type === 'tabs') {
+    //@ts-ignore:so many types
     return getColorForTabsTheme(component?.designOptions?.theme?.value)
   }
+  //@ts-ignore:so many types
   return component?.designOptions?.background || getColorForTheme(component?.designOptions?.theme)
 }
 
@@ -135,7 +138,9 @@ const isColoredBackgroundAndNotWhite = (componentsDO: any, isWhiteColor: boolean
     ((componentsDO?.type === 'backgroundColor' || componentsDO?.backgroundColor || componentsDO?.background) &&
       !isWhiteColor) ||
     componentsDO?.type === 'backgroundImage' ||
-    componentsDO?.backgroundImage?.image
+    componentsDO?.backgroundImage?.image ||
+    componentsDO?.backgroundUtility !== 'bg-white-100' ||
+    componentsDO?.backgroundUtility !== 'white-100'
   )
 }
 
@@ -154,7 +159,6 @@ const isSameColorBackground = (currentComponentsDO: any, previousComponentsDO: a
 const applyPaddingTopIfApplicable = (currentComponent: ComponentProps, prevComponent: ComponentProps): string => {
   const currentComponentsDO = getBackgroundOptions(currentComponent)
   const previousComponentsDO = getBackgroundOptions(prevComponent)
-
   const currentIsWhiteColorBackground = isWhiteColorBackground(currentComponentsDO, currentComponent)
   const previousIsWhiteColorBackground = isWhiteColorBackground(previousComponentsDO, prevComponent)
 
@@ -166,9 +170,7 @@ const applyPaddingTopIfApplicable = (currentComponent: ComponentProps, prevCompo
     previousComponentsDO,
     previousIsWhiteColorBackground,
   )
-
   const previousIsSameColorAsCurrent = isSameColorBackground(currentComponentsDO, previousComponentsDO)
-
   const specialCases = ['teaser', 'fullWidthImage', 'fullWidthVideo']
   //@ts-ignore
   const previousComponentIsASpecialCaseAndNeedPT = specialCases.includes(prevComponent?.type)
@@ -189,6 +191,7 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
   const content = (data?.content || []).map((c: ComponentProps, index) => {
     const prevComponent = data?.content?.[index - 1]
     const anchorReference =
+      //@ts-ignore:so many types
       (prevComponent as unknown as ComponentProps)?.type === 'anchorLink'
         ? (prevComponent as unknown as AnchorLinkData)?.anchorReference
         : undefined
@@ -207,7 +210,7 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
         : (data?.content?.[previousComponentIndex] as unknown as ComponentProps)
 
     const topSpacingClassName = applyPaddingTopIfApplicable(c, previousComponentToCompare)
-
+    //@ts-ignore:so many types
     switch (c.type) {
       case 'teaser':
         return <Teaser key={c.id} data={c as TeaserData} anchor={anchorReference} />

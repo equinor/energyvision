@@ -3,7 +3,7 @@ import { twMerge } from 'tailwind-merge'
 import IngressText from '../../pageComponents/shared/portableText/IngressText'
 import { getColorForTabsTheme } from './tabThemes'
 import { Tabs } from '@core/Tabs'
-import { forwardRef, useId, useRef } from 'react'
+import { forwardRef, useEffect, useId, useRef, useState } from 'react'
 import TabsKeyNumberItem from './TabsKeyNumberItem'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
 import TabsInfoPanelItem from './TabsInfoPanelItem'
@@ -12,7 +12,7 @@ import { TabItem } from './TabsBlock.types'
 
 const { TabList, Tab, TabPanel } = Tabs
 
-type TabsBlockProps = {
+export type TabsBlockProps = {
   title: PortableTextBlock[]
   ingress: PortableTextBlock[]
   designOptions: {
@@ -38,13 +38,19 @@ const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
   //Select first items panel type and use for rest. Editors advised to use same type in studio
   const tabPanelVariant = tabList?.[0]?.panel?.type
 
+  const scrollbarTheme: Record<number, string> = {
+    0: 'envis-scrollbar-mist-blue',
+    1: 'envis-scrollbar-mid-orange',
+    2: 'envis-scrollbar-moss-green',
+  }
+
   return (
     <div
       ref={ref}
       id={anchor}
       className={twMerge(
         `${id ? 'scroll-mt-topbar' : ''}
-            ${tabPanelVariant === 'tabsKeyNumbers' ? theme?.background : 'bg-white-100'}`,
+            ${tabPanelVariant === 'tabsKeyNumbers' ? theme?.backgroundUtility : 'bg-white-100'}`,
         className,
       )}
     >
@@ -57,7 +63,7 @@ const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
             ${
               tabPanelVariant === 'tabsKeyNumbers'
                 ? `lg:px-layout-lg pb-page-content`
-                : `mx-layout-sm ${theme?.background} rounded-md my-page-content
+                : `mx-layout-sm ${theme?.backgroundUtility} rounded-md my-page-content
           `
             }
             `}
@@ -82,51 +88,23 @@ const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
           <Tabs
             defaultValue={tabList[0]?.id}
             {...(hideTitle && { 'aria-labelledby': headingId })}
-            className="w-full flex flex-col items-center"
+            className={`w-full 
+              px-6 
+              lg:px-0 
+              flex 
+              flex-col 
+              items-center
+              ${tabPanelVariant === 'tabsInfoPanel' ? 'mt-4' : ''}
+              `}
           >
-            <TabList
-              className={`
-                w-full
-                border-b 
-                border-grey-50 
-            ${tabPanelVariant === 'tabsInfoPanel' ? 'mx-6 lg:mx-24 px-12 lg:px-24 pt-8 mb-2' : 'px-4 lg:px-6'}`}
-            >
-              <div
-                ref={tabsListRef}
-                className={`
-                w-full
-                flex
-                flex-row
-                flex-nowrap
-                overflow-x-auto
-                lg:grid 
-                lg:grid-flow-col
-                lg:auto-cols-[minmax(60px,1fr)]
-                place-items-center 
-                justify-evenly
-                `}
-              >
-                {tabList?.map((tab: TabItem) => {
-                  return (
-                    <Tab
-                      key={tab.id}
-                      value={tab.id}
-                      className={`
-                    min-w-[33vw]
-                    lg:w-fit
-                    h-full
-                    text-base
-                    mb-[1px] 
-                    `}
-                      contentClassName={`
-                    ${tabPanelVariant === 'tabsInfoPanel' ? 'px-4 md:px-6 xl:px-12' : 'px-4 lg:px-6'} 
-                    `}
-                    >
-                      {tab.title}
-                    </Tab>
-                  )
-                })}
-              </div>
+            <TabList loop ref={tabsListRef} className={`${scrollbarTheme[designOptions?.theme?.value ?? 0]}`}>
+              {tabList?.map((tab: TabItem) => {
+                return (
+                  <Tab key={tab.id} value={tab.id} className={`${``}`}>
+                    {tab.title}
+                  </Tab>
+                )
+              })}
             </TabList>
             {tabList?.map((tabItem: TabItem) => {
               return (
@@ -144,9 +122,10 @@ const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
                       {...(title && hideTitle && { 'aria-labelledby': headingId })}
                       className={`flex 
                         flex-col
-                        lg:grid
-                        lg:grid-flow-col
-                        lg:auto-cols-fr
+                        md:grid
+                        md:grid-cols-2
+                        3xl:grid-flow-col
+                        3xl:auto-cols-fr
                         gap-6`}
                     >
                       {tabItem.panel?.items?.map((tabsKeyNumber: any) => {

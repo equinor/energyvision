@@ -39,8 +39,10 @@ const TabsInfoPanelItem = forwardRef<HTMLDivElement, TabsInfoPanelItemProps>(fun
             lg:grid-cols-2 
             gap-12 
             items-start 
-            px-16 
-            py-12`
+            px-8
+            lg:px-16
+            py-6
+            lg:py-12`
             : ''
         }`,
         className,
@@ -94,7 +96,7 @@ const TabsInfoPanelItem = forwardRef<HTMLDivElement, TabsInfoPanelItemProps>(fun
         )}
       </div>
       {image?.asset && imageVariant === 'sideImage' && (
-        <div className="relative rounded-md aspect-video lg:aspect-5/4">
+        <div className="w-full relative rounded-md aspect-video lg:aspect-5/4">
           <Image image={image} fill className="rounded-md" />
         </div>
       )}
