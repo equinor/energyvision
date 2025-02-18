@@ -1,4 +1,4 @@
-import { defineField, PortableTextBlock, Role, Rule, set, StringInputProps, unset, useCurrentUser } from 'sanity'
+import { defineField, PortableTextBlock, Role, Rule, set, StringInputProps, useCurrentUser } from 'sanity'
 import { configureBlockContent } from '../../editors'
 import CompactBlockEditor from '../../components/CompactBlockEditor'
 import { useCallback, useState } from 'react'

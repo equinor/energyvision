@@ -35,7 +35,7 @@ export default {
   ],
   preview: {
     select: {},
-    prepare(selection: {}) {
+    prepare() {
       return {
         title: 'Key numbers',
         media: NumberIcon,
