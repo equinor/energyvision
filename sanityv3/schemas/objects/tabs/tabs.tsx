@@ -9,17 +9,23 @@ import { TabsThemeSelectorValue, TabTheme } from './tabsThemes'
 import { Flex, Stack, Text } from '@sanity/ui'
 import { capitalizeFirstLetter } from '../../../helpers/formatters'
 
-export function TabsPreview(props: PreviewProps) {
-  console.log('TabsPreview props', props)
+type TabsPreviewProps = {
+  tabList?: any[]
+  tabsBackground?: any
+} & PreviewProps
 
-  const plainTitle = props.title ? blocksToText(props.title) : undefined
-  const subTitle = `Tabs component | ${props.tabList?.length} tabs | Panel type: ${capitalizeFirstLetter(
-    props.tabList?.[0]?.tabPanel?.panel?.[0]?._type ?? '',
+export function TabsPreview(props: TabsPreviewProps) {
+  const { title, tabList, tabsBackground } = props
+
+  //@ts-ignore:todo
+  const plainTitle = title ? blocksToText(title) : undefined
+  const subTitle = `Tabs component | ${tabList?.length} tabs | Panel type: ${capitalizeFirstLetter(
+    tabList?.[0]?.tabPanel?.panel?.[0]?._type ?? '',
   )}`
 
   const color: TabsThemeSelectorValue = {
-    title: props?.tabsBackground?.background?.[0]?.title as string,
-    value: props?.tabsBackground?.background?.[0]?.value,
+    title: tabsBackground?.background?.[0]?.title as string,
+    value: tabsBackground?.background?.[0]?.value,
   }
   return (
     <Flex gap={2} padding={2} align={'center'}>
