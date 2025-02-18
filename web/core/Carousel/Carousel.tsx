@@ -71,8 +71,6 @@ type CarouselProps = {
   autoRotation?: boolean
   hasSectionTitle?: boolean
   title?: PortableTextBlock[]
-  /* The component to use to display default carousel item */
-  defaultItemContainer?: React.JSXElementConstructor<React.HTMLAttributes<HTMLElement>>
 } & Omit<HTMLAttributes<HTMLDivElement>, 'title'>
 
 const TRANSLATE_X_AMOUNT_LG = 1000
@@ -90,7 +88,6 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
     className = '',
     listClassName = '',
     hasSectionTitle = false,
-    defaultItemContainer: DefaultItemContainer,
   },
   ref,
 ) {
