@@ -43,8 +43,7 @@ const Article = styled.article`
 
   /* spacing */
 
-  figure,
-  blockquote {
+  figure {
     margin: 0;
   }
 
@@ -112,13 +111,6 @@ export const Typography: React.FC<TypographyProps> = () => (
       supply chain partners. The findings from this initial exploratory phase will form the basis for subsequent
       decisions.
     </p>
-    <blockquote>
-      <p>
-        “Panasonic’s plan for expanding its footprint in the European lithium-ion battery market Mototsugu Sato,
-        Executive Vice President of Panasonic, says the company sees the strategic partnership with Equinor and Hydro as
-        a potential basis for future development and growth in the energy/battery sector in the European region.”
-      </p>
-    </blockquote>
     <p>
       “This collaboration combines Panasonic’s position as an innovative technology company and leader in lithium-ion
       batteries, with the deep industrial experience of Equinor and Hydro, both strong global players, to potentially
