@@ -25,10 +25,8 @@ const TabsKeyNumberItem = forwardRef<HTMLDivElement, TabsKeyNumberItemProps>(fun
         `w-full
         h-full
         ${cardBackground} 
-        grid
-        grid-cols-1
-        data-[dir=row]:grid-rows-[max-content_25%_auto]
-        items-stretch
+        flex
+        flex-col
         rounded-md
         px-4
         lg:px-6
@@ -36,9 +34,9 @@ const TabsKeyNumberItem = forwardRef<HTMLDivElement, TabsKeyNumberItemProps>(fun
         className,
       )}
     >
-      <div className="text-2xl leading-none">{keyNumber}</div>
-      <div className="text-base">{unit ? unit : ''}</div>
-      {description && <div className="pt-2 text-wrap">{description}</div>}
+      <div className="text-2xl leading-none h-10 md:h-14">{keyNumber}</div>
+      <div className="text-base md:h-8">{unit ? unit : ''}</div>
+      {description && <div className="grow text-base pt-2 text-wrap">{description}</div>}
     </div>
   )
 })
