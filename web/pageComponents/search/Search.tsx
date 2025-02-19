@@ -166,7 +166,9 @@ const Search = () => {
       {indices.map((index) => (
         <Index indexName={index.value} key={index.label} indexId={index.value} />
       ))}
-      <SearchBox variant="inverted" />
+      <div className="max-w-[700px]">
+        <SearchBox variant="inverted" />
+      </div>
       <SearchResults resultsRef={resultsRef} items={indices} />
       <PaginationContextProvider defaultRef={resultsRef}>
         <StyledPagination padding={padding} hitsPerPage={5} />
