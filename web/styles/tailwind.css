@@ -255,24 +255,6 @@
     .envis-scrollbar::-webkit-scrollbar-thumb {
       @apply h-2.5 bg-grey-50 hover:bg-grey-60 rounded-xs;
     }
-    .envis-scrollbar-mist-blue::-webkit-scrollbar-track {
-      @apply h-2.5 bg-white-100;
-    }
-    .envis-scrollbar-mist-blue::-webkit-scrollbar-thumb {
-      @apply h-2.5 bg-north-sea-50 hover:bg-north-sea-60 rounded-xs;
-    }
-    .envis-scrollbar-mid-orange::-webkit-scrollbar-track {
-      @apply h-2.5 bg-white-100;
-    }
-    .envis-scrollbar-mid-orange::-webkit-scrollbar-thumb {
-      @apply h-2.5 bg-sand-and-summer-60 hover:bg-sand-and-summer-70 rounded-xs;
-    }
-    .envis-scrollbar-moss-green::-webkit-scrollbar-track {
-      @apply h-2.5 bg-white-100;
-    }
-    .envis-scrollbar-moss-green::-webkit-scrollbar-thumb {
-      @apply h-2.5 bg-green-50 hover:bg-norwegian-woods-70 rounded-xs;
-    }
   }
 
   @starting-style {

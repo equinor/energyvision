@@ -3,7 +3,7 @@ import { twMerge } from 'tailwind-merge'
 import IngressText from '../../pageComponents/shared/portableText/IngressText'
 import { getColorForTabsTheme } from './tabThemes'
 import { Tabs } from '@core/Tabs'
-import { forwardRef, useEffect, useId, useRef, useState } from 'react'
+import { forwardRef, useId, useRef } from 'react'
 import TabsKeyNumberItem from './TabsKeyNumberItem'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
 import TabsInfoPanelItem from './TabsInfoPanelItem'
@@ -38,19 +38,17 @@ const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
   //Select first items panel type and use for rest. Editors advised to use same type in studio
   const tabPanelVariant = tabList?.[0]?.panel?.type
 
-  const scrollbarTheme: Record<number, string> = {
-    0: 'envis-scrollbar-mist-blue',
-    1: 'envis-scrollbar-mid-orange',
-    2: 'envis-scrollbar-moss-green',
-  }
-
   return (
     <div
       ref={ref}
       id={anchor}
       className={twMerge(
         `${id ? 'scroll-mt-topbar' : ''}
-            ${tabPanelVariant === 'tabsKeyNumbers' ? theme?.backgroundUtility : 'bg-white-100'}`,
+          ${
+            tabPanelVariant === 'tabsKeyNumbers'
+              ? theme?.backgroundUtility
+              : `${theme?.backgroundUtility} lg:bg-white-100`
+          }`,
         className,
       )}
     >
@@ -62,54 +60,47 @@ const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
             mx-auto
             ${
               tabPanelVariant === 'tabsKeyNumbers'
-                ? `lg:px-layout-lg pb-page-content`
-                : `mx-layout-sm ${theme?.backgroundUtility} rounded-md my-page-content
-          `
+                ? `px-layout-sm lg:px-layout-lg pb-page-content`
+                : `lg:mx-layout-sm ${theme?.backgroundUtility} rounded-md`
             }
             `}
       >
-        {title && (
-          <Heading
-            id={headingId}
-            value={title}
-            as="h2"
-            variant="xl"
-            className={`${hideTitle ? 'sr-only' : ''} 
-            ${tabPanelVariant === 'tabsKeyNumbers' ? 'max-lg:px-layout-lg' : ''}`}
-          />
-        )}
-        {ingress && (
-          <IngressText
-            value={ingress}
-            className={`${tabPanelVariant === 'tabsKeyNumbers' ? 'max-lg:px-layout-lg' : ''} mb-12`}
-          />
-        )}
+        <div
+          className={`${
+            tabPanelVariant === 'tabsInfoPanel' && !hideTitle ? `lg:pt-20 pl-layout-sm max-w-innerColumn` : ``
+          }`}
+        >
+          {title && (
+            <Heading id={headingId} value={title} as="h2" variant="xl" className={`${hideTitle ? 'sr-only' : ''}`} />
+          )}
+          {ingress && <IngressText value={ingress} className={`mt-6`} />}
+        </div>
         {tabList && tabList?.length > 0 && (
           <Tabs
             defaultValue={tabList[0]?.id}
             {...(hideTitle && { 'aria-labelledby': headingId })}
             className={`w-full 
-              px-6 
-              lg:px-0 
               flex 
               flex-col 
               items-center
               ${tabPanelVariant === 'tabsInfoPanel' ? 'mt-4' : ''}
               `}
           >
-            <TabList loop ref={tabsListRef} className={`${scrollbarTheme[designOptions?.theme?.value ?? 0]}`}>
-              {tabList?.map((tab: TabItem) => {
+            <TabList ref={tabsListRef}>
+              {tabList?.map((tab: TabItem, i: number) => {
                 return (
-                  <Tab key={tab.id} value={tab.id} className={`${``}`}>
+                  // eslint-disable-next-line react/no-array-index-key
+                  <Tab key={`${tab.id}_index_${i}`} value={tab.id} className={`${``}`}>
                     {tab.title}
                   </Tab>
                 )
               })}
             </TabList>
-            {tabList?.map((tabItem: TabItem) => {
+            {tabList?.map((tabItem: TabItem, i: number) => {
               return (
                 <TabPanel
-                  key={tabItem.panel.id}
+                  // eslint-disable-next-line react/no-array-index-key
+                  key={`${tabItem.panel.id}_index_${i}`}
                   value={tabItem.id}
                   className={`${
                     tabPanelVariant === 'tabsKeyNumbers'

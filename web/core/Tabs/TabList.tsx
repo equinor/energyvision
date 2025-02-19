@@ -14,26 +14,37 @@ export const TabList = forwardRef<HTMLDivElement, TabListProps>(function TabList
 ) {
   const tabListRef = useRef<HTMLDivElement>(null)
   const combinedRef = useMemo(() => mergeRefs<HTMLDivElement>(tabListRef, ref), [tabListRef, ref])
-  const [isOverflowing, setIsOverflowing] = useState<boolean>(true)
+
+  const [averageTabWidth, setAverageTabWidth] = useState<string>('min-w-full')
+
+  const getAverage = (array: number[]) => array.reduce((sum, currentValue) => sum + currentValue, 0) / array.length
 
   useEffect(() => {
-    const checkIsOverflowing = function (el: HTMLDivElement) {
-      if (!el) return false
-      const curOverflow = el.style.overflow
-      if (!curOverflow || curOverflow === 'visible') el.style.overflow = 'hidden'
+    const getTabCols = function (el: HTMLElement) {
+      if (!el) return ''
+      const tablist = el
+      const buttonChildren = [...tablist.children]
 
-      const isOverflowing = el.clientWidth < el.scrollWidth || el.clientHeight < el.scrollHeight
-
-      el.style.overflow = curOverflow
-      return isOverflowing
+      const averageCharCount = getAverage(
+        buttonChildren?.map((bc) => {
+          return (bc as HTMLElement)?.innerText?.length
+        }),
+      )
+      if (averageCharCount < 5) {
+        //3 letter acronyms
+        return 'auto-cols-[minmax(8%,_1fr)]'
+      }
+      if (averageCharCount > 5) {
+        return 'auto-cols-[minmax(29%,1fr)] xl:auto-cols-[minmax(21%,1fr)] 3xl:auto-cols-[minmax(min-content,1fr)]'
+      }
+      return ''
     }
-
     const container = tabListRef?.current
     if (container) {
-      setIsOverflowing(checkIsOverflowing(container))
-      window.addEventListener('resize', () => setIsOverflowing(checkIsOverflowing(container)))
+      setAverageTabWidth(getTabCols(container))
+      window.addEventListener('resize', () => setAverageTabWidth(getTabCols(container)))
       return () => {
-        window.removeEventListener('resize', () => setIsOverflowing(checkIsOverflowing(container)))
+        window.removeEventListener('resize', () => setAverageTabWidth(getTabCols(container)))
       }
     }
   }, [tabListRef])
@@ -42,20 +53,20 @@ export const TabList = forwardRef<HTMLDivElement, TabListProps>(function TabList
     <RadixTabs.List
       ref={combinedRef}
       className={envisTwMerge(
-        `
-        group/tablist
-        w-full
-        overflow-x-auto
-        flex
-        flex-nowrap
-        gap-0
-        ${isOverflowing ? '' : 'justify-center'}
-        envis-scrollbar
+        `relative
+          w-full
+          group/tablist
+          overflow-x-auto
+          grid
+          grid-flow-col-dense
+          grid-rows-1
+          ${averageTabWidth}
+          place-content-start
+          no-scrollbar
         `,
         className,
       )}
       aria-label={ariaLabel}
-      data-overflowing={isOverflowing}
       {...rest}
     >
       {children}

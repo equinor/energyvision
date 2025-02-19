@@ -78,6 +78,7 @@ const SearchResults = (props: SearchResultsProps) => {
               {options.map((item) => (
                 <Tab id={`tab-trigger-${item.label}`} key={item.label} value={item.label} className="">
                   {item.label}
+                  {` `}
                   <span>
                     (
                     {

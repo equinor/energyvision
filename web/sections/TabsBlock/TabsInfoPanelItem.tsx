@@ -41,8 +41,7 @@ const TabsInfoPanelItem = forwardRef<HTMLDivElement, TabsInfoPanelItemProps>(fun
             items-start 
             px-8
             lg:px-16
-            py-6
-            lg:py-12`
+            py-12`
             : ''
         }`,
         className,
@@ -82,7 +81,7 @@ const TabsInfoPanelItem = forwardRef<HTMLDivElement, TabsInfoPanelItemProps>(fun
           )}
         </div>
         {keyInfo && (
-          <div className="grid grid-cols-2 grid-rows-2 gap-4">
+          <div className={`grid grid-cols-1 ${keyInfo?.length % 2 ? 'xl:grid-cols-1' : 'xl:grid-cols-2'} gap-6`}>
             {keyInfo?.map((item) => {
               return (
                 <div key={item?.id}>
