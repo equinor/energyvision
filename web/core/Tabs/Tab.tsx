@@ -16,6 +16,7 @@ export const Tab = forwardRef<HTMLButtonElement, TabProps>(function Tab({ childr
         whitespace-normal
         text-base
         pt-4
+        pb-2
         px-1
         lg:px-4
         border-b
