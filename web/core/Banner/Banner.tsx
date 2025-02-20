@@ -44,18 +44,19 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
     titleClassName,
   )
 
-  const titleElement = (
-    <>
-      {typeof title === 'string' ? (
+  const getTitleElement = () => {
+    if (title && (title === 'string' || typeof title === 'string')) {
+      return (
         <Typography as="h2" variant="h4" className={titleClassNames}>
           {title}
         </Typography>
-      ) : (
-        //@ts-ignore: Checked earlier for undefined title
-        <Heading as="h2" variant="h4" className={titleClassNames} value={title} />
-      )}
-    </>
-  )
+      )
+    }
+    if (title && Array.isArray(title)) {
+      return <Heading as="h2" variant="h4" className={titleClassNames} value={title} />
+    }
+    return null
+  }
 
   const contentElements = (
     <>
@@ -75,7 +76,7 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
         <div className={`${contentVariantClassName[variant]}`}>
           {ctaLabel ? (
             <>
-              {title && titleElement}
+              {title && getTitleElement()}
               {contentElements}
               <ResourceLink href={ctaLink} type="internalUrl" className="w-fit">
                 {ctaLabel}
@@ -84,7 +85,7 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
           ) : (
             <>
               <BaseLink href={ctaLink} type="internalUrl">
-                {titleElement ?? 'Missing title'}
+                {getTitleElement() ?? 'Missing title'}
               </BaseLink>
               {contentElements}
             </>
@@ -93,7 +94,7 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
       )}
       {!ctaLink && (
         <div className={`${contentVariantClassName[variant]}`}>
-          {title && titleElement}
+          {title && getTitleElement()}
           {contentElements}
         </div>
       )}

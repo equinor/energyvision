@@ -5,6 +5,7 @@ import { library_image } from '@equinor/eds-icons'
 import blocksToText from '../../helpers/blocksToText'
 import type { Rule } from 'sanity'
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
+import { autoPlay, singleMode } from './carousel/sharedCarouselFields'
 
 const titleContentType = configureTitleBlockContent()
 const ingressBlockContentType = configureBlockContent({
@@ -69,10 +70,22 @@ export default {
     {
       type: 'array',
       name: 'items',
-      description: 'Add images for the carousel',
+      description: 'Add images for the carousel. Use same type of items.',
       title: 'Carousel items',
-      of: [{ type: 'imageWithAltAndCaption' }],
-      validation: (Rule: Rule) => Rule.required().min(2),
+      of: [
+        { type: 'imageWithAltAndCaption' },
+        { type: 'imageWithRichTextBelow' },
+        { type: 'imageWithLinkAndOrOverlay' },
+      ],
+      validation: (Rule: Rule) => Rule.required().min(3),
+    },
+    autoPlay,
+    {
+      title: 'Background',
+      description: 'Pick a colour for the background. Default is white.',
+      name: 'background',
+      type: 'colorlist',
+      fieldset: 'design',
     },
     {
       type: 'number',
@@ -83,21 +96,6 @@ export default {
       fieldset: 'carouselOptions',
       validation: (Rule: Rule) => Rule.required().min(2),
       readOnly: ({ value }: { value?: string }) => !value,
-    },
-    {
-      type: 'boolean',
-      name: 'autoplay',
-      title: 'Autoplay',
-      description: 'Whether the carousel should autoplay or not.',
-      initialValue: true,
-      fieldset: 'carouselOptions',
-    },
-    {
-      title: 'Background',
-      description: 'Pick a colour for the background. Default is white.',
-      name: 'background',
-      type: 'colorlist',
-      fieldset: 'design',
     },
   ],
   preview: {
