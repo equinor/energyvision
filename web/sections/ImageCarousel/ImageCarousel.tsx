@@ -48,6 +48,7 @@ const ImageCarousel = forwardRef<HTMLUListElement, ImageCarouselProps>(function 
         labelledbyId={title && !hideTitle ? headingId : undefined}
         title={title}
         autoRotation={options?.autoplay}
+        sectionTitle={title}
       />
     </BackgroundContainer>
   )
