@@ -26,6 +26,7 @@ type CarouselImageItemProps = {
   captionText?: PortableTextBlock[]
   active?: boolean
   action?: LinkData
+  /** Single container */
   wasUserPress?: boolean
 } & HTMLAttributes<HTMLLIElement>
 
@@ -33,7 +34,6 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
   {
     type,
     active = false,
-    wasUserPress = false,
     image,
     caption,
     attribution,
@@ -43,6 +43,7 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
     displayMode = 'single',
     className = '',
     action,
+    wasUserPress = false,
     ...rest
   },
   ref,
@@ -60,12 +61,6 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
   const singleHeights = `min-h-single-carousel-card-h-sm
   md:min-h-single-carousel-card-h-md
   lg:min-h-single-carousel-card-h-lg`
-
-  useEffect(() => {
-    if (active && itemRef?.current && wasUserPress) {
-      itemRef?.current?.focus()
-    }
-  }, [active, wasUserPress])
 
   const getBody = () => {
     if (isJustImage) {
@@ -154,27 +149,39 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
         md:w-single-carousel-card-w-md 
         lg:w-single-carousel-card-w-lg`
 
+  useEffect(() => {
+    if (displayMode === 'single') {
+      if (active && itemRef?.current && wasUserPress) {
+        itemRef?.current?.focus()
+      }
+    }
+  }, [active, wasUserPress, displayMode])
+
   return (
     <li
       {...rest}
       ref={combinedItemRef}
-      // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-      tabIndex={active ? 0 : -1}
-      aria-current={active}
-      aria-hidden={!active}
+      {...(displayMode === 'single' && {
+        'aria-current': active,
+        tabIndex: active ? 0 : -1,
+      })}
+      {...(displayMode === 'scroll' && {
+        tabIndex: 0,
+      })}
       className={envisTwMerge(
-        `
-        relative
+        `relative
+        mt-1
+        focus:outline-none
+        focus-visible:outline-dashed
+        focus-visible:outline-2
+        focus-visible:outline-grey-50
+        dark:focus-visible:outline-white-100
+        focus-visible:outline-offset-2
         ${isImageWithRichTextCaption ? 'h-full' : singleHeights}
         ${displayMode === 'single' ? singleListItemWidthsClassNames : scrollListItemWidthsClassNames}
         ${
           displayMode === 'single'
             ? `
-            focus:outline-dashed
-            focus:outline-2
-            focus:outline-grey-50
-            dark:focus:outline-white-100
-            focus:outline-offset-2
             transition-opacity
             duration-1000
             ease-[ease]

@@ -29,14 +29,14 @@ type CarouselItemProps = {
   action?: LinkData
   /* With richTextBelow or default. */
   attribution?: string
-  /** Single container */
-  wasUserPress?: boolean
   /* Only scroll: Sets widths based on aspect ratios type */
   aspectRatio?: CarouselAspectRatios
   /* Only scroll: To bypass getElementAspectRatio */
   customListItemWidth?: boolean
   /* Override heights in the richTextBelow */
   overrideHeights?: boolean
+  /** Single container */
+  wasUserPress?: boolean
 } & HTMLAttributes<HTMLLIElement>
 
 /* Carousel item
@@ -102,7 +102,6 @@ export const CarouselItem = forwardRef<HTMLLIElement, CarouselItemProps>(functio
   transform-all
   shrink-0
   grow
-  relative
   snap-center
   pb-6
   last:mr-lg 
@@ -111,7 +110,6 @@ export const CarouselItem = forwardRef<HTMLLIElement, CarouselItemProps>(functio
   lg:max-h-[740px]`
 
   const singleVariantClassNames = `
-  relative
   h-full
   ${variant === 'richTextBelow' ? '' : `${singleWidths} ${singleHeigths}`}
   ms-2 
@@ -120,11 +118,6 @@ export const CarouselItem = forwardRef<HTMLLIElement, CarouselItemProps>(functio
   col-end-1 
   row-start-1 
   row-end-1
-  focus:outline-dashed
-  focus:outline-2
-  focus:outline-grey-50
-  dark:focus:outline-white-100
-  focus:outline-offset-2
   transition-opacity
   duration-1000
   ease-[ease]
@@ -205,11 +198,21 @@ export const CarouselItem = forwardRef<HTMLLIElement, CarouselItemProps>(functio
       ref={combinedItemRef}
       {...(displayMode === 'single' && {
         'aria-current': active,
-        'aria-hidden': !active,
         tabIndex: active ? 0 : -1,
       })}
+      {...(displayMode === 'scroll' && {
+        tabIndex: 0,
+      })}
       className={envisTwMerge(
-        `${displayMode === 'single' ? singleVariantClassNames : scrollVariantClassNames}`,
+        ` relative
+          mt-1
+          focus:outline-none
+          focus-visible:outline-dashed
+          focus-visible:outline-2
+          focus-visible:outline-grey-50
+          dark:focus-visible:outline-white-100
+          focus-visible:outline-offset-2
+        ${displayMode === 'single' ? singleVariantClassNames : scrollVariantClassNames}`,
         className,
       )}
     >

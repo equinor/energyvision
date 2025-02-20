@@ -12,6 +12,7 @@ import { ResourceLink } from '@core/Link'
 import { getUrlFromAction } from '../../common/helpers'
 import { getLocaleFromName } from '../../lib/localization'
 import { DisplayModes } from '@core/Carousel/Carousel'
+import { FormattedMessage } from 'react-intl'
 
 export type ImageWithOverlayProps = {
   image?: SanityImageObject
@@ -131,7 +132,9 @@ export const ImageWithOverlay = forwardRef<HTMLDivElement, ImageWithOverlayProps
               lg:px-8
               `}
         >
-          <span className="sr-only">Show me more</span>
+          <span className="sr-only">
+            <FormattedMessage id="readMore" defaultMessage="Read more" />
+          </span>
           <div
             className={`
               group

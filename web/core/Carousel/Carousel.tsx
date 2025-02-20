@@ -25,7 +25,7 @@ import { usePrefersReducedMotion } from '../../common/hooks/usePrefersReducedMot
 import { PortableTextBlock } from '@portabletext/types'
 import { toPlainText } from '@portabletext/react'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, useIntl } from 'react-intl'
 import { CarouselAspectRatios, CarouselItem } from './CarouselItem'
 import IFrame from '../../pageComponents/shared/iframe/IFrame'
 import { EventCard } from '@sections/cards/EventCard'
@@ -71,6 +71,8 @@ type CarouselProps = {
   autoRotation?: boolean
   hasSectionTitle?: boolean
   title?: PortableTextBlock[]
+  /** Variant Image: The section title to be used in translated autorotation control button */
+  sectionTitle?: PortableTextBlock[]
 } & Omit<HTMLAttributes<HTMLDivElement>, 'title'>
 
 const TRANSLATE_X_AMOUNT_LG = 1000
@@ -88,38 +90,43 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
     className = '',
     listClassName = '',
     hasSectionTitle = false,
+    sectionTitle,
   },
   ref,
 ) {
   const CarouselTag = hasSectionTitle ? (`div` as ElementType) : (`section` as ElementType)
   const carouselItemsId = useId()
   const controlsId = useId()
+  const intl = useIntl()
   const sliderRef = useRef<HTMLUListElement>(null)
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
   //a prefers-reduced-motion user setting must always override autoplay
   const prefersReducedMotion = usePrefersReducedMotion()
-  const internalAutoRotation = prefersReducedMotion
-    ? false
-    : autoRotation && variant === 'image' && displayMode === 'single'
+  const internalAutoRotation = useMemo(() => {
+    //Only image single mode should have auto rotation
+    if (prefersReducedMotion) {
+      return false
+    } else if (autoRotation && variant === 'image' && displayMode === 'single') {
+      return true
+    } else {
+      return false
+    }
+  }, [autoRotation, displayMode, prefersReducedMotion, variant])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [currentXPosition, setCurrentXPosition] = useState(0)
   const [currentListTranslateX, setCurrentListTranslateX] = useState(0)
   const [pauseAutoRotation, setPauseAutoRotation] = useState(false)
   const [wasUserInteraction, setWasUserInteraction] = useState(false)
-  let TRANSLATE_X_AMOUNT = TRANSLATE_X_AMOUNT_SM
   const isMedium = useMediaQuery(`(min-width: 768px)`)
   const isLarge = useMediaQuery(`(min-width: 1024px)`)
-  const [scrollPosition, setScrollPosition] = useState<'start' | 'middle' | 'end'>('start')
-
-  const carouselGridTop = `col-start-1 col-end-1 row-start-1 row-end-1`
-  const carouselGridBottom = `col-start-1 col-end-1 row-start-2 row-end-2`
-
+  let TRANSLATE_X_AMOUNT = TRANSLATE_X_AMOUNT_SM
   if (isMedium) {
     TRANSLATE_X_AMOUNT = TRANSLATE_X_AMOUNT_MD
   }
   if (isLarge) {
     TRANSLATE_X_AMOUNT = TRANSLATE_X_AMOUNT_LG
   }
+  const [scrollPosition, setScrollPosition] = useState<'start' | 'middle' | 'end'>('start')
   const initialPositions = useMemo(() => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
@@ -130,8 +137,9 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
       return TRANSLATE_X_AMOUNT * i
     })
   }, [TRANSLATE_X_AMOUNT, items])
-
   const [itemsXPositions, setItemsXPositions] = useState<number[]>([])
+  const carouselGridTop = `col-start-1 col-end-1 row-start-1 row-end-1`
+  const carouselGridBottom = `col-start-1 col-end-1 row-start-2 row-end-2`
 
   const prevSlide = () => {
     const isFirst = currentIndex === 0
@@ -208,7 +216,6 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
   }, [TRANSLATE_X_AMOUNT, currentIndex, currentListTranslateX, currentXPosition, items?.length, itemsXPositions])
 
   const loopSlidePrev = useCallback(() => {
-    console.log('loopSlidePrev')
     const isFirst = currentIndex === 0
     const newIndex = isFirst ? items?.length - 1 : currentIndex - 1
     const newXPosition = currentXPosition - TRANSLATE_X_AMOUNT
@@ -233,14 +240,13 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
   }, [TRANSLATE_X_AMOUNT, currentIndex, currentListTranslateX, currentXPosition, items?.length, itemsXPositions])
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLUListElement>) => {
-    console.log('event key', event.key)
     if (event.key === 'ArrowRight') {
       setWasUserInteraction(true)
       loopSlideNext()
     }
     if (event.key === 'ArrowLeft') {
-      loopSlidePrev()
       setWasUserInteraction(true)
+      loopSlidePrev()
     }
   }
 
@@ -263,6 +269,18 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
     reset()
   }, [initialPositions])
 
+  const getTranslatedItemCountLabel = (item: number) => {
+    return intl.formatMessage(
+      {
+        id: 'carouselItemCountLabel',
+        defaultMessage: 'Item {x} of {carouselLength}',
+      },
+      {
+        x: item,
+        carouselLength: items.length,
+      },
+    )
+  }
   const cancelTimeout = () => {
     timeoutRef.current && clearTimeout(timeoutRef.current)
   }
@@ -301,6 +319,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
     return (
       <CarouselItem
         key={iframeData._key}
+        aria-label={getTranslatedItemCountLabel(index + 1)}
         displayMode={displayMode}
         active={index === currentIndex}
         //@ts-ignore:TODO- didnt work with type assertion as PortableTextBlock[]
@@ -314,6 +333,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
           style: {
             transform: `translate3d(${itemsXPositions[index]}px, 0px, 0px)`,
           },
+          wasUserPress: wasUserInteraction,
         })}
       >
         {element}
@@ -322,7 +342,6 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
   }
   const getVideoVariantBody = (itemData: VideoPlayerCarouselItem, index: number) => {
     const { title, video, id } = itemData
-
     const element = (
       <VideoJsComponent
         video={video}
@@ -344,6 +363,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
     return (
       <CarouselItem
         key={id}
+        aria-label={getTranslatedItemCountLabel(index + 1)}
         displayMode={displayMode}
         active={index === currentIndex}
         variant={title ? 'richTextBelow' : 'default'}
@@ -354,6 +374,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
           style: {
             transform: `translate3d(${itemsXPositions[index]}px, 0px, 0px)`,
           },
+          wasUserPress: wasUserInteraction,
         })}
       >
         {element}
@@ -368,6 +389,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
         key={itemData.id}
         displayMode={displayMode}
         variant="default"
+        aria-label={getTranslatedItemCountLabel(index + 1)}
         customListItemWidth={true}
         className={`
           ${displayMode === 'scroll' ? `w-event-carousel-card-w` : ''}
@@ -376,18 +398,19 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
           style: {
             transform: `translate3d(${itemsXPositions[index]}px, 0px, 0px)`,
           },
+          wasUserPress: wasUserInteraction,
         })}
       >
         {element}
       </CarouselItem>
     )
   }
-
-  const getKeyNumberVariantBody = (itemData: KeyNumberItemData) => {
+  const getKeyNumberVariantBody = (itemData: KeyNumberItemData, index: number) => {
     const element = <KeyNumberItem {...itemData} isScrollable />
 
     return (
       <CarouselItem
+        aria-label={getTranslatedItemCountLabel(index + 1)}
         key={itemData.id}
         displayMode="scroll"
         variant="default"
@@ -399,7 +422,6 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
     )
   }
   const getCarouselItem = (item: CarouselItemTypes, i: number) => {
-    const ariaLabel = `${i + 1} of ${items?.length}`
     switch (variant) {
       case 'video':
         return getVideoVariantBody(item as VideoPlayerCarouselItem, i)
@@ -410,7 +432,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
             key={item?.id ?? item?._key ?? `image_carousel_${sliderRef.current}_item_${i}`}
             {...(item as ImageCarouselItem)}
             displayMode={displayMode}
-            aria-label={ariaLabel}
+            aria-label={getTranslatedItemCountLabel(i + 1)}
             active={i === currentIndex}
             {...(displayMode === 'single' && {
               style: {
@@ -426,7 +448,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
       case 'event':
         return getEventVariantBody(item as EventCardData, i)
       case 'keyNumber':
-        return getKeyNumberVariantBody(item as KeyNumberItemData)
+        return getKeyNumberVariantBody(item as KeyNumberItemData, i)
       case 'iframe':
         return getIframeVariantBody(item as IFrameCarouselItemData, i)
     }
@@ -459,6 +481,13 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
     duration-[800ms]
     ${getCarouselItemVariant() === 'richTextBelow' ? carouselGridBottom : carouselGridTop}
     `
+  let translatedPlayPauseAutoRotationTitle = ''
+  if (internalAutoRotation && labelledbyId && sectionTitle) {
+    translatedPlayPauseAutoRotationTitle = toPlainText(sectionTitle)
+  }
+  if (internalAutoRotation && !labelledbyId && title) {
+    translatedPlayPauseAutoRotationTitle = toPlainText(title)
+  }
 
   return (
     <CarouselTag
@@ -514,7 +543,27 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
           {internalAutoRotation && variant === 'image' && displayMode === 'single' && (
             <MediaButton
               key={`play_pause_button_${currentIndex}`}
-              title={pauseAutoRotation ? `Play our image gallery.` : `Pause image gallery`}
+              title={
+                pauseAutoRotation
+                  ? intl.formatMessage(
+                      {
+                        id: 'carouselPlay',
+                        defaultMessage: 'Play {title} gallery',
+                      },
+                      {
+                        title: translatedPlayPauseAutoRotationTitle,
+                      },
+                    )
+                  : intl.formatMessage(
+                      {
+                        id: 'carouselPause',
+                        defaultMessage: 'Pause {title} gallery',
+                      },
+                      {
+                        title: translatedPlayPauseAutoRotationTitle,
+                      },
+                    )
+              }
               mode={pauseAutoRotation ? 'play' : 'pause'}
               onClick={() => {
                 setPauseAutoRotation(!pauseAutoRotation)
@@ -524,9 +573,20 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
               className="[grid-area:left]"
             />
           )}
+          {/** From W3.org:
+           * Allow the user to maintain control of the keyboard focus.
+           * When the carousel advances automatically, users should not be
+           * drawn away from their current place in the page. Also, do not
+           * move keyboard focus when the previous or next buttons are
+           * used; moving the focus makes it harder for users to browse
+           * back and forth between the slides.
+           */}
           <div className="flex gap-3 items-center">
             <MediaButton
-              title={`Go to previous`}
+              title={intl.formatMessage({
+                id: 'previous',
+                defaultMessage: 'Previous',
+              })}
               aria-controls={carouselItemsId}
               mode="previous"
               disabled={(displayMode === 'scroll' && scrollPosition === 'start') ?? false}
@@ -543,7 +603,10 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
               className="hover:border-autumn-storm-60"
             />
             <MediaButton
-              title={`Go to next`}
+              title={intl.formatMessage({
+                id: 'next',
+                defaultMessage: 'Next',
+              })}
               mode="next"
               aria-controls={carouselItemsId}
               disabled={(displayMode === 'scroll' && scrollPosition === 'end') ?? false}
@@ -581,7 +644,6 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
             style: {
               transform: `translate3d(${currentListTranslateX}px, 0px, 0px)`,
             },
-            'aria-live': pauseAutoRotation ? 'polite' : 'off',
             onKeyDown: handleKeyDown,
           })}
         >
@@ -589,6 +651,18 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
             return getCarouselItem(item, i)
           })}
         </ul>
+        {displayMode === 'single' && (
+          <div aria-live={pauseAutoRotation ? 'polite' : 'off'} aria-atomic={true} className="sr-only">
+            <FormattedMessage
+              id="carouselLiveAnnoucement"
+              defaultMessage="Showing item {x} of {carouselLength}"
+              values={{
+                x: currentIndex + 1,
+                carouselLength: items.length,
+              }}
+            />
+          </div>
+        )}
       </div>
     </CarouselTag>
   )
