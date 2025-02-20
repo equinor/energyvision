@@ -60,7 +60,7 @@ const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
             mx-auto
             ${
               tabPanelVariant === 'tabsKeyNumbers'
-                ? `px-layout-sm lg:px-layout-lg pb-page-content`
+                ? `px-layout-sm lg:px-layout-md pb-page-content`
                 : `lg:mx-layout-sm ${theme?.backgroundUtility} rounded-md`
             }
             `}
@@ -104,7 +104,7 @@ const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
                   value={tabItem.id}
                   className={`${
                     tabPanelVariant === 'tabsKeyNumbers'
-                      ? 'py-10 max-lg:px-layout-sm'
+                      ? 'py-14 max-lg:px-layout-sm'
                       : 'w-full h-full rounded-md overflow-hidden'
                   }`}
                 >
