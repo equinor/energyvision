@@ -1,5 +1,5 @@
 import { Template } from 'sanity'
-import { languages } from './languages'
+import { defaultLanguage, languages } from './languages'
 import textSnippets from './schemas/textSnippets'
 import { Flags } from './src/lib/datasetHelpers'
 
@@ -79,9 +79,10 @@ const localNewsWithTagTemplate: Template<any, any> = {
   id: 'localnews-with-tag',
   title: 'Local news',
   schemaType: 'localNews',
-  parameters: [{ name: 'localNewsTag', type: 'reference' }],
+  parameters: [{ name: 'localNewsTag', type: 'reference' }, { name: 'lang', type: 'string' }],
   value: (params: Record<string, unknown>) => ({
     localNewsTag: params.localNewsTag,
+    lang: params.lang || defaultLanguage.name,
   }),
 }
 
