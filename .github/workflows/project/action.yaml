@@ -102,7 +102,7 @@ runs:
 
         ITEMS=$(jq -s '.' items.json)
         echo 'ITEMS<<EOF' >> $GITHUB_ENV
-        ITEMS
+        echo $ITEMS >> $GITHUB_ENV
         echo 'EOF' >> $GITHUB_ENV
         #echo "ITEMS=${ITEMS}" >> $GITHUB_ENV
 
@@ -127,7 +127,7 @@ runs:
       run: |
         IFS=: read -r -a arr <<< "$RAW_ITEMS"
         echo "arr elements:"
-        echo $RAW_ITEMS
+        echo $ITEMS
         echo "$RAW_ITEMS"
         echo "ORGANIZATION: $ORGANIZATION"
 
