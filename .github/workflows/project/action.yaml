@@ -98,10 +98,15 @@ runs:
       # Get all the items with status "🚀 Release"
       run: |
         echo "$ORGANIZATION $PROJECT_NUMBER"
-        gh project item-list 965 --owner equinor --format=json | jq '.items[] | select(.status=="🚀 Release" and .content.type == "Issue") | {id: .id ,url :.content.url}' >>items.json
+        gh project item-list $PROJECT_NUMBER --owner $ORGANIZATION --format=json | jq '.items[] | select(.status=="🚀 Release" and .content.type == "Issue") | {id: .id ,url :.content.url}' >>items.json
 
         ITEMS=$(jq -s '.' items.json)
-        echo "ITEMS=${ITEMS}" >> $GITHUB_ENV
+        {
+        echo 'ITEMS<<EOF'
+        ${ITEMS}
+        echo EOF
+        } >> "$GITHUB_ENV"
+        #echo "ITEMS=${ITEMS}" >> $GITHUB_ENV
 
         ITEM_IDS=$(jq -s '[.[]|.id]' items.json)
         echo "ITEM_IDS=${ITEM_IDS}" >> $GITHUB_ENV
