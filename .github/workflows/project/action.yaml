@@ -107,9 +107,10 @@ runs:
 
       # Sets the value of the `Status` field to `✅  Done`.
       run: |
-        ITEMIDS = $(jq -s '[.[]|.id]' $HOME/items.json)
-        echo "ITEMs $ITEMIDS"
-        for id in $ITEMIDS; do
+        echo "Set value of status field "
+        ITEM_IDS = $(jq -s '[.[]|.id]' $HOME/items.json)
+        echo "ITEMs $ITEM_IDS"
+        for id in $ITEM_IDS; do
          echo "Moving $id"
          GH_DEBUG=api gh api graphql -f query='
            mutation (
