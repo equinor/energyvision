@@ -74,6 +74,9 @@ runs:
         #
         # **Note:** This workflow assumes that you have a project with a single select field called "Status" that includes an option called "✅  Done" and a date field called "Date posted". You must modify this section to match the fields that are present in your table.
 
+        echo "ORGANIZATION=${ORGANIZATION}" >> $GITHUB_ENV
+        echo "PROJECT_NUMBER=${PROJECT_NUMBER}" >> $GITHUB_ENV
+
         PROJECT_ID=$(jq '.data.organization.projectV2.id' project_data.json)
         echo "PROJECT_ID=${PROJECT_ID}" >> $GITHUB_ENV
 
@@ -83,10 +86,6 @@ runs:
         DONE_OPTION_ID=$(jq '.data.organization.projectV2.fields.nodes[] | select(.name== "Status") | .options[] | select(.name=="✅  Done") |.id' project_data.json)
         echo "DONE_OPTION_ID=${DONE_OPTION_ID}" >> $GITHUB_ENV
 
-
-        #echo 'PROJECT_ID='$(jq '.data.organization.projectV2.id' project_data.json) >> $GITHUB_ENV
-        #echo 'STATUS_FIELD_ID='$(jq '.data.organization.projectV2.fields.nodes[] | select(.name== "Status") | .id' project_data.json) >> $GITHUB_ENV
-        #echo 'DONE_OPTION_ID='$(jq '.data.organization.projectV2.fields.nodes[] | select(.name== "Status") | .options[] | select(.name=="✅  Done") |.id' project_data.json) >> $GITHUB_ENV
         echo "done id : $DONE_OPTION_ID"
         echo $PROJECT_ID
         echo "Status field id: $STATUS_FIELD_ID"
@@ -96,15 +95,23 @@ runs:
       shell: bash
       env:
         GH_TOKEN: ${{ inputs.token }}
-        ORGANIZATION: ${{ env.ORGANIZATION }}
       # Get all the items with status "🚀 Release"
       run: |
-        echo "Env set in previous steps $DONE_OPTION_ID"
-        gh project item-list 965 --owner equinor --format=json | jq '.items[] | select(.status=="🚀 Release" and .content.type == "Issue") | {id: .id ,url :.content.url}' >>items.json
-        echo 'ITEMS = '$(jq -s '.' items.json) >> $GITHUB_ENV
-        echo 'ITEM_IDS = '$(jq -s '[.[]|.id]' items.json) >> $GITHUB_ENV
-        echo 'RAW_ITEMS = '$(jq '.|.id' items.json) >> $GITHUB_ENV
-        echo 'RAW_ITEMS_OUTPUT = ' $(jq '.|.id' items.json) >> $GITHUB_OUTPUT
+        gh project item-list $PROJECT_NUMBER --owner $ORGANIZATION --format=json | jq '.items[] | select(.status=="🚀 Release" and .content.type == "Issue") | {id: .id ,url :.content.url}' >>items.json
+
+        ITEMS=$(jq -s '.' items.json)
+        echo "ITEMS=${ITEMS}" >> $GITHUB_ENV
+
+        ITEM_IDS=$(jq -s '[.[]|.id]' items.json)
+        echo "ITEM_IDS=${ITEM_IDS}" >> $GITHUB_ENV
+
+        RAW_ITEMS=$(jq '.|.id' items.json)
+        echo "RAW_ITEMS=${RAW_ITEMS}" >> $GITHUB_ENV
+
+        #echo 'ITEMS = '$(jq -s '.' items.json) >> $GITHUB_ENV
+        #echo 'ITEM_IDS = '$(jq -s '[.[]|.id]' items.json) >> $GITHUB_ENV
+        #echo 'RAW_ITEMS = '$(jq '.|.id' items.json) >> $GITHUB_ENV
+        #echo 'RAW_ITEMS_OUTPUT = ' $(jq '.|.id' items.json) >> $GITHUB_OUTPUT
 
     # #Sets environment variables for this step. Replace `YOUR_TOKEN` with the name of the secret that contains your personal access token.
     - name: Set fields
@@ -118,10 +125,7 @@ runs:
         echo "arr elements:"
         echo $RAW_ITEMS
         echo "$RAW_ITEMS"
-        echo ${{ env.RAW_ITEMS}}
-        echo "${{ env.RAW_ITEMS}}"
         echo "ORGANIZATION: $ORGANIZATION"
-        echo "OUTPUT : $OUT"
 
         for id in "${arr[@]}"; do
          echo "Moving $id"
