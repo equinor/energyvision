@@ -83,7 +83,7 @@ runs:
         STATUS_FIELD_ID=$(jq '.data.organization.projectV2.fields.nodes[] | select(.name== "Status") | .id' project_data.json)
         echo "STATUS_FIELD_ID=${STATUS_FIELD_ID}" >> $GITHUB_ENV
 
-        DONE_OPTION_ID=$(jq '.data.organization.projectV2.fields.nodes[] | select(.name== "Status") | .options[] | select(.name=="✅  Done") |.id' project_data.json)
+        DONE_OPTION_ID=$(jq -r '.data.organization.projectV2.fields.nodes[] | select(.name== "Status") | .options[] | select(.name=="✅  Done") |.id' project_data.json)
         echo "DONE_OPTION_ID=${DONE_OPTION_ID}" >> $GITHUB_ENV
 
         echo "done id : $DONE_OPTION_ID"
