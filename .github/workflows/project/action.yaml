@@ -131,7 +131,6 @@ runs:
                  id
                  }
              }
-
-             add
+             
            }' -f project=$PROJECT_ID -f item=$id -f status_field=$STATUS_FIELD_ID -f status_value=$DONE_OPTION_ID --silent
            done
