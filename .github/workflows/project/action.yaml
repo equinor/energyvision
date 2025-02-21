@@ -108,7 +108,7 @@ runs:
       # Sets the value of the `Status` field to `✅  Done`.
       run: |
         echo "Set value of status field "
-        ITEM_IDS = $(jq -s '[.[]|.id]' $HOME/items.json)
+        ITEM_IDS=$(jq -s '[.[]|.id]' $HOME/items.json)
         echo "ITEMs $ITEM_IDS"
         for id in $ITEM_IDS; do
          echo "Moving $id"
