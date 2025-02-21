@@ -100,22 +100,22 @@ runs:
         echo "$ORGANIZATION $PROJECT_NUMBER"
         gh project item-list $PROJECT_NUMBER --owner $ORGANIZATION --format=json | jq '.items[] | select(.status=="🚀 Release" and .content.type == "Issue") | {id: .id ,url :.content.url}' >>items.json
 
-        ITEMS=$(jq -s '.' items.json)
-        echo 'ITEMS<<EOF' >> $GITHUB_ENV
-        echo $ITEMS >> $GITHUB_ENV
-        echo 'EOF' >> $GITHUB_ENV
+        #ITEMS=$(jq -s '.' items.json)
+        #echo 'ITEMS<<EOF' >> $GITHUB_ENV
+        #echo $ITEMS >> $GITHUB_ENV
+        #echo 'EOF' >> $GITHUB_ENV
         #echo "ITEMS=${ITEMS}" >> $GITHUB_ENV
 
-        ITEM_IDS=$(jq -s '[.[]|.id]' items.json)
-        echo "ITEM_IDS=${ITEM_IDS}" >> $GITHUB_ENV
+        #ITEM_IDS=$(jq -s '[.[]|.id]' items.json)
+        #echo "ITEM_IDS=${ITEM_IDS}" >> $GITHUB_ENV
 
-        RAW_ITEMS=$(jq '.|.id' items.json)
-        echo "RAW_ITEMS=${RAW_ITEMS}" >> $GITHUB_ENV
+        #RAW_ITEMS=$(jq '.|.id' items.json)
+        #echo "RAW_ITEMS=${RAW_ITEMS}" >> $GITHUB_ENV
 
-        #echo 'ITEMS = '$(jq -s '.' items.json) >> $GITHUB_ENV
-        #echo 'ITEM_IDS = '$(jq -s '[.[]|.id]' items.json) >> $GITHUB_ENV
-        #echo 'RAW_ITEMS = '$(jq '.|.id' items.json) >> $GITHUB_ENV
-        #echo 'RAW_ITEMS_OUTPUT = ' $(jq '.|.id' items.json) >> $GITHUB_OUTPUT
+        echo 'ITEMS = '$(jq -s '.' items.json) >> $GITHUB_ENV
+        echo 'ITEM_IDS = '$(jq -s '[.[]|.id]' items.json) >> $GITHUB_ENV
+        echo 'RAW_ITEMS = '$(jq '.|.id' items.json) >> $GITHUB_ENV
+        echo 'RAW_ITEMS_OUTPUT = ' $(jq '.|.id' items.json) >> $GITHUB_OUTPUT
 
     # #Sets environment variables for this step. Replace `YOUR_TOKEN` with the name of the secret that contains your personal access token.
     - name: Set fields
@@ -127,7 +127,7 @@ runs:
       run: |
         IFS=: read -r -a arr <<< "$RAW_ITEMS"
         echo "arr elements:"
-        echo $ITEMS
+        echo ${{ env.ITEMS }}
         echo "$RAW_ITEMS"
         echo "ORGANIZATION: $ORGANIZATION"
 
