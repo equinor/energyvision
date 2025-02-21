@@ -24,7 +24,6 @@ runs:
         PROJECT_NUMBER: 965
       # Uses [GitHub CLI](https://cli.github.com/manual/) to query the API for the ID of the project and return the name and ID of the first 20 fields in the project. `fields` returns a union and the query uses inline fragments (`... on`) to return information about any `ProjectV2Field` and `ProjectV2SingleSelectField` fields. The response is stored in a file called `project_data.json`.
       run: |
-        echo "ORGANIZATION: $ORGANIZATION"
         gh api graphql -f query='
             query($org: String!, $number: Int!) {
             organization(login: $org){
@@ -75,11 +74,22 @@ runs:
         #
         # **Note:** This workflow assumes that you have a project with a single select field called "Status" that includes an option called "✅  Done" and a date field called "Date posted". You must modify this section to match the fields that are present in your table.
 
-        echo 'PROJECT_ID='$(jq '.data.organization.projectV2.id' project_data.json) >> $GITHUB_ENV
-        echo 'STATUS_FIELD_ID='$(jq '.data.organization.projectV2.fields.nodes[] | select(.name== "Status") | .id' project_data.json) >> $GITHUB_ENV
-        echo 'DONE_OPTION_ID='$(jq '.data.organization.projectV2.fields.nodes[] | select(.name== "Status") | .options[] | select(.name=="✅  Done") |.id' project_data.json) >> $GITHUB_ENV
+        PROJECT_ID=$(jq '.data.organization.projectV2.id' project_data.json)
+        echo "PROJECT_ID=${PROJECT_ID}" >> $GITHUB_ENV
+
+        STATUS_FIELD_ID=$(jq '.data.organization.projectV2.fields.nodes[] | select(.name== "Status") | .id' project_data.json)
+        echo "STATUS_FIELD_ID=${STATUS_FIELD_ID}" >> $GITHUB_ENV
+
+        DONE_OPTION_ID=$(jq '.data.organization.projectV2.fields.nodes[] | select(.name== "Status") | .options[] | select(.name=="✅  Done") |.id' project_data.json)
+        echo "DONE_OPTION_ID=${DONE_OPTION_ID}" >> $GITHUB_ENV
+
+
+        #echo 'PROJECT_ID='$(jq '.data.organization.projectV2.id' project_data.json) >> $GITHUB_ENV
+        #echo 'STATUS_FIELD_ID='$(jq '.data.organization.projectV2.fields.nodes[] | select(.name== "Status") | .id' project_data.json) >> $GITHUB_ENV
+        #echo 'DONE_OPTION_ID='$(jq '.data.organization.projectV2.fields.nodes[] | select(.name== "Status") | .options[] | select(.name=="✅  Done") |.id' project_data.json) >> $GITHUB_ENV
         echo "done id : $DONE_OPTION_ID"
         echo $PROJECT_ID
+        echo "Status field id: $STATUS_FIELD_ID"
 
     - name: Get all items in status release
       id: items
@@ -89,6 +99,7 @@ runs:
         ORGANIZATION: ${{ env.ORGANIZATION }}
       # Get all the items with status "🚀 Release"
       run: |
+        echo "Env set in previous steps $DONE_OPTION_ID"
         gh project item-list 965 --owner equinor --format=json | jq '.items[] | select(.status=="🚀 Release" and .content.type == "Issue") | {id: .id ,url :.content.url}' >>items.json
         echo 'ITEMS = '$(jq -s '.' items.json) >> $GITHUB_ENV
         echo 'ITEM_IDS = '$(jq -s '[.[]|.id]' items.json) >> $GITHUB_ENV
@@ -100,8 +111,6 @@ runs:
       shell: bash
       env:
         GH_TOKEN: ${{ inputs.token }}
-        RAW_ITEMS: ${{ env.RAW_ITEMS }}
-        OUT: ${{ steps.items.outputs.RAW_ITEMS_OUTPUT}}
 
       # Sets the value of the `Status` field to `✅  Done`.
       run: |
