@@ -101,7 +101,7 @@ runs:
         gh project item-list $PROJECT_NUMBER --owner $ORGANIZATION --format=json | jq '.items[] | select(.status=="🚀 Release" and .content.type == "Issue") | {id: .id ,url :.content.url}' >>items.json
 
         ITEMS=$(jq -s '.' items.json)
-        echo "ITEMS<<EOF${ITEMS}EOF" >> $GITHUB_ENV
+        echo "ITEMS<<EOF ${ITEMS}EOF " >> $GITHUB_ENV
         #echo "ITEMS=${ITEMS}" >> $GITHUB_ENV
 
         ITEM_IDS=$(jq -s '[.[]|.id]' items.json)
