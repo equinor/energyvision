@@ -124,13 +124,13 @@ runs:
                itemId: $item
                fieldId: $status_field
                value: {
-                 singleSelectOptionId: $status_value
+                 singleSelectOptionId: "98236657"
                  }
              }) {
                projectV2Item {
                  id
                  }
              }
-             
+
            }' -f project=$PROJECT_ID -f item=$id -f status_field=$STATUS_FIELD_ID -f status_value=$DONE_OPTION_ID --silent
            done
