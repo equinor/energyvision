@@ -24,7 +24,7 @@ runs:
         PROJECT_NUMBER: 965
       # Uses [GitHub CLI](https://cli.github.com/manual/) to query the API for the ID of the project and return the name and ID of the first 20 fields in the project. `fields` returns a union and the query uses inline fragments (`... on`) to return information about any `ProjectV2Field` and `ProjectV2SingleSelectField` fields. The response is stored in a file called `project_data.json`.
       run: |
-        gh api graphql -f query='
+        GH_DEBUG=api gh api graphql -f query='
             query($org: String!, $number: Int!) {
             organization(login: $org){
               repository(name:"energyvision"){
@@ -120,7 +120,7 @@ runs:
         echo "ITEMs $ITEM_IDS "
         for id in $ITEM_IDS; do
          echo "Moving $id $DONE_OPTION_ID"
-         GH_DEBUG=api gh api graphql -f query='
+         gh api graphql -f query='
            mutation (
              $project: ID!
              $item: ID!
