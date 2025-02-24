@@ -149,12 +149,12 @@ runs:
         DATE=$(date +'%d-%m-%Y')
         ITEMS=$(jq -r -s '.[] | (.title + "#" + .number )' $HOME/items.json | jq -r 'join("- ")')
         echo "$DATE"
-        echo "$ITEMS"
+        echo "$ITEMS" 
         BODY="# Release Log<br/>" 
-        BODY += "## Issues closed<br/>"
-        BODY += $ITEMS 
-        BODY += "<br/>## Commit SHA<br/>"
-        BODY += "To be inserted here.."
+        BODY+="## Issues closed<br/>"
+        BODY+="$ITEMS" 
+        BODY+="<br/>## Commit SHA<br/>"
+        BODY+="To be inserted here.."
 
         echo "$BODY"
         GH_DEBUG=api gh api graphql -f query=' 
