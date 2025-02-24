@@ -27,6 +27,10 @@ runs:
         gh api graphql -f query='
             query($org: String!, $number: Int!) {
             organization(login: $org){
+              repository(name:"energyvision"){
+                discussionCategory(slug:"Announcements"){
+                id
+              }
               projectV2(number: $number) {
               id
               fields(first:20) {
@@ -45,7 +49,7 @@ runs:
                   }
                 }
               }
-              items(first:50){
+              items(first:100){
                nodes{
                 id
                 fieldValues(first:20){
@@ -86,9 +90,13 @@ runs:
         DONE_OPTION_ID=$(jq -r '.data.organization.projectV2.fields.nodes[] | select(.name== "Status") | .options[] | select(.name=="✅  Done") |.id' project_data.json)
         echo "DONE_OPTION_ID=${DONE_OPTION_ID}" >> $GITHUB_ENV
 
+        DISCUSSION_CATEGORY_ID=$(jq '.data.organization.repository.discussionCategory.id' project_data.json)
+        echo "DISCUSSION_CATEGOTY_ID=${DISCUSSION_CATEGORY_ID}" >> $GITHUB_ENV
+
         echo "done id : $DONE_OPTION_ID"
         echo $PROJECT_ID
         echo "Status field id: $STATUS_FIELD_ID"
+        echo "Discussion id: $DISCUSSION_ID"
 
     - name: Get all items in status release
       id: items
@@ -134,3 +142,18 @@ runs:
              
            }' -f project=$PROJECT_ID -f item=$id -f status_field=$STATUS_FIELD_ID -f status_value=$DONE_OPTION_ID --silent
            done
+    - name: Create discussion
+      shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.token }}
+      run: |
+        DATE=$(date +'%d-%m-%Y')
+        gh api graphql -f query=' 
+        mutation($date: String!, $repositoryId: ID!, $categoryId: ID!){
+        createDiscussion(input: {repositoryId:$repositoryId , categoryId: , body: "# Release Log ", title: "Release $date"}) {
+
+        # response type: CreateDiscussionPayload
+         discussion {
+           id
+        }
+        }}' -f date=$DATE -f repositoryId=${{github.repository_id}} -f categoryId=$DISCUSSION_CATEGORY_ID
