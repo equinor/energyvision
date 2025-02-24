@@ -155,7 +155,9 @@ runs:
         ## Commit SHA 
         To be inserted here..
         '
-        gh api graphql -f query=' 
+
+        echo "$BODY"
+        GH_DEBUG=api gh api graphql -f query=' 
         mutation($date: String!, $repositoryId: ID!, $categoryId: ID!, $body: String!){
         createDiscussion(input: {repositoryId:$repositoryId , categoryId: $categoryId, body:$body, title: "Release $date"}) {
 
