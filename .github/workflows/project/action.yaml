@@ -71,27 +71,25 @@ runs:
             }
          }' -f org=$ORGANIZATION -F number=$PROJECT_NUMBER > project_data.json
 
-        # Parses the response from the API query and stores the relevant IDs as environment variables. Modify this to get the ID for different fields or options. For example:
-        #
-        # - To get the ID of a field called `Team`, add `echo 'TEAM_FIELD_ID='$(jq '.data.organization.projectV2.fields.nodes[] | select(.name== "Team") | .id' project_data.json) >> $GITHUB_ENV`.
-        # - To get the ID of an option called `Octoteam` for the `Team` single select field, add `echo 'OCTOTEAM_OPTION_ID='$(jq '.data.organization.projectV2.fields.nodes[] | select(.name== "Team") |.options[] | select(.name=="Octoteam") |.id' project_data.json) >> $GITHUB_ENV`.
-        #
-        # **Note:** This workflow assumes that you have a project with a single select field called "Status" that includes an option called "✅  Done" and a date field called "Date posted". You must modify this section to match the fields that are present in your table.
-
         echo "ORGANIZATION=${ORGANIZATION}" >> $GITHUB_ENV
         echo "PROJECT_NUMBER=${PROJECT_NUMBER}" >> $GITHUB_ENV
 
         PROJECT_ID=$(jq '.data.organization.projectV2.id' project_data.json)
         echo "PROJECT_ID=${PROJECT_ID}" >> $GITHUB_ENV
 
+        echo "Project id saved..."
+
         STATUS_FIELD_ID=$(jq '.data.organization.projectV2.fields.nodes[] | select(.name== "Status") | .id' project_data.json)
         echo "STATUS_FIELD_ID=${STATUS_FIELD_ID}" >> $GITHUB_ENV
+        echo "Status field id saved..."
 
         DONE_OPTION_ID=$(jq -r '.data.organization.projectV2.fields.nodes[] | select(.name== "Status") | .options[] | select(.name=="✅  Done") |.id' project_data.json)
         echo "DONE_OPTION_ID=${DONE_OPTION_ID}" >> $GITHUB_ENV
+        echo "Done option id saved..."
 
         DISCUSSION_CATEGORY_ID=$(jq '.data.organization.repository.discussionCategory.id' project_data.json)
         echo "DISCUSSION_CATEGOTY_ID=${DISCUSSION_CATEGORY_ID}" >> $GITHUB_ENV
+        echo "Category id saved..."
 
         echo "done id : $DONE_OPTION_ID"
         echo $PROJECT_ID
