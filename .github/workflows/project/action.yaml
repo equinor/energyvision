@@ -147,7 +147,7 @@ runs:
         GH_TOKEN: ${{ inputs.token }}
       run: |
         DATE=$(date +'%d-%m-%Y')
-        ITEMS=$(jq -s '.[] | .title + " [#" + .number+"]("+ .url +") | join("\n- ")' $HOME/items.json)
+        ITEMS=$(jq -s '.[] | .title + " #" + (.number|tostring) + ""' $HOME/items.json | jq -r 'join("\n- ")')
         BODY='
         # Release Log 
         ## Issues closed
