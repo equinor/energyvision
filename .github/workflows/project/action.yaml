@@ -148,6 +148,8 @@ runs:
       run: |
         DATE=$(date +'%d-%m-%Y')
         ITEMS=$(jq -s '.[] | .title + " [#" + .number +"]("+ .url + ")"' $HOME/items.json |  jq -r 'join("\n- ")')
+        echo "$DATE"
+        echo "$ITEMS"
         BODY="# Release Log<br/>" 
         BODY += "## Issues closed<br/>""
         BODY += $ITEMS 
