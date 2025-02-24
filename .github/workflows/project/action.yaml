@@ -148,13 +148,11 @@ runs:
       run: |
         DATE=$(date +'%d-%m-%Y')
         ITEMS=$(jq -s '.[] | .title + " [#" + .number +"]("+ .url + ")"' $HOME/items.json |  jq -r 'join("\n- ")')
-        BODY='
-        # Release Log 
-        ## Issues closed\n'
-        + $ITEMS +
-        '\n## Commit SHA 
-        To be inserted here..
-        '
+        BODY='# Release Log<br/>' 
+        BODY += '## Issues closed<br/>'
+        BODY += $ITEMS 
+        BODY += '<br/>## Commit SHA<br/>'
+        BODY += 'To be inserted here..'
 
         echo "$BODY"
         GH_DEBUG=api gh api graphql -f query=' 
