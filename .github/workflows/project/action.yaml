@@ -53,12 +53,6 @@ runs:
                   items(first:100){
                     nodes{
                       id
-                      content{
-                        ... on Issue{
-                          title
-                          number
-                        }
-                      }
                       fieldValues(first:20){
                         nodes{
                           ... on ProjectV2ItemFieldSingleSelectValue {
@@ -110,7 +104,7 @@ runs:
         GH_TOKEN: ${{ inputs.token }}
       # Get all the items with status "🚀 Release"
       run: |
-        gh project item-list $PROJECT_NUMBER --owner $ORGANIZATION --format=json | jq '.items[] | select(.status=="🚀 Release" and .content.type == "Issue") | {id: .id ,url :.content.url}' >> $HOME/items.json
+        gh project item-list $PROJECT_NUMBER --owner $ORGANIZATION --format=json | jq '.items[] | select(.status=="🚀 Release" and .content.type == "Issue") | {id: .id ,url :.content.url, title: .content.title, number: .content.number}' >> $HOME/items.json
 
     # #Sets environment variables for this step. Replace `YOUR_TOKEN` with the name of the secret that contains your personal access token.
     - name: Set fields
