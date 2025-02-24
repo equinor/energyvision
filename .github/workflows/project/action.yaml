@@ -54,7 +54,7 @@ runs:
                     nodes{
                       id
                       ... on ProjectV2ItemContent{
-                        title,
+                        title
                         number
                       }
                       fieldValues(first:20){
