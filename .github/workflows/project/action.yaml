@@ -53,6 +53,10 @@ runs:
                   items(first:100){
                     nodes{
                       id
+                      content{
+                        title,
+                        number
+                      }
                       fieldValues(first:20){
                         nodes{
                           ... on ProjectV2ItemFieldSingleSelectValue {
@@ -147,12 +151,20 @@ runs:
         GH_TOKEN: ${{ inputs.token }}
       run: |
         DATE=$(date +'%d-%m-%Y')
+        ITEMS=$(jq -s '.[]|.content | { .title + " #" + .number}' $HOME/items.json)
+        BODY='
+        # Release Log 
+        ## Issues closed
+        ${ITEMS}
+        ## Commit SHA 
+        To be inserted here..
+        '
         gh api graphql -f query=' 
-        mutation($date: String!, $repositoryId: ID!, $categoryId: ID!){
-        createDiscussion(input: {repositoryId:$repositoryId , categoryId: , body: "# Release Log ", title: "Release $date"}) {
+        mutation($date: String!, $repositoryId: ID!, $categoryId: ID!, $body: String!){
+        createDiscussion(input: {repositoryId:$repositoryId , categoryId: $categoryId, body:$body, title: "Release $date"}) {
 
         # response type: CreateDiscussionPayload
          discussion {
            id
         }
-        }}' -f date=$DATE -f repositoryId=${{github.repository_id}} -f categoryId=$DISCUSSION_CATEGORY_ID
+        }}' -f date=$DATE -f repositoryId=${{github.repository_id}} -f categoryId=$DISCUSSION_CATEGORY_ID -f body=$BODY
