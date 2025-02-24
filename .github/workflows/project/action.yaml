@@ -31,6 +31,7 @@ runs:
                   discussionCategory(slug: "Announcements"){
                     id
                   }
+                }
                 projectV2(number: $number) {
                   id
                   fields(first:20) {
@@ -69,7 +70,7 @@ runs:
                 }
               }
             }
-         }' -f org=$ORGANIZATION -F number=$PROJECT_NUMBER > project_data.json
+         ' -f org=$ORGANIZATION -F number=$PROJECT_NUMBER > project_data.json
 
         echo "ORGANIZATION=${ORGANIZATION}" >> $GITHUB_ENV
         echo "PROJECT_NUMBER=${PROJECT_NUMBER}" >> $GITHUB_ENV
@@ -79,15 +80,15 @@ runs:
 
         echo "Project id saved..."
 
-        STATUS_FIELD_ID=$(jq '.data.organization.projectV2.fields.nodes[] | select(.name== "Status") | .id' project_data.json)
+        STATUS_FIELD_ID=$(jq -r '.data.organization.projectV2.fields.nodes[] | select(.name=="Status") | .id' project_data.json)
         echo "STATUS_FIELD_ID=${STATUS_FIELD_ID}" >> $GITHUB_ENV
         echo "Status field id saved..."
 
-        DONE_OPTION_ID=$(jq -r '.data.organization.projectV2.fields.nodes[] | select(.name== "Status") | .options[] | select(.name=="✅  Done") |.id' project_data.json)
+        DONE_OPTION_ID=$(jq -r '.data.organization.projectV2.fields.nodes[] | select(.name=="Status") | .options[] | select(.name=="✅  Done") |.id' project_data.json)
         echo "DONE_OPTION_ID=${DONE_OPTION_ID}" >> $GITHUB_ENV
         echo "Done option id saved..."
 
-        DISCUSSION_CATEGORY_ID=$(jq '.data.organization.repository.discussionCategory.id' project_data.json)
+        DISCUSSION_CATEGORY_ID=$(jq -r '.data.organization.repository.discussionCategory.id' project_data.json)
         echo "DISCUSSION_CATEGOTY_ID=${DISCUSSION_CATEGORY_ID}" >> $GITHUB_ENV
         echo "Category id saved..."
 
