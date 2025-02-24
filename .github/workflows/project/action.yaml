@@ -70,7 +70,7 @@ runs:
                 }
               }
             }
-         ' -f org=$ORGANIZATION -F number=$PROJECT_NUMBER > project_data.json
+         }' -f org=$ORGANIZATION -F number=$PROJECT_NUMBER > project_data.json
 
         echo "ORGANIZATION=${ORGANIZATION}" >> $GITHUB_ENV
         echo "PROJECT_NUMBER=${PROJECT_NUMBER}" >> $GITHUB_ENV
