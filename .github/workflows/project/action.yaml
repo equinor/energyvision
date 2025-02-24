@@ -150,9 +150,9 @@ runs:
         ITEMS=$(jq -s '.[] | .title + " [#" + .number +"]("+ .url + ")"' $HOME/items.json |  jq -r 'join("\n- ")')
         BODY='
         # Release Log 
-        ## Issues closed
-        ${ITEMS}
-        ## Commit SHA 
+        ## Issues closed\n'
+        + $ITEMS +
+        '\n## Commit SHA 
         To be inserted here..
         '
 
