@@ -53,9 +53,11 @@ runs:
                   items(first:100){
                     nodes{
                       id
-                      ... on ProjectV2ItemContent{
-                        title
-                        number
+                      content{
+                        ... on Issue{
+                          title
+                          number
+                        }
                       }
                       fieldValues(first:20){
                         nodes{
