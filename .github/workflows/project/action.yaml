@@ -53,7 +53,7 @@ runs:
                   items(first:100){
                     nodes{
                       id
-                      content{
+                      ... on ProjectV2ItemContent{
                         title,
                         number
                       }
