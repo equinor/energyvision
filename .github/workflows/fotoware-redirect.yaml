@@ -10,6 +10,10 @@ on:
           - development
           - production
         default: development
+      branch:
+        description: 'Enter the branch name in fotoware repository. Default is master'
+        default: master
+        type: string
 
 env:
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -27,6 +31,7 @@ jobs:
         with:
           repository: 'equinor/energyvision-fotoware-redirect'
           ssh-key: '${{ secrets.DEPLOY_FUNCTION_KEY }}'
+          ref: ${{ github.event.inputs.branch }}
       - name: Install pnpm 📦
         id: install-pnpm
         uses: pnpm/action-setup@v4
