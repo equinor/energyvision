@@ -49,6 +49,9 @@ inputs:
   friendlyCaptchaPuzzleEndpoint:
     description: 'Friendly captcha puzzle endpoint'
     required: true
+  envis_actions_service_principal:
+    description: 'Envis actions service principal secret'
+    required: true
 runs:
   using: 'composite'
   steps:
@@ -122,6 +125,8 @@ runs:
     - name: Get token 🔑
       id: get-token
       uses: ./.github/workflows/get-auth-token/
+      with:
+        envis_actions_service_principal: ${{ inputs.envis_actions_service_principal }}
     - name: Get component name
       id: get-component-name
       shell: bash
