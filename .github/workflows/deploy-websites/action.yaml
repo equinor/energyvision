@@ -43,6 +43,9 @@ inputs:
   archiveContentLink:
     description: 'Archive storage link'
     required: true
+  deployToBothClusters:
+    description: 'Deploy app to both Radix clusters'
+    required: false
   friendlyCaptchaSitekey:
     description: 'Friendly captcha site key'
     required: true
