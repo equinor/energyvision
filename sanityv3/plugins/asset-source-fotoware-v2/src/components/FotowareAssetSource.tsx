@@ -10,15 +10,12 @@ import {
   HAS_ENV_VARS,
   getSelectionWidgetURL,
   FotowareEvents,
-  getRenditionURL,
-  handleRequestError,
-  getApiAccessURL,
-  checkAPIAuthData,
 } from '../utils/utils'
 import { StyledIframe, StyledButton } from './components'
 import { FWAttributeField, FWAsset } from '../../types'
 import { createPortal } from 'react-dom'
 import { ImageContainer, StyledImage } from '../../../asset-source-fotoware/src/components'
+import mime from 'mime'
 
 const TENANT_URL = process.env.SANITY_STUDIO_FOTOWARE_TENANT_URL
 const REDIRECT_ORIGIN = process.env.SANITY_STUDIO_FOTOWARE_REDIRECT_ORIGIN
@@ -26,7 +23,6 @@ const REDIRECT_ORIGIN = process.env.SANITY_STUDIO_FOTOWARE_REDIRECT_ORIGIN
 const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   const { onSelect, onClose } = props
   const [selectionToken, setSelectionToken] = useState<string | false>(getAccessToken('SelectionFotowareToken'))
-  const [apiToken, setApiToken] = useState<string | false>(getAccessToken('ApiFotowareToken'))
   const [container, setContainer] = useState<HTMLDivElement | null>(null)
   const requestState = useMemo(() => uuid(), [])
   const [asset, setAsset] = useState<FWAsset | null>(null)
@@ -35,6 +31,7 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   const [showSelectionIframe, setShowSelectionIframe] = useState(false)
   const [loadingText, setLoadingText] = useState('')
   const [hasError, setHasError] = useState(!HAS_ENV_VARS)
+  const [url, setUrl] = useState('')
   const [errorText, setErrorText] = useState(
     !HAS_ENV_VARS ? 'One or more required enviroment variables are not defined. Please contact support.' : '',
   )
@@ -54,7 +51,6 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   // Login & store access token
   const handleAuthEvent = useCallback((event: any) => {
     const validateAuthEvent = () => {
-      console.log('running validation')
       if (event.data?.error) {
         const { error, error_description } = event.data
         setHasError(true)
@@ -106,112 +102,32 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
     }
   }, [])
 
-  // Login API & store access token
-  const getApiAccessToken = async () => {
-    if (apiToken) return
-
-    const apiUrl = getApiAccessURL()
-
-    const response = await fetch(apiUrl)
-      .catch((error) => {
-        console.error('An error occured while api access', error)
-        setHasError(true)
-        setErrorText(`Api error: ${error}`)
-      })
-      .then((res) => {
-        if (res && res.status !== 200) {
-          console.error('An error occured while retrieving api access', res.statusText)
-          setHasError(true)
-          setErrorText(`Api error: ${res.statusText}`)
-        }
-        return res
-      })
-
-    if (!response || response.status !== 200) return
-
-    const data = await response.json()
-
-    if (!data?.access_token) {
-      setHasError(true)
-      setErrorText('Missing api access token. Make sure you have permission to access Fotoware and try again.')
-      return
-    }
-
-    if (!checkAPIAuthData(data)) {
-      setHasError(true)
-      setErrorText('Invalid event data.')
-      return
-    }
-    console.log('store access token', data.access_token)
-    storeAccessToken('ApiFotowareToken', data)
-    setApiToken(data.access_token)
-  }
-
-  //REvalidate expirationDate /fotoweb/archives/{archiveid}/{folderid}/{asset}
-
-  const downloadRenditionAsset = async (url: string) => {
-    try {
-      const response = await fetch(url)
-      //if (!response || response.status !== 200) return
-      console.log('response', response)
-      const data = await response.json()
-
-      // kall tilbake til export bag <date Sanity:dataset> -> Metadata field 870
-      // PATCH /fotoweb/archives/{archiveid}/{folderid}/{asset}
-      // kan vi bruke archiveHREF fra asset representation to /{archiveid}/{folderid}/
-      //Use the "href" or "linkstance" property value and store it. This url is used for getting the asset representation and update metadata.
-
-      console.log('data', data)
-      return data
-    } catch (error) {
-      console.error('An error occured while downloading asset', error)
-      return null
-    }
-  }
-
-  const getRenditionServiceUrl = async () => {
-    try {
-      const renditionServiceUrl = getRenditionURL()
-      const response = await fetch(renditionServiceUrl)
-      console.log('response', response)
-      const data = await response.json()
-      console.log('data', data)
-      return data?.services?.rendition_requests
-    } catch (error) {
-      console.error('An error occured retrieving rendition service url', error)
-      return null
-    }
-  }
-
-  const getRendition = async (renditionHref: string) => {
-    const serviceUrl = await getRenditionServiceUrl()
+  const getAsset = async (renditionHref: string, mimeType: string) => {
+    const serviceUrl = `${process.env.SANITY_STUDIO_FOTOWARE_AF_EXPORT_URL}?code=${process.env.SANITY_STUDIO_FOTOWARE_AF_EXPORT_KEY}`
     if (serviceUrl) {
       const options = {
         method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
         body: JSON.stringify({
           href: renditionHref,
+          mimeType: mimeType,
         }),
       }
       try {
         const response = await fetch(serviceUrl, options)
-        const data = await response.json()
-        if (data?.href) {
-          const asset = await downloadRenditionAsset(data?.href)
-          console.log('asset', asset)
-          return asset
-        }
+        const blob = await response.blob()
+        setIsLoading(false)
+        return blob
       } catch (error) {
         console.error('Error fetching rendition:', error)
+        setErrorText('Error downloading image')
+        setHasError(true)
         return null
       }
     }
   }
 
   const handleWidgetEvent = useCallback(
-    (event: any) => {
+    async (event: any) => {
       if (isLogin) return false
       if (!event || !event.data) return false
 
@@ -245,35 +161,52 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
         console.log('event.data.asset.renditions', event.data.asset.renditions)
         const renditionUrl = event.data.asset.renditions?.find((rendition: any) => rendition.original).href
         console.log('renditionUrl', renditionUrl)
-        if (!apiToken) {
+        if (!selectionToken) {
           setHasError(true)
           setErrorText('Missing api access token,downloading is not possible. Please check api access')
         }
         setShowSelectionIframe(false)
-        if (apiToken) {
-          const asset = getRendition(renditionUrl)
-          console.log('downloaded asset', asset)
+        if (selectionToken) {
           setIsLoading(true)
-          setLoadingText(`Downloading ${assetTitle} from Fotoware... Please hold`)
-          //await api rendition download and set
-          /*   
-onSelect([
-          {
-            kind: 'url',
-            value: exportedImage.image.highCompression,
-            assetDocumentProps: {
-              originalFilename: asset?.filename || '',
-              source: {
-                name: 'fotoware',
-                id: assetId || asset?.uniqueid || exportedImage.image.highCompression,
-                url: exportedImage.source,
+          setLoadingText(`Downloading ${assetTitle?.value} from Fotoware... Please hold`)
+
+          let blob = await getAsset(renditionUrl, mime.getType(selectedAsset.filename) || 'application/octet-stream')
+
+          // blob = blob?.slice(0, blob.size, mime.getType(selectedAsset.filename) || 'application/octet-stream')
+          console.log(blob)
+
+          if (blob) {
+            const url = URL.createObjectURL(blob)
+            setUrl(url)
+            console.log(url)
+            /*let buffer = Buffer.from(await blob.arrayBuffer())
+            const base64 =
+              'data:' +
+              (mime.getType(selectedAsset.filename) || 'application/octet-stream') +
+              ';base64,' +
+              buffer.toString('base64')
+            console.log(base64)*/
+            const file = new File([blob!!], selectedAsset?.filename || 'image.jpg', {
+              type: mime.getType(selectedAsset.filename) || 'application/octet-stream',
+            })
+            /*onSelect([
+              {
+                kind: 'file',
+                value: file,
+                assetDocumentProps: {
+                  originalFilename: asset?.filename || '',
+                  source: {
+                    name: 'fotoware',
+                    id: assetId || asset?.uniqueid,
+                    //url: asset?.source,
+                  },
+                  title: assetTitle?.value,
+                  description: description,
+                  expirationDate: assetExpirationDate,
+                },
               },
-              title: assetTitle?.value,
-              description: description,
-              expirationDate: assetExpirationDate,
-            },
-          },
-        ]) */
+            ])*/
+          }
         }
       }
     },
@@ -310,15 +243,16 @@ onSelect([
     }
   }, [handleAuthEvent])
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (!apiToken) {
       getApiAccessToken()
     }
-  }, [apiToken, getApiAccessToken])
+  }, [apiToken, getApiAccessToken])*/
 
   useEffect(() => {
     if (selectionToken) {
       window.removeEventListener('message', handleAuthEvent)
+      setShowSelectionIframe(true)
     }
   }, [selectionToken, handleAuthEvent])
 
@@ -349,6 +283,7 @@ onSelect([
       zOffset={9999}
     >
       <Box padding={4}>
+        {url.length > 0 && <img src={url} />}
         {hasError && (
           <Card padding={[3, 3, 4]} radius={2} shadow={1}>
             <Text align="center" size={[2, 2, 3, 4]}>
@@ -380,7 +315,7 @@ onSelect([
             {container && createPortal(props.children, container)}
           </Flex>
         )}
-        {!apiToken && (
+        {!selectionToken && (
           <Flex direction="column" align={'center'} gap={6}>
             <Text align="center" size={[2, 2, 3, 3]}>
               Have not got access token for api from AF, please hold or try again.

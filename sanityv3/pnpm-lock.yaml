@@ -37,6 +37,9 @@ dependencies:
   hls.js:
     specifier: ^1.4.8
     version: 1.4.8
+  mime:
+    specifier: ^4.0.6
+    version: 4.0.6
   react:
     specifier: ^18.2.0
     version: 18.2.0
@@ -5300,7 +5303,7 @@ packages:
       https-proxy-agent: 7.0.6
       issue-parser: 6.0.0
       lodash-es: 4.17.21
-      mime: 4.0.4
+      mime: 4.0.6
       p-filter: 4.1.0
       semantic-release: 22.0.12(typescript@4.0.2)
       url-join: 5.0.0
@@ -9640,8 +9643,8 @@ packages:
       mime-db: 1.52.0
     dev: false
 
-  /mime@4.0.4:
-    resolution: {integrity: sha512-v8yqInVjhXyqP6+Kw4fV3ZzeMRqEW6FotRsKXjRS5VMTNIuXsdRoAvklpoRgSqXm6o9VNH4/C0mgedko9DdLsQ==}
+  /mime@4.0.6:
+    resolution: {integrity: sha512-4rGt7rvQHBbaSOF9POGkk1ocRP16Md1x36Xma8sz8h8/vfCUI2OtEIeCqe4Ofes853x4xDoPiFLIT47J5fI/7A==}
     engines: {node: '>=16'}
     hasBin: true
     dev: false

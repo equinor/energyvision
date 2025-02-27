@@ -39,7 +39,8 @@
     "sanity-plugin-utils": "^1.6.4",
     "slugify": "^1.6.5",
     "speakingurl": "^14.0.1",
-    "styled-components": "^6.1"
+    "styled-components": "^6.1",
+    "mime": "^4.0.6"
   },
   "devDependencies": {
     "@sanity/eslint-config-studio": "^2.0.4",
