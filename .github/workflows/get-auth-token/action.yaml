@@ -1,16 +1,12 @@
 name: 'Get auth token'
 description: Log in to Azure to obtain token for Radix
-inputs:
-  envis_actions_service_principal:
-    description: 'The service principal'
-    required: true
 runs:
   using: 'composite'
   steps:
     - name: 'Az CLI login'
       uses: azure/login@v1
       with:
-        creds: ${{ inputs.envis_actions_service_principal }}
+        creds: ${{ secrets.ENVIS_ACTIONS_SERVICE_PRINCIPAL }}
       #with:
       #client-id: 460b889f-89e0-4cc9-965c-31f3e7770226  # Managed identity id
       # tenant-id: 3aa4a235-b6e2-48d5-9195-7fcf05b459b0  # Equinor tenant id
