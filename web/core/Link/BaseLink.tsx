@@ -36,23 +36,6 @@ export const BaseLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(function Ba
         className,
       )
 
-const isPdf = href?.toLowerCase().endsWith('.pdf')
-if (isPdf) {
-  return (
-          <a
-            className={classNames}
-            ref={ref}
-            href={href}
-            target="_blank"
-            {...rest}
-            rel="noreferrer noopener"
-            referrerPolicy="strict-origin-when-cross-origin"
-          >
-            {children}
-          </a>
-        )
-}
-
   const getLinkElement = () => {
     switch (type) {
       case 'externalUrl':

@@ -1,9 +1,9 @@
 import { forwardRef } from 'react'
 import { Facebook, Instagram, Linkedin, Twitter, Youtube } from '../../icons'
 import type { FooterLinkData, SomeType, FooterColumns } from '../../types/index'
-import { default as NextLink } from 'next/link'
 import { useIntl } from 'react-intl'
 import { LinkButton } from '@core/Button'
+import FooterLink from '@core/Link/FooterLink'
 
 function getSomeSvg(someType: SomeType) {
   const iconMap = {
@@ -41,22 +41,16 @@ const Footer = forwardRef<HTMLDivElement, FooterProps>(function Footer({ footerD
                 const icon = type === 'someLink' && someType ? getSomeSvg(someType) : null
 
                 return (
-                  <NextLink
+                  <FooterLink
                     key={id}
                     href={url || getLink(link)}
                     prefetch={false}
-                    className="items-center group focus:outline-none hover:underline hover:text-moss-green-90 focus-visible:envis-outline-invert p-0 min-w-11 min-h-11 no-underline flex flex-row align-center text-sm"
+                    type={type}
+                    someType={someType}
+                    icon={icon}
                   >
-                    {icon && (
-                      <span
-                        className="group-hover:fill-moss-green-90 inline-block text-center w-[30px] mr-2 fill-white-100"
-                        aria-hidden={true}
-                      >
-                        {icon}
-                      </span>
-                    )}
                     {label}
-                  </NextLink>
+                  </FooterLink>
                 )
               })}
             </div>
