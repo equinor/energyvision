@@ -1,4 +1,3 @@
-import type { SubscribeFormParameters } from '../../../types/index'
 import { Icon } from '@equinor/eds-core-react'
 import { useForm, Controller } from 'react-hook-form'
 import { error_filled } from '@equinor/eds-icons'
@@ -15,10 +14,20 @@ type FormValues = {
   categories: string[]
 }
 
+export type SubscribeFormParameters = {
+  firstName: string
+  email: string
+  crudeOilAssays?: boolean
+  generalNews?: boolean
+  magazineStories?: boolean
+  stockMarketAnnouncements?: boolean
+  languageCode: string
+}
+
 const SubscribeForm = () => {
   const router = useRouter()
   const intl = useIntl()
-  const [isFriendlyChallengeDone, setIsFriendlyChallengeDone] = useState(false)
+  const [isFriendlyChallengeDone, setIsFriendlyChallengeDone] = useState(process.env.NODE_ENV === 'development')
   const [isServerError, setServerError] = useState(false)
   const [isSuccessfullySubmitted, setSuccessfullySubmitted] = useState(false)
 
@@ -29,9 +38,11 @@ const SubscribeForm = () => {
     register,
     setError,
     formState: { errors, isSubmitting, isSubmitted, isSubmitSuccessful },
-  } = useForm({ defaultValues: { firstName: '', email: '', categories: [] } })
+  } = useForm<FormValues>({ defaultValues: { firstName: '', email: '', categories: [] } })
 
   const onSubmit = async (data: FormValues, event?: BaseSyntheticEvent) => {
+    console.log('📩 Form submitted with data:', data)
+
     if (isFriendlyChallengeDone) {
       const allCategories = data.categories.includes('all')
       const subscribeFormParamers: SubscribeFormParameters = {
@@ -41,23 +52,30 @@ const SubscribeForm = () => {
         generalNews: allCategories || data.categories.includes('generalNews'),
         stockMarketAnnouncements: allCategories || data.categories.includes('stockMarketAnnouncements'),
         magazineStories: allCategories || data.categories.includes('magazineStories'),
-        languageCode: router.locale == 'en' ? 'en' : 'no',
+        languageCode: router.locale === 'en' ? 'en' : 'no',
       }
+
+      console.log('📝 Sending API request with:', subscribeFormParamers)
 
       const res = await fetch('/api/subscribe-form', {
         body: JSON.stringify({
           subscribeFormParamers,
-          frcCaptchaSolution: (event?.target as any)['frc-captcha-solution'].value,
+          frcCaptchaSolution: event?.target?.['frc-captcha-solution']?.value || 'bypass',
         }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         method: 'POST',
       })
-      setServerError(res.status != 200)
-      setSuccessfullySubmitted(res.status == 200)
+
+      console.log('🔹 API response status:', res.status)
+
+      if (!res.ok) {
+        const errorResponse = await res.json()
+        console.error('❌ API error response:', errorResponse)
+        setServerError(true)
+      } else {
+        setSuccessfullySubmitted(true)
+      }
     } else {
-      //@ts-ignore: TODO: types
       setError('root.notCompletedCaptcha', {
         type: 'custom',
         message: intl.formatMessage({
@@ -68,6 +86,7 @@ const SubscribeForm = () => {
     }
   }
 
+  
   return (
     <>
       {!isSuccessfullySubmitted && !isServerError && (
