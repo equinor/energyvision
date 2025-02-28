@@ -62,6 +62,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const { publicRuntimeConfig } = getConfig()
   const data = JSON.parse(body)
   const locale = languages.find((lang) => lang.name == data.languageCode)?.locale || 'en'
+  console.log('timestamp', data.timeStamp)
   const newsDistributionParameters: NewsDistributionParameters = {
     timeStamp: newDate.toISOString(),
     title: data.title,
