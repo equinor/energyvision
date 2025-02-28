@@ -1,6 +1,5 @@
 import { distribute } from './subscription'
 import { languages } from '../../languages'
-import { NewsDistributionParameters } from '../../types/index'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { isValidSignature, SIGNATURE_HEADER_NAME } from '@sanity/webhook'
 import getRawBody from 'raw-body'
@@ -15,6 +14,18 @@ export const config = {
   api: {
     bodyParser: false,
   },
+}
+
+export type NewsDistributionParameters = {
+  newsletterId: number
+  senderId: number
+  segmentId?: number
+  timeStamp: string
+  title: string
+  ingress: string
+  link: string
+  newsType: string
+  languageCode: string
 }
 
 const logRequest = (req: NextApiRequest, title: string) => {
@@ -47,6 +58,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     link: `${publicRuntimeConfig.domain}/${locale}${data.link}`,
     newsType: data.newsType,
     languageCode: locale,
+    newsletterId: data.newsletterId,
+    senderId: data.senderId,
   }
 
   console.log('Newsletter link: ', newsDistributionParameters.link)
