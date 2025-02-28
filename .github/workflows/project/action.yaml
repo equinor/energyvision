@@ -28,6 +28,7 @@ runs:
             query($org: String!, $number: Int!) {
               organization(login: $org){
                 repository(name: "energyvision"){
+                  id
                   discussionCategory(slug: "Announcements"){
                     id
                   }
@@ -90,12 +91,17 @@ runs:
 
         DISCUSSION_CATEGORY_ID=$(jq -r '.data.organization.repository.discussionCategory.id' project_data.json)
         echo "DISCUSSION_CATEGORY_ID=${DISCUSSION_CATEGORY_ID}" >> $GITHUB_ENV
+
+        REPOSITORY_ID=$(jq -r '.data.organization.repository.id' project_data.json)
+        echo "REPOSITORY_ID=${REPOSITORY_ID}" >> $GITHUB_ENV
+
         echo "Category id saved..."
 
         echo "done id : $DONE_OPTION_ID"
         echo $PROJECT_ID
         echo "Status field id: $STATUS_FIELD_ID"
         echo "Discussion id: $DISCUSSION_ID"
+        echo "Repository id: $REPOSITORY_ID"
 
     - name: Get all items in status release
       id: items
@@ -148,7 +154,7 @@ runs:
       run: |
         TITLE="Release "
         DATE=$(date +'%d-%m-%Y')
-        TITLE+=DATE
+        TITLE+=$DATE
         ITEMS=$(jq -r -s '.[] | (.title + "#" + .number )' $HOME/items.json | jq -r 'join("- ")')
         echo "$TITLE"
         echo "$ITEMS" 
@@ -167,4 +173,4 @@ runs:
          discussion {
            id
         }
-        }}' -f title=$TITLE -f repositoryId=${{github.repository_id}} -f categoryId=$DISCUSSION_CATEGORY_ID -f body=$BODY
+        }}' -f title=$TITLE -f repositoryId=$REPOSITORY_ID -f categoryId=$DISCUSSION_CATEGORY_ID -f body=$BODY
