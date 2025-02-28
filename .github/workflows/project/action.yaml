@@ -122,7 +122,8 @@ runs:
       run: |
         echo "Set value of status field "
         ITEM_IDS=$(jq -s '.[]|.id' $HOME/items.json)
-        echo "ITEMs $ITEM_IDS "
+        cat $HOME/items.json
+        echo "ITEMs $ITEM_IDS $HOME/items.json "
         for id in $ITEM_IDS; do
          echo "Moving $id $DONE_OPTION_ID"
          gh api graphql -f query='
@@ -158,7 +159,7 @@ runs:
         ITEMS=$(jq -r -s '.[] | (.title + "#" + .number )' $HOME/items.json | jq -r 'join("- ")')
         echo "$TITLE"
         echo "$ITEMS" 
-        BODY="# Release Log<br/>" 
+        BODY="# Release Log#<br/>" 
         BODY+="## Issues closed<br/>"
         BODY+="$ITEMS" 
         BODY+="<br/>## Commit SHA<br/>"
