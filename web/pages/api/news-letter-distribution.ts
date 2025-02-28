@@ -38,14 +38,13 @@ const logRequest = (req: NextApiRequest, title: string) => {
 }
 
 function hashStringToInt(str: string): number {
-  let hash = 2166136261; 
+  let hash = 2166136261
   for (let i = 0; i < str.length; i++) {
-    hash ^= str.charCodeAt(i);
-    hash += (hash << 1) + (hash << 4) + (hash << 7) + (hash << 8) + (hash << 24);
+    hash ^= str.charCodeAt(i)
+    hash += (hash << 1) + (hash << 4) + (hash << 7) + (hash << 8) + (hash << 24)
   }
-  return hash >>> 0; 
+  return hash >>> 0
 }
-
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   console.log('req', req)
@@ -53,6 +52,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   console.log('Datetime: ' + new Date())
   const signature = req.headers[SIGNATURE_HEADER_NAME] as string
   const body = (await getRawBody(req)).toString()
+  const newDate = new Date()
 
   if (!isValidSignature(body, signature, SANITY_API_TOKEN)) {
     logRequest(req, 'Unauthorized request: Newsletter Distribution Endpoint')
@@ -63,7 +63,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const data = JSON.parse(body)
   const locale = languages.find((lang) => lang.name == data.languageCode)?.locale || 'en'
   const newsDistributionParameters: NewsDistributionParameters = {
-    timeStamp: data.timeStamp,
+    timeStamp: newDate.toISOString(),
     title: data.title,
     ingress: data.ingress,
     link: `${publicRuntimeConfig.domain}/${locale}${data.link}`,
