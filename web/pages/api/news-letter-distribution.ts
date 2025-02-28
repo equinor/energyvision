@@ -38,6 +38,7 @@ const logRequest = (req: NextApiRequest, title: string) => {
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  console.log('req', req)
   console.log('Sending newsletter...  ')
   console.log('Datetime: ' + new Date())
   const signature = req.headers[SIGNATURE_HEADER_NAME] as string
