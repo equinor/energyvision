@@ -18,7 +18,6 @@ import { ImageContainer, StyledImage } from '../../../asset-source-fotoware/src/
 import mime from 'mime'
 
 const TENANT_URL = process.env.SANITY_STUDIO_FOTOWARE_TENANT_URL
-const REDIRECT_ORIGIN = process.env.SANITY_STUDIO_FOTOWARE_REDIRECT_ORIGIN
 
 const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   const { onSelect, onClose } = props
@@ -189,7 +188,7 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
             const file = new File([blob!!], selectedAsset?.filename || 'image.jpg', {
               type: mime.getType(selectedAsset.filename) || 'application/octet-stream',
             })
-            /*onSelect([
+            onSelect([
               {
                 kind: 'file',
                 value: file,
@@ -205,7 +204,7 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
                   expirationDate: assetExpirationDate,
                 },
               },
-            ])*/
+            ])
           }
         }
       }
