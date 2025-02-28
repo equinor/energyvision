@@ -173,4 +173,4 @@ runs:
          discussion {
            id
         }
-        }}' -f title=$TITLE -f repositoryId=$REPOSITORY_ID -f categoryId=$DISCUSSION_CATEGORY_ID -f body=$BODY
+        }}' -f title=$TITLE -f repositoryId=$REPOSITORY_ID -f categoryId=$DISCUSSION_CATEGORY_ID -f body=$BODY --silent
