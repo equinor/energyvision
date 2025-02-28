@@ -151,8 +151,8 @@ export const distribute = async (parameters: NewsDistributionParameters) => {
     console.log('🔹 distribute() called with:', parameters)
 
     const requestBody = {
-      segment_id: parameters.segmentId ?? null,
-      sender_id: parameters.senderId,
+      segment_id: SUBSCRIBER_LIST_ID,
+      sender_id: MAKE_API_USER,
       scheduled_at: new Date(parameters.timeStamp).toISOString(),
     }
 

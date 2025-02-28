@@ -37,6 +37,16 @@ const logRequest = (req: NextApiRequest, title: string) => {
   console.log('\n')
 }
 
+function hashStringToInt(str: string): number {
+  let hash = 2166136261; 
+  for (let i = 0; i < str.length; i++) {
+    hash ^= str.charCodeAt(i);
+    hash += (hash << 1) + (hash << 4) + (hash << 7) + (hash << 8) + (hash << 24);
+  }
+  return hash >>> 0; 
+}
+
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   console.log('req', req)
   console.log('Sending newsletter...  ')
@@ -59,7 +69,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     link: `${publicRuntimeConfig.domain}/${locale}${data.link}`,
     newsType: data.newsType,
     languageCode: locale,
-    newsletterId: data.newsletterId,
+    newsletterId: hashStringToInt(locale + data.link),
     senderId: data.senderId,
   }
 
