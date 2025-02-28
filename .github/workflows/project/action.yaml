@@ -89,7 +89,7 @@ runs:
         echo "Done option id saved..."
 
         DISCUSSION_CATEGORY_ID=$(jq -r '.data.organization.repository.discussionCategory.id' project_data.json)
-        echo "DISCUSSION_CATEGOTY_ID=${DISCUSSION_CATEGORY_ID}" >> $GITHUB_ENV
+        echo "DISCUSSION_CATEGORY_ID=${DISCUSSION_CATEGORY_ID}" >> $GITHUB_ENV
         echo "Category id saved..."
 
         echo "done id : $DONE_OPTION_ID"
