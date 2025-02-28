@@ -146,9 +146,11 @@ runs:
       env:
         GH_TOKEN: ${{ inputs.token }}
       run: |
+        TITLE="Release "
         DATE=$(date +'%d-%m-%Y')
+        TITLE+=DATE
         ITEMS=$(jq -r -s '.[] | (.title + "#" + .number )' $HOME/items.json | jq -r 'join("- ")')
-        echo "$DATE"
+        echo "$TITLE"
         echo "$ITEMS" 
         BODY="# Release Log<br/>" 
         BODY+="## Issues closed<br/>"
@@ -158,11 +160,11 @@ runs:
 
         echo "$BODY"
         GH_DEBUG=api gh api graphql -f query=' 
-        mutation($date: String!, $repositoryId: ID!, $categoryId: ID!, $body: String!){
-        createDiscussion(input: {repositoryId:$repositoryId , categoryId: $categoryId, body:$body, title: "Release "+$date}) {
+        mutation($title: String!, $repositoryId: ID!, $categoryId: ID!, $body: String!){
+        createDiscussion(input: {repositoryId:$repositoryId , categoryId: $categoryId, body:$body, title: $title}) {
 
         # response type: CreateDiscussionPayload
          discussion {
            id
         }
-        }}' -f date=$DATE -f repositoryId=${{github.repository_id}} -f categoryId=$DISCUSSION_CATEGORY_ID -f body="$BODY"
+        }}' -f title=$TITLE -f repositoryId=${{github.repository_id}} -f categoryId=$DISCUSSION_CATEGORY_ID -f body="$BODY"
