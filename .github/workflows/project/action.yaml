@@ -169,7 +169,12 @@ runs:
 
         GH_DEBUG=api gh api graphql -f query=' 
         mutation($title: String!, $repositoryId: ID!, $categoryId: ID!, $body: String!){
-        createDiscussion(input: {repositoryId:$repositoryId , categoryId: $categoryId, body:$body, title: $title}) {
+        createDiscussion(input: {
+          repositoryId:$repositoryId 
+          categoryId:$categoryId
+          body:$body
+          title:$title
+           }) {
 
         # response type: CreateDiscussionPayload
          discussion {
