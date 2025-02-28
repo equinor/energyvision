@@ -167,4 +167,4 @@ runs:
          discussion {
            id
         }
-        }}' -f title=$TITLE -f repositoryId=${{github.repository_id}} -f categoryId=$DISCUSSION_CATEGORY_ID -f body="$BODY"
+        }}' -f title=$TITLE -f repositoryId=${{github.repository_id}} -f categoryId=$DISCUSSION_CATEGORY_ID -f body=$BODY
