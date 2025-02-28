@@ -158,13 +158,15 @@ runs:
         ITEMS=$(jq -r -s '.[] | (.title + "#" + .number )' $HOME/items.json | jq -r 'join("- ")')
         echo "$TITLE"
         echo "$ITEMS" 
-        BODY="# Release Log<br/>" 
-        BODY+="## Issues closed<br/>"
-        BODY+="$ITEMS" 
-        BODY+="<br/>## Commit SHA<br/>"
-        BODY+="To be inserted here.."
+        #BODY="# Release Log<br/>" 
+        #BODY+="## Issues closed<br/>"
+        #BODY+="$ITEMS" 
+        #BODY+="<br/>## Commit SHA<br/>"
+        #BODY+="To be inserted here.."
+        BODY="Try with simple string as body"
 
         echo "$BODY"
+
         GH_DEBUG=api gh api graphql -f query=' 
         mutation($title: String!, $repositoryId: ID!, $categoryId: ID!, $body: String!){
         createDiscussion(input: {repositoryId:$repositoryId , categoryId: $categoryId, body:$body, title: $title}) {
