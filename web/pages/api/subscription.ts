@@ -143,17 +143,35 @@ export const signUp = async (formParameters: SubscribeFormParameters) => {
   }
 }
 
+// TODO: if this works - move into a helper file
+function formatWithTimezone(dateString: string): string {
+  const now = new Date(dateString)
+
+  const timeZoneOffset = now.getTimezoneOffset()
+  const offsetHours = Math.abs(timeZoneOffset) / 60
+  const offsetMinutes = Math.abs(timeZoneOffset) % 60
+  const offsetSign = timeZoneOffset > 0 ? '-' : '+'
+  const formattedOffset = `${offsetSign}${String(offsetHours).padStart(2, '0')}:${String(offsetMinutes).padStart(
+    2,
+    '0',
+  )}`
+
+  return now.toISOString().replace('Z', '') + formattedOffset
+}
+
 /**
  *  Distribute a newsletter
  */
 export const distribute = async (parameters: NewsDistributionParameters) => {
+  const scheduledAt = formatWithTimezone(parameters.timeStamp)
+
   try {
     console.log('🔹 distribute() called with:', parameters)
 
     const requestBody = {
       segment_id: SUBSCRIBER_LIST_ID,
       sender_id: MAKE_API_USER,
-      scheduled_at: new Date(),
+      scheduled_at: scheduledAt,
     }
 
     console.log('📤 Sending request to newsletter API:', {

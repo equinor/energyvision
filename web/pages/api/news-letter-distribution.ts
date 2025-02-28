@@ -46,6 +46,24 @@ function hashStringToInt(str: string): number {
   return hash >>> 0
 }
 
+
+// TODO: if this works - move into a helper file
+function formatWithTimezone(dateString: string): string {
+  const now = new Date(dateString)
+
+  const timeZoneOffset = now.getTimezoneOffset()
+  const offsetHours = Math.abs(timeZoneOffset) / 60
+  const offsetMinutes = Math.abs(timeZoneOffset) % 60
+  const offsetSign = timeZoneOffset > 0 ? '-' : '+'
+  const formattedOffset = `${offsetSign}${String(offsetHours).padStart(2, '0')}:${String(offsetMinutes).padStart(
+    2,
+    '0',
+  )}`
+
+  return now.toISOString().replace('Z', '') + formattedOffset
+}
+
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   console.log('req', req)
   console.log('Sending newsletter...  ')
@@ -64,7 +82,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const locale = languages.find((lang) => lang.name == data.languageCode)?.locale || 'en'
   console.log('timestamp', data.timeStamp)
   const newsDistributionParameters: NewsDistributionParameters = {
-    timeStamp: newDate.toISOString(),
+    timeStamp: formatWithTimezone(data.timeStamp),
     title: data.title,
     ingress: data.ingress,
     link: `${publicRuntimeConfig.domain}/${locale}${data.link}`,
