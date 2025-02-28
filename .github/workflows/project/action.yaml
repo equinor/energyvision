@@ -51,7 +51,7 @@ runs:
                       }
                     }
                   }
-                  items(first:100){
+                  items(first:1){
                     nodes{
                       id
                       fieldValues(first:20){
@@ -121,6 +121,8 @@ runs:
       # Sets the value of the `Status` field to `✅  Done`.
       run: |
         echo "Set value of status field "
+        JSON=$(cat $HOME/items.json)
+        echo "$JSON"
         ITEM_IDS=$(jq -s '.[]|.id' $HOME/items.json)
         cat $HOME/items.json
         echo "ITEMs $ITEM_IDS $HOME/items.json "
