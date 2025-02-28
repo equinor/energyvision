@@ -153,7 +153,7 @@ export const distribute = async (parameters: NewsDistributionParameters) => {
     const requestBody = {
       segment_id: SUBSCRIBER_LIST_ID,
       sender_id: MAKE_API_USER,
-      scheduled_at: new Date(parameters.timeStamp).toISOString(),
+      scheduled_at: new Date(),
     }
 
     console.log('📤 Sending request to newsletter API:', {
