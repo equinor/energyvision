@@ -168,11 +168,11 @@ runs:
         echo "$BODY"
 
         GH_DEBUG=api gh api graphql -f query=' 
-        mutation($title: String!, $repositoryId: ID!, $categoryId: ID!){
+        mutation($title: String!, $repositoryId: ID!, $categoryId: ID!, $body: String!){
         createDiscussion(input: {
-          repositoryId:$repositoryId,
-          categoryId:$categoryId,
-          body: "This is body. Lets see if this works",
+          repositoryId:$repositoryId 
+          categoryId:$categoryId
+          body:$body
           title:$title
            }) {
 
@@ -180,4 +180,4 @@ runs:
          discussion {
            id
         }
-        }}' -f title=$TITLE -f repositoryId=$REPOSITORY_ID -f categoryId=$DISCUSSION_CATEGORY_ID
+        }}' -f title=$TITLE -f repositoryId=$REPOSITORY_ID -f categoryId=$DISCUSSION_CATEGORY_ID -f body=$BODY
