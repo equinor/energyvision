@@ -163,7 +163,7 @@ runs:
         #BODY+="$ITEMS" 
         #BODY+="<br/>## Commit SHA<br/>"
         #BODY+="To be inserted here.."
-        BODY="Trywithsimplestringasbodyseeifspaceistheissue"
+        BODY="Try with simple string as body"
 
         echo "$BODY"
 
