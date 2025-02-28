@@ -150,10 +150,10 @@ runs:
         ITEMS=$(jq -r -s '.[] | (.title + "#" + .number )' $HOME/items.json | jq -r 'join("- ")')
         echo "$DATE"
         echo "$ITEMS" 
-        BODY="# Release Log<br/>" 
-        BODY+="## Issues closed<br/>"
+        BODY="# Release Log " 
+        BODY+="## Issues closed "
         BODY+="$ITEMS" 
-        BODY+="<br/>## Commit SHA<br/>"
+        BODY+=" ## Commit SHA "
         BODY+="To be inserted here.."
 
         echo "$BODY"
