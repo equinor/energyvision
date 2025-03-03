@@ -27,6 +27,7 @@ const MAKE_NEWSLETTER_API_BASE_URL = process.env.MAKE_NEWSLETTER_API_BASE_URL
 const MAKE_API_KEY = process.env.MAKE_API_KEY || ''
 const SUBSCRIBER_LIST_ID = process.env.MAKE_SUBSCRIBER_LIST_ID
 const MAKE_API_USER = process.env.MAKE_API_USERID || ''
+const MAKE_NEWSLETTER_ID = process.env.MAKE_NEWSLETTER_ID
 
 //  Axios instance for Subscribers API
 const subscriberApi = axios.create({
@@ -143,27 +144,23 @@ export const signUp = async (formParameters: SubscribeFormParameters) => {
   }
 }
 
-// TODO: if this works - move into a helper file
-function formatWithTimezone(dateString: string): string {
-  const now = new Date(dateString)
+function convertToTimeZone(dateString: string, offset = 2): string {
+  const date = new Date(dateString)
 
-  const timeZoneOffset = now.getTimezoneOffset()
-  const offsetHours = Math.abs(timeZoneOffset) / 60
-  const offsetMinutes = Math.abs(timeZoneOffset) % 60
-  const offsetSign = timeZoneOffset > 0 ? '-' : '+'
-  const formattedOffset = `${offsetSign}${String(offsetHours).padStart(2, '0')}:${String(offsetMinutes).padStart(
-    2,
-    '0',
-  )}`
+  date.setHours(date.getHours() + offset)
 
-  return now.toISOString().replace('Z', '') + formattedOffset
+  const isoString = date.toISOString().replace('Z', '')
+
+  const formattedOffset = `+${String(offset).padStart(2, '0')}:00`
+
+  return `${isoString}${formattedOffset}`
 }
 
 /**
  *  Distribute a newsletter
  */
 export const distribute = async (parameters: NewsDistributionParameters) => {
-  const scheduledAt = formatWithTimezone(parameters.timeStamp)
+  const scheduledAt = convertToTimeZone(parameters.timeStamp, 2) // Convert to UTC+2
 
   try {
     console.log('🔹 distribute() called with:', parameters)
@@ -175,12 +172,12 @@ export const distribute = async (parameters: NewsDistributionParameters) => {
     }
 
     console.log('📤 Sending request to newsletter API:', {
-      url: `/newsletters/${parameters.newsletterId}/send`,
+      url: `/newsletters/${MAKE_NEWSLETTER_ID}/send`,
       headers: newsletterApi.defaults.headers,
       body: requestBody,
     })
 
-    const response = await newsletterApi.post(`/newsletters/${parameters.newsletterId}/send`, requestBody)
+    const response = await newsletterApi.post(`/newsletters/${MAKE_NEWSLETTER_ID}/send`, requestBody)
 
     console.log('✅ Success! API response:', response.status, response.data)
     return response.status === 200
