@@ -181,7 +181,7 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
     }
   }
   return (
-    <BaseLink className={classNames} type={type} ref={ref} href={href} {...rest}>
+    <BaseLink className={classNames} type={type} ref={ref} href={href} {...rest} target="_blank">
       <div
         className={envisTwMerge(
           `h-full
