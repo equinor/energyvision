@@ -110,7 +110,7 @@ runs:
         GH_TOKEN: ${{ inputs.token }}
       # Get all the items with status "🚀 Release"
       run: |
-        GH_DEBUG=api gh project item-list $PROJECT_NUMBER --owner $ORGANIZATION -L 200 --format=json | jq '.data.organization.projectV2.items.nodes[] | select(.content.__typename == "Issue" and .content.repository.nameWithOwner == "${{ github.repository }} and .fieldvalues.nodes[]|select(.__typename == "ProjectV2ItemFieldSingleSelectValue" and .name == "🚀 Release") ) | {id: .id ,url :.content.url, title: .content.title, number: .content.number}' >> $HOME/items.json
+        GH_DEBUG=api gh project item-list $PROJECT_NUMBER --owner $ORGANIZATION -L 100 --format=json | jq '.data.organization.projectV2.items.nodes[] | select(.content.__typename == "Issue" and .content.repository.nameWithOwner == "${{ github.repository }} and .fieldvalues.nodes[]|select(.__typename == "ProjectV2ItemFieldSingleSelectValue" and .name == "🚀 Release") ) | {id: .id ,url :.content.url, title: .content.title, number: .content.number}' >> $HOME/items.json
 
     # #Sets environment variables for this step. Replace `YOUR_TOKEN` with the name of the secret that contains your personal access token.
     - name: Set fields
