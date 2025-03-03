@@ -144,23 +144,10 @@ export const signUp = async (formParameters: SubscribeFormParameters) => {
   }
 }
 
-function convertToTimeZone(dateString: string, offset = 2): string {
-  const date = new Date(dateString)
-
-  date.setHours(date.getHours() + offset)
-
-  const isoString = date.toISOString().replace('Z', '')
-
-  const formattedOffset = `+${String(offset).padStart(2, '0')}:00`
-
-  return `${isoString}${formattedOffset}`
-}
-
 /**
  *  Distribute a newsletter
  */
 export const distribute = async (parameters: NewsDistributionParameters) => {
-  const scheduledAt = convertToTimeZone(parameters.timeStamp, 2) // Convert to UTC+2
 
   try {
     console.log('🔹 distribute() called with:', parameters)
@@ -168,7 +155,7 @@ export const distribute = async (parameters: NewsDistributionParameters) => {
     const requestBody = {
       segment_id: SUBSCRIBER_LIST_ID,
       sender_id: MAKE_API_USER,
-      scheduled_at: scheduledAt,
+      scheduled_at: parameters.timeStamp,
     }
 
     console.log('📤 Sending request to newsletter API:', {

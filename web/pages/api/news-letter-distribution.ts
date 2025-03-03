@@ -48,20 +48,18 @@ function hashStringToInt(str: string): number {
 
 
 // TODO: if this works - move into a helper file
-function formatWithTimezone(dateString: string): string {
-  const now = new Date(dateString)
+function convertToTimeZone(dateString: string, offset = 2): string {
+  const date = new Date(dateString)
 
-  const timeZoneOffset = now.getTimezoneOffset()
-  const offsetHours = Math.abs(timeZoneOffset) / 60
-  const offsetMinutes = Math.abs(timeZoneOffset) % 60
-  const offsetSign = timeZoneOffset > 0 ? '-' : '+'
-  const formattedOffset = `${offsetSign}${String(offsetHours).padStart(2, '0')}:${String(offsetMinutes).padStart(
-    2,
-    '0',
-  )}`
+  date.setHours(date.getHours() + offset)
 
-  return now.toISOString().replace('Z', '') + formattedOffset
+  const isoString = date.toISOString().replace('Z', '')
+
+  const formattedOffset = `+${String(offset).padStart(2, '0')}:00`
+
+  return `${isoString}${formattedOffset}`
 }
+
 
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -70,7 +68,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   console.log('Datetime: ' + new Date())
   const signature = req.headers[SIGNATURE_HEADER_NAME] as string
   const body = (await getRawBody(req)).toString()
-  const newDate = new Date()
+
 
   if (!isValidSignature(body, signature, SANITY_API_TOKEN)) {
     logRequest(req, 'Unauthorized request: Newsletter Distribution Endpoint')
@@ -82,7 +80,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const locale = languages.find((lang) => lang.name == data.languageCode)?.locale || 'en'
   console.log('timestamp', data.timeStamp)
   const newsDistributionParameters: NewsDistributionParameters = {
-    timeStamp: formatWithTimezone(data.timeStamp),
+    timeStamp: convertToTimeZone(data.timeStamp, 2),
     title: data.title,
     ingress: data.ingress,
     link: `${publicRuntimeConfig.domain}/${locale}${data.link}`,
