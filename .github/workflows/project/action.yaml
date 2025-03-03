@@ -24,7 +24,7 @@ runs:
         PROJECT_NUMBER: 965
       # Uses [GitHub CLI](https://cli.github.com/manual/) to query the API for the ID of the project and return the name and ID of the first 20 fields in the project. `fields` returns a union and the query uses inline fragments (`... on`) to return information about any `ProjectV2Field` and `ProjectV2SingleSelectField` fields. The response is stored in a file called `project_data.json`.
       run: |
-        gh api graphql -f query='
+        GH_DEBUG=api gh api graphql -f query='
             query($org: String!, $number: Int!) {
               organization(login: $org){
                 repository(name: "energyvision"){
@@ -51,7 +51,7 @@ runs:
                       }
                     }
                   }
-                  items(first:1){
+                  items(last:50){
                     nodes{
                       id
                       fieldValues(first:20){
@@ -110,7 +110,7 @@ runs:
         GH_TOKEN: ${{ inputs.token }}
       # Get all the items with status "🚀 Release"
       run: |
-        GH_DEBUG=api gh project item-list $PROJECT_NUMBER --owner $ORGANIZATION -L 100 --format=json | jq '.data.organization.projectV2.items.nodes[] | select(.content.__typename == "Issue" and .content.repository.nameWithOwner == "${{ github.repository }} and .fieldvalues.nodes[]|select(.__typename == "ProjectV2ItemFieldSingleSelectValue" and .name == "🚀 Release") ) | {id: .id ,url :.content.url, title: .content.title, number: .content.number}' >> $HOME/items.json
+        gh project item-list $PROJECT_NUMBER --owner $ORGANIZATION --format=json | jq '.data.organization.projectV2.items.nodes[] | select(.content.__typename == "Issue" and .content.repository.nameWithOwner == "${{ github.repository }} and .fieldvalues.nodes[]|select(.__typename == "ProjectV2ItemFieldSingleSelectValue" and .name == "🚀 Release") ) | {id: .id ,url :.content.url, title: .content.title, number: .content.number}' >> $HOME/items.json
 
     # #Sets environment variables for this step. Replace `YOUR_TOKEN` with the name of the secret that contains your personal access token.
     - name: Set fields
