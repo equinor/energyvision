@@ -148,9 +148,15 @@ export const signUp = async (formParameters: SubscribeFormParameters) => {
  *  Distribute a newsletter
  */
 export const distribute = async (parameters: NewsDistributionParameters) => {
-
   try {
     console.log('🔹 distribute() called with:', parameters)
+
+    const url = `${MAKE_NEWSLETTER_API_BASE_URL}/newsletters/${parameters.newsletterId}/send`
+    console.log(`📤 Sending request to: ${url}`)
+
+    if (!MAKE_API_USER || !MAKE_API_KEY) {
+      throw new Error('❌ API credentials are missing!')
+    }
 
     const requestBody = {
       segment_id: SUBSCRIBER_LIST_ID,
@@ -158,13 +164,7 @@ export const distribute = async (parameters: NewsDistributionParameters) => {
       scheduled_at: parameters.timeStamp,
     }
 
-    console.log('📤 Sending request to newsletter API:', {
-      url: `/newsletters/${MAKE_NEWSLETTER_ID}/send`,
-      headers: newsletterApi.defaults.headers,
-      body: requestBody,
-    })
-
-    const response = await newsletterApi.post(`/newsletters/${MAKE_NEWSLETTER_ID}/send`, requestBody)
+    const response = await newsletterApi.post(url, requestBody)
 
     console.log('✅ Success! API response:', response.status, response.data)
     return response.status === 200
@@ -175,6 +175,7 @@ export const distribute = async (parameters: NewsDistributionParameters) => {
       responseStatus: error.response?.status,
       requestHeaders: error.config?.headers,
     })
+
     return false
   }
 }
