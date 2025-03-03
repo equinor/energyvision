@@ -52,6 +52,7 @@ function convertToTimeZone(dateString: string, offset = 2): string {
 }
 
 const MAKE_NEWSLETTER_ID = Number(process.env.MAKE_NEWSLETTER_ID) || 0
+const MAKE_API_USER = Number(process.env.MAKE_API_USERID) || 0
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   console.log('req', req)
@@ -78,7 +79,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     newsType: data.newsType,
     languageCode: locale,
     newsletterId: MAKE_NEWSLETTER_ID,
-    senderId: data.senderId,
+    senderId: MAKE_API_USER,
   }
 
   console.log('Newsletter link: ', newsDistributionParameters.link)
