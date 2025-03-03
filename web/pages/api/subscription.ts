@@ -151,7 +151,7 @@ export const distribute = async (parameters: NewsDistributionParameters) => {
   try {
     console.log('🔹 distribute() called with:', parameters)
 
-    const url = `${MAKE_NEWSLETTER_API_BASE_URL}/newsletters/${parameters.newsletterId}/send`
+    const url = `${MAKE_NEWSLETTER_API_BASE_URL}/recurring_actions/${MAKE_NEWSLETTER_ID}/trigger`
     console.log(`📤 Sending request to: ${url}`)
 
     if (!MAKE_API_USER || !MAKE_API_KEY) {
@@ -159,9 +159,7 @@ export const distribute = async (parameters: NewsDistributionParameters) => {
     }
 
     const requestBody = {
-      segment_id: SUBSCRIBER_LIST_ID,
       sender_id: MAKE_API_USER,
-      scheduled_at: parameters.timeStamp,
     }
 
     const response = await newsletterApi.post(url, requestBody)
