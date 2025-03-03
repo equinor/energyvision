@@ -52,14 +52,13 @@ function convertToTimeZone(dateString: string, offset = 2): string {
   const date = new Date(dateString)
 
   date.setHours(date.getHours() + offset)
+  date.setMinutes(date.getMinutes() + 2)
 
-  const isoString = date.toISOString().replace('Z', '')
-
+  const isoString = date.toISOString().split('.')[0] 
   const formattedOffset = `+${String(offset).padStart(2, '0')}:00`
 
   return `${isoString}${formattedOffset}`
 }
-
 
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
