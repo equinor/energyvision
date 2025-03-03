@@ -72,7 +72,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const locale = languages.find((lang) => lang.name == data.languageCode)?.locale || 'en'
   console.log('timestamp', data.timeStamp)
   const newsDistributionParameters: NewsDistributionParameters = {
-    timeStamp: convertToTimeZone(data.timeStamp, 2),
+    timeStamp: convertToTimeZone(data.timeStamp, 1),
     title: data.title,
     ingress: data.ingress,
     link: `${publicRuntimeConfig.domain}/${locale}${data.link}`,
