@@ -113,6 +113,7 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
       }
       try {
         const response = await fetch(serviceUrl, options)
+        console.log("responxe", response);
         const blob = await response.blob()
         setIsLoading(false)
         return blob
@@ -158,7 +159,9 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
 
         const assetExpirationDate = selectedAsset?.metadata?.[428]?.value //valid to date
         console.log('event.data.asset.renditions', event.data.asset.renditions)
-        const renditionUrl = event.data.asset.renditions?.find((rendition: any) => rendition.original).href
+        const renditionUrl = event.data.asset.renditions?.find(
+          (rendition: any, i: number) => String(rendition?.display_name).includes('Large') || i === 3,
+        ).href
         console.log('renditionUrl', renditionUrl)
         if (!selectionToken) {
           setHasError(true)
@@ -168,7 +171,7 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
         if (selectionToken) {
           setIsLoading(true)
           setLoadingText(`Downloading ${assetTitle?.value} from Fotoware... Please hold`)
-
+          console.log('getAsset')
           let blob = await getAsset(renditionUrl, mime.getType(selectedAsset.filename) || 'application/octet-stream')
 
           // blob = blob?.slice(0, blob.size, mime.getType(selectedAsset.filename) || 'application/octet-stream')
