@@ -97,7 +97,7 @@ runs:
         REPOSITORY_ID=$(jq -r '.data.organization.repository.id' project_data.json)
         echo "REPOSITORY_ID=${REPOSITORY_ID}" >> $GITHUB_ENV
 
-        ITEMS=$(jq -r '.data.organization.projectV2.items.nodes[] | select(.fieldValueByName.status =="🚀 Release") | map({id: .id,number: .number,title: .title})' project_data.json)
+        ITEMS=$(jq -r '.data.organization.projectV2.items.nodes[] | select(.fieldValueByName.status =="🚀 Release") | .id, .number, .title ' project_data.json)
         echo "ITEMS=${ITEMS}" >> $GITHUB_ENV
         echo "ITEMS are saved..."
 
