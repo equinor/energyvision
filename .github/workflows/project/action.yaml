@@ -35,6 +35,8 @@ runs:
                 }
                 projectV2(number: $number) {
                   id
+                  title
+                  number
                   fields(first:20) {
                     nodes {
                       ... on ProjectV2Field {
@@ -95,6 +97,10 @@ runs:
         REPOSITORY_ID=$(jq -r '.data.organization.repository.id' project_data.json)
         echo "REPOSITORY_ID=${REPOSITORY_ID}" >> $GITHUB_ENV
 
+        ITEMS=$(jq -r '.data.organization.projectV2.items.nodes[] | select(.fieldvalues.nodes[]| select(.name =="🚀 Release") ) | {"id": .id,"number": .number,"title": .title}' project_data.json)
+        echo "ITEMS=${ITEMS}" >> $GITHUB_ENV
+        echo "ITEMS are saved..."
+
         echo "Category id saved..."
 
         echo "done id : $DONE_OPTION_ID"
@@ -110,7 +116,7 @@ runs:
         GH_TOKEN: ${{ inputs.token }}
       # Get all the items with status "🚀 Release"
       run: |
-        gh project item-list $PROJECT_NUMBER --owner $ORGANIZATION --format=json | jq '.data.organization.projectV2.items.nodes[] | select(.content.__typename == "Issue" and .content.repository.nameWithOwner == "${{ github.repository }} and .fieldvalues.nodes[]|select(.__typename == "ProjectV2ItemFieldSingleSelectValue" and .name == "🚀 Release") ) | {id: .id ,url :.content.url, title: .content.title, number: .content.number}' >> $HOME/items.json
+        # gh project item-list $PROJECT_NUMBER --owner $ORGANIZATION --format=json | jq '.data.organization.projectV2.items.nodes[] | select(.content.__typename == "Issue" and .content.repository.nameWithOwner == "${{ github.repository }} and .fieldvalues.nodes[]|select(.__typename == "ProjectV2ItemFieldSingleSelectValue" and .name == "🚀 Release") ) | {id: .id ,url :.content.url, title: .content.title, number: .content.number}' >> $HOME/items.json
 
     # #Sets environment variables for this step. Replace `YOUR_TOKEN` with the name of the secret that contains your personal access token.
     - name: Set fields
@@ -121,8 +127,8 @@ runs:
       # Sets the value of the `Status` field to `✅  Done`.
       run: |
         echo "Set value of status field "
-        JSON=$(cat $HOME/items.json)
-        echo "$JSON"
+        #JSON=$(cat $ITEMS)
+        echo "$ITEMS"
         ITEM_IDS=$(jq -s '.[]|.id' $HOME/items.json)
         cat $HOME/items.json
         echo "ITEMs $ITEM_IDS $HOME/items.json "
