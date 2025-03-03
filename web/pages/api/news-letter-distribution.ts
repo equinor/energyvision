@@ -37,15 +37,6 @@ const logRequest = (req: NextApiRequest, title: string) => {
   console.log('\n')
 }
 
-function hashStringToInt(str: string): number {
-  let hash = 2166136261
-  for (let i = 0; i < str.length; i++) {
-    hash ^= str.charCodeAt(i)
-    hash += (hash << 1) + (hash << 4) + (hash << 7) + (hash << 8) + (hash << 24)
-  }
-  return hash >>> 0
-}
-
 
 // TODO: if this works - move into a helper file
 function convertToTimeZone(dateString: string, offset = 2): string {
@@ -60,6 +51,7 @@ function convertToTimeZone(dateString: string, offset = 2): string {
   return `${isoString}${formattedOffset}`
 }
 
+const MAKE_NEWSLETTER_ID = Number(process.env.MAKE_NEWSLETTER_ID) || 0
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   console.log('req', req)
@@ -85,7 +77,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     link: `${publicRuntimeConfig.domain}/${locale}${data.link}`,
     newsType: data.newsType,
     languageCode: locale,
-    newsletterId: hashStringToInt(locale + data.link),
+    newsletterId: MAKE_NEWSLETTER_ID,
     senderId: data.senderId,
   }
 
