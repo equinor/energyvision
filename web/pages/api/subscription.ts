@@ -80,11 +80,7 @@ export const distribute = async () => {
       throw new Error('❌ API credentials are missing!')
     }
 
-    const requestBody = {
-      sender_id: MAKE_API_USER,
-    }
-
-    const response = await newsletterApi.post(url, requestBody)
+    const response = await newsletterApi.post(url)
 
     console.log('✅ Success! API response:', response.status, response.data)
     return response.status === 200
