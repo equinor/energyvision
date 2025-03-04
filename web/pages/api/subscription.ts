@@ -84,24 +84,13 @@ const newsletterApi = axios.create({
 /**
  *  Distribute a newsletter
  */
-export const distribute = async (parameters: NewsDistributionParameters) => {
+export const distribute = async () => {
   try {
-    console.log('🔹 distribute() called with:', parameters)
-
     const url = `${MAKE_NEWSLETTER_API_BASE_URL}/recurring_actions/${MAKE_NEWSLETTER_ID}/trigger`
-    console.log(`📤 Sending request to: ${url}`)
-
-    if (!MAKE_API_USER || !MAKE_API_KEY) {
-      throw new Error('❌ API credentials are missing!')
-    }
-
     const requestBody = {
       sender_id: MAKE_API_USER,
     }
-
     const response = await newsletterApi.post(url, requestBody)
-
-    console.log('✅ Success! API response:', response.status, response.data)
     return response.status === 200
   } catch (error: any) {
     console.error('❌ Error in distribute:', {
