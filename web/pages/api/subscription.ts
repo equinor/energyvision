@@ -1,24 +1,11 @@
 import axios from 'axios'
 
 export type SubscribeFormParameters = {
-  firstName: string
   email: string
   crudeOilAssays?: boolean
   generalNews?: boolean
   magazineStories?: boolean
   stockMarketAnnouncements?: boolean
-  languageCode: string
-}
-
-export type NewsDistributionParameters = {
-  newsletterId: number
-  senderId: number
-  segmentId?: number
-  timeStamp: string
-  title: string
-  ingress: string
-  link: string
-  newsType: string
   languageCode: string
 }
 
@@ -29,7 +16,6 @@ const SUBSCRIBER_LIST_ID = process.env.MAKE_SUBSCRIBER_LIST_ID
 const MAKE_API_USER = process.env.MAKE_API_USERID || ''
 const MAKE_NEWSLETTER_ID = process.env.MAKE_NEWSLETTER_ID
 
-//  Axios instance for Subscribers API
 const subscriberApi = axios.create({
   baseURL: MAKE_SUBSCRIBER_API_BASE_URL,
   headers: {
@@ -38,89 +24,20 @@ const subscriberApi = axios.create({
   },
 })
 
-//  Axios instance for Newsletters API
-const newsletterApi = axios.create({
-  baseURL: MAKE_NEWSLETTER_API_BASE_URL,
-  headers: {
-    'Content-Type': 'application/json',
-    Authorization: `Basic ${Buffer.from(`${MAKE_API_USER}:${MAKE_API_KEY}`).toString('base64')}`,
-  },
-})
-
-/**
- *  Fetch all available subscriber tags
- */
-const fetchTags = async () => {
-  try {
-    console.log('📤 Fetching subscriber tags...')
-    const response = await subscriberApi.get(`/subscriber_tags`)
-    console.log('✅ Tags fetched:', response.data)
-    return response.data
-  } catch (error: any) {
-    console.error('❌ Error fetching subscriber tags:', error.response?.data || error.message)
-    return []
-  }
-}
-
-/**
- *  Ensure tags exist before assigning them to a subscriber
- */
-const ensureTagsExist = async (requestedTags: string[]) => {
-  const existingTags = await fetchTags()
-  const finalTags: string[] = []
-
-  for (const tagTitle of requestedTags) {
-    const existingTag = existingTags.find((tag: any) => tag.title.toLowerCase() === tagTitle.toLowerCase())
-
-    if (existingTag) {
-      console.log(`✅ Using existing tag: ${existingTag.title}`)
-      finalTags.push(existingTag.title)
-    } else {
-      console.log(`📤 Creating tag: ${tagTitle}`)
-      try {
-        const response = await subscriberApi.post(`/subscriber_tags`, { title: tagTitle })
-        console.log(`✅ Tag created: ${response.data.title}`)
-        finalTags.push(response.data.title)
-      } catch (error: any) {
-        console.error(`❌ Error creating tag (${tagTitle}):`, error.response?.data || error.message)
-      }
-    }
-  }
-
-  return finalTags
-}
-
 /**
  *  Subscribe a user using subscriber_list_id and tags
  */
 export const signUp = async (formParameters: SubscribeFormParameters) => {
   try {
-    console.log('🔹 signUp() called with:', formParameters)
-
     const requestedTags: string[] = []
-    if (formParameters.stockMarketAnnouncements) requestedTags.push('Stock Market')
-    if (formParameters.generalNews) requestedTags.push('General News')
-    if (formParameters.crudeOilAssays) requestedTags.push('Crude Oil Assays')
+    if (formParameters.stockMarketAnnouncements) requestedTags.push('Stock')
+    if (formParameters.generalNews) requestedTags.push('Company')
+    if (formParameters.crudeOilAssays) requestedTags.push('Crude')
     if (formParameters.magazineStories) requestedTags.push('Magazine')
-
-    console.log('📤 Ensuring subscriber tags exist...')
-    const finalTags = await ensureTagsExist(requestedTags)
-
-    console.log('🔹 Final Tags:', finalTags)
 
     const requestBody = {
       email: formParameters.email,
-      firstname: formParameters.firstName || '',
-      lastname: '',
-      address: '',
-      zip: '',
-      city: '',
-      phone: '',
-      company: '',
-      birthday: new Date().toISOString().split('T')[0],
-      tags: finalTags,
-      external_id: `ext-${formParameters.email}`,
-      gender: '',
+      tags: requestedTags,
     }
 
     console.log('📤 Sending subscription request:', {
@@ -131,7 +48,6 @@ export const signUp = async (formParameters: SubscribeFormParameters) => {
 
     const response = await subscriberApi.post(`/subscribers?subscriber_list_id=${SUBSCRIBER_LIST_ID}`, requestBody)
 
-    console.log('✅ Successfully subscribed:', response.data)
     return response.status === 200
   } catch (error: any) {
     console.error('❌ Error in signUp:', {
@@ -144,27 +60,24 @@ export const signUp = async (formParameters: SubscribeFormParameters) => {
   }
 }
 
+const newsletterApi = axios.create({
+  baseURL: MAKE_NEWSLETTER_API_BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+    Authorization: `Basic ${Buffer.from(`${MAKE_API_USER}:${MAKE_API_KEY}`).toString('base64')}`,
+  },
+})
+
 /**
  *  Distribute a newsletter
  */
-export const distribute = async (parameters: NewsDistributionParameters) => {
+export const distribute = async () => {
   try {
-    console.log('🔹 distribute() called with:', parameters)
-
     const url = `${MAKE_NEWSLETTER_API_BASE_URL}/recurring_actions/${MAKE_NEWSLETTER_ID}/trigger`
-    console.log(`📤 Sending request to: ${url}`)
-
-    if (!MAKE_API_USER || !MAKE_API_KEY) {
-      throw new Error('❌ API credentials are missing!')
-    }
-
     const requestBody = {
       sender_id: MAKE_API_USER,
     }
-
     const response = await newsletterApi.post(url, requestBody)
-
-    console.log('✅ Success! API response:', response.status, response.data)
     return response.status === 200
   } catch (error: any) {
     console.error('❌ Error in distribute:', {
