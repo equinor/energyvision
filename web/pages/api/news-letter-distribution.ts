@@ -17,6 +17,8 @@ export const config = {
 }
 
 export type NewsDistributionParameters = {
+  newsletterId: number
+  senderId: number
   segmentId?: number
   timeStamp: string
   title: string
@@ -45,6 +47,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(401).json({ success: false, msg: 'Unauthorized!' })
   }
 
+  const MAKE_NEWSLETTER_ID = Number(process.env.MAKE_NEWSLETTER_ID)
+  const MAKE_API_USER = Number(process.env.MAKE_API_USERID)
+
   const { publicRuntimeConfig } = getConfig()
   const data = JSON.parse(body)
   const locale = languages.find((lang) => lang.name == data.languageCode)?.locale || 'en'
@@ -55,6 +60,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     link: `${publicRuntimeConfig.domain}/${locale}${data.link}`,
     newsType: data.newsType,
     languageCode: locale,
+    newsletterId: MAKE_NEWSLETTER_ID,
+    senderId: MAKE_API_USER,
   }
 
   console.log('Newsletter link: ', newsDistributionParameters.link)
