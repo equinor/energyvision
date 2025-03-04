@@ -8,7 +8,6 @@ import {
   Button,
   Dialog,
   Text,
-  TextInput,
   Label,
   Menu,
   MenuButton,
