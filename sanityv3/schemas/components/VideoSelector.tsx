@@ -3,21 +3,8 @@ import { MemberField, set, unset } from 'sanity'
 import { createPortal } from 'react-dom'
 import type { ObjectInputProps } from 'sanity'
 import { Buffer } from 'buffer'
-import { UploadIcon, ResetIcon, EllipsisVerticalIcon, ComponentIcon } from '@sanity/icons'
-import {
-  Button,
-  Dialog,
-  Text,
-  Label,
-  Menu,
-  MenuButton,
-  MenuDivider,
-  MenuItem,
-  Stack,
-  Card,
-  Box,
-  useToast,
-} from '@sanity/ui'
+import { UploadIcon, ResetIcon, EllipsisVerticalIcon } from '@sanity/icons'
+import { Button, Dialog, Text, Label, Menu, MenuButton, MenuItem, Stack, Card, Box, useToast } from '@sanity/ui'
 import HLSPlayer from './HLSPlayer'
 import { baseUrl } from '../../resolveProductionUrl'
 import { getObjectMemberField } from './utils/getObjectMemberField'
@@ -64,14 +51,18 @@ const VideoSelector = forwardRef(function VideoSelector(
       })
         .then((res) =>
           res.status !== 200
-            ? setError('Could not retrieve url from Screen9. Please report the error to the dev team.')
+            ? setError(
+                res.status == 404
+                  ? 'The video corresponding to the given Id is not found. Please check the media Id and try again. '
+                  : 'Could not retrieve url from Screen9. Please report the error to the dev team.',
+              )
             : res.json(),
         )
         .catch((error) => {
           setError(`Could not retrieve url from Screen9. Please report the error to the dev team. Error: ${error}`)
         })
 
-      if (!data.error) {
+      if (data && !data.error) {
         const video = {
           id: videoId,
           title: data.meta.title,
@@ -172,17 +163,6 @@ const VideoSelector = forwardRef(function VideoSelector(
                     id="menu-video"
                     menu={
                       <Menu>
-                        <MenuItem as="div">
-                          <Label size={2}>Replace</Label>
-                        </MenuItem>
-                        <MenuItem
-                          as="button"
-                          icon={ComponentIcon}
-                          type="button"
-                          onClick={handleOpenModal}
-                          text="Media Bank"
-                        />
-                        <MenuDivider />
                         <MenuItem
                           as="button"
                           icon={ResetIcon}
