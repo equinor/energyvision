@@ -8,7 +8,7 @@ export default {
     {
       name: 'id',
       type: 'string',
-      hidden: true,
+      // hidden: true,
     },
     {
       name: 'title',
