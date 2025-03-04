@@ -51,7 +51,6 @@ const MAKE_NEWSLETTER_ID = Number(process.env.MAKE_NEWSLETTER_ID) || 0
 const MAKE_API_USER = Number(process.env.MAKE_API_USERID) || 0
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  console.log('req', req)
   console.log('Sending newsletter...  ')
   console.log('Datetime: ' + new Date())
   const signature = req.headers[SIGNATURE_HEADER_NAME] as string
