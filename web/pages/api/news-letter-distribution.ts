@@ -15,8 +15,9 @@ export const config = {
     bodyParser: false,
   },
 }
-
 export type NewsDistributionParameters = {
+  newsletterId: number
+  senderId: number
   segmentId?: number
   timeStamp: string
   title: string
@@ -25,6 +26,7 @@ export type NewsDistributionParameters = {
   newsType: string
   languageCode: string
 }
+
 const logRequest = (req: NextApiRequest, title: string) => {
   console.log('\n')
   console.log(title)
@@ -34,7 +36,24 @@ const logRequest = (req: NextApiRequest, title: string) => {
   console.log('\n')
 }
 
+// TODO: if this works - move into a helper file
+function convertToTimeZone(dateString: string, offset = 2): string {
+  const date = new Date(dateString)
+
+  date.setHours(date.getHours() + offset)
+  date.setMinutes(date.getMinutes() + 2)
+
+  const isoString = date.toISOString().split('.')[0]
+  const formattedOffset = `+${String(offset).padStart(2, '0')}:00`
+
+  return `${isoString}${formattedOffset}`
+}
+
+const MAKE_NEWSLETTER_ID = Number(process.env.MAKE_NEWSLETTER_ID) || 0
+const MAKE_API_USER = Number(process.env.MAKE_API_USERID) || 0
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  console.log('req', req)
   console.log('Sending newsletter...  ')
   console.log('Datetime: ' + new Date())
   const signature = req.headers[SIGNATURE_HEADER_NAME] as string
@@ -44,17 +63,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     logRequest(req, 'Unauthorized request: Newsletter Distribution Endpoint')
     return res.status(401).json({ success: false, msg: 'Unauthorized!' })
   }
-  
+
   const { publicRuntimeConfig } = getConfig()
   const data = JSON.parse(body)
   const locale = languages.find((lang) => lang.name == data.languageCode)?.locale || 'en'
+  console.log('timestamp', data.timeStamp)
   const newsDistributionParameters: NewsDistributionParameters = {
-    timeStamp: data.timeStamp,
+    timeStamp: convertToTimeZone(data.timeStamp, 1),
     title: data.title,
     ingress: data.ingress,
     link: `${publicRuntimeConfig.domain}/${locale}${data.link}`,
     newsType: data.newsType,
     languageCode: locale,
+    newsletterId: MAKE_NEWSLETTER_ID,
+    senderId: MAKE_API_USER,
   }
 
   console.log('Newsletter link: ', newsDistributionParameters.link)
@@ -91,7 +113,7 @@ async function distributeWithRetry(
   const date = getDateWithMs()
 
   try {
-    const isSuccessful = await distribute()
+    const isSuccessful = await distribute(newsDistributionParameters)
     if (!isSuccessful) throw new Error('Distribution was unsuccessful.')
     res = {
       success: true,

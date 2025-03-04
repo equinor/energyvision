@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 export type SubscribeFormParameters = {
+  firstName: string
   email: string
   crudeOilAssays?: boolean
   generalNews?: boolean
@@ -15,6 +16,18 @@ const MAKE_API_KEY = process.env.MAKE_API_KEY || ''
 const SUBSCRIBER_LIST_ID = process.env.MAKE_SUBSCRIBER_LIST_ID
 const MAKE_API_USER = process.env.MAKE_API_USERID || ''
 const MAKE_NEWSLETTER_ID = process.env.MAKE_NEWSLETTER_ID
+
+export type NewsDistributionParameters = {
+  newsletterId: number
+  senderId: number
+  segmentId?: number
+  timeStamp: string
+  title: string
+  ingress: string
+  link: string
+  newsType: string
+  languageCode: string
+}
 
 const subscriberApi = axios.create({
   baseURL: MAKE_SUBSCRIBER_API_BASE_URL,
@@ -71,8 +84,10 @@ const newsletterApi = axios.create({
 /**
  *  Distribute a newsletter
  */
-export const distribute = async () => {
+export const distribute = async (parameters: NewsDistributionParameters) => {
   try {
+    console.log('🔹 distribute() called with:', parameters)
+
     const url = `${MAKE_NEWSLETTER_API_BASE_URL}/recurring_actions/${MAKE_NEWSLETTER_ID}/trigger`
     console.log(`📤 Sending request to: ${url}`)
 
@@ -80,7 +95,11 @@ export const distribute = async () => {
       throw new Error('❌ API credentials are missing!')
     }
 
-    const response = await newsletterApi.post(url)
+    const requestBody = {
+      sender_id: MAKE_API_USER,
+    }
+
+    const response = await newsletterApi.post(url, requestBody)
 
     console.log('✅ Success! API response:', response.status, response.data)
     return response.status === 200
@@ -95,4 +114,3 @@ export const distribute = async () => {
     return false
   }
 }
-
