@@ -17,8 +17,6 @@ export const config = {
 }
 
 export type NewsDistributionParameters = {
-  newsletterId: number
-  senderId: number
   segmentId?: number
   timeStamp: string
   title: string
@@ -37,18 +35,7 @@ const logRequest = (req: NextApiRequest, title: string) => {
   console.log('\n')
 }
 
-function hashStringToInt(str: string): number {
-  let hash = 2166136261; 
-  for (let i = 0; i < str.length; i++) {
-    hash ^= str.charCodeAt(i);
-    hash += (hash << 1) + (hash << 4) + (hash << 7) + (hash << 8) + (hash << 24);
-  }
-  return hash >>> 0; 
-}
-
-
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  console.log('req', req)
   console.log('Sending newsletter...  ')
   console.log('Datetime: ' + new Date())
   const signature = req.headers[SIGNATURE_HEADER_NAME] as string
@@ -58,7 +45,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     logRequest(req, 'Unauthorized request: Newsletter Distribution Endpoint')
     return res.status(401).json({ success: false, msg: 'Unauthorized!' })
   }
-
+  
   const { publicRuntimeConfig } = getConfig()
   const data = JSON.parse(body)
   const locale = languages.find((lang) => lang.name == data.languageCode)?.locale || 'en'
@@ -69,8 +56,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     link: `${publicRuntimeConfig.domain}/${locale}${data.link}`,
     newsType: data.newsType,
     languageCode: locale,
-    newsletterId: hashStringToInt(locale + data.link),
-    senderId: data.senderId,
   }
 
   console.log('Newsletter link: ', newsDistributionParameters.link)
@@ -107,7 +92,7 @@ async function distributeWithRetry(
   const date = getDateWithMs()
 
   try {
-    const isSuccessful = await distribute(newsDistributionParameters)
+    const isSuccessful = await distribute()
     if (!isSuccessful) throw new Error('Distribution was unsuccessful.')
     res = {
       success: true,
