@@ -27,7 +27,7 @@ const generateRssFeed = async (lang: 'no' | 'en') => {
       <title>${map[lang].title}</title>
       <description>${map[lang].description}</description>
       <language>${lang}</language>
-      <link>https://www.equinor.com</link>` 
+      <link>https://www.equinor.com</link>`
 
     const serializers = {
       ...defaultComponents,
@@ -56,7 +56,7 @@ const generateRssFeed = async (lang: 'no' | 'en') => {
           <pubDate>${new Date(article.publishDateTime).toUTCString()}</pubDate>
           <description><![CDATA[<img src="${bannerImageUrl}"${imageAlt}/><br/>${descriptionHtml}]]></description>
           <category>all</category>
-          <categeory>${article.subscriptionType}</categeory>
+          ${article.subscriptionType ? `<category>${article.subscriptionType}</category>` : ''}
         </item>`
     })
 
