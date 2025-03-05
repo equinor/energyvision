@@ -178,7 +178,7 @@ const VideoSelector = forwardRef(function VideoSelector(
               </Label>
               <div ref={forwardedRef} id="thumbnail" style={{ position: 'relative' }}>
                 <Card border paddingX={6} tone="transparent">
-                  <img src={value.thumbnail} style={{ objectFit: 'cover', width: '100%' }} />
+                  <img src={value.thumbnail} alt="" style={{ objectFit: 'cover', width: '100%' }} />
                 </Card>
               </div>
             </Stack>
