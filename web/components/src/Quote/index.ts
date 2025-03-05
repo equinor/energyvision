@@ -17,5 +17,3 @@ PullQuote.Quote = Quote
 
 export { PullQuote }
 export type { PullQuoteProps }
-
-export * from './BlockQuote'
