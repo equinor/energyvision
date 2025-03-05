@@ -7,6 +7,7 @@ import { configureBlockContent, configureTitleBlockContent } from '../editors'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import { defaultColors } from '../defaultColors'
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
+import { carouselWidth, singleMode } from './carousel/sharedCarouselFields'
 
 const titleContentType = configureTitleBlockContent()
 const ingressBlockContentType = configureBlockContent({
@@ -21,13 +22,12 @@ const ingressBlockContentType = configureBlockContent({
 
 export default {
   name: 'videoPlayerCarousel',
-  title: 'Horizontal scroll video player',
+  title: 'Video carousel',
   type: 'object',
   fieldsets: [
     {
       title: 'Design options',
       name: 'design',
-      description: 'Some options for design',
       options: {
         collapsible: true,
         collapsed: false,
@@ -36,6 +36,12 @@ export default {
   ],
   fields: [
     title,
+    {
+      type: 'boolean',
+      name: 'hideTitle',
+      title: 'Hide title',
+      description: 'Hides the title, but screen readers will read title of carousel',
+    },
     {
       name: 'ingress',
       title: 'Ingress',
@@ -48,7 +54,7 @@ export default {
       type: 'array',
       name: 'items',
       description: 'Add more videos',
-      title: 'Scrollable video items',
+      title: 'Video items',
       of: [
         {
           title: 'Video item',
@@ -58,7 +64,7 @@ export default {
               name: 'title',
               type: 'array',
               title: 'Title',
-              description: 'The (optional) title/heading shown beneath the video.',
+              description: 'Optional title/heading shown beneath the video.',
               components: { input: CompactBlockEditor },
               of: [titleContentType],
             },
@@ -94,7 +100,7 @@ export default {
           },
         },
       ],
-      validation: (Rule: Rule) => Rule.required().min(2),
+      validation: (Rule: Rule) => Rule.required().min(3),
     },
     {
       name: 'aspectRatio',
@@ -111,6 +117,15 @@ export default {
       initialValue: '16:9',
       fieldset: 'design',
       validation: (Rule: Rule) => Rule.required(),
+    },
+    {
+      type: 'boolean',
+      name: 'scrollMode',
+      title: 'Scroll mode',
+      description: 'Displays the carousel as scroll container',
+      initialValue: false,
+      fieldset: 'design',
+      hidden: ({ parent }: { parent: any }) => parent?.aspectRatio !== '9:16',
     },
     {
       title: 'Background',
@@ -131,8 +146,8 @@ export default {
       const length = items ? items.length : 0
 
       return {
-        title: title ? blocksToText(title) : 'Untitled horizontal scroll video',
-        subtitle: `Horizontal scroll video carousel with ${length} items`,
+        title: title ? blocksToText(title) : 'Untitled video carousel',
+        subtitle: `Video carousel with ${length} items`,
         media: EdsIcon(play_circle),
       }
     },
