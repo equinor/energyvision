@@ -1,6 +1,5 @@
 import { distribute } from './subscription'
 import { languages } from '../../languages'
-import { NewsDistributionParameters } from '../../types/index'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { isValidSignature, SIGNATURE_HEADER_NAME } from '@sanity/webhook'
 import getRawBody from 'raw-body'
@@ -15,6 +14,16 @@ export const config = {
   api: {
     bodyParser: false,
   },
+}
+
+export type NewsDistributionParameters = {
+  segmentId?: number
+  timeStamp: string
+  title: string
+  ingress: string
+  link: string
+  newsType: string
+  languageCode: string
 }
 
 const logRequest = (req: NextApiRequest, title: string) => {
@@ -36,7 +45,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     logRequest(req, 'Unauthorized request: Newsletter Distribution Endpoint')
     return res.status(401).json({ success: false, msg: 'Unauthorized!' })
   }
-
+  
   const { publicRuntimeConfig } = getConfig()
   const data = JSON.parse(body)
   const locale = languages.find((lang) => lang.name == data.languageCode)?.locale || 'en'
@@ -83,7 +92,7 @@ async function distributeWithRetry(
   const date = getDateWithMs()
 
   try {
-    const isSuccessful = await distribute(newsDistributionParameters)
+    const isSuccessful = await distribute()
     if (!isSuccessful) throw new Error('Distribution was unsuccessful.')
     res = {
       success: true,
