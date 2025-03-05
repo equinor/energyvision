@@ -1,5 +1,5 @@
 import { play_circle } from '@equinor/eds-icons'
-import type { Reference, Rule } from 'sanity'
+import type { Reference, Rule, ValidationContext } from 'sanity'
 import { EdsIcon } from '../../icons/edsIcons'
 import { ImageWithAlt } from './imageWithAlt'
 import { HLSVideo } from './hlsVideo'
@@ -36,18 +36,22 @@ export default {
       initialValue: {
         isDecorative: true,
       },
-      validation: (Rule: Rule) => Rule.custom((value: ImageWithAlt) => (!value.asset ? 'Image is required' : true)),
+      validation: (Rule: Rule) =>
+        Rule.custom((value: ImageWithAlt, parent: ValidationContext) =>
+          !value.asset && !(parent?.document?.video as any)?.thumbnail ? 'Image is required' : true,
+        ),
     },
   ],
   preview: {
     select: {
       title: 'video.title',
       image: 'thumbnail',
+      poster: 'video.thumbnail',
     },
-    prepare({ title = '', image }: { title: string; image: Reference }) {
+    prepare({ title = '', image, poster }: { title: string; image: Reference; poster: string }) {
       return {
         title,
-        media: image,
+        media: image || poster,
       }
     },
   },

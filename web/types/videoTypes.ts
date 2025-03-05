@@ -11,6 +11,7 @@ export type VideoType = {
   title: string
   url: string
   thumbnail: ImageWithAlt
+  posterUrl?: string
 }
 
 export type VideoControlsType = {
