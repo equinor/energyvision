@@ -4,6 +4,7 @@ export type HLSVideo = {
   id: string
   title: string
   url: string
+  thumbnail: string
 }
 
 export default {
@@ -25,6 +26,11 @@ export default {
       name: 'url',
       type: 'string',
       title: 'Video',
+    },
+    {
+      name: 'thumbnail',
+      type: 'string',
+      title: 'Thumbnail',
     },
   ],
   components: {

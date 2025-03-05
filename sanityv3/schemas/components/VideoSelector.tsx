@@ -12,6 +12,7 @@ type VideoSelector = {
   id: string
   title: string
   url: string
+  thumbnail: string
 }
 
 type VideoSelectorProps = {
@@ -61,6 +62,7 @@ const VideoSelector = forwardRef(function VideoSelector(
           id: videoId,
           title: data.meta.title,
           url: data.streams.hls,
+          thumbnail: data.meta.poster.image,
         }
         // save to document
         onChange(set(video))
@@ -69,7 +71,7 @@ const VideoSelector = forwardRef(function VideoSelector(
     } else {
       toast.push({
         status: 'error',
-        title: 'Enter media id of the video',
+        title: 'Enter media id of the video. (Video must be public)',
       })
     }
   }
@@ -168,6 +170,16 @@ const VideoSelector = forwardRef(function VideoSelector(
                     popover={{ portal: true }}
                   />
                 </div>
+              </div>
+            </Stack>
+            <Stack space={3}>
+              <Label as="label" htmlFor="thumbnail" size={1}>
+                Thumbnail
+              </Label>
+              <div ref={forwardedRef} id="thumbnail" style={{ position: 'relative' }}>
+                <Card border paddingX={6} tone="transparent">
+                  <img src={value.thumbnail} style={{ objectFit: 'cover', width: '100%' }} />
+                </Card>
               </div>
             </Stack>
           </Stack>
