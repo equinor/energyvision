@@ -36,7 +36,7 @@ const VideoSelector = forwardRef(function VideoSelector(
     if (value?.id) {
       setIsOpen(true)
       const videoId = value.id
-      const endpoint = `${baseUrl}/api/screen9/${SCREEN9_ACCOUNT_ID}/videos/${videoId}?ssl=true`
+      const endpoint = `${baseUrl}/api/screen9/${SCREEN9_ACCOUNT_ID}/videos/${videoId}/streams?ssl=true`
 
       const data = await fetch(endpoint, {
         headers: {
@@ -59,7 +59,7 @@ const VideoSelector = forwardRef(function VideoSelector(
       if (data && !data.error) {
         const video = {
           id: videoId,
-          title: data.meta.title,
+          title: 'Try only with streams ', //data.meta.title,
           url: data.streams.hls,
         }
         // save to document
