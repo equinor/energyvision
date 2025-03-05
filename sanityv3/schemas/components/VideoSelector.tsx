@@ -1,6 +1,5 @@
-import { ReactNode, useState, forwardRef, useEffect } from 'react'
+import { ReactNode, useState, forwardRef } from 'react'
 import { MemberField, set, unset } from 'sanity'
-import { createPortal } from 'react-dom'
 import type { ObjectInputProps } from 'sanity'
 import { Buffer } from 'buffer'
 import { UploadIcon, ResetIcon, EllipsisVerticalIcon } from '@sanity/icons'
@@ -30,19 +29,14 @@ const VideoSelector = forwardRef(function VideoSelector(
 ) {
   const toast = useToast()
   const [open, setIsOpen] = useState(false)
-  const [container, setContainer] = useState<HTMLDivElement | null>(null)
   const [error, setError] = useState('')
-  const { value, members, children, renderField, renderInput, renderItem, renderPreview, onChange } = props
-
-  useEffect(() => {
-    setContainer(document.createElement('div'))
-  }, [])
+  const { value, members, renderField, renderInput, renderItem, renderPreview, onChange } = props
 
   const handleOpenModal = async () => {
     if (value?.id) {
       setIsOpen(true)
       const videoId = value.id
-      const endpoint = `${baseUrl}/api/screen9/${SCREEN9_ACCOUNT_ID}/videos/${videoId}/meta,streams?ssl=true`
+      const endpoint = `${baseUrl}/api/screen9/${SCREEN9_ACCOUNT_ID}/videos/${videoId}?ssl=true`
 
       const data = await fetch(endpoint, {
         headers: {
@@ -89,7 +83,6 @@ const VideoSelector = forwardRef(function VideoSelector(
 
   return (
     <>
-      {container && createPortal(children, container)}
       {error && (
         <Dialog id="error-dialog" header={'Error'} onClose={() => setError('')}>
           <Box padding={4}>
