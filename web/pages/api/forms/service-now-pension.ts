@@ -4,18 +4,17 @@ import { sendRequestToServiceNow } from './service-now-base'
 import { validateFormRequest } from './validateFormRequest'
 
 const getCatalogIdentifier = (catalogType: PensionFormCatalogType | null) => {
-    switch (catalogType) {
-      case 'pension':
-        return '6777904f938a2950eaf1f4527cba1048';
-      case 'travelInsurance':
-        return '1818180393ca2950eaf1f4527cba101d';
-      case 'otherPensionInsuranceRelated':
-        return '6777904f938a2950eaf1f4527cba1048';
-      default:
-        return '6777904f938a2950eaf1f4527cba1048';
-    }
-  };
-  
+  switch (catalogType) {
+    case 'pension':
+      return '6777904f938a2950eaf1f4527cba1048'
+    case 'travelInsurance':
+      return '1818180393ca2950eaf1f4527cba101d'
+    case 'otherPensionInsuranceRelated':
+      return '6777904f938a2950eaf1f4527cba1048'
+    default:
+      return '6777904f938a2950eaf1f4527cba1048'
+  }
+}
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const result = await validateFormRequest(req, 'pension form')
   if (result.status !== 200) {
@@ -26,8 +25,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const data = req.body.data
   const email = encodeURI(data.email)
-  const category = encodeURI(data.category)
-  const requests = encodeURI(data.message)
+  const category = encodeURI(data.pensionCategory)
+  const requests = encodeURI(data.requests)
   const name = encodeURI(data.name)
 
   const urlString =
