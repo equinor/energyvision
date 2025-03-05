@@ -176,6 +176,9 @@ const VideoSelector = forwardRef(function VideoSelector(
               <Label as="label" htmlFor="thumbnail" size={1}>
                 Thumbnail
               </Label>
+              <Text size={1}>
+                You can override this thumbnail by selecting an alternate image at the thumbnail section below.
+              </Text>
               <div ref={forwardedRef} id="thumbnail" style={{ position: 'relative' }}>
                 <Card border paddingX={6} tone="transparent">
                   <img src={value.thumbnail} alt="" style={{ objectFit: 'cover', width: '100%' }} />
