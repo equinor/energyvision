@@ -47,9 +47,9 @@ const generateRssFeed = async () => {
 
       rss += `
         <item>
-          <title>${article.title} (${article.lang.toUpperCase()})</title>
+          <title>${article.title}</title>
           <link>https://equinor.com${langPath}${article.slug}</link>
-          <guid>https://equinor.com${langPath}${article.slug}</guid>
+          <guid>https://web-global-development-equinor-web-sites-dev.c2.radix.equinor.com${langPath}${article.slug}</guid>
           <pubDate>${new Date(article.publishDateTime).toUTCString()}</pubDate>
           <description><![CDATA[<img src="${bannerImageUrl}"${imageAlt}/><br/>${descriptionHtml}]]></description>
           <category>${article.lang}</category>
@@ -68,7 +68,7 @@ const generateRssFeed = async () => {
   }
 }
 
-export default async function handler(res: NextApiResponse) {
+export default async function handler(_req: NextApiRequest, res: NextApiResponse) {
   const rss = await generateRssFeed()
   res.setHeader('Content-Type', 'text/xml')
   res.write(rss)
