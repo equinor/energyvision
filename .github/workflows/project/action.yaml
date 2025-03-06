@@ -54,8 +54,14 @@ runs:
                   items(last:50){
                     nodes{
                       id
-                      title
-                      number
+                      ... on ProjectV2Item{
+                        content{
+                          ... on Issue{
+                            number
+                            title
+                          }
+                        }
+                      }
                       fieldValues(first:20){
                         nodes{
                           ... on ProjectV2ItemFieldSingleSelectValue {
@@ -68,6 +74,7 @@ runs:
               			       status: name
            						  }
           		        }
+                      
                     }
                   }
                 }
