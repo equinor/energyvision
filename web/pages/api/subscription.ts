@@ -39,7 +39,8 @@ export const signUp = async (formParameters: SubscribeFormParameters) => {
     if (formParameters.generalNews) requestedTags.push('Company')
     if (formParameters.crudeOilAssays) requestedTags.push('Crude')
     if (formParameters.magazineStories) requestedTags.push('Magazine')
-    requestedTags.push(formParameters.languageCode)
+    if (formParameters.languageCode === 'en') requestedTags.push('en_gb')
+    if (formParameters.languageCode === 'no') requestedTags.push('nb_no')
 
     const requestBody = {
       email: formParameters.email,

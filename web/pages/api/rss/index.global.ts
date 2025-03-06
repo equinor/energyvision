@@ -49,10 +49,12 @@ const generateRssFeed = async () => {
         <item>
           <title>${article.title}</title>
           <link>https://equinor.com${langPath}${article.slug}</link>
-          <guid>https://web-global-development-equinor-web-sites-dev.c2.radix.equinor.com${langPath}${article.slug}</guid>
+          <guid>https://web-global-development-equinor-web-sites-dev.c2.radix.equinor.com${langPath}${
+        article.slug
+      }</guid>
           <pubDate>${new Date(article.publishDateTime).toUTCString()}</pubDate>
           <description><![CDATA[<img src="${bannerImageUrl}"${imageAlt}/><br/>${descriptionHtml}]]></description>
-          <category>${article.lang}</category>
+          <category>${article.lang.toLowerCase}</category>
           ${article.subscriptionType ? `<category>${article.subscriptionType}</category>` : ''}
         </item>`
     })
