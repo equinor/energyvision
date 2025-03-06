@@ -13,6 +13,7 @@ jobs:
         id: 'get-list'
         with:
           token: ${{ secrets.PADMS_PAT_READ_PACKAGE }}
+          commitSHA: ${{ github.sha }}
         uses: ./.github/workflows/project/
 
       - name: Post a message in a channel

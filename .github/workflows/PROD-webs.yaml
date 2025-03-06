@@ -86,6 +86,12 @@ jobs:
             -a equinor-web-sites
             -e ${{ secrets.ENV }}
             -f
+      - name: 'Close the cards and create release log'
+        id: 'get-list'
+        with:
+          token: ${{ secrets.PADMS_PAT_READ_PACKAGE }}
+          commitSHA: ${{ github.sha }}
+        uses: ./.github/workflows/project/
 
       - uses: act10ns/slack@v2
         with:
