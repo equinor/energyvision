@@ -5,6 +5,7 @@ import { urlFor } from '../../../common/helpers/urlFor'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 const generateRssFeed = async (lang: 'no' | 'en') => {
+  console.log('Generating RSS feed for', lang)
   try {
     const map = {
       en: {
@@ -19,6 +20,7 @@ const generateRssFeed = async (lang: 'no' | 'en') => {
       },
     }
     const languageCode = map[lang].language || 'en_GB'
+    console.log('Language code:', languageCode)
 
     const articles: LatestNewsType[] = await sanityClient.fetch(latestNews, { lang: languageCode })
     let rss = `<?xml version="1.0" encoding="UTF-8"?>
@@ -73,7 +75,7 @@ const generateRssFeed = async (lang: 'no' | 'en') => {
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const lang = req.query.lang === 'no' ? 'no' : 'en' // Defaults to 'en' if the lang parameter is not 'no'
+  const lang = req.query.lang === 'no' ? 'no' : 'en' 
   const rss = await generateRssFeed(lang)
   res.setHeader('Content-Type', 'text/xml')
   res.write(rss)
