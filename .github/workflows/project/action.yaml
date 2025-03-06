@@ -106,7 +106,7 @@ runs:
         ITEMS_IDS=$(jq -r '.data.organization.repository.issues.nodes[].projectItems.nodes[] | select(.fieldValueByName.status =="🚀 Release") | .id' project_data.json)
         echo "ITEMS_IDS=${ITEMS_IDS}" >> $GITHUB_ENV
 
-        ITEMS=$(jq -r '.data.organization.repository.issues.nodes[].projectItems.nodes[] | select(.fieldValueByName.status =="🚀 Release") | "\(.content.title) #\(.content.number)' project_data.json)
+        ITEMS=$(jq -r '.data.organization.repository.issues.nodes[].projectItems.nodes[] | select(.fieldValueByName.status =="🚀 Release") | "\(.content.title) #\(.content.number)"' project_data.json)
         echo "ITEMS=${ITEMS}" >> $GITHUB_ENV
         echo "ITEMS are saved... $ITEMS $ITEM_IDS"
 
@@ -119,15 +119,6 @@ runs:
         echo "Discussion id: $DISCUSSION_ID"
         echo "Repository id: $REPOSITORY_ID"
 
-    - name: Get all items in status release
-      id: items
-      shell: bash
-      env:
-        GH_TOKEN: ${{ inputs.token }}
-      # Get all the items with status "🚀 Release"
-      run: |
-        # gh project item-list $PROJECT_NUMBER --owner $ORGANIZATION --format=json | jq '.data.organization.projectV2.items.nodes[] | select(.content.__typename == "Issue" and .content.repository.nameWithOwner == "${{ github.repository }} and .fieldvalues.nodes[]|select(.__typename == "ProjectV2ItemFieldSingleSelectValue" and .name == "🚀 Release") ) | {id: .id ,url :.content.url, title: .content.title, number: .content.number}' >> $HOME/items.json
-
     # #Sets environment variables for this step. Replace `YOUR_TOKEN` with the name of the secret that contains your personal access token.
     - name: Set fields
       shell: bash
@@ -139,9 +130,6 @@ runs:
         echo "Set value of status field "
         #JSON=$(cat $ITEMS)
         echo "$ITEMS"
-        ITEM_IDS=$(jq -s '.[]|.id' $HOME/items.json)
-        cat $HOME/items.json
-        echo "ITEMs $ITEM_IDS $HOME/items.json "
         for id in $ITEM_IDS; do
          echo "Moving $id $DONE_OPTION_ID"
          gh api graphql -f query='
