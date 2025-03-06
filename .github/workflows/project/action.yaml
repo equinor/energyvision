@@ -156,7 +156,7 @@ runs:
 
         echo "$BODY"
 
-        GH_DEBUG=api gh api graphql -f query=' 
+        gh api graphql -f query=' 
         mutation($title: String!, $repositoryId: ID!, $categoryId: ID!, $body: String!){
         createDiscussion(input: {
           repositoryId:$repositoryId 
