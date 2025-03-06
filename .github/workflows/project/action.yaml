@@ -102,10 +102,6 @@ runs:
         REPOSITORY_ID=$(jq -r '.data.organization.repository.id' project_data.json)
         echo "REPOSITORY_ID=${REPOSITORY_ID}" >> $GITHUB_ENV
 
-
-        ITEMS_IDS=$(jq '.data.organization.repository.issues.nodes[].projectItems.nodes[] | select(.fieldValueByName.status =="🚀 Release") | .id' project_data.json)
-        echo "ITEMS_IDS=${ITEMS_IDS}" >> $GITHUB_ENV
-
         ITEMS=$(jq -r '.data.organization.repository.issues.nodes[].projectItems.nodes[] | select(.fieldValueByName.status =="🚀 Release") | "\(.content.title) #\(.content.number)"' project_data.json)
         echo "ITEMS=${ITEMS}" >> $GITHUB_ENV
         echo "ITEMS are saved... $ITEMS"
@@ -128,7 +124,9 @@ runs:
       # Sets the value of the `Status` field to `✅  Done`.
       run: |
         echo "Set value of status field "
-        for id in $ITEM_IDS; do
+        ITEMS_IDS=$(jq '.data.organization.repository.issues.nodes[].projectItems.nodes[] | select(.fieldValueByName.status =="🚀 Release") | .id' project_data.json)
+        echo $ITEMS_IDS
+        for id in $ITEMS_IDS; do
          echo "Moving $id $DONE_OPTION_ID"
          gh api graphql -f query='
            mutation (
