@@ -32,7 +32,20 @@ runs:
                   discussionCategory(slug: "Announcements"){
                     id
                   }
-                }
+                    issues(states:[CLOSED], first:50, orderBy:{
+                    field:UPDATED_AT, direction:DESC}){
+                       nodes{
+                         id
+                         number
+                        title
+                        projectItems(first:10){
+                        nodes{
+                         id
+                          }
+                      }
+                       }
+                     }
+                     }
                 projectV2(number: $number) {
                   id
                   fields(first:20) {
@@ -55,8 +68,6 @@ runs:
                     nodes{
                       id
                       ... on ProjectV2Item{
-                      content
-                      
                         content{
                           ... on Issue{
                             number
