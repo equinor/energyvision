@@ -62,7 +62,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   console.log('timestamp', data.timeStamp)
   const newsDistributionParameters: NewsDistributionParameters = {
     title: data.title,
-    link: `${publicRuntimeConfig.domain}/${locale}${data.link}`,
+    link: `https://web-global-development-equinor-web-sites-dev.c2.radix.equinor.com/${locale}${data.link}`,
   }
 
   console.log('Newsletter link: ', newsDistributionParameters.link)
