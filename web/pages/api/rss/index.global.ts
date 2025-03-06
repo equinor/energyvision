@@ -54,7 +54,7 @@ const generateRssFeed = async () => {
       }</guid>
           <pubDate>${new Date(article.publishDateTime).toUTCString()}</pubDate>
           <description><![CDATA[<img src="${bannerImageUrl}"${imageAlt}/><br/>${descriptionHtml}]]></description>
-          <category>${article.lang.toLowerCase}</category>
+          <category>${article.lang.toUpperCase()}</category>
           ${article.subscriptionType ? `<category>${article.subscriptionType}</category>` : ''}
         </item>`
     })
