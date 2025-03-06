@@ -152,7 +152,7 @@ runs:
 
         echo "$BODY"
 
-        gh api graphql -f query=' 
+        GH_DEBUG=api gh api graphql -f query=' 
         mutation($title: String!, $repositoryId: ID!, $categoryId: ID!, $body: String!){
         createDiscussion(input: {
           repositoryId:$repositoryId 
@@ -163,6 +163,19 @@ runs:
 
         # response type: CreateDiscussionPayload
          discussion {
-           id
+           number
         }
-        }}' -f title="$TITLE" -f repositoryId="$REPOSITORY_ID" -f categoryId="$DISCUSSION_CATEGORY_ID" -f body="$BODY"
+        }}' -f title="$TITLE" -f repositoryId="$REPOSITORY_ID" -f categoryId="$DISCUSSION_CATEGORY_ID" -f body="$BODY" > discussion.json
+
+    - name: Post a message in a channel
+      uses: slackapi/slack-github-action@v2.0.0
+      with:
+        webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
+        webhook-type: incoming-webhook
+        payload: |
+          text: "*:rocket: New release :rocket:*"
+          blocks:
+          - type: "section"
+            text:
+              type: "mrkdwn"
+              text: "Link to release log - https://github.com/${{ github.repository }}/discussions/ "
