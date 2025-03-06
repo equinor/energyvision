@@ -188,4 +188,4 @@ runs:
           - type: "section"
             text:
               type: "mrkdwn"
-              text: "Link to release log - https://github.com/${{ github.repository }}/discussions/${DISCUSSION_NUMBER}"
+              text: "Link to release log - https://github.com/${{ github.repository }}/discussions/${{ env.DISCUSSION_NUMBER }}"
