@@ -102,16 +102,6 @@ runs:
         REPOSITORY_ID=$(jq -r '.data.organization.repository.id' project_data.json)
         echo "REPOSITORY_ID=${REPOSITORY_ID}" >> $GITHUB_ENV
 
-        ITEMS=$(jq -r '.data.organization.repository.issues.nodes[].projectItems.nodes[] | select(.fieldValueByName.status =="🚀 Release") | "\(.content.title) #\(.content.number)"' project_data.json)
-        #echo "ITEMS=${ITEMS}" >> $GITHUB_ENV
-          {
-          echo 'ITEMS<<EOF'
-          ITEMS
-          echo EOF
-         } >> "$GITHUB_ENV"
-        echo "ITEMS are saved... $ITEMS"
-        echo "Item ids $ITEM_IDS"
-
         echo "Category id saved..."
 
         echo "done id : $DONE_OPTION_ID"
@@ -163,7 +153,7 @@ runs:
         TITLE="Release "
         DATE=$(date +'%d-%m-%Y')
         TITLE+=$DATE
-        ITEMS=$(jq -r -s '.[] | (.title + "#" + .number )' $HOME/items.json | jq -r 'join("- ")')
+        ITEMS=$(jq -r '.data.organization.repository.issues.nodes[].projectItems.nodes[] | select(.fieldValueByName.status =="🚀 Release") | "\(.content.title) #\(.content.number)"' project_data.json)
         echo "$TITLE"
         echo "$ITEMS" 
         BODY="# Release Log#<br/>" 
