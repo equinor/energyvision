@@ -52,7 +52,7 @@ const generateRssFeed = async (lang: 'no' | 'en') => {
         <item>
           <title>${article.title}</title>
           <link>https://equinor.com${lang === 'no' ? '/no' : ''}${article.slug}</link>
-          <guid>https://web-global-development-equinor-web-sites-dev.c2.radix.equinor.com/${
+          <guid>https://web-global-development-equinor-web-sites-dev.c2.radix.equinor.com${
             lang === 'no' ? '/no' : ''
           }${article.slug}</guid>
           <pubDate>${new Date(article.publishDateTime).toUTCString()}</pubDate>
