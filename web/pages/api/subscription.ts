@@ -96,9 +96,7 @@ export const distribute = async (newsDistributionParameters: NewsDistributionPar
       },
     })
 
-    const requestBody = {
-      guids: newsDistributionParameters.link,
-    }
+    const requestBody = {}
     const response = await newsletterApi.post(url, requestBody)
     return response.status === 200
   } catch (error: any) {
