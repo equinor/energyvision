@@ -41,8 +41,13 @@ runs:
                         projectItems(first:10){
                         nodes{
                          id
-                          }
-                      }
+                         fieldValueByName( name: "Status") {
+             			      ... on ProjectV2ItemFieldSingleSelectValue {
+              			       status: name
+           						  }
+          		        }
+                        }
+                       }
                        }
                      }
                      }
