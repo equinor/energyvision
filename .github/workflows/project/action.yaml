@@ -5,6 +5,9 @@ inputs:
   token:
     description: 'A Github PAT'
     required: true
+  commitSHA:
+    description: 'Commit SHA of the Release'
+    required: true
 runs:
   using: 'composite'
   steps:
@@ -153,14 +156,17 @@ runs:
         TITLE="Release "
         DATE=$(date +'%d-%m-%Y')
         TITLE+=$DATE
-        ITEMS=$(jq -r '.data.organization.repository.issues.nodes[].projectItems.nodes[] | select(.fieldValueByName.status =="🚀 Release") | "\(.content.title) #\(.content.number)"' project_data.json)
+        ITEMS=$(jq -r '.data.organization.repository.issues.nodes[].projectItems.nodes[] | select(.fieldValueByName.status =="🚀 Release") | "- \(.content.title) #\(.content.number)"' project_data.json)
         echo "$TITLE"
         echo "$ITEMS" 
-        BODY="# Release Log#<br/>" 
-        BODY+="## Issues closed<br/>"
+        BODY="# Release Log 
+        ## Issues closed
+        "
         BODY+="$ITEMS" 
-        BODY+="<br/>## Commit SHA<br/>"
-        BODY+="To be inserted here.."
+        BODY+="
+        ## Commit SHA
+        "
+        BODY+=${{ inputs.commitSHA }}
 
         echo "$BODY"
 
