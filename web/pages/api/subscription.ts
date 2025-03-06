@@ -88,6 +88,13 @@ export const distribute = async (newsDistributionParameters: NewsDistributionPar
     const url = `${MAKE_NEWSLETTER_API_BASE_URL}/recurring_actions/${
       newsDistributionParameters.languageCode === 'no' ? MAKE_NEWSLETTER_ID_NO : MAKE_NEWSLETTER_ID_EN
     }/trigger`
+    console.log('📤 Sending newsletter distribution request:', {
+      url,
+      headers: newsletterApi.defaults.headers,
+      body: {
+        sender_id: MAKE_API_USER,
+      },
+    })
 
     const requestBody = {
       sender_id: MAKE_API_USER,
