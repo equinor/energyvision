@@ -36,11 +36,14 @@ runs:
                     field:UPDATED_AT, direction:DESC}){
                        nodes{
                          id
-                         number
-                        title
+
                         projectItems(first:10){
                         nodes{
                          id
+                         content{
+                         number
+                        title
+                         }
                          fieldValueByName( name: "Status") {
              			      ... on ProjectV2ItemFieldSingleSelectValue {
               			       status: name
@@ -97,12 +100,14 @@ runs:
         REPOSITORY_ID=$(jq -r '.data.organization.repository.id' project_data.json)
         echo "REPOSITORY_ID=${REPOSITORY_ID}" >> $GITHUB_ENV
 
-        ITEMS=$(jq -r '.data.organization.projectV2.items.nodes[] | select(.fieldValueByName.status =="🚀 Release") | "\(.title) #\(.number)"' project_data.json)
+
+        ITEMS_IDS=$(jq -r '.data.organization.reposiroty.issues.nodes[] | .projectItems.nodes[] | select(.fieldValueByName.status =="🚀 Release") | .id' project_data.json)
+        echo "ITEMS_IDS=${ITEMS_IDS}" >> $GITHUB_ENV
+
+        ITEMS=$(jq -r '.data.organization.reposiroty.issues.nodes[] | select(.fieldValueByName.status =="🚀 Release") | "\(.title) #\(.number)"' project_data.json)
         echo "ITEMS=${ITEMS}" >> $GITHUB_ENV
         echo "ITEMS are saved..."
 
-        ITEMS_IDS=$(jq -r '.data.organization.projectV2.items.nodes[] | select(.fieldValueByName.status =="🚀 Release") | .id' project_data.json)
-        echo "ITEMS_IDS=${ITEMS_IDS}" >> $GITHUB_ENV
 
         echo "Category id saved..."
 
