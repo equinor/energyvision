@@ -18,6 +18,7 @@ export const config = {
 export type NewsDistributionParameters = {
   title: string
   link: string
+  languageCode?: string
 }
 
 const logRequest = (req: NextApiRequest, title: string) => {
@@ -28,22 +29,6 @@ const logRequest = (req: NextApiRequest, title: string) => {
   console.log('Body:\n', req.body)
   console.log('\n')
 }
-
-// TODO: if this works - move into a helper file
-function convertToTimeZone(dateString: string, offset = 2): string {
-  const date = new Date(dateString)
-
-  date.setHours(date.getHours() + offset)
-  date.setMinutes(date.getMinutes() + 2)
-
-  const isoString = date.toISOString().split('.')[0]
-  const formattedOffset = `+${String(offset).padStart(2, '0')}:00`
-
-  return `${isoString}${formattedOffset}`
-}
-
-const MAKE_NEWSLETTER_ID = Number(process.env.MAKE_NEWSLETTER_ID) || 0
-const MAKE_API_USER = Number(process.env.MAKE_API_USERID) || 0
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   console.log('Sending newsletter...  ')
@@ -63,6 +48,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const newsDistributionParameters: NewsDistributionParameters = {
     title: data.title,
     link: `${publicRuntimeConfig.domain}/${locale}${data.link}`,
+    languageCode: locale,
   }
 
   console.log('Newsletter link: ', newsDistributionParameters.link)
@@ -99,7 +85,7 @@ async function distributeWithRetry(
   const date = getDateWithMs()
 
   try {
-    const isSuccessful = await distribute()
+    const isSuccessful = await distribute(newsDistributionParameters)
     if (!isSuccessful) throw new Error('Distribution was unsuccessful.')
     res = {
       success: true,

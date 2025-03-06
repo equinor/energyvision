@@ -13,7 +13,6 @@ export type LatestNewsType = {
   hero: ImageWithCaptionData
   ingress: PortableTextBlock
   subscriptionType: string
-  lang: string
 }
 
 export const latestNews = /* groq */ `
@@ -25,6 +24,5 @@ export const latestNews = /* groq */ `
     subscriptionType,
     "publishDateTime": ${publishDateTimeQuery},
     ${ingressForNewsQuery},
-    lang
   }
 `
