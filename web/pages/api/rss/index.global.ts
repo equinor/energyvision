@@ -54,9 +54,9 @@ const generateRssFeed = async (lang: 'no' | 'en') => {
         <item>
           <title>${article.title}</title>
           <link>https://equinor.com${lang === 'no' ? '/no' : ''}${article.slug}</link>
-          <guid>https://web-global-development-equinor-web-sites-dev.c2.radix.equinor.com${
-            lang === 'no' ? '/no' : ''
-          }${article.slug}</guid>
+          <guid>https://web-global-development-equinor-web-sites-dev.c2.radix.equinor.com${lang === 'no' ? '/no' : ''}${
+        article.slug
+      }</guid>
           <pubDate>${new Date(article.publishDateTime).toUTCString()}</pubDate>
           <description><![CDATA[<img src="${bannerImageUrl}"${imageAlt}/><br/>${descriptionHtml}]]></description>
           ${article.subscriptionType ? `<category>${article.subscriptionType}</category>` : ''}
@@ -75,7 +75,8 @@ const generateRssFeed = async (lang: 'no' | 'en') => {
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const lang = req.query.lang === 'no' ? 'no' : 'en' 
+  console.log('Generating RSS feed...', new Date(), req.query.lang, req, res)
+  const lang = req.query.lang === 'no' ? 'no' : 'en'
   const rss = await generateRssFeed(lang)
   res.setHeader('Content-Type', 'text/xml')
   res.write(rss)
