@@ -84,8 +84,6 @@ export const colors = css`
 
     --theme-background-primary: var(--white-100);
 
-    --topbar-height: 100px;
-
     /* new colors */
     --bg-default: var(--white-100);
     --bg-moss-green: var(--mid-green); // replace old color

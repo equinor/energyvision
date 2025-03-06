@@ -1,26 +1,10 @@
 import { HTMLAttributes } from 'react'
-import Footer from './Footer'
+import Footer from '../Footer/Footer'
 import type { FooterColumns } from '../../types/index'
 import { IntlProvider } from 'react-intl'
 import { defaultLanguage } from '../../languages'
 import { getIsoFromLocale } from '../../lib/localization'
-import styled from 'styled-components'
-
-const LayoutWrapper = styled.div<{ $useFullPage: boolean }>`
-  ${({ $useFullPage }) =>
-    $useFullPage && {
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'space-between',
-      height: 'calc(100vh - var(--topbar-height))',
-    }}
-`
-const ChildrenWrapper = styled.div<{ $useFullPage: boolean }>`
-  ${({ $useFullPage }) =>
-    $useFullPage && {
-      height: '100%',
-    }}
-`
+import envisTwMerge from '../../twMerge'
 
 export type LayoutProps = {
   // eslint-disable-next-line
@@ -30,11 +14,18 @@ export type LayoutProps = {
     defaultLocale: string
     messages: Record<string, string>
   }
-  useFullPage?: boolean
   children: React.ReactNode
+  hasSticky?: boolean
 } & HTMLAttributes<HTMLDivElement>
 
-export const Layout = ({ useFullPage = false, children, footerData, intl, ...rest }: LayoutProps): JSX.Element => {
+export const Layout = ({
+  hasSticky = false,
+  children,
+  footerData,
+  intl,
+  className = '',
+  ...rest
+}: LayoutProps): JSX.Element => {
   const defaultLocale = defaultLanguage.locale
   const locale = intl?.locale || defaultLocale
 
@@ -44,10 +35,10 @@ export const Layout = ({ useFullPage = false, children, footerData, intl, ...res
       defaultLocale={getIsoFromLocale(defaultLocale)}
       messages={intl?.messages}
     >
-      <LayoutWrapper $useFullPage={useFullPage} {...rest}>
-        <ChildrenWrapper $useFullPage>{children}</ChildrenWrapper>
+      <div className={envisTwMerge(`${hasSticky ? '' : 'pt-topbar'}`, className)} {...rest}>
+        {children}
         <Footer footerData={footerData} />
-      </LayoutWrapper>
+      </div>
     </IntlProvider>
   )
 }

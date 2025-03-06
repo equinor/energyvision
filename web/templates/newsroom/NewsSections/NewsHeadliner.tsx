@@ -1,4 +1,4 @@
-import { FormattedDate } from '@components/FormattedDateTime'
+import { FormattedDate, FormattedTime } from '@components/FormattedDateTime'
 import { forwardRef, HTMLAttributes } from 'react'
 import { BaseLink } from '@core/Link'
 import { Typography } from '@core/Typography'
@@ -50,7 +50,16 @@ const NewsHeadliner = forwardRef<HTMLLIElement, NewsHeadlinerProps>(function New
           </div>
         )}
         {publishDateTime && (
-          <FormattedDate datetime={publishDateTime} uppercase className="text-2xs font-normal leading-normal" />
+          <div>
+            <FormattedDate datetime={publishDateTime} uppercase className="text-2xs font-normal leading-normal" />
+            <span className="mx-2 text-2xs font-normal leading-normal pb-1">|</span>
+            <FormattedTime
+              small
+              timezone
+              datetime={publishDateTime}
+              className="text-2xs font-normal leading-normal pb-1"
+            />
+          </div>
         )}
         {title && (
           <Typography as="h2" variant="md" className="group-hover:underline">

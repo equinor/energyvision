@@ -72,7 +72,7 @@ const NewsRoomFilters = forwardRef<HTMLDivElement, NewsRoomFiltersProps>(functio
                 defaultMessage: 'Topic',
               })}
             </Accordion.Header>
-            <Accordion.Content className="py-4" forceMount={true}>
+            <Accordion.Content className="py-4">
               <RefinementListFilter variant="accordion" limit={50} attribute="topicTags" />
             </Accordion.Content>
           </Accordion.Item>
@@ -83,7 +83,7 @@ const NewsRoomFilters = forwardRef<HTMLDivElement, NewsRoomFiltersProps>(functio
                 defaultMessage: 'Country',
               })}
             </Accordion.Header>
-            <Accordion.Content className="py-4" forceMount={true}>
+            <Accordion.Content className="py-4">
               <RefinementListFilter variant="accordion" attribute="countryTags" />
             </Accordion.Content>
           </Accordion.Item>
@@ -94,7 +94,7 @@ const NewsRoomFilters = forwardRef<HTMLDivElement, NewsRoomFiltersProps>(functio
                 defaultMessage: 'Year',
               })}
             </Accordion.Header>
-            <Accordion.Content className="py-4" forceMount={true}>
+            <Accordion.Content className="py-4">
               <RefinementListFilter variant="accordion" sortBy={['name:desc']} attribute="year" limit={50} />
             </Accordion.Content>
           </Accordion.Item>
