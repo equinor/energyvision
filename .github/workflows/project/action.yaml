@@ -103,7 +103,7 @@ runs:
         echo "REPOSITORY_ID=${REPOSITORY_ID}" >> $GITHUB_ENV
 
 
-        ITEMS_IDS=$(jq -r '.data.organization.repository.issues.nodes[].projectItems.nodes[] | select(.fieldValueByName.status =="🚀 Release") | .id' project_data.json)
+        ITEMS_IDS=$(jq '.data.organization.repository.issues.nodes[].projectItems.nodes[] | select(.fieldValueByName.status =="🚀 Release") | .id' project_data.json)
         echo "ITEMS_IDS=${ITEMS_IDS}" >> $GITHUB_ENV
 
         ITEMS=$(jq -r '.data.organization.repository.issues.nodes[].projectItems.nodes[] | select(.fieldValueByName.status =="🚀 Release") | "\(.content.title) #\(.content.number)"' project_data.json)
@@ -128,7 +128,6 @@ runs:
       # Sets the value of the `Status` field to `✅  Done`.
       run: |
         echo "Set value of status field "
-        echo "$ITEMS"
         for id in $ITEM_IDS; do
          echo "Moving $id $DONE_OPTION_ID"
          gh api graphql -f query='
