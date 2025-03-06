@@ -18,15 +18,7 @@ const MAKE_API_USER = process.env.MAKE_API_USERID || ''
 const MAKE_NEWSLETTER_ID = process.env.MAKE_NEWSLETTER_ID
 
 export type NewsDistributionParameters = {
-  newsletterId: number
-  senderId: number
-  segmentId?: number
-  timeStamp: string
-  title: string
-  ingress: string
   link: string
-  newsType: string
-  languageCode: string
 }
 
 const subscriberApi = axios.create({
@@ -47,6 +39,7 @@ export const signUp = async (formParameters: SubscribeFormParameters) => {
     if (formParameters.generalNews) requestedTags.push('Company')
     if (formParameters.crudeOilAssays) requestedTags.push('Crude')
     if (formParameters.magazineStories) requestedTags.push('Magazine')
+    requestedTags.push(formParameters.languageCode)
 
     const requestBody = {
       email: formParameters.email,
@@ -84,11 +77,11 @@ const newsletterApi = axios.create({
 /**
  *  Distribute a newsletter
  */
-export const distribute = async () => {
+export const distribute = async (newsDistributionParameters: NewsDistributionParameters) => {
   try {
     const url = `${MAKE_NEWSLETTER_API_BASE_URL}/recurring_actions/${MAKE_NEWSLETTER_ID}/trigger`
     const requestBody = {
-      sender_id: MAKE_API_USER,
+      guids: [newsDistributionParameters.link],
     }
     const response = await newsletterApi.post(url, requestBody)
     return response.status === 200
