@@ -55,6 +55,8 @@ runs:
                     nodes{
                       id
                       ... on ProjectV2Item{
+                      content
+                      
                         content{
                           ... on Issue{
                             number
