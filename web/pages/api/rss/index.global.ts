@@ -4,31 +4,25 @@ import { defaultComponents, toHTML } from '@portabletext/to-html'
 import { urlFor } from '../../../common/helpers/urlFor'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-const generateRssFeed = async (lang: 'no' | 'en') => {
-  console.log('Generating RSS feed for', lang)
+const generateRssFeed = async () => {
   try {
-    const map = {
-      en: {
-        language: 'en_GB',
-        title: 'Equinor News',
-        description: 'Latest news',
-      },
-      no: {
-        language: 'nb_NO',
-        title: 'Equinor Nyheter',
-        description: 'Siste nytt',
-      },
-    }
-    const languageCode = map[lang].language || 'en_GB'
-    console.log('Language code:', languageCode)
+    // Fetch both English and Norwegian articles
+    const [englishArticles, norwegianArticles] = await Promise.all([
+      sanityClient.fetch(latestNews, { lang: 'en_GB' }),
+      sanityClient.fetch(latestNews, { lang: 'nb_NO' }),
+    ])
 
-    const articles: LatestNewsType[] = await sanityClient.fetch(latestNews, { lang: languageCode })
+    // Merge the articles and sort by publish date (newest first)
+    const articles: LatestNewsType[] = [...englishArticles, ...norwegianArticles].sort(
+      (a, b) => new Date(b.publishDateTime).getTime() - new Date(a.publishDateTime).getTime(),
+    )
+
     let rss = `<?xml version="1.0" encoding="UTF-8"?>
     <rss version="2.0">
       <channel>
-      <title>${map[lang].title}</title>
-      <description>${map[lang].description}</description>
-      <language>${lang}</language>
+      <title>Equinor News</title>
+      <description>Latest news</description>
+      <language>en_GB, nb_NO</language>
       <link>https://www.equinor.com</link>`
 
     const serializers = {
@@ -41,6 +35,7 @@ const generateRssFeed = async (lang: 'no' | 'en') => {
     }
 
     articles.forEach((article) => {
+      const langPath = article.lang === 'no' ? '/no' : ''
       const descriptionHtml = toHTML(article.ingress, {
         components: serializers,
         onMissingComponent: (e) => String(e),
@@ -53,12 +48,13 @@ const generateRssFeed = async (lang: 'no' | 'en') => {
       rss += `
         <item>
           <title>${article.title}</title>
-          <link>https://equinor.com${lang === 'no' ? '/no' : ''}${article.slug}</link>
-          <guid>https://web-global-development-equinor-web-sites-dev.c2.radix.equinor.com${lang === 'no' ? '/no' : ''}${
+          <link>https://equinor.com${langPath}${article.slug}</link>
+          <guid>https://web-global-development-equinor-web-sites-dev.c2.radix.equinor.com${langPath}${
         article.slug
       }</guid>
           <pubDate>${new Date(article.publishDateTime).toUTCString()}</pubDate>
           <description><![CDATA[<img src="${bannerImageUrl}"${imageAlt}/><br/>${descriptionHtml}]]></description>
+          <category>${article.lang.toUpperCase()}</category>
           ${article.subscriptionType ? `<category>${article.subscriptionType}</category>` : ''}
         </item>`
     })
@@ -74,10 +70,8 @@ const generateRssFeed = async (lang: 'no' | 'en') => {
   }
 }
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  console.log('Generating RSS feed...', new Date(), req.query.lang, req, res)
-  const lang = req.query.lang === 'no' ? 'no' : 'en'
-  const rss = await generateRssFeed(lang)
+export default async function handler(_req: NextApiRequest, res: NextApiResponse) {
+  const rss = await generateRssFeed()
   res.setHeader('Content-Type', 'text/xml')
   res.write(rss)
   res.end()

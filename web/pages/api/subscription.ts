@@ -97,7 +97,7 @@ export const distribute = async (newsDistributionParameters: NewsDistributionPar
     })
 
     const requestBody = {
-      sender_id: MAKE_API_USER,
+      guids: [newsDistributionParameters.link],
     }
     const response = await newsletterApi.post(url, requestBody)
     return response.status === 200
