@@ -103,7 +103,12 @@ runs:
         echo "REPOSITORY_ID=${REPOSITORY_ID}" >> $GITHUB_ENV
 
         ITEMS=$(jq -r '.data.organization.repository.issues.nodes[].projectItems.nodes[] | select(.fieldValueByName.status =="🚀 Release") | "\(.content.title) #\(.content.number)"' project_data.json)
-        echo "ITEMS=${ITEMS}" >> $GITHUB_ENV
+        #echo "ITEMS=${ITEMS}" >> $GITHUB_ENV
+          {
+          echo 'ITEMS<<EOF'
+          ITEMS
+          echo EOF
+         } >> "$GITHUB_ENV"
         echo "ITEMS are saved... $ITEMS"
         echo "Item ids $ITEM_IDS"
 
