@@ -37,7 +37,7 @@ runs:
                        nodes{
                          id
 
-                        projectItems(first:10){
+                        projectItems(first:10, includeArchived:false){
                         nodes{
                          id
                          content{
