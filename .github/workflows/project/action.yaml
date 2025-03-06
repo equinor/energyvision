@@ -8,6 +8,10 @@ inputs:
   commitSHA:
     description: 'Commit SHA of the Release'
     required: true
+  slackWebhook:
+    description: 'Slack webhook url of the channel'
+    required: true
+
 runs:
   using: 'composite'
   steps:
@@ -170,7 +174,7 @@ runs:
     - name: Post a message in a channel
       uses: slackapi/slack-github-action@v2.0.0
       with:
-        webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
+        webhook: ${{ inputs.slackWebhook }}
         webhook-type: incoming-webhook
         payload: |
           text: "*:rocket: New release :rocket:*"

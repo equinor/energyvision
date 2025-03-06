@@ -14,6 +14,7 @@ jobs:
         with:
           token: ${{ secrets.PADMS_PAT_READ_PACKAGE }}
           commitSHA: ${{ github.sha }}
+          slackWebhook: ${{ secrets.SLACK_WEBHOOK_RELEASE_ANNOUNCEMENT}}
         uses: ./.github/workflows/project/
 
       - name: Post a message in a channel
