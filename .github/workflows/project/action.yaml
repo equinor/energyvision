@@ -69,32 +69,7 @@ runs:
                       }
                     }
                   }
-                  items(last:50){
-                    nodes{
-                      id
-                      ... on ProjectV2Item{
-                        content{
-                          ... on Issue{
-                            number
-                            title
-                          }
-                        }
-                      }
-                      fieldValues(first:20){
-                        nodes{
-                          ... on ProjectV2ItemFieldSingleSelectValue {
-                            name
-                          }
-                        }
-                      }
-                      fieldValueByName( name: "Status") {
-             			      ... on ProjectV2ItemFieldSingleSelectValue {
-              			       status: name
-           						  }
-          		        }
-                      
-                    }
-                  }
+                  
                 }
               }
             }
