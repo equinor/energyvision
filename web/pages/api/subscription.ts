@@ -89,10 +89,10 @@ export const distribute = async (newsDistributionParameters: NewsDistributionPar
       newsDistributionParameters.languageCode === 'no' ? MAKE_NEWSLETTER_ID_NO : MAKE_NEWSLETTER_ID_EN
     }/trigger`
 
-    const responseBody = {
-      guid: [newsDistributionParameters.link],
+    const requestBody = {
+      sender_id: MAKE_API_USER,
     }
-    const response = await newsletterApi.post(url, responseBody)
+    const response = await newsletterApi.post(url, requestBody)
     return response.status === 200
   } catch (error: any) {
     console.error('❌ Error in distribute:', {
