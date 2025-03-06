@@ -11,13 +11,6 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    # Sets environment variables for this step.
-    #
-    # If you are using a personal access token, replace `YOUR_TOKEN` with the name of the secret that contains your personal access token.
-    #
-    # Replace `YOUR_ORGANIZATION` with the name of your organization. For example, `octo-org`.
-    #
-    # Replace `YOUR_PROJECT_NUMBER` with your project number. To find the project number, look at the project URL. For example, `https://github.com/orgs/octo-org/projects/5` has a project number of 5.
     - name: Get project data
       id: get-project-data
       shell: 'bash'
@@ -27,10 +20,10 @@ runs:
         PROJECT_NUMBER: 965
       # Uses [GitHub CLI](https://cli.github.com/manual/) to query the API for the ID of the project and return the name and ID of the first 20 fields in the project. `fields` returns a union and the query uses inline fragments (`... on`) to return information about any `ProjectV2Field` and `ProjectV2SingleSelectField` fields. The response is stored in a file called `project_data.json`.
       run: |
-        GH_DEBUG=api gh api graphql -f query='
-            query($org: String!, $number: Int!) {
+        gh api graphql -f query='
+            query($org: String!, $number: Int!, $repository:String!) {
               organization(login: $org){
-                repository(name: "energyvision"){
+                repository(name: $repository){
                   id
                   discussionCategory(slug: "Announcements"){
                     id
@@ -81,7 +74,7 @@ runs:
                 }
               }
             }
-         }' -f org=$ORGANIZATION -F number=$PROJECT_NUMBER > project_data.json
+         }' -f org=$ORGANIZATION -F number=$PROJECT_NUMBER -f repository=${{ github.event.repository.name }}  > project_data.json
 
         echo "ORGANIZATION=${ORGANIZATION}" >> $GITHUB_ENV
         echo "PROJECT_NUMBER=${PROJECT_NUMBER}" >> $GITHUB_ENV
@@ -89,29 +82,19 @@ runs:
         PROJECT_ID=$(jq '.data.organization.projectV2.id' project_data.json)
         echo "PROJECT_ID=${PROJECT_ID}" >> $GITHUB_ENV
 
-        echo "Project id saved..."
-
         STATUS_FIELD_ID=$(jq -r '.data.organization.projectV2.fields.nodes[] | select(.name=="Status") | .id' project_data.json)
         echo "STATUS_FIELD_ID=${STATUS_FIELD_ID}" >> $GITHUB_ENV
-        echo "Status field id saved..."
+
 
         DONE_OPTION_ID=$(jq -r '.data.organization.projectV2.fields.nodes[] | select(.name=="Status") | .options[] | select(.name=="✅  Done") |.id' project_data.json)
         echo "DONE_OPTION_ID=${DONE_OPTION_ID}" >> $GITHUB_ENV
-        echo "Done option id saved..."
+
 
         DISCUSSION_CATEGORY_ID=$(jq -r '.data.organization.repository.discussionCategory.id' project_data.json)
         echo "DISCUSSION_CATEGORY_ID=${DISCUSSION_CATEGORY_ID}" >> $GITHUB_ENV
 
         REPOSITORY_ID=$(jq -r '.data.organization.repository.id' project_data.json)
         echo "REPOSITORY_ID=${REPOSITORY_ID}" >> $GITHUB_ENV
-
-        echo "Category id saved..."
-
-        echo "done id : $DONE_OPTION_ID"
-        echo $PROJECT_ID
-        echo "Status field id: $STATUS_FIELD_ID"
-        echo "Discussion id: $DISCUSSION_ID"
-        echo "Repository id: $REPOSITORY_ID"
 
     # #Sets environment variables for this step. Replace `YOUR_TOKEN` with the name of the secret that contains your personal access token.
     - name: Set fields
@@ -121,7 +104,6 @@ runs:
 
       # Sets the value of the `Status` field to `✅  Done`.
       run: |
-        echo "Set value of status field "
         ITEMS_IDS=$(jq '.data.organization.repository.issues.nodes[].projectItems.nodes[] | select(.fieldValueByName.status =="🚀 Release") | .id' project_data.json)
         echo $ITEMS_IDS
         for id in $ITEMS_IDS; do
