@@ -32,30 +32,29 @@ runs:
                   discussionCategory(slug: "Announcements"){
                     id
                   }
-                    issues(states:[CLOSED], first:50, orderBy:{
+                  issues(states:[CLOSED], first:50, orderBy:{
                     field:UPDATED_AT, direction:DESC}){
                        nodes{
                          id
-
-                        projectItems(first:10, includeArchived:false){
-                        nodes{
-                         id
-                         content{
-                         ... on Issue{
-                         number
-                        title
+                         projectItems(first:10, includeArchived:false){
+                          nodes{
+                            id
+                            content{
+                              ... on Issue{
+                                number
+                                title
+                              }
+                            }
+                          fieldValueByName( name: "Status") {
+             			          ... on ProjectV2ItemFieldSingleSelectValue {
+              			          status: name
+           						      }
+          		            }
                         }
-                         }
-                         fieldValueByName( name: "Status") {
-             			      ... on ProjectV2ItemFieldSingleSelectValue {
-              			       status: name
-           						  }
-          		        }
-                        }
-                       }
-                       }
-                     }
-                     }
+                      }
+                    }
+                  }
+                }
                 projectV2(number: $number) {
                   id
                   fields(first:20) {
@@ -74,7 +73,6 @@ runs:
                       }
                     }
                   }
-                  
                 }
               }
             }
@@ -131,7 +129,6 @@ runs:
                  id
                  }
              }
-             
            }' -f project=$PROJECT_ID -f item=$id -f status_field=$STATUS_FIELD_ID -f status_value=$DONE_OPTION_ID --silent
            done
     - name: Create discussion
