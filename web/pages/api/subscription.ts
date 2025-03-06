@@ -78,14 +78,10 @@ const newsletterApi = axios.create({
 /**
  *  Distribute a newsletter
  */
-export const distribute = async (newsDistributionParameters: NewsDistributionParameters) => {
+export const distribute = async () => {
   try {
     const url = `${MAKE_NEWSLETTER_API_BASE_URL}/recurring_actions/${MAKE_NEWSLETTER_ID}/trigger`
-    const requestBody = {
-      guids: [newsDistributionParameters.link],
-    }
-    const response = await newsletterApi.post(url, requestBody)
-    console.log('RESPONSE', response)
+    const response = await newsletterApi.post(url)
     return response.status === 200
   } catch (error: any) {
     console.error('❌ Error in distribute:', {
