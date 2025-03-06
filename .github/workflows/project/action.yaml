@@ -103,12 +103,12 @@ runs:
         echo "REPOSITORY_ID=${REPOSITORY_ID}" >> $GITHUB_ENV
 
 
-        ITEMS_IDS=$(jq -r '.data.organization.reposiroty.issues.nodes[].projectItems.nodes[] | select(.fieldValueByName.status =="🚀 Release") | .id' project_data.json)
+        ITEMS_IDS=$(jq -r '.data.organization.repository.issues.nodes[].projectItems.nodes[] | select(.fieldValueByName.status =="🚀 Release") | .id' project_data.json)
         echo "ITEMS_IDS=${ITEMS_IDS}" >> $GITHUB_ENV
 
-        ITEMS=$(jq -r '.data.organization.reposiroty.issues.nodes[].projectItems.nodes[] | select(.fieldValueByName.status =="🚀 Release") | "\(.content.title) #\(.content.number)' project_data.json)
+        ITEMS=$(jq -r '.data.organization.repository.issues.nodes[].projectItems.nodes[] | select(.fieldValueByName.status =="🚀 Release") | "\(.content.title) #\(.content.number)' project_data.json)
         echo "ITEMS=${ITEMS}" >> $GITHUB_ENV
-        echo "ITEMS are saved..."
+        echo "ITEMS are saved... $ITEMS $ITEM_IDS"
 
 
         echo "Category id saved..."
