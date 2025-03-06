@@ -41,8 +41,10 @@ runs:
                         nodes{
                          id
                          content{
+                         ... on Issue{
                          number
                         title
+                        }
                          }
                          fieldValueByName( name: "Status") {
              			      ... on ProjectV2ItemFieldSingleSelectValue {
