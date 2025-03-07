@@ -76,13 +76,9 @@ const SearchResults = (props: SearchResultsProps) => {
           >
             <TabList aria-label={intl.formatMessage({ id: 'categories', defaultMessage: 'Categories' })}>
               {options.map((item) => (
-                <Tab
-                  id={`tab-trigger-${item.label}`}
-                  key={item.label}
-                  value={item.label}
-                  className="text-sm flex gap-2"
-                >
+                <Tab id={`tab-trigger-${item.label}`} key={item.label} value={item.label} className="">
                   {item.label}
+                  {` `}
                   <span>
                     (
                     {

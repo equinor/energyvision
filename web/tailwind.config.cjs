@@ -265,6 +265,7 @@ module.exports = {
         //When large font, prose(65ch) might not be the best
         text: '760px',
         menuText: 'calc(35 * var(--space-medium))',
+        innerColumn: 'calc(100vw - (theme(padding.layout-lg) * 2))',
       },
       minWidth: {
         viewport: '375',
@@ -360,6 +361,7 @@ module.exports = {
         horizontal: 'orientation~="horizontal"',
         selected: 'selected~="true"',
         expanded: 'expanded~="true"',
+        overflowing: 'overflowing~="true"',
       },
       flex: {
         fr: '1 1 1',

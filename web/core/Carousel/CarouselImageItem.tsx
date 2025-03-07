@@ -24,7 +24,6 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
       ref={ref}
       aria-current={active}
       aria-hidden={!active}
-      aria-roledescription="slide"
       className={envisTwMerge(
         `
         aspect-4/5
