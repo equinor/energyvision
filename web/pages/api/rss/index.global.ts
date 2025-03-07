@@ -35,7 +35,7 @@ const generateRssFeed = async () => {
     }
 
     articles.forEach((article) => {
-      const langPath = article.lang === 'no' ? '/no' : ''
+      const langPath = article.lang === 'nb_NO' ? '/no' : ''
       const descriptionHtml = toHTML(article.ingress, {
         components: serializers,
         onMissingComponent: (e) => String(e),
