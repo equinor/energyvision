@@ -98,6 +98,7 @@ export const distribute = async (newsDistributionParameters: NewsDistributionPar
 
     const requestBody = {}
     const response = await newsletterApi.post(url, requestBody)
+    console.log('📤 Newsletter distribution response:', response.data, response)
     return response.status === 200
   } catch (error: any) {
     console.error('❌ Error in distribute:', {

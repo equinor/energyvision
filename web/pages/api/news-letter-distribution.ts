@@ -85,6 +85,7 @@ async function distributeWithRetry(
 
   try {
     const isSuccessful = await distribute(newsDistributionParameters)
+    console.log('isSuccessful', isSuccessful)
     if (!isSuccessful) throw new Error('Distribution was unsuccessful.')
     res = {
       success: true,
