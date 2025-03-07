@@ -24,13 +24,13 @@ pnpm setup-project
 
 For compatibility reasons, the Sanity Studio uses the Yarn package manager, and the search indexer uses npm. The `pnpm setup-project` script will automatically install the dependencies for the Studio as well as the workspace packages listed in `pnpm-workspace.yaml`. See the [section on package managers](#package-managers) for more information.
 
-This project requires several environment variables to run. These environment variables should be added in `studio/.env.development`, `web/.env.local`, and `search/.env` respectively.
+This project requires several environment variables to run. These environment variables should be added in `sanityv3/.env.development`, `web/.env.local`, and `search/.env` respectively.
 
 ## Project overview
 
 This monorepo is organized into several folder. Please refer to README files inside each folder for more information.
 
-- `studio` - [Sanity](https://www.sanity.io/) powered content platform.
+- `sanityv3` - [Sanity](https://www.sanity.io/) powered content platform.
 - `web` - Web application using [Next.js](https://nextjs.org/) and React components.
 - `search` - Azure functions for maintaining search indexes at [Algolia](https://www.algolia.com/apps/24ZMKUY18Z/dashboard).
 - `legacy` - Archived code/content from previous versions of the equinor.com website.
@@ -62,11 +62,9 @@ pnpm web add chalk -- --save-dev
 
 ### Studio
 
-Since version 2 of the Sanity Studio does not work well with pnpm (and defaults to Yarn when deploying), we use Yarn as package manager inside that folder instead. You can still run command from root using pnpm using the `studio` alias, but adding/updating/removing packages from the root may work unexpectedly.
-
 ```bash
 # Start studio in dev mode
-pnpm studio dev
+pnpm sanityv3 dev
 ```
 
 ### Search
@@ -81,7 +79,7 @@ The legacy packages are currently excluded from the pnpm workspace (see `pnpm-wo
 
 ## Feature flags
 
-These feature flags are based on the currently active [Sanity dataset](https://www.sanity.io/docs/datasets). This allows us to have features that are based on dataset. For example some features related to analytics can be disabled in development dataset where it is not needed. Not all features in global dataset are used in other datasets. 
+These feature flags are based on the currently active [Sanity dataset](https://www.sanity.io/docs/datasets). This allows us to have features that are based on dataset. For example some features related to analytics can be disabled in development dataset where it is not needed. Not all features in global dataset are used in other datasets.
 
 ## Contributing
 
