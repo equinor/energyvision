@@ -8,8 +8,6 @@ type TabsKeyNumberItemProps = {
   unit?: string
   description?: string
   className?: string
-  /* On mobile flex wraps if 3 or less, else show as scroll */
-  'data-dir'?: string
 }
 
 const TabsKeyNumberItem = forwardRef<HTMLDivElement, TabsKeyNumberItemProps>(function TabsKeyNumberItem(
