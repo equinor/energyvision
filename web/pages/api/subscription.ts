@@ -48,11 +48,6 @@ export const signUp = async (formParameters: SubscribeFormParameters) => {
       tags: requestedTags,
     }
 
-    console.log('📤 Sending subscription request:', {
-      headers: subscriberApi.defaults.headers,
-      body: requestBody,
-    })
-
     const response = await subscriberApi.post(
       `/subscribers?subscriber_list_id=${
         formParameters.languageCode === 'no' ? SUBSCRIBER_LIST_ID_NO : SUBSCRIBER_LIST_ID_EN
@@ -88,17 +83,12 @@ export const distribute = async (newsDistributionParameters: NewsDistributionPar
     const url = `${MAKE_NEWSLETTER_API_BASE_URL}/recurring_actions/${
       newsDistributionParameters.languageCode === 'no' ? MAKE_NEWSLETTER_ID_NO : MAKE_NEWSLETTER_ID_EN
     }/trigger`
-    console.log('📤 Sending newsletter distribution request:', {
-      url,
-      headers: newsletterApi.defaults.headers,
-      body: {
-        sender_id: MAKE_API_USER,
-      },
-    })
 
-    const requestBody = {}
+    const requestBody = {
+      guids: [newsDistributionParameters.link],
+    }
+    
     const response = await newsletterApi.post(url, requestBody)
-    console.log('📤 Newsletter distribution response:', response.data, response)
     return response.status === 200
   } catch (error: any) {
     console.error('❌ Error in distribute:', {

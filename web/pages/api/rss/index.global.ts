@@ -71,12 +71,7 @@ const generateRssFeed = async () => {
 }
 
 export default async function handler(_req: NextApiRequest, res: NextApiResponse) {
-  console.log('Generating RSS feed...')
-  console.log('Datetime: ' + new Date())
-  console.log('\n')
   const rss = await generateRssFeed()
-  console.log('--------------------------')
-  console.log('rss feed', rss)
   res.setHeader('Content-Type', 'text/xml')
   res.write(rss)
   res.end()
