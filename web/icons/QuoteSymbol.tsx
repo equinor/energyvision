@@ -1,7 +1,7 @@
 const QuoteSymbol = ({ iconSize }: { iconSize?: string }) => {
   return (
     <svg
-      fill="var(--quote-icon-color)"
+      fill="currentColor"
       className={`${iconSize}`}
       viewBox="0 0 48 48"
       aria-hidden={true}
