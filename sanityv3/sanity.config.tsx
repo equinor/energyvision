@@ -152,6 +152,7 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret = fals
     unstable_fieldActions: (previous: DocumentFieldAction[]) => {
       return previous.map((it) => (it.name === 'copyField' ? copyAction : it))
     },
+    tasks: { enabled: false },
   },
   auth: createAuthStore({
     projectId: projectIdParam,
