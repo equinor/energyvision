@@ -3,6 +3,7 @@ import { Heading } from '@core/Typography'
 import type { IframeCarouselData } from '../../types/index'
 import { twMerge } from 'tailwind-merge'
 import { Carousel } from '@core/Carousel/Carousel'
+import { useId } from 'react'
 
 type IframeCarouselProps = {
   data: IframeCarouselData
@@ -11,18 +12,29 @@ type IframeCarouselProps = {
 }
 
 const IframeCarousel = ({ data, anchor, className, ...rest }: IframeCarouselProps) => {
-  const { title, items, designOptions } = data
+  const { title, hideTitle, items, designOptions } = data
   const { background } = designOptions
+  const headingId = useId()
 
   return (
-    <BackgroundContainer background={background} {...rest} id={anchor}>
-      <div className={twMerge(`pb-page-content max-w-viewport mx-auto px-layout-sm`, className)}>
-        {title && <Heading value={title} variant="h3" as="h2" className="pb-lg text-center" />}
+    <BackgroundContainer asSection={true} background={background} {...rest} id={anchor}>
+      <div className={twMerge(`pb-page-content`, className)}>
+        {title && (
+          <Heading
+            value={title}
+            variant="h3"
+            as="h2"
+            id={headingId}
+            className={hideTitle ? 'sr-only' : 'pb-lg text-center  max-w-viewport mx-auto px-layout-sm'}
+          />
+        )}
         <Carousel
           items={items}
-          displayMode="scroll"
+          displayMode="single"
           variant="iframe"
-          className={`px-0 md:px-xs ${items.length !== 2 ? 'lg:px-xs' : 'lg:px-4xl'}`}
+          autoRotation={false}
+          hasSectionTitle={title && !hideTitle}
+          labelledbyId={title && !hideTitle ? headingId : undefined}
         />
       </div>
     </BackgroundContainer>
