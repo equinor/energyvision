@@ -29,4 +29,10 @@ export default {
   orange: {
     50: '#f8d1af',
   },
+  'sand-and-summer': {
+    50: '#FFE7D6',
+  },
+  'norwegian-woods': {
+    40: '#E6FAEC',
+  },
 }
