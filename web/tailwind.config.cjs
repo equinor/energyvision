@@ -372,6 +372,7 @@ module.exports = {
         selected: 'selected~="true"',
         expanded: 'expanded~="true"',
         overflowing: 'overflowing~="true"',
+        overflowing: 'overflowing~="true"',
       },
       flex: {
         fr: '1 1 1',
