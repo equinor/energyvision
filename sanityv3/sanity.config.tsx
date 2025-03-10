@@ -1,5 +1,6 @@
 import { visionTool } from '@sanity/vision'
 import { media } from 'sanity-plugin-media'
+import { assist } from '@sanity/assist'
 import {
   ConfigContext,
   createAuthStore,
@@ -99,6 +100,7 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret = fals
       title: 'Desk',
     }),
     media(),
+    assist(),
     datasetParam === 'global-development' && visionTool(),
     FotowareAssetSource(),
     BrandmasterAssetSource(),

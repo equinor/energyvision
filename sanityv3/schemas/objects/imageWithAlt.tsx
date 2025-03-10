@@ -14,6 +14,9 @@ export default {
   options: {
     hotspot: true,
     collapsed: false,
+    aiAssist: {
+      imageDescriptionField: 'alt',
+    },
   },
   fields: [
     {
