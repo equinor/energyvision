@@ -43,13 +43,13 @@ const Quote = ({ data: { quote, authorTitle, author, image, designOptions } }: {
       className={`text-xs text-left sm:text-right sm:self-end ${!hasImage ? 'col-span-2 sm:col-span-1' : ''}`}
     >
       <span className={`${authorTitle ? 'font-bold' : ''}`}>{author}</span>
-      {authorTitle && <span className="block text-gray-500">{authorTitle}</span>}
+      {authorTitle && <span className="block text-gray-500 dark:text-white-100">{authorTitle}</span>}
     </figcaption>
   )
 
   return (
     <figure
-      className={`grid gap-4 text-gray-700 
+      className={`grid gap-4 text-gray-700 dark:text-white-100
         ${isMobile ? 'grid-cols-2' : isImageLeft ? 'sm:grid-cols-[auto_1fr]' : 'sm:grid-cols-[1fr_auto]'}
       `}
     >
