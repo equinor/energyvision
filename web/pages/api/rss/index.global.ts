@@ -67,7 +67,7 @@ const generateRssFeed = async () => {
           <description><![CDATA[<img src="${bannerImageUrl}"${imageAlt}/><br/>${descriptionHtml}]]></description>
           <category>${article.lang.toUpperCase()}</category>
           ${article.subscriptionType ? `<category>${article.subscriptionType}</category>` : ''}
-          <nl:extra1>${extraFormattedDate}</nl:extra1>
+          <extra1>${extraFormattedDate}</extra1>
         </item>`
     })
 
