@@ -13,20 +13,15 @@ export type SubscribeFormParameters = {
 const MAKE_SUBSCRIBER_API_BASE_URL = process.env.MAKE_SUBSCRIBER_API_BASE_URL
 const MAKE_NEWSLETTER_API_BASE_URL = process.env.MAKE_NEWSLETTER_API_BASE_URL
 const MAKE_API_KEY = process.env.MAKE_API_KEY || ''
-const SUBSCRIBER_LIST_ID = process.env.MAKE_SUBSCRIBER_LIST_ID
+const SUBSCRIBER_LIST_ID_EN = process.env.MAKE_SUBSCRIBER_LIST_ID_EN
+const SUBSCRIBER_LIST_ID_NO = process.env.MAKE_SUBSCRIBER_LIST_ID_NO
 const MAKE_API_USER = process.env.MAKE_API_USERID || ''
-const MAKE_NEWSLETTER_ID = process.env.MAKE_NEWSLETTER_ID
+const MAKE_NEWSLETTER_ID_EN = process.env.MAKE_NEWSLETTER_ID_EN
+const MAKE_NEWSLETTER_ID_NO = process.env.MAKE_NEWSLETTER_ID_NO
 
 export type NewsDistributionParameters = {
-  newsletterId: number
-  senderId: number
-  segmentId?: number
-  timeStamp: string
-  title: string
-  ingress: string
+  languageCode?: string
   link: string
-  newsType: string
-  languageCode: string
 }
 
 const subscriberApi = axios.create({
@@ -53,13 +48,12 @@ export const signUp = async (formParameters: SubscribeFormParameters) => {
       tags: requestedTags,
     }
 
-    console.log('📤 Sending subscription request:', {
-      url: `/subscribers?subscriber_list_id=${SUBSCRIBER_LIST_ID}`,
-      headers: subscriberApi.defaults.headers,
-      body: requestBody,
-    })
-
-    const response = await subscriberApi.post(`/subscribers?subscriber_list_id=${SUBSCRIBER_LIST_ID}`, requestBody)
+    const response = await subscriberApi.post(
+      `/subscribers?subscriber_list_id=${
+        formParameters.languageCode === 'no' ? SUBSCRIBER_LIST_ID_NO : SUBSCRIBER_LIST_ID_EN
+      }`,
+      requestBody,
+    )
 
     return response.status === 200
   } catch (error: any) {
@@ -84,12 +78,16 @@ const newsletterApi = axios.create({
 /**
  *  Distribute a newsletter
  */
-export const distribute = async () => {
+export const distribute = async (newsDistributionParameters: NewsDistributionParameters) => {
   try {
-    const url = `${MAKE_NEWSLETTER_API_BASE_URL}/recurring_actions/${MAKE_NEWSLETTER_ID}/trigger`
+    const url = `${MAKE_NEWSLETTER_API_BASE_URL}/recurring_actions/${
+      newsDistributionParameters.languageCode === 'no' ? MAKE_NEWSLETTER_ID_NO : MAKE_NEWSLETTER_ID_EN
+    }/trigger`
+
     const requestBody = {
-      sender_id: MAKE_API_USER,
+      guids: [newsDistributionParameters.link],
     }
+
     const response = await newsletterApi.post(url, requestBody)
     return response.status === 200
   } catch (error: any) {
