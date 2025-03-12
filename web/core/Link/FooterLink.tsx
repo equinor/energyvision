@@ -26,7 +26,7 @@ const FooterLink = forwardRef<HTMLAnchorElement, FooterLinkProps>(function Foote
     >
       {icon && (
         <span
-          className="group-hover:fill-moss-green-90 inline-block text-center w-[30px] mr-2  fill-white-100"
+          className="group-hover:fill-moss-green-90 inline-block text-center w-[30px] mr-1 h-[35px] fill-white-100"
           aria-hidden={true}
         >
           {icon}

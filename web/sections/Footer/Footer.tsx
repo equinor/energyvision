@@ -7,7 +7,7 @@ import FooterLink from '@core/Link/FooterLink'
 
 function getSomeSvg(someType: SomeType) {
   const iconMap = {
-    facebook: <Facebook width={12} />,
+    facebook: <Facebook width={22} />,
     instagram: <Instagram width={24} />,
     linkedin: <Linkedin width={24} />,
     twitter: <Twitter width={24} />,
