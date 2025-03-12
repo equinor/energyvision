@@ -19,7 +19,7 @@ const generateRssFeed = async () => {
     )
 
     let rss = `<?xml version="1.0" encoding="UTF-8"?>
-    <rss version="2.0">
+    <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:nl="https://support.make.as/nb/articles/21122-design-av-rss-rader">
       <channel>
       <title>Equinor News</title>
       <description>Latest news</description>
@@ -67,7 +67,7 @@ const generateRssFeed = async () => {
           <description><![CDATA[<img src="${bannerImageUrl}"${imageAlt}/><br/>${descriptionHtml}]]></description>
           <category>${article.lang.toUpperCase()}</category>
           ${article.subscriptionType ? `<category>${article.subscriptionType}</category>` : ''}
-          <extra1>${extraFormattedDate}</extra1>
+          <nl:extra1>${extraFormattedDate}</nl:extra1>
         </item>`
     })
 
