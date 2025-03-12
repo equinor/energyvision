@@ -46,25 +46,28 @@ const generateRssFeed = async () => {
       const bannerImageUrl = hero?.image?.asset ? urlFor(hero.image).size(560, 280).auto('format').toString() : ''
       const imageAlt = hero?.image?.alt ? ` alt="${hero.image.alt}"` : ''
 
-      const formattedPubDate = format(
-        utcToZonedTime(new Date(article.publishDateTime), 'Europe/Oslo'),
-        'EEE, dd MMM yyyy HH:mm:ss xxxx',
-        {
-          timeZone: 'Europe/Oslo',
-        },
-      )
+      const publishDate = new Date(article.publishDateTime)
+
+      // Format the main pubDate
+      const formattedPubDate = format(utcToZonedTime(publishDate, 'Europe/Oslo'), 'EEE, dd MMM yyyy HH:mm:ss xxxx', {
+        timeZone: 'Europe/Oslo',
+      })
+
+      // Format the extra field date as dd.MM.yyyy
+      const extraFormattedDate = format(utcToZonedTime(publishDate, 'Europe/Oslo'), 'dd.MM.yyyy', {
+        timeZone: 'Europe/Oslo',
+      })
 
       rss += `
         <item>
           <title>${article.title}</title>
           <link>https://equinor.com${langPath}${article.slug}</link>
-          <guid>https://web-global-development-equinor-web-sites-dev.c2.radix.equinor.com${langPath}${
-        article.slug
-      }</guid>
+          <guid>https://equinor.com${langPath}${article.slug}</guid>
           <pubDate>${formattedPubDate}</pubDate>
           <description><![CDATA[<img src="${bannerImageUrl}"${imageAlt}/><br/>${descriptionHtml}]]></description>
           <category>${article.lang.toUpperCase()}</category>
           ${article.subscriptionType ? `<category>${article.subscriptionType}</category>` : ''}
+          <nl:extra1>${extraFormattedDate}</nl:extra1>
         </item>`
     })
 
