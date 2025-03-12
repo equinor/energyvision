@@ -21,7 +21,6 @@ const MAKE_NEWSLETTER_ID_NO = process.env.MAKE_NEWSLETTER_ID_NO
 
 export type NewsDistributionParameters = {
   languageCode?: string
-  link: string
 }
 
 const subscriberApi = axios.create({
@@ -84,11 +83,7 @@ export const distribute = async (newsDistributionParameters: NewsDistributionPar
       newsDistributionParameters.languageCode === 'no' ? MAKE_NEWSLETTER_ID_NO : MAKE_NEWSLETTER_ID_EN
     }/trigger`
 
-    const requestBody = {
-      guids: [newsDistributionParameters.link],
-    }
-
-    const response = await newsletterApi.post(url, requestBody)
+    const response = await newsletterApi.post(url)
     return response.status === 200
   } catch (error: any) {
     console.error('❌ Error in distribute:', {
