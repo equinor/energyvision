@@ -11,7 +11,7 @@ type OptionListProps = {
   onChange: (value: string) => void
 }
 
-const OptionList = forwardRef<HTMLUListElement, OptionListProps>(function FilterButton(
+const OptionList = forwardRef<HTMLUListElement, OptionListProps>(function OptionList(
   { optionsList = [], onChange },
   ref,
 ) {
