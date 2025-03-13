@@ -214,8 +214,10 @@ jobs:
           npm install js-yaml
       - name: Run script for 'web' and 'studio'
         run: |
-          node ci/storeImageTags.js web
-          node ci/storeImageTags.js studio
+          WEB_SHA=$(node ci/storeImageTags.js web)
+          STUDIO_SHA=$(node ci/storeImageTags.js studio)
+          echo "WEB_SHA=${WEB_SHA}" >> $GITHUB_ENV
+          echo "STUDIO_SHA=${WEB_SHA}" >> $GITHUB_ENV
       - name: Commit and push changes
         run: |
           git config --global user.name 'github'
@@ -236,6 +238,6 @@ jobs:
         id: 'get-list'
         with:
           token: ${{ secrets.PADMS_PAT_READ_PACKAGE }}
-          commitSHA: ${{ github.sha }}
+          commitSHA: 'Web : ${{ env.WEB_SHA }}</br>Studio: ${{ env.STUDIO_SHA }}'
           slackWebhook: ${{ secrets.SLACK_WEBHOOK_RELEASE_ANNOUNCEMENT}}
         uses: ./.github/workflows/project/
