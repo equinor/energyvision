@@ -1,13 +1,14 @@
 import { getClient, PreviewContext } from './sanity.server'
-import type { QueryParams } from './queryFromSlug'
+import type { QueryParams as CustomQueryParams } from './queryFromSlug'
 import { Flags } from '../common/helpers/datasetHelpers'
 import { filterDataToSingleItem } from './filterDataToSingleItem'
 import { footerQuery } from './queries/footer'
 import { simpleMenuQuery } from './queries/simpleMenu'
 import { menuQuery as globalMenuQuery } from './queries/menu'
+import { QueryParams } from 'next-sanity'
 
 export const getComponentsData = async (
-  page: { query: string; queryParams: QueryParams },
+  page: { query: string; queryParams: CustomQueryParams },
   previewContext: PreviewContext,
 ) => {
   const client = getClient(previewContext)
@@ -37,7 +38,7 @@ export const getData = async (
 ) => {
   const client = getClient(previewContext)
   try {
-    const results = await client.fetch(fetchQuery.query, fetchQuery.queryParams)
+    const results = await client.fetch(fetchQuery.query, fetchQuery.queryParams as QueryParams)
     return {
       isSuccess: true,
       data: results,

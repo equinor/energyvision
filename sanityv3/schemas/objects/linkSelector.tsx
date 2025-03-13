@@ -7,7 +7,6 @@ import routes from '../routes'
 import { validateInternalOrExternalUrl } from '../validations/validateInternalOrExternalUrl'
 import { AnchorLinkDescription } from './anchorReferenceField'
 import { defaultLanguage } from '../../languages'
-import { apiVersion } from '../../sanity.client'
 import { warnHttpOrNotValidSlugExternal } from '../validations/validateSlug'
 // eslint-disable-next-line import/namespace
 import { ClientPerspective } from '@sanity/client'

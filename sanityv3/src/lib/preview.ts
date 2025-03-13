@@ -2,6 +2,7 @@ import { dataset } from './datasetHelpers'
 import { getLocaleFromName } from './localization'
 import { defaultLanguage } from '../../languages'
 import { type SanityDocument as DefaultSanityDocument } from 'sanity'
+// eslint-disable-next-line import/namespace
 import { ClientPerspective } from '@sanity/client'
 
 type SanityDocument = {
