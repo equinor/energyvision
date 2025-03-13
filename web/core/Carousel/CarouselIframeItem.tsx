@@ -42,7 +42,6 @@ export const CarouselIframeItem = forwardRef<HTMLLIElement, CarouselIframeItemPr
       {...rest}
       ref={ref}
       aria-current={active}
-      aria-roledescription="slide"
       className={envisTwMerge(
         `transform-all
                     shrink-0

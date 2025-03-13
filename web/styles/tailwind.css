@@ -205,27 +205,6 @@
     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.08) 0px 3px 4px 0px;
   }
 
-  @supports (scrollbar-color: auto) {
-    .scrolltrack-transparent {
-      scrollbar-color: rgba(0, 0, 0, 0);
-    }
-  }
-  @supports selector(::-webkit-scrollbar) {
-    .transparent-scrollbar::-webkit-scrollbar {
-      @apply bg-transparent h-2 my-2;
-    }
-    .transparent-scrollbar::-webkit-scrollbar-track {
-      @apply my-[2px];
-    }
-    .transparent-scrollbar::-webkit-scrollbar-thumb {
-      @apply bg-grey-40 hover:bg-grey-70 dark:bg-white-100 dark:hover:bg-white-100/70 rounded-lg;
-    }
-    /* Hide scrollbar for Chrome, Safari and Opera */
-    .no-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
-  }
-
   /* Hide scrollbar for IE, Edge and Firefox */
   .no-scrollbar {
     -ms-overflow-style: none; /* IE and Edge */
@@ -257,14 +236,19 @@
     }
   }
   @supports selector(::-webkit-scrollbar) {
-    .transparent-v-scrollbar::-webkit-scrollbar {
-      @apply bg-white-100 dark:bg-transparent w-3;
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
     }
-    .transparent-v-scrollbar::-webkit-scrollbar-track {
-      @apply bg-white-100 dark:bg-transparent;
+
+    .envis-scrollbar::-webkit-scrollbar {
+      @apply h-2.5 bg-grey-20;
     }
-    .transparent-v-scrollbar::-webkit-scrollbar-thumb {
-      @apply w-[2px] bg-grey-40 hover:bg-grey-70 dark:bg-white-100 dark:hover:bg-white-100/70 rounded-lg;
+    .envis-scrollbar::-webkit-scrollbar-track {
+      @apply h-2.5 bg-grey-20;
+    }
+    .envis-scrollbar::-webkit-scrollbar-thumb {
+      @apply h-2.5 bg-grey-50 hover:bg-grey-60 rounded-xs;
     }
   }
 

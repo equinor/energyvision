@@ -23,7 +23,6 @@ export const CarouselKeyNumberItem = forwardRef<HTMLLIElement, CarouselEventItem
       ref={ref}
       key={keyNumber.id}
       aria-current={active}
-      aria-roledescription="slide"
       className={envisTwMerge(
         `transform-all
         shrink-0
