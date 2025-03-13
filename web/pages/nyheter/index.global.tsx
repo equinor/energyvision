@@ -15,6 +15,7 @@ import { getServerState, InstantSearchSSRProvider } from 'react-instantsearch'
 import algoliasearch from 'algoliasearch'
 import { algolia } from '../../lib/config'
 import { Flags } from '../../common/helpers/datasetHelpers'
+import { ClientPerspective } from 'next-sanity'
 
 export default function NorwegianNewsRoom({ data, serverState }: AlgoliaIndexPageType) {
   const defaultLocale = defaultLanguage.locale
@@ -69,7 +70,7 @@ NorwegianNewsRoom.getLayout = (page: AppProps) => {
   )
 }
 
-export const getStaticProps: GetStaticProps = async ({ preview = false, locale = 'en' }) => {
+export const getStaticProps: GetStaticProps = async ({ preview = false, locale = 'en', previewData }) => {
   // For the time being, let's just give 404 for satellites
   // We will also return 404 if the locale is not English.
   // This is a hack and and we should improve this at some point
@@ -82,7 +83,7 @@ export const getStaticProps: GetStaticProps = async ({ preview = false, locale =
   }
 
   const lang = getNameFromLocale(locale)
-  const intl = await getIntl(locale, false)
+  const intl = await getIntl(locale, { preview: false })
 
   const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
   const indexName = `${envPrefix}_NEWS_nb-NO`
@@ -99,13 +100,16 @@ export const getStaticProps: GetStaticProps = async ({ preview = false, locale =
   const queryParams = {
     lang,
   }
-
+  const { perspective } = previewData as { perspective: ClientPerspective }
   const { menuData, pageData, footerData } = await getComponentsData(
     {
       query: newsroomQuery,
       queryParams,
     },
-    preview,
+    {
+      preview,
+      perspective,
+    },
   )
 
   const serverState = await getServerState(

@@ -1,7 +1,7 @@
 import items from './src/lib/structure'
 import FilePreview from './src/previews/file/filePreview'
 import DocumentsPane from 'sanity-plugin-documents-pane'
-import Iframe from 'sanity-plugin-iframe-pane'
+import { Iframe } from 'sanity-plugin-iframe-pane'
 import { resolvePreviewUrl } from './src/lib/preview'
 
 export default (S, context) => S.list().title('Content').items(items(S, context))
@@ -31,7 +31,7 @@ export const defaultDocumentNodeResolver = (S, { schemaType }) => {
       S.view
         .component(Iframe)
         .options({
-          url: (doc) => resolvePreviewUrl(doc),
+          url: (doc, { selectedPerspectiveName }) => resolvePreviewUrl(doc, selectedPerspectiveName || 'drafts'),
           loader: 'Loading preview...',
           reload: {
             button: true,

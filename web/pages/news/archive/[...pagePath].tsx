@@ -21,10 +21,11 @@ import { getNameFromLocale } from '../../../lib/localization'
 import { footerQuery } from '../../../lib/queries/footer'
 import { menuQuery as globalMenuQuery } from '../../../lib/queries/menu'
 import { simpleMenuQuery } from '../../../lib/queries/simpleMenu'
-import { getClient } from '../../../lib/sanity.server'
+import { getClient, PreviewContext } from '../../../lib/sanity.server'
 import Header from '../../../sections/Header/Header'
 import { Layout } from '../../../sections/Layout/Layout'
 import type { MenuData, SimpleMenuData } from '../../../types/index'
+import { ClientPerspective } from 'next-sanity'
 
 const { publicRuntimeConfig } = getConfig()
 
@@ -209,7 +210,12 @@ const fallbackToAnotherLanguage = async (
   }
 }
 
-export const getStaticProps: GetStaticProps = async ({ preview = false, params, locale = defaultLanguage.locale }) => {
+export const getStaticProps: GetStaticProps = async ({
+  preview = false,
+  params,
+  locale = defaultLanguage.locale,
+  previewData,
+}) => {
   if (!Flags.HAS_ARCHIVED_NEWS) return { notFound: true }
 
   const pagePathArray = params?.pagePath as string[]
@@ -222,11 +228,15 @@ export const getStaticProps: GetStaticProps = async ({ preview = false, params, 
 
   if (response.status === 404) return fallbackToAnotherLanguage(pagePathArray, pagePath, locale)
 
+  const previewContext = {
+    preview: preview || true,
+    perspective: ((previewData as { perspective: ClientPerspective }).perspective as ClientPerspective) || 'published',
+  } as PreviewContext
   const pageData = await parseResponse(response)
   const menuQuery = Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery
-  const menuDataWithDrafts = await getClient(preview).fetch(menuQuery, { lang: getNameFromLocale(locale) })
-  const footerDataWithDrafts = await getClient(preview).fetch(footerQuery, { lang: getNameFromLocale(locale) })
-  const intl = await getIntl(locale, preview)
+  const menuDataWithDrafts = await getClient(previewContext).fetch(menuQuery, { lang: getNameFromLocale(locale) })
+  const footerDataWithDrafts = await getClient(previewContext).fetch(footerQuery, { lang: getNameFromLocale(locale) })
+  const intl = await getIntl(locale, previewContext)
 
   const menuData = filterDataToSingleItem(menuDataWithDrafts, preview)
   const footerData = filterDataToSingleItem(footerDataWithDrafts, preview)

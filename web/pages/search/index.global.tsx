@@ -82,7 +82,7 @@ SearchPage.getLayout = (page: AppProps) => {
 }
 
 export const getStaticProps: GetStaticProps = async ({ preview = false, locale = defaultLanguage.locale }) => {
-  const intl = await getIntl(locale, false)
+  const intl = await getIntl(locale, { preview: false })
 
   return {
     props: {

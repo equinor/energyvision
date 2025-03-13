@@ -10,6 +10,7 @@ import { defaultLanguage } from '../../languages'
 import { AlgoliaIndexPageType, MagazineIndexPageType } from '../../types'
 import { getComponentsData, getData, MagazineQueryParams } from '../../lib/fetchData'
 import MagazineRoom from '../../templates/magazine/Magazineroom'
+import { ClientPerspective } from 'next-sanity'
 
 export default function MagazineIndex({ data }: AlgoliaIndexPageType) {
   const defaultLocale = defaultLanguage.locale
@@ -56,28 +57,39 @@ MagazineIndex.getLayout = (page: AppProps) => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ req, preview = false, locale = 'en', query }) => {
+export const getServerSideProps: GetServerSideProps = async ({
+  req,
+  preview = false,
+  locale = 'en',
+  query,
+  previewData,
+}) => {
   if (locale !== 'en') {
     return {
       notFound: true,
     }
   }
+  const { perspective } = previewData as { perspective: ClientPerspective }
+
+  const previewContext = {
+    preview,
+    perspective,
+  }
 
   const lang = getNameFromLocale(locale)
-  const intl = await getIntl(locale, false)
+  const intl = await getIntl(locale, previewContext)
 
   let queryParams: MagazineQueryParams = {
     lang,
   }
 
   const slug = req.url
-
   const { menuData, pageData, footerData } = await getComponentsData(
     {
       query: magazineIndexQuery,
       queryParams,
     },
-    preview,
+    previewContext,
   )
 
   let magazineList = []
@@ -87,17 +99,23 @@ export const getServerSideProps: GetServerSideProps = async ({ req, preview = fa
       tag: query.tag as string,
     }
     const magazineGroq = getMagazineArticlesByTag(false, false)
-    const { data } = await getData({
-      query: magazineGroq,
-      queryParams,
-    })
+    const { data } = await getData(
+      {
+        query: magazineGroq,
+        queryParams,
+      },
+      previewContext,
+    )
 
     magazineList = data
   } else {
-    const { data } = await getData({
-      query: allMagazineDocuments,
-      queryParams,
-    })
+    const { data } = await getData(
+      {
+        query: allMagazineDocuments,
+        queryParams,
+      },
+      previewContext,
+    )
     magazineList = data
   }
 

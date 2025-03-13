@@ -5,6 +5,8 @@ import { getLocaleFromName } from './lib/localization'
 import { Flags } from './common/helpers/datasetHelpers'
 import { getDocumentBySlug } from './common/helpers/getPaths'
 import archivedNews from './lib/archive/archivedNewsPaths.json'
+import { PreviewContext } from './lib/sanity.server'
+import { ClientPerspective } from 'next-sanity'
 
 const PERMANENT_REDIRECT = 301
 //const TEMPORARY_REDIRECT = 302
@@ -13,27 +15,28 @@ const DOT_HTML = '.html'
 const IS_ARCHIVED_NEWS_DOWNLOADS = /(.*)\/news\/archive\/[0-9]{4}\/[0-9]{2}\/[0-9]{2}\/downloads\/(.*)\.(.*)$/
 
 // Check if a given path exists in Sanity or not
-const pathExistsInSanity = async (pathname: string, isPreview = false): Promise<boolean> => {
-  const article = await getDocumentBySlug(pathname, isPreview)
+const pathExistsInSanity = async (pathname: string, previewContext: PreviewContext): Promise<boolean> => {
+  const article = await getDocumentBySlug(pathname, previewContext)
   return Boolean(article)
 }
 
 // Check if preview mode is enabled in Sanity
-const isPreviewEnabled = (request: NextRequest): boolean => {
+const getPreviewContext = (request: NextRequest): PreviewContext => {
   const { searchParams } = request.nextUrl
   const previewCookie = request.cookies.get('__next_preview_data')
   const previewParam = searchParams.get('preview')
+  const previewData = request.cookies.get('previewData')?.value as unknown as { perspective: ClientPerspective }
 
-  if (previewCookie && previewParam) return true
+  if (previewCookie && previewParam) return { preview: true, perspective: previewData.perspective }
 
-  return false
+  return { preview: false }
 }
 
 export async function middleware(request: NextRequest) {
   const { origin, locale } = request.nextUrl
   const pathname = decodeURI(request.nextUrl.pathname)
   const isDotHtml = pathname.slice(-5) === DOT_HTML
-  const isPreview = isPreviewEnabled(request)
+  const previewContext = getPreviewContext(request)
 
   // Rewrite the correct path for assets in download section of achived news (older than 2016)
   if (IS_ARCHIVED_NEWS_DOWNLOADS.test(pathname) && (Flags.IS_DEV || Flags.IS_GLOBAL_PROD)) {
@@ -71,7 +74,7 @@ export async function middleware(request: NextRequest) {
 
   // Redirect external links to news which is now archived if link doesn't exist in Sanity
   if (Flags.HAS_ARCHIVED_NEWS && pathname.startsWith('/news') && !pathname.startsWith('/news/archive')) {
-    const existsInSanity = await pathExistsInSanity(pathname, isPreview)
+    const existsInSanity = await pathExistsInSanity(pathname, previewContext)
     if (!existsInSanity) {
       const archivedPath = pathname.replace('news', 'news/archive')
       const existsInArchive = archivedNews.some((e) => e.slug === archivedPath)
