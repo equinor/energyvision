@@ -10,8 +10,8 @@ import getIntl from '../common/helpers/getIntl'
 import { defaultLanguage } from '../languages'
 import { ErrorPageData, MenuData, FooterColumns, IntlData } from '../types/index'
 import { getComponentsData } from '../lib/fetchData'
-import Header from '../pageComponents/shared/Header'
-import Footer from '../pageComponents/shared/Footer'
+import Header from '../sections/Header/Header'
+import Footer from '../sections/Footer/Footer'
 
 const ErrorPage = dynamic(() => import('../pageComponents/pageTemplates/ErrorPage'))
 
@@ -58,11 +58,12 @@ Custom404.getLayout = (page: AppProps) => {
         messages={data?.intl?.messages}
       >
         <Grid>
-          <>
+          <div className="pt-topbar">
+            {/*@ts-ignore: TODO */}
             <Header slugs={slugs} menuData={data?.menuData} />
             {page}
             <Footer footerData={data?.footerData} />
-          </>
+          </div>
         </Grid>
       </IntlProvider>
     </>

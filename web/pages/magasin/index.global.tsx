@@ -1,8 +1,8 @@
 import { GetServerSideProps } from 'next'
 import type { AppProps } from 'next/app'
 import { IntlProvider } from 'react-intl'
-import Footer from '../../pageComponents/shared/Footer'
-import Header from '../../pageComponents/shared/Header'
+import Footer from '../../sections/Footer/Footer'
+import Header from '../../sections/Header/Header'
 import { allMagazineDocuments, getMagazineArticlesByTag, magazineIndexQuery } from '../../lib/queries/magazine'
 import getIntl from '../../common/helpers/getIntl'
 import { getNameFromLocale, getIsoFromLocale } from '../../lib/localization'
@@ -46,14 +46,12 @@ MagazineIndexNorwegian.getLayout = (page: AppProps) => {
       defaultLocale={getIsoFromLocale(defaultLocale)}
       messages={data?.intl?.messages}
     >
-      {/*
-       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore */}
-      <>
+      <div className="pt-topbar">
+        {/*@ts-ignore: TODO */}
         <Header slugs={slugs} menuData={data?.menuData} />
         {page}
         <Footer footerData={data?.footerData} />
-      </>
+      </div>
     </IntlProvider>
   )
 }
