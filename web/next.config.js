@@ -46,6 +46,7 @@ export default withBundle({
       'video.js',
     ],
   },
+  swcMinify: true,
   transpilePackages: ['friendly-challenge'],
   eslint: {
     // Warning: Dangerously allow production builds to successfully complete even if
@@ -93,6 +94,15 @@ export default withBundle({
       {
         source: '/:path*',
         headers: securityHeaders,
+      },
+      {
+        source: '/fonts/(.*)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=604800, immutable',
+          },
+        ],
       },
     ].filter((e) => e)
   },

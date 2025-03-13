@@ -28,16 +28,20 @@ import { CarouselEventItem } from './CarouselEventItem'
 import { CarouselKeyNumberItem } from './CarouselKeyNumberItem'
 import { CarouselIframeItem } from './CarouselIframeItem'
 import { FormattedMessage } from 'react-intl'
+import { CarouselDefaultItem } from './CarouselDefaultItem'
 
 export type DisplayModes = 'single' | 'scroll'
 export type Layouts = 'full' | 'default'
+export type DefaultCarouselItem = Record<string, any>
+
 type CarouselItemTypes =
   | VideoPlayerCarouselItem
   | ImageCarouselItem
   | EventCardData
   | KeyNumberItemData
   | IFrameCarouselItemData
-type Variants = 'video' | 'image' | 'event' | 'keyNumber' | 'iframe'
+  | DefaultCarouselItem
+type Variants = 'video' | 'image' | 'event' | 'keyNumber' | 'iframe' | 'default'
 
 type CarouselProps = {
   items: CarouselItemTypes[]
@@ -51,6 +55,8 @@ type CarouselProps = {
   autoRotation?: boolean
   hasSectionTitle?: boolean
   title?: PortableTextBlock[]
+  /* The component to use to display default carousel item */
+  defaultItemContainer?: React.JSXElementConstructor<React.HTMLAttributes<HTMLElement>>
 } & Omit<HTMLAttributes<HTMLDivElement>, 'title'>
 
 const TRANSLATE_X_AMOUNT_LG = 1000
@@ -68,6 +74,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
     className = '',
     listClassName = '',
     hasSectionTitle = false,
+    defaultItemContainer: DefaultItemContainer,
   },
   ref,
 ) {
@@ -239,6 +246,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
     event: `flex gap-3 lg:gap-6 w-full h-full overflow-y-hidden no-scrollbar`,
     keyNumber: `flex w-full gap-3xl`,
     iframe: `flex mx-0 gap-md lg:px-0 px-6 lg:no-scrollbar`,
+    default: 'flex gap-3 lg:gap-12 w-full h-full overflow-y-hidden no-scrollbar',
   }
   const listDisplayModeClassName = {
     scroll: 'snap-mandatory snap-x overflow-x-scroll',
@@ -315,6 +323,12 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
             aspectRatio={(item as IFrameCarouselItemData).aspectRatio}
           />
         )
+      case 'default':
+        return (
+          <CarouselDefaultItem>
+            {item && DefaultItemContainer && <DefaultItemContainer {...(item as DefaultCarouselItem)} />}
+          </CarouselDefaultItem>
+        )
     }
   }
 
@@ -334,7 +348,6 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
       {...(displayMode === 'scroll' && {
         tabIndex: 0,
       })}
-      aria-roledescription="carousel"
       className={envisTwMerge(
         `w-full
         relative
