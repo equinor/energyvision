@@ -237,37 +237,11 @@
   .box-shadow-crisp-interact {
     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.08) 0px 3px 4px 0px;
   }
-  /* Modern browsers with `scrollbar-*` support */
 
-  /* Legacy browsers with `::-webkit-scrollbar-*` support */
   @supports selector(::-webkit-scrollbar) {
-    .transparent-scrollbar::-webkit-scrollbar {
-      @apply bg-transparent h-2 my-2;
-    }
-    .transparent-scrollbar::-webkit-scrollbar-track {
-      @apply my-[2px];
-    }
-    .transparent-scrollbar::-webkit-scrollbar-thumb {
-      @apply bg-grey-40 hover:bg-grey-70 dark:bg-white-100 dark:hover:bg-white-100/70 rounded-lg;
-    }
     /* Hide scrollbar for Chrome, Safari and Opera */
     .no-scrollbar::-webkit-scrollbar {
       display: none;
-    }
-
-    .horizontal-scrollbar::-webkit-scrollbar {
-      border-radius: 100vh;
-      height: 10px;
-    }
-
-    .horizontal-scrollbar::-webkit-scrollbar-track {
-      @apply bg-grey-20/50;
-      border-radius: 100vh;
-    }
-
-    .horizontal-scrollbar::-webkit-scrollbar-thumb {
-      @apply bg-north-sea-100/20 hover:bg-north-sea-100/40;
-      border-radius: 100vh;
     }
 
     .envis-scrollbar::-webkit-scrollbar {
