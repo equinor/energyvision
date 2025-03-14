@@ -413,6 +413,7 @@ export type IframeCarouselData = {
   type: 'iframeCarousel'
   id: string
   title?: PortableTextBlock[]
+  hideTitle?: boolean
   items: IFrameCarouselItemData[]
   designOptions: DesignOptions
 }
@@ -437,6 +438,7 @@ export type KeyNumbersData = {
   id: string
   ingress?: PortableTextBlock[]
   title?: PortableTextBlock[]
+  hideTitle?: boolean
   disclaimer?: PortableTextBlock[]
   items: KeyNumberItemData[]
   useHorizontalScroll: boolean

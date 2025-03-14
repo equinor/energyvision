@@ -123,6 +123,15 @@
       clip-path var(--modal-transition-duration) var(--modal-transition-easing), display 0.7s allow-discrete,
       overlay 0.7s allow-discrete;
   }
+  /* Carousel */
+  .carousel-top-bottom-grid-area {
+    grid-template-areas:
+      'top'
+      'bottom';
+  }
+  .carousel-controls-grid-area {
+    grid-template-areas: 'left center right';
+  }
 }
 
 @layer utilities {
@@ -132,6 +141,22 @@
       @apply animate-fadeInOut;
       animation-timeline: view();
       animation-range: cover 18% cover 85%;
+    }
+    .adjustObjectPosition {
+      @apply animate-adjustObjectPosition;
+      animation-timeline: view(x);
+    }
+  }
+  @supports (animation-timeline) {
+    .dots-timeline-container {
+      scroll-timeline: --carousel x;
+    }
+
+    .dots-timeline-dot {
+      animation-timeline: --carousel;
+      /* Do with [animation-range:calc((${i}-1)*20%)_calc(${i}*20%+1px)] for the child index
+      * in the component using dots-timeline
+      */
     }
   }
   .white-right-gradient {
@@ -183,6 +208,9 @@
     background-image: linear-gradient(theme('colors.slate-blue.95 / 50%'), theme('colors.slate-blue.95 / 50%')),
       linear-gradient(rgba(0, 0, 0, 0.36), rgba(0, 0, 0, 0.36));
   }
+  .fade-in-black-gradient {
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 60%, rgba(0, 0, 0, 0.8) 100%);
+  }
   .black-to-top-gradient {
     background-image: linear-gradient(
       to top,
@@ -203,6 +231,23 @@
   }
   .box-shadow-crisp-interact {
     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.08) 0px 3px 4px 0px;
+  }
+
+  @supports selector(::-webkit-scrollbar) {
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .envis-scrollbar::-webkit-scrollbar {
+      @apply h-2.5 bg-grey-20;
+    }
+    .envis-scrollbar::-webkit-scrollbar-track {
+      @apply h-2.5 bg-grey-20;
+    }
+    .envis-scrollbar::-webkit-scrollbar-thumb {
+      @apply h-2.5 bg-grey-50 hover:bg-grey-60 rounded-xs;
+    }
   }
 
   /* Hide scrollbar for IE, Edge and Firefox */
@@ -235,26 +280,17 @@
       scrollbar-color: rgba(0, 0, 0, 0);
     }
   }
-  @supports selector(::-webkit-scrollbar) {
-    /* Hide scrollbar for Chrome, Safari and Opera */
-    .no-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
-
-    .envis-scrollbar::-webkit-scrollbar {
-      @apply h-2.5 bg-grey-20;
-    }
-    .envis-scrollbar::-webkit-scrollbar-track {
-      @apply h-2.5 bg-grey-20;
-    }
-    .envis-scrollbar::-webkit-scrollbar-thumb {
-      @apply h-2.5 bg-grey-50 hover:bg-grey-60 rounded-xs;
-    }
-  }
 
   @starting-style {
     .topbar-height {
       top: 0;
+    }
+  }
+  @starting-style {
+    .fadeInVisibilityOpacityDisplay {
+      visibility: visible;
+      opacity: 0;
+      display: hidden;
     }
   }
 }
