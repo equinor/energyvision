@@ -2,19 +2,19 @@ import { getClient } from '../../lib/sanity.server'
 import { redirects, externalRedirects, RedirectsType, ExternalRedirectsType } from '../../lib/queries/redirects'
 
 export const getRedirectUrl = async (slug: string, locale: string): Promise<RedirectsType> => {
-  return getClient(false).fetch(redirects, { slug: slug, slugWithLocale: `/${locale}${slug}` })
+  return getClient({ preview: false }).fetch(redirects, { slug: slug, slugWithLocale: `/${locale}${slug}` })
 }
 
 export const getExternalRedirectUrl = async (slug: string, locale: string): Promise<ExternalRedirectsType> => {
-  return getClient(false).fetch(externalRedirects, { slug: slug, slugWithLocale: `/${locale}${slug}` })
+  return getClient({ preview: false }).fetch(externalRedirects, { slug: slug, slugWithLocale: `/${locale}${slug}` })
 }
 
 export const getWWWRedirect = (host: string, pathname: string): string | undefined => {
-  if (!host.includes("www")) {
-    return `https://www.${host}${pathname}`;
+  if (!host.includes('www')) {
+    return `https://www.${host}${pathname}`
   }
-  return undefined;
-};
+  return undefined
+}
 
 export const getDnsRedirect = (host: string, pathname: string) => {
   const dns = host.replace('http://', '').replace('https://', '').replace('www.', '')
@@ -98,5 +98,5 @@ const dnsRedirects = [
   {
     from: 'morgendagenshelter.no',
     to: '/no/om-oss/sponsing-og-stotte',
-  }
+  },
 ]

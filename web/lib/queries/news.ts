@@ -1,6 +1,6 @@
 import slugsForNewsAndMagazine, { querySuffixForNewsAndMagazine } from './slugsForNewsAndMagazine'
 import { Flags } from '../../common/helpers/datasetHelpers'
-import { noDrafts, sameLang, fixPreviewForDrafts } from './common/langAndDrafts'
+import { sameLang, fixPreviewForDrafts } from './common/langAndDrafts'
 import {
   contentForNewsQuery,
   iframeForNewsQuery,
@@ -40,7 +40,7 @@ const newsFields = /* groq */ `
     slug.current != $slug &&
     heroImage.image.asset != null &&
     ${excludeCrudeOilAssays}
-    ${sameLang} && ${noDrafts}] | order(${publishDateTimeQuery} desc)[0...3] {
+    ${sameLang}] | order(${publishDateTimeQuery} desc)[0...3] {
       ${latestNewsFields}
     }
 `
@@ -66,7 +66,7 @@ export const newsPromotionQuery = /* groq */ `
       ||
       localNewsTag._ref in $localNewsTags[].id
     )
-    && ${sameLang} && ${noDrafts})
+    && ${sameLang})
   ] | order(${publishDateTimeQuery} desc)[0...3]{
     "type": _type,
     "id": _id,

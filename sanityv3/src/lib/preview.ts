@@ -1,7 +1,9 @@
 import { dataset } from './datasetHelpers'
 import { getLocaleFromName } from './localization'
 import { defaultLanguage } from '../../languages'
-import type { SanityDocument as DefaultSanityDocument } from 'sanity'
+import { type SanityDocument as DefaultSanityDocument } from 'sanity'
+// eslint-disable-next-line import/namespace
+import { ClientPerspective } from '@sanity/client'
 
 type SanityDocument = {
   lang?: string | undefined
@@ -29,7 +31,7 @@ export const getBaseUrl = (dataset: string): string => {
   }
 }
 
-export const resolvePreviewUrl = (document: SanityDocument): string | false => {
+export const resolvePreviewUrl = (document: SanityDocument, perspective: ClientPerspective): string | false => {
   // Any random string, must match SANITY_PREVIEW_SECRET in the Next.js .env.local file
   const previewSecret = import.meta.env.SANITY_STUDIO_PREVIEW_SECRET
 
@@ -49,6 +51,7 @@ export const resolvePreviewUrl = (document: SanityDocument): string | false => {
   previewUrl.pathname = '/api/preview'
   previewUrl.searchParams.append('type', document._type)
   previewUrl.searchParams.append('locale', locale)
+  previewUrl.searchParams.append('perspective', perspective.toString())
 
   if (document?.slug?.current) {
     previewUrl.searchParams.append('slug', document?.slug?.current)

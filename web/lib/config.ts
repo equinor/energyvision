@@ -11,7 +11,8 @@ export const sanityConfig: Config = {
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'h61q9gi9',
   token: process.env.SANITY_API_TOKEN,
   useCdn: true,
-  apiVersion: '2024-01-01',
+  apiVersion: '2025-03-11',
+  perspective: 'published',
 }
 
 export const algolia = {

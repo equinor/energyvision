@@ -3,8 +3,13 @@
  * utilities we use on the client side, we are able to tree-shake (remove)
  * code that is not used on the client side.
  */
-import { createClient } from '@sanity/client'
+import { ClientPerspective, createClient } from 'next-sanity'
 import { sanityConfig } from './config'
+
+export type PreviewContext = {
+  preview: boolean
+  perspective?: ClientPerspective
+}
 
 export const sanityClient = createClient(sanityConfig)
 
@@ -13,25 +18,16 @@ export const sanityClientWithEquinorCDN = createClient({
   apiHost: 'https://cdn.equinor.com',
 })
 
-export const previewClient = createClient({
-  ...sanityConfig,
-  useCdn: false,
-})
+export const previewClient = (perspective: ClientPerspective) =>
+  createClient({
+    ...sanityConfig,
+    useCdn: false,
+    perspective: perspective,
+  })
 
-export const getClient = (preview: boolean) => (preview ? previewClient : sanityClient)
-
-/* export function overlayDrafts(docs) {
-  const documents = docs || []
-  const overlayed = documents.reduce((map, doc) => {
-    if (!doc._id) {
-      throw new Error('Ensure that `_id` is included in query projection')
-    }
-
-    const isDraft = doc._id.startsWith('drafts.')
-    const id = isDraft ? doc._id.slice(7) : doc._id
-    return isDraft || !map.has(id) ? map.set(id, doc) : map
-  }, new Map())
-
-  return Array.from(overlayed.values())
+export const getClient = (previewContext: PreviewContext) => {
+  if (previewContext.preview && !previewContext.perspective) {
+    throw Error('Perspective is missing to preview')
+  }
+  return previewContext.preview && previewContext.perspective ? previewClient(previewContext.perspective) : sanityClient
 }
- */

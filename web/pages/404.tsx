@@ -1,5 +1,4 @@
 import { GetStaticProps } from 'next'
-import styled from 'styled-components'
 import type { AppProps } from 'next/app'
 import { IntlProvider } from 'react-intl'
 import dynamic from 'next/dynamic'
@@ -12,14 +11,9 @@ import { ErrorPageData, MenuData, FooterColumns, IntlData } from '../types/index
 import { getComponentsData } from '../lib/fetchData'
 import Header from '../sections/Header/Header'
 import Footer from '../sections/Footer/Footer'
+import { ClientPerspective } from 'next-sanity'
 
 const ErrorPage = dynamic(() => import('../pageComponents/pageTemplates/ErrorPage'))
-
-const Grid = styled.div`
-  display: grid;
-  height: calc(100vh - var(--topbar-height));
-  grid-template-rows: min-content 1fr min-content;
-`
 
 type Custom404Props = {
   pageData: ErrorPageData
@@ -31,7 +25,7 @@ type Custom404Props = {
 const Custom404 = ({ data }: { data: Custom404Props }) => {
   const { pageData } = data
 
-  return <ErrorPage pageData={pageData} />
+  return <ErrorPage pageData={pageData} statusCode={404} />
 }
 
 Custom404.getLayout = (page: AppProps) => {
@@ -57,22 +51,30 @@ Custom404.getLayout = (page: AppProps) => {
         defaultLocale={getIsoFromLocale(defaultLocale)}
         messages={data?.intl?.messages}
       >
-        <Grid>
-          <div className="pt-topbar">
-            {/*@ts-ignore: TODO */}
-            <Header slugs={slugs} menuData={data?.menuData} />
-            {page}
-            <Footer footerData={data?.footerData} />
-          </div>
-        </Grid>
+        <div className="pt-topbar">
+          {/*@ts-ignore: TODO */}
+          <Header slugs={slugs} menuData={data?.menuData} />
+          {page}
+          <Footer footerData={data?.footerData} />
+        </div>
       </IntlProvider>
     </>
   )
 }
 
-export const getStaticProps: GetStaticProps = async ({ locale = defaultLanguage.locale, preview = false }) => {
+export const getStaticProps: GetStaticProps = async ({
+  locale = defaultLanguage.locale,
+  preview = false,
+  previewData,
+}) => {
   const lang = getNameFromLocale(locale)
-  const intl = await getIntl(locale, false)
+  const { perspective } = previewData as { perspective: ClientPerspective }
+
+  const previewContext = {
+    preview,
+    perspective,
+  }
+  const intl = await getIntl(locale, previewContext)
 
   const queryParams = {
     lang,
@@ -83,7 +85,7 @@ export const getStaticProps: GetStaticProps = async ({ locale = defaultLanguage.
       query: pageNotFoundQuery,
       queryParams,
     },
-    preview,
+    previewContext,
   )
 
   return {

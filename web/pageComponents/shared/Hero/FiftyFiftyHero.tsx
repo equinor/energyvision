@@ -54,10 +54,6 @@ const StyledIngress = styled.div`
     display: none;
   }
 `
-const StyledHeroTitle = styled(TitleText).attrs((props: { $isBigTitle: boolean }) => props)`
-  max-width: 1186px; /* 1920 - (2 * 367) */
-  font-weight: ${(props) => (props.$isBigTitle ? 'var(--fontWeight-regular)' : 'var(--fontWeight-medium)')};
-`
 
 export const FiftyFiftyHero = ({ title, ingress, link: action, background, figure, isBigTitle }: HeroType) => {
   const url = action && getUrlFromAction(action)
@@ -71,7 +67,12 @@ export const FiftyFiftyHero = ({ title, ingress, link: action, background, figur
         </StyledMedia>
         <StyledContent>
           {title && (
-            <StyledHeroTitle $isBigTitle={isBigTitle} value={title} level="h1" size={isBigTitle ? '2xl' : 'xl'} />
+            <TitleText
+              className={`max-w-[1186px] ${isBigTitle ? 'font-normal' : 'font-medium'}`}
+              value={title}
+              level="h1"
+              size={isBigTitle ? '2xl' : 'xl'}
+            />
           )}
           {ingress && !isBigTitle && (
             <StyledIngress>

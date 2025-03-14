@@ -2,7 +2,7 @@ import { Box, Card, Flex, Stack, Tooltip, Text } from '@sanity/ui'
 import { useCallback } from 'react'
 import { set } from 'sanity'
 import type { ObjectInputProps } from 'sanity'
-import styled from 'styled-components'
+import { styled } from 'styled-components'
 import { defaultColors } from '../../defaultColors'
 
 const Circle = styled.div<{ active: boolean }>`
