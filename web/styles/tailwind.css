@@ -269,6 +269,16 @@
       @apply bg-north-sea-100/20 hover:bg-north-sea-100/40;
       border-radius: 100vh;
     }
+
+    .envis-scrollbar::-webkit-scrollbar {
+      @apply h-2.5 bg-grey-20;
+    }
+    .envis-scrollbar::-webkit-scrollbar-track {
+      @apply h-2.5 bg-grey-20;
+    }
+    .envis-scrollbar::-webkit-scrollbar-thumb {
+      @apply h-2.5 bg-grey-50 hover:bg-grey-60 rounded-xs;
+    }
   }
 
   /* Hide scrollbar for IE, Edge and Firefox */
@@ -293,6 +303,12 @@
       .bd-blurred[open]::backdrop {
         @apply backdrop-blur-none bg-transparent;
       }
+    }
+  }
+
+  @supports (scrollbar-color: auto) {
+    .scrolltrack-transparent {
+      scrollbar-color: rgba(0, 0, 0, 0);
     }
   }
 

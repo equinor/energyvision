@@ -49,11 +49,14 @@ export default {
   ],
   preview: {
     select: {
+      title: 'title',
       group: 'group',
     },
-    prepare({ group }: any) {
+    prepare({ group, title }: any) {
+      const plainText = blocksToText(title)
+      const previewTitle = plainText ? plainText : group ? generatePreviewTitle(group) : 'Missing content'
       return {
-        title: group ? generatePreviewTitle(group) : 'Missing content',
+        title: previewTitle,
         subtitle: `${group ? group.length : 0} Text with Icon component(s)`,
         media: <div>{EdsIcon(view_module)}</div>,
       }
@@ -71,7 +74,7 @@ const generatePreviewTitle = (group: any) => {
       string = current.title.substr(0, cutOff).trim()
     } else if (current.text) {
       const plainText = blocksToText(current.text)
-      string = plainText.substr(0, cutOff).trim()
+      string = plainText ? plainText.slice(0, cutOff).trim() : `Missing title and text`
     } else {
       string = `Missing title and text`
     }

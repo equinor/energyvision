@@ -5,7 +5,7 @@ import { DisplayModes } from './Carousel'
 import { forwardRef, HTMLAttributes, useEffect, useMemo, useRef } from 'react'
 import { PortableTextBlock } from '@portabletext/types'
 import { SanityImageObject } from '@sanity/image-url/lib/types/types'
-import { BaseLink } from '@core/Link'
+import { BaseLink, ResourceLink } from '@core/Link'
 import { getUrlFromAction } from '../../common/helpers'
 import { getLocaleFromName } from '../../lib/localization'
 import { ArrowRight } from '../../icons'
@@ -55,7 +55,6 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
   const isImageWithRichTextCaption = type === 'imageWithRichTextBelow' && !!caption
   const isImageWithJustLink = type === 'imageWithLinkAndOrOverlay' && action && (!captionTitle || !captionText)
   const isImageWithOverlay = type === 'imageWithLinkAndOrOverlay' && (!!captionTitle || !!captionText)
-
   const url = action && getUrlFromAction(action)
 
   const singleHeights = `min-h-single-carousel-card-h-sm
@@ -137,6 +136,19 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
                 //@ts-ignore:TODO
                 value={caption}
               />
+            )}
+            {action && url && (
+              <ResourceLink
+                href={url}
+                extension={action?.extension}
+                showExtensionIcon={true}
+                {...(action?.link?.lang && { locale: getLocaleFromName(action?.link?.lang) })}
+                type={action?.type}
+                variant="fit"
+                className="mt-4"
+              >
+                {action?.label}
+              </ResourceLink>
             )}
           </figcaption>
         </figure>
