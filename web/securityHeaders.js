@@ -58,6 +58,8 @@ const dataSrcUrls = [
   'https://*.twimg.com',
   'https://i.ytimg.com',
   'https://*.cookiebot.com',
+  'https://bcdn.screen9.com',
+  'https://qcdn.screen9.com',
 ].join(' ')
 
 const selfSrcUrls = [

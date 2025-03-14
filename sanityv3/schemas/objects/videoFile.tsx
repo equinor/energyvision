@@ -1,7 +1,8 @@
 import { play_circle } from '@equinor/eds-icons'
-import type { Reference, Rule } from 'sanity'
+import type { Reference, Rule, ValidationContext } from 'sanity'
 import { EdsIcon } from '../../icons/edsIcons'
 import { ImageWithAlt } from './imageWithAlt'
+import { HLSVideo } from './hlsVideo'
 
 export default {
   type: 'document',
@@ -14,7 +15,13 @@ export default {
       title: 'Video',
       description: 'Pick from Equinor Media Bank',
       type: 'hlsVideo',
-      validation: (Rule: Rule) => Rule.required(),
+      validation: (Rule: Rule) =>
+        Rule.custom((value: HLSVideo) => {
+          if (!value || !value?.id) return 'Id is required'
+          else if (!value.url) return 'Please fetch the video.'
+          else if (!value.title) return 'Title is required.'
+          else return true
+        }),
     },
     {
       name: 'transcript',
@@ -29,18 +36,22 @@ export default {
       initialValue: {
         isDecorative: true,
       },
-      validation: (Rule: Rule) => Rule.custom((value: ImageWithAlt) => (!value.asset ? 'Image is required' : true)),
+      validation: (Rule: Rule) =>
+        Rule.custom((value: ImageWithAlt, parent: ValidationContext) =>
+          !value.asset && !(parent?.document?.video as any)?.thumbnail ? 'Image is required' : true,
+        ),
     },
   ],
   preview: {
     select: {
       title: 'video.title',
       image: 'thumbnail',
+      poster: 'video.thumbnail',
     },
-    prepare({ title = '', image }: { title: string; image: Reference }) {
+    prepare({ title = '', image, poster }: { title: string; image: Reference; poster: string }) {
       return {
         title,
-        media: image,
+        media: image || poster,
       }
     },
   },
