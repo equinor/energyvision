@@ -7,11 +7,6 @@
 
 @layer base {
   :root {
-    /* Image carousel card withs */
-    --image-carousel-card-w-sm: 275px;
-    --image-carousel-card-w-md: 692px;
-    --image-carousel-card-w-lg: 980px;
-
     /* Modal */
     --modal-transition-duration: 0.4s;
     --modal-transition-easing: cubic-bezier(0.45, 0, 0.55, 1);
