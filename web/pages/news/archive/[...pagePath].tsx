@@ -230,8 +230,9 @@ export const getStaticProps: GetStaticProps = async ({
 
   const previewContext = {
     preview: preview || true,
-    perspective: ((previewData as { perspective: ClientPerspective }).perspective as ClientPerspective) || 'published',
+    perspective: ((previewData as { perspective: ClientPerspective })?.perspective as ClientPerspective) || 'published',
   } as PreviewContext
+
   const pageData = await parseResponse(response)
   const menuQuery = Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery
   const menuDataWithDrafts = await getClient(previewContext).fetch(menuQuery, { lang: getNameFromLocale(locale) })

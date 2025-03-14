@@ -67,11 +67,9 @@ export const getStaticProps: GetStaticProps = async ({
   preview = false,
   previewData,
 }) => {
-  const { perspective } = previewData as { perspective: ClientPerspective }
-
   const previewContext = {
     preview,
-    perspective,
+    perspective: (previewData as { perspective: ClientPerspective })?.perspective || 'published',
   }
   const lang = getNameFromLocale(locale)
   const queryParams = {

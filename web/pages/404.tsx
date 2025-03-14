@@ -68,11 +68,10 @@ export const getStaticProps: GetStaticProps = async ({
   previewData,
 }) => {
   const lang = getNameFromLocale(locale)
-  const { perspective } = previewData as { perspective: ClientPerspective }
 
   const previewContext = {
     preview,
-    perspective,
+    perspective: (previewData as { perspective: ClientPerspective })?.perspective || 'published',
   }
   const intl = await getIntl(locale, previewContext)
 
