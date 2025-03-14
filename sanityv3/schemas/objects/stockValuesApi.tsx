@@ -8,10 +8,12 @@ const ApiDescription = () => {
   return (
     <Box>
       <Heading size={2}>How to use</Heading>
-      <Text style={{ margin: '4px 0' }}>
-        This component will automatically display up to date Equinor stock values from the OSE and NYSE. No
-        configuration is required.
-      </Text>
+      <span style={{ display: 'block', marginTop: '25px' }}>
+        <Text>
+          This component will automatically display up to date Equinor stock values from the OSE and NYSE. No
+          configuration is required.
+        </Text>
+      </span>
     </Box>
   )
 }
