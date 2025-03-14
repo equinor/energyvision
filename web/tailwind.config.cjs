@@ -274,7 +274,7 @@ module.exports = {
         viewport: '1920px',
         //When large font, prose(65ch) might not be the best
         text: '760px',
-        menuText: 'calc(35 * var(--space-medium))',
+        menuText: 'calc(35 * theme(spacing.6))',
         innerColumn: 'calc(100vw - (theme(padding.layout-lg) * 2))',
         smContainer: 'calc(100vw - theme(spacing.layout-sm) - theme(spacing.layout-sm))',
       },
