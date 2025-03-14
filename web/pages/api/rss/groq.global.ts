@@ -12,15 +12,19 @@ export type LatestNewsType = {
   publishDateTime: string
   hero: ImageWithCaptionData
   ingress: PortableTextBlock
+  subscriptionType: string
+  lang: string
 }
 
 export const latestNews = /* groq */ `
-  *[_type == "news" && ${excludeCrudeOilAssays} ${sameLang}] | order(${publishDateTimeQuery} desc)[0...20] {
+  *[_type == "news" && ${excludeCrudeOilAssays} ${sameLang}] | order(${publishDateTimeQuery} desc)[0...5] {
     _id,
     "slug": slug.current,
     title,
     "hero": heroImage,
+    subscriptionType,
     "publishDateTime": ${publishDateTimeQuery},
     ${ingressForNewsQuery},
+    lang
   }
 `
