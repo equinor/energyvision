@@ -100,16 +100,18 @@ export const getStaticProps: GetStaticProps = async ({ preview = false, locale =
   const queryParams = {
     lang,
   }
-  const { perspective } = previewData as { perspective: ClientPerspective }
+
+  const previewContext = {
+    preview,
+    perspective: (previewData as { perspective: ClientPerspective })?.perspective || 'published',
+  }
+
   const { menuData, pageData, footerData } = await getComponentsData(
     {
       query: newsroomQuery,
       queryParams,
     },
-    {
-      preview,
-      perspective,
-    },
+    previewContext,
   )
 
   const serverState = await getServerState(
