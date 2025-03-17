@@ -1,5 +1,5 @@
 import { forwardRef, HTMLAttributes } from 'react'
-import type { FactImagePosition } from '../../components/src/Fact'
+import { FactImagePosition } from '.'
 import { BackgroundColours } from '../../types/index'
 import { ColorKeyTokens } from '../../styles/colorKeyToUtilityMap'
 import { BackgroundContainer, BackgroundContainerProps } from '@components'

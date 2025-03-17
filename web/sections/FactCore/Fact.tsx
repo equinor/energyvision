@@ -1,6 +1,6 @@
 import { toPlainText } from '@portabletext/react'
-import { FactBox } from '@components'
-import type { FactImagePosition } from '@components'
+import { FactBox } from '@core/FactCore'
+import type { FactImagePosition } from '@core/FactCore'
 import type { PortableTextBlock } from '@portabletext/types'
 import type { BackgroundColours, ImageWithAlt } from '../../types/index'
 import { urlFor } from '../../common/helpers'

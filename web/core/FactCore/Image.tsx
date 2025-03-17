@@ -1,4 +1,4 @@
-import { FactImagePosition } from '@components'
+import { FactImagePosition } from '.'
 import { HTMLAttributes } from 'react'
 
 export const Image = ({
