@@ -1,7 +1,7 @@
 import { forwardRef, HTMLAttributes } from 'react'
-import type { FactImagePosition } from './'
-import { BackgroundColours } from '../../../types/index'
-import { ColorKeyTokens } from '../../../styles/colorKeyToUtilityMap'
+import type { FactImagePosition } from '../../components/src/Fact'
+import { BackgroundColours } from '../../types/index'
+import { ColorKeyTokens } from '../../styles/colorKeyToUtilityMap'
 import { BackgroundContainer, BackgroundContainerProps } from '@components'
 import { twMerge } from 'tailwind-merge'
 

@@ -2,11 +2,11 @@ import { toPlainText } from '@portabletext/react'
 import { FactBox } from '@components'
 import type { FactImagePosition } from '@components'
 import type { PortableTextBlock } from '@portabletext/types'
-import type { BackgroundColours, ImageWithAlt } from '../../../../../types/index'
-import { urlFor } from '../../../../../common/helpers'
-import Blocks from '../../Blocks'
+import type { BackgroundColours, ImageWithAlt } from '../../types/index'
+import { urlFor } from '../../common/helpers'
+import Blocks from '../../pageComponents/shared/portableText/Blocks'
 import { Typography } from '@core/Typography'
-import Image from '../../../SanityImage'
+import Image from '../../pageComponents/shared/SanityImage'
 
 type FactboxProps = {
   title: string

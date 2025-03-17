@@ -1,4 +1,4 @@
-import { FactBox as FactBoxWrapper, FactProps } from './FactBox'
+import { FactBox as FactBoxWrapper, FactProps } from '../../../core/FactCore/FactBox'
 import { Text } from './Text'
 import { Image } from './Image'
 import { Content } from './Content'
