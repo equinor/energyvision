@@ -23,7 +23,6 @@ const generateRssFeed = async () => {
       <channel>
       <title>Equinor News</title>
       <description>Latest news</description>
-      <language>en_GB, nb_NO</language>
       <link>https://www.equinor.com</link>`
 
     const serializers = {
@@ -65,7 +64,7 @@ const generateRssFeed = async () => {
           <guid>https://equinor.com${langPath}${article.slug}</guid>
           <pubDate>${formattedPubDate}</pubDate>
           <description><![CDATA[<img src="${bannerImageUrl}"${imageAlt}/><br/>${descriptionHtml}]]></description>
-          <category>${article.lang.toUpperCase()}</category>
+          <language>${article.lang}</language>
           ${article.subscriptionType ? `<category>${article.subscriptionType}</category>` : ''}
           <nl:extra1>${extraFormattedDate}</nl:extra1>
         </item>`
