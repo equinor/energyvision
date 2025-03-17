@@ -236,6 +236,9 @@ export type PromoTileArrayData = {
   id: string
   group: PromoTileData[]
   useHorizontalScroll: boolean
+  title?: PortableTextBlock[]
+  ingress?: PortableTextBlock[]
+  hideTitle?: boolean
 }
 
 export type CookieType = 'none' | 'marketing' | 'statistics' | 'preferences'
