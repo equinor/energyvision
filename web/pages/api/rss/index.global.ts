@@ -19,7 +19,7 @@ const generateRssFeed = async () => {
     )
 
     let rss = `<?xml version="1.0" encoding="UTF-8"?>
-    <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:nl="https://support.make.as/nb/articles/21122-design-av-rss-rader">
+    <rss version="2.0" xmlns:nl="http://www.w3.org">
       <channel>
       <title>Equinor News</title>
       <description>Latest news</description>
