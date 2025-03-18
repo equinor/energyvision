@@ -67,6 +67,7 @@ const datasets = {
   equinorfunds: ['norwegian'],
   southkorea: ['english', 'korean'],
   celticsea: ['english', 'welsh'],
+  sponsorship: ['english', 'norwegian'],
   // Test datasets
   'global-development': ['english', 'norwegian', 'japanese'],
   'global-test': ['english', 'norwegian', 'japanese'],
@@ -136,6 +137,10 @@ const websiteDomains = {
   },
   'global-test': {
     url: 'https://web-global-test-equinor-web-sites-test.c2.radix.equinor.com',
+    meta: 'Equinor',
+  },
+  sponsorship: {
+    url: 'https://web-global-test-equinor-web-sites-dev.c2.radix.equinor.com',
     meta: 'Equinor',
   },
 }
