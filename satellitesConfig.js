@@ -140,7 +140,7 @@ const websiteDomains = {
     meta: 'Equinor',
   },
   sponsorship: {
-    url: 'https://web-sponsorship-equinor-web-sites-prod.c2.radix.equinor.com/',
+    url: 'https://web-sponsorship-equinor-web-sites-preprod.c2.radix.equinor.com/',
     meta: 'Equinor',
   },
 }
