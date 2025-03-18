@@ -30,7 +30,8 @@ const TextWithIconArray = ({ data, anchor, className = '', listClassName = '' }:
         pb-page-content
         mx-auto
         flex
-        flex-col`,
+        flex-col
+        gap-6`,
         className,
       )}
     >
