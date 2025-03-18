@@ -1,7 +1,6 @@
 export * from './Button'
 export * from './Card'
 export * from './Topbar'
-export * from './Fact'
 export * from './Text'
 export * from './FormattedDateTime'
 export * from './List'
