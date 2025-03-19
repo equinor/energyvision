@@ -7,7 +7,7 @@ import NewsHit from './NewsHit'
 import TopicHit from './TopicHit'
 import TotalResultsStat from './TotalResultsStat'
 import { useSortBy, UseSortByProps, useHits, useInstantSearch } from 'react-instantsearch'
-import { FormattedMessage, useIntl } from 'react-intl'
+import { useIntl } from 'react-intl'
 
 const { TabList, Tab, TabPanel } = Tabs
 
