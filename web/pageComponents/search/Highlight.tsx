@@ -2,11 +2,11 @@ import { Fragment } from 'react'
 import { getHighlightedParts, getPropertyByPath } from 'instantsearch.js/es/lib/utils/index.js'
 import { v4 as uuidv4 } from 'uuid'
 import { decode } from 'html-entities'
-import type { EventHitType } from './EventHit'
-import type { TopicHitType } from './TopicHit'
+import type { Hit as AlgoliaHit } from '@algolia/client-search'
+import type { HitData } from './UniversalHit'
 
 type Highlight = {
-  hit: EventHitType | TopicHitType
+  hit: AlgoliaHit<HitData>
   attribute: string
 }
 
