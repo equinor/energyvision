@@ -90,6 +90,7 @@ import tabsItem from './objects/tabs/tabsItem'
 import tabsBackground from './objects/tabs/tabsBackground'
 import tabsInfoPanel from './objects/tabs/tabsInfoPanel'
 import tabsKeyNumbers from './objects/tabs/tabsKeyNumbers'
+import tabsKeyNumberItem from './objects/tabs/tabsKeyNumberItem'
 import imageWithRichText from './objects/ImageWithRichText'
 
 const {
@@ -226,6 +227,7 @@ const RemainingSchemas = [
   tabsBackground,
   tabsInfoPanel,
   tabsKeyNumbers,
+  tabsKeyNumberItem,
   imageWithLinkAndOrOverlay,
   imageWithRichText,
 ]
