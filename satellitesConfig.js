@@ -83,6 +83,7 @@ export const defaultWebLanguage = {
   storage: 'german',
   southkorea: 'korean',
   japan: 'japanese',
+  sponsorship: 'norwegian',
 }
 
 /**
@@ -140,8 +141,8 @@ const websiteDomains = {
     meta: 'Equinor',
   },
   sponsorship: {
-    url: 'https://web-sponsorship-equinor-web-sites-preprod.c2.radix.equinor.com/',
-    meta: 'Equinor',
+    url: 'https://www.sponsorship.equinor.com',
+    meta: 'Sponsorship',
   },
 }
 
