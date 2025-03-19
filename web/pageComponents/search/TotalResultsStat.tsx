@@ -14,7 +14,7 @@ const TotalResultsStat = ({ totalPages, hitsPerPage }: TotalResultsStatProps) =>
 
   const defaultMessage = '{currentlyShowing} of {nbHits} results'
   return (
-    <div className="mt-4 text-slate-blue-70">
+    <div className="mt-5 text-slate-blue-70">
       <FormattedMessage
         id="search_showing_results_number"
         defaultMessage={defaultMessage}
