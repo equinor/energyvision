@@ -1,30 +1,15 @@
-import styled from 'styled-components'
 import { Heading, HeadingProps } from '@components'
-import { StyledHitLink } from './HitLink'
-import { outlineTemplate, Tokens } from '@utils'
 
-const { outline } = Tokens
-
-const StyledHitHeading = styled(Heading)`
-  position: relative;
-  display: inline-block;
-  margin-bottom: var(--space-xSmall);
-
-  ${StyledHitLink}:hover & {
-    text-decoration: underline;
-  }
-
-  ${StyledHitLink}:focus-visible & {
-    outline: none;
-    ${outlineTemplate(outline)}
-    outline-color: var(--mist-blue-100);
-  }
-`
 const HitHeading = ({ children, ...rest }: HeadingProps) => {
   return (
-    <StyledHitHeading level="h2" size="sm" {...rest}>
+    <Heading
+      level="h2"
+      size="sm"
+      className="relative inline-block mb-2 group-hover:underline group-focus-visible:outline-none group-focus-visible:ring-2 group-focus-visible:ring-mist-blue-100"
+      {...rest}
+    >
       {children}
-    </StyledHitHeading>
+    </Heading>
   )
 }
 

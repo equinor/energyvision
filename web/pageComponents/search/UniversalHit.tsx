@@ -1,12 +1,12 @@
 import { Highlight } from './Highlight'
 import getConfig from 'next/config'
 import type { Hit as AlgoliaHit } from '@algolia/client-search'
-import { StyledHitLink } from './hit/HitLink'
 import HitHeading from './hit/HitHeading'
 import DisplayLink from './hit/DisplayLink'
 import { FormattedDate } from '@components'
 import { useRouter } from 'next/router'
 import { defaultLanguage } from '../../languages'
+import { default as NextLink } from 'next/link'
 
 export type HitData = {
   slug?: string
@@ -33,41 +33,41 @@ const buildDisplayURL = (slug = '', locale: string | undefined): string => {
 }
 
 const UniversalHit: React.FC<HitProps> = ({ hit }) => {
-  const { slug = '', title, ingress, text, eventDescription, eventDate, publishDateTime } = hit
+  const { slug = '', title, ingress, text, eventDescription, eventDate, publishDateTime, pageTitle, type } = hit
   const { locale } = useRouter()
   const fullUrl = buildDisplayURL(slug, locale)
+  const formattedDate = eventDate || publishDateTime
 
+  // Define text attributes with conditional class names
   const textAttributes = [
-    { key: 'title', value: title },
-    { key: 'ingress', value: ingress },
-    { key: 'text', value: text },
-    { key: 'eventDescription', value: eventDescription },
+    { key: 'title', value: title, className: 'text-sm' },
+    { key: 'pageTitle', value: pageTitle, className: 'text-sm' },
+    { key: 'ingress', value: ingress, className: type === 'event' ? 'text-2xs' : 'text-xs' },
+    { key: 'eventDescription', value: eventDescription, className: type === 'event' ? 'text-2xs' : 'text-xs' },
+    { key: 'text', value: text, className: 'text-xs' },
   ]
+
+  console.log('UniversalHit', hit)
 
   return (
     <article>
-      <StyledHitLink href={slug} prefetch={false}>
-        {eventDate ||
-          (publishDateTime && (
-            <p className="block text-xs tracking-wide">
-              <FormattedDate uppercase datetime={eventDate || publishDateTime} />
-            </p>
-          ))}
-        <HitHeading level="h2" size="sm">
-          <Highlight hit={hit} attribute="pageTitle" />
-        </HitHeading>
+      <NextLink className="py-4 px-0 block cursor-pointer outline-none" href={slug} prefetch={false}>
+        {formattedDate && type !== 'magazine' && (
+          <p className={`block tracking-wide ${type === 'news' ? 'text-2xs' : 'text-xs'}`}>
+            <FormattedDate uppercase datetime={formattedDate} />
+          </p>
+        )}
 
-        {textAttributes.map(
-          ({ key, value }) =>
-            value && (
-              <p key={key} className="m-0 text-xs leading-cloudy">
-                <Highlight hit={hit} attribute={key} />
-              </p>
-            ),
+        {textAttributes.map(({ key, value, className }) =>
+          value ? (
+            <p key={key} className={`${className} m-0 leading-cloudy`}>
+              <Highlight hit={hit} attribute={key} />
+            </p>
+          ) : null,
         )}
 
         <DisplayLink>{fullUrl}</DisplayLink>
-      </StyledHitLink>
+      </NextLink>
     </article>
   )
 }
