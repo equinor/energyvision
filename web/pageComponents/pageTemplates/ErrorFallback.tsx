@@ -1,105 +1,56 @@
 import { Button, Text, Heading } from '@components'
-import styled from 'styled-components'
 import { GlobalStyle, GlobalFontStyle } from '../../styles/globalStyles'
 import type { FallbackProps } from 'react-error-boundary'
-import { Link } from '@core/Link'
 
-const Wrapper = styled.section`
-  padding: clamp(40px, calc(14.3125px + 11.0032vw), 210px) clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
-`
-
-const ContentWrapper = styled.div`
-  margin: var(--space-xLarge) 0;
-`
-
-const StyledButton = styled(Button)`
-  margin-bottom: var(--space-large);
-`
-
-const StyledDetails = styled.details`
-  margin: var(--space-xLarge) 0;
-`
-
-const StyledSummary = styled.summary`
-  font-size: var(--typeScale-2);
-  margin-bottom: var(--space-medium);
-`
-
-const StyledCode = styled.code`
-  padding: var(--space-small);
-  background: var(--grey-20);
-  display: block;
-  border-radius: 10px;
-  margin: var(--space-medium) 0;
-`
-
-const StyledPre = styled.pre`
-  padding: var(--space-small);
-  overflow-x: auto;
-  line-height: 1.5em;
-`
-
-const sliceErrorStack = (stackTrace = '', numLines = 10) => {
-  const lines = stackTrace.split('\n')
-  const firstNLines = lines.slice(0, numLines)
-  const joinedLines = firstNLines.join('\n')
-  return joinedLines
-}
-
-const getMailLink = (): string => {
-  const subject = 'Problem: unable to load website'
-
-  if (typeof window === 'undefined') {
-    return `mailto:noreply@equinor.com?subject=${encodeURIComponent(subject)}`
-  }
-
-  const body = `An error occured while viewing: ${window.location.href}`
-
-  return `mailto:noreply@equinor.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
-}
+const sliceErrorStack = (stackTrace = '', numLines = 10) => stackTrace.split('\n').slice(0, numLines).join('\n')
 
 export const ErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => {
   return (
-    <Wrapper>
+    <section className="px-layout-sm">
       <GlobalStyle />
       <GlobalFontStyle />
       <Heading level="h1" size="xl">
         An Error Occurred
       </Heading>
 
-      <ContentWrapper>
+      <div className="mx-0 my-10">
         <Text>
           The application detected an error that prevented it from loading. This error has been automatically reported
           to the development team. You can try clicking the <strong>Reload the Page</strong> button below to return to
           the page you were on previously.
         </Text>
 
-        <StyledButton onClick={resetErrorBoundary}>Reload the Page</StyledButton>
+        <Button className="mb-7" onClick={resetErrorBoundary}>
+          Reload the Page
+        </Button>
+      </div>
 
-        <Text>
-          If the error keeps occurring, please contact us at{' '}
-          <Link type="externalUrl" href={getMailLink()}>
-            noreply@equinor.com
-          </Link>{' '}
-          with the URL of the page you are trying to view and the details below:
-        </Text>
-      </ContentWrapper>
-
-      <ContentWrapper>
+      <div className="mx-0 my-10">
         <Heading level="h2" size="lg">
           Error Details
         </Heading>
-        <StyledCode>
-          <StyledPre tabIndex={0}>{error.message}</StyledPre>
-        </StyledCode>
-        <StyledDetails>
-          <StyledSummary>Expand to Show Error Stack Traces</StyledSummary>
+
+        <div
+          className="p-2 block bg-grey-20 rounded-lg my-4 mx-0 overflow-x-auto"
+          role="textbox"
+          aria-label="Error message"
+        >
+          <pre className="p-2 text-2">{error.message}</pre>
+        </div>
+
+        <details className="mx-0 my-10">
+          <summary className="text-md mb-4">Expand to Show Error Stack Traces</summary>
           <Heading level="h3">Stack Trace</Heading>
-          <StyledCode>
-            <StyledPre tabIndex={0}>{sliceErrorStack(error.stack)}</StyledPre>
-          </StyledCode>
-        </StyledDetails>
-      </ContentWrapper>
-    </Wrapper>
+
+          <div
+            className="p-2 block bg-grey-20 rounded-lg my-4 mx-0 overflow-x-auto"
+            role="textbox"
+            aria-label="Stack trace"
+          >
+            <pre className="p-2 text-2">{sliceErrorStack(error.stack)}</pre>
+          </div>
+        </details>
+      </div>
+    </section>
   )
 }
