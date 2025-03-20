@@ -136,10 +136,6 @@ const websiteDomains = {
     url: 'localhost:3000',
     meta: 'Equinor',
   },
-  'global-test': {
-    url: 'https://web-global-test-equinor-web-sites-test.c2.radix.equinor.com',
-    meta: 'Equinor',
-  },
   sponsorship: {
     url: 'https://www.sponsorship.equinor.com',
     meta: 'Sponsorship',
