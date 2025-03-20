@@ -1,9 +1,8 @@
 import { Highlight } from './Highlight'
 import getConfig from 'next/config'
 import type { Hit as AlgoliaHit } from '@algolia/client-search'
-import HitHeading from './hit/HitHeading'
 import DisplayLink from './hit/DisplayLink'
-import { FormattedDate } from '@components'
+import { FormattedDate, Heading } from '@components'
 import { useRouter } from 'next/router'
 import { defaultLanguage } from '../../languages'
 import { default as NextLink } from 'next/link'
@@ -38,32 +37,54 @@ const UniversalHit: React.FC<HitProps> = ({ hit }) => {
   const fullUrl = buildDisplayURL(slug, locale)
   const formattedDate = eventDate || publishDateTime
 
-  // Define text attributes with conditional class names
-  const textAttributes = [
-    { key: 'title', value: title, className: 'text-sm' },
-    { key: 'pageTitle', value: pageTitle, className: 'text-sm' },
-    { key: 'ingress', value: ingress, className: type === 'event' ? 'text-2xs' : 'text-xs' },
-    { key: 'eventDescription', value: eventDescription, className: type === 'event' ? 'text-2xs' : 'text-xs' },
-    { key: 'text', value: text, className: 'text-xs' },
-  ]
-
-  console.log('UniversalHit', hit)
-
   return (
     <article>
-      <NextLink className="py-4 px-0 block cursor-pointer outline-none" href={slug} prefetch={false}>
+      <NextLink className="py-6 px-0 block cursor-pointer outline-none" href={slug} prefetch={false}>
         {formattedDate && type !== 'magazine' && (
           <p className={`block tracking-wide ${type === 'news' ? 'text-2xs' : 'text-xs'}`}>
             <FormattedDate uppercase datetime={formattedDate} />
           </p>
         )}
+        {pageTitle && (
+          <Heading className="relative inline-block mb-2" level="h2" size="sm">
+            <span className="hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mist-blue-100">
+              <Highlight hit={hit} attribute="pageTitle" />
+            </span>
+          </Heading>
+        )}
+        {title && pageTitle && <br />}
+        {title && (
+          <Heading
+            level="h2"
+            size="sm"
+            className={`relative inline-block mb-2 ${pageTitle && title ? 'text-xs' : 'hover:underline'}`}
+          >
+            <span
+              className={`${
+                pageTitle && title ? 'text-xs' : 'hover:underline'
+              } focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mist-blue-100`}
+            >
+              <Highlight hit={hit} attribute="title" />
+            </span>
+          </Heading>
+        )}
 
-        {textAttributes.map(({ key, value, className }) =>
-          value ? (
-            <p key={key} className={`${className} m-0 leading-cloudy`}>
-              <Highlight hit={hit} attribute={key} />
-            </p>
-          ) : null,
+        {[
+          { key: 'ingress', value: ingress },
+          { key: 'eventDescription', value: eventDescription },
+          { key: 'text', value: text },
+        ].map(
+          ({ key, value }) =>
+            value && (
+              <p
+                key={key}
+                className={`${
+                  type === 'event' && (key === 'ingress' || key === 'eventDescription') ? 'text-2xs' : 'text-xs'
+                } m-0 leading-cloudy`}
+              >
+                <Highlight hit={hit} attribute={key} />
+              </p>
+            ),
         )}
 
         <DisplayLink>{fullUrl}</DisplayLink>
