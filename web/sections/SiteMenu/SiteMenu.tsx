@@ -11,6 +11,7 @@ import { Link, LogoLink } from '@core/Link'
 import type { MenuData, SimpleGroupData, SimpleMenuData, SubMenuData } from '../../types/index'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { SimpleMenuItem } from './SimpleMenuItem'
+import { Flags } from '../../common/helpers/datasetHelpers'
 
 export type Variants = 'default' | 'simple'
 
@@ -46,7 +47,7 @@ const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
   }, [router.events, handleRouteChange])
 
   const title = intl.formatMessage({ id: 'menu', defaultMessage: 'Menu' })
-  const allSitesURL = getAllSitesLink('internal', router?.locale || 'en')
+  const allSitesURL = getAllSitesLink(Flags.IS_GLOBAL_PROD ? 'internal' : 'external', router?.locale || 'en')
 
   const getCurrentMenuItemIndex = () => {
     return menuItems
