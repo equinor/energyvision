@@ -2,6 +2,7 @@ import { forwardRef, CSSProperties } from 'react'
 import { Table as EdsTable, CellProps } from '@equinor/eds-core-react'
 import styled from 'styled-components'
 import { StyledHeadItem } from './Head'
+import { twMerge } from 'tailwind-merge'
 
 const { Cell: EdsCell } = EdsTable
 

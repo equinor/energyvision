@@ -2,6 +2,7 @@ import { forwardRef, CSSProperties } from 'react'
 import { Table as EdsTable, TableProps as EdsTableProps } from '@equinor/eds-core-react'
 import styled, { ThemeProvider } from 'styled-components'
 import { TableThemes } from '../../../types/index'
+import { twMerge } from 'tailwind-merge'
 
 type ThemeType = {
   headerBackground: string
