@@ -1,4 +1,4 @@
-import { FactImagePosition } from '@components'
+import { FactImagePosition } from '.'
 import { twMerge } from 'tailwind-merge'
 
 type ContentProps = {
