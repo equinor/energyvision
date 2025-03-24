@@ -1,4 +1,4 @@
-import { signUp } from './subscription'
+import { signUp } from './make-subscription'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { validateFormRequest } from './forms/validateFormRequest'
 
