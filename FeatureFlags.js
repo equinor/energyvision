@@ -15,17 +15,9 @@ const SATELLITES = [
   'poland',
   'southkorea',
   'storage',
+  'sponsorship',
 ]
-const NEWS = [
-  ...GLOBAL_DEV,
-  ...GLOBAL_PROD,
-  'japan',
-  'poland',
-  'brazil',
-  'germany',
-  'southkorea',
-  'celticsea',
-]
+const NEWS = [...GLOBAL_DEV, ...GLOBAL_PROD, 'japan', 'poland', 'brazil', 'germany', 'southkorea', 'celticsea']
 const ARCHIVED_NEWS = [...GLOBAL_PROD, ...GLOBAL_DEV]
 const NEWS_SUBSCRIPTION = [...GLOBAL_PROD, ...GLOBAL_DEV]
 const MAGAZINE_SUBSCRIPTION = [...GLOBAL_DEV, ...GLOBAL_PROD]

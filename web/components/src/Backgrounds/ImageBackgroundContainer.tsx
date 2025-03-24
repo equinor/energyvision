@@ -11,6 +11,8 @@ type ImageBackgroundContainerProps = {
   /* Provide gradient in scrimClassname and disable default */
   overrideGradient?: boolean
   aspectRatio?: number
+  /** Set return element as section */
+  asSection?: boolean
 } & ImageBackground &
   HTMLAttributes<HTMLDivElement>
 const DEFAULT_MAX_WIDTH = 1920
@@ -28,6 +30,7 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
       overrideGradient = false,
       dontSplit = false,
       aspectRatio,
+      asSection = false,
       ...rest
     },
     ref,
@@ -35,6 +38,7 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
     const props = useSanityLoader(image, DEFAULT_MAX_WIDTH, aspectRatio)
     const src = props?.src
     const isMobile = useMediaQuery(`(max-width: 800px)`)
+    const ReturnElement = asSection ? 'section' : 'div'
 
     const fadedFilter = `
     before:content-['']
@@ -79,7 +83,7 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
     }
 
     return useAnimation && !isMobile ? (
-      <div
+      <ReturnElement
         ref={ref}
         className={backgroundClassNames}
         style={
@@ -103,9 +107,9 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
         >
           {children}
         </div>
-      </div>
+      </ReturnElement>
     ) : isMobile && !dontSplit ? (
-      <div ref={ref} {...rest}>
+      <ReturnElement ref={ref} {...rest}>
         <div
           className={twMerge(`aspect-video`, backgroundClassNames)}
           style={{
@@ -113,9 +117,9 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
           }}
         />
         {children}
-      </div>
+      </ReturnElement>
     ) : (
-      <div
+      <ReturnElement
         ref={ref}
         className={backgroundClassNames}
         style={{
@@ -136,7 +140,7 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
         >
           {children}
         </div>
-      </div>
+      </ReturnElement>
     )
   },
 )
