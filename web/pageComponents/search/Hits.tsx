@@ -1,8 +1,8 @@
 import { useHits } from 'react-instantsearch'
-import { List, Heading } from '@components'
 import { FormattedMessage } from 'react-intl'
 import type { Hit as AlgoliaHit } from '@algolia/client-search'
 import { HitData } from './UniversalHit'
+import { Typography } from '@core/Typography'
 
 export type HitProps = { hit: AlgoliaHit<HitData> }
 
@@ -14,10 +14,12 @@ const Hits = ({ hitComponent: Hit }: HitsProps) => {
   const { items } = useHits()
   if (!items || items.length === 0) {
     return (
-      <div className="py-15 px-0">
-        <Heading className="uppercase" level="h2" size="sm">
-          <FormattedMessage id="search_no_results_heading" defaultMessage="Nothing found" />
-        </Heading>
+      <div className="py-12 px-0">
+        <Typography level="h2" size="sm">
+          <div className="uppercase">
+            <FormattedMessage id="search_no_results_heading" defaultMessage="Nothing found" />
+          </div>
+        </Typography>
         <p>
           <FormattedMessage
             id="search_no_results_generic"
@@ -30,7 +32,7 @@ const Hits = ({ hitComponent: Hit }: HitsProps) => {
 
   return (
     <div className="relative">
-      <List variant="numbered" unstyled>
+      <ol>
         {items.map((item) => (
           <li
             key={item.objectID}
@@ -39,7 +41,7 @@ const Hits = ({ hitComponent: Hit }: HitsProps) => {
             <Hit hit={item} />
           </li>
         ))}
-      </List>
+      </ol>
     </div>
   )
 }
