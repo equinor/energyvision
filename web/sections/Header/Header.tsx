@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useRouter } from 'next/router'
 import { default as NextLink } from 'next/link'
-import { BackgroundContainer } from '@components'
 import { AllSlugsType, LocalizationSwitch } from '../../pageComponents/shared/LocalizationSwitch'
 import type { MenuData, SimpleMenuData, StickyMenuData } from '../../types/index'
 import { Flags } from '../../common/helpers/datasetHelpers'
