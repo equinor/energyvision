@@ -1,4 +1,4 @@
-const Twitter = ({ width = 42, height = 42 }: { width?: number; height?: number }) => {
+const Twitter = ({ width = 33, height = 30 }: { width?: number; height?: number }) => {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} viewBox="0 0 963.6 963.6">
       <g id="Twitter_X_Icon-equinor" data-name="Twitter X Icon-equinor" transform="translate(-352.5 -128.8)">

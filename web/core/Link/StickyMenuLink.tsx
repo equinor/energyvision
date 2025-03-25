@@ -12,6 +12,7 @@ export const StickyMenuLink = forwardRef<HTMLAnchorElement, StickMenuLinkProps>(
   { children, type = 'internalUrl', className = '', href = '', isDownloadable = false, ...rest },
   ref,
 ) {
+  const isPdf = href?.toLowerCase().endsWith('.pdf')
   return (
     <BaseLink
       type={type}
@@ -28,6 +29,8 @@ export const StickyMenuLink = forwardRef<HTMLAnchorElement, StickMenuLinkProps>(
       )}
       ref={ref}
       href={href}
+      target={isPdf ? '_blank' : undefined}
+      rel={isPdf ? 'noopener noreferrer' : undefined}
       {...rest}
     >
       {isDownloadable && <PiFilePdfThin className="mr-2" />}
