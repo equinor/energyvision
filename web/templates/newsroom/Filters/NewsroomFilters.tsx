@@ -1,3 +1,4 @@
+'use client'
 import { forwardRef, HTMLAttributes } from 'react'
 import { FormattedMessage, useIntl } from 'react-intl'
 import envisTwMerge from '../../../twMerge'

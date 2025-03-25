@@ -1,4 +1,5 @@
-import { useRouter } from 'next/router'
+//import { useRouter } from 'next/router'
+'use client'
 import { PageContent } from '../../pageComponents/pageTemplates/shared/SharedPageContent'
 import SharedTitle from '../../pageComponents/pageTemplates/shared/SharedTitle'
 import { HeroTypes, MagazinePageSchema } from '../../types/index'
@@ -7,6 +8,9 @@ import Teaser from '../../pageComponents/shared/Teaser'
 import Seo from '../../pageComponents/shared/Seo'
 import useSharedTitleStyles from '../../lib/hooks/useSharedTitleStyles'
 import MagazineTagBar from '@sections/MagazineTags/MagazineTagBar'
+import { usePathname, useRouter } from 'next/navigation'
+import { useCurrentLocale } from 'next-i18n-router/client'
+import { i18nConfig } from '../../i18nConfig'
 
 type MagazinePageProps = {
   data: MagazinePageSchema
@@ -14,9 +18,11 @@ type MagazinePageProps = {
 
 const MagazinePage = ({ data }: MagazinePageProps) => {
   const router = useRouter()
+  const locale = useCurrentLocale(i18nConfig)
+  const pathname = usePathname() || ''
   const parentSlug =
-    (router.locale !== router.defaultLocale ? `/${router.locale}` : '') +
-    router.asPath.substring(router.asPath.indexOf('/'), router.asPath.lastIndexOf('/'))
+    (locale !== i18nConfig.defaultLocale ? `/${locale}` : '') +
+    pathname.substring(pathname.indexOf('/'), pathname.lastIndexOf('/'))
 
   const { hideFooterComponent, footerComponent, tags } = data
 
@@ -24,17 +30,11 @@ const MagazinePage = ({ data }: MagazinePageProps) => {
 
   const handleClickTag = (tagValue: string) => {
     if (tagValue === 'ALL') {
-      delete router.query.filter
-      router.push({
-        pathname: parentSlug,
-      })
+      router.push(parentSlug)
     } else {
-      router.push({
-        pathname: parentSlug,
-        query: {
-          tag: tagValue,
-        },
-      })
+      router.push(
+        parentSlug, //TODO add tagname
+      )
     }
   }
 

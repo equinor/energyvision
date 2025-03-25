@@ -1,6 +1,6 @@
-import { useEffect, useCallback, useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { useFloating, useInteractions, useDismiss, FloatingOverlay, FloatingFocusManager } from '@floating-ui/react'
-import { useRouter } from 'next/router'
+import { usePathname } from 'next/navigation'
 import { Menu, MenuButton } from '@core/MenuAccordion'
 import { MenuItem } from './MenuItem'
 import { TopbarDropdown } from './TopbarDropdown'
@@ -12,6 +12,8 @@ import type { MenuData, SimpleGroupData, SimpleMenuData, SubMenuData } from '../
 import { FormattedMessage, useIntl } from 'react-intl'
 import { SimpleMenuItem } from './SimpleMenuItem'
 import { Flags } from '../../common/helpers/datasetHelpers'
+import { useCurrentLocale } from 'next-i18n-router/client'
+import { i18nConfig } from '../../i18nConfig'
 
 export type Variants = 'default' | 'simple'
 
@@ -21,7 +23,9 @@ export type MenuProps = {
 }
 
 const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
-  const router = useRouter()
+  const pathname = usePathname()
+  const currentLocale = useCurrentLocale(i18nConfig)
+
   const [isOpen, setIsOpen] = useState(false)
   const intl = useIntl()
   const { refs, context } = useFloating({
@@ -37,30 +41,25 @@ const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
     return data && variant === 'simple' ? (data as SimpleMenuData).groups : (data as MenuData).subMenus
   }, [data, variant])
 
-  const handleRouteChange = useCallback(() => {
-    setIsOpen(false)
-  }, [])
-
   useEffect(() => {
-    router.events.on('routeChangeComplete', handleRouteChange)
-    return () => router.events.off('routeChangeComplete', handleRouteChange)
-  }, [router.events, handleRouteChange])
+    setIsOpen(false)
+  }, [pathname])
 
   const title = intl.formatMessage({ id: 'menu', defaultMessage: 'Menu' })
-  const allSitesURL = getAllSitesLink(Flags.IS_GLOBAL_PROD ? 'internal' : 'external', router?.locale || 'en')
+  const allSitesURL = getAllSitesLink(Flags.IS_GLOBAL_PROD ? 'internal' : 'external', currentLocale || 'en')
 
   const getCurrentMenuItemIndex = () => {
     return menuItems
       .findIndex((menuItem) => {
         if (variant === 'simple') {
           if ('link' in menuItem && menuItem?.link) {
-            return menuItem.link.slug === router.asPath
+            return menuItem.link.slug === pathname
           }
           if ('links' in menuItem && menuItem?.links) {
-            return menuItem.links.some((link) => link.link?.slug === router.asPath)
+            return menuItem.links.some((link) => link.link?.slug === pathname)
           }
         } else if (variant === 'default' && 'groups' in menuItem && menuItem.groups) {
-          return menuItem.groups?.some((group) => group.links.some((link) => link.link?.slug === router.asPath))
+          return menuItem.groups?.some((group) => group.links.some((link) => link.link?.slug === pathname))
         } else {
           return -1
         }

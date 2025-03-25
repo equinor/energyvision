@@ -1,17 +1,25 @@
-import { textSnippetsQuery } from '../../lib/queries/textSnippets'
-import { getClient } from '../../lib/sanity.server'
-import formatTextSnippets from './formatTextSnippets'
-import { getNameFromLocale } from '../../lib/localization'
-import { defaultLanguage } from '../../languages'
+'server-only'
 
-export default async (locale: string, preview: boolean) => {
+import { createIntl } from '@formatjs/intl'
+import { getNameFromLocale } from '../../lib/localization'
+import { getClient } from '../../lib/sanity.server'
+import { MessageFormatElement } from 'react-intl'
+import formatTextSnippets from '../../common/helpers/formatTextSnippets'
+import { textSnippetsQuery } from '../../lib/queries/textSnippets'
+
+const getMessages = async (
+  locale: string,
+  preview = false,
+): Promise<Record<string, MessageFormatElement[]> | Record<string, string>> => {
   const textSnippetsArray = await getClient(preview).fetch(textSnippetsQuery)
   const textSnippetsData = formatTextSnippets(textSnippetsArray)
   const lang = getNameFromLocale(locale)
+  return textSnippetsData[lang]
+}
 
-  return {
+export default async function getIntl(locale: string, preview: boolean) {
+  return createIntl({
     locale: locale,
-    defaultLocale: defaultLanguage.locale,
-    messages: textSnippetsData[lang],
-  }
+    messages: await getMessages(locale, preview),
+  })
 }

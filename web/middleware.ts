@@ -5,6 +5,8 @@ import { getLocaleFromName } from './lib/localization'
 import { Flags } from './common/helpers/datasetHelpers'
 import { getDocumentBySlug } from './common/helpers/getPaths'
 import archivedNews from './lib/archive/archivedNewsPaths.json'
+import { i18nRouter } from 'next-i18n-router'
+import { i18nConfig } from './i18nConfig'
 
 const PERMANENT_REDIRECT = 301
 //const TEMPORARY_REDIRECT = 302
@@ -101,4 +103,5 @@ export async function middleware(request: NextRequest) {
   if (isDotHtml) {
     return NextResponse.redirect(`${origin}${pathname.replace(DOT_HTML, '')}`, PERMANENT_REDIRECT)
   }
+  return i18nRouter(request, i18nConfig)
 }

@@ -14,8 +14,18 @@ type TopicPageProps = {
 const TopicPage = ({ data }: TopicPageProps) => {
   const titleStyles = useSharedTitleStyles(data?.hero?.type, data?.content?.[0])
   const { breadcrumbs } = data
-
   return (
+    <>
+      <Seo
+        seoAndSome={data?.seoAndSome}
+        slug={data?.slug}
+        heroImage={data?.hero?.figure?.image}
+        pageTitle={data?.title}
+      />
+      <h1>{toPlainText(data?.title)}</h1>
+    </>
+  )
+  /*return (
     <>
       <Seo
         seoAndSome={data?.seoAndSome}
@@ -46,7 +56,7 @@ const TopicPage = ({ data }: TopicPageProps) => {
         <PageContent data={data} titleBackground={titleStyles} />
       </main>
     </>
-  )
+  )*/
 }
 
 export default TopicPage

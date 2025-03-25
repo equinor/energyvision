@@ -1,3 +1,4 @@
+'use client'
 import { forwardRef, useRef } from 'react'
 import singletonRouter from 'next/router'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
@@ -10,7 +11,8 @@ import { Flags } from '../../common/helpers/datasetHelpers'
 import { createInstantSearchRouterNext } from 'react-instantsearch-router-nextjs'
 import { SearchClient, SearchResponse, UiState } from 'instantsearch.js'
 import Seo from '../../pageComponents/shared/Seo'
-import { Configure, InstantSearch } from 'react-instantsearch'
+import { Configure } from 'react-instantsearch'
+import { InstantSearchNext } from 'react-instantsearch-nextjs'
 import { FormattedMessage, useIntl } from 'react-intl'
 import NewsSections from './NewsSections/NewsSections'
 import QuickSearch from './QuickSearch/QuickSearch'
@@ -148,10 +150,12 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
     <PaginationContextProvider defaultRef={resultsRef}>
       <Seo seoAndSome={seoAndSome} slug={slug} pageTitle={title} />
       <main ref={ref}>
-        <InstantSearch
+        <InstantSearchNext
           searchClient={queriedSearchClient}
           future={{ preserveSharedStateOnUnmount: false }}
           indexName={indexName}
+          // eslint-disable-next-line
+          // @ts-ignore: @TODO: The types are not correct
           routing={routing}
         >
           <Configure
@@ -210,7 +214,7 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
               </div>
             </div>
           </div>
-        </InstantSearch>
+        </InstantSearchNext>
       </main>
     </PaginationContextProvider>
   )

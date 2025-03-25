@@ -1,14 +1,12 @@
 const archiveServerHostname = process.env.NEXT_PUBLIC_ARCHIVE_CONTENT_LINK
 /* eslint-disable @typescript-eslint/no-var-requires */
 import withBundleAnalyzer from '@next/bundle-analyzer'
-import { dataset, defaultLanguage, domain, languages } from './languages.js'
+import { dataset, domain } from './languages.js'
 import securityHeaders from './securityHeaders.js'
 
 const withBundle = withBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
 })
-
-const locales = languages.map((lang) => lang.locale)
 
 const getPageExtensions = (dataset) => {
   const extensions = ['tsx', 'ts', 'js', 'jsx']
@@ -46,7 +44,6 @@ export default withBundle({
       'video.js',
     ],
   },
-  swcMinify: true,
   transpilePackages: ['friendly-challenge'],
   eslint: {
     // Warning: Dangerously allow production builds to successfully complete even if
@@ -65,11 +62,6 @@ export default withBundle({
     domains: ['cdn.sanity.io', 'cdn.equinor.com'],
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
-  },
-  i18n: {
-    locales: locales,
-    defaultLocale: defaultLanguage.locale,
-    localeDetection: false,
   },
   async rewrites() {
     return [
@@ -133,5 +125,11 @@ export default withBundle({
         permanent: true,
       },
     ].filter((e) => e)
+  },
+
+  logging: {
+    fetches: {
+      fullUrl: true,
+    },
   },
 })

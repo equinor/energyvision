@@ -1,7 +1,8 @@
+'use client'
 import { BreadcrumbsList } from './index'
 import { BackgroundContainer, BackgroundContainerProps } from '@components'
 import { BreadcrumbJsonLd } from 'next-seo'
-import { useRouter } from 'next/router'
+import { usePathname } from 'next/navigation'
 import { twMerge } from 'tailwind-merge'
 import NextLink from 'next/link'
 import type { Breadcrumb } from '../../types'
@@ -14,9 +15,7 @@ type BreadcrumbsProps = {
   className?: string
 } & BackgroundContainerProps
 
-const buildJsonLdElements = (crumbs: Breadcrumb[], router: ReturnType<typeof useRouter>) => {
-  const { pathname, locale } = router
-
+const buildJsonLdElements = (crumbs: Breadcrumb[], pathname: string) => {
   return crumbs.map((item, index) => ({
     position: index + 1,
     name: item.label,
@@ -45,7 +44,7 @@ export const Breadcrumbs = ({
   background,
   className = '',
 }: BreadcrumbsProps) => {
-  const router = useRouter()
+  const pathname = usePathname()
   const crumbs =
     useCustomBreadcrumbs && customBreadcrumbs.length >= 3
       ? parseBreadcrumbs(customBreadcrumbs)
@@ -77,7 +76,7 @@ export const Breadcrumbs = ({
           })}
         </BreadcrumbsList>
       </nav>
-      <BreadcrumbJsonLd itemListElements={buildJsonLdElements(crumbs, router)} />
+      <BreadcrumbJsonLd itemListElements={buildJsonLdElements(crumbs, pathname || '')} />
     </BackgroundContainer>
   )
 }

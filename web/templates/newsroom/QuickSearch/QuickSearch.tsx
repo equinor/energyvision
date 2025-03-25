@@ -1,3 +1,4 @@
+'use client'
 import { SearchBox } from '../../../core/AlgoliaSearchBox/SearchBox'
 import { forwardRef } from 'react'
 import { SearchBoxProps } from 'react-instantsearch'

@@ -1,3 +1,4 @@
+'use client'
 import { HTMLAttributes, useContext, useState } from 'react'
 import { PreviewContext } from '../../../lib/contexts/PreviewContext'
 import styled from 'styled-components'

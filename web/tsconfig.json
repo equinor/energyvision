@@ -9,7 +9,6 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
-      "@components/*": ["components/src/*"],
       "@core/*": ["core/*"],
       "@sections/*": ["sections/*"],
       "@templates/*": ["templates/*"],
@@ -26,5 +25,5 @@
     ]
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "jest-setup.ts", ".next/types/**/*.ts"],
-  "exclude": ["node_modules", "pages-disabled/*.tsx"]
+  "exclude": ["node_modules", "pages-disabled/*.tsx", "pagesold/*", "components/*"]
 }

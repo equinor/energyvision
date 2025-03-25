@@ -1,3 +1,4 @@
+'use client'
 import { forwardRef } from 'react'
 import { FormattedMessage } from 'react-intl'
 import NewsHeadliner from './NewsHeadliner'

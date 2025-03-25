@@ -1,3 +1,4 @@
+'use client'
 import { TransformableIcon } from '../../../icons/TransformableIcon'
 import { isModifierClick } from '../../../pageComponents/shared/search/simplePagination/PaginationItem'
 import { forwardRef, HTMLAttributes } from 'react'
