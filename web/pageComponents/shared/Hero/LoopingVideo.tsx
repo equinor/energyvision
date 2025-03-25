@@ -9,7 +9,7 @@ const DEFAULT_MAX_WIDTH = 1920
 const DynamicVideoJsComponent = dynamic<React.ComponentProps<typeof VideoJS>>(
   () => import('../../../components/src/VideoJsPlayer').then((mod) => mod.VideoJS),
   {
-    ssr: false,
+    // ssr: false,
     loading: () => <p>Loading...</p>,
   },
 )

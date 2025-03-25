@@ -3,7 +3,7 @@ import { Link, ResourceLink } from '@core/Link'
 import { Menu } from '@core/MenuAccordion'
 import type { MenuLinkData, SubMenuData, SubMenuGroupData } from '../../types/index'
 import FeaturedContent from './FeaturedContent'
-import { useRouter } from 'next/router'
+import { usePathname } from 'next/navigation'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
 import { Typography } from '@core/Typography'
 
@@ -28,7 +28,7 @@ export const MenuItem = ({ item, index }: MenuGroupType) => {
   const { topLevelLink, groups, intro, featuredContent, featuredCTALabel, featuredIngress } = item
 
   const menuItemHref = getLink(topLevelLink)
-  const router = useRouter()
+  const pathname = usePathname()
 
   return (
     <_MenuItem value={`${index}`}>
@@ -92,7 +92,7 @@ export const MenuItem = ({ item, index }: MenuGroupType) => {
                                 aria-current:border-l-[3px]
                                 aria-current:border-moss-green-95`}
                               href={getLink(link)}
-                              aria-current={router.asPath == link?.link?.slug ? 'page' : 'false'}
+                              aria-current={pathname == link?.link?.slug ? 'page' : 'false'}
                             >
                               {link.label}
                             </Link>

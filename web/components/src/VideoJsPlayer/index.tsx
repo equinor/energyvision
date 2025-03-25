@@ -1,3 +1,4 @@
+'use client'
 import { useEffect, HTMLProps, useState, useCallback } from 'react'
 import videojs from 'video.js'
 import Player from 'video.js/dist/types/player'

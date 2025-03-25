@@ -1,3 +1,4 @@
+'use client'
 import { useEffect, useState } from 'react'
 import { isAfter } from 'date-fns'
 import { getEventDates, toUTCDateParts } from '../../common/helpers/dateUtilities'

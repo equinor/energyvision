@@ -1,21 +1,22 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { useRouter } from 'next/router'
+'use client'
+import { usePathname } from 'next/navigation'
 import { default as NextLink } from 'next/link'
-import { BackgroundContainer } from '@components'
 import { AllSlugsType, LocalizationSwitch } from '../../pageComponents/shared/LocalizationSwitch'
 import type { MenuData, SimpleMenuData, StickyMenuData } from '../../types/index'
 import { Flags } from '../../common/helpers/datasetHelpers'
-import { languages, defaultLanguage } from '../../languages'
+import { languages, defaultLanguage, domain } from '../../languages'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { search } from '@equinor/eds-icons'
 import { getLocaleFromName, getNameFromLocale } from '../../lib/localization'
 import Head from 'next/head'
-import getConfig from 'next/config'
 import { getAllSitesLink } from '../../common/helpers/getAllSitesLink'
 import { Icon } from '@equinor/eds-core-react'
 import { ButtonLink, LogoLink } from '@core/Link'
 import SiteMenu from '@sections/SiteMenu/SiteMenu'
 import Topbar from '@core/Topbar/Topbar'
+import { useCurrentLocale } from 'next-i18n-router/client'
+import { i18nConfig } from '../../i18nConfig'
 
 export type HeaderProps = {
   menuData?: MenuData | SimpleMenuData
@@ -24,14 +25,14 @@ export type HeaderProps = {
 }
 
 const HeadTags = ({ slugs }: { slugs: AllSlugsType }) => {
-  const router = useRouter()
+  const pathname = usePathname()
+  const activeLocale = useCurrentLocale(i18nConfig)
   const localization = {
-    activeLocale: router.locale || defaultLanguage.locale,
+    activeLocale: activeLocale || defaultLanguage.locale,
   }
-  const { publicRuntimeConfig } = getConfig()
+  //const { publicRuntimeConfig } = getConfig()
 
-  const activeSlug =
-    slugs.find((slug) => slug.lang === getNameFromLocale(localization.activeLocale))?.slug || router.asPath
+  const activeSlug = slugs.find((slug) => slug.lang === getNameFromLocale(localization.activeLocale))?.slug || pathname
   const defaultSlug = slugs.find((slug) => slug.lang === defaultLanguage.name)?.slug
   const defaultLocale = defaultLanguage.locale
   const canonicalSlug =
@@ -47,14 +48,7 @@ const HeadTags = ({ slugs }: { slugs: AllSlugsType }) => {
           const correctedSlug = (defaultLocale !== locale ? `/${locale}` : '').concat(
             slug.slug !== '/' ? slug.slug : '',
           )
-          return (
-            <link
-              key={locale}
-              rel="alternate"
-              hrefLang={locale}
-              href={`${publicRuntimeConfig.domain}${correctedSlug}`}
-            />
-          )
+          return <link key={locale} rel="alternate" hrefLang={locale} href={`${domain}${correctedSlug}`} />
         })}
 
       {slugs.length > 1 && (
@@ -62,11 +56,11 @@ const HeadTags = ({ slugs }: { slugs: AllSlugsType }) => {
           key="x-default"
           rel="alternate"
           hrefLang="x-default"
-          href={`${publicRuntimeConfig.domain}${defaultSlug === '/' ? '' : defaultSlug}`}
+          href={`${domain}${defaultSlug === '/' ? '' : defaultSlug}`}
         />
       )}
 
-      <link rel="canonical" href={`${publicRuntimeConfig.domain}${canonicalSlug}`} />
+      <link rel="canonical" href={`${domain}${canonicalSlug}`} />
     </Head>
   )
 }
@@ -81,9 +75,9 @@ const AllSites = () => {
 }
 
 const Header = ({ slugs, menuData, stickyMenuData }: HeaderProps) => {
-  const router = useRouter()
+  const activeLocale = useCurrentLocale(i18nConfig)
   const localization = {
-    activeLocale: router.locale || defaultLanguage.locale,
+    activeLocale: activeLocale || defaultLanguage.locale,
   }
   const hasSearch = Flags.HAS_SEARCH
   const hasMoreThanOneLanguage = languages.length > 1

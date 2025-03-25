@@ -1,4 +1,5 @@
-import { useRouter } from 'next/router'
+'use client'
+import { usePathname } from 'next/navigation'
 import { NewsArticleJsonLd, NextSeo } from 'next-seo'
 import { Heading, FormattedDateTime, BackgroundContainer } from '@components'
 import styled from 'styled-components'
@@ -17,6 +18,8 @@ import Blocks from '../shared/portableText/Blocks'
 import { twMerge } from 'tailwind-merge'
 import RelatedContent from '../../pageComponents/shared/RelatedContent'
 import Footnotes from '../../pageComponents/shared/portableText/components/Footnotes'
+import { useCurrentLocale } from 'next-i18n-router/client'
+import { i18nConfig } from '../../i18nConfig'
 
 const NewsLayout = styled.div`
   --banner-paddingHorizontal: clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
@@ -109,13 +112,10 @@ type ArticleProps = {
 }
 
 const NewsPage = ({ data: news }: ArticleProps) => {
-  const router = useRouter()
-  /*  const appInsights = useAppInsightsContext() */
+  const pathname = usePathname()
+  const locale = useCurrentLocale(i18nConfig)
   const slug = news?.slug
-
-  const { pathname, locale } = router
-
-  const fullUrl = getFullUrl(pathname, slug, locale)
+  const fullUrl = getFullUrl(pathname || '', slug, locale)
 
   const {
     publishDateTime,

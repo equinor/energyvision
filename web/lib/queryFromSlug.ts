@@ -76,10 +76,11 @@ export const getQueryFromSlug = async (
   slugArray: string[] = [''],
   locale = '',
 ): Promise<{ query: string; queryParams: QueryParams }> => {
+  console.log(slugArray)
   const [firstPiece, secondPiece] = slugArray.filter((part: string) => part !== locale)
   const date = new Date().toISOString().substring(0, 10)
 
-  if (isSlugID(firstPiece)) {
+  if (firstPiece && isSlugID(firstPiece)) {
     return getPreviewByIdQuery(firstPiece, locale, date)
   }
 

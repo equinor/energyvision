@@ -1,3 +1,4 @@
+'use client'
 import Teaser from '../../shared/Teaser'
 import TextBlock from '../../topicPages/TextBlock'
 import FullWidthImage from '../../topicPages/FullWidthImage'
