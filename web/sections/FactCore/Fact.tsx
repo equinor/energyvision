@@ -62,17 +62,7 @@ export const Fact = (block: BlockProps) => {
       {imageSrc && <Image image={image} fill />}
     </div>
   )
-  const TextComponent = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(function CardMedia(
-    { children, ...rest },
-    ref,
-  ) {
-    return (
-      <div ref={ref} className="text-pretty" {...rest}>
-        {children}
-      </div>
-    )
-  })
-
+  
   const ContentComponent = () => {
     const contentClassNames = `
     ${!hasColumns && !hasImage ? 'px-layout-lg max-w-viewport mx-auto' : ''}
@@ -92,12 +82,12 @@ export const Fact = (block: BlockProps) => {
             {title}
           </Typography>
         )}
-        <TextComponent>
+     
           <Blocks
             value={content}
-            className={`prose ${hasColumns ? 'max-w-none lg:columns-2 lg:[column-gap:theme(spacing.24)]' : ''}`}
+            className={`text-pretty prose ${hasColumns ? 'max-w-none lg:columns-2 lg:[column-gap:theme(spacing.24)]' : ''}`}
           />
-        </TextComponent>
+     
       </div>
     )
   }
