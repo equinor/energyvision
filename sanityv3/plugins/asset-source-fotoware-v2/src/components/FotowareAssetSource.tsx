@@ -114,8 +114,7 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
       }
       try {
         const response = await fetch(serviceUrl, options)
-        console.log("responxe", response);
-        const arrayBuffer = await response.arrayBuffer() //.blob()
+        const arrayBuffer = await response.arrayBuffer()
         setIsLoading(false)
         return arrayBuffer
       } catch (error) {
@@ -125,37 +124,6 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
         return null
       }
     }
-  }
-
-  const updateImportFieldInFotoware(asset:any, field:any, area:any, date:any) {
-    let fieldValue = [];
-    let updateObj = {};
-    //Adding area+date to existing values
-    if(field in asset.metadata) {
-      fieldValue = asset.metadata[field].value;
-    }
-    fieldValue.push("Sanity - " + area + " - " date);
-    //building update object
-    obj.assets = [];
-    obj.assets.push({"href" : asset.linkstance});
-    obj.["job-metadata"] = [];
-    obj.["job-metadata"].push({"field": field, "value": fieldValue});
-  
-    fetch(asset.linkstance, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/vnd.fotoware.metadata-edit-request+json',
-          'Accept': 'application/vnd.fotoware.metadata-edit-response+json',
-          'Authorization': 'Bearer ' + token
-        },
-        body: JSON.stringify(obj)
-      })
-      .then(response => response.json())
-      .then(data => {
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
   }
 
   const handleWidgetEvent = useCallback(
@@ -195,6 +163,7 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
           (rendition: any, i: number) => String(rendition?.display_name).includes('Large') || i === 3,
         ).href
         console.log('renditionUrl', renditionUrl)
+        console.log('handleWidgetEvent selectionToken', selectionToken)
         if (!selectionToken) {
           setHasError(true)
           setErrorText('Missing api access token,downloading is not possible. Please check api access')
@@ -222,11 +191,11 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
                 kind: 'file',
                 value: file,
                 assetDocumentProps: {
-                  originalFilename: asset?.filename || '',
+                  originalFilename: selectedAsset?.filename || '',
                   source: {
                     name: 'fotoware',
-                    id: assetId || asset?.uniqueid,
-                    //url: asset?.source,
+                    id: assetId || selectedAsset?.uniqueid,
+                    url: selectedAsset?.linkstance,
                   },
                   metadata:{
                     expirationDate: assetExpirationDate,

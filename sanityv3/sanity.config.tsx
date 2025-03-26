@@ -1,4 +1,5 @@
 import { visionTool } from '@sanity/vision'
+import { dashboardTool } from '@sanity/dashboard'
 import { media } from 'sanity-plugin-media'
 import {
   ConfigContext,
@@ -42,6 +43,7 @@ import './customStyles.css'
 import { partialStudioTheme } from './studioTheme'
 import { copyAction } from './actions/fieldActions/CustomCopyFieldAction'
 import CustomDocumentInternationalizationMenu from './schemas/components/CustomDocumentInternationalizationMenu'
+//import {importedFotowareAssetsWidget} from './widgets/importedFotowareAssetsWidget'
 
 export const customTheme = buildLegacyTheme(partialStudioTheme)
 
@@ -99,6 +101,7 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret = fals
       title: 'Desk',
     }),
     media(),
+    dashboardTool({ widgets: []}),
     datasetParam === 'global-development' && visionTool(),
     FotowareAssetSource(),
     BrandmasterAssetSource(),
