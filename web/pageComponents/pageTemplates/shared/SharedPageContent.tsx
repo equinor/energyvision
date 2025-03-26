@@ -111,6 +111,13 @@ type PageContentProps = {
  * E.g. 2 colored background of same color content, only first need but not second
  */
 const getBackgroundOptions = (component: ComponentProps) => {
+  //@ts-ignore:Too many types
+  if (!component?.designOptions) {
+    //Return white default if no designOptions
+    return {
+      backgroundUtility: 'white-100',
+    }
+  }
   //@ts-ignore
   if (component?.type === 'tabs') {
     //@ts-ignore:so many types
@@ -171,6 +178,7 @@ const applyPaddingTopIfApplicable = (currentComponent: ComponentProps, prevCompo
     previousIsWhiteColorBackground,
   )
   const previousIsSameColorAsCurrent = isSameColorBackground(currentComponentsDO, previousComponentsDO)
+
   const specialCases = ['teaser', 'fullWidthImage', 'fullWidthVideo']
   //@ts-ignore
   const previousComponentIsASpecialCaseAndNeedPT = specialCases.includes(prevComponent?.type)

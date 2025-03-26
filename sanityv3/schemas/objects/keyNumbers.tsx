@@ -48,6 +48,12 @@ export default {
       validation: (Rule: Rule) => Rule.required().warning('In most cases you should add a title'),
     },
     {
+      type: 'boolean',
+      name: 'hideTitle',
+      title: 'Hide title',
+      description: 'Hides the title, but screen readers will read title of carousel',
+    },
+    {
       name: 'ingress',
       title: 'Ingress',
       type: 'array',

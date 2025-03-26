@@ -181,6 +181,9 @@ _type == "keyNumbers" =>{
   _type == "promoTileArray"=>{
     "type": _type,
     "id": _key,
+    title,
+    "hideTitle":coalesce(hideTitle, false),
+    ingress,
     "useHorizontalScroll": useHorizontalScroll,
     "group": group[]{
       "id": _key,
