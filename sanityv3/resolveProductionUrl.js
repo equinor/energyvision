@@ -1,3 +1,4 @@
+import { getPublishedId } from 'sanity'
 import { defaultLanguage } from './languages'
 import { dataset } from './src/lib/datasetHelpers'
 import { getLocaleFromName } from './src/lib/localization'
@@ -32,7 +33,8 @@ export default function resolveProductionUrl(doc) {
   if (doc?.slug?.current) {
     previewUrl.searchParams.append('slug', doc?.slug?.current)
   } else if (doc?._id) {
-    previewUrl.searchParams.append('id', doc?._id)
+    const publishedId = getPublishedId(doc._id)
+    previewUrl.searchParams.append('id', publishedId)
   } else {
     // @TODO Handle this case better
     // Should only happen if the publisher tries to preview before they start to type

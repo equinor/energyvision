@@ -16,7 +16,7 @@ const ErrorPage = ({ pageData, statusCode }: { pageData: ErrorPageData; statusCo
         title={`${pageData?.documentTitle} - ${metaTitleSuffix}`}
         description={pageData?.metaDescription}
       ></NextSeo>
-      <div className="relative">
+      <div className="relative min-h-[80vh]">
         {backgroundImage && <BackgroundImage backgroundImage={backgroundImage} />}
         <div className="relative pt-16 pb-10 px-layout-md">
           <Typography as="h1" variant="3xl" className="pb-10">

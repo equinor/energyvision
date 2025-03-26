@@ -1,7 +1,7 @@
 import { dataset } from './datasetHelpers'
 import { getLocaleFromName } from './localization'
 import { defaultLanguage } from '../../languages'
-import { type SanityDocument as DefaultSanityDocument } from 'sanity'
+import { getPublishedId, type SanityDocument as DefaultSanityDocument } from 'sanity'
 // eslint-disable-next-line import/namespace
 import { ClientPerspective } from '@sanity/client'
 
@@ -56,7 +56,8 @@ export const resolvePreviewUrl = (document: SanityDocument, perspective: ClientP
   if (document?.slug?.current) {
     previewUrl.searchParams.append('slug', document?.slug?.current)
   } else {
-    previewUrl.searchParams.append('id', document?._id)
+    const publishedId = getPublishedId(document._id)
+    previewUrl.searchParams.append('id', publishedId)
   }
 
   previewUrl.searchParams.append('secret', previewSecret)
