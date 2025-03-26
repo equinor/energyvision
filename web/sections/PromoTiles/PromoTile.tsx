@@ -4,10 +4,12 @@ import { ColorKeyTokens, colorKeyToUtilityMap } from '../../styles/colorKeyToUti
 import { PromoTileData } from '../../types/index'
 import { forwardRef } from 'react'
 
-type PromoTileProps = PromoTileData
+type PromoTileProps = {
+  hasSectionTitle?: boolean
+} & PromoTileData
 
 export const PromoTile = forwardRef<HTMLAnchorElement, PromoTileProps>(function PromoTile(
-  { id, designOptions, image, title, action, linkLabelAsTitle },
+  { id, designOptions, image, title, action, linkLabelAsTitle, hasSectionTitle },
   ref,
 ) {
   const url = getUrlFromAction(action)
@@ -34,6 +36,7 @@ export const PromoTile = forwardRef<HTMLAnchorElement, PromoTileProps>(function 
     >
       <Card.Content variant="secondary" className={`${twBg}`}>
         <Card.Header
+          titleLevel={hasSectionTitle ? 'h3' : 'h2'}
           {...(!linkLabelAsTitle && { titleBlock: title })}
           {...(linkLabelAsTitle && { title: action.label })}
         />

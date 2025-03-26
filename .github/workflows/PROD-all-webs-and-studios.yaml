@@ -214,8 +214,10 @@ jobs:
           npm install js-yaml
       - name: Run script for 'web' and 'studio'
         run: |
-          node ci/storeImageTags.js web
-          node ci/storeImageTags.js studio
+          WEB_SHA=$(node ci/storeImageTags.js web)
+          STUDIO_SHA=$(node ci/storeImageTags.js studio)
+          echo "WEB_SHA=$WEB_SHA" >> $GITHUB_ENV
+          echo "STUDIO_SHA=$STUDIO_SHA" >> $GITHUB_ENV
       - name: Commit and push changes
         run: |
           git config --global user.name 'github'
@@ -224,11 +226,18 @@ jobs:
           git add latest-prod-tags.json
           git commit -m "Update latest-prod-tags.json with new tags" || echo "No changes to commit"
           git push
-          
+
+  create-discussion-and-share:
+    needs: [store-image-tags]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+
       - name: 'Move cards and create discussion and post it to channel'
         id: 'get-list'
         with:
           token: ${{ secrets.PADMS_PAT_READ_PACKAGE }}
-          commitSHA: ${{ github.sha }}
+          commitSHA: 'Web : ${{ env.WEB_SHA }}</br>Studio: ${{ env.STUDIO_SHA }}'
           slackWebhook: ${{ secrets.SLACK_WEBHOOK_RELEASE_ANNOUNCEMENT}}
         uses: ./.github/workflows/project/

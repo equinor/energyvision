@@ -1,4 +1,4 @@
-const Linkedin = ({ width = 33, height = 33 }: { width?: number; height?: number }) => {
+const Linkedin = ({ width = 33, height = 25 }: { width?: number; height?: number }) => {
   return (
     <svg viewBox="0 0 33 33" xmlns="http://www.w3.org/2000/svg" width={width} height={height}>
       <path d="M7.74598 11.0354H0V33H7.74598V11.0354Z" />
