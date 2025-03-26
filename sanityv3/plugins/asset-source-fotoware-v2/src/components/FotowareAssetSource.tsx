@@ -16,6 +16,7 @@ import { FWAttributeField, FWAsset } from '../../types'
 import { createPortal } from 'react-dom'
 import { ImageContainer, StyledImage } from '../../../asset-source-fotoware/src/components'
 import mime from 'mime'
+import { arrayBufferToBlob } from 'blob-util'
 
 const TENANT_URL = process.env.SANITY_STUDIO_FOTOWARE_TENANT_URL
 
@@ -114,9 +115,9 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
       try {
         const response = await fetch(serviceUrl, options)
         console.log("responxe", response);
-        const blob = await response.blob()
+        const arrayBuffer = await response.arrayBuffer() //.blob()
         setIsLoading(false)
-        return blob
+        return arrayBuffer
       } catch (error) {
         console.error('Error fetching rendition:', error)
         setErrorText('Error downloading image')
@@ -124,6 +125,37 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
         return null
       }
     }
+  }
+
+  const updateImportFieldInFotoware(asset:any, field:any, area:any, date:any) {
+    let fieldValue = [];
+    let updateObj = {};
+    //Adding area+date to existing values
+    if(field in asset.metadata) {
+      fieldValue = asset.metadata[field].value;
+    }
+    fieldValue.push("Sanity - " + area + " - " date);
+    //building update object
+    obj.assets = [];
+    obj.assets.push({"href" : asset.linkstance});
+    obj.["job-metadata"] = [];
+    obj.["job-metadata"].push({"field": field, "value": fieldValue});
+  
+    fetch(asset.linkstance, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/vnd.fotoware.metadata-edit-request+json',
+          'Accept': 'application/vnd.fotoware.metadata-edit-response+json',
+          'Authorization': 'Bearer ' + token
+        },
+        body: JSON.stringify(obj)
+      })
+      .then(response => response.json())
+      .then(data => {
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
   }
 
   const handleWidgetEvent = useCallback(
@@ -168,28 +200,22 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
           setErrorText('Missing api access token,downloading is not possible. Please check api access')
         }
         setShowSelectionIframe(false)
-        if (selectionToken) {
+        if (selectionToken && selectedAsset) {
           setIsLoading(true)
           setLoadingText(`Downloading ${assetTitle?.value} from Fotoware... Please hold`)
           console.log('getAsset')
-          let blob = await getAsset(renditionUrl, mime.getType(selectedAsset.filename) || 'application/octet-stream')
-
-          // blob = blob?.slice(0, blob.size, mime.getType(selectedAsset.filename) || 'application/octet-stream')
+          const assetMimeType = mime.getType(selectedAsset.filename) || 'application/octet-stream'
+          const arrayBuffer = await getAsset(renditionUrl, assetMimeType)
+          console.log("arrayBuffer", arrayBuffer);
+          const blob = arrayBufferToBlob(arrayBuffer);
           console.log(blob)
 
           if (blob) {
             const url = URL.createObjectURL(blob)
             setUrl(url)
             console.log(url)
-            /*let buffer = Buffer.from(await blob.arrayBuffer())
-            const base64 =
-              'data:' +
-              (mime.getType(selectedAsset.filename) || 'application/octet-stream') +
-              ';base64,' +
-              buffer.toString('base64')
-            console.log(base64)*/
-            const file = new File([blob!!], selectedAsset?.filename || 'image.jpg', {
-              type: mime.getType(selectedAsset.filename) || 'application/octet-stream',
+            const file = new File([blob], selectedAsset?.filename || 'image.jpg', {
+              type: assetMimeType,
             })
             onSelect([
               {
@@ -202,9 +228,11 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
                     id: assetId || asset?.uniqueid,
                     //url: asset?.source,
                   },
+                  metadata:{
+                    expirationDate: assetExpirationDate,
+                  },
                   title: assetTitle?.value,
                   description: description,
-                  expirationDate: assetExpirationDate,
                 },
               },
             ])
@@ -245,12 +273,6 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
     }
   }, [handleAuthEvent])
 
-  /* useEffect(() => {
-    if (!apiToken) {
-      getApiAccessToken()
-    }
-  }, [apiToken, getApiAccessToken])*/
-
   useEffect(() => {
     if (selectionToken) {
       window.removeEventListener('message', handleAuthEvent)
@@ -285,7 +307,6 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
       zOffset={9999}
     >
       <Box padding={4}>
-        {url.length > 0 && <img src={url} />}
         {hasError && (
           <Card padding={[3, 3, 4]} radius={2} shadow={1}>
             <Text align="center" size={[2, 2, 3, 4]}>
@@ -315,15 +336,6 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
             )}
 
             {container && createPortal(props.children, container)}
-          </Flex>
-        )}
-        {!selectionToken && (
-          <Flex direction="column" align={'center'} gap={6}>
-            <Text align="center" size={[2, 2, 3, 3]}>
-              Have not got access token for api from AF, please hold or try again.
-              <br />
-              If no luck, please contact support.
-            </Text>
           </Flex>
         )}
         {isLoading && (

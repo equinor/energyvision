@@ -31,6 +31,9 @@ dependencies:
   '@sanity/vision':
     specifier: ^3.37.2
     version: 3.71.0(@babel/runtime@7.25.6)(@codemirror/lint@6.8.1)(@codemirror/theme-one-dark@6.1.2)(@lezer/common@1.2.1)(codemirror@6.0.1)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.0)
+  blob-util:
+    specifier: ^2.0.2
+    version: 2.0.2
   buffer:
     specifier: ^6.0.3
     version: 6.0.3
@@ -6327,6 +6330,10 @@ packages:
       buffer: 5.7.1
       inherits: 2.0.4
       readable-stream: 3.6.2
+    dev: false
+
+  /blob-util@2.0.2:
+    resolution: {integrity: sha512-T7JQa+zsXXEa6/8ZhHcQEW1UFfVM49Ts65uBkFL6fz2QmrElqmbajIDJvuA0tEhRe5eIjpV9ZF+0RfZR9voJFQ==}
     dev: false
 
   /boolbase@1.0.0:
