@@ -59,7 +59,7 @@ export const Fact = (block: BlockProps) => {
         imagePosition === 'right' ? 'lg:col-start-2 lg:row-start-1' : ''
       } relative w-full h-[400px] lg:h-auto`}
     >
-      {imageSrc && <Image image={image} fill />}
+      <Image image={image} fill />
     </div>
   )
   
@@ -132,7 +132,7 @@ export const Fact = (block: BlockProps) => {
       backgroundUtility={background?.key}
       dark={background?.dark}
     >
-      <ImageComponent />
+      {imageSrc && <ImageComponent />}
       <ContentComponent />
     </FactBoxComponent>
   )

@@ -10,10 +10,10 @@ import {
   InternalLink,
   FigureWithLayout,
   Quote,
-  Fact,
   BulletList,
   NumberedList,
 } from './components'
+import {Fact} from '@sections/FactCore/Fact'
 import isEmpty from './helpers/isEmpty'
 import type { PortableTextBlock } from '@portabletext/types'
 
