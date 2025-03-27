@@ -104,11 +104,9 @@ export const Pagination = ({ className = '', totalPages, padding, hitsPerPage = 
           id: 'search_pagination_last_page',
           defaultMessage: 'Last page',
         })}
-        value={nbPages - 1}
         isCurrent={false}
         isDisabled={isLastPage}
-        createURL={createURL}
-        refine={refine}
+        onClick={(e) => handleClick(e, nbPages - 1)}
       >
         <Icon data={last_page} size={16} className={`size-6`} />
       </PaginationItem>
