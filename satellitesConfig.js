@@ -67,6 +67,7 @@ const datasets = {
   equinorfunds: ['norwegian'],
   southkorea: ['english', 'korean'],
   celticsea: ['english', 'welsh'],
+  sponsorship: ['english', 'norwegian'],
   // Test datasets
   'global-development': ['english', 'norwegian', 'japanese'],
   'global-test': ['english', 'norwegian', 'japanese'],
@@ -82,6 +83,7 @@ export const defaultWebLanguage = {
   storage: 'german',
   southkorea: 'korean',
   japan: 'japanese',
+  sponsorship: 'norwegian',
 }
 
 /**
@@ -134,9 +136,9 @@ const websiteDomains = {
     url: 'localhost:3000',
     meta: 'Equinor',
   },
-  'global-test': {
-    url: 'https://web-global-test-equinor-web-sites-test.c2.radix.equinor.com',
-    meta: 'Equinor',
+  sponsorship: {
+    url: 'https://www.sponsorship.equinor.com',
+    meta: 'Sponsorship',
   },
 }
 
