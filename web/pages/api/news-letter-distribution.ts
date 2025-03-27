@@ -1,3 +1,4 @@
+import { distribute as makeDistribute } from './make-subscription'
 import { distribute } from './subscription'
 import { languages } from '../../languages'
 import { NewsDistributionParameters } from '../../types/index'
@@ -83,8 +84,13 @@ async function distributeWithRetry(
   const date = getDateWithMs()
 
   try {
-    const isSuccessful = await distribute(newsDistributionParameters)
+    const isCrude = newsDistributionParameters.newsType === 'Crude'
+    const isSuccessful = isCrude
+      ? await makeDistribute(newsDistributionParameters)
+      : await distribute(newsDistributionParameters)
+
     if (!isSuccessful) throw new Error('Distribution was unsuccessful.')
+
     res = {
       success: true,
       message: 'Newsletter sent successfully!',
@@ -110,7 +116,6 @@ async function distributeWithRetry(
 
   return res
 }
-
 async function sendSlackNotification(message: string): Promise<void> {
   if (!SLACK_NEWSLETTER_WEBHOOK_URL) return
 
