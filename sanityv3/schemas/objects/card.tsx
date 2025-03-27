@@ -51,8 +51,8 @@ export default {
       type: 'text',
       validation: (Rule: Rule) =>
         Rule.required()
-          .custom((value) => {
-            if (typeof value !== 'string' || value.trim() === '') {
+          .custom((value: string) => {
+            if (!value || value.trim() === '') {
               return 'Card title cannot be empty or contain only blank spaces.';
             }
             return true;
