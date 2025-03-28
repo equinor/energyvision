@@ -1,3 +1,4 @@
+
 import { forwardRef, CSSProperties } from 'react'
 import { Table as EdsTable } from '@equinor/eds-core-react'
 import styled from 'styled-components'
@@ -9,7 +10,7 @@ export const StyledHeadItem = styled(EdsHead)``
 export type TableHeadProps = React.HTMLAttributes<HTMLTableSectionElement>
 
 export const Head = forwardRef<HTMLTableSectionElement, TableHeadProps>(function Head(
-  { style, children, ...rest },
+  { style, children,className, ...rest },
   ref,
 ) {
   return (
