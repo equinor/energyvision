@@ -158,6 +158,7 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
           : personShownInTheImage
 
         const assetExpirationDate = selectedAsset?.metadata?.[428]?.value //valid to date
+        console.log('assetExpirationDate', assetExpirationDate)
         console.log('event.data.asset.renditions', event.data.asset.renditions)
         const renditionUrl = event.data.asset.renditions?.find(
           (rendition: any, i: number) => String(rendition?.display_name).includes('Large') || i === 3,
@@ -175,8 +176,8 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
           console.log('getAsset')
           const assetMimeType = mime.getType(selectedAsset.filename) || 'application/octet-stream'
           const arrayBuffer = await getAsset(renditionUrl, assetMimeType)
-          console.log("arrayBuffer", arrayBuffer);
-          const blob = arrayBufferToBlob(arrayBuffer);
+          console.log('arrayBuffer', arrayBuffer)
+          const blob = arrayBufferToBlob(arrayBuffer)
           console.log(blob)
 
           if (blob) {
@@ -193,11 +194,11 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
                 assetDocumentProps: {
                   originalFilename: selectedAsset?.filename || '',
                   source: {
-                    name: 'fotoware',
+                    name: `fotoware_${assetExpirationDate}`,
                     id: assetId || selectedAsset?.uniqueid,
                     url: selectedAsset?.linkstance,
                   },
-                  metadata:{
+                  metadata: {
                     expirationDate: assetExpirationDate,
                   },
                   title: assetTitle?.value,

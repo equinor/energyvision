@@ -43,7 +43,7 @@ import './customStyles.css'
 import { partialStudioTheme } from './studioTheme'
 import { copyAction } from './actions/fieldActions/CustomCopyFieldAction'
 import CustomDocumentInternationalizationMenu from './schemas/components/CustomDocumentInternationalizationMenu'
-//import {importedFotowareAssetsWidget} from './widgets/importedFotowareAssetsWidget'
+import { fotowareWidget } from './widgets/ImportedFotowareAssetsWidget'
 
 export const customTheme = buildLegacyTheme(partialStudioTheme)
 
@@ -101,7 +101,7 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret = fals
       title: 'Desk',
     }),
     media(),
-    dashboardTool({ widgets: []}),
+    dashboardTool({ widgets: [fotowareWidget()] }),
     datasetParam === 'global-development' && visionTool(),
     FotowareAssetSource(),
     BrandmasterAssetSource(),
