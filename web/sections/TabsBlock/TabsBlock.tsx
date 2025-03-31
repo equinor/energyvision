@@ -115,8 +115,7 @@ const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
                         flex-col
                         md:grid
                         md:grid-cols-2
-                        3xl:grid-flow-col
-                        3xl:auto-cols-fr
+                        ${tabItem.panel?.items?.length < 4 ? '3xl:grid-flow-col 3xl:auto-cols-fr' : ''} 
                         gap-6`}
                     >
                       {tabItem.panel?.items?.map((tabsKeyNumber: any) => {
