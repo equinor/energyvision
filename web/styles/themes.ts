@@ -24,12 +24,6 @@ export const normal = css`
   --link-arrow-color-hover: var(--energy-red-100);
   --content-link-arrow-color-hover: var(--energy-red-100);
 
-  /**@ Pagination Component */
-  --pagination-btn-text-color: var(--slate-blue-95);
-  --pagination-btn-background-active: var(--moss-green-80);
-  --pagination-btn-text-color-active: var(--black-100);
-  --pagination-btn-disabled: var(--grey-30);
-
   /**@ Accordion component*/
   --accordion-icon-color: var(--energy-red-100);
 
@@ -52,10 +46,7 @@ export const inverted = css`
   --link-arrow-color: var(--white-100);
   --link-arrow-color-hover: var(--white-100);
   --content-link-arrow-color-hover: var(--energy-red-100);
-  --pagination-btn-text-color: var(--moss-green-80);
-  --pagination-btn-background-active: var(--moss-green-70);
-  --pagination-btn-text-color-active: var(--default-text);
-  --pagination-btn-disabled: var(--slate-blue-90);
+
   --accordion-icon-color: var(--white-100);
   --breadcrumbs-inactive-color: var(--grey-30);
   --title-highlight-color: var(--spruce-wood-100);
