@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react'
 import { DocumentActionConfirmDialogProps, DocumentActionProps, useDocumentOperation } from 'sanity'
 
+const FIRST_PUBLISHED_AT_FIELD_NAME = 'firstPublishedAt'
+const LAST_MODIFIED_AT_FIELD_NAME = 'lastModifiedAt'
+
 export function SetAndPublishAction(props: DocumentActionProps) {
-  const { publish } = useDocumentOperation(props.id, props.type)
+  const { patch, publish } = useDocumentOperation(props.id, props.type)
   const [isPublishing, setIsPublishing] = useState(false)
   const [dialogOpen, setDialogOpen] = useState(false)
 
@@ -12,7 +15,7 @@ export function SetAndPublishAction(props: DocumentActionProps) {
     if (isPublishing && !props.draft) {
       setIsPublishing(false)
     }
-  }, [props.draft, isPublishing])
+  }, [props.draft])
 
   return {
     disabled: publish.disabled || dialogOpen,
@@ -31,6 +34,14 @@ export function SetAndPublishAction(props: DocumentActionProps) {
           setDialogOpen(false)
         },
         onConfirm: () => {
+          const currentTimeStamp = new Date().toISOString()
+          // set lastModifiedAt date.
+          patch.execute([{ set: { [LAST_MODIFIED_AT_FIELD_NAME]: currentTimeStamp } }])
+
+          //set firstPublishedAt date if not published.
+          if (!props.published?.[FIRST_PUBLISHED_AT_FIELD_NAME])
+            patch.execute([{ set: { [FIRST_PUBLISHED_AT_FIELD_NAME]: currentTimeStamp } }])
+
           // Perform the publish
           publish.execute()
 

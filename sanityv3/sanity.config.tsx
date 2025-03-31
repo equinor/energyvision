@@ -169,10 +169,10 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret = fals
     ],
   }),
   releases: {
-    enabled: true,
+    enabled: false,
   },
   scheduledPublishing: {
-    enabled: false,
+    enabled: true,
   },
 })
 
