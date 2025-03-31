@@ -18,7 +18,7 @@ import {
   BulletList,
   NumberedList,
 } from './components'
-import {Fact} from '@sections/FactCore/Fact'
+import { Fact } from '@sections/FactCore/Fact'
 import { twMerge } from 'tailwind-merge'
 import { FormattedMessage } from 'react-intl'
 

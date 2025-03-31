@@ -10,7 +10,7 @@ import { BackgroundContainer, BackgroundContainerProps } from '@components/Backg
 import { ColorKeyTokens } from '../../styles/colorKeyToUtilityMap'
 import Image from '../../pageComponents/shared/SanityImage'
 
-type FactImagePosition = 'left' | 'right';
+type FactImagePosition = 'left' | 'right'
 
 type FactboxProps = {
   title: string
@@ -62,7 +62,7 @@ export const Fact = (block: BlockProps) => {
       <Image image={image} fill />
     </div>
   )
-  
+
   const ContentComponent = () => {
     const contentClassNames = `
     ${!hasColumns && !hasImage ? 'px-layout-lg max-w-viewport mx-auto' : ''}
@@ -82,12 +82,13 @@ export const Fact = (block: BlockProps) => {
             {title}
           </Typography>
         )}
-     
-          <Blocks
-            value={content}
-            className={`text-pretty prose ${hasColumns ? 'max-w-none lg:columns-2 lg:[column-gap:theme(spacing.24)]' : ''}`}
-          />
-     
+
+        <Blocks
+          value={content}
+          className={`text-pretty prose ${
+            hasColumns ? 'max-w-none lg:columns-2 lg:[column-gap:theme(spacing.24)]' : ''
+          }`}
+        />
       </div>
     )
   }
@@ -126,12 +127,7 @@ export const Fact = (block: BlockProps) => {
   })
 
   return (
-    // <FactBox
-    <FactBoxComponent
-      background={background?.title}
-      backgroundUtility={background?.key}
-      dark={background?.dark}
-    >
+    <FactBoxComponent background={background?.title} backgroundUtility={background?.key} dark={background?.dark}>
       {imageSrc && <ImageComponent />}
       <ContentComponent />
     </FactBoxComponent>
