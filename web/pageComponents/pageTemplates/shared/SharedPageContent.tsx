@@ -183,8 +183,9 @@ const applyPaddingTopIfApplicable = (currentComponent: ComponentProps, prevCompo
 
   const currentIsWhiteColorBackground = isWhiteColorBackground(currentComponentsDO, currentComponent)
   const previousIsWhiteColorBackground = isWhiteColorBackground(previousComponentsDO, prevComponent)
-  //@ts-ignore
+
   const previousComponentIsASpecialCaseAndNeedPT =
+    //@ts-ignore
     specialCases.includes(prevComponent?.type) || specialCases.includes(previousComponentsDO?.type)
 
   if (currentIsWhiteColorBackground && previousIsWhiteColorBackground && !previousComponentIsASpecialCaseAndNeedPT) {
