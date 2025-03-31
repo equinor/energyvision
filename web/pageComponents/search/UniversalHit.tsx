@@ -47,7 +47,7 @@ const UniversalHit: React.FC<HitProps> = ({ hit }) => {
           </p>
         )}
         {pageTitle && (
-          <Typography className="relative inline-block mb-2" level="h2" size="sm">
+          <Typography className="relative inline-block" level="h2" size="sm">
             <span className="hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mist-blue-100">
               <Highlight hit={hit} attribute="pageTitle" />
             </span>
