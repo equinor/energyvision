@@ -22,8 +22,8 @@ const Quote = ({ data: { quote, authorTitle, author, image, designOptions } }: {
   const isImageLeft = (designOptions?.imagePosition || 'left') === 'left'
   const hasImage = Boolean(image?.asset)
 
-  const weight = quote.length < textBoldLimit ? 'font-semibold' : 'font-normal'
-  const size = quote.length < textSizeLimit ? 'text-3xl' : 'text-lg'
+  const weight = quote.length < textBoldLimit ? 'font-medium' : 'font-normal'
+  const size = quote.length < textSizeLimit ? 'text-3xl' : 'text-md'
   const iconSize = quote.length < textSizeLimit ? 'w-12 h-12' : 'w-9 h-9'
 
   const ImageComponent = hasImage && (
@@ -39,11 +39,11 @@ const Quote = ({ data: { quote, authorTitle, author, image, designOptions } }: {
   )
 
   const AuthorComponent = author && (
-    <figcaption
-      className={`text-xs text-left sm:text-right sm:self-end ${!hasImage ? 'col-span-2 sm:col-span-1' : ''}`}
-    >
-      <span className={`${authorTitle ? 'font-bold' : ''}`}>{author}</span>
-      {authorTitle && <span className="block text-gray-500 dark:text-white-100">{authorTitle}</span>}
+    <figcaption className="text-xs text-right">
+      <div className="inline-block text-left">
+        <div className={authorTitle ? 'font-bold' : ''}>{author}</div>
+        {authorTitle && <div className="text-gray-600 dark:text-white-100">{authorTitle}</div>}
+      </div>
     </figcaption>
   )
 
