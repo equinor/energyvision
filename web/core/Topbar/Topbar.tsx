@@ -103,7 +103,8 @@ export const Topbar = forwardRef<HTMLDivElement, TopbarProps>(function Topbar(
           ease-in-out  
           duration-300
           ${isVisible ? 'top-0' : '-top-topbar'} 
-          ${hasDropShadow ? 'shadow-md' : ''}`}
+          ${hasDropShadow && !showSticky ? "shadow-md" : ''}         
+          `}
         {...rest}
       >
         <div className="px-layout-sm max-w-viewport mx-auto flex items-center justify-between py-4">{children}</div>

@@ -18,9 +18,9 @@ export default {
   fields: [
     {
       name: 'keyNumberItems',
-      title: 'Key Number Items',
+      title: 'Tab Key Number Items',
       type: 'array',
-      of: [{ type: 'keyNumberItem' }],
+      of: [{ type: 'tabsKeyNumberItem' }],
       validation: (Rule: Rule) => Rule.min(2).error('Need minimum 2 key numbers'),
     },
     {

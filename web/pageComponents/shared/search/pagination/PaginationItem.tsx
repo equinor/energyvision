@@ -1,35 +1,7 @@
 import { Button } from '@core/Button'
 import { usePagination } from 'react-instantsearch'
-import styled from 'styled-components'
 
 // Based on: https://github.com/algolia/react-instantsearch/blob/master/examples/hooks/components/Pagination.tsx
-
-const StyledListItem = styled.li`
-  display: inline-block;
-`
-
-const PaginationLink = styled(Button)<{ isCurrent?: boolean }>`
-  width: 44px;
-  height: 44px;
-  color: var(--pagination-btn-text-color);
-  ${({ isCurrent }) =>
-    isCurrent && {
-      background: 'var(--pagination-btn-background-active)',
-      color: 'var(--pagination-btn-text-color-active)',
-    }}
-
-  :hover {
-    color: var(--pagination-btn-text-color-active);
-    :disabled {
-      color: var(--pagination-btn-disabled);
-    }
-  }
-
-  :disabled {
-    cursor: auto;
-    color: var(--pagination-btn-disabled);
-  }
-`
 
 export function isModifierClick(event: React.MouseEvent) {
   const isMiddleClick = event.button === 1
