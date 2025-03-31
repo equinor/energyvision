@@ -27,7 +27,7 @@ const TextTeaser = ({ data, anchor, className }: TextTeaserProps) => {
   return (
     <BackgroundContainer background={{ backgroundColor: background }} id={anchor}>
       <Teaser className={twMerge(`${dark ? 'dark' : ''} `, className)}>
-        <Media className="pt-12 pb-0 px-layout-lg sm:pt-12 sm:py-8 md:p-16" mediaPosition={titlePosition}>
+        <Media className="pt-12 pb-0 px-layout-lg sm:pt-12 sm:py-8 md:p-16 h-auto" mediaPosition={titlePosition}>
           <Heading className={`pt-0 px-0 pb-12 sm:p-0 ${highlight}`} variant="2xl" as="h2" value={title} />
         </Media>
         <Content className="pt-0 px-layout-lg pb-16 sm:p-12 lg:p-16 ">
