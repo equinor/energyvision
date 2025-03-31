@@ -6,6 +6,7 @@ export const videoPlayerFields = /* groq */ `
   "id": _key,
   "type": _type,
   title,
+  hideTitle,
   ingress[] {
     ...,
     ${markDefs},
