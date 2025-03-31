@@ -7,9 +7,6 @@ dependencies:
   is-ci:
     specifier: ^3.0.1
     version: 3.0.1
-  pnpm:
-    specifier: ^10.6.3
-    version: 10.6.3
 
 devDependencies:
   '@typescript-eslint/eslint-plugin':
@@ -1895,12 +1892,6 @@ packages:
     engines: {node: '>=0.10'}
     hasBin: true
     dev: true
-
-  /pnpm@10.6.3:
-    resolution: {integrity: sha512-u0XjTVCpp26FipWDcwG/tr1tNa6ixdUglPpJekZ8Q/XEQBA84lEengovicPWBxuqwzWPxorG+3XizrPSc2Bl5g==}
-    engines: {node: '>=18.12'}
-    hasBin: true
-    dev: false
 
   /possible-typed-array-names@1.0.0:
     resolution: {integrity: sha512-d7Uw+eZoloe0EHDIYoe+bQ5WXnGMOpmiZFTuMWCwpjzzkL2nTjcKiAk4hh8TjnGye2TwWOk3UXucZ+3rbmBa8Q==}
