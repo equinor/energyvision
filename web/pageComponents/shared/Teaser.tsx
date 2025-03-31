@@ -1,5 +1,5 @@
-import { Teaser as EnvisTeaser, Eyebrow, BackgroundContainer } from '@components'
-import styled from 'styled-components'
+import { BackgroundContainer } from '@components'
+import { Teaser as TeaserLayout } from '@core/Teaser'
 import IngressText from './portableText/IngressText'
 import { getUrlFromAction, urlFor } from '../../common/helpers'
 import Img from 'next/image'
@@ -8,17 +8,14 @@ import type { TeaserData, ImageWithAlt } from '../../types/index'
 import { ResourceLink } from '../../core/Link'
 import { Heading } from '../../core/Typography'
 import { getLocaleFromName } from '../../lib/localization'
+import { Typography } from '@core/Typography'
 
-const { Content, Media } = EnvisTeaser
+const { Content, Media } = TeaserLayout
 
 type TeaserProps = {
   data: TeaserData
   anchor?: string
 }
-
-const StyledEnvisTeaser = styled(EnvisTeaser)`
-  font-size: var(--typeScale-1);
-`
 
 const TeaserImage = ({ image }: { image: ImageWithAlt }) => {
   const imageSrc =
@@ -56,22 +53,25 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
 
   return (
     <BackgroundContainer {...restOptions} id={anchor} renderFragmentWhenPossible>
-      <StyledEnvisTeaser imagePosition={imagePosition}>
+      <TeaserLayout className="text-sm" id={anchor}>
         <Media
           size={isSvg && imageSize === 'small' ? 'small' : 'full'}
           center={isSvg ? true : false}
           fixedHeight={isSvg ? false : true}
+          mediaPosition={imagePosition || 'left'}
         >
           {image?.asset && <TeaserImage image={image} />}
         </Media>
-        <Content className={`gap-y-lg`}>
+        <Content className={`gap-y-lg grid auto-cols-auto px-8 py-12`}>
           {isBigText ? (
             text && <Heading value={text} as="h2" variant="2xl" className="leading-cloudy mb-2" />
           ) : (
             <>
               {overline ? (
                 <hgroup className="flex flex-col gap-2 mb-1">
-                  <Eyebrow>{overline}</Eyebrow>
+                  <Typography as="div" className="text-md">
+                    {overline}
+                  </Typography>
                   {title && <Heading value={title} as="h2" variant="xl" />}
                 </hgroup>
               ) : (
@@ -102,7 +102,7 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
             </div>
           )}
         </Content>
-      </StyledEnvisTeaser>
+      </TeaserLayout>
     </BackgroundContainer>
   )
 }
