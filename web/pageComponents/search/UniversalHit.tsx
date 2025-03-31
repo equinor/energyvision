@@ -2,10 +2,11 @@ import { Highlight } from './Highlight'
 import getConfig from 'next/config'
 import type { Hit as AlgoliaHit } from '@algolia/client-search'
 import DisplayLink from './hit/DisplayLink'
-import { FormattedDate, Heading } from '@components'
+import { FormattedDate } from '@components'
 import { useRouter } from 'next/router'
 import { defaultLanguage } from '../../languages'
 import { default as NextLink } from 'next/link'
+import { Typography } from '@core/Typography'
 
 export type HitData = {
   slug?: string
@@ -46,18 +47,18 @@ const UniversalHit: React.FC<HitProps> = ({ hit }) => {
           </p>
         )}
         {pageTitle && (
-          <Heading className="relative inline-block mb-2" level="h2" size="sm">
+          <Typography className="relative inline-block mb-2" level="h2" size="sm">
             <span className="hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mist-blue-100">
               <Highlight hit={hit} attribute="pageTitle" />
             </span>
-          </Heading>
+          </Typography>
         )}
         {title && pageTitle && <br />}
         {title && (
-          <Heading
+          <Typography
             level="h2"
             size="sm"
-            className={`relative inline-block mb-2 ${pageTitle && title ? 'text-xs' : 'hover:underline'}`}
+            className={`relative inline-block ${pageTitle && title ? 'text-xs' : 'hover:underline'}`}
           >
             <span
               className={`${
@@ -66,7 +67,7 @@ const UniversalHit: React.FC<HitProps> = ({ hit }) => {
             >
               <Highlight hit={hit} attribute="title" />
             </span>
-          </Heading>
+          </Typography>
         )}
 
         {[
