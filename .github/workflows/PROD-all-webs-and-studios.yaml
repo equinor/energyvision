@@ -216,8 +216,8 @@ jobs:
         run: |
           WEB_SHA=$(node ci/storeImageTags.js web)
           STUDIO_SHA=$(node ci/storeImageTags.js studio)
-          echo "WEB_SHA=${{ fromJson(WEB_SHA) }}" >> $GITHUB_ENV
-          echo "STUDIO_SHA=${{ fromJson(STUDIO_SHA) }}" >> $GITHUB_ENV
+          echo "WEB_SHA=${WEB_SHA}" >> $GITHUB_ENV
+          echo "STUDIO_SHA=${STUDIO_SHA}" >> $GITHUB_ENV
       - name: Commit and push changes
         run: |
           git config --global user.name 'github'
