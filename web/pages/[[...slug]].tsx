@@ -108,6 +108,7 @@ export const getStaticProps: GetStaticProps = async ({
     preview,
     perspective: (previewData as { perspective: ClientPerspective })?.perspective || 'published',
   }
+  console.log(`catch all topic slug - \n${JSON.stringify(previewContext)}`)
   const intl = await getIntl(locale, previewContext)
 
   const { menuData, pageData, footerData } = await getComponentsData(

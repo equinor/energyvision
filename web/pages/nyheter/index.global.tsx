@@ -105,7 +105,7 @@ export const getStaticProps: GetStaticProps = async ({ preview = false, locale =
     preview,
     perspective: (previewData as { perspective: ClientPerspective })?.perspective || 'published',
   }
-
+  console.log(`Nyheter - \n${JSON.stringify(previewContext)}`)
   const { menuData, pageData, footerData } = await getComponentsData(
     {
       query: newsroomQuery,
