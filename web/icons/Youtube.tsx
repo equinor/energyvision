@@ -1,4 +1,4 @@
-const Youtube = ({ width = 51, height = 32 }: { width?: number; height?: number }) => {
+const Youtube = ({ width = 33, height = 33 }: { width?: number; height?: number }) => {
   return (
     <svg viewBox="0 0 51 32" xmlns="http://www.w3.org/2000/svg" width={width} height={height}>
       <g clipPath="url(#clip0_2639:72508)">

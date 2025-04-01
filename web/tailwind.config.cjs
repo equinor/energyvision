@@ -210,6 +210,16 @@ module.exports = {
         '3xl': 'calc((56 / 16) * theme(fontSize.base))',
         '4xl': 'calc((96 / 16) * theme(fontSize.base))',
         topbar: '85px',
+        'layout-sm': 'clamp(16px, calc(-38.3689px + 14.4984vw), 250px)',
+        'layout-md': 'clamp(16px, calc(-69.4369px + 22.7832vw), 368px)',
+        'layout-lg': 'clamp(16px, calc(-101.4757px + 31.3269vw), 500px)',
+        'single-carousel-card-w-sm': '275px',
+        'single-carousel-card-w-md': '692px',
+        'single-carousel-card-w-lg': '980px',
+        'single-carousel-card-h-sm': '400px',
+        'single-carousel-card-h-md': '430px',
+        'single-carousel-card-h-lg': '516px',
+        'event-carousel-card-w': '383px',
       }),
       fontSize: {
         //--typeScale-00
@@ -264,7 +274,9 @@ module.exports = {
         viewport: '1920px',
         //When large font, prose(65ch) might not be the best
         text: '760px',
-        menuText: 'calc(35 * var(--space-medium))',
+        menuText: 'calc(35 * theme(spacing.6))',
+        innerColumn: 'calc(100vw - (theme(padding.layout-lg) * 2))',
+        smContainer: 'calc(100vw - theme(spacing.layout-sm) - theme(spacing.layout-sm))',
       },
       minWidth: {
         viewport: '375',
@@ -277,9 +289,6 @@ module.exports = {
         xs: '0.1rem',
       },
       padding: {
-        'layout-sm': 'clamp(16px, calc(-38.3689px + 14.4984vw), 250px)',
-        'layout-md': 'clamp(16px, calc(-69.4369px + 22.7832vw), 368px)',
-        'layout-lg': 'clamp(16px, calc(-101.4757px + 31.3269vw), 500px)',
         'page-content': 'theme(spacing.20)',
       },
       boxShadow: {
@@ -293,9 +302,6 @@ module.exports = {
         '4/3': '4/3',
       },
       margin: {
-        'layout-sm': 'clamp(16px, calc(-38.3689px + 14.4984vw), 250px)',
-        'layout-md': 'clamp(16px, calc(-69.4369px + 22.7832vw), 368px)',
-        'layout-lg': 'clamp(16px, calc(-101.4757px + 31.3269vw), 500px)',
         'page-content': 'theme(spacing.20)',
       },
       transitionProperty: {
@@ -341,6 +347,10 @@ module.exports = {
           '0%': { height: 'var(--radix-accordion-content-height)' },
           '100%': { height: 0 },
         },
+        adjustObjectPosition: {
+          '0%': { 'object-position': '100% 0' },
+          '100%': { 'object-position': '0 0' },
+        },
       },
       animation: {
         fadeInOut: 'fade linear both',
@@ -351,6 +361,7 @@ module.exports = {
         'spin-slow': 'spin 3s linear infinite',
         slideUp: 'slideUp 0.2s ease-out',
         slideDown: 'slideDown 0.2s ease-out',
+        adjustObjectPosition: 'adjustObjectPosition linear both',
       },
       data: {
         open: 'state~="open"',
@@ -360,6 +371,7 @@ module.exports = {
         horizontal: 'orientation~="horizontal"',
         selected: 'selected~="true"',
         expanded: 'expanded~="true"',
+        overflowing: 'overflowing~="true"',
       },
       flex: {
         fr: '1 1 1',

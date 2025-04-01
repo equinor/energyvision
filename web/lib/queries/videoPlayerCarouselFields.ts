@@ -15,6 +15,7 @@ export const videoPlayerCarouselFields = /* groq */ `
       "posterUrl": videoFile-> video.thumbnail,
     },
   },
+  scrollMode,
   "designOptions": {
     "aspectRatio": coalesce(aspectRatio, '16:9'),
     ${background}

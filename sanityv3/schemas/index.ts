@@ -25,6 +25,8 @@ import fullWidthVideo from './objects/fullWidthVideo'
 import iframe from './objects/iframe'
 import imageWithAlt from './objects/imageWithAlt'
 import imageWithAltAndCaption from './objects/imageWithAltAndCaption'
+import carouselImage from './objects/carouselImage'
+import imageWithLinkAndOrOverlay from './objects/ImageWithLinkAndOrOverlay'
 import largeTable from './objects/largeTable'
 import linkSelector from './objects/linkSelector'
 import menuGroup from './objects/menuGroup'
@@ -83,6 +85,13 @@ import anchorLinkList from './objects/anchorLinkList/anchorLinkList'
 import anchorLinkReference from './objects/anchorLinkList/anchorLinkReference'
 import imageForText from './objects/imageForText'
 import stickyMenu from './objects/stickyMenu'
+import tabs from './objects/tabs/tabs'
+import tabsItem from './objects/tabs/tabsItem'
+import tabsBackground from './objects/tabs/tabsBackground'
+import tabsInfoPanel from './objects/tabs/tabsInfoPanel'
+import tabsKeyNumbers from './objects/tabs/tabsKeyNumbers'
+import tabsKeyNumberItem from './objects/tabs/tabsKeyNumberItem'
+import imageWithRichText from './objects/ImageWithRichText'
 
 const {
   pageNotFound,
@@ -140,6 +149,7 @@ const RemainingSchemas = [
   internalServerError,
   imageWithAlt,
   imageWithAltAndCaption,
+  carouselImage,
   pullQuote,
   factbox,
   relatedLinks,
@@ -212,6 +222,14 @@ const RemainingSchemas = [
   anchorLinkReference,
   imageForText,
   stickyMenu,
+  tabs,
+  tabsItem,
+  tabsBackground,
+  tabsInfoPanel,
+  tabsKeyNumbers,
+  tabsKeyNumberItem,
+  imageWithLinkAndOrOverlay,
+  imageWithRichText,
 ]
 
 // Then we give our schema to the builder and provide the result to Sanity

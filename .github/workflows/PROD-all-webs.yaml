@@ -100,7 +100,9 @@ jobs:
           npm install js-yaml
 
       - name: Run script for 'web'
-        run: node ci/storeImageTags.js web
+        run: |
+          WEB_SHA=$(node ci/storeImageTags.js web)
+          echo "WEB_SHA=$(WEB_SHA)" >> $GITHUB_ENV
 
       - name: Commit and push changes
         run: |
@@ -110,3 +112,11 @@ jobs:
           git add latest-prod-tags.json
           git commit -m "Update latest-prod-tags.json with new tags" || echo "No changes to commit"
           git push
+
+      - name: 'Move cards and create discussion and post it to channel'
+        id: 'get-list'
+        with:
+          token: ${{ secrets.PADMS_PAT_READ_PACKAGE }}
+          commitSHA: 'Web : ${{ env.WEB_SHA }}'
+          slackWebhook: ${{ secrets.SLACK_WEBHOOK_RELEASE_ANNOUNCEMENT}}
+        uses: ./.github/workflows/project/

@@ -852,6 +852,31 @@ const snippets: textSnippet = {
     defaultValue: 'Global',
     group: groups.common,
   },
+  carouselLiveAnnoucement: {
+    title: 'Carousel live announcement',
+    defaultValue: 'Showing item {x} of {carouselLength}',
+    group: groups.common,
+  },
+  carouselItemCountLabel: {
+    title: 'Carousel item count label',
+    defaultValue: 'Item {x} of {carouselLength}',
+    group: groups.common,
+  },
+  carouselPlay: {
+    title: 'Play {titleOfCarousel} gallery',
+    defaultValue: 'Play {title} gallery',
+    group: groups.common,
+  },
+  carouselPause: {
+    title: 'Pause {titleOfCarousel} gallery',
+    defaultValue: 'Pause {title} gallery',
+    group: groups.common,
+  },
+  readMore: {
+    title: 'Read more',
+    defaultValue: 'Read more',
+    group: groups.others,
+  },
 }
 
 type textSnippetGroup = { title: string; hidden?: boolean }

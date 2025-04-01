@@ -18,6 +18,7 @@ on:
           - equinorfunds
           - southkorea
           - celticsea
+          - sponsorship
 permissions:
   id-token: write
 jobs:

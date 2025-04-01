@@ -30,6 +30,8 @@ export type BackgroundContainerProps = {
   scrimClassName?: string
   /* On mobile dont split background image and content */
   dontSplit?: boolean
+  /** Set return element as section */
+  asSection?: boolean
 } & HTMLAttributes<HTMLDivElement>
 
 export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContainerProps>(function BackgroundContainer(
@@ -43,6 +45,7 @@ export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContaine
     id,
     renderFragmentWhenPossible = false,
     dontSplit = false,
+    asSection = false,
     ...rest
   },
   ref,
@@ -61,13 +64,15 @@ export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContaine
           className={envisTwMerge(`${id ? 'scroll-mt-topbar' : ''}`, className)}
           scrimClassName={scrimClassName}
           dontSplit={dontSplit}
+          asSection={asSection}
         >
           {children}
         </StyledImageBackground>
       )}
       {(type === 'backgroundColor' || !type) && (
         <>
-          {renderFragmentWhenPossible &&
+          {!asSection &&
+          renderFragmentWhenPossible &&
           (restBackground?.backgroundColor === 'White' || restBackground?.backgroundUtility === 'white-100') &&
           className === '' &&
           !id ? (
@@ -76,6 +81,7 @@ export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContaine
             <ColouredContainer
               ref={ref}
               id={id}
+              asSection={asSection}
               {...restBackground}
               style={style}
               className={envisTwMerge(`${id ? 'scroll-mt-topbar' : ''}`, className, twClassName)}

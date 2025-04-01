@@ -4,7 +4,7 @@ import { useContext, useEffect, useRef } from 'react'
 import { usePagination, UsePaginationProps } from 'react-instantsearch'
 import { usePrefersReducedMotion } from '../../../../common/hooks/usePrefersReducedMotion'
 import { PaginationContext } from '../../../../common/contexts/PaginationContext'
-import { PaginationItem } from './PaginationItem'
+import { isModifierClick, PaginationItem } from './PaginationItem'
 import envisTwMerge from '../../../../twMerge'
 import { useIntl } from 'react-intl'
 
@@ -24,6 +24,14 @@ export const Pagination = ({ className = '', totalPages, padding, hitsPerPage = 
   const { resultsRef } = useContext(PaginationContext)
   const prevRefinement = useRef<number>(currentRefinement)
   const prefersReducedMotion = usePrefersReducedMotion()
+
+  const handleClick = (event: any, value: number) => {
+    if (isModifierClick(event)) {
+      return
+    }
+    event.preventDefault()
+    refine(value)
+  }
 
   useEffect(() => {
     if (!prefersReducedMotion && resultsRef?.current && currentRefinement !== prevRefinement.current) {
@@ -46,11 +54,9 @@ export const Pagination = ({ className = '', totalPages, padding, hitsPerPage = 
           id: 'search_pagination_first_page',
           defaultMessage: 'First page',
         })}
-        value={0}
         isCurrent={false}
+        onClick={(e) => handleClick(e, 0)}
         isDisabled={isFirstPage}
-        createURL={createURL}
-        refine={refine}
       >
         <Icon data={first_page} />
       </PaginationItem>
@@ -59,11 +65,9 @@ export const Pagination = ({ className = '', totalPages, padding, hitsPerPage = 
           id: 'previous',
           defaultMessage: 'Previous',
         })}
-        value={currentRefinement - 1}
+        onClick={(e) => handleClick(e, currentRefinement - 1)}
         isCurrent={false}
         isDisabled={isFirstPage}
-        createURL={createURL}
-        refine={refine}
       >
         <Icon data={chevron_left} />
       </PaginationItem>
@@ -75,11 +79,9 @@ export const Pagination = ({ className = '', totalPages, padding, hitsPerPage = 
             id: 'page',
             defaultMessage: 'Page',
           })} ${page + 1}`}
-          value={page}
+          onClick={(e) => handleClick(e, page)}
           isCurrent={page === currentRefinement}
           isDisabled={false}
-          createURL={createURL}
-          refine={refine}
         >
           {page + 1}
         </PaginationItem>
@@ -90,11 +92,9 @@ export const Pagination = ({ className = '', totalPages, padding, hitsPerPage = 
           id: 'next',
           defaultMessage: 'Next',
         })}
-        value={currentRefinement + 1}
         isCurrent={false}
         isDisabled={isLastPage}
-        createURL={createURL}
-        refine={refine}
+        onClick={(e) => handleClick(e, currentRefinement + 1)}
       >
         <Icon data={chevron_right} />
       </PaginationItem>
@@ -104,11 +104,9 @@ export const Pagination = ({ className = '', totalPages, padding, hitsPerPage = 
           id: 'search_pagination_last_page',
           defaultMessage: 'Last page',
         })}
-        value={nbPages - 1}
         isCurrent={false}
         isDisabled={isLastPage}
-        createURL={createURL}
-        refine={refine}
+        onClick={(e) => handleClick(e, nbPages - 1)}
       >
         <Icon data={last_page} size={16} className={`size-6`} />
       </PaginationItem>
