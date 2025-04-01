@@ -21,14 +21,12 @@ function useLocalStorage() {
   // Pass initial state function to useState so logic is only executed once
 
   const getToken = () => {
-    console.log('Get token')
     const fotowareToken = window.localStorage.getItem('FotowareToken')
     if (!fotowareToken) return null
   }
 
   const [storedToken, setStoredToken] = useState(() => {
     try {
-      console.log('Initial get token')
       return getToken()
     } catch (error) {
       console.log('Error when retrieving token from storage')
@@ -39,7 +37,6 @@ function useLocalStorage() {
 
   const setToken = (data: FotowareAuthData) => {
     try {
-      console.log('SET TOKEN', data)
       const now = Math.floor(new Date().getTime() / 1000.0)
 
       const tokenData = {
@@ -47,10 +44,9 @@ function useLocalStorage() {
         expires: now + parseInt(data.expires_in),
       }
       // Save state
-      console.log('Saving token to hook state')
+      //@ts-ignore:TODO
       setStoredToken(tokenData)
       // Save to local storage
-      console.log('Saving token to localstorage')
       window.localStorage.setItem('FotowareToken', JSON.stringify(tokenData))
     } catch (error) {
       console.log(error)

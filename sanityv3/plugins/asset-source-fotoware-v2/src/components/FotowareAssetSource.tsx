@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { useEffect, useCallback, forwardRef, useState, useRef, useMemo } from 'react'
-import { Card, Dialog, Text, Flex, Box, Spinner } from '@sanity/ui'
+import { Card, Dialog, Button, Text, Flex, Box, Spinner } from '@sanity/ui'
 import { uuid } from '@sanity/uuid'
 import {
   getAuthURL,
@@ -11,14 +11,26 @@ import {
   getSelectionWidgetURL,
   FotowareEvents,
 } from '../utils/utils'
-import { StyledIframe, StyledButton } from './components'
 import { FWAttributeField, FWAsset } from '../../types'
 import { createPortal } from 'react-dom'
 import { ImageContainer, StyledImage } from '../../../asset-source-fotoware/src/components'
 import mime from 'mime'
 import { arrayBufferToBlob } from 'blob-util'
+import styled from 'styled-components'
 
 const TENANT_URL = process.env.SANITY_STUDIO_FOTOWARE_TENANT_URL
+
+export const StyledButton = styled(Button)`
+  width: fit-content;
+`
+
+export const StyledIframe = styled.iframe`
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 80vh;
+  border: none;
+`
 
 const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   const { onSelect, onClose } = props
@@ -48,52 +60,55 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   const selectionContainerRef = useRef<HTMLDivElement>(null)
 
   // Login & store access token
-  const handleAuthEvent = useCallback((event: any) => {
-    const validateAuthEvent = () => {
-      if (event.data?.error) {
-        const { error, error_description } = event.data
-        setHasError(true)
-        setErrorText(`Error: ${error} - description: ${error_description}`)
-        return false
+  const handleAuthEvent = useCallback(
+    (event: any) => {
+      const validateAuthEvent = () => {
+        if (event.data?.error) {
+          const { error, error_description } = event.data
+          setHasError(true)
+          setErrorText(`Error: ${error} - description: ${error_description}`)
+          return false
+        }
+
+        if (!event?.data?.access_token) {
+          setHasError(true)
+          setErrorText('Missing access token. Make sure you have permission to access Fotoware and try again.')
+          return false
+        }
+
+        if (!checkAuthData(event.data)) {
+          setHasError(true)
+          setErrorText('Invalid event data.')
+          return false
+        }
+
+        if (event.data.state !== requestState) {
+          setHasError(true)
+          setErrorText('Redirect state did not match request state')
+          return false
+        }
+        return true
       }
 
-      if (!event?.data?.access_token) {
-        setHasError(true)
-        setErrorText('Missing access token. Make sure you have permission to access Fotoware and try again.')
-        return false
-      }
+      if (!newWindow.current || !event || !event.data) return false
 
-      if (!checkAuthData(event.data)) {
-        setHasError(true)
-        setErrorText('Invalid event data.')
-        return false
-      }
-
-      if (event.data.state !== requestState) {
-        setHasError(true)
-        setErrorText('Redirect state did not match request state')
-        return false
-      }
-      return true
-    }
-
-    if (!newWindow.current || !event || !event.data) return false
-
-    if (event.data) {
-      const validateEvent = validateAuthEvent()
-      if (validateEvent) {
-        storeAccessToken('SelectionFotowareToken', event.data)
-        setSelectionToken(event.data.access_token)
-        setIsLogin(false)
-        setShowSelectionIframe(true)
-        newWindow.current.close()
+      if (event.data) {
+        const validateEvent = validateAuthEvent()
+        if (validateEvent) {
+          storeAccessToken('SelectionFotowareToken', event.data)
+          setSelectionToken(event.data.access_token)
+          setIsLogin(false)
+          setShowSelectionIframe(true)
+          newWindow.current.close()
+        } else {
+          return false
+        }
       } else {
         return false
       }
-    } else {
-      return false
-    }
-  }, [])
+    },
+    [requestState],
+  )
 
   const getAsset = async (renditionHref: string, mimeType: string) => {
     const serviceUrl = `${process.env.SANITY_STUDIO_FOTOWARE_AF_EXPORT_URL}?code=${process.env.SANITY_STUDIO_FOTOWARE_AF_EXPORT_KEY}`
@@ -169,7 +184,6 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
           const blob = arrayBufferToBlob(arrayBuffer)
 
           if (blob) {
-            const url = URL.createObjectURL(blob)
             const file = new File([blob], selectedAsset?.filename || 'image.jpg', {
               type: assetMimeType,
             })
@@ -196,7 +210,7 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
         }
       }
     },
-    [onSelect, onClose, asset],
+    [onSelect, onClose, asset, isLogin],
   )
 
   const getAuthLink = async () => {
