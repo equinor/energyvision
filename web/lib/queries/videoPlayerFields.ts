@@ -18,6 +18,7 @@ export const videoPlayerFields = /* groq */ `
     "title": videoFile->video.title,
     "url": videoFile->video.url,
     "thumbnail": videoFile->thumbnail,
+    "posterUrl": videoFile-> video.thumbnail,
   },
   videoControls {
     playButton,

@@ -1,5 +1,12 @@
 import VideoSelector from '../components/VideoSelector'
 
+export type HLSVideo = {
+  id: string
+  title: string
+  url: string
+  thumbnail: string
+}
+
 export default {
   title: 'Video',
   name: 'hlsVideo',
@@ -8,7 +15,7 @@ export default {
     {
       name: 'id',
       type: 'string',
-      hidden: true,
+      // hidden: true,
     },
     {
       name: 'title',
@@ -19,6 +26,11 @@ export default {
       name: 'url',
       type: 'string',
       title: 'Video',
+    },
+    {
+      name: 'thumbnail',
+      type: 'string',
+      title: 'Thumbnail',
     },
   ],
   components: {
