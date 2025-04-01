@@ -27,6 +27,10 @@ export const getDnsRedirect = (host: string, pathname: string) => {
     return `https://www.equinor.co.kr${pathname}`
   }
 
+  if (dns === 'sponsorship.equinor.com') {
+    return `https://communicationtoolbox.equinor.com/point/en/sponsor/`
+  }
+
   const redirect =
     dnsRedirects.find((redirect) => redirect.from === dns + pathname) ||
     dnsRedirects.find((redirect) => redirect.from === dns)
