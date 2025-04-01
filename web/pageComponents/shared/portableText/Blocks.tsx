@@ -11,7 +11,6 @@ import { PortableTextBlock, PortableTextBlockStyle } from '@portabletext/types'
 import {
   FigureWithLayout,
   Quote,
-  Fact,
   ExternalLink,
   InternalLink,
   BasicIframe,
@@ -19,6 +18,7 @@ import {
   BulletList,
   NumberedList,
 } from './components'
+import { Fact } from '@sections/FactCore/Fact'
 import { twMerge } from 'tailwind-merge'
 import { FormattedMessage } from 'react-intl'
 

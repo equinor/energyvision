@@ -49,7 +49,7 @@ export default function SearchPage() {
               <Icon size={24} data={close} />
             </button>
           </NavTopbar>
-          <div className="p-8 max-w-[700px] mx-auto">
+          <div className="p-8 px-layout-sm lg:px-layout-lg mx-auto">
             <Search />
           </div>
         </TopbarDropdown>
