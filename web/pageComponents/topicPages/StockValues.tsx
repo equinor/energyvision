@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import useSWR from 'swr'
 import * as xml2js from 'xml2js'
-import { BackgroundContainer, FormattedDate } from '@components'
+import { BackgroundContainer } from '@components'
+import { FormattedDate } from '@core/FormattedDateTime'
 import { FormattedMessage } from 'react-intl'
 import type { StockValuesData } from '../../types/index'
 import { twMerge } from 'tailwind-merge'
@@ -64,7 +65,12 @@ const StockValues = ({
 
   return (
     <BackgroundContainer background={background} {...rest} id={anchor}>
-      <div className={twMerge(`pb-page-content px-layout-lg max-w-viewport mx-auto grid grid-cols-[1fr] gap-8 sm:grid-cols-[1fr,1fr]`, className)}>
+      <div
+        className={twMerge(
+          `pb-page-content px-layout-lg max-w-viewport mx-auto grid grid-cols-[1fr] gap-8 sm:grid-cols-[1fr,1fr]`,
+          className,
+        )}
+      >
         <div className="text-center">
           <p>
             EQNR

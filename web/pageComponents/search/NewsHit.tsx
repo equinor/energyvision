@@ -5,7 +5,7 @@ import getConfig from 'next/config'
 import { StyledHitLink } from './hit/HitLink'
 import HitHeading from './hit/HitHeading'
 import DisplayLink from './hit/DisplayLink'
-import { FormattedDate } from '@components'
+import { FormattedDate} from '@core/FormattedDateTime'
 import { useRouter } from 'next/router'
 import { defaultLanguage } from '../../languages'
 
