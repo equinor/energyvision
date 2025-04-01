@@ -31,7 +31,6 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   const [showSelectionIframe, setShowSelectionIframe] = useState(false)
   const [loadingText, setLoadingText] = useState('')
   const [hasError, setHasError] = useState(!HAS_ENV_VARS)
-  const [url, setUrl] = useState('')
   const [errorText, setErrorText] = useState(
     !HAS_ENV_VARS ? 'One or more required enviroment variables are not defined. Please contact support.' : '',
   )
@@ -75,7 +74,6 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
         setErrorText('Redirect state did not match request state')
         return false
       }
-      console.log('auth event validated')
       return true
     }
 
@@ -83,16 +81,11 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
 
     if (event.data) {
       const validateEvent = validateAuthEvent()
-      console.log('validateEvent', validateEvent)
       if (validateEvent) {
-        console.log('Set token', event.data)
         storeAccessToken('SelectionFotowareToken', event.data)
         setSelectionToken(event.data.access_token)
-        console.log('set is login false')
         setIsLogin(false)
-        console.log('set show selection iframe true')
         setShowSelectionIframe(true)
-        console.log('close auth window')
         newWindow.current.close()
       } else {
         return false
@@ -157,33 +150,26 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
           ? [assetDescription?.value, personShownInTheImage].join('\n')
           : personShownInTheImage
 
-        const assetExpirationDate = selectedAsset?.metadata?.[428]?.value //valid to date
-        console.log('assetExpirationDate', assetExpirationDate)
-        console.log('event.data.asset.renditions', event.data.asset.renditions)
-        const renditionUrl = event.data.asset.renditions?.find(
-          (rendition: any, i: number) => String(rendition?.display_name).includes('Large') || i === 3,
-        ).href
-        console.log('renditionUrl', renditionUrl)
-        console.log('handleWidgetEvent selectionToken', selectionToken)
-        if (!selectionToken) {
-          setHasError(true)
-          setErrorText('Missing api access token,downloading is not possible. Please check api access')
-        }
+        const assetExpirationDate = selectedAsset?.metadata?.[428]?.value ?? undefined //valid to date
+        const renditionUrl =
+          event.data.asset.renditions?.length > 1
+            ? event.data.asset.renditions?.find(
+                (rendition: any, i: number) => String(rendition?.display_name).includes('Large') || i === 3,
+              ).href
+            : event.data.asset.renditions[0]?.href
+
         setShowSelectionIframe(false)
-        if (selectionToken && selectedAsset) {
+
+        if (selectedAsset) {
           setIsLoading(true)
           setLoadingText(`Downloading ${assetTitle?.value} from Fotoware... Please hold`)
-          console.log('getAsset')
           const assetMimeType = mime.getType(selectedAsset.filename) || 'application/octet-stream'
           const arrayBuffer = await getAsset(renditionUrl, assetMimeType)
-          console.log('arrayBuffer', arrayBuffer)
+          //@ts-ignore: TODO
           const blob = arrayBufferToBlob(arrayBuffer)
-          console.log(blob)
 
           if (blob) {
             const url = URL.createObjectURL(blob)
-            setUrl(url)
-            console.log(url)
             const file = new File([blob], selectedAsset?.filename || 'image.jpg', {
               type: assetMimeType,
             })
@@ -194,9 +180,9 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
                 assetDocumentProps: {
                   originalFilename: selectedAsset?.filename || '',
                   source: {
-                    name: `fotoware_${assetExpirationDate}`,
+                    name: `fotoware${assetExpirationDate ? `_${assetExpirationDate}` : ''}`,
                     id: assetId || selectedAsset?.uniqueid,
-                    url: selectedAsset?.linkstance,
+                    url: process.env.SANITY_STUDIO_FOTOWARE_TENANT_URL + selectedAsset?.linkstance,
                   },
                   metadata: {
                     expirationDate: assetExpirationDate,
@@ -219,8 +205,6 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
       setHasError(true)
       setErrorText('Something went wrong when retrieving auth url')
     }
-    console.log('authUrl', authURL)
-    console.log('container', container)
     if (authURL && container) {
       console.log('open auth url in window', authURL)
       newWindow.current = window.open(authURL, 'Fotoware', 'width=1200,height=800,left=200,top=200')
