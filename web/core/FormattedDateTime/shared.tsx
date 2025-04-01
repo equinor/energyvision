@@ -9,7 +9,6 @@ export type DateProps = {
   month?: 'numeric' | '2-digit' | 'long' | 'short' | 'narrow'
   day?: 'numeric' | '2-digit'
   weekday?: 'long'
-  /** Uppercase letter for the date or not */
   uppercase?: boolean
 } & HTMLAttributes<HTMLSpanElement>
 
