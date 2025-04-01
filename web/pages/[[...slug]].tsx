@@ -16,6 +16,7 @@ import getPageSlugs from '../common/helpers/getPageSlugs'
 import { getComponentsData } from '../lib/fetchData'
 import { useContext, useEffect } from 'react'
 import { PreviewContext } from '../lib/contexts/PreviewContext'
+import { ClientPerspective } from 'next-sanity'
 
 const MagazinePage = dynamic(() => import('../templates/magazine/MagazinePage'))
 const LandingPage = dynamic(() => import('../pageComponents/pageTemplates/LandingPage'))
@@ -95,17 +96,26 @@ Page.getLayout = (page: AppProps) => {
   )
 }
 
-export const getStaticProps: GetStaticProps = async ({ params, preview = false, locale = defaultLanguage.locale }) => {
+export const getStaticProps: GetStaticProps = async ({
+  params,
+  preview = false,
+  locale = defaultLanguage.locale,
+  previewData = { perspective: 'published' },
+}) => {
   const { query, queryParams } = await getQueryFromSlug(params?.slug as string[], locale)
 
-  const intl = await getIntl(locale, preview)
+  const previewContext = {
+    preview,
+    perspective: (previewData as { perspective: ClientPerspective })?.perspective || 'published',
+  }
+  const intl = await getIntl(locale, previewContext)
 
   const { menuData, pageData, footerData } = await getComponentsData(
     {
       query,
       queryParams,
     },
-    preview,
+    previewContext,
   )
 
   return {

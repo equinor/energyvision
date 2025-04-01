@@ -15,6 +15,7 @@ import { getServerState, InstantSearchSSRProvider } from 'react-instantsearch'
 import { Flags } from '../../common/helpers/datasetHelpers'
 import algoliasearch from 'algoliasearch/lite'
 import { algolia } from '../../lib/config'
+import { ClientPerspective } from 'next-sanity'
 
 export default function NewsRoom({ data, serverState }: AlgoliaIndexPageType) {
   const defaultLocale = defaultLanguage.locale
@@ -69,7 +70,7 @@ NewsRoom.getLayout = (page: AppProps) => {
   )
 }
 
-export const getStaticProps: GetStaticProps = async ({ preview = false, locale = 'en' }) => {
+export const getStaticProps: GetStaticProps = async ({ preview = false, locale = 'en', previewData }) => {
   // For the time being, let's just give 404 for satellites
   // We will also return 404 if the locale is not English.
   // This is a hack and and we should improve this at some point
@@ -80,8 +81,13 @@ export const getStaticProps: GetStaticProps = async ({ preview = false, locale =
       notFound: true,
     }
   }
+
+  const previewContext = {
+    preview,
+    perspective: (previewData as { perspective: ClientPerspective })?.perspective || 'published',
+  }
   const lang = getNameFromLocale(locale)
-  const intl = await getIntl(locale, false)
+  const intl = await getIntl(locale, previewContext)
 
   const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
   const indexName = `${envPrefix}_NEWS_en-GB`
@@ -104,7 +110,7 @@ export const getStaticProps: GetStaticProps = async ({ preview = false, locale =
       query: newsroomQuery,
       queryParams,
     },
-    preview,
+    previewContext,
   )
 
   const serverState = await getServerState(<NewsRoom data={{ menuData, pageData, footerData, intl, response }} />, {

@@ -1,6 +1,5 @@
 import { Rule } from 'sanity'
 import { defaultColors } from '../defaultColors'
-import { description } from './iframe/sharedIframeFields'
 
 const chosenColors = ['White', 'Moss Green Light']
 const backgroundColors = defaultColors.filter((color) => chosenColors.includes(color.title))

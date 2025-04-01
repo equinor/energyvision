@@ -1,6 +1,6 @@
 import { ReactNode, forwardRef } from 'react'
 import { Dialog, Box } from '@sanity/ui'
-import styled from 'styled-components'
+import { styled } from 'styled-components'
 
 export const Content = styled.div`
   margin: 1.5em;

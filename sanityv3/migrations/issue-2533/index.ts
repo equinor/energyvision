@@ -5,7 +5,7 @@ export default defineMigration({
   documentTypes: ['page', 'magazine'],
 
   migrate: {
-    array(node, path, _context) {
+    array(node, path) {
       if (path[0] === 'content')
         return node
           .filter((it) => (it._type === 'textBlock' || it._type === 'accordion') && it.anchor != null)

@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import { styled } from 'styled-components'
 import { Text, Card, Heading, Box } from '@sanity/ui'
 
 const StyledSpan = styled.span`
