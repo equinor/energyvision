@@ -4,10 +4,11 @@ import linkSelectorFields from './actions/linkSelectorFields'
 import markDefs from './blockEditorMarks'
 import background from './background'
 
-export const keyNumbersFields = /*groq*/ ` 
+export const keyNumbersFields = /*groq*/ `
     "type": _type,
     "id" : _key,
     title,
+    hideTitle,
     ingress[]{..., ${markDefs}},
     disclaimer[]{..., ${markDefs}},
     useHorizontalScroll,

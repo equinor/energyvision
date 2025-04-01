@@ -1,75 +1,220 @@
 import envisTwMerge from '../../twMerge'
 import Image from '../../pageComponents/shared/SanityImage'
-import { ImageWithAlt, ImageWithCaptionData } from '../../types/index'
+import { ImageWithAlt, LinkData } from '../../types/index'
 import { DisplayModes } from './Carousel'
-import { forwardRef, HTMLAttributes } from 'react'
+import { forwardRef, HTMLAttributes, useEffect, useMemo, useRef } from 'react'
+import { PortableTextBlock } from '@portabletext/types'
+import { SanityImageObject } from '@sanity/image-url/lib/types/types'
+import { BaseLink, ResourceLink } from '@core/Link'
+import { getUrlFromAction } from '../../common/helpers'
+import { getLocaleFromName } from '../../lib/localization'
+import { ArrowRight } from '../../icons'
+import { ImageWithOverlay } from '@core/Image/ImageWithOverlay'
+import Blocks from '../../pageComponents/shared/portableText/Blocks'
+import { mergeRefs } from '@equinor/eds-utils'
 
 type CarouselImageItemProps = {
-  image?: ImageWithAlt | ImageWithCaptionData
+  type: string
+  image?: ImageWithAlt | SanityImageObject
   displayMode?: DisplayModes
   className?: string
   aspectRatio?: string
-  caption?: string
+  caption?: PortableTextBlock[] | string
   attribution?: string
+  captionTeaserTitle?: string
+  captionTitle?: PortableTextBlock[]
+  captionText?: PortableTextBlock[]
   active?: boolean
+  action?: LinkData
+  /** Single container */
+  wasUserPress?: boolean
 } & HTMLAttributes<HTMLLIElement>
 
 export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProps>(function CarouselImageItem(
-  { active = false, image, caption, attribution, displayMode = 'single', className = '', ...rest },
+  {
+    type,
+    active = false,
+    image,
+    caption,
+    attribution,
+    captionTitle,
+    captionText,
+    captionTeaserTitle,
+    displayMode = 'single',
+    className = '',
+    action,
+    wasUserPress = false,
+    ...rest
+  },
   ref,
 ) {
+  const itemRef = useRef<HTMLLIElement>(null)
+  const combinedItemRef = useMemo(() => mergeRefs<HTMLLIElement>(itemRef, ref), [itemRef, ref])
+  const isJustImage = type === 'imageWithAltAndCaption' && !caption && !attribution
+  const isImageWithSimpleCaption = type === 'imageWithAltAndCaption' && (!!caption || !!attribution)
+  const isImageWithRichTextCaption = type === 'imageWithRichTextBelow' && !!caption
+  const isImageWithJustLink = type === 'imageWithLinkAndOrOverlay' && action && (!captionTitle || !captionText)
+  const isImageWithOverlay = type === 'imageWithLinkAndOrOverlay' && (!!captionTitle || !!captionText)
+  const url = action && getUrlFromAction(action)
+
+  const singleHeights = `min-h-single-carousel-card-h-sm
+  md:min-h-single-carousel-card-h-md
+  lg:min-h-single-carousel-card-h-lg`
+
+  const getBody = () => {
+    if (isJustImage) {
+      return (
+        <div className={`relative w-full h-full rounded-md`}>
+          <Image maxWidth={1420} image={image as ImageWithAlt} fill className="rounded-md" />
+        </div>
+      )
+    }
+    if (isImageWithSimpleCaption) {
+      return (
+        <figure className="relative w-full h-full rounded-md flex items-end">
+          <Image maxWidth={1420} image={image as ImageWithAlt} fill className={`rounded-md ${singleHeights}`} />
+          <figcaption
+            className={`w-full rounded-b-md z-[1] fade-in-black-gradient fadeInVisibilityOpacityDisplay transition-all 
+            ${displayMode === 'single' ? (active ? 'block' : 'hidden') : ''}`}
+          >
+            <div className={`w-full h-fit pt-20 pb-6 px-8`}>
+              <span className="w-2/3 flex flex-col gap-1 ">
+                {caption && <span className={`text-white-100 text-left text-lg`}>{caption as string}</span>}
+                {attribution && <span className={`text-white-100 text-base`}>{attribution}</span>}
+              </span>
+            </div>
+          </figcaption>
+        </figure>
+      )
+    }
+    if (isImageWithJustLink) {
+      return (
+        <figure className="relative w-full h-full">
+          <Image maxWidth={1420} image={image as ImageWithAlt} fill className={`${singleHeights} rounded-md`} />
+          <div className="h-full w-full fade-in-black-gradient pt-20 flex items-end rounded-b-md">
+            <BaseLink
+              href={url as string}
+              {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
+              type={action.type}
+              className="group flex gap-2"
+            >
+              <span className="text-white-100 text-left text-lg">{action.label}</span>
+              <ArrowRight className={`group-hover:translate-y-2 size-10`} />
+            </BaseLink>
+          </div>
+        </figure>
+      )
+    }
+    if (isImageWithOverlay) {
+      return (
+        <ImageWithOverlay
+          teaserTitle={captionTeaserTitle}
+          //@ts-ignore:TODO
+          title={captionTitle as PortableTextBlock[]}
+          text={captionText}
+          image={image}
+          action={action}
+          captionClassname={`${active ? 'opacity-100' : 'opacity-0'}`}
+        />
+      )
+    }
+    if (isImageWithRichTextCaption) {
+      const singleClassname = `fadeInVisibilityOpacityDisplay transition-all ${active ? 'block' : 'hidden'}`
+      const scrollClassname = ``
+      return (
+        <figure className="w-full h-full flex flex-col">
+          <div className={`relative w-full rounded-md ${singleHeights}`}>
+            <Image maxWidth={1420} image={image as ImageWithAlt} fill className="rounded-md" />
+          </div>
+          <figcaption
+            className={`h-fit max-w-text p-4 lg:py-6 lg:px-8 ${
+              displayMode === 'single' ? singleClassname : scrollClassname
+            }`}
+          >
+            {caption && (
+              <Blocks
+                //@ts-ignore:TODO
+                value={caption}
+              />
+            )}
+            {action && url && (
+              <ResourceLink
+                href={url}
+                extension={action?.extension}
+                showExtensionIcon={true}
+                {...(action?.link?.lang && { locale: getLocaleFromName(action?.link?.lang) })}
+                type={action?.type}
+                variant="fit"
+                className="mt-4"
+              >
+                {action?.label}
+              </ResourceLink>
+            )}
+          </figcaption>
+        </figure>
+      )
+    }
+  }
+
+  const scrollListItemWidthsClassNames = `w-[75vw] md:w-[70vw] lg:w-[62vw] max-w-[1030px]`
+  const singleListItemWidthsClassNames = `w-single-carousel-card-w-sm 
+        md:w-single-carousel-card-w-md 
+        lg:w-single-carousel-card-w-lg`
+
+  useEffect(() => {
+    if (displayMode === 'single') {
+      if (active && itemRef?.current && wasUserPress) {
+        itemRef?.current?.focus()
+      }
+    }
+  }, [active, wasUserPress, displayMode])
+
   return (
     <li
       {...rest}
-      ref={ref}
-      aria-current={active}
-      aria-hidden={!active}
-      aria-roledescription="slide"
+      ref={combinedItemRef}
+      {...(displayMode === 'single' && {
+        'aria-current': active,
+        tabIndex: active ? 0 : -1,
+      })}
+      {...(displayMode === 'scroll' && {
+        tabIndex: 0,
+      })}
       className={envisTwMerge(
-        `
-        aspect-4/5
-        md:aspect-video
-        relative
-        h-full
+        `relative
+        mt-1
+        focus:outline-none
+        focus-visible:outline-dashed
+        focus-visible:outline-2
+        focus-visible:outline-grey-50
+        dark:focus-visible:outline-white-100
+        focus-visible:outline-offset-2
+        ${isImageWithRichTextCaption ? 'h-full' : singleHeights}
+        ${displayMode === 'single' ? singleListItemWidthsClassNames : scrollListItemWidthsClassNames}
         ${
           displayMode === 'single'
             ? `
-        transition-opacity
-        duration-1000
-        ease-[ease]`
-            : 'shrink-0'
-        }
-        ${!active && displayMode === 'single' ? 'opacity-30' : ''}
-        ${
-          displayMode === 'scroll'
-            ? 'w-[80%] snap-center scroll-ml-6'
-            : 'w-[var(--image-carousel-card-w-sm)] md:w-[var(--image-carousel-card-w-md)] lg:w-[var(--image-carousel-card-w-lg)] ms-2 me-2 col-start-1 col-end-1 row-start-1 row-end-1'
+            transition-opacity
+            duration-1000
+            ease-[ease]
+            ${!active ? 'opacity-30' : ''}
+            ms-2 
+            me-2 
+            col-start-1 
+            col-end-1 
+            row-start-1 
+            row-end-1
+        `
+            : `snap-center 
+          snap-mandatory
+          shrink-0
+            `
         }
         `,
         className,
       )}
     >
-      {caption || attribution ? (
-        <figure className="relative w-full h-full">
-          <Image maxWidth={1420} image={image as ImageWithAlt} fill className="rounded-md" />
-          <figcaption
-            className={`${
-              active ? 'block' : 'hidden'
-            } absolute bottom-0 left-4 right-4 lg:left-8 lg:right-8 mb-4 lg:mb-8`}
-          >
-            <div
-              className={`bg-spruce-wood-70/75 text-slate-80 px-8 pt-6 w-fit flex flex-col max-w-text ${
-                attribution ? 'pb-4' : 'pb-6'
-              }`}
-            >
-              {caption && <span className={`text-lg ${attribution ? 'pb-3' : ''}`}>{caption}</span>}
-              {attribution && <span className="text-sm">{attribution}</span>}
-            </div>
-          </figcaption>
-        </figure>
-      ) : (
-        <Image maxWidth={1420} image={image as ImageWithAlt} fill className="rounded-md" />
-      )}
+      {getBody()}
     </li>
   )
 })

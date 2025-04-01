@@ -15,6 +15,7 @@ import { noDrafts, sameLang } from './langAndDrafts'
 import promoteMagazine from './promotions/promoteMagazine'
 import { lastUpdatedTimeQuery, publishDateTimeQuery } from './publishDateTime'
 import { anchorLinkReferenceFields } from './anchorLinkReferenceFields'
+import { tabsComponentFields } from './tabsComponentFields'
 
 const pageContentFields = /* groq */ `
 _type == "keyNumbers" =>{
@@ -180,6 +181,9 @@ _type == "keyNumbers" =>{
   _type == "promoTileArray"=>{
     "type": _type,
     "id": _key,
+    title,
+    "hideTitle":coalesce(hideTitle, false),
+    ingress,
     "useHorizontalScroll": useHorizontalScroll,
     "group": group[]{
       "id": _key,
@@ -606,6 +610,9 @@ _type == "keyNumbers" =>{
       ...,
       "extension": asset-> extension
     },
+  },
+  _type == "tabs"=>{
+    ${tabsComponentFields}
   },
 `
 

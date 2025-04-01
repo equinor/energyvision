@@ -1,50 +1,18 @@
 import { Button } from '@core/Button'
-import { usePagination } from 'react-instantsearch'
-import styled from 'styled-components'
-
 // Based on: https://github.com/algolia/react-instantsearch/blob/master/examples/hooks/components/Pagination.tsx
 
-const StyledListItem = styled.li`
-  display: inline-block;
-`
-
-const PaginationLink = styled(Button)<{ isCurrent?: boolean }>`
-  width: 44px;
-  height: 44px;
-  color: var(--pagination-btn-text-color);
-  ${({ isCurrent }) =>
-    isCurrent && {
-      background: 'var(--pagination-btn-background-active)',
-      color: 'var(--pagination-btn-text-color-active)',
-    }}
-
-  :hover {
-    color: var(--pagination-btn-text-color-active);
-    :disabled {
-      color: var(--pagination-btn-disabled);
-    }
-  }
-
-  :disabled {
-    cursor: auto;
-    color: var(--pagination-btn-disabled);
-  }
-`
+type PaginationItemProps = React.ComponentProps<'button'> & {
+  isDisabled: boolean
+  isCurrent: boolean
+  ariaLabel?: string
+}
 
 export function isModifierClick(event: React.MouseEvent) {
   const isMiddleClick = event.button === 1
   return Boolean(isMiddleClick || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey)
 }
 
-type PaginationItemProps = React.ComponentProps<'a'> &
-  Pick<ReturnType<typeof usePagination>, 'refine' | 'createURL'> & {
-    isDisabled: boolean
-    value: number
-    isCurrent: boolean
-    ariaLabel?: string
-  }
-
-export const PaginationItem = ({ isDisabled, value, isCurrent, ariaLabel, refine, children }: PaginationItemProps) => {
+export const PaginationItem = ({ isDisabled, isCurrent, ariaLabel, onClick, children }: PaginationItemProps) => {
   const itemClassNames = `
   flex
   justify-center
@@ -71,19 +39,7 @@ export const PaginationItem = ({ isDisabled, value, isCurrent, ariaLabel, refine
 
   return (
     <li>
-      <Button
-        variant="ghost"
-        aria-label={ariaLabel}
-        className={itemClassNames}
-        onClick={(event) => {
-          if (isModifierClick(event)) {
-            return
-          }
-
-          event.preventDefault()
-          refine(value)
-        }}
-      >
+      <Button variant="ghost" aria-label={ariaLabel} className={itemClassNames} onClick={onClick}>
         {children}
       </Button>
     </li>
