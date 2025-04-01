@@ -12,7 +12,7 @@ const StyledRowItem = styled(EdsRow)`
 
 export type TableRowProps = React.HTMLAttributes<HTMLTableRowElement>
 
-export const Row = forwardRef<HTMLTableRowElement, TableRowProps>(function Row({ style, children, ...rest }, ref) {
+export const Row = forwardRef<HTMLTableRowElement, TableRowProps>(function Row({ style, children, className,...rest }, ref) {
   return (
     <StyledRowItem
       ref={ref}
