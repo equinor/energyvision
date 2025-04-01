@@ -86,6 +86,7 @@ export const getStaticProps: GetStaticProps = async ({ preview = false, locale =
     preview,
     perspective: (previewData as { perspective: ClientPerspective })?.perspective || 'published',
   }
+  console.log(`Newsroom - \n${JSON.stringify(previewContext)}`)
   const lang = getNameFromLocale(locale)
   const intl = await getIntl(locale, previewContext)
 

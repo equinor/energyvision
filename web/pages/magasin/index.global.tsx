@@ -80,6 +80,7 @@ export const getServerSideProps: GetServerSideProps = async ({
     preview,
     perspective,
   }
+  console.log(`Magasin landing - \n${JSON.stringify(previewContext)}`)
   const lang = getNameFromLocale(locale)
   const intl = await getIntl(locale, previewContext)
 

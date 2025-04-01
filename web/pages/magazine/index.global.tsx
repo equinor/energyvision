@@ -91,7 +91,7 @@ export const getServerSideProps: GetServerSideProps = async ({
     },
     previewContext,
   )
-
+  console.log(`Magazine landing - \n${JSON.stringify(previewContext)}`)
   let magazineList = []
   if (query?.tag) {
     queryParams = {
