@@ -187,7 +187,7 @@ function ImportedFotowareAssetsWidget() {
         </SortBar>
         <StyledGrid>
           {sortedAssets?.length > 0 ? (
-            sortedAssets.map((image) => {
+            sortedAssets.map((image : { expired?: string; soonExpiring?: string;} & SanityDocument) => {
               return (
                 <StyledCard key={image._id}>
                   <InnerGrid>
