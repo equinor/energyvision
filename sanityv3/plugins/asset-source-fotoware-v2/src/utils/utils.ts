@@ -6,7 +6,8 @@ export const HAS_ENV_VARS =
   process.env.SANITY_STUDIO_FOTOWARE_TENANT_URL &&
   process.env.SANITY_STUDIO_FOTOWARE_REDIRECT_ORIGIN &&
   process.env.SANITY_STUDIO_FOTOWARE_AF_EXPORT_URL &&
-  process.env.SANITY_STUDIO_FOTOWARE_AF_EXPORT_KEY
+  process.env.SANITY_STUDIO_FOTOWARE_AF_EXPORT_KEY &&
+  process.env.SANITY_STUDIO_FOTOWARE_REDIRECT_URI
 
 export const FotowareEvents = ['selectionWidgetCancel', 'assetSelected', 'assetExported']
 
