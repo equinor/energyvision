@@ -160,8 +160,8 @@ const isSameColorBackground = (currentComponentsDO: any, previousComponentsDO: a
     previousComponentsDO?.backgroundColor
   ) {
     return (
-      colorKeyToUtilityMap[cleanBgUtility(currentComponentsDO?.backgroundUtility) as keyof ColorKeyTokens]
-        .backgroundName === previousComponentsDO?.backgroundColor
+      colorKeyToUtilityMap[currentComponentsDO?.backgroundUtility as keyof ColorKeyTokens]?.backgroundName ===
+      previousComponentsDO?.backgroundColor
     )
   }
   if (
@@ -170,7 +170,7 @@ const isSameColorBackground = (currentComponentsDO: any, previousComponentsDO: a
     previousComponentsDO?.backgroundUtility
   ) {
     currentComponentsDO?.backgroundColor ===
-      colorKeyToUtilityMap[previousComponentsDO?.backgroundUtility as keyof ColorKeyTokens].backgroundName
+      colorKeyToUtilityMap[previousComponentsDO?.backgroundUtility as keyof ColorKeyTokens]?.backgroundName
   }
 
   return currentComponentsDO?.backgroundColor === previousComponentsDO?.backgroundColor

@@ -11,13 +11,13 @@ import { PortableTextBlock, PortableTextBlockStyle } from '@portabletext/types'
 import {
   FigureWithLayout,
   Quote,
-  Fact,
   ExternalLink,
   InternalLink,
   BasicIframe,
   BulletList,
   NumberedList,
 } from './components'
+import { Fact } from '@sections/FactCore/Fact'
 import { twMerge } from 'tailwind-merge'
 import { FormattedMessage } from 'react-intl'
 import { Highlight } from '@core/Typography/Highlight'
