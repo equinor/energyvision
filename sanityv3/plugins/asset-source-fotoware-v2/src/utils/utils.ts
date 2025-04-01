@@ -12,7 +12,7 @@ export const HAS_ENV_VARS =
 export const FotowareEvents = ['selectionWidgetCancel', 'assetSelected', 'assetExported']
 
 export const createCodeVerifier = async () => {
-  // Create byte array and fill with 1 random number and get cryptographically strong random values
+  // Create byte array, fill with 1 random number and get cryptographically strong random values
   const code_verifier = window.crypto.getRandomValues(new Uint8Array(1))
   const hashBuffer = await window.crypto.subtle.digest('SHA-256', code_verifier) // hash to SHA-256
   return hashBuffer
