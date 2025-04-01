@@ -94,6 +94,7 @@ export default {
         {
           type: 'object',
           title: 'Header cell',
+          name: 'headerCell',
           fields: [
             {
               name: 'headerCell',
@@ -112,6 +113,7 @@ export default {
         {
           type: 'object',
           title: 'Table row',
+          name: 'tableRow',
           fields: [
             {
               name: 'row',
