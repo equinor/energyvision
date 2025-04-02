@@ -1,4 +1,4 @@
-import { Card, Flex, Spinner, Select, Label } from '@sanity/ui'
+import { Card, Grid, Flex, Spinner, Select, Button, Label } from '@sanity/ui'
 import { Feedback, useListeningQuery } from 'sanity-plugin-utils'
 import { DashboardWidgetContainer, DashboardWidget, LayoutConfig } from '@sanity/dashboard'
 import { SanityDocument } from 'sanity'
@@ -7,11 +7,13 @@ import { isAfter, isBefore, subDays, format, isDate } from 'date-fns'
 import { WarningOutlineIcon, WarningFilledIcon } from '@sanity/icons'
 import { useEffect, useMemo, useState } from 'react'
 
-const StyledGrid = styled.div`
+const StyledGrid = styled(Grid)`
   display: grid;
   grid-template-columns: repeat(auto-fill, 340px);
   grid-template-rows: repeat(auto-fill, 300px);
   gap: 20px;
+  max-height: 65vh;
+  overflow: auto;
 `
 const InnerGrid = styled.div`
   width: 100%;
@@ -49,7 +51,7 @@ const FotowareLink = styled.a`
 const SortBar = styled.div`
   display: flex;
   gap: 12px;
-  backgroundcolor: grey;
+  background: #e3edea;
   padding: 1.25rem 0.75rem;
 `
 const SelectWrapper = styled.div`
@@ -62,8 +64,17 @@ const StyledLabel = styled(Label)`
   text-transform: none;
 `
 
+const PaginationBar = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  background: #e3edea;
+  padding: 1.25rem 0.75rem;
+`
+
 type SortTypes = 'expiration' | 'created' | 'updated'
 type SortDirections = 'asc' | 'desc'
+const CHUNK_SIZE = 12
 
 function ImportedFotowareAssetsWidget() {
   const { data, loading, error } = useListeningQuery<SanityDocument[]>(
@@ -96,6 +107,8 @@ function ImportedFotowareAssetsWidget() {
   }, [data])
 
   const [sortedAssets, setSortedAssets] = useState([])
+  const [pages, setPages] = useState([])
+  const [currentPage, setCurrentPage] = useState(0)
   const [sortType, setSortType] = useState<SortTypes>('expiration')
   const [sortDirection, setSortDirection] = useState<SortDirections>('desc')
 
@@ -134,6 +147,19 @@ function ImportedFotowareAssetsWidget() {
       handleSortChange(sortType, sortDirection)
     }
   }, [formattedAssets])
+
+  useEffect(() => {
+    if (sortedAssets?.length > 0) {
+      const chunks = [...Array(Math.ceil(sortedAssets.length / CHUNK_SIZE))].map((_, i) =>
+        sortedAssets.slice(CHUNK_SIZE * i, CHUNK_SIZE + CHUNK_SIZE * i),
+      )
+      setPages(chunks)
+    }
+  }, [sortedAssets])
+
+  console.log('currentPage <= pages?.length - 1', currentPage <= pages?.length - 1)
+  console.log('currentPage', currentPage)
+  console.log('pages', pages)
 
   return (
     <DashboardWidgetContainer header="Find imported Fotoware assets">
@@ -186,8 +212,8 @@ function ImportedFotowareAssetsWidget() {
           </div>
         </SortBar>
         <StyledGrid>
-          {sortedAssets?.length > 0 ? (
-            sortedAssets.map((image : { expired?: string; soonExpiring?: string;} & SanityDocument) => {
+          {pages?.length > 0 ? (
+            pages[currentPage]?.map((image: { expired?: string; soonExpiring?: string } & SanityDocument) => {
               return (
                 <StyledCard key={image._id}>
                   <InnerGrid>
@@ -223,6 +249,29 @@ function ImportedFotowareAssetsWidget() {
             <Feedback>No images found</Feedback>
           )}
         </StyledGrid>
+        <PaginationBar>
+          <Flex direction="column" align="center">
+            <Flex direction="row" gap={4} paddingBottom={4}>
+              <Button
+                fontSize={[2, 2, 3]}
+                mode="ghost"
+                disabled={currentPage === 0}
+                onClick={() => setCurrentPage(currentPage - 1)}
+                padding={[3, 3, 4]}
+                text="Previous page"
+              />
+              <Button
+                fontSize={[2, 2, 3]}
+                mode="ghost"
+                padding={[3, 3, 4]}
+                disabled={currentPage >= pages?.length - 1}
+                onClick={() => setCurrentPage(currentPage + 1)}
+                text="Next page"
+              />
+            </Flex>
+            Showing {currentPage * CHUNK_SIZE} of {sortedAssets?.length}
+          </Flex>
+        </PaginationBar>
       </Card>
     </DashboardWidgetContainer>
   )
