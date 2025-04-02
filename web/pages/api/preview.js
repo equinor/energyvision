@@ -37,13 +37,13 @@ export default function preview(req, res) {
 
   let url = ''
   if (Flags.HAS_NEWSROOM && type == 'newsroom') {
-    url = locale === 'no' ? `${baseUrl}/no/nyheter?preview` : `${baseUrl}/news?preview`
+    url = locale === 'no' ? `${baseUrl}/no/nyheter` : `${baseUrl}/news`
   } else if (Flags.HAS_MAGAZINE_INDEX && type == 'magazineIndex') {
-    url = locale === 'no' ? `${baseUrl}/no/magasin?preview` : `${baseUrl}/magazine?preview`
+    url = locale === 'no' ? `${baseUrl}/no/magasin` : `${baseUrl}/magazine`
   } else if (type == 'pageNotFound') {
-    url = `${baseUrl}${locale}/404?preview`
+    url = `${baseUrl}${locale}/404`
   } else if (type == 'internalServerError') {
-    url = `${baseUrl}${locale}/500?preview`
+    url = `${baseUrl}${locale}/500`
   } else {
     url = `${baseUrl}${locale}${pathname}`
   }

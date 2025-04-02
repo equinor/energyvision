@@ -82,6 +82,8 @@ export const getStaticProps: GetStaticProps = async ({
     },
     previewContext,
   )
+  console.log(JSON.stringify(previewContext))
+  console.log(JSON.stringify(pageData))
 
   const intl = await getIntl(locale, previewContext)
 
