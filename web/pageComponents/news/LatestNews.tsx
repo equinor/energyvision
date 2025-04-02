@@ -1,6 +1,6 @@
 import type { CardData } from '../../types/index'
 import { FormattedMessage } from 'react-intl'
-import { FormattedDate } from '@components/FormattedDateTime'
+import { FormattedDate } from '@core/FormattedDateTime'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
 import Card from '@sections/cards/Card'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'

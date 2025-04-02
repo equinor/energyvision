@@ -1,44 +1,25 @@
-import { forwardRef } from 'react'
-import { Icon } from '@equinor/eds-core-react'
-import { calendar, time } from '@equinor/eds-icons'
-import { twMerge } from 'tailwind-merge'
-import { FormattedDate } from 'react-intl'
+import { FormattedTime, FormattedTimeProps, FormattedDate } from '@core/FormattedDateTime'
+import { DateProps, DateIcon } from './shared'
 
-export type FormattedDateTimeProps = {
-  date: string
-  hideIcon?: boolean
-  year?: 'numeric' | '2-digit'
-  month?: 'numeric' | '2-digit' | 'long' | 'short' | 'narrow'
-  day?: 'numeric' | '2-digit'
-  className?: string
-  timeClassName?: string
-}
-
-const FormattedDateTime = forwardRef<HTMLDivElement, FormattedDateTimeProps>(function PastEventsListItem(
-  {
-    date,
-    year = 'numeric',
-    month = 'long',
-    day = '2-digit',
-    hideIcon = false,
-    className = '',
-    timeClassName = '',
-    ...rest
-  },
-  ref,
-) {
+const FormattedDateTime = ({
+  datetime,
+  year = 'numeric',
+  month = 'long',
+  day = '2-digit',
+  icon = false,
+  timezone,
+  uppercase = false,
+  ...rest
+}: DateProps & FormattedTimeProps): JSX.Element => {
   return (
-    <span ref={ref} className={twMerge('inline-flex gap-2 items-center', className)} {...rest}>
-      {!hideIcon && <DateIcon />}
-      {date && (
-        <time dateTime={date} className={twMerge('text-xs', timeClassName)}>
-          <FormattedDate value={new Date(date)} day={day} year={year} month={month} />
-        </time>
-      )}
+    <span className={`inline-flex items-center space-x-2 ${uppercase && 'uppercase'}`} {...rest}>
+      {icon && <DateIcon />}
+      <span className="flex-shrink box-content space-x-3">
+        <FormattedDate uppercase={uppercase} datetime={datetime} year={year} month={month} day={day} />
+        <FormattedTime datetime={datetime} timezone={timezone} />
+      </span>
     </span>
   )
-})
-export default FormattedDateTime
+}
 
-export const DateIcon = (): JSX.Element => <Icon data={calendar} className="text-norwegian-woods-100" />
-export const TimeIcon = (): JSX.Element => <Icon data={time} className="text-norwegian-woods-100" />
+export default FormattedDateTime
