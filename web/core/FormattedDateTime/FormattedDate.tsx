@@ -12,9 +12,9 @@ const FormattedDate = ({
   ...rest
 }: DateProps): JSX.Element => {
   return (
-    <span className={`inline-flex items-center space-x-2 ${uppercase && 'uppercase'}`} {...rest}>
+    <span className={`inline-flex items-center space-x-2`} {...rest}>
       {icon && <DateIcon />}
-      <span className={`flex-shrink box-content ${icon && '-mb-1'}`}>
+      <span className={`flex-shrink box-content ${icon && '-mb-1'} ${uppercase && 'uppercase'}`}>
         <time suppressHydrationWarning dateTime={datetime}>
           <ReactIntlDate
             value={new Date(datetime)}
