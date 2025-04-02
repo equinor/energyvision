@@ -230,7 +230,7 @@ function ImportedFotowareAssetsWidget() {
                       )}
                       {sortType === 'updated' && (
                         <ExpirationDateContainer>
-                          Created: {format(new Date(image._updatedAt), 'd. MMM yyyy mm:HH')}
+                          Updated: {format(new Date(image._updatedAt), 'd. MMM yyyy mm:HH')}
                         </ExpirationDateContainer>
                       )}
                       {image.expirationDate && isDate(image.expirationDate) && (
