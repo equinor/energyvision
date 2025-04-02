@@ -101,7 +101,10 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret = fals
       title: 'Desk',
     }),
     media(),
-    dashboardTool({ widgets: [fotowareWidget()] }),
+    dashboardTool({
+      title: 'Fotoware assets',
+      widgets: [fotowareWidget()],
+    }),
     datasetParam === 'global-development' && visionTool(),
     FotowareAssetSource(),
     BrandmasterAssetSource(),

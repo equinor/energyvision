@@ -12,7 +12,7 @@ const StyledGrid = styled(Grid)`
   grid-template-columns: repeat(auto-fill, 340px);
   grid-template-rows: repeat(auto-fill, 300px);
   gap: 20px;
-  max-height: 65vh;
+  max-height: 70vh;
   overflow: auto;
 `
 const InnerGrid = styled.div`
@@ -108,7 +108,7 @@ function ImportedFotowareAssetsWidget() {
 
   const [sortedAssets, setSortedAssets] = useState([])
   const [pages, setPages] = useState([])
-  const [currentPage, setCurrentPage] = useState(0)
+  const [currentPage, setCurrentPage] = useState(1)
   const [sortType, setSortType] = useState<SortTypes>('expiration')
   const [sortDirection, setSortDirection] = useState<SortDirections>('desc')
 
@@ -157,12 +157,11 @@ function ImportedFotowareAssetsWidget() {
     }
   }, [sortedAssets])
 
-  console.log('currentPage <= pages?.length - 1', currentPage <= pages?.length - 1)
-  console.log('currentPage', currentPage)
-  console.log('pages', pages)
+  const currentItemFirst = currentPage === 1 ? 1 : currentPage * CHUNK_SIZE - CHUNK_SIZE + 1 // First number of range of items at current page
+  const currentItemLast = currentPage === pages?.length ? sortedAssets?.length : currentPage * CHUNK_SIZE // Last number of range of items at current page
 
   return (
-    <DashboardWidgetContainer header="Find imported Fotoware assets">
+    <DashboardWidgetContainer>
       <Card>
         {error && <div>{error.message}</div>}
         {!error && loading && (
@@ -213,7 +212,7 @@ function ImportedFotowareAssetsWidget() {
         </SortBar>
         <StyledGrid>
           {pages?.length > 0 ? (
-            pages[currentPage]?.map((image: { expired?: string; soonExpiring?: string } & SanityDocument) => {
+            pages[currentPage - 1]?.map((image: { expired?: string; soonExpiring?: string } & SanityDocument) => {
               return (
                 <StyledCard key={image._id}>
                   <InnerGrid>
@@ -255,7 +254,7 @@ function ImportedFotowareAssetsWidget() {
               <Button
                 fontSize={[2, 2, 3]}
                 mode="ghost"
-                disabled={currentPage === 0}
+                disabled={currentPage === 1}
                 onClick={() => setCurrentPage(currentPage - 1)}
                 padding={[3, 3, 4]}
                 text="Previous page"
@@ -264,12 +263,19 @@ function ImportedFotowareAssetsWidget() {
                 fontSize={[2, 2, 3]}
                 mode="ghost"
                 padding={[3, 3, 4]}
-                disabled={currentPage >= pages?.length - 1}
+                disabled={currentPage >= pages?.length}
                 onClick={() => setCurrentPage(currentPage + 1)}
                 text="Next page"
               />
             </Flex>
-            Showing {currentPage * CHUNK_SIZE} of {sortedAssets?.length}
+            {currentItemFirst !== currentItemLast
+              ? `${currentItemFirst}
+              ${' - '}
+              ${currentItemLast}
+              ${' of '}
+              ${sortedAssets?.length}
+              ${' items'}`
+              : `${currentItemFirst} ${' of '} ${sortedAssets?.length} ${' items'}`}
           </Flex>
         </PaginationBar>
       </Card>
