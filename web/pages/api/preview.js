@@ -41,9 +41,9 @@ export default function preview(req, res) {
   } else if (Flags.HAS_MAGAZINE_INDEX && type == 'magazineIndex') {
     url = locale === 'no' ? `${baseUrl}/no/magasin` : `${baseUrl}/magazine`
   } else if (type == 'pageNotFound') {
-    url = `${baseUrl}${locale}/404?${Date().getTime()}`
+    url = `${baseUrl}${locale}/404?${new Date().getTime()}`
   } else if (type == 'internalServerError') {
-    url = `${baseUrl}${locale}/500?${Date().getTime()}`
+    url = `${baseUrl}${locale}/500?${new Date().getTime()}`
   } else {
     url = `${baseUrl}${locale}${pathname}`
   }
