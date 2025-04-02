@@ -1,30 +1,18 @@
-import { forwardRef, CSSProperties } from 'react'
+import { forwardRef } from 'react'
 import { Table as EdsTable } from '@equinor/eds-core-react'
-import styled from 'styled-components'
+import { twMerge } from 'tailwind-merge'
 
 const { Body: EdsBody } = EdsTable
-
-const StyledBodyItem = styled(EdsBody)`
-  background-color: var(--white-100);
-`
 
 export type TableBodyProps = React.HTMLAttributes<HTMLTableSectionElement>
 
 export const Body = forwardRef<HTMLTableSectionElement, TableBodyProps>(function Body(
-  { style, children, ...rest },
+  { children, className, ...rest },
   ref,
 ) {
   return (
-    <StyledBodyItem
-      ref={ref}
-      style={
-        {
-          ...style,
-        } as CSSProperties
-      }
-      {...rest}
-    >
+    <EdsBody ref={ref} className={twMerge('!bg-white-100')} {...rest}>
       {children}
-    </StyledBodyItem>
+    </EdsBody>
   )
 })
