@@ -28,13 +28,15 @@ const Quote = ({ data: { quote, authorTitle, author, image, designOptions } }: {
 
   const ImageComponent = hasImage && (
     <div className="flex justify-center">
-      <Image
-        maxWidth={242}
-        aspectRatio={Ratios.ONE_TO_ONE}
-        image={image!}
-        sizes="(min-width: 2280px) 242px, (min-width: 800px) calc(3.29vw + 168px), 80px"
-        className="w-20 h-20 sm:w-24 sm:h-24 rounded-full object-cover"
-      />
+      <div className="w-22 h-22 sm:w-[234px] sm:h-[234px]">
+        <Image
+          maxWidth={242}
+          aspectRatio={Ratios.ONE_TO_ONE}
+          image={image!}
+          sizes="(min-width: 2280px) 242px, (min-width: 800px) calc(3.29vw + 168px), calc(1.67vw + 75px)"
+          className="rounded-full"
+        />
+      </div>
     </div>
   )
 
@@ -73,7 +75,7 @@ const Quote = ({ data: { quote, authorTitle, author, image, designOptions } }: {
             <div className="flex flex-col items-center self-center sm:row-span-2">{ImageComponent}</div>
           )}
 
-          <div className="flex flex-col space-y-3">
+          <div className="flex flex-col space-y-3 mr-2">
             <QuoteSymbol iconSize={iconSize} />
             <blockquote className={`italic ${weight} ${size}`}>{quote}</blockquote>
           </div>
