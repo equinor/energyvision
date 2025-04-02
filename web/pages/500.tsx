@@ -71,7 +71,6 @@ export const getStaticProps: GetStaticProps = async ({
     preview,
     perspective: (previewData as { perspective: ClientPerspective })?.perspective || 'published',
   }
-  console.log(`500 - \n${JSON.stringify(previewContext)}`)
   const lang = getNameFromLocale(locale)
   const queryParams = {
     lang,
@@ -83,6 +82,8 @@ export const getStaticProps: GetStaticProps = async ({
     },
     previewContext,
   )
+  console.log(JSON.stringify(previewContext))
+  console.log(JSON.stringify(pageData))
 
   const intl = await getIntl(locale, previewContext)
 
