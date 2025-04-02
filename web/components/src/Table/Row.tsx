@@ -1,29 +1,15 @@
-import { forwardRef, CSSProperties } from 'react'
+import { forwardRef } from 'react'
 import { Table as EdsTable } from '@equinor/eds-core-react'
-import styled from 'styled-components'
+import { twMerge } from 'tailwind-merge'
 
 const { Row: EdsRow } = EdsTable
 
-const StyledRowItem = styled(EdsRow)`
-  &:hover {
-    background-color: transparent;
-  }
-`
-
 export type TableRowProps = React.HTMLAttributes<HTMLTableRowElement>
 
-export const Row = forwardRef<HTMLTableRowElement, TableRowProps>(function Row({ style, children, className,...rest }, ref) {
+export const Row = forwardRef<HTMLTableRowElement, TableRowProps>(function Row({ children, className, ...rest }, ref) {
   return (
-    <StyledRowItem
-      ref={ref}
-      style={
-        {
-          ...style,
-        } as CSSProperties
-      }
-      {...rest}
-    >
+    <EdsRow ref={ref} {...rest} className={twMerge('hover:!bg-transparent')}>
       {children}
-    </StyledRowItem>
+    </EdsRow>
   )
 })

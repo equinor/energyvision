@@ -6,12 +6,11 @@ import { getColorForTableTheme } from './tabletheme'
 
 export type TableProps = EdsTableProps & { theme?: TableThemes }
 
-export const Table = forwardRef<HTMLTableElement, TableProps>(function Table({ children, style, theme, ...rest }, ref) {
+export const Table = forwardRef<HTMLTableElement, TableProps>(function Table({ children, theme, ...rest }, ref) {
   const tableTheme = getColorForTableTheme(theme)
   return (
     <EdsTable
       ref={ref}
-      style={style}
       {...rest}
       className={twMerge(`
         overflow-x-auto block max-w-full sm:w-full sm:block sm:table
@@ -20,7 +19,7 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(function Table({ c
         ${tableTheme.rowBackground}
         ${tableTheme.coloumnBorderLeftBand}
         ${tableTheme.coloumnBorderBottomBand}
-        ${tableTheme.coloumnLastChildBorderBottomBand}
+      
       `)}
     >
       {children}
