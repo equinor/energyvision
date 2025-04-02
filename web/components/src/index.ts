@@ -1,4 +1,3 @@
-export * from './Button'
 export * from './Card'
 export * from './Topbar'
 export * from './Quote'

@@ -1,9 +1,10 @@
 import styled from 'styled-components'
-import { Text, Button, Heading, BackgroundContainer } from '@components'
+import { Text, Heading, BackgroundContainer } from '@components'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { useRouter } from 'next/router'
 import { defaultLanguage } from '../../../languages'
 import { CookieType } from '../../../types'
+import { Button } from '@core/Button'
 
 declare global {
   interface Window {
