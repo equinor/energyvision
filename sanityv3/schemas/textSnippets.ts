@@ -877,6 +877,11 @@ const snippets: textSnippet = {
     defaultValue: 'Read more',
     group: groups.others,
   },
+  open: {
+    title: 'Open',
+    defaultValue: 'Open',
+    group: groups.others,
+  },
 }
 
 type textSnippetGroup = { title: string; hidden?: boolean }

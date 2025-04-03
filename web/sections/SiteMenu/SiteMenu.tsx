@@ -2,16 +2,19 @@ import { useEffect, useCallback, useState, useMemo } from 'react'
 import { useFloating, useInteractions, useDismiss, FloatingOverlay, FloatingFocusManager } from '@floating-ui/react'
 import { useRouter } from 'next/router'
 import { Menu, MenuButton } from '@core/MenuAccordion'
-import { MenuItem } from './MenuItem'
 import { TopbarDropdown } from './TopbarDropdown'
 import { NavTopbar } from './NavTopbar'
 import { getAllSitesLink } from '../../common/helpers/getAllSitesLink'
-import { Link, LogoLink } from '@core/Link'
+import { BaseLink, Link, LogoLink } from '@core/Link'
 
 import type { MenuData, SimpleGroupData, SimpleMenuData, SubMenuData } from '../../types/index'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { SimpleMenuItem } from './SimpleMenuItem'
 import { Flags } from '../../common/helpers/datasetHelpers'
+import { MenuPanes } from '@core/MenuPanes/MenuPanes'
+import { PaneMenuItem } from '@core/MenuPanes/PaneMenuItem'
+import { MenuItem } from './MenuItem'
+import { ArrowRight } from 'icons'
 
 export type Variants = 'default' | 'simple'
 
@@ -70,8 +73,9 @@ const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
 
   const variantClassName: Partial<Record<Variants, string>> = {
     default: 'h-full px-8 xl:bg-moss-green-50 xl:mt-8 xl:mx-8 xl:flex xl:justify-between items-center',
-    simple: 'px-layout-sm flex flex-col mx-auto xl:px-layout-lg xl:w-fit',
+    simple: 'px-layout-sm mt-6 xl:mt-8 flex flex-col mx-auto',
   }
+  console.log('menuItems', menuItems)
 
   return (
     <>
@@ -88,7 +92,7 @@ const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
         <FloatingFocusManager context={context}>
           <FloatingOverlay ref={refs.setFloating} lockScroll {...getFloatingProps()}>
             <TopbarDropdown>
-              <nav>
+              <nav className="dark w-full h-full bg-north-sea-80">
                 <NavTopbar>
                   <LogoLink />
                   <MenuButton
@@ -100,43 +104,49 @@ const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
                   />
                 </NavTopbar>
                 <div className={variantClassName[variant]} {...rest}>
-                  <Menu variant={variant} defaultValue={getCurrentMenuItemIndex()}>
-                    {menuItems.map((item, idx: number) => {
-                      return variant === 'simple' ? (
-                        <SimpleMenuItem key={item.id} index={idx} item={item as SimpleGroupData} />
-                      ) : (
-                        <MenuItem key={item.id} index={idx} item={item as SubMenuData} />
-                      )
-                    })}
-                  </Menu>
-
-                  <Link
+                  {variant === 'simple' ? (
+                    <MenuPanes menuItems={menuItems} />
+                  ) : (
+                    <Menu variant="default" defaultValue={getCurrentMenuItemIndex()}>
+                      {menuItems.map((item, idx: number) => {
+                        return <MenuItem key={item.id} index={idx} item={item as SubMenuData} />
+                      })}
+                    </Menu>
+                  )}
+                  {variant === 'simple' && <hr className="h-[1px] w-full bg-white-100 mt-8 mb-6" />}
+                  <BaseLink
                     className={`
                     ${
                       variant === 'simple'
-                        ? 'py-4 xl:py-6 text-sm'
+                        ? 'py-4 xl:py-6 text-md hover:text-north-sea-50'
                         : `py-6 
                         px-2
                         xl:px-6
                         xl:my-4
                         xl:py-4
-                        text-base`
+                        xl:text-sm
+                        text-base
+                        `
                     }
-                    xl:text-sm
+                    w-fit 
+                    inline-flex
+                    items-center
+                    gap-2
                     leading-none
                     no-underline 
                     hover:underline
                     underline-offset-2
-                    w-fit
                     h-fit
                     rounded-sm
-                    xl:border-l-2
-                    xl:border-white-100
                     `}
+                    type={Flags.IS_GLOBAL_PROD ? 'internalUrl' : 'externalUrl'}
                     href={allSitesURL}
                   >
                     <FormattedMessage id="all_sites" defaultMessage="All sites" />
-                  </Link>
+                    {!Flags.IS_GLOBAL_PROD && (
+                      <ArrowRight className="ml-0.5 text-gray-500 group-hover:text-moss-green-90 transform -translate-y-0.5 rotate-[-50deg]" />
+                    )}
+                  </BaseLink>
                 </div>
               </nav>
             </TopbarDropdown>
