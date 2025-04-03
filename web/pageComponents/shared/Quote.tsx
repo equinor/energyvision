@@ -28,7 +28,7 @@ const Quote = ({ data: { quote, authorTitle, author, image, designOptions } }: {
 
   const ImageComponent = hasImage && (
     <div className="flex justify-center">
-      <div className="w-22 h-22 sm:w-[234px] sm:h-[234px]">
+      <div className="w-[calc(1.67vw + 75px)] md:w-[calc(3.29vw + 168px)] 2xl:w-[242px]">
         <Image
           maxWidth={242}
           aspectRatio={Ratios.ONE_TO_ONE}
@@ -43,7 +43,7 @@ const Quote = ({ data: { quote, authorTitle, author, image, designOptions } }: {
   const AuthorComponent = author && (
     <figcaption className="text-xs text-right">
       <div className="inline-block text-left text-[16px]">
-        <div className={authorTitle ? 'font-bold' : ''}>{author}</div>
+        <div className={authorTitle ? 'font-semibold' : ''}>{author}</div>
         {authorTitle && <div>{authorTitle}</div>}
       </div>
     </figcaption>
@@ -63,7 +63,7 @@ const Quote = ({ data: { quote, authorTitle, author, image, designOptions } }: {
               {AuthorComponent}
             </div>
           )}
-          <div className="col-span-2 flex flex-col space-y-3">
+          <div className="col-span-2 flex flex-col">
             <QuoteSymbol iconSize={iconSize} />
             <blockquote className={`italic ${weight} ${size}`}>{quote}</blockquote>
           </div>
@@ -75,7 +75,7 @@ const Quote = ({ data: { quote, authorTitle, author, image, designOptions } }: {
             <div className="flex flex-col items-center self-center sm:row-span-2">{ImageComponent}</div>
           )}
 
-          <div className="flex flex-col space-y-3 mr-2">
+          <div className="flex flex-col mr-2">
             <QuoteSymbol iconSize={iconSize} />
             <blockquote className={`italic ${weight} ${size}`}>{quote}</blockquote>
           </div>
