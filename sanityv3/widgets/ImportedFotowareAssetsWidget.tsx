@@ -78,7 +78,7 @@ const CHUNK_SIZE = 12
 
 function ImportedFotowareAssetsWidget() {
   const { data, loading, error } = useListeningQuery<SanityDocument[]>(
-    `*[_type == "sanity.imageAsset" && source.name match "fotoware*"]`,
+    `*[_type == "sanity.imageAsset" && source.name match "fotoware*"] | order(_createdAt desc)`,
     {
       params: {},
       initialValue: [],
@@ -97,7 +97,7 @@ function ImportedFotowareAssetsWidget() {
           const valid = expDate ? isBefore(subDays(new Date(), 30), expDate) : undefined
           return {
             ...asset,
-            expirationDate: expDate,
+            expirationDate: expDate ? expDate : '',
             expired,
             soonExpiring,
             valid,
@@ -107,55 +107,56 @@ function ImportedFotowareAssetsWidget() {
   }, [data])
 
   const [sortedAssets, setSortedAssets] = useState([])
-  const [pages, setPages] = useState([])
+  const [pages, setPages] = useState<any[][]>([])
   const [currentPage, setCurrentPage] = useState(1)
   const [sortType, setSortType] = useState<SortTypes>('expiration')
   const [sortDirection, setSortDirection] = useState<SortDirections>('desc')
 
   const handleSortChange = (type: SortTypes, direction: SortDirections) => {
-    const sorted = formattedAssets.sort((a, b) => {
-      if (type === 'created') {
-        return direction === 'desc'
-          ? new Date(b._createdAt) - new Date(a._createdAt)
-          : new Date(a._createdAt) - new Date(b._createdAt)
-      }
-      if (type === 'updated') {
-        return direction === 'desc'
-          ? new Date(b._updatedAt) - new Date(a._updatedAt)
-          : new Date(a._updatedAt) - new Date(b._updatedAt)
-      }
-
-      if (!a.expirationDate || !b.expirationDate) {
-        return !a.expirationDate - !b.expirationDate
-        //return -1
-      }
-      return direction === 'desc'
-        ? new Date(b.expirationDate) - new Date(a.expirationDate)
-        : new Date(a.expirationDate) - new Date(b.expirationDate)
-    })
-    setSortedAssets(sorted)
-
+    let sorted = []
+    if (type === 'expiration') {
+      const hasExpirationArray = formattedAssets
+        .filter((item) => item?.expirationDate != '')
+        .sort((a, b) => {
+          return direction === 'desc'
+            ? new Date(b.expirationDate) - new Date(a.expirationDate)
+            : new Date(a.expirationDate) - new Date(b.expirationDate)
+        })
+      const theRestArray = formattedAssets.filter((item) => item?.expirationDate === '')
+      sorted = hasExpirationArray.concat(theRestArray)
+    } else {
+      sorted = formattedAssets.sort((a, b) => {
+        if (type === 'created') {
+          return direction === 'desc'
+            ? new Date(b._createdAt) - new Date(a._createdAt)
+            : new Date(a._createdAt) - new Date(b._createdAt)
+        }
+        if (type === 'updated') {
+          return direction === 'desc'
+            ? new Date(b._updatedAt) - new Date(a._updatedAt)
+            : new Date(a._updatedAt) - new Date(b._updatedAt)
+        }
+      })
+    }
     if (sortType !== type) {
       setSortType(type)
     }
     if (sortDirection !== direction) {
       setSortDirection(direction)
     }
+
+    const chunks = [...Array(Math.ceil(sorted.length / CHUNK_SIZE))].map((_, i) =>
+      sorted.slice(CHUNK_SIZE * i, CHUNK_SIZE + CHUNK_SIZE * i),
+    )
+    setSortedAssets(sorted)
+    setPages(chunks)
+    setCurrentPage(1)
   }
   useEffect(() => {
     if (formattedAssets?.length > 0) {
       handleSortChange(sortType, sortDirection)
     }
   }, [formattedAssets])
-
-  useEffect(() => {
-    if (sortedAssets?.length > 0) {
-      const chunks = [...Array(Math.ceil(sortedAssets.length / CHUNK_SIZE))].map((_, i) =>
-        sortedAssets.slice(CHUNK_SIZE * i, CHUNK_SIZE + CHUNK_SIZE * i),
-      )
-      setPages(chunks)
-    }
-  }, [sortedAssets])
 
   const currentItemFirst = currentPage === 1 ? 1 : currentPage * CHUNK_SIZE - CHUNK_SIZE + 1 // First number of range of items at current page
   const currentItemLast = currentPage === pages?.length ? sortedAssets?.length : currentPage * CHUNK_SIZE // Last number of range of items at current page
