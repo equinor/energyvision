@@ -42,7 +42,7 @@ const Quote = ({ data: { quote, authorTitle, author, image, designOptions } }: {
 
   const AuthorComponent = author && (
     <figcaption className="text-xs text-right">
-      <div className="inline-block text-left text-grey-90 dark:text-white-100 text-[16px]">
+      <div className="inline-block text-left text-[16px]">
         <div className={authorTitle ? 'font-bold' : ''}>{author}</div>
         {authorTitle && <div>{authorTitle}</div>}
       </div>
@@ -51,7 +51,7 @@ const Quote = ({ data: { quote, authorTitle, author, image, designOptions } }: {
 
   return (
     <figure
-      className={`grid gap-4 text-gray-700 dark:text-white-100
+      className={`grid gap-4 text-grey-90 dark:text-white-100
         ${isMobile ? 'grid-cols-2' : isImageLeft ? 'sm:grid-cols-[auto_1fr]' : 'sm:grid-cols-[1fr_auto]'}
       `}
     >
