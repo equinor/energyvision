@@ -42,9 +42,9 @@ const Quote = ({ data: { quote, authorTitle, author, image, designOptions } }: {
 
   const AuthorComponent = author && (
     <figcaption className="text-xs text-right">
-      <div className="inline-block text-left">
+      <div className="inline-block text-left text-grey-90 dark:text-white-100 text-[16px]">
         <div className={authorTitle ? 'font-bold' : ''}>{author}</div>
-        {authorTitle && <div className="text-gray-600 dark:text-white-100">{authorTitle}</div>}
+        {authorTitle && <div>{authorTitle}</div>}
       </div>
     </figcaption>
   )
