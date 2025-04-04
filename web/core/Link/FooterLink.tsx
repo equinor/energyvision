@@ -12,7 +12,7 @@ const FooterLink = forwardRef<HTMLAnchorElement, FooterLinkProps>(function Foote
   { href = '', type = 'internalUrl', icon, children, ...rest },
   ref,
 ) {
-  const isExternal = type === 'externalUrl' || type === 'someLink'
+  const isExternal = type === 'externalUrl' ||  href.startsWith('http') || href.toLowerCase().includes('.pdf')
   const target = isExternal ? '_blank' : undefined
 
   return (
