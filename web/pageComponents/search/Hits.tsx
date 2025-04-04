@@ -1,71 +1,48 @@
 import { useHits } from 'react-instantsearch'
-import { List, Heading } from '@components'
-import styled from 'styled-components'
 import { FormattedMessage } from 'react-intl'
-import type { HitProps } from './EventHit'
+import type { Hit as AlgoliaHit } from '@algolia/client-search'
+import { HitData } from './UniversalHit'
+import { Typography } from '@core/Typography'
 
-const { Item } = List
+export type HitProps = { hit: AlgoliaHit<HitData> }
 
 type HitsProps = {
-  // Let's consider to create a compound component instead of this Algolia example way of doing it
-  hitComponent: React.FC<HitProps>
+  hitComponent: React.FC<{ hit: AlgoliaHit<HitData> }>
 }
 
-const HitItem = styled(Item)`
-  &:after {
-    content: '';
-    height: 1px;
-    width: 100%;
-    border-bottom: 1px solid var(--grey-20);
-    /* Doesn't work in FF https://bugzilla.mozilla.org/show_bug.cgi?id=1481307 */
-    transform: scaleY(0.5);
-    position: absolute;
-    border-radius: 0.01px;
-  }
-`
-
-const HitsContainer = styled.div`
-  position: relative;
-`
-
-const UppercaseHeading = styled(Heading)`
-  text-transform: uppercase;
-`
-
-const WarningContainer = styled.div`
-  padding: var(--space-xxLarge) 0;
-`
-
-const WarningText = styled.p``
-
 const Hits = ({ hitComponent: Hit }: HitsProps) => {
-  const { hits } = useHits()
-  if (!hits || hits.length === 0) {
+  const { items } = useHits()
+  if (!items || items.length === 0) {
     return (
-      <WarningContainer>
-        <UppercaseHeading level="h2" size="sm">
-          <FormattedMessage id="search_no_results_heading" defaultMessage="Nothing found" />
-        </UppercaseHeading>
-        <WarningText>
+      <div className="py-12 px-0">
+        <Typography level="h2" size="sm">
+          <div className="uppercase">
+            <FormattedMessage id="search_no_results_heading" defaultMessage="Nothing found" />
+          </div>
+        </Typography>
+        <p>
           <FormattedMessage
             id="search_no_results_generic"
             defaultMessage="Sorry, no results were found. Please try again with some different keywords."
           />
-        </WarningText>
-      </WarningContainer>
+        </p>
+      </div>
     )
   }
 
   return (
-    <HitsContainer>
-      <List variant="numbered" unstyled>
-        {hits.map((hit) => (
-          <HitItem key={hit.objectID}>
-            <Hit hit={hit} />
-          </HitItem>
+    <div className="relative">
+      <ol>
+        {items.map((item) => (
+          <li
+            key={item.objectID}
+            className=" after:w-full after:border-b after:opacity-50 after:scale-y-50 after:absolute"
+          >
+            <Hit hit={item} />
+          </li>
         ))}
-      </List>
-    </HitsContainer>
+      </ol>
+    </div>
   )
 }
 
