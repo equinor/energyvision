@@ -1,8 +1,8 @@
 import { PortableText, PortableTextProps } from '@portabletext/react'
 import { Heading, HeadingProps } from '@components'
 import isEmpty from './helpers/isEmpty'
-import { Sub, Sup, Strikethrough, Highlight } from './components'
-
+import { Sub, Sup, Strikethrough } from './components'
+import { Highlight } from '@core/Typography/Highlight'
 import type { PortableTextBlock } from '@portabletext/types'
 
 type TitleTextProps = PortableTextProps &

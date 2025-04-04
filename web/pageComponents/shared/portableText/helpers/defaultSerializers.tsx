@@ -1,15 +1,6 @@
 import { Text, List } from '@components'
-import {
-  h3Heading,
-  h2Heading,
-  Sub,
-  Sup,
-  ExternalLink,
-  InternalLink,
-  BulletList,
-  NumberedList,
-  Highlight,
-} from '../components'
+import { Highlight } from '@core/Typography/Highlight'
+import { h3Heading, h2Heading, Sub, Sup, ExternalLink, InternalLink, BulletList, NumberedList } from '../components'
 import {
   defaultComponents,
   PortableTextBlockComponent,

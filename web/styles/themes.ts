@@ -29,9 +29,6 @@ export const normal = css`
 
   /**@ Breadcrumbs component*/
   --breadcrumbs-inactive-color: var(--slate-blue-90);
-
-  /**@ Title Highlight  */
-  --title-highlight-color: var(--energy-red-100);
 `
 
 export const inverted = css`
@@ -49,5 +46,4 @@ export const inverted = css`
 
   --accordion-icon-color: var(--white-100);
   --breadcrumbs-inactive-color: var(--grey-30);
-  --title-highlight-color: var(--spruce-wood-100);
 `
