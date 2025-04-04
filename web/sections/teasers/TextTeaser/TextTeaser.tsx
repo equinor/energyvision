@@ -1,6 +1,6 @@
 import { Teaser } from '@core/Teaser'
 import { BackgroundContainer } from '@components/Backgrounds'
-import IngressText from '../portableText/IngressText'
+
 import type { TextTeaserData } from '../../../types/index'
 import { getColorForTheme } from './theme'
 
@@ -9,6 +9,7 @@ import { ResourceLink } from '@core/Link'
 import { getUrlFromAction } from '../../../common/helpers/getUrlFromAction'
 import { getLocaleFromName } from '../../../lib/localization'
 import { Heading } from '@core/Typography'
+import IngressText from '../../../pageComponents/shared/portableText/IngressText'
 
 const { Content, Media } = Teaser
 
