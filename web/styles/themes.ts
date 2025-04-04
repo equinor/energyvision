@@ -24,9 +24,6 @@ export const normal = css`
   --link-arrow-color-hover: var(--energy-red-100);
   --content-link-arrow-color-hover: var(--energy-red-100);
 
-  /**@ Quote component*/
-  --quote-icon-color: var(--grey-90);
-
   /**@ Accordion component*/
   --accordion-icon-color: var(--energy-red-100);
 
@@ -49,7 +46,7 @@ export const inverted = css`
   --link-arrow-color: var(--white-100);
   --link-arrow-color-hover: var(--white-100);
   --content-link-arrow-color-hover: var(--energy-red-100);
-  --quote-icon-color: var(--inverted-text);
+
   --accordion-icon-color: var(--white-100);
   --breadcrumbs-inactive-color: var(--grey-30);
   --title-highlight-color: var(--spruce-wood-100);
