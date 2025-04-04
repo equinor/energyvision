@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router'
 import { NewsArticleJsonLd, NextSeo } from 'next-seo'
-import { Heading, FormattedDateTime, BackgroundContainer } from '@components'
+import { Heading, BackgroundContainer } from '@components'
+import { FormattedDateTime } from '@core/FormattedDateTime'
 import styled from 'styled-components'
 import { Icon } from '@equinor/eds-core-react'
 import { calendar } from '@equinor/eds-icons'
