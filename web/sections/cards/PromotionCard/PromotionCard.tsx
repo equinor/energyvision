@@ -1,6 +1,6 @@
 import { useMediaQuery } from '../../../lib/hooks/useMediaQuery'
 import Card from '@sections/cards/Card'
-import { FormattedDate } from '@components/FormattedDateTime'
+import { FormattedDate } from '@core/FormattedDateTime'
 import Blocks from '../../../pageComponents/shared/portableText/Blocks'
 import type { CardData } from '../../../types/index'
 import { forwardRef, HTMLAttributes } from 'react'

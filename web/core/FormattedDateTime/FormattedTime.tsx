@@ -1,6 +1,6 @@
 import { HTMLAttributes } from 'react'
 import { FormattedTime as ReactIntlTime } from 'react-intl'
-import { StyledDate, TimeIcon } from './shared'
+import { TimeIcon } from '@core/FormattedDateTime'
 
 export type FormattedTimeProps = {
   datetime: string
@@ -9,7 +9,7 @@ export type FormattedTimeProps = {
   small?: boolean
 } & HTMLAttributes<HTMLSpanElement>
 
-export const FormattedTime = ({
+const FormattedTime = ({
   datetime,
   icon = false,
   small = false,
@@ -18,9 +18,9 @@ export const FormattedTime = ({
 }: FormattedTimeProps): JSX.Element => {
   const date = new Date(datetime)
   return (
-    <StyledDate {...rest}>
+    <span className="inline-flex items-center space-x-2" {...rest}>
       {icon && <TimeIcon />}
-      <span className={`${small ? 'text-2xs mt-1' : 'mt-0'}`}>
+      <span className={`flex-shrink box-content ${small ? 'text-2xs mt-1' : 'mt-0'}`}>
         <time suppressHydrationWarning dateTime={datetime}>
           <ReactIntlTime value={date} />
         </time>
@@ -30,6 +30,8 @@ export const FormattedTime = ({
           </span>
         )}
       </span>
-    </StyledDate>
+    </span>
   )
 }
+
+export default FormattedTime
