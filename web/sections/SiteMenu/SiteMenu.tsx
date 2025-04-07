@@ -5,16 +5,15 @@ import { Menu, MenuButton } from '@core/MenuAccordion'
 import { TopbarDropdown } from './TopbarDropdown'
 import { NavTopbar } from './NavTopbar'
 import { getAllSitesLink } from '../../common/helpers/getAllSitesLink'
-import { BaseLink, Link, LogoLink } from '@core/Link'
-
+import { BaseLink, LogoLink } from '@core/Link'
 import type { MenuData, SimpleGroupData, SimpleMenuData, SubMenuData } from '../../types/index'
 import { FormattedMessage, useIntl } from 'react-intl'
-import { SimpleMenuItem } from './SimpleMenuItem'
 import { Flags } from '../../common/helpers/datasetHelpers'
 import { MenuPanes } from '@core/MenuPanes/MenuPanes'
-import { PaneMenuItem } from '@core/MenuPanes/PaneMenuItem'
 import { MenuItem } from './MenuItem'
-import { ArrowRight } from 'icons'
+import { ArrowRight } from '../../icons'
+import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
+import { SimpleMenuItem } from './SimpleMenuItem'
 
 export type Variants = 'default' | 'simple'
 
@@ -32,6 +31,7 @@ const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
     onOpenChange: setIsOpen,
   })
   const { getReferenceProps, getFloatingProps } = useInteractions([useDismiss(context)])
+  const usePaneMenu = useMediaQuery(`(min-width: 1300px)`)
 
   const menuItems = useMemo(() => {
     if (!data) {
@@ -73,10 +73,9 @@ const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
 
   const variantClassName: Partial<Record<Variants, string>> = {
     default: 'h-full px-8 xl:bg-moss-green-50 xl:mt-8 xl:mx-8 xl:flex xl:justify-between items-center',
-    simple: 'px-layout-sm mt-6 xl:mt-8 flex flex-col mx-auto',
+    simple: `${!Flags.IS_GLOBAL_PROD ? 'bg-north-sea-80' : ''} px-layout-sm mt-6 xl:mt-8 flex flex-col mx-auto`,
   }
-  console.log('menuItems', menuItems)
-
+  console.log('variant sitemenu', variant)
   return (
     <>
       <MenuButton
@@ -92,7 +91,7 @@ const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
         <FloatingFocusManager context={context}>
           <FloatingOverlay ref={refs.setFloating} lockScroll {...getFloatingProps()}>
             <TopbarDropdown>
-              <nav className="dark w-full h-full bg-north-sea-80">
+              <nav className={`${!Flags.IS_GLOBAL_PROD ? 'h-full dark bg-north-sea-80' : ''} `}>
                 <NavTopbar>
                   <LogoLink />
                   <MenuButton
@@ -105,7 +104,17 @@ const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
                 </NavTopbar>
                 <div className={variantClassName[variant]} {...rest}>
                   {variant === 'simple' ? (
-                    <MenuPanes menuItems={menuItems} />
+                    <>
+                      {usePaneMenu ? (
+                        <MenuPanes menuItems={menuItems} />
+                      ) : (
+                        <Menu variant="simple" defaultValue={getCurrentMenuItemIndex()}>
+                          {menuItems.map((item, idx: number) => {
+                            return <SimpleMenuItem key={item.id} index={idx} item={item as SimpleGroupData} />
+                          })}
+                        </Menu>
+                      )}
+                    </>
                   ) : (
                     <Menu variant="default" defaultValue={getCurrentMenuItemIndex()}>
                       {menuItems.map((item, idx: number) => {
@@ -113,7 +122,13 @@ const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
                       })}
                     </Menu>
                   )}
-                  {variant === 'simple' && <hr className="h-[1px] w-full bg-white-100 mt-8 mb-6" />}
+                  {
+                    <hr
+                      className={`${
+                        Flags.IS_GLOBAL_PROD ? 'xl:hidden' : ''
+                      } h-[1px] w-full bg-slate-80 dark:bg-white-100 mt-8 mb-6`}
+                    />
+                  }
                   <BaseLink
                     className={`
                     ${
@@ -121,11 +136,11 @@ const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
                         ? 'py-4 xl:py-6 text-md hover:text-north-sea-50'
                         : `py-6 
                         px-2
+                        text-md
                         xl:px-6
                         xl:my-4
                         xl:py-4
                         xl:text-sm
-                        text-base
                         `
                     }
                     w-fit 
@@ -138,6 +153,7 @@ const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
                     underline-offset-2
                     h-fit
                     rounded-sm
+                    mb-40
                     `}
                     type={Flags.IS_GLOBAL_PROD ? 'internalUrl' : 'externalUrl'}
                     href={allSitesURL}

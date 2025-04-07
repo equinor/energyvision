@@ -43,18 +43,21 @@ export const PaneMenuItem = forwardRef<HTMLLIElement, PaneMenuItemProps>(functio
       <div ref={firstPaneRef} className="group flex text-white-100 w-full">
         {type === 'simpleMenuLink' ? (
           <Link
-            className={`aria-current:bg-grey-10
-                                aria-current:px-2
-                                aria-current:-ml-2
-                                aria-current:border-l-[3px]
-                                aria-current:border-moss-green-95
-                                no-underline
-                                hover:underline 
-                                underline-offset-2
-                                dark:hover:text-north-sea-50
-                                text-lg
-                                `}
-            href={item.link.slug}
+            className={`w-full
+              relative
+              aria-current:before:content-['']
+              aria-current:before:absolute
+              aria-current:before:top-0
+              aria-current:before:-left-2
+              aria-current:before:w-[2px]
+              aria-current:before:h-full
+              aria-current:before:bg-north-sea-50
+              hover:underline
+              dark:hover:text-north-sea-50
+              underline-offset-2
+              text-lg
+              no-underline`}
+            href={(item.link && item.link.slug) || '/'}
             aria-current={router?.asPath == item?.link?.slug ? 'page' : 'false'}
           >
             {item.label}
@@ -69,10 +72,9 @@ export const PaneMenuItem = forwardRef<HTMLLIElement, PaneMenuItemProps>(functio
             aria-expanded={showSecondPane}
             className={`w-full
             flex
-            border-b
-            border-transparent
+            border-b-2
+            ${showSecondPane ? 'border-north-sea-50' : ' border-transparent'}
             hover:border-north-sea-50
-            ${showSecondPane ? 'border-north-sea-50' : ''}
           `}
           >
             <span className="sr-only">
@@ -128,6 +130,7 @@ export const PaneMenuItem = forwardRef<HTMLLIElement, PaneMenuItemProps>(functio
                           no-underline
                           hover:underline 
                           underline-offset-2
+                          decoration-2
                           dark:hover:text-north-sea-50
                           `}
                 href={link?.link?.slug || '/'}

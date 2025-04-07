@@ -66,7 +66,8 @@ export const MenuButton = forwardRef<HTMLButtonElement, MenuButtonProps>(functio
         py-2 
         px-3 
         focus:outline-none
-        focus-visible:envis-outline`}
+        focus-visible:envis-outline
+        dark:focus-visible:envis-outline-invert`}
       {...rest}
     >
       <span className="leading-[1em] hidden break-keep sm:block">{title}</span>

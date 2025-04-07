@@ -34,7 +34,7 @@ export const MenuItem = ({ item, index }: MenuGroupType) => {
     <_MenuItem value={`${index}`}>
       <MenuHeader>{topLevelLink?.label}</MenuHeader>
       <MenuContent className="">
-        <div className="max-xl:mt-8 px-4 xl:px-layout-sm xl:mx-auto">
+        <div className="px-4 xl:px-layout-sm xl:mx-auto">
           <div className="w-full flex flex-col gap-2 pb-6">
             {intro && <Blocks value={intro} />}
             <ResourceLink href={menuItemHref} className="w-fit">
