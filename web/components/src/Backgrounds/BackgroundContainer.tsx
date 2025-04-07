@@ -1,15 +1,9 @@
 import { forwardRef, HTMLAttributes } from 'react'
-import styled from 'styled-components'
-import { normal, inverted } from '../../../styles/themes'
 import type { BackgroundColours, BackgroundTypes, ImageBackground } from '../../../types/index'
 import { ColouredContainer } from './ColouredContainer'
-import { ImageBackgroundContainer } from './ImageBackgroundContainer'
 import { ColorKeyTokens } from '../../../styles/colorKeyToUtilityMap'
 import envisTwMerge from '../../../twMerge'
-
-const StyledImageBackground = styled(ImageBackgroundContainer)<{ $isInverted: boolean }>`
-  ${({ $isInverted }) => ($isInverted ? inverted : normal)}
-`
+import { ImageBackgroundContainer } from './ImageBackgroundContainer'
 
 export type BackgroundContainerProps = {
   background?: {
@@ -55,9 +49,8 @@ export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContaine
   return (
     <>
       {type === 'backgroundImage' && backgroundImage && (
-        <StyledImageBackground
+        <ImageBackgroundContainer
           {...rest}
-          $isInverted={backgroundImage?.useLight ? false : true}
           ref={ref}
           id={id}
           {...backgroundImage}
@@ -67,7 +60,7 @@ export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContaine
           asSection={asSection}
         >
           {children}
-        </StyledImageBackground>
+        </ImageBackgroundContainer>
       )}
       {(type === 'backgroundColor' || !type) && (
         <>
