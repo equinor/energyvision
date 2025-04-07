@@ -4,6 +4,7 @@ import { Button as EdsButton, ButtonProps as EdsButtonProps, Icon } from '@equin
 import { Text } from '@components'
 import { error_outlined } from '@equinor/eds-icons'
 import { FormattedMessage } from 'react-intl'
+import { twMerge } from 'tailwind-merge'
 
 const Box = styled.div`
   display: flex;
@@ -23,7 +24,7 @@ const StyledEdsButton = styled(EdsButton)`
 
 export const FormSubmitFailureBox = forwardRef<HTMLDivElement, EdsButtonProps>(function Button({ ...rest }, ref) {
   return (
-    <Box color="var(--lichen-green-100)">
+    <div className={twMerge('border border-solid !border-[var(--energy-red-100)] border-[var(--eds_button__border_width)] flex p-[var(--space-large)]')}>
       <StyledIcon data={error_outlined} size={48} />
       <div>
         <Text size="md" bold={true}>
@@ -38,6 +39,8 @@ export const FormSubmitFailureBox = forwardRef<HTMLDivElement, EdsButtonProps>(f
           <FormattedMessage id="form_failure_cta" defaultMessage="Try again" />
         </StyledEdsButton>
       </div>
-    </Box>
+    </div>
   )
 })
+
+
