@@ -23,11 +23,7 @@ export const ColouredContainer = forwardRef<HTMLDivElement, ColouredContainerPro
     ? colorKeyToUtilityMap[backgroundUtility].background
     : colorKeyToUtilityMap[colorKey].background
 
-  // After a while with TW, this isDark should be removed and only use dark from designOptions for dark
-  const isDark =
-    dark || backgroundColor === 'Mid Blue' || backgroundColor === 'Slate Blue' || backgroundColor === 'Slate Blue 95'
-
-  const classNames = twMerge(`${className} ${isDark ? 'dark' : ''}  ${backgroundMap}`)
+  const classNames = twMerge(`${className} ${dark ? 'dark' : ''}  ${backgroundMap}`)
   return asSection ? (
     <section className={classNames} ref={ref} {...rest}>
       {children}
