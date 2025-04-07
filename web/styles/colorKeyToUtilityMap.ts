@@ -1,4 +1,4 @@
-export const colorKeyToUtilityMap = {
+export const colorKeyToUtilityMap: Record<string, { backgroundName: string; background: string; text: string }> = {
   'blue-50': {
     backgroundName: 'Mid blue',
     background: 'bg-blue-50',
