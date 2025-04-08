@@ -181,7 +181,18 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
     }
   }
   return (
-    <BaseLink className={classNames} type={type} ref={ref} href={href} {...rest} target="_blank">
+    <BaseLink className={classNames} type={type} ref={ref} href={href} {...rest} 
+    target={
+    type === 'externalUrl' || (extension && extension.toLowerCase() === 'pdf')
+      ? '_blank'
+      : undefined
+    }
+    rel={
+    type === 'externalUrl' || (extension && extension.toLowerCase() === 'pdf')
+      ? 'noopener noreferrer'
+      : undefined
+    }
+>
       <div
         className={envisTwMerge(
           `h-full
