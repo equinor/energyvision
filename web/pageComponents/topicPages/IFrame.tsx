@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import type { IFrameData } from '../../types/index'
-import { BackgroundContainer, FigureCaption } from '@components'
+import { FigureCaption } from '@components'
+import { BackgroundContainer } from '@core/Backgrounds'
 import CoreIFrame from '../shared/iframe/IFrame'
 import IngressText from '../shared/portableText/IngressText'
 import TitleText from '../shared/portableText/TitleText'

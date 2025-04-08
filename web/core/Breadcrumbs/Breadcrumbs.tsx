@@ -1,5 +1,5 @@
 import { BreadcrumbsList } from './index'
-import { BackgroundContainer, BackgroundContainerProps } from '@components'
+import { BackgroundContainer, BackgroundContainerProps } from '@core/Backgrounds'
 import { BreadcrumbJsonLd } from 'next-seo'
 import { useRouter } from 'next/router'
 import { twMerge } from 'tailwind-merge'

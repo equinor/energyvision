@@ -7,7 +7,7 @@ import {
   VideoType,
   VideoDesignOptionsType,
 } from '../../types/index'
-import { BackgroundContainer } from '@components'
+import { BackgroundContainer } from '@core/Backgrounds'
 import { urlFor } from '../../common/helpers'
 import IngressText from './portableText/IngressText'
 import { VideoJS } from '@components/VideoJsPlayer'

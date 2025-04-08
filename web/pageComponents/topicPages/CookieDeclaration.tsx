@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import { useEffect, useRef } from 'react'
 import styled from 'styled-components'
-import { BackgroundContainer } from '@components'
+import { BackgroundContainer } from '@core/Backgrounds'
 import TitleText from '../../pageComponents/shared/portableText/TitleText'
 import { CookieDeclarationData } from '../../types/index'
 import { twMerge } from 'tailwind-merge'

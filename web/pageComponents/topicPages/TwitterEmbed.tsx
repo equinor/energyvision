@@ -1,7 +1,7 @@
 import { TwitterEmbedData } from '../../types/index'
 import RequestConsentContainer from '../../pageComponents/shared/iframe/RequestConsentContainer'
 import { TwitterTimelineEmbed, TwitterTweetEmbed } from 'react-twitter-embed'
-import { BackgroundContainer } from '@components'
+import { BackgroundContainer } from '@core/Backgrounds'
 import IngressText from '../../pageComponents/shared/portableText/IngressText'
 import TitleText from '../../pageComponents/shared/portableText/TitleText'
 import { twMerge } from 'tailwind-merge'

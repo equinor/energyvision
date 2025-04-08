@@ -1,5 +1,6 @@
 import styled from 'styled-components'
-import { Text, Button, Heading, BackgroundContainer } from '@components'
+import { Text, Button, Heading } from '@components'
+import { BackgroundContainer } from '@core/Backgrounds'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { useRouter } from 'next/router'
 import { defaultLanguage } from '../../../languages'

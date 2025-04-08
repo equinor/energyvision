@@ -1,4 +1,4 @@
-import { BackgroundContainer } from '@components'
+import { BackgroundContainer } from '@core/Backgrounds'
 import type { TextWithIconArrayData, TextWithIconItem } from '../../types/index'
 import { twMerge } from 'tailwind-merge'
 import { TextWithIcon } from '@core/TextWithIcon/TextWithIcon'

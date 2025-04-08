@@ -1,4 +1,5 @@
-import { Teaser as EnvisTeaser, Eyebrow, BackgroundContainer } from '@components'
+import { Teaser as EnvisTeaser, Eyebrow } from '@components'
+import { BackgroundContainer } from '@core/Backgrounds'
 import styled from 'styled-components'
 import IngressText from './portableText/IngressText'
 import { getUrlFromAction, urlFor } from '../../common/helpers'

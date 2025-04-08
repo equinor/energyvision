@@ -1,6 +1,6 @@
 import { FullWidthVideoData, FullWidthVideoRatio } from '../../types/index'
 import styled from 'styled-components'
-import { BackgroundContainer } from '@components'
+import { BackgroundContainer } from '@core/Backgrounds'
 import { VideoJS } from '../../components/src/VideoJsPlayer'
 import dynamic from 'next/dynamic'
 
