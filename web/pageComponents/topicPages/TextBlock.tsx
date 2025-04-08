@@ -1,4 +1,5 @@
-import { BackgroundContainer, Eyebrow } from '@components'
+import { Eyebrow } from '@components'
+import { BackgroundContainer } from '@core/Backgrounds'
 import { Heading } from '../../core/Typography'
 import IngressText from '../shared/portableText/IngressText'
 import Image, { Ratios } from '../shared/SanityImage'

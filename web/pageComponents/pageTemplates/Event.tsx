@@ -1,5 +1,5 @@
-import { BackgroundContainer } from '@components'
 import { FormattedDate, FormattedTime } from '@core/FormattedDateTime'
+import { BackgroundContainer } from '@core/Backgrounds'
 import { toPlainText } from '@portabletext/react'
 import { FormattedMessage } from 'react-intl'
 import { getEventDates } from '../../common/helpers/dateUtilities'

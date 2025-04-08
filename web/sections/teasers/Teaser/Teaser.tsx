@@ -1,7 +1,8 @@
-import { BackgroundContainer } from '@components'
 import { Teaser as TeaserLayout } from '@core/Teaser'
 import IngressText from '../../../pageComponents/shared/portableText/IngressText'
 import { getUrlFromAction, urlFor } from '../../../common/helpers'
+import { BackgroundContainer } from '@core/Backgrounds'
+
 import Img from 'next/image'
 import Image from '../../../pageComponents/shared/SanityImage'
 import type { TeaserData, ImageWithAlt } from '../../../types/index'
