@@ -180,19 +180,14 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
         )
     }
   }
+  const shouldOpenInNewTab =
+  type === 'externalUrl' || (extension && extension.toLowerCase() === 'pdf')
+
   return (
     <BaseLink className={classNames} type={type} ref={ref} href={href} {...rest} 
-    target={
-    type === 'externalUrl' || (extension && extension.toLowerCase() === 'pdf')
-      ? '_blank'
-      : undefined
-    }
-    rel={
-    type === 'externalUrl' || (extension && extension.toLowerCase() === 'pdf')
-      ? 'noopener noreferrer'
-      : undefined
-    }
->
+    target={shouldOpenInNewTab ? '_blank' : undefined}
+    rel={shouldOpenInNewTab ? 'noopener noreferrer' : undefined}
+    >
       <div
         className={envisTwMerge(
           `h-full
