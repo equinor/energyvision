@@ -49,6 +49,16 @@ export const colorKeyToUtilityMap: Record<string, { backgroundName: string; back
     background: 'bg-slate-blue-95',
     text: 'text-white-100',
   },
+  'norwegin-woods-40': {
+    backgroundName: 'Mid Orange',
+    background: 'bg-norwegin-woods-40',
+    text: 'text-norwegin-woods-40',
+  },
+  'sand-and-summer-50': {
+    backgroundName: 'Mid Orange',
+    background: 'bg-sand-and-summer-50',
+    text: 'text-sand-and-summer-50',
+  },
 }
 export type ColorKeyTokens = {
   [P1 in keyof typeof colorKeyToUtilityMap]: string
