@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import useSWR from 'swr'
 import * as xml2js from 'xml2js'
-import { FormattedDate } from '@components'
 import { BackgroundContainer } from '@core/Backgrounds'
+import { FormattedDate } from '@core/FormattedDateTime'
 import { FormattedMessage } from 'react-intl'
 import type { StockValuesData } from '../../types/index'
 import { twMerge } from 'tailwind-merge'
