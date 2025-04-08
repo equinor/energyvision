@@ -1,6 +1,6 @@
 import { forwardRef, HTMLAttributes } from 'react'
-import { BackgroundColours } from '../../../types/index'
-import { ColorKeyTokens, colorKeyToUtilityMap } from '../../../styles/colorKeyToUtilityMap'
+import { BackgroundColours } from '../../types/index'
+import { ColorKeyTokens, colorKeyToUtilityMap } from '../../styles/colorKeyToUtilityMap'
 import { twMerge } from 'tailwind-merge'
 
 type ColouredContainerProps = {

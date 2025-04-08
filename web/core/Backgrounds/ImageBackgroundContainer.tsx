@@ -1,8 +1,8 @@
 import { forwardRef, HTMLAttributes, CSSProperties } from 'react'
-import { useSanityLoader } from '../../../lib/hooks/useSanityLoader'
-import { ImageBackground } from '../../../types/index'
+import { useSanityLoader } from '../../lib/hooks/useSanityLoader'
+import { ImageBackground } from '../../types/index'
 import { twMerge } from 'tailwind-merge'
-import { useMediaQuery } from '../../../lib/hooks/useMediaQuery'
+import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
 
 type ImageBackgroundContainerProps = {
   scrimClassName?: string

@@ -6,7 +6,7 @@ import Blocks from '../../pageComponents/shared/portableText/Blocks'
 import { Typography } from '@core/Typography'
 import { forwardRef, HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { BackgroundContainer, BackgroundContainerProps } from '@components/Backgrounds'
+import { BackgroundContainer, BackgroundContainerProps } from '@core/Backgrounds'
 import { ColorKeyTokens } from '../../styles/colorKeyToUtilityMap'
 import Image from '../../pageComponents/shared/SanityImage'
 

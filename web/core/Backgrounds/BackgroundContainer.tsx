@@ -1,8 +1,8 @@
 import { forwardRef, HTMLAttributes } from 'react'
-import type { BackgroundColours, BackgroundTypes, ImageBackground } from '../../../types/index'
+import type { BackgroundColours, BackgroundTypes, ImageBackground } from '../../types/index'
 import { ColouredContainer } from './ColouredContainer'
-import { ColorKeyTokens } from '../../../styles/colorKeyToUtilityMap'
-import envisTwMerge from '../../../twMerge'
+import { ColorKeyTokens } from '../../styles/colorKeyToUtilityMap'
+import envisTwMerge from '../../twMerge'
 import { ImageBackgroundContainer } from './ImageBackgroundContainer'
 
 export type BackgroundContainerProps = {
