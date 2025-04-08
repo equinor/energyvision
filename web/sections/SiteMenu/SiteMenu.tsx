@@ -13,6 +13,7 @@ import { FormattedMessage, useIntl } from 'react-intl'
 import { SimpleMenuItem } from './SimpleMenuItem'
 import { useCurrentLocale } from 'next-i18n-router/client'
 import { i18nConfig } from '../../i18nConfig'
+import { Flags } from '../../common/helpers/datasetHelpers'
 
 export type Variants = 'default' | 'simple'
 
@@ -45,7 +46,8 @@ const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
   }, [pathname])
 
   const title = intl.formatMessage({ id: 'menu', defaultMessage: 'Menu' })
-  const allSitesURL = getAllSitesLink('internal', currentLocale || 'en')
+
+  const allSitesURL = getAllSitesLink(Flags.IS_GLOBAL_PROD ? 'internal' : 'external', currentLocale || 'en')
 
   const getCurrentMenuItemIndex = () => {
     return menuItems

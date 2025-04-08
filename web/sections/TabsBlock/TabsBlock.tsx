@@ -104,19 +104,19 @@ const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
                   value={tabItem.id}
                   className={`${
                     tabPanelVariant === 'tabsKeyNumbers'
-                      ? 'py-14 max-lg:px-layout-sm'
+                      ? 'w-full py-14 max-lg:px-layout-sm'
                       : 'w-full h-full rounded-md overflow-hidden'
                   }`}
                 >
                   {tabItem.panel?.type === 'tabsKeyNumbers' && tabItem.panel?.items && (
                     <ul
                       {...(title && hideTitle && { 'aria-labelledby': headingId })}
-                      className={`flex 
+                      className={`
+                        flex 
                         flex-col
                         md:grid
                         md:grid-cols-2
-                        3xl:grid-flow-col
-                        3xl:auto-cols-fr
+                        ${tabItem.panel?.items?.length < 4 ? '3xl:grid-flow-col 3xl:auto-cols-fr' : ''} 
                         gap-6`}
                     >
                       {tabItem.panel?.items?.map((tabsKeyNumber: any) => {

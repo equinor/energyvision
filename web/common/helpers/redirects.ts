@@ -10,11 +10,11 @@ export const getExternalRedirectUrl = async (slug: string, locale: string): Prom
 }
 
 export const getWWWRedirect = (host: string, pathname: string): string | undefined => {
-  if (!host.includes("www")) {
-    return `https://www.${host}${pathname}`;
+  if (!host.includes('www')) {
+    return `https://www.${host}${pathname}`
   }
-  return undefined;
-};
+  return undefined
+}
 
 export const getDnsRedirect = (host: string, pathname: string) => {
   const dns = host.replace('http://', '').replace('https://', '').replace('www.', '')
@@ -25,6 +25,10 @@ export const getDnsRedirect = (host: string, pathname: string) => {
 
   if (dns === 'equinor.kr') {
     return `https://www.equinor.co.kr${pathname}`
+  }
+
+  if (dns === 'sponsorship.equinor.com') {
+    return `https://communicationtoolbox.equinor.com/point/en/sponsor/`
   }
 
   const redirect =
@@ -98,5 +102,5 @@ const dnsRedirects = [
   {
     from: 'morgendagenshelter.no',
     to: '/no/om-oss/sponsing-og-stotte',
-  }
+  },
 ]

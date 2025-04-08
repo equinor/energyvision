@@ -1,0 +1,98 @@
+name: DEV - Build & Deploy equinor.com in next 15
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - staging-web-upgrade
+    paths:
+      - 'web/**'
+      - '!web/README.md'
+      - '!web/.gitignore'
+      - '!web/jest.config.cjs'
+      - '!web/jest.setup.ts'
+      - './FeatureFlags.js'
+      - '!web/components/README.md'
+  repository_dispatch:
+    types: [sanity_publish]
+permissions:
+  id-token: write
+  packages: write
+jobs:
+  check-code:
+    runs-on: ubuntu-latest
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      DOCKER_BUILDKIT: 1
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+        with:
+          ref: staging
+      - name: Install pnpm 📦
+        id: install-pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: '8.5.1'
+      - name: Cache pnpm modules 💾
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'pnpm'
+      - name: Install dependencies 🔧
+        id: install-dependencies
+        run: |
+          pnpm install
+          pnpm install --filter energy-vision-web
+      - name: Run ESLint 🔎
+        id: lint
+        run: |
+          pnpm lint:web
+      - name: Run tests 🔍
+        id: test
+        run: |
+          pnpm test --filter energy-vision-web
+      - name: log-errors-to-slack 📄
+        uses: act10ns/slack@v2
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()
+
+  deploy-global-development:
+    needs: check-code
+    runs-on: ubuntu-latest
+    environment:
+      name: development
+      url: https://web-global-development-upgrade-equinor-web-sites-dev.c2.radix.equinor.com/
+    strategy:
+      # The matrix approach is needed to re-use code created for satellites
+      matrix:
+        dataset: ['global-development']
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      DOCKER_BUILDKIT: 1
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+      - id: deploy-global-development
+        uses: ./.github/workflows/deploy-websites/
+        with:
+          imageName: ghcr.io/equinor/energyvision/web-${{ matrix.dataset }}-upgrade
+          datasetName: ${{ matrix.dataset }}
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          sanityApiToken: ${{ secrets.SANITY_API_TOKEN }}
+          sanityPreviewSecret: ${{ secrets.SANITY_STUDIO_PREVIEW_SECRET }}
+          algoliaAppId: ${{ secrets.ALGOLIA_APP_ID }}
+          algoliaApiKey: ${{ secrets.ALGOLIA_SEARCH_API_KEY }}
+          dynatraceEnvironment: ${{ secrets.DYNATRACE_ENVIRONMENT }}
+          dynatracePaaSToken: ${{ secrets.DYNATRACE_PAAS_TOKEN }}
+          dynatraceImage: ${{ secrets.DYNATRACE_PREPROD_IMAGE }}
+          archiveContentLink: ${{ vars.ARCHIVE_CONTENT_LINK }}
+          friendlyCaptchaSitekey: ${{ matrix.dataset == 'brazil' && vars.BRAZIL_FC_SITEKEY || vars.GLOBAL_FC_SITEKEY }}
+          friendlyCaptchaPuzzleEndpoint: ${{ matrix.dataset == 'brazil' && vars.BRAZIL_FC_PUZZLE_END_POINT || vars.GLOBAL_FC_PUZZLE_END_POINT }}
+          environment: ${{ secrets.ENV }}
+      - uses: act10ns/slack@v2
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()

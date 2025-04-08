@@ -3,7 +3,7 @@ import { chevron_left, chevron_right, first_page, last_page } from '@equinor/eds
 import { useContext, useEffect, useRef, useState } from 'react'
 import { usePrefersReducedMotion } from '../../../../common/hooks/usePrefersReducedMotion'
 import { PaginationContext } from '../../../../common/contexts/PaginationContext'
-import { PaginationItem } from './PaginationItem'
+import { PaginationItem } from '../pagination/PaginationItem'
 
 type PaginationProps = {
   totalPages: number

@@ -32,11 +32,11 @@ const TabsKeyNumberItem = forwardRef<HTMLDivElement, TabsKeyNumberItemProps>(fun
         className,
       )}
     >
-      <div className="text-2xl leading-none flex gap-2 items-baseline">
+      <div className="text-2xl leading-none flex flex-wrap text-balance gap-2 items-baseline">
         {keyNumber}
-        <div className="text-base">{unit ? unit : ''}</div>
+        <div className="text-base font-medium">{unit ? unit : ''}</div>
       </div>
-      {description && <div className="grow text-base pt-2 text-wrap">{description}</div>}
+      {description && <div className="grow text-base pt-8 flex flex-wrap text-balance">{description}</div>}
     </div>
   )
 })
