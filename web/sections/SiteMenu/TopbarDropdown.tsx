@@ -1,4 +1,4 @@
-import { BackgroundContainer, BackgroundContainerProps } from '@components/Backgrounds'
+import { BackgroundContainer, BackgroundContainerProps } from '@core/Backgrounds'
 import { ReactNode } from 'react'
 import envisTwMerge from '../../twMerge'
 

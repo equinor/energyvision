@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import DefaulHeroImage from './DefaultHeroImage'
 import { PortableTextBlock } from '@portabletext/types'
 import TitleText from '../portableText/TitleText'
-import { BackgroundContainer } from '@components/Backgrounds'
+import { BackgroundContainer } from '@core/Backgrounds'
 
 const StyledHeading = styled(TitleText)`
   max-width: 1186px; /* 1920 - (2 * 367) */
