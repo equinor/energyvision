@@ -14,13 +14,13 @@ import {
   ExternalLink,
   InternalLink,
   BasicIframe,
-  Highlight,
   BulletList,
   NumberedList,
 } from './components'
 import { Fact } from '@sections/FactCore/Fact'
 import { twMerge } from 'tailwind-merge'
 import { FormattedMessage } from 'react-intl'
+import { Highlight } from '@core/Typography/Highlight'
 
 export type BlockType = Record<PortableTextBlockStyle, PortableTextBlockComponent | undefined>
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
