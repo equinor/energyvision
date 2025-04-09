@@ -1,7 +1,7 @@
 import { twMerge } from 'tailwind-merge'
 import { getUrlFromAction } from '../../common/helpers'
 import GridLinkArrow from './GridLinkArrow'
-import { getColorForTheme } from '../../pageComponents/shared/textTeaser/theme'
+import { getColorForTheme } from '@sections/teasers/TextTeaser/theme'
 import { BackgroundTypes, GridTextBlockData } from '../../types/index'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
 import { BackgroundContainer } from '@core/Backgrounds'

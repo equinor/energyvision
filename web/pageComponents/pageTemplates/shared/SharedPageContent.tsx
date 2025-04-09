@@ -1,4 +1,4 @@
-import Teaser from '../../shared/Teaser'
+import Teaser from '../../../sections/teasers/Teaser/Teaser'
 import TextBlock from '../../topicPages/TextBlock'
 import FullWidthImage from '../../topicPages/FullWidthImage'
 import FullWidthVideo from '../../topicPages/FullWidthVideo'
@@ -15,7 +15,7 @@ import CookieDeclaration from '../../topicPages/CookieDeclaration'
 import TwitterEmbed from '../../topicPages/TwitterEmbed'
 import IframeCarousel from '@sections/IframeCarousel/IframeCarousel'
 import VideoPlayer from '../../shared/VideoPlayer'
-import TextTeaser from '../../shared/textTeaser/TextTeaser'
+import TextTeaser from '@sections/teasers/TextTeaser/TextTeaser'
 import KeyNumbers from '../../../sections/KeyNumber/KeyNumber'
 import CardsList from '../../../sections/cards/CardsList/CardsList'
 import {
@@ -53,7 +53,7 @@ import {
   AnchorLinkListData,
   ImageForTextData,
 } from '../../../types/index'
-import { getColorForTheme } from '../../shared/textTeaser/theme'
+import { getColorForTheme } from '@sections/teasers/TextTeaser/theme'
 import Grid from '@sections/Grid/Grid'
 import { CampaignBanner } from '@sections/CampaignBanner'
 import { BackgroundContainerProps } from '@core/Backgrounds'
