@@ -1,4 +1,5 @@
-import { BackgroundContainer, FormattedDate, Table as EnvisTable, Text } from '@components'
+import { BackgroundContainer, Table as EnvisTable, Text } from '@components'
+import { FormattedDate } from '@core/FormattedDateTime'
 import styled from 'styled-components'
 import isEmpty from '../shared/portableText/helpers/isEmpty'
 import IngressText from '../shared/portableText/IngressText'
