@@ -1,10 +1,8 @@
-import { Eyebrow } from '@components'
 import { BackgroundContainer } from '@core/Backgrounds'
-import { Heading } from '../../core/Typography'
+import { Heading, Typography } from '../../core/Typography'
 import IngressText from '../shared/portableText/IngressText'
 import Image, { Ratios } from '../shared/SanityImage'
 import type { TextBlockData } from '../../types/index'
-//import CallToActions from './CallToActions'
 import CallToActions from '../../sections/CallToActions'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
 import { twMerge } from 'tailwind-merge'
@@ -89,7 +87,9 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
             )}
             {overline ? (
               <hgroup className={`flex flex-col gap-2 mb-1 ${useBrandTheme ? 'text-energy-red-100' : ''}`}>
-                <Eyebrow>{overline}</Eyebrow>
+                <Typography as="div" className="text-md">
+                  {overline}
+                </Typography>
                 {title && <Heading value={title} as="h2" variant="xl" serializerClassnames={serializerClassnames} />}
               </hgroup>
             ) : (
