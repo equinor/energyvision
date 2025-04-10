@@ -1,4 +1,4 @@
-import { Text, List } from '@components'
+import { Text } from '@components'
 import { Highlight } from '@core/Typography/Highlight'
 import { h3Heading, h2Heading, Sub, Sup, ExternalLink, InternalLink, BulletList, NumberedList } from '../components'
 import {
@@ -10,6 +10,7 @@ import {
   PortableTextReactComponents,
 } from '@portabletext/react'
 import { PortableTextBlockStyle } from '@portabletext/types'
+import { List } from '@core/List'
 
 type Props = {
   children?: React.ReactNode

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { PortableText, PortableTextProps } from '@portabletext/react'
-import { Text, List } from '@components'
+import { Text } from '@components'
 import {
   h3Heading,
   h2Heading,
@@ -16,6 +16,7 @@ import {
 import { Fact } from '@sections/FactCore/Fact'
 import isEmpty from './helpers/isEmpty'
 import type { PortableTextBlock } from '@portabletext/types'
+import { List } from '@core/List'
 
 const { Item } = List
 
