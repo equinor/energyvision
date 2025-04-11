@@ -32,7 +32,7 @@ This application requires a number of environment variables to work. These shoul
 
 ## CSS & Styles
 
-We use [💅🏾 styled-components](https://styled-components.com/) for CSS. We prefer CSS Variables to
+We use Tailwind for CSS. We prefer CSS Variables to
 interpolation functions. [The styled-components happy path blogpost](https://styled-components.com/) explains the concept nicely.
 
 To structure the global CSS we follow the
