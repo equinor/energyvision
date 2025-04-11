@@ -4,12 +4,13 @@ import { Caption } from '../image/Caption'
 
 type HeroImageProps = {
   data: ImageWithCaptionData
+  className?: string
 }
 
-const DefaulHeroImage = ({ data }: HeroImageProps) => {
+const DefaulHeroImage = ({ data, className }: HeroImageProps) => {
   const { image, caption, attribution } = data
   return (
-    <figure>
+    <figure className={className}>
       <Image
         maxWidth={1420}
         aspectRatio={Ratios.ONE_TO_TWO}
