@@ -107,6 +107,7 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
 
   const classNames = envisTwMerge(
     `group
+    text-base
     relative
     flex
     flex-col
@@ -231,8 +232,8 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
           w-inherit 
           flex
           justify-start
-        items-center
-        ${contentVariantClassName[variant]}`,
+          items-center
+          ${contentVariantClassName[variant]}`,
         )}
       >
         {getContentElements()}
