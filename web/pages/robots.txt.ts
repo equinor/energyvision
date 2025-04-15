@@ -16,6 +16,7 @@ export const crawlableDomains = [
   'www.equinor.de',
   'www.equinor.co.kr',
   'www.equinorcelticsea.co.uk',
+  'www.sponsorship.equinor.com',
 ]
 
 const robots = (domain: string) => `User-agent: *
