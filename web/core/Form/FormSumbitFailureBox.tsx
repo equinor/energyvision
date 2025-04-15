@@ -1,10 +1,10 @@
-import { forwardRef } from 'react'
 import { ButtonProps as EdsButtonProps, Icon } from '@equinor/eds-core-react'
 import { Text } from '@components'
 import { error_outlined } from '@equinor/eds-icons'
 import { FormattedMessage } from 'react-intl'
 import { twMerge } from 'tailwind-merge'
-import { Button as FormSubmitFailureButton} from '../../../core/Button/Button'
+import { Button as FormButton } from '@core/Button'
+import { forwardRef } from 'react'
 
 export const FormSubmitFailureBox = forwardRef<HTMLDivElement, EdsButtonProps>(function Button() {
   return (
@@ -22,9 +22,9 @@ export const FormSubmitFailureBox = forwardRef<HTMLDivElement, EdsButtonProps>(f
         {/* <EdsButton className={twMerge('pl-10 pr-10')} ref={ref} {...rest} color="danger">
           <FormattedMessage id="form_failure_cta" defaultMessage="Try again" />
         </EdsButton> */}
-        <FormSubmitFailureButton variant="contained" className={twMerge('pl-10 pr-10')}>
+        <FormButton variant="contained" className={twMerge('pl-10 pr-10')}>
           <FormattedMessage id="form_failure_cta" defaultMessage="Try again" />
-        </FormSubmitFailureButton>
+        </FormButton>
       </div>
     </div>
   )
