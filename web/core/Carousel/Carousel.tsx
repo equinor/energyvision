@@ -390,7 +390,6 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
         displayMode={displayMode}
         variant="default"
         aria-label={getTranslatedItemCountLabel(index + 1)}
-        customListItemWidth={true}
         className={`
           ${displayMode === 'scroll' ? `w-event-carousel-card-w` : ''}
         `}
@@ -414,7 +413,6 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
         key={itemData.id}
         displayMode="scroll"
         variant="default"
-        customListItemWidth={true}
         className={`w-[37vw]`}
       >
         {element}
