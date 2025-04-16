@@ -1,11 +1,5 @@
 import { usePagination, UsePaginationProps } from 'react-instantsearch'
 import { FormattedMessage } from 'react-intl'
-import styled from 'styled-components'
-
-const Container = styled.div`
-  margin-top: var(--space-medium);
-  color: var(--slate-blue-70);
-`
 
 type TotalResultsStatProps = {
   hitsPerPage: number
@@ -20,7 +14,7 @@ const TotalResultsStat = ({ totalPages, hitsPerPage }: TotalResultsStatProps) =>
 
   const defaultMessage = '{currentlyShowing} of {nbHits} results'
   return (
-    <Container>
+    <div className="mt-5 text-slate-blue-70">
       <FormattedMessage
         id="search_showing_results_number"
         defaultMessage={defaultMessage}
@@ -29,7 +23,7 @@ const TotalResultsStat = ({ totalPages, hitsPerPage }: TotalResultsStatProps) =>
           currentlyShowing: `${currentLowestNumber} - ${currentHighestNumber}`,
         }}
       />
-    </Container>
+    </div>
   )
 }
 

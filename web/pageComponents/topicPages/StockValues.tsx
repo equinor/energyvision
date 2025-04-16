@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import useSWR from 'swr'
 import * as xml2js from 'xml2js'
-import styled from 'styled-components'
-import { BackgroundContainer, FormattedDate } from '@components'
+import { BackgroundContainer } from '@components'
+import { FormattedDate } from '@core/FormattedDateTime'
 import { FormattedMessage } from 'react-intl'
 import type { StockValuesData } from '../../types/index'
 import { twMerge } from 'tailwind-merge'
@@ -39,42 +39,6 @@ const fetchData = async (url: string) => {
   }
 }
 
-const Container = styled.div`
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-gap: var(--space-large);
-
-  @media (min-width: 750px) {
-    grid-template-columns: 1fr 1fr;
-  }
-`
-
-const Item = styled.div`
-  text-align: center;
-`
-
-const Price = styled.span`
-  font-size: var(--typeScale-4);
-  font-weight: var(--fontWeight-medium);
-  color: var(--moss-green-100);
-  margin: 0 var(--space-xSmall);
-`
-
-const Subtitle = styled.p`
-  font-weight: var(--fontWeight-bolder);
-  margin: 0 0 var(--space-xSmall);
-  padding: 0;
-`
-
-const MarketTitle = styled(Subtitle)`
-  text-transform: uppercase;
-`
-
-const TimeDelay = styled.span`
-  font-style: italic;
-  font-weight: var(--fontWeight-medium);
-`
-
 const ENDPOINT = `https://tools.eurolandir.com/tools/pricefeed/xmlirmultiiso5.aspx?companyid=9053`
 
 // @TODO: use correct datetime & formatting
@@ -101,33 +65,38 @@ const StockValues = ({
 
   return (
     <BackgroundContainer background={background} {...rest} id={anchor}>
-      <Container className={twMerge(`pb-page-content px-layout-lg max-w-viewport mx-auto`, className)}>
-        <Item>
+      <div
+        className={twMerge(
+          `pb-page-content px-layout-lg max-w-viewport mx-auto grid grid-cols-[1fr] gap-8 sm:grid-cols-[1fr,1fr]`,
+          className,
+        )}
+      >
+        <div className="text-center">
           <p>
             EQNR
-            <Price>{data.OSE?.Quote}</Price>
+            <span className="text-xl my-0 mx-1 text-moss-green-100 font-medium">{data.OSE?.Quote}</span>
             {data.OSE?.currency}
           </p>
-          <MarketTitle>{data.OSE?.title}</MarketTitle>
-          <Subtitle>
+          <p className="font-semibold uppercase mb-1 mx-0 mt-0 p-0">{data.OSE?.title}</p>
+          <p className="font-semibold mb-1 mx-0 mt-0 p-0">
             <FormattedDate datetime={data.OSE?.Date} /> CET
-          </Subtitle>
-        </Item>
-        <Item>
+          </p>
+        </div>
+        <div className="text-center">
           <p>
             EQNR
-            <Price>{data.NYSE?.Quote}</Price>
+            <span className="text-xl my-0 mx-1 text-moss-green-100 font-medium">{data.NYSE?.Quote}</span>
             {data.NYSE?.currency}
           </p>
-          <MarketTitle>{data.NYSE?.title}</MarketTitle>
-          <Subtitle>
+          <p className="font-semibold uppercase mb-1 mx-0 mt-0 p-0">{data.NYSE?.title}</p>
+          <p className="font-semibold mb-1 mx-0 mt-0 p-0">
             <FormattedDate datetime={data.NYSE?.Date} /> CET{' '}
-            <TimeDelay>
+            <span className="font-medium italic">
               <FormattedMessage id="stock_nyse_time_delay_message" defaultMessage="at least 20 minutes delayed" />
-            </TimeDelay>
-          </Subtitle>
-        </Item>
-      </Container>
+            </span>
+          </p>
+        </div>
+      </div>
     </BackgroundContainer>
   )
 }

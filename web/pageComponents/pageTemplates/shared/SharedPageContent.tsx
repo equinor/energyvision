@@ -1,4 +1,4 @@
-import Teaser from '../../shared/Teaser'
+import Teaser from '../../../sections/teasers/Teaser/Teaser'
 import TextBlock from '../../topicPages/TextBlock'
 import FullWidthImage from '../../topicPages/FullWidthImage'
 import FullWidthVideo from '../../topicPages/FullWidthVideo'
@@ -15,7 +15,7 @@ import CookieDeclaration from '../../topicPages/CookieDeclaration'
 import TwitterEmbed from '../../topicPages/TwitterEmbed'
 import IframeCarousel from '@sections/IframeCarousel/IframeCarousel'
 import VideoPlayer from '../../shared/VideoPlayer'
-import TextTeaser from '../../shared/textTeaser/TextTeaser'
+import TextTeaser from '@sections/teasers/TextTeaser/TextTeaser'
 import KeyNumbers from '../../../sections/KeyNumber/KeyNumber'
 import CardsList from '../../../sections/cards/CardsList/CardsList'
 import {
@@ -53,7 +53,7 @@ import {
   AnchorLinkListData,
   ImageForTextData,
 } from '../../../types/index'
-import { getColorForTheme } from '../../shared/textTeaser/theme'
+import { getColorForTheme } from '@sections/teasers/TextTeaser/theme'
 import Grid from '@sections/Grid/Grid'
 import { CampaignBanner } from '@sections/CampaignBanner'
 import { BackgroundContainerProps } from '@components/Backgrounds'
@@ -128,7 +128,7 @@ const getBackgroundOptions = (component: ComponentProps) => {
   return component?.designOptions?.background || getColorForTheme(component?.designOptions?.theme)
 }
 
-const cleanBgUtility = (value: string) => value?.replace("bg-", "") 
+const cleanBgUtility = (value: string) => value?.replace('bg-', '')
 
 const isWhiteColorBackground = (componentsDO: any, component: ComponentProps) => {
   const casesWhichHaveBackgroundButIsWhite = ['cardsList']
@@ -150,13 +150,27 @@ const isSameColorBackground = (currentComponentsDO: any, previousComponentsDO: a
     previousComponentsDO?.backgroundUtility &&
     previousComponentsDO?.backgroundUtility !== ''
   ) {
-    return cleanBgUtility(currentComponentsDO?.backgroundUtility) === cleanBgUtility(previousComponentsDO?.backgroundUtility)
+    return (
+      cleanBgUtility(currentComponentsDO?.backgroundUtility) === cleanBgUtility(previousComponentsDO?.backgroundUtility)
+    )
   }
-  if(currentComponentsDO?.backgroundUtility && (!previousComponentsDO?.backgroundUtility && previousComponentsDO?.backgroundColor)){
-    return colorKeyToUtilityMap[currentComponentsDO?.backgroundUtility as keyof ColorKeyTokens].backgroundName === previousComponentsDO?.backgroundColor
+  if (
+    currentComponentsDO?.backgroundUtility &&
+    !previousComponentsDO?.backgroundUtility &&
+    previousComponentsDO?.backgroundColor
+  ) {
+    return (
+      colorKeyToUtilityMap[currentComponentsDO?.backgroundUtility as keyof ColorKeyTokens]?.backgroundName ===
+      previousComponentsDO?.backgroundColor
+    )
   }
-  if((!currentComponentsDO?.backgroundUtility && currentComponentsDO?.backgroundColor) && previousComponentsDO?.backgroundUtility){
-    currentComponentsDO?.backgroundColor === colorKeyToUtilityMap[previousComponentsDO?.backgroundUtility as keyof ColorKeyTokens].backgroundName
+  if (
+    !currentComponentsDO?.backgroundUtility &&
+    currentComponentsDO?.backgroundColor &&
+    previousComponentsDO?.backgroundUtility
+  ) {
+    currentComponentsDO?.backgroundColor ===
+      colorKeyToUtilityMap[previousComponentsDO?.backgroundUtility as keyof ColorKeyTokens]?.backgroundName
   }
 
   return currentComponentsDO?.backgroundColor === previousComponentsDO?.backgroundColor
@@ -165,20 +179,22 @@ const isSameColorBackground = (currentComponentsDO: any, previousComponentsDO: a
 const applyPaddingTopIfApplicable = (currentComponent: ComponentProps, prevComponent: ComponentProps): string => {
   const currentComponentsDO = getBackgroundOptions(currentComponent)
   const previousComponentsDO = getBackgroundOptions(prevComponent)
-  const specialCases = ['teaser', 'fullWidthImage', 'fullWidthVideo','backgroundImage']
+  const specialCases = ['teaser', 'fullWidthImage', 'fullWidthVideo', 'backgroundImage']
 
   const currentIsWhiteColorBackground = isWhiteColorBackground(currentComponentsDO, currentComponent)
   const previousIsWhiteColorBackground = isWhiteColorBackground(previousComponentsDO, prevComponent)
-  //@ts-ignore
-  const previousComponentIsASpecialCaseAndNeedPT = specialCases.includes(prevComponent?.type) || specialCases.includes(previousComponentsDO?.type)
 
-  if(currentIsWhiteColorBackground && (previousIsWhiteColorBackground && !previousComponentIsASpecialCaseAndNeedPT)){
-    return ""
+  const previousComponentIsASpecialCaseAndNeedPT =
+    //@ts-ignore
+    specialCases.includes(prevComponent?.type) || specialCases.includes(previousComponentsDO?.type)
+
+  if (currentIsWhiteColorBackground && previousIsWhiteColorBackground && !previousComponentIsASpecialCaseAndNeedPT) {
+    return ''
   }
 
   const previousIsSameColorAsCurrent = isSameColorBackground(currentComponentsDO, previousComponentsDO)
-  if(previousIsSameColorAsCurrent && !previousComponentIsASpecialCaseAndNeedPT){
-    return ""
+  if (previousIsSameColorAsCurrent && !previousComponentIsASpecialCaseAndNeedPT) {
+    return ''
   }
 
   return 'pt-20'

@@ -2,7 +2,7 @@
 import { grid_on } from '@equinor/eds-icons'
 import { configureTitleBlockContent } from '../editors'
 import CompactBlockEditor from '../components/CompactBlockEditor'
-import type { PortableTextBlock } from 'sanity'
+import type { PortableTextBlock, Rule } from 'sanity'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
 import { Card } from './card'
@@ -59,6 +59,10 @@ export default {
       name: 'cards',
       type: 'array',
       of: [{ type: 'card' }],
+      validation: (Rule: Rule) =>
+        Rule.required()
+            .min(1)
+            .error('At least one card with a valid title is required.')
     },
     {
       title: 'The background color on the cards',

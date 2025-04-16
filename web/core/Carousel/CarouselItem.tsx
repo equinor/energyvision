@@ -31,8 +31,6 @@ type CarouselItemProps = {
   attribution?: string
   /* Only scroll: Sets widths based on aspect ratios type */
   aspectRatio?: CarouselAspectRatios
-  /* Only scroll: To bypass getElementAspectRatio */
-  customListItemWidth?: boolean
   /* Override heights in the richTextBelow */
   overrideHeights?: boolean
   /** Single container */

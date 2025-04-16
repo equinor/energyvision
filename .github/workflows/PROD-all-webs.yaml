@@ -100,7 +100,9 @@ jobs:
           npm install js-yaml
 
       - name: Run script for 'web'
-        run: node ci/storeImageTags.js web
+        run: |
+          WEB_SHA=$(node ci/storeImageTags.js web)
+          echo "WEB_SHA=$(WEB_SHA)" >> $GITHUB_ENV
 
       - name: Commit and push changes
         run: |
@@ -115,6 +117,6 @@ jobs:
         id: 'get-list'
         with:
           token: ${{ secrets.PADMS_PAT_READ_PACKAGE }}
-          commitSHA: ${{ github.sha }}
+          commitSHA: 'Web : ${{ env.WEB_SHA }}'
           slackWebhook: ${{ secrets.SLACK_WEBHOOK_RELEASE_ANNOUNCEMENT}}
         uses: ./.github/workflows/project/

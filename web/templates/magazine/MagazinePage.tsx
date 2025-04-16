@@ -3,7 +3,7 @@ import { PageContent } from '../../pageComponents/pageTemplates/shared/SharedPag
 import SharedTitle from '../../pageComponents/pageTemplates/shared/SharedTitle'
 import { HeroTypes, MagazinePageSchema } from '../../types/index'
 import { SharedBanner } from '../../pageComponents/pageTemplates/shared/SharedBanner'
-import Teaser from '../../pageComponents/shared/Teaser'
+import Teaser from '../../sections/teasers/Teaser/Teaser'
 import Seo from '../../pageComponents/shared/Seo'
 import useSharedTitleStyles from '../../lib/hooks/useSharedTitleStyles'
 import MagazineTagBar from '@sections/MagazineTags/MagazineTagBar'
