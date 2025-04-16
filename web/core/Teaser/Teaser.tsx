@@ -9,13 +9,15 @@ export const Teaser = forwardRef<HTMLDivElement, BackgroundContainerProps>(funct
   ref,
 ) {
   return (
-    <BackgroundContainer
-      as="article"
-      className={twMerge(`overflow-y-hidden max-w-[1440px] grid md:grid-cols-2 auto-rows-min my-0 mx-auto `, className)}
-      ref={ref}
-      {...rest}
-    >
-      {children}
+    <BackgroundContainer as="article" ref={ref} {...rest}>
+      <div
+        className={twMerge(
+          `overflow-y-hidden max-w-[1440px] grid md:grid-cols-2 auto-rows-min my-0 mx-auto `,
+          className,
+        )}
+      >
+        {children}
+      </div>
     </BackgroundContainer>
   )
 })
