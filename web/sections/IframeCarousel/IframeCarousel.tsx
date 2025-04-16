@@ -17,7 +17,7 @@ const IframeCarousel = ({ data, anchor, className, ...rest }: IframeCarouselProp
   const headingId = useId()
 
   return (
-    <BackgroundContainer asSection={true} background={background} {...rest} id={anchor}>
+    <BackgroundContainer as="section" background={background} {...rest} id={anchor}>
       <div className={twMerge(`pb-page-content`, className)}>
         {title && (
           <Heading

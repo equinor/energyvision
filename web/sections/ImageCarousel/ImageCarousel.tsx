@@ -1,7 +1,7 @@
 import { Heading, Paragraph } from '@core/Typography'
 import envisTwMerge from '../../twMerge'
 import { ImageCarouselData } from '../../types/index'
-import { BackgroundContainer } from '@components'
+import { BackgroundContainer } from '@core/Backgrounds'
 import { Carousel } from '@core/Carousel/Carousel'
 import { forwardRef, useId } from 'react'
 
@@ -21,7 +21,7 @@ const ImageCarousel = forwardRef<HTMLUListElement, ImageCarouselProps>(function 
 
   return (
     <BackgroundContainer
-      asSection={true}
+      as="section"
       background={background}
       id={anchor}
       className={envisTwMerge(`pb-page-content`, className)}

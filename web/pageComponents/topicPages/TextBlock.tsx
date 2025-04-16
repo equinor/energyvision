@@ -71,47 +71,48 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
   }
 
   return (
-    <BackgroundContainer {...bgContainerOptions} id={anchor} renderFragmentWhenPossible>
-      <div
-        className={`flex flex-col gap-6 ${
-          designOptions?.background?.type === 'backgroundImage' ? backgroundImageContentClassNames : contentClassNames
-        }`}
-      >
-        {isBigText && title && <Heading value={title} as="h2" variant="3xl" />}
-        {!isBigText && (
-          <>
-            {image?.asset && (
-              <div className="w-[300px]">
-                <Image image={image} maxWidth={300} aspectRatio={Ratios.NINE_TO_SIXTEEN} className="object-cover" />
-              </div>
-            )}
-            {overline ? (
-              <hgroup className={`flex flex-col gap-2 mb-1 ${useBrandTheme ? 'text-energy-red-100' : ''}`}>
-                <Typography as="div" className="text-md">
-                  {overline}
-                </Typography>
-                {title && <Heading value={title} as="h2" variant="xl" serializerClassnames={serializerClassnames} />}
-              </hgroup>
-            ) : (
-              <>
-                {title && (
-                  <Heading
-                    value={title}
-                    as="h2"
-                    variant="xl"
-                    serializerClassnames={serializerClassnames}
-                    className={`mb-2`}
-                  />
-                )}
-              </>
-            )}
-            {ingress && <IngressText value={ingress} />}
-          </>
-        )}
-        {text && <Blocks value={text} className={`${callToActions ? 'mb-4' : ''}`} />}
+    <BackgroundContainer
+      {...bgContainerOptions}
+      id={anchor}
+      renderFragmentWhenPossible
+      className={`flex flex-col gap-6 ${
+        designOptions?.background?.type === 'backgroundImage' ? backgroundImageContentClassNames : contentClassNames
+      }`}
+    >
+      {isBigText && title && <Heading value={title} as="h2" variant="3xl" />}
+      {!isBigText && (
+        <>
+          {image?.asset && (
+            <div className="w-[300px]">
+              <Image image={image} maxWidth={300} aspectRatio={Ratios.NINE_TO_SIXTEEN} className="object-cover" />
+            </div>
+          )}
+          {overline ? (
+            <hgroup className={`flex flex-col gap-2 mb-1 ${useBrandTheme ? 'text-energy-red-100' : ''}`}>
+              <Typography as="div" className="text-md">
+                {overline}
+              </Typography>
+              {title && <Heading value={title} as="h2" variant="xl" serializerClassnames={serializerClassnames} />}
+            </hgroup>
+          ) : (
+            <>
+              {title && (
+                <Heading
+                  value={title}
+                  as="h2"
+                  variant="xl"
+                  serializerClassnames={serializerClassnames}
+                  className={`mb-2`}
+                />
+              )}
+            </>
+          )}
+          {ingress && <IngressText value={ingress} />}
+        </>
+      )}
+      {text && <Blocks value={text} className={`${callToActions ? 'mb-4' : ''}`} />}
 
-        {callToActions && <CallToActions callToActions={callToActions} splitList={splitList} />}
-      </div>
+      {callToActions && <CallToActions callToActions={callToActions} splitList={splitList} />}
     </BackgroundContainer>
   )
 }
