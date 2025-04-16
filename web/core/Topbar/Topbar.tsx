@@ -94,6 +94,7 @@ export const Topbar = forwardRef<HTMLDivElement, TopbarProps>(function Topbar(
         className={`
           h-topbar
           overflow-hidden
+          w-screen
           ${showSticky ? 'sticky' : 'fixed'} 
           bg-white-100
           z-40
