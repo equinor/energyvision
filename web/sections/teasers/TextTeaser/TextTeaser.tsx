@@ -25,29 +25,31 @@ const TextTeaser = ({ data, anchor, className }: TextTeaserProps) => {
   const url = action && getUrlFromAction(action)
 
   return (
-    <BackgroundContainer background={{ backgroundColor: background }} id={anchor}>
-      <Teaser className={twMerge(`${dark ? 'dark' : ''} `, className)}>
-        <Media className="pt-12 pb-0 px-layout-lg sm:pt-12 sm:py-8 md:p-16 h-auto" mediaPosition={titlePosition}>
-          <Heading className={`pt-0 px-0 pb-12 sm:p-0 ${highlight}`} variant="2xl" as="h2" value={title} />
-        </Media>
-        <Content className="pt-0 px-layout-lg pb-16 sm:p-12 lg:p-16 ">
-          {text && (
-            <div className="pb-8 last:pb-0">
-              <IngressText value={text} />
-            </div>
-          )}
-          {action && (
-            <ResourceLink
-              href={url as string}
-              {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
-              type={action.type}
-            >
-              {`${action.label} ${action.extension ? `(${action.extension.toUpperCase()})` : ''}`}
-            </ResourceLink>
-          )}
-        </Content>
-      </Teaser>
-    </BackgroundContainer>
+    <Teaser
+      background={{ backgroundColor: background }}
+      id={anchor}
+      className={twMerge(`${dark ? 'dark' : ''} `, className)}
+    >
+      <Media className="pt-12 pb-0 px-layout-lg sm:pt-12 sm:py-8 md:p-16 h-auto" mediaPosition={titlePosition}>
+        <Heading className={`pt-0 px-0 pb-12 sm:p-0 ${highlight}`} variant="2xl" as="h2" value={title} />
+      </Media>
+      <Content className="pt-0 px-layout-lg pb-16 sm:p-12 lg:p-16 ">
+        {text && (
+          <div className="pb-8 last:pb-0">
+            <IngressText value={text} />
+          </div>
+        )}
+        {action && (
+          <ResourceLink
+            href={url as string}
+            {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
+            type={action.type}
+          >
+            {`${action.label} ${action.extension ? `(${action.extension.toUpperCase()})` : ''}`}
+          </ResourceLink>
+        )}
+      </Content>
+    </Teaser>
   )
 }
 

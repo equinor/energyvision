@@ -29,31 +29,32 @@ const AccordionBlock = ({ data, anchor, className }: AccordionBlockProps) => {
 
   return (
     <>
-      <BackgroundContainer {...designOptions} id={anchor} renderFragmentWhenPossible>
-        <div
-          className={twMerge(
-            `flex flex-col gap-6 max-w-viewport mx-auto pb-page-content px-layout-lg [&_svg]:inline [&_svg]:align-baseline`,
-            className,
-          )}
-        >
-          {image?.asset && (
-            <div className="w-[200px]">
-              <Image image={image} maxWidth={200} aspectRatio={Ratios.ONE_TO_ONE} className="rounded-full" />
-            </div>
-          )}
-          {title &&
-            (Array.isArray(title) ? (
-              <Heading value={title} as="h2" variant="xl" className="mb-2" />
-            ) : (
-              <Typography as="h2" variant="xl" className="mb-2">
-                {title}
-              </Typography>
-            ))}
-          {ingress && <IngressText value={ingress} />}
-          {accordion && accordion.length > 0 && (
-            <Accordion data={accordion} id={id} hasSectionTitle={!!title} queryParamName={id} />
-          )}
-        </div>
+      <BackgroundContainer
+        {...designOptions}
+        id={anchor}
+        renderFragmentWhenPossible
+        className={twMerge(
+          `flex flex-col gap-6 max-w-viewport mx-auto pb-page-content px-layout-lg [&_svg]:inline [&_svg]:align-baseline`,
+          className,
+        )}
+      >
+        {image?.asset && (
+          <div className="w-[200px]">
+            <Image image={image} maxWidth={200} aspectRatio={Ratios.ONE_TO_ONE} className="rounded-full" />
+          </div>
+        )}
+        {title &&
+          (Array.isArray(title) ? (
+            <Heading value={title} as="h2" variant="xl" className="mb-2" />
+          ) : (
+            <Typography as="h2" variant="xl" className="mb-2">
+              {title}
+            </Typography>
+          ))}
+        {ingress && <IngressText value={ingress} />}
+        {accordion && accordion.length > 0 && (
+          <Accordion data={accordion} id={id} hasSectionTitle={!!title} queryParamName={id} />
+        )}
       </BackgroundContainer>
       {enableStructuredMarkup && accordion && <FAQPageJsonLd mainEntity={buildJsonLdElements(accordion)} />}
     </>

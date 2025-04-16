@@ -3,16 +3,17 @@ import { BackgroundColours } from '../../types/index'
 import { ColorKeyTokens, colorKeyToUtilityMap } from '../../styles/colorKeyToUtilityMap'
 import { twMerge } from 'tailwind-merge'
 
+export type BackgroundContainerType = 'section' | 'div' | 'article'
 type ColouredContainerProps = {
   backgroundColor?: BackgroundColours
   backgroundUtility?: keyof ColorKeyTokens
   dark?: boolean
   /** Set return element as section */
-  asSection?: boolean
+  as?: BackgroundContainerType
 } & HTMLAttributes<HTMLDivElement>
 
 export const ColouredContainer = forwardRef<HTMLDivElement, ColouredContainerProps>(function BackgroundContainer(
-  { backgroundColor = 'White', backgroundUtility, dark, children, className = '', asSection = false, ...rest },
+  { backgroundColor = 'White', backgroundUtility, dark, children, className = '', as = 'div', ...rest },
   ref,
 ) {
   const colorKey =
@@ -24,13 +25,10 @@ export const ColouredContainer = forwardRef<HTMLDivElement, ColouredContainerPro
     : colorKeyToUtilityMap[colorKey].background
 
   const classNames = twMerge(`${className} ${dark ? 'dark' : ''}  ${backgroundMap}`)
-  return asSection ? (
-    <section className={classNames} ref={ref} {...rest}>
+  const Tag = as ?? (`div` as React.ElementType)
+  return (
+    <Tag className={classNames} ref={ref} {...rest}>
       {children}
-    </section>
-  ) : (
-    <div className={classNames} ref={ref} {...rest}>
-      {children}
-    </div>
+    </Tag>
   )
 })

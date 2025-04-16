@@ -1,6 +1,6 @@
 import { forwardRef, HTMLAttributes } from 'react'
 import type { BackgroundColours, BackgroundTypes, ImageBackground } from '../../types/index'
-import { ColouredContainer } from './ColouredContainer'
+import { BackgroundContainerType, ColouredContainer } from './ColouredContainer'
 import { ColorKeyTokens } from '../../styles/colorKeyToUtilityMap'
 import envisTwMerge from '../../twMerge'
 import { ImageBackgroundContainer } from './ImageBackgroundContainer'
@@ -24,8 +24,8 @@ export type BackgroundContainerProps = {
   scrimClassName?: string
   /* On mobile dont split background image and content */
   dontSplit?: boolean
-  /** Set return element as section */
-  asSection?: boolean
+  /** Set return element as given */
+  as?: BackgroundContainerType
 } & HTMLAttributes<HTMLDivElement>
 
 export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContainerProps>(function BackgroundContainer(
@@ -39,7 +39,7 @@ export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContaine
     id,
     renderFragmentWhenPossible = false,
     dontSplit = false,
-    asSection = false,
+    as = 'div',
     ...rest
   },
   ref,
@@ -50,6 +50,7 @@ export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContaine
     <>
       {type === 'backgroundImage' && backgroundImage && (
         <ImageBackgroundContainer
+          as={as}
           {...rest}
           ref={ref}
           id={id}
@@ -57,14 +58,13 @@ export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContaine
           className={envisTwMerge(`${id ? 'scroll-mt-topbar' : ''}`, className)}
           scrimClassName={scrimClassName}
           dontSplit={dontSplit}
-          asSection={asSection}
         >
           {children}
         </ImageBackgroundContainer>
       )}
       {(type === 'backgroundColor' || !type) && (
         <>
-          {!asSection &&
+          {as == 'div' &&
           renderFragmentWhenPossible &&
           (restBackground?.backgroundColor === 'White' || restBackground?.backgroundUtility === 'white-100') &&
           className === '' &&
@@ -74,9 +74,9 @@ export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContaine
             <ColouredContainer
               ref={ref}
               id={id}
-              asSection={asSection}
               {...restBackground}
               style={style}
+              as={as}
               className={envisTwMerge(`${id ? 'scroll-mt-topbar' : ''}`, className, twClassName)}
               {...rest}
             >

@@ -21,7 +21,7 @@ const VideoPlayerCarousel = forwardRef<HTMLUListElement, VideoPlayerCarouselProp
 
   return (
     <BackgroundContainer
-      asSection={true}
+      as="section"
       background={background}
       id={anchor}
       className={envisTwMerge(`pb-page-content`, className)}
