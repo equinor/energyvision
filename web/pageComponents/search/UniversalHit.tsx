@@ -81,7 +81,7 @@ const UniversalHit: React.FC<HitProps> = ({ hit }) => {
                 key={key}
                 className={`${
                   type === 'event' && (key === 'ingress' || key === 'eventDescription') ? 'text-2xs' : 'text-xs'
-                } m-0 leading-cloud`}
+                } m-0 leading-cloudy`}
               >
                 <Highlight hit={hit} attribute={key} />
               </Typography>
