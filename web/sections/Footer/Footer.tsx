@@ -1,17 +1,16 @@
-'use client'
 import { Facebook, Instagram, Linkedin, Twitter, Youtube } from '../../icons'
-import type { FooterLinkData, SomeType, FooterColumns } from '../../types/index'
+import type { FooterLinkData, SomeType, FooterColumns, LinkType } from '../../types/index'
 import { useIntl } from 'react-intl'
 import { LinkButton } from '@core/Button'
 import FooterLink from '@core/Link/FooterLink'
 
 function getSomeSvg(someType: SomeType) {
   const iconMap = {
-    facebook: <Facebook width={22} />,
-    instagram: <Instagram width={24} />,
-    linkedin: <Linkedin width={24} />,
-    twitter: <Twitter width={24} />,
-    youtube: <Youtube width={24} />,
+    facebook: <Facebook height={24} width={24} />,
+    instagram: <Instagram height={24} width={24} />,
+    linkedin: <Linkedin height={24} width={24} />,
+    twitter: <Twitter height={24} width={24} />,
+    youtube: <Youtube height={24} width={24} />,
   }
 
   if (!(someType in iconMap)) console.warn('Unable to get social icon for footer: Unknown SoMe type passed')
@@ -30,7 +29,7 @@ type FooterProps = {
 const Footer = function Footer({ footerData }: FooterProps) {
   const intl = useIntl()
   return (
-    <footer className="min-h-12 clear-both text-white-100 bg-slate-blue-95 py-4 px-0">
+    <footer className="dark min-h-12 clear-both text-white-100 bg-slate-blue-95 py-4 px-0">
       <div className="flex flex-row flex-wrap my-0 mx-auto justify-between px-layout-sm pb-2 max-w-screen-2xl max-md:flex-col">
         {footerData?.footerColumns?.map(({ header, linkList }) => (
           <section className="flex flex-col max-md:py-4 max-md:w-4/5" key={header}>
@@ -39,16 +38,10 @@ const Footer = function Footer({ footerData }: FooterProps) {
               {linkList?.map((link: FooterLinkData) => {
                 const { id, type, someType, label, url } = link
                 const icon = type === 'someLink' && someType ? getSomeSvg(someType) : null
+                const linkType = type === 'someLink' ? 'externalUrl' : (link.link?.type as LinkType)
 
                 return (
-                  <FooterLink
-                    key={id}
-                    href={url || getLink(link)}
-                    prefetch={false}
-                    type={type}
-                    someType={someType}
-                    icon={icon}
-                  >
+                  <FooterLink key={id} href={url || getLink(link)} type={linkType} icon={icon}>
                     {label}
                   </FooterLink>
                 )

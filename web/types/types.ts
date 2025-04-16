@@ -22,6 +22,7 @@ import type {
   FigureData,
   StickyMenuLinkType,
 } from './index'
+import { MediaPosition } from '@core/Teaser/Media'
 
 export type IntlData = {
   locale: string
@@ -128,7 +129,7 @@ export type TeaserData = {
   image: ImageWithAlt
   actions?: LinkData[]
   designOptions: DesignOptions & {
-    imagePosition?: TeaserImagePosition
+    imagePosition?: MediaPosition
     imageSize?: TeaserImageSize
   }
 }

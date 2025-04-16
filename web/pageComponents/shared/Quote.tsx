@@ -28,7 +28,7 @@ const Quote = ({ data: { quote, authorTitle, author, image, designOptions } }: {
 
   const ImageComponent = hasImage && (
     <div className="flex justify-center">
-      <div className="w-[calc(1.67vw + 75px)] md:w-[calc(3.29vw + 168px)] xl:w-[242px]">
+      <div className={`${isMobile ? 'w-[81px]' : 'min-w-[194px] md:w-52 xl:w-[242px]'} `}>
         <Image
           maxWidth={242}
           aspectRatio={Ratios.ONE_TO_ONE}

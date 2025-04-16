@@ -542,7 +542,8 @@ module.exports = {
           '.break-word': {
             wordBreak: 'break-word',
           },
-        })
+        }),
+        addVariant('highlight', '& [data-highlight]')
     }),
   ],
 }
