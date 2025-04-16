@@ -73,9 +73,11 @@ const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
 
   const variantClassName: Partial<Record<Variants, string>> = {
     default: 'h-full px-8 xl:bg-moss-green-50 xl:mt-8 xl:mx-8 xl:flex xl:justify-between items-center',
-    simple: `${!Flags.IS_GLOBAL_PROD ? 'bg-north-sea-80' : ''} px-layout-sm mt-6 xl:mt-8 flex flex-col mx-auto`,
+    simple: `max-w-viewport ${
+      !Flags.IS_GLOBAL_PROD ? 'bg-north-sea-80' : ''
+    } px-layout-sm mt-6 xl:mt-8 flex flex-col mx-auto`,
   }
-  console.log('variant sitemenu', variant)
+
   return (
     <>
       <MenuButton
@@ -106,7 +108,7 @@ const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
                   {variant === 'simple' ? (
                     <>
                       {usePaneMenu ? (
-                        <MenuPanes menuItems={menuItems} />
+                        <MenuPanes menuItems={menuItems as SimpleGroupData[]} />
                       ) : (
                         <Menu variant="simple" defaultValue={getCurrentMenuItemIndex()}>
                           {menuItems.map((item, idx: number) => {

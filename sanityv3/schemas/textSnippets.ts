@@ -882,6 +882,21 @@ const snippets: textSnippet = {
     defaultValue: 'Open',
     group: groups.others,
   },
+  internalLink: {
+    title: 'Internal link',
+    defaultValue: 'Internal link',
+    group: groups.common,
+  },
+  externalLink: {
+    title: 'External link',
+    defaultValue: 'External link',
+    group: groups.common,
+  },
+  downloadDocument: {
+    title: 'Download document',
+    defaultValue: 'Download document',
+    group: groups.common,
+  },
 }
 
 type textSnippetGroup = { title: string; hidden?: boolean }

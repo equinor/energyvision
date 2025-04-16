@@ -1,9 +1,9 @@
 import { forwardRef, useState } from 'react'
 import { PaneMenuItem } from './PaneMenuItem'
-import { SubMenuData } from '../../types'
+import { SimpleGroupData } from '../../types'
 
 export type MenuPanesProps = {
-  menuItems: any[]
+  menuItems: SimpleGroupData[]
 }
 
 export const MenuPanes = forwardRef<HTMLDivElement, MenuPanesProps>(function MenuPanes({ menuItems, ...rest }, ref) {
@@ -18,7 +18,7 @@ export const MenuPanes = forwardRef<HTMLDivElement, MenuPanesProps>(function Men
   }
 
   return (
-    <section className="">
+    <section ref={ref} {...rest}>
       <ul className="relative w-max max-w-[50vw] flex flex-col gap-6">
         {menuItems.map((item, idx: number) => {
           return (
@@ -27,7 +27,7 @@ export const MenuPanes = forwardRef<HTMLDivElement, MenuPanesProps>(function Men
               index={idx}
               showSecondPane={openPaneId === idx}
               onOpen={handleOpen}
-              item={item as SubMenuData}
+              item={item as SimpleGroupData}
             />
           )
         })}

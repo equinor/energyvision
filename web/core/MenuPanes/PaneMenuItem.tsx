@@ -1,7 +1,7 @@
 import { Link, ResourceLink } from '@core/Link'
 import type { SimpleGroupData } from '../../types/index'
 import { useRouter } from 'next/router'
-import { Dispatch, forwardRef, SetStateAction, useEffect, useId, useRef, useState } from 'react'
+import { forwardRef, useEffect, useId, useRef, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { GoChevronRight } from 'react-icons/go'
 
@@ -33,7 +33,6 @@ export const PaneMenuItem = forwardRef<HTMLLIElement, PaneMenuItemProps>(functio
 
   useEffect(() => {
     if (firstPaneRef?.current) {
-      console.log('firstPaneRef.current.clientWidth', firstPaneRef.current.clientWidth)
       setTranslateX(firstPaneRef.current.clientWidth.toString())
     }
   }, [firstPaneRef])
@@ -105,7 +104,7 @@ export const PaneMenuItem = forwardRef<HTMLLIElement, PaneMenuItemProps>(functio
             border-l-[1px]
             border-white-100
             px-12
-            ml-12
+            ml-14
             min-w-[40vw]
             flex 
             flex-col

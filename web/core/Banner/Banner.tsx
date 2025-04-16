@@ -26,6 +26,7 @@ export type BannerProps = {
   backgroundUtility?: keyof ColorKeyTokens
 } & HTMLAttributes<HTMLDivElement>
 
+/** Generic Banner component */
 export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
   { title, ingress, content, image, ctaLabel, ctaLink, className = '', variant = 'primary', titleClassName = '' },
   ref,
@@ -68,10 +69,22 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
     <div
       ref={ref}
       className={envisTwMerge(
-        `grid grid-cols-[60%_40%] xl:grid-cols-2 items-center gap-4 xl:gap-20 xl:py-6 xl:pr-6`,
+        `flex flex-col xl:grid xl:grid-cols-[max-content_auto] xl:items-center gap-4 xl:gap-14 xl:py-6 xl:pr-6`,
         className,
       )}
     >
+      <div className="relative w-full h-full xl:min-w-[320px] aspect-video max-w-[420px]">
+        {image && (
+          <Image
+            aria-hidden
+            sizes="(max-width: 800px) 100vw, 800px"
+            image={image}
+            fill
+            aspectRatio={Ratios.NINE_TO_SIXTEEN}
+            className="rounded-md"
+          />
+        )}
+      </div>
       {ctaLink && (
         <div className={`${contentVariantClassName[variant]}`}>
           {ctaLabel ? (
@@ -98,18 +111,6 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
           {contentElements}
         </div>
       )}
-      <div className="relative w-full h-full">
-        {image && (
-          <Image
-            aria-hidden
-            sizes="(max-width: 800px) 100vw, 800px"
-            image={image}
-            fill
-            aspectRatio={Ratios.FOUR_TO_FIVE}
-            className="rounded-md"
-          />
-        )}
-      </div>
     </div>
   )
 })
