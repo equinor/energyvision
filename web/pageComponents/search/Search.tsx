@@ -13,6 +13,7 @@ import { useIntl } from 'react-intl'
 import { SearchClient } from 'algoliasearch/lite'
 import { SearchBox } from '@core/AlgoliaSearchBox/SearchBox'
 import { PaginationContextProvider } from '../../common/contexts/PaginationContext'
+import { twMerge } from 'tailwind-merge'
 
 const SearchResults = dynamic(() => import('./SearchResults'))
 
@@ -157,6 +158,9 @@ const Search = () => {
       indexName={mainIndex}
       routing={routing}
     >
+      <div className={twMerge(' text-white-100 py-4')}>
+        <h1>{intl.formatMessage({ id: 'search_page_title', defaultMessage: 'Search' })}</h1>
+      </div>
       <Configure hitsPerPage={5} snippetEllipsisText="..." />
       {indices.map((index) => (
         <Index indexName={index.value} key={index.label} indexId={index.value} />
@@ -166,7 +170,7 @@ const Search = () => {
       </div>
       <SearchResults resultsRef={resultsRef} items={indices} />
       <PaginationContextProvider defaultRef={resultsRef}>
-        <Pagination className='mt-12 justify-center' padding={padding} hitsPerPage={5} />
+        <Pagination className="mt-12 justify-center" padding={padding} hitsPerPage={5} />
       </PaginationContextProvider>
     </InstantSearch>
   )
