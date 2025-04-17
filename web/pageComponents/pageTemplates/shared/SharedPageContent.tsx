@@ -56,7 +56,7 @@ import {
 import { getColorForTheme } from '@sections/teasers/TextTeaser/theme'
 import Grid from '@sections/Grid/Grid'
 import { CampaignBanner } from '@sections/CampaignBanner'
-import { BackgroundContainerProps } from '@components/Backgrounds'
+import { BackgroundContainerProps } from '@core/Backgrounds'
 import VideoPlayerCarousel from '@sections/VideoPlayerCarousel/VideoPlayerCarousel'
 import ImageCarousel from '@sections/ImageCarousel/ImageCarousel'
 import { AnchorLinkList } from '@sections/AnchorLinkList'
@@ -179,7 +179,7 @@ const isSameColorBackground = (currentComponentsDO: any, previousComponentsDO: a
 const applyPaddingTopIfApplicable = (currentComponent: ComponentProps, prevComponent: ComponentProps): string => {
   const currentComponentsDO = getBackgroundOptions(currentComponent)
   const previousComponentsDO = getBackgroundOptions(prevComponent)
-  const specialCases = ['teaser', 'fullWidthImage', 'fullWidthVideo', 'backgroundImage']
+  const specialCases = ['teaser', 'fullWidthImage', 'fullWidthVideo', 'backgroundImage', 'campaignBanner']
 
   const currentIsWhiteColorBackground = isWhiteColorBackground(currentComponentsDO, currentComponent)
   const previousIsWhiteColorBackground = isWhiteColorBackground(previousComponentsDO, prevComponent)

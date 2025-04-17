@@ -1,4 +1,4 @@
-import { BackgroundContainer } from '@components'
+import { BackgroundContainer } from '@core/Backgrounds'
 import { Heading } from '@core/Typography'
 import type { IframeCarouselData } from '../../types/index'
 import { twMerge } from 'tailwind-merge'
@@ -17,7 +17,7 @@ const IframeCarousel = ({ data, anchor, className, ...rest }: IframeCarouselProp
   const headingId = useId()
 
   return (
-    <BackgroundContainer asSection={true} background={background} {...rest} id={anchor}>
+    <BackgroundContainer as="section" background={background} {...rest} id={anchor}>
       <div className={twMerge(`pb-page-content`, className)}>
         {title && (
           <Heading
