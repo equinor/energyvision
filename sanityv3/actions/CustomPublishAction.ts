@@ -25,13 +25,10 @@ export function SetAndPublishAction(props: DocumentActionProps) {
     if (isPublishing && !props.draft) {
       setIsPublishing(false)
     }
-  }, [props.draft])
-
-  // Determine if the action should be disabled based on validation errors and publish status
-  const isDisabled = hasValidationErrors || publish.disabled
+  }, [props.draft, isPublishing])
 
   return {
-    disabled: isDisabled || dialogOpen,
+    disabled: publish.disabled || dialogOpen || hasValidationErrors,
     label: isPublishing ? 'Publishing…' : `Publish`,
     onHandle: () => {
       // This will update the button text
@@ -39,8 +36,7 @@ export function SetAndPublishAction(props: DocumentActionProps) {
     },
     dialog:
       dialogOpen &&
-      props.draft &&
-      ({
+      props.draft && {
         type: 'confirm',
         onCancel: () => {
           props.onComplete()
@@ -51,9 +47,9 @@ export function SetAndPublishAction(props: DocumentActionProps) {
           // set lastModifiedAt date.
           patch.execute([{ set: { [LAST_MODIFIED_AT_FIELD_NAME]: currentTimeStamp } }])
 
-          //set firstPublishedAt date if not published.
-          if (!props.published?.[FIRST_PUBLISHED_AT_FIELD_NAME])
+          if (!props.published?.[FIRST_PUBLISHED_AT_FIELD_NAME]) {
             patch.execute([{ set: { [FIRST_PUBLISHED_AT_FIELD_NAME]: currentTimeStamp } }])
+          }
 
           // Perform the publish
           publish.execute()
@@ -62,8 +58,11 @@ export function SetAndPublishAction(props: DocumentActionProps) {
           props.onComplete()
 
           setDialogOpen(false)
+          setIsPublishing(true)
         },
-        message: 'Are you sure you want to publish?',
-      } as DocumentActionConfirmDialogProps),
+        message: hasValidationErrors
+          ? 'Cannot publish due to validation errors.'
+          : 'Are you sure you want to publish?',
+      } as DocumentActionConfirmDialogProps,
   }
 }
