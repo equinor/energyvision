@@ -4,7 +4,8 @@ import {
   DocumentActionProps, 
   useDocumentOperation, 
   useValidationStatus, 
-  isValidationErrorMarker 
+  isValidationErrorMarker,
+  SanityDocument,
 } from 'sanity'
 
 const FIRST_PUBLISHED_AT_FIELD_NAME = 'firstPublishedAt'
@@ -12,7 +13,7 @@ const LAST_MODIFIED_AT_FIELD_NAME = 'lastModifiedAt'
 
 export function SetAndPublishAction(props: DocumentActionProps) {
   const { patch, publish } = useDocumentOperation(props.id, props.type)
-  const [isPublishing, setIsPublishing] = useState(false)
+  const [isPublishing, setIsPublishing] = useState(true)
   const [dialogOpen, setDialogOpen] = useState(false)
 
   // Check for validation errors
@@ -25,17 +26,17 @@ export function SetAndPublishAction(props: DocumentActionProps) {
     if (isPublishing && !props.draft) {
       setIsPublishing(false)
     }
-  }, [props.draft])
+  }, [props.draft, isPublishing])
 
-  // Determine if the action should be disabled based on validation errors and publish status
-  const isDisabled = hasValidationErrors || publish.disabled
-
+  // check if the document is already published (default publish action is disabled if it is)
+  const isDisabled = hasValidationErrors || publish.disabled === 'ALREADY_PUBLISHED' || dialogOpen || isPublishing
   return {
-    disabled: isDisabled || dialogOpen,
-    label: isPublishing ? 'Publishing…' : `Publish`,
+    disabled: isDisabled,
+    label: isPublishing ? 'Publishing.. ' : 'Publish',
     onHandle: () => {
       // This will update the button text
       setDialogOpen(true)
+      
     },
     dialog:
       dialogOpen &&
@@ -48,13 +49,13 @@ export function SetAndPublishAction(props: DocumentActionProps) {
         },
         onConfirm: () => {
           const currentTimeStamp = new Date().toISOString()
-          // set lastModifiedAt date.
-          patch.execute([{ set: { [LAST_MODIFIED_AT_FIELD_NAME]: currentTimeStamp } }])
-
-          //set firstPublishedAt date if not published.
-          if (!props.published?.[FIRST_PUBLISHED_AT_FIELD_NAME])
-            patch.execute([{ set: { [FIRST_PUBLISHED_AT_FIELD_NAME]: currentTimeStamp } }])
-
+          patch.execute(
+            [
+              { setIfMissing: { [FIRST_PUBLISHED_AT_FIELD_NAME]: currentTimeStamp } },
+              { set: { [LAST_MODIFIED_AT_FIELD_NAME]: currentTimeStamp } },
+            ],
+            props.published as SanityDocument | undefined,
+          )
           // Perform the publish
           publish.execute()
 
