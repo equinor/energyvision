@@ -309,6 +309,7 @@ module.exports = {
       },
       transitionTimingFunction: {
         scroll: 'cubic-bezier(0.645, 0.045, 0.355, 1)',
+        ease: 'cubic-bezier(0.25, 0.1, 0.25, 1.0)',
       },
       transitionDuration: {
         400: '400ms',

@@ -286,11 +286,4 @@
       top: 0;
     }
   }
-  @starting-style {
-    .fadeInVisibilityOpacityDisplay {
-      visibility: visible;
-      opacity: 0;
-      display: hidden;
-    }
-  }
 }
