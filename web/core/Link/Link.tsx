@@ -19,7 +19,6 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
     w-fit 
     inline-flex
     items-center
-    gap-2.5
     underline
     hover:text-norwegian-woods-100
     dark:hover:text-slate-blue-95
@@ -34,7 +33,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
         <ArrowRight
           aria-hidden="false"
           aria-label={`, ${intl.formatMessage({ id: 'externalLink', defaultMessage: 'External link' })}`}
-          className="text-no inline-block pt-1 -rotate-45 origin-bottom-left"
+          className="text-no inline-block pb-1 -rotate-45 origin-center"
         />
       )}
     </BaseLink>
