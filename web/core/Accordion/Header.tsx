@@ -175,7 +175,6 @@ export const Header = forwardRef<HTMLButtonElement, AccordionHeaderProps>(functi
       />
     </div>
   )
-  console.log('variant', variant)
 
   return (
     <AccordionHeader asChild className={envisTwMerge(`${headerVariantClassName[variant]}`, headerClassName)}>

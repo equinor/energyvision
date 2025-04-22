@@ -4,10 +4,14 @@ import { SimpleGroupData } from '../../types'
 
 export type MenuPanesProps = {
   menuItems: SimpleGroupData[]
+  currentMenuItemIndex?: string
 }
 
-export const MenuPanes = forwardRef<HTMLDivElement, MenuPanesProps>(function MenuPanes({ menuItems, ...rest }, ref) {
-  const [openPaneId, setOpenPaneId] = useState<number>()
+export const MenuPanes = forwardRef<HTMLDivElement, MenuPanesProps>(function MenuPanes(
+  { menuItems, currentMenuItemIndex, ...rest },
+  ref,
+) {
+  const [openPaneId, setOpenPaneId] = useState<number>(currentMenuItemIndex ? parseInt(currentMenuItemIndex, 10) : -1)
 
   const handleOpen = (index: number) => {
     if (index === openPaneId) {
@@ -25,7 +29,7 @@ export const MenuPanes = forwardRef<HTMLDivElement, MenuPanesProps>(function Men
             <PaneMenuItem
               key={item.id}
               index={idx}
-              showSecondPane={openPaneId === idx}
+              showSecondPane={openPaneId == idx}
               onOpen={handleOpen}
               item={item as SimpleGroupData}
             />

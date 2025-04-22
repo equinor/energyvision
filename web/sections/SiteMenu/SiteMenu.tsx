@@ -56,14 +56,38 @@ const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
     return menuItems
       .findIndex((menuItem) => {
         if (variant === 'simple') {
-          if ('link' in menuItem && menuItem?.link) {
+          if ('link' in menuItem && menuItem?.link && menuItem.link.slug === router.asPath) {
             return menuItem.link.slug === router.asPath
           }
-          if ('links' in menuItem && menuItem?.links) {
+          if (
+            'links' in menuItem &&
+            menuItem?.links &&
+            menuItem.links.some((link) => link.link?.slug === router.asPath)
+          ) {
             return menuItem.links.some((link) => link.link?.slug === router.asPath)
           }
-        } else if (variant === 'default' && 'groups' in menuItem && menuItem.groups) {
-          return menuItem.groups?.some((group) => group.links.some((link) => link.link?.slug === router.asPath))
+          if (
+            'readMoreLink' in menuItem &&
+            menuItem?.readMoreLink?.link?.slug &&
+            menuItem.readMoreLink.link.slug === router.asPath
+          ) {
+            return menuItem.readMoreLink.link.slug === router.asPath
+          }
+        } else if (variant === 'default') {
+          if (
+            'groups' in menuItem &&
+            menuItem.groups &&
+            menuItem.groups?.some((group) => group.links.some((link) => link.link?.slug === router.asPath))
+          ) {
+            return menuItem.groups?.some((group) => group.links.some((link) => link.link?.slug === router.asPath))
+          }
+          if (
+            'topLevelLink' in menuItem &&
+            menuItem?.topLevelLink?.link?.slug &&
+            menuItem?.topLevelLink?.link?.slug === router.asPath
+          ) {
+            return menuItem?.topLevelLink?.link?.slug === router.asPath
+          }
         } else {
           return -1
         }
@@ -108,7 +132,10 @@ const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
                   {variant === 'simple' ? (
                     <>
                       {usePaneMenu ? (
-                        <MenuPanes menuItems={menuItems as SimpleGroupData[]} />
+                        <MenuPanes
+                          menuItems={menuItems as SimpleGroupData[]}
+                          currentMenuItemIndex={getCurrentMenuItemIndex()}
+                        />
                       ) : (
                         <Menu variant="simple" defaultValue={getCurrentMenuItemIndex()}>
                           {menuItems.map((item, idx: number) => {

@@ -27,6 +27,14 @@ export const PaneMenuItem = forwardRef<HTMLLIElement, PaneMenuItemProps>(functio
     console.warn('Missing slug for simple menu link')
   }
 
+  const ariaCurrentStyling = `aria-current:before:content-['']
+  aria-current:before:absolute
+  aria-current:before:top-0
+  aria-current:before:-left-4
+  aria-current:before:w-[2px]
+  aria-current:before:h-full
+  aria-current:before:bg-north-sea-50`
+
   const handleOpenClick = () => {
     onOpen && onOpen(index)
   }
@@ -44,12 +52,7 @@ export const PaneMenuItem = forwardRef<HTMLLIElement, PaneMenuItemProps>(functio
           <Link
             className={`w-full
               relative
-              aria-current:before:content-['']
-              aria-current:before:absolute
-              aria-current:before:top-0
-              aria-current:before:-left-2
-              aria-current:before:w-[2px]
-              aria-current:before:h-full
+              ${ariaCurrentStyling}
               aria-current:before:bg-north-sea-50
               hover:underline
               dark:hover:text-north-sea-50
@@ -114,24 +117,27 @@ export const PaneMenuItem = forwardRef<HTMLLIElement, PaneMenuItemProps>(functio
           }}
         >
           {!!readMoreLink?.link?.slug && (
-            <ResourceLink href={readMoreLink.link?.slug} className="w-fit pt-0 hover:text-north-sea-50">
+            <ResourceLink
+              href={readMoreLink.link?.slug}
+              className={`
+              ${ariaCurrentStyling}
+              w-fit 
+              pt-0 
+              hover:text-north-sea-50`}
+              aria-current={router?.asPath == readMoreLink?.link?.slug ? 'page' : 'false'}
+            >
               {readMoreLink.label}
             </ResourceLink>
           )}
           {links?.map((link: any) => (
-            <li key={link.id}>
+            <li key={link.id} className="relative">
               <Link
-                className={`aria-current:bg-grey-10
-                          aria-current:px-2
-                          aria-current:-ml-2
-                          aria-current:border-l-[3px]
-                          aria-current:border-moss-green-95
-                          no-underline
-                          hover:underline 
-                          underline-offset-2
-                          decoration-2
-                          dark:hover:text-north-sea-50
-                          `}
+                className={`${ariaCurrentStyling}
+                  no-underline
+                  hover:underline 
+                  underline-offset-2
+                  decoration-2
+                  dark:hover:text-north-sea-50`}
                 href={link?.link?.slug || '/'}
                 aria-current={router?.asPath == link?.link?.slug ? 'page' : 'false'}
               >
