@@ -5,7 +5,6 @@ import { library_image } from '@equinor/eds-icons'
 import blocksToText from '../../helpers/blocksToText'
 import type { Rule } from 'sanity'
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
-import { autoPlay, singleMode } from './carousel/sharedCarouselFields'
 
 const titleContentType = configureTitleBlockContent()
 const ingressBlockContentType = configureBlockContent({
@@ -79,7 +78,13 @@ export default {
       ],
       validation: (Rule: Rule) => Rule.required().min(3),
     },
-    autoPlay,
+    {
+      type: 'boolean',
+      name: 'autoplay',
+      title: 'Autoplay',
+      description: 'Whether the carousel should autoplay or not.',
+      initialValue: false,
+    },
     {
       title: 'Background',
       description: 'Pick a colour for the background. Default is white.',
