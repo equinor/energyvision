@@ -8,7 +8,7 @@ export type MenuHeaderProps = {
 } & Omit<AccordionHeaderProps, 'variant'>
 
 export const MenuHeader = forwardRef<HTMLButtonElement, MenuHeaderProps>(function MenuHeader(
-  { children, variant = 'default', className = '' },
+  { children, variant = 'default', className = '', ...rest },
   ref,
 ) {
   const variantClassName: Partial<Record<Variants, string>> = {
@@ -18,6 +18,7 @@ export const MenuHeader = forwardRef<HTMLButtonElement, MenuHeaderProps>(functio
 
   return (
     <Accordion.Header
+      {...rest}
       ref={ref}
       variant={variant === 'simple' ? 'simpleMenu' : 'menu'}
       className={envisTwMerge(`${variantClassName[variant]}`, className)}

@@ -1,5 +1,4 @@
 import { Accordion, AccordionSingleProps } from '@core/Accordion'
-import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
 import { forwardRef } from 'react'
 
 export type Variants = 'default' | 'simple'
@@ -13,8 +12,6 @@ export const MenuAccordion = forwardRef<HTMLDivElement, MenuAccordionProps>(func
   { children, variant = 'default', ...rest },
   ref,
 ) {
-  const isMobile = useMediaQuery(`(max-width: 800px)`)
-
   const variantClassName: Partial<Record<Variants, string>> = {
     default: 'w-auto mx-auto flex flex-col xl:flex-row',
     simple: 'flex flex-col',
@@ -28,7 +25,7 @@ export const MenuAccordion = forwardRef<HTMLDivElement, MenuAccordionProps>(func
       id="menu-accordion"
       asChild
       collapsible
-      orientation={isMobile ? 'vertical' : 'horizontal'}
+      orientation={'vertical'}
       className={`${variantClassName[variant]}`}
     >
       <ul>{children}</ul>
