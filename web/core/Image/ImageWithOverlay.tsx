@@ -62,7 +62,7 @@ export const ImageWithOverlay = forwardRef<HTMLDivElement, ImageWithOverlayProps
   return (
     <figure ref={ref} className={envisTwMerge(`w-full h-full rounded-md`, className)}>
       <Image maxWidth={1420} image={image as ImageWithAlt} fill className={`rounded-md`} />
-      <figcaption className={envisTwMerge(`w-full h-full`, captionClassname)}>
+      <figcaption className={envisTwMerge(`transition-opacity w-full h-full`, captionClassname)}>
         <div
           className={`absolute
               inset-0
