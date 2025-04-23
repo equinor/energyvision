@@ -16,6 +16,7 @@ export const TopbarDropdown = ({ children, variant = 'light', className = '', ..
         backgroundUtility: variant === 'dark' ? 'slate-blue-95' : 'white-100',
         dark: variant === 'dark',
       }}
+      backgroundStyle="none"
       className={envisTwMerge(`fixed overflow-auto inset-0`, className)}
       {...rest}
     >
