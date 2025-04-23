@@ -28,7 +28,7 @@ const Promotion = ({
   const paddingClassName = `px-layout-sm 3xl:px-layout-lg`
 
   return (
-    <BackgroundContainer {...designOptions} id={anchor} renderFragmentWhenPossible>
+    <BackgroundContainer {...designOptions} backgroundStyle="none" id={anchor} renderFragmentWhenPossible>
       <div className={twMerge(`pb-page-content max-w-viewport mx-auto flex flex-col gap-6`, className)} {...rest}>
         {title && (
           <Heading

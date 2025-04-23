@@ -9,7 +9,7 @@ export const Teaser = forwardRef<HTMLDivElement, BackgroundContainerProps>(funct
   ref,
 ) {
   return (
-    <BackgroundContainer as="article" ref={ref} {...rest}>
+    <BackgroundContainer as="article" backgroundStyle="none" ref={ref} {...rest}>
       <div
         className={twMerge(
           `overflow-y-hidden max-w-[1440px] grid md:grid-cols-2 auto-rows-min my-0 mx-auto `,

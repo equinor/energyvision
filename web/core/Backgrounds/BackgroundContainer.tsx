@@ -1,6 +1,6 @@
 import { forwardRef, HTMLAttributes } from 'react'
 import type { BackgroundColours, BackgroundTypes, ImageBackground } from '../../types/index'
-import { BackgroundContainerType, ColouredContainer } from './ColouredContainer'
+import { BackgroundContainerType, BackgroundStyle, ColouredContainer } from './ColouredContainer'
 import { ColorKeyTokens } from '../../styles/colorKeyToUtilityMap'
 import envisTwMerge from '../../twMerge'
 import { ImageBackgroundContainer } from './ImageBackgroundContainer'
@@ -26,6 +26,8 @@ export type BackgroundContainerProps = {
   dontSplit?: boolean
   /** Set return element as given */
   as?: BackgroundContainerType
+  /** Background style for coloured backgrounds  */
+  backgroundStyle?: BackgroundStyle
 } & HTMLAttributes<HTMLDivElement>
 
 export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContainerProps>(function BackgroundContainer(
@@ -40,6 +42,7 @@ export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContaine
     renderFragmentWhenPossible = false,
     dontSplit = false,
     as = 'div',
+    backgroundStyle = 'regular',
     ...rest
   },
   ref,
@@ -77,6 +80,7 @@ export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContaine
               {...restBackground}
               style={style}
               as={as}
+              backgroundStyle={backgroundStyle}
               className={envisTwMerge(`${id ? 'scroll-mt-topbar' : ''}`, className, twClassName)}
               {...rest}
             >

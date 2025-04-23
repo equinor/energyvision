@@ -20,12 +20,7 @@ const VideoPlayerCarousel = forwardRef<HTMLUListElement, VideoPlayerCarouselProp
   const headingId = useId()
 
   return (
-    <BackgroundContainer
-      as="section"
-      background={background}
-      id={anchor}
-      className={envisTwMerge(`pb-page-content`, className)}
-    >
+    <BackgroundContainer as="section" background={background} id={anchor} backgroundStyle="none" className={className}>
       <div className="w-full flex flex-col px-layout-lg mx-auto max-w-viewport pb-8">
         {title && (
           <Heading

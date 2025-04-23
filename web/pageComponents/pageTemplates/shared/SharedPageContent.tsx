@@ -225,43 +225,37 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
         : (data?.content?.[previousComponentIndex] as unknown as ComponentProps)
 
     const topSpacingClassName = applyPaddingTopIfApplicable(c, previousComponentToCompare)
+    const spacingClassName = `${topSpacingClassName} pb-page-content`
     //@ts-ignore:so many types
     switch (c.type) {
       case 'teaser':
         return <Teaser key={c.id} data={c as TeaserData} anchor={anchorReference} />
       case 'textTeaser':
         return (
-          <TextTeaser key={c.id} data={c as TextTeaserData} anchor={anchorReference} className={topSpacingClassName} />
+          <TextTeaser key={c.id} data={c as TextTeaserData} anchor={anchorReference} className={spacingClassName} />
         )
       case 'textBlock':
-        return (
-          <TextBlock key={c.id} data={c as TextBlockData} anchor={anchorReference} className={topSpacingClassName} />
-        )
+        return <TextBlock key={c.id} data={c as TextBlockData} anchor={anchorReference} className={spacingClassName} />
       case 'fullWidthImage':
         return <FullWidthImage key={c.id} data={c as FullWidthImageData} anchor={anchorReference} />
       case 'fullWidthVideo':
         return <FullWidthVideo key={c.id} data={c as FullWidthVideoData} anchor={anchorReference} />
       case 'figure':
-        return <Figure key={c.id} data={c as FigureData} anchor={anchorReference} className={topSpacingClassName} />
+        return <Figure key={c.id} data={c as FigureData} anchor={anchorReference} className={spacingClassName} />
       case 'textWithIconArray':
         return (
           <TextWithIconArray
             key={c.id}
             data={c as TextWithIconArrayData}
             anchor={anchorReference}
-            className={topSpacingClassName}
+            className={spacingClassName}
           />
         )
       case 'pullQuote':
-        return <PageQuote key={c.id} data={c as QuoteData} anchor={anchorReference} className={topSpacingClassName} />
+        return <PageQuote key={c.id} data={c as QuoteData} anchor={anchorReference} className={spacingClassName} />
       case 'accordion':
         return (
-          <AccordionBlock
-            key={c.id}
-            data={c as AccordionData}
-            anchor={anchorReference}
-            className={topSpacingClassName}
-          />
+          <AccordionBlock key={c.id} data={c as AccordionData} anchor={anchorReference} className={spacingClassName} />
         )
       case 'promoTileArray':
         return (
@@ -269,26 +263,24 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
             key={c.id}
             data={c as PromoTileArrayData}
             anchor={anchorReference}
-            className={topSpacingClassName}
+            className={spacingClassName}
           />
         )
       case 'iframe':
-        return <IFrame key={c.id} data={c as IFrameData} anchor={anchorReference} className={topSpacingClassName} />
+        return <IFrame key={c.id} data={c as IFrameData} anchor={anchorReference} className={spacingClassName} />
       case 'promotion':
-        return (
-          <Promotion key={c.id} data={c as PromotionData} anchor={anchorReference} className={topSpacingClassName} />
-        )
+        return <Promotion key={c.id} data={c as PromotionData} anchor={anchorReference} className={spacingClassName} />
       case 'form':
-        return <Form key={c.id} data={c as FormData} anchor={anchorReference} className={topSpacingClassName} />
+        return <Form key={c.id} data={c as FormData} anchor={anchorReference} className={spacingClassName} />
       case 'table':
-        return <Table key={c.id} data={c as TableData} anchor={anchorReference} className={topSpacingClassName} />
+        return <Table key={c.id} data={c as TableData} anchor={anchorReference} className={spacingClassName} />
       case 'cookieDeclaration':
         return (
           <CookieDeclaration
             key={c.id}
             data={c as CookieDeclarationData}
             anchor={anchorReference}
-            className={topSpacingClassName}
+            className={spacingClassName}
           />
         )
       case 'newsList':
@@ -297,26 +289,16 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
             key={c.id}
             data={c as unknown as NewsListData}
             anchor={anchorReference}
-            className={topSpacingClassName}
+            className={spacingClassName}
           />
         )
       case 'stockValuesApi':
         return (
-          <StockValues
-            key={c.id}
-            data={c as StockValuesData}
-            anchor={anchorReference}
-            className={topSpacingClassName}
-          />
+          <StockValues key={c.id} data={c as StockValuesData} anchor={anchorReference} className={spacingClassName} />
         )
       case 'twitterEmbed':
         return (
-          <TwitterEmbed
-            key={c.id}
-            data={c as TwitterEmbedData}
-            anchor={anchorReference}
-            className={topSpacingClassName}
-          />
+          <TwitterEmbed key={c.id} data={c as TwitterEmbedData} anchor={anchorReference} className={spacingClassName} />
         )
       case 'imageCarousel':
         return (
@@ -324,7 +306,7 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
             key={c.id}
             data={c as ImageCarouselData}
             anchor={anchorReference}
-            className={topSpacingClassName}
+            className={spacingClassName}
           />
         )
       case 'iframeCarousel':
@@ -333,17 +315,12 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
             key={c.id}
             data={c as IframeCarouselData}
             anchor={anchorReference}
-            className={topSpacingClassName}
+            className={spacingClassName}
           />
         )
       case 'videoPlayer':
         return (
-          <VideoPlayer
-            key={c.id}
-            data={c as VideoPlayerData}
-            anchor={anchorReference}
-            className={topSpacingClassName}
-          />
+          <VideoPlayer key={c.id} data={c as VideoPlayerData} anchor={anchorReference} className={spacingClassName} />
         )
       case 'videoPlayerCarousel':
         return (
@@ -351,19 +328,17 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
             key={c.id}
             data={c as VideoPlayerCarouselData}
             anchor={anchorReference}
-            className={topSpacingClassName}
+            className={spacingClassName}
           />
         )
       case 'keyNumbers':
         return (
-          <KeyNumbers key={c.id} data={c as KeyNumbersData} anchor={anchorReference} className={topSpacingClassName} />
+          <KeyNumbers key={c.id} data={c as KeyNumbersData} anchor={anchorReference} className={spacingClassName} />
         )
       case 'cardsList':
-        return (
-          <CardsList key={c.id} data={c as CardsListData} anchor={anchorReference} className={topSpacingClassName} />
-        )
+        return <CardsList key={c.id} data={c as CardsListData} anchor={anchorReference} className={spacingClassName} />
       case 'grid':
-        return <Grid key={c.id} data={c as GridData} anchor={anchorReference} className={topSpacingClassName} />
+        return <Grid key={c.id} data={c as GridData} anchor={anchorReference} className={spacingClassName} />
       case 'campaignBanner':
         return <CampaignBanner key={c.id} data={c as CampaignBannerData} />
       case 'anchorLinkList':
@@ -372,13 +347,13 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
             key={c.id}
             data={c as AnchorLinkListData}
             anchor={anchorReference}
-            className={topSpacingClassName}
+            className={spacingClassName}
           />
         )
       case 'imageForText':
         return <ImageForText key={c.id} data={c as ImageForTextData} />
       case 'tabs':
-        return <TabsBlock key={c.id} {...(c as any)} className={topSpacingClassName} />
+        return <TabsBlock key={c.id} {...(c as any)} className={spacingClassName} />
       default:
         return null
     }

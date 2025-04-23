@@ -24,7 +24,12 @@ const KeyNumber = ({ data, anchor, className }: KeyNumbersProps) => {
   const renderScroll = useHorizontalScroll && isMobile
 
   return (
-    <BackgroundContainer {...designOptions} className={twMerge(`pb-page-content px-layout-sm`, className)} id={anchor}>
+    <BackgroundContainer
+      {...designOptions}
+      backgroundStyle="full-screen"
+      className={twMerge(`pb-page-content px-layout-sm`, className)}
+      id={anchor}
+    >
       {title && (
         <Heading value={title} id={headingId} variant="h3" as="h2" className={hideTitle ? 'sr-only' : 'pb-lg'} />
       )}

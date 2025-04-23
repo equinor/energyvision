@@ -122,7 +122,7 @@ const RequestConsentContainer = ({ hasSectionTitle = true, cookiePolicy }: Reque
   }
   return (
     <StyledDiv>
-      <CookieHeader background={{ backgroundColor: 'Slate Blue 95' }}>
+      <CookieHeader background={{ backgroundUtility: 'slate-blue-95', dark: true }} backgroundStyle="none">
         <Heading size="lg" level={hasSectionTitle ? 'h3' : 'h2'}>
           <FormattedMessage id="cookie_consent_header" defaultMessage="Accept Cookies" />
         </Heading>
@@ -169,7 +169,7 @@ const RequestConsentContainer = ({ hasSectionTitle = true, cookiePolicy }: Reque
           />
         </SVG>
       </Icon>
-      <Content background={{ backgroundColor: 'White' }}>
+      <Content background={{ backgroundColor: 'White' }} backgroundStyle="none">
         <Text>{getCookieInformationText(cookiePolicy)}</Text>
         <LeftAlignedButton onClick={() => handleCookiebotRenew(router?.locale)} color="secondary" variant="outlined">
           <FormattedMessage id="cookie_settings" defaultMessage="Cookie settings" />

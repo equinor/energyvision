@@ -20,12 +20,7 @@ const ImageCarousel = forwardRef<HTMLUListElement, ImageCarouselProps>(function 
   const headingId = useId()
 
   return (
-    <BackgroundContainer
-      as="section"
-      background={background}
-      id={anchor}
-      className={envisTwMerge(`pb-page-content`, className)}
-    >
+    <BackgroundContainer as="section" background={background} id={anchor} backgroundStyle="none" className={className}>
       {((title && !hideTitle) || ingress) && (
         <div className="w-full flex flex-col px-layout-lg max-w-viewport mx-auto pb-8">
           {title && !hideTitle && (
