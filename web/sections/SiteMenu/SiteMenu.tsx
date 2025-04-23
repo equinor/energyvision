@@ -98,7 +98,7 @@ const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
   const variantClassName: Partial<Record<Variants, string>> = {
     default: 'h-full px-8 xl:bg-moss-green-50 xl:mt-8 xl:mx-8 xl:flex xl:justify-between items-center',
     simple: `max-w-viewport ${
-      !Flags.IS_GLOBAL_PROD ? 'bg-north-sea-80' : ''
+      Flags.HAS_FANCY_MENU ? '' : 'bg-north-sea-80'
     } px-layout-sm mt-6 xl:mt-8 flex flex-col mx-auto`,
   }
 
@@ -117,7 +117,7 @@ const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
         <FloatingFocusManager context={context}>
           <FloatingOverlay ref={refs.setFloating} lockScroll {...getFloatingProps()}>
             <TopbarDropdown>
-              <nav className={`${!Flags.IS_GLOBAL_PROD ? 'h-full dark bg-north-sea-80' : ''} `}>
+              <nav className={`${!Flags.HAS_FANCY_MENU ? 'h-full dark bg-north-sea-80' : ''} `}>
                 <NavTopbar>
                   <LogoLink />
                   <MenuButton
@@ -154,7 +154,7 @@ const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
                   {
                     <hr
                       className={`${
-                        Flags.IS_GLOBAL_PROD ? 'xl:hidden' : ''
+                        Flags.HAS_FANCY_MENU ? 'xl:hidden' : ''
                       } h-[1px] w-full bg-slate-80 dark:bg-white-100 mt-8 mb-6`}
                     />
                   }
