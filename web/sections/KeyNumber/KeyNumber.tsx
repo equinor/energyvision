@@ -26,7 +26,7 @@ const KeyNumber = ({ data, anchor, className }: KeyNumbersProps) => {
   return (
     <BackgroundContainer
       {...designOptions}
-      backgroundStyle="full-screen"
+      backgroundStyle="none"
       className={twMerge(`pb-page-content px-layout-sm`, className)}
       id={anchor}
     >

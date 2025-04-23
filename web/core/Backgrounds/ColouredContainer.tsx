@@ -19,7 +19,7 @@ export const ColouredContainer = forwardRef<HTMLDivElement, ColouredContainerPro
   {
     backgroundColor = 'White',
     backgroundUtility,
-    dark,
+    dark: utilityDark,
     children,
     backgroundStyle = 'regular',
     className = '',
@@ -36,7 +36,8 @@ export const ColouredContainer = forwardRef<HTMLDivElement, ColouredContainerPro
   const backgroundMap = backgroundUtility
     ? colorKeyToUtilityMap[backgroundUtility].background
     : colorKeyToUtilityMap[colorKey].background
-
+  const darkMap = backgroundUtility ? colorKeyToUtilityMap[backgroundUtility].dark : colorKeyToUtilityMap[colorKey].dark
+  const dark = utilityDark || darkMap
   const backgroundClassesByStyle = getBackgroundClassesByStyles(backgroundStyle)
   const classNamesForChildren = envisTwMerge(backgroundClassesByStyle, className)
   const Tag = as ?? (`div` as React.ElementType)
