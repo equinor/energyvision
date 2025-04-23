@@ -155,11 +155,8 @@ export const Header = forwardRef<HTMLButtonElement, AccordionHeaderProps>(functi
           text-slate-80
           dark:text-white-100
           group-data-open:hidden
-          transition-all
-          col-span-full
-          row-span-full
           `}
-        size={42}
+        size={38}
       />
       <GoDash
         className={`
@@ -167,11 +164,8 @@ export const Header = forwardRef<HTMLButtonElement, AccordionHeaderProps>(functi
           dark:text-white-100
           hidden
           group-data-open:block
-          transition-all
-          col-span-full
-          row-span-full
           `}
-        size={42}
+        size={38}
       />
     </div>
   )
