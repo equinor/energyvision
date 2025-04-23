@@ -17,26 +17,31 @@ const IframeCarousel = ({ data, anchor, className, ...rest }: IframeCarouselProp
   const headingId = useId()
 
   return (
-    <BackgroundContainer as="section" background={background} {...rest} id={anchor}>
-      <div className={twMerge(`pb-page-content`, className)}>
-        {title && (
-          <Heading
-            value={title}
-            variant="h3"
-            as="h2"
-            id={headingId}
-            className={hideTitle ? 'sr-only' : 'pb-lg text-center  max-w-viewport mx-auto px-layout-sm'}
-          />
-        )}
-        <Carousel
-          items={items}
-          displayMode="single"
-          variant="iframe"
-          autoRotation={false}
-          hasSectionTitle={title && !hideTitle}
-          labelledbyId={title && !hideTitle ? headingId : undefined}
+    <BackgroundContainer
+      as="section"
+      background={background}
+      backgroundStyle="none"
+      className={className}
+      {...rest}
+      id={anchor}
+    >
+      {title && (
+        <Heading
+          value={title}
+          variant="h3"
+          as="h2"
+          id={headingId}
+          className={hideTitle ? 'sr-only' : 'pb-lg text-center  max-w-viewport mx-auto px-layout-sm'}
         />
-      </div>
+      )}
+      <Carousel
+        items={items}
+        displayMode="single"
+        variant="iframe"
+        autoRotation={false}
+        hasSectionTitle={title && !hideTitle}
+        labelledbyId={title && !hideTitle ? headingId : undefined}
+      />
     </BackgroundContainer>
   )
 }

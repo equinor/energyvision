@@ -55,15 +55,17 @@ const StyledPlayer = styled(DynamicVideosComponent)`
 
 const FullWidthVideo = ({ anchor, data }: { data: FullWidthVideoData; anchor?: string }) => {
   const { video, designOptions, spacing } = data
-  const { background, aspectRatio } = designOptions
+  const { aspectRatio } = designOptions
   return (
-    <BackgroundContainer background={background} id={anchor}>
-      <Container $aspectRatio={aspectRatio} style={spacing ? { marginTop: '50px', marginBottom: '50px' } : {}}>
-        <StyledFigure>
-          <StyledPlayer title={video.title} autoPlay muted loop src={video.url} playsInline />
-        </StyledFigure>
-      </Container>
-    </BackgroundContainer>
+    <Container
+      id={anchor}
+      $aspectRatio={aspectRatio}
+      style={spacing ? { marginTop: '50px', marginBottom: '50px' } : {}}
+    >
+      <StyledFigure>
+        <StyledPlayer title={video.title} autoPlay muted loop src={video.url} playsInline />
+      </StyledFigure>
+    </Container>
   )
 }
 
