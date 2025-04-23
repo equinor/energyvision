@@ -158,9 +158,7 @@ const Search = () => {
       indexName={mainIndex}
       routing={routing}
     >
-      <div className={twMerge(' text-white-100 py-4')}>
-        <h1>{intl.formatMessage({ id: 'search_page_title', defaultMessage: 'Search' })}</h1>
-      </div>
+      <h1 className="sr-only">{intl.formatMessage({ id: 'search_page_title', defaultMessage: 'Search' })}</h1>
       <Configure hitsPerPage={5} snippetEllipsisText="..." />
       {indices.map((index) => (
         <Index indexName={index.value} key={index.label} indexId={index.value} />
