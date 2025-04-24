@@ -13,7 +13,7 @@ export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(function MenuI
 ) {
   return (
     <Accordion.Item ref={ref} variant={variant === 'simple' ? 'simpleMenu' : 'menu'} asChild {...rest}>
-      <li>{children}</li>
+      <li className="group/accordionListItem">{children}</li>
     </Accordion.Item>
   )
 })
