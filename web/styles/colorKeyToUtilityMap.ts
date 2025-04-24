@@ -64,6 +64,11 @@ export const colorKeyToUtilityMap: Record<
     background: 'bg-sand-and-summer-50',
     text: 'text-sand-and-summer-50',
   },
+  'norwegian-woods-40': {
+    backgroundName: 'Light green',
+    background: 'bg-norwegian-woods-40',
+    text: 'text-norwegian-woods-40',
+  },
 }
 export type ColorKeyTokens = {
   [P1 in keyof typeof colorKeyToUtilityMap]: string
