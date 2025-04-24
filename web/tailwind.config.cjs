@@ -29,7 +29,7 @@ module.exports = {
   NB: TwMerge configuration must be extended to properly merge custom theme utilities. 
   Less pain to use Tailwind eqvivalent. 
   */
-  darkMode: 'selector',
+  darkMode: ['variant', [':is(.dark &):not(.light &)']],
   theme: {
     extend: {
       screens: {
