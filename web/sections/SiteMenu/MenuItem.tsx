@@ -42,7 +42,7 @@ export const MenuItem = ({ item, index }: MenuGroupType) => {
     <_MenuItem value={`${index}`}>
       <MenuHeader>{topLevelLink?.label}</MenuHeader>
       <MenuContent className="">
-        <div className="px-4 xl:px-layout-sm xl:mx-auto">
+        <div className="max-xl:py-4 px-4 xl:px-layout-sm xl:mx-auto">
           <div className="w-full flex flex-col gap-2 pb-6">
             {intro && <Blocks value={intro} />}
             <ResourceLink
@@ -53,7 +53,7 @@ export const MenuItem = ({ item, index }: MenuGroupType) => {
               {topLevelLink?.label}
             </ResourceLink>
           </div>
-          <div className="flex-grow py-4 xl:py-10 border-b border-grey-30">
+          <div className="flex-grow py-4 xl:py-10">
             {groups && groups.length > 0 && (
               <div
                 className="flex

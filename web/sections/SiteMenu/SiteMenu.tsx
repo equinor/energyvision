@@ -31,7 +31,7 @@ const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
     onOpenChange: setIsOpen,
   })
   const { getReferenceProps, getFloatingProps } = useInteractions([useDismiss(context)])
-  const usePaneMenu = useMediaQuery(`(min-width: 1300px)`)
+  const useComplex = useMediaQuery(`(min-width: 1300px)`)
 
   const menuItems = useMemo(() => {
     if (!data) {
@@ -52,7 +52,7 @@ const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
   const title = intl.formatMessage({ id: 'menu', defaultMessage: 'Menu' })
   const allSitesURL = getAllSitesLink(Flags.IS_GLOBAL_PROD ? 'internal' : 'external', router?.locale || 'en')
 
-  const getCurrentMenuItemIndex = () => {
+  const getCurrentMenuItemIndex = useCallback(() => {
     return menuItems
       .findIndex((menuItem) => {
         if (variant === 'simple') {
@@ -93,13 +93,17 @@ const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
         }
       })
       .toString()
-  }
+  }, [menuItems, router.asPath, variant])
+
+  const currentMenuItemIndex = useMemo(() => {
+    return getCurrentMenuItemIndex()
+  }, [getCurrentMenuItemIndex])
 
   const variantClassName: Partial<Record<Variants, string>> = {
-    default: 'h-full px-8 xl:bg-moss-green-50 xl:mt-8 xl:mx-8 xl:flex xl:justify-between items-center',
+    default: 'h-full mt-8 xl:bg-moss-green-50 xl:mx-8 xl:flex xl:justify-between items-center',
     simple: `max-w-viewport ${
       Flags.HAS_FANCY_MENU ? '' : 'bg-north-sea-80'
-    } px-layout-sm mt-6 xl:mt-8 flex flex-col mx-auto`,
+    } mt-6 xl:mt-8 xl:px-layout-sm flex flex-col mx-auto`,
   }
 
   return (
@@ -131,21 +135,29 @@ const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
                 <div className={variantClassName[variant]} {...rest}>
                   {variant === 'simple' ? (
                     <>
-                      {usePaneMenu ? (
+                      {useComplex ? (
                         <MenuPanes
                           menuItems={menuItems as SimpleGroupData[]}
-                          currentMenuItemIndex={getCurrentMenuItemIndex()}
+                          currentMenuItemIndex={currentMenuItemIndex}
                         />
                       ) : (
-                        <Menu variant="simple" defaultValue={getCurrentMenuItemIndex()}>
+                        <Menu variant="simple" defaultValue={[currentMenuItemIndex]}>
                           {menuItems.map((item, idx: number) => {
-                            return <SimpleMenuItem key={item.id} index={idx} item={item as SimpleGroupData} />
+                            const nextIsSimpleLink = (menuItems[idx + 1] as SimpleGroupData)?.type === 'simpleMenuLink'
+                            return (
+                              <SimpleMenuItem
+                                key={item.id}
+                                index={idx}
+                                item={item as SimpleGroupData}
+                                nextIsSimpleLink={nextIsSimpleLink}
+                              />
+                            )
                           })}
                         </Menu>
                       )}
                     </>
                   ) : (
-                    <Menu variant="default" defaultValue={getCurrentMenuItemIndex()}>
+                    <Menu variant="default" defaultValue={useComplex ? currentMenuItemIndex : [currentMenuItemIndex]}>
                       {menuItems.map((item, idx: number) => {
                         return <MenuItem key={item.id} index={idx} item={item as SubMenuData} />
                       })}
@@ -154,24 +166,12 @@ const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
                   {
                     <hr
                       className={`${
-                        Flags.HAS_FANCY_MENU ? 'xl:hidden' : ''
-                      } h-[1px] w-full bg-slate-80 dark:bg-white-100 mt-8 mb-6`}
+                        Flags.HAS_FANCY_MENU ? 'xl:hidden mt-12' : 'max-xl:mt-8'
+                      } h-[2px] w-full bg-grey-40 dark:bg-white-100`}
                     />
                   }
                   <BaseLink
                     className={`
-                    ${
-                      variant === 'simple'
-                        ? 'py-4 xl:py-6 text-md hover:text-north-sea-50'
-                        : `py-6 
-                        px-2
-                        text-md
-                        xl:px-6
-                        xl:my-4
-                        xl:py-4
-                        xl:text-sm
-                        `
-                    }
                     w-fit 
                     inline-flex
                     items-center
@@ -183,6 +183,21 @@ const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
                     h-fit
                     rounded-sm
                     mb-40
+                    max-xl:px-layout-sm
+                    ${
+                      variant === 'simple'
+                        ? 'max-xl:ml-2 py-4 xl:py-6 text-md hover:text-north-sea-50'
+                        : `py-6 
+                        px-2
+                        text-md
+                        xl:px-6
+                        xl:my-4
+                        xl:py-4
+                        xl:text-sm
+                        xl:border-l
+                        xl:border-white-100
+                        `
+                    }
                     `}
                     type={Flags.IS_GLOBAL_PROD ? 'internalUrl' : 'externalUrl'}
                     href={allSitesURL}

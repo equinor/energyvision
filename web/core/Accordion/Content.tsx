@@ -27,6 +27,7 @@ export const Content = forwardRef<HTMLDivElement, AccordionContentProps>(functio
     menu: `max-xl:overflow-hidden
     max-xl:motion-safe:data-closed:animate-slideDown
     max-xl:motion-safe:data-open:animate-slideUp
+
     `,
     simpleMenu: `max-xl:overflow-hidden
     max-xl:motion-safe:data-closed:animate-slideDown

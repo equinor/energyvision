@@ -3,15 +3,17 @@ import type { SimpleGroupData } from '../../types/index'
 import { Menu } from '@core/MenuAccordion'
 import { useRouter } from 'next/router'
 import { useId } from 'react'
+import envisTwMerge from '../../twMerge'
 
 const { MenuItem, MenuHeader, MenuContent } = Menu
 
 type MenuGroupType = {
   item: SimpleGroupData
   index: number
+  nextIsSimpleLink?: boolean
 }
 
-export const SimpleMenuItem = ({ item, index }: MenuGroupType) => {
+export const SimpleMenuItem = ({ item, index, nextIsSimpleLink }: MenuGroupType) => {
   const { type, label, links = [], readMoreLink } = item
   const router = useRouter()
   const id = useId()
@@ -37,16 +39,19 @@ export const SimpleMenuItem = ({ item, index }: MenuGroupType) => {
               item.link.slug === router.asPath && {
                 'aria-current': 'page',
               })}
-            className={`w-full
+            className={envisTwMerge(
+              `w-full
               relative
-              ${ariaCurrentStyling}
-              py-4
+              py-3
               px-2
               hover:underline
               dark:hover:text-north-sea-50
               underline-offset-2
               text-lg
-              no-underline`}
+              no-underline`,
+              ariaCurrentStyling,
+              `aria-current:before:-left-2`,
+            )}
             href={(item.link && item.link.slug) || '/'}
           >
             {item.label}
@@ -56,7 +61,7 @@ export const SimpleMenuItem = ({ item, index }: MenuGroupType) => {
         <>
           <MenuItem value={`${index}`} variant="simple">
             {label && (
-              <MenuHeader id={id} variant="simple">
+              <MenuHeader id={id} variant="simple" className={`${nextIsSimpleLink ? 'max-xl:border-b' : ''}`}>
                 {label}
               </MenuHeader>
             )}
