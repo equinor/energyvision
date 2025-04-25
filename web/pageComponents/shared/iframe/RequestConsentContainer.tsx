@@ -1,5 +1,6 @@
 import styled from 'styled-components'
-import { Text, Button, Heading } from '@components'
+import { Text, Button } from '@components'
+import { Typography } from '@core/Typography'
 import { BackgroundContainer } from '@core/Backgrounds'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { useRouter } from 'next/router'
@@ -123,9 +124,9 @@ const RequestConsentContainer = ({ hasSectionTitle = true, cookiePolicy }: Reque
   return (
     <StyledDiv>
       <CookieHeader background={{ backgroundUtility: 'slate-blue-95', dark: true }} backgroundStyle="none">
-        <Heading size="lg" level={hasSectionTitle ? 'h3' : 'h2'}>
+        <Typography variant="lg" as={hasSectionTitle ? 'h3' : 'h2'}>
           <FormattedMessage id="cookie_consent_header" defaultMessage="Accept Cookies" />
-        </Heading>
+        </Typography>
       </CookieHeader>
       <Icon>
         <SVG
