@@ -289,6 +289,7 @@ module.exports = {
       },
       borderRadius: {
         xs: '0.1rem',
+        'consent-container': '10px',
       },
       padding: {
         'page-content': 'theme(spacing.20)',

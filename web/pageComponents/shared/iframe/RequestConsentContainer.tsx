@@ -1,4 +1,4 @@
-import { BackgroundContainer, Button, Text } from '@components'
+import { BackgroundContainer, Button } from '@components'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { useRouter } from 'next/router'
 import { defaultLanguage } from '../../../languages'
@@ -64,9 +64,9 @@ const RequestConsentContainer = ({ hasSectionTitle = true, cookiePolicy }: Reque
     <section className="rounded-[10px] shadow-[0_6px_20px_rgba(0,0,0,0.2)] bg-white-100 grid grid-rows-[min-content_var(--space-large)_min-content_var(--space-large)] grid-cols-[min-content_1fr] before:content-[''] before:bg-slate-blue-95 before:rounded-tl-[10px] before:rounded-tr-[10px] before:grid before:col-[1/3] before:row-start-1 ">
       <BackgroundContainer
         background={{ backgroundColor: 'Slate Blue 95' }}
-        className="col-start-2 row-start-1 rounded-[10px] p-[var(--space-medium)_var(--space-large)] pl-[var(--icon-column-width)] break-words hyphens-auto"
+        className="col-start-2 row-start-1 rounded-consent-container p-[var(--space-medium)_var(--space-large)] pl-[var(--icon-column-width)] break-words hyphens-auto"
       >
-        <Typography as={hasSectionTitle ? 'h3' : 'h2'} variant="lg">
+        <Typography variant="lg" as={hasSectionTitle ? 'h3' : 'h2'}>
           <FormattedMessage id="cookie_consent_header" defaultMessage="Accept Cookies" />
         </Typography>
       </BackgroundContainer>
@@ -117,7 +117,7 @@ const RequestConsentContainer = ({ hasSectionTitle = true, cookiePolicy }: Reque
         className="col-start-2 row-start-3 pr-[var(--space-medium)] break-words hyphens-auto"
         background={{ backgroundColor: 'White' }}
       >
-        <Text>{getCookieInformationText(cookiePolicy)}</Text>
+        <Typography value={getCookieInformationText(cookiePolicy)} />
         <Button
           className="text-left"
           onClick={() => handleCookiebotRenew(router?.locale)}
