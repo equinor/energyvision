@@ -1,9 +1,9 @@
-import styled from 'styled-components'
-import { Text, Button, Heading, BackgroundContainer } from '@components'
+import { BackgroundContainer, Button, Text } from '@components'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { useRouter } from 'next/router'
 import { defaultLanguage } from '../../../languages'
 import { CookieType } from '../../../types'
+import { Typography } from '../../../core/Typography'
 
 declare global {
   interface Window {
@@ -11,65 +11,6 @@ declare global {
     Cookiebot: any
   }
 }
-
-const StyledDiv = styled.section`
-  --border-radius: 10px;
-  display: grid;
-  grid-template-rows: min-content var(--space-large) min-content var(--space-large);
-  grid-template-columns: min-content 1fr;
-  grid-template-areas:
-    '. heading'
-    '. .'
-    'icon text'
-    '. .';
-  border-radius: var(--border-radius);
-  box-shadow: var(--card-box-shadow);
-  background-color: var(--white-100);
-
-  &:before {
-    content: '';
-    background-color: var(--slate-blue-95);
-    border-top-left-radius: var(--border-radius);
-    border-top-right-radius: var(--border-radius);
-    grid-column: 1 / 3;
-    grid-row: 1;
-  }
-`
-
-const CookieHeader = styled(BackgroundContainer)`
-  border-radius: var(--border-radius);
-  grid-area: heading;
-  padding: var(--space-medium) var(--space-large);
-  padding-left: var(--icon-column-width);
-  word-break: break-word;
-  hyphens: auto;
-`
-const Icon = styled.div`
-  grid-area: icon;
-  padding: 0 var(--space-medium);
-  /* Firefox has a bug related to grids, svg and the width of a div */
-  width: max-content;
-`
-
-const SVG = styled.svg`
-  height: 45px;
-  width: 45px;
-  @media (min-width: 650px) {
-    height: auto;
-    width: auto;
-  }
-`
-
-const Content = styled(BackgroundContainer)`
-  grid-area: text;
-  padding-right: var(--space-medium);
-  word-break: break-word;
-  hyphens: auto;
-`
-
-const LeftAlignedButton = styled(Button)`
-  text-align: left;
-`
 
 type RequestConsentContainerProps = {
   hasSectionTitle?: boolean
@@ -120,14 +61,18 @@ const RequestConsentContainer = ({ hasSectionTitle = true, cookiePolicy }: Reque
     )
   }
   return (
-    <StyledDiv>
-      <CookieHeader background={{ backgroundColor: 'Slate Blue 95' }}>
-        <Heading size="lg" level={hasSectionTitle ? 'h3' : 'h2'}>
+    <section className="rounded-[10px] shadow-[0_6px_20px_rgba(0,0,0,0.2)] bg-white-100 grid grid-rows-[min-content_var(--space-large)_min-content_var(--space-large)] grid-cols-[min-content_1fr] before:content-[''] before:bg-slate-blue-95 before:rounded-tl-[10px] before:rounded-tr-[10px] before:grid before:col-[1/3] before:row-start-1 ">
+      <BackgroundContainer
+        background={{ backgroundColor: 'Slate Blue 95' }}
+        className="col-start-2 row-start-1 rounded-[10px] p-[var(--space-medium)_var(--space-large)] pl-[var(--icon-column-width)] break-words hyphens-auto"
+      >
+        <Typography as={hasSectionTitle ? 'h3' : 'h2'} variant="lg">
           <FormattedMessage id="cookie_consent_header" defaultMessage="Accept Cookies" />
-        </Heading>
-      </CookieHeader>
-      <Icon>
-        <SVG
+        </Typography>
+      </BackgroundContainer>
+      <div className="col-start-1 row-start-3 px-0 px-[var(--space-medium)] w-max">
+        <svg
+          className="h-[45px] w-[45px] md:h-auto md:w-auto"
           width="69"
           height="68"
           viewBox="0 0 69 68"
@@ -166,15 +111,23 @@ const RequestConsentContainer = ({ hasSectionTitle = true, cookiePolicy }: Reque
             d="M27.4054 41.4633L26.5924 44.5435L27.4054 46.439V49.756L24.9666 55.9163L27.4054 57.5748L30.2506 59.7073"
             fill="black"
           />
-        </SVG>
-      </Icon>
-      <Content background={{ backgroundColor: 'White' }}>
+        </svg>
+      </div>
+      <BackgroundContainer
+        className="col-start-2 row-start-3 pr-[var(--space-medium)] break-words hyphens-auto"
+        background={{ backgroundColor: 'White' }}
+      >
         <Text>{getCookieInformationText(cookiePolicy)}</Text>
-        <LeftAlignedButton onClick={() => handleCookiebotRenew(router?.locale)} color="secondary" variant="outlined">
+        <Button
+          className="text-left"
+          onClick={() => handleCookiebotRenew(router?.locale)}
+          color="secondary"
+          variant="outlined"
+        >
           <FormattedMessage id="cookie_settings" defaultMessage="Cookie settings" />
-        </LeftAlignedButton>
-      </Content>
-    </StyledDiv>
+        </Button>
+      </BackgroundContainer>
+    </section>
   )
 }
 
