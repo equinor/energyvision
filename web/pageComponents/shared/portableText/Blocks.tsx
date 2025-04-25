@@ -17,7 +17,7 @@ import {
   BulletList,
   NumberedList,
 } from './components'
-import { Fact } from '@sections/FactCore/Fact'
+import { FactBox } from '@sections/FactBox/FactBox'
 import { twMerge } from 'tailwind-merge'
 import { FormattedMessage } from 'react-intl'
 import { Highlight } from '@core/Typography/Highlight'
@@ -221,7 +221,7 @@ export default function Blocks({
                 components={{
                   types: {
                     //@ts-ignore
-                    factbox: (props) => <Fact className={`${marginOverride}`} {...props} />,
+                    factbox: (props) => <FactBox className={`${marginOverride}`} {...props} />,
                   },
                 }}
               />
