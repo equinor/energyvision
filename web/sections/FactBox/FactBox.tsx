@@ -39,7 +39,7 @@ export const FactBox = forwardRef<HTMLElement, FactBoxProps>(function FactBox({ 
 
   let contentXPadding = 'px-layout-sm lg:px-24'
   if (!hasImage) {
-    contentXPadding = isSingleColumn ? 'px-layout-lg' : 'px-layout-sm'
+    contentXPadding = useTwoColumns ? 'px-layout-sm' : 'px-layout-lg'
   }
   const colorName =
     Object.keys(colorKeyToUtilityMap).find(
