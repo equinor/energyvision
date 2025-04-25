@@ -22,7 +22,7 @@ const BasicIFrame = ({ data, ...rest }: { data: IFrameData }) => {
   const { height, aspectRatio, background } = designOptions
 
   return (
-    <BackgroundContainer background={background} {...rest}>
+    <BackgroundContainer background={background} backgroundStyle="none" {...rest}>
       <Container>
         {title && <StyledHeading value={title} />}
         <IFrame
