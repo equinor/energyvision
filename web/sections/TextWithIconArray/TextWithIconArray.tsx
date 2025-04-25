@@ -22,19 +22,7 @@ const TextWithIconArray = ({ data, anchor, className = '', listClassName = '' }:
   }
 
   return (
-    <BackgroundContainer
-      {...designOptions}
-      id={anchor}
-      className={twMerge(
-        `max-w-viewport
-        pb-page-content
-        mx-auto
-        flex
-        flex-col
-        gap-6`,
-        className,
-      )}
-    >
+    <BackgroundContainer {...designOptions} id={anchor} backgroundStyle="none" className={className}>
       {title && <Heading value={title} as="h2" variant="xl" className={`${hideTitle ? 'sr-only' : 'px-layout-lg'}`} />}
       <ul className={twMerge(`px-layout-sm w-full  flex flex-col gap-12 lg:grid ${gridCols}`, listClassName)}>
         {group.map((item: TextWithIconItem) => {
