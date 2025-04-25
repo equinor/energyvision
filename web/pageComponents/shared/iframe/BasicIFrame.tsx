@@ -1,19 +1,8 @@
-import styled from 'styled-components'
 import type { IFrameData } from '../../../types/index'
 import { BackgroundContainer } from '@components'
 import TitleText from '../portableText/TitleText'
 import IFrame from './IFrame'
-
-const StyledHeading = styled(TitleText)`
-  padding: var(--iframe-titlePadding, 0 0 var(--space-large) 0);
-  text-align: var(--iframe-titleAlign, left);
-`
-
-const Container = styled.div`
-  padding: var(--iframe-innerPadding, var(--space-3xLarge) var(--layout-paddingHorizontal-large));
-  max-width: var(--iframe-maxWidth, var(--maxViewportWidth));
-  margin: auto;
-`
+import { twMerge } from 'tailwind-merge'
 
 const BasicIFrame = ({ data, ...rest }: { data: IFrameData }) => {
   const { title, frameTitle, url, cookiePolicy = ['none'], designOptions } = data || {}
@@ -23,8 +12,16 @@ const BasicIFrame = ({ data, ...rest }: { data: IFrameData }) => {
 
   return (
     <BackgroundContainer background={background} {...rest}>
-      <Container>
-        {title && <StyledHeading value={title} />}
+      <div className="p-[var(--iframe-innerPadding,var(--space-3xLarge)_var(--layout-paddingHorizontal-large))] max-w-[var(--iframe-maxWidth,var(--maxViewportWidth))] mx-auto">
+        {title && (
+          <TitleText
+            className={twMerge(
+              'p-[var(--iframe-titlePadding, 0 0 var(--space-large) 0)]',
+              'pt-0 pb-8 pl-0 pr-0 text-left',
+            )}
+            value={title}
+          />
+        )}
         <IFrame
           frameTitle={frameTitle}
           url={url}
@@ -33,7 +30,7 @@ const BasicIFrame = ({ data, ...rest }: { data: IFrameData }) => {
           height={height}
           hasSectionTitle={!!title}
         />
-      </Container>
+      </div>
     </BackgroundContainer>
   )
 }

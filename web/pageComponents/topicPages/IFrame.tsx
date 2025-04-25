@@ -1,4 +1,3 @@
-import styled from 'styled-components'
 import type { IFrameData } from '../../types/index'
 import { BackgroundContainer, FigureCaption } from '@components'
 import CoreIFrame from '../shared/iframe/IFrame'
@@ -7,19 +6,6 @@ import TitleText from '../shared/portableText/TitleText'
 import RichText from '../shared/portableText/RichText'
 import { twMerge } from 'tailwind-merge'
 import TranscriptAndActions from '../../pageComponents/shared/TranscriptAndActions'
-
-const StyledHeading = styled(TitleText)`
-  padding: 0 0 var(--space-large) 0;
-  text-align: left;
-`
-
-const Figure = styled.figure`
-  margin: 0;
-`
-
-const Ingress = styled.div`
-  margin-bottom: var(--space-large);
-`
 
 const IFrame = ({
   anchor,
@@ -37,14 +23,14 @@ const IFrame = ({
   return (
     <BackgroundContainer {...restOptions} {...rest} id={anchor} renderFragmentWhenPossible>
       <div className={twMerge(`pb-page-content max-w-viewport px-layout-lg mx-auto`, className)}>
-        {title && <StyledHeading value={title} />}
+        {title && <TitleText className="pt-0 pr-0 pb-8 pl-0 text-left" value={title} />}
         {ingress && (
-          <Ingress>
+          <div className="mb-8">
             <IngressText value={ingress}></IngressText>
-          </Ingress>
+          </div>
         )}
         {description ? (
-          <Figure>
+          <figure className="m-0">
             <CoreIFrame
               frameTitle={frameTitle}
               url={url}
@@ -56,7 +42,7 @@ const IFrame = ({
             <FigureCaption size="medium">
               <RichText value={description} />
             </FigureCaption>
-          </Figure>
+          </figure>
         ) : (
           <CoreIFrame
             frameTitle={frameTitle}
