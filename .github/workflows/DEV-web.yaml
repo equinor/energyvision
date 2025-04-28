@@ -93,7 +93,7 @@ jobs:
           environment: ${{ secrets.ENV }}
 
   store-image-tags:
-    needs: [deploy-webs, deploy-satellite-studios]
+    needs: [deploy-global-development]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout internal 🛎️
