@@ -113,7 +113,9 @@ jobs:
       - name: Run script for 'web' and 'studio'
         run: |
           WEB_SHA=$(node ci/storeImageTags.js web)
+          echo "Web SHA is $WEB_SHA"
           STUDIO_SHA=$(node ci/storeImageTags.js studio)
+          echo "Web SHA is $STUDIO_SHA"
           echo "WEB_SHA=$(WEB_SHA)" >> $GITHUB_ENV
           echo "STUDIO_SHA=$(STUDIO_SHA)" >> $GITHUB_ENV
 
