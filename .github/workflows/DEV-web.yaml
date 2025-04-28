@@ -116,8 +116,8 @@ jobs:
           echo "Web SHA is $WEB_SHA"
           STUDIO_SHA=$(node ci/storeImageTags.js studio)
           echo "Web SHA is $STUDIO_SHA"
-          echo "WEB_SHA=$(WEB_SHA)" >> $GITHUB_ENV
-          echo "STUDIO_SHA=$(STUDIO_SHA)" >> $GITHUB_ENV
+          echo "WEB_SHA=$WEB_SHA" >> $GITHUB_ENV
+          echo "STUDIO_SHA=$STUDIO_SHA" >> $GITHUB_ENV
 
       - name: Post a message in a channel
         uses: slackapi/slack-github-action@v2.0.0
