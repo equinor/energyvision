@@ -59,7 +59,7 @@ jobs:
         if: failure()
 
   deploy-global-development:
-    ##needs: check-code
+    needs: check-code
     runs-on: ubuntu-latest
     environment:
       name: development
@@ -91,50 +91,6 @@ jobs:
           friendlyCaptchaSitekey: ${{ matrix.dataset == 'brazil' && vars.BRAZIL_FC_SITEKEY || vars.GLOBAL_FC_SITEKEY }}
           friendlyCaptchaPuzzleEndpoint: ${{ matrix.dataset == 'brazil' && vars.BRAZIL_FC_PUZZLE_END_POINT || vars.GLOBAL_FC_PUZZLE_END_POINT }}
           environment: ${{ secrets.ENV }}
-
-  store-image-tags:
-    needs: [deploy-global-development]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout internal 🛎️
-        id: checkout-internal
-        uses: actions/checkout@v3
-        with:
-          repository: 'equinor/energyvision-internal'
-          ref: main
-          token: ${{ secrets.PADMS_PAT }}
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '14'
-      - name: Install dependencies
-        run: |
-          npm install js-yaml
-      - name: Run script for 'web' and 'studio'
-        run: |
-          WEB_SHA=$(node ci/storeImageTags.js web)
-          echo "Web SHA is $WEB_SHA"
-          STUDIO_SHA=$(node ci/storeImageTags.js studio)
-          echo "Web SHA is $STUDIO_SHA"
-          echo "WEB_SHA=$WEB_SHA" >> $GITHUB_ENV
-          echo "STUDIO_SHA=$STUDIO_SHA" >> $GITHUB_ENV
-
-      - name: Post a message in a channel
-        uses: slackapi/slack-github-action@v2.0.0
-        with:
-          webhook: ${{ inputs.slackWebhook }}
-          webhook-type: incoming-webhook
-          payload: |
-            blocks:
-            - type: "header"
-              text:
-                type: "plain_text"
-                text: "New release today :rocket:"
-            - type: "section"
-              text:
-                type: "mrkdwn"
-                text: "SHA - ${{ env.WEB_SHA }} Studio - ${{ env.STUDIO_SHA}}"
-
       - uses: act10ns/slack@v2
         with:
           status: ${{ job.status }}
