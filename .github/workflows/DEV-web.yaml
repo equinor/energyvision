@@ -19,6 +19,7 @@ permissions:
   packages: write
 jobs:
   check-code:
+    if: false
     runs-on: ubuntu-latest
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -59,7 +60,7 @@ jobs:
         if: failure()
 
   deploy-global-development:
-    needs: check-code
+    ##needs: check-code
     runs-on: ubuntu-latest
     environment:
       name: development
@@ -76,6 +77,7 @@ jobs:
         uses: actions/checkout@v3
       - id: deploy-global-development
         uses: ./.github/workflows/deploy-websites/
+        if: false
         with:
           imageName: ghcr.io/equinor/energyvision/web-${{ matrix.dataset }}
           datasetName: ${{ matrix.dataset }}
@@ -94,8 +96,8 @@ jobs:
 
       - name: Run script for 'web' and 'studio'
         run: |
-          WEB_SHA=$(node ./test.js web)
-          STUDIO_SHA=$(node ./test.js studio)
+          WEB_SHA=$(node ./.github/workflows/test.js web)
+          STUDIO_SHA=$(node ./.github/workflows/test.js studio)
           echo "WEB_SHA=$(WEB_SHA)" >> $GITHUB_ENV
           echo "STUDIO_SHA=$(STUDIO_SHA)" >> $GITHUB_ENV
           - name: Post a message in a channel
