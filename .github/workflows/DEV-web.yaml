@@ -91,6 +91,29 @@ jobs:
           friendlyCaptchaSitekey: ${{ matrix.dataset == 'brazil' && vars.BRAZIL_FC_SITEKEY || vars.GLOBAL_FC_SITEKEY }}
           friendlyCaptchaPuzzleEndpoint: ${{ matrix.dataset == 'brazil' && vars.BRAZIL_FC_PUZZLE_END_POINT || vars.GLOBAL_FC_PUZZLE_END_POINT }}
           environment: ${{ secrets.ENV }}
+
+      - name: Run script for 'web' and 'studio'
+        run: |
+          WEB_SHA=$(node ./test.js web)
+          STUDIO_SHA=$(node ./test.js studio)
+          echo "WEB_SHA=$(WEB_SHA)" >> $GITHUB_ENV
+          echo "STUDIO_SHA=$(STUDIO_SHA)" >> $GITHUB_ENV
+          - name: Post a message in a channel
+      - uses: slackapi/slack-github-action@v2.0.0
+        with:
+          webhook: ${{ inputs.slackWebhook }}
+          webhook-type: incoming-webhook
+          payload: |
+            blocks:
+            - type: "header"
+              text:
+                type: "plain_text"
+                text: "New release today :rocket:"
+            - type: "section"
+              text:
+                type: "mrkdwn"
+                text: "SHA - ${{ env.WEB_SHA }} Studio - ${{ env.STUDIO_SHA}}"
+
       - uses: act10ns/slack@v2
         with:
           status: ${{ job.status }}
