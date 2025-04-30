@@ -1,4 +1,3 @@
-import styled from 'styled-components'
 import Image from '../SanityImage'
 import TitleText from '../portableText/TitleText'
 import type { HeroType } from '../../../types/index'
@@ -18,12 +17,11 @@ export const FiftyFiftyHero = ({
 }: HeroType) => {
   const url = action && getUrlFromAction(action)
 
-  
   return (
     <BackgroundContainer background={{ backgroundColor: background }}>
-      <div className="mx-auto grid max-w-[var(--max-content-width) min-h-[350px] grid-rows-[1fr] md:grid-cols-2 md:grid-areas-[content_image]">
+      <div className="mx-auto grid max-w-screen-xl min-h-[350px] md:grid-cols-2">
         {/* Image Section */}
-        <div className="relative min-h-[350px] md:order-2 grid-in-image">
+        <div className="relative min-h-[350px] md:order-2">
           {figure && (
             <Image
               maxWidth={4096}
@@ -36,18 +34,13 @@ export const FiftyFiftyHero = ({
         </div>
 
         {/* Content Section */}
-        <div
-          className="flex flex-col justify-center gap-[var(--space-large)] px-[var(--layout-paddingHorizontal-small)] py-[var(--space-3xLarge)]
-          max-w-[calc(var(--maxViewportWidth)/2)]
-          md:min-h-[450px] md:justify-self-end md:px-[var(--space-xxLarge)]
-          xl:px-[var(--layout-paddingHorizontal-small)] xl:pr-[var(--space-4xLarge)]"
-        >
+        <div className="flex flex-col justify-center gap-8 px-4 py-24 max-w-full md:min-h-[450px] md:justify-self-end md:px-16 xl:px-4 xl:pr-32">
           {title && (
             <TitleText
               value={title}
               level="h1"
               size={isBigTitle ? '2xl' : 'xl'}
-              className={`max-w-[1186px] font-${isBigTitle ? 'normal' : 'medium'}`}
+              className={`max-w-[1186px] ${isBigTitle ? 'font-normal' : 'font-medium'}`}
             />
           )}
 
@@ -59,11 +52,11 @@ export const FiftyFiftyHero = ({
 
           {action && !isBigTitle && url && (
             <ResourceLink
-              href={url}
-              {...(action.link?.lang && { locale: getLocaleFromName(action.link.lang) })}
-              type={action.type}
+            href={url as string}
+            {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
+            type={action.type}
             >
-              {`${action.label}${action.extension ? ` (${action.extension.toUpperCase()})` : ''}`}
+              {`${action.label} ${action.extension ? `(${action.extension.toUpperCase()})` : ''}`}
             </ResourceLink>
           )}
         </div>
