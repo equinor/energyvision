@@ -19,6 +19,7 @@ const iframeSrcs = [
   'https://lt.morningstar.com',
   'https://www.youtube.com',
   'https://vimeo.com',
+  'https://player.vimeo.com',
   'https://sds-maintenance.com',
   'https://tools.eurolandir.com',
   'https://platform.twitter.com',
