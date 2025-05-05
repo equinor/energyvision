@@ -1,5 +1,4 @@
 export * from './Card'
-export * from './Topbar'
 export * from './Text'
 export * from './List'
 export * from './Teaser'
