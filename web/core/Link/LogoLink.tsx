@@ -1,8 +1,8 @@
 import { AnchorHTMLAttributes } from 'react'
-import { LogoSecondary } from '@components'
 import NextLink from 'next/link'
 import { twMerge } from 'tailwind-merge'
 import { useIntl } from 'react-intl'
+import { LogoSecondary } from '@core/Logo/Logo'
 
 export type LogoLinkProps = AnchorHTMLAttributes<HTMLAnchorElement>
 
