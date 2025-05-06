@@ -63,7 +63,7 @@ export const FiftyFiftyHero = ({ title, ingress, link: action, background, figur
   const url = action && getUrlFromAction(action)
   return (
     <>
-      <StyledHero background={{ backgroundColor: background }}>
+      <StyledHero background={{ backgroundColor: background }} backgroundStyle="none">
         <StyledMedia>
           {figure && (
             <Image maxWidth={4096} sizes="(max-width: 800px) 100vw, 800px" image={figure.image} fill priority />
