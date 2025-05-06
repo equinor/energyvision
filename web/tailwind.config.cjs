@@ -213,6 +213,8 @@ module.exports = {
         'layout-sm': 'clamp(16px, calc(-38.3689px + 14.4984vw), 250px)',
         'layout-md': 'clamp(16px, calc(-69.4369px + 22.7832vw), 368px)',
         'layout-lg': 'clamp(16px, calc(-101.4757px + 31.3269vw), 500px)',
+        'news-banner-horizontal': 'clamp(16px, calc(-69.1942px + 22.7184vw), 367px)',
+        'news-banner-vertical': 'clamp(40px, calc(14.3125px + 11.0032vw), 210px)',
         'single-carousel-card-w-sm': '275px',
         'single-carousel-card-w-md': '692px',
         'single-carousel-card-w-lg': '980px',
@@ -309,6 +311,7 @@ module.exports = {
       },
       transitionTimingFunction: {
         scroll: 'cubic-bezier(0.645, 0.045, 0.355, 1)',
+        ease: 'cubic-bezier(0.25, 0.1, 0.25, 1.0)',
       },
       transitionDuration: {
         400: '400ms',
