@@ -1,5 +1,5 @@
 import Image from '../SanityImage'
-import TitleText from '../portableText/TitleText'
+import { Heading } from '@core/Typography'
 import type { HeroType } from '../../../types/index'
 import { BackgroundContainer } from '@components'
 import { ResourceLink } from '@core/Link'
@@ -19,7 +19,7 @@ export const FiftyFiftyHero = ({
 
   return (
     <BackgroundContainer background={{ backgroundColor: background }}>
-      <div className="mx-auto grid max-w-screen-xl min-h-[350px] md:grid-cols-2">
+      <div className="mx-auto grid max-w-[1440px] min-h-[350px] md:grid-cols-2">
         {/* Image Section */}
         <div className="relative min-h-[350px] md:order-2">
           {figure && (
@@ -36,10 +36,9 @@ export const FiftyFiftyHero = ({
         {/* Content Section */}
         <div className="flex flex-col justify-center gap-8 px-4 py-24 max-w-full md:min-h-[450px] md:justify-self-end md:px-16 xl:px-4 xl:pr-32">
           {title && (
-            <TitleText
+            <Heading
               value={title}
-              level="h1"
-              size={isBigTitle ? '2xl' : 'xl'}
+              variant={isBigTitle ? '5xl' : 'h1'}
               className={`max-w-[1186px] ${isBigTitle ? 'font-normal' : 'font-medium'}`}
             />
           )}
