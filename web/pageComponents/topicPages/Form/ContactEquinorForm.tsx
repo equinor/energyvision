@@ -192,11 +192,8 @@ const ContactEquinorForm = (props: ContactEquinorFormProps) => {
                     selectRef={ref}
                     id={name}
                     disabled={isHumanRightsRequest}
-                    label={`${intl.formatMessage({
-                      id: 'form_please_select_an_option',
-                      defaultMessage: 'Please select an option',
-                    })}*`}
-                    >
+                    label={intl.formatMessage({ id: 'category', defaultMessage: 'Category' })}
+                  >
                     <option value="">
                       {intl.formatMessage({
                         id: 'form_please_select_an_option',
