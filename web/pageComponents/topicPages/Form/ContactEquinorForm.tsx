@@ -201,9 +201,6 @@ const ContactEquinorForm = (props: ContactEquinorFormProps) => {
                       })}
                     </option>
                     <option>
-                      {intl.formatMessage({ id: 'contact_form_ask_us', defaultMessage: 'Ask us a question' })}
-                    </option>
-                    <option>
                       {intl.formatMessage({
                         id: 'contact_form_report_error',
                         defaultMessage: 'Report an error on our website',

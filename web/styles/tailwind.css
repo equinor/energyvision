@@ -253,6 +253,10 @@
     scrollbar-width: none; /* Firefox */
   }
 
+  .overflow-wrap-break-word {
+    overflow-wrap: break-word; /* Can be replaced with wrap-break-word class from tailwind 4*/
+  }
+
   @supports selector(::backdrop) {
     .bd-blurred::backdrop {
       transition: background-color 0s linear var(--modal-transition-duration),
@@ -281,13 +285,6 @@
   @starting-style {
     .topbar-height {
       top: 0;
-    }
-  }
-  @starting-style {
-    .fadeInVisibilityOpacityDisplay {
-      visibility: visible;
-      opacity: 0;
-      display: hidden;
     }
   }
 }

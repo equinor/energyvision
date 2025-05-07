@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import { NewsArticleJsonLd, NextSeo } from 'next-seo'
-import { Heading, FormattedDateTime, BackgroundContainer } from '@components'
-import styled from 'styled-components'
+import { Typography } from '@core/Typography'
+import { FormattedDateTime } from '@core/FormattedDateTime'
 import { Icon } from '@equinor/eds-core-react'
 import { calendar } from '@equinor/eds-icons'
 import DefaulHeroImage from '../shared/Hero/DefaultHeroImage'
@@ -17,85 +17,6 @@ import Blocks from '../shared/portableText/Blocks'
 import { twMerge } from 'tailwind-merge'
 import RelatedContent from '../../pageComponents/shared/RelatedContent'
 import Footnotes from '../../pageComponents/shared/portableText/components/Footnotes'
-
-const NewsLayout = styled.div`
-  --banner-paddingHorizontal: clamp(16px, calc(-69.1942px + 22.7184vw), 367px);
-  --banner-paddingVertical: clamp(40px, calc(14.3125px + 11.0032vw), 210px);
-
-  margin-bottom: var(--space-4xLarge);
-`
-
-const Header = styled(BackgroundContainer)`
-  padding: var(--banner-paddingVertical) var(--layout-paddingHorizontal-medium);
-`
-
-const HeaderInner = styled.div`
-  max-width: 1186px; /* 1920 - (2 * 367) */
-  margin-left: auto;
-  margin-right: auto;
-`
-
-const StyledHeading = styled(Heading)`
-  margin: 0;
-`
-
-const DateWrapper = styled.div`
-  color: var(--white-100);
-  margin-top: var(--space-xxLarge);
-  margin-bottom: var(--space-xxLarge);
-  display: grid;
-  grid-template-columns: min-content 1fr;
-  grid-gap: var(--space-small);
-`
-
-const DateContainer = styled.div`
-  overflow-wrap: break-word;
-  font-size: var(--typeScale-1);
-  line-height: var(--lineHeight-3);
-`
-
-const LastModifiedLabel = styled.span`
-  margin: 0 var(--space-small);
-  text-transform: uppercase;
-  &:after {
-    content: ':';
-  }
-  &:before {
-    content: '|';
-    margin-right: var(--space-small);
-  }
-`
-
-const Image = styled.div`
-  padding: 0 var(--layout-paddingHorizontal-small);
-  max-width: 1920px;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: calc(var(--banner-paddingVertical) * -1);
-  & > figure {
-    margin: 0;
-  }
-`
-
-const LeadParagraph = styled.div`
-  /*  @TODO: Revisit when finalizing news article */
-  & h2,
-  & h3 {
-    margin: var(--space-small) 0;
-  }
-
-  padding: 0 var(--layout-paddingHorizontal-large);
-  margin-top: var(--space-xLarge);
-  margin-bottom: var(--space-3xLarge);
-
-  max-width: var(--maxViewportWidth);
-  margin-left: auto;
-  margin-right: auto;
-  /* Side effect of change yesterday :/ */
-  & > p {
-    margin-bottom: 0;
-  }
-`
 
 const isDateAfter = (a: string, b: string) => {
   const dtA = new Date(a).getTime()
@@ -175,74 +96,73 @@ const NewsPage = ({ data: news }: ArticleProps) => {
         body={toPlainText(content)}
       />
       <main>
-        <article>
-          <NewsLayout>
-            <Header background={{ backgroundColor: 'Slate Blue 95' }}>
-              <HeaderInner>
-                <StyledHeading level="h1" size="3xl">
-                  {title}
-                </StyledHeading>
-                {publishDateTime && (
-                  <DateWrapper>
-                    <Icon data={calendar} />
-                    <DateContainer>
-                      <FormattedDateTime uppercase datetime={publishDateTime} timezone />
-                      {
-                        // publishDateTime + 5 minutes
-                        isDateAfter(
-                          modifiedDate,
-                          new Date(new Date(publishDateTime).getTime() + 5 * 60000).toISOString(),
-                        ) && (
-                          <>
-                            <LastModifiedLabel>Last modified</LastModifiedLabel>
-                            <FormattedDateTime uppercase datetime={modifiedDate} />
-                          </>
-                        )
-                      }
-                    </DateContainer>
-                  </DateWrapper>
-                )}
-              </HeaderInner>
-            </Header>
-            {heroImage.image.asset && (
-              <Image>
-                <DefaulHeroImage data={heroImage} />
-              </Image>
-            )}
-            {ingress && ingress.length > 0 && (
-              <LeadParagraph>
-                <IngressText value={ingress} includeFootnotes />
-              </LeadParagraph>
-            )}
-
-            {content && content.length > 0 && (
-              <Blocks
-                value={formattedContent}
-                proseClassName="prose-article"
-                className="p-0 max-w-viewport mx-auto"
-                includeFootnotes
-              />
-            )}
-            <div className="mt-8 mb-2 px-layout-lg max-w-viewport mx-auto">
-              <Footnotes blocks={[...ingress, ...content]} />
+        <article className="pb-28">
+          <div className={'bg-slate-blue-95 py-news-banner-vertical px-layout-md dark'}>
+            <div className="max-w-[1186px] mx-auto">
+              <Typography id="mainTitle" variant="3xl" as="h1" className="m-0">
+                {title}
+              </Typography>
+              {publishDateTime && (
+                <div className="my-12 grid grid-cols-[min-content_1fr] gap-4 ">
+                  <Icon data={calendar} className="text-white-100" />
+                  <div className="text-white-100 overflow-wrap-break-word text-base leading-planetary">
+                    <FormattedDateTime uppercase datetime={publishDateTime} timezone />
+                    {
+                      // publishDateTime + 5 minutes
+                      isDateAfter(
+                        modifiedDate,
+                        new Date(new Date(publishDateTime).getTime() + 5 * 60000).toISOString(),
+                      ) && (
+                        <>
+                          <span className='uppercase my-0 mx-4 after:content-[":"] before:content-["|"] before:mr-4  '>
+                            Last modified
+                          </span>
+                          <FormattedDateTime uppercase datetime={modifiedDate} />
+                        </>
+                      )
+                    }
+                  </div>
+                </div>
+              )}
             </div>
+          </div>
+          {heroImage.image.asset && (
+            <div className="py-0 px-layout-sm max-w-viewport mx-auto -mt-news-banner-vertical">
+              <DefaulHeroImage className="m-0" data={heroImage} />
+            </div>
+          )}
+          {ingress && ingress.length > 0 && (
+            <div className="py-0 px-layout-lg mt-10 mb-16 max-w-viewport mx-auto">
+              <IngressText value={ingress} includeFootnotes />
+            </div>
+          )}
 
-            {iframe && <BasicIFrame data={iframe} />}
+          {content && content.length > 0 && (
+            <Blocks
+              value={formattedContent}
+              proseClassName="prose-article"
+              className="p-0 max-w-viewport mx-auto"
+              includeFootnotes
+            />
+          )}
+          <div className="mt-8 mb-2 px-layout-lg max-w-viewport mx-auto">
+            <Footnotes blocks={[...ingress, ...content]} />
+          </div>
 
-            {relatedLinks?.links && relatedLinks.links.length > 0 && (
-              <RelatedContent
-                data={relatedLinks}
-                className={twMerge(`
+          {iframe && <BasicIFrame data={iframe} />}
+
+          {relatedLinks?.links && relatedLinks.links.length > 0 && (
+            <RelatedContent
+              data={relatedLinks}
+              className={twMerge(`
              px-layout-lg
              max-w-viewport
              my-3xl
              mx-auto
              `)}
-              />
-            )}
-
-            {latestNews && latestNews.length > 0 && <LatestNews data={latestNews} />}
-          </NewsLayout>
+            />
+          )}
+          {latestNews && latestNews.length > 0 && <LatestNews data={latestNews} />}
         </article>
       </main>
     </>

@@ -26,6 +26,7 @@ export type BannerProps = {
   backgroundUtility?: keyof ColorKeyTokens
 } & HTMLAttributes<HTMLDivElement>
 
+/** Generic Banner component */
 export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
   { title, ingress, content, image, ctaLabel, ctaLink, className = '', variant = 'primary', titleClassName = '' },
   ref,

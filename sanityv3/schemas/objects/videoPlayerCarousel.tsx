@@ -7,7 +7,6 @@ import { configureBlockContent, configureTitleBlockContent } from '../editors'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import { defaultColors } from '../defaultColors'
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
-import { carouselWidth, singleMode } from './carousel/sharedCarouselFields'
 
 const titleContentType = configureTitleBlockContent()
 const ingressBlockContentType = configureBlockContent({
