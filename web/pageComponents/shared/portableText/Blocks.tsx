@@ -6,6 +6,7 @@ import {
   PortableTextMarkComponent,
   PortableTextBlockComponent,
   PortableTextTypeComponent,
+  toPlainText,
 } from '@portabletext/react'
 import { PortableTextBlock, PortableTextBlockStyle } from '@portabletext/types'
 import {
@@ -21,6 +22,7 @@ import { FactBox } from '@sections/FactBox/FactBox'
 import { twMerge } from 'tailwind-merge'
 import { FormattedMessage } from 'react-intl'
 import { Highlight } from '@core/Typography/Highlight'
+import { Link, ResourceLink } from '@core/Link'
 
 export type BlockType = Record<PortableTextBlockStyle, PortableTextBlockComponent | undefined>
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -58,6 +60,21 @@ const defaultSerializers = {
     //TODO find proper type
     internalLink: ({ children, value }: any) => {
       return <InternalLink value={value}>{children}</InternalLink>
+    },
+    attachment: ({ children, value }: any) => {
+      const { attachment } = value
+      return (
+        <ResourceLink
+          useAsRegular={true}
+          variant="fit"
+          type="downloadableFile"
+          href={attachment?.href}
+          extension={attachment?.extension}
+          showExtensionIcon={true}
+        >
+          {children}
+        </ResourceLink>
+      )
     },
     footnote: () => null,
     highlight: ({ children }: TypeProps) => {

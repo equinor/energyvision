@@ -1,7 +1,3 @@
-import downloadableFileFields from './common/actions/downloadableFileFields'
-import downloadableImageFields from './common/actions/downloadableImageFields'
-import { linkReferenceFields } from './common/actions/linkSelectorFields'
-import background from './common/background'
 import markDefs from './common/blockEditorMarks'
 
 export const tableFields = /* groq */ `
@@ -15,38 +11,26 @@ export const tableFields = /* groq */ `
     ...,
     ${markDefs},
   },
+  tableCaption,
   tableHeaders[]{
     "id": _key,
+    formatAsDate,
     headerCell[]{
       ...,
       ${markDefs},
     }
   },
-  tableRows[]{
+  rows[]{
     "id": _key,
-    row[] {
+    cells[] {
       "type": _type,
       "id": _key,
-      "text": tableRichText[] {
+      content[]{
         ...,
         ${markDefs}
       },
-      label,
-      "link": select(
-        linkToOtherLanguage == true =>
-          referenceToOtherLanguage->${linkReferenceFields},
-          reference->${linkReferenceFields},
-      ),
-      "href": url,
-      ${downloadableFileFields},
-      ${downloadableImageFields},
-      ...
     },
   },
-  "designOptions": {
-    "theme": coalesce(lower(theme.title), 'grey'),
-    "aspectRatio": coalesce(aspectRatio, '16:9'),
-    height,
-    ${background}
-  }
+  useBorder,
+  theme
 `

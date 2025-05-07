@@ -99,6 +99,7 @@ export default {
         { type: 'cookieDeclaration' },
         { type: 'anchorLinkList' },
         { type: 'tabs' },
+        { type: 'tablev2' },
       ].filter((e) => e),
     },
   ].filter((e) => e),

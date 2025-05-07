@@ -6,7 +6,7 @@ import { Flags } from '../../src/lib/datasetHelpers'
 import { ExternalLinkRenderer, SubScriptRenderer, SuperScriptRenderer } from '../components'
 import routes from '../routes'
 import { defaultColors } from '../defaultColors'
-import { strictExternal, warnHttpExternal, warnHttpOrNotValidSlugExternal } from '../validations/validateSlug'
+import { warnHttpOrNotValidSlugExternal } from '../validations/validateSlug'
 
 export type BlockContentProps = {
   h2?: boolean
@@ -16,6 +16,7 @@ export type BlockContentProps = {
   h4?: boolean
   internalLink?: boolean
   externalLink?: boolean
+  footnote?: boolean
   attachment?: boolean
   lists?: boolean
   smallText?: boolean
@@ -28,6 +29,7 @@ export type BlockContentProps = {
     component?: ({ children }: { children: React.ReactNode }) => JSX.Element
   }
   extendedStyles?: BlockStyleDefinition[]
+  onlySubSupScriptDecorators?: boolean
 }
 
 export const textColorConfig = {
@@ -75,6 +77,8 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockDef
     highlight = false,
     extendedStyles = [],
     normalTextOverride = { title: 'Normal', value: 'normal' },
+    footnote = false,
+    onlySubSupScriptDecorators = false,
   } = options
 
   /** comment */
@@ -89,68 +93,85 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockDef
         ]
       : [],
     marks: {
-      decorators: [
-        // @TODO: Strong and Em are built in and not needed
-        { title: 'Strong', value: 'strong' },
-        { title: 'Emphasis', value: 'em' },
-        {
-          title: 'Sub',
-          value: 'sub',
-          icon: IconSubScript,
-          component: SubScriptRenderer,
-        },
-        {
-          title: 'Super',
-          value: 'sup',
-          icon: IconSuperScript,
-          component: SuperScriptRenderer,
-        },
-      ],
-      annotations: [
-        {
-          name: 'footnote',
-          type: 'object',
-          title: 'Footnote',
-          icon: EdsIcon(star_filled),
-          fields: [
+      decorators: onlySubSupScriptDecorators
+        ? [
             {
-              name: 'text',
-              type: 'array',
-              of: [
+              title: 'Sub',
+              value: 'sub',
+              icon: IconSubScript,
+              component: SubScriptRenderer,
+            },
+            {
+              title: 'Super',
+              value: 'sup',
+              icon: IconSuperScript,
+              component: SuperScriptRenderer,
+            },
+          ]
+        : [
+            // @TODO: Strong and Em are built in and not needed
+            { title: 'Strong', value: 'strong' },
+            { title: 'Emphasis', value: 'em' },
+            {
+              title: 'Sub',
+              value: 'sub',
+              icon: IconSubScript,
+              component: SubScriptRenderer,
+            },
+            {
+              title: 'Super',
+              value: 'sup',
+              icon: IconSuperScript,
+              component: SuperScriptRenderer,
+            },
+          ],
+      annotations: footnote
+        ? [
+            {
+              name: 'footnote',
+              type: 'object',
+              title: 'Footnote',
+              icon: EdsIcon(star_filled),
+              fields: [
                 {
-                  type: 'block',
-                  styles: [
+                  name: 'text',
+                  type: 'array',
+                  of: [
                     {
-                      title: 'Small text',
-                      value: 'smallText',
-                      component: SmallTextRender,
+                      type: 'block',
+                      styles: [
+                        {
+                          title: 'Small text',
+                          value: 'smallText',
+                          component: SmallTextRender,
+                        },
+                      ],
+                      lists: [],
+                      marks: {
+                        decorators: [
+                          { title: 'Strong', value: 'strong' },
+                          { title: 'Emphasis', value: 'em' },
+                          {
+                            title: 'Sub',
+                            value: 'sub',
+                            icon: IconSubScript,
+                            component: SubScriptRenderer,
+                          },
+                          {
+                            title: 'Super',
+                            value: 'sup',
+                            icon: IconSuperScript,
+                            component: SuperScriptRenderer,
+                          },
+                        ],
+                      },
                     },
                   ],
-                  lists: [],
-                  marks: {
-                    decorators: [
-                      { title: 'Strong', value: 'strong' },
-                      { title: 'Emphasis', value: 'em' },
-                      {
-                        title: 'Sub',
-                        value: 'sub',
-                        icon: IconSubScript,
-                        component: SubScriptRenderer,
-                      },
-                      {
-                        title: 'Super',
-                        value: 'sup',
-                        icon: IconSuperScript,
-                        component: SuperScriptRenderer,
-                      },
-                    ],
-                  },
                 },
               ],
             },
-          ],
-        },
-      ],
+          ]
+        : [],
     },
   }
 
@@ -296,27 +317,17 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockDef
       {
         name: 'reference',
         type: 'reference',
-        to: [{ type: 'downloadableFile' }],
+        to: [{ type: 'assetFile' }],
       },
     ],
   }
 
   if (h2) {
     config?.styles?.push(h2DefaultConfig)
-    /*     if (useH2BaseStyle) {
-      config?.styles?.push(h2BaseConfig)
-    } else {
-      config?.styles?.push(h2DefaultConfig)
-    } */
   }
 
   if (h3) {
     config?.styles?.push(h3DefaultConfig)
-    /*     if (useH3BaseStyle) {
-      config?.styles?.push(h3BaseConfig)
-    } else {
-      config?.styles?.push(h3DefaultConfig)
-    } */
   }
 
   if (h4) {

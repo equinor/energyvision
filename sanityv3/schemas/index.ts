@@ -47,7 +47,6 @@ import simpleMenuGroup from './objects/simpleMenuGroup'
 import simpleMenuLink from './objects/simpleMenuLink'
 import stockValuesApi from './objects/stockValuesApi'
 import table from './objects/table'
-import tableRichText from './objects/table/tableRichText'
 import teaser from './objects/teaser'
 import textTeaser from './objects/textTeaser'
 import textBlock from './objects/textBlock'
@@ -92,6 +91,8 @@ import tabsInfoPanel from './objects/tabs/tabsInfoPanel'
 import tabsKeyNumbers from './objects/tabs/tabsKeyNumbers'
 import tabsKeyNumberItem from './objects/tabs/tabsKeyNumberItem'
 import imageWithRichText from './objects/ImageWithRichText'
+import tablev2 from './objects/tableV2'
+import tableTheme from './objects/table/tableTheme'
 
 const {
   pageNotFound,
@@ -180,7 +181,6 @@ const RemainingSchemas = [
   promotePeople,
   contactList,
   table,
-  tableRichText,
   assetFile,
   assetTag,
   cookieDeclaration,
@@ -230,6 +230,8 @@ const RemainingSchemas = [
   tabsKeyNumberItem,
   imageWithLinkAndOrOverlay,
   imageWithRichText,
+  tablev2,
+  tableTheme,
 ]
 
 // Then we give our schema to the builder and provide the result to Sanity

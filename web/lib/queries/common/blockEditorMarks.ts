@@ -25,6 +25,15 @@ const markDefs = /* groq */ `
           reference->${referenceFields},
         )
     },
+    _type == "attachment" => {
+        "attachment": {
+          "id": _key,
+          "type": _type,
+          "href": reference->asset.asset->url,
+          "extension": reference->asset.asset->extension,
+          "fileName": reference->asset.asset->originalFilename
+        }
+    }
     },[])
 `
 

@@ -22,6 +22,8 @@ export type ResourceLinkProps = {
   extension?: string | undefined
   /** If type is of an extension type (PDF), show the extention as icon */
   showExtensionIcon?: boolean
+  /** Display as a regular link without the border bottom effect and reduced spacing */
+  useAsRegular?: boolean
 } & BaseLinkProps
 
 export const iconRotation: Record<string, string> = {
@@ -89,6 +91,7 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
     textClassName = '',
     showExtensionIcon = false,
     ariaHideText = false,
+    useAsRegular = false,
     href = '',
     ...rest
   },
@@ -115,10 +118,16 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
     gap-0
     text-slate-blue-95
     dark:text-white-100
-    border-b
+    ${
+      useAsRegular
+        ? `underline 
+        hover:text-norwegian-woods-100 
+        dark:hover:text-slate-blue-95`
+        : `border-b
     border-grey-50
-    dark:border-white-100
-    no-underline
+    dark:border-white-100 no-underline`
+    }
+
     ${variantClassName[variant]}
   `,
     className,
@@ -237,9 +246,9 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
         )}
       >
         {getContentElements()}
-        {getArrowElement(type, iconClassName)}
+        {!useAsRegular && getArrowElement(type, iconClassName)}
       </div>
-      <div className="w-[0%] h-[1px] bg-grey-40 transition-all duration-300 group-hover:w-full" />
+      {!useAsRegular && <div className="w-[0%] h-[1px] bg-grey-40 transition-all duration-300 group-hover:w-full" />}
     </BaseLink>
   )
 })
