@@ -15,9 +15,12 @@ export const MenuButton = forwardRef<HTMLButtonElement, MenuButtonProps>(functio
   h-[2.5px]
   w-full
   bg-slate-80
+  dark:bg-white-100
+  dark:group-hover:bg-slate-80
   rounded-[3px]
   l-0
-  transition-all duration-[250ms]
+  transition-transform 
+  duration-[250ms]
   nth-1:top-2.5
   nth-1:origin-[left_center]
   nth-2:top-[18px]
@@ -51,16 +54,20 @@ export const MenuButton = forwardRef<HTMLButtonElement, MenuButtonProps>(functio
         border-none
         outline-none
         text-slate-80
+        dark:text-white-100
+        dark:hover:text-slate-80
         text-base
         font-normal
         leading-[1em]
         md:grid-cols-[min-content_1fr]
         hover:bg-moss-green-60
+        dark:hover:bg-white-100
         rounded-md
         py-2 
         px-3 
         focus:outline-none
-        focus-visible:envis-outline`}
+        focus-visible:envis-outline
+        dark:focus-visible:envis-outline-invert`}
       {...rest}
     >
       <span className="leading-[1em] hidden break-keep sm:block">{title}</span>
