@@ -16,8 +16,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "preinstall": "npx only-allow pnpm",
-    "type-check": "tsc --project tsconfig.json --pretty --noEmit",
-    "update:searchindex": "ts-node --project tsconfig.json ./scripts/create-index"
+    "type-check": "tsc --project tsconfig.json --pretty --noEmit"
   },
   "dependencies": {
     "@algolia/cache-browser-local-storage": "^4.22.1",
