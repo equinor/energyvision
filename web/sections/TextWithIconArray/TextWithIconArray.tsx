@@ -26,7 +26,7 @@ const TextWithIconArray = ({ data, anchor, className = '', listClassName = '' }:
       {...designOptions}
       id={anchor}
       backgroundStyle="wide"
-      className={twMerge(`pb-page-content max-w-viewport mx-auto flex flex-col gap-6`, className)}
+      className={twMerge(`flex flex-col gap-6`, className)}
     >
       {title && <Heading value={title} as="h2" variant="xl" className={`${hideTitle ? 'sr-only' : 'px-layout-lg'}`} />}
       <ul className={twMerge(`px-layout-sm w-full  flex flex-col gap-12 lg:grid ${gridCols}`, listClassName)}>
