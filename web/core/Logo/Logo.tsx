@@ -10,6 +10,7 @@ export const LogoSecondary = ({ className, ...rest }: LogoProps) => {
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
       aria-hidden
+      fill="currentColor"
       className={twMerge(className, 'block h-[50px] max-w-full box-content')}
       {...rest}
     >
@@ -30,6 +31,7 @@ export const LogoPrimary = ({ className, ...rest }: LogoProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 283.46 233.13"
+    fill="currentColor"
     className={twMerge(className, 'block h-[50px] max-w-full box-content')}
     {...rest}
   >
