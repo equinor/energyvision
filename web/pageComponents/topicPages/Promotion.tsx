@@ -30,7 +30,7 @@ const Promotion = ({
   return (
     <BackgroundContainer
       {...designOptions}
-      backgroundStyle="none"
+      backgroundStyle="wide"
       className={twMerge(`pb-page-content max-w-viewport mx-auto flex flex-col gap-6`, className)}
       id={anchor}
       renderFragmentWhenPossible

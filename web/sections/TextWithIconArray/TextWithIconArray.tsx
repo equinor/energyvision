@@ -25,7 +25,7 @@ const TextWithIconArray = ({ data, anchor, className = '', listClassName = '' }:
     <BackgroundContainer
       {...designOptions}
       id={anchor}
-      backgroundStyle="none"
+      backgroundStyle="wide"
       className={twMerge(`pb-page-content max-w-viewport mx-auto flex flex-col gap-6`, className)}
     >
       {title && <Heading value={title} as="h2" variant="xl" className={`${hideTitle ? 'sr-only' : 'px-layout-lg'}`} />}
