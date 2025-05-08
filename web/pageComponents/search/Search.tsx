@@ -163,6 +163,7 @@ const Search = () => {
       {indices.map((index) => (
         <Index indexName={index.value} key={index.label} indexId={index.value} />
       ))}
+      <h1 className="sr-only">{intl.formatMessage({ id: 'search_page_title', defaultMessage: 'Search' })}</h1>
       <div className="max-w-[700px]">
         <SearchBox variant="inverted" />
       </div>

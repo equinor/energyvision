@@ -893,8 +893,8 @@ const snippets: textSnippet = {
     group: groups.common,
   },
   search_page_title: {
-    title: 'Search Page',
-    defaultValue: 'Search Page',
+    title: 'Search page title',
+    defaultValue: 'Search',
     group: groups.search,
   },
 }
