@@ -5,7 +5,14 @@ import { getBackgroundClassesByStyles } from './backgroundStyles'
 import envisTwMerge from '../../twMerge'
 
 export type BackgroundContainerType = 'section' | 'div' | 'article' | 'figure' | 'nav'
-export type BackgroundStyle = 'regular' | 'wide' | 'none'
+/**
+ *  **regular** : Includes a background wrapper with default padding,  max width and margin on the component.
+ *
+ *  **wide**: Includes a background wrapper with no padding but has default margin and max width. To be used in components when they need a wrapper for color with margin and max width but no padding.
+ *
+ *  **none**: No wrapper. Renders component as is with background color provided
+ */
+export type BackgroundStyle = 'regular' | 'none' | 'wide'
 type ColouredContainerProps = {
   backgroundColor?: BackgroundColours
   backgroundUtility?: keyof ColorKeyTokens
