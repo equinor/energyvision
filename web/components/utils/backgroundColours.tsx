@@ -39,9 +39,6 @@ function getContainerColor(backgroundTitle?: BackgroundColours) {
     } else {
       styleVariant = `--bg-${backgroundTitle?.replace(/\s/g, '-').toLowerCase()}` as StyleVariants
     }
-  else {
-    console.log(backgroundTitle + ' is not the correct background color')
-  }
   return styleVariant
 }
 
