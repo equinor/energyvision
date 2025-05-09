@@ -239,6 +239,6 @@ jobs:
         id: 'get-list'
         with:
           token: ${{ secrets.PADMS_PAT_READ_PACKAGE }}
-          commitSHA: 'Web : ${{ needs.store-image-tags.outputs.WEB_SHA }}</br>Studio: ${{ needs.store-image-tags.outputs.WEB_SHA }}'
+          commitSHA: 'Web : ${{ needs.store-image-tags.outputs.WEB_SHA }} Studio: ${{ needs.store-image-tags.outputs.WEB_SHA }}'
           slackWebhook: ${{ secrets.SLACK_WEBHOOK_RELEASE_ANNOUNCEMENT}}
         uses: ./.github/workflows/project/
