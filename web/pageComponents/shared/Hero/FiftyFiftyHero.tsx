@@ -23,7 +23,7 @@ export const FiftyFiftyHero = ({
         {/* Image Section */}
         {figure && (
           <div className="relative min-h-[350px] md:order-2">
-            <Image maxWidth={4096} sizes="(max-width: 800px) 100vw, 800px" image={figure.image} fill priority />
+            <Image maxWidth={4096} image={figure.image} fill priority />
           </div>
         )}
 
@@ -40,13 +40,15 @@ export const FiftyFiftyHero = ({
           {ingress && !isBigTitle && <Blocks value={ingress} className="hidden md:block" />}
 
           {action && !isBigTitle && (
-            <ResourceLink
-              href={url as string}
-              {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
-              type={action.type}
-            >
-              {`${action.label} ${action.extension ? `(${action.extension.toUpperCase()})` : ''}`}
-            </ResourceLink>
+           <ResourceLink
+           href={url as string}
+           {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
+           type={action.type}
+           extension={action.extension}
+           showExtensionIcon
+         >
+           {action.label}
+         </ResourceLink>         
           )}
         </div>
       </div>
