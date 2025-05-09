@@ -216,8 +216,8 @@ jobs:
         run: |
           WEB_SHA=$(node ci/storeImageTags.js web)
           STUDIO_SHA=$(node ci/storeImageTags.js studio)
-          echo "WEB_SHA=$(WEB_SHA)" >> $GITHUB_ENV
-          echo "STUDIO_SHA=$(STUDIO_SHA)" >> $GITHUB_ENV
+          echo "WEB_SHA=$(WEB_SHA)" >> $GITHUB_OUTPUT
+          echo "STUDIO_SHA=$(STUDIO_SHA)" >> $GITHUB_OUTPUT
 
       - name: Commit and push changes
         run: |
@@ -239,6 +239,6 @@ jobs:
         id: 'get-list'
         with:
           token: ${{ secrets.PADMS_PAT_READ_PACKAGE }}
-          commitSHA: 'Web : ${{ env.WEB_SHA }}</br>Studio: ${{ env.STUDIO_SHA }}'
+          commitSHA: 'Web : ${{ needs.store-image-tags.outputs.WEB_SHA }}</br>Studio: ${{ needs.store-image-tags.outputs.WEB_SHA }}'
           slackWebhook: ${{ secrets.SLACK_WEBHOOK_RELEASE_ANNOUNCEMENT}}
         uses: ./.github/workflows/project/
