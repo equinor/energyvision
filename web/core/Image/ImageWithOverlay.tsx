@@ -70,7 +70,7 @@ export const ImageWithOverlay = forwardRef<HTMLDivElement, ImageWithOverlayProps
               transition-colors
             duration-[250ms]
             rounded-md
-            ${showOverlay ? 'bg-slate-blue-95 dark' : ''}
+            ${showOverlay ? 'bg-slate-blue-95' : ''}
             flex
             flex-col-reverse
             rounded-b-md`}
@@ -89,6 +89,7 @@ export const ImageWithOverlay = forwardRef<HTMLDivElement, ImageWithOverlayProps
           <div
             id={overlayId}
             className={`
+              dark
               py-2
               px-4
               lg:py-6
@@ -122,7 +123,8 @@ export const ImageWithOverlay = forwardRef<HTMLDivElement, ImageWithOverlayProps
               focus:outline-none
               focus-visible:envis-outline
               absolute
-              inset-0
+              bottom-0 
+              right-0
               z-[3]
               flex
               justify-end

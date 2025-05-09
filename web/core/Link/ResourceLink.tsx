@@ -68,7 +68,7 @@ export const getArrowElement = (type: LinkType, iconClassName: string) => {
       return (
         <div className={`flex flex-col px-1 ${marginClassName} translate-y-[1px]`}>
           <ArrowRight className={iconClassNames} />
-          <div className="bg-energy-red-100 h-[2px] w-full" />
+          <div className="bg-energy-red-100 dark:bg-white-100 h-[2px] w-full" />
         </div>
       )
     case 'icsLink':
