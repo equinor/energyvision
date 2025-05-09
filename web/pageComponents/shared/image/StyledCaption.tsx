@@ -1,6 +1,6 @@
 import { CaptionData } from '../../../types'
 import { Caption } from './Caption'
-import { BackgroundContainer, BackgroundContainerProps } from '@components'
+import { BackgroundContainer, BackgroundContainerProps } from '@core/Backgrounds'
 
 type CaptionProps = CaptionData & BackgroundContainerProps
 

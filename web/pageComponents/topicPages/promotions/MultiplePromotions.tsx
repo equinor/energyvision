@@ -35,20 +35,20 @@ const MultiplePromotions = ({
       case 'localNews':
         return (
           <li key={data?.id} className="flex justify-center">
-            <PromotionCard data={data as CardData} hasSectionTitle={hasSectionTitle} />
+            <PromotionCard className="light" data={data as CardData} hasSectionTitle={hasSectionTitle} />
           </li>
         )
       case 'topics':
       case 'magazine':
         return (
           <li key={data?.id} className="flex justify-center">
-            <PromotionCard data={data as CardData} hasSectionTitle={hasSectionTitle} />
+            <PromotionCard className="light" data={data as CardData} hasSectionTitle={hasSectionTitle} />
           </li>
         )
       case 'people':
         return (
           <li key={data.id} className="flex justify-center">
-            <PeopleCard data={data as PeopleCardData} hasSectionTitle={hasSectionTitle} />
+            <PeopleCard className="light" data={data as PeopleCardData} hasSectionTitle={hasSectionTitle} />
           </li>
         )
       default:
@@ -87,6 +87,7 @@ const MultiplePromotions = ({
             data={data[closestToTodayIndex] as EventCardData}
             hasSectionTitle={hasSectionTitle}
             variant="single"
+            className="light"
           />
         ) : (
           <MultipleEventCards
