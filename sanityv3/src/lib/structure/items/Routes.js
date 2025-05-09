@@ -1,7 +1,7 @@
 import { map } from 'rxjs/operators'
 import { RouteDocuments } from '../../../../icons'
 import { languages } from '../../../../languages'
-import Iframe from 'sanity-plugin-iframe-pane'
+import { Iframe } from 'sanity-plugin-iframe-pane'
 import { resolvePreviewUrl } from '../../preview'
 import flags from '../../../../icons/countries'
 import { apiVersion } from '../../../../sanity.client'
@@ -21,7 +21,7 @@ const views = (S) => [
   S.view
     .component(Iframe)
     .options({
-      url: (doc) => resolvePreviewUrl(doc),
+      url: (doc, { selectedPerspectiveName }) => resolvePreviewUrl(doc, selectedPerspectiveName || 'drafts'),
       loader: 'Loading preview...',
       reload: {
         button: true,

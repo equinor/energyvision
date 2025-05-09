@@ -6,7 +6,7 @@ import downloadableFileFields from './common/actions/downloadableFileFields'
 import downloadableImageFields from './common/actions/downloadableImageFields'
 import markDefs from './common/blockEditorMarks'
 import { seoAndSomeFields } from './common/seoAndSomeFields'
-import { sameLang, fixPreviewForDrafts, noDrafts } from './common/langAndDrafts'
+import { sameLang, fixPreviewForDrafts } from './common/langAndDrafts'
 import { publishDateTimeQuery } from './common/publishDateTime'
 import background from './common/background'
 
@@ -31,7 +31,7 @@ const footerComponentFields = /* groq */ `
   },
 `
 
-const promotedmagazineTags = /* groq */ `"": *[_type == "magazineIndex" && ${sameLang} && ${noDrafts}][0] {"magazineTags":promotedMagazineTags[]->{
+const promotedmagazineTags = /* groq */ `"": *[_type == "magazineIndex" && ${sameLang}][0] {"magazineTags":promotedMagazineTags[]->{
   "id": _id,
   "key": key.current,
   "title":title[$lang],
@@ -51,7 +51,7 @@ export const magazineQuery = /* groq */ `
           ${pageContentFields}
       },
       ${slugsForNewsAndMagazine},
-    "footerComponent": *[_type == 'magazineIndex' && ${sameLang} && ${noDrafts}][0]{
+    "footerComponent": *[_type == 'magazineIndex' && ${sameLang}][0]{
       "data": footerComponent{
         ${footerComponentFields}
       }
@@ -83,7 +83,7 @@ export const magazineIndexQuery = /* groq */ `
 }`
 
 export const allMagazineDocuments = /* groq */ `
-*[_type == "magazine" && ${sameLang} && ${noDrafts} ] | order(${publishDateTimeQuery} desc){
+*[_type == "magazine" && ${sameLang}  ] | order(${publishDateTimeQuery} desc){
     "id": _id,
     "slug": slug.current,
     title[]{
@@ -109,7 +109,7 @@ export const getMagazineArticlesByTag = (hasFirstId = false, hasLastId = false) 
                 && key.current == $tag]
                 { _id, "key": key.current },
 }{
-  "articles": *[_type == 'magazine' && ${sameLang} && ${noDrafts}
+  "articles": *[_type == 'magazine' && ${sameLang}
     && references(^.tagsParam[]._id)
   ${hasLastId ? nextDirectionFilter : ''}
   ${hasFirstId ? prevDirectionFilter : ''}
@@ -126,7 +126,7 @@ export const getMagazineArticlesByTag = (hasFirstId = false, hasLastId = false) 
 `
 
 export const allMagazineTags = /* groq */ `
-*[_type == "magazineTag" && ${noDrafts}]{
+*[_type == "magazineTag" ]{
 "id": _id,
 "key": key.current,
 "title":title[$lang],

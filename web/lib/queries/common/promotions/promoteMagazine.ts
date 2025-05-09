@@ -1,4 +1,4 @@
-import { sameLang, noDrafts } from './../langAndDrafts'
+import { sameLang } from './../langAndDrafts'
 import markDefs from '../blockEditorMarks'
 import { publishDateTimeQuery } from '../publishDateTime'
 import { heroFields } from '../../common/heroFields'
@@ -36,7 +36,7 @@ export default /* groq */ `
     "promotions": *[
       _type == "magazine"
       && (count(magazineTags[_ref in ^.^.tags[]._ref]) > 0)
-      && ${sameLang} && ${noDrafts}
+      && ${sameLang}
     ] | order(${publishDateTimeQuery} desc)[0...3]{
       ${promotedMagazineFields}
     }

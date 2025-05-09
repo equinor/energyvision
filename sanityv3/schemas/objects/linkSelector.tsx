@@ -1,15 +1,15 @@
 import { link } from '@equinor/eds-icons'
-import type { Reference, Rule, ValidationContext } from 'sanity'
+import { getVersionFromId, type Reference, type Rule, type ValidationContext } from 'sanity'
 import { filterByPages, filterByPagesInOtherLanguages } from '../../helpers/referenceFilters'
 import { EdsIcon } from '../../icons'
 import { Flags } from '../../src/lib/datasetHelpers'
 import routes from '../routes'
 import { validateInternalOrExternalUrl } from '../validations/validateInternalOrExternalUrl'
 import { AnchorLinkDescription } from './anchorReferenceField'
-// eslint-disable-next-line import/no-unresolved
 import { defaultLanguage } from '../../languages'
-import { apiVersion } from '../../sanity.client'
 import { warnHttpOrNotValidSlugExternal } from '../validations/validateSlug'
+// eslint-disable-next-line import/namespace
+import { ClientPerspective } from '@sanity/client'
 
 export type ReferenceTarget = {
   type: string
@@ -70,15 +70,20 @@ export const getLinkSelectorFields = (labelFieldset?: string, flag?: string) => 
       hidden: ({ parent }: { parent: LinkSelector }) => parent?.linkToOtherLanguage || isHidden(parent),
       validation: (Rule: Rule) =>
         Rule.custom(async (value: any, context: ValidationContext) => {
-          const { parent, document } = context as { parent: LinkSelector; document: { lang?: string } }
+          const { parent, document } = context as { parent: LinkSelector; document: { lang?: string; _id: string } }
+
           if (isHidden(parent)) return true
           if (parent?.linkToOtherLanguage) return true
           if (value?._ref) {
-            const referenceLang = await context
-              .getClient({ apiVersion: apiVersion })
-              .fetch(/* groq */ `*[_id == $id][0]{"lang": coalesce(content->lang, lang)}.lang`, {
+            const perspective = getVersionFromId(document._id)
+            // use experimental version for now until release perspective is available
+            const referenceLang = await context.getClient({ apiVersion: 'vX' }).fetch(
+              /* groq */ `*[_id == $id][0]{"lang": coalesce(content->lang, lang)}.lang`,
+              {
                 id: value._ref,
-              })
+              },
+              { perspective: perspective ? (Array(perspective) as unknown as ClientPerspective) : undefined },
+            )
             if (document.lang ? document.lang !== referenceLang : defaultLanguage.name !== referenceLang)
               return 'Reference must have the same language as the document'
           }
@@ -122,7 +127,7 @@ export const getLinkSelectorFields = (labelFieldset?: string, flag?: string) => 
           const internalValidation = validateInternalOrExternalUrl(value, connectedField)
           //If message from internalValidation return that if not continue to check external url
           if (internalValidation) {
-            return warnHttpOrNotValidSlugExternal(value, context)
+            return warnHttpOrNotValidSlugExternal(value)
           } else {
             return internalValidation
           }

@@ -13,7 +13,7 @@ import { newsSlug } from '../../../satellitesConfig'
 import { formatDate } from '../../helpers/formatDate'
 import { EdsIcon } from '../../icons'
 import { defaultLanguage } from '../../languages'
-import SlugInput from '../components/SlugInput'
+import { SlugInput } from '../components/SlugInput'
 import { withSlugValidation } from '../validations/validateSlug'
 import { lang } from './langField'
 import {

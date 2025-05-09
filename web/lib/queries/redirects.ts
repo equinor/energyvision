@@ -1,5 +1,3 @@
-import { noDrafts } from './common/langAndDrafts'
-
 export type RedirectsType = {
   lang: string
   to: string
@@ -10,14 +8,14 @@ export type ExternalRedirectsType = {
 } | null
 
 export const redirects = /* groq */ `
-  *[_type == "redirect" && (from == $slug || from == $slugWithLocale) && ${noDrafts}][0]{
+  *[_type == "redirect" && (from == $slug || from == $slugWithLocale)][0]{
     "lang": lang,
     "to": to->slug.current
   }
 `
 
 export const externalRedirects = /* groq */ `
-  *[_type == "externalRedirect" && (from == $slug || from == $slugWithLocale) && ${noDrafts}][0]{
+  *[_type == "externalRedirect" && (from == $slug || from == $slugWithLocale)][0]{
     to
   }
 `

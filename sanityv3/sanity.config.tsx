@@ -168,6 +168,12 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret = fals
       },
     ],
   }),
+  releases: {
+    enabled: false,
+  },
+  scheduledPublishing: {
+    enabled: true,
+  },
 })
 
 export default dataset === 'secret'

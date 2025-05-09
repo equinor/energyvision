@@ -37,7 +37,7 @@ export const copyAction = defineDocumentFieldAction({
       onCopy(path, value, {
         context: { source: isDocument ? 'documentFieldAction' : 'fieldAction' },
       })
-    }, [path, isDocument, onCopy, getFormValue])
+    }, [path, isDocument, onCopy, getFormValue, toast])
 
     return {
       type: 'action',

@@ -7,7 +7,7 @@ const validateIsUniqueWithinLocale = async (slug: string, context: ValidationCon
   const { document, getClient } = context
 
   if (!document) return
-  const id = document._id.replace(/^drafts\./, '')
+  const id = document._id.split('.').at(-1)
   const params = {
     draft: `drafts.${id}`,
     published: id,
@@ -18,20 +18,27 @@ const validateIsUniqueWithinLocale = async (slug: string, context: ValidationCon
 
   let query: string
   if (document._type.includes('route')) {
-    query = /* groq */ `!defined(*[
+    query = /* groq */ `*[
       !(_id in [$draft, $published]) &&
       slug.current == $slug && 
       _type == $type
-    ][0]._id)`
+    ]._id`
   } else {
-    query = /* groq */ `!defined(*[
+    query = /* groq */ `*[
       !(_id in [$draft, $published]) &&
       slug.current == $slug && 
       lang == $language
-    ][0]._id)`
+    ]._id`
   }
+  // get all the document ids with the give n slug
   const result = await getClient({ apiVersion: apiVersion }).fetch(query, params)
-  return result
+  // exclude all the versions of the current document..
+  if (result.length > 0) {
+    return !result.some((it: string) => {
+      return !it.includes(id as string)
+    })
+  }
+  return true
 }
 
 export const withSlugValidation = (options: any) => {
