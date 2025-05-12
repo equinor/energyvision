@@ -20,9 +20,9 @@ export const PromoTile = forwardRef<HTMLAnchorElement, PromoTileProps>(function 
       (key) => colorKeyToUtilityMap[key as keyof ColorKeyTokens]?.backgroundName === background?.backgroundColor,
     ) ?? 'white-100'
 
-  const twBg = background?.backgroundUtility
-    ? colorKeyToUtilityMap[background.backgroundUtility]?.background
-    : colorKeyToUtilityMap[colorName as keyof ColorKeyTokens]?.background
+  const theme = background?.backgroundUtility
+    ? colorKeyToUtilityMap[background.backgroundUtility]
+    : colorKeyToUtilityMap[colorName as keyof ColorKeyTokens]
 
   return (
     <Card
@@ -32,9 +32,9 @@ export const PromoTile = forwardRef<HTMLAnchorElement, PromoTileProps>(function 
       ref={ref}
       image={image}
       variant="secondary"
-      className={`${background?.dark ? 'dark' : ''} `}
+      className={`${theme?.dark || background.dark ? 'dark' : ''} `}
     >
-      <Card.Content variant="secondary" className={`${twBg}`}>
+      <Card.Content variant="secondary" className={`${theme.background}`}>
         <Card.Header
           titleLevel={hasSectionTitle ? 'h3' : 'h2'}
           {...(!linkLabelAsTitle && { titleBlock: title })}

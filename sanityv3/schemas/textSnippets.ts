@@ -892,6 +892,11 @@ const snippets: textSnippet = {
     defaultValue: 'Download document',
     group: groups.common,
   },
+  search_page_title: {
+    title: 'Search page title',
+    defaultValue: 'Search',
+    group: groups.search,
+  },
 }
 
 type textSnippetGroup = { title: string; hidden?: boolean }

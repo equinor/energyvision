@@ -1,7 +1,7 @@
 import { Heading, Paragraph } from '@core/Typography'
 import envisTwMerge from '../../twMerge'
 import { VideoPlayerCarouselData } from '../../types/index'
-import { BackgroundContainer } from '@components'
+import { BackgroundContainer } from '@core/Backgrounds'
 import { Carousel } from '@core/Carousel/Carousel'
 import { forwardRef, useId } from 'react'
 
@@ -20,12 +20,7 @@ const VideoPlayerCarousel = forwardRef<HTMLUListElement, VideoPlayerCarouselProp
   const headingId = useId()
 
   return (
-    <BackgroundContainer
-      asSection={true}
-      background={background}
-      id={anchor}
-      className={envisTwMerge(`pb-page-content`, className)}
-    >
+    <BackgroundContainer as="section" background={background} id={anchor} backgroundStyle="none" className={className}>
       <div className="w-full flex flex-col px-layout-lg mx-auto max-w-viewport pb-8">
         {title && (
           <Heading
