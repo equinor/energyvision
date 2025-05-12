@@ -1,8 +1,9 @@
 import { forwardRef, HTMLAttributes, CSSProperties } from 'react'
-import { useSanityLoader } from '../../../lib/hooks/useSanityLoader'
-import { ImageBackground } from '../../../types/index'
+import { useSanityLoader } from '../../lib/hooks/useSanityLoader'
+import { ImageBackground } from '../../types/index'
 import { twMerge } from 'tailwind-merge'
-import { useMediaQuery } from '../../../lib/hooks/useMediaQuery'
+import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
+import { BackgroundContainerType } from './ColouredContainer'
 
 type ImageBackgroundContainerProps = {
   scrimClassName?: string
@@ -11,8 +12,8 @@ type ImageBackgroundContainerProps = {
   /* Provide gradient in scrimClassname and disable default */
   overrideGradient?: boolean
   aspectRatio?: number
-  /** Set return element as section */
-  asSection?: boolean
+  /** Set return element as given */
+  as?: BackgroundContainerType
 } & ImageBackground &
   HTMLAttributes<HTMLDivElement>
 const DEFAULT_MAX_WIDTH = 1920
@@ -30,7 +31,7 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
       overrideGradient = false,
       dontSplit = false,
       aspectRatio,
-      asSection = false,
+      as = 'div',
       ...rest
     },
     ref,
@@ -38,7 +39,7 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
     const props = useSanityLoader(image, DEFAULT_MAX_WIDTH, aspectRatio)
     const src = props?.src
     const isMobile = useMediaQuery(`(max-width: 800px)`)
-    const ReturnElement = asSection ? 'section' : 'div'
+    const ReturnElement = as
 
     const fadedFilter = `
     before:content-['']
@@ -47,8 +48,7 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
     ${useLight ? `before:bg-white-100 before:opacity-[35%]` : `before:bg-black-100 before:opacity-[25%]`}
     `
 
-    const backgroundClassNames = twMerge(
-      `[container:inline-size]
+    const backgroundClassNames = `[container:inline-size]
       relative
       ${useLight ? '' : 'dark'}
       w-full
@@ -56,9 +56,7 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
       bg-center
       bg-no-repeat
       bg-cover
-    `,
-      className,
-    )
+    `
 
     const lightGradientForContentAlignment = {
       center: 'white-center-gradient',
@@ -89,7 +87,6 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
         style={
           {
             backgroundImage: `url(${src})`,
-            '--color-on-background': `var(--inverted-text)`,
           } as CSSProperties
         }
         {...rest}
@@ -105,7 +102,7 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
             scrimClassName,
           )}
         >
-          {children}
+          <div className={className}>{children}</div>
         </div>
       </ReturnElement>
     ) : isMobile && !dontSplit ? (
@@ -116,12 +113,12 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
             backgroundImage: `url(${src})`,
           }}
         />
-        {children}
+        <div className={className}>{children}</div>
       </ReturnElement>
     ) : (
       <ReturnElement
         ref={ref}
-        className={backgroundClassNames}
+        className={`${backgroundClassNames} ${className}`}
         style={{
           backgroundImage: `url(${src})`,
         }}

@@ -42,9 +42,9 @@ const UniversalHit: React.FC<HitProps> = ({ hit }) => {
     <article>
       <NextLink className="py-6 px-0 block cursor-pointer outline-none" href={slug} prefetch={false}>
         {formattedDate && type !== 'magazine' && (
-          <p className={`block tracking-wide ${type === 'news' ? 'text-2xs' : 'text-xs'}`}>
+          <Typography className={`block tracking-wide ${type === 'news' ? 'text-2xs' : 'text-xs'}`}>
             <FormattedDate uppercase datetime={formattedDate} />
-          </p>
+          </Typography>
         )}
         {pageTitle && (
           <Typography className="relative inline-block" level="h2" size="sm">
@@ -77,14 +77,14 @@ const UniversalHit: React.FC<HitProps> = ({ hit }) => {
         ].map(
           ({ key, value }) =>
             value && (
-              <p
+              <Typography
                 key={key}
                 className={`${
                   type === 'event' && (key === 'ingress' || key === 'eventDescription') ? 'text-2xs' : 'text-xs'
                 } m-0 leading-cloudy`}
               >
                 <Highlight hit={hit} attribute={key} />
-              </p>
+              </Typography>
             ),
         )}
 
