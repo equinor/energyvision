@@ -78,8 +78,8 @@ const MagazineRoom = ({ pageData, slug }: MagazineIndexTemplateProps) => {
             {pageData?.hero.type !== HeroTypes.DEFAULT && title && (
               <SharedTitle sharedTitle={title} background={{ backgroundColor: ingress.background }} />
             )}
-            <BackgroundContainer background={{ backgroundColor: ingress.background }}>
-              <div className="px-layout-lg py-16">{ingress && <Blocks value={ingress.content} />}</div>
+            <BackgroundContainer className="py-16" background={{ backgroundColor: ingress.background }}>
+              {ingress && <Blocks value={ingress.content} />}
             </BackgroundContainer>
           </>
         )}

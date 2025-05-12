@@ -1,5 +1,5 @@
 import type { FigureData } from '../../types/index'
-import { FigureCaption } from '@components'
+import { FigureCaption } from '@core/FigureCaption/FigureCaption'
 import { BackgroundContainer } from '@core/Backgrounds'
 import Image, { Ratios } from '../shared/SanityImage'
 
@@ -43,8 +43,8 @@ const Figure = ({ data, anchor, className }: FigureProps) => {
 
       {(caption || attribution) && (
         <FigureCaption>
-          {caption && <FigureCaption.Caption>{caption}</FigureCaption.Caption>}
-          {attribution && <FigureCaption.Attribution>{attribution}</FigureCaption.Attribution>}
+          {caption && <div>{caption}</div>}
+          {attribution && <div>{attribution}</div>}
         </FigureCaption>
       )}
     </BackgroundContainer>
