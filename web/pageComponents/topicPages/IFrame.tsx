@@ -1,12 +1,11 @@
 import styled from 'styled-components'
 import type { IFrameData } from '../../types/index'
-import { FigureCaption } from '@components'
+import { FigureCaption } from '@core/FigureCaption/FigureCaption'
 import { BackgroundContainer } from '@core/Backgrounds'
 import CoreIFrame from '../shared/iframe/IFrame'
 import IngressText from '../shared/portableText/IngressText'
 import TitleText from '../shared/portableText/TitleText'
 import RichText from '../shared/portableText/RichText'
-import { twMerge } from 'tailwind-merge'
 import TranscriptAndActions from '../../pageComponents/shared/TranscriptAndActions'
 
 const StyledHeading = styled(TitleText)`
