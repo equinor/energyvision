@@ -1,15 +1,9 @@
 import { forwardRef, HTMLAttributes } from 'react'
-import styled from 'styled-components'
-import { normal, inverted } from '../../../styles/themes'
-import type { BackgroundColours, BackgroundTypes, ImageBackground } from '../../../types/index'
-import { ColouredContainer } from './ColouredContainer'
+import type { BackgroundColours, BackgroundTypes, ImageBackground } from '../../types/index'
+import { BackgroundContainerType, BackgroundStyle, ColouredContainer } from './ColouredContainer'
+import { ColorKeyTokens } from '../../styles/colorKeyToUtilityMap'
+import envisTwMerge from '../../twMerge'
 import { ImageBackgroundContainer } from './ImageBackgroundContainer'
-import { ColorKeyTokens } from '../../../styles/colorKeyToUtilityMap'
-import envisTwMerge from '../../../twMerge'
-
-const StyledImageBackground = styled(ImageBackgroundContainer)<{ $isInverted: boolean }>`
-  ${({ $isInverted }) => ($isInverted ? inverted : normal)}
-`
 
 export type BackgroundContainerProps = {
   background?: {
@@ -30,8 +24,10 @@ export type BackgroundContainerProps = {
   scrimClassName?: string
   /* On mobile dont split background image and content */
   dontSplit?: boolean
-  /** Set return element as section */
-  asSection?: boolean
+  /** Set return element as given */
+  as?: BackgroundContainerType
+  /** Background style for coloured backgrounds  */
+  backgroundStyle?: BackgroundStyle
 } & HTMLAttributes<HTMLDivElement>
 
 export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContainerProps>(function BackgroundContainer(
@@ -45,7 +41,8 @@ export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContaine
     id,
     renderFragmentWhenPossible = false,
     dontSplit = false,
-    asSection = false,
+    as = 'div',
+    backgroundStyle = 'regular',
     ...rest
   },
   ref,
@@ -55,23 +52,22 @@ export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContaine
   return (
     <>
       {type === 'backgroundImage' && backgroundImage && (
-        <StyledImageBackground
+        <ImageBackgroundContainer
+          as={as}
           {...rest}
-          $isInverted={backgroundImage?.useLight ? false : true}
           ref={ref}
           id={id}
           {...backgroundImage}
           className={envisTwMerge(`${id ? 'scroll-mt-topbar' : ''}`, className)}
           scrimClassName={scrimClassName}
           dontSplit={dontSplit}
-          asSection={asSection}
         >
           {children}
-        </StyledImageBackground>
+        </ImageBackgroundContainer>
       )}
       {(type === 'backgroundColor' || !type) && (
         <>
-          {!asSection &&
+          {as == 'div' &&
           renderFragmentWhenPossible &&
           (restBackground?.backgroundColor === 'White' || restBackground?.backgroundUtility === 'white-100') &&
           className === '' &&
@@ -81,9 +77,10 @@ export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContaine
             <ColouredContainer
               ref={ref}
               id={id}
-              asSection={asSection}
               {...restBackground}
               style={style}
+              as={as}
+              backgroundStyle={backgroundStyle}
               className={envisTwMerge(`${id ? 'scroll-mt-topbar' : ''}`, className, twClassName)}
               {...rest}
             >

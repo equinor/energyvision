@@ -1,7 +1,7 @@
 import Image from '../SanityImage'
 import { Heading } from '@core/Typography'
 import type { HeroType } from '../../../types/index'
-import { BackgroundContainer } from '@components'
+import { BackgroundContainer } from '@core/Backgrounds'
 import { ResourceLink } from '@core/Link'
 import Blocks from '../portableText/Blocks'
 import { getUrlFromAction } from '../../../common/helpers'
