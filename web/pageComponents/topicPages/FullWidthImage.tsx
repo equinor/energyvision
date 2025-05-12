@@ -1,6 +1,6 @@
 import type { FullWidthImageData } from '../../types/index'
 import Image, { Ratios } from '../shared/SanityImage'
-import { StyledCaption } from '../shared/image/StyledCaption'
+import { Caption } from '../shared/image/Caption'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
 
 type TeaserProps = {
@@ -19,7 +19,7 @@ const FullWidthImage = ({ data, anchor }: TeaserProps) => {
   return (
     <>
       <Image id={anchor} image={image} maxWidth={2000} aspectRatio={ratio} sizes="100vw" alt={image.alt} />
-      {image.asset && <StyledCaption caption={caption} attribution={attribution} />}
+      {image.asset && <Caption caption={caption} attribution={attribution} />}
     </>
   )
 }
