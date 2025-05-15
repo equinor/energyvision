@@ -1,4 +1,4 @@
-import { useIntl } from 'react-intl'
+import { useTranslations } from 'next-intl'
 import { languages } from '../../languages'
 import { ButtonLink } from '@core/Link'
 
@@ -10,7 +10,7 @@ export type LocalizationSwitchProps = {
 }
 
 export const LocalizationSwitch = ({ allSlugs: slugs, activeLocale, ...rest }: LocalizationSwitchProps) => {
-  const intl = useIntl()
+  const intl = useTranslations()
 
   if (slugs.length < 1) return null
 
@@ -32,10 +32,7 @@ export const LocalizationSwitch = ({ allSlugs: slugs, activeLocale, ...rest }: L
                 flex flex-col gap-0 items-stretch px-2 text-xs
                 `}
             >
-              <span className="sr-only">{`${intl.formatMessage({
-                id: 'switch_to',
-                defaultMessage: 'Switch to',
-              })} ${language?.title}`}</span>
+              <span className="sr-only">{`${intl('switch_to')} ${language?.title}`}</span>
               <span
                 aria-hidden
                 className={`uppercase ${activeLocale === String(language?.locale) ? 'font-semibold' : 'font-normal'}`}

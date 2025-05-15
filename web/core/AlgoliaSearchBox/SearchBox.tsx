@@ -1,9 +1,9 @@
 import { useRef, useState, ChangeEvent, ComponentProps, useId } from 'react'
 import { useSearchBox, UseSearchBoxProps } from 'react-instantsearch'
 import { close, search } from '@equinor/eds-icons'
-import { useIntl } from 'react-intl'
 import { Icon } from '@equinor/eds-core-react'
 import envisTwMerge from '../../twMerge'
+import { useTranslations } from 'next-intl'
 
 type Variants = 'default' | 'inverted'
 export type SearchBoxProps = {
@@ -34,7 +34,7 @@ export function SearchBox({
   placeholder,
   ...rest
 }: SearchBoxProps) {
-  const intl = useIntl()
+  const intl = useTranslations()
   const { query, refine, clear } = useSearchBox({ ...rest, queryHook })
   const [value, setValue] = useState(query)
   const inputRef = useRef<HTMLInputElement>(null)
@@ -96,14 +96,14 @@ export function SearchBox({
       <div className={`${label ? 'row-start-2 row-end-2' : ''} relative flex items-center`}>
         <input
           {...(!label && {
-            'aria-label': intl.formatMessage({ id: 'search', defaultMessage: 'Search' }),
+            'aria-label': intl('search'),
           })}
           ref={inputRef}
           id={searchId}
           autoComplete="off"
           autoCorrect="off"
           autoCapitalize="off"
-          placeholder={placeholder ?? intl.formatMessage({ id: 'search', defaultMessage: 'Search' })}
+          placeholder={placeholder ?? intl('search')}
           spellCheck={false}
           maxLength={512}
           type="search"
@@ -125,7 +125,7 @@ export function SearchBox({
         />
         <button
           type="reset"
-          aria-label={intl.formatMessage({ id: 'reset', defaultMessage: 'Reset' })}
+          aria-label={intl('search_reset')}
           className={envisTwMerge(
             `${value.length === 0 ? 'hidden' : 'flex'} 
             absolute 
@@ -144,7 +144,7 @@ export function SearchBox({
       </div>
       <button
         type="submit"
-        aria-label={intl.formatMessage({ id: 'search_submit', defaultMessage: 'Submit search' })}
+        aria-label={intl('search_submit')}
         className={envisTwMerge(
           `h-inherit 
           rounded-e-xs

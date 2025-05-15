@@ -3,9 +3,9 @@ import { forwardRef, HTMLAttributes } from 'react'
 import { useClearRefinements, useCurrentRefinements, UseRefinementListProps } from 'react-instantsearch'
 import { close_circle_outlined, close } from '@equinor/eds-icons'
 import { Typography } from '@core/Typography'
-import { FormattedMessage } from 'react-intl'
 import envisTwMerge from '../../../twMerge'
 import { isModifierClick } from '../../../pageComponents/shared/search/pagination/PaginationItem'
+import { useTranslations } from 'next-intl'
 
 type SelectedFiltersProps = HTMLAttributes<HTMLDivElement>
 
@@ -20,6 +20,7 @@ const SelectedFilters = forwardRef<HTMLDivElement, SelectedFiltersProps>(functio
 ) {
   const { items, refine } = useCurrentRefinements()
   const { refine: clearRefinements } = useClearRefinements()
+  const t = useTranslations()
 
   const flattenedItems = items.flatMap((item) => {
     return item.refinements
@@ -37,7 +38,7 @@ const SelectedFilters = forwardRef<HTMLDivElement, SelectedFiltersProps>(functio
           className="flex gap-1 text-xs underline hover:no-underline focus:outline-none focus-visible:envis-outline active:scale-99"
         >
           <TransformableIcon iconData={close} className="size-6" />
-          <FormattedMessage id="newsroom_filters_clear_all" defaultMessage="Clear all" />
+          {t('newsroom_filters_clear_all')}
         </button>
       </div>
       <ul className="flex flex-wrap gap-4">
@@ -66,9 +67,7 @@ const SelectedFilters = forwardRef<HTMLDivElement, SelectedFiltersProps>(functio
               focus-visible:envis-outline
               active:scale-99`}
             >
-              <span className="sr-only">
-                <FormattedMessage id="remove" defaultMessage="Remove" />
-              </span>
+              <span className="sr-only">{t('remove')}</span>
               <span>{item.label}</span>
               <TransformableIcon
                 aria-hidden

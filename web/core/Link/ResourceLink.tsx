@@ -6,7 +6,7 @@ import envisTwMerge from '../../twMerge'
 import { TransformableIcon } from '../../icons/TransformableIcon'
 import { add, calendar } from '@equinor/eds-icons'
 import { BsFiletypePdf, BsFiletypeXlsx } from 'react-icons/bs'
-import { useIntl } from 'react-intl'
+import { useTranslations } from 'next-intl'
 
 export type Variants = 'default' | 'fit'
 
@@ -94,7 +94,7 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
   },
   ref,
 ) {
-  const intl = useIntl()
+  const intl = useTranslations()
   const variantClassName: Partial<Record<Variants, string>> = {
     default: 'w-full pt-3',
     fit: 'w-fit pt-3',
@@ -127,13 +127,13 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
   const getTranslation = () => {
     switch (type) {
       case 'externalUrl':
-        return intl.formatMessage({ id: 'externalLink', defaultMessage: 'External link' })
+        return intl('externalLink')
       case 'downloadableFile':
       case 'downloadableImage':
       case 'icsLink':
-        return intl.formatMessage({ id: 'downloadDocument', defaultMessage: 'Download document' })
+        return intl('downloadDocument')
       default:
-        return intl.formatMessage({ id: 'internalLink', defaultMessage: 'Internal link' })
+        return intl('internalLink')
     }
   }
 

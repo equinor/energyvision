@@ -1,11 +1,13 @@
+'use client'
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { useRouter } from 'next/router'
+import { useLocale, useTranslations } from 'next-intl'
+import { usePathname } from 'next/navigation'
 import { default as NextLink } from 'next/link'
 import { AllSlugsType, LocalizationSwitch } from '../../pageComponents/shared/LocalizationSwitch'
 import type { MenuData, SimpleMenuData, StickyMenuData } from '../../types/index'
 import { Flags } from '../../common/helpers/datasetHelpers'
 import { languages, defaultLanguage } from '../../languages'
-import { FormattedMessage, useIntl } from 'react-intl'
+//import { FormattedMessage, useIntl } from 'react-intl'
 import { search } from '@equinor/eds-icons'
 import { getLocaleFromName, getNameFromLocale } from '../../lib/localization'
 import Head from 'next/head'
@@ -23,14 +25,15 @@ export type HeaderProps = {
 }
 
 const HeadTags = ({ slugs }: { slugs: AllSlugsType }) => {
-  const router = useRouter()
+  //const router = useRouter()
+  const locale = useLocale()
+  const pathname = usePathname()
   const localization = {
-    activeLocale: router.locale || defaultLanguage.locale,
+    activeLocale: locale || defaultLanguage.locale,
   }
-  const { publicRuntimeConfig } = getConfig()
+  //const { publicRuntimeConfig } = getConfig()
 
-  const activeSlug =
-    slugs.find((slug) => slug.lang === getNameFromLocale(localization.activeLocale))?.slug || router.asPath
+  const activeSlug = slugs.find((slug) => slug.lang === getNameFromLocale(localization.activeLocale))?.slug || pathname
   const defaultSlug = slugs.find((slug) => slug.lang === defaultLanguage.name)?.slug
   const defaultLocale = defaultLanguage.locale
   const canonicalSlug =
@@ -46,43 +49,32 @@ const HeadTags = ({ slugs }: { slugs: AllSlugsType }) => {
           const correctedSlug = (defaultLocale !== locale ? `/${locale}` : '').concat(
             slug.slug !== '/' ? slug.slug : '',
           )
-          return (
-            <link
-              key={locale}
-              rel="alternate"
-              hrefLang={locale}
-              href={`${publicRuntimeConfig.domain}${correctedSlug}`}
-            />
-          )
+          return <link key={locale} rel="alternate" hrefLang={locale} href={`${correctedSlug}`} />
         })}
 
       {slugs.length > 1 && (
-        <link
-          key="x-default"
-          rel="alternate"
-          hrefLang="x-default"
-          href={`${publicRuntimeConfig.domain}${defaultSlug === '/' ? '' : defaultSlug}`}
-        />
+        <link key="x-default" rel="alternate" hrefLang="x-default" href={`${defaultSlug === '/' ? '' : defaultSlug}`} />
       )}
 
-      <link rel="canonical" href={`${publicRuntimeConfig.domain}${canonicalSlug}`} />
+      <link rel="canonical" href={`${canonicalSlug}`} />
     </Head>
   )
 }
 
 const AllSites = () => {
   const allSitesURL = getAllSitesLink('external')
+  const t = useTranslations()
   return (
     <NextLink className="cursor-pointer text-base no-underline hover:underline" href={allSitesURL} prefetch={false}>
-      <FormattedMessage id="all_sites" defaultMessage="All Sites" />
+      {t('all_sites')}
     </NextLink>
   )
 }
 
 const Header = ({ slugs, menuData, stickyMenuData }: HeaderProps) => {
-  const router = useRouter()
+  const locale = useLocale()
   const localization = {
-    activeLocale: router.locale || defaultLanguage.locale,
+    activeLocale: locale || defaultLanguage.locale,
   }
   const hasSearch = Flags.HAS_SEARCH
   const hasMoreThanOneLanguage = languages.length > 1
@@ -97,8 +89,8 @@ const Header = ({ slugs, menuData, stickyMenuData }: HeaderProps) => {
 
   /* Filter objects that have translations but no routes */
   const validSlugs = slugs.filter((obj) => obj.slug)
-  const intl = useIntl()
-  const searchLabel = intl.formatMessage({ id: 'search', defaultMessage: 'Search' })
+  const t = useTranslations()
+  const searchLabel = t('search')
 
   return (
     <>
@@ -120,9 +112,7 @@ const Header = ({ slugs, menuData, stickyMenuData }: HeaderProps) => {
                 className="w-full p-2 md:px-5 md:py-3 clickbound-area"
               >
                 <Icon size={24} data={search} />
-                <span className="max-md:sr-only">
-                  <FormattedMessage id="search" />
-                </span>
+                <span className="max-md:sr-only">{t('search')}</span>
               </ButtonLink>
             </div>
           )}

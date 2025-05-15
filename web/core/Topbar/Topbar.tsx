@@ -2,7 +2,7 @@ import { forwardRef, HTMLAttributes, useEffect, useMemo, useRef, useState } from
 import { mergeRefs } from '@equinor/eds-utils'
 import { StickyMenuData } from '../../types/index'
 import StickyMenu from '@sections/StickyMenu/StickyMenu'
-import { useIntl } from 'react-intl'
+import { useTranslations } from 'next-intl'
 
 export type TopbarProps = {
   stickyMenuData?: StickyMenuData
@@ -14,7 +14,7 @@ export const Topbar = forwardRef<HTMLDivElement, TopbarProps>(function Topbar(
 ) {
   const topbarRef = useRef<HTMLDivElement>(null)
   const combinedTopbarRef = useMemo(() => mergeRefs<HTMLDivElement>(topbarRef, ref), [topbarRef, ref])
-  const intl = useIntl()
+  const intl = useTranslations()
   const [height, setHeight] = useState(0)
   const [prevScrollPos, setPrevScrollPos] = useState(0)
   const [isVisible, setIsVisible] = useState(true)
@@ -86,10 +86,7 @@ export const Topbar = forwardRef<HTMLDivElement, TopbarProps>(function Topbar(
     <>
       <nav
         ref={combinedTopbarRef}
-        aria-label={intl.formatMessage({
-          id: 'global',
-          defaultMessage: 'Global',
-        })}
+        aria-label={intl('global')}
         role="navigation"
         className={`
           h-topbar

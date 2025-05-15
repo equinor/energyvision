@@ -1,6 +1,7 @@
+'use client'
 import { useEffect, useCallback, useState, useMemo } from 'react'
 import { useFloating, useInteractions, useDismiss, FloatingOverlay, FloatingFocusManager } from '@floating-ui/react'
-import { useRouter } from 'next/router'
+import { usePathname, useRouter } from 'next/navigation'
 import { Menu, MenuButton } from '@core/MenuAccordion'
 import { MenuItem } from './MenuItem'
 import { TopbarDropdown } from './TopbarDropdown'
@@ -12,6 +13,7 @@ import type { MenuData, SimpleGroupData, SimpleMenuData, SubMenuData } from '../
 import { FormattedMessage, useIntl } from 'react-intl'
 import { SimpleMenuItem } from './SimpleMenuItem'
 import { Flags } from '../../common/helpers/datasetHelpers'
+import { useLocale, useTranslations } from 'next-intl'
 
 export type Variants = 'default' | 'simple'
 
@@ -22,8 +24,10 @@ export type MenuProps = {
 
 const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
   const router = useRouter()
+  const pathname = usePathname()
+  const locale = useLocale()
   const [isOpen, setIsOpen] = useState(false)
-  const intl = useIntl()
+  const intl = useTranslations()
   const { refs, context } = useFloating({
     open: isOpen,
     onOpenChange: setIsOpen,
@@ -41,26 +45,26 @@ const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
     setIsOpen(false)
   }, [])
 
-  useEffect(() => {
+  /*useEffect(() => {
     router.events.on('routeChangeComplete', handleRouteChange)
     return () => router.events.off('routeChangeComplete', handleRouteChange)
-  }, [router.events, handleRouteChange])
+  }, [router.events, handleRouteChange])*/
 
-  const title = intl.formatMessage({ id: 'menu', defaultMessage: 'Menu' })
-  const allSitesURL = getAllSitesLink(Flags.IS_GLOBAL_PROD ? 'internal' : 'external', router?.locale || 'en')
+  const title = intl('menu')
+  const allSitesURL = getAllSitesLink(Flags.IS_GLOBAL_PROD ? 'internal' : 'external', locale || 'en')
 
   const getCurrentMenuItemIndex = () => {
     return menuItems
       .findIndex((menuItem) => {
         if (variant === 'simple') {
           if ('link' in menuItem && menuItem?.link) {
-            return menuItem.link.slug === router.asPath
+            return menuItem.link.slug === pathname
           }
           if ('links' in menuItem && menuItem?.links) {
-            return menuItem.links.some((link) => link.link?.slug === router.asPath)
+            return menuItem.links.some((link) => link.link?.slug === pathname)
           }
         } else if (variant === 'default' && 'groups' in menuItem && menuItem.groups) {
-          return menuItem.groups?.some((group) => group.links.some((link) => link.link?.slug === router.asPath))
+          return menuItem.groups?.some((group) => group.links.some((link) => link.link?.slug === pathname))
         } else {
           return -1
         }
@@ -135,7 +139,7 @@ const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
                     `}
                     href={allSitesURL}
                   >
-                    <FormattedMessage id="all_sites" defaultMessage="All sites" />
+                    {intl('all_sites')}
                   </Link>
                 </div>
               </nav>

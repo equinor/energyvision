@@ -1,7 +1,8 @@
+'use client'
 import { forwardRef } from 'react'
 import { BaseLinkProps, BaseLink } from './BaseLink'
 import { ArrowRight } from '../../icons'
-import { useIntl } from 'react-intl'
+import { useTranslations } from 'next-intl'
 
 export type FooterLinkProps = {
   icon?: React.ReactNode
@@ -13,7 +14,7 @@ const FooterLink = forwardRef<HTMLAnchorElement, FooterLinkProps>(function Foote
 ) {
   const isExternal = type === 'externalUrl' || href.startsWith('http') || href.toLowerCase().includes('.pdf')
   const target = isExternal ? '_blank' : undefined
-  const intl = useIntl()
+  const intl = useTranslations()
 
   return (
     <BaseLink
@@ -44,7 +45,7 @@ const FooterLink = forwardRef<HTMLAnchorElement, FooterLinkProps>(function Foote
       {isExternal && (
         <ArrowRight
           aria-hidden="false"
-          aria-label={`, ${intl.formatMessage({ id: 'externalLink', defaultMessage: 'External link' })}`}
+          aria-label={intl('externalLink')}
           className="size-5 text-gray-500 group-hover:text-moss-green-90 transform -translate-y-0.5 rotate-[-50deg]"
         />
       )}

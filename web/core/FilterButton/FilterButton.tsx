@@ -1,3 +1,4 @@
+'use client'
 import { Icon } from '@equinor/eds-core-react'
 import { forwardRef, useState } from 'react'
 import {

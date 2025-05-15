@@ -1,3 +1,4 @@
+'use client'
 import { Icon } from '@equinor/eds-core-react'
 import { chevron_left, chevron_right, first_page, last_page } from '@equinor/eds-icons'
 import { useContext, useEffect, useRef } from 'react'
@@ -6,7 +7,7 @@ import { usePrefersReducedMotion } from '../../../../common/hooks/usePrefersRedu
 import { PaginationContext } from '../../../../common/contexts/PaginationContext'
 import { isModifierClick, PaginationItem } from './PaginationItem'
 import envisTwMerge from '../../../../twMerge'
-import { useIntl } from 'react-intl'
+import { useTranslations } from 'next-intl'
 
 // Based on: https://github.com/algolia/react-instantsearch/blob/master/examples/hooks/components/Pagination.tsx
 export type PaginationProps = {
@@ -20,7 +21,7 @@ export const Pagination = ({ className = '', totalPages, padding, hitsPerPage = 
     totalPages,
     padding,
   })
-  const intl = useIntl()
+  const intl = useTranslations()
   const { resultsRef } = useContext(PaginationContext)
   const prevRefinement = useRef<number>(currentRefinement)
   const prefersReducedMotion = usePrefersReducedMotion()
@@ -50,10 +51,7 @@ export const Pagination = ({ className = '', totalPages, padding, hitsPerPage = 
   return (
     <ul className={envisTwMerge(`max-w-viewport flex flex-wrap gap-2 my-2`, className)} {...rest}>
       <PaginationItem
-        ariaLabel={intl.formatMessage({
-          id: 'search_pagination_first_page',
-          defaultMessage: 'First page',
-        })}
+        ariaLabel={intl('search_pagination_first_page')}
         isCurrent={false}
         onClick={(e) => handleClick(e, 0)}
         isDisabled={isFirstPage}
@@ -61,10 +59,7 @@ export const Pagination = ({ className = '', totalPages, padding, hitsPerPage = 
         <Icon data={first_page} />
       </PaginationItem>
       <PaginationItem
-        ariaLabel={intl.formatMessage({
-          id: 'previous',
-          defaultMessage: 'Previous',
-        })}
+        ariaLabel={intl('previous')}
         onClick={(e) => handleClick(e, currentRefinement - 1)}
         isCurrent={false}
         isDisabled={isFirstPage}
@@ -75,10 +70,7 @@ export const Pagination = ({ className = '', totalPages, padding, hitsPerPage = 
       {pages.map((page) => (
         <PaginationItem
           key={page}
-          ariaLabel={`${intl.formatMessage({
-            id: 'page',
-            defaultMessage: 'Page',
-          })} ${page + 1}`}
+          ariaLabel={`${intl('page')} ${page + 1}`}
           onClick={(e) => handleClick(e, page)}
           isCurrent={page === currentRefinement}
           isDisabled={false}
@@ -88,10 +80,7 @@ export const Pagination = ({ className = '', totalPages, padding, hitsPerPage = 
       ))}
 
       <PaginationItem
-        ariaLabel={intl.formatMessage({
-          id: 'next',
-          defaultMessage: 'Next',
-        })}
+        ariaLabel={intl('next')}
         isCurrent={false}
         isDisabled={isLastPage}
         onClick={(e) => handleClick(e, currentRefinement + 1)}
@@ -100,10 +89,7 @@ export const Pagination = ({ className = '', totalPages, padding, hitsPerPage = 
       </PaginationItem>
 
       <PaginationItem
-        ariaLabel={intl.formatMessage({
-          id: 'search_pagination_last_page',
-          defaultMessage: 'Last page',
-        })}
+        ariaLabel={intl('search_pagination_last_page')}
         isCurrent={false}
         isDisabled={isLastPage}
         onClick={(e) => handleClick(e, nbPages - 1)}

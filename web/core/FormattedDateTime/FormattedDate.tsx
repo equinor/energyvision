@@ -1,5 +1,6 @@
 import { FormattedDate as ReactIntlDate } from 'react-intl'
 import { DateProps, DateIcon } from './shared'
+import { useFormatter } from 'next-intl'
 
 const FormattedDate = ({
   datetime,
@@ -11,18 +12,25 @@ const FormattedDate = ({
   uppercase = false,
   ...rest
 }: DateProps): JSX.Element => {
+  const formatter = useFormatter()
   return (
     <span className={`inline-flex items-center space-x-2`} {...rest}>
       {icon && <DateIcon />}
       <span className={`flex-shrink box-content ${icon && '-mb-1'} ${uppercase && 'uppercase'}`}>
         <time suppressHydrationWarning dateTime={datetime}>
-          <ReactIntlDate
+          {formatter.dateTime(new Date(datetime), {
+            year: year,
+            month: month,
+            day: day,
+            ...(weekday && { weekday: weekday }),
+          })}
+          {/*<ReactIntlDate
             value={new Date(datetime)}
             day={day}
             year={year}
             month={month}
             {...(weekday && { weekday: weekday })}
-          />
+          />*/}
         </time>
       </span>
     </span>

@@ -1,6 +1,6 @@
 import { HTMLAttributes } from 'react'
-import { FormattedTime as ReactIntlTime } from 'react-intl'
 import { TimeIcon } from '@core/FormattedDateTime'
+import { useFormatter } from 'next-intl'
 
 export type FormattedTimeProps = {
   datetime: string
@@ -17,12 +17,13 @@ const FormattedTime = ({
   ...rest
 }: FormattedTimeProps): JSX.Element => {
   const date = new Date(datetime)
+  const format = useFormatter()
   return (
     <span className="inline-flex items-center space-x-2" {...rest}>
       {icon && <TimeIcon />}
       <span className={`flex-shrink box-content ${small ? 'text-2xs mt-1' : 'mt-0'}`}>
         <time suppressHydrationWarning dateTime={datetime}>
-          <ReactIntlTime value={date} />
+          {format.dateTime(date, { hour: 'numeric', minute: 'numeric', hour12: false }) + ' '}
         </time>
         {timezone && (
           <span suppressHydrationWarning style={{ marginLeft: 'var(--space-4)' }}>

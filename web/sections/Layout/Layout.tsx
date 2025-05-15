@@ -1,7 +1,7 @@
 import { HTMLAttributes } from 'react'
 import Footer from '../Footer/Footer'
 import type { FooterColumns } from '../../types/index'
-import { IntlProvider } from 'react-intl'
+//import { IntlProvider } from 'react-intl'
 import { defaultLanguage } from '../../languages'
 import { getIsoFromLocale } from '../../lib/localization'
 import envisTwMerge from '../../twMerge'
@@ -30,15 +30,9 @@ export const Layout = ({
   const locale = intl?.locale || defaultLocale
 
   return (
-    <IntlProvider
-      locale={getIsoFromLocale(locale)}
-      defaultLocale={getIsoFromLocale(defaultLocale)}
-      messages={intl?.messages}
-    >
-      <div className={envisTwMerge(`${hasSticky ? '' : 'pt-topbar'}`, className)} {...rest}>
-        {children}
-        <Footer footerData={footerData} />
-      </div>
-    </IntlProvider>
+    <div className={envisTwMerge(`${hasSticky ? '' : 'pt-topbar'}`, className)} {...rest}>
+      {children}
+      <Footer footerData={footerData} />
+    </div>
   )
 }

@@ -5,7 +5,8 @@ const getFormattedSnippets = (lang: string, snippets: any) => {
   return Object.assign(
     {},
     ...snippets.map((snippet: any) => {
-      const key = snippet._id.replace('text_snippet_', '')
+      const key = snippet._id.replace('text_snippet_', '').replace('drafts.', '')
+
       return {
         [key]: snippet[lang] || '',
       }

@@ -1,11 +1,11 @@
 import { forwardRef } from 'react'
-import { FormattedMessage } from 'react-intl'
 import NewsHeadliner from './NewsHeadliner'
 import NewsItem from './NewsItem'
 import envisTwMerge from '../../../twMerge'
 import { SanityImageObject } from '@sanity/image-url/lib/types/types'
 import { useHits, useInstantSearch } from 'react-instantsearch'
 import NewsSectionsSkeleton from './NewsSectionsSkeleton'
+import { useTranslations } from 'next-intl'
 
 type NewsSectionsProps = {
   fallbackImages?: SanityImageObject[]
@@ -17,9 +17,10 @@ const NewsSections = forwardRef<HTMLDivElement, NewsSectionsProps>(function News
 ) {
   const { items } = useHits()
   const { status } = useInstantSearch()
+  const t = useTranslations()
 
   if (!items || items.length === 0) {
-    return <FormattedMessage id="newsroom_no_hits" defaultMessage="Your search returned no results" />
+    return t('newsroom_no_hits')
   }
 
   return status !== 'loading' && status !== 'stalled' ? (

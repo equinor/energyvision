@@ -1,3 +1,4 @@
+'use client'
 import { forwardRef, useRef } from 'react'
 import singletonRouter from 'next/router'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
@@ -10,14 +11,16 @@ import { Flags } from '../../common/helpers/datasetHelpers'
 import { createInstantSearchRouterNext } from 'react-instantsearch-router-nextjs'
 import { SearchClient, SearchResponse, UiState } from 'instantsearch.js'
 import Seo from '../../pageComponents/shared/Seo'
-import { Configure, InstantSearch } from 'react-instantsearch'
-import { FormattedMessage, useIntl } from 'react-intl'
+import { Configure } from 'react-instantsearch'
 import NewsSections from './NewsSections/NewsSections'
 import QuickSearch from './QuickSearch/QuickSearch'
 import { searchClient as client } from '../../lib/algolia'
 import { Pagination } from '../../pageComponents/shared/search/pagination/Pagination'
 import { List } from '@core/List'
 import { PaginationContextProvider } from '../../common/contexts/PaginationContext'
+import { InstantSearchNext } from 'react-instantsearch-nextjs'
+
+import { useTranslations } from 'next-intl'
 
 type NewsRoomTemplateProps = {
   locale?: string
@@ -32,7 +35,7 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
 ) {
   const { ingress, title, seoAndSome, subscriptionLink, subscriptionLinkTitle, localNewsPages, fallbackImages } =
     pageData || {}
-  const intl = useIntl()
+  const t = useTranslations()
   const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
   const isoCode = getIsoFromLocale(locale)
   const indexName = `${envPrefix}_NEWS_${isoCode}`
@@ -135,6 +138,7 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
     ...searchClient,
     search(requests: any) {
       if (requests.every(({ params }: any) => !params.query && params?.facetFilters?.flat().length > 2)) {
+        console.log(requests)
         return Promise.resolve({
           results: requests.map(() => initialSearchResponse),
         })
@@ -148,11 +152,11 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
     <PaginationContextProvider defaultRef={resultsRef}>
       <Seo seoAndSome={seoAndSome} slug={slug} pageTitle={title} />
       <main ref={ref}>
-        <InstantSearch
+        <InstantSearchNext
           searchClient={queriedSearchClient}
           future={{ preserveSharedStateOnUnmount: false }}
           indexName={indexName}
-          routing={routing}
+          routing={false} //{routing}
         >
           <Configure
             facetingAfterDistinct
@@ -172,10 +176,7 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
                     role="navigation"
                     className="max-lg:w-full"
                     listClassName={'list-none'}
-                    aria-label={intl.formatMessage({
-                      id: 'newsroom_related_links',
-                      defaultMessage: 'Related links',
-                    })}
+                    aria-label={/*intl('newsroom_related_links')*/ 'Newsroom related links'}
                   >
                     <List.Item className="w-full">
                       {subscriptionLink?.slug && (
@@ -203,14 +204,14 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
               </aside>
               <div className="flex flex-col max-lg:px-4">
                 <Typography id="newsroom_news" as="h2" className="sr-only">
-                  <FormattedMessage id="newsroom_newslist_header" defaultMessage="News" />
+                  {t('newsroom_newslist_header')}
                 </Typography>
                 <NewsSections fallbackImages={fallbackImages} />
                 <Pagination hitsPerPage={20} className="w-full justify-center py-12" />
               </div>
             </div>
           </div>
-        </InstantSearch>
+        </InstantSearchNext>
       </main>
     </PaginationContextProvider>
   )
