@@ -14,7 +14,7 @@ export const Item = forwardRef<HTMLDivElement, AccordionItemProps>(function Item
   const variantClassName: Partial<Record<Variants, string>> = {
     primary: 'border-b border-grey-40 dark:border-white-100',
     menu: '',
-    simpleMenu: 'border-b border-grey-40 dark:border-white-100',
+    simpleMenu: '',
   }
   return (
     <AccordionItem ref={forwardedRef} {...rest} className={envisTwMerge(`${variantClassName[variant]}`, className)}>
