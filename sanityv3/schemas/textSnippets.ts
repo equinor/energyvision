@@ -393,11 +393,6 @@ const snippets: textSnippet = {
     defaultValue: 'Invite Equinor to a career fair or student event',
     group: groups.careerFairForm,
   },
-  career_fair_form_invite_company_presentation: {
-    title: 'Invite to hold company presentation',
-    defaultValue: 'Invite Equinor to hold a company presentation',
-    group: groups.careerFairForm,
-  },
   career_fair_form_visit_equinor: {
     title: 'Visit Equinor office',
     defaultValue: 'Would like to visit Equinor office or facility',
