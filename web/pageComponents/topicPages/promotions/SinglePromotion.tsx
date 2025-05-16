@@ -15,14 +15,32 @@ const SinglePromotion = ({ promotion, hasSectionTitle = false }: SinglePromotion
     switch (data.type) {
       case 'news':
       case 'localNews':
-        return <PromotionCard data={data as CardData} hasSectionTitle={hasSectionTitle} variant="single" />
+        return (
+          <PromotionCard className="light" data={data as CardData} hasSectionTitle={hasSectionTitle} variant="single" />
+        )
       case 'topics':
       case 'magazine':
-        return <PromotionCard data={data as CardData} hasSectionTitle={hasSectionTitle} variant="single" />
+        return (
+          <PromotionCard className="light" data={data as CardData} hasSectionTitle={hasSectionTitle} variant="single" />
+        )
       case 'people':
-        return <PeopleCard data={data as PeopleCardData} hasSectionTitle={hasSectionTitle} variant="single" />
+        return (
+          <PeopleCard
+            className="light"
+            data={data as PeopleCardData}
+            hasSectionTitle={hasSectionTitle}
+            variant="single"
+          />
+        )
       case 'events':
-        return <EventCard data={data as EventCardData} hasSectionTitle={hasSectionTitle} variant="single" />
+        return (
+          <EventCard
+            className="light"
+            data={data as EventCardData}
+            hasSectionTitle={hasSectionTitle}
+            variant="single"
+          />
+        )
       default:
         console.warn('Missing card type for ', data)
         return <div />

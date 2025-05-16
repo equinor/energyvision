@@ -1,4 +1,4 @@
-import { BackgroundContainer } from '@components'
+import { BackgroundContainer } from '@core/Backgrounds'
 import type { TextWithIconArrayData, TextWithIconItem } from '../../types/index'
 import { twMerge } from 'tailwind-merge'
 import { TextWithIcon } from '@core/TextWithIcon/TextWithIcon'
@@ -25,15 +25,8 @@ const TextWithIconArray = ({ data, anchor, className = '', listClassName = '' }:
     <BackgroundContainer
       {...designOptions}
       id={anchor}
-      className={twMerge(
-        `max-w-viewport
-        pb-page-content
-        mx-auto
-        flex
-        flex-col
-        gap-6`,
-        className,
-      )}
+      backgroundStyle="wide"
+      className={twMerge(`flex flex-col gap-6`, className)}
     >
       {title && <Heading value={title} as="h2" variant="xl" className={`${hideTitle ? 'sr-only' : 'px-layout-lg'}`} />}
       <ul className={twMerge(`px-layout-sm w-full  flex flex-col gap-12 lg:grid ${gridCols}`, listClassName)}>

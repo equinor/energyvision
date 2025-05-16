@@ -1,4 +1,4 @@
-import { FormattedDate, FormattedTime } from '@components/FormattedDateTime'
+import { FormattedDate, FormattedTime } from '@core/FormattedDateTime'
 import { forwardRef, HTMLAttributes } from 'react'
 import { BaseLink } from '@core/Link'
 import { Typography } from '@core/Typography'

@@ -1,10 +1,8 @@
 import { useRouter } from 'next/router'
 import { useEffect, useRef } from 'react'
-import styled from 'styled-components'
-import { BackgroundContainer } from '@components'
-import TitleText from '../../pageComponents/shared/portableText/TitleText'
+import { BackgroundContainer } from '@core/Backgrounds'
+import { Heading } from '@core/Typography'
 import { CookieDeclarationData } from '../../types/index'
-import { twMerge } from 'tailwind-merge'
 
 type CookieDeclarationProps = {
   data: CookieDeclarationData
@@ -12,9 +10,6 @@ type CookieDeclarationProps = {
   className?: string
 }
 
-const StyledTitle = styled(TitleText)`
-  margin-bottom: var(--space-xLarge);
-`
 const CookieDeclaration = ({ data, anchor, className }: CookieDeclarationProps) => {
   const title = data.title
   const router = useRouter()
@@ -31,12 +26,9 @@ const CookieDeclaration = ({ data, anchor, className }: CookieDeclarationProps) 
     }
   }, [language])
   return (
-    <BackgroundContainer background={{ backgroundColor: 'White' }} id={anchor}>
-      <div
-        id="cookie-declaration-wrapper"
-        className={twMerge(`pb-page-content px-layout-lg max-w-viewport mx-auto`, className)}
-      >
-        {title && <StyledTitle value={title} />}
+    <BackgroundContainer id={anchor} className={className}>
+      <div id="cookie-declaration-wrapper">
+        {title && <Heading value={title} />}
         <div ref={placeholderRef}></div>
       </div>
     </BackgroundContainer>

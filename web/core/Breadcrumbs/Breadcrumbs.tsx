@@ -1,5 +1,5 @@
 import { BreadcrumbsList } from './index'
-import { BackgroundContainer, BackgroundContainerProps } from '@components'
+import { BackgroundContainer, BackgroundContainerProps } from '@core/Backgrounds'
 import { BreadcrumbJsonLd } from 'next-seo'
 import { useRouter } from 'next/router'
 import { twMerge } from 'tailwind-merge'
@@ -54,29 +54,27 @@ export const Breadcrumbs = ({
   if (crumbs.length < 2) return null
 
   return (
-    <BackgroundContainer background={background} renderFragmentWhenPossible className="mx-auto max-w-viewport">
-      <nav aria-label="Breadcrumbs">
-        <BreadcrumbsList className={twMerge(`py-10 px-layout-lg`, className)}>
-          {crumbs.map((item) => {
-            const isActive = item.slug === slug
-            const label = item.label
-            return (
-              <BreadcrumbsList.BreadcrumbsListItem key={item.slug} active={isActive}>
-                {isActive ? (
-                  <span aria-current="page">{label}</span>
-                ) : (
-                  <NextLink
-                    href={item.slug}
-                    className="hover:underline no-underline focus:outline-none focus-visible:envis-outline dark:focus-visible:envis-outline-invert"
-                  >
-                    {label}
-                  </NextLink>
-                )}
-              </BreadcrumbsList.BreadcrumbsListItem>
-            )
-          })}
-        </BreadcrumbsList>
-      </nav>
+    <BackgroundContainer as="nav" aria-label="Breadcrumbs" background={background} renderFragmentWhenPossible>
+      <BreadcrumbsList className={twMerge(`py-10`, className)}>
+        {crumbs.map((item) => {
+          const isActive = item.slug === slug
+          const label = item.label
+          return (
+            <BreadcrumbsList.BreadcrumbsListItem key={item.slug} active={isActive}>
+              {isActive ? (
+                <span aria-current="page">{label}</span>
+              ) : (
+                <NextLink
+                  href={item.slug}
+                  className="hover:underline no-underline focus:outline-none focus-visible:envis-outline dark:focus-visible:envis-outline-invert"
+                >
+                  {label}
+                </NextLink>
+              )}
+            </BreadcrumbsList.BreadcrumbsListItem>
+          )
+        })}
+      </BreadcrumbsList>
       <BreadcrumbJsonLd itemListElements={buildJsonLdElements(crumbs, router)} />
     </BackgroundContainer>
   )

@@ -252,11 +252,6 @@ const snippets: textSnippet = {
     defaultValue: 'Please let us know how we may help you',
     group: groups.contactForm,
   },
-  contact_form_ask_us: {
-    title: 'Ask us a question',
-    defaultValue: 'Ask us a question',
-    group: groups.contactForm,
-  },
   contact_form_report_error: {
     title: 'Report an error',
     defaultValue: 'Report an error',
@@ -876,6 +871,26 @@ const snippets: textSnippet = {
     title: 'Read more',
     defaultValue: 'Read more',
     group: groups.others,
+  },
+  internalLink: {
+    title: 'Internal link',
+    defaultValue: 'Internal link',
+    group: groups.common,
+  },
+  externalLink: {
+    title: 'External link',
+    defaultValue: 'External link',
+    group: groups.common,
+  },
+  downloadDocument: {
+    title: 'Download document',
+    defaultValue: 'Download document',
+    group: groups.common,
+  },
+  search_page_title: {
+    title: 'Search page title',
+    defaultValue: 'Search',
+    group: groups.search,
   },
 }
 

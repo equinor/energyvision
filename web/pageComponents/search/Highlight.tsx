@@ -1,18 +1,13 @@
 import { Fragment } from 'react'
 import { getHighlightedParts, getPropertyByPath } from 'instantsearch.js/es/lib/utils/index.js'
-import styled from 'styled-components'
 import { v4 as uuidv4 } from 'uuid'
 import { decode } from 'html-entities'
-import type { EventHitType } from './EventHit'
-import type { TopicHitType } from './TopicHit'
-
-const StyledSpan = styled.span`
-  color: var(--spruce-wood-100);
-  font-weight: var(--fontWeight-bolder);
-`
+import type { Hit as AlgoliaHit } from '@algolia/client-search'
+import type { HitData } from './UniversalHit'
+import { Highlight as TypographyHighlight } from '@core/Typography'
 
 type Highlight = {
-  hit: EventHitType | TopicHitType
+  hit: AlgoliaHit<HitData>
   attribute: string
 }
 
@@ -29,9 +24,12 @@ export const Highlight: React.FC<Highlight> = ({ hit, attribute }) => {
         const key = uuidv4()
         const value = decode(part.value)
         if (part.isHighlighted) {
-          return <StyledSpan key={key}>{value}</StyledSpan>
+          return (
+            <TypographyHighlight key={key} className="font-bold">
+              {value}
+            </TypographyHighlight>
+          )
         }
-
         return <Fragment key={key}>{value}</Fragment>
       })}
     </>
