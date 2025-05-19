@@ -31,6 +31,35 @@ const subscriberApi = axios.create({
   },
 })
 
+export type SanityCategory = 'generalNews' | 'magazineStories' | 'stockMarketAnnouncements' | 'crudeOilAssays'
+
+/* Used when sign up and distribution */
+export const mapCategoryToId = (category: SanityCategory, locale: 'no' | 'en') => {
+  if (locale === 'no') {
+    switch (category) {
+      case 'generalNews':
+        return '236530'
+      case 'crudeOilAssays':
+        return '123050'
+      case 'magazineStories':
+        return '236531'
+      case 'stockMarketAnnouncements':
+        return '236529'
+    }
+  } else {
+    switch (category) {
+      case 'generalNews':
+        return '123047'
+      case 'crudeOilAssays':
+        return '123050'
+      case 'magazineStories':
+        return '129256'
+      case 'stockMarketAnnouncements':
+        return '129253'
+    }
+  }
+}
+
 /**
  *  Subscribe a user using subscriber_list_id and tags
  */
@@ -38,16 +67,24 @@ export const signUp = async (formParameters: SubscribeFormParameters) => {
   try {
     const requestedTags: string[] = []
     if (formParameters.stockMarketAnnouncements) {
-      formParameters.languageCode === 'no' ? requestedTags.push('236529') : requestedTags.push('129253')
+      formParameters.languageCode === 'no'
+        ? requestedTags.push(mapCategoryToId('stockMarketAnnouncements', 'no'))
+        : requestedTags.push(mapCategoryToId('stockMarketAnnouncements', 'en'))
     }
     if (formParameters.generalNews) {
-      formParameters.languageCode === 'no' ? requestedTags.push('236530') : requestedTags.push('123047')
+      formParameters.languageCode === 'no'
+        ? requestedTags.push(mapCategoryToId('generalNews', 'no'))
+        : requestedTags.push(mapCategoryToId('generalNews', 'en'))
     }
     if (formParameters.crudeOilAssays) {
-      formParameters.languageCode === 'no' ? requestedTags.push('123050') : requestedTags.push('123050')
+      formParameters.languageCode === 'no'
+        ? requestedTags.push(mapCategoryToId('crudeOilAssays', 'no'))
+        : requestedTags.push(mapCategoryToId('crudeOilAssays', 'en'))
     }
     if (formParameters.magazineStories) {
-      formParameters.languageCode === 'no' ? requestedTags.push('236531') : requestedTags.push('129256')
+      formParameters.languageCode === 'no'
+        ? requestedTags.push(mapCategoryToId('magazineStories', 'no'))
+        : requestedTags.push(mapCategoryToId('magazineStories', 'en'))
     }
 
     const requestBody = {
