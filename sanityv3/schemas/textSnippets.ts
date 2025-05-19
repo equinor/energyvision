@@ -867,6 +867,11 @@ const snippets: textSnippet = {
     defaultValue: 'Read more',
     group: groups.others,
   },
+  open: {
+    title: 'Open',
+    defaultValue: 'Open',
+    group: groups.others,
+  },
   internalLink: {
     title: 'Internal link',
     defaultValue: 'Internal link',
