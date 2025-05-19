@@ -19,7 +19,7 @@ export type LatestNewsType = {
 //add groq to collect only ones with category
 
 export const latestNews = /* groq */ `
-  *[_type == "news" && defined(category) && ${sameLang} && ${noDrafts}] | order(${publishDateTimeQuery} desc)[0...5] {
+  *[_type == "news" && defined(subscriptionType) && ${sameLang} && ${noDrafts}] | order(${publishDateTimeQuery} desc)[0...5] {
     _id,
     "type":_type,
     "slug": slug.current,

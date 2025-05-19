@@ -50,7 +50,6 @@ const generateRssFeed = async () => {
       })
 
       const hero = article.hero
-      console.log('hero', hero)
       const bannerImageUrl = hero?.image?.asset ? urlFor(hero.image).size(560, 280).auto('format').toString() : ''
       const imageAlt = hero?.image?.alt ? ` alt="${hero.image.alt}"` : ''
 
@@ -67,7 +66,6 @@ const generateRssFeed = async () => {
       })
       const categoryTag = article.type === 'magazine' ? 'magazineStories' : article.subscriptionType
       const title = article.type === 'magazine' ? toPlainText(article.title as PortableTextBlock[]) : article.title
-      console.log('categoryTag', categoryTag)
 
       rss += `
         <item>
