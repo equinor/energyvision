@@ -31,33 +31,44 @@ const subscriberApi = axios.create({
   },
 })
 
-export type SanityCategory = 'generalNews' | 'magazineStories' | 'stockMarketAnnouncements' | 'crudeOilAssays'
-
 /* Used when sign up and distribution */
-export const mapCategoryToId = (category: SanityCategory, locale: 'no' | 'en') => {
+export const mapCategoryToId = (category: string, locale: 'no' | 'en') => {
   if (locale === 'no') {
     switch (category) {
       case 'generalNews':
         return 'generelle nyheter' //'236530'
+      case 'Company':
+        return 'generelle nyheter' //'236530'
       case 'crudeOilAssays':
+        return 'crude oil assays' //'123050'
+      case 'Crude':
         return 'crude oil assays' //'123050'
       case 'magazineStories':
         return 'magasinsaker' //'236531'
       case 'stockMarketAnnouncements':
+        return 'børsmeldinger' //'236529'
+      case 'Stock':
         return 'børsmeldinger' //'236529'
     }
   } else {
     switch (category) {
       case 'generalNews':
         return 'general news' //'123047'
+      case 'Company':
+        return 'general news' //'236530'
       case 'crudeOilAssays':
+        return 'crude oil assays' //'123050'
+      case 'Crude':
         return 'crude oil assays' //'123050'
       case 'magazineStories':
         return 'magazine stories' //'129256'
       case 'stockMarketAnnouncements':
         return 'stock market announcements' //'129253'
+      case 'Stock':
+        return 'stock market announcements' //'236529'
     }
   }
+  return ''
 }
 
 /**
