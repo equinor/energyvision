@@ -4,6 +4,7 @@ import { defaultComponents, toHTML } from '@portabletext/to-html'
 import { urlFor } from '../../../common/helpers/urlFor'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { format, utcToZonedTime } from 'date-fns-tz'
+import { mapCategoryToId, SanityCategory } from '../subscription'
 
 const generateRssFeed = async () => {
   try {
@@ -36,6 +37,7 @@ const generateRssFeed = async () => {
 
     articles.forEach((article) => {
       const langPath = article.lang === 'nb_NO' ? '/no' : ''
+      const locale = article.lang === 'nb_NO' ? 'no' : 'en'
       const descriptionHtml = toHTML(article.ingress, {
         components: serializers,
         onMissingComponent: (e) => String(e),
@@ -65,7 +67,11 @@ const generateRssFeed = async () => {
           <pubDate>${formattedPubDate}</pubDate>
           <description><![CDATA[<img src="${bannerImageUrl}"${imageAlt}/><br/>${descriptionHtml}]]></description>
           <language>${article.lang}</language>
-          ${article.subscriptionType ? `<category>${article.subscriptionType}</category>` : ''}
+          ${
+            article.subscriptionType
+              ? `<category>${mapCategoryToId(article.subscriptionType as SanityCategory, locale)}</category>`
+              : ''
+          }
           <nl:extra1>${extraFormattedDate}</nl:extra1>
         </item>`
     })
