@@ -37,10 +37,18 @@ const subscriberApi = axios.create({
 export const signUp = async (formParameters: SubscribeFormParameters) => {
   try {
     const requestedTags: string[] = []
-    if (formParameters.stockMarketAnnouncements) requestedTags.push('Stock')
-    if (formParameters.generalNews) requestedTags.push('Company')
-    if (formParameters.crudeOilAssays) requestedTags.push('Crude')
-    if (formParameters.magazineStories) requestedTags.push('Magazine')
+    if (formParameters.stockMarketAnnouncements) {
+      formParameters.languageCode === 'no' ? requestedTags.push('236529') : requestedTags.push('129253')
+    }
+    if (formParameters.generalNews) {
+      formParameters.languageCode === 'no' ? requestedTags.push('236530') : requestedTags.push('123047')
+    }
+    if (formParameters.crudeOilAssays) {
+      formParameters.languageCode === 'no' ? requestedTags.push('123050') : requestedTags.push('123050')
+    }
+    if (formParameters.magazineStories) {
+      formParameters.languageCode === 'no' ? requestedTags.push('236531') : requestedTags.push('129256')
+    }
 
     const requestBody = {
       email: formParameters.email,
