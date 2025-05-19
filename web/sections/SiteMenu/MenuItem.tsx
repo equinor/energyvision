@@ -30,18 +30,30 @@ export const MenuItem = ({ item, index }: MenuGroupType) => {
   const menuItemHref = getLink(topLevelLink)
   const router = useRouter()
 
+  const ariaCurrentStyling = `aria-current:before:content-['']
+  aria-current:before:absolute
+  aria-current:before:top-0
+  aria-current:before:-left-4
+  aria-current:before:w-[2px]
+  aria-current:before:h-full
+  aria-current:before:bg-moss-green-95`
+
   return (
     <_MenuItem value={`${index}`}>
       <MenuHeader>{topLevelLink?.label}</MenuHeader>
       <MenuContent className="">
-        <div className="max-xl:mt-8 px-4 xl:px-layout-sm xl:mx-auto">
+        <div className="max-xl:py-4 px-4 xl:px-layout-sm xl:mx-auto">
           <div className="w-full flex flex-col gap-2 pb-6">
             {intro && <Blocks value={intro} />}
-            <ResourceLink href={menuItemHref} className="w-fit">
+            <ResourceLink
+              href={menuItemHref}
+              className={`relative w-fit ${ariaCurrentStyling}`}
+              aria-current={router.asPath == topLevelLink?.link?.slug ? 'page' : 'false'}
+            >
               {topLevelLink?.label}
             </ResourceLink>
           </div>
-          <div className="flex-grow py-4 xl:py-10 border-b border-grey-30">
+          <div className="flex-grow py-4 xl:py-10">
             {groups && groups.length > 0 && (
               <div
                 className="flex
@@ -80,17 +92,14 @@ export const MenuItem = ({ item, index }: MenuGroupType) => {
                         {groupItem.links?.map((link: MenuLinkData) => (
                           <li key={link.id}>
                             <Link
-                              className={` 
-                                aria-current:bg-grey-10
-                                aria-current:px-2
-                                aria-current:-ml-2
+                              className={`relative 
                                 py-2
                                 hover:underline 
                                 underline-offset-2
                                 text-sm
                                 no-underline
-                                aria-current:border-l-[3px]
-                                aria-current:border-moss-green-95`}
+                                ${ariaCurrentStyling}
+                                `}
                               href={getLink(link)}
                               aria-current={router.asPath == link?.link?.slug ? 'page' : 'false'}
                             >
