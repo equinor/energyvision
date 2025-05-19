@@ -1,29 +1,35 @@
 import { sanityClient } from '../../../lib/sanity.server'
-import { LatestNewsType, latestNews } from './groq.global'
+import { LatestNewsType, latestMagazine, latestNews } from './groq.global'
 import { defaultComponents, toHTML } from '@portabletext/to-html'
 import { urlFor } from '../../../common/helpers/urlFor'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { format, utcToZonedTime } from 'date-fns-tz'
-import { mapCategoryToId, SanityCategory } from '../subscription'
+import { mapCategoryToId } from '../subscription'
+import { PortableTextBlock, toPlainText } from '@portabletext/react'
 
 const generateRssFeed = async () => {
   try {
-    // Fetch both English and Norwegian articles
-    const [englishArticles, norwegianArticles] = await Promise.all([
+    // Fetch both English and Norwegian articles from news and magazine
+    const [englishArticles, norwegianArticles, englishMagazineArticles, norwegianMagazineArticles] = await Promise.all([
       sanityClient.fetch(latestNews, { lang: 'en_GB' }),
       sanityClient.fetch(latestNews, { lang: 'nb_NO' }),
+      sanityClient.fetch(latestMagazine, { lang: 'en_GB' }),
+      sanityClient.fetch(latestMagazine, { lang: 'nb_NO' }),
     ])
 
     // Merge the articles and sort by publish date (newest first)
-    const articles: LatestNewsType[] = [...englishArticles, ...norwegianArticles].sort(
-      (a, b) => new Date(b.publishDateTime).getTime() - new Date(a.publishDateTime).getTime(),
-    )
+    const articles: LatestNewsType[] = [
+      ...englishArticles,
+      ...norwegianArticles,
+      ...englishMagazineArticles,
+      ...norwegianMagazineArticles,
+    ].sort((a, b) => new Date(b.publishDateTime).getTime() - new Date(a.publishDateTime).getTime())
 
     let rss = `<?xml version="1.0" encoding="UTF-8"?>
     <rss version="2.0" xmlns:nl="http://www.w3.org">
       <channel>
-      <title>Equinor News</title>
-      <description>Latest news</description>
+      <title>Equinor news and magazine stories</title>
+      <description>Latest news and magazine stories</description>
       <link>https://www.equinor.com</link>`
 
     const serializers = {
@@ -44,6 +50,7 @@ const generateRssFeed = async () => {
       })
 
       const hero = article.hero
+      console.log('hero', hero)
       const bannerImageUrl = hero?.image?.asset ? urlFor(hero.image).size(560, 280).auto('format').toString() : ''
       const imageAlt = hero?.image?.alt ? ` alt="${hero.image.alt}"` : ''
 
@@ -58,20 +65,19 @@ const generateRssFeed = async () => {
       const extraFormattedDate = format(utcToZonedTime(publishDate, 'Europe/Oslo'), 'dd.MM.yyyy', {
         timeZone: 'Europe/Oslo',
       })
+      const categoryTag = article.type === 'magazine' ? 'magazineStories' : article.subscriptionType
+      const title = article.type === 'magazine' ? toPlainText(article.title as PortableTextBlock[]) : article.title
+      console.log('categoryTag', categoryTag)
 
       rss += `
         <item>
-          <title>${article.title}</title>
+          <title>${title}</title>
           <link>https://equinor.com${langPath}${article.slug}</link>
           <guid>https://equinor.com${langPath}${article.slug}</guid>
           <pubDate>${formattedPubDate}</pubDate>
           <description><![CDATA[<img src="${bannerImageUrl}"${imageAlt}/><br/>${descriptionHtml}]]></description>
           <language>${article.lang}</language>
-          ${
-            article.subscriptionType
-              ? `<category>${mapCategoryToId(article.subscriptionType as SanityCategory, locale)}</category>`
-              : ''
-          }
+          ${categoryTag ? `<category>${mapCategoryToId(categoryTag, locale)}</category>` : ''}
           <nl:extra1>${extraFormattedDate}</nl:extra1>
         </item>`
     })

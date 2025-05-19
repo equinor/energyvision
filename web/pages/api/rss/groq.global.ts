@@ -6,8 +6,9 @@ import { noDrafts, sameLang } from '../../../lib/queries/common/langAndDrafts'
 
 export type LatestNewsType = {
   _id: string
+  type: string
   slug: string
-  title: string
+  title: string | PortableTextBlock[]
   publishDateTime: string
   hero: ImageWithCaptionData
   ingress: PortableTextBlock
@@ -15,13 +16,28 @@ export type LatestNewsType = {
   lang: string
 }
 
+//add groq to collect only ones with category
+
 export const latestNews = /* groq */ `
-  *[_type == "news" && ${sameLang} && ${noDrafts}] | order(${publishDateTimeQuery} desc)[0...5] {
+  *[_type == "news" && defined(category) && ${sameLang} && ${noDrafts}] | order(${publishDateTimeQuery} desc)[0...5] {
     _id,
+    "type":_type,
     "slug": slug.current,
     title,
     "hero": heroImage,
     subscriptionType,
+    "publishDateTime": ${publishDateTimeQuery},
+    ${ingressForNewsQuery},
+    lang
+  }
+`
+export const latestMagazine = /* groq */ `
+  *[_type == "magazine" && shouldDistributeMagazine && ${sameLang} && ${noDrafts}] | order(${publishDateTimeQuery} desc)[0...5] {
+    _id,
+    "type":_type,
+    "slug": slug.current,
+    title,
+    "hero": heroFigure,
     "publishDateTime": ${publishDateTimeQuery},
     ${ingressForNewsQuery},
     lang
