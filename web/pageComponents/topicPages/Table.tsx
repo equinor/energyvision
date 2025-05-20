@@ -1,10 +1,9 @@
-import { Table as EnvisTable, Text } from '@components'
+import { Table as EnvisTable } from '@components'
 import { BackgroundContainer } from '@core/Backgrounds'
 import { FormattedDate } from '@core/FormattedDateTime'
 import styled from 'styled-components'
 import isEmpty from '../shared/portableText/helpers/isEmpty'
 import IngressText from '../shared/portableText/IngressText'
-import RichText from '../shared/portableText/RichText'
 import TitleText from '../shared/portableText/TitleText'
 import { Link } from '@core/Link'
 
@@ -13,7 +12,7 @@ import type { CellData, LinkData, TableData } from '../../types/index'
 import { PortableTextBlock } from '@portabletext/types'
 import { PortableText } from '@portabletext/react'
 import defaultSerializers from '../shared/portableText/helpers/defaultSerializers'
-import { twMerge } from 'tailwind-merge'
+import Blocks from '../shared/portableText/Blocks'
 
 const { Head, Row, Cell, Body } = EnvisTable
 
@@ -125,21 +124,7 @@ const Table = ({ data, anchor, className }: TableProps) => {
             {tableHeaders?.map((header) => {
               return (
                 <StyledHeaderCell key={header.id}>
-                  {header && header.headerCell && (
-                    <RichText
-                      value={header.headerCell}
-                      components={{
-                        block: {
-                          normal: ({ children }) => {
-                            // eslint-disable-next-line
-                            // @ts-ignore: Still struggling with the types here :/
-                            if (isEmpty(children)) return null
-                            return <Text size="md">{children}</Text>
-                          },
-                        },
-                      }}
-                    />
-                  )}
+                  {header && header.headerCell && <Blocks value={header.headerCell}></Blocks>}
                 </StyledHeaderCell>
               )
             })}

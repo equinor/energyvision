@@ -1,5 +1,4 @@
 import { GetStaticProps } from 'next'
-import styled from 'styled-components'
 import type { AppProps } from 'next/app'
 import { IntlProvider } from 'react-intl'
 import dynamic from 'next/dynamic'
@@ -15,12 +14,6 @@ const ErrorPage = dynamic(() => import('../pageComponents/pageTemplates/ErrorPag
 const Footer = dynamic(() => import('../sections/Footer/Footer'))
 const Header = dynamic(() => import('../sections/Header/Header'))
 
-const Grid = styled.div`
-  display: grid;
-  height: calc(100vh - var(--topbar-height));
-  grid-template-rows: min-content 1fr min-content;
-`
-
 type Custom500Props = {
   pageData: ErrorPageData
   menuData: MenuData
@@ -31,7 +24,7 @@ type Custom500Props = {
 const Custom500 = ({ data }: { data: Custom500Props }) => {
   const { pageData } = data
 
-  return <ErrorPage pageData={pageData} />
+  return <ErrorPage pageData={pageData} statusCode={500} />
 }
 
 Custom500.getLayout = (page: AppProps) => {
@@ -57,14 +50,12 @@ Custom500.getLayout = (page: AppProps) => {
         defaultLocale={getIsoFromLocale(defaultLocale)}
         messages={data?.intl?.messages}
       >
-        <Grid>
-          <div className="pt-topbar">
-            {/*@ts-ignore: TODO */}
-            <Header slugs={slugs} menuData={data?.menuData} />
-            {page}
-            <Footer footerData={data?.footerData} />
-          </div>
-        </Grid>
+        <div className="pt-topbar">
+          {/*@ts-ignore: TODO */}
+          <Header slugs={slugs} menuData={data?.menuData} />
+          {page}
+          <Footer footerData={data?.footerData} />
+        </div>
       </IntlProvider>
     </>
   )
