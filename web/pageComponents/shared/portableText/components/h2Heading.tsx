@@ -1,9 +1,9 @@
-import { Heading } from '@components'
+import { Typography } from '@core/Typography'
 
 export const h2Heading = ({ children }: { children?: React.ReactNode }) => {
   return (
-    <Heading level="h2" size="lg">
+    <Typography as="h2" variant="lg">
       {children}
-    </Heading>
+    </Typography>
   )
 }

@@ -5,17 +5,9 @@ import TitleText from '../shared/portableText/TitleText'
 import ContentGroup from '../landingPages/ContentGroup'
 import Seo from '../../pageComponents/shared/Seo'
 
-const LandingPageLayout = styled.main``
-
 const HeroBanner = styled.div`
   padding: var(--space-xLarge) var(--layout-paddingHorizontal-medium) var(--space-xLarge)
     var(--layout-paddingHorizontal-medium);
-`
-
-const StyledHeading = styled(TitleText)`
-  max-width: 1186px; /* 1920 - (2 * 367) */
-  margin-left: auto;
-  margin-right: auto;
 `
 
 const Intro = styled.div`
@@ -42,8 +34,10 @@ const LandingPage = ({ data }: LandingPageProps) => {
   return (
     <>
       <Seo seoAndSome={data?.seoAndSome} slug={data?.slug} pageTitle={data?.title} />
-      <LandingPageLayout>
-        <HeroBanner>{title && <StyledHeading value={title} level="h1" size="3xl" />}</HeroBanner>
+      <main>
+        <HeroBanner>
+          {title && <TitleText className="max-w-[1186px] mx-auto" value={title} level="h1" size="3xl" />}
+        </HeroBanner>
         {ingress && (
           <Intro>
             <IngressText value={ingress} />
@@ -54,7 +48,7 @@ const LandingPage = ({ data }: LandingPageProps) => {
             return <ContentGroup key={group.id} group={group} />
           })}
         </TOCList>
-      </LandingPageLayout>
+      </main>
     </>
   )
 }

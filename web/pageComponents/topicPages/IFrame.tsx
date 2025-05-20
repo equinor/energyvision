@@ -1,4 +1,3 @@
-import styled from 'styled-components'
 import type { IFrameData } from '../../types/index'
 import { FigureCaption } from '@core/FigureCaption/FigureCaption'
 import { BackgroundContainer } from '@core/Backgrounds'
@@ -7,19 +6,7 @@ import IngressText from '../shared/portableText/IngressText'
 import TitleText from '../shared/portableText/TitleText'
 import RichText from '../shared/portableText/RichText'
 import TranscriptAndActions from '../../pageComponents/shared/TranscriptAndActions'
-
-const StyledHeading = styled(TitleText)`
-  padding: 0 0 var(--space-large) 0;
-  text-align: left;
-`
-
-const Figure = styled.figure`
-  margin: 0;
-`
-
-const Ingress = styled.div`
-  margin-bottom: var(--space-large);
-`
+import { twMerge } from 'tailwind-merge'
 
 const IFrame = ({
   anchor,
@@ -35,15 +22,30 @@ const IFrame = ({
 
   const { height, aspectRatio, ...restOptions } = designOptions
   return (
-    <BackgroundContainer {...restOptions} {...rest} id={anchor} className={className} renderFragmentWhenPossible>
-      {title && <StyledHeading value={title} />}
-      {ingress && (
-        <Ingress>
-          <IngressText value={ingress}></IngressText>
-        </Ingress>
-      )}
-      {description ? (
-        <Figure>
+    <BackgroundContainer {...restOptions} {...rest} id={anchor} renderFragmentWhenPossible>
+      <div className={twMerge(`pb-page-content max-w-viewport px-layout-lg mx-auto`, className)}>
+        {title && <TitleText className="px-0 pt-0 pr-8 " value={title} />}
+        {ingress && (
+          <div className="mb-8">
+            <IngressText value={ingress}></IngressText>
+          </div>
+        )}
+        {description ? (
+          <figure className="m-0">
+            <CoreIFrame
+              frameTitle={frameTitle}
+              url={url}
+              cookiePolicy={cookiePolicy}
+              aspectRatio={aspectRatio}
+              height={height}
+              hasSectionTitle={!!title}
+            />
+            <FigureCaption size="medium">
+              <RichText value={description || []} />
+            </FigureCaption>
+          </figure>
+        ) : (
+          <>
           <CoreIFrame
             frameTitle={frameTitle}
             url={url}
@@ -53,20 +55,12 @@ const IFrame = ({
             hasSectionTitle={!!title}
           />
           <FigureCaption size="medium">
-            <RichText value={description} />
+            <RichText value={description || []} />
           </FigureCaption>
-        </Figure>
-      ) : (
-        <CoreIFrame
-          frameTitle={frameTitle}
-          url={url}
-          cookiePolicy={cookiePolicy}
-          aspectRatio={aspectRatio}
-          height={height}
-          hasSectionTitle={!!title}
-        />
+        </>
       )}
       <TranscriptAndActions action={action} transcript={transcript} ariaTitle={frameTitle} />
+      </div>
     </BackgroundContainer>
   )
 }
