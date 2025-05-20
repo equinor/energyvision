@@ -106,7 +106,7 @@ export const signUp = async (formParameters: SubscribeFormParameters) => {
     const response = await subscriberApi.post(
       `/subscribers?subscriber_list_id=${
         formParameters.languageCode === 'no' ? SUBSCRIBER_LIST_ID_NO : SUBSCRIBER_LIST_ID_EN
-      }`,
+      }&tag=merge`,
       requestBody,
     )
 
