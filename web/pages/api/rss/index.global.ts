@@ -7,23 +7,18 @@ import { format, utcToZonedTime } from 'date-fns-tz'
 import { mapCategoryToId } from '../subscription'
 import { PortableTextBlock, toPlainText } from '@portabletext/react'
 
-const generateRssFeed = async () => {
+const generateRssFeed = async (locale: 'en_GB' | 'nb_NO') => {
   try {
     // Fetch both English and Norwegian articles from news and magazine
-    const [englishArticles, norwegianArticles, englishMagazineArticles, norwegianMagazineArticles] = await Promise.all([
-      sanityClient.fetch(latestNews, { lang: 'en_GB' }),
-      sanityClient.fetch(latestNews, { lang: 'nb_NO' }),
-      sanityClient.fetch(latestMagazine, { lang: 'en_GB' }),
-      sanityClient.fetch(latestMagazine, { lang: 'nb_NO' }),
+    const [newsArticles, magazineArticles] = await Promise.all([
+      sanityClient.fetch(latestNews, { lang: locale }),
+      sanityClient.fetch(latestMagazine, { lang: locale }),
     ])
 
     // Merge the articles and sort by publish date (newest first)
-    const articles: LatestNewsType[] = [
-      ...englishArticles,
-      ...norwegianArticles,
-      ...englishMagazineArticles,
-      ...norwegianMagazineArticles,
-    ].sort((a, b) => new Date(b.publishDateTime).getTime() - new Date(a.publishDateTime).getTime())
+    const articles: LatestNewsType[] = [...newsArticles, ...magazineArticles].sort(
+      (a, b) => new Date(b.publishDateTime).getTime() - new Date(a.publishDateTime).getTime(),
+    )
 
     let rss = `<?xml version="1.0" encoding="UTF-8"?>
     <rss version="2.0" xmlns:nl="http://www.w3.org">
@@ -92,7 +87,10 @@ const generateRssFeed = async () => {
 }
 
 export default async function handler(_req: NextApiRequest, res: NextApiResponse) {
-  const rss = await generateRssFeed()
+  const { query } = _req
+  const lang = query?.lang
+  const locale = lang === 'no' ? 'nb_NO' : 'en_GB'
+  const rss = await generateRssFeed(locale)
   res.setHeader('Content-Type', 'text/xml')
   res.write(rss)
   res.end()
