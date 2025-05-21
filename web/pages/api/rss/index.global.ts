@@ -3,7 +3,9 @@ import { LatestNewsType, latestMagazine, latestNews } from './groq.global'
 import { defaultComponents, toHTML } from '@portabletext/to-html'
 import { urlFor } from '../../../common/helpers/urlFor'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { format, utcToZonedTime } from 'date-fns-tz'
+import { format } from 'date-fns'
+import { TZDate } from '@date-fns/tz'
+import { enGB, nb } from 'date-fns/locale'
 import { mapCategoryToId } from '../subscription'
 import { PortableTextBlock, toPlainText } from '@portabletext/react'
 
@@ -51,14 +53,12 @@ const generateRssFeed = async (locale: 'en_GB' | 'nb_NO') => {
       const publishDate = new Date(article.publishDateTime)
 
       // Format the main pubDate
-      const formattedPubDate = format(utcToZonedTime(publishDate, 'Europe/Oslo'), 'EEE, dd MMM yyyy HH:mm:ss xxxx', {
-        timeZone: 'Europe/Oslo',
-      })
+      const formattedPubDate = format(new TZDate(publishDate, 'Europe/Oslo'), 'EEE, dd MMM yyyy HH:mm:ss xxxx')
 
       // Format the extra field date as dd.MM.yyyy
-      const extraFormattedDate = format(utcToZonedTime(publishDate, 'Europe/Oslo'), 'dd.MM.yyyy', {
+      /*       const extraFormattedDate = format(utcToZonedTime(publishDate, 'Europe/Oslo'), 'dd.MM.yyyy', {
         timeZone: 'Europe/Oslo',
-      })
+      }) */
       const categoryTag = article.type === 'magazine' ? 'magazineStories' : article.subscriptionType
       const title = article.type === 'magazine' ? toPlainText(article.title as PortableTextBlock[]) : article.title
 
@@ -71,7 +71,9 @@ const generateRssFeed = async (locale: 'en_GB' | 'nb_NO') => {
           <description><![CDATA[<img src="${bannerImageUrl}"${imageAlt}/><br/>${descriptionHtml}]]></description>
           <language>${article.lang}</language>
           ${categoryTag ? `<category>${mapCategoryToId(categoryTag, locale)}</category>` : ''}
-          <nl:extra1>${extraFormattedDate}</nl:extra1>
+          <nl:extra1>${format(new TZDate(publishDate, 'Europe/Oslo'), "d.MMMM yyyy hh:mm ('CEST')", {
+            locale: article.lang === 'nb_NO' ? nb : enGB,
+          })}</nl:extra1>
         </item>`
     })
 
