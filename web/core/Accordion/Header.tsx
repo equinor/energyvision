@@ -5,8 +5,9 @@ import {
   AccordionTrigger,
   AccordionTriggerProps,
 } from '@radix-ui/react-accordion'
-import envisTwMerge from '../../twMerge'
+import { GoPlus, GoDash } from 'react-icons/go'
 import { add_circle_filled, add_circle_outlined, remove, remove_outlined } from '@equinor/eds-icons'
+import envisTwMerge from '../../twMerge'
 import { TransformableIcon } from '../../icons/TransformableIcon'
 import { Variants } from './Accordion'
 import { Typography } from '@core/Typography'
@@ -41,18 +42,26 @@ export const Header = forwardRef<HTMLButtonElement, AccordionHeaderProps>(functi
     py-4
     xl:pt-5
     xl:pb-4
-    border-none`,
+    border-none
+    justify-start
+    text-left`,
     menu: `
+    relative
+    max-xl:aria-current:before:content-['']
+    max-xl:aria-current:before:absolute
+    max-xl:aria-current:before:top-0
+    max-xl:aria-current:before:-left-2
+    max-xl:aria-current:before:w-[2px]
+    max-xl:aria-current:before:h-full
     py-3
-    px-2
     items-center
     text-base
-    aria-current:bg-grey-10
-    border-b
+    border-b-0
+    group-last/accordionListItem:border-b
+    max-xl:data-open:border-b
+    border-t
     border-grey-20
-    aria-current:border-moss-green-95
     font-normal 
-    data-open:font-bold
     leading-none
     xl:px-6
     xl:my-4
@@ -60,24 +69,112 @@ export const Header = forwardRef<HTMLButtonElement, AccordionHeaderProps>(functi
     xl:border-t-0
     xl:border-transparent
     xl:border-b-2
-    data-open:xl:border-moss-green-95
-    data-open:xl:font-normal`,
-    simpleMenu: `py-3
+    xl:aria-current:border-moss-green-95
+    data-open:xl:border-moss-green-95`,
+    simpleMenu: `
+    py-3
     px-2
     items-center
     text-base
-    aria-current:bg-grey-10
-    aria-current:border-moss-green-95
-    font-normal 
-    data-open:font-bold
-    leading-none`,
+    relative
+    dark:hover:text-north-sea-50
+    aria-current:before:content-['']
+    aria-current:before:absolute
+    aria-current:before:top-0
+    aria-current:before:-left-2
+    aria-current:before:w-[2px]
+    aria-current:before:h-full
+    aria-current:font-semibold
+    aria-current:before:bg-north-sea-50
+    font-normal
+    leading-none
+    max-xl:border-b-0
+    max-xl:group-last/accordionListItem:border-b
+    max-xl:data-open:border-b
+    max-xl:border-t
+    max-xl:border-grey-20`,
   }
 
   const textVariantClassName: Partial<Record<Variants, string>> = {
     primary: 'text-base',
-    menu: 'text-base xl:text-sm',
-    simpleMenu: 'text-base xl:text-sm',
+    menu: 'flex justify-start text-lg xl:text-base',
+    simpleMenu: 'group-hover:text-north-sea-50 flex justify-start text-lg',
   }
+
+  const defaultIconsElement = (
+    <span className={`grid pr-4`}>
+      <TransformableIcon
+        className={`fill-slate-80
+          dark:fill-white-100
+          opacity-100
+          group-hover:opacity-0
+          group-data-open:opacity-0
+          transition-opacity
+          col-span-full
+          row-span-full`}
+        size={24}
+        iconData={add_circle_outlined}
+      />
+      <TransformableIcon
+        className={`fill-slate-80
+          dark:fill-white-100
+          opacity-0
+          group-hover:opacity-100
+          group-data-open:opacity-0
+          transition-opacity
+          col-span-full
+          row-span-full`}
+        size={24}
+        iconData={add_circle_filled}
+      />
+      <TransformableIcon
+        className={`fill-slate-80
+          dark:fill-white-100
+          opacity-0
+          group-data-open:opacity-100
+          group-data-open:group-hover:opacity-0
+          transition-opacity
+          col-span-full
+          row-span-full`}
+        size={24}
+        iconData={remove_outlined}
+      />
+      <TransformableIcon
+        className={`fill-slate-80
+          dark:fill-white-100
+          opacity-0
+          group-data-open:opacity-0
+          group-data-open:group-hover:opacity-100
+          transition-opacity
+          col-span-full
+          row-span-full`}
+        size={24}
+        iconData={remove}
+      />
+    </span>
+  )
+
+  const menuIconsElement = (
+    <div className={`w-fit mr-2 ${variant === 'menu' ? 'xl:hidden' : ''}`}>
+      <GoPlus
+        className={`
+          text-slate-80
+          dark:text-white-100
+          group-data-open:hidden
+          `}
+        size={32}
+      />
+      <GoDash
+        className={`
+          text-slate-80
+          dark:text-white-100
+          hidden
+          group-data-open:block
+          `}
+        size={32}
+      />
+    </div>
+  )
 
   return (
     <AccordionHeader asChild className={envisTwMerge(`${headerVariantClassName[variant]}`, headerClassName)}>
@@ -87,85 +184,42 @@ export const Header = forwardRef<HTMLButtonElement, AccordionHeaderProps>(functi
           className={envisTwMerge(
             `group
             w-full
-            bg-transparent
             cursor-pointer
             hover:underline
-            underline-offset-2
+            decoration-1
+            underline-offset-4
             outline-none
             focus:outline-none
+            focus:no-underline
             focus-visible:envis-outline
             dark:focus-visible:envis-outline-invert
             flex
-            justify-start
-            text-left
-          ${variantClassName[variant]}
+            ${variantClassName[variant]}
           `,
             className,
           )}
           {...rest}
         >
-          <span className={`grid pr-4 ${variant === 'menu' ? 'xl:hidden' : ''}`}>
-            <TransformableIcon
-              className={`fill-slate-80
-                  dark:fill-white-100
-                  opacity-100
-                  group-hover:opacity-0
-                  group-data-open:opacity-0
-                  transition-opacity
-                  col-span-full
-                  row-span-full`}
-              size={24}
-              iconData={add_circle_outlined}
-            />
-            <TransformableIcon
-              className={`fill-slate-80
-                  dark:fill-white-100
-                  opacity-0
-                  group-hover:opacity-100
-                  group-data-open:opacity-0
-                  transition-opacity
-                  col-span-full
-                  row-span-full`}
-              size={24}
-              iconData={add_circle_filled}
-            />
-            <TransformableIcon
-              className={`fill-slate-80
-                  dark:fill-white-100
-                  opacity-0
-                  group-data-open:opacity-100
-                  group-data-open:group-hover:opacity-0
-                  transition-opacity
-                  col-span-full
-                  row-span-full`}
-              size={24}
-              iconData={remove_outlined}
-            />
-            <TransformableIcon
-              className={`fill-slate-80
-                  dark:fill-white-100
-                  opacity-0
-                  group-data-open:opacity-0
-                  group-data-open:group-hover:opacity-100
-                  transition-opacity
-                  col-span-full
-                  row-span-full`}
-              size={24}
-              iconData={remove}
-            />
-          </span>
+          {variant === 'primary' && defaultIconsElement}
           <Typography
             as="span"
             className={`
-              motion-safe:transition-all
-              motion-safe:duration-100 
-              motion-safe:ease-in-out
-              font-normal
-              group-data-open:font-semibold
+              grow
+              ${
+                variant === 'menu'
+                  ? `xl:motion-safe:transition-all
+              xl:motion-safe:duration-100 
+              xl:motion-safe:ease-in-out`
+                  : ''
+              } 
+                font-normal
+                max-xl:group-data-open:font-semibold
+               xl:group-data-open:no-underline
               ${textVariantClassName[variant]}`}
           >
             {children}
           </Typography>
+          {(variant === 'menu' || variant === 'simpleMenu') && menuIconsElement}
         </AccordionTrigger>
       </Typography>
     </AccordionHeader>

@@ -1,18 +1,12 @@
-import styled from 'styled-components'
-
-const StyledDisplayLink = styled.p`
-  color: var(--mist-blue-100);
-  font-size: var(--typeScale-0);
-  margin: var(--space-xSmall) 0 var(--space-medium) 0;
-  word-break: break-word;
-  hyphens: auto;
-`
-
 const DisplayLink: React.FC<React.PropsWithChildren<React.HTMLAttributes<HTMLParagraphElement>>> = ({
   children,
   ...rest
 }) => {
-  return <StyledDisplayLink {...rest}>{children}</StyledDisplayLink>
+  return (
+    <p className="text-mist-blue-100 text-xs mx-0 mt-2 mb-4 break-word hyphens-auto" {...rest}>
+      {children}
+    </p>
+  )
 }
 
 export default DisplayLink

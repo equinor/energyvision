@@ -1,18 +1,13 @@
 import { Tabs } from '@core/Tabs'
 import { RefObject, useEffect, useState } from 'react'
-import EventHit from './EventHit'
 import Hits from './Hits'
-import MagazineHit from './MagazineHit'
-import NewsHit from './NewsHit'
-import TopicHit from './TopicHit'
 import TotalResultsStat from './TotalResultsStat'
 import { useSortBy, UseSortByProps, useHits, useInstantSearch } from 'react-instantsearch'
-import { FormattedMessage, useIntl } from 'react-intl'
+import { useIntl } from 'react-intl'
+import UniversalHit from './UniversalHit'
 
 const { TabList, Tab, TabPanel } = Tabs
 
-// Sven: I don't understand how we can revieve this number, it's configured
-// in the Configure component, so how could we get it from there
 const HITS_PER_PAGE = 5
 
 type SearchResultsProps = {
@@ -43,18 +38,6 @@ const SearchResults = (props: SearchResultsProps) => {
     }
   }, [userClicked, scopedResults, options, results?.__isArtificial, indexUiState.query, currentRefinement, refine])
 
-  const getHitProps = (tab: string) => {
-    switch (tab) {
-      case 'Magazine':
-        return MagazineHit
-      case 'News':
-        return NewsHit
-      case 'Events':
-        return EventHit
-      default:
-        return TopicHit
-    }
-  }
   const handleTabChange = (value: string) => {
     setUserClicked(true)
     const activeIndex = options.find((option) => option.label === value)
@@ -93,7 +76,7 @@ const SearchResults = (props: SearchResultsProps) => {
             {options.map((it) => (
               <TabPanel key={it.label} value={it.label} aria-labelledby={`tab-trigger-${it.label}`}>
                 <TotalResultsStat hitsPerPage={HITS_PER_PAGE} />
-                <Hits hitComponent={getHitProps(it.label)} />
+                <Hits hitComponent={UniversalHit} />
               </TabPanel>
             ))}
           </Tabs>
