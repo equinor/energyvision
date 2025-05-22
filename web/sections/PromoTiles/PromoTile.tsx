@@ -3,6 +3,7 @@ import { getUrlFromAction } from '../../common/helpers'
 import { ColorKeyTokens, colorKeyToUtilityMap } from '../../styles/colorKeyToUtilityMap'
 import { PromoTileData } from '../../types/index'
 import { forwardRef } from 'react'
+import { getLocaleFromName } from '../../lib/localization'
 
 type PromoTileProps = {
   hasSectionTitle?: boolean
@@ -13,7 +14,7 @@ export const PromoTile = forwardRef<HTMLAnchorElement, PromoTileProps>(function 
   ref,
 ) {
   const url = getUrlFromAction(action)
-
+  const locale = action.link?.lang ? getLocaleFromName(action.link?.lang) : false
   const { background } = designOptions
   const colorName =
     Object.keys(colorKeyToUtilityMap).find(
@@ -29,6 +30,7 @@ export const PromoTile = forwardRef<HTMLAnchorElement, PromoTileProps>(function 
       {...(id && { id: id })}
       //@ts-ignore:TODO
       href={url}
+      locale={locale}
       ref={ref}
       image={image}
       variant="secondary"
