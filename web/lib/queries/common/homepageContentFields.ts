@@ -12,7 +12,7 @@ _type == "homepageBanner" =>{
     "type": _type,
     "id": _key,
     overline,
-    "link": link[]{
+    "link": link[0]{
       ${linkSelectorFields},
       ${downloadableFileFields},
       ${downloadableImageFields},

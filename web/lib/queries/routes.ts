@@ -5,7 +5,6 @@ import { heroFields } from './common/heroFields'
 import { seoAndSomeFields } from './common/seoAndSomeFields'
 import { breadcrumbsQuery } from './common/breadcrumbs'
 import { stickyMenu } from './common/stickyMenu'
-import homepageContentFields from './common/homepageContentFields'
 
 const allSlugsQuery = /* groq */ `
     "currentSlug": {
