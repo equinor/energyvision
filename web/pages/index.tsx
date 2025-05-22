@@ -1,28 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { GetStaticProps, GetStaticPaths } from 'next'
+import { GetStaticProps } from 'next'
 import type { AppProps } from 'next/app'
 import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
 import dynamic from 'next/dynamic'
-/* import { useAppInsightsContext } from '@microsoft/applicationinsights-react-js' */
-import { getQueryFromSlug } from '../lib/queryFromSlug'
 import { Layout } from '../sections/Layout/Layout'
 import { defaultLanguage } from '../languages'
 import Header from '../sections/Header/Header'
 import { FormattedMessage } from 'react-intl'
 import getIntl from '../common/helpers/getIntl'
-import { getStaticBuildRoutePaths } from '../common/helpers/getPaths'
 import getPageSlugs from '../common/helpers/getPageSlugs'
 import { getComponentsData } from '../lib/fetchData'
 import { useContext, useEffect } from 'react'
 import { PreviewContext } from '../lib/contexts/PreviewContext'
-import { ClientPerspective } from 'next-sanity'
+import { getQueryFromSlug } from '../lib/queryFromSlug'
 
-const MagazinePage = dynamic(() => import('../templates/magazine/MagazinePage'))
-const LandingPage = dynamic(() => import('../pageComponents/pageTemplates/LandingPage'))
-const EventPage = dynamic(() => import('../pageComponents/pageTemplates/Event'))
-const NewsPage = dynamic(() => import('../pageComponents/pageTemplates/News'))
-const TopicPage = dynamic(() => import('../pageComponents/pageTemplates/TopicPage'))
+const HomePage = dynamic(() => import('../pageComponents/pageTemplates/HomePage'))
 
 // @TODO Improve types here, don't use any
 export default function Page({ data, preview = false }: any) {
@@ -37,13 +30,10 @@ export default function Page({ data, preview = false }: any) {
   const { pageData } = data
 
   const slug = pageData?.slug
+
   if (!router.isFallback && !slug && !data?.queryParams?.id) {
     return <ErrorPage statusCode={404} />
   }
-
-  const template = pageData?.template || null
-
-  if (!template) console.warn('Missing template for', slug)
 
   if (router.isFallback) {
     return (
@@ -52,20 +42,7 @@ export default function Page({ data, preview = false }: any) {
       </p>
     )
   }
-
-  switch (template) {
-    case 'landingPage':
-      return <LandingPage data={pageData} />
-    case 'event':
-      return <EventPage data={pageData} />
-    case 'news':
-    case 'localNews':
-      return <NewsPage data={pageData} />
-    case 'magazine':
-      return <MagazinePage data={pageData} />
-    default:
-      return <TopicPage data={pageData} />
-  }
+  return <HomePage data={pageData} />
 }
 
 // eslint-disable-next-line react/display-name
@@ -80,7 +57,7 @@ Page.getLayout = (page: AppProps) => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   const { props } = page
-  const { data, preview } = props
+  const { data } = props
 
   const slugs = getPageSlugs(data)
   const hasSticky =
@@ -96,26 +73,16 @@ Page.getLayout = (page: AppProps) => {
   )
 }
 
-export const getStaticProps: GetStaticProps = async ({
-  params,
-  preview = false,
-  locale = defaultLanguage.locale,
-  previewData = { perspective: 'published' },
-}) => {
+export const getStaticProps: GetStaticProps = async ({ params, preview = false, locale = defaultLanguage.locale }) => {
   const { query, queryParams } = await getQueryFromSlug(params?.slug as string[], locale)
 
-  const previewContext = {
-    preview,
-    perspective: (previewData as { perspective: ClientPerspective })?.perspective || 'published',
-  }
-  const intl = await getIntl(locale, previewContext)
-
+  const intl = await getIntl(locale, preview)
   const { menuData, pageData, footerData } = await getComponentsData(
     {
       query,
       queryParams,
     },
-    previewContext,
+    preview,
   )
 
   return {
@@ -132,20 +99,5 @@ export const getStaticProps: GetStaticProps = async ({
     },
     revalidate: 60,
     notFound: !pageData,
-  }
-}
-
-export const getStaticPaths: GetStaticPaths = async ({ locales = [] }) => {
-  // Not changing getRoutePaths(locales) because its used in sitemap.xml
-  const routePaths = await getStaticBuildRoutePaths(locales)
-
-  const paths = routePaths.map((path) => ({
-    params: { slug: path.slug },
-    locale: path.locale,
-  }))
-
-  return {
-    paths,
-    fallback: 'blocking',
   }
 }

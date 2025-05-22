@@ -2,11 +2,12 @@ import { SchemaType } from '../../types'
 import blocksToText from '../../helpers/blocksToText'
 import { calendar_event, home } from '@equinor/eds-icons'
 import { EdsIcon, TopicDocuments } from '../../icons'
+import { defaultLanguage } from '../../languages'
 
-export default (isoCode: string, title: string) => ({
+export default {
   type: 'document',
-  title: `Home Page Route ${title}`,
-  name: `route_${isoCode}_homepage`,
+  title: `Home Page Route`,
+  name: `route_homepage`,
   icon: () => EdsIcon(home),
   fields: [
     {
@@ -17,12 +18,12 @@ export default (isoCode: string, title: string) => ({
       type: 'reference',
       to: [
         {
-          type: 'page',
+          type: 'homePage',
         },
       ],
       options: {
         filter: 'lang == $lang',
-        filterParams: { lang: `${isoCode}` },
+        filterParams: { lang: defaultLanguage.name },
         disableNew: true,
       },
     },
@@ -61,4 +62,4 @@ export default (isoCode: string, title: string) => ({
       }
     },
   },
-})
+}
