@@ -21,12 +21,12 @@ const generateRssFeed = async (locale: 'en_GB' | 'nb_NO') => {
     const articles: LatestNewsType[] = [...newsArticles, ...magazineArticles].sort(
       (a, b) => new Date(b.publishDateTime).getTime() - new Date(a.publishDateTime).getTime(),
     )
-    const newsLink = locale === 'en_GB' ? 'https://www.equinor.com/news/' : 'https://www.equinor.com/nyheter/'
+    const newsLink = locale === 'en_GB' ? 'https://www.equinor.com/news/' : 'https://www.equinor.com/no/nyheter/'
     const newsRSSLink =
       locale === 'en_GB' ? 'https://www.equinor.com/api/rss?lang=en' : 'https://www.equinor.com/api/rss?lang=no'
 
     let rss = `<?xml version="1.0" encoding="UTF-8"?>
-    <rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:media="http://search.yahoo.com/mrss/" version="2.0" >
+    <rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:media="http://search.yahoo.com/mrss/" xmlns:nl="http://www.w3.org" version="2.0">
       <channel>
         <title>${
           locale === 'en_GB' ? 'Latest news and magazine stories - Equinor' : 'Siste nyheter og magasinsaker - Equinor'
@@ -44,7 +44,9 @@ const generateRssFeed = async (locale: 'en_GB' | 'nb_NO') => {
 
       const hero = article.hero
       const bannerImageUrl = hero?.image?.asset ? urlFor(hero.image).size(560, 280).auto('format').toString() : ''
-
+      const encodedUrl = bannerImageUrl.replace(/&/g, '&amp;')
+      console.log('bannerImageUrl', bannerImageUrl)
+      console.log('encodedUrl', encodedUrl)
       const publishDate = new Date(article.publishDateTime).toUTCString()
       console.log('publishDate', publishDate)
 
@@ -61,18 +63,22 @@ const generateRssFeed = async (locale: 'en_GB' | 'nb_NO') => {
           <guid>https://equinor.com${langPath}${article.slug}</guid>
           <pubDate>${publishDate}</pubDate>
           <description>${toPlainText(article.ingress)}</description>
-          ${categoryTag ? `<category>${mapCategoryToId(categoryTag, locale)}</category>` : ''}
+          ${categoryTag ? `<category>${mapCategoryToId(categoryTag, locale)}</category>` : '<category />'}
           <nl:extra1>${format(new TZDate(publishDate, 'Europe/Oslo'), "d.MMMM yyyy hh:mm ('CEST')", {
             locale: article.lang === 'nb_NO' ? nb : enGB,
           })}</nl:extra1>
-          <media:content medium="image" type="image/jpeg" url="${bannerImageUrl}">
+          ${
+            hero?.image?.asset
+              ? `<media:content medium="image" type="image/jpeg" url="${encodedUrl}">
             ${
               article.hero?.attribution
                 ? `<media:credit role="photographer" scheme="urn:ebu">${article.hero?.attribution}</media:credit>`
-                : ''
+                : '<media:credit/>'
             }
-            ${article.hero?.image?.alt ? `<media:title>${article.hero?.image?.alt}</media:title>` : ''}
-          </media:content>
+            ${article.hero?.image?.alt ? `<media:title>${article.hero?.image?.alt}</media:title>` : '<media:title />'}
+          </media:content>`
+              : ''
+          }
         </item>`
     })
 
