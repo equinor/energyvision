@@ -14,6 +14,7 @@ import { getComponentsData } from '../lib/fetchData'
 import { useContext, useEffect } from 'react'
 import { PreviewContext } from '../lib/contexts/PreviewContext'
 import { getQueryFromSlug } from '../lib/queryFromSlug'
+import { ClientPerspective } from 'next-sanity'
 
 const HomePage = dynamic(() => import('../pageComponents/pageTemplates/HomePage'))
 
@@ -73,16 +74,26 @@ Page.getLayout = (page: AppProps) => {
   )
 }
 
-export const getStaticProps: GetStaticProps = async ({ params, preview = false, locale = defaultLanguage.locale }) => {
+export const getStaticProps: GetStaticProps = async ({
+  params,
+  preview = false,
+  locale = defaultLanguage.locale,
+  previewData = { perspective: 'published' },
+}) => {
   const { query, queryParams } = await getQueryFromSlug(params?.slug as string[], locale)
 
-  const intl = await getIntl(locale, preview)
+  const previewContext = {
+    preview,
+    perspective: (previewData as { perspective: ClientPerspective })?.perspective || 'published',
+  }
+  const intl = await getIntl(locale, previewContext)
+
   const { menuData, pageData, footerData } = await getComponentsData(
     {
       query,
       queryParams,
     },
-    preview,
+    previewContext,
   )
 
   return {
