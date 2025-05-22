@@ -242,12 +242,6 @@ const CareerFairForm = () => {
                     </option>
                     <option>
                       {intl.formatMessage({
-                        id: 'career_fair_form_invite_company_presentation',
-                        defaultMessage: 'Invite Equinor to hold a company presentation',
-                      })}
-                    </option>
-                    <option>
-                      {intl.formatMessage({
                         id: 'career_fair_form_visit_equinor',
                         defaultMessage: 'Would like to visit Equinor office or facility',
                       })}
