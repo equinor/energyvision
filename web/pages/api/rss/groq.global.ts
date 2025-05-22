@@ -1,6 +1,6 @@
 import { ImageWithCaptionData } from '../../../types'
 import { ingressForNewsQuery } from '../../../lib/queries/common/newsSubqueries'
-import { publishDateTimeQuery } from '../../../lib/queries/common/publishDateTime'
+import { newsletterPublishDateTimeQuery } from '../../../lib/queries/common/publishDateTime'
 import { PortableTextBlock } from '@portabletext/types'
 import { noDrafts, sameLang } from '../../../lib/queries/common/langAndDrafts'
 
@@ -19,26 +19,26 @@ export type LatestNewsType = {
 //add groq to collect only ones with category
 
 export const latestNews = /* groq */ `
-  *[_type == "news" && defined(subscriptionType) && ${sameLang} && ${noDrafts}] | order(${publishDateTimeQuery} desc)[0...5] {
+  *[_type == "news" && defined(subscriptionType) && ${sameLang} && ${noDrafts}] | order(${newsletterPublishDateTimeQuery} desc)[0...5] {
     _id,
     "type":_type,
     "slug": slug.current,
     title,
     "hero": heroImage,
     subscriptionType,
-    "publishDateTime": ${publishDateTimeQuery},
+    "publishDateTime": ${newsletterPublishDateTimeQuery},
     ${ingressForNewsQuery},
     lang
   }
 `
 export const latestMagazine = /* groq */ `
-  *[_type == "magazine" && shouldDistributeMagazine && ${sameLang} && ${noDrafts}] | order(${publishDateTimeQuery} desc)[0...5] {
+  *[_type == "magazine" && shouldDistributeMagazine && ${sameLang} && ${noDrafts}] | order(${newsletterPublishDateTimeQuery} desc)[0...5] {
     _id,
     "type":_type,
     "slug": slug.current,
     title,
     "hero": heroFigure,
-    "publishDateTime": ${publishDateTimeQuery},
+    "publishDateTime": ${newsletterPublishDateTimeQuery},
     ${ingressForNewsQuery},
     lang
   }
