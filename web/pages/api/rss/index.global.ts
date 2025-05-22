@@ -45,9 +45,9 @@ const generateRssFeed = async (locale: 'en_GB' | 'nb_NO') => {
       const hero = article.hero
       const bannerImageUrl = hero?.image?.asset ? urlFor(hero.image).size(560, 280).auto('format').toString() : ''
       const encodedUrl = bannerImageUrl.replace(/&/g, '&amp;')
-      console.log('bannerImageUrl', bannerImageUrl)
-      console.log('encodedUrl', encodedUrl)
+
       const publishDate = new Date(article.publishDateTime).toUTCString()
+      console.log('article.publishDateTime', article.publishDateTime)
       console.log('publishDate', publishDate)
 
       // Format the main pubDate
