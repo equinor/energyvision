@@ -45,7 +45,7 @@ export const getArrowAnimation = (type: LinkType) => {
   }
 }
 
-export const getArrowElement = (type: LinkType, iconClassName: string) => {
+export const getArrowElement = (type: LinkType, iconClassName?: string) => {
   const iconClassNames = envisTwMerge(
     `size-arrow-right
     text-energy-red-100

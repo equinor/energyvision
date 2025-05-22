@@ -6,7 +6,6 @@ import sharedHeroFields from './header/sharedHeaderFields'
 import { EdsIcon } from '../../icons'
 import { paste } from '@equinor/eds-icons'
 import { lang } from './langField'
-import { description } from '../objects/iframe/sharedIframeFields'
 
 export default {
   type: 'document',
@@ -99,6 +98,8 @@ export default {
         { type: 'cookieDeclaration' },
         { type: 'anchorLinkList' },
         { type: 'tabs' },
+        //Remove here and move to new homepage document type
+        { type: 'homepageBanner' },
       ].filter((e) => e),
     },
   ].filter((e) => e),

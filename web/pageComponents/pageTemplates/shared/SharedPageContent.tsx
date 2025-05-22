@@ -66,6 +66,7 @@ import AccordionBlock from '@sections/AccordionBlock/AccordionBlock'
 import TabsBlock, { TabsBlockProps } from '@sections/TabsBlock/TabsBlock'
 import { getColorForTabsTheme } from '@sections/TabsBlock/tabThemes'
 import { ColorKeyTokens, colorKeyToUtilityMap } from '../../../styles/colorKeyToUtilityMap'
+import HomepageBanner from '@sections/HomepageBanner/HomePageBanner'
 
 type DefaultComponent = {
   id?: string
@@ -354,6 +355,9 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
         return <ImageForText key={c.id} data={c as ImageForTextData} />
       case 'tabs':
         return <TabsBlock key={c.id} {...(c as any)} className={spacingClassName} />
+      /* Remove from here and move to Homepage Template PageContent */
+      case 'homepageBanner':
+        return <HomepageBanner key={c.id} {...(c as any)} />
       default:
         return null
     }

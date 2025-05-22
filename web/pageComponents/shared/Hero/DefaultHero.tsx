@@ -74,7 +74,11 @@ export const DefaultHero = ({ title, image, isBigTitle, bigTitle, tags }: Props)
           )}
         </div>
       )}
-      <ImageWrapper>{image && <DefaulHeroImage data={image} />}</ImageWrapper>
+      {image && (
+        <ImageWrapper>
+          <DefaulHeroImage data={image} />
+        </ImageWrapper>
+      )}
     </>
   )
 }
