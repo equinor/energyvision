@@ -7,6 +7,7 @@ import event from './event'
 import eventTag from './eventTag'
 import externalRedirect from './externalRedirect'
 import footer from './footer'
+import homePage from './homePage'
 import landingPage from './landingPage'
 import localNews from './localNews'
 import localNewsTag from './localNewsTag'
@@ -35,6 +36,7 @@ export const documentsWithI18n = {
   news,
   newsroom,
   page,
+  homePage,
 }
 export default {
   ...documentsWithI18n,

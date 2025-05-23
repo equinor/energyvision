@@ -4,7 +4,6 @@ import type { AppProps } from 'next/app'
 import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
 import dynamic from 'next/dynamic'
-/* import { useAppInsightsContext } from '@microsoft/applicationinsights-react-js' */
 import { getQueryFromSlug } from '../lib/queryFromSlug'
 import { Layout } from '../sections/Layout/Layout'
 import { defaultLanguage } from '../languages'
@@ -22,6 +21,7 @@ const LandingPage = dynamic(() => import('../pageComponents/pageTemplates/Landin
 const EventPage = dynamic(() => import('../pageComponents/pageTemplates/Event'))
 const NewsPage = dynamic(() => import('../pageComponents/pageTemplates/News'))
 const TopicPage = dynamic(() => import('../pageComponents/pageTemplates/TopicPage'))
+const HomePage = dynamic(() => import('../pageComponents/pageTemplates/HomePage'))
 
 // @TODO Improve types here, don't use any
 export default function Page({ data, preview = false }: any) {
@@ -53,6 +53,8 @@ export default function Page({ data, preview = false }: any) {
   }
 
   switch (template) {
+    case 'homePage':
+      return <HomePage data={pageData} />
     case 'landingPage':
       return <LandingPage data={pageData} />
     case 'event':
@@ -82,6 +84,7 @@ Page.getLayout = (page: AppProps) => {
   const { data, preview } = props
 
   const slugs = getPageSlugs(data)
+  console.log(JSON.stringify(slugs))
   const hasSticky =
     data?.pageData?.stickyMenu && data?.pageData?.stickyMenu?.links && data?.pageData?.stickyMenu?.links?.length > 0
 
