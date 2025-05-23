@@ -2,7 +2,9 @@ import { SchemaType } from '../../types'
 import blocksToText from '../../helpers/blocksToText'
 import { calendar_event, home } from '@equinor/eds-icons'
 import { EdsIcon, TopicDocuments } from '../../icons'
-import { defaultLanguage } from '../../languages'
+import { defaultLanguage, languages } from '../../languages'
+import { ValidationContext } from 'sanity'
+import { apiVersion } from '../../sanity.client'
 
 export default {
   type: 'document',
@@ -13,8 +15,22 @@ export default {
     {
       title: 'Content',
       name: 'content',
-      description: 'The content you want to appear as the home page. Remember it needs to be published.',
-      validation: (Rule: SchemaType.ValidationRule) => Rule.required(),
+      description:
+        'The content you want to appear as the home page. Remember it needs to be published along with its translations.',
+      validation: (Rule: SchemaType.ValidationRule) => {
+        return Rule.custom(async (value: any, context: ValidationContext) => {
+          if (value) {
+            const result = await context.getClient({ apiVersion: apiVersion }).fetch(
+              /* groq */ `count(*[_type=="translation.metadata" && references($id)][0].translations[])`,
+              {
+                id: value._ref,
+              },
+              { perspective: 'published' },
+            )
+            return result == languages.length || 'Translations of this home page must be published'
+          } else return 'Required'
+        })
+      },
       type: 'reference',
       to: [
         {
