@@ -21,7 +21,7 @@ const getTopicRoutesForLocale = async (locale: string) => {
 const getTopicRoutesForLocaleToStaticallyBuild = async (locale: string) => {
   const lang = getNameFromLocale(locale)
   const data: { slug: string; _updatedAt: string }[] = await getClient(false).fetch(
-    groq`*[_type match "route_" + $lang && (!(slug.current in $blacklist)) && includeInBuild && defined(slug.current) && !(_id in path("drafts.**"))][] {
+    groq`*[_type match "route_" + $lang  && includeInBuild && defined(slug.current) && !(_id in path("drafts.**"))][] {
       _updatedAt,
       "slug": slug.current,
     }`,
