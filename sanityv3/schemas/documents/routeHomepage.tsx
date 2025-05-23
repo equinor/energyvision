@@ -27,19 +27,6 @@ export default {
         disableNew: true,
       },
     },
-    {
-      title: 'Home page URL',
-      name: 'slug',
-      type: 'slug',
-      description: `The home page slug is always '/'. This cannot be changed.`,
-      readOnly: true,
-      initialValue: { current: '/', _type: 'slug' },
-    },
-    {
-      name: 'includeInBuild',
-      type: 'boolean',
-      initialValue: true,
-    },
   ],
 
   preview: {
