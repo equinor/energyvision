@@ -20,12 +20,12 @@ const Hits = ({ hitComponent: Hit }: HitsProps) => {
             <FormattedMessage id="search_no_results_heading" defaultMessage="Nothing found" />
           </div>
         </Typography>
-        <p>
+        <Typography level="body" size="sm" className="mt-2">
           <FormattedMessage
             id="search_no_results_generic"
             defaultMessage="Sorry, no results were found. Please try again with some different keywords."
           />
-        </p>
+        </Typography>
       </div>
     )
   }
