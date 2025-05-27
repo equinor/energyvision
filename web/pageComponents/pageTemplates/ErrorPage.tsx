@@ -1,10 +1,10 @@
 import { NextSeo } from 'next-seo'
 import { toPlainText } from '@portabletext/react'
-import { Typography } from '@core/Typography'
+import Blocks from '../shared/portableText/Blocks'
 import BackgroundImage from '../errorPages/BackgroundImage'
 import type { ErrorPageData } from '../../types/index'
 import { metaTitleSuffix } from '../../languages'
-import Blocks from '../../pageComponents/shared/portableText/Blocks'
+import { Typography } from '@core/Typography'
 
 const ErrorPage = ({ pageData, statusCode }: { pageData: ErrorPageData; statusCode: 404 | 500 }) => {
   if (!pageData) return null
@@ -20,9 +20,9 @@ const ErrorPage = ({ pageData, statusCode }: { pageData: ErrorPageData; statusCo
       <div className="relative min-h-[80vh]">
         {backgroundImage && <BackgroundImage backgroundImage={backgroundImage} />}
         <div className="relative pt-16 pb-10 px-layout-md">
-          <Typography as="h1" variant="3xl" className="pb-10">
-            <span className="font-medium text-5xl text-slate-blue-80 w-full block">{statusCode}</span>
-            {title && toPlainText(title)}
+          <Typography as="h1" className="pb-10 " variant="3xl">
+            <span className="text-5xl block font-medium text-slate-blue-80">{statusCode}</span>
+            {title && <span>{toPlainText(title)}</span>}
           </Typography>
           {text && <Blocks className="prose-md" value={text}></Blocks>}
         </div>
