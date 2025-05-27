@@ -84,7 +84,6 @@ Page.getLayout = (page: AppProps) => {
   const { data, preview } = props
 
   const slugs = getPageSlugs(data)
-  console.log(JSON.stringify(slugs))
   const hasSticky =
     data?.pageData?.stickyMenu && data?.pageData?.stickyMenu?.links && data?.pageData?.stickyMenu?.links?.length > 0
 
