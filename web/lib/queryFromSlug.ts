@@ -8,6 +8,7 @@ import { getClient } from './sanity.server'
 import { Flags } from '../common/helpers/datasetHelpers'
 import { localNewsQuery } from './queries/localNews'
 import { noDrafts } from './queries/common/langAndDrafts'
+import { homePageQuery } from './queries/homePage'
 
 export type QueryParams = {
   id?: string
@@ -36,6 +37,7 @@ const parseSlug = (slug: string): string => {
 const localNewsTagsQuery = (lang: string) => /* groq */ `*[_type == 'localNewsTag' && ${noDrafts}] {${lang}}`
 
 const getQuery = async (firstPiece: string, secondPiece: string | undefined, lang: string) => {
+  if (firstPiece == '') return homePageQuery
   if (Flags.HAS_NEWS && newsSlug[lang] === firstPiece && secondPiece) {
     // is news
     const localNewsTagsData: Record<string, string>[] = await getClient(false).fetch(localNewsTagsQuery(lang))

@@ -45,6 +45,7 @@ export type PageSchema = {
 }
 
 export type TopicPageSchema = PageSchema
+export type HomePageSchema = PageSchema
 
 export type MagazinePageSchema = PageSchema & {
   magazineTags?: { id: string; title: string; key: string }[]

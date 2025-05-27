@@ -14,7 +14,7 @@ export const contentQueryById = /* groq */ `
      _type == "landingPage" => {
       ${landingPageById}
     },
-    _type == "page" => {
+    _type == "page" || _type == "homePage" => {
       "content": content[] {
         ${pageContentFields}
       },

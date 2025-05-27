@@ -55,6 +55,9 @@ const isPortableTextEditor = (schema: SchemaType) => {
   return schema?.of && Array.isArray(schema.of) && schema.of[0]?.name === 'block'
 }
 
+// create the singleton docs before adding here...
+const singletonTemplates = ['route_homepage', 'newsroom', 'pageNotFound', 'internalServerError', 'magazineIndex']
+
 const handleInputComponents = (inputProps: InputProps) => {
   if (isPortableTextEditor(inputProps.schemaType))
     return <CharCounterEditor {...(inputProps as ArrayOfObjectsInputProps)} />
@@ -126,6 +129,10 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret = fals
         : prev
     },
     actions: (prev: DocumentActionComponent[], context: any) => {
+      // do not allow delete or duplicate action on singletons
+      if (singletonTemplates.includes(context.schemaType))
+        return prev.filter((it) => !['delete', 'duplicate'].includes(it.action))
+
       if (isSecret) prev.push(ResetCrossDatasetToken)
       if (i18n.schemaTypes.includes(context.schemaType)) prev.push(DeleteTranslationAction)
       return prev
@@ -184,5 +191,12 @@ const filterTemplates = (prev: Template<any, any>[]) => {
   const excludedTemplates = i18n.supportedLanguages
     .filter((lang) => lang.title != defaultLanguage.title)
     .flatMap((lang) => i18n.schemaTypes.map((type) => `${type}-${lang.id}`))
-  return prev.filter((template) => !(i18n.schemaTypes.includes(template.id) || excludedTemplates.includes(template.id)))
+  return prev.filter(
+    (template) =>
+      !(
+        i18n.schemaTypes.includes(template.id) ||
+        excludedTemplates.includes(template.id) ||
+        singletonTemplates.includes(template.id)
+      ),
+  )
 }
