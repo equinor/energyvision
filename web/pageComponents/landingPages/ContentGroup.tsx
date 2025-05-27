@@ -1,8 +1,8 @@
 import styled from 'styled-components'
-import { Heading } from '@components'
 import SimpleCard from '../cards/SimpleCard'
 
 import type { SubMenuGroupData } from '../../types/index'
+import { Typography } from '@core/Typography'
 
 const GroupWrapper = styled.div`
   margin: var(--space-3xLarge) 0;
@@ -41,9 +41,9 @@ const ContentGroup = ({ group }: ContentGroupType) => {
     <GroupWrapper>
       {label && (
         <ContentGroupHeader>
-          <Heading size="xl" level="h2">
+          <Typography variant="xl" as="h2">
             {label}
-          </Heading>
+          </Typography>
         </ContentGroupHeader>
       )}
       <LinkGroup>

@@ -1,9 +1,18 @@
+import { HTMLAttributes } from 'react'
 import { PortableText, PortableTextProps } from '@portabletext/react'
-import { Heading, HeadingProps } from '@components'
 import isEmpty from './helpers/isEmpty'
 import { Sub, Sup, Strikethrough } from './components'
 import { Highlight } from '@core/Typography/Highlight'
 import type { PortableTextBlock } from '@portabletext/types'
+import { Typography } from '@core/Typography'
+
+type HeadingProps = {
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl'
+  level?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
+  regular?: boolean
+  center?: boolean
+  uppercase?: boolean
+} & HTMLAttributes<HTMLHeadingElement>
 
 type TitleTextProps = PortableTextProps &
   Pick<HeadingProps, 'level' | 'size'> &
@@ -17,16 +26,16 @@ const defaultComponents = ({ size, level, className }: DefaultComponents) => {
       normal: ({ children }: PortableTextBlock) => {
         if (isEmpty(children)) return null
         return (
-          <Heading size={size} level={level} className={className}>
+          <Typography as={level} variant={size} className={className}>
             <>{children}</>
-          </Heading>
+          </Typography>
         )
       },
       extraLarge: ({ children }: PortableTextBlock) => {
         return (
-          <Heading size={'5xl'} level={level} className={className}>
+          <Typography as={'h1'} variant={size} className={className}>
             <>{children}</>
-          </Heading>
+          </Typography>
         )
       },
     },

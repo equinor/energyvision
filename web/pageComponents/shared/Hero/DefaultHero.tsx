@@ -5,12 +5,6 @@ import { PortableTextBlock } from '@portabletext/types'
 import TitleText from '../portableText/TitleText'
 import { BackgroundContainer } from '@core/Backgrounds'
 
-const StyledHeading = styled(TitleText)`
-  max-width: 1186px; /* 1920 - (2 * 367) */
-  margin-left: auto;
-  margin-right: auto;
-`
-
 const HeroBannerSmall = styled.div`
   margin-left: auto;
   margin-right: auto;
@@ -55,7 +49,7 @@ export const DefaultHero = ({ title, image, isBigTitle, bigTitle, tags }: Props)
           <HeroBannerBigTitle>{bigTitle && <TitleText value={bigTitle} level="h2" size="3xl" />}</HeroBannerBigTitle>
         </>
       )}
-      {!isBigTitle && <HeroBanner>{title && <StyledHeading value={title} level="h1" size="3xl" />}</HeroBanner>}
+      {!isBigTitle && <HeroBanner>{title && <TitleText className='mx-auto max-w-[1186px]' value={title} level="h1" size="3xl" />}</HeroBanner>}
       {tags && tags?.length > 0 && (
         <div className="px-layout-md pb-12">
           {tags && tags?.length > 0 && (

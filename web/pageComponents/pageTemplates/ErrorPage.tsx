@@ -1,11 +1,11 @@
 import { NextSeo } from 'next-seo'
 import { toPlainText } from '@portabletext/react'
-import { Heading, Text } from '@components'
 import RichText from '../shared/portableText/RichText'
 import isEmpty from '../shared/portableText/helpers/isEmpty'
 import BackgroundImage from '../errorPages/BackgroundImage'
 import type { ErrorPageData } from '../../types/index'
 import { metaTitleSuffix } from '../../languages'
+import { Typography } from '@core/Typography'
 
 const ErrorPage = ({ pageData }: { pageData: ErrorPageData }) => {
   if (!pageData) return null
@@ -20,10 +20,10 @@ const ErrorPage = ({ pageData }: { pageData: ErrorPageData }) => {
       <div className="relative">
         {backgroundImage && <BackgroundImage backgroundImage={backgroundImage} />}
         <div className="relative pt-16 pb-10 px-layout-md">
-          <Heading level="h1" size="3xl" style={{ marginBottom: 'var(--space-xLarge)' }}>
+          <Typography as="h1" variant="3xl" className="mb-10">
             <span className="text-4xl block font-medium text-slate-blue-80">404</span>
             {title && <span>{toPlainText(title)}</span>}
-          </Heading>
+          </Typography>
           {text && (
             <div>
               <RichText
@@ -31,15 +31,15 @@ const ErrorPage = ({ pageData }: { pageData: ErrorPageData }) => {
                   block: {
                     // Overriding the h2
                     h2: ({ children }) => (
-                      <Heading level="h2" size="xl">
+                      <Typography as="h2" variant="xl">
                         {children}
-                      </Heading>
+                      </Typography>
                     ),
                     normal: ({ children }) => {
                       // eslint-disable-next-line
                       // @ts-ignore: Still struggling with the types here :/
                       if (isEmpty(children)) return null
-                      return <Text style={{ fontSize: 'var(--typeScale-3)' }}>{children}</Text>
+                      return <Typography className="text-lg">{children}</Typography>
                     },
                   },
                 }}

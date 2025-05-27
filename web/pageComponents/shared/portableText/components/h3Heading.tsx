@@ -1,7 +1,7 @@
 import styled from 'styled-components'
-import { Heading } from '@components'
+import { Typography } from '@core/Typography'
 
-const StyledHeading = styled(Heading)`
+const StyledHeading = styled(Typography)`
   font-weight: var(--fontWeight-regular);
   line-height: var(--lineHeight-3);
   margin-bottom: 0.5em;
@@ -13,8 +13,8 @@ const StyledHeading = styled(Heading)`
 
 export const h3Heading = ({ children }: { children?: React.ReactNode }) => {
   return (
-    <StyledHeading level="h3" size="lg">
+    <Typography as="h3" variant="lg">
       {children}
-    </StyledHeading>
+    </Typography>
   )
 }
