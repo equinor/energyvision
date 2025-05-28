@@ -92,6 +92,7 @@ import tabsInfoPanel from './objects/tabs/tabsInfoPanel'
 import tabsKeyNumbers from './objects/tabs/tabsKeyNumbers'
 import tabsKeyNumberItem from './objects/tabs/tabsKeyNumberItem'
 import imageWithRichText from './objects/ImageWithRichText'
+import highlightTheme from './objects/highlightTheme'
 
 const {
   pageNotFound,
@@ -217,6 +218,7 @@ const RemainingSchemas = [
   gridTeaser,
   threeColumns,
   gridColorTheme,
+  highlightTheme,
   transcript,
   anchorLinkList,
   anchorLinkReference,

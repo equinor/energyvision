@@ -125,6 +125,20 @@ export default {
       name: 'theme',
       type: 'themeList',
       fieldset: 'design',
+      deprecated: true,
+    },
+    {
+      title: 'Background',
+      fieldset: 'design',
+      type: 'colorlist',
+      name: 'background',
+    },
+    {
+      title: 'Title Highlight color',
+      name: 'highlightColor',
+      description: 'When you have selected highlight in the title, choosen theme is applied for the highlight.',
+      type: 'highlightTheme',
+      fieldset: 'design',
     },
   ],
   preview: {

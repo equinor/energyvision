@@ -6,7 +6,6 @@ export type ColorType = {
   title: string
   value: string
   key: string
-  dark: boolean
 }
 
 export default defineType({
@@ -27,7 +26,6 @@ export default defineType({
     title: defaultColors[0].title,
     value: defaultColors[0].value,
     key: defaultColors[0].key,
-    dark: defaultColors[0].dark,
   },
   components: {
     input: (props) => {
