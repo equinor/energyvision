@@ -1,58 +1,66 @@
-import styled from 'styled-components'
-import { Heading } from '@components'
-import SimpleCard from '../cards/SimpleCard'
-
-import type { SubMenuGroupData } from '../../types/index'
-
-const GroupWrapper = styled.div`
-  margin: var(--space-3xLarge) 0;
-  @media (min-width: 750px) {
-    margin: var(--space-4xLarge) 0;
-  }
-`
-
-const LinkGroup = styled.div`
-  --min: 220px;
-  --row-gap: var(--space-xLarge);
-  --column-gap: var(--space-medium);
-
-  padding: 0 var(--layout-paddingHorizontal-small);
-  margin: 0 auto;
-  max-width: var(--maxViewportWidth);
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--min)), 1fr));
-  grid-row-gap: var(--row-gap);
-  grid-column-gap: var(--column-gap);
-`
-const ContentGroupHeader = styled.div`
-  padding: 0 var(--layout-paddingHorizontal-medium) var(--space-xLarge);
-  max-width: var(--maxViewportWidth);
-  margin-left: auto;
-  margin-right: auto;
-`
+import type { SubMenuGroupData, PromoTileData } from '../../types/index'
+import { Typography } from '@core/Typography'
+import { PromoTile } from '@sections/PromoTiles/PromoTile'
 
 type ContentGroupType = {
   group: SubMenuGroupData
 }
 
 const ContentGroup = ({ group }: ContentGroupType) => {
-  const { label, links } = group
+  const { label, id, links } = group
+
+  const transformedLinks: PromoTileData[] = links
+    .filter((link) => link.id)
+    .map((link) => ({
+      id: link.id!,
+      title: [],
+      image: link.image,
+      linkLabelAsTitle: true,
+      action: {
+        label: link.label,
+        href: link.href ?? undefined,
+        type: link.link ? 'internalUrl' : 'externalUrl',
+        link: link.link
+          ? {
+              ...link.link,
+              lang: 'en',
+            }
+          : undefined,
+        anchorReference: undefined,
+        ariaLabel: undefined,
+      },
+      designOptions: {
+        background: { value: 'white-100', dark: false },
+      },
+    }))
+
   return (
-    <GroupWrapper>
+    <section className="mx-0 my-16 md:my-32">
       {label && (
-        <ContentGroupHeader>
-          <Heading size="xl" level="h2">
+        <div className="mx-auto max-w-viewport pt-0 pb-xl px-layout-md">
+          <Typography variant="xl" as="h2">
             {label}
-          </Heading>
-        </ContentGroupHeader>
+          </Typography>
+        </div>
       )}
-      <LinkGroup>
-        {links.map((link) => {
-          const { id } = link
-          return <SimpleCard data={link} key={id} />
-        })}
-      </LinkGroup>
-    </GroupWrapper>
+
+      <ul
+        className={`
+                px-layout-sm
+                mx-auto
+                max-w-viewport
+                grid
+                grid-cols-3
+                gap-x-6
+                list-none`}
+      >
+        {transformedLinks.map((tile) => (
+          <li key={tile.id} className="h-full w-full">
+            <PromoTile {...tile} hasSectionTitle={!!label} variant="primary" />
+          </li>
+        ))}
+      </ul>
+    </section>
   )
 }
 
