@@ -1,58 +1,26 @@
 import { useSanityLoader } from '../../../lib/hooks/useSanityLoader'
-import styled from 'styled-components'
-import { LoopingVideoData, LoopingVideoRatio } from '../../../types'
+import { LoopingVideoData } from '../../../types'
 import dynamic from 'next/dynamic'
-import { VideoJS } from '@components/VideoJsPlayer'
+import { VideoJS } from '@core/VideoJsPlayer'
 
 const DEFAULT_MAX_WIDTH = 1920
 
 const DynamicVideoJsComponent = dynamic<React.ComponentProps<typeof VideoJS>>(
-  () => import('../../../components/src/VideoJsPlayer').then((mod) => mod.VideoJS),
+  () => import('@core/VideoJsPlayer').then((mod) => mod.VideoJS),
   {
     ssr: false,
     loading: () => <p>Loading...</p>,
   },
 )
 
-const Container = styled.div<{ $aspectRatio: LoopingVideoRatio }>`
-  position: relative;
-  ${({ $aspectRatio }) =>
-    $aspectRatio === 'narrow'
-      ? `
-        padding-bottom: 75%;
-        @media (min-width: 750px) {
-          padding-bottom: 30%;
-        }
-      `
-      : 'padding-bottom: 50%;'}
-`
-
-const StyledFigure = styled.figure`
-  justify-content: center;
-  display: flex;
-  margin: 0;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-`
-
-const StyledPlayer = styled(DynamicVideoJsComponent)`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  .vjs-poster img {
-    object-fit: cover;
-  }
-`
-
 export const LoopingVideo = ({ video }: { video: LoopingVideoData }) => {
   const { title, url, thumbnail, ratio } = video
   const thumbnailURL = useSanityLoader(thumbnail, DEFAULT_MAX_WIDTH, undefined)
   return (
-    <Container $aspectRatio={ratio}>
-      <StyledFigure>
-        <StyledPlayer
+    <div className={`relative ${ratio == 'narrow' ? 'pb-3/4 md:pb-[30%]' : 'pb-1/2'}`}>
+      <figure className="justify-center flex m-0 w-full h-full absolute">
+        <DynamicVideoJsComponent
+          className="absolute w-full h-full object-cover"
           loop
           muted
           autoPlay
@@ -62,7 +30,7 @@ export const LoopingVideo = ({ video }: { video: LoopingVideoData }) => {
           src={url}
           videoDescription={thumbnail.alt}
         />
-      </StyledFigure>
-    </Container>
+      </figure>
+    </div>
   )
 }
