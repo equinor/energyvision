@@ -1,71 +1,54 @@
 import { FullWidthVideoData, FullWidthVideoRatio } from '../../types/index'
-import styled from 'styled-components'
-import { BackgroundContainer } from '@core/Backgrounds'
-import { VideoJS } from '../../components/src/VideoJsPlayer'
+import { VideoJS } from '@core/VideoJsPlayer'
 import dynamic from 'next/dynamic'
 
 const DynamicVideosComponent = dynamic<React.ComponentProps<typeof VideoJS>>(
-  () => import('../../components/src/VideoJsPlayer').then((mod) => mod.VideoJS),
+  () => import('@core/VideoJsPlayer').then((mod) => mod.VideoJS),
   {
     ssr: false,
     loading: () => <p>Loading...</p>,
   },
 )
 
-const Container = styled.div<{ $aspectRatio: FullWidthVideoRatio }>`
-  position: relative;
-  width: 100%;
-  ${({ $aspectRatio }) => {
-    switch ($aspectRatio) {
-      case 'fullScreen':
-        return 'height: 100vh;'
-      case 'narrow':
-        return `
-          padding-bottom: 75%;
-          @media(min-width: 750px) {
-            padding-bottom: 30%;
-          }
-        `
-      case '2:1':
-        return 'padding-bottom: 50%;'
-      default:
-        return 'padding-bottom: 50%;'
-    }
-  }}
-`
-
-const StyledFigure = styled.figure`
-  justify-content: center;
-  display: flex;
-  margin: 0;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-`
-
-const StyledPlayer = styled(DynamicVideosComponent)`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-`
-
 const FullWidthVideo = ({ anchor, data }: { data: FullWidthVideoData; anchor?: string }) => {
   const { video, designOptions, spacing } = data
   const { aspectRatio } = designOptions
+
+  const containerClassName = (aspectRatio: FullWidthVideoRatio): string => {
+    let className = 'pb-1/2'
+    switch (aspectRatio) {
+      case 'fullScreen':
+        className = 'h-screen'
+        break
+      case 'narrow':
+        className = `pb-3/4 md:pb-[30%]`
+        break
+      case '2:1':
+        className = 'pb-1/2'
+        break
+      default:
+        className = 'pb-1/2'
+    }
+    return className
+  }
   return (
-    <Container
+    <div
       id={anchor}
-      $aspectRatio={aspectRatio}
+      className={`relative w-full ${containerClassName(aspectRatio)}`}
       style={spacing ? { marginTop: '50px', marginBottom: '50px' } : {}}
     >
-      <StyledFigure>
-        <StyledPlayer title={video.title} autoPlay muted loop src={video.url} playsInline />
-      </StyledFigure>
-    </Container>
+      <figure className="justify-center flex m-0 top-0 left-0 w-full h-full absolute">
+        <DynamicVideosComponent
+          className="absolute top-0 left-0 w-full h-full"
+          title={video.title}
+          autoPlay
+          muted
+          loop
+          src={video.url}
+          playsInline
+        />
+      </figure>
+    </div>
   )
 }
 

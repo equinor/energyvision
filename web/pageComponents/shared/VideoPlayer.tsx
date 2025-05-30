@@ -10,7 +10,7 @@ import {
 import { BackgroundContainer } from '@core/Backgrounds'
 import { urlFor } from '../../common/helpers'
 import IngressText from './portableText/IngressText'
-import { VideoJS } from '@components/VideoJsPlayer'
+import { VideoJS } from '@core/VideoJsPlayer'
 import { twMerge } from 'tailwind-merge'
 import { Heading } from '@core/Typography'
 import TranscriptAndActions from './TranscriptAndActions'
@@ -18,7 +18,7 @@ import { PortableTextBlock } from '@portabletext/types'
 import Blocks from './portableText/Blocks'
 
 const DynamicVideoJsComponent = dynamic<React.ComponentProps<typeof VideoJS>>(
-  () => import('../../components/src/VideoJsPlayer').then((mod) => mod.VideoJS),
+  () => import('@core/VideoJsPlayer').then((mod) => mod.VideoJS),
   {
     ssr: false,
     loading: () => <p>Loading...</p>,
