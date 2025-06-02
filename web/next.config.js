@@ -37,16 +37,7 @@ const withBundleConfig = {
   experimental: {
     largePageDataBytes: 300 * 1000,
     scrollRestoration: true,
-    optimizePackageImports: [
-      '@components',
-      '@chakra-ui',
-      '@chakra-ui/skip-nav',
-      '@emotion/react',
-      '@emotion/styled',
-      '@equinor/eds-core-react',
-      '@equinor/eds-icons',
-      'video.js',
-    ],
+    optimizePackageImports: ['@components', '@equinor/eds-core-react', '@equinor/eds-icons', 'video.js'],
   },
   swcMinify: true,
   transpilePackages: ['friendly-challenge'],

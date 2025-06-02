@@ -18,7 +18,6 @@ type CarouselImageItemProps = {
   image?: ImageWithAlt | SanityImageObject
   displayMode?: DisplayModes
   className?: string
-  aspectRatio?: string
   caption?: PortableTextBlock[] | string
   attribution?: string
   captionTeaserTitle?: string
@@ -50,16 +49,14 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
 ) {
   const itemRef = useRef<HTMLLIElement>(null)
   const combinedItemRef = useMemo(() => mergeRefs<HTMLLIElement>(itemRef, ref), [itemRef, ref])
+  const isImageWithRichTextCaption = useMemo(() => type === 'imageWithRichTextBelow' && !!caption, [caption, type])
   const isJustImage = type === 'imageWithAltAndCaption' && !caption && !attribution
   const isImageWithSimpleCaption = type === 'imageWithAltAndCaption' && (!!caption || !!attribution)
-  const isImageWithRichTextCaption = type === 'imageWithRichTextBelow' && !!caption
   const isImageWithJustLink = type === 'imageWithLinkAndOrOverlay' && action && (!captionTitle || !captionText)
   const isImageWithOverlay = type === 'imageWithLinkAndOrOverlay' && (!!captionTitle || !!captionText)
   const url = action && getUrlFromAction(action)
 
-  const singleHeights = `min-h-single-carousel-card-h-sm
-  md:min-h-single-carousel-card-h-md
-  lg:min-h-single-carousel-card-h-lg`
+  const singleHeights = `min-h-single-carousel-card-h-sm md:min-h-single-carousel-card-h-md lg:min-h-single-carousel-card-h-lg`
 
   const getBody = () => {
     if (isJustImage) {
@@ -74,8 +71,8 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
         <figure className="relative w-full h-full rounded-md flex items-end">
           <Image maxWidth={1420} image={image as ImageWithAlt} fill className={`rounded-md ${singleHeights}`} />
           <figcaption
-            className={`w-full rounded-b-md z-[1] fade-in-black-gradient fadeInVisibilityOpacityDisplay transition-all 
-            ${displayMode === 'single' ? (active ? 'block' : 'hidden') : ''}`}
+            className={`w-full rounded-b-md z-[1] fade-in-black-gradient 
+            ${displayMode === 'single' ? (active ? 'opacity-100' : 'opacity-50') : ''}`}
           >
             <div className={`w-full h-fit pt-20 pb-6 px-8`}>
               <span className="w-2/3 flex flex-col gap-1 ">
@@ -119,7 +116,7 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
       )
     }
     if (isImageWithRichTextCaption) {
-      const singleClassname = `fadeInVisibilityOpacityDisplay transition-all ${active ? 'block' : 'hidden'}`
+      const singleClassname = `${active ? 'opacity-100' : 'opacity-50'}`
       const scrollClassname = ``
       return (
         <figure className="w-full h-full flex flex-col">
@@ -157,9 +154,7 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
   }
 
   const scrollListItemWidthsClassNames = `w-[75vw] md:w-[70vw] lg:w-[62vw] max-w-[1030px]`
-  const singleListItemWidthsClassNames = `w-single-carousel-card-w-sm 
-        md:w-single-carousel-card-w-md 
-        lg:w-single-carousel-card-w-lg`
+  const singleListItemWidthsClassNames = `w-single-carousel-card-w-sm md:w-single-carousel-card-w-md lg:w-single-carousel-card-w-lg`
 
   useEffect(() => {
     if (displayMode === 'single') {
@@ -194,10 +189,10 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
         ${
           displayMode === 'single'
             ? `
+            ${!active ? 'opacity-30' : 'opacity-100'}
             transition-opacity
             duration-1000
-            ease-[ease]
-            ${!active ? 'opacity-30' : ''}
+            ease-ease
             ms-2 
             me-2 
             col-start-1 
@@ -205,10 +200,7 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
             row-start-1 
             row-end-1
         `
-            : `snap-center 
-          snap-mandatory
-          shrink-0
-            `
+            : `snap-center snap-mandatory shrink-0`
         }
         `,
         className,

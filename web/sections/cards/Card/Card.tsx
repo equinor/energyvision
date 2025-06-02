@@ -78,9 +78,9 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
         `group/card
         bg-white-100
         text-slate-80
+        dark:text-white-100
         focus:outline-none
         focus-visible:envis-outline
-        dark:text-slate-80
         dark:focus-visible:envis-outline-invert
         ${variantClassNames[variant]}
       `,

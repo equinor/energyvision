@@ -1,22 +1,18 @@
 import { Button } from '@core/Button'
-import { usePagination } from 'react-instantsearch'
-
 // Based on: https://github.com/algolia/react-instantsearch/blob/master/examples/hooks/components/Pagination.tsx
+
+type PaginationItemProps = React.ComponentProps<'button'> & {
+  isDisabled: boolean
+  isCurrent: boolean
+  ariaLabel?: string
+}
 
 export function isModifierClick(event: React.MouseEvent) {
   const isMiddleClick = event.button === 1
   return Boolean(isMiddleClick || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey)
 }
 
-type PaginationItemProps = React.ComponentProps<'a'> &
-  Pick<ReturnType<typeof usePagination>, 'refine' | 'createURL'> & {
-    isDisabled: boolean
-    value: number
-    isCurrent: boolean
-    ariaLabel?: string
-  }
-
-export const PaginationItem = ({ isDisabled, value, isCurrent, ariaLabel, refine, children }: PaginationItemProps) => {
+export const PaginationItem = ({ isDisabled, isCurrent, ariaLabel, onClick, children }: PaginationItemProps) => {
   const itemClassNames = `
   flex
   justify-center
@@ -43,19 +39,7 @@ export const PaginationItem = ({ isDisabled, value, isCurrent, ariaLabel, refine
 
   return (
     <li>
-      <Button
-        variant="ghost"
-        aria-label={ariaLabel}
-        className={itemClassNames}
-        onClick={(event) => {
-          if (isModifierClick(event)) {
-            return
-          }
-
-          event.preventDefault()
-          refine(value)
-        }}
-      >
+      <Button variant="ghost" aria-label={ariaLabel} className={itemClassNames} onClick={onClick}>
         {children}
       </Button>
     </li>

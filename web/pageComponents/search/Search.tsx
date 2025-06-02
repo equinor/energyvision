@@ -7,7 +7,6 @@ import { createInstantSearchRouterNext } from 'react-instantsearch-router-nextjs
 import singletonRouter, { useRouter } from 'next/router'
 import type { UiState } from 'instantsearch.js'
 import { useRef } from 'react'
-import styled from 'styled-components'
 import { Pagination } from '../shared/search/pagination/Pagination'
 import usePaginationPadding from '../../lib/hooks/usePaginationPadding'
 import { useIntl } from 'react-intl'
@@ -17,10 +16,6 @@ import { PaginationContextProvider } from '../../common/contexts/PaginationConte
 
 const SearchResults = dynamic(() => import('./SearchResults'))
 
-const StyledPagination = styled(Pagination)`
-  margin-top: var(--space-xLarge);
-  justify-content: center;
-`
 const searchClient = client()
 const queriedSearchClient: SearchClient = {
   ...searchClient,
@@ -166,12 +161,13 @@ const Search = () => {
       {indices.map((index) => (
         <Index indexName={index.value} key={index.label} indexId={index.value} />
       ))}
+      <h1 className="sr-only">{intl.formatMessage({ id: 'search_page_title', defaultMessage: 'Search' })}</h1>
       <div className="max-w-[700px]">
         <SearchBox variant="inverted" />
       </div>
       <SearchResults resultsRef={resultsRef} items={indices} />
       <PaginationContextProvider defaultRef={resultsRef}>
-        <StyledPagination padding={padding} hitsPerPage={5} />
+        <Pagination className="mt-12 justify-center" padding={padding} hitsPerPage={5} />
       </PaginationContextProvider>
     </InstantSearch>
   )

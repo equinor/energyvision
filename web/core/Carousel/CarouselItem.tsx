@@ -12,9 +12,6 @@ import { mergeRefs } from '@equinor/eds-utils'
 
 export type Variants = 'richTextBelow' | 'default'
 
-// The accepted ratios from video, iframe and can be used with event,images, keynumber
-export type CarouselAspectRatios = '16:9' | '9:16' | '1:1' | '4:3'
-
 type CarouselItemProps = {
   variant?: Variants
   displayMode?: DisplayModes
@@ -29,10 +26,6 @@ type CarouselItemProps = {
   action?: LinkData
   /* With richTextBelow or default. */
   attribution?: string
-  /* Only scroll: Sets widths based on aspect ratios type */
-  aspectRatio?: CarouselAspectRatios
-  /* Only scroll: To bypass getElementAspectRatio */
-  customListItemWidth?: boolean
   /* Override heights in the richTextBelow */
   overrideHeights?: boolean
   /** Single container */
@@ -99,7 +92,6 @@ export const CarouselItem = forwardRef<HTMLLIElement, CarouselItemProps>(functio
 
   const scrollVariantClassNames = `
   group
-  transform-all
   shrink-0
   grow
   snap-center
@@ -120,16 +112,13 @@ export const CarouselItem = forwardRef<HTMLLIElement, CarouselItemProps>(functio
   row-end-1
   transition-opacity
   duration-1000
-  ease-[ease]
-  ${!active ? 'opacity-30' : ''}
+  ease-ease
+  ${!active ? 'opacity-30' : 'opacity-100'}
   `
 
   const getVariantBody = () => {
     switch (variant) {
       case 'richTextBelow': {
-        const scrollClassNames = ``
-        const singleClassNames = `${active ? 'block' : 'hidden'}`
-
         return (
           <figure className={`flex flex-col ${displayMode === 'single' ? `${singleWidths}` : ''}`}>
             <div
@@ -147,7 +136,7 @@ export const CarouselItem = forwardRef<HTMLLIElement, CarouselItemProps>(functio
                 pr-4  
                 w-full
                 h-fit
-                ${displayMode === 'single' ? singleClassNames : scrollClassNames}
+                ${displayMode === 'single' ? `${active ? 'opacity-100' : 'opacity-50'}` : ''}
             `}
             >
               <div
@@ -204,7 +193,7 @@ export const CarouselItem = forwardRef<HTMLLIElement, CarouselItemProps>(functio
         tabIndex: 0,
       })}
       className={envisTwMerge(
-        ` relative
+        `relative
           mt-1
           focus:outline-none
           focus-visible:outline-dashed

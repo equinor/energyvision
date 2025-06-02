@@ -10,10 +10,10 @@ import {
   InternalLink,
   FigureWithLayout,
   Quote,
-  Fact,
   BulletList,
   NumberedList,
 } from './components'
+import { FactBox } from '@sections/FactBox/FactBox'
 import isEmpty from './helpers/isEmpty'
 import type { PortableTextBlock } from '@portabletext/types'
 
@@ -39,7 +39,7 @@ const defaultSerializers = {
   },
   types: {
     positionedInlineImage: FigureWithLayout,
-    factbox: Fact,
+    factbox: FactBox,
     pullQuote: Quote,
   },
   marks: { sub: Sub, sup: Sup, link: ExternalLink, internalLink: InternalLink },
