@@ -15,19 +15,19 @@ const FullWidthVideo = ({ anchor, data }: { data: FullWidthVideoData; anchor?: s
   const { aspectRatio } = designOptions
 
   const containerClassName = (aspectRatio: FullWidthVideoRatio): string => {
-    let className = 'pb-1/2'
+    let className = 'pb-[50%]'
     switch (aspectRatio) {
       case 'fullScreen':
         className = 'h-screen'
         break
       case 'narrow':
-        className = `pb-3/4 md:pb-[30%]`
+        className = `pb-[75%] md:pb-[30%]`
         break
       case '2:1':
-        className = 'pb-1/2'
+        className = 'pb-[50%]'
         break
       default:
-        className = 'pb-1/2'
+        className = 'pb-[50%]'
     }
     return className
   }
