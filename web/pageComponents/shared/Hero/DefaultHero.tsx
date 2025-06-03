@@ -20,7 +20,7 @@ export const DefaultHero = ({ title, image, isBigTitle, bigTitle, tags }: Props)
           <div className="mx-auto max-w-viewport pt-10 pr-16 pb-0 pl-layout-sm">
             {title && <Heading value={title} as="h1" variant="xl" />}
           </div>
-          <div className="mx-auto py-10 px-layout-sm">
+          <div className="mx-auto py-10 px-layout-sm max-w-viewport">
             {bigTitle && <Heading value={bigTitle} as="h2" variant="3xl" />}
           </div>
         </>
