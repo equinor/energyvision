@@ -1,10 +1,10 @@
 import type { CardData } from '../../types/index'
-import { FormattedMessage } from 'react-intl'
 import { FormattedDate } from '@core/FormattedDateTime'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
 import Card from '@sections/cards/Card'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
 import { Typography } from '@core/Typography'
+import { useTranslations } from 'next-intl'
 
 type LatestNewsProp = {
   data: CardData[]
@@ -12,6 +12,7 @@ type LatestNewsProp = {
 
 const LatestNews = ({ data }: LatestNewsProp) => {
   const isMobile = useMediaQuery(`(max-width: 800px)`)
+  const t = useTranslations()
 
   return (
     <section
@@ -27,7 +28,7 @@ const LatestNews = ({ data }: LatestNewsProp) => {
     "
     >
       <Typography variant="xl" as="h2" className="mb-10">
-        <FormattedMessage id="latest_news" defaultMessage="Latest News" />
+        {t('latest_news')}
       </Typography>
       <ul className="max-lg:w-full grid grid-cols-1 auto-rows-fr gap-x-6 gap-y-3 md:grid-flow-col md:auto-cols-fr">
         {data.map((newsItem: CardData) => {

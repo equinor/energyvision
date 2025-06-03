@@ -12,7 +12,7 @@ import { ResourceLink } from '@core/Link'
 import { getUrlFromAction } from '../../common/helpers'
 import { getLocaleFromName } from '../../lib/localization'
 import { DisplayModes } from '@core/Carousel/Carousel'
-import { FormattedMessage } from 'react-intl'
+import { useTranslations } from 'next-intl'
 
 export type ImageWithOverlayProps = {
   image?: SanityImageObject
@@ -34,6 +34,7 @@ export const ImageWithOverlay = forwardRef<HTMLDivElement, ImageWithOverlayProps
   const toggleButtonId = useId()
   const overlayId = useId()
   const url = action && getUrlFromAction(action)
+  const intl = useTranslations()
 
   const lineClassName = `
     block
@@ -134,9 +135,7 @@ export const ImageWithOverlay = forwardRef<HTMLDivElement, ImageWithOverlayProps
               lg:px-8
               `}
         >
-          <span className="sr-only">
-            <FormattedMessage id="readMore" defaultMessage="Read more" />
-          </span>
+          <span className="sr-only">{intl('readMore')}</span>
           <div
             className={`
               group

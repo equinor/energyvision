@@ -1,3 +1,4 @@
+'use client'
 import { LinkData } from '../../types'
 import { getUrlFromAction } from '../../common/helpers'
 import { useState } from 'react'
@@ -9,8 +10,9 @@ import Modal from '@sections/Modal/Modal'
 import { add_circle_filled } from '@equinor/eds-icons'
 import { twMerge } from 'tailwind-merge'
 import { TransformableIcon } from '../../icons/TransformableIcon'
-import { useIntl } from 'react-intl'
 import Blocks from './portableText/Blocks'
+import { useTransitionStyles } from '@floating-ui/react'
+import { useTranslations } from 'next-intl'
 
 type TranscriptAndActionsProps = {
   className?: string
@@ -21,8 +23,8 @@ type TranscriptAndActionsProps = {
 const TranscriptAndActions = ({ action, transcript, className, ariaTitle }: TranscriptAndActionsProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const actionUrl = action ? getUrlFromAction(action) : ''
-  const intl = useIntl()
-  const readTranscript = intl.formatMessage({ id: 'read_transcript', defaultMessage: 'Read transcript' })
+  const intl = useTranslations()
+  const readTranscript = intl('read_transcript')
   const handleOpen = () => {
     setIsOpen(true)
   }

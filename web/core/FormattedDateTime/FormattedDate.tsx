@@ -1,4 +1,3 @@
-import { FormattedDate as ReactIntlDate } from 'react-intl'
 import { DateProps, DateIcon } from './shared'
 import { useFormatter } from 'next-intl'
 
@@ -24,13 +23,6 @@ const FormattedDate = ({
             day: day,
             ...(weekday && { weekday: weekday }),
           })}
-          {/*<ReactIntlDate
-            value={new Date(datetime)}
-            day={day}
-            year={year}
-            month={month}
-            {...(weekday && { weekday: weekday })}
-          />*/}
         </time>
       </span>
     </span>

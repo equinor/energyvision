@@ -1,6 +1,5 @@
 import { getIsoFromLocale, getNameFromLocale } from '../../../lib/localization'
 import { Flags } from '../../../common/helpers/datasetHelpers'
-import getIntl from '../../../common/helpers/getIntl'
 import algoliasearch from 'algoliasearch'
 import { algolia } from '../../../lib/config'
 import { getComponentsData } from '../../../lib/fetchData'
@@ -8,7 +7,6 @@ import { newsroomQuery } from '../../../lib/queries/newsroom'
 import { notFound } from 'next/navigation'
 import { unstable_cache } from 'next/cache'
 import { Layout } from '@sections/Layout/Layout'
-import { defaultLanguage } from '../../../languages'
 import NewsRoomTemplate from '@templates/newsroom/Newsroom'
 import { NewsRoomPageType } from '../../../types'
 //import { IntlShape } from '@formatjs/intl'
@@ -25,10 +23,10 @@ type NewsRoomPageProps = {
 }
 
 const getInitialResponse = unstable_cache(
-  async () => {
+  async (locale: string) => {
     console.log('Querying algolia')
     const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
-    const indexName = `${envPrefix}_NEWS_en-GB`
+    const indexName = `${envPrefix}_NEWS_${locale}`
 
     const searchClient = algoliasearch(algolia.applicationId, algolia.searchApiKey)
     const index = searchClient.initIndex(indexName)
@@ -61,6 +59,7 @@ export default async function NewsPage({ params, preview = false }: any) {
   }
 
   const lang = getNameFromLocale(locale)
+  const isoLocale = getIsoFromLocale(locale)
 
   const queryParams = {
     lang,
@@ -74,22 +73,16 @@ export default async function NewsPage({ params, preview = false }: any) {
     preview,
   )
 
-  const { slug } = pageData
-  const response = await getInitialResponse()
+  const response = await getInitialResponse(isoLocale)
   const slugs = [
     { slug: '/news', lang: 'en_GB' },
-    { slug: '/nyheter', lang: 'nb_NO' },
+    { slug: '/no/nyheter', lang: 'nb_NO' },
   ]
   return (
     <Layout footerData={footerData} hasSticky={false}>
       <>
         <Header slugs={slugs} menuData={menuData} />
-        <NewsRoomTemplate
-          locale={locale}
-          pageData={pageData as NewsRoomPageType}
-          initialSearchResponse={response}
-          //slug={slug}
-        />
+        <NewsRoomTemplate locale={locale} pageData={pageData as NewsRoomPageType} initialSearchResponse={response} />
       </>
     </Layout>
   )

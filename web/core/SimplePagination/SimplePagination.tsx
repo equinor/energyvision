@@ -1,9 +1,9 @@
 import envisTwMerge from '../../twMerge'
-import { useIntl } from 'react-intl'
 import { MediaButton } from '@core/MediaButton/MediaButton'
 import { useContext } from 'react'
 import { PaginationContext } from '../../common/contexts/PaginationContext'
 import { usePrefersReducedMotion } from '../../common/hooks/usePrefersReducedMotion'
+import { useTranslations } from 'next-intl'
 
 export type SimplePaginationProps = {
   className?: string
@@ -21,7 +21,7 @@ export const SimplePagination = ({
   isLastPage = false,
   ...rest
 }: SimplePaginationProps) => {
-  const intl = useIntl()
+  const intl = useTranslations()
   const { resultsRef } = useContext(PaginationContext)
   const prefersReducedMotion = usePrefersReducedMotion()
 
@@ -42,10 +42,7 @@ export const SimplePagination = ({
     <ul className={envisTwMerge(`max-w-viewport flex-wrap my-2 flex gap-3 items-center`, className)} {...rest}>
       <li>
         <MediaButton
-          title={intl.formatMessage({
-            id: 'previous',
-            defaultMessage: 'Previous',
-          })}
+          title={intl('previous')}
           mode="previous"
           disabled={isFirstPage}
           onClick={handlePrevPagination}
@@ -54,10 +51,7 @@ export const SimplePagination = ({
       </li>
       <li>
         <MediaButton
-          title={intl.formatMessage({
-            id: 'next',
-            defaultMessage: 'Next',
-          })}
+          title={intl('next')}
           mode="next"
           disabled={isLastPage}
           onClick={handleNextPagination}

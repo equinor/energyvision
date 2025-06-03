@@ -1,9 +1,9 @@
 import { Link, ResourceLink } from '@core/Link'
 import type { SimpleGroupData } from '../../types/index'
-import { useRouter } from 'next/router'
+import { usePathname } from 'next/navigation'
 import { forwardRef, useEffect, useId, useRef, useState } from 'react'
-import { FormattedMessage } from 'react-intl'
 import { GoChevronRight } from 'react-icons/go'
+import { useTranslations } from 'next-intl'
 
 type PaneMenuItemProps = {
   item: SimpleGroupData
@@ -17,11 +17,12 @@ export const PaneMenuItem = forwardRef<HTMLLIElement, PaneMenuItemProps>(functio
   ref,
 ) {
   const { type, label, links = [], readMoreLink } = item
-  const router = useRouter()
+  const pathname = usePathname()
   const id = useId()
   const secondPaneId = useId()
   const firstPaneRef = useRef<HTMLDivElement>(null)
   const [translateX, setTranslateX] = useState('100%')
+  const t = useTranslations()
 
   if (item?.type === 'simpleMenuLink' && item.link && !item.link.slug) {
     console.warn('Missing slug for simple menu link')
@@ -60,7 +61,7 @@ export const PaneMenuItem = forwardRef<HTMLLIElement, PaneMenuItemProps>(functio
               text-lg
               no-underline`}
             href={(item.link && item.link.slug) || '/'}
-            aria-current={router?.asPath == item?.link?.slug ? 'page' : 'false'}
+            aria-current={pathname == item?.link?.slug ? 'page' : 'false'}
           >
             {item.label}
           </Link>
@@ -79,13 +80,7 @@ export const PaneMenuItem = forwardRef<HTMLLIElement, PaneMenuItemProps>(functio
             hover:border-north-sea-50
           `}
           >
-            <span className="sr-only">
-              {showSecondPane ? (
-                <FormattedMessage id="close" defaultMessage="Close" />
-              ) : (
-                <FormattedMessage id="open" defaultMessage="Open" />
-              )}
-            </span>
+            <span className="sr-only">{showSecondPane ? t('close') : t('open')}</span>
             {label && (
               <div id={id} className="grow text-lg flex justify-start mr-12">
                 {label}
@@ -124,7 +119,7 @@ export const PaneMenuItem = forwardRef<HTMLLIElement, PaneMenuItemProps>(functio
               w-fit 
               pt-0 
               hover:text-north-sea-50`}
-              aria-current={router?.asPath == readMoreLink?.link?.slug ? 'page' : 'false'}
+              aria-current={pathname == readMoreLink?.link?.slug ? 'page' : 'false'}
             >
               {readMoreLink.label}
             </ResourceLink>
@@ -139,7 +134,7 @@ export const PaneMenuItem = forwardRef<HTMLLIElement, PaneMenuItemProps>(functio
                   decoration-2
                   dark:hover:text-north-sea-50`}
                 href={link?.link?.slug || '/'}
-                aria-current={router?.asPath == link?.link?.slug ? 'page' : 'false'}
+                aria-current={pathname == link?.link?.slug ? 'page' : 'false'}
               >
                 {link.label}
               </Link>

@@ -1,4 +1,5 @@
-import { useRouter } from 'next/router'
+'use client'
+import { usePathname } from 'next/navigation'
 import { NewsArticleJsonLd, NextSeo } from 'next-seo'
 import { Typography } from '@core/Typography'
 import { FormattedDateTime } from '@core/FormattedDateTime'
@@ -17,6 +18,7 @@ import Blocks from '../shared/portableText/Blocks'
 import { twMerge } from 'tailwind-merge'
 import RelatedContent from '../../pageComponents/shared/RelatedContent'
 import Footnotes from '../../pageComponents/shared/portableText/components/Footnotes'
+import { useLocale } from 'next-intl'
 
 const isDateAfter = (a: string, b: string) => {
   const dtA = new Date(a).getTime()
@@ -30,11 +32,10 @@ type ArticleProps = {
 }
 
 const NewsPage = ({ data: news }: ArticleProps) => {
-  const router = useRouter()
-  /*  const appInsights = useAppInsightsContext() */
   const slug = news?.slug
 
-  const { pathname, locale } = router
+  const pathname = usePathname()
+  const locale = useLocale()
 
   const fullUrl = getFullUrl(pathname, slug, locale)
 

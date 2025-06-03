@@ -4,10 +4,10 @@ import { PortableText } from '@portabletext/react'
 import { PortableTextBlock } from '@portabletext/types'
 import isEmpty from '../helpers/isEmpty'
 import { BaseLink } from '@core/Link'
-import { FormattedMessage, useIntl } from 'react-intl'
+import { useTranslations } from 'next-intl'
 
 function Footnotes({ blocks }: { blocks: PortableTextBlock[] }) {
-  const intl = useIntl()
+  const intl = useTranslations()
   const notes = blocks
     //
     .filter(({ _type }) => _type === 'block')
@@ -31,7 +31,7 @@ function Footnotes({ blocks }: { blocks: PortableTextBlock[] }) {
     >
       {/*       <div className="h-[1px] bg-autumn-storm-60 w-[30vw]" /> */}
       <h2 className="sr-only" id="footnote-label">
-        <FormattedMessage id="footnotes" defaultMessage="Footnotes" />
+        {intl('footnotes')}
       </h2>
       <ol className="my-0">
         {notes.map(({ _key, text }: { _key: any; text: any }) => (
@@ -76,9 +76,9 @@ function Footnotes({ blocks }: { blocks: PortableTextBlock[] }) {
                 before:translate-x-[-50%]
                 before:rounded-[100%]
                 "
-                aria-label={intl.formatMessage({ id: 'back_to_content', defaultMessage: 'Back to content' })}
+                aria-label={intl('back_to_content')}
                 role="doc-backlink"
-                title={intl.formatMessage({ id: 'back_to_content', defaultMessage: 'Back to content' })}
+                title={intl('back_to_content')}
               >
                 ↵
               </BaseLink>

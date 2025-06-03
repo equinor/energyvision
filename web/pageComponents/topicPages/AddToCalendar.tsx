@@ -1,9 +1,10 @@
+'use client'
 import { useEffect, useState } from 'react'
 import { isAfter } from 'date-fns'
 import { getEventDates, toUTCDateParts } from '../../common/helpers/dateUtilities'
 import type { EventDateType } from '../../types/index'
-import { useIntl } from 'react-intl'
 import { ResourceLink } from '@core/Link'
+import { useTranslations } from 'next-intl'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const ics = require('ics')
@@ -50,7 +51,7 @@ const createICS = (eventData: ICSProps): string | boolean => {
 }
 
 const AddToCalendar = ({ eventDate, title, location }: AddToCalendarProps) => {
-  const intl = useIntl()
+  const intl = useTranslations()
   const [fileData, setFileData] = useState<string | boolean>(false)
 
   useEffect(() => {
@@ -84,14 +85,8 @@ const AddToCalendar = ({ eventDate, title, location }: AddToCalendarProps) => {
   }, [eventDate, location, title])
 
   if (!fileData) return null
-  const atc = intl.formatMessage({ id: 'add_to_calendar_event', defaultMessage: 'Add to Calendar' })
-  const atcAriaLabel = intl.formatMessage(
-    {
-      id: 'add_to_calendar_aria_label',
-      defaultMessage: `Add {eventTitle} to calendar`,
-    },
-    { eventTitle: title },
-  )
+  const atc = intl('add_to_calendar_event')
+  const atcAriaLabel = intl('add_to_calendar_aria_label', { eventTitle: title })
   return fileData ? (
     <ResourceLink
       href={fileData as string}

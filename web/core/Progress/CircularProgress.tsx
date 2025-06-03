@@ -1,6 +1,6 @@
 import { forwardRef, SVGProps, useEffect, useState, CSSProperties } from 'react'
 import envisTwMerge from '../../twMerge'
-import { useIntl } from 'react-intl'
+import { useTranslations } from 'next-intl'
 
 export type CircularProgressProps = {
   /**  Use indeterminate when there is no progress value */
@@ -31,7 +31,7 @@ const CircularProgress = forwardRef<SVGSVGElement, CircularProgressProps>(functi
   },
   ref,
 ) {
-  const intl = useIntl()
+  const intl = useTranslations()
   const thickness = 2.5
   const progress = value ? Math.round(value) : 0
   const props = {
@@ -92,7 +92,7 @@ const CircularProgress = forwardRef<SVGSVGElement, CircularProgressProps>(functi
   }, [progress, variant])
 
   const getProgressFormatted = () => {
-    return `${intl.formatMessage({ id: 'loading', defaultMessage: 'Loading' })} ${srProgress}%`
+    return `${intl('loading')} ${srProgress}%`
   }
 
   const trackStyle: CSSProperties = {

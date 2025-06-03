@@ -1,7 +1,6 @@
 import { BackgroundContainer } from '@core/Backgrounds'
 import { FormattedDate, FormattedTime } from '@core/FormattedDateTime'
 import { toPlainText } from '@portabletext/react'
-import { FormattedMessage } from 'react-intl'
 import { getEventDates } from '../../common/helpers/dateUtilities'
 import ContactList from '../shared/ContactList'
 import IngressText from '../shared/portableText/IngressText'
@@ -15,9 +14,11 @@ import { EventJsonLd } from 'next-seo'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
 import { twMerge } from 'tailwind-merge'
 import RelatedContent from '../../pageComponents/shared/RelatedContent'
+import { useTranslations } from 'next-intl'
 
 export default function Event({ data }: { data: EventSchema }): JSX.Element {
   const { title } = data
+  const t = useTranslations()
   const { location, ingress, content, promotedPeople, relatedLinks, contactList, eventDate } = data.content
 
   const plainTitle = title ? toPlainText(title as PortableTextBlock[]) : ''
@@ -33,7 +34,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
         <article>
           <BackgroundContainer className="px-layout-md py-32" background={{ backgroundColor: 'Moss Green Light' }}>
             <div className="mx-auto max-w-[1186px]">
-              {title && <TitleText value={title} level="h1" size="3xl" />}
+              {title && <TitleText value={title} as="h1" variant="3xl" />}
               {start && (
                 <div className="text-xl text-norwegian-woods-100 mt-7 mb-5">
                   <FormattedDate datetime={start} />
@@ -48,9 +49,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
                     <FormattedTime datetime={end} timezone />
                   </>
                 ) : (
-                  <span>
-                    <FormattedMessage id="tba" defaultMessage="To be announced" />
-                  </span>
+                  <span>{t('tba')}</span>
                 )}
               </div>
 

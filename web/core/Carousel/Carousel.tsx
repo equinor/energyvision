@@ -1,3 +1,4 @@
+'use client'
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import {
   VideoPlayerCarouselItem,
@@ -25,12 +26,12 @@ import { usePrefersReducedMotion } from '../../common/hooks/usePrefersReducedMot
 import { PortableTextBlock } from '@portabletext/types'
 import { toPlainText } from '@portabletext/react'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
-import { FormattedMessage, useIntl } from 'react-intl'
 import { CarouselItem } from './CarouselItem'
 import IFrame from '../../pageComponents/shared/iframe/IFrame'
 import { EventCard } from '@sections/cards/EventCard'
 import { VideoJsComponent } from '../../pageComponents/shared/VideoPlayer'
 import KeyNumberItem from '@sections/KeyNumber/KeyNumberItem'
+import { useTranslations } from 'next-intl'
 
 export type DisplayModes = 'single' | 'scroll'
 export type Layouts = 'full' | 'default'
@@ -81,7 +82,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
   const CarouselTag = hasSectionTitle ? (`div` as ElementType) : (`section` as ElementType)
   const carouselItemsId = useId()
   const controlsId = useId()
-  const intl = useIntl()
+  const intl = useTranslations()
   const sliderRef = useRef<HTMLUListElement>(null)
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
   //a prefers-reduced-motion user setting must always override autoplay
@@ -257,16 +258,10 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
   }, [initialPositions])
 
   const getTranslatedItemCountLabel = (item: number) => {
-    return intl.formatMessage(
-      {
-        id: 'carouselItemCountLabel',
-        defaultMessage: 'Item {x} of {carouselLength}',
-      },
-      {
-        x: item,
-        carouselLength: items.length,
-      },
-    )
+    return intl('carouselItemCountLabel', {
+      x: item,
+      carouselLength: items.length,
+    })
   }
   const cancelTimeout = () => {
     timeoutRef.current && clearTimeout(timeoutRef.current)
@@ -527,24 +522,16 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
               key={`play_pause_button_${currentIndex}`}
               title={
                 pauseAutoRotation
-                  ? intl.formatMessage(
-                      {
-                        id: 'carouselPlay',
-                        defaultMessage: 'Play {title} gallery',
-                      },
+                  ? intl(
+                      'carouselPlay',
+
                       {
                         title: translatedPlayPauseAutoRotationTitle,
                       },
                     )
-                  : intl.formatMessage(
-                      {
-                        id: 'carouselPause',
-                        defaultMessage: 'Pause {title} gallery',
-                      },
-                      {
-                        title: translatedPlayPauseAutoRotationTitle,
-                      },
-                    )
+                  : intl('carouselPause', {
+                      title: translatedPlayPauseAutoRotationTitle,
+                    })
               }
               mode={pauseAutoRotation ? 'play' : 'pause'}
               onClick={() => {
@@ -565,10 +552,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
            */}
           <div className="flex gap-3 items-center">
             <MediaButton
-              title={intl.formatMessage({
-                id: 'previous',
-                defaultMessage: 'Previous',
-              })}
+              title={intl('previous')}
               aria-controls={carouselItemsId}
               mode="previous"
               disabled={(displayMode === 'scroll' && scrollPosition === 'start') ?? false}
@@ -585,10 +569,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
               className="hover:border-autumn-storm-60"
             />
             <MediaButton
-              title={intl.formatMessage({
-                id: 'next',
-                defaultMessage: 'Next',
-              })}
+              title={intl('next')}
               mode="next"
               aria-controls={carouselItemsId}
               disabled={(displayMode === 'scroll' && scrollPosition === 'end') ?? false}
@@ -633,14 +614,10 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
         </ul>
         {displayMode === 'single' && (
           <div aria-live={pauseAutoRotation ? 'polite' : 'off'} aria-atomic={true} className="sr-only">
-            <FormattedMessage
-              id="carouselLiveAnnoucement"
-              defaultMessage="Showing item {x} of {carouselLength}"
-              values={{
-                x: currentIndex + 1,
-                carouselLength: items.length,
-              }}
-            />
+            {intl('carouselLiveAnnoucement', {
+              x: currentIndex + 1,
+              carouselLength: items.length,
+            })}
           </div>
         )}
       </div>
