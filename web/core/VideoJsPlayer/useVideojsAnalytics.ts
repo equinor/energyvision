@@ -1,4 +1,4 @@
-import useConsent from './useConsent'
+import useConsent from '../../lib/hooks/useConsent'
 import { pushToDataLayer } from '../../lib/gtm'
 import { useEffect, useCallback, useState } from 'react'
 import Player from 'video.js/dist/types/player'
