@@ -49,7 +49,7 @@ export const DefaultHero = ({ title, image, isBigTitle, bigTitle, tags }: Props)
         </div>
       )}
 
-      {image && <DefaulHeroImage className="pt-0 px-layout-sm pb-16 max-w-viewport m-0" data={image} />}
+      {image && <DefaulHeroImage className="pt-0 px-layout-sm pb-16 max-w-viewport mx-auto" data={image} />}
     </>
   )
 }
