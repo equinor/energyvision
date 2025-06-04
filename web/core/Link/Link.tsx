@@ -2,6 +2,7 @@ import { forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { BaseLink, BaseLinkProps } from './BaseLink'
 import { ArrowRight } from '../../icons'
+import { useIntl } from 'react-intl'
 
 export type LinkProps = BaseLinkProps
 
@@ -10,13 +11,14 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
   { children, type = 'internalUrl', className = '', href = '', ...rest },
   ref,
 ) {
+  const intl = useIntl()
+
   const classNames = twMerge(
     `text-slate-blue-95
     dark:text-white-100
     w-fit 
     inline-flex
     items-center
-    gap-2.5
     underline
     hover:text-norwegian-woods-100
     dark:hover:text-slate-blue-95
@@ -27,7 +29,13 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
   return (
     <BaseLink className={classNames} type={type} ref={ref} href={href} {...rest}>
       {children}
-      {type === 'externalUrl' && <ArrowRight className="text-no inline-block pt-1 -rotate-45 origin-bottom-left" />}
+      {type === 'externalUrl' && (
+        <ArrowRight
+          aria-hidden="false"
+          aria-label={`, ${intl.formatMessage({ id: 'externalLink', defaultMessage: 'External link' })}`}
+          className="text-no inline-block pb-1 -rotate-45 origin-center"
+        />
+      )}
     </BaseLink>
   )
 })

@@ -13,7 +13,7 @@ import {
   BulletList,
   NumberedList,
 } from './components'
-import { Fact } from '@sections/FactCore/Fact'
+import { FactBox } from '@sections/FactBox/FactBox'
 import isEmpty from './helpers/isEmpty'
 import type { PortableTextBlock } from '@portabletext/types'
 import { List } from '@core/List'
@@ -40,7 +40,7 @@ const defaultSerializers = {
   },
   types: {
     positionedInlineImage: FigureWithLayout,
-    factbox: Fact,
+    factbox: FactBox,
     pullQuote: Quote,
   },
   marks: { sub: Sub, sup: Sup, link: ExternalLink, internalLink: InternalLink },

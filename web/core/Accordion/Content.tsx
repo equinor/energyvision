@@ -27,6 +27,7 @@ export const Content = forwardRef<HTMLDivElement, AccordionContentProps>(functio
     menu: `max-xl:overflow-hidden
     max-xl:motion-safe:data-closed:animate-slideDown
     max-xl:motion-safe:data-open:animate-slideUp
+
     `,
     simpleMenu: `max-xl:overflow-hidden
     max-xl:motion-safe:data-closed:animate-slideDown
@@ -55,7 +56,7 @@ export const Content = forwardRef<HTMLDivElement, AccordionContentProps>(functio
 
       default:
         return (
-          <div className="pt-0 ml-2.5 border-l border-dashed border-slate-80 pl-7 pr-4 pb-6 mb-6 flex flex-col gap-6">
+          <div className="pt-0 ml-2.5 border-l border-dashed border-slate-80 dark:border-white-100 pl-7 pr-4 pb-6 mb-6 flex flex-col gap-6">
             {children}
           </div>
         )

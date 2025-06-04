@@ -5,7 +5,8 @@ import { ArrowRight } from '../../icons'
 import envisTwMerge from '../../twMerge'
 import { TransformableIcon } from '../../icons/TransformableIcon'
 import { add, calendar } from '@equinor/eds-icons'
-import { PiFilePdfThin } from 'react-icons/pi'
+import { BsFiletypePdf, BsFiletypeXlsx } from 'react-icons/bs'
+import { useIntl } from 'react-intl'
 
 export type Variants = 'default' | 'fit'
 
@@ -17,13 +18,11 @@ export type ResourceLinkProps = {
   textClassName?: string
   /** When using aria-label on the link, e.g add to calendar  */
   ariaHideText?: boolean
-  /** What kind of content is it  */
-  type?: LinkType
   /* Link extension */
   extension?: string | undefined
   /** If type is of an extension type (PDF), show the extention as icon */
   showExtensionIcon?: boolean
-} & Omit<BaseLinkProps, 'type'>
+} & BaseLinkProps
 
 export const iconRotation: Record<string, string> = {
   externalUrl: '-rotate-45',
@@ -69,7 +68,7 @@ export const getArrowElement = (type: LinkType, iconClassName: string) => {
       return (
         <div className={`flex flex-col px-1 ${marginClassName} translate-y-[1px]`}>
           <ArrowRight className={iconClassNames} />
-          <div className="bg-energy-red-100 h-[2px] w-full" />
+          <div className="bg-energy-red-100 dark:bg-white-100 h-[2px] w-full" />
         </div>
       )
     case 'icsLink':
@@ -95,6 +94,7 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
   },
   ref,
 ) {
+  const intl = useIntl()
   const variantClassName: Partial<Record<Variants, string>> = {
     default: 'w-full pt-3',
     fit: 'w-fit pt-3',
@@ -107,6 +107,7 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
 
   const classNames = envisTwMerge(
     `group
+    text-base
     relative
     flex
     flex-col
@@ -123,13 +124,34 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
     className,
   )
 
+  const getTranslation = () => {
+    switch (type) {
+      case 'externalUrl':
+        return intl.formatMessage({ id: 'externalLink', defaultMessage: 'External link' })
+      case 'downloadableFile':
+      case 'downloadableImage':
+      case 'icsLink':
+        return intl.formatMessage({ id: 'downloadDocument', defaultMessage: 'Download document' })
+      default:
+        return intl.formatMessage({ id: 'internalLink', defaultMessage: 'Internal link' })
+    }
+  }
+
   const getContentElements = () => {
     const textClassNames = envisTwMerge(`pt-1 grow leading-none`, textClassName)
     switch (type) {
       case 'downloadableFile':
-        return extension && extension.toUpperCase() === 'PDF' && showExtensionIcon ? (
+        return extension &&
+          (extension.toUpperCase() === 'PDF' ||
+            extension.toUpperCase() === 'XLS' ||
+            extension.toUpperCase() === 'XLSX') &&
+          showExtensionIcon ? (
           <>
-            <PiFilePdfThin size={24} className="mr-2 min-w-6 min-h-6" />
+            {extension.toUpperCase() === 'PDF' ? (
+              <BsFiletypePdf aria-label="pdf" size={24} className="mr-2 min-w-6 min-h-6" />
+            ) : (
+              <BsFiletypeXlsx aria-label="xlsx" size={24} className="mr-2 min-w-6 min-h-6" />
+            )}
             <div
               className={textClassNames}
               {...(ariaHideText && {
@@ -147,15 +169,22 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
             })}
           >
             {children}
-            {(extension && !showExtensionIcon) || (extension && extension.toUpperCase() !== 'PDF' && showExtensionIcon)
-              ? `(${extension.toUpperCase()})`
-              : ''}
+            {(extension && !showExtensionIcon) ||
+            (extension &&
+              (extension.toUpperCase() !== 'PDF' ||
+                extension.toUpperCase() !== 'XLS' ||
+                extension.toUpperCase() !== 'XLSX') &&
+              showExtensionIcon) ? (
+              <span
+                aria-label={`, ${getTranslation()} ${extension.toUpperCase()}`}
+              >{`(${extension.toUpperCase()})`}</span>
+            ) : null}
           </div>
         )
       case 'icsLink':
         return (
           <>
-            <TransformableIcon iconData={calendar} className="mr-2" />
+            <TransformableIcon aria-label={`, ${getTranslation()}`} iconData={calendar} className="mr-2" />
             <div
               className={textClassNames}
               {...(ariaHideText && {
@@ -175,20 +204,36 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
             })}
           >
             {children}
-            {extension ? `(${extension.toUpperCase()})` : ''}
+            {extension ? (
+              <span aria-label={`, ${getTranslation()} ${extension.toUpperCase()}`}>
+                {`(${extension.toUpperCase()})`}
+              </span>
+            ) : null}
           </div>
         )
     }
   }
+
   return (
-    <BaseLink className={classNames} type={type} ref={ref} href={href} {...rest} target="_blank">
+    <BaseLink
+      className={classNames}
+      type={type}
+      ref={ref}
+      href={href}
+      {...rest}
+      {...(extension &&
+        extension.toLowerCase() === 'pdf' && {
+          target: '_blank',
+        })}
+    >
       <div
         className={envisTwMerge(
           `h-full
-          w-inherit flex
+          w-inherit 
+          flex
           justify-start
-        items-center
-        ${contentVariantClassName[variant]}`,
+          items-center
+          ${contentVariantClassName[variant]}`,
         )}
       >
         {getContentElements()}
