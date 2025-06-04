@@ -60,5 +60,5 @@ const defaultSerializers: PortableTextReactComponents = {
   } as ListType,
   listItem: listItem as ListItemType,
 }
-
+ 
 export default defaultSerializers
