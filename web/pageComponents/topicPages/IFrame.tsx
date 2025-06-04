@@ -5,8 +5,8 @@ import { BackgroundContainer } from '@core/Backgrounds'
 import CoreIFrame from '../shared/iframe/IFrame'
 import IngressText from '../shared/portableText/IngressText'
 import TitleText from '../shared/portableText/TitleText'
-import RichText from '../shared/portableText/RichText'
 import TranscriptAndActions from '../../pageComponents/shared/TranscriptAndActions'
+import Blocks from '../../pageComponents/shared/portableText/Blocks'
 
 const StyledHeading = styled(TitleText)`
   padding: 0 0 var(--space-large) 0;
@@ -53,7 +53,7 @@ const IFrame = ({
             hasSectionTitle={!!title}
           />
           <FigureCaption size="medium">
-            <RichText value={description} />
+            <Blocks value={description} />
           </FigureCaption>
         </Figure>
       ) : (

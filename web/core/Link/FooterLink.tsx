@@ -25,6 +25,7 @@ const FooterLink = forwardRef<HTMLAnchorElement, FooterLinkProps>(function Foote
       className={`group 
         hover:underline 
         hover:text-moss-green-90 
+        dark:hover:text-moss-green-90
         min-w-11 
         min-h-11 
         no-underline 
