@@ -5,7 +5,7 @@ import { useSanityLoader } from '../../lib/hooks/useSanityLoader'
 import { getUrlFromAction } from '../../common/helpers'
 import { getArrowElement } from '@core/Link/ResourceLink'
 import { BaseLink } from '@core/Link'
-import { ImageBackground } from '../../types'
+import { ImageBackground, ImageWithAlt } from '../../types'
 import { PortableTextBlock } from '@portabletext/types'
 import { Heading } from '@core/Typography'
 
@@ -19,7 +19,7 @@ import { Heading } from '@core/Typography'
 
 type HomePageBannerProps = {
   title?: PortableTextBlock[]
-  image: ImageBackground
+  image: ImageWithAlt
   attribution: string
   ctaCards: any[]
   colorBackground?: ColorSelectorValue
@@ -30,13 +30,13 @@ export const HomePageBanner = forwardRef<HTMLDivElement, HomePageBannerProps>(fu
   { anchor, title, image, attribution, ctaCards, colorBackground },
   ref,
 ) {
-  const desktopUrl = useSanityLoader(image?.image, 2560, Ratios.ONE_TO_TWO)
+  const desktopUrl = useSanityLoader(image, 2560, Ratios.ONE_TO_TWO)
   console.log('image', image)
   return (
     <div ref={ref} id={anchor} className={`relative px-layout-md`}>
       <picture className="absolute inset-0">
         <source srcSet={desktopUrl?.src} media="(min-width: 1250px)" />
-        <Image maxWidth={810} aspectRatio={3.33} image={image?.image} sizes="100vw" fill priority className="" />
+        <Image maxWidth={810} aspectRatio={3.33} image={image} sizes="100vw" fill priority className="" />
       </picture>
       <div className="grid grid-cols-1 grid-rows-[max-content_min-content] gap-12 pt-44 pb-16 max-w-viewport">
         {title && (
