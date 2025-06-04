@@ -6,11 +6,11 @@ import { ButtonLink } from '@core/Link'
 import { Button, getVariant } from '@core/Button'
 import { getLocaleFromName } from '../../lib/localization'
 import Modal from '@sections/Modal/Modal'
-import RichText from './portableText/RichText'
 import { add_circle_filled } from '@equinor/eds-icons'
 import { twMerge } from 'tailwind-merge'
 import { TransformableIcon } from '../../icons/TransformableIcon'
 import { useIntl } from 'react-intl'
+import Blocks from './portableText/Blocks'
 
 type TranscriptAndActionsProps = {
   className?: string
@@ -56,7 +56,7 @@ const TranscriptAndActions = ({ action, transcript, className, ariaTitle }: Tran
             <TransformableIcon iconData={add_circle_filled} />
           </Button>
           <Modal isOpen={isOpen} onClose={handleClose} title={ariaTitle}>
-            <RichText value={transcript} />
+            <Blocks value={transcript} />
           </Modal>
         </>
       )}
