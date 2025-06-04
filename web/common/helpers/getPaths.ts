@@ -4,40 +4,29 @@ import { publishDateTimeQuery } from '../../lib/queries/common/publishDateTime'
 import { getClient } from '../../lib/sanity.server'
 import { noDrafts, sameLang } from './../../lib/queries/common/langAndDrafts'
 
-// These URLs uses SSR and thus should not be static rendered
-const topicSlugBlackList = {
-  en_GB: ['/news'],
-  nb_NO: ['/nyheter'],
-}
-
 const getTopicRoutesForLocale = async (locale: string) => {
   const lang = getNameFromLocale(locale)
-  // Empty array as fallback for satelittes
-  const blacklist = topicSlugBlackList[lang as keyof typeof topicSlugBlackList] || []
+
   const data: { slug: string; _updatedAt: string }[] = await getClient(false).fetch(
-    groq`*[_type match "route_" + $lang + "*" && (!(slug.current in $blacklist)) && defined(slug.current) && !(_id in path("drafts.**"))][] {
+    groq`*[_type match "route_" + $lang && defined(slug.current) && !(_id in path("drafts.**"))][] {
       _updatedAt,
       "slug": slug.current,
     }`,
     {
       lang,
-      blacklist,
     },
   )
   return data
 }
 const getTopicRoutesForLocaleToStaticallyBuild = async (locale: string) => {
   const lang = getNameFromLocale(locale)
-  // Empty array as fallback for satelittes
-  const blacklist = topicSlugBlackList[lang as keyof typeof topicSlugBlackList] || []
   const data: { slug: string; _updatedAt: string }[] = await getClient(false).fetch(
-    groq`*[_type match "route_" + $lang + "*" && (!(slug.current in $blacklist)) && includeInBuild && defined(slug.current) && !(_id in path("drafts.**"))][] {
+    groq`*[_type match "route_" + $lang  && includeInBuild && defined(slug.current) && !(_id in path("drafts.**"))][] {
       _updatedAt,
       "slug": slug.current,
     }`,
     {
       lang,
-      blacklist,
     },
   )
   return data
