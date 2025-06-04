@@ -36,10 +36,9 @@ export const getVariant = (variant: Variants): string => {
     case 'outlined':
       return `
       border
-      border-north-sea-100
-      text-norwegian-woods-100
-      hover:bg-moss-green-60
-      hover:text-moss-green-100
+      border-grey-60
+      hover:bg-autumn-storm-60
+      hover:border-autumn-storm-60
       focus:outline-none
       focus-visible:outline-slate-blue-95
       dark:text-white-100
@@ -54,9 +53,10 @@ export const getVariant = (variant: Variants): string => {
       lg:px-5
       lg:py-3
       border
-      border-north-sea-100
+      border-grey-60
       text-black-80 
-      hover:bg-slate-blue-100
+      hover:bg-autumn-storm-60
+      hover:border-autumn-storm-60
       hover:text-white-100
       focus:outline-none
       focus-visible:outline-slate-blue-95

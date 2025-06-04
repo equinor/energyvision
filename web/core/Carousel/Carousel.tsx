@@ -582,7 +582,6 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
                   prevSlide()
                 }
               }}
-              className="hover:border-autumn-storm-60"
             />
             <MediaButton
               title={intl.formatMessage({
@@ -602,7 +601,6 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
                   nextSlide()
                 }
               }}
-              className="hover:border-autumn-storm-60"
             />
           </div>
         </div>

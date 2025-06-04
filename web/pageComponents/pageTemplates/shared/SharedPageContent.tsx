@@ -7,7 +7,6 @@ import PageQuote from '../../topicPages/PageQuote'
 import PromoTileArray from '../../../sections/PromoTiles/PromoTileArray'
 import IFrame from '../../topicPages/IFrame'
 import Promotion from '../../topicPages/Promotion'
-import Form from '../../topicPages/Form/Form'
 import Table from '../../topicPages/Table'
 import NewsList from '../../topicPages/NewsList'
 import StockValues from '../../topicPages/StockValues'
@@ -66,6 +65,7 @@ import AccordionBlock from '@sections/AccordionBlock/AccordionBlock'
 import TabsBlock, { TabsBlockProps } from '@sections/TabsBlock/TabsBlock'
 import { getColorForTabsTheme } from '@sections/TabsBlock/tabThemes'
 import { ColorKeyTokens, colorKeyToUtilityMap } from '../../../styles/colorKeyToUtilityMap'
+import Form from '@templates/forms/Form'
 
 type DefaultComponent = {
   id?: string
