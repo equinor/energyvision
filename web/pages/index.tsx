@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
 import dynamic from 'next/dynamic'
 import { Layout } from '../sections/Layout/Layout'
-import { defaultLanguage } from '../languages'
+import { defaultLanguage, languages } from '../languages'
 import Header from '../sections/Header/Header'
 import { FormattedMessage } from 'react-intl'
 import getIntl from '../common/helpers/getIntl'
@@ -74,6 +74,10 @@ Page.getLayout = (page: AppProps) => {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params, preview = false, locale = defaultLanguage.locale }) => {
+  if (!languages.map((it) => it.locale).includes(locale))
+    return {
+      notFound: true,
+    }
   const { query, queryParams } = await getQueryFromSlug(params?.slug as string[], locale)
 
   const intl = await getIntl(locale, preview)
@@ -85,13 +89,14 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
     preview,
   )
 
+  const { data, slugs } = pageData
   return {
     props: {
       preview,
       data: {
         query,
         queryParams,
-        pageData,
+        pageData: { ...data, slugs },
         menuData,
         footerData,
         intl,
