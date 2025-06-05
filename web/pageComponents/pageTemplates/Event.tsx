@@ -22,7 +22,6 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
 
   const plainTitle = title ? toPlainText(title as PortableTextBlock[]) : ''
   const { start, end } = getEventDates(eventDate)
-
   return (
     <>
       <Seo seoAndSome={data?.seoAndSome} slug={data?.slug} pageTitle={data?.title} />
@@ -35,7 +34,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
             <div className="mx-auto max-w-[1186px]">
               {title && (
                 <Typography as="h1" variant="3xl">
-                  {title}
+                  {plainTitle}
                 </Typography>
               )}
               {start && (

@@ -9,7 +9,7 @@ import { Link } from '@core/Link'
 import { getLocaleFromName } from '../../lib/localization'
 import type { CellData, LinkData, TableData } from '../../types/index'
 import { PortableTextBlock } from '@portabletext/types'
-import { PortableText } from '@portabletext/react'
+import { PortableText, toPlainText } from '@portabletext/react'
 import defaultSerializers from '../shared/portableText/helpers/defaultSerializers'
 import Blocks from '../shared/portableText/Blocks'
 import { Typography } from '@core/Typography'
@@ -102,17 +102,14 @@ const renderCellByType = (cellData: CellData) => {
 
 const Table = ({ data, anchor, className }: TableProps) => {
   const { title, ingress, designOptions, tableHeaders = [], tableRows = [] } = data
+  const plainTitle = title ? toPlainText(title as PortableTextBlock[]) : ''
 
   const { theme, ...restOptions } = designOptions
 
   // Should the headers just be a plain text field?
   return (
     <BackgroundContainer className={className} {...restOptions} id={anchor} renderFragmentWhenPossible>
-      {title && (
-        <Typography className="mb-10">
-          <>{title}</>
-        </Typography>
-      )}
+      {title && <Typography className="mb-10">{plainTitle}</Typography>}
       {ingress && (
         <StyledIngress>
           <IngressText value={ingress} />

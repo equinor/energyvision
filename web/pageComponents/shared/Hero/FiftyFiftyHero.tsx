@@ -1,12 +1,13 @@
 import styled from 'styled-components'
 import Image from '../SanityImage'
-import type { HeroType } from '../../../types/index'
+import type { HeroType, PortableTextBlock } from '../../../types/index'
 import { BackgroundContainer } from '@core/Backgrounds'
 import { ResourceLink } from '@core/Link'
 import Blocks from '../portableText/Blocks'
 import { getUrlFromAction } from '../../../common/helpers'
 import { getLocaleFromName } from '../../../lib/localization'
 import { Typography } from '@core/Typography'
+import { toPlainText } from '@portabletext/react'
 
 const StyledHero = styled(BackgroundContainer)`
   display: grid;
@@ -57,6 +58,8 @@ const StyledIngress = styled.div`
 
 export const FiftyFiftyHero = ({ title, ingress, link: action, background, figure, isBigTitle }: HeroType) => {
   const url = action && getUrlFromAction(action)
+  const plainTitle = title ? toPlainText(title as PortableTextBlock[]) : ''
+
   return (
     <>
       <StyledHero background={{ backgroundColor: background }} backgroundStyle="none">
@@ -73,7 +76,7 @@ export const FiftyFiftyHero = ({ title, ingress, link: action, background, figur
                 variant={isBigTitle ? '2xl' : 'xl'}
                 className={`max-w-[1186px] ${isBigTitle ? 'font-normal' : 'font-medium'}`}
               >
-                <>{title}</>
+                {plainTitle}
               </Typography>
             </>
           )}

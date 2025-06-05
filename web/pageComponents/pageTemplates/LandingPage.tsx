@@ -1,9 +1,10 @@
 import styled from 'styled-components'
-import type { LandingPageSchema } from '../../types/index'
+import type { LandingPageSchema, PortableTextBlock } from '../../types/index'
 import IngressText from '../shared/portableText/IngressText'
 import ContentGroup from '../landingPages/ContentGroup'
 import Seo from '../../pageComponents/shared/Seo'
 import { Typography } from '@core/Typography'
+import { toPlainText } from '@portabletext/react'
 
 const HeroBanner = styled.div`
   padding: var(--space-xLarge) var(--layout-paddingHorizontal-medium) var(--space-xLarge)
@@ -30,6 +31,7 @@ type LandingPageProps = {
 
 const LandingPage = ({ data }: LandingPageProps) => {
   const { title, ingress, subGroups = [] } = data
+  const plainTitle = title ? toPlainText(title as PortableTextBlock[]) : ''
 
   return (
     <>
@@ -38,7 +40,7 @@ const LandingPage = ({ data }: LandingPageProps) => {
         <HeroBanner>
           {title && (
             <Typography className="max-w-[1186px] mx-auto" as="h1" variant="3xl">
-              {title}
+              {plainTitle}
             </Typography>
           )}
         </HeroBanner>

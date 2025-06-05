@@ -1,4 +1,4 @@
-import type { IFrameData } from '../../types/index'
+import type { IFrameData, PortableTextBlock } from '../../types/index'
 import { FigureCaption } from '@core/FigureCaption/FigureCaption'
 import { BackgroundContainer } from '@core/Backgrounds'
 import CoreIFrame from '../shared/iframe/IFrame'
@@ -7,6 +7,7 @@ import TranscriptAndActions from '../../pageComponents/shared/TranscriptAndActio
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
 import { twMerge } from 'tailwind-merge'
 import { Typography } from '@core/Typography'
+import { toPlainText } from '@portabletext/react'
 
 const IFrame = ({
   anchor,
@@ -21,14 +22,12 @@ const IFrame = ({
   if (!url) return null
 
   const { height, aspectRatio, ...restOptions } = designOptions
+  const plainTitle = title ? toPlainText(title as PortableTextBlock[]) : ''
+
   return (
     <BackgroundContainer {...restOptions} {...rest} id={anchor} renderFragmentWhenPossible>
       <div className={twMerge(`pb-page-content max-w-viewport mx-auto`, className)}>
-        {title && (
-          <Typography className="px-0 pt-0 pr-8 pb-4">
-            <>{title}</>
-          </Typography>
-        )}
+        {title && <Typography className="px-0 pt-0 pr-8 pb-4">{plainTitle}</Typography>}
         {ingress && (
           <div className="mb-8">
             <IngressText value={ingress}></IngressText>
