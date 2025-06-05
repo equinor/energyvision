@@ -1,25 +1,11 @@
-import styled from 'styled-components'
 import type { IFrameData } from '../../types/index'
 import { FigureCaption } from '@core/FigureCaption/FigureCaption'
 import { BackgroundContainer } from '@core/Backgrounds'
-import CoreIFrame from '../shared/iframe/IFrame'
-import IngressText from '../shared/portableText/IngressText'
-import TitleText from '../shared/portableText/TitleText'
-import TranscriptAndActions from '../../pageComponents/shared/TranscriptAndActions'
+import CoreIFrame from '@sections/iframe/IFrameTemp'
+import IngressText from '../../pageComponents/shared/portableText/IngressText'
+import TranscriptAndActions from '../Transcript/TranscriptAndActions'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
-
-const StyledHeading = styled(TitleText)`
-  padding: 0 0 var(--space-large) 0;
-  text-align: left;
-`
-
-const Figure = styled.figure`
-  margin: 0;
-`
-
-const Ingress = styled.div`
-  margin-bottom: var(--space-large);
-`
+import { Heading } from '@core/Typography'
 
 const IFrame = ({
   anchor,
@@ -36,14 +22,10 @@ const IFrame = ({
   const { height, aspectRatio, ...restOptions } = designOptions
   return (
     <BackgroundContainer {...restOptions} {...rest} id={anchor} className={className} renderFragmentWhenPossible>
-      {title && <StyledHeading value={title} />}
-      {ingress && (
-        <Ingress>
-          <IngressText value={ingress}></IngressText>
-        </Ingress>
-      )}
+      {title && <Heading as="h1" value={title} />}
+      {ingress && <IngressText value={ingress}></IngressText>}
       {description ? (
-        <Figure>
+        <figure className="m-0">
           <CoreIFrame
             frameTitle={frameTitle}
             url={url}
@@ -55,7 +37,7 @@ const IFrame = ({
           <FigureCaption size="medium">
             <Blocks value={description} />
           </FigureCaption>
-        </Figure>
+        </figure>
       ) : (
         <CoreIFrame
           frameTitle={frameTitle}

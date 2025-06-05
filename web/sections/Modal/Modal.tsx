@@ -41,11 +41,10 @@ const Modal = forwardRef<HTMLDialogElement, ModalProps>(function Modal(
     <dialog
       ref={combinedDialogRef}
       className={envisTwMerge(
-        `
-        p-0
+        `p-0
         modal
-        modal-transition
         bd-blurred
+        rounded-lg
       `,
         dialogClassName,
       )}
@@ -54,7 +53,8 @@ const Modal = forwardRef<HTMLDialogElement, ModalProps>(function Modal(
     >
       <div
         className={envisTwMerge(
-          `w-[90vw] 
+          `bg-white-100 
+          w-[90vw] 
           lg:w-[997px] 
           max-h-[90vh]
           relative

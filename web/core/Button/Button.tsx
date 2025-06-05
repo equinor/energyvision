@@ -39,11 +39,13 @@ export const getVariant = (variant: Variants): string => {
       border-grey-60
       hover:bg-autumn-storm-60
       hover:border-autumn-storm-60
+      hover:text-white-100
       focus:outline-none
       focus-visible:outline-slate-blue-95
       dark:text-white-100
       dark:border-white-100
       dark:hover:bg-white-transparent
+      dark:hover:text-slate-80
       dark:focus-visible:outline-white-100
       `
     case 'outlined-secondary':

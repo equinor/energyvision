@@ -21,6 +21,7 @@ import { FactBox } from '@sections/FactBox/FactBox'
 import { twMerge } from 'tailwind-merge'
 import { FormattedMessage } from 'react-intl'
 import { Highlight } from '@core/Typography/Highlight'
+import { IFrame } from '@core/IFrame/IFrame'
 
 export type BlockType = Record<PortableTextBlockStyle, PortableTextBlockComponent | undefined>
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -45,7 +46,10 @@ const defaultSerializers = {
     //@ts-ignore
     pullQuote: (props) => <Quote {...props} className="not-prose" />,
     //@ts-ignore
-    basicIframe: (props) => <BasicIframe {...props} className="not-prose px-layout-md" />,
+    basicIframe: (props) => {
+      const { value } = props
+      return <IFrame {...value} className="not-prose px-layout-md py-14 mx-auto" />
+    },
   },
   marks: {
     sub: ({ children }: TypeProps) => <sub>{children}</sub>,
