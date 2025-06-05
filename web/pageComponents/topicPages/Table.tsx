@@ -4,23 +4,20 @@ import { FormattedDate } from '@core/FormattedDateTime'
 import styled from 'styled-components'
 import isEmpty from '../shared/portableText/helpers/isEmpty'
 import IngressText from '../shared/portableText/IngressText'
-import TitleText from '../shared/portableText/TitleText'
 import { Link } from '@core/Link'
 
 import { getLocaleFromName } from '../../lib/localization'
 import type { CellData, LinkData, TableData } from '../../types/index'
 import { PortableTextBlock } from '@portabletext/types'
-import { PortableText } from '@portabletext/react'
+import { PortableText, toPlainText } from '@portabletext/react'
 import defaultSerializers from '../shared/portableText/helpers/defaultSerializers'
 import Blocks from '../shared/portableText/Blocks'
+import { Typography } from '@core/Typography'
 
 const { Head, Row, Cell, Body } = EnvisTable
 
 const StyledIngress = styled.div`
   padding: 0 0 var(--space-medium);
-`
-const StyledTitle = styled(TitleText)`
-  margin-bottom: var(--space-xLarge);
 `
 
 const StyledHeaderCell = styled(Cell)`
@@ -105,13 +102,14 @@ const renderCellByType = (cellData: CellData) => {
 
 const Table = ({ data, anchor, className }: TableProps) => {
   const { title, ingress, designOptions, tableHeaders = [], tableRows = [] } = data
+  const plainTitle = title ? toPlainText(title as PortableTextBlock[]) : ''
 
   const { theme, ...restOptions } = designOptions
 
   // Should the headers just be a plain text field?
   return (
     <BackgroundContainer className={className} {...restOptions} id={anchor} renderFragmentWhenPossible>
-      {title && <StyledTitle value={title} />}
+      {title && <Typography className="mb-10">{plainTitle}</Typography>}
       {ingress && (
         <StyledIngress>
           <IngressText value={ingress} />
