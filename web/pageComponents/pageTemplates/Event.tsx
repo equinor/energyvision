@@ -5,7 +5,6 @@ import { FormattedMessage } from 'react-intl'
 import { getEventDates } from '../../common/helpers/dateUtilities'
 import ContactList from '../shared/ContactList'
 import IngressText from '../shared/portableText/IngressText'
-import TitleText from '../shared/portableText/TitleText'
 import AddToCalendar from '../topicPages/AddToCalendar'
 import Promotion from '../topicPages/Promotion'
 import type { PortableTextBlock } from '@portabletext/types'
@@ -15,6 +14,7 @@ import { EventJsonLd } from 'next-seo'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
 import { twMerge } from 'tailwind-merge'
 import RelatedContent from '../../pageComponents/shared/RelatedContent'
+import { Typography } from '@core/Typography'
 
 export default function Event({ data }: { data: EventSchema }): JSX.Element {
   const { title } = data
@@ -33,7 +33,11 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
         <article>
           <BackgroundContainer className="px-layout-md py-32" background={{ backgroundColor: 'Moss Green Light' }}>
             <div className="mx-auto max-w-[1186px]">
-              {title && <TitleText value={title} level="h1" size="3xl" />}
+              {title && (
+                <Typography as="h1" variant="3xl">
+                  {title}
+                </Typography>
+              )}
               {start && (
                 <div className="text-xl text-norwegian-woods-100 mt-7 mb-5">
                   <FormattedDate datetime={start} />

@@ -3,10 +3,10 @@ import { FigureCaption } from '@core/FigureCaption/FigureCaption'
 import { BackgroundContainer } from '@core/Backgrounds'
 import CoreIFrame from '../shared/iframe/IFrame'
 import IngressText from '../shared/portableText/IngressText'
-import TitleText from '../shared/portableText/TitleText'
 import TranscriptAndActions from '../../pageComponents/shared/TranscriptAndActions'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
 import { twMerge } from 'tailwind-merge'
+import { Typography } from '@core/Typography'
 
 const IFrame = ({
   anchor,
@@ -24,7 +24,11 @@ const IFrame = ({
   return (
     <BackgroundContainer {...restOptions} {...rest} id={anchor} renderFragmentWhenPossible>
       <div className={twMerge(`pb-page-content max-w-viewport mx-auto`, className)}>
-        {title && <TitleText className="px-0 pt-0 pr-8 pb-4" value={title} />}
+        {title && (
+          <Typography className="px-0 pt-0 pr-8 pb-4">
+            <>{title}</>
+          </Typography>
+        )}
         {ingress && (
           <div className="mb-8">
             <IngressText value={ingress}></IngressText>

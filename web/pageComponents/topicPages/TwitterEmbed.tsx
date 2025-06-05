@@ -3,8 +3,7 @@ import RequestConsentContainer from '../../pageComponents/shared/iframe/RequestC
 import { TwitterTimelineEmbed, TwitterTweetEmbed } from 'react-twitter-embed'
 import { BackgroundContainer } from '@core/Backgrounds'
 import IngressText from '../../pageComponents/shared/portableText/IngressText'
-import TitleText from '../../pageComponents/shared/portableText/TitleText'
-import { twMerge } from 'tailwind-merge'
+import { Typography } from '@core/Typography'
 
 type TwitterEmbedProps = {
   data: TwitterEmbedData
@@ -38,7 +37,9 @@ const TwitterEmbed = ({ data, anchor, className }: TwitterEmbedProps) => {
     <BackgroundContainer {...designOptions} id={anchor} className={className} renderFragmentWhenPossible>
       {title && (
         <div className="mb-11">
-          <TitleText value={title} />
+          <Typography>
+            <>{title}</>
+          </Typography>
         </div>
       )}
       {ingress && (

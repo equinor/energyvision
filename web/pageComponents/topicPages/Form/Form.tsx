@@ -1,4 +1,3 @@
-import TitleText from '../../shared/portableText/TitleText'
 import IngressText from '../../shared/portableText/IngressText'
 import ContactEquinorForm from './ContactEquinorForm'
 import SubscribeForm from './SubscribeForm'
@@ -9,8 +8,7 @@ import type { FormData } from '../../../types/index'
 import { twMerge } from 'tailwind-merge'
 import CallToActions from '@sections/CallToActions'
 import PensionForm from './PensionForm'
-
-
+import { Typography } from '@core/Typography'
 
 const Form = ({ data, anchor, className }: { data: FormData; anchor?: string; className?: string }) => {
   const { title, ingress, downloads } = data
@@ -32,7 +30,7 @@ const Form = ({ data, anchor, className }: { data: FormData; anchor?: string; cl
           <>
             <>
               {downloads && (
-                <div className='pb-10'>
+                <div className="pb-10">
                   {downloads.length > 0 && <CallToActions callToActions={downloads} overrideButtonStyle />}
                 </div>
               )}
@@ -45,7 +43,11 @@ const Form = ({ data, anchor, className }: { data: FormData; anchor?: string; cl
 
   return (
     <div className={twMerge(`pb-page-content px-layout-lg max-w-viewport mx-auto`, className)} id={anchor}>
-      {title && <TitleText className='px-0 pt-0 pr-6' value={title} />}
+      {title && (
+        <Typography className="px-0 pt-0 pr-6">
+          <>{title}</>
+        </Typography>
+      )}
       {ingress && <IngressText value={ingress}></IngressText>}
 
       {renderForm(variant)}

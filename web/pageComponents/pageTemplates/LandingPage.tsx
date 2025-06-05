@@ -1,9 +1,9 @@
 import styled from 'styled-components'
 import type { LandingPageSchema } from '../../types/index'
 import IngressText from '../shared/portableText/IngressText'
-import TitleText from '../shared/portableText/TitleText'
 import ContentGroup from '../landingPages/ContentGroup'
 import Seo from '../../pageComponents/shared/Seo'
+import { Typography } from '@core/Typography'
 
 const HeroBanner = styled.div`
   padding: var(--space-xLarge) var(--layout-paddingHorizontal-medium) var(--space-xLarge)
@@ -36,7 +36,11 @@ const LandingPage = ({ data }: LandingPageProps) => {
       <Seo seoAndSome={data?.seoAndSome} slug={data?.slug} pageTitle={data?.title} />
       <main>
         <HeroBanner>
-          {title && <TitleText className="max-w-[1186px] mx-auto" value={title} level="h1" size="3xl" />}
+          {title && (
+            <Typography className="max-w-[1186px] mx-auto" as="h1" variant="3xl">
+              {title}
+            </Typography>
+          )}
         </HeroBanner>
         {ingress && (
           <Intro>
