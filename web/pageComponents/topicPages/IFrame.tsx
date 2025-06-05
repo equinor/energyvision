@@ -23,8 +23,8 @@ const IFrame = ({
   const { height, aspectRatio, ...restOptions } = designOptions
   return (
     <BackgroundContainer {...restOptions} {...rest} id={anchor} renderFragmentWhenPossible>
-      <div className={twMerge(`pb-page-content max-w-viewport px-layout-lg mx-auto`, className)}>
-        {title && <TitleText className="px-0 pt-0 pr-8 " value={title} />}
+      <div className={twMerge(`pb-page-content max-w-viewport mx-auto`, className)}>
+        {title && <TitleText className="px-0 pt-0 pr-8 pb-4" value={title} />}
         {ingress && (
           <div className="mb-8">
             <IngressText value={ingress}></IngressText>

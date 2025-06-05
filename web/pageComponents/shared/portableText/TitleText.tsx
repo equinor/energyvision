@@ -33,7 +33,7 @@ const defaultComponents = ({ size, level, className }: DefaultComponents) => {
       },
       extraLarge: ({ children }: PortableTextBlock) => {
         return (
-          <Typography as={'h1'} variant={size} className={className}>
+          <Typography as="h1" variant={size} className={className}>
             <>{children}</>
           </Typography>
         )
