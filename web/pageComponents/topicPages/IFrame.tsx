@@ -4,8 +4,8 @@ import { BackgroundContainer } from '@core/Backgrounds'
 import CoreIFrame from '../shared/iframe/IFrame'
 import IngressText from '../shared/portableText/IngressText'
 import TitleText from '../shared/portableText/TitleText'
-import RichText from '../shared/portableText/RichText'
 import TranscriptAndActions from '../../pageComponents/shared/TranscriptAndActions'
+import Blocks from '../../pageComponents/shared/portableText/Blocks'
 import { twMerge } from 'tailwind-merge'
 
 const IFrame = ({
@@ -41,25 +41,25 @@ const IFrame = ({
               hasSectionTitle={!!title}
             />
             <FigureCaption size="medium">
-              <RichText value={description || []} />
+              <Blocks value={description || []} />
             </FigureCaption>
           </figure>
         ) : (
           <>
-          <CoreIFrame
-            frameTitle={frameTitle}
-            url={url}
-            cookiePolicy={cookiePolicy}
-            aspectRatio={aspectRatio}
-            height={height}
-            hasSectionTitle={!!title}
-          />
-          <FigureCaption size="medium">
-            <RichText value={description || []} />
-          </FigureCaption>
-        </>
-      )}
-      <TranscriptAndActions action={action} transcript={transcript} ariaTitle={frameTitle} />
+            <CoreIFrame
+              frameTitle={frameTitle}
+              url={url}
+              cookiePolicy={cookiePolicy}
+              aspectRatio={aspectRatio}
+              height={height}
+              hasSectionTitle={!!title}
+            />
+            <FigureCaption size="medium">
+              <Blocks value={description || []} />
+            </FigureCaption>
+          </>
+        )}
+        <TranscriptAndActions action={action} transcript={transcript} ariaTitle={frameTitle} />
       </div>
     </BackgroundContainer>
   )

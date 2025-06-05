@@ -1,9 +1,9 @@
-import TitleText from '../shared/portableText/TitleText'
 import { Pagination } from '../shared/search/simplePagination/Pagination'
 import type { NewsListData } from '../../types/index'
 import { useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import PromotionCard from '@sections/cards/PromotionCard/PromotionCard'
+import { Heading } from '@core/Typography'
 
 const NewsList = ({
   data,
@@ -34,7 +34,7 @@ const NewsList = ({
       id={anchor}
       className={twMerge(`pb-page-content px-layout-sm 3xl:px-layout-md max-w-viewport mx-auto`, className)}
     >
-      {title && <TitleText className="mb-10 text-center" value={title} level="h2" size="xl" />}
+      {title && <Heading value={title} as="h2" variant="xl" className="mb-10" />}
       <div className="grid gap-x-6 gap-y-8 sm:grid-cols-2 xl:grid-cols-3" {...rest}>
         {pagedArticles.map((article) => (
           <PromotionCard key={article.id} data={article} hasSectionTitle={!!title} />
