@@ -14,6 +14,7 @@ const docsWithNormalPreview = [
   'newsroom',
   'magazineIndex',
   'page',
+  'homePage',
   'event',
   'pageNotFound',
   'internalServerError',
