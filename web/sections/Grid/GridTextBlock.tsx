@@ -212,7 +212,7 @@ const GridTextBlock = forwardRef<HTMLDivElement, GridTextBlockProps>(function Gr
     <BackgroundContainer
       ref={ref}
       {...imageBgOptions}
-      className={`h-full aspect-auto`}
+      className={`aspect-auto`}
       dontSplit
       scrimClassName={`
         py-10
