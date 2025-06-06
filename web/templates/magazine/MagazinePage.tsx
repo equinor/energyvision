@@ -18,7 +18,7 @@ const MagazinePage = ({ data }: MagazinePageProps) => {
     (router.locale !== router.defaultLocale ? `/${router.locale}` : '') +
     router.asPath.substring(router.asPath.indexOf('/'), router.asPath.lastIndexOf('/'))
 
-  const { hideFooterComponent, footerComponent, tags } = data
+  const { hideFooterComponent, footerComponent, tags, firstPublishedAt } = data
 
   const titleStyles = useSharedTitleStyles(data?.hero?.type, data?.content?.[0])
 
@@ -37,6 +37,13 @@ const MagazinePage = ({ data }: MagazinePageProps) => {
       })
     }
   }
+  const formattedPublishDate = firstPublishedAt
+    ? new Date(firstPublishedAt).toLocaleDateString(router.locale, {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      })
+    : null;
 
   return (
     <>
@@ -55,6 +62,11 @@ const MagazinePage = ({ data }: MagazinePageProps) => {
             tags: tags,
           })}
         />
+         {formattedPublishDate && (
+          <div className="max-w-viewport px-layout-lg mx-auto py-4 text-gray-600">
+            Published: {formattedPublishDate}
+          </div>
+        )}
         {data?.magazineTags && <MagazineTagBar tags={data?.magazineTags} href={parentSlug} onClick={handleClickTag} />}
         {data.hero.type !== HeroTypes.DEFAULT && (
           <SharedTitle sharedTitle={data.title} background={titleStyles.background} />
