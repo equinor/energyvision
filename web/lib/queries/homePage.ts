@@ -9,32 +9,38 @@ const allSlugsQuery = /* groq */ `
       "slug": "/",
       "lang":$lang
     },
-    "slugsFromTranslations": *[_type == "translation.metadata" && references(^.value._ref)].translations[].value->{
+    "slugsFromTranslations": *[_type == "translation.metadata" && references(^._ref)].translations[].value->{
     "slug":"/",
     lang
+
   }`
 
 export const homePageQuery = /* groq */ `
-  *[_type == "translation.metadata" && references(*[_id=="homepage" || _id=="drafts.homePage"][0].content._ref)].translations[_key==$lang] {
-    "_id": value._ref, //used for data filtering
+  fn ex::content($docRef)=$docRef{
+    "_id": _ref, //used for data filtering
     "slug": "/",
     ${allSlugsQuery},
-    "title": value->title,
-    "seoAndSome": value->${seoAndSomeFields},
+    "title": @->title,
+    "seoAndSome": @->${seoAndSomeFields},
     ${stickyMenu},
-    "hero": value->${heroFields},
-    "template": value->_type,
-    "isCampaign":value->isCampaign,
+    "hero": @->${heroFields},
+    "template": @->_type,
+    "isCampaign":@->isCampaign,
     "breadcrumbs": {
       ${breadcrumbsQuery}
     },
-     "content": value->content[] {
+     "content": @->content[] {
           ${pageContentFields}
       },
-  }{
-    ...,
-    "slugs":{
-      "allSlugs" : select(count(slugsFromTranslations)> 0 => slugsFromTranslations, [currentSlug])
+  };
+{
+ "data": select(count(*[ _type =="translation.metadata"])>0 =>*[_type == "translation.metadata" && references(*[_id=="route_homepage" || _id=="drafts.route_homepage"][0].content._ref)][0].translations[_key==$lang][0] {
+   "":ex::content(value)
+},  ex::content(*[_id=="route_homepage" || _id=="drafts.route_homepage"][0].content) )}
+ {
+  ...,
+ "slugs":{
+      "allSlugs" : select(count(data.slugsFromTranslations)> 0 => data.slugsFromTranslations, [data.currentSlug])
     }
   }
 `

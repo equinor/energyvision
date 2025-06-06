@@ -21,13 +21,13 @@ export default {
         return Rule.custom(async (value: any, context: ValidationContext) => {
           if (value) {
             const result = await context.getClient({ apiVersion: apiVersion }).fetch(
-              /* groq */ `count(*[_type=="translation.metadata" && references($id)][0].translations[])`,
+              /* groq */ `coalesce(count(*[_type=="translation.metadata" && references($id)][0].translations[]),0)`,
               {
                 id: value._ref,
               },
               { perspective: 'published' },
             )
-            return result == languages.length || 'Translations of this home page must be published'
+            return result == languages.length || result == 0 || 'Translations of this home page must be published'
           } else return 'Required'
         })
       },
