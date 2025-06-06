@@ -1,11 +1,10 @@
 import { forwardRef } from 'react'
 import Image, { Ratios } from '../../pageComponents/shared/SanityImage'
-import Blocks from '../../pageComponents/shared/portableText/Blocks'
 import { useSanityLoader } from '../../lib/hooks/useSanityLoader'
 import { getUrlFromAction } from '../../common/helpers'
 import { getArrowElement } from '@core/Link/ResourceLink'
 import { BaseLink } from '@core/Link'
-import { ImageBackground, ImageWithAlt } from '../../types'
+import { ImageWithAlt } from '../../types'
 import { PortableTextBlock } from '@portabletext/types'
 import { Heading } from '@core/Typography'
 
@@ -17,21 +16,55 @@ import { Heading } from '@core/Typography'
   colorBackground?: ColorSelectorValue
 } */
 
+export type HomePageBannerThemeColors = {
+  background?: string
+  foreground?: string
+  dark?: boolean
+}
+//Keep in sync with sanityv3/schemas/objects/homepageBanner/getColorForHomePageBannerTheme
+export const getColorForHomepageBannerTheme = (pattern?: number): HomePageBannerThemeColors => {
+  switch (pattern) {
+    //White
+    case 1:
+      return {
+        background: 'bg-white-100',
+        foreground: 'bg-moss-green-60',
+      }
+    //Blue
+    case 2:
+      return {
+        background: 'bg-mist-blue-100',
+        foreground: 'bg-white-100',
+      }
+    //Green
+    case 0:
+    default:
+      return {
+        background: 'bg-moss-green-60',
+        foreground: 'bg-white-100',
+      }
+  }
+}
+
 type HomePageBannerProps = {
   title?: PortableTextBlock[]
   image: ImageWithAlt
   attribution: string
   ctaCards: any[]
-  colorBackground?: ColorSelectorValue
+  colorTheme?: {
+    title: string
+    value: number
+  }
+  backgroundType?: number
   anchor?: string
 }
 
 export const HomePageBanner = forwardRef<HTMLDivElement, HomePageBannerProps>(function HomePageBanner(
-  { anchor, title, image, attribution, ctaCards, colorBackground },
+  { anchor, title, image, attribution, ctaCards, backgroundType, colorTheme },
   ref,
 ) {
   const desktopUrl = useSanityLoader(image, 2560, Ratios.ONE_TO_TWO)
-  console.log('image', image)
+
   return (
     <div ref={ref} id={anchor} className={`relative px-layout-md`}>
       <picture className="absolute inset-0">

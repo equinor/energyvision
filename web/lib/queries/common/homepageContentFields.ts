@@ -21,8 +21,9 @@ _type == "homepageBanner" =>{
   image,
   attribution,
   "designOptions": {
-      colorBackground,
-    },
+      backgroundType,
+      colorTheme,
+  }
   },
 `
 

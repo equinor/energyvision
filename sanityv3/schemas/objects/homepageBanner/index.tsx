@@ -45,9 +45,10 @@ export const homepageBannerThemeColors = [
   { title: 'Blue', value: 2 },
 ]
 
-//Keep in sync with web/sections/HomePageBanner/themes
+//Keep in sync with web/sections/HomePageBanner/homepageBannerthemes
 export const getColorForHomePageBannerTheme = (color: ThemeSelectorValue): ThemeSelectorColor => {
   switch (color.value) {
+    //White
     case 1:
       return {
         background: {
@@ -59,6 +60,7 @@ export const getColorForHomePageBannerTheme = (color: ThemeSelectorValue): Theme
           key: defaultColors[12].key,
         },
       }
+    //Blue
     case 2:
       return {
         background: {
@@ -70,6 +72,7 @@ export const getColorForHomePageBannerTheme = (color: ThemeSelectorValue): Theme
           key: defaultColors[0].key,
         },
       }
+    //Green
     case 0:
     default:
       return {
