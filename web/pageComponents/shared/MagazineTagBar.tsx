@@ -1,5 +1,4 @@
 import { AnchorHTMLAttributes, forwardRef } from 'react'
-import styled from 'styled-components'
 import { Link } from '@core/Link'
 import { useIntl } from 'react-intl'
 
@@ -15,12 +14,6 @@ export type TagLink = {
   active: boolean
 } & AnchorHTMLAttributes<HTMLAnchorElement>
 
-const Wrapper = styled.div`
-  display: flex;
-  align-content: center;
-  border-top: 1px solid var(--grey-30);
-  border-bottom: 1px solid var(--grey-30);
-`
 const TagWrapper = styled.div`
   display: flex;
   flex-wrap: nowrap;
@@ -55,8 +48,8 @@ const MagazineTagBar = forwardRef<HTMLDivElement, MagazineTagBarProps>(function 
   allTagLink.active = defaultActive
   const linkClassNames = `inline-block text-base lg:text-xs relative no-underline hover:font-bold before:block before:content-[attr(data-title)] before:font-bold before:h-0 before:overflow-hidden before:invisible after:content-[''] after:absolute after:border-l-2 after:border-energy-red-100 after:right-[calc(var(--space-xLarge)_*-0.5)] after:h-full last:after:hidden`
   return (
-    <Wrapper ref={ref} className="mb-8 mx-auto">
-      <TagWrapper>
+    <div ref={ref} className="mb-8 mx-auto flex content-center border-y-grey-30 border-y-[1px] border-y-solid">
+      <div className='flex flex-nowrap m-auto overflow-x-scroll whitespace-nowrap p-8 gap-10'>
         <Link
           href={href}
           className={`${allTagLink.active ? 'font-bold' : 'font-normal'} ${linkClassNames}`}
@@ -89,7 +82,7 @@ const MagazineTagBar = forwardRef<HTMLDivElement, MagazineTagBarProps>(function 
           </Link>
         ))}
       </TagWrapper>
-    </Wrapper>
+    </div>
   )
 })
 
