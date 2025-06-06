@@ -53,6 +53,7 @@ export type MagazinePageSchema = PageSchema & {
     data?: TeaserData
   }
   hideFooterComponent?: boolean
+  firstPublishedAt?: string
 }
 
 export type LandingPageSchema = {
