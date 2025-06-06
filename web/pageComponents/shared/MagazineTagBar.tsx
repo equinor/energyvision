@@ -14,25 +14,6 @@ export type TagLink = {
   active: boolean
 } & AnchorHTMLAttributes<HTMLAnchorElement>
 
-const TagWrapper = styled.div`
-  display: flex;
-  flex-wrap: nowrap;
-  margin: auto;
-  overflow-x: scroll;
-  white-space: nowrap;
-  padding: var(--space-large);
-  grid-gap: var(--space-xLarge);
-
-  ::-webkit-scrollbar {
-    display: none;
-  }
-
-  @media (min-width: 1024px) {
-    flex-wrap: wrap;
-    padding: var(--space-large) var(--space-3xLarge);
-    overflow: overlay;
-  }
-`
 const allTagLink: TagLink = {
   href: '#',
   label: 'All',
@@ -49,7 +30,10 @@ const MagazineTagBar = forwardRef<HTMLDivElement, MagazineTagBarProps>(function 
   const linkClassNames = `inline-block text-base lg:text-xs relative no-underline hover:font-bold before:block before:content-[attr(data-title)] before:font-bold before:h-0 before:overflow-hidden before:invisible after:content-[''] after:absolute after:border-l-2 after:border-energy-red-100 after:right-[calc(var(--space-xLarge)_*-0.5)] after:h-full last:after:hidden`
   return (
     <div ref={ref} className="mb-8 mx-auto flex content-center border-y-grey-30 border-y-[1px] border-y-solid">
-      <div className='flex flex-nowrap m-auto overflow-x-scroll whitespace-nowrap p-8 gap-10'>
+      <div
+        className="flex flex-nowrap m-auto overflow-x-scroll no-scrollbar whitespace-nowrap p-8 gap-10 
+      lg:wrap lg:py-8 lg:px-16 lg:[overflow-overlay]"
+      >
         <Link
           href={href}
           className={`${allTagLink.active ? 'font-bold' : 'font-normal'} ${linkClassNames}`}
@@ -81,7 +65,7 @@ const MagazineTagBar = forwardRef<HTMLDivElement, MagazineTagBarProps>(function 
             {it.label}
           </Link>
         ))}
-      </TagWrapper>
+      </div>
     </div>
   )
 })
