@@ -7,19 +7,12 @@ import Blocks from '../portableText/Blocks'
 import { getUrlFromAction } from '../../../common/helpers'
 import { getLocaleFromName } from '../../../lib/localization'
 
-export const FiftyFiftyHero = ({
-  title,
-  ingress,
-  link: action,
-  background,
-  figure,
-  isBigTitle,
-}: HeroType) => {
+export const FiftyFiftyHero = ({ title, ingress, link: action, background, figure, isBigTitle }: HeroType) => {
   const url = action && getUrlFromAction(action)
 
   return (
-    <BackgroundContainer background={{ backgroundColor: background }}>
-      <div className="mx-auto grid max-w-[1440px] min-h-[350px] md:grid-cols-2">
+    <BackgroundContainer background={{ backgroundColor: background }} backgroundStyle={'none'}>
+      <div className="mx-auto grid min-h-[350px] md:grid-cols-2">
         {/* Image Section */}
         {figure && (
           <div className="relative min-h-[350px] md:order-2">
@@ -28,7 +21,7 @@ export const FiftyFiftyHero = ({
         )}
 
         {/* Content Section */}
-        <div className="flex flex-col justify-center gap-8 px-4 py-24 max-w-full md:min-h-[450px] md:justify-self-end md:px-16 xl:px-4 xl:pr-32">
+        <div className="flex flex-col justify-center gap-8 px-4 py-12 max-w-full md:min-h-[450px] md:justify-self-end md:pr-28 md:pl-36 xl:px-4 xl:pr-32">
           {title && (
             <Heading
               value={title}
@@ -40,15 +33,15 @@ export const FiftyFiftyHero = ({
           {ingress && !isBigTitle && <Blocks value={ingress} className="hidden md:block" />}
 
           {action && !isBigTitle && (
-           <ResourceLink
-           href={url as string}
-           {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
-           type={action.type}
-           extension={action.extension}
-           showExtensionIcon
-         >
-           {action.label}
-         </ResourceLink>         
+            <ResourceLink
+              href={url as string}
+              {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
+              type={action.type}
+              extension={action.extension}
+              showExtensionIcon
+            >
+              {action.label}
+            </ResourceLink>
           )}
         </div>
       </div>
