@@ -2,42 +2,46 @@ import { SchemaType } from '../../types'
 import blocksToText from '../../helpers/blocksToText'
 import { calendar_event, home } from '@equinor/eds-icons'
 import { EdsIcon, TopicDocuments } from '../../icons'
+import { defaultLanguage, languages } from '../../languages'
+import { ValidationContext } from 'sanity'
+import { apiVersion } from '../../sanity.client'
 
-export default (isoCode: string, title: string) => ({
+export default {
   type: 'document',
-  title: `Home Page Route ${title}`,
-  name: `route_${isoCode}_homepage`,
+  title: `Home Page Route`,
+  name: `route_homepage`,
   icon: () => EdsIcon(home),
   fields: [
     {
       title: 'Content',
       name: 'content',
-      description: 'The content you want to appear as the home page. Remember it needs to be published.',
-      validation: (Rule: SchemaType.ValidationRule) => Rule.required(),
+      description:
+        'The content you want to appear as the home page. Remember it needs to be published along with its translations.',
+      validation: (Rule: SchemaType.ValidationRule) => {
+        return Rule.custom(async (value: any, context: ValidationContext) => {
+          if (value) {
+            const result = await context.getClient({ apiVersion: apiVersion }).fetch(
+              /* groq */ `coalesce(count(*[_type=="translation.metadata" && references($id)][0].translations[]),0)`,
+              {
+                id: value._ref,
+              },
+              { perspective: 'published' },
+            )
+            return result == languages.length || result == 0 || 'Translations of this home page must be published'
+          } else return 'Required'
+        })
+      },
       type: 'reference',
       to: [
         {
-          type: 'page',
+          type: 'homePage',
         },
       ],
       options: {
         filter: 'lang == $lang',
-        filterParams: { lang: `${isoCode}` },
+        filterParams: { lang: defaultLanguage.name },
         disableNew: true,
       },
-    },
-    {
-      title: 'Home page URL',
-      name: 'slug',
-      type: 'slug',
-      description: `The home page slug is always '/'. This cannot be changed.`,
-      readOnly: true,
-      initialValue: { current: '/', _type: 'slug' },
-    },
-    {
-      name: 'includeInBuild',
-      type: 'boolean',
-      initialValue: true,
     },
   ],
 
@@ -61,4 +65,4 @@ export default (isoCode: string, title: string) => ({
       }
     },
   },
-})
+}

@@ -1,6 +1,6 @@
 import { languages } from '../languages'
 
 const routes = languages.map((lang) => ({ type: `route_${lang.name}` }))
-const routesHomepage = languages.map((lang) => ({ type: `route_${lang.name}_homepage` }))
+const routesHomepage = { type: `route_homepage` }
 
-export default [...routes, ...routesHomepage]
+export default [routesHomepage, ...routes]

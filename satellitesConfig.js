@@ -67,7 +67,7 @@ const datasets = {
   equinorfunds: ['norwegian'],
   southkorea: ['english', 'korean'],
   celticsea: ['english', 'welsh'],
-  sponsorship: ['english', 'norwegian'],
+  sponsorship: ['norwegian', 'english'],
   // Test datasets
   'global-development': ['english', 'norwegian', 'japanese'],
   'global-test': ['english', 'norwegian', 'japanese'],

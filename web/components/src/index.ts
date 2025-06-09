@@ -1,7 +1,6 @@
 export * from './Button'
 export * from './Card'
 export * from './Text'
-export * from './List'
 export * from './Teaser'
 export * from './Heading'
 export * from './Table'

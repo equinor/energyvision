@@ -16,7 +16,7 @@ export const MenuButton = forwardRef<HTMLButtonElement, MenuButtonProps>(functio
   w-full
   bg-slate-80
   dark:bg-white-100
-  dark:group-hover:bg-slate-80
+  group-hover:dark:bg-slate-80
   rounded-[3px]
   l-0
   transition-transform 

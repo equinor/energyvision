@@ -167,7 +167,7 @@ const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
                     <hr
                       className={`${
                         Flags.HAS_FANCY_MENU ? 'xl:hidden mt-12' : 'max-xl:mt-8'
-                      } h-[2px] w-full bg-grey-40 dark:bg-white-100`}
+                      } h-[1px] w-full bg-grey-40 dark:bg-white-100`}
                     />
                   }
                   <BaseLink
