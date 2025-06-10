@@ -1,4 +1,4 @@
-import { forwardRef, HTMLAttributes } from 'react'
+import { forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 import Image, { Ratios } from '../../../pageComponents/shared/SanityImage'
 import { ImageWithAlt } from '../../../types/index'
@@ -15,8 +15,7 @@ export type CardProps = {
   image?: ImageWithAlt
   /** Override background image styling */
   imageClassName?: string
-} & HTMLAttributes<HTMLAnchorElement> &
-  BaseLinkProps
+} & BaseLinkProps
 
 /**
  * Common Card component.
