@@ -186,13 +186,6 @@ export default {
       fieldset: 'design',
       hidden: ({ parent }) => parent?.backgroundType !== '0',
     },
-    {
-      name: 'attribution',
-      title: 'Credit',
-      type: 'string',
-      fieldset: 'design',
-      hidden: ({ parent }) => parent?.backgroundType !== '0',
-    },
     defineField({
       name: 'colorTheme',
       title: 'Theme',
@@ -257,6 +250,7 @@ export default {
           ],
         },
       ],
+      validation: (Rule: Rule) => Rule.max(3).error('Max 3'),
     },
   ],
   components: {

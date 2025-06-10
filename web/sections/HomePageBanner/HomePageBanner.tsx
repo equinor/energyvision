@@ -4,19 +4,10 @@ import { useSanityLoader } from '../../lib/hooks/useSanityLoader'
 import { getUrlFromAction } from '../../common/helpers'
 import { getArrowElement } from '@core/Link/ResourceLink'
 import { BaseLink } from '@core/Link'
-import { ImageWithAlt } from '../../types'
+import { ImageWithAlt, LinkData } from '../../types'
 import { PortableTextBlock } from '@portabletext/types'
 import { Heading } from '@core/Typography'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
-import SanityImage from '@core/SanityImage/SanityImage'
-
-/* type HomePageBanner = {
-  title?: PortableTextBlock[]
-  image: ImageWithAlt
-  attribution: string
-  ctaCards: any[]
-  colorBackground?: ColorSelectorValue
-} */
 
 export type HomePageBannerThemeColors = {
   background?: string
@@ -51,8 +42,10 @@ export const getColorForHomepageBannerTheme = (pattern?: number): HomePageBanner
 type HomePageBannerProps = {
   title?: PortableTextBlock[]
   image: ImageWithAlt
-  attribution: string
-  ctaCards: any[]
+  ctaCards: {
+    overline?: string
+    link?: LinkData
+  }[]
   rightAlignTitle?: boolean
   useWhiteTitle?: boolean
   designOptions: {
@@ -66,15 +59,17 @@ type HomePageBannerProps = {
 }
 
 export const HomePageBanner = forwardRef<HTMLDivElement, HomePageBannerProps>(function HomePageBanner(
-  { anchor, title, rightAlignTitle, useWhiteTitle, image, attribution, ctaCards, designOptions },
+  { anchor, title, rightAlignTitle, useWhiteTitle, image, ctaCards, designOptions },
   ref,
 ) {
-  const desktopUrl = useSanityLoader(image, 2560, Ratios.FOUR_TO_FIVE)
+  const desktopUrl = useSanityLoader(image, 2560, Ratios.FIVE_TO_THREE)
   // 4:3 for small screens and 10:3 for large screens
   const { backgroundType, colorTheme } = designOptions
   const { foreground, background } = getColorForHomepageBannerTheme(colorTheme?.value ?? 0)
   const useImage = backgroundType == 0
   const isMobile = useMediaQuery(`(max-width: 1024px)`)
+
+  console.log('image', image)
 
   const headingElement = (
     <Heading
@@ -104,15 +99,7 @@ export const HomePageBanner = forwardRef<HTMLDivElement, HomePageBannerProps>(fu
       {useImage && (
         <picture className="relative flex w-full h-auto max-lg:aspect-video lg:absolute inset-0">
           <source srcSet={desktopUrl?.src} media="(min-width: 1024px)" />
-          <Image
-            maxWidth={810}
-            aspectRatio={Ratios.SIXTEEN_TO_NINE}
-            image={image}
-            sizes="100vw"
-            fill
-            priority
-            className=""
-          />
+          <Image maxWidth={810} aspectRatio={Ratios.SIXTEEN_TO_NINE} image={image} sizes="100vw" fill priority />
         </picture>
       )}
       <div
@@ -158,7 +145,6 @@ export const HomePageBanner = forwardRef<HTMLDivElement, HomePageBannerProps>(fu
         )}
         {title && isMobile && headingElement}
       </div>
-      {useImage && attribution && <div>{attribution}</div>}
     </div>
   )
 })

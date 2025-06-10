@@ -21,7 +21,6 @@ _type == "homepageBanner" =>{
     },
   },
   image,
-  attribution,
   "designOptions": {
       backgroundType,
       colorTheme,

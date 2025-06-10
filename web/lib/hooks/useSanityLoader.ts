@@ -11,11 +11,14 @@ export const useSanityLoader = (
   useNextSanityImage(sanityClientWithEquinorCDN, image, {
     imageBuilder: (imageUrlBuilder, options) => {
       const { width: imageWidth, croppedImageDimensions: cropped } = options
+      console.log('imageWidth', imageWidth)
+      console.log('cropped', cropped)
+      console.log('options', options)
       // We do not want to allow gigantic images to exist due to performance
-      const width = Math.round(imageWidth || Math.min(maxWidth, cropped.width))
+      const width = Math.round(imageWidth ?? Math.min(maxWidth, cropped.width))
       const height = aspectRatio
         ? Math.round(width / aspectRatio)
-        : Math.round(width / (cropped.height / cropped.width))
+        : Math.round(width / (cropped.width / cropped.height))
       return imageUrlBuilder.width(width).height(height).auto('format').quality(100)
     },
   })

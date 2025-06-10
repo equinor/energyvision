@@ -21,6 +21,7 @@ export enum Ratios {
   ONE_TO_ONE = 1,
   FIVE_TO_FOUR = 1.25,
   FOUR_TO_THREE = 1.33,
+  FIVE_TO_THREE = 1.66,
 }
 
 const DEFAULT_SIZES = '(max-width: 800px) 100vw, 800px'
