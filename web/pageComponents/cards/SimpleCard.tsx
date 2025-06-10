@@ -1,8 +1,8 @@
 import { CSSProperties } from 'react'
 import styled from 'styled-components'
 import Image, { Ratios } from '../shared/SanityImage'
-
-import { Card, Heading } from '@components'
+import { Typography } from '@core/Typography'
+import { Card } from '@components'
 import type { MenuLinkData, SubMenuGroupLinkData } from '../../types/index'
 
 const { Header, Action, Arrow, CardLink, Media } = Card
@@ -75,7 +75,7 @@ const SimpleCard = ({ data }: SimpleCardData) => {
           )}
         </Media>
         <Header>
-          <Heading style={{ '--size': 'var(--typeScale-05)' } as CSSProperties}>{label}</Heading>
+          <Typography className="text-sm">{label}</Typography>
         </Header>
         <Action>
           <Arrow />

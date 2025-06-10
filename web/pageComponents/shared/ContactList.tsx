@@ -1,7 +1,7 @@
 import type { ContactListData } from '../../types/index'
-import { Text, Heading } from '@components'
 import { removeWhiteSpace } from '../../common/helpers/removeWhiteSpace'
 import { twMerge } from 'tailwind-merge'
+import { Typography } from '@core/Typography'
 
 type ContactListProps = {
   data: ContactListData
@@ -12,11 +12,11 @@ const ContactList = ({ data, className = '' }: ContactListProps) => {
   return (
     <div className={twMerge(`flex flex-col max-w-viewport mx-auto px-layout-lg`, className)}>
       {data?.title && (
-        <Heading className="pb-6 text-left" size="xl" level="h2">
+        <Typography className="pb-6 text-left" variant="xl" as="h2">
           {data.title}
-        </Heading>
+        </Typography>
       )}
-      {data?.ingress && <Text size="md">{data.ingress}</Text>}
+      {data?.ingress && <Typography variant='h5' className='pb-4'>{data.ingress}</Typography>}
       {data?.contacts && data?.contacts.length > 0 && (
         <div className="flex flex-row flex-wrap justify-between">
           {data.contacts.map((contact) => {
