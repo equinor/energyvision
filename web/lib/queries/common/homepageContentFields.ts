@@ -8,6 +8,8 @@ _type == "homepageBanner" =>{
   "type": _type,
   "id": _key,
   title[]{..., ${markDefs}},
+  rightAlignTitle,
+  useWhiteTitle,
   ctaCards[]{
     "type": _type,
     "id": _key,

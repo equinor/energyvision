@@ -14,6 +14,7 @@ import { configureTitleBlockContent } from '../../editors'
 import { defineField, PreviewProps, type PortableTextBlock, type Rule } from 'sanity'
 import styled from 'styled-components'
 import { ImageWithAlt } from '../imageWithAlt'
+import { description } from '../iframe/sharedIframeFields'
 
 const MediaContainer = styled.div`
   position: relative;
@@ -151,6 +152,18 @@ export default {
         input: CompactBlockEditor,
       },
       of: [titleContentType],
+    },
+    {
+      name: 'rightAlignTitle',
+      title: 'Align title to the right',
+      description: 'Use this when image has left hotspot, to align the tagline to the right',
+      type: 'boolean',
+    },
+    {
+      name: 'useWhiteTitle',
+      title: 'Use white color for title',
+      description: 'Use this when image is dark to set title text as white',
+      type: 'boolean',
     },
     defineField({
       title: 'Choose background type',
