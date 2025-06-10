@@ -67,7 +67,7 @@ const ContentGroup = ({ group }: ContentGroupProps) => {
           max-w-viewport
           grid
           grid-cols-3
-          gap-x-6
+          gap-6
           list-none`}
       >
         {promoTiles.map((tile) => {
