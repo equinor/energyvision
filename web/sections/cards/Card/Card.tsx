@@ -1,10 +1,9 @@
 import { forwardRef, HTMLAttributes } from 'react'
-import { LinkProps } from 'next/link'
 import { twMerge } from 'tailwind-merge'
 import Image, { Ratios } from '../../../pageComponents/shared/SanityImage'
 import { ImageWithAlt } from '../../../types/index'
 import envisTwMerge from '../../../twMerge'
-import { BaseLink } from '@core/Link'
+import { BaseLink, BaseLinkProps } from '@core/Link'
 
 export type Variants = 'primary' | 'secondary' | 'compact' | 'single'
 export type CardProps = {
@@ -17,7 +16,7 @@ export type CardProps = {
   /** Override background image styling */
   imageClassName?: string
 } & HTMLAttributes<HTMLAnchorElement> &
-  LinkProps
+  BaseLinkProps
 
 /**
  * Common Card component.
@@ -71,10 +70,10 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
   }
 
   return (
-  <BaseLink
+    <BaseLink
       ref={ref}
-      href={href?.toString() ?? ''}
-      locale={locale?.toString()}
+      href={href}
+      locale={locale}
       prefetch={false}
       className={twMerge(
         `group/card
