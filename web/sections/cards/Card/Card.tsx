@@ -88,7 +88,7 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
       )}
       {...rest}
     >
-      {image && (
+      {image && image.asset && (
         <div
           className={envisTwMerge(
             `relative
