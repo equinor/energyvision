@@ -57,11 +57,12 @@ export default async function handler(req, res) {
       return res.status(400).json(response.body)
     }
   }
+  if (!data._id) {
+    return res.status(400).json({ success: false, msg: 'Missing id for Sanity query.' })
+  }
   const result = await sanityClient.fetch(
     groq`*[_type match "route_*" && content._ref == $id && excludeFromSearch != true][0]{"slug": slug.current}`,
-    {
-      id: data._id,
-    },
+    { id: data._id },
   )
   try {
     if (result?.slug) {
