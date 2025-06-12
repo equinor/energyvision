@@ -161,17 +161,17 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
             ) : (
               <BsFiletypeXlsx aria-label="xlsx" size={24} className="mr-2 min-w-6 min-h-6" />
             )}
-            <div
+            <span
               className={textClassNames}
               {...(ariaHideText && {
                 'aria-hidden': true,
               })}
             >
               {children}
-            </div>
+            </span>
           </>
         ) : (
-          <div
+          <span
             className={textClassNames}
             {...(ariaHideText && {
               'aria-hidden': true,
@@ -188,25 +188,25 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
                 aria-label={`, ${getTranslation()} ${extension.toUpperCase()}`}
               >{`(${extension.toUpperCase()})`}</span>
             ) : null}
-          </div>
+          </span>
         )
       case 'icsLink':
         return (
           <>
             <TransformableIcon aria-label={`, ${getTranslation()}`} iconData={calendar} className="mr-2" />
-            <div
+            <span
               className={textClassNames}
               {...(ariaHideText && {
                 'aria-hidden': true,
               })}
             >
               {children}
-            </div>
+            </span>
           </>
         )
       default:
         return (
-          <div
+          <span
             className={textClassNames}
             {...(ariaHideText && {
               'aria-hidden': true,
@@ -218,7 +218,7 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
                 {`(${extension.toUpperCase()})`}
               </span>
             ) : null}
-          </div>
+          </span>
         )
     }
   }
@@ -235,7 +235,7 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
           target: '_blank',
         })}
     >
-      <div
+      <span
         className={envisTwMerge(
           `h-full
           w-inherit 
@@ -247,8 +247,8 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
       >
         {getContentElements()}
         {!useAsRegular && getArrowElement(type, iconClassName)}
-      </div>
-      {!useAsRegular && <div className="w-[0%] h-[1px] bg-grey-40 transition-all duration-300 group-hover:w-full" />}
+      </span>
+      {!useAsRegular && <span className="w-[0%] h-[1px] bg-grey-40 transition-all duration-300 group-hover:w-full" />}
     </BaseLink>
   )
 })

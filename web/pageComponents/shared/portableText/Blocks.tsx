@@ -6,7 +6,6 @@ import {
   PortableTextMarkComponent,
   PortableTextBlockComponent,
   PortableTextTypeComponent,
-  toPlainText,
 } from '@portabletext/react'
 import { PortableTextBlock, PortableTextBlockStyle } from '@portabletext/types'
 import {
@@ -22,7 +21,7 @@ import { FactBox } from '@sections/FactBox/FactBox'
 import { twMerge } from 'tailwind-merge'
 import { FormattedMessage } from 'react-intl'
 import { Highlight } from '@core/Typography/Highlight'
-import { Link, ResourceLink } from '@core/Link'
+import { ResourceLink } from '@core/Link'
 
 export type BlockType = Record<PortableTextBlockStyle, PortableTextBlockComponent | undefined>
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
