@@ -76,7 +76,7 @@ const TableBlock = forwardRef<HTMLDivElement, TableBlockProps>(function TableBlo
           )
         },
         id: `headercell_${index}_${headerKey}`,
-        cell: (info) => {
+        cell: (info: any) => {
           const value = info.getValue()
           const isPortableText = Array.isArray(value)
           if (variant === 'default' && tableHeaders?.[index]?.formatAsDate) {
@@ -128,9 +128,9 @@ const TableBlock = forwardRef<HTMLDivElement, TableBlockProps>(function TableBlo
           <Table>
             {tableCaption && <Table.Caption>{tableCaption}</Table.Caption>}
             <Table.Head variant={useBorder ? 'border' : 'zebra'} themeVariant={theme?.title}>
-              {reactTable?.getHeaderGroups().map((headerGroup) => (
+              {reactTable?.getHeaderGroups().map((headerGroup: any) => (
                 <Table.Row key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => (
+                  {headerGroup.headers.map((header: any) => (
                     <Table.Cell key={header.id}>
                       {flexRender(header.column.columnDef.header, header.getContext())}
                     </Table.Cell>
@@ -139,9 +139,9 @@ const TableBlock = forwardRef<HTMLDivElement, TableBlockProps>(function TableBlo
               ))}
             </Table.Head>
             <Table.Body variant={useBorder ? 'border' : 'zebra'} themeVariant={theme?.title}>
-              {reactTable?.getRowModel().rows.map((row) => (
+              {reactTable?.getRowModel().rows.map((row: any) => (
                 <Table.Row key={row.id}>
-                  {row.getVisibleCells().map((cell) => (
+                  {row.getVisibleCells().map((cell: any) => (
                     <Table.Cell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</Table.Cell>
                   ))}
                 </Table.Row>

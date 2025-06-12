@@ -44,7 +44,8 @@ const MultipleEventCards = ({
         <>
           {data?.length <= 3 || isMobile ? (
             <ul
-              className={` 
+              className={`
+                light 
                 grid 
                 gap-y-3
                 gap-x-4

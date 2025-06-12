@@ -10,9 +10,11 @@
  * @returns
  */
 
-export const Highlight = ({ children }: { children?: React.ReactNode }) => {
+import { twMerge } from 'tailwind-merge'
+
+export const Highlight = ({ children, className = '' }: { children?: React.ReactNode; className?: string }) => {
   return (
-    <span data-highlight className="text-energy-red-100 dark:text-spruce-wood-100">
+    <span data-highlight className={twMerge('text-energy-red-100 dark:text-spruce-wood-100', className)}>
       {children}
     </span>
   )

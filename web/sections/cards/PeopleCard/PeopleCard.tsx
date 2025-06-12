@@ -85,8 +85,10 @@ const PeopleCard = forwardRef<HTMLDivElement, PeopleCardProps>(function PeopleCa
             >
               {name}
             </Typography>
-            {title && <div className="text-sm text-pretty">{title}</div>}
-            {department && <div className="mt-2 text-sm text-pretty">{department}</div>}
+            {title && <div className="text-sm text-pretty text-slate-80 dark:text-white-100">{title}</div>}
+            {department && (
+              <div className="mt-2 text-sm text-pretty text-slate-80 dark:text-white-100">{department}</div>
+            )}
           </div>
 
           <div

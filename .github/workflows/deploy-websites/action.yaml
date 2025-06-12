@@ -31,15 +31,6 @@ inputs:
   algoliaApiKey:
     description: 'Api key for Algolia'
     required: false
-  dynatraceEnvironment:
-    description: 'Dynatrace environment'
-    required: false
-  dynatracePaaSToken:
-    description: 'Dynatrace PaaS Token'
-    required: false
-  dynatraceImage:
-    description: 'Dynatrace image URL'
-    required: false
   archiveContentLink:
     description: 'Archive storage link'
     required: true
@@ -84,14 +75,6 @@ runs:
       run: |
         echo "IMAGE_TAG=${{inputs.commitSha}}" >> $GITHUB_ENV
         echo "IMAGE_TAG_SHA=${{inputs.commitSha}}" >> $GITHUB_ENV
-    - name: Docker login with Dynatrace credentials 🐳
-      if: "${{ inputs.dynatraceEnvironment != '' }}"
-      uses: docker/login-action@v2
-      id: docker-dynatrace-login
-      with:
-        registry: https://spa-equinor.kanari.com
-        username: ${{ inputs.dynatraceEnvironment }}
-        password: ${{ inputs.dynatracePaaSToken }}
     - name: Build web component ⚙️
       shell: bash
       id: build
@@ -104,7 +87,6 @@ runs:
           --build-arg ARG_SANITY_PREVIEW_SECRET=${{ inputs.sanityPreviewSecret }} \
           --build-arg ARG_ALGOLIA_APP_ID=${{ inputs.algoliaAppId }} \
           --build-arg ARG_ALGOLIA_SEARCH_API_KEY=${{ inputs.algoliaApiKey }} \
-          --build-arg ARG_DYNATRACE_IMAGE=${{ inputs.dynatraceImage || 'node:18-alpine' }} \
           --build-arg ARG_ENV=${{ inputs.environment }} \
           --build-arg ARG_ARCHIVE_CONTENT_LINK=${{ inputs.archiveContentLink }} \
           --build-arg ARG_FRIENDLY_CAPTCHA_SITEKEY=${{ inputs.friendlyCaptchaSitekey}} \
@@ -133,7 +115,7 @@ runs:
     # MAIN CLUSTER
     - name: Deploy to Radix c2 🚀
       id: deploy-c2
-      uses: equinor/radix-github-actions@master
+      uses: equinor/radix-github-actions@v1
       with:
         args: >
           create job

@@ -130,6 +130,7 @@ export default {
         {
           type: 'object',
           title: 'Header cell',
+          name: 'headerCell',
           fields: [
             {
               name: 'headerCell',
