@@ -92,6 +92,7 @@ import tabsInfoPanel from './objects/tabs/tabsInfoPanel'
 import tabsKeyNumbers from './objects/tabs/tabsKeyNumbers'
 import tabsKeyNumberItem from './objects/tabs/tabsKeyNumberItem'
 import imageWithRichText from './objects/ImageWithRichText'
+import homePage from './documents/homePage'
 import homepageBanner from './objects/homepageBanner'
 
 const {
@@ -126,10 +127,6 @@ const routeSchemas = languages.map(({ name, title }) => {
   return route(name, title)
 })
 
-const routeHomepageSchemas = languages.map(({ name, title }) => {
-  return routeHomepage(name, title)
-})
-
 const MenuSchemas = Flags.HAS_FANCY_MENU
   ? [siteMenu, subMenu, menuGroup, menuLink]
   : [simpleMenu, simpleMenuGroup, simpleMenuLink]
@@ -144,8 +141,9 @@ const MagazineSchemas = Flags.HAS_MAGAZINE
   : []
 const RemainingSchemas = [
   page,
+  homePage,
   ...routeSchemas,
-  ...routeHomepageSchemas,
+  routeHomepage,
   pageNotFound,
   internalServerError,
   imageWithAlt,

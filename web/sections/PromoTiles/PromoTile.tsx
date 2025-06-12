@@ -3,6 +3,8 @@ import { getUrlFromAction } from '../../common/helpers'
 import { ColorKeyTokens, colorKeyToUtilityMap } from '../../styles/colorKeyToUtilityMap'
 import { PromoTileData } from '../../types/index'
 import { forwardRef } from 'react'
+import { getLocaleFromName } from '../../lib/localization'
+import { useIntl } from 'react-intl'
 
 type PromoTileProps = {
   hasSectionTitle?: boolean
@@ -13,8 +15,13 @@ export const PromoTile = forwardRef<HTMLAnchorElement, PromoTileProps>(function 
   ref,
 ) {
   const url = getUrlFromAction(action)
-
+  const intl = useIntl()
+  if (!url) {
+    return null
+  }
+  const locale = action.link?.lang ? getLocaleFromName(action.link?.lang) : intl.locale
   const { background } = designOptions
+
   const colorName =
     Object.keys(colorKeyToUtilityMap).find(
       (key) => colorKeyToUtilityMap[key as keyof ColorKeyTokens]?.backgroundName === background?.backgroundColor,
@@ -27,8 +34,9 @@ export const PromoTile = forwardRef<HTMLAnchorElement, PromoTileProps>(function 
   return (
     <Card
       {...(id && { id: id })}
-      //@ts-ignore:TODO
       href={url}
+      type={action.type}
+      locale={locale}
       ref={ref}
       image={image}
       variant="secondary"

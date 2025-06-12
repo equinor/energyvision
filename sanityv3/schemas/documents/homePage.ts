@@ -8,8 +8,8 @@ import { isCampaign, openGraphImage, seo, stickyMenu, content } from './topic/sh
 
 export default {
   type: 'document',
-  name: 'page',
-  title: 'Topic page',
+  name: 'homePage',
+  title: 'Home page',
   icon: () => EdsIcon(paste),
   fieldsets: [
     {
@@ -55,7 +55,7 @@ export default {
       const media = type === HeroTypes.LOOPING_VIDEO ? video : image
       return {
         title: plainTitle,
-        subtitle: 'Topic content',
+        subtitle: 'Home Page',
         media,
       }
     },

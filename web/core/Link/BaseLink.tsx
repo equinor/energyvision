@@ -1,5 +1,5 @@
 import { AnchorHTMLAttributes, forwardRef } from 'react'
-import NextLink from 'next/link'
+import NextLink, { LinkProps } from 'next/link'
 import { twMerge } from 'tailwind-merge'
 import { LinkType } from '../../types/index'
 
@@ -10,7 +10,8 @@ export type BaseLinkProps = {
   locale?: string
   /** Skip internal link styling, because incoming button styling */
   skipInternalStyle?: boolean
-} & AnchorHTMLAttributes<HTMLAnchorElement>
+} & AnchorHTMLAttributes<HTMLAnchorElement> &
+  LinkProps
 
 /** Base link style for use
  * Contains the common focus and active styling
@@ -23,7 +24,7 @@ export const BaseLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(function Ba
   const classNames = skipInternalStyle
     ? className
     : twMerge(
-        `text-base
+        `
     text-slate-80
     focus:outline-none
     focus-visible:envis-outline
