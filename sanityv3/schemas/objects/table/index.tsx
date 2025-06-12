@@ -1,20 +1,38 @@
 import blocksToText from '../../../helpers/blocksToText'
+import { defaultColors } from '../../defaultColors'
 import CompactBlockEditor from '../../components/CompactBlockEditor'
 import { configureBlockContent, configureTitleBlockContent } from '../../editors'
-import { PortableTextBlock, PreviewProps, Rule } from 'sanity'
+
+import { PortableTextBlock, Rule, ValidationContext } from 'sanity'
 import type { ColorSelectorValue } from '../../components/ColorSelector'
-import { Flex, Stack, Text } from '@sanity/ui'
-import { TableTheme, TableThemeSelectorValue } from './tableThemes'
+import { EdsIcon } from '../../../icons'
+import { table_chart } from '@equinor/eds-icons'
+import { ColorType } from '../colorList'
 
 export type Table = {
   _type: 'table'
   title?: PortableTextBlock[]
   ingress?: PortableTextBlock[]
   background?: ColorSelectorValue
-  theme?: TableThemeSelectorValue
+  theme?: ColorType
 }
 
 const titleContentType = configureTitleBlockContent()
+
+const themes: ColorType[] = [
+  {
+    title: 'Grey',
+    value: '#e7e7e7',
+  },
+  {
+    title: 'Blue',
+    value: '#A8C3DB',
+  },
+  {
+    title: 'Green',
+    value: '#C2D4D6',
+  },
+]
 
 const ingressContentType = configureBlockContent({
   h2: false,
@@ -32,59 +50,16 @@ const headerCellContentType = configureBlockContent({
   attachment: false,
   lists: false,
   smallText: false,
-  onlySubSupScriptDecorators: true,
 })
 
-const cellContentType = configureBlockContent({
-  h2: false,
-  h3: false,
-  lists: false,
-  attachment: true,
-  smallText: false,
-  highlight: false,
-})
-
-type TablePreviewProps = {
-  theme?: TableThemeSelectorValue
-  useBorder?: boolean
-} & PreviewProps
-
-export function TablePreview(props: TablePreviewProps) {
-  //@ts-ignore: find import for  _type
-  const { title, theme, useBorder, _type } = props
-
-  //@ts-ignore:todo
-  const plainTitle = title ? blocksToText(title) : undefined
-  const subTitle = `${_type === 'tablev2' ? 'Import table' : 'Table'} component | ${
-    useBorder ? 'Border rows' : 'Zebra rows'
-  }`
-
-  return (
-    <Flex gap={2} padding={2} align={'center'}>
-      {theme && <TableTheme value={theme} preview thumbnail />}
-      <Stack space={2}>
-        <Text size={1}>{plainTitle}</Text>
-        <Text muted size={1}>
-          {subTitle}
-        </Text>
-      </Stack>
-    </Flex>
-  )
-}
-
+const chosenColors = ['White', 'Mid Green', 'Moss Green Light', 'Spruce Wood', 'Mist Blue']
+const backgroundColors = defaultColors.filter((color) => chosenColors.includes(color.title))
 export default {
-  title: 'Table',
+  title: 'Table (Deprecated)',
+  description: 'Migrate to new Table or ImportTable',
   name: 'table',
   type: 'object',
   fieldsets: [
-    {
-      title: 'Table ',
-      name: 'tableConfig',
-      options: {
-        collapsible: true,
-        collapsed: false,
-      },
-    },
     {
       title: 'Design options',
       name: 'design',
@@ -100,7 +75,6 @@ export default {
       title: 'Title',
       name: 'title',
       type: 'array',
-      description: 'Will render h2',
       components: {
         input: CompactBlockEditor,
       },
@@ -112,12 +86,6 @@ export default {
       title: 'Ingress',
       type: 'array',
       of: [ingressContentType],
-    },
-    {
-      name: 'tableCaption',
-      title: 'Table caption',
-      description: 'Tables should have caption, will render as caption just above table',
-      type: 'string',
     },
     {
       name: 'tableHeaders',
@@ -134,39 +102,56 @@ export default {
               type: 'array',
               of: [headerCellContentType],
             },
-            {
-              name: 'formatAsDate',
-              title: 'Format column as date',
-              type: 'boolean',
-            },
           ],
         },
       ],
-      fieldset: 'tableConfig',
     },
     {
-      name: 'rows',
-      title: 'Rows',
+      name: 'tableRows',
+      title: 'Table rows',
       type: 'array',
       of: [
         {
-          name: 'row',
           type: 'object',
-          title: 'Row',
+          title: 'Table row',
+          name: 'tableRow',
           fields: [
             {
-              name: 'cells',
-              title: 'Cells',
+              name: 'row',
               type: 'array',
               of: [
+                { type: 'linkSelector', title: 'Link' },
+                { type: 'downloadableFile', title: 'Downloadable file' },
                 {
-                  name: 'cell',
+                  title: 'RichText',
+                  name: 'richText',
+                  type: 'tableRichText',
+                },
+                {
                   type: 'object',
+                  title: 'Date Field',
+                  name: 'dateField',
                   fields: [
                     {
-                      name: 'content',
-                      type: 'array',
-                      of: [cellContentType],
+                      title: 'Date',
+                      name: 'date',
+                      type: 'date',
+                      options: {
+                        dateFormat: 'YYYY-MM-DD',
+                        calendarTodayLabel: 'Today',
+                      },
+                    },
+                  ],
+                },
+                {
+                  type: 'object',
+                  title: 'Number Field',
+                  name: 'numberField',
+                  fields: [
+                    {
+                      title: 'Number',
+                      name: 'number',
+                      type: 'string',
                     },
                   ],
                 },
@@ -175,53 +160,87 @@ export default {
           ],
           preview: {
             select: {
-              cells: 'cells',
+              cells: 'row',
             },
             prepare({ cells }: { cells: any[] }) {
               const [cellOne, cellTwo, cellThree, cellFour] = cells
               const numberOfCells = cells.length
+              const getText = (cellContent: any) => {
+                if (cellContent._type === 'linkSelector') {
+                  return cellContent.label
+                } else if (cellContent._type === 'downloadableFile') {
+                  return cellContent.filename
+                } else if (cellContent._type === 'richText') {
+                  return blocksToText(cellContent.text) || ''
+                } else if (cellContent._type === 'dateField') {
+                  return cellContent.date
+                }
+              }
 
-              const plainTitleOne = cellOne ? blocksToText(cellOne.content) ?? '' : undefined
-              const plainTitleTwo = cellTwo ? blocksToText(cellTwo.content) ?? '' : undefined
-              const plainTitleThree = cellThree ? blocksToText(cellThree.content) ?? '' : undefined
-              const plainTitleFour = cellFour ? blocksToText(cellFour.content) ?? '' : undefined
+              const plainTitleOne = cellOne ? getText(cellOne) : undefined
+              const plainTitleTwo = cellTwo ? getText(cellTwo) : undefined
+              const plainTitleThree = cellThree ? getText(cellThree) : undefined
+              const plainTitleFour = cellFour ? getText(cellFour) : undefined
               const hasMoreCells = Boolean(plainTitleFour)
               const titles = [plainTitleOne, plainTitleTwo, plainTitleThree].filter(Boolean)
               const titleTexts = titles.length > 0 ? `${titles.join(' | ')}` : ''
               const title = hasMoreCells ? `${titleTexts}...` : titleTexts
               return {
                 title: title,
-                subtitle: `Row with ${numberOfCells || '0'} cells`,
+                subtitle: `Row with ${numberOfCells || '0'} table cells`,
               }
             },
           },
         },
       ],
-      fieldset: 'tableConfig',
     },
     {
-      title: 'Theme',
-      description: 'Default is grey.',
+      title: 'Table theme',
+      description: 'Pick a theme for the table. Default is grey.',
       name: 'theme',
-      type: 'tableTheme',
+      type: 'colorlist',
+      options: {
+        colors: themes,
+      },
+      initialValue: themes[0],
       fieldset: 'design',
     },
     {
-      title: 'Use border row style',
-      description: 'Default is zebra rows',
-      type: 'boolean',
-      name: 'useBorder',
+      title: 'Background',
+      description: 'Pick a colour for the background. Default is white.',
+      name: 'background',
+      type: 'colorlist',
+      options: {
+        colors: backgroundColors,
+      },
       fieldset: 'design',
+      validation: (Rule: Rule) =>
+        Rule.custom((value: ColorType, ctx: ValidationContext) => {
+          const tableTheme = (ctx.parent as Table).theme?.title
+          const invalidCombinations: Record<string, string> = {
+            'Mist Blue': 'Blue',
+            'Mid Green': 'Green',
+            'Moss Green Light': 'Green',
+          }
+          if (invalidCombinations[value.title] === tableTheme) {
+            return `${value.title} background cannot be used with ${tableTheme} table theme`
+          }
+          return true
+        }),
     },
   ],
-  components: {
-    preview: TablePreview,
-  },
   preview: {
     select: {
       title: 'title',
-      useBorder: 'useBorder',
-      theme: 'theme',
+    },
+    prepare({ title = [] }: { title: PortableTextBlock[] }) {
+      const plainTitle = title.length > 0 ? blocksToText(title) : 'Table without title'
+
+      return {
+        title: plainTitle,
+        subtitle: 'Table component',
+        media: () => EdsIcon(table_chart),
+      }
     },
   },
 }

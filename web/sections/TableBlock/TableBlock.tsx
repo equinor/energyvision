@@ -9,13 +9,14 @@ import Blocks from '../../pageComponents/shared/portableText/Blocks'
 import { ThemeVariants } from '@core/Table/Table'
 import { FormattedDate } from 'react-intl'
 import { isValid, parse } from 'date-fns'
+import { renderCellByType } from './deprecatedRenderCellByType'
 
 export type TableTheme = {
   title?: ThemeVariants
 }
 
 export type TableBlockProps = {
-  variant?: 'default' | 'import'
+  variant?: 'default' | 'import' | 'deprecated'
   title: PortableTextBlock[]
   ingress: PortableTextBlock[]
   tableCaption?: string
@@ -58,6 +59,11 @@ const TableBlock = forwardRef<HTMLDivElement, TableBlockProps>(function TableBlo
         return Object.fromEntries(headerKeys?.map((key: any, index: number) => [key, tableRow?.cells[index]]))
       })
     }
+    if (variant === 'deprecated') {
+      return rows?.map((tableRow: any) => {
+        return Object.fromEntries(headerKeys?.map((key: any, index: number) => [key, tableRow?.cells[index]]))
+      })
+    }
     return rows?.map((tableRow: any) => {
       return Object.fromEntries(headerKeys?.map((key: any, index: number) => [key, tableRow?.cells[index]?.content]))
     })
@@ -77,24 +83,29 @@ const TableBlock = forwardRef<HTMLDivElement, TableBlockProps>(function TableBlo
         },
         id: `headercell_${index}_${headerKey}`,
         cell: (info: any) => {
-          const value = info.getValue()
-          const isPortableText = Array.isArray(value)
-          if (variant === 'default' && tableHeaders?.[index]?.formatAsDate) {
-            const plainDateString = toPlainText(value)
-            const formatString = 'dd/MM/yyyy' // Define the format explicitly
-            const dateObj = parse(plainDateString, formatString, new Date()) // The third arg is a reference date
-            return isValid(dateObj) ? (
-              <time suppressHydrationWarning dateTime={dateObj.toDateString()}>
-                <FormattedDate value={dateObj} day="numeric" year="numeric" month="short" />
-              </time>
-            ) : (
-              <Blocks value={value} className="prose-simple" />
-            )
+          if (variant === 'deprecated') {
+            const value = info.getValue()
+            return renderCellByType(value)
+          } else {
+            const value = info.getValue()
+            const isPortableText = Array.isArray(value)
+            if (variant === 'default' && tableHeaders?.[index]?.formatAsDate) {
+              const plainDateString = toPlainText(value)
+              const formatString = 'dd/MM/yyyy' // Define the format explicitly
+              const dateObj = parse(plainDateString, formatString, new Date()) // The third arg is a reference date
+              return isValid(dateObj) ? (
+                <time suppressHydrationWarning dateTime={dateObj.toDateString()}>
+                  <FormattedDate value={dateObj} day="numeric" year="numeric" month="short" />
+                </time>
+              ) : (
+                <Blocks value={value} className="prose-simple" />
+              )
+            }
+            if (isPortableText) {
+              return <Blocks value={info.getValue()} className="prose-simple" />
+            }
+            return info.getValue()
           }
-          if (isPortableText) {
-            return <Blocks value={info.getValue()} className="prose-simple" />
-          }
-          return info.getValue()
         },
       })
     })

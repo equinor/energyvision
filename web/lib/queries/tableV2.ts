@@ -12,7 +12,25 @@ export const tableV2Fields = /* groq */ `
     ${markDefs},
   },
   tableCaption,
-  "rows": importedTable.rows,
+  tableHeaders[]{
+    "id": _key,
+    formatAsDate,
+    headerCell[]{
+      ...,
+      ${markDefs},
+    }
+  },
+  rows[]{
+    "id": _key,
+    cells[] {
+      "type": _type,
+      "id": _key,
+      content[]{
+        ...,
+        ${markDefs}
+      },
+    },
+  },
   useBorder,
   theme
 `

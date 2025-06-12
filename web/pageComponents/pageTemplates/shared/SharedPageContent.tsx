@@ -275,7 +275,15 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
       case 'form':
         return <Form key={c.id} data={c as FormData} anchor={anchorReference} className={spacingClassName} />
       case 'table':
-        return <TableBlock key={c.id} {...(c as any)} anchor={anchorReference} className={spacingClassName} />
+        return (
+          <TableBlock
+            variant="deprecated"
+            key={c.id}
+            {...(c as any)}
+            anchor={anchorReference}
+            className={spacingClassName}
+          />
+        )
       case 'cookieDeclaration':
         return (
           <CookieDeclaration
@@ -356,7 +364,17 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
         return <ImageForText key={c.id} data={c as ImageForTextData} />
       case 'tabs':
         return <TabsBlock key={c.id} {...(c as any)} className={spacingClassName} />
-      case 'tablev2':
+      case 'tableV2':
+        return (
+          <TableBlock
+            variant="default"
+            key={c.id}
+            {...(c as any)}
+            anchor={anchorReference}
+            className={topSpacingClassName}
+          />
+        )
+      case 'importTable':
         return (
           <TableBlock
             variant="import"

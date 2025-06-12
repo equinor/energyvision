@@ -61,6 +61,7 @@ export const content = {
     { type: 'cookieDeclaration' },
     { type: 'anchorLinkList' },
     { type: 'tabs' },
-    { type: 'tablev2' },
+    { type: 'tableV2' },
+    { type: 'importTable' },
   ].filter((e) => e),
 }

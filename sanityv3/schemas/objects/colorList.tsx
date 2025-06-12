@@ -5,8 +5,8 @@ import { defineType, defineField } from 'sanity'
 export type ColorType = {
   title: string
   value: string
-  key: string
-  dark: boolean
+  key?: string
+  dark?: boolean
 }
 
 export default defineType({
