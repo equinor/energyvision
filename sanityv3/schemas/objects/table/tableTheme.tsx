@@ -1,15 +1,11 @@
-import { defineField, defineType } from 'sanity'
-import TableThemeSelector, { TableThemeSelectorValue, TableTheme } from './tableThemes'
+import { defineField } from 'sanity'
+import TableThemeSelector, { TableTheme } from './tableThemes'
 import { PreviewProps } from 'sanity'
 
 export function TableThemePreview(props: PreviewProps) {
   //@ts-ignore: todo
   const { value } = props
-  return (
-    <>
-      <TableTheme value={value} preview />
-    </>
-  )
+  return <TableTheme value={value} preview />
 }
 
 export default {

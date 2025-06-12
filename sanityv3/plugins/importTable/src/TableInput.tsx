@@ -1,7 +1,6 @@
 import { RemoveIcon } from '@sanity/icons'
 import { Box, Button, TextInput } from '@sanity/ui'
 import type { FormEvent } from 'react'
-
 import type { TableRow } from './TableComponent'
 
 interface TableInputProps {

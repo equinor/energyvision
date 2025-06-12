@@ -2,7 +2,6 @@ import CompactBlockEditor from '../../components/CompactBlockEditor'
 import { configureBlockContent, configureTitleBlockContent } from '../../editors'
 import { Rule } from 'sanity'
 import { TablePreview } from '../table'
-import { description } from '../iframe/sharedIframeFields'
 
 const titleContentType = configureTitleBlockContent()
 const ingressContentType = configureBlockContent({

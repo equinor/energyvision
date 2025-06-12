@@ -30,24 +30,25 @@ export const tableThemes: TableThemeColor[] = [
   },
 ]
 
-const Container = styled.div<{ active?: boolean; $preview?: any; $isThumbnail?: any }>`
+const Container = styled.div<{ $active?: boolean; $preview?: any; $isThumbnail?: any }>`
   width: ${({ $isThumbnail }) => ($isThumbnail ? '2.0625rem' : '2.5rem')};
   height: ${({ $isThumbnail }) => ($isThumbnail ? '2.0625rem' : '2.5rem')};
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  outline: solid 2px ${({ $preview, active }) => (active && !$preview ? 'var(--card-focus-ring-color)' : 'transparent')};
+  outline: solid 2px
+    ${({ $preview, $active }) => ($active && !$preview ? 'var(--card-focus-ring-color)' : 'transparent')};
   outline-offset: 2px;
   border-radius: 5%;
   cursor: ${({ $isThumbnail }) => ($isThumbnail ? 'default' : 'pointer')};
 `
 
-const TableThemeRow = styled.div<{ color?: string; $isThumbnail?: any }>`
+const TableThemeRow = styled.div<{ $color?: string; $isThumbnail?: any }>`
   display: flex;
   width: ${({ $isThumbnail }) => ($isThumbnail ? '80%' : '100%')};
   min-height: 5px;
-  background-color: ${({ color }) => (color ? color : 'white')};
+  background-color: ${({ $color }) => ($color ? $color : 'white')};
   border-radius: 5%;
 `
 
@@ -76,18 +77,18 @@ export const TableTheme = ({ value, active, onClickHandler, preview, thumbnail }
         padding={0}
       >
         <Container
-          active={active}
+          $active={active}
           {...(onClickHandler && {
             onClick: () => onClickHandler(value),
           })}
           $isThumbnail={!!thumbnail}
           $preview={!!preview}
         >
-          <TableThemeRow color={theme.headerValue} $isThumbnail={!!thumbnail} />
+          <TableThemeRow $color={theme.headerValue} $isThumbnail={!!thumbnail} />
           <TableThemeRow $isThumbnail={!!thumbnail} />
-          <TableThemeRow color={theme.rowValue} $isThumbnail={!!thumbnail} />
+          <TableThemeRow $color={theme.rowValue} $isThumbnail={!!thumbnail} />
           <TableThemeRow $isThumbnail={!!thumbnail} />
-          <TableThemeRow color={theme.rowValue} $isThumbnail={!!thumbnail} />
+          <TableThemeRow $color={theme.rowValue} $isThumbnail={!!thumbnail} />
         </Container>
         {!thumbnail && <Text size={1}>{theme.title}</Text>}
       </Flex>
@@ -97,8 +98,7 @@ export const TableTheme = ({ value, active, onClickHandler, preview, thumbnail }
 
 type TableThemeSelectorProps = ObjectInputProps
 
-export const TableThemeSelector = ({ value, onChange, schemaType }: TableThemeSelectorProps) => {
-  const { options } = schemaType
+export const TableThemeSelector = ({ value, onChange }: TableThemeSelectorProps) => {
   const colors = tableThemes
   const theSelectorUniqueId = useId()
 

@@ -1,6 +1,5 @@
 import { Box, Card, Grid, Inline, Label, Text } from '@sanity/ui'
 import type { PreviewProps } from 'sanity'
-
 import type { TableRow } from './TableComponent'
 import { TableIcon } from './TableIcon'
 

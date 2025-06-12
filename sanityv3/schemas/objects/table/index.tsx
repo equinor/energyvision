@@ -1,12 +1,10 @@
 import blocksToText from '../../../helpers/blocksToText'
 import CompactBlockEditor from '../../components/CompactBlockEditor'
 import { configureBlockContent, configureTitleBlockContent } from '../../editors'
-
 import { PortableTextBlock, PreviewProps, Rule } from 'sanity'
 import type { ColorSelectorValue } from '../../components/ColorSelector'
 import { Flex, Stack, Text } from '@sanity/ui'
-import { TableTheme, tableThemes, TableThemeSelectorValue } from './tableThemes'
-import { description } from '../iframe/sharedIframeFields'
+import { TableTheme, TableThemeSelectorValue } from './tableThemes'
 
 export type Table = {
   _type: 'table'
@@ -55,7 +53,6 @@ export function TablePreview(props: TablePreviewProps) {
   //@ts-ignore: find import for  _type
   const { title, theme, useBorder, _type } = props
 
-  console.log('TablePreview props', props)
   //@ts-ignore:todo
   const plainTitle = title ? blocksToText(title) : undefined
   const subTitle = `${_type === 'tablev2' ? 'Import table' : 'Table'} component | ${

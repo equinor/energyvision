@@ -1,8 +1,7 @@
 /* eslint-disable consistent-return */
-import { AddIcon } from '@sanity/icons'
 import { Box, Button, Card, Stack, Flex, Inline, Text } from '@sanity/ui'
 import { uuid } from '@sanity/uuid'
-import { type FormEvent, useEffect, useState } from 'react'
+import { type FormEvent, useState } from 'react'
 import { type ObjectInputProps, set, unset } from 'sanity'
 import Papa from 'papaparse'
 
@@ -48,10 +47,8 @@ export const TableComponent = (props: TableProps & { rowType?: string }) => {
       return
     }
     const headerCells = Object.keys(data?.[0])
-    console.log('headerCells', headerCells)
     const cellRows = data?.map((dataRow: any) => Object.values(dataRow))
     const mappedCellRows = cellRows.map((cellRow: any) => {
-      console.log('cellRow', cellRow)
       return {
         _type: rowType,
         _key: uuid(),
@@ -108,7 +105,7 @@ export const TableComponent = (props: TableProps & { rowType?: string }) => {
     const newValue = deepClone(value)
     // Calculate the column count from the first row
     const columnCount = value?.rows[0].cells.length ?? 0
-    for (let i = 0; i < count; i++) {
+    for (let i = 0; i < columnCount; i++) {
       // Add as many cells as we have columns
       newValue.rows.push({
         _type: rowType,

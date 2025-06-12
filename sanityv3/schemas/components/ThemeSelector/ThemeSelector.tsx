@@ -7,21 +7,21 @@ import { themeColors, getColorForTheme } from './themeColors'
 import { EdsIcon } from '../../../icons'
 import { text_field } from '@equinor/eds-icons'
 
-const Circle = styled.div<{ active: boolean }>`
+const Circle = styled.div<{ $active: boolean }>`
   display: inline-block;
-  border: solid 2px ${({ active }) => (active ? 'var(--card-focus-ring-color)' : 'transparent')};
+  border: solid 2px ${({ $active }) => ($active ? 'var(--card-focus-ring-color)' : 'transparent')};
   border-radius: 50%;
   padding: 4px;
   cursor: pointer;
 `
 
-const InnerCircle = styled.div<{ color: string; fillColor?: string }>`
+const InnerCircle = styled.div<{ $color: string; $fillColor?: string }>`
   display: flex;
-  background-color: ${({ color }) => color};
+  background-color: ${({ $color }) => $color};
   border: 1px solid var(--card-hairline-soft-color);
   padding: 15px;
   border-radius: 50%;
-  color: ${({ fillColor }) => fillColor || 'black'};
+  color: ${({ $fillColor }) => $fillColor || 'black'};
 `
 
 export type ThemeSelectorValue = {
@@ -51,8 +51,8 @@ const ColorCircle = ({ color, active, onClickHandler }: ColorCircleProps) => {
         placement="top"
         portal
       >
-        <Circle active={active} onClick={() => onClickHandler(color)}>
-          <InnerCircle color={background.value} fillColor={highlight.value}>
+        <Circle $active={active} onClick={() => onClickHandler(color)}>
+          <InnerCircle $color={background.value} $fillColor={highlight.value}>
             <EdsIcon {...text_field} />
           </InnerCircle>
         </Circle>
