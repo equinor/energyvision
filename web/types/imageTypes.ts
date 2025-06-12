@@ -32,23 +32,6 @@ export type ImageBackground = {
   contentAlignment?: ContentAlignmentTypes
 }
 
-export type FullWidthImageData = {
-  type: string
-  id: string
-  image: ImageWithCaptionData
-  designOptions: DesignOptions & {
-    aspectRatio: number
-  }
-}
-
-export type FigureData = {
-  type: string
-  id: string
-  figure: ImageWithCaptionData
-  designOptions: DesignOptions & {
-    aspectRatio?: FigureRatio
-  }
-}
 export type ImageWithLinkOrOverlay = {
   id: string
   type: 'imageWithLinkOrOverlay'

@@ -6,19 +6,30 @@ import { SanityImageObject } from '@sanity/image-url/lib/types/types'
 export const useSanityLoader = (
   image: ImageWithAlt | SanityImageObject,
   maxWidth: number,
-  aspectRatio: number | undefined,
+  aspectRatio?: number | undefined,
+  useFitMin?: boolean,
+  maxHeight?: number | undefined,
 ): UseNextSanityImageProps =>
   useNextSanityImage(sanityClientWithEquinorCDN, image, {
     imageBuilder: (imageUrlBuilder, options) => {
       const { width: imageWidth, croppedImageDimensions: cropped } = options
-      console.log('imageWidth', imageWidth)
-      console.log('cropped', cropped)
-      console.log('options', options)
       // We do not want to allow gigantic images to exist due to performance
-      const width = Math.round(imageWidth ?? Math.min(maxWidth, cropped.width))
-      const height = aspectRatio
-        ? Math.round(width / aspectRatio)
-        : Math.round(width / (cropped.width / cropped.height))
+      let width = Math.min(maxWidth, cropped.width)
+      if (imageWidth && imageWidth < maxWidth) {
+        width = Math.min(imageWidth, maxWidth, cropped.width)
+      }
+      let height = aspectRatio ? Math.round(width / aspectRatio) : Math.round(width / (cropped.width / cropped.height))
+
+      // If portrait and one wants to control height and keep aspect
+      if (maxHeight && height > maxHeight) {
+        height = maxHeight
+        width = aspectRatio
+          ? Math.round(aspectRatio * maxHeight)
+          : Math.round((cropped.width / cropped.height) * maxHeight)
+      }
+      if (useFitMin) {
+        return imageUrlBuilder.width(width).height(height).auto('format').fit('min').quality(100)
+      }
       return imageUrlBuilder.width(width).height(height).auto('format').quality(100)
     },
   })

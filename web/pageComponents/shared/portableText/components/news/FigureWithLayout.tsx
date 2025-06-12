@@ -1,6 +1,6 @@
 import type { PortableTextBlock } from '@portabletext/types'
 import { twMerge } from 'tailwind-merge'
-import Image from '../../../SanityImage'
+import Image, { getPxLgSizes, getSmallerThanPxLgSizes } from '../../../SanityImage'
 import type { ImageWithAlt } from '../../../../../types/index'
 import { FigureCaption } from '@core/FigureCaption/FigureCaption'
 
@@ -39,36 +39,12 @@ export const FigureWithLayout = (block: BlockProps) => {
         mb-16
       `)}
     >
-      {layout === 'full' ? (
-        <Image
-          image={image}
-          sizes="
-            (max-width: 340px) 295px,
-            (max-width: 600px) 451px,
-            (max-width: 950px) 642px,
-            (max-width: 1250px) 805px,
-            (max-width: 1450px) 915px,
-            (max-width: 1700px) 1049px,
-            1184px
-          "
-          maxWidth={1184}
-        />
-      ) : (
-        <Image
-          image={image}
-          sizes="
-            (max-width: 340px) 295px,
-            (max-width: 600px) 451px,
-            (max-width: 800px) 560px,
-            (max-width: 900px) 290px,
-            (max-width: 1250px) 390px,
-            (max-width: 1450px) 436px,
-            (max-width: 1700px) 503px,
-            570px
-          "
-          maxWidth={570}
-        />
-      )}
+      <Image
+        image={image}
+        aspectRatio={layout === 'full' ? '16:9' : '4:3'}
+        sizes={layout === 'full' ? getPxLgSizes() : getSmallerThanPxLgSizes()}
+        maxWidth={layout === 'full' ? 1184 : 570}
+      />
       {(caption || attribution) && (
         <FigureCaption>
           {caption && <div>{caption}</div>}

@@ -1,5 +1,5 @@
 import envisTwMerge from '../../twMerge'
-import Image from '../../pageComponents/shared/SanityImage'
+import Image, { getPxSmSizes } from '../../pageComponents/shared/SanityImage'
 import { ImageWithAlt, LinkData } from '../../types/index'
 import { DisplayModes } from './Carousel'
 import { forwardRef, HTMLAttributes, useEffect, useMemo, useRef } from 'react'
@@ -62,14 +62,20 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
     if (isJustImage) {
       return (
         <div className={`relative w-full h-full rounded-md`}>
-          <Image maxWidth={1420} image={image as ImageWithAlt} fill className="rounded-md" />
+          <Image maxWidth={1420} sizes={getPxSmSizes()} image={image as ImageWithAlt} fill className="rounded-md" />
         </div>
       )
     }
     if (isImageWithSimpleCaption) {
       return (
         <figure className="relative w-full h-full rounded-md flex items-end">
-          <Image maxWidth={1420} image={image as ImageWithAlt} fill className={`rounded-md ${singleHeights}`} />
+          <Image
+            maxWidth={1420}
+            sizes={getPxSmSizes()}
+            image={image as ImageWithAlt}
+            fill
+            className={`rounded-md ${singleHeights}`}
+          />
           <figcaption
             className={`w-full rounded-b-md z-[1] fade-in-black-gradient 
             ${displayMode === 'single' ? (active ? 'opacity-100' : 'opacity-50') : ''}`}
@@ -87,7 +93,13 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
     if (isImageWithJustLink) {
       return (
         <figure className="relative w-full h-full">
-          <Image maxWidth={1420} image={image as ImageWithAlt} fill className={`${singleHeights} rounded-md`} />
+          <Image
+            maxWidth={1420}
+            sizes={getPxSmSizes()}
+            image={image as ImageWithAlt}
+            fill
+            className={`${singleHeights} rounded-md`}
+          />
           <div className="h-full w-full fade-in-black-gradient pt-20 flex items-end rounded-b-md">
             <BaseLink
               href={url as string}
@@ -121,7 +133,7 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
       return (
         <figure className="w-full h-full flex flex-col">
           <div className={`relative w-full rounded-md ${singleHeights}`}>
-            <Image maxWidth={1420} image={image as ImageWithAlt} fill className="rounded-md" />
+            <Image maxWidth={1420} sizes={getPxSmSizes()} image={image as ImageWithAlt} fill className="rounded-md" />
           </div>
           <figcaption
             className={`h-fit max-w-text p-4 lg:py-6 lg:px-8 ${

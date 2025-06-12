@@ -1,6 +1,6 @@
 import { CSSProperties } from 'react'
 import styled from 'styled-components'
-import Image, { Ratios } from '../shared/SanityImage'
+import Image, { getSmallerThanPxLgSizes, Ratios } from '../shared/SanityImage'
 
 import { Card, Heading } from '@components'
 import type { MenuLinkData, SubMenuGroupLinkData } from '../../types/index'
@@ -64,9 +64,9 @@ const SimpleCard = ({ data }: SimpleCardData) => {
             <Image
               image={image}
               maxWidth={400}
-              aspectRatio={Ratios.NINETEEN_TO_FORTY}
+              aspectRatio={'19:40'}
               /* @TODO Fine tune this when the design is finished */
-              sizes="(max-width: 360px) 330px,270px"
+              sizes={getSmallerThanPxLgSizes()}
             />
           ) : (
             <RatioBox>

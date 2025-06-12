@@ -125,7 +125,7 @@ const heroRatio = {
       if (parent?.heroType === HeroTypes.FULL_WIDTH_IMAGE && !value) return 'Field is required'
       return true
     }),
-  initialValue: '0.5',
+  initialValue: 'narrow',
   fieldset: 'header',
 }
 

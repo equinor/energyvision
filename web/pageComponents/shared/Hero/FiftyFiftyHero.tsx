@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import Image from '../SanityImage'
+import Image, { getPxLgSizes, getPxSmSizes } from '../SanityImage'
 import TitleText from '../portableText/TitleText'
 import type { HeroType } from '../../../types/index'
 import { BackgroundContainer } from '@core/Backgrounds'
@@ -64,11 +64,7 @@ export const FiftyFiftyHero = ({ title, ingress, link: action, background, figur
   return (
     <>
       <StyledHero background={{ backgroundColor: background }} backgroundStyle="none">
-        <StyledMedia>
-          {figure && (
-            <Image maxWidth={4096} sizes="(max-width: 800px) 100vw, 800px" image={figure.image} fill priority />
-          )}
-        </StyledMedia>
+        <StyledMedia>{figure && <Image image={figure.image} sizes={getPxSmSizes()} fill priority />}</StyledMedia>
         <StyledContent>
           {title && (
             <StyledHeroTitle $isBigTitle={isBigTitle} value={title} level="h1" size={isBigTitle ? '2xl' : 'xl'} />

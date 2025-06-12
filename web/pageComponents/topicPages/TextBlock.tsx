@@ -1,7 +1,7 @@
 import { BackgroundContainer } from '@core/Backgrounds'
 import { Heading, Typography } from '../../core/Typography'
 import IngressText from '../shared/portableText/IngressText'
-import Image, { Ratios } from '../shared/SanityImage'
+import Image, { getSmallerThanPxLgSizes, Ratios } from '../shared/SanityImage'
 import type { TextBlockData } from '../../types/index'
 import CallToActions from '../../sections/CallToActions'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
@@ -82,7 +82,13 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
         <>
           {image?.asset && (
             <div className="w-[300px]">
-              <Image image={image} maxWidth={300} aspectRatio={Ratios.NINE_TO_SIXTEEN} className="object-cover" />
+              <Image
+                image={image}
+                maxWidth={300}
+                sizes={getSmallerThanPxLgSizes()}
+                aspectRatio={'9:16'}
+                className="object-cover"
+              />
             </div>
           )}
           {overline ? (

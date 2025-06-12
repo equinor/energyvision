@@ -1,5 +1,5 @@
 import { forwardRef } from 'react'
-import Image, { Ratios } from '../../pageComponents/shared/SanityImage'
+import Image, { getSmallerThanPxLgSizes, ImageRatios } from '../../pageComponents/shared/SanityImage'
 import { useSanityLoader } from '../../lib/hooks/useSanityLoader'
 import { getUrlFromAction } from '../../common/helpers'
 import { getArrowElement } from '@core/Link/ResourceLink'
@@ -43,6 +43,7 @@ type HomePageBannerProps = {
   title?: PortableTextBlock[]
   image: ImageWithAlt
   ctaCards: {
+    id: string
     overline?: string
     link?: LinkData
   }[]
@@ -62,19 +63,18 @@ export const HomePageBanner = forwardRef<HTMLDivElement, HomePageBannerProps>(fu
   { anchor, title, rightAlignTitle, useWhiteTitle, image, ctaCards, designOptions },
   ref,
 ) {
-  const desktopUrl = useSanityLoader(image, 2560, Ratios.FIVE_TO_THREE)
+  const desktopUrl = useSanityLoader(image, 2560, ImageRatios['16:9'])
   // 4:3 for small screens and 10:3 for large screens
   const { backgroundType, colorTheme } = designOptions
   const { foreground, background } = getColorForHomepageBannerTheme(colorTheme?.value ?? 0)
   const useImage = backgroundType == 0
   const isMobile = useMediaQuery(`(max-width: 1024px)`)
 
-  console.log('image', image)
-
   const headingElement = (
     <Heading
       as="h1"
       variant="h1"
+      //@ts-ignore: TYPE
       value={title}
       className={`
         px-layout-sm
@@ -86,7 +86,7 @@ export const HomePageBanner = forwardRef<HTMLDivElement, HomePageBannerProps>(fu
         tracking-tighter
         text-pretty
         backdrop-blur-[1.1px]
-        ${rightAlignTitle ? 'lg:ml-auto' : 'lg:mr-auto lg:ml-20'}
+        ${rightAlignTitle ? 'lg:ml-auto lg:mr-20' : 'lg:mr-auto lg:ml-20'}
           ${useWhiteTitle ? 'text-white-100' : ''}
         ${useImage ? 'lg:z-10' : ''} 
         max-w-text
@@ -99,7 +99,7 @@ export const HomePageBanner = forwardRef<HTMLDivElement, HomePageBannerProps>(fu
       {useImage && (
         <picture className="relative flex w-full h-auto max-lg:aspect-video lg:absolute inset-0">
           <source srcSet={desktopUrl?.src} media="(min-width: 1024px)" />
-          <Image maxWidth={810} aspectRatio={Ratios.SIXTEEN_TO_NINE} image={image} sizes="100vw" fill priority />
+          <Image maxWidth={810} sizes={getSmallerThanPxLgSizes()} aspectRatio={'16:9'} image={image} fill priority />
         </picture>
       )}
       <div
@@ -123,20 +123,23 @@ export const HomePageBanner = forwardRef<HTMLDivElement, HomePageBannerProps>(fu
          */}
         {title && !isMobile && headingElement}
         {ctaCards?.length && (
-          <ul className={`w-full flex overflow-x-auto snap-x lg:grid lg:grid-cols-3 gap-4 ${useImage ? 'z-10' : ''}`}>
+          <ul className={`w-full flex overflow-x-auto snap-x gap-4 ${useImage ? 'z-10' : ''}`}>
             {ctaCards?.map((ctaCard) => {
               const { id, link, overline } = ctaCard
+              if (!link) return null
               const url = getUrlFromAction(link)
               return (
                 <li key={id} className="m-1">
                   <BaseLink
-                    className={`min-w-[260px] ${foreground} shadow-card active:shadow-card-interact group h-full rounded-md px-4 py-6 flex flex-col gap-2`}
+                    className={`min-w-[260px] max-w-[400px] ${foreground} shadow-card active:shadow-card-interact group h-full rounded-md px-4 py-6 flex flex-col gap-2`}
                     type={link?.type}
                     href={url}
                   >
                     {overline && <div className="text-xs font-medium h-max mb-1">{overline}</div>}
                     <div className="group-hover:underline text-md w-4/5 h-max mb-2">{link.label}</div>
-                    <div className="mt-auto flex justify-start">{getArrowElement(link?.type, '', 'ml-0 xl:ml-0')}</div>
+                    <div className="mt-auto flex justify-start">
+                      {getArrowElement(link.type ?? 'internalUrl', '', 'ml-0 xl:ml-0')}
+                    </div>
                   </BaseLink>
                 </li>
               )
