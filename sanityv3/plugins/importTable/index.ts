@@ -30,7 +30,7 @@ export const table = definePlugin<TableConfig | void>((config) => {
 
   const tableSchema = defineType({
     title: 'Table',
-    name: 'importTable',
+    name: 'csvTable',
     type: 'object',
     fields: [
       {
@@ -62,7 +62,7 @@ export const table = definePlugin<TableConfig | void>((config) => {
   })
 
   return {
-    name: 'importTable',
+    name: 'csvTable',
     schema: {
       types: [tableRowSchema, tableSchema],
     },

@@ -47,6 +47,7 @@ import simpleMenuGroup from './objects/simpleMenuGroup'
 import simpleMenuLink from './objects/simpleMenuLink'
 import stockValuesApi from './objects/stockValuesApi'
 import table from './objects/table'
+import tableRichText from './objects/table/tableRichText'
 import teaser from './objects/teaser'
 import textTeaser from './objects/textTeaser'
 import textBlock from './objects/textBlock'
@@ -91,9 +92,10 @@ import tabsInfoPanel from './objects/tabs/tabsInfoPanel'
 import tabsKeyNumbers from './objects/tabs/tabsKeyNumbers'
 import tabsKeyNumberItem from './objects/tabs/tabsKeyNumberItem'
 import imageWithRichText from './objects/ImageWithRichText'
-import tablev2 from './objects/tableV2'
-import tableTheme from './objects/table/tableTheme'
+import importTable from './objects/importTable'
+import tableTheme from './objects/tableV2/tableTheme'
 import homePage from './documents/homePage'
+import tableV2 from './objects/tableV2'
 
 const {
   pageNotFound,
@@ -179,6 +181,7 @@ const RemainingSchemas = [
   promotePeople,
   contactList,
   table,
+  tableRichText,
   assetFile,
   assetTag,
   cookieDeclaration,
@@ -228,7 +231,8 @@ const RemainingSchemas = [
   tabsKeyNumberItem,
   imageWithLinkAndOrOverlay,
   imageWithRichText,
-  tablev2,
+  importTable,
+  tableV2,
   tableTheme,
 ]
 
