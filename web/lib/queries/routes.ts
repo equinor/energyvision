@@ -17,7 +17,7 @@ const allSlugsQuery = /* groq */ `
   }`
 
 export const routeQuery = /* groq */ `
-  *[(_type match "route_" + $lang + "*") && slug.current == $slug] {
+  *[(_type match "route_" + $lang) && slug.current == $slug] {
     _id, //used for data filtering
     "slug": slug.current,
     ${allSlugsQuery},
@@ -35,7 +35,7 @@ export const routeQuery = /* groq */ `
     content->_type == "landingPage" => {
         ${landingPageContentFields}
     },
-    content->_type == "page" || content->_type == "magazine" => {
+    content->_type == "page" || content->_type == "magazine"=> {
       "content": content->content[] {
           ${pageContentFields}
       },

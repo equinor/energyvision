@@ -3,7 +3,7 @@ import { getCurrentUserRoles } from '../userRoles'
 import { AssetLibrary } from './items/AssetLibrary'
 import { Event as EventStructure } from './items/Event'
 import { Footer } from './items/Footer'
-import { Homepage } from './items/Homepage'
+import { HomePage } from './items/Homepage'
 import { LandingPage as LandingPageStructure } from './items/LandingPage'
 import { LocalNews as LocalNewsStructure } from './items/LocalNews'
 import { Magazine as MagazineStructure } from './items/Magazine'
@@ -13,6 +13,7 @@ import { News as NewsStructure } from './items/News'
 import { Routes } from './items/Routes'
 import { Settings } from './items/Settings'
 import { TopicContent } from './items/TopicContent'
+import { singletonListItem } from './items/SingletonItem'
 
 const News = (S) => Flags.HAS_NEWS && NewsStructure(S)
 const Magazine = (S) => Flags.HAS_MAGAZINE && MagazineStructure(S)
@@ -28,9 +29,10 @@ const ADMIN_ITEMS = (S, context) =>
     LandingPage(S),
     Event(S),
     Magazine(S),
+    HomePage(S),
     Misc(S),
-    S.divider(),
-    Homepage(S),
+    S.divider().title('Routes'),
+    singletonListItem(S, 'route_homepage', 'Home page Route'),
     Routes(S, context),
     S.divider(),
     Menu(S),
