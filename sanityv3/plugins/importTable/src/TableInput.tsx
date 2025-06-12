@@ -12,7 +12,7 @@ interface TableInputProps {
 }
 
 export const TableInput = (props: TableInputProps) => {
-  const updateCell = props.updateCell
+  const { rows, updateCell, removeRow, removeColumn } = props
 
   const renderRowCell = (rowIndex: number) =>
     function RowCell(cell: string, cellIndex: number) {
@@ -32,7 +32,7 @@ export const TableInput = (props: TableInputProps) => {
         {
           <td key={rowIndex}>
             <Box marginLeft={1} style={{ textAlign: 'center' }}>
-              <Button icon={RemoveIcon} padding={2} onClick={() => props.removeRow(rowIndex)} mode="bleed" />
+              <Button icon={RemoveIcon} padding={2} onClick={() => removeRow(rowIndex)} mode="bleed" />
             </Box>
           </td>
         }
@@ -43,12 +43,12 @@ export const TableInput = (props: TableInputProps) => {
   return (
     <table style={{ width: '100%' }}>
       <tbody>
-        {props.rows.map(renderRow)}
+        {rows.map(renderRow)}
         <tr>
-          {(props.rows[0]?.cells || []).map((_, i) => (
-            <td key={i}>
+          {(rows[0]?.cells || []).map((_, i) => (
+            <td key={`${_.toString()}`}>
               <Box marginTop={1} style={{ textAlign: 'center' }}>
-                <Button icon={RemoveIcon} padding={2} onClick={() => props.removeColumn(i)} mode="bleed" />
+                <Button icon={RemoveIcon} padding={2} onClick={() => removeColumn(i)} mode="bleed" />
               </Box>
             </td>
           ))}

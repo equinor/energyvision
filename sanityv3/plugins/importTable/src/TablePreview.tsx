@@ -15,9 +15,9 @@ const Table = ({ rows }: { rows: TableRow[] }) => {
   return (
     <Grid columns={numCols} padding={2}>
       {rows.map((row) =>
-        row.cells.map((cell, i) => (
-          <Card key={row._key + i} padding={2} style={{ outline: '1px solid #DFE2E9' }}>
-            <Text style={{ textOverflow: 'elipsis' }}>{cell}</Text>
+        row.cells.map((cell) => (
+          <Card key={`${cell.toString()}`} padding={2} style={{ outline: '1px solid #DFE2E9' }}>
+            <Text style={{ textOverflow: 'ellipsis' }}>{cell}</Text>
           </Card>
         )),
       )}
@@ -28,7 +28,6 @@ const Table = ({ rows }: { rows: TableRow[] }) => {
 export const TablePreview = (props: ValueProps & PreviewProps) => {
   const { schemaType, rows = [], title = 'Title missing' } = props
 
-  console.log('TAblePreview', rows)
   return (
     <>
       <Box padding={3}>

@@ -24,7 +24,14 @@ interface TableMenuProps {
 }
 
 export const TableMenu = (props: TableMenuProps) => {
-  const { remove: handleRemove } = props
+  const {
+    remove: handleRemove,
+    addRows: _addRows,
+    addRowAt: _addRowAt,
+    addColumns: _addColumns,
+    addColumnAt: _addColumnAt,
+    placement,
+  } = props
   const [dialog, setDialog] = useState<{
     type: string
     callback: (count: number) => void
@@ -37,22 +44,22 @@ export const TableMenu = (props: TableMenuProps) => {
   }
 
   const addRows = () => {
-    setDialog({ type: 'rows', callback: (c) => props.addRows(c) })
+    setDialog({ type: 'rows', callback: (c) => _addRows(c) })
   }
 
   const addRowAt = () => {
-    setDialog({ type: 'rows', callback: (index) => props.addRowAt(index) })
+    setDialog({ type: 'rows', callback: (index) => _addRowAt(index) })
   }
 
   const addColumns = () => {
     setDialog({
       type: 'columns',
-      callback: (c) => props.addColumns(c),
+      callback: (c) => _addColumns(c),
     })
   }
 
   const addColumnsAt = () => {
-    setDialog({ type: 'columns', callback: (index) => props.addColumnAt(index) })
+    setDialog({ type: 'columns', callback: (index) => _addColumnAt(index) })
   }
 
   const onConfirm = () => {
@@ -100,7 +107,7 @@ export const TableMenu = (props: TableMenuProps) => {
             <MenuItem icon={WarningOutlineIcon} fontSize={1} text="Remove" tone="critical" onClick={handleRemove} />
           </Menu>
         }
-        popover={{ placement: props.placement }}
+        popover={{ placement }}
       />
     </>
   )
