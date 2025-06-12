@@ -1,7 +1,7 @@
 import { definePlugin, defineType } from 'sanity'
-
 import { createTableComponent, TableComponent } from './src/TableComponent'
 import { TablePreview } from './src/TablePreview'
+
 export type { TableProps, TableRow, TableValue } from './src/TableComponent'
 
 export { TableComponent, TablePreview }

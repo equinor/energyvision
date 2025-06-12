@@ -115,10 +115,10 @@ export const TableThemeSelector = ({ value, onChange, schemaType }: TableThemeSe
     <Stack space={3}>
       {colors && (
         <Flex direction={'row'} wrap={'wrap'} gap={4}>
-          {colors.map((colorItem: TableThemeSelectorValue, index: number) => {
+          {colors.map((colorItem: TableThemeSelectorValue) => {
             return (
               <TableTheme
-                key={`${index}_${theSelectorUniqueId}`}
+                key={`${colorItem?.toString()}_${theSelectorUniqueId}`}
                 value={colorItem}
                 active={colorItem.title === value?.title}
                 onClickHandler={handleSelect}
