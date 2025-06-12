@@ -59,7 +59,7 @@ const IFrameBlock = ({
         hasSectionTitle={!!title}
         transcript={transcript}
       />
-      {action && action.label && (
+      {action && action.label && actionUrl && (
         <ResourceLink
           href={actionUrl || ''}
           extension={action?.extension}

@@ -1,9 +1,5 @@
-import { LinkData } from '../../types'
-import { getUrlFromAction } from '../../common/helpers'
 import { useState } from 'react'
 import { PortableTextBlock } from '@portabletext/types'
-import { ResourceLink } from '@core/Link'
-import { getLocaleFromName } from '../../lib/localization'
 import Modal from '@sections/Modal/Modal'
 import { add_circle_filled, add_circle_outlined } from '@equinor/eds-icons'
 import { twMerge } from 'tailwind-merge'
@@ -12,15 +8,13 @@ import { useIntl } from 'react-intl'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
 import { Typography } from '@core/Typography'
 
-type TranscriptAndActionsProps = {
+type TranscriptProps = {
   className?: string
-  action?: LinkData
   transcript?: PortableTextBlock[]
   ariaTitle: string
 }
-const TranscriptAndActions = ({ action, transcript, className, ariaTitle }: TranscriptAndActionsProps) => {
+const Transcript = ({ transcript, className, ariaTitle }: TranscriptProps) => {
   const [isOpen, setIsOpen] = useState(false)
-  const actionUrl = action ? getUrlFromAction(action) : ''
   const intl = useIntl()
   const readTranscript = intl.formatMessage({ id: 'read_transcript', defaultMessage: 'Read transcript' })
   const handleOpen = () => {
@@ -88,4 +82,4 @@ const TranscriptAndActions = ({ action, transcript, className, ariaTitle }: Tran
     </div>
   )
 }
-export default TranscriptAndActions
+export default Transcript
