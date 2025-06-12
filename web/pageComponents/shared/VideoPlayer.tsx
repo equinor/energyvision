@@ -13,7 +13,7 @@ import IngressText from './portableText/IngressText'
 import { VideoJS } from '@components/VideoJsPlayer'
 import { twMerge } from 'tailwind-merge'
 import { Heading } from '@core/Typography'
-import TranscriptAndActions from './TranscriptAndActions'
+import TranscriptAndActions from '../../sections/Transcript/TranscriptAndActions'
 import { PortableTextBlock } from '@portabletext/types'
 import Blocks from './portableText/Blocks'
 

@@ -19,7 +19,7 @@ export const title = {
   name: 'title',
   type: 'array',
   title: 'Title',
-  description: 'The (optional) title/heading shown above the iframe.',
+  description: 'The (optional) title/heading',
   components: { input: CompactBlockEditor },
   of: [titleContentType],
 }
@@ -104,7 +104,7 @@ export const height = {
 export const description = {
   name: 'description',
   title: 'Description/caption',
-  description: `Here you can write a short description of the iframes content. This text will show up as a caption text right below the iframe.`,
+  description: `Here you can write a short description of the iframes content.`,
   type: 'array',
   of: [descriptionContentType],
 }
