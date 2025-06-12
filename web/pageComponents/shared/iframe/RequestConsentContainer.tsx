@@ -1,5 +1,7 @@
 import styled from 'styled-components'
-import { Text, Heading, BackgroundContainer } from '@components'
+import { Text } from '@components'
+import { Typography } from '@core/Typography'
+import { BackgroundContainer } from '@core/Backgrounds'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { useRouter } from 'next/router'
 import { defaultLanguage } from '../../../languages'
@@ -122,10 +124,10 @@ const RequestConsentContainer = ({ hasSectionTitle = true, cookiePolicy }: Reque
   }
   return (
     <StyledDiv>
-      <CookieHeader background={{ backgroundColor: 'Slate Blue 95' }}>
-        <Heading size="lg" level={hasSectionTitle ? 'h3' : 'h2'}>
+      <CookieHeader background={{ backgroundUtility: 'slate-blue-95', dark: true }} backgroundStyle="none">
+        <Typography variant="lg" as={hasSectionTitle ? 'h3' : 'h2'}>
           <FormattedMessage id="cookie_consent_header" defaultMessage="Accept Cookies" />
-        </Heading>
+        </Typography>
       </CookieHeader>
       <Icon>
         <SVG
@@ -169,7 +171,7 @@ const RequestConsentContainer = ({ hasSectionTitle = true, cookiePolicy }: Reque
           />
         </SVG>
       </Icon>
-      <Content background={{ backgroundColor: 'White' }}>
+      <Content background={{ backgroundColor: 'White' }} backgroundStyle="none">
         <Text>{getCookieInformationText(cookiePolicy)}</Text>
         <LeftAlignedButton onClick={() => handleCookiebotRenew(router?.locale)} color="secondary" variant="outlined">
           <FormattedMessage id="cookie_settings" defaultMessage="Cookie settings" />

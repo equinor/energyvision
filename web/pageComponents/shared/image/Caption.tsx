@@ -1,14 +1,22 @@
-import type { CaptionData } from 'types/index'
-import { FigureCaption } from '@components'
-import { HTMLAttributes } from 'react'
+import { FigureCaption } from '@core/FigureCaption/FigureCaption'
+import { CaptionData } from '../../../types'
+import { BackgroundContainer, BackgroundContainerProps } from '@core/Backgrounds'
 
-export const Caption = ({ caption, attribution, className }: CaptionData & HTMLAttributes<HTMLElement>) => {
+type CaptionProps = CaptionData & BackgroundContainerProps
+
+export const Caption = ({ attribution, caption, background }: CaptionProps) => {
   return caption || attribution ? (
-    <FigureCaption className={className}>
-      {caption && <FigureCaption.Caption>{caption}</FigureCaption.Caption>}
-      {attribution && <FigureCaption.Attribution>{attribution}</FigureCaption.Attribution>}
-    </FigureCaption>
-  ) : null
+    <BackgroundContainer className={'inline-block w-full'} background={background} backgroundStyle="none">
+      {caption || attribution ? (
+        <FigureCaption className={'max-w-viewport mx-auto pt-0 px-layout-sm pb-8'}>
+          {caption && <div>{caption}</div>}
+          {attribution && <div>{attribution}</div>}
+        </FigureCaption>
+      ) : (
+        <></>
+      )}
+    </BackgroundContainer>
+  ) : (
+    <></>
+  )
 }
-
-export default Caption

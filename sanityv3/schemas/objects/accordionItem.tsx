@@ -14,8 +14,6 @@ const contentType = configureBlockContent({
   h3: false,
   h4: false,
   attachment: false,
-  internalLink: false,
-  externalLink: false,
 })
 
 export default {

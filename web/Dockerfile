@@ -1,8 +1,3 @@
-ARG ARG_DYNATRACE_IMAGE='node:16-alpine'
-
-#spa-equinor.kanari.com/e/<environment>/linux/oneagent-codemodules-musl:all
-FROM ${ARG_DYNATRACE_IMAGE} AS dynatrace
-
 FROM node:18-alpine AS base
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
@@ -93,10 +88,6 @@ COPY --from=builder --chown="$USER":"$USER" /app/web/.next/static ./.next/static
 
 USER "$UID"
 
-# Copy dynatrace or "empty"
-COPY --from=dynatrace / /
-ENV LD_PRELOAD /opt/dynatrace/oneagent/agent/lib64/liboneagentproc.so
-ENV DT_TAGS=EQUINORCOM\ ENVIRONMENT=${ARG_ENV}\ DT_PROCESS_GROUP=${ARG_SANITY_DATASET}
 ENV NEXT_MANUAL_SIG_HANDLE=true
 
 EXPOSE "$PORT"

@@ -1,8 +1,12 @@
-export const colorKeyToUtilityMap = {
+export const colorKeyToUtilityMap: Record<
+  string,
+  { backgroundName: string; background: string; text: string; dark?: boolean }
+> = {
   'blue-50': {
-    backgroundName: 'Mid blue',
+    backgroundName: 'Mid Blue',
     background: 'bg-blue-50',
     text: 'text-blue-50',
+    dark: true,
   },
   'white-100': {
     backgroundName: 'White',
@@ -48,6 +52,22 @@ export const colorKeyToUtilityMap = {
     backgroundName: 'Slate Blue 95',
     background: 'bg-slate-blue-95',
     text: 'text-white-100',
+    dark: true,
+  },
+  'norwegin-woods-40': {
+    backgroundName: 'Light green',
+    background: 'bg-norwegin-woods-40',
+    text: 'text-norwegin-woods-40',
+  },
+  'sand-and-summer-50': {
+    backgroundName: 'Sand',
+    background: 'bg-sand-and-summer-50',
+    text: 'text-sand-and-summer-50',
+  },
+  'norwegian-woods-40': {
+    backgroundName: 'Light green',
+    background: 'bg-norwegian-woods-40',
+    text: 'text-norwegian-woods-40',
   },
 }
 export type ColorKeyTokens = {
