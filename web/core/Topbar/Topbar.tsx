@@ -94,7 +94,7 @@ export const Topbar = forwardRef<HTMLDivElement, TopbarProps>(function Topbar(
         className={`
           h-topbar
           overflow-hidden
-          w-screen 
+          w-full 
           ${showSticky ? 'sticky' : 'fixed'} 
           bg-white-100
           z-40
@@ -103,7 +103,7 @@ export const Topbar = forwardRef<HTMLDivElement, TopbarProps>(function Topbar(
           ease-in-out  
           duration-300
           ${isVisible ? 'top-0' : '-top-topbar'} 
-          ${hasDropShadow && !showSticky ? "shadow-md" : ''}         
+          ${hasDropShadow && !showSticky ? 'shadow-md' : ''}         
           `}
         {...rest}
       >

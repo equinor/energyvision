@@ -1,9 +1,9 @@
-import { BackgroundContainer, Table as EnvisTable, Text } from '@components'
+import { Table as EnvisTable } from '@components'
+import { BackgroundContainer } from '@core/Backgrounds'
 import { FormattedDate } from '@core/FormattedDateTime'
 import styled from 'styled-components'
 import isEmpty from '../shared/portableText/helpers/isEmpty'
 import IngressText from '../shared/portableText/IngressText'
-import RichText from '../shared/portableText/RichText'
 import TitleText from '../shared/portableText/TitleText'
 import { Link } from '@core/Link'
 
@@ -12,11 +12,9 @@ import type { CellData, LinkData, TableData } from '../../types/index'
 import { PortableTextBlock } from '@portabletext/types'
 import { PortableText } from '@portabletext/react'
 import defaultSerializers from '../shared/portableText/helpers/defaultSerializers'
-import { twMerge } from 'tailwind-merge'
+import Blocks from '../shared/portableText/Blocks'
 
 const { Head, Row, Cell, Body } = EnvisTable
-
-export const StyledTableWrapper = styled(BackgroundContainer)``
 
 const StyledIngress = styled.div`
   padding: 0 0 var(--space-medium);
@@ -112,56 +110,40 @@ const Table = ({ data, anchor, className }: TableProps) => {
 
   // Should the headers just be a plain text field?
   return (
-    <StyledTableWrapper {...restOptions} id={anchor} renderFragmentWhenPossible>
-      <div className={twMerge(`pb-page-content px-layout-lg max-w-viewport mx-auto`, className)}>
-        {title && <StyledTitle value={title} />}
-        {ingress && (
-          <StyledIngress>
-            <IngressText value={ingress} />
-          </StyledIngress>
-        )}
+    <BackgroundContainer className={className} {...restOptions} id={anchor} renderFragmentWhenPossible>
+      {title && <StyledTitle value={title} />}
+      {ingress && (
+        <StyledIngress>
+          <IngressText value={ingress} />
+        </StyledIngress>
+      )}
 
-        <EnvisTable theme={theme}>
-          <Head>
-            <Row>
-              {tableHeaders?.map((header) => {
-                return (
-                  <StyledHeaderCell key={header.id}>
-                    {header && header.headerCell && (
-                      <RichText
-                        value={header.headerCell}
-                        components={{
-                          block: {
-                            normal: ({ children }) => {
-                              // eslint-disable-next-line
-                              // @ts-ignore: Still struggling with the types here :/
-                              if (isEmpty(children)) return null
-                              return <Text size="md">{children}</Text>
-                            },
-                          },
-                        }}
-                      />
-                    )}
-                  </StyledHeaderCell>
-                )
-              })}
-            </Row>
-          </Head>
-
-          <Body>
-            {tableRows?.map((row) => {
+      <EnvisTable theme={theme}>
+        <Head>
+          <Row>
+            {tableHeaders?.map((header) => {
               return (
-                <Row key={row.id}>
-                  {row?.row?.map((cell: CellData) => {
-                    return <StyledCell key={cell.id}>{renderCellByType(cell)} </StyledCell>
-                  })}
-                </Row>
+                <StyledHeaderCell key={header.id}>
+                  {header && header.headerCell && <Blocks value={header.headerCell}></Blocks>}
+                </StyledHeaderCell>
               )
             })}
-          </Body>
-        </EnvisTable>
-      </div>
-    </StyledTableWrapper>
+          </Row>
+        </Head>
+
+        <Body>
+          {tableRows?.map((row) => {
+            return (
+              <Row key={row.id}>
+                {row?.row?.map((cell: CellData) => {
+                  return <StyledCell key={cell.id}>{renderCellByType(cell)} </StyledCell>
+                })}
+              </Row>
+            )
+          })}
+        </Body>
+      </EnvisTable>
+    </BackgroundContainer>
   )
 }
 

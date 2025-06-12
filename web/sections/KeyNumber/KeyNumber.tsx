@@ -1,5 +1,5 @@
 import { KeyNumbersData } from '../../types'
-import { BackgroundContainer } from '@components/Backgrounds'
+import { BackgroundContainer } from '@core/Backgrounds'
 import { Heading, Paragraph } from '@core/Typography'
 import KeyNumberItem from './KeyNumberItem'
 import { ResourceLink } from '@core/Link'
@@ -24,7 +24,12 @@ const KeyNumber = ({ data, anchor, className }: KeyNumbersProps) => {
   const renderScroll = useHorizontalScroll && isMobile
 
   return (
-    <BackgroundContainer {...designOptions} className={twMerge(`pb-page-content px-layout-sm`, className)} id={anchor}>
+    <BackgroundContainer
+      {...designOptions}
+      backgroundStyle="none"
+      className={twMerge(`pb-page-content px-layout-sm`, className)}
+      id={anchor}
+    >
       {title && (
         <Heading value={title} id={headingId} variant="h3" as="h2" className={hideTitle ? 'sr-only' : 'pb-lg'} />
       )}

@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import Image from '../SanityImage'
 import TitleText from '../portableText/TitleText'
 import type { HeroType } from '../../../types/index'
-import { BackgroundContainer } from '@components'
+import { BackgroundContainer } from '@core/Backgrounds'
 import { ResourceLink } from '@core/Link'
 import Blocks from '../portableText/Blocks'
 import { getUrlFromAction } from '../../../common/helpers'
@@ -63,7 +63,7 @@ export const FiftyFiftyHero = ({ title, ingress, link: action, background, figur
   const url = action && getUrlFromAction(action)
   return (
     <>
-      <StyledHero background={{ backgroundColor: background }}>
+      <StyledHero background={{ backgroundColor: background }} backgroundStyle="none">
         <StyledMedia>
           {figure && (
             <Image maxWidth={4096} sizes="(max-width: 800px) 100vw, 800px" image={figure.image} fill priority />

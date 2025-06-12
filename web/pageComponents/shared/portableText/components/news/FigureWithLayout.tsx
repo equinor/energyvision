@@ -1,8 +1,8 @@
 import type { PortableTextBlock } from '@portabletext/types'
 import { twMerge } from 'tailwind-merge'
-import { FigureCaption } from '@components'
 import Image from '../../../SanityImage'
 import type { ImageWithAlt } from '../../../../../types/index'
+import { FigureCaption } from '@core/FigureCaption/FigureCaption'
 
 type Layout = 'full' | 'left' | 'right'
 
@@ -71,8 +71,8 @@ export const FigureWithLayout = (block: BlockProps) => {
       )}
       {(caption || attribution) && (
         <FigureCaption>
-          {caption && <FigureCaption.Caption>{caption}</FigureCaption.Caption>}
-          {attribution && <FigureCaption.Attribution>{attribution}</FigureCaption.Attribution>}
+          {caption && <div>{caption}</div>}
+          {attribution && <div>{attribution}</div>}
         </FigureCaption>
       )}
     </figure>

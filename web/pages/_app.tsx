@@ -10,8 +10,6 @@ import { GTM_ID, pageview } from '../lib/gtm'
 import Script from 'next/script'
 import { ErrorBoundary } from 'react-error-boundary'
 import { ErrorFallback } from '../pageComponents/pageTemplates/ErrorFallback'
-import useConsentState from '../lib/hooks/useConsentState'
-import { enableDynatrace, disableDynatrace } from '../pageComponents/Dynatrace'
 import { SWRConfig } from 'swr'
 
 // import archivedStyles from '@equinor/energyvision-legacy-css'
@@ -91,16 +89,6 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
       }
     }
   }, [router.asPath])
-
-  const enableStatisticsCookies = () => {
-    enableDynatrace()
-  }
-
-  const disableStatisticsCookies = () => {
-    disableDynatrace()
-  }
-
-  useConsentState(['statistics'], enableStatisticsCookies, disableStatisticsCookies)
 
   const GoogleTagManagerHead = () => (
     // eslint-disable-next-line @next/next/next-script-for-ga

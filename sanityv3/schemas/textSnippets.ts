@@ -252,11 +252,6 @@ const snippets: textSnippet = {
     defaultValue: 'Please let us know how we may help you',
     group: groups.contactForm,
   },
-  contact_form_ask_us: {
-    title: 'Ask us a question',
-    defaultValue: 'Ask us a question',
-    group: groups.contactForm,
-  },
   contact_form_report_error: {
     title: 'Report an error',
     defaultValue: 'Report an error',
@@ -396,11 +391,6 @@ const snippets: textSnippet = {
   career_fair_form_invite_career_fair: {
     title: 'Invite to career fair/ student event',
     defaultValue: 'Invite Equinor to a career fair or student event',
-    group: groups.careerFairForm,
-  },
-  career_fair_form_invite_company_presentation: {
-    title: 'Invite to hold company presentation',
-    defaultValue: 'Invite Equinor to hold a company presentation',
     group: groups.careerFairForm,
   },
   career_fair_form_visit_equinor: {
@@ -877,6 +867,11 @@ const snippets: textSnippet = {
     defaultValue: 'Read more',
     group: groups.others,
   },
+  open: {
+    title: 'Open',
+    defaultValue: 'Open',
+    group: groups.others,
+  },
   internalLink: {
     title: 'Internal link',
     defaultValue: 'Internal link',
@@ -891,6 +886,11 @@ const snippets: textSnippet = {
     title: 'Download document',
     defaultValue: 'Download document',
     group: groups.common,
+  },
+  search_page_title: {
+    title: 'Search page title',
+    defaultValue: 'Search',
+    group: groups.search,
   },
 }
 

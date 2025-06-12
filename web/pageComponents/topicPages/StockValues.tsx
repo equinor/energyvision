@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import useSWR from 'swr'
 import * as xml2js from 'xml2js'
-import { BackgroundContainer } from '@components'
+import { BackgroundContainer } from '@core/Backgrounds'
 import { FormattedDate } from '@core/FormattedDateTime'
 import { FormattedMessage } from 'react-intl'
 import type { StockValuesData } from '../../types/index'
@@ -64,38 +64,36 @@ const StockValues = ({
   const { background } = designOptions
 
   return (
-    <BackgroundContainer background={background} {...rest} id={anchor}>
-      <div
-        className={twMerge(
-          `pb-page-content px-layout-lg max-w-viewport mx-auto grid grid-cols-[1fr] gap-8 sm:grid-cols-[1fr,1fr]`,
-          className,
-        )}
-      >
-        <div className="text-center">
-          <p>
-            EQNR
-            <span className="text-xl my-0 mx-1 text-moss-green-100 font-medium">{data.OSE?.Quote}</span>
-            {data.OSE?.currency}
-          </p>
-          <p className="font-semibold uppercase mb-1 mx-0 mt-0 p-0">{data.OSE?.title}</p>
-          <p className="font-semibold mb-1 mx-0 mt-0 p-0">
-            <FormattedDate datetime={data.OSE?.Date} /> CET
-          </p>
-        </div>
-        <div className="text-center">
-          <p>
-            EQNR
-            <span className="text-xl my-0 mx-1 text-moss-green-100 font-medium">{data.NYSE?.Quote}</span>
-            {data.NYSE?.currency}
-          </p>
-          <p className="font-semibold uppercase mb-1 mx-0 mt-0 p-0">{data.NYSE?.title}</p>
-          <p className="font-semibold mb-1 mx-0 mt-0 p-0">
-            <FormattedDate datetime={data.NYSE?.Date} /> CET{' '}
-            <span className="font-medium italic">
-              <FormattedMessage id="stock_nyse_time_delay_message" defaultMessage="at least 20 minutes delayed" />
-            </span>
-          </p>
-        </div>
+    <BackgroundContainer
+      className={twMerge(`grid grid-cols-[1fr] gap-8 sm:grid-cols-[1fr,1fr]`, className)}
+      background={background}
+      {...rest}
+      id={anchor}
+    >
+      <div className="text-center">
+        <p>
+          EQNR
+          <span className="text-xl my-0 mx-1 text-moss-green-100 font-medium">{data.OSE?.Quote}</span>
+          {data.OSE?.currency}
+        </p>
+        <p className="font-semibold uppercase mb-1 mx-0 mt-0 p-0">{data.OSE?.title}</p>
+        <p className="font-semibold mb-1 mx-0 mt-0 p-0">
+          <FormattedDate datetime={data.OSE?.Date} /> CET
+        </p>
+      </div>
+      <div className="text-center">
+        <p>
+          EQNR
+          <span className="text-xl my-0 mx-1 text-moss-green-100 font-medium">{data.NYSE?.Quote}</span>
+          {data.NYSE?.currency}
+        </p>
+        <p className="font-semibold uppercase mb-1 mx-0 mt-0 p-0">{data.NYSE?.title}</p>
+        <p className="font-semibold mb-1 mx-0 mt-0 p-0">
+          <FormattedDate datetime={data.NYSE?.Date} /> CET{' '}
+          <span className="font-medium italic">
+            <FormattedMessage id="stock_nyse_time_delay_message" defaultMessage="at least 20 minutes delayed" />
+          </span>
+        </p>
       </div>
     </BackgroundContainer>
   )

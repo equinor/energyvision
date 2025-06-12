@@ -27,7 +27,7 @@ import { PortableTextBlock } from '@portabletext/types'
 import { toPlainText } from '@portabletext/react'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
 import { FormattedMessage, useIntl } from 'react-intl'
-import { CarouselAspectRatios, CarouselItem } from './CarouselItem'
+import { CarouselItem } from './CarouselItem'
 import IFrame from '../../pageComponents/shared/iframe/IFrame'
 import { EventCard } from '@sections/cards/EventCard'
 import { VideoJsComponent } from '../../pageComponents/shared/VideoPlayer'
@@ -35,22 +35,6 @@ import KeyNumberItem from '@sections/KeyNumber/KeyNumberItem'
 
 export type DisplayModes = 'single' | 'scroll'
 export type Layouts = 'full' | 'default'
-
-export const getUtilityForAspectRatio = (aspectRatio: string) => {
-  switch (aspectRatio) {
-    case '16:9':
-      return 'aspect-video'
-    case '4:3':
-      return 'aspect-4/3'
-    case '9:16':
-      return 'aspect-9/16'
-    case '1:1':
-      return 'aspect-square'
-
-    default:
-      return 'aspect-video'
-  }
-}
 
 type CarouselItemTypes =
   | VideoPlayerCarouselItem
@@ -113,9 +97,6 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
       return false
     }
   }, [autoRotation, displayMode, prefersReducedMotion, variant])
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [currentXPosition, setCurrentXPosition] = useState(0)
-  const [currentListTranslateX, setCurrentListTranslateX] = useState(0)
   const [pauseAutoRotation, setPauseAutoRotation] = useState(false)
   const [wasUserInteraction, setWasUserInteraction] = useState(false)
   const isMedium = useMediaQuery(`(min-width: 768px)`)
@@ -138,6 +119,9 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
       return TRANSLATE_X_AMOUNT * i
     })
   }, [TRANSLATE_X_AMOUNT, items])
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [currentListTranslateX, setCurrentListTranslateX] = useState(0)
+  const [currentXPosition, setCurrentXPosition] = useState(0)
   const [itemsXPositions, setItemsXPositions] = useState<number[]>([])
   const carouselGridTop = `col-start-1 col-end-1 row-start-1 row-end-1`
   const carouselGridBottom = `col-start-1 col-end-1 row-start-2 row-end-2`
@@ -198,6 +182,11 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
     const newIndex = isLast ? 0 : currentIndex + 1
     const newXPosition = currentXPosition + TRANSLATE_X_AMOUNT
     const higestLastItemTranslateXPosition = Math.max(...itemsXPositions)
+
+    //move the ul slider
+    const newTranslateX = currentListTranslateX - TRANSLATE_X_AMOUNT
+    setCurrentListTranslateX(newTranslateX)
+
     if (newXPosition === higestLastItemTranslateXPosition) {
       const newPositions = itemsXPositions.map((position, i) => {
         if (newIndex === items?.length - 1 && i === 0) {
@@ -207,11 +196,8 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
         }
         return position
       })
-      setItemsXPositions(newPositions)
+      setTimeout(() => setItemsXPositions(newPositions), 400)
     }
-    //move the ul slider
-    const newTranslateX = currentListTranslateX - TRANSLATE_X_AMOUNT
-    setCurrentListTranslateX(newTranslateX)
     setCurrentIndex(newIndex)
     setCurrentXPosition(newXPosition)
   }, [TRANSLATE_X_AMOUNT, currentIndex, currentListTranslateX, currentXPosition, items?.length, itemsXPositions])
@@ -222,6 +208,10 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
     const newXPosition = currentXPosition - TRANSLATE_X_AMOUNT
     const lowestLastItemTranslateXPosition = Math.min(...itemsXPositions)
 
+    //move the ul slider
+    const newTranslateX = currentListTranslateX + TRANSLATE_X_AMOUNT
+    setCurrentListTranslateX(newTranslateX)
+
     if (newXPosition === lowestLastItemTranslateXPosition) {
       const newPositions = itemsXPositions.map((position, i) => {
         if (newIndex === 0 && i === items?.length - 1) {
@@ -231,11 +221,8 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
         }
         return position
       })
-      setItemsXPositions(newPositions)
+      setTimeout(() => setItemsXPositions(newPositions), 400)
     }
-    //move the ul slider
-    const newTranslateX = currentListTranslateX + TRANSLATE_X_AMOUNT
-    setCurrentListTranslateX(newTranslateX)
     setCurrentIndex(newIndex)
     setCurrentXPosition(newXPosition)
   }, [TRANSLATE_X_AMOUNT, currentIndex, currentListTranslateX, currentXPosition, items?.length, itemsXPositions])
@@ -329,7 +316,6 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
         content={description}
         action={action}
         overrideHeights={true}
-        aspectRatio={iframeData?.aspectRatio as CarouselAspectRatios}
         {...(displayMode === 'single' && {
           style: {
             transform: `translate3d(${itemsXPositions[index]}px, 0px, 0px)`,
@@ -461,7 +447,6 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
     iframe: '',
   }
 
-  //  no-scrollbar
   const commonScrollListContainerClassName = `
     no-scrollbar
     flex 
@@ -475,8 +460,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
   const commonSingleListContainerClassName = `
     grid 
     transition-transform 
-    ease-scroll 
-    delay-0 
+    ease-scroll  
     duration-[800ms]
     ${getCarouselItemVariant() === 'richTextBelow' ? carouselGridBottom : carouselGridTop}
     `
@@ -627,10 +611,8 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
           ref={sliderRef}
           id={carouselItemsId}
           className={envisTwMerge(
-            `transition-all
-          duration-300
-          m-auto
-          w-full
+            `w-full
+            m-auto
           focus:outline-dashed
           focus:outline-grey-60
           focus:outline-1

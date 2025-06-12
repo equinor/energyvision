@@ -1,7 +1,7 @@
 import { TwitterEmbedData } from '../../types/index'
 import RequestConsentContainer from '../../pageComponents/shared/iframe/RequestConsentContainer'
 import { TwitterTimelineEmbed, TwitterTweetEmbed } from 'react-twitter-embed'
-import { BackgroundContainer } from '@components'
+import { BackgroundContainer } from '@core/Backgrounds'
 import IngressText from '../../pageComponents/shared/portableText/IngressText'
 import TitleText from '../../pageComponents/shared/portableText/TitleText'
 import { twMerge } from 'tailwind-merge'
@@ -35,29 +35,25 @@ const TwitterEmbed = ({ data, anchor, className }: TwitterEmbedProps) => {
     }
   }
   return (
-    <>
-      <BackgroundContainer {...designOptions} id={anchor} renderFragmentWhenPossible>
-        <div className={twMerge(`pb-page-content px-layout-lg max-w-viewport mx-auto`, className)}>
-          {title && (
-            <div className="mb-11">
-              <TitleText value={title} />
-            </div>
-          )}
-          {ingress && (
-            <div className="pt-0 px-0 pb-4">
-              <IngressText value={ingress} />
-            </div>
-          )}
-
-          <div className="cookieconsent-optin-marketing">
-            <Embed />
-          </div>
-          <div className="cookieconsent-optout-marketing">
-            <RequestConsentContainer cookiePolicy={['marketing']} />
-          </div>
+    <BackgroundContainer {...designOptions} id={anchor} className={className} renderFragmentWhenPossible>
+      {title && (
+        <div className="mb-11">
+          <TitleText value={title} />
         </div>
-      </BackgroundContainer>
-    </>
+      )}
+      {ingress && (
+        <div className="pt-0 px-0 pb-4">
+          <IngressText value={ingress} />
+        </div>
+      )}
+
+      <div className="cookieconsent-optin-marketing">
+        <Embed />
+      </div>
+      <div className="cookieconsent-optout-marketing">
+        <RequestConsentContainer cookiePolicy={['marketing']} />
+      </div>
+    </BackgroundContainer>
   )
 }
 

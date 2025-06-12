@@ -7,7 +7,7 @@ import {
   VideoType,
   VideoDesignOptionsType,
 } from '../../types/index'
-import { BackgroundContainer } from '@components'
+import { BackgroundContainer } from '@core/Backgrounds'
 import { urlFor } from '../../common/helpers'
 import IngressText from './portableText/IngressText'
 import { VideoJS } from '@components/VideoJsPlayer'
@@ -159,18 +159,16 @@ const VideoPlayer = ({ anchor, data, className }: { data: VideoPlayerData; ancho
   const { width } = designOptions
 
   return (
-    <BackgroundContainer {...designOptions.background} id={anchor} renderFragmentWhenPossible>
-      <div
-        className={twMerge(
-          `pb-page-content ${width === 'extraWide' ? 'px-layout-md' : 'px-layout-lg'} max-w-viewport mx-auto`,
-          className,
-        )}
-      >
-        {title && <Heading value={title} as="h2" variant="xl" className="mb-2 pb-2" />}
-        {ingress && <IngressText value={ingress} className="mb-lg" />}
-        <VideoJsComponent video={video} designOptions={designOptions} videoControls={videoControls} />
-        <TranscriptAndActions action={action} transcript={transcript} ariaTitle={video.title} />
-      </div>
+    <BackgroundContainer
+      {...designOptions.background}
+      className={twMerge(` ${width === 'extraWide' ? 'px-layout-md' : 'px-layout-lg'}`, className)}
+      id={anchor}
+      renderFragmentWhenPossible
+    >
+      {title && <Heading value={title} as="h2" variant="xl" className="mb-2 pb-2" />}
+      {ingress && <IngressText value={ingress} className="mb-lg" />}
+      <VideoJsComponent video={video} designOptions={designOptions} videoControls={videoControls} />
+      <TranscriptAndActions action={action} transcript={transcript} ariaTitle={video.title} />
     </BackgroundContainer>
   )
 }

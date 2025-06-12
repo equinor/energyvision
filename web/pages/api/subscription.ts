@@ -88,7 +88,7 @@ const createDistributeRequest = async (loginResult: LoginResult, parameters: New
     if (error != undefined) {
       // should trigger mail...
       console.log('Newsletter distribution failure', response.body.toString())
-      // @TODO Move to Dynatrace
+      // @TODO Move to Sentry
       // appInsights.trackEvent({name:"Newsletter distribution failure"},{message:error})
       response.statusCode = 400
     }

@@ -1,7 +1,7 @@
 import type { HeroType, ImageWithCaptionData } from 'types'
 import { useSanityLoader } from '../../../lib/hooks/useSanityLoader'
 import Image, { Ratios } from '../SanityImage'
-import { StyledCaption } from '../image/StyledCaption'
+import { Caption } from '../image/Caption'
 
 type FullImageHeroType = {
   figure: ImageWithCaptionData
@@ -59,7 +59,7 @@ export const FullImageHero = ({ ratio, figure, hideImageCaption, captionBg }: He
     <>
       {getHero()}
       {figure?.image?.asset && !hideImageCaption && (
-        <StyledCaption
+        <Caption
           background={{ backgroundColor: captionBg }}
           attribution={figure.attribution}
           caption={figure.caption}

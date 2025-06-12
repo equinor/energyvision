@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import type { IFrameData } from '../../../types/index'
-import { BackgroundContainer } from '@components'
+import { BackgroundContainer } from '@core/Backgrounds'
 import TitleText from '../portableText/TitleText'
 import IFrame from './IFrame'
 
@@ -22,7 +22,7 @@ const BasicIFrame = ({ data, ...rest }: { data: IFrameData }) => {
   const { height, aspectRatio, background } = designOptions
 
   return (
-    <BackgroundContainer background={background} {...rest}>
+    <BackgroundContainer background={background} backgroundStyle="none" {...rest}>
       <Container>
         {title && <StyledHeading value={title} />}
         <IFrame
