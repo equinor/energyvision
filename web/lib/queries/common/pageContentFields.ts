@@ -16,6 +16,7 @@ import promoteMagazine from './promotions/promoteMagazine'
 import { lastUpdatedTimeQuery, publishDateTimeQuery } from './publishDateTime'
 import { anchorLinkReferenceFields } from './anchorLinkReferenceFields'
 import { tabsComponentFields } from './tabsComponentFields'
+import { tableV2Fields } from '../tableV2'
 
 const pageContentFields = /* groq */ `
 _type == "keyNumbers" =>{
@@ -523,6 +524,9 @@ _type == "keyNumbers" =>{
   },
   _type == "table" => {
     ${tableFields}
+  },
+  _type == "tablev2" => {
+    ${tableV2Fields}
   },
   _type == "cardsList" => {
     "type": _type,

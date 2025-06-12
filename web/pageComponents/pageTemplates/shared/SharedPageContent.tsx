@@ -66,6 +66,7 @@ import AccordionBlock from '@sections/AccordionBlock/AccordionBlock'
 import TabsBlock, { TabsBlockProps } from '@sections/TabsBlock/TabsBlock'
 import { getColorForTabsTheme } from '@sections/TabsBlock/tabThemes'
 import { ColorKeyTokens, colorKeyToUtilityMap } from '../../../styles/colorKeyToUtilityMap'
+import TableBlock, { TableBlockProps } from '@sections/TableBlock/TableBlock'
 
 type DefaultComponent = {
   id?: string
@@ -97,6 +98,7 @@ export type ComponentProps =
   | KeyNumbersData
   | DefaultComponent
   | TabsBlockProps
+  | TableBlockProps
 
 type PageContentProps = {
   data: TopicPageSchema | MagazinePageSchema
@@ -273,7 +275,7 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
       case 'form':
         return <Form key={c.id} data={c as FormData} anchor={anchorReference} className={spacingClassName} />
       case 'table':
-        return <Table key={c.id} data={c as TableData} anchor={anchorReference} className={spacingClassName} />
+        return <TableBlock key={c.id} {...(c as any)} anchor={anchorReference} className={spacingClassName} />
       case 'cookieDeclaration':
         return (
           <CookieDeclaration
@@ -354,6 +356,16 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
         return <ImageForText key={c.id} data={c as ImageForTextData} />
       case 'tabs':
         return <TabsBlock key={c.id} {...(c as any)} className={spacingClassName} />
+      case 'tablev2':
+        return (
+          <TableBlock
+            variant="import"
+            key={c.id}
+            {...(c as any)}
+            anchor={anchorReference}
+            className={topSpacingClassName}
+          />
+        )
       default:
         return null
     }

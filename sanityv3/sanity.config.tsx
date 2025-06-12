@@ -45,6 +45,9 @@ import { copyAction } from './actions/fieldActions/CustomCopyFieldAction'
 import CustomDocumentInternationalizationMenu from './schemas/components/CustomDocumentInternationalizationMenu'
 import { fotowareWidget } from './widgets/ImportedFotowareAssetsWidget'
 
+//Table plugin
+import { table } from './plugins/importTable'
+
 export const customTheme = buildLegacyTheme(partialStudioTheme)
 
 // @TODO:
@@ -117,6 +120,7 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret = fals
         types: ['news', 'tag', 'countryTag', 'translation.metadata'],
         follow: ['inbound'],
       }),
+    table(),
   ].filter((e) => e) as PluginOptions[],
 
   schema: {
