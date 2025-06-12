@@ -8,15 +8,7 @@ import {
   PortableTextTypeComponent,
 } from '@portabletext/react'
 import { PortableTextBlock, PortableTextBlockStyle } from '@portabletext/types'
-import {
-  FigureWithLayout,
-  Quote,
-  ExternalLink,
-  InternalLink,
-  BasicIframe,
-  BulletList,
-  NumberedList,
-} from './components'
+import { FigureWithLayout, Quote, ExternalLink, InternalLink, BulletList, NumberedList } from './components'
 import { FactBox } from '@sections/FactBox/FactBox'
 import { twMerge } from 'tailwind-merge'
 import { FormattedMessage } from 'react-intl'
