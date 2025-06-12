@@ -7,7 +7,7 @@ import envisTwMerge from '../../twMerge'
 import RequestConsentContainer from './RequestConsentContainer'
 import { PortableTextBlock } from '@portabletext/types'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
-import TranscriptAndActions from '@sections/Transcript/TranscriptAndActions'
+import Transcript from '@sections/Transcript/Transcript'
 
 const calculatePadding = (aspectRatio: string): string => {
   const ratio = aspectRatio.split(':')
@@ -105,7 +105,7 @@ export const IFrame = forwardRef<HTMLDivElement, IFrameProps>(function IFrame(
           })}
         />
       </div>
-      {transcript && <TranscriptAndActions transcript={transcript} ariaTitle={frameTitle} />}
+      {transcript && <Transcript transcript={transcript} ariaTitle={frameTitle} />}
       {title && !showTitleAbove && (
         <Blocks
           value={title}
