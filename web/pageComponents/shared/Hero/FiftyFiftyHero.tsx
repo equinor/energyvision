@@ -1,4 +1,4 @@
-import Image from '../SanityImage'
+import Image, { getPxLgSizes, getPxSmSizes } from '../SanityImage'
 import { Heading } from '@core/Typography'
 import type { HeroType } from '../../../types/index'
 import { BackgroundContainer } from '@core/Backgrounds'
@@ -16,7 +16,7 @@ export const FiftyFiftyHero = ({ title, ingress, link: action, background, figur
         {/* Image Section */}
         {figure && (
           <div className="relative min-h-[350px] md:order-2">
-            <Image maxWidth={4096} image={figure.image} fill priority />
+            <Image sizes={getPxSmSizes()} image={figure.image} fill priority />
           </div>
         )}
 

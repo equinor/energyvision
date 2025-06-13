@@ -2,7 +2,8 @@ import { FormattedDate, FormattedTime } from '@core/FormattedDateTime'
 import { forwardRef, HTMLAttributes } from 'react'
 import { BaseLink } from '@core/Link'
 import { Typography } from '@core/Typography'
-import Image, { Ratios } from '../../../pageComponents/shared/SanityImage'
+import Image, { getPxSmSizes, getSmallerThanPxLgSizes } from '../../../pageComponents/shared/SanityImage'
+import NextImage from 'next/image'
 import envisTwMerge from '../../../twMerge'
 import { NewsRoomNewsItem } from '../../../types/algoliaIndexPage'
 import { SanityImageObject } from '@sanity/image-url/lib/types/types'
@@ -25,12 +26,11 @@ const NewsHeadliner = forwardRef<HTMLLIElement, NewsHeadlinerProps>(function New
         {(heroImage?.image?.asset || fallbackImage || thumbnailUrl) && (
           <div className="aspect-video relative max-h-[324px] mb-2">
             {thumbnailUrl ? (
-              <img
-                className="relative rounded-xs h-full w-full"
+              <NextImage
+                className="relative rounded-xs h-full w-full object-cover"
                 src={thumbnailUrl}
                 alt=""
-                style={{ objectFit: 'cover' }}
-                sizes="(max-width: 800px) 100vw, 800px"
+                sizes={getSmallerThanPxLgSizes()}
                 role={'presentation'}
               />
             ) : (
@@ -39,9 +39,8 @@ const NewsHeadliner = forwardRef<HTMLLIElement, NewsHeadlinerProps>(function New
                   //@ts-ignore: TODO Fix SanityImage to take SanityImageObject
                   image={heroImage?.image?.asset ? heroImage?.image : fallbackImage}
                   aria-hidden
-                  priority
-                  aspectRatio={Ratios.NINE_TO_SIXTEEN}
-                  sizes="(max-width: 800px) 100vw, 800px"
+                  aspectRatio="16:9"
+                  sizes={getPxSmSizes()}
                   fill
                   className="rounded-xs"
                 />

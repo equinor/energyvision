@@ -80,7 +80,7 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
             sizes="(max-width: 800px) 100vw, 800px"
             image={image}
             fill
-            aspectRatio={Ratios.NINE_TO_SIXTEEN}
+            aspectRatio={'16:9'}
             className="rounded-md"
           />
         )}
