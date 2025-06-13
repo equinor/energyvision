@@ -118,11 +118,7 @@ export const HomePageBanner = forwardRef<HTMLDivElement, HomePageBannerProps>(fu
           lg:pb-14 
           max-w-viewport`}
       >
-        {/**
-         * [text-shadow:rgba(0,0,0,0.45)_1px_0px_1px]
-         * [text-shadow:rgba(255,255,255,0.45)_1px_0px_1px]
-         */}
-        {title && !isMobile && headingElement}
+        {title && ((useImage && !isMobile) || !useImage) && headingElement}
         {ctaCards?.length && (
           <ul className={`w-full flex overflow-x-auto snap-x gap-4 ${useImage ? 'z-10' : ''}`}>
             {ctaCards?.map((ctaCard) => {
@@ -148,7 +144,7 @@ export const HomePageBanner = forwardRef<HTMLDivElement, HomePageBannerProps>(fu
             })}
           </ul>
         )}
-        {title && isMobile && headingElement}
+        {title && useImage && isMobile && headingElement}
       </div>
     </div>
   )
