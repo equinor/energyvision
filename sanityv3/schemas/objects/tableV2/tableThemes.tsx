@@ -3,7 +3,7 @@ import { useCallback, useId } from 'react'
 import { set } from 'sanity'
 import type { ObjectInputProps } from 'sanity'
 import styled from 'styled-components'
-import colorConfig from '../../../colorConfig'
+import { defaultColors } from '../../defaultColors'
 
 type TableThemeColor = {
   title: string
@@ -15,18 +15,18 @@ type TableThemeColor = {
 export const tableThemes: TableThemeColor[] = [
   {
     title: 'grey',
-    headerValue: colorConfig['grey'][50],
-    rowValue: colorConfig['grey'][10],
+    headerValue: defaultColors[17].value,
+    rowValue: defaultColors[18].value,
   },
   {
     title: 'blue',
-    headerValue: colorConfig['north-sea'][50],
-    rowValue: colorConfig['north-sea'][40],
+    headerValue: defaultColors[13].value,
+    rowValue: defaultColors[14].value,
   },
   {
     title: 'green',
-    headerValue: colorConfig['autumn-storm'][60],
-    rowValue: colorConfig['autumn-storm'][40],
+    headerValue: defaultColors[15].value,
+    rowValue: defaultColors[16].value,
   },
 ]
 
