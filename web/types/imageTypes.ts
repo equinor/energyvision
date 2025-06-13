@@ -1,4 +1,4 @@
-import { ContentAlignmentTypes, FigureRatio, DesignOptions, LinkData } from './index'
+import { ContentAlignmentTypes, DesignOptions, LinkData } from './index'
 import { SanityImageCrop, SanityImageHotspot, SanityImageObject } from '@sanity/image-url/lib/types/types'
 import { PortableTextBlock } from '@portabletext/types'
 

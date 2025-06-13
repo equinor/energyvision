@@ -128,6 +128,7 @@ export const HomePageBanner = forwardRef<HTMLDivElement, HomePageBannerProps>(fu
               const { id, link, overline } = ctaCard
               if (!link) return null
               const url = getUrlFromAction(link)
+              if (!url) return null
               return (
                 <li key={id} className="m-1">
                   <BaseLink

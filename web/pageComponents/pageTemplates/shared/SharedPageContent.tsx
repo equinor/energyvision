@@ -1,8 +1,8 @@
 import Teaser from '../../../sections/teasers/Teaser/Teaser'
 import TextBlock from '../../topicPages/TextBlock'
-import FullWidthImage from '../../topicPages/FullWidthImage'
+import FullWidthImage, { FullWidthImageData } from '../../topicPages/FullWidthImage'
 import FullWidthVideo from '../../topicPages/FullWidthVideo'
-import Figure from '../../topicPages/Figure'
+import Figure, { FigureData } from '../../topicPages/Figure'
 import PageQuote from '../../topicPages/PageQuote'
 import PromoTileArray from '../../../sections/PromoTiles/PromoTileArray'
 import IFrame from '../../topicPages/IFrame'
@@ -24,9 +24,7 @@ import {
   MagazinePageSchema,
   TeaserData,
   TextBlockData,
-  FullWidthImageData,
   FullWidthVideoData,
-  FigureData,
   TextWithIconArrayData,
   CallToActionData,
   QuoteData,

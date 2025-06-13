@@ -18,11 +18,11 @@ import type {
   VideoPlayerCarouselData,
   FullWidthVideoData,
   GridData,
-  FullWidthImageData,
-  FigureData,
   StickyMenuLinkType,
 } from './index'
 import { MediaPosition } from '@core/Teaser/Media'
+import { FigureData } from '../pageComponents/topicPages/Figure'
+import { FullWidthImageData } from '../pageComponents/topicPages/FullWidthImage'
 
 export type IntlData = {
   locale: string
