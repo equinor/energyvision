@@ -50,7 +50,7 @@ type HomePageBannerProps = {
   rightAlignTitle?: boolean
   useWhiteTitle?: boolean
   designOptions: {
-    colorTheme?: {
+    theme?: {
       title: string
       value: number
     }
@@ -65,8 +65,8 @@ export const HomePageBanner = forwardRef<HTMLDivElement, HomePageBannerProps>(fu
 ) {
   const desktopUrl = useSanityLoader(image, 2560, ImageRatios['16:9'])
   // 4:3 for small screens and 10:3 for large screens
-  const { backgroundType, colorTheme } = designOptions
-  const { foreground, background } = getColorForHomepageBannerTheme(colorTheme?.value ?? 0)
+  const { backgroundType, theme } = designOptions
+  const { foreground, background } = getColorForHomepageBannerTheme(theme?.value ?? 0)
   const useImage = backgroundType == 0
   const isMobile = useMediaQuery(`(max-width: 1024px)`)
 
@@ -77,6 +77,7 @@ export const HomePageBanner = forwardRef<HTMLDivElement, HomePageBannerProps>(fu
       //@ts-ignore: TYPE
       value={title}
       className={`
+        max-lg:pt-6
         px-layout-sm
         lg:px-0
         w-full

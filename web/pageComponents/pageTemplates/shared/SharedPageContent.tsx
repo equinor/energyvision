@@ -64,7 +64,7 @@ import AccordionBlock from '@sections/AccordionBlock/AccordionBlock'
 import TabsBlock, { TabsBlockProps } from '@sections/TabsBlock/TabsBlock'
 import { getColorForTabsTheme } from '@sections/TabsBlock/tabThemes'
 import { ColorKeyTokens, colorKeyToUtilityMap } from '../../../styles/colorKeyToUtilityMap'
-import { HomePageBanner } from '@sections/HomePageBanner/HomePageBanner'
+import { getColorForHomepageBannerTheme, HomePageBanner } from '@sections/HomePageBanner/HomePageBanner'
 
 type DefaultComponent = {
   id?: string
@@ -112,7 +112,7 @@ type PageContentProps = {
  */
 const getBackgroundOptions = (component: ComponentProps) => {
   //@ts-ignore:Too many types
-  if (!component?.designOptions) {
+  if (!component?.designOptions || !Object.hasOwn(component, 'designOptions')) {
     //Return white default if no designOptions
     return {
       backgroundUtility: 'white-100',
@@ -122,6 +122,17 @@ const getBackgroundOptions = (component: ComponentProps) => {
   if (component?.type === 'tabs') {
     //@ts-ignore:so many types
     return getColorForTabsTheme(component?.designOptions?.theme?.value)
+  }
+  //@ts-ignore
+  if (component?.type === 'homepageBanner') {
+    //@ts-ignore:so many types
+    if (component?.designOptions?.backgroundType === '0') {
+      return {
+        backgroundUtility: 'white-100',
+      }
+    }
+    //@ts-ignore:so many types
+    return getColorForHomepageBannerTheme(component?.designOptions?.theme?.value)
   }
   //@ts-ignore:so many types
   return component?.designOptions?.background || getColorForTheme(component?.designOptions?.theme)
@@ -182,6 +193,8 @@ const applyPaddingTopIfApplicable = (currentComponent: ComponentProps, prevCompo
 
   const currentIsWhiteColorBackground = isWhiteColorBackground(currentComponentsDO, currentComponent)
   const previousIsWhiteColorBackground = isWhiteColorBackground(previousComponentsDO, prevComponent)
+  console.log('currentIsWhiteColorBackground', currentIsWhiteColorBackground)
+  console.log('previousIsWhiteColorBackground', previousIsWhiteColorBackground)
 
   const previousComponentIsASpecialCaseAndNeedPT =
     //@ts-ignore
