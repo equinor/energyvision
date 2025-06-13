@@ -23,6 +23,7 @@ _type == "homepageBanner" =>{
   image,
   "designOptions": {
       backgroundType,
+      useGradient,
       "theme":colorTheme,
   }
   },
