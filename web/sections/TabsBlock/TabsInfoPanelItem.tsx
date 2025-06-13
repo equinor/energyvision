@@ -6,7 +6,7 @@ import { getUrlFromAction } from '../../common/helpers'
 import { getLocaleFromName } from '../../lib/localization'
 import { Heading } from '@core/Typography'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
-import Image, { getPxSmSizes } from '../../pageComponents/shared/SanityImage'
+import Image, { getPxSmSizes } from '../../core/SanityImage/SanityImage'
 import { ImageWithAlt, LinkData } from '../../types'
 import { InfoPanelImageVariant, InfoPanelKeyInfo } from './TabsBlock.types'
 

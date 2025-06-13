@@ -1,11 +1,6 @@
 import { forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
-import Image, {
-  getSmallerThanPxLgSizes,
-  ImageRatioKeys,
-  ImageRatios,
-  Ratios,
-} from '../../../pageComponents/shared/SanityImage'
+import Image, { getSmallerThanPxLgSizes, ImageRatioKeys } from '../../../core/SanityImage/SanityImage'
 import { ImageWithAlt } from '../../../types/index'
 import envisTwMerge from '../../../twMerge'
 import { BaseLink, BaseLinkProps } from '@core/Link'

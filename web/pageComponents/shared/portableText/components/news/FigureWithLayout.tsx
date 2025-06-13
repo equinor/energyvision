@@ -1,6 +1,6 @@
 import type { PortableTextBlock } from '@portabletext/types'
 import { twMerge } from 'tailwind-merge'
-import Image, { getPxLgSizes, getSmallerThanPxLgSizes } from '../../../SanityImage'
+import Image, { getPxLgSizes, getSmallerThanPxLgSizes } from '../../../../../core/SanityImage/SanityImage'
 import type { ImageWithAlt } from '../../../../../types/index'
 import { FigureCaption } from '@core/FigureCaption/FigureCaption'
 

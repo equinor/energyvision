@@ -1,5 +1,5 @@
 import envisTwMerge from '../../twMerge'
-import Image, { getPxSmSizes } from '../../pageComponents/shared/SanityImage'
+import Image, { getPxSmSizes } from '../SanityImage/SanityImage'
 import { ImageWithAlt, LinkData } from '../../types/index'
 import { DisplayModes } from './Carousel'
 import { forwardRef, HTMLAttributes, useEffect, useMemo, useRef } from 'react'

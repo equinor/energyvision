@@ -4,41 +4,6 @@ import Img, { ImageProps } from 'next/image'
 import type { ImageWithAlt } from 'types'
 import envisTwMerge from '../../twMerge'
 
-//Remove when references is cleared
-export enum Ratios {
-  THREE_TO_TEN = 0.3,
-  TEN_TO_THREE = 3.33,
-  NINETEEN_TO_FORTY = 0.475,
-  ONE_TO_TWO = 0.5,
-  TWO_TO_ONE = 2,
-  SIXTEEN_TO_NINE = 1.77,
-  NINE_TO_SIXTEEN = 0.5625,
-  THREE_TO_FOUR = 0.75,
-  FOUR_TO_FIVE = 0.8,
-  ONE_TO_ONE = 1,
-  FIVE_TO_FOUR = 1.25,
-  FOUR_TO_THREE = 1.33,
-  FIVE_TO_THREE = 1.66,
-}
-// END Remove when references is cleared
-
-/* export enum ImageRatios {
-  'original' = 0,
-  '1:1' = 1,
-  '3:10' = 0.3,
-  '10:3' = 3.33,
-  '19:40' = 0.475,
-  '1:2' = 0.5,
-  '2:1' = 2,
-  '16:9' = 1.77,
-  '9:16' = 0.5625,
-  '3:4' = 0.75,
-  '4:3' = 1.33,
-  '4:5' = 0.8,
-  '5:4' = 1.25,
-  '5:3' = 1.66,
-} */
-
 export const ImageRatios = {
   original: 0,
   '1:1': 1,

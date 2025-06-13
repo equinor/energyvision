@@ -2,7 +2,7 @@
 import { forwardRef, HTMLAttributes, useId, useState } from 'react'
 import { PortableTextBlock } from '@portabletext/types'
 import { ImageWithAlt, LinkData } from '../../types'
-import Image, { getPxSmSizes } from '../../pageComponents/shared/SanityImage'
+import Image, { getPxSmSizes } from '../SanityImage/SanityImage'
 import envisTwMerge from '../../twMerge'
 import { SanityImageObject } from '@sanity/image-url/lib/types/types'
 import { Typography } from '@equinor/eds-core-react'

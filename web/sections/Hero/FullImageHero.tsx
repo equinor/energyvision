@@ -1,7 +1,8 @@
 import type { HeroType, ImageWithCaptionData } from 'types'
-import { useSanityLoader } from '../../../lib/hooks/useSanityLoader'
-import Image, { getFullScreenSizes, Ratios } from '../SanityImage'
-import { Caption } from '../image/Caption'
+import { useSanityLoader } from '../../lib/hooks/useSanityLoader'
+import Image, { getFullScreenSizes, mapSanityImageRatio } from '../../core/SanityImage/SanityImage'
+import { BackgroundContainer } from '@core/Backgrounds'
+import { FigureCaption } from '@core/FigureCaption/FigureCaption'
 
 type FullImageHeroType = {
   figure: ImageWithCaptionData
@@ -12,7 +13,7 @@ const imageSizes = getFullScreenSizes()
 
 const NarrowHero = ({ figure }: FullImageHeroType) => {
   // 4:3 for small screens and 10:3 for large screens
-  const desktopUrl = useSanityLoader(figure.image, 2560, Ratios.TEN_TO_THREE)
+  const desktopUrl = useSanityLoader(figure.image, 2560, mapSanityImageRatio('10:3'))
 
   // Using picture with mobile and dekstop source to avoid initial load layout shift between aspect ratio
   return (
@@ -50,12 +51,17 @@ export const FullImageHero = ({ ratio, figure, hideImageCaption, captionBg }: He
   return (
     <>
       {getHero()}
-      {figure?.image?.asset && !hideImageCaption && (
-        <Caption
+      {figure?.image?.asset && !hideImageCaption && (figure.caption || figure.attribution) && (
+        <BackgroundContainer
+          className={'inline-block w-full'}
           background={{ backgroundColor: captionBg }}
-          attribution={figure.attribution}
-          caption={figure.caption}
-        />
+          backgroundStyle="none"
+        >
+          <FigureCaption className={'max-w-viewport mx-auto pt-0 px-layout-sm pb-8'}>
+            {figure.caption && <div>{figure.caption}</div>}
+            {figure.attribution && <div>{figure.attribution}</div>}
+          </FigureCaption>
+        </BackgroundContainer>
       )}
     </>
   )
