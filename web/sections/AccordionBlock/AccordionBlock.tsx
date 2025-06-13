@@ -7,7 +7,7 @@ import { toPlainText } from '@portabletext/react'
 import { Heading, Typography } from '../../core/Typography'
 import { twMerge } from 'tailwind-merge'
 import IngressText from '../../pageComponents/shared/portableText/IngressText'
-import Image, { getSmallerThanPxLgSizes, ImageRatios, Ratios } from '../../pageComponents/shared/SanityImage'
+import Image, { getSmallerThanPxLgSizes } from '../../core/SanityImage/SanityImage'
 
 type AccordionBlockProps = {
   data: AccordionData

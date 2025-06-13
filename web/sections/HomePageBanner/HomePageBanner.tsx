@@ -1,5 +1,5 @@
 import { forwardRef } from 'react'
-import Image, { getSmallerThanPxLgSizes, ImageRatios } from '../../pageComponents/shared/SanityImage'
+import Image, { getSmallerThanPxLgSizes, ImageRatios } from '../../core/SanityImage/SanityImage'
 import { useSanityLoader } from '../../lib/hooks/useSanityLoader'
 import { getUrlFromAction } from '../../common/helpers'
 import { getArrowElement } from '@core/Link/ResourceLink'

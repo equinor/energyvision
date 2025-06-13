@@ -1,7 +1,7 @@
 import { BackgroundContainer } from '@core/Backgrounds'
 import { Heading, Typography } from '../../core/Typography'
 import IngressText from '../shared/portableText/IngressText'
-import Image, { getSmallerThanPxLgSizes, Ratios } from '../shared/SanityImage'
+import Image, { getSmallerThanPxLgSizes } from '../../core/SanityImage/SanityImage'
 import type { TextBlockData } from '../../types/index'
 import CallToActions from '../../sections/CallToActions'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'

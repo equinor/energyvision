@@ -2,7 +2,7 @@ import { Accordion as EnvisAccordion } from '@core/Accordion'
 import type { AccordionListData } from '../../types/index'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
 import CallToActions from '@sections/CallToActions'
-import Image, { getSmallerThanPxLgSizes } from '../../pageComponents/shared/SanityImage'
+import Image, { getSmallerThanPxLgSizes } from '../../core/SanityImage/SanityImage'
 
 const { Item, Header, Content } = EnvisAccordion
 

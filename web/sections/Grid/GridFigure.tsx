@@ -1,5 +1,5 @@
 import { forwardRef } from 'react'
-import Image from '../../pageComponents/shared/SanityImage'
+import Image from '../../core/SanityImage/SanityImage'
 import { FigureData } from '../../pageComponents/topicPages/Figure'
 
 type GridFigureProps = {

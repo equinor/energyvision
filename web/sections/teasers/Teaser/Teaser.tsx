@@ -1,7 +1,7 @@
 import { Teaser as TeaserLayout } from '@core/Teaser'
 import IngressText from '../../../pageComponents/shared/portableText/IngressText'
 import { getUrlFromAction } from '../../../common/helpers'
-import Image, { getPxLgSizes } from '../../../pageComponents/shared/SanityImage'
+import Image, { getPxLgSizes } from '../../../core/SanityImage/SanityImage'
 import type { TeaserData, ImageWithAlt } from '../../../types/index'
 import { ResourceLink } from '../../../core/Link'
 import { Heading } from '../../../core/Typography'

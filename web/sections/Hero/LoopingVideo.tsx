@@ -1,13 +1,13 @@
-import { useSanityLoader } from '../../../lib/hooks/useSanityLoader'
+import { useSanityLoader } from '../../lib/hooks/useSanityLoader'
 import styled from 'styled-components'
-import { LoopingVideoData, LoopingVideoRatio } from '../../../types'
+import { LoopingVideoData, LoopingVideoRatio } from '../../types'
 import dynamic from 'next/dynamic'
 import { VideoJS } from '@components/VideoJsPlayer'
 
 const DEFAULT_MAX_WIDTH = 1920
 
 const DynamicVideoJsComponent = dynamic<React.ComponentProps<typeof VideoJS>>(
-  () => import('../../../components/src/VideoJsPlayer').then((mod) => mod.VideoJS),
+  () => import('../../components/src/VideoJsPlayer').then((mod) => mod.VideoJS),
   {
     ssr: false,
     loading: () => <p>Loading...</p>,

@@ -1,6 +1,6 @@
 import { CSSProperties } from 'react'
 import styled from 'styled-components'
-import Image, { getSmallerThanPxLgSizes, Ratios } from '../shared/SanityImage'
+import Image, { getSmallerThanPxLgSizes } from '../../core/SanityImage/SanityImage'
 
 import { Card, Heading } from '@components'
 import type { MenuLinkData, SubMenuGroupLinkData } from '../../types/index'

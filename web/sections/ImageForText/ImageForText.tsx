@@ -1,6 +1,6 @@
 import { ImageForTextData } from '../../types/types'
 import { forwardRef } from 'react'
-import Image from '../../pageComponents/shared/SanityImage'
+import Image from '../../core/SanityImage/SanityImage'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
 
 type ImageForTextProps = {

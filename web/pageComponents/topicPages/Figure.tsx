@@ -1,7 +1,7 @@
 import type { DesignOptions, ImageWithCaptionData } from '../../types/index'
 import { FigureCaption } from '@core/FigureCaption/FigureCaption'
 import { BackgroundContainer } from '@core/Backgrounds'
-import Image, { ImageRatioKeys } from '../shared/SanityImage'
+import Image, { ImageRatioKeys } from '../../core/SanityImage/SanityImage'
 import envisTwMerge from '../../twMerge'
 
 export type FigureData = {

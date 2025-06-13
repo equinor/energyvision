@@ -1,4 +1,4 @@
-import Image, { getSmallerThanPxLgSizes, ImageRatios, Ratios } from './SanityImage'
+import Image, { getSmallerThanPxLgSizes } from '../../core/SanityImage/SanityImage'
 import type { ImageWithAlt, DesignOptions } from '../../types/index'
 import { QuoteSymbol } from '../../icons'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'

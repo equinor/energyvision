@@ -1,6 +1,6 @@
 import type { DesignOptions, ImageWithCaptionData } from '../../types/index'
-import Image, { getFullScreenSizes, ImageRatioKeys } from '../shared/SanityImage'
-import { Caption } from '../shared/image/Caption'
+import Image, { getFullScreenSizes, ImageRatioKeys } from '../../core/SanityImage/SanityImage'
+import { FigureCaption } from '@core/FigureCaption/FigureCaption'
 
 export type FullWidthImageData = {
   type: string
@@ -32,7 +32,12 @@ const FullWidthImage = ({ data, anchor }: FullWidthImageProps) => {
         aspectRatio={aspectRatio}
         alt={image.alt}
       />
-      {image.asset && <Caption caption={caption} attribution={attribution} />}
+      {image.asset && (caption || attribution) && (
+        <FigureCaption className={'max-w-viewport mx-auto pt-0 px-layout-sm pb-8'}>
+          {caption && <div>{caption}</div>}
+          {attribution && <div>{attribution}</div>}
+        </FigureCaption>
+      )}
     </>
   )
 }
