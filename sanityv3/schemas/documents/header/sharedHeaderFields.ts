@@ -200,6 +200,8 @@ const heroImage = {
     Rule.custom((value: ImageWithAltAndCaption, context: ValidationContext) => {
       const { parent } = context as unknown as DocumentType
       if (
+        //@ts-ignore:add _type?
+        parent?._type !== 'homePage' &&
         (parent?.heroType === HeroTypes.FIFTY_FIFTY || parent?.heroType === HeroTypes.FULL_WIDTH_IMAGE) &&
         !value.image.asset
       )
