@@ -183,7 +183,14 @@ export default {
       title: 'Background image',
       type: 'imageWithAlt',
       fieldset: 'design',
-      hidden: ({ parent }) => parent?.backgroundType !== '0',
+      hidden: ({ parent }: any) => parent?.backgroundType !== '0',
+    },
+    {
+      name: 'useGradient',
+      title: 'Apply gradient',
+      description: 'Applies gradient, light for dark text and vice versa ',
+      type: 'boolean',
+      hidden: ({ parent }: any) => parent?.backgroundType !== '0',
     },
     defineField({
       name: 'colorTheme',

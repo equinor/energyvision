@@ -50,6 +50,7 @@ type HomePageBannerProps = {
   rightAlignTitle?: boolean
   useWhiteTitle?: boolean
   designOptions: {
+    useGradient?: boolean
     theme?: {
       title: string
       value: number
@@ -60,15 +61,19 @@ type HomePageBannerProps = {
 }
 
 export const HomePageBanner = forwardRef<HTMLDivElement, HomePageBannerProps>(function HomePageBanner(
-  { anchor, title, rightAlignTitle, useWhiteTitle, image, ctaCards, designOptions },
+  { anchor, title, rightAlignTitle, useWhiteTitle = false, image, ctaCards, designOptions },
   ref,
 ) {
   const desktopUrl = useSanityLoader(image, 2560, ImageRatios['16:9'])
   // 4:3 for small screens and 10:3 for large screens
-  const { backgroundType, theme } = designOptions
+  const { backgroundType, theme, useGradient = false } = designOptions
   const { foreground, background } = getColorForHomepageBannerTheme(theme?.value ?? 0)
   const useImage = backgroundType == 0
   const isMobile = useMediaQuery(`(max-width: 1024px)`)
+  let gradient = rightAlignTitle ? 'lg:homepage-banner-white-right-gradient' : 'lg:homepage-banner-white-left-gradient'
+  if (useWhiteTitle) {
+    gradient = rightAlignTitle ? 'lg:homepage-banner-black-right-gradient' : 'lg:homepage-banner-black-left-gradient'
+  }
 
   const headingElement = (
     <Heading
@@ -98,13 +103,15 @@ export const HomePageBanner = forwardRef<HTMLDivElement, HomePageBannerProps>(fu
   return (
     <div ref={ref} id={anchor} className={`relative ${!useImage ? background : ''}`}>
       {useImage && (
-        <picture className="relative flex w-full h-auto max-lg:aspect-video lg:absolute inset-0">
+        <picture className={`relative flex w-full h-auto max-lg:aspect-video lg:absolute inset-0`}>
+          {useGradient && <div className={`z-[1] absolute inset-0 ${useGradient ? gradient : ''}`} />}
           <source srcSet={desktopUrl?.src} media="(min-width: 1024px)" />
           <Image maxWidth={810} sizes={getSmallerThanPxLgSizes()} aspectRatio={'16:9'} image={image} fill priority />
         </picture>
       )}
       <div
         className={`
+          mx-auto
           pl-sm 
           lg:px-layout-sm
           grid 
