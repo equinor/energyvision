@@ -52,6 +52,7 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
       relative
       ${useLight ? '' : 'dark'}
       w-full
+      h-full
       ${useAnimation && !isMobile ? `bg-fixed ${fadedFilter}` : 'bg-local'}
       bg-center
       bg-no-repeat
@@ -118,7 +119,7 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
     ) : (
       <ReturnElement
         ref={ref}
-        className={`${backgroundClassNames} ${className}`}
+        className={`${backgroundClassNames} `}
         style={{
           backgroundImage: `url(${src})`,
         }}
@@ -135,7 +136,7 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
             scrimClassName,
           )}
         >
-          {children}
+          <div className={className}>{children}</div>
         </div>
       </ReturnElement>
     )
