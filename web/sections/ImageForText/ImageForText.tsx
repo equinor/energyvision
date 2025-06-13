@@ -1,6 +1,6 @@
 import { ImageForTextData } from '../../types/types'
 import { forwardRef } from 'react'
-import Image, { Ratios } from '../../pageComponents/shared/SanityImage'
+import Image from '../../core/SanityImage/SanityImage'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
 
 type ImageForTextProps = {
@@ -16,14 +16,7 @@ const ImageForText = forwardRef<HTMLDivElement, ImageForTextProps>(function Imag
         <Image
           image={image}
           maxWidth={2000}
-          {...(aspectRatio === 'fullWidth'
-            ? { aspectRatio: Ratios.THREE_TO_TEN }
-            : { aspectRatio: Ratios.NINE_TO_SIXTEEN })}
-          sizes={
-            aspectRatio === 'fullWidth'
-              ? '100vw'
-              : '(min-width: 2060px) 920px, (min-width: 440px) calc(34.56vw + 215px), calc(76.67vw + 38px)'
-          }
+          {...(aspectRatio === 'fullWidth' ? { aspectRatio: '10:3' } : { aspectRatio: '16:9' })}
           aria-hidden
           className="max-w-viewport"
         />

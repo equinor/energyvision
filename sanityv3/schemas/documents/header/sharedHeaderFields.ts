@@ -125,7 +125,7 @@ const heroRatio = {
       if (parent?.heroType === HeroTypes.FULL_WIDTH_IMAGE && !value) return 'Field is required'
       return true
     }),
-  initialValue: '0.5',
+  initialValue: 'narrow',
   fieldset: 'header',
 }
 
@@ -198,7 +198,9 @@ const heroImage = {
   validation: (Rule: Rule) =>
     Rule.custom((value: string, context: ValidationContext) => {
       const { parent } = context as unknown as DocumentType
-      if (parent?.heroType === HeroTypes.LOOPING_VIDEO && !value) return 'Field is required'
+      //@ts-ignore:add _type?
+      if (parent?._type !== 'homePage' && parent?.heroType === HeroTypes.LOOPING_VIDEO && !value)
+        return 'Field is required'
       return true
     }),
   hidden: ({ parent }: DocumentType) => {
