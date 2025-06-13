@@ -92,14 +92,24 @@ const TableBlock = forwardRef<HTMLDivElement, TableBlockProps>(function TableBlo
             if (variant === 'default' && tableHeaders?.[index]?.formatAsDate) {
               const plainDateString = toPlainText(value)
               const formatString = 'dd/MM/yyyy' // Define the format explicitly
+              const formatStringAlternative = 'yyyy-MM-dd'
               const dateObj = parse(plainDateString, formatString, new Date()) // The third arg is a reference date
-              return isValid(dateObj) ? (
-                <time suppressHydrationWarning dateTime={dateObj.toDateString()}>
-                  <FormattedDate value={dateObj} day="numeric" year="numeric" month="short" />
-                </time>
-              ) : (
-                <Blocks value={value} className="prose-simple" />
-              )
+              const dateObjAlternative = parse(plainDateString, formatStringAlternative, new Date()) // The third arg is a reference date
+              if (isValid(dateObj)) {
+                return (
+                  <time suppressHydrationWarning dateTime={dateObj.toDateString()}>
+                    <FormattedDate value={dateObj} day="numeric" year="numeric" month="short" />
+                  </time>
+                )
+              }
+              if (isValid(dateObjAlternative)) {
+                return (
+                  <time suppressHydrationWarning dateTime={dateObjAlternative.toDateString()}>
+                    <FormattedDate value={dateObjAlternative} day="numeric" year="numeric" month="short" />
+                  </time>
+                )
+              }
+              return <Blocks value={value} className="prose-simple" />
             }
             if (isPortableText) {
               return <Blocks value={info.getValue()} className="prose-simple" />
