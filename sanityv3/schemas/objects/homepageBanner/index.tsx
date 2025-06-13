@@ -14,7 +14,6 @@ import { configureTitleBlockContent } from '../../editors'
 import { defineField, PreviewProps, type PortableTextBlock, type Rule } from 'sanity'
 import styled from 'styled-components'
 import { ImageWithAlt } from '../imageWithAlt'
-import { description } from '../iframe/sharedIframeFields'
 
 const MediaContainer = styled.div`
   position: relative;
