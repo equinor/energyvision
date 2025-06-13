@@ -123,17 +123,6 @@ const getBackgroundOptions = (component: ComponentProps) => {
     //@ts-ignore:so many types
     return getColorForTabsTheme(component?.designOptions?.theme?.value)
   }
-  //@ts-ignore
-  if (component?.type === 'homepageBanner') {
-    //@ts-ignore:so many types
-    if (component?.designOptions?.backgroundType === '0') {
-      return {
-        backgroundUtility: 'white-100',
-      }
-    }
-    //@ts-ignore:so many types
-    return getColorForHomepageBannerTheme(component?.designOptions?.theme?.value)
-  }
   //@ts-ignore:so many types
   return component?.designOptions?.background || getColorForTheme(component?.designOptions?.theme)
 }
@@ -193,15 +182,19 @@ const applyPaddingTopIfApplicable = (currentComponent: ComponentProps, prevCompo
 
   const currentIsWhiteColorBackground = isWhiteColorBackground(currentComponentsDO, currentComponent)
   const previousIsWhiteColorBackground = isWhiteColorBackground(previousComponentsDO, prevComponent)
-  console.log('currentIsWhiteColorBackground', currentIsWhiteColorBackground)
-  console.log('previousIsWhiteColorBackground', previousIsWhiteColorBackground)
 
   const previousComponentIsASpecialCaseAndNeedPT =
-    //@ts-ignore
+    //@ts-ignore: too many types
     specialCases.includes(prevComponent?.type) || specialCases.includes(previousComponentsDO?.type)
 
   if (currentIsWhiteColorBackground && previousIsWhiteColorBackground && !previousComponentIsASpecialCaseAndNeedPT) {
     return ''
+  }
+
+  //@ts-ignore: too many types
+  if (prevComponent?.type === 'homepageBanner') {
+    //@ts-ignore: too many types
+    return prevComponent?.designOptions?.backgroundType === '0' ? 'lg:pt-20' : 'pt-20'
   }
 
   const previousIsSameColorAsCurrent = isSameColorBackground(currentComponentsDO, previousComponentsDO)
