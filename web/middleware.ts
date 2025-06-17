@@ -10,7 +10,6 @@ const PERMANENT_REDIRECT = 301
 //const TEMPORARY_REDIRECT = 302
 const PUBLIC_FILE = /\.(.*)$/
 const DOT_HTML = '.html'
-const IS_ARCHIVED_NEWS_DOWNLOADS = /(.*)\/news\/archive\/[0-9]{4}\/[0-9]{2}\/[0-9]{2}\/downloads\/(.*)\.(.*)$/
 
 // Check if a given path exists in Sanity or not
 const pathExistsInSanity = async (pathname: string, isPreview = false): Promise<boolean> => {
@@ -36,9 +35,12 @@ export async function middleware(request: NextRequest) {
   const isPreview = isPreviewEnabled(request)
 
   // Rewrite the correct path for assets in download section of achived news (older than 2016)
-  if (IS_ARCHIVED_NEWS_DOWNLOADS.test(pathname) && (Flags.IS_DEV || Flags.IS_GLOBAL_PROD)) {
-    const rewrite = pathname.replace(pathname, `/content/dam/archive-assets/${locale}${pathname}`)
-    return NextResponse.rewrite(`${origin}${rewrite}`)
+  if (Flags.IS_DEV || Flags.IS_GLOBAL_PROD) {
+    //const IS_ARCHIVED_NEWS_DOWNLOADS = /(.*)\/news\/archive\/[0-9]{4}\/[0-9]{2}\/[0-9]{2}\/downloads\/(.*)\.(.*)$/
+    if (pathname.startsWith('/news/archive') && pathname.includes('downloads')) {
+      const rewrite = pathname.replace(pathname, `/content/dam/archive-assets/${locale}${pathname}`)
+      return NextResponse.rewrite(`${origin}${rewrite}`)
+    }
   }
 
   // Redirect statoil enrollment pdf
