@@ -6,7 +6,6 @@ import getConfig from 'next/config'
 import ErrorPage from 'next/error'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { Flags } from '../../../common/helpers/datasetHelpers'
 import { getFullUrl } from '../../../common/helpers/getFullUrl'
@@ -43,21 +42,10 @@ type OldArchivedNewsPageProps = {
 }
 
 const OldArchivedNewsPage = ({ data }: OldArchivedNewsPageProps): JSX.Element => {
-  const [isArchivePage, setIsArchivePage] = useState(true)
   const router = useRouter()
   const { pathname, locale } = router
-  useEffect(() => {
-    if (isArchivePage) {
-      document.getElementById('legacyScript')?.remove()
-      const scriptTag = document.createElement('script')
-      scriptTag.src = '/legacy/legacy.minified.js'
-      scriptTag.id = 'legacyScript'
-      document.body.appendChild(scriptTag)
-    }
-  })
 
   if (!router.isFallback && !data?.news) {
-    setIsArchivePage(false)
     return <ErrorPage statusCode={404} />
   }
   const fullUrl = getFullUrl(pathname, data?.news?.slug, locale)
