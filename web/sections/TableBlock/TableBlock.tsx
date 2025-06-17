@@ -49,10 +49,14 @@ const TableBlock = forwardRef<HTMLDivElement, TableBlockProps>(function TableBlo
     if (variant === 'import') {
       return rows?.[0]?.isHeader ? rows?.[0]?.cells.map((cell: any) => cell) : []
     }
-    return tableHeaders?.map((header) => toPlainText(header.headerCell))
+    return Array.isArray(tableHeaders) ? tableHeaders.map((header) => toPlainText(header.headerCell)) : []
   }, [variant, tableHeaders, rows])
 
   const columnData = useMemo(() => {
+    if (!Array.isArray(rows) || !Array.isArray(headerKeys) || headerKeys.length === 0) {
+      console.warn('TableBlock: rows or headerKeys missing or empty, returning empty columnData')
+      return []
+    }
     if (variant === 'import') {
       //First row of import table rows is header row
       return rows?.slice(1)?.map((tableRow: any) => {
