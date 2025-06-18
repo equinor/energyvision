@@ -8,8 +8,6 @@
     "test": "node ./tests/equinor-news-WCAG-Chrome.js"
   },
   "devDependencies": {
-    "@percy/cli": "^1.0.0-beta.47",
-    "@percy/selenium-webdriver": "^1.0.0",
     "axe-core": "^4.2.1",
     "dotenv": "^10.0.0"
   },
