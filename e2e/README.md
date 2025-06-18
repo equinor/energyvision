@@ -19,14 +19,6 @@ To run the tests, set the following environment variables:
 - `BS_UserName` (Browserstack username)
 - `BS_Accesskey` (Browserstack access key)
 
-### Run from command line
-
-To run Percy from the command line, cd into the `visualTests` directory and type:
-
-```
-npx percy exec -- node equinor-news.js
-```
-
 ### Accessibility Tests
 
 Tests in the `tests` folder are accessibility tests. To run a test, go to `tests` and type:

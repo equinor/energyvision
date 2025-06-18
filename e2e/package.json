@@ -19,7 +19,6 @@
         1920
       ],
       "min-height": 1024,
-      "percy-css": "iframe { display: none; }",
       "enable-javascript": false
     }
   }
