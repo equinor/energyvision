@@ -21,7 +21,7 @@ export const FiftyFiftyHero = ({ title, ingress, link: action, background, figur
         )}
 
         {/* Content Section */}
-        <div className="flex flex-col justify-center gap-8 max-w-full md:min-h-[450px] md:justify-self-end py-16 px-layout-sm md:px-12 xl:pl-layout-sm xl:pr-28">
+        <div className="flex flex-col justify-center gap-8 max-w-full md:min-h-[450px] md:justify-self-end py-16 px-layout-sm md:px-12 xl:pl-layout-sm xl:pr-4xl">
           {title && (
             <Heading
               value={title}
