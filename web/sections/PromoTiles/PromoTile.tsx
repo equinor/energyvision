@@ -16,12 +16,14 @@ export const PromoTile = forwardRef<HTMLAnchorElement, PromoTileProps>(function 
   { id, designOptions, image, title, action, linkLabelAsTitle, hasSectionTitle, variant = 'secondary' },
   ref,
 ) {
+  console.log('action', action)
   const url = getUrlFromAction(action)
   const intl = useIntl()
   if (!url) {
     return null
   }
-  const locale = action.link?.lang ? getLocaleFromName(action.link?.lang) : intl.locale
+  console.log('intl.locale', intl.locale)
+  const locale = action.link?.lang ? getLocaleFromName(action.link?.lang) : getLocaleFromName(intl.locale)
   const { background } = designOptions
 
   const colorName =
