@@ -27,7 +27,6 @@ type ContentGroupProps = {
 
 const ContentGroup = ({ group }: ContentGroupProps) => {
   const { links, label, id } = group
-  console.log('links', links)
 
   const promoTiles = Array.isArray(links)
     ? links.map((tile) => ({
