@@ -83,7 +83,7 @@ export const GridTeaser = forwardRef<HTMLDivElement, GridTeaserProps>(function G
 
       <div className={`relative h-full ${contentTextColor}`}>
         <div
-          className={`h-full px-10 flex flex-col justify-center items-center gap-6 py-6 ${
+          className={`h-full px-6 flex flex-col justify-center items-center gap-6 py-6 ${
             rowType !== 'span3' ? 'lg:py-8' : 'lg:py-12'
           } `}
         >
