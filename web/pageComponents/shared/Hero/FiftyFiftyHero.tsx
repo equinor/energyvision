@@ -1,12 +1,13 @@
 import styled from 'styled-components'
 import Image from '../SanityImage'
-import TitleText from '../portableText/TitleText'
-import type { HeroType } from '../../../types/index'
+import type { HeroType, PortableTextBlock } from '../../../types/index'
 import { BackgroundContainer } from '@core/Backgrounds'
 import { ResourceLink } from '@core/Link'
 import Blocks from '../portableText/Blocks'
 import { getUrlFromAction } from '../../../common/helpers'
 import { getLocaleFromName } from '../../../lib/localization'
+import { Typography } from '@core/Typography'
+import { toPlainText } from '@portabletext/react'
 
 const StyledHero = styled(BackgroundContainer)`
   display: grid;
@@ -54,13 +55,11 @@ const StyledIngress = styled.div`
     display: none;
   }
 `
-const StyledHeroTitle = styled(TitleText).attrs((props: { $isBigTitle: boolean }) => props)`
-  max-width: 1186px; /* 1920 - (2 * 367) */
-  font-weight: ${(props) => (props.$isBigTitle ? 'var(--fontWeight-regular)' : 'var(--fontWeight-medium)')};
-`
 
 export const FiftyFiftyHero = ({ title, ingress, link: action, background, figure, isBigTitle }: HeroType) => {
   const url = action && getUrlFromAction(action)
+  const plainTitle = title ? toPlainText(title as PortableTextBlock[]) : ''
+
   return (
     <>
       <StyledHero background={{ backgroundColor: background }} backgroundStyle="none">
@@ -71,7 +70,15 @@ export const FiftyFiftyHero = ({ title, ingress, link: action, background, figur
         </StyledMedia>
         <StyledContent>
           {title && (
-            <StyledHeroTitle $isBigTitle={isBigTitle} value={title} level="h1" size={isBigTitle ? '2xl' : 'xl'} />
+            <>
+              <Typography
+                as="h1"
+                variant={isBigTitle ? '2xl' : 'xl'}
+                className={`max-w-[1186px] ${isBigTitle ? 'font-normal' : 'font-medium'}`}
+              >
+                {plainTitle}
+              </Typography>
+            </>
           )}
           {ingress && !isBigTitle && (
             <StyledIngress>
