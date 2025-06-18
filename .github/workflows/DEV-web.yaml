@@ -17,7 +17,6 @@ permissions:
   packages: write
 jobs:
   deploy-global-development:
-    needs: check-code
     runs-on: ubuntu-latest
     environment:
       name: development
