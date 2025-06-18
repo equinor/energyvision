@@ -1,6 +1,5 @@
 export * from './Button'
 export * from './Card'
 export * from './Text'
-export * from './Teaser'
 export * from './Table'
 export * from './Form'
