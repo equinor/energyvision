@@ -2,34 +2,85 @@ import { Icon } from '@equinor/eds-core-react'
 import { useForm, Controller } from 'react-hook-form'
 import { error_filled } from '@equinor/eds-icons'
 import { FormattedMessage, useIntl } from 'react-intl'
-import { FormTextField, FormSelect, FormSubmitSuccessBox, FormSubmitFailureBox } from '@components'
 import { BaseSyntheticEvent, useState } from 'react'
 import FriendlyCaptcha from './FriendlyCaptcha'
-import { PensionFormCatalogType } from '../../../types'
+import { ContactFormCatalogType } from '../../types'
 import { Button } from '@core/Button'
 import { TextField } from '@core/TextField/TextField'
+import { Select } from '@core/Select/Select'
+import { FormMessageBox } from '@core/Form/FormMessageBox'
 
-type PensionFormValues = {
+type ContactEquinorFormProps = {
+  isHumanRightsRequest?: boolean
+}
+type FormValues = {
   name: string
   email: string
-  phone: string
-  pensionCategory: string
-  requests: string
+  category: string
+  message: string
 }
 
-const PensionForm = () => {
+const ContactEquinorForm = (props: ContactEquinorFormProps) => {
   const intl = useIntl()
+  const { isHumanRightsRequest } = props
   const [isServerError, setServerError] = useState(false)
   const [isFriendlyChallengeDone, setIsFriendlyChallengeDone] = useState(false)
   const [isSuccessfullySubmitted, setSuccessfullySubmitted] = useState(false)
 
-  const onSubmit = async (data: PensionFormValues, event?: BaseSyntheticEvent) => {
+  const getCatalog = (category: string): ContactFormCatalogType | null => {
+    if (
+      category.includes(
+        intl.formatMessage({
+          id: 'contact_form_human_rights_information_request',
+          defaultMessage: 'Human Rights Information Request',
+        }),
+      )
+    )
+      return 'humanRightsInformationRequest'
+    else if (
+      category.includes(
+        intl.formatMessage({
+          id: 'contact_form_login_issues',
+          defaultMessage: 'Login Issues',
+        }),
+      )
+    )
+      return 'loginIssues'
+    else return null
+  }
+  const {
+    handleSubmit,
+    control,
+    reset,
+    setError,
+    formState: { errors, isSubmitted, isSubmitting, isSubmitSuccessful },
+  } = useForm({
+    defaultValues: {
+      name: '',
+      email: '',
+      message: '',
+      category: isHumanRightsRequest
+        ? intl.formatMessage({
+            id: 'contact_form_human_rights_information_request',
+            defaultMessage: 'Human Rights Information Request',
+          })
+        : '',
+    },
+  })
+
+  const onSubmit = async (data: FormValues, event?: BaseSyntheticEvent) => {
     if (isFriendlyChallengeDone) {
-      const res = await fetch('/api/forms/service-now-pension', {
+      const res = await fetch('/api/forms/service-now-contact-us', {
         body: JSON.stringify({
           data,
           frcCaptchaSolution: (event?.target as any)['frc-captcha-solution'].value,
-          catalogType: getCatalog(data.pensionCategory),
+          isHumanRightsInformationRequest: data.category.includes(
+            intl.formatMessage({
+              id: 'contact_form_human_rights_information_request',
+              defaultMessage: 'Human Rights Information Request',
+            }),
+          ),
+          catalogType: getCatalog(data.category),
         }),
         headers: {
           'Content-Type': 'application/json',
@@ -50,40 +101,6 @@ const PensionForm = () => {
     }
   }
 
-  const getCatalog = (category: string): PensionFormCatalogType | null => {
-    if (category.includes(intl.formatMessage({ id: 'pension_form_pension', defaultMessage: 'Pension' })))
-      return 'pension'
-    else if (
-      category.includes(intl.formatMessage({ id: 'pension_form_travel_insurance', defaultMessage: 'Travel Insurance' }))
-    )
-      return 'travelInsurance'
-    else if (
-      category.includes(
-        intl.formatMessage({
-          id: 'pension_form_other_pension_insurance_related',
-          defaultMessage: 'Other Pension/Insurance Related',
-        }),
-      )
-    )
-      return 'otherPensionInsuranceRelated'
-    else return null
-  }
-  const {
-    handleSubmit,
-    control,
-    reset,
-    setError,
-    formState: { errors, isSubmitted, isSubmitting, isSubmitSuccessful },
-  } = useForm<PensionFormValues>({
-    defaultValues: {
-      name: '',
-      email: '',
-      phone: '',
-      pensionCategory: '',
-      requests: '',
-    },
-  })
-
   return (
     <>
       {!isSuccessfullySubmitted && !isServerError && (
@@ -102,7 +119,6 @@ const PensionForm = () => {
       >
         {!isSuccessfullySubmitted && !isServerError && (
           <>
-            {/* Name field */}
             <Controller
               name="name"
               control={control}
@@ -115,7 +131,7 @@ const PensionForm = () => {
               render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => {
                 const { name } = props
                 return (
-                  <FormTextField
+                  <TextField
                     {...props}
                     id={name}
                     label={`${intl.formatMessage({
@@ -131,8 +147,6 @@ const PensionForm = () => {
                 )
               }}
             />
-
-            {/* Email field */}
             <Controller
               name="email"
               control={control}
@@ -152,7 +166,7 @@ const PensionForm = () => {
               render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => {
                 const { name } = props
                 return (
-                  <FormTextField
+                  <TextField
                     {...props}
                     id={name}
                     label={`${intl.formatMessage({
@@ -168,21 +182,18 @@ const PensionForm = () => {
                 )
               }}
             />
-            {/* Pension Category field */}
             <Controller
-              name="pensionCategory"
+              name="category"
               control={control}
               render={({ field: { ref, ...props } }) => {
                 const { name } = props
                 return (
-                  <FormSelect
+                  <Select
                     {...props}
                     selectRef={ref}
                     id={name}
-                    label={intl.formatMessage({
-                      id: 'category',
-                      defaultMessage: 'Category',
-                    })}
+                    disabled={isHumanRightsRequest}
+                    label={intl.formatMessage({ id: 'category', defaultMessage: 'Category' })}
                   >
                     <option value="">
                       {intl.formatMessage({
@@ -190,30 +201,50 @@ const PensionForm = () => {
                         defaultMessage: 'Please select an option',
                       })}
                     </option>
-                    <option value="pension">
-                      {intl.formatMessage({ id: 'pension_form_category_pension', defaultMessage: 'Pension' })}
-                    </option>
-                    <option value="travelInsurance">
-                      {intl.formatMessage({ id: 'pension_form_category_travel_insurance', defaultMessage: 'Travel Insurance' })}
-                    </option>
-                    <option value="otherPensionInsuranceRelated">
+                    <option>
                       {intl.formatMessage({
-                        id: 'pension_form_category_other',
-                        defaultMessage: 'Other Pension/Insurance Related',
+                        id: 'contact_form_report_error',
+                        defaultMessage: 'Report an error on our website',
                       })}
                     </option>
-                  </FormSelect>
+                    <option>
+                      {intl.formatMessage({
+                        id: 'contact_form_contact_department',
+                        defaultMessage: 'Contact a department or member of staff',
+                      })}
+                    </option>
+                    <option>
+                      {intl.formatMessage({
+                        id: 'contact_form_investor_relations',
+                        defaultMessage: 'Investor relations',
+                      })}
+                    </option>
+                    <option>
+                      {intl.formatMessage({
+                        id: 'contact_form_human_rights_information_request',
+                        defaultMessage: 'Human Rights Information Request',
+                      })}
+                    </option>
+
+                    <option>
+                      {intl.formatMessage({
+                        id: 'contact_form_login_issues',
+                        defaultMessage: 'Login Issues',
+                      })}
+                    </option>
+
+                    <option>{intl.formatMessage({ id: 'contact_form_other', defaultMessage: 'Other' })}</option>
+                  </Select>
                 )
               }}
             />
 
-            {/* requests field */}
             <Controller
-              name="requests"
+              name="message"
               control={control}
               rules={{
                 required: intl.formatMessage({
-                  id: 'pension_form_what_is_your_request_validation',
+                  id: 'contact_form_how_to_help_validation',
                   defaultMessage: 'Please let us know how we may help you',
                 }),
               }}
@@ -228,8 +259,8 @@ const PensionForm = () => {
                       defaultMessage: `Please don't enter any personal information`,
                     })}
                     label={`${intl.formatMessage({
-                      id: 'pension_form_what_is_your_request',
-                      defaultMessage: 'What is your request?',
+                      id: 'contact_form_how_to_help',
+                      defaultMessage: 'How can we help you?',
                     })}*`}
                     inputRef={ref}
                     multiline
@@ -254,7 +285,10 @@ const PensionForm = () => {
               />
               {/*@ts-ignore: TODO: types*/}
               {errors?.root?.notCompletedCaptcha && (
-                <p role="alert" className="text-clear-red-100 flex gap-2 font-semibold">
+                <p
+                  role="alert"
+                  className="text-slate-80 border border-clear-red-100 px-6 py-4  flex gap-2 font-semibold"
+                >
                   {/*@ts-ignore: TODO: types*/}
                   <span className="mt-1">{errors.root.notCompletedCaptcha.message}</span>
                   <Icon data={error_filled} aria-hidden="true" />
@@ -265,25 +299,25 @@ const PensionForm = () => {
               {isSubmitting ? (
                 <FormattedMessage id="form_sending" defaultMessage={'Sending...'}></FormattedMessage>
               ) : (
-                <FormattedMessage id="pension_form_submit" defaultMessage="Submit Form" />
+                <FormattedMessage id="contact_form_cta" defaultMessage="Submit Form" />
               )}
             </Button>
           </>
         )}
-
-        {isSubmitSuccessful && !isServerError && <FormSubmitSuccessBox type="reset" />}
-        {isSubmitted && isServerError && (
-          <FormSubmitFailureBox
-            type="button"
-            onClick={() => {
-              reset(undefined, { keepValues: true })
-              setServerError(false)
-            }}
-          />
-        )}
+        <div role="region" aria-live="assertive">
+          {isSubmitSuccessful && !isServerError && <FormMessageBox variant="success" />}
+          {isSubmitted && isServerError && (
+            <FormMessageBox
+              variant="error"
+              onClick={() => {
+                reset(undefined, { keepValues: true })
+                setServerError(false)
+              }}
+            />
+          )}
+        </div>
       </form>
     </>
   )
 }
-
-export default PensionForm
+export default ContactEquinorForm

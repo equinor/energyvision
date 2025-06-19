@@ -1,20 +1,18 @@
-import IngressText from '../../shared/portableText/IngressText'
 import ContactEquinorForm from './ContactEquinorForm'
 import SubscribeForm from './SubscribeForm'
 import CareerFairForm from './CareerFairForm'
 import OrderReportsForm from './OrderReportsForm'
 import CareersContactForm from './careersContactForm/CareersContactForm'
-import type { FormData, PortableTextBlock } from '../../../types/index'
+import type { FormData } from '../../types/index'
 import { twMerge } from 'tailwind-merge'
 import CallToActions from '@sections/CallToActions'
 import PensionForm from './PensionForm'
-import { Typography } from '@core/Typography'
-import { toPlainText } from '@portabletext/react'
+import { Heading } from '@core/Typography'
+import Blocks from '../../pageComponents/shared/portableText/Blocks'
 
 const Form = ({ data, anchor, className }: { data: FormData; anchor?: string; className?: string }) => {
   const { title, ingress, downloads } = data
   const variant = data.form
-  const plainTitle = title ? toPlainText(title as PortableTextBlock[]) : ''
 
   const renderForm = (variant: string | undefined) => {
     switch (variant) {
@@ -46,8 +44,8 @@ const Form = ({ data, anchor, className }: { data: FormData; anchor?: string; cl
 
   return (
     <div className={twMerge(`pb-page-content px-layout-lg max-w-viewport mx-auto`, className)} id={anchor}>
-      {title && <Typography className="px-0 pt-0 pr-6">{plainTitle}</Typography>}
-      {ingress && <IngressText value={ingress}></IngressText>}
+      {title && <Heading as="h2" className="px-0 pt-0 pr-6" value={title} />}
+      {ingress && <Blocks value={ingress} />}
 
       {renderForm(variant)}
     </div>

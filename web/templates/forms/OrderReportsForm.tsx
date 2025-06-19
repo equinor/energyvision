@@ -2,10 +2,12 @@ import { Icon } from '@equinor/eds-core-react'
 import { useForm, Controller } from 'react-hook-form'
 import { error_filled } from '@equinor/eds-icons'
 import { FormattedMessage, useIntl } from 'react-intl'
-import { FormTextField, FormSubmitFailureBox, FormSubmitSuccessBox, Checkbox } from '@components'
 import { BaseSyntheticEvent, useState } from 'react'
 import FriendlyCaptcha from './FriendlyCaptcha'
 import { Button } from '@core/Button'
+import { Checkbox } from '@core/Checkbox/Checkbox'
+import { TextField } from '@core/TextField/TextField'
+import { FormMessageBox } from '@core/Form/FormMessageBox'
 
 type FormValues = {
   name: string
@@ -134,7 +136,7 @@ const OrderReportsForm = () => {
               )}
               {errors.reports && (
                 <div
-                  className="text-clear-red-100 text-sm font-semibold items-center flex gap-2"
+                  className="text-slate-80 border border-clear-red-100 px-6 py-4 text-sm font-semibold items-center flex gap-2"
                   role="alert"
                   id="atleast-one-report-required"
                 >
@@ -162,7 +164,7 @@ const OrderReportsForm = () => {
                 }),
               }}
               render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
-                <FormTextField
+                <TextField
                   {...props}
                   id={props.name}
                   label={`${intl.formatMessage({
@@ -194,7 +196,7 @@ const OrderReportsForm = () => {
                 },
               }}
               render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
-                <FormTextField
+                <TextField
                   {...props}
                   id={props.name}
                   label={`${intl.formatMessage({
@@ -219,7 +221,7 @@ const OrderReportsForm = () => {
                 }),
               }}
               render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
-                <FormTextField
+                <TextField
                   {...props}
                   id={props.name}
                   label={`${intl.formatMessage({
@@ -244,7 +246,7 @@ const OrderReportsForm = () => {
                 }),
               }}
               render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
-                <FormTextField
+                <TextField
                   {...props}
                   id={props.name}
                   label={`${intl.formatMessage({
@@ -270,7 +272,7 @@ const OrderReportsForm = () => {
                 }),
               }}
               render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
-                <FormTextField
+                <TextField
                   {...props}
                   id={props.name}
                   label={`${intl.formatMessage({
@@ -296,7 +298,7 @@ const OrderReportsForm = () => {
                 }),
               }}
               render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
-                <FormTextField
+                <TextField
                   {...props}
                   id={props.name}
                   aria-required="true"
@@ -321,7 +323,7 @@ const OrderReportsForm = () => {
                 }),
               }}
               render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
-                <FormTextField
+                <TextField
                   {...props}
                   id={props.name}
                   label={`${intl.formatMessage({
@@ -348,7 +350,10 @@ const OrderReportsForm = () => {
               />
               {/*@ts-ignore: TODO: types*/}
               {errors?.root?.notCompletedCaptcha && (
-                <p role="alert" className="text-clear-red-100 flex gap-2 font-semibold">
+                <p
+                  role="alert"
+                  className="text-slate-80 border border-clear-red-100 px-6 py-4 flex gap-2 font-semibold"
+                >
                   {/*@ts-ignore: TODO: types*/}
                   <span className="mt-1">{errors.root.notCompletedCaptcha.message}</span>
                   <Icon data={error_filled} aria-hidden="true" />
@@ -364,16 +369,18 @@ const OrderReportsForm = () => {
             </Button>
           </>
         )}
-        {isSubmitSuccessful && !isServerError && <FormSubmitSuccessBox type="reset" />}
-        {isSubmitted && isServerError && (
-          <FormSubmitFailureBox
-            type="button"
-            onClick={() => {
-              reset(undefined, { keepValues: true })
-              setServerError(false)
-            }}
-          />
-        )}
+        <div role="region" aria-live="assertive">
+          {isSubmitSuccessful && !isServerError && <FormMessageBox variant="success" />}
+          {isSubmitted && isServerError && (
+            <FormMessageBox
+              variant="error"
+              onClick={() => {
+                reset(undefined, { keepValues: true })
+                setServerError(false)
+              }}
+            />
+          )}
+        </div>
       </form>
     </>
   )

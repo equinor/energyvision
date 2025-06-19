@@ -49,11 +49,11 @@ export const MediaButton = forwardRef<HTMLButtonElement, ButtonProps>(
           text-slate-80
           focus:outline-none
           hover:bg-autumn-storm-60
+          hover:border-autumn-storm-60
           hover:text-white-100
           focus-visible:outline-slate-blue-95
           dark:hover:bg-white-100
           dark:hover:border-white-100
-          dark:focus-visible:outline-white-100
           disabled:border-grey-40
           dark:disabled:border-white-100/40
           disabled:pointer-events-none`
@@ -85,6 +85,7 @@ export const MediaButton = forwardRef<HTMLButtonElement, ButtonProps>(
           cursor-pointer 
           focus-none
           focus-visible:envis-outline
+          dark:focus-visible:envis-outline-invert
           ${getButtonVariantClassNames()}`,
           className,
         )}
