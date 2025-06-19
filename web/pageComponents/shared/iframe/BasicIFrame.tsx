@@ -1,30 +1,20 @@
-import styled from 'styled-components'
-import type { IFrameData } from '../../../types/index'
+import type { IFrameData, PortableTextBlock } from '../../../types/index'
 import { BackgroundContainer } from '@core/Backgrounds'
-import TitleText from '../portableText/TitleText'
 import IFrame from './IFrame'
-
-const StyledHeading = styled(TitleText)`
-  padding: var(--iframe-titlePadding, 0 0 var(--space-large) 0);
-  text-align: var(--iframe-titleAlign, left);
-`
-
-const Container = styled.div`
-  padding: var(--iframe-innerPadding, var(--space-3xLarge) var(--layout-paddingHorizontal-large));
-  max-width: var(--iframe-maxWidth, var(--maxViewportWidth));
-  margin: auto;
-`
+import { Typography } from '@core/Typography'
+import { toPlainText } from '@portabletext/react'
 
 const BasicIFrame = ({ data, ...rest }: { data: IFrameData }) => {
   const { title, frameTitle, url, cookiePolicy = ['none'], designOptions } = data || {}
   if (!url) return null
+  const plainTitle = title ? toPlainText(title as PortableTextBlock[]) : ''
 
   const { height, aspectRatio, background } = designOptions
 
   return (
-    <BackgroundContainer background={background} backgroundStyle="none" {...rest}>
-      <Container>
-        {title && <StyledHeading value={title} />}
+    <BackgroundContainer background={background} {...rest}>
+      <div className="m-auto max-w-viewport px-layout-lg">
+        {title && <Typography className="px-0 pt-0 pb-8 text-left">{plainTitle}</Typography>}
         <IFrame
           frameTitle={frameTitle}
           url={url}
@@ -33,7 +23,7 @@ const BasicIFrame = ({ data, ...rest }: { data: IFrameData }) => {
           height={height}
           hasSectionTitle={!!title}
         />
-      </Container>
+      </div>
     </BackgroundContainer>
   )
 }

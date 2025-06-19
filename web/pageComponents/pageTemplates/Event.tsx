@@ -4,7 +4,6 @@ import { toPlainText } from '@portabletext/react'
 import { getEventDates } from '../../common/helpers/dateUtilities'
 import ContactList from '../shared/ContactList'
 import IngressText from '../shared/portableText/IngressText'
-import TitleText from '../shared/portableText/TitleText'
 import AddToCalendar from '../topicPages/AddToCalendar'
 import Promotion from '../topicPages/Promotion'
 import type { PortableTextBlock } from '@portabletext/types'
@@ -15,6 +14,7 @@ import Blocks from '../../pageComponents/shared/portableText/Blocks'
 import { twMerge } from 'tailwind-merge'
 import RelatedContent from '../../pageComponents/shared/RelatedContent'
 import { useTranslations } from 'next-intl'
+import { Typography } from '@core/Typography'
 
 export default function Event({ data }: { data: EventSchema }): JSX.Element {
   const { title } = data
@@ -23,7 +23,6 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
 
   const plainTitle = title ? toPlainText(title as PortableTextBlock[]) : ''
   const { start, end } = getEventDates(eventDate)
-
   return (
     <>
       <Seo seoAndSome={data?.seoAndSome} slug={data?.slug} pageTitle={data?.title} />
@@ -34,7 +33,11 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
         <article>
           <BackgroundContainer className="px-layout-md py-32" background={{ backgroundColor: 'Moss Green Light' }}>
             <div className="mx-auto max-w-[1186px]">
-              {title && <TitleText value={title} as="h1" variant="3xl" />}
+              {title && (
+                <Typography as="h1" variant="3xl">
+                  {plainTitle}
+                </Typography>
+              )}
               {start && (
                 <div className="text-xl text-norwegian-woods-100 mt-7 mb-5">
                   <FormattedDate datetime={start} />

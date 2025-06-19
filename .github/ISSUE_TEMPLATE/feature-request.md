@@ -2,8 +2,8 @@
 name: Feature request
 about: Don't find a feature you need? Create feature request here.
 title: ''
-labels: enhancement
 assignees: ''
+type: Feature
 ---
 
 **Is your feature request related to a problem? Please describe.**
