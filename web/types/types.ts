@@ -1,4 +1,4 @@
-import { TeaserImagePosition, TeaserImageSize } from '@components'
+import { TeaserImagePosition, TeaserImageSize } from '@core/Teaser'
 import { PortableTextBlock } from '@portabletext/types'
 import { SanityImageObject } from '@sanity/image-url/lib/types/types'
 import type {
