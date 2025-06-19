@@ -12,7 +12,7 @@ type SinglePromotionData = {
 
 const SinglePromotion = ({ promotion, hasSectionTitle = false }: SinglePromotionData) => {
   const getCard = (data: CardProps) => {
-    switch (data.type) {
+    switch (data?.type) {
       case 'news':
       case 'localNews':
         return (

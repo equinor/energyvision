@@ -92,7 +92,10 @@ import tabsInfoPanel from './objects/tabs/tabsInfoPanel'
 import tabsKeyNumbers from './objects/tabs/tabsKeyNumbers'
 import tabsKeyNumberItem from './objects/tabs/tabsKeyNumberItem'
 import imageWithRichText from './objects/ImageWithRichText'
+import importTable from './objects/importTable'
+import tableTheme from './objects/tableV2/tableTheme'
 import homePage from './documents/homePage'
+import tableV2 from './objects/tableV2'
 
 const {
   pageNotFound,
@@ -228,6 +231,9 @@ const RemainingSchemas = [
   tabsKeyNumberItem,
   imageWithLinkAndOrOverlay,
   imageWithRichText,
+  importTable,
+  tableV2,
+  tableTheme,
 ]
 
 // Then we give our schema to the builder and provide the result to Sanity
