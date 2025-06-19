@@ -1,3 +1,4 @@
+'use client'
 import { Heading } from '@core/Typography'
 import { EventCardData } from '../../../types/index'
 import { forwardRef, HTMLAttributes } from 'react'
@@ -8,10 +9,10 @@ import { Icon } from '@equinor/eds-core-react'
 import { getEventDates } from '../../../common/helpers/dateUtilities'
 import { toPlainText } from '@portabletext/react'
 import { PortableTextBlock } from '@portabletext/types'
-import { FormattedMessage } from 'react-intl'
 import AddToCalendar from '../../../pageComponents/topicPages/AddToCalendar'
 import { BaseLink } from '@core/Link'
 import Blocks from '../../../pageComponents/shared/portableText/Blocks'
+import { useTranslations } from 'next-intl'
 
 type Variants = 'default' | 'single' | 'carousel'
 export type EventCardProps = {
@@ -32,6 +33,7 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
   const { start, end } = getEventDates(eventDate)
   const plainTitle = title ? toPlainText(title as PortableTextBlock[]) : ''
   const metaClassNames = `h-full grid grid-cols-[24px_auto] gap-sm items-center py-2`
+  const t = useTranslations()
 
   const variantClassName: Partial<Record<Variants, string>> = {
     default: '',
@@ -100,7 +102,7 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
         ) : (
           <div className={metaClassNames}>
             <TimeIcon />
-            <FormattedMessage id="tba" defaultMessage="To be announced" />
+            {t('tba')}
           </div>
         )}
       </div>

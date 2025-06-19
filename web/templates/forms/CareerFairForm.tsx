@@ -1,8 +1,8 @@
+'use client'
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Icon } from '@equinor/eds-core-react'
 import { useForm, Controller } from 'react-hook-form'
 import { error_filled } from '@equinor/eds-icons'
-import { FormattedMessage, useIntl } from 'react-intl'
 import { BaseSyntheticEvent, useState } from 'react'
 import FriendlyCaptcha from './FriendlyCaptcha'
 import { TextField } from '@core/TextField/TextField'
@@ -10,6 +10,7 @@ import { Button } from '@core/Button'
 import { Select } from '@core/Select/Select'
 import { Checkbox } from '@core/Checkbox/Checkbox'
 import { FormMessageBox } from '@core/Form/FormMessageBox'
+import { useLocale, useTranslations } from 'next-intl'
 
 type FormValues = {
   organisation: string
@@ -24,7 +25,9 @@ type FormValues = {
 }
 
 const CareerFairForm = () => {
-  const intl = useIntl()
+  const intl = useTranslations()
+  const locale = useLocale()
+
   const [isFriendlyChallengeDone, setIsFriendlyChallengeDone] = useState(false)
   const [isServerError, setServerError] = useState(false)
   const [isSuccessfullySubmitted, setSuccessfullySubmitted] = useState(false)
@@ -47,11 +50,12 @@ const CareerFairForm = () => {
       eventDescription: '',
       website: '',
       supportingDocuments: '',
-      preferredLang: intl.locale,
+      preferredLang: locale,
     },
   })
+
   const onSubmit = async (data: FormValues, event?: BaseSyntheticEvent) => {
-    data.preferredLang = intl.locale
+    data.preferredLang = locale
     if (isFriendlyChallengeDone) {
       const res = await fetch('/api/forms/service-now-career-fair-events', {
         body: JSON.stringify({
@@ -71,10 +75,7 @@ const CareerFairForm = () => {
       //@ts-ignore: TODO: types
       setError('root.notCompletedCaptcha', {
         type: 'custom',
-        message: intl.formatMessage({
-          id: 'form_antirobot_validation_required',
-          defaultMessage: 'Anti-Robot verification is required',
-        }),
+        message: intl('form_antirobot_validation_required'),
       })
     }
   }
@@ -82,11 +83,7 @@ const CareerFairForm = () => {
   const watchEvent = watch('event')
   return (
     <>
-      {!isSuccessfullySubmitted && !isServerError && (
-        <div className="pb-6 text-sm">
-          <FormattedMessage id="all_fields_mandatory" defaultMessage="All fields with *  are mandatory" />
-        </div>
-      )}
+      {!isSuccessfullySubmitted && !isServerError && <div className="pb-6 text-sm">{intl('all_fields_mandatory')}</div>}
       <form
         onSubmit={handleSubmit(onSubmit)}
         onReset={() => {
@@ -102,19 +99,13 @@ const CareerFairForm = () => {
               name="organisation"
               control={control}
               rules={{
-                required: intl.formatMessage({
-                  id: 'career_fair_form_organisation_validation',
-                  defaultMessage: 'Please enter your school or organisation',
-                }),
+                required: intl('career_fair_form_organisation_validation'),
               }}
               render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
                 <TextField
                   {...props}
                   id={props.name}
-                  label={`${intl.formatMessage({
-                    id: 'career_fair_form_organisation',
-                    defaultMessage: 'School / Organisation',
-                  })}*`}
+                  label={`${intl('career_fair_form_organisation')}*`}
                   inputRef={ref}
                   aria-required="true"
                   inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
@@ -127,19 +118,13 @@ const CareerFairForm = () => {
               name="contactPerson"
               control={control}
               rules={{
-                required: intl.formatMessage({
-                  id: 'career_fair_form_contact_person_validation',
-                  defaultMessage: 'Please enter a contact person',
-                }),
+                required: intl('career_fair_form_contact_person_validation'),
               }}
               render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
                 <TextField
                   {...props}
                   id={props.name}
-                  label={`${intl.formatMessage({
-                    id: 'career_fair_form_contact_person',
-                    defaultMessage: 'Contact Person',
-                  })}*`}
+                  label={`${intl('career_fair_form_contact_person')}*`}
                   inputRef={ref}
                   aria-required="true"
                   inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
@@ -152,30 +137,18 @@ const CareerFairForm = () => {
               name="phone"
               control={control}
               rules={{
-                required: intl.formatMessage({
-                  id: 'career_fair_form_phone_validation',
-                  defaultMessage: 'Please enter your phone number',
-                }),
+                required: intl('career_fair_form_phone_validation'),
                 pattern: {
                   value: /^[+]?([0-9]?[()]|[0-9]+|[0-9]+-){8,20}(?:x[0-9]{0,10})?$/g,
-                  message: intl.formatMessage({
-                    id: 'career_fair_form_phone_validation',
-                    defaultMessage: 'Please enter your phone number',
-                  }),
+                  message: intl('career_fair_form_phone_validation'),
                 },
               }}
               render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
                 <TextField
                   {...props}
                   id={props.name}
-                  label={`${intl.formatMessage({
-                    id: 'career_fair_form_phone',
-                    defaultMessage: 'Phone Number',
-                  })}*`}
-                  description={intl.formatMessage({
-                    id: 'country_code_format',
-                    defaultMessage: 'Enter phone number with country code',
-                  })}
+                  label={`${intl('career_fair_form_phone')}*`}
+                  description={intl('country_code_format')}
                   type="tel"
                   inputRef={ref}
                   inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
@@ -190,26 +163,17 @@ const CareerFairForm = () => {
               name="email"
               control={control}
               rules={{
-                required: intl.formatMessage({
-                  id: 'email_validation',
-                  defaultMessage: 'Please fill out a valid email address',
-                }),
+                required: intl('email_validation'),
                 pattern: {
                   value: /^[\w!#$%&'*+/=?`{|}~^-]+(?:\.[\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}$/g,
-                  message: intl.formatMessage({
-                    id: 'email_validation',
-                    defaultMessage: 'Please fill out a valid email address',
-                  }),
+                  message: intl('email_validation'),
                 },
               }}
               render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
                 <TextField
                   {...props}
                   id={props.name}
-                  label={`${intl.formatMessage({
-                    id: 'email',
-                    defaultMessage: 'Email',
-                  })}*`}
+                  label={`${intl('email')}*`}
                   inputRef={ref}
                   inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
                   helperText={error?.message}
@@ -228,38 +192,15 @@ const CareerFairForm = () => {
                     selectRef={ref}
                     id={props.name}
                     aria-describedby="select-helper-text-${id}"
-                    label={intl.formatMessage({ id: 'career_fair_form_event', defaultMessage: 'Event' })}
+                    label={intl('career_fair_form_event')}
                   >
-                    <option value="">
-                      {intl.formatMessage({
-                        id: 'form_please_select_an_option',
-                        defaultMessage: 'Please select an option',
-                      })}
-                    </option>
-                    <option>
-                      {intl.formatMessage({
-                        id: 'career_fair_form_invite_career_fair',
-                        defaultMessage: 'Invite Equinor to a career fair or student event',
-                      })}
-                    </option>
-                    <option>
-                      {intl.formatMessage({
-                        id: 'career_fair_form_visit_equinor',
-                        defaultMessage: 'Would like to visit Equinor office or facility',
-                      })}
-                    </option>
+                    <option value="">{intl('form_please_select_an_option')}</option>
+                    <option>{intl('career_fair_form_invite_career_fair')}</option>
+                    <option>{intl('career_fair_form_visit_equinor')}</option>
                   </Select>
-                  {watchEvent ==
-                    intl.formatMessage({
-                      id: 'career_fair_form_visit_equinor',
-                      defaultMessage: 'Would like to visit Equinor office or facility',
-                    }) && (
+                  {watchEvent == intl('career_fair_form_visit_equinor') && (
                     <p className="-mt-2" id="select-helper-text">
-                      {intl.formatMessage({
-                        id: 'career_fair_form_visit_equinor_helper_text',
-                        defaultMessage:
-                          'Please be aware that we only offer visits to a few selected locations. Please specify your preferred location and we will revert to you as soon as we can.',
-                      })}
+                      {intl('career_fair_form_visit_equinor_helper_text')}
                     </p>
                   )}
                 </>
@@ -270,10 +211,7 @@ const CareerFairForm = () => {
               name="eventDescription"
               control={control}
               rules={{
-                required: intl.formatMessage({
-                  id: 'career_fair_form_event_description_validation',
-                  defaultMessage: 'Please enter a description for the event',
-                }),
+                required: intl('career_fair_form_event_description_validation'),
               }}
               render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
                 <TextField
@@ -283,19 +221,10 @@ const CareerFairForm = () => {
                   rowsMax={10}
                   maxLength={3400}
                   aria-required="true"
-                  label={`${intl.formatMessage({
-                    id: 'career_fair_form_event_description',
-                    defaultMessage: 'Event Description',
-                  })}*`}
-                  description={intl.formatMessage(
-                    {
-                      id: 'form_validation_maxChars',
-                      defaultMessage: 'Max {maxChars} characters',
-                    },
-                    {
-                      maxChars: '3400',
-                    },
-                  )}
+                  label={`${intl('career_fair_form_event_description')}*`}
+                  description={intl('form_validation_maxChars', {
+                    maxChars: '3400',
+                  })}
                   inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
                   helperText={error?.message}
                   inputRef={ref}
@@ -307,24 +236,12 @@ const CareerFairForm = () => {
               name="website"
               control={control}
               render={({ field: { ref, ...props } }) => (
-                <TextField
-                  {...props}
-                  id={props.name}
-                  label={intl.formatMessage({
-                    id: 'career_fair_form_website',
-                    defaultMessage: 'Link to website',
-                  })}
-                  inputRef={ref}
-                />
+                <TextField {...props} id={props.name} label={intl('career_fair_form_website')} inputRef={ref} />
               )}
             />
             <Checkbox
               className="pb-4"
-              label={intl.formatMessage({
-                id: 'career_fair_form_supporting_documents',
-                defaultMessage:
-                  'Tick the box if you would like to send supporting documents, and we will get in touch with you',
-              })}
+              label={intl('career_fair_form_supporting_documents')}
               value="Yes"
               {...register('supportingDocuments')}
             />
@@ -348,13 +265,7 @@ const CareerFairForm = () => {
                 </p>
               )}
             </div>
-            <Button type="submit">
-              {isSubmitting ? (
-                <FormattedMessage id="form_sending" defaultMessage={'Sending...'}></FormattedMessage>
-              ) : (
-                <FormattedMessage id="career_fair_form_cta" defaultMessage="Submit Form" />
-              )}
-            </Button>
+            <Button type="submit">{isSubmitting ? intl('form_sending') : intl('career_fair_form_cta')}</Button>
           </>
         )}
         <div role="region" aria-live="assertive">

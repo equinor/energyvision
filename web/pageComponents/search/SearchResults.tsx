@@ -3,8 +3,8 @@ import { RefObject, useEffect, useState } from 'react'
 import Hits from './Hits'
 import TotalResultsStat from './TotalResultsStat'
 import { useSortBy, UseSortByProps, useHits, useInstantSearch } from 'react-instantsearch'
-import { useIntl } from 'react-intl'
 import UniversalHit from './UniversalHit'
+import { useTranslations } from 'next-intl'
 
 const { TabList, Tab, TabPanel } = Tabs
 
@@ -16,7 +16,7 @@ type SearchResultsProps = {
 const SearchResults = (props: SearchResultsProps) => {
   const { resultsRef } = props
   const { refine, currentRefinement, options } = useSortBy(props)
-  const intl = useIntl()
+  const intl = useTranslations()
   const { results } = useHits()
   const { scopedResults, indexUiState } = useInstantSearch()
   const [userClicked, setUserClicked] = useState(false)
@@ -57,7 +57,7 @@ const SearchResults = (props: SearchResultsProps) => {
             activationMode="manual"
             onValueChange={handleTabChange}
           >
-            <TabList aria-label={intl.formatMessage({ id: 'categories', defaultMessage: 'Categories' })}>
+            <TabList aria-label={intl('categories')}>
               {options.map((item) => (
                 <Tab id={`tab-trigger-${item.label}`} key={item.label} value={item.label} className="">
                   {item.label}

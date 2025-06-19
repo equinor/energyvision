@@ -1,3 +1,4 @@
+'use client'
 import { HTMLAttributes } from 'react'
 import { Icon } from '@equinor/eds-core-react'
 import { calendar, time } from '@equinor/eds-icons'

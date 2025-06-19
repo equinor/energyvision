@@ -1,15 +1,15 @@
+'use client'
 import type { SubscribeFormParameters } from '../../types/index'
 import { Icon } from '@equinor/eds-core-react'
 import { useForm, Controller } from 'react-hook-form'
 import { error_filled } from '@equinor/eds-icons'
-import { useRouter } from 'next/router'
-import { FormattedMessage, useIntl } from 'react-intl'
 import { BaseSyntheticEvent, useState } from 'react'
 import FriendlyCaptcha from './FriendlyCaptcha'
 import { Button } from '@core/Button'
 import { Checkbox } from '@core/Checkbox/Checkbox'
 import { TextField } from '@core/TextField/TextField'
 import { FormMessageBox } from '@core/Form/FormMessageBox'
+import { useLocale, useTranslations } from 'next-intl'
 
 type FormValues = {
   firstName: string
@@ -18,8 +18,8 @@ type FormValues = {
 }
 
 const SubscribeForm = () => {
-  const router = useRouter()
-  const intl = useIntl()
+  const locale = useLocale()
+  const intl = useTranslations()
   const [isFriendlyChallengeDone, setIsFriendlyChallengeDone] = useState(false)
   const [isServerError, setServerError] = useState(false)
   const [isSuccessfullySubmitted, setSuccessfullySubmitted] = useState(false)
@@ -43,7 +43,7 @@ const SubscribeForm = () => {
         generalNews: allCategories || data.categories.includes('generalNews'),
         stockMarketAnnouncements: allCategories || data.categories.includes('stockMarketAnnouncements'),
         magazineStories: allCategories || data.categories.includes('magazineStories'),
-        languageCode: router.locale == 'en' ? 'en' : 'no',
+        languageCode: locale == 'en' ? 'en' : 'no',
       }
 
       const res = await fetch('/api/subscribe-form', {
@@ -62,10 +62,7 @@ const SubscribeForm = () => {
       //@ts-ignore: TODO: types
       setError('root.notCompletedCaptcha', {
         type: 'custom',
-        message: intl.formatMessage({
-          id: 'form_antirobot_validation_required',
-          defaultMessage: 'Anti-Robot verification is required',
-        }),
+        message: intl('form_antirobot_validation_required'),
       })
     }
   }
@@ -73,9 +70,7 @@ const SubscribeForm = () => {
   return (
     <>
       {!isSuccessfullySubmitted && !isServerError && (
-        <div className="pt-8 pb-6 text-sm">
-          <FormattedMessage id="all_fields_mandatory" defaultMessage="All fields with *  are mandatory" />
-        </div>
+        <div className="pt-8 pb-6 text-sm">{intl('all_fields_mandatory')} </div>
       )}
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -91,11 +86,7 @@ const SubscribeForm = () => {
             <fieldset className="p-0 pb-4">
               {!errors.categories && (
                 <legend id="atleast-one-category-required" className="text-base font-semibold max-w-text">
-                  <FormattedMessage
-                    id="subscribe_form_choose"
-                    defaultMessage="Please choose one or more of the following"
-                  />
-                  *
+                  {intl('subscribe_form_choose')}*
                 </legend>
               )}
               {errors.categories && (
@@ -104,22 +95,14 @@ const SubscribeForm = () => {
                   role="alert"
                   id="atleast-one-category-required"
                 >
-                  <legend>
-                    <FormattedMessage
-                      id="subscribe_form_choose"
-                      defaultMessage="Please choose one or more of the following"
-                    />
-                  </legend>
+                  <legend>{intl('subscribe_form_choose')}</legend>
                   <Icon data={error_filled} aria-hidden="true" />
                 </div>
               )}
               <ul>
                 <li>
                   <Checkbox
-                    label={intl.formatMessage({
-                      id: 'subscribe_form_general_news',
-                      defaultMessage: 'General News',
-                    })}
+                    label={intl('subscribe_form_general_news')}
                     value="generalNews"
                     aria-describedby="atleast-one-category-required"
                     {...register('categories', {
@@ -131,10 +114,7 @@ const SubscribeForm = () => {
                 </li>
                 <li>
                   <Checkbox
-                    label={intl.formatMessage({
-                      id: 'subscribe_form_magazine_stories',
-                      defaultMessage: 'Magazine stories',
-                    })}
+                    label={intl('subscribe_form_magazine_stories')}
                     aria-invalid={errors.categories ? 'true' : 'false'}
                     aria-describedby="atleast-one-category-required"
                     value="magazineStories"
@@ -144,10 +124,7 @@ const SubscribeForm = () => {
                 </li>
                 <li>
                   <Checkbox
-                    label={intl.formatMessage({
-                      id: 'subscribe_form_stock_market',
-                      defaultMessage: 'Stock market announcements',
-                    })}
+                    label={intl('subscribe_form_stock_market')}
                     value="stockMarketAnnouncements"
                     aria-invalid={errors.categories ? 'true' : 'false'}
                     aria-describedby="atleast-one-category-required"
@@ -157,10 +134,7 @@ const SubscribeForm = () => {
                 </li>
                 <li>
                   <Checkbox
-                    label={intl.formatMessage({
-                      id: 'subscribe_form_cruide_oil',
-                      defaultMessage: 'Crude oil assays',
-                    })}
+                    label={intl('subscribe_form_cruide_oil')}
                     aria-invalid={errors.categories ? 'true' : 'false'}
                     aria-describedby="atleast-one-category-required"
                     value="crudeOilAssays"
@@ -170,10 +144,7 @@ const SubscribeForm = () => {
                 </li>
                 <li>
                   <Checkbox
-                    label={intl.formatMessage({
-                      id: 'subscribe_form_all',
-                      defaultMessage: 'All',
-                    })}
+                    label={intl('subscribe_form_all')}
                     aria-invalid={errors.categories ? 'true' : 'false'}
                     aria-describedby="atleast-one-category-required"
                     value="all"
@@ -187,26 +158,17 @@ const SubscribeForm = () => {
               name="email"
               control={control}
               rules={{
-                required: intl.formatMessage({
-                  id: 'email_validation',
-                  defaultMessage: 'Please fill out a valid email address',
-                }),
+                required: intl('email_validation'),
                 pattern: {
                   value: /^[\w!#$%&'*+/=?`{|}~^-]+(?:\.[\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}$/g,
-                  message: intl.formatMessage({
-                    id: 'email_validation',
-                    defaultMessage: 'Please fill out a valid email address',
-                  }),
+                  message: intl('email_validation'),
                 },
               }}
               render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
                 <TextField
                   {...props}
                   id={props.name}
-                  label={`${intl.formatMessage({
-                    id: 'email',
-                    defaultMessage: 'Email',
-                  })}*`}
+                  label={`${intl('email')}*`}
                   inputRef={ref}
                   inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
                   helperText={error?.message}
@@ -237,13 +199,7 @@ const SubscribeForm = () => {
                 </p>
               )}
             </div>
-            <Button type="submit">
-              {isSubmitting ? (
-                <FormattedMessage id="form_sending" defaultMessage={'Sending...'}></FormattedMessage>
-              ) : (
-                <FormattedMessage id="subscribe_form_cta" defaultMessage={'Subscribe'} />
-              )}
-            </Button>
+            <Button type="submit">{isSubmitting ? intl('form_sending') : intl('subscribe_form_cta')}</Button>
           </>
         )}
         <div role="region" aria-live="assertive">

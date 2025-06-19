@@ -17,12 +17,12 @@ const HomePage = ({ data }: HomePageProps) => {
 
   return (
     <>
-      <Seo
+      {/*<Seo
         seoAndSome={data?.seoAndSome}
         slug={data?.slug}
         heroImage={data?.hero?.figure?.image}
         pageTitle={data?.title}
-      />
+      />*/}
       <main>
         {data.isCampaign ? (
           <h1 className="sr-only">{toPlainText(data.title)}</h1>

@@ -1,3 +1,4 @@
+'use client'
 import { Heading } from '../../core/Typography'
 import { twMerge } from 'tailwind-merge'
 import IngressText from '../../pageComponents/shared/portableText/IngressText'

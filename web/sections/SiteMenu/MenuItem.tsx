@@ -3,7 +3,7 @@ import { Link, ResourceLink } from '@core/Link'
 import { Menu } from '@core/MenuAccordion'
 import type { MenuLinkData, SubMenuData, SubMenuGroupData } from '../../types/index'
 import FeaturedContent from './FeaturedContent'
-import { useRouter } from 'next/router'
+import { usePathname } from 'next/navigation'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
 import { Typography } from '@core/Typography'
 
@@ -28,7 +28,8 @@ export const MenuItem = ({ item, index }: MenuGroupType) => {
   const { topLevelLink, groups, intro, featuredContent, featuredCTALabel, featuredIngress } = item
 
   const menuItemHref = getLink(topLevelLink)
-  const router = useRouter()
+
+  const pathname = usePathname()
 
   const ariaCurrentStyling = `aria-current:before:content-['']
   aria-current:before:absolute
@@ -48,7 +49,7 @@ export const MenuItem = ({ item, index }: MenuGroupType) => {
             <ResourceLink
               href={menuItemHref}
               className={`relative w-fit ${ariaCurrentStyling}`}
-              aria-current={router.asPath == topLevelLink?.link?.slug ? 'page' : 'false'}
+              aria-current={pathname == topLevelLink?.link?.slug ? 'page' : 'false'}
             >
               {topLevelLink?.label}
             </ResourceLink>
@@ -101,7 +102,7 @@ export const MenuItem = ({ item, index }: MenuGroupType) => {
                                 ${ariaCurrentStyling}
                                 `}
                               href={getLink(link)}
-                              aria-current={router.asPath == link?.link?.slug ? 'page' : 'false'}
+                              aria-current={pathname == link?.link?.slug ? 'page' : 'false'}
                             >
                               {link.label}
                             </Link>

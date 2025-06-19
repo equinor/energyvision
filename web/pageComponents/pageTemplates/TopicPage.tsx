@@ -15,14 +15,15 @@ const TopicPage = ({ data }: TopicPageProps) => {
   const titleStyles = useSharedTitleStyles(data?.hero?.type, data?.content?.[0])
   const { breadcrumbs } = data
 
+  console.log(JSON.stringify(data))
   return (
     <>
-      <Seo
+      {/* <Seo
         seoAndSome={data?.seoAndSome}
         slug={data?.slug}
         heroImage={data?.hero?.figure?.image}
         pageTitle={data?.title}
-      />
+      />*/}
       <main>
         {data.isCampaign ? (
           <h1 className="sr-only">{toPlainText(data.title)}</h1>
@@ -43,7 +44,7 @@ const TopicPage = ({ data }: TopicPageProps) => {
         {data.hero.type !== HeroTypes.DEFAULT && !data?.isCampaign && (
           <SharedTitle sharedTitle={data.title} background={titleStyles.background} />
         )}
-        <PageContent data={data} titleBackground={titleStyles} />
+        {/*<PageContent data={data} titleBackground={titleStyles} />*/}
       </main>
     </>
   )

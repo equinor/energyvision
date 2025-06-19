@@ -1,3 +1,4 @@
+'use client'
 import { useMediaQuery } from '../../../lib/hooks/useMediaQuery'
 import { getEventDates } from '../../../common/helpers/dateUtilities'
 import type { EventCardData, EventPromotionSettings } from '../../../types/index'

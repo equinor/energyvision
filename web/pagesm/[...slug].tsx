@@ -8,13 +8,13 @@ import { getQueryFromSlug } from '../lib/queryFromSlug'
 import { Layout } from '../sections/Layout/Layout'
 import { defaultLanguage } from '../languages'
 import Header from '../sections/Header/Header'
-import { FormattedMessage } from 'react-intl'
 import getIntl from '../common/helpers/getIntl'
 import { getStaticBuildRoutePaths } from '../common/helpers/getPaths'
 import getPageSlugs from '../common/helpers/getPageSlugs'
 import { getComponentsData } from '../lib/fetchData'
 import { useContext, useEffect } from 'react'
 import { PreviewContext } from '../lib/contexts/PreviewContext'
+import { useTranslations } from 'next-intl'
 
 const MagazinePage = dynamic(() => import('../templates/magazine/MagazinePage'))
 const LandingPage = dynamic(() => import('../pageComponents/pageTemplates/LandingPage'))
@@ -26,7 +26,7 @@ const HomePage = dynamic(() => import('../pageComponents/pageTemplates/HomePage'
 // @TODO Improve types here, don't use any
 export default function Page({ data, preview = false }: any) {
   const router = useRouter()
-
+  const t = useTranslations()
   const { setIsPreview } = useContext(PreviewContext)
 
   useEffect(() => {
@@ -45,11 +45,7 @@ export default function Page({ data, preview = false }: any) {
   if (!template) console.warn('Missing template for', slug)
 
   if (router.isFallback) {
-    return (
-      <p>
-        <FormattedMessage id="loading" defaultMessage="Loading..." />
-      </p>
-    )
+    return <p>{t('loading')}</p>
   }
 
   switch (template) {

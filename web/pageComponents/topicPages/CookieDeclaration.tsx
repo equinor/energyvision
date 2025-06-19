@@ -1,3 +1,4 @@
+'use client'
 import { useRouter } from 'next/router'
 import { useEffect, useRef } from 'react'
 import { BackgroundContainer } from '@core/Backgrounds'

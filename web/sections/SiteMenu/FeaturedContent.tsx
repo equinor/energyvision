@@ -1,9 +1,9 @@
 import type { EventCardData, FeaturedContentData } from '../../types/index'
 import { EventCard } from '@sections/cards/EventCard'
 import { Banner } from '@core/Banner/Banner'
-import { FormattedMessage } from 'react-intl'
 import { Typography } from '@core/Typography'
 import { PortableTextBlock } from '@portabletext/types'
+import { useTranslations } from 'next-intl'
 
 type Props = {
   featuredContent: FeaturedContentData
@@ -12,6 +12,7 @@ type Props = {
 }
 
 const FeaturedContent = ({ featuredContent, featuredCTALabel, featuredIngress }: Props) => {
+  const t = useTranslations()
   if (!featuredContent.type) return null
 
   const isEvent = (data: FeaturedContentData): boolean => data?.routeContentType === 'event'
@@ -34,7 +35,7 @@ const FeaturedContent = ({ featuredContent, featuredCTALabel, featuredIngress }:
             xl:text-xs
             `}
       >
-        <FormattedMessage id="featured_content" defaultMessage="Featured" />
+        {t('featured_content')}
       </Typography>
       {isEvent(featuredContent) ? (
         <EventCard

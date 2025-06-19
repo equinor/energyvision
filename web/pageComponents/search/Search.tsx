@@ -9,10 +9,10 @@ import type { UiState } from 'instantsearch.js'
 import { useRef } from 'react'
 import { Pagination } from '../shared/search/pagination/Pagination'
 import usePaginationPadding from '../../lib/hooks/usePaginationPadding'
-import { useIntl } from 'react-intl'
 import { SearchClient } from 'algoliasearch/lite'
 import { SearchBox } from '@core/AlgoliaSearchBox/SearchBox'
 import { PaginationContextProvider } from '../../common/contexts/PaginationContext'
+import { useTranslations } from 'next-intl'
 
 const SearchResults = dynamic(() => import('./SearchResults'))
 
@@ -41,8 +41,7 @@ const queriedSearchClient: SearchClient = {
 }
 
 const Search = () => {
-  const router = useRouter()
-  const intl = useIntl()
+  const intl = useTranslations()
   const padding = usePaginationPadding()
   const resultsRef = useRef<HTMLDivElement>(null)
 
@@ -53,23 +52,23 @@ const Search = () => {
   }
 
   const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
-  const isoCode = getIsoFromLocale(router.locale)
+  const isoCode = getIsoFromLocale(locale)
   const indices = [
     {
       value: `${envPrefix}_TOPICS_${isoCode}`,
-      label: intl.formatMessage({ id: 'search_topics_tab', defaultMessage: 'Topics' }),
+      label: intl('search_topics_tab'),
     },
     {
       value: `${envPrefix}_EVENTS_${isoCode}`,
-      label: intl.formatMessage({ id: 'search_events_tab', defaultMessage: 'Events' }),
+      label: intl('search_events_tab'),
     },
     {
       value: `${envPrefix}_NEWS_${isoCode}`,
-      label: intl.formatMessage({ id: 'search_news_tab', defaultMessage: 'News' }),
+      label: intl('search_news_tab'),
     },
     {
       value: `${envPrefix}_MAGAZINE_${isoCode}`,
-      label: intl.formatMessage({ id: 'search_magazine_tab', defaultMessage: 'Magazine' }),
+      label: intl('search_magazine_tab'),
     },
   ]
 
@@ -161,7 +160,7 @@ const Search = () => {
       {indices.map((index) => (
         <Index indexName={index.value} key={index.label} indexId={index.value} />
       ))}
-      <h1 className="sr-only">{intl.formatMessage({ id: 'search_page_title', defaultMessage: 'Search' })}</h1>
+      <h1 className="sr-only">{intl('search_page_title')}</h1>
       <div className="max-w-[700px]">
         <SearchBox variant="inverted" />
       </div>

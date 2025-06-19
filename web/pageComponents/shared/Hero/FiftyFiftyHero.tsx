@@ -1,3 +1,4 @@
+
 import Image from '../SanityImage'
 import { Heading } from '@core/Typography'
 import type { HeroType } from '../../../types/index'

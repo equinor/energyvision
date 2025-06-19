@@ -86,7 +86,7 @@ export const Topbar = forwardRef<HTMLDivElement, TopbarProps>(function Topbar(
     <>
       <nav
         ref={combinedTopbarRef}
-        aria-label={intl('global')}
+        aria-label={'Global ' /*intl('global') TODO*/}
         role="navigation"
         className={`
           h-topbar

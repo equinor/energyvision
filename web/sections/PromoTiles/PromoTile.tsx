@@ -5,7 +5,7 @@ import { PromoTileData } from '../../types/index'
 import { forwardRef } from 'react'
 import { Variants } from '../cards/Card/Card'
 import { getLocaleFromName } from '../../lib/localization'
-import { useIntl } from 'react-intl'
+import { useLocale } from 'next-intl'
 
 type PromoTileProps = {
   hasSectionTitle?: boolean
@@ -17,11 +17,11 @@ export const PromoTile = forwardRef<HTMLAnchorElement, PromoTileProps>(function 
   ref,
 ) {
   const url = getUrlFromAction(action)
-  const intl = useIntl()
+  const intlLocale = useLocale()
   if (!url) {
     return null
   }
-  const locale = action.link?.lang ? getLocaleFromName(action.link?.lang) : intl.locale
+  const locale = action.link?.lang ? getLocaleFromName(action.link?.lang) : intlLocale
   const { background } = designOptions
 
   const colorName =

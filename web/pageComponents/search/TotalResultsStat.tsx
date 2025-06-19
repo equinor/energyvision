@@ -1,5 +1,6 @@
+import { useTranslations } from 'next-intl'
 import { usePagination, UsePaginationProps } from 'react-instantsearch'
-import { FormattedMessage } from 'react-intl'
+
 
 type TotalResultsStatProps = {
   hitsPerPage: number
@@ -12,17 +13,16 @@ const TotalResultsStat = ({ totalPages, hitsPerPage }: TotalResultsStatProps) =>
   const potentialHighestNumber = currentRefinement * hitsPerPage + 5
   const currentHighestNumber = Math.min(potentialHighestNumber, nbHits)
 
-  const defaultMessage = '{currentlyShowing} of {nbHits} results'
+  const t = useTranslations()
   return (
     <div className="mt-5 text-slate-blue-70">
-      <FormattedMessage
-        id="search_showing_results_number"
-        defaultMessage={defaultMessage}
-        values={{
+      {
+        t("search_showing_results_number",{
           nbHits: nbHits,
           currentlyShowing: `${currentLowestNumber} - ${currentHighestNumber}`,
-        }}
-      />
+        })
+      }
+     
     </div>
   )
 }

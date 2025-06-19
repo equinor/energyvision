@@ -273,7 +273,7 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
       case 'form':
         return <Form key={c.id} data={c as FormData} anchor={anchorReference} className={spacingClassName} />
       case 'table':
-        return <Table key={c.id} data={c as TableData} anchor={anchorReference} className={spacingClassName} />
+        return <>To be updated to new table</> //<Table key={c.id} data={c as TableData} anchor={anchorReference} className={spacingClassName} />
       case 'cookieDeclaration':
         return (
           <CookieDeclaration

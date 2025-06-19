@@ -1,4 +1,4 @@
-import { Table as EnvisTable } from '@components'
+/*import { Table as EnvisTable } from '@components'
 import { BackgroundContainer } from '@core/Backgrounds'
 import { FormattedDate } from '@core/FormattedDateTime'
 import styled from 'styled-components'
@@ -146,3 +146,4 @@ const Table = ({ data, anchor, className }: TableProps) => {
 }
 
 export default Table
+*/

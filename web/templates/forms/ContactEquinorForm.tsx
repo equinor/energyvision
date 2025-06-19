@@ -1,7 +1,7 @@
+'use client'
 import { Icon } from '@equinor/eds-core-react'
 import { useForm, Controller } from 'react-hook-form'
 import { error_filled } from '@equinor/eds-icons'
-import { FormattedMessage, useIntl } from 'react-intl'
 import { BaseSyntheticEvent, useState } from 'react'
 import FriendlyCaptcha from './FriendlyCaptcha'
 import { ContactFormCatalogType } from '../../types'
@@ -9,6 +9,7 @@ import { Button } from '@core/Button'
 import { TextField } from '@core/TextField/TextField'
 import { Select } from '@core/Select/Select'
 import { FormMessageBox } from '@core/Form/FormMessageBox'
+import { useTranslations } from 'next-intl'
 
 type ContactEquinorFormProps = {
   isHumanRightsRequest?: boolean
@@ -21,31 +22,15 @@ type FormValues = {
 }
 
 const ContactEquinorForm = (props: ContactEquinorFormProps) => {
-  const intl = useIntl()
+  const intl = useTranslations()
   const { isHumanRightsRequest } = props
   const [isServerError, setServerError] = useState(false)
   const [isFriendlyChallengeDone, setIsFriendlyChallengeDone] = useState(false)
   const [isSuccessfullySubmitted, setSuccessfullySubmitted] = useState(false)
 
   const getCatalog = (category: string): ContactFormCatalogType | null => {
-    if (
-      category.includes(
-        intl.formatMessage({
-          id: 'contact_form_human_rights_information_request',
-          defaultMessage: 'Human Rights Information Request',
-        }),
-      )
-    )
-      return 'humanRightsInformationRequest'
-    else if (
-      category.includes(
-        intl.formatMessage({
-          id: 'contact_form_login_issues',
-          defaultMessage: 'Login Issues',
-        }),
-      )
-    )
-      return 'loginIssues'
+    if (category.includes(intl('contact_form_human_rights_information_request'))) return 'humanRightsInformationRequest'
+    else if (category.includes(intl('contact_form_login_issues'))) return 'loginIssues'
     else return null
   }
   const {
@@ -59,12 +44,7 @@ const ContactEquinorForm = (props: ContactEquinorFormProps) => {
       name: '',
       email: '',
       message: '',
-      category: isHumanRightsRequest
-        ? intl.formatMessage({
-            id: 'contact_form_human_rights_information_request',
-            defaultMessage: 'Human Rights Information Request',
-          })
-        : '',
+      category: isHumanRightsRequest ? intl('contact_form_human_rights_information_request') : '',
     },
   })
 
@@ -75,10 +55,7 @@ const ContactEquinorForm = (props: ContactEquinorFormProps) => {
           data,
           frcCaptchaSolution: (event?.target as any)['frc-captcha-solution'].value,
           isHumanRightsInformationRequest: data.category.includes(
-            intl.formatMessage({
-              id: 'contact_form_human_rights_information_request',
-              defaultMessage: 'Human Rights Information Request',
-            }),
+            intl('contact_form_human_rights_information_request'),
           ),
           catalogType: getCatalog(data.category),
         }),
@@ -93,10 +70,7 @@ const ContactEquinorForm = (props: ContactEquinorFormProps) => {
       //@ts-ignore: TODO: types
       setError('root.notCompletedCaptcha', {
         type: 'custom',
-        message: intl.formatMessage({
-          id: 'form_antirobot_validation_required',
-          defaultMessage: 'Anti-Robot verification is required',
-        }),
+        message: intl('form_antirobot_validation_required'),
       })
     }
   }
@@ -104,9 +78,7 @@ const ContactEquinorForm = (props: ContactEquinorFormProps) => {
   return (
     <>
       {!isSuccessfullySubmitted && !isServerError && (
-        <div className="pb-6 text-sm">
-          <FormattedMessage id="all_fields_mandatory" defaultMessage="All fields with *  are mandatory" />
-        </div>
+        <div className="pb-6 text-sm">{intl('all_fields_mandatory')} </div>
       )}
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -123,10 +95,7 @@ const ContactEquinorForm = (props: ContactEquinorFormProps) => {
               name="name"
               control={control}
               rules={{
-                required: intl.formatMessage({
-                  id: 'name_validation',
-                  defaultMessage: 'Please fill out your name',
-                }),
+                required: intl('name_validation'),
               }}
               render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => {
                 const { name } = props
@@ -134,10 +103,7 @@ const ContactEquinorForm = (props: ContactEquinorFormProps) => {
                   <TextField
                     {...props}
                     id={name}
-                    label={`${intl.formatMessage({
-                      id: 'name',
-                      defaultMessage: 'Name',
-                    })}*`}
+                    label={`${intl('name')}*`}
                     inputRef={ref}
                     aria-required="true"
                     inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
@@ -151,16 +117,10 @@ const ContactEquinorForm = (props: ContactEquinorFormProps) => {
               name="email"
               control={control}
               rules={{
-                required: intl.formatMessage({
-                  id: 'email_validation',
-                  defaultMessage: 'Please fill out a valid email address',
-                }),
+                required: intl('email_validation'),
                 pattern: {
                   value: /^[\w!#$%&'*+/=?`{|}~^-]+(?:\.[\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}$/g,
-                  message: intl.formatMessage({
-                    id: 'email_validation',
-                    defaultMessage: 'Please fill out a valid email address',
-                  }),
+                  message: intl('email_validation'),
                 },
               }}
               render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => {
@@ -169,10 +129,7 @@ const ContactEquinorForm = (props: ContactEquinorFormProps) => {
                   <TextField
                     {...props}
                     id={name}
-                    label={`${intl.formatMessage({
-                      id: 'email',
-                      defaultMessage: 'Email',
-                    })}*`}
+                    label={`${intl('email')}*`}
                     inputRef={ref}
                     inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
                     helperText={error?.message}
@@ -188,52 +145,16 @@ const ContactEquinorForm = (props: ContactEquinorFormProps) => {
               render={({ field: { ref, ...props } }) => {
                 const { name } = props
                 return (
-                  <Select
-                    {...props}
-                    selectRef={ref}
-                    id={name}
-                    disabled={isHumanRightsRequest}
-                    label={intl.formatMessage({ id: 'category', defaultMessage: 'Category' })}
-                  >
-                    <option value="">
-                      {intl.formatMessage({
-                        id: 'form_please_select_an_option',
-                        defaultMessage: 'Please select an option',
-                      })}
-                    </option>
-                    <option>
-                      {intl.formatMessage({
-                        id: 'contact_form_report_error',
-                        defaultMessage: 'Report an error on our website',
-                      })}
-                    </option>
-                    <option>
-                      {intl.formatMessage({
-                        id: 'contact_form_contact_department',
-                        defaultMessage: 'Contact a department or member of staff',
-                      })}
-                    </option>
-                    <option>
-                      {intl.formatMessage({
-                        id: 'contact_form_investor_relations',
-                        defaultMessage: 'Investor relations',
-                      })}
-                    </option>
-                    <option>
-                      {intl.formatMessage({
-                        id: 'contact_form_human_rights_information_request',
-                        defaultMessage: 'Human Rights Information Request',
-                      })}
-                    </option>
+                  <Select {...props} selectRef={ref} id={name} disabled={isHumanRightsRequest} label={intl('category')}>
+                    <option value="">{intl('form_please_select_an_option')}</option>
+                    <option>{intl('contact_form_report_error')}</option>
+                    <option>{intl('contact_form_contact_department')}</option>
+                    <option>{intl('contact_form_investor_relations')}</option>
+                    <option>{intl('contact_form_human_rights_information_request')}</option>
 
-                    <option>
-                      {intl.formatMessage({
-                        id: 'contact_form_login_issues',
-                        defaultMessage: 'Login Issues',
-                      })}
-                    </option>
+                    <option>{intl('contact_form_login_issues')}</option>
 
-                    <option>{intl.formatMessage({ id: 'contact_form_other', defaultMessage: 'Other' })}</option>
+                    <option>{intl('contact_form_other')}</option>
                   </Select>
                 )
               }}
@@ -243,10 +164,7 @@ const ContactEquinorForm = (props: ContactEquinorFormProps) => {
               name="message"
               control={control}
               rules={{
-                required: intl.formatMessage({
-                  id: 'contact_form_how_to_help_validation',
-                  defaultMessage: 'Please let us know how we may help you',
-                }),
+                required: intl('contact_form_how_to_help_validation'),
               }}
               render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => {
                 const { name } = props
@@ -254,14 +172,8 @@ const ContactEquinorForm = (props: ContactEquinorFormProps) => {
                   <TextField
                     {...props}
                     id={name}
-                    description={intl.formatMessage({
-                      id: 'dont_enter_personal_info',
-                      defaultMessage: `Please don't enter any personal information`,
-                    })}
-                    label={`${intl.formatMessage({
-                      id: 'contact_form_how_to_help',
-                      defaultMessage: 'How can we help you?',
-                    })}*`}
+                    description={intl('dont_enter_personal_info')}
+                    label={`${intl('contact_form_how_to_help')}*`}
                     inputRef={ref}
                     multiline
                     rowsMax={10}
@@ -295,13 +207,7 @@ const ContactEquinorForm = (props: ContactEquinorFormProps) => {
                 </p>
               )}
             </div>
-            <Button type="submit">
-              {isSubmitting ? (
-                <FormattedMessage id="form_sending" defaultMessage={'Sending...'}></FormattedMessage>
-              ) : (
-                <FormattedMessage id="contact_form_cta" defaultMessage="Submit Form" />
-              )}
-            </Button>
+            <Button type="submit">{isSubmitting ? intl('form_sending') : intl('contact_form_cta')}</Button>
           </>
         )}
         <div role="region" aria-live="assertive">

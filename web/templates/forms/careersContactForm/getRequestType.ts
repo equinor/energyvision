@@ -1,11 +1,12 @@
 import { CareersContactFormCatalogType } from '../../../types'
-import { IntlShape } from 'react-intl'
+import { useTranslations } from 'next-intl'
 
 export default function getCatalogType(
   intl: IntlShape,
   category: string,
   candidateType: string,
 ): CareersContactFormCatalogType | null {
+  const t = useTranslations()
   const suspectedRecruitmentScam = intl.formatMessage({
     id: 'careers_contact_form_suspected_recruitment_scam',
     defaultMessage: 'Suspected recruitment scam',

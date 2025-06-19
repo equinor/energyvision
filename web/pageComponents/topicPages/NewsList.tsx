@@ -1,3 +1,4 @@
+'use client'
 import { Pagination } from '../shared/search/simplePagination/Pagination'
 import type { NewsListData } from '../../types/index'
 import { useState } from 'react'

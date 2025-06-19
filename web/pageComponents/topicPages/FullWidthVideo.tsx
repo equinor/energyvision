@@ -1,3 +1,4 @@
+'use client'
 import { FullWidthVideoData, FullWidthVideoRatio } from '../../types/index'
 import { VideoJS } from '@core/VideoJsPlayer'
 import dynamic from 'next/dynamic'

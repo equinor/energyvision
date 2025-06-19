@@ -1,16 +1,20 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import Header from '@sections/Header/Header'
 import { Layout } from '@sections/Layout/Layout'
-import { getStaticBuildRoutePaths } from '../../common/helpers/getPaths'
-import { getQueryFromSlug } from '../../lib/queryFromSlug'
-import { getComponentsData } from '../../lib/fetchData'
-import getPageSlugs from '../../common/helpers/getPageSlugs'
+import { getStaticBuildRoutePaths } from '../../../common/helpers/getPaths'
+import { getQueryFromSlug } from '../../../lib/queryFromSlug'
+import { getComponentsData } from '../../../lib/fetchData'
+import getPageSlugs from '../../../common/helpers/getPageSlugs'
+import dynamic from 'next/dynamic'
 import { notFound } from 'next/navigation'
-import HomePage from '../../pageComponents/pageTemplates/HomePage'
-import { languages } from 'languages'
 //import { useContext, useEffect } from 'react'
 //import { PreviewContext } from '../../../lib/contexts/PreviewContext'
 //import { FormattedMessage } from 'react-intl'
+
+const MagazinePage = dynamic(() => import('@templates/magazine/MagazinePage'))
+const LandingPage = dynamic(() => import('../../../pageComponents/pageTemplates/LandingPage'))
+const EventPage = dynamic(() => import('../../../pageComponents/pageTemplates/Event'))
+const NewsPage = dynamic(() => import('../../../pageComponents/pageTemplates/News'))
+const TopicPage = dynamic(() => import('../../../pageComponents/pageTemplates/TopicPage'))
 
 export async function generateStaticParams() {
   const routePaths = await getStaticBuildRoutePaths(['en', 'no'])
@@ -49,26 +53,19 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
 }*/
 
 export default async function Page({ params }: any) {
-  const { locale } = await params
-  if (!languages.map((it) => it.locale).includes(locale)) notFound()
+  const { locale, slug: s } = await params
 
-  const { query, queryParams } = await getQueryFromSlug(params?.slug as string[], locale)
+  const { query, queryParams } = await getQueryFromSlug(s as string[], locale)
 
-  const {
-    menuData,
-    pageData: fullData,
-    footerData,
-  } = await getComponentsData(
+  const { menuData, pageData, footerData } = await getComponentsData(
     {
       query,
       queryParams,
     },
     false,
   )
-  const { data, slugs: s } = fullData
-  const pageData = { ...data, s }
   if (!pageData) notFound()
-  const slugs = getPageSlugs({ pageData })
+  const slugs = getPageSlugs(pageData)
   const hasSticky = pageData?.stickyMenu && pageData?.stickyMenu?.links && pageData?.stickyMenu?.links?.length > 0
 
   //const router = useRouter()
@@ -96,11 +93,29 @@ export default async function Page({ params }: any) {
     )
   }*/
 
+  const getTemplate = () => {
+    switch (template) {
+      case 'landingPage':
+        return <LandingPage data={pageData} />
+      case 'event':
+        // eslint-disable-next-line react/jsx-no-undef
+        return <EventPage data={pageData} />
+      case 'news':
+      case 'localNews':
+        // eslint-disable-next-line react/jsx-no-undef
+        return <NewsPage data={pageData} />
+      case 'magazine':
+        return <MagazinePage data={pageData} />
+      default:
+        return <TopicPage data={pageData} />
+    }
+  }
+
   return (
     <Layout footerData={footerData} hasSticky={hasSticky}>
       <>
         <Header slugs={slugs} menuData={menuData} stickyMenuData={pageData?.stickyMenu} />
-        <HomePage data={pageData} />
+        {getTemplate()}
       </>
     </Layout>
   )

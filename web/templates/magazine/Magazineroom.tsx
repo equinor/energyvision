@@ -1,3 +1,4 @@
+'use client'
 import type { MagazineIndexPageType } from '../../types'
 import { useMemo, useRef, useState } from 'react'
 import Seo from '../../pageComponents/shared/Seo'

@@ -7,5 +7,6 @@
   "debug.internalConsoleOptions": "neverOpen",
   "azureFunctions.preDeployTask": "npm prune (functions)",
   "typescript.tsdk": "node_modules/typescript/lib",
-  "compile-hero.disable-compile-files-on-did-save-code": false
+  "compile-hero.disable-compile-files-on-did-save-code": false,
+  "postman.settings.dotenv-detection-notification-visibility": false
 }

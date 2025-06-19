@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
+'use client'
 import useSWR from 'swr'
 import * as xml2js from 'xml2js'
 import { BackgroundContainer } from '@core/Backgrounds'
 import { FormattedDate } from '@core/FormattedDateTime'
-import { FormattedMessage } from 'react-intl'
 import type { StockValuesData } from '../../types/index'
 import { twMerge } from 'tailwind-merge'
+import { useTranslations } from 'next-intl'
 
 const fetchData = async (url: string) => {
   const response = await fetch(url)
@@ -53,7 +55,7 @@ const StockValues = ({
   className?: string
 }) => {
   const { data, error } = useSWR(ENDPOINT, fetchData, { refreshInterval: 60000 })
-
+  const t = useTranslations()
   if (error) {
     console.error('An error occured while fetching stock values: ', error)
     return null
@@ -90,9 +92,7 @@ const StockValues = ({
         <p className="font-semibold uppercase mb-1 mx-0 mt-0 p-0">{data.NYSE?.title}</p>
         <p className="font-semibold mb-1 mx-0 mt-0 p-0">
           <FormattedDate datetime={data.NYSE?.Date} /> CET{' '}
-          <span className="font-medium italic">
-            <FormattedMessage id="stock_nyse_time_delay_message" defaultMessage="at least 20 minutes delayed" />
-          </span>
+          <span className="font-medium italic">{t('stock_nyse_time_delay_message')}</span>
         </p>
       </div>
     </BackgroundContainer>

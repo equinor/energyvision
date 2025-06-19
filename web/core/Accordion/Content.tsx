@@ -1,3 +1,4 @@
+'use client'
 import { forwardRef } from 'react'
 import { AccordionContent, AccordionContentProps as _AccordionContentProps } from '@radix-ui/react-accordion'
 import envisTwMerge from '../../twMerge'

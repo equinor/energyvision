@@ -11,9 +11,9 @@ import { PortableTextBlock, PortableTextBlockStyle } from '@portabletext/types'
 import { FigureWithLayout, Quote, ExternalLink, InternalLink, BulletList, NumberedList } from './components'
 import { FactBox } from '@sections/FactBox/FactBox'
 import { twMerge } from 'tailwind-merge'
-import { FormattedMessage } from 'react-intl'
 import { Highlight } from '@core/Typography/Highlight'
 import { IFrame } from '@core/IFrame/IFrame'
+import { useTranslations } from 'next-intl'
 
 export type BlockType = Record<PortableTextBlockStyle, PortableTextBlockComponent | undefined>
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -68,6 +68,7 @@ const defaultSerializers = {
 }
 const footnoteSerializer = {
   footnote: ({ children, markKey }: any) => {
+    const t =useTranslations()
     return (
       <span>
         {children}
@@ -75,7 +76,7 @@ const footnoteSerializer = {
           <a id={`back_ref_${markKey}`} href={`#${markKey}`} aria-describedby="footnote-label" className="">
             {/* the number for footnote is added by css see tailwind.css components */}
             <span className="sr-only">
-              <FormattedMessage id="footnote" defaultMessage="Footnote" />
+              {t("footnote")}
             </span>
           </a>
         </span>

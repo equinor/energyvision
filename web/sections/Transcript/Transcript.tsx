@@ -4,9 +4,9 @@ import Modal from '@sections/Modal/Modal'
 import { add_circle_filled, add_circle_outlined } from '@equinor/eds-icons'
 import { twMerge } from 'tailwind-merge'
 import { TransformableIcon } from '../../icons/TransformableIcon'
-import { useIntl } from 'react-intl'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
 import { Typography } from '@core/Typography'
+import { useTranslations } from 'next-intl'
 
 type TranscriptProps = {
   className?: string
@@ -15,8 +15,8 @@ type TranscriptProps = {
 }
 const Transcript = ({ transcript, className, ariaTitle }: TranscriptProps) => {
   const [isOpen, setIsOpen] = useState(false)
-  const intl = useIntl()
-  const readTranscript = intl.formatMessage({ id: 'read_transcript', defaultMessage: 'Read transcript' })
+  const intl = useTranslations()
+  const readTranscript = intl('read_transcript')
   const handleOpen = () => {
     setIsOpen(true)
   }

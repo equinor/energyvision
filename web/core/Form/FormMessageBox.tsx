@@ -1,9 +1,9 @@
 import { forwardRef, HTMLAttributes } from 'react'
 import { check, error_outlined } from '@equinor/eds-icons'
-import { FormattedMessage } from 'react-intl'
 import { TransformableIcon } from '../../icons/TransformableIcon'
 import { Typography } from '@core/Typography'
 import { Button } from '@core/Button'
+import { useTranslations } from 'next-intl'
 
 type Variant = 'success' | 'error'
 
@@ -20,6 +20,7 @@ export const FormMessageBox = forwardRef<HTMLDivElement, FormMessageBoxProps>(fu
     success: 'border-norwegian-woods-100',
     error: 'border-energy-red-100',
   }
+  const t = useTranslations()
   return (
     <div ref={ref} {...rest} className={`flex gap-6 px-6 py-4 border-2 ${variantClassName[variant]}`}>
       <TransformableIcon
@@ -30,21 +31,20 @@ export const FormMessageBox = forwardRef<HTMLDivElement, FormMessageBoxProps>(fu
       <div>
         <Typography variant="body" className="text-md font-semibold">
           {variant === 'success' ? (
-            <FormattedMessage id="form_success_title" defaultMessage="Thank you!" />
+            t("form_success_title")
           ) : (
-            <FormattedMessage id="form_failure_title" defaultMessage="Sorry, something went wrong!" />
+            t("form_failure_title")
           )}
         </Typography>
         <Typography variant="body">
           {variant === 'success' ? (
             <>
-              <FormattedMessage id="form_success_line1" defaultMessage="Your form was successfully submitted. " />{' '}
-              <FormattedMessage id="form_success_line2" defaultMessage="You will hear from us shortly." />
-            </>
+            {t("form_success_line1")}
+             {t("form_success_line2")}
+           </>
           ) : (
-            <>
-              <FormattedMessage id="form_failure_line1" defaultMessage=" The form was not submitted." />{' '}
-              <FormattedMessage id="form_failure_line2" defaultMessage="Please try again." />
+            <> {t("form_failure_line1")}
+             {t("form_failure_line2")}
             </>
           )}
         </Typography>
@@ -58,9 +58,9 @@ export const FormMessageBox = forwardRef<HTMLDivElement, FormMessageBoxProps>(fu
           className="mt-4"
         >
           {variant === 'success' ? (
-            <FormattedMessage id="form_failure_cta" defaultMessage="Try again" />
+         t("form_failure_cta" )
           ) : (
-            <FormattedMessage id="form_success_cta" defaultMessage="Reopen the form" />
+            t("form_success_cta")
           )}
         </Button>
       </div>

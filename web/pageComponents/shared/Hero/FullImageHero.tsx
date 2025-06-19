@@ -1,3 +1,4 @@
+'use client'
 import type { HeroType, ImageWithCaptionData } from 'types'
 import { useSanityLoader } from '../../../lib/hooks/useSanityLoader'
 import Image, { Ratios } from '../SanityImage'

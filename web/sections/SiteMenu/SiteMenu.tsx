@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useCallback, useState, useMemo } from 'react'
+import { useCallback, useState, useMemo } from 'react'
 import { useFloating, useInteractions, useDismiss, FloatingOverlay, FloatingFocusManager } from '@floating-ui/react'
 import { usePathname, useRouter } from 'next/navigation'
 import { Menu, MenuButton } from '@core/MenuAccordion'
@@ -8,7 +8,6 @@ import { NavTopbar } from './NavTopbar'
 import { getAllSitesLink } from '../../common/helpers/getAllSitesLink'
 import { BaseLink, LogoLink } from '@core/Link'
 import type { MenuData, SimpleGroupData, SimpleMenuData, SubMenuData } from '../../types/index'
-import { FormattedMessage, useIntl } from 'react-intl'
 import { Flags } from '../../common/helpers/datasetHelpers'
 import { useLocale, useTranslations } from 'next-intl'
 import { MenuPanes } from '@core/MenuPanes/MenuPanes'
@@ -25,7 +24,6 @@ export type MenuProps = {
 }
 
 const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
-  const router = useRouter()
   const pathname = usePathname()
   const locale = useLocale()
   const [isOpen, setIsOpen] = useState(false)

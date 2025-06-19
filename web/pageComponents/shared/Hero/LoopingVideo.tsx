@@ -1,3 +1,4 @@
+'use client'
 import { useSanityLoader } from '../../../lib/hooks/useSanityLoader'
 import { LoopingVideoData } from '../../../types'
 import dynamic from 'next/dynamic'

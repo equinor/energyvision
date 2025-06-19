@@ -1,9 +1,10 @@
+'use client'
 import { AnchorHTMLAttributes, forwardRef, useMemo } from 'react'
 import { Link } from '@core/Link'
-import { FormattedMessage, useIntl } from 'react-intl'
 import { filter_alt } from '@equinor/eds-icons'
 import { TransformableIcon } from '../../icons/TransformableIcon'
-import { useRouter } from 'next/router'
+import { useTranslations } from 'next-intl'
+import { useSearchParams } from 'next/navigation'
 
 export type MagazineTagBarProps = {
   tags: { id: string; title: string; key: string }[]
@@ -28,20 +29,20 @@ const MagazineTagBar = forwardRef<HTMLDivElement, MagazineTagBarProps>(function 
   { tags, onClick, href },
   ref,
 ) {
-  const router = useRouter()
-  const { query } = router
+  const searchParams = useSearchParams()
+  const query = searchParams.get('tag')
 
   const formattedTags = useMemo(() => {
     return tags?.map((tag) => ({
       id: tag.id,
       label: tag.title,
       key: tag.key,
-      active: query?.tag === tag.key,
+      active: query === tag.key,
     }))
   }, [tags, query])
 
-  const intl = useIntl()
-  allTagLink.label = intl.formatMessage({ id: 'magazine_tag_filter_all', defaultMessage: 'All categories' })
+  const intl = useTranslations()
+  allTagLink.label = intl('magazine_tag_filter_all')
   allTagLink.active = !query
   const linkClassNames = `
   inline-block 
@@ -62,7 +63,7 @@ const MagazineTagBar = forwardRef<HTMLDivElement, MagazineTagBarProps>(function 
     >
       <h2 className="flex gap-1 font-medium text-sm items-center -mt-0.5">
         <TransformableIcon iconData={filter_alt} className="text-grey-50 size-5 -mt-1" />
-        <FormattedMessage id="filter" defaultMessage="Filter" />
+        {intl('filter')}
       </h2>
       <ul
         // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex

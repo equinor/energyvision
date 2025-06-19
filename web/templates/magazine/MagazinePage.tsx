@@ -1,3 +1,4 @@
+'use client'
 import { useRouter } from 'next/router'
 import { PageContent } from '../../pageComponents/pageTemplates/shared/SharedPageContent'
 import SharedTitle from '../../pageComponents/pageTemplates/shared/SharedTitle'
@@ -7,16 +8,17 @@ import Teaser from '../../sections/teasers/Teaser/Teaser'
 import Seo from '../../pageComponents/shared/Seo'
 import useSharedTitleStyles from '../../lib/hooks/useSharedTitleStyles'
 import MagazineTagBar from '@sections/MagazineTags/MagazineTagBar'
+import { useLocale } from 'next-intl'
+import { usePathname } from 'next/navigation'
 
 type MagazinePageProps = {
   data: MagazinePageSchema
 }
 
 const MagazinePage = ({ data }: MagazinePageProps) => {
-  const router = useRouter()
-  const parentSlug =
-    (router.locale !== router.defaultLocale ? `/${router.locale}` : '') +
-    router.asPath.substring(router.asPath.indexOf('/'), router.asPath.lastIndexOf('/'))
+  const locale = useLocale()
+  const pathname = usePathname()
+  const parentSlug = locale + pathname.substring(pathname.indexOf('/'), pathname.lastIndexOf('/'))
 
   const { hideFooterComponent, footerComponent, tags } = data
 

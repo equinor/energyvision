@@ -1,9 +1,9 @@
 import { forwardRef, HTMLAttributes } from 'react'
 import { StickyMenuData } from '../../types/index'
-import { useIntl } from 'react-intl'
 import { ColorKeyTokens, colorKeyToUtilityMap } from '../../styles/colorKeyToUtilityMap'
 import { StickyMenuLink } from '@core/Link'
 import envisTwMerge from '../../twMerge'
+import { useTranslations } from 'next-intl'
 
 export type StickyMenuProps = {
   stickyMenuData?: StickyMenuData
@@ -13,7 +13,7 @@ export const StickyMenu = forwardRef<HTMLElement, StickyMenuProps>(function Stic
   { stickyMenuData, className = '', ...rest },
   ref,
 ) {
-  const intl = useIntl()
+  const intl = useTranslations()
   const anchorReference = stickyMenuData?.links.find((it) => it.type == 'anchorLinkReference')
   const resourceLink = stickyMenuData?.links.find((it) => it.type == 'downloadableFile')
 
@@ -24,10 +24,7 @@ export const StickyMenu = forwardRef<HTMLElement, StickyMenuProps>(function Stic
     <nav
       {...rest}
       ref={ref}
-      aria-label={intl.formatMessage({
-        id: 'local',
-        defaultMessage: 'Local',
-      })}
+      aria-label={intl('local')}
       role="navigation"
       className={envisTwMerge(
         `

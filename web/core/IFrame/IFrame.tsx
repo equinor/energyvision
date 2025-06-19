@@ -1,3 +1,4 @@
+'use client'
 import { forwardRef, HTMLAttributes, useContext, useId, useState } from 'react'
 import { PreviewContext } from '../../lib/contexts/PreviewContext'
 import useConsentState from '../../lib/hooks/useConsentState'

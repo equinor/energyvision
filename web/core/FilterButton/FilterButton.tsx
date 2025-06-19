@@ -16,7 +16,7 @@ import {
 import OptionList from './OptionList'
 import { chevron_down } from '@equinor/eds-icons'
 import { Button } from '@core/Button'
-import { FormattedMessage, useIntl } from 'react-intl'
+import { useTranslations } from 'next-intl'
 
 type FilterButtonProps = {
   optionsList: any[]
@@ -29,7 +29,7 @@ const FilterButton = forwardRef<HTMLDivElement, FilterButtonProps>(function Filt
   ref,
 ) {
   const [isOpen, setIsOpen] = useState(false)
-  const intl = useIntl()
+  const intl = useTranslations()
 
   const { refs, floatingStyles, context } = useFloating({
     open: isOpen,
@@ -48,10 +48,7 @@ const FilterButton = forwardRef<HTMLDivElement, FilterButtonProps>(function Filt
   const refinedItems = optionsList.filter((item) => item.isRefined)
   const buttonStateLabel =
     refinedItems?.length > 0
-      ? `${filterName}, ${refinedItems.length} ${intl.formatMessage({
-          id: 'newsroom_filters_selected',
-          defaultMessage: 'selected',
-        })}`
+      ? `${filterName}, ${refinedItems.length} ${intl('newsroom_filters_selected')}`
       : `${filterName}`
 
   const handleChange = (itemValue: string) => {

@@ -1,3 +1,4 @@
+'use client'
 import { useMediaQuery } from '../../../lib/hooks/useMediaQuery'
 import Card from '@sections/cards/Card'
 import { FormattedDate } from '@core/FormattedDateTime'

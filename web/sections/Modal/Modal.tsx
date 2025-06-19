@@ -1,10 +1,10 @@
 import { close } from '@equinor/eds-icons'
 import { TransformableIcon } from '../../icons/TransformableIcon'
 import { forwardRef, useEffect, useMemo, useRef } from 'react'
-import { useIntl } from 'react-intl'
 import { mergeRefs } from '@equinor/eds-utils'
 import { Button } from '@core/Button'
 import envisTwMerge from '../../twMerge'
+import { useTranslations } from 'next-intl'
 
 export type ModalProps = {
   isOpen: boolean
@@ -21,7 +21,7 @@ const Modal = forwardRef<HTMLDialogElement, ModalProps>(function Modal(
 ) {
   const modalRef = useRef<HTMLDialogElement>(null)
   const combinedDialogRef = useMemo(() => mergeRefs<HTMLDialogElement>(modalRef, ref), [modalRef, ref])
-  const intl = useIntl()
+  const intl = useTranslations()
 
   useEffect(() => {
     if (isOpen) {
@@ -74,12 +74,7 @@ const Modal = forwardRef<HTMLDialogElement, ModalProps>(function Modal(
         // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
         tabIndex={0}
       >
-        <Button
-          variant="ghost"
-          className="ml-auto sticky top-0 p-3"
-          onClick={onClose}
-          aria-label={intl.formatMessage({ id: 'close', defaultMessage: 'Close' })}
-        >
+        <Button variant="ghost" className="ml-auto sticky top-0 p-3" onClick={onClose} aria-label={intl('close')}>
           <TransformableIcon iconData={close} className="w-full h-auto" />
         </Button>
         <div className="pl-2 pr-12 md:px-12 py-12">{children}</div>

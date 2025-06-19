@@ -1,8 +1,8 @@
+'use client'
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Icon } from '@equinor/eds-core-react'
 import { useForm, Controller, useWatch } from 'react-hook-form'
 import { error_filled } from '@equinor/eds-icons'
-import { FormattedMessage, useIntl } from 'react-intl'
 import { BaseSyntheticEvent, useMemo, useState } from 'react'
 import FriendlyCaptcha from '../FriendlyCaptcha'
 import { TextField } from '@core/TextField/TextField'
@@ -11,6 +11,7 @@ import { FormMessageBox } from '@core/Form/FormMessageBox'
 import { Select } from '@core/Select/Select'
 import { Checkbox } from '@core/Checkbox/Checkbox'
 import getCatalogType from './getRequestType'
+import { useLocale, useTranslations } from 'next-intl'
 
 type FormValues = {
   name: string
@@ -25,7 +26,8 @@ type FormValues = {
 }
 
 const CareersContactForm = () => {
-  const intl = useIntl()
+  const intl = useTranslations()
+  const locale = useLocale()
   const [isFriendlyChallengeDone, setIsFriendlyChallengeDone] = useState(false)
   const [isServerError, setServerError] = useState(false)
   const [isSuccessfullySubmitted, setSuccessfullySubmitted] = useState(false)
@@ -58,17 +60,11 @@ const CareersContactForm = () => {
   })
 
   const setPositionIdMandatory = useMemo(() => {
-    return (
-      watchCategory !==
-        intl.formatMessage({
-          id: 'careers_contact_form_suspected_recruitment_scam',
-          defaultMessage: 'Suspected recruitment scam',
-        }) && watchCategory !== ''
-    )
+    return watchCategory !== intl('careers_contact_form_suspected_recruitment_scam') && watchCategory !== ''
   }, [intl, watchCategory])
 
   const onSubmit = async (data: FormValues, event?: BaseSyntheticEvent) => {
-    data.preferredLang = intl.locale
+    data.preferredLang = locale
     if (isFriendlyChallengeDone) {
       const res = await fetch('/api/forms/service-now-careers-contact', {
         body: JSON.stringify({
@@ -87,10 +83,7 @@ const CareersContactForm = () => {
       //@ts-ignore: TODO: types
       setError('root.notCompletedCaptcha', {
         type: 'custom',
-        message: intl.formatMessage({
-          id: 'form_antirobot_validation_required',
-          defaultMessage: 'Anti-Robot verification is required',
-        }),
+        message: intl('form_antirobot_validation_required'),
       })
     }
   }
@@ -98,9 +91,7 @@ const CareersContactForm = () => {
   return (
     <>
       {!isSuccessfullySubmitted && !isServerError && (
-        <div className="pb-6 text-sm">
-          <FormattedMessage id="all_fields_mandatory" defaultMessage="All fields with *  are mandatory" />
-        </div>
+        <div className="pb-6 text-sm">{intl('all_fields_mandatory')} </div>
       )}
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -117,19 +108,13 @@ const CareersContactForm = () => {
               name="name"
               control={control}
               rules={{
-                required: intl.formatMessage({
-                  id: 'name_validation',
-                  defaultMessage: 'Please fill out your name',
-                }),
+                required: intl('name_validation'),
               }}
               render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
                 <TextField
                   {...props}
                   id={props.name}
-                  label={`${intl.formatMessage({
-                    id: 'name',
-                    defaultMessage: 'Your Name',
-                  })}*`}
+                  label={`${intl('name')}*`}
                   inputRef={ref}
                   aria-required="true"
                   inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
@@ -142,30 +127,18 @@ const CareersContactForm = () => {
               name="phone"
               control={control}
               rules={{
-                required: intl.formatMessage({
-                  id: 'careers_contact_form_phone_validation',
-                  defaultMessage: 'Please enter a valid phone number',
-                }),
+                required: intl('careers_contact_form_phone_validation'),
                 pattern: {
                   value: /^[+]?([0-9]?[()]|[0-9]+|[0-9]+-){8,20}(?:x[0-9]{0,10})?$/g,
-                  message: intl.formatMessage({
-                    id: 'careers_contact_form_phone_validation',
-                    defaultMessage: 'Please enter a valid phone number',
-                  }),
+                  message: intl('careers_contact_form_phone_validation'),
                 },
               }}
               render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
                 <TextField
                   {...props}
                   id={props.name}
-                  label={`${intl.formatMessage({
-                    id: 'careers_contact_form_phone',
-                    defaultMessage: 'Phone Number',
-                  })}*`}
-                  description={intl.formatMessage({
-                    id: 'country_code_format',
-                    defaultMessage: 'Enter phone number with country code',
-                  })}
+                  label={`${intl('careers_contact_form_phone')}*`}
+                  description={intl('country_code_format')}
                   type="tel"
                   inputRef={ref}
                   inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
@@ -179,26 +152,17 @@ const CareersContactForm = () => {
               name="email"
               control={control}
               rules={{
-                required: intl.formatMessage({
-                  id: 'email_validation',
-                  defaultMessage: 'Please fill out a valid email address',
-                }),
+                required: intl('email_validation'),
                 pattern: {
                   value: /^[\w!#$%&'*+/=?`{|}~^-]+(?:\.[\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}$/g,
-                  message: intl.formatMessage({
-                    id: 'email_validation',
-                    defaultMessage: 'Please fill out a valid email address',
-                  }),
+                  message: intl('email_validation'),
                 },
               }}
               render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
                 <TextField
                   {...props}
                   id={props.name}
-                  label={`${intl.formatMessage({
-                    id: 'email',
-                    defaultMessage: 'Email',
-                  })}*`}
+                  label={`${intl('email')}*`}
                   inputRef={ref}
                   inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
                   helperText={error?.message}
@@ -211,42 +175,12 @@ const CareersContactForm = () => {
               name="category"
               control={control}
               render={({ field: { ref, ...props } }) => (
-                <Select
-                  {...props}
-                  selectRef={ref}
-                  id={props.name}
-                  label={intl.formatMessage({ id: 'category', defaultMessage: 'Category' })}
-                >
-                  <option value="">
-                    {intl.formatMessage({
-                      id: 'form_please_select_an_option',
-                      defaultMessage: 'Please select an option',
-                    })}
-                  </option>
-                  <option>
-                    {intl.formatMessage({
-                      id: 'careers_contact_form_onboarding',
-                      defaultMessage: 'Onboarding',
-                    })}
-                  </option>
-                  <option>
-                    {intl.formatMessage({
-                      id: 'careers_contact_form_questions_related_to_position',
-                      defaultMessage: 'Questions related to a specific position',
-                    })}
-                  </option>
-                  <option>
-                    {intl.formatMessage({
-                      id: 'careers_contact_form_technical_issues',
-                      defaultMessage: 'Technical issue when applying for a specific position',
-                    })}
-                  </option>
-                  <option>
-                    {intl.formatMessage({
-                      id: 'careers_contact_form_suspected_recruitment_scam',
-                      defaultMessage: 'Suspected recruitment scam',
-                    })}
-                  </option>
+                <Select {...props} selectRef={ref} id={props.name} label={intl('category')}>
+                  <option value="">{intl('form_please_select_an_option')}</option>
+                  <option>{intl('careers_contact_form_onboarding')}</option>
+                  <option>{intl('careers_contact_form_questions_related_to_position')}</option>
+                  <option>{intl('careers_contact_form_technical_issues')}</option>
+                  <option>{intl('careers_contact_form_suspected_recruitment_scam')}</option>
                 </Select>
               )}
             />
@@ -259,10 +193,7 @@ const CareersContactForm = () => {
                   require: (value) => {
                     if (!value && setPositionIdMandatory) {
                       console.log('not validated required field')
-                      return intl.formatMessage({
-                        id: 'careers_contact_form_positionId_validation',
-                        defaultMessage: 'Please enter a position ID or name ',
-                      })
+                      return intl('careers_contact_form_positionId_validation')
                     }
                     return true
                   },
@@ -272,10 +203,7 @@ const CareersContactForm = () => {
                 <TextField
                   {...props}
                   id={props.name}
-                  label={`${intl.formatMessage({
-                    id: 'careers_contact_form_position',
-                    defaultMessage: 'Position ID/name',
-                  })}${setPositionIdMandatory ? '*' : ''}`}
+                  label={`${intl('careers_contact_form_position')}${setPositionIdMandatory ? '*' : ''}`}
                   inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
                   helperText={error?.message}
                   {...(setPositionIdMandatory && {
@@ -291,23 +219,14 @@ const CareersContactForm = () => {
               name="location"
               control={control}
               rules={{
-                required: intl.formatMessage({
-                  id: 'careers_contact_form_location_validation',
-                  defaultMessage: 'Please enter a location ',
-                }),
+                required: intl('careers_contact_form_location_validation'),
               }}
               render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
                 <TextField
                   {...props}
                   id={props.name}
-                  label={`${intl.formatMessage({
-                    id: 'careers_contact_form_location',
-                    defaultMessage: 'Location',
-                  })}*`}
-                  description={intl.formatMessage({
-                    id: 'careers_contact_form_location_placeholder',
-                    defaultMessage: 'Country/city',
-                  })}
+                  label={`${intl('careers_contact_form_location')}*`}
+                  description={intl('careers_contact_form_location_placeholder')}
                   inputRef={ref}
                   inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
                   helperText={error?.message}
@@ -321,51 +240,13 @@ const CareersContactForm = () => {
               name="candidateType"
               control={control}
               render={({ field: { ref, ...props } }) => (
-                <Select
-                  {...props}
-                  selectRef={ref}
-                  id={props.name}
-                  label={intl.formatMessage({
-                    id: 'careers_contact_form_candidate_type',
-                    defaultMessage: 'Candidate type',
-                  })}
-                >
-                  <option value="">
-                    {intl.formatMessage({
-                      id: 'form_please_select_an_option',
-                      defaultMessage: 'Please select an option',
-                    })}
-                  </option>
-                  <option>
-                    {intl.formatMessage({
-                      id: 'careers_contact_form_experienced_professionals',
-                      defaultMessage: 'Experienced professionals',
-                    })}
-                  </option>
-                  <option>
-                    {intl.formatMessage({
-                      id: ' careers_contact_form_graduates',
-                      defaultMessage: 'Graduates',
-                    })}
-                  </option>
-                  <option>
-                    {intl.formatMessage({
-                      id: 'careers_contact_form_interns',
-                      defaultMessage: 'Interns (e.g. summer, academic)',
-                    })}
-                  </option>
-                  <option>
-                    {intl.formatMessage({
-                      id: 'careers_contact_form_apprentices',
-                      defaultMessage: 'Apprentices/lærlinger',
-                    })}
-                  </option>
-                  <option>
-                    {intl.formatMessage({
-                      id: 'careers_contact_form_other',
-                      defaultMessage: 'Other',
-                    })}
-                  </option>
+                <Select {...props} selectRef={ref} id={props.name} label={intl('careers_contact_form_candidate_type')}>
+                  <option value="">{intl('form_please_select_an_option')}</option>
+                  <option>{intl('careers_contact_form_experienced_professionals')}</option>
+                  <option>{intl(' careers_contact_form_graduates')}</option>
+                  <option>{intl('careers_contact_form_interns')}</option>
+                  <option>{intl('careers_contact_form_apprentices')}</option>
+                  <option>{intl('careers_contact_form_other')}</option>
                 </Select>
               )}
             />
@@ -374,19 +255,13 @@ const CareersContactForm = () => {
               name="questions"
               control={control}
               rules={{
-                required: intl.formatMessage({
-                  id: 'careers_contact_form_questions_validation',
-                  defaultMessage: 'Please enter a question',
-                }),
+                required: intl('careers_contact_form_questions_validation'),
               }}
               render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
                 <TextField
                   {...props}
                   id={props.name}
-                  label={`${intl.formatMessage({
-                    id: 'careers_contact_form_questions',
-                    defaultMessage: 'Type your questions',
-                  })}*`}
+                  label={`${intl('careers_contact_form_questions')}*`}
                   inputRef={ref}
                   multiline
                   rowsMax={10}
@@ -399,11 +274,7 @@ const CareersContactForm = () => {
             />
             <Checkbox
               className="pb-4"
-              label={intl.formatMessage({
-                id: 'careers_contact_form_supporting_documents',
-                defaultMessage:
-                  'Tick the box if you would like to send supporting documents, and we will get in touch with you',
-              })}
+              label={intl('careers_contact_form_supporting_documents')}
               value="Yes"
               {...register('supportingDocuments')}
             />
@@ -429,13 +300,8 @@ const CareersContactForm = () => {
                 </p>
               )}
             </div>
-            <Button type="submit">
-              {isSubmitting ? (
-                <FormattedMessage id="form_sending" defaultMessage={'Sending...'}></FormattedMessage>
-              ) : (
-                <FormattedMessage id="careers_contact_form_cta" defaultMessage="Submit Form" />
-              )}
-            </Button>
+
+            <Button type="submit">{isSubmitting ? intl('form_sending') : intl('careers_contact_form_cta')}</Button>
           </>
         )}
         <div role="region" aria-live="assertive">
