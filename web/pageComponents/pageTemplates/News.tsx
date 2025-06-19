@@ -9,7 +9,6 @@ import DefaulHeroImage from '../shared/Hero/DefaultHeroImage'
 import IngressText from '../shared/portableText/IngressText'
 import LatestNews from '../news/LatestNews'
 import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
-import BasicIFrame from '../shared/iframe/BasicIFrame'
 import { getFullUrl } from '../../common/helpers/getFullUrl'
 import { metaTitleSuffix } from '../../languages'
 import type { NewsSchema } from '../../types/index'
@@ -19,6 +18,8 @@ import { twMerge } from 'tailwind-merge'
 import RelatedContent from '../../pageComponents/shared/RelatedContent'
 import Footnotes from '../../pageComponents/shared/portableText/components/Footnotes'
 import { useLocale } from 'next-intl'
+import { IFrame } from '@core/IFrame/IFrame'
+
 
 const isDateAfter = (a: string, b: string) => {
   const dtA = new Date(a).getTime()
@@ -55,7 +56,6 @@ const NewsPage = ({ data: news }: ArticleProps) => {
   } = news
 
   const modifiedDate = isDateAfter(publishDateTime, updatedAt) ? publishDateTime : updatedAt
-
   const openGraphImages = getOpenGraphImages((openGraphImage?.asset ? openGraphImage : null) || heroImage?.image)
   /*   appInsights.trackPageView({ name: slug, uri: fullUrl }) */
 
@@ -150,7 +150,20 @@ const NewsPage = ({ data: news }: ArticleProps) => {
             <Footnotes blocks={[...ingress, ...content]} />
           </div>
 
-          {iframe && <BasicIFrame data={iframe} />}
+          {iframe && (
+            <section className="px-layout-lg max-w-viewport mx-auto">
+              <IFrame
+                //@ts-ignore:TODO type match for portabletext
+                title={iframe?.title}
+                showTitleAbove={true}
+                frameTitle={iframe?.frameTitle}
+                url={iframe?.url}
+                cookiePolicy={iframe?.cookiePolicy}
+                aspectRatio={iframe?.designOptions?.aspectRatio}
+                description={iframe?.description}
+              />
+            </section>
+          )}
 
           {relatedLinks?.links && relatedLinks.links.length > 0 && (
             <RelatedContent

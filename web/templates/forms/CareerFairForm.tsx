@@ -3,11 +3,13 @@ import { Icon } from '@equinor/eds-core-react'
 import { useForm, Controller } from 'react-hook-form'
 import { error_filled } from '@equinor/eds-icons'
 import { FormattedMessage, useIntl } from 'react-intl'
-import { FormTextField, Checkbox, FormSelect, FormSubmitSuccessBox, FormSubmitFailureBox } from '@components'
 import { BaseSyntheticEvent, useState } from 'react'
 import FriendlyCaptcha from './FriendlyCaptcha'
 import { TextField } from '@core/TextField/TextField'
 import { Button } from '@core/Button'
+import { Select } from '@core/Select/Select'
+import { Checkbox } from '@core/Checkbox/Checkbox'
+import { FormMessageBox } from '@core/Form/FormMessageBox'
 
 type FormValues = {
   organisation: string
@@ -106,7 +108,7 @@ const CareerFairForm = () => {
                 }),
               }}
               render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
-                <FormTextField
+                <TextField
                   {...props}
                   id={props.name}
                   label={`${intl.formatMessage({
@@ -131,7 +133,7 @@ const CareerFairForm = () => {
                 }),
               }}
               render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
-                <FormTextField
+                <TextField
                   {...props}
                   id={props.name}
                   label={`${intl.formatMessage({
@@ -201,7 +203,7 @@ const CareerFairForm = () => {
                 },
               }}
               render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
-                <FormTextField
+                <TextField
                   {...props}
                   id={props.name}
                   label={`${intl.formatMessage({
@@ -221,7 +223,7 @@ const CareerFairForm = () => {
               control={control}
               render={({ field: { ref, ...props } }) => (
                 <>
-                  <FormSelect
+                  <Select
                     {...props}
                     selectRef={ref}
                     id={props.name}
@@ -246,7 +248,7 @@ const CareerFairForm = () => {
                         defaultMessage: 'Would like to visit Equinor office or facility',
                       })}
                     </option>
-                  </FormSelect>
+                  </Select>
                   {watchEvent ==
                     intl.formatMessage({
                       id: 'career_fair_form_visit_equinor',
@@ -305,7 +307,7 @@ const CareerFairForm = () => {
               name="website"
               control={control}
               render={({ field: { ref, ...props } }) => (
-                <FormTextField
+                <TextField
                   {...props}
                   id={props.name}
                   label={intl.formatMessage({
@@ -339,7 +341,7 @@ const CareerFairForm = () => {
               />
               {/*@ts-ignore: TODO: types*/}
               {errors?.root?.notCompletedCaptcha && (
-                <p role="alert" className="text-clear-red-100 flex gap-2 font-semibold">
+                <p role="alert" className="text-slate-80 border border-clear-red-100 px-6 py-4flex gap-2 font-semibold">
                   {/*@ts-ignore: TODO: types*/}
                   <span className="mt-1">{errors.root.notCompletedCaptcha.message}</span>
                   <Icon data={error_filled} aria-hidden="true" />
@@ -355,16 +357,18 @@ const CareerFairForm = () => {
             </Button>
           </>
         )}
-        {isSubmitSuccessful && !isServerError && <FormSubmitSuccessBox type="reset" />}
-        {isSubmitted && isServerError && (
-          <FormSubmitFailureBox
-            type="button"
-            onClick={() => {
-              reset(undefined, { keepValues: true })
-              setServerError(false)
-            }}
-          />
-        )}
+        <div role="region" aria-live="assertive">
+          {isSubmitSuccessful && !isServerError && <FormMessageBox variant="success" />}
+          {isSubmitted && isServerError && (
+            <FormMessageBox
+              variant="error"
+              onClick={() => {
+                reset(undefined, { keepValues: true })
+                setServerError(false)
+              }}
+            />
+          )}
+        </div>
       </form>
     </>
   )
