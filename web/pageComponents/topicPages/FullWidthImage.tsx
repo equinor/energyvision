@@ -1,3 +1,4 @@
+'use client'
 import type { FullWidthImageData } from '../../types/index'
 import Image, { Ratios } from '../shared/SanityImage'
 import { Caption } from '../shared/image/Caption'

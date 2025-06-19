@@ -1,3 +1,4 @@
+'use client'
 import Image, { Ratios } from './SanityImage'
 import type { ImageWithAlt, DesignOptions } from '../../types/index'
 import { QuoteSymbol } from '../../icons'
