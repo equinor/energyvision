@@ -3,8 +3,8 @@ import videojs from 'video.js'
 import Player from 'video.js/dist/types/player'
 //import 'video.js/dist/video-js.css'
 import MediaError from 'video.js/dist/types/media-error'
-import useVideojsAnalytics from '../../../lib/hooks/useVideojsAnalytics'
-import { Play, Pause } from '../../../icons'
+import useVideojsAnalytics from './useVideojsAnalytics'
+import { Play, Pause } from '../../icons'
 
 type VideoJSProps = Omit<HTMLProps<HTMLVideoElement>, 'src'> & {
   src: string

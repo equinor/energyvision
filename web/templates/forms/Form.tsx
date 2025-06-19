@@ -13,6 +13,7 @@ import Blocks from '../../pageComponents/shared/portableText/Blocks'
 const Form = ({ data, anchor, className }: { data: FormData; anchor?: string; className?: string }) => {
   const { title, ingress, downloads } = data
   const variant = data.form
+
   const renderForm = (variant: string | undefined) => {
     switch (variant) {
       case 'subscribeForm':

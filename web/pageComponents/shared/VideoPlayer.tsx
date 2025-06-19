@@ -10,7 +10,7 @@ import {
 import { BackgroundContainer } from '@core/Backgrounds'
 import { getUrlFromAction, urlFor } from '../../common/helpers'
 import IngressText from './portableText/IngressText'
-import { VideoJS } from '@components/VideoJsPlayer'
+import { VideoJS } from '@core/VideoJsPlayer'
 import { twMerge } from 'tailwind-merge'
 import { Heading } from '@core/Typography'
 import { PortableTextBlock } from '@portabletext/types'
@@ -20,7 +20,7 @@ import { ResourceLink } from '@core/Link'
 import { getLocaleFromName } from '../../lib/localization'
 
 const DynamicVideoJsComponent = dynamic<React.ComponentProps<typeof VideoJS>>(
-  () => import('../../components/src/VideoJsPlayer').then((mod) => mod.VideoJS),
+  () => import('@core/VideoJsPlayer').then((mod) => mod.VideoJS),
   {
     ssr: false,
     loading: () => <p>Loading...</p>,
@@ -101,7 +101,7 @@ export const VideoComponentWithCaption = ({
           className="object-cover"
           src={video.url}
           title={video.title}
-          poster={urlFor(video.thumbnail).width(w).height(h).url()}
+          poster={urlFor(video.thumbnail?.asset).width(w).height(h).url()}
           playsInline
           aspectRatio={designOptions.aspectRatio}
           useBrandTheme={designOptions?.useBrandTheme}
@@ -145,7 +145,7 @@ export const VideoJsComponent = ({
         className="object-cover"
         src={video.url}
         title={video.title}
-        poster={video.thumbnail && urlFor(video.thumbnail).width(w).height(h).url()}
+        poster={video.thumbnail?.asset && urlFor(video.thumbnail).width(w).height(h).url()}
         playsInline
         aspectRatio={designOptions.aspectRatio}
         useBrandTheme={designOptions?.useBrandTheme}

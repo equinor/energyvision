@@ -1,8 +1,9 @@
-import { TwitterEmbedData } from '../../types/index'
+import { PortableTextBlock, TwitterEmbedData } from '../../types/index'
 import { TwitterTimelineEmbed, TwitterTweetEmbed } from 'react-twitter-embed'
 import { BackgroundContainer } from '@core/Backgrounds'
 import IngressText from '../../pageComponents/shared/portableText/IngressText'
-import TitleText from '../../pageComponents/shared/portableText/TitleText'
+import { Typography } from '@core/Typography'
+import { toPlainText } from '@portabletext/react'
 import RequestConsentContainer from '@core/IFrame/RequestConsentContainer'
 
 type TwitterEmbedProps = {
@@ -13,6 +14,7 @@ type TwitterEmbedProps = {
 
 const TwitterEmbed = ({ data, anchor, className }: TwitterEmbedProps) => {
   const { embedType, embedValue, designOptions, title, ingress } = data
+  const plainTitle = title ? toPlainText(title as PortableTextBlock[]) : ''
 
   const Embed = () => {
     switch (embedType) {
@@ -37,7 +39,7 @@ const TwitterEmbed = ({ data, anchor, className }: TwitterEmbedProps) => {
     <BackgroundContainer {...designOptions} id={anchor} className={className} renderFragmentWhenPossible>
       {title && (
         <div className="mb-11">
-          <TitleText value={title} />
+          <Typography>{plainTitle}</Typography>
         </div>
       )}
       {ingress && (

@@ -1,5 +1,5 @@
 import { forwardRef, HTMLAttributes } from 'react'
-import { Heading } from '../Heading'
+import { Typography } from '../../../core/Typography'
 
 import styled from 'styled-components'
 
@@ -7,7 +7,7 @@ const StyledTitle = styled.div`
   margin-left: 0;
 `
 
-const StyledHeading = styled(Heading)`
+const StyledHeading = styled(Typography)`
   margin-bottom: 0;
 
   // TODO: Don’t use !important.
@@ -23,7 +23,7 @@ export type TitleProps = {
 export const Title = forwardRef<HTMLDivElement, TitleProps>(function Title({ level = 'h3', children, ...rest }, ref) {
   return (
     <StyledTitle ref={ref} {...rest}>
-      <StyledHeading level={level}>{children}</StyledHeading>
+      <StyledHeading as={level}>{children}</StyledHeading>
     </StyledTitle>
   )
 })

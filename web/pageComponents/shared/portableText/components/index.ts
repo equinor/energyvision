@@ -1,5 +1,3 @@
-export * from './h3Heading'
-export * from './h2Heading'
 export * from './Sub'
 export * from './Sup'
 export * from './Strikethrough'
