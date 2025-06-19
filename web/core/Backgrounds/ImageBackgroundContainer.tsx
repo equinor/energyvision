@@ -1,3 +1,4 @@
+'use client'
 import { forwardRef, HTMLAttributes, CSSProperties } from 'react'
 import { useSanityLoader } from '../../lib/hooks/useSanityLoader'
 import { ImageBackground } from '../../types/index'

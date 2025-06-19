@@ -1,7 +1,8 @@
-import { useRouter } from 'next/router'
+'use client'
 import { useEffect, useState } from 'react'
 import { checkCookieConsent } from '../../common/helpers/checkCookieConsent'
 import { CookieType } from '../../types'
+import { usePathname } from 'next/navigation'
 
 /**
  * Returns true if the consent is given for the given consentType.
@@ -10,9 +11,9 @@ import { CookieType } from '../../types'
  */
 export default function useConsent(consentType: CookieType[]): boolean | undefined {
   const [consent, setConsent] = useState<boolean>(checkCookieConsent(consentType))
-  const router = useRouter()
+  const pathname = usePathname()
   useEffect(() => {
     setConsent(checkCookieConsent(consentType))
-  }, [consentType, router.asPath])
+  }, [consentType, pathname])
   return consent
 }

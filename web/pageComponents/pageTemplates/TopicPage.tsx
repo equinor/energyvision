@@ -44,7 +44,7 @@ const TopicPage = ({ data }: TopicPageProps) => {
         {data.hero.type !== HeroTypes.DEFAULT && !data?.isCampaign && (
           <SharedTitle sharedTitle={data.title} background={titleStyles.background} />
         )}
-        {/*<PageContent data={data} titleBackground={titleStyles} />*/}
+        {<PageContent data={data} titleBackground={titleStyles} />}
       </main>
     </>
   )

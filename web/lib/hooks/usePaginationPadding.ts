@@ -1,3 +1,4 @@
+'use client'
 import { useMediaQuery } from './useMediaQuery'
 
 function usePaginationPadding() {

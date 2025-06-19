@@ -1,3 +1,4 @@
+'use client'
 import { Flags } from '../../common/helpers/datasetHelpers'
 import { useEffect, useState } from 'react'
 

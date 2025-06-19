@@ -2,6 +2,7 @@
  * This hook returns a style object for the shared title
  * accordingly to its next component
  */
+
 import { BackgroundContainerProps } from '@core/Backgrounds'
 import { HeroTypes, TextBlockData, ContentType } from '../../types'
 
