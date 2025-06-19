@@ -302,6 +302,7 @@ module.exports = {
         '5/4': '1.25',
         '9/16': '0.56',
         '4/3': '4/3',
+        '10/3': '10/3',
       },
       margin: {
         'page-content': 'theme(spacing.20)',

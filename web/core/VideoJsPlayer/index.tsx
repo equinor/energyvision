@@ -53,6 +53,7 @@ export const VideoJS: React.FC<VideoJSProps> = ({
 
   const getPlayer = useCallback(
     (node: Element) => {
+      console.log('rest', rest)
       const player = videojs(
         node,
         {
