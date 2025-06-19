@@ -106,8 +106,8 @@ export const TextField = forwardRef<HTMLDivElement, TextFieldProps>(function Tex
   }
 
   const variantClassName = {
-    error: 'text-clear-red-100',
-    success: 'text-norwegian-woods-100',
+    error: 'text-slate-80 border border-clear-red-100 px-6 py-2',
+    success: 'text-slate-80 border border-norwegian-woods-100 px-6 py-2',
     warning: '',
   }
 
@@ -128,7 +128,7 @@ export const TextField = forwardRef<HTMLDivElement, TextFieldProps>(function Tex
           className={envisTwMerge(
             `${
               variant ? variantClassName[variant] : ''
-            } mt-2 ml-2 grid auto-cols-auto gap-2 items-start justify-start whitespace-pre-line font-semibold`,
+            } mt-2 grid auto-cols-auto gap-2 items-start justify-start whitespace-pre-line font-semibold`,
             helperTextClassName,
           )}
         >

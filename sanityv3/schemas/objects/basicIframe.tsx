@@ -42,7 +42,7 @@ export default {
       name: 'title',
       type: 'array',
       title: 'Title',
-      description: 'The (optional) title/heading shown above the iframe.',
+      description: 'The (optional) title/heading',
       components: {
         input: CompactBlockEditor,
       },

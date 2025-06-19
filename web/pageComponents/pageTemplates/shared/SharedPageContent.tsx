@@ -1,13 +1,11 @@
 import Teaser from '../../../sections/teasers/Teaser/Teaser'
-import TextBlock from '../../topicPages/TextBlock'
+import TextBlock from '../../../sections/TextBlock/TextBlock'
 import FullWidthImage, { FullWidthImageData } from '../../topicPages/FullWidthImage'
 import FullWidthVideo from '../../topicPages/FullWidthVideo'
 import Figure, { FigureData } from '../../topicPages/Figure'
 import PageQuote from '../../topicPages/PageQuote'
 import PromoTileArray from '../../../sections/PromoTiles/PromoTileArray'
-import IFrame from '../../topicPages/IFrame'
 import Promotion from '../../topicPages/Promotion'
-import Form from '../../topicPages/Form/Form'
 import Table from '../../topicPages/Table'
 import NewsList from '../../topicPages/NewsList'
 import StockValues from '../../topicPages/StockValues'
@@ -64,6 +62,8 @@ import AccordionBlock from '@sections/AccordionBlock/AccordionBlock'
 import TabsBlock, { TabsBlockProps } from '@sections/TabsBlock/TabsBlock'
 import { getColorForTabsTheme } from '@sections/TabsBlock/tabThemes'
 import { ColorKeyTokens, colorKeyToUtilityMap } from '../../../styles/colorKeyToUtilityMap'
+import Form from '@templates/forms/Form'
+import IFrameBlock from '../../../sections/IFrameBlock/IFrameBlock'
 import { getColorForHomepageBannerTheme, HomePageBanner } from '@sections/HomePageBanner/HomePageBanner'
 
 type DefaultComponent = {
@@ -272,7 +272,7 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
           />
         )
       case 'iframe':
-        return <IFrame key={c.id} data={c as IFrameData} anchor={anchorReference} className={spacingClassName} />
+        return <IFrameBlock key={c.id} data={c as IFrameData} anchor={anchorReference} className={spacingClassName} />
       case 'promotion':
         return <Promotion key={c.id} data={c as PromotionData} anchor={anchorReference} className={spacingClassName} />
       case 'form':
