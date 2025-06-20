@@ -1,6 +1,6 @@
 import { ComponentProps } from '../../pageComponents/pageTemplates/shared/SharedPageContent'
 import { IFrameData, VideoPlayerData } from '../../types/index'
-import IFrame from '../../pageComponents/topicPages/IFrame'
+import IFrame from '../IFrameBlock/IFrameBlock'
 import { VideoJsComponent } from '../../pageComponents/shared/VideoPlayer'
 import GridTextBlock from './GridTextBlock'
 import { GridTeaser } from './GridTeaser'

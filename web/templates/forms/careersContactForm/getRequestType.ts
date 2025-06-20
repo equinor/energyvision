@@ -1,4 +1,4 @@
-import { CareersContactFormCatalogType } from '../../../../types'
+import { CareersContactFormCatalogType } from '../../../types'
 import { IntlShape } from 'react-intl'
 
 export default function getCatalogType(

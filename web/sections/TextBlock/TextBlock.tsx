@@ -1,11 +1,11 @@
 import { BackgroundContainer } from '@core/Backgrounds'
 import { Heading, Typography } from '../../core/Typography'
-import IngressText from '../shared/portableText/IngressText'
 import Image, { getSmallerThanPxLgSizes } from '../../core/SanityImage/SanityImage'
 import type { TextBlockData } from '../../types/index'
-import CallToActions from '../../sections/CallToActions'
+import CallToActions from '../CallToActions'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
 import { twMerge } from 'tailwind-merge'
+import IngressText from '../../pageComponents/shared/portableText/IngressText'
 
 type TextBlockProps = {
   data: TextBlockData

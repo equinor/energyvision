@@ -100,17 +100,23 @@
     @apply bg-autumn-storm-40 w-fit;
   }
 
-  /* MODAL */
+  /* MODAL 
+  [clip-path:inset(0_round_0.5rem)] [transform:none]
+  */
   .modal[open] {
-    @apply opacity-100 [clip-path:inset(0_round_0.5rem)] [transform:none];
+    @apply opacity-100 transition-opacity;
   }
+  /*
+  [clip-path:inset(10%_round_0.5rem)] translate-y-[40vh]
+  */
   .modal {
-    @apply opacity-0 [clip-path:inset(10%_round_0.5rem)] translate-y-[40vh];
+    @apply opacity-0;
   }
   /*   Before-open state  */
   @starting-style {
+    /* [clip-path:inset(10%_round_0.5rem)] translate-y-[40vh]*/
     .modal[open] {
-      @apply opacity-0 [clip-path:inset(10%_round_0.5rem)] translate-y-[40vh];
+      @apply opacity-0;
     }
   }
   .modal-transition {
@@ -282,10 +288,11 @@
 
   @supports selector(::backdrop) {
     .bd-blurred::backdrop {
-      transition: background-color 0s linear var(--modal-transition-duration),
+      @apply transition-all
+/*       transition: background-color 0s linear var(--modal-transition-duration),
         backdrop-filter calc(var(--modal-transition-duration) * 2 / 3) var(--modal-transition-easing)
           calc(var(--modal-transition-duration) / 3),
-        display 0.7s allow-discrete, overlay 0.7s allow-discrete;
+        display 0.7s allow-discrete, overlay 0.7s allow-discrete; */;
     }
     .bd-blurred[open]::backdrop {
       @apply backdrop-blur-md bg-north-sea-90/50;
