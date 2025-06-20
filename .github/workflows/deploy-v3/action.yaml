@@ -132,15 +132,13 @@ runs:
     - name: Deploy to Radix c2 🚀
       id: deploy-c2
       uses: equinor/radix-github-actions@v2
-      with:
-        args: >
-          create job
-          deploy
+      run: |
+        rx create job deploy 
           --token-environment
-          --context platform2
-          --component $COMPONENT_NAME
-          -a equinor-web-sites
-          -e ${{ inputs.environment }}
+          --context platform2 
+          --component $COMPONENT_NAME 
+          -a equinor-web-sites 
+          -e ${{ inputs.environment }} 
           -f
     - name: log-errors-to-slack 📄
       uses: act10ns/slack@v2

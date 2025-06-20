@@ -62,10 +62,8 @@ jobs:
       - name: Deploy to Radix 🚀
         id: deploy-main
         uses: equinor/radix-github-actions@v2
-        with:
-          args: >
-            create job
-            deploy
+      - run: |
+          rx create job deploy 
             --token-environment
             --context platform2
             -a equinor-web-sites
@@ -178,10 +176,8 @@ jobs:
       - name: Deploy to Radix 🚀
         id: deploy
         uses: equinor/radix-github-actions@v2
-        with:
-          args: >
-            create job
-            deploy
+      - run: |
+          rx create job deploy 
             --token-environment
             --context platform2
             -a equinor-web-sites
