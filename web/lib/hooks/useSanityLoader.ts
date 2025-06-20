@@ -14,9 +14,9 @@ export const useSanityLoader = (
     imageBuilder: (imageUrlBuilder, options) => {
       const { width: imageWidth, croppedImageDimensions: cropped } = options
       // We do not want to allow gigantic images to exist due to performance
-      let width = Math.min(maxWidth, cropped.width)
+      let width = Math.round(Math.min(maxWidth, cropped.width))
       if (imageWidth && imageWidth < maxWidth) {
-        width = Math.min(imageWidth, maxWidth, cropped.width)
+        width = Math.round(Math.min(imageWidth, maxWidth, cropped.width))
       }
       let height = aspectRatio ? Math.round(width / aspectRatio) : Math.round(width / (cropped.width / cropped.height))
 
