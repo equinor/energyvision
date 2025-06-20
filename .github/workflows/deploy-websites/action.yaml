@@ -115,7 +115,7 @@ runs:
     # MAIN CLUSTER
     - name: Deploy to Radix c2 🚀
       id: deploy-c2
-      uses: equinor/radix-github-actions@v1
+      uses: equinor/radix-github-actions@v2
       with:
         args: >
           create job

@@ -61,7 +61,7 @@ jobs:
       # MAIN CLUSTER PLATFORM2
       - name: Deploy to Radix 🚀
         id: deploy-main
-        uses: equinor/radix-github-actions@v1
+        uses: equinor/radix-github-actions@v2
         with:
           args: >
             create job

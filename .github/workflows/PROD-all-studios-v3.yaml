@@ -224,7 +224,7 @@ jobs:
       # PRODUCTION CLUSTERS
       - name: Deploy to Radix 🚀
         id: deploy
-        uses: equinor/radix-github-actions@v1
+        uses: equinor/radix-github-actions@v2
         with:
           args: >
             create job
