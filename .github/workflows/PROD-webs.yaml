@@ -77,11 +77,9 @@ jobs:
         uses: ./.github/workflows/get-auth-token/
       - name: Deploy website on Radix 🚀
         id: deploy
-        uses: equinor/radix-github-actions@v1
-        with:
-          args: >
-            create job
-            deploy
+        uses: equinor/radix-github-actions@v2
+      - run: |
+          rx create job deploy 
             --token-environment
             --context platform2
             -a equinor-web-sites
