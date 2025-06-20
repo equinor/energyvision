@@ -1,8 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const plugin = require('tailwindcss/plugin')
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const colors = require('./colorConfig')
 
 const round = (num) =>
   num
@@ -28,6 +26,8 @@ module.exports = {
   inverted -> dark
   NB: TwMerge configuration must be extended to properly merge custom theme utilities. 
   Less pain to use Tailwind eqvivalent. 
+
+  Keep Sanityv3 theme and background colors in sync with these colors
   */
   darkMode: ['variant', [':is(.dark &):not(.light &)']],
   theme: {
@@ -48,10 +48,10 @@ module.exports = {
           80: 'hsl(184, 31%, 74%)',
           70: 'hsl(184, 30%, 84%)',
           60: 'hsl(184, 31%, 89%)',
-          50: colors['moss-green'][50],
+          50: 'hsl(184, 30%, 96%)',
         },
         'energy-red': {
-          100: colors['energy-red'][100],
+          100: 'hsl(348, 100%, 54%)',
           90: 'hsl(348, 100%, 67%)',
           80: 'hsl(347, 100%, 77%)',
           70: 'hsl(347, 100%, 86%)',
@@ -63,7 +63,7 @@ module.exports = {
           80: 'hsl(0, 0%, 20%)',
         },
         white: {
-          100: colors.white[100],
+          100: 'hsl(0, 0%, 100%)',
         },
         'slate-blue': {
           //--bg-slate-blue
@@ -77,7 +77,7 @@ module.exports = {
           50: 'hsl(210, 8%, 90%)',
         },
         'mist-blue': {
-          100: colors['mist-blue'][100],
+          100: 'hsl(199, 58%, 90%)',
           60: 'hsl(200, 56%, 94%)',
         },
         'lichen-green': {
@@ -85,7 +85,7 @@ module.exports = {
         },
         'spruce-wood': {
           100: 'hsl(25, 100%, 92%)',
-          90: colors['spruce-wood'][90],
+          90: 'hsl(25, 100%, 94%)',
           70: 'hsl(26, 100%, 97%)',
         },
         'heritage-red': {
@@ -112,27 +112,27 @@ module.exports = {
           //--mid-green
           //--bg-moss-green
           //--bg-mid-green
-          50: colors.green[50],
+          50: '#c3e4ce',
         },
         //midnight-sun
         yellow: {
           60: '#FDE88C',
           //--mid-yellow
           //--bg-mid-yellow
-          50: colors.yellow[50],
+          50: '#fff5b8',
         },
         blue: {
           //--mid-blue
           //--bg-mid-blue
           //north-sea-70
-          50: colors.blue[50],
+          50: '#49709c',
         },
         orange: {
           100: 'hsl(34, 100%, 34%)',
           90: 'hsl(34, 100%, 50%)',
           //--mid-orange
           //--bg-mid-orange
-          50: colors.orange[50],
+          50: '#f8d1af',
         },
         grey: {
           100: 'hsl(0, 0%, 9%)',
