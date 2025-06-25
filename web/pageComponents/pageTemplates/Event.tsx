@@ -1,5 +1,5 @@
-import { BackgroundContainer } from '@core/Backgrounds'
-import { FormattedDate, FormattedTime } from '@core/FormattedDateTime'
+import { BackgroundContainer } from '@/core/Backgrounds'
+import { FormattedDate, FormattedTime } from '@/core/FormattedDateTime'
 import { toPlainText } from '@portabletext/react'
 import { getEventDates } from '../../common/helpers/dateUtilities'
 import ContactList from '../shared/ContactList'
@@ -14,7 +14,7 @@ import Blocks from '../../pageComponents/shared/portableText/Blocks'
 import { twMerge } from 'tailwind-merge'
 import RelatedContent from '../../pageComponents/shared/RelatedContent'
 import { useTranslations } from 'next-intl'
-import { Typography } from '@core/Typography'
+import { Typography } from '@/core/Typography'
 
 export default function Event({ data }: { data: EventSchema }): JSX.Element {
   const { title } = data

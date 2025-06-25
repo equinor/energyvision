@@ -1,8 +1,8 @@
 'use client'
 import { usePathname } from 'next/navigation'
 import { NewsArticleJsonLd, NextSeo } from 'next-seo'
-import { Typography } from '@core/Typography'
-import { FormattedDateTime } from '@core/FormattedDateTime'
+import { Typography } from '@/core/Typography'
+import { FormattedDateTime } from '@/core/FormattedDateTime'
 import { Icon } from '@equinor/eds-core-react'
 import { calendar } from '@equinor/eds-icons'
 import DefaulHeroImage from '../shared/Hero/DefaultHeroImage'
@@ -18,8 +18,7 @@ import { twMerge } from 'tailwind-merge'
 import RelatedContent from '../../pageComponents/shared/RelatedContent'
 import Footnotes from '../../pageComponents/shared/portableText/components/Footnotes'
 import { useLocale } from 'next-intl'
-import { IFrame } from '@core/IFrame/IFrame'
-
+import { IFrame } from '@/core/IFrame/IFrame'
 
 const isDateAfter = (a: string, b: string) => {
   const dtA = new Date(a).getTime()

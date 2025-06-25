@@ -1,4 +1,4 @@
-import { BackgroundContainer } from '@core/Backgrounds'
+import { BackgroundContainer } from '@/core/Backgrounds'
 import Accordion from './Accordion'
 import { FAQPageJsonLd } from 'next-seo'
 

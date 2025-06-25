@@ -15,7 +15,7 @@ import {
 } from '@floating-ui/react'
 import OptionList from './OptionList'
 import { chevron_down } from '@equinor/eds-icons'
-import { Button } from '@core/Button'
+import { Button } from '@/core/Button'
 import { useTranslations } from 'next-intl'
 
 type FilterButtonProps = {

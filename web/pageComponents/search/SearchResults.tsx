@@ -1,4 +1,4 @@
-import { Tabs } from '@core/Tabs'
+import { Tabs } from '@/core/Tabs'
 import { RefObject, useEffect, useState } from 'react'
 import Hits from './Hits'
 import TotalResultsStat from './TotalResultsStat'

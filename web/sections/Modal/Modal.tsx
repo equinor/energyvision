@@ -2,7 +2,7 @@ import { close } from '@equinor/eds-icons'
 import { TransformableIcon } from '../../icons/TransformableIcon'
 import { forwardRef, useEffect, useMemo, useRef } from 'react'
 import { mergeRefs } from '@equinor/eds-utils'
-import { Button } from '@core/Button'
+import { Button } from '@/core/Button'
 import envisTwMerge from '../../twMerge'
 import { useTranslations } from 'next-intl'
 

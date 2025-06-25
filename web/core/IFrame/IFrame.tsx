@@ -8,7 +8,7 @@ import envisTwMerge from '../../twMerge'
 import RequestConsentContainer from './RequestConsentContainer'
 import { PortableTextBlock } from '@portabletext/types'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
-import Transcript from '@sections/Transcript/Transcript'
+import Transcript from '@/sections/Transcript/Transcript'
 
 const calculatePadding = (aspectRatio: string): string => {
   const ratio = aspectRatio.split(':')

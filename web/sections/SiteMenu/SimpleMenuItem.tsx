@@ -1,6 +1,6 @@
-import { Link, ResourceLink } from '@core/Link'
+import { Link, ResourceLink } from '@/core/Link'
 import type { SimpleGroupData } from '../../types/index'
-import { Menu } from '@core/MenuAccordion'
+import { Menu } from '@/core/MenuAccordion'
 import { useRouter } from 'next/router'
 import { useId } from 'react'
 import envisTwMerge from '../../twMerge'

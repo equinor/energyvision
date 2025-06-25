@@ -5,7 +5,7 @@ import Seo from '../shared/Seo'
 import { SharedBanner } from './shared/SharedBanner'
 import { PageContent } from './shared/SharedPageContent'
 import SharedTitle from './shared/SharedTitle'
-import { Breadcrumbs } from '@core/Breadcrumbs'
+import { Breadcrumbs } from '@/core/Breadcrumbs'
 
 type HomePageProps = {
   data: HomePageSchema
@@ -40,7 +40,7 @@ const HomePage = ({ data }: HomePageProps) => {
           />
         )}
 
-        {data.hero.type !== HeroTypes.DEFAULT && !data?.isCampaign && (
+        {data?.hero?.type !== HeroTypes.DEFAULT && !data?.isCampaign && (
           <SharedTitle sharedTitle={data.title} background={titleStyles.background} />
         )}
         <PageContent data={data} titleBackground={titleStyles} />

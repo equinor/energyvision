@@ -1,7 +1,7 @@
-import { Typography } from '@core/Typography'
+import { Typography } from '@/core/Typography'
 import { defaultLanguage } from '../../languages'
 import { CookieType } from '../../types'
-import { Button } from '@core/Button'
+import { Button } from '@/core/Button'
 import { useLocale, useTranslations } from 'next-intl'
 
 declare global {

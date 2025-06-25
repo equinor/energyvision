@@ -7,7 +7,7 @@ import { SharedBanner } from '../../pageComponents/pageTemplates/shared/SharedBa
 import Teaser from '../../sections/teasers/Teaser/Teaser'
 import Seo from '../../pageComponents/shared/Seo'
 import useSharedTitleStyles from '../../lib/hooks/useSharedTitleStyles'
-import MagazineTagBar from '@sections/MagazineTags/MagazineTagBar'
+import MagazineTagBar from '@/sections/MagazineTags/MagazineTagBar'
 import { useLocale } from 'next-intl'
 import { usePathname } from 'next/navigation'
 

@@ -1,9 +1,9 @@
 import { KeyNumbersData } from '../../types'
-import { BackgroundContainer } from '@core/Backgrounds'
-import { Heading, Paragraph } from '@core/Typography'
+import { BackgroundContainer } from '@/core/Backgrounds'
+import { Heading, Paragraph } from '@/core/Typography'
 import KeyNumberItem from './KeyNumberItem'
-import { ResourceLink } from '@core/Link'
-import { Carousel } from '@core/Carousel/Carousel'
+import { ResourceLink } from '@/core/Link'
+import { Carousel } from '@/core/Carousel/Carousel'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
 import { twMerge } from 'tailwind-merge'
 import { getUrlFromAction } from '../../common/helpers/getUrlFromAction'
@@ -56,7 +56,7 @@ const KeyNumber = ({ data, anchor, className }: KeyNumbersProps) => {
       {action && (
         <ResourceLink
           href={url as string}
-          {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
+          {...(action.link?.lang && { hrefLang: getLocaleFromName(action.link?.lang) })}
           type={action.type}
         >
           {`${action.label} ${action.extension ? `(${action.extension.toUpperCase()})` : ''}`}

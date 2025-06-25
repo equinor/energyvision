@@ -7,9 +7,9 @@ import {
   VideoPlayerData,
   ImageBackground,
 } from './index'
-import { TeaserImagePosition } from '@core/Teaser'
+import { TeaserImagePosition } from '@/core/Teaser'
 import { PortableTextBlock } from '@portabletext/types'
-import { RowType } from '@sections/Grid/mapGridContent'
+import { RowType } from '@/sections/Grid/mapGridContent'
 
 export type GridTeaserData = {
   type: 'gridTeaser'

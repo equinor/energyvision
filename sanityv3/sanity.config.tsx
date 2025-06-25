@@ -42,8 +42,14 @@ import './customStyles.css'
 import { partialStudioTheme } from './studioTheme'
 import { copyAction } from './actions/fieldActions/CustomCopyFieldAction'
 import CustomDocumentInternationalizationMenu from './schemas/components/CustomDocumentInternationalizationMenu'
+import { defineDocuments, defineLocations, presentationTool } from 'sanity/presentation'
+import { locations } from './presentation/locations'
+import { getLocaleFromName } from './src/lib/localization'
 
 export const customTheme = buildLegacyTheme(partialStudioTheme)
+
+// URL for preview functionality, defaults to localhost:3000 if not set
+const SANITY_STUDIO_PREVIEW_URL = process.env.SANITY_STUDIO_PREVIEW_URL || 'http://localhost:3000'
 
 // @TODO:
 // isArrayOfBlocksSchemaType helper function from Sanity is listed as @internal
@@ -111,6 +117,39 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret = fals
         types: ['news', 'tag', 'countryTag', 'translation.metadata'],
         follow: ['inbound'],
       }),
+    presentationTool({
+      previewUrl: {
+        origin: SANITY_STUDIO_PREVIEW_URL,
+        previewMode: {
+          enable: '/api/draft-mode/enable',
+        },
+      },
+      resolve: {
+        locations: {
+          // Resolve locations using values from the matched document
+          page: defineLocations({
+            select: {
+              title: 'title',
+              lang: 'lang',
+              //slugs: '_type match "route_*" && references(^._id)]',
+            },
+            resolve: (doc) => ({
+              locations: [
+                {
+                  title: doc?.title || 'Untitled',
+                  href: `/${getLocaleFromName(doc?.lang) !== 'en' ? `/${getLocaleFromName(doc?.lang)}` : ''}${
+                    doc?.slugs?.[0]
+                  }`,
+                },
+              ],
+            }),
+          }),
+        },
+      },
+    }),
+    /*       resolvers: {
+        locations: locations,
+      }, */
   ].filter((e) => e) as PluginOptions[],
 
   schema: {

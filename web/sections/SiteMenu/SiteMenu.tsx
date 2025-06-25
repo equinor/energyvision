@@ -1,16 +1,16 @@
 'use client'
 import { useCallback, useState, useMemo } from 'react'
 import { useFloating, useInteractions, useDismiss, FloatingOverlay, FloatingFocusManager } from '@floating-ui/react'
-import { usePathname, useRouter } from 'next/navigation'
-import { Menu, MenuButton } from '@core/MenuAccordion'
+import { usePathname } from 'next/navigation'
+import { Menu, MenuButton } from '@/core/MenuAccordion'
 import { TopbarDropdown } from './TopbarDropdown'
 import { NavTopbar } from './NavTopbar'
 import { getAllSitesLink } from '../../common/helpers/getAllSitesLink'
-import { BaseLink, LogoLink } from '@core/Link'
+import { BaseLink, LogoLink } from '@/core/Link'
 import type { MenuData, SimpleGroupData, SimpleMenuData, SubMenuData } from '../../types/index'
 import { Flags } from '../../common/helpers/datasetHelpers'
 import { useLocale, useTranslations } from 'next-intl'
-import { MenuPanes } from '@core/MenuPanes/MenuPanes'
+import { MenuPanes } from '@/core/MenuPanes/MenuPanes'
 import { MenuItem } from './MenuItem'
 import { ArrowRight } from '../../icons'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
@@ -56,7 +56,7 @@ const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
 
   const getCurrentMenuItemIndex = useCallback(() => {
     return menuItems
-      .findIndex((menuItem) => {
+      ?.findIndex((menuItem) => {
         if (variant === 'simple') {
           if ('link' in menuItem && menuItem?.link && menuItem.link.slug === pathname) {
             return menuItem.link.slug === pathname

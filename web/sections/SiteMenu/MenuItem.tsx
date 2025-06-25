@@ -1,11 +1,11 @@
 import { Fragment } from 'react'
-import { Link, ResourceLink } from '@core/Link'
-import { Menu } from '@core/MenuAccordion'
+import { Link, ResourceLink } from '@/core/Link'
+import { Menu } from '@/core/MenuAccordion'
 import type { MenuLinkData, SubMenuData, SubMenuGroupData } from '../../types/index'
 import FeaturedContent from './FeaturedContent'
 import { usePathname } from 'next/navigation'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
-import { Typography } from '@core/Typography'
+import { Typography } from '@/core/Typography'
 
 const { MenuItem: _MenuItem, MenuHeader, MenuContent } = Menu
 

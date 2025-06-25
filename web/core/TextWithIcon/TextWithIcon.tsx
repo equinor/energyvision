@@ -6,7 +6,7 @@ import { ImageWithAlt } from '../../types'
 import Img from 'next/image'
 import { urlFor } from '../../common/helpers'
 import { PortableTextBlock } from '@portabletext/types'
-import { Typography } from '@core/Typography'
+import { Typography } from '@/core/Typography'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
 
 export type TextWithIconProps = {

@@ -7,7 +7,7 @@ export type BaseLinkProps = {
   /** What kind of content is it  */
   type?: LinkType
   /** The locale for the link, required for internal URLs */
-  locale?: string
+  hrefLang?: string
   /** Skip internal link styling, because incoming button styling */
   skipInternalStyle?: boolean
 } & AnchorHTMLAttributes<HTMLAnchorElement> &

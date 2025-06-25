@@ -2,11 +2,11 @@ import { Highlight } from './Highlight'
 import getConfig from 'next/config'
 import type { Hit as AlgoliaHit } from '@algolia/client-search'
 import DisplayLink from './hit/DisplayLink'
-import { FormattedDate } from '@core/FormattedDateTime'
+import { FormattedDate } from '@/core/FormattedDateTime'
 import { useRouter } from 'next/router'
 import { defaultLanguage } from '../../languages'
 import { default as NextLink } from 'next/link'
-import { Typography } from '@core/Typography'
+import { Typography } from '@/core/Typography'
 
 export type HitData = {
   slug?: string

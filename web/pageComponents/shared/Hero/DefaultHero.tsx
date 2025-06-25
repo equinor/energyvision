@@ -1,7 +1,7 @@
 import type { ImageWithCaptionData } from '../../../types/index'
 import DefaulHeroImage from './DefaultHeroImage'
 import { PortableTextBlock } from '@portabletext/types'
-import { Heading } from '@core/Typography'
+import { Heading } from '@/core/Typography'
 
 type Props = {
   title?: PortableTextBlock[]

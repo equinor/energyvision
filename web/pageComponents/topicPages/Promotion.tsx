@@ -1,11 +1,11 @@
-import { BackgroundContainer } from '@core/Backgrounds'
+import { BackgroundContainer } from '@/core/Backgrounds'
 import SinglePromotion from './promotions/SinglePromotion'
 import MultiplePromotions from './promotions/MultiplePromotions'
 import IngressText from '../shared/portableText/IngressText'
 import type { PromotionData } from '../../types/index'
 import { twMerge } from 'tailwind-merge'
-import { ResourceLink } from '@core/Link'
-import { Heading } from '@core/Typography'
+import { ResourceLink } from '@/core/Link'
+import { Heading } from '@/core/Typography'
 import { useId } from 'react'
 
 const Promotion = ({

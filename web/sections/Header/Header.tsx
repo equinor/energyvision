@@ -12,9 +12,9 @@ import { getLocaleFromName, getNameFromLocale } from '../../lib/localization'
 import Head from 'next/head'
 import { getAllSitesLink } from '../../common/helpers/getAllSitesLink'
 import { Icon } from '@equinor/eds-core-react'
-import { ButtonLink, LogoLink } from '@core/Link'
-import SiteMenu from '@sections/SiteMenu/SiteMenu'
-import Topbar from '@core/Topbar/Topbar'
+import { ButtonLink, LogoLink } from '@/core/Link'
+import SiteMenu from '@/sections/SiteMenu/SiteMenu'
+import Topbar from '@/core/Topbar/Topbar'
 
 export type HeaderProps = {
   menuData?: MenuData | SimpleMenuData

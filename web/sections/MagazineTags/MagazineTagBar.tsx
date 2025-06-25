@@ -1,6 +1,6 @@
 'use client'
 import { AnchorHTMLAttributes, forwardRef, useMemo } from 'react'
-import { Link } from '@core/Link'
+import { Link } from '@/core/Link'
 import { filter_alt } from '@equinor/eds-icons'
 import { TransformableIcon } from '../../icons/TransformableIcon'
 import { useTranslations } from 'next-intl'

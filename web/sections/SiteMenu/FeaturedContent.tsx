@@ -1,7 +1,7 @@
 import type { EventCardData, FeaturedContentData } from '../../types/index'
-import { EventCard } from '@sections/cards/EventCard'
-import { Banner } from '@core/Banner/Banner'
-import { Typography } from '@core/Typography'
+import { EventCard } from '@/sections/cards/EventCard'
+import { Banner } from '@/core/Banner/Banner'
+import { Typography } from '@/core/Typography'
 import { PortableTextBlock } from '@portabletext/types'
 import { useTranslations } from 'next-intl'
 

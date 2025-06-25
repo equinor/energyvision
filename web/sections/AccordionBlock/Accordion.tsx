@@ -1,7 +1,7 @@
-import { Accordion as EnvisAccordion } from '@core/Accordion'
+import { Accordion as EnvisAccordion } from '@/core/Accordion'
 import type { AccordionListData } from '../../types/index'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
-import CallToActions from '@sections/CallToActions'
+import CallToActions from '@/sections/CallToActions'
 import Image from '../../pageComponents/shared/SanityImage'
 
 const { Item, Header, Content } = EnvisAccordion

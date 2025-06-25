@@ -1,7 +1,7 @@
 import type { PortableTextBlock } from '@portabletext/types'
 import type { ImageWithAlt } from '../../types/index'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
-import { Typography } from '@core/Typography'
+import { Typography } from '@/core/Typography'
 import { forwardRef, HTMLAttributes } from 'react'
 import { ColorKeyTokens, colorKeyToUtilityMap } from '../../styles/colorKeyToUtilityMap'
 import Image from '../../pageComponents/shared/SanityImage'

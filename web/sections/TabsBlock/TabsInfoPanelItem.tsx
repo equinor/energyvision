@@ -1,10 +1,10 @@
 import { twMerge } from 'tailwind-merge'
 import { forwardRef } from 'react'
 import { PortableTextBlock } from '@portabletext/types'
-import { ResourceLink } from '@core/Link'
+import { ResourceLink } from '@/core/Link'
 import { getUrlFromAction } from '../../common/helpers'
 import { getLocaleFromName } from '../../lib/localization'
-import { Heading } from '@core/Typography'
+import { Heading } from '@/core/Typography'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
 import Image from '../../pageComponents/shared/SanityImage'
 import { ImageWithAlt, LinkData } from '../../types'
@@ -69,7 +69,7 @@ const TabsInfoPanelItem = forwardRef<HTMLDivElement, TabsInfoPanelItemProps>(fun
           {action && url && (
             <ResourceLink
               href={url}
-              {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
+              {...(action.link?.lang && { hrefLang: getLocaleFromName(action.link?.lang) })}
               type={action.type}
               extension={action.extension}
               showExtensionIcon={true}

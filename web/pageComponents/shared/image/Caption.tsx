@@ -1,6 +1,6 @@
-import { FigureCaption } from '@core/FigureCaption/FigureCaption'
+import { FigureCaption } from '@/core/FigureCaption/FigureCaption'
 import { CaptionData } from '../../../types'
-import { BackgroundContainer, BackgroundContainerProps } from '@core/Backgrounds'
+import { BackgroundContainer, BackgroundContainerProps } from '@/core/Backgrounds'
 
 type CaptionProps = CaptionData & BackgroundContainerProps
 

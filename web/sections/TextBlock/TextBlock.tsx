@@ -1,4 +1,4 @@
-import { BackgroundContainer } from '@core/Backgrounds'
+import { BackgroundContainer } from '@/core/Backgrounds'
 import { Heading, Typography } from '../../core/Typography'
 import IngressText from '../../pageComponents/shared/portableText/IngressText'
 import Image, { Ratios } from '../../pageComponents/shared/SanityImage'

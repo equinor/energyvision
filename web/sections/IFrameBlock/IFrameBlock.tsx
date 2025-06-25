@@ -1,12 +1,12 @@
 import type { IFrameData } from '../../types/index'
-import { BackgroundContainer } from '@core/Backgrounds'
+import { BackgroundContainer } from '@/core/Backgrounds'
 import IngressText from '../../pageComponents/shared/portableText/IngressText'
-import { Heading } from '@core/Typography'
-import { IFrame } from '@core/IFrame/IFrame'
+import { Heading } from '@/core/Typography'
+import { IFrame } from '@/core/IFrame/IFrame'
 import { useId } from 'react'
 import envisTwMerge from '../../twMerge'
 import { getUrlFromAction } from '../../common/helpers'
-import { ResourceLink } from '@core/Link'
+import { ResourceLink } from '@/core/Link'
 import { getLocaleFromName } from '../../lib/localization'
 
 const IFrameBlock = ({

@@ -1,4 +1,4 @@
-import { Teaser as TeaserLayout } from '@core/Teaser'
+import { Teaser as TeaserLayout } from '@/core/Teaser'
 import IngressText from '../../../pageComponents/shared/portableText/IngressText'
 import { getUrlFromAction, urlFor } from '../../../common/helpers'
 import Img from 'next/image'
@@ -7,7 +7,7 @@ import type { TeaserData, ImageWithAlt } from '../../../types/index'
 import { ResourceLink } from '../../../core/Link'
 import { Heading } from '../../../core/Typography'
 import { getLocaleFromName } from '../../../lib/localization'
-import { Typography } from '@core/Typography'
+import { Typography } from '@/core/Typography'
 
 const { Content, Media } = TeaserLayout
 
@@ -86,7 +86,7 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
               return (
                 <ResourceLink
                   href={url as string}
-                  {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
+                  {...(action.link?.lang && { hrefLang: getLocaleFromName(action.link?.lang) })}
                   type={action.type}
                   key={action.id}
                   variant="fit"

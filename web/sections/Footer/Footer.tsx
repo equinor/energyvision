@@ -2,8 +2,8 @@
 import { useTranslations } from 'next-intl'
 import { Facebook, Instagram, Linkedin, Twitter, Youtube } from '../../icons'
 import type { FooterLinkData, SomeType, FooterColumns, LinkType } from '../../types/index'
-import { LinkButton } from '@core/Button'
-import FooterLink from '@core/Link/FooterLink'
+import { LinkButton } from '@/core/Button'
+import FooterLink from '@/core/Link/FooterLink'
 
 function getSomeSvg(someType: SomeType) {
   const iconMap = {

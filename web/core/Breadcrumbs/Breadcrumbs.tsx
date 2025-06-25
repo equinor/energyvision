@@ -1,6 +1,6 @@
 'use client'
 import { BreadcrumbsList } from './index'
-import { BackgroundContainer, BackgroundContainerProps } from '@core/Backgrounds'
+import { BackgroundContainer, BackgroundContainerProps } from '@/core/Backgrounds'
 import { BreadcrumbJsonLd } from 'next-seo'
 import { useRouter, usePathname } from 'next/navigation'
 import { twMerge } from 'tailwind-merge'

@@ -1,6 +1,6 @@
 import Quote from '../shared/Quote'
 import type { QuoteData } from '../../types/index'
-import { BackgroundContainer } from '@core/Backgrounds'
+import { BackgroundContainer } from '@/core/Backgrounds'
 import { twMerge } from 'tailwind-merge'
 
 const PageQuote = ({ data, anchor, className }: { data: QuoteData; anchor?: string; className?: string }) => {

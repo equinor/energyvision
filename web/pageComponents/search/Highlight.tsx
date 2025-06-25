@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { decode } from 'html-entities'
 import type { Hit as AlgoliaHit } from '@algolia/client-search'
 import type { HitData } from './UniversalHit'
-import { Highlight as TypographyHighlight } from '@core/Typography'
+import { Highlight as TypographyHighlight } from '@/core/Typography'
 
 type Highlight = {
   hit: AlgoliaHit<HitData>

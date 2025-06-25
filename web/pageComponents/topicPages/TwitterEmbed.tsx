@@ -1,10 +1,10 @@
 import { PortableTextBlock, TwitterEmbedData } from '../../types/index'
 import { TwitterTimelineEmbed, TwitterTweetEmbed } from 'react-twitter-embed'
-import { BackgroundContainer } from '@core/Backgrounds'
+import { BackgroundContainer } from '@/core/Backgrounds'
 import IngressText from '../../pageComponents/shared/portableText/IngressText'
-import { Typography } from '@core/Typography'
+import { Typography } from '@/core/Typography'
 import { toPlainText } from '@portabletext/react'
-import RequestConsentContainer from '@core/IFrame/RequestConsentContainer'
+import RequestConsentContainer from '@/core/IFrame/RequestConsentContainer'
 
 type TwitterEmbedProps = {
   data: TwitterEmbedData

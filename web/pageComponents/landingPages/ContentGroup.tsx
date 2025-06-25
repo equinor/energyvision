@@ -1,5 +1,5 @@
-import { Typography } from '@core/Typography'
-import { PromoTile } from '@sections/PromoTiles/PromoTile'
+import { Typography } from '@/core/Typography'
+import { PromoTile } from '@/sections/PromoTiles/PromoTile'
 
 export type ContentGroupData = {
   id: string

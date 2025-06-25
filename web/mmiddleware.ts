@@ -3,7 +3,7 @@ import { getRedirectUrl, getDnsRedirect, getExternalRedirectUrl, getWWWRedirect 
 import { NextRequest, NextResponse } from 'next/server'
 import { getLocaleFromName } from './lib/localization'
 import { Flags } from './common/helpers/datasetHelpers'
-import { getDocumentBySlug } from './common/helpers/getPaths'
+import { getDocumentBySlug } from './sanity/queries/paths/getPaths'
 import archivedNews from './lib/archive/archivedNewsPaths.json'
 
 const PERMANENT_REDIRECT = 301

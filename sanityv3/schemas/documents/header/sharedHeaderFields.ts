@@ -200,7 +200,9 @@ const heroImage = {
     Rule.custom((value: ImageWithAltAndCaption, context: ValidationContext) => {
       const { parent } = context as unknown as DocumentType
       if (
-        (parent?.heroType === HeroTypes.FIFTY_FIFTY || parent?.heroType === HeroTypes.FULL_WIDTH_IMAGE) &&
+        (parent?.heroType === HeroTypes.FIFTY_FIFTY ||
+          //@ts-ignore:add _type?
+          (parent?._type !== 'homePage' && parent?.heroType === HeroTypes.FULL_WIDTH_IMAGE)) &&
         !value.image.asset
       )
         return 'Field is required'

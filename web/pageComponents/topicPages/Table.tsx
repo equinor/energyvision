@@ -1,10 +1,10 @@
 /*import { Table as EnvisTable } from '@components'
-import { BackgroundContainer } from '@core/Backgrounds'
-import { FormattedDate } from '@core/FormattedDateTime'
+import { BackgroundContainer } from '@/core/Backgrounds'
+import { FormattedDate } from '@/core/FormattedDateTime'
 import styled from 'styled-components'
 import isEmpty from '../shared/portableText/helpers/isEmpty'
 import IngressText from '../shared/portableText/IngressText'
-import { Link } from '@core/Link'
+import { Link } from '@/core/Link'
 
 import { getLocaleFromName } from '../../lib/localization'
 import type { CellData, LinkData, TableData } from '../../types/index'
@@ -12,7 +12,7 @@ import { PortableTextBlock } from '@portabletext/types'
 import { PortableText, toPlainText } from '@portabletext/react'
 import defaultSerializers from '../shared/portableText/helpers/defaultSerializers'
 import Blocks from '../shared/portableText/Blocks'
-import { Typography } from '@core/Typography'
+import { Typography } from '@/core/Typography'
 
 const { Head, Row, Cell, Body } = EnvisTable
 

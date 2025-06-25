@@ -1,7 +1,7 @@
 import type { ContactListData } from '../../types/index'
 import { removeWhiteSpace } from '../../common/helpers/removeWhiteSpace'
 import { twMerge } from 'tailwind-merge'
-import { Typography } from '@core/Typography'
+import { Typography } from '@/core/Typography'
 
 type ContactListProps = {
   data: ContactListData
@@ -16,7 +16,11 @@ const ContactList = ({ data, className = '' }: ContactListProps) => {
           {data.title}
         </Typography>
       )}
-      {data?.ingress && <Typography variant='h5' className='pb-4'>{data.ingress}</Typography>}
+      {data?.ingress && (
+        <Typography variant="h5" className="pb-4">
+          {data.ingress}
+        </Typography>
+      )}
       {data?.contacts && data?.contacts.length > 0 && (
         <div className="flex flex-row flex-wrap justify-between">
           {data.contacts.map((contact) => {

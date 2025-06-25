@@ -1,7 +1,7 @@
 import { forwardRef, HTMLAttributes } from 'react'
 import { StickyMenuData } from '../../types/index'
 import { ColorKeyTokens, colorKeyToUtilityMap } from '../../styles/colorKeyToUtilityMap'
-import { StickyMenuLink } from '@core/Link'
+import { StickyMenuLink } from '@/core/Link'
 import envisTwMerge from '../../twMerge'
 import { useTranslations } from 'next-intl'
 

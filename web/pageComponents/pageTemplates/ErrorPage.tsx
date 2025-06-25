@@ -4,7 +4,7 @@ import Blocks from '../shared/portableText/Blocks'
 import BackgroundImage from '../errorPages/BackgroundImage'
 import type { ErrorPageData } from '../../types/index'
 import { metaTitleSuffix } from '../../languages'
-import { Typography } from '@core/Typography'
+import { Typography } from '@/core/Typography'
 
 const ErrorPage = ({ pageData, statusCode }: { pageData: ErrorPageData; statusCode: 404 | 500 }) => {
   if (!pageData) return null

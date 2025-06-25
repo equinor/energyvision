@@ -1,5 +1,5 @@
 import envisTwMerge from '../../twMerge'
-import { MediaButton } from '@core/MediaButton/MediaButton'
+import { MediaButton } from '@/core/MediaButton/MediaButton'
 import { useContext } from 'react'
 import { PaginationContext } from '../../common/contexts/PaginationContext'
 import { usePrefersReducedMotion } from '../../common/hooks/usePrefersReducedMotion'

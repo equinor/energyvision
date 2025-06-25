@@ -1,7 +1,7 @@
 import { forwardRef } from 'react'
 import envisTwMerge from '../../twMerge'
 import { Variants } from './MenuAccordion'
-import { Accordion, AccordionHeaderProps } from '@core/Accordion'
+import { Accordion, AccordionHeaderProps } from '@/core/Accordion'
 
 export type MenuHeaderProps = {
   variant?: Variants

@@ -1,8 +1,8 @@
-import { Heading, Paragraph } from '@core/Typography'
+import { Heading, Paragraph } from '@/core/Typography'
 import envisTwMerge from '../../twMerge'
 import { ImageCarouselData } from '../../types/index'
-import { BackgroundContainer } from '@core/Backgrounds'
-import { Carousel } from '@core/Carousel/Carousel'
+import { BackgroundContainer } from '@/core/Backgrounds'
+import { Carousel } from '@/core/Carousel/Carousel'
 import { forwardRef, useId } from 'react'
 
 type ImageCarouselProps = {

@@ -1,6 +1,6 @@
 import { useTranslations } from 'next-intl'
 import { languages } from '../../languages'
-import { ButtonLink } from '@core/Link'
+import { ButtonLink } from '@/core/Link'
 
 export type AllSlugsType = { slug: string; lang: string }[]
 
@@ -26,7 +26,7 @@ export const LocalizationSwitch = ({ allSlugs: slugs, activeLocale, ...rest }: L
             <ButtonLink
               variant="ghost"
               href={obj.slug}
-              locale={`${language?.locale}`}
+              hrefLang={`${language?.locale}`}
               className={`
                 ${activeLocale === String(language?.locale) ? 'hidden md:block' : ''}
                 flex flex-col gap-0 items-stretch px-2 text-xs

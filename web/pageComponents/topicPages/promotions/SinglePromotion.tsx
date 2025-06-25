@@ -1,7 +1,7 @@
 import type { PeopleCardData, EventCardData, CardData } from '../../../types/index'
-import { EventCard } from '@sections/cards/EventCard'
-import PeopleCard from '@sections/cards/PeopleCard/PeopleCard'
-import PromotionCard from '@sections/cards/PromotionCard/PromotionCard'
+import { EventCard } from '@/sections/cards/EventCard'
+import PeopleCard from '@/sections/cards/PeopleCard/PeopleCard'
+import PromotionCard from '@/sections/cards/PromotionCard/PromotionCard'
 
 type CardProps = CardData | PeopleCardData | EventCardData
 

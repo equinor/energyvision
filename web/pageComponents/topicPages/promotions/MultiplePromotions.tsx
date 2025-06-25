@@ -7,10 +7,10 @@ import type {
 } from '../../../types/index'
 import MultipleEventCards from './MultipleEventCards'
 
-import PeopleCard from '@sections/cards/PeopleCard/PeopleCard'
-import { EventCard } from '@sections/cards/EventCard'
+import PeopleCard from '@/sections/cards/PeopleCard/PeopleCard'
+import { EventCard } from '@/sections/cards/EventCard'
 import { closestIndexTo } from 'date-fns'
-import PromotionCard from '@sections/cards/PromotionCard/PromotionCard'
+import PromotionCard from '@/sections/cards/PromotionCard/PromotionCard'
 import { twMerge } from 'tailwind-merge'
 
 type CardProps = CardData | PeopleCardData | EventCardData

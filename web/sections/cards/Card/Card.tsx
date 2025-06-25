@@ -3,7 +3,7 @@ import { twMerge } from 'tailwind-merge'
 import Image, { Ratios } from '../../../pageComponents/shared/SanityImage'
 import { ImageWithAlt } from '../../../types/index'
 import envisTwMerge from '../../../twMerge'
-import { BaseLink, BaseLinkProps } from '@core/Link'
+import { BaseLink, BaseLinkProps } from '@/core/Link'
 
 export type Variants = 'primary' | 'secondary' | 'compact' | 'single'
 export type CardProps = {

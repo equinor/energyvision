@@ -1,4 +1,4 @@
-import { Button } from '@core/Button'
+import { Button } from '@/core/Button'
 // Based on: https://github.com/algolia/react-instantsearch/blob/master/examples/hooks/components/Pagination.tsx
 
 type PaginationItemProps = React.ComponentProps<'button'> & {

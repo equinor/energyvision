@@ -5,7 +5,7 @@ import Seo from '../shared/Seo'
 import { SharedBanner } from './shared/SharedBanner'
 import { PageContent } from './shared/SharedPageContent'
 import SharedTitle from './shared/SharedTitle'
-import { Breadcrumbs } from '@core/Breadcrumbs'
+import { Breadcrumbs } from '@/core/Breadcrumbs'
 
 type TopicPageProps = {
   data: TopicPageSchema
@@ -15,7 +15,6 @@ const TopicPage = ({ data }: TopicPageProps) => {
   const titleStyles = useSharedTitleStyles(data?.hero?.type, data?.content?.[0])
   const { breadcrumbs } = data
 
-  console.log(JSON.stringify(data))
   return (
     <>
       {/* <Seo
@@ -41,7 +40,7 @@ const TopicPage = ({ data }: TopicPageProps) => {
           />
         )}
 
-        {data.hero.type !== HeroTypes.DEFAULT && !data?.isCampaign && (
+        {data?.hero?.type !== HeroTypes.DEFAULT && !data?.isCampaign && (
           <SharedTitle sharedTitle={data.title} background={titleStyles.background} />
         )}
         {<PageContent data={data} titleBackground={titleStyles} />}

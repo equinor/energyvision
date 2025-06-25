@@ -1,7 +1,7 @@
 import { HTMLAttributes } from 'react'
 import type { RelatedLinksData, LinkData } from '../../types/index'
-import { ResourceLink } from '@core/Link'
-import { Typography } from '@core/Typography'
+import { ResourceLink } from '@/core/Link'
+import { Typography } from '@/core/Typography'
 import { getUrlFromAction } from '../../common/helpers'
 import { getLocaleFromName } from '../../lib/localization'
 
@@ -23,7 +23,7 @@ const RelatedContent = ({ data, ...rest }: RelatedContentProps) => {
               <li key={item.id}>
                 <ResourceLink
                   href={url as string}
-                  {...(item.link?.lang && { locale: getLocaleFromName(item.link?.lang) })}
+                  {...(item.link?.lang && { hrefLang: getLocaleFromName(item.link?.lang) })}
                   type={item.type}
                   extension={item.extension}
                   showExtensionIcon={true}

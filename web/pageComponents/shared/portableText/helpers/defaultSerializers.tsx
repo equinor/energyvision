@@ -1,4 +1,4 @@
-import { Highlight } from '@core/Typography/Highlight'
+import { Highlight } from '@/core/Typography/Highlight'
 import { Sub, Sup, ExternalLink, InternalLink, BulletList, NumberedList } from '../components'
 import {
   defaultComponents,
@@ -9,8 +9,8 @@ import {
   PortableTextReactComponents,
 } from '@portabletext/react'
 import { PortableTextBlockStyle } from '@portabletext/types'
-import { List } from '@core/List'
-import { Typography } from '@core/Typography'
+import { List } from '@/core/List'
+import { Typography } from '@/core/Typography'
 
 type Props = {
   children?: React.ReactNode

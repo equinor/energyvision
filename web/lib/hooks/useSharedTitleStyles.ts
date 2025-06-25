@@ -3,7 +3,7 @@
  * accordingly to its next component
  */
 
-import { BackgroundContainerProps } from '@core/Backgrounds'
+import { BackgroundContainerProps } from '@/core/Backgrounds'
 import { HeroTypes, TextBlockData, ContentType } from '../../types'
 
 export type TitleStyles = BackgroundContainerProps

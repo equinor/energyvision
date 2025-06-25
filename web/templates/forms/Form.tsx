@@ -5,9 +5,9 @@ import OrderReportsForm from './OrderReportsForm'
 import CareersContactForm from './careersContactForm/CareersContactForm'
 import type { FormData } from '../../types/index'
 import { twMerge } from 'tailwind-merge'
-import CallToActions from '@sections/CallToActions'
+import CallToActions from '@/sections/CallToActions'
 import PensionForm from './PensionForm'
-import { Heading } from '@core/Typography'
+import { Heading } from '@/core/Typography'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
 
 const Form = ({ data, anchor, className }: { data: FormData; anchor?: string; className?: string }) => {

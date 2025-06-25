@@ -1,6 +1,6 @@
 import type { PortableTextBlock } from '@portabletext/types'
-import { BackgroundContainer, BackgroundContainerProps } from '@core/Backgrounds'
-import { Heading } from '@core/Typography'
+import { BackgroundContainer, BackgroundContainerProps } from '@/core/Backgrounds'
+import { Heading } from '@/core/Typography'
 
 type SharedTitleProps = {
   sharedTitle: PortableTextBlock[]

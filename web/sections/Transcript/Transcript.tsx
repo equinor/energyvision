@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { PortableTextBlock } from '@portabletext/types'
-import Modal from '@sections/Modal/Modal'
+import Modal from '@/sections/Modal/Modal'
 import { add_circle_filled, add_circle_outlined } from '@equinor/eds-icons'
 import { twMerge } from 'tailwind-merge'
 import { TransformableIcon } from '../../icons/TransformableIcon'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
-import { Typography } from '@core/Typography'
+import { Typography } from '@/core/Typography'
 import { useTranslations } from 'next-intl'
 
 type TranscriptProps = {

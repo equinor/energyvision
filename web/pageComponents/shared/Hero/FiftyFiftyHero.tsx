@@ -1,9 +1,8 @@
-
 import Image from '../SanityImage'
-import { Heading } from '@core/Typography'
+import { Heading } from '@/core/Typography'
 import type { HeroType } from '../../../types/index'
-import { BackgroundContainer } from '@core/Backgrounds'
-import { ResourceLink } from '@core/Link'
+import { BackgroundContainer } from '@/core/Backgrounds'
+import { ResourceLink } from '@/core/Link'
 import Blocks from '../portableText/Blocks'
 import { getUrlFromAction } from '../../../common/helpers'
 import { getLocaleFromName } from '../../../lib/localization'
@@ -36,7 +35,7 @@ export const FiftyFiftyHero = ({ title, ingress, link: action, background, figur
           {action && !isBigTitle && (
             <ResourceLink
               href={url as string}
-              {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
+              {...(action.link?.lang && { hrefLang: getLocaleFromName(action.link?.lang) })}
               type={action.type}
               extension={action.extension}
               showExtensionIcon

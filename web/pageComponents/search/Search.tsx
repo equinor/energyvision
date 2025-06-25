@@ -10,7 +10,7 @@ import { useRef } from 'react'
 import { Pagination } from '../shared/search/pagination/Pagination'
 import usePaginationPadding from '../../lib/hooks/usePaginationPadding'
 import { SearchClient } from 'algoliasearch/lite'
-import { SearchBox } from '@core/AlgoliaSearchBox/SearchBox'
+import { SearchBox } from '@/core/AlgoliaSearchBox/SearchBox'
 import { PaginationContextProvider } from '../../common/contexts/PaginationContext'
 import { useTranslations } from 'next-intl'
 

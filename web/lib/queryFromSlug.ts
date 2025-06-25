@@ -1,14 +1,14 @@
-import { newsQuery } from './queries/news'
-import { routeQuery } from './queries/routes'
-import { magazineQuery } from './queries/magazine'
-import { contentQueryById } from './queries/contentById'
+import { newsQuery } from '@/sanity/queries/news'
+import { routeQuery } from '@/sanity/queries/routes'
+import { magazineQuery } from '@/sanity/queries/magazine'
+import { contentQueryById } from '@/sanity/queries/contentById'
 import { getNameFromLocale } from './localization'
 import { newsSlug, magazineSlug } from '../../satellitesConfig'
 import { getClient } from './sanity.server'
 import { Flags } from '../common/helpers/datasetHelpers'
-import { localNewsQuery } from './queries/localNews'
-import { noDrafts } from './queries/common/langAndDrafts'
-import { homePageQuery } from './queries/homePage'
+import { localNewsQuery } from '@/sanity/queries/localNews'
+import { noDrafts } from '@/sanity/queries/common/langAndDrafts'
+import { homePageQuery } from '@/sanity/queries/homePage'
 
 export type QueryParams = {
   id?: string
@@ -37,6 +37,7 @@ const parseSlug = (slug: string): string => {
 const localNewsTagsQuery = (lang: string) => /* groq */ `*[_type == 'localNewsTag' && ${noDrafts}] {${lang}}`
 
 const getQuery = async (firstPiece: string, secondPiece: string | undefined, lang: string) => {
+  console.log('test, return homepagequery', firstPiece == '')
   if (firstPiece == '') return homePageQuery
   if (Flags.HAS_NEWS && newsSlug[lang] === firstPiece && secondPiece) {
     // is news
@@ -81,14 +82,13 @@ export const getQueryFromSlug = async (
   const [firstPiece, secondPiece] = slugArray.filter((part: string) => part !== locale)
   const date = new Date().toISOString().substring(0, 10)
 
-  if (isSlugID(firstPiece)) {
+  /*   if (isSlugID(firstPiece)) {
     return getPreviewByIdQuery(firstPiece, locale, date)
-  }
+  } */
 
   const slug = `/${slugArray.join('/')}`
   const lang = getNameFromLocale(locale)
   const query = await getQuery(firstPiece, secondPiece, lang)
-
   return {
     query,
     queryParams: { slug, lang, date },

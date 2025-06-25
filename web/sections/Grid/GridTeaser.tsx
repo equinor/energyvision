@@ -10,7 +10,7 @@ import Blocks from '../../pageComponents/shared/portableText/Blocks'
 import { PortableTextBlock } from '@portabletext/types'
 import isEmpty from '../../pageComponents/shared/portableText/helpers/isEmpty'
 import { PortableTextReactComponents } from '@portabletext/react'
-import { getColorForTheme } from '@sections/teasers/TextTeaser/theme'
+import { getColorForTheme } from '@/sections/teasers/TextTeaser/theme'
 
 export type GridTeaserProps = {
   data: GridTeaserData

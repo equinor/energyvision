@@ -1,7 +1,7 @@
 import { forwardRef, HTMLAttributes, useEffect, useMemo, useRef, useState } from 'react'
 import { mergeRefs } from '@equinor/eds-utils'
 import { StickyMenuData } from '../../types/index'
-import StickyMenu from '@sections/StickyMenu/StickyMenu'
+import StickyMenu from '@/sections/StickyMenu/StickyMenu'
 import { useTranslations } from 'next-intl'
 
 export type TopbarProps = {

@@ -1,4 +1,4 @@
-import { BackgroundContainer, BackgroundContainerProps } from '@core/Backgrounds'
+import { BackgroundContainer, BackgroundContainerProps } from '@/core/Backgrounds'
 import { forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 

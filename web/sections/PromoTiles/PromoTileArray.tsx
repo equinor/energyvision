@@ -1,7 +1,7 @@
 import type { PromoTileArrayData, PromoTileData } from '../../types/index'
 import { PromoTile } from './PromoTile'
 import { twMerge } from 'tailwind-merge'
-import { Heading, Paragraph } from '@core/Typography'
+import { Heading, Paragraph } from '@/core/Typography'
 
 const PromoTileArray = ({
   data,

@@ -9,10 +9,10 @@ import {
 } from '@portabletext/react'
 import { PortableTextBlock, PortableTextBlockStyle } from '@portabletext/types'
 import { FigureWithLayout, Quote, ExternalLink, InternalLink, BulletList, NumberedList } from './components'
-import { FactBox } from '@sections/FactBox/FactBox'
+import { FactBox } from '@/sections/FactBox/FactBox'
 import { twMerge } from 'tailwind-merge'
-import { Highlight } from '@core/Typography/Highlight'
-import { IFrame } from '@core/IFrame/IFrame'
+import { Highlight } from '@/core/Typography/Highlight'
+import { IFrame } from '@/core/IFrame/IFrame'
 import { useTranslations } from 'next-intl'
 
 export type BlockType = Record<PortableTextBlockStyle, PortableTextBlockComponent | undefined>
@@ -68,16 +68,14 @@ const defaultSerializers = {
 }
 const footnoteSerializer = {
   footnote: ({ children, markKey }: any) => {
-    const t =useTranslations()
+    const t = useTranslations()
     return (
       <span>
         {children}
         <span>
           <a id={`back_ref_${markKey}`} href={`#${markKey}`} aria-describedby="footnote-label" className="">
             {/* the number for footnote is added by css see tailwind.css components */}
-            <span className="sr-only">
-              {t("footnote")}
-            </span>
+            <span className="sr-only">{t('footnote')}</span>
           </a>
         </span>
       </span>

@@ -3,8 +3,8 @@ import { Pagination } from '../shared/search/simplePagination/Pagination'
 import type { NewsListData } from '../../types/index'
 import { useState } from 'react'
 import { twMerge } from 'tailwind-merge'
-import PromotionCard from '@sections/cards/PromotionCard/PromotionCard'
-import { Heading } from '@core/Typography'
+import PromotionCard from '@/sections/cards/PromotionCard/PromotionCard'
+import { Heading } from '@/core/Typography'
 
 const NewsList = ({
   data,

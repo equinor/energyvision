@@ -1,7 +1,7 @@
 import { forwardRef, HTMLAttributes } from 'react'
 import envisTwMerge from '../../../twMerge'
 import { useMediaQuery } from '../../../lib/hooks/useMediaQuery'
-import { Accordion } from '@core/Accordion'
+import { Accordion } from '@/core/Accordion'
 import RefinementListFilter from './RefinementListFilter'
 import SelectedFilters from './SelectedFilters'
 import { useTranslations } from 'next-intl'

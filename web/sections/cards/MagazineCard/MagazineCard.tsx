@@ -1,4 +1,4 @@
-import Card from '@sections/cards/Card'
+import Card from '@/sections/cards/Card'
 import type { MagazineCardData } from '../../../types/index'
 import { forwardRef, HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'

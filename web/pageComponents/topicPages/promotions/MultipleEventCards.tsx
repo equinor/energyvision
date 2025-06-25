@@ -2,9 +2,9 @@
 import { useMediaQuery } from '../../../lib/hooks/useMediaQuery'
 import { getEventDates } from '../../../common/helpers/dateUtilities'
 import type { EventCardData, EventPromotionSettings } from '../../../types/index'
-import { EventCard } from '@sections/cards/EventCard'
+import { EventCard } from '@/sections/cards/EventCard'
 import PastEvents from './pastEvents/PastEvents'
-import { Carousel } from '@core/Carousel/Carousel'
+import { Carousel } from '@/core/Carousel/Carousel'
 
 type MultipleEventCardsProp = {
   data: EventCardData[]

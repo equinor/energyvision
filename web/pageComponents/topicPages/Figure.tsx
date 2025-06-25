@@ -1,6 +1,6 @@
 import type { FigureData } from '../../types/index'
-import { FigureCaption } from '@core/FigureCaption/FigureCaption'
-import { BackgroundContainer } from '@core/Backgrounds'
+import { FigureCaption } from '@/core/FigureCaption/FigureCaption'
+import { BackgroundContainer } from '@/core/Backgrounds'
 import Image, { Ratios } from '../shared/SanityImage'
 
 type FigureProps = {

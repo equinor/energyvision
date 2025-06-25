@@ -1,4 +1,4 @@
-import { Accordion, AccordionMultipleProps, AccordionSingleProps } from '@core/Accordion'
+import { Accordion, AccordionMultipleProps, AccordionSingleProps } from '@/core/Accordion'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
 import { forwardRef } from 'react'
 

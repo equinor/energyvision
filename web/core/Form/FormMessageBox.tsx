@@ -1,8 +1,8 @@
 import { forwardRef, HTMLAttributes } from 'react'
 import { check, error_outlined } from '@equinor/eds-icons'
 import { TransformableIcon } from '../../icons/TransformableIcon'
-import { Typography } from '@core/Typography'
-import { Button } from '@core/Button'
+import { Typography } from '@/core/Typography'
+import { Button } from '@/core/Button'
 import { useTranslations } from 'next-intl'
 
 type Variant = 'success' | 'error'
@@ -30,21 +30,19 @@ export const FormMessageBox = forwardRef<HTMLDivElement, FormMessageBoxProps>(fu
       />
       <div>
         <Typography variant="body" className="text-md font-semibold">
-          {variant === 'success' ? (
-            t("form_success_title")
-          ) : (
-            t("form_failure_title")
-          )}
+          {variant === 'success' ? t('form_success_title') : t('form_failure_title')}
         </Typography>
         <Typography variant="body">
           {variant === 'success' ? (
             <>
-            {t("form_success_line1")}
-             {t("form_success_line2")}
-           </>
+              {t('form_success_line1')}
+              {t('form_success_line2')}
+            </>
           ) : (
-            <> {t("form_failure_line1")}
-             {t("form_failure_line2")}
+            <>
+              {' '}
+              {t('form_failure_line1')}
+              {t('form_failure_line2')}
             </>
           )}
         </Typography>
@@ -57,11 +55,7 @@ export const FormMessageBox = forwardRef<HTMLDivElement, FormMessageBoxProps>(fu
           type={variant === 'success' ? 'reset' : 'button'}
           className="mt-4"
         >
-          {variant === 'success' ? (
-         t("form_failure_cta" )
-          ) : (
-            t("form_success_cta")
-          )}
+          {variant === 'success' ? t('form_failure_cta') : t('form_success_cta')}
         </Button>
       </div>
     </div>

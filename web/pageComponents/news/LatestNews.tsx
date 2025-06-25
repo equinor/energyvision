@@ -1,9 +1,9 @@
 import type { CardData } from '../../types/index'
-import { FormattedDate } from '@core/FormattedDateTime'
+import { FormattedDate } from '@/core/FormattedDateTime'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
-import Card from '@sections/cards/Card'
+import Card from '@/sections/cards/Card'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
-import { Typography } from '@core/Typography'
+import { Typography } from '@/core/Typography'
 import { useTranslations } from 'next-intl'
 
 type LatestNewsProp = {

@@ -1,0 +1,297 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'video.js/dist/video-js.css';
+@import '../styles/components/videojs.css';
+@import '../styles/components/cookiebot.css';
+@import 'tailwindcss/utilities';
+
+@layer base {
+  :root {
+    /* Modal */
+    --modal-transition-duration: 0.4s;
+    --modal-transition-easing: cubic-bezier(0.45, 0, 0.55, 1);
+  }
+
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    overflow-wrap: break-word;
+  }
+
+  input[type='search' i]::-webkit-search-cancel-button {
+    display: none;
+  }
+
+  /* Scroll lock on the native dialog html element */
+  body:has(dialog[open]) {
+    @apply overflow-hidden;
+  }
+}
+
+@layer components {
+  .clickbound-area {
+    @apply before:cursor-pointer 
+    before:content-[''] 
+    before:absolute 
+    before:w-[48px]
+    before:aspect-square
+    before:top-1/2
+    before:left-1/2
+    before:translate-y-[-50%]
+    before:translate-x-[-50%]
+    before:rounded-[100%];
+  }
+
+  article {
+    counter-reset: footnotes;
+  }
+  /**
+ * Inline footnotes references
+ * 1. Increment the counter at each new reference
+ */
+  a[aria-describedby='footnote-label'] {
+    @apply relative cursor-default outline-none text-inherit;
+    counter-increment: footnotes;
+    text-decoration: none;
+    /* outline: none;*/
+  }
+  a[aria-describedby='footnote-label']::before {
+    @apply cursor-pointer;
+    content: '';
+    position: absolute;
+    width: 48px;
+    aspect-ratio: 1/1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 100%;
+  }
+  /**
+ * Actual numbered references
+ * 1. Display the current state of the counter (e.g. `[1]`)
+ */
+  a[aria-describedby='footnote-label']::after {
+    @apply align-super 
+    text-xs 
+    pl-[2px] 
+    text-slate-blue-95 
+    no-underline
+    font-medium
+    pr-[2px]
+    cursor-pointer
+    hover:underline
+    hover:font-medium;
+    content: counter(footnotes); /* 1 */
+  }
+
+  /**
+ * Resetting the default focused styles on the number
+ */
+  a[aria-describedby='footnote-label']:focus::after {
+    @apply outline-dashed outline-2 outline-offset-2 outline-norwegian-woods-100;
+  }
+
+  /* highlight the note in the footer */
+  footer :target {
+    @apply bg-autumn-storm-40 w-fit;
+  }
+
+  /* MODAL 
+  [clip-path:inset(0_round_0.5rem)] [transform:none]
+  */
+  .modal[open] {
+    @apply opacity-100 transition-opacity;
+  }
+  /*
+  [clip-path:inset(10%_round_0.5rem)] translate-y-[40vh]
+  */
+  .modal {
+    @apply opacity-0;
+  }
+  /*   Before-open state  */
+  @starting-style {
+    /* [clip-path:inset(10%_round_0.5rem)] translate-y-[40vh]*/
+    .modal[open] {
+      @apply opacity-0;
+    }
+  }
+  .modal-transition {
+    transition: opacity calc(var(--modal-transition-duration) / 2) var(--modal-transition-easing)
+        calc(var(--modal-transition-duration) / 2),
+      transform var(--modal-transition-duration) var(--modal-transition-easing),
+      clip-path var(--modal-transition-duration) var(--modal-transition-easing), display 0.7s allow-discrete,
+      overlay 0.7s allow-discrete;
+  }
+  /* Carousel */
+  .carousel-top-bottom-grid-area {
+    grid-template-areas:
+      'top'
+      'bottom';
+  }
+  .carousel-controls-grid-area {
+    grid-template-areas: 'left center right';
+  }
+}
+
+@layer utilities {
+  /* Scroll-Timeline Supported, Yay! */
+  @supports (animation-timeline: view()) {
+    .animate-timeline {
+      @apply animate-fadeInOut;
+      animation-timeline: view();
+      animation-range: cover 18% cover 85%;
+    }
+    .adjustObjectPosition {
+      @apply animate-adjustObjectPosition;
+      animation-timeline: view(x);
+    }
+  }
+  @supports (animation-timeline) {
+    .dots-timeline-container {
+      scroll-timeline: --carousel x;
+    }
+
+    .dots-timeline-dot {
+      animation-timeline: --carousel;
+      /* Do with [animation-range:calc((${i}-1)*20%)_calc(${i}*20%+1px)] for the child index
+      * in the component using dots-timeline
+      */
+    }
+  }
+  .white-right-gradient {
+    background-image: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.1),
+      rgba(255, 255, 255, 0.3) 30%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+  }
+  .white-left-gradient {
+    background-image: linear-gradient(
+      to left,
+      rgba(255, 255, 255, 0.1),
+      rgba(255, 255, 255, 0.3) 30%,
+      rgba(255, 255, 255, 0.4) 100%
+    );
+  }
+  .white-to-top-gradient {
+    background-image: linear-gradient(
+      to top,
+      rgba(255, 255, 255, 0.7),
+      rgba(255, 255, 255, 0.3) 30%,
+      rgba(255, 255, 255, 0) 100%
+    );
+  }
+  .white-to-top-tall-gradient {
+    background-image: linear-gradient(
+      to top,
+      rgba(255, 255, 255, 0.6),
+      rgba(255, 255, 255, 0.5) 30%,
+      rgba(255, 255, 255, 0.35) 60%,
+      rgba(255, 255, 255, 0) 100%
+    );
+  }
+  .white-center-gradient {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4));
+  }
+  .black-right-gradient {
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3) 30%, rgba(0, 0, 0, 0.4) 100%);
+  }
+  .black-left-gradient {
+    background-image: linear-gradient(to left, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3) 30%, rgba(0, 0, 0, 0.4) 100%);
+  }
+  .black-center-gradient {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4));
+  }
+  .black-blue-center-gradient {
+    background-image: linear-gradient(theme('colors.slate-blue.95 / 50%'), theme('colors.slate-blue.95 / 50%')),
+      linear-gradient(rgba(0, 0, 0, 0.36), rgba(0, 0, 0, 0.36));
+  }
+  .fade-in-black-gradient {
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 60%, rgba(0, 0, 0, 0.8) 100%);
+  }
+  .black-to-top-gradient {
+    background-image: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.7),
+      rgba(0, 0, 0, 0.6) 20%,
+      rgba(0, 0, 0, 0.45) 32%,
+      rgba(0, 0, 0, 0.1) 60%,
+      rgba(0, 0, 0, 0) 100%
+    );
+  }
+  .black-to-top-tall-gradient {
+    background-image: linear-gradient(to top, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3) 40%, rgba(0, 0, 0, 0) 100%),
+      linear-gradient(26deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.45) 35%, rgba(0, 0, 0, 0) 100%);
+  }
+  .box-shadow-crisp {
+    box-shadow: 0.3px 0.5px 0.7px hsl(var(--tw-shadow-color) / 0.34),
+      0.4px 0.8px 1px -1.2px hsl(var(--tw-shadow-color) / 0.34), 1px 2px 2.5px -2.5px hsl(var(--tw-shadow-color) / 0.34);
+  }
+  .box-shadow-crisp-interact {
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.08) 0px 3px 4px 0px;
+  }
+
+  @supports selector(::-webkit-scrollbar) {
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .envis-scrollbar::-webkit-scrollbar {
+      @apply h-2.5 bg-grey-20;
+    }
+    .envis-scrollbar::-webkit-scrollbar-track {
+      @apply h-2.5 bg-grey-20;
+    }
+    .envis-scrollbar::-webkit-scrollbar-thumb {
+      @apply h-2.5 bg-grey-50 hover:bg-grey-60 rounded-xs;
+    }
+  }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .overflow-wrap-break-word {
+    overflow-wrap: break-word; /* Can be replaced with wrap-break-word class from tailwind 4*/
+  }
+
+  @supports selector(::backdrop) {
+    .bd-blurred::backdrop {
+      @apply transition-all
+/*       transition: background-color 0s linear var(--modal-transition-duration),
+        backdrop-filter calc(var(--modal-transition-duration) * 2 / 3) var(--modal-transition-easing)
+          calc(var(--modal-transition-duration) / 3),
+        display 0.7s allow-discrete, overlay 0.7s allow-discrete; */;
+    }
+    .bd-blurred[open]::backdrop {
+      @apply backdrop-blur-md bg-north-sea-90/50;
+    }
+
+    /*   Before-open state  */
+    @starting-style {
+      .bd-blurred[open]::backdrop {
+        @apply backdrop-blur-none bg-transparent;
+      }
+    }
+  }
+
+  @supports (scrollbar-color: auto) {
+    .scrolltrack-transparent {
+      scrollbar-color: rgba(0, 0, 0, 0);
+    }
+  }
+
+  @starting-style {
+    .topbar-height {
+      top: 0;
+    }
+  }
+}

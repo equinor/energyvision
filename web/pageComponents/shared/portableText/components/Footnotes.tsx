@@ -3,7 +3,7 @@
 import { PortableText } from '@portabletext/react'
 import { PortableTextBlock } from '@portabletext/types'
 import isEmpty from '../helpers/isEmpty'
-import { BaseLink } from '@core/Link'
+import { BaseLink } from '@/core/Link'
 import { useTranslations } from 'next-intl'
 
 function Footnotes({ blocks }: { blocks: PortableTextBlock[] }) {

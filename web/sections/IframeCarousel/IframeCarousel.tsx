@@ -1,8 +1,8 @@
-import { BackgroundContainer } from '@core/Backgrounds'
-import { Heading } from '@core/Typography'
+import { BackgroundContainer } from '@/core/Backgrounds'
+import { Heading } from '@/core/Typography'
 import type { IframeCarouselData } from '../../types/index'
 import { twMerge } from 'tailwind-merge'
-import { Carousel } from '@core/Carousel/Carousel'
+import { Carousel } from '@/core/Carousel/Carousel'
 import { useId } from 'react'
 
 type IframeCarouselProps = {

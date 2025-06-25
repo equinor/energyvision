@@ -1,4 +1,4 @@
-import { ResourceLink } from '@core/Link'
+import { ResourceLink } from '@/core/Link'
 import type { LinkData } from '../../types/index'
 import { getUrlFromAction } from '../../common/helpers'
 import { getLocaleFromName } from '../../lib/localization'
@@ -27,7 +27,7 @@ const CallToActions = ({ callToActions = [], splitList, className }: CallToActio
         href={url}
         extension={extension}
         showExtensionIcon={true}
-        {...(link?.lang && { locale: getLocaleFromName(link?.lang) })}
+        {...(link?.lang && { hrefLang: getLocaleFromName(link?.lang) })}
         type={type}
         variant="fit"
       >
@@ -53,7 +53,7 @@ const CallToActions = ({ callToActions = [], splitList, className }: CallToActio
             {/*  If the URL is a static AEM page it should behave as an internal link in the web */}
             <ResourceLink
               href={url}
-              {...(callToAction.link?.lang && { locale: getLocaleFromName(callToAction.link?.lang) })}
+              {...(callToAction.link?.lang && { hrefLang: getLocaleFromName(callToAction.link?.lang) })}
               type={callToAction.type}
               extension={callToAction.extension}
               showExtensionIcon={true}

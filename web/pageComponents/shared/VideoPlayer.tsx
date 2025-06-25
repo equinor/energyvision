@@ -8,20 +8,20 @@ import {
   VideoType,
   VideoDesignOptionsType,
 } from '../../types/index'
-import { BackgroundContainer } from '@core/Backgrounds'
+import { BackgroundContainer } from '@/core/Backgrounds'
 import { getUrlFromAction, urlFor } from '../../common/helpers'
 import IngressText from './portableText/IngressText'
-import { VideoJS } from '@core/VideoJsPlayer'
+import { VideoJS } from '@/core/VideoJsPlayer'
 import { twMerge } from 'tailwind-merge'
-import { Heading } from '@core/Typography'
+import { Heading } from '@/core/Typography'
 import { PortableTextBlock } from '@portabletext/types'
 import Blocks from './portableText/Blocks'
 import Transcript from '../../sections/Transcript/Transcript'
-import { ResourceLink } from '@core/Link'
+import { ResourceLink } from '@/core/Link'
 import { getLocaleFromName } from '../../lib/localization'
 
 const DynamicVideoJsComponent = dynamic<React.ComponentProps<typeof VideoJS>>(
-  () => import('@core/VideoJsPlayer').then((mod) => mod.VideoJS),
+  () => import('@/core/VideoJsPlayer').then((mod) => mod.VideoJS),
   {
     ssr: false,
     loading: () => <p>Loading...</p>,

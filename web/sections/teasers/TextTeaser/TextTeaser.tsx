@@ -1,12 +1,12 @@
-import { Teaser } from '@core/Teaser'
+import { Teaser } from '@/core/Teaser'
 import type { TextTeaserData } from '../../../types/index'
 import { getColorForTheme } from './theme'
 
 import { twMerge } from 'tailwind-merge'
-import { ResourceLink } from '@core/Link'
+import { ResourceLink } from '@/core/Link'
 import { getUrlFromAction } from '../../../common/helpers/getUrlFromAction'
 import { getLocaleFromName } from '../../../lib/localization'
-import { Heading } from '@core/Typography'
+import { Heading } from '@/core/Typography'
 import IngressText from '../../../pageComponents/shared/portableText/IngressText'
 
 const { Content, Media } = Teaser
@@ -41,7 +41,7 @@ const TextTeaser = ({ data, anchor, className }: TextTeaserProps) => {
         {action && (
           <ResourceLink
             href={url as string}
-            {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
+            {...(action.link?.lang && { hrefLang: getLocaleFromName(action.link?.lang) })}
             type={action.type}
           >
             {`${action.label} ${action.extension ? `(${action.extension.toUpperCase()})` : ''}`}

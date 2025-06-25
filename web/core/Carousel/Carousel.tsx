@@ -20,19 +20,18 @@ import {
   useState,
 } from 'react'
 import envisTwMerge from '../../twMerge'
-import { MediaButton } from '@core/MediaButton/MediaButton'
+import { MediaButton } from '@/core/MediaButton/MediaButton'
 import { CarouselImageItem } from './CarouselImageItem'
 import { usePrefersReducedMotion } from '../../common/hooks/usePrefersReducedMotion'
 import { PortableTextBlock } from '@portabletext/types'
 import { toPlainText } from '@portabletext/react'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
 import { CarouselItem } from './CarouselItem'
-import { EventCard } from '@sections/cards/EventCard'
+import { EventCard } from '@/sections/cards/EventCard'
 import { VideoJsComponent } from '../../pageComponents/shared/VideoPlayer'
-import KeyNumberItem from '@sections/KeyNumber/KeyNumberItem'
+import KeyNumberItem from '@/sections/KeyNumber/KeyNumberItem'
 import { useTranslations } from 'next-intl'
-import { IFrame } from '@core/IFrame/IFrame'
-
+import { IFrame } from '@/core/IFrame/IFrame'
 
 export type DisplayModes = 'single' | 'scroll'
 export type Layouts = 'full' | 'default'
@@ -515,7 +514,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
           `}
         >
           <div id={controlsId} className="sr-only">
-          {intl('carousel_controls')}
+            {intl('carousel_controls')}
           </div>
           {/** Only image should have autoplay */}
           {internalAutoRotation && variant === 'image' && displayMode === 'single' && (

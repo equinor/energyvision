@@ -1,4 +1,4 @@
-import Card from '@sections/cards/Card'
+import Card from '@/sections/cards/Card'
 import { getUrlFromAction } from '../../common/helpers'
 import { ColorKeyTokens, colorKeyToUtilityMap } from '../../styles/colorKeyToUtilityMap'
 import { PromoTileData } from '../../types/index'

@@ -1,5 +1,5 @@
 import { PortableTextBlock } from '@portabletext/types'
-import { Heading, Typography, TypographyVariants } from '@core/Typography'
+import { Heading, Typography, TypographyVariants } from '@/core/Typography'
 import { forwardRef, HTMLAttributes } from 'react'
 import { Variants } from './Card'
 import envisTwMerge from '../../../twMerge'

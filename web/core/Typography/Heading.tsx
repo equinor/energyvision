@@ -3,7 +3,7 @@ import { PortableText, PortableTextProps } from '@portabletext/react'
 import type { PortableTextBlock } from '@portabletext/types'
 import { Typography, TypographyProps } from './Typography'
 import isEmpty from '../../pageComponents/shared/portableText/helpers/isEmpty'
-import { Highlight } from '@core/Typography/Highlight'
+import { Highlight } from '@/core/Typography/Highlight'
 import { BlockProps } from '../../pageComponents/shared/portableText/Blocks'
 import { twMerge } from 'tailwind-merge'
 

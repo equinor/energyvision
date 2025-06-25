@@ -18,7 +18,7 @@ import { apiVersion } from '../../../../sanity.client'
 
 const views = (S) => [
   S.view.form().title('Edit route'),
-  S.view
+  /*   S.view
     .component(Iframe)
     .options({
       url: (doc) => resolvePreviewUrl(doc),
@@ -28,7 +28,7 @@ const views = (S) => [
       },
       showDisplayUrl: false,
     })
-    .title('Preview'),
+    .title('Preview'), */
 ]
 // Original version without preview pane
 // const views = [S.view.form()]

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { twMerge } from 'tailwind-merge'
 import { getUrlFromAction } from '../../common/helpers'
-import { BaseLink } from '@core/Link'
+import { BaseLink } from '@/core/Link'
 import { getLocaleFromName } from '../../lib/localization'
 import { ArrowRight } from '../../icons'
 import { LinkData } from '../../types/index'
@@ -59,7 +59,7 @@ const GridLinkArrow = forwardRef<HTMLDivElement, GridLinkArrowProps>(function Gr
         >
           <BaseLink
             href={url as string}
-            {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
+            {...(action.link?.lang && { hrefLang: getLocaleFromName(action.link?.lang) })}
             type={action.type}
             className={twMerge(
               `group

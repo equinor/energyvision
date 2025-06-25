@@ -26,8 +26,7 @@ const fileDocTypes = ['assetFile', 'videoFile']
 export const defaultDocumentNodeResolver = (S, { schemaType }) => {
   const views = [S.view.form()]
 
-  if (docsWithNormalPreview.includes(schemaType)) {
-    // @TODO: remove old preview if we go with this component
+  /*     if (docsWithNormalPreview.includes(schemaType)) {
     views.push(
       S.view
         .component(Iframe)
@@ -40,33 +39,33 @@ export const defaultDocumentNodeResolver = (S, { schemaType }) => {
           showDisplayUrl: false,
         })
         .title('Preview'),
-    )
-  }
+    ) 
+  } */
 
   if (docsWithRoute.includes(schemaType))
-    views.push(
+    if (fileDocTypes.includes(schemaType))
+      /*     views.push(
       S.view
         .component(DocumentsPane)
         .options({
-          query: /* groq */ `*[!(_id in path("drafts.**")) && references($id) && _type match "route_*"]`,
+          query: `*[!(_id in path("drafts.**")) && references($id) && _type match "route_*"]`,
           params: { id: `_id` },
           useDraft: false,
         })
         .title('Connected routes'),
-    )
+    ) */
 
-  if (fileDocTypes.includes(schemaType))
-    views.push(
-      S.view
-        .component(DocumentsPane)
-        .options({
-          query: /* groq */ `*[!(_id in path("drafts.**")) && references($id) && _type in ["news", "event", "page", "magazine"]]`,
-          params: { id: `_id` },
-          useDraft: false,
-        })
-        .title('References'),
-      S.view.component(FilePreview).title('Preview'),
-    )
+      views.push(
+        S.view
+          .component(DocumentsPane)
+          .options({
+            query: /* groq */ `*[!(_id in path("drafts.**")) && references($id) && _type in ["news", "event", "page", "magazine"]]`,
+            params: { id: `_id` },
+            useDraft: false,
+          })
+          .title('References'),
+        S.view.component(FilePreview).title('Preview'),
+      )
 
   if (tagDocTypes.includes(schemaType)) {
     const query =

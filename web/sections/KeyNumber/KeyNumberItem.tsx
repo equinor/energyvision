@@ -1,5 +1,5 @@
 import { KeyNumberItemData } from '../../types'
-import { Typography } from '@core/Typography'
+import { Typography } from '@/core/Typography'
 
 type KeyNumberItemProps = KeyNumberItemData & { isScrollable?: boolean }
 export default function ({ keyNumber, description, unit }: KeyNumberItemProps) {

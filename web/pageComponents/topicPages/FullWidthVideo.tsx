@@ -1,10 +1,10 @@
 'use client'
 import { FullWidthVideoData, FullWidthVideoRatio } from '../../types/index'
-import { VideoJS } from '@core/VideoJsPlayer'
+import { VideoJS } from '@/core/VideoJsPlayer'
 import dynamic from 'next/dynamic'
 
 const DynamicVideosComponent = dynamic<React.ComponentProps<typeof VideoJS>>(
-  () => import('@core/VideoJsPlayer').then((mod) => mod.VideoJS),
+  () => import('@/core/VideoJsPlayer').then((mod) => mod.VideoJS),
   {
     ssr: false,
     loading: () => <p>Loading...</p>,

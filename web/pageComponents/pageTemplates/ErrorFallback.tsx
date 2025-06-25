@@ -1,7 +1,7 @@
 import { GlobalStyle, GlobalFontStyle } from '../../styles/globalStyles'
 import type { FallbackProps } from 'react-error-boundary'
-import { Button } from '@core/Button'
-import { Typography } from '@core/Typography'
+import { Button } from '@/core/Button'
+import { Typography } from '@/core/Typography'
 
 const sliceErrorStack = (stackTrace = '', numLines = 10) => stackTrace.split('\n').slice(0, numLines).join('\n')
 

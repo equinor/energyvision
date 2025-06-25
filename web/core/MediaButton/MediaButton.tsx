@@ -1,7 +1,7 @@
 import { ArrowRight, Pause, Play } from '../../icons'
 import { ButtonHTMLAttributes, forwardRef } from 'react'
 import envisTwMerge from '../../twMerge'
-import { CircularProgress } from '@core/Progress/CircularProgress'
+import { CircularProgress } from '@/core/Progress/CircularProgress'
 
 type ModeVariants = 'play' | 'pause' | 'next' | 'previous'
 type Variants = 'video' | 'default'

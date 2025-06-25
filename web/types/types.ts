@@ -1,4 +1,4 @@
-import { TeaserImagePosition, TeaserImageSize } from '@core/Teaser'
+import { TeaserImagePosition, TeaserImageSize } from '@/core/Teaser'
 import { PortableTextBlock } from '@portabletext/types'
 import { SanityImageObject } from '@sanity/image-url/lib/types/types'
 import type {
@@ -22,7 +22,7 @@ import type {
   FigureData,
   StickyMenuLinkType,
 } from './index'
-import { MediaPosition } from '@core/Teaser/Media'
+import { MediaPosition } from '@/core/Teaser/Media'
 
 export type IntlData = {
   locale: string

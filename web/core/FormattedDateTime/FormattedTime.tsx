@@ -1,5 +1,5 @@
 import { HTMLAttributes } from 'react'
-import { TimeIcon } from '@core/FormattedDateTime'
+import { TimeIcon } from '@/core/FormattedDateTime'
 import { useFormatter } from 'next-intl'
 
 export type FormattedTimeProps = {

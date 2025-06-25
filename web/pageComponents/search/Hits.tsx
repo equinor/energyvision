@@ -1,7 +1,7 @@
 import { useHits } from 'react-instantsearch'
 import type { Hit as AlgoliaHit } from '@algolia/client-search'
 import { HitData } from './UniversalHit'
-import { Typography } from '@core/Typography'
+import { Typography } from '@/core/Typography'
 import { useTranslations } from 'next-intl'
 
 export type HitProps = { hit: AlgoliaHit<HitData> }

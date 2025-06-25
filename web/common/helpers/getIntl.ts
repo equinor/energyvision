@@ -1,8 +1,8 @@
-import { textSnippetsQuery } from '../../lib/queries/textSnippets'
 import { getClient } from '../../lib/sanity.server'
 import formatTextSnippets from './formatTextSnippets'
 import { getNameFromLocale } from '../../lib/localization'
 import { defaultLanguage } from '../../languages'
+import { textSnippetsQuery } from '@/sanity/queries/textSnippets'
 
 export default async (locale: string, preview: boolean) => {
   const textSnippetsArray = await getClient(preview).fetch(textSnippetsQuery)

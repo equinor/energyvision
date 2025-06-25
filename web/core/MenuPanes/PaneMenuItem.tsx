@@ -1,4 +1,4 @@
-import { Link, ResourceLink } from '@core/Link'
+import { Link, ResourceLink } from '@/core/Link'
 import type { SimpleGroupData } from '../../types/index'
 import { usePathname } from 'next/navigation'
 import { forwardRef, useEffect, useId, useRef, useState } from 'react'

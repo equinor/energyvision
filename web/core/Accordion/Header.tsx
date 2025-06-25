@@ -10,7 +10,7 @@ import { add_circle_filled, add_circle_outlined, remove, remove_outlined } from 
 import envisTwMerge from '../../twMerge'
 import { TransformableIcon } from '../../icons/TransformableIcon'
 import { Variants } from './Accordion'
-import { Typography } from '@core/Typography'
+import { Typography } from '@/core/Typography'
 
 export type AccordionHeaderProps = {
   hasSectionTitle?: boolean

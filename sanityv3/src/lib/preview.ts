@@ -46,15 +46,16 @@ export const resolvePreviewUrl = (document: SanityDocument): string | false => {
   const previewUrl = new URL(getBaseUrl(dataset))
   const locale = getLocaleFromName(document?.lang) || defaultLanguage.locale
 
-  previewUrl.pathname = '/api/preview'
+  previewUrl.pathname = '/api/draft'
   previewUrl.searchParams.append('type', document._type)
   previewUrl.searchParams.append('locale', locale)
 
   if (document?.slug?.current) {
     previewUrl.searchParams.append('slug', document?.slug?.current)
-  } else {
-    previewUrl.searchParams.append('id', document?._id)
   }
+  /*    else {
+    previewUrl.searchParams.append('id', document?._id)
+  } */
 
   previewUrl.searchParams.append('secret', previewSecret)
 
