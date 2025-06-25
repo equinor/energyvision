@@ -5,3 +5,4 @@ packages:
   - 'search'
 overrides:
   'tar-fs': '^3.0.9'
+  'minimatch': '10.0.3'
