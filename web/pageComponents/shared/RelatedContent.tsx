@@ -1,7 +1,7 @@
 import { HTMLAttributes } from 'react'
-import { Heading } from '@components'
 import type { RelatedLinksData, LinkData } from '../../types/index'
 import { ResourceLink } from '@core/Link'
+import { Typography } from '@core/Typography'
 import { getUrlFromAction } from '../../common/helpers'
 import { getLocaleFromName } from '../../lib/localization'
 
@@ -12,9 +12,9 @@ type RelatedContentProps = {
 const RelatedContent = ({ data, ...rest }: RelatedContentProps) => {
   return (
     <aside {...rest}>
-      <Heading className="pb-4 text-left" size="xl" level="h2">
+      <Typography className="pb-4 text-left" variant="xl" as="h2">
         {data.title}
-      </Heading>
+      </Typography>
       <ul>
         {data.links.length > 0 &&
           data.links.map((item: LinkData) => {
