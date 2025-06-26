@@ -20,6 +20,7 @@ type InternalLinkProps = {
 export const InternalLink = ({ value, children }: { value?: InternalLinkProps; children?: React.ReactNode }) => {
   try {
     if (!value) return null
+    console.log(JSON.stringify(value))
     const { id, lang } = value.internalLink
     const anchorReference = value.anchorReference
     const linkLocale = getLocaleFromName(lang)

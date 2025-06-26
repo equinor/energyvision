@@ -1,31 +1,8 @@
-import slugReference from './slugReference'
-
-const lang = /* groq */ `
-  select(_type match 'route_*' =>
-    content->lang,
-    lang
-  )
-`
-
-const referenceFields = /* groq */ `
-  {
-    "id": ${slugReference},
-    "lang": ${lang},
-    "type": _type,
-  }
-`
-
 const markDefs = /* groq */ `
-  "markDefs": coalesce(markDefs[]{
-      ...,
-      _type == "internalLink" => {
-        "internalLink": select(
-          linkToOtherLanguage == true =>
-            referenceToOtherLanguange->${referenceFields}, 
-          reference->${referenceFields},
-        )
-    },
-    },[])
+"markDefs" : coalesce(markDefs[]{
+  ...,
+  _type == "reference" || _type == "homePageLink" || _type == "referenceOtherLang"=> {"internalLink" :links::getLinkFields(@){ ..., "id":link.slug, "lang": link.lang}}
+})
 `
 
 export default markDefs

@@ -9,6 +9,7 @@ import { seoAndSomeFields } from './common/seoAndSomeFields'
 import { sameLang, fixPreviewForDrafts, noDrafts } from './common/langAndDrafts'
 import { publishDateTimeQuery } from './common/publishDateTime'
 import background from './common/background'
+import { functions } from './common/functions'
 
 const footerComponentFields = /* groq */ `
   title,
@@ -38,6 +39,7 @@ const promotedmagazineTags = /* groq */ `"": *[_type == "magazineIndex" && ${sam
 }}`
 
 export const magazineQuery = /* groq */ `
+  ${functions}
 *[_type == "magazine" && slug.current == $slug && ${fixPreviewForDrafts}] {
     _id, //used for data filtering
     "slug": slug.current,

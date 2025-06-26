@@ -59,6 +59,17 @@ const defaultSerializers = {
     internalLink: ({ children, value }: any) => {
       return <InternalLink value={value}>{children}</InternalLink>
     },
+    //TODO find proper type
+    reference: ({ children, value }: any) => {
+      return <InternalLink value={value}>{children}</InternalLink>
+    },
+    //TODO find proper type
+    referenceOtherLang: ({ children, value }: any) => {
+      return <InternalLink value={value}>{children}</InternalLink>
+    },
+    homePageLink: ({ children, value }: any) => {
+      return <InternalLink value={value}>{children}</InternalLink>
+    },
     footnote: () => null,
     highlight: ({ children }: TypeProps) => {
       return <Highlight>{children}</Highlight>

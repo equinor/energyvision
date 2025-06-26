@@ -2,7 +2,7 @@ import type { Rule, Reference } from 'sanity'
 import type { ImageWithAlt } from '../imageWithAlt'
 import { contacts } from '@equinor/eds-icons'
 import { EdsIcon } from '../../../icons'
-import { getLinkSelectorFields } from '../linkSelector'
+import linkSelector from '../linkSelector/linkSelector'
 
 export type Promotion = {
   image?: ImageWithAlt
@@ -100,7 +100,10 @@ export default {
               placeholder: '+47 999 99 999',
               hidden: ({ parent }: { parent: Promotion }) => parent?.isLink,
             },
-            ...getLinkSelectorFields(undefined, 'isLink'),
+            linkSelector(
+              ['reference', 'referenceToOtherLanguage', 'link'],
+              ({ parent }: { parent: Promotion }) => !parent?.isLink,
+            ),
           ],
           preview: {
             select: {

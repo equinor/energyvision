@@ -1,13 +1,18 @@
-import { attach_file, external_link, format_color_text, link, star_filled } from '@equinor/eds-icons'
-import type { BlockDefinition, BlockStyleDefinition, Rule, ValidationContext } from 'sanity'
-import { filterByPages, filterByPagesInOtherLanguages } from '../../helpers/referenceFilters'
+import { attach_file, format_color_text, star_filled } from '@equinor/eds-icons'
+import type { BlockDefinition, BlockStyleDefinition } from 'sanity'
 import { EdsBlockEditorIcon, EdsIcon, IconSubScript, IconSuperScript } from '../../icons'
-import { Flags } from '../../src/lib/datasetHelpers'
-import { ExternalLinkRenderer, SubScriptRenderer, SuperScriptRenderer } from '../components'
-import routes from '../routes'
+import { SubScriptRenderer, SuperScriptRenderer } from '../components'
 import { defaultColors } from '../defaultColors'
-import { strictExternal, warnHttpExternal, warnHttpOrNotValidSlugExternal } from '../validations/validateSlug'
+import {
+  externalLink,
+  homepageLink,
+  internalReference,
+  internalReferenceOtherLanguage,
+} from '../objects/linkSelector/common'
 
+const externalLinkConfig = {
+  ...externalLink,
+}
 export type BlockContentProps = {
   h2?: boolean
   useH2BaseStyle?: boolean
@@ -172,117 +177,23 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockDef
     value: 'extraLargeText',
     component: ExtraLargeTextRender,
   }
-  const externalLinkConfig = {
-    name: 'link',
-    type: 'object',
-    title: 'External link',
-    icon: () => EdsBlockEditorIcon(external_link),
-    component: ExternalLinkRenderer,
-    fields: [
-      {
-        name: 'href',
-        type: 'url',
-        validation: (Rule: any) =>
-          Rule.uri({ scheme: ['http', 'https', 'tel', 'mailto'] })
-            .custom((value: any, context: ValidationContext) => {
-              return warnHttpOrNotValidSlugExternal(value, context)
-            })
-            .error(),
-      },
-    ],
-  }
-
-  type ReferenceType = {
-    _ref: string
-    _type: 'reference'
-  }
-
-  type InternalLinkType = {
-    linkToOtherLanguage: boolean
-    reference: ReferenceType
-    referenceToOtherLangs: ReferenceType
-  }
-
-  type ReferenceTarget = {
-    type: string
-  }
-
-  const types = [
-    Flags.HAS_NEWS && {
-      type: 'news',
-    },
-    Flags.HAS_LOCAL_NEWS && {
-      type: 'localNews',
-    },
-    Flags.HAS_MAGAZINE && {
-      type: 'magazine',
-    },
-  ].filter((e) => e)
-  const defaultReferenceTargets: ReferenceTarget[] = [...(types as ReferenceTarget[]), ...routes]
 
   const internalLinkConfig = {
-    name: 'internalLink',
-    type: 'object',
-    title: 'Internal link',
-    icon: () => EdsBlockEditorIcon(link),
-    fields: [
-      {
-        name: 'linkToOtherLanguage',
-        type: 'boolean',
-        title: 'Link to a different language',
-        description: 'Use this if you want to create a link to a page of a different language',
-      },
-      {
-        title: 'Reference',
-        name: 'reference',
-        type: 'reference',
-        to: defaultReferenceTargets,
-        options: {
-          filter: filterByPages,
-          disableNew: true,
-        },
-        hidden: ({ parent }: { parent: InternalLinkType }) => parent.linkToOtherLanguage,
-        validation: (Rule: Rule) =>
-          Rule.custom((value: ReferenceType, context: ValidationContext) => {
-            const { parent } = context as { parent: InternalLinkType }
-            if (parent.linkToOtherLanguage || value?._ref) {
-              return true
-            } else {
-              return 'Field is required'
-            }
-          }),
-      },
-      {
-        title: 'Reference',
-        // Oh no! There is a typo here :(
-        name: 'referenceToOtherLanguange',
-        type: 'reference',
-        to: defaultReferenceTargets,
-        options: {
-          filter: filterByPagesInOtherLanguages,
-          disableNew: true,
-        },
-        hidden: ({ parent }: { parent: InternalLinkType }) => !parent.linkToOtherLanguage,
-        validation: (Rule: Rule) =>
-          Rule.custom((value: ReferenceType, context: ValidationContext) => {
-            const { parent } = context as { parent: InternalLinkType }
-            if (!parent.linkToOtherLanguage || value?._ref) {
-              return true
-            } else {
-              return 'Field is required'
-            }
-          }),
-      },
-      {
-        name: 'anchorReference',
-        title: 'Anchor reference',
-        type: 'anchorReferenceField',
-        description: 'Use this field to link to an anchor point on the page you are linking to.',
-      },
-    ],
+    ...internalReference,
     options: {
+      ...internalReference.options,
       modal: {
         width: 'medium',
+      },
+    },
+  }
+
+  const internalLinkOtherLanguageConfig = {
+    ...internalReferenceOtherLanguage,
+    options: {
+      ...internalReferenceOtherLanguage.options,
+      modal: {
+        width: 'large',
       },
     },
   }
@@ -291,7 +202,7 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockDef
     name: 'attachment',
     type: 'object',
     title: 'Attachment',
-    icon: () => EdsIcon(attach_file),
+    icon: () => EdsBlockEditorIcon(attach_file),
     fields: [
       {
         name: 'reference',
@@ -338,6 +249,8 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockDef
 
   if (internalLink) {
     config?.marks?.annotations?.push(internalLinkConfig)
+    config?.marks?.annotations?.push(internalLinkOtherLanguageConfig)
+    config?.marks?.annotations?.push(homepageLink)
   }
 
   if (attachment) {

@@ -303,16 +303,10 @@ export type SomeType = 'facebook' | 'instagram' | 'youtube' | 'twitter' | 'linke
 
 export type FooterLinkData = {
   id: string
-  type: 'someLink' | 'link'
+  type: 'externalUrl'
   key: string
-  label: string
-  url?: string
   someType?: SomeType
-  link?: {
-    type: string
-    slug: string
-  }
-}
+} & LinkData
 
 export type ContactListData = {
   title: string
