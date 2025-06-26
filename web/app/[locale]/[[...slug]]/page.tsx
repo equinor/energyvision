@@ -58,6 +58,7 @@ export default async function Page({ params }: any) {
   const { isEnabled } = await draftMode()
   console.log('draftmode isEnabled', isEnabled)
   const { query, queryParams } = await getQueryFromSlug(s as string[], locale)
+  console.log('query', query)
 
   const { menuData, pageData, footerData } = await getComponentsData(
     {

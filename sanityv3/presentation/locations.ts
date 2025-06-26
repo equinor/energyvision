@@ -2,6 +2,8 @@ import { DocumentLocationResolver } from 'sanity/presentation'
 import { getDraftId } from 'sanity'
 import { map } from 'rxjs'
 import { getLocaleFromName } from '../src/lib/localization'
+import { toPlainText } from '@portabletext/react'
+
 // Pass 'context' as the second argument
 export const locations: DocumentLocationResolver = (params, context) => {
   // Set up locations for page documents
@@ -38,8 +40,8 @@ export const locations: DocumentLocationResolver = (params, context) => {
         return {
           locations: [
             {
-              title: doc.title || 'Untitled',
-              href: `/${locale !== 'en' ? `/${locale}` : ''}${doc.slugs?.[0]}`,
+              title: toPlainText(doc.title) || 'Untitled',
+              href: `${locale !== 'en' ? `/${locale}` : ''}${doc.slugs?.[0]}`,
             },
           ],
         }

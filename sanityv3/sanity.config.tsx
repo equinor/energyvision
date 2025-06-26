@@ -42,9 +42,8 @@ import './customStyles.css'
 import { partialStudioTheme } from './studioTheme'
 import { copyAction } from './actions/fieldActions/CustomCopyFieldAction'
 import CustomDocumentInternationalizationMenu from './schemas/components/CustomDocumentInternationalizationMenu'
-import { defineDocuments, defineLocations, presentationTool } from 'sanity/presentation'
+import { presentationTool } from 'sanity/presentation'
 import { locations } from './presentation/locations'
-import { getLocaleFromName } from './src/lib/localization'
 
 export const customTheme = buildLegacyTheme(partialStudioTheme)
 
@@ -125,7 +124,8 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret = fals
         },
       },
       resolve: {
-        locations: {
+        locations,
+        /*         locations: {
           // Resolve locations using values from the matched document
           page: defineLocations({
             select: {
@@ -144,7 +144,7 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret = fals
               ],
             }),
           }),
-        },
+        }, */
       },
     }),
     /*       resolvers: {

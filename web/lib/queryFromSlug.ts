@@ -37,7 +37,9 @@ const parseSlug = (slug: string): string => {
 const localNewsTagsQuery = (lang: string) => /* groq */ `*[_type == 'localNewsTag' && ${noDrafts}] {${lang}}`
 
 const getQuery = async (firstPiece: string, secondPiece: string | undefined, lang: string) => {
-  console.log('test, return homepagequery', firstPiece == '')
+  console.log('firstPiece', firstPiece)
+  console.log('secondPiece', secondPiece)
+  console.log('lang', lang)
   if (firstPiece == '') return homePageQuery
   if (Flags.HAS_NEWS && newsSlug[lang] === firstPiece && secondPiece) {
     // is news
@@ -56,6 +58,7 @@ const getQuery = async (firstPiece: string, secondPiece: string | undefined, lan
     return magazineQuery
   } else {
     // is route
+    console.log('is route')
     return routeQuery
   }
 }
@@ -86,7 +89,9 @@ export const getQueryFromSlug = async (
     return getPreviewByIdQuery(firstPiece, locale, date)
   } */
 
+  console.log('slugArray', slugArray)
   const slug = `/${slugArray.join('/')}`
+  console.log('slug', slug)
   const lang = getNameFromLocale(locale)
   const query = await getQuery(firstPiece, secondPiece, lang)
   return {

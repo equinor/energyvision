@@ -45,7 +45,7 @@
     "http-proxy": "^1.18.1",
     "ics": "^3.1.0",
     "instantsearch.js": "^4.73.4",
-    "next": "15.3.2",
+    "next": "15.3.4",
     "next-sanity": "9.12.0",
     "next-sanity-image": "^6.2.0",
     "next-seo": "^6.8.0",
