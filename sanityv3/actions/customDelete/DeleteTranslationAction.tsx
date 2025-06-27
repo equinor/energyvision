@@ -7,6 +7,7 @@ import DeleteTranslationFooter from './components/DeleteTranslationFooter'
 import { useDocumentInternationalizationContext } from '@sanity/document-internationalization'
 import { apiVersion } from '../../sanity.client'
 import { defaultLanguage } from '../../languages'
+// eslint-disable-next-line import/namespace
 import { Patch, Transaction } from '@sanity/client'
 
 const TRANSLATIONS_ARRAY_NAME = 'translations'
