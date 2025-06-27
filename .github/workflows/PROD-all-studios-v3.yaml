@@ -242,7 +242,7 @@ jobs:
         if: failure()
 
   store-image-tags:
-    needs: deploy-satellite-studios
+    needs: [deploy-satellite-studios, deploy-global, deploy-secret]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout internal 🛎️
