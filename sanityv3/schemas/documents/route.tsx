@@ -6,6 +6,7 @@ import { EdsIcon, TopicDocuments } from '../../icons'
 import { Flags } from '../../src/lib/datasetHelpers'
 import { withSlugValidation } from '../validations/validateSlug'
 import SlugInput from '../components/SlugInput'
+// eslint-disable-next-line import/namespace
 import { SanityClient, SanityDocument } from '@sanity/client'
 
 export default (isoCode: string, title: string) => {
