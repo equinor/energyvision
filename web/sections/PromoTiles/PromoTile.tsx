@@ -38,7 +38,7 @@ export const PromoTile = forwardRef<HTMLAnchorElement, PromoTileProps>(function 
       {...(id && { id: id })}
       href={url}
       type={action.type}
-      locale={locale}
+      hrefLang={locale}
       ref={ref}
       image={image}
       variant={variant}

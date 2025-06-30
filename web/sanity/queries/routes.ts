@@ -45,7 +45,7 @@ export const routeQuery = /* groq */ `
         ${eventContentFields}
       }
     },
-  }{
+  }[0]{
     ...,
     "slugs":{
       "allSlugs" : select(count(slugsFromTranslations)> 0 => slugsFromTranslations, [currentSlug])

@@ -72,7 +72,7 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
     <BaseLink
       ref={ref}
       href={href}
-      locale={locale}
+      hrefLang={locale}
       prefetch={false}
       className={twMerge(
         `group/card

@@ -1,3 +1,4 @@
+import envisTwMerge from '@/twMerge'
 import { DateProps, DateIcon } from './shared'
 import { useFormatter } from 'next-intl'
 
@@ -9,13 +10,14 @@ const FormattedDate = ({
   weekday,
   icon = false,
   uppercase = false,
+  className = '',
   ...rest
 }: DateProps): JSX.Element => {
   const formatter = useFormatter()
   return (
-    <span className={`inline-flex items-center space-x-2`} {...rest}>
+    <span {...rest} className={envisTwMerge(`text-base inline-flex items-center space-x-2`, className)}>
       {icon && <DateIcon />}
-      <span className={`flex-shrink box-content ${icon && '-mb-1'} ${uppercase && 'uppercase'}`}>
+      <span className={`flex-shrink box-content ${icon && '-mb-1'} ${uppercase ? 'uppercase' : ''}`}>
         <time suppressHydrationWarning dateTime={datetime}>
           {formatter.dateTime(new Date(datetime), {
             year: year,

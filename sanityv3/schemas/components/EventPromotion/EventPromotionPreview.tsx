@@ -37,7 +37,15 @@ export const EventPromotionPreview = (props: EventPromotionPreviewProps) => {
     const withTags = useTags && tags ? `from ${tags.length} tag(s)` : ''
 
     return setTitle(`Showing ${number} ${time} ${promoteSingleUpcomingEvent ? 'event' : 'events'} ${withTags}`)
-  }, [manuallySelectEvents, promotedEvents, useTags, tags, pastEventsCount, promoteSingleUpcomingEvent])
+  }, [
+    manuallySelectEvents,
+    promotedEvents,
+    useTags,
+    tags,
+    pastEventsCount,
+    promoteSingleUpcomingEvent,
+    promotePastEvents,
+  ])
 
   return (
     <Flex align="center">

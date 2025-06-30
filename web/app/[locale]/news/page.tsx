@@ -2,7 +2,7 @@ import { getIsoFromLocale, getNameFromLocale } from '../../../lib/localization'
 import { Flags } from '../../../common/helpers/datasetHelpers'
 import algoliasearch from 'algoliasearch'
 import { algolia } from '../../../lib/config'
-import { getComponentsData } from '../../../lib/fetchData'
+import { getComponentsData } from '../../../sanity/lib/fetchData'
 import { notFound } from 'next/navigation'
 import { unstable_cache } from 'next/cache'
 import { Layout } from '@/sections/Layout/Layout'
@@ -42,7 +42,7 @@ const getInitialResponse = unstable_cache(
   { revalidate: 3600, tags: ['news'] },
 )
 
-export default async function NewsPage({ params, preview = false }: any) {
+export default async function NewsPage({ params }: any) {
   const { locale } = await params
 
   // For the time being, let's just give 404 for satellites
@@ -65,13 +65,10 @@ export default async function NewsPage({ params, preview = false }: any) {
     lang,
   }
 
-  const { menuData, pageData, footerData } = await getComponentsData(
-    {
-      query: newsroomQuery,
-      queryParams,
-    },
-    preview,
-  )
+  const { menuData, pageData, footerData } = await getComponentsData({
+    query: newsroomQuery,
+    queryParams,
+  })
 
   const response = await getInitialResponse(isoLocale)
   const slugs = [

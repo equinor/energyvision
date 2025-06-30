@@ -1,33 +1,31 @@
-import { getClient } from './sanity.server'
-import type { QueryParams } from './queryFromSlug'
-import { Flags } from '../common/helpers/datasetHelpers'
+import { getClient } from '../../lib/sanity.server'
+import type { QueryParams } from '../../lib/queryFromSlug'
+import { Flags } from '../../common/helpers/datasetHelpers'
 import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu'
 import { footerQuery } from '@/sanity/queries/footer'
 import { simpleMenuQuery } from '@/sanity/queries/simpleMenu'
 import { sanityFetch } from '@/sanity/lib/live'
 
-export const getComponentsData = async (page: { query: string; queryParams: QueryParams }, draftMode = false) => {
-  const menuQuery = Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery
-  const menuData = await sanityFetch({
-    query: menuQuery,
-    params: { ...page.queryParams },
-  })
-
-  const { pageData } = await sanityFetch({
+export const getPageData = async (page: { query: string; queryParams: QueryParams }) => {
+  const pageResults = await sanityFetch({
     query: page.query,
     params: { ...page.queryParams },
   })
-  const footerData = await sanityFetch({
+
+  return { pageData: pageResults.data }
+}
+export const getHeaderAndFooterData = async (queryParams: QueryParams) => {
+  const menuQuery = Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery
+  const menuResults = await sanityFetch({
+    query: menuQuery,
+    params: { ...queryParams },
+  })
+  const footerResults = await sanityFetch({
     query: footerQuery,
-    params: { ...page.queryParams },
+    params: { ...queryParams },
   })
 
-  /* Necessary?
-  const menuData = filterDataToSingleItem(menuDataWithDrafts, preview)
-  const pageData = filterDataToSingleItem(pageDataWithDrafts, preview)
-  const footerData = filterDataToSingleItem(footerDataWithDrafts, preview) */
-
-  return { menuData, pageData, footerData }
+  return { menuData: menuResults.data, footerData: footerResults.data }
 }
 
 export type MagazineQueryParams = {

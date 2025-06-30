@@ -151,7 +151,6 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret = fals
         locations: locations,
       }, */
   ].filter((e) => e) as PluginOptions[],
-
   schema: {
     types: schemaTypes as SchemaTypeDefinition[],
     templates: (prev: Template<any, any>[]) => [...filterTemplates(prev), ...initialValueTemplates],
@@ -214,6 +213,12 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret = fals
       },
     ],
   }),
+  releases: {
+    enabled: false,
+  },
+  scheduledPublishing: {
+    enabled: true,
+  },
 })
 
 export default dataset === 'secret'

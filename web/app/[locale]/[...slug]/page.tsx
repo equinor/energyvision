@@ -1,11 +1,10 @@
 import Header from '@/sections/Header/Header'
 import { Layout } from '@/sections/Layout/Layout'
 import { getQueryFromSlug } from '../../../lib/queryFromSlug'
-import { getComponentsData } from '../../../lib/fetchData'
+import { getComponentsData } from '../../../sanity/lib/fetchData'
 import getPageSlugs from '../../../common/helpers/getPageSlugs'
 import dynamic from 'next/dynamic'
 import { notFound } from 'next/navigation'
-import { draftMode } from 'next/headers'
 //import { useContext, useEffect } from 'react'
 //import { PreviewContext } from '../../../lib/contexts/PreviewContext'
 //import { FormattedMessage } from 'react-intl'
@@ -55,18 +54,12 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
 export default async function Page({ params }: any) {
   const { locale, slug: s } = await params
   console.log('s', s)
-  const { isEnabled } = await draftMode()
-  console.log('draftmode isEnabled', isEnabled)
   const { query, queryParams } = await getQueryFromSlug(s as string[], locale)
-  console.log('query', query)
 
-  const { menuData, pageData, footerData } = await getComponentsData(
-    {
-      query,
-      queryParams,
-    },
-    isEnabled,
-  )
+  const { menuData, pageData, footerData } = await getComponentsData({
+    query,
+    queryParams,
+  })
   if (!pageData) notFound()
   const slugs = getPageSlugs(pageData)
   const hasSticky = pageData?.stickyMenu && pageData?.stickyMenu?.links && pageData?.stickyMenu?.links?.length > 0

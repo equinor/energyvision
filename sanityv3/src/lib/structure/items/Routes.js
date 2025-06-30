@@ -1,8 +1,6 @@
 import { map } from 'rxjs/operators'
 import { RouteDocuments } from '../../../../icons'
 import { languages } from '../../../../languages'
-import Iframe from 'sanity-plugin-iframe-pane'
-import { resolvePreviewUrl } from '../../preview'
 import flags from '../../../../icons/countries'
 import { apiVersion } from '../../../../sanity.client'
 
@@ -16,22 +14,7 @@ import { apiVersion } from '../../../../sanity.client'
  *    the 'parent' reference field with the 'parent' _id
  */
 
-const views = (S) => [
-  S.view.form().title('Edit route'),
-  /*   S.view
-    .component(Iframe)
-    .options({
-      url: (doc) => resolvePreviewUrl(doc),
-      loader: 'Loading preview...',
-      reload: {
-        button: true,
-      },
-      showDisplayUrl: false,
-    })
-    .title('Preview'), */
-]
-// Original version without preview pane
-// const views = [S.view.form()]
+const views = (S) => [S.view.form().title('Edit route')]
 
 const schema = 'route'
 

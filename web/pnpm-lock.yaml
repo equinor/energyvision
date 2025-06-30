@@ -10,6 +10,9 @@ dependencies:
   '@algolia/cache-in-memory':
     specifier: ^4.22.1
     version: 4.22.1
+  '@date-fns/tz':
+    specifier: ^1.2.0
+    version: 1.2.0
   '@equinor/eds-core-react':
     specifier: 0.39.0
     version: 0.39.0(react-dom@18.3.1)(react@18.3.1)(styled-components@6.1.19)
@@ -62,11 +65,8 @@ dependencies:
     specifier: ^4.16.0
     version: 4.16.0
   date-fns:
-    specifier: ^2.29.3
-    version: 2.29.3
-  date-fns-tz:
-    specifier: ^2.0.0
-    version: 2.0.0(date-fns@2.29.3)
+    specifier: ^4.1.0
+    version: 4.1.0
   easy-soap-request:
     specifier: ^5.4.0
     version: 5.4.0
@@ -7394,14 +7394,6 @@ packages:
 
   /dataloader@2.2.2:
     resolution: {integrity: sha512-8YnDaaf7N3k/q5HnTJVuzSyLETjoZjVmHc4AeKAzOvKHEFQKcn64OKBfzHYtE9zGjctNM7V9I0MfnUVLpi7M5g==}
-    dev: false
-
-  /date-fns-tz@2.0.0(date-fns@2.29.3):
-    resolution: {integrity: sha512-OAtcLdB9vxSXTWHdT8b398ARImVwQMyjfYGkKD2zaGpHseG2UPHbHjXELReErZFxWdSLph3c2zOaaTyHfOhERQ==}
-    peerDependencies:
-      date-fns: '>=2.0.0'
-    dependencies:
-      date-fns: 2.29.3
     dev: false
 
   /date-fns@2.29.3:

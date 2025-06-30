@@ -87,7 +87,7 @@ export const DeleteTranslationAction: DocumentActionComponent = (props) => {
           description: err.message,
         })
       })
-  }, [client, translations, documentId, onClose, toast])
+  }, [client, onClose, toast, isDefaultLanguageDocument])
 
   return {
     label: `Delete translation...`,

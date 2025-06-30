@@ -74,16 +74,5 @@ export default {
           }
         }),
     },
-    {
-      title: 'Timezone',
-      description: 'Timezone in which the event will be held',
-      name: 'timezone',
-      type: 'string',
-      components: {
-        input: TimezoneInput,
-      },
-      initialValue: Intl.DateTimeFormat().resolvedOptions().timeZone,
-      validation: (Rule: Rule) => Rule.required(),
-    },
   ],
 }

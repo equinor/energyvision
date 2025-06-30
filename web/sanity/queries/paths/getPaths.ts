@@ -3,7 +3,7 @@ import { getNameFromLocale } from '../../../lib/localization'
 import { getClient } from '../../../lib/sanity.server'
 import { sanityFetch } from '@/sanity/lib/live'
 import { topicRoutesForLocale, topicRoutesForLocaleToStaticallyBuild } from './pathQueries'
-import { noDrafts, sameLang } from '../common/langAndDrafts'
+import { sameLang } from '../common/langAndDrafts'
 import { publishDateTimeQuery } from '../common/publishDateTime'
 
 const getTopicRoutesForLocale = async (locale: string) => {
@@ -30,7 +30,7 @@ const getTopicRoutesForLocaleToStaticallyBuild = async (locale: string) => {
 const getDocumentsForLocale = async (type: 'news' | 'localNews' | 'magazine', locale: string) => {
   const lang = getNameFromLocale(locale)
   const data: { slug: string; _updatedAt: string }[] = await getClient(false).fetch(
-    groq`*[_type == $type && defined(slug.current) && ${sameLang} && ${noDrafts}][] {
+    groq`*[_type == $type && defined(slug.current) && ${sameLang}][] {
       _updatedAt,
       "slug": slug.current,
     }`,
@@ -45,9 +45,8 @@ const getDocumentsForLocale = async (type: 'news' | 'localNews' | 'magazine', lo
 // Get a Sanity document by given slug
 // Only include drafts if preview mode is enabled
 export const getDocumentBySlug = async (slug: string, isPreview = false) => {
-  const draft = isPreview ? `` : /* groq */ `&& ${noDrafts}`
   const data: { slug: string; _updatedAt: string }[] = await getClient(false).fetch(
-    groq`*[defined(slug.current) && slug.current == $slug ${draft}][0] {
+    groq`*[defined(slug.current) && slug.current == $slug][0] {
       _updatedAt,
       "slug": slug.current,
     }`,
@@ -135,7 +134,7 @@ export const getNewsroomPaths = async (): Promise<PathType[]> => {
   // Use last published news as updatedAt field for newsroom
   const getUpdatedAt = async (lang: 'en_GB' | 'nb_NO'): Promise<{ _updatedAt: string }> =>
     await getClient(false).fetch(
-      groq`*[_type == 'news' && ${sameLang} && ${noDrafts}] | order(${publishDateTimeQuery} desc)[0] {
+      groq`*[_type == 'news' && ${sameLang}] | order(${publishDateTimeQuery} desc)[0] {
       _updatedAt,
     }`,
       {
@@ -164,7 +163,7 @@ export const getMagazineIndexPaths = async (): Promise<PathType[]> => {
   // Use last published news as updatedAt field for newsroom
   const getUpdatedAt = async (lang: 'en_GB' | 'nb_NO'): Promise<{ _updatedAt: string }> =>
     await getClient(false).fetch(
-      groq`*[_type == 'magazine' && ${sameLang} && ${noDrafts}] | order(_createdAt desc)[0] {
+      groq`*[_type == 'magazine' && ${sameLang}] | order(_createdAt desc)[0] {
       _updatedAt,
     }`,
       {

@@ -78,17 +78,12 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
       >
         {start && (
           <div className="h-full py-2">
-            <FormattedDate icon datetime={start} style={{ fontSize: 'var(--typeScale-0)' }} />
+            <FormattedDate icon datetime={start} className="text-xs" />
           </div>
         )}
         {location && (
           <div className={metaClassNames}>
-            <Icon
-              data={world}
-              color={'currentColor'}
-              style={{ fontSize: 'var(--typeScale-0)' }}
-              className="text-norwegian-woods-100"
-            />
+            <Icon data={world} color={'currentColor'} className="text-norwegian-woods-100 text-2xs" />
             <span className="text-xs">{location}</span>
           </div>
         )}
@@ -97,7 +92,7 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
           <div className={`h-full flex gap-1 items-center py-2`}>
             <FormattedTime icon datetime={start} small />
             <span className="w-max">-</span>
-            <FormattedTime datetime={end} timezone small />
+            <FormattedTime datetime={end} showTimezone small />
           </div>
         ) : (
           <div className={metaClassNames}>

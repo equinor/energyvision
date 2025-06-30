@@ -1,6 +1,5 @@
 import { getYear, getMonth, getDate, getHours, getMinutes, getSeconds } from 'date-fns'
 import { EventDateType } from '../../../web/types/index'
-import { zonedTimeToUtc } from 'date-fns-tz'
 
 export const toDateParts = (datetime: Date): number[] => {
   return [
@@ -25,23 +24,28 @@ export const toUTCDateParts = (datetime: Date): number[] => {
 }
 
 export const getEventDates = (eventDate: EventDateType | undefined) => {
+  let start = undefined
+  let end = undefined
   if (!eventDate) {
     console.warn('Missing eventDate object for event')
-    return { start: null, end: null }
-  }
-  const { date, startTime, endTime, timezone } = eventDate
-  if (!date) return { start: null, end: null }
-
-  if (startTime && endTime) {
-    const start = zonedTimeToUtc(new Date(`${date}T${startTime}`), timezone).toISOString()
-    const end = zonedTimeToUtc(new Date(`${date}T${endTime}`), timezone).toISOString()
     return { start, end }
-  } else {
-    const [YYYY, MM, DD] = date.split('-').map(Number)
-    const start = new Date()
-    start.setFullYear(YYYY, MM - 1, DD)
-    start.setHours(12, 0, 0, 0)
-
-    return { start: start.toISOString(), end: null }
   }
+  const { date, startTime, endTime } = eventDate
+  if (!date) return { start, end }
+
+  if (startTime) {
+    const [startHH, startMM] = startTime.split(':')
+    const startDateTime = new Date(date)
+    startDateTime.setHours(parseInt(startHH, 10))
+    startDateTime.setMinutes(parseInt(startMM, 10))
+    start = startDateTime
+  }
+  if (endTime) {
+    const [endHH, endMM] = endTime.split(':')
+    const endDateTime = new Date(date)
+    endDateTime.setHours(parseInt(endHH, 10))
+    endDateTime.setMinutes(parseInt(endMM, 10))
+    end = endDateTime
+  }
+  return { start, end }
 }

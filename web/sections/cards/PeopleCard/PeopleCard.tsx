@@ -99,7 +99,7 @@ const PeopleCard = forwardRef<HTMLDivElement, PeopleCardProps>(function PeopleCa
             {isLink && cv && cvUrl ? (
               <ResourceLink
                 href={cvUrl}
-                locale={cv?.type === 'internalUrl' ? getLocaleFromName(cv?.link?.lang) : undefined}
+                hrefLang={cv?.type === 'internalUrl' ? getLocaleFromName(cv?.link?.lang) : undefined}
                 variant="fit"
               >
                 {cv?.label}

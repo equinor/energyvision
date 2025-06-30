@@ -11,7 +11,7 @@ import markDefs from './blockEditorMarks'
 import { eventPromotionFields, futureEventsQuery, pastEventsQuery } from './promotions/eventPromotion'
 import { imageCarouselFields } from './imageCarouselFields'
 import { keyNumbersFields } from './keyNumbersFields'
-import { noDrafts, sameLang } from './langAndDrafts'
+import { sameLang } from './langAndDrafts'
 import promoteMagazine from './promotions/promoteMagazine'
 import { lastUpdatedTimeQuery, publishDateTimeQuery } from './publishDateTime'
 import { anchorLinkReferenceFields } from './anchorLinkReferenceFields'
@@ -288,7 +288,7 @@ _type == "keyNumbers" =>{
             ||
             localNewsTag._ref in ^.localNewsTags[]._ref
           )
-          && ${sameLang} && ${noDrafts}
+          && ${sameLang}
         ] | order(${publishDateTimeQuery} desc)[0...3]{
           "type": _type,
           "id": _id,
@@ -464,7 +464,7 @@ _type == "keyNumbers" =>{
       ||
         localNewsTag._ref in ^.selectedTags.localNewsTags[]._ref
     )
-    && ${sameLang} && ${noDrafts}
+    && ${sameLang}
     ] | order(${publishDateTimeQuery} desc){
       "type": _type,
       "id": _id,

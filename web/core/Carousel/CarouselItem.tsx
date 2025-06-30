@@ -157,7 +157,7 @@ export const CarouselItem = forwardRef<HTMLLIElement, CarouselItemProps>(functio
                     aria-label={action?.ariaLabel}
                     variant="fit"
                     className="mt-auto"
-                    locale={action?.type === 'internalUrl' ? getLocaleFromName(action?.link?.lang) : undefined}
+                    hrefLang={action?.type === 'internalUrl' ? getLocaleFromName(action?.link?.lang) : undefined}
                   >
                     {action.label}
                   </ResourceLink>

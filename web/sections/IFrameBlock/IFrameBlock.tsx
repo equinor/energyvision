@@ -65,7 +65,7 @@ const IFrameBlock = ({
           extension={action?.extension}
           showExtensionIcon={true}
           variant="fit"
-          locale={action?.type === 'internalUrl' ? getLocaleFromName(action?.link?.lang) : undefined}
+          hrefLang={action?.type === 'internalUrl' ? getLocaleFromName(action?.link?.lang) : undefined}
           className=""
         >
           {action.label}

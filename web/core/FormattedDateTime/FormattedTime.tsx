@@ -5,7 +5,7 @@ import { useFormatter } from 'next-intl'
 export type FormattedTimeProps = {
   datetime: string
   icon?: boolean
-  timezone?: boolean
+  showTimezone?: boolean
   small?: boolean
 } & HTMLAttributes<HTMLSpanElement>
 
@@ -13,23 +13,19 @@ const FormattedTime = ({
   datetime,
   icon = false,
   small = false,
-  timezone,
+  showTimezone = false,
   ...rest
 }: FormattedTimeProps): JSX.Element => {
   const date = new Date(datetime)
   const format = useFormatter()
   return (
-    <span className="inline-flex items-center space-x-2" {...rest}>
+    <span className="text-xs inline-flex items-center space-x-2" {...rest}>
       {icon && <TimeIcon />}
-      <span className={`flex-shrink box-content ${small ? 'text-2xs mt-1' : 'mt-0'}`}>
+      <span className={`flex-shrink box-content ${small ? 'mt-1' : 'mt-0'}`}>
         <time suppressHydrationWarning dateTime={datetime}>
           {format.dateTime(date, { hour: 'numeric', minute: 'numeric', hour12: false }) + ' '}
         </time>
-        {timezone && (
-          <span suppressHydrationWarning style={{ marginLeft: 'var(--space-4)' }}>
-            ({date.toLocaleTimeString('es-NO', { timeZoneName: 'short' }).split(' ')[1]})
-          </span>
-        )}
+        {showTimezone && <span>(CEST)</span>}
       </span>
     </span>
   )

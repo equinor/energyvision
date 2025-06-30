@@ -1,6 +1,6 @@
 import linkSelectorFields, { linkReferenceFields } from './common/actions/linkSelectorFields'
 import markDefs from './common/blockEditorMarks'
-import { noDrafts, sameLang } from './common/langAndDrafts'
+import { sameLang } from './common/langAndDrafts'
 import { ingressForNewsQuery } from './common/newsSubqueries'
 import { publishDateTimeQuery } from './common/publishDateTime'
 import { seoAndSomeFields } from './common/seoAndSomeFields'
@@ -35,7 +35,7 @@ const nextDirectionFilter = /* groq */ `
 `
 
 export const allNewsDocuments = /* groq */ `
-*[_type == "news" && ${sameLang} && ${noDrafts} ] | order(${publishDateTimeQuery} desc)[0...30] {
+*[_type == "news" && ${sameLang} ] | order(${publishDateTimeQuery} desc)[0...30] {
 "id": _id,
 "updatedAt": _updatedAt,
 title,
@@ -55,7 +55,7 @@ ${ingressForNewsQuery},
 }`
 
 export const getNewsArticlesByPage = (hasFirstId = false, hasLastId = false) => /* groq */ `
-*[_type == 'news' && ${sameLang} && ${noDrafts}
+*[_type == 'news' && ${sameLang}
   ${hasLastId ? nextDirectionFilter : ''}
   ${hasFirstId ? prevDirectionFilter : ''}
   ] | order(${publishDateTimeQuery} desc)[0...30]{

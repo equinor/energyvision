@@ -8,6 +8,7 @@ const sanityConfig: ClientConfig = {
   apiVersion,
   token,
   perspective: 'published',
+  useCdn: true,
   stega: {
     studioUrl,
     // Set logger to 'console' for more verbose logging
@@ -22,11 +23,9 @@ const sanityConfig: ClientConfig = {
   },
 }
 
-export const client = createClient({ ...sanityConfig, useCdn: true })
-export const clientNoCdn = createClient({ ...sanityConfig, useCdn: false })
+export const client = createClient({ ...sanityConfig })
 
 export const sanityClientWithEquinorCDN = createClient({
   ...sanityConfig,
-  useCdn: true,
   apiHost: 'https://cdn.equinor.com',
 })

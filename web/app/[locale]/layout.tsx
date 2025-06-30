@@ -10,6 +10,10 @@ import DraftModeToast from '@/sections/DraftMode/DraftModeToast'
 import { VisualEditing } from 'next-sanity'
 import { SanityLive } from '@/sanity/lib/live'
 import { handleError } from '../client-utils'
+import { getHeaderAndFooterData } from '@/sanity/lib/fetchData'
+import { getNameFromLocale } from '@/lib/localization'
+import Header from '@/sections/Header/Header'
+import envisTwMerge from '@/twMerge'
 
 const equinorRegular = localFont({
   src: '../fonts/equinor/Equinor-Regular.woff',
@@ -29,11 +33,13 @@ export default async function LocaleLayout({
 }) {
   // Ensure that the incoming `locale` is valid
   const { locale } = await params
+  console.log('locale in layout', locale)
   const { isEnabled: isDraftMode } = await draftMode()
 
   if (!hasLocale(routing.locales, locale)) {
     notFound()
   }
+  const { menuData, footerData } = await getHeaderAndFooterData({ lang: getNameFromLocale(locale) })
 
   return (
     <html
@@ -51,7 +57,13 @@ export default async function LocaleLayout({
         )}
         {/* The <SanityLive> component is responsible for making all sanityFetch calls in your application live, so should always be rendered. */}
         <SanityLive onError={handleError} />
-        <NextIntlClientProvider>{children}</NextIntlClientProvider>
+        <NextIntlClientProvider>
+          <div className={envisTwMerge(`${hasSticky ? '' : 'pt-topbar'}`, className)} {...rest}>
+            <Header slugs={slugs} menuData={menuData} stickyMenuData={pageData?.stickyMenu} />
+            {children}
+            <Footer footerData={footerData} />
+          </div>
+        </NextIntlClientProvider>
       </body>
     </html>
   )

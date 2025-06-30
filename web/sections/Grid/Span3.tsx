@@ -1,3 +1,4 @@
+'use client'
 import { twMerge } from 'tailwind-merge'
 import { HTMLAttributes, forwardRef } from 'react'
 import { mapGridContent } from './mapGridContent'

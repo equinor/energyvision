@@ -30,7 +30,7 @@ export const InternalLink = ({ value, children }: { value?: InternalLinkProps; c
     }
 
     return (
-      <Link locale={linkLocale} href={href}>
+      <Link hrefLang={linkLocale} href={href}>
         {children}
       </Link>
     )

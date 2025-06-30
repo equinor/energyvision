@@ -177,7 +177,7 @@ const VideoPlayer = ({ anchor, data, className }: { data: VideoPlayerData; ancho
           extension={action?.extension}
           showExtensionIcon={true}
           variant="fit"
-          locale={action?.type === 'internalUrl' ? getLocaleFromName(action?.link?.lang) : undefined}
+          hrefLang={action?.type === 'internalUrl' ? getLocaleFromName(action?.link?.lang) : undefined}
           className="mt-4 mb-2"
         >
           {action.label}
