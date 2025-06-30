@@ -257,7 +257,7 @@ module.exports = {
         //--fontWeight-medium: tw -> medium
         //--fontWeight-regular: tw -> normal
       },
-      lineHeight: {
+      /*       lineHeight: {
         text: '2.3rem',
         //--lineHeight-1
         inherit: 'inherit',
@@ -268,7 +268,7 @@ module.exports = {
         cloudy: 1.35,
         //-lineHeight-3
         planetary: 1.5,
-      },
+      }, */
       scale: {
         99: '0.99',
       },
