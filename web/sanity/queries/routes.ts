@@ -15,6 +15,22 @@ const allSlugsQuery = /* groq */ `
     "slug":*[_type match "route*" && content._ref == ^._id][0].slug.current,
     lang
   }`
+export const pageDataForHeaderQuery = /* groq */ `
+  *[(_type match "route_" + $lang) && slug.current == $slug] {
+    _id, //used for data filtering
+    "slug": slug.current,
+    ${allSlugsQuery},
+    "title": content->title,
+    "seoAndSome": content->${seoAndSomeFields},
+    ${stickyMenu},
+    "template": content->_type,
+  }[0]{
+    ...,
+    "slugs":{
+      "allSlugs" : select(count(slugsFromTranslations)> 0 => slugsFromTranslations, [currentSlug])
+    }
+  }
+`
 
 export const routeQuery = /* groq */ `
   *[(_type match "route_" + $lang) && slug.current == $slug] {

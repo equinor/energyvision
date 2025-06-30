@@ -15,7 +15,7 @@ const TotalResultsStat = ({ totalPages, hitsPerPage }: TotalResultsStatProps) =>
 
   const t = useTranslations()
   return (
-    <div className="mt-5 text-slate-blue-70">
+    <div className="mt-5">
       {
         t("search_showing_results_number",{
           nbHits: nbHits,

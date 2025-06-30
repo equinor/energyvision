@@ -1,9 +1,107 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'video.js/dist/video-js.css';
-@import '../styles/components/videojs.css';
-@import '../styles/components/cookiebot.css';
-@import 'tailwindcss/utilities';
+@import 'tailwindcss';
+@config "../../tailwind.config.js";
+@source 'video.js/dist/video-js.css';
+@source '../styles/components/videojs.css';
+@source '../styles/components/cookiebot.css';
+
+/*old darkMode: ['variant', [':is(.dark &):not(.light &)']],*/
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: 'Equinor', 'Open Sans', sans-serif;
+  --breakpoint-md: 700px;
+  --breakpoint-xl: 1300px;
+  --breakpoint-3xl: 1600px;
+  --breakpoint-4xl: 1920px;
+  --color-moss-green-100: hsl(184, 100%, 17%);
+  --color-moss-green-95: hsl(184, 100%, 24%);
+  --color-moss-green-90: hsl(184, 31%, 58%);
+  --color-moss-green-80: hsl(184, 31%, 74%);
+  --color-moss-green-60: hsl(184, 31%, 89%);
+  --color-moss-green-50: hsl(184, 30%, 96%);
+  --color-energy-red-100: hsl(348, 100%, 54%);
+  --color-clear-red-100: hsl(0, 100%, 46%);
+  --color-black-100: hsl(0, 0%, 0%);
+  --color-black-80: hsl(0, 0%, 20%);
+  --color-slate-blue-100: hsl(206, 34%, 14%);
+  --color-slate-blue-95: hsl(206, 32%, 21%);
+  --color-slate-blue-90: hsl(207, 14%, 37%);
+  /*--default-text*/
+  --color-slate-80: hsl(0, 100%, 46%);
+  --color-mist-blue-100: hsl(199, 58%, 90%);
+  --color-spruce-wood-100: hsl(25, 100%, 92%);
+  --color-spruce-wood-90: hsl(25, 100%, 94%);
+  --color-green-50: #c3e4ce;
+  --color-yellow-50: #fff5b8;
+  --color-blue-50: #49709c;
+  --color-orange-50: #f8d1af;
+  --color-north-sea-90: #051b33;
+  --color-north-sea-80: #2a4d74;
+  --color-north-sea-50: #a8c3db;
+  --color-norwegian-woods-100: #007079;
+  --color-norwegian-woods-70: #aad5bb;
+  --color-norwegian-woods-60: #c3e4ce;
+  --color-norwegian-woods-40: #e6faec;
+  --color-sand-and-summer-50: #ffe7d6;
+  --color-autumn-storm-60: #86a7ac;
+  --color-autumn-storm-40: #c2d4d6;
+  --text-2xs: 'clamp(calc(11.11 / 16 * 1rem), 0.19vw + 0.65rem, calc(14.08 / 16 * 1rem))';
+  --text-xs: 'clamp(calc(13.33 / 16 * 1rem), 0.28vw + 0.77rem, calc(17.60 / 16 * 1rem))';
+  --text-sm: 'clamp(calc(14.61 / 16 * 1rem), 0.33vw + 0.84rem, calc(19.68 / 16 * 1rem))';
+  --text-base: 'clamp(calc(16.00 / 16 * 1rem), 0.39vw + 0.91rem, calc(22.00 / 16 * 1rem))';
+  --text-md: 'clamp(calc(19.20 / 16 * 1rem), 0.54vw + 1.07rem, calc(27.50 / 16 * 1rem))';
+  --text-lg: 'clamp(calc(23.04 / 16 * 1rem), 0.73vw + 1.27rem, calc(34.38 / 16 * 1rem))';
+  --text-xl: 'clamp(calc(27.65 / 16 * 1rem), 0.99vw + 1.5rem, calc(42.97 / 16 * 1rem))';
+  --text-2xl: 'clamp(calc(33.73 / 16 * 1rem), 1.38vw + 1.785rem, calc(55.055 / 16 * 1rem))';
+  --text-3xl: 'clamp(calc(39.81 / 16 * 1rem), 1.77vw + 2.07rem, calc(67.14 / 16 * 1rem))';
+  --text-4xl: 'clamp(calc(45.89 / 16 * 1rem), 2.16vw + 2.355rem, calc(79.225 / 16 * 1rem))';
+  --text-5xl: 'clamp(calc(51.97 / 16 * 1rem), 2.55vw + 2.64rem, calc(91.31 / 16 * 1rem))';
+  --text-6xl: 'clamp(calc(58.05 / 16 * 1rem), 2.94vw + 2.925rem, calc(103.39 / 16 * 1rem))';
+
+  --spacing-topbar: '85px';
+  --spacing-layout-sm: 'clamp(16px, calc(-38.3689px + 14.4984vw), 250px)';
+  --spacing-layout-md: 'clamp(16px, calc(-69.4369px + 22.7832vw), 368px)';
+  --spacing-layout-lg: 'clamp(16px, calc(-101.4757px + 31.3269vw), 500px)';
+  --spacing-news-banner-vertical: 'clamp(40px, calc(14.3125px + 11.0032vw), 210px)';
+  --spacing-single-carousel-card-w-sm: '275px';
+  --spacing-single-carousel-card-w-md: '692px';
+  --spacing-single-carousel-card-w-lg: '980px';
+  --spacing-single-carousel-card-h-sm: '400px';
+  --spacing-single-carousel-card-h-md: '430px';
+  --spacing-single-carousel-card-h-lg: '516px';
+  --spacing-event-carousel-card-w: '383px';
+  --spacing-arrow-right: '1.58rem';
+  --spacing-viewport: '1920px';
+  --spacing-text: '760px';
+  --spacing-menuText: 'calc(35 * var(--spacing-6))';
+  --spacing-innerColumn: 'calc(100vw - (var(--spacing-layout-lg) * 2))';
+  --spacing-smContainer: 'calc(100vw - var(--spacing-layout-sm) - var(spacing-layout-sm))';
+  --spacing-page-content: 'var(--spacing-20)';
+  --font-weight-semibolder: 650;
+
+  --radius-xs: 0.1rem;
+
+  --leading-text: '2.3rem';
+  --leading-inherit: 'inherit';
+  --leading-earthy: 1.2;
+  --leading-misty: 1.25;
+  --leading-cloudy: 1.35;
+  --leading-planetary: 1.5;
+
+  --scale-99: '0.99';
+
+  --shadow-card: 'rgba(0, 0, 0, 0.08) 0px 1px 3px,1px -1px 2px 0px rgba(0, 0, 0, 0.07), rgba(0, 0, 0, 0.20) 0px 1px 2px';
+  --shadow-card-interact: 'rgba(0, 0, 0, 0.14) 0px 1px 3px, rgba(0, 0, 0, 0.36) 0px 1px 2px';
+
+  --aspect-'4/5': '0.8';
+  --aspect-'5/4': '1.25';
+  --aspect-'9/16': '0.56';
+  --aspect-'4/3': '4/3';
+
+  --ease-fluid: cubic-bezier(0.3, 0, 0, 1);
+  --ease-snappy: cubic-bezier(0.2, 0, 0, 1);
+  /* ... */
+}
 
 @layer base {
   :root {
@@ -208,7 +306,7 @@
     background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4));
   }
   .black-blue-center-gradient {
-    background-image: linear-gradient(theme('colors.slate-blue.95 / 50%'), theme('colors.slate-blue.95 / 50%')),
+    background-image: linear-gradient(var(--colors-slate-blue-95) / 50, var(--colors-slate-blue-95) / 50),
       linear-gradient(rgba(0, 0, 0, 0.36), rgba(0, 0, 0, 0.36));
   }
   .fade-in-black-gradient {

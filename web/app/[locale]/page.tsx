@@ -1,12 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import Header from '@/sections/Header/Header'
-import { Layout } from '@/sections/Layout/Layout'
 import { getQueryFromSlug } from '../../lib/queryFromSlug'
-import { getComponentsData } from '../../sanity/lib/fetchData'
-import getPageSlugs from '../../common/helpers/getPageSlugs'
 import { notFound } from 'next/navigation'
 import HomePage from '../../pageComponents/pageTemplates/HomePage'
 import { languages } from '@/languages'
+import { getPageData } from '@/sanity/lib/fetchData'
 
 export const dynamicParams = true // fallback to true in app router
 
@@ -39,11 +35,7 @@ export default async function Page({ params }: any) {
 
   const { query, queryParams } = await getQueryFromSlug(params?.slug as string[], locale)
 
-  const {
-    menuData,
-    pageData: fullData,
-    footerData,
-  } = await getComponentsData({
+  const { pageData: fullData } = await getPageData({
     query,
     queryParams,
   })
@@ -52,8 +44,6 @@ export default async function Page({ params }: any) {
   const { pageData: data, slugs: s } = fullData
   const pageData = { ...data, s }
   if (!pageData) notFound()
-  const slugs = getPageSlugs({ pageData })
-  const hasSticky = pageData?.stickyMenu && pageData?.stickyMenu?.links && pageData?.stickyMenu?.links?.length > 0
 
   //const router = useRouter()
 
@@ -80,12 +70,5 @@ export default async function Page({ params }: any) {
     )
   }*/
 
-  return (
-    <Layout footerData={footerData} hasSticky={hasSticky}>
-      <>
-        <Header slugs={slugs} menuData={menuData} stickyMenuData={pageData?.stickyMenu} />
-        <HomePage data={pageData} />
-      </>
-    </Layout>
-  )
+  return <HomePage data={pageData} />
 }

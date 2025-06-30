@@ -13,13 +13,13 @@ const em = (px, base) => `${round(px / base)}em`
 
 module.exports = {
   content: [
-    './components/**/*.{js,ts,tsx}',
+    './app/**/*.{ts,tsx}',
+    './sanity/**/*.{ts,tsx}',
     './pageComponents/**/*.{js,ts,tsx}',
     './core/**/*.{js,ts,tsx}',
     './sections/**/*.{js,ts,tsx}',
     './templates/**/*.{js,ts,tsx}',
     './icons/**/*.{js,ts,tsx}',
-    './pages/**/*.{js,ts,tsx}',
     './templates/**/*.{js,ts,tsx}',
   ],
   /*

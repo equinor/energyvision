@@ -1,30 +1,13 @@
-import Header from '@/sections/Header/Header'
-import { Layout } from '@/sections/Layout/Layout'
 import { getQueryFromSlug } from '../../../lib/queryFromSlug'
-import { getComponentsData } from '../../../sanity/lib/fetchData'
-import getPageSlugs from '../../../common/helpers/getPageSlugs'
 import dynamic from 'next/dynamic'
 import { notFound } from 'next/navigation'
-//import { useContext, useEffect } from 'react'
-//import { PreviewContext } from '../../../lib/contexts/PreviewContext'
-//import { FormattedMessage } from 'react-intl'
+import { getPageData } from '@/sanity/lib/fetchData'
 
 const MagazinePage = dynamic(() => import('@/templates/magazine/MagazinePage'))
 const LandingPage = dynamic(() => import('@/pageComponents/pageTemplates/LandingPage'))
 const EventPage = dynamic(() => import('@/pageComponents/pageTemplates/Event'))
 const NewsPage = dynamic(() => import('@/pageComponents/pageTemplates/News'))
 const TopicPage = dynamic(() => import('@/pageComponents/pageTemplates/TopicPage'))
-
-/* export async function generateStaticParams() {
-  const routePaths = await getStaticBuildRoutePaths(['en', 'no'])
-
-  const paths = routePaths.map((path) => ({
-    params: { slug: path.slug },
-    locale: path.locale,
-  }))
-
-  return paths
-} */
 
 export const dynamicParams = true // fallback to true in app router
 
@@ -56,17 +39,12 @@ export default async function Page({ params }: any) {
   console.log('s', s)
   const { query, queryParams } = await getQueryFromSlug(s as string[], locale)
 
-  const { menuData, pageData, footerData } = await getComponentsData({
+  const { pageData } = await getPageData({
     query,
     queryParams,
   })
   if (!pageData) notFound()
-  const slugs = getPageSlugs(pageData)
-  const hasSticky = pageData?.stickyMenu && pageData?.stickyMenu?.links && pageData?.stickyMenu?.links?.length > 0
-
-  console.log('menuData', menuData)
-  console.log('pageData', pageData)
-  console.log('footerData', footerData)
+  console.log('[locale]>Page pageData', pageData)
 
   //const router = useRouter()
 
@@ -111,12 +89,5 @@ export default async function Page({ params }: any) {
     }
   }
 
-  return (
-    <Layout footerData={footerData} hasSticky={hasSticky}>
-      <>
-        <Header slugs={slugs} menuData={menuData} stickyMenuData={pageData?.stickyMenu} />
-        {getTemplate()}
-      </>
-    </Layout>
-  )
+  return getTemplate()
 }

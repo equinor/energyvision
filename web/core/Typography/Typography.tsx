@@ -63,7 +63,7 @@ export type TypographyProps = {
  * Typography used for common text styles
  * @example
  * ```jsx
- *     <Typography variant="h6" as="h2" className="text-green-moss-100">
+ *     <Typography variant="h6" as="h2" className="text-moss-green-100">
  *       I am a h2 heading with h6 styling with classname override
  *     </Typography>
  * ```

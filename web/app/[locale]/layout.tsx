@@ -10,10 +10,11 @@ import DraftModeToast from '@/sections/DraftMode/DraftModeToast'
 import { VisualEditing } from 'next-sanity'
 import { SanityLive } from '@/sanity/lib/live'
 import { handleError } from '../client-utils'
-import { getHeaderAndFooterData } from '@/sanity/lib/fetchData'
+import { getHeaderAndFooterData, getPageDataForHeader } from '@/sanity/lib/fetchData'
 import { getNameFromLocale } from '@/lib/localization'
 import Header from '@/sections/Header/Header'
-import envisTwMerge from '@/twMerge'
+import getPageSlugs from '@/common/helpers/getPageSlugs'
+import Footer from '@/sections/Footer/Footer'
 
 const equinorRegular = localFont({
   src: '../fonts/equinor/Equinor-Regular.woff',
@@ -29,17 +30,24 @@ export default async function LocaleLayout({
   params,
 }: {
   children: React.ReactNode
-  params: Promise<{ locale: string }>
+  params: Promise<{ locale: string; slug: string }>
 }) {
   // Ensure that the incoming `locale` is valid
-  const { locale } = await params
-  console.log('locale in layout', locale)
+  const { locale, slug } = await params
+  console.log('Layout locale', locale)
+  console.log('Layout slug', slug)
   const { isEnabled: isDraftMode } = await draftMode()
 
   if (!hasLocale(routing.locales, locale)) {
+    console.log('Layout not valid locale -> return not found')
     notFound()
   }
-  const { menuData, footerData } = await getHeaderAndFooterData({ lang: getNameFromLocale(locale) })
+  const { menuData, footerData } = await getHeaderAndFooterData({ slug, lang: getNameFromLocale(locale) })
+  console.log('Layout menudata', menuData)
+  console.log('Layout footerData', footerData)
+  const { pageData } = await getPageDataForHeader({ slug, lang: getNameFromLocale(locale) })
+  console.log('Layout pagedata', pageData)
+  const slugs = getPageSlugs(pageData)
 
   return (
     <html
@@ -58,7 +66,7 @@ export default async function LocaleLayout({
         {/* The <SanityLive> component is responsible for making all sanityFetch calls in your application live, so should always be rendered. */}
         <SanityLive onError={handleError} />
         <NextIntlClientProvider>
-          <div className={envisTwMerge(`${hasSticky ? '' : 'pt-topbar'}`, className)} {...rest}>
+          <div className={`has-[.sticky-menu]:pt-topbar`}>
             <Header slugs={slugs} menuData={menuData} stickyMenuData={pageData?.stickyMenu} />
             {children}
             <Footer footerData={footerData} />

@@ -9,5 +9,5 @@ export const pageNotFoundQuery = /* groq */ `
     title,
     text[]{..., ${markDefs}},
     backgroundImage
-  }
+  }[0]
  `

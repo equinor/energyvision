@@ -20,7 +20,7 @@ const ErrorPage = ({ pageData, statusCode }: { pageData: ErrorPageData; statusCo
         {backgroundImage && <BackgroundImage backgroundImage={backgroundImage} />}
         <div className="relative pt-16 pb-10 px-layout-md">
           <Typography as="h1" className="pb-10 " variant="3xl">
-            <span className="text-5xl block font-medium text-slate-blue-80">{statusCode}</span>
+            <span className="text-5xl block font-medium text-slate-blue-95">{statusCode}</span>
             {title && <span>{toPlainText(title)}</span>}
           </Typography>
           {text && <Blocks className="prose-md" value={text}></Blocks>}

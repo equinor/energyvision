@@ -5,6 +5,8 @@ import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu'
 import { footerQuery } from '@/sanity/queries/footer'
 import { simpleMenuQuery } from '@/sanity/queries/simpleMenu'
 import { sanityFetch } from '@/sanity/lib/live'
+import { pageDataForHeaderQuery } from '../queries/routes'
+import { homePageDataForHeaderQuery } from '../queries/homePage'
 
 export const getPageData = async (page: { query: string; queryParams: QueryParams }) => {
   const pageResults = await sanityFetch({
@@ -18,14 +20,35 @@ export const getHeaderAndFooterData = async (queryParams: QueryParams) => {
   const menuQuery = Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery
   const menuResults = await sanityFetch({
     query: menuQuery,
-    params: { ...queryParams },
+    params: {
+      lang: queryParams?.lang ?? 'en_GB',
+      slug: queryParams?.slug ?? '/',
+    },
   })
   const footerResults = await sanityFetch({
     query: footerQuery,
-    params: { ...queryParams },
+    params: {
+      lang: queryParams?.lang ?? 'en_GB',
+      slug: queryParams?.slug ?? '/',
+    },
   })
 
   return { menuData: menuResults.data, footerData: footerResults.data }
+}
+export const getPageDataForHeader = async (queryParams: QueryParams) => {
+  console.log('getPageDataForHeader slug', queryParams?.slug)
+  console.log('getPageDataForHeader test', !!queryParams?.slug)
+  const isHomepage = typeof queryParams?.slug === undefined || queryParams?.slug === ''
+  console.log('getPageDataForHeader isHomepage ', isHomepage)
+  const pageResults = await sanityFetch({
+    query: isHomepage ? homePageDataForHeaderQuery : pageDataForHeaderQuery,
+    params: {
+      lang: queryParams?.lang ?? 'en_GB',
+      slug: queryParams?.slug ?? '/',
+    },
+  })
+  console.log('pageResults', pageResults)
+  return { pageData: pageResults.data }
 }
 
 export type MagazineQueryParams = {

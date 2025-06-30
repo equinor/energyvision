@@ -7,7 +7,6 @@ import { newsSlug, magazineSlug } from '../../satellitesConfig'
 import { getClient } from './sanity.server'
 import { Flags } from '../common/helpers/datasetHelpers'
 import { localNewsQuery } from '@/sanity/queries/localNews'
-import { noDrafts } from '@/sanity/queries/common/langAndDrafts'
 import { homePageQuery } from '@/sanity/queries/homePage'
 
 export type QueryParams = {
@@ -34,7 +33,7 @@ const parseSlug = (slug: string): string => {
   return slug
 }
 
-const localNewsTagsQuery = (lang: string) => /* groq */ `*[_type == 'localNewsTag' && ${noDrafts}] {${lang}}`
+const localNewsTagsQuery = (lang: string) => /* groq */ `*[_type == 'localNewsTag'] {${lang}}`
 
 const getQuery = async (firstPiece: string, secondPiece: string | undefined, lang: string) => {
   if (firstPiece == '') return homePageQuery
