@@ -45,7 +45,7 @@ const types = [
 const defaultReferenceTargets: ReferenceTarget[] = [...(types as ReferenceTarget[]), ...routes]
 
 const validation =
-  (linkToAnotherLanguage: boolean = false) =>
+  (linkToAnotherLanguage = false) =>
   (Rule: Rule) =>
     Rule.custom(async (value: any, context: ValidationContext) => {
       if (value?._ref && linkToAnotherLanguage) return true

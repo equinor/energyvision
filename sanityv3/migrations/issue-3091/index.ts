@@ -4,6 +4,7 @@ import { customAlphabet } from 'nanoid'
 const nanoid = customAlphabet('1234567890abcdef', 12)
 export default defineMigration({
   title: 'Issue 3091',
+  //  documentTypes: ['footer'],
 
   migrate: {
     object(node, path, context) {
@@ -81,22 +82,24 @@ export default defineMigration({
       /// Footer.....
       if (node._type == 'footerColumnGroup') {
         const links = node?.columnLinks
-          ?.filter((it) => it._type != 'linkSelector')
-          ?.map((it) => ({
-            label: it.label,
-            _key: it._key,
-            _type: 'linkSelector',
-            link: [
-              {
-                _key: nanoid(),
-                _type: it._type == 'someLink' ? 'socialMediaLink' : it.url ? 'link' : 'reference',
-                href: it.url,
-                someType: it.someType,
-                ...it.reference,
-              },
-            ],
-          }))
-        if (links > 0) return at(['columnLinks'], set(links))
+          ?.filter((it) => it._type !== 'linkSelector')
+          ?.map((it) => {
+            return {
+              label: it.label,
+              _key: it._key,
+              _type: 'linkSelector',
+              link: [
+                {
+                  _key: nanoid(),
+                  _type: it._type == 'someLink' ? 'socialMediaLink' : it.url ? 'link' : 'reference',
+                  href: it.url,
+                  someType: it.someType,
+                  ...it.reference,
+                },
+              ],
+            }
+          })
+        if (links.length > 0) return at(['columnLinks'], set(links))
         else console.log('No footer links to migrate')
       }
 
