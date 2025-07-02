@@ -1,3 +1,4 @@
+'use client'
 import { LinkData } from '../../types'
 import envisTwMerge from '../../twMerge'
 import { forwardRef, HTMLAttributes, ReactNode, useEffect, useId, useMemo, useRef } from 'react'

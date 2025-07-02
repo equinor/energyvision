@@ -20,7 +20,6 @@ export default async function NotFound() {
     queryParams: { lang: getNameFromLocale(locale) },
   })
   const { backgroundImage, title, text } = pageData
-  console.log(' [locale]>notFound pageData', pageData)
   return (
     <div className="relative min-h-[80vh]">
       {backgroundImage && <BackgroundImage backgroundImage={backgroundImage} />}

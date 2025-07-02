@@ -1,5 +1,3 @@
-import '../globals.css'
-
 import { NextIntlClientProvider, hasLocale } from 'next-intl'
 import { notFound } from 'next/navigation'
 import { routing } from '../../i18n/routing'
@@ -25,12 +23,19 @@ const equinorVariableWoff = localFont({
 const equinorVariableWoff2 = localFont({
   src: '../fonts/equinor/EquinorVariable-VF.woff2',
 })
+
+type Params = Promise<{ locale: string; slug: string}>
+ 
+export async function generateMetadata({ params }: { params: Params }) {
+  const { locale, slug } = await params
+}
+
 export default async function LocaleLayout({
   children,
   params,
 }: {
   children: React.ReactNode
-  params: Promise<{ locale: string; slug: string }>
+  params: Params
 }) {
   // Ensure that the incoming `locale` is valid
   const { locale, slug } = await params

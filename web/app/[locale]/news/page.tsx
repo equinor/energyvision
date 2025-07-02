@@ -1,19 +1,17 @@
 import { getIsoFromLocale, getNameFromLocale } from '../../../lib/localization'
 import { Flags } from '../../../common/helpers/datasetHelpers'
-import algoliasearch from 'algoliasearch'
 import { algolia } from '../../../lib/config'
-import { getComponentsData } from '../../../sanity/lib/fetchData'
+import { getPageData } from '../../../sanity/lib/fetchData'
 import { notFound } from 'next/navigation'
 import { unstable_cache } from 'next/cache'
-import { Layout } from '@/sections/Layout/Layout'
 import NewsRoomTemplate from '@/templates/newsroom/Newsroom'
 import { NewsRoomPageType } from '../../../types'
 //import { IntlShape } from '@formatjs/intl'
 import { SearchResponse } from '@algolia/client-search'
 //import ServerIntlProvider from '../../ServerIntlProvider'
-import Header from '@/sections/Header/Header'
 import { setRequestLocale } from 'next-intl/server'
 import { newsroomQuery } from '@/sanity/queries/newsroom'
+import { algoliasearch } from 'algoliasearch'
 
 type NewsRoomPageProps = {
   locale: string
@@ -22,7 +20,7 @@ type NewsRoomPageProps = {
   response: SearchResponse
 }
 
-const getInitialResponse = unstable_cache(
+/* const getInitialResponse = unstable_cache(
   async (locale: string) => {
     console.log('Querying algolia')
     const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
@@ -40,7 +38,7 @@ const getInitialResponse = unstable_cache(
   },
   ['news'],
   { revalidate: 3600, tags: ['news'] },
-)
+) */
 
 export default async function NewsPage({ params }: any) {
   const { locale } = await params
@@ -65,22 +63,18 @@ export default async function NewsPage({ params }: any) {
     lang,
   }
 
-  const { menuData, pageData, footerData } = await getComponentsData({
+  const { pageData } = await getPageData({
     query: newsroomQuery,
     queryParams,
   })
 
-  const response = await getInitialResponse(isoLocale)
+  /*   const response = await getInitialResponse(isoLocale) */
   const slugs = [
     { slug: '/news', lang: 'en_GB' },
     { slug: '/no/nyheter', lang: 'nb_NO' },
   ]
-  return (
-    <Layout footerData={footerData} hasSticky={false}>
-      <>
-        <Header slugs={slugs} menuData={menuData} />
-        <NewsRoomTemplate locale={locale} pageData={pageData as NewsRoomPageType} initialSearchResponse={response} />
-      </>
-    </Layout>
-  )
+  return <div>Newsroom</div>
+  {
+    /* <NewsRoomTemplate locale={locale} pageData={pageData as NewsRoomPageType} initialSearchResponse={response} /> */
+  }
 }

@@ -1,3 +1,4 @@
+'use client'
 import { useRef, useState, ChangeEvent, ComponentProps, useId } from 'react'
 import { useSearchBox, UseSearchBoxProps } from 'react-instantsearch'
 import { close, search } from '@equinor/eds-icons'

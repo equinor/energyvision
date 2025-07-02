@@ -1,3 +1,4 @@
+'use client'
 import { forwardRef, useEffect, useMemo, useRef, useState } from 'react'
 import * as RadixTabs from '@radix-ui/react-tabs'
 import envisTwMerge from '../../twMerge'

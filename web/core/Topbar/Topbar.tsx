@@ -1,3 +1,4 @@
+'use client'
 import { forwardRef, HTMLAttributes, useEffect, useMemo, useRef, useState } from 'react'
 import { mergeRefs } from '@equinor/eds-utils'
 import { StickyMenuData } from '../../types/index'

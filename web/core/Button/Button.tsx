@@ -22,6 +22,12 @@ export type Variants = 'contained' | 'outlined' | 'ghost' | 'contained-secondary
 
 /** Use for common button styling in Button,IconButton, Link/ButtonLink */
 export const getVariant = (variant: Variants): string => {
+
+  /* let sizeClasses = {
+    md: "px-4 py-2 rounded-md text-base",
+    lg: "px-5 py-3 rounded-lg text-lg",
+  }[size];*/
+
   switch (variant) {
     case 'ghost':
       return `

@@ -1,3 +1,4 @@
+'use client'
 import envisTwMerge from '../../twMerge'
 import Image from '../../pageComponents/shared/SanityImage'
 import { ImageWithAlt, LinkData } from '../../types/index'

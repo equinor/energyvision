@@ -56,7 +56,15 @@ export default withNextIntl(
       archiveStorageURL: archiveServerHostname,
     },
     images: {
-      domains: ['cdn.sanity.io', 'cdn.equinor.com'],
+      remotePatterns: [
+        {
+        protocol: 'https',
+        hostname: 'cdn.sanity.io',
+        },
+        {
+        protocol: 'https',
+        hostname: 'cdn.equinor.com',
+      }],
       dangerouslyAllowSVG: true,
       contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     },

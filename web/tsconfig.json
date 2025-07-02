@@ -14,6 +14,6 @@
       }
     ]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "temp_prettierrc.ts"],
   "exclude": ["node_modules", "pages-disabled/*.tsx", "pagesm/*.tsx"]
 }

@@ -1,3 +1,4 @@
+'use client'
 import { close } from '@equinor/eds-icons'
 import { TransformableIcon } from '../../icons/TransformableIcon'
 import { forwardRef, useEffect, useMemo, useRef } from 'react'
@@ -42,8 +43,15 @@ const Modal = forwardRef<HTMLDialogElement, ModalProps>(function Modal(
       ref={combinedDialogRef}
       className={envisTwMerge(
         `p-0
-        modal
-        bd-blurred
+        starting:open:opacity-0
+        opacity-0
+        open:opacity-100
+        open:transition-opacity
+        backdrop:transition-all
+        starting:open:backdrop:backdrop-blur-none
+        starting:open:backdrop:bg-transparent
+        open:backdrop:backdrop-blur-md
+        open:backdrop:bg-north-sea-90/50
         rounded-lg
       `,
         dialogClassName,

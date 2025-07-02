@@ -1,11 +1,13 @@
 @import 'tailwindcss';
-@config "../../tailwind.config.js";
+@plugin "@tailwindcss/typography";
+@source "../core"; 
+@source "../sections"; 
+@source "../templates"; 
+@source "../app"; 
+@source "../pageComponents"; 
 @source 'video.js/dist/video-js.css';
 @source '../styles/components/videojs.css';
 @source '../styles/components/cookiebot.css';
-
-/*old darkMode: ['variant', [':is(.dark &):not(.light &)']],*/
-@custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
   --font-sans: 'Equinor', 'Open Sans', sans-serif;
@@ -93,23 +95,228 @@
   --shadow-card: 'rgba(0, 0, 0, 0.08) 0px 1px 3px,1px -1px 2px 0px rgba(0, 0, 0, 0.07), rgba(0, 0, 0, 0.20) 0px 1px 2px';
   --shadow-card-interact: 'rgba(0, 0, 0, 0.14) 0px 1px 3px, rgba(0, 0, 0, 0.36) 0px 1px 2px';
 
-  --aspect-'4/5': '0.8';
-  --aspect-'5/4': '1.25';
-  --aspect-'9/16': '0.56';
-  --aspect-'4/3': '4/3';
+  --ease-scroll: cubic-bezier(0.645, 0.045, 0.355, 1);
+  --ease-ease: cubic-bezier(0.25, 0.1, 0.25, 1);
 
-  --ease-fluid: cubic-bezier(0.3, 0, 0, 1);
-  --ease-snappy: cubic-bezier(0.2, 0, 0, 1);
-  /* ... */
-}
+  --animate-spin-slow: spin 3s linear infinite;
+  --animate-slideUp: slideUp 0.2s ease-out;
+  --animate-slideDown: slideDown 0.2s ease-out;
 
-@layer base {
-  :root {
-    /* Modal */
-    --modal-transition-duration: 0.4s;
-    --modal-transition-easing: cubic-bezier(0.45, 0, 0.55, 1);
+  /* Modal */
+  --modal-transition-duration: 0.4s;
+  --modal-transition-easing: cubic-bezier(0.45, 0, 0.55, 1);
+
+  /* or just --fr? flex-(--fr) */
+  --flex-fr: '1 1 1';
+
+  /* or just --motion-safe? transition-(--my-properties) */
+  --transition-motion-safe: 'motion-safe';
+
+  /*just --card ? grid-cols-(--my-grid-cols) */
+  --grid-cols-card: repeat(auto-fill, minmax(min(100%, 220px), 400px));
+
+  @keyframes slideUp {
+    0% {
+      height: 0;
+    }
+    100% {
+      height: 'var(--radix-accordion-content-height)';
+    }
   }
 
+  @keyframes slideDown {
+    0% {
+      height: 'var(--radix-accordion-content-height)';
+    }
+    100% {
+      height: 0;
+    }
+  }
+
+  /* Implement in code and check
+        flex: {
+        fr: '1 1 1',
+      },
+  */
+}
+
+/*
+@custom-variant data-checked (&[data-ui~="checked"]);
+data-ui="checked active" class="data-checked:underline">
+*/
+@custom-variant data-open (&[data-state~="open"]);
+@custom-variant data-closed (&[data-state~="closed"]);
+@custom-variant data-active (&[data-state~="active"]);
+@custom-variant data-vertical (&[data-orientation~="vertical"]);
+@custom-variant data-horizontal (&[data-orientation~="horizontal"]);
+@custom-variant data-selected (&[data-selected~="true"]);
+@custom-variant data-expanded (&[data-expanded~="true"]);
+@custom-variant data-overflowing (&[data-overflowing~="true"]);
+@custom-variant aria-current (&[aria-current~="page"]);
+
+/* old darkMode: ['variant', [':is(.dark &):not(.light &)']],*/
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+Test highlight on Text teaser and (Text block?)
+and not use important in textteaser theme
+*/
+@custom-variant highlight (&:where([data-highlight], [data-highlight] *))
+
+@variant envis-outline {
+  @apply outline-dashed outline-2 outline-offset-3 outline-norwegian-woods-100;
+}
+@variant envis-outline-invert {
+  @apply outline-dashed outline-2 outline-offset-3 outline-white-100;
+}
+@variant envis-outline-invert {
+  word-break: 'break-word';
+}
+
+@custom-variant supports-animation-timeline {
+  @supports (animation-timeline) {
+    @slot;
+  }
+}
+
+@custom-variant supports-backdrop {
+  @supports (selector(::backdrop)) {
+    @slot;
+  }
+}
+
+@variant animate-timeline {
+  @apply animate-fadeInOut;
+  animation-timeline: view();
+  animation-range: cover 18% cover 85%;
+}
+@variant animate-timeline {
+  @apply animate-fadeInOut;
+  animation-timeline: view();
+  animation-range: cover 18% cover 85%;
+}
+
+@utility no-scrollbar {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  /* Hide scrollbar for IE, Edge and Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+@utility envis-scrollbar {
+  &::-webkit-scrollbar {
+    @apply h-2.5 bg-grey-20;
+  }
+  &::-webkit-scrollbar-track {
+    @apply h-2.5 bg-grey-20;
+  }
+  &::-webkit-scrollbar-thumb {
+    @apply h-2.5 bg-grey-50 hover:bg-grey-60 rounded-xs;
+  }
+}
+
+@utility white-right-gradient {
+  background-image: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.3) 30%,
+    rgba(255, 255, 255, 0.4) 100%
+  );
+}
+@utility white-left-gradient {
+  background-image: linear-gradient(
+    to left,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.3) 30%,
+    rgba(255, 255, 255, 0.4) 100%
+  );
+}
+@utility white-to-top-gradient {
+  background-image: linear-gradient(
+    to top,
+    rgba(255, 255, 255, 0.7),
+    rgba(255, 255, 255, 0.3) 30%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+@utility white-to-top-tall-gradient {
+  background-image: linear-gradient(
+    to top,
+    rgba(255, 255, 255, 0.6),
+    rgba(255, 255, 255, 0.5) 30%,
+    rgba(255, 255, 255, 0.35) 60%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+@utility white-center-gradient {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4));
+}
+@utility black-right-gradient {
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3) 30%, rgba(0, 0, 0, 0.4) 100%);
+}
+@utility black-left-gradient {
+  background-image: linear-gradient(to left, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3) 30%, rgba(0, 0, 0, 0.4) 100%);
+}
+@utility black-center-gradient {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4));
+}
+@utility black-blue-center-gradient {
+  background-image: linear-gradient(var(--colors-slate-blue-95) / 50, var(--colors-slate-blue-95) / 50),
+    linear-gradient(rgba(0, 0, 0, 0.36), rgba(0, 0, 0, 0.36));
+}
+@utility fade-in-black-gradient {
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 60%, rgba(0, 0, 0, 0.8) 100%);
+}
+@utility black-to-top-gradient {
+  background-image: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.7),
+    rgba(0, 0, 0, 0.6) 20%,
+    rgba(0, 0, 0, 0.45) 32%,
+    rgba(0, 0, 0, 0.1) 60%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+@utility black-to-top-tall-gradient {
+  background-image: linear-gradient(to top, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3) 40%, rgba(0, 0, 0, 0) 100%),
+    linear-gradient(26deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.45) 35%, rgba(0, 0, 0, 0) 100%);
+}
+@utility box-shadow-crisp {
+  box-shadow: 0.3px 0.5px 0.7px hsl(var(--tw-shadow-color) / 0.34),
+    0.4px 0.8px 1px -1.2px hsl(var(--tw-shadow-color) / 0.34), 1px 2px 2.5px -2.5px hsl(var(--tw-shadow-color) / 0.34);
+}
+@utility box-shadow-crisp-interact {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.08) 0px 3px 4px 0px;
+}
+
+/* Works out of the box?
+aspect-<ratio> -> aspect-ratio: <ratio>;
+Use aspect-<ratio> utilities like aspect-3/2 to give an element a specific aspect ratio:
+
+To handle fractions, we rely on the CSS ratio data type. 
+If this is used with --value(), it's a signal to Tailwind to 
+treat the value and modifier as a single value:
+
+  --aspect-4/5': '0.8';
+  --aspect-5/4': '1.25';
+  --aspect-9/16': '0.56';
+  --aspect-4/3': '4/3';
+
+  @utility aspect-* {
+  aspect-ratio: --value(--aspect-ratio- *, ratio, [ratio]);
+}
+*/
+
+/*
+
+@utility tab-* {
+  tab-size: --value(--tab-size-*);
+}
+}*/
+
+@layer base {
   p,
   h1,
   h2,
@@ -128,6 +335,10 @@
   body:has(dialog[open]) {
     @apply overflow-hidden;
   }
+
+  article {
+    counter-reset: footnotes;
+  }
 }
 
 @layer components {
@@ -144,9 +355,6 @@
     before:rounded-[100%];
   }
 
-  article {
-    counter-reset: footnotes;
-  }
   /**
  * Inline footnotes references
  * 1. Increment the counter at each new reference
@@ -196,200 +404,5 @@
   /* highlight the note in the footer */
   footer :target {
     @apply bg-autumn-storm-40 w-fit;
-  }
-
-  /* MODAL 
-  [clip-path:inset(0_round_0.5rem)] [transform:none]
-  */
-  .modal[open] {
-    @apply opacity-100 transition-opacity;
-  }
-  /*
-  [clip-path:inset(10%_round_0.5rem)] translate-y-[40vh]
-  */
-  .modal {
-    @apply opacity-0;
-  }
-  /*   Before-open state  */
-  @starting-style {
-    /* [clip-path:inset(10%_round_0.5rem)] translate-y-[40vh]*/
-    .modal[open] {
-      @apply opacity-0;
-    }
-  }
-  .modal-transition {
-    transition: opacity calc(var(--modal-transition-duration) / 2) var(--modal-transition-easing)
-        calc(var(--modal-transition-duration) / 2),
-      transform var(--modal-transition-duration) var(--modal-transition-easing),
-      clip-path var(--modal-transition-duration) var(--modal-transition-easing), display 0.7s allow-discrete,
-      overlay 0.7s allow-discrete;
-  }
-  /* Carousel */
-  .carousel-top-bottom-grid-area {
-    grid-template-areas:
-      'top'
-      'bottom';
-  }
-  .carousel-controls-grid-area {
-    grid-template-areas: 'left center right';
-  }
-}
-
-@layer utilities {
-  /* Scroll-Timeline Supported, Yay! */
-  @supports (animation-timeline: view()) {
-    .animate-timeline {
-      @apply animate-fadeInOut;
-      animation-timeline: view();
-      animation-range: cover 18% cover 85%;
-    }
-    .adjustObjectPosition {
-      @apply animate-adjustObjectPosition;
-      animation-timeline: view(x);
-    }
-  }
-  @supports (animation-timeline) {
-    .dots-timeline-container {
-      scroll-timeline: --carousel x;
-    }
-
-    .dots-timeline-dot {
-      animation-timeline: --carousel;
-      /* Do with [animation-range:calc((${i}-1)*20%)_calc(${i}*20%+1px)] for the child index
-      * in the component using dots-timeline
-      */
-    }
-  }
-  .white-right-gradient {
-    background-image: linear-gradient(
-      to right,
-      rgba(255, 255, 255, 0.1),
-      rgba(255, 255, 255, 0.3) 30%,
-      rgba(255, 255, 255, 0.4) 100%
-    );
-  }
-  .white-left-gradient {
-    background-image: linear-gradient(
-      to left,
-      rgba(255, 255, 255, 0.1),
-      rgba(255, 255, 255, 0.3) 30%,
-      rgba(255, 255, 255, 0.4) 100%
-    );
-  }
-  .white-to-top-gradient {
-    background-image: linear-gradient(
-      to top,
-      rgba(255, 255, 255, 0.7),
-      rgba(255, 255, 255, 0.3) 30%,
-      rgba(255, 255, 255, 0) 100%
-    );
-  }
-  .white-to-top-tall-gradient {
-    background-image: linear-gradient(
-      to top,
-      rgba(255, 255, 255, 0.6),
-      rgba(255, 255, 255, 0.5) 30%,
-      rgba(255, 255, 255, 0.35) 60%,
-      rgba(255, 255, 255, 0) 100%
-    );
-  }
-  .white-center-gradient {
-    background-image: linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4));
-  }
-  .black-right-gradient {
-    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3) 30%, rgba(0, 0, 0, 0.4) 100%);
-  }
-  .black-left-gradient {
-    background-image: linear-gradient(to left, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3) 30%, rgba(0, 0, 0, 0.4) 100%);
-  }
-  .black-center-gradient {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4));
-  }
-  .black-blue-center-gradient {
-    background-image: linear-gradient(var(--colors-slate-blue-95) / 50, var(--colors-slate-blue-95) / 50),
-      linear-gradient(rgba(0, 0, 0, 0.36), rgba(0, 0, 0, 0.36));
-  }
-  .fade-in-black-gradient {
-    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 60%, rgba(0, 0, 0, 0.8) 100%);
-  }
-  .black-to-top-gradient {
-    background-image: linear-gradient(
-      to top,
-      rgba(0, 0, 0, 0.7),
-      rgba(0, 0, 0, 0.6) 20%,
-      rgba(0, 0, 0, 0.45) 32%,
-      rgba(0, 0, 0, 0.1) 60%,
-      rgba(0, 0, 0, 0) 100%
-    );
-  }
-  .black-to-top-tall-gradient {
-    background-image: linear-gradient(to top, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3) 40%, rgba(0, 0, 0, 0) 100%),
-      linear-gradient(26deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.45) 35%, rgba(0, 0, 0, 0) 100%);
-  }
-  .box-shadow-crisp {
-    box-shadow: 0.3px 0.5px 0.7px hsl(var(--tw-shadow-color) / 0.34),
-      0.4px 0.8px 1px -1.2px hsl(var(--tw-shadow-color) / 0.34), 1px 2px 2.5px -2.5px hsl(var(--tw-shadow-color) / 0.34);
-  }
-  .box-shadow-crisp-interact {
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.08) 0px 3px 4px 0px;
-  }
-
-  @supports selector(::-webkit-scrollbar) {
-    /* Hide scrollbar for Chrome, Safari and Opera */
-    .no-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
-
-    .envis-scrollbar::-webkit-scrollbar {
-      @apply h-2.5 bg-grey-20;
-    }
-    .envis-scrollbar::-webkit-scrollbar-track {
-      @apply h-2.5 bg-grey-20;
-    }
-    .envis-scrollbar::-webkit-scrollbar-thumb {
-      @apply h-2.5 bg-grey-50 hover:bg-grey-60 rounded-xs;
-    }
-  }
-
-  /* Hide scrollbar for IE, Edge and Firefox */
-  .no-scrollbar {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
-  }
-
-  .overflow-wrap-break-word {
-    overflow-wrap: break-word; /* Can be replaced with wrap-break-word class from tailwind 4*/
-  }
-
-  @supports selector(::backdrop) {
-    .bd-blurred::backdrop {
-      @apply transition-all
-/*       transition: background-color 0s linear var(--modal-transition-duration),
-        backdrop-filter calc(var(--modal-transition-duration) * 2 / 3) var(--modal-transition-easing)
-          calc(var(--modal-transition-duration) / 3),
-        display 0.7s allow-discrete, overlay 0.7s allow-discrete; */;
-    }
-    .bd-blurred[open]::backdrop {
-      @apply backdrop-blur-md bg-north-sea-90/50;
-    }
-
-    /*   Before-open state  */
-    @starting-style {
-      .bd-blurred[open]::backdrop {
-        @apply backdrop-blur-none bg-transparent;
-      }
-    }
-  }
-
-  @supports (scrollbar-color: auto) {
-    .scrolltrack-transparent {
-      scrollbar-color: rgba(0, 0, 0, 0);
-    }
-  }
-
-  @starting-style {
-    .topbar-height {
-      top: 0;
-    }
   }
 }

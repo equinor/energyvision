@@ -1,3 +1,4 @@
+'use client'
 import { forwardRef, useState, TextareaHTMLAttributes, useCallback, CSSProperties } from 'react'
 import { mergeRefs, useAutoResize } from '@equinor/eds-utils'
 import { SharedTextFieldProps } from './TextField'

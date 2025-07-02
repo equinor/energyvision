@@ -1,3 +1,4 @@
+'use client'
 import { forwardRef, useState } from 'react'
 import { PaneMenuItem } from './PaneMenuItem'
 import { SimpleGroupData } from '../../types'

@@ -74,7 +74,7 @@ const Header = ({ slugs, menuData, stickyMenuData }: HeaderProps) => {
   const localization = {
     activeLocale: locale || defaultLanguage.locale,
   }
-  const hasSearch = Flags.HAS_SEARCH
+  const hasSearch = false //Flags.HAS_SEARCH
   const hasMoreThanOneLanguage = languages.length > 1
   const is404 = slugs.length === 0
 
@@ -97,7 +97,7 @@ const Header = ({ slugs, menuData, stickyMenuData }: HeaderProps) => {
         <LogoLink />
         <div
           className={`grid ${
-            columns == 3 ? 'grid-cols-auto-3' : columns == 2 ? 'grid-cols-auto-2' : 'grid-cols-1'
+            columns == 3 ? 'grid-cols-[repeat(3,auto)]' : columns == 2 ? 'grid-cols-[repeat(2,auto)]' : 'grid-cols-1'
           } gap-x-4 items-center sm:gap-x-61`}
         >
           {hasSearch && (

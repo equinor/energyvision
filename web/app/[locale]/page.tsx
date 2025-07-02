@@ -40,7 +40,6 @@ export default async function Page({ params }: any) {
     queryParams,
   })
 
-  console.log('fullData', fullData)
   const { pageData: data, slugs: s } = fullData
   const pageData = { ...data, s }
   if (!pageData) notFound()

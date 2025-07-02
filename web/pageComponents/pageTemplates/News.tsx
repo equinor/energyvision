@@ -105,8 +105,8 @@ const NewsPage = ({ data: news }: ArticleProps) => {
               {publishDateTime && (
                 <div className="my-12 grid grid-cols-[min-content_1fr] gap-4 ">
                   <Icon data={calendar} className="text-white-100" />
-                  <div className="text-white-100 overflow-wrap-break-word text-base leading-planetary">
-                    <FormattedDateTime uppercase datetime={publishDateTime} timezone />
+                  <div className="text-white-100 wrap-break-word text-base leading-planetary">
+                    <FormattedDateTime uppercase datetime={publishDateTime} showTimezone />
                     {
                       // publishDateTime + 5 minutes
                       isDateAfter(

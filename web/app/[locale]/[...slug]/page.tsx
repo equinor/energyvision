@@ -9,33 +9,27 @@ const EventPage = dynamic(() => import('@/pageComponents/pageTemplates/Event'))
 const NewsPage = dynamic(() => import('@/pageComponents/pageTemplates/News'))
 const TopicPage = dynamic(() => import('@/pageComponents/pageTemplates/TopicPage'))
 
-export const dynamicParams = true // fallback to true in app router
-
-/*type Props = {
-  params: Promise<{ id: string }>
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+type Params = Promise<{ slug: string | string[] ; locale: string; }>
+type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>
+ 
+export async function generateMetadata(props: {
+  params: Params
+  searchParams: SearchParams
+}) {
+  const params = await props.params
+  const searchParams = await props.searchParams
+  const slug = params.slug
+  const query = searchParams.query
 }
 
-export async function generateMetadata({ params, searchParams }: Props, parent: ResolvingMetadata): Promise<Metadata> {
-  // read route params
-  const { id } = await params
-
-  // fetch data
-  const product = await fetch(`https://.../${id}`).then((res) => res.json())
-
-  // optionally access and extend (rather than replace) parent metadata
-  const previousImages = (await parent).openGraph?.images || []
-
-  return {
-    title: product.title,
-    openGraph: {
-      images: ['/some-specific-page-image.jpg', ...previousImages],
-    },
-  }
-}*/
-
-export default async function Page({ params }: any) {
-  const { locale, slug: s } = await params
+export default async function Page(props: {
+  params: Params
+  searchParams: SearchParams
+}) {
+    const params = await props.params
+  const searchParams = await props.searchParams
+  const { locale, slug: s } = params
+  const searchQuery = searchParams.query
   console.log('s', s)
   const { query, queryParams } = await getQueryFromSlug(s as string[], locale)
 

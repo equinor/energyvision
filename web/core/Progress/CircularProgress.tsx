@@ -1,3 +1,4 @@
+'use client'
 import { forwardRef, SVGProps, useEffect, useState, CSSProperties } from 'react'
 import envisTwMerge from '../../twMerge'
 import { useTranslations } from 'next-intl'

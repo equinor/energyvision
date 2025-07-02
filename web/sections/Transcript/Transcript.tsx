@@ -1,3 +1,4 @@
+'use client'
 import { useState } from 'react'
 import { PortableTextBlock } from '@portabletext/types'
 import Modal from '@/sections/Modal/Modal'

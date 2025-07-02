@@ -66,7 +66,7 @@ export const BaseLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(function Ba
 
       default:
         return (
-          <NextLink {...rest} ref={ref} href={href} prefetch={false} className={classNames}>
+          <NextLink {...rest} ref={ref} href={href} className={classNames}>
             {children}
           </NextLink>
         )

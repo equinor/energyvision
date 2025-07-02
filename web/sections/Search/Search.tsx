@@ -1,20 +1,18 @@
-import { InstantSearch, Configure, Index } from 'react-instantsearch'
+'use client'
+import { Flags } from '@/common/helpers/datasetHelpers'
+import { getIsoFromLocale } from '@/lib/localization'
+import { useLocale, useTranslations } from 'next-intl'
+import { InstantSearchNext } from 'react-instantsearch-nextjs'
 import { searchClient as client } from '../../lib/algolia'
-import dynamic from 'next/dynamic'
-import { Flags } from '../../common/helpers/datasetHelpers'
-import { getIsoFromLocale } from '../../lib/localization'
-import { createInstantSearchRouterNext } from 'react-instantsearch-router-nextjs'
-import singletonRouter, { useRouter } from 'next/router'
-import type { UiState } from 'instantsearch.js'
-import { useRef } from 'react'
-import { Pagination } from '../shared/search/pagination/Pagination'
-import usePaginationPadding from '../../lib/hooks/usePaginationPadding'
-import { SearchClient } from 'algoliasearch/lite'
+import { SearchClient } from 'instantsearch.js'
+import { useRouter } from 'next/navigation'
 import { SearchBox } from '@/core/AlgoliaSearchBox/SearchBox'
-import { PaginationContextProvider } from '../../common/contexts/PaginationContext'
-import { useTranslations } from 'next-intl'
-
-const SearchResults = dynamic(() => import('./SearchResults'))
+import { Configure, Index } from 'react-instantsearch'
+import SearchResults from '@/pageComponents/search/SearchResults'
+import { PaginationContextProvider } from '@/common/contexts/PaginationContext'
+import { useRef } from 'react'
+import { Pagination } from '@/pageComponents/shared/search/pagination/Pagination'
+import usePaginationPadding from '@/lib/hooks/usePaginationPadding'
 
 const searchClient = client()
 const queriedSearchClient: SearchClient = {
@@ -39,20 +37,14 @@ const queriedSearchClient: SearchClient = {
     return searchClient.search(requests)
   },
 }
-
-const Search = () => {
+export function Search() {
   const intl = useTranslations()
-  const padding = usePaginationPadding()
+  const locale = useLocale()
+  const router = useRouter()
   const resultsRef = useRef<HTMLDivElement>(null)
-
-  // @TODO: Don't hard code it like this
-  if (searchClient.appId === '') {
-    console.warn('Missing app ID in Algolia search client')
-    return null
-  }
-
   const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
   const isoCode = getIsoFromLocale(locale)
+  const padding = usePaginationPadding()
   const indices = [
     {
       value: `${envPrefix}_TOPICS_${isoCode}`,
@@ -108,53 +100,48 @@ const Search = () => {
     }
   }
 
-  const routing = {
-    router: createInstantSearchRouterNext({
-      singletonRouter,
-      routerOptions: {
-        createURL: createURL,
-        parseURL: parseURL,
-        push(url) {
-          if (url.split('?')[1]) {
-            // replace url only if it has query params
-            singletonRouter.replace(url)
-          }
-        },
-      },
-    }),
-    stateMapping: {
-      stateToRoute(uiState: UiState) {
-        const indexUiState = uiState[mainIndex]
-        return {
-          ...(indexUiState.sortBy && {
-            tab: indexUiState.sortBy
-              .replaceAll(isoCode, '')
-              .replaceAll(envPrefix, '')
-              .replaceAll('_', '')
-              .toLowerCase(),
-          }),
-          ...(indexUiState?.query && { query: indexUiState.query }),
-          ...(indexUiState?.page && { page: indexUiState?.page }),
-        }
-      },
-      routeToState(routeState: any) {
-        return {
-          [mainIndex]: {
-            ...(routeState.query && { query: routeState.query }),
-            ...(routeState.page && { page: routeState.page as number }),
-            ...(routeState.tab && { sortBy: `${envPrefix}_${routeState.tab.toUpperCase()}_${isoCode}` }),
-          },
-        }
-      },
-    },
-  }
-
   return (
-    <InstantSearch
-      future={{ preserveSharedStateOnUnmount: false }}
-      searchClient={queriedSearchClient}
+    <InstantSearchNext
       indexName={mainIndex}
-      routing={routing}
+      searchClient={searchClient}
+      routing={{
+        router: {
+          cleanUrlOnDispose: false,
+          createURL: createURL,
+          parseURL: parseURL,
+          push(url) {
+            if (url.split('?')[1]) {
+              // replace url only if it has query params
+              router.replace(url)
+            }
+          },
+        },
+        stateMapping: {
+          stateToRoute(uiState) {
+            const indexUiState = uiState[mainIndex]
+            return {
+              ...(indexUiState.sortBy && {
+                tab: indexUiState.sortBy
+                  .replaceAll(isoCode, '')
+                  .replaceAll(envPrefix, '')
+                  .replaceAll('_', '')
+                  .toLowerCase(),
+              }),
+              ...(indexUiState?.query && { query: indexUiState.query }),
+              ...(indexUiState?.page && { page: indexUiState?.page }),
+            }
+          },
+          routeToState(routeState: any) {
+            return {
+              [mainIndex]: {
+                ...(routeState.query && { query: routeState.query }),
+                ...(routeState.page && { page: routeState.page as number }),
+                ...(routeState.tab && { sortBy: `${envPrefix}_${routeState.tab.toUpperCase()}_${isoCode}` }),
+              },
+            }
+          },
+        },
+      }}
     >
       <Configure hitsPerPage={5} snippetEllipsisText="..." />
       {indices.map((index) => (
@@ -168,8 +155,6 @@ const Search = () => {
       <PaginationContextProvider defaultRef={resultsRef}>
         <Pagination className="mt-12 justify-center" padding={padding} hitsPerPage={5} />
       </PaginationContextProvider>
-    </InstantSearch>
+    </InstantSearchNext>
   )
 }
-
-export default Search
