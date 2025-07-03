@@ -21,7 +21,7 @@ const FormattedTime = ({
   return (
     <span className="text-xs inline-flex items-center space-x-2" {...rest}>
       {icon && <TimeIcon />}
-      <span className={`flex-shrink box-content ${small ? 'mt-1' : 'mt-0'}`}>
+      <span className={`shrink box-content ${small ? 'mt-1' : 'mt-0'}`}>
         <time suppressHydrationWarning dateTime={datetime}>
           {format.dateTime(date, { hour: 'numeric', minute: 'numeric', hour12: false }) + ' '}
         </time>

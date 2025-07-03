@@ -26,7 +26,7 @@ export const BaseLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(function Ba
     : twMerge(
         `
     text-slate-80
-    focus:outline-none
+    focus:outline-hidden
     focus-visible:envis-outline
     active:scale-99
     dark:text-white-100

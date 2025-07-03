@@ -20,7 +20,7 @@ const NewsRoomFilters = forwardRef<HTMLDivElement, NewsRoomFiltersProps>(functio
       <a
         href="#newsroom_news"
         className="sr-only
-        focus:outline-none
+        focus:outline-hidden
         focus-visible:not-sr-only
         text-sm
         underline
@@ -28,7 +28,7 @@ const NewsRoomFilters = forwardRef<HTMLDivElement, NewsRoomFiltersProps>(functio
         focus-visible:envis-outline
         px-4
         py-3
-        rounded-sm
+        rounded-xs
         "
       >
         {intl('newsroom_skip_to_news')}

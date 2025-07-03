@@ -111,10 +111,10 @@ export function SearchBox({
           value={value}
           onChange={onChange}
           className={envisTwMerge(
-            `flex-grow
+            `grow
             rounded-s-xs
             rounded-e-none
-            focus:outline-none
+            focus:outline-hidden
             text-white-100
             pl-6
             pr-12
@@ -133,7 +133,7 @@ export function SearchBox({
             right-2 
             rounded-full 
             size-8 
-            focus:outline-none 
+            focus:outline-hidden 
             justify-center
             items-center
             ${resetVariantClassName[variant]}`,
@@ -151,7 +151,7 @@ export function SearchBox({
           rounded-e-xs
           px-4
           py-3
-          focus:outline-none
+          focus:outline-hidden
           ${label ? 'row-start-2 row-end-2' : ''}
           ${submitVariantClassName[variant]}
           `,

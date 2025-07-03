@@ -196,7 +196,7 @@ export const CarouselItem = forwardRef<HTMLLIElement, CarouselItemProps>(functio
       className={envisTwMerge(
         `relative
           mt-1
-          focus:outline-none
+          focus:outline-hidden
           focus-visible:outline-dashed
           focus-visible:outline-2
           focus-visible:outline-grey-50

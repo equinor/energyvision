@@ -84,7 +84,7 @@ const FilterButton = forwardRef<HTMLDivElement, FilterButtonProps>(function Filt
             <span
               className={`${
                 refinedItems?.length > 0 ? 'bg-moss-green-60' : 'bg-transparent'
-              } rounded-sm text-slate-80 px-2 py-1`}
+              } rounded-xs text-slate-80 px-2 py-1`}
             >
               <span className={`${refinedItems?.length > 0 ? 'block' : 'hidden'}`}>{refinedItems.length}</span>
             </span>

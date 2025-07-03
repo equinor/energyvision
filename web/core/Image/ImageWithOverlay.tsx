@@ -122,7 +122,7 @@ export const ImageWithOverlay = forwardRef<HTMLDivElement, ImageWithOverlayProps
           aria-controls={overlayId}
           onClick={() => setShowOverlay(!showOverlay)}
           className={`
-              focus:outline-none
+              focus:outline-hidden
               focus-visible:envis-outline
               absolute
               bottom-0 
@@ -149,7 +149,7 @@ export const ImageWithOverlay = forwardRef<HTMLDivElement, ImageWithOverlayProps
               p-5
               md:p-6
               text-2xl
-              focus:outline-none
+              focus:outline-hidden
               focus-visible:envis-outline-invert            
               ${
                 showOverlay

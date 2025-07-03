@@ -48,9 +48,9 @@ const Modal = forwardRef<HTMLDialogElement, ModalProps>(function Modal(
         open:opacity-100
         open:transition-opacity
         backdrop:transition-all
-        starting:open:backdrop:backdrop-blur-none
+        starting:open:backdrop:backdrop-blur-sm-none
         starting:open:backdrop:bg-transparent
-        open:backdrop:backdrop-blur-md
+        open:backdrop:backdrop-blur-sm-md
         open:backdrop:bg-north-sea-90/50
         rounded-lg
       `,

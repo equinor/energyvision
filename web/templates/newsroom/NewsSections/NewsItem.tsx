@@ -51,7 +51,7 @@ const NewsItem = forwardRef<HTMLLIElement, NewsListItemProps>(function NewsItem(
             <>
               {thumbnailUrl ? (
                 <img
-                  className="relative rounded-xs"
+                  className="relative rounded-2xs"
                   src={thumbnailUrl}
                   alt=""
                   style={{ objectFit: 'cover' }}
@@ -67,7 +67,7 @@ const NewsItem = forwardRef<HTMLLIElement, NewsListItemProps>(function NewsItem(
                     aspectRatio={Ratios.NINE_TO_SIXTEEN}
                     sizes="(max-width: 800px) 100vw, 800px"
                     fill
-                    className="rounded-xs"
+                    className="rounded-2xs"
                   />
                 )
               )}

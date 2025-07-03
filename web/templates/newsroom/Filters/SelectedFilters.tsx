@@ -36,7 +36,7 @@ const SelectedFilters = forwardRef<HTMLDivElement, SelectedFiltersProps>(functio
         <button
           type="button"
           onClick={clearRefinements}
-          className="flex gap-1 text-xs underline hover:no-underline focus:outline-none focus-visible:envis-outline active:scale-99"
+          className="flex gap-1 text-xs underline hover:no-underline focus:outline-hidden focus-visible:envis-outline active:scale-99"
         >
           <TransformableIcon iconData={close} className="size-6" />
           {t('newsroom_filters_clear_all')}
@@ -64,7 +64,7 @@ const SelectedFilters = forwardRef<HTMLDivElement, SelectedFiltersProps>(functio
               rounded-full 
               flex 
               items-center gap-4
-              focus:outline-none
+              focus:outline-hidden
               focus-visible:envis-outline
               active:scale-99`}
             >

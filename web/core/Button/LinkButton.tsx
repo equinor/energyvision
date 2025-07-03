@@ -20,7 +20,7 @@ export const LinkButton = forwardRef<HTMLButtonElement, LinkButtonProps>(
           text-xs
           underline
           hover:no-underline
-          focus:outline-none
+          focus:outline-hidden
           focus-visible:envis-outline
           active:scale-99`,
           className,

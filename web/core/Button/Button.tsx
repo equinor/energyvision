@@ -8,9 +8,9 @@ text-sm
 px-4
 py-3
 rounded-md
-focus:outline-none
+focus:outline-hidden
 focus-visible:envis-outline
-dark:focus:outline-none
+dark:focus:outline-hidden
 dark:focus-visible:envis-outline-invert
 active:scale-99
 flex
@@ -22,7 +22,6 @@ export type Variants = 'contained' | 'outlined' | 'ghost' | 'contained-secondary
 
 /** Use for common button styling in Button,IconButton, Link/ButtonLink */
 export const getVariant = (variant: Variants): string => {
-
   /* let sizeClasses = {
     md: "px-4 py-2 rounded-md text-base",
     lg: "px-5 py-3 rounded-lg text-lg",
@@ -32,7 +31,7 @@ export const getVariant = (variant: Variants): string => {
     case 'ghost':
       return `
       hover:bg-moss-green-60
-      focus:outline-none
+      focus:outline-hidden
       focus-visible:envis-outline
       active:scale-99
       dark:text-white-100
@@ -46,7 +45,7 @@ export const getVariant = (variant: Variants): string => {
       hover:bg-autumn-storm-60
       hover:border-autumn-storm-60
       hover:text-white-100
-      focus:outline-none
+      focus:outline-hidden
       focus-visible:outline-slate-blue-95
       dark:text-white-100
       dark:border-white-100
@@ -66,7 +65,7 @@ export const getVariant = (variant: Variants): string => {
       hover:bg-autumn-storm-60
       hover:border-autumn-storm-60
       hover:text-white-100
-      focus:outline-none
+      focus:outline-hidden
       focus-visible:outline-slate-blue-95
       dark:text-white-100
       dark:border-white-100
@@ -83,7 +82,7 @@ export const getVariant = (variant: Variants): string => {
       text-white-100 
       hover:bg-slate-blue-100
       hover:text-white-100
-      focus:outline-none
+      focus:outline-hidden
       focus-visible:outline-slate-blue-95
     `
     case 'contained':
@@ -91,7 +90,7 @@ export const getVariant = (variant: Variants): string => {
       return `bg-norwegian-woods-100 
       text-white-100 
       hover:bg-moss-green-100
-      focus:outline-none
+      focus:outline-hidden
       focus-visible:outline-norwegian-woods-100
       dark:bg-white-100
       dark:hover:bg-norwegian-woods-40

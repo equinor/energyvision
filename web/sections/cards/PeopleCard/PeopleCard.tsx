@@ -41,14 +41,14 @@ const PeopleCard = forwardRef<HTMLDivElement, PeopleCardProps>(function PeopleCa
         grid
         ${variantClassNames[variant]}
         shadow-card
-        rounded-sm
+        rounded-xs
         px-6
         py-8
         bg-white-100
         text-slate-80
         active:box-shadow-crisp-interact
         active:shadow-white-100-interact
-        focus:outline-none
+        focus:outline-hidden
         focus-visible:envis-outline
         dark:text-white-100
         dark:focus-visible:envis-outline-invert

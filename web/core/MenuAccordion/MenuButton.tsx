@@ -52,7 +52,7 @@ export const MenuButton = forwardRef<HTMLButtonElement, MenuButtonProps>(functio
         cursor-pointer
         bg-transparent
         border-none
-        outline-none
+        outline-hidden
         text-slate-80
         dark:text-white-100
         dark:hover:text-slate-80
@@ -65,7 +65,7 @@ export const MenuButton = forwardRef<HTMLButtonElement, MenuButtonProps>(functio
         rounded-md
         py-2 
         px-3 
-        focus:outline-none
+        focus:outline-hidden
         focus-visible:envis-outline
         dark:focus-visible:envis-outline-invert`}
       {...rest}

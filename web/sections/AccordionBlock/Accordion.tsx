@@ -23,7 +23,7 @@ const Accordion = ({ data, id, hasSectionTitle = true }: AccordionProps) => {
           <Item key={id} value={id}>
             <Header hasSectionTitle={hasSectionTitle}>{itemTitle}</Header>
             <Content>
-              {image && image?.asset && <Image image={image} className="aspect-video rounded-xs max-w-72" />}
+              {image && image?.asset && <Image image={image} className="aspect-video rounded-2xs max-w-72" />}
               {content && <Blocks value={content} />}
               {links && <CallToActions overrideButtonStyle callToActions={links} />}
             </Content>

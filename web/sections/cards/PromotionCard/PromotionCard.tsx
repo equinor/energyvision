@@ -51,7 +51,7 @@ const PromotionCard = forwardRef<HTMLAnchorElement, PromotionCardProps>(function
               })}
           titleLevel={hasSectionTitle ? 'h3' : 'h2'}
           {...(publishDateTime && {
-            eyebrow: <FormattedDate datetime={publishDateTime} uppercase />,
+            eyebrow: <FormattedDate datetime={publishDateTime} uppercase className="text-xs" />,
           })}
           titleClassName={titleClassName}
         />

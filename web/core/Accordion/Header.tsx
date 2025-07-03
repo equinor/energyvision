@@ -188,8 +188,8 @@ export const Header = forwardRef<HTMLButtonElement, AccordionHeaderProps>(functi
             hover:underline
             decoration-1
             underline-offset-4
-            outline-none
-            focus:outline-none
+            outline-hidden
+            focus:outline-hidden
             focus:no-underline
             focus-visible:envis-outline
             dark:focus-visible:envis-outline-invert

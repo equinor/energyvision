@@ -40,7 +40,7 @@ const UniversalHit: React.FC<HitProps> = ({ hit }) => {
 
   return (
     <article>
-      <NextLink className="py-6 px-0 block cursor-pointer outline-none" href={slug} prefetch={false}>
+      <NextLink className="py-6 px-0 block cursor-pointer outline-hidden" href={slug} prefetch={false}>
         {formattedDate && type !== 'magazine' && (
           <Typography className={`block tracking-wide ${type === 'news' ? 'text-2xs' : 'text-xs'}`}>
             <FormattedDate uppercase datetime={formattedDate} />
@@ -48,7 +48,7 @@ const UniversalHit: React.FC<HitProps> = ({ hit }) => {
         )}
         {pageTitle && (
           <Typography className="relative inline-block" level="h2" size="sm">
-            <span className="hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mist-blue-100">
+            <span className="hover:underline focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-mist-blue-100">
               <Highlight hit={hit} attribute="pageTitle" />
             </span>
           </Typography>
@@ -63,7 +63,7 @@ const UniversalHit: React.FC<HitProps> = ({ hit }) => {
             <span
               className={`${
                 pageTitle && title ? 'text-xs' : 'hover:underline'
-              } focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mist-blue-100`}
+              } focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-mist-blue-100`}
             >
               <Highlight hit={hit} attribute="title" />
             </span>

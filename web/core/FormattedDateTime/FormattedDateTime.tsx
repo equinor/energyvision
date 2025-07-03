@@ -14,7 +14,7 @@ const FormattedDateTime = ({
   return (
     <span className={`inline-flex items-center space-x-2 ${uppercase && 'uppercase'}`} {...rest}>
       {icon && <DateIcon />}
-      <span className="flex-shrink box-content space-x-3">
+      <span className="shrink box-content space-x-3">
         <FormattedDate uppercase={uppercase} datetime={datetime} year={year} month={month} day={day} />
         <FormattedTime datetime={datetime} timezone={timezone} />
       </span>

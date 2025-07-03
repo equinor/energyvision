@@ -39,9 +39,9 @@ const Transcript = ({ transcript, className, ariaTitle }: TranscriptProps) => {
               pr-4
               pb-2
               group
-              focus:outline-none
+              focus:outline-hidden
               focus-visible:envis-outline
-              dark:focus:outline-none
+              dark:focus:outline-hidden
               dark:focus-visible:envis-outline-invert
               border-b border-grey-40 dark:border-white-100`}
           >

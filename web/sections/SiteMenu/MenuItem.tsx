@@ -54,7 +54,7 @@ export const MenuItem = ({ item, index }: MenuGroupType) => {
               {topLevelLink?.label}
             </ResourceLink>
           </div>
-          <div className="flex-grow py-4 xl:py-10">
+          <div className="grow py-4 xl:py-10">
             {groups && groups.length > 0 && (
               <div
                 className="flex

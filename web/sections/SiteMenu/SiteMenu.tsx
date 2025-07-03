@@ -179,7 +179,7 @@ const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
                     hover:underline
                     underline-offset-2
                     h-fit
-                    rounded-sm
+                    rounded-xs
                     mb-40
                     max-xl:px-layout-sm
                     ${

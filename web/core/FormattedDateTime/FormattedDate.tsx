@@ -15,9 +15,9 @@ const FormattedDate = ({
 }: DateProps): JSX.Element => {
   const formatter = useFormatter()
   return (
-    <span {...rest} className={envisTwMerge(`text-base inline-flex items-center space-x-2`, className)}>
+    <span {...rest} className={envisTwMerge(`text-base items-center space-x-2`, className)}>
       {icon && <DateIcon />}
-      <span className={`flex-shrink box-content ${icon && '-mb-1'} ${uppercase ? 'uppercase' : ''}`}>
+      <span className={envisTwMerge(`shrink ${icon ? '-mb-1' : ''}${uppercase ? 'uppercase' : ''}`)}>
         <time suppressHydrationWarning dateTime={datetime}>
           {formatter.dateTime(new Date(datetime), {
             year: year,

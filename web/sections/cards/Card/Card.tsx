@@ -37,7 +37,7 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
   flex-col
   gap-0
   shadow-card 
-  rounded-sm 
+  rounded-xs 
   active:shadow-card-interact
   w-full
   h-full
@@ -46,8 +46,8 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
   const variantClassNames = {
     primary: `${commonStyling}`,
     secondary: `${commonStyling}`,
-    compact: `w-full h-full rounded-sm flex gap-4`,
-    single: `grid grid-cols-[40%_1fr] min-h-[450px] shadow-card rounded-sm active:shadow-card-interact`,
+    compact: `w-full h-full rounded-xs flex gap-4`,
+    single: `grid grid-cols-[40%_1fr] min-h-[450px] shadow-card rounded-xs active:shadow-card-interact`,
   }
   const variantAspectRatio = {
     primary: Ratios.NINE_TO_SIXTEEN,
@@ -64,7 +64,7 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
   const imageVariantClassNames = {
     primary: `rounded-t-sm *:rounded-t-sm`,
     secondary: `rounded-t-sm *:rounded-t-sm`,
-    compact: 'rounded-sm w-[25vw] h-auto *:rounded-sm',
+    compact: 'rounded-xs w-[25vw] h-auto *:rounded-xs',
     single: 'w-auto h-full',
   }
 
@@ -79,7 +79,7 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
         bg-white-100
         text-slate-80
         dark:text-white-100
-        focus:outline-none
+        focus:outline-hidden
         focus-visible:envis-outline
         dark:focus-visible:envis-outline-invert
         ${variantClassNames[variant]}

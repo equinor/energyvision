@@ -1,10 +1,4 @@
-import type {
-  CardData,
-  PeopleCardData,
-  EventCardData,
-  PromotionType,
-  EventPromotionSettings,
-} from '../../../types/index'
+import type { CardData, PeopleCardData, EventCardData, PromotionType, EventPromotionSettings } from '../../types/index'
 import MultipleEventCards from './MultipleEventCards'
 
 import PeopleCard from '@/sections/cards/PeopleCard/PeopleCard'

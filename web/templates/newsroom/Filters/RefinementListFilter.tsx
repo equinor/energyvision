@@ -23,7 +23,7 @@ const RefinementListFilter = ({ variant = 'list', filterName, labelledBy, ...res
     <div
       className={`${
         variant === 'list'
-          ? 'border border-autumn-storm-60 rounded-sm p-4 flex flex-col overflow-auto focus:outline-none focus-visible:envis-outline envis-scrollbar'
+          ? 'border border-autumn-storm-60 rounded-xs p-4 flex flex-col overflow-auto focus:outline-hidden focus-visible:envis-outline envis-scrollbar'
           : ''
       }`}
       {...(variant === 'list' && {

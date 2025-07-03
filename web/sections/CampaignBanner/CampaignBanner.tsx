@@ -14,12 +14,12 @@ const campaignTitleBlocks: BlockType = {
   smallText: ({ children }: PortableTextBlock) => <p className="text-sm">{<>{children}</>}</p>,
   //@ts-ignore
   largeText: ({ children }: PortableTextBlock) => (
-    <p className="block w-fit text-pretty text-2xl leading-none bg-white-100 rounded-sm">{<>{children}</>}</p>
+    <p className="block w-fit text-pretty text-2xl leading-none bg-white-100 rounded-xs">{<>{children}</>}</p>
   ),
   //@ts-ignore
   extraLargeText: ({ children }: PortableTextBlock) => {
     return (
-      <p className="block w-fit text-pretty text-4xl leading-none lg:text-8xl font-semibold mt-4 bg-white-100 rounded-sm ">
+      <p className="block w-fit text-pretty text-4xl leading-none lg:text-8xl font-semibold mt-4 bg-white-100 rounded-xs ">
         {<>{children}</>}
       </p>
     )

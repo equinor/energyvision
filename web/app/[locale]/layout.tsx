@@ -39,7 +39,6 @@ export default async function LocaleLayout({ children, params }: { children: Rea
   const { isEnabled: isDraftMode } = await draftMode()
 
   if (!hasLocale(routing.locales, locale)) {
-    console.log('Layout not valid locale -> return not found')
     notFound()
   }
   const { menuData, footerData } = await getHeaderAndFooterData({ slug, lang: getNameFromLocale(locale) })
@@ -65,7 +64,6 @@ export default async function LocaleLayout({ children, params }: { children: Rea
         <NextIntlClientProvider>
           <div className={`has-[.sticky-menu]:pt-topbar`}>
             <Header slugs={slugs} menuData={menuData} stickyMenuData={pageData?.stickyMenu} />
-            LOCALELAYOUT
             {children}
             <Footer footerData={footerData} />
           </div>

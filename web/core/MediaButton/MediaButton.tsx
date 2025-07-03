@@ -47,7 +47,7 @@ export const MediaButton = forwardRef<HTMLButtonElement, ButtonProps>(
           size-[44px]
           ${useTimer ? `` : `border border-grey-60 dark:border-white-100`}
           text-slate-80
-          focus:outline-none
+          focus:outline-hidden
           hover:bg-autumn-storm-60
           hover:border-autumn-storm-60
           hover:text-white-100

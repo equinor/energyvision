@@ -30,7 +30,7 @@ export const Tab = forwardRef<HTMLButtonElement, TabProps>(function Tab({ childr
         decoration-1
         hover:cursor-pointer
         data-active:font-semibold
-        focus:outline-none
+        focus:outline-hidden
         focus-visible:envis-outline
         dark:focus-visible:envis-outline-invert
     `,

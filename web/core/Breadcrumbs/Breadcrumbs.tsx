@@ -65,7 +65,7 @@ export const Breadcrumbs = ({
               ) : (
                 <NextLink
                   href={item.slug}
-                  className="hover:underline no-underline focus:outline-none focus-visible:envis-outline dark:focus-visible:envis-outline-invert"
+                  className="hover:underline no-underline focus:outline-hidden focus-visible:envis-outline dark:focus-visible:envis-outline-invert"
                 >
                   {label}
                 </NextLink>

@@ -65,7 +65,7 @@ const GridLinkArrow = forwardRef<HTMLDivElement, GridLinkArrowProps>(function Gr
               `group
               py-2
               px-4
-              focus:outline-none
+              focus:outline-hidden
               ${bgClassName()}
               ${variantClassName()}
               focus-visible:envis-outline

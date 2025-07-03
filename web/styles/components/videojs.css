@@ -7,7 +7,7 @@
 }
 .vjs-envis button,
 [type='button'] {
-  @apply focus:outline-none focus-visible:envis-outline-invert;
+  @apply focus:outline-hidden focus-visible:envis-outline-invert;
 }
 .vjs-envis .vjs-big-play-button {
   @apply bg-slate-blue-100/70 border-none rounded-full w-[60px] h-[60px] lg:w-[80px] lg:h-[80px];
