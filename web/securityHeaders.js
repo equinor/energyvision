@@ -74,6 +74,7 @@ const selfSrcUrls = [
   'https://*.algolia.net',
   'https://*.algolianet.com',
   'https://*.cookiebot.com',
+  'https://*.ingest.de.sentry.io',
   dataset !== 'brazil' ? 'https://eu-api.friendlycaptcha.eu' : 'https://api.friendlycaptcha.com/',
   isProduction ? '' : 'ws:',
 ]
