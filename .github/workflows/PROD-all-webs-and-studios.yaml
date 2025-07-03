@@ -61,16 +61,16 @@ jobs:
 
       - name: Deploy to Radix 🚀
         id: deploy-main
-        uses: equinor/radix-github-actions@v1
-        with:
-          args: >
-            create job
-            deploy
-            --token-environment
-            --context platform2
-            -a equinor-web-sites
-            -e ${{ secrets.ENV }}
+        uses: equinor/radix-github-actions@v2
+
+      - run: |
+          rx create job deploy \
+            --token-environment \
+            --context platform2 \
+            -a equinor-web-sites \
+            -e ${{ secrets.ENV }} \
             -f
+        shell: bash
 
       - uses: act10ns/slack@v2
         with:
@@ -177,11 +177,9 @@ jobs:
 
       - name: Deploy to Radix 🚀
         id: deploy
-        uses: equinor/radix-github-actions@v1
-        with:
-          args: >
-            create job
-            deploy
+        uses: equinor/radix-github-actions@v2
+      - run: |
+          rx create job deploy 
             --token-environment
             --context platform2
             -a equinor-web-sites
