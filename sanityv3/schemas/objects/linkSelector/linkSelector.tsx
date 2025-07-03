@@ -12,7 +12,7 @@ import {
 const linkSelector = (
   linkTypes: LinkType[] = ['link', 'homePageLink', 'reference', 'referenceToOtherLanguage'],
   hidden?: (arg0: any) => boolean,
-  includeLabels: boolean = true,
+  includeLabels = true,
 ) => ({
   name: 'linkSelector',
   title: 'Link',
