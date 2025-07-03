@@ -1,21 +1,4 @@
-import styled from 'styled-components'
 import { Text, Card, Heading, Box } from '@sanity/ui'
-
-const StyledSpan = styled.span`
-  display: inline-block;
-  padding-right: 5px;
-
-  &:after {
-    content: '>';
-    padding-left: 5px;
-  }
-
-  &:last-child {
-    &:after {
-      content: '';
-    }
-  }
-`
 
 export const BreadcrumbsPreview = ({ breadcrumbs }: { breadcrumbs: string[] }) => (
   <Box marginTop={2} marginBottom={2}>
@@ -24,8 +7,11 @@ export const BreadcrumbsPreview = ({ breadcrumbs }: { breadcrumbs: string[] }) =
     </Heading>
     <Card padding={[3, 3, 4]} radius={2} shadow={1} marginTop={3}>
       <Text size={1}>
-        {breadcrumbs.map((item) => (
-          <StyledSpan key={item}>{item}</StyledSpan>
+        {breadcrumbs.map((item, idx) => (
+          <span key={item} style={{ display: 'inline-block', paddingRight: 5 }}>
+            {item}
+            {idx < breadcrumbs.length - 1 && <span style={{ paddingLeft: 5 }}>{'>'}</span>}
+          </span>
         ))}
       </Text>
     </Card>
