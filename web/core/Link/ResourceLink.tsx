@@ -1,3 +1,4 @@
+'use client'
 import { forwardRef } from 'react'
 import { BaseLink, BaseLinkProps } from './BaseLink'
 import { LinkType } from '../../types/index'

@@ -1,4 +1,5 @@
 'use client'
+
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useLocale, useTranslations } from 'next-intl'
 import { usePathname } from 'next/navigation'
@@ -76,17 +77,17 @@ const Header = ({ slugs, menuData, stickyMenuData }: HeaderProps) => {
   }
   const hasSearch = false //Flags.HAS_SEARCH
   const hasMoreThanOneLanguage = languages.length > 1
-  const is404 = slugs.length === 0
+  const is404 = slugs?.length === 0
 
   let columns = 1
   if (hasSearch) columns++
   if (hasMoreThanOneLanguage && !is404) columns++
 
   /** Display "All sites" in case menu is empty **/
-  const shouldDisplayAllSites = !Flags.HAS_FANCY_MENU && !menuData
+  const shouldDisplayAllSites = !menuData
 
   /* Filter objects that have translations but no routes */
-  const validSlugs = slugs.filter((obj) => obj.slug)
+  const validSlugs = slugs?.filter((obj) => obj.slug)
   const t = useTranslations()
   const searchLabel = t('search')
 
@@ -119,14 +120,12 @@ const Header = ({ slugs, menuData, stickyMenuData }: HeaderProps) => {
           )}
           {shouldDisplayAllSites ? (
             <AllSites />
-          ) : menuData && Flags.HAS_FANCY_MENU ? (
+          ) : Flags.HAS_FANCY_MENU ? (
             <div>
               <SiteMenu data={menuData as MenuData} />
             </div>
           ) : (
-            <div>
-              <SiteMenu variant="simple" data={menuData as SimpleMenuData} />
-            </div>
+            <div>{<SiteMenu variant="simple" data={menuData as SimpleMenuData} />}</div>
           )}
         </div>
       </Topbar>

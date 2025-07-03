@@ -1,3 +1,4 @@
+'use client'
 import { forwardRef, HTMLAttributes } from 'react'
 import { StickyMenuData } from '../../types/index'
 import { ColorKeyTokens, colorKeyToUtilityMap } from '../../styles/colorKeyToUtilityMap'

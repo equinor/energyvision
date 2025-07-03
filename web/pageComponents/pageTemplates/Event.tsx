@@ -1,3 +1,4 @@
+'use client'
 import { BackgroundContainer } from '@/core/Backgrounds'
 import { FormattedDate, FormattedTime } from '@/core/FormattedDateTime'
 import { toPlainText } from '@portabletext/react'

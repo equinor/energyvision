@@ -1,3 +1,4 @@
+'use client'
 import { useTranslations } from 'next-intl'
 import { languages } from '../../languages'
 import { ButtonLink } from '@/core/Link'

@@ -1,8 +1,9 @@
+'use client'
 import { CareersContactFormCatalogType } from '../../../types'
 import { useTranslations } from 'next-intl'
 
 export default function getCatalogType(
-  intl: IntlShape,
+  translations,
   category: string,
   candidateType: string,
 ): CareersContactFormCatalogType | null {

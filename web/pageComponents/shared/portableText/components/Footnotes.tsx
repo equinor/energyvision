@@ -1,3 +1,4 @@
+'use client'
 /* eslint-disable no-unsafe-optional-chaining */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { PortableText } from '@portabletext/react'
@@ -29,7 +30,6 @@ function Footnotes({ blocks }: { blocks: PortableTextBlock[] }) {
       role="doc-endnotes"
       className="prose prose-md py-2 text-sm lg:text-xs border-y-[1px] border-autumn-storm-40 italic"
     >
-      {/*       <div className="h-[1px] bg-autumn-storm-60 w-[30vw]" /> */}
       <h2 className="sr-only" id="footnote-label">
         {intl('footnotes')}
       </h2>

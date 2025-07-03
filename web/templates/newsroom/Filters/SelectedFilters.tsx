@@ -1,3 +1,4 @@
+'use client'
 import { TransformableIcon } from '../../../icons/TransformableIcon'
 import { forwardRef, HTMLAttributes } from 'react'
 import { useClearRefinements, useCurrentRefinements, UseRefinementListProps } from 'react-instantsearch'

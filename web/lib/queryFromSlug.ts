@@ -84,9 +84,9 @@ export const getQueryFromSlug = async (
     return getPreviewByIdQuery(firstPiece, locale, date)
   } */
 
-  console.log('slugArray', slugArray)
+  console.log('getQueryFromSlug slugArray', slugArray)
   const slug = `/${slugArray.join('/')}`
-  console.log('slug', slug)
+  console.log('getQueryFromSlug slug', slug)
   const lang = getNameFromLocale(locale)
   const query = await getQuery(firstPiece, secondPiece, lang)
   return {

@@ -1,3 +1,4 @@
+import '../globals.css'
 import { NextIntlClientProvider, hasLocale } from 'next-intl'
 import { notFound } from 'next/navigation'
 import { routing } from '../../i18n/routing'
@@ -24,19 +25,13 @@ const equinorVariableWoff2 = localFont({
   src: '../fonts/equinor/EquinorVariable-VF.woff2',
 })
 
-type Params = Promise<{ locale: string; slug: string}>
- 
-export async function generateMetadata({ params }: { params: Params }) {
-  const { locale, slug } = await params
-}
+type Params = Promise<{ locale: string; slug: string }>
 
-export default async function LocaleLayout({
-  children,
-  params,
-}: {
-  children: React.ReactNode
-  params: Params
-}) {
+/* export async function generateMetadata({ params }: { params: Params }) {
+  const { locale, slug } = await params
+} */
+
+export default async function LocaleLayout({ children, params }: { children: React.ReactNode; params: Params }) {
   // Ensure that the incoming `locale` is valid
   const { locale, slug } = await params
   console.log('Layout locale', locale)
@@ -48,10 +43,7 @@ export default async function LocaleLayout({
     notFound()
   }
   const { menuData, footerData } = await getHeaderAndFooterData({ slug, lang: getNameFromLocale(locale) })
-  console.log('Layout menudata', menuData)
-  console.log('Layout footerData', footerData)
   const { pageData } = await getPageDataForHeader({ slug, lang: getNameFromLocale(locale) })
-  console.log('Layout pagedata', pageData)
   const slugs = getPageSlugs(pageData)
 
   return (
@@ -73,6 +65,7 @@ export default async function LocaleLayout({
         <NextIntlClientProvider>
           <div className={`has-[.sticky-menu]:pt-topbar`}>
             <Header slugs={slugs} menuData={menuData} stickyMenuData={pageData?.stickyMenu} />
+            LOCALELAYOUT
             {children}
             <Footer footerData={footerData} />
           </div>

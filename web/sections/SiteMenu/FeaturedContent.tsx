@@ -1,3 +1,4 @@
+'use client'
 import type { EventCardData, FeaturedContentData } from '../../types/index'
 import { EventCard } from '@/sections/cards/EventCard'
 import { Banner } from '@/core/Banner/Banner'

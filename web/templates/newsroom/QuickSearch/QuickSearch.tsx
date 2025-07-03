@@ -1,3 +1,4 @@
+'use client'
 import { useTranslations } from 'next-intl'
 import { SearchBox } from '../../../core/AlgoliaSearchBox/SearchBox'
 import { forwardRef } from 'react'

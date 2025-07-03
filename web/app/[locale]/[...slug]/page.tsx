@@ -9,10 +9,10 @@ const EventPage = dynamic(() => import('@/pageComponents/pageTemplates/Event'))
 const NewsPage = dynamic(() => import('@/pageComponents/pageTemplates/News'))
 const TopicPage = dynamic(() => import('@/pageComponents/pageTemplates/TopicPage'))
 
-type Params = Promise<{ slug: string | string[] ; locale: string; }>
+type Params = Promise<{ slug: string | string[]; locale: string }>
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>
- 
-export async function generateMetadata(props: {
+
+/* export async function generateMetadata(props: {
   params: Params
   searchParams: SearchParams
 }) {
@@ -20,17 +20,14 @@ export async function generateMetadata(props: {
   const searchParams = await props.searchParams
   const slug = params.slug
   const query = searchParams.query
-}
+} */
 
-export default async function Page(props: {
-  params: Params
-  searchParams: SearchParams
-}) {
-    const params = await props.params
+export default async function Page(props: { params: Params; searchParams: SearchParams }) {
+  const params = await props.params
   const searchParams = await props.searchParams
   const { locale, slug: s } = params
   const searchQuery = searchParams.query
-  console.log('s', s)
+  console.log('slug page s', s)
   const { query, queryParams } = await getQueryFromSlug(s as string[], locale)
 
   const { pageData } = await getPageData({

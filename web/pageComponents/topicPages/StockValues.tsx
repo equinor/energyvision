@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 'use client'
 import useSWR from 'swr'
 import * as xml2js from 'xml2js'

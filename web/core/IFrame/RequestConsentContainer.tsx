@@ -1,3 +1,4 @@
+'use client'
 import { Typography } from '@/core/Typography'
 import { defaultLanguage } from '../../languages'
 import { CookieType } from '../../types'

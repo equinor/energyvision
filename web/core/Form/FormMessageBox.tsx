@@ -1,3 +1,5 @@
+'use client'
+
 import { forwardRef, HTMLAttributes } from 'react'
 import { check, error_outlined } from '@equinor/eds-icons'
 import { TransformableIcon } from '../../icons/TransformableIcon'

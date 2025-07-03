@@ -3,7 +3,6 @@ import { forwardRef, HTMLAttributes, useEffect, useMemo, useRef, useState } from
 import { mergeRefs } from '@equinor/eds-utils'
 import { StickyMenuData } from '../../types/index'
 import StickyMenu from '@/sections/StickyMenu/StickyMenu'
-import { useTranslations } from 'next-intl'
 
 export type TopbarProps = {
   stickyMenuData?: StickyMenuData
@@ -15,7 +14,6 @@ export const Topbar = forwardRef<HTMLDivElement, TopbarProps>(function Topbar(
 ) {
   const topbarRef = useRef<HTMLDivElement>(null)
   const combinedTopbarRef = useMemo(() => mergeRefs<HTMLDivElement>(topbarRef, ref), [topbarRef, ref])
-  const intl = useTranslations()
   const [height, setHeight] = useState(0)
   const [prevScrollPos, setPrevScrollPos] = useState(0)
   const [isVisible, setIsVisible] = useState(true)

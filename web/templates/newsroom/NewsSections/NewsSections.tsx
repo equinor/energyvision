@@ -1,3 +1,4 @@
+'use client'
 import { forwardRef } from 'react'
 import NewsHeadliner from './NewsHeadliner'
 import NewsItem from './NewsItem'

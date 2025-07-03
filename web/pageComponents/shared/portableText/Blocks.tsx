@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
+'use client'
 import {
   PortableText,
   PortableTextProps,
@@ -13,7 +13,7 @@ import { FactBox } from '@/sections/FactBox/FactBox'
 import { twMerge } from 'tailwind-merge'
 import { Highlight } from '@/core/Typography/Highlight'
 import { IFrame } from '@/core/IFrame/IFrame'
-import { useTranslations } from 'next-intl'
+import { Footnote } from './components/Footnote'
 
 export type BlockType = Record<PortableTextBlockStyle, PortableTextBlockComponent | undefined>
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -33,11 +33,11 @@ const defaultSerializers = {
     },
   },
   types: {
-    //@ts-ignore
+    //@ts-ignore:todo
     positionedInlineImage: (props) => <FigureWithLayout {...props} />,
-    //@ts-ignore
+    //@ts-ignore:todo
     pullQuote: (props) => <Quote {...props} className="not-prose" />,
-    //@ts-ignore
+    //@ts-ignore:todo
     basicIframe: (props) => {
       const { value } = props
       return <IFrame {...value} className="not-prose px-layout-md py-14 mx-auto" />
@@ -67,19 +67,8 @@ const defaultSerializers = {
   },
 }
 const footnoteSerializer = {
-  footnote: ({ children, markKey }: any) => {
-    const t = useTranslations()
-    return (
-      <span>
-        {children}
-        <span>
-          <a id={`back_ref_${markKey}`} href={`#${markKey}`} aria-describedby="footnote-label" className="">
-            {/* the number for footnote is added by css see tailwind.css components */}
-            <span className="sr-only">{t('footnote')}</span>
-          </a>
-        </span>
-      </span>
-    )
+  footnote: (props: any) => {
+    return <Footnote {...props} />
   },
 }
 
@@ -142,7 +131,6 @@ export type BlockProps = {
 
 const inlineBlockTypes = ['block', 'positionedInlineImage', 'pullQuote', 'basicIframe']
 
-//@ts-ignore
 export default function Blocks({
   value,
   blocksComponents,
@@ -158,84 +146,82 @@ export default function Blocks({
   let div: PortableTextBlock[] = []
   return (
     <>
-      {
-        //@ts-ignore
-        value?.map((block: PortableTextBlock, i: number, blocks: PortableTextBlock[]) => {
-          // Normal text blocks (p, h1, h2, etc.) — these are grouped so we can wrap them in a prose div
-          if (inlineBlockTypes.includes(block._type)) {
-            div.push(block)
+      {//@ts-ignore:todo
+      value?.map((block: PortableTextBlock, i: number, blocks: PortableTextBlock[]) => {
+        // Normal text blocks (p, h1, h2, etc.) — these are grouped so we can wrap them in a prose div
+        if (inlineBlockTypes.includes(block._type)) {
+          div.push(block)
 
-            // If the next block is also text/pullQuote, group it with this one
-            if (inlineBlockTypes.includes(blocks[i + 1]?._type)) return null
+          // If the next block is also text/pullQuote, group it with this one
+          if (inlineBlockTypes.includes(blocks[i + 1]?._type)) return null
 
-            // Otherwise, render the group of text blocks we have
-            const value = div
-            div = []
+          // Otherwise, render the group of text blocks we have
+          const value = div
+          div = []
 
-            return (
-              <div
-                key={block._key}
-                className={twMerge(`prose ${proseClassName} ${noInvert ? '' : `dark:prose-invert`}`, className)}
-                id={id}
-              >
-                <PortableText
-                  value={value}
-                  //@ts-ignore
-                  components={{
-                    block: {
-                      ...defaultSerializers.block,
-                      ...blocksComponents,
-                      ...(clampLines && getLineClampNormalBlock(clampLines)),
-                    },
-                    types: { ...defaultSerializers.types },
-                    marks: {
-                      ...defaultSerializers.marks,
-                      ...marksComponents,
-                      ...(includeFootnotes && footnoteSerializer),
-                    },
-                    list: { ...defaultSerializers.list },
-                  }}
-                />
-              </div>
-            )
-          } else if (block._type === 'factbox') {
-            let marginOverride = ''
-            // If the next block is a factbox, remove margin bottom
-            if (blocks[i + 1]?._type === 'factbox') {
-              marginOverride = 'mb-0'
-            }
-            // If the previous block was a factbox, remove margin top
-            if (blocks[i - 1]?._type === 'factbox') {
-              marginOverride = 'mt-0'
-            }
-
-            return (
+          return (
+            <div
+              key={block._key}
+              className={twMerge(`prose ${proseClassName} ${noInvert ? '' : `dark:prose-invert`}`, className)}
+              id={id}
+            >
               <PortableText
-                key={block._key}
-                value={block}
+                value={value}
+                //@ts-ignore:todo
                 components={{
-                  types: {
-                    //@ts-ignore
-                    factbox: (props) => <FactBox className={`${marginOverride}`} {...props} />,
+                  block: {
+                    ...defaultSerializers.block,
+                    ...blocksComponents,
+                    ...(clampLines && getLineClampNormalBlock(clampLines)),
                   },
+                  types: { ...defaultSerializers.types },
+                  marks: {
+                    ...defaultSerializers.marks,
+                    ...marksComponents,
+                    ...(includeFootnotes && footnoteSerializer),
+                  },
+                  list: { ...defaultSerializers.list },
                 }}
               />
-            )
-          } else {
-            // Non-text blocks (modules, sections, etc.) — note that these can recursively render text
-            // blocks again
-            return (
-              <PortableText
-                key={block._key}
-                value={block}
-                components={{
-                  ...components,
-                }}
-              />
-            )
+            </div>
+          )
+        } else if (block._type === 'factbox') {
+          let marginOverride = ''
+          // If the next block is a factbox, remove margin bottom
+          if (blocks[i + 1]?._type === 'factbox') {
+            marginOverride = 'mb-0'
           }
-        })
-      }
+          // If the previous block was a factbox, remove margin top
+          if (blocks[i - 1]?._type === 'factbox') {
+            marginOverride = 'mt-0'
+          }
+
+          return (
+            <PortableText
+              key={block._key}
+              value={block}
+              components={{
+                types: {
+                  //@ts-ignore:todo
+                  factbox: (props) => <FactBox className={`${marginOverride}`} {...props} />,
+                },
+              }}
+            />
+          )
+        } else {
+          // Non-text blocks (modules, sections, etc.) — note that these can recursively render text
+          // blocks again
+          return (
+            <PortableText
+              key={block._key}
+              value={block}
+              components={{
+                ...components,
+              }}
+            />
+          )
+        }
+      })}
     </>
   )
 }

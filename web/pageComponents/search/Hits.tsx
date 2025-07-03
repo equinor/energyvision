@@ -1,3 +1,4 @@
+'use client'
 import { useHits } from 'react-instantsearch'
 import type { Hit as AlgoliaHit } from '@algolia/client-search'
 import { HitData } from './UniversalHit'

@@ -1,3 +1,4 @@
+'use client'
 import envisTwMerge from '../../twMerge'
 import { MediaButton } from '@/core/MediaButton/MediaButton'
 import { useContext } from 'react'

@@ -1,13 +1,9 @@
 @import 'tailwindcss';
 @plugin "@tailwindcss/typography";
-@source "../core"; 
-@source "../sections"; 
-@source "../templates"; 
-@source "../app"; 
-@source "../pageComponents"; 
-@source 'video.js/dist/video-js.css';
+@source "../{core,sections,templates,pageComponents}/**/*.{tsx}";
+/*@source 'video.js/dist/video-js.css';
 @source '../styles/components/videojs.css';
-@source '../styles/components/cookiebot.css';
+@source '../styles/components/cookiebot.css';*/
 
 @theme {
   --font-sans: 'Equinor', 'Open Sans', sans-serif;
@@ -47,6 +43,11 @@
   --color-sand-and-summer-50: #ffe7d6;
   --color-autumn-storm-60: #86a7ac;
   --color-autumn-storm-40: #c2d4d6;
+  --color-grey-20: hsl(0, 0%, 92%);
+  --color-grey-50: hsl(0, 0%, 55%);
+  --color-grey-60: hsl(0, 0%, 44%);
+  --color-white-100: hsl(0, 0%, 100%);
+
   --text-2xs: 'clamp(calc(11.11 / 16 * 1rem), 0.19vw + 0.65rem, calc(14.08 / 16 * 1rem))';
   --text-xs: 'clamp(calc(13.33 / 16 * 1rem), 0.28vw + 0.77rem, calc(17.60 / 16 * 1rem))';
   --text-sm: 'clamp(calc(14.61 / 16 * 1rem), 0.33vw + 0.84rem, calc(19.68 / 16 * 1rem))';
@@ -161,15 +162,15 @@ data-ui="checked active" class="data-checked:underline">
 Test highlight on Text teaser and (Text block?)
 and not use important in textteaser theme
 */
-@custom-variant highlight (&:where([data-highlight], [data-highlight] *))
+/* @custom-variant highlight (&:where([data-highlight], [data-highlight] *)) */
 
-@variant envis-outline {
+@custom-variant envis-outline {
   @apply outline-dashed outline-2 outline-offset-3 outline-norwegian-woods-100;
 }
-@variant envis-outline-invert {
+@custom-variant envis-outline-invert {
   @apply outline-dashed outline-2 outline-offset-3 outline-white-100;
 }
-@variant envis-outline-invert {
+@custom-variant envis-outline-invert {
   word-break: 'break-word';
 }
 
@@ -185,12 +186,12 @@ and not use important in textteaser theme
   }
 }
 
-@variant animate-timeline {
+@custom-variant animate-timeline {
   @apply animate-fadeInOut;
   animation-timeline: view();
   animation-range: cover 18% cover 85%;
 }
-@variant animate-timeline {
+@custom-variant animate-timeline {
   @apply animate-fadeInOut;
   animation-timeline: view();
   animation-range: cover 18% cover 85%;
@@ -200,9 +201,6 @@ and not use important in textteaser theme
   &::-webkit-scrollbar {
     display: none;
   }
-  /* Hide scrollbar for IE, Edge and Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
 }
 
 @utility envis-scrollbar {
@@ -263,7 +261,8 @@ and not use important in textteaser theme
   background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4));
 }
 @utility black-blue-center-gradient {
-  background-image: linear-gradient(var(--colors-slate-blue-95) / 50, var(--colors-slate-blue-95) / 50),
+  background-image:
+    linear-gradient(var(--colors-slate-blue-95) / 50, var(--colors-slate-blue-95) / 50),
     linear-gradient(rgba(0, 0, 0, 0.36), rgba(0, 0, 0, 0.36));
 }
 @utility fade-in-black-gradient {
@@ -280,15 +279,20 @@ and not use important in textteaser theme
   );
 }
 @utility black-to-top-tall-gradient {
-  background-image: linear-gradient(to top, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3) 40%, rgba(0, 0, 0, 0) 100%),
+  background-image:
+    linear-gradient(to top, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3) 40%, rgba(0, 0, 0, 0) 100%),
     linear-gradient(26deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.45) 35%, rgba(0, 0, 0, 0) 100%);
 }
 @utility box-shadow-crisp {
-  box-shadow: 0.3px 0.5px 0.7px hsl(var(--tw-shadow-color) / 0.34),
-    0.4px 0.8px 1px -1.2px hsl(var(--tw-shadow-color) / 0.34), 1px 2px 2.5px -2.5px hsl(var(--tw-shadow-color) / 0.34);
+  box-shadow:
+    0.3px 0.5px 0.7px hsl(var(--tw-shadow-color) / 0.34),
+    0.4px 0.8px 1px -1.2px hsl(var(--tw-shadow-color) / 0.34),
+    1px 2px 2.5px -2.5px hsl(var(--tw-shadow-color) / 0.34);
 }
 @utility box-shadow-crisp-interact {
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.08) 0px 3px 4px 0px;
+  box-shadow:
+    rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
+    rgba(0, 0, 0, 0.08) 0px 3px 4px 0px;
 }
 
 /* Works out of the box?
@@ -308,13 +312,6 @@ treat the value and modifier as a single value:
   aspect-ratio: --value(--aspect-ratio- *, ratio, [ratio]);
 }
 */
-
-/*
-
-@utility tab-* {
-  tab-size: --value(--tab-size-*);
-}
-}*/
 
 @layer base {
   p,

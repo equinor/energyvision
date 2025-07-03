@@ -1,3 +1,4 @@
+'use client'
 import { AnchorHTMLAttributes } from 'react'
 import NextLink from 'next/link'
 import { twMerge } from 'tailwind-merge'

@@ -1,3 +1,4 @@
+'use client'
 import type { CardData } from '../../types/index'
 import { FormattedDate } from '@/core/FormattedDateTime'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
