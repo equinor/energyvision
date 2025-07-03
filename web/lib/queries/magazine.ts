@@ -62,6 +62,7 @@ export const magazineQuery = /* groq */ `
 }${querySuffixForNewsAndMagazine}`
 
 export const magazineIndexQuery = /* groq */ `
+ ${functions}
   *[_type == "magazineIndex" && ${sameLang}] {
     _id,
     "seoAndSome": ${seoAndSomeFields},

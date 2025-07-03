@@ -1,7 +1,7 @@
 import { Rule } from 'sanity'
 import {
+  anchorReference,
   externalLink,
-  getLinkFields,
   homepageLink,
   internalReference,
   internalReferenceOtherLanguage,
@@ -12,6 +12,7 @@ import {
 const linkSelector = (
   linkTypes: LinkType[] = ['link', 'homePageLink', 'reference', 'referenceToOtherLanguage'],
   hidden?: (arg0: any) => boolean,
+  includeLabels: boolean = true,
 ) => ({
   name: 'linkSelector',
   title: 'Link',
@@ -26,8 +27,24 @@ const linkSelector = (
       ),
       validation: (Rule: Rule) => Rule.length(1).required(),
     },
-    ...getLinkFields(),
-  ],
+    anchorReference,
+    includeLabels && {
+      name: 'label',
+      title: 'Visible label',
+      description: 'The visible text on the link/button.',
+      type: 'string',
+      validation: (Rule: Rule) =>
+        Rule.custom((value: string) => {
+          return value ? true : 'You must add a label'
+        }),
+    },
+    includeLabels && {
+      name: 'ariaLabel',
+      title: '♿ Screenreader label',
+      description: 'A text used for providing screen readers with additional information',
+      type: 'string',
+    },
+  ].filter((e) => e),
 })
 
 export default linkSelector
