@@ -1,18 +1,23 @@
-import { attach_file, format_color_text, star_filled } from '@equinor/eds-icons'
+import { attach_file, format_color_text, link, star_filled } from '@equinor/eds-icons'
 import type { BlockDefinition, BlockStyleDefinition } from 'sanity'
 import { EdsBlockEditorIcon, EdsIcon, IconSubScript, IconSuperScript } from '../../icons'
 import { SubScriptRenderer, SuperScriptRenderer } from '../components'
 import { defaultColors } from '../defaultColors'
+import { Rule } from 'sanity'
 import {
+  anchorReference,
   externalLink,
   homepageLink,
   internalReference,
   internalReferenceOtherLanguage,
+  LinkType,
 } from '../objects/linkSelector/common'
+import linkSelector from '../objects/linkSelector/linkSelector'
 
 const externalLinkConfig = {
   ...externalLink,
 }
+
 export type BlockContentProps = {
   h2?: boolean
   useH2BaseStyle?: boolean
@@ -178,24 +183,15 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockDef
     component: ExtraLargeTextRender,
   }
 
-  const internalLinkConfig = {
-    ...internalReference,
-    options: {
-      ...internalReference.options,
-      modal: {
-        width: 'medium',
-      },
-    },
-  }
-
-  const internalLinkOtherLanguageConfig = {
-    ...internalReferenceOtherLanguage,
-    options: {
-      ...internalReferenceOtherLanguage.options,
-      modal: {
-        width: 'large',
-      },
-    },
+  const internalLinkConfig = (linkConfig: any) => {
+    const linkType: LinkType = linkConfig.name
+    const linkSelectorSchema = linkSelector([linkType], undefined, false)
+    return {
+      icon: linkConfig.icon,
+      ...linkSelectorSchema,
+      name: linkType + '_block',
+      title: linkConfig.title,
+    }
   }
 
   const attachmentConfig = {
@@ -248,9 +244,9 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockDef
   }
 
   if (internalLink) {
-    config?.marks?.annotations?.push(internalLinkConfig)
-    config?.marks?.annotations?.push(internalLinkOtherLanguageConfig)
-    config?.marks?.annotations?.push(homepageLink)
+    config?.marks?.annotations?.push(internalLinkConfig(internalReference))
+    config?.marks?.annotations?.push(internalLinkConfig(internalReferenceOtherLanguage))
+    config?.marks?.annotations?.push(internalLinkConfig(homepageLink))
   }
 
   if (attachment) {

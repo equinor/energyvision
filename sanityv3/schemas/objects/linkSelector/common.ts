@@ -165,29 +165,9 @@ export const socialMediaLink = {
   ],
 }
 
-export const getLinkFields = () => {
-  return [
-    {
-      name: 'anchorReference',
-      title: 'Anchor reference',
-      type: 'anchorReferenceField',
-      description: AnchorLinkDescription(),
-    },
-    {
-      name: 'label',
-      title: 'Visible label',
-      description: 'The visible text on the link/button.',
-      type: 'string',
-      validation: (Rule: Rule) =>
-        Rule.custom((value: string) => {
-          return value ? true : 'You must add a label'
-        }),
-    },
-    {
-      name: 'ariaLabel',
-      title: '♿ Screenreader label',
-      description: 'A text used for providing screen readers with additional information',
-      type: 'string',
-    },
-  ]
+export const anchorReference = {
+  name: 'anchorReference',
+  title: 'Anchor reference',
+  type: 'anchorReferenceField',
+  description: AnchorLinkDescription(),
 }

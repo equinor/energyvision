@@ -111,7 +111,12 @@ export default defineMigration({
           : (node.reference as JsonObject)
         const type = node.linkToOtherLanguage ? 'referenceToOtherLanguage' : 'reference'
         return [
-          set({ ...value, _type: type, _key: node._key }),
+          set({
+            link: [{ _key: nanoid(), ...value, _type: type }],
+            _type: type + '_block',
+            _key: node._key,
+            anchorReference: node.anchorReference,
+          }),
           at('referenceToOtherLanguange', unset()),
           at('reference', unset()),
           at('linkToOtherLanguage', unset()),
