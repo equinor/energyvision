@@ -1,6 +1,6 @@
 import { getYear, getMonth, getDate, getHours, getMinutes, getSeconds } from 'date-fns'
 import { EventDateType } from '../../../web/types/index'
-import { zonedTimeToUtc } from 'date-fns-tz'
+import { TZDate } from '@date-fns/tz'
 
 export const toDateParts = (datetime: Date): number[] => {
   return [
@@ -33,8 +33,8 @@ export const getEventDates = (eventDate: EventDateType | undefined) => {
   if (!date) return { start: null, end: null }
 
   if (startTime && endTime) {
-    const start = zonedTimeToUtc(new Date(`${date}T${startTime}`), timezone).toISOString()
-    const end = zonedTimeToUtc(new Date(`${date}T${endTime}`), timezone).toISOString()
+    const start = new TZDate(new Date(`${date}T${startTime}`), timezone).toISOString() //zonedTimeToUtc(new Date(`${date}T${startTime}`), timezone).toISOString()
+    const end = new TZDate(new Date(`${date}T${endTime}`), timezone).toISOString() //zonedTimeToUtc(new Date(`${date}T${endTime}`), timezone).toISOString()
     return { start, end }
   } else {
     const [YYYY, MM, DD] = date.split('-').map(Number)
