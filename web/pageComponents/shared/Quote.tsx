@@ -1,4 +1,4 @@
-import Image, { Ratios } from './SanityImage'
+import Image, { getSmallerThanPxLgSizes } from '../../core/SanityImage/SanityImage'
 import type { ImageWithAlt, DesignOptions } from '../../types/index'
 import { QuoteSymbol } from '../../icons'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
@@ -31,9 +31,9 @@ const Quote = ({ data: { quote, authorTitle, author, image, designOptions } }: {
       <div className={`${isMobile ? 'w-[81px]' : 'min-w-[194px] md:w-52 xl:w-[242px]'} `}>
         <Image
           maxWidth={242}
-          aspectRatio={Ratios.ONE_TO_ONE}
+          aspectRatio={'1:1'}
           image={image!}
-          sizes="(min-width: 2280px) 242px, (min-width: 800px) calc(3.29vw + 168px), calc(1.67vw + 75px)"
+          sizes={getSmallerThanPxLgSizes()}
           className="rounded-full"
         />
       </div>
