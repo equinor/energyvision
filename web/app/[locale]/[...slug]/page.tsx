@@ -4,9 +4,9 @@ import { notFound } from 'next/navigation'
 import { getPageData } from '@/sanity/lib/fetchData'
 
 const MagazinePage = dynamic(() => import('@/templates/magazine/MagazinePage'))
-const LandingPage = dynamic(() => import('@/pageComponents/pageTemplates/LandingPage'))
+const LandingPage = dynamic(() => import('@/templates/landingpage/LandingPage'))
 const EventPage = dynamic(() => import('@/pageComponents/pageTemplates/Event'))
-const NewsPage = dynamic(() => import('@/pageComponents/pageTemplates/News'))
+const NewsPage = dynamic(() => import('@/templates/news/News'))
 const TopicPage = dynamic(() => import('@/pageComponents/pageTemplates/TopicPage'))
 
 type Params = Promise<{ slug: string | string[]; locale: string }>
@@ -51,6 +51,7 @@ export default async function Page(props: { params: Params; searchParams: Search
   }*/
 
   const template = pageData?.template || null
+  console.log('[locale]>Page template', template)
 
   if (!template) console.warn('Missing template for', slug)
 

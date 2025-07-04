@@ -1,6 +1,6 @@
 import type { LandingPageSchema, PortableTextBlock } from '../../types/index'
-import IngressText from '../shared/portableText/IngressText'
-import ContentGroup from '../landingPages/ContentGroup'
+import IngressText from '../../pageComponents/shared/portableText/IngressText'
+import ContentGroup from '../../pageComponents/landingPages/ContentGroup'
 import Seo from '../../pageComponents/shared/Seo'
 import { Typography } from '@/core/Typography'
 import { toPlainText } from '@portabletext/react'

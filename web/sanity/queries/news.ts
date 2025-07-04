@@ -54,7 +54,7 @@ export const newsQuery = /* groq */ `
     "template": _type,
     openGraphImage,
     ${newsFields}
-  }${querySuffixForNewsAndMagazine}
+  }[0]${querySuffixForNewsAndMagazine}
 `
 
 export const newsPromotionQuery = /* groq */ `

@@ -26,10 +26,30 @@ const variants = {
     overline: 'text-md text-slate-80 dark:text-white-100',
     body: 'text-base font-normal text-slate-80 dark:text-white-100',
   },
+  prose: {
+    body: 'text-base prose-medium:text-md',
+    paragraph: `prose-article:px-layout-lg 
+    prose-campaign:text-balance
+    prose-campaign:my-0`,
+    list: `list-disc 
+    prose-article:px-layout-lg 
+    prose-article:[&:is(ul,ol>:not(ul,ol))]:px-layout-lg
+    prose-article:[&:where(ol,ul)_:not(ol,ul)]:px-layout-lg
+    prose-article:[&:is(ul>ul,ul>ol,ol>ul,ol>ol)]:mx-0
+    prose-article:[&:where(ol,ul)_:where(ol,ul)]:mx-0
+    `,
+    h2: `text-xl
+    my-2
+    prose-medium:my-6
+    prose-article:px-layout-lg`,
+    h3: `text-lg
+    prose-medium:my-6
+    prose-article:px-layout-lg`,
+  },
 }
 export type TypographyTokens = {
   [P1 in keyof typeof variants]: {
-    [P2 in keyof typeof variants[P1]]: string
+    [P2 in keyof (typeof variants)[P1]]: string
   }
 }
 

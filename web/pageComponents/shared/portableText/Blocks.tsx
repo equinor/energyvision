@@ -14,6 +14,7 @@ import { twMerge } from 'tailwind-merge'
 import { Highlight } from '@/core/Typography/Highlight'
 import { IFrame } from '@/core/IFrame/IFrame'
 import { Footnote } from './components/Footnote'
+import { Typography } from '@/core/Typography'
 
 export type BlockType = Record<PortableTextBlockStyle, PortableTextBlockComponent | undefined>
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -21,11 +22,13 @@ export type MarkType = Record<string, PortableTextMarkComponent<any> | undefined
 export type TypesType = Record<string, PortableTextTypeComponent<any> | undefined>
 
 type TypeProps = {
+  value?: any
   children?: React.ReactNode
 }
 
 const defaultSerializers = {
   block: {
+    normal: ({ children }: TypeProps) => <Typography>{children}</Typography>,
     smallText: ({ children }: TypeProps) => <p className="text-sm">{children}</p>,
     largeText: ({ children }: TypeProps) => <p className="text-2xl leading-snug">{children}</p>,
     extraLargeText: ({ children }: TypeProps) => {
@@ -93,7 +96,10 @@ const getLineClampNormalBlock = (linesToClamp: number): any => {
   }
 }
 
+export type Variants = 'prose' | 'article' | 'medium' | 'campaign'
+
 export type BlockProps = {
+  variant?: Variants
   /**
    * Override default block serializers
    */
@@ -132,6 +138,7 @@ export type BlockProps = {
 const inlineBlockTypes = ['block', 'positionedInlineImage', 'pullQuote', 'basicIframe']
 
 export default function Blocks({
+  variant = 'prose',
   value,
   blocksComponents,
   marks: marksComponents,
@@ -158,13 +165,15 @@ export default function Blocks({
           // Otherwise, render the group of text blocks we have
           const value = div
           div = []
+          /*           const proseGroup: Partial<Record<Variants, string>> = {
+            default: 'group/prose',
+            article: 'group/article',
+            campaign: 'group/campaign',
+            medium: 'group/medium',
+          } */
 
           return (
-            <div
-              key={block._key}
-              className={twMerge(`prose ${proseClassName} ${noInvert ? '' : `dark:prose-invert`}`, className)}
-              id={id}
-            >
+            <div key={block._key} className={twMerge(``, className)} id={id} data-prose={variant}>
               <PortableText
                 value={value}
                 //@ts-ignore:todo

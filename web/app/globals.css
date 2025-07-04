@@ -1,5 +1,4 @@
 @import 'tailwindcss';
-@plugin "@tailwindcss/typography";
 @source 'video.js/dist/video-js.css';
 @source '../styles/components/videojs.css';
 @source '../styles/components/cookiebot.css';
@@ -141,6 +140,14 @@
   --spacing-innerColumn: calc(100vw - (var(--spacing-layout-lg) * 2));
   --spacing-smContainer: calc(100vw - --spacing(layout-sm) - --spacing(layout-sm));
   --spacing-menuText: calc(35 * --spacing(6));
+
+  /* PROSE - Typography to be used with blocks */
+
+  /* font size: change --prose-text to reference var(--text-md) to replace prose-md */
+  --prose-text-base: var(--text-base);
+
+  /* text color: change --prose-body to reference var(--color-.....) */
+  --prose-body: var(--color-slate-80);
 }
 
 /*
@@ -156,6 +163,33 @@ data-ui="checked active" class="data-checked:underline">
 @custom-variant data-expanded (&[data-expanded~="true"]);
 @custom-variant data-overflowing (&[data-overflowing~="true"]);
 @custom-variant aria-current (&[aria-current~="page"]);
+
+@custom-variant sticky-menu {
+  &:where([data-sticky-menu='true'] *) {
+    @slot;
+  }
+}
+
+@custom-variant prose {
+  &:where([data-prose='prose'] *) {
+    @slot;
+  }
+}
+@custom-variant prose-md {
+  &:where([data-prose='medium'] *) {
+    @slot;
+  }
+}
+@custom-variant prose-article {
+  &:where([data-prose='article'] *) {
+    @slot;
+  }
+}
+@custom-variant prose-campaign {
+  &:where([data-prose='campaign'] *) {
+    @slot;
+  }
+}
 
 /* old darkMode: ['variant', [':is(.dark &):not(.light &)']],*/
 /* @custom-variant dark (&:where(.dark, .dark *)); */
@@ -313,8 +347,7 @@ treat the value and modifier as a single value:
 
   @utility aspect-* {
   aspect-ratio: --value(--aspect-ratio- *, ratio, [ratio]);
-}
-*/
+}*/
 
 @layer base {
   p,
@@ -342,6 +375,131 @@ treat the value and modifier as a single value:
 }
 
 @layer components {
+  /*
+* PROSE:
+* .prose-article :where(p):not(:where([class~=not-prose],[class~=not-prose] *)) 
+* .prose :where(p):not(:where([class~=not-prose],[class~=not-prose] *))
+* .prose :where(.prose>:first-child):not(:where([class~=not-prose],[class~=not-prose] *))
+
+.prose :where(ol):not(:where([class~=not-prose],[class~=not-prose] *)) {
+    list-style-type: decimal;
+    margin-top: 1.25em;
+    margin-bottom: 1.25em;
+    padding-left: 1.625em
+}
+
+.prose :where(ol[type=A]):not(:where([class~=not-prose],[class~=not-prose] *)) {
+    list-style-type: upper-alpha
+}
+
+.prose :where(ol[type=a]):not(:where([class~=not-prose],[class~=not-prose] *)) {
+    list-style-type: lower-alpha
+}
+
+.prose :where(ol[type=A s]):not(:where([class~=not-prose],[class~=not-prose] *)) {
+    list-style-type: upper-alpha
+}
+
+.prose :where(ol[type=a s]):not(:where([class~=not-prose],[class~=not-prose] *)) {
+    list-style-type: lower-alpha
+}
+
+.prose :where(ol[type=I]):not(:where([class~=not-prose],[class~=not-prose] *)) {
+    list-style-type: upper-roman
+}
+
+.prose :where(ol[type=i]):not(:where([class~=not-prose],[class~=not-prose] *)) {
+    list-style-type: lower-roman
+}
+
+.prose :where(ol[type=I s]):not(:where([class~=not-prose],[class~=not-prose] *)) {
+    list-style-type: upper-roman
+}
+
+.prose :where(ol[type=i s]):not(:where([class~=not-prose],[class~=not-prose] *)) {
+    list-style-type: lower-roman
+}
+
+.prose :where(ol[type="1"]):not(:where([class~=not-prose],[class~=not-prose] *)) {
+    list-style-type: decimal
+}
+
+.prose :where(ul):not(:where([class~=not-prose],[class~=not-prose] *)) {
+    list-style-type: disc;
+    margin-top: 1.25em;
+    margin-bottom: 1.25em;
+    padding-left: 1.625em
+}
+
+.prose :where(ol>li):not(:where([class~=not-prose],[class~=not-prose] *))::marker {
+    font-weight: 400;
+    color: var(--tw-prose-counters)
+}
+
+.prose :where(ul>li):not(:where([class~=not-prose],[class~=not-prose] *))::marker {
+    color: var(--tw-prose-bullets)
+}
+
+
+.prose :where(li):not(:where([class~=not-prose],[class~=not-prose] *)) {
+    margin-top: .5em;
+    margin-bottom: .5em
+}
+
+.prose :where(ol>li):not(:where([class~=not-prose],[class~=not-prose] *)) {
+    padding-left: .375em;
+    margin-left: .5714286em
+}
+
+.prose :where(ul>li):not(:where([class~=not-prose],[class~=not-prose] *)) {
+    padding-left: .375em;
+    margin-left: .5714286em
+}
+
+.prose :where(.prose>ul>li p):not(:where([class~=not-prose],[class~=not-prose] *)) {
+    margin-top: .75em;
+    margin-bottom: .75em
+}
+
+.prose :where(.prose>ul>li>:first-child):not(:where([class~=not-prose],[class~=not-prose] *)) {
+    margin-top: 0
+}
+
+.prose :where(.prose>ul>li>:last-child):not(:where([class~=not-prose],[class~=not-prose] *)) {
+    margin-bottom: 0
+}
+
+.prose :where(.prose>ol>li>:first-child):not(:where([class~=not-prose],[class~=not-prose] *)) {
+    margin-top: 0
+}
+
+.prose :where(.prose>ol>li>:last-child):not(:where([class~=not-prose],[class~=not-prose] *)) {
+    margin-bottom: 0
+}
+
+.prose :where(ul ul,ul ol,ol ul,ol ol):not(:where([class~=not-prose],[class~=not-prose] *)) {
+    margin-top: .75em;
+    margin-bottom: .75em;
+    padding-left: 1.5833333em
+}
+    .prose :where(.prose>:first-child):not(:where([class~=not-prose],[class~=not-prose] *)) {
+    margin-top: 0
+}
+
+.prose :where(.prose>:last-child):not(:where([class~=not-prose],[class~=not-prose] *)) {
+    margin-bottom: 0
+}
+
+.prose :where(ol ol):not(:where([class~=not-prose],[class~=not-prose] *)) {
+    list-style-type: lower-alpha
+}
+
+.prose :where(ol ol ol):not(:where([class~=not-prose],[class~=not-prose] *)) {
+    list-style-type: lower-roman
+}
+
+**/
+
   .clickbound-area {
     @apply before:cursor-pointer 
     before:content-[''] 

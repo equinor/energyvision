@@ -1,11 +1,11 @@
 import { toPlainText } from '@portabletext/react'
 import useSharedTitleStyles from '../../lib/hooks/useSharedTitleStyles'
 import { HeroTypes, HomePageSchema } from '../../types/index'
-import Seo from '../shared/Seo'
-import { SharedBanner } from './shared/SharedBanner'
-import { PageContent } from './shared/SharedPageContent'
-import SharedTitle from './shared/SharedTitle'
+
 import { Breadcrumbs } from '@/core/Breadcrumbs'
+import { SharedBanner } from '@/templates/shared/SharedBanner'
+import SharedTitle from '@/templates/shared/SharedTitle'
+import { PageContent } from '@/templates/shared/SharedPageContent'
 
 type HomePageProps = {
   data: HomePageSchema

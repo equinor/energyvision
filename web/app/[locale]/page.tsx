@@ -1,6 +1,6 @@
 import { getQueryFromSlug } from '../../lib/queryFromSlug'
 import { notFound } from 'next/navigation'
-import HomePage from '../../pageComponents/pageTemplates/HomePage'
+import HomePage from '../../templates/homepage/HomePage'
 import { languages } from '@/languages'
 import { getPageData } from '@/sanity/lib/fetchData'
 
