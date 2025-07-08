@@ -42,7 +42,7 @@ export type NewsRoomPageType = {
   seoAndSome: SeoData
   title: PortableTextBlock[]
   ingress?: PortableTextBlock[]
-  subscriptionLink?: { slug: string; type: string; lang: string }
+  subscriptionLink?: LinkData
   subscriptionLinkTitle?: string
   localNewsPages?: LinkData[]
   fallbackImages?: SanityImageObject[]

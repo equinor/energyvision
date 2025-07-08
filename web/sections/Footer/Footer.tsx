@@ -1,9 +1,11 @@
 import { forwardRef } from 'react'
 import { Facebook, Instagram, Linkedin, Twitter, Youtube } from '../../icons'
-import type { FooterLinkData, SomeType, FooterColumns, LinkType } from '../../types/index'
+import type { FooterLinkData, SomeType, FooterColumns } from '../../types/index'
 import { useIntl } from 'react-intl'
 import { LinkButton } from '@core/Button'
 import FooterLink from '@core/Link/FooterLink'
+import { getLocaleFromName } from '../../lib/localization'
+import { getUrlFromAction } from '../../common/helpers'
 
 function getSomeSvg(someType: SomeType) {
   const iconMap = {
@@ -16,11 +18,6 @@ function getSomeSvg(someType: SomeType) {
 
   if (!(someType in iconMap)) console.warn('Unable to get social icon for footer: Unknown SoMe type passed')
   return iconMap[someType] || null
-}
-
-function getLink(linkData: FooterLinkData) {
-  const { link } = linkData || {}
-  return link?.slug ?? '/'
 }
 
 type FooterProps = {
@@ -36,13 +33,18 @@ const Footer = forwardRef<HTMLDivElement, FooterProps>(function Footer({ footerD
           <section className="flex flex-col max-md:py-4 max-md:w-4/5" key={header}>
             <h2 className="text-md font-medium text-white-100 px-0 py-2 leading-planetary">{header}</h2>
             <div className="grid grid-cols-2 gap-y-2 gap-x-8 items-start md:flex md:flex-col md:grid-y-0">
-              {linkList?.map((link: FooterLinkData) => {
-                const { id, type, someType, label, url } = link
-                const icon = type === 'someLink' && someType ? getSomeSvg(someType) : null
-                const linkType = type === 'someLink' ? 'externalUrl' : (link.link?.type as LinkType)
-
+              {linkList?.map((footerLink: FooterLinkData) => {
+                const { id, type, someType, label, href, link } = footerLink
+                const icon = type === 'externalUrl' && someType ? getSomeSvg(someType) : null
+                const linkLocale = getLocaleFromName(link?.lang)
                 return (
-                  <FooterLink key={id} href={url || getLink(link)} type={linkType} icon={icon}>
+                  <FooterLink
+                    locale={linkLocale}
+                    key={id}
+                    href={href || getUrlFromAction(footerLink) || '/'}
+                    type={type}
+                    icon={icon}
+                  >
                     {label}
                   </FooterLink>
                 )

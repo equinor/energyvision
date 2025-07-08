@@ -7,6 +7,7 @@ import {
 } from './common/newsSubqueries'
 import { publishDateTimeQuery, lastUpdatedTimeQuery } from './common/publishDateTime'
 import { fixPreviewForDrafts } from './common/langAndDrafts'
+import { functions } from './common/functions/functions'
 
 const localNewsFields = /* groq */ `
   "id": _id,
@@ -25,6 +26,7 @@ const localNewsFields = /* groq */ `
 `
 
 export const localNewsQuery = /* groq */ `
+ ${functions}
   *[_type == "localNews" && slug.current == $slug && ${fixPreviewForDrafts}] | order(${publishDateTimeQuery} desc) {
     _id, //used for data filtering
     "slug": slug.current,
