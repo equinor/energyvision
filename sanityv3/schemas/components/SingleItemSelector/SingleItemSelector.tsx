@@ -21,6 +21,7 @@ export const SingleItemSelectorInput = (props: SingleItemSelectorProps) => {
             const { icon: Icon } = it
             return (
               <Button
+                key={it.name}
                 selected={value && value[0]._type === it.name}
                 fontSize={[2, 2, 3]}
                 iconRight={Icon}
