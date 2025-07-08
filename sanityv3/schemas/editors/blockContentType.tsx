@@ -3,9 +3,7 @@ import type { BlockDefinition, BlockStyleDefinition } from 'sanity'
 import { EdsBlockEditorIcon, EdsIcon, IconSubScript, IconSuperScript } from '../../icons'
 import { SubScriptRenderer, SuperScriptRenderer } from '../components'
 import { defaultColors } from '../defaultColors'
-import { Rule } from 'sanity'
 import {
-  anchorReference,
   externalLink,
   homepageLink,
   internalReference,
@@ -191,6 +189,9 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockDef
       ...linkSelectorSchema,
       name: linkType + '_block',
       title: linkConfig.title,
+      initialValue: {
+        link: [{ _type: linkType, _key: 'dummyKey' }],
+      },
     }
   }
 

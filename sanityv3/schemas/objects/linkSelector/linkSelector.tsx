@@ -8,6 +8,7 @@ import {
   LinkType,
   socialMediaLink,
 } from './common'
+import { SingleItemSelectorInput } from '../../components/SingleItemSelector/SingleItemSelector'
 
 const linkSelector = (
   linkTypes: LinkType[] = ['link', 'homePageLink', 'reference', 'referenceToOtherLanguage'],
@@ -26,6 +27,13 @@ const linkSelector = (
         (it) => linkTypes.includes(it.name as LinkType),
       ),
       validation: (Rule: Rule) => Rule.length(1).required(),
+      options: {
+        sortable: false,
+        disableActions: ['add', 'addAfter', 'addBefore', 'duplicate', 'remove', 'duplicate', 'copy'],
+      },
+      components: {
+        input: SingleItemSelectorInput,
+      },
     },
     anchorReference,
     includeLabels && {

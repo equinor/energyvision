@@ -77,6 +77,7 @@ export const externalLink = {
           .custom((value: any) => {
             return warnHttpOrNotValidSlugExternal(value)
           })
+          .required()
           .error(),
     },
   ],
@@ -110,6 +111,7 @@ export const homepageLink = {
       options: {
         list: languages.map((it) => ({ title: it.title, value: it.name })),
       },
+      initialValue: defaultLanguage.name,
     },
   ],
 }
