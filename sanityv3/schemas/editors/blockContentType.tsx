@@ -190,6 +190,7 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockDef
       name: linkType + '_block',
       title: linkConfig.title,
       initialValue: {
+        value: 'dummyValue', // need this to set the _type
         link: [{ _type: linkType, _key: 'dummyKey' }],
       },
     }
