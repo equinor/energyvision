@@ -3,4 +3,5 @@ packages:
   - 'e2e'
   - 'sanityv3'
   - 'search'
-  - '!legacy'
+overrides:
+  'tar-fs': '^3.0.9'

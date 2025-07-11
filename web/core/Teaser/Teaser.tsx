@@ -3,6 +3,7 @@ import { forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 export type ImageSize = 'small' | 'full'
+export type ImagePosition = 'left' | 'right'
 
 export const Teaser = forwardRef<HTMLDivElement, BackgroundContainerProps>(function Teaser(
   { children, className, ...rest },

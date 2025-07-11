@@ -4,6 +4,7 @@ import CompactBlockEditor from '../../components/CompactBlockEditor'
 import { configureBlockContent, configureTitleBlockContent } from '../../editors'
 import { HeroTypes } from '../../HeroTypes'
 import { defaultBannerBigTitletStyle, fiftyFiftyBigTitleStyle } from './bigTitleStyles'
+import { ImageWithAltAndCaption } from '../../objects/imageWithAltAndCaption'
 
 const bigTitleRoles = ['administrator', 'developer', 'editor'] // allow editor until designer role is created.
 
@@ -196,9 +197,13 @@ const heroImage = {
   type: 'imageWithAltAndCaption',
   description: 'Caption and credit is not shown for 50-50 banner.',
   validation: (Rule: Rule) =>
-    Rule.custom((value: string, context: ValidationContext) => {
+    Rule.custom((value: ImageWithAltAndCaption, context: ValidationContext) => {
       const { parent } = context as unknown as DocumentType
-      if (parent?.heroType === HeroTypes.LOOPING_VIDEO && !value) return 'Field is required'
+      if (
+        (parent?.heroType === HeroTypes.FIFTY_FIFTY || parent?.heroType === HeroTypes.FULL_WIDTH_IMAGE) &&
+        !value.image.asset
+      )
+        return 'Field is required'
       return true
     }),
   hidden: ({ parent }: DocumentType) => {

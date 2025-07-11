@@ -224,16 +224,16 @@ jobs:
       # PRODUCTION CLUSTERS
       - name: Deploy to Radix 🚀
         id: deploy
-        uses: equinor/radix-github-actions@v1
-        with:
-          args: >
-            create job
-            deploy
-            --token-environment
-            --context platform2
-            -a equinor-web-sites
-            -e ${{ secrets.ENV }}
+        uses: equinor/radix-github-actions@v2
+
+      - run: |
+          rx create job deploy \
+            --token-environment \
+            --context platform2 \
+            -a equinor-web-sites \
+            -e ${{ secrets.ENV }} \
             -f
+        shell: bash
 
       - uses: act10ns/slack@v2
         with:
@@ -242,7 +242,7 @@ jobs:
         if: failure()
 
   store-image-tags:
-    needs: deploy-satellite-studios
+    needs: [deploy-satellite-studios, deploy-global, deploy-secret]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout internal 🛎️

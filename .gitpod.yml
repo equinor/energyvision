@@ -5,7 +5,7 @@ tasks:
   - name: Install
     init: |
       pnpm install
-      pnpm recursive install --filter ./web --filter ./legacy/css --filter ./legacy/js
+      pnpm recursive install --filter ./web
       gp sync-done install
     command: pnpm web dev
   - name: Lint

@@ -1,4 +1,3 @@
-import { BackgroundContainer } from '@core/Backgrounds'
 import { Teaser as TeaserLayout } from '@core/Teaser'
 import IngressText from '../../../pageComponents/shared/portableText/IngressText'
 import { getUrlFromAction, urlFor } from '../../../common/helpers'
