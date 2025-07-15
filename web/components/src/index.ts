@@ -1,6 +1,4 @@
 export * from './Button'
 export * from './Card'
 export * from './Text'
-export * from './Heading'
 export * from './Table'
-export * from './Form'

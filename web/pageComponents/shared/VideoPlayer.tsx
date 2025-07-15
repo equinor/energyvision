@@ -8,14 +8,16 @@ import {
   VideoDesignOptionsType,
 } from '../../types/index'
 import { BackgroundContainer } from '@core/Backgrounds'
-import { urlFor } from '../../common/helpers'
+import { getUrlFromAction, urlFor } from '../../common/helpers'
 import IngressText from './portableText/IngressText'
 import { VideoJS } from '@core/VideoJsPlayer'
 import { twMerge } from 'tailwind-merge'
 import { Heading } from '@core/Typography'
-import TranscriptAndActions from './TranscriptAndActions'
 import { PortableTextBlock } from '@portabletext/types'
 import Blocks from './portableText/Blocks'
+import Transcript from '../../sections/Transcript/Transcript'
+import { ResourceLink } from '@core/Link'
+import { getLocaleFromName } from '../../lib/localization'
 
 const DynamicVideoJsComponent = dynamic<React.ComponentProps<typeof VideoJS>>(
   () => import('@core/VideoJsPlayer').then((mod) => mod.VideoJS),
@@ -99,7 +101,7 @@ export const VideoComponentWithCaption = ({
           className="object-cover"
           src={video.url}
           title={video.title}
-          poster={urlFor(video.thumbnail).width(w).height(h).url()}
+          poster={urlFor(video.thumbnail?.asset).width(w).height(h).url()}
           playsInline
           aspectRatio={designOptions.aspectRatio}
           useBrandTheme={designOptions?.useBrandTheme}
@@ -143,7 +145,7 @@ export const VideoJsComponent = ({
         className="object-cover"
         src={video.url}
         title={video.title}
-        poster={video.thumbnail && urlFor(video.thumbnail).width(w).height(h).url()}
+        poster={video.thumbnail?.asset && urlFor(video.thumbnail).width(w).height(h).url()}
         playsInline
         aspectRatio={designOptions.aspectRatio}
         useBrandTheme={designOptions?.useBrandTheme}
@@ -157,6 +159,7 @@ export const VideoJsComponent = ({
 const VideoPlayer = ({ anchor, data, className }: { data: VideoPlayerData; anchor?: string; className?: string }) => {
   const { title, ingress, action, video, videoControls, designOptions, transcript } = data
   const { width } = designOptions
+  const actionUrl = action ? getUrlFromAction(action) : ''
 
   return (
     <BackgroundContainer
@@ -167,8 +170,20 @@ const VideoPlayer = ({ anchor, data, className }: { data: VideoPlayerData; ancho
     >
       {title && <Heading value={title} as="h2" variant="xl" className="mb-2 pb-2" />}
       {ingress && <IngressText value={ingress} className="mb-lg" />}
+      {action && action.label && actionUrl && (
+        <ResourceLink
+          href={actionUrl || ''}
+          extension={action?.extension}
+          showExtensionIcon={true}
+          variant="fit"
+          locale={action?.type === 'internalUrl' ? getLocaleFromName(action?.link?.lang) : undefined}
+          className="mt-4 mb-2"
+        >
+          {action.label}
+        </ResourceLink>
+      )}
       <VideoJsComponent video={video} designOptions={designOptions} videoControls={videoControls} />
-      <TranscriptAndActions action={action} transcript={transcript} ariaTitle={video.title} />
+      <Transcript transcript={transcript} ariaTitle={video.title} />
     </BackgroundContainer>
   )
 }

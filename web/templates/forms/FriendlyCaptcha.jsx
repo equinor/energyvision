@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { WidgetInstance } from 'friendly-challenge'
-import { friendlyCaptcha } from '../../../lib/config'
 import { useRouter } from 'next/router'
+import { friendlyCaptcha } from '../../lib/config'
 
 const FriendlyCaptcha = ({ doneCallback, errorCallback }) => {
   const puzzleEndpoint = friendlyCaptcha.puzzleEndpoint

@@ -1,20 +1,19 @@
-import TitleText from '../../shared/portableText/TitleText'
-import IngressText from '../../shared/portableText/IngressText'
 import ContactEquinorForm from './ContactEquinorForm'
 import SubscribeForm from './SubscribeForm'
 import CareerFairForm from './CareerFairForm'
 import OrderReportsForm from './OrderReportsForm'
 import CareersContactForm from './careersContactForm/CareersContactForm'
-import type { FormData } from '../../../types/index'
+import type { FormData } from '../../types/index'
 import { twMerge } from 'tailwind-merge'
 import CallToActions from '@sections/CallToActions'
 import PensionForm from './PensionForm'
-
-
+import { Heading } from '@core/Typography'
+import Blocks from '../../pageComponents/shared/portableText/Blocks'
 
 const Form = ({ data, anchor, className }: { data: FormData; anchor?: string; className?: string }) => {
   const { title, ingress, downloads } = data
   const variant = data.form
+
   const renderForm = (variant: string | undefined) => {
     switch (variant) {
       case 'subscribeForm':
@@ -32,7 +31,7 @@ const Form = ({ data, anchor, className }: { data: FormData; anchor?: string; cl
           <>
             <>
               {downloads && (
-                <div className='pb-10'>
+                <div className="pb-10">
                   {downloads.length > 0 && <CallToActions callToActions={downloads} overrideButtonStyle />}
                 </div>
               )}
@@ -45,8 +44,8 @@ const Form = ({ data, anchor, className }: { data: FormData; anchor?: string; cl
 
   return (
     <div className={twMerge(`pb-page-content px-layout-lg max-w-viewport mx-auto`, className)} id={anchor}>
-      {title && <TitleText className='px-0 pt-0 pr-6' value={title} />}
-      {ingress && <IngressText value={ingress}></IngressText>}
+      {title && <Heading as="h2" className="px-0 pt-0 pr-6" value={title} />}
+      {ingress && <Blocks value={ingress} />}
 
       {renderForm(variant)}
     </div>
