@@ -78,12 +78,12 @@ jobs:
         id: deploy
         uses: equinor/radix-github-actions@v2
 
-      - run: |
-          rx create job deploy \
-            --token-environment \
-            --context platform2 \
-            -a equinor-web-sites \
-            -e ${{ secrets.ENV }} \
+      - run: >
+          rx create job deploy 
+            --token-environment 
+            --context platform2 
+            -a equinor-web-sites 
+            -e ${{ secrets.ENV }} 
             -f
         shell: bash
 
