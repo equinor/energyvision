@@ -1,4 +1,4 @@
-import { ContentAlignmentTypes, FigureRatio, DesignOptions, LinkData } from './index'
+import { ContentAlignmentTypes, DesignOptions, LinkData } from './index'
 import { SanityImageCrop, SanityImageHotspot, SanityImageObject } from '@sanity/image-url/lib/types/types'
 import { PortableTextBlock } from '@portabletext/types'
 
@@ -32,23 +32,6 @@ export type ImageBackground = {
   contentAlignment?: ContentAlignmentTypes
 }
 
-export type FullWidthImageData = {
-  type: string
-  id: string
-  image: ImageWithCaptionData
-  designOptions: DesignOptions & {
-    aspectRatio: number
-  }
-}
-
-export type FigureData = {
-  type: string
-  id: string
-  figure: ImageWithCaptionData
-  designOptions: DesignOptions & {
-    aspectRatio?: FigureRatio
-  }
-}
 export type ImageWithLinkOrOverlay = {
   id: string
   type: 'imageWithLinkOrOverlay'
