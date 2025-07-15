@@ -2,27 +2,9 @@ import { Box, Card, Flex, Stack, Tooltip, Text } from '@sanity/ui'
 import { useCallback, useId } from 'react'
 import { set } from 'sanity'
 import type { ObjectInputProps } from 'sanity'
-import styled from 'styled-components'
 import { themeColors, getColorForTheme } from './themeColors'
 import { EdsIcon } from '../../../icons'
 import { text_field } from '@equinor/eds-icons'
-
-const Circle = styled.div<{ active: boolean }>`
-  display: inline-block;
-  border: solid 2px ${({ active }) => (active ? 'var(--card-focus-ring-color)' : 'transparent')};
-  border-radius: 50%;
-  padding: 4px;
-  cursor: pointer;
-`
-
-const InnerCircle = styled.div<{ color: string; fillColor?: string }>`
-  display: flex;
-  background-color: ${({ color }) => color};
-  border: 1px solid var(--card-hairline-soft-color);
-  padding: 15px;
-  border-radius: 50%;
-  color: ${({ fillColor }) => fillColor || 'black'};
-`
 
 export type ThemeSelectorValue = {
   title: string
@@ -51,11 +33,38 @@ const ColorCircle = ({ color, active, onClickHandler }: ColorCircleProps) => {
         placement="top"
         portal
       >
-        <Circle active={active} onClick={() => onClickHandler(color)}>
-          <InnerCircle color={background.value} fillColor={highlight.value}>
+        <Box
+          as="span"
+          style={{
+            display: 'inline-block',
+            border: `2px solid ${active ? 'var(--card-focus-ring-color)' : 'transparent'}`,
+            borderRadius: '50%',
+            width: 68,
+            height: 68,
+            padding: 4,
+            cursor: 'pointer',
+            boxSizing: 'border-box',
+            verticalAlign: 'middle',
+          }}
+          onClick={() => onClickHandler(color)}
+        >
+          <Box
+            as="span"
+            style={{
+              backgroundColor: background.value,
+              border: '1px solid var(--card-hairline-soft-color)',
+              borderRadius: '50%',
+              padding: 15,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              margin: 'auto',
+              color: highlight.value,
+            }}
+          >
             <EdsIcon {...text_field} />
-          </InnerCircle>
-        </Circle>
+          </Box>
+        </Box>
       </Tooltip>
     </Card>
   )
