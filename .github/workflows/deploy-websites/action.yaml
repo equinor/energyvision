@@ -117,14 +117,13 @@ runs:
       id: deploy-c2
       uses: equinor/radix-github-actions@v2
 
-    - run: |
-        rx create job deploy \
-          --token-environment \
-          --component $COMPONENT_NAME \
-          --context platform2 \
-          -a equinor-web-sites \
-          -e ${{ inputs.environment }} \
-          -f
+    - run: rx create piprline-job deploy
+        --token-environment
+        --component $COMPONENT_NAME
+        --context platform2
+        -a equinor-web-sites
+        -e ${{ inputs.environment }}
+        -f
       shell: bash
 
     - name: log-errors-to-slack 📄
