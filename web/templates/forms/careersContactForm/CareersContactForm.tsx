@@ -258,7 +258,7 @@ const CareersContactForm = () => {
                 validate: {
                   require: (value) => {
                     if (!value && setPositionIdMandatory) {
-                      console.log('not validated required field')
+                      console.log('Not validated required field')
                       return intl.formatMessage({
                         id: 'careers_contact_form_positionId_validation',
                         defaultMessage: 'Please enter a position ID or name ',
