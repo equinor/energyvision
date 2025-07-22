@@ -116,9 +116,10 @@ runs:
     - name: Deploy to Radix c2 🚀
       id: deploy-c2
       uses: equinor/radix-github-actions@v2
+      with:
+        azure_client_id: 460b889f-89e0-4cc9-965c-31f3e7770226
 
-    - run: rx create piprline-job deploy
-        --token-environment
+    - run: rx create pipeline-job deploy
         --component $COMPONENT_NAME
         --context platform2
         -a equinor-web-sites
