@@ -12,6 +12,7 @@ import { Flags } from '../../../src/lib/datasetHelpers'
 
 import routes from '../../routes'
 import { filterByRoute } from '../../../helpers/referenceFilters'
+import singleItemArray from '../singleItemArray'
 
 const promotionLengthValidation = (context: Promotion): true | ValidationError => {
   const { promotion } = context
@@ -98,21 +99,23 @@ export default {
       type: 'array',
       of: [ingressContentType],
     },
-    {
-      type: 'array',
-      name: 'promotion',
-      description: 'Select what type of content you want to promote',
-      title: 'Type of promotion',
-      of: [
-        Flags.HAS_NEWS && { type: 'promoteNews', title: 'Promote news' },
-        { type: 'promoteTopics', title: 'Promote topic' },
-        { type: 'promotePeople', title: 'Promote people' },
-        Flags.HAS_EVENT && { type: 'promoteEvents', title: 'Promote events' },
-        Flags.HAS_MAGAZINE && { type: 'promoteMagazine', title: 'Promote magazine' },
-      ].filter((e) => e),
-      options: { sortable: false },
-      validation: (Rule: Rule) => Rule.required().min(1).max(1),
-    },
+    singleItemArray(
+      {
+        type: 'array',
+        name: 'promotion',
+        description: 'Select what type of content you want to promote',
+        title: 'Type of promotion',
+        of: [
+          Flags.HAS_NEWS && { type: 'promoteNews', title: 'Promote news' },
+          { type: 'promoteTopics', title: 'Promote topic' },
+          { type: 'promotePeople', title: 'Promote people' },
+          Flags.HAS_EVENT && { type: 'promoteEvents', title: 'Promote events' },
+          Flags.HAS_MAGAZINE && { type: 'promoteMagazine', title: 'Promote magazine' },
+        ].filter((e) => e),
+        options: { sortable: false },
+      },
+      true,
+    ),
     {
       name: 'viewAllLink',
       title: 'View all internal link',

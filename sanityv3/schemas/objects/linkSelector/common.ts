@@ -81,6 +81,16 @@ export const externalLink = {
           .error(),
     },
   ],
+  preview: {
+    select: {
+      href: 'href',
+    },
+    prepare({ href }: { href: string }) {
+      return {
+        title: href || 'Add external link',
+      }
+    },
+  },
 }
 
 export const internalReference = {
@@ -114,6 +124,18 @@ export const homepageLink = {
       initialValue: defaultLanguage.name,
     },
   ],
+  preview: {
+    select: {
+      title: 'homePageLanguage',
+    },
+    prepare({ title }: { title: string }) {
+      return {
+        title: title
+          ? `Linking to ${languages.find((it) => it.name == title)?.title} home page`
+          : 'Select language of the home page',
+      }
+    },
+  },
 }
 
 export const internalReferenceOtherLanguage = {

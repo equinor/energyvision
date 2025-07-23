@@ -3,6 +3,7 @@ import { configureBlockContent, configureTitleBlockContent } from '../editors'
 import { PortableTextBlock, Rule } from 'sanity'
 import { NumberIcon } from '@sanity/icons'
 import blocksToText from '../../helpers/blocksToText'
+import singleItemArray from './singleItemArray'
 
 const titleContentType = configureTitleBlockContent()
 const ingressContentType = configureBlockContent({
@@ -25,11 +26,6 @@ export default {
   title: 'Key Numbers',
   type: 'object',
   fieldsets: [
-    {
-      name: 'link',
-      title: 'Link',
-      description: 'Select either an internal link or external URL.',
-    },
     {
       name: 'design',
       title: 'Design options',
@@ -83,19 +79,17 @@ export default {
       },
       of: [disclaimerContentType],
     },
-    {
+    singleItemArray({
       name: 'action',
       title: 'Link/action',
       description: 'Select the link or downloadable file for the teaser',
-      fieldset: 'link',
       type: 'array',
       of: [
         { type: 'linkSelector', title: 'Link' },
         { type: 'downloadableImage', title: 'Downloadable image' },
         { type: 'downloadableFile', title: 'Downloadable file' },
       ],
-      validation: (Rule: Rule) => Rule.max(1).error('Only one action is permitted'),
-    },
+    }),
     {
       title: 'Background',
       description: 'Pick a colour for the background. Default is white.',

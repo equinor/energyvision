@@ -3,6 +3,7 @@ import blocksToText from '../../../../helpers/blocksToText'
 import { PortableTextBlock, Rule } from 'sanity'
 import { EdsIcon } from '../../../../icons'
 import { table_chart } from '@equinor/eds-icons'
+import singleItemArray from '../../singleItemArray'
 
 export type Span2And1 = {
   _type: 'span2and1'
@@ -13,7 +14,7 @@ export default {
   name: 'span2and1',
   type: 'object',
   fields: [
-    {
+    singleItemArray({
       name: 'span2',
       title: 'The span 2 content',
       type: 'array',
@@ -23,15 +24,14 @@ export default {
         { type: 'iframe' },
         { type: 'figure' },
       ],
-      validation: (Rule: Rule) => Rule.max(1).error('Only one is permitted'),
-    },
+    }),
     {
       title: 'Align Span 2 on the right',
       name: 'alignSpan2Right',
       description: 'Will align the span 2 on the right side. If not selected on the left',
       type: 'boolean',
     },
-    {
+    singleItemArray({
       name: 'singleColumn',
       title: 'The single column content',
       type: 'array',
@@ -40,8 +40,7 @@ export default {
         { type: 'figure' },
         { type: 'gridTeaser' },
       ],
-      validation: (Rule: Rule) => Rule.max(1).error('Only one is permitted'),
-    },
+    }),
   ],
   preview: {
     select: {

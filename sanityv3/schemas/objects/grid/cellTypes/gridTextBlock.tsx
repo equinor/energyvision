@@ -17,6 +17,7 @@ import { configureThemedTitleBlockContent } from '../../../editors/themedTitleEd
 import { capitalizeFirstLetter } from '../../../../helpers/formatters'
 import { RadioIconSelector } from '../../../components'
 import { fromLargerTextThemeColors, fromNormalTextThemeColors } from '../../textTeaser'
+import singleItemArray from '../../singleItemArray'
 
 const blockContentType = configureBlockContent({
   smallText: true,
@@ -112,7 +113,7 @@ export default {
       type: 'array',
       of: [blockContentType],
     },
-    {
+    singleItemArray({
       name: 'action',
       title: 'Link/action',
       description: 'Select the link or downloadable file',
@@ -122,8 +123,7 @@ export default {
         { type: 'downloadableImage', title: 'Downloadable image' },
         { type: 'downloadableFile', title: 'Downloadable file' },
       ],
-      validation: (Rule: Rule) => Rule.max(1).error('Only one action is permitted'),
-    },
+    }),
     {
       name: 'contentTheme',
       title: 'Content theme',
