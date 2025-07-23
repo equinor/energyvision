@@ -58,7 +58,8 @@ jobs:
       - name: Deploy to Radix 🚀
         id: deploy-main
         uses: equinor/radix-github-actions@v2
-
+        with:
+          azure_client_id: 460b889f-89e0-4cc9-965c-31f3e7770226
       - run: rx create job deploy
           --context platform2
           -a equinor-web-sites
