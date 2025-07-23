@@ -117,9 +117,6 @@ runs:
       run: |
         echo "${{ inputs.githubToken }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
         docker push ${{ inputs.imageName }} --all-tags
-    - name: Get token 🔑
-      id: get-token
-      uses: ./.github/workflows/get-auth-token/
     - name: Get component name
       id: get-component-name
       shell: bash
@@ -127,20 +124,18 @@ runs:
         component=${{ inputs.datasetName == 'global-development' && 'studiov3-global-development'|| 'global-test' && 'studiov3-global-test' || format('{0}{1}', 'studio-', inputs.datasetName) }}
         echo "Component name is $component"
         echo "COMPONENT_NAME=$component" >> $GITHUB_ENV
-
       # MAIN CLUSTER
     - name: Deploy to Radix c2 🚀
       id: deploy-c2
       uses: equinor/radix-github-actions@v2
-
-    - run: |
-        rx create job deploy \
-          --token-environment \
-          --context platform2 \
-          --component $COMPONENT_NAME \
-          -a equinor-web-sites \
-          -e ${{ inputs.environment }} \
-          -f
+      with:
+        azure_client_id: 460b889f-89e0-4cc9-965c-31f3e7770226
+    - run: rx create job deploy
+        --context platform2
+        --component $COMPONENT_NAME
+        -a equinor-web-sites
+        -e ${{ inputs.environment }}
+        -f
       shell: bash
     - name: log-errors-to-slack 📄
       uses: act10ns/slack@v2

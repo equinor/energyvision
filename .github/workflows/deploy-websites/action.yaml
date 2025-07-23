@@ -101,7 +101,6 @@ runs:
       run: |
         echo "${{ inputs.githubToken }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
         docker push ghcr.io/equinor/energyvision/web-${{ inputs.datasetName  }} --all-tags
-
     - name: Get component name
       id: get-component-name
       shell: bash
