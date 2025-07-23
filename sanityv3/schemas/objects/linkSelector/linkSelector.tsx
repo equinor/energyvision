@@ -8,33 +8,30 @@ import {
   LinkType,
   socialMediaLink,
 } from './common'
-import { SingleItemSelectorInput } from '../../components/SingleItemSelector/SingleItemSelector'
+import singleItemArray from '../singleItemArray'
 
-const linkSelector = (
-  linkTypes: LinkType[] = ['link', 'homePageLink', 'reference', 'referenceToOtherLanguage'],
-  hidden?: (arg0: any) => boolean,
-  includeLabels = true,
-) => ({
+const defaultLinks = ['link', 'reference', 'referenceToOtherLanguage', 'homePageLink'] as LinkType[]
+const linkSelector = (linkTypes?: LinkType[], hidden?: (arg0: any) => boolean, includeLabels = true) => ({
   name: 'linkSelector',
   title: 'Link',
   type: 'object',
   hidden: hidden,
   fields: [
-    {
-      name: 'link',
-      type: 'array',
-      of: [internalReference, internalReferenceOtherLanguage, homepageLink, externalLink, socialMediaLink].filter(
-        (it) => linkTypes.includes(it.name as LinkType),
-      ),
-      validation: (Rule: Rule) => Rule.length(1).required(),
-      options: {
-        sortable: false,
-        disableActions: ['add', 'addAfter', 'addBefore', 'duplicate', 'remove', 'duplicate', 'copy'],
+    singleItemArray(
+      {
+        name: 'link',
+        type: 'array',
+        of: [externalLink, internalReference, internalReferenceOtherLanguage, homepageLink, socialMediaLink].filter(
+          (it) => {
+            const types = linkTypes
+              ? linkTypes.includes(it.name as LinkType)
+              : defaultLinks.includes(it.name as LinkType)
+            return types
+          },
+        ),
       },
-      components: {
-        input: SingleItemSelectorInput,
-      },
-    },
+      true,
+    ),
     anchorReference,
     includeLabels && {
       name: 'label',
