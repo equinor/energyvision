@@ -55,21 +55,15 @@ jobs:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
 
-      - name: Get token 🔑
-        id: get-token
-        uses: ./.github/workflows/get-auth-token/
-
       - name: Deploy to Radix 🚀
         id: deploy-main
         uses: equinor/radix-github-actions@v2
 
-      - run: |
-          rx create job deploy \
-            --token-environment \
-            --context platform2 \
-            -a equinor-web-sites \
-            -e ${{ secrets.ENV }} \
-            -f
+      - run: rx create job deploy
+          --context platform2
+          -a equinor-web-sites
+          -e ${{ secrets.ENV }}
+          -f
         shell: bash
 
       - uses: act10ns/slack@v2
@@ -158,6 +152,87 @@ jobs:
           status: ${{ job.status }}
           steps: ${{ toJson(steps) }}
         if: failure()
+  deploy-secret:
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      SANITY_STUDIO_API_PROJECT_ID: w3b4om14
+      SANITY_STUDIO_MUTATION_TOKEN: ${{ secrets.SANITY_STUDIO_SECRET_MUTATION_TOKEN }}
+      SANITY_STUDIO_PREVIEW_SECRET: ${{ secrets.SANITY_STUDIO_SECRET_PREVIEW_SECRET }}
+      SANITY_STUDIO_BRANDMASTER_URL: ${{ secrets.SANITY_STUDIO_BRANDMASTER_URL }}
+      SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE: ${{ secrets.SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE }}
+      SANITY_STUDIO_API_DATASET: secret
+      SANITY_STUDIO_FOTOWARE_CLIENT_ID: ${{ secrets.SANITY_STUDIO_FOTOWARE_CLIENT_ID }}
+      SANITY_STUDIO_FOTOWARE_TENANT_URL: ${{ secrets.SANITY_STUDIO_FOTOWARE_TENANT_URL }}
+      SANITY_STUDIO_FOTOWARE_REDIRECT_ORIGIN: ${{ secrets.SANITY_STUDIO_FOTOWARE_REDIRECT_ORIGIN }}
+      SANITY_STUDIO_FOTOWARE_AF_EXPORT_URL: ${{ secrets.SANITY_STUDIO_FOTOWARE_AF_EXPORT_URL }}
+      SANITY_STUDIO_FOTOWARE_AF_EXPORT_KEY: ${{ secrets.SANITY_STUDIO_FOTOWARE_AF_EXPORT_KEY }}
+      SANITY_STUDIO_SCREEN9_ACCOUNT_ID: ${{ secrets.SANITY_STUDIO_SCREEN9_ACCOUNT_ID }}
+      SANITY_STUDIO_SCREEN9_TOKEN: ${{ secrets.SANITY_STUDIO_SCREEN9_TOKEN }}
+      DOCKER_BUILDKIT: 1
+    steps:
+      - name: Checkout internal 🛎️
+        id: checkout-internal
+        uses: actions/checkout@v3
+        with:
+          repository: 'equinor/energyvision-internal'
+          ref: main
+          token: ${{ secrets.PADMS_PAT }}
+      - name: Get preprod sha 🏷️
+        id: get-preprod-sha
+        shell: bash
+        run: |
+          # Install pre-requisite
+          python -m pip install --user ruamel.yaml
+          echo "sha=$(python ci/returnGlobalStudioVersion.py preprod)" >> $GITHUB_OUTPUT
+      - name: Checkout 🛎️
+        id: checkout-main
+        uses: actions/checkout@v3
+        with:
+          repository: 'equinor/energyvision'
+          fetch-depth: 0
+          # ref: '${{ steps.get-preprod-sha.outputs.sha }}'
+      - name: Get long sha ️🏷️
+        id: get-long-sha
+        shell: bash
+        run: |
+          echo "sha=$(git rev-parse ${{ steps.get-preprod-sha.outputs.sha }})" >> $GITHUB_OUTPUT
+      - name: Checkout 🛎️
+        id: checkout-specific-branch
+        uses: actions/checkout@v3
+        with:
+          repository: 'equinor/energyvision'
+          fetch-depth: 0
+          ref: '${{ steps.get-long-sha.outputs.sha }}'
+      - name: Install pnpm 📦
+        id: install-pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: '8.5.1'
+      - name: Cache pnpm modules 💾
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'pnpm'
+      - name: Install dependencies 🔧
+        id: install-dependencies
+        run: |
+          pnpm install
+          pnpm sanityv3 install
+      - name: Deploy 🚀
+        id: deploy
+        working-directory: ./sanityv3
+        run: |
+          pnpm run deploy
+        env:
+          SANITY_AUTH_TOKEN: ${{ secrets.SANITY_SECRET_DEPLOY }}
+      - uses: act10ns/slack@v2
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()
 
   deploy-satellite-studios:
     needs: deploy-studios
@@ -171,20 +246,14 @@ jobs:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
 
-      - name: Get token 🔑
-        id: get-token
-        uses: ./.github/workflows/get-auth-token/
-
       - name: Deploy to Radix 🚀
         id: deploy
         uses: equinor/radix-github-actions@v2
-      - run: |
-          rx create job deploy 
-            --token-environment
-            --context platform2
-            -a equinor-web-sites
-            -e ${{ secrets.ENV }}
-            -f
+      - run: rx create job deploy
+          --context platform2
+          -a equinor-web-sites
+          -e ${{ secrets.ENV }}
+          -f
 
       - uses: act10ns/slack@v2
         with:
