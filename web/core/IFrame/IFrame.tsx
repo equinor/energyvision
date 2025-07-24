@@ -64,6 +64,7 @@ export const IFrame = forwardRef<HTMLDivElement, IFrameProps>(function IFrame(
   const titleId = useId()
   const descriptionId = useId()
   const labelledById = title ? titleId : labelledBy
+  const isEventTemplate = typeof window !== 'undefined' && window.location.pathname.includes('/event')
 
   useConsentState(
     cookiePolicy,
@@ -136,7 +137,9 @@ export const IFrame = forwardRef<HTMLDivElement, IFrameProps>(function IFrame(
       {consented ? (
         iframeElement
       ) : (
-        <RequestConsentContainer hasSectionTitle={hasSectionTitle} cookiePolicy={cookiePolicy} />
+        <div className={isEventTemplate ? 'px-layout-lg' : ''}>
+          <RequestConsentContainer hasSectionTitle={hasSectionTitle} cookiePolicy={cookiePolicy} />
+        </div>
       )}
     </>
   )
