@@ -1,5 +1,6 @@
-import { ThemeSelector, themeColors } from '../components/ThemeSelector'
+import { ThemeSelector } from '../components/ThemeSelector'
 import { defineType, defineField } from 'sanity'
+import { getColorForThemeTextTeaser, textTeaserThemeColors } from './textTeaser'
 
 export default defineType({
   name: 'themeList',
@@ -16,12 +17,19 @@ export default defineType({
     }),
   ],
   initialValue: {
-    title: themeColors[0].title,
-    value: themeColors[0].value,
+    title: textTeaserThemeColors[0].title,
+    value: textTeaserThemeColors[0].value,
   },
   components: {
     input: (props) => {
-      return <ThemeSelector {...props} />
+      return (
+        <ThemeSelector
+          variant="circles"
+          themeColors={textTeaserThemeColors}
+          getColorForThemeHandler={getColorForThemeTextTeaser}
+          {...props}
+        />
+      )
     },
   },
 })

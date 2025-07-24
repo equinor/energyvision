@@ -19,17 +19,17 @@ export default {
     },
     {
       name: 'aspectRatio',
-      type: 'number',
+      type: 'string',
       title: 'Aspect ratio',
       options: {
         list: [
-          { title: '10:3', value: 0.3 },
-          { title: '2:1', value: 0.5 },
+          { title: '16:9', value: '16:9' },
+          { title: '10:3', value: '10:3' },
+          { title: '2:1', value: '2:1' },
         ],
         layout: 'dropdown',
       },
-      initialValue: 0.3,
-      validation: (Rule: Rule) => Rule.required(),
+      initialValue: '16:9',
     },
   ],
   preview: {
