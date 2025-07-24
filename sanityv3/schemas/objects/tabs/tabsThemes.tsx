@@ -1,8 +1,7 @@
-import { Card, Flex, Stack, Text } from '@sanity/ui'
+import { Card, Flex, Stack, Text, Box } from '@sanity/ui'
 import { useCallback, useId } from 'react'
 import { set } from 'sanity'
 import type { ObjectInputProps } from 'sanity'
-import styled from 'styled-components'
 import { defaultColors } from '../../defaultColors'
 
 export const tabsThemes = [
@@ -51,29 +50,6 @@ export const getColorForTabTheme = (pattern: number) => {
   }
 }
 
-const Container = styled.div<{ active?: boolean; color: string; $preview?: any; $isThumbnail?: any }>`
-  width: ${({ $isThumbnail }) => ($isThumbnail ? '2.0625rem' : 'fit-content')};
-  height: ${({ $isThumbnail }) => ($isThumbnail ? '2.0625rem' : 'fit-content')};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: ${({ $isThumbnail }) => ($isThumbnail ? '2px' : '4px')};
-  background-color: ${({ color }) => color};
-  outline: solid 2px ${({ $preview, active }) => (active && !$preview ? 'var(--card-focus-ring-color)' : 'transparent')};
-  outline-offset: 2px;
-  border-radius: 5%;
-  padding: ${({ $isThumbnail }) => ($isThumbnail ? '0px' : '6px 12px')};
-  cursor: ${({ $isThumbnail }) => ($isThumbnail ? 'default' : 'pointer')};
-`
-
-const TabThemeCard = styled.div<{ color: string; $isThumbnail?: any }>`
-  display: flex;
-  width: fit-content;
-  background-color: ${({ color }) => color};
-  padding: ${({ $isThumbnail }) => ($isThumbnail ? '0.25em' : '15px')};
-  border-radius: 5%;
-`
-
 export type TabsThemeSelectorValue = {
   title: string
   value: number
@@ -97,18 +73,47 @@ export const TabTheme = ({ color, active, onClickHandler, preview, thumbnail }: 
       gap={thumbnail ? 2 : 4}
       padding={0}
     >
-      <Container
-        active={active}
+      <Box
+        as="span"
+        style={{
+          width: thumbnail ? '2.0625rem' : 'fit-content',
+          height: thumbnail ? '2.0625rem' : 'fit-content',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: thumbnail ? 2 : 4,
+          backgroundColor: background.value,
+          outline: active && !preview ? '2px solid var(--card-focus-ring-color)' : '2px solid transparent',
+          outlineOffset: 2,
+          borderRadius: '5%',
+          padding: thumbnail ? 0 : '6px 12px',
+          cursor: thumbnail ? 'default' : 'pointer',
+        }}
         {...(onClickHandler && {
           onClick: () => onClickHandler(color),
         })}
-        color={background.value}
-        $isThumbnail={!!thumbnail}
-        $preview={!!preview}
       >
-        <TabThemeCard $isThumbnail={!!thumbnail} color={card.value} />
-        <TabThemeCard $isThumbnail={!!thumbnail} color={card.value} />
-      </Container>
+        <Box
+          as="span"
+          style={{
+            display: 'flex',
+            width: 'fit-content',
+            backgroundColor: card.value,
+            padding: thumbnail ? '0.25em' : 15,
+            borderRadius: '5%',
+          }}
+        />
+        <Box
+          as="span"
+          style={{
+            display: 'flex',
+            width: 'fit-content',
+            backgroundColor: card.value,
+            padding: thumbnail ? '0.25em' : 15,
+            borderRadius: '5%',
+          }}
+        />
+      </Box>
       {!thumbnail && (
         <Text muted size={1}>
           {color.title}
