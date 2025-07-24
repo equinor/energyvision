@@ -86,6 +86,7 @@ export const magazineIndexQuery = /* groq */ `
 }`
 
 export const allMagazineDocuments = /* groq */ `
+${functions}
 *[_type == "magazine" && ${sameLang} && ${noDrafts} ] | order(${publishDateTimeQuery} desc){
     "id": _id,
     "slug": slug.current,
@@ -106,6 +107,7 @@ const nextDirectionFilter = /* groq */ `
 `
 
 export const getMagazineArticlesByTag = (hasFirstId = false, hasLastId = false) => /* groq */ `
+${functions}
 {
  "tagsParam": *[_type == 'magazineTag'
                 && !(_id in path('drafts.**'))
