@@ -3,6 +3,7 @@ import { heroFields } from './common/heroFields'
 import { seoAndSomeFields } from './common/seoAndSomeFields'
 import { breadcrumbsQuery } from './common/breadcrumbs'
 import { stickyMenu } from './common/stickyMenu'
+import { functions } from './common/functions'
 
 const allSlugsQuery = /* groq */ `
     "currentSlug": {
@@ -16,6 +17,7 @@ const allSlugsQuery = /* groq */ `
   }`
 
 export const homePageQuery = /* groq */ `
+   ${functions}
   fn ex::content($docRef)=$docRef{
     "_id": _ref, //used for data filtering
     "slug": "/",

@@ -2,6 +2,7 @@ import { text_field } from '@equinor/eds-icons'
 import { defineField, type PortableTextBlock, type Rule } from 'sanity'
 import { EdsIcon } from '../../../icons'
 import { capitalizeFirstLetter } from '../../../helpers/formatters'
+import singleItemArray from '../singleItemArray'
 
 export type TabsItem = {
   _type: 'tabsItem'
@@ -24,7 +25,7 @@ export default {
       type: 'object',
       name: 'tabPanel',
       fields: [
-        defineField({
+        singleItemArray({
           type: 'array',
           name: 'panel',
           description: 'Add tab panel. Select the same panel type for all tab items',
@@ -37,7 +38,6 @@ export default {
             },
           ].filter((e) => e),
           options: { sortable: false },
-          validation: (Rule: Rule) => Rule.max(1).error('Only one panel needed'),
         }),
       ],
     },

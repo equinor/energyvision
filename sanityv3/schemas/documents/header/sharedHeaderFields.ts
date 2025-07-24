@@ -1,10 +1,11 @@
-import { PortableTextBlock, Rule, ValidationContext, CurrentUser } from 'sanity'
+import { PortableTextBlock, Rule, ValidationContext, CurrentUser, ConditionalPropertyCallbackContext } from 'sanity'
 import blocksToText from '../../../helpers/blocksToText'
 import CompactBlockEditor from '../../components/CompactBlockEditor'
 import { configureBlockContent, configureTitleBlockContent } from '../../editors'
 import { HeroTypes } from '../../HeroTypes'
 import { defaultBannerBigTitletStyle, fiftyFiftyBigTitleStyle } from './bigTitleStyles'
 import { ImageWithAltAndCaption } from '../../objects/imageWithAltAndCaption'
+import singleItemArray from '../../objects/singleItemArray'
 
 const bigTitleRoles = ['administrator', 'developer', 'editor'] // allow editor until designer role is created.
 
@@ -165,20 +166,18 @@ const heroIngress = {
   fieldset: 'header',
 }
 
-const heroLink = {
+const heroLink = singleItemArray({
   name: 'heroLink',
   title: 'Link',
   description: 'Select link to display',
   type: 'array',
   of: [{ type: 'linkSelector', title: 'Link' }],
-  hidden: ({ parent }: DocumentType) => {
+  hidden: ({ parent }: ConditionalPropertyCallbackContext) => {
     return (
       parent?.heroType !== HeroTypes.FIFTY_FIFTY || (parent?.heroType === HeroTypes.FIFTY_FIFTY && parent.isBigTitle)
     )
   },
-  fieldset: 'header',
-  validation: (Rule: Rule) => Rule.max(1).error('Only one action is permitted'),
-}
+})
 
 const background = {
   title: 'Hero Background',

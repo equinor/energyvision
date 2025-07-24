@@ -12,6 +12,7 @@ import type { ColorSelectorValue } from '../../../components/ColorSelector'
 import { LeftAlignedImage, RightAlignedImage } from '../../../../icons'
 import { RadioIconSelector } from '../../../components'
 import { fromLargerTextThemeColors, fromNormalTextThemeColors } from '../../../components/ThemeSelector'
+import singleItemArray from '../../singleItemArray'
 
 const blockContentType = configureBlockContent({
   smallText: true,
@@ -117,7 +118,7 @@ export default {
       description: 'Optional title for the author.',
       hidden: ({ parent }: GridTeaserDocument) => parent.useExtendedThemes,
     },
-    {
+    singleItemArray({
       name: 'action',
       title: 'Link/action',
       description: 'Select the link or downloadable file for the teaser',
@@ -127,8 +128,7 @@ export default {
         { type: 'downloadableImage', title: 'Downloadable image' },
         { type: 'downloadableFile', title: 'Downloadable file' },
       ],
-      validation: (Rule: Rule) => Rule.max(1).error('Only one action is permitted'),
-    },
+    }),
     {
       name: 'image',
       title: 'Image',

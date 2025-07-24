@@ -34,7 +34,15 @@ export default {
       },
     },
   ],
-  fields: [lang, seo, openGraphImage, ...sharedHeroFields, isCampaign, stickyMenu, content].filter((e) => e),
+  fields: [
+    lang,
+    seo,
+    openGraphImage,
+    ...sharedHeroFields.map((it) => ({ fieldset: 'header', ...it })),
+    isCampaign,
+    stickyMenu,
+    content,
+  ].filter((e) => e),
   orderings: [
     {
       title: 'Title ',
