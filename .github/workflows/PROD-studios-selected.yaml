@@ -69,22 +69,18 @@ jobs:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
 
-      - name: Get token 🔑
-        id: get-token
-        uses: ./.github/workflows/get-auth-token/
-
       # PRODUCTION CLUSTERS
       - name: Deploy to Radix 🚀
         id: deploy
         uses: equinor/radix-github-actions@v2
-
-      - run: |
-          rx create job deploy \
-            --token-environment \
-            --context platform2 \
-            -a equinor-web-sites \
-            -e ${{ secrets.ENV }} \
-            -f
+        with:
+          azure_client_id: 460b889f-89e0-4cc9-965c-31f3e7770226
+          version: latest
+      - run: rx create job deploy
+          --context platform2
+          -a equinor-web-sites
+          -e ${{ secrets.ENV }}
+          -f
         shell: bash
 
       - uses: act10ns/slack@v2
