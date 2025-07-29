@@ -53,6 +53,7 @@ export const magazineQuery = /* groq */ `
           ${pageContentFields}
       },
       ${slugsForNewsAndMagazine},
+    "firstPublishedAt": coalesce(firstPublishedAt, _createdAt),
     "footerComponent": *[_type == 'magazineIndex' && ${sameLang} && ${noDrafts}][0]{
       "data": footerComponent{
         ${footerComponentFields}
