@@ -1,4 +1,3 @@
-import { BackgroundContainer } from '@core/Backgrounds'
 import { Teaser as TeaserLayout } from '@core/Teaser'
 import IngressText from '../../../pageComponents/shared/portableText/IngressText'
 import { getUrlFromAction, urlFor } from '../../../common/helpers'
@@ -81,15 +80,14 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
         )}
         {actions && (
           <div className="flex flex-col gap-8">
-            {actions?.map((action) => {
+            {actions?.map((action, idx) => {
               const url = action && getUrlFromAction(action)
-
               return (
                 <ResourceLink
                   href={url as string}
                   {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
                   type={action.type}
-                  key={action.id}
+                  key={action.id || idx}
                   variant="fit"
                   extension={action.extension}
                   showExtensionIcon
