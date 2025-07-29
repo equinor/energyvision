@@ -38,9 +38,12 @@ const CircularProgress = forwardRef<SVGSVGElement, CircularProgressProps>(functi
     ...rest,
     ref,
   }
+
+  const radius = (48 - thickness) / 2
+  const circumference = 2 * Math.PI * radius
+
   const [internalDuration, setInternalDuration] = useState<number | null>(duration)
   const [srProgress, setSrProgress] = useState(type === 'timer' ? duration : 0)
-  const circumference = 2 * Math.PI * ((48 - thickness) / 2)
 
   if (variant === 'determinate' && type === 'progress') {
     if (type === 'progress') {
@@ -52,11 +55,11 @@ const CircularProgress = forwardRef<SVGSVGElement, CircularProgressProps>(functi
         props['aria-valuemax'] = 100
       }
     } else {
-      props['aria-valuenow'] = progress
-      if (value !== undefined) {
+    props['aria-valuenow'] = progress
+    if (value !== undefined) {
         props['aria-valuenow'] = progress
-        props['aria-valuemin'] = 0
-        props['aria-valuemax'] = 100
+      props['aria-valuemin'] = 0
+      props['aria-valuemax'] = 100
       }
     }
   }
@@ -95,21 +98,25 @@ const CircularProgress = forwardRef<SVGSVGElement, CircularProgressProps>(functi
     return `${intl.formatMessage({ id: 'loading', defaultMessage: 'Loading' })} ${srProgress}%`
   }
 
+  const progressStyle: CSSProperties =
+    variant === 'determinate'
+      ? {
+          strokeDasharray: `${circumference}px`,
+          strokeDashoffset:
+            type === 'progress'
+              ? `${(((100 - progress) / 100) * circumference).toFixed(3)}px`
+              : internalDuration && duration
+              ? (circumference - (((duration - internalDuration) * (100 / duration)) / 100) * circumference).toFixed(
+                  3,
+                ) + 'px'
+              : '0px',
+          transition: 'stroke-dashoffset 0.5s ease-in-out',
+        }
+      : {}
+
   const trackStyle: CSSProperties = {
-    ...(variant === 'determinate' && {
-      stroke: circumference.toFixed(3),
-      strokeDashoffset:
-        type === 'progress'
-          ? `${(((100 - progress) / 100) * circumference).toFixed(3)}px`
-          : `${
-              internalDuration && duration
-                ? (circumference - (((duration - internalDuration) * (100 / duration)) / 100) * circumference).toFixed(
-                    3,
-                  )
-                : 0
-            }px`,
-      transition: 'stroke-dashoffset 0.5s ease-in-out',
-    }),
+    strokeDasharray: `${circumference}px`,
+    strokeDashoffset: '0px',
   }
 
   return (
@@ -123,27 +130,25 @@ const CircularProgress = forwardRef<SVGSVGElement, CircularProgressProps>(functi
         preserveAspectRatio="xMidYMid meet"
         className={envisTwMerge(`${variant === 'indeterminate' ? 'animate-spin-slow' : ''}`, className)}
       >
-        {/* Track */}
         <circle
           style={trackStyle}
           cx={48}
           cy={48}
-          r={(48 - thickness) / 2}
+          r={radius}
           fill="none"
           strokeWidth={thickness}
           stroke="currentColor"
           className={envisTwMerge('stroke-grey-30', trackClassName)}
         />
-        {/* Progress */}
         <circle
-          style={trackStyle}
+          style={progressStyle}
           cx={48}
           cy={48}
-          r={(48 - thickness) / 2}
+          r={radius}
           fill="none"
           strokeLinecap="round"
           strokeWidth={thickness}
-          strokeDasharray={variant === 'determinate' ? circumference : 48}
+          stroke="currentColor"
           className={envisTwMerge('stroke-grey-60', progressClassName)}
           opacity={paused ? 0 : 1}
         />
