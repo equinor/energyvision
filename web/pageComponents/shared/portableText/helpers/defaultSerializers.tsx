@@ -1,4 +1,3 @@
-import { Text } from '@components'
 import { Highlight } from '@core/Typography/Highlight'
 import { Sub, Sup, ExternalLink, InternalLink, BulletList, NumberedList } from '../components'
 import {
@@ -34,8 +33,8 @@ const block: BlockType = {
       {children}
     </Typography>
   ),
-  normal: ({ children }: Props) => <Text>{children}</Text>,
-  smallText: ({ children }: Props) => <Text size="small">{children}</Text>,
+  normal: ({ children }: Props) => <Typography>{children}</Typography>,
+  smallText: ({ children }: Props) => <Typography variant='sm'>{children}</Typography>,
 }
 
 const marks: MarkType = {
