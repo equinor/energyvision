@@ -18,7 +18,7 @@ export const Play = forwardRef<SVGSVGElement, PlayProps>(function Play({ size = 
       height={size}
       viewBox={`0 0 24 24`}
       fill="currentColor"
-      aria-hidden
+      aria-label="Play icon"
       className={className}
       {...rest}
     >
