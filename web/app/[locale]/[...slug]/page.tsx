@@ -5,9 +5,9 @@ import { getPageData } from '@/sanity/lib/fetchData'
 
 const MagazinePage = dynamic(() => import('@/templates/magazine/MagazinePage'))
 const LandingPage = dynamic(() => import('@/templates/landingpage/LandingPage'))
-const EventPage = dynamic(() => import('@/pageComponents/pageTemplates/Event'))
+const EventPage = dynamic(() => import('@/templates/event/Event'))
 const NewsPage = dynamic(() => import('@/templates/news/News'))
-const TopicPage = dynamic(() => import('@/pageComponents/pageTemplates/TopicPage'))
+const TopicPage = dynamic(() => import('@/templates/topic/TopicPage'))
 
 type Params = Promise<{ slug: string | string[]; locale: string }>
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>
@@ -23,6 +23,7 @@ type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>
 } */
 
 export default async function Page(props: { params: Params; searchParams: SearchParams }) {
+  console.log('LOCALE > [..slug] > page')
   const params = await props.params
   const searchParams = await props.searchParams
   const { locale, slug: s } = params

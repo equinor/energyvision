@@ -25,6 +25,7 @@ export type HeaderProps = {
 
 const HeadTags = ({ slugs }: { slugs: AllSlugsType }) => {
   //const router = useRouter()
+  console.log('slugs', slugs)
   const locale = useLocale()
   const pathname = usePathname()
   const localization = {
@@ -99,7 +100,7 @@ const Header = ({ slugs, menuData, stickyMenuData }: HeaderProps) => {
         <div
           className={`grid ${
             columns == 3 ? 'grid-cols-[repeat(3,auto)]' : columns == 2 ? 'grid-cols-[repeat(2,auto)]' : 'grid-cols-1'
-          } gap-x-4 items-center sm:gap-x-61`}
+          } items-center gap-x-4 sm:gap-x-61`}
         >
           {hasSearch && (
             <div>
@@ -108,7 +109,7 @@ const Header = ({ slugs, menuData, stickyMenuData }: HeaderProps) => {
                 aria-expanded="false"
                 aria-label={searchLabel}
                 href="/search"
-                className="w-full p-2 md:px-5 md:py-3 clickbound-area"
+                className="clickbound-area w-full p-2 md:px-5 md:py-3"
               >
                 <Icon size={24} data={search} />
                 <span className="max-md:sr-only">{t('search')}</span>

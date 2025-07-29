@@ -32,6 +32,7 @@ type ArticleProps = {
 }
 
 const NewsPage = ({ data: news }: ArticleProps) => {
+  console.log('NEWSPAGE', news)
   const slug = news?.slug
 
   const pathname = usePathname()
@@ -56,7 +57,6 @@ const NewsPage = ({ data: news }: ArticleProps) => {
 
   const modifiedDate = isDateAfter(publishDateTime, updatedAt) ? publishDateTime : updatedAt
   const openGraphImages = getOpenGraphImages((openGraphImage?.asset ? openGraphImage : null) || heroImage?.image)
-  /*   appInsights.trackPageView({ name: slug, uri: fullUrl }) */
 
   const formattedContent = content.map((block) => ({
     ...block,
@@ -97,15 +97,15 @@ const NewsPage = ({ data: news }: ArticleProps) => {
       />
       <main>
         <article className="pb-28">
-          <div className={'bg-slate-blue-95 py-news-banner-vertical px-layout-md dark'}>
-            <div className="max-w-[1186px] mx-auto">
+          <div className={'dark bg-slate-blue-95 px-layout-md py-news-banner-vertical'}>
+            <div className="mx-auto max-w-[1186px]">
               <Typography id="mainTitle" variant="3xl" as="h1" className="m-0">
                 {title}
               </Typography>
               {publishDateTime && (
-                <div className="my-12 grid grid-cols-[min-content_1fr] gap-4 ">
+                <div className="my-12 grid grid-cols-[min-content_1fr] gap-4">
                   <Icon data={calendar} className="text-white-100" />
-                  <div className="text-white-100 wrap-break-word text-base leading-planetary">
+                  <div className="text-base leading-planetary wrap-break-word text-white-100">
                     <FormattedDateTime uppercase datetime={publishDateTime} showTimezone />
                     {
                       // publishDateTime + 5 minutes
@@ -114,7 +114,7 @@ const NewsPage = ({ data: news }: ArticleProps) => {
                         new Date(new Date(publishDateTime).getTime() + 5 * 60000).toISOString(),
                       ) && (
                         <>
-                          <span className='uppercase my-0 mx-4 after:content-[":"] before:content-["|"] before:mr-4  '>
+                          <span className='mx-4 my-0 uppercase before:mr-4 before:content-["|"] after:content-[":"]'>
                             Last modified
                           </span>
                           <FormattedDateTime uppercase datetime={modifiedDate} />
@@ -127,12 +127,12 @@ const NewsPage = ({ data: news }: ArticleProps) => {
             </div>
           </div>
           {heroImage.image.asset && (
-            <div className="py-0 px-layout-sm max-w-viewport mx-auto -mt-news-banner-vertical">
+            <div className="mx-auto -mt-news-banner-vertical max-w-viewport px-layout-sm py-0">
               <DefaulHeroImage className="m-0" data={heroImage} />
             </div>
           )}
           {ingress && ingress.length > 0 && (
-            <div className="py-0 px-layout-lg mt-10 mb-16 max-w-viewport mx-auto">
+            <div className="mx-auto mt-10 mb-16 max-w-viewport px-layout-lg py-0">
               <IngressText value={ingress} includeFootnotes />
             </div>
           )}
@@ -141,16 +141,16 @@ const NewsPage = ({ data: news }: ArticleProps) => {
             <Blocks
               value={formattedContent}
               proseClassName="prose-article"
-              className="p-0 max-w-viewport mx-auto"
+              className="mx-auto max-w-viewport p-0"
               includeFootnotes
             />
           )}
-          <div className="mt-8 mb-2 px-layout-lg max-w-viewport mx-auto">
+          <div className="mx-auto mt-8 mb-2 max-w-viewport px-layout-lg">
             <Footnotes blocks={[...ingress, ...content]} />
           </div>
 
           {iframe && (
-            <section className="px-layout-lg max-w-viewport mx-auto">
+            <section className="mx-auto max-w-viewport px-layout-lg">
               <IFrame
                 //@ts-ignore:TODO type match for portabletext
                 title={iframe?.title}
@@ -165,15 +165,7 @@ const NewsPage = ({ data: news }: ArticleProps) => {
           )}
 
           {relatedLinks?.links && relatedLinks.links.length > 0 && (
-            <RelatedContent
-              data={relatedLinks}
-              className={twMerge(`
-             px-layout-lg
-             max-w-viewport
-             my-3xl
-             mx-auto
-             `)}
-            />
+            <RelatedContent data={relatedLinks} className={twMerge(`my-3xl mx-auto max-w-viewport px-layout-lg`)} />
           )}
           {latestNews && latestNews.length > 0 && <LatestNews data={latestNews} />}
         </article>

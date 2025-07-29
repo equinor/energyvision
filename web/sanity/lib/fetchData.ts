@@ -13,6 +13,7 @@ export const getPageData = async (page: { query: string; queryParams: QueryParam
     query: page.query,
     params: { ...page.queryParams },
   })
+  console.log('pageResults.data', pageResults.data)
 
   return { pageData: pageResults.data }
 }

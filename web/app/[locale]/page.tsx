@@ -30,6 +30,7 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
 }*/
 
 export default async function Page({ params }: any) {
+  console.log('LOCALE>PAGE')
   const { locale } = await params
   if (!languages.map((it) => it.locale).includes(locale)) notFound()
 

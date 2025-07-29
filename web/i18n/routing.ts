@@ -8,10 +8,12 @@ export const routing = defineRouting({
   localeDetection: false,
   // Used when no locale matches
   defaultLocale: 'en',
-  pathnames: {
+  /** Opt-out as using CMS to manage pathnames */
+  alternateLinks: false,
+  /*   pathnames: {
     '/': '/',
     '/news': {
       no: '/nyheter',
     },
-  },
+  }, */
 })

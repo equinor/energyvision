@@ -1,21 +1,7 @@
-import Teaser from '../../../sections/teasers/Teaser/Teaser'
-import TextBlock from '../../../sections/TextBlock/TextBlock'
-import FullWidthImage from '../../topicPages/FullWidthImage'
-import FullWidthVideo from '../../topicPages/FullWidthVideo'
-import Figure from '../../topicPages/Figure'
-import PageQuote from '../../topicPages/PageQuote'
-import PromoTileArray from '../../../sections/PromoTiles/PromoTileArray'
-import Promotion from '../../../sections/Promotion/Promotion'
-import Table from '../../topicPages/Table'
-import NewsList from '../../topicPages/NewsList'
-import StockValues from '../../topicPages/StockValues'
-import CookieDeclaration from '../../topicPages/CookieDeclaration'
-import TwitterEmbed from '../../topicPages/TwitterEmbed'
 import IframeCarousel from '@/sections/IframeCarousel/IframeCarousel'
-import VideoPlayer from '../../shared/VideoPlayer'
 import TextTeaser from '@/sections/teasers/TextTeaser/TextTeaser'
-import KeyNumbers from '../../../sections/KeyNumber/KeyNumber'
-import CardsList from '../../../sections/cards/CardsList/CardsList'
+import KeyNumbers from '@/sections/KeyNumber/KeyNumber'
+import CardsList from '@/sections/cards/CardsList/CardsList'
 import {
   AnchorLinkData,
   TopicPageSchema,
@@ -50,7 +36,7 @@ import {
   DesignOptions,
   AnchorLinkListData,
   ImageForTextData,
-} from '../../../types/index'
+} from '@/types'
 import { getColorForTheme } from '@/sections/teasers/TextTeaser/theme'
 import Grid from '@/sections/Grid/Grid'
 import { CampaignBanner } from '@/sections/CampaignBanner'
@@ -63,9 +49,22 @@ import TextWithIconArray from '@/sections/TextWithIconArray/TextWithIconArray'
 import AccordionBlock from '@/sections/AccordionBlock/AccordionBlock'
 import TabsBlock, { TabsBlockProps } from '@/sections/TabsBlock/TabsBlock'
 import { getColorForTabsTheme } from '@/sections/TabsBlock/tabThemes'
-import { ColorKeyTokens, colorKeyToUtilityMap } from '../../../styles/colorKeyToUtilityMap'
+import { ColorKeyTokens, colorKeyToUtilityMap } from '@/styles/colorKeyToUtilityMap'
 import Form from '@/templates/forms/Form'
-import IFrameBlock from '../../../sections/IFrameBlock/IFrameBlock'
+import IFrameBlock from '@/sections/IFrameBlock/IFrameBlock'
+import Teaser from '@/sections/teasers/Teaser/Teaser'
+import TextBlock from '@/sections/TextBlock/TextBlock'
+import FullWidthImage from '@/pageComponents/topicPages/FullWidthImage'
+import FullWidthVideo from '@/pageComponents/topicPages/FullWidthVideo'
+import Figure from '@/pageComponents/topicPages/Figure'
+import PageQuote from '@/pageComponents/topicPages/PageQuote'
+import PromoTileArray from '@/sections/PromoTiles/PromoTileArray'
+import Promotion from '@/sections/Promotion/Promotion'
+import CookieDeclaration from '@/pageComponents/topicPages/CookieDeclaration'
+import NewsList from '@/pageComponents/topicPages/NewsList'
+import StockValues from '@/pageComponents/topicPages/StockValues'
+import TwitterEmbed from '@/pageComponents/topicPages/TwitterEmbed'
+import VideoPlayer from '@/pageComponents/shared/VideoPlayer'
 
 type DefaultComponent = {
   id?: string

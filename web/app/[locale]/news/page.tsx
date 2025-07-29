@@ -20,7 +20,7 @@ type NewsRoomPageProps = {
   response: SearchResponse
 }
 
-/* const getInitialResponse = unstable_cache(
+const getInitialResponse = unstable_cache(
   async (locale: string) => {
     console.log('Querying algolia')
     const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
@@ -38,10 +38,12 @@ type NewsRoomPageProps = {
   },
   ['news'],
   { revalidate: 3600, tags: ['news'] },
-) */
+)
 
 export default async function NewsPage({ params }: any) {
   const { locale } = await params
+
+  console.log('LOCALE > NEWS > PAGE > params', params)
 
   // For the time being, let's just give 404 for satellites
   // We will also return 404 if the locale is not English.
@@ -49,12 +51,12 @@ export default async function NewsPage({ params }: any) {
   // See https://github.com/vercel/next.js/discussions/18485
   // Only build when newsroom allowed, satellites has english
 
-  // Enable static rendering
-  setRequestLocale(locale)
-
   if (!Flags.HAS_NEWSROOM) {
     notFound()
   }
+
+  // Enable static rendering
+  setRequestLocale(locale)
 
   const lang = getNameFromLocale(locale)
   const isoLocale = getIsoFromLocale(locale)
@@ -67,14 +69,9 @@ export default async function NewsPage({ params }: any) {
     query: newsroomQuery,
     queryParams,
   })
+  console.log('pagedata for news>page', pageData)
 
-  /*   const response = await getInitialResponse(isoLocale) */
-  const slugs = [
-    { slug: '/news', lang: 'en_GB' },
-    { slug: '/no/nyheter', lang: 'nb_NO' },
-  ]
-  return <div>Newsroom</div>
-  {
-    /* <NewsRoomTemplate locale={locale} pageData={pageData as NewsRoomPageType} initialSearchResponse={response} /> */
-  }
+  const response = await getInitialResponse(isoLocale)
+
+  return <NewsRoomTemplate locale={locale} pageData={pageData as NewsRoomPageType} initialSearchResponse={response} />
 }

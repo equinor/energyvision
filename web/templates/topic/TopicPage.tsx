@@ -1,11 +1,10 @@
 import { toPlainText } from '@portabletext/react'
 import useSharedTitleStyles from '../../lib/hooks/useSharedTitleStyles'
 import { HeroTypes, TopicPageSchema } from '../../types/index'
-import Seo from '../shared/Seo'
-import { SharedBanner } from './shared/SharedBanner'
-import { PageContent } from './shared/SharedPageContent'
-import SharedTitle from './shared/SharedTitle'
 import { Breadcrumbs } from '@/core/Breadcrumbs'
+import { SharedBanner } from '../shared/SharedBanner'
+import SharedTitle from '../shared/SharedTitle'
+import { PageContent } from '../shared/SharedPageContent'
 
 type TopicPageProps = {
   data: TopicPageSchema
