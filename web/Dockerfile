@@ -12,10 +12,10 @@ WORKDIR /app
 
 # Copy only dependency files for better cache
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-COPY web/package.json web/pnpm-lock.yaml web/
+COPY web/package.json web/
 COPY web/patches web/patches
 
-RUN if [ -f pnpm-lock.yaml ]; then pnpm m i --frozen-lockfile; \
+RUN if [ -f pnpm-lock.yaml ]; then pnpm install --frozen-lockfile; \
   else echo "Lockfile not found." && exit 1; fi
 
 # Copy the rest of the source code and build
