@@ -11,12 +11,12 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
 # Copy only dependency files for better cache
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-COPY web/package.json web/
+COPY package.json pnpm-workspace.yaml ./
+COPY web/package.json web/pnpm-lock.yaml web/
 COPY web/patches web/patches
 
-RUN if [ -f pnpm-lock.yaml ]; then pnpm install --frozen-lockfile; \
-  else echo "Lockfile not found." && exit 1; fi
+# Install only web workspace deps for better caching
+RUN pnpm install --filter web... --frozen-lockfile
 
 # Copy the rest of the source code and build
 FROM base AS builder
