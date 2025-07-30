@@ -1,4 +1,4 @@
-import { ArrayDefinition, ArrayFieldProps, FieldDefinition, ObjectDefinition } from 'sanity'
+import { ArrayDefinition, Rule } from 'sanity'
 import { SingleItemSelectorInput } from '../components/SingleItemSelector/SingleItemSelector'
 
 const singleItemArray = (it: ArrayDefinition, required = false) => {
@@ -6,7 +6,7 @@ const singleItemArray = (it: ArrayDefinition, required = false) => {
 
   const config = {
     ...it,
-    validation: (Rule) => (required ? Rule.length(1).required() : Rule.length(1)),
+    validation: (Rule: Rule) => (required ? Rule.length(1).required() : Rule.length(1)),
     components: {
       input: SingleItemSelectorInput,
     },
