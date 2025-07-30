@@ -20,6 +20,8 @@ WORKDIR /app/web
 COPY --from=deps /app/web/node_modules ./node_modules
 COPY web .
 
+COPY satellitesConfig.js /app/satellitesConfig.js
+
 ARG ARG_SANITY_DATASET
 ARG ARG_SANITY_API_TOKEN
 ARG ARG_SANITY_PROJECT_ID
