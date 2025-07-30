@@ -3,26 +3,29 @@ ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 ENV NODE_OPTIONS="--max_old_space_size=8192"
 RUN corepack enable && corepack prepare pnpm@8.5.1 --activate
+WORKDIR /app
 
-# Install dependencies only for web
+# Install dependencies only when needed
 FROM base AS deps
 RUN apk add --no-cache libc6-compat
+WORKDIR /app
 
-WORKDIR /app/web
-COPY web/package.json web/pnpm-lock.yaml ./
-COPY web/patches ./patches
-RUN if [ -f pnpm-lock.yaml ]; then pnpm install --frozen-lockfile; \
-  else echo "Lockfile not found." && exit 1; fi
+COPY package.json pnpm-lock.yaml ./
+COPY web/package.json web/pnpm-lock.yaml web/
+COPY web/patches web/patches
 
-# Build the app
+# Install only web workspace deps for better caching
+RUN \
+  if [ -f pnpm-lock.yaml ]; then pnpm m i --frozen-lockfile;\
+  else echo "Lockfile not found." && exit 1; \
+  fi
+  
+# Copy the rest of the source code and build
 FROM base AS builder
-WORKDIR /app/web
-COPY --from=deps /app/web/node_modules ./node_modules
-COPY web .
-
-COPY package.json /app/package.json
-COPY satellitesConfig.js /app/satellitesConfig.js
-COPY tsconfig.base.json /app/tsconfig.base.json
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY --from=deps /app/web/node_modules ./web/node_modules
+COPY . .
 
 ARG ARG_SANITY_DATASET
 ARG ARG_SANITY_API_TOKEN
@@ -43,11 +46,11 @@ ENV NEXT_PUBLIC_FRIENDLY_CAPTCHA_SITEKEY=${ARG_FRIENDLY_CAPTCHA_SITEKEY}
 ENV NEXT_PUBLIC_FRIENDLY_CAPTCHA_PUZZLE_ENDPOINT=${ARG_FRIENDLY_CAPTCHA_PUZZLE_ENDPOINT}
 ENV NEXT_TELEMETRY_DISABLED=1
 
-RUN pnpm build
+RUN pnpm web build
 
 # Production image, copy only what is needed and run next
 FROM node:18-alpine AS runner
-WORKDIR /app/web
+WORKDIR /app
 
 ENV NODE_ENV=production
 
