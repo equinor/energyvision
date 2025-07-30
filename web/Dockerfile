@@ -22,6 +22,7 @@ COPY web .
 
 COPY package.json /app/package.json
 COPY satellitesConfig.js /app/satellitesConfig.js
+COPY tsconfig.base.json /app/tsconfig.base.json
 
 ARG ARG_SANITY_DATASET
 ARG ARG_SANITY_API_TOKEN
