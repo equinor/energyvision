@@ -10,8 +10,7 @@ FROM base AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-# Copy only dependency files for better cache
-COPY package.json pnpm-workspace.yaml ./
+COPY package.json pnpm-lock.yaml ./
 COPY web/package.json web/pnpm-lock.yaml web/
 COPY web/patches web/patches
 
