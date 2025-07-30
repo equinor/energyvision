@@ -8,17 +8,14 @@ WORKDIR /app
 # Install dependencies only when needed
 FROM base AS deps
 RUN apk add --no-cache libc6-compat
-WORKDIR /app
 
 COPY package.json pnpm-lock.yaml ./
 COPY web/package.json web/pnpm-lock.yaml web/
 COPY web/patches web/patches
 
 # Install only web workspace deps for better caching
-RUN \
-  if [ -f pnpm-lock.yaml ]; then pnpm m i --frozen-lockfile;\
-  else echo "Lockfile not found." && exit 1; \
-  fi
+RUN if [ -f pnpm-lock.yaml ]; then pnpm install --filter web... --frozen-lockfile; \
+  else echo "Lockfile not found." && exit 1; fi
   
 # Copy the rest of the source code and build
 FROM base AS builder
