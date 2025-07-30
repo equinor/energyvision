@@ -16,8 +16,11 @@ COPY web/package.json web/pnpm-lock.yaml web/
 COPY web/patches web/patches
 
 # Install only web workspace deps for better caching
-RUN pnpm install --filter web... --frozen-lockfile
-
+RUN \
+  if [ -f pnpm-lock.yaml ]; then pnpm m i --frozen-lockfile;\
+  else echo "Lockfile not found." && exit 1; \
+  fi
+  
 # Copy the rest of the source code and build
 FROM base AS builder
 WORKDIR /app
