@@ -7,19 +7,18 @@ WORKDIR /app
 
 # Install dependencies only when needed
 FROM base AS deps
-# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-COPY package.json pnpm-lock.yaml ./
+# Copy only dependency files for better cache
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY web/package.json web/pnpm-lock.yaml web/
 COPY web/patches web/patches
 
-RUN \
-  if [ -f pnpm-lock.yaml ]; then pnpm m i --frozen-lockfile;\
-  else echo "Lockfile not found." && exit 1; \
-  fi
+RUN if [ -f pnpm-lock.yaml ]; then pnpm m i --frozen-lockfile; \
+  else echo "Lockfile not found." && exit 1; fi
 
+# Copy the rest of the source code and build
 FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
@@ -47,8 +46,8 @@ ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN pnpm web build
 
-# Production image, copy all the files and run next
-FROM base AS runner
+# Production image, copy only what is needed and run next
+FROM node:18-alpine AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
@@ -87,4 +86,3 @@ EXPOSE 3000
 
 ENTRYPOINT ["/sbin/tini", "--"]
 CMD ["node", "server.js"]
-
