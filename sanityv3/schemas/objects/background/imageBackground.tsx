@@ -27,6 +27,7 @@ export default defineType({
         hotspot: true,
         collapsed: false,
       },
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       title: 'Apply scroll animation',
