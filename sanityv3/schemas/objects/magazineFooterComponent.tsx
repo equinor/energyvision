@@ -10,7 +10,8 @@ import type { ColorSelectorValue } from '../components/ColorSelector'
 import type { DownloadableImage } from './downloadableImage'
 import type { DownloadableFile } from './files'
 import type { ImageWithAlt } from './imageWithAlt'
-import type { LinkSelector } from './linkSelector'
+import type { LinkSelector } from './linkSelector/linkSelector'
+import singleItemArray from './singleItemArray'
 
 const titleContentType = configureTitleBlockContent()
 
@@ -74,7 +75,7 @@ export default {
       validation: (Rule: Rule) =>
         Rule.custom((value: PortableTextBlock[]) => validateCharCounterEditor(value, 600)).warning(),
     },
-    {
+    singleItemArray({
       name: 'action',
       title: 'Link/action',
       description: 'Select the link or downloadable file for the teaser',
@@ -84,8 +85,7 @@ export default {
         { type: 'downloadableImage', title: 'Downloadable image' },
         { type: 'downloadableFile', title: 'Downloadable file' },
       ],
-      validation: (Rule: Rule) => Rule.max(1).error('Only one action is permitted'),
-    },
+    }),
     {
       name: 'image',
       title: 'Image',

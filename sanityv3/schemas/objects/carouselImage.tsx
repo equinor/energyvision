@@ -4,6 +4,7 @@ import { defineField, Rule } from 'sanity'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import { configureBlockContent, configureTitleBlockContent } from '../editors'
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
+import singleItemArray from './singleItemArray'
 
 const blockConfig = {
   h2: false,
@@ -60,14 +61,13 @@ export default {
           return validateCharCounterEditor(value, 600)
         }).error(),
     },
-    {
+    singleItemArray({
       name: 'action',
       title: 'CTA Link',
       type: 'array',
       of: [{ type: 'linkSelector', title: 'Link' }],
       description: 'Optional link associated with the image.',
-      validation: (Rule: Rule) => Rule.max(1).error('Only one action is permitted'),
-    },
+    }),
   ],
   preview: {
     select: {
