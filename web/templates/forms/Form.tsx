@@ -8,7 +8,7 @@ import { twMerge } from 'tailwind-merge'
 import CallToActions from '@/sections/CallToActions'
 import PensionForm from './PensionForm'
 import { Heading } from '@/core/Typography'
-import Blocks from '../../pageComponents/shared/portableText/Blocks'
+import Blocks from '../../portableText/Blocks'
 
 const Form = ({ data, anchor, className }: { data: FormData; anchor?: string; className?: string }) => {
   const { title, ingress, downloads } = data
@@ -43,7 +43,7 @@ const Form = ({ data, anchor, className }: { data: FormData; anchor?: string; cl
   }
 
   return (
-    <div className={twMerge(`pb-page-content px-layout-lg max-w-viewport mx-auto`, className)} id={anchor}>
+    <div className={twMerge(`mx-auto max-w-viewport px-layout-lg pb-page-content`, className)} id={anchor}>
       {title && <Heading as="h2" className="px-0 pt-0 pr-6" value={title} />}
       {ingress && <Blocks value={ingress} />}
 

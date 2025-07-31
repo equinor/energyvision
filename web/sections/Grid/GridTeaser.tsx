@@ -6,9 +6,9 @@ import { GridTeaserData } from '../../types/index'
 import { urlFor } from '../../common/helpers'
 import { RowType } from './mapGridContent'
 import GridLinkArrow from './GridLinkArrow'
-import Blocks from '../../pageComponents/shared/portableText/Blocks'
+import Blocks from '../../portableText/Blocks'
 import { PortableTextBlock } from '@portabletext/types'
-import isEmpty from '../../pageComponents/shared/portableText/helpers/isEmpty'
+import isEmpty from '../../portableText/helpers/isEmpty'
 import { PortableTextReactComponents } from '@portabletext/react'
 import { getColorForTheme } from '@/sections/teasers/TextTeaser/theme'
 
@@ -59,14 +59,9 @@ export const GridTeaser = forwardRef<HTMLDivElement, GridTeaserProps>(function G
   return (
     <div
       ref={ref}
-      className={twMerge(`
-      h-full
-      grid
-      grid-rows-2
-      lg:grid-rows-[250px_1fr]
-      ${String(rowType) === 'span3' ? 'lg:grid-cols-[40%_60%] lg:grid-rows-1' : ''}
-      ${bgColor}
-      `)}
+      className={twMerge(
+        `grid h-full grid-rows-2 lg:grid-rows-[250px_1fr] ${String(rowType) === 'span3' ? 'lg:grid-cols-[40%_60%] lg:grid-rows-1' : ''} ${bgColor} `,
+      )}
     >
       {image && (
         <div className="relative">
@@ -83,14 +78,14 @@ export const GridTeaser = forwardRef<HTMLDivElement, GridTeaserProps>(function G
 
       <div className={`relative h-full ${contentTextColor}`}>
         <div
-          className={`h-full px-6 flex flex-col justify-center items-center gap-6 py-6 ${
+          className={`flex h-full flex-col items-center justify-center gap-6 px-6 py-6 ${
             rowType !== 'span3' ? 'lg:py-8' : 'lg:py-12'
           } `}
         >
           {(content || (useExtendedThemes && themedContent)) && (
             <Blocks
               value={(useExtendedThemes ? themedContent : content) as PortableTextBlock[]}
-              proseClassName="prose-campaign"
+              variant="prose-campaign"
               className={`text-md ${contentTextColor}`}
               {...(useExtendedThemes && {
                 blocksComponents: {
@@ -107,7 +102,7 @@ export const GridTeaser = forwardRef<HTMLDivElement, GridTeaserProps>(function G
             />
           )}
           {quote && (
-            <figure className="px-1 flex flex-col">
+            <figure className="flex flex-col px-1">
               <div className="h-full">
                 <svg
                   fill="currentColor"
@@ -120,10 +115,10 @@ export const GridTeaser = forwardRef<HTMLDivElement, GridTeaserProps>(function G
                   <title>Quote symbol</title>
                   <path d="M24.3178 27.4196C24.3178 20.9682 29.485 14.2193 37.5942 12.7059L40.9409 15.5294C38.0002 16.5773 33.3736 20.0696 33.0856 22.5845C36.3927 23.0764 38.9218 25.7807 38.9218 29.046C38.9218 33.0391 35.4912 35.2941 32.0195 35.2941C28.0166 35.2941 24.3178 32.4016 24.3178 27.4196ZM7.05859 27.4196C7.05859 20.9682 12.2257 14.2193 20.3349 12.7059L23.3221 15.5294C20.3814 16.5773 16.1144 20.0696 15.8263 22.5845C19.1334 23.0764 21.6626 25.7807 21.6626 29.046C21.6626 33.0391 18.232 35.2941 14.7602 35.2941C10.7574 35.2941 7.05859 32.4016 7.05859 27.4196Z" />
                 </svg>
-                {quote && <p className="text-md leading-normal text-ellipsis line-clamp-4">{quote}</p>}
+                {quote && <p className="line-clamp-4 text-md leading-normal text-ellipsis">{quote}</p>}
               </div>
-              <figcaption className="pt-6 w-full flex justify-end">
-                <div className="w-fit flex flex-col items-start">
+              <figcaption className="flex w-full justify-end pt-6">
+                <div className="flex w-fit flex-col items-start">
                   {author && <strong className="text-base">{author}</strong>}
                   {authorTitle && <div className="text-sm">{authorTitle}</div>}
                 </div>

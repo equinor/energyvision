@@ -7,7 +7,7 @@ import { BackgroundContainer } from '@/core/Backgrounds'
 import Teaser from '../../sections/teasers/Teaser/Teaser'
 import SharedTitle from '../../pageComponents/pageTemplates/shared/SharedTitle'
 import { SharedBanner } from '../../pageComponents/pageTemplates/shared/SharedBanner'
-import Blocks from '../../pageComponents/shared/portableText/Blocks'
+import Blocks from '../../portableText/Blocks'
 import MagazineTagBar from '@/sections/MagazineTags/MagazineTagBar'
 import { useRouter } from 'next/router'
 import { ImageBackgroundContainer } from '@/core/Backgrounds/ImageBackgroundContainer'
@@ -93,13 +93,13 @@ const MagazineRoom = ({ pageData, slug }: MagazineIndexTemplateProps) => {
                 scrimClassName="py-40 lg:py-44 black-blue-center-gradient"
                 aspectRatio={Ratios.NINE_TO_SIXTEEN}
               >
-                <div className="px-layout-lg mx-auto max-w-viewport max-lg:py-11">
+                <div className="mx-auto max-w-viewport px-layout-lg max-lg:py-11">
                   <Heading value={title} id="mainTitle" variant="h1" className="text-pretty" />
                   <div className="pt-6">{ingress && <Blocks value={ingress.content} />}</div>
                 </div>
               </ImageBackgroundContainer>
             ) : (
-              <div className="px-layout-lg mx-auto max-w-viewport max-lg:py-11">
+              <div className="mx-auto max-w-viewport px-layout-lg max-lg:py-11">
                 <Heading value={title} id="mainTitle" variant="h1" className="text-pretty" />
                 <div className="pt-6">{ingress && <Blocks value={ingress.content} />}</div>
               </div>
@@ -108,21 +108,7 @@ const MagazineRoom = ({ pageData, slug }: MagazineIndexTemplateProps) => {
         )}
         {magazineTags && <MagazineTagBar tags={magazineTags} href={parentSlug} onClick={handleClickTag} />}
         <PaginationContextProvider defaultRef={resultsRef}>
-          <ul
-            className="
-          py-12
-          w-full
-          mx-auto
-          max-w-viewport
-          px-layout-sm
-          grid
-          gap-8 
-          justify-center 
-          content-center
-          grid-cols-card
-          auto-rows-fr
-          scroll-mt-24"
-          >
+          <ul className="grid-cols-card mx-auto grid w-full max-w-viewport scroll-mt-24 auto-rows-fr content-center justify-center gap-8 px-layout-sm py-12">
             {isLoading &&
               Array.from({ length: 5 }, (_v, i) => i).map((item) => (
                 <li key={item}>

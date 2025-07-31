@@ -1,10 +1,10 @@
 import { forwardRef, HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { CampaignBannerData } from '../../types/index'
-import Blocks from '../../pageComponents/shared/portableText/Blocks'
+import Blocks from '../../portableText/Blocks'
 import { PortableTextBlock } from '@portabletext/types'
-import isEmpty from '../../pageComponents/shared/portableText/helpers/isEmpty'
-import { BlockType } from '../../pageComponents/shared/portableText/helpers/defaultSerializers'
+import isEmpty from '../../portableText/helpers/isEmpty'
+import { BlockType } from '../../portableText/helpers/defaultSerializers'
 import { colorKeyToUtilityMap } from '../../styles/colorKeyToUtilityMap'
 import { urlFor } from '../../common/helpers'
 
@@ -14,12 +14,12 @@ const campaignTitleBlocks: BlockType = {
   smallText: ({ children }: PortableTextBlock) => <p className="text-sm">{<>{children}</>}</p>,
   //@ts-ignore
   largeText: ({ children }: PortableTextBlock) => (
-    <p className="block w-fit text-pretty text-2xl leading-none bg-white-100 rounded-xs">{<>{children}</>}</p>
+    <p className="block w-fit rounded-xs bg-white-100 text-2xl leading-none text-pretty">{<>{children}</>}</p>
   ),
   //@ts-ignore
   extraLargeText: ({ children }: PortableTextBlock) => {
     return (
-      <p className="block w-fit text-pretty text-4xl leading-none lg:text-8xl font-semibold mt-4 bg-white-100 rounded-xs ">
+      <p className="mt-4 block w-fit rounded-xs bg-white-100 text-4xl leading-none font-semibold text-pretty lg:text-8xl">
         {<>{children}</>}
       </p>
     )
@@ -78,12 +78,12 @@ const CampaignBanner = forwardRef<HTMLElement, CampaignBannerProps>(function Cam
 
   return (
     <section ref={ref} className={`${backgroundClassNames}`} {...props}>
-      <div className={`px-layout-md mx-auto max-w-viewport`}>
+      <div className={`mx-auto max-w-viewport px-layout-md`}>
         <div className="flex justify-start">
           <h2 className="">
             <Blocks
               value={title}
-              proseClassName="prose-campaign"
+              variant="prose-campaign"
               blocksComponents={campaignTitleBlocks}
               className="w-fit max-w-prose text-energy-red-100"
             />

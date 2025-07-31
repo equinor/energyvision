@@ -1,6 +1,6 @@
 import { Accordion as EnvisAccordion } from '@/core/Accordion'
 import type { AccordionListData } from '../../types/index'
-import Blocks from '../../pageComponents/shared/portableText/Blocks'
+import Blocks from '../../portableText/Blocks'
 import CallToActions from '@/sections/CallToActions'
 import Image from '../../pageComponents/shared/SanityImage'
 
@@ -23,7 +23,7 @@ const Accordion = ({ data, id, hasSectionTitle = true }: AccordionProps) => {
           <Item key={id} value={id}>
             <Header hasSectionTitle={hasSectionTitle}>{itemTitle}</Header>
             <Content>
-              {image && image?.asset && <Image image={image} className="aspect-video rounded-2xs max-w-72" />}
+              {image && image?.asset && <Image image={image} className="aspect-video max-w-72 rounded-2xs" />}
               {content && <Blocks value={content} />}
               {links && <CallToActions overrideButtonStyle callToActions={links} />}
             </Content>

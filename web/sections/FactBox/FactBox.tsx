@@ -1,6 +1,6 @@
 import type { PortableTextBlock } from '@portabletext/types'
 import type { ImageWithAlt } from '../../types/index'
-import Blocks from '../../pageComponents/shared/portableText/Blocks'
+import Blocks from '../../portableText/Blocks'
 import { Typography } from '@/core/Typography'
 import { forwardRef, HTMLAttributes } from 'react'
 import { ColorKeyTokens, colorKeyToUtilityMap } from '../../styles/colorKeyToUtilityMap'
@@ -54,37 +54,19 @@ export const FactBox = forwardRef<HTMLElement, FactBoxProps>(function FactBox({ 
 
   return (
     <aside
-      className={envisTwMerge(
-        `w-full 
-        h-full
-        my-24
-        ${twBg} 
-        ${background?.dark ? 'dark' : ''}`,
-        className,
-      )}
+      className={envisTwMerge(`my-24 h-full w-full ${twBg} ${background?.dark ? 'dark' : ''}`, className)}
       ref={ref}
     >
       <div
-        className={`flex
-        flex-col
-        lg:flex-row 
-        max-w-viewport 
-        mx-auto
-        ${hasImage && imgPos === 'right' ? 'lg:flex-row-reverse' : ''} 
-        ${hasImage ? '' : contentXPadding}`}
+        className={`mx-auto flex max-w-viewport flex-col lg:flex-row ${hasImage && imgPos === 'right' ? 'lg:flex-row-reverse' : ''} ${hasImage ? '' : contentXPadding}`}
       >
         {hasImage && (
-          <div className={`relative w-full h-[380px] lg:w-1/2 lg:max-w-1/2 lg:h-auto `}>
+          <div className={`relative h-[380px] w-full lg:h-auto lg:w-1/2 lg:max-w-1/2`}>
             <Image image={image} fill />
           </div>
         )}
         <div
-          className={`w-fit 
-        py-12 
-        xl:py-24 
-        ${hasImage && imgPos === 'right' ? 'px-layout-sm lg:pl-layout-sm lg:pr-24' : ''}
-        ${hasImage && imgPos === 'left' ? 'px-layout-sm lg:pr-layout-sm lg:pl-24' : ''}
-        `}
+          className={`w-fit py-12 xl:py-24 ${hasImage && imgPos === 'right' ? 'px-layout-sm lg:pr-24 lg:pl-layout-sm' : ''} ${hasImage && imgPos === 'left' ? 'px-layout-sm lg:pr-layout-sm lg:pl-24' : ''} `}
         >
           {title && (
             <Typography as="h2" variant="h3" className="pb-8">

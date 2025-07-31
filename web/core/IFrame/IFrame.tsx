@@ -7,7 +7,7 @@ import useConsent from '../../lib/hooks/useConsent'
 import envisTwMerge from '../../twMerge'
 import RequestConsentContainer from './RequestConsentContainer'
 import { PortableTextBlock } from '@portabletext/types'
-import Blocks from '../../pageComponents/shared/portableText/Blocks'
+import Blocks from '../../portableText/Blocks'
 import Transcript from '@/sections/Transcript/Transcript'
 
 const calculatePadding = (aspectRatio: string): string => {
@@ -81,7 +81,7 @@ export const IFrame = forwardRef<HTMLDivElement, IFrameProps>(function IFrame(
   const iframeElement = (
     <div ref={ref} className={envisTwMerge('h-min', className)}>
       {title && showTitleAbove && (
-        <Blocks value={title} id={titleId} className={envisTwMerge('text-xl pb-8', titleClassName)} />
+        <Blocks value={title} id={titleId} className={envisTwMerge('pb-8 text-xl', titleClassName)} />
       )}
       <div
         className="relative w-full overflow-hidden"
@@ -90,7 +90,7 @@ export const IFrame = forwardRef<HTMLDivElement, IFrameProps>(function IFrame(
         }}
       >
         <iframe
-          className="absolute inset-0 w-full h-full border-0"
+          className="absolute inset-0 h-full w-full border-0"
           allowFullScreen
           loading="lazy"
           src={url}
@@ -111,7 +111,7 @@ export const IFrame = forwardRef<HTMLDivElement, IFrameProps>(function IFrame(
         <Blocks
           value={title}
           id={titleId}
-          className={envisTwMerge('text-md pt-4', description ? 'pb-2' : '', titleClassName)}
+          className={envisTwMerge('pt-4 text-md', description ? 'pb-2' : '', titleClassName)}
         />
       )}
       {description && (

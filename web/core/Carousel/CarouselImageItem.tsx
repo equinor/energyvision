@@ -11,7 +11,7 @@ import { getUrlFromAction } from '../../common/helpers'
 import { getLocaleFromName } from '../../lib/localization'
 import { ArrowRight } from '../../icons'
 import { ImageWithOverlay } from '@/core/Image/ImageWithOverlay'
-import Blocks from '../../pageComponents/shared/portableText/Blocks'
+import Blocks from '../../portableText/Blocks'
 import { mergeRefs } from '@equinor/eds-utils'
 
 type CarouselImageItemProps = {
@@ -62,23 +62,22 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
   const getBody = () => {
     if (isJustImage) {
       return (
-        <div className={`relative w-full h-full rounded-md`}>
+        <div className={`relative h-full w-full rounded-md`}>
           <Image maxWidth={1420} image={image as ImageWithAlt} fill className="rounded-md" />
         </div>
       )
     }
     if (isImageWithSimpleCaption) {
       return (
-        <figure className="relative w-full h-full rounded-md flex items-end">
+        <figure className="relative flex h-full w-full items-end rounded-md">
           <Image maxWidth={1420} image={image as ImageWithAlt} fill className={`rounded-md ${singleHeights}`} />
           <figcaption
-            className={`w-full rounded-b-md z-[1] fade-in-black-gradient 
-            ${displayMode === 'single' ? (active ? 'opacity-100' : 'opacity-50') : ''}`}
+            className={`z-[1] w-full rounded-b-md fade-in-black-gradient ${displayMode === 'single' ? (active ? 'opacity-100' : 'opacity-50') : ''}`}
           >
-            <div className={`w-full h-fit pt-20 pb-6 px-8`}>
-              <span className="w-2/3 flex flex-col gap-1 ">
-                {caption && <span className={`text-white-100 text-left text-lg`}>{caption as string}</span>}
-                {attribution && <span className={`text-white-100 text-base`}>{attribution}</span>}
+            <div className={`h-fit w-full px-8 pt-20 pb-6`}>
+              <span className="flex w-2/3 flex-col gap-1">
+                {caption && <span className={`text-left text-lg text-white-100`}>{caption as string}</span>}
+                {attribution && <span className={`text-base text-white-100`}>{attribution}</span>}
               </span>
             </div>
           </figcaption>
@@ -87,17 +86,17 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
     }
     if (isImageWithJustLink) {
       return (
-        <figure className="relative w-full h-full">
+        <figure className="relative h-full w-full">
           <Image maxWidth={1420} image={image as ImageWithAlt} fill className={`${singleHeights} rounded-md`} />
-          <div className="h-full w-full fade-in-black-gradient pt-20 flex items-end rounded-b-md">
+          <div className="flex h-full w-full items-end rounded-b-md fade-in-black-gradient pt-20">
             <BaseLink
               href={url as string}
               {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
               type={action.type}
               className="group flex gap-2"
             >
-              <span className="text-white-100 text-left text-lg">{action.label}</span>
-              <ArrowRight className={`group-hover:translate-y-2 size-10`} />
+              <span className="text-left text-lg text-white-100">{action.label}</span>
+              <ArrowRight className={`size-10 group-hover:translate-y-2`} />
             </BaseLink>
           </div>
         </figure>
@@ -120,12 +119,12 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
       const singleClassname = `${active ? 'opacity-100' : 'opacity-50'}`
       const scrollClassname = ``
       return (
-        <figure className="w-full h-full flex flex-col">
+        <figure className="flex h-full w-full flex-col">
           <div className={`relative w-full rounded-md ${singleHeights}`}>
             <Image maxWidth={1420} image={image as ImageWithAlt} fill className="rounded-md" />
           </div>
           <figcaption
-            className={`h-fit max-w-text p-4 lg:py-6 lg:px-8 ${
+            className={`h-fit max-w-text p-4 lg:px-8 lg:py-6 ${
               displayMode === 'single' ? singleClassname : scrollClassname
             }`}
           >
@@ -177,33 +176,11 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
         tabIndex: 0,
       })}
       className={envisTwMerge(
-        `relative
-        mt-1
-        focus:outline-hidden
-        focus-visible:outline-dashed
-        focus-visible:outline-2
-        focus-visible:outline-grey-50
-        dark:focus-visible:outline-white-100
-        focus-visible:outline-offset-2
-        ${isImageWithRichTextCaption ? 'h-full' : singleHeights}
-        ${displayMode === 'single' ? singleListItemWidthsClassNames : scrollListItemWidthsClassNames}
-        ${
+        `relative mt-1 focus:outline-hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grey-50 focus-visible:outline-dashed dark:focus-visible:outline-white-100 ${isImageWithRichTextCaption ? 'h-full' : singleHeights} ${displayMode === 'single' ? singleListItemWidthsClassNames : scrollListItemWidthsClassNames} ${
           displayMode === 'single'
-            ? `
-            ${!active ? 'opacity-30' : 'opacity-100'}
-            transition-opacity
-            duration-1000
-            ease-ease
-            ms-2 
-            me-2 
-            col-start-1 
-            col-end-1 
-            row-start-1 
-            row-end-1
-        `
-            : `snap-center snap-mandatory shrink-0`
-        }
-        `,
+            ? ` ${!active ? 'opacity-30' : 'opacity-100'} col-start-1 col-end-1 row-start-1 row-end-1 ms-2 me-2 transition-opacity duration-1000 ease-ease`
+            : `shrink-0 snap-mandatory snap-center`
+        } `,
         className,
       )}
     >

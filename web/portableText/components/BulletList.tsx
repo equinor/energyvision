@@ -2,7 +2,7 @@ import * as React from 'react'
 
 export const BulletList = ({ children }: { children?: React.ReactNode }) => {
   return (
-    <ul className="list-disc">
+    <ul className="">
       {React.Children.map(children, (listItem) => {
         if (!React.isValidElement(listItem)) return listItem
 

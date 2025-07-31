@@ -5,7 +5,7 @@ import { ResourceLink } from '@/core/Link'
 import { getUrlFromAction } from '../../common/helpers'
 import { getLocaleFromName } from '../../lib/localization'
 import { Heading } from '@/core/Typography'
-import Blocks from '../../pageComponents/shared/portableText/Blocks'
+import Blocks from '../../portableText/Blocks'
 import Image from '../../pageComponents/shared/SanityImage'
 import { ImageWithAlt, LinkData } from '../../types'
 import { InfoPanelImageVariant, InfoPanelKeyInfo } from './TabsBlock.types'
@@ -30,18 +30,9 @@ const TabsInfoPanelItem = forwardRef<HTMLDivElement, TabsInfoPanelItemProps>(fun
     <div
       ref={ref}
       className={twMerge(
-        `relative 
-        ${
+        `relative ${
           imageVariant === 'sideImage'
-            ? `flex 
-            flex-col-reverse 
-            lg:grid 
-            lg:grid-cols-2 
-            gap-12 
-            items-start 
-            px-8
-            lg:px-16
-            py-12`
+            ? `flex flex-col-reverse items-start gap-12 px-8 py-12 lg:grid lg:grid-cols-2 lg:px-16`
             : ''
         }`,
         className,
@@ -51,15 +42,9 @@ const TabsInfoPanelItem = forwardRef<HTMLDivElement, TabsInfoPanelItemProps>(fun
         <Image aria-hidden image={image} fill className="z-[1] object-center" />
       )}
       <div
-        className={`relative 
-          flex 
-          flex-col 
-          ${
-            imageVariant === 'sideImage'
-              ? ''
-              : 'lg:grid lg:grid-cols-2 px-8 lg:px-12 pt-12 pb-16 lg:pt-16 lg:pb-40 z-10'
-          }
-           gap-x-12 lg:gap-x-20 gap-y-12 `}
+        className={`relative flex flex-col ${
+          imageVariant === 'sideImage' ? '' : 'z-10 px-8 pt-12 pb-16 lg:grid lg:grid-cols-2 lg:px-12 lg:pt-16 lg:pb-40'
+        } gap-x-12 gap-y-12 lg:gap-x-20`}
       >
         <div>
           <div className="flex flex-col gap-4">
@@ -95,7 +80,7 @@ const TabsInfoPanelItem = forwardRef<HTMLDivElement, TabsInfoPanelItemProps>(fun
         )}
       </div>
       {image?.asset && imageVariant === 'sideImage' && (
-        <div className="w-full relative rounded-md aspect-video lg:aspect-5/4">
+        <div className="relative aspect-video w-full rounded-md lg:aspect-5/4">
           <Image image={image} fill className="rounded-md" />
         </div>
       )}

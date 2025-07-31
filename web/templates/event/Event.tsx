@@ -8,13 +8,13 @@ import type { PortableTextBlock } from '@portabletext/types'
 import Seo from '../../pageComponents/shared/Seo'
 import type { EventSchema } from '../../types/index'
 import { EventJsonLd } from 'next-seo'
-import Blocks from '../../pageComponents/shared/portableText/Blocks'
+import Blocks from '../../portableText/Blocks'
 import { twMerge } from 'tailwind-merge'
 import RelatedContent from '../../pageComponents/shared/RelatedContent'
 import { useTranslations } from 'next-intl'
 import { Typography } from '@/core/Typography'
 import AddToCalendar from '@/pageComponents/topicPages/AddToCalendar'
-import IngressText from '@/pageComponents/shared/portableText/IngressText'
+import IngressText from '@/portableText/IngressText'
 import ContactList from '@/pageComponents/shared/ContactList'
 
 export default function Event({ data }: { data: EventSchema }): JSX.Element {
@@ -40,12 +40,12 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
                 </Typography>
               )}
               {start && (
-                <div className="text-xl text-norwegian-woods-100 mt-7 mb-5">
+                <div className="mt-7 mb-5 text-xl text-norwegian-woods-100">
                   <FormattedDate datetime={start} />
                 </div>
               )}
 
-              <div className="flex flex-center gap-1 mb-2 text-norwegian-woods-100 ">
+              <div className="flex-center mb-2 flex gap-1 text-norwegian-woods-100">
                 {start && end ? (
                   <>
                     <FormattedTime datetime={start} />
@@ -57,22 +57,14 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
                 )}
               </div>
 
-              {location && <div className="text-norwegian-woods-100 mb-4">{location}</div>}
+              {location && <div className="mb-4 text-norwegian-woods-100">{location}</div>}
               <AddToCalendar eventDate={eventDate} location={location} title={plainTitle} />
             </div>
           </BackgroundContainer>
           {(ingress || content) && (
-            <div
-              className={`
-             mt-16
-             pb-page-content
-             px-0 
-             md:px-8
-             lg:px-0
-             `}
-            >
-              {ingress && <IngressText value={ingress} className="max-w-viewport mx-auto px-layout-lg pb-16" />}
-              {content && <Blocks proseClassName="prose-article" value={content} className="mx-auto max-w-viewport" />}
+            <div className={`mt-16 px-0 pb-page-content md:px-8 lg:px-0`}>
+              {ingress && <IngressText value={ingress} className="mx-auto max-w-viewport px-layout-lg pb-16" />}
+              {content && <Blocks variant="prose-article" value={content} className="mx-auto max-w-viewport" />}
             </div>
           )}
           {promotedPeople?.people && promotedPeople?.people.length > 0 && (
@@ -90,13 +82,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
           {relatedLinks?.links && relatedLinks.links.length > 0 && (
             <RelatedContent
               data={relatedLinks}
-              className={twMerge(`
-              px-layout-lg
-              max-w-viewport
-          
-              mx-auto
-              pb-page-content
-              `)}
+              className={twMerge(`mx-auto max-w-viewport px-layout-lg pb-page-content`)}
             />
           )}
         </article>

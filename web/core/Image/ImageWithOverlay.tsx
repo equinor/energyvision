@@ -8,7 +8,7 @@ import envisTwMerge from '../../twMerge'
 import { SanityImageObject } from '@sanity/image-url/lib/types/types'
 import { Typography } from '@equinor/eds-core-react'
 import { Heading } from '@/core/Typography'
-import Blocks from '../../pageComponents/shared/portableText/Blocks'
+import Blocks from '../../portableText/Blocks'
 import { ResourceLink } from '@/core/Link'
 import { getUrlFromAction } from '../../common/helpers'
 import { getLocaleFromName } from '../../lib/localization'
@@ -62,43 +62,26 @@ export const ImageWithOverlay = forwardRef<HTMLDivElement, ImageWithOverlayProps
   )
 
   return (
-    <figure ref={ref} className={envisTwMerge(`w-full h-full rounded-md`, className)}>
+    <figure ref={ref} className={envisTwMerge(`h-full w-full rounded-md`, className)}>
       <Image maxWidth={1420} image={image as ImageWithAlt} fill className={`rounded-md`} />
-      <figcaption className={envisTwMerge(`transition-opacity w-full h-full`, captionClassname)}>
+      <figcaption className={envisTwMerge(`h-full w-full transition-opacity`, captionClassname)}>
         <div
-          className={`absolute
-              inset-0
-              z-[1] 
-              transition-colors
-            duration-[250ms]
-            rounded-md
-            ${showOverlay ? 'bg-slate-blue-95' : ''}
-            flex
-            flex-col-reverse
-            rounded-b-md`}
+          className={`absolute inset-0 z-[1] rounded-md transition-colors duration-[250ms] ${showOverlay ? 'bg-slate-blue-95' : ''} flex flex-col-reverse rounded-b-md`}
         >
           <div
-            className={` h-fit rounded-b-md ${
+            className={`h-fit rounded-b-md ${
               showOverlay ? 'justify-end' : 'justify-between fade-in-black-gradient'
-            } flex items-end py-6 px-8`}
+            } flex items-end px-8 py-6`}
           >
             {teaserTitle && (
-              <div className={`text-white-100 text-left text-lg w-2/3 pt-40 ${showOverlay ? 'hidden' : 'block'}`}>
+              <div className={`w-2/3 pt-40 text-left text-lg text-white-100 ${showOverlay ? 'hidden' : 'block'}`}>
                 {teaserTitle}
               </div>
             )}
           </div>
           <div
             id={overlayId}
-            className={`
-              dark
-              py-2
-              px-4
-              lg:py-6
-              lg:px-8
-              max-w-text
-              ${showOverlay ? 'opacity-100' : 'opacity-0'} ${showOverlay ? 'visible' : 'invisible'}
-              `}
+            className={`dark max-w-text px-4 py-2 lg:px-8 lg:py-6 ${showOverlay ? 'opacity-100' : 'opacity-0'} ${showOverlay ? 'visible' : 'invisible'} `}
           >
             <div className={`pb-1 lg:pb-6`}>{title && titleElement}</div>
             {text && <Blocks value={text} className={`text-sm md:text-base ${action ? 'pb-1 lg:pb-4' : ''}`} />}
@@ -121,68 +104,20 @@ export const ImageWithOverlay = forwardRef<HTMLDivElement, ImageWithOverlayProps
           aria-expanded={showOverlay}
           aria-controls={overlayId}
           onClick={() => setShowOverlay(!showOverlay)}
-          className={`
-              focus:outline-hidden
-              focus-visible:envis-outline
-              absolute
-              bottom-0 
-              right-0
-              z-[3]
-              flex
-              justify-end
-              items-end
-              p-1.5
-              lg:py-6 
-              lg:px-8
-              `}
+          className={`focus-visible:envis-outline absolute right-0 bottom-0 z-[3] flex items-end justify-end p-1.5 focus:outline-hidden lg:px-8 lg:py-6`}
         >
           <span className="sr-only">{intl('readMore')}</span>
           <div
-            className={`
-              group
-              flex
-              justify-center 
-              items-center
-              size-3
-              md:size-4
-              rounded-full
-              p-5
-              md:p-6
-              text-2xl
-              focus:outline-hidden
-              focus-visible:envis-outline-invert            
-              ${
-                showOverlay
-                  ? 'bg-white-100 text-slate-80 hover:bg-slate-80 hover:text-white-100'
-                  : `bg-slate-80 hover:bg-white-100 text-white-100 hover:text-slate-80`
-              }
-               `}
+            className={`group focus-visible:envis-outline-invert flex size-3 items-center justify-center rounded-full p-5 text-2xl focus:outline-hidden md:size-4 md:p-6 ${
+              showOverlay
+                ? 'bg-white-100 text-slate-80 hover:bg-slate-80 hover:text-white-100'
+                : `bg-slate-80 text-white-100 hover:bg-white-100 hover:text-slate-80`
+            } `}
           >
             <span
-              className={`
-                  ${
-                    showOverlay
-                      ? '*:bg-slate-80 *:group-hover:bg-white-100'
-                      : '*:bg-white-100 *:group-hover:bg-slate-80'
-                  }
-                  *:transition-transform
-                  *:duration-[250ms]
-                  relative 
-                  overflow-hidden
-                  min-w-4
-                  md:min-w-6
-                  w-4
-                  md:w-6
-                  min-h-4
-                  md:min-h-6
-                  h-4
-                  md:h-6 
-                  flex
-                  flex-col
-                  justify-center
-                  items-center
-                  gap-3
-                  `}
+              className={` ${
+                showOverlay ? '*:bg-slate-80 *:group-hover:bg-white-100' : '*:bg-white-100 *:group-hover:bg-slate-80'
+              } relative flex h-4 min-h-4 w-4 min-w-4 flex-col items-center justify-center gap-3 overflow-hidden *:transition-transform *:duration-[250ms] md:h-6 md:min-h-6 md:w-6 md:min-w-6`}
               aria-hidden="true"
             >
               <span className={envisTwMerge(`${showOverlay ? 'rotate-45' : 'rotate-90'}`, lineClassName)}></span>

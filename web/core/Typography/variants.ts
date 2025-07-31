@@ -1,8 +1,21 @@
 const variants = {
   heading: {
+    unstyled: '',
     h1: 'text-slate-80 dark:text-white-100 text-3xl leading-earthy font-normal pb-11 my-0',
-    h2: 'text-slate-80 dark:text-white-100 text-2xl leading-cloudy font-normal pb-8 my-0',
-    h3: 'text-slate-80 dark:text-white-100 text-xl leading-inherit font-normal pb-0 my-0',
+    h2: `text-slate-80 
+    dark:text-white-100 
+    text-2xl 
+    leading-cloudy 
+    font-normal 
+    pb-8 
+    my-0`,
+    h3: `text-slate-80 
+    dark:text-white-100 
+    text-xl
+    leading-inherit 
+    font-normal 
+    pb-0 
+    my-0`,
     h4: 'text-slate-80 dark:text-white-100 text-lg leading-inherit font-normal pb-0',
     h5: 'text-slate-80 dark:text-white-100 text-md leading-inherit font-normal pb-0',
     h6: 'text-slate-80 dark:text-white-100 text-base leading-inherit font-normal pb-0',
@@ -27,24 +40,21 @@ const variants = {
     body: 'text-base font-normal text-slate-80 dark:text-white-100',
   },
   prose: {
-    body: 'text-base prose-medium:text-md',
-    paragraph: `prose-article:px-layout-lg 
-    prose-campaign:text-balance
-    prose-campaign:my-0`,
-    list: `list-disc 
-    prose-article:px-layout-lg 
-    prose-article:[&:is(ul,ol>:not(ul,ol))]:px-layout-lg
-    prose-article:[&:where(ol,ul)_:not(ol,ul)]:px-layout-lg
-    prose-article:[&:is(ul>ul,ul>ol,ol>ul,ol>ol)]:mx-0
-    prose-article:[&:where(ol,ul)_:where(ol,ul)]:mx-0
+    body: `
+    text-slate-80
+    dark:text-white-100
+    text-base
     `,
-    h2: `text-xl
+    h2: `
+    text-slate-80
+    dark:text-white-100
+    text-xl
     my-2
-    prose-medium:my-6
-    prose-article:px-layout-lg`,
-    h3: `text-lg
-    prose-medium:my-6
-    prose-article:px-layout-lg`,
+    `,
+    h3: `
+    text-slate-80
+    dark:text-white-100
+    text-lg`,
   },
 }
 export type TypographyTokens = {

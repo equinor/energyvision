@@ -11,7 +11,7 @@ import { toPlainText } from '@portabletext/react'
 import { PortableTextBlock } from '@portabletext/types'
 import AddToCalendar from '../../../pageComponents/topicPages/AddToCalendar'
 import { BaseLink } from '@/core/Link'
-import Blocks from '../../../pageComponents/shared/portableText/Blocks'
+import Blocks from '../../../portableText/Blocks'
 import { useTranslations } from 'next-intl'
 
 type Variants = 'default' | 'single' | 'carousel'
@@ -45,25 +45,7 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
     <div
       ref={ref}
       className={twMerge(
-        `h-full
-        w-full
-        grid
-        grid-rows-[1fr_max-content_max-content]
-        gap-4
-        shadow-card
-        rounded-xs
-        px-6
-        py-8
-        bg-white-100
-        text-slate-80
-        active:box-shadow-crisp-interact
-        active:shadow-white-100-interact
-        focus:outline-hidden
-        focus-visible:envis-outline
-        dark:text-white-100
-        dark:focus-visible:envis-outline-invert
-        ${variantClassName[variant]}
-      `,
+        `active:shadow-white-100-interact focus-visible:envis-outline dark:focus-visible:envis-outline-invert grid h-full w-full grid-rows-[1fr_max-content_max-content] gap-4 rounded-xs bg-white-100 px-6 py-8 text-slate-80 shadow-card focus:outline-hidden active:box-shadow-crisp-interact dark:text-white-100 ${variantClassName[variant]} `,
         className,
       )}
       {...rest}
@@ -83,13 +65,13 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
         )}
         {location && (
           <div className={metaClassNames}>
-            <Icon data={world} color={'currentColor'} className="text-norwegian-woods-100 text-2xs" />
+            <Icon data={world} color={'currentColor'} className="text-2xs text-norwegian-woods-100" />
             <span className="text-xs">{location}</span>
           </div>
         )}
 
         {start && end ? (
-          <div className={`h-full flex gap-1 items-center py-2`}>
+          <div className={`flex h-full items-center gap-1 py-2`}>
             <FormattedTime icon datetime={start} small />
             <span className="w-max">-</span>
             <FormattedTime datetime={end} showTimezone small />
@@ -101,7 +83,7 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
           </div>
         )}
       </div>
-      {variant === 'single' && ingress && <Blocks value={ingress} className="mt-4 text-sm max-w-prose text-pretty" />}
+      {variant === 'single' && ingress && <Blocks value={ingress} className="mt-4 max-w-prose text-sm text-pretty" />}
       <div className="mt-4 lg:mt-8">
         <AddToCalendar eventDate={eventDate} location={location} title={plainTitle} />
       </div>

@@ -3,7 +3,7 @@ import type { CardData } from '../../types/index'
 import { FormattedDate } from '@/core/FormattedDateTime'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
 import Card from '@/sections/cards/Card'
-import Blocks from '../../pageComponents/shared/portableText/Blocks'
+import Blocks from '../../portableText/Blocks'
 import { Typography } from '@/core/Typography'
 import { useTranslations } from 'next-intl'
 
@@ -16,22 +16,11 @@ const LatestNews = ({ data }: LatestNewsProp) => {
   const t = useTranslations()
 
   return (
-    <section
-      className=" 
-      max-w-viewport
-      px-layout-sm
-      3xl:px-layout-md
-      my-3xl
-      mx-auto
-      flex
-      flex-col
-      items-center
-    "
-    >
+    <section className="my-3xl mx-auto flex max-w-viewport flex-col items-center px-layout-sm 3xl:px-layout-md">
       <Typography variant="xl" as="h2" className="mb-10">
         {t('latest_news')}
       </Typography>
-      <ul className="max-lg:w-full grid grid-cols-1 auto-rows-fr gap-x-6 gap-y-3 md:grid-flow-col md:auto-cols-fr">
+      <ul className="grid auto-rows-fr grid-cols-1 gap-x-6 gap-y-3 max-lg:w-full md:auto-cols-fr md:grid-flow-col">
         {data.map((newsItem: CardData) => {
           return (
             <li key={newsItem.id} className="">
@@ -51,7 +40,7 @@ const LatestNews = ({ data }: LatestNewsProp) => {
                     variant={isMobile ? 'compact' : 'primary'}
                   />
                   {newsItem?.ingress && (
-                    <Blocks value={newsItem?.ingress} className={`break-word grow hidden lg:block`} clampLines={5} />
+                    <Blocks value={newsItem?.ingress} className={`break-word hidden grow lg:block`} clampLines={5} />
                   )}
                 </Card.Content>
               </Card>

@@ -1,5 +1,5 @@
 import type { LandingPageSchema, PortableTextBlock } from '../../types/index'
-import IngressText from '../../pageComponents/shared/portableText/IngressText'
+import IngressText from '../../portableText/IngressText'
 import ContentGroup from '../../pageComponents/landingPages/ContentGroup'
 import Seo from '../../pageComponents/shared/Seo'
 import { Typography } from '@/core/Typography'
@@ -19,7 +19,7 @@ const LandingPage = ({ data }: LandingPageProps) => {
       <main>
         <div className="px-layout-md py-layout-lg">
           {title && (
-            <Typography className="max-w-[1186px] mx-auto" as="h1" variant="3xl">
+            <Typography className="mx-auto max-w-[1186px]" as="h1" variant="3xl">
               {plainTitle}
             </Typography>
           )}

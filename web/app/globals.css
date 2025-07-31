@@ -171,22 +171,25 @@ data-ui="checked active" class="data-checked:underline">
 }
 
 @custom-variant prose {
-  &:where([data-prose='prose'] *) {
+  &:where([class~='prose'], [class~='prose'] *) {
     @slot;
   }
 }
-@custom-variant prose-md {
-  &:where([data-prose='medium'] *) {
+@custom-variant prose-medium {
+  &:where([class~='prose-medium'], [class~='prose-medium'] *) {
     @slot;
   }
 }
 @custom-variant prose-article {
-  &:where([data-prose='article'] *) {
+  &:where([class~='prose-article'], [class~='prose-article'] *) {
     @slot;
   }
+  /*   &:where([data-prose='article'] *) {
+    @slot;
+  } */
 }
 @custom-variant prose-campaign {
-  &:where([data-prose='campaign'] *) {
+  &:where([class~='prose-campaign'], [class~='prose-campaign'] *) {
     @slot;
   }
 }
@@ -350,6 +353,9 @@ treat the value and modifier as a single value:
 }*/
 
 @layer base {
+  body {
+    -webkit-font-smoothing: antialiased;
+  }
   p,
   h1,
   h2,
@@ -375,130 +381,184 @@ treat the value and modifier as a single value:
 }
 
 @layer components {
-  /*
-* PROSE:
-* .prose-article :where(p):not(:where([class~=not-prose],[class~=not-prose] *)) 
-* .prose :where(p):not(:where([class~=not-prose],[class~=not-prose] *))
-* .prose :where(.prose>:first-child):not(:where([class~=not-prose],[class~=not-prose] *))
+  /** PROSE: */
+  /*   .prose :where(p):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+    margin-top: 1.25em;
+    margin-bottom: 1.25em;
+    @apply my-5
+  } */
 
-.prose :where(ol):not(:where([class~=not-prose],[class~=not-prose] *)) {
+  /*   .prose :where(.prose > :first-child):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+    @apply mt-0;
+  }
+
+  .prose :where(.prose > :last-child):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+    @apply mb-0;
+  } */
+
+  /* Should be solved by the link serializer? */
+  /* .prose :where(a):not(:where([class~=not-prose],[class~=not-prose] *)) {
+    color: var(--tw-prose-links);
+    text-decoration: underline;
+    font-weight: 500
+} */
+
+  /*   .prose :where(picture > img):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .prose :where(video):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+    margin-top: 2em;
+    margin-bottom: 2em;
+  } */
+
+  /*   .prose-article
+    :where(p):not(:where([class~='not-prose'], [class~='not-prose'] *))
+    .prose
+    :where(p):not(:where([class~='not-prose'], [class~='not-prose'] *))
+    .prose
+    :where(.prose > :first-child):not(:where([class~='not-prose'], [class~='not-prose'] *))
+    .prose
+    :where(ol):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
     list-style-type: decimal;
     margin-top: 1.25em;
     margin-bottom: 1.25em;
-    padding-left: 1.625em
-}
+    padding-left: 1.625em;
+  } */
 
-.prose :where(ol[type=A]):not(:where([class~=not-prose],[class~=not-prose] *)) {
-    list-style-type: upper-alpha
-}
+  /*   .prose :where(h2){
+    @apply text-xl;
+  }
+  .prose :where(h3):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+    @apply text-lg;
+  }
+  .prose :where(h2 + *):not(:where([class~='not-prose'], [class~='not-prose'] *)),
+  .prose :where(h3 + *):not(:where([class~='not-prose'], [class~='not-prose'] *)),
+  .prose :where(h4 + *):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+    @apply mt-0;
+  } */
+  .prose :where(ul, ol):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+    @apply my-5 pl-6;
+  }
+  .prose :where(ul):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+    @apply list-disc;
+  }
+  .prose :where(ol):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+    @apply list-decimal;
+  }
+  /* Get rid of portableText components for ol and ul? Must fix highlight here then */
 
-.prose :where(ol[type=a]):not(:where([class~=not-prose],[class~=not-prose] *)) {
-    list-style-type: lower-alpha
-}
+  .prose :where(ol ol):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+    list-style-type: lower-alpha;
+  }
 
-.prose :where(ol[type=A s]):not(:where([class~=not-prose],[class~=not-prose] *)) {
-    list-style-type: upper-alpha
-}
+  .prose :where(ol ol ol):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+    list-style-type: lower-roman;
+  }
 
-.prose :where(ol[type=a s]):not(:where([class~=not-prose],[class~=not-prose] *)) {
-    list-style-type: lower-alpha
-}
+  .prose :where(ol[type='A']):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+    list-style-type: upper-alpha;
+  }
 
-.prose :where(ol[type=I]):not(:where([class~=not-prose],[class~=not-prose] *)) {
-    list-style-type: upper-roman
-}
+  .prose :where(ol[type='a']):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+    list-style-type: lower-alpha;
+  }
 
-.prose :where(ol[type=i]):not(:where([class~=not-prose],[class~=not-prose] *)) {
-    list-style-type: lower-roman
-}
+  .prose :where(ol[type='A s']):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+    list-style-type: upper-alpha;
+  }
 
-.prose :where(ol[type=I s]):not(:where([class~=not-prose],[class~=not-prose] *)) {
-    list-style-type: upper-roman
-}
+  .prose :where(ol[type='a s']):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+    list-style-type: lower-alpha;
+  }
 
-.prose :where(ol[type=i s]):not(:where([class~=not-prose],[class~=not-prose] *)) {
-    list-style-type: lower-roman
-}
+  .prose :where(ol[type='I']):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+    list-style-type: upper-roman;
+  }
 
-.prose :where(ol[type="1"]):not(:where([class~=not-prose],[class~=not-prose] *)) {
-    list-style-type: decimal
-}
+  .prose :where(ol[type='i']):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+    list-style-type: lower-roman;
+  }
 
-.prose :where(ul):not(:where([class~=not-prose],[class~=not-prose] *)) {
-    list-style-type: disc;
-    margin-top: 1.25em;
-    margin-bottom: 1.25em;
-    padding-left: 1.625em
-}
+  .prose :where(ol[type='I s']):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+    list-style-type: upper-roman;
+  }
 
-.prose :where(ol>li):not(:where([class~=not-prose],[class~=not-prose] *))::marker {
+  .prose :where(ol[type='i s']):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+    list-style-type: lower-roman;
+  }
+
+  .prose :where(ol[type='1']):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+    @apply list-decimal;
+  }
+
+  .prose :where(li):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+    @apply my-2;
+  }
+  .prose :where(ul > li):not(:where([class~='not-prose'], [class~='not-prose'] *)),
+  .prose :where(ol > li):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+    @apply ml-2 pl-1.5;
+  }
+  /* .prose :where(.prose>ul>li p):not(:where([class~=not-prose],[class~=not-prose] *)) {
+
+} */
+  .prose :where(.prose > ul > li > :first-child):not(:where([class~='not-prose'], [class~='not-prose'] *)),
+  .prose :where(.prose > ol > li > :first-child):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+    @apply mt-0;
+  }
+
+  .prose :where(.prose > ul > li > :last-child):not(:where([class~='not-prose'], [class~='not-prose'] *)),
+  .prose :where(.prose > ol > li > :last-child):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+    @apply mt-0;
+  }
+  .prose :where(ul ul, ul ol, ol ul, ol ol):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+    @apply my-3 pl-6;
+  }
+
+  /*   .prose :where(ol > li):not(:where([class~='not-prose'], [class~='not-prose'] *))::marker {
     font-weight: 400;
-    color: var(--tw-prose-counters)
-}
+    color: var(--tw-prose-counters);
+  }
 
-.prose :where(ul>li):not(:where([class~=not-prose],[class~=not-prose] *))::marker {
-    color: var(--tw-prose-bullets)
-}
+  .prose :where(ul > li):not(:where([class~='not-prose'], [class~='not-prose'] *))::marker {
+    color: var(--tw-prose-bullets);
+  } */
 
-
-.prose :where(li):not(:where([class~=not-prose],[class~=not-prose] *)) {
-    margin-top: .5em;
-    margin-bottom: .5em
-}
-
-.prose :where(ol>li):not(:where([class~=not-prose],[class~=not-prose] *)) {
-    padding-left: .375em;
-    margin-left: .5714286em
-}
-
-.prose :where(ul>li):not(:where([class~=not-prose],[class~=not-prose] *)) {
-    padding-left: .375em;
-    margin-left: .5714286em
-}
-
-.prose :where(.prose>ul>li p):not(:where([class~=not-prose],[class~=not-prose] *)) {
-    margin-top: .75em;
-    margin-bottom: .75em
-}
-
-.prose :where(.prose>ul>li>:first-child):not(:where([class~=not-prose],[class~=not-prose] *)) {
-    margin-top: 0
-}
-
-.prose :where(.prose>ul>li>:last-child):not(:where([class~=not-prose],[class~=not-prose] *)) {
-    margin-bottom: 0
-}
-
-.prose :where(.prose>ol>li>:first-child):not(:where([class~=not-prose],[class~=not-prose] *)) {
-    margin-top: 0
-}
-
-.prose :where(.prose>ol>li>:last-child):not(:where([class~=not-prose],[class~=not-prose] *)) {
-    margin-bottom: 0
-}
-
-.prose :where(ul ul,ul ol,ol ul,ol ol):not(:where([class~=not-prose],[class~=not-prose] *)) {
-    margin-top: .75em;
-    margin-bottom: .75em;
-    padding-left: 1.5833333em
-}
-    .prose :where(.prose>:first-child):not(:where([class~=not-prose],[class~=not-prose] *)) {
-    margin-top: 0
-}
-
-.prose :where(.prose>:last-child):not(:where([class~=not-prose],[class~=not-prose] *)) {
-    margin-bottom: 0
-}
-
-.prose :where(ol ol):not(:where([class~=not-prose],[class~=not-prose] *)) {
-    list-style-type: lower-alpha
-}
-
-.prose :where(ol ol ol):not(:where([class~=not-prose],[class~=not-prose] *)) {
-    list-style-type: lower-roman
-}
-
-**/
+  /* PROSE-ARTICLE */
+  /*   .prose-article :where(h2):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+    @apply px-layout-lg text-lg;
+  }
+  .prose-article :where(h3):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+    @apply px-layout-lg text-md;
+  } */
+  .prose-article :where(ol):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+    @apply mx-layout-lg;
+  }
+  .prose-article :where(ul):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+    @apply mx-layout-lg;
+  }
+  .prose-article :where(ul ul, ul ol, ol ul, ol ol):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+    @apply mx-0;
+  }
+  /*   .prose-article :where(p):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+    @apply px-layout-lg;
+  } */
+  /* PROSE-MEDIUM */
+  .prose-medium {
+    @apply text-md;
+  }
+  .prose-medium :where(h2):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+    @apply my-6 text-xl;
+  }
+  .prose-medium :where(h3):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+    @apply my-6 text-lg;
+  }
+  /* PROSE-CAMPAIGN */
+  .prose-campaign :where(p):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+    @apply my-0 text-balance;
+  }
+  /** PROSE END  */
 
   .clickbound-area {
     @apply before:absolute before:top-1/2 before:left-1/2 before:aspect-square before:w-[48px] before:translate-x-[-50%] before:translate-y-[-50%] before:cursor-pointer before:rounded-[100%] before:content-[''];

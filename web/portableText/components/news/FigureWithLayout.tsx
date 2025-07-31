@@ -1,7 +1,7 @@
 import type { PortableTextBlock } from '@portabletext/types'
 import { twMerge } from 'tailwind-merge'
-import Image from '../../../SanityImage'
-import type { ImageWithAlt } from '../../../../../types/index'
+import Image from '../../../pageComponents/shared/SanityImage'
+import type { ImageWithAlt } from '../../../types/index'
 import { FigureCaption } from '@/core/FigureCaption/FigureCaption'
 
 type Layout = 'full' | 'left' | 'right'
@@ -27,17 +27,9 @@ export const FigureWithLayout = (block: BlockProps) => {
 
   return (
     <figure
-      className={twMerge(`
-        py-0
-        px-layout-md
-        mx-auto
-        w-full
-        ${layout !== 'full' ? 'md:w-1/2' : ''}
-        ${layout === 'right' ? 'md:float-right md:pl-8' : ''}
-        ${layout === 'left' ? 'md:float-left md:pr-8' : ''}
-        mt-14
-        mb-16
-      `)}
+      className={twMerge(
+        `mx-auto w-full px-layout-md py-0 ${layout !== 'full' ? 'md:w-1/2' : ''} ${layout === 'right' ? 'md:float-right md:pl-8' : ''} ${layout === 'left' ? 'md:float-left md:pr-8' : ''} mt-14 mb-16`,
+      )}
     >
       {layout === 'full' ? (
         <Image

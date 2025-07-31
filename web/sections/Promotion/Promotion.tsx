@@ -1,7 +1,7 @@
 import { BackgroundContainer } from '@/core/Backgrounds'
 import SinglePromotion from './SinglePromotion'
 import MultiplePromotions from './MultiplePromotions'
-import IngressText from '../../pageComponents/shared/portableText/IngressText'
+import IngressText from '../../portableText/IngressText'
 import type { PromotionData } from '../../types/index'
 import { twMerge } from 'tailwind-merge'
 import { ResourceLink } from '@/core/Link'

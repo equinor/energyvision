@@ -10,12 +10,12 @@ import {
 } from '../../types/index'
 import { BackgroundContainer } from '@/core/Backgrounds'
 import { getUrlFromAction, urlFor } from '../../common/helpers'
-import IngressText from './portableText/IngressText'
+import IngressText from '../../portableText/IngressText'
 import { VideoJS } from '@/core/VideoJsPlayer'
 import { twMerge } from 'tailwind-merge'
 import { Heading } from '@/core/Typography'
 import { PortableTextBlock } from '@portabletext/types'
-import Blocks from './portableText/Blocks'
+import Blocks from '../../portableText/Blocks'
 import Transcript from '../../sections/Transcript/Transcript'
 import { ResourceLink } from '@/core/Link'
 import { getLocaleFromName } from '../../lib/localization'
@@ -91,9 +91,7 @@ export const VideoComponentWithCaption = ({
   return (
     <figure
       className={twMerge(
-        `${useFillMode ? 'h-full w-full' : getHeightWidth(designOptions.aspectRatio, designOptions.height)} 
-        [&video::-webkit-media-controls-fullscreen-button]:hidden relative mx-auto my-0
-        `,
+        `${useFillMode ? 'h-full w-full' : getHeightWidth(designOptions.aspectRatio, designOptions.height)} relative mx-auto my-0 [&video::-webkit-media-controls-fullscreen-button]:hidden`,
         className,
       )}
     >
@@ -135,10 +133,7 @@ export const VideoJsComponent = ({
   return (
     <figure
       className={twMerge(
-        `
-        ${useFillMode ? 'h-full w-full' : getHeightWidth(designOptions.aspectRatio, designOptions.height)} 
-        [&video::-webkit-media-controls-fullscreen-button]:hidden relative mx-auto my-0
-        `,
+        ` ${useFillMode ? 'h-full w-full' : getHeightWidth(designOptions.aspectRatio, designOptions.height)} relative mx-auto my-0 [&video::-webkit-media-controls-fullscreen-button]:hidden`,
         className,
       )}
     >

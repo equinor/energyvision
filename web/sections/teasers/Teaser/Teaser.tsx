@@ -1,5 +1,5 @@
 import { Teaser as TeaserLayout } from '@/core/Teaser'
-import IngressText from '../../../pageComponents/shared/portableText/IngressText'
+import IngressText from '../../../portableText/IngressText'
 import { getUrlFromAction, urlFor } from '../../../common/helpers'
 import Img from 'next/image'
 import Image from '../../../pageComponents/shared/SanityImage'
@@ -62,11 +62,11 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
       </Media>
       <Content className={`gap-y-lg grid auto-cols-auto px-8 py-12`}>
         {isBigText ? (
-          text && <Heading value={text} as="h2" variant="2xl" className="leading-cloudy mb-2" />
+          text && <Heading value={text} as="h2" variant="2xl" className="mb-2 leading-cloudy" />
         ) : (
           <>
             {overline ? (
-              <hgroup className="flex flex-col gap-2 mb-1">
+              <hgroup className="mb-1 flex flex-col gap-2">
                 <Typography as="div" className="text-md">
                   {overline}
                 </Typography>

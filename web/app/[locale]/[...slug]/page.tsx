@@ -2,6 +2,12 @@ import { getQueryFromSlug } from '../../../lib/queryFromSlug'
 import dynamic from 'next/dynamic'
 import { notFound } from 'next/navigation'
 import { getPageData } from '@/sanity/lib/fetchData'
+import { Metadata, ResolvingMetadata } from 'next'
+import { getLocaleFromName, getNameFromLocale } from '@/lib/localization'
+import getOpenGraphImages from '@/common/helpers/getOpenGraphImages'
+import { defaultLanguage, metaTitleSuffix, domain } from '@/languages'
+import getPageSlugs from '@/common/helpers/getPageSlugs'
+import { isDateAfter } from '@/common/helpers/dateUtilities'
 
 const MagazinePage = dynamic(() => import('@/templates/magazine/MagazinePage'))
 const LandingPage = dynamic(() => import('@/templates/landingpage/LandingPage'))
@@ -9,25 +15,79 @@ const EventPage = dynamic(() => import('@/templates/event/Event'))
 const NewsPage = dynamic(() => import('@/templates/news/News'))
 const TopicPage = dynamic(() => import('@/templates/topic/TopicPage'))
 
-type Params = Promise<{ slug: string | string[]; locale: string }>
-type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>
+type Props = {
+  params: Promise<{ slug: string | string[]; locale: string }>
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}
 
-/* export async function generateMetadata(props: {
-  params: Params
-  searchParams: SearchParams
-}) {
-  const params = await props.params
-  const searchParams = await props.searchParams
-  const slug = params.slug
-  const query = searchParams.query
-} */
+export async function generateMetadata({ params }: Props, parent: ResolvingMetadata): Promise<Metadata> {
+  //array, separated by /. e.g. [news, last slug]
+  const slug = (await params).slug as string[]
+  const defaultLocale = defaultLanguage.locale
+  const locale = (await params).locale ?? defaultLocale
+  const fullSlug = `${domain}/${locale !== defaultLocale ? `${locale}/` : ''}${slug.join('/')}`
 
-export default async function Page(props: { params: Params; searchParams: SearchParams }) {
+  const { query, queryParams } = await getQueryFromSlug(slug as string[], locale)
+  const { pageData } = await getPageData({
+    query,
+    queryParams,
+  })
+  const slugs = getPageSlugs(pageData) ?? []
+
+  const activeSlug = slugs.length > 0 ? slugs.find((slug) => slug.lang === getNameFromLocale(locale))?.slug : slug
+
+  const canonicalSlug =
+    locale === defaultLocale
+      ? `${domain}${activeSlug !== '/' ? activeSlug : ''}`
+      : `${domain}/${locale}${activeSlug !== '/' ? activeSlug : ''}`
+
+  const alternateLinks: Record<string, string> = {}
+  slugs.forEach((slug) => {
+    const slugLocale = getLocaleFromName(slug.lang)
+    const correctedSlug = (defaultLocale !== slugLocale ? `/${slugLocale}` : '').concat(
+      slug.slug !== '/' ? slug.slug : '',
+    )
+    Object.assign(alternateLinks, { [slugLocale]: `${domain}${correctedSlug}` })
+  })
+
+  //Fallback page if no locale
+  const defaultSlug = slugs.find((slug) => slug.lang === defaultLanguage.name)?.slug
+  const xDefaultSlug = `${domain}${defaultSlug === '/' ? '' : defaultSlug}`
+
+  //@ts-ignore: todo
+  const { publishDateTime, updatedAt, documentTitle, title, metaDescription, openGraphImage, heroImage } = pageData
+
+  const modifiedDate = isDateAfter(publishDateTime, updatedAt) ? publishDateTime : updatedAt
+  const openGraphImages = getOpenGraphImages((openGraphImage?.asset ? openGraphImage : null) || heroImage?.image)
+
+  return {
+    title: `${documentTitle || title} - ${metaTitleSuffix}`,
+    description: metaDescription,
+    openGraph: {
+      title: title,
+      description: metaDescription,
+      url: fullSlug,
+      locale,
+      type: 'article',
+      siteName: 'Equinor',
+      publishedTime: publishDateTime,
+      modifiedTime: modifiedDate,
+      images: openGraphImages,
+    },
+    alternates: {
+      ...(locale === defaultLocale && { canonical: canonicalSlug }),
+      languages: {
+        ...alternateLinks,
+        'x-default': xDefaultSlug,
+      },
+    },
+  }
+}
+
+export default async function Page({ params, searchParams }: Props) {
   console.log('LOCALE > [..slug] > page')
-  const params = await props.params
-  const searchParams = await props.searchParams
-  const { locale, slug: s } = params
-  const searchQuery = searchParams.query
+  const s = (await params).slug
+  const locale = (await params).locale
   console.log('slug page s', s)
   const { query, queryParams } = await getQueryFromSlug(s as string[], locale)
 
@@ -39,12 +99,6 @@ export default async function Page(props: { params: Params; searchParams: Search
   console.log('[locale]>Page pageData', pageData)
 
   //const router = useRouter()
-
-  //const { setIsPreview } = useContext(PreviewContext)
-
-  /*useEffect(() => {
-    setIsPreview(preview)
-  }, [setIsPreview, preview])*/
 
   const slug = pageData?.slug
   /*if (!router.isFallback && !slug && queryParams?.id) {
@@ -69,11 +123,9 @@ export default async function Page(props: { params: Params; searchParams: Search
       case 'landingPage':
         return <LandingPage data={pageData} />
       case 'event':
-        // eslint-disable-next-line react/jsx-no-undef
         return <EventPage data={pageData} />
       case 'news':
       case 'localNews':
-        // eslint-disable-next-line react/jsx-no-undef
         return <NewsPage data={pageData} />
       case 'magazine':
         return <MagazinePage data={pageData} />

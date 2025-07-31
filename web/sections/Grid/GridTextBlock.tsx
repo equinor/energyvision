@@ -3,7 +3,7 @@ import { getUrlFromAction } from '../../common/helpers'
 import GridLinkArrow from './GridLinkArrow'
 import { getColorForTheme } from '@/sections/teasers/TextTeaser/theme'
 import { BackgroundTypes, GridTextBlockData } from '../../types/index'
-import Blocks from '../../pageComponents/shared/portableText/Blocks'
+import Blocks from '../../portableText/Blocks'
 import { BackgroundContainer } from '@/core/Backgrounds'
 import { Heading, Typography } from '@/core/Typography'
 import { RowType } from './mapGridContent'
@@ -159,7 +159,7 @@ const GridTextBlock = forwardRef<HTMLDivElement, GridTextBlockProps>(function Gr
       >
         {overline ? (
           <hgroup
-            className={`flex flex-col gap-2 max-w-text ${
+            className={`flex max-w-text flex-col gap-2 ${
               textContentAlignmentUtilities[contentAlignment ?? 'left']
             } ${titleTextColor}`}
           >
@@ -196,8 +196,8 @@ const GridTextBlock = forwardRef<HTMLDivElement, GridTextBlockProps>(function Gr
           <div className={`flex flex-col justify-end ${rowType === 'span3' ? 'lg:-translate-y-[10px]' : ''}`}>
             <Blocks
               value={content}
-              proseClassName="prose-campaign"
-              className={`flex flex-col gap-sm ${textClassNames} ${contentTextColor} ${
+              variant="prose-campaign"
+              className={`gap-sm flex flex-col ${textClassNames} ${contentTextColor} ${
                 textContentAlignmentUtilities[contentAlignment ?? 'left']
               } text-balance`}
             />
@@ -237,7 +237,7 @@ const GridTextBlock = forwardRef<HTMLDivElement, GridTextBlockProps>(function Gr
   ) : (
     <div
       ref={ref}
-      className={`p-10 lg:p-12 relative w-full h-full flex overflow-y-auto ${bgColor} ${
+      className={`relative flex h-full w-full overflow-y-auto p-10 lg:p-12 ${bgColor} ${
         contentAlignmentUtilities[contentAlignment ?? 'center']
       }`}
     >

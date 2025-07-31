@@ -6,7 +6,7 @@ import type { AccordionData, AccordionListData } from '../../types/index'
 import { toPlainText } from '@portabletext/react'
 import { Heading, Typography } from '../../core/Typography'
 import { twMerge } from 'tailwind-merge'
-import IngressText from '../../pageComponents/shared/portableText/IngressText'
+import IngressText from '../../portableText/IngressText'
 import Image, { Ratios } from '../../pageComponents/shared/SanityImage'
 
 type AccordionBlockProps = {
@@ -34,7 +34,7 @@ const AccordionBlock = ({ data, anchor, className }: AccordionBlockProps) => {
         id={anchor}
         renderFragmentWhenPossible
         className={twMerge(
-          `flex flex-col gap-6 max-w-viewport mx-auto pb-page-content px-layout-lg [&_svg]:inline [&_svg]:align-baseline`,
+          `mx-auto flex max-w-viewport flex-col gap-6 px-layout-lg pb-page-content [&_svg]:inline [&_svg]:align-baseline`,
           className,
         )}
       >

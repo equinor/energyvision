@@ -1,10 +1,10 @@
 import { BackgroundContainer } from '@/core/Backgrounds'
 import { Heading, Typography } from '../../core/Typography'
-import IngressText from '../../pageComponents/shared/portableText/IngressText'
+import IngressText from '../../portableText/IngressText'
 import Image, { Ratios } from '../../pageComponents/shared/SanityImage'
 import type { TextBlockData } from '../../types/index'
 import CallToActions from '../CallToActions'
-import Blocks from '../../pageComponents/shared/portableText/Blocks'
+import Blocks from '../../portableText/Blocks'
 import { twMerge } from 'tailwind-merge'
 
 type TextBlockProps = {
@@ -86,7 +86,7 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
             </div>
           )}
           {overline ? (
-            <hgroup className={`flex flex-col gap-2 mb-1 ${useBrandTheme ? 'text-energy-red-100' : ''}`}>
+            <hgroup className={`mb-1 flex flex-col gap-2 ${useBrandTheme ? 'text-energy-red-100' : ''}`}>
               <Typography as="div" className="text-md">
                 {overline}
               </Typography>

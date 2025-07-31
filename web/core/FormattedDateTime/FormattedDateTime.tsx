@@ -12,9 +12,9 @@ const FormattedDateTime = ({
   ...rest
 }: DateProps & FormattedTimeProps): JSX.Element => {
   return (
-    <span className={`inline-flex items-center space-x-2 ${uppercase && 'uppercase'}`} {...rest}>
+    <span className={`inline-flex items-center space-x-2 ${uppercase ? 'uppercase' : ''}`} {...rest}>
       {icon && <DateIcon />}
-      <span className="shrink box-content space-x-3">
+      <span className="box-content shrink space-x-3">
         <FormattedDate uppercase={uppercase} datetime={datetime} year={year} month={month} day={day} />
         <FormattedTime datetime={datetime} timezone={timezone} />
       </span>

@@ -13,7 +13,7 @@ const IngressText = ({ value, centered = false, components = {}, className = '',
   return (
     <Blocks
       value={value}
-      proseClassName="prose-md"
+      variant="prose-medium"
       className={twMerge(`${centered ? 'text-center' : ''}`, className)}
       components={components}
       {...rest}

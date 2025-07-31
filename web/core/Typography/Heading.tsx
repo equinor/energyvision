@@ -2,9 +2,9 @@
 import { PortableText, PortableTextProps } from '@portabletext/react'
 import type { PortableTextBlock } from '@portabletext/types'
 import { Typography, TypographyProps } from './Typography'
-import isEmpty from '../../pageComponents/shared/portableText/helpers/isEmpty'
+import isEmpty from '../../portableText/helpers/isEmpty'
 import { Highlight } from '@/core/Typography/Highlight'
-import { BlockProps } from '../../pageComponents/shared/portableText/Blocks'
+import { BlockProps, ProseVariants } from '../../portableText/Blocks'
 import { twMerge } from 'tailwind-merge'
 
 export type HeadingProps = {
@@ -13,7 +13,7 @@ export type HeadingProps = {
    * If needed to connect with aria-labelledby and such
    */
   id?: string
-  noProse?: boolean
+  proseVariant?: ProseVariants
   serializerClassnames?: {
     largeText?: string
     normal?: string
@@ -22,7 +22,7 @@ export type HeadingProps = {
   }
 } & PortableTextProps &
   TypographyProps &
-  BlockProps
+  Omit<BlockProps, 'variant'>
 
 type DefaultComponentsProps = {
   serializerClassnames?: {
@@ -125,8 +125,7 @@ export const Heading = ({
   group,
   as,
   className,
-  noProse = false,
-  proseClassName = '',
+  proseVariant,
   serializerClassnames,
   id,
   ...props
@@ -178,10 +177,7 @@ export const Heading = ({
             return (
               <WrapperTextTag
                 key={block._key}
-                className={twMerge(
-                  `${noProse ? '' : `prose ${proseClassName} dark:prose-invert`} flex flex-col`,
-                  className,
-                )}
+                className={twMerge(`prose ${proseVariant} flex flex-col`, className)}
                 id={id}
               >
                 {/*@ts-ignore */}

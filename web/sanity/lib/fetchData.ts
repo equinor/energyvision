@@ -1,3 +1,4 @@
+import { cache } from 'react'
 import { getClient } from '../../lib/sanity.server'
 import type { QueryParams } from '../../lib/queryFromSlug'
 import { Flags } from '../../common/helpers/datasetHelpers'
@@ -8,7 +9,8 @@ import { sanityFetch } from '@/sanity/lib/live'
 import { pageDataForHeaderQuery } from '../queries/routes'
 import { homePageDataForHeaderQuery } from '../queries/homePage'
 
-export const getPageData = async (page: { query: string; queryParams: QueryParams }) => {
+//export const getPageData = async (page: { query: string; queryParams: QueryParams }) => {
+export const getPageData = cache(async (page: { query: string; queryParams: QueryParams }) => {
   const pageResults = await sanityFetch({
     query: page.query,
     params: { ...page.queryParams },
@@ -16,7 +18,8 @@ export const getPageData = async (page: { query: string; queryParams: QueryParam
   console.log('pageResults.data', pageResults.data)
 
   return { pageData: pageResults.data }
-}
+})
+
 export const getHeaderAndFooterData = async (queryParams: QueryParams) => {
   const menuQuery = Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery
   const menuResults = await sanityFetch({
@@ -36,7 +39,9 @@ export const getHeaderAndFooterData = async (queryParams: QueryParams) => {
 
   return { menuData: menuResults.data, footerData: footerResults.data }
 }
-export const getPageDataForHeader = async (queryParams: QueryParams) => {
+
+//export const getPageDataForHeader = async (queryParams: QueryParams) => {
+export const getPageDataForHeader = cache(async (queryParams: QueryParams) => {
   console.log('getPageDataForHeader slug', queryParams?.slug)
   console.log('getPageDataForHeader test', !!queryParams?.slug)
   const isHomepage = typeof queryParams?.slug === undefined || queryParams?.slug === ''
@@ -50,7 +55,7 @@ export const getPageDataForHeader = async (queryParams: QueryParams) => {
   })
   console.log('pageResults', pageResults)
   return { pageData: pageResults.data }
-}
+})
 
 export type MagazineQueryParams = {
   lang?: string

@@ -1,16 +1,11 @@
 'use client'
-
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import { useLocale, useTranslations } from 'next-intl'
-import { usePathname } from 'next/navigation'
 import { default as NextLink } from 'next/link'
 import { AllSlugsType, LocalizationSwitch } from '../../pageComponents/shared/LocalizationSwitch'
 import type { MenuData, SimpleMenuData, StickyMenuData } from '../../types/index'
 import { Flags } from '../../common/helpers/datasetHelpers'
 import { languages, defaultLanguage } from '../../languages'
 import { search } from '@equinor/eds-icons'
-import { getLocaleFromName, getNameFromLocale } from '../../lib/localization'
-import Head from 'next/head'
 import { getAllSitesLink } from '../../common/helpers/getAllSitesLink'
 import { Icon } from '@equinor/eds-core-react'
 import { ButtonLink, LogoLink } from '@/core/Link'
@@ -23,11 +18,12 @@ export type HeaderProps = {
   stickyMenuData?: StickyMenuData
 }
 
-const HeadTags = ({ slugs }: { slugs: AllSlugsType }) => {
+/* const HeadTags = ({ slugs }: { slugs: AllSlugsType }) => {
   //const router = useRouter()
   console.log('slugs', slugs)
   const locale = useLocale()
   const pathname = usePathname()
+
   const localization = {
     activeLocale: locale || defaultLanguage.locale,
   }
@@ -40,8 +36,10 @@ const HeadTags = ({ slugs }: { slugs: AllSlugsType }) => {
     localization.activeLocale === defaultLocale
       ? `${activeSlug !== '/' ? activeSlug : ''}`
       : `/${localization.activeLocale}${activeSlug !== '/' ? activeSlug : ''}`
+
+  console.log('defaultSlug', defaultSlug)
+  console.log('canonicalSlug', canonicalSlug)
   return (
-    /** @TODO Add alternate tags to archived news */
     <Head>
       {slugs.length > 1 &&
         slugs.map((slug) => {
@@ -49,6 +47,7 @@ const HeadTags = ({ slugs }: { slugs: AllSlugsType }) => {
           const correctedSlug = (defaultLocale !== locale ? `/${locale}` : '').concat(
             slug.slug !== '/' ? slug.slug : '',
           )
+          console.log('correctedSlug', correctedSlug)
           return <link key={locale} rel="alternate" hrefLang={locale} href={`${correctedSlug}`} />
         })}
 
@@ -59,7 +58,7 @@ const HeadTags = ({ slugs }: { slugs: AllSlugsType }) => {
       <link rel="canonical" href={`${canonicalSlug}`} />
     </Head>
   )
-}
+} */
 
 const AllSites = () => {
   const allSitesURL = getAllSitesLink('external')
@@ -94,7 +93,6 @@ const Header = ({ slugs, menuData, stickyMenuData }: HeaderProps) => {
 
   return (
     <>
-      <HeadTags slugs={slugs} />
       <Topbar stickyMenuData={stickyMenuData}>
         <LogoLink />
         <div

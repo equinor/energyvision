@@ -5,7 +5,7 @@ import { forwardRef, HTMLAttributes, ReactNode, useEffect, useId, useMemo, useRe
 import { PortableTextBlock } from '@portabletext/types'
 import { DisplayModes } from './Carousel'
 import { Heading, Typography } from '@/core/Typography'
-import Blocks from '../../pageComponents/shared/portableText/Blocks'
+import Blocks from '../../portableText/Blocks'
 import { ResourceLink } from '@/core/Link'
 import { getUrlFromAction } from '../../common/helpers'
 import { getLocaleFromName } from '../../lib/localization'
@@ -126,32 +126,18 @@ export const CarouselItem = forwardRef<HTMLLIElement, CarouselItemProps>(functio
               className={`${
                 displayMode === 'scroll'
                   ? 'aspect-9/16'
-                  : `
-              ${overrideHeights ? 'aspect-video' : `${singleHeigths} aspect-9/16 md:aspect-video`}`
+                  : ` ${overrideHeights ? 'aspect-video' : `${singleHeigths} aspect-9/16 md:aspect-video`}`
               }`}
             >
               {children}
             </div>
             <figcaption
-              className={`pt-4 
-                pr-4  
-                w-full
-                h-fit
-                ${displayMode === 'single' ? `${active ? 'opacity-100' : 'opacity-50'}` : ''}
-            `}
+              className={`h-fit w-full pt-4 pr-4 ${displayMode === 'single' ? `${active ? 'opacity-100' : 'opacity-50'}` : ''} `}
             >
-              <div
-                className={`w-full 
-              h-fit 
-              flex 
-              flex-col
-              gap-2
-              last:self-end
-              max-w-text`}
-              >
+              <div className={`flex h-fit w-full max-w-text flex-col gap-2 last:self-end`}>
                 {getTitleElement()}
                 {getContentElement()}
-                {attribution && <span className={`text-white-100 text-base`}>{attribution}</span>}
+                {attribution && <span className={`text-base text-white-100`}>{attribution}</span>}
                 {action && action.label && (
                   <ResourceLink
                     href={getUrlFromAction(action) || ''}
@@ -194,15 +180,7 @@ export const CarouselItem = forwardRef<HTMLLIElement, CarouselItemProps>(functio
         tabIndex: 0,
       })}
       className={envisTwMerge(
-        `relative
-          mt-1
-          focus:outline-hidden
-          focus-visible:outline-dashed
-          focus-visible:outline-2
-          focus-visible:outline-grey-50
-          dark:focus-visible:outline-white-100
-          focus-visible:outline-offset-2
-        ${displayMode === 'single' ? singleVariantClassNames : scrollVariantClassNames}`,
+        `relative mt-1 focus:outline-hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grey-50 focus-visible:outline-dashed dark:focus-visible:outline-white-100 ${displayMode === 'single' ? singleVariantClassNames : scrollVariantClassNames}`,
         className,
       )}
     >

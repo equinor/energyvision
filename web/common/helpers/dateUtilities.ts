@@ -49,3 +49,10 @@ export const getEventDates = (eventDate: EventDateType | undefined) => {
   }
   return { start, end }
 }
+
+export const isDateAfter = (a: string, b: string) => {
+  const dtA = new Date(a).getTime()
+  const dtB = new Date(b).getTime()
+
+  return dtA > dtB
+}

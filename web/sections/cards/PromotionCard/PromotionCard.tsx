@@ -2,7 +2,7 @@
 import { useMediaQuery } from '../../../lib/hooks/useMediaQuery'
 import Card from '@/sections/cards/Card'
 import { FormattedDate } from '@/core/FormattedDateTime'
-import Blocks from '../../../pageComponents/shared/portableText/Blocks'
+import Blocks from '../../../portableText/Blocks'
 import type { CardData } from '../../../types/index'
 import { forwardRef, HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
@@ -35,7 +35,7 @@ const PromotionCard = forwardRef<HTMLAnchorElement, PromotionCardProps>(function
       href={slug}
       image={heroImage?.image}
       variant={variant === 'single' && !isMobile ? 'single' : 'primary'}
-      className={twMerge(`w-full h-full`, className)}
+      className={twMerge(`h-full w-full`, className)}
       imageClassName={imageClassName}
       key={id}
     >

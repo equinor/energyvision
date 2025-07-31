@@ -1,7 +1,7 @@
 import { PortableText } from '@portabletext/react'
 import type { PortableTextBlock } from '@portabletext/types'
 import { Typography, TypographyProps } from './Typography'
-import isEmpty from '../../pageComponents/shared/portableText/helpers/isEmpty'
+import isEmpty from '../../portableText/helpers/isEmpty'
 import { Highlight } from '@/core/Typography/Highlight'
 import { twMerge } from 'tailwind-merge'
 

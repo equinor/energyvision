@@ -2,7 +2,7 @@ import * as React from 'react'
 
 export const NumberedList = ({ children }: { children?: React.ReactNode }) => {
   return (
-    <ol className="list-decimal">
+    <ol className={`list-decimal`}>
       {React.Children.map(children, (listItem) => {
         if (!React.isValidElement(listItem)) return listItem
 

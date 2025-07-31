@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { forwardRef, HTMLAttributes } from 'react'
-import Blocks from '../../pageComponents/shared/portableText/Blocks'
+import Blocks from '../../portableText/Blocks'
 import { PortableTextBlock } from '@portabletext/types'
 import { ImageWithAlt } from '../../types'
 import { ColorKeyTokens } from '../../styles/colorKeyToUtilityMap'
@@ -8,7 +8,7 @@ import { BaseLink, ResourceLink } from '@/core/Link'
 import Image, { Ratios } from '../../pageComponents/shared/SanityImage'
 import { Heading, Typography } from '@/core/Typography'
 import envisTwMerge from '../../twMerge'
-import IngressText from '../../pageComponents/shared/portableText/IngressText'
+import IngressText from '../../portableText/IngressText'
 
 export type Variants = 'primary' | 'secondary'
 
@@ -61,7 +61,7 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
 
   const contentElements = (
     <>
-      {ingress && <IngressText value={ingress} clampLines={3} className={`text-sm py-2`} />}
+      {ingress && <IngressText value={ingress} clampLines={3} className={`py-2 text-sm`} />}
       {content && variant !== 'secondary' && <Blocks value={content} />}
     </>
   )
@@ -69,11 +69,11 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
     <div
       ref={ref}
       className={envisTwMerge(
-        `flex flex-col xl:grid xl:grid-cols-[max-content_auto] xl:items-center gap-4 xl:gap-14 xl:py-6 xl:pr-6`,
+        `flex flex-col gap-4 xl:grid xl:grid-cols-[max-content_auto] xl:items-center xl:gap-14 xl:py-6 xl:pr-6`,
         className,
       )}
     >
-      <div className="relative w-full h-full xl:min-w-[320px] aspect-video max-w-[420px]">
+      <div className="relative aspect-video h-full w-full max-w-[420px] xl:min-w-[320px]">
         {image && (
           <Image
             aria-hidden

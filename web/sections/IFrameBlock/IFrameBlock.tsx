@@ -1,6 +1,6 @@
 import type { IFrameData } from '../../types/index'
 import { BackgroundContainer } from '@/core/Backgrounds'
-import IngressText from '../../pageComponents/shared/portableText/IngressText'
+import IngressText from '../../portableText/IngressText'
 import { Heading } from '@/core/Typography'
 import { IFrame } from '@/core/IFrame/IFrame'
 import { useId } from 'react'
@@ -41,7 +41,7 @@ const IFrameBlock = ({
       {...background}
       {...rest}
       id={anchor}
-      className={envisTwMerge('max-w-viewport mx-auto flex flex-col gap-6 pb-page-content', className)}
+      className={envisTwMerge('mx-auto flex max-w-viewport flex-col gap-6 pb-page-content', className)}
       renderFragmentWhenPossible
     >
       {title && <Heading variant="h3" as="h2" id={headingId} value={title} />}

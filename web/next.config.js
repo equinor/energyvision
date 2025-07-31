@@ -51,20 +51,21 @@ export default withNextIntl(
       // Enables the styled-components SWC transform
       styledComponents: true,
     },
-    publicRuntimeConfig: {
+    /*     publicRuntimeConfig: {
       domain: domain,
       archiveStorageURL: archiveServerHostname,
-    },
+    }, */
     images: {
       remotePatterns: [
         {
-        protocol: 'https',
-        hostname: 'cdn.sanity.io',
+          protocol: 'https',
+          hostname: 'cdn.sanity.io',
         },
         {
-        protocol: 'https',
-        hostname: 'cdn.equinor.com',
-      }],
+          protocol: 'https',
+          hostname: 'cdn.equinor.com',
+        },
+      ],
       dangerouslyAllowSVG: true,
       contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     },

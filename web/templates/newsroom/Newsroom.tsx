@@ -1,7 +1,7 @@
 'use client'
 import { forwardRef, useRef } from 'react'
 import singletonRouter from 'next/router'
-import Blocks from '../../pageComponents/shared/portableText/Blocks'
+import Blocks from '../../portableText/Blocks'
 import type { NewsRoomPageType } from '../../types'
 import { Heading, Typography } from '@/core/Typography'
 import NewsRoomFilters from './Filters/NewsroomFilters'
@@ -166,11 +166,11 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
           />
 
           <div className="flex flex-col gap-8 lg:gap-12">
-            <div className="bg-slate-blue-95 dark py-24">
-              <div className="flex flex-col gap-4  grid-rows-2 mx-auto px-layout-sm max-w-viewport">
+            <div className="dark bg-slate-blue-95 py-24">
+              <div className="mx-auto flex max-w-viewport grid-rows-2 flex-col gap-4 px-layout-sm">
                 {title && <Heading value={title} as="h1" variant="h2" />}
                 {ingress && <Blocks value={ingress} />}
-                <div className="w-full flex flex-col gap-8 lg:flex-row lg:justify-between items-center">
+                <div className="flex w-full flex-col items-center gap-8 lg:flex-row lg:justify-between">
                   <QuickSearch />
                   <List
                     role="navigation"
@@ -198,8 +198,8 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
                 </div>
               </div>
             </div>
-            <div className="w-full flex flex-col lg:grid lg:grid-cols-[27%_1fr] gap-8 lg:gap-12 pb-12 lg:px-layout-sm mx-auto max-w-viewport">
-              <aside className="lg:self-start lg:sticky lg:top-6 flex flex-col gap-4 lg:gap-6 max-lg:px-layout-sm">
+            <div className="mx-auto flex w-full max-w-viewport flex-col gap-8 pb-12 lg:grid lg:grid-cols-[27%_1fr] lg:gap-12 lg:px-layout-sm">
+              <aside className="flex flex-col gap-4 max-lg:px-layout-sm lg:sticky lg:top-6 lg:gap-6 lg:self-start">
                 <NewsRoomFilters />
               </aside>
               <div className="flex flex-col max-lg:px-4">

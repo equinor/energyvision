@@ -1,6 +1,6 @@
-import QuoteComponent from '../../../Quote'
+import QuoteComponent from '../../../pageComponents/shared/Quote'
 import type { PortableTextBlock } from '@portabletext/types'
-import type { QuoteData } from '../../../../../types/index'
+import type { QuoteData } from '../../../types/index'
 import { twMerge } from 'tailwind-merge'
 
 type QuoteRenderer = {
@@ -23,7 +23,7 @@ export const Quote = (quote: BlockProps) => {
   }
 
   return (
-    <div className={twMerge(`px-layout-md my-16 mx-auto clear-both`, className)}>
+    <div className={twMerge(`clear-both mx-auto my-16 px-layout-md`, className)}>
       <QuoteComponent data={data} />
     </div>
   )

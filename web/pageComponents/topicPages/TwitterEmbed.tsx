@@ -1,7 +1,7 @@
 import { PortableTextBlock, TwitterEmbedData } from '../../types/index'
 import { TwitterTimelineEmbed, TwitterTweetEmbed } from 'react-twitter-embed'
 import { BackgroundContainer } from '@/core/Backgrounds'
-import IngressText from '../../pageComponents/shared/portableText/IngressText'
+import IngressText from '../../portableText/IngressText'
 import { Typography } from '@/core/Typography'
 import { toPlainText } from '@portabletext/react'
 import RequestConsentContainer from '@/core/IFrame/RequestConsentContainer'
@@ -43,7 +43,7 @@ const TwitterEmbed = ({ data, anchor, className }: TwitterEmbedProps) => {
         </div>
       )}
       {ingress && (
-        <div className="pt-0 px-0 pb-4">
+        <div className="px-0 pt-0 pb-4">
           <IngressText value={ingress} />
         </div>
       )}

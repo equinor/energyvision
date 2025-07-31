@@ -6,7 +6,7 @@ import Image, { Ratios } from '../../../pageComponents/shared/SanityImage'
 import envisTwMerge from '../../../twMerge'
 import { NewsRoomNewsItem } from '../../../types/algoliaIndexPage'
 import { SanityImageObject } from '@sanity/image-url/lib/types/types'
-import Blocks from '../../../pageComponents/shared/portableText/Blocks'
+import Blocks from '../../../portableText/Blocks'
 
 export type NewsHeadlinerProps = {
   data: NewsRoomNewsItem
@@ -23,10 +23,10 @@ const NewsHeadliner = forwardRef<HTMLLIElement, NewsHeadlinerProps>(function New
     <section ref={ref} {...rest} className={envisTwMerge('', className)}>
       <BaseLink href={slug} className="group flex flex-col gap-2 pb-6">
         {(heroImage?.image?.asset || fallbackImage || thumbnailUrl) && (
-          <div className="aspect-video relative max-h-[324px] mb-2">
+          <div className="relative mb-2 aspect-video max-h-[324px]">
             {thumbnailUrl ? (
               <img
-                className="relative rounded-2xs h-full w-full"
+                className="relative h-full w-full rounded-2xs"
                 src={thumbnailUrl}
                 alt=""
                 style={{ objectFit: 'cover' }}
@@ -51,13 +51,13 @@ const NewsHeadliner = forwardRef<HTMLLIElement, NewsHeadlinerProps>(function New
         )}
         {publishDateTime && (
           <div>
-            <FormattedDate datetime={publishDateTime} uppercase className="text-2xs font-normal leading-normal" />
-            <span className="mx-2 text-2xs font-normal leading-normal pb-1">|</span>
+            <FormattedDate datetime={publishDateTime} uppercase className="text-2xs leading-normal font-normal" />
+            <span className="mx-2 pb-1 text-2xs leading-normal font-normal">|</span>
             <FormattedTime
               small
               timezone
               datetime={publishDateTime}
-              className="text-2xs font-normal leading-normal pb-1"
+              className="pb-1 text-2xs leading-normal font-normal"
             />
           </div>
         )}
@@ -67,9 +67,9 @@ const NewsHeadliner = forwardRef<HTMLLIElement, NewsHeadlinerProps>(function New
           </Typography>
         )}
         {Array.isArray(ingress) ? (
-          <Blocks value={ingress} className="text-sm max-w-prose" />
+          <Blocks value={ingress} className="max-w-prose text-sm" />
         ) : (
-          <Typography variant="body" className="text-sm max-w-prose`">
+          <Typography variant="body" className="max-w-prose` text-sm">
             {ingress}
           </Typography>
         )}

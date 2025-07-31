@@ -6,26 +6,20 @@ import { FormattedDateTime } from '@/core/FormattedDateTime'
 import { Icon } from '@equinor/eds-core-react'
 import { calendar } from '@equinor/eds-icons'
 import DefaulHeroImage from '../../pageComponents/shared/Hero/DefaultHeroImage'
-import IngressText from '../../pageComponents/shared/portableText/IngressText'
+import IngressText from '../../portableText/IngressText'
 import LatestNews from '../../pageComponents/news/LatestNews'
 import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
 import { getFullUrl } from '../../common/helpers/getFullUrl'
 import { metaTitleSuffix } from '../../languages'
 import type { NewsSchema } from '../../types/index'
 import { toPlainText } from '@portabletext/react'
-import Blocks from '../../pageComponents/shared/portableText/Blocks'
+import Blocks from '../../portableText/Blocks'
 import { twMerge } from 'tailwind-merge'
 import RelatedContent from '../../pageComponents/shared/RelatedContent'
-import Footnotes from '../../pageComponents/shared/portableText/components/Footnotes'
+import Footnotes from '../../portableText/components/Footnotes'
 import { useLocale } from 'next-intl'
 import { IFrame } from '@/core/IFrame/IFrame'
-
-const isDateAfter = (a: string, b: string) => {
-  const dtA = new Date(a).getTime()
-  const dtB = new Date(b).getTime()
-
-  return dtA > dtB
-}
+import { isDateAfter } from '@/common/helpers/dateUtilities'
 
 type ArticleProps = {
   data: NewsSchema
@@ -38,7 +32,7 @@ const NewsPage = ({ data: news }: ArticleProps) => {
   const pathname = usePathname()
   const locale = useLocale()
 
-  const fullUrl = getFullUrl(pathname, slug, locale)
+  const fullUrl = '' //TODO solve domain getFullUrl(pathname, slug, locale)
 
   const {
     publishDateTime,
@@ -65,21 +59,6 @@ const NewsPage = ({ data: news }: ArticleProps) => {
 
   return (
     <>
-      <NextSeo
-        title={`${documentTitle || title} - ${metaTitleSuffix}`}
-        description={metaDescription}
-        openGraph={{
-          title: title,
-          description: metaDescription,
-          type: 'article',
-          article: {
-            publishedTime: publishDateTime,
-            modifiedTime: modifiedDate,
-          },
-          url: fullUrl,
-          images: openGraphImages,
-        }}
-      ></NextSeo>
       <NewsArticleJsonLd
         url={fullUrl}
         title={title}
@@ -106,7 +85,7 @@ const NewsPage = ({ data: news }: ArticleProps) => {
                 <div className="my-12 grid grid-cols-[min-content_1fr] gap-4">
                   <Icon data={calendar} className="text-white-100" />
                   <div className="text-base leading-planetary wrap-break-word text-white-100">
-                    <FormattedDateTime uppercase datetime={publishDateTime} showTimezone />
+                    <FormattedDateTime uppercase datetime={publishDateTime} />
                     {
                       // publishDateTime + 5 minutes
                       isDateAfter(
@@ -138,12 +117,7 @@ const NewsPage = ({ data: news }: ArticleProps) => {
           )}
 
           {content && content.length > 0 && (
-            <Blocks
-              value={formattedContent}
-              proseClassName="prose-article"
-              className="mx-auto max-w-viewport p-0"
-              includeFootnotes
-            />
+            <Blocks value={formattedContent} variant="prose-article" includeFootnotes />
           )}
           <div className="mx-auto mt-8 mb-2 max-w-viewport px-layout-lg">
             <Footnotes blocks={[...ingress, ...content]} />

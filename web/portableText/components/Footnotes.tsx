@@ -28,7 +28,8 @@ function Footnotes({ blocks }: { blocks: PortableTextBlock[] }) {
   return (
     <footer
       role="doc-endnotes"
-      className="prose prose-md py-2 text-sm lg:text-xs border-y-[1px] border-autumn-storm-40 italic"
+      data-prose="medium"
+      className="border-y-[1px] border-autumn-storm-40 py-2 text-sm italic lg:text-xs"
     >
       <h2 className="sr-only" id="footnote-label">
         {intl('footnotes')}
@@ -56,26 +57,7 @@ function Footnotes({ blocks }: { blocks: PortableTextBlock[] }) {
               />
               <BaseLink
                 href={`#${`back_ref_${_key}`}`}
-                className="
-                w-fit
-                h-fit
-                px-2 
-                hover:no-underline
-                text-sm
-                lg:text-2xs 
-                font-thin
-                relative
-                before:cursor-pointer
-                before:content-['']
-                before:absolute
-                before:w-[48px]
-                before:aspect-square
-                before:top-1/2
-                before:left-1/2
-                before:translate-y-[-50%]
-                before:translate-x-[-50%]
-                before:rounded-[100%]
-                "
+                className="relative h-fit w-fit px-2 text-sm font-thin before:absolute before:top-1/2 before:left-1/2 before:aspect-square before:w-[48px] before:translate-x-[-50%] before:translate-y-[-50%] before:cursor-pointer before:rounded-[100%] before:content-[''] hover:no-underline lg:text-2xs"
                 aria-label={intl('back_to_content')}
                 role="doc-backlink"
                 title={intl('back_to_content')}
