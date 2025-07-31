@@ -1,4 +1,4 @@
-export * from './Link'
+export * from '../prose/Link'
 export * from './InternalLink'
 export * from './BulletList'
 export * from './NumberedList'

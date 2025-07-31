@@ -493,17 +493,17 @@ treat the value and modifier as a single value:
     @apply list-decimal;
   }
 
-  .prose :where(li):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+  /*   .prose :where(li):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
     @apply my-2;
   }
   .prose :where(ul > li):not(:where([class~='not-prose'], [class~='not-prose'] *)),
   .prose :where(ol > li):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
     @apply ml-2 pl-1.5;
-  }
+  } */
   /* .prose :where(.prose>ul>li p):not(:where([class~=not-prose],[class~=not-prose] *)) {
 
 } */
-  .prose :where(.prose > ul > li > :first-child):not(:where([class~='not-prose'], [class~='not-prose'] *)),
+  /*   .prose :where(.prose > ul > li > :first-child):not(:where([class~='not-prose'], [class~='not-prose'] *)),
   .prose :where(.prose > ol > li > :first-child):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
     @apply mt-0;
   }
@@ -511,7 +511,7 @@ treat the value and modifier as a single value:
   .prose :where(.prose > ul > li > :last-child):not(:where([class~='not-prose'], [class~='not-prose'] *)),
   .prose :where(.prose > ol > li > :last-child):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
     @apply mt-0;
-  }
+  } */
   .prose :where(ul ul, ul ol, ol ul, ol ol):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
     @apply my-3 pl-6;
   }
