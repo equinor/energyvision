@@ -23,7 +23,6 @@ RUN pnpm install --filter ./web... --frozen-lockfile
 # ---------- BUILD LAYER ----------
 FROM base AS builder
 WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
 COPY --from=deps /app/web/node_modules ./web/node_modules
 COPY package.json pnpm-lock.yaml tsconfig.base.json satellitesConfig.js FeatureFlags.js ./
 COPY web web
