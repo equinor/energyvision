@@ -1,6 +1,5 @@
 'use client'
 import { ElementType, forwardRef, HTMLAttributes } from 'react'
-import { PortableTextBlock } from 'next-sanity'
 
 export type ListProps = {
   /**
@@ -10,8 +9,7 @@ export type ListProps = {
   as?: ElementType
   children?: React.ReactNode
   className?: string
-} & HTMLAttributes<HTMLUListElement | HTMLOListElement> &
-  PortableTextBlock
+} & HTMLAttributes<HTMLUListElement | HTMLOListElement>
 /** Regular link style for use*/
 export const List = forwardRef<HTMLParagraphElement, ListProps>(function List(
   { children, as: providedAs, className = '' },

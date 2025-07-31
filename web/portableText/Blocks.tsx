@@ -6,27 +6,33 @@ import {
   PortableTextMarkComponent,
   PortableTextBlockComponent,
   PortableTextTypeComponent,
+  PortableTextListComponent,
 } from '@portabletext/react'
 import { PortableTextBlock, PortableTextBlockStyle } from '@portabletext/types'
-import { FigureWithLayout, Quote, ExternalLink, InternalLink, BulletList, NumberedList } from './components'
+import { FigureWithLayout, Quote } from './components'
 import { FactBox } from '@/sections/FactBox/FactBox'
 import { twMerge } from 'tailwind-merge'
 import { Highlight } from '@/core/Typography/Highlight'
 import { IFrame } from '@/core/IFrame/IFrame'
 import { Footnote } from './components/Footnote'
 import { Typography } from '@/core/Typography'
+import ProseBlock from './prose/Block'
+import ProseHeading from './prose/Heading'
+import { Link as ProseLink } from './prose/Link'
+import ProseList from './prose/List'
 
 export type BlockType = Record<PortableTextBlockStyle, PortableTextBlockComponent | undefined>
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type MarkType = Record<string, PortableTextMarkComponent<any> | undefined>
 export type TypesType = Record<string, PortableTextTypeComponent<any> | undefined>
+export type ListType = Record<'number' | 'bullet', PortableTextListComponent>
 
 type TypeProps = {
   value?: any
   children?: React.ReactNode
 }
 
-const defaultBlockSerializers = {
+const defaultBlockSerializers: BlockType = {
   normal: ({ children }: TypeProps) => <Typography>{children}</Typography>,
   smallText: ({ children }: TypeProps) => <p className="text-sm">{children}</p>,
   largeText: ({ children }: TypeProps) => <p className="text-2xl leading-snug">{children}</p>,
@@ -34,55 +40,33 @@ const defaultBlockSerializers = {
     return <p className={`text-4xl leading-planetary font-medium lg:text-5xl 2xl:text-8xl`}>{children}</p>
   },
 }
-const proseBlockSerializers = {
-  normal: ({ children }: TypeProps) => (
-    <Typography group="prose" variant="body">
-      {children}
-    </Typography>
-  ),
-  smallText: ({ children }: TypeProps) => (
-    <Typography group="prose" variant="body" className="text-sm">
-      {children}
-    </Typography>
-  ),
-  largeText: ({ children }: TypeProps) => (
-    <Typography group="prose" variant="body" className="text-2xl leading-snug">
-      {children}
-    </Typography>
-  ),
+const proseBlockSerializers: BlockType = {
+  normal: ({ children }: TypeProps) => <ProseBlock textVariant="normal">{children}</ProseBlock>,
+  smallText: ({ children }: TypeProps) => <ProseBlock textVariant="small">{children}</ProseBlock>,
+  largeText: ({ children }: TypeProps) => <ProseBlock textVariant="large">{children}</ProseBlock>,
   extraLargeText: ({ children }: TypeProps) => {
+    return <ProseBlock textVariant="extraLarge">{children}</ProseBlock>
+  },
+  h2: ({ children }: TypeProps) => <ProseHeading as="h2">{children}</ProseHeading>,
+  h3: ({ children }: TypeProps) => <ProseHeading as="h3">{children}</ProseHeading>,
+}
+const defaultMarkSerializers: MarkType = {
+  sub: ({ children }: TypeProps) => <sub>{children}</sub>,
+  sup: ({ children }: TypeProps) => <sup>{children}</sup>,
+  s: ({ children }: TypeProps) => <s>{children}</s>,
+  link: ({ children, value }: any) => {
     return (
-      <Typography
-        group="prose"
-        variant="body"
-        className={`text-4xl leading-planetary font-medium lg:text-5xl 2xl:text-8xl`}
-      >
+      <ProseLink type="externalUrl" value={value}>
         {children}
-      </Typography>
+      </ProseLink>
     )
   },
-  h2: ({ children }: TypeProps) => (
-    <Typography as="h2" variant="h2" group="prose">
-      {children}
-    </Typography>
-  ),
-  h3: ({ children }: TypeProps) => (
-    <Typography as="h3" variant="h3" group="prose">
-      {children}
-    </Typography>
-  ),
-}
-const defaultMarkSerializers = {
-  sub: ({ children }: TypeProps) => <sub>{children}</sub>,
-  sup: ({ children }: TypeProps) => <sup>{children}</sup>,
-  s: ({ children }: TypeProps) => <s>{children}</s>,
-  //TODO find proper type
-  link: ({ children, value }: any) => {
-    return <ExternalLink value={value}>{children}</ExternalLink>
-  },
-  //TODO find proper type
   internalLink: ({ children, value }: any) => {
-    return <InternalLink value={value}>{children}</InternalLink>
+    return (
+      <ProseLink type="internalUrl" value={value}>
+        {children}
+      </ProseLink>
+    )
   },
   footnote: () => null,
   highlight: ({ children }: TypeProps) => {
@@ -90,28 +74,14 @@ const defaultMarkSerializers = {
   },
   strong: ({ children }: any) => <strong className="font-bold text-inherit">{children}</strong>,
 }
-/* const proseMarkSerializers = {
-  sub: ({ children }: TypeProps) => <sub>{children}</sub>,
-  sup: ({ children }: TypeProps) => <sup>{children}</sup>,
-  s: ({ children }: TypeProps) => <s>{children}</s>,
-  //TODO find proper type
-  link: ({ children, value }: any) => {
-    return <ExternalLink value={value}>{children}</ExternalLink>
-  },
-  //TODO find proper type
-  internalLink: ({ children, value }: any) => {
-    return <InternalLink value={value}>{children}</InternalLink>
-  },
-  footnote: () => null,
-  highlight: ({ children }: TypeProps) => {
-    return <Highlight>{children}</Highlight>
-  },
-  strong: ({ children }: any) => <strong className="font-bold text-inherit">{children}</strong>,
-} */
 
-const defaultListSerializers = {
-  bullet: BulletList,
-  number: NumberedList,
+const defaultListSerializers: ListType = {
+  bullet: ({ children }: any) => {
+    return <ProseList as="ul">{children}</ProseList>
+  },
+  number: ({ children }: any) => {
+    return <ProseList as="ol">{children}</ProseList>
+  },
 }
 /* const proseListSerializers = {
   bullet: BulletList,
@@ -221,17 +191,10 @@ export default function Blocks({
           // Otherwise, render the group of text blocks we have
           const value = div
           div = []
-          /*           const proseGroup: Partial<Record<Variants, string>> = {
-            default: 'group/prose',
-            article: 'group/article',
-            campaign: 'group/campaign',
-            medium: 'group/medium',
-          } */
 
           return (
             <div
               key={block._key}
-              /*               {...(!noProse && { 'data-prose': variant })} */
               className={twMerge(`${variant === 'no-prose' ? '' : `prose ${variant}`}`, className)}
               id={id}
             >
