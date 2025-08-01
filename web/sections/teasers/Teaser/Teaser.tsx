@@ -72,15 +72,14 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
         )}
         {actions && (
           <div className="flex flex-col gap-8">
-            {actions?.map((action) => {
+            {actions?.map((action, idx) => {
               const url = action && getUrlFromAction(action)
-
               return (
                 <ResourceLink
                   href={url as string}
                   {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
                   type={action.type}
-                  key={action.id}
+                  key={action.id || idx}
                   variant="fit"
                   extension={action.extension}
                   showExtensionIcon

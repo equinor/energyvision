@@ -3,7 +3,6 @@ import { useCallback, useId } from 'react'
 import { set } from 'sanity'
 import type { ObjectInputProps, PreviewProps } from 'sanity'
 import styled from 'styled-components'
-import { getColorForTheme } from './themeColors'
 import { EdsIcon } from '../../../icons'
 import { text_field } from '@equinor/eds-icons'
 
