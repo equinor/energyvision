@@ -11,7 +11,7 @@ import type { LinkSelector } from '../../linkSelector'
 import type { ColorSelectorValue } from '../../../components/ColorSelector'
 import { LeftAlignedImage, RightAlignedImage } from '../../../../icons'
 import { RadioIconSelector } from '../../../components'
-import { fromLargerTextThemeColors, fromNormalTextThemeColors } from '../../../components/ThemeSelector'
+import { fromLargerTextThemeColors, fromNormalTextThemeColors } from '../../textTeaser'
 import singleItemArray from '../../singleItemArray'
 
 const blockContentType = configureBlockContent({

@@ -7,7 +7,7 @@ import { toPlainText } from '@portabletext/react'
 import { Heading, Typography } from '../../core/Typography'
 import { twMerge } from 'tailwind-merge'
 import IngressText from '../../pageComponents/shared/portableText/IngressText'
-import Image, { Ratios } from '../../pageComponents/shared/SanityImage'
+import Image, { getSmallerThanPxLgSizes } from '../../core/SanityImage/SanityImage'
 
 type AccordionBlockProps = {
   data: AccordionData
@@ -39,8 +39,14 @@ const AccordionBlock = ({ data, anchor, className }: AccordionBlockProps) => {
         )}
       >
         {image?.asset && (
-          <div className="w-[200px]">
-            <Image image={image} maxWidth={200} aspectRatio={Ratios.ONE_TO_ONE} className="rounded-full" />
+          <div className="w-1/4">
+            <Image
+              image={image}
+              maxWidth={570}
+              sizes={getSmallerThanPxLgSizes()}
+              aspectRatio={'1:1'}
+              className="rounded-full aspect-square"
+            />
           </div>
         )}
         {title &&
