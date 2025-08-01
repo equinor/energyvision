@@ -381,122 +381,10 @@ treat the value and modifier as a single value:
 }
 
 @layer components {
-  /** PROSE: */
-  /*   .prose :where(p):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
-    margin-top: 1.25em;
-    margin-bottom: 1.25em;
-    @apply my-5
-  } */
-
-  /*   .prose :where(.prose > :first-child):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
-    @apply mt-0;
-  }
-
-  .prose :where(.prose > :last-child):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
-    @apply mb-0;
-  } */
-
-  /* Should be solved by the link serializer? */
-  /* .prose :where(a):not(:where([class~=not-prose],[class~=not-prose] *)) {
-    color: var(--tw-prose-links);
-    text-decoration: underline;
-    font-weight: 500
-} */
-
-  /*   .prose :where(picture > img):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
-    margin-top: 0;
-    margin-bottom: 0;
-  }
-
-  .prose :where(video):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
-    margin-top: 2em;
-    margin-bottom: 2em;
-  } */
-
-  /*   .prose-article
-    :where(p):not(:where([class~='not-prose'], [class~='not-prose'] *))
-    .prose
-    :where(p):not(:where([class~='not-prose'], [class~='not-prose'] *))
-    .prose
-    :where(.prose > :first-child):not(:where([class~='not-prose'], [class~='not-prose'] *))
-    .prose
-    :where(ol):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
-    list-style-type: decimal;
-    margin-top: 1.25em;
-    margin-bottom: 1.25em;
-    padding-left: 1.625em;
-  } */
-
-  /*   .prose :where(h2){
-    @apply text-xl;
-  }
-  .prose :where(h3):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
-    @apply text-lg;
-  }
-  .prose :where(h2 + *):not(:where([class~='not-prose'], [class~='not-prose'] *)),
-  .prose :where(h3 + *):not(:where([class~='not-prose'], [class~='not-prose'] *)),
-  .prose :where(h4 + *):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
-    @apply mt-0;
-  } */
-  .prose :where(ul, ol):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
-    @apply my-5 pl-6;
-  }
-  .prose :where(ul):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
-    @apply list-disc;
-  }
-  .prose :where(ol):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
-    @apply list-decimal;
-  }
-  /* Get rid of portableText components for ol and ul? Must fix highlight here then */
-
-  .prose :where(ol ol):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
-    list-style-type: lower-alpha;
-  }
-
-  .prose :where(ol ol ol):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
-    list-style-type: lower-roman;
-  }
-
-  .prose :where(ol[type='A']):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
-    list-style-type: upper-alpha;
-  }
-
-  .prose :where(ol[type='a']):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
-    list-style-type: lower-alpha;
-  }
-
-  .prose :where(ol[type='A s']):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
-    list-style-type: upper-alpha;
-  }
-
-  .prose :where(ol[type='a s']):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
-    list-style-type: lower-alpha;
-  }
-
-  .prose :where(ol[type='I']):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
-    list-style-type: upper-roman;
-  }
-
-  .prose :where(ol[type='i']):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
-    list-style-type: lower-roman;
-  }
-
-  .prose :where(ol[type='I s']):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
-    list-style-type: upper-roman;
-  }
-
-  .prose :where(ol[type='i s']):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
-    list-style-type: lower-roman;
-  }
-
-  .prose :where(ol[type='1']):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
-    @apply list-decimal;
-  }
-
   /*   .prose :where(li):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
     @apply my-2;
-  }
-  .prose :where(ul > li):not(:where([class~='not-prose'], [class~='not-prose'] *)),
+  } */
+  /*   .prose :where(ul > li):not(:where([class~='not-prose'], [class~='not-prose'] *)),
   .prose :where(ol > li):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
     @apply ml-2 pl-1.5;
   } */
@@ -506,15 +394,15 @@ treat the value and modifier as a single value:
   /*   .prose :where(.prose > ul > li > :first-child):not(:where([class~='not-prose'], [class~='not-prose'] *)),
   .prose :where(.prose > ol > li > :first-child):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
     @apply mt-0;
-  }
+  } */
 
-  .prose :where(.prose > ul > li > :last-child):not(:where([class~='not-prose'], [class~='not-prose'] *)),
+  /*   .prose :where(.prose > ul > li > :last-child):not(:where([class~='not-prose'], [class~='not-prose'] *)),
   .prose :where(.prose > ol > li > :last-child):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
     @apply mt-0;
-  } */
+  }
   .prose :where(ul ul, ul ol, ol ul, ol ol):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
     @apply my-3 pl-6;
-  }
+  } */
 
   /*   .prose :where(ol > li):not(:where([class~='not-prose'], [class~='not-prose'] *))::marker {
     font-weight: 400;
@@ -532,15 +420,6 @@ treat the value and modifier as a single value:
   .prose-article :where(h3):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
     @apply px-layout-lg text-md;
   } */
-  .prose-article :where(ol):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
-    @apply mx-layout-lg;
-  }
-  .prose-article :where(ul):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
-    @apply mx-layout-lg;
-  }
-  .prose-article :where(ul ul, ul ol, ol ul, ol ol):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
-    @apply mx-0;
-  }
   /*   .prose-article :where(p):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
     @apply px-layout-lg;
   } */

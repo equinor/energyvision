@@ -1,5 +1,5 @@
 module.exports = {
-  extends: ['../.eslintrc.cjs', 'plugin:@next/next/recommended'],
+  extends: ['plugin:@next/next/recommended', '../.eslintrc.cjs'],
   rules: {
     '@next/next/no-html-link-for-pages': ['warn', 'web/pages'],
   },

@@ -93,11 +93,11 @@ const defaultSerializers = {
     //@ts-ignore:todo
     positionedInlineImage: (props) => <FigureWithLayout {...props} />,
     //@ts-ignore:todo
-    pullQuote: (props) => <Quote {...props} className="not-prose" />,
+    pullQuote: (props) => <Quote {...props} />,
     //@ts-ignore:todo
     basicIframe: (props) => {
       const { value } = props
-      return <IFrame {...value} className="not-prose mx-auto px-layout-md py-14" />
+      return <IFrame {...value} className="mx-auto px-layout-md py-14" />
     },
   },
 }

@@ -50,6 +50,10 @@ export default async function LocaleLayout({ children, params }: { children: Rea
       lang={locale}
       className={`${equinorRegular.className} ${equinorVariableWoff.className} ${equinorVariableWoff2.className}`}
     >
+      <head>
+        {/*eslint-disable-next-line react/no-unknown-property*/}
+        <link rel="stylesheet" precedence="default" href="https://cdn.eds.equinor.com/font/equinor-font.css" />
+      </head>
       <body>
         {/* The <Toaster> component is responsible for rendering toast notifications used in /app/client-utils.ts and /sections/DraftMode/DraftModeToast.tsx */}
         <Toaster />
