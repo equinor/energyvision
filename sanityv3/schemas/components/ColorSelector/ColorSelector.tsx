@@ -3,6 +3,7 @@ import { useCallback } from 'react'
 import { set } from 'sanity'
 import type { ObjectInputProps } from 'sanity'
 import { defaultColors } from '../../defaultColors'
+import styled from 'styled-components'
 
 const Circle = styled.div<{ $active: boolean }>`
   display: inline-block;
