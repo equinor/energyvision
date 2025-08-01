@@ -2,7 +2,7 @@ import { Accordion as EnvisAccordion } from '@core/Accordion'
 import type { AccordionListData } from '../../types/index'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
 import CallToActions from '@sections/CallToActions'
-import Image from '../../pageComponents/shared/SanityImage'
+import Image, { getSmallerThanPxLgSizes } from '../../core/SanityImage/SanityImage'
 
 const { Item, Header, Content } = EnvisAccordion
 
@@ -23,7 +23,15 @@ const Accordion = ({ data, id, hasSectionTitle = true }: AccordionProps) => {
           <Item key={id} value={id}>
             <Header hasSectionTitle={hasSectionTitle}>{itemTitle}</Header>
             <Content>
-              {image && image?.asset && <Image image={image} className="aspect-video rounded-xs max-w-72" />}
+              {image && image?.asset && (
+                <Image
+                  maxWidth={570}
+                  aspectRatio="16:9"
+                  sizes={getSmallerThanPxLgSizes()}
+                  image={image}
+                  className="aspect-video rounded-xs max-w-72"
+                />
+              )}
               {content && <Blocks value={content} />}
               {links && <CallToActions overrideButtonStyle callToActions={links} />}
             </Content>
