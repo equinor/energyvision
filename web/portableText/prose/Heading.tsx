@@ -14,7 +14,7 @@ export const Heading = forwardRef<HTMLHeadingElement, HeadingProps>(function Hea
   ref,
 ) {
   const headingVariants: Record<string, string> = {
-    h2: 'my-2 text-xl prose-article:text-lg prose-article:px-layout-lg ',
+    h2: 'my-2 text-xl prose-article:text-lg prose-article:px-layout-lg',
     h3: 'text-lg prose-article:px-layout-lg prose-article:text-md',
   }
   return (
@@ -24,7 +24,7 @@ export const Heading = forwardRef<HTMLHeadingElement, HeadingProps>(function Hea
       as={as}
       group="heading"
       variant="unstyled"
-      className={`${headingVariants[as as string]} *:first:mt-0`}
+      className={`${headingVariants[as as string]} `}
     >
       {children}
     </Typography>
