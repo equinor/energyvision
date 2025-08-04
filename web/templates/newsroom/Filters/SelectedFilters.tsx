@@ -71,7 +71,6 @@ const SelectedFilters = forwardRef<HTMLDivElement, SelectedFiltersProps>(functio
               </span>
               <span>{item.label}</span>
               <TransformableIcon
-                aria-hidden
                 className="text-norwegian-woods-100 size-7"
                 iconData={close_circle_outlined}
               />

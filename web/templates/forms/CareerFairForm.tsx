@@ -344,7 +344,7 @@ const CareerFairForm = () => {
                 <p role="alert" className="text-slate-80 border border-clear-red-100 px-6 py-4flex gap-2 font-semibold">
                   {/*@ts-ignore: TODO: types*/}
                   <span className="mt-1">{errors.root.notCompletedCaptcha.message}</span>
-                  <Icon data={error_filled} aria-hidden="true" />
+                  <Icon data={error_filled} aria-label="Error Icon" />
                 </p>
               )}
             </div>

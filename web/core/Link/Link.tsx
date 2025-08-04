@@ -31,7 +31,6 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
       {children}
       {type === 'externalUrl' && (
         <ArrowRight
-          aria-hidden="false"
           aria-label={`, ${intl.formatMessage({ id: 'externalLink', defaultMessage: 'External link' })}`}
           className="text-no inline-block pb-1 -rotate-45 origin-center"
         />
