@@ -32,7 +32,7 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
   const { title, location, eventDate, slug, ingress } = data
   const { start, end } = getEventDates(eventDate)
   const plainTitle = title ? toPlainText(title as PortableTextBlock[]) : ''
-  const metaClassNames = `h-full grid grid-cols-[24px_auto] gap-sm items-center py-2`
+
   const t = useTranslations()
 
   const variantClassName: Partial<Record<Variants, string>> = {
@@ -64,7 +64,7 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
           </div>
         )}
         {location && (
-          <div className={metaClassNames}>
+          <div className={`gap-sm grid h-full grid-cols-[24px_auto] items-center py-2`}>
             <Icon data={world} color={'currentColor'} className="text-2xs text-norwegian-woods-100" />
             <span className="text-xs">{location}</span>
           </div>
@@ -72,12 +72,12 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
 
         {start && end ? (
           <div className={`flex h-full items-center gap-1 py-2`}>
-            <FormattedTime icon datetime={start} small />
+            <FormattedTime icon datetime={start} className="text-xs" />
             <span className="w-max">-</span>
-            <FormattedTime datetime={end} showTimezone small />
+            <FormattedTime datetime={end} showTimezone className="text-xs" />
           </div>
         ) : (
-          <div className={metaClassNames}>
+          <div className={`gap-sm grid h-full grid-cols-[24px_auto] items-center py-2`}>
             <TimeIcon />
             {t('tba')}
           </div>

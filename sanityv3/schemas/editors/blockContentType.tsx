@@ -6,7 +6,7 @@ import { Flags } from '../../src/lib/datasetHelpers'
 import { ExternalLinkRenderer, SubScriptRenderer, SuperScriptRenderer } from '../components'
 import routes from '../routes'
 import { defaultColors } from '../defaultColors'
-import { strictExternal, warnHttpExternal, warnHttpOrNotValidSlugExternal } from '../validations/validateSlug'
+import { warnHttpOrNotValidSlugExternal } from '../validations/validateSlug'
 
 export type BlockContentProps = {
   h2?: boolean

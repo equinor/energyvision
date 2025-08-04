@@ -1,6 +1,2 @@
-export * from '../prose/Link'
-export * from './InternalLink'
-export * from './BulletList'
-export * from './NumberedList'
 export * from './news/FigureWithLayout'
 export * from './news/Quote'

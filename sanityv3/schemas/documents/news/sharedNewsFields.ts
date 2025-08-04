@@ -2,9 +2,7 @@ import { configureBlockContent } from '../../editors/blockContentType'
 import { validateCharCounterEditor } from '../../validations/validateCharCounterEditor'
 import type { Rule, ValidationContext } from 'sanity'
 
-const blockContentType = configureBlockContent({
-  highlight: true,
-})
+const blockContentType = configureBlockContent()
 const ingressBlockContentType = configureBlockContent({
   h2: false,
   h3: false,

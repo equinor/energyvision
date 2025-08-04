@@ -8,7 +8,6 @@ const richTextType = configureBlockContent({
   lists: false,
   attachment: false,
   smallText: false,
-  highlight: true,
 })
 
 export default {

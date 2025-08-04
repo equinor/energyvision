@@ -1,6 +1,8 @@
 import { HTMLAttributes } from 'react'
 import { TimeIcon } from '@/core/FormattedDateTime'
 import { useFormatter } from 'next-intl'
+import envisTwMerge from '@/twMerge'
+import { twMerge } from 'tailwind-merge'
 
 export type FormattedTimeProps = {
   datetime: string
@@ -14,14 +16,16 @@ const FormattedTime = ({
   icon = false,
   small = false,
   showTimezone = false,
+  className = '',
   ...rest
 }: FormattedTimeProps): JSX.Element => {
   const date = new Date(datetime)
   const format = useFormatter()
+  console.log('className', className)
   return (
-    <span className="text-xs inline-flex items-center space-x-2" {...rest}>
+    <span {...rest} className={twMerge('flex items-center gap-x-2 text-base', className)}>
       {icon && <TimeIcon />}
-      <span className={`shrink box-content ${small ? 'mt-1' : 'mt-0'}`}>
+      <span className={`box-content shrink ${small ? 'mt-1' : 'mt-0'}`}>
         <time suppressHydrationWarning dateTime={datetime}>
           {format.dateTime(date, { hour: 'numeric', minute: 'numeric', hour12: false }) + ' '}
         </time>

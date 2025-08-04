@@ -1,5 +1,6 @@
 import { FormattedTime, FormattedTimeProps, FormattedDate } from '@/core/FormattedDateTime'
 import { DateProps, DateIcon } from './shared'
+import { twMerge } from 'tailwind-merge'
 
 const FormattedDateTime = ({
   datetime,
@@ -7,16 +8,17 @@ const FormattedDateTime = ({
   month = 'long',
   day = '2-digit',
   icon = false,
-  timezone,
+  showTimezone = false,
   uppercase = false,
+  className = '',
   ...rest
 }: DateProps & FormattedTimeProps): JSX.Element => {
   return (
-    <span className={`inline-flex items-center space-x-2 ${uppercase ? 'uppercase' : ''}`} {...rest}>
+    <span {...rest} className={twMerge(`flex items-center space-x-2 ${uppercase ? 'uppercase' : ''}`, className)}>
       {icon && <DateIcon />}
-      <span className="box-content shrink space-x-3">
+      <span className="box-content flex shrink gap-x-3">
         <FormattedDate uppercase={uppercase} datetime={datetime} year={year} month={month} day={day} />
-        <FormattedTime datetime={datetime} timezone={timezone} />
+        <FormattedTime datetime={datetime} showTimezone={showTimezone} />
       </span>
     </span>
   )
