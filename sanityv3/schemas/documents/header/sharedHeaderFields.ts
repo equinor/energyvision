@@ -201,8 +201,7 @@ const heroImage = {
       const { parent } = context as unknown as DocumentType
       //@ts-ignore:add _type?
       if (
-        (parent?.heroType === HeroTypes.FIFTY_FIFTY ||
-          (parent?._type !== 'homePage' && parent?.heroType === HeroTypes.FULL_WIDTH_IMAGE)) &&
+        (parent?.heroType === HeroTypes.FIFTY_FIFTY || parent?.heroType === HeroTypes.FULL_WIDTH_IMAGE) &&
         !value.image.asset
       )
         return 'Field is required'
