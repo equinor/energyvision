@@ -126,7 +126,7 @@ const heroRatio = {
       if (parent?.heroType === HeroTypes.FULL_WIDTH_IMAGE && !value) return 'Field is required'
       return true
     }),
-  initialValue: '0.5',
+  initialValue: 'narrow',
   fieldset: 'header',
 }
 
@@ -199,6 +199,7 @@ const heroImage = {
   validation: (Rule: Rule) =>
     Rule.custom((value: ImageWithAltAndCaption, context: ValidationContext) => {
       const { parent } = context as unknown as DocumentType
+      //@ts-ignore:add _type?
       if (
         (parent?.heroType === HeroTypes.FIFTY_FIFTY || parent?.heroType === HeroTypes.FULL_WIDTH_IMAGE) &&
         !value.image.asset

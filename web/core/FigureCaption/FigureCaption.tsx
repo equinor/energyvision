@@ -9,9 +9,7 @@ export const FigureCaption = ({ size = 'small', children, className, ...rest }: 
   return (
     <figcaption
       className={twMerge(
-        `max-w-prose mt-2 leading-misty text-slate dark:text-white-100 ${
-          size === 'small' ? 'text-xs' : 'text-base'
-        } figCaption`,
+        `max-w-prose mt-2 leading-misty text-slate dark:text-white-100 ${size === 'small' ? 'text-xs' : 'text-base'}`,
         className,
       )}
       {...rest}
