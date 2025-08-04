@@ -24,7 +24,7 @@ export const Heading = forwardRef<HTMLHeadingElement, HeadingProps>(function Hea
       as={as}
       group="heading"
       variant="unstyled"
-      className={`${headingVariants[as as string]} `}
+      className={`dark:text-white-100 ${headingVariants[as as string]} `}
     >
       {children}
     </Typography>

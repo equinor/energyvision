@@ -3,7 +3,7 @@
 import { forwardRef, HTMLAttributes, useId, useState } from 'react'
 import { PortableTextBlock } from '@portabletext/types'
 import { ImageWithAlt, LinkData } from '../../types'
-import Image from '../../pageComponents/shared/SanityImage'
+import Image, { getPxSmSizes } from '../SanityImage/SanityImage'
 import envisTwMerge from '../../twMerge'
 import { SanityImageObject } from '@sanity/image-url/lib/types/types'
 import { Typography } from '@equinor/eds-core-react'
@@ -63,7 +63,7 @@ export const ImageWithOverlay = forwardRef<HTMLDivElement, ImageWithOverlayProps
 
   return (
     <figure ref={ref} className={envisTwMerge(`h-full w-full rounded-md`, className)}>
-      <Image maxWidth={1420} image={image as ImageWithAlt} fill className={`rounded-md`} />
+      <Image maxWidth={1420} sizes={getPxSmSizes()} image={image as ImageWithAlt} fill className={`rounded-md`} />
       <figcaption className={envisTwMerge(`h-full w-full transition-opacity`, captionClassname)}>
         <div
           className={`absolute inset-0 z-[1] rounded-md transition-colors duration-[250ms] ${showOverlay ? 'bg-slate-blue-95' : ''} flex flex-col-reverse rounded-b-md`}

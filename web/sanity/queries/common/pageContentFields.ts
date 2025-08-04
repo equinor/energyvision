@@ -16,6 +16,7 @@ import promoteMagazine from './promotions/promoteMagazine'
 import { lastUpdatedTimeQuery, publishDateTimeQuery } from './publishDateTime'
 import { anchorLinkReferenceFields } from './anchorLinkReferenceFields'
 import { tabsComponentFields } from './tabsComponentFields'
+import homepageContentFields from './homepageContentFields'
 
 const pageContentFields = /* groq */ `
 _type == "keyNumbers" =>{
@@ -614,6 +615,8 @@ _type == "keyNumbers" =>{
   _type == "tabs"=>{
     ${tabsComponentFields}
   },
+  //Remove from here and place with homepage template query only
+  ${homepageContentFields}
 `
 
 export default pageContentFields

@@ -1,9 +1,9 @@
-import { DefaultHero } from '@/pageComponents/shared/Hero/DefaultHero'
-import { FiftyFiftyHero } from '@/pageComponents/shared/Hero/FiftyFiftyHero'
-import { FullImageHero } from '@/pageComponents/shared/Hero/FullImageHero'
-import { LoopingVideo } from '@/pageComponents/shared/Hero/LoopingVideo'
 import { BackgroundColours, HeroType, HeroTypes, LoopingVideoData } from '@/types'
 import { PortableTextBlock } from '@portabletext/types'
+import { FullImageHero } from '@/sections/Hero/FullImageHero'
+import { FiftyFiftyHero } from '@/sections/Hero/FiftyFiftyHero'
+import { LoopingVideo } from '@/sections/Hero/LoopingVideo'
+import { DefaultHero } from '@/sections/Hero/DefaultHero'
 
 type BannerProps = {
   title: PortableTextBlock[]

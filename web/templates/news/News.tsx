@@ -1,16 +1,12 @@
 'use client'
 import { usePathname } from 'next/navigation'
-import { NewsArticleJsonLd, NextSeo } from 'next-seo'
+import { NewsArticleJsonLd } from 'next-seo'
 import { Typography } from '@/core/Typography'
 import { FormattedDateTime } from '@/core/FormattedDateTime'
 import { Icon } from '@equinor/eds-core-react'
 import { calendar } from '@equinor/eds-icons'
-import DefaulHeroImage from '../../pageComponents/shared/Hero/DefaultHeroImage'
 import IngressText from '../../portableText/IngressText'
-import LatestNews from '../../pageComponents/news/LatestNews'
 import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
-import { getFullUrl } from '../../common/helpers/getFullUrl'
-import { metaTitleSuffix } from '../../languages'
 import type { NewsSchema } from '../../types/index'
 import { toPlainText } from '@portabletext/react'
 import Blocks from '../../portableText/Blocks'
@@ -20,6 +16,8 @@ import Footnotes from '../../portableText/components/Footnotes'
 import { useLocale } from 'next-intl'
 import { IFrame } from '@/core/IFrame/IFrame'
 import { isDateAfter } from '@/common/helpers/dateUtilities'
+import DefaulHeroImage from '@/sections/Hero/DefaultHeroImage'
+import LatestNews from '@/pageComponents/news/LatestNews'
 
 type ArticleProps = {
   data: NewsSchema
@@ -37,9 +35,7 @@ const NewsPage = ({ data: news }: ArticleProps) => {
   const {
     publishDateTime,
     updatedAt,
-    documentTitle,
     title,
-    metaDescription,
     openGraphImage,
     heroImage,
     ingress,

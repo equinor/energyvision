@@ -14,7 +14,6 @@ import { ImageBackgroundContainer } from '@/core/Backgrounds/ImageBackgroundCont
 import { Heading } from '@/core/Typography'
 import MagazineCard from '@/sections/cards/MagazineCard/MagazineCard'
 import { SimplePagination } from '@/core/SimplePagination/SimplePagination'
-import { Ratios } from '../../pageComponents/shared/SanityImage'
 import CardSkeleton from '@/sections/cards/CardSkeleton/CardSkeleton'
 import { PaginationContextProvider } from '../../common/contexts/PaginationContext'
 
@@ -91,7 +90,7 @@ const MagazineRoom = ({ pageData, slug }: MagazineIndexTemplateProps) => {
                 image={hero.figure.image}
                 overrideGradient
                 scrimClassName="py-40 lg:py-44 black-blue-center-gradient"
-                aspectRatio={Ratios.NINE_TO_SIXTEEN}
+                aspectRatio={'9:16'}
               >
                 <div className="mx-auto max-w-viewport px-layout-lg max-lg:py-11">
                   <Heading value={title} id="mainTitle" variant="h1" className="text-pretty" />

@@ -5,7 +5,7 @@ import { PortableTextBlock } from '@portabletext/types'
 import { ImageWithAlt } from '../../types'
 import { ColorKeyTokens } from '../../styles/colorKeyToUtilityMap'
 import { BaseLink, ResourceLink } from '@/core/Link'
-import Image, { Ratios } from '../../pageComponents/shared/SanityImage'
+import Image from '../SanityImage/SanityImage'
 import { Heading, Typography } from '@/core/Typography'
 import envisTwMerge from '../../twMerge'
 import IngressText from '../../portableText/IngressText'
@@ -80,7 +80,7 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
             sizes="(max-width: 800px) 100vw, 800px"
             image={image}
             fill
-            aspectRatio={Ratios.NINE_TO_SIXTEEN}
+            aspectRatio={'16:9'}
             className="rounded-md"
           />
         )}

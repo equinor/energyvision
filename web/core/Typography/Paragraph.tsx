@@ -53,7 +53,7 @@ const Paragraph = ({ value, className, componentsClassName }: ParagraphProps) =>
           div = []
 
           return (
-            <div key={block._key} className={twMerge(`prose dark:prose-invert`, className)}>
+            <div key={block._key} className={twMerge(`prose`, className)}>
               <PortableText
                 value={value}
                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment

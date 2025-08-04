@@ -1,11 +1,11 @@
-import Image from '../SanityImage'
-import { Heading } from '@/core/Typography'
-import type { HeroType } from '../../../types/index'
+import { getUrlFromAction } from '@/common/helpers'
 import { BackgroundContainer } from '@/core/Backgrounds'
 import { ResourceLink } from '@/core/Link'
-import Blocks from '../../../portableText/Blocks'
-import { getUrlFromAction } from '../../../common/helpers'
-import { getLocaleFromName } from '../../../lib/localization'
+import Image, { getPxSmSizes } from '@/core/SanityImage/SanityImage'
+import { Heading } from '@/core/Typography'
+import { getLocaleFromName } from '@/lib/localization'
+import Blocks from '@/portableText/Blocks'
+import { HeroType } from '@/types'
 
 export const FiftyFiftyHero = ({ title, ingress, link: action, background, figure, isBigTitle }: HeroType) => {
   const url = action && getUrlFromAction(action)
@@ -16,7 +16,7 @@ export const FiftyFiftyHero = ({ title, ingress, link: action, background, figur
         {/* Image Section */}
         {figure && (
           <div className="relative min-h-[350px] md:order-2">
-            <Image maxWidth={4096} image={figure.image} fill priority />
+            <Image sizes={getPxSmSizes()} image={figure.image} fill priority />
           </div>
         )}
 

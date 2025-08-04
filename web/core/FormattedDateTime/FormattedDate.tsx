@@ -15,7 +15,7 @@ const FormattedDate = ({
 }: DateProps): JSX.Element => {
   const formatter = useFormatter()
   return (
-    <span {...rest} className={twMerge(`items-center space-x-2 text-base`, className)}>
+    <span {...rest} className={twMerge(`inline-flex items-center gap-2 text-base`, className)}>
       {icon && <DateIcon />}
       <span className={twMerge(`shrink ${icon ? '-mb-1' : ''}${uppercase ? 'uppercase' : ''}`)}>
         <time suppressHydrationWarning dateTime={datetime}>

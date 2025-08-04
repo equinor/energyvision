@@ -14,7 +14,7 @@ const FormattedDateTime = ({
   ...rest
 }: DateProps & FormattedTimeProps): JSX.Element => {
   return (
-    <span {...rest} className={twMerge(`flex items-center space-x-2 ${uppercase ? 'uppercase' : ''}`, className)}>
+    <span {...rest} className={twMerge(`inline-flex items-center gap-2 ${uppercase ? 'uppercase' : ''}`, className)}>
       {icon && <DateIcon />}
       <span className="box-content flex shrink gap-x-3">
         <FormattedDate uppercase={uppercase} datetime={datetime} year={year} month={month} day={day} />

@@ -1,5 +1,5 @@
 'use client'
-import Image, { Ratios } from './SanityImage'
+import Image, { getSmallerThanPxLgSizes } from '../../core/SanityImage/SanityImage'
 import type { ImageWithAlt, DesignOptions } from '../../types/index'
 import { QuoteSymbol } from '../../icons'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
@@ -32,9 +32,9 @@ const Quote = ({ data: { quote, authorTitle, author, image, designOptions } }: {
       <div className={`${isMobile ? 'w-[81px]' : 'min-w-[194px] md:w-52 xl:w-[242px]'} `}>
         <Image
           maxWidth={242}
-          aspectRatio={Ratios.ONE_TO_ONE}
+          aspectRatio={'1:1'}
           image={image!}
-          sizes="(min-width: 2280px) 242px, (min-width: 800px) calc(3.29vw + 168px), calc(1.67vw + 75px)"
+          sizes={getSmallerThanPxLgSizes()}
           className="rounded-full"
         />
       </div>
@@ -42,7 +42,7 @@ const Quote = ({ data: { quote, authorTitle, author, image, designOptions } }: {
   )
 
   const AuthorComponent = author && (
-    <figcaption className="text-xs text-right">
+    <figcaption className="text-right text-xs">
       <div className="inline-block text-left text-[16px]">
         <div className={authorTitle ? 'font-semibold' : ''}>{author}</div>
         {authorTitle && <div>{authorTitle}</div>}
@@ -52,14 +52,12 @@ const Quote = ({ data: { quote, authorTitle, author, image, designOptions } }: {
 
   return (
     <figure
-      className={`grid gap-4 text-grey-90 dark:text-white-100
-        ${isMobile ? 'grid-cols-2' : isImageLeft ? 'sm:grid-cols-[auto_1fr]' : 'sm:grid-cols-[1fr_auto]'}
-      `}
+      className={`text-grey-90 grid gap-4 dark:text-white-100 ${isMobile ? 'grid-cols-2' : isImageLeft ? 'sm:grid-cols-[auto_1fr]' : 'sm:grid-cols-[1fr_auto]'} `}
     >
       {isMobile ? (
         <>
           {hasImage && (
-            <div className="flex items-end col-span-2 gap-3">
+            <div className="col-span-2 flex items-end gap-3">
               {ImageComponent}
               {AuthorComponent}
             </div>
@@ -76,7 +74,7 @@ const Quote = ({ data: { quote, authorTitle, author, image, designOptions } }: {
             <div className="flex flex-col items-center self-center sm:row-span-2">{ImageComponent}</div>
           )}
 
-          <div className="flex flex-col mr-2">
+          <div className="mr-2 flex flex-col">
             <QuoteSymbol iconSize={iconSize} />
             <blockquote className={`italic ${weight} ${size}`}>{quote}</blockquote>
           </div>

@@ -1,8 +1,7 @@
 import { Teaser as TeaserLayout } from '@/core/Teaser'
 import IngressText from '../../../portableText/IngressText'
-import { getUrlFromAction, urlFor } from '../../../common/helpers'
-import Img from 'next/image'
-import Image from '../../../pageComponents/shared/SanityImage'
+import { getUrlFromAction } from '../../../common/helpers'
+import Image from '../../../core/SanityImage/SanityImage'
 import type { TeaserData, ImageWithAlt } from '../../../types/index'
 import { ResourceLink } from '../../../core/Link'
 import { Heading } from '../../../core/Typography'
@@ -17,26 +16,19 @@ type TeaserProps = {
 }
 
 const TeaserImage = ({ image }: { image: ImageWithAlt }) => {
-  const imageSrc =
-    image.extension === 'svg' ? urlFor(image).toString() : urlFor(image).size(1200, 800).auto('format').toString()
+  const isSvg = image.extension?.toLowerCase() === 'svg'
 
-  if (!imageSrc) return null
+  if (!image?.asset) return null
   const altTag = image?.isDecorative ? '' : image?.alt || ''
+
   return (
-    <>
-      {image.extension === 'svg' ? (
-        <Image image={image} alt={altTag} maxWidth={720} />
-      ) : (
-        <Img
-          src={imageSrc}
-          alt={altTag}
-          style={{ objectFit: 'cover' }}
-          fill
-          sizes="(max-width: 800px) 100vw, 800px"
-          role={image?.isDecorative ? 'presentation' : undefined}
-        />
-      )}
-    </>
+    <Image
+      image={image}
+      alt={altTag}
+      fill
+      maxWidth={isSvg ? 720 : 1100}
+      role={image?.isDecorative ? 'presentation' : undefined}
+    />
   )
 }
 
@@ -48,7 +40,7 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
     return null
   }
 
-  const isSvg = image?.extension === 'svg'
+  const isSvg = image.extension?.toLowerCase() === 'svg'
 
   return (
     <TeaserLayout className="text-sm" id={anchor} {...restOptions} renderFragmentWhenPossible>

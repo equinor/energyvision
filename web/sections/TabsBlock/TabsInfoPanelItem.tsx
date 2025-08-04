@@ -6,7 +6,7 @@ import { getUrlFromAction } from '../../common/helpers'
 import { getLocaleFromName } from '../../lib/localization'
 import { Heading } from '@/core/Typography'
 import Blocks from '../../portableText/Blocks'
-import Image from '../../pageComponents/shared/SanityImage'
+import Image, { getPxSmSizes } from '../../core/SanityImage/SanityImage'
 import { ImageWithAlt, LinkData } from '../../types'
 import { InfoPanelImageVariant, InfoPanelKeyInfo } from './TabsBlock.types'
 
@@ -39,7 +39,7 @@ const TabsInfoPanelItem = forwardRef<HTMLDivElement, TabsInfoPanelItemProps>(fun
       )}
     >
       {image?.asset && imageVariant === 'backgroundImage' && (
-        <Image aria-hidden image={image} fill className="z-[1] object-center" />
+        <Image sizes={getPxSmSizes()} aria-hidden image={image} fill className="z-[1] object-center" />
       )}
       <div
         className={`relative flex flex-col ${

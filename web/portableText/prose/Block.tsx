@@ -14,7 +14,7 @@ export const Block = forwardRef<HTMLParagraphElement, BlockProps>(function Block
 ) {
   return (
     <p
-      className={`my-5 text-base first:mt-0 last:mb-0 prose-medium:text-md prose-article:px-layout-lg [:where(h2+*,h3+*)]:mt-0 ${textVariant === 'small' ? 'text-sm' : ''} ${textVariant === 'large' ? 'text-2xl leading-snug' : ''} ${textVariant === 'extraLarge' ? 'text-4xl leading-planetary font-medium lg:text-5xl 2xl:text-8xl' : ''} `}
+      className={`my-5 text-base first:mt-0 last:mb-0 dark:text-white-100 prose-medium:text-md prose-article:px-layout-lg [:where(h2+*,h3+*)]:mt-0 ${textVariant === 'small' ? 'text-sm' : ''} ${textVariant === 'large' ? 'text-2xl leading-snug' : ''} ${textVariant === 'extraLarge' ? 'text-4xl leading-planetary font-medium lg:text-5xl 2xl:text-8xl' : ''} `}
       ref={ref}
     >
       {children}

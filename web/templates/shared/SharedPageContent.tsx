@@ -8,9 +8,7 @@ import {
   MagazinePageSchema,
   TeaserData,
   TextBlockData,
-  FullWidthImageData,
   FullWidthVideoData,
-  FigureData,
   TextWithIconArrayData,
   CallToActionData,
   QuoteData,
@@ -54,9 +52,9 @@ import Form from '@/templates/forms/Form'
 import IFrameBlock from '@/sections/IFrameBlock/IFrameBlock'
 import Teaser from '@/sections/teasers/Teaser/Teaser'
 import TextBlock from '@/sections/TextBlock/TextBlock'
-import FullWidthImage from '@/pageComponents/topicPages/FullWidthImage'
+import FullWidthImage, { FullWidthImageData } from '@/pageComponents/topicPages/FullWidthImage'
 import FullWidthVideo from '@/pageComponents/topicPages/FullWidthVideo'
-import Figure from '@/pageComponents/topicPages/Figure'
+import Figure, { FigureData } from '@/pageComponents/topicPages/Figure'
 import PageQuote from '@/pageComponents/topicPages/PageQuote'
 import PromoTileArray from '@/sections/PromoTiles/PromoTileArray'
 import Promotion from '@/sections/Promotion/Promotion'
@@ -65,6 +63,7 @@ import NewsList from '@/pageComponents/topicPages/NewsList'
 import StockValues from '@/pageComponents/topicPages/StockValues'
 import TwitterEmbed from '@/pageComponents/topicPages/TwitterEmbed'
 import VideoPlayer from '@/pageComponents/shared/VideoPlayer'
+import { getColorForHomepageBannerTheme, HomePageBanner } from '@sections/HomePageBanner/HomePageBanner'
 
 type DefaultComponent = {
   id?: string
@@ -112,7 +111,7 @@ type PageContentProps = {
  */
 const getBackgroundOptions = (component: ComponentProps) => {
   //@ts-ignore:Too many types
-  if (!component?.designOptions) {
+  if (!component?.designOptions || !Object.hasOwn(component, 'designOptions')) {
     //Return white default if no designOptions
     return {
       backgroundUtility: 'white-100',
@@ -184,11 +183,17 @@ const applyPaddingTopIfApplicable = (currentComponent: ComponentProps, prevCompo
   const previousIsWhiteColorBackground = isWhiteColorBackground(previousComponentsDO, prevComponent)
 
   const previousComponentIsASpecialCaseAndNeedPT =
-    //@ts-ignore
+    //@ts-ignore: too many types
     specialCases.includes(prevComponent?.type) || specialCases.includes(previousComponentsDO?.type)
 
   if (currentIsWhiteColorBackground && previousIsWhiteColorBackground && !previousComponentIsASpecialCaseAndNeedPT) {
     return ''
+  }
+
+  //@ts-ignore: too many types
+  if (prevComponent?.type === 'homepageBanner') {
+    //@ts-ignore: too many types
+    return prevComponent?.designOptions?.backgroundType === '0' ? 'lg:pt-20' : 'pt-20'
   }
 
   const previousIsSameColorAsCurrent = isSameColorBackground(currentComponentsDO, previousComponentsDO)
@@ -353,6 +358,9 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
         return <ImageForText key={c.id} data={c as ImageForTextData} />
       case 'tabs':
         return <TabsBlock key={c.id} {...(c as any)} className={spacingClassName} />
+      /* Remove from here and move to Homepage Template PageContent */
+      case 'homepageBanner':
+        return <HomePageBanner key={c.id} {...(c as any)} />
       default:
         return null
     }

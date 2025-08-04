@@ -23,7 +23,7 @@ const FormattedTime = ({
   const format = useFormatter()
   console.log('className', className)
   return (
-    <span {...rest} className={twMerge('flex items-center gap-x-2 text-base', className)}>
+    <span {...rest} className={twMerge('inline-flex items-center gap-2 text-base', className)}>
       {icon && <TimeIcon />}
       <span className={`box-content shrink ${small ? 'mt-1' : 'mt-0'}`}>
         <time suppressHydrationWarning dateTime={datetime}>

@@ -2,7 +2,8 @@ import { FormattedDate, FormattedTime } from '@/core/FormattedDateTime'
 import { forwardRef, HTMLAttributes } from 'react'
 import { BaseLink } from '@/core/Link'
 import { Typography } from '@/core/Typography'
-import Image, { Ratios } from '../../../pageComponents/shared/SanityImage'
+import NextImage from 'next/image'
+import Image, { getPxLgSizes, getSmallerThanPxLgSizes } from '../../../core/SanityImage/SanityImage'
 import envisTwMerge from '../../../twMerge'
 import { NewsRoomNewsItem } from '../../../types/algoliaIndexPage'
 import { SanityImageObject } from '@sanity/image-url/lib/types/types'
@@ -29,14 +30,14 @@ const NewsItem = forwardRef<HTMLLIElement, NewsListItemProps>(function NewsItem(
               <FormattedDate
                 datetime={publishDateTime}
                 uppercase
-                className="text-2xs font-normal leading-normal pb-1"
+                className="pb-1 text-2xs leading-normal font-normal"
               />
-              <span className="mx-2 text-2xs font-normal leading-normal pb-1">|</span>
+              <span className="mx-2 pb-1 text-2xs leading-normal font-normal">|</span>
               <FormattedTime
                 small
                 timezone
                 datetime={publishDateTime}
-                className="text-2xs font-normal leading-normal pb-1"
+                className="pb-1 text-2xs leading-normal font-normal"
               />
             </div>
           )}
@@ -46,16 +47,15 @@ const NewsItem = forwardRef<HTMLLIElement, NewsListItemProps>(function NewsItem(
             </Typography>
           )}
         </div>
-        <div className="w-[30%] lg:h-full aspect-5/4 lg:aspect-video relative">
+        <div className="relative aspect-5/4 w-[30%] lg:aspect-video lg:h-full">
           {(heroImage?.image?.asset || fallbackImage || thumbnailUrl) && (
             <>
               {thumbnailUrl ? (
-                <img
-                  className="relative rounded-2xs"
+                <NextImage
+                  className="relative rounded-2xs object-cover"
                   src={thumbnailUrl}
                   alt=""
-                  style={{ objectFit: 'cover' }}
-                  sizes="(max-width: 800px) 100vw, 800px"
+                  sizes={getSmallerThanPxLgSizes()}
                   role={'presentation'}
                 />
               ) : (
@@ -64,8 +64,8 @@ const NewsItem = forwardRef<HTMLLIElement, NewsListItemProps>(function NewsItem(
                     //@ts-ignore: TODO Fix SanityImage to take SanityImageObject
                     image={heroImage?.image?.asset ? heroImage?.image : fallbackImage}
                     aria-hidden
-                    aspectRatio={Ratios.NINE_TO_SIXTEEN}
-                    sizes="(max-width: 800px) 100vw, 800px"
+                    aspectRatio="16:9"
+                    sizes={getPxLgSizes()}
                     fill
                     className="rounded-2xs"
                   />

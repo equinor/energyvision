@@ -1,15 +1,8 @@
-import {
-  ImageWithAlt,
-  BackgroundColours,
-  LinkData,
-  FigureData,
-  IFrameData,
-  VideoPlayerData,
-  ImageBackground,
-} from './index'
+import { ImageWithAlt, BackgroundColours, LinkData, IFrameData, VideoPlayerData, ImageBackground } from './index'
 import { TeaserImagePosition } from '@/core/Teaser'
 import { PortableTextBlock } from '@portabletext/types'
 import { RowType } from '@/sections/Grid/mapGridContent'
+import { FigureData } from '../pageComponents/topicPages/Figure'
 
 export type GridTeaserData = {
   type: 'gridTeaser'

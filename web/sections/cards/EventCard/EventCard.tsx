@@ -64,7 +64,7 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
           </div>
         )}
         {location && (
-          <div className={`gap-sm grid h-full grid-cols-[24px_auto] items-center py-2`}>
+          <div className={`grid h-full grid-cols-[24px_auto] items-center gap-2 py-2`}>
             <Icon data={world} color={'currentColor'} className="text-2xs text-norwegian-woods-100" />
             <span className="text-xs">{location}</span>
           </div>

@@ -1,8 +1,8 @@
 import { Typography } from '@/core/Typography'
 import { forwardRef, HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { BaseLink, ButtonLink, ResourceLink } from '@/core/Link'
-import Image, { Ratios } from '../../../pageComponents/shared/SanityImage'
+import { BaseLink, ResourceLink } from '@/core/Link'
+import Image, { getSmallerThanPxLgSizes } from '../../../core/SanityImage/SanityImage'
 import { getLocaleFromName } from '../../../lib/localization'
 import { getUrlFromAction, urlFor } from '../../../common/helpers'
 import { PeopleCardData } from '../../../types/index'
@@ -36,23 +36,7 @@ const PeopleCard = forwardRef<HTMLDivElement, PeopleCardProps>(function PeopleCa
       <div
         ref={ref}
         className={twMerge(
-          `h-full
-        w-full
-        grid
-        ${variantClassNames[variant]}
-        shadow-card
-        rounded-xs
-        px-6
-        py-8
-        bg-white-100
-        text-slate-80
-        active:box-shadow-crisp-interact
-        active:shadow-white-100-interact
-        focus:outline-hidden
-        focus-visible:envis-outline
-        dark:text-white-100
-        dark:focus-visible:envis-outline-invert
-      `,
+          `grid h-full w-full ${variantClassNames[variant]} active:shadow-white-100-interact focus-visible:envis-outline dark:focus-visible:envis-outline-invert rounded-xs bg-white-100 px-6 py-8 text-slate-80 shadow-card focus:outline-hidden active:box-shadow-crisp-interact dark:text-white-100`,
           className,
         )}
         {...rest}
@@ -66,13 +50,14 @@ const PeopleCard = forwardRef<HTMLDivElement, PeopleCardProps>(function PeopleCa
             <Image
               image={image}
               maxWidth={400}
-              aspectRatio={Ratios.ONE_TO_ONE}
+              sizes={getSmallerThanPxLgSizes()}
+              aspectRatio="1:1"
               quality={100}
               className="rounded-full"
             />
           </div>
         )}
-        <div className={`h-full grid grid-cols-1 grid-rows-[1fr_auto]`}>
+        <div className={`grid h-full grid-cols-1 grid-rows-[1fr_auto]`}>
           <div
             className={`flex flex-col ${
               variant === 'single' ? 'items-start justify-center' : 'items-center justify-start text-center'
@@ -81,7 +66,7 @@ const PeopleCard = forwardRef<HTMLDivElement, PeopleCardProps>(function PeopleCa
             <Typography
               as={hasSectionTitle ? 'h3' : 'h2'}
               variant={`${variant === 'single' ? 'md' : 'sm'}`}
-              className="font-medium mb-4"
+              className="mb-4 font-medium"
             >
               {name}
             </Typography>
@@ -94,7 +79,7 @@ const PeopleCard = forwardRef<HTMLDivElement, PeopleCardProps>(function PeopleCa
           <div
             className={`flex flex-col ${
               variant === 'single' ? 'items-start justify-center' : 'items-center justify-start text-center'
-            }  gap-2 pt-6`}
+            } gap-2 pt-6`}
           >
             {isLink && cv && cvUrl ? (
               <ResourceLink
