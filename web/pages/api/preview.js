@@ -18,7 +18,11 @@ export default function preview(req, res) {
     return res.status(400).json({ message: 'No slug or id', data: req.query })
   }
 
-  if (!req.query.slug && (REQUIRES_SLUG.includes(req.query.type) || req.query.type?.includes('route'))) {
+  if (
+    !req.query.slug &&
+    ((req.query.type && typeof req.query.type === 'string' && REQUIRES_SLUG.includes(req.query.type)) ||
+      req.query.type?.includes('route'))
+  ) {
     return res.status(400).json({ message: 'The document needs a slug before it can be previewed.' })
   }
 
