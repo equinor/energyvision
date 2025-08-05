@@ -72,7 +72,7 @@
     "@next/eslint-plugin-next": "^13.4.7",
     "@tailwindcss/typography": "^0.5.16",
     "@tailwindcss/postcss": "^4.1.11",
-    "@types/easy-soap-request": "^4.1.1",
+    "@types/easy-soap-request": "^5.6.0",
     "@types/http-proxy": "^1.17.10",
     "@types/node": "^18.14.9999",
     "@types/react": "^19.1.9",

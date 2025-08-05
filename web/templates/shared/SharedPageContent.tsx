@@ -63,7 +63,7 @@ import NewsList from '@/pageComponents/topicPages/NewsList'
 import StockValues from '@/pageComponents/topicPages/StockValues'
 import TwitterEmbed from '@/pageComponents/topicPages/TwitterEmbed'
 import VideoPlayer from '@/pageComponents/shared/VideoPlayer'
-import { getColorForHomepageBannerTheme, HomePageBanner } from '@sections/HomePageBanner/HomePageBanner'
+import { HomePageBanner } from '@/sections/HomePageBanner/HomePageBanner'
 
 type DefaultComponent = {
   id?: string

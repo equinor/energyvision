@@ -1,11 +1,10 @@
 import { HTMLAttributes } from 'react'
 import { TimeIcon } from '@/core/FormattedDateTime'
 import { useFormatter } from 'next-intl'
-import envisTwMerge from '@/twMerge'
 import { twMerge } from 'tailwind-merge'
 
 export type FormattedTimeProps = {
-  datetime: string
+  datetime: string | Date
   icon?: boolean
   showTimezone?: boolean
   small?: boolean
@@ -19,6 +18,7 @@ const FormattedTime = ({
   className = '',
   ...rest
 }: FormattedTimeProps): JSX.Element => {
+  //Fix getEventDates DAte and string mixins
   const date = new Date(datetime)
   const format = useFormatter()
   console.log('className', className)

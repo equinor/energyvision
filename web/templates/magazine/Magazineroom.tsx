@@ -5,8 +5,6 @@ import Seo from '../../pageComponents/shared/Seo'
 import { HeroTypes } from '../../types/index'
 import { BackgroundContainer } from '@/core/Backgrounds'
 import Teaser from '../../sections/teasers/Teaser/Teaser'
-import SharedTitle from '../../pageComponents/pageTemplates/shared/SharedTitle'
-import { SharedBanner } from '../../pageComponents/pageTemplates/shared/SharedBanner'
 import Blocks from '../../portableText/Blocks'
 import MagazineTagBar from '@/sections/MagazineTags/MagazineTagBar'
 import { useRouter } from 'next/router'
@@ -16,6 +14,8 @@ import MagazineCard from '@/sections/cards/MagazineCard/MagazineCard'
 import { SimplePagination } from '@/core/SimplePagination/SimplePagination'
 import CardSkeleton from '@/sections/cards/CardSkeleton/CardSkeleton'
 import { PaginationContextProvider } from '../../common/contexts/PaginationContext'
+import { SharedBanner } from '../shared/SharedBanner'
+import SharedTitle from '../shared/SharedTitle'
 
 type MagazineIndexTemplateProps = {
   pageData: MagazineIndexPageType

@@ -8,10 +8,7 @@ export default function getCatalogType(
   candidateType: string,
 ): CareersContactFormCatalogType | null {
   const t = useTranslations()
-  const suspectedRecruitmentScam = intl.formatMessage({
-    id: 'careers_contact_form_suspected_recruitment_scam',
-    defaultMessage: 'Suspected recruitment scam',
-  })
+  const suspectedRecruitmentScam = t('careers_contact_form_suspected_recruitment_scam') ?? 'Suspected recruitment scam'
   const onboarding = intl.formatMessage({
     id: 'careers_contact_form_onboarding',
     defaultMessage: 'Onboarding',

@@ -28,7 +28,12 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
     <>
       <Seo seoAndSome={data?.seoAndSome} slug={data?.slug} pageTitle={data?.title} />
       {eventDate?.date && start && end && (
-        <EventJsonLd name={plainTitle} startDate={start} endDate={end} location={location} />
+        <EventJsonLd
+          name={plainTitle}
+          startDate={start.toDateString()}
+          endDate={end.toDateString()}
+          location={location}
+        />
       )}
       <main>
         <article>

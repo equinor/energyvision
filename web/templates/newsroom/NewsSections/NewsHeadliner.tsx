@@ -52,12 +52,7 @@ const NewsHeadliner = forwardRef<HTMLLIElement, NewsHeadlinerProps>(function New
           <div>
             <FormattedDate datetime={publishDateTime} uppercase className="text-2xs leading-normal font-normal" />
             <span className="mx-2 pb-1 text-2xs leading-normal font-normal">|</span>
-            <FormattedTime
-              small
-              timezone
-              datetime={publishDateTime}
-              className="pb-1 text-2xs leading-normal font-normal"
-            />
+            <FormattedTime datetime={publishDateTime} className="pb-1 text-2xs leading-normal font-normal" />
           </div>
         )}
         {title && (
