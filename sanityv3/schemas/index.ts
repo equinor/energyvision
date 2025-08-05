@@ -28,7 +28,7 @@ import imageWithAltAndCaption from './objects/imageWithAltAndCaption'
 import carouselImage from './objects/carouselImage'
 import imageWithLinkAndOrOverlay from './objects/ImageWithLinkAndOrOverlay'
 import largeTable from './objects/largeTable'
-import linkSelector from './objects/linkSelector'
+import linkSelector from './objects/linkSelector/linkSelector'
 import menuGroup from './objects/menuGroup'
 import menuLink from './objects/menuLink'
 import newsList from './objects/newsList'
@@ -166,7 +166,7 @@ const RemainingSchemas = [
   figure,
   textWithIcon,
   textWithIconArray,
-  linkSelector,
+  linkSelector(),
   promoTile,
   promoTileArray,
   stockValuesApi,

@@ -10,6 +10,7 @@ import type { PortableTextBlock, Rule } from 'sanity'
 import type { DownloadableImage } from './downloadableImage'
 import type { DownloadableFile } from './files'
 import type { LinkSelector } from './linkSelector'
+import singleItemArray from './singleItemArray'
 import { ThemeSelectorColor, ThemeSelectorValue } from '../components/ThemeSelector'
 import { defaultColors } from '../defaultColors'
 
@@ -289,7 +290,7 @@ export default {
         }).error(),
     },
 
-    {
+    singleItemArray({
       name: 'action',
       title: 'Link/action',
       description: 'Select the link or downloadable file for the teaser',
@@ -299,8 +300,7 @@ export default {
         { type: 'downloadableImage', title: 'Downloadable image' },
         { type: 'downloadableFile', title: 'Downloadable file' },
       ],
-      validation: (Rule: Rule) => Rule.max(1).error('Only one action is permitted'),
-    },
+    }),
     {
       name: 'titlePosition',
       title: 'Title position',

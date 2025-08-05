@@ -27,6 +27,7 @@ export default defineType({
         hotspot: true,
         collapsed: false,
       },
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       title: 'Apply scroll animation',
@@ -34,7 +35,6 @@ export default defineType({
       type: 'boolean',
       description: 'Animates content over the background image.',
       hidden: ({ parent }: any) => {
-        console.log('parent in image background', parent)
         return false
       },
     }),
