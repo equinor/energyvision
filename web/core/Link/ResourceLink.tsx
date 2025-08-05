@@ -233,6 +233,7 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
           flex
           justify-start
           items-center
+          gap-x-2
           ${contentVariantClassName[variant]}`,
         )}
       >
