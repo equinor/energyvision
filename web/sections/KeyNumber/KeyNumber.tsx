@@ -1,3 +1,4 @@
+'use client'
 import { KeyNumbersData } from '../../types'
 import { BackgroundContainer } from '@/core/Backgrounds'
 import { Heading, Paragraph } from '@/core/Typography'

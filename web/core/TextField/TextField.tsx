@@ -43,10 +43,11 @@ type FieldProps = SharedTextFieldProps & {
 } & React.HTMLAttributes<HTMLTextAreaElement | HTMLInputElement>
 /** Proxy component for working around typescript and element type switching */
 const Field = forwardRef<HTMLTextAreaElement | HTMLInputElement, FieldProps>(function Field(props, ref) {
-  return props.multiline ? (
-    <Textarea ref={ref as ForwardedRef<HTMLTextAreaElement>} {...props} className={`[&_textarea]:text-base`} />
+  const {multiline, ...rest} = props
+  return multiline ? (
+    <Textarea ref={ref as ForwardedRef<HTMLTextAreaElement>} {...rest} className={`[&_textarea]:text-base`} />
   ) : (
-    <Input ref={ref as ForwardedRef<HTMLInputElement>} {...props} className={`[&_input]:text-base`} />
+    <Input ref={ref as ForwardedRef<HTMLInputElement>} {...rest} className={`[&_input]:text-base`} />
   )
 })
 

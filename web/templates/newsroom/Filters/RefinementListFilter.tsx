@@ -1,3 +1,4 @@
+'use client'
 import { Typography } from '@/core/Typography'
 import { Checkbox } from '@equinor/eds-core-react'
 import { useId } from 'react'

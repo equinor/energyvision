@@ -32,7 +32,7 @@ const Form = ({ data, anchor, className }: { data: FormData; anchor?: string; cl
             <>
               {downloads && (
                 <div className="pb-10">
-                  {downloads.length > 0 && <CallToActions callToActions={downloads} overrideButtonStyle />}
+                  {downloads.length > 0 && <CallToActions callToActions={downloads} />}
                 </div>
               )}
             </>

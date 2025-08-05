@@ -1,3 +1,4 @@
+'use client'
 import { PortableTextBlock, TwitterEmbedData } from '../../types/index'
 import { TwitterTimelineEmbed, TwitterTweetEmbed } from 'react-twitter-embed'
 import { BackgroundContainer } from '@/core/Backgrounds'

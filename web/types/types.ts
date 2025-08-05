@@ -22,7 +22,7 @@ import type {
 } from './index'
 import { MediaPosition } from '@/core/Teaser/Media'
 import { FigureData } from '../pageComponents/topicPages/Figure'
-import { FullWidthImageData } from '../pageComponents/topicPages/FullWidthImage'
+import { FullWidthImageData } from '../sections/FullwidthImage/FullWidthImage'
 
 export type IntlData = {
   locale: string

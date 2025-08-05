@@ -1,9 +1,9 @@
 'use client'
-import { useRouter } from 'next/router'
 import { useEffect, useRef } from 'react'
 import { BackgroundContainer } from '@/core/Backgrounds'
 import { Heading } from '@/core/Typography'
 import { CookieDeclarationData } from '../../types/index'
+import { useLocale } from 'next-intl'
 
 type CookieDeclarationProps = {
   data: CookieDeclarationData
@@ -13,9 +13,9 @@ type CookieDeclarationProps = {
 
 const CookieDeclaration = ({ data, anchor, className }: CookieDeclarationProps) => {
   const title = data.title
-  const router = useRouter()
   const placeholderRef = useRef<HTMLDivElement>(null)
-  const language = router.locale == 'no' ? 'nb' : router.locale ? router.locale : 'en'
+  const locale = useLocale();
+  const language = locale == 'no' ? 'nb' : locale ? locale : 'en'
   useEffect(() => {
     if (!placeholderRef.current?.hasChildNodes()) {
       const script = document.createElement('script')

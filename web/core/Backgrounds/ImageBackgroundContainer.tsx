@@ -5,7 +5,7 @@ import { ImageBackground } from '../../types/index'
 import { twMerge } from 'tailwind-merge'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
 import { BackgroundContainerType } from './ColouredContainer'
-import { ImageRatioKeys, mapSanityImageRatio } from '@core/SanityImage/SanityImage'
+import { ImageRatioKeys, mapSanityImageRatio } from '@/core/SanityImage/SanityImage'
 
 type ImageBackgroundContainerProps = {
   scrimClassName?: string

@@ -1,5 +1,7 @@
 'use client' // Error boundaries must be Client Components
 
+import { Button } from '@/core/Button';
+import { Typography } from '@/core/Typography';
 import { useEffect } from 'react'
 
 export default function Error({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
@@ -9,16 +11,16 @@ export default function Error({ error, reset }: { error: Error & { digest?: stri
   }, [error])
 
   return (
-    <div>
-      <h2>Something went wrong!</h2>
-      <button
+    <div className='py-20 px-layout-lg w-full flex flex-col items-center'>
+      <Typography variant='h2'>We are sorry, something has gone wrong...</Typography>
+      <Button
         onClick={
           // Attempt to recover by trying to re-render the segment
           () => reset()
         }
       >
         Try again
-      </button>
+      </Button>
     </div>
   )
 }

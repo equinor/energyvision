@@ -18,7 +18,7 @@ export type BaseLinkProps = {
  * And the strict origin policy when external for using blank
  */
 export const BaseLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(function BaseLink(
-  { children, type = 'internalUrl', className = '', href = '', skipInternalStyle = false, ...rest },
+  { children, type = 'internalUrl', className = '', href = '', skipInternalStyle = false, prefetch, ...rest },
   ref,
 ) {
   const classNames = skipInternalStyle
@@ -66,7 +66,7 @@ export const BaseLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(function Ba
 
       default:
         return (
-          <NextLink {...rest} ref={ref} href={href} className={classNames}>
+          <NextLink {...rest} ref={ref} href={href} className={classNames} prefetch={prefetch}>
             {children}
           </NextLink>
         )

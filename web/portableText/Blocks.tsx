@@ -15,7 +15,6 @@ import { twMerge } from 'tailwind-merge'
 import { Highlight } from '@/core/Typography/Highlight'
 import { IFrame } from '@/core/IFrame/IFrame'
 import { Footnote } from './components/Footnote'
-import { Typography } from '@/core/Typography'
 import ProseBlock from './prose/Block'
 import ProseHeading from './prose/Heading'
 import { Link as ProseLink } from './prose/Link'
@@ -31,7 +30,7 @@ type TypeProps = {
   value?: any
   children?: React.ReactNode
 }
-
+/* 
 const defaultBlockSerializers: BlockType = {
   normal: ({ children }: TypeProps) => <Typography>{children}</Typography>,
   smallText: ({ children }: TypeProps) => <p className="text-sm">{children}</p>,
@@ -39,7 +38,9 @@ const defaultBlockSerializers: BlockType = {
   extraLargeText: ({ children }: TypeProps) => {
     return <p className={`text-4xl leading-planetary font-medium lg:text-5xl 2xl:text-8xl`}>{children}</p>
   },
-}
+  h2: ({ children }: TypeProps) => <ProseHeading as="h2">{children}</ProseHeading>,
+  h3: ({ children }: TypeProps) => <ProseHeading as="h3">{children}</ProseHeading>,
+} */
 const proseBlockSerializers: BlockType = {
   normal: ({ children }: TypeProps) => <ProseBlock textVariant="normal">{children}</ProseBlock>,
   smallText: ({ children }: TypeProps) => <ProseBlock textVariant="small">{children}</ProseBlock>,
@@ -204,7 +205,7 @@ export default function Blocks({
                 components={{
                   block: {
                     ...defaultSerializers,
-                    ...(variant === 'no-prose' ? defaultBlockSerializers : proseBlockSerializers),
+                    ...proseBlockSerializers,
                     ...blocksComponents,
                     ...(clampLines && getLineClampNormalBlock(clampLines)),
                   },

@@ -1,6 +1,6 @@
 import { forwardRef } from 'react'
 import * as _Accordion from '@radix-ui/react-accordion'
-import envisTwMerge from '../../twMerge'
+import { twMerge } from 'tailwind-merge'
 
 export interface AccordionSingleProps extends _Accordion.AccordionSingleProps {
   type: 'single'
@@ -38,7 +38,7 @@ export const Accordion = forwardRef<
   const props = type === 'single' ? (rest as AccordionSingleProps) : (rest as AccordionMultipleProps)
   return (
     //@ts-ignore: TODO solve type casting
-    <_Accordion.Root type={type} ref={ref} id={id} className={envisTwMerge(``, className)} {...props}>
+    <_Accordion.Root type={type} ref={ref} id={id} className={twMerge(``, className)} {...props}>
       {children}
     </_Accordion.Root>
   )

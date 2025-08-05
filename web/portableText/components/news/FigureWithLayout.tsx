@@ -1,11 +1,9 @@
 import type { PortableTextBlock } from '@portabletext/types'
 import { twMerge } from 'tailwind-merge'
-import Image, {
-  getPxLgSizes,
-  getSmallerThanPxLgSizes,
-} from '../../../../../core/SanityImage/pageComponents/shared/SanityImage'
+
 import type { ImageWithAlt } from '../../../types/index'
 import { FigureCaption } from '@/core/FigureCaption/FigureCaption'
+import Image, { getPxLgSizes, getSmallerThanPxLgSizes } from '@/core/SanityImage/SanityImage'
 
 type Layout = 'full' | 'left' | 'right'
 

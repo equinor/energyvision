@@ -8,6 +8,7 @@ import getOpenGraphImages from '@/common/helpers/getOpenGraphImages'
 import { defaultLanguage, metaTitleSuffix, domain } from '@/languages'
 import getPageSlugs from '@/common/helpers/getPageSlugs'
 import { isDateAfter } from '@/common/helpers/dateUtilities'
+import { toPlainText } from 'next-sanity'
 
 const MagazinePage = dynamic(() => import('@/templates/magazine/MagazinePage'))
 const LandingPage = dynamic(() => import('@/templates/landingpage/LandingPage'))
@@ -56,15 +57,16 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
 
   //@ts-ignore: todo
   const { publishDateTime, updatedAt, documentTitle, title, metaDescription, openGraphImage, heroImage } = pageData
+  const plainTitle = Array.isArray(title) ? toPlainText(title): title
 
   const modifiedDate = isDateAfter(publishDateTime, updatedAt) ? publishDateTime : updatedAt
   const openGraphImages = getOpenGraphImages((openGraphImage?.asset ? openGraphImage : null) || heroImage?.image)
 
   return {
-    title: `${documentTitle || title} - ${metaTitleSuffix}`,
+    title: `${documentTitle || plainTitle} - ${metaTitleSuffix}`,
     description: metaDescription,
     openGraph: {
-      title: title,
+      title: plainTitle,
       description: metaDescription,
       url: fullSlug,
       locale,

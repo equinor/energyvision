@@ -1,7 +1,7 @@
 'use client'
 import type { DesignOptions, ImageWithCaptionData } from '../../types/index'
 import Image, { getFullScreenSizes, ImageRatioKeys } from '../../core/SanityImage/SanityImage'
-import { FigureCaption } from '@core/FigureCaption/FigureCaption'
+import { FigureCaption } from '@/core/FigureCaption/FigureCaption'
 
 export type FullWidthImageData = {
   type: string

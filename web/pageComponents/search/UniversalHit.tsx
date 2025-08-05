@@ -3,10 +3,10 @@ import getConfig from 'next/config'
 import type { Hit as AlgoliaHit } from '@algolia/client-search'
 import DisplayLink from './hit/DisplayLink'
 import { FormattedDate } from '@/core/FormattedDateTime'
-import { useRouter } from 'next/router'
 import { defaultLanguage } from '../../languages'
 import { default as NextLink } from 'next/link'
 import { Typography } from '@/core/Typography'
+import { useLocale } from 'next-intl'
 
 export type HitData = {
   slug?: string
@@ -34,7 +34,7 @@ const buildDisplayURL = (slug = '', locale: string | undefined): string => {
 
 const UniversalHit: React.FC<HitProps> = ({ hit }) => {
   const { slug = '', title, ingress, text, eventDescription, eventDate, publishDateTime, pageTitle, type } = hit
-  const { locale } = useRouter()
+  const locale = useLocale()
   const fullUrl = buildDisplayURL(slug, locale)
   const formattedDate = eventDate || publishDateTime
 

@@ -1,15 +1,14 @@
 'use client'
-import { AnchorHTMLAttributes, forwardRef, useMemo } from 'react'
+import { AnchorHTMLAttributes, forwardRef, useCallback, useMemo } from 'react'
 import { Link } from '@/core/Link'
 import { filter_alt } from '@equinor/eds-icons'
 import { TransformableIcon } from '../../icons/TransformableIcon'
-import { useTranslations } from 'next-intl'
-import { useSearchParams } from 'next/navigation'
+import { useLocale, useTranslations } from 'next-intl'
+import { usePathname, useSearchParams } from 'next/navigation'
+import { defaultLanguage } from '@/languages'
 
 export type MagazineTagBarProps = {
   tags: { id: string; title: string; key: string }[]
-  href: string
-  onClick?: (value: string) => void
 }
 
 export type TagLink = {
@@ -19,18 +18,27 @@ export type TagLink = {
   active: boolean
 } & AnchorHTMLAttributes<HTMLAnchorElement>
 
-const allTagLink = {
-  href: '#',
-  label: 'All',
-  active: false,
-}
-
 const MagazineTagBar = forwardRef<HTMLDivElement, MagazineTagBarProps>(function MagazineTagBar(
-  { tags, onClick, href },
+  { tags },
   ref,
 ) {
+  const locale = useLocale()
+  const pathname = usePathname()
   const searchParams = useSearchParams()
+  const parentSlug = `${locale !== defaultLanguage.locale ? `/${locale}` : ''}${pathname}` //locale + pathname.substring(pathname.indexOf('/'), pathname.lastIndexOf('/'))
   const query = searchParams.get('tag')
+
+  // Get a new searchParams string by merging the current
+  // searchParams with a provided key/value pair
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams.toString())
+      params.set(name, value)
+ 
+      return params.toString()
+    },
+    [searchParams]
+  )
 
   const formattedTags = useMemo(() => {
     return tags?.map((tag) => ({
@@ -42,8 +50,7 @@ const MagazineTagBar = forwardRef<HTMLDivElement, MagazineTagBarProps>(function 
   }, [tags, query])
 
   const intl = useTranslations()
-  allTagLink.label = intl('magazine_tag_filter_all')
-  allTagLink.active = !query
+
   const linkClassNames = `
   inline-block 
   text-base
@@ -72,38 +79,22 @@ const MagazineTagBar = forwardRef<HTMLDivElement, MagazineTagBarProps>(function 
         flex
         items-center 
         divide-x-2
-      divide-energy-red-100"
+        divide-energy-red-100"
       >
         <li>
           <Link
-            href={href}
-            className={`${allTagLink.active ? 'font-bold' : 'font-normal'} ${linkClassNames}`}
-            data-title={allTagLink.label}
-            onClick={(event) => {
-              if (onClick) {
-                event.preventDefault()
-                onClick('ALL')
-                allTagLink.active = true
-              }
-            }}
+            href={parentSlug + '?' + createQueryString('tag', 'all')}
+            className={`active:font-bold ${linkClassNames}`}
           >
-            {allTagLink.label}
+            {intl('magazine_tag_filter_all')}
           </Link>
         </li>
         {formattedTags.map((tag: TagLink) => {
           return (
             <li key={tag.id}>
               <Link
-                className={`${tag.active ? 'font-bold' : 'font-normal'} ${linkClassNames}`}
-                href={`${href}${`?tag=${tag.key}`}`}
-                data-title={tag.label}
-                onClick={(event) => {
-                  if (onClick) {
-                    event.preventDefault()
-                    onClick(tag.key)
-                    allTagLink.active = false
-                  }
-                }}
+                className={`active:font-bold ${linkClassNames}`}
+                href={parentSlug + '?' + createQueryString('tag', tag.key)}
               >
                 {tag.label}
               </Link>

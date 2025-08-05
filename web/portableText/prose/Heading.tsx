@@ -1,5 +1,5 @@
 'use client'
-import { ElementType, forwardRef } from 'react'
+import { forwardRef } from 'react'
 import { Typography, TypographyProps } from '@/core/Typography'
 
 export type HeadingProps = {
@@ -14,9 +14,10 @@ export const Heading = forwardRef<HTMLHeadingElement, HeadingProps>(function Hea
   ref,
 ) {
   const headingVariants: Record<string, string> = {
-    h2: 'my-2 text-xl prose-article:text-lg prose-article:px-layout-lg',
-    h3: 'text-lg prose-article:px-layout-lg prose-article:text-md',
+    h2: 'mt-2 mb-8 text-xl prose-article:mb-2 prose-article:text-lg prose-article:px-layout-lg',
+    h3: 'mt-2 text-md prose-article:px-layout-lg',
   }
+
   return (
     <Typography
       {...rest}

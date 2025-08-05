@@ -2,16 +2,16 @@ import { ResourceLink } from '@/core/Link'
 import type { LinkData } from '../../types/index'
 import { getUrlFromAction } from '../../common/helpers'
 import { getLocaleFromName } from '../../lib/localization'
-import envisTwMerge from '../../twMerge'
+import { twMerge } from 'tailwind-merge'
 
 type CallToActionsProps = {
   callToActions: LinkData[]
-  overrideButtonStyle?: boolean
   splitList?: boolean
   className?: string
+  linkVariant?: 'default' | 'fit'
 }
 
-const CallToActions = ({ callToActions = [], splitList, className }: CallToActionsProps) => {
+const CallToActions = ({ callToActions = [], splitList,linkVariant, className ="" }: CallToActionsProps) => {
   if (!callToActions) return null
 
   const getSingleAction = () => {
@@ -40,7 +40,7 @@ const CallToActions = ({ callToActions = [], splitList, className }: CallToActio
     getSingleAction()
   ) : (
     <ul
-      className={envisTwMerge(
+      className={twMerge(
         `grid grid-cols-[fit-content] gap-x-8 gap-y-6 ${splitList ? 'md:grid md:grid-cols-2 items-end' : ''}
      `,
         className,
@@ -57,7 +57,7 @@ const CallToActions = ({ callToActions = [], splitList, className }: CallToActio
               type={callToAction.type}
               extension={callToAction.extension}
               showExtensionIcon={true}
-              variant="default"
+              variant={linkVariant ? linkVariant : "default"}
             >
               {`${callToAction?.label}`}
             </ResourceLink>

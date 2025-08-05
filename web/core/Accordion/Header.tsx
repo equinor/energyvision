@@ -1,6 +1,5 @@
-import { forwardRef } from 'react'
+import { ElementType, forwardRef } from 'react'
 import {
-  AccordionHeader,
   AccordionHeaderProps as _AccordionHeaderProps,
   AccordionTrigger,
   AccordionTriggerProps,
@@ -31,11 +30,8 @@ export const Header = forwardRef<HTMLButtonElement, AccordionHeaderProps>(functi
   { variant = 'primary', children, hasSectionTitle = false, className = '', headerClassName = '', ...rest },
   ref,
 ) {
-  const headerVariantClassName: Partial<Record<Variants, string>> = {
-    primary: '',
-    menu: '',
-    simpleMenu: '',
-  }
+  console.log("rest",rest);
+
   const variantClassName: Partial<Record<Variants, string>> = {
     primary: ` 
     items-center
@@ -175,10 +171,11 @@ export const Header = forwardRef<HTMLButtonElement, AccordionHeaderProps>(functi
       />
     </div>
   )
+  const ChildElementType = hasSectionTitle ? 'h3' : 'h2' as ElementType
+
 
   return (
-    <AccordionHeader asChild className={envisTwMerge(`${headerVariantClassName[variant]}`, headerClassName)}>
-      <Typography as={hasSectionTitle ? 'h3' : 'h2'}>
+      <ChildElementType className={headerClassName}>
         <AccordionTrigger
           ref={ref}
           className={envisTwMerge(
@@ -198,7 +195,6 @@ export const Header = forwardRef<HTMLButtonElement, AccordionHeaderProps>(functi
           `,
             className,
           )}
-          {...rest}
         >
           {variant === 'primary' && defaultIconsElement}
           <Typography
@@ -221,7 +217,6 @@ export const Header = forwardRef<HTMLButtonElement, AccordionHeaderProps>(functi
           </Typography>
           {(variant === 'menu' || variant === 'simpleMenu') && menuIconsElement}
         </AccordionTrigger>
-      </Typography>
-    </AccordionHeader>
+      </ChildElementType>
   )
 })

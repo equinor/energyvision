@@ -2,7 +2,7 @@
 import { BreadcrumbsList } from './index'
 import { BackgroundContainer, BackgroundContainerProps } from '@/core/Backgrounds'
 import { BreadcrumbJsonLd } from 'next-seo'
-import { useRouter, usePathname } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import { twMerge } from 'tailwind-merge'
 import NextLink from 'next/link'
 import type { Breadcrumb } from '../../types'

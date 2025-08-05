@@ -86,7 +86,6 @@ _type == "keyNumbers" =>{
       ${downloadableImageFields},
     },
     splitList,
-    overrideButtonStyle,
     "designOptions": {
       ${background},
     },

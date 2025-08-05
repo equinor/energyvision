@@ -21,7 +21,6 @@ const FormattedTime = ({
   //Fix getEventDates DAte and string mixins
   const date = new Date(datetime)
   const format = useFormatter()
-  console.log('className', className)
   return (
     <span {...rest} className={twMerge('inline-flex items-center gap-2 text-base', className)}>
       {icon && <TimeIcon />}

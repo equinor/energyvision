@@ -1,12 +1,8 @@
 'use client'
-
 import { HeroTypes, MagazinePageSchema } from '../../types/index'
 import Teaser from '../../sections/teasers/Teaser/Teaser'
-import Seo from '../../pageComponents/shared/Seo'
 import useSharedTitleStyles from '../../lib/hooks/useSharedTitleStyles'
 import MagazineTagBar from '@/sections/MagazineTags/MagazineTagBar'
-import { useLocale } from 'next-intl'
-import { usePathname, useRouter } from 'next/navigation'
 import { SharedBanner } from '../shared/SharedBanner'
 import SharedTitle from '../shared/SharedTitle'
 import { PageContent } from '../shared/SharedPageContent'
@@ -16,39 +12,10 @@ type MagazinePageProps = {
 }
 
 const MagazinePage = ({ data }: MagazinePageProps) => {
-  const locale = useLocale()
-  const pathname = usePathname()
-  const router = useRouter()
-  const parentSlug = locale + pathname.substring(pathname.indexOf('/'), pathname.lastIndexOf('/'))
-
   const { hideFooterComponent, footerComponent, tags } = data
-
   const titleStyles = useSharedTitleStyles(data?.hero?.type, data?.content?.[0])
 
-  const handleClickTag = (tagValue: string) => {
-    if (tagValue === 'ALL') {
-      delete router.query.filter
-      router.push({
-        pathname: parentSlug,
-      })
-    } else {
-      router.push({
-        pathname: parentSlug,
-        query: {
-          tag: tagValue,
-        },
-      })
-    }
-  }
-
   return (
-    <>
-      <Seo
-        seoAndSome={data?.seoAndSome}
-        slug={data?.slug}
-        heroImage={data?.hero?.figure?.image}
-        pageTitle={data?.title}
-      />
       <main>
         <SharedBanner
           title={data?.title}
@@ -58,7 +25,7 @@ const MagazinePage = ({ data }: MagazinePageProps) => {
             tags: tags,
           })}
         />
-        {data?.magazineTags && <MagazineTagBar tags={data?.magazineTags} href={parentSlug} onClick={handleClickTag} />}
+        {data?.magazineTags && <MagazineTagBar tags={data?.magazineTags} />}
         {data.hero.type !== HeroTypes.DEFAULT && (
           <SharedTitle sharedTitle={data.title} background={titleStyles.background} />
         )}
@@ -83,7 +50,6 @@ const MagazinePage = ({ data }: MagazinePageProps) => {
         <PageContent data={data} />
         {!hideFooterComponent && footerComponent?.data && <Teaser data={footerComponent.data} />}
       </main>
-    </>
   )
 }
 

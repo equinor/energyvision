@@ -1,8 +1,8 @@
 import { Accordion as EnvisAccordion } from '@/core/Accordion'
-import type { AccordionListData } from '../../types/index'
-import Blocks from '../../portableText/Blocks'
 import CallToActions from '@/sections/CallToActions'
-import Image, { getSmallerThanPxLgSizes } from '../../core/SanityImage/SanityImage'
+import Blocks from '@/portableText/Blocks'
+import Image, { getSmallerThanPxLgSizes } from '@/core/SanityImage/SanityImage'
+import { AccordionListData } from '@/types'
 
 const { Item, Header, Content } = EnvisAccordion
 
@@ -14,6 +14,7 @@ type AccordionProps = {
 }
 
 const Accordion = ({ data, id, hasSectionTitle = true }: AccordionProps) => {
+  console.log("Accordion",data);
   return (
     <EnvisAccordion type="multiple" id={id}>
       {data.map((item) => {
@@ -33,7 +34,7 @@ const Accordion = ({ data, id, hasSectionTitle = true }: AccordionProps) => {
                 />
               )}
               {content && <Blocks value={content} />}
-              {links && <CallToActions overrideButtonStyle callToActions={links} />}
+              {links && <CallToActions callToActions={links} linkVariant='fit' />}
             </Content>
           </Item>
         )

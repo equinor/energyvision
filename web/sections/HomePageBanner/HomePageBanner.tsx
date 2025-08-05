@@ -1,12 +1,13 @@
+'use client'
 import { forwardRef } from 'react'
 import Image, { getSmallerThanPxLgSizes, ImageRatios } from '../../core/SanityImage/SanityImage'
 import { useSanityLoader } from '../../lib/hooks/useSanityLoader'
 import { getUrlFromAction } from '../../common/helpers'
-import { getArrowElement } from '@core/Link/ResourceLink'
-import { BaseLink } from '@core/Link'
+import { getArrowElement } from '@/core/Link/ResourceLink'
+import { BaseLink } from '@/core/Link'
 import { ImageWithAlt, LinkData } from '../../types'
 import { PortableTextBlock } from '@portabletext/types'
-import { Heading } from '@core/Typography'
+import { Heading } from '@/core/Typography'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
 
 export type HomePageBannerThemeColors = {

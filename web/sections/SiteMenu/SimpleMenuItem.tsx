@@ -1,7 +1,7 @@
 import { Link, ResourceLink } from '@/core/Link'
 import type { SimpleGroupData } from '../../types/index'
 import { Menu } from '@/core/MenuAccordion'
-import { useRouter } from 'next/router'
+import { usePathname } from 'next/navigation'
 import { useId } from 'react'
 import envisTwMerge from '../../twMerge'
 
@@ -13,9 +13,10 @@ type MenuGroupType = {
   nextIsSimpleLink?: boolean
 }
 
+//CHECK PATHNAME versus router.asPath before
 export const SimpleMenuItem = ({ item, index, nextIsSimpleLink }: MenuGroupType) => {
   const { type, label, links = [], readMoreLink } = item
-  const router = useRouter()
+  const pathname = usePathname()
   const id = useId()
 
   if (item?.type === 'simpleMenuLink' && item.link && !item.link.slug) {
@@ -36,7 +37,7 @@ export const SimpleMenuItem = ({ item, index, nextIsSimpleLink }: MenuGroupType)
         <>
           <Link
             {...(item?.link &&
-              item.link.slug === router.asPath && {
+              item.link.slug === pathname && {
                 'aria-current': 'page',
               })}
             className={envisTwMerge(
@@ -71,7 +72,7 @@ export const SimpleMenuItem = ({ item, index, nextIsSimpleLink }: MenuGroupType)
                   <ResourceLink
                     href={readMoreLink.link?.slug}
                     className={`w-fit pt-0 mb-10 ${ariaCurrentStyling}`}
-                    aria-current={router?.asPath == readMoreLink?.link?.slug ? 'page' : 'false'}
+                    aria-current={pathname == readMoreLink?.link?.slug ? 'page' : 'false'}
                   >
                     {readMoreLink.label}
                   </ResourceLink>
@@ -91,7 +92,7 @@ export const SimpleMenuItem = ({ item, index, nextIsSimpleLink }: MenuGroupType)
                         underline-offset-2
                         text-base`}
                       href={link?.link?.slug || '/'}
-                      aria-current={router?.asPath == link?.link?.slug ? 'page' : 'false'}
+                      aria-current={pathname == link?.link?.slug ? 'page' : 'false'}
                     >
                       {link.label}
                     </Link>

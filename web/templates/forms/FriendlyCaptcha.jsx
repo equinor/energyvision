@@ -1,14 +1,14 @@
 'use client'
 import { useEffect, useRef } from 'react'
 import { WidgetInstance } from 'friendly-challenge'
-import { useRouter } from 'next/router'
 import { friendlyCaptcha } from '../../lib/config'
+import { useLocale } from 'next-intl'
 
 const FriendlyCaptcha = ({ doneCallback, errorCallback }) => {
   const puzzleEndpoint = friendlyCaptcha.puzzleEndpoint
   const container = useRef()
   const widget = useRef()
-  const router = useRouter()
+  const locale = useLocale()
 
   useEffect(() => {
     if (!widget.current && container.current) {
@@ -22,7 +22,7 @@ const FriendlyCaptcha = ({ doneCallback, errorCallback }) => {
   }, [container, doneCallback, errorCallback, puzzleEndpoint])
 
   return (
-    <div ref={container} className="frc-captcha" data-sitekey={friendlyCaptcha.siteKey} data-lang={router.locale} />
+    <div ref={container} className="frc-captcha" data-sitekey={friendlyCaptcha.siteKey} data-lang={locale} />
   )
 }
 

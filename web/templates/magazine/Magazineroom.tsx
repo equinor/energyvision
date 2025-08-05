@@ -1,13 +1,11 @@
 'use client'
 import type { MagazineIndexPageType } from '../../types'
 import { useMemo, useRef, useState } from 'react'
-import Seo from '../../pageComponents/shared/Seo'
 import { HeroTypes } from '../../types/index'
 import { BackgroundContainer } from '@/core/Backgrounds'
 import Teaser from '../../sections/teasers/Teaser/Teaser'
 import Blocks from '../../portableText/Blocks'
 import MagazineTagBar from '@/sections/MagazineTags/MagazineTagBar'
-import { useRouter } from 'next/router'
 import { ImageBackgroundContainer } from '@/core/Backgrounds/ImageBackgroundContainer'
 import { Heading } from '@/core/Typography'
 import MagazineCard from '@/sections/cards/MagazineCard/MagazineCard'
@@ -34,9 +32,6 @@ const MagazineRoom = ({ pageData, slug }: MagazineIndexTemplateProps) => {
   const { ingress, title, hero, seoAndSome, magazineTags, magazineArticles, footerComponent } = pageData || {}
   const resultsRef = useRef<HTMLDivElement>(null)
   const [isLoading, setIsLoading] = useState(false)
-  const router = useRouter()
-  const parentSlug = `${router.locale !== router.defaultLocale ? `/${router.locale}` : ''}${router.pathname}`
-
   const magazineList = useMemo(() => magazineArticles, [magazineArticles])
   const pagedList = useMemo(() => chunkArray(magazineList, 12), [magazineList])
   const [page, setPage] = useState(0)
@@ -52,25 +47,7 @@ const MagazineRoom = ({ pageData, slug }: MagazineIndexTemplateProps) => {
     setIsLoading(false)
   }
 
-  const handleClickTag = (tagValue: string) => {
-    if (tagValue === 'ALL') {
-      delete router.query.filter
-      router.push({
-        pathname: parentSlug,
-      })
-    } else {
-      router.push({
-        pathname: parentSlug,
-        query: {
-          tag: tagValue,
-        },
-      })
-    }
-  }
-
   return (
-    <>
-      <Seo seoAndSome={seoAndSome} slug={slug} pageTitle={title} />
       <main>
         {hero.type !== HeroTypes.BACKGROUND_IMAGE && (
           <>
@@ -105,7 +82,7 @@ const MagazineRoom = ({ pageData, slug }: MagazineIndexTemplateProps) => {
             )}
           </>
         )}
-        {magazineTags && <MagazineTagBar tags={magazineTags} href={parentSlug} onClick={handleClickTag} />}
+        {magazineTags && <MagazineTagBar tags={magazineTags} />}
         <PaginationContextProvider defaultRef={resultsRef}>
           <ul className="grid-cols-card mx-auto grid w-full max-w-viewport scroll-mt-24 auto-rows-fr content-center justify-center gap-8 px-layout-sm py-12">
             {isLoading &&
@@ -133,7 +110,6 @@ const MagazineRoom = ({ pageData, slug }: MagazineIndexTemplateProps) => {
         </PaginationContextProvider>
         <div className="pt-24">{footerComponent && <Teaser data={footerComponent} />}</div>
       </main>
-    </>
   )
 }
 export default MagazineRoom
