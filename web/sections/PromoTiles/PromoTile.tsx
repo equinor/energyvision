@@ -22,7 +22,7 @@ export const PromoTile = forwardRef<HTMLAnchorElement, PromoTileProps>(function 
   if (!url) {
     return null
   }
-  const locale = action.link?.lang ? getLocaleFromName(action.link?.lang) : intl.locale
+  const locale = action.link?.lang ? getLocaleFromName(action.link?.lang) : getLocaleFromName(intl.locale)
   const { background } = designOptions
 
   const colorName =

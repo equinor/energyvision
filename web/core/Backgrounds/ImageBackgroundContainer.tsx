@@ -4,6 +4,7 @@ import { ImageBackground } from '../../types/index'
 import { twMerge } from 'tailwind-merge'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
 import { BackgroundContainerType } from './ColouredContainer'
+import { ImageRatioKeys, mapSanityImageRatio } from '@core/SanityImage/SanityImage'
 
 type ImageBackgroundContainerProps = {
   scrimClassName?: string
@@ -11,7 +12,7 @@ type ImageBackgroundContainerProps = {
   dontSplit?: boolean
   /* Provide gradient in scrimClassname and disable default */
   overrideGradient?: boolean
-  aspectRatio?: number
+  aspectRatio?: ImageRatioKeys
   /** Set return element as given */
   as?: BackgroundContainerType
 } & ImageBackground &
@@ -36,7 +37,7 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
     },
     ref,
   ) {
-    const props = useSanityLoader(image, DEFAULT_MAX_WIDTH, aspectRatio)
+    const props = useSanityLoader(image, DEFAULT_MAX_WIDTH, mapSanityImageRatio(aspectRatio ?? '16:9'))
     const src = props?.src
     const isMobile = useMediaQuery(`(max-width: 800px)`)
     const ReturnElement = as

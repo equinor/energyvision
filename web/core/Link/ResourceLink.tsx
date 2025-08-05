@@ -45,7 +45,7 @@ export const getArrowAnimation = (type: LinkType) => {
   }
 }
 
-export const getArrowElement = (type: LinkType, iconClassName: string) => {
+export const getArrowElement = (type: LinkType, iconClassName?: string, marginClassName?: string) => {
   const iconClassNames = envisTwMerge(
     `size-arrow-right
     text-energy-red-100
@@ -60,13 +60,13 @@ export const getArrowElement = (type: LinkType, iconClassName: string) => {
   `,
     iconClassName,
   )
-  const marginClassName = `ml-6 xl:ml-8`
+  const marginClassNames = envisTwMerge(`ml-6 xl:ml-8`, marginClassName)
 
   switch (type) {
     case 'downloadableFile':
     case 'downloadableImage':
       return (
-        <div className={`flex flex-col px-1 ${marginClassName} translate-y-[1px]`}>
+        <div className={`flex flex-col px-1 ${marginClassNames} translate-y-[1px]`}>
           <ArrowRight className={iconClassNames} />
           <div className="bg-energy-red-100 dark:bg-white-100 h-[2px] w-full" />
         </div>
@@ -233,6 +233,7 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
           flex
           justify-start
           items-center
+          gap-x-2
           ${contentVariantClassName[variant]}`,
         )}
       >

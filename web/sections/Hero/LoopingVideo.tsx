@@ -1,5 +1,5 @@
-import { useSanityLoader } from '../../../lib/hooks/useSanityLoader'
-import { LoopingVideoData } from '../../../types'
+import { useSanityLoader } from '../../lib/hooks/useSanityLoader'
+import { LoopingVideoData } from '../../types'
 import dynamic from 'next/dynamic'
 import { VideoJS } from '@core/VideoJsPlayer'
 

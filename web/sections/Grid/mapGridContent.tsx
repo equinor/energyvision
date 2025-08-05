@@ -1,10 +1,11 @@
 import { ComponentProps } from '../../pageComponents/pageTemplates/shared/SharedPageContent'
-import { FigureData, IFrameData, VideoPlayerData } from '../../types/index'
+import { IFrameData, VideoPlayerData } from '../../types/index'
 import IFrame from '../IFrameBlock/IFrameBlock'
 import { VideoJsComponent } from '../../pageComponents/shared/VideoPlayer'
 import GridTextBlock from './GridTextBlock'
 import { GridTeaser } from './GridTeaser'
 import GridFigure from './GridFigure'
+import { FigureData } from '../../pageComponents/topicPages/Figure'
 
 export type RowType = 'span3' | 'span2and1' | 'threeColumns' | undefined
 
