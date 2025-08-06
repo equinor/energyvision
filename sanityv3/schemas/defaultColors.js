@@ -81,7 +81,7 @@ export const defaultColors = [
     key: 'autumn-storm-40',
     dark: false,
   },
-  //18
+  // 18
   {
     title: 'Autumn storm 20',
     value: '#E3EDEA',
