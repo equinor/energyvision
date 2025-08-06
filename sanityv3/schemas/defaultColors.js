@@ -48,9 +48,9 @@ export const defaultColors = [
   },
   //13
   {
-    title: 'Grey 50',
-    value: 'hsl(0, 0%, 55%)',
-    key: 'grey-50',
+    title: 'Grey 20',
+    value: 'hsl(0, 0%, 92%)',
+    key: 'grey-20',
     dark: false,
   },
   //14
@@ -69,23 +69,23 @@ export const defaultColors = [
   },
   //16
   {
-    title: 'North Sea 40',
-    value: '#DFF5FF',
-    key: 'north-sea-40',
+    title: 'North Sea 30',
+    value: '#D6EBF6',
+    key: 'north-sea-30',
     dark: false,
   },
   //17
   {
-    title: 'Autumn storm 60',
-    value: '#86A7AC',
-    key: 'autumn-storm-60',
+    title: 'Autumn storm 40',
+    value: '#C2D4D6',
+    key: 'autumn-storm-40',
     dark: false,
   },
   //18
   {
-    title: 'Autumn storm 40',
-    value: '#C2D4D6',
-    key: 'autumn-storm-40',
+    title: 'Autumn storm 20',
+    value: '#E3EDEA',
+    key: 'autumn-storm-20',
     dark: false,
   },
 ]
