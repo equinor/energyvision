@@ -37,6 +37,7 @@ _type == "keyNumbers" =>{
       ${background},
       "imagePosition": coalesce(imagePosition, 'left'),
       imageSize,
+      colRatio
     },
     "image": image {
       ...,

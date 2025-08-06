@@ -199,6 +199,22 @@ export default {
       },
     },
     {
+      name: 'colRatio',
+      title: 'Column widths',
+      description: 'media width(%) - text content width(%). ImagePosition does not change this.',
+      type: 'string',
+      options: {
+        list: [
+          { title: '50-50', value: '50-50' },
+          { title: '40-60', value: '40-60' },
+          { title: '60-40', value: '60-40' },
+          { title: '33-66', value: '33-66' },
+          { title: '66-33', value: '66-33' },
+        ],
+      },
+      fieldset: 'design',
+    },
+    {
       title: 'Background',
       description: 'Pick a colour for the background. Default is white.',
       name: 'background',

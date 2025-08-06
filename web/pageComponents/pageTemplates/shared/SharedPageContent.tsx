@@ -234,7 +234,7 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
     //@ts-ignore:so many types
     switch (c.type) {
       case 'teaser':
-        return <Teaser key={c.id} data={c as TeaserData} anchor={anchorReference} />
+        return <Teaser key={c.id} {...(c as TeaserData)} anchor={anchorReference} />
       case 'textTeaser':
         return (
           <TextTeaser key={c.id} data={c as TextTeaserData} anchor={anchorReference} className={spacingClassName} />

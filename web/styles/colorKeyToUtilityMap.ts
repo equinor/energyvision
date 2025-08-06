@@ -54,11 +54,6 @@ export const colorKeyToUtilityMap: Record<
     text: 'text-white-100',
     dark: true,
   },
-  'norwegin-woods-40': {
-    backgroundName: 'Light green',
-    background: 'bg-norwegin-woods-40',
-    text: 'text-norwegin-woods-40',
-  },
   'sand-and-summer-50': {
     backgroundName: 'Sand',
     background: 'bg-sand-and-summer-50',
@@ -72,4 +67,14 @@ export const colorKeyToUtilityMap: Record<
 }
 export type ColorKeyTokens = {
   [P1 in keyof typeof colorKeyToUtilityMap]: string
+}
+
+export const getUtilityByBackgroundName = (backgroundName?: string) => {
+  let returnValue = colorKeyToUtilityMap['white-100']
+  Object.values(colorKeyToUtilityMap).forEach((value) => {
+    if (backgroundName === value.backgroundName) {
+      returnValue = value
+    }
+  })
+  return returnValue
 }
