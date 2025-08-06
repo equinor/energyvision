@@ -3,21 +3,21 @@ export const getColorConfigForTableTheme = (title: string) => {
   switch (title) {
     case 'blue':
       return {
-        headerBackground: 'bg-autumn-storm-40',
-        headerText: 'text-north-sea-90',
-        headerBorder: 'border-autumn-storm-60',
-        rowBorder: 'border-autumn-storm-40',
-        rowZebraBackground: 'even:bg-autumn-storm-20',
-        rowZebraLastOdd: 'odd:last:border-autumn-storm-20',
-      }
-    case 'green':
-      return {
         headerBackground: 'bg-north-sea-50',
         headerText: 'text-norwegian-woods-100',
         headerBorder: 'border-north-sea-50',
         rowBottomBorder: 'border-north-sea-50',
         rowZebraBackground: 'even:bg-north-sea-30',
         rowZebraLastOdd: 'odd:last:border-north-sea-30',
+      }
+    case 'green':
+      return {
+        headerBackground: 'bg-autumn-storm-40',
+        headerText: 'text-north-sea-90',
+        headerBorder: 'border-autumn-storm-60',
+        rowBorder: 'border-autumn-storm-40',
+        rowZebraBackground: 'even:bg-autumn-storm-20',
+        rowZebraLastOdd: 'odd:last:border-autumn-storm-20',
       }
     case 'grey':
     default:
