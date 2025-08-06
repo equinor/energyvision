@@ -102,7 +102,7 @@ const transform = (content) => {
           {
             _key: uniqueId,
             _type: 'attachment',
-            reference: content.reference,
+            reference: content.fileReference,
           },
         ],
         style: 'normal',
@@ -123,7 +123,7 @@ export default defineMigration({
     array(node, path, _context) {
       if (path[0] === 'content')
         // uncomment below line to delete tablev2
-        //return node.filter((it) => it._type === 'tableV2').map((it) => at([{ _key: it._key }], unset()))
+        //  return node.filter((it) => it._type === 'tableV2').map((it) => at([{ _key: it._key }], unset()))
         return node
           .filter((it) => it._type === 'table')
           .filter((e) => !!e)
