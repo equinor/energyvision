@@ -1,13 +1,11 @@
 import Teaser from '../../../sections/teasers/Teaser/Teaser'
-import TextBlock from '../../topicPages/TextBlock'
-import FullWidthImage from '../../topicPages/FullWidthImage'
+import TextBlock from '../../../sections/TextBlock/TextBlock'
+import FullWidthImage, { FullWidthImageData } from '../../topicPages/FullWidthImage'
 import FullWidthVideo from '../../topicPages/FullWidthVideo'
-import Figure from '../../topicPages/Figure'
+import Figure, { FigureData } from '../../topicPages/Figure'
 import PageQuote from '../../topicPages/PageQuote'
 import PromoTileArray from '../../../sections/PromoTiles/PromoTileArray'
-import IFrame from '../../topicPages/IFrame'
 import Promotion from '../../topicPages/Promotion'
-import Form from '../../topicPages/Form/Form'
 import Table from '../../topicPages/Table'
 import NewsList from '../../topicPages/NewsList'
 import StockValues from '../../topicPages/StockValues'
@@ -24,9 +22,7 @@ import {
   MagazinePageSchema,
   TeaserData,
   TextBlockData,
-  FullWidthImageData,
   FullWidthVideoData,
-  FigureData,
   TextWithIconArrayData,
   CallToActionData,
   QuoteData,
@@ -66,6 +62,9 @@ import AccordionBlock from '@sections/AccordionBlock/AccordionBlock'
 import TabsBlock, { TabsBlockProps } from '@sections/TabsBlock/TabsBlock'
 import { getColorForTabsTheme } from '@sections/TabsBlock/tabThemes'
 import { ColorKeyTokens, colorKeyToUtilityMap } from '../../../styles/colorKeyToUtilityMap'
+import Form from '@templates/forms/Form'
+import IFrameBlock from '../../../sections/IFrameBlock/IFrameBlock'
+import { getColorForHomepageBannerTheme, HomePageBanner } from '@sections/HomePageBanner/HomePageBanner'
 import TableBlock, { TableBlockProps } from '@sections/TableBlock/TableBlock'
 
 type DefaultComponent = {
@@ -115,7 +114,7 @@ type PageContentProps = {
  */
 const getBackgroundOptions = (component: ComponentProps) => {
   //@ts-ignore:Too many types
-  if (!component?.designOptions) {
+  if (!component?.designOptions || !Object.hasOwn(component, 'designOptions')) {
     //Return white default if no designOptions
     return {
       backgroundUtility: 'white-100',
@@ -187,11 +186,17 @@ const applyPaddingTopIfApplicable = (currentComponent: ComponentProps, prevCompo
   const previousIsWhiteColorBackground = isWhiteColorBackground(previousComponentsDO, prevComponent)
 
   const previousComponentIsASpecialCaseAndNeedPT =
-    //@ts-ignore
+    //@ts-ignore: too many types
     specialCases.includes(prevComponent?.type) || specialCases.includes(previousComponentsDO?.type)
 
   if (currentIsWhiteColorBackground && previousIsWhiteColorBackground && !previousComponentIsASpecialCaseAndNeedPT) {
     return ''
+  }
+
+  //@ts-ignore: too many types
+  if (prevComponent?.type === 'homepageBanner') {
+    //@ts-ignore: too many types
+    return prevComponent?.designOptions?.backgroundType === '0' ? 'lg:pt-20' : 'pt-20'
   }
 
   const previousIsSameColorAsCurrent = isSameColorBackground(currentComponentsDO, previousComponentsDO)
@@ -269,7 +274,7 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
           />
         )
       case 'iframe':
-        return <IFrame key={c.id} data={c as IFrameData} anchor={anchorReference} className={spacingClassName} />
+        return <IFrameBlock key={c.id} data={c as IFrameData} anchor={anchorReference} className={spacingClassName} />
       case 'promotion':
         return <Promotion key={c.id} data={c as PromotionData} anchor={anchorReference} className={spacingClassName} />
       case 'form':
@@ -364,6 +369,9 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
         return <ImageForText key={c.id} data={c as ImageForTextData} />
       case 'tabs':
         return <TabsBlock key={c.id} {...(c as any)} className={spacingClassName} />
+      /* Remove from here and move to Homepage Template PageContent */
+      case 'homepageBanner':
+        return <HomePageBanner key={c.id} {...(c as any)} />
       case 'tableV2':
         return (
           <TableBlock

@@ -8,19 +8,12 @@ import {
   PortableTextTypeComponent,
 } from '@portabletext/react'
 import { PortableTextBlock, PortableTextBlockStyle } from '@portabletext/types'
-import {
-  FigureWithLayout,
-  Quote,
-  ExternalLink,
-  InternalLink,
-  BasicIframe,
-  BulletList,
-  NumberedList,
-} from './components'
+import { FigureWithLayout, Quote, ExternalLink, InternalLink, BulletList, NumberedList } from './components'
 import { FactBox } from '@sections/FactBox/FactBox'
 import { twMerge } from 'tailwind-merge'
 import { FormattedMessage } from 'react-intl'
 import { Highlight } from '@core/Typography/Highlight'
+import { IFrame } from '@core/IFrame/IFrame'
 import { ResourceLink } from '@core/Link'
 
 export type BlockType = Record<PortableTextBlockStyle, PortableTextBlockComponent | undefined>
@@ -46,7 +39,10 @@ const defaultSerializers = {
     //@ts-ignore
     pullQuote: (props) => <Quote {...props} className="not-prose" />,
     //@ts-ignore
-    basicIframe: (props) => <BasicIframe {...props} className="not-prose px-layout-md" />,
+    basicIframe: (props) => {
+      const { value } = props
+      return <IFrame {...value} className="not-prose px-layout-md py-14 mx-auto" />
+    },
   },
   marks: {
     sub: ({ children }: TypeProps) => <sub>{children}</sub>,
@@ -58,6 +54,17 @@ const defaultSerializers = {
     },
     //TODO find proper type
     internalLink: ({ children, value }: any) => {
+      return <InternalLink value={value}>{children}</InternalLink>
+    },
+    //TODO find proper type
+    reference_block: ({ children, value }: any) => {
+      return <InternalLink value={value}>{children}</InternalLink>
+    },
+    //TODO find proper type
+    referenceToOtherLanguage_block: ({ children, value }: any) => {
+      return <InternalLink value={value}>{children}</InternalLink>
+    },
+    homePageLink_block: ({ children, value }: any) => {
       return <InternalLink value={value}>{children}</InternalLink>
     },
     attachment: ({ children, value }: any) => {

@@ -4,7 +4,8 @@ import type { PortableTextBlock, Reference, Rule } from 'sanity'
 import type { ColorSelectorValue } from '../../../components/ColorSelector'
 import CompactBlockEditor from '../../../components/CompactBlockEditor'
 import blocksToText from '../../../../helpers/blocksToText'
-import { EdsIcon ,
+import {
+  EdsIcon,
   ContentRightImage,
   ContentLeftImage,
   ContentCenterImage,
@@ -13,9 +14,10 @@ import { EdsIcon ,
 } from '../../../../icons'
 import { configureBlockContent } from '../../../editors'
 import { configureThemedTitleBlockContent } from '../../../editors/themedTitleEditorContentType'
-import { fromLargerTextThemeColors, fromNormalTextThemeColors } from '../../../components/ThemeSelector'
 import { capitalizeFirstLetter } from '../../../../helpers/formatters'
 import { RadioIconSelector } from '../../../components'
+import singleItemArray from '../../singleItemArray'
+import { fromLargerTextThemeColors, fromNormalTextThemeColors } from '../../textTeaser'
 
 const blockContentType = configureBlockContent({
   smallText: true,
@@ -111,7 +113,7 @@ export default {
       type: 'array',
       of: [blockContentType],
     },
-    {
+    singleItemArray({
       name: 'action',
       title: 'Link/action',
       description: 'Select the link or downloadable file',
@@ -121,8 +123,7 @@ export default {
         { type: 'downloadableImage', title: 'Downloadable image' },
         { type: 'downloadableFile', title: 'Downloadable file' },
       ],
-      validation: (Rule: Rule) => Rule.max(1).error('Only one action is permitted'),
-    },
+    }),
     {
       name: 'contentTheme',
       title: 'Content theme',

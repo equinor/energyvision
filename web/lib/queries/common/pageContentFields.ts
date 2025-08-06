@@ -5,7 +5,7 @@ import { videoPlayerCarouselFields } from '../videoPlayerCarouselFields'
 import { videoPlayerFields } from '../videoPlayerFields'
 import downloadableFileFields from './actions/downloadableFileFields'
 import downloadableImageFields from './actions/downloadableImageFields'
-import linkSelectorFields, { linkReferenceFields } from './actions/linkSelectorFields'
+import linkSelectorFields from './actions/linkSelectorFields'
 import background from './background'
 import markDefs from './blockEditorMarks'
 import { eventPromotionFields, futureEventsQuery, pastEventsQuery } from './promotions/eventPromotion'
@@ -16,6 +16,7 @@ import promoteMagazine from './promotions/promoteMagazine'
 import { lastUpdatedTimeQuery, publishDateTimeQuery } from './publishDateTime'
 import { anchorLinkReferenceFields } from './anchorLinkReferenceFields'
 import { tabsComponentFields } from './tabsComponentFields'
+import homepageContentFields from './homepageContentFields'
 import { importTableFields } from '../importTable'
 import { tableV2Fields } from '../tableV2'
 
@@ -198,17 +199,7 @@ _type == "keyNumbers" =>{
       "action": {
         "label": link.label,
         "ariaLabel": link.ariaLabel,
-        "anchorReference": link.anchorReference,
-        "link": select(
-          link.linkToOtherLanguage == true =>
-            link.referenceToOtherLanguage->${linkReferenceFields},
-            link.reference->${linkReferenceFields},
-        ),
-        "href": link.url,
-        "type": select(
-          defined(link.url) => "externalUrl",
-          "internalUrl"
-        ),
+        "": links::getLinkFields(link.link[0])
       },
       "image": image{
         ...,
@@ -261,7 +252,7 @@ _type == "keyNumbers" =>{
     "useHorizontalScroll": useHorizontalScroll,
     "viewAllLink": {
         "label": viewAllLinkLabel,
-        "link":viewAllLink->${linkReferenceFields},
+        "": links::getLinkFields(viewAllLink),
     },
     "content": promotion[0]{
       "id": _key,
@@ -350,20 +341,11 @@ _type == "keyNumbers" =>{
             email,
             phone,
           },
-          isLink => {
+          isLink => linkSelector{
             "cv": {
-              "id": _key,
-              "type": select(
-                defined(url) => "externalUrl", "internalUrl"
-               ),
               label,
               ariaLabel,
-              "link": select(
-                linkToOtherLanguage == true =>
-                referenceToOtherLanguage->${linkReferenceFields},
-                reference->${linkReferenceFields},
-                ),
-              "href": url,
+              "": links::getLinkFields(link[0]),
               anchorReference,
             },
           },
@@ -622,6 +604,8 @@ _type == "keyNumbers" =>{
   _type == "tabs"=>{
     ${tabsComponentFields}
   },
+  //Remove from here and place with homepage template query only
+  ${homepageContentFields}
 `
 
 export default pageContentFields

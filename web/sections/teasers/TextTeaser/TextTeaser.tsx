@@ -1,5 +1,4 @@
 import { Teaser } from '@core/Teaser'
-import { BackgroundContainer } from '@core/Backgrounds'
 import type { TextTeaserData } from '../../../types/index'
 import { getColorForTheme } from './theme'
 

@@ -28,7 +28,7 @@ import imageWithAltAndCaption from './objects/imageWithAltAndCaption'
 import carouselImage from './objects/carouselImage'
 import imageWithLinkAndOrOverlay from './objects/ImageWithLinkAndOrOverlay'
 import largeTable from './objects/largeTable'
-import linkSelector from './objects/linkSelector'
+import linkSelector from './objects/linkSelector/linkSelector'
 import menuGroup from './objects/menuGroup'
 import menuLink from './objects/menuLink'
 import newsList from './objects/newsList'
@@ -95,6 +95,7 @@ import imageWithRichText from './objects/ImageWithRichText'
 import importTable from './objects/importTable'
 import tableTheme from './objects/tableV2/tableTheme'
 import homePage from './documents/homePage'
+import homepageBanner from './objects/homepageBanner'
 import tableV2 from './objects/tableV2'
 
 const {
@@ -168,7 +169,7 @@ const RemainingSchemas = [
   figure,
   textWithIcon,
   textWithIconArray,
-  linkSelector,
+  linkSelector(),
   promoTile,
   promoTileArray,
   stockValuesApi,
@@ -231,6 +232,7 @@ const RemainingSchemas = [
   tabsKeyNumberItem,
   imageWithLinkAndOrOverlay,
   imageWithRichText,
+  homepageBanner,
   importTable,
   tableV2,
   tableTheme,

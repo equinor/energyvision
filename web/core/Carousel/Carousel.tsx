@@ -27,10 +27,10 @@ import { toPlainText } from '@portabletext/react'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { CarouselItem } from './CarouselItem'
-import IFrame from '../../pageComponents/shared/iframe/IFrame'
 import { EventCard } from '@sections/cards/EventCard'
 import { VideoJsComponent } from '../../pageComponents/shared/VideoPlayer'
 import KeyNumberItem from '@sections/KeyNumber/KeyNumberItem'
+import { IFrame } from '@core/IFrame/IFrame'
 
 export type DisplayModes = 'single' | 'scroll'
 export type Layouts = 'full' | 'default'
@@ -582,7 +582,6 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
                   prevSlide()
                 }
               }}
-              className="hover:border-autumn-storm-60"
             />
             <MediaButton
               title={intl.formatMessage({
@@ -602,7 +601,6 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
                   nextSlide()
                 }
               }}
-              className="hover:border-autumn-storm-60"
             />
           </div>
         </div>
