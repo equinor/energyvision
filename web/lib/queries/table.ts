@@ -21,9 +21,9 @@ export const tableFields = /* groq */ `
       ${markDefs},
     }
   },
-  tableRows[]{
+  "rows": tableRows[]{
     "id": _key,
-    row[] {
+    "cells":row[] {
       "type": _type,
       "id": _key,
       "text": tableRichText[] {
@@ -37,6 +37,7 @@ export const tableFields = /* groq */ `
       ...
     },
   },
+    "theme": coalesce(lower(theme.title), 'grey'),
   "designOptions": {
     "theme": coalesce(lower(theme.title), 'grey'),
     height,

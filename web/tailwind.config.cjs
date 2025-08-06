@@ -155,12 +155,14 @@ module.exports = {
         },
         'north-sea': {
           100: '#243746',
-          90: '#051b33',
+          90: '#234057',
           80: '#2A4D74',
           70: '#49709C',
           60: '#7294BB',
           50: '#A8C3DB',
-          40: '#DFF5FF',
+          40: '#C2DAEB',
+          30: '#D6EBF6',
+          20: '#DFF5FF',
         },
         'norwegian-woods': {
           100: '#007079',
@@ -176,8 +178,10 @@ module.exports = {
           90: '#DF6D62',
           80: '#E9947C',
           70: '#EEA990',
-          60: '#F8D1AF',
-          50: '#FFE7D6',
+          60: '#F4C3A4',
+          50: '#F8D1AF',
+          40: '#FEE0C7',
+          30: '#FFE7D6',
         },
         'autumn-storm': {
           60: '#86A7AC',
@@ -375,6 +379,8 @@ module.exports = {
         selected: 'selected~="true"',
         expanded: 'expanded~="true"',
         overflowing: 'overflowing~="true"',
+        zebra: 'zebra~="true"',
+        'sticky-header': 'sticky-header~="true"',
       },
       flex: {
         fr: '1 1 1',
@@ -498,6 +504,11 @@ module.exports = {
               marginTop: '0',
               marginBottom: '0',
             },
+          },
+        },
+        simple: {
+          css: {
+            color: 'inherit',
           },
         },
       }),

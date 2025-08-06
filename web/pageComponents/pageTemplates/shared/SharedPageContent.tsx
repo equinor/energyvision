@@ -65,6 +65,7 @@ import { ColorKeyTokens, colorKeyToUtilityMap } from '../../../styles/colorKeyTo
 import Form from '@templates/forms/Form'
 import IFrameBlock from '../../../sections/IFrameBlock/IFrameBlock'
 import { getColorForHomepageBannerTheme, HomePageBanner } from '@sections/HomePageBanner/HomePageBanner'
+import TableBlock, { TableBlockProps } from '@sections/TableBlock/TableBlock'
 
 type DefaultComponent = {
   id?: string
@@ -96,6 +97,7 @@ export type ComponentProps =
   | KeyNumbersData
   | DefaultComponent
   | TabsBlockProps
+  | TableBlockProps
 
 type PageContentProps = {
   data: TopicPageSchema | MagazinePageSchema
@@ -278,7 +280,15 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
       case 'form':
         return <Form key={c.id} data={c as FormData} anchor={anchorReference} className={spacingClassName} />
       case 'table':
-        return <Table key={c.id} data={c as TableData} anchor={anchorReference} className={spacingClassName} />
+        return (
+          <TableBlock
+            variant="deprecated"
+            key={c.id}
+            {...(c as any)}
+            anchor={anchorReference}
+            className={spacingClassName}
+          />
+        )
       case 'cookieDeclaration':
         return (
           <CookieDeclaration
@@ -362,6 +372,26 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
       /* Remove from here and move to Homepage Template PageContent */
       case 'homepageBanner':
         return <HomePageBanner key={c.id} {...(c as any)} />
+      case 'tableV2':
+        return (
+          <TableBlock
+            variant="default"
+            key={c.id}
+            {...(c as any)}
+            anchor={anchorReference}
+            className={topSpacingClassName}
+          />
+        )
+      case 'importTable':
+        return (
+          <TableBlock
+            variant="import"
+            key={c.id}
+            {...(c as any)}
+            anchor={anchorReference}
+            className={topSpacingClassName}
+          />
+        )
       default:
         return null
     }
