@@ -3,7 +3,8 @@ import { useCallback, useId } from 'react'
 import { set } from 'sanity'
 import type { ObjectInputProps } from 'sanity'
 import styled from 'styled-components'
-import colorConfig from '../../../colorConfig'
+import { defaultColors } from '../../defaultColors'
+import { capitalizeFirstLetter } from '../../../helpers/formatters'
 
 type TableThemeColor = {
   title: string
@@ -15,18 +16,18 @@ type TableThemeColor = {
 export const tableThemes: TableThemeColor[] = [
   {
     title: 'grey',
-    headerValue: colorConfig['grey'][50],
-    rowValue: colorConfig['grey'][10],
+    headerValue: defaultColors[13].value,
+    rowValue: defaultColors[14].value,
   },
   {
     title: 'blue',
-    headerValue: colorConfig['north-sea'][50],
-    rowValue: colorConfig['north-sea'][40],
+    headerValue: defaultColors[15].value,
+    rowValue: defaultColors[16].value,
   },
   {
     title: 'green',
-    headerValue: colorConfig['autumn-storm'][60],
-    rowValue: colorConfig['autumn-storm'][40],
+    headerValue: defaultColors[17].value,
+    rowValue: defaultColors[18].value,
   },
 ]
 
@@ -90,7 +91,7 @@ export const TableTheme = ({ value, active, onClickHandler, preview, thumbnail }
           <TableThemeRow $isThumbnail={!!thumbnail} />
           <TableThemeRow $color={theme.rowValue} $isThumbnail={!!thumbnail} />
         </Container>
-        {!thumbnail && <Text size={1}>{theme.title}</Text>}
+        {!thumbnail && <Text size={1}>{capitalizeFirstLetter(theme.title)}</Text>}
       </Flex>
     </Card>
   )
