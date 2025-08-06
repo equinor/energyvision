@@ -17,6 +17,8 @@ import { lastUpdatedTimeQuery, publishDateTimeQuery } from './publishDateTime'
 import { anchorLinkReferenceFields } from './anchorLinkReferenceFields'
 import { tabsComponentFields } from './tabsComponentFields'
 import homepageContentFields from './homepageContentFields'
+import { importTableFields } from '../importTable'
+import { tableV2Fields } from '../tableV2'
 
 const pageContentFields = /* groq */ `
 _type == "keyNumbers" =>{
@@ -505,6 +507,12 @@ _type == "keyNumbers" =>{
   },
   _type == "table" => {
     ${tableFields}
+  },
+  _type == "tableV2" => {
+    ${tableV2Fields}
+  },
+    _type == "importTable" => {
+    ${importTableFields}
   },
   _type == "cardsList" => {
     "type": _type,

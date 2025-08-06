@@ -1,6 +1,7 @@
 import { defineField, defineType } from 'sanity'
 import { getColorForTabTheme, tabsThemeColors } from './tabsThemes'
 import { PreviewProps } from 'sanity'
+import singleItemArray from '../singleItemArray'
 import { CardTheme, ThemeSelector, ThemeSelectorValue } from '../../components/ThemeSelector'
 import singleItemArray from '../singleItemArray'
 

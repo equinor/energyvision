@@ -16,6 +16,7 @@ import { configureBlockContent } from '../../../editors'
 import { configureThemedTitleBlockContent } from '../../../editors/themedTitleEditorContentType'
 import { capitalizeFirstLetter } from '../../../../helpers/formatters'
 import { RadioIconSelector } from '../../../components'
+import singleItemArray from '../../singleItemArray'
 import { fromLargerTextThemeColors, fromNormalTextThemeColors } from '../../textTeaser'
 import singleItemArray from '../../singleItemArray'
 

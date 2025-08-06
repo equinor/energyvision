@@ -13,7 +13,7 @@ export const getColorForTabsTheme = (pattern?: number): TabsThemeColors => {
       }
     case 1:
       return {
-        backgroundUtility: 'bg-sand-and-summer-50',
+        backgroundUtility: 'bg-sand-and-summer-30',
         cardBackground: 'bg-orange-50',
       }
     case 2:
