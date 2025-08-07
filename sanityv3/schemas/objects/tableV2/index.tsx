@@ -51,7 +51,7 @@ type TablePreviewProps = {
 
 export function TablePreview(props: TablePreviewProps) {
   //@ts-ignore: find import for  _type
-  const { title, theme, useBorder, _type } = props
+  const { title, theme, caption, useBorder, _type } = props
 
   //@ts-ignore:todo
   const plainTitle = title ? blocksToText(title) : undefined
@@ -63,7 +63,7 @@ export function TablePreview(props: TablePreviewProps) {
     <Flex gap={2} padding={2} align={'center'}>
       {theme && <TableTheme value={theme} preview thumbnail />}
       <Stack space={2}>
-        <Text size={1}>{plainTitle}</Text>
+        <Text size={1}>{plainTitle ?? caption}</Text>
         <Text muted size={1}>
           {subTitle}
         </Text>
@@ -77,6 +77,14 @@ export default {
   name: 'tableV2',
   type: 'object',
   fieldsets: [
+    {
+      title: 'Title and ingress',
+      name: 'textContent',
+      options: {
+        collapsible: true,
+        collapsed: true,
+      },
+    },
     {
       title: 'Table ',
       name: 'tableConfig',
@@ -94,24 +102,34 @@ export default {
         collapsed: false,
       },
     },
+    {
+      title: 'Table series',
+      name: 'series',
+      description: 'Options when multiple tables are listed after each other',
+      options: {
+        collapsible: true,
+        collapsed: true,
+      },
+    },
   ],
   fields: [
     {
       title: 'Title',
       name: 'title',
       type: 'array',
-      description: 'Will render h2',
       components: {
         input: CompactBlockEditor,
       },
       of: [titleContentType],
-      validation: (Rule: Rule) => Rule.required().warning('In most cases you should add a title'),
+      validation: (Rule: Rule) => Rule.required().warning('In most cases you should add a heading'),
+      fieldset: 'textContent',
     },
     {
       name: 'ingress',
       title: 'Ingress',
       type: 'array',
       of: [ingressContentType],
+      fieldset: 'textContent',
     },
     {
       name: 'tableCaption',
@@ -204,6 +222,7 @@ export default {
       description: 'Default is grey.',
       name: 'theme',
       type: 'tableTheme',
+      initialValue: 'grey',
       fieldset: 'design',
     },
     {
@@ -213,6 +232,38 @@ export default {
       name: 'useBorder',
       fieldset: 'design',
     },
+    {
+      title: 'Stretch to full container width',
+      description: `Default Table is sized by its content, check this box to stretch it to the second outer content width. 
+         If inner content width is checked below, the table will stretch to that container`,
+      type: 'boolean',
+      name: 'useFullContainerWidth',
+      fieldset: 'design',
+    },
+    {
+      title: 'Align with text in the inner content width',
+      description:
+        'Default container is second outer content width. This option sets the table in the inner content width aligned with all the text content.',
+      type: 'boolean',
+      name: 'useInnerContentWidth',
+      fieldset: 'design',
+    },
+    {
+      title: 'Reduced padding bottom',
+      description:
+        'This reduces padding bottom. Use this on all tables except last in the series to connect more with the next table',
+      type: 'boolean',
+      name: 'reducePaddingBottom',
+      fieldset: 'series',
+    },
+    {
+      title: 'No padding top',
+      description:
+        'This removes padding top. Use this on  all tables except first in the series to connect more with previous table.',
+      type: 'boolean',
+      name: 'noPaddingTop',
+      fieldset: 'series',
+    },
   ],
   components: {
     preview: TablePreview,
@@ -220,6 +271,7 @@ export default {
   preview: {
     select: {
       title: 'title',
+      caption: 'tableCaption',
       useBorder: 'useBorder',
       theme: 'theme',
     },
