@@ -32,5 +32,9 @@ export const tableV2Fields = /* groq */ `
     },
   },
   useBorder,
-  theme
+  theme,
+  useFullContainerWidth,
+  useInnerContentWidth,
+  reducePaddingBottom,
+  noPaddingTop
 `

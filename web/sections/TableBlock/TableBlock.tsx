@@ -24,6 +24,10 @@ export type TableBlockProps = {
   rows: any
   theme?: TableTheme
   useBorder?: boolean
+  useFullContainerWidth?: boolean
+  useInnerContentWidth?: boolean
+  reducePaddingBottom?: boolean
+  noPaddingTop?: boolean
   id?: string
   anchor?: string
   className?: string
@@ -37,11 +41,15 @@ const TableBlock = forwardRef<HTMLDivElement, TableBlockProps>(function TableBlo
     tableCaption,
     tableHeaders,
     theme,
-    useBorder,
+    useBorder = false,
     rows,
     id,
     anchor,
     className = '',
+    useFullContainerWidth = false,
+    useInnerContentWidth = false,
+    reducePaddingBottom = false,
+    noPaddingTop = false,
   },
   ref,
 ) {
@@ -101,22 +109,22 @@ const TableBlock = forwardRef<HTMLDivElement, TableBlockProps>(function TableBlo
               const dateObjAlternative = parse(plainDateString, formatStringAlternative, new Date()) // The third arg is a reference date
               if (isValid(dateObj)) {
                 return (
-                  <time suppressHydrationWarning dateTime={dateObj.toDateString()}>
+                  <time suppressHydrationWarning dateTime={dateObj.toDateString()} className="text-base">
                     <FormattedDate value={dateObj} day="numeric" year="numeric" month="short" />
                   </time>
                 )
               }
               if (isValid(dateObjAlternative)) {
                 return (
-                  <time suppressHydrationWarning dateTime={dateObjAlternative.toDateString()}>
+                  <time suppressHydrationWarning dateTime={dateObjAlternative.toDateString()} className="text-base">
                     <FormattedDate value={dateObjAlternative} day="numeric" year="numeric" month="short" />
                   </time>
                 )
               }
-              return <Blocks value={value} className="prose-simple" />
+              return <Blocks value={value} />
             }
             if (isPortableText) {
-              return <Blocks value={info.getValue()} className="prose-simple" />
+              return <Blocks value={info.getValue()} />
             }
             return info.getValue()
           }
@@ -135,7 +143,11 @@ const TableBlock = forwardRef<HTMLDivElement, TableBlockProps>(function TableBlo
     <div
       ref={ref}
       id={anchor}
-      className={twMerge(`max-w-viewport mx-auto pb-page-content ${id ? 'scroll-mt-topbar' : ''}`, className)}
+      className={twMerge(
+        `max-w-viewport mx-auto ${id ? 'scroll-mt-topbar' : ''}`,
+        className,
+        `${noPaddingTop ? 'pt-0' : ''} ${reducePaddingBottom ? 'pb-12' : 'pb-page-content'} `,
+      )}
     >
       {title && (
         <div className="px-layout-sm xl:px-layout-lg">
@@ -143,14 +155,18 @@ const TableBlock = forwardRef<HTMLDivElement, TableBlockProps>(function TableBlo
           {ingress && <Paragraph value={ingress} className="max-w-text text-pretty pb-xl" />}
         </div>
       )}
-      <div className="w-full px-layout-sm xl:px-layout-md flex justify-center">
+      <div
+        className={`w-full px-layout-sm ${
+          useInnerContentWidth ? 'xl:px-layout-lg' : 'xl:px-layout-md'
+        }  flex justify-center`}
+      >
         <div
-          className="overflow-x-auto"
+          className="w-full overflow-x-auto"
           // Scrollable, needs to be keyboard accessible
           // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
           tabIndex={0}
         >
-          <Table>
+          <Table className={`${useFullContainerWidth ? 'w-full' : 'w-fit'}`}>
             {tableCaption && <Table.Caption>{tableCaption}</Table.Caption>}
             <Table.Head variant={useBorder ? 'border' : 'zebra'} themeVariant={theme?.title}>
               {reactTable?.getHeaderGroups().map((headerGroup: any) => (

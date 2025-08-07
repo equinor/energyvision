@@ -32,7 +32,10 @@ export type TableProps = TableHTMLAttributes<HTMLTableElement>
  *   </Table.Foot>
  * </Table>
  */
-export const Table = forwardRef<HTMLTableElement, TableProps>(function Table({ className, children, ...rest }, ref) {
+export const Table = forwardRef<HTMLTableElement, TableProps>(function Table(
+  { className = '', children, ...rest },
+  ref,
+) {
   return (
     <table className={envisTwMerge('table-auto w-full border-collapse', className)} ref={ref} {...rest}>
       {children}
