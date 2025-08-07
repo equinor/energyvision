@@ -16,7 +16,6 @@ export const PromoTile = forwardRef<HTMLAnchorElement, PromoTileProps>(function 
   { id, designOptions, image, title, action, linkLabelAsTitle, hasSectionTitle, variant = 'secondary' },
   ref,
 ) {
-  console.log(JSON.stringify(action))
   const url = getUrlFromAction(action)
   const intl = useIntl()
   if (!url) {
