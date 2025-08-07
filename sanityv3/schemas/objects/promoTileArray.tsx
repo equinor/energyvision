@@ -21,7 +21,7 @@ const ingressContentType = configureBlockContent({
 export default {
   type: 'object',
   name: 'promoTileArray',
-  title: 'Promo tiles',
+  title: 'Promo tile list',
   fields: [
     {
       title: 'Title',
@@ -46,19 +46,24 @@ export default {
       of: [ingressContentType],
     },
     {
+      name: 'promoTileVariant',
+      type: 'string',
+      title: 'Promo tile variant',
+      options: {
+        list: [
+          { title: 'Left - Right', value: 'leftRight' },
+          { title: 'Top - Bottom', value: 'topBottom' },
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'default',
+    },
+    {
       type: 'array',
       name: 'group',
-      description: 'Add promo tiles in pairs of two (2, 4, 6...)',
       title: 'Promo tiles',
       of: [{ type: 'promoTile' }],
       validation: (Rule: Rule) => Rule.required().min(2),
-    },
-    {
-      name: 'useHorizontalScroll',
-      title: 'Use horizontal scroll',
-      description: '(Deprecated)',
-      type: 'boolean',
-      initialValue: false,
     },
   ].filter((e) => e),
   preview: {

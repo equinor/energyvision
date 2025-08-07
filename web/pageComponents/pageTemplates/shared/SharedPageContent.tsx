@@ -4,7 +4,7 @@ import FullWidthImage, { FullWidthImageData } from '../../topicPages/FullWidthIm
 import FullWidthVideo from '../../topicPages/FullWidthVideo'
 import Figure, { FigureData } from '../../topicPages/Figure'
 import PageQuote from '../../topicPages/PageQuote'
-import PromoTileArray from '../../../sections/PromoTiles/PromoTileArray'
+import PromoTileArray, { PromoTileArrayProps } from '../../../sections/PromoTiles/PromoTileArray'
 import Promotion from '../../topicPages/Promotion'
 import Table from '../../topicPages/Table'
 import NewsList from '../../topicPages/NewsList'
@@ -27,7 +27,6 @@ import {
   CallToActionData,
   QuoteData,
   AccordionData,
-  PromoTileArrayData,
   IFrameData,
   PromotionData,
   FormData,
@@ -82,7 +81,7 @@ export type ComponentProps =
   | CallToActionData
   | QuoteData
   | AccordionData
-  | PromoTileArrayData
+  | PromoTileArrayProps
   | IFrameData
   | PromotionData
   | FormData
@@ -268,7 +267,7 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
         return (
           <PromoTileArray
             key={c.id}
-            data={c as PromoTileArrayData}
+            {...(c as PromoTileArrayProps)}
             anchor={anchorReference}
             className={spacingClassName}
           />
