@@ -7,10 +7,23 @@ import CompactBlockEditor from '../components/CompactBlockEditor'
 import type { ImageWithAlt } from './imageWithAlt'
 
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { configureTitleBlockContent } from '../editors'
+import { configureBlockContent, configureTitleBlockContent } from '../editors'
 import { LinkSelector } from './linkSelector/common'
+import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
 
 const titleContentType = configureTitleBlockContent()
+const blockConfig = {
+  h2: false,
+  h3: false,
+  h4: false,
+  internalLink: false,
+  externalLink: false,
+  attachment: false,
+  lists: false,
+  smallText: false,
+}
+
+const blockContentType = configureBlockContent({ ...blockConfig })
 
 export type PromoTile = {
   _type: 'promoTile'
@@ -43,8 +56,13 @@ export default {
   ],
   fields: [
     {
+      name: 'image',
+      title: 'Image',
+      type: 'imageWithAlt',
+    },
+    {
       name: 'linkLabelAsTitle',
-      title: 'Use link label as title',
+      title: 'Use label for the link as the title',
       type: 'boolean',
       initialValue: false,
     },
@@ -63,9 +81,15 @@ export default {
         }),
     },
     {
-      name: 'image',
-      title: 'Image',
-      type: 'imageWithAlt',
+      name: 'ingress',
+      type: 'array',
+      title: 'Short ingress',
+      description: 'Max 200 chars',
+      of: [blockContentType],
+      validation: (Rule: Rule) =>
+        Rule.custom((value: PortableTextBlock[]) => {
+          return validateCharCounterEditor(value, 200, true)
+        }).error(),
     },
     {
       name: 'link',

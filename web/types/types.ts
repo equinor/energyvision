@@ -23,6 +23,7 @@ import type {
 import { MediaPosition } from '@core/Teaser/Media'
 import { FigureData } from '../pageComponents/topicPages/Figure'
 import { FullWidthImageData } from '../pageComponents/topicPages/FullWidthImage'
+import { PromoTileArrayProps } from '@sections/PromoTiles/PromoTileArray'
 
 export type IntlData = {
   locale: string
@@ -83,7 +84,7 @@ export type ContentType =
   | TextWithIconArrayData
   | QuoteData
   | AccordionData
-  | PromoTileArrayData
+  | PromoTileArrayProps
   | IFrameData
   | PromotionData
   | FormData
@@ -219,25 +220,6 @@ export type AccordionData = {
   accordion: AccordionListData[]
   designOptions: DesignOptions
   enableStructuredMarkup?: boolean
-}
-
-export type PromoTileData = {
-  id: string
-  title: PortableTextBlock[]
-  image: ImageWithAlt
-  action: LinkData
-  designOptions: DesignOptions
-  linkLabelAsTitle?: boolean
-}
-
-export type PromoTileArrayData = {
-  type: string
-  id: string
-  group: PromoTileData[]
-  useHorizontalScroll: boolean
-  title?: PortableTextBlock[]
-  ingress?: PortableTextBlock[]
-  hideTitle?: boolean
 }
 
 export type CookieType = 'none' | 'marketing' | 'statistics' | 'preferences'

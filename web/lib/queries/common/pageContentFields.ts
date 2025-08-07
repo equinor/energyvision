@@ -187,10 +187,11 @@ _type == "keyNumbers" =>{
     title,
     "hideTitle":coalesce(hideTitle, false),
     ingress,
-    "useHorizontalScroll": useHorizontalScroll,
+    promoTileVariant,
     "group": group[]{
       "id": _key,
       title,
+      ingress,
       linkLabelAsTitle,
       "image": {
         "asset": image.asset,
