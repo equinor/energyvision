@@ -154,7 +154,8 @@ export default {
             },
             {
               name: 'formatAsDate',
-              title: 'Format column as date',
+              title:
+                'Format all cells under this column as date object. Cell text must follow either dd/MM/yyyy or yyyy-MM-dd format.',
               type: 'boolean',
             },
           ],
@@ -184,6 +185,8 @@ export default {
                     {
                       name: 'content',
                       type: 'array',
+                      description:
+                        'If column header is set to format as date, remember to write date text as either dd/MM/yyyy or yyyy-MM-dd format.',
                       of: [cellContentType],
                     },
                   ],

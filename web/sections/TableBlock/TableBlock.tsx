@@ -109,22 +109,22 @@ const TableBlock = forwardRef<HTMLDivElement, TableBlockProps>(function TableBlo
               const dateObjAlternative = parse(plainDateString, formatStringAlternative, new Date()) // The third arg is a reference date
               if (isValid(dateObj)) {
                 return (
-                  <time suppressHydrationWarning dateTime={dateObj.toDateString()}>
+                  <time suppressHydrationWarning dateTime={dateObj.toDateString()} className="text-base">
                     <FormattedDate value={dateObj} day="numeric" year="numeric" month="short" />
                   </time>
                 )
               }
               if (isValid(dateObjAlternative)) {
                 return (
-                  <time suppressHydrationWarning dateTime={dateObjAlternative.toDateString()}>
+                  <time suppressHydrationWarning dateTime={dateObjAlternative.toDateString()} className="text-base">
                     <FormattedDate value={dateObjAlternative} day="numeric" year="numeric" month="short" />
                   </time>
                 )
               }
-              return <Blocks value={value} className="prose-simple" />
+              return <Blocks value={value} />
             }
             if (isPortableText) {
-              return <Blocks value={info.getValue()} className="prose-simple" />
+              return <Blocks value={info.getValue()} />
             }
             return info.getValue()
           }

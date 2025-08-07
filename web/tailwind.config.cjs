@@ -506,11 +506,6 @@ module.exports = {
             },
           },
         },
-        simple: {
-          css: {
-            color: 'inherit',
-          },
-        },
       }),
       gridTemplateColumns: {
         'auto-1': 'repeat(1,auto)',
