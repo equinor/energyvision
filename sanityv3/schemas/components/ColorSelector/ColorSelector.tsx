@@ -2,7 +2,7 @@ import { Box, Card, Flex, Stack, Tooltip, Text } from '@sanity/ui'
 import { useCallback } from 'react'
 import { set } from 'sanity'
 import type { ObjectInputProps } from 'sanity'
-import { defaultColors } from '../../defaultColors'
+import { defaultBackgroundColors } from '../../defaultColors'
 import styled from 'styled-components'
 
 const Circle = styled.div<{ $active: boolean }>`
@@ -59,7 +59,7 @@ type ColorSelectorProps = ObjectInputProps
 
 export const ColorSelector = ({ value, onChange, schemaType }: ColorSelectorProps) => {
   const { options } = schemaType
-  const colors = (options?.colors as ColorSelectorValue[]) || defaultColors
+  const colors = (options?.colors as ColorSelectorValue[]) || defaultBackgroundColors
 
   const handleSelect = useCallback(
     (selected: ColorSelectorValue) => {
