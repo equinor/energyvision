@@ -10,7 +10,6 @@ export const getUrlFromAction = ({
   if (!type && !href) return undefined
 
   const anchor = anchorReference ? `#${anchorReference}` : ''
-
   if (type === 'internalUrl') {
     if (!link?.slug) {
       console.warn('Missing slug in action:', fileName)

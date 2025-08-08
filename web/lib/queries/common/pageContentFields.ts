@@ -197,10 +197,14 @@ _type == "keyNumbers" =>{
         "asset": image.asset,
         "alt": image.alt,
       },
-      "action": {
-        "label": link.label,
-        "ariaLabel": link.ariaLabel,
-        "": links::getLinkFields(link.link[0])
+      containImage,
+      "action": linkSelector{
+            "link": {
+              label,
+              ariaLabel,
+              "": links::getLinkFields(link[0]),
+              anchorReference,
+            },
       },
       "image": image{
         ...,

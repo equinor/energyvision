@@ -11,7 +11,12 @@ import {
 import singleItemArray from '../singleItemArray'
 
 const defaultLinks = ['link', 'reference', 'referenceToOtherLanguage', 'homePageLink'] as LinkType[]
-const linkSelector = (linkTypes?: LinkType[], hidden?: (arg0: any) => boolean, includeLabels = true) => ({
+const linkSelector = (
+  linkTypes: LinkType[] = defaultLinks,
+  hidden?: (arg0: any) => boolean,
+  includeLabels = true,
+  required = true,
+) => ({
   name: 'linkSelector',
   title: 'Link',
   type: 'object',
@@ -30,12 +35,12 @@ const linkSelector = (linkTypes?: LinkType[], hidden?: (arg0: any) => boolean, i
           },
         ),
       },
-      true,
+      required,
     ),
     anchorReference,
     includeLabels && {
       name: 'label',
-      title: 'Label',
+      title: 'Link label',
       type: 'string',
       validation: (Rule: Rule) =>
         Rule.custom((value: string) => {

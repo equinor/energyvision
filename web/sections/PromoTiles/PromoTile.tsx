@@ -18,22 +18,38 @@ export type PromoTileProps = {
   title: PortableTextBlock[]
   ingress: PortableTextBlock[]
   image: ImageWithAlt
-  action: LinkData
+  containImage?: boolean
+  action?: {
+    link?: LinkData
+  }
   designOptions: DesignOptions
   linkLabelAsTitle?: boolean
 }
 
 export const PromoTile = forwardRef<HTMLDivElement, PromoTileProps>(function PromoTile(
-  { id, designOptions, image, title, action, linkLabelAsTitle, hasSectionTitle, ingress, variant = 'leftRight' },
+  {
+    id,
+    designOptions,
+    image,
+    title,
+    action,
+    linkLabelAsTitle = false,
+    hasSectionTitle = true,
+    containImage = false,
+    ingress,
+    variant = 'leftRight',
+  },
   ref,
 ) {
-  console.log(JSON.stringify(action))
-  const url = getUrlFromAction(action)
+  const url = getUrlFromAction(action?.link ?? {})
+  const anchor = action?.link?.anchorReference ? `#${action?.link.anchorReference}` : undefined
+  const isLink = !!url || !!anchor
+
   const intl = useIntl()
-  if (!url) {
-    return null
-  }
-  const locale = action.link?.lang ? getLocaleFromName(action.link?.lang) : getLocaleFromName(intl.locale)
+  const locale =
+    action?.link?.link && action?.link.link?.lang
+      ? getLocaleFromName(action.link.link?.lang)
+      : getLocaleFromName(intl.locale)
   const { background } = designOptions
 
   const colorName =
@@ -44,6 +60,29 @@ export const PromoTile = forwardRef<HTMLDivElement, PromoTileProps>(function Pro
   const theme = background?.backgroundUtility
     ? colorKeyToUtilityMap[background.backgroundUtility ?? 'white-100']
     : colorKeyToUtilityMap[colorName as keyof ColorKeyTokens]
+
+  const contentElement = (
+    <>
+      {title && !linkLabelAsTitle && (
+        <Heading
+          value={title}
+          as={hasSectionTitle ? 'h3' : 'h2'}
+          variant="h5"
+          className={` ${isLink ? 'group-hover:underline' : ''}`}
+        />
+      )}
+      {linkLabelAsTitle && action?.link && url && (
+        <Typography
+          as={hasSectionTitle ? 'h3' : 'h2'}
+          variant="h5"
+          className={` ${isLink ? 'group-hover:underline' : ''}`}
+        >
+          {action?.link.label ?? 'Missing link label that is set to be title'}
+        </Typography>
+      )}
+      {ingress && <Blocks value={ingress} className="mt-4 text-sm" />}
+    </>
+  )
 
   return (
     <div
@@ -56,26 +95,35 @@ export const PromoTile = forwardRef<HTMLDivElement, PromoTileProps>(function Pro
       } rounded-sm border border-moss-green-70 min-h-[120px]`}
     >
       {image && image.asset && (
-        <div className={`relative w-full h-auto ${variant === 'leftRight' ? '' : ' lg:aspect-video'}`}>
-          <Image image={image} fill maxWidth={600} aspectRatio={'16:9'} sizes={getSmallerThanPxLgSizes()} />
+        <div
+          className={`relative w-full h-auto ${variant === 'leftRight' ? '' : ' lg:aspect-video'} ${
+            containImage ? 'flex justify-center items-start pt-6 pl-4' : ''
+          }`}
+        >
+          <Image
+            image={image}
+            {...(!containImage && { fill: true })}
+            maxWidth={600}
+            aspectRatio={'16:9'}
+            sizes={getSmallerThanPxLgSizes()}
+            className={`${containImage ? 'object-contain' : ''}`}
+          />
         </div>
       )}
-      <BaseLink
-        href={url}
-        locale={locale}
-        prefetch={false}
-        className={`flex flex-col justify-start group p-6 lg:px-6 lg:pt-4 lg:pb-10`}
-      >
-        {title && !linkLabelAsTitle && (
-          <Heading value={title} as={hasSectionTitle ? 'h3' : 'h2'} variant="h6" className={`group-hover:underline`} />
-        )}
-        {linkLabelAsTitle && (
-          <Typography as={hasSectionTitle ? 'h3' : 'h2'} variant="h6" className={`group-hover:underline`}>
-            {action.label}
-          </Typography>
-        )}
-        {ingress && <Blocks value={ingress} className="mt-4 text-sm" />}
-      </BaseLink>
+      {isLink && (url || anchor) && (
+        <BaseLink
+          href={url ?? (anchor as string)}
+          type={action?.link?.type ?? 'internalUrl'}
+          locale={locale}
+          prefetch={false}
+          className={`flex flex-col justify-start group p-6 lg:px-6 lg:pt-6 lg:pb-10`}
+        >
+          {contentElement}
+        </BaseLink>
+      )}
+      {!isLink && (
+        <div className={`flex flex-col justify-start group p-6 lg:px-6 lg:pt-6 lg:pb-10`}>{contentElement}</div>
+      )}
     </div>
   )
 })
