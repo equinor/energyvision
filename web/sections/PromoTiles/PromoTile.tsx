@@ -51,6 +51,7 @@ export const PromoTile = forwardRef<HTMLDivElement, PromoTileProps>(function Pro
       ? getLocaleFromName(action.link.link?.lang)
       : getLocaleFromName(intl.locale)
   const { background } = designOptions
+  console.log('background', background)
 
   const colorName =
     Object.keys(colorKeyToUtilityMap).find(
@@ -90,9 +91,7 @@ export const PromoTile = forwardRef<HTMLDivElement, PromoTileProps>(function Pro
       {...(id && { id: id })}
       className={`w-full h-full ${
         variant === 'leftRight' ? 'grid grid-cols-[40%_60%]' : 'grid grid-cols-[40%_60%] lg:flex lg:flex-col'
-      } ${theme.background} ${
-        theme?.dark || background.dark ? 'dark' : ''
-      } rounded-sm border border-moss-green-70 min-h-[120px]`}
+      } ${theme?.background} ${theme?.dark ? 'dark' : ''} rounded-sm border border-moss-green-70 min-h-[120px]`}
     >
       {image && image.asset && (
         <div
