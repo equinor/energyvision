@@ -3,7 +3,6 @@ import { SingleItemSelectorInput } from '../components/SingleItemSelector/Single
 
 const singleItemArray = (it: ArrayDefinition, required = false) => {
   const { options } = it as ArrayDefinition
-
   const config = {
     ...it,
     validation: (Rule: Rule) => (required ? Rule.length(1).required() : Rule.length(1)),

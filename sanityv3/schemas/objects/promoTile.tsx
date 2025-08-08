@@ -8,8 +8,10 @@ import type { ImageWithAlt } from './imageWithAlt'
 
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { configureBlockContent, configureTitleBlockContent } from '../editors'
-import { LinkSelector } from './linkSelector/common'
+//import { LinkSelector } from './linkSelector/common'
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
+import linkSelector from './linkSelector/linkSelector'
+import { LinkSelector } from './linkSelector/common'
 
 const titleContentType = configureTitleBlockContent()
 const blockConfig = {
@@ -61,6 +63,13 @@ export default {
       type: 'imageWithAlt',
     },
     {
+      name: 'containImage',
+      title:
+        'Use this to contain image.The image keeps its aspect ratio, but is resized to fit within the given dimension',
+      type: 'boolean',
+      initialValue: false,
+    },
+    {
       name: 'linkLabelAsTitle',
       title: 'Use label for the link as the title',
       type: 'boolean',
@@ -84,18 +93,14 @@ export default {
       name: 'ingress',
       type: 'array',
       title: 'Short ingress',
-      description: 'Max 200 chars',
+      description: 'Max 600 chars',
       of: [blockContentType],
       validation: (Rule: Rule) =>
         Rule.custom((value: PortableTextBlock[]) => {
-          return validateCharCounterEditor(value, 200, true)
+          return validateCharCounterEditor(value, 600, true)
         }).error(),
     },
-    {
-      name: 'link',
-      type: 'linkSelector',
-      validation: (Rule: Rule) => Rule.required(),
-    },
+    linkSelector(['link', 'reference', 'referenceToOtherLanguage', 'homePageLink'], undefined, undefined, false),
     {
       title: 'Background',
       description: 'Pick a colour for the background. Default is white.',
