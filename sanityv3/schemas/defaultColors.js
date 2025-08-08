@@ -89,3 +89,37 @@ export const defaultColors = [
     dark: false,
   },
 ]
+
+export const defaultBackgroundColors = [
+  //0
+  {
+    title: 'White',
+    value: 'hsl(0, 0%, 100%)',
+    key: 'white-100',
+    dark: false,
+  },
+  //1
+  {
+    title: 'Moss Green Light',
+    value: 'hsl(184, 30%, 96%)',
+    key: 'moss-green-50',
+    dark: false,
+  },
+  //2
+  {
+    title: 'Spruce Wood',
+    value: 'hsl(25, 100%, 94%)',
+    key: 'spruce-wood-90',
+    dark: false,
+  },
+  //3
+  { title: 'Mist Blue', value: 'hsl(199, 58%, 90%)', key: 'mist-blue-100', dark: false },
+  //4
+  { title: 'Mid Yellow', value: '#fff5b8', key: 'yellow-50', dark: false },
+  //5
+  { title: 'Mid Orange', value: '#f8d1af', key: 'orange-50', dark: false },
+  //6
+  { title: 'Mid Blue', value: '#49709c', key: 'blue-50', dark: true },
+  //7
+  { title: 'Mid Green', value: '#c3e4ce', key: 'green-50', dark: false },
+]

@@ -6,7 +6,7 @@ import { paste } from '@equinor/eds-icons'
 import { lang } from './langField'
 import { isCampaign, openGraphImage, seo, stickyMenu, content } from './topic/sharedTopicPageFields'
 import { Flags } from '../../src/lib/datasetHelpers'
-import { defaultColors } from '../defaultColors'
+import { defaultBackgroundColors } from '../defaultColors'
 
 export default {
   type: 'document',
@@ -53,7 +53,7 @@ export default {
         { type: 'cardsList' },
         { type: 'figure' },
         { type: 'fullWidthImage' },
-        { type: 'pullQuote', initialValue: { background: defaultColors[0] } },
+        { type: 'pullQuote', initialValue: { background: defaultBackgroundColors[0] } },
         { type: 'accordion' },
         { type: 'promoTileArray' },
         { type: 'iframe' },

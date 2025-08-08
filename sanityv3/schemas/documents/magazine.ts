@@ -2,7 +2,7 @@ import type { Rule, SanityDocument } from 'sanity'
 import slugify from 'slugify'
 import { magazineSlug } from '../../../satellitesConfig'
 import blocksToText from '../../helpers/blocksToText'
-import { defaultColors } from '../defaultColors'
+import { defaultBackgroundColors } from '../defaultColors'
 import { defaultLanguage } from '../../languages'
 import { Flags } from '../../src/lib/datasetHelpers'
 import SlugInput from '../components/SlugInput'
@@ -154,7 +154,7 @@ export default {
         { type: 'fullWidthVideo' },
         { type: 'figure' },
         { type: 'textWithIconArray' },
-        { type: 'pullQuote', initialValue: { background: defaultColors[0] } },
+        { type: 'pullQuote', initialValue: { background: defaultBackgroundColors[0] } },
         { type: 'accordion' },
         { type: 'promoTileArray' },
         { type: 'promotion' },

@@ -7,7 +7,7 @@ import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
 import { Card } from './card'
 import { ColorSelectorValue } from '../components/ColorSelector'
-import { defaultColors } from '../defaultColors'
+import { defaultBackgroundColors } from '../defaultColors'
 
 const titleContentType = configureTitleBlockContent()
 
@@ -59,10 +59,7 @@ export default {
       name: 'cards',
       type: 'array',
       of: [{ type: 'card' }],
-      validation: (Rule: Rule) =>
-        Rule.required()
-            .min(1)
-            .error('At least one card with a valid title is required.')
+      validation: (Rule: Rule) => Rule.required().min(1).error('At least one card with a valid title is required.'),
     },
     {
       title: 'The background color on the cards',
@@ -70,7 +67,7 @@ export default {
       name: 'background',
       type: 'colorlist',
       fieldset: 'design',
-      initialValue: defaultColors[6],
+      initialValue: defaultBackgroundColors[6],
     },
   ],
   preview: {

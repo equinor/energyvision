@@ -5,7 +5,7 @@ import type { Reference, Rule, PortableTextBlock } from 'sanity'
 import { title } from './iframe/sharedIframeFields'
 import { configureBlockContent, configureTitleBlockContent } from '../editors'
 import CompactBlockEditor from '../components/CompactBlockEditor'
-import { defaultColors } from '../defaultColors'
+import { defaultBackgroundColors } from '../defaultColors'
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
 
 const titleContentType = configureTitleBlockContent()
@@ -132,7 +132,7 @@ export default {
       name: 'background',
       type: 'colorlist',
       fieldset: 'design',
-      initialValue: defaultColors[0],
+      initialValue: defaultBackgroundColors[0],
     },
   ],
   preview: {

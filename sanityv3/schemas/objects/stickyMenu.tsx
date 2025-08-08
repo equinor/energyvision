@@ -1,9 +1,8 @@
 import { Rule } from 'sanity'
-import { defaultColors } from '../defaultColors'
-import { description } from './iframe/sharedIframeFields'
+import { defaultBackgroundColors } from '../defaultColors'
 
 const chosenColors = ['White', 'Moss Green Light']
-const backgroundColors = defaultColors.filter((color) => chosenColors.includes(color.title))
+const backgroundColors = defaultBackgroundColors.filter((color) => chosenColors.includes(color.title))
 
 export default {
   name: 'stickyMenu',
