@@ -38,15 +38,18 @@ const PromoTileArray = ({
   return (
     <section
       id={anchor}
-      className={twMerge(
-        `pb-page-content px-layout-sm lg:px-layout-md max-w-viewport mx-auto flex flex-col gap-6 justify-center`,
-        className,
-      )}
+      className={twMerge(`pb-page-content max-w-viewport mx-auto flex flex-col gap-6 justify-center`, className)}
     >
-      {title && <Heading value={title} variant="h3" as="h2" className={hideTitle ? 'sr-only' : ''} />}
-      {ingress && <Paragraph value={ingress} className="max-w-text text-pretty pb-xl" />}
+      {title && (
+        <div className="px-layout-sm lg:px-layout-lg">
+          {title && <Heading value={title} variant="h3" as="h2" className={hideTitle ? 'sr-only' : ''} />}
+          {ingress && <Paragraph value={ingress} className="max-w-text text-pretty pb-xl" />}
+        </div>
+      )}
       <ul
         className={`
+          px-layout-sm 
+          lg:px-layout-md
           ${title && !hideTitle ? 'pt-6' : ''}
           w-full
           flex
