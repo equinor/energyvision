@@ -179,7 +179,14 @@ const isSameColorBackground = (currentComponentsDO: any, previousComponentsDO: a
 const applyPaddingTopIfApplicable = (currentComponent: ComponentProps, prevComponent: ComponentProps): string => {
   const currentComponentsDO = getBackgroundOptions(currentComponent)
   const previousComponentsDO = getBackgroundOptions(prevComponent)
-  const specialCases = ['teaser', 'fullWidthImage', 'fullWidthVideo', 'backgroundImage', 'campaignBanner']
+  const specialCases = [
+    'teaser',
+    'fullWidthImage',
+    'fullWidthVideo',
+    'backgroundImage',
+    'campaignBanner',
+    'imageForText',
+  ]
 
   const currentIsWhiteColorBackground = isWhiteColorBackground(currentComponentsDO, currentComponent)
   const previousIsWhiteColorBackground = isWhiteColorBackground(previousComponentsDO, prevComponent)
