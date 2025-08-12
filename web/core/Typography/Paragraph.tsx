@@ -16,6 +16,11 @@ const defaultComponents = ({ className }: TypographyProps) => {
           </Typography>
         )
       },
+      smallText: ({ children }: PortableTextBlock) => (
+        <Typography variant="sm">
+          <>{children}</>
+        </Typography>
+      ),
     },
     marks: {
       highlight: Highlight,
