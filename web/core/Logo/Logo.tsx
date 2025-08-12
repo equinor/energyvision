@@ -9,8 +9,8 @@ export const LogoSecondary = ({ className, ...rest }: LogoProps) => {
       viewBox="0 0 402 160"
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
-      aria-hidden
       fill="currentColor"
+      aria-label='Equinor logo'
       className={twMerge(className, 'block h-[50px] max-w-full box-content')}
       {...rest}
     >

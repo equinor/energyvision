@@ -233,7 +233,7 @@ const SubscribeForm = () => {
                 >
                   {/*@ts-ignore: TODO: types*/}
                   <span className="mt-1">{errors.root.notCompletedCaptcha.message}</span>
-                  <Icon data={error_filled} aria-hidden="true" />
+                  <Icon data={error_filled} aria-label="Error Icon" />
                 </p>
               )}
             </div>
