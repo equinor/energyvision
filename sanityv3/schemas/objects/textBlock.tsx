@@ -198,13 +198,6 @@ export default {
       type: 'backgroundOptions',
       readOnly: ({ parent }: { parent: TextBlock }) => parent.useBrandTheme,
     },
-    {
-      title: 'Background (Deprecated)',
-      description: 'This field will be phased out over time. Please use Design options above. Default is white',
-      name: 'background',
-      readOnly: true,
-      type: 'colorlist',
-    },
   ].filter((e) => e),
   preview: {
     select: {

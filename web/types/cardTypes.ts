@@ -1,3 +1,4 @@
+import { ColorKeyTokens } from '../styles/colorKeyToUtilityMap'
 import {
   ImageWithAlt,
   ImageWithCaptionData,
@@ -61,6 +62,7 @@ export type CardsListData = {
   id: string
   title?: PortableTextBlock[]
   cards?: CardListItemData[]
+  cardColor?: keyof ColorKeyTokens
   designOptions: DesignOptions
 }
 

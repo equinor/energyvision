@@ -525,6 +525,7 @@ _type == "keyNumbers" =>{
         "content": defined(content[]){..., ${markDefs}},
         ...,
       },
+    "cardColor": background.key,
     "designOptions": {
       ${background},
     },

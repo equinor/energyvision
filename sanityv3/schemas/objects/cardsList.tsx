@@ -8,6 +8,7 @@ import { EdsIcon } from '../../icons'
 import { Card } from './card'
 import { ColorSelectorValue } from '../components/ColorSelector'
 import { defaultBackgroundColors } from '../defaultColors'
+import singleItemArray from './singleItemArray'
 
 const titleContentType = configureTitleBlockContent()
 
@@ -61,14 +62,15 @@ export default {
       of: [{ type: 'card' }],
       validation: (Rule: Rule) => Rule.required().min(1).error('At least one card with a valid title is required.'),
     },
-    {
+    singleItemArray({
       title: 'The background color on the cards',
       description: 'List title will be on default background. Default is White',
-      name: 'background',
-      type: 'colorlist',
+      name: 'cardBackground',
+      type: 'array',
       fieldset: 'design',
-      initialValue: defaultBackgroundColors[6],
-    },
+      of: [{ title: 'Color', type: 'colorlist' }],
+      //initialValue: [{defaultBackgroundColors[6]}],
+    }),
   ],
   preview: {
     select: {

@@ -64,7 +64,7 @@ import { getColorForTabsTheme } from '@sections/TabsBlock/tabThemes'
 import { ColorKeyTokens, colorKeyToUtilityMap } from '../../../styles/colorKeyToUtilityMap'
 import Form from '@templates/forms/Form'
 import IFrameBlock from '../../../sections/IFrameBlock/IFrameBlock'
-import { getColorForHomepageBannerTheme, HomePageBanner } from '@sections/HomePageBanner/HomePageBanner'
+import { HomePageBanner } from '@sections/HomePageBanner/HomePageBanner'
 import TableBlock, { TableBlockProps } from '@sections/TableBlock/TableBlock'
 
 type DefaultComponent = {
