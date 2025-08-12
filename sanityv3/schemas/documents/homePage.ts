@@ -5,6 +5,8 @@ import { EdsIcon } from '../../icons'
 import { paste } from '@equinor/eds-icons'
 import { lang } from './langField'
 import { isCampaign, openGraphImage, seo, stickyMenu, content } from './topic/sharedTopicPageFields'
+import { Flags } from '../../src/lib/datasetHelpers'
+import { defaultBackgroundColors } from '../defaultColors'
 
 export default {
   type: 'document',
@@ -34,7 +36,52 @@ export default {
       },
     },
   ],
-  fields: [lang, seo, openGraphImage, ...sharedHeroFields, isCampaign, stickyMenu, content].filter((e) => e),
+  fields: [
+    lang,
+    seo,
+    openGraphImage,
+    ...sharedHeroFields,
+    isCampaign,
+    stickyMenu,
+    {
+      name: 'content',
+      type: 'array',
+      title: 'Page sections',
+      of: [
+        { type: 'textBlock' },
+        { type: 'teaser' },
+        { type: 'cardsList' },
+        { type: 'figure' },
+        { type: 'fullWidthImage' },
+        { type: 'pullQuote', initialValue: { background: defaultBackgroundColors[0] } },
+        { type: 'accordion' },
+        { type: 'promoTileArray' },
+        { type: 'iframe' },
+        { type: 'fullWidthVideo' },
+        { type: 'textWithIconArray' },
+        { type: 'keyNumbers' },
+        { type: 'textTeaser' },
+        { type: 'promotion' },
+        { type: 'anchorLink' },
+        { type: 'imageCarousel' },
+        { type: 'iframeCarousel' },
+        { type: 'videoPlayer' },
+        { type: 'videoPlayerCarousel' },
+        { type: 'table' },
+        { type: 'imageForText' },
+        Flags.HAS_CAMPAIGN_BLOCKS && { type: 'grid' },
+        Flags.HAS_CAMPAIGN_BLOCKS && { type: 'campaignBanner' },
+        Flags.HAS_FORMS && { type: 'form' },
+        Flags.HAS_NEWS && { type: 'newsList' },
+        { type: 'stockValuesApi' },
+        Flags.HAS_TWITTER_FEED && { type: 'twitterEmbed' },
+        { type: 'cookieDeclaration' },
+        { type: 'anchorLinkList' },
+        { type: 'tabs' },
+        { type: 'homepageBanner' },
+      ].filter((e) => e),
+    },
+  ].filter((e) => e),
   orderings: [
     {
       title: 'Title ',

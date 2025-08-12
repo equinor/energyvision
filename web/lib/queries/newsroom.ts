@@ -1,5 +1,6 @@
-import linkSelectorFields, { linkReferenceFields } from './common/actions/linkSelectorFields'
+import linkSelectorFields from './common/actions/linkSelectorFields'
 import markDefs from './common/blockEditorMarks'
+import { functions } from './common/functions'
 import { noDrafts, sameLang } from './common/langAndDrafts'
 import { ingressForNewsQuery } from './common/newsSubqueries'
 import { publishDateTimeQuery } from './common/publishDateTime'
@@ -7,6 +8,7 @@ import { seoAndSomeFields } from './common/seoAndSomeFields'
 import slugsForNewsAndMagazine from './slugsForNewsAndMagazine'
 
 export const newsroomQuery = /* groq */ `
+  ${functions}
   *[_type == "newsroom" && ${sameLang}] {
     _id,
     "seoAndSome": ${seoAndSomeFields},
@@ -16,7 +18,7 @@ export const newsroomQuery = /* groq */ `
       ${markDefs},
     },
     subscriptionHeading,
-    "subscriptionLink": subscriptionLink->${linkReferenceFields},
+    "subscriptionLink": links::getLinkFields(subscriptionLink),
     subscriptionLinkTitle,
     localNewsPagesHeading,
     localNewsPages[]{

@@ -1,11 +1,11 @@
 import { BackgroundContainer } from '@core/Backgrounds'
 import { Heading, Typography } from '../../core/Typography'
-import IngressText from '../../pageComponents/shared/portableText/IngressText'
-import Image, { Ratios } from '../../pageComponents/shared/SanityImage'
+import Image, { getSmallerThanPxLgSizes } from '../../core/SanityImage/SanityImage'
 import type { TextBlockData } from '../../types/index'
 import CallToActions from '../CallToActions'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
 import { twMerge } from 'tailwind-merge'
+import IngressText from '../../pageComponents/shared/portableText/IngressText'
 
 type TextBlockProps = {
   data: TextBlockData
@@ -82,7 +82,13 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
         <>
           {image?.asset && (
             <div className="w-[300px]">
-              <Image image={image} maxWidth={300} aspectRatio={Ratios.NINE_TO_SIXTEEN} className="object-cover" />
+              <Image
+                image={image}
+                maxWidth={300}
+                sizes={getSmallerThanPxLgSizes()}
+                aspectRatio={'9:16'}
+                className="object-cover"
+              />
             </div>
           )}
           {overline ? (

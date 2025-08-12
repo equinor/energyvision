@@ -2,6 +2,7 @@ import { configureTitleBlockContent, configureBlockContent } from '../../editors
 import CompactBlockEditor from '../../components/CompactBlockEditor'
 import type { Rule, ValidationContext } from 'sanity'
 import type { IFrame } from '../iframe'
+import singleItemArray from '../singleItemArray'
 
 const titleContentType = configureTitleBlockContent()
 
@@ -114,11 +115,10 @@ export const transcript = {
   title: 'Enter transcript if this iframe is a youtube video.',
   type: 'transcript',
 }
-export const action = {
+export const action = singleItemArray({
   name: 'action',
   title: 'Link/action',
   description: 'You can add one separate link if you need. The link will show up at the bottom of the component.',
   type: 'array',
   of: [{ type: 'linkSelector', title: 'Link' }],
-  validation: (Rule: Rule) => Rule.max(1),
-}
+})
