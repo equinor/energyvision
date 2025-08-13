@@ -24,6 +24,7 @@ export const LoopingVideo = ({ video }: { video: LoopingVideoData }) => {
           loop
           muted
           autoPlay
+          playsInline
           playButton={false}
           title={title}
           poster={thumbnailURL?.src}
