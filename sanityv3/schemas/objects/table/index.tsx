@@ -1,5 +1,5 @@
 import blocksToText from '../../../helpers/blocksToText'
-import { defaultColors } from '../../defaultColors'
+import { defaultBackgroundColors } from '../../defaultColors'
 import CompactBlockEditor from '../../components/CompactBlockEditor'
 import { configureBlockContent, configureTitleBlockContent } from '../../editors'
 
@@ -53,9 +53,10 @@ const headerCellContentType = configureBlockContent({
 })
 
 const chosenColors = ['White', 'Mid Green', 'Moss Green Light', 'Spruce Wood', 'Mist Blue']
-const backgroundColors = defaultColors.filter((color) => chosenColors.includes(color.title))
+const backgroundColors = defaultBackgroundColors.filter((color) => chosenColors.includes(color.title))
 export default {
-  title: 'Table',
+  title: 'Table (Deprecated)',
+  description: 'Migrate to new Table or ImportTable',
   name: 'table',
   type: 'object',
   fieldsets: [

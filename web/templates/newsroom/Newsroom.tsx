@@ -178,8 +178,8 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
                     })}
                   >
                     <List.Item className="w-full">
-                      {subscriptionLink?.slug && (
-                        <ResourceLink href={subscriptionLink.slug}>{subscriptionLinkTitle}</ResourceLink>
+                      {subscriptionLink?.link?.slug && (
+                        <ResourceLink href={subscriptionLink.link.slug}>{subscriptionLinkTitle}</ResourceLink>
                       )}
                     </List.Item>
                     {localNewsPages &&

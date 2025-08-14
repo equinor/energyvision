@@ -28,7 +28,7 @@ import imageWithAltAndCaption from './objects/imageWithAltAndCaption'
 import carouselImage from './objects/carouselImage'
 import imageWithLinkAndOrOverlay from './objects/ImageWithLinkAndOrOverlay'
 import largeTable from './objects/largeTable'
-import linkSelector from './objects/linkSelector'
+import linkSelector from './objects/linkSelector/linkSelector'
 import menuGroup from './objects/menuGroup'
 import menuLink from './objects/menuLink'
 import newsList from './objects/newsList'
@@ -92,6 +92,11 @@ import tabsInfoPanel from './objects/tabs/tabsInfoPanel'
 import tabsKeyNumbers from './objects/tabs/tabsKeyNumbers'
 import tabsKeyNumberItem from './objects/tabs/tabsKeyNumberItem'
 import imageWithRichText from './objects/ImageWithRichText'
+import importTable from './objects/importTable'
+import tableTheme from './objects/tableV2/tableTheme'
+import homePage from './documents/homePage'
+import homepageBanner from './objects/homepageBanner'
+import tableV2 from './objects/tableV2'
 
 const {
   pageNotFound,
@@ -125,10 +130,6 @@ const routeSchemas = languages.map(({ name, title }) => {
   return route(name, title)
 })
 
-const routeHomepageSchemas = languages.map(({ name, title }) => {
-  return routeHomepage(name, title)
-})
-
 const MenuSchemas = Flags.HAS_FANCY_MENU
   ? [siteMenu, subMenu, menuGroup, menuLink]
   : [simpleMenu, simpleMenuGroup, simpleMenuLink]
@@ -143,8 +144,9 @@ const MagazineSchemas = Flags.HAS_MAGAZINE
   : []
 const RemainingSchemas = [
   page,
+  homePage,
   ...routeSchemas,
-  ...routeHomepageSchemas,
+  routeHomepage,
   pageNotFound,
   internalServerError,
   imageWithAlt,
@@ -167,7 +169,7 @@ const RemainingSchemas = [
   figure,
   textWithIcon,
   textWithIconArray,
-  linkSelector,
+  linkSelector(),
   promoTile,
   promoTileArray,
   stockValuesApi,
@@ -230,6 +232,10 @@ const RemainingSchemas = [
   tabsKeyNumberItem,
   imageWithLinkAndOrOverlay,
   imageWithRichText,
+  homepageBanner,
+  importTable,
+  tableV2,
+  tableTheme,
 ]
 
 // Then we give our schema to the builder and provide the result to Sanity

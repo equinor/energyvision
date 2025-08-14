@@ -32,10 +32,14 @@ export const LocalizationSwitch = ({ allSlugs: slugs, activeLocale, ...rest }: L
                 flex flex-col gap-0 items-stretch px-2 text-xs
                 `}
             >
-              <span className="sr-only">{`${intl.formatMessage({
-                id: 'switch_to',
-                defaultMessage: 'Switch to',
-              })} ${language?.title}`}</span>
+              <span
+                className="sr-only"
+                aria-label={
+                  activeLocale === String(language?.locale)
+                    ? `Current language: ${language?.title}`
+                    : `${intl.formatMessage({ id: 'switch_to', defaultMessage: 'Switch to' })} ${language?.title}`
+                }
+              />
               <span
                 aria-hidden
                 className={`uppercase ${activeLocale === String(language?.locale) ? 'font-semibold' : 'font-normal'}`}

@@ -4,7 +4,7 @@ import Blocks from '../../pageComponents/shared/portableText/Blocks'
 import { Typography } from '@core/Typography'
 import { forwardRef, HTMLAttributes } from 'react'
 import { ColorKeyTokens, colorKeyToUtilityMap } from '../../styles/colorKeyToUtilityMap'
-import Image from '../../pageComponents/shared/SanityImage'
+import Image from '../../core/SanityImage/SanityImage'
 import envisTwMerge from '../../twMerge'
 import { toPlainText } from '@portabletext/react'
 

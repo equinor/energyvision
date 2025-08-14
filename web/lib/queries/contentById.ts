@@ -3,8 +3,10 @@ import { landingPageById } from './common/landingPageContentFields'
 import { eventContentFields } from './common/eventContentFields'
 import { heroFields } from './common/heroFields'
 import { seoAndSomeFields } from './common/seoAndSomeFields'
+import { functions } from './common/functions'
 
 export const contentQueryById = /* groq */ `
+  ${functions}
   *[_id == $id] {
     _id,
     "title": title,
@@ -14,7 +16,7 @@ export const contentQueryById = /* groq */ `
      _type == "landingPage" => {
       ${landingPageById}
     },
-    _type == "page" => {
+    _type == "page" || _type == "homePage" => {
       "content": content[] {
         ${pageContentFields}
       },

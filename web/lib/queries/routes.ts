@@ -5,6 +5,7 @@ import { heroFields } from './common/heroFields'
 import { seoAndSomeFields } from './common/seoAndSomeFields'
 import { breadcrumbsQuery } from './common/breadcrumbs'
 import { stickyMenu } from './common/stickyMenu'
+import { functions } from './common/functions'
 
 const allSlugsQuery = /* groq */ `
     "currentSlug": {
@@ -17,7 +18,8 @@ const allSlugsQuery = /* groq */ `
   }`
 
 export const routeQuery = /* groq */ `
-  *[(_type match "route_" + $lang + "*") && slug.current == $slug] {
+  ${functions}
+  *[(_type match "route_" + $lang) && slug.current == $slug] {
     _id, //used for data filtering
     "slug": slug.current,
     ${allSlugsQuery},
@@ -35,7 +37,7 @@ export const routeQuery = /* groq */ `
     content->_type == "landingPage" => {
         ${landingPageContentFields}
     },
-    content->_type == "page" || content->_type == "magazine" => {
+    content->_type == "page" || content->_type == "magazine"=> {
       "content": content->content[] {
           ${pageContentFields}
       },

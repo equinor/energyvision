@@ -5,9 +5,10 @@ import CompactBlockEditor from '../../components/CompactBlockEditor'
 import { configureTitleBlockContent } from '../../editors'
 import { configureBlockContent } from '../../editors/blockContentType'
 import type { ColorSelectorValue } from '../../components/ColorSelector'
-import { TabsThemeSelectorValue, TabTheme } from './tabsThemes'
 import { Flex, Stack, Text } from '@sanity/ui'
 import { capitalizeFirstLetter } from '../../../helpers/formatters'
+import { CardTheme, ThemeSelectorValue } from '../../components/ThemeSelector'
+import { getColorForTabTheme } from './tabsThemes'
 
 type TabsPreviewProps = {
   tabList?: any[]
@@ -23,13 +24,13 @@ export function TabsPreview(props: TabsPreviewProps) {
     tabList?.[0]?.tabPanel?.panel?.[0]?._type ?? '',
   )}`
 
-  const color: TabsThemeSelectorValue = {
+  const color: ThemeSelectorValue = {
     title: tabsBackground?.background?.[0]?.title as string,
     value: tabsBackground?.background?.[0]?.value,
   }
   return (
     <Flex gap={2} padding={2} align={'center'}>
-      <TabTheme color={color} preview thumbnail />
+      <CardTheme getColorForThemeHandler={getColorForTabTheme} color={color} preview thumbnail />
       <Stack space={2}>
         <Text size={1}>{plainTitle}</Text>
         <Text muted size={1}>

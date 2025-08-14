@@ -1,9 +1,9 @@
-import { forwardRef, HTMLAttributes } from 'react'
-import { default as NextLink, LinkProps } from 'next/link'
+import { forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
-import Image, { Ratios } from '../../../pageComponents/shared/SanityImage'
+import Image, { getSmallerThanPxLgSizes, ImageRatioKeys } from '../../../core/SanityImage/SanityImage'
 import { ImageWithAlt } from '../../../types/index'
 import envisTwMerge from '../../../twMerge'
+import { BaseLink, BaseLinkProps } from '@core/Link'
 
 export type Variants = 'primary' | 'secondary' | 'compact' | 'single'
 export type CardProps = {
@@ -15,8 +15,7 @@ export type CardProps = {
   image?: ImageWithAlt
   /** Override background image styling */
   imageClassName?: string
-} & HTMLAttributes<HTMLAnchorElement> &
-  LinkProps
+} & BaseLinkProps
 
 /**
  * Common Card component.
@@ -30,7 +29,7 @@ export type CardProps = {
  * @example
  * */
 export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
-  { variant = 'primary', href, className = '', imageClassName = '', children, image, ...rest },
+  { variant = 'primary', href, className = '', imageClassName = '', children, locale, image, ...rest },
   ref,
 ) {
   const commonStyling = `
@@ -44,25 +43,25 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
   h-full
   `
 
-  const variantClassNames = {
+  const variantClassNames: Record<Variants, string> = {
     primary: `${commonStyling}`,
     secondary: `${commonStyling}`,
     compact: `w-full h-full rounded-sm flex gap-4`,
     single: `grid grid-cols-[40%_1fr] min-h-[450px] shadow-card rounded-sm active:shadow-card-interact`,
   }
-  const variantAspectRatio = {
-    primary: Ratios.NINE_TO_SIXTEEN,
-    secondary: Ratios.FOUR_TO_THREE,
-    compact: Ratios.FIVE_TO_FOUR,
-    single: Ratios.FIVE_TO_FOUR,
+  const variantAspectRatio: Record<Variants, ImageRatioKeys> = {
+    primary: '16:9',
+    secondary: '4:3',
+    compact: '5:4',
+    single: '5:4',
   }
-  const imageRatio = {
+  const imageRatio: Record<Variants, string> = {
     primary: 'aspect-video',
     secondary: 'aspect-4/3',
     compact: 'aspect-5/4',
     single: '',
   }
-  const imageVariantClassNames = {
+  const imageVariantClassNames: Record<Variants, string> = {
     primary: `rounded-t-sm *:rounded-t-sm`,
     secondary: `rounded-t-sm *:rounded-t-sm`,
     compact: 'rounded-sm w-[25vw] h-auto *:rounded-sm',
@@ -70,9 +69,10 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
   }
 
   return (
-    <NextLink
+    <BaseLink
       ref={ref}
       href={href}
+      locale={locale}
       prefetch={false}
       className={twMerge(
         `group/card
@@ -88,7 +88,7 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
       )}
       {...rest}
     >
-      {image && (
+      {image && image.asset && (
         <div
           className={envisTwMerge(
             `relative
@@ -104,11 +104,11 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
             fill
             maxWidth={600}
             aspectRatio={variantAspectRatio[variant]}
-            sizes="(max-width: 800px) 100vw, 800px"
+            sizes={getSmallerThanPxLgSizes()}
           />
         </div>
       )}
       {children}
-    </NextLink>
+    </BaseLink>
   )
 })

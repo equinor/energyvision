@@ -54,23 +54,19 @@ jobs:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
 
-      - name: Get token 🔑
-        id: get-token
-        uses: ./.github/workflows/get-auth-token/
-
       # MAIN CLUSTER PLATFORM2
       - name: Deploy to Radix 🚀
         id: deploy-main
-        uses: equinor/radix-github-actions@v1
+        uses: equinor/radix-github-actions@v2
         with:
-          args: >
-            create job
-            deploy
-            --token-environment
-            --context platform2
-            -a equinor-web-sites
-            -e ${{ secrets.ENV }}
-            -f
+          azure_client_id: 460b889f-89e0-4cc9-965c-31f3e7770226
+          version: latest
+      - run: rx create job deploy
+          --context platform2
+          -a equinor-web-sites
+          -e ${{ secrets.ENV }}
+          -f
+        shell: bash
 
       - uses: act10ns/slack@v2
         with:
@@ -81,6 +77,8 @@ jobs:
   store-image-tags:
     needs: deploy
     runs-on: ubuntu-latest
+    outputs:
+      WEB_SHA: ${{ steps.save-and-get-image-tags.outputs.WEB_SHA }}
     steps:
       - name: Checkout internal 🛎️
         id: checkout-internal
@@ -100,6 +98,7 @@ jobs:
           npm install js-yaml
 
       - name: Run script for 'web'
+        id: save-and-get-image-tags
         run: |
           WEB_SHA=$(node ci/storeImageTags.js web)
           echo "WEB_SHA=$WEB_SHA" >> $GITHUB_OUTPUT
