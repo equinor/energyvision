@@ -4,7 +4,7 @@ import { publishDateTimeQuery } from '../../../lib/queries/common/publishDateTim
 import { PortableTextBlock } from '@portabletext/types'
 import { excludeCrudeOilAssays } from '../../../lib/queries/news'
 import { noDrafts, sameLang } from '../../../lib/queries/common/langAndDrafts'
-import { functions } from 'lib/queries/common/functions'
+import { functions } from '../../../lib/queries/common/functions'
 
 export type LatestNewsType = {
   _id: string
