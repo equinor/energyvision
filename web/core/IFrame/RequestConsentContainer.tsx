@@ -63,7 +63,12 @@ const RequestConsentContainer = ({ hasSectionTitle = true, cookiePolicy }: Reque
   return (
     <div className="flex flex-col rounded-md ">
       <div className="bg-slate-blue-95 dark px-6 py-4 rounded-t-md border border-slate-blue-95">
-        <Typography variant="lg" as={hasSectionTitle ? 'h3' : 'h2'}>
+        <Typography
+          variant="lg"
+          as={hasSectionTitle ? 'h3' : 'h2'}
+          className="text-white"
+          style={{ paddingLeft: 'unset', paddingRight: 'unset' }}
+        >
           <FormattedMessage id="cookie_consent_header" defaultMessage="Accept Cookies" />
         </Typography>
       </div>
@@ -111,7 +116,9 @@ const RequestConsentContainer = ({ hasSectionTitle = true, cookiePolicy }: Reque
         </svg>
 
         <div className="flex flex-col gap-6">
-          <Typography variant="body">{getCookieInformationText(cookiePolicy)}</Typography>
+          <Typography variant="body" style={{ paddingLeft: 'unset', paddingRight: 'unset' }}>
+            {getCookieInformationText(cookiePolicy)}
+          </Typography>
           <Button onClick={() => handleCookiebotRenew(router?.locale)} variant="outlined" className="text-left">
             <FormattedMessage id="cookie_settings" defaultMessage="Cookie settings" />
           </Button>
