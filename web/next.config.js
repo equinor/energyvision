@@ -1,3 +1,5 @@
+import { withSentryConfig } from '@sentry/nextjs'
+
 const archiveServerHostname = process.env.NEXT_PUBLIC_ARCHIVE_CONTENT_LINK
 /* eslint-disable @typescript-eslint/no-var-requires */
 import withBundleAnalyzer from '@next/bundle-analyzer'
@@ -28,7 +30,7 @@ const getPageExtensions = (dataset) => {
 
 const pageExtensions = getPageExtensions(dataset)
 
-export default withBundle({
+const withBundleConfig = {
   output: 'standalone',
   pageExtensions: pageExtensions,
   reactStrictMode: true,
@@ -125,4 +127,11 @@ export default withBundle({
       },
     ].filter((e) => e)
   },
+}
+
+export default withSentryConfig(withBundle(withBundleConfig), {
+  org: 'equinor',
+  project: 'equinor-com',
+  silent: !process.env.CI,
+  disableLogger: true,
 })
