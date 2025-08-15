@@ -73,24 +73,24 @@ const StockValues = ({
       <div className="text-center">
         <p>
           EQNR
-          <span className="text-xl my-0 mx-1 text-moss-green-100 font-medium">{data.OSE?.Quote}</span>
+          <span className="mx-1 my-0 text-xl font-medium text-moss-green-100">{data.OSE?.Quote}</span>
           {data.OSE?.currency}
         </p>
-        <p className="font-semibold uppercase mb-1 mx-0 mt-0 p-0">{data.OSE?.title}</p>
-        <p className="font-semibold mb-1 mx-0 mt-0 p-0">
+        <p className="mx-0 mt-0 mb-1 p-0 font-semibold uppercase">{data.OSE?.title}</p>
+        <p className="mx-0 mt-0 mb-1 p-0 font-semibold">
           <FormattedDate datetime={data.OSE?.Date} /> CET
         </p>
       </div>
       <div className="text-center">
         <p>
           EQNR
-          <span className="text-xl my-0 mx-1 text-moss-green-100 font-medium">{data.NYSE?.Quote}</span>
+          <span className="mx-1 my-0 text-xl font-medium text-moss-green-100">{data.NYSE?.Quote}</span>
           {data.NYSE?.currency}
         </p>
-        <p className="font-semibold uppercase mb-1 mx-0 mt-0 p-0">{data.NYSE?.title}</p>
-        <p className="font-semibold mb-1 mx-0 mt-0 p-0">
+        <p className="mx-0 mt-0 mb-1 p-0 font-semibold uppercase">{data.NYSE?.title}</p>
+        <p className="mx-0 mt-0 mb-1 p-0 font-semibold">
           <FormattedDate datetime={data.NYSE?.Date} /> CET{' '}
-          <span className="font-medium italic">{t('stock_nyse_time_delay_message')}</span>
+          <span className="font-medium italic">{'stock_nyse_time_delay_message'}</span>
         </p>
       </div>
     </BackgroundContainer>
