@@ -4,8 +4,6 @@ import { customAlphabet } from 'nanoid'
 
 const nanoid = customAlphabet('1234567890abcdef', 12)
 
-const specialCases = ['teaser', 'table', 'tabs', 'fullWidthImage', 'grid', 'fullWidthVideo', 'campaignBanner']
-
 export default defineMigration({
   title: 'Issue 2997',
   documentTypes: ['page', 'magazine', 'homePage'],
@@ -26,7 +24,7 @@ export default defineMigration({
             // if background is white or undefined clear background...
             return at(['background'], unset()) // unset deprecated field
           }
-          var utility = defaultColors.find((color) => color.title == backgroundTitle)?.key
+          let utility = defaultColors.find((color) => color.title == backgroundTitle)?.key
 
           if (!utility) {
             if (backgroundTitle == 'Slate Blue') utility = 'mid-blue'
