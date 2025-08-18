@@ -8,16 +8,7 @@ import { getUrlFromAction } from '../../common/helpers'
 import { ResourceLink } from '@core/Link'
 import { getLocaleFromName } from '../../lib/localization'
 
-const IFrameBlock = ({
-  anchor,
-  data,
-  className,
-  ...rest
-}: {
-  data: IFrameData
-  anchor?: string
-  className?: string
-}) => {
+const IFrameBlock = ({ anchor, data, className }: { data: IFrameData; anchor?: string; className?: string }) => {
   const {
     title,
     ingress,
