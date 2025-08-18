@@ -67,7 +67,6 @@ export default {
         { type: 'iframeCarousel' },
         { type: 'videoPlayer' },
         { type: 'videoPlayerCarousel' },
-        { type: 'table' },
         { type: 'imageForText' },
         Flags.HAS_CAMPAIGN_BLOCKS && { type: 'grid' },
         Flags.HAS_CAMPAIGN_BLOCKS && { type: 'campaignBanner' },

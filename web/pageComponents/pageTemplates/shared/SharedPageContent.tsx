@@ -6,7 +6,6 @@ import Figure, { FigureData } from '../../topicPages/Figure'
 import PageQuote from '../../topicPages/PageQuote'
 import PromoTileArray from '../../../sections/PromoTiles/PromoTileArray'
 import Promotion from '../../topicPages/Promotion'
-import Table from '../../topicPages/Table'
 import NewsList from '../../topicPages/NewsList'
 import StockValues from '../../topicPages/StockValues'
 import CookieDeclaration from '../../topicPages/CookieDeclaration'
@@ -64,7 +63,7 @@ import { getColorForTabsTheme } from '@sections/TabsBlock/tabThemes'
 import { ColorKeyTokens, colorKeyToUtilityMap } from '../../../styles/colorKeyToUtilityMap'
 import Form from '@templates/forms/Form'
 import IFrameBlock from '../../../sections/IFrameBlock/IFrameBlock'
-import { getColorForHomepageBannerTheme, HomePageBanner } from '@sections/HomePageBanner/HomePageBanner'
+import { HomePageBanner } from '@sections/HomePageBanner/HomePageBanner'
 import TableBlock, { TableBlockProps } from '@sections/TableBlock/TableBlock'
 
 type DefaultComponent = {
@@ -279,16 +278,7 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
         return <Promotion key={c.id} data={c as PromotionData} anchor={anchorReference} className={spacingClassName} />
       case 'form':
         return <Form key={c.id} data={c as FormData} anchor={anchorReference} className={spacingClassName} />
-      case 'table':
-        return (
-          <TableBlock
-            variant="deprecated"
-            key={c.id}
-            {...(c as any)}
-            anchor={anchorReference}
-            className={spacingClassName}
-          />
-        )
+
       case 'cookieDeclaration':
         return (
           <CookieDeclaration

@@ -9,14 +9,13 @@ import Blocks from '../../pageComponents/shared/portableText/Blocks'
 import { ThemeVariants } from '@core/Table/Table'
 import { FormattedDate } from 'react-intl'
 import { isValid, parse } from 'date-fns'
-import { renderCellByType } from './deprecatedRenderCellByType'
 
 export type TableTheme = {
   title?: ThemeVariants
 }
 
 export type TableBlockProps = {
-  variant?: 'default' | 'import' | 'deprecated'
+  variant?: 'default' | 'import'
   title: PortableTextBlock[]
   ingress: PortableTextBlock[]
   tableCaption?: string
@@ -71,11 +70,6 @@ const TableBlock = forwardRef<HTMLDivElement, TableBlockProps>(function TableBlo
         return Object.fromEntries(headerKeys?.map((key: any, index: number) => [key, tableRow?.cells[index]]))
       })
     }
-    if (variant === 'deprecated') {
-      return rows?.map((tableRow: any) => {
-        return Object.fromEntries(headerKeys?.map((key: any, index: number) => [key, tableRow?.cells[index]]))
-      })
-    }
     return rows?.map((tableRow: any) => {
       return Object.fromEntries(headerKeys?.map((key: any, index: number) => [key, tableRow?.cells[index]?.content]))
     })
@@ -95,39 +89,34 @@ const TableBlock = forwardRef<HTMLDivElement, TableBlockProps>(function TableBlo
         },
         id: `headercell_${index}_${headerKey}`,
         cell: (info: any) => {
-          if (variant === 'deprecated') {
-            const value = info.getValue()
-            return renderCellByType(value)
-          } else {
-            const value = info.getValue()
-            const isPortableText = Array.isArray(value)
-            if (variant === 'default' && tableHeaders?.[index]?.formatAsDate) {
-              const plainDateString = toPlainText(value)
-              const formatString = 'dd/MM/yyyy' // Define the format explicitly
-              const formatStringAlternative = 'yyyy-MM-dd'
-              const dateObj = parse(plainDateString, formatString, new Date()) // The third arg is a reference date
-              const dateObjAlternative = parse(plainDateString, formatStringAlternative, new Date()) // The third arg is a reference date
-              if (isValid(dateObj)) {
-                return (
-                  <time suppressHydrationWarning dateTime={dateObj.toDateString()} className="text-base">
-                    <FormattedDate value={dateObj} day="numeric" year="numeric" month="short" />
-                  </time>
-                )
-              }
-              if (isValid(dateObjAlternative)) {
-                return (
-                  <time suppressHydrationWarning dateTime={dateObjAlternative.toDateString()} className="text-base">
-                    <FormattedDate value={dateObjAlternative} day="numeric" year="numeric" month="short" />
-                  </time>
-                )
-              }
-              return <Blocks value={value} />
+          const value = info.getValue()
+          const isPortableText = Array.isArray(value)
+          if (variant === 'default' && tableHeaders?.[index]?.formatAsDate) {
+            const plainDateString = toPlainText(value)
+            const formatString = 'dd/MM/yyyy' // Define the format explicitly
+            const formatStringAlternative = 'yyyy-MM-dd'
+            const dateObj = parse(plainDateString, formatString, new Date()) // The third arg is a reference date
+            const dateObjAlternative = parse(plainDateString, formatStringAlternative, new Date()) // The third arg is a reference date
+            if (isValid(dateObj)) {
+              return (
+                <time suppressHydrationWarning dateTime={dateObj.toDateString()} className="text-base">
+                  <FormattedDate value={dateObj} day="numeric" year="numeric" month="short" />
+                </time>
+              )
             }
-            if (isPortableText) {
-              return <Blocks value={info.getValue()} />
+            if (isValid(dateObjAlternative)) {
+              return (
+                <time suppressHydrationWarning dateTime={dateObjAlternative.toDateString()} className="text-base">
+                  <FormattedDate value={dateObjAlternative} day="numeric" year="numeric" month="short" />
+                </time>
+              )
             }
-            return info.getValue()
+            return <Blocks value={value} />
           }
+          if (isPortableText) {
+            return <Blocks value={info.getValue()} />
+          }
+          return info.getValue()
         },
       })
     })
