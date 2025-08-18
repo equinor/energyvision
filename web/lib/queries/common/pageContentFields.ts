@@ -530,9 +530,7 @@ _type == "keyNumbers" =>{
         "content": defined(content[]){..., ${markDefs}},
         ...,
       },
-    "designOptions": {
-      ${background},
-    },
+    "cardColor": cardBackground.key,
   },
   _type == "grid" => {
     "type": _type,
@@ -581,8 +579,6 @@ _type == "keyNumbers" =>{
         "backgroundImage":{ 
           "image": backgroundImage 
         },
-      "backgroundColor": coalesce(backgroundColor.title, 'White'),
-      "dark": coalesce(backgroundColor.dark, false),
       "backgroundUtility":coalesce(backgroundColor.key, ""),
       }
     },

@@ -1,24 +1,18 @@
-import { BackgroundContainer, BackgroundContainerProps } from '@core/Backgrounds'
-import { forwardRef } from 'react'
+import { forwardRef, HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 export type ImageSize = 'small' | 'full'
 export type ImagePosition = 'left' | 'right'
 
-export const Teaser = forwardRef<HTMLDivElement, BackgroundContainerProps>(function Teaser(
-  { children, className, ...rest },
+export const Teaser = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(function Teaser(
+  { children, className },
   ref,
 ) {
   return (
-    <BackgroundContainer as="article" backgroundStyle="none" ref={ref} {...rest}>
-      <div
-        className={twMerge(
-          `overflow-y-hidden max-w-[1440px] grid md:grid-cols-2 auto-rows-min my-0 mx-auto `,
-          className,
-        )}
-      >
+    <article className={className} ref={ref}>
+      <div className={`overflow-y-hidden max-w-[1440px] grid md:grid-cols-2 auto-rows-min my-0 mx-auto `}>
         {children}
       </div>
-    </BackgroundContainer>
+    </article>
   )
 })

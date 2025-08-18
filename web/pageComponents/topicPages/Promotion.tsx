@@ -1,4 +1,3 @@
-import { BackgroundContainer } from '@core/Backgrounds'
 import SinglePromotion from './promotions/SinglePromotion'
 import MultiplePromotions from './promotions/MultiplePromotions'
 import IngressText from '../shared/portableText/IngressText'
@@ -7,6 +6,7 @@ import { twMerge } from 'tailwind-merge'
 import { ResourceLink } from '@core/Link'
 import { Heading } from '@core/Typography'
 import { useId } from 'react'
+import getBgClassName from '../../common/helpers/getBackgroundColor'
 
 const Promotion = ({
   data,
@@ -24,16 +24,14 @@ const Promotion = ({
   const variant = data.content?.type
   const promoteSingleUpcomingEvent = data?.content?.eventPromotionSettings?.promoteSingleUpcomingEvent
   const sectionTitleId = useId()
+  const bgClassNames = getBgClassName(designOptions?.background?.backgroundUtility)
 
   const paddingClassName = `px-layout-sm 3xl:px-layout-lg`
 
   return (
-    <BackgroundContainer
-      {...designOptions}
-      backgroundStyle="wide"
-      className={twMerge(`flex flex-col gap-6`, className)}
+    <div
+      className={twMerge(`flex flex-col gap-6 max-w-viewport mx-auto ${bgClassNames}`, className)}
       id={anchor}
-      renderFragmentWhenPossible
       {...rest}
     >
       {title && (
@@ -81,7 +79,7 @@ const Promotion = ({
           />
         )}
       </div>
-    </BackgroundContainer>
+    </div>
   )
 }
 

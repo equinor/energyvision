@@ -64,10 +64,6 @@ export const ColorSelector = ({ value, onChange, schemaType }: ColorSelectorProp
   const handleSelect = useCallback(
     (selected: ColorSelectorValue) => {
       if (selected === value) return
-
-      onChange(set(selected.title, ['title']))
-      onChange(set(selected.value, ['value']))
-      onChange(set(selected.dark, ['dark']))
       onChange(set(selected.key, ['key']))
     },
     [onChange, value],
@@ -85,7 +81,7 @@ export const ColorSelector = ({ value, onChange, schemaType }: ColorSelectorProp
                   <ColorCircle
                     key={colorItem.value}
                     color={colorItem}
-                    active={colorItem.value === value?.value}
+                    active={colorItem.key === value?.key}
                     onClickHandler={handleSelect}
                   />
                 )

@@ -1,8 +1,8 @@
 import type { DesignOptions, ImageWithCaptionData } from '../../types/index'
 import { FigureCaption } from '@core/FigureCaption/FigureCaption'
-import { BackgroundContainer } from '@core/Backgrounds'
 import Image, { ImageRatioKeys } from '../../core/SanityImage/SanityImage'
 import envisTwMerge from '../../twMerge'
+import getBgClassName from '../../common/helpers/getBackgroundColor'
 
 export type FigureData = {
   type: string
@@ -29,11 +29,12 @@ const Figure = ({ data, anchor, className = '' }: FigureProps) => {
   const { image, caption, attribution } = figure
 
   return (
-    <BackgroundContainer
-      background={designOptions?.background}
+    <figure
       id={anchor}
-      className={envisTwMerge(``, className)}
-      as="figure"
+      className={envisTwMerge(
+        `${getBgClassName(designOptions.background.backgroundUtility)} px-layout-lg mx-auto max-w-viewport `,
+        className,
+      )}
     >
       <Image
         image={image}
@@ -53,7 +54,7 @@ const Figure = ({ data, anchor, className = '' }: FigureProps) => {
           {attribution && <div>{attribution}</div>}
         </FigureCaption>
       )}
-    </BackgroundContainer>
+    </figure>
   )
 }
 

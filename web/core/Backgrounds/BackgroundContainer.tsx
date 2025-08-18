@@ -1,5 +1,5 @@
 import { forwardRef, HTMLAttributes } from 'react'
-import type { BackgroundColours, BackgroundTypes, ImageBackground } from '../../types/index'
+import type { BackgroundTypes, ImageBackground } from '../../types/index'
 import { BackgroundContainerType, BackgroundStyle, ColouredContainer } from './ColouredContainer'
 import { ColorKeyTokens } from '../../styles/colorKeyToUtilityMap'
 import envisTwMerge from '../../twMerge'
@@ -8,10 +8,8 @@ import { ImageBackgroundContainer } from './ImageBackgroundContainer'
 export type BackgroundContainerProps = {
   background?: {
     type?: BackgroundTypes
-    backgroundColor?: BackgroundColours
     backgroundImage?: ImageBackground
     backgroundUtility?: keyof ColorKeyTokens
-    dark?: boolean
   }
   /** Render fragment if true and background color
    * is white and no id/anchor is set on it
@@ -65,11 +63,11 @@ export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContaine
           {children}
         </ImageBackgroundContainer>
       )}
-      {(type === 'backgroundColor' || !type) && (
+      {(type === 'colorlist' || !type) && (
         <>
           {as == 'div' &&
           renderFragmentWhenPossible &&
-          (restBackground?.backgroundColor === 'White' || restBackground?.backgroundUtility === 'white-100') &&
+          restBackground?.backgroundUtility === 'white-100' &&
           className === '' &&
           !id ? (
             <>{children}</>

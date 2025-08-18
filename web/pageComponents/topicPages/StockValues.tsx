@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import useSWR from 'swr'
 import * as xml2js from 'xml2js'
-import { BackgroundContainer } from '@core/Backgrounds'
 import { FormattedDate } from '@core/FormattedDateTime'
 import { FormattedMessage } from 'react-intl'
 import type { StockValuesData } from '../../types/index'
 import { twMerge } from 'tailwind-merge'
+import getBgClassName from '../../common/helpers/getBackgroundColor'
 
 const fetchData = async (url: string) => {
   const response = await fetch(url)
@@ -64,9 +64,13 @@ const StockValues = ({
   const { background } = designOptions
 
   return (
-    <BackgroundContainer
-      className={twMerge(`grid grid-cols-[1fr] gap-8 sm:grid-cols-[1fr,1fr]`, className)}
-      background={background}
+    <div
+      className={twMerge(
+        `grid grid-cols-[1fr] gap-8 sm:grid-cols-[1fr,1fr] ${getBgClassName(
+          background.backgroundUtility,
+        )} max-w-viewport px-layout-lg mx-auto`,
+        className,
+      )}
       {...rest}
       id={anchor}
     >
@@ -95,7 +99,7 @@ const StockValues = ({
           </span>
         </p>
       </div>
-    </BackgroundContainer>
+    </div>
   )
 }
 

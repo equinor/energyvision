@@ -1,6 +1,5 @@
 import { PortableTextBlock, TwitterEmbedData } from '../../types/index'
 import { TwitterTimelineEmbed, TwitterTweetEmbed } from 'react-twitter-embed'
-import { BackgroundContainer } from '@core/Backgrounds'
 import IngressText from '../../pageComponents/shared/portableText/IngressText'
 import { Typography } from '@core/Typography'
 import { toPlainText } from '@portabletext/react'
@@ -13,7 +12,7 @@ type TwitterEmbedProps = {
 }
 
 const TwitterEmbed = ({ data, anchor, className }: TwitterEmbedProps) => {
-  const { embedType, embedValue, designOptions, title, ingress } = data
+  const { embedType, embedValue, title, ingress } = data
   const plainTitle = title ? toPlainText(title as PortableTextBlock[]) : ''
 
   const Embed = () => {
@@ -36,7 +35,7 @@ const TwitterEmbed = ({ data, anchor, className }: TwitterEmbedProps) => {
     }
   }
   return (
-    <BackgroundContainer {...designOptions} id={anchor} className={className} renderFragmentWhenPossible>
+    <div id={anchor} className={`${className} mx-auto px-layout-lg max-w-viewport`}>
       {title && (
         <div className="mb-11">
           <Typography>{plainTitle}</Typography>
@@ -54,7 +53,7 @@ const TwitterEmbed = ({ data, anchor, className }: TwitterEmbedProps) => {
       <div className="cookieconsent-optout-marketing">
         <RequestConsentContainer cookiePolicy={['marketing']} />
       </div>
-    </BackgroundContainer>
+    </div>
   )
 }
 

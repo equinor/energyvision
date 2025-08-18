@@ -14,16 +14,14 @@ export type BackgroundColours =
   | 'Mid Orange'
   | 'Slate Blue 95'
 
-export type BackgroundTypes = 'backgroundColor' | 'backgroundImage'
+export type BackgroundTypes = 'colorlist' | 'backgroundImage'
 
 export type ContentAlignmentTypes = 'left' | 'right' | 'center'
 
 export type DesignOptions = {
   background: {
     type?: BackgroundTypes
-    backgroundColor?: BackgroundColours
     backgroundImage?: ImageBackground
     backgroundUtility?: keyof ColorKeyTokens
-    dark: boolean
   }
 }

@@ -1,5 +1,4 @@
 import type { IFrameData } from '../../types/index'
-import { BackgroundContainer } from '@core/Backgrounds'
 import IngressText from '../../pageComponents/shared/portableText/IngressText'
 import { Heading } from '@core/Typography'
 import { IFrame } from '@core/IFrame/IFrame'
@@ -31,18 +30,15 @@ const IFrameBlock = ({
     transcript,
   } = data
 
-  const { height, aspectRatio, background } = designOptions
+  const { height, aspectRatio } = designOptions
   const headingId = useId()
   const actionUrl = action ? getUrlFromAction(action) : ''
 
   if (!url) return null
   return (
-    <BackgroundContainer
-      {...background}
-      {...rest}
+    <div
       id={anchor}
-      className={envisTwMerge('max-w-viewport mx-auto flex flex-col gap-6 pb-page-content', className)}
-      renderFragmentWhenPossible
+      className={envisTwMerge(`max-w-viewport mx-auto flex flex-col gap-6 pb-page-content px-layout-lg`, className)}
     >
       {title && <Heading variant="h3" as="h2" id={headingId} value={title} />}
       {ingress && <IngressText value={ingress} />}
@@ -71,7 +67,7 @@ const IFrameBlock = ({
           {action.label}
         </ResourceLink>
       )}
-    </BackgroundContainer>
+    </div>
   )
 }
 

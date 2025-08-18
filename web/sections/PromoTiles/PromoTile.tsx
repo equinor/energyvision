@@ -1,5 +1,4 @@
 import { getUrlFromAction } from '../../common/helpers'
-import { ColorKeyTokens, colorKeyToUtilityMap } from '../../styles/colorKeyToUtilityMap'
 import { forwardRef } from 'react'
 import { getLocaleFromName } from '../../lib/localization'
 import { useIntl } from 'react-intl'
@@ -9,6 +8,7 @@ import Image, { getSmallerThanPxLgSizes } from '@core/SanityImage/SanityImage'
 import { Heading, Typography } from '@core/Typography'
 import { BaseLink } from '@core/Link'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
+import getBgClassName from '../../common/helpers/getBackgroundColor'
 
 type Variants = 'leftRight' | 'topBottom'
 export type PromoTileProps = {
@@ -51,16 +51,7 @@ export const PromoTile = forwardRef<HTMLDivElement, PromoTileProps>(function Pro
       ? getLocaleFromName(action.link.link?.lang)
       : getLocaleFromName(intl.locale)
   const { background } = designOptions
-  console.log('background', background)
-
-  const colorName =
-    Object.keys(colorKeyToUtilityMap).find(
-      (key) => colorKeyToUtilityMap[key as keyof ColorKeyTokens]?.backgroundName === background?.backgroundColor,
-    ) ?? 'white-100'
-
-  const theme = background?.backgroundUtility
-    ? colorKeyToUtilityMap[background.backgroundUtility ?? 'white-100']
-    : colorKeyToUtilityMap[colorName as keyof ColorKeyTokens]
+  const theme = getBgClassName(background.backgroundUtility)
 
   const contentElement = (
     <>
@@ -91,7 +82,7 @@ export const PromoTile = forwardRef<HTMLDivElement, PromoTileProps>(function Pro
       {...(id && { id: id })}
       className={`w-full h-full ${
         variant === 'leftRight' ? 'grid grid-cols-[40%_60%]' : 'grid grid-cols-[40%_60%] lg:flex lg:flex-col'
-      } ${theme?.background} ${theme?.dark ? 'dark' : ''} rounded-sm border border-moss-green-70 min-h-[120px]`}
+      } ${theme}  rounded-sm border border-moss-green-70 min-h-[120px]`}
     >
       {image && image.asset && (
         <div

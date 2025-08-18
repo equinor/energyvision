@@ -24,10 +24,7 @@ export default defineType({
     }),
   ],
   initialValue: {
-    title: defaultBackgroundColors[0].title,
-    value: defaultBackgroundColors[0].value,
     key: defaultBackgroundColors[0].key,
-    dark: defaultBackgroundColors[0].dark,
   },
   components: {
     input: (props) => {
@@ -36,16 +33,16 @@ export default defineType({
   },
   preview: {
     select: {
-      value: 'value',
-      title: 'title',
+      value: 'key',
     },
-    prepare({ value, title }: { value: string; title: string }) {
+    prepare({ value }: { value: string }) {
+      const color = defaultBackgroundColors.find((it) => it.key == value)
       return {
-        title: `Color '${title}'`,
+        title: `Color '${color?.title}'`,
         media: (
           <span
             style={{
-              backgroundColor: value,
+              backgroundColor: color?.value,
               padding: '15px',
               borderRadius: '50%',
             }}

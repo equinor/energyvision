@@ -2,7 +2,6 @@ import type { MagazineIndexPageType } from '../../types'
 import { useMemo, useRef, useState } from 'react'
 import Seo from '../../pageComponents/shared/Seo'
 import { HeroTypes } from '../../types/index'
-import { BackgroundContainer } from '@core/Backgrounds'
 import Teaser from '../../sections/teasers/Teaser/Teaser'
 import SharedTitle from '../../pageComponents/pageTemplates/shared/SharedTitle'
 import { SharedBanner } from '../../pageComponents/pageTemplates/shared/SharedBanner'
@@ -15,6 +14,7 @@ import MagazineCard from '@sections/cards/MagazineCard/MagazineCard'
 import { SimplePagination } from '@core/SimplePagination/SimplePagination'
 import CardSkeleton from '@sections/cards/CardSkeleton/CardSkeleton'
 import { PaginationContextProvider } from '../../common/contexts/PaginationContext'
+import { colorKeyToUtilityMap } from '../../styles/colorKeyToUtilityMap'
 
 type MagazineIndexTemplateProps = {
   pageData: MagazineIndexPageType
@@ -75,11 +75,11 @@ const MagazineRoom = ({ pageData, slug }: MagazineIndexTemplateProps) => {
           <>
             <SharedBanner title={title} hero={hero} hideImageCaption={true} />
             {pageData?.hero.type !== HeroTypes.DEFAULT && title && (
-              <SharedTitle sharedTitle={title} background={{ backgroundColor: ingress.background }} />
+              <SharedTitle sharedTitle={title} background={ingress.background} />
             )}
-            <BackgroundContainer className="py-16" background={{ backgroundColor: ingress.background }}>
+            <div className={`py-16 ${colorKeyToUtilityMap[ingress.background].background}`}>
               {ingress && <Blocks value={ingress.content} />}
-            </BackgroundContainer>
+            </div>
           </>
         )}
         {hero.type === HeroTypes.BACKGROUND_IMAGE && (

@@ -53,9 +53,8 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
   if (useBrandTheme) {
     bgContainerOptions = {
       background: {
-        type: 'backgroundColor',
+        type: 'colorlist',
         backgroundUtility: 'white-100',
-        dark: false,
       },
     }
   }

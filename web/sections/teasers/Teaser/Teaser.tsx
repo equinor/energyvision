@@ -1,12 +1,13 @@
 import { Teaser as TeaserLayout } from '@core/Teaser'
 import IngressText from '../../../pageComponents/shared/portableText/IngressText'
 import { getUrlFromAction } from '../../../common/helpers'
-import Image, { getPxLgSizes } from '../../../core/SanityImage/SanityImage'
+import Image from '../../../core/SanityImage/SanityImage'
 import type { TeaserData, ImageWithAlt } from '../../../types/index'
 import { ResourceLink } from '../../../core/Link'
 import { Heading } from '../../../core/Typography'
 import { getLocaleFromName } from '../../../lib/localization'
 import { Typography } from '@core/Typography'
+import getBgClassName from '../../../common/helpers/getBackgroundColor'
 
 const { Content, Media } = TeaserLayout
 
@@ -43,7 +44,7 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
   const isSvg = image.extension?.toLowerCase() === 'svg'
 
   return (
-    <TeaserLayout className="text-sm" id={anchor} {...restOptions} renderFragmentWhenPossible>
+    <TeaserLayout className={`text-sm ${getBgClassName(designOptions.background.backgroundUtility)}`} id={anchor}>
       <Media
         size={isSvg && imageSize === 'small' ? 'small' : 'full'}
         center={isSvg ? true : false}

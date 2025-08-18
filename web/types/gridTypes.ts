@@ -1,8 +1,9 @@
-import { ImageWithAlt, BackgroundColours, LinkData, IFrameData, VideoPlayerData, ImageBackground } from './index'
+import { ImageWithAlt, LinkData, IFrameData, VideoPlayerData, ImageBackground } from './index'
 import { TeaserImagePosition } from '@core/Teaser'
 import { PortableTextBlock } from '@portabletext/types'
 import { RowType } from '@sections/Grid/mapGridContent'
 import { FigureData } from '../pageComponents/topicPages/Figure'
+import { ColorKeyTokens } from '../styles/colorKeyToUtilityMap'
 
 export type GridTeaserData = {
   type: 'gridTeaser'
@@ -16,7 +17,7 @@ export type GridTeaserData = {
   quote?: string
   author?: string
   authorTitle?: string
-  background?: BackgroundColours
+  background?: keyof ColorKeyTokens
   imagePosition?: TeaserImagePosition
   action?: LinkData
   theme?: number

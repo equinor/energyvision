@@ -1,26 +1,19 @@
-import { BackgroundContainer, BackgroundContainerProps } from '@core/Backgrounds'
-import { ReactNode } from 'react'
+import { HTMLAttributes, ReactNode } from 'react'
 import envisTwMerge from '../../twMerge'
+import getBgClassName from '../../common/helpers/getBackgroundColor'
 
 type Props = {
   variant?: 'light' | 'dark'
   right?: string
   children: ReactNode
-} & BackgroundContainerProps
-
+} & HTMLAttributes<HTMLDivElement>
 export const TopbarDropdown = ({ children, variant = 'light', className = '', ...rest }: Props) => {
+  const bgToken = variant === 'dark' ? 'slate-blue-95' : undefined
+  const bgColor = getBgClassName(bgToken)
+
   return (
-    <BackgroundContainer
-      background={{
-        type: 'backgroundColor',
-        backgroundUtility: variant === 'dark' ? 'slate-blue-95' : 'white-100',
-        dark: variant === 'dark',
-      }}
-      backgroundStyle="none"
-      className={envisTwMerge(`fixed overflow-auto inset-0`, className)}
-      {...rest}
-    >
+    <div className={envisTwMerge(`fixed overflow-auto inset-0 ${bgColor}`, className)} {...rest}>
       {children}
-    </BackgroundContainer>
+    </div>
   )
 }

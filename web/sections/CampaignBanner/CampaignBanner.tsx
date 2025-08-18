@@ -5,8 +5,8 @@ import Blocks from '../../pageComponents/shared/portableText/Blocks'
 import { PortableTextBlock } from '@portabletext/types'
 import isEmpty from '../../pageComponents/shared/portableText/helpers/isEmpty'
 import { BlockType } from '../../pageComponents/shared/portableText/helpers/defaultSerializers'
-import { colorKeyToUtilityMap } from '../../styles/colorKeyToUtilityMap'
 import { urlFor } from '../../common/helpers'
+import getBgClassName from '../../common/helpers/getBackgroundColor'
 
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 const campaignTitleBlocks: BlockType = {
@@ -44,7 +44,7 @@ export type CampaignBannerProps = {
 const CampaignBanner = forwardRef<HTMLElement, CampaignBannerProps>(function CampaignBanner({ data, className }, ref) {
   const { title, designOptions } = data
   const { background } = designOptions
-  const { backgroundImage, backgroundUtility, dark } = background
+  const { backgroundImage, backgroundUtility } = background
 
   const bgImageClassNames = `[container:inline-size]
   relative
@@ -60,10 +60,9 @@ const CampaignBanner = forwardRef<HTMLElement, CampaignBannerProps>(function Cam
   2xl:pb-64
 `
 
-  const bgColor = backgroundUtility ? colorKeyToUtilityMap[backgroundUtility].background : ''
+  const bgColor = getBgClassName(backgroundUtility)
   const backgroundClassNames = twMerge(
-    `${dark ? 'dark' : ''}
-    ${backgroundImage?.image ? bgImageClassNames : `${bgColor} pt-12 pb-12 lg:pb-18`}
+    `${backgroundImage?.image ? bgImageClassNames : `${bgColor} pt-12 pb-12 lg:pb-18`}
   `,
     className,
   )

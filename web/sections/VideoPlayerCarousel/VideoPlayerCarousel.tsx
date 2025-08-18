@@ -1,9 +1,8 @@
 import { Heading, Paragraph } from '@core/Typography'
-import envisTwMerge from '../../twMerge'
 import { VideoPlayerCarouselData } from '../../types/index'
-import { BackgroundContainer } from '@core/Backgrounds'
 import { Carousel } from '@core/Carousel/Carousel'
 import { forwardRef, useId } from 'react'
+import getBgClassName from '../../common/helpers/getBackgroundColor'
 
 type VideoPlayerCarouselProps = {
   data: VideoPlayerCarouselData
@@ -20,7 +19,7 @@ const VideoPlayerCarousel = forwardRef<HTMLUListElement, VideoPlayerCarouselProp
   const headingId = useId()
 
   return (
-    <BackgroundContainer as="section" background={background} id={anchor} backgroundStyle="none" className={className}>
+    <section id={anchor} className={`${className} ${getBgClassName(background.backgroundUtility)}`}>
       <div className="w-full flex flex-col px-layout-lg mx-auto max-w-viewport pb-8">
         {title && (
           <Heading
@@ -46,7 +45,7 @@ const VideoPlayerCarousel = forwardRef<HTMLUListElement, VideoPlayerCarouselProp
         labelledbyId={title ? headingId : undefined}
         autoRotation={false}
       />
-    </BackgroundContainer>
+    </section>
   )
 })
 

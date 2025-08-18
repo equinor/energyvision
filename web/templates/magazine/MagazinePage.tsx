@@ -26,8 +26,6 @@ const MagazinePage = ({ data }: MagazinePageProps) => {
 
   const titleStyles = useSharedTitleStyles(data?.hero?.type, data?.content?.[0])
 
- 
-
   const handleClickTag = (tagValue: string) => {
     if (tagValue === 'ALL') {
       delete router.query.filter
@@ -62,13 +60,12 @@ const MagazinePage = ({ data }: MagazinePageProps) => {
             tags: tags,
           })}
         />
-        
+
         {data?.magazineTags && <MagazineTagBar tags={data?.magazineTags} href={parentSlug} onClick={handleClickTag} />}
         {data.hero.type !== HeroTypes.DEFAULT && (
           <>
-          <SharedTitle sharedTitle={data.title} background={titleStyles.background} />
-          <MagazineDate classname='max-w-viewport px-layout-lg mx-auto' firstPublishedAt={firstPublishedAt}/>
-    
+            <SharedTitle sharedTitle={data.title} background={titleStyles.background?.backgroundUtility} />
+            <MagazineDate classname="max-w-viewport px-layout-lg mx-auto" firstPublishedAt={firstPublishedAt} />
           </>
         )}
         {data.hero.type !== HeroTypes.DEFAULT && (
