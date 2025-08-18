@@ -149,7 +149,7 @@ runs:
         BODY+="
         ## Commit SHA
         "
-        BODY+=${{ inputs.commitSHA }}
+        BODY+="${{ inputs.commitSHA }}"
 
         echo "$BODY"
 

@@ -4,7 +4,7 @@ const QuoteSymbol = ({ iconSize }: { iconSize?: string }) => {
       fill="currentColor"
       className={`${iconSize}`}
       viewBox="0 0 48 48"
-      aria-hidden={true}
+      aria-label="Quote symbol"
       xmlns="http://www.w3.org/2000/svg"
     >
       <title>Quote symbol</title>

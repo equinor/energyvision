@@ -241,6 +241,8 @@ jobs:
   store-image-tags:
     needs: [deploy-satellite-studios, deploy-global, deploy-secret]
     runs-on: ubuntu-latest
+    outputs:
+      STUDIO_SHA: ${{ steps.save-and-get-image-tags.outputs.STUDIO_SHA }}
     steps:
       - name: Checkout internal 🛎️
         id: checkout-internal
@@ -259,6 +261,7 @@ jobs:
           npm install js-yaml
 
       - name: Run script for 'studio'
+        id: save-and-get-image-tags
         run: |
           STUDIO_SHA=$(node ci/storeImageTags.js studio)
           echo "STUDIO_SHA=$(STUDIO_SHA)" >> $GITHUB_OUTPUT

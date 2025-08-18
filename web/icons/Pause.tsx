@@ -23,7 +23,7 @@ export const Pause = forwardRef<SVGSVGElement, PauseProps>(function Pause(
       fill="currentColor"
       stroke="currentColor"
       strokeWidth={0}
-      aria-hidden
+      aria-label='Pause icon'
       className={className}
       {...rest}
     >
