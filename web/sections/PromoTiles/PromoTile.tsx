@@ -1,11 +1,11 @@
 import Card from '@sections/cards/Card'
 import { getUrlFromAction } from '../../common/helpers'
-import { ColorKeyTokens, colorKeyToUtilityMap } from '../../styles/colorKeyToUtilityMap'
 import { PromoTileData } from '../../types/index'
 import { forwardRef } from 'react'
 import { Variants } from '../cards/Card/Card'
 import { getLocaleFromName } from '../../lib/localization'
 import { useIntl } from 'react-intl'
+import getBgClassName from '../../common/helpers/getBackgroundColor'
 
 type PromoTileProps = {
   hasSectionTitle?: boolean
@@ -23,16 +23,7 @@ export const PromoTile = forwardRef<HTMLAnchorElement, PromoTileProps>(function 
   }
   const locale = action.link?.lang ? getLocaleFromName(action.link?.lang) : getLocaleFromName(intl.locale)
   const { background } = designOptions
-
-  const colorName =
-    Object.keys(colorKeyToUtilityMap).find(
-      (key) => colorKeyToUtilityMap[key as keyof ColorKeyTokens]?.backgroundName === background?.backgroundColor,
-    ) ?? 'white-100'
-
-  const theme = background?.backgroundUtility
-    ? colorKeyToUtilityMap[background.backgroundUtility]
-    : colorKeyToUtilityMap[colorName as keyof ColorKeyTokens]
-
+  const theme = getBgClassName(background.backgroundUtility)
   return (
     <Card
       {...(id && { id: id })}
@@ -42,9 +33,8 @@ export const PromoTile = forwardRef<HTMLAnchorElement, PromoTileProps>(function 
       ref={ref}
       image={image}
       variant={variant}
-      className={`${theme?.dark || background.dark ? 'dark' : ''} `}
     >
-      <Card.Content variant={variant} className={`${theme.background}`}>
+      <Card.Content variant={variant} className={`${theme}`}>
         <Card.Header
           titleLevel={hasSectionTitle ? 'h3' : 'h2'}
           {...(!linkLabelAsTitle && { titleBlock: title })}

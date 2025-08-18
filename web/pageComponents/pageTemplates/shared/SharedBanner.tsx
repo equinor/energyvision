@@ -1,15 +1,16 @@
 import { PortableTextBlock } from '@portabletext/types'
-import { BackgroundColours, HeroType, HeroTypes, LoopingVideoData } from '../../../types/index'
+import { HeroType, HeroTypes, LoopingVideoData } from '../../../types/index'
 import { FullImageHero } from '@sections/Hero/FullImageHero'
 import { FiftyFiftyHero } from '@sections/Hero/FiftyFiftyHero'
 import { LoopingVideo } from '@sections/Hero/LoopingVideo'
 import { DefaultHero } from '@sections/Hero/DefaultHero'
+import { ColorKeyTokens } from '../../../styles/colorKeyToUtilityMap'
 
 type BannerProps = {
   title: PortableTextBlock[]
   hero: HeroType
   hideImageCaption?: boolean
-  captionBg?: BackgroundColours
+  captionBg?: keyof ColorKeyTokens
   /* Magazine */
   tags?: string[]
 }

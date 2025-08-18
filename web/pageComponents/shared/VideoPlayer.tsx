@@ -7,7 +7,6 @@ import {
   VideoType,
   VideoDesignOptionsType,
 } from '../../types/index'
-import { BackgroundContainer } from '@core/Backgrounds'
 import { getUrlFromAction, urlFor } from '../../common/helpers'
 import IngressText from './portableText/IngressText'
 import { VideoJS } from '@core/VideoJsPlayer'
@@ -18,6 +17,7 @@ import Blocks from './portableText/Blocks'
 import Transcript from '../../sections/Transcript/Transcript'
 import { ResourceLink } from '@core/Link'
 import { getLocaleFromName } from '../../lib/localization'
+import getBgClassName from '../../common/helpers/getBackgroundColor'
 
 const DynamicVideoJsComponent = dynamic<React.ComponentProps<typeof VideoJS>>(
   () => import('@core/VideoJsPlayer').then((mod) => mod.VideoJS),
@@ -160,13 +160,12 @@ const VideoPlayer = ({ anchor, data, className }: { data: VideoPlayerData; ancho
   const { title, ingress, action, video, videoControls, designOptions, transcript } = data
   const { width } = designOptions
   const actionUrl = action ? getUrlFromAction(action) : ''
+  const bgColor = getBgClassName(designOptions.background.backgroundUtility)
 
   return (
-    <BackgroundContainer
-      {...designOptions.background}
-      className={twMerge(` ${width === 'extraWide' ? 'px-layout-md' : 'px-layout-lg'}`, className)}
+    <div
+      className={twMerge(` ${width === 'extraWide' ? 'px-layout-md' : 'px-layout-lg'} ${bgColor}`, className)}
       id={anchor}
-      renderFragmentWhenPossible
     >
       {title && <Heading value={title} as="h2" variant="xl" className="mb-2 pb-2" />}
       {ingress && <IngressText value={ingress} className="mb-lg" />}
@@ -184,7 +183,7 @@ const VideoPlayer = ({ anchor, data, className }: { data: VideoPlayerData; ancho
       )}
       <VideoJsComponent video={video} designOptions={designOptions} videoControls={videoControls} />
       <Transcript transcript={transcript} ariaTitle={video.title} />
-    </BackgroundContainer>
+    </div>
   )
 }
 

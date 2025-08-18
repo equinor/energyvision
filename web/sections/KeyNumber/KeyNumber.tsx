@@ -1,5 +1,4 @@
 import { KeyNumbersData } from '../../types'
-import { BackgroundContainer } from '@core/Backgrounds'
 import { Heading, Paragraph } from '@core/Typography'
 import KeyNumberItem from './KeyNumberItem'
 import { ResourceLink } from '@core/Link'
@@ -9,6 +8,7 @@ import { twMerge } from 'tailwind-merge'
 import { getUrlFromAction } from '../../common/helpers/getUrlFromAction'
 import { getLocaleFromName } from '../../lib/localization'
 import { useId } from 'react'
+import getBgClassName from '../../common/helpers/getBackgroundColor'
 
 type KeyNumbersProps = {
   data: KeyNumbersData
@@ -24,10 +24,11 @@ const KeyNumber = ({ data, anchor, className }: KeyNumbersProps) => {
   const renderScroll = useHorizontalScroll && isMobile
 
   return (
-    <BackgroundContainer
-      {...designOptions}
-      backgroundStyle="none"
-      className={twMerge(`pb-page-content px-layout-sm`, className)}
+    <div
+      className={twMerge(
+        `pb-page-content px-layout-sm ${getBgClassName(designOptions.background.backgroundUtility)}`,
+        className,
+      )}
       id={anchor}
     >
       {title && (
@@ -62,7 +63,7 @@ const KeyNumber = ({ data, anchor, className }: KeyNumbersProps) => {
           {`${action.label} ${action.extension ? `(${action.extension.toUpperCase()})` : ''}`}
         </ResourceLink>
       )}
-    </BackgroundContainer>
+    </div>
   )
 }
 

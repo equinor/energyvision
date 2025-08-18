@@ -1,4 +1,3 @@
-import { BackgroundContainer } from '@core/Backgrounds'
 import Accordion from './Accordion'
 import { FAQPageJsonLd } from 'next-seo'
 
@@ -8,6 +7,7 @@ import { Heading, Typography } from '../../core/Typography'
 import { twMerge } from 'tailwind-merge'
 import IngressText from '../../pageComponents/shared/portableText/IngressText'
 import Image, { getSmallerThanPxLgSizes } from '../../core/SanityImage/SanityImage'
+import getBgClassName from '../../common/helpers/getBackgroundColor'
 
 type AccordionBlockProps = {
   data: AccordionData
@@ -29,12 +29,12 @@ const AccordionBlock = ({ data, anchor, className }: AccordionBlockProps) => {
 
   return (
     <>
-      <BackgroundContainer
-        {...designOptions}
+      <div
         id={anchor}
-        renderFragmentWhenPossible
         className={twMerge(
-          `flex flex-col gap-6 max-w-viewport mx-auto pb-page-content px-layout-lg [&_svg]:inline [&_svg]:align-baseline`,
+          `flex flex-col gap-6 max-w-viewport mx-auto pb-page-content px-layout-lg [&_svg]:inline [&_svg]:align-baseline  ${getBgClassName(
+            designOptions.background.backgroundUtility,
+          )}`,
           className,
         )}
       >
@@ -61,7 +61,7 @@ const AccordionBlock = ({ data, anchor, className }: AccordionBlockProps) => {
         {accordion && accordion.length > 0 && (
           <Accordion data={accordion} id={id} hasSectionTitle={!!title} queryParamName={id} />
         )}
-      </BackgroundContainer>
+      </div>
       {enableStructuredMarkup && accordion && <FAQPageJsonLd mainEntity={buildJsonLdElements(accordion)} />}
     </>
   )

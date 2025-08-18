@@ -57,7 +57,7 @@ const MagazinePage = ({ data }: MagazinePageProps) => {
         />
         {data?.magazineTags && <MagazineTagBar tags={data?.magazineTags} href={parentSlug} onClick={handleClickTag} />}
         {data.hero.type !== HeroTypes.DEFAULT && (
-          <SharedTitle sharedTitle={data.title} background={titleStyles.background} />
+          <SharedTitle sharedTitle={data.title} background={titleStyles.background?.backgroundUtility || 'white-100'} />
         )}
         {data.hero.type !== HeroTypes.DEFAULT && (
           <div className="max-w-viewport px-layout-lg mx-auto pb-6">

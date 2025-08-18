@@ -1,21 +1,23 @@
 import { BreadcrumbsList } from './index'
-import { BackgroundContainer, BackgroundContainerProps } from '@core/Backgrounds'
 import { BreadcrumbJsonLd } from 'next-seo'
 import { useRouter } from 'next/router'
 import { twMerge } from 'tailwind-merge'
 import NextLink from 'next/link'
 import type { Breadcrumb } from '../../types'
+import { ColorKeyTokens } from '../../styles/colorKeyToUtilityMap'
+import getBgClassName from '../../common/helpers/getBackgroundColor'
 
 type BreadcrumbsProps = {
   slug: string
   useCustomBreadcrumbs: boolean
   defaultBreadcrumbs: Breadcrumb[]
   customBreadcrumbs: Breadcrumb[]
+  bgKey?: keyof ColorKeyTokens
   className?: string
-} & BackgroundContainerProps
+}
 
 const buildJsonLdElements = (crumbs: Breadcrumb[], router: ReturnType<typeof useRouter>) => {
-  const { pathname, locale } = router
+  const { pathname } = router
 
   return crumbs.map((item, index) => ({
     position: index + 1,
@@ -42,8 +44,8 @@ export const Breadcrumbs = ({
   useCustomBreadcrumbs,
   defaultBreadcrumbs,
   customBreadcrumbs,
-  background,
   className = '',
+  bgKey,
 }: BreadcrumbsProps) => {
   const router = useRouter()
   const crumbs =
@@ -54,7 +56,7 @@ export const Breadcrumbs = ({
   if (crumbs.length < 2) return null
 
   return (
-    <BackgroundContainer as="nav" aria-label="Breadcrumbs" background={background} renderFragmentWhenPossible>
+    <nav aria-label="Breadcrumbs" className={`max-w-viewport px-layout-lg mx-auto ${getBgClassName(bgKey)}`}>
       <BreadcrumbsList className={twMerge(`py-10`, className)}>
         {crumbs.map((item) => {
           const isActive = item.slug === slug
@@ -76,6 +78,6 @@ export const Breadcrumbs = ({
         })}
       </BreadcrumbsList>
       <BreadcrumbJsonLd itemListElements={buildJsonLdElements(crumbs, router)} />
-    </BackgroundContainer>
+    </nav>
   )
 }

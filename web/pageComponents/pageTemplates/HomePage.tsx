@@ -27,11 +27,11 @@ const HomePage = ({ data }: HomePageProps) => {
         {data.isCampaign ? (
           <h1 className="sr-only">{toPlainText(data.title)}</h1>
         ) : (
-          <SharedBanner title={data.title} hero={data.hero} captionBg={titleStyles.background?.backgroundColor} />
+          <SharedBanner title={data.title} hero={data.hero} captionBg={titleStyles.background?.backgroundUtility} />
         )}
         {breadcrumbs && breadcrumbs?.enableBreadcrumbs && (
           <Breadcrumbs
-            background={titleStyles.background}
+            bgKey={titleStyles.background?.backgroundUtility}
             slug={data?.slug}
             useCustomBreadcrumbs={breadcrumbs?.useCustomBreadcrumbs}
             defaultBreadcrumbs={breadcrumbs?.defaultBreadcrumbs}
@@ -41,7 +41,7 @@ const HomePage = ({ data }: HomePageProps) => {
         )}
 
         {data.hero.type !== HeroTypes.DEFAULT && !data?.isCampaign && (
-          <SharedTitle sharedTitle={data.title} background={titleStyles.background} />
+          <SharedTitle sharedTitle={data.title} background={titleStyles.background?.backgroundUtility || 'white-100'} />
         )}
         <PageContent data={data} titleBackground={titleStyles} />
       </main>

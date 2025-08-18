@@ -20,15 +20,11 @@ type TextTeaserProps = {
 const TextTeaser = ({ data, anchor, className }: TextTeaserProps) => {
   const { title, text, action, designOptions } = data
   const { theme, titlePosition } = designOptions
-  const { background, highlight, dark } = getColorForTheme(theme)
+  const { backgroundUtility, highlight, dark } = getColorForTheme(theme)
   const url = action && getUrlFromAction(action)
 
   return (
-    <Teaser
-      background={{ backgroundColor: background }}
-      id={anchor}
-      className={twMerge(`${dark ? 'dark' : ''} `, className)}
-    >
+    <Teaser id={anchor} className={twMerge(`${dark ? 'dark' : ''} ${backgroundUtility}`, className)}>
       <Media className="pt-12 pb-0 px-layout-lg sm:pt-12 sm:py-8 md:p-16 h-auto" mediaPosition={titlePosition}>
         <Heading className={`pt-0 px-0 pb-12 sm:p-0 ${highlight}`} variant="2xl" as="h2" value={title} />
       </Media>

@@ -1,7 +1,6 @@
 import type { HeroType, ImageWithCaptionData } from 'types'
 import { useSanityLoader } from '../../lib/hooks/useSanityLoader'
 import Image, { getFullScreenSizes, mapSanityImageRatio } from '../../core/SanityImage/SanityImage'
-import { BackgroundContainer } from '@core/Backgrounds'
 import { FigureCaption } from '@core/FigureCaption/FigureCaption'
 
 type FullImageHeroType = {
@@ -52,16 +51,12 @@ export const FullImageHero = ({ ratio, figure, hideImageCaption, captionBg }: He
     <>
       {getHero()}
       {figure?.image?.asset && !hideImageCaption && (figure.caption || figure.attribution) && (
-        <BackgroundContainer
-          className={'inline-block w-full'}
-          background={{ backgroundColor: captionBg }}
-          backgroundStyle="none"
-        >
+        <div className={`inline-block w-full ${captionBg}`}>
           <FigureCaption className={'max-w-viewport mx-auto pt-0 px-layout-sm pb-8'}>
             {figure.caption && <div>{figure.caption}</div>}
             {figure.attribution && <div>{figure.attribution}</div>}
           </FigureCaption>
-        </BackgroundContainer>
+        </div>
       )}
     </>
   )

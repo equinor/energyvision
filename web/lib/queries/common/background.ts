@@ -1,6 +1,6 @@
 const background = /* groq */ `
-"background": {
-    "type": coalesce(designOptions.background[0]._type, "backgroundColor"),
+"background":{
+"type": coalesce(designOptions.background[0]._type, "colorlist"),
    "backgroundUtility":coalesce(designOptions.background[0].key, background.key, ""),
     "backgroundImage": coalesce(designOptions.background[0],""),
 }

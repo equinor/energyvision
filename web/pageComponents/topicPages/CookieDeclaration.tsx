@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router'
 import { useEffect, useRef } from 'react'
-import { BackgroundContainer } from '@core/Backgrounds'
 import { Heading } from '@core/Typography'
 import { CookieDeclarationData } from '../../types/index'
 
@@ -26,12 +25,12 @@ const CookieDeclaration = ({ data, anchor, className }: CookieDeclarationProps) 
     }
   }, [language])
   return (
-    <BackgroundContainer id={anchor} className={className}>
+    <div id={anchor} className={`${className} mx-auto px-layout-lg max-w-viewport`}>
       <div id="cookie-declaration-wrapper">
         {title && <Heading value={title} />}
         <div ref={placeholderRef}></div>
       </div>
-    </BackgroundContainer>
+    </div>
   )
 }
 export default CookieDeclaration

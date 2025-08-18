@@ -131,67 +131,21 @@ const getBackgroundOptions = (component: ComponentProps) => {
 
 const cleanBgUtility = (value: string) => value?.replace('bg-', '')
 
-const isWhiteColorBackground = (componentsDO: any, component: ComponentProps) => {
-  const casesWhichHaveBackgroundButIsWhite = ['cardsList']
-  return (
-    cleanBgUtility(componentsDO?.backgroundUtility) === 'white-100' ||
-    componentsDO?.backgroundColor === 'White' ||
-    componentsDO?.background === 'White' ||
-    //@ts-ignore
-    casesWhichHaveBackgroundButIsWhite.includes(component?.type) ||
-    //@ts-ignore
-    !component?.designOptions
-  )
-}
-
 const isSameColorBackground = (currentComponentsDO: any, previousComponentsDO: any) => {
-  if (
-    currentComponentsDO?.backgroundUtility &&
-    currentComponentsDO?.backgroundUtility !== '' &&
-    previousComponentsDO?.backgroundUtility &&
-    previousComponentsDO?.backgroundUtility !== ''
-  ) {
-    return (
-      cleanBgUtility(currentComponentsDO?.backgroundUtility) === cleanBgUtility(previousComponentsDO?.backgroundUtility)
-    )
-  }
-  if (
-    currentComponentsDO?.backgroundUtility &&
-    !previousComponentsDO?.backgroundUtility &&
-    previousComponentsDO?.backgroundColor
-  ) {
-    return (
-      colorKeyToUtilityMap[currentComponentsDO?.backgroundUtility as keyof ColorKeyTokens]?.backgroundName ===
-      previousComponentsDO?.backgroundColor
-    )
-  }
-  if (
-    !currentComponentsDO?.backgroundUtility &&
-    currentComponentsDO?.backgroundColor &&
-    previousComponentsDO?.backgroundUtility
-  ) {
-    currentComponentsDO?.backgroundColor ===
-      colorKeyToUtilityMap[previousComponentsDO?.backgroundUtility as keyof ColorKeyTokens]?.backgroundName
-  }
-
-  return currentComponentsDO?.backgroundColor === previousComponentsDO?.backgroundColor
+  return (
+    cleanBgUtility(currentComponentsDO?.backgroundUtility) === cleanBgUtility(previousComponentsDO?.backgroundUtility)
+  )
 }
 
 const applyPaddingTopIfApplicable = (currentComponent: ComponentProps, prevComponent: ComponentProps): string => {
   const currentComponentsDO = getBackgroundOptions(currentComponent)
   const previousComponentsDO = getBackgroundOptions(prevComponent)
-  const specialCases = ['teaser', 'fullWidthImage', 'fullWidthVideo', 'backgroundImage', 'campaignBanner']
 
-  const currentIsWhiteColorBackground = isWhiteColorBackground(currentComponentsDO, currentComponent)
-  const previousIsWhiteColorBackground = isWhiteColorBackground(previousComponentsDO, prevComponent)
+  const specialCases = ['teaser', 'fullWidthImage', 'fullWidthVideo', 'backgroundImage', 'campaignBanner']
 
   const previousComponentIsASpecialCaseAndNeedPT =
     //@ts-ignore: too many types
     specialCases.includes(prevComponent?.type) || specialCases.includes(previousComponentsDO?.type)
-
-  if (currentIsWhiteColorBackground && previousIsWhiteColorBackground && !previousComponentIsASpecialCaseAndNeedPT) {
-    return ''
-  }
 
   //@ts-ignore: too many types
   if (prevComponent?.type === 'homepageBanner') {

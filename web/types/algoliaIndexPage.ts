@@ -6,7 +6,6 @@ import type {
   HeroType,
   ImageWithCaptionData,
   SeoData,
-  BackgroundColours,
   MenuData,
   LinkData,
   MagazineCardData,
@@ -14,6 +13,7 @@ import type {
 import { PortableTextBlock } from '@portabletext/types'
 import { SanityImageObject } from '@sanity/image-url/lib/types/types'
 import { SearchResponse } from 'instantsearch.js'
+import { ColorKeyTokens } from '../styles/colorKeyToUtilityMap'
 
 export type AlgoliaIndexPageType = {
   serverState?: InstantSearchServerState
@@ -54,12 +54,12 @@ export type MagazineIndexPageType = {
   hero: HeroType
   ingress: {
     content: PortableTextBlock[]
-    background: BackgroundColours
+    background: keyof ColorKeyTokens
   }
   query?: any
   magazineArticles: MagazineCardData[]
   heroImage: ImageWithCaptionData
   footerComponent?: TeaserData
   magazineTags: { id: string; title: string; key: string }[]
-  background: BackgroundColours
+  background: keyof ColorKeyTokens
 }

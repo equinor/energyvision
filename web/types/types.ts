@@ -11,7 +11,6 @@ import type {
   CardData,
   EventCardData,
   PeopleCardData,
-  BackgroundColours,
   DesignOptions,
   LoopingVideoData,
   VideoPlayerData,
@@ -23,6 +22,7 @@ import type {
 import { MediaPosition } from '@core/Teaser/Media'
 import { FigureData } from '../pageComponents/topicPages/Figure'
 import { FullWidthImageData } from '../pageComponents/topicPages/FullWidthImage'
+import { ColorKeyTokens } from '../styles/colorKeyToUtilityMap'
 
 export type IntlData = {
   locale: string
@@ -68,10 +68,10 @@ export type HeroType = {
   link?: LinkData
   type?: HeroTypes
   ratio?: string
-  background?: BackgroundColours
+  background?: keyof ColorKeyTokens
   loopingVideo?: LoopingVideoData
   hideImageCaption?: boolean
-  captionBg?: BackgroundColours
+  captionBg?: keyof ColorKeyTokens
 }
 
 export type ContentType =

@@ -12,7 +12,7 @@ export const heroFields = /* groq */ `{
       "title" : heroBigTitleDefault,
     },
     "ingress": heroIngress,
-    "background": coalesce(heroBackground.title, 'White'),
+    "background": coalesce(heroBackground.key, 'white-100'),
     "figure":  select(
       heroType == 'loopingVideo' => { "image": heroLoopingVideo->thumbnail},
       heroFigure),

@@ -62,15 +62,14 @@ export default {
       of: [{ type: 'card' }],
       validation: (Rule: Rule) => Rule.required().min(1).error('At least one card with a valid title is required.'),
     },
-    singleItemArray({
+    {
       title: 'The background color on the cards',
       description: 'List title will be on default background. Default is White',
       name: 'cardBackground',
-      type: 'array',
+      type: 'colorlist',
+      initialValue: defaultBackgroundColors[6],
       fieldset: 'design',
-      of: [{ title: 'Color', type: 'colorlist' }],
-      //initialValue: [{defaultBackgroundColors[6]}],
-    }),
+    },
   ],
   preview: {
     select: {

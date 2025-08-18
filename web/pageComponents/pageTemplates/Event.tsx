@@ -1,4 +1,3 @@
-import { BackgroundContainer } from '@core/Backgrounds'
 import { FormattedDate, FormattedTime } from '@core/FormattedDateTime'
 import { toPlainText } from '@portabletext/react'
 import { FormattedMessage } from 'react-intl'
@@ -30,7 +29,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
       )}
       <main>
         <article>
-          <BackgroundContainer className="px-layout-md py-32" background={{ backgroundColor: 'Moss Green Light' }}>
+          <div className="px-layout-md py-32 bg-moss-green-50">
             <div className="mx-auto max-w-[1186px]">
               {title && (
                 <Typography as="h1" variant="3xl">
@@ -60,7 +59,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
               {location && <div className="text-norwegian-woods-100 mb-4">{location}</div>}
               <AddToCalendar eventDate={eventDate} location={location} title={plainTitle} />
             </div>
-          </BackgroundContainer>
+          </div>
           {(ingress || content) && (
             <div
               className={`
