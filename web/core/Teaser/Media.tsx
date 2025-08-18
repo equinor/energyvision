@@ -20,7 +20,7 @@ export const Media = forwardRef<HTMLDivElement, TeaserMediaProps>(function Media
   return (
     <div
       className={twMerge(
-        `${mediaPosition == 'right' ? 'md:order-last' : ''} relative ${fixedHeight ? 'h-[400px]' : ''} ${
+        `${mediaPosition == 'right' ? 'md:order-last' : ''} relative min-h-[400px] ${fixedHeight ? 'h-[400px]' : ''} ${
           center ? 'text-center justify-center place-self-center' : ''
         } md:h-full md:max-h-[800px] ${size == 'small' ? 'w-[55%] pt-12' : 'w-full'}`,
         className,
