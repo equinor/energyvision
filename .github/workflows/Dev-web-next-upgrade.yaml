@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - staging-web-upgrade
+      - upgrade-next-intl
     paths:
       - 'web/**'
       - '!web/README.md'
