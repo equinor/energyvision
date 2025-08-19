@@ -1,5 +1,6 @@
 import { attach_file, format_color_text, link, star_filled } from '@equinor/eds-icons'
-import type { BlockDefinition, BlockStyleDefinition } from 'sanity'
+import { BookmarkIcon } from '@sanity/icons'
+import type { BlockDefinition, BlockStyleDefinition, Rule, TypedObject } from 'sanity'
 import { EdsBlockEditorIcon, EdsIcon, IconSubScript, IconSuperScript } from '../../icons'
 import { SubScriptRenderer, SuperScriptRenderer } from '../components'
 import { defaultColors } from '../defaultColors'
@@ -11,6 +12,7 @@ import {
   LinkType,
 } from '../objects/linkSelector/common'
 import linkSelector from '../objects/linkSelector/linkSelector'
+import { validateAnchorReference } from '../validations/validateAnchorReference'
 
 const externalLinkConfig = {
   ...externalLink,
@@ -30,6 +32,7 @@ export type BlockContentProps = {
   smallText?: boolean
   largeText?: boolean
   extraLargeText?: boolean
+  headingAnchor?: boolean
   highlight?: boolean
   normalTextOverride?: {
     title: string
@@ -83,6 +86,7 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockDef
     extraLargeText = false,
     smallText = true,
     highlight = false,
+    headingAnchor = false,
     extendedStyles = [],
     normalTextOverride = { title: 'Normal', value: 'normal' },
     footnote = false,
@@ -133,53 +137,7 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockDef
               component: SuperScriptRenderer,
             },
           ],
-      annotations: footnote
-        ? [
-            {
-              name: 'footnote',
-              type: 'object',
-              title: 'Footnote',
-              icon: EdsIcon(star_filled),
-              fields: [
-                {
-                  name: 'text',
-                  type: 'array',
-                  of: [
-                    {
-                      type: 'block',
-                      styles: [
-                        {
-                          title: 'Small text',
-                          value: 'smallText',
-                          component: SmallTextRender,
-                        },
-                      ],
-                      lists: [],
-                      marks: {
-                        decorators: [
-                          { title: 'Strong', value: 'strong' },
-                          { title: 'Emphasis', value: 'em' },
-                          {
-                            title: 'Sub',
-                            value: 'sub',
-                            icon: IconSubScript,
-                            component: SubScriptRenderer,
-                          },
-                          {
-                            title: 'Super',
-                            value: 'sup',
-                            icon: IconSuperScript,
-                            component: SuperScriptRenderer,
-                          },
-                        ],
-                      },
-                    },
-                  ],
-                },
-              ],
-            },
-          ]
-        : [],
+      annotations: [],
     },
   }
 
@@ -231,6 +189,58 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockDef
     ],
   }
 
+  const headingAnchorConfig = {
+    name: 'headingAnchor',
+    type: 'object',
+    title: 'Heading Anchor',
+    icon: BookmarkIcon,
+    fields: [
+      {
+        name: 'anchor',
+        description:"Add anchor id that will be set as id of the heading. Only use together with headings. The # is only to indicate that this has an anchor id. Not visible in web",
+        type: 'string',
+/*         validation: (Rule: Rule) => Rule.custom((value: string, context: any) => {
+          if (!value) return true
+        
+          const errors: string[] = []
+        
+          // Check for duplicate anchor values in the document
+          const anchors = context.document.content
+            .filter((item: TypedObject) => {
+              return (item?.anchor || item?.anchorReference || item?.text?.some((block: any) => block?.markDefs?.some((mark: any) => mark?._type === "headingAnchor")))
+             })
+            .map((item) => {
+              return item.anchor || item.anchorReference || item?.text?.find((block: any) => block?.markDefs?.find((mark: any) => mark?._type === "headingAnchor"))?.markDefs?.find((mark: any) => mark?._type === "headingAnchor").anchor
+            })
+          if (anchors.some((val : string, i : number) => anchors.indexOf(val) !== i)) {
+            errors.push(` Anchor value ${value} is used multiple times. Must be unique`)
+          }
+          if (context.document.content?.find((item) => item?.text?.some((block: any) => block?.markDefs?.some((mark: any) => mark?._type === "headingAnchor" && mark?.anchor === value)))?.text?.find((block: any) => block?.markDefs?.some((mark: any) => mark?._type === "headingAnchor" && mark?.anchor === value) )) {
+            errors.push(` Anchor value ${value} is used multiple times. Must be unique`)
+          }
+        
+          // Validate the input value
+          const inputValidation = validateAnchorReference(value)
+          if (Array.isArray(inputValidation)) {
+            return [...errors, ...inputValidation]
+          }
+        
+          if (errors.length > 0) return errors
+        
+          return true
+        }), */
+      },
+    ],
+    components:{
+      annotation: (props : any) => {
+        return <span>
+          <span style={{paddingRight: '4px', color:"lightgrey"}}>#</span>
+          {props.renderDefault(props)}
+        </span>
+      }
+    }
+    }
+
   if (h2) {
     config?.styles?.push(h2DefaultConfig)
   }
@@ -264,6 +274,57 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockDef
 
   if (attachment) {
     config?.marks?.annotations?.push(attachmentConfig)
+  }
+  if (headingAnchor) {
+    config?.marks?.annotations?.push(headingAnchorConfig)
+  }
+
+  if (footnote) {
+    config?.marks?.annotations?.push(
+      {
+        name: 'footnote',
+        type: 'object',
+        title: 'Footnote',
+        icon: EdsIcon(star_filled),
+        fields: [
+          {
+            name: 'text',
+            type: 'array',
+            of: [
+              {
+                type: 'block',
+                styles: [
+                  {
+                    title: 'Small text',
+                    value: 'smallText',
+                    component: SmallTextRender,
+                  },
+                ],
+                lists: [],
+                marks: {
+                  decorators: [
+                    { title: 'Strong', value: 'strong' },
+                    { title: 'Emphasis', value: 'em' },
+                    {
+                      title: 'Sub',
+                      value: 'sub',
+                      icon: IconSubScript,
+                      component: SubScriptRenderer,
+                    },
+                    {
+                      title: 'Super',
+                      value: 'sup',
+                      icon: IconSuperScript,
+                      component: SuperScriptRenderer,
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+        ],
+      }
+    )
   }
 
   if (highlight) {

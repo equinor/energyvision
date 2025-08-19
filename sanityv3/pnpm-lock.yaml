@@ -24,8 +24,8 @@ dependencies:
     specifier: ^3.3.1
     version: 3.3.1(@types/react@18.0.9)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(rxjs@7.8.0)(sanity@3.95.0)(styled-components@6.1.15)
   '@sanity/icons':
-    specifier: ^2.11.8
-    version: 2.11.8(react@18.2.0)
+    specifier: ^3.7.4
+    version: 3.7.4(react@18.2.0)
   '@sanity/ui':
     specifier: ^2.16.4
     version: 2.16.4(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.15)
@@ -4351,7 +4351,7 @@ packages:
       sanity: ^3.40.0
       styled-components: ^6.1
     dependencies:
-      '@sanity/icons': 3.5.7(react@18.2.0)
+      '@sanity/icons': 3.7.4(react@18.2.0)
       '@sanity/incompatible-plugin': 1.0.5(react-dom@18.2.0)(react@18.2.0)
       '@sanity/mutator': 3.74.1(@types/react@18.0.9)
       '@sanity/ui': 2.16.4(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.15)
@@ -4439,15 +4439,6 @@ packages:
     engines: {node: '>=14.0.0'}
     peerDependencies:
       react: ^18
-    dependencies:
-      react: 18.2.0
-    dev: false
-
-  /@sanity/icons@3.5.7(react@18.2.0):
-    resolution: {integrity: sha512-Gdqh1Cst/GL2RF23Ztx14hFEOBltK7PYMDHTi83TQ4Vq2/W0rhhMTVlaAopb4MgnUBwzISHRLD85SuvDMi9SuA==}
-    engines: {node: '>=14.0.0'}
-    peerDependencies:
-      react: ^18.3 || ^19.0.0-0
     dependencies:
       react: 18.2.0
     dev: false
@@ -11171,7 +11162,7 @@ packages:
       sanity: ^3.52.4
       styled-components: ^6.1
     dependencies:
-      '@sanity/icons': 3.5.7(react@18.2.0)
+      '@sanity/icons': 3.7.4(react@18.2.0)
       '@sanity/incompatible-plugin': 1.0.5(react-dom@18.2.0)(react@18.2.0)
       '@sanity/language-filter': 4.0.3(@types/react@18.0.9)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(sanity@3.95.0)(styled-components@6.1.15)
       '@sanity/ui': 2.16.4(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.15)
@@ -11265,7 +11256,7 @@ packages:
       sanity: ^3.43.0
       styled-components: ^6.1
     dependencies:
-      '@sanity/icons': 3.5.7(react@18.2.0)
+      '@sanity/icons': 3.7.4(react@18.2.0)
       '@sanity/incompatible-plugin': 1.0.5(react-dom@18.2.0)(react@18.2.0)
       '@sanity/ui': 2.16.4(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)(styled-components@6.1.15)
       react: 18.2.0

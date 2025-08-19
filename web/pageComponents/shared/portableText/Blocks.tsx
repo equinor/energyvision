@@ -26,12 +26,26 @@ type TypeProps = {
 }
 
 const defaultSerializers = {
-  block: {
-    smallText: ({ children }: TypeProps) => <p className="text-sm">{children}</p>,
-    largeText: ({ children }: TypeProps) => <p className="text-2xl leading-snug">{children}</p>,
-    extraLargeText: ({ children }: TypeProps) => {
+  block: (props: any) => {
+    const { node, children } = props
+    const { style, markDefs, _key } = node
+
+    if (/^h\d/.test(style)) {
+      const HeadingTag = style
+      const anchorId = markDefs?.find((mark: any) => mark?.anchor)?.anchor
+      return <HeadingTag id={anchorId}>{children}</HeadingTag>
+    }
+    if (style === 'smallText') {
+      return <p className="text-sm">{children}</p>
+    }
+    if (style === 'largeText') {
+      return <p className="text-2xl leading-snug">{children}</p>
+    }
+    if (style === 'extraLargeText') {
       return <p className={`text-4xl lg:text-5xl 2xl:text-8xl font-medium leading-planetary`}>{children}</p>
-    },
+    }
+
+    return <p>{children}</p>
   },
   types: {
     //@ts-ignore
@@ -81,6 +95,9 @@ const defaultSerializers = {
           {children}
         </ResourceLink>
       )
+    },
+    headingAnchor: ({ children, value }: any) => {
+      return <>{children}</>
     },
     footnote: () => null,
     highlight: ({ children }: TypeProps) => {
@@ -199,22 +216,22 @@ export default function Blocks({
             // Otherwise, render the group of text blocks we have
             const value = div
             div = []
-
+            console.log('block', block)
             return (
               <div
                 key={block._key}
-                className={twMerge(`prose ${proseClassName} ${noInvert ? '' : `dark:prose-invert`}`, className)}
+                className={twMerge(
+                  `prose ${proseClassName} ${noInvert ? '' : `dark:prose-invert`}`,
+                  clampLines && getLineClampNormalBlock(clampLines),
+                  className,
+                )}
                 id={id}
               >
                 <PortableText
                   value={value}
                   //@ts-ignore
                   components={{
-                    block: {
-                      ...defaultSerializers.block,
-                      ...blocksComponents,
-                      ...(clampLines && getLineClampNormalBlock(clampLines)),
-                    },
+                    block: defaultSerializers.block,
                     types: { ...defaultSerializers.types },
                     marks: {
                       ...defaultSerializers.marks,

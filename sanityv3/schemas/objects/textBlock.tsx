@@ -13,6 +13,7 @@ const blockContentType = configureBlockContent({
   h4: false,
   highlight: true,
   attachment: false,
+  headingAnchor: true,
 })
 
 const ingressContentType = configureBlockContent({
