@@ -21,7 +21,7 @@ type Props = {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }
 
-export async function generateMetadata({ params }: Props, parent: ResolvingMetadata): Promise<Metadata> {
+export async function generateMetadata({ params }: Props, _: ResolvingMetadata): Promise<Metadata> {
   //array, separated by /. e.g. [news, last slug]
   const slug = (await params).slug as string[]
   const defaultLocale = defaultLanguage.locale
@@ -57,7 +57,7 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
 
   //@ts-ignore: todo
   const { publishDateTime, updatedAt, documentTitle, title, metaDescription, openGraphImage, heroImage } = pageData
-  const plainTitle = Array.isArray(title) ? toPlainText(title): title
+  const plainTitle = Array.isArray(title) ? toPlainText(title) : title
 
   const modifiedDate = isDateAfter(publishDateTime, updatedAt) ? publishDateTime : updatedAt
   const openGraphImages = getOpenGraphImages((openGraphImage?.asset ? openGraphImage : null) || heroImage?.image)
