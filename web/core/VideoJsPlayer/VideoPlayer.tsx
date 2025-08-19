@@ -63,22 +63,39 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
         type: 'application/x-mpegURL',
       },
     ],
+
     muted: muted ? 'muted' : false,
     playsinline: playsInline,
     loop:loop,
     autoplay: autoPlay,
     preload: autoPlay ? 'auto' : 'none',
-    controls: controls ?? !autoPlay,
+    controls: true ,
     responsive: true,
-    ...(useFill ? { fill: true } : {
+ ...(useFill ? { fill: true } : {
       fluid: true,
       aspectRatio
     }),
     bigPlayButton: playButton && !autoPlay,
     controlbar: true,
+    audioTrack:false,
     loadingSpinner: !autoPlay,
     controlBar: {
-      fullscreenToggle: allowFullScreen,
+      pictureInPictureToggle: false,
+      pictureInPictureControl: false,
+      chaptersButton: false,   
+      audioTrackButton:false,
+      playbackRateMenuButton: false,
+      fullscreenToggle: variant !== "fullwidth" ? allowFullScreen : false,
+      ...(variant === "fullwidth" && {
+        progressControl: {
+          seekBar: false,
+        },
+          captionsButton: false,         
+          subtitlesButton: false,
+          remainingTimeDisplay: false,
+          volumePanel: false
+      })
+
     },
     html5: {
       useDevicePixelRatio: true,
@@ -88,7 +105,6 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
         limitRenditionByPlayerDimensions: false,
       },
     },
-
   };
 
   const aspectRatioClassName: Record<AspectRatioVariants, string> = {
@@ -119,7 +135,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
 
   return (
     <figure {...(id && {id})} className={twMerge(`relative ${variantClassName[variant]} ${aspectRatioClassName[aspectRatio]}`,className)}>
-      <DynamicVideoPlayer options={videoJsOptions} onReady={handlePlayerReady} />
+      <DynamicVideoPlayer options={videoJsOptions} onReady={handlePlayerReady} useBrandTheme={useBrandTheme} poster={poster} />
       {figureCaption && <figcaption className={twMerge(`text-md ${title ? 'py-2' : ''}`, captionClassName)}>
         {figureCaption && Array.isArray(figureCaption) && <Blocks value={figureCaption} />}
         {figureCaption && !Array.isArray(figureCaption) && figureCaption}

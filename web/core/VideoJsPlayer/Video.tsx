@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, HTMLProps, useRef } from 'react'
 import videojs from 'video.js'
+//import 'video.js/dist/video-js.css';
 import Player from 'video.js/dist/types/player'
 import useVideojsAnalytics from './useVideojsAnalytics'
 
@@ -10,20 +11,27 @@ options?: any
   onReady?: (player: Player) => void
 } 
 
-export const Video: React.FC<VideoProps> = ({options, onReady}) => {
+export const Video: React.FC<VideoProps> = ({options, onReady, useBrandTheme}) => {
 
   const videoRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<Player>(null);
 
-
+console.log("VIDEO -> options", options);
   useVideojsAnalytics(playerRef.current, options.src, options.title, options.autoPlay)
-
 
    useEffect(() => {
     if (!playerRef.current) {
-      const videoElement = document.createElement('video-js');
-      videoElement.classList.add(`vjs-layout-large vjs-envis ${useBrandTheme ? 'vjs-envis-brand' : ''}
-        ${playButton ? 'vjs-envis-hasPlayButton' : ''}`);
+      const videoElement = document.createElement('video-js')
+      videoElement.classList.add('vjs-layout-large','vjs-envis')
+        if(useBrandTheme){
+          videoElement.classList.add('vjs-envis-brand')
+        }
+        if(options?.playButton){
+          videoElement.classList.add('vjs-envis-hasPlayButton')
+        }
+        if(options?.fill){
+          videoElement.classList.add('vjs-fill','*:object-cover')
+        }
       videoRef.current.appendChild(videoElement);
 
       const player = (playerRef.current = videojs(videoElement, options, () => {
@@ -53,8 +61,8 @@ export const Video: React.FC<VideoProps> = ({options, onReady}) => {
   }, []);
 
   return (
-    <div className='video-player' data-vjs-player>
-      <div ref={videoRef} />
+    <div className={`video-player ${options?.fill ? "w-full h-full":""}`} data-vjs-player>
+      <div ref={videoRef} className={`${options?.fill ? "w-full h-full":""}`}/>
     </div>
   )
 }

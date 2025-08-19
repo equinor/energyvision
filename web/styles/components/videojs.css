@@ -2,8 +2,14 @@
 .vjs-envis {
   @apply text-xs lg:text-2xs;
 }
-.vjs-envis .vjs-control-bar {
-  @apply bg-slate-blue-100;
+.video-js.vjs-fill .vjs-control-bar {
+@apply !bg-transparent
+  }
+.vjs-envis.video-js .vjs-control-bar {
+  @apply !bg-slate-blue-100;
+}
+.video-js.vjs-fill > .vjs-control-bar{
+ @apply bg-transparent;
 }
 .vjs-envis button,
 [type='button'] {

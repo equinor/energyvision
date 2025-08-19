@@ -134,11 +134,12 @@ const withBundleconfig = {
     ].filter((e) => e)
   },
 }
+export default withNextIntl(withBundleconfig)
 
-export default withSentryConfig(withNextIntl(withBundle(withBundleconfig)), {
+/* export default withSentryConfig(withNextIntl(withBundleconfig), {
   org: 'equinor',
   project: 'equinor-com',
   silent: !process.env.CI,
   widenClientFileUpload: true,
   disableLogger: true,
-})
+}) */

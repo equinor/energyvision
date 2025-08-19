@@ -1,6 +1,7 @@
 @import 'tailwindcss';
 @source '../styles/components/videojs.css';
 @source '../styles/components/cookiebot.css';
+@source 'video.js/dist/video-js.css';
 
 @theme {
   --font-sans: 'Equinor', 'Open Sans', sans-serif;
@@ -372,6 +373,36 @@ treat the value and modifier as a single value:
       from { height: var(--radix-accordion-content-height); }
       to { height: 0; }
   }
+
+  /* VIDEOJS */
+.video-js.vjs-fill .vjs-control-bar {
+@apply !bg-transparent
+}
+.video-js.vjs-fill .vjs-play-control {
+@apply !bg-slate-blue-100
+}
+.video-js:not(.vjs-fill) .vjs-control-bar {
+  @apply !bg-slate-blue-100;
+}
+
+.video-js .vjs-big-play-button {
+@apply !border-none !rounded-full !w-[2.3em] !h-[2.3em] flex justify-center items-center
+}
+.video-js .vjs-big-play-button .vjs-icon-placeholder:before{
+  @apply !text-2xl
+}
+.video-js .vjs-audio-button,.vjs-picture-in-picture-control
+ {
+  @apply !hidden
+}
+/* BRAND THEMING */
+.vjs-envis-brand:hover .vjs-big-play-button {
+  @apply !bg-energy-red-100;
+}
+.vjs-envis-brand .vjs-big-play-button:focus {
+  @apply !bg-energy-red-100;
+}
+
 }
 
  @utility animate-slideDown {
@@ -380,7 +411,8 @@ treat the value and modifier as a single value:
 
 @utility animate-slideUp{
       animation: slideUp 0.2s ease-out;
-    } 
+  } 
+
 
 @layer components {
   /*   .prose :where(li):not(:where([class~='not-prose'], [class~='not-prose'] *)) {

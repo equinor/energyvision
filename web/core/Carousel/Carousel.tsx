@@ -329,7 +329,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
         designOptions={{
           aspectRatio: displayMode === 'single' ? VideoPlayerRatios['16:9'] : VideoPlayerRatios['9:16'],
         }}
-        useFillMode={true}
+        /* useFillMode={true} */
         videoControls={{
           playButton: true,
           controls: true,
