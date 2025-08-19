@@ -1,10 +1,11 @@
-import { PortableTextBlock, Rule, ValidationContext, CurrentUser } from 'sanity'
+import { PortableTextBlock, Rule, ValidationContext, CurrentUser, ConditionalPropertyCallbackContext } from 'sanity'
 import blocksToText from '../../../helpers/blocksToText'
 import CompactBlockEditor from '../../components/CompactBlockEditor'
 import { configureBlockContent, configureTitleBlockContent } from '../../editors'
 import { HeroTypes } from '../../HeroTypes'
 import { defaultBannerBigTitletStyle, fiftyFiftyBigTitleStyle } from './bigTitleStyles'
 import { ImageWithAltAndCaption } from '../../objects/imageWithAltAndCaption'
+import singleItemArray from '../../objects/singleItemArray'
 
 const bigTitleRoles = ['administrator', 'developer', 'editor'] // allow editor until designer role is created.
 
@@ -126,7 +127,7 @@ const heroRatio = {
       if (parent?.heroType === HeroTypes.FULL_WIDTH_IMAGE && !value) return 'Field is required'
       return true
     }),
-  initialValue: '0.5',
+  initialValue: 'narrow',
   fieldset: 'header',
 }
 
@@ -165,20 +166,18 @@ const heroIngress = {
   fieldset: 'header',
 }
 
-const heroLink = {
+const heroLink = singleItemArray({
   name: 'heroLink',
   title: 'Link',
   description: 'Select link to display',
   type: 'array',
   of: [{ type: 'linkSelector', title: 'Link' }],
-  hidden: ({ parent }: DocumentType) => {
+  hidden: ({ parent }: ConditionalPropertyCallbackContext) => {
     return (
       parent?.heroType !== HeroTypes.FIFTY_FIFTY || (parent?.heroType === HeroTypes.FIFTY_FIFTY && parent.isBigTitle)
     )
   },
-  fieldset: 'header',
-  validation: (Rule: Rule) => Rule.max(1).error('Only one action is permitted'),
-}
+})
 
 const background = {
   title: 'Hero Background',
@@ -199,6 +198,7 @@ const heroImage = {
   validation: (Rule: Rule) =>
     Rule.custom((value: ImageWithAltAndCaption, context: ValidationContext) => {
       const { parent } = context as unknown as DocumentType
+      //@ts-ignore:add _type?
       if (
         (parent?.heroType === HeroTypes.FIFTY_FIFTY || parent?.heroType === HeroTypes.FULL_WIDTH_IMAGE) &&
         !value.image.asset

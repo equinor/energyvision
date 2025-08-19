@@ -77,6 +77,8 @@ jobs:
   store-image-tags:
     needs: deploy
     runs-on: ubuntu-latest
+    outputs:
+      WEB_SHA: ${{ steps.save-and-get-image-tags.outputs.WEB_SHA }}
     steps:
       - name: Checkout internal 🛎️
         id: checkout-internal
@@ -96,6 +98,7 @@ jobs:
           npm install js-yaml
 
       - name: Run script for 'web'
+        id: save-and-get-image-tags
         run: |
           WEB_SHA=$(node ci/storeImageTags.js web)
           echo "WEB_SHA=$WEB_SHA" >> $GITHUB_OUTPUT

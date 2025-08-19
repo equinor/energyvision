@@ -4,6 +4,7 @@ import { publishDateTimeQuery } from '../../../lib/queries/common/publishDateTim
 import { PortableTextBlock } from '@portabletext/types'
 import { excludeCrudeOilAssays } from '../../../lib/queries/news'
 import { noDrafts, sameLang } from '../../../lib/queries/common/langAndDrafts'
+import { functions } from '../../../lib/queries/common/functions'
 
 export type LatestNewsType = {
   _id: string
@@ -15,6 +16,7 @@ export type LatestNewsType = {
 }
 
 export const latestNews = /* groq */ `
+${functions}
   *[_type == "news" && ${excludeCrudeOilAssays} ${sameLang} && ${noDrafts}] | order(${publishDateTimeQuery} desc)[0...20] {
     _id,
     "slug": slug.current,

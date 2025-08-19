@@ -31,6 +31,7 @@
     "blob-util": "^2.0.2",
     "date-fns": "^4.1.0",
     "hls.js": "^1.4.8",
+    "papaparse": "^5.5.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-is": "^18.2.0",

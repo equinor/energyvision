@@ -5,9 +5,10 @@ import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import type { ImageWithAlt } from './imageWithAlt'
-import type { LinkSelector } from './linkSelector'
+
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { configureTitleBlockContent } from '../editors'
+import { LinkSelector } from './linkSelector/common'
 
 const titleContentType = configureTitleBlockContent()
 
