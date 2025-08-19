@@ -1,15 +1,15 @@
 name: Test - Build & deploy studio v3
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - staging
-    paths:
-      - 'sanityv3/**/*'
-      - './FeatureFlags.js'
-      - '!./README.md'
-      - '!./.env.test.template'
-      - '!./sanityv3/scripts/**/*'
+  #push:
+  #  branches:
+  #    - staging
+  #  paths:
+  #    - 'sanityv3/**/*'
+  #    - './FeatureFlags.js'
+  #    - '!./README.md'
+  #    - '!./.env.test.template'
+  #   - '!./sanityv3/scripts/**/*'
 permissions:
   id-token: write
   packages: write
