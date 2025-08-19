@@ -156,7 +156,7 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
           searchClient={queriedSearchClient}
           future={{ preserveSharedStateOnUnmount: false }}
           indexName={indexName}
-          routing={false} //{routing}
+          routing={routing}
         >
           <Configure
             facetingAfterDistinct

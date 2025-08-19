@@ -12,6 +12,7 @@ import { SearchResponse } from '@algolia/client-search'
 import { setRequestLocale } from 'next-intl/server'
 import { newsroomQuery } from '@/sanity/queries/newsroom'
 import { algoliasearch } from 'algoliasearch'
+import { client } from '@/sanity/lib/client'
 
 type NewsRoomPageProps = {
   locale: string
@@ -27,12 +28,14 @@ const getInitialResponse = unstable_cache(
     const indexName = `${envPrefix}_NEWS_${locale}`
 
     const searchClient = algoliasearch(algolia.applicationId, algolia.searchApiKey)
-    const index = searchClient.initIndex(indexName)
-    const response = await index.search('', {
-      hitsPerPage: 50,
-      facetFilters: ['type:news', 'topicTags:-Crude Oil Assays'],
-      facetingAfterDistinct: true,
-      facets: ['countryTags', 'topicTags', 'year'],
+    const response = await searchClient.searchSingleIndex({
+      indexName: indexName,
+      searchParams: {
+        hitsPerPage: 50,
+        facetFilters: ['type:news', 'topicTags:-Crude Oil Assays'],
+        facetingAfterDistinct: true,
+        facets: ['countryTags', 'topicTags', 'year'],
+      },
     })
     return response
   },
