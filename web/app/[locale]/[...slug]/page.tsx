@@ -86,7 +86,7 @@ export async function generateMetadata({ params }: Props, _: ResolvingMetadata):
   }
 }
 
-export default async function Page({ params, searchParams }: Props) {
+export default async function Page({ params }: Props) {
   console.log('LOCALE > [..slug] > page')
   const s = (await params).slug
   const locale = (await params).locale

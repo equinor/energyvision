@@ -1,4 +1,4 @@
-import { ComponentProps } from '../../pageComponents/pageTemplates/shared/SharedPageContent'
+import { ComponentProps } from '../../templates/shared/SharedPageContent'
 import { IFrameData, VideoPlayerData } from '../../types/index'
 import IFrame from '../IFrameBlock/IFrameBlock'
 import { VideoJsComponent } from '../../pageComponents/shared/VideoPlayer'
