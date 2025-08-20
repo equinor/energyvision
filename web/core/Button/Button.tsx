@@ -107,24 +107,16 @@ export type ButtonProps = {
    * @default 'button'
    */
   type?: string
-  /** Should make our own Icon component ? */
-  icon?: IconType
 } & ButtonHTMLAttributes<HTMLButtonElement>
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ variant = 'contained', type = 'button', children, icon: Icon, className = '', ...rest }, ref) => {
+  ({ variant = 'contained', type = 'button', children, className = '', ...rest }, ref) => {
     const variantClassNames = getVariant(variant)
 
-    const buttonClassNames = envisTwMerge(
-      commonButtonStyling,
-      variantClassNames,
-      `${Icon ? 'flex gap-2' : ''}`,
-      className,
-    )
+    const buttonClassNames = envisTwMerge(commonButtonStyling, variantClassNames, className)
 
     return (
       <button ref={ref} type={type} className={buttonClassNames} {...rest}>
-        {Icon && <Icon />}
         {children}
       </button>
     )

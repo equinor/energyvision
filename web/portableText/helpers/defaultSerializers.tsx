@@ -34,7 +34,7 @@ const block: BlockType = {
     </Typography>
   ),
   normal: ({ children }: Props) => <Typography>{children}</Typography>,
-  smallText: ({ children }: Props) => <Typography variant="small">{children}</Typography>,
+  smallText: ({ children }: Props) => <Typography variant="sm">{children}</Typography>,
 }
 
 const marks: MarkType = {

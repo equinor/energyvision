@@ -6,7 +6,7 @@ import { redirect } from 'next/navigation'
 
 export async function GET(request: Request) {
   // Parse query string parameters
-  const { searchParams } = new URL(request.url)
+  const { searchParams, host } = new URL(request.url)
   const secret = searchParams.get('secret')
   const slug = searchParams.get('slug')
   const previewLocale = searchParams.get('locale')
@@ -37,8 +37,7 @@ if (!req.query.slug && (REQUIRES_SLUG.includes(req.query.type) || req.query.type
 
   const pathname = slug ?? '/'
   const locale = previewLocale ? `/${previewLocale}` : ''
-  const baseUrl = '//' + request?.headers?.host
-
+  const baseUrl = '//' + host
   let url = ''
   if (Flags.HAS_NEWSROOM && ['/newsroom', '/drafts.newsroom'].includes(pathname)) {
     url = locale === 'no' ? `${baseUrl}/no/nyheter?preview` : `${baseUrl}/news?preview`

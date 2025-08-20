@@ -59,15 +59,16 @@ export const getPageDataForHeader = cache(async (queryParams: QueryParams) => {
 
 export type MagazineQueryParams = {
   lang?: string
-  tag?: string | undefined
+  tag?: string
   lastId?: string
   lastPublishedAt?: string
 }
 
 export const getData = async (fetchQuery: { query: string; queryParams: MagazineQueryParams }, preview = false) => {
   const client = getClient(preview)
+  const { query, queryParams } = fetchQuery
   try {
-    const results = await client.fetch(fetchQuery.query, fetchQuery.queryParams)
+    const results = await client.fetch(query, queryParams)
     return {
       isSuccess: true,
       data: results,
