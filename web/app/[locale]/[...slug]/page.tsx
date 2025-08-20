@@ -33,6 +33,27 @@ export async function generateMetadata({ params }: Props, _: ResolvingMetadata):
     query,
     queryParams,
   })
+
+  if (!pageData) {
+    if (process.env.NODE_ENV !== 'production') {
+      console.warn('[generateMetadata] pageData is null', { slug, locale })
+    }
+    return {
+      title: metaTitleSuffix,
+      openGraph: {
+        title: metaTitleSuffix,
+        url: fullSlug,
+        locale,
+        type: 'article',
+        siteName: 'Equinor',
+      },
+      alternates: {
+        ...(locale === defaultLocale && { canonical: fullSlug }),
+        languages: {},
+      },
+    }
+  }
+
   const slugs = getPageSlugs(pageData) ?? []
 
   const activeSlug = slugs.length > 0 ? slugs.find((slug) => slug.lang === getNameFromLocale(locale))?.slug : slug

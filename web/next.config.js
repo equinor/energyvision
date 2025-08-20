@@ -134,12 +134,15 @@ const withBundleconfig = {
     ].filter((e) => e)
   },
 }
-export default withNextIntl(withBundleconfig)
 
-/* export default withSentryConfig(withNextIntl(withBundleconfig), {
+const isProd = process.env.NODE_ENV === 'production'
+
+export default withSentryConfig(withNextIntl(withBundleconfig), {
   org: 'equinor',
   project: 'equinor-com',
-  silent: !process.env.CI,
-  widenClientFileUpload: true,
+  silent: true,
   disableLogger: true,
-}) */
+  widenClientFileUpload: true,
+  disableClientWebpackPlugin: !isProd,
+  disableServerWebpackPlugin: !isProd,
+})

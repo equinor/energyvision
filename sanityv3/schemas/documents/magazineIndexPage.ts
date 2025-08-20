@@ -5,11 +5,10 @@ import MagazineFooterComponent from '../objects/magazineFooterComponent'
 import { EdsIcon } from '../../icons'
 import { bookmarks } from '@equinor/eds-icons'
 
-import type { PortableTextBlock, Rule } from 'sanity'
+import type { PortableTextBlock, Rule, ValidationContext } from 'sanity'
 import { lang } from './langField'
 import { HeroTypes } from '../HeroTypes'
 import { configureTitleBlockContent } from '../editors'
-import { ValidationContext } from '../../types/schemaTypes'
 
 const titleContentType = configureTitleBlockContent()
 
@@ -100,12 +99,12 @@ export default {
           { title: 'Narrow', value: 'narrow' },
         ],
       },
-      hidden: ({ parent }: DocumentType) => {
+      hidden: ({ parent }: any) => {
         return parent?.heroType !== HeroTypes.FULL_WIDTH_IMAGE
       },
       validation: (Rule: Rule) =>
         Rule.custom((value: string, context: ValidationContext) => {
-          const { parent } = context as unknown as DocumentType
+          const { parent } = context as any
           if (parent?.heroType === HeroTypes.FULL_WIDTH_IMAGE && !value) return 'Field is required'
           return true
         }),
