@@ -1,12 +1,12 @@
 import { ColorSelector } from '../components/ColorSelector'
-import { defaultColors } from '../defaultColors'
+import { defaultBackgroundColors } from '../defaultColors'
 import { defineType, defineField } from 'sanity'
 
 export type ColorType = {
   title: string
   value: string
-  key: string
-  dark: boolean
+  key?: string
+  dark?: boolean
 }
 
 export default defineType({
@@ -24,10 +24,10 @@ export default defineType({
     }),
   ],
   initialValue: {
-    title: defaultColors[0].title,
-    value: defaultColors[0].value,
-    key: defaultColors[0].key,
-    dark: defaultColors[0].dark,
+    title: defaultBackgroundColors[0].title,
+    value: defaultBackgroundColors[0].value,
+    key: defaultBackgroundColors[0].key,
+    dark: defaultBackgroundColors[0].dark,
   },
   components: {
     input: (props) => {

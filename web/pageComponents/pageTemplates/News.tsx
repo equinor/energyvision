@@ -4,7 +4,6 @@ import { Typography } from '@core/Typography'
 import { FormattedDateTime } from '@core/FormattedDateTime'
 import { Icon } from '@equinor/eds-core-react'
 import { calendar } from '@equinor/eds-icons'
-import DefaulHeroImage from '../shared/Hero/DefaultHeroImage'
 import IngressText from '../shared/portableText/IngressText'
 import LatestNews from '../news/LatestNews'
 import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
@@ -17,6 +16,7 @@ import { twMerge } from 'tailwind-merge'
 import RelatedContent from '../../pageComponents/shared/RelatedContent'
 import Footnotes from '../../pageComponents/shared/portableText/components/Footnotes'
 import { IFrame } from '@core/IFrame/IFrame'
+import DefaulHeroImage from '@sections/Hero/DefaultHeroImage'
 
 const isDateAfter = (a: string, b: string) => {
   const dtA = new Date(a).getTime()

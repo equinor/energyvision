@@ -14,6 +14,7 @@ import { twMerge } from 'tailwind-merge'
 import { FormattedMessage } from 'react-intl'
 import { Highlight } from '@core/Typography/Highlight'
 import { IFrame } from '@core/IFrame/IFrame'
+import { ResourceLink } from '@core/Link'
 
 export type BlockType = Record<PortableTextBlockStyle, PortableTextBlockComponent | undefined>
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -54,6 +55,32 @@ const defaultSerializers = {
     //TODO find proper type
     internalLink: ({ children, value }: any) => {
       return <InternalLink value={value}>{children}</InternalLink>
+    },
+    //TODO find proper type
+    reference_block: ({ children, value }: any) => {
+      return <InternalLink value={value}>{children}</InternalLink>
+    },
+    //TODO find proper type
+    referenceToOtherLanguage_block: ({ children, value }: any) => {
+      return <InternalLink value={value}>{children}</InternalLink>
+    },
+    homePageLink_block: ({ children, value }: any) => {
+      return <InternalLink value={value}>{children}</InternalLink>
+    },
+    attachment: ({ children, value }: any) => {
+      const { attachment } = value
+      return (
+        <ResourceLink
+          useAsRegular={true}
+          variant="fit"
+          type="downloadableFile"
+          href={attachment?.href}
+          extension={attachment?.extension}
+          showExtensionIcon={true}
+        >
+          {children}
+        </ResourceLink>
+      )
     },
     footnote: () => null,
     highlight: ({ children }: TypeProps) => {

@@ -1,5 +1,5 @@
 import { Flags } from '../../../src/lib/datasetHelpers'
-import { defaultColors } from '../../defaultColors'
+import { defaultBackgroundColors } from '../../defaultColors'
 
 export const seo = {
   title: 'Meta information',
@@ -36,7 +36,7 @@ export const content = {
     { type: 'cardsList' },
     { type: 'figure' },
     { type: 'fullWidthImage' },
-    { type: 'pullQuote', initialValue: { background: defaultColors[0] } },
+    { type: 'pullQuote', initialValue: { background: defaultBackgroundColors[0] } },
     { type: 'accordion' },
     { type: 'promoTileArray' },
     { type: 'iframe' },
@@ -61,5 +61,7 @@ export const content = {
     { type: 'cookieDeclaration' },
     { type: 'anchorLinkList' },
     { type: 'tabs' },
+    { type: 'tableV2' },
+    { type: 'importTable' },
   ].filter((e) => e),
 }

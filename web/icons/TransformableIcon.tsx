@@ -33,7 +33,7 @@ export const TransformableIcon = forwardRef<SVGSVGElement, TransformableIconProp
       height={size}
       viewBox={`0 0 ${size} ${size}`}
       fill="currentColor"
-      aria-hidden
+      aria-label={`${icon.name} icon`}
       className={className}
       {...rest}
     >

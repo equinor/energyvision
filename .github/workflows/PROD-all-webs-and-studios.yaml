@@ -60,6 +60,7 @@ jobs:
         uses: equinor/radix-github-actions@v2
         with:
           azure_client_id: 460b889f-89e0-4cc9-965c-31f3e7770226
+          version: latest
 
       - run: rx create job deploy
           --context platform2
@@ -253,6 +254,7 @@ jobs:
         uses: equinor/radix-github-actions@v2
         with:
           azure_client_id: 460b889f-89e0-4cc9-965c-31f3e7770226
+          version: latest
       - run: rx create job deploy
           --context platform2
           -a equinor-web-sites
@@ -268,6 +270,9 @@ jobs:
   store-image-tags:
     needs: [deploy-webs, deploy-satellite-studios]
     runs-on: ubuntu-latest
+    outputs:
+      WEB_SHA: ${{ steps.save-and-get-image-tags.outputs.WEB_SHA }}
+      STUDIO_SHA: ${{ steps.save-and-get-image-tags.outputs.STUDIO_SHA }}
     steps:
       - name: Checkout internal 🛎️
         id: checkout-internal
@@ -284,6 +289,7 @@ jobs:
         run: |
           npm install js-yaml
       - name: Run script for 'web' and 'studio'
+        id: save-and-get-image-tags
         run: |
           WEB_SHA=$(node ci/storeImageTags.js web)
           STUDIO_SHA=$(node ci/storeImageTags.js studio)

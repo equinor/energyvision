@@ -2,12 +2,12 @@ import { Box, Card, Flex, Stack, Tooltip, Text } from '@sanity/ui'
 import { useCallback } from 'react'
 import { set } from 'sanity'
 import type { ObjectInputProps } from 'sanity'
+import { defaultBackgroundColors } from '../../defaultColors'
 import styled from 'styled-components'
-import { defaultColors } from '../../defaultColors'
 
-const Circle = styled.div<{ active: boolean }>`
+const Circle = styled.div<{ $active: boolean }>`
   display: inline-block;
-  border: solid 2px ${({ active }) => (active ? 'var(--card-focus-ring-color)' : 'transparent')};
+  border: solid 2px ${({ $active }) => ($active ? 'var(--card-focus-ring-color)' : 'transparent')};
   border-radius: 50%;
   padding: 4px;
   cursor: pointer;
@@ -48,7 +48,7 @@ const ColorCircle = ({ color, active, onClickHandler }: ColorCircleProps) => (
       placement="top"
       portal
     >
-      <Circle active={active} onClick={() => onClickHandler(color)}>
+      <Circle $active={active} onClick={() => onClickHandler(color)}>
         <InnerCircle color={color.value} />
       </Circle>
     </Tooltip>
@@ -59,7 +59,7 @@ type ColorSelectorProps = ObjectInputProps
 
 export const ColorSelector = ({ value, onChange, schemaType }: ColorSelectorProps) => {
   const { options } = schemaType
-  const colors = (options?.colors as ColorSelectorValue[]) || defaultColors
+  const colors = (options?.colors as ColorSelectorValue[]) || defaultBackgroundColors
 
   const handleSelect = useCallback(
     (selected: ColorSelectorValue) => {

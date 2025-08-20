@@ -78,7 +78,7 @@ const RequestConsentContainer = ({ hasSectionTitle = true, cookiePolicy }: Reque
           viewBox="0 0 69 68"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          aria-hidden={true}
+          aria-label='Cookiebot logo'
           className="w-full h-auto max-w-[69px]"
         >
           <path

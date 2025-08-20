@@ -1,8 +1,8 @@
 import { Typography } from '@core/Typography'
 import { forwardRef, HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { BaseLink, ButtonLink, ResourceLink } from '@core/Link'
-import Image, { Ratios } from '../../../pageComponents/shared/SanityImage'
+import { BaseLink, ResourceLink } from '@core/Link'
+import Image, { getSmallerThanPxLgSizes } from '../../../core/SanityImage/SanityImage'
 import { getLocaleFromName } from '../../../lib/localization'
 import { getUrlFromAction, urlFor } from '../../../common/helpers'
 import { PeopleCardData } from '../../../types/index'
@@ -66,7 +66,8 @@ const PeopleCard = forwardRef<HTMLDivElement, PeopleCardProps>(function PeopleCa
             <Image
               image={image}
               maxWidth={400}
-              aspectRatio={Ratios.ONE_TO_ONE}
+              sizes={getSmallerThanPxLgSizes()}
+              aspectRatio="1:1"
               quality={100}
               className="rounded-full"
             />
