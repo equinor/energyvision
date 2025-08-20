@@ -8,12 +8,11 @@ type TotalResultsStatProps = {
 
 const TotalResultsStat = ({ totalPages, hitsPerPage }: TotalResultsStatProps) => {
   const { nbHits, currentRefinement } = usePagination({ totalPages })
+  const t = useTranslations()
   if (nbHits === 0) return null
   const currentLowestNumber = currentRefinement * hitsPerPage + 1
   const potentialHighestNumber = currentRefinement * hitsPerPage + 5
   const currentHighestNumber = Math.min(potentialHighestNumber, nbHits)
-
-  const t = useTranslations()
 
   return (
     <div className="mt-5">

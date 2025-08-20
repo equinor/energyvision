@@ -69,22 +69,15 @@ const FilterButton = forwardRef<HTMLDivElement, FilterButtonProps>(function Filt
         {...getReferenceProps()}
         aria-label={buttonStateLabel}
         onClick={() => setIsOpen(!isOpen)}
-        className={`
-          text-sm
-          border
-          border-transparent
-          ${isOpen ? 'border-x border-t border-b-0 border-autumn-storm-60 rounded-b-none' : ''}
-          pl-6
-          pr-2
-          py-2`}
+        className={`border border-transparent text-sm ${isOpen ? 'rounded-b-none border-x border-t border-b-0 border-autumn-storm-60' : ''} py-2 pr-2 pl-6`}
       >
-        <div aria-hidden className="flex gap-1.5 items-center">
-          <div className="flex gap-2 items-center">
+        <div aria-hidden className="flex items-center gap-1.5">
+          <div className="flex items-center gap-2">
             <span className="">{filterName}</span>
             <span
               className={`${
                 refinedItems?.length > 0 ? 'bg-moss-green-60' : 'bg-transparent'
-              } rounded-xs text-slate-80 px-2 py-1`}
+              } rounded-xs px-2 py-1 text-slate-80`}
             >
               <span className={`${refinedItems?.length > 0 ? 'block' : 'hidden'}`}>{refinedItems.length}</span>
             </span>
@@ -98,20 +91,19 @@ const FilterButton = forwardRef<HTMLDivElement, FilterButtonProps>(function Filt
             ref={refs.setFloating}
             style={floatingStyles}
             {...getFloatingProps()}
-            className="text-sm bg-white-100 border border-x-autumn-storm-60 
-          border-y-autumn-storm-60 rounded-b-[0.42rem] z-[1400]"
+            className="z-[1400] rounded-b-[0.42rem] border border-x-autumn-storm-60 border-y-autumn-storm-60 bg-white-100 text-sm"
           >
-            <div className="overflow-y-auto min-w-[250px] max-h-[350px] envis-scrollbar">
+            <div className="envis-scrollbar max-h-[350px] min-w-[250px] overflow-y-auto">
               {optionsList && <OptionList onChange={handleChange} optionsList={optionsList} />}
             </div>
-            <div className="w-full flex rounded-b-md">
+            <div className="flex w-full rounded-b-md">
               <Button
                 variant="outlined"
-                className="w-full px-6 py-4 border-x-0 border-b-0 rounded-none rounded-bl-md border-autumn-storm-60"
+                className="w-full rounded-none rounded-bl-md border-x-0 border-b-0 border-autumn-storm-60 px-6 py-4"
                 aria-label="Close filter"
                 onClick={handleClose}
               >
-                <FormattedMessage id="Close" defaultMessage="Close" />
+                ${intl('close')}
               </Button>
             </div>
           </div>

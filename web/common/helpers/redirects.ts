@@ -1,5 +1,5 @@
 import { getClient } from '../../lib/sanity.server'
-import { redirects, externalRedirects, RedirectsType, ExternalRedirectsType } from '../../lib/queries/redirects'
+import { redirects, externalRedirects, RedirectsType, ExternalRedirectsType } from '@/sanity/queries/redirects'
 
 export const getRedirectUrl = async (slug: string, locale: string): Promise<RedirectsType> => {
   return getClient(false).fetch(redirects, { slug: slug, slugWithLocale: `/${locale}${slug}` })

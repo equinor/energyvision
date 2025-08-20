@@ -4,13 +4,12 @@ import { Icon } from '@equinor/eds-core-react'
 import { useForm, Controller, useWatch } from 'react-hook-form'
 import { error_filled } from '@equinor/eds-icons'
 import { BaseSyntheticEvent, useMemo, useState } from 'react'
-import FriendlyCaptcha from '../FriendlyCaptcha'
+import FriendlyCaptcha from './FriendlyCaptcha'
 import { TextField } from '@/core/TextField/TextField'
 import { Button } from '@/core/Button'
 import { FormMessageBox } from '@/core/Form/FormMessageBox'
 import { Select } from '@/core/Select/Select'
 import { Checkbox } from '@/core/Checkbox/Checkbox'
-import getCatalogType from './getRequestType'
 import { useLocale, useTranslations } from 'next-intl'
 
 type FormValues = {
@@ -53,6 +52,12 @@ const CareersContactForm = () => {
       supportingDocuments: '',
     },
   })
+  const suspectedRecruitmentScam =
+    intl('careers_contact_form_suspected_recruitment_scam') ?? 'Suspected recruitment scam'
+  const onboarding = intl('careers_contact_form_onboarding')
+  const graduates = intl(' careers_contact_form_graduates')
+  const interns = intl('careers_contact_form_interns')
+  const apprentices = intl('careers_contact_form_apprentices')
 
   const watchCategory = useWatch({
     name: 'category',
@@ -60,8 +65,20 @@ const CareersContactForm = () => {
   })
 
   const setPositionIdMandatory = useMemo(() => {
-    return watchCategory !== intl('careers_contact_form_suspected_recruitment_scam') && watchCategory !== ''
-  }, [intl, watchCategory])
+    return watchCategory !== suspectedRecruitmentScam && watchCategory !== ''
+  }, [watchCategory])
+
+  const getCatalogType = (category: string, candidateType: string) => {
+    if (category.includes(suspectedRecruitmentScam)) return 'suspectedRecruitmentScamRequest'
+    else if (category.includes(onboarding)) return 'onboarding'
+    else if (
+      candidateType.includes(graduates) ||
+      candidateType.includes(interns) ||
+      candidateType.includes(apprentices)
+    )
+      return 'emergingTalentsQueries'
+    else return 'others'
+  }
 
   const onSubmit = async (data: FormValues, event?: BaseSyntheticEvent) => {
     data.preferredLang = locale
@@ -70,7 +87,7 @@ const CareersContactForm = () => {
         body: JSON.stringify({
           data,
           frcCaptchaSolution: (event?.target as any)['frc-captcha-solution'].value,
-          catalogType: getCatalogType(intl, data.category, data.candidateType),
+          catalogType: getCatalogType(data.category, data.candidateType),
         }),
         headers: {
           'Content-Type': 'application/json',
@@ -177,10 +194,10 @@ const CareersContactForm = () => {
               render={({ field: { ref, ...props } }) => (
                 <Select {...props} selectRef={ref} id={props.name} label={intl('category')}>
                   <option value="">{intl('form_please_select_an_option')}</option>
-                  <option>{intl('careers_contact_form_onboarding')}</option>
+                  <option>{onboarding}</option>
                   <option>{intl('careers_contact_form_questions_related_to_position')}</option>
                   <option>{intl('careers_contact_form_technical_issues')}</option>
-                  <option>{intl('careers_contact_form_suspected_recruitment_scam')}</option>
+                  <option>{suspectedRecruitmentScam}</option>
                 </Select>
               )}
             />
@@ -243,9 +260,9 @@ const CareersContactForm = () => {
                 <Select {...props} selectRef={ref} id={props.name} label={intl('careers_contact_form_candidate_type')}>
                   <option value="">{intl('form_please_select_an_option')}</option>
                   <option>{intl('careers_contact_form_experienced_professionals')}</option>
-                  <option>{intl(' careers_contact_form_graduates')}</option>
-                  <option>{intl('careers_contact_form_interns')}</option>
-                  <option>{intl('careers_contact_form_apprentices')}</option>
+                  <option>{graduates}</option>
+                  <option>{interns}</option>
+                  <option>{apprentices}</option>
                   <option>{intl('careers_contact_form_other')}</option>
                 </Select>
               )}
@@ -292,7 +309,7 @@ const CareersContactForm = () => {
               {errors?.root?.notCompletedCaptcha && (
                 <p
                   role="alert"
-                  className="text-slate-80 border border-clear-red-100 px-6 py-4 flex gap-2 font-semibold"
+                  className="flex gap-2 border border-clear-red-100 px-6 py-4 font-semibold text-slate-80"
                 >
                   {/*@ts-ignore: TODO: types*/}
                   <span className="mt-1">{errors.root.notCompletedCaptcha.message}</span>

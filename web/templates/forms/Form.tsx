@@ -2,7 +2,7 @@ import ContactEquinorForm from './ContactEquinorForm'
 import SubscribeForm from './SubscribeForm'
 import CareerFairForm from './CareerFairForm'
 import OrderReportsForm from './OrderReportsForm'
-import CareersContactForm from './careersContactForm/CareersContactForm'
+import CareersContactForm from './CareersContactForm'
 import type { FormData } from '../../types/index'
 import { twMerge } from 'tailwind-merge'
 import CallToActions from '@/sections/CallToActions'
@@ -31,9 +31,7 @@ const Form = ({ data, anchor, className }: { data: FormData; anchor?: string; cl
           <>
             <>
               {downloads && (
-                <div className="pb-10">
-                  {downloads.length > 0 && <CallToActions callToActions={downloads} />}
-                </div>
+                <div className="pb-10">{downloads.length > 0 && <CallToActions callToActions={downloads} />}</div>
               )}
             </>
             <OrderReportsForm />
