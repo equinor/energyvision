@@ -1,11 +1,11 @@
 'use client'
 import { VideoPlayer } from '@/core/VideoJsPlayer/VideoPlayer';
-import { FullWidthVideoData, FullWidthVideoRatio } from '../../types/index'
+import { FullWidthVideoData } from '../../types/index'
 
 const FullWidthVideo = ({ anchor, data }: { data: FullWidthVideoData; anchor?: string }) => {
   const { video, designOptions, spacing } = data
   const { aspectRatio } = designOptions
-  console.log("FullWidthVideo aspectRatio",aspectRatio);
+
   const aspect = {
     'narrow': '10:3',
     'fullScreen': '16:9',
