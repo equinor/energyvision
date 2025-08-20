@@ -175,7 +175,6 @@ export default function Blocks({
   id,
   clampLines,
   includeFootnotes = false,
-  noInvert = false,
 }: BlockProps) {
   let div: PortableTextBlock[] = []
   return (

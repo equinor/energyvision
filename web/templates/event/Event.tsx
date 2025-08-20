@@ -46,16 +46,16 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
               )}
               {start && (
                 <div className="mt-7 mb-5 text-xl text-norwegian-woods-100">
-                  <FormattedDate datetime={start} />
+                  <FormattedDate datetime={start.toDateString()} />
                 </div>
               )}
 
               <div className="flex-center mb-2 flex gap-1 text-norwegian-woods-100">
                 {start && end ? (
                   <>
-                    <FormattedTime datetime={start} />
+                    <FormattedTime datetime={start.toDateString()} />
                     <span>-</span>
-                    <FormattedTime datetime={end} timezone />
+                    <FormattedTime datetime={end.toDateString()} showTimezone />
                   </>
                 ) : (
                   <span>{t('tba')}</span>

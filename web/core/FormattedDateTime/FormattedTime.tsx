@@ -4,7 +4,7 @@ import { useFormatter } from 'next-intl'
 import { twMerge } from 'tailwind-merge'
 
 export type FormattedTimeProps = {
-  datetime: string | Date
+  datetime: string
   icon?: boolean
   showTimezone?: boolean
   small?: boolean

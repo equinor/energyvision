@@ -6,63 +6,60 @@ import Player from 'video.js/dist/types/player'
 import useVideojsAnalytics from './useVideojsAnalytics'
 
 type VideoProps = Omit<HTMLProps<HTMLVideoElement>, 'src'> & {
-options?: any
+  options?: any
   useBrandTheme?: boolean
   onReady?: (player: Player) => void
-} 
+}
 
-export const Video: React.FC<VideoProps> = ({options, onReady, useBrandTheme}) => {
+export const Video: React.FC<VideoProps> = ({ options, onReady, useBrandTheme }) => {
+  const videoRef = useRef<HTMLDivElement>(null)
+  const playerRef = useRef<Player>(null)
 
-  const videoRef = useRef<HTMLDivElement>(null);
-  const playerRef = useRef<Player>(null);
-
-console.log("VIDEO -> options", options);
+  console.log('VIDEO -> options', options)
   useVideojsAnalytics(playerRef.current, options.src, options.title, options.autoPlay)
 
-   useEffect(() => {
+  useEffect(() => {
     if (!playerRef.current) {
       const videoElement = document.createElement('video-js')
-      videoElement.classList.add('vjs-layout-large','vjs-envis')
-        if(useBrandTheme){
-          videoElement.classList.add('vjs-envis-brand')
-        }
-        if(options?.playButton){
-          videoElement.classList.add('vjs-envis-hasPlayButton')
-        }
-        if(options?.fill){
-          videoElement.classList.add('vjs-fill','*:object-cover')
-        }
-      videoRef.current.appendChild(videoElement);
+      videoElement.classList.add('vjs-layout-large', 'vjs-envis')
+      if (useBrandTheme) {
+        videoElement.classList.add('vjs-envis-brand')
+      }
+      if (options?.playButton) {
+        videoElement.classList.add('vjs-envis-hasPlayButton')
+      }
+      if (options?.fill) {
+        videoElement.classList.add('vjs-fill', '*:object-cover')
+      }
+      videoRef.current?.appendChild(videoElement)
 
       const player = (playerRef.current = videojs(videoElement, options, () => {
-        videojs.log('player is ready');
+        videojs.log('player is ready')
         if (onReady) {
-          onReady(player);
+          onReady(player)
         }
-      }));
+      }))
     } else {
-      const player = playerRef.current;
-      player.autoplay(options.autoplay);
-      player.src( 
-        options.sources
-      );
+      const player = playerRef.current
+      player.autoplay(options.autoplay)
+      player.src(options.sources)
     }
-  }, [onReady, options]);
+  }, [onReady, options])
 
   useEffect(() => {
-    const player = playerRef.current;
+    const player = playerRef.current
     // Clean up function to dispose the player after the component unmounts
     return () => {
       if (player && !player.isDisposed()) {
-        player.dispose();
-        playerRef.current = null;
+        player.dispose()
+        playerRef.current = null
       }
-    };
-  }, []);
+    }
+  }, [])
 
   return (
-    <div className={`video-player ${options?.fill ? "w-full h-full":""}`} data-vjs-player>
-      <div ref={videoRef} className={`${options?.fill ? "w-full h-full":""}`}/>
+    <div className={`video-player ${options?.fill ? 'h-full w-full' : ''}`} data-vjs-player>
+      <div ref={videoRef} className={`${options?.fill ? 'h-full w-full' : ''}`} />
     </div>
   )
 }

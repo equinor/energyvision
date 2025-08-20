@@ -19,8 +19,9 @@ import { Pagination } from '../../pageComponents/shared/search/pagination/Pagina
 import { List } from '@/core/List'
 import { PaginationContextProvider } from '../../common/contexts/PaginationContext'
 import { InstantSearchNext } from 'react-instantsearch-nextjs'
-
 import { useTranslations } from 'next-intl'
+
+type NewsRouteState = { query: any; page: any; topics: any[]; years: any[]; countries: any[]; indexName: string }
 
 type NewsRoomTemplateProps = {
   locale?: string
@@ -70,6 +71,7 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
     })
     return `${location.pathname}${queryString}`
   }
+
   // eslint-disable-next-line
   // @ts-ignore: @TODO: The types are not correct
   const parseURL = ({ qsModule, location }) => {
@@ -85,11 +87,11 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
       years: allYears,
       countries: allCountries,
       indexName: indexName,
-    }
+    } as NewsRouteState
   }
 
   const routing = {
-    router: createInstantSearchRouterNext({
+    router: createInstantSearchRouterNext<NewsRouteState>({
       singletonRouter,
       serverUrl: `https://www.equinor.com${isoCode === 'nb-NO' ? '/no/nyheter' : '/news'}`, // temporary fix for url to be available during build time
       routerOptions: {
@@ -114,9 +116,9 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
           countries: indexUiState.refinementList?.countryTags,
           page: indexUiState?.page,
           indexName: indexName,
-        } as { query: any; page: any; topics: any[]; years: any[]; countries: any[]; indexName: string }
+        } as NewsRouteState
       },
-      routeToState(routeState: any) {
+      routeToState(routeState: NewsRouteState) {
         return {
           [indexName]: {
             query: routeState.query,
@@ -127,11 +129,10 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
             },
             page: routeState.page,
           },
-        }
+        } as UiState
       },
     },
   }
-
   const searchClient = client()
 
   const queriedSearchClient: SearchClient = {
@@ -156,11 +157,13 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
           searchClient={queriedSearchClient}
           future={{ preserveSharedStateOnUnmount: false }}
           indexName={indexName}
+          // eslint-disable-next-line
+          // @ts-ignore: @TODO: The types are not correct
           routing={routing}
         >
           <Configure
             facetingAfterDistinct
-            maxFacetHits={50}
+            // maxFacetHits={50}  TODO:// Is this needed?
             maxValuesPerFacet={100}
             facetFilters={['type:news', 'topicTags:-Crude Oil Assays']}
           />

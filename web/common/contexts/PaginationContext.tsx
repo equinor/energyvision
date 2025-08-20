@@ -2,11 +2,11 @@
 import { createContext, RefObject, useState } from 'react'
 
 type Props = {
-  resultsRef: RefObject<HTMLDivElement> | undefined
+  resultsRef: RefObject<HTMLDivElement | null> | undefined
 }
 
 type ProviderProps = {
-  defaultRef?: RefObject<HTMLDivElement> | undefined
+  defaultRef?: RefObject<HTMLDivElement | null> | undefined
   children: React.ReactNode
 }
 
@@ -15,7 +15,7 @@ export const PaginationContext = createContext<Props>({
 })
 
 export const PaginationContextProvider = ({ defaultRef, children }: ProviderProps) => {
-  const [resultsRef] = useState<RefObject<HTMLDivElement> | undefined>(defaultRef)
+  const [resultsRef] = useState<RefObject<HTMLDivElement | null> | undefined>(defaultRef)
 
   return <PaginationContext.Provider value={{ resultsRef }}>{children}</PaginationContext.Provider>
 }

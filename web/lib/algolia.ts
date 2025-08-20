@@ -1,11 +1,11 @@
-import { AlgoliaSearchOptions, liteClient } from 'algoliasearch/lite'
-
+import { liteClient } from 'algoliasearch/lite'
 import { algolia } from './config'
 import { createInMemoryCache } from '@algolia/cache-in-memory'
 import { createFallbackableCache } from '@algolia/cache-common'
 import { createBrowserLocalStorageCache } from '@algolia/cache-browser-local-storage'
+import { SearchOptions } from 'instantsearch.js'
 
-export const searchClient = (options?: AlgoliaSearchOptions) =>
+export const searchClient = (options?: SearchOptions) =>
   liteClient(algolia.applicationId, algolia.searchApiKey, {
     ...options,
     responsesCache: createFallbackableCache({
