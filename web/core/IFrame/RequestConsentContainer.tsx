@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import { defaultLanguage } from '../../languages'
 import { CookieType } from '../../types'
 import { Button } from '@core/Button'
+import { twMerge } from 'tailwind-merge'
 
 declare global {
   interface Window {
@@ -62,7 +63,7 @@ const RequestConsentContainer = ({ hasSectionTitle = true, cookiePolicy }: Reque
     )
   }
   return (
-    <div className={isEventTemplate ? 'px-layout-lg' : ''}>
+    <div className={twMerge(isEventTemplate ? 'px-layout-lg' : '')}>
       <div className="flex flex-col rounded-md bg-white-100">
         <div className="bg-slate-blue-95 dark px-6 py-4 rounded-t-md border border-slate-blue-95">
           <Typography
