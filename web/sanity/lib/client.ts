@@ -23,28 +23,7 @@ const sanityConfig: ClientConfig = {
   },
 }
 
-const sanityDraftConfig: ClientConfig = {
-  projectId,
-  dataset,
-  apiVersion,
-  token,
-  perspective: 'drafts',
-  stega: {
-    studioUrl,
-    // Set logger to 'console' for more verbose logging
-    // logger: console,
-    filter: (props) => {
-      if (props.sourcePath.at(-1) === 'title') {
-        return true
-      }
-
-      return props.filterDefault(props)
-    },
-  },
-}
-
 export const client = createClient({ ...sanityConfig })
-export const draftClient = createClient({ ...sanityDraftConfig })
 
 export const sanityClientWithEquinorCDN = createClient({
   ...sanityConfig,

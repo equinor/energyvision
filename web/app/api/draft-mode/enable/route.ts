@@ -1,5 +1,6 @@
 import { defineEnableDraftMode } from 'next-sanity/draft-mode'
-import { draftClient } from '@/sanity/lib/client'
+import { client } from '@/sanity/lib/client'
+import { token } from '@/sanity/lib/token'
 
 /**
  * defineEnableDraftMode() is used to enable draft mode. Set the route of this file
@@ -8,5 +9,5 @@ import { draftClient } from '@/sanity/lib/client'
  */
 
 export const { GET } = defineEnableDraftMode({
-  client: draftClient,
+  client: client.withConfig({ token }),
 })
