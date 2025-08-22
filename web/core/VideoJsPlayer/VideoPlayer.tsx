@@ -16,7 +16,7 @@ const DynamicVideoPlayer = dynamic<React.ComponentProps<typeof Video>>(
   },
 )
 type Variants = 'default' | 'fullwidth'
-type AspectRatioVariants = '16:9' | '9:16' | '2:1' | '10:3'
+export type AspectRatioVariants = '16:9' | '9:16' | '2:1' | '10:3'
 
 type VideoPlayerProps = Omit<HTMLProps<HTMLVideoElement>, 'src'> & {
   variant?: Variants

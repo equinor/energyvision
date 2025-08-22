@@ -60,7 +60,7 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
       >
         {start && (
           <div className="h-full py-2">
-            <FormattedDate icon datetime={start} className="text-xs" />
+            <FormattedDate icon datetime={start.toDateString()} className="text-xs" />
           </div>
         )}
         {location && (
@@ -72,9 +72,9 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
 
         {start && end ? (
           <div className={`flex h-full items-center gap-1 py-2`}>
-            <FormattedTime icon datetime={start} className="text-xs" />
+            <FormattedTime icon datetime={start.toDateString()} className="text-xs" />
             <span className="w-max">-</span>
-            <FormattedTime datetime={end} showTimezone className="text-xs" />
+            <FormattedTime datetime={end.toDateString()} showTimezone className="text-xs" />
           </div>
         ) : (
           <div className={`gap-sm grid h-full grid-cols-[24px_auto] items-center py-2`}>

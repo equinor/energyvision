@@ -11,10 +11,7 @@ export type ListProps = {
   className?: string
 } & HTMLAttributes<HTMLUListElement | HTMLOListElement>
 /** Regular link style for use*/
-export const List = forwardRef<HTMLParagraphElement, ListProps>(function List(
-  { children, as: providedAs, className = '' },
-  ref,
-) {
+export const List = forwardRef<HTMLParagraphElement, ListProps>(function List({ children, as: providedAs }, ref) {
   const ListTag = providedAs ?? (`ul` as React.ElementType)
   return (
     <ListTag

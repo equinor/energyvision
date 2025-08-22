@@ -59,7 +59,7 @@ export const getPageDataForHeader = cache(async (queryParams: QueryParams) => {
 
 export type MagazineQueryParams = {
   lang?: string
-  tag?: string
+  magazineTag?: string
   lastId?: string
   lastPublishedAt?: string
 }

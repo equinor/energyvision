@@ -29,7 +29,7 @@ export type CardProps = {
  * @example
  * */
 export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
-  { variant = 'primary', href, className = '', imageClassName = '', children, locale, image, ...rest },
+  { variant = 'primary', href, className = '', imageClassName = '', children, image, ...rest },
   ref,
 ) {
   const commonStyling = `
@@ -72,18 +72,9 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
     <BaseLink
       ref={ref}
       href={href}
-      hrefLang={locale}
       prefetch={false}
       className={twMerge(
-        `group/card
-        bg-white-100
-        text-slate-80
-        dark:text-white-100
-        focus:outline-hidden
-        focus-visible:envis-outline
-        dark:focus-visible:envis-outline-invert
-        ${variantClassNames[variant]}
-      `,
+        `group/card focus-visible:envis-outline dark:focus-visible:envis-outline-invert bg-white-100 text-slate-80 focus:outline-hidden dark:text-white-100 ${variantClassNames[variant]} `,
         className,
       )}
       {...rest}
@@ -91,11 +82,7 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
       {image && image.asset && (
         <div
           className={envisTwMerge(
-            `relative
-            w-full
-          ${imageVariantClassNames[variant]}
-          ${imageRatio[variant]}
-          `,
+            `relative w-full ${imageVariantClassNames[variant]} ${imageRatio[variant]} `,
             imageClassName,
           )}
         >

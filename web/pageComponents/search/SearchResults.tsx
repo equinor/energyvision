@@ -12,7 +12,7 @@ const { TabList, Tab, TabPanel } = Tabs
 const HITS_PER_PAGE = 5
 
 type SearchResultsProps = {
-  resultsRef: RefObject<HTMLDivElement> | undefined
+  resultsRef: RefObject<HTMLDivElement | null> | undefined
 } & UseSortByProps
 const SearchResults = (props: SearchResultsProps) => {
   const { resultsRef } = props
@@ -23,7 +23,9 @@ const SearchResults = (props: SearchResultsProps) => {
   const [userClicked, setUserClicked] = useState(false)
 
   useEffect(() => {
-    const indexWithHits = scopedResults.slice(1).filter((it) => it.results?.nbHits > 0 && it.results?.query)
+    const indexWithHits = scopedResults
+      .slice(1)
+      .filter((it) => it.results?.nbHits && it.results?.nbHits > 0 && it.results?.query)
     const firstIndexWithHits = options
       .map((it) => it.value)
       .find((index) => indexWithHits.map((it) => it.indexId).includes(index))

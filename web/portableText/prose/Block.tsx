@@ -9,7 +9,7 @@ export type BlockProps = {
 }
 /** Regular link style for use*/
 export const Block = forwardRef<HTMLParagraphElement, BlockProps>(function Block(
-  { children, textVariant = 'normal', className = '' },
+  { children, textVariant = 'normal' },
   ref,
 ) {
   return (

@@ -9,22 +9,21 @@ import { publishDateTimeQuery } from '../common/publishDateTime'
 const getTopicRoutesForLocale = async (locale: string) => {
   const lang = getNameFromLocale(locale)
 
-  const data: { slug: string; _updatedAt: string }[] = await sanityFetch({
+  const { data } = await sanityFetch({
     query: topicRoutesForLocale,
     params: { lang },
   })
-  return data
+  return data as { slug: string; _updatedAt: string }[]
 }
 const getTopicRoutesForLocaleToStaticallyBuild = async (locale: string) => {
   const lang = getNameFromLocale(locale)
-  const data: { slug: string; _updatedAt: string }[] = await sanityFetch({
+  const { data } = await sanityFetch({
     query: topicRoutesForLocaleToStaticallyBuild,
-    useCdn: false,
     stega: false,
     params: { lang },
   })
   console.log('topic routes data', data)
-  return data
+  return data as { slug: string; _updatedAt: string }[]
 }
 
 const getDocumentsForLocale = async (type: 'news' | 'localNews' | 'magazine', locale: string) => {
@@ -45,7 +44,7 @@ const getDocumentsForLocale = async (type: 'news' | 'localNews' | 'magazine', lo
 // Get a Sanity document by given slug
 // Only include drafts if preview mode is enabled
 export const getDocumentBySlug = async (slug: string, isPreview = false) => {
-  const data: { slug: string; _updatedAt: string }[] = await getClient(false).fetch(
+  const data: { slug: string; _updatedAt: string }[] = await getClient(isPreview).fetch(
     groq`*[defined(slug.current) && slug.current == $slug][0] {
       _updatedAt,
       "slug": slug.current,

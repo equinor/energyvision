@@ -1,15 +1,15 @@
 import { forwardRef, HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { CampaignBannerData } from '../../types/index'
-import Blocks from '../../portableText/Blocks'
+import Blocks, { MarkType } from '../../portableText/Blocks'
 import { PortableTextBlock } from '@portabletext/types'
 import isEmpty from '../../portableText/helpers/isEmpty'
-import { BlockType } from '../../portableText/helpers/defaultSerializers'
+//import { BlockType } from '../../portableText/helpers/defaultSerializers'
 import { colorKeyToUtilityMap } from '../../styles/colorKeyToUtilityMap'
 import { urlFor } from '../../common/helpers'
 
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-const campaignTitleBlocks: BlockType = {
+const campaignTitleBlocks: MarkType = {
   //@ts-ignore
   smallText: ({ children }: PortableTextBlock) => <p className="text-sm">{<>{children}</>}</p>,
   //@ts-ignore
