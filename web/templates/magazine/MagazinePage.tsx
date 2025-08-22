@@ -7,6 +7,10 @@ import Teaser from '../../sections/teasers/Teaser/Teaser'
 import Seo from '../../pageComponents/shared/Seo'
 import useSharedTitleStyles from '../../lib/hooks/useSharedTitleStyles'
 import MagazineTagBar from '@sections/MagazineTags/MagazineTagBar'
+import { Icon } from '@equinor/eds-core-react'
+import { calendar } from '@equinor/eds-icons'
+import { FormattedDateTime } from '@core/FormattedDateTime'
+import MagazineDate from './MagazineDate'
 
 type MagazinePageProps = {
   data: MagazinePageSchema
@@ -18,9 +22,11 @@ const MagazinePage = ({ data }: MagazinePageProps) => {
     (router.locale !== router.defaultLocale ? `/${router.locale}` : '') +
     router.asPath.substring(router.asPath.indexOf('/'), router.asPath.lastIndexOf('/'))
 
-  const { hideFooterComponent, footerComponent, tags } = data
+  const { hideFooterComponent, footerComponent, tags, firstPublishedAt } = data
 
   const titleStyles = useSharedTitleStyles(data?.hero?.type, data?.content?.[0])
+
+ 
 
   const handleClickTag = (tagValue: string) => {
     if (tagValue === 'ALL') {
@@ -49,15 +55,21 @@ const MagazinePage = ({ data }: MagazinePageProps) => {
       <main>
         <SharedBanner
           title={data?.title}
+          publishedDate={firstPublishedAt}
           hero={data?.hero}
           hideImageCaption={true}
           {...(data.hero.type === HeroTypes.DEFAULT && {
             tags: tags,
           })}
         />
+        
         {data?.magazineTags && <MagazineTagBar tags={data?.magazineTags} href={parentSlug} onClick={handleClickTag} />}
         {data.hero.type !== HeroTypes.DEFAULT && (
+          <>
           <SharedTitle sharedTitle={data.title} background={titleStyles.background} />
+          <MagazineDate classname='max-w-viewport px-layout-lg mx-auto' firstPublishedAt={firstPublishedAt}/>
+    
+          </>
         )}
         {data.hero.type !== HeroTypes.DEFAULT && (
           <div className="max-w-viewport px-layout-lg mx-auto pb-6">
