@@ -1,4 +1,4 @@
-import { TeaserImagePosition, TeaserImageSize } from '@components'
+import { TeaserImagePosition, TeaserImageSize } from '@core/Teaser'
 import { PortableTextBlock } from '@portabletext/types'
 import { SanityImageObject } from '@sanity/image-url/lib/types/types'
 import type {
@@ -18,11 +18,11 @@ import type {
   VideoPlayerCarouselData,
   FullWidthVideoData,
   GridData,
-  FullWidthImageData,
-  FigureData,
   StickyMenuLinkType,
 } from './index'
 import { MediaPosition } from '@core/Teaser/Media'
+import { FigureData } from '../pageComponents/topicPages/Figure'
+import { FullWidthImageData } from '../pageComponents/topicPages/FullWidthImage'
 
 export type IntlData = {
   locale: string
@@ -150,8 +150,6 @@ export type TableHeaderData = {
   id: string
   headerCell: PortableTextBlock[]
 }
-
-export type FigureRatio = 'original' | '16:9'
 
 export type CellData = {
   id: string
@@ -303,16 +301,10 @@ export type SomeType = 'facebook' | 'instagram' | 'youtube' | 'twitter' | 'linke
 
 export type FooterLinkData = {
   id: string
-  type: 'someLink' | 'link'
+  type: 'externalUrl'
   key: string
-  label: string
-  url?: string
   someType?: SomeType
-  link?: {
-    type: string
-    slug: string
-  }
-}
+} & LinkData
 
 export type ContactListData = {
   title: string

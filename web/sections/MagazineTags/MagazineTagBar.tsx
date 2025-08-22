@@ -57,7 +57,7 @@ const MagazineTagBar = forwardRef<HTMLDivElement, MagazineTagBarProps>(function 
   return (
     <div
       ref={ref}
-      className="flex gap-2 overflow-x-auto mx-auto lg:justify-center p-8 border-y 
+      className="flex gap-2 overflow-x-auto mx-auto xl:justify-center p-8 border-y 
       border-grey-3 items-center mb-8"
     >
       <h2 className="flex gap-1 font-medium text-sm items-center -mt-0.5">

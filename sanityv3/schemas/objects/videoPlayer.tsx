@@ -6,6 +6,7 @@ import CompactBlockEditor from '../components/CompactBlockEditor'
 import blocksToText from '../../helpers/blocksToText'
 import type { PortableTextBlock, Rule } from 'sanity'
 import { ImageWithAlt } from './imageWithAlt'
+import singleItemArray from './singleItemArray'
 
 const titleContentType = configureTitleBlockContent()
 
@@ -46,14 +47,13 @@ export default {
       type: 'array',
       of: [ingressContentType],
     },
-    {
+    singleItemArray({
       name: 'action',
       title: 'Link/action',
       description: 'You can add one separate link if you need. The link will show up at the bottom of the component.',
       type: 'array',
       of: [{ type: 'linkSelector', title: 'Link' }],
-      validation: (Rule: Rule) => Rule.max(1),
-    },
+    }),
     {
       name: 'videoFile',
       type: 'reference',
