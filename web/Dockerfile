@@ -1,32 +1,31 @@
+
+# ---------- BASE IMAGE ----------
 FROM node:18-alpine AS base
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 ENV NODE_OPTIONS="--max_old_space_size=8192"
-RUN corepack enable
-RUN corepack prepare pnpm@8.5.1 --activate
-COPY . /app
+RUN corepack enable && corepack prepare pnpm@8.5.1 --activate
 WORKDIR /app
 
-# Install dependencies only when needed
+# ---------- DEPS LAYER ----------
 FROM base AS deps
-# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-COPY package.json pnpm-lock.yaml ./
+# Copy only required root files and web workspace files
+COPY package.json pnpm-lock.yaml tsconfig.base.json satellitesConfig.js FeatureFlags.js ./
 COPY web/package.json web/pnpm-lock.yaml web/
 COPY web/patches web/patches
 
-RUN \
-  if [ -f pnpm-lock.yaml ]; then pnpm m i --frozen-lockfile;\
-  else echo "Lockfile not found." && exit 1; \
-  fi
+# Install only web workspace deps for better caching
+RUN pnpm install --filter ./web... --frozen-lockfile
 
+# ---------- BUILD LAYER ----------
 FROM base AS builder
 WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
 COPY --from=deps /app/web/node_modules ./web/node_modules
-COPY . .
+COPY package.json pnpm-lock.yaml tsconfig.base.json satellitesConfig.js FeatureFlags.js ./
+COPY web web
 
 ARG ARG_SANITY_DATASET
 ARG ARG_SANITY_API_TOKEN
@@ -37,25 +36,22 @@ ARG ARG_ARCHIVE_CONTENT_LINK
 ARG ARG_FRIENDLY_CAPTCHA_SITEKEY
 ARG ARG_FRIENDLY_CAPTCHA_PUZZLE_ENDPOINT
 
-ENV NEXT_PUBLIC_SANITY_DATASET ${ARG_SANITY_DATASET}
-ENV NEXT_PUBLIC_SANITY_PROJECT_ID ${ARG_SANITY_PROJECT_ID}
-ENV SANITY_API_TOKEN ${ARG_SANITY_API_TOKEN}
-ENV NEXT_PUBLIC_ALGOLIA_APP_ID ${ARG_ALGOLIA_APP_ID}
-ENV NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY ${ARG_ALGOLIA_SEARCH_API_KEY}
-ENV NEXT_PUBLIC_ARCHIVE_CONTENT_LINK ${ARG_ARCHIVE_CONTENT_LINK}
-ENV NEXT_PUBLIC_FRIENDLY_CAPTCHA_SITEKEY ${ARG_FRIENDLY_CAPTCHA_SITEKEY}
-ENV NEXT_PUBLIC_FRIENDLY_CAPTCHA_PUZZLE_ENDPOINT ${ARG_FRIENDLY_CAPTCHA_PUZZLE_ENDPOINT} 
-
-# https://nextjs.org/telemetry
-ENV NEXT_TELEMETRY_DISABLED 1
+ENV NEXT_PUBLIC_SANITY_DATASET=${ARG_SANITY_DATASET}
+ENV NEXT_PUBLIC_SANITY_PROJECT_ID=${ARG_SANITY_PROJECT_ID}
+ENV SANITY_API_TOKEN=${ARG_SANITY_API_TOKEN}
+ENV NEXT_PUBLIC_ALGOLIA_APP_ID=${ARG_ALGOLIA_APP_ID}
+ENV NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY=${ARG_ALGOLIA_SEARCH_API_KEY}
+ENV NEXT_PUBLIC_ARCHIVE_CONTENT_LINK=${ARG_ARCHIVE_CONTENT_LINK}
+ENV NEXT_PUBLIC_FRIENDLY_CAPTCHA_SITEKEY=${ARG_FRIENDLY_CAPTCHA_SITEKEY}
+ENV NEXT_PUBLIC_FRIENDLY_CAPTCHA_PUZZLE_ENDPOINT=${ARG_FRIENDLY_CAPTCHA_PUZZLE_ENDPOINT}
+ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN pnpm web build
 
-# Production image, copy all the files and run next
-FROM base AS runner
+# ---------- RUNTIME LAYER ----------
+FROM node:18-alpine AS runner
 WORKDIR /app
-
-ENV NODE_ENV production
+ENV NODE_ENV=production
 
 ARG ARG_ENV
 ARG ARG_SANITY_DATASET
@@ -64,35 +60,21 @@ ARG ARG_ALGOLIA_SEARCH_API_KEY
 ARG ARG_FRIENDLY_CAPTCHA_SITEKEY
 ARG ARG_FRIENDLY_CAPTCHA_PUZZLE_ENDPOINT
 
-ENV ENV ${ARG_ENV}
-ENV NEXT_PUBLIC_SANITY_DATASET ${ARG_SANITY_DATASET}
-ENV NEXT_PUBLIC_ALGOLIA_APP_ID ${ARG_ALGOLIA_APP_ID}
-ENV NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY ${ARG_ALGOLIA_SEARCH_API_KEY}
-ENV NEXT_PUBLIC_FRIENDLY_CAPTCHA_SITEKEY ${ARG_FRIENDLY_CAPTCHA_SITEKEY}
-ENV NEXT_PUBLIC_FRIENDLY_CAPTCHA_PUZZLE_ENDPOINT ${ARG_FRIENDLY_CAPTCHA_PUZZLE_ENDPOINT} 
-
-ENV PORT 3000
-ENV USER nextjs
-ENV UID 12345
-# https://nextjs.org/telemetry
-ENV NEXT_TELEMETRY_DISABLED 1
-
-RUN addgroup -S "$USER"
-RUN adduser -S --uid "$UID" "$USER"
+ENV ENV=${ARG_ENV}
+ENV NEXT_PUBLIC_SANITY_DATASET=${ARG_SANITY_DATASET}
+ENV NEXT_PUBLIC_ALGOLIA_APP_ID=${ARG_ALGOLIA_APP_ID}
+ENV NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY=${ARG_ALGOLIA_SEARCH_API_KEY}
+ENV NEXT_PUBLIC_FRIENDLY_CAPTCHA_SITEKEY=${ARG_FRIENDLY_CAPTCHA_SITEKEY}
+ENV NEXT_PUBLIC_FRIENDLY_CAPTCHA_PUZZLE_ENDPOINT=${ARG_FRIENDLY_CAPTCHA_PUZZLE_ENDPOINT}
 RUN apk add --no-cache tini
 
 COPY --from=builder /app/web/public ./public
-# https://nextjs.org/docs/advanced-features/output-file-tracing
-COPY --from=builder --chown="$USER":"$USER" /app/web/.next/standalone .
-COPY --from=builder --chown="$USER":"$USER" /app/web/.next/static ./.next/static
+COPY --from=builder /app/web/.next/standalone .
+COPY --from=builder /app/web/.next/static ./.next/static
 
-USER "$UID"
-
+USER 12345
 ENV NEXT_MANUAL_SIG_HANDLE=true
-
-EXPOSE "$PORT"
+EXPOSE 3000
 
 ENTRYPOINT ["/sbin/tini", "--"]
-
 CMD ["node", "server.js"]
-
