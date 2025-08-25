@@ -78,6 +78,7 @@ jobs:
         uses: ./.github/workflows/deploy-websites/
         with:
           imageName: ghcr.io/equinor/energyvision/web-${{ matrix.dataset }}-upgrade
+          projectId: h61q9gi9
           datasetName: ${{ matrix.dataset }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           sanityApiToken: ${{ secrets.SANITY_API_TOKEN }}
