@@ -100,7 +100,7 @@ runs:
       id: push-to-ghcr
       run: |
         echo "${{ inputs.githubToken }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-        docker push ghcr.io/equinor/energyvision/web-${{ inputs.datasetName  }} --all-tags
+        docker push ghcr.io/equinor/energyvision/web-${{ inputs.datasetName  }}-upgrade --all-tags
     - name: Get component name
       id: get-component-name
       shell: bash
