@@ -131,13 +131,9 @@ export const IFrame = forwardRef<HTMLDivElement, IFrameProps>(function IFrame(
     return iframeElement
   }
 
-  return (
-    <>
-      {consented ? (
-        iframeElement
-      ) : (
-        <RequestConsentContainer hasSectionTitle={hasSectionTitle} cookiePolicy={cookiePolicy} />
-      )}
-    </>
+  return consented ? (
+    iframeElement
+  ) : (
+    <RequestConsentContainer hasSectionTitle={hasSectionTitle} cookiePolicy={cookiePolicy} />
   )
 })
