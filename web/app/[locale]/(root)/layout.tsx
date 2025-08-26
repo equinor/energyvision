@@ -1,14 +1,14 @@
-import '../globals.css'
+import '../../globals.css'
 import { NextIntlClientProvider, hasLocale } from 'next-intl'
 import { notFound } from 'next/navigation'
-import { routing } from '../../i18n/routing'
+import { routing } from '../../../i18n/routing'
 import localFont from 'next/font/local'
 import { draftMode } from 'next/headers'
 import { Toaster } from 'sonner'
 import DraftModeToast from '@/sections/DraftMode/DraftModeToast'
 import { VisualEditing } from 'next-sanity'
 import { SanityLive } from '@/sanity/lib/live'
-import { handleError } from '../client-utils'
+import { handleError } from '../../client-utils'
 import { getHeaderAndFooterData, getPageDataForHeader } from '@/sanity/lib/fetchData'
 import { getNameFromLocale } from '@/lib/localization'
 import Header from '@/sections/Header/Header'
@@ -16,13 +16,13 @@ import getPageSlugs from '@/common/helpers/getPageSlugs'
 import Footer from '@/sections/Footer/Footer'
 
 const equinorRegular = localFont({
-  src: '../fonts/equinor/Equinor-Regular.woff',
+  src: '../../fonts/equinor/Equinor-Regular.woff',
 })
 const equinorVariableWoff = localFont({
-  src: '../fonts/equinor/EquinorVariable-VF.woff',
+  src: '../../fonts/equinor/EquinorVariable-VF.woff',
 })
 const equinorVariableWoff2 = localFont({
-  src: '../fonts/equinor/EquinorVariable-VF.woff2',
+  src: '../../fonts/equinor/EquinorVariable-VF.woff2',
 })
 
 type Params = Promise<{ locale: string; slug: string }>
