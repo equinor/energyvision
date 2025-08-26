@@ -4,28 +4,31 @@ FROM node:18-alpine AS base
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 ENV NODE_OPTIONS="--max_old_space_size=8192"
-RUN corepack enable && corepack prepare pnpm@8.5.1 --activate
+RUN corepack enable
+RUN corepack prepare pnpm@8.5.1 --activate
+COPY . /app
 WORKDIR /app
 
 # ---------- DEPS LAYER ----------
 FROM base AS deps
+# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
 # Copy only required root files and web workspace files
-COPY package.json pnpm-lock.yaml tsconfig.base.json satellitesConfig.js FeatureFlags.js ./
 COPY web/package.json web/pnpm-lock.yaml web/
 COPY web/patches web/patches
 
-# Install only web workspace deps for better caching
-RUN pnpm install --filter ./web... --frozen-lockfile
-
+RUN \
+  if [ -f pnpm-lock.yaml ]; then pnpm m i --frozen-lockfile;\
+  else echo "Lockfile not found." && exit 1; \
 # ---------- BUILD LAYER ----------
+
 FROM base AS builder
 WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
 COPY --from=deps /app/web/node_modules ./web/node_modules
-COPY package.json pnpm-lock.yaml tsconfig.base.json satellitesConfig.js FeatureFlags.js ./
-COPY web web
+COPY . .
 
 ARG ARG_SANITY_DATASET
 ARG ARG_SANITY_API_TOKEN
@@ -49,7 +52,7 @@ ENV NEXT_TELEMETRY_DISABLED=1
 RUN pnpm web build
 
 # ---------- RUNTIME LAYER ----------
-FROM node:18-alpine AS runner
+FROM base AS runner
 WORKDIR /app
 ENV NODE_ENV=production
 
@@ -66,15 +69,28 @@ ENV NEXT_PUBLIC_ALGOLIA_APP_ID=${ARG_ALGOLIA_APP_ID}
 ENV NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY=${ARG_ALGOLIA_SEARCH_API_KEY}
 ENV NEXT_PUBLIC_FRIENDLY_CAPTCHA_SITEKEY=${ARG_FRIENDLY_CAPTCHA_SITEKEY}
 ENV NEXT_PUBLIC_FRIENDLY_CAPTCHA_PUZZLE_ENDPOINT=${ARG_FRIENDLY_CAPTCHA_PUZZLE_ENDPOINT}
+
+ENV PORT 3000
+ENV USER nextjs
+ENV UID 12345
+# https://nextjs.org/telemetry
+ENV NEXT_TELEMETRY_DISABLED 1
+
+RUN addgroup -S "$USER"
+RUN adduser -S --uid "$UID" "$USER"
 RUN apk add --no-cache tini
 
 COPY --from=builder /app/web/public ./public
-COPY --from=builder /app/web/.next/standalone .
-COPY --from=builder /app/web/.next/static ./.next/static
+# https://nextjs.org/docs/advanced-features/output-file-tracing
+COPY --from=builder --chown="$USER":"$USER" /app/web/.next/standalone .
+COPY --from=builder --chown="$USER":"$USER" /app/web/.next/static ./.next/static
 
-USER 12345
+USER "$UID"
+
 ENV NEXT_MANUAL_SIG_HANDLE=true
-EXPOSE 3000
+
+EXPOSE "$PORT"
 
 ENTRYPOINT ["/sbin/tini", "--"]
+
 CMD ["node", "server.js"]
