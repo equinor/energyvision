@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { defaultLanguage } from '../../languages'
 import { CookieType } from '../../types'
 import { Button } from '@core/Button'
-import { twMerge } from 'tailwind-merge'
+import { useEffect, useState } from 'react'
 
 declare global {
   interface Window {
@@ -34,7 +34,12 @@ const handleCookiebotRenew = (locale?: string) => {
 const RequestConsentContainer = ({ hasSectionTitle = true, cookiePolicy }: RequestConsentContainerProps) => {
   const router = useRouter()
   const intl = useIntl()
-  const isEventTemplate = typeof window !== 'undefined' && window.location.pathname.includes('/event')
+  const [isEventTemplate, setIsEventTemplate] = useState(false)
+  useEffect(() => {
+    const path = (router.asPath || '').split('#')[0]
+    setIsEventTemplate(path.includes('/event'))
+  }, [router.asPath])
+
   const getCookieInformationText = (cookiePolicy: CookieType[]) => {
     if (cookiePolicy.length === 1) {
       return intl.formatMessage(
@@ -63,7 +68,7 @@ const RequestConsentContainer = ({ hasSectionTitle = true, cookiePolicy }: Reque
     )
   }
   return (
-    <div className={twMerge(isEventTemplate ? 'px-layout-lg' : '')}>
+    <div className={isEventTemplate ? 'px-layout-lg' : ''}>
       <div className="flex flex-col rounded-md bg-white-100">
         <div className="bg-slate-blue-95 dark px-6 py-4 rounded-t-md border border-slate-blue-95">
           <Typography
