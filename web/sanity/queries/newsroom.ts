@@ -6,6 +6,14 @@ import { publishDateTimeQuery } from './common/publishDateTime'
 import { seoAndSomeFields } from './common/seoAndSomeFields'
 import slugsForNewsAndMagazine from './slugsForNewsAndMagazine'
 
+export const newsroomDataForHeaderQuery = /* groq */ `
+  *[_type == "newsroom" && && ${sameLang}] {
+    _id, //used for data filtering
+    "title": content->title,
+    "seoAndSome": content->${seoAndSomeFields},
+    "template": content->_type,
+  }[0]
+`
 export const newsroomQuery = /* groq */ `
   *[_type == "newsroom" && ${sameLang}] {
     _id,
@@ -24,7 +32,7 @@ export const newsroomQuery = /* groq */ `
     },
     backgroundImage,
     "fallbackImages": imageThumbnailFallbacks[]{...}
-}`
+}[0]`
 
 const prevDirectionFilter = /* groq */ `
 && (${publishDateTimeQuery} > $lastPublishedAt || (${publishDateTimeQuery} == $lastPublishedAt && _id > $lastId))

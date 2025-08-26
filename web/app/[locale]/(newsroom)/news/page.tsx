@@ -1,29 +1,21 @@
-import { getIsoFromLocale, getNameFromLocale } from '../../../lib/localization'
-import { Flags } from '../../../common/helpers/datasetHelpers'
-import { algolia } from '../../../lib/config'
-import { getPageData } from '../../../sanity/lib/fetchData'
+import { getIsoFromLocale, getNameFromLocale } from '../../../../lib/localization'
+import { Flags } from '../../../../common/helpers/datasetHelpers'
+import { algolia } from '../../../../lib/config'
+import { getPageData } from '../../../../sanity/lib/fetchData'
 import { notFound } from 'next/navigation'
 import { unstable_cache } from 'next/cache'
 import NewsRoomTemplate from '@/templates/newsroom/Newsroom'
-import { NewsRoomPageType } from '../../../types'
-//import { IntlShape } from '@formatjs/intl'
-import { SearchResponse } from '@algolia/client-search'
-//import ServerIntlProvider from '../../ServerIntlProvider'
+import { NewsRoomPageType } from '../../../../types'
 import { setRequestLocale } from 'next-intl/server'
 import { newsroomQuery } from '@/sanity/queries/newsroom'
 import { algoliasearch } from 'algoliasearch'
-import { client } from '@/sanity/lib/client'
 
-type NewsRoomPageProps = {
-  locale: string
-  // intl: IntlShape
-  pageData: NewsRoomPageType
-  response: SearchResponse
+export function generateStaticParams() {
+  return [{ locale: 'en' }]
 }
 
 const getInitialResponse = unstable_cache(
   async (locale: string) => {
-    console.log('Querying algolia')
     const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
     const indexName = `${envPrefix}_NEWS_${locale}`
 
@@ -43,10 +35,8 @@ const getInitialResponse = unstable_cache(
   { revalidate: 3600, tags: ['news'] },
 )
 
-export default async function NewsPage({ params }: any) {
+export default async function NewsPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
-
-  console.log('LOCALE > NEWS > PAGE > params', params)
 
   // For the time being, let's just give 404 for satellites
   // We will also return 404 if the locale is not English.
@@ -54,7 +44,7 @@ export default async function NewsPage({ params }: any) {
   // See https://github.com/vercel/next.js/discussions/18485
   // Only build when newsroom allowed, satellites has english
 
-  if (!Flags.HAS_NEWSROOM) {
+  if (!Flags.HAS_NEWSROOM && locale !== 'en') {
     notFound()
   }
 
@@ -72,7 +62,6 @@ export default async function NewsPage({ params }: any) {
     query: newsroomQuery,
     queryParams,
   })
-  console.log('pagedata for news>page', pageData)
 
   const response = await getInitialResponse(isoLocale)
 

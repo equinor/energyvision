@@ -8,6 +8,7 @@ import { simpleMenuQuery } from '@/sanity/queries/simpleMenu'
 import { sanityFetch } from '@/sanity/lib/live'
 import { pageDataForHeaderQuery } from '../queries/routes'
 import { homePageDataForHeaderQuery } from '../queries/homePage'
+import { newsroomDataForHeaderQuery } from '../queries/newsroom'
 
 //export const getPageData = async (page: { query: string; queryParams: QueryParams }) => {
 export const getPageData = cache(async (page: { query: string; queryParams: QueryParams }) => {
@@ -51,6 +52,17 @@ export const getPageDataForHeader = cache(async (queryParams: QueryParams) => {
     params: {
       lang: queryParams?.lang ?? 'en_GB',
       slug: queryParams?.slug ?? '/',
+    },
+  })
+  console.log('pageResults', pageResults)
+  return { pageData: pageResults.data }
+})
+
+export const getNewsroomDataForHeader = cache(async (queryParams: QueryParams) => {
+  const pageResults = await sanityFetch({
+    query: newsroomDataForHeaderQuery,
+    params: {
+      lang: queryParams?.lang ?? 'en_GB',
     },
   })
   console.log('pageResults', pageResults)

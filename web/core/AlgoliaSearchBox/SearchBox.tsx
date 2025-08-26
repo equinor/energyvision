@@ -86,8 +86,7 @@ export function SearchBox({
         <label
           htmlFor={searchId}
           className={envisTwMerge(
-            `col-span-2 row-start-1 row-end-1
-            text-slate-80 dark:text-white-100 text-base leading-inherit font-normal max-w-text py-4`,
+            `col-span-2 row-start-1 row-end-1 max-w-text py-4 text-base leading-inherit font-normal text-slate-80 dark:text-white-100`,
             labelClassName,
           )}
         >
@@ -111,16 +110,7 @@ export function SearchBox({
           value={value}
           onChange={onChange}
           className={envisTwMerge(
-            `grow
-            rounded-s-xs
-            rounded-e-none
-            focus:outline-hidden
-            text-white-100
-            pl-6
-            pr-12
-            py-4
-            ${inputVariantClassName[variant]}
-            `,
+            `grow rounded-s-xs rounded-e-none bg-white-100 py-4 pr-12 pl-6 text-white-100 focus:outline-hidden ${inputVariantClassName[variant]} `,
             className,
           )}
         />
@@ -128,15 +118,7 @@ export function SearchBox({
           type="reset"
           aria-label={intl('search_reset')}
           className={envisTwMerge(
-            `${value.length === 0 ? 'hidden' : 'flex'} 
-            absolute 
-            right-2 
-            rounded-full 
-            size-8 
-            focus:outline-hidden 
-            justify-center
-            items-center
-            ${resetVariantClassName[variant]}`,
+            `${value.length === 0 ? 'hidden' : 'flex'} absolute right-2 size-8 items-center justify-center rounded-full focus:outline-hidden ${resetVariantClassName[variant]}`,
             resetClassName,
           )}
         >
@@ -147,14 +129,7 @@ export function SearchBox({
         type="submit"
         aria-label={intl('search_submit')}
         className={envisTwMerge(
-          `h-inherit 
-          rounded-e-xs
-          px-4
-          py-3
-          focus:outline-hidden
-          ${label ? 'row-start-2 row-end-2' : ''}
-          ${submitVariantClassName[variant]}
-          `,
+          `h-inherit rounded-e-xs px-4 py-3 focus:outline-hidden ${label ? 'row-start-2 row-end-2' : ''} ${submitVariantClassName[variant]} `,
           submitClassName,
         )}
       >

@@ -98,7 +98,7 @@ const Header = ({ slugs, menuData, stickyMenuData }: HeaderProps) => {
         <div
           className={`grid ${
             columns == 3 ? 'grid-cols-[repeat(3,auto)]' : columns == 2 ? 'grid-cols-[repeat(2,auto)]' : 'grid-cols-1'
-          } items-center gap-x-4 sm:gap-x-61`}
+          } items-center gap-x-4 sm:gap-x-6`}
         >
           {hasSearch && (
             <div>

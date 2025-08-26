@@ -31,11 +31,11 @@ type NewsRoomTemplateProps = {
 }
 
 const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function NewsRoomTemplate(
-  { locale, pageData, slug, initialSearchResponse },
+  { locale, pageData, initialSearchResponse },
   ref,
 ) {
-  const { ingress, title, seoAndSome, subscriptionLink, subscriptionLinkTitle, localNewsPages, fallbackImages } =
-    pageData || {}
+  const { ingress, title, subscriptionLink, subscriptionLinkTitle, localNewsPages, fallbackImages } = pageData || {}
+
   const t = useTranslations()
   const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
   const isoCode = getIsoFromLocale(locale)
@@ -139,7 +139,6 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
     ...searchClient,
     search(requests: any) {
       if (requests.every(({ params }: any) => !params.query && params?.facetFilters?.flat().length > 2)) {
-        console.log(requests)
         return Promise.resolve({
           results: requests.map(() => initialSearchResponse),
         })
@@ -151,7 +150,7 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
 
   return (
     <PaginationContextProvider defaultRef={resultsRef}>
-      <Seo seoAndSome={seoAndSome} slug={slug} pageTitle={title} />
+      {/*<Seo seoAndSome={seoAndSome} slug={slug} pageTitle={title} />*/}
       <main ref={ref}>
         <InstantSearchNext
           searchClient={queriedSearchClient}
@@ -179,7 +178,7 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
                     role="navigation"
                     className="max-lg:w-full"
                     listClassName={'list-none'}
-                    aria-label={/*intl('newsroom_related_links')*/ 'Newsroom related links'}
+                    aria-label={t('newsroom_related_links')}
                   >
                     <List.Item className="w-full">
                       {subscriptionLink?.slug && (
