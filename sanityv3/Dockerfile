@@ -1,30 +1,20 @@
+# Build
+FROM node:lts-alpine AS builder
 
-# ---------- BASE IMAGE ----------
-FROM node:lts-alpine AS base
-ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
 ENV NODE_OPTIONS="--max_old_space_size=8192"
-RUN corepack enable && corepack prepare pnpm@8.5.1 --activate
+RUN npm install -g pnpm@8.5.1
+
 WORKDIR /opt/app
 
-# ---------- DEPS LAYER ----------
-FROM base AS deps
-WORKDIR /opt/app
-# Copy only files needed for dependency install
-COPY package.json pnpm-lock.yaml tsconfig.base.json satellitesConfig.js FeatureFlags.js ./
-COPY sanityv3/package.json sanityv3/pnpm-lock.yaml sanityv3/
-# If you use patches, add: COPY sanityv3/patches sanityv3/patches
-# Install only sanityv3 workspace deps for better caching
-RUN pnpm install --filter ./sanityv3... --frozen-lockfile
+# Install dependencies
+RUN npm install dotenv fs
 
-# ---------- BUILD LAYER ----------
-FROM base AS builder
-WORKDIR /opt/app
-# Copy node_modules first for better cache
-COPY --from=deps /opt/app/sanityv3/node_modules ./sanityv3/node_modules
-# Now copy the rest of the source code
-COPY package.json pnpm-lock.yaml tsconfig.base.json satellitesConfig.js FeatureFlags.js ./
-COPY sanityv3 sanityv3
+COPY ./package.json ./
+COPY ./pnpm-lock.yaml ./
+COPY ./tsconfig.base.json ./
+COPY ./satellitesConfig.js ./
+COPY ./FeatureFlags.js ./
+COPY ./sanityv3 ./sanityv3
 
 ARG ARG_SANITY_API_TOKEN
 ARG ARG_SANITY_MUTATION_TOKEN
@@ -58,11 +48,12 @@ ENV SANITY_STUDIO_FOTOWARE_AF_EXPORT_KEY=${ARG_FOTOWARE_AF_EXPORT_KEY}
 ENV SANITY_STUDIO_SCREEN9_ACCOUNT_ID=${ARG_SCREEN9_ACCOUNT_ID}
 ENV SANITY_STUDIO_SCREEN9_TOKEN=${ARG_SCREEN9_TOKEN}
 
-
+RUN pnpm m i --frozen-lockfile
 RUN pnpm sanityv3 build
 
-# ---------- RUNTIME LAYER ----------
+# Run
 FROM node:lts-alpine AS runner
+
 WORKDIR /opt/app
 
 ENV PORT 3333
