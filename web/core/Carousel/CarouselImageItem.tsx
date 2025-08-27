@@ -1,5 +1,4 @@
 'use client'
-import envisTwMerge from '../../twMerge'
 import Image, { getPxSmSizes } from '../SanityImage/SanityImage'
 import { ImageWithAlt, LinkData } from '../../types/index'
 import { DisplayModes } from './Carousel'
@@ -13,6 +12,8 @@ import { ArrowRight } from '../../icons'
 import { ImageWithOverlay } from '@/core/Image/ImageWithOverlay'
 import Blocks from '../../portableText/Blocks'
 import { mergeRefs } from '@equinor/eds-utils'
+import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
+import { twMerge } from 'tailwind-merge'
 
 type CarouselImageItemProps = {
   type: string
@@ -56,33 +57,42 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
   const isImageWithJustLink = type === 'imageWithLinkAndOrOverlay' && action && (!captionTitle || !captionText)
   const isImageWithOverlay = type === 'imageWithLinkAndOrOverlay' && (!!captionTitle || !!captionText)
   const url = action && getUrlFromAction(action)
+  const isMobile = useMediaQuery(`(max-width: 700px)`)
 
   const singleHeights = `min-h-single-carousel-card-h-sm md:min-h-single-carousel-card-h-md lg:min-h-single-carousel-card-h-lg`
 
   const getBody = () => {
     if (isJustImage) {
       return (
-        <div className={`relative h-full w-full rounded-md`}>
-          <Image maxWidth={1420} sizes={getPxSmSizes()} image={image as ImageWithAlt} fill className="rounded-md" />
+        <div className={`relative aspect-4/3 h-full w-full rounded-md md:aspect-video`}>
+          <Image
+            aspectRatio={isMobile ? '4:3' : '16:9'}
+            maxWidth={1420}
+            sizes={getPxSmSizes()}
+            image={image as ImageWithAlt}
+            fill
+            className="rounded-md"
+          />
         </div>
       )
     }
     if (isImageWithSimpleCaption) {
       return (
-        <figure className="relative flex h-full w-full items-end rounded-md">
+        <figure className="relative flex aspect-4/3 h-full w-full items-end rounded-md md:aspect-video">
           <Image
+            aspectRatio={isMobile ? '4:3' : '16:9'}
             maxWidth={1420}
             sizes={getPxSmSizes()}
             image={image as ImageWithAlt}
             fill
-            className={`rounded-md ${singleHeights}`}
+            className={`rounded-md`}
           />
           <figcaption
             className={`z-[1] w-full rounded-b-md fade-in-black-gradient ${displayMode === 'single' ? (active ? 'opacity-100' : 'opacity-50') : ''}`}
           >
-            <div className={`h-fit w-full px-8 pt-20 pb-6`}>
-              <span className="flex w-2/3 flex-col gap-1">
-                {caption && <span className={`text-left text-lg text-white-100`}>{caption as string}</span>}
+            <div className={`h-fit w-full px-4 pt-20 pb-6 lg:px-8`}>
+              <span className="flex w-full flex-col gap-1 lg:w-2/3">
+                {caption && <span className={`text-left text-md text-white-100 lg:text-lg`}>{caption as string}</span>}
                 {attribution && <span className={`text-base text-white-100`}>{attribution}</span>}
               </span>
             </div>
@@ -94,20 +104,21 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
       return (
         <figure className="relative h-full w-full">
           <Image
+            aspectRatio={isMobile ? '4:3' : '16:9'}
             maxWidth={1420}
             sizes={getPxSmSizes()}
             image={image as ImageWithAlt}
             fill
-            className={`${singleHeights} rounded-md`}
+            className={`aspect-4/3 rounded-md md:aspect-video`}
           />
-          <div className="flex h-full w-full items-end rounded-b-md fade-in-black-gradient pt-20">
+          <div className="flex h-full w-full items-end rounded-b-md fade-in-black-gradient pt-10 lg:pt-20">
             <BaseLink
               href={url as string}
               {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
               type={action.type}
               className="group flex gap-2"
             >
-              <span className="text-left text-lg text-white-100">{action.label}</span>
+              <span className="text-left text-md text-white-100 lg:text-lg">{action.label}</span>
               <ArrowRight className={`size-10 group-hover:translate-y-2`} />
             </BaseLink>
           </div>
@@ -133,7 +144,14 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
       return (
         <figure className="flex h-full w-full flex-col">
           <div className={`relative w-full rounded-md ${singleHeights}`}>
-            <Image maxWidth={1420} sizes={getPxSmSizes()} image={image as ImageWithAlt} fill className="rounded-md" />
+            <Image
+              aspectRatio={isMobile ? '4:3' : '16:9'}
+              maxWidth={1420}
+              sizes={getPxSmSizes()}
+              image={image as ImageWithAlt}
+              fill
+              className="md:aspect-videorounded-md aspect-4/3 rounded-md"
+            />
           </div>
           <figcaption
             className={`h-fit max-w-text p-4 lg:px-8 lg:py-6 ${
@@ -187,8 +205,8 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
       {...(displayMode === 'scroll' && {
         tabIndex: 0,
       })}
-      className={envisTwMerge(
-        `relative mt-1 focus:outline-hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grey-50 focus-visible:outline-dashed dark:focus-visible:outline-white-100 ${isImageWithRichTextCaption ? 'h-full' : singleHeights} ${displayMode === 'single' ? singleListItemWidthsClassNames : scrollListItemWidthsClassNames} ${
+      className={twMerge(
+        `relative mt-1 focus:outline-hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grey-50 focus-visible:outline-dashed dark:focus-visible:outline-white-100 ${displayMode === 'single' ? 'w-single-carousel-card-w-sm md:w-single-carousel-card-w-md lg:w-single-carousel-card-w-lg' : scrollListItemWidthsClassNames} ${
           displayMode === 'single'
             ? ` ${!active ? 'opacity-30' : 'opacity-100'} col-start-1 col-end-1 row-start-1 row-end-1 ms-2 me-2 transition-opacity duration-1000 ease-ease`
             : `shrink-0 snap-mandatory snap-center`

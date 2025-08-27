@@ -2,6 +2,7 @@
 import { forwardRef, SVGProps, useEffect, useState, CSSProperties } from 'react'
 import envisTwMerge from '../../twMerge'
 import { useTranslations } from 'next-intl'
+import { twMerge } from 'tailwind-merge'
 
 export type CircularProgressProps = {
   /**  Use indeterminate when there is no progress value */
@@ -122,7 +123,7 @@ const CircularProgress = forwardRef<SVGSVGElement, CircularProgressProps>(functi
         height={48}
         width={48}
         preserveAspectRatio="xMidYMid meet"
-        className={envisTwMerge(`${variant === 'indeterminate' ? 'animate-spin-slow' : ''}`, className)}
+        className={twMerge(`${variant === 'indeterminate' ? 'animate-spin-slow' : ''}`, className)}
       >
         {/* Track */}
         <circle
@@ -133,7 +134,7 @@ const CircularProgress = forwardRef<SVGSVGElement, CircularProgressProps>(functi
           fill="none"
           strokeWidth={thickness}
           stroke="currentColor"
-          className={envisTwMerge('stroke-grey-30', trackClassName)}
+          className={twMerge('stroke-grey-30', trackClassName)}
         />
         {/* Progress */}
         <circle
@@ -145,7 +146,7 @@ const CircularProgress = forwardRef<SVGSVGElement, CircularProgressProps>(functi
           strokeLinecap="round"
           strokeWidth={thickness}
           strokeDasharray={variant === 'determinate' ? circumference : 48}
-          className={envisTwMerge('stroke-grey-60', progressClassName)}
+          className={twMerge('stroke-grey-60', progressClassName)}
           opacity={paused ? 0 : 1}
         />
       </svg>

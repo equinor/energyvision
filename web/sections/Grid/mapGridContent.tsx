@@ -1,11 +1,12 @@
 import { ComponentProps } from '../../templates/shared/SharedPageContent'
-import { IFrameData, VideoPlayerData } from '../../types/index'
+import { IFrameData } from '../../types/index'
 import IFrame from '../IFrameBlock/IFrameBlock'
-import { VideoJsComponent } from '../../pageComponents/shared/VideoPlayer'
 import GridTextBlock from './GridTextBlock'
 import { GridTeaser } from './GridTeaser'
 import GridFigure from './GridFigure'
 import { FigureData } from '../../pageComponents/topicPages/Figure'
+import { VideoPlayer } from '@/core/VideoJsPlayer/VideoPlayer'
+import { VideoPlayerBlockProps } from '../VideoPlayerBlock/VideoPlayerBlock'
 
 export type RowType = 'span3' | 'span2and1' | 'threeColumns' | undefined
 
@@ -22,10 +23,10 @@ export const mapGridContent = (data: ComponentProps, rowType?: RowType, isMobile
       return <IFrame key={data.id} data={data as IFrameData} />
     case 'videoPlayer': {
       return (
-        <VideoJsComponent
+        <VideoPlayer
           key={data.id}
-          {...(data as VideoPlayerData)}
-          className={`${isMobile ? '' : 'h-full sm:w-full'}`}
+          {...(data as VideoPlayerBlockProps)}
+          /*           className={`${isMobile ? '' : 'h-full sm:w-full'}`} */
         />
       )
     }

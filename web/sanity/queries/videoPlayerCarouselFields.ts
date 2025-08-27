@@ -10,8 +10,8 @@ export const videoPlayerCarouselFields = /* groq */ `
     title,
     "video": {
       "title": videoFile->video.title,
-      "url": videoFile->video.url,
-      "thumbnail": videoFile->thumbnail,
+      "src": videoFile->video.url,
+      "poster": videoFile->thumbnail,
     },
   },
   scrollMode,

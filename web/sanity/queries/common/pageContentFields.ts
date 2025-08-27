@@ -101,7 +101,6 @@ _type == "keyNumbers" =>{
   _type == "fullWidthVideo"=>{
     "type": _type,
     "id": _key,
-    spacing,
     ${videoPlayerFields}
   },
   _type == "figure"=>{

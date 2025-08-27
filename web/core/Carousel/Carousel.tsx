@@ -6,7 +6,6 @@ import {
   EventCardData,
   KeyNumberItemData,
   IFrameCarouselItemData,
-  VideoPlayerRatios,
 } from '../../types/index'
 import {
   ElementType,
@@ -28,10 +27,11 @@ import { toPlainText } from '@portabletext/react'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
 import { CarouselItem } from './CarouselItem'
 import { EventCard } from '@/sections/cards/EventCard'
-import { VideoJsComponent } from '../../pageComponents/shared/VideoPlayer'
 import KeyNumberItem from '@/sections/KeyNumber/KeyNumberItem'
 import { useTranslations } from 'next-intl'
 import { IFrame } from '@/core/IFrame/IFrame'
+import { VideoPlayer } from '../VideoJsPlayer/VideoPlayer'
+import { VideoPlayerRatios } from '../VideoJsPlayer/Video'
 
 export type DisplayModes = 'single' | 'scroll'
 export type Layouts = 'full' | 'default'
@@ -61,7 +61,7 @@ type CarouselProps = {
 } & Omit<HTMLAttributes<HTMLDivElement>, 'title'>
 
 const TRANSLATE_X_AMOUNT_LG = 1000
-const TRANSLATE_X_AMOUNT_SM = 295
+const TRANSLATE_X_AMOUNT_SM = 370 //old value 295
 const TRANSLATE_X_AMOUNT_MD = 712
 
 export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel(
@@ -309,7 +309,6 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
         //@ts-ignore:TODO- didnt work with type assertion as PortableTextBlock[]
         content={description}
         action={action}
-        overrideHeights={true}
         {...(displayMode === 'single' && {
           style: {
             transform: `translate3d(${itemsXPositions[index]}px, 0px, 0px)`,
@@ -323,23 +322,14 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
   }
   const getVideoVariantBody = (itemData: VideoPlayerCarouselItem, index: number) => {
     const { title, video, id } = itemData
-    const element = (
-      <VideoJsComponent
-        video={video}
-        designOptions={{
-          aspectRatio: displayMode === 'single' ? VideoPlayerRatios['16:9'] : VideoPlayerRatios['9:16'],
-        }}
-        /* useFillMode={true} */
-        videoControls={{
-          playButton: true,
-          controls: true,
-        }}
-        className={`
-        ${displayMode === 'single' ? '' : 'aspect-9/16'}
-          object-cover
-          `}
-      />
-    )
+    const props = {
+      ...video,
+      aspectRatio:
+        displayMode === 'single' ? VideoPlayerRatios['16:9'] : (VideoPlayerRatios['9:16'] ?? VideoPlayerRatios['16:9']),
+      playButton: true,
+      controls: true,
+    }
+    const element = <VideoPlayer {...props} />
 
     return (
       <CarouselItem
@@ -371,9 +361,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
         displayMode={displayMode}
         variant="default"
         aria-label={getTranslatedItemCountLabel(index + 1)}
-        className={`
-          ${displayMode === 'scroll' ? `w-event-carousel-card-w` : ''}
-        `}
+        className={` ${displayMode === 'scroll' ? `w-event-carousel-card-w` : ''} `}
         {...(displayMode === 'single' && {
           style: {
             transform: `translate3d(${itemsXPositions[index]}px, 0px, 0px)`,
@@ -472,8 +460,8 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
       className={envisTwMerge(
         `${
           displayMode === 'single'
-            ? 'relative overflow-hidden flex flex-col'
-            : 'px-4 md:p-0 w-full mx-auto lg:px-layout-sm max-w-viewport'
+            ? 'relative flex flex-col overflow-hidden'
+            : 'mx-auto w-full max-w-viewport px-4 md:p-0 lg:px-layout-sm'
         }`,
         className,
       )}
@@ -496,22 +484,11 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
          */}
         <div
           aria-labelledby={controlsId}
-          className={`
-          pt-6 
-          pb-2 
-          flex 
-          ${internalAutoRotation ? 'justify-between' : 'justify-end'}
-          ${
+          className={`flex pt-6 pb-2 ${internalAutoRotation ? 'justify-between' : 'justify-end'} ${
             displayMode === 'single'
-              ? `mx-auto
-              w-single-carousel-card-w-sm
-              md:w-single-carousel-card-w-md
-              lg:w-single-carousel-card-w-lg
-              `
+              ? `mx-auto w-single-carousel-card-w-sm md:w-single-carousel-card-w-md lg:w-single-carousel-card-w-lg`
               : ''
-          }
-          ${getCarouselItemVariant() === 'richTextBelow' ? carouselGridTop : carouselGridBottom}
-          `}
+          } ${getCarouselItemVariant() === 'richTextBelow' ? carouselGridTop : carouselGridBottom} `}
         >
           <div id={controlsId} className="sr-only">
             {intl('carousel_controls')}
@@ -550,7 +527,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
            * used; moving the focus makes it harder for users to browse
            * back and forth between the slides.
            */}
-          <div className="flex gap-3 items-center">
+          <div className="flex items-center gap-3">
             <MediaButton
               title={intl('previous')}
               aria-controls={carouselItemsId}
@@ -589,14 +566,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
           ref={sliderRef}
           id={carouselItemsId}
           className={envisTwMerge(
-            `w-full
-            m-auto
-          focus:outline-dashed
-          focus:outline-grey-60
-          focus:outline-1
-          ${displayMode === 'single' ? commonSingleListContainerClassName : commonScrollListContainerClassName}
-          ${customListVariantClassName[variant]}
-        `,
+            `m-auto w-full focus:outline-1 focus:outline-grey-60 focus:outline-dashed ${displayMode === 'single' ? commonSingleListContainerClassName : commonScrollListContainerClassName} ${customListVariantClassName[variant]} `,
             listClassName,
           )}
           {...(displayMode === 'single' && {

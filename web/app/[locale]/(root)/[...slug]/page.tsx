@@ -108,10 +108,8 @@ export async function generateMetadata({ params }: Props, _: ResolvingMetadata):
 }
 
 export default async function Page({ params }: Props) {
-  console.log('LOCALE > [..slug] > page')
   const s = (await params).slug
   const locale = (await params).locale
-  console.log('slug page s', s)
   const { query, queryParams } = await getQueryFromSlug(s as string[], locale)
 
   const { pageData } = await getPageData({
@@ -119,7 +117,7 @@ export default async function Page({ params }: Props) {
     queryParams,
   })
   if (!pageData) notFound()
-  console.log('[locale]>Page pageData', pageData)
+  //console.log('[locale]>Page pageData', pageData)
 
   //const router = useRouter()
 
@@ -129,8 +127,6 @@ export default async function Page({ params }: Props) {
   }*/
 
   const template = pageData?.template || null
-  console.log('[locale]>Page template', template)
-
   if (!template) console.warn('Missing template for', slug)
 
   /*if (router.isFallback) {

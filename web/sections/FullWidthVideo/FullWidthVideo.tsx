@@ -1,11 +1,25 @@
 'use client'
-import { AspectRatioVariants, VideoPlayer } from '@/core/VideoJsPlayer/VideoPlayer'
-import { FullWidthVideoData } from '../../types/index'
+import { VideoPlayer, VideoType } from '@/core/VideoJsPlayer/VideoPlayer'
+import { DesignOptions, LinkData } from '../../types/index'
+import { PortableTextBlock } from 'next-sanity'
+import { AspectRatioVariants } from '@/core/VideoJsPlayer/Video'
 
-const FullWidthVideo = ({ anchor, data }: { data: FullWidthVideoData; anchor?: string }) => {
-  const { video, designOptions } = data
-  const { aspectRatio } = designOptions
+export type FullWidthVideoRatio = 'fullScreen' | 'narrow' | '2:1'
 
+export type FullWidthVideoProps = {
+  type: string
+  id: string
+  video: VideoType
+  title?: PortableTextBlock[]
+  action?: LinkData
+  designOptions: DesignOptions & {
+    aspectRatio: FullWidthVideoRatio
+  }
+  anchor?: string
+}
+
+const FullWidthVideo = ({ anchor, video, designOptions }: FullWidthVideoProps) => {
+  const { aspectRatio = 'fullScreen' } = designOptions
   const aspect: Record<string, AspectRatioVariants> = {
     narrow: '10:3',
     fullScreen: '16:9',
@@ -16,12 +30,11 @@ const FullWidthVideo = ({ anchor, data }: { data: FullWidthVideoData; anchor?: s
     <VideoPlayer
       id={anchor}
       variant="fullwidth"
-      aspectRatio={aspect[aspectRatio] ?? aspect['fullScreen']}
-      title={video.title}
+      aspectRatio={aspect[aspectRatio ?? 'fullScreen']}
+      {...video}
       autoPlay
       muted
       loop
-      src={video.url}
       playsInline
     />
   )

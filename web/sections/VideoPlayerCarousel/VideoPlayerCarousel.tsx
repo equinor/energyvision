@@ -1,9 +1,9 @@
 import { Heading, Paragraph } from '@/core/Typography'
-import envisTwMerge from '../../twMerge'
 import { VideoPlayerCarouselData } from '../../types/index'
-import { BackgroundContainer } from '@/core/Backgrounds'
 import { Carousel } from '@/core/Carousel/Carousel'
 import { forwardRef, useId } from 'react'
+import { getBgAndDarkFromDesignOptionBackground } from '@/styles/colorKeyToUtilityMap'
+import { twMerge } from 'tailwind-merge'
 
 type VideoPlayerCarouselProps = {
   data: VideoPlayerCarouselData
@@ -16,18 +16,19 @@ const VideoPlayerCarousel = forwardRef<HTMLUListElement, VideoPlayerCarouselProp
   ref,
 ) {
   const { title, hideTitle, ingress, items, scrollMode, designOptions } = data
-  const { background, aspectRatio } = designOptions
+  const { aspectRatio } = designOptions
   const headingId = useId()
+  const { bg, dark } = getBgAndDarkFromDesignOptionBackground(designOptions)
 
   return (
-    <BackgroundContainer as="section" background={background} id={anchor} backgroundStyle="none" className={className}>
-      <div className="w-full flex flex-col px-layout-lg mx-auto max-w-viewport pb-8">
+    <section id={anchor} className={twMerge(`${bg} ${dark ? 'dark' : ''}`, className)}>
+      <div className="mx-auto flex w-full max-w-viewport flex-col px-layout-lg pb-8">
         {title && (
           <Heading
             id={headingId}
             as="h2"
             value={title}
-            className={hideTitle ? 'sr-only' : `${ingress ? 'pb-6' : ''} text-xl max-w-text text-pretty`}
+            className={hideTitle ? 'sr-only' : `${ingress ? 'pb-6' : ''} max-w-text text-xl text-pretty`}
           />
         )}
         {ingress && <Paragraph value={ingress} className="max-w-text text-pretty" />}
@@ -46,7 +47,7 @@ const VideoPlayerCarousel = forwardRef<HTMLUListElement, VideoPlayerCarouselProp
         labelledbyId={title ? headingId : undefined}
         autoRotation={false}
       />
-    </BackgroundContainer>
+    </section>
   )
 })
 

@@ -239,6 +239,7 @@ const heroLoopingVideoRatio = {
   options: {
     list: [
       { title: '1:2', value: '1:2' },
+      { title: 'Tall', value: 'tall' },
       { title: 'Narrow', value: 'narrow' },
     ],
     initialValue: '1:2',

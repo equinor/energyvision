@@ -17,12 +17,6 @@ export default {
       validation: (Rule: Rule) => Rule.required(),
     },
     {
-      name: 'spacing',
-      type: 'boolean',
-      title: 'Space between other components',
-      initialValue: false,
-    },
-    {
       name: 'aspectRatio',
       type: 'string',
       title: 'Aspect ratio',

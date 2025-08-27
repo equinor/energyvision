@@ -59,22 +59,6 @@
   --text-5xl: clamp(calc(51.97 / 16 * 1rem), 2.55vw + 2.64rem, calc(91.31 / 16 * 1rem));
   --text-6xl: clamp(calc(58.05 / 16 * 1rem), 2.94vw + 2.925rem, calc(103.39 / 16 * 1rem));
 
-  --spacing-topbar: 85px;
-  --spacing-layout-sm: clamp(16px, calc(-38.3689px + 14.4984vw), 250px);
-  --spacing-layout-md: clamp(16px, calc(-69.4369px + 22.7832vw), 368px);
-  --spacing-layout-lg: clamp(16px, calc(-101.4757px + 31.3269vw), 500px);
-  --spacing-news-banner-vertical: clamp(40px, calc(14.3125px + 11.0032vw), 210px);
-  --spacing-single-carousel-card-w-sm: 275px;
-  --spacing-single-carousel-card-w-md: 692px;
-  --spacing-single-carousel-card-w-lg: 980px;
-  --spacing-single-carousel-card-h-sm: 400px;
-  --spacing-single-carousel-card-h-md: 430px;
-  --spacing-single-carousel-card-h-lg: 516px;
-  --spacing-event-carousel-card-w: 383px;
-  --spacing-arrow-right: 1.58rem;
-  --spacing-viewport: 1920px;
-  --spacing-text: 760px;
-
   --font-weight-semibolder: 650;
 
   --radius-2xs: 0.1rem;
@@ -107,20 +91,39 @@
   /*just --card ? grid-cols-(--my-grid-cols) */
   --grid-cols-card: repeat(auto-fill, minmax(min(100%, 220px), 400px));
 
-
-
   /* Implement in code and check
         flex: {
         fr: '1 1 1',
       },
   */
 }
+@utility grid-overlay {
+  grid: [overlay] 1fr / [overlay] 1fr;
+}
+@utility grid-area-overlay {
+  grid-area: overlay;
+}
 
 @theme inline {
-  --spacing-page-content: --spacing(20); /*var(--spacing-20);*/
+  --spacing-page-content: --spacing(20);
   --spacing-innerColumn: calc(100vw - (var(--spacing-layout-lg) * 2));
   --spacing-smContainer: calc(100vw - --spacing(layout-sm) - --spacing(layout-sm));
   --spacing-menuText: calc(35 * --spacing(6));
+  --spacing-topbar: 85px;
+  --spacing-layout-sm: clamp(16px, calc(-38.3689px + 14.4984vw), 250px);
+  --spacing-layout-md: clamp(16px, calc(-69.4369px + 22.7832vw), 368px);
+  --spacing-layout-lg: clamp(16px, calc(-101.4757px + 31.3269vw), 500px);
+  --spacing-news-banner-vertical: clamp(40px, calc(14.3125px + 11.0032vw), 210px);
+  --spacing-single-carousel-card-w-sm: 350px; /*275px;*/
+  --spacing-single-carousel-card-w-md: 692px;
+  --spacing-single-carousel-card-w-lg: 980px;
+  --spacing-single-carousel-card-h-sm: 400px;
+  --spacing-single-carousel-card-h-md: 430px;
+  --spacing-single-carousel-card-h-lg: 516px;
+  --spacing-event-carousel-card-w: 383px;
+  --spacing-arrow-right: 1.58rem;
+  --spacing-viewport: 1920px;
+  --spacing-text: 760px;
 
   /* PROSE - Typography to be used with blocks */
 
@@ -218,9 +221,9 @@ and not use important in textteaser theme
   animation-range: cover 18% cover 85%;
 }
 
- @utility animate-spin-slow{
-    animation: spin 3s linear infinite;
-  } 
+@utility animate-spin-slow {
+  animation: spin 3s linear infinite;
+}
 
 @utility no-scrollbar {
   &::-webkit-scrollbar {
@@ -364,55 +367,61 @@ treat the value and modifier as a single value:
     counter-reset: footnotes;
   }
 
-      @keyframes slideUp {
-      from { height: 0; }
-      to { height: var(--radix-accordion-content-height); }
+  @keyframes slideUp {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
   }
 
   @keyframes slideDown {
-      from { height: var(--radix-accordion-content-height); }
-      to { height: 0; }
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
   }
 
   /* VIDEOJS */
-.video-js.vjs-fill .vjs-control-bar {
-@apply !bg-transparent
-}
-.video-js.vjs-fill .vjs-play-control {
-@apply !bg-slate-blue-100
-}
-.video-js:not(.vjs-fill) .vjs-control-bar {
-  @apply !bg-slate-blue-100;
+  .video-js.vjs-fill .vjs-control-bar {
+    @apply !bg-transparent;
+  }
+  .video-js.vjs-fill .vjs-play-control {
+    @apply !bg-slate-blue-100;
+  }
+  .video-js:not(.vjs-fill) .vjs-control-bar {
+    @apply !bg-slate-blue-100;
+  }
+
+  .video-js .vjs-big-play-button {
+    @apply flex !h-[2.3em] !w-[2.3em] items-center justify-center !rounded-full !border-none;
+  }
+  .video-js .vjs-big-play-button .vjs-icon-placeholder::before {
+    @apply !text-2xl max-lg:mt-2.5;
+  }
+  .video-js .vjs-audio-button,
+  .vjs-picture-in-picture-control {
+    @apply !hidden;
+  }
+  /* BRAND THEMING */
+  .vjs-envis-brand:hover .vjs-big-play-button {
+    @apply !bg-energy-red-100;
+  }
+  .vjs-envis-brand .vjs-big-play-button:focus {
+    @apply !bg-energy-red-100;
+  }
 }
 
-.video-js .vjs-big-play-button {
-@apply !border-none !rounded-full !w-[2.3em] !h-[2.3em] flex justify-center items-center
-}
-.video-js .vjs-big-play-button .vjs-icon-placeholder:before{
-  @apply !text-2xl
-}
-.video-js .vjs-audio-button,.vjs-picture-in-picture-control
- {
-  @apply !hidden
-}
-/* BRAND THEMING */
-.vjs-envis-brand:hover .vjs-big-play-button {
-  @apply !bg-energy-red-100;
-}
-.vjs-envis-brand .vjs-big-play-button:focus {
-  @apply !bg-energy-red-100;
+@utility animate-slideDown {
+  animation: slideDown 0.2s ease-out;
 }
 
+@utility animate-slideUp {
+  animation: slideUp 0.2s ease-out;
 }
-
- @utility animate-slideDown {
-      animation: slideDown 0.2s ease-out;
-    }
-
-@utility animate-slideUp{
-      animation: slideUp 0.2s ease-out;
-  } 
-
 
 @layer components {
   /*   .prose :where(li):not(:where([class~='not-prose'], [class~='not-prose'] *)) {

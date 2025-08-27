@@ -1,3 +1,5 @@
+import { DesignOptions } from '@/types'
+
 export const colorKeyToUtilityMap: Record<
   string,
   { backgroundName: string; background: string; text: string; dark?: boolean }
@@ -72,4 +74,13 @@ export const colorKeyToUtilityMap: Record<
 }
 export type ColorKeyTokens = {
   [P1 in keyof typeof colorKeyToUtilityMap]: string
+}
+
+export const getBgAndDarkFromDesignOptionBackground = (designOptions: DesignOptions) => {
+  const { background } = designOptions
+  const backwardCompabilityColorName = Object.keys(colorKeyToUtilityMap).find(
+    (key) => colorKeyToUtilityMap[key as keyof ColorKeyTokens]?.backgroundName === background?.backgroundColor,
+  )
+  const bgKey = background?.backgroundUtility ?? backwardCompabilityColorName ?? 'white-100'
+  return { bg: colorKeyToUtilityMap[bgKey].background, dark: colorKeyToUtilityMap[bgKey].dark }
 }

@@ -62,7 +62,7 @@ import CookieDeclaration from '@/pageComponents/topicPages/CookieDeclaration'
 import NewsList from '@/pageComponents/topicPages/NewsList'
 import StockValues from '@/pageComponents/topicPages/StockValues'
 import TwitterEmbed from '@/pageComponents/topicPages/TwitterEmbed'
-import VideoPlayer from '@/pageComponents/shared/VideoPlayer'
+import VideoPlayer from '@/sections/VideoPlayerBlock/VideoPlayerBlock'
 import { HomePageBanner } from '@/sections/HomePageBanner/HomePageBanner'
 
 type DefaultComponent = {
@@ -243,7 +243,7 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
       case 'fullWidthImage':
         return <FullWidthImage key={c.id} data={c as FullWidthImageData} anchor={anchorReference} />
       case 'fullWidthVideo':
-        return <FullWidthVideo key={c.id} data={c as FullWidthVideoData} anchor={anchorReference} />
+        return <FullWidthVideo key={c.id} {...(c as FullWidthVideoData)} anchor={anchorReference} />
       case 'figure':
         return <Figure key={c.id} data={c as FigureData} anchor={anchorReference} className={spacingClassName} />
       case 'textWithIconArray':
@@ -324,7 +324,7 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
         )
       case 'videoPlayer':
         return (
-          <VideoPlayer key={c.id} data={c as VideoPlayerData} anchor={anchorReference} className={spacingClassName} />
+          <VideoPlayer key={c.id} {...(c as VideoPlayerData)} anchor={anchorReference} className={spacingClassName} />
         )
       case 'videoPlayerCarousel':
         return (

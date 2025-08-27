@@ -34,8 +34,6 @@ type Params = Promise<{ locale: string; slug: string }>
 export default async function LocaleLayout({ children, params }: { children: React.ReactNode; params: Params }) {
   // Ensure that the incoming `locale` is valid
   const { locale, slug } = await params
-  console.log('Layout locale', locale)
-  console.log('Layout slug', slug)
   const { isEnabled: isDraftMode } = await draftMode()
 
   if (!hasLocale(routing.locales, locale)) {

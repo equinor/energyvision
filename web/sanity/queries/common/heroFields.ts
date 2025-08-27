@@ -18,8 +18,8 @@ export const heroFields = /* groq */ `{
       heroFigure),
     "loopingVideo": {
       "title": heroLoopingVideo->video.title,
-      "thumbnail": heroLoopingVideo->thumbnail,
-      "url": heroLoopingVideo->video.url,
+      "poster": heroLoopingVideo->thumbnail,
+      "src": heroLoopingVideo->video.url,
       "ratio": heroLoopingVideoRatio,
     },
     "link": heroLink[0]{

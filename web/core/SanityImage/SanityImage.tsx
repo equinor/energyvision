@@ -23,7 +23,7 @@ export const ImageRatios = {
 } as const
 
 export type ImageRatioKeys = keyof typeof ImageRatios
-export type ImageRatioValues = typeof ImageRatios[ImageRatioKeys]
+export type ImageRatioValues = (typeof ImageRatios)[ImageRatioKeys]
 
 export const mapSanityImageRatio = (ratio: ImageRatioKeys) => {
   return ImageRatios[ratio]
@@ -75,7 +75,9 @@ export const getFullScreenSizes = () => {
   2560px`
 }
 
-const DEFAULT_MAX_WIDTH = 2560
+export const MAX_WIDTH_LAYOUT_SM = 2560
+export const MAX_WIDTH_LAYOUT_MD = 1420
+export const MAX_WIDTH_LAYOUT_LG = 1100
 
 type Props = Omit<ImageProps, 'src' | 'alt' | 'sizes'> & {
   image: ImageWithAlt | SanityImageObject
@@ -100,7 +102,7 @@ const Image = ({
   image,
   aspectRatio,
   sizes = getPxLgSizes(),
-  maxWidth = DEFAULT_MAX_WIDTH,
+  maxWidth = MAX_WIDTH_LAYOUT_MD,
   maxHeight,
   fill,
   className = '',
@@ -128,7 +130,7 @@ const Image = ({
       src={src}
       alt={getAltText()}
       sizes={sizes}
-      className={envisTwMerge(`${fill ? 'object-cover' : 'flex w-full h-auto'}`, className)}
+      className={envisTwMerge(`${fill ? 'object-cover' : 'flex h-auto w-full'}`, className)}
     />
   )
 }

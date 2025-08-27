@@ -5,8 +5,26 @@ import videojs from 'video.js'
 import Player from 'video.js/dist/types/player'
 import useVideojsAnalytics from './useVideojsAnalytics'
 
-type VideoProps = Omit<HTMLProps<HTMLVideoElement>, 'src'> & {
-  options?: any
+//Needed?
+export enum VideoPlayerRatios {
+  '16:9' = '16:9',
+  '9:16' = '9:16',
+  '1:1' = '1:1',
+  '4:3' = '4:3',
+}
+//21:9 is only for Header LoopingVideo Tall aspect ratio
+export type AspectRatioVariants = '16:9' | '9:16' | '2:1' | '10:3' | '4:3' | '21:9'
+
+type VideoOptions = {
+  playButton?: boolean
+  autoplay?: boolean
+  fill?: boolean
+  aspectRatio: AspectRatioVariants
+  src: string
+} & Omit<HTMLProps<HTMLVideoElement>, 'src'>
+
+type VideoProps = {
+  options: VideoOptions
   useBrandTheme?: boolean
   onReady?: (player: Player) => void
 }
@@ -14,9 +32,10 @@ type VideoProps = Omit<HTMLProps<HTMLVideoElement>, 'src'> & {
 export const Video: React.FC<VideoProps> = ({ options, onReady, useBrandTheme }) => {
   const videoRef = useRef<HTMLDivElement>(null)
   const playerRef = useRef<Player>(null)
-
-  console.log('VIDEO -> options', options)
-  useVideojsAnalytics(playerRef.current, options.src, options.title, options.autoPlay)
+  const { src, title, autoplay = false, fill, aspectRatio } = options
+  console.log('video aspext', aspectRatio)
+  //Here or in the VideoPlayer?
+  useVideojsAnalytics(playerRef.current, src, title, autoplay)
 
   useEffect(() => {
     if (!playerRef.current) {
@@ -28,8 +47,18 @@ export const Video: React.FC<VideoProps> = ({ options, onReady, useBrandTheme })
       if (options?.playButton) {
         videoElement.classList.add('vjs-envis-hasPlayButton')
       }
-      if (options?.fill) {
+      if (fill || aspectRatio === '10:3') {
+        console.log('adding vjs-fill')
         videoElement.classList.add('vjs-fill', '*:object-cover')
+      }
+      if (options?.aspectRatio === '16:9') {
+        videoElement.classList.add('vjs-16-9')
+      }
+      if (options?.aspectRatio === '4:3') {
+        videoElement.classList.add('vjs-4-3')
+      }
+      if (options?.aspectRatio === '9:16') {
+        videoElement.classList.add('vjs-9-16')
       }
       videoRef.current?.appendChild(videoElement)
 
@@ -41,10 +70,10 @@ export const Video: React.FC<VideoProps> = ({ options, onReady, useBrandTheme })
       }))
     } else {
       const player = playerRef.current
-      player.autoplay(options.autoplay)
-      player.src(options.sources)
+      player.autoplay(autoplay)
+      player.src(src)
     }
-  }, [onReady, options])
+  }, [autoplay, onReady, options, src, useBrandTheme])
 
   useEffect(() => {
     const player = playerRef.current
@@ -58,8 +87,8 @@ export const Video: React.FC<VideoProps> = ({ options, onReady, useBrandTheme })
   }, [])
 
   return (
-    <div className={`video-player ${options?.fill ? 'h-full w-full' : ''}`} data-vjs-player>
-      <div ref={videoRef} className={`${options?.fill ? 'h-full w-full' : ''}`} />
+    <div className={`video-player ${!fill ? '' : 'h-full w-full'}`} data-vjs-player>
+      <div ref={videoRef} className={`${!fill ? '' : 'h-full w-full'}`} />
     </div>
   )
 }

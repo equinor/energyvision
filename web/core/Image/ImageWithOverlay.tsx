@@ -14,6 +14,7 @@ import { getUrlFromAction } from '../../common/helpers'
 import { getLocaleFromName } from '../../lib/localization'
 import { DisplayModes } from '@/core/Carousel/Carousel'
 import { useTranslations } from 'next-intl'
+import { useMediaQuery } from '@/lib/hooks/useMediaQuery'
 
 export type ImageWithOverlayProps = {
   image?: SanityImageObject
@@ -36,6 +37,7 @@ export const ImageWithOverlay = forwardRef<HTMLDivElement, ImageWithOverlayProps
   const overlayId = useId()
   const url = action && getUrlFromAction(action)
   const intl = useTranslations()
+  const isMobile = useMediaQuery(`(max-width: 700px)`)
 
   const lineClassName = `
     block
@@ -63,7 +65,14 @@ export const ImageWithOverlay = forwardRef<HTMLDivElement, ImageWithOverlayProps
 
   return (
     <figure ref={ref} className={envisTwMerge(`h-full w-full rounded-md`, className)}>
-      <Image maxWidth={1420} sizes={getPxSmSizes()} image={image as ImageWithAlt} fill className={`rounded-md`} />
+      <Image
+        aspectRatio={isMobile ? '4:3' : '16:9'}
+        maxWidth={1420}
+        sizes={getPxSmSizes()}
+        image={image as ImageWithAlt}
+        fill
+        className={`aspect-4/3 rounded-md md:aspect-video`}
+      />
       <figcaption className={envisTwMerge(`h-full w-full transition-opacity`, captionClassname)}>
         <div
           className={`absolute inset-0 z-[1] rounded-md transition-colors duration-[250ms] ${showOverlay ? 'bg-slate-blue-95' : ''} flex flex-col-reverse rounded-b-md`}

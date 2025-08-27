@@ -16,8 +16,6 @@ export const getPageData = cache(async (page: { query: string; queryParams: Quer
     query: page.query,
     params: { ...page.queryParams },
   })
-  console.log('pageResults.data', pageResults.data)
-
   return { pageData: pageResults.data }
 })
 
@@ -43,10 +41,7 @@ export const getHeaderAndFooterData = async (queryParams: QueryParams) => {
 
 //export const getPageDataForHeader = async (queryParams: QueryParams) => {
 export const getPageDataForHeader = cache(async (queryParams: QueryParams) => {
-  console.log('getPageDataForHeader slug', queryParams?.slug)
-  console.log('getPageDataForHeader test', !!queryParams?.slug)
   const isHomepage = typeof queryParams?.slug === undefined || queryParams?.slug === ''
-  console.log('getPageDataForHeader isHomepage ', isHomepage)
   const pageResults = await sanityFetch({
     query: isHomepage ? homePageDataForHeaderQuery : pageDataForHeaderQuery,
     params: {
@@ -54,7 +49,6 @@ export const getPageDataForHeader = cache(async (queryParams: QueryParams) => {
       slug: queryParams?.slug ?? '/',
     },
   })
-  console.log('pageResults', pageResults)
   return { pageData: pageResults.data }
 })
 

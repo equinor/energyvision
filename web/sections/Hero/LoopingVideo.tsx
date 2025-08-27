@@ -1,26 +1,23 @@
 'use client'
-import dynamic from 'next/dynamic'
-import { VideoJS } from '@/core/VideoJsPlayer'
+import { VideoPlayer } from '@/core/VideoJsPlayer/VideoPlayer'
 import { useSanityLoader } from '@/lib/hooks/useSanityLoader'
 import { LoopingVideoData } from '@/types'
 
 const DEFAULT_MAX_WIDTH = 1920
 
-const DynamicVideoJsComponent = dynamic<React.ComponentProps<typeof VideoJS>>(
-  () => import('@/core/VideoJsPlayer').then((mod) => mod.VideoJS),
-  {
-    ssr: false,
-    loading: () => <p>Loading...</p>,
-  },
-)
-
 export const LoopingVideo = ({ video }: { video: LoopingVideoData }) => {
-  const { title, url, thumbnail, ratio } = video
-  const thumbnailURL = useSanityLoader(thumbnail, DEFAULT_MAX_WIDTH, undefined)
-  return (
+  const { ratio } = video
+  const aspect: Record<string, any> = {
+    narrow: '10:3',
+    tall: '21:9',
+  }
+
+  return <VideoPlayer variant="fullwidth" aspectRatio={aspect[ratio ?? 'narrow']} {...video} autoPlay muted loop />
+
+  /*   return (
     <div className={`relative ${ratio == 'narrow' ? 'pb-[75%] md:pb-[30%]' : 'pb-[50%]'}`}>
       <figure className="absolute m-0 flex h-full w-full justify-center">
-        <DynamicVideoJsComponent
+        <VideoPlayer
           className="absolute h-full w-full object-cover"
           loop
           muted
@@ -33,5 +30,5 @@ export const LoopingVideo = ({ video }: { video: LoopingVideoData }) => {
         />
       </figure>
     </div>
-  )
+  ) */
 }

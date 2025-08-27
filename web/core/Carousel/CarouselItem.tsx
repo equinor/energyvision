@@ -104,7 +104,7 @@ export const CarouselItem = forwardRef<HTMLLIElement, CarouselItemProps>(functio
 
   const singleVariantClassNames = `
   h-full
-  ${variant === 'richTextBelow' ? '' : `${singleWidths} ${singleHeigths}`}
+  ${variant === 'richTextBelow' ? '' : `${singleWidths}`} 
   ms-2 
   me-2 
   col-start-1 
@@ -124,9 +124,7 @@ export const CarouselItem = forwardRef<HTMLLIElement, CarouselItemProps>(functio
           <figure className={`flex flex-col ${displayMode === 'single' ? `${singleWidths}` : ''}`}>
             <div
               className={`${
-                displayMode === 'scroll'
-                  ? 'aspect-9/16'
-                  : ` ${overrideHeights ? 'aspect-video' : `${singleHeigths} aspect-9/16 md:aspect-video`}`
+                displayMode === 'scroll' ? 'aspect-9/16' : `aspect-4/3 md:aspect-video` //` ${overrideHeights ? 'aspect-video' : `${singleHeigths} aspect-9/16 md:aspect-video`}`
               }`}
             >
               {children}
