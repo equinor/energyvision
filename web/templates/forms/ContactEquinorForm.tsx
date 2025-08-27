@@ -10,9 +10,6 @@ import { TextField } from '@core/TextField/TextField'
 import { Select } from '@core/Select/Select'
 import { FormMessageBox } from '@core/Form/FormMessageBox'
 
-type ContactEquinorFormProps = {
-  isHumanRightsRequest?: boolean
-}
 type FormValues = {
   name: string
   email: string
@@ -20,24 +17,14 @@ type FormValues = {
   message: string
 }
 
-const ContactEquinorForm = (props: ContactEquinorFormProps) => {
+const ContactEquinorForm = () => {
   const intl = useIntl()
-  const { isHumanRightsRequest } = props
   const [isServerError, setServerError] = useState(false)
   const [isFriendlyChallengeDone, setIsFriendlyChallengeDone] = useState(false)
   const [isSuccessfullySubmitted, setSuccessfullySubmitted] = useState(false)
 
   const getCatalog = (category: string): ContactFormCatalogType | null => {
     if (
-      category.includes(
-        intl.formatMessage({
-          id: 'contact_form_human_rights_information_request',
-          defaultMessage: 'Human Rights Information Request',
-        }),
-      )
-    )
-      return 'humanRightsInformationRequest'
-    else if (
       category.includes(
         intl.formatMessage({
           id: 'contact_form_login_issues',
@@ -59,12 +46,7 @@ const ContactEquinorForm = (props: ContactEquinorFormProps) => {
       name: '',
       email: '',
       message: '',
-      category: isHumanRightsRequest
-        ? intl.formatMessage({
-            id: 'contact_form_human_rights_information_request',
-            defaultMessage: 'Human Rights Information Request',
-          })
-        : '',
+      category: '',
     },
   })
 
@@ -74,12 +56,6 @@ const ContactEquinorForm = (props: ContactEquinorFormProps) => {
         body: JSON.stringify({
           data,
           frcCaptchaSolution: (event?.target as any)['frc-captcha-solution'].value,
-          isHumanRightsInformationRequest: data.category.includes(
-            intl.formatMessage({
-              id: 'contact_form_human_rights_information_request',
-              defaultMessage: 'Human Rights Information Request',
-            }),
-          ),
           catalogType: getCatalog(data.category),
         }),
         headers: {
@@ -192,7 +168,6 @@ const ContactEquinorForm = (props: ContactEquinorFormProps) => {
                     {...props}
                     selectRef={ref}
                     id={name}
-                    disabled={isHumanRightsRequest}
                     label={intl.formatMessage({ id: 'category', defaultMessage: 'Category' })}
                   >
                     <option value="">
@@ -219,13 +194,6 @@ const ContactEquinorForm = (props: ContactEquinorFormProps) => {
                         defaultMessage: 'Investor relations',
                       })}
                     </option>
-                    <option>
-                      {intl.formatMessage({
-                        id: 'contact_form_human_rights_information_request',
-                        defaultMessage: 'Human Rights Information Request',
-                      })}
-                    </option>
-
                     <option>
                       {intl.formatMessage({
                         id: 'contact_form_login_issues',
@@ -291,7 +259,7 @@ const ContactEquinorForm = (props: ContactEquinorFormProps) => {
                 >
                   {/*@ts-ignore: TODO: types*/}
                   <span className="mt-1">{errors.root.notCompletedCaptcha.message}</span>
-                  <Icon data={error_filled} aria-label='Error Icon' />
+                  <Icon data={error_filled} aria-label="Error Icon" />
                 </p>
               )}
             </div>

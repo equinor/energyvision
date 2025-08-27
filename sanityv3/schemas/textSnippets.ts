@@ -267,11 +267,6 @@ const snippets: textSnippet = {
     defaultValue: 'Investor relations',
     group: groups.contactForm,
   },
-  contact_form_human_rights_information_request: {
-    title: 'Human Rights Information Request',
-    defaultValue: 'Human Rights Information Request',
-    group: groups.contactForm,
-  },
   contact_form_login_issues: {
     title: 'Login Issues',
     defaultValue: 'Login Issues',
