@@ -356,7 +356,6 @@ export type FormData = {
   ingress?: PortableTextBlock[]
   form: string
   downloads: LinkData[]
-  isHumanRightsRequest?: boolean
 }
 
 export type NewsListData = {
@@ -414,7 +413,7 @@ export type IframeCarouselData = {
   designOptions: DesignOptions
 }
 
-export type ContactFormCatalogType = 'humanRightsInformationRequest' | 'loginIssues'
+export type ContactFormCatalogType = 'loginIssues'
 
 export type CareersContactFormCatalogType =
   | 'suspectedRecruitmentScamRequest'

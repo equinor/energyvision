@@ -5,8 +5,6 @@ import { validateFormRequest } from './validateFormRequest'
 
 const getCatalogIdentifier = (catalogType: ContactFormCatalogType | null) => {
   switch (catalogType) {
-    case 'humanRightsInformationRequest':
-      return 'd0d1eaee47fb0950cd271141e36d439b'
     case 'loginIssues':
       return '49f29a93dbb2ac10f42b2208059619a7'
     default:
