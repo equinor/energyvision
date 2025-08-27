@@ -11,9 +11,7 @@ import { Select } from '@/core/Select/Select'
 import { FormMessageBox } from '@/core/Form/FormMessageBox'
 import { useTranslations } from 'next-intl'
 
-type ContactEquinorFormProps = {
-  isHumanRightsRequest?: boolean
-}
+
 type FormValues = {
   name: string
   email: string
@@ -21,16 +19,14 @@ type FormValues = {
   message: string
 }
 
-const ContactEquinorForm = (props: ContactEquinorFormProps) => {
+const ContactEquinorForm = () => {
   const intl = useTranslations()
-  const { isHumanRightsRequest } = props
   const [isServerError, setServerError] = useState(false)
   const [isFriendlyChallengeDone, setIsFriendlyChallengeDone] = useState(false)
   const [isSuccessfullySubmitted, setSuccessfullySubmitted] = useState(false)
 
   const getCatalog = (category: string): ContactFormCatalogType | null => {
-    if (category.includes(intl('contact_form_human_rights_information_request'))) return 'humanRightsInformationRequest'
-    else if (category.includes(intl('contact_form_login_issues'))) return 'loginIssues'
+     if (category.includes(intl('contact_form_login_issues'))) return 'loginIssues'
     else return null
   }
   const {
@@ -44,7 +40,7 @@ const ContactEquinorForm = (props: ContactEquinorFormProps) => {
       name: '',
       email: '',
       message: '',
-      category: isHumanRightsRequest ? intl('contact_form_human_rights_information_request') : '',
+      category: '',
     },
   })
 
@@ -54,9 +50,6 @@ const ContactEquinorForm = (props: ContactEquinorFormProps) => {
         body: JSON.stringify({
           data,
           frcCaptchaSolution: (event?.target as any)['frc-captcha-solution'].value,
-          isHumanRightsInformationRequest: data.category.includes(
-            intl('contact_form_human_rights_information_request'),
-          ),
           catalogType: getCatalog(data.category),
         }),
         headers: {
@@ -145,15 +138,12 @@ const ContactEquinorForm = (props: ContactEquinorFormProps) => {
               render={({ field: { ref, ...props } }) => {
                 const { name } = props
                 return (
-                  <Select {...props} selectRef={ref} id={name} disabled={isHumanRightsRequest} label={intl('category')}>
+                  <Select {...props} selectRef={ref} id={name} label={intl('category')}>
                     <option value="">{intl('form_please_select_an_option')}</option>
                     <option>{intl('contact_form_report_error')}</option>
                     <option>{intl('contact_form_contact_department')}</option>
                     <option>{intl('contact_form_investor_relations')}</option>
-                    <option>{intl('contact_form_human_rights_information_request')}</option>
-
                     <option>{intl('contact_form_login_issues')}</option>
-
                     <option>{intl('contact_form_other')}</option>
                   </Select>
                 )

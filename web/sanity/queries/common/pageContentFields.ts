@@ -436,7 +436,6 @@ _type == "keyNumbers" =>{
     },
     "form": form,
     "downloads": downloads[]{${downloadableFileFields}},
-    isHumanRightsRequest
   },
 
   _type == "newsList" => {
