@@ -1,34 +1,30 @@
 'use client'
 import { VideoPlayer } from '@/core/VideoJsPlayer/VideoPlayer'
-import { useSanityLoader } from '@/lib/hooks/useSanityLoader'
-import { LoopingVideoData } from '@/types'
+import { ImageWithAlt } from '@/types'
 
-const DEFAULT_MAX_WIDTH = 1920
+export type LoopingVideoRatio = '1:2' | 'narrow' // Typo in Sanity value, should be 2:1
 
-export const LoopingVideo = ({ video }: { video: LoopingVideoData }) => {
+export type LoopingVideoData = {
+  title: string
+  poster: ImageWithAlt
+  src: string
+  ratio: LoopingVideoRatio
+  containVideo?: boolean
+}
+export type LoopingVideoProps = {
+  video: LoopingVideoData
+}
+
+export const LoopingVideo = ({ video }: LoopingVideoProps) => {
   const { ratio } = video
   const aspect: Record<string, any> = {
     narrow: '10:3',
     tall: '21:9',
+    '1:2': '2:1', // Typo in Sanity value, should look through dataset in prod for use and migrate or change to 2:1
   }
 
-  return <VideoPlayer variant="fullwidth" aspectRatio={aspect[ratio ?? 'narrow']} {...video} autoPlay muted loop />
-
-  /*   return (
-    <div className={`relative ${ratio == 'narrow' ? 'pb-[75%] md:pb-[30%]' : 'pb-[50%]'}`}>
-      <figure className="absolute m-0 flex h-full w-full justify-center">
-        <VideoPlayer
-          className="absolute h-full w-full object-cover"
-          loop
-          muted
-          autoPlay
-          playButton={false}
-          title={title}
-          poster={thumbnailURL?.src}
-          src={url}
-          videoDescription={thumbnail.alt}
-        />
-      </figure>
-    </div>
-  ) */
+  return (
+    //@ts-ignore: TODO
+    <VideoPlayer variant="fullwidth" aspectRatio={aspect[ratio ?? 'narrow']} {...video} autoPlay muted loop />
+  )
 }

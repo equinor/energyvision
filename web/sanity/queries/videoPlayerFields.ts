@@ -20,17 +20,14 @@ export const videoPlayerFields = /* groq */ `
     "poster": videoFile->thumbnail,
   },
   videoControls {
-    playButton,
-    controls,
     loop,
-    allowFullScreen,
     autoPlay,
     muted,
   },
   defined(showTranscript) && showTranscript =>  { "transcript": videoFile->transcript.text},
   "designOptions": {
     "aspectRatio": coalesce(aspectRatio, '16:9'),
-    height,
+    containVideo,
     width,
     useBrandTheme,
     ${background}

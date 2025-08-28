@@ -1,12 +1,6 @@
 'use client'
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-import {
-  VideoPlayerCarouselItem,
-  ImageCarouselItem,
-  EventCardData,
-  KeyNumberItemData,
-  IFrameCarouselItemData,
-} from '../../types/index'
+import { ImageCarouselItem, EventCardData, KeyNumberItemData, IFrameCarouselItemData } from '../../types/index'
 import {
   ElementType,
   forwardRef,
@@ -31,7 +25,7 @@ import KeyNumberItem from '@/sections/KeyNumber/KeyNumberItem'
 import { useTranslations } from 'next-intl'
 import { IFrame } from '@/core/IFrame/IFrame'
 import { VideoPlayer } from '../VideoJsPlayer/VideoPlayer'
-import { VideoPlayerRatios } from '../VideoJsPlayer/Video'
+import { VideoPlayerCarouselItem } from '@/sections/VideoPlayerCarousel/VideoPlayerCarousel'
 
 export type DisplayModes = 'single' | 'scroll'
 export type Layouts = 'full' | 'default'
@@ -324,11 +318,11 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
     const { title, video, id } = itemData
     const props = {
       ...video,
-      aspectRatio:
-        displayMode === 'single' ? VideoPlayerRatios['16:9'] : (VideoPlayerRatios['9:16'] ?? VideoPlayerRatios['16:9']),
+      aspectRatio: displayMode === 'single' ? '16:9' : '9:16',
       playButton: true,
       controls: true,
     }
+    //@ts-ignore: TODO
     const element = <VideoPlayer {...props} />
 
     return (

@@ -25,7 +25,7 @@ const NarrowHero = ({ figure }: FullImageHeroType) => {
 }
 const TallHero = ({ figure }: FullImageHeroType) => {
   return (
-    <div className="relative h-[53dvh] w-full lg:h-[65dvh] 4xl:h-[67dvh]">
+    <div className="relative h-auto w-full max-md:aspect-4/3 md:h-[53dvh] lg:h-[65dvh] 4xl:h-[67dvh]">
       <Image maxWidth={2560} fill aspectRatio={'5:4'} image={figure.image} sizes={imageSizes} priority />
     </div>
   )

@@ -22,7 +22,7 @@ export default {
       title: 'Aspect ratio',
       options: {
         list: [
-          { title: 'Full screen', value: 'fullScreen' },
+          { title: 'Tall', value: 'fullScreen' },
           { title: 'Narrow', value: 'narrow' },
           { title: '2:1', value: '2:1' },
         ],
@@ -30,6 +30,17 @@ export default {
       },
       initialValue: 'fullScreen',
       validation: (Rule: Rule) => Rule.required(),
+    },
+    {
+      name: 'containVideo',
+      title: 'Contain video',
+      description:
+        'Aspect ratios Tall and Narrow applies object cover, which might clip video content. This can problematic if the video has text.Set this to not clip content but black bars in the video might appear.',
+      type: 'boolean',
+      initialValue: false,
+      hidden: ({ parent }: any) => {
+        return parent?.aspectRatio === '2:1'
+      },
     },
   ],
   preview: {

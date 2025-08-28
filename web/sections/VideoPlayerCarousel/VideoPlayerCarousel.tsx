@@ -1,9 +1,33 @@
 import { Heading, Paragraph } from '@/core/Typography'
-import { VideoPlayerCarouselData } from '../../types/index'
+import { DesignOptions } from '../../types/index'
 import { Carousel } from '@/core/Carousel/Carousel'
 import { forwardRef, useId } from 'react'
 import { getBgAndDarkFromDesignOptionBackground } from '@/styles/colorKeyToUtilityMap'
 import { twMerge } from 'tailwind-merge'
+import { VideoType } from '@/core/VideoJsPlayer/VideoPlayer'
+import { PortableTextBlock } from 'next-sanity'
+import { AspectRatioVariants } from '@/core/VideoJsPlayer/Video'
+
+export type VideoPlayerCarouselItem = {
+  id: string
+  video: VideoType
+  title?: PortableTextBlock[]
+  hideVideoTitle?: boolean
+  aspectRatio?: AspectRatioVariants
+}
+
+export type VideoPlayerCarouselData = {
+  id: string
+  type: string
+  items: VideoPlayerCarouselItem[]
+  designOptions: DesignOptions & {
+    aspectRatio: AspectRatioVariants
+  }
+  scrollMode?: boolean
+  title?: PortableTextBlock[]
+  hideTitle?: boolean
+  ingress?: PortableTextBlock[]
+}
 
 type VideoPlayerCarouselProps = {
   data: VideoPlayerCarouselData
@@ -35,7 +59,7 @@ const VideoPlayerCarousel = forwardRef<HTMLUListElement, VideoPlayerCarouselProp
       </div>
       <Carousel
         ref={ref}
-        items={items.map((item) => {
+        items={items.map((item: VideoPlayerCarouselItem) => {
           return {
             ...item,
             aspectRatio: aspectRatio,

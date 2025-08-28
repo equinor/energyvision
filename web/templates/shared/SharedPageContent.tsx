@@ -8,7 +8,6 @@ import {
   MagazinePageSchema,
   TeaserData,
   TextBlockData,
-  FullWidthVideoData,
   TextWithIconArrayData,
   CallToActionData,
   QuoteData,
@@ -24,8 +23,6 @@ import {
   CookieDeclarationData,
   ImageCarouselData,
   IframeCarouselData,
-  VideoPlayerData,
-  VideoPlayerCarouselData,
   TextTeaserData,
   KeyNumbersData,
   CardsListData,
@@ -39,7 +36,7 @@ import { getColorForTheme } from '@/sections/teasers/TextTeaser/theme'
 import Grid from '@/sections/Grid/Grid'
 import { CampaignBanner } from '@/sections/CampaignBanner'
 import { BackgroundContainerProps } from '@/core/Backgrounds'
-import VideoPlayerCarousel from '@/sections/VideoPlayerCarousel/VideoPlayerCarousel'
+import VideoPlayerCarousel, { VideoPlayerCarouselData } from '@/sections/VideoPlayerCarousel/VideoPlayerCarousel'
 import ImageCarousel from '@/sections/ImageCarousel/ImageCarousel'
 import { AnchorLinkList } from '@/sections/AnchorLinkList'
 import ImageForText from '@/sections/ImageForText/ImageForText'
@@ -53,7 +50,7 @@ import IFrameBlock from '@/sections/IFrameBlock/IFrameBlock'
 import Teaser from '@/sections/teasers/Teaser/Teaser'
 import TextBlock from '@/sections/TextBlock/TextBlock'
 import FullWidthImage, { FullWidthImageData } from '@/sections/FullwidthImage/FullWidthImage'
-import FullWidthVideo from '@/sections/FullWidthVideo/FullWidthVideo'
+import FullWidthVideo, { FullWidthVideoProps } from '@/sections/FullWidthVideo/FullWidthVideo'
 import Figure, { FigureData } from '@/pageComponents/topicPages/Figure'
 import PageQuote from '@/pageComponents/topicPages/PageQuote'
 import PromoTileArray from '@/sections/PromoTiles/PromoTileArray'
@@ -62,7 +59,7 @@ import CookieDeclaration from '@/pageComponents/topicPages/CookieDeclaration'
 import NewsList from '@/pageComponents/topicPages/NewsList'
 import StockValues from '@/pageComponents/topicPages/StockValues'
 import TwitterEmbed from '@/pageComponents/topicPages/TwitterEmbed'
-import VideoPlayer from '@/sections/VideoPlayerBlock/VideoPlayerBlock'
+import VideoPlayer, { VideoPlayerBlockProps } from '@/sections/VideoPlayerBlock/VideoPlayerBlock'
 import { HomePageBanner } from '@/sections/HomePageBanner/HomePageBanner'
 
 type DefaultComponent = {
@@ -88,7 +85,6 @@ export type ComponentProps =
   | StockValuesData
   | TwitterEmbedData
   | AnchorLinkData
-  | VideoPlayerData
   | VideoPlayerCarouselData
   | CookieDeclarationData
   | TextTeaserData
@@ -243,7 +239,7 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
       case 'fullWidthImage':
         return <FullWidthImage key={c.id} data={c as FullWidthImageData} anchor={anchorReference} />
       case 'fullWidthVideo':
-        return <FullWidthVideo key={c.id} {...(c as FullWidthVideoData)} anchor={anchorReference} />
+        return <FullWidthVideo key={c.id} {...(c as FullWidthVideoProps)} anchor={anchorReference} />
       case 'figure':
         return <Figure key={c.id} data={c as FigureData} anchor={anchorReference} className={spacingClassName} />
       case 'textWithIconArray':
@@ -324,7 +320,12 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
         )
       case 'videoPlayer':
         return (
-          <VideoPlayer key={c.id} {...(c as VideoPlayerData)} anchor={anchorReference} className={spacingClassName} />
+          <VideoPlayer
+            key={c.id}
+            {...(c as VideoPlayerBlockProps)}
+            anchor={anchorReference}
+            className={spacingClassName}
+          />
         )
       case 'videoPlayerCarousel':
         return (

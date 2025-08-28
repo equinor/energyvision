@@ -12,7 +12,7 @@ export enum VideoPlayerRatios {
   '1:1' = '1:1',
   '4:3' = '4:3',
 }
-//21:9 is only for Header LoopingVideo Tall aspect ratio
+
 export type AspectRatioVariants = '16:9' | '9:16' | '2:1' | '10:3' | '4:3' | '21:9'
 
 type VideoOptions = {
@@ -26,14 +26,16 @@ type VideoOptions = {
 type VideoProps = {
   options: VideoOptions
   useBrandTheme?: boolean
+  /** For the aspect ratios that apply object cover, override to contain */
+  containVideo?: boolean
   onReady?: (player: Player) => void
-}
+} & Omit<HTMLProps<HTMLVideoElement>, 'src'>
 
-export const Video: React.FC<VideoProps> = ({ options, onReady, useBrandTheme }) => {
+export const Video: React.FC<VideoProps> = ({ options, onReady, useBrandTheme = false, containVideo = false }) => {
   const videoRef = useRef<HTMLDivElement>(null)
   const playerRef = useRef<Player>(null)
   const { src, title, autoplay = false, fill, aspectRatio } = options
-  console.log('video aspext', aspectRatio)
+
   //Here or in the VideoPlayer?
   useVideojsAnalytics(playerRef.current, src, title, autoplay)
 
@@ -44,20 +46,17 @@ export const Video: React.FC<VideoProps> = ({ options, onReady, useBrandTheme })
       if (useBrandTheme) {
         videoElement.classList.add('vjs-envis-brand')
       }
-      if (options?.playButton) {
-        videoElement.classList.add('vjs-envis-hasPlayButton')
+
+      if (!containVideo && (fill || aspectRatio === '10:3' || aspectRatio === '21:9')) {
+        videoElement.classList.add('vjs-fill', 'lg:[&>video]:object-cover')
       }
-      if (fill || aspectRatio === '10:3') {
-        console.log('adding vjs-fill')
-        videoElement.classList.add('vjs-fill', '*:object-cover')
-      }
-      if (options?.aspectRatio === '16:9') {
+      if (aspectRatio === '16:9') {
         videoElement.classList.add('vjs-16-9')
       }
-      if (options?.aspectRatio === '4:3') {
+      if (aspectRatio === '4:3') {
         videoElement.classList.add('vjs-4-3')
       }
-      if (options?.aspectRatio === '9:16') {
+      if (aspectRatio === '9:16') {
         videoElement.classList.add('vjs-9-16')
       }
       videoRef.current?.appendChild(videoElement)
@@ -87,8 +86,8 @@ export const Video: React.FC<VideoProps> = ({ options, onReady, useBrandTheme })
   }, [])
 
   return (
-    <div className={`video-player ${!fill ? '' : 'h-full w-full'}`} data-vjs-player>
-      <div ref={videoRef} className={`${!fill ? '' : 'h-full w-full'}`} />
+    <div className={`video-player h-full w-full`} data-vjs-player>
+      <div ref={videoRef} className={`h-full w-full`} />
     </div>
   )
 }

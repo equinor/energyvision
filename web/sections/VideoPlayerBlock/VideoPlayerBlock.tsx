@@ -8,11 +8,12 @@ import Transcript from '../Transcript/Transcript'
 import { ResourceLink } from '@/core/Link'
 import { getLocaleFromName } from '../../lib/localization'
 import { DesignOptions, LinkData } from '@/types'
-import { VideoControlsType, VideoPlayer, VideoPlayerRatios, VideoType } from '@/core/VideoJsPlayer/VideoPlayer'
+import { VideoControlsType, VideoPlayer, VideoType } from '@/core/VideoJsPlayer/VideoPlayer'
 import { getBgAndDarkFromDesignOptionBackground } from '@/styles/colorKeyToUtilityMap'
+import { AspectRatioVariants } from '@/core/VideoJsPlayer/Video'
 
 export type VideoDesignOptionsType = {
-  aspectRatio: VideoPlayerRatios
+  aspectRatio: AspectRatioVariants
   height?: number
   width?: 'normal' | 'extraWide'
   useBrandTheme?: boolean
@@ -71,6 +72,7 @@ const VideoPlayerBlock = ({
           {action.label}
         </ResourceLink>
       )}
+      {/*@ts-ignore: TODO*/}
       <VideoPlayer {...video} {...videoPlayerDesignOptions} {...videoControls} />
       <Transcript transcript={transcript} ariaTitle={video.title} />
     </section>

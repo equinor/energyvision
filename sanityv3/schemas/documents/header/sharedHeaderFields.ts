@@ -237,11 +237,11 @@ const heroLoopingVideoRatio = {
   type: 'string',
   options: {
     list: [
-      { title: '1:2', value: '1:2' },
+      { title: '2:1', value: '1:2' }, // should look if this value is in use to change it to 2:1
       { title: 'Tall', value: 'tall' },
       { title: 'Narrow', value: 'narrow' },
     ],
-    initialValue: '1:2',
+    initialValue: 'narrow',
   },
   hidden: ({ parent }: DocumentType) => {
     return parent?.heroType !== HeroTypes.LOOPING_VIDEO
@@ -253,6 +253,18 @@ const heroLoopingVideoRatio = {
       return true
     }),
   fieldset: 'header',
+}
+const containVideo = {
+  name: 'containVideo',
+  title: 'Contain video',
+  fieldset: 'header',
+  description:
+    'Aspect ratios Tall and Narrow applies object cover, which might clip video content. This can problematic if the video has text.Set this to not clip content but black bars in the video might appear.',
+  type: 'boolean',
+  initialValue: false,
+  hidden: ({ parent }: DocumentType) => {
+    return parent?.heroLoopingVideoRatio === '2:1'
+  },
 }
 
 export default [
@@ -269,4 +281,5 @@ export default [
   heroImage,
   heroLoopingVideo,
   heroLoopingVideoRatio,
+  containVideo,
 ]

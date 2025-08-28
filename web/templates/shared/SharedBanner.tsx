@@ -1,8 +1,8 @@
-import { BackgroundColours, HeroType, HeroTypes, LoopingVideoData } from '@/types'
+import { BackgroundColours, HeroType, HeroTypes } from '@/types'
 import { PortableTextBlock } from '@portabletext/types'
 import { FullImageHero } from '@/sections/Hero/FullImageHero'
 import { FiftyFiftyHero } from '@/sections/Hero/FiftyFiftyHero'
-import { LoopingVideo } from '@/sections/Hero/LoopingVideo'
+import { LoopingVideo, LoopingVideoData } from '@/sections/Hero/LoopingVideo'
 import { DefaultHero } from '@/sections/Hero/DefaultHero'
 
 type BannerProps = {

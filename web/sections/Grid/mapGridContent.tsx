@@ -10,7 +10,7 @@ import { VideoPlayerBlockProps } from '../VideoPlayerBlock/VideoPlayerBlock'
 
 export type RowType = 'span3' | 'span2and1' | 'threeColumns' | undefined
 
-export const mapGridContent = (data: ComponentProps, rowType?: RowType, isMobile?: boolean): React.ReactNode => {
+export const mapGridContent = (data: ComponentProps, rowType?: RowType): React.ReactNode => {
   //@ts-ignore:so many types
   switch (data.type) {
     case 'gridTextBlock':
@@ -23,11 +23,8 @@ export const mapGridContent = (data: ComponentProps, rowType?: RowType, isMobile
       return <IFrame key={data.id} data={data as IFrameData} />
     case 'videoPlayer': {
       return (
-        <VideoPlayer
-          key={data.id}
-          {...(data as VideoPlayerBlockProps)}
-          /*           className={`${isMobile ? '' : 'h-full sm:w-full'}`} */
-        />
+        //@ts-ignore: TODO
+        <VideoPlayer key={data.id} {...(data as VideoPlayerBlockProps)} />
       )
     }
     default:

@@ -1,8 +1,9 @@
-import { ImageWithAlt, BackgroundColours, LinkData, IFrameData, VideoPlayerData, ImageBackground } from './index'
+import { ImageWithAlt, BackgroundColours, LinkData, IFrameData, ImageBackground } from './index'
 import { TeaserImagePosition } from '@/core/Teaser'
 import { PortableTextBlock } from '@portabletext/types'
 import { RowType } from '@/sections/Grid/mapGridContent'
 import { FigureData } from '../pageComponents/topicPages/Figure'
+import { VideoPlayerBlockProps } from '@/sections/VideoPlayerBlock/VideoPlayerBlock'
 
 export type GridTeaserData = {
   type: 'gridTeaser'
@@ -30,7 +31,7 @@ export type GridData = {
   gridRows?: GridRowType[]
 }
 
-export type GridContentType = FigureData | IFrameData | VideoPlayerData | GridTextBlockData | GridTeaserData
+export type GridContentType = FigureData | IFrameData | VideoPlayerBlockProps | GridTextBlockData | GridTeaserData
 
 type GridTextBlockContentAlignment = 'left' | 'right' | 'center' | 'bottom-left' | 'bottom-center'
 

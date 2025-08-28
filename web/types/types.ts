@@ -13,16 +13,16 @@ import type {
   PeopleCardData,
   BackgroundColours,
   DesignOptions,
-  LoopingVideoData,
-  VideoPlayerData,
-  VideoPlayerCarouselData,
-  FullWidthVideoData,
   GridData,
   StickyMenuLinkType,
 } from './index'
 import { MediaPosition } from '@/core/Teaser/Media'
 import { FigureData } from '../pageComponents/topicPages/Figure'
 import { FullWidthImageData } from '../sections/FullwidthImage/FullWidthImage'
+import { LoopingVideoData } from '@/sections/Hero/LoopingVideo'
+import { FullWidthVideoProps } from '@/sections/FullWidthVideo/FullWidthVideo'
+import { VideoPlayerCarouselData } from '@/sections/VideoPlayerCarousel/VideoPlayerCarousel'
+import { VideoPlayerBlockProps } from '@/sections/VideoPlayerBlock/VideoPlayerBlock'
 
 export type IntlData = {
   locale: string
@@ -78,7 +78,7 @@ export type ContentType =
   | TeaserData
   | TextBlockData
   | FullWidthImageData
-  | FullWidthVideoData
+  | FullWidthVideoProps
   | FigureData
   | TextWithIconArrayData
   | QuoteData
@@ -92,8 +92,8 @@ export type ContentType =
   | NewsListData
   | StockValuesData
   | TwitterEmbedData
-  | VideoPlayerData
   | VideoPlayerCarouselData
+  | VideoPlayerBlockProps
   | GridData
   | CampaignBannerData
 
