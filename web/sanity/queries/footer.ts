@@ -1,6 +1,8 @@
+import { functions } from './common/functions'
 import { sameLang } from './common/langAndDrafts'
 
 export const footerQuery = /* groq */ `
+${functions}
  *[_type == "footer" && ${sameLang}] {
   _id,
 	footerColumns[]{
@@ -10,12 +12,7 @@ export const footerQuery = /* groq */ `
       "type": _type,
       "id": _key,
         label,
-        someType,
-  	    "link": reference-> {
-        "type": _type,
-        "slug": slug.current,
-      },
-      url,
+  	    "":links::getLinkFields(link[0]),
     }
   }
 }[0]

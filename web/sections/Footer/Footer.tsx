@@ -2,9 +2,11 @@
 
 import { useTranslations } from 'next-intl'
 import { Facebook, Instagram, Linkedin, Twitter, Youtube } from '../../icons'
-import type { FooterLinkData, SomeType, FooterColumns, LinkType } from '../../types/index'
 import { LinkButton } from '@/core/Button'
 import FooterLink from '@/core/Link/FooterLink'
+import type { FooterLinkData, SomeType, FooterColumns } from '../../types/index'
+import { getLocaleFromName } from '../../lib/localization'
+import { getUrlFromAction } from '../../common/helpers'
 
 function getSomeSvg(someType: SomeType) {
   const iconMap = {
@@ -19,11 +21,6 @@ function getSomeSvg(someType: SomeType) {
   return iconMap[someType] || null
 }
 
-function getLink(linkData: FooterLinkData) {
-  const { link } = linkData || {}
-  return link?.slug ?? '/'
-}
-
 type FooterProps = {
   footerData?: { footerColumns: FooterColumns[] }
 }
@@ -32,19 +29,24 @@ const Footer = ({ footerData, ...rest }: FooterProps) => {
   const t = useTranslations()
 
   return (
-    <footer className="dark *:text-white-100 min-h-12 bg-slate-blue-95 py-4 px-0" {...rest}>
-      <div className="flex flex-row flex-wrap my-0 mx-auto justify-between px-layout-sm pb-2 max-w-screen-2xl max-md:flex-col">
+    <footer className="dark min-h-12 bg-slate-blue-95 px-0 py-4 *:text-white-100" {...rest}>
+      <div className="mx-auto my-0 flex max-w-screen-2xl flex-row flex-wrap justify-between px-layout-sm pb-2 max-md:flex-col">
         {footerData?.footerColumns?.map(({ header, linkList }) => (
-          <section className="flex flex-col max-md:py-4 max-md:w-4/5" key={header}>
-            <h2 className="text-md font-medium px-0 py-2 leading-planetary">{header}</h2>
-            <div className="grid grid-cols-2 gap-y-2 gap-x-8 items-start md:flex md:flex-col md:grid-y-0">
-              {linkList?.map((link: FooterLinkData) => {
-                const { id, type, someType, label, url } = link
-                const icon = type === 'someLink' && someType ? getSomeSvg(someType) : null
-                const linkType = type === 'someLink' ? 'externalUrl' : (link.link?.type as LinkType)
-
+          <section className="flex flex-col max-md:w-4/5 max-md:py-4" key={header}>
+            <h2 className="px-0 py-2 text-md leading-planetary font-medium">{header}</h2>
+            <div className="md:grid-y-0 grid grid-cols-2 items-start gap-x-8 gap-y-2 md:flex md:flex-col">
+              {linkList?.map((footerLink: FooterLinkData) => {
+                const { id, type, someType, label, href, link } = footerLink
+                const icon = type === 'externalUrl' && someType ? getSomeSvg(someType) : null
+                const linkLocale = getLocaleFromName(link?.lang)
                 return (
-                  <FooterLink key={id} href={url || getLink(link)} type={linkType} icon={icon}>
+                  <FooterLink
+                    locale={linkLocale}
+                    key={id}
+                    href={href || getUrlFromAction(footerLink) || '/'}
+                    type={type}
+                    icon={icon}
+                  >
                     {label}
                   </FooterLink>
                 )
@@ -52,16 +54,16 @@ const Footer = ({ footerData, ...rest }: FooterProps) => {
             </div>
           </section>
         ))}
-        <section className="flex flex-col max-md:py-4 max-md:w-4/5">
+        <section className="flex flex-col max-md:w-4/5 max-md:py-4">
           <LinkButton
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className={`group text-sm px-0 py-2 underline underline-offset-8 hover:underline hover:text-moss-green-90`}
+            className={`group px-0 py-2 text-sm underline underline-offset-8 hover:text-moss-green-90 hover:underline`}
           >
             {t('footer_to_top_button')}
           </LinkButton>
         </section>
       </div>
-      <div className="flex md:justify-center justify-start pl-4 pt-12 pb-3">
+      <div className="flex justify-start pt-12 pb-3 pl-4 md:justify-center">
         <span className="text-2xs">Copyright {new Date().getFullYear()} Equinor ASA</span>
       </div>
     </footer>

@@ -1,6 +1,7 @@
 import { defineField, defineType } from 'sanity'
 import { getColorForTabTheme, tabsThemeColors } from './tabsThemes'
 import { PreviewProps } from 'sanity'
+import singleItemArray from '../singleItemArray'
 import { CardTheme, ThemeSelector, ThemeSelectorValue } from '../../components/ThemeSelector'
 
 export function ThemePreview(props: PreviewProps) {
@@ -21,7 +22,7 @@ export default {
   type: 'object',
   name: 'tabsBackground',
   fields: [
-    defineField({
+    singleItemArray({
       type: 'array',
       name: 'background',
       description: 'Select theme for tabs',

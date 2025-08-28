@@ -8,6 +8,7 @@ import {
   relatedLinksForNewsQuery,
 } from './common/newsSubqueries'
 import { lastUpdatedTimeQuery, publishDateTimeQuery } from './common/publishDateTime'
+import { functions } from './common/functions'
 
 export const excludeCrudeOilAssays =
   Flags.IS_DEV || Flags.IS_GLOBAL_PROD ? /* groq */ `!('crude-oil-assays' in tags[]->key.current) &&` : ''
@@ -46,6 +47,7 @@ const newsFields = /* groq */ `
 `
 
 export const newsQuery = /* groq */ `
+  ${functions}
   *[_type == "news" && slug.current == $slug && ${fixPreviewForDrafts}] | order(${publishDateTimeQuery} desc) {
     _id, //used for data filtering
     "slug": slug.current,

@@ -38,7 +38,7 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
     },
     ref,
   ) {
-    const props = useSanityLoader(image, DEFAULT_MAX_WIDTH, mapSanityImageRatio(aspectRatio ?? '9:16'))
+    const props = useSanityLoader(image, DEFAULT_MAX_WIDTH, mapSanityImageRatio(aspectRatio ?? '16:9'))
     const src = props?.src
     const isMobile = useMediaQuery(`(max-width: 800px)`)
     const ReturnElement = as

@@ -5,7 +5,7 @@ import { videoPlayerCarouselFields } from '../videoPlayerCarouselFields'
 import { videoPlayerFields } from '../videoPlayerFields'
 import downloadableFileFields from './actions/downloadableFileFields'
 import downloadableImageFields from './actions/downloadableImageFields'
-import linkSelectorFields, { linkReferenceFields } from './actions/linkSelectorFields'
+import linkSelectorFields from './actions/linkSelectorFields'
 import background from './background'
 import markDefs from './blockEditorMarks'
 import { eventPromotionFields, futureEventsQuery, pastEventsQuery } from './promotions/eventPromotion'
@@ -195,17 +195,7 @@ _type == "keyNumbers" =>{
       "action": {
         "label": link.label,
         "ariaLabel": link.ariaLabel,
-        "anchorReference": link.anchorReference,
-        "link": select(
-          link.linkToOtherLanguage == true =>
-            link.referenceToOtherLanguage->${linkReferenceFields},
-            link.reference->${linkReferenceFields},
-        ),
-        "href": link.url,
-        "type": select(
-          defined(link.url) => "externalUrl",
-          "internalUrl"
-        ),
+        "": links::getLinkFields(link.link[0])
       },
       "image": image{
         ...,
@@ -258,7 +248,7 @@ _type == "keyNumbers" =>{
     "useHorizontalScroll": useHorizontalScroll,
     "viewAllLink": {
         "label": viewAllLinkLabel,
-        "link":viewAllLink->${linkReferenceFields},
+        "": links::getLinkFields(viewAllLink),
     },
     "content": promotion[0]{
       "id": _key,
@@ -347,20 +337,11 @@ _type == "keyNumbers" =>{
             email,
             phone,
           },
-          isLink => {
+          isLink => linkSelector{
             "cv": {
-              "id": _key,
-              "type": select(
-                defined(url) => "externalUrl", "internalUrl"
-               ),
               label,
               ariaLabel,
-              "link": select(
-                linkToOtherLanguage == true =>
-                referenceToOtherLanguage->${linkReferenceFields},
-                reference->${linkReferenceFields},
-                ),
-              "href": url,
+              "": links::getLinkFields(link[0]),
               anchorReference,
             },
           },

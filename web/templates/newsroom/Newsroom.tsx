@@ -181,8 +181,8 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
                     aria-label={t('newsroom_related_links')}
                   >
                     <List.Item className="w-full">
-                      {subscriptionLink?.slug && (
-                        <ResourceLink href={subscriptionLink.slug}>{subscriptionLinkTitle}</ResourceLink>
+                      {subscriptionLink?.link?.slug && (
+                        <ResourceLink href={subscriptionLink.link.slug}>{subscriptionLinkTitle}</ResourceLink>
                       )}
                     </List.Item>
                     {localNewsPages &&

@@ -32,7 +32,7 @@ const TallHero = ({ figure }: FullImageHeroType) => {
 }
 
 const RatioHero = ({ figure }: FullImageHeroType) => {
-  return <Image maxWidth={2560} aspectRatio={'1:2'} image={figure.image} sizes={imageSizes} priority />
+  return <Image maxWidth={2560} aspectRatio={'2:1'} image={figure.image} sizes={imageSizes} priority />
 }
 
 export const FullImageHero = ({ ratio, figure, hideImageCaption, captionBg }: HeroType) => {
