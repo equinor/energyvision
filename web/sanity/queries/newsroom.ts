@@ -1,7 +1,7 @@
 import linkSelectorFields from './common/actions/linkSelectorFields'
 import markDefs from './common/blockEditorMarks'
 import { sameLang } from './common/langAndDrafts'
-import { functions } from '@/lib/queries/common/functions'
+import { functions } from './common/functions'
 import { ingressForNewsQuery } from './common/newsSubqueries'
 import { publishDateTimeQuery } from './common/publishDateTime'
 import { seoAndSomeFields } from './common/seoAndSomeFields'

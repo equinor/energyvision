@@ -9,7 +9,7 @@ import { seoAndSomeFields } from './common/seoAndSomeFields'
 import { sameLang, fixPreviewForDrafts } from './common/langAndDrafts'
 import { publishDateTimeQuery } from './common/publishDateTime'
 import background from './common/background'
-import { functions } from '@/lib/queries/common/functions'
+import { functions } from './common/functions'
 
 const footerComponentFields = /* groq */ `
   title,
