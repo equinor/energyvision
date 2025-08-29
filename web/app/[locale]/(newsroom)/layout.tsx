@@ -34,16 +34,15 @@ export async function generateMetadata() {
 export default async function LocaleLayout({ children, params }: { children: React.ReactNode; params: Params }) {
   // Ensure that the incoming `locale` is valid
   const { locale, slug } = await params
-  console.log('Layout locale', locale)
   const { isEnabled: isDraftMode } = await draftMode()
 
-  if (!hasLocale(routing.locales, locale) && locale !== 'no') {
+  if (!hasLocale(routing.locales, locale)) {
     notFound()
   }
   const { menuData, footerData } = await getHeaderAndFooterData({ slug, lang: getNameFromLocale(locale) })
   const slugs = [
     { slug: '/news', lang: 'en_GB' },
-    { slug: '/nyheter', lang: 'nb_NO' },
+    { slug: '/no/nyheter', lang: 'nb_NO' },
   ]
 
   return (

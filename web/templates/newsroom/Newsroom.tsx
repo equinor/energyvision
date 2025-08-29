@@ -86,7 +86,6 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
       topics: allTopics,
       years: allYears,
       countries: allCountries,
-      indexName: indexName,
     } as NewsRouteState
   }
 
@@ -115,7 +114,6 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
           topics: indexUiState.refinementList?.topicTags,
           countries: indexUiState.refinementList?.countryTags,
           page: indexUiState?.page,
-          indexName: indexName,
         } as NewsRouteState
       },
       routeToState(routeState: NewsRouteState) {
