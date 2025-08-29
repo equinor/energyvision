@@ -263,7 +263,8 @@ const containVideo = {
   type: 'boolean',
   initialValue: false,
   hidden: ({ parent }: DocumentType) => {
-    return parent?.heroLoopingVideoRatio === '2:1'
+    console.log('parent?.heroType', parent?.heroType)
+    return parent?.heroType !== HeroTypes.LOOPING_VIDEO || parent?.heroLoopingVideoRatio === '2:1'
   },
 }
 
