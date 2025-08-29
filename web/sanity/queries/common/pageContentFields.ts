@@ -195,7 +195,7 @@ _type == "keyNumbers" =>{
       "action": {
         "label": link.label,
         "ariaLabel": link.ariaLabel,
-        "": links::getLinkFields(link.link[0])
+        ...links::getLinkFields(link.link[0])
       },
       "image": image{
         ...,
@@ -248,7 +248,7 @@ _type == "keyNumbers" =>{
     "useHorizontalScroll": useHorizontalScroll,
     "viewAllLink": {
         "label": viewAllLinkLabel,
-        "": links::getLinkFields(viewAllLink),
+        ...links::getLinkFields(viewAllLink),
     },
     "content": promotion[0]{
       "id": _key,
@@ -341,7 +341,7 @@ _type == "keyNumbers" =>{
             "cv": {
               label,
               ariaLabel,
-              "": links::getLinkFields(link[0]),
+              ...links::getLinkFields(link[0]),
               anchorReference,
             },
           },

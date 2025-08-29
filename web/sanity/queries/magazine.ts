@@ -32,7 +32,7 @@ const footerComponentFields = /* groq */ `
   },
 `
 
-const promotedmagazineTags = /* groq */ `"": *[_type == "magazineIndex" && ${sameLang}][0] {"magazineTags":promotedMagazineTags[]->{
+const promotedmagazineTags = /* groq */ `... *[_type == "magazineIndex" && ${sameLang}][0] {"magazineTags":promotedMagazineTags[]->{
   "id": _id,
   "key": key.current,
   "title":title[$lang],

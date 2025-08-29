@@ -12,7 +12,7 @@ ${functions}
       "type": _type,
       "id": _key,
         label,
-  	    "":links::getLinkFields(link[0]),
+  	    ...links::getLinkFields(link[0]),
     }
   }
 }[0]

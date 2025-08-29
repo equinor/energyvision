@@ -1,6 +1,6 @@
 const linkSelectorFields = /* groq */ `
 _type == "linkSelector" => {
-  "":links::getLinkFields(link[0]),
+  ...links::getLinkFields(link[0]),
   label,
   ariaLabel,
   anchorReference,

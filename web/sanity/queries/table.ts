@@ -31,7 +31,7 @@ export const tableFields = /* groq */ `
         ${markDefs}
       },
       label,
-      "": links::getLinkFields(link[0]),
+      ...links::getLinkFields(link[0]),
       ${downloadableFileFields},
       ${downloadableImageFields},
       ...
