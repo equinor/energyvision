@@ -38,7 +38,6 @@ const withBundleconfig = {
   reactStrictMode: true,
   experimental: {
     largePageDataBytes: 300 * 1000,
-    scrollRestoration: true,
     optimizePackageImports: ['@components', '@equinor/eds-core-react', '@equinor/eds-icons', 'video.js'],
   },
   transpilePackages: ['friendly-challenge'],

@@ -1,6 +1,6 @@
 'use client'
 import { HTMLProps, useRef } from 'react'
-import { AspectRatioVariants, Video } from './Video'
+import { AspectRatioVariants, Variants, Video } from './Video'
 import Player from 'video.js/dist/types/player'
 import { PortableTextBlock } from 'next-sanity'
 import { twMerge } from 'tailwind-merge'
@@ -21,8 +21,6 @@ export type VideoControlsType = {
   autoPlay?: boolean
   muted?: boolean
 }
-
-type Variants = 'default' | 'fullwidth'
 
 type VideoPlayerProps = Omit<HTMLProps<HTMLVideoElement>, 'src'> & {
   variant?: Variants
@@ -157,6 +155,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
         onReady={handlePlayerReady}
         useBrandTheme={useBrandTheme}
         containVideo={containVideo}
+        variant={variant}
       />
       {figureCaption && (
         <figcaption className={twMerge(`text-md ${title ? 'py-2' : ''} `, captionClassName)}>

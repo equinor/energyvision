@@ -15,6 +15,8 @@ export enum VideoPlayerRatios {
 
 export type AspectRatioVariants = '16:9' | '9:16' | '2:1' | '10:3' | '4:3' | '21:9'
 
+export type Variants = 'default' | 'fullwidth'
+
 type VideoOptions = {
   playButton?: boolean
   autoplay?: boolean
@@ -24,6 +26,7 @@ type VideoOptions = {
 } & Omit<HTMLProps<HTMLVideoElement>, 'src'>
 
 type VideoProps = {
+  variant?: Variants
   options: VideoOptions
   useBrandTheme?: boolean
   /** For the aspect ratios that apply object cover, override to contain */
@@ -31,7 +34,13 @@ type VideoProps = {
   onReady?: (player: Player) => void
 } & Omit<HTMLProps<HTMLVideoElement>, 'src'>
 
-export const Video: React.FC<VideoProps> = ({ options, onReady, useBrandTheme = false, containVideo = false }) => {
+export const Video: React.FC<VideoProps> = ({
+  variant = 'default',
+  options,
+  onReady,
+  useBrandTheme = false,
+  containVideo = false,
+}) => {
   const videoRef = useRef<HTMLDivElement>(null)
   const playerRef = useRef<Player>(null)
   const { src, title, autoplay = false, fill, aspectRatio } = options
@@ -42,11 +51,13 @@ export const Video: React.FC<VideoProps> = ({ options, onReady, useBrandTheme = 
   useEffect(() => {
     if (!playerRef.current) {
       const videoElement = document.createElement('video-js')
-      videoElement.classList.add('vjs-layout-large', 'vjs-envis')
+      videoElement.classList.add('vjs-layout-large')
       if (useBrandTheme) {
         videoElement.classList.add('vjs-envis-brand')
       }
-
+      if (variant === 'fullwidth') {
+        videoElement.classList.add('vjs-fullwidth')
+      }
       if (!containVideo && (fill || aspectRatio === '10:3' || aspectRatio === '21:9')) {
         videoElement.classList.add('vjs-fill', 'lg:[&>video]:object-cover')
       }
@@ -64,6 +75,7 @@ export const Video: React.FC<VideoProps> = ({ options, onReady, useBrandTheme = 
       const player = (playerRef.current = videojs(videoElement, options, () => {
         videojs.log('player is ready')
         if (onReady) {
+          videoElement.classList.remove('vjs-custom-waiting')
           onReady(player)
         }
       }))
