@@ -76,11 +76,19 @@ export type ColorKeyTokens = {
   [P1 in keyof typeof colorKeyToUtilityMap]: string
 }
 
-export const getBgAndDarkFromDesignOptionBackground = (designOptions: DesignOptions) => {
+export const getBgAndDarkFromBackground = (designOptions: DesignOptions) => {
   const { background } = designOptions
   const backwardCompabilityColorName = Object.keys(colorKeyToUtilityMap).find(
     (key) => colorKeyToUtilityMap[key as keyof ColorKeyTokens]?.backgroundName === background?.backgroundColor,
   )
-  const bgKey = background?.backgroundUtility ?? backwardCompabilityColorName ?? 'white-100'
+
+  let bgKey = 'white-100'
+  if (backwardCompabilityColorName && backwardCompabilityColorName !== '') {
+    bgKey = backwardCompabilityColorName
+  }
+  if (background?.backgroundUtility && background?.backgroundUtility !== '') {
+    bgKey = background?.backgroundUtility
+  }
+
   return { bg: colorKeyToUtilityMap[bgKey].background, dark: colorKeyToUtilityMap[bgKey].dark }
 }

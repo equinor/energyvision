@@ -2,7 +2,7 @@ import { Heading, Paragraph } from '@/core/Typography'
 import { DesignOptions } from '../../types/index'
 import { Carousel } from '@/core/Carousel/Carousel'
 import { forwardRef, useId } from 'react'
-import { getBgAndDarkFromDesignOptionBackground } from '@/styles/colorKeyToUtilityMap'
+import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
 import { twMerge } from 'tailwind-merge'
 import { VideoType } from '@/core/VideoJsPlayer/VideoPlayer'
 import { PortableTextBlock } from 'next-sanity'
@@ -42,7 +42,7 @@ const VideoPlayerCarousel = forwardRef<HTMLUListElement, VideoPlayerCarouselProp
   const { title, hideTitle, ingress, items, scrollMode, designOptions } = data
   const { aspectRatio } = designOptions
   const headingId = useId()
-  const { bg, dark } = getBgAndDarkFromDesignOptionBackground(designOptions)
+  const { bg, dark } = getBgAndDarkFromBackground(designOptions)
 
   return (
     <section id={anchor} className={twMerge(`${bg} ${dark ? 'dark' : ''}`, className)}>

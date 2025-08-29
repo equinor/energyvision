@@ -9,7 +9,7 @@ import { ResourceLink } from '@/core/Link'
 import { getLocaleFromName } from '../../lib/localization'
 import { DesignOptions, LinkData } from '@/types'
 import { VideoControlsType, VideoPlayer, VideoType } from '@/core/VideoJsPlayer/VideoPlayer'
-import { getBgAndDarkFromDesignOptionBackground } from '@/styles/colorKeyToUtilityMap'
+import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
 import { AspectRatioVariants } from '@/core/VideoJsPlayer/Video'
 
 export type VideoDesignOptionsType = {
@@ -46,7 +46,7 @@ const VideoPlayerBlock = ({
 }: VideoPlayerBlockProps) => {
   const { width = 'normal', ...videoPlayerDesignOptions } = designOptions
   const actionUrl = action ? getUrlFromAction(action) : ''
-  const { bg, dark } = getBgAndDarkFromDesignOptionBackground(designOptions)
+  const { bg, dark } = getBgAndDarkFromBackground(designOptions)
 
   return (
     <section
