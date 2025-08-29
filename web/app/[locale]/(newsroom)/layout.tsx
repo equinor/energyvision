@@ -67,11 +67,11 @@ export default async function LocaleLayout({ children, params }: { children: Rea
         {/* The <SanityLive> component is responsible for making all sanityFetch calls in your application live, so should always be rendered. */}
         <SanityLive onError={handleError} />
         <NextIntlClientProvider>
-          <>
+          <div className={`[:not(:has(.sticky-menu))]:pt-topbar`}>
             <Header slugs={slugs} menuData={menuData} />
             {children}
             <Footer footerData={footerData} />
-          </>
+          </div>
         </NextIntlClientProvider>
       </body>
     </html>
