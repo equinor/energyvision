@@ -10,7 +10,6 @@ import { getIsoFromLocale } from '../../lib/localization'
 import { Flags } from '../../common/helpers/datasetHelpers'
 import { createInstantSearchRouterNext } from 'react-instantsearch-router-nextjs'
 import { SearchClient, SearchResponse, UiState } from 'instantsearch.js'
-import Seo from '../../pageComponents/shared/Seo'
 import { Configure } from 'react-instantsearch'
 import NewsSections from './NewsSections/NewsSections'
 import QuickSearch from './QuickSearch/QuickSearch'
@@ -18,10 +17,10 @@ import { searchClient as client } from '../../lib/algolia'
 import { Pagination } from '../../pageComponents/shared/search/pagination/Pagination'
 import { List } from '@/core/List'
 import { PaginationContextProvider } from '../../common/contexts/PaginationContext'
-import { InstantSearchNext } from 'react-instantsearch-nextjs'
+import { InstantSearchNext, InstantSearchNextRouting } from 'react-instantsearch-nextjs'
 import { useTranslations } from 'next-intl'
 
-type NewsRouteState = { query: any; page: any; topics: any[]; years: any[]; countries: any[]; indexName: string }
+type NewsRouteState = { query?: string; page?: number; topics?: string[]; years?: string[]; countries?: string[] }
 
 type NewsRoomTemplateProps = {
   locale?: string
@@ -42,61 +41,58 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
   const indexName = `${envPrefix}_NEWS_${isoCode}`
   const resultsRef = useRef<HTMLDivElement>(null)
 
-  // eslint-disable-next-line
-  // @ts-ignore: @TODO: The types are not correct
-  const createURL = ({ qsModule, routeState, location }) => {
-    if (singletonRouter.locale !== locale) return location.href
-    const queryParameters: any = {}
-
-    if (routeState.query) {
-      queryParameters.query = routeState.query
-    }
-    if (routeState.page !== 1) {
-      queryParameters.page = routeState.page
-    }
-    if (routeState.topics) {
-      queryParameters.topics = routeState.topics
-    }
-    if (routeState.years) {
-      queryParameters.years = routeState.years
-    }
-    if (routeState.countries) {
-      queryParameters.countries = routeState.countries
-    }
-
-    const queryString = qsModule.stringify(queryParameters, {
-      addQueryPrefix: true,
-      arrayFormat: 'repeat',
-      format: 'RFC1738',
-    })
-    console.log('Created url from routeState ' + `${location.pathname}${queryString}`)
-    return `${location.pathname}${queryString}`
-  }
-
-  // eslint-disable-next-line
-  // @ts-ignore: @TODO: The types are not correct
-  const parseURL = ({ qsModule, location }) => {
-    const { query = '', page, topics = '', years = '', countries = '' }: any = qsModule.parse(location.search.slice(1))
-
-    const allTopics = Array.isArray(topics) ? topics : [topics].filter(Boolean)
-    const allYears = Array.isArray(years) ? years : [years].filter(Boolean)
-    const allCountries = Array.isArray(countries) ? countries : [countries].filter(Boolean)
-    return {
-      query: query,
-      page,
-      topics: allTopics,
-      years: allYears,
-      countries: allCountries,
-    } as NewsRouteState
-  }
-
   const routing = {
     router: createInstantSearchRouterNext<NewsRouteState>({
       singletonRouter,
       serverUrl: `https://www.equinor.com${isoCode === 'nb-NO' ? '/no/nyheter' : '/news'}`, // temporary fix for url to be available during build time
       routerOptions: {
-        createURL: createURL,
-        parseURL: parseURL,
+        createURL: ({ qsModule, routeState, location }) => {
+          if (singletonRouter.locale !== locale) return location.href
+          const queryParameters: any = {}
+
+          if (routeState.query) {
+            queryParameters.query = routeState.query
+          }
+          if (routeState.page !== 1) {
+            queryParameters.page = routeState.page
+          }
+          if (routeState.topics) {
+            queryParameters.topics = routeState.topics
+          }
+          if (routeState.years) {
+            queryParameters.years = routeState.years
+          }
+          if (routeState.countries) {
+            queryParameters.countries = routeState.countries
+          }
+
+          const queryString = qsModule.stringify(queryParameters, {
+            addQueryPrefix: true,
+            arrayFormat: 'repeat',
+            format: 'RFC1738',
+          })
+          return `${location.pathname}${queryString}`
+        },
+        parseURL: ({ qsModule, location }) => {
+          const {
+            query = '',
+            page,
+            topics = [],
+            years = [],
+            countries = [],
+          }: NewsRouteState = qsModule.parse(location.search.slice(1))
+
+          const allTopics = Array.isArray(topics) ? topics : [topics].filter(Boolean)
+          const allYears = Array.isArray(years) ? years : [years].filter(Boolean)
+          const allCountries = Array.isArray(countries) ? countries : [countries].filter(Boolean)
+          return {
+            query: query,
+            page,
+            topics: allTopics,
+            years: allYears,
+            countries: allCountries,
+          } as NewsRouteState
+        },
         push(url) {
           if (singletonRouter.asPath.split('?')[1] !== url.split('?')[1]) {
             // replace url only if there is a change in query params
@@ -131,7 +127,7 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
         } as UiState
       },
     },
-  }
+  } as InstantSearchNextRouting<UiState, NewsRouteState>
   const searchClient = client()
 
   const queriedSearchClient: SearchClient = {
@@ -149,19 +145,15 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
 
   return (
     <PaginationContextProvider defaultRef={resultsRef}>
-      {/*<Seo seoAndSome={seoAndSome} slug={slug} pageTitle={title} />*/}
       <main ref={ref}>
         <InstantSearchNext
           searchClient={queriedSearchClient}
           future={{ preserveSharedStateOnUnmount: false }}
           indexName={indexName}
-          // eslint-disable-next-line
-          // @ts-ignore: @TODO: The types are not correct
           routing={routing}
         >
           <Configure
             facetingAfterDistinct
-            // maxFacetHits={50}  TODO:// Is this needed?
             maxValuesPerFacet={100}
             facetFilters={['type:news', 'topicTags:-Crude Oil Assays']}
           />
