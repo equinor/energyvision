@@ -78,7 +78,6 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
     return {
       notFound: true,
     }
-    console.log("locale",locale);
   const { query, queryParams } = await getQueryFromSlug(params?.slug as string[], locale)
 
   const intl = await getIntl(locale, preview)
@@ -89,7 +88,7 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
     },
     preview,
   )
-  
+
   const { data, slugs } = pageData
   return {
     props: {
