@@ -69,6 +69,7 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
       arrayFormat: 'repeat',
       format: 'RFC1738',
     })
+    console.log('Created url from routeState ' + `${location.pathname}${queryString}`)
     return `${location.pathname}${queryString}`
   }
 
