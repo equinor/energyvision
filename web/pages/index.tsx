@@ -89,7 +89,7 @@ export const getStaticProps: GetStaticProps = async ({ params, preview = false, 
     },
     preview,
   )
-  console.log("pageData",pageData);
+  
   const { data, slugs } = pageData
   return {
     props: {
