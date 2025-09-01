@@ -9,9 +9,59 @@ import { NewsRoomPageType } from '../../../../types'
 import { setRequestLocale } from 'next-intl/server'
 import { newsroomQuery } from '@/sanity/queries/newsroom'
 import { algoliasearch } from 'algoliasearch'
+import { toPlainText } from 'next-sanity'
+import { isDateAfter } from '@/common/helpers/dateUtilities'
+import getOpenGraphImages from '@/common/helpers/getOpenGraphImages'
+import { metaTitleSuffix } from '@/languages'
+import { Metadata, ResolvingMetadata } from 'next'
 
 export function generateStaticParams() {
   return [{ locale: 'en' }]
+}
+
+export async function generateMetadata(
+  { params }: { params: Promise<{ locale: string }> },
+  _: ResolvingMetadata,
+): Promise<Metadata> {
+  const { locale } = await params
+  const lang = getNameFromLocale(locale)
+
+  const queryParams = {
+    lang,
+  }
+  const { pageData } = await getPageData({
+    query: newsroomQuery,
+    queryParams,
+  })
+
+  const { publishDateTime, updatedAt, documentTitle, title, metaDescription, openGraphImage, heroImage } = pageData
+  const plainTitle = Array.isArray(title) ? toPlainText(title) : title
+
+  const modifiedDate = isDateAfter(publishDateTime, updatedAt) ? publishDateTime : updatedAt
+  const openGraphImages = getOpenGraphImages((openGraphImage?.asset ? openGraphImage : null) || heroImage?.image)
+
+  return {
+    title: `${documentTitle || plainTitle} - ${metaTitleSuffix}`,
+    description: metaDescription,
+    openGraph: {
+      title: plainTitle,
+      description: metaDescription,
+      url: 'https://www.equinor.com/news',
+      locale,
+      type: 'article',
+      siteName: 'Equinor',
+      publishedTime: publishDateTime,
+      modifiedTime: modifiedDate,
+      images: openGraphImages,
+    },
+    alternates: {
+      canonical: 'https://www.equinor.com/news',
+      languages: {
+        no: 'https://www.equinor.com/no/nyheter',
+        'x-default': 'https://www.equinor.com/news',
+      },
+    },
+  }
 }
 
 const getInitialResponse = unstable_cache(

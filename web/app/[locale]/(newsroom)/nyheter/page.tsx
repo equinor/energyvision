@@ -9,6 +9,11 @@ import { NewsRoomPageType } from '../../../../types'
 import { setRequestLocale } from 'next-intl/server'
 import { newsroomQuery } from '@/sanity/queries/newsroom'
 import { algoliasearch } from 'algoliasearch'
+import { Metadata, ResolvingMetadata } from 'next'
+import { metaTitleSuffix } from '@/languages'
+import { isDateAfter } from '@/common/helpers/dateUtilities'
+import getOpenGraphImages from '@/common/helpers/getOpenGraphImages'
+import { toPlainText } from 'next-sanity'
 
 export function generateStaticParams() {
   return [{ locale: 'no' }]
@@ -34,6 +39,51 @@ const getInitialResponse = unstable_cache(
   ['news'],
   { revalidate: 3600, tags: ['news'] },
 )
+
+export async function generateMetadata(
+  { params }: { params: Promise<{ locale: string }> },
+  _: ResolvingMetadata,
+): Promise<Metadata> {
+  const { locale } = await params
+  const lang = getNameFromLocale(locale)
+
+  const queryParams = {
+    lang,
+  }
+  const { pageData } = await getPageData({
+    query: newsroomQuery,
+    queryParams,
+  })
+
+  const { publishDateTime, updatedAt, documentTitle, title, metaDescription, openGraphImage, heroImage } = pageData
+  const plainTitle = Array.isArray(title) ? toPlainText(title) : title
+
+  const modifiedDate = isDateAfter(publishDateTime, updatedAt) ? publishDateTime : updatedAt
+  const openGraphImages = getOpenGraphImages((openGraphImage?.asset ? openGraphImage : null) || heroImage?.image)
+
+  return {
+    title: `${documentTitle || plainTitle} - ${metaTitleSuffix}`,
+    description: metaDescription,
+    openGraph: {
+      title: plainTitle,
+      description: metaDescription,
+      url: 'https://www.equinor.com/no/nyheter',
+      locale,
+      type: 'article',
+      siteName: 'Equinor',
+      publishedTime: publishDateTime,
+      modifiedTime: modifiedDate,
+      images: openGraphImages,
+    },
+    alternates: {
+      canonical: 'https://www.equinor.com/no/nyheter',
+      languages: {
+        en: 'https://www.equinor.com/news',
+        'x-default': 'https://www.equinor.com/news',
+      },
+    },
+  }
+}
 
 export default async function NewsPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
