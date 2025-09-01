@@ -36,7 +36,7 @@ This monorepo is organized into several folder. Please refer to README files ins
 
 ## Package managers
 
-This project uses the pnpm package manager. All commands should be run from root. There are filter aliases in the root `package.json` file that can be used to run commands in specific directories. For example:
+This project uses the pnpm package manager. All commands should be run from root. There are filter aliases in the root `package.json` file that can be used to run commands in specific directories. E.g:
 
 ```bash
 # Install dependencies
