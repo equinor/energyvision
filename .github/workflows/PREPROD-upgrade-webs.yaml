@@ -1,0 +1,52 @@
+name: PREPROD - Build & Deploy all webs
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - upgrade-next-intl
+    paths:
+      - 'web/**'
+      - '!web/README.md'
+      - '!web/.gitignore'
+      - '!web/jest.config.cjs'
+      - '!web/jest.setup.ts'
+      - './FeatureFlags.js'
+      - '!web/components/README.md'
+permissions:
+  id-token: write
+  packages: write
+jobs:
+  deploy-all-sites:
+    runs-on: ubuntu-latest
+    environment:
+      name: preprod
+    strategy:
+      fail-fast: false
+      matrix:
+        dataset: ['global', 'argentina']
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      DOCKER_BUILDKIT: 1
+    steps:
+      - name: Checkout 🔔
+        uses: actions/checkout@v3
+      - name: Deploy website 🌐
+        id: deploy-website
+        uses: ./.github/workflows/deploy-websites/
+        with:
+          imageName: ghcr.io/equinor/energyvision/web-${{ matrix.dataset }}-upgrade
+          datasetName: ${{ matrix.dataset }}
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          sanityApiToken: ${{ secrets.SANITY_API_TOKEN }}
+          sanityPreviewSecret: ${{ secrets.SANITY_STUDIO_PREVIEW_SECRET }}
+          algoliaAppId: ${{ secrets.ALGOLIA_APP_ID }}
+          algoliaApiKey: ${{ secrets.ALGOLIA_SEARCH_API_KEY }}
+          environment: ${{ secrets.ENV }}
+          archiveContentLink: ${{ vars.ARCHIVE_CONTENT_LINK }}
+          friendlyCaptchaSitekey: ${{ matrix.dataset == 'brazil' && vars.BRAZIL_FC_SITEKEY || vars.GLOBAL_FC_SITEKEY }}
+          friendlyCaptchaPuzzleEndpoint: ${{ matrix.dataset == 'brazil' && vars.BRAZIL_FC_PUZZLE_END_POINT || vars.GLOBAL_FC_PUZZLE_END_POINT }}
+      - uses: act10ns/slack@v2
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()
