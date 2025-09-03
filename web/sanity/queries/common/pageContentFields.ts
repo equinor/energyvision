@@ -593,6 +593,7 @@ _type == "keyNumbers" =>{
   _type == "tabs"=>{
     ${tabsComponentFields}
   },
+    _type == "tableV2" => {"table": table::getTablefields(@)},
   //Remove from here and place with homepage template query only
   ${homepageContentFields}
 `

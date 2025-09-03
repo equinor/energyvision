@@ -61,6 +61,7 @@ import StockValues from '@/pageComponents/topicPages/StockValues'
 import TwitterEmbed from '@/pageComponents/topicPages/TwitterEmbed'
 import VideoPlayer, { VideoPlayerBlockProps } from '@/sections/VideoPlayerBlock/VideoPlayerBlock'
 import { HomePageBanner } from '@/sections/HomePageBanner/HomePageBanner'
+import TableBlock, { TableBlockProps } from '@/sections/TableBlock/TableBlock'
 
 type DefaultComponent = {
   id?: string
@@ -91,6 +92,7 @@ export type ComponentProps =
   | KeyNumbersData
   | DefaultComponent
   | TabsBlockProps
+  | TableBlockProps
 
 type PageContentProps = {
   data: TopicPageSchema | MagazinePageSchema
@@ -362,6 +364,26 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
       /* Remove from here and move to Homepage Template PageContent */
       case 'homepageBanner':
         return <HomePageBanner key={c.id} {...(c as any)} />
+              case 'tableV2':
+        return (
+          <TableBlock
+            variant="default"
+            key={c.id}
+            {...(c as any)}
+            anchor={anchorReference}
+            className={topSpacingClassName}
+          />
+        )
+      case 'importTable':
+        return (
+          <TableBlock
+            variant="import"
+            key={c.id}
+            {...(c as any)}
+            anchor={anchorReference}
+            className={topSpacingClassName}
+          />
+        )
       default:
         return null
     }
