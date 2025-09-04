@@ -134,6 +134,10 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
     ...searchClient,
     search(requests: any) {
       if (requests.every(({ params }: any) => !params.query && params?.facetFilters?.flat().length > 2)) {
+        console.log(initialSearchResponse)
+        console.log(
+          'If you are seeing this with some data just above this log. Good news, server cached response is working.',
+        )
         return Promise.resolve({
           results: requests.map(() => initialSearchResponse),
         })

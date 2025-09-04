@@ -31,5 +31,6 @@ export const config = {
   // Match all pathnames except for
   // - … if they start with `/api`, `/_next` or Next dev overlay routes
   // - … the ones containing a dot (e.g. `favicon.ico`)
-  matcher: '/((?!api|_next|favicon.ico|__nextjs|__nextjs_original-stack-frame|__nextjs_launch-editor).*)',
+  matcher:
+    '/((?!api|_next|favicon.ico|__nextjs|__nextjs_original-stack-frame|__nextjs_launch-editor|.well-known|styles).*)',
 }

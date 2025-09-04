@@ -1,6 +1,7 @@
 import getConfig from 'next/config'
 import { NextRouter } from 'next/router'
 import { AllSlugsType } from '../../pageComponents/shared/LocalizationSwitch'
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
 
 const getContentUrl = (locale: string, slug: string) => {
   const { publicRuntimeConfig } = getConfig()
@@ -93,7 +94,7 @@ export const getPagePaths = async (path: string): Promise<string[]> => {
 
 export const anchorClick = (
   e: React.MouseEvent<HTMLDivElement> | React.KeyboardEvent<HTMLDivElement>,
-  router: NextRouter,
+  router: AppRouterInstance,
 ) => {
   if (e != null) {
     const targetLink = (e.target as Element).closest('a')

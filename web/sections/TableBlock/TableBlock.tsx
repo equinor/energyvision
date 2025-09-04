@@ -4,10 +4,10 @@ import { forwardRef, useMemo } from 'react'
 import { PortableTextBlock } from '@portabletext/types'
 import { useReactTable, createColumnHelper, flexRender, getCoreRowModel } from '@tanstack/react-table'
 import { toPlainText } from '@portabletext/react'
-import { Table } from '@core/Table'
-import Blocks from '../../pageComponents/shared/portableText/Blocks'
-import { ThemeVariants } from '@core/Table/Table'
-import { FormattedDate } from 'react-intl'
+import { Table } from '@/core/Table'
+import Blocks from '@/portableText/Blocks'
+import { ThemeVariants } from '@/core/Table/Table'
+import { FormattedDate } from '@/core/FormattedDateTime'
 import { isValid, parse } from 'date-fns'
 
 export type TableTheme = {
@@ -100,14 +100,19 @@ const TableBlock = forwardRef<HTMLDivElement, TableBlockProps>(function TableBlo
             if (isValid(dateObj)) {
               return (
                 <time suppressHydrationWarning dateTime={dateObj.toDateString()} className="text-base">
-                  <FormattedDate value={dateObj} day="numeric" year="numeric" month="short" />
+                  <FormattedDate datetime={dateObj.toDateString()} day="numeric" year="numeric" month="short" />
                 </time>
               )
             }
             if (isValid(dateObjAlternative)) {
               return (
                 <time suppressHydrationWarning dateTime={dateObjAlternative.toDateString()} className="text-base">
-                  <FormattedDate value={dateObjAlternative} day="numeric" year="numeric" month="short" />
+                  <FormattedDate
+                    datetime={dateObjAlternative.toDateString()}
+                    day="numeric"
+                    year="numeric"
+                    month="short"
+                  />
                 </time>
               )
             }
@@ -133,7 +138,7 @@ const TableBlock = forwardRef<HTMLDivElement, TableBlockProps>(function TableBlo
       ref={ref}
       id={anchor}
       className={twMerge(
-        `max-w-viewport mx-auto ${id ? 'scroll-mt-topbar' : ''}`,
+        `mx-auto max-w-viewport ${id ? 'scroll-mt-topbar' : ''}`,
         className,
         `${noPaddingTop ? 'pt-0' : ''} ${reducePaddingBottom ? 'pb-12' : 'pb-page-content'} `,
       )}
@@ -141,13 +146,13 @@ const TableBlock = forwardRef<HTMLDivElement, TableBlockProps>(function TableBlo
       {title && (
         <div className="px-layout-sm xl:px-layout-lg">
           {title && <Heading value={title} variant="h3" as="h2" className={'pb-lg'} />}
-          {ingress && <Paragraph value={ingress} className="max-w-text text-pretty pb-xl" />}
+          {ingress && <Paragraph value={ingress} className="pb-xl max-w-text text-pretty" />}
         </div>
       )}
       <div
         className={`w-full px-layout-sm ${
           useInnerContentWidth ? 'xl:px-layout-lg' : 'xl:px-layout-md'
-        }  flex justify-center`}
+        } flex justify-center`}
       >
         <div
           className="w-full overflow-x-auto"
