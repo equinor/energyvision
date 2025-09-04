@@ -94,13 +94,13 @@ export const getPagePaths = async (path: string): Promise<string[]> => {
 
 export const anchorClick = (
   e: React.MouseEvent<HTMLDivElement> | React.KeyboardEvent<HTMLDivElement>,
-  router: AppRouterInstance,
+  router: NextRouter,
 ) => {
   if (e != null) {
     const targetLink = (e.target as Element).closest('a')
     if (!targetLink) return
     if (targetLink.href.includes('#')) {
-      /* e.preventDefault()
+      e.preventDefault()
       if (
         targetLink.href
           .split(router.locale || 'en')
@@ -109,7 +109,7 @@ export const anchorClick = (
           .at(0) == router.asPath.split('#').at(0)
       ) {
         router.replace(targetLink.href, undefined, { shallow: true })
-      } else router.push(targetLink.href)*/
+      } else router.push(targetLink.href)
     }
   }
 }
