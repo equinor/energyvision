@@ -9,6 +9,7 @@ import Header from '@/sections/Header/Header'
 import Footer from '@/sections/Footer/Footer'
 import archivedNews from '../../../../../../lib/archive/archivedNewsPaths.json'
 import { PathType } from '@/sanity/queries/paths/getPaths'
+import { Flags } from '@/common/helpers/datasetHelpers'
 
 const equinorRegular = localFont({
   src: '../../../../../fonts/equinor/Equinor-Regular.woff',
@@ -31,7 +32,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
   const pagePathArray = slug
   const pagePath = pagePathArray.join('/')
 
-  if (!hasLocale(routing.locales, locale)) {
+  if (!hasLocale(routing.locales, locale) || !Flags.HAS_ARCHIVED_NEWS) {
     notFound()
   }
   const { menuData, footerData } = await getHeaderAndFooterData({ slug, lang: getNameFromLocale(locale) })

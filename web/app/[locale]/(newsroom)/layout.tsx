@@ -13,6 +13,7 @@ import { getHeaderAndFooterData } from '@/sanity/lib/fetchData'
 import { getNameFromLocale } from '@/lib/localization'
 import Header from '@/sections/Header/Header'
 import Footer from '@/sections/Footer/Footer'
+import { Flags } from '@/common/helpers/datasetHelpers'
 
 const equinorRegular = localFont({
   src: '../../fonts/equinor/Equinor-Regular.woff',
@@ -35,7 +36,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
   const { locale, slug } = await params
   const { isEnabled: isDraftMode } = await draftMode()
 
-  if (!hasLocale(routing.locales, locale)) {
+  if (!hasLocale(routing.locales, locale) || !Flags.HAS_NEWSROOM) {
     notFound()
   }
   const { menuData, footerData } = await getHeaderAndFooterData({ slug, lang: getNameFromLocale(locale) })
