@@ -35,7 +35,6 @@ export default async function LocaleLayout({ children, params }: { children: Rea
   const { locale, slug } = await params
   const { isEnabled: isDraftMode } = await draftMode()
 
-  console.log('Newsroom Layout')
   if (!hasLocale(routing.locales, locale)) {
     notFound()
   }

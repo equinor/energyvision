@@ -75,7 +75,7 @@ const Header = ({ slugs, menuData, stickyMenuData }: HeaderProps) => {
   const localization = {
     activeLocale: locale || defaultLanguage.locale,
   }
-  const hasSearch = false //Flags.HAS_SEARCH
+  const hasSearch = Flags.HAS_SEARCH
   const hasMoreThanOneLanguage = languages.length > 1
   const is404 = slugs?.length === 0
 

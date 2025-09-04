@@ -1,9 +1,7 @@
 import { Flags } from '@/common/helpers/datasetHelpers'
 import archivedNews from '../../../../../../lib/archive/archivedNewsPaths.json'
-import getConfig from 'next/config'
 import { languages } from '@/languages'
 import { notFound } from 'next/navigation'
-import { anchorClick } from '@/common/helpers/staticPageHelpers'
 import ArchivedNews from '@/templates/archivedNews/ArchivedNews'
 
 //const { publicRuntimeConfig } = getConfig()
@@ -73,12 +71,9 @@ const fallbackToAnotherLanguage = async (
 }
 
 export default async function Page({ params }: any) {
-  const { locale, slug } = await params
-  //const router = useRouter()
-
+  const { locale, slug: pagePathArray } = await params
   if (!Flags.HAS_ARCHIVED_NEWS) return { notFound: true }
 
-  const pagePathArray = slug
   const pagePath = pagePathArray.join('/')
 
   const archivedItems = archivedNews.filter((e) => e.slug === `/news/archive/${pagePath}`)
@@ -93,30 +88,4 @@ export default async function Page({ params }: any) {
   if (!pageData) notFound()
 
   return <ArchivedNews {...pageData} />
-
-  /*const menuQuery = Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery
-  const menuDataWithDrafts = await getClient(preview).fetch(menuQuery, { lang: getNameFromLocale(locale) })
-  const footerDataWithDrafts = await getClient(preview).fetch(footerQuery, { lang: getNameFromLocale(locale) })
-  const intl = await getIntl(locale, preview)
-
-  const menuData = filterDataToSingleItem(menuDataWithDrafts, preview)
-  const footerData = filterDataToSingleItem(footerDataWithDrafts, preview)
-
-  return {
-    props: {
-      data: {
-        menuData,
-        footerData,
-        archivedItems,
-        news: {
-          ...pageData,
-          slug: pagePath,
-        },
-        intl,
-      },
-    },
-
-    notFound: !pageData,
-    revalidate: 1800,
-  }*/
 }
