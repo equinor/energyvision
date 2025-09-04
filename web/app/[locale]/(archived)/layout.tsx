@@ -63,7 +63,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
           <div className={`[:not(:has(.sticky-menu))]:pt-topbar`}>
             <Header slugs={slugs} menuData={menuData} />
             {children}
-            <Footer footerData={footerData} />
+            <Footer footerData={footerData} className={'clear-both'} />
           </div>
         </NextIntlClientProvider>
       </body>

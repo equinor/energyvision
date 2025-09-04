@@ -7,6 +7,7 @@ import FooterLink from '@/core/Link/FooterLink'
 import type { FooterLinkData, SomeType, FooterColumns } from '../../types/index'
 import { getLocaleFromName } from '../../lib/localization'
 import { getUrlFromAction } from '../../common/helpers'
+import { twMerge } from 'tailwind-merge'
 
 function getSomeSvg(someType: SomeType) {
   const iconMap = {
@@ -23,13 +24,14 @@ function getSomeSvg(someType: SomeType) {
 
 type FooterProps = {
   footerData?: { footerColumns: FooterColumns[] }
+  className: string
 }
 
-const Footer = ({ footerData, ...rest }: FooterProps) => {
+const Footer = ({ footerData, className = '', ...rest }: FooterProps) => {
   const t = useTranslations()
 
   return (
-    <footer className="dark min-h-12 bg-slate-blue-95 px-0 py-4 *:text-white-100" {...rest}>
+    <footer className={twMerge(`dark min-h-12 bg-slate-blue-95 px-0 py-4 *:text-white-100`, className)} {...rest}>
       <div className="mx-auto my-0 flex max-w-screen-2xl flex-row flex-wrap justify-between px-layout-sm pb-2 max-md:flex-col">
         {footerData?.footerColumns?.map(({ header, linkList }) => (
           <section className="flex flex-col max-md:w-4/5 max-md:py-4" key={header}>
