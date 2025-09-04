@@ -24,7 +24,7 @@ function getSomeSvg(someType: SomeType) {
 
 type FooterProps = {
   footerData?: { footerColumns: FooterColumns[] }
-  className: string
+  className?: string
 }
 
 const Footer = ({ footerData, className = '', ...rest }: FooterProps) => {
