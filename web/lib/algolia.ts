@@ -18,3 +18,5 @@ export const searchClient = (options?: SearchOptions) =>
       ],
     }),
   })
+
+export const testSearchClient = () => liteClient(algolia.applicationId, algolia.searchApiKey)

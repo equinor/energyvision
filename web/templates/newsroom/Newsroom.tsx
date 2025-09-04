@@ -13,7 +13,7 @@ import { SearchClient, SearchResponse, UiState } from 'instantsearch.js'
 import { Configure } from 'react-instantsearch'
 import NewsSections from './NewsSections/NewsSections'
 import QuickSearch from './QuickSearch/QuickSearch'
-import { searchClient as client } from '../../lib/algolia'
+import { testSearchClient as client } from '../../lib/algolia'
 import { Pagination } from '../../pageComponents/shared/search/pagination/Pagination'
 import { List } from '@/core/List'
 import { PaginationContextProvider } from '../../common/contexts/PaginationContext'
@@ -46,7 +46,7 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
       singletonRouter,
       serverUrl: `https://www.equinor.com${isoCode === 'nb-NO' ? '/no/nyheter' : '/news'}`, // temporary fix for url to be available during build time
       routerOptions: {
-        createURL: ({ qsModule, routeState, location }) => {
+        /*createURL: ({ qsModule, routeState, location }) => {
           if (singletonRouter.locale !== locale) return location.href
           const queryParameters: any = {}
 
@@ -70,9 +70,10 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
             addQueryPrefix: true,
             arrayFormat: 'repeat',
             format: 'RFC1738',
+            encode: false,
           })
           return `${location.pathname}${queryString}`
-        },
+        },*/
         parseURL: ({ qsModule, location }) => {
           const {
             query = '',
@@ -134,10 +135,6 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
     ...searchClient,
     search(requests: any) {
       if (requests.every(({ params }: any) => !params.query && params?.facetFilters?.flat().length > 2)) {
-        console.log(initialSearchResponse)
-        console.log(
-          'If you are seeing this with some data just above this log. Good news, server cached response is working.',
-        )
         return Promise.resolve({
           results: requests.map(() => initialSearchResponse),
         })

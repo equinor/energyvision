@@ -30,8 +30,6 @@ export const Header = forwardRef<HTMLButtonElement, AccordionHeaderProps>(functi
   { variant = 'primary', children, hasSectionTitle = false, className = '', headerClassName = '', ...rest },
   ref,
 ) {
-  console.log("rest",rest);
-
   const variantClassName: Partial<Record<Variants, string>> = {
     primary: ` 
     items-center
@@ -100,50 +98,22 @@ export const Header = forwardRef<HTMLButtonElement, AccordionHeaderProps>(functi
   const defaultIconsElement = (
     <span className={`grid pr-4`}>
       <TransformableIcon
-        className={`fill-slate-80
-          dark:fill-white-100
-          opacity-100
-          group-hover:opacity-0
-          group-data-open:opacity-0
-          transition-opacity
-          col-span-full
-          row-span-full`}
+        className={`col-span-full row-span-full fill-slate-80 opacity-100 transition-opacity group-hover:opacity-0 group-data-open:opacity-0 dark:fill-white-100`}
         size={24}
         iconData={add_circle_outlined}
       />
       <TransformableIcon
-        className={`fill-slate-80
-          dark:fill-white-100
-          opacity-0
-          group-hover:opacity-100
-          group-data-open:opacity-0
-          transition-opacity
-          col-span-full
-          row-span-full`}
+        className={`col-span-full row-span-full fill-slate-80 opacity-0 transition-opacity group-hover:opacity-100 group-data-open:opacity-0 dark:fill-white-100`}
         size={24}
         iconData={add_circle_filled}
       />
       <TransformableIcon
-        className={`fill-slate-80
-          dark:fill-white-100
-          opacity-0
-          group-data-open:opacity-100
-          group-data-open:group-hover:opacity-0
-          transition-opacity
-          col-span-full
-          row-span-full`}
+        className={`col-span-full row-span-full fill-slate-80 opacity-0 transition-opacity group-data-open:opacity-100 group-data-open:group-hover:opacity-0 dark:fill-white-100`}
         size={24}
         iconData={remove_outlined}
       />
       <TransformableIcon
-        className={`fill-slate-80
-          dark:fill-white-100
-          opacity-0
-          group-data-open:opacity-0
-          group-data-open:group-hover:opacity-100
-          transition-opacity
-          col-span-full
-          row-span-full`}
+        className={`col-span-full row-span-full fill-slate-80 opacity-0 transition-opacity group-data-open:opacity-0 group-data-open:group-hover:opacity-100 dark:fill-white-100`}
         size={24}
         iconData={remove}
       />
@@ -151,72 +121,35 @@ export const Header = forwardRef<HTMLButtonElement, AccordionHeaderProps>(functi
   )
 
   const menuIconsElement = (
-    <div className={`w-fit mr-2 ${variant === 'menu' ? 'xl:hidden' : ''}`}>
-      <GoPlus
-        className={`
-          text-slate-80
-          dark:text-white-100
-          group-data-open:hidden
-          `}
-        size={32}
-      />
-      <GoDash
-        className={`
-          text-slate-80
-          dark:text-white-100
-          hidden
-          group-data-open:block
-          `}
-        size={32}
-      />
+    <div className={`mr-2 w-fit ${variant === 'menu' ? 'xl:hidden' : ''}`}>
+      <GoPlus className={`text-slate-80 group-data-open:hidden dark:text-white-100`} size={32} />
+      <GoDash className={`hidden text-slate-80 group-data-open:block dark:text-white-100`} size={32} />
     </div>
   )
-  const ChildElementType = hasSectionTitle ? 'h3' : 'h2' as ElementType
-
+  const ChildElementType = hasSectionTitle ? 'h3' : ('h2' as ElementType)
 
   return (
-      <ChildElementType className={headerClassName}>
-        <AccordionTrigger
-          ref={ref}
-          className={envisTwMerge(
-            `group
-            w-full
-            cursor-pointer
-            hover:underline
-            decoration-1
-            underline-offset-4
-            outline-hidden
-            focus:outline-hidden
-            focus:no-underline
-            focus-visible:envis-outline
-            dark:focus-visible:envis-outline-invert
-            flex
-            ${variantClassName[variant]}
-          `,
-            className,
-          )}
+    <ChildElementType className={headerClassName}>
+      <AccordionTrigger
+        ref={ref}
+        className={envisTwMerge(
+          `group focus-visible:envis-outline dark:focus-visible:envis-outline-invert flex w-full cursor-pointer decoration-1 underline-offset-4 outline-hidden hover:underline focus:no-underline focus:outline-hidden ${variantClassName[variant]} `,
+          className,
+        )}
+      >
+        {variant === 'primary' && defaultIconsElement}
+        <Typography
+          as="span"
+          className={`grow ${
+            variant === 'menu'
+              ? `xl:motion-safe:transition-all xl:motion-safe:duration-100 xl:motion-safe:ease-in-out`
+              : ''
+          } font-normal max-xl:group-data-open:font-semibold xl:group-data-open:no-underline ${textVariantClassName[variant]}`}
         >
-          {variant === 'primary' && defaultIconsElement}
-          <Typography
-            as="span"
-            className={`
-              grow
-              ${
-                variant === 'menu'
-                  ? `xl:motion-safe:transition-all
-              xl:motion-safe:duration-100 
-              xl:motion-safe:ease-in-out`
-                  : ''
-              } 
-                font-normal
-                max-xl:group-data-open:font-semibold
-               xl:group-data-open:no-underline
-              ${textVariantClassName[variant]}`}
-          >
-            {children}
-          </Typography>
-          {(variant === 'menu' || variant === 'simpleMenu') && menuIconsElement}
-        </AccordionTrigger>
-      </ChildElementType>
+          {children}
+        </Typography>
+        {(variant === 'menu' || variant === 'simpleMenu') && menuIconsElement}
+      </AccordionTrigger>
+    </ChildElementType>
   )
 })
