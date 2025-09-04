@@ -27,7 +27,7 @@ export type AccordionHeaderProps = {
  * @see 🏷️ {@link AccordionHeaderProps}
  */
 export const Header = forwardRef<HTMLButtonElement, AccordionHeaderProps>(function Header(
-  { variant = 'primary', children, hasSectionTitle = false, className = '', headerClassName = '', ...rest },
+  { variant = 'primary', children, hasSectionTitle = false, className = '', headerClassName = '' },
   ref,
 ) {
   const variantClassName: Partial<Record<Variants, string>> = {
