@@ -9,7 +9,7 @@ import { ResourceLink } from '@/core/Link'
 import { getIsoFromLocale } from '../../lib/localization'
 import { Flags } from '../../common/helpers/datasetHelpers'
 import { createInstantSearchRouterNext } from 'react-instantsearch-router-nextjs'
-import { SearchClient, SearchResponse, UiState } from 'instantsearch.js'
+import { SearchClient, SearchOptions, SearchResponse, UiState } from 'instantsearch.js'
 import { Configure } from 'react-instantsearch'
 import NewsSections from './NewsSections/NewsSections'
 import QuickSearch from './QuickSearch/QuickSearch'
@@ -19,6 +19,7 @@ import { List } from '@/core/List'
 import { PaginationContextProvider } from '../../common/contexts/PaginationContext'
 import { InstantSearchNext, InstantSearchNextRouting } from 'react-instantsearch-nextjs'
 import { useTranslations } from 'next-intl'
+import { FacetFilters } from 'algoliasearch'
 
 type NewsRouteState = { query?: string; page?: number; topics?: string[]; years?: string[]; countries?: string[] }
 
@@ -133,13 +134,20 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
 
   const queriedSearchClient: SearchClient = {
     ...searchClient,
-    search(requests: any) {
-      if (requests.every(({ params }: any) => !params.query && params?.facetFilters?.flat().length > 2)) {
+    search(requests: Array<{ indexName: string; params: SearchOptions }>) {
+      if (
+        requests.every(
+          ({ params }: { indexName: string; params: SearchOptions }) =>
+            !params.query && !params?.facetFilters?.flat().length > 2,
+        )
+      ) {
+        console.log('Server cache hit')
         return Promise.resolve({
           results: requests.map(() => initialSearchResponse),
         })
       }
-
+      console.log('Cache not hit for below request')
+      console.log(requests)
       return searchClient.search(requests)
     },
   }
