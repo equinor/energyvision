@@ -40,6 +40,10 @@ inputs:
   friendlyCaptchaPuzzleEndpoint:
     description: 'Friendly captcha puzzle endpoint'
     required: true
+  componentSuffix:
+    description: 'Radix component name suffix. Temporary fix for upgrade.'
+    required: false
+
 runs:
   using: 'composite'
   steps:
@@ -105,7 +109,7 @@ runs:
       id: get-component-name
       shell: bash
       run: |
-        component=${{ inputs.datasetName == 'global' && 'web' || format('{0}{1}', 'web-', inputs.datasetName) }}
+        component=${{ inputs.datasetName == 'global' && format('{0}{1}','web',inputs.componentSuffix) || format('{0}{1}{2}', 'web-', inputs.datasetName, inputs.componentSuffix) }}
         echo "Component name is $component"
         echo "COMPONENT_NAME=$component" >> $GITHUB_ENV
 
