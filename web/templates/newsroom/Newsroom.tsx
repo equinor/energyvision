@@ -136,7 +136,7 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
     search(requests: Array<{ indexName: string; params: SearchOptions }>) {
       const facetFilterSet = new Set(requests.map((it) => it.params.facetFilters).flat(2))
       const hasEmptyQueryOrFirstPage = requests.every(
-        ({ params }: { indexName: string; params: SearchOptions }) => !params.query && params.page !== 0,
+        ({ params }: { indexName: string; params: SearchOptions }) => !params.query && params.page === 0,
       )
 
       if (hasEmptyQueryOrFirstPage && facetFilterSet.size == 2) {
