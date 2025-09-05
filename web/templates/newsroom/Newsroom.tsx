@@ -138,7 +138,9 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
       if (
         requests.every(
           ({ params }: { indexName: string; params: SearchOptions }) =>
-            !params.query && typeof params?.facetFilters !== 'string' && (params?.facetFilters?.flat().length ?? 0 > 2),
+            !params.query &&
+            typeof params?.facetFilters !== 'string' &&
+            (params?.facetFilters?.flat().length ?? 0 <= 2),
         )
       ) {
         console.log('Server cache hit')
