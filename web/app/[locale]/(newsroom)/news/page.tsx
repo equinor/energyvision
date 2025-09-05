@@ -16,7 +16,7 @@ import { metaTitleSuffix } from '@/languages'
 import { Metadata, ResolvingMetadata } from 'next'
 
 export function generateStaticParams() {
-  return [{ locale: 'en' }]
+  return Flags.HAS_NEWSROOM ? [{ locale: 'en' }] : []
 }
 
 export async function generateMetadata(

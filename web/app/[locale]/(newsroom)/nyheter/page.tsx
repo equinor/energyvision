@@ -16,7 +16,7 @@ import getOpenGraphImages from '@/common/helpers/getOpenGraphImages'
 import { toPlainText } from 'next-sanity'
 
 export function generateStaticParams() {
-  return [{ locale: 'no' }]
+  return Flags.HAS_NEWSROOM ? [{ locale: 'no' }] : []
 }
 
 const getInitialResponse = unstable_cache(
