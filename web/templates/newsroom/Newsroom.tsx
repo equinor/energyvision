@@ -144,6 +144,7 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
         )
       ) {
         console.log('Server cache hit')
+        console.log(requests)
         return Promise.resolve({
           results: requests.map(() => initialSearchResponse),
         })
