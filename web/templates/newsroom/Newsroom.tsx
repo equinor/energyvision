@@ -135,22 +135,18 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
   const queriedSearchClient: SearchClient = {
     ...searchClient,
     search(requests: Array<{ indexName: string; params: SearchOptions }>) {
-      if (
-        requests.every(
-          ({ params }: { indexName: string; params: SearchOptions }) =>
-            !params.query &&
-            typeof params?.facetFilters !== 'string' &&
-            (params?.facetFilters?.flat().length ?? 0 <= 2),
-        )
-      ) {
+      const facetFilterSet = new Set(requests.map((it) => it.params.facetFilters).flat(2))
+      const hasEmptyQuery = requests.every(({ params }: { indexName: string; params: SearchOptions }) => !params.query)
+
+      if (hasEmptyQuery && facetFilterSet.size == 2) {
         console.log('Server cache hit')
-        console.log(requests)
+        console.log(JSON.stringify(requests))
         return Promise.resolve({
           results: requests.map(() => initialSearchResponse),
         })
       }
       console.log('Cache not hit for below request')
-      console.log(requests)
+      console.log(JSON.stringify(facetFilterSet))
       return searchClient.search(requests)
     },
   }
