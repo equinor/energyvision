@@ -19,7 +19,6 @@ import { List } from '@/core/List'
 import { PaginationContextProvider } from '../../common/contexts/PaginationContext'
 import { InstantSearchNext, InstantSearchNextRouting } from 'react-instantsearch-nextjs'
 import { useTranslations } from 'next-intl'
-import { FacetFilters } from 'algoliasearch'
 
 type NewsRouteState = { query?: string; page?: number; topics?: string[]; years?: string[]; countries?: string[] }
 
@@ -136,9 +135,11 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
     ...searchClient,
     search(requests: Array<{ indexName: string; params: SearchOptions }>) {
       const facetFilterSet = new Set(requests.map((it) => it.params.facetFilters).flat(2))
-      const hasEmptyQuery = requests.every(({ params }: { indexName: string; params: SearchOptions }) => !params.query)
+      const hasEmptyQueryOrFirstPage = requests.every(
+        ({ params }: { indexName: string; params: SearchOptions }) => !params.query && params.page !== 0,
+      )
 
-      if (hasEmptyQuery && facetFilterSet.size == 2) {
+      if (hasEmptyQueryOrFirstPage && facetFilterSet.size == 2) {
         console.log('Server cache hit')
         console.log(facetFilterSet)
         console.log(JSON.stringify(requests))
@@ -148,7 +149,7 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
       }
       console.log('Cache not hit for below request')
       console.log(JSON.stringify(requests))
-      console.log(JSON.stringify(facetFilterSet))
+      console.log(facetFilterSet)
       return searchClient.search(requests)
     },
   }
