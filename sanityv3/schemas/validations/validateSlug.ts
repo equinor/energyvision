@@ -44,7 +44,7 @@ export const withSlugValidation = (options: any) => {
 }
 
 const stringIsSlug =
-  /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/
+  /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,256}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/
 const httpRegex = /^http:\/\/[^\s]+$/
 export const warnHttpOrNotValidSlugExternal = (slug: string) => {
   if (!slug) return true
