@@ -150,7 +150,7 @@ export default {
       const { label, group = [], url } = selection
       return {
         title: label || 'No label added yet',
-        subtitle: url || (group && `Menu groups: ${group.length}`) || 'No groups added yet',
+        subtitle: url || (group && `Menu groups: ${group.length}`) || '',
         media: EdsIcon(format_line_spacing),
       }
     },
