@@ -1,13 +1,13 @@
-import { BackgroundContainer } from '@/core/Backgrounds'
 import Accordion from './Accordion'
 import { FAQPageJsonLd } from 'next-seo'
-
 import type { AccordionData, AccordionListData } from '../../types/index'
 import { toPlainText } from '@portabletext/react'
-import { Heading, Typography } from '../../core/Typography'
+import { Typography } from '../../core/Typography'
 import { twMerge } from 'tailwind-merge'
-import IngressText from '../../portableText/IngressText'
 import Image, { getSmallerThanPxLgSizes } from '../../core/SanityImage/SanityImage'
+import Blocks from '@/portableText/Blocks'
+import Heading from '@/portableText/components/Heading'
+import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
 
 type AccordionBlockProps = {
   data: AccordionData
@@ -26,15 +26,14 @@ const buildJsonLdElements = (data: AccordionListData[]) => {
 
 const AccordionBlock = ({ data, anchor, className }: AccordionBlockProps) => {
   const { title, ingress, designOptions, accordion, id, image, enableStructuredMarkup } = data
-
+  const { bg, dark } = getBgAndDarkFromBackground(designOptions)
+  // check if section classname needs: [&_svg]:inline [&_svg]:align-baseline
   return (
     <>
-      <BackgroundContainer
-        {...designOptions}
+      <section
         id={anchor}
-        renderFragmentWhenPossible
         className={twMerge(
-          `mx-auto flex max-w-viewport flex-col gap-6 px-layout-lg pb-page-content [&_svg]:inline [&_svg]:align-baseline`,
+          `${bg} ${dark ? 'dark' : ''} mx-auto max-w-viewport px-layout-lg pb-page-content`,
           className,
         )}
       >
@@ -51,17 +50,17 @@ const AccordionBlock = ({ data, anchor, className }: AccordionBlockProps) => {
         )}
         {title &&
           (Array.isArray(title) ? (
-            <Heading value={title} as="h2" variant="xl" className="mb-2" />
+            <Heading value={title} variant="h2" />
           ) : (
-            <Typography as="h2" variant="xl" className="mb-2">
-              {title}
-            </Typography>
+            <Typography variant="h2">{title}</Typography>
           ))}
-        {ingress && <IngressText value={ingress} />}
-        {accordion && accordion.length > 0 && (
-          <Accordion data={accordion} id={id} hasSectionTitle={!!title} queryParamName={id} />
-        )}
-      </BackgroundContainer>
+        <div className="flex flex-col gap-6">
+          {ingress && <Blocks variant="ingress" value={ingress} />}
+          {accordion && accordion.length > 0 && (
+            <Accordion data={accordion} id={id} hasSectionTitle={!!title} queryParamName={id} />
+          )}
+        </div>
+      </section>
       {enableStructuredMarkup && accordion && <FAQPageJsonLd mainEntity={buildJsonLdElements(accordion)} />}
     </>
   )

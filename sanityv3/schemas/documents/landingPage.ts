@@ -4,17 +4,8 @@ import blocksToText from '../../helpers/blocksToText'
 import { filterByLang } from '../../helpers/referenceFilters'
 import { EdsIcon } from '../../icons'
 import CompactBlockEditor from '../components/CompactBlockEditor'
-import { configureTitleBlockContent } from '../editors'
 import { configureBlockContent } from '../editors/blockContentType'
 import { lang } from './langField'
-
-const titleContentType = configureTitleBlockContent()
-const ingressContentType = configureBlockContent({
-  h2: false,
-  h3: false,
-  h4: false,
-  attachment: false,
-})
 
 export default {
   type: 'document',
@@ -53,14 +44,14 @@ export default {
       components: {
         input: CompactBlockEditor,
       },
-      of: [titleContentType],
+      of: [configureBlockContent({ variant: 'title' })],
       validation: (Rule: Rule) => Rule.required(),
     },
     {
       title: 'Ingress',
       name: 'ingress',
       type: 'array',
-      of: [ingressContentType],
+      of: [configureBlockContent({ variant: 'ingress' })],
     },
     {
       title: 'Landing page content',

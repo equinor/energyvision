@@ -1,12 +1,12 @@
 import type { PortableTextBlock, Rule, ValidationContext } from 'sanity'
 import blocksToText from '../../helpers/blocksToText'
 import CompactBlockEditor from '../components/CompactBlockEditor'
-import { configureBlockContent, configureTitleBlockContent } from '../editors'
+import { configureBlockContent } from '../editors'
 import { validateRequiredIfVisible } from '../validations/validateRequiredIfVisible'
 import { DownloadableFile } from './files'
 import { Flags } from '../../src/lib/datasetHelpers'
 
-const titleContentType = configureTitleBlockContent()
+const titleContentType = configureBlockContent({ variant: 'title' })
 
 export type Form = {
   _type: 'form'
@@ -23,13 +23,6 @@ type FormType =
   | 'orderReportsForm'
   | 'careerFairAndVisitsForm'
   | 'pensionForm'
-
-const ingressContentType = configureBlockContent({
-  h2: false,
-  h3: false,
-  h4: false,
-  attachment: false,
-})
 
 export default {
   name: 'form',
@@ -51,7 +44,7 @@ export default {
       name: 'ingress',
       title: 'Ingress',
       type: 'array',
-      of: [ingressContentType],
+      of: [configureBlockContent({ variant: 'ingress' })],
     },
     {
       type: 'string',
@@ -105,7 +98,7 @@ export default {
           return 'Careers contact form'
         } else if (type == 'orderReportsForm') {
           return 'Order reports'
-        } else if(type == 'pensionForm') {
+        } else if (type == 'pensionForm') {
           return 'Pension form'
         }
         return 'Career fairs and visits'

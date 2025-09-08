@@ -54,6 +54,8 @@ const NewsPage = ({ data: news }: ArticleProps) => {
     markDefs: block.markDefs || [],
   }))
 
+  const commonInnerContentGridClasses = ``
+
   return (
     <>
       <NewsArticleJsonLd
@@ -72,10 +74,10 @@ const NewsPage = ({ data: news }: ArticleProps) => {
         body={toPlainText(content)}
       />
       <main>
-        <article className="pb-28">
+        <article className="flex flex-col items-center pb-28">
           <div className={'dark bg-slate-blue-95 px-layout-md py-news-banner-vertical'}>
             <div className="mx-auto max-w-[1186px]">
-              <Typography id="mainTitle" variant="3xl" as="h1" className="m-0">
+              <Typography id="mainTitle" variant="h1">
                 {title}
               </Typography>
               {publishDateTime && (
@@ -102,43 +104,39 @@ const NewsPage = ({ data: news }: ArticleProps) => {
               )}
             </div>
           </div>
-          {heroImage.image.asset && (
-            <div className="mx-auto -mt-news-banner-vertical max-w-viewport px-layout-sm py-0">
-              <DefaulHeroImage className="m-0" data={heroImage} />
-            </div>
-          )}
-          {ingress && ingress.length > 0 && (
-            <div className="mx-auto mt-10 mb-16 max-w-viewport px-layout-lg py-0">
-              <IngressText value={ingress} includeFootnotes />
-            </div>
-          )}
+          <div className="max-w-viewport">
+            {heroImage.image.asset && (
+              <div className="-mt-news-banner-vertical px-layout-sm">
+                <DefaulHeroImage data={heroImage} />
+              </div>
+            )}
+            <div className="px-layout-lg">
+              {ingress && ingress.length > 0 && <Blocks variant="ingress" value={ingress} includeFootnotes />}
 
-          {content && content.length > 0 && (
-            <Blocks value={formattedContent} variant="prose-article" includeFootnotes />
-          )}
-          <div className="mx-auto mt-8 mb-2 max-w-viewport px-layout-lg">
-            <Footnotes blocks={[...ingress, ...content]} />
+              {content && content.length > 0 && <Blocks group="article" value={formattedContent} includeFootnotes />}
+              <div className="mt-8 mb-2">
+                <Footnotes blocks={[...ingress, ...content]} />
+              </div>
+
+              {iframe && (
+                <IFrame
+                  //@ts-ignore:TODO type match for portabletext
+                  title={iframe?.title}
+                  showTitleAbove={true}
+                  frameTitle={iframe?.frameTitle}
+                  url={iframe?.url}
+                  cookiePolicy={iframe?.cookiePolicy}
+                  aspectRatio={iframe?.designOptions?.aspectRatio}
+                  description={iframe?.description}
+                />
+              )}
+
+              {relatedLinks?.links && relatedLinks.links.length > 0 && (
+                <RelatedContent data={relatedLinks} className={twMerge(`my-3xl`)} />
+              )}
+            </div>
+            {latestNews && latestNews.length > 0 && <LatestNews data={latestNews} />}
           </div>
-
-          {iframe && (
-            <section className="mx-auto max-w-viewport px-layout-lg">
-              <IFrame
-                //@ts-ignore:TODO type match for portabletext
-                title={iframe?.title}
-                showTitleAbove={true}
-                frameTitle={iframe?.frameTitle}
-                url={iframe?.url}
-                cookiePolicy={iframe?.cookiePolicy}
-                aspectRatio={iframe?.designOptions?.aspectRatio}
-                description={iframe?.description}
-              />
-            </section>
-          )}
-
-          {relatedLinks?.links && relatedLinks.links.length > 0 && (
-            <RelatedContent data={relatedLinks} className={twMerge(`my-3xl mx-auto max-w-viewport px-layout-lg`)} />
-          )}
-          {latestNews && latestNews.length > 0 && <LatestNews data={latestNews} />}
         </article>
       </main>
     </>

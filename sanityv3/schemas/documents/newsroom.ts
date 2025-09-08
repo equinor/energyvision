@@ -1,6 +1,5 @@
 import blocksToText from '../../helpers/blocksToText'
 import CompactBlockEditor from '../components/CompactBlockEditor'
-import { configureTitleBlockContent } from '../editors'
 import { configureBlockContent } from '../editors/blockContentType'
 import { file } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
@@ -8,17 +7,6 @@ import type { PortableTextBlock, Rule } from 'sanity'
 import { lang } from './langField'
 import routes from '../routes'
 import { filterByRoute } from '../../helpers/referenceFilters'
-
-const titleContentType = configureTitleBlockContent()
-const textContentType = configureBlockContent({
-  h2: true,
-  h3: false,
-  h4: false,
-  externalLink: false,
-  internalLink: true,
-  lists: false,
-  attachment: false,
-})
 
 export default {
   type: 'document',
@@ -59,14 +47,14 @@ export default {
       components: {
         input: CompactBlockEditor,
       },
-      of: [titleContentType],
+      of: [configureBlockContent({ variant: 'title' })],
       validation: (Rule: Rule) => Rule.required(),
     },
     {
       title: 'Text',
       name: 'ingress',
       type: 'array',
-      of: [textContentType],
+      of: [configureBlockContent({ variant: 'fullBlock' })],
     },
     {
       name: 'subscriptionLink',

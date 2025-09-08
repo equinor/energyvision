@@ -2,17 +2,6 @@ import { configureBlockContent } from '../../editors/blockContentType'
 import { validateCharCounterEditor } from '../../validations/validateCharCounterEditor'
 import type { Rule, ValidationContext } from 'sanity'
 
-const blockContentType = configureBlockContent()
-const ingressBlockContentType = configureBlockContent({
-  h2: false,
-  h3: false,
-  h4: false,
-  internalLink: false,
-  externalLink: false,
-  attachment: false,
-  lists: false,
-})
-
 const validateRelatedLinksTitle = (value: any, context: any) => {
   const links = context.document.relatedLinks.links
 
@@ -193,7 +182,7 @@ export const ingress = {
   title: 'Ingress',
   description: 'Lead paragraph. Shown in article and on cards. Max 400 characters',
   type: 'array',
-  of: [ingressBlockContentType],
+  of: [configureBlockContent({ variant: 'ingress' })],
   validation: (Rule: Rule) => Rule.custom((value: any) => validateCharCounterEditor(value, 400)),
 }
 
@@ -201,7 +190,12 @@ export const content = {
   name: 'content',
   title: 'Content',
   type: 'array',
-  of: [blockContentType, { type: 'pullQuote' }, { type: 'positionedInlineImage' }, { type: 'factbox' }],
+  of: [
+    configureBlockContent({ group: 'article', footnote: true }),
+    { type: 'pullQuote' },
+    { type: 'positionedInlineImage' },
+    { type: 'factbox' },
+  ],
   validation: (Rule: Rule) =>
     Rule.custom((value: any) => {
       if (!value || value.length === 0) {

@@ -14,7 +14,6 @@ import {
   AccordionData,
   PromoTileArrayData,
   IFrameData,
-  PromotionData,
   FormData,
   TableData,
   NewsListData,
@@ -54,7 +53,6 @@ import FullWidthVideo, { FullWidthVideoProps } from '@/sections/FullWidthVideo/F
 import Figure, { FigureData } from '@/pageComponents/topicPages/Figure'
 import PageQuote from '@/pageComponents/topicPages/PageQuote'
 import PromoTileArray from '@/sections/PromoTiles/PromoTileArray'
-import Promotion from '@/sections/Promotion/Promotion'
 import CookieDeclaration from '@/pageComponents/topicPages/CookieDeclaration'
 import NewsList from '@/pageComponents/topicPages/NewsList'
 import StockValues from '@/pageComponents/topicPages/StockValues'
@@ -62,14 +60,10 @@ import TwitterEmbed from '@/pageComponents/topicPages/TwitterEmbed'
 import VideoPlayer, { VideoPlayerBlockProps } from '@/sections/VideoPlayerBlock/VideoPlayerBlock'
 import { HomePageBanner } from '@/sections/HomePageBanner/HomePageBanner'
 import TableBlock, { TableBlockProps } from '@/sections/TableBlock/TableBlock'
+import PromotionsBlock, { PromotionsBlockData } from '@/sections/promotions/PromotionsBlock'
 
-type DefaultComponent = {
-  id?: string
-  type?: string
-  designOptions?: DesignOptions
-}
 // How could we do this for several different component types?
-export type ComponentProps =
+export type ComponentSections =
   | TeaserData
   | TextBlockData
   | FullWidthImageData
@@ -80,7 +74,7 @@ export type ComponentProps =
   | AccordionData
   | PromoTileArrayData
   | IFrameData
-  | PromotionData
+  | PromotionsBlockData
   | FormData
   | TableData
   | StockValuesData
@@ -90,9 +84,15 @@ export type ComponentProps =
   | CookieDeclarationData
   | TextTeaserData
   | KeyNumbersData
-  | DefaultComponent
   | TabsBlockProps
   | TableBlockProps
+
+//To be removed when all types are moved to relevant component and these common are in every section component
+type Component = {
+  id?: string
+  type?: string
+  designOptions?: DesignOptions
+} & ComponentSections
 
 type PageContentProps = {
   data: TopicPageSchema | MagazinePageSchema
@@ -107,7 +107,7 @@ type PageContentProps = {
  * Remember to think about the prev section of condition with top spacing
  * E.g. 2 colored background of same color content, only first need but not second
  */
-const getBackgroundOptions = (component: ComponentProps) => {
+const getBackgroundOptions = (component: Component) => {
   //@ts-ignore:Too many types
   if (!component?.designOptions || !Object.hasOwn(component, 'designOptions')) {
     //Return white default if no designOptions
@@ -126,7 +126,7 @@ const getBackgroundOptions = (component: ComponentProps) => {
 
 const cleanBgUtility = (value: string) => value?.replace('bg-', '')
 
-const isWhiteColorBackground = (componentsDO: any, component: ComponentProps) => {
+const isWhiteColorBackground = (componentsDO: any, component: Component) => {
   const casesWhichHaveBackgroundButIsWhite = ['cardsList']
   return (
     cleanBgUtility(componentsDO?.backgroundUtility) === 'white-100' ||
@@ -172,7 +172,7 @@ const isSameColorBackground = (currentComponentsDO: any, previousComponentsDO: a
   return currentComponentsDO?.backgroundColor === previousComponentsDO?.backgroundColor
 }
 
-const applyPaddingTopIfApplicable = (currentComponent: ComponentProps, prevComponent: ComponentProps): string => {
+const applyPaddingTopIfApplicable = (currentComponent: Component, prevComponent: Component): string => {
   const currentComponentsDO = getBackgroundOptions(currentComponent)
   const previousComponentsDO = getBackgroundOptions(prevComponent)
   const specialCases = ['teaser', 'fullWidthImage', 'fullWidthVideo', 'backgroundImage', 'campaignBanner']
@@ -205,7 +205,7 @@ const applyPaddingTopIfApplicable = (currentComponent: ComponentProps, prevCompo
 /*eslint-enable @typescript-eslint/ban-ts-comment */
 
 export const PageContent = ({ data, titleBackground }: PageContentProps) => {
-  const content = (data?.content || []).map((c: ComponentProps, index) => {
+  const content = (data?.content || []).map((c: Component, index) => {
     const prevComponent = data?.content?.[index - 1]
     const anchorReference =
       //@ts-ignore:so many types
@@ -223,8 +223,8 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
             designOptions: {
               background: titleBackground?.background,
             },
-          } as DefaultComponent)
-        : (data?.content?.[previousComponentIndex] as unknown as ComponentProps)
+          } as Component)
+        : (data?.content?.[previousComponentIndex] as unknown as Component)
 
     const topSpacingClassName = applyPaddingTopIfApplicable(c, previousComponentToCompare)
     const spacingClassName = `${topSpacingClassName} pb-page-content`
@@ -271,7 +271,14 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
       case 'iframe':
         return <IFrameBlock key={c.id} data={c as IFrameData} anchor={anchorReference} className={spacingClassName} />
       case 'promotion':
-        return <Promotion key={c.id} data={c as PromotionData} anchor={anchorReference} className={spacingClassName} />
+        return (
+          <PromotionsBlock
+            key={c.id}
+            data={c as PromotionsBlockData}
+            anchor={anchorReference}
+            className={spacingClassName}
+          />
+        )
       case 'form':
         return <Form key={c.id} data={c as FormData} anchor={anchorReference} className={spacingClassName} />
       case 'table':
@@ -364,7 +371,7 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
       /* Remove from here and move to Homepage Template PageContent */
       case 'homepageBanner':
         return <HomePageBanner key={c.id} {...(c as any)} />
-              case 'tableV2':
+      case 'tableV2':
         return (
           <TableBlock
             variant="default"

@@ -4,11 +4,11 @@ import { forwardRef, useMemo } from 'react'
 import { PortableTextBlock } from '@portabletext/types'
 import { useReactTable, createColumnHelper, flexRender, getCoreRowModel } from '@tanstack/react-table'
 import { toPlainText } from '@portabletext/react'
-import { Table } from '@/core/Table'
-import Blocks from '@/portableText/Blocks'
-import { ThemeVariants } from '@/core/Table/Table'
 import { FormattedDate } from '@/core/FormattedDateTime'
 import { isValid, parse } from 'date-fns'
+import Blocks from '@/portableText/Blocks'
+import { ThemeVariants } from '@/core/Table/Table'
+import { Table } from '@/core/Table'
 
 export type TableTheme = {
   title?: ThemeVariants
@@ -27,7 +27,6 @@ export type TableBlockProps = {
   useInnerContentWidth?: boolean
   reducePaddingBottom?: boolean
   noPaddingTop?: boolean
-  id?: string
   anchor?: string
   className?: string
 }
@@ -42,7 +41,6 @@ const TableBlock = forwardRef<HTMLDivElement, TableBlockProps>(function TableBlo
     theme,
     useBorder = false,
     rows,
-    id,
     anchor,
     className = '',
     useFullContainerWidth = false,
@@ -138,7 +136,7 @@ const TableBlock = forwardRef<HTMLDivElement, TableBlockProps>(function TableBlo
       ref={ref}
       id={anchor}
       className={twMerge(
-        `mx-auto max-w-viewport ${id ? 'scroll-mt-topbar' : ''}`,
+        `mx-auto max-w-viewport ${anchor ? 'scroll-mt-topbar' : ''}`,
         className,
         `${noPaddingTop ? 'pt-0' : ''} ${reducePaddingBottom ? 'pb-12' : 'pb-page-content'} `,
       )}
@@ -147,11 +145,13 @@ const TableBlock = forwardRef<HTMLDivElement, TableBlockProps>(function TableBlo
         <div className="px-layout-sm xl:px-layout-lg">
           {title && <Heading value={title} variant="h3" as="h2" className={'pb-lg'} />}
           {ingress && <Paragraph value={ingress} className="pb-xl max-w-text text-pretty" />}
+          {ingress && <Paragraph value={ingress} className="pb-xl max-w-text text-pretty" />}
         </div>
       )}
       <div
         className={`w-full px-layout-sm ${
           useInnerContentWidth ? 'xl:px-layout-lg' : 'xl:px-layout-md'
+        } flex justify-center`}
         } flex justify-center`}
       >
         <div

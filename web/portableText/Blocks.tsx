@@ -12,13 +12,14 @@ import { PortableTextBlock, PortableTextBlockStyle } from '@portabletext/types'
 import { FigureWithLayout, Quote } from './components'
 import { FactBox } from '@/sections/FactBox/FactBox'
 import { twMerge } from 'tailwind-merge'
-import { Highlight } from '@/core/Typography/Highlight'
 import { IFrame } from '@/core/IFrame/IFrame'
 import { Footnote } from './components/Footnote'
-import ProseBlock from './prose/Block'
-import ProseHeading from './prose/Heading'
-import { Link as ProseLink } from './prose/Link'
-import ProseList from './prose/List'
+import { Link } from './components/Link'
+import { List } from './components/List'
+import { HeadingProps, ParagraphProps } from '@/core/Typography'
+import { TypographyGroups, TypographyVariants } from '@/core/Typography/variants'
+import { Paragraph } from './components/Paragraph'
+import { Heading } from './components/Heading'
 
 export type BlockType = Record<PortableTextBlockStyle, PortableTextBlockComponent | undefined>
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -28,78 +29,124 @@ export type ListType = Record<'number' | 'bullet', PortableTextListComponent>
 
 type TypeProps = {
   value?: any
-  children?: React.ReactNode
+  children?: PortableTextBlock[]
 }
-/* 
-const defaultBlockSerializers: BlockType = {
-  normal: ({ children }: TypeProps) => <Typography>{children}</Typography>,
-  smallText: ({ children }: TypeProps) => <p className="text-sm">{children}</p>,
-  largeText: ({ children }: TypeProps) => <p className="text-2xl leading-snug">{children}</p>,
+
+/* const blockSerializers: BlockType = {
+  normal: ({ children }: TypeProps) => <Block>{children}</Block>,
+  smallText: ({ children }: TypeProps) => <Block textVariant="small">{children}</Block>,
+  largeText: ({ children }: TypeProps) => <Block textVariant="large">{children}</Block>,
   extraLargeText: ({ children }: TypeProps) => {
-    return <p className={`text-4xl leading-planetary font-medium lg:text-5xl 2xl:text-8xl`}>{children}</p>
+    return <Block textVariant="extraLarge">{children}</Block>
   },
-  h2: ({ children }: TypeProps) => <ProseHeading as="h2">{children}</ProseHeading>,
-  h3: ({ children }: TypeProps) => <ProseHeading as="h3">{children}</ProseHeading>,
+  twoXLText: ({ children }: TypeProps) => {
+    return <Block textVariant="twoXLText">{children}</Block>
+  },
+  h2: ({ children }: TypeProps) => (
+    <Block type="heading" headingLevel="h2">
+      {children}
+    </Block>
+  ),
+  h3: ({ children }: TypeProps) => (
+    <Block type="heading" headingLevel="h3">
+      {children}
+    </Block>
+  ),
+  h4: ({ children }: TypeProps) => (
+    <Block type="heading" headingLevel="h4">
+      {children}
+    </Block>
+  ),
 } */
-const proseBlockSerializers: BlockType = {
-  normal: ({ children }: TypeProps) => <ProseBlock textVariant="normal">{children}</ProseBlock>,
-  smallText: ({ children }: TypeProps) => <ProseBlock textVariant="small">{children}</ProseBlock>,
-  largeText: ({ children }: TypeProps) => <ProseBlock textVariant="large">{children}</ProseBlock>,
-  extraLargeText: ({ children }: TypeProps) => {
-    return <ProseBlock textVariant="extraLarge">{children}</ProseBlock>
-  },
-  h2: ({ children }: TypeProps) => <ProseHeading as="h2">{children}</ProseHeading>,
-  h3: ({ children }: TypeProps) => <ProseHeading as="h3">{children}</ProseHeading>,
+
+// Ingress only has normal and small text
+// Text Block Text Content has normal, small text and heading 3
+// News Content has normal, small text and heading 2 and 3 -> Heading group article
+
+const getBlockComponents = (group: TypographyGroups, variant: TypographyVariants) => {
+  return {
+    normal: ({ children }: TypeProps) => (
+      <Paragraph group={group} variant={variant}>
+        {children}
+      </Paragraph>
+    ),
+    smallText: ({ children }: TypeProps) => (
+      <Paragraph group="paragraph" variant="small">
+        {children}
+      </Paragraph>
+    ),
+    largeText: ({ children }: TypeProps) => <Heading variant="2xl">{children}</Heading>,
+    extraLargeText: ({ children }: TypeProps) => {
+      return <Heading variant="5xl">{children}</Heading>
+    },
+    twoXLText: ({ children }: TypeProps) => {
+      return <Heading variant="8xl">{children}</Heading>
+    },
+    h2: ({ children }: TypeProps) => (
+      <Heading group={group} variant="h2">
+        {children}
+      </Heading>
+    ),
+    h3: ({ children }: TypeProps) => (
+      <Heading group={group} variant="h3">
+        {children}
+      </Heading>
+    ),
+    h4: ({ children }: TypeProps) => (
+      <Heading group={group} variant="h4">
+        {children}
+      </Heading>
+    ),
+  }
 }
-const defaultMarkSerializers: MarkType = {
+
+const markSerializers: MarkType = {
   sub: ({ children }: TypeProps) => <sub>{children}</sub>,
   sup: ({ children }: TypeProps) => <sup>{children}</sup>,
   s: ({ children }: TypeProps) => <s>{children}</s>,
   link: ({ children, value }: any) => {
     return (
-      <ProseLink type="externalUrl" value={value}>
+      <Link type="externalUrl" value={value}>
         {children}
-      </ProseLink>
+      </Link>
     )
   },
   internalLink: ({ children, value }: any) => {
     return (
-      <ProseLink type="internalUrl" value={value}>
+      <Link type="internalUrl" value={value}>
         {children}
-      </ProseLink>
+      </Link>
     )
   },
   footnote: () => null,
   highlight: ({ children }: TypeProps) => {
-    return <Highlight>{children}</Highlight>
+    return (
+      <span data-highlight className={'text-energy-red-100 dark:text-spruce-wood-100'}>
+        {children}
+      </span>
+    )
   },
-  strong: ({ children }: any) => <strong className="font-bold text-inherit">{children}</strong>,
+  strong: ({ children }: any) => <strong className="font-bold">{children}</strong>,
 }
 
-const defaultListSerializers: ListType = {
+const listSerializers: ListType = {
   bullet: ({ children }: any) => {
-    return <ProseList as="ul">{children}</ProseList>
+    return <List as="ul">{children}</List>
   },
   number: ({ children }: any) => {
-    return <ProseList as="ol">{children}</ProseList>
+    return <List as="ol">{children}</List>
   },
 }
-/* const proseListSerializers = {
-  bullet: BulletList,
-  number: NumberedList,
-} */
 
-const defaultSerializers = {
-  types: {
-    //@ts-ignore:todo
-    positionedInlineImage: (props) => <FigureWithLayout {...props} />,
-    //@ts-ignore:todo
-    pullQuote: (props) => <Quote {...props} />,
-    //@ts-ignore:todo
-    basicIframe: (props) => {
-      const { value } = props
-      return <IFrame {...value} className="mx-auto px-layout-md py-14" />
-    },
+const typesSerializers = {
+  //@ts-ignore:todo
+  positionedInlineImage: (props) => <FigureWithLayout {...props} />,
+  //@ts-ignore:todo
+  pullQuote: (props) => <Quote {...props} />,
+  //@ts-ignore:todo
+  basicIframe: (props) => {
+    const { value } = props
+    return <IFrame {...value} className="mx-auto px-layout-md py-14" />
   },
 }
 const footnoteSerializer = {
@@ -129,44 +176,30 @@ const getLineClampNormalBlock = (linesToClamp: number): any => {
   }
 }
 
-export type ProseVariants = 'no-prose' | 'prose-article' | 'prose-medium' | 'prose-campaign'
-
-export type BlockProps = {
-  variant?: ProseVariants
-  /**
-   * Override default block serializers
-   */
+export type BlocksProps = {
+  group?: TypographyGroups
+  variant?: TypographyVariants
   blocksComponents?: Partial<PortableTextReactComponents>
-  /**
-   * Override default marks serializers
-   */
   marks?: MarkType
-  /**
-   * Override default types serializers
-   */
   types?: TypesType
   /**
    * Extend components sent for non blocks
    */
   components?: PortableTextReactComponents | Partial<PortableTextReactComponents>
-  /**
-   * Override other styling to the wrapping block
-   */
   className?: string
-  /**
-   * If needed to connect with aria-describedby and such
-   */
+  /** If needed to connect with aria-describedby and such */
   id?: string
   /** Use to clamp lines on number */
   clampLines?: 3 | 4 | 5
   includeFootnotes?: boolean
   noInvert?: boolean
-} & PortableTextProps
+} & (HeadingProps | ParagraphProps)
 
 const inlineBlockTypes = ['block', 'positionedInlineImage', 'pullQuote', 'basicIframe']
 
 export default function Blocks({
-  variant = 'no-prose',
+  group = 'paragraph',
+  variant = 'body',
   value,
   blocksComponents,
   marks: marksComponents,
@@ -175,7 +208,7 @@ export default function Blocks({
   id,
   clampLines,
   includeFootnotes = false,
-}: BlockProps) {
+}: BlocksProps) {
   let div: PortableTextBlock[] = []
   return (
     <>
@@ -193,28 +226,26 @@ export default function Blocks({
           div = []
 
           return (
-            <div
-              key={block._key}
-              className={twMerge(`${variant === 'no-prose' ? '' : `prose ${variant}`}`, className)}
-              id={id}
-            >
+            <div key={block._key} className={twMerge(``, className)} id={id}>
               <PortableText
                 value={value}
                 //@ts-ignore:todo
                 components={{
                   block: {
-                    ...defaultSerializers,
-                    ...proseBlockSerializers,
+                    ...getBlockComponents(group, variant),
                     ...blocksComponents,
                     ...(clampLines && getLineClampNormalBlock(clampLines)),
                   },
-                  types: { ...defaultSerializers.types },
+                  types: { ...typesSerializers },
                   marks: {
-                    ...defaultMarkSerializers,
+                    ...markSerializers,
                     ...marksComponents,
                     ...(includeFootnotes && footnoteSerializer),
                   },
-                  list: { ...defaultListSerializers },
+                  list: { ...listSerializers },
+                }}
+                onMissingComponent={(message, options) => {
+                  console.warn(`${message},type:${options.type},nodeType:${options.nodeType}`)
                 }}
               />
             </div>

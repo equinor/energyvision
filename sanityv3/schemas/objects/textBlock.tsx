@@ -5,9 +5,9 @@ import type { ColorSelectorValue } from '../components/ColorSelector'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
 import CompactBlockEditor from '../components/CompactBlockEditor'
-import { configureBlockContent, configureTitleBlockContent } from '../editors'
+import { configureBlockContent } from '../editors'
 
-const blockContentType = configureBlockContent({
+/* const blockContentType = configureBlockContent({
   h2: false,
   h3: true,
   h4: false,
@@ -39,7 +39,7 @@ const titleContentType = configureTitleBlockContent({
   largeText: true,
   extraLargeText: true,
   twoXLText: true,
-})
+}) */
 
 type TextBlock = {
   overline?: string
@@ -124,7 +124,7 @@ export default {
       components: {
         input: CompactBlockEditor,
       },
-      of: [titleContentType],
+      of: [configureBlockContent({ variant: 'with2XLTitle' })],
       validation: (Rule: Rule) =>
         Rule.custom((value: PortableTextBlock[]) => (!value ? 'A title is recommended' : true)).warning(),
     },
@@ -149,7 +149,7 @@ export default {
       description: 'Use regular title and set big text to false. Will be removed after a transition period',
       fieldset: 'titleOptions',
       type: 'array',
-      of: [blockContentTypeForBigText],
+      of: [configureBlockContent({ variant: 'withXLTitle' })],
       hidden: ({ parent }: TextBlockDocument) => !parent.isBigText,
       validation: (Rule: Rule) =>
         Rule.custom((value: PortableTextBlock[], ctx: ValidationContext) =>
@@ -163,14 +163,14 @@ export default {
       name: 'ingress',
       title: 'Ingress',
       type: 'array',
-      of: [ingressContentType],
+      of: [configureBlockContent({ variant: 'ingress' })],
       hidden: ({ parent }: TextBlockDocument) => parent.isBigText,
     },
     {
       name: 'text',
       title: 'Text content',
       type: 'array',
-      of: [blockContentType],
+      of: [configureBlockContent()],
     },
     {
       name: 'action',

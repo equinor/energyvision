@@ -1,5 +1,4 @@
 import type { LandingPageSchema, PortableTextBlock } from '../../types/index'
-import IngressText from '../../portableText/IngressText'
 import ContentGroup from '../../pageComponents/landingPages/ContentGroup'
 import Seo from '../../pageComponents/shared/Seo'
 import { Typography } from '@/core/Typography'
@@ -16,16 +15,16 @@ const LandingPage = ({ data }: LandingPageProps) => {
   return (
     <>
       <Seo seoAndSome={data?.seoAndSome} slug={data?.slug} pageTitle={data?.title} />
-      <main>
-        <div className="px-layout-md py-layout-lg">
+      <main className="pt-20 pb-page-content">
+        <div className="px-layout-lg">
           {title && (
-            <Typography className="mx-auto max-w-[1186px]" as="h1" variant="3xl">
+            <Typography className="mx-auto max-w-[1186px]" variant="h1">
               {plainTitle}
             </Typography>
           )}
+          {ingress && <Blocks variant="ingress" value={ingress} className="mb-6" />}
         </div>
-        {ingress && <IngressText value={ingress} />}
-        <div>
+        <div className="flex flex-col gap-6 px-layout-md">
           {subGroups?.map((group) => {
             return <ContentGroup key={group.id} group={group} />
           })}

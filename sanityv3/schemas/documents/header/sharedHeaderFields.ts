@@ -1,9 +1,8 @@
 import { PortableTextBlock, Rule, ValidationContext, CurrentUser, ConditionalPropertyCallbackContext } from 'sanity'
 import blocksToText from '../../../helpers/blocksToText'
 import CompactBlockEditor from '../../components/CompactBlockEditor'
-import { configureBlockContent, configureTitleBlockContent } from '../../editors'
+import { configureBlockContent } from '../../editors'
 import { HeroTypes } from '../../HeroTypes'
-import { defaultBannerBigTitletStyle, fiftyFiftyBigTitleStyle } from './bigTitleStyles'
 import { ImageWithAltAndCaption } from '../../objects/imageWithAltAndCaption'
 import singleItemArray from '../../objects/singleItemArray'
 
@@ -14,14 +13,6 @@ type Hero = {
   heroType?: HeroTypes
   isBigTitle?: boolean
 }
-
-const titleContentType = configureTitleBlockContent()
-const ingressContentType = configureBlockContent({
-  h2: false,
-  h3: false,
-  h4: false,
-  attachment: false,
-})
 
 const isBigTitle = {
   title: 'Big title',
@@ -42,9 +33,9 @@ const heroBigTitleDefault = {
   type: 'array',
   fieldset: 'header',
   of: [
-    configureTitleBlockContent({
+    configureBlockContent({
+      variant: 'withXLTitle',
       highlight: true,
-      extendedStyles: defaultBannerBigTitletStyle,
     }),
   ],
   hidden: ({ parent }: DocumentType) => !parent.isBigTitle || parent.heroType !== HeroTypes.DEFAULT,
@@ -66,7 +57,7 @@ const heroBigTitleFiftyFifty = {
   title: 'Hero Title',
   type: 'array',
   fieldset: 'header',
-  of: [configureTitleBlockContent({ extendedStyles: fiftyFiftyBigTitleStyle })],
+  of: [configureBlockContent({ variant: 'withLargerTitle' })],
   hidden: ({ parent }: DocumentType) => !parent.isBigTitle || parent.heroType !== HeroTypes.FIFTY_FIFTY,
   validation: (Rule: Rule) =>
     Rule.custom((value: PortableTextBlock[], ctx: ValidationContext) =>
@@ -86,7 +77,7 @@ const title = {
   components: {
     input: CompactBlockEditor,
   },
-  of: [titleContentType],
+  of: [configureBlockContent({ variant: 'title' })],
   fieldset: 'header',
   validation: (Rule: Rule) => Rule.required(),
 }
@@ -138,7 +129,7 @@ const heroTitle = {
   components: {
     input: CompactBlockEditor,
   },
-  of: [titleContentType],
+  of: [configureBlockContent({ variant: 'ingress' })],
   fieldset: 'header',
   hidden: ({ parent }: DocumentType) => {
     return (
@@ -157,7 +148,7 @@ const heroIngress = {
   title: 'Hero Ingress',
   name: 'heroIngress',
   type: 'array',
-  of: [ingressContentType],
+  of: [configureBlockContent({ variant: 'ingress' })],
   hidden: ({ parent }: DocumentType) => {
     return (
       parent?.heroType !== HeroTypes.FIFTY_FIFTY || (parent?.heroType === HeroTypes.FIFTY_FIFTY && parent.isBigTitle)

@@ -169,11 +169,9 @@ const GridTextBlock = forwardRef<HTMLDivElement, GridTextBlockProps>(function Gr
             {(title || (useThemedTitle && themedTitle)) && (
               <Heading
                 as="h2"
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                //@ts-ignore
+                //@ts-ignore: todo
                 value={useThemedTitle ? themedTitle : title}
                 serializerClassnames={serializerClassnames}
-                noProse
               />
             )}
           </hgroup>
@@ -182,11 +180,9 @@ const GridTextBlock = forwardRef<HTMLDivElement, GridTextBlockProps>(function Gr
             {(title || (useThemedTitle && themedTitle)) && (
               <Heading
                 as="h2"
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                //@ts-ignore
+                //@ts-ignore: todo
                 value={useThemedTitle ? themedTitle : title}
                 serializerClassnames={serializerClassnames}
-                noProse
                 className={`${textContentAlignmentUtilities[contentAlignment ?? 'left']}`}
               />
             )}

@@ -22,5 +22,3 @@ export const List = forwardRef<HTMLParagraphElement, ListProps>(function List({ 
     </ListTag>
   )
 })
-
-export default List

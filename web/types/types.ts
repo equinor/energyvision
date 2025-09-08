@@ -85,7 +85,6 @@ export type ContentType =
   | AccordionData
   | PromoTileArrayData
   | IFrameData
-  | PromotionData
   | FormData
   | TableData
   | CookieDeclarationData
@@ -268,27 +267,6 @@ export type Tag = {
   title: {
     [key: string]: string
   }
-}
-
-// Do we have a way to share types between studio and web?
-export type PromotionType = 'promoteTopics' | 'promoteNews' | 'promotePeople' | 'promoteEvents' | 'promoteMagazine'
-
-export type PromotionData = {
-  id: string
-  type: string
-  title?: PortableTextBlock[]
-  ingress?: PortableTextBlock[]
-  content: {
-    tags?: Tag[]
-    countryTags?: Tag[]
-    localNewsTags?: Tag[]
-    promotions: CardData[] | PeopleCardData[] | EventCardData[]
-    type: PromotionType
-    eventPromotionSettings?: EventPromotionSettings
-  }
-  viewAllLink?: LinkData
-  useHorizontalScroll?: boolean | undefined
-  designOptions?: DesignOptions
 }
 
 export type FooterColumns = {

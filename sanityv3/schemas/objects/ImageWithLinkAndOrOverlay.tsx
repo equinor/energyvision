@@ -2,21 +2,9 @@ import { ImageWithAlt } from './imageWithAlt'
 import type { PortableTextBlock, Reference } from 'sanity'
 import { Rule } from 'sanity'
 import CompactBlockEditor from '../components/CompactBlockEditor'
-import { configureBlockContent, configureTitleBlockContent } from '../editors'
+import { configureBlockContent } from '../editors'
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
 import singleItemArray from './singleItemArray'
-
-const blockConfig = {
-  h2: false,
-  h3: false,
-  h4: false,
-  internalLink: false,
-  externalLink: false,
-  attachment: false,
-  lists: true,
-}
-
-const blockContentType = configureBlockContent({ ...blockConfig })
 
 export type CarouselImageWithLinkAndOrOverlay = {
   _type: 'imageWithLinkAndOrOverlay'
@@ -57,14 +45,14 @@ export default {
       components: {
         input: CompactBlockEditor,
       },
-      of: [configureTitleBlockContent()],
+      of: [configureBlockContent({ variant: 'title' })],
     },
     {
       name: 'captionText',
       title: 'Caption content',
       description: 'Displays title in overlay',
       type: 'array',
-      of: [blockContentType],
+      of: [configureBlockContent({ variant: 'simpleBlock' })],
       validation: (Rule: Rule) =>
         Rule.custom((value: PortableTextBlock[]) => {
           return validateCharCounterEditor(value, 200, true)

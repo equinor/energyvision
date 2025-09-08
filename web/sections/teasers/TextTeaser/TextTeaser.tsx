@@ -7,7 +7,7 @@ import { ResourceLink } from '@/core/Link'
 import { getUrlFromAction } from '../../../common/helpers/getUrlFromAction'
 import { getLocaleFromName } from '../../../lib/localization'
 import { Heading } from '@/core/Typography'
-import IngressText from '../../../portableText/IngressText'
+import Blocks from '@/portableText/Blocks'
 
 const { Content, Media } = Teaser
 
@@ -35,7 +35,7 @@ const TextTeaser = ({ data, anchor, className }: TextTeaserProps) => {
       <Content className="px-layout-lg pt-0 pb-16 sm:p-12 lg:p-16">
         {text && (
           <div className="pb-8 last:pb-0">
-            <IngressText value={text} />
+            <Blocks variant="ingress" value={text} />
           </div>
         )}
         {action && (

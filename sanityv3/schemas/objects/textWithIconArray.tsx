@@ -3,9 +3,7 @@ import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import { SchemaType } from '../../types'
-import { configureTitleBlockContent } from '../editors'
-
-const titleContentType = configureTitleBlockContent()
+import { configureBlockContent } from '../editors'
 
 export default {
   type: 'object',
@@ -22,7 +20,7 @@ export default {
       name: 'title',
       type: 'array',
       inputComponent: CompactBlockEditor,
-      of: [titleContentType],
+      of: [configureBlockContent({ variant: 'title' })],
       title: 'Title',
       description: 'The list of icon/text should have a heading, can be hidden below',
     },

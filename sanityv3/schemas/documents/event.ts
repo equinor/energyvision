@@ -3,20 +3,11 @@ import type { PortableTextBlock, Rule, ValidationContext } from 'sanity'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
 import CompactBlockEditor from '../components/CompactBlockEditor'
-import { configureBlockContent, configureTitleBlockContent } from '../editors'
+import { configureBlockContent } from '../editors'
 import type { EventDate } from '../objects/eventDate'
 import type { RelatedLinksArray } from '../objects/relatedLinks'
 import { lang } from './langField'
 import basicIframe from '../objects/basicIframe'
-
-const titleContentType = configureTitleBlockContent()
-const blockContentType = configureBlockContent()
-const ingressContentType = configureBlockContent({
-  h2: false,
-  h3: false,
-  h4: false,
-  attachment: false,
-})
 
 const validateRelatedLinksTitle = (value: string, context: ValidationContext) => {
   const { parent } = context as { parent: { title: string; links: RelatedLinksArray } }
@@ -99,7 +90,7 @@ export default {
       components: {
         input: CompactBlockEditor,
       },
-      of: [titleContentType],
+      of: [configureBlockContent({ variant: 'title' })],
       validation: (Rule: Rule) => Rule.required(),
     },
 
@@ -117,13 +108,13 @@ export default {
       title: 'Ingress',
       name: 'ingress',
       type: 'array',
-      of: [ingressContentType],
+      of: [configureBlockContent({ variant: 'ingress' })],
     },
     {
       name: 'content',
       title: 'Content',
       type: 'array',
-      of: [blockContentType, basicIframe],
+      of: [configureBlockContent(), basicIframe],
     },
     {
       title: 'Title',
@@ -133,7 +124,7 @@ export default {
       components: {
         input: CompactBlockEditor,
       },
-      of: [titleContentType],
+      of: [configureBlockContent({ variant: 'title' })],
     },
     {
       title: ' ',

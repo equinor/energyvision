@@ -3,21 +3,8 @@ import type { PortableTextBlock, Rule } from 'sanity'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
 import CompactBlockEditor from '../components/CompactBlockEditor'
-import { configureTitleBlockContent } from '../editors'
 import { configureBlockContent } from '../editors/blockContentType'
 import { lang } from './langField'
-
-const titleContentType = configureTitleBlockContent()
-const textContentType = configureBlockContent({
-  h2: true,
-  h3: false,
-  h4: false,
-  externalLink: false,
-  internalLink: false,
-  lists: false,
-  attachment: false,
-  smallText: false,
-})
 
 export default {
   type: 'document',
@@ -51,14 +38,14 @@ export default {
       components: {
         input: CompactBlockEditor,
       },
-      of: [titleContentType],
+      of: [configureBlockContent({ variant: 'title' })],
       validation: (Rule: Rule) => Rule.required(),
     },
     {
       title: 'Text',
       name: 'text',
       type: 'array',
-      of: [textContentType],
+      of: [configureBlockContent({ variant: 'withH2SimpleBlock' })],
     },
     {
       title: 'Background image',

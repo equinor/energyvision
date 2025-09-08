@@ -1,25 +1,9 @@
 import CompactBlockEditor from '../components/CompactBlockEditor'
-import { configureBlockContent, configureTitleBlockContent } from '../editors'
+import { configureBlockContent } from '../editors'
 import { PortableTextBlock, Rule } from 'sanity'
 import { NumberIcon } from '@sanity/icons'
 import blocksToText from '../../helpers/blocksToText'
 import singleItemArray from './singleItemArray'
-
-const titleContentType = configureTitleBlockContent()
-const ingressContentType = configureBlockContent({
-  h2: false,
-  h3: false,
-  h4: false,
-  attachment: false,
-})
-
-const disclaimerContentType = configureBlockContent({
-  h2: false,
-  h3: false,
-  h4: false,
-  attachment: false,
-  smallText: true,
-})
 
 export default {
   name: 'keyNumbers',
@@ -40,7 +24,7 @@ export default {
       components: {
         input: CompactBlockEditor,
       },
-      of: [titleContentType],
+      of: [configureBlockContent({ variant: 'title' })],
       validation: (Rule: Rule) => Rule.required().warning('In most cases you should add a title'),
     },
     {
@@ -53,7 +37,7 @@ export default {
       name: 'ingress',
       title: 'Ingress',
       type: 'array',
-      of: [ingressContentType],
+      of: [configureBlockContent({ variant: 'ingress' })],
     },
     {
       name: 'keyNumberItems',
@@ -77,7 +61,7 @@ export default {
       components: {
         input: CompactBlockEditor,
       },
-      of: [disclaimerContentType],
+      of: [configureBlockContent({ variant: 'ingress' })],
     },
     singleItemArray({
       name: 'action',

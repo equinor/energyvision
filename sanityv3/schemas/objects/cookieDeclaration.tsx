@@ -2,9 +2,8 @@ import { table_chart } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
 import { Heading, Text, Box } from '@sanity/ui'
 import CompactBlockEditor from '../components/CompactBlockEditor'
-import { configureTitleBlockContent } from '../editors'
+import { configureBlockContent } from '../editors'
 
-const titleContentType = configureTitleBlockContent()
 // eslint-disable-next-line react/display-name
 const ApiDescription = () => {
   return (
@@ -38,7 +37,7 @@ export default {
       components: {
         input: CompactBlockEditor,
       },
-      of: [titleContentType],
+      of: [configureBlockContent({ variant: 'title' })],
     },
     {
       name: 'description',

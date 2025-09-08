@@ -3,7 +3,7 @@ import blocksToText from '../../helpers/blocksToText'
 import { FullSizeImage, LeftAlignedImage, RightAlignedImage, SmallSizeImage } from '../../icons'
 import { RadioIconSelector } from '../components'
 import CompactBlockEditor from '../components/CompactBlockEditor'
-import { configureBlockContent, configureTitleBlockContent } from '../editors'
+import { configureBlockContent } from '../editors'
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
 
 import type { PortableTextBlock, Reference, Rule, ValidationContext } from 'sanity'
@@ -12,8 +12,6 @@ import type { DownloadableFile } from './files'
 import type { ImageWithAlt } from './imageWithAlt'
 import type { LinkSelector } from './linkSelector'
 import type { ColorSelectorValue } from '../components/ColorSelector'
-
-const titleContentType = configureTitleBlockContent()
 
 const imageSizeOptions = [
   { value: 'full', icon: FullSizeImage },
@@ -24,28 +22,6 @@ const imageAlignmentOptions = [
   { value: 'left', icon: LeftAlignedImage },
   { value: 'right', icon: RightAlignedImage },
 ]
-
-const blockConfig = {
-  h2: false,
-  h3: false,
-  h4: false,
-  internalLink: false,
-  externalLink: false,
-  attachment: false,
-  lists: true,
-}
-
-const blockContentType = configureBlockContent({ ...blockConfig })
-
-const blockContentTypeForBigText = configureBlockContent({
-  ...blockConfig,
-  smallText: false,
-  normalTextOverride: {
-    title: 'Normal',
-    value: 'normal',
-    component: ({ children }: { children: React.ReactNode }) => <span style={{ fontSize: '42px' }}>{children}</span>,
-  },
-})
 
 export type Teaser = {
   _type: 'teaser'
@@ -109,14 +85,15 @@ export default {
       components: {
         input: CompactBlockEditor,
       },
-      of: [titleContentType],
+      of: [configureBlockContent({ variant: 'title' })],
       hidden: ({ parent }: TeaserDocument) => parent.isBigText,
     },
+    // Maybe teaser could have links in block content and use ingress style?
     {
       name: 'text',
       title: 'Text content',
       type: 'array',
-      of: [blockContentType],
+      of: [configureBlockContent({ variant: 'simpleBlock' })],
       validation: (Rule: Rule) =>
         Rule.custom((value: PortableTextBlock[], ctx: ValidationContext) => {
           if (!(ctx.parent as Teaser)?.isBigText) {
@@ -130,7 +107,7 @@ export default {
       name: 'bigText',
       title: 'Text content',
       type: 'array',
-      of: [blockContentTypeForBigText],
+      of: [configureBlockContent({ variant: 'withLargerTitle' })],
       validation: (Rule: Rule) =>
         Rule.custom((value: PortableTextBlock[], ctx: ValidationContext) => {
           if ((ctx.parent as Teaser)?.isBigText) {

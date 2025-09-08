@@ -3,7 +3,7 @@ import blocksToText from '../../helpers/blocksToText'
 import { LeftAlignedImage, RightAlignedImage } from '../../icons'
 import { RadioIconSelector } from '../components'
 import CompactBlockEditor from '../components/CompactBlockEditor'
-import { configureBlockContent, configureTitleBlockContent } from '../editors'
+import { configureBlockContent } from '../editors'
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
 import type { PortableTextBlock, Reference, Rule } from 'sanity'
 import type { ColorSelectorValue } from '../components/ColorSelector'
@@ -13,22 +13,10 @@ import type { ImageWithAlt } from './imageWithAlt'
 import type { LinkSelector } from './linkSelector/linkSelector'
 import singleItemArray from './singleItemArray'
 
-const titleContentType = configureTitleBlockContent()
-
 const imageAlignmentOptions = [
   { value: 'left', icon: LeftAlignedImage },
   { value: 'right', icon: RightAlignedImage },
 ]
-
-const blockContentType = configureBlockContent({
-  h2: false,
-  h3: false,
-  h4: false,
-  internalLink: false,
-  externalLink: false,
-  attachment: false,
-  lists: false,
-})
 
 export type Teaser = {
   _type: 'teaser'
@@ -65,13 +53,13 @@ export default {
       components: {
         input: CompactBlockEditor,
       },
-      of: [titleContentType],
+      of: [configureBlockContent({ variant: 'title' })],
     },
     {
       name: 'text',
       title: 'Text content',
       type: 'array',
-      of: [blockContentType],
+      of: [configureBlockContent({ variant: 'simpleBlock' })],
       validation: (Rule: Rule) =>
         Rule.custom((value: PortableTextBlock[]) => validateCharCounterEditor(value, 600)).warning(),
     },

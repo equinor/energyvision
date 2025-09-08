@@ -1,12 +1,10 @@
 import { defaultLanguage } from '../../languages'
 import { EdsIcon } from '../../icons'
 import { list } from '@equinor/eds-icons'
-import { configureTitleBlockContent } from '../editors'
+import { configureBlockContent } from '../editors'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import { Card, Text, Box, Stack } from '@sanity/ui'
 import type { Rule } from 'sanity'
-
-const titleContentType = configureTitleBlockContent()
 
 // eslint-disable-next-line react/display-name
 const ComponentDescription = () => {
@@ -53,7 +51,7 @@ export default {
       components: {
         input: CompactBlockEditor,
       },
-      of: [titleContentType],
+      of: [configureBlockContent({ variant: 'title' })],
     },
     {
       type: 'promoteNews',

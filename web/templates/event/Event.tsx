@@ -3,18 +3,16 @@ import { BackgroundContainer } from '@/core/Backgrounds'
 import { FormattedDate, FormattedTime } from '@/core/FormattedDateTime'
 import { toPlainText } from '@portabletext/react'
 import { getEventDates } from '../../common/helpers/dateUtilities'
-import Promotion from '../../sections/Promotion/Promotion'
+import Promotion from '../../sections/promotions/PromotionsBlock'
 import type { PortableTextBlock } from '@portabletext/types'
 import Seo from '../../pageComponents/shared/Seo'
 import type { EventSchema } from '../../types/index'
 import { EventJsonLd } from 'next-seo'
-import Blocks from '../../portableText/Blocks'
 import { twMerge } from 'tailwind-merge'
 import RelatedContent from '../../pageComponents/shared/RelatedContent'
 import { useTranslations } from 'next-intl'
 import { Typography } from '@/core/Typography'
 import AddToCalendar from '@/pageComponents/topicPages/AddToCalendar'
-import IngressText from '@/portableText/IngressText'
 import ContactList from '@/pageComponents/shared/ContactList'
 
 export default function Event({ data }: { data: EventSchema }): JSX.Element {
@@ -68,8 +66,10 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
           </BackgroundContainer>
           {(ingress || content) && (
             <div className={`mt-16 px-0 pb-page-content md:px-8 lg:px-0`}>
-              {ingress && <IngressText value={ingress} className="mx-auto max-w-viewport px-layout-lg pb-16" />}
-              {content && <Blocks variant="prose-article" value={content} className="mx-auto max-w-viewport" />}
+              {ingress && (
+                <Blocks variant="ingress" value={ingress} className="mx-auto max-w-viewport px-layout-lg pb-16" />
+              )}
+              {content && <Blocks group="article" value={content} className="mx-auto max-w-viewport" />}
             </div>
           )}
           {promotedPeople?.people && promotedPeople?.people.length > 0 && (

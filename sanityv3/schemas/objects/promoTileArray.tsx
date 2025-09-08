@@ -4,19 +4,12 @@ import type { PortableTextBlock, Rule } from 'sanity'
 import type { PromoTile } from './promoTile'
 import blocksToText from '../../helpers/blocksToText'
 import CompactBlockEditor from '../components/CompactBlockEditor'
-import { configureBlockContent, configureTitleBlockContent } from '../editors'
+import { configureBlockContent } from '../editors'
 
 export type PromoTileArray = {
   _type: 'promoTileArray'
   group: PromoTile[]
 }
-
-const ingressContentType = configureBlockContent({
-  h2: false,
-  h3: false,
-  h4: false,
-  attachment: false,
-})
 
 export default {
   type: 'object',
@@ -30,7 +23,7 @@ export default {
       components: {
         input: CompactBlockEditor,
       },
-      of: [configureTitleBlockContent()],
+      of: [configureBlockContent({ variant: 'title' })],
       validation: (Rule: Rule) => Rule.required().warning('In most cases you should add a title'),
     },
     {
@@ -43,7 +36,7 @@ export default {
       name: 'ingress',
       title: 'Ingress',
       type: 'array',
-      of: [ingressContentType],
+      of: [configureBlockContent({ variant: 'ingress' })],
     },
     {
       type: 'array',
@@ -76,8 +69,8 @@ export default {
         title: compTitle
           ? compTitle
           : group
-          ? getGroupTitle(group[0]) + ' | ' + (getGroupTitle(group[1]) || '')
-          : 'Missing content',
+            ? getGroupTitle(group[0]) + ' | ' + (getGroupTitle(group[1]) || '')
+            : 'Missing content',
         subtitle: 'Promo tiles component',
         media: <div>{EdsIcon(collection_2)}</div>,
       }

@@ -5,8 +5,8 @@
     "import/no-unresolved": [
       "error",
       {
-        "ignore": ["^sanity/.+"]
-      }
-    ]
-  }
+        "ignore": ["^sanity/.+"],
+      },
+    ],
+  },
 }

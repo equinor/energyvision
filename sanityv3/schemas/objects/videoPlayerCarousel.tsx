@@ -3,21 +3,10 @@ import { play_circle } from '@equinor/eds-icons'
 import blocksToText from '../../helpers/blocksToText'
 import type { Reference, Rule, PortableTextBlock } from 'sanity'
 import { title } from './iframe/sharedIframeFields'
-import { configureBlockContent, configureTitleBlockContent } from '../editors'
+import { configureBlockContent } from '../editors'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import { defaultColors } from '../defaultColors'
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
-
-const titleContentType = configureTitleBlockContent()
-const ingressBlockContentType = configureBlockContent({
-  h2: false,
-  h3: false,
-  h4: false,
-  internalLink: false,
-  externalLink: false,
-  attachment: false,
-  lists: false,
-})
 
 export default {
   name: 'videoPlayerCarousel',
@@ -46,7 +35,7 @@ export default {
       title: 'Ingress',
       description: 'Optional short description. Max 400 characters',
       type: 'array',
-      of: [ingressBlockContentType],
+      of: [configureBlockContent({ variant: 'ingress' })],
       validation: (Rule: Rule) => Rule.custom((value: any) => validateCharCounterEditor(value, 400, true)),
     },
     {
@@ -65,7 +54,7 @@ export default {
               title: 'Title',
               description: 'Optional title/heading shown beneath the video.',
               components: { input: CompactBlockEditor },
-              of: [titleContentType],
+              of: [configureBlockContent({ variant: 'title' })],
             },
             {
               name: 'videoFile',

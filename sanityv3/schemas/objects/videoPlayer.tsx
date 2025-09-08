@@ -1,21 +1,11 @@
 import { play_circle } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
-
-import { configureBlockContent, configureTitleBlockContent } from '../editors'
+import { configureBlockContent } from '../editors'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import blocksToText from '../../helpers/blocksToText'
 import type { PortableTextBlock, Rule } from 'sanity'
 import { ImageWithAlt } from './imageWithAlt'
 import singleItemArray from './singleItemArray'
-
-const titleContentType = configureTitleBlockContent()
-
-const ingressContentType = configureBlockContent({
-  h2: false,
-  h3: false,
-  h4: false,
-  attachment: false,
-})
 
 export default {
   name: 'videoPlayer',
@@ -39,13 +29,13 @@ export default {
       title: 'Title',
       description: 'The (optional) title/heading shown above the video.',
       components: { input: CompactBlockEditor },
-      of: [titleContentType],
+      of: [configureBlockContent({ variant: 'title' })],
     },
     {
       name: 'ingress',
       title: 'Ingress',
       type: 'array',
-      of: [ingressContentType],
+      of: [configureBlockContent({ variant: 'ingress' })],
     },
     singleItemArray({
       name: 'action',

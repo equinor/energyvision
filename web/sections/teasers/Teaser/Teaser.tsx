@@ -1,12 +1,12 @@
 import { Teaser as TeaserLayout } from '@/core/Teaser'
-import IngressText from '../../../portableText/IngressText'
 import { getUrlFromAction } from '../../../common/helpers'
 import Image from '../../../core/SanityImage/SanityImage'
 import type { TeaserData, ImageWithAlt } from '../../../types/index'
 import { ResourceLink } from '../../../core/Link'
-import { Heading } from '../../../core/Typography'
 import { getLocaleFromName } from '../../../lib/localization'
 import { Typography } from '@/core/Typography'
+import Blocks from '@/portableText/Blocks'
+import Heading from '@/portableText/components/Heading'
 
 const { Content, Media } = TeaserLayout
 
@@ -58,16 +58,14 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
         ) : (
           <>
             {overline ? (
-              <hgroup className="mb-1 flex flex-col gap-2">
-                <Typography as="div" className="text-md">
-                  {overline}
-                </Typography>
-                {title && <Heading value={title} as="h2" variant="xl" />}
+              <hgroup className="mb-1">
+                <Typography variant="overline">{overline}</Typography>
+                {title && <Heading value={title} variant="h2" />}
               </hgroup>
             ) : (
-              <>{title && <Heading value={title} as="h2" variant="xl" className="mb-2" />}</>
+              <>{title && <Heading value={title} variant="h2" />}</>
             )}
-            {text && <IngressText value={text} />}
+            {text && <Blocks variant="ingress" value={text} className="mb-6" />}
           </>
         )}
         {actions && (

@@ -58,6 +58,7 @@
   --text-4xl: clamp(calc(45.89 / 16 * 1rem), 2.16vw + 2.355rem, calc(79.225 / 16 * 1rem));
   --text-5xl: clamp(calc(51.97 / 16 * 1rem), 2.55vw + 2.64rem, calc(91.31 / 16 * 1rem));
   --text-6xl: clamp(calc(58.05 / 16 * 1rem), 2.94vw + 2.925rem, calc(103.39 / 16 * 1rem));
+  --text-8xl: clamp(calc(59.19 / 16 * 1rem), 3.72vw + 3.495rem, calc(115.47 / 16 * 1rem));
 
   --font-weight-semibolder: 650;
 
@@ -189,10 +190,10 @@ and not use important in textteaser theme
 /* @custom-variant highlight (&:where([data-highlight], [data-highlight] *)) */
 
 @custom-variant envis-outline {
-  @apply outline-2 outline-offset-3 outline-norwegian-woods-100 outline-dashed;
+  @apply outline-offset-3 outline-norwegian-woods-100 outline-dashed outline-2;
 }
 @custom-variant envis-outline-invert {
-  @apply outline-2 outline-offset-3 outline-white-100 outline-dashed;
+  @apply outline-offset-3 outline-white-100 outline-dashed outline-2;
 }
 @custom-variant envis-outline-invert {
   word-break: 'break-word';
@@ -233,13 +234,13 @@ and not use important in textteaser theme
 
 @utility envis-scrollbar {
   &::-webkit-scrollbar {
-    @apply h-2.5 bg-grey-20;
+    @apply bg-grey-20 h-2.5;
   }
   &::-webkit-scrollbar-track {
-    @apply h-2.5 bg-grey-20;
+    @apply bg-grey-20 h-2.5;
   }
   &::-webkit-scrollbar-thumb {
-    @apply h-2.5 rounded-2xs bg-grey-50 hover:bg-grey-60;
+    @apply rounded-2xs bg-grey-50 hover:bg-grey-60 h-2.5;
   }
 }
 
@@ -342,6 +343,7 @@ treat the value and modifier as a single value:
 
 @layer base {
   body {
+    @apply text-slate-80 dark:text-white-100;
     -webkit-font-smoothing: antialiased;
   }
   p,
@@ -508,7 +510,7 @@ treat the value and modifier as a single value:
   /** PROSE END  */
 
   .clickbound-area {
-    @apply before:absolute before:top-1/2 before:left-1/2 before:aspect-square before:w-[48px] before:translate-x-[-50%] before:translate-y-[-50%] before:cursor-pointer before:rounded-[100%] before:content-[''];
+    @apply before:absolute before:left-1/2 before:top-1/2 before:aspect-square before:w-[48px] before:translate-x-[-50%] before:translate-y-[-50%] before:cursor-pointer before:rounded-[100%] before:content-[''];
   }
 
   /**
@@ -516,7 +518,7 @@ treat the value and modifier as a single value:
  * 1. Increment the counter at each new reference
  */
   a[aria-describedby='footnote-label'] {
-    @apply relative cursor-default text-inherit outline-hidden;
+    @apply outline-hidden relative cursor-default text-inherit;
     counter-increment: footnotes;
     text-decoration: none;
     /* outline: none;*/
@@ -537,7 +539,7 @@ treat the value and modifier as a single value:
  * 1. Display the current state of the counter (e.g. `[1]`)
  */
   a[aria-describedby='footnote-label']::after {
-    @apply cursor-pointer pr-[2px] pl-[2px] align-super text-xs font-medium text-slate-blue-95 no-underline hover:font-medium hover:underline;
+    @apply text-slate-blue-95 cursor-pointer pl-[2px] pr-[2px] align-super text-xs font-medium no-underline hover:font-medium hover:underline;
     content: counter(footnotes); /* 1 */
   }
 
@@ -545,11 +547,11 @@ treat the value and modifier as a single value:
  * Resetting the default focused styles on the number
  */
   a[aria-describedby='footnote-label']:focus::after {
-    @apply outline-2 outline-offset-2 outline-norwegian-woods-100 outline-dashed;
+    @apply outline-norwegian-woods-100 outline-dashed outline-2 outline-offset-2;
   }
 
   /* highlight the note in the footer */
   footer :target {
-    @apply w-fit bg-autumn-storm-40;
+    @apply bg-autumn-storm-40 w-fit;
   }
 }

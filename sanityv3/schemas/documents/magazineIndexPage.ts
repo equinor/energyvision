@@ -8,19 +8,6 @@ import { bookmarks } from '@equinor/eds-icons'
 import type { PortableTextBlock, Rule, ValidationContext } from 'sanity'
 import { lang } from './langField'
 import { HeroTypes } from '../HeroTypes'
-import { configureTitleBlockContent } from '../editors'
-
-const titleContentType = configureTitleBlockContent()
-
-const textContentType = configureBlockContent({
-  h2: true,
-  h3: true,
-  h4: false,
-  externalLink: false,
-  internalLink: true,
-  lists: true,
-  attachment: false,
-})
 
 export default {
   type: 'document',
@@ -64,7 +51,7 @@ export default {
       components: {
         input: CompactBlockEditor,
       },
-      of: [titleContentType],
+      of: [configureBlockContent({ variant: 'title' })],
       fieldset: 'header',
       validation: (Rule: Rule) => Rule.required(),
     },
@@ -115,7 +102,7 @@ export default {
       title: 'Text',
       name: 'ingress',
       type: 'array',
-      of: [textContentType],
+      of: [configureBlockContent({ variant: 'fullBlock' })],
       fieldset: 'header',
     },
     {

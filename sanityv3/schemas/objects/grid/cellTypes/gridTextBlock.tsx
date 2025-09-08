@@ -13,19 +13,14 @@ import {
   ContentBottomCenterImage,
 } from '../../../../icons'
 import { configureBlockContent } from '../../../editors'
-import { configureThemedTitleBlockContent } from '../../../editors/themedTitleEditorContentType'
 import { capitalizeFirstLetter } from '../../../../helpers/formatters'
 import { RadioIconSelector } from '../../../components'
 import singleItemArray from '../../singleItemArray'
 import { fromLargerTextThemeColors, fromNormalTextThemeColors } from '../../textTeaser'
 
-const blockContentType = configureBlockContent({
-  smallText: true,
-  largeText: true,
-  extraLargeText: true,
-})
-const themedTitleContentType = configureThemedTitleBlockContent({ normalText: false })
-const titleContentType = configureThemedTitleBlockContent()
+const blockContentType = configureBlockContent({ variant: 'extendedBlock' })
+const themedTitleContentType = configureBlockContent({ variant: 'with2XLTitle' })
+const titleContentType = configureBlockContent({ variant: 'title' })
 
 const contentAlignmentOptions = [
   { value: 'left', icon: ContentLeftImage },

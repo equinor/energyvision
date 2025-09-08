@@ -11,7 +11,7 @@ type CallToActionsProps = {
   linkVariant?: 'default' | 'fit'
 }
 
-const CallToActions = ({ callToActions = [], splitList,linkVariant, className ="" }: CallToActionsProps) => {
+const CallToActions = ({ callToActions = [], splitList, linkVariant, className = '' }: CallToActionsProps) => {
   if (!callToActions) return null
 
   const getSingleAction = () => {
@@ -41,8 +41,7 @@ const CallToActions = ({ callToActions = [], splitList,linkVariant, className ="
   ) : (
     <ul
       className={twMerge(
-        `grid grid-cols-[fit-content] gap-x-8 gap-y-6 ${splitList ? 'md:grid md:grid-cols-2 items-end' : ''}
-     `,
+        `grid grid-cols-[fit-content] gap-x-8 gap-y-6 ${splitList ? 'items-end md:grid md:grid-cols-2' : ''} `,
         className,
       )}
     >
@@ -57,7 +56,7 @@ const CallToActions = ({ callToActions = [], splitList,linkVariant, className ="
               type={callToAction.type}
               extension={callToAction.extension}
               showExtensionIcon={true}
-              variant={linkVariant ? linkVariant : "default"}
+              variant={linkVariant ? linkVariant : 'default'}
             >
               {`${callToAction?.label}`}
             </ResourceLink>

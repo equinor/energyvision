@@ -2,7 +2,7 @@ import { twitter } from '@equinor/eds-icons'
 import { Rule, ValidationContext } from 'sanity'
 import { EdsIcon } from '../../icons'
 import CompactBlockEditor from '../components/CompactBlockEditor'
-import { configureBlockContent, configureTitleBlockContent } from '../editors'
+import { configureBlockContent } from '../editors'
 
 export type TwitterEmbed = {
   _type: 'twitterEmbed'
@@ -10,13 +10,6 @@ export type TwitterEmbed = {
   embedValue: string
 }
 
-const titleContentType = configureTitleBlockContent()
-const ingressContentType = configureBlockContent({
-  h2: false,
-  h3: false,
-  h4: false,
-  attachment: false,
-})
 export default {
   title: 'Twitter Embed',
   description:
@@ -43,13 +36,13 @@ export default {
       components: {
         input: CompactBlockEditor,
       },
-      of: [titleContentType],
+      of: [configureBlockContent({ variant: 'title' })],
     },
     {
       name: 'ingress',
       title: 'Ingress',
       type: 'array',
-      of: [ingressContentType],
+      of: [configureBlockContent({ variant: 'ingress' })],
     },
     {
       name: 'embedType',
@@ -76,8 +69,8 @@ export default {
             return embedValue?.startsWith('@')
               ? "Enter twitter handle without '@'"
               : embedValue === undefined
-              ? 'Twitter handle is required'
-              : true
+                ? 'Twitter handle is required'
+                : true
         }).error(),
     },
     {

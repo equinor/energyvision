@@ -1,13 +1,15 @@
 import type { IFrameData } from '../../types/index'
 import { BackgroundContainer } from '@/core/Backgrounds'
-import IngressText from '../../portableText/IngressText'
-import { Heading } from '@/core/Typography'
 import { IFrame } from '@/core/IFrame/IFrame'
 import { useId } from 'react'
 import envisTwMerge from '../../twMerge'
 import { getUrlFromAction } from '../../common/helpers'
 import { ResourceLink } from '@/core/Link'
 import { getLocaleFromName } from '../../lib/localization'
+import Blocks from '@/portableText/Blocks'
+import Heading from '@/portableText/components/Heading'
+import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
+import { twMerge } from 'tailwind-merge'
 
 const IFrameBlock = ({
   anchor,
@@ -31,47 +33,47 @@ const IFrameBlock = ({
     transcript,
   } = data
 
-  const { height, aspectRatio, background } = designOptions
+  const { height, aspectRatio } = designOptions
+  const { bg, dark } = getBgAndDarkFromBackground(designOptions)
   const headingId = useId()
   const actionUrl = action ? getUrlFromAction(action) : ''
 
   if (!url) return null
   return (
-    <BackgroundContainer
-      {...background}
-      {...rest}
+    <section
+      className={twMerge(`${bg} ${dark ? 'dark' : ''} mx-auto max-w-viewport px-layout-lg pb-page-content`, className)}
       id={anchor}
-      className={envisTwMerge('mx-auto flex max-w-viewport flex-col gap-6 pb-page-content', className)}
-      renderFragmentWhenPossible
     >
       {title && <Heading variant="h3" as="h2" id={headingId} value={title} />}
-      {ingress && <IngressText value={ingress} />}
-      <IFrame
-        frameTitle={frameTitle}
-        url={url}
-        cookiePolicy={cookiePolicy}
-        aspectRatio={aspectRatio}
-        height={height}
-        labelledBy={headingId}
-        {...(description && {
-          description,
-        })}
-        hasSectionTitle={!!title}
-        transcript={transcript}
-      />
-      {action && action.label && actionUrl && (
-        <ResourceLink
-          href={actionUrl || ''}
-          extension={action?.extension}
-          showExtensionIcon={true}
-          variant="fit"
-          hrefLang={action?.type === 'internalUrl' ? getLocaleFromName(action?.link?.lang) : undefined}
-          className=""
-        >
-          {action.label}
-        </ResourceLink>
-      )}
-    </BackgroundContainer>
+      <div className="flex flex-col gap-6">
+        {ingress && <Blocks variant="ingress" value={ingress} />}
+        <IFrame
+          frameTitle={frameTitle}
+          url={url}
+          cookiePolicy={cookiePolicy}
+          aspectRatio={aspectRatio}
+          height={height}
+          labelledBy={headingId}
+          {...(description && {
+            description,
+          })}
+          hasSectionTitle={!!title}
+          transcript={transcript}
+        />
+        {action && action.label && actionUrl && (
+          <ResourceLink
+            href={actionUrl || ''}
+            extension={action?.extension}
+            showExtensionIcon={true}
+            variant="fit"
+            hrefLang={action?.type === 'internalUrl' ? getLocaleFromName(action?.link?.lang) : undefined}
+            className=""
+          >
+            {action.label}
+          </ResourceLink>
+        )}
+      </div>
+    </section>
   )
 }
 

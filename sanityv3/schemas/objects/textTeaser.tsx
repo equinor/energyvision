@@ -3,7 +3,7 @@ import blocksToText from '../../helpers/blocksToText'
 import { LeftAlignedImage, RightAlignedImage } from '../../icons'
 import { RadioIconSelector } from '../components'
 import CompactBlockEditor from '../components/CompactBlockEditor'
-import { configureBlockContent, configureTitleBlockContent } from '../editors'
+import { configureBlockContent } from '../editors'
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
 
 import type { PortableTextBlock, Rule } from 'sanity'
@@ -14,33 +14,10 @@ import singleItemArray from './singleItemArray'
 import { ThemeSelectorColor, ThemeSelectorValue } from '../components/ThemeSelector'
 import { defaultColors } from '../defaultColors'
 
-const titleContentType = configureTitleBlockContent({
-  highlight: true,
-  highlightTitle: 'Highlight text selected from theme below',
-  extendedStyles: [
-    {
-      title: 'Normal',
-      value: 'normal',
-    },
-  ],
-})
-
 const titleAlignmentOptions = [
   { value: 'left', icon: LeftAlignedImage },
   { value: 'right', icon: RightAlignedImage },
 ]
-
-const blockConfig = {
-  h2: false,
-  h3: false,
-  h4: false,
-  internalLink: false,
-  externalLink: false,
-  attachment: false,
-  lists: true,
-}
-
-const blockContentType = configureBlockContent({ ...blockConfig })
 
 //Keep in sync with web/pageComponents/shared/textTeaser/theme
 export const textTeaserThemeColors = [
@@ -276,14 +253,14 @@ export default {
       components: {
         input: CompactBlockEditor,
       },
-      of: [titleContentType],
+      of: [configureBlockContent({ variant: 'title', highlight: true })],
       validation: (Rule: Rule) => Rule.required(),
     },
     {
       name: 'text',
       title: 'Text content',
       type: 'array',
-      of: [blockContentType],
+      of: [configureBlockContent({ variant: 'simpleBlock' })],
       validation: (Rule: Rule) =>
         Rule.custom((value: PortableTextBlock[]) => {
           return validateCharCounterEditor(value, 600)

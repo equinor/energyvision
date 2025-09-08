@@ -6,11 +6,9 @@ import { EdsIcon } from '../../icons'
 import type { PortableTextBlock, Rule, ValidationContext } from 'sanity'
 import blocksToText from '../../helpers/blocksToText'
 import CompactBlockEditor from '../components/CompactBlockEditor'
-import { configureTitleBlockContent } from '../editors'
+import { configureBlockContent } from '../editors'
 import type { ColorSelectorValue } from '../components/ColorSelector'
 import { cookiePolicy } from './iframe/sharedIframeFields'
-
-const titleContentType = configureTitleBlockContent()
 
 export type IFrame = {
   _type: 'basicIframe'
@@ -46,7 +44,7 @@ export default {
       components: {
         input: CompactBlockEditor,
       },
-      of: [titleContentType],
+      of: [configureBlockContent({ variant: 'title' })],
     },
 
     {

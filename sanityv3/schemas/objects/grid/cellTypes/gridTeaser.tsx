@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 import blocksToText from '../../../../helpers/blocksToText'
-import { configureBlockContent, configureThemedTitleBlockContent } from '../../../editors'
+import { configureBlockContent } from '../../../editors'
 import { validateCharCounterEditor } from '../../../validations/validateCharCounterEditor'
 
 import type { PortableTextBlock, Reference, Rule } from 'sanity'
@@ -19,7 +19,7 @@ const blockContentType = configureBlockContent({
   largeText: true,
   extraLargeText: true,
 })
-const themedTitleContentType = configureThemedTitleBlockContent({ normalText: false, extraLargeText: true })
+const themedTitleContentType = configureBlockContent({ variant: 'withXLTitle' })
 
 const imageAlignmentOptions = [
   { value: 'left', icon: LeftAlignedImage },

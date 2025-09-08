@@ -1,20 +1,8 @@
-import { configureTitleBlockContent, configureBlockContent } from '../../editors'
+import { configureBlockContent } from '../../editors'
 import CompactBlockEditor from '../../components/CompactBlockEditor'
 import type { Rule, ValidationContext } from 'sanity'
 import type { IFrame } from '../iframe'
 import singleItemArray from '../singleItemArray'
-
-const titleContentType = configureTitleBlockContent()
-
-const descriptionContentType = configureBlockContent({
-  h2: false,
-  h3: false,
-  h4: false,
-  attachment: false,
-  internalLink: false,
-  externalLink: false,
-  lists: false,
-})
 
 export const title = {
   name: 'title',
@@ -22,7 +10,7 @@ export const title = {
   title: 'Title',
   description: 'The (optional) title/heading',
   components: { input: CompactBlockEditor },
-  of: [titleContentType],
+  of: [configureBlockContent({ variant: 'title' })],
 }
 
 export const frameTitle = {
@@ -107,7 +95,7 @@ export const description = {
   title: 'Description/caption',
   description: `Here you can write a short description of the iframes content.`,
   type: 'array',
-  of: [descriptionContentType],
+  of: [configureBlockContent({ variant: 'simpleBlock' })],
 }
 
 export const transcript = {

@@ -15,9 +15,10 @@ export const openGraphImage = {
   fieldset: 'metadata',
 }
 export const isCampaign = {
-  title: 'Is Campain',
+  title: 'Dont show title (h1) and hero image',
+  description:
+    'This option hides the main title and hero image on page, but will still be available for screenreaders and SEO/SOME purposes. The first content block will be the first to show',
   name: 'isCampaign',
-  description: 'Set this to true if the page should be treated as campaign. the header title h1 will be hidden.',
   type: 'boolean',
 }
 export const stickyMenu = {
@@ -50,7 +51,7 @@ export const content = {
     { type: 'iframeCarousel' },
     { type: 'videoPlayer' },
     { type: 'videoPlayerCarousel' },
-    { type: 'table' },
+    { type: 'tableV2' },
     { type: 'imageForText' },
     Flags.HAS_CAMPAIGN_BLOCKS && { type: 'grid' },
     Flags.HAS_CAMPAIGN_BLOCKS && { type: 'campaignBanner' },

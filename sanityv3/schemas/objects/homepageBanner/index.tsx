@@ -10,10 +10,10 @@ import {
   ThemeSelectorValue,
 } from '../../components/ThemeSelector'
 import { defaultColors } from '../../defaultColors'
-import { configureTitleBlockContent } from '../../editors'
 import { defineField, PreviewProps, type PortableTextBlock, type Rule } from 'sanity'
 import styled from 'styled-components'
 import { ImageWithAlt } from '../imageWithAlt'
+import { configureBlockContent } from '../../editors'
 
 const MediaContainer = styled.div`
   position: relative;
@@ -36,8 +36,6 @@ const StyledImage = styled.img`
   object-fit: cover;
   border-radius: inherit;
 `
-
-const titleContentType = configureTitleBlockContent()
 
 export const homepageBannerThemeColors = [
   { title: 'Green', value: 0 },
@@ -150,7 +148,7 @@ export default {
       components: {
         input: CompactBlockEditor,
       },
-      of: [titleContentType],
+      of: [configureBlockContent({ variant: 'title' })],
     },
     {
       name: 'rightAlignTitle',

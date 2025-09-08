@@ -1,15 +1,14 @@
 'use client'
 import { Heading } from '../../core/Typography'
 import { twMerge } from 'tailwind-merge'
-import IngressText from '../../portableText/IngressText'
 import { getColorForTabsTheme } from './tabThemes'
 import { Tabs } from '@/core/Tabs'
 import { forwardRef, useId, useRef } from 'react'
 import TabsKeyNumberItem from './TabsKeyNumberItem'
-import Blocks from '../../portableText/Blocks'
 import TabsInfoPanelItem from './TabsInfoPanelItem'
 import { PortableTextBlock } from '@portabletext/types'
 import { TabItem } from './TabsBlock.types'
+import Blocks from '@/portableText/Blocks'
 
 const { TabList, Tab, TabPanel } = Tabs
 
@@ -67,7 +66,7 @@ const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
           {title && (
             <Heading id={headingId} value={title} as="h2" variant="xl" className={`${hideTitle ? 'sr-only' : ''}`} />
           )}
-          {ingress && <IngressText value={ingress} className={`mt-6`} />}
+          {ingress && <Blocks variant="ingress" value={ingress} className={`mt-6`} />}
         </div>
         {tabList && tabList?.length > 0 && (
           <Tabs

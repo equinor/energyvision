@@ -1,11 +1,10 @@
 import { BackgroundContainer } from '@/core/Backgrounds'
-import { Heading, Typography } from '../../core/Typography'
-import IngressText from '../../portableText/IngressText'
+import { Typography } from '../../core/Typography'
 import Image, { getSmallerThanPxLgSizes } from '../../core/SanityImage/SanityImage'
 import type { TextBlockData } from '../../types/index'
 import CallToActions from '../CallToActions'
-import Blocks from '../../portableText/Blocks'
 import { twMerge } from 'tailwind-merge'
+import Blocks from '@/portableText/Blocks'
 
 type TextBlockProps = {
   data: TextBlockData
@@ -60,24 +59,16 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
     }
   }
 
-  const common = `${useBrandTheme ? 'text-energy-red-100' : ''} text-balance`
-  const serializerClassnames = {
-    largeText: common,
-    normal: common,
-    twoXLText: common,
-    extraLargeText: common,
-  }
-
   return (
     <BackgroundContainer
       {...bgContainerOptions}
       id={anchor}
       renderFragmentWhenPossible
-      className={`flex flex-col gap-6 ${
+      className={`${
         designOptions?.background?.type === 'backgroundImage' ? backgroundImageContentClassNames : className
       }`}
     >
-      {isBigText && title && <Heading value={title} as="h2" variant="3xl" />}
+      {isBigText && title && <Blocks value={title} as="h2" variant="2xl" className="mb-2 leading-cloudy" />}
       {!isBigText && (
         <>
           {image?.asset && (
@@ -86,37 +77,26 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
                 image={image}
                 maxWidth={300}
                 sizes={getSmallerThanPxLgSizes()}
-                aspectRatio={'9:16'}
+                aspectRatio={'16:9'}
                 className="object-cover"
               />
             </div>
           )}
           {overline ? (
-            <hgroup className={`mb-1 flex flex-col gap-2 ${useBrandTheme ? 'text-energy-red-100' : ''}`}>
-              <Typography as="div" className="text-md">
-                {overline}
-              </Typography>
-              {title && <Heading value={title} as="h2" variant="xl" serializerClassnames={serializerClassnames} />}
+            <hgroup className={`mb-1${useBrandTheme ? 'text-energy-red-100' : ''} text-balance`}>
+              <Typography variant="overline">{overline}</Typography>
+              {title && <Blocks variant="h2" value={title} />}
             </hgroup>
           ) : (
-            <>
-              {title && (
-                <Heading
-                  value={title}
-                  as="h2"
-                  variant="xl"
-                  serializerClassnames={serializerClassnames}
-                  className={`mb-2`}
-                />
-              )}
-            </>
+            <>{title && <Blocks value={title} variant="h2" />}</>
           )}
-          {ingress && <IngressText value={ingress} />}
+          {ingress && <Blocks variant="ingress" value={ingress} className="mb-6" />}
         </>
       )}
-      {text && <Blocks value={text} className={`${callToActions ? 'mb-4' : ''}`} />}
-
-      {callToActions && <CallToActions callToActions={callToActions} splitList={splitList} />}
+      <div className="flex flex-col gap-6">
+        {text && <Blocks value={text} />}
+        {callToActions && <CallToActions callToActions={callToActions} splitList={splitList} />}
+      </div>
     </BackgroundContainer>
   )
 }

@@ -1,4 +1,4 @@
-import type { CardData, PeopleCardData, EventCardData, PromotionType, EventPromotionSettings } from '../../types/index'
+import type { CardData, PeopleCardData, EventCardData, EventPromotionSettings } from '../../types/index'
 import MultipleEventCards from './MultipleEventCards'
 
 import PeopleCard from '@/sections/cards/PeopleCard/PeopleCard'
@@ -6,6 +6,7 @@ import { EventCard } from '@/sections/cards/EventCard'
 import { closestIndexTo } from 'date-fns'
 import PromotionCard from '@/sections/cards/PromotionCard/PromotionCard'
 import { twMerge } from 'tailwind-merge'
+import { PromotionType } from './PromotionsBlock'
 
 type CardProps = CardData | PeopleCardData | EventCardData
 
@@ -21,7 +22,6 @@ const MultiplePromotions = ({
   hasSectionTitle: boolean
   labelledbyId?: string
   eventPromotionSettings?: EventPromotionSettings
-  useHorizontalScroll?: boolean | undefined
 }) => {
   const getCard = (data: CardProps) => {
     switch (data.type) {
@@ -98,15 +98,9 @@ const MultiplePromotions = ({
 
   return (
     <ul
-      className={twMerge(`
-      max-lg:w-full
-      grid 
-      ${getRowGap(variant)}
-      justify-center
-      content-center
-      grid-cols-1
-      auto-rows-fr
-      ${data?.length === 3 ? 'md:grid-cols-3' : 'md:grid-cols-2 2xl:grid-cols-3'}`)}
+      className={twMerge(
+        `grid max-lg:w-full ${getRowGap(variant)} auto-rows-fr grid-cols-1 content-center justify-center ${data?.length === 3 ? 'md:grid-cols-3' : 'md:grid-cols-2 2xl:grid-cols-3'}`,
+      )}
     >
       <>
         {data.map((item) => {

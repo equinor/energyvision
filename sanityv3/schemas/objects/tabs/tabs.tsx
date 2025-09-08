@@ -2,7 +2,6 @@
 import { defineField, defineType, PreviewProps, type Rule } from 'sanity'
 import blocksToText from '../../../helpers/blocksToText'
 import CompactBlockEditor from '../../components/CompactBlockEditor'
-import { configureTitleBlockContent } from '../../editors'
 import { configureBlockContent } from '../../editors/blockContentType'
 import type { ColorSelectorValue } from '../../components/ColorSelector'
 import { Flex, Stack, Text } from '@sanity/ui'
@@ -49,15 +48,6 @@ export type Tabs = {
   background?: ColorSelectorValue
 }
 
-const titleContentType = configureTitleBlockContent()
-
-const ingressContentType = configureBlockContent({
-  h2: false,
-  h3: false,
-  h4: false,
-  attachment: false,
-})
-
 export default defineType({
   title: 'Tabs',
   name: 'tabs',
@@ -71,7 +61,7 @@ export default defineType({
       components: {
         input: CompactBlockEditor,
       },
-      of: [titleContentType],
+      of: [configureBlockContent({ variant: 'title' })],
       validation: (Rule: Rule) => Rule.required().warning('Should we warn for missing title'),
     }),
     defineField({
@@ -84,7 +74,7 @@ export default defineType({
       title: 'Ingress',
       name: 'ingress',
       type: 'array',
-      of: [ingressContentType],
+      of: [configureBlockContent({ variant: 'ingress' })],
     }),
     defineField({
       title: 'Tabs items',

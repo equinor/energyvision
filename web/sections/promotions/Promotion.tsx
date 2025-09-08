@@ -5,12 +5,12 @@ import PromotionCard from '@/sections/cards/PromotionCard/PromotionCard'
 
 type CardProps = CardData | PeopleCardData | EventCardData
 
-type SinglePromotionData = {
+type PromotionProps = {
   promotion: PeopleCardData | CardData | EventCardData
   hasSectionTitle?: boolean
 }
 
-const SinglePromotion = ({ promotion, hasSectionTitle = false }: SinglePromotionData) => {
+const Promotion = ({ promotion, hasSectionTitle = false }: PromotionProps) => {
   if (!promotion) return null
   const getCard = (data: CardProps) => {
     switch (data?.type) {
@@ -48,7 +48,7 @@ const SinglePromotion = ({ promotion, hasSectionTitle = false }: SinglePromotion
     }
   }
 
-  return <>{getCard(promotion)}</>
+  return getCard(promotion)
 }
 
-export default SinglePromotion
+export default Promotion

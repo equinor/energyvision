@@ -2,7 +2,7 @@
 import { forwardRef, ElementType, HTMLAttributes, AnchorHTMLAttributes } from 'react'
 import { TypographyGroups, TypographyVariants, quickVariants, variants } from './variants'
 import { OverridableComponent } from '@equinor/eds-utils'
-import envisTwMerge from '../../twMerge'
+import { twMerge } from 'tailwind-merge'
 
 const getElementType = (variant: string, link: boolean): ElementType => {
   if (link) {
@@ -17,7 +17,7 @@ const getElementType = (variant: string, link: boolean): ElementType => {
     case 'h6':
       return variant
     case 'caption':
-    case 'ingress':
+    case 'eyebrow':
     case 'overline':
     case 'body':
     default:
@@ -80,8 +80,9 @@ export const Typography: OverridableComponent<TypographyProps, HTMLElement> = fo
   }
   const TypographyTag = as ?? (`p` as React.ElementType)
 
+  // text color for regular and dark is applied in globals base body. is it necessary here?
   return (
-    <TypographyTag {...rest} ref={ref} className={envisTwMerge(typography, className)}>
+    <TypographyTag {...rest} ref={ref} className={twMerge('text-balance', typography, className)}>
       {children}
     </TypographyTag>
   )

@@ -6,9 +6,9 @@ import { ImageWithAlt } from '../../types'
 import { ColorKeyTokens } from '../../styles/colorKeyToUtilityMap'
 import { BaseLink, ResourceLink } from '@/core/Link'
 import Image from '../SanityImage/SanityImage'
-import { Heading, Typography } from '@/core/Typography'
+import { Typography } from '@/core/Typography'
 import envisTwMerge from '../../twMerge'
-import IngressText from '../../portableText/IngressText'
+import Heading from '@/portableText/components/Heading'
 
 export type Variants = 'primary' | 'secondary'
 
@@ -61,7 +61,7 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
 
   const contentElements = (
     <>
-      {ingress && <IngressText value={ingress} clampLines={3} className={`py-2 text-sm`} />}
+      {ingress && <Blocks variant="ingress" value={ingress} clampLines={3} className={`py-2 text-sm`} />}
       {content && variant !== 'secondary' && <Blocks value={content} />}
     </>
   )

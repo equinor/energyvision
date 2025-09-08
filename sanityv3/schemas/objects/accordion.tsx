@@ -3,7 +3,6 @@ import type { Rule } from 'sanity'
 import blocksToText from '../../helpers/blocksToText'
 import { AccordionComponent } from '../../icons'
 import CompactBlockEditor from '../components/CompactBlockEditor'
-import { configureTitleBlockContent } from '../editors'
 import { configureBlockContent } from '../editors/blockContentType'
 import type { ColorSelectorValue } from '../components/ColorSelector'
 
@@ -14,14 +13,6 @@ export type Accordion = {
   accordion: any[]
   background: ColorSelectorValue
 }
-
-const titleContentType = configureTitleBlockContent()
-const ingressContentType = configureBlockContent({
-  h2: false,
-  h3: false,
-  h4: false,
-  attachment: false,
-})
 
 export default {
   title: 'Accordion',
@@ -63,14 +54,14 @@ export default {
       components: {
         input: CompactBlockEditor,
       },
-      of: [titleContentType],
+      of: [configureBlockContent({ variant: 'title' })],
       validation: (Rule: Rule) => Rule.required().warning('Should we warn for missing title'),
     },
     {
       title: 'Ingress',
       name: 'ingress',
       type: 'array',
-      of: [ingressContentType],
+      of: [configureBlockContent({ variant: 'ingress' })],
     },
     {
       name: 'image',

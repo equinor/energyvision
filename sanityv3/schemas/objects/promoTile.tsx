@@ -7,10 +7,8 @@ import CompactBlockEditor from '../components/CompactBlockEditor'
 import type { ImageWithAlt } from './imageWithAlt'
 
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { configureTitleBlockContent } from '../editors'
+import { configureBlockContent } from '../editors'
 import { LinkSelector } from './linkSelector/common'
-
-const titleContentType = configureTitleBlockContent()
 
 export type PromoTile = {
   _type: 'promoTile'
@@ -52,7 +50,7 @@ export default {
       name: 'title',
       type: 'array',
       inputComponent: CompactBlockEditor,
-      of: [titleContentType],
+      of: [configureBlockContent({ variant: 'title' })],
       title: 'Title',
       hidden: ({ parent }: { parent: PromoTile }) => parent?.linkLabelAsTitle,
       validation: (Rule: Rule) =>

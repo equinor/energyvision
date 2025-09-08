@@ -1,21 +1,10 @@
 import CompactBlockEditor from '../components/CompactBlockEditor'
-import { configureBlockContent, configureTitleBlockContent } from '../editors'
+import { configureBlockContent } from '../editors'
 import { EdsIcon } from '../../icons'
 import { library_image } from '@equinor/eds-icons'
 import blocksToText from '../../helpers/blocksToText'
 import type { Rule } from 'sanity'
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
-
-const titleContentType = configureTitleBlockContent()
-const ingressBlockContentType = configureBlockContent({
-  h2: false,
-  h3: false,
-  h4: false,
-  internalLink: false,
-  externalLink: false,
-  attachment: false,
-  lists: false,
-})
 
 export default {
   name: 'imageCarousel',
@@ -48,7 +37,7 @@ export default {
       components: {
         input: CompactBlockEditor,
       },
-      of: [titleContentType],
+      of: [configureBlockContent({ variant: 'title' })],
       title: 'Title',
       validation: (Rule: Rule) => Rule.required(),
     },
@@ -63,7 +52,7 @@ export default {
       title: 'Ingress',
       description: 'Optional short description. Max 400 characters',
       type: 'array',
-      of: [ingressBlockContentType],
+      of: [configureBlockContent({ variant: 'ingress' })],
       validation: (Rule: Rule) => Rule.custom((value: any) => validateCharCounterEditor(value, 400, true)),
     },
     {

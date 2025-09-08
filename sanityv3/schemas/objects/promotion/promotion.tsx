@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import blocksToText from '../../../helpers/blocksToText'
 import CompactBlockEditor from '../../components/CompactBlockEditor'
-import { configureBlockContent, configureTitleBlockContent } from '../../editors'
+import { configureBlockContent } from '../../editors'
 import type { MagazinePromotion } from './promoteMagazine'
 import type { TopicPromotion } from './promoteTopic'
 import { calendar_event, contacts, library_books } from '@equinor/eds-icons'
@@ -48,15 +48,6 @@ export type Promotion = {
 
 type PromotionType = 'promoteTopics' | 'promoteNews' | 'promotePeople' | 'promoteEvents' | 'promoteMagazine'
 
-const titleContentType = configureTitleBlockContent()
-
-const ingressContentType = configureBlockContent({
-  h2: false,
-  h3: false,
-  h4: false,
-  attachment: false,
-})
-
 export default {
   title: 'Promotion',
   name: 'promotion',
@@ -90,14 +81,14 @@ export default {
       components: {
         input: CompactBlockEditor,
       },
-      of: [titleContentType],
+      of: [configureBlockContent({ variant: 'title' })],
       validation: (Rule: Rule) => Rule.required().warning('In most cases you should add a title'),
     },
     {
       name: 'ingress',
       title: 'Ingress',
       type: 'array',
-      of: [ingressContentType],
+      of: [configureBlockContent({ variant: 'ingress' })],
     },
     singleItemArray(
       {

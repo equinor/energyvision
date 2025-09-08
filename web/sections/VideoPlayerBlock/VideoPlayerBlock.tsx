@@ -1,6 +1,5 @@
 'use client'
 import { getUrlFromAction } from '../../common/helpers'
-import IngressText from '../../portableText/IngressText'
 import { twMerge } from 'tailwind-merge'
 import { Heading } from '@/core/Typography'
 import { PortableTextBlock } from '@portabletext/types'
@@ -56,9 +55,14 @@ const VideoPlayerBlock = ({
       )}
       id={anchor}
     >
-      {title && <Heading value={title} as="h2" variant="xl" className="mb-2 pb-2" />}
+      {/* classname mb-2 pb-2  or common heading 2 styling pb-8 and inheriting pt-20 if applicable */}
+      {title && <Heading value={title} variant="h2" />}
       {ingress && (
-        <IngressText value={ingress} className={`${action && action.label && actionUrl ? 'mb-4' : 'mb-8'}`} />
+        <Blocks
+          variant="ingress"
+          value={ingress}
+          className={`${action && action.label && actionUrl ? 'mb-4' : 'mb-8'}`}
+        />
       )}
       {action && action.label && actionUrl && (
         <ResourceLink
