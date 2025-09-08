@@ -3,6 +3,7 @@ import { ingressForNewsQuery } from '../../../lib/queries/common/newsSubqueries'
 import { newsletterPublishDateTimeQuery } from '../../../lib/queries/common/publishDateTime'
 import { PortableTextBlock } from '@portabletext/types'
 import { noDrafts, sameLang } from '../../../lib/queries/common/langAndDrafts'
+import { functions } from '../../../lib/queries/common/functions'
 
 export type LatestNewsType = {
   _id: string
@@ -19,6 +20,7 @@ export type LatestNewsType = {
 //add groq to collect only ones with category
 
 export const latestNews = /* groq */ `
+${functions}
   *[_type == "news" && defined(subscriptionType) && ${sameLang} && ${noDrafts}] | order(${newsletterPublishDateTimeQuery} desc)[0...5] {
     _id,
     "type":_type,

@@ -83,7 +83,7 @@ export const GridTeaser = forwardRef<HTMLDivElement, GridTeaserProps>(function G
 
       <div className={`relative h-full ${contentTextColor}`}>
         <div
-          className={`h-full px-10 flex flex-col justify-center items-center gap-6 py-6 ${
+          className={`h-full px-6 flex flex-col justify-center items-center gap-6 py-6 ${
             rowType !== 'span3' ? 'lg:py-8' : 'lg:py-12'
           } `}
         >
@@ -114,7 +114,7 @@ export const GridTeaser = forwardRef<HTMLDivElement, GridTeaserProps>(function G
                   width="36px"
                   height="36px"
                   viewBox="0 0 48 48"
-                  aria-hidden={true}
+                  aria-label='Quote symbol'
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <title>Quote symbol</title>

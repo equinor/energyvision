@@ -1,6 +1,6 @@
 import { forwardRef } from 'react'
-import Image from '../../pageComponents/shared/SanityImage'
-import type { FigureData } from '../../types/index'
+import Image from '../../core/SanityImage/SanityImage'
+import { FigureData } from '../../pageComponents/topicPages/Figure'
 
 type GridFigureProps = {
   data: FigureData
@@ -12,7 +12,7 @@ const GridFigure = forwardRef<HTMLDivElement, GridFigureProps>(function GridFigu
   const { image } = figure
   return (
     <div ref={ref} className="relative w-full h-full">
-      <Image image={image} fill sizes="(max-width: 800px) 100vw, 800px" className="object-cover h-full w-auto" />
+      <Image image={image} fill className="object-cover h-full w-auto" />
     </div>
   )
 })

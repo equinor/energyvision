@@ -6,7 +6,6 @@ import getConfig from 'next/config'
 import ErrorPage from 'next/error'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import { Flags } from '../../../common/helpers/datasetHelpers'
 import { getFullUrl } from '../../../common/helpers/getFullUrl'
@@ -43,21 +42,10 @@ type OldArchivedNewsPageProps = {
 }
 
 const OldArchivedNewsPage = ({ data }: OldArchivedNewsPageProps): JSX.Element => {
-  const [isArchivePage, setIsArchivePage] = useState(true)
   const router = useRouter()
   const { pathname, locale } = router
-  useEffect(() => {
-    if (isArchivePage) {
-      document.getElementById('legacyScript')?.remove()
-      const scriptTag = document.createElement('script')
-      scriptTag.src = '/legacy/legacy.minified.js'
-      scriptTag.id = 'legacyScript'
-      document.body.appendChild(scriptTag)
-    }
-  })
 
   if (!router.isFallback && !data?.news) {
-    setIsArchivePage(false)
     return <ErrorPage statusCode={404} />
   }
   const fullUrl = getFullUrl(pathname, data?.news?.slug, locale)
@@ -252,20 +240,22 @@ export const getStaticProps: GetStaticProps = async ({ preview = false, params, 
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const paths: string[] = []
+  let slicedPaths: string[] = []
+  if (Flags.HAS_ARCHIVED_NEWS) {
+    const newsPagesList = fs
+      .readFileSync(process.cwd() + `/lib/archive/news2016To2018.txt`)
+      .toString()
+      .replace(/\r/g, '')
+      .split(/\n/)
 
-  const newsPagesList = fs
-    .readFileSync(process.cwd() + `/lib/archive/news2016To2018.txt`)
-    .toString()
-    .replace(/\r/g, '')
-    .split(/\n/)
+    newsPagesList.map((pagePath: string) => {
+      const pageName = removeHTMLExtension(pagePath.substr(pagePath.lastIndexOf('/') + 1))
+      paths.push(pageName)
+    })
 
-  newsPagesList.map((pagePath: string) => {
-    const pageName = removeHTMLExtension(pagePath.substr(pagePath.lastIndexOf('/') + 1))
-    paths.push(pageName)
-  })
-
-  // Only static generate a couple of the pages for testing purposes
-  const slicedPaths = paths.slice(0, 9)
+    // Only static generate a couple of the pages for testing purposes
+    slicedPaths = paths.slice(0, 9)
+  }
 
   return {
     paths: slicedPaths.map((pagePath: string) => ({ params: { pagePath: [pagePath] } })),

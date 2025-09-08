@@ -33,11 +33,10 @@ This monorepo is organized into several folder. Please refer to README files ins
 - `sanityv3` - [Sanity](https://www.sanity.io/) powered content platform.
 - `web` - Web application using [Next.js](https://nextjs.org/) and React components.
 - `search` - Azure functions for maintaining search indexes at [Algolia](https://www.algolia.com/apps/24ZMKUY18Z/dashboard).
-- `legacy` - Archived code/content from previous versions of the equinor.com website.
 
 ## Package managers
 
-This project uses the pnpm package manager. All commands should be run from root. There are filter aliases in the root `package.json` file that can be used to run commands in specific directories. For example:
+This project uses the pnpm package manager. All commands should be run from root. There are filter aliases in the root `package.json` file that can be used to run commands in specific directories. E.g:
 
 ```bash
 # Install dependencies
@@ -69,13 +68,7 @@ pnpm sanityv3 dev
 
 ### Search
 
-Due to compatibility issues, npm is used for the Search Indexers. The reason being that it was not possible (with pnpm v6 at least) to generate a package containing all dependencies from the search folder. So in order to work with dependencies for anything under `search`, use npm from within that folder. You can still use pnpm from the root folder to execute scripts however.
-
-## Legacy packages
-
-The `legacy` folder contains packages related to static content from the AEM based equinor.com website and the legacy CSS/JavaScript needed to run this static content. These packages are rarely updated and rely on outdated and/or deprecated dependencies. This causes issues when using a node version higher than node v14 on certain platforms (for example node-sass does not compile). When working on these packages, be sure to switch to node v14 to build the packages.
-
-The legacy packages are currently excluded from the pnpm workspace (see `pnpm-workspace.yaml`) so will not have their dependencies installed when running `pnpm setup-project` / `pnpm m i` / `pnpm recursive install` from the project root.
+Due to compatibility issues, npm is used for the Search Indexers. The reason being that it was not possible (with pnpm v6 at least) to generate a package containing all dependencies from the search folder. So in order to work with dependencies for anything under `search`, use npm from within that folder. You can still use pnpm from the root folder to execute scripts.
 
 ## Feature flags
 

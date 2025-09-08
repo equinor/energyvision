@@ -1,25 +1,43 @@
-import type { FullWidthImageData } from '../../types/index'
-import Image, { Ratios } from '../shared/SanityImage'
-import { Caption } from '../shared/image/Caption'
-import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
+import type { DesignOptions, ImageWithCaptionData } from '../../types/index'
+import Image, { getFullScreenSizes, ImageRatioKeys } from '../../core/SanityImage/SanityImage'
+import { FigureCaption } from '@core/FigureCaption/FigureCaption'
 
-type TeaserProps = {
+export type FullWidthImageData = {
+  type: string
+  id: string
+  image: ImageWithCaptionData
+  designOptions: DesignOptions & {
+    aspectRatio: ImageRatioKeys
+  }
+}
+
+type FullWidthImageProps = {
   data: FullWidthImageData
   anchor?: string
 }
 
-const FullWidthImage = ({ data, anchor }: TeaserProps) => {
+const FullWidthImage = ({ data, anchor }: FullWidthImageProps) => {
   const { image, attribution, caption } = data.image
-  const { aspectRatio } = data.designOptions
-  const isMobile = useMediaQuery(`(max-width: 750px)`)
-
-  const ratio = isMobile || aspectRatio === Ratios.ONE_TO_TWO ? Ratios.ONE_TO_TWO : Ratios.THREE_TO_TEN
+  const { aspectRatio = '16:9' } = data.designOptions
 
   if (!image) return null
+
   return (
     <>
-      <Image id={anchor} image={image} maxWidth={2000} aspectRatio={ratio} sizes="100vw" alt={image.alt} />
-      {image.asset && <Caption caption={caption} attribution={attribution} />}
+      <Image
+        id={anchor}
+        image={image}
+        sizes={getFullScreenSizes()}
+        maxWidth={2000}
+        aspectRatio={aspectRatio}
+        alt={image.alt}
+      />
+      {image.asset && (caption || attribution) && (
+        <FigureCaption className={'max-w-viewport mx-auto pt-0 px-layout-sm pb-8'}>
+          {caption && <div>{caption}</div>}
+          {attribution && <div>{attribution}</div>}
+        </FigureCaption>
+      )}
     </>
   )
 }

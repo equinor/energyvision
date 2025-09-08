@@ -1,9 +1,7 @@
-import { BackgroundContainer } from '@core/Backgrounds'
 import { Teaser as TeaserLayout } from '@core/Teaser'
 import IngressText from '../../../pageComponents/shared/portableText/IngressText'
-import { getUrlFromAction, urlFor } from '../../../common/helpers'
-import Img from 'next/image'
-import Image from '../../../pageComponents/shared/SanityImage'
+import { getUrlFromAction } from '../../../common/helpers'
+import Image, { getPxLgSizes } from '../../../core/SanityImage/SanityImage'
 import type { TeaserData, ImageWithAlt } from '../../../types/index'
 import { ResourceLink } from '../../../core/Link'
 import { Heading } from '../../../core/Typography'
@@ -18,26 +16,19 @@ type TeaserProps = {
 }
 
 const TeaserImage = ({ image }: { image: ImageWithAlt }) => {
-  const imageSrc =
-    image.extension === 'svg' ? urlFor(image).toString() : urlFor(image).size(1200, 800).auto('format').toString()
+  const isSvg = image.extension?.toLowerCase() === 'svg'
 
-  if (!imageSrc) return null
+  if (!image?.asset) return null
   const altTag = image?.isDecorative ? '' : image?.alt || ''
+
   return (
-    <>
-      {image.extension === 'svg' ? (
-        <Image image={image} alt={altTag} maxWidth={720} />
-      ) : (
-        <Img
-          src={imageSrc}
-          alt={altTag}
-          style={{ objectFit: 'cover' }}
-          fill
-          sizes="(max-width: 800px) 100vw, 800px"
-          role={image?.isDecorative ? 'presentation' : undefined}
-        />
-      )}
-    </>
+    <Image
+      image={image}
+      alt={altTag}
+      fill
+      maxWidth={isSvg ? 720 : 1100}
+      role={image?.isDecorative ? 'presentation' : undefined}
+    />
   )
 }
 
@@ -49,7 +40,7 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
     return null
   }
 
-  const isSvg = image?.extension === 'svg'
+  const isSvg = image.extension?.toLowerCase() === 'svg'
 
   return (
     <TeaserLayout className="text-sm" id={anchor} {...restOptions} renderFragmentWhenPossible>
@@ -81,15 +72,14 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
         )}
         {actions && (
           <div className="flex flex-col gap-8">
-            {actions?.map((action) => {
+            {actions?.map((action, idx) => {
               const url = action && getUrlFromAction(action)
-
               return (
                 <ResourceLink
                   href={url as string}
                   {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
                   type={action.type}
-                  key={action.id}
+                  key={action.id || idx}
                   variant="fit"
                   extension={action.extension}
                   showExtensionIcon

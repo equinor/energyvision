@@ -40,7 +40,7 @@ const HomePage = ({ data }: HomePageProps) => {
           />
         )}
 
-        {data.hero.type !== HeroTypes.DEFAULT && !data?.isCampaign && (
+        {data.hero?.type !== HeroTypes.DEFAULT && !data?.isCampaign && (
           <SharedTitle sharedTitle={data.title} background={titleStyles.background} />
         )}
         <PageContent data={data} titleBackground={titleStyles} />
