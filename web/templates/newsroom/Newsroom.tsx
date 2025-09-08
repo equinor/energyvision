@@ -46,7 +46,7 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
       singletonRouter,
       serverUrl: `https://www.equinor.com${isoCode === 'nb-NO' ? '/no/nyheter' : '/news'}`, // temporary fix for url to be available during build time
       routerOptions: {
-        /*createURL: ({ qsModule, routeState, location }) => {
+        createURL: ({ qsModule, routeState, location }) => {
           if (singletonRouter.locale !== locale) return location.href
           const queryParameters: any = {}
 
@@ -73,7 +73,7 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
             encode: false,
           })
           return `${location.pathname}${queryString}`
-        },*/
+        },
         parseURL: ({ qsModule, location }) => {
           const {
             query = '',
