@@ -147,7 +147,7 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
           results: requests.map(() => initialSearchResponse),
         })
       }
-      console.log('Cache not hit for below request')
+      console.log('Cache not hit for below request.')
       console.log(JSON.stringify(requests))
       console.log(facetFilterSet)
       return searchClient.search(requests)
