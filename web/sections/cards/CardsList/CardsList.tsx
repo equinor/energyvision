@@ -1,9 +1,9 @@
 import type { CardsListData } from '../../../types/index'
 import CardItem from './CardItem'
 import { colorKeyToUtilityMap } from '../../../styles/colorKeyToUtilityMap'
-import { Heading } from '../../../core/Typography'
 import { twMerge } from 'tailwind-merge'
 import { HTMLAttributes, forwardRef } from 'react'
+import Blocks from '@/portableText/Blocks'
 
 export type CardsListProps = {
   data: CardsListData
@@ -33,11 +33,11 @@ const CardsList = forwardRef<HTMLElement, CardsListProps>(function CardsList(
   return (
     <section
       ref={ref}
-      className={twMerge(`px-layout-md pb-page-content max-w-viewport mx-auto`, className)}
+      className={twMerge(`mx-auto max-w-viewport px-layout-md pb-page-content`, className)}
       id={anchor}
       {...rest}
     >
-      {title && <Heading value={title} variant="h3" as="h2" className="pb-10" />}
+      {title && <Blocks value={title} variant="h3" as="h2" className="pb-10" />}
       <ul className={`grid ${gridColumns} gap-4`}>
         {cards?.map((card) => {
           return (

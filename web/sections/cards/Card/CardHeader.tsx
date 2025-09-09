@@ -1,8 +1,9 @@
 import { PortableTextBlock } from '@portabletext/types'
-import { Heading, Typography, TypographyVariants } from '@/core/Typography'
+import { Typography, TypographyVariants } from '@/core/Typography'
 import { forwardRef, HTMLAttributes } from 'react'
 import { Variants } from './Card'
 import envisTwMerge from '../../../twMerge'
+import Blocks from '@/portableText/Blocks'
 
 export type CardHeaderProps = {
   /** Title string content */
@@ -80,7 +81,7 @@ export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(function C
           {title}
         </Typography>
       )}
-      {titleBlock && <Heading as={titleLevel} variant={titleVariant} className={titleClassNames} value={titleBlock} />}
+      {titleBlock && <Blocks as={titleLevel} variant={titleVariant} className={titleClassNames} value={titleBlock} />}
     </hgroup>
   ) : (
     <>
@@ -96,7 +97,7 @@ export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(function C
         </Typography>
       )}
       {titleBlock && (
-        <Heading
+        <Blocks
           {...(titleVariant && { as: titleLevel })}
           {...(titleVariant ? { variant: titleVariant } : { variant: titleLevel })}
           className={titleClassNames}

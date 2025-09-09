@@ -1,5 +1,4 @@
 'use client'
-import { Heading } from '@/core/Typography'
 import { EventCardData } from '../../../types/index'
 import { forwardRef, HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
@@ -51,7 +50,7 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
       {...rest}
     >
       <BaseLink href={slug} className="hover:underline">
-        <Heading value={title} as={hasSectionTitle ? 'h3' : 'h2'} variant="h5" className="mb-1" />
+        <Blocks value={title} as={hasSectionTitle ? 'h3' : 'h2'} variant="h5" className="mb-1" />
       </BaseLink>
       <div
         className={`${

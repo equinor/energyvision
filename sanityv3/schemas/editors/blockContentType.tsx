@@ -216,7 +216,7 @@ const fullBlockStylesOptions: BlockContentProps = {
 // H1 not allowed in block content since it should be a document title.
 // Default configuration is for text block main block content
 export const configureBlockContent = (options?: BlockContentProps): BlockDefinition => {
-  let defaultConfigOptions = {
+  let defaultConfigOptions: BlockContentProps = {
     h3: true,
     lists: true,
     internalLink: true,
@@ -326,17 +326,17 @@ export const configureBlockContent = (options?: BlockContentProps): BlockDefinit
   const h2Config = {
     title: 'Heading 2',
     value: 'h2',
-    component: (props: any) => Heading2Decorator(props.children, variant),
+    component: (props: any) => Heading2Decorator(props.children, group),
   }
   const h3Config = {
     title: 'Heading 3',
     value: 'h3',
-    component: (props: any) => Heading3Decorator(props.children, variant),
+    component: (props: any) => Heading3Decorator(props.children, group),
   }
   const h4Config = {
     title: 'Heading 4',
     value: 'h4',
-    component: (props: any) => Heading4Decorator(props.children, variant),
+    component: (props: any) => Heading4Decorator(props.children, group),
   }
   const smallTextConfig = {
     title: 'Small text',

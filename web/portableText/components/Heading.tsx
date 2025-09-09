@@ -18,6 +18,8 @@ export const Heading = forwardRef<HTMLHeadingElement, HeadingProps>(function Hea
   { children, group = 'heading', variant = 'h2', className = '', ...rest },
   ref,
 ) {
+  console.log('Heading group', group)
+  console.log('Heading variant', variant)
   /*  Apply these in the blocks serializer and use Typography variants direct 
  ${textVariant === 'small' ? 'text-sm' : ''} 
   ${textVariant === 'large' ? 'text-2xl leading-snug' : ''} 

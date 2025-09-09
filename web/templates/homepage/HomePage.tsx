@@ -1,7 +1,6 @@
 import { toPlainText } from '@portabletext/react'
 import useSharedTitleStyles from '../../lib/hooks/useSharedTitleStyles'
 import { HeroTypes, HomePageSchema } from '../../types/index'
-
 import { Breadcrumbs } from '@/core/Breadcrumbs'
 import { SharedBanner } from '@/templates/shared/SharedBanner'
 import SharedTitle from '@/templates/shared/SharedTitle'

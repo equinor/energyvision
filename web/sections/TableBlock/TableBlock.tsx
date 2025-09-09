@@ -1,4 +1,3 @@
-import { Heading, Paragraph } from '../../core/Typography'
 import { twMerge } from 'tailwind-merge'
 import { forwardRef, useMemo } from 'react'
 import { PortableTextBlock } from '@portabletext/types'
@@ -143,15 +142,13 @@ const TableBlock = forwardRef<HTMLDivElement, TableBlockProps>(function TableBlo
     >
       {title && (
         <div className="px-layout-sm xl:px-layout-lg">
-          {title && <Heading value={title} variant="h3" as="h2" className={'pb-lg'} />}
-          {ingress && <Paragraph value={ingress} className="pb-xl max-w-text text-pretty" />}
-          {ingress && <Paragraph value={ingress} className="pb-xl max-w-text text-pretty" />}
+          {title && <Blocks value={title} variant="h2" />}
+          {ingress && <Blocks value={ingress} variant="ingress" />}
         </div>
       )}
       <div
         className={`w-full px-layout-sm ${
           useInnerContentWidth ? 'xl:px-layout-lg' : 'xl:px-layout-md'
-        } flex justify-center`}
         } flex justify-center`}
       >
         <div

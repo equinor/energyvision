@@ -5,7 +5,6 @@ import { Typography } from '@/core/Typography'
 import { FormattedDateTime } from '@/core/FormattedDateTime'
 import { Icon } from '@equinor/eds-core-react'
 import { calendar } from '@equinor/eds-icons'
-import IngressText from '../../portableText/IngressText'
 import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
 import type { NewsSchema } from '../../types/index'
 import { toPlainText } from '@portabletext/react'
@@ -75,8 +74,8 @@ const NewsPage = ({ data: news }: ArticleProps) => {
       />
       <main>
         <article className="flex flex-col items-center pb-28">
-          <div className={'dark bg-slate-blue-95 px-layout-md py-news-banner-vertical'}>
-            <div className="mx-auto max-w-[1186px]">
+          <div className={'dark w-full bg-slate-blue-95'}>
+            <div className="px-layout-lg py-news-banner-vertical">
               <Typography id="mainTitle" variant="h1">
                 {title}
               </Typography>

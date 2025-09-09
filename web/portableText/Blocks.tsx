@@ -1,7 +1,6 @@
 'use client'
 import {
   PortableText,
-  PortableTextProps,
   PortableTextReactComponents,
   PortableTextMarkComponent,
   PortableTextBlockComponent,
@@ -16,10 +15,10 @@ import { IFrame } from '@/core/IFrame/IFrame'
 import { Footnote } from './components/Footnote'
 import { Link } from './components/Link'
 import { List } from './components/List'
-import { HeadingProps, ParagraphProps } from '@/core/Typography'
 import { TypographyGroups, TypographyVariants } from '@/core/Typography/variants'
-import { Paragraph } from './components/Paragraph'
+import { Block, Paragraph } from './components/Block'
 import { Heading } from './components/Heading'
+import { TypographyProps } from '@/core/Typography'
 
 export type BlockType = Record<PortableTextBlockStyle, PortableTextBlockComponent | undefined>
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -63,39 +62,55 @@ type TypeProps = {
 // Text Block Text Content has normal, small text and heading 3
 // News Content has normal, small text and heading 2 and 3 -> Heading group article
 
-const getBlockComponents = (group: TypographyGroups, variant: TypographyVariants) => {
+const getBlockComponents = (group?: TypographyGroups, variant?: TypographyVariants) => {
+  console.log('getBlockComponents group', group)
+  console.log('getBlockComponents variant', variant)
   return {
-    normal: ({ children }: TypeProps) => (
-      <Paragraph group={group} variant={variant}>
-        {children}
-      </Paragraph>
-    ),
+    normal: ({ children }: TypeProps) => {
+      return (
+        <Block group={group} variant={variant}>
+          {children}
+        </Block>
+      )
+    },
     smallText: ({ children }: TypeProps) => (
-      <Paragraph group="paragraph" variant="small">
+      <Block group="heading" variant="sm">
         {children}
-      </Paragraph>
+      </Block>
     ),
-    largeText: ({ children }: TypeProps) => <Heading variant="2xl">{children}</Heading>,
+    largeText: ({ children }: TypeProps) => (
+      <Block group="heading" variant="2xl">
+        {children}
+      </Block>
+    ),
     extraLargeText: ({ children }: TypeProps) => {
-      return <Heading variant="5xl">{children}</Heading>
+      return (
+        <Block group="heading" variant="5xl">
+          {children}
+        </Block>
+      )
     },
     twoXLText: ({ children }: TypeProps) => {
-      return <Heading variant="8xl">{children}</Heading>
+      return (
+        <Block group="heading" variant="8xl">
+          {children}
+        </Block>
+      )
     },
     h2: ({ children }: TypeProps) => (
-      <Heading group={group} variant="h2">
+      <Block group={group} variant="h2">
         {children}
-      </Heading>
+      </Block>
     ),
     h3: ({ children }: TypeProps) => (
-      <Heading group={group} variant="h3">
+      <Block group={group} variant="h3">
         {children}
-      </Heading>
+      </Block>
     ),
     h4: ({ children }: TypeProps) => (
-      <Heading group={group} variant="h4">
+      <Block group={group} variant="h4">
         {children}
-      </Heading>
+      </Block>
     ),
   }
 }
@@ -177,8 +192,7 @@ const getLineClampNormalBlock = (linesToClamp: number): any => {
 }
 
 export type BlocksProps = {
-  group?: TypographyGroups
-  variant?: TypographyVariants
+  value: PortableTextBlock[]
   blocksComponents?: Partial<PortableTextReactComponents>
   marks?: MarkType
   types?: TypesType
@@ -193,12 +207,12 @@ export type BlocksProps = {
   clampLines?: 3 | 4 | 5
   includeFootnotes?: boolean
   noInvert?: boolean
-} & (HeadingProps | ParagraphProps)
+} & TypographyProps
 
 const inlineBlockTypes = ['block', 'positionedInlineImage', 'pullQuote', 'basicIframe']
 
 export default function Blocks({
-  group = 'paragraph',
+  group,
   variant = 'body',
   value,
   blocksComponents,
@@ -224,6 +238,7 @@ export default function Blocks({
           // Otherwise, render the group of text blocks we have
           const value = div
           div = []
+          console.log('block', block)
 
           return (
             <div key={block._key} className={twMerge(``, className)} id={id}>

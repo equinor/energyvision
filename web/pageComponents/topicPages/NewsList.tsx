@@ -4,7 +4,7 @@ import type { NewsListData } from '../../types/index'
 import { useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import PromotionCard from '@/sections/cards/PromotionCard/PromotionCard'
-import { Heading } from '@/core/Typography'
+import Blocks from '@/portableText/Blocks'
 
 const NewsList = ({
   data,
@@ -33,9 +33,9 @@ const NewsList = ({
   return (
     <div
       id={anchor}
-      className={twMerge(`pb-page-content px-layout-sm 3xl:px-layout-md max-w-viewport mx-auto`, className)}
+      className={twMerge(`mx-auto max-w-viewport px-layout-sm pb-page-content 3xl:px-layout-md`, className)}
     >
-      {title && <Heading value={title} as="h2" variant="xl" className="mb-10" />}
+      {title && <Blocks value={title} variant="h2" />}
       <div className="grid gap-x-6 gap-y-8 sm:grid-cols-2 xl:grid-cols-3" {...rest}>
         {pagedArticles.map((article) => (
           <PromotionCard key={article.id} data={article} hasSectionTitle={!!title} />

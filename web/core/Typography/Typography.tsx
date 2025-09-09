@@ -82,7 +82,11 @@ export const Typography: OverridableComponent<TypographyProps, HTMLElement> = fo
 
   // text color for regular and dark is applied in globals base body. is it necessary here?
   return (
-    <TypographyTag {...rest} ref={ref} className={twMerge('text-balance', typography, className)}>
+    <TypographyTag
+      {...rest}
+      ref={ref}
+      className={twMerge('text-balance text-slate-80 dark:text-white-100', typography, className)}
+    >
       {children}
     </TypographyTag>
   )

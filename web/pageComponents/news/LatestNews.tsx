@@ -16,7 +16,7 @@ const LatestNews = ({ data }: LatestNewsProp) => {
   const t = useTranslations()
 
   return (
-    <section className="my-3xl mx-auto flex max-w-viewport flex-col items-center px-layout-sm 3xl:px-layout-md">
+    <section className="mx-auto flex max-w-viewport flex-col items-start px-layout-sm py-20 3xl:px-layout-md">
       <Typography variant="xl" as="h2" className="mb-10">
         {t('latest_news')}
       </Typography>

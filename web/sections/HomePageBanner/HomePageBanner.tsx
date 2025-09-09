@@ -7,8 +7,9 @@ import { getArrowElement } from '@/core/Link/ResourceLink'
 import { BaseLink } from '@/core/Link'
 import { ImageWithAlt, LinkData } from '../../types'
 import { PortableTextBlock } from '@portabletext/types'
-import { Heading, Typography } from '@/core/Typography'
+import { Typography } from '@/core/Typography'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
+import Blocks from '@/portableText/Blocks'
 
 export type HomePageBannerThemeColors = {
   background?: string
@@ -77,10 +78,9 @@ export const HomePageBanner = forwardRef<HTMLDivElement, HomePageBannerProps>(fu
   }
 
   const headingElement = (
-    <Heading
-      as="h1"
-      variant="h1"
-      //@ts-ignore: TYPE
+    <Blocks
+      group="heading"
+      variant="h2"
       value={title}
       className={`h-fit w-full px-layout-sm text-3xl tracking-tighter text-pretty backdrop-blur-[1.1px] max-lg:pt-6 lg:px-0 lg:text-4xl ${rightAlignTitle ? 'lg:mr-20 lg:ml-auto' : 'lg:mr-auto lg:ml-20'} ${useWhiteTitle ? 'text-white-100' : ''} ${useImage ? 'lg:z-10' : ''} max-w-text`}
     />

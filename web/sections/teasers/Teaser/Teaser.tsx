@@ -6,7 +6,6 @@ import { ResourceLink } from '../../../core/Link'
 import { getLocaleFromName } from '../../../lib/localization'
 import { Typography } from '@/core/Typography'
 import Blocks from '@/portableText/Blocks'
-import Heading from '@/portableText/components/Heading'
 
 const { Content, Media } = TeaserLayout
 
@@ -54,16 +53,16 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
       </Media>
       <Content className={`gap-y-lg grid auto-cols-auto px-8 py-12`}>
         {isBigText ? (
-          text && <Heading value={text} as="h2" variant="2xl" className="mb-2 leading-cloudy" />
+          text && <Blocks value={text} as="h2" variant="2xl" className="mb-2 leading-cloudy" />
         ) : (
           <>
             {overline ? (
               <hgroup className="mb-1">
                 <Typography variant="overline">{overline}</Typography>
-                {title && <Heading value={title} variant="h2" />}
+                {title && <Blocks value={title} variant="h2" />}
               </hgroup>
             ) : (
-              <>{title && <Heading value={title} variant="h2" />}</>
+              <>{title && <Blocks value={title} variant="h2" />}</>
             )}
             {text && <Blocks variant="ingress" value={text} className="mb-6" />}
           </>
