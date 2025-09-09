@@ -18,6 +18,7 @@ import { IFrame } from '@/core/IFrame/IFrame'
 import { isDateAfter } from '@/common/helpers/dateUtilities'
 import DefaulHeroImage from '@/sections/Hero/DefaultHeroImage'
 import LatestNews from '@/pageComponents/news/LatestNews'
+import { getFullUrl } from '@/common/helpers/getFullUrl'
 
 type ArticleProps = {
   data: NewsSchema
