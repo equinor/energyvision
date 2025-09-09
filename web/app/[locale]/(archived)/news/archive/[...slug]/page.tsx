@@ -10,7 +10,7 @@ import { PathType } from '@/sanity/queries/paths/getPaths'
 import { hasLocale } from 'next-intl'
 import { routing } from '@/i18n/routing'
 
-export const getPageData = cache(async (params: any) => {
+const getPageData = cache(async (params: any) => {
   const { locale, slug: pagePathArray } = await params
   if (!Flags.HAS_ARCHIVED_NEWS) return { notFound: true }
 
