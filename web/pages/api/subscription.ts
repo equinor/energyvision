@@ -36,36 +36,36 @@ export const mapCategoryToId = (category: string, locale: 'no' | 'en') => {
   if (locale === 'no') {
     switch (category) {
       case 'generalNews':
-        return 'generelle nyheter' //'236530'
+        return 'generelle nyheter' 
       case 'Company':
-        return 'generelle nyheter' //'236530'
+        return 'generelle nyheter' 
       case 'crudeOilAssays':
-        return 'crude oil assays' //'123050'
+        return 'crude oil assays' 
       case 'Crude':
-        return 'crude oil assays' //'123050'
+        return 'crude oil assays'
       case 'magazineStories':
-        return 'magasinsaker' //'236531'
+        return 'magasinsaker'
       case 'stockMarketAnnouncements':
-        return 'børsmeldinger' //'236529'
+        return 'børsmeldinger'
       case 'Stock':
-        return 'børsmeldinger' //'236529'
+        return 'børsmeldinger'
     }
   } else {
     switch (category) {
       case 'generalNews':
-        return 'general news' //'123047'
+        return 'general news' 
       case 'Company':
-        return 'general news' //'236530'
+        return 'general news'
       case 'crudeOilAssays':
-        return 'crude oil assays' //'123050'
+        return 'crude oil assays'
       case 'Crude':
-        return 'crude oil assays' //'123050'
+        return 'crude oil assays'
       case 'magazineStories':
-        return 'magazine stories' //'129256'
+        return 'magazine stories'
       case 'stockMarketAnnouncements':
-        return 'stock market announcements' //'129253'
+        return 'stock market announcements'
       case 'Stock':
-        return 'stock market announcements' //'236529'
+        return 'stock market announcements'
     }
   }
   return ''

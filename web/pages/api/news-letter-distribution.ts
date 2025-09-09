@@ -4,6 +4,8 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { isValidSignature, SIGNATURE_HEADER_NAME } from '@sanity/webhook'
 import getRawBody from 'raw-body'
 import getConfig from 'next/config'
+import { distributeOld } from './old-distribution'
+
 
 const SANITY_API_TOKEN = process.env.SANITY_API_TOKEN || ''
 const SLACK_NEWSLETTER_WEBHOOK_URL = process.env.SLACK_NEWSLETTER_WEBHOOK_URL
@@ -44,6 +46,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const { publicRuntimeConfig } = getConfig()
   const data = JSON.parse(body)
   const locale = languages.find((lang) => lang.name == data.languageCode)?.locale || 'en'
+
+  //To be removed after migration period
+    const oldNewsDistributionParameters: any = {
+    timeStamp: data.timeStamp,
+    title: data.title,
+    ingress: data.ingress,
+    link: `${publicRuntimeConfig.domain}/${locale}${data.link}`,
+    newsType: data.newsType,
+    languageCode: locale,
+  }
+  // END
+
   const newsDistributionParameters: NewsDistributionParameters = {
     title: data.title,
     link: `${publicRuntimeConfig.domain}/${locale}${data.link}`,
@@ -52,7 +66,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   console.log('Newsletter link: ', newsDistributionParameters.link)
 
-  await distributeWithRetry(newsDistributionParameters)
+  await distributeWithRetry(newsDistributionParameters, oldNewsDistributionParameters)
     .then((result) => {
       if (result.success) {
         res.status(200).json({ msg: result.message })
@@ -74,6 +88,7 @@ interface DistributionResult {
 
 async function distributeWithRetry(
   newsDistributionParameters: NewsDistributionParameters,
+  oldNewsDistributionParameters: any,
   attempt = 1,
 ): Promise<DistributionResult> {
   let res: DistributionResult = {
@@ -84,7 +99,12 @@ async function distributeWithRetry(
   const date = getDateWithMs()
 
   try {
-    const isSuccessful = await distribute(newsDistributionParameters)
+    //For migration period just log.
+    const isNewSuccessful = await distribute(newsDistributionParameters)
+    console.log(`New distribution was successful: ${isNewSuccessful}`)
+
+    const isSuccessful = await distributeOld(oldNewsDistributionParameters)
+
     if (!isSuccessful) throw new Error('Distribution was unsuccessful.')
     res = {
       success: true,
