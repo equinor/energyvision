@@ -30,7 +30,7 @@ const NewsPage = ({ data: news }: ArticleProps) => {
   const pathname = usePathname()
   const locale = useLocale()
 
-  const fullUrl = '' //TODO solve domain getFullUrl(pathname, slug, locale)
+  const fullUrl = getFullUrl(pathname, slug, locale)
 
   const {
     publishDateTime,

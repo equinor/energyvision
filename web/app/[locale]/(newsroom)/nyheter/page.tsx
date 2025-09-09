@@ -11,7 +11,6 @@ import { newsroomQuery } from '@/sanity/queries/newsroom'
 import { algoliasearch } from 'algoliasearch'
 import { Metadata, ResolvingMetadata } from 'next'
 import { metaTitleSuffix } from '@/languages'
-import { isDateAfter } from '@/common/helpers/dateUtilities'
 import getOpenGraphImages from '@/common/helpers/getOpenGraphImages'
 import { toPlainText } from 'next-sanity'
 
@@ -55,10 +54,9 @@ export async function generateMetadata(
     queryParams,
   })
 
-  const { publishDateTime, updatedAt, documentTitle, title, metaDescription, openGraphImage, heroImage } = pageData
+  const { documentTitle, title, metaDescription, openGraphImage, heroImage } = pageData
   const plainTitle = Array.isArray(title) ? toPlainText(title) : title
 
-  const modifiedDate = isDateAfter(publishDateTime, updatedAt) ? publishDateTime : updatedAt
   const openGraphImages = getOpenGraphImages((openGraphImage?.asset ? openGraphImage : null) || heroImage?.image)
 
   return {
@@ -69,10 +67,8 @@ export async function generateMetadata(
       description: metaDescription,
       url: 'https://www.equinor.com/no/nyheter',
       locale,
-      type: 'article',
+      type: 'website',
       siteName: 'Equinor',
-      publishedTime: publishDateTime,
-      modifiedTime: modifiedDate,
       images: openGraphImages,
     },
     alternates: {

@@ -3,8 +3,69 @@ import archivedNews from '../../../../../../lib/archive/archivedNewsPaths.json'
 import { languages } from '@/languages'
 import { notFound } from 'next/navigation'
 import ArchivedNews from '@/templates/archivedNews/ArchivedNews'
+import { Metadata, ResolvingMetadata } from 'next'
+import { cache } from 'react'
+import { host } from '@/lib/config'
+import { PathType } from '@/sanity/queries/paths/getPaths'
+import { hasLocale } from 'next-intl'
+import { routing } from '@/i18n/routing'
 
-//const { publicRuntimeConfig } = getConfig()
+export const getPageData = cache(async (params: any) => {
+  const { locale, slug: pagePathArray } = await params
+  if (!Flags.HAS_ARCHIVED_NEWS) return { notFound: true }
+
+  const pagePath = pagePathArray.join('/')
+
+  const archivedItems = archivedNews.filter((e) => e.slug === `/news/archive/${pagePath}`)
+  if (archivedItems.length === 0) return notFound()
+
+  const response = await fetchArchiveData(pagePathArray, pagePath, locale)
+
+  if (response.status === 404) return fallbackToAnotherLanguage(pagePathArray, pagePath, locale)
+
+  const pageData = await parseResponse(response)
+  return pageData
+})
+
+export async function generateMetadata({ params }: { params: any }, _: ResolvingMetadata): Promise<Metadata> {
+  const { locale, slug: pagePathArray } = await params
+
+  if (!hasLocale(routing.locales, locale) || !Flags.HAS_ARCHIVED_NEWS) {
+    notFound()
+  }
+
+  const archivedItems = archivedNews.filter((e) => e.slug === `/news/archive/${pagePathArray.join('/')}`)
+  const slugs =
+    archivedItems?.map((data: PathType) => ({
+      slug: `${data['locale'] == 'no' ? '/no' : ''}${data['slug'] as string}`,
+      lang: data['locale'] === 'en' ? 'en_GB' : 'nb_NO',
+    })) ?? []
+
+  const pageData = await getPageData(params)
+  const { title, description } = pageData
+
+  const fullUrl = `${host.url}${slugs.find((it) => it.lang === (locale === 'en' ? 'en_GB' : 'nb_NO'))?.slug}`
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: fullUrl,
+      locale,
+      type: 'article',
+      siteName: 'Equinor',
+    },
+    alternates: {
+      canonical: fullUrl,
+      languages: {
+        en: fullUrl,
+        no: `${host.url}${slugs.find((it) => it.lang === (locale === 'en' ? 'nb_NO' : 'en_GB'))?.slug}`,
+        'x-default': fullUrl,
+      },
+    },
+  }
+}
 
 const fetchArchiveData = async (pagePathArray: string[], pagePath: string, locale: string): Promise<Response> => {
   if (pagePath.includes('.')) return Promise.reject()
@@ -71,21 +132,7 @@ const fallbackToAnotherLanguage = async (
 }
 
 export default async function Page({ params }: any) {
-  const { locale, slug: pagePathArray } = await params
-  if (!Flags.HAS_ARCHIVED_NEWS) return { notFound: true }
-
-  const pagePath = pagePathArray.join('/')
-
-  const archivedItems = archivedNews.filter((e) => e.slug === `/news/archive/${pagePath}`)
-  if (archivedItems.length === 0) return notFound()
-
-  const response = await fetchArchiveData(pagePathArray, pagePath, locale)
-
-  if (response.status === 404) return fallbackToAnotherLanguage(pagePathArray, pagePath, locale)
-
-  const pageData = await parseResponse(response)
-
+  const pageData = await getPageData(params)
   if (!pageData) notFound()
-
   return <ArchivedNews {...pageData} />
 }

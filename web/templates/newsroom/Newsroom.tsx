@@ -19,6 +19,7 @@ import { List } from '@/core/List'
 import { PaginationContextProvider } from '../../common/contexts/PaginationContext'
 import { InstantSearchNext, InstantSearchNextRouting } from 'react-instantsearch-nextjs'
 import { useTranslations } from 'next-intl'
+import { host } from '@/lib/config'
 
 type NewsRouteState = { query?: string; page?: number; topics?: string[]; years?: string[]; countries?: string[] }
 
@@ -44,7 +45,7 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
   const routing = {
     router: createInstantSearchRouterNext<NewsRouteState>({
       singletonRouter,
-      serverUrl: `https://www.equinor.com${isoCode === 'nb-NO' ? '/no/nyheter' : '/news'}`, // temporary fix for url to be available during build time
+      serverUrl: `${host.url}${isoCode === 'nb-NO' ? '/no/nyheter' : '/news'}`, // temporary fix for url to be available during build time
       routerOptions: {
         createURL: ({ qsModule, routeState, location }) => {
           if (singletonRouter.locale !== locale) return location.href

@@ -21,10 +21,6 @@ const equinorVariableWoff2 = localFont({
   src: '../../../../../fonts/equinor/EquinorVariable-VF.woff2',
 })
 
-/*export async function generateMetadata() {
-  return routing.locales.map((locale) => ({ locale, slug: locale === 'no' ? '/no/nyheter' : '/en/news' }))
-}*/
-
 export default async function LocaleLayout({ children, params }: { children: React.ReactNode; params: any }) {
   // Ensure that the incoming `locale` is valid
   const { locale, slug } = await params
