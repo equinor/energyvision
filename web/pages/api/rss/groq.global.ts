@@ -34,6 +34,7 @@ ${functions}
   }
 `
 export const latestMagazine = /* groq */ `
+${functions}
   *[_type == "magazine" && shouldDistributeMagazine && ${sameLang} && ${noDrafts}] | order(${newsletterPublishDateTimeQuery} desc)[0...5] {
     _id,
     "type":_type,
