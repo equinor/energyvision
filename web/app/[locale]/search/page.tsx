@@ -6,7 +6,7 @@ import { TopbarDropdown } from '@/sections/SiteMenu/TopbarDropdown'
 import { Icon } from '@equinor/eds-core-react'
 import { FloatingOverlay } from '@floating-ui/react'
 import { close } from '@equinor/eds-icons'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 
 export const dynamic = 'force-dynamic'
 // Multiple versions of this page will be statically generated
