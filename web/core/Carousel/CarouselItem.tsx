@@ -4,7 +4,7 @@ import envisTwMerge from '../../twMerge'
 import { forwardRef, HTMLAttributes, ReactNode, useEffect, useId, useMemo, useRef } from 'react'
 import { PortableTextBlock } from '@portabletext/types'
 import { DisplayModes } from './Carousel'
-import { Heading, Typography } from '@/core/Typography'
+import { Typography } from '@/core/Typography'
 import Blocks from '../../portableText/Blocks'
 import { ResourceLink } from '@/core/Link'
 import { getUrlFromAction } from '../../common/helpers'
@@ -67,7 +67,7 @@ export const CarouselItem = forwardRef<HTMLLIElement, CarouselItemProps>(functio
       )
     }
     if (title && Array.isArray(title)) {
-      return <Heading as="h3" variant="h6" value={title} />
+      return <Blocks as="h3" variant="h6" value={title} />
     }
     return null
   }

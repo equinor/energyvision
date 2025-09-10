@@ -1,4 +1,4 @@
-import { ComponentProps } from '../../templates/shared/SharedPageContent'
+'use client'
 import { IFrameData } from '../../types/index'
 import IFrame from '../IFrameBlock/IFrameBlock'
 import GridTextBlock from './GridTextBlock'
@@ -10,7 +10,7 @@ import { VideoPlayerBlockProps } from '../VideoPlayerBlock/VideoPlayerBlock'
 
 export type RowType = 'span3' | 'span2and1' | 'threeColumns' | undefined
 
-export const mapGridContent = (data: ComponentProps, rowType?: RowType): React.ReactNode => {
+export const mapGridContent = (data: any, rowType?: RowType): React.ReactNode => {
   //@ts-ignore:so many types
   switch (data.type) {
     case 'gridTextBlock':

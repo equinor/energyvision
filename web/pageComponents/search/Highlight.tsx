@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { decode } from 'html-entities'
 import type { Hit as AlgoliaHit } from '@algolia/client-search'
 import type { HitData } from './UniversalHit'
-import { Highlight as TypographyHighlight } from '@/core/Typography'
+import { Typography } from '@/core/Typography'
 
 type Highlight = {
   hit: AlgoliaHit<HitData>
@@ -25,9 +25,9 @@ export const Highlight: React.FC<Highlight> = ({ hit, attribute }) => {
         const value = decode(part.value)
         if (part.isHighlighted) {
           return (
-            <TypographyHighlight key={key} className="font-bold">
+            <Typography group="paragraph" variant="highlight" key={key} className="font-bold">
               {value}
-            </TypographyHighlight>
+            </Typography>
           )
         }
         return <Fragment key={key}>{value}</Fragment>

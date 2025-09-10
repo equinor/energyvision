@@ -1,7 +1,6 @@
 'use client'
 import { useId } from 'react'
 import Blocks from '@/portableText/Blocks'
-import Heading from '@/portableText/components/Heading'
 import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
 import { twMerge } from 'tailwind-merge'
 import { PortableTextBlock } from 'next-sanity'
@@ -55,7 +54,7 @@ const SectionBlockTemplate = ({
       id={anchor}
     >
       {/* Heading has more padding bottom than the rest, padding is taken care of with Typography */}
-      {title && <Heading variant="h2" id={headingId} value={title} className={`${hideTitle ? 'sr-only' : ''}`} />}
+      {title && <Blocks variant="h2" id={headingId} value={title} className={`${hideTitle ? 'sr-only' : ''}`} />}
       {/* Rest of content can have gap-6 between them */}
       <div className="flex flex-col gap-6">
         {ingress && <Blocks variant="ingress" value={ingress} />}

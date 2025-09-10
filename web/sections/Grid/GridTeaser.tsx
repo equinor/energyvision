@@ -8,8 +8,6 @@ import { RowType } from './mapGridContent'
 import GridLinkArrow from './GridLinkArrow'
 import Blocks from '../../portableText/Blocks'
 import { PortableTextBlock } from '@portabletext/types'
-import isEmpty from '../../portableText/helpers/isEmpty'
-import { PortableTextReactComponents } from '@portabletext/react'
 import { getColorForTheme } from '@/sections/teasers/TextTeaser/theme'
 
 export type GridTeaserProps = {
@@ -85,9 +83,8 @@ export const GridTeaser = forwardRef<HTMLDivElement, GridTeaserProps>(function G
           {(content || (useExtendedThemes && themedContent)) && (
             <Blocks
               value={(useExtendedThemes ? themedContent : content) as PortableTextBlock[]}
-              variant="prose-campaign"
-              className={`text-md ${contentTextColor}`}
-              {...(useExtendedThemes && {
+              blockClassName={`text-md ${contentTextColor}`}
+              /*               {...(useExtendedThemes && {
                 blocksComponents: {
                   normal: ({ children }: PortableTextBlock) => {
                     if (isEmpty(children)) return null
@@ -98,7 +95,7 @@ export const GridTeaser = forwardRef<HTMLDivElement, GridTeaserProps>(function G
                     )
                   },
                 } as Partial<PortableTextReactComponents>,
-              })}
+              })} */
             />
           )}
           {quote && (

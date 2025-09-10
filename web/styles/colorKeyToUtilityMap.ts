@@ -76,7 +76,10 @@ export type ColorKeyTokens = {
   [P1 in keyof typeof colorKeyToUtilityMap]: string
 }
 
-export const getBgAndDarkFromBackground = (designOptions: DesignOptions) => {
+export const getBgAndDarkFromBackground = (designOptions?: DesignOptions) => {
+  if (!designOptions) {
+    return { bg: '', dark: false }
+  }
   const { background } = designOptions
   const backwardCompabilityColorName = Object.keys(colorKeyToUtilityMap).find(
     (key) => colorKeyToUtilityMap[key as keyof ColorKeyTokens]?.backgroundName === background?.backgroundColor,

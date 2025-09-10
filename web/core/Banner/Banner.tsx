@@ -8,7 +8,6 @@ import { BaseLink, ResourceLink } from '@/core/Link'
 import Image from '../SanityImage/SanityImage'
 import { Typography } from '@/core/Typography'
 import envisTwMerge from '../../twMerge'
-import Heading from '@/portableText/components/Heading'
 
 export type Variants = 'primary' | 'secondary'
 
@@ -54,7 +53,7 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
       )
     }
     if (title && Array.isArray(title)) {
-      return <Heading as="h2" variant="h4" className={titleClassNames} value={title} />
+      return <Blocks as="h2" variant="h4" className={titleClassNames} value={title} />
     }
     return null
   }

@@ -1,9 +1,8 @@
 import { BackgroundContainer } from '@/core/Backgrounds'
-import { Heading } from '@/core/Typography'
 import type { IframeCarouselData } from '../../types/index'
-import { twMerge } from 'tailwind-merge'
 import { Carousel } from '@/core/Carousel/Carousel'
 import { useId } from 'react'
+import Blocks from '@/portableText/Blocks'
 
 type IframeCarouselProps = {
   data: IframeCarouselData
@@ -26,12 +25,11 @@ const IframeCarousel = ({ data, anchor, className, ...rest }: IframeCarouselProp
       id={anchor}
     >
       {title && (
-        <Heading
+        <Blocks
           value={title}
-          variant="h3"
-          as="h2"
+          variant="h2"
           id={headingId}
-          className={hideTitle ? 'sr-only' : 'pb-lg text-center  max-w-viewport mx-auto px-layout-sm'}
+          className={hideTitle ? 'sr-only' : 'max-w-viewport px-layout-sm'}
         />
       )}
       <Carousel

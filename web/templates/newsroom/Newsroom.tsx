@@ -3,7 +3,7 @@ import { forwardRef, useRef } from 'react'
 import singletonRouter from 'next/router'
 import Blocks from '../../portableText/Blocks'
 import type { NewsRoomPageType } from '../../types'
-import { Heading, Typography } from '@/core/Typography'
+import { Typography } from '@/core/Typography'
 import NewsRoomFilters from './Filters/NewsroomFilters'
 import { ResourceLink } from '@/core/Link'
 import { getIsoFromLocale } from '../../lib/localization'
@@ -173,7 +173,7 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
           <div className="flex flex-col gap-8 lg:gap-12">
             <div className="dark bg-slate-blue-95 py-24">
               <div className="mx-auto flex max-w-viewport grid-rows-2 flex-col gap-4 px-layout-sm">
-                {title && <Heading value={title} as="h1" variant="h2" />}
+                {title && <Blocks value={title} as="h1" variant="h2" />}
                 {ingress && <Blocks value={ingress} />}
                 <div className="flex w-full flex-col items-center gap-8 lg:flex-row lg:justify-between">
                   <QuickSearch />

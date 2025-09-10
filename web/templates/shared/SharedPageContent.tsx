@@ -94,7 +94,7 @@ type Component = {
   designOptions?: DesignOptions
 } & ComponentSections
 
-type PageContentProps = {
+export type PageContentProps = {
   data: TopicPageSchema | MagazinePageSchema
   titleBackground?: BackgroundContainerProps
 }

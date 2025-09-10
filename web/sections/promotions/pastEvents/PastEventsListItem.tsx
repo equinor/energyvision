@@ -1,5 +1,5 @@
 'use client'
-import { Heading, Typography } from '@/core/Typography'
+import { Typography } from '@/core/Typography'
 import { EventCardData } from '../../../types/index'
 import { forwardRef, HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
@@ -7,7 +7,7 @@ import { getEventDates } from '../../../common/helpers/dateUtilities'
 import { BaseLink } from '@/core/Link'
 import { Icon } from '@equinor/eds-core-react'
 import { world } from '@equinor/eds-icons'
-import { useFormatter } from 'next-intl'
+import Blocks from '@/portableText/Blocks'
 
 export type PastEventsListItemProps = {
   event: EventCardData
@@ -20,26 +20,15 @@ const PastEventsListItem = forwardRef<HTMLAnchorElement, PastEventsListItemProps
 ) {
   const { title, eventDate, location, slug } = event
   const { start } = getEventDates(eventDate)
-  const formatter = useFormatter()
 
   return (
     <BaseLink
       ref={ref}
       href={slug}
-      className={twMerge(
-        `h-full
-      w-full
-      grid
-      grid-cols-[18%_auto]
-      flex-col
-      dark:text-white-100
-      group
-      `,
-        className,
-      )}
+      className={twMerge(`group grid h-full w-full grid-cols-[18%_auto] flex-col dark:text-white-100`, className)}
       {...rest}
     >
-      <div className="w-full h-full aspect-square bg-norwegian-woods-100 text-white-100 flex justify-center items-center p-2">
+      <div className="flex aspect-square h-full w-full items-center justify-center bg-norwegian-woods-100 p-2 text-white-100">
         {
           start && ''
           /*<FormattedDateParts value={start} year="numeric" month="short" day="2-digit">
@@ -55,21 +44,21 @@ const PastEventsListItem = forwardRef<HTMLAnchorElement, PastEventsListItemProps
         }
       </div>
       <div className="px-6 py-6">
-        <Heading
+        <Blocks
           value={title}
           as={hasSectionTitle ? 'h3' : 'h2'}
           variant="h5"
-          className="text-base pb-4 group-hover:underline text-pretty max-w-text"
+          className="max-w-text pb-4 text-base text-pretty group-hover:underline"
         />
         {location && (
-          <div className="flex gap-sm items-start">
+          <div className="gap-sm flex items-start">
             <Icon
               data={world}
               color={'currentColor'}
               style={{ fontSize: 'var(--typeScale-0)' }}
               className="text-norwegian-woods-100"
             />
-            <Typography variant="body" className="text-sm text-pretty max-w-text">
+            <Typography variant="body" className="max-w-text text-sm text-pretty">
               {location}
             </Typography>
           </div>

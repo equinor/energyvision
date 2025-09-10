@@ -7,7 +7,6 @@ import Teaser from '../../sections/teasers/Teaser/Teaser'
 import Blocks from '../../portableText/Blocks'
 import MagazineTagBar from '@/sections/MagazineTags/MagazineTagBar'
 import { ImageBackgroundContainer } from '@/core/Backgrounds/ImageBackgroundContainer'
-import { Heading } from '@/core/Typography'
 import MagazineCard from '@/sections/cards/MagazineCard/MagazineCard'
 import { SimplePagination } from '@/core/SimplePagination/SimplePagination'
 import CardSkeleton from '@/sections/cards/CardSkeleton/CardSkeleton'
@@ -70,13 +69,13 @@ const MagazineRoom = ({ pageData }: MagazineIndexTemplateProps) => {
               aspectRatio={'9:16'}
             >
               <div className="mx-auto max-w-viewport px-layout-lg max-lg:py-11">
-                <Heading value={title} id="mainTitle" variant="h1" className="text-pretty" />
+                <Blocks value={title} id="mainTitle" variant="h1" />
                 <div className="pt-6">{ingress && <Blocks value={ingress.content} />}</div>
               </div>
             </ImageBackgroundContainer>
           ) : (
             <div className="mx-auto max-w-viewport px-layout-lg max-lg:py-11">
-              <Heading value={title} id="mainTitle" variant="h1" className="text-pretty" />
+              <Blocks value={title} id="mainTitle" variant="h1" />
               <div className="pt-6">{ingress && <Blocks value={ingress.content} />}</div>
             </div>
           )}

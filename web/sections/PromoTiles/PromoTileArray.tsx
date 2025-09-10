@@ -1,7 +1,7 @@
+import Blocks from '@/portableText/Blocks'
 import type { PromoTileArrayData, PromoTileData } from '../../types/index'
 import { PromoTile } from './PromoTile'
 import { twMerge } from 'tailwind-merge'
-import { Heading, Paragraph } from '@/core/Typography'
 
 const PromoTileArray = ({
   data,
@@ -20,25 +20,14 @@ const PromoTileArray = ({
     <section
       id={anchor}
       className={twMerge(
-        `pb-page-content px-layout-md xl:px-layout-lg max-w-viewport mx-auto flex flex-col gap-6 justify-center`,
+        `mx-auto flex max-w-viewport flex-col justify-center gap-6 px-layout-md pb-page-content xl:px-layout-lg`,
         className,
       )}
     >
-      {title && <Heading value={title} variant="h3" as="h2" className={hideTitle ? 'sr-only' : ''} />}
-      {ingress && <Paragraph value={ingress} className="max-w-text text-pretty pb-xl" />}
+      {title && <Blocks value={title} variant="h2" className={hideTitle ? 'sr-only' : ''} />}
+      {ingress && <Blocks variant="ingress" value={ingress} />}
       <ul
-        className={`
-          ${title && !hideTitle ? 'pt-6' : ''}
-          w-full
-          flex
-          flex-col
-          gap-6
-          justify-center
-          items-center
-          content-center
-          md:grid
-          md:grid-cols-2
-          md:auto-rows-fr`}
+        className={` ${title && !hideTitle ? 'pt-6' : ''} flex w-full flex-col content-center items-center justify-center gap-6 md:grid md:auto-rows-fr md:grid-cols-2`}
       >
         {group?.map((tile: PromoTileData) => {
           return (

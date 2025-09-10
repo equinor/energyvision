@@ -25,7 +25,7 @@ export type PromotionsBlockData = {
     eventPromotionSettings?: EventPromotionSettings
   }
   viewAllLink?: LinkData
-  designOptions: DesignOptions
+  designOptions?: DesignOptions
 }
 
 const PromotionsBlock = ({

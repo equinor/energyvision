@@ -4,7 +4,6 @@ import { PortableTextBlock } from '@portabletext/types'
 import { ResourceLink } from '@/core/Link'
 import { getUrlFromAction } from '../../common/helpers'
 import { getLocaleFromName } from '../../lib/localization'
-import { Heading } from '@/core/Typography'
 import Blocks from '../../portableText/Blocks'
 import Image, { getPxSmSizes } from '../../core/SanityImage/SanityImage'
 import { ImageWithAlt, LinkData } from '../../types'
@@ -48,8 +47,8 @@ const TabsInfoPanelItem = forwardRef<HTMLDivElement, TabsInfoPanelItemProps>(fun
       >
         <div>
           <div className="flex flex-col gap-4">
-            {title && <Heading value={title} as="h3" variant="h5" className={``} />}
-            {text && <Blocks value={text} className={`text-sm`} />}
+            {title && <Blocks value={title} as="h3" variant="h5" />}
+            {text && <Blocks group="paragraph" variant="small" value={text} />}
           </div>
           {action && url && (
             <ResourceLink

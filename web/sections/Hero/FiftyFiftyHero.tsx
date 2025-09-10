@@ -2,7 +2,6 @@ import { getUrlFromAction } from '@/common/helpers'
 import { BackgroundContainer } from '@/core/Backgrounds'
 import { ResourceLink } from '@/core/Link'
 import Image, { getPxSmSizes } from '@/core/SanityImage/SanityImage'
-import { Heading } from '@/core/Typography'
 import { getLocaleFromName } from '@/lib/localization'
 import Blocks from '@/portableText/Blocks'
 import { HeroType } from '@/types'
@@ -23,8 +22,9 @@ export const FiftyFiftyHero = ({ title, ingress, link: action, background, figur
         {/* Content Section */}
         <div className="xl:pr-4xl flex max-w-full flex-col justify-center gap-8 px-layout-sm py-16 md:min-h-[450px] md:justify-self-end md:px-12 xl:pl-layout-sm">
           {title && (
-            <Heading
+            <Blocks
               value={title}
+              as="h2"
               variant={isBigTitle ? '2xl' : 'xl'}
               className={`max-w-[1186px] ${isBigTitle ? 'font-normal' : 'font-medium'}`}
             />

@@ -1,5 +1,4 @@
 'use client'
-import { Heading } from '../../core/Typography'
 import { twMerge } from 'tailwind-merge'
 import { getColorForTabsTheme } from './tabThemes'
 import { Tabs } from '@/core/Tabs'
@@ -63,10 +62,8 @@ const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
             tabPanelVariant === 'tabsInfoPanel' && !hideTitle ? `max-w-innerColumn pl-layout-sm lg:pt-20` : ``
           }`}
         >
-          {title && (
-            <Heading id={headingId} value={title} as="h2" variant="xl" className={`${hideTitle ? 'sr-only' : ''}`} />
-          )}
-          {ingress && <Blocks variant="ingress" value={ingress} className={`mt-6`} />}
+          {title && <Blocks id={headingId} value={title} as="h2" className={`${hideTitle ? 'sr-only' : ''}`} />}
+          {ingress && <Blocks variant="ingress" value={ingress} />}
         </div>
         {tabList && tabList?.length > 0 && (
           <Tabs

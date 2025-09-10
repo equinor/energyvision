@@ -1,7 +1,7 @@
+import Blocks from '@/portableText/Blocks'
 import type { ImageWithCaptionData } from '../../types/index'
 import DefaulHeroImage from './DefaultHeroImage'
 import { PortableTextBlock } from '@portabletext/types'
-import { Heading } from '@/core/Typography'
 
 type Props = {
   title?: PortableTextBlock[]
@@ -18,16 +18,16 @@ export const DefaultHero = ({ title, image, isBigTitle, bigTitle, tags }: Props)
       {isBigTitle && (
         <>
           <div className="mx-auto max-w-viewport pt-10 pr-16 pb-0 pl-layout-sm">
-            {title && <Heading value={title} as="h1" variant="xl" />}
+            {title && <Blocks value={title} as="h1" variant="xl" />}
           </div>
-          <div className="mx-auto py-10 px-layout-sm max-w-viewport">
-            {bigTitle && <Heading value={bigTitle} as="h2" variant="3xl" />}
+          <div className="mx-auto max-w-viewport px-layout-sm py-10">
+            {bigTitle && <Blocks value={bigTitle} as="h2" variant="3xl" />}
           </div>
         </>
       )}
       {!isBigTitle && (
-        <div className="py-10 px-layout-md">
-          {title && <Heading className="max-w-[1186px] mx-auto" value={title} as="h1" variant="3xl" />}
+        <div className="px-layout-md py-10">
+          {title && <Blocks className="mx-auto max-w-[1186px]" value={title} as="h1" variant="3xl" />}
         </div>
       )}
       {tags && tags?.length > 0 && (
@@ -38,7 +38,7 @@ export const DefaultHero = ({ title, image, isBigTitle, bigTitle, tags }: Props)
                 return (
                   <span
                     key={`magazine_tag_key_${tag}`}
-                    className="inline-block text-sm font-medium pl-3 pr-3 first:pl-0 lg:text-xs whitespace-nowrap"
+                    className="inline-block pr-3 pl-3 text-sm font-medium whitespace-nowrap first:pl-0 lg:text-xs"
                   >
                     {tag}
                   </span>
@@ -49,7 +49,7 @@ export const DefaultHero = ({ title, image, isBigTitle, bigTitle, tags }: Props)
         </div>
       )}
 
-      {image && <DefaulHeroImage className="pt-0 px-layout-sm pb-16 max-w-viewport mx-auto" data={image} />}
+      {image && <DefaulHeroImage className="mx-auto max-w-viewport px-layout-sm pt-0 pb-16" data={image} />}
     </>
   )
 }

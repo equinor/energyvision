@@ -6,7 +6,6 @@ import { Typography } from '../../core/Typography'
 import { twMerge } from 'tailwind-merge'
 import Image, { getSmallerThanPxLgSizes } from '../../core/SanityImage/SanityImage'
 import Blocks from '@/portableText/Blocks'
-import Heading from '@/portableText/components/Heading'
 import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
 
 type AccordionBlockProps = {
@@ -50,7 +49,7 @@ const AccordionBlock = ({ data, anchor, className }: AccordionBlockProps) => {
         )}
         {title &&
           (Array.isArray(title) ? (
-            <Heading value={title} variant="h2" />
+            <Blocks value={title} variant="h2" />
           ) : (
             <Typography variant="h2">{title}</Typography>
           ))}

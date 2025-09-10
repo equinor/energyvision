@@ -14,6 +14,7 @@ import { useTranslations } from 'next-intl'
 import { Typography } from '@/core/Typography'
 import AddToCalendar from '@/pageComponents/topicPages/AddToCalendar'
 import ContactList from '@/pageComponents/shared/ContactList'
+import Blocks from '@/portableText/Blocks'
 
 export default function Event({ data }: { data: EventSchema }): JSX.Element {
   const { title } = data

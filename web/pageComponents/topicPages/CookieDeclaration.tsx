@@ -1,9 +1,9 @@
 'use client'
 import { useEffect, useRef } from 'react'
 import { BackgroundContainer } from '@/core/Backgrounds'
-import { Heading } from '@/core/Typography'
 import { CookieDeclarationData } from '../../types/index'
 import { useLocale } from 'next-intl'
+import Blocks from '@/portableText/Blocks'
 
 type CookieDeclarationProps = {
   data: CookieDeclarationData
@@ -14,7 +14,7 @@ type CookieDeclarationProps = {
 const CookieDeclaration = ({ data, anchor, className }: CookieDeclarationProps) => {
   const title = data.title
   const placeholderRef = useRef<HTMLDivElement>(null)
-  const locale = useLocale();
+  const locale = useLocale()
   const language = locale == 'no' ? 'nb' : locale ? locale : 'en'
   useEffect(() => {
     if (!placeholderRef.current?.hasChildNodes()) {
@@ -29,7 +29,7 @@ const CookieDeclaration = ({ data, anchor, className }: CookieDeclarationProps) 
   return (
     <BackgroundContainer id={anchor} className={className}>
       <div id="cookie-declaration-wrapper">
-        {title && <Heading value={title} />}
+        {title && <Blocks variant="h2" value={title} />}
         <div ref={placeholderRef}></div>
       </div>
     </BackgroundContainer>

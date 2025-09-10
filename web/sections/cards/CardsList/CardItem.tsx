@@ -1,5 +1,5 @@
 import type { CardListItemData } from '../../../types/index'
-import { Typography, Paragraph } from '@/core/Typography'
+import { Typography } from '@/core/Typography'
 import { twMerge } from 'tailwind-merge'
 import { HTMLAttributes, forwardRef } from 'react'
 import Blocks from '@/portableText/Blocks'

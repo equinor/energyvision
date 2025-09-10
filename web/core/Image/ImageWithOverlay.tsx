@@ -7,7 +7,6 @@ import Image, { getPxSmSizes } from '../SanityImage/SanityImage'
 import envisTwMerge from '../../twMerge'
 import { SanityImageObject } from '@sanity/image-url/lib/types/types'
 import { Typography } from '@equinor/eds-core-react'
-import { Heading } from '@/core/Typography'
 import Blocks from '../../portableText/Blocks'
 import { ResourceLink } from '@/core/Link'
 import { getUrlFromAction } from '../../common/helpers'
@@ -58,7 +57,7 @@ export const ImageWithOverlay = forwardRef<HTMLDivElement, ImageWithOverlayProps
         </Typography>
       ) : (
         //@ts-ignore: Checked earlier for undefined title
-        <Heading as="h2" variant="h4" className="text-md lg:text-lg" value={title} />
+        <Blocks as="h2" variant="h4" className="text-md lg:text-lg" value={title} />
       )}
     </>
   )

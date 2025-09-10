@@ -4,6 +4,7 @@ import type { PortableTextBlock } from '@portabletext/types'
 import { forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 import isEmpty from '../helpers/isEmpty'
+import { TypographyGroups, variants } from '@/core/Typography/variants'
 
 export type BlockProps = {
   children: PortableTextBlock[]
@@ -17,20 +18,17 @@ export const Block = forwardRef<HTMLParagraphElement, BlockProps>(function Block
   //Check for empty blocks
   if (isEmpty(children)) return null
 
-  const paragraphClassNames = `
-  my-5
-  first:mt-0 
-  last:mb-0 
-  [:where(h2+*,h3+*)]:mt-0`
+  let groupFromVariant = group ? group : 'paragraph'
+  if (!group) {
+    Object.entries(variants).forEach(([key, value]) => {
+      if (Object.keys(value).some((el) => String(el) === String(variant))) {
+        groupFromVariant = key as TypographyGroups
+      }
+    })
+  }
 
   return (
-    <Typography
-      {...rest}
-      ref={ref}
-      group={group}
-      variant={variant}
-      className={twMerge(group === 'paragraph' && paragraphClassNames, className)}
-    >
+    <Typography {...rest} ref={ref} group={groupFromVariant} variant={variant} className={twMerge(``, className)}>
       {children}
     </Typography>
   )

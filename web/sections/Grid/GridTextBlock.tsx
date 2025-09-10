@@ -5,7 +5,7 @@ import { getColorForTheme } from '@/sections/teasers/TextTeaser/theme'
 import { BackgroundTypes, GridTextBlockData } from '../../types/index'
 import Blocks from '../../portableText/Blocks'
 import { BackgroundContainer } from '@/core/Backgrounds'
-import { Heading, Typography } from '@/core/Typography'
+import { Typography } from '@/core/Typography'
 import { RowType } from './mapGridContent'
 import envisTwMerge from '../../twMerge'
 import { forwardRef } from 'react'
@@ -143,10 +143,12 @@ const GridTextBlock = forwardRef<HTMLDivElement, GridTextBlockProps>(function Gr
     }
   }
 
-  const serializerClassnames = {
+  // TODO check the serializers here
+  const serializerClassnames = `${titleTextColor}`
+  /*   {
     largeText: `leading-tight text-balance ${titleTextColor}`,
     normal: `text-2xl leading-snug text-balance ${titleTextColor}`,
-  }
+  } */
 
   const mainContent = (
     <>
@@ -167,22 +169,22 @@ const GridTextBlock = forwardRef<HTMLDivElement, GridTextBlockProps>(function Gr
               {overline}
             </Typography>
             {(title || (useThemedTitle && themedTitle)) && (
-              <Heading
-                as="h2"
+              <Blocks
+                variant="h2"
                 //@ts-ignore: todo
                 value={useThemedTitle ? themedTitle : title}
-                serializerClassnames={serializerClassnames}
+                blockClassName={serializerClassnames}
               />
             )}
           </hgroup>
         ) : (
           <>
             {(title || (useThemedTitle && themedTitle)) && (
-              <Heading
-                as="h2"
+              <Blocks
+                variant="h2"
                 //@ts-ignore: todo
                 value={useThemedTitle ? themedTitle : title}
-                serializerClassnames={serializerClassnames}
+                blockClassName={serializerClassnames}
                 className={`${textContentAlignmentUtilities[contentAlignment ?? 'left']}`}
               />
             )}
@@ -192,7 +194,7 @@ const GridTextBlock = forwardRef<HTMLDivElement, GridTextBlockProps>(function Gr
           <div className={`flex flex-col justify-end ${rowType === 'span3' ? 'lg:-translate-y-[10px]' : ''}`}>
             <Blocks
               value={content}
-              variant="prose-campaign"
+              blockClassName="my-0"
               className={`gap-sm flex flex-col ${textClassNames} ${contentTextColor} ${
                 textContentAlignmentUtilities[contentAlignment ?? 'left']
               } text-balance`}

@@ -1,7 +1,6 @@
 'use client'
 import { getUrlFromAction } from '../../common/helpers'
 import { twMerge } from 'tailwind-merge'
-import { Heading } from '@/core/Typography'
 import { PortableTextBlock } from '@portabletext/types'
 import Transcript from '../Transcript/Transcript'
 import { ResourceLink } from '@/core/Link'
@@ -10,6 +9,7 @@ import { DesignOptions, LinkData } from '@/types'
 import { VideoControlsType, VideoPlayer, VideoType } from '@/core/VideoJsPlayer/VideoPlayer'
 import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
 import { AspectRatioVariants } from '@/core/VideoJsPlayer/Video'
+import Blocks from '@/portableText/Blocks'
 
 export type VideoDesignOptionsType = {
   aspectRatio: AspectRatioVariants
@@ -56,7 +56,7 @@ const VideoPlayerBlock = ({
       id={anchor}
     >
       {/* classname mb-2 pb-2  or common heading 2 styling pb-8 and inheriting pt-20 if applicable */}
-      {title && <Heading value={title} variant="h2" />}
+      {title && <Blocks value={title} variant="h2" />}
       {ingress && (
         <Blocks
           variant="ingress"

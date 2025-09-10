@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+//@ts-nocheck
 'use client'
 import {
   PortableText,
@@ -16,8 +18,7 @@ import { Footnote } from './components/Footnote'
 import { Link } from './components/Link'
 import { List } from './components/List'
 import { TypographyGroups, TypographyVariants } from '@/core/Typography/variants'
-import { Block, Paragraph } from './components/Block'
-import { Heading } from './components/Heading'
+import { Block } from './components/Block'
 import { TypographyProps } from '@/core/Typography'
 
 export type BlockType = Record<PortableTextBlockStyle, PortableTextBlockComponent | undefined>
@@ -62,53 +63,53 @@ type TypeProps = {
 // Text Block Text Content has normal, small text and heading 3
 // News Content has normal, small text and heading 2 and 3 -> Heading group article
 
-const getBlockComponents = (group?: TypographyGroups, variant?: TypographyVariants) => {
+const getBlockComponents = (group?: TypographyGroups, variant?: TypographyVariants, className = '') => {
   console.log('getBlockComponents group', group)
   console.log('getBlockComponents variant', variant)
   return {
     normal: ({ children }: TypeProps) => {
       return (
-        <Block group={group} variant={variant}>
+        <Block group={group} variant={variant} className={className}>
           {children}
         </Block>
       )
     },
     smallText: ({ children }: TypeProps) => (
-      <Block group="heading" variant="sm">
+      <Block variant="sm" className={className}>
         {children}
       </Block>
     ),
     largeText: ({ children }: TypeProps) => (
-      <Block group="heading" variant="2xl">
+      <Block variant="2xl" className={className}>
         {children}
       </Block>
     ),
     extraLargeText: ({ children }: TypeProps) => {
       return (
-        <Block group="heading" variant="5xl">
+        <Block variant="5xl" className={className}>
           {children}
         </Block>
       )
     },
     twoXLText: ({ children }: TypeProps) => {
       return (
-        <Block group="heading" variant="8xl">
+        <Block variant="8xl" className={className}>
           {children}
         </Block>
       )
     },
     h2: ({ children }: TypeProps) => (
-      <Block group={group} variant="h2">
+      <Block group={group} variant="h2" className={className}>
         {children}
       </Block>
     ),
     h3: ({ children }: TypeProps) => (
-      <Block group={group} variant="h3">
+      <Block group={group} variant="h3" className={className}>
         {children}
       </Block>
     ),
     h4: ({ children }: TypeProps) => (
-      <Block group={group} variant="h4">
+      <Block group={group} variant="h4" className={className}>
         {children}
       </Block>
     ),
@@ -201,6 +202,8 @@ export type BlocksProps = {
    */
   components?: PortableTextReactComponents | Partial<PortableTextReactComponents>
   className?: string
+  /** Extended or overrides to the block serializers  */
+  blockClassName?: string
   /** If needed to connect with aria-describedby and such */
   id?: string
   /** Use to clamp lines on number */
@@ -219,6 +222,7 @@ export default function Blocks({
   marks: marksComponents,
   components,
   className = '',
+  blockClassName = '',
   id,
   clampLines,
   includeFootnotes = false,
@@ -241,13 +245,17 @@ export default function Blocks({
           console.log('block', block)
 
           return (
-            <div key={block._key} className={twMerge(``, className)} id={id}>
+            <div
+              key={block._key}
+              className={twMerge(`${group === 'article' ? 'max-w-viewport px-layout-lg' : ''}`, className)}
+              id={id}
+            >
               <PortableText
                 value={value}
                 //@ts-ignore:todo
                 components={{
                   block: {
-                    ...getBlockComponents(group, variant),
+                    ...getBlockComponents(group, variant, blockClassName),
                     ...blocksComponents,
                     ...(clampLines && getLineClampNormalBlock(clampLines)),
                   },

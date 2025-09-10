@@ -79,8 +79,8 @@ export const HomePageBanner = forwardRef<HTMLDivElement, HomePageBannerProps>(fu
 
   const headingElement = (
     <Blocks
-      group="heading"
       variant="h2"
+      //@ts-ignore:todo
       value={title}
       className={`h-fit w-full px-layout-sm text-3xl tracking-tighter text-pretty backdrop-blur-[1.1px] max-lg:pt-6 lg:px-0 lg:text-4xl ${rightAlignTitle ? 'lg:mr-20 lg:ml-auto' : 'lg:mr-auto lg:ml-20'} ${useWhiteTitle ? 'text-white-100' : ''} ${useImage ? 'lg:z-10' : ''} max-w-text`}
     />

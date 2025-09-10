@@ -15,7 +15,7 @@ export default function NotFoundPage({ backgroundImage, title, text }: any) {
           <div className="pb-6 text-9xl text-energy-red-100">404</div>
           {title && <span>{toPlainText(title)}</span>}
         </Typography>
-        {text && <Blocks variant="prose-medium" value={text}></Blocks>}
+        {text && <Blocks variant="ingress" value={text}></Blocks>}
         <ResourceLink variant="fit" href="/" className="pt-12">
           {intl('logolink_title')}
         </ResourceLink>

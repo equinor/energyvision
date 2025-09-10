@@ -1,8 +1,7 @@
-import { Heading, Paragraph } from '@/core/Typography'
-import envisTwMerge from '../../twMerge'
 import { ImageCarouselData } from '../../types/index'
 import { BackgroundContainer } from '@/core/Backgrounds'
 import { Carousel } from '@/core/Carousel/Carousel'
+import Blocks from '@/portableText/Blocks'
 import { forwardRef, useId } from 'react'
 
 type ImageCarouselProps = {
@@ -22,16 +21,9 @@ const ImageCarousel = forwardRef<HTMLUListElement, ImageCarouselProps>(function 
   return (
     <BackgroundContainer as="section" background={background} id={anchor} backgroundStyle="none" className={className}>
       {((title && !hideTitle) || ingress) && (
-        <div className="w-full flex flex-col px-layout-lg max-w-viewport mx-auto pb-8">
-          {title && !hideTitle && (
-            <Heading
-              as="h2"
-              id={headingId}
-              value={title}
-              className={`${ingress ? 'pb-6' : ''} text-xl max-w-text text-pretty`}
-            />
-          )}
-          {ingress && <Paragraph value={ingress} className="max-w-text text-pretty" />}
+        <div className="mx-auto flex w-full max-w-viewport flex-col px-layout-lg pb-8">
+          {title && !hideTitle && <Blocks variant="h2" id={headingId} value={title} />}
+          {ingress && <Blocks variant="ingress" value={ingress} />}
         </div>
       )}
       <Carousel

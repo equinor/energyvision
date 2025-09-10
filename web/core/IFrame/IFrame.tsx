@@ -79,7 +79,7 @@ export const IFrame = forwardRef<HTMLDivElement, IFrameProps>(function IFrame(
   const containerPadding = height ? `${height}px` : calculatePadding(aspectRatio)
 
   const iframeElement = (
-    <section ref={ref} className={envisTwMerge('h-min', className)}>
+    <section ref={ref} className={envisTwMerge('h-min max-w-viewport', className)}>
       {title && showTitleAbove && (
         <Blocks value={title} id={titleId} className={envisTwMerge('pb-8 text-xl', titleClassName)} />
       )}

@@ -2,7 +2,7 @@ import { BackgroundContainer } from '@/core/Backgrounds'
 import type { TextWithIconArrayData, TextWithIconItem } from '../../types/index'
 import { twMerge } from 'tailwind-merge'
 import { TextWithIcon } from '@/core/TextWithIcon/TextWithIcon'
-import { Heading } from '@/core/Typography'
+import Blocks from '@/portableText/Blocks'
 
 type TextWithIconArrayProps = {
   data: TextWithIconArrayData
@@ -28,8 +28,8 @@ const TextWithIconArray = ({ data, anchor, className = '', listClassName = '' }:
       backgroundStyle="wide"
       className={twMerge(`flex flex-col gap-6`, className)}
     >
-      {title && <Heading value={title} as="h2" variant="xl" className={`${hideTitle ? 'sr-only' : 'px-layout-lg'}`} />}
-      <ul className={twMerge(`px-layout-sm w-full  flex flex-col gap-12 lg:grid ${gridCols}`, listClassName)}>
+      {title && <Blocks value={title} variant="h2" className={`${hideTitle ? 'sr-only' : 'px-layout-lg'}`} />}
+      <ul className={twMerge(`flex w-full flex-col gap-12 px-layout-sm lg:grid ${gridCols}`, listClassName)}>
         {group.map((item: TextWithIconItem) => {
           const { icon, title, text, id } = item
           return (

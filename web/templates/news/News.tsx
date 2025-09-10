@@ -103,39 +103,38 @@ const NewsPage = ({ data: news }: ArticleProps) => {
               )}
             </div>
           </div>
-          <div className="max-w-viewport">
-            {heroImage.image.asset && (
-              <div className="-mt-news-banner-vertical px-layout-sm">
-                <DefaulHeroImage data={heroImage} />
-              </div>
-            )}
-            <div className="px-layout-lg">
-              {ingress && ingress.length > 0 && <Blocks variant="ingress" value={ingress} includeFootnotes />}
-
-              {content && content.length > 0 && <Blocks group="article" value={formattedContent} includeFootnotes />}
-              <div className="mt-8 mb-2">
-                <Footnotes blocks={[...ingress, ...content]} />
-              </div>
-
-              {iframe && (
-                <IFrame
-                  //@ts-ignore:TODO type match for portabletext
-                  title={iframe?.title}
-                  showTitleAbove={true}
-                  frameTitle={iframe?.frameTitle}
-                  url={iframe?.url}
-                  cookiePolicy={iframe?.cookiePolicy}
-                  aspectRatio={iframe?.designOptions?.aspectRatio}
-                  description={iframe?.description}
-                />
-              )}
-
-              {relatedLinks?.links && relatedLinks.links.length > 0 && (
-                <RelatedContent data={relatedLinks} className={twMerge(`my-3xl`)} />
-              )}
+          {heroImage.image.asset && (
+            <div className="-mt-news-banner-vertical max-w-viewport px-layout-sm">
+              <DefaulHeroImage data={heroImage} />
             </div>
-            {latestNews && latestNews.length > 0 && <LatestNews data={latestNews} />}
+          )}
+          {ingress && ingress.length > 0 && (
+            <Blocks variant="ingress" value={ingress} includeFootnotes className="max-w-viewport px-layout-lg" />
+          )}
+          {content && content.length > 0 && <Blocks group="article" value={formattedContent} includeFootnotes />}
+          <div className="px-layout-lg">
+            <div className="mt-8 mb-2">
+              <Footnotes blocks={[...ingress, ...content]} />
+            </div>
+
+            {iframe && (
+              <IFrame
+                //@ts-ignore:TODO type match for portabletext
+                title={iframe?.title}
+                showTitleAbove={true}
+                frameTitle={iframe?.frameTitle}
+                url={iframe?.url}
+                cookiePolicy={iframe?.cookiePolicy}
+                aspectRatio={iframe?.designOptions?.aspectRatio}
+                description={iframe?.description}
+              />
+            )}
+
+            {relatedLinks?.links && relatedLinks.links.length > 0 && (
+              <RelatedContent data={relatedLinks} className={twMerge(`my-3xl`)} />
+            )}
           </div>
+          {latestNews && latestNews.length > 0 && <LatestNews data={latestNews} />}
         </article>
       </main>
     </>

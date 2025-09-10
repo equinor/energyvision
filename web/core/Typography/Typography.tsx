@@ -20,6 +20,7 @@ const getElementType = (variant: string, link: boolean): ElementType => {
     case 'eyebrow':
     case 'overline':
     case 'body':
+    case 'highlight':
     default:
       return 'p'
   }
@@ -69,9 +70,10 @@ export type TypographyProps = {
  * ```
  */
 export const Typography: OverridableComponent<TypographyProps, HTMLElement> = forwardRef(function Typography(
-  { variant = 'body', group, children, as: providedAs, link = false, className, ...rest },
+  { variant = 'body', group, children, as: providedAs, link = false, className = '', ...rest },
   ref,
 ) {
+  console.log('Typography classname', className)
   const as: ElementType = providedAs ? providedAs : getElementType(variant, link)
   const typography = findTypography(variant, group)
 

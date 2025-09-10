@@ -1,26 +1,15 @@
 import type { IFrameData } from '../../types/index'
-import { BackgroundContainer } from '@/core/Backgrounds'
 import { IFrame } from '@/core/IFrame/IFrame'
 import { useId } from 'react'
-import envisTwMerge from '../../twMerge'
 import { getUrlFromAction } from '../../common/helpers'
 import { ResourceLink } from '@/core/Link'
 import { getLocaleFromName } from '../../lib/localization'
 import Blocks from '@/portableText/Blocks'
-import Heading from '@/portableText/components/Heading'
+
 import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
 import { twMerge } from 'tailwind-merge'
 
-const IFrameBlock = ({
-  anchor,
-  data,
-  className,
-  ...rest
-}: {
-  data: IFrameData
-  anchor?: string
-  className?: string
-}) => {
+const IFrameBlock = ({ anchor, data, className }: { data: IFrameData; anchor?: string; className?: string }) => {
   const {
     title,
     ingress,
@@ -44,7 +33,7 @@ const IFrameBlock = ({
       className={twMerge(`${bg} ${dark ? 'dark' : ''} mx-auto max-w-viewport px-layout-lg pb-page-content`, className)}
       id={anchor}
     >
-      {title && <Heading variant="h3" as="h2" id={headingId} value={title} />}
+      {title && <Blocks variant="h2" id={headingId} value={title} />}
       <div className="flex flex-col gap-6">
         {ingress && <Blocks variant="ingress" value={ingress} />}
         <IFrame

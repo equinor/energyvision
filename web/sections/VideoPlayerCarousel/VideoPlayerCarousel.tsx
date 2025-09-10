@@ -1,4 +1,3 @@
-import { Heading, Paragraph } from '@/core/Typography'
 import { DesignOptions } from '../../types/index'
 import { Carousel } from '@/core/Carousel/Carousel'
 import { forwardRef, useId } from 'react'
@@ -7,6 +6,7 @@ import { twMerge } from 'tailwind-merge'
 import { VideoType } from '@/core/VideoJsPlayer/VideoPlayer'
 import { PortableTextBlock } from 'next-sanity'
 import { AspectRatioVariants } from '@/core/VideoJsPlayer/Video'
+import Blocks from '@/portableText/Blocks'
 
 export type VideoPlayerCarouselItem = {
   id: string
@@ -48,14 +48,14 @@ const VideoPlayerCarousel = forwardRef<HTMLUListElement, VideoPlayerCarouselProp
     <section id={anchor} className={twMerge(`${bg} ${dark ? 'dark' : ''}`, className)}>
       <div className="mx-auto flex w-full max-w-viewport flex-col px-layout-lg pb-8">
         {title && (
-          <Heading
+          <Blocks
             id={headingId}
-            as="h2"
+            variant="h2"
             value={title}
-            className={hideTitle ? 'sr-only' : `${ingress ? 'pb-6' : ''} max-w-text text-xl text-pretty`}
+            className={hideTitle ? 'sr-only' : `${ingress ? 'pb-6' : ''}`}
           />
         )}
-        {ingress && <Paragraph value={ingress} className="max-w-text text-pretty" />}
+        {ingress && <Blocks variant="ingress" value={ingress} />}
       </div>
       <Carousel
         ref={ref}
