@@ -1,4 +1,3 @@
-'use client'
 import { Flags } from '@/common/helpers/datasetHelpers'
 import { getIsoFromLocale } from '@/lib/localization'
 import { useLocale, useTranslations } from 'next-intl'
@@ -103,7 +102,7 @@ export function Search() {
   return (
     <InstantSearchNext
       indexName={mainIndex}
-      searchClient={searchClient}
+      searchClient={queriedSearchClient}
       routing={{
         router: {
           cleanUrlOnDispose: false,
@@ -147,14 +146,18 @@ export function Search() {
       {indices.map((index) => (
         <Index indexName={index.value} key={index.label} indexId={index.value} />
       ))}
-      <h1 className="sr-only">{intl('search_page_title')}</h1>
-      <div className="max-w-[700px]">
-        <SearchBox variant="inverted" />
+      <div className="mx-auto p-8 px-layout-sm lg:px-layout-lg">
+        <h1 className="sr-only">{intl('search_page_title')}</h1>
+
+        <div className="max-w-[700px]">
+          <SearchBox variant="inverted" />
+        </div>
+
+        <SearchResults resultsRef={resultsRef} items={indices} />
+        <PaginationContextProvider defaultRef={resultsRef}>
+          <Pagination className="mt-12 justify-center" padding={padding} hitsPerPage={5} />
+        </PaginationContextProvider>
       </div>
-      <SearchResults resultsRef={resultsRef} items={indices} />
-      <PaginationContextProvider defaultRef={resultsRef}>
-        <Pagination className="mt-12 justify-center" padding={padding} hitsPerPage={5} />
-      </PaginationContextProvider>
     </InstantSearchNext>
   )
 }

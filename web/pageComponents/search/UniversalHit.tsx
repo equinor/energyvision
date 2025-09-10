@@ -1,5 +1,4 @@
 import { Highlight } from './Highlight'
-import getConfig from 'next/config'
 import type { Hit as AlgoliaHit } from '@algolia/client-search'
 import DisplayLink from './hit/DisplayLink'
 import { FormattedDate } from '@/core/FormattedDateTime'
@@ -7,6 +6,7 @@ import { defaultLanguage } from '../../languages'
 import { default as NextLink } from 'next/link'
 import { Typography } from '@/core/Typography'
 import { useLocale } from 'next-intl'
+import { host } from '@/lib/config'
 
 export type HitData = {
   slug?: string
@@ -24,12 +24,11 @@ export type UniversalHitType = AlgoliaHit<HitData>
 export type HitProps = { hit: UniversalHitType }
 
 const buildDisplayURL = (slug = '', locale: string | undefined): string => {
-  const { publicRuntimeConfig } = getConfig()
   const startsWithLocale = slug.startsWith(`${locale}/`) || slug.startsWith(`/${locale}/`)
 
   return locale && locale !== defaultLanguage?.locale && !startsWithLocale
-    ? `${publicRuntimeConfig.domain}/${locale}/${slug.replace(/^\//, '')}`
-    : `${publicRuntimeConfig.domain}${slug}`
+    ? `${host.url}/${locale}/${slug.replace(/^\//, '')}`
+    : `${host.url}${slug}`
 }
 
 const UniversalHit: React.FC<HitProps> = ({ hit }) => {
@@ -40,7 +39,7 @@ const UniversalHit: React.FC<HitProps> = ({ hit }) => {
 
   return (
     <article>
-      <NextLink className="py-6 px-0 block cursor-pointer outline-hidden" href={slug} prefetch={false}>
+      <NextLink className="block cursor-pointer px-0 py-6 outline-hidden" href={slug} prefetch={false}>
         {formattedDate && type !== 'magazine' && (
           <Typography className={`block tracking-wide ${type === 'news' ? 'text-2xs' : 'text-xs'}`}>
             <FormattedDate uppercase datetime={formattedDate} />
@@ -48,7 +47,7 @@ const UniversalHit: React.FC<HitProps> = ({ hit }) => {
         )}
         {pageTitle && (
           <Typography className="relative inline-block" level="h2" size="sm">
-            <span className="hover:underline focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-mist-blue-100">
+            <span className="hover:underline focus-visible:ring-2 focus-visible:ring-mist-blue-100 focus-visible:outline-hidden">
               <Highlight hit={hit} attribute="pageTitle" />
             </span>
           </Typography>
@@ -63,7 +62,7 @@ const UniversalHit: React.FC<HitProps> = ({ hit }) => {
             <span
               className={`${
                 pageTitle && title ? 'text-xs' : 'hover:underline'
-              } focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-mist-blue-100`}
+              } focus-visible:ring-2 focus-visible:ring-mist-blue-100 focus-visible:outline-hidden`}
             >
               <Highlight hit={hit} attribute="title" />
             </span>
