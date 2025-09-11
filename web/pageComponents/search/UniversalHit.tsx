@@ -52,9 +52,9 @@ const UniversalHit: React.FC<HitProps> = ({ hit }) => {
     <article className="border-b border-white-100/20 pt-6 pb-8">
       <BaseLink href={slug} className="group">
         {formattedDate && type !== 'magazine' && (
-          <Typography className={`tracking-wide ${type === 'news' ? 'text-2xs' : 'text-xs'}`}>
+          <div className={`tracking-wide ${type === 'news' ? 'text-2xs' : 'text-xs'}`}>
             <FormattedDate uppercase datetime={formattedDate} />
-          </Typography>
+          </div>
         )}
         {pageTitle && (
           <Typography as="h2" variant="h6" className={`${commonLinkClassName}`}>
