@@ -24,7 +24,6 @@ type ArticleProps = {
 }
 
 const NewsPage = ({ data: news }: ArticleProps) => {
-  console.log('NEWSPAGE', news)
   const slug = news?.slug
 
   const pathname = usePathname()
@@ -52,8 +51,6 @@ const NewsPage = ({ data: news }: ArticleProps) => {
     ...block,
     markDefs: block.markDefs || [],
   }))
-
-  const commonInnerContentGridClasses = ``
 
   return (
     <>
@@ -109,7 +106,7 @@ const NewsPage = ({ data: news }: ArticleProps) => {
             </div>
           )}
           {ingress && ingress.length > 0 && (
-            <Blocks variant="ingress" value={ingress} includeFootnotes className="px-layout-lg" />
+            <Blocks variant="ingress" value={ingress} includeFootnotes blockClassName="px-layout-lg" />
           )}
           {content && content.length > 0 && <Blocks group="article" value={formattedContent} includeFootnotes />}
           <div className="px-layout-lg">
