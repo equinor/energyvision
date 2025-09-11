@@ -58,7 +58,7 @@ export const FactBox = forwardRef<HTMLElement, FactBoxProps>(function FactBox({ 
       ref={ref}
     >
       <div
-        className={`mx-auto flex max-w-viewport flex-col lg:flex-row ${hasImage && imgPos === 'right' ? 'lg:flex-row-reverse' : ''} ${hasImage ? '' : contentXPadding}`}
+        className={`mx-auto flex flex-col lg:flex-row ${hasImage && imgPos === 'right' ? 'lg:flex-row-reverse' : ''} ${hasImage ? '' : contentXPadding}`}
       >
         {hasImage && (
           <div className={`relative h-[380px] w-full lg:h-auto lg:w-1/2 lg:max-w-1/2`}>
@@ -76,7 +76,7 @@ export const FactBox = forwardRef<HTMLElement, FactBoxProps>(function FactBox({ 
           {content && (
             <Blocks
               value={content}
-              className={`w-full text-pretty ${useTwoColumns ? 'lg:max-w-full lg:columns-2' : ''}`}
+              blockClassName={`w-full text-pretty ${useTwoColumns ? 'lg:max-w-full lg:columns-2' : ''}`}
             />
           )}
         </div>

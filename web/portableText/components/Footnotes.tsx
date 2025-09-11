@@ -29,7 +29,7 @@ function Footnotes({ blocks }: { blocks: PortableTextBlock[] }) {
     <footer
       role="doc-endnotes"
       data-prose="medium"
-      className="max-w-viewport border-y-[1px] border-autumn-storm-40 py-2 text-sm italic lg:text-xs"
+      className="border-y-[1px] border-autumn-storm-40 py-2 text-sm italic lg:text-xs"
     >
       <h2 className="sr-only" id="footnote-label">
         {intl('footnotes')}

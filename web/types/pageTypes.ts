@@ -12,6 +12,7 @@ import {
   TeaserData,
   SubMenuGroupData,
   IFrameData,
+  DesignOptions,
 } from './index'
 import { SanityImageSource } from '@sanity/asset-utils'
 import { Templates } from 'instantsearch.js'
@@ -41,6 +42,7 @@ export type PageSchema = {
     useCustomBreadcrumbs: boolean
     defaultBreadcrumbs: Breadcrumb[]
     customBreadcrumbs: Breadcrumb[]
+    designOptions?: DesignOptions
   }
 }
 

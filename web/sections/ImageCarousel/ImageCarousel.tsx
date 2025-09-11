@@ -21,7 +21,7 @@ const ImageCarousel = forwardRef<HTMLUListElement, ImageCarouselProps>(function 
   return (
     <BackgroundContainer as="section" background={background} id={anchor} backgroundStyle="none" className={className}>
       {((title && !hideTitle) || ingress) && (
-        <div className="mx-auto flex w-full max-w-viewport flex-col px-layout-lg pb-8">
+        <div className="mx-auto flex w-full flex-col px-layout-lg pb-8">
           {title && !hideTitle && <Blocks variant="h2" id={headingId} value={title} />}
           {ingress && <Blocks variant="ingress" value={ingress} />}
         </div>

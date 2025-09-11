@@ -104,12 +104,12 @@ const NewsPage = ({ data: news }: ArticleProps) => {
             </div>
           </div>
           {heroImage.image.asset && (
-            <div className="-mt-news-banner-vertical max-w-viewport px-layout-sm">
+            <div className="-mt-news-banner-vertical px-layout-sm">
               <DefaulHeroImage data={heroImage} />
             </div>
           )}
           {ingress && ingress.length > 0 && (
-            <Blocks variant="ingress" value={ingress} includeFootnotes className="max-w-viewport px-layout-lg" />
+            <Blocks variant="ingress" value={ingress} includeFootnotes className="px-layout-lg" />
           )}
           {content && content.length > 0 && <Blocks group="article" value={formattedContent} includeFootnotes />}
           <div className="px-layout-lg">

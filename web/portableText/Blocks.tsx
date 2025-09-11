@@ -63,51 +63,51 @@ type TypeProps = {
 // Text Block Text Content has normal, small text and heading 3
 // News Content has normal, small text and heading 2 and 3 -> Heading group article
 
-const getBlockComponents = (group?: TypographyGroups, variant?: TypographyVariants, className = '') => {
+const getBlockComponents = (group?: TypographyGroups, variant?: TypographyVariants, as, className = '') => {
   return {
     normal: ({ children }: TypeProps) => {
       return (
-        <Block group={group} variant={variant} className={className}>
+        <Block as={as} group={group} variant={variant} className={className}>
           {children}
         </Block>
       )
     },
     smallText: ({ children }: TypeProps) => (
-      <Block variant="sm" className={className}>
+      <Block as={as} variant="sm" className={className}>
         {children}
       </Block>
     ),
     largeText: ({ children }: TypeProps) => (
-      <Block variant="2xl" className={className}>
+      <Block as={as} variant="2xl" className={className}>
         {children}
       </Block>
     ),
     extraLargeText: ({ children }: TypeProps) => {
       return (
-        <Block variant="5xl" className={className}>
+        <Block as={as} variant="5xl" className={className}>
           {children}
         </Block>
       )
     },
     twoXLText: ({ children }: TypeProps) => {
       return (
-        <Block variant="8xl" className={className}>
+        <Block as={as} variant="8xl" className={className}>
           {children}
         </Block>
       )
     },
     h2: ({ children }: TypeProps) => (
-      <Block group={group} variant="h2" className={className}>
+      <Block as={as} group={group} variant="h2" className={className}>
         {children}
       </Block>
     ),
     h3: ({ children }: TypeProps) => (
-      <Block group={group} variant="h3" className={className}>
+      <Block as={as} group={group} variant="h3" className={className}>
         {children}
       </Block>
     ),
     h4: ({ children }: TypeProps) => (
-      <Block group={group} variant="h4" className={className}>
+      <Block as={as} group={group} variant="h4" className={className}>
         {children}
       </Block>
     ),
@@ -224,36 +224,27 @@ export default function Blocks({
   id,
   clampLines,
   includeFootnotes = false,
+  as,
 }: BlocksProps) {
   let div: PortableTextBlock[] = []
   return (
     <>
       {//@ts-ignore:todo
       value?.map((block: PortableTextBlock, i: number, blocks: PortableTextBlock[]) => {
+        console.log('blocks', blocks)
         // Normal text blocks (p, h1, h2, etc.) — these are grouped so we can wrap them in a prose div
         if (inlineBlockTypes.includes(block._type)) {
-          div.push(block)
-
-          // If the next block is also text/pullQuote, group it with this one
-          if (inlineBlockTypes.includes(blocks[i + 1]?._type)) return null
-
-          // Otherwise, render the group of text blocks we have
-          const value = div
-          div = []
-          /*           console.log('block', block) */
-
-          return (
-            <div
-              key={block._key}
-              className={twMerge(`${group === 'article' ? 'max-w-viewport px-layout-lg' : ''}`, className)}
-              id={id}
-            >
+          if (blocks?.length === 1) {
+            return (
               <PortableText
+                key={block._key}
+                className={twMerge(` ${group === 'article' ? 'px-layout-lg' : ''}`, className)}
+                id={id}
                 value={value}
                 //@ts-ignore:todo
                 components={{
                   block: {
-                    ...getBlockComponents(group, variant, blockClassName),
+                    ...getBlockComponents(group, variant, as, blockClassName),
                     ...blocksComponents,
                     ...(clampLines && getLineClampNormalBlock(clampLines)),
                   },
@@ -269,8 +260,48 @@ export default function Blocks({
                   console.warn(`${message},type:${options.type},nodeType:${options.nodeType}`)
                 }}
               />
-            </div>
-          )
+            )
+          } else {
+            div.push(block)
+
+            // If the next block is also text/pullQuote, group it with this one
+            if (inlineBlockTypes.includes(blocks[i + 1]?._type)) return null
+
+            // Otherwise, render the group of text blocks we have
+            const value = div
+            div = []
+            /*           console.log('block', block) */
+
+            return (
+              <div
+                key={block._key}
+                className={twMerge(` ${group === 'article' ? 'px-layout-lg' : ''}`, className)}
+                id={id}
+              >
+                <PortableText
+                  value={value}
+                  //@ts-ignore:todo
+                  components={{
+                    block: {
+                      ...getBlockComponents(group, variant, as, blockClassName),
+                      ...blocksComponents,
+                      ...(clampLines && getLineClampNormalBlock(clampLines)),
+                    },
+                    types: { ...typesSerializers },
+                    marks: {
+                      ...markSerializers,
+                      ...marksComponents,
+                      ...(includeFootnotes && footnoteSerializer),
+                    },
+                    list: { ...listSerializers },
+                  }}
+                  onMissingComponent={(message, options) => {
+                    console.warn(`${message},type:${options.type},nodeType:${options.nodeType}`)
+                  }}
+                />
+              </div>
+            )
+          }
         } else if (block._type === 'factbox') {
           let marginOverride = ''
           // If the next block is a factbox, remove margin bottom

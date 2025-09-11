@@ -50,7 +50,7 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
       {...rest}
     >
       <BaseLink href={slug} className="hover:underline">
-        <Blocks value={title} as={hasSectionTitle ? 'h3' : 'h2'} variant="h5" className="mb-1" />
+        <Blocks value={title} as={hasSectionTitle ? 'h3' : 'h2'} variant="h5" blockClassName="mb-1" />
       </BaseLink>
       <div
         className={`${
@@ -82,7 +82,9 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
           </div>
         )}
       </div>
-      {variant === 'single' && ingress && <Blocks value={ingress} className="mt-4 max-w-prose text-sm text-pretty" />}
+      {variant === 'single' && ingress && (
+        <Blocks value={ingress} blockClassName="mt-4 max-w-prose text-sm text-pretty" />
+      )}
       <div className="mt-4 lg:mt-8">
         <AddToCalendar eventDate={eventDate} location={location} title={plainTitle} />
       </div>

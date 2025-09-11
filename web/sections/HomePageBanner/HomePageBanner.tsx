@@ -82,7 +82,7 @@ export const HomePageBanner = forwardRef<HTMLDivElement, HomePageBannerProps>(fu
       variant="h2"
       //@ts-ignore:todo
       value={title}
-      blockClassName={`h-fit w-full px-layout-sm text-3xl tracking-tighter text-pretty backdrop-blur-[1.1px] max-lg:pt-6 lg:px-0 lg:text-4xl ${rightAlignTitle ? 'lg:mr-20 lg:ml-auto' : 'lg:mr-auto lg:ml-20'} ${useWhiteTitle ? 'text-white-100' : ''} ${useImage ? 'lg:z-10' : ''} max-w-text`}
+      blockClassName={`h-fit w-full px-layout-md text-3xl tracking-tighter text-pretty backdrop-blur-[1.1px] max-lg:pt-6 lg:px-0 lg:text-4xl ${rightAlignTitle ? 'lg:mr-20 lg:ml-auto' : 'lg:mr-auto lg:ml-20'} ${useWhiteTitle ? 'text-white-100' : ''} ${useImage ? 'lg:z-10' : ''} max-w-text`}
     />
   )
 
@@ -96,7 +96,7 @@ export const HomePageBanner = forwardRef<HTMLDivElement, HomePageBannerProps>(fu
         </picture>
       )}
       <div
-        className={`pl-sm mx-auto grid grid-cols-1 grid-rows-[max-content_min-content] gap-4 lg:gap-12 lg:px-layout-sm ${useImage ? '-mt-12 lg:pt-40' : 'pt-16'} max-w-viewport pb-2 lg:pt-32 lg:pb-14`}
+        className={`pl-sm mx-auto grid grid-cols-1 grid-rows-[max-content_min-content] gap-4 lg:gap-12 lg:px-layout-sm ${useImage ? '-mt-12 lg:pt-40' : 'pt-16'} pb-2 lg:pt-32 lg:pb-14`}
       >
         {title && ((useImage && !isMobile) || !useImage) && headingElement}
         {ctaCards?.length && (

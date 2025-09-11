@@ -32,7 +32,7 @@ const Transcript = ({ transcript, className, ariaTitle }: TranscriptProps) => {
             onClick={handleOpen}
             aria-haspopup="dialog"
             aria-label={`${readTranscript} ${ariaTitle}`}
-            className={`group focus-visible:envis-outline dark:focus-visible:envis-outline-invert border-grey-40 flex w-fit gap-4 border-b pr-4 pb-2 focus:outline-hidden dark:border-white-100 dark:focus:outline-hidden`}
+            className={`group focus-visible:envis-outline dark:focus-visible:envis-outline-invert border-grey-40 flex w-fit items-center gap-4 border-b pr-4 pb-2 focus:outline-hidden dark:border-white-100 dark:focus:outline-hidden`}
           >
             <span className={`grid`}>
               <TransformableIcon
@@ -46,9 +46,7 @@ const Transcript = ({ transcript, className, ariaTitle }: TranscriptProps) => {
                 iconData={add_circle_filled}
               />
             </span>
-            <Typography as="span" className="">
-              {readTranscript}
-            </Typography>
+            <Typography variant="simple">{readTranscript}</Typography>
           </button>
           <Modal isOpen={isOpen} onClose={handleClose} title={ariaTitle}>
             <Blocks value={transcript} />

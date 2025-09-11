@@ -51,7 +51,7 @@ const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
       )}
     >
       <div
-        className={`mx-auto flex max-w-viewport flex-col gap-6 ${
+        className={`mx-auto flex flex-col gap-6 ${
           tabPanelVariant === 'tabsKeyNumbers'
             ? `px-layout-sm pb-page-content lg:px-layout-md`
             : `lg:mx-layout-sm ${theme?.backgroundUtility} rounded-md`

@@ -31,13 +31,8 @@ const CardsList = forwardRef<HTMLElement, CardsListProps>(function CardsList(
     : { background: 'bg-blue-50', dark: true }
 
   return (
-    <section
-      ref={ref}
-      className={twMerge(`mx-auto max-w-viewport px-layout-md pb-page-content`, className)}
-      id={anchor}
-      {...rest}
-    >
-      {title && <Blocks value={title} variant="h3" as="h2" className="pb-10" />}
+    <section ref={ref} className={twMerge(`mx-auto px-layout-md pb-page-content`, className)} id={anchor} {...rest}>
+      {title && <Blocks value={title} variant="h3" as="h2" blockClassName="pb-10" />}
       <ul className={`grid ${gridColumns} gap-4`}>
         {cards?.map((card) => {
           return (

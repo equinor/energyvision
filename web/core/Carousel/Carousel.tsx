@@ -455,7 +455,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
         `${
           displayMode === 'single'
             ? 'relative flex flex-col overflow-hidden'
-            : 'mx-auto w-full max-w-viewport px-4 md:p-0 lg:px-layout-sm'
+            : 'mx-auto w-full px-4 md:p-0 lg:px-layout-sm'
         }`,
         className,
       )}

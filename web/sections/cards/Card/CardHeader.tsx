@@ -81,7 +81,9 @@ export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(function C
           {title}
         </Typography>
       )}
-      {titleBlock && <Blocks as={titleLevel} variant={titleVariant} className={titleClassNames} value={titleBlock} />}
+      {titleBlock && (
+        <Blocks as={titleLevel} variant={titleVariant} blockClassName={titleClassNames} value={titleBlock} />
+      )}
     </hgroup>
   ) : (
     <>
@@ -100,7 +102,7 @@ export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(function C
         <Blocks
           {...(titleVariant && { as: titleLevel })}
           {...(titleVariant ? { variant: titleVariant } : { variant: titleLevel })}
-          className={titleClassNames}
+          blockClassName={titleClassNames}
           value={titleBlock}
           {...rest}
         />

@@ -53,23 +53,14 @@ const ContentGroup = ({ group }: ContentGroupProps) => {
   return (
     <section className="mx-0 my-16 md:my-32" id={id}>
       {label && (
-        <div className="mx-auto max-w-viewport pt-0 pb-xl px-layout-md">
+        <div className="pb-xl mx-auto px-layout-md pt-0">
           <Typography variant="xl" as="h2">
             {label}
           </Typography>
         </div>
       )}
 
-      <ul
-        className={`
-          px-layout-sm
-          mx-auto
-          max-w-viewport
-          grid
-          grid-cols-3
-          gap-6
-          list-none`}
-      >
+      <ul className={`mx-auto grid list-none grid-cols-3 gap-6 px-layout-sm`}>
         {promoTiles.map((tile) => {
           return (
             <li key={tile.id} className="h-full w-full">

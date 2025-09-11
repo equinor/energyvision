@@ -31,10 +31,7 @@ const NewsList = ({
   }
 
   return (
-    <div
-      id={anchor}
-      className={twMerge(`mx-auto max-w-viewport px-layout-sm pb-page-content 3xl:px-layout-md`, className)}
-    >
+    <div id={anchor} className={twMerge(`mx-auto px-layout-sm pb-page-content 3xl:px-layout-md`, className)}>
       {title && <Blocks value={title} variant="h2" />}
       <div className="grid gap-x-6 gap-y-8 sm:grid-cols-2 xl:grid-cols-3" {...rest}>
         {pagedArticles.map((article) => (

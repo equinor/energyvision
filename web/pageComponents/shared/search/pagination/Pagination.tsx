@@ -49,7 +49,7 @@ export const Pagination = ({ className = '', totalPages, padding, hitsPerPage = 
   }
 
   return (
-    <ul className={envisTwMerge(`max-w-viewport flex flex-wrap gap-2 my-2`, className)} {...rest}>
+    <ul className={envisTwMerge(`my-2 flex flex-wrap gap-2`, className)} {...rest}>
       <PaginationItem
         ariaLabel={intl('search_pagination_first_page')}
         isCurrent={false}

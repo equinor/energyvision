@@ -50,7 +50,7 @@ const SectionBlockTemplate = ({
 
   return (
     <section
-      className={twMerge(`${bg} ${dark ? 'dark' : ''} mx-auto max-w-viewport px-layout-lg pb-page-content`, className)}
+      className={twMerge(`${bg} ${dark ? 'dark' : ''} mx-auto px-layout-lg pb-page-content`, className)}
       id={anchor}
     >
       {/* Heading has more padding bottom than the rest, padding is taken care of with Typography */}

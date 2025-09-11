@@ -28,23 +28,13 @@ export const StickyMenu = forwardRef<HTMLElement, StickyMenuProps>(function Stic
       aria-label={intl('local')}
       role="navigation"
       className={envisTwMerge(
-        `
-        sticky
-        top-0
-        [transition-property:top]
-        ease-in-out  
-        duration-300
-        ${twBg} 
-        w-full
-        shadow-md
-        z-10
-        py-4`,
+        `sticky top-0 [transition-property:top] duration-300 ease-in-out ${twBg} z-10 w-full py-4 shadow-md`,
         className,
       )}
     >
-      <div className={`flex flex-col lg:flex-row gap-y-3 lg:justify-between px-layout-sm max-w-viewport mx-auto`}>
-        <div className={`text-start font-medium text-base`}>{stickyMenuData?.title}</div>
-        <div className="flex gap-10 items-center">
+      <div className={`mx-auto flex flex-col gap-y-3 px-layout-sm lg:flex-row lg:justify-between`}>
+        <div className={`text-start text-base font-medium`}>{stickyMenuData?.title}</div>
+        <div className="flex items-center gap-10">
           {anchorReference && (
             <StickyMenuLink className="" href={`#${anchorReference.anchorReference}`}>
               {anchorReference.title}

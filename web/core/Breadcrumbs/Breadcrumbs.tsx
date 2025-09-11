@@ -1,11 +1,13 @@
 'use client'
-import { BreadcrumbsList } from './index'
-import { BackgroundContainer, BackgroundContainerProps } from '@/core/Backgrounds'
 import { BreadcrumbJsonLd } from 'next-seo'
 import { usePathname } from 'next/navigation'
 import { twMerge } from 'tailwind-merge'
-import NextLink from 'next/link'
-import type { Breadcrumb } from '../../types'
+import type { Breadcrumb, DesignOptions } from '../../types'
+import { forwardRef } from 'react'
+import { BreadcrumbsList } from './BreadcrumbList'
+import { BreadcrumbsListItem } from './BreadcrumbListItem'
+import { BaseLink } from '../Link'
+import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
 
 type BreadcrumbsProps = {
   slug: string
@@ -13,7 +15,8 @@ type BreadcrumbsProps = {
   defaultBreadcrumbs: Breadcrumb[]
   customBreadcrumbs: Breadcrumb[]
   className?: string
-} & BackgroundContainerProps
+  designOptions?: DesignOptions
+}
 
 const buildJsonLdElements = (crumbs: Breadcrumb[], pathname: ReturnType<typeof usePathname>) => {
   return crumbs.map((item, index) => ({
@@ -36,45 +39,39 @@ const parseBreadcrumbs = (crumbs: Breadcrumb[]) => {
     })
 }
 
-export const Breadcrumbs = ({
-  slug,
-  useCustomBreadcrumbs,
-  defaultBreadcrumbs,
-  customBreadcrumbs,
-  background,
-  className = '',
-}: BreadcrumbsProps) => {
-  const pathname = usePathname()
-  const crumbs =
-    useCustomBreadcrumbs && customBreadcrumbs.length >= 3
-      ? parseBreadcrumbs(customBreadcrumbs)
-      : parseBreadcrumbs(defaultBreadcrumbs)
+export const Breadcrumbs = forwardRef<HTMLElement, BreadcrumbsProps>(
+  ({ slug, useCustomBreadcrumbs, defaultBreadcrumbs, customBreadcrumbs, designOptions, className = '' }, ref) => {
+    const pathname = usePathname()
+    const crumbs =
+      useCustomBreadcrumbs && customBreadcrumbs.length >= 3
+        ? parseBreadcrumbs(customBreadcrumbs)
+        : parseBreadcrumbs(defaultBreadcrumbs)
 
-  if (crumbs.length < 2) return null
+    if (crumbs.length < 2) return null
 
-  return (
-    <BackgroundContainer as="nav" aria-label="Breadcrumbs" background={background} renderFragmentWhenPossible>
-      <BreadcrumbsList className={twMerge(`py-10`, className)}>
-        {crumbs.map((item) => {
-          const isActive = item.slug === slug
-          const label = item.label
-          return (
-            <BreadcrumbsList.BreadcrumbsListItem key={item.slug} active={isActive}>
-              {isActive ? (
-                <span aria-current="page">{label}</span>
-              ) : (
-                <NextLink
-                  href={item.slug}
-                  className="hover:underline no-underline focus:outline-hidden focus-visible:envis-outline dark:focus-visible:envis-outline-invert"
-                >
-                  {label}
-                </NextLink>
-              )}
-            </BreadcrumbsList.BreadcrumbsListItem>
-          )
-        })}
-      </BreadcrumbsList>
-      <BreadcrumbJsonLd itemListElements={buildJsonLdElements(crumbs, pathname)} />
-    </BackgroundContainer>
-  )
-}
+    const { bg, dark } = getBgAndDarkFromBackground(designOptions)
+
+    return (
+      <nav ref={ref} aria-label="Breadcrumbs" className={`px-layout-lg ${bg} ${dark ? 'dark' : ''}`}>
+        <BreadcrumbsList className={twMerge(`py-6`, className)}>
+          {crumbs.map((item) => {
+            const isActive = item.slug === slug
+            const label = item.label
+            return (
+              <BreadcrumbsListItem key={item.slug} active={isActive}>
+                {isActive ? (
+                  <span aria-current="page">{label}</span>
+                ) : (
+                  <BaseLink href={item.slug} className="no-underline hover:underline">
+                    {label}
+                  </BaseLink>
+                )}
+              </BreadcrumbsListItem>
+            )
+          })}
+        </BreadcrumbsList>
+        <BreadcrumbJsonLd itemListElements={buildJsonLdElements(crumbs, pathname)} />
+      </nav>
+    )
+  },
+)

@@ -31,10 +31,7 @@ const AccordionBlock = ({ data, anchor, className }: AccordionBlockProps) => {
     <>
       <section
         id={anchor}
-        className={twMerge(
-          `${bg} ${dark ? 'dark' : ''} mx-auto max-w-viewport px-layout-lg pb-page-content`,
-          className,
-        )}
+        className={twMerge(`${bg} ${dark ? 'dark' : ''} mx-auto px-layout-lg pb-page-content`, className)}
       >
         {image?.asset && (
           <div className="w-1/4">

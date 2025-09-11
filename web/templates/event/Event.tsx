@@ -25,7 +25,6 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
   const { start, end } = getEventDates(eventDate)
   return (
     <>
-      <Seo seoAndSome={data?.seoAndSome} slug={data?.slug} pageTitle={data?.title} />
       {eventDate?.date && start && end && (
         <EventJsonLd
           name={plainTitle}
@@ -34,7 +33,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
           location={location}
         />
       )}
-      <main>
+      <main className="flex flex-col [:not(:has(.sticky-menu))]:pt-topbar">
         <article>
           <BackgroundContainer className="px-layout-md py-32" background={{ backgroundColor: 'Moss Green Light' }}>
             <div className="mx-auto max-w-[1186px]">
@@ -67,10 +66,8 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
           </BackgroundContainer>
           {(ingress || content) && (
             <div className={`mt-16 px-0 pb-page-content md:px-8 lg:px-0`}>
-              {ingress && (
-                <Blocks variant="ingress" value={ingress} className="mx-auto max-w-viewport px-layout-lg pb-16" />
-              )}
-              {content && <Blocks group="article" value={content} className="mx-auto max-w-viewport" />}
+              {ingress && <Blocks variant="ingress" value={ingress} className="mx-auto px-layout-lg pb-16" />}
+              {content && <Blocks group="article" value={content} className="mx-auto" />}
             </div>
           )}
           {promotedPeople?.people && promotedPeople?.people.length > 0 && (
@@ -86,10 +83,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
           {contactList && <ContactList data={contactList} className="my-12" />}
 
           {relatedLinks?.links && relatedLinks.links.length > 0 && (
-            <RelatedContent
-              data={relatedLinks}
-              className={twMerge(`mx-auto max-w-viewport px-layout-lg pb-page-content`)}
-            />
+            <RelatedContent data={relatedLinks} className={twMerge(`mx-auto px-layout-lg pb-page-content`)} />
           )}
         </article>
       </main>

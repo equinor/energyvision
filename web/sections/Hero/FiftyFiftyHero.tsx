@@ -26,11 +26,11 @@ export const FiftyFiftyHero = ({ title, ingress, link: action, background, figur
               value={title}
               as="h2"
               variant={isBigTitle ? '2xl' : 'xl'}
-              className={`max-w-[1186px] ${isBigTitle ? 'font-normal' : 'font-medium'}`}
+              blockClassName={`max-w-[1186px] ${isBigTitle ? 'font-normal' : 'font-medium'}`}
             />
           )}
 
-          {ingress && !isBigTitle && <Blocks value={ingress} className="hidden md:block" />}
+          {ingress && !isBigTitle && <Blocks value={ingress} blockClassName="hidden md:block" />}
 
           {action && !isBigTitle && (
             <ResourceLink

@@ -34,7 +34,7 @@ const FullWidthImage = ({ data, anchor }: FullWidthImageProps) => {
         alt={image.alt}
       />
       {image.asset && (caption || attribution) && (
-        <FigureCaption className={'mx-auto max-w-viewport px-layout-sm pt-0 pb-8'}>
+        <FigureCaption className={'mx-auto px-layout-sm pt-0 pb-8'}>
           {caption && <div>{caption}</div>}
           {attribution && <div>{attribution}</div>}
         </FigureCaption>

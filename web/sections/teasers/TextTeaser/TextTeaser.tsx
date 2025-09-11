@@ -29,7 +29,7 @@ const TextTeaser = ({ data, anchor, className }: TextTeaserProps) => {
       className={twMerge(`${dark ? 'dark' : ''} `, className)}
     >
       <Media className="h-auto px-layout-lg pt-12 pb-0 sm:py-8 sm:pt-12 md:p-16" mediaPosition={titlePosition}>
-        <Blocks className={`px-0 pt-0 pb-12 sm:p-0 ${highlight}`} variant="2xl" as="h2" value={title} />
+        <Blocks blockClassName={`px-0 pt-0 pb-12 sm:p-0 ${highlight}`} variant="2xl" as="h2" value={title} />
       </Media>
       <Content className="px-layout-lg pt-0 pb-16 sm:p-12 lg:p-16">
         {text && (

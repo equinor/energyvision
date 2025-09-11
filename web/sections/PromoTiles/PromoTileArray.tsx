@@ -20,7 +20,7 @@ const PromoTileArray = ({
     <section
       id={anchor}
       className={twMerge(
-        `mx-auto flex max-w-viewport flex-col justify-center gap-6 px-layout-md pb-page-content xl:px-layout-lg`,
+        `mx-auto flex flex-col justify-center gap-6 px-layout-md pb-page-content xl:px-layout-lg`,
         className,
       )}
     >

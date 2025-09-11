@@ -19,7 +19,7 @@ export const Topbar = forwardRef<HTMLDivElement, TopbarProps>(function Topbar(
   const [isVisible, setIsVisible] = useState(true)
   const [hasDropShadow, setHasDropShadow] = useState(false)
   const showSticky = stickyMenuData && stickyMenuData?.links && stickyMenuData?.links?.length > 0
-
+  console.log('showSticky', showSticky)
   useEffect(() => {
     if (topbarRef && topbarRef?.current) {
       setHeight(topbarRef.current.getBoundingClientRect().height)
@@ -87,23 +87,10 @@ export const Topbar = forwardRef<HTMLDivElement, TopbarProps>(function Topbar(
         ref={combinedTopbarRef}
         aria-label={'Global ' /*intl('global') TODO*/}
         role="navigation"
-        className={`
-          h-topbar
-          overflow-hidden
-          w-full 
-          ${showSticky ? 'sticky' : 'fixed'} 
-          bg-white-100
-          z-40
-          animate-height
-          [transition-property:top]
-          ease-in-out  
-          duration-300
-          ${isVisible ? 'top-0' : '-top-topbar'} 
-          ${hasDropShadow && !showSticky ? 'shadow-md' : ''}         
-          `}
+        className={`h-topbar w-full overflow-hidden ${showSticky ? 'sticky' : 'fixed'} animate-height z-40 bg-white-100 [transition-property:top] duration-300 ease-in-out ${isVisible ? 'top-0' : '-top-topbar'} ${hasDropShadow && !showSticky ? 'shadow-md' : ''} `}
         {...rest}
       >
-        <div className="px-layout-sm max-w-viewport mx-auto flex items-center justify-between py-4">{children}</div>
+        <div className="mx-auto flex items-center justify-between px-layout-sm py-4">{children}</div>
       </nav>
       {showSticky && (
         <StickyMenu stickyMenuData={stickyMenuData} className={`${isVisible ? 'top-topbar pt-2' : 'top-0'}`} />

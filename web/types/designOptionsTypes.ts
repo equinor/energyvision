@@ -24,6 +24,6 @@ export type DesignOptions = {
     backgroundColor?: BackgroundColours
     backgroundImage?: ImageBackground
     backgroundUtility?: keyof ColorKeyTokens
-    dark: boolean
+    dark?: boolean
   }
 }

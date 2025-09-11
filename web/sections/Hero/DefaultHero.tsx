@@ -17,18 +17,16 @@ export const DefaultHero = ({ title, image, isBigTitle, bigTitle, tags }: Props)
     <>
       {isBigTitle && (
         <>
-          <div className="mx-auto max-w-viewport pt-10 pr-16 pb-0 pl-layout-sm">
+          <div className="mx-auto pt-10 pr-16 pb-0 pl-layout-sm">
             {title && <Blocks value={title} as="h1" variant="xl" />}
           </div>
-          <div className="mx-auto max-w-viewport px-layout-sm py-10">
+          <div className="mx-auto px-layout-sm py-10">
             {bigTitle && <Blocks value={bigTitle} as="h2" variant="3xl" />}
           </div>
         </>
       )}
       {!isBigTitle && (
-        <div className="px-layout-md py-10">
-          {title && <Blocks className="mx-auto max-w-[1186px]" value={title} as="h1" variant="3xl" />}
-        </div>
+        <div className="px-layout-md py-10">{title && <Blocks value={title} as="h1" variant="3xl" />}</div>
       )}
       {tags && tags?.length > 0 && (
         <div className="px-layout-md pb-12">
@@ -49,7 +47,7 @@ export const DefaultHero = ({ title, image, isBigTitle, bigTitle, tags }: Props)
         </div>
       )}
 
-      {image && <DefaulHeroImage className="mx-auto max-w-viewport px-layout-sm pt-0 pb-16" data={image} />}
+      {image && <DefaulHeroImage className="mx-auto px-layout-sm pt-0 pb-16" data={image} />}
     </>
   )
 }

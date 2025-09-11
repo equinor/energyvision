@@ -45,17 +45,7 @@ const MultipleEventCards = ({
         <>
           {data?.length <= 3 || isMobile ? (
             <ul
-              className={`
-                light 
-                grid 
-                gap-y-3
-                gap-x-4
-                grid-cols-1
-                justify-center
-                content-center
-                auto-rows-auto
-                md:grid-cols-2
-                2xl:grid-cols-3`}
+              className={`light grid auto-rows-auto grid-cols-1 content-center justify-center gap-x-4 gap-y-3 md:grid-cols-2 2xl:grid-cols-3`}
             >
               {data.map((item) => {
                 return (
@@ -72,7 +62,7 @@ const MultipleEventCards = ({
               {...(hasSectionTitle && {
                 labelledbyId: labelledbyId,
               })}
-              className="lg:px-0 max-w-viewport"
+              className="lg:px-0"
               hasSectionTitle={hasSectionTitle}
             />
           )}

@@ -48,7 +48,7 @@ const PastEventsListItem = forwardRef<HTMLAnchorElement, PastEventsListItemProps
           value={title}
           as={hasSectionTitle ? 'h3' : 'h2'}
           variant="h5"
-          className="max-w-text pb-4 text-base text-pretty group-hover:underline"
+          blockClassName="max-w-text pb-4 text-base text-pretty group-hover:underline"
         />
         {location && (
           <div className="gap-sm flex items-start">

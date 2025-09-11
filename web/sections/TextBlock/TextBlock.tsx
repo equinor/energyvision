@@ -68,7 +68,7 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
         designOptions?.background?.type === 'backgroundImage' ? backgroundImageContentClassNames : className
       }`}
     >
-      {isBigText && title && <Blocks value={title} as="h2" variant="2xl" className="mb-2 leading-cloudy" />}
+      {isBigText && title && <Blocks value={title} as="h2" variant="2xl" blockClassName="mb-2 leading-cloudy" />}
       {!isBigText && (
         <>
           {image?.asset && (
@@ -88,9 +88,9 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
               {title && <Blocks variant="h2" value={title} />}
             </hgroup>
           ) : (
-            <>{title && <Blocks value={title} variant="h2" />}</>
+            title && <Blocks value={title} variant="h2" />
           )}
-          {ingress && <Blocks variant="ingress" value={ingress} className="mb-6" />}
+          {ingress && <Blocks variant="ingress" value={ingress} blockClassName="mb-6" />}
         </>
       )}
       <div className="flex flex-col gap-6">

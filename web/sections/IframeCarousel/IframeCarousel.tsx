@@ -1,8 +1,9 @@
-import { BackgroundContainer } from '@/core/Backgrounds'
 import type { IframeCarouselData } from '../../types/index'
 import { Carousel } from '@/core/Carousel/Carousel'
 import { useId } from 'react'
 import Blocks from '@/portableText/Blocks'
+import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
+import { twMerge } from 'tailwind-merge'
 
 type IframeCarouselProps = {
   data: IframeCarouselData
@@ -10,26 +11,19 @@ type IframeCarouselProps = {
   className?: string
 }
 
-const IframeCarousel = ({ data, anchor, className, ...rest }: IframeCarouselProps) => {
+const IframeCarousel = ({ data, anchor, className = '' }: IframeCarouselProps) => {
   const { title, hideTitle, items, designOptions } = data
-  const { background } = designOptions
   const headingId = useId()
+  const { bg, dark } = getBgAndDarkFromBackground(designOptions)
 
   return (
-    <BackgroundContainer
-      as="section"
-      background={background}
-      backgroundStyle="none"
-      className={className}
-      {...rest}
-      id={anchor}
-    >
+    <section className={twMerge(`${bg} ${dark ? 'dark' : ''}`, className)} id={anchor}>
       {title && (
         <Blocks
           value={title}
           variant="h2"
           id={headingId}
-          className={hideTitle ? 'sr-only' : 'max-w-viewport px-layout-sm'}
+          blockClassName={`px-layout-lg ${hideTitle ? 'sr-only' : ''}`}
         />
       )}
       <Carousel
@@ -40,7 +34,7 @@ const IframeCarousel = ({ data, anchor, className, ...rest }: IframeCarouselProp
         hasSectionTitle={title && !hideTitle}
         labelledbyId={title && !hideTitle ? headingId : undefined}
       />
-    </BackgroundContainer>
+    </section>
   )
 }
 

@@ -99,9 +99,7 @@ const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
 
   const variantClassName: Partial<Record<Variants, string>> = {
     default: 'h-full mt-8 xl:bg-moss-green-50 xl:mx-8 xl:flex xl:justify-between items-center',
-    simple: `max-w-viewport ${
-      Flags.HAS_FANCY_MENU ? '' : 'bg-north-sea-80'
-    } mt-6 xl:mt-8 xl:px-layout-sm flex flex-col mx-auto`,
+    simple: ` ${Flags.HAS_FANCY_MENU ? '' : 'bg-north-sea-80'} mt-6 xl:mt-8 xl:px-layout-sm flex flex-col mx-auto`,
   }
 
   return (
@@ -119,7 +117,7 @@ const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
         <FloatingFocusManager context={context}>
           <FloatingOverlay ref={refs.setFloating} lockScroll {...getFloatingProps()}>
             <TopbarDropdown>
-              <nav className={`${!Flags.HAS_FANCY_MENU ? 'h-full dark bg-north-sea-80' : ''} `}>
+              <nav className={`${!Flags.HAS_FANCY_MENU ? 'dark h-full bg-north-sea-80' : ''} `}>
                 <NavTopbar>
                   <LogoLink />
                   <MenuButton
@@ -164,45 +162,22 @@ const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
                   {
                     <hr
                       className={`${
-                        Flags.HAS_FANCY_MENU ? 'xl:hidden mt-12' : 'max-xl:mt-8'
-                      } h-[1px] w-full bg-grey-40 dark:bg-white-100`}
+                        Flags.HAS_FANCY_MENU ? 'mt-12 xl:hidden' : 'max-xl:mt-8'
+                      } bg-grey-40 h-[1px] w-full dark:bg-white-100`}
                     />
                   }
                   <BaseLink
-                    className={`
-                    w-fit 
-                    inline-flex
-                    items-center
-                    gap-2
-                    leading-none
-                    no-underline 
-                    hover:underline
-                    underline-offset-2
-                    h-fit
-                    rounded-xs
-                    mb-40
-                    max-xl:px-layout-sm
-                    ${
+                    className={`mb-40 inline-flex h-fit w-fit items-center gap-2 rounded-xs leading-none no-underline underline-offset-2 hover:underline max-xl:px-layout-sm ${
                       variant === 'simple'
-                        ? 'max-xl:ml-2 py-4 xl:py-6 text-md hover:text-north-sea-50'
-                        : `py-6 
-                        px-2
-                        text-md
-                        xl:px-6
-                        xl:my-4
-                        xl:py-4
-                        xl:text-sm
-                        xl:border-l
-                        xl:border-white-100
-                        `
-                    }
-                    `}
+                        ? 'py-4 text-md hover:text-north-sea-50 max-xl:ml-2 xl:py-6'
+                        : `px-2 py-6 text-md xl:my-4 xl:border-l xl:border-white-100 xl:px-6 xl:py-4 xl:text-sm`
+                    } `}
                     type={Flags.IS_GLOBAL_PROD ? 'internalUrl' : 'externalUrl'}
                     href={allSitesURL}
                   >
                     {intl('all_sites')}
                     {!Flags.IS_GLOBAL_PROD && (
-                      <ArrowRight className="ml-0.5 text-gray-500 group-hover:text-moss-green-90 transform -translate-y-0.5 rotate-[-50deg]" />
+                      <ArrowRight className="ml-0.5 -translate-y-0.5 rotate-[-50deg] transform text-gray-500 group-hover:text-moss-green-90" />
                     )}
                   </BaseLink>
                 </div>

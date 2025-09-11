@@ -78,7 +78,7 @@ const CampaignBanner = forwardRef<HTMLElement, CampaignBannerProps>(function Cam
 
   return (
     <section ref={ref} className={`${backgroundClassNames}`} {...props}>
-      <div className={`mx-auto max-w-viewport px-layout-md`}>
+      <div className={`mx-auto px-layout-md`}>
         <div className="flex justify-start">
           <h2 className="">
             <Blocks

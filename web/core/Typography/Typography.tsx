@@ -74,6 +74,7 @@ export const Typography: OverridableComponent<TypographyProps, HTMLElement> = fo
   { variant = 'body', group, children, as: providedAs, link = false, className = '', ...rest },
   ref,
 ) {
+  console.log('Typography group', group)
   const as: ElementType = providedAs ? providedAs : getElementType(variant, link)
   const typography = findTypography(variant, group)
 
@@ -87,7 +88,7 @@ export const Typography: OverridableComponent<TypographyProps, HTMLElement> = fo
     <TypographyTag
       {...rest}
       ref={ref}
-      className={twMerge('text-balance text-slate-80 dark:text-white-100', typography, className)}
+      className={twMerge('text-pretty text-slate-80 dark:text-white-100', typography, className)}
     >
       {children}
     </TypographyTag>

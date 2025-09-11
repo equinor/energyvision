@@ -18,7 +18,7 @@ const ImageForText = forwardRef<HTMLDivElement, ImageForTextProps>(function Imag
           maxWidth={2000}
           {...(aspectRatio === 'fullWidth' ? { aspectRatio: '10:3' } : { aspectRatio: '16:9' })}
           aria-hidden
-          className="max-w-viewport"
+          className=""
         />
       </div>
       {content && <Blocks value={content} className="sr-only" />}

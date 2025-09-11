@@ -61,7 +61,7 @@ const VideoPlayerBlock = ({
         <Blocks
           variant="ingress"
           value={ingress}
-          className={`${action && action.label && actionUrl ? 'mb-4' : 'mb-8'}`}
+          blockClassName={`${action && action.label && actionUrl ? 'mb-4' : 'mb-8'}`}
         />
       )}
       {action && action.label && actionUrl && (

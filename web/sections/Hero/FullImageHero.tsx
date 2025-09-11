@@ -57,7 +57,7 @@ export const FullImageHero = ({ ratio, figure, hideImageCaption, captionBg }: He
           background={{ backgroundColor: captionBg }}
           backgroundStyle="none"
         >
-          <FigureCaption className={'mx-auto max-w-viewport px-layout-sm pt-0 pb-8'}>
+          <FigureCaption className={'mx-auto px-layout-sm pt-0 pb-8'}>
             {figure.caption && <div>{figure.caption}</div>}
             {figure.attribution && <div>{figure.attribution}</div>}
           </FigureCaption>

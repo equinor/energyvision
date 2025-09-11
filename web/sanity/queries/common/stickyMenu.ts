@@ -12,3 +12,14 @@ content->stickyMenu{
 "background": coalesce(backgroundColor.key, 'white-100'),
 }
 `
+export const stickyMenuOutSideContent = /* groq */ `"stickyMenu": 
+@->stickyMenu{
+ title,
+"type": _type,
+"links": links[]{
+   ${downloadableFileFields},
+  ${anchorLinkReferenceFields}
+},
+"background": coalesce(backgroundColor.key, 'white-100'),
+}
+`

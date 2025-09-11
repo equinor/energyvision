@@ -16,7 +16,7 @@ const LandingPage = ({ data }: LandingPageProps) => {
   return (
     <>
       <Seo seoAndSome={data?.seoAndSome} slug={data?.slug} pageTitle={data?.title} />
-      <main className="pt-20 pb-page-content">
+      <main className="flex flex-col [:not(:has(.sticky-menu))]:pt-topbar">
         <div className="px-layout-lg">
           {title && (
             <Typography className="mx-auto max-w-[1186px]" variant="h1">

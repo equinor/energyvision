@@ -40,7 +40,7 @@ export const SimplePagination = ({
   }
 
   return (
-    <ul className={envisTwMerge(`max-w-viewport flex-wrap my-2 flex gap-3 items-center`, className)} {...rest}>
+    <ul className={envisTwMerge(`my-2 flex flex-wrap items-center gap-3`, className)} {...rest}>
       <li>
         <MediaButton
           title={intl('previous')}

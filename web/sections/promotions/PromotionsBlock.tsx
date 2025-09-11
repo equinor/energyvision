@@ -47,16 +47,13 @@ const PromotionsBlock = ({
   const paddingClassName = `px-layout-sm 3xl:px-layout-lg`
 
   return (
-    <section
-      className={twMerge(`${bg} ${dark ? 'dark' : ''} mx-auto max-w-viewport pb-page-content`, className)}
-      id={anchor}
-    >
+    <section className={twMerge(`${bg} ${dark ? 'dark' : ''} mx-auto pb-page-content`, className)} id={anchor}>
       {title && (
         <Blocks
           variant="h2"
           id={sectionTitleId}
           value={title}
-          className={`w-full ${paddingClassName} ${!ingress && viewAllLink?.link?.slug ? '' : ''}`}
+          blockClassName={`w-full ${paddingClassName} ${!ingress && viewAllLink?.link?.slug ? '' : ''}`}
         />
       )}
       <div className="flex flex-col gap-6">
@@ -73,7 +70,7 @@ const PromotionsBlock = ({
           </div>
         )}
         <div
-          className={`pt-6 ${
+          className={`mx-auto pt-6 ${
             (variant === 'promoteEvents' &&
               (promoteSingleUpcomingEvent ||
                 promotions?.length === 1 ||

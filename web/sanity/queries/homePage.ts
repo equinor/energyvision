@@ -2,8 +2,10 @@ import pageContentFields from './common/pageContentFields'
 import { heroFields } from './common/heroFields'
 import { seoAndSomeFields } from './common/seoAndSomeFields'
 import { breadcrumbsQuery } from './common/breadcrumbs'
-import { stickyMenu } from './common/stickyMenu'
+import { stickyMenu, stickyMenuOutSideContent } from './common/stickyMenu'
 import { functions } from './common/functions'
+import downloadableFileFields from './common/actions/downloadableFileFields'
+import { anchorLinkReferenceFields } from './common/anchorLinkReferenceFields'
 
 const allSlugsQuery = /* groq */ `
     "currentSlug": {
@@ -48,7 +50,7 @@ export const homePageQuery = /* groq */ `
     ${allSlugsQuery},
     "title": @->title,
     "seoAndSome": @->${seoAndSomeFields},
-    ${stickyMenu},
+    ${stickyMenuOutSideContent},
     "hero": @->${heroFields},
     "template": @->_type,
     "isCampaign":@->isCampaign,

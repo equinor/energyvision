@@ -111,9 +111,9 @@
   --spacing-smContainer: calc(100vw - --spacing(layout-sm) - --spacing(layout-sm));
   --spacing-menuText: calc(35 * --spacing(6));
   --spacing-topbar: 85px;
-  --spacing-layout-sm: clamp(16px, calc(-38.3689px + 14.4984vw), 250px);
-  --spacing-layout-md: clamp(16px, calc(-69.4369px + 22.7832vw), 368px);
-  --spacing-layout-lg: clamp(16px, calc(-101.4757px + 31.3269vw), 500px);
+  --spacing-layout-sm: clamp(16px, calc(-38.3689px + 14.4984vw), 12dvw); /*figma:170 old:250px*/
+  --spacing-layout-md: clamp(16px, calc(-69.4369px + 22.7832vw), 17.8dvw); /*figma:255 old:368px*/
+  --spacing-layout-lg: clamp(16px, calc(-101.4757px + 31.3269vw), 22.3dvw); /*figma:320 old: 500px*/
   --spacing-news-banner-vertical: clamp(40px, calc(14.3125px + 11.0032vw), 210px);
   --spacing-single-carousel-card-w-sm: 350px; /*275px;*/
   --spacing-single-carousel-card-w-md: 692px;
@@ -123,7 +123,6 @@
   --spacing-single-carousel-card-h-lg: 516px;
   --spacing-event-carousel-card-w: 383px;
   --spacing-arrow-right: 1.58rem;
-  --spacing-viewport: 1920px;
   --spacing-text: 760px;
 
   /* PROSE - Typography to be used with blocks */
@@ -190,10 +189,10 @@ and not use important in textteaser theme
 /* @custom-variant highlight (&:where([data-highlight], [data-highlight] *)) */
 
 @custom-variant envis-outline {
-  @apply outline-offset-3 outline-norwegian-woods-100 outline-dashed outline-2;
+  @apply outline-2 outline-offset-3 outline-norwegian-woods-100 outline-dashed;
 }
 @custom-variant envis-outline-invert {
-  @apply outline-offset-3 outline-white-100 outline-dashed outline-2;
+  @apply outline-2 outline-offset-3 outline-white-100 outline-dashed;
 }
 @custom-variant envis-outline-invert {
   word-break: 'break-word';
@@ -234,13 +233,13 @@ and not use important in textteaser theme
 
 @utility envis-scrollbar {
   &::-webkit-scrollbar {
-    @apply bg-grey-20 h-2.5;
+    @apply h-2.5 bg-grey-20;
   }
   &::-webkit-scrollbar-track {
-    @apply bg-grey-20 h-2.5;
+    @apply h-2.5 bg-grey-20;
   }
   &::-webkit-scrollbar-thumb {
-    @apply rounded-2xs bg-grey-50 hover:bg-grey-60 h-2.5;
+    @apply h-2.5 rounded-2xs bg-grey-50 hover:bg-grey-60;
   }
 }
 
@@ -510,7 +509,7 @@ treat the value and modifier as a single value:
   /** PROSE END  */
 
   .clickbound-area {
-    @apply before:absolute before:left-1/2 before:top-1/2 before:aspect-square before:w-[48px] before:translate-x-[-50%] before:translate-y-[-50%] before:cursor-pointer before:rounded-[100%] before:content-[''];
+    @apply before:absolute before:top-1/2 before:left-1/2 before:aspect-square before:w-[48px] before:translate-x-[-50%] before:translate-y-[-50%] before:cursor-pointer before:rounded-[100%] before:content-[''];
   }
 
   /**
@@ -518,7 +517,7 @@ treat the value and modifier as a single value:
  * 1. Increment the counter at each new reference
  */
   a[aria-describedby='footnote-label'] {
-    @apply outline-hidden relative cursor-default text-inherit;
+    @apply relative cursor-default text-inherit outline-hidden;
     counter-increment: footnotes;
     text-decoration: none;
     /* outline: none;*/
@@ -539,7 +538,7 @@ treat the value and modifier as a single value:
  * 1. Display the current state of the counter (e.g. `[1]`)
  */
   a[aria-describedby='footnote-label']::after {
-    @apply text-slate-blue-95 cursor-pointer pl-[2px] pr-[2px] align-super text-xs font-medium no-underline hover:font-medium hover:underline;
+    @apply cursor-pointer pr-[2px] pl-[2px] align-super text-xs font-medium text-slate-blue-95 no-underline hover:font-medium hover:underline;
     content: counter(footnotes); /* 1 */
   }
 
@@ -547,11 +546,11 @@ treat the value and modifier as a single value:
  * Resetting the default focused styles on the number
  */
   a[aria-describedby='footnote-label']:focus::after {
-    @apply outline-norwegian-woods-100 outline-dashed outline-2 outline-offset-2;
+    @apply outline-2 outline-offset-2 outline-norwegian-woods-100 outline-dashed;
   }
 
   /* highlight the note in the footer */
   footer :target {
-    @apply bg-autumn-storm-40 w-fit;
+    @apply w-fit bg-autumn-storm-40;
   }
 }

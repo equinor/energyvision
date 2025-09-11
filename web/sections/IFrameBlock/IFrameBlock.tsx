@@ -30,7 +30,7 @@ const IFrameBlock = ({ anchor, data, className }: { data: IFrameData; anchor?: s
   if (!url) return null
   return (
     <section
-      className={twMerge(`${bg} ${dark ? 'dark' : ''} mx-auto max-w-viewport px-layout-lg pb-page-content`, className)}
+      className={twMerge(`${bg} ${dark ? 'dark' : ''} mx-auto px-layout-lg pb-page-content`, className)}
       id={anchor}
     >
       {title && <Blocks variant="h2" id={headingId} value={title} />}

@@ -78,11 +78,7 @@ const TableBlock = forwardRef<HTMLDivElement, TableBlockProps>(function TableBlo
     return headerKeys?.map((headerKey: any, index: number) => {
       return columnHelper.accessor(headerKey, {
         header: () => {
-          return variant === 'import' ? (
-            headerKey
-          ) : (
-            <Blocks value={tableHeaders?.[index].headerCell} className="prose-simple" />
-          )
+          return variant === 'import' ? headerKey : <Blocks value={tableHeaders?.[index].headerCell} />
         },
         id: `headercell_${index}_${headerKey}`,
         cell: (info: any) => {
@@ -135,7 +131,7 @@ const TableBlock = forwardRef<HTMLDivElement, TableBlockProps>(function TableBlo
       ref={ref}
       id={anchor}
       className={twMerge(
-        `mx-auto max-w-viewport ${anchor ? 'scroll-mt-topbar' : ''}`,
+        `mx-auto ${anchor ? 'scroll-mt-topbar' : ''}`,
         className,
         `${noPaddingTop ? 'pt-0' : ''} ${reducePaddingBottom ? 'pb-12' : 'pb-page-content'} `,
       )}

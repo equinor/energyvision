@@ -5,8 +5,8 @@ export const getBackgroundClassesByStyles = (backgroundStyle: BackgroundStyle): 
     case 'none':
       return ''
     case 'wide':
-      return 'max-w-viewport mx-auto'
+      return ' mx-auto'
     default:
-      return 'max-w-viewport px-layout-lg mx-auto'
+      return ' px-layout-lg mx-auto'
   }
 }

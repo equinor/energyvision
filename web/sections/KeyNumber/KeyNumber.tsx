@@ -31,7 +31,7 @@ const KeyNumber = ({ data, anchor, className }: KeyNumbersProps) => {
       className={twMerge(`px-layout-sm pb-page-content`, className)}
       id={anchor}
     >
-      {title && <Blocks value={title} id={headingId} variant="h2" className={hideTitle ? 'sr-only' : ''} />}
+      {title && <Blocks value={title} id={headingId} variant="h2" blockClassName={hideTitle ? 'sr-only' : ''} />}
       {ingress && <Blocks variant="ingress" value={ingress} />}
 
       {renderScroll && (
@@ -51,7 +51,7 @@ const KeyNumber = ({ data, anchor, className }: KeyNumbersProps) => {
         </div>
       )}
 
-      {disclaimer && <Blocks group="paragraph" variant="small" value={disclaimer} className="pb-lg max-w-text" />}
+      {disclaimer && <Blocks group="paragraph" variant="small" value={disclaimer} blockClassName="pb-lg max-w-text" />}
       {action && (
         <ResourceLink
           href={url as string}

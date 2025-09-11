@@ -35,7 +35,7 @@ const AnchorLinkList = forwardRef<HTMLElement, AnchorLinkListProps>(function Anc
   return (
     <section
       ref={ref}
-      className={twMerge(`px-layout-md pb-page-content max-w-viewport mx-auto flex flex-col items-center`, className)}
+      className={twMerge(`mx-auto flex flex-col items-center px-layout-md pb-page-content`, className)}
       id={anchor}
       {...rest}
     >
@@ -45,11 +45,11 @@ const AnchorLinkList = forwardRef<HTMLElement, AnchorLinkListProps>(function Anc
             {title}
           </Typography>
         )}
-        <ul className={`w-full ${getFlow()} gap-x-4 gap-y-2 lg:gap-y-4 lg:gap-x-6`}>
+        <ul className={`w-full ${getFlow()} gap-x-4 gap-y-2 lg:gap-x-6 lg:gap-y-4`}>
           {anchorList?.map((anchorLink: { id: string; title?: string; anchorReference?: string }) => {
             const anchor = anchorLink?.anchorReference ? `#${anchorLink?.anchorReference}` : ''
             return (
-              <li key={`anchor_link_${anchorLink?.id}`} className="w-full flex justify-start">
+              <li key={`anchor_link_${anchorLink?.id}`} className="flex w-full justify-start">
                 <ButtonLink variant="ghost" href={anchor} className="w-max text-moss-green-100">
                   {anchorLink?.title}
                 </ButtonLink>

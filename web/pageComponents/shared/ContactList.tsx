@@ -10,7 +10,7 @@ type ContactListProps = {
 
 const ContactList = ({ data, className = '' }: ContactListProps) => {
   return (
-    <div className={twMerge(`flex flex-col max-w-viewport mx-auto px-layout-lg`, className)}>
+    <div className={twMerge(`mx-auto flex flex-col px-layout-lg`, className)}>
       {data?.title && (
         <Typography className="pb-6 text-left" variant="xl" as="h2">
           {data.title}
@@ -25,10 +25,10 @@ const ContactList = ({ data, className = '' }: ContactListProps) => {
         <div className="flex flex-row flex-wrap justify-between">
           {data.contacts.map((contact) => {
             return (
-              <div className="flex basis-2/5 justify-left flex-col py-2" key={contact._key}>
+              <div className="justify-left flex basis-2/5 flex-col py-2" key={contact._key}>
                 <p className="my-2 text-md">{contact.location} </p>
                 <a
-                  className="my-2 text-gray-600 text-xs hover:text-moss-green-100"
+                  className="my-2 text-xs text-gray-600 hover:text-moss-green-100"
                   href={`tel:${removeWhiteSpace(contact.phone)}`}
                 >
                   {contact.phone}

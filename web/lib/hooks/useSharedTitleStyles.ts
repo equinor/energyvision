@@ -8,12 +8,10 @@ import { HeroTypes, TextBlockData, ContentType } from '../../types'
 
 export type TitleStyles = BackgroundContainerProps
 
-const BG_DEFAULT = 'White'
-
 function useSharedTitleStyles(heroType?: HeroTypes, nextContent?: ContentType): TitleStyles {
   const defaultValue: TitleStyles = {
     background: {
-      backgroundColor: BG_DEFAULT,
+      backgroundUtility: 'white-100',
     },
   }
 
@@ -25,7 +23,8 @@ function useSharedTitleStyles(heroType?: HeroTypes, nextContent?: ContentType): 
     case 'textBlock':
       return {
         background: {
-          backgroundColor: (nextContent as TextBlockData)?.designOptions?.background?.backgroundColor || BG_DEFAULT,
+          backgroundUtility: (nextContent as TextBlockData)?.designOptions?.background?.backgroundUtility,
+          backgroundColor: (nextContent as TextBlockData)?.designOptions?.background?.backgroundColor,
         },
       }
     default:

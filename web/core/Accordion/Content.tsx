@@ -45,7 +45,7 @@ export const Content = forwardRef<HTMLDivElement, AccordionContentProps>(functio
             exit="hidden"
             variants={contentVariants}
             transition={{ duration: 0.3 }}
-            className="mx-auto max-w-viewport bg-white-100 absolute left-0 top-[260px] right-0"
+            className="absolute top-[260px] right-0 left-0 mx-auto bg-white-100"
           >
             {children}
           </motion.div>
@@ -53,11 +53,11 @@ export const Content = forwardRef<HTMLDivElement, AccordionContentProps>(functio
           <>{children}</>
         )
       case 'simpleMenu':
-        return <div className="pl-4 py-6 xl:py-10">{children}</div>
+        return <div className="py-6 pl-4 xl:py-10">{children}</div>
 
       default:
         return (
-          <div className="pt-0 ml-2.5 border-l border-dashed border-slate-80 dark:border-white-100 pl-7 pr-4 pb-6 mb-6 flex flex-col gap-6">
+          <div className="mb-6 ml-2.5 flex flex-col gap-6 border-l border-dashed border-slate-80 pt-0 pr-4 pb-6 pl-7 dark:border-white-100">
             {children}
           </div>
         )

@@ -47,7 +47,7 @@ const MagazineRoom = ({ pageData }: MagazineIndexTemplateProps) => {
   }
 
   return (
-    <main>
+    <main className="flex flex-col [:not(:has(.sticky-menu))]:pt-topbar">
       {hero.type !== HeroTypes.BACKGROUND_IMAGE && (
         <>
           <SharedBanner title={title} hero={hero} hideImageCaption={true} />
@@ -68,13 +68,13 @@ const MagazineRoom = ({ pageData }: MagazineIndexTemplateProps) => {
               scrimClassName="py-40 lg:py-44 black-blue-center-gradient"
               aspectRatio={'9:16'}
             >
-              <div className="mx-auto max-w-viewport px-layout-lg max-lg:py-11">
+              <div className="mx-auto px-layout-lg max-lg:py-11">
                 <Blocks value={title} id="mainTitle" variant="h1" />
                 <div className="pt-6">{ingress && <Blocks value={ingress.content} />}</div>
               </div>
             </ImageBackgroundContainer>
           ) : (
-            <div className="mx-auto max-w-viewport px-layout-lg max-lg:py-11">
+            <div className="mx-auto px-layout-lg max-lg:py-11">
               <Blocks value={title} id="mainTitle" variant="h1" />
               <div className="pt-6">{ingress && <Blocks value={ingress.content} />}</div>
             </div>
@@ -83,7 +83,7 @@ const MagazineRoom = ({ pageData }: MagazineIndexTemplateProps) => {
       )}
       {magazineTags && <MagazineTagBar tags={magazineTags} />}
       <PaginationContextProvider defaultRef={resultsRef}>
-        <ul className="grid-cols-card mx-auto grid w-full max-w-viewport scroll-mt-24 auto-rows-fr content-center justify-center gap-8 px-layout-sm py-12">
+        <ul className="grid-cols-card mx-auto grid w-full scroll-mt-24 auto-rows-fr content-center justify-center gap-8 px-layout-sm py-12">
           {isLoading &&
             Array.from({ length: 5 }, (_v, i) => i).map((item) => (
               <li key={item}>

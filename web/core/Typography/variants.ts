@@ -7,7 +7,7 @@ const variants = {
     //TextBlock isBigText set to 3xl
     // isBigText set to common pattern 2xl now with classname mb-2 leading-cloudy
     h2: `text-2xl leading-cloudy pb-8 my-0`,
-    h3: `text-xl pb-0 my-0`, //needs pt and pb?
+    h3: `text-lg pb-4 my-0`, //needs pt and pb?
     h4: 'text-lg pb-0',
     h5: 'text-md pb-0',
     h6: 'text-base pb-0',
@@ -32,6 +32,7 @@ const variants = {
     eyebrow: 'text-xs font-medium uppercase',
     body: 'my-5 first:mt-0 last:mb-0 [:where(h2+*,h3+*)]:mt-0 text-base',
     small: 'text-sm',
+    simple: 'text-base',
   },
   article: {
     body: 'my-5 first:mt-0 last:mb-0 [:where(h2+*,h3+*)]:mt-0 text-base',
