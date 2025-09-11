@@ -64,8 +64,6 @@ type TypeProps = {
 // News Content has normal, small text and heading 2 and 3 -> Heading group article
 
 const getBlockComponents = (group?: TypographyGroups, variant?: TypographyVariants, className = '') => {
-  console.log('getBlockComponents group', group)
-  console.log('getBlockComponents variant', variant)
   return {
     normal: ({ children }: TypeProps) => {
       return (
@@ -242,7 +240,7 @@ export default function Blocks({
           // Otherwise, render the group of text blocks we have
           const value = div
           div = []
-          console.log('block', block)
+          /*           console.log('block', block) */
 
           return (
             <div

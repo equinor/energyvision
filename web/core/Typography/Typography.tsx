@@ -74,7 +74,6 @@ export const Typography: OverridableComponent<TypographyProps, HTMLElement> = fo
   { variant = 'body', group, children, as: providedAs, link = false, className = '', ...rest },
   ref,
 ) {
-  console.log('Typography classname', className)
   const as: ElementType = providedAs ? providedAs : getElementType(variant, link)
   const typography = findTypography(variant, group)
 

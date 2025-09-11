@@ -15,7 +15,7 @@ const TotalResultsStat = ({ totalPages, hitsPerPage }: TotalResultsStatProps) =>
   const currentHighestNumber = Math.min(potentialHighestNumber, nbHits)
 
   return (
-    <div className="mt-5">
+    <div className="my-3 mt-5 dark:text-white-100">
       {t('search_showing_results_number', {
         nbHits: nbHits,
         currentlyShowing: `${currentLowestNumber} - ${currentHighestNumber}`,

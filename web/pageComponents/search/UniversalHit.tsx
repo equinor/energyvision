@@ -3,7 +3,6 @@ import type { Hit as AlgoliaHit } from '@algolia/client-search'
 import DisplayLink from './hit/DisplayLink'
 import { FormattedDate } from '@/core/FormattedDateTime'
 import { defaultLanguage } from '../../languages'
-import { default as NextLink } from 'next/link'
 import { Typography } from '@/core/Typography'
 import { useLocale } from 'next-intl'
 import { host } from '@/lib/config'
@@ -39,7 +38,8 @@ const UniversalHit: React.FC<HitProps> = ({ hit }) => {
   const formattedDate = eventDate || publishDateTime
 
   const commonLinkClassName = `
-    pb-2
+    text-base
+    pb-4
     group-hover:underline
     group-focus:outline-hidden
     group-focus-visible:envis-outline
@@ -52,9 +52,7 @@ const UniversalHit: React.FC<HitProps> = ({ hit }) => {
     <article className="border-b border-white-100/20 pt-6 pb-8">
       <BaseLink href={slug} className="group">
         {formattedDate && type !== 'magazine' && (
-          <div className={`tracking-wide ${type === 'news' ? 'text-2xs' : 'text-xs'}`}>
-            <FormattedDate uppercase datetime={formattedDate} />
-          </div>
+          <FormattedDate uppercase datetime={formattedDate} className={`pb-3 text-xs tracking-wide`} />
         )}
         {pageTitle && (
           <Typography as="h2" variant="h6" className={`${commonLinkClassName}`}>
@@ -62,7 +60,7 @@ const UniversalHit: React.FC<HitProps> = ({ hit }) => {
           </Typography>
         )}
         {title && (
-          <div className={`${title && pageTitle ? 'pt-2 text-sm' : ''} ${!pageTitle ? commonLinkClassName : ''}`}>
+          <div className={`${title && pageTitle ? 'text-sm' : ''} ${!pageTitle ? commonLinkClassName : ''}`}>
             <Highlight hit={hit} attribute="title" />
           </div>
         )}
@@ -74,12 +72,7 @@ const UniversalHit: React.FC<HitProps> = ({ hit }) => {
         ].map(
           ({ key, value }) =>
             value && (
-              <span
-                key={key}
-                className={`${
-                  type === 'event' && (key === 'ingress' || key === 'eventDescription') ? 'text-2xs' : 'text-xs'
-                }`}
-              >
+              <span key={key} className={`text-xs`}>
                 <Highlight hit={hit} attribute={key} />
               </span>
             ),

@@ -15,6 +15,7 @@ export const Block = forwardRef<HTMLParagraphElement, BlockProps>(function Block
   { children, group, variant = 'body', className = '', ...rest },
   ref,
 ) {
+  console.log('children', children)
   //Check for empty blocks
   if (isEmpty(children)) return null
 

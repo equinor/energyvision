@@ -28,7 +28,7 @@ const variants = {
   paragraph: {
     caption: '',
     overline: 'text-md pb-2',
-    ingress: 'text-md mt-10 mb-16',
+    ingress: 'text-md my-6 first:mt-0 last:mb-0',
     eyebrow: 'text-xs font-medium uppercase',
     body: 'my-5 first:mt-0 last:mb-0 [:where(h2+*,h3+*)]:mt-0 text-base',
     small: 'text-sm',
