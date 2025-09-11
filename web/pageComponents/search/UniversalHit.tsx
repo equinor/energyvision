@@ -62,7 +62,7 @@ const UniversalHit: React.FC<HitProps> = ({ hit }) => {
           </Typography>
         )}
         {title && (
-          <div className={`${title && pageTitle ? 'pt-2 text-sm' : `${commonLinkClassName}`}`}>
+          <div className={`${title && pageTitle ? 'pt-2 text-sm' : ''} ${!pageTitle ? commonLinkClassName : ''}`}>
             <Highlight hit={hit} attribute="title" />
           </div>
         )}
