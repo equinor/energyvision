@@ -16,11 +16,12 @@ const getElementType = (variant: string, link: boolean): ElementType => {
     case 'h5':
     case 'h6':
       return variant
+    case 'highlight':
+      return 'span'
     case 'caption':
     case 'eyebrow':
     case 'overline':
     case 'body':
-    case 'highlight':
     default:
       return 'p'
   }

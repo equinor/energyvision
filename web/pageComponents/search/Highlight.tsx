@@ -25,7 +25,7 @@ export const Highlight: React.FC<Highlight> = ({ hit, attribute }) => {
         const value = decode(part.value)
         if (part.isHighlighted) {
           return (
-            <Typography group="paragraph" variant="highlight" key={key} className="font-bold">
+            <Typography variant="highlight" key={key} className="text-base font-bold">
               {value}
             </Typography>
           )

@@ -16,11 +16,11 @@ const Hits = ({ hitComponent: Hit }: HitsProps) => {
   const t = useTranslations()
   if (!items || items.length === 0) {
     return (
-      <div className="py-12 px-0">
-        <Typography level="h2" size="sm">
-          <div className="uppercase">{t('search_no_results_heading')}</div>
+      <div className="px-0 py-12">
+        <Typography as="h2" variant="lg" className="uppercase">
+          {t('search_no_results_heading')}
         </Typography>
-        <Typography level="body" size="sm" className="mt-2">
+        <Typography variant="body" className="mt-2">
           {t('search_no_results_generic')}
         </Typography>
       </div>
@@ -31,10 +31,7 @@ const Hits = ({ hitComponent: Hit }: HitsProps) => {
     <div className="relative">
       <ol>
         {items.map((item) => (
-          <li
-            key={item.objectID}
-            className=" after:w-full after:border-b after:opacity-50 after:scale-y-50 after:absolute"
-          >
+          <li key={item.objectID}>
             <Hit hit={item} />
           </li>
         ))}

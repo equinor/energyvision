@@ -7,6 +7,7 @@ import { default as NextLink } from 'next/link'
 import { Typography } from '@/core/Typography'
 import { useLocale } from 'next-intl'
 import { host } from '@/lib/config'
+import { BaseLink } from '@/core/Link'
 
 export type HitData = {
   slug?: string
@@ -37,36 +38,33 @@ const UniversalHit: React.FC<HitProps> = ({ hit }) => {
   const fullUrl = buildDisplayURL(slug, locale)
   const formattedDate = eventDate || publishDateTime
 
+  const commonLinkClassName = `
+    pb-2
+    group-hover:underline
+    group-focus:outline-hidden
+    group-focus-visible:envis-outline
+    group-active:scale-99
+    dark:text-white-100
+    dark:group-focus-visible:envis-outline-invert
+    dark:group-active:envis-outline-invert`
+
   return (
-    <article>
-      <NextLink className="block cursor-pointer px-0 py-6 outline-hidden" href={slug} prefetch={false}>
+    <article className="border-b border-white-100/20 pt-6 pb-8">
+      <BaseLink href={slug} className="group">
         {formattedDate && type !== 'magazine' && (
-          <Typography className={`block tracking-wide ${type === 'news' ? 'text-2xs' : 'text-xs'}`}>
+          <Typography className={`tracking-wide ${type === 'news' ? 'text-2xs' : 'text-xs'}`}>
             <FormattedDate uppercase datetime={formattedDate} />
           </Typography>
         )}
         {pageTitle && (
-          <Typography className="relative inline-block" level="h2" size="sm">
-            <span className="hover:underline focus-visible:ring-2 focus-visible:ring-mist-blue-100 focus-visible:outline-hidden">
-              <Highlight hit={hit} attribute="pageTitle" />
-            </span>
+          <Typography as="h2" variant="h6" className={`${commonLinkClassName}`}>
+            <Highlight hit={hit} attribute="pageTitle" />
           </Typography>
         )}
-        {title && pageTitle && <br />}
         {title && (
-          <Typography
-            level="h2"
-            size="sm"
-            className={`relative inline-block ${pageTitle && title ? 'text-xs' : 'hover:underline'}`}
-          >
-            <span
-              className={`${
-                pageTitle && title ? 'text-xs' : 'hover:underline'
-              } focus-visible:ring-2 focus-visible:ring-mist-blue-100 focus-visible:outline-hidden`}
-            >
-              <Highlight hit={hit} attribute="title" />
-            </span>
-          </Typography>
+          <div className={`${title && pageTitle ? 'pt-2 text-sm' : `${commonLinkClassName}`}`}>
+            <Highlight hit={hit} attribute="title" />
+          </div>
         )}
 
         {[
@@ -76,19 +74,19 @@ const UniversalHit: React.FC<HitProps> = ({ hit }) => {
         ].map(
           ({ key, value }) =>
             value && (
-              <Typography
+              <span
                 key={key}
                 className={`${
                   type === 'event' && (key === 'ingress' || key === 'eventDescription') ? 'text-2xs' : 'text-xs'
-                } m-0 leading-cloudy`}
+                }`}
               >
                 <Highlight hit={hit} attribute={key} />
-              </Typography>
+              </span>
             ),
         )}
 
         <DisplayLink>{fullUrl}</DisplayLink>
-      </NextLink>
+      </BaseLink>
     </article>
   )
 }

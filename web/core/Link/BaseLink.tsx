@@ -18,7 +18,7 @@ export type BaseLinkProps = {
  * And the strict origin policy when external for using blank
  */
 export const BaseLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(function BaseLink(
-  { children, type = 'internalUrl', className = '', href = '', skipInternalStyle = false, prefetch, ...rest },
+  { children, type = 'internalUrl', className = '', href = '', skipInternalStyle = false, prefetch = false, ...rest },
   ref,
 ) {
   const classNames = skipInternalStyle
