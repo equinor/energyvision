@@ -106,7 +106,7 @@ const Header = ({ slugs, menuData, stickyMenuData }: HeaderProps) => {
                 variant="ghost"
                 aria-expanded="false"
                 aria-label={searchLabel}
-                href="/search"
+                href={localization.activeLocale === 'no' ? '/no/search' : '/search'}
                 className="clickbound-area w-full p-2 md:px-5 md:py-3"
               >
                 <Icon size={24} data={search} />
