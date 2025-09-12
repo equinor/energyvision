@@ -92,43 +92,41 @@ const Header = ({ slugs, menuData, stickyMenuData }: HeaderProps) => {
   const searchLabel = t('search')
 
   return (
-    <>
-      <Topbar stickyMenuData={stickyMenuData}>
-        <LogoLink />
-        <div
-          className={`grid ${
-            columns == 3 ? 'grid-cols-[repeat(3,auto)]' : columns == 2 ? 'grid-cols-[repeat(2,auto)]' : 'grid-cols-1'
-          } items-center gap-x-4 sm:gap-x-6`}
-        >
-          {hasSearch && (
-            <div>
-              <ButtonLink
-                variant="ghost"
-                aria-expanded="false"
-                aria-label={searchLabel}
-                href={localization.activeLocale === 'no' ? '/no/search' : '/search'}
-                className="clickbound-area w-full p-2 md:px-5 md:py-3"
-              >
-                <Icon size={24} data={search} />
-                <span className="max-md:sr-only">{t('search')}</span>
-              </ButtonLink>
-            </div>
-          )}
-          {hasMoreThanOneLanguage && (
-            <LocalizationSwitch activeLocale={localization.activeLocale} allSlugs={validSlugs} />
-          )}
-          {shouldDisplayAllSites ? (
-            <AllSites />
-          ) : Flags.HAS_FANCY_MENU ? (
-            <div>
-              <SiteMenu data={menuData as MenuData} />
-            </div>
-          ) : (
-            <div>{<SiteMenu variant="simple" data={menuData as SimpleMenuData} />}</div>
-          )}
-        </div>
-      </Topbar>
-    </>
+    <Topbar stickyMenuData={stickyMenuData}>
+      <LogoLink />
+      <div
+        className={`grid ${
+          columns == 3 ? 'grid-cols-[repeat(3,auto)]' : columns == 2 ? 'grid-cols-[repeat(2,auto)]' : 'grid-cols-1'
+        } items-center gap-x-4 sm:gap-x-6`}
+      >
+        {hasSearch && (
+          <div>
+            <ButtonLink
+              variant="ghost"
+              aria-expanded="false"
+              aria-label={searchLabel}
+              href={localization.activeLocale === 'no' ? '/no/search' : '/search'}
+              className="clickbound-area w-full p-2 md:px-5 md:py-3"
+            >
+              <Icon size={24} data={search} />
+              <span className="max-md:sr-only">{t('search')}</span>
+            </ButtonLink>
+          </div>
+        )}
+        {hasMoreThanOneLanguage && (
+          <LocalizationSwitch activeLocale={localization.activeLocale} allSlugs={validSlugs} />
+        )}
+        {shouldDisplayAllSites ? (
+          <AllSites />
+        ) : Flags.HAS_FANCY_MENU ? (
+          <div>
+            <SiteMenu data={menuData as MenuData} />
+          </div>
+        ) : (
+          <div>{<SiteMenu variant="simple" data={menuData as SimpleMenuData} />}</div>
+        )}
+      </div>
+    </Topbar>
   )
 }
 

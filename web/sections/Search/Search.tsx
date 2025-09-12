@@ -59,7 +59,7 @@ export function Search() {
     },
     {
       value: `${envPrefix}_MAGAZINE_${isoCode}`,
-      label: 'Magazine', //intl('search_magazine_tab'), TODO : Add the text snippet
+      label: intl('search_magazine_tab'),
     },
   ]
 

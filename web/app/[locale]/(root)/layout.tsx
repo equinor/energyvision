@@ -40,8 +40,8 @@ export default async function LocaleLayout({ children, params }: { children: Rea
     notFound()
   }
   const { menuData, footerData } = await getHeaderAndFooterData({ slug, lang: getNameFromLocale(locale) })
-  const { pageData } = await getPageDataForHeader({ slug, lang: getNameFromLocale(locale) })
-  const slugs = getPageSlugs(pageData)
+  const { pageData: data } = await getPageDataForHeader({ slug: '', lang: getNameFromLocale(locale) })
+  const slugs = getPageSlugs(data.pageData)
 
   return (
     <html
@@ -65,7 +65,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
         <SanityLive onError={handleError} />
         <NextIntlClientProvider>
           {/*           <div className={`flex flex-col [:not(:has(.sticky-menu))]:pt-topbar`}> */}
-          <Header slugs={slugs} menuData={menuData} stickyMenuData={pageData?.stickyMenu} />
+          <Header slugs={slugs} menuData={menuData} stickyMenuData={data.pageData?.stickyMenu} />
           {children}
           <Footer footerData={footerData} />
           {/*           </div> */}
