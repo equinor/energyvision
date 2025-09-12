@@ -1,6 +1,5 @@
 'use client'
 import { forwardRef, useRef } from 'react'
-import singletonRouter from 'next/router'
 import Blocks from '../../portableText/Blocks'
 import type { NewsRoomPageType } from '../../types'
 import { Typography } from '@/core/Typography'
@@ -8,7 +7,6 @@ import NewsRoomFilters from './Filters/NewsroomFilters'
 import { ResourceLink } from '@/core/Link'
 import { getIsoFromLocale } from '../../lib/localization'
 import { Flags } from '../../common/helpers/datasetHelpers'
-import { createInstantSearchRouterNext } from 'react-instantsearch-router-nextjs'
 import { SearchClient, SearchOptions, SearchResponse, UiState } from 'instantsearch.js'
 import { Configure } from 'react-instantsearch'
 import NewsSections from './NewsSections/NewsSections'
@@ -19,7 +17,6 @@ import { List } from '@/core/List'
 import { PaginationContextProvider } from '../../common/contexts/PaginationContext'
 import { InstantSearchNext, InstantSearchNextRouting } from 'react-instantsearch-nextjs'
 import { useTranslations } from 'next-intl'
-import { host } from '@/lib/config'
 
 type NewsRouteState = { query?: string; page?: number; topics?: string[]; years?: string[]; countries?: string[] }
 
@@ -43,67 +40,62 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
   const resultsRef = useRef<HTMLDivElement>(null)
 
   const routing = {
-    router: createInstantSearchRouterNext<NewsRouteState>({
-      singletonRouter,
-      serverUrl: `${host.url}${isoCode === 'nb-NO' ? '/no/nyheter' : '/news'}`, // temporary fix for url to be available during build time
-      routerOptions: {
-        createURL: ({ qsModule, routeState, location }) => {
-          if (singletonRouter.locale !== locale) return location.href
-          const queryParameters: any = {}
+    router: {
+      createURL: ({ qsModule, routeState, location }) => {
+        const queryParameters: any = {}
 
-          if (routeState.query) {
-            queryParameters.query = routeState.query
-          }
-          if (routeState.page !== 1) {
-            queryParameters.page = routeState.page
-          }
-          if (routeState.topics) {
-            queryParameters.topics = routeState.topics
-          }
-          if (routeState.years) {
-            queryParameters.years = routeState.years
-          }
-          if (routeState.countries) {
-            queryParameters.countries = routeState.countries
-          }
+        if (routeState.query) {
+          queryParameters.query = encodeURIComponent(routeState.query)
+        }
+        if (routeState.page !== 1) {
+          queryParameters.page = routeState.page
+        }
+        if (routeState.topics) {
+          queryParameters.topics = routeState.topics.map(encodeURIComponent)
+        }
+        if (routeState.years) {
+          queryParameters.years = routeState.years
+        }
+        if (routeState.countries) {
+          queryParameters.countries = routeState.countries.map(encodeURIComponent)
+        }
 
-          const queryString = qsModule.stringify(queryParameters, {
-            addQueryPrefix: true,
-            arrayFormat: 'repeat',
-            format: 'RFC1738',
-            encode: false,
-          })
-          return `${location.pathname}${queryString}`
-        },
-        parseURL: ({ qsModule, location }) => {
-          const {
-            query = '',
-            page,
-            topics = [],
-            years = [],
-            countries = [],
-          }: NewsRouteState = qsModule.parse(location.search.slice(1))
-
-          const allTopics = Array.isArray(topics) ? topics : [topics].filter(Boolean)
-          const allYears = Array.isArray(years) ? years : [years].filter(Boolean)
-          const allCountries = Array.isArray(countries) ? countries : [countries].filter(Boolean)
-          return {
-            query: query,
-            page,
-            topics: allTopics,
-            years: allYears,
-            countries: allCountries,
-          } as NewsRouteState
-        },
-        push(url) {
-          if (singletonRouter.asPath.split('?')[1] !== url.split('?')[1]) {
-            // replace url only if there is a change in query params
-            singletonRouter.replace(url, undefined, { scroll: false })
-          }
-        },
-        cleanUrlOnDispose: false,
+        const queryString = qsModule.stringify(queryParameters, {
+          addQueryPrefix: true,
+          arrayFormat: 'repeat',
+          format: 'RFC1738',
+          encode: false,
+        })
+        return `${location.pathname}${queryString}`
       },
-    }),
+      parseURL: ({ qsModule, location }) => {
+        const {
+          query = '',
+          page,
+          topics = [],
+          years = [],
+          countries = [],
+        }: NewsRouteState = qsModule.parse(location.search.slice(1))
+
+        const allTopics = Array.isArray(topics) ? topics : [topics].filter(Boolean)
+        const allYears = Array.isArray(years) ? years : [years].filter(Boolean)
+        const allCountries = Array.isArray(countries) ? countries : [countries].filter(Boolean)
+        return {
+          query: decodeURIComponent(query),
+          page,
+          topics: allTopics.map(decodeURIComponent),
+          years: allYears,
+          countries: allCountries.map(decodeURIComponent),
+        } as NewsRouteState
+      },
+      /* push(url) {
+        if (singletonRouter.asPath.split('?')[1] !== url.split('?')[1]) {
+          // replace url only if there is a change in query params
+          singletonRouter.replace(url, undefined, { scroll: false })
+        }
+      },*/
+      cleanUrlOnDispose: false,
+    },
     stateMapping: {
       stateToRoute(uiState: UiState) {
         const indexUiState = uiState[indexName] || {}
