@@ -1,5 +1,5 @@
 'use client'
-import { useCallback, useState, useMemo } from 'react'
+import { useCallback, useState, useMemo, useEffect } from 'react'
 import { useFloating, useInteractions, useDismiss, FloatingOverlay, FloatingFocusManager } from '@floating-ui/react'
 import { usePathname } from 'next/navigation'
 import { Menu, MenuButton } from '@/core/MenuAccordion'
@@ -42,14 +42,10 @@ const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
     return data && variant === 'simple' ? (data as SimpleMenuData).groups : (data as MenuData).subMenus
   }, [data, variant])
 
-  const handleRouteChange = useCallback(() => {
+  useEffect(() => {
+    console.log('closing ')
     setIsOpen(false)
-  }, [])
-
-  /*useEffect(() => {
-    router.events.on('routeChangeComplete', handleRouteChange)
-    return () => router.events.off('routeChangeComplete', handleRouteChange)
-  }, [router.events, handleRouteChange])*/
+  }, [pathname, setIsOpen])
 
   const title = intl('menu')
   const allSitesURL = getAllSitesLink(Flags.IS_GLOBAL_PROD ? 'internal' : 'external', locale || 'en')
