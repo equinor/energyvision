@@ -19,7 +19,7 @@ type MagazineIndexTemplateProps = {
   slug?: string
 }
 
-const chunkArray = (array: any[], chunkSize: number) => {
+const chunkArray = (array: any[] = [], chunkSize: number) => {
   const chunkedArray = []
   for (let i = 0; i < array.length; i += chunkSize) {
     chunkedArray.push(array.slice(i, i + chunkSize))
@@ -28,38 +28,51 @@ const chunkArray = (array: any[], chunkSize: number) => {
 }
 
 const MagazineRoom = ({ pageData }: MagazineIndexTemplateProps) => {
-  const { ingress, title, hero, magazineTags, magazineArticles, footerComponent } = pageData || {}
+  const isArray = Array.isArray(pageData)
+  const page = isArray ? null : (pageData as any)
+
+  const hero = page?.hero
+  const ingress = page?.ingress
+  const title = page?.title
+  const magazineTags = page?.magazineTags || []
+  const footerComponent = page?.footerComponent
+
   const resultsRef = useRef<HTMLDivElement>(null)
   const [isLoading, setIsLoading] = useState(false)
-  const magazineList = useMemo(() => magazineArticles, [magazineArticles])
-  const pagedList = useMemo(() => chunkArray(magazineList, 12), [magazineList])
-  const [page, setPage] = useState(0)
+
+  const magazineList = useMemo(() => {
+    if (isArray) return (pageData as any[]) || []
+    return page?.magazineArticles || []
+  }, [isArray, pageData, page])
+
+  const pagedList = useMemo(() => chunkArray(magazineList || [], 12), [magazineList])
+  const [pageIdx, setPage] = useState(0)
 
   const getNext = async () => {
     setIsLoading(true)
-    setPage(page + 1)
+    setPage(pageIdx + 1)
     setIsLoading(false)
   }
   const getPrevious = async () => {
     setIsLoading(true)
-    setPage(page - 1)
+    setPage(pageIdx - 1)
     setIsLoading(false)
   }
 
   return (
     <main className="flex flex-col [:not(:has(.sticky-menu))]:pt-topbar">
-      {hero.type !== HeroTypes.BACKGROUND_IMAGE && (
+      {!!hero && hero?.type !== HeroTypes.BACKGROUND_IMAGE && (
         <>
           <SharedBanner title={title} hero={hero} hideImageCaption={true} />
-          {pageData?.hero.type !== HeroTypes.DEFAULT && title && (
-            <SharedTitle sharedTitle={title} background={{ backgroundColor: ingress.background }} />
+          {hero?.type !== HeroTypes.DEFAULT && title && (
+            <SharedTitle sharedTitle={title} background={{ backgroundColor: ingress?.background }} />
           )}
-          <BackgroundContainer className="py-16" background={{ backgroundColor: ingress.background }}>
-            {ingress && <Blocks value={ingress.content} />}
+          <BackgroundContainer className="py-16" background={{ backgroundColor: ingress?.background }}>
+            {ingress?.content && <Blocks value={ingress.content} />}
           </BackgroundContainer>
         </>
       )}
-      {hero.type === HeroTypes.BACKGROUND_IMAGE && (
+      {!!hero && hero?.type === HeroTypes.BACKGROUND_IMAGE && (
         <>
           {hero?.figure?.image ? (
             <ImageBackgroundContainer
@@ -70,18 +83,18 @@ const MagazineRoom = ({ pageData }: MagazineIndexTemplateProps) => {
             >
               <div className="mx-auto px-layout-lg max-lg:py-11">
                 <Blocks value={title} id="mainTitle" variant="h1" />
-                <div className="pt-6">{ingress && <Blocks value={ingress.content} />}</div>
+                <div className="pt-6">{ingress?.content && <Blocks value={ingress.content} />}</div>
               </div>
             </ImageBackgroundContainer>
           ) : (
             <div className="mx-auto px-layout-lg max-lg:py-11">
               <Blocks value={title} id="mainTitle" variant="h1" />
-              <div className="pt-6">{ingress && <Blocks value={ingress.content} />}</div>
+              <div className="pt-6">{ingress?.content && <Blocks value={ingress.content} />}</div>
             </div>
           )}
         </>
       )}
-      {magazineTags && <MagazineTagBar tags={magazineTags} />}
+      {magazineTags?.length > 0 && <MagazineTagBar tags={magazineTags} />}
       <PaginationContextProvider defaultRef={resultsRef}>
         <ul className="grid-cols-card mx-auto grid w-full scroll-mt-24 auto-rows-fr content-center justify-center gap-8 px-layout-sm py-12">
           {isLoading &&
@@ -91,7 +104,7 @@ const MagazineRoom = ({ pageData }: MagazineIndexTemplateProps) => {
               </li>
             ))}
           {!isLoading &&
-            pagedList?.[page]?.map((article) => (
+            pagedList?.[pageIdx]?.map((article) => (
               <li key={article.id}>
                 <MagazineCard data={article} />
               </li>
@@ -101,8 +114,8 @@ const MagazineRoom = ({ pageData }: MagazineIndexTemplateProps) => {
           <SimplePagination
             onNextPage={getNext}
             onPreviousPage={getPrevious}
-            isFirstPage={page === 0}
-            isLastPage={page === pagedList.length - 1}
+            isFirstPage={pageIdx === 0}
+            isLastPage={pageIdx === pagedList.length - 1}
             className="justify-center pt-12"
           />
         )}

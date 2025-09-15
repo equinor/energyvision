@@ -86,6 +86,7 @@ export const magazineIndexQuery = /* groq */ `
 }`
 
 export const allMagazineDocuments = /* groq */ `
+  ${functions}
 *[_type == "magazine" && ${sameLang} ] | order(${publishDateTimeQuery} desc){
     "id": _id,
     "slug": slug.current,
@@ -130,6 +131,7 @@ ${functions}
 `
 
 export const allMagazineTags = /* groq */ `
+  ${functions}
 *[_type == "magazineTag"}]{
 "id": _id,
 "key": key.current,
