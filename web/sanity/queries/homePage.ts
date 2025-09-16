@@ -3,7 +3,7 @@ import { heroFields } from './common/heroFields'
 import { seoAndSomeFields } from './common/seoAndSomeFields'
 import { breadcrumbsQuery } from './common/breadcrumbs'
 import { stickyMenu, stickyMenuOutSideContent } from './common/stickyMenu'
-import { functions } from './common/functions'
+import { functions, pageContentFunctions } from './common/functions'
 import downloadableFileFields from './common/actions/downloadableFileFields'
 import { anchorLinkReferenceFields } from './common/anchorLinkReferenceFields'
 
@@ -44,6 +44,7 @@ export const homePageDataForHeaderQuery = /* groq */ `
 
 export const homePageQuery = /* groq */ `
    ${functions}
+   ${pageContentFunctions}
   fn ex::content($docRef)=$docRef{
     "_id": _ref, //used for data filtering
     "slug": "/",
