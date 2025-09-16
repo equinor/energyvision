@@ -10,7 +10,7 @@ const getCatalogIdentifier = (catalogType: ContactFormCatalogType | null) => {
       return '66f0ff89db2e2644ff6272dabf961945'
   }
 }
-export default async function handler(req: Request) {
+export async function POST(req: Request) {
   const result = await validateFormRequest(req, 'contact us form')
   if (result.status !== 200) {
     return Response.json({ msg: result.message }, { status: result.status })

@@ -15,7 +15,7 @@ const getCatalogIdentifier = (catalogType: PensionFormCatalogType | null) => {
       return '6777904f938a2950eaf1f4527cba1048'
   }
 }
-export default async function handler(req: Request) {
+export async function POST(req: Request) {
   const result = await validateFormRequest(req, 'pension form')
   if (result.status !== 200) {
     return Response.json({ msg: result.message }, { status: result.status })

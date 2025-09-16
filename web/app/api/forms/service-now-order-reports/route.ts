@@ -1,7 +1,7 @@
 import { sendRequestToServiceNow } from '../service-now-base'
 import { validateFormRequest } from '../validateFormRequest'
 
-export default async function handler(req: Request) {
+export async function POST(req: Request) {
   const result = await validateFormRequest(req, 'order reports form')
   if (result.status !== 200) {
     return Response.json({ msg: result.message }, { status: result.status })
