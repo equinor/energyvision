@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation'
 import MagazineRoom from '@/templates/magazine/Magazineroom'
 import { MagazineIndexPageType } from '../../../../types'
 import { setRequestLocale } from 'next-intl/server'
-import { allMagazineDocuments, magazineQuery } from '@/sanity/queries/magazine'
+import { allMagazineDocuments } from '@/sanity/queries/magazine'
 import { toPlainText } from 'next-sanity'
 import { isDateAfter } from '@/common/helpers/dateUtilities'
 import getOpenGraphImages from '@/common/helpers/getOpenGraphImages'
@@ -77,7 +77,7 @@ export default async function MagazinePage({ params }: { params: Promise<{ local
   }
 
   const { pageData } = await getPageData({
-    query: magazineQuery,
+    query: allMagazineDocuments,
     queryParams,
   })
 
