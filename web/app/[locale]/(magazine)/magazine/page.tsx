@@ -1,8 +1,7 @@
-import { getIsoFromLocale, getNameFromLocale } from '../../../../lib/localization'
+import { getNameFromLocale } from '../../../../lib/localization'
 import { Flags } from '../../../../common/helpers/datasetHelpers'
 import { getPageData } from '../../../../sanity/lib/fetchData'
 import { notFound } from 'next/navigation'
-import { unstable_cache } from 'next/cache'
 import MagazineRoom from '@/templates/magazine/Magazineroom'
 import { MagazineIndexPageType } from '../../../../types'
 import { setRequestLocale } from 'next-intl/server'
@@ -62,8 +61,6 @@ export async function generateMetadata(
   }
 }
 
-
-
 export default async function MagazinePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
 
@@ -84,7 +81,6 @@ export default async function MagazinePage({ params }: { params: Promise<{ local
     query: allMagazineDocuments,
     queryParams,
   })
-
 
   return <MagazineRoom pageData={pageData as MagazineIndexPageType} />
 }

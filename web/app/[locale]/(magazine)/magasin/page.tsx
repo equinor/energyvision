@@ -1,14 +1,11 @@
-import { getIsoFromLocale, getNameFromLocale } from '../../../../lib/localization'
+import { getNameFromLocale } from '../../../../lib/localization'
 import { Flags } from '../../../../common/helpers/datasetHelpers'
-import { algolia } from '../../../../lib/config'
 import { getPageData } from '../../../../sanity/lib/fetchData'
 import { notFound } from 'next/navigation'
-import { unstable_cache } from 'next/cache'
 import MagazineRoom from '@/templates/magazine/Magazineroom'
 import { MagazineIndexPageType } from '../../../../types'
 import { setRequestLocale } from 'next-intl/server'
 import { allMagazineDocuments, magazineQuery } from '@/sanity/queries/magazine'
-import { algoliasearch } from 'algoliasearch'
 import { toPlainText } from 'next-sanity'
 import { isDateAfter } from '@/common/helpers/dateUtilities'
 import getOpenGraphImages from '@/common/helpers/getOpenGraphImages'
@@ -64,27 +61,6 @@ export async function generateMetadata(
   }
 }
 
-const getInitialResponse = unstable_cache(
-  async (locale: string) => {
-    const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
-    const indexName = `${envPrefix}_MAGAZINES_${locale}`
-
-    const searchClient = algoliasearch(algolia.applicationId, algolia.searchApiKey)
-    const response = await searchClient.searchSingleIndex({
-      indexName: indexName,
-      searchParams: {
-        hitsPerPage: 50,
-        facetFilters: ['type:magazine', 'topicTags:-Crude Oil Assays'],
-        facetingAfterDistinct: true,
-        facets: ['countryTags', 'topicTags', 'year'],
-      },
-    })
-    return response
-  },
-  ['magazine'],
-  { revalidate: 3600, tags: ['magazine'] },
-)
-
 export default async function MagazinePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
 
@@ -95,7 +71,6 @@ export default async function MagazinePage({ params }: { params: Promise<{ local
   setRequestLocale(locale)
 
   const lang = getNameFromLocale(locale)
-  const isoLocale = getIsoFromLocale(locale)
 
   const queryParams = {
     lang,
@@ -105,8 +80,6 @@ export default async function MagazinePage({ params }: { params: Promise<{ local
     query: magazineQuery,
     queryParams,
   })
-
-  const response = await getInitialResponse(isoLocale)
 
   return <MagazineRoom pageData={pageData as MagazineIndexPageType} />
 }
