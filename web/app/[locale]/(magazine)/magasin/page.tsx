@@ -7,7 +7,7 @@ import { unstable_cache } from 'next/cache'
 import MagazineRoom from '@/templates/magazine/Magazineroom'
 import { MagazineIndexPageType } from '../../../../types'
 import { setRequestLocale } from 'next-intl/server'
-import { magazineQuery } from '@/sanity/queries/magazine'
+import { allMagazineDocuments, magazineQuery } from '@/sanity/queries/magazine'
 import { algoliasearch } from 'algoliasearch'
 import { toPlainText } from 'next-sanity'
 import { isDateAfter } from '@/common/helpers/dateUtilities'
@@ -30,7 +30,7 @@ export async function generateMetadata(
     lang,
   }
   const { pageData } = await getPageData({
-    query: magazineQuery,
+    query: allMagazineDocuments,
     queryParams,
   })
 
