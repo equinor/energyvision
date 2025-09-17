@@ -26,6 +26,7 @@ export async function validateCaptcha(captchaSolution: string) {
     // !! ERROR ON OUR SIDE !!
     // We have an error in the server side: maybe our api key or sitekey is not configured correctly.
     // You should send a warning to yourself here to fix this issue.
+    console.log('Sitekey ' + process.env.NEXT_PUBLIC_FRIENDLY_CAPTCHA_SITEKEY)
     console.error(
       'FRIENDLY CAPTCHA MISCONFIGURATION WARNING\nCould not verify Friendly Captcha solution due to client error:',
       respBody,
