@@ -69,12 +69,12 @@ export async function POST(req: Request) {
     .then((response) => {
       if (JSON.parse(response).status == 'failure' || JSON.parse(response).Status?.includes('Failure')) {
         console.log('Failed to create ticket in service-now')
-        Response.json({ status: 500 })
+        return Response.json({ status: 500 })
       }
-      Response.json({ status: 200 })
+      return Response.json({ status: 200 })
     })
     .catch((error) => {
       console.log('Error occured while sending request to ServiceNow', error)
-      Response.json({ status: 500 })
+      return Response.json({ status: 500 })
     })
 }

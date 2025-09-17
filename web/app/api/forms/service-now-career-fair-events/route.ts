@@ -7,10 +7,9 @@ export async function POST(req: Request) {
   if (result.status !== 200) {
     return Response.json({ msg: result.message }, { status: result.status })
   }
-
   const catalogIdentifier = '848f447ddb692600ff6272dabf961948'
-
   const data = body.data
+
   const email = encodeURI(data.email)
   const groupOrganisation = encodeURI(data.organisation)
   const contactPerson = encodeURI(data.contactPerson)
@@ -50,12 +49,12 @@ export async function POST(req: Request) {
     .then((response) => {
       if (JSON.parse(response).status == 'failure' || JSON.parse(response).Status?.includes('Failure')) {
         console.log('Failed to create ticket in service-now')
-        Response.json({ status: 500 })
+        return Response.json({ status: 500 })
       }
-      Response.json({ status: 200 })
+      return Response.json({ status: 200 })
     })
     .catch((error) => {
       console.log('Error occured while sending request to ServiceNow', error)
-      Response.json({ status: 500 })
+      return Response.json({ status: 500 })
     })
 }
