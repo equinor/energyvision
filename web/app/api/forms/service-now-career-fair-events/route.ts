@@ -2,13 +2,14 @@ import { sendRequestToServiceNow } from '../service-now-base'
 import { validateFormRequest } from '../validateFormRequest'
 
 export async function POST(req: Request) {
-  const result = await validateFormRequest(req, 'career fair and events form')
+  const body = await req.json()
+  const result = await validateFormRequest(req.method, body, 'career fair and events form')
   if (result.status !== 200) {
     return Response.json({ msg: result.message }, { status: result.status })
   }
 
   const catalogIdentifier = '848f447ddb692600ff6272dabf961948'
-  const body = await req.json()
+
   const data = body.data
   const email = encodeURI(data.email)
   const groupOrganisation = encodeURI(data.organisation)

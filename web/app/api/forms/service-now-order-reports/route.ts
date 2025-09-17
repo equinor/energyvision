@@ -2,12 +2,13 @@ import { sendRequestToServiceNow } from '../service-now-base'
 import { validateFormRequest } from '../validateFormRequest'
 
 export async function POST(req: Request) {
-  const result = await validateFormRequest(req, 'order reports form')
+  const body = await req.json()
+  const result = await validateFormRequest(req.method, body, 'order reports form')
   if (result.status !== 200) {
     return Response.json({ msg: result.message }, { status: result.status })
   }
 
-  const { data } = await req.json()
+  const { data } = body
   const catalogIdentifier = 'd1872741db26ea40977079e9bf961949'
   const email = encodeURI(data.email)
   const name = encodeURI(data.name)

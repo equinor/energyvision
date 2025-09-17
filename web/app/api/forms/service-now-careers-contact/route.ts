@@ -16,7 +16,8 @@ const getCatalogIdentifier = (catalogType: CareersContactFormCatalogType | null)
 }
 
 export async function POST(req: Request) {
-  const result = await validateFormRequest(req, 'careers contact form')
+  const body = await req.json()
+  const result = await validateFormRequest(req.method, body, 'careers contact form')
   if (result.status !== 200) {
     return Response.json({ msg: result.message }, { status: result.status })
   }
@@ -24,7 +25,6 @@ export async function POST(req: Request) {
   if (!req.body) {
     return Response.json({ msg: 'Invalid request' }, { status: 400 })
   }
-  const body = await req.json()
   const catalogIdentifier = getCatalogIdentifier(body.catalogType)
   const data = body.data
   const phone = encodeURI(data.phone)

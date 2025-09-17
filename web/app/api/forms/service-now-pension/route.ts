@@ -16,12 +16,12 @@ const getCatalogIdentifier = (catalogType: PensionFormCatalogType | null) => {
   }
 }
 export async function POST(req: Request) {
-  const result = await validateFormRequest(req, 'pension form')
+  const body = await req.json()
+  const result = await validateFormRequest(req.method, body, 'pension form')
   if (result.status !== 200) {
     return Response.json({ msg: result.message }, { status: result.status })
   }
 
-  const body = await req.json()
   const catalogIdentifier = getCatalogIdentifier(body.catalogType)
 
   const data = body.data

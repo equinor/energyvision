@@ -1,10 +1,9 @@
 import { validateCaptcha } from './validateCaptcha'
 
-export async function validateFormRequest(req: Request, formName: string) {
-  if (req.method !== 'POST') {
+export async function validateFormRequest(method: string, body: any, formName: string) {
+  if (method !== 'POST') {
     return { status: 405, message: 'Invalid request' }
   }
-  const body = await req.json()
   const frcCaptchaSolution = body.frcCaptchaSolution
   if (!frcCaptchaSolution) {
     return { status: 500, message: 'Anti-robot check solution was not present' }
