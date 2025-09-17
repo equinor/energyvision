@@ -45,7 +45,7 @@ export async function POST(req: Request) {
     '&PreferredLang=' +
     preferredLang
 
-  await sendRequestToServiceNow(urlString)
+  const response = await sendRequestToServiceNow(urlString)
     .then((response) => {
       if (JSON.parse(response).status == 'failure' || JSON.parse(response).Status?.includes('Failure')) {
         console.log('Failed to create ticket in service-now')
@@ -57,4 +57,5 @@ export async function POST(req: Request) {
       console.log('Error occured while sending request to ServiceNow', error)
       return Response.json({ status: 500 })
     })
+  return response
 }
