@@ -11,8 +11,11 @@ const localUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:3333
 const globalUrl = dataset === 'global' ? 'https://equinor.sanity.studio' : ''
 const secretUrl = dataset === 'secret' ? 'https://equinor-restricted.sanity.studio' : ''
 const studioUrls = envs.map((env) => `https://studio-${dataset}-equinor-web-sites-${env}.c2.radix.equinor.com`)
-const studioV3Url = 'http://studiov3-global-development-equinor-web-sites-dev.c2.radix.equinor.com'
-const xFrameUrls = [localUrl, ...studioUrls, studioV3Url, globalUrl, secretUrl].filter((e) => e).join(' ')
+const studioV3Urls = [
+  'http://studiov3-global-development-equinor-web-sites-dev.c2.radix.equinor.com',
+  'http://studiov3-global-development-upgrade-equinor-web-sites-dev.c2.radix.equinor.com',
+]
+const xFrameUrls = [localUrl, ...studioUrls, ...studioV3Urls, globalUrl, secretUrl].filter((e) => e).join(' ')
 const edsCdnUrl = 'https://cdn.eds.equinor.com'
 const iframeSrcs = [
   'https://consentcdn.cookiebot.com',
