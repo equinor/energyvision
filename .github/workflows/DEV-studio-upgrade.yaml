@@ -1,0 +1,138 @@
+name: DEV - Build & deploy studio v3 upgrade
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - upgrade-next-intl
+    paths:
+      - 'sanityv3/**/*'
+      - './FeatureFlags.js'
+      - '!./README.md'
+      - '!./.env.development.template'
+      - '!./sanityv3/scripts/**/*'
+permissions:
+  id-token: write
+  packages: write
+jobs:
+  check-code:
+    runs-on: ubuntu-latest
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+        with:
+          ref: staging
+      - name: Install pnpm 📦
+        id: install-pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: '8.5.1'
+      - name: Cache pnpm modules 💾
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'pnpm'
+      - name: Install dependencies 🔧
+        id: install-dependencies
+        run: |
+          pnpm install
+          pnpm sanityv3 install
+      - name: Run ESLint 🔎
+        id: lint
+        run: |
+          pnpm lint:sanityv3
+      - uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()
+
+  update-radix-config:
+    needs: check-code
+    runs-on: ubuntu-latest
+    environment:
+      name: development
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+        with:
+          ref: upgrade-next-intl
+      - name: Set image tag 🏷
+        shell: bash
+        id: set-default-image-tag
+        run: |
+          echo "IMAGE_TAG_SHA=$(git rev-parse --short=12 ${GITHUB_SHA})" >> $GITHUB_ENV
+      - name: Checkout internal 🛎️
+        id: checkout-internal
+        uses: actions/checkout@v3
+        with:
+          repository: 'equinor/energyvision-internal'
+          ref: main
+          token: ${{ secrets.PADMS_PAT }} # Replace with ssh as per https://stackoverflow.com/questions/60222741/github-actions-and-git-clone-issue
+      - name: Modify radixconfig tag for DEV on upgrade-next-intl branch 🗒️
+        if: github.ref == 'refs/heads/upgrade-next-intl'
+        shell: bash
+        id: modify-radix
+        run: |
+          # Install pre-requisite
+          python3 -m venv venv
+          source venv/bin/activate
+          python -m pip install ruamel.yaml
+          python ci/upgradeEnvironment.py studio ${{ env.IMAGE_TAG_SHA }} ${{ secrets.ENV }}
+          git config --global user.name 'github'
+          git config --global user.email 'padms@users.noreply.github.com'
+          git remote set-url origin https://x-access-token:${{ secrets.PADMS_PAT }}@github.com/equinor/energyvision-internal
+          if [[ `git status --porcelain` ]]
+          then
+            git commit -am "🚀 Deploy studio to dev for tag ${{ env.IMAGE_TAG_SHA }}"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
+      - uses: act10ns/slack@v2
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()
+
+  deploy-studio:
+    needs: update-radix-config
+    runs-on: ubuntu-latest
+    environment:
+      name: development
+      url: https://studiov3-global-development-upgrade-energyvision-dev.radix.equinor.com/
+    strategy:
+      matrix:
+        dataset: [global-development]
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      DOCKER_BUILDKIT: 1
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+      - id: deploy-satellite
+        uses: ./.github/workflows/deploy-v3/
+        with:
+          imageName: ghcr.io/equinor/energyvision/studiov3-${{ matrix.dataset }}-upgrade
+          datasetName: ${{ matrix.dataset }}
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          sanityApiToken: ${{ secrets.SANITY_API_TOKEN }}
+          sanityHistoryApiToken: ${{ secrets.SANITY_STUDIO_HISTORY_API_TOKEN }}
+          sanityPreviewToken: ${{ secrets.SANITY_STUDIO_PREVIEW_SECRET }}
+          brandmasterUrl: ${{ secrets.SANITY_STUDIO_BRANDMASTER_URL }}
+          brandmasterPluginSource: ${{ secrets.SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE }}
+          fotowareClientId: ${{ secrets.SANITY_STUDIO_FOTOWARE_CLIENT_ID }}
+          fotowareTenantUrl: ${{ secrets.SANITY_STUDIO_FOTOWARE_TENANT_URL }}
+          fotowareRedirectOrigin: ${{ secrets.SANITY_STUDIO_FOTOWARE_REDIRECT_ORIGIN }}
+          fotowareAfExportUrl: ${{ secrets.SANITY_STUDIO_FOTOWARE_AF_EXPORT_URL }}
+          fotowareAfExportKey: ${{ secrets.SANITY_STUDIO_FOTOWARE_AF_EXPORT_KEY }}
+          screen9accountId: ${{ secrets.SANITY_STUDIO_SCREEN9_ACCOUNT_ID }}
+          screen9token: ${{ secrets.SANITY_STUDIO_SCREEN9_TOKEN }}
+          environment: ${{ secrets.ENV }}
+      - uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()
