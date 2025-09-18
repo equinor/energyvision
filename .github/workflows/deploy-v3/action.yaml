@@ -52,6 +52,8 @@ inputs:
   screen9token:
     description: 'Screen9 API token'
     required: true
+  previewUrl:
+    description: 'Preview url for presentation'
 runs:
   using: 'composite'
   steps:
@@ -107,6 +109,7 @@ runs:
           --build-arg ARG_FOTOWARE_AF_EXPORT_KEY="${{ inputs.fotowareAfExportKey }}" \
           --build-arg ARG_SCREEN9_ACCOUNT_ID="${{ inputs.screen9accountId }}" \
           --build-arg ARG_SCREEN9_TOKEN="${{ inputs.screen9token }}" \
+          --build-arg ARG_SANITY_STUDIO_PREVIEW_URL="${{ inputs.previewUrl }}" \
           --file sanityv3/Dockerfile \
           --tag ${{ inputs.imageName }}:${{ env.IMAGE_TAG }} \
           --tag ${{ inputs.imageName }}:${{ env.IMAGE_TAG_SHA }} \
