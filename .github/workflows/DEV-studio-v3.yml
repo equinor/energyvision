@@ -49,7 +49,6 @@ jobs:
         if: failure()
 
   deploy-studio:
-    needs: update-radix-config
     runs-on: ubuntu-latest
     environment:
       name: development
