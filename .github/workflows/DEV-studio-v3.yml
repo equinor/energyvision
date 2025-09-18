@@ -50,6 +50,7 @@ jobs:
 
   deploy-studio:
     runs-on: ubuntu-latest
+    needs: check-code
     environment:
       name: development
       url: https://studiov3-global-development-energyvision-dev.radix.equinor.com/
