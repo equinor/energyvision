@@ -28,7 +28,7 @@ const chunkArray = (array: any[] = [], chunkSize: number) => {
 }
 
 const MagazineRoom = ({ pageData }: MagazineIndexTemplateProps) => {
-    const { ingress, title, hero, magazineTags, magazineArticles, footerComponent } = pageData || {}
+  const { ingress, title, hero, magazineTags, magazineArticles, footerComponent } = pageData || {}
   const isArray = Array.isArray(pageData)
   const page = isArray ? null : (pageData as any)
 
@@ -60,9 +60,14 @@ const MagazineRoom = ({ pageData }: MagazineIndexTemplateProps) => {
         <>
           <SharedBanner title={title} hero={hero} hideImageCaption={true} />
           {hero?.type !== HeroTypes.DEFAULT && title && (
-            <SharedTitle sharedTitle={title} background={{ backgroundColor: ingress?.background }} />
+            <div className="py-11">
+              <SharedTitle sharedTitle={title} background={{ backgroundColor: ingress?.background }} />
+            </div>
           )}
-          <BackgroundContainer className="py-16" background={{ backgroundColor: ingress?.background }}>
+          <BackgroundContainer
+            className="mx-auto px-layout-sm pb-16 max-lg:py-11 lg:px-layout-lg"
+            background={{ backgroundColor: ingress?.background }}
+          >
             {ingress?.content && <Blocks value={ingress.content} />}
           </BackgroundContainer>
         </>
