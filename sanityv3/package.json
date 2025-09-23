@@ -29,6 +29,7 @@
     "@portabletext/react": "^3.2.1",
     "buffer": "^6.0.3",
     "hls.js": "^1.4.8",
+    "papaparse": "^5.5.3",
     "react": "^19.0.1",
     "react-dom": "^19.0.1",
     "react-is": "^19.0.1",

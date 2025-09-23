@@ -29,10 +29,7 @@ const IFrameBlock = ({ anchor, data, className }: { data: IFrameData; anchor?: s
 
   if (!url) return null
   return (
-    <section
-      className={twMerge(`${bg} ${dark ? 'dark' : ''} mx-auto px-layout-lg pb-page-content`, className)}
-      id={anchor}
-    >
+    <section className={twMerge(`${bg} ${dark ? 'dark' : ''} px-layout-lg pb-page-content`, className)} id={anchor}>
       {title && <Blocks variant="h2" id={headingId} value={title} />}
       <div className="flex flex-col gap-6">
         {ingress && <Blocks variant="ingress" value={ingress} />}

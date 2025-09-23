@@ -24,7 +24,7 @@ export const FormMessageBox = forwardRef<HTMLDivElement, FormMessageBoxProps>(fu
   }
   const t = useTranslations()
   return (
-    <div ref={ref} {...rest} className={`flex gap-6 px-6 py-4 border-2 ${variantClassName[variant]}`}>
+    <div ref={ref} {...rest} className={`flex gap-6 border-2 px-6 py-4 ${variantClassName[variant]}`}>
       <TransformableIcon
         iconData={variant === 'success' ? check : error_outlined}
         size={48}
@@ -42,23 +42,24 @@ export const FormMessageBox = forwardRef<HTMLDivElement, FormMessageBoxProps>(fu
             </>
           ) : (
             <>
-              {' '}
               {t('form_failure_line1')}
               {t('form_failure_line2')}
             </>
           )}
         </Typography>
-        <Button
-          variant="outlined-secondary"
-          {...(variant === 'error' &&
-            onClick && {
-              onClick,
-            })}
-          type={variant === 'success' ? 'reset' : 'button'}
-          className="mt-4"
-        >
-          {variant === 'success' ? t('form_failure_cta') : t('form_success_cta')}
-        </Button>
+        {variant === 'error' && (
+          <Button
+            variant="outlined-secondary"
+            {...(variant === 'error' &&
+              onClick && {
+                onClick,
+              })}
+            type="button"
+            className="mt-4"
+          >
+            {t('form_failure_cta')}
+          </Button>
+        )}
       </div>
     </div>
   )

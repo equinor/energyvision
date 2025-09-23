@@ -19,10 +19,7 @@ const PromoTileArray = ({
   return (
     <section
       id={anchor}
-      className={twMerge(
-        `mx-auto flex flex-col justify-center gap-6 px-layout-md pb-page-content xl:px-layout-lg`,
-        className,
-      )}
+      className={twMerge(`flex flex-col justify-center gap-6 px-layout-md pb-page-content xl:px-layout-lg`, className)}
     >
       {title && <Blocks value={title} variant="h2" className={hideTitle ? 'sr-only' : ''} />}
       {ingress && <Blocks variant="ingress" value={ingress} />}

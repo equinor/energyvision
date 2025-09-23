@@ -58,7 +58,7 @@ export const FactBox = forwardRef<HTMLElement, FactBoxProps>(function FactBox({ 
       ref={ref}
     >
       <div
-        className={`mx-auto flex flex-col lg:flex-row ${hasImage && imgPos === 'right' ? 'lg:flex-row-reverse' : ''} ${hasImage ? '' : contentXPadding}`}
+        className={`flex flex-col lg:flex-row ${hasImage && imgPos === 'right' ? 'lg:flex-row-reverse' : ''} ${hasImage ? '' : contentXPadding}`}
       >
         {hasImage && (
           <div className={`relative h-[380px] w-full lg:h-auto lg:w-1/2 lg:max-w-1/2`}>

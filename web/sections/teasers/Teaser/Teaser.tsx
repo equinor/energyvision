@@ -1,39 +1,24 @@
-import { Teaser as TeaserLayout } from '@/core/Teaser'
 import { getUrlFromAction } from '../../../common/helpers'
-import Image from '../../../core/SanityImage/SanityImage'
-import type { TeaserData, ImageWithAlt } from '../../../types/index'
+import Image, { getPxSmSizes } from '../../../core/SanityImage/SanityImage'
+import type { TeaserData } from '../../../types/index'
 import { ResourceLink } from '../../../core/Link'
 import { getLocaleFromName } from '../../../lib/localization'
 import { Typography } from '@/core/Typography'
 import Blocks from '@/portableText/Blocks'
-
-const { Content, Media } = TeaserLayout
+import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
+import { useMediaQuery } from '@/lib/hooks/useMediaQuery'
 
 type TeaserProps = {
   data: TeaserData
   anchor?: string
 }
 
-const TeaserImage = ({ image }: { image: ImageWithAlt }) => {
-  const isSvg = image.extension?.toLowerCase() === 'svg'
-
-  if (!image?.asset) return null
-  const altTag = image?.isDecorative ? '' : image?.alt || ''
-
-  return (
-    <Image
-      image={image}
-      alt={altTag}
-      fill
-      maxWidth={isSvg ? 720 : 1100}
-      role={image?.isDecorative ? 'presentation' : undefined}
-    />
-  )
-}
-
 const Teaser = ({ data, anchor }: TeaserProps) => {
   const { title, overline, text, image, actions, designOptions, isBigText } = data
   const { imageSize, imagePosition, ...restOptions } = designOptions
+  const useFlexCol = useMediaQuery(`(max-width: 1023px)`)
+
+  const { bg, dark } = getBgAndDarkFromBackground(designOptions)
 
   if ([title, overline, text, image?.asset, actions].every((i) => !i)) {
     return null
@@ -41,30 +26,32 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
 
   const isSvg = image.extension?.toLowerCase() === 'svg'
 
+  // Svg can be "pictures"/illustrations and small svgs...
+  const imageElement = (
+    <div className="relative h-auto min-h-[400px] w-full">
+      <Image image={image} fill sizes={getPxSmSizes()} maxWidth={1420} />
+    </div>
+  )
+
   return (
-    <TeaserLayout className="text-sm" id={anchor} {...restOptions} renderFragmentWhenPossible>
-      <Media
-        size={isSvg && imageSize === 'small' ? 'small' : 'full'}
-        center={isSvg ? true : false}
-        fixedHeight={isSvg ? false : true}
-        mediaPosition={imagePosition || 'left'}
+    <article id={anchor} className={`${bg} ${dark ? 'dark' : ''} flex flex-col lg:grid lg:grid-cols-2`}>
+      {(imagePosition === 'left' || useFlexCol) && imageElement}
+      <div
+        className={`max-w-text pt-8 pb-10 lg:pt-18 lg:pb-22 ${imagePosition === 'left' ? 'pr-8 lg:pr-44' : 'pl-8 lg:pl-44'}`}
       >
-        {image?.asset && <TeaserImage image={image} />}
-      </Media>
-      <Content className={`gap-y-lg grid auto-cols-auto px-8 py-12`}>
         {isBigText ? (
-          text && <Blocks value={text} as="h2" variant="2xl" className="mb-2 leading-cloudy" />
+          text && <Blocks value={text} variant="h2" />
         ) : (
           <>
             {overline ? (
               <hgroup className="mb-1">
                 <Typography variant="overline">{overline}</Typography>
-                {title && <Blocks value={title} variant="h2" />}
+                {title && <Blocks value={title} as="h2" variant="xl" />}
               </hgroup>
             ) : (
-              <>{title && <Blocks value={title} variant="h2" />}</>
+              <>{title && <Blocks value={title} as="h2" variant="xl" />}</>
             )}
-            {text && <Blocks variant="ingress" value={text} className="mb-6" />}
+            {text && <Blocks variant="ingress" value={text} />}
           </>
         )}
         {actions && (
@@ -87,8 +74,9 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
             })}
           </div>
         )}
-      </Content>
-    </TeaserLayout>
+      </div>
+      {imagePosition === 'right' && !useFlexCol && imageElement}
+    </article>
   )
 }
 

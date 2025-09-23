@@ -4,7 +4,6 @@ import { CampaignBannerData } from '../../types/index'
 import Blocks, { MarkType } from '../../portableText/Blocks'
 import { PortableTextBlock } from '@portabletext/types'
 import isEmpty from '../../portableText/helpers/isEmpty'
-//import { BlockType } from '../../portableText/helpers/defaultSerializers'
 import { colorKeyToUtilityMap } from '../../styles/colorKeyToUtilityMap'
 import { urlFor } from '../../common/helpers'
 
@@ -44,7 +43,7 @@ export type CampaignBannerProps = {
 const CampaignBanner = forwardRef<HTMLElement, CampaignBannerProps>(function CampaignBanner({ data, className }, ref) {
   const { title, designOptions } = data
   const { background } = designOptions
-  const { backgroundImage, backgroundUtility, dark } = background
+  const { backgroundImage, backgroundUtility, dark } = background ?? {}
 
   const bgImageClassNames = `[container:inline-size]
   relative

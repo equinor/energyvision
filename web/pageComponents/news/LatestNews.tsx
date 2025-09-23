@@ -17,7 +17,7 @@ const LatestNews = ({ data }: LatestNewsProp) => {
 
   return (
     <section className="mx-auto flex flex-col items-start px-layout-sm py-20 3xl:px-layout-md">
-      <Typography variant="xl" as="h2" className="mb-10">
+      <Typography variant="h2" className="mb-10">
         {t('latest_news')}
       </Typography>
       <ul className="grid auto-rows-fr grid-cols-1 gap-x-6 gap-y-3 max-lg:w-full md:auto-cols-fr md:grid-flow-col">

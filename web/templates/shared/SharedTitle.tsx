@@ -1,16 +1,19 @@
 import type { PortableTextBlock } from '@portabletext/types'
-import { BackgroundContainer, BackgroundContainerProps } from '@/core/Backgrounds'
 import Blocks from '@/portableText/Blocks'
+import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
+import { Background } from '@/types'
 
 type SharedTitleProps = {
   sharedTitle: PortableTextBlock[]
-} & BackgroundContainerProps
+  background?: Background
+}
 
 const SharedTitle = ({ sharedTitle, background }: SharedTitleProps) => {
+  const { bg, dark } = getBgAndDarkFromBackground({ background })
   return (
-    <BackgroundContainer background={background}>
-      <Blocks value={sharedTitle} id="mainTitle" as="h1" variant="3xl" className="py-11 text-pretty" />
-    </BackgroundContainer>
+    <div className={`${bg} ${dark ? 'dark' : ''} px-layout-sm lg:px-layout-lg`}>
+      <Blocks value={sharedTitle} id="mainTitle" variant="h1" />
+    </div>
   )
 }
 

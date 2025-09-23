@@ -1,8 +1,9 @@
 import { ImageCarouselData } from '../../types/index'
-import { BackgroundContainer } from '@/core/Backgrounds'
 import { Carousel } from '@/core/Carousel/Carousel'
 import Blocks from '@/portableText/Blocks'
+import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
 import { forwardRef, useId } from 'react'
+import { twMerge } from 'tailwind-merge'
 
 type ImageCarouselProps = {
   data: ImageCarouselData
@@ -15,13 +16,13 @@ const ImageCarousel = forwardRef<HTMLUListElement, ImageCarouselProps>(function 
   ref,
 ) {
   const { title, hideTitle, ingress, items, designOptions, options } = data
-  const { background } = designOptions
+  const { bg, dark } = getBgAndDarkFromBackground(designOptions)
   const headingId = useId()
 
   return (
-    <BackgroundContainer as="section" background={background} id={anchor} backgroundStyle="none" className={className}>
+    <section id={anchor} className={twMerge(`${bg} ${dark ? 'dark' : ''}`, className)}>
       {((title && !hideTitle) || ingress) && (
-        <div className="mx-auto flex w-full flex-col px-layout-lg pb-8">
+        <div className="flex w-full flex-col px-layout-lg pb-8">
           {title && !hideTitle && <Blocks variant="h2" id={headingId} value={title} />}
           {ingress && <Blocks variant="ingress" value={ingress} />}
         </div>
@@ -37,7 +38,7 @@ const ImageCarousel = forwardRef<HTMLUListElement, ImageCarouselProps>(function 
         autoRotation={options?.autoplay}
         sectionTitle={title}
       />
-    </BackgroundContainer>
+    </section>
   )
 })
 

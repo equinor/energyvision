@@ -1,90 +1,58 @@
-import { forwardRef, HTMLAttributes } from 'react'
-import type { BackgroundColours, BackgroundTypes, ImageBackground } from '../../types/index'
-import { BackgroundContainerType, BackgroundStyle, ColouredContainer } from './ColouredContainer'
-import { ColorKeyTokens } from '../../styles/colorKeyToUtilityMap'
-import envisTwMerge from '../../twMerge'
+import { ElementType, forwardRef, HTMLAttributes } from 'react'
+import type { Background, ImageBackground } from '../../types/index'
+import { getBgAndDarkFromBackground } from '../../styles/colorKeyToUtilityMap'
 import { ImageBackgroundContainer } from './ImageBackgroundContainer'
+import { twMerge } from 'tailwind-merge'
 
 export type BackgroundContainerProps = {
-  background?: {
-    type?: BackgroundTypes
-    backgroundColor?: BackgroundColours
-    backgroundImage?: ImageBackground
-    backgroundUtility?: keyof ColorKeyTokens
-    dark?: boolean
-  }
-  /** Render fragment if true and background color
-   * is white and no id/anchor is set on it
-   * @default false
-   */
-  renderFragmentWhenPossible?: boolean
-  /** Extended tailwind styling */
-  twClassName?: string
+  background?: Background
   /** Extended  styling when background image */
   scrimClassName?: string
   /* On mobile dont split background image and content */
   dontSplit?: boolean
   /** Set return element as given */
-  as?: BackgroundContainerType
-  /** Background style for coloured backgrounds  */
-  backgroundStyle?: BackgroundStyle
-} & HTMLAttributes<HTMLDivElement>
+  as?: ElementType
+} & HTMLAttributes<HTMLElement>
 
-export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContainerProps>(function BackgroundContainer(
-  {
-    background,
-    style,
-    children,
-    className = '',
-    scrimClassName = '',
-    twClassName = '',
-    id,
-    renderFragmentWhenPossible = false,
-    dontSplit = false,
-    as = 'div',
-    backgroundStyle = 'regular',
-  },
+export const BackgroundContainer = forwardRef<HTMLElement, BackgroundContainerProps>(function BackgroundContainer(
+  { background, children, className = '', scrimClassName = '', id, dontSplit = false, as = 'section' },
   ref,
 ) {
-  const { backgroundImage, type, ...restBackground } = background || {}
+  const ContainerElement = as ?? (`section` as ElementType)
+  const isColor =
+    !background ||
+    background?.type !== 'backgroundImage' ||
+    (background?.type === 'backgroundImage' && !background?.backgroundImage?.image?.asset)
+
+  const { backgroundImage } = background ?? {}
+  //If no background, falls back to empty bg.
+  const { bg, dark } = getBgAndDarkFromBackground({ background })
+
+  const commonClassNames = `${id ? 'scroll-mt-topbar' : ''}`
 
   return (
     <>
-      {type === 'backgroundImage' && backgroundImage && (
+      {!isColor ? (
         <ImageBackgroundContainer
           as={as}
           ref={ref}
           id={id}
-          {...backgroundImage}
-          className={envisTwMerge(`${id ? 'scroll-mt-topbar' : ''}`, className)}
+          //@ts-ignore:todo
+          image={backgroundImage}
+          className={twMerge(commonClassNames, className)}
           scrimClassName={scrimClassName}
           dontSplit={dontSplit}
         >
           {children}
         </ImageBackgroundContainer>
-      )}
-      {(type === 'backgroundColor' || !type) && (
-        <>
-          {as == 'div' &&
-          renderFragmentWhenPossible &&
-          (restBackground?.backgroundColor === 'White' || restBackground?.backgroundUtility === 'white-100') &&
-          className === '' &&
-          !id ? (
-            <>{children}</>
-          ) : (
-            <ColouredContainer
-              ref={ref}
-              id={id}
-              {...restBackground}
-              style={style}
-              as={as}
-              backgroundStyle={backgroundStyle}
-              className={envisTwMerge(`${id ? 'scroll-mt-topbar' : ''}`, className, twClassName)}
-            >
-              {children}
-            </ColouredContainer>
-          )}
-        </>
+      ) : (
+        <ContainerElement
+          id={id}
+          ref={ref}
+          className={twMerge(commonClassNames, `${bg} ${dark ? 'dark' : ''}`, className)}
+        >
+          {children}
+        </ContainerElement>
       )}
     </>
   )

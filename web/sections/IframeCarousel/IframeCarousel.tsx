@@ -19,12 +19,9 @@ const IframeCarousel = ({ data, anchor, className = '' }: IframeCarouselProps) =
   return (
     <section className={twMerge(`${bg} ${dark ? 'dark' : ''}`, className)} id={anchor}>
       {title && (
-        <Blocks
-          value={title}
-          variant="h2"
-          id={headingId}
-          blockClassName={`px-layout-lg ${hideTitle ? 'sr-only' : ''}`}
-        />
+        <div className="px-layout-lg">
+          <Blocks value={title} variant="h2" id={headingId} blockClassName={` ${hideTitle ? 'sr-only' : ''}`} />
+        </div>
       )}
       <Carousel
         items={items}

@@ -1,3 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+//@ts-nocheck
+'use client'
 import IframeCarousel from '@/sections/IframeCarousel/IframeCarousel'
 import TextTeaser from '@/sections/teasers/TextTeaser/TextTeaser'
 import KeyNumbers from '@/sections/KeyNumber/KeyNumber'
@@ -53,7 +56,7 @@ import FullWidthVideo, { FullWidthVideoProps } from '@/sections/FullWidthVideo/F
 import Figure, { FigureData } from '@/pageComponents/topicPages/Figure'
 import PageQuote from '@/pageComponents/topicPages/PageQuote'
 import PromoTileArray from '@/sections/PromoTiles/PromoTileArray'
-import CookieDeclaration from '@/pageComponents/topicPages/CookieDeclaration'
+import CookieDeclaration from '@/sections/CookieDeclaration/CookieDeclaration'
 import NewsList from '@/pageComponents/topicPages/NewsList'
 import StockValues from '@/pageComponents/topicPages/StockValues'
 import TwitterEmbed from '@/pageComponents/topicPages/TwitterEmbed'
@@ -61,6 +64,7 @@ import VideoPlayer, { VideoPlayerBlockProps } from '@/sections/VideoPlayerBlock/
 import { HomePageBanner } from '@/sections/HomePageBanner/HomePageBanner'
 import TableBlock, { TableBlockProps } from '@/sections/TableBlock/TableBlock'
 import PromotionsBlock, { PromotionsBlockData } from '@/sections/promotions/PromotionsBlock'
+import { toPlainText } from 'next-sanity'
 
 // How could we do this for several different component types?
 export type ComponentSections =
@@ -108,19 +112,18 @@ export type PageContentProps = {
  * E.g. 2 colored background of same color content, only first need but not second
  */
 const getBackgroundOptions = (component: Component) => {
-  //@ts-ignore:Too many types
   if (!component?.designOptions || !Object.hasOwn(component, 'designOptions')) {
-    //Return white default if no designOptions
+    //white if no designOptions
+    console.log('return default with background options')
     return {
       backgroundUtility: 'white-100',
     }
   }
-  //@ts-ignore
+
   if (component?.type === 'tabs') {
-    //@ts-ignore:so many types
     return getColorForTabsTheme(component?.designOptions?.theme?.value)
   }
-  //@ts-ignore:so many types
+
   return component?.designOptions?.background || getColorForTheme(component?.designOptions?.theme)
 }
 
@@ -132,9 +135,7 @@ const isWhiteColorBackground = (componentsDO: any, component: Component) => {
     cleanBgUtility(componentsDO?.backgroundUtility) === 'white-100' ||
     componentsDO?.backgroundColor === 'White' ||
     componentsDO?.background === 'White' ||
-    //@ts-ignore
     casesWhichHaveBackgroundButIsWhite.includes(component?.type) ||
-    //@ts-ignore
     !component?.designOptions
   )
 }
@@ -173,24 +174,36 @@ const isSameColorBackground = (currentComponentsDO: any, previousComponentsDO: a
 }
 
 const applyPaddingTopIfApplicable = (currentComponent: Component, prevComponent: Component): string => {
+  if (currentComponent?.type === 'anchorLink') {
+    return
+  }
+
   const currentComponentsDO = getBackgroundOptions(currentComponent)
+  console.log('currentComponentsDO', currentComponentsDO)
   const previousComponentsDO = getBackgroundOptions(prevComponent)
+  console.log('previousComponentsDO', previousComponentsDO)
   const specialCases = ['teaser', 'fullWidthImage', 'fullWidthVideo', 'backgroundImage', 'campaignBanner']
 
   const currentIsWhiteColorBackground = isWhiteColorBackground(currentComponentsDO, currentComponent)
   const previousIsWhiteColorBackground = isWhiteColorBackground(previousComponentsDO, prevComponent)
-
+  console.log('currentComponent', currentComponent)
+  console.log(
+    `Current component ${currentComponent?.type}: ${Array.isArray(currentComponent?.title) ? toPlainText(currentComponent?.title) : currentComponent?.title}`,
+  )
+  console.log('currentIsWhiteColorBackground', currentIsWhiteColorBackground)
+  console.log('prevComponent', prevComponent)
+  console.log(
+    `Previous component ${prevComponent?.type}:  ${Array.isArray(prevComponent?.title) ? toPlainText(prevComponent?.title) : prevComponent?.title}`,
+  )
+  console.log('previousIsWhiteColorBackground', previousIsWhiteColorBackground)
   const previousComponentIsASpecialCaseAndNeedPT =
-    //@ts-ignore: too many types
     specialCases.includes(prevComponent?.type) || specialCases.includes(previousComponentsDO?.type)
 
   if (currentIsWhiteColorBackground && previousIsWhiteColorBackground && !previousComponentIsASpecialCaseAndNeedPT) {
     return ''
   }
 
-  //@ts-ignore: too many types
   if (prevComponent?.type === 'homepageBanner') {
-    //@ts-ignore: too many types
     return prevComponent?.designOptions?.backgroundType === '0' ? 'lg:pt-20' : 'pt-20'
   }
 
@@ -202,13 +215,10 @@ const applyPaddingTopIfApplicable = (currentComponent: Component, prevComponent:
   return 'pt-20'
 }
 
-/*eslint-enable @typescript-eslint/ban-ts-comment */
-
 export const PageContent = ({ data, titleBackground }: PageContentProps) => {
   const content = (data?.content || []).map((c: Component, index) => {
     const prevComponent = data?.content?.[index - 1]
     const anchorReference =
-      //@ts-ignore:so many types
       (prevComponent as unknown as ComponentProps)?.type === 'anchorLink'
         ? (prevComponent as unknown as AnchorLinkData)?.anchorReference
         : undefined
@@ -227,8 +237,10 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
         : (data?.content?.[previousComponentIndex] as unknown as Component)
 
     const topSpacingClassName = applyPaddingTopIfApplicable(c, previousComponentToCompare)
+    console.log(
+      `Applying top spacing: ${topSpacingClassName} to ${c?.type} with title ${Array.isArray(c?.title) ? toPlainText(c?.title) : c?.title}`,
+    )
     const spacingClassName = `${topSpacingClassName} pb-page-content`
-    //@ts-ignore:so many types
     switch (c.type) {
       case 'teaser':
         return <Teaser key={c.id} data={c as TeaserData} anchor={anchorReference} />

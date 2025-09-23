@@ -1,4 +1,3 @@
-import { TeaserImagePosition, TeaserImageSize } from '@/core/Teaser'
 import { PortableTextBlock } from '@portabletext/types'
 import { SanityImageObject } from '@sanity/image-url/lib/types/types'
 import type {
@@ -7,16 +6,12 @@ import type {
   LinkData,
   LinkType,
   EventDateType,
-  EventPromotionSettings,
   CardData,
-  EventCardData,
-  PeopleCardData,
   BackgroundColours,
   DesignOptions,
   GridData,
   StickyMenuLinkType,
 } from './index'
-import { MediaPosition } from '@/core/Teaser/Media'
 import { FigureData } from '../pageComponents/topicPages/Figure'
 import { FullWidthImageData } from '../sections/FullwidthImage/FullWidthImage'
 import { LoopingVideoData } from '@/sections/Hero/LoopingVideo'
@@ -128,8 +123,8 @@ export type TeaserData = {
   image: ImageWithAlt
   actions?: LinkData[]
   designOptions: DesignOptions & {
-    imagePosition?: MediaPosition
-    imageSize?: TeaserImageSize
+    imagePosition?: 'left' | 'right'
+    imageSize?: 'full' | 'small'
   }
 }
 
@@ -198,7 +193,7 @@ export type QuoteData = {
   authorTitle?: string
   quote: string
   image?: ImageWithAlt
-  designOptions: DesignOptions & { imagePosition?: TeaserImagePosition }
+  designOptions: DesignOptions & { imagePosition?: 'left' | 'right' }
 }
 
 export type AccordionListData = {

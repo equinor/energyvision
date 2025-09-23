@@ -1,6 +1,5 @@
 'use client'
 import { KeyNumbersData } from '../../types'
-import { BackgroundContainer } from '@/core/Backgrounds'
 import KeyNumberItem from './KeyNumberItem'
 import { ResourceLink } from '@/core/Link'
 import { Carousel } from '@/core/Carousel/Carousel'
@@ -10,6 +9,7 @@ import { getUrlFromAction } from '../../common/helpers/getUrlFromAction'
 import { getLocaleFromName } from '../../lib/localization'
 import { useId } from 'react'
 import Blocks from '@/portableText/Blocks'
+import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
 
 type KeyNumbersProps = {
   data: KeyNumbersData
@@ -21,18 +21,16 @@ const KeyNumber = ({ data, anchor, className }: KeyNumbersProps) => {
   const url = action && getUrlFromAction(action)
   const isMobile = useMediaQuery(`(max-width: 800px)`)
   const headingId = useId()
+  const { bg, dark } = getBgAndDarkFromBackground(designOptions)
 
   const renderScroll = useHorizontalScroll && isMobile
 
   return (
-    <BackgroundContainer
-      {...designOptions}
-      backgroundStyle="none"
-      className={twMerge(`px-layout-sm pb-page-content`, className)}
-      id={anchor}
-    >
-      {title && <Blocks value={title} id={headingId} variant="h2" blockClassName={hideTitle ? 'sr-only' : ''} />}
-      {ingress && <Blocks variant="ingress" value={ingress} />}
+    <section className={twMerge(`${bg} ${dark ? 'dark' : ''} pb-page-content`, className)} id={anchor}>
+      <div className="px-layout-lg">
+        {title && <Blocks value={title} id={headingId} variant="h2" blockClassName={hideTitle ? 'sr-only' : ''} />}
+        {ingress && <Blocks variant="ingress" value={ingress} />}
+      </div>
 
       {renderScroll && (
         <Carousel
@@ -61,7 +59,7 @@ const KeyNumber = ({ data, anchor, className }: KeyNumbersProps) => {
           {`${action.label} ${action.extension ? `(${action.extension.toUpperCase()})` : ''}`}
         </ResourceLink>
       )}
-    </BackgroundContainer>
+    </section>
   )
 }
 

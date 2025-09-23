@@ -131,7 +131,7 @@ const TableBlock = forwardRef<HTMLDivElement, TableBlockProps>(function TableBlo
       ref={ref}
       id={anchor}
       className={twMerge(
-        `mx-auto ${anchor ? 'scroll-mt-topbar' : ''}`,
+        `${anchor ? 'scroll-mt-topbar' : ''}`,
         className,
         `${noPaddingTop ? 'pt-0' : ''} ${reducePaddingBottom ? 'pb-12' : 'pb-page-content'} `,
       )}

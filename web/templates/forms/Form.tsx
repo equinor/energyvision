@@ -40,11 +40,11 @@ const Form = ({ data, anchor, className }: { data: FormData; anchor?: string; cl
   }
 
   return (
-    <div className={twMerge(`px-layout-lg pb-page-content`, className)} id={anchor}>
-      {title && <Blocks variant="h2" className="px-0 pt-0 pr-6" value={title} />}
+    <section className={twMerge(`px-layout-sm pb-page-content lg:px-layout-lg`, className)} id={anchor}>
+      {title && <Blocks variant="h2" value={title} />}
       {ingress && <Blocks variant="ingress" value={ingress} />}
       {renderForm(variant)}
-    </div>
+    </section>
   )
 }
 export default Form

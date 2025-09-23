@@ -1,4 +1,3 @@
-import { Teaser } from '@/core/Teaser'
 import type { TextTeaserData } from '../../../types/index'
 import { getColorForTheme } from './theme'
 
@@ -7,8 +6,6 @@ import { ResourceLink } from '@/core/Link'
 import { getUrlFromAction } from '../../../common/helpers/getUrlFromAction'
 import { getLocaleFromName } from '../../../lib/localization'
 import Blocks from '@/portableText/Blocks'
-
-const { Content, Media } = Teaser
 
 type TextTeaserProps = {
   data: TextTeaserData
@@ -19,19 +16,21 @@ type TextTeaserProps = {
 const TextTeaser = ({ data, anchor, className }: TextTeaserProps) => {
   const { title, text, action, designOptions } = data
   const { theme, titlePosition } = designOptions
-  const { background, highlight, dark } = getColorForTheme(theme)
+  const { backgroundUtility, highlight, dark } = getColorForTheme(theme)
   const url = action && getUrlFromAction(action)
 
+  const bigTextElement = <Blocks blockClassName={`${highlight}`} variant="h2" value={title} />
+
   return (
-    <Teaser
-      background={{ backgroundColor: background }}
+    <article
       id={anchor}
-      className={twMerge(`${dark ? 'dark' : ''} `, className)}
+      className={twMerge(
+        `min-h-[400px] ${backgroundUtility} flex flex-col gap-6 px-layout-md py-6 md:flex-row ${dark ? 'dark' : ''} `,
+        className,
+      )}
     >
-      <Media className="h-auto px-layout-lg pt-12 pb-0 sm:py-8 sm:pt-12 md:p-16" mediaPosition={titlePosition}>
-        <Blocks blockClassName={`px-0 pt-0 pb-12 sm:p-0 ${highlight}`} variant="2xl" as="h2" value={title} />
-      </Media>
-      <Content className="px-layout-lg pt-0 pb-16 sm:p-12 lg:p-16">
+      {titlePosition === 'left' && bigTextElement}
+      <div className="">
         {text && (
           <div className="pb-8 last:pb-0">
             <Blocks variant="ingress" value={text} />
@@ -46,8 +45,9 @@ const TextTeaser = ({ data, anchor, className }: TextTeaserProps) => {
             {`${action.label} ${action.extension ? `(${action.extension.toUpperCase()})` : ''}`}
           </ResourceLink>
         )}
-      </Content>
-    </Teaser>
+      </div>
+      {titlePosition === 'right' && bigTextElement}
+    </article>
   )
 }
 

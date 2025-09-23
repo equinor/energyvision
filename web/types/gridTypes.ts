@@ -1,5 +1,4 @@
 import { ImageWithAlt, BackgroundColours, LinkData, IFrameData, ImageBackground } from './index'
-import { TeaserImagePosition } from '@/core/Teaser'
 import { PortableTextBlock } from '@portabletext/types'
 import { RowType } from '@/sections/Grid/mapGridContent'
 import { FigureData } from '../pageComponents/topicPages/Figure'
@@ -18,7 +17,7 @@ export type GridTeaserData = {
   author?: string
   authorTitle?: string
   background?: BackgroundColours
-  imagePosition?: TeaserImagePosition
+  imagePosition?: 'left' | 'right'
   action?: LinkData
   theme?: number
 }

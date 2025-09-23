@@ -30,16 +30,7 @@ const Grid = forwardRef<HTMLElement, GridProps>(function Grid({ data, anchor, cl
     <section
       ref={ref}
       className={twMerge(
-        `lg:px-layout-md 
-        max-w-[2200px]
-        pb-page-content
-        mx-auto
-        w-full
-        grid
-        auto-rows-max
-        grid-cols-1
-        lg:grid-cols-3
-        `,
+        `grid w-full max-w-[2200px] auto-rows-max grid-cols-1 pb-page-content lg:grid-cols-3 lg:px-layout-md`,
         className,
       )}
       id={anchor}

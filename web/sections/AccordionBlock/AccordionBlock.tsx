@@ -29,10 +29,7 @@ const AccordionBlock = ({ data, anchor, className }: AccordionBlockProps) => {
   // check if section classname needs: [&_svg]:inline [&_svg]:align-baseline
   return (
     <>
-      <section
-        id={anchor}
-        className={twMerge(`${bg} ${dark ? 'dark' : ''} mx-auto px-layout-lg pb-page-content`, className)}
-      >
+      <section id={anchor} className={twMerge(`${bg} ${dark ? 'dark' : ''} px-layout-lg pb-page-content`, className)}>
         {image?.asset && (
           <div className="w-1/4">
             <Image

@@ -49,12 +49,9 @@ const PromotionsBlock = ({
   return (
     <section className={twMerge(`${bg} ${dark ? 'dark' : ''} mx-auto pb-page-content`, className)} id={anchor}>
       {title && (
-        <Blocks
-          variant="h2"
-          id={sectionTitleId}
-          value={title}
-          blockClassName={`w-full ${paddingClassName} ${!ingress && viewAllLink?.link?.slug ? '' : ''}`}
-        />
+        <div className={paddingClassName}>
+          <Blocks variant="h2" id={sectionTitleId} value={title} />
+        </div>
       )}
       <div className="flex flex-col gap-6">
         {ingress && (

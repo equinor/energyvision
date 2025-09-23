@@ -1,10 +1,9 @@
 'use client'
-import { forwardRef, HTMLAttributes, CSSProperties } from 'react'
+import { forwardRef, HTMLAttributes, CSSProperties, ElementType } from 'react'
 import { useSanityLoader } from '../../lib/hooks/useSanityLoader'
 import { ImageBackground } from '../../types/index'
 import { twMerge } from 'tailwind-merge'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
-import { BackgroundContainerType } from './ColouredContainer'
 import { ImageRatioKeys, mapSanityImageRatio } from '@/core/SanityImage/SanityImage'
 
 type ImageBackgroundContainerProps = {
@@ -15,12 +14,12 @@ type ImageBackgroundContainerProps = {
   overrideGradient?: boolean
   aspectRatio?: ImageRatioKeys
   /** Set return element as given */
-  as?: BackgroundContainerType
+  as?: ElementType
 } & ImageBackground &
-  HTMLAttributes<HTMLDivElement>
+  HTMLAttributes<HTMLElement>
 const DEFAULT_MAX_WIDTH = 1920
 
-export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgroundContainerProps>(
+export const ImageBackgroundContainer = forwardRef<HTMLElement, ImageBackgroundContainerProps>(
   function ImageBackgroundContainer(
     {
       image,
@@ -33,7 +32,7 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
       overrideGradient = false,
       dontSplit = false,
       aspectRatio,
-      as = 'div',
+      as = 'section',
       ...rest
     },
     ref,
@@ -96,14 +95,7 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
       >
         {/** Scrim */}
         <div
-          className={twMerge(
-            `py-40
-            lg:py-[25dvh]
-            ${animatedScrimGradient}
-            animate-timeline
-            relative`,
-            scrimClassName,
-          )}
+          className={twMerge(`py-40 lg:py-[25dvh] ${animatedScrimGradient} animate-timeline relative`, scrimClassName)}
         >
           <div className={className}>{children}</div>
         </div>
@@ -128,16 +120,7 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
         {...rest}
       >
         {/** Scrim */}
-        <div
-          className={twMerge(
-            `h-full
-            py-40
-            lg:py-52
-            relative
-            ${animatedScrimGradient}`,
-            scrimClassName,
-          )}
-        >
+        <div className={twMerge(`relative h-full py-40 lg:py-52 ${animatedScrimGradient}`, scrimClassName)}>
           <div className={className}>{children}</div>
         </div>
       </ReturnElement>

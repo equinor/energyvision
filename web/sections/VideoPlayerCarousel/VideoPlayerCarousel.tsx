@@ -46,7 +46,7 @@ const VideoPlayerCarousel = forwardRef<HTMLUListElement, VideoPlayerCarouselProp
 
   return (
     <section id={anchor} className={twMerge(`${bg} ${dark ? 'dark' : ''}`, className)}>
-      <div className="mx-auto flex w-full flex-col px-layout-lg pb-8">
+      <div className="flex w-full flex-col px-layout-lg pb-8">
         {title && (
           <Blocks
             id={headingId}

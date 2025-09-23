@@ -45,6 +45,10 @@ import CustomDocumentInternationalizationMenu from './schemas/components/CustomD
 import { presentationTool } from 'sanity/presentation'
 import { locations } from './presentation/locations'
 
+
+//Table plugin
+import { table } from './plugins/importTable'
+
 export const customTheme = buildLegacyTheme(partialStudioTheme)
 
 // URL for preview functionality, defaults to localhost:3000 if not set
@@ -125,31 +129,9 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret = fals
       },
       resolve: {
         locations,
-        /*         locations: {
-          // Resolve locations using values from the matched document
-          page: defineLocations({
-            select: {
-              title: 'title',
-              lang: 'lang',
-              //slugs: '_type match "route_*" && references(^._id)]',
-            },
-            resolve: (doc) => ({
-              locations: [
-                {
-                  title: doc?.title || 'Untitled',
-                  href: `/${getLocaleFromName(doc?.lang) !== 'en' ? `/${getLocaleFromName(doc?.lang)}` : ''}${
-                    doc?.slugs?.[0]
-                  }`,
-                },
-              ],
-            }),
-          }),
-        }, */
       },
     }),
-    /*       resolvers: {
-        locations: locations,
-      }, */
+    table(),
   ].filter((e) => e) as PluginOptions[],
   schema: {
     types: schemaTypes as SchemaTypeDefinition[],

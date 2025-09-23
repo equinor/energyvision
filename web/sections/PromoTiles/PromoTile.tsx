@@ -43,7 +43,7 @@ export const PromoTile = forwardRef<HTMLAnchorElement, PromoTileProps>(function 
       ref={ref}
       image={image}
       variant={variant}
-      className={`${theme?.dark || background.dark ? 'dark' : ''} `}
+      className={`${theme?.dark || background?.dark ? 'dark' : ''} `}
     >
       <Card.Content variant={variant} className={`${theme.background}`}>
         <Card.Header

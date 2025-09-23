@@ -19,7 +19,7 @@ export const Topbar = forwardRef<HTMLDivElement, TopbarProps>(function Topbar(
   const [isVisible, setIsVisible] = useState(true)
   const [hasDropShadow, setHasDropShadow] = useState(false)
   const showSticky = stickyMenuData && stickyMenuData?.links && stickyMenuData?.links?.length > 0
-  console.log('showSticky', showSticky)
+
   useEffect(() => {
     if (topbarRef && topbarRef?.current) {
       setHeight(topbarRef.current.getBoundingClientRect().height)

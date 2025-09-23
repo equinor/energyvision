@@ -1,11 +1,12 @@
 'use client'
 import { PortableTextBlock, TwitterEmbedData } from '../../types/index'
 import { TwitterTimelineEmbed, TwitterTweetEmbed } from 'react-twitter-embed'
-import { BackgroundContainer } from '@/core/Backgrounds'
 import { Typography } from '@/core/Typography'
 import { toPlainText } from '@portabletext/react'
 import RequestConsentContainer from '@/core/IFrame/RequestConsentContainer'
 import Blocks from '@/portableText/Blocks'
+import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
+import { twMerge } from 'tailwind-merge'
 
 type TwitterEmbedProps = {
   data: TwitterEmbedData
@@ -16,6 +17,7 @@ type TwitterEmbedProps = {
 const TwitterEmbed = ({ data, anchor, className }: TwitterEmbedProps) => {
   const { embedType, embedValue, designOptions, title, ingress } = data
   const plainTitle = title ? toPlainText(title as PortableTextBlock[]) : ''
+  const { bg, dark } = getBgAndDarkFromBackground(designOptions)
 
   const Embed = () => {
     switch (embedType) {
@@ -37,7 +39,7 @@ const TwitterEmbed = ({ data, anchor, className }: TwitterEmbedProps) => {
     }
   }
   return (
-    <BackgroundContainer {...designOptions} id={anchor} className={className} renderFragmentWhenPossible>
+    <section id={anchor} className={twMerge(`${bg} ${dark ? 'dark' : ''}`, className)}>
       {title && (
         <div className="mb-11">
           {/* variant h3 or h4? */}
@@ -54,7 +56,7 @@ const TwitterEmbed = ({ data, anchor, className }: TwitterEmbedProps) => {
       <div className="cookieconsent-optout-marketing">
         <RequestConsentContainer cookiePolicy={['marketing']} />
       </div>
-    </BackgroundContainer>
+    </section>
   )
 }
 

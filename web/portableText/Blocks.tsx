@@ -231,7 +231,6 @@ export default function Blocks({
     <>
       {//@ts-ignore:todo
       value?.map((block: PortableTextBlock, i: number, blocks: PortableTextBlock[]) => {
-        console.log('blocks', blocks)
         // Normal text blocks (p, h1, h2, etc.) — these are grouped so we can wrap them in a prose div
         if (inlineBlockTypes.includes(block._type)) {
           if (blocks?.length === 1) {

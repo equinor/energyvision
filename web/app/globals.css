@@ -9,6 +9,7 @@
   --breakpoint-xl: 81.25rem;
   --breakpoint-3xl: 100rem;
   --breakpoint-4xl: 120rem;
+  --breakpoint-6xl: 140rem;
 
   --color-moss-green-100: hsl(184, 100%, 17%);
   --color-moss-green-95: hsl(184, 100%, 24%);
@@ -123,7 +124,7 @@
   --spacing-single-carousel-card-h-lg: 516px;
   --spacing-event-carousel-card-w: 383px;
   --spacing-arrow-right: 1.58rem;
-  --spacing-text: 760px;
+  --spacing-text: 810px; /* recommended 760px */
 
   /* PROSE - Typography to be used with blocks */
 

@@ -36,15 +36,11 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
     'bottom-left': 'items-start text-start px-layout-lg xl:mr-auto xl:pl-layout-sm xl:pr-0',
     'bottom-center': 'items-start text-start px-layout-lg xl:pl-layout-sm xl:pr-0',
   }
-  let backgroundImageContentClassNames = `
-  justify-center
-  py-14
-  `
+  let backgroundImageContentClassNames = `justify-center py-14`
   if (designOptions?.background?.backgroundImage?.contentAlignment) {
     backgroundImageContentClassNames = twMerge(
       backgroundImageContentClassNames,
-      `
-    ${contentAlignment[designOptions?.background?.backgroundImage?.contentAlignment]}`,
+      `${contentAlignment[designOptions?.background?.backgroundImage?.contentAlignment]}`,
     )
   }
 
@@ -63,10 +59,11 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
     <BackgroundContainer
       {...bgContainerOptions}
       id={anchor}
-      renderFragmentWhenPossible
-      className={`${
-        designOptions?.background?.type === 'backgroundImage' ? backgroundImageContentClassNames : className
-      }`}
+      className={twMerge(
+        designOptions?.background?.type === 'backgroundImage' && backgroundImageContentClassNames,
+        designOptions?.background?.type !== 'backgroundImage' && `px-layout-sm lg:px-layout-lg`,
+        className,
+      )}
     >
       {isBigText && title && <Blocks value={title} as="h2" variant="2xl" blockClassName="mb-2 leading-cloudy" />}
       {!isBigText && (

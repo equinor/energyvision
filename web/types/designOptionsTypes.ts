@@ -18,12 +18,14 @@ export type BackgroundTypes = 'backgroundColor' | 'backgroundImage'
 
 export type ContentAlignmentTypes = 'left' | 'right' | 'center'
 
+export type Background = {
+  type?: BackgroundTypes
+  backgroundColor?: BackgroundColours
+  backgroundImage?: ImageBackground
+  backgroundUtility?: keyof ColorKeyTokens
+  dark?: boolean
+}
+
 export type DesignOptions = {
-  background: {
-    type?: BackgroundTypes
-    backgroundColor?: BackgroundColours
-    backgroundImage?: ImageBackground
-    backgroundUtility?: keyof ColorKeyTokens
-    dark?: boolean
-  }
+  background?: Background
 }

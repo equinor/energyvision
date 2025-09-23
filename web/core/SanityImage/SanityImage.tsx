@@ -2,7 +2,7 @@ import { SanityImageObject } from '@sanity/image-url/lib/types/types'
 import { useSanityLoader } from '../../lib/hooks/useSanityLoader'
 import Img, { ImageProps } from 'next/image'
 import type { ImageWithAlt } from 'types'
-import envisTwMerge from '../../twMerge'
+import { twMerge } from 'tailwind-merge'
 
 export const ImageRatios = {
   original: 0,
@@ -130,7 +130,7 @@ const Image = ({
       src={src}
       alt={getAltText()}
       sizes={sizes}
-      className={envisTwMerge(`${fill ? 'object-cover' : 'flex h-auto w-full'}`, className)}
+      className={twMerge(`${fill ? 'object-cover' : 'flex h-auto w-full'}`, className)}
     />
   )
 }

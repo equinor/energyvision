@@ -1,6 +1,5 @@
 'use client'
 import { useEffect, useRef } from 'react'
-import { BackgroundContainer } from '@/core/Backgrounds'
 import { CookieDeclarationData } from '../../types/index'
 import { useLocale } from 'next-intl'
 import Blocks from '@/portableText/Blocks'
@@ -11,7 +10,7 @@ type CookieDeclarationProps = {
   className?: string
 }
 
-const CookieDeclaration = ({ data, anchor, className }: CookieDeclarationProps) => {
+const CookieDeclaration = ({ data, anchor, className = '' }: CookieDeclarationProps) => {
   const title = data.title
   const placeholderRef = useRef<HTMLDivElement>(null)
   const locale = useLocale()
@@ -27,12 +26,12 @@ const CookieDeclaration = ({ data, anchor, className }: CookieDeclarationProps) 
     }
   }, [language])
   return (
-    <BackgroundContainer id={anchor} className={className}>
+    <section id={anchor} className={className}>
       <div id="cookie-declaration-wrapper">
         {title && <Blocks variant="h2" value={title} />}
         <div ref={placeholderRef}></div>
       </div>
-    </BackgroundContainer>
+    </section>
   )
 }
 export default CookieDeclaration

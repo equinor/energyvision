@@ -1,8 +1,8 @@
-import type { HeroType, ImageWithCaptionData } from 'types'
+import type { DesignOptions, HeroType, ImageWithCaptionData } from 'types'
 import { useSanityLoader } from '../../lib/hooks/useSanityLoader'
 import Image, { getFullScreenSizes, mapSanityImageRatio } from '../../core/SanityImage/SanityImage'
-import { BackgroundContainer } from '@/core/Backgrounds'
 import { FigureCaption } from '@/core/FigureCaption/FigureCaption'
+import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
 
 type FullImageHeroType = {
   figure: ImageWithCaptionData
@@ -36,6 +36,13 @@ const RatioHero = ({ figure }: FullImageHeroType) => {
 }
 
 export const FullImageHero = ({ ratio, figure, hideImageCaption, captionBg }: HeroType) => {
+  const captionDesignOtions: DesignOptions = {
+    background: {
+      backgroundColor: captionBg,
+    },
+  }
+  const { bg, dark } = getBgAndDarkFromBackground(captionDesignOtions)
+
   const getHero = () => {
     if (figure)
       switch (ratio) {
@@ -52,16 +59,12 @@ export const FullImageHero = ({ ratio, figure, hideImageCaption, captionBg }: He
     <>
       {getHero()}
       {figure?.image?.asset && !hideImageCaption && (figure.caption || figure.attribution) && (
-        <BackgroundContainer
-          className={'inline-block w-full'}
-          background={{ backgroundColor: captionBg }}
-          backgroundStyle="none"
-        >
-          <FigureCaption className={'mx-auto px-layout-sm pt-0 pb-8'}>
+        <div className={`w-full ${bg} ${dark ? 'dark' : ''}`}>
+          <FigureCaption>
             {figure.caption && <div>{figure.caption}</div>}
             {figure.attribution && <div>{figure.attribution}</div>}
           </FigureCaption>
-        </BackgroundContainer>
+        </div>
       )}
     </>
   )

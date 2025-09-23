@@ -1,16 +1,18 @@
 import { getUrlFromAction } from '@/common/helpers'
-import { BackgroundContainer } from '@/core/Backgrounds'
 import { ResourceLink } from '@/core/Link'
 import Image, { getPxSmSizes } from '@/core/SanityImage/SanityImage'
 import { getLocaleFromName } from '@/lib/localization'
 import Blocks from '@/portableText/Blocks'
+import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
 import { HeroType } from '@/types'
 
 export const FiftyFiftyHero = ({ title, ingress, link: action, background, figure, isBigTitle }: HeroType) => {
   const url = action && getUrlFromAction(action)
+  //@ts-ignore: Todo
+  const { bg, dark } = getBgAndDarkFromBackground({ background })
 
   return (
-    <BackgroundContainer background={{ backgroundColor: background }} backgroundStyle={'none'}>
+    <section className={`${bg} ${dark ? 'dark' : ''}`}>
       <div className="mx-auto grid min-h-[350px] md:grid-cols-2">
         {/* Image Section */}
         {figure && (
@@ -45,6 +47,6 @@ export const FiftyFiftyHero = ({ title, ingress, link: action, background, figur
           )}
         </div>
       </div>
-    </BackgroundContainer>
+    </section>
   )
 }
