@@ -1,5 +1,5 @@
 'use client'
-import type { MagazineIndexPageType } from '../../types'
+import type { DesignOptions, MagazineIndexPageType } from '../../types'
 import { useMemo, useRef, useState } from 'react'
 import { HeroTypes } from '../../types/index'
 import { BackgroundContainer } from '@/core/Backgrounds'
@@ -13,6 +13,7 @@ import CardSkeleton from '@/sections/cards/CardSkeleton/CardSkeleton'
 import { PaginationContextProvider } from '../../common/contexts/PaginationContext'
 import { SharedBanner } from '../shared/SharedBanner'
 import SharedTitle from '../shared/SharedTitle'
+import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
 
 type MagazineIndexTemplateProps = {
   pageData: MagazineIndexPageType
@@ -42,6 +43,12 @@ const MagazineRoom = ({ pageData }: MagazineIndexTemplateProps) => {
 
   const pagedList = useMemo(() => chunkArray(magazineList || [], 12), [magazineList])
   const [pageIdx, setPage] = useState(0)
+  const captionDesignOtions: DesignOptions = {
+    background: {
+      backgroundColor: ingress?.background,
+    },
+  }
+  const { bg, dark } = getBgAndDarkFromBackground(captionDesignOtions)
 
   const getNext = async () => {
     setIsLoading(true)
@@ -64,12 +71,9 @@ const MagazineRoom = ({ pageData }: MagazineIndexTemplateProps) => {
               <SharedTitle sharedTitle={title} background={{ backgroundColor: ingress?.background }} />
             </div>
           )}
-          <BackgroundContainer
-            className="mx-auto px-layout-sm pb-16 max-lg:py-11 lg:px-layout-lg"
-            background={{ backgroundColor: ingress?.background }}
-          >
+          <div className={`w-full ${bg} ${dark ? 'dark' : ''} mx-auto px-layout-sm pb-16 max-lg:py-11 lg:px-layout-lg`}>
             {ingress?.content && <Blocks value={ingress.content} />}
-          </BackgroundContainer>
+          </div>
         </>
       )}
       {!!hero && hero?.type === HeroTypes.BACKGROUND_IMAGE && (
