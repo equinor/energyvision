@@ -84,36 +84,23 @@ export default async function MagazinePage({
     query: magazineIndexQuery,
     queryParams,
   })
-  console.log('[MagazinePage][en] indexPageData (raw):', indexPageData)
   const index = Array.isArray(indexPageData) ? indexPageData[0] : indexPageData
-  console.log('[MagazinePage][en] Parsed index object keys:', index ? Object.keys(index) : null)
-  console.log('[MagazinePage][en] Index hero present?', Boolean(index?.hero))
-  console.log('[MagazinePage][en] Index magazineTags count:', index?.magazineTags?.length ?? 0)
 
   // Fetch list of articles (by tag or all)
   const tag = (await searchParams)?.tag
-  console.log('[MagazinePage][en] tag filter:', tag)
   let magazineArticles: any[] = []
   if (tag && tag !== 'all') {
     const { data } = await getData({
       query: getMagazineArticlesByTag(false, false),
       queryParams: { ...(queryParams as any), tag } as any,
     })
-    console.log('[MagazinePage][en] getMagazineArticlesByTag results count:', Array.isArray(data) ? data.length : 'n/a')
     magazineArticles = data
   } else {
     const { data } = await getData({ query: allMagazineDocuments, queryParams: queryParams as any })
-    console.log('[MagazinePage][en] allMagazineDocuments results count:', Array.isArray(data) ? data.length : 'n/a')
     magazineArticles = data
   }
 
   const pageData: MagazineIndexPageType = { ...(index as any), magazineArticles } as any
-  console.log('[MagazinePage][en] Composed pageData for template', {
-    hasHero: Boolean((pageData as any)?.hero),
-    tagsCount: (pageData as any)?.magazineTags?.length ?? 0,
-    articlesCount: magazineArticles?.length ?? 0,
-    indexWasArray: Array.isArray(indexPageData),
-  })
 
   return <MagazineRoom pageData={pageData} />
 }

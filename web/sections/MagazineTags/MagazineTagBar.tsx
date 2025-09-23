@@ -51,25 +51,21 @@ const MagazineTagBar = forwardRef<HTMLDivElement, MagazineTagBarProps>(function 
   return (
     <div
       ref={ref}
-      className="border-grey-3 mx-auto mb-8 flex items-center gap-2 overflow-x-auto border-y p-8 lg:justify-center"
+      className="mb-8 flex items-center gap-2 overflow-x-auto border-y-[0.5px] border-grey-20 p-8 xl:justify-center"
     >
-      <h2 className="-mt-0.5 flex items-center gap-1 text-sm font-medium">
+      <h2 className="flex items-center gap-1 text-sm font-medium">
         <TransformableIcon iconData={filter_alt} className="-mt-1 size-5 text-grey-50" />
         {intl('magazine_tag_filter')}
       </h2>
       <ul
         // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
         tabIndex={0}
-        className="
-        flex
-        items-center 
-        divide-x-2
-        divide-energy-red-100"
+        className="flex items-center divide-x-2 divide-energy-red-100"
       >
         <li>
           <Link
             href={parentSlug + '?' + createQueryString('tag', 'all')}
-            className={`${linkClassNames} ${isAllActive ? 'font-bold underline underline-offset-4' : ''}`}
+            className={`${linkClassNames} ${isAllActive ? 'font-bold' : ''}`}
           >
             {intl('magazine_tag_filter_all')}
           </Link>
@@ -77,7 +73,7 @@ const MagazineTagBar = forwardRef<HTMLDivElement, MagazineTagBarProps>(function 
         {formattedTags.map((tag: TagLink) => (
           <li key={tag.id}>
             <Link
-              className={`${linkClassNames} ${tag.active ? 'font-bold underline underline-offset-4' : ''}`}
+              className={`${linkClassNames} ${tag.active ? 'font-bold' : ''}`}
               href={parentSlug + '?' + createQueryString('tag', tag.key)}
             >
               {tag.label}
