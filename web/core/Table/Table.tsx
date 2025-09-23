@@ -1,3 +1,4 @@
+'use client'
 import { forwardRef } from 'react'
 import type { TableHTMLAttributes } from 'react'
 import envisTwMerge from '../../twMerge'
@@ -37,7 +38,7 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(function Table(
   ref,
 ) {
   return (
-    <table className={envisTwMerge('table-auto w-full border-collapse', className)} ref={ref} {...rest}>
+    <table className={envisTwMerge('w-full table-auto border-collapse', className)} ref={ref} {...rest}>
       {children}
     </table>
   )
