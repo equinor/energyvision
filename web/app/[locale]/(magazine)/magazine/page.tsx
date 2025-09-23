@@ -1,13 +1,11 @@
 import { getNameFromLocale } from '../../../../lib/localization'
 import { Flags } from '../../../../common/helpers/datasetHelpers'
-import { getPageData } from '../../../../sanity/lib/fetchData'
+import { getPageData, getData } from '../../../../sanity/lib/fetchData'
 import { notFound } from 'next/navigation'
 import MagazineRoom from '@/templates/magazine/Magazineroom'
 import { MagazineIndexPageType } from '../../../../types'
 import { setRequestLocale } from 'next-intl/server'
-import { allMagazineDocuments } from '@/sanity/queries/magazine'
-import { toPlainText } from 'next-sanity'
-import { isDateAfter } from '@/common/helpers/dateUtilities'
+import { allMagazineDocuments, magazineIndexQuery, getMagazineArticlesByTag } from '@/sanity/queries/magazine'
 import getOpenGraphImages from '@/common/helpers/getOpenGraphImages'
 import { metaTitleSuffix } from '@/languages'
 import { Metadata, ResolvingMetadata } from 'next'
@@ -27,28 +25,27 @@ export async function generateMetadata(
     lang,
   }
   const { pageData } = await getPageData({
-    query: allMagazineDocuments,
+    query: magazineIndexQuery,
     queryParams,
   })
-
-  const { publishDateTime, updatedAt, documentTitle, title, metaDescription, openGraphImage, heroImage } = pageData
-  const plainTitle = Array.isArray(title) ? toPlainText(title) : title
-
-  const modifiedDate = isDateAfter(publishDateTime, updatedAt) ? publishDateTime : updatedAt
-  const openGraphImages = getOpenGraphImages((openGraphImage?.asset ? openGraphImage : null) || heroImage?.image)
+  const index = Array.isArray(pageData) ? pageData[0] : pageData
+  const documentTitle = index?.seoAndSome?.documentTitle
+  const metaDescription = index?.seoAndSome?.metaDescription
+  const title = index?.title
+  const heroImage = index?.hero?.figure?.image
+  const ogImage = index?.seoAndSome?.openGraphImage
+  const openGraphImages = getOpenGraphImages((ogImage?.asset ? ogImage : null) || heroImage)
 
   return {
-    title: `${documentTitle || plainTitle} - ${metaTitleSuffix}`,
+    title: `${documentTitle || title || 'Magazine'} - ${metaTitleSuffix}`,
     description: metaDescription,
     openGraph: {
-      title: plainTitle,
+      title: title || 'Magazine',
       description: metaDescription,
       url: 'https://www.equinor.com/magazine',
       locale,
-      type: 'article',
+      type: 'website',
       siteName: 'Equinor',
-      publishedTime: publishDateTime,
-      modifiedTime: modifiedDate,
       images: openGraphImages,
     },
     alternates: {
@@ -61,7 +58,13 @@ export async function generateMetadata(
   }
 }
 
-export default async function MagazinePage({ params }: { params: Promise<{ locale: string }> }) {
+export default async function MagazinePage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ locale: string }>
+  searchParams?: Promise<{ tag?: string }>
+}) {
   const { locale } = await params
 
   if (!Flags.HAS_MAGAZINE_INDEX || locale !== 'en') {
@@ -75,12 +78,42 @@ export default async function MagazinePage({ params }: { params: Promise<{ local
   const queryParams = {
     lang,
   }
-
-  // Use magazine index query, not magazineQuery (which expects slug)
-  const { pageData } = await getPageData({
-    query: allMagazineDocuments,
+  console.log('[MagazinePage][en] Locale:', locale, 'Lang param:', lang)
+  // Fetch index (hero, tags, footer)
+  const { pageData: indexPageData } = await getPageData({
+    query: magazineIndexQuery,
     queryParams,
   })
+  console.log('[MagazinePage][en] indexPageData (raw):', indexPageData)
+  const index = Array.isArray(indexPageData) ? indexPageData[0] : indexPageData
+  console.log('[MagazinePage][en] Parsed index object keys:', index ? Object.keys(index) : null)
+  console.log('[MagazinePage][en] Index hero present?', Boolean(index?.hero))
+  console.log('[MagazinePage][en] Index magazineTags count:', index?.magazineTags?.length ?? 0)
 
-  return <MagazineRoom pageData={pageData as MagazineIndexPageType} />
+  // Fetch list of articles (by tag or all)
+  const tag = (await searchParams)?.tag
+  console.log('[MagazinePage][en] tag filter:', tag)
+  let magazineArticles: any[] = []
+  if (tag && tag !== 'all') {
+    const { data } = await getData({
+      query: getMagazineArticlesByTag(false, false),
+      queryParams: { ...(queryParams as any), tag } as any,
+    })
+    console.log('[MagazinePage][en] getMagazineArticlesByTag results count:', Array.isArray(data) ? data.length : 'n/a')
+    magazineArticles = data
+  } else {
+    const { data } = await getData({ query: allMagazineDocuments, queryParams: queryParams as any })
+    console.log('[MagazinePage][en] allMagazineDocuments results count:', Array.isArray(data) ? data.length : 'n/a')
+    magazineArticles = data
+  }
+
+  const pageData: MagazineIndexPageType = { ...(index as any), magazineArticles } as any
+  console.log('[MagazinePage][en] Composed pageData for template', {
+    hasHero: Boolean((pageData as any)?.hero),
+    tagsCount: (pageData as any)?.magazineTags?.length ?? 0,
+    articlesCount: magazineArticles?.length ?? 0,
+    indexWasArray: Array.isArray(indexPageData),
+  })
+
+  return <MagazineRoom pageData={pageData} />
 }

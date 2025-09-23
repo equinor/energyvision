@@ -28,14 +28,9 @@ const chunkArray = (array: any[] = [], chunkSize: number) => {
 }
 
 const MagazineRoom = ({ pageData }: MagazineIndexTemplateProps) => {
+    const { ingress, title, hero, magazineTags, magazineArticles, footerComponent } = pageData || {}
   const isArray = Array.isArray(pageData)
   const page = isArray ? null : (pageData as any)
-
-  const hero = page?.hero
-  const ingress = page?.ingress
-  const title = page?.title
-  const magazineTags = page?.magazineTags || []
-  const footerComponent = page?.footerComponent
 
   const resultsRef = useRef<HTMLDivElement>(null)
   const [isLoading, setIsLoading] = useState(false)
@@ -96,7 +91,7 @@ const MagazineRoom = ({ pageData }: MagazineIndexTemplateProps) => {
       )}
       {magazineTags?.length > 0 && <MagazineTagBar tags={magazineTags} />}
       <PaginationContextProvider defaultRef={resultsRef}>
-        <ul className="grid-cols-card mx-auto grid w-full scroll-mt-24 auto-rows-fr content-center justify-center gap-8 px-layout-sm py-12">
+        <ul className="mx-auto grid w-full scroll-mt-24 auto-rows-fr grid-cols-1 gap-8 px-layout-sm py-12 sm:grid-cols-2 lg:grid-cols-3">
           {isLoading &&
             Array.from({ length: 5 }, (_v, i) => i).map((item) => (
               <li key={item}>

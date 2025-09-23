@@ -2,18 +2,20 @@
 import { HeroTypes, MagazinePageSchema } from '../../types/index'
 import Teaser from '../../sections/teasers/Teaser/Teaser'
 import useSharedTitleStyles from '../../lib/hooks/useSharedTitleStyles'
-import MagazineTagBar from '@/sections/MagazineTags/MagazineTagBar'
 import { SharedBanner } from '../shared/SharedBanner'
 import SharedTitle from '../shared/SharedTitle'
 import { PageContent } from '../shared/SharedPageContent'
+import MagazineTagBar from '@/sections/MagazineTags/MagazineTagBar'
 
 type MagazinePageProps = {
   data: MagazinePageSchema
 }
 
 const MagazinePage = ({ data }: MagazinePageProps) => {
-  const { hideFooterComponent, footerComponent, tags } = data
-  const titleStyles = useSharedTitleStyles(data?.hero?.type, data?.content?.[0])
+  const { hideFooterComponent, footerComponent } = data || {}
+  const tags = (data?.tags as string[] | undefined) ?? []
+  const heroType = data?.hero?.type
+  const titleStyles = useSharedTitleStyles(heroType, data?.content?.[0])
 
   return (
     <main className="flex flex-col [:not(:has(.sticky-menu))]:pt-topbar">
@@ -21,28 +23,22 @@ const MagazinePage = ({ data }: MagazinePageProps) => {
         title={data?.title}
         hero={data?.hero}
         hideImageCaption={true}
-        {...(data.hero.type === HeroTypes.DEFAULT && {
-          tags: tags,
-        })}
+        {...(heroType === HeroTypes.DEFAULT ? { tags } : {})}
       />
       {data?.magazineTags && <MagazineTagBar tags={data?.magazineTags} />}
-      {data.hero.type !== HeroTypes.DEFAULT && (
-        <SharedTitle sharedTitle={data.title} background={titleStyles.background} />
-      )}
-      {data.hero.type !== HeroTypes.DEFAULT && (
+      {heroType !== HeroTypes.DEFAULT && <SharedTitle sharedTitle={data?.title} background={titleStyles.background} />}
+      {heroType !== HeroTypes.DEFAULT && (
         <div className="mx-auto px-layout-lg pb-6">
-          {tags && tags?.length > 0 && (
+          {tags.length > 0 && (
             <ul className="flex flex-wrap gap-y-4 divide-x-2 divide-energy-red-100">
-              {tags.map((tag: string) => {
-                return (
-                  <li
-                    key={`magazine_tag_key_${tag}`}
-                    className="inline-block pr-3 pl-3 text-sm font-medium whitespace-nowrap first:pl-0 lg:text-xs"
-                  >
-                    {tag}
-                  </li>
-                )
-              })}
+              {tags.map((tag) => (
+                <li
+                  key={`magazine_tag_key_${tag}`}
+                  className="inline-block pr-3 pl-3 text-sm font-medium whitespace-nowrap first:pl-0 lg:text-xs"
+                >
+                  {tag}
+                </li>
+              ))}
             </ul>
           )}
         </div>
