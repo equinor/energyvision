@@ -1,6 +1,5 @@
 'use client'
-import { forwardRef, HTMLAttributes, useContext, useId, useState } from 'react'
-import { PreviewContext } from '../../lib/contexts/PreviewContext'
+import { forwardRef, HTMLAttributes, useId, useState } from 'react'
 import useConsentState from '../../lib/hooks/useConsentState'
 import { CookieType } from '../../types'
 import useConsent from '../../lib/hooks/useConsent'
@@ -9,6 +8,7 @@ import RequestConsentContainer from './RequestConsentContainer'
 import { PortableTextBlock } from '@portabletext/types'
 import Blocks from '../../portableText/Blocks'
 import Transcript from '@/sections/Transcript/Transcript'
+import { useIsPresentationTool } from 'next-sanity/hooks'
 
 const calculatePadding = (aspectRatio: string): string => {
   const ratio = aspectRatio.split(':')
@@ -60,7 +60,7 @@ export const IFrame = forwardRef<HTMLDivElement, IFrameProps>(function IFrame(
   },
   ref,
 ) {
-  const { isPreview } = useContext(PreviewContext)
+  const isPreview = useIsPresentationTool()
   const [consented, setConsented] = useState(useConsent(cookiePolicy))
   const titleId = useId()
   const descriptionId = useId()

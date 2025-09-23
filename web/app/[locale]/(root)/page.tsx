@@ -45,12 +45,6 @@ export default async function Page({ params }: any) {
 
   //const router = useRouter()
 
-  //const { setIsPreview } = useContext(PreviewContext)
-
-  /*useEffect(() => {
-    setIsPreview(preview)
-  }, [setIsPreview, preview])*/
-
   const slug = pageData?.slug
   /*if (!router.isFallback && !slug && queryParams?.id) {
     return <ErrorPage pageData={pageData} />
