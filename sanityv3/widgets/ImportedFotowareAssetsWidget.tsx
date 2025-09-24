@@ -1,0 +1,293 @@
+import { Card, Grid, Flex, Spinner, Select, Button, Label } from '@sanity/ui'
+import { Feedback, useListeningQuery } from 'sanity-plugin-utils'
+import { DashboardWidgetContainer, DashboardWidget, LayoutConfig } from '@sanity/dashboard'
+import { SanityDocument } from 'sanity'
+import styled from 'styled-components'
+import { isAfter, isBefore, subDays, format, isDate } from 'date-fns'
+import { WarningOutlineIcon, WarningFilledIcon } from '@sanity/icons'
+import { useEffect, useMemo, useState } from 'react'
+
+const StyledGrid = styled(Grid)`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 340px);
+  grid-template-rows: repeat(auto-fill, 300px);
+  gap: 20px;
+  max-height: 70vh;
+  overflow: auto;
+`
+const InnerGrid = styled.div`
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+`
+const StyledImage = styled.img`
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  object-position: center;
+  aspect-ratio: 16/9;
+`
+const StyledCard = styled(Card)`
+  padding: 1.25rem 0.75rem;
+  width: 100%;
+  height: 100%;
+`
+const StyledStack = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-height: 32px;
+`
+const ExpirationDateContainer = styled.div`
+  display: flex;
+  gap: 4px;
+  align-items: center;
+`
+const FotowareLink = styled.a`
+  color: black;
+`
+const SortBar = styled.div`
+  display: flex;
+  gap: 12px;
+  background: #e3edea;
+  padding: 1.25rem 0.75rem;
+`
+const SelectWrapper = styled.div`
+  & > div {
+    width: fit-content;
+  }
+`
+const StyledLabel = styled(Label)`
+  padding: 8px 0px;
+  text-transform: none;
+`
+
+const PaginationBar = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  background: #e3edea;
+  padding: 1.25rem 0.75rem;
+`
+
+type SortTypes = 'expiration' | 'created' | 'updated'
+type SortDirections = 'asc' | 'desc'
+const CHUNK_SIZE = 12
+
+function ImportedFotowareAssetsWidget() {
+  const { data, loading, error } = useListeningQuery<SanityDocument[]>(
+    `*[_type == "sanity.imageAsset" && source.name match "fotoware*"] | order(_createdAt desc)`,
+    {
+      params: {},
+      initialValue: [],
+    },
+  )
+
+  const formattedAssets = useMemo(() => {
+    return data?.length > 0
+      ? data.map((asset: SanityDocument) => {
+          const splitDate = asset.source.name.split('_')[1]
+          const expDate = splitDate ? new Date(splitDate) : undefined
+          const expired = expDate ? isAfter(new Date(), expDate) : undefined
+          // expDate is not expired but after the margin of 30 days before expirationDate
+          const soonExpiring = expDate ? !expired && isAfter(subDays(new Date(), 30), expDate) : undefined
+          //Is valid before the margin of 30 days before expirationDate
+          const valid = expDate ? isBefore(subDays(new Date(), 30), expDate) : undefined
+          return {
+            ...asset,
+            expirationDate: expDate ? expDate : '',
+            expired,
+            soonExpiring,
+            valid,
+          }
+        })
+      : []
+  }, [data])
+
+  const [sortedAssets, setSortedAssets] = useState([])
+  const [pages, setPages] = useState<any[][]>([])
+  const [currentPage, setCurrentPage] = useState(1)
+  const [sortType, setSortType] = useState<SortTypes>('expiration')
+  const [sortDirection, setSortDirection] = useState<SortDirections>('desc')
+
+  const handleSortChange = (type: SortTypes, direction: SortDirections) => {
+    let sorted = []
+    if (type === 'expiration') {
+      const hasExpirationArray = formattedAssets
+        .filter((item) => item?.expirationDate != '')
+        .sort((a, b) => {
+          return direction === 'desc'
+            ? new Date(b.expirationDate) - new Date(a.expirationDate)
+            : new Date(a.expirationDate) - new Date(b.expirationDate)
+        })
+      const theRestArray = formattedAssets.filter((item) => item?.expirationDate === '')
+      sorted = hasExpirationArray.concat(theRestArray)
+    } else {
+      sorted = formattedAssets.sort((a, b) => {
+        if (type === 'created') {
+          return direction === 'desc'
+            ? new Date(b._createdAt) - new Date(a._createdAt)
+            : new Date(a._createdAt) - new Date(b._createdAt)
+        }
+        if (type === 'updated') {
+          return direction === 'desc'
+            ? new Date(b._updatedAt) - new Date(a._updatedAt)
+            : new Date(a._updatedAt) - new Date(b._updatedAt)
+        }
+      })
+    }
+    if (sortType !== type) {
+      setSortType(type)
+    }
+    if (sortDirection !== direction) {
+      setSortDirection(direction)
+    }
+
+    const chunks = [...Array(Math.ceil(sorted.length / CHUNK_SIZE))].map((_, i) =>
+      sorted.slice(CHUNK_SIZE * i, CHUNK_SIZE + CHUNK_SIZE * i),
+    )
+    setSortedAssets(sorted)
+    setPages(chunks)
+    setCurrentPage(1)
+  }
+  useEffect(() => {
+    if (formattedAssets?.length > 0) {
+      handleSortChange(sortType, sortDirection)
+    }
+  }, [formattedAssets])
+
+  const currentItemFirst = currentPage === 1 ? 1 : currentPage * CHUNK_SIZE - CHUNK_SIZE + 1 // First number of range of items at current page
+  const currentItemLast = currentPage === pages?.length ? sortedAssets?.length : currentPage * CHUNK_SIZE // Last number of range of items at current page
+
+  return (
+    <DashboardWidgetContainer>
+      <Card>
+        {error && <div>{error.message}</div>}
+        {!error && loading && (
+          <Card padding={4}>
+            <Flex justify="center">
+              <Spinner muted />
+            </Flex>
+          </Card>
+        )}
+        <SortBar>
+          <div>
+            <StyledLabel id="sort_label" size={5}>
+              Sort by:
+            </StyledLabel>
+            <SelectWrapper>
+              <Select
+                aria-labelledby="sort_label"
+                onChange={(event) => handleSortChange(event.target.value, sortDirection)}
+                value={sortType}
+                fontSize={[2, 2, 3, 4]}
+                padding={[3, 3, 4]}
+                space={[3, 3, 4]}
+              >
+                <option value="expiration">Expiration date</option>
+                <option value="created">Created</option>
+                <option value="updated">Updated</option>
+              </Select>
+            </SelectWrapper>
+          </div>
+          <div>
+            <StyledLabel id="sort_direction_label" size={5}>
+              Direction:
+            </StyledLabel>
+            <SelectWrapper>
+              <Select
+                aria-labelledby="sort_direction_label"
+                onChange={(event) => handleSortChange(sortType, event?.target.value)}
+                value={sortDirection}
+                fontSize={[2, 2, 3, 4]}
+                padding={[3, 3, 4]}
+                space={[3, 3, 4]}
+              >
+                <option value="asc">Ascending</option>
+                <option value="desc">Descending</option>
+              </Select>
+            </SelectWrapper>
+          </div>
+        </SortBar>
+        <StyledGrid>
+          {pages?.length > 0 ? (
+            pages[currentPage - 1]?.map((image: { expired?: string; soonExpiring?: string } & SanityDocument) => {
+              return (
+                <StyledCard key={image._id}>
+                  <InnerGrid>
+                    <StyledImage src={image.url} />
+                    <StyledStack>
+                      <div style={{ color: image.expired ? 'red' : 'orange', width: '24px', height: '24px' }}>
+                        {image.expired && <WarningFilledIcon width={24} height={24} />}
+                        {image.soonExpiring && <WarningOutlineIcon width={24} height={24} />}
+                      </div>
+                      <div>{image.title}</div>
+                      {sortType === 'created' && (
+                        <ExpirationDateContainer>
+                          Created: {format(new Date(image._createdAt), 'd. MMM yyyy mm:HH')}
+                        </ExpirationDateContainer>
+                      )}
+                      {sortType === 'updated' && (
+                        <ExpirationDateContainer>
+                          Updated: {format(new Date(image._updatedAt), 'd. MMM yyyy mm:HH')}
+                        </ExpirationDateContainer>
+                      )}
+                      {image.expirationDate && isDate(image.expirationDate) && (
+                        <ExpirationDateContainer>
+                          Expires: {format(new Date(image.expirationDate), 'd. MMM yyyy mm:HH')}
+                        </ExpirationDateContainer>
+                      )}
+                      {image.source.url && <FotowareLink href={image.source.url}>Fotoware url</FotowareLink>}
+                    </StyledStack>
+                  </InnerGrid>
+                </StyledCard>
+              )
+            })
+          ) : (
+            <Feedback>No images found</Feedback>
+          )}
+        </StyledGrid>
+        <PaginationBar>
+          <Flex direction="column" align="center">
+            <Flex direction="row" gap={4} paddingBottom={4}>
+              <Button
+                fontSize={[2, 2, 3]}
+                mode="ghost"
+                disabled={currentPage === 1}
+                onClick={() => setCurrentPage(currentPage - 1)}
+                padding={[3, 3, 4]}
+                text="Previous page"
+              />
+              <Button
+                fontSize={[2, 2, 3]}
+                mode="ghost"
+                padding={[3, 3, 4]}
+                disabled={currentPage >= pages?.length}
+                onClick={() => setCurrentPage(currentPage + 1)}
+                text="Next page"
+              />
+            </Flex>
+            {currentItemFirst !== currentItemLast
+              ? `${currentItemFirst}
+              ${' - '}
+              ${currentItemLast}
+              ${' of '}
+              ${sortedAssets?.length}
+              ${' items'}`
+              : `${currentItemFirst} ${' of '} ${sortedAssets?.length} ${' items'}`}
+          </Flex>
+        </PaginationBar>
+      </Card>
+    </DashboardWidgetContainer>
+  )
+}
+
+export function fotowareWidget(config: { layout?: LayoutConfig } = {}): DashboardWidget {
+  return {
+    name: 'fotoware-widget',
+    component: ImportedFotowareAssetsWidget,
+    layout: config.layout ?? { width: 'medium' },
+  }
+}

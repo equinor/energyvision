@@ -31,12 +31,22 @@ inputs:
   fotowareRedirectOrigin:
     description: 'Redirect Origin for Fotoware auth'
     required: true
+  fotowareRedirectUri:
+    description: 'Redirect Uri for Fotoware auth'
+    required: true
   fotowareAfExportUrl:
     description: 'Azure Function img export URL'
     required: true
   fotowareAfExportKey:
     description: 'Azure Function img export function key'
     required: true
+  fotowareAfApiAccessKey:
+    description: 'Azure Function api auth function key'
+    required: true
+  fotowareAfApiAccessUrl:
+    description: 'Azure Function api auth function key'
+    required: true
+
   environment:
     description: 'dev, preprod or prod'
     required: true
@@ -105,6 +115,8 @@ runs:
           --build-arg ARG_FOTOWARE_REDIRECT_URI="${{ inputs.fotowareRedirectUri }}" \
           --build-arg ARG_FOTOWARE_AF_EXPORT_URL="${{ inputs.fotowareAfExportUrl }}" \
           --build-arg ARG_FOTOWARE_AF_EXPORT_KEY="${{ inputs.fotowareAfExportKey }}" \
+          --build-arg ARG_FOTOWARE_AF_API_ACCESS_KEY="${{ inputs.fotowareAfApiAccessKey }}" \
+          --build-arg ARG_FOTOWARE_AF_API_ACCESS_URL="${{ inputs.fotowareAfApiAccessUrl }}" \
           --build-arg ARG_SCREEN9_ACCOUNT_ID="${{ inputs.screen9accountId }}" \
           --build-arg ARG_SCREEN9_TOKEN="${{ inputs.screen9token }}" \
           --file sanityv3/Dockerfile \

@@ -1,4 +1,5 @@
 import { visionTool } from '@sanity/vision'
+import { dashboardTool } from '@sanity/dashboard'
 import { media } from 'sanity-plugin-media'
 import {
   ConfigContext,
@@ -25,8 +26,8 @@ import { schemaTypes } from './schemas'
 import { initialValueTemplates } from './initialValueTemplates'
 import { CharCounterEditor } from './schemas/components/CharCounterEditor'
 import { DeleteTranslationAction } from './actions/customDelete/DeleteTranslationAction'
+import { FotowareAssetSource } from './plugins/asset-source-fotoware-v2'
 import { documentInternationalization } from '@sanity/document-internationalization'
-import { FotowareAssetSource } from './plugins/asset-source-fotoware'
 import { BrandmasterAssetSource } from './plugins/asset-source-brandmaster'
 import { SetAndPublishAction } from './actions/CustomPublishAction'
 import { dataset, projectId } from './sanity.client'
@@ -42,6 +43,7 @@ import './customStyles.css'
 import { partialStudioTheme } from './studioTheme'
 import { copyAction } from './actions/fieldActions/CustomCopyFieldAction'
 import CustomDocumentInternationalizationMenu from './schemas/components/CustomDocumentInternationalizationMenu'
+import { fotowareWidget } from './widgets/ImportedFotowareAssetsWidget'
 
 //Table plugin
 import { table } from './plugins/importTable'
@@ -105,6 +107,10 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret = fals
       title: 'Desk',
     }),
     media(),
+    dashboardTool({
+      title: 'Fotoware assets',
+      widgets: [fotowareWidget()],
+    }),
     datasetParam === 'global-development' && visionTool(),
     FotowareAssetSource(),
     BrandmasterAssetSource(),
