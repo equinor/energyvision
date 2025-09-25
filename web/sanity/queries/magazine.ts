@@ -60,7 +60,7 @@ export const magazineQuery = /* groq */ `
       }
     },
     hideFooterComponent,
-}${querySuffixForNewsAndMagazine}`
+}[0]${querySuffixForNewsAndMagazine}`
 
 export const magazineIndexQuery = /* groq */ `
  ${functions}

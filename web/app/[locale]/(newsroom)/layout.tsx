@@ -1,3 +1,4 @@
+// @ts-ignore: missing type declarations for side-effect import of global CSS
 import '../../globals.css'
 import { NextIntlClientProvider, hasLocale } from 'next-intl'
 import { notFound } from 'next/navigation'
