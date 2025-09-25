@@ -1,8 +1,8 @@
 import type { DesignOptions, ImageWithCaptionData } from '../../types/index'
 import { FigureCaption } from '@/core/FigureCaption/FigureCaption'
-import { BackgroundContainer } from '@/core/Backgrounds'
 import Image, { ImageRatioKeys } from '../../core/SanityImage/SanityImage'
 import envisTwMerge from '../../twMerge'
+import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
 
 export type FigureData = {
   type: string
@@ -27,14 +27,10 @@ const Figure = ({ data, anchor, className = '' }: FigureProps) => {
   // With previews in Sanity, we need to support work in progress figures
   if (!figure?.image) return null
   const { image, caption, attribution } = figure
+  const { bg, dark } = getBgAndDarkFromBackground(designOptions)
 
   return (
-    <BackgroundContainer
-      background={designOptions?.background}
-      id={anchor}
-      className={envisTwMerge(``, className)}
-      as="figure"
-    >
+    <figure id={anchor} className={envisTwMerge(`${bg} ${dark ? 'dark' : ''}`, className)}>
       <Image
         image={image}
         {...(aspectRatio && {
@@ -53,7 +49,7 @@ const Figure = ({ data, anchor, className = '' }: FigureProps) => {
           {attribution && <div>{attribution}</div>}
         </FigureCaption>
       )}
-    </BackgroundContainer>
+    </figure>
   )
 }
 
