@@ -103,6 +103,7 @@ export function SearchBox({
           autoComplete="off"
           autoCorrect="off"
           autoCapitalize="off"
+          autoFocus={true}
           placeholder={placeholder ?? intl('search')}
           spellCheck={false}
           maxLength={512}
