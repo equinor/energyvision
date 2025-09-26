@@ -19,7 +19,16 @@ export const getPageData = cache(async (page: { query: string; queryParams: Quer
   return { pageData: pageResults.data }
 })
 
-export const getHeaderAndFooterData = async (queryParams: QueryParams) => {
+export const getFooterData = async (lang: string) => {
+  const footerResults = await sanityFetch({
+    query: footerQuery,
+    params: {
+      lang: lang ?? 'en_GB',
+    },
+  })
+  return footerResults.data
+}
+export const getHeaderData = async (queryParams: QueryParams) => {
   const menuQuery = Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery
   const menuResults = await sanityFetch({
     query: menuQuery,
@@ -28,15 +37,7 @@ export const getHeaderAndFooterData = async (queryParams: QueryParams) => {
       slug: queryParams?.slug ?? '/',
     },
   })
-  const footerResults = await sanityFetch({
-    query: footerQuery,
-    params: {
-      lang: queryParams?.lang ?? 'en_GB',
-      slug: queryParams?.slug ?? '/',
-    },
-  })
-
-  return { menuData: menuResults.data, footerData: footerResults.data }
+  return menuResults.data
 }
 
 //export const getPageDataForHeader = async (queryParams: QueryParams) => {

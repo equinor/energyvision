@@ -10,7 +10,7 @@ import DraftModeToast from '@/sections/DraftMode/DraftModeToast'
 import { VisualEditing } from 'next-sanity'
 import { SanityLive } from '@/sanity/lib/live'
 import { handleError } from '../../client-utils'
-import { getHeaderAndFooterData } from '@/sanity/lib/fetchData'
+import { getHeaderData } from '@/sanity/lib/fetchData'
 import { getNameFromLocale } from '@/lib/localization'
 import Header from '@/sections/Header/Header'
 import Footer from '@/sections/Footer/Footer'
@@ -36,40 +36,17 @@ export default async function LocaleLayout({ children, params }: { children: Rea
   if (!hasLocale(routing.locales, locale) || !Flags.HAS_MAGAZINE) {
     notFound()
   }
-  const { menuData, footerData } = await getHeaderAndFooterData({ slug, lang: getNameFromLocale(locale) })
+  const { menuData, footerData } = await getHeaderData({ slug, lang: getNameFromLocale(locale) })
   const slugs = [
     { slug: '/magazine', lang: 'en_GB' },
     { slug: '/no/magasin', lang: 'nb_NO' },
   ]
 
   return (
-    <html
-      lang={locale}
-      className={`${equinorRegular.className} ${equinorVariableWoff.className} ${equinorVariableWoff2.className}`}
-    >
-      <head>
-        {/*eslint-disable-next-line react/no-unknown-property*/}
-        <link rel="stylesheet" precedence="default" href="https://cdn.eds.equinor.com/font/equinor-font.css" />
-      </head>
-      <body>
-        {/* The <Toaster> component is responsible for rendering toast notifications used in /app/client-utils.ts and /sections/DraftMode/DraftModeToast.tsx */}
-        <Toaster />
-        {isDraftMode && (
-          <>
-            <DraftModeToast />
-            <VisualEditing />
-          </>
-        )}
-        {/* The <SanityLive> component is responsible for making all sanityFetch calls in your application live, so should always be rendered. */}
-        <SanityLive onError={handleError} />
-        <NextIntlClientProvider>
-          <div className={`[:not(:has(.sticky-menu))]:pt-topbar`}>
-            <Header slugs={slugs} menuData={menuData} />
-            {children}
-            <Footer footerData={footerData} />
-          </div>
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <div className={`[:not(:has(.sticky-menu))]:pt-topbar`}>
+      <Header slugs={slugs} menuData={menuData} />
+      {children}
+      <Footer footerData={footerData} />
+    </div>
   )
 }
