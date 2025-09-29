@@ -15,6 +15,8 @@ import Footer from '@/sections/Footer/Footer'
 import Script from 'next/script'
 import { SiteImprove } from './SiteImprove'
 import { GoogleTagManagerHead } from './GTMHead'
+import { Suspense } from 'react'
+import { NavigationEvents } from './NavigationEvents'
 
 const equinorRegular = localFont({
   src: '../fonts/equinor/Equinor-Regular.woff',
@@ -59,6 +61,9 @@ export default async function LocaleLayout({ children, params }: { children: Rea
         <link rel="stylesheet" precedence="default" href="https://cdn.eds.equinor.com/font/equinor-font.css" />
       </head>
       <body>
+        <Suspense fallback={null}>
+          <NavigationEvents />
+        </Suspense>
         {slug !== 'search' ? (
           <>
             {/* The <Toaster> component is responsible for rendering toast notifications used in /app/client-utils.ts and /sections/DraftMode/DraftModeToast.tsx */}
