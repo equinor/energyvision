@@ -32,7 +32,7 @@ const PastEventsListItem = forwardRef<HTMLAnchorElement, PastEventsListItemProps
       className={twMerge(`group grid h-full w-full grid-cols-[18%_auto] flex-col dark:text-white-100`, className)}
       {...rest}
     >
-      <div className="flex aspect-square h-full w-full items-center justify-center bg-norwegian-woods-100 p-2 text-white-100">
+      <div className="flex h-full w-full items-center justify-center bg-norwegian-woods-100 p-2 text-white-100">
         {start && (
           <div className="flex flex-col items-center justify-start gap-4 text-center">
             <span className="text-md">{dayMonth}</span>
