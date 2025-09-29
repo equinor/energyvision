@@ -1,4 +1,4 @@
-import { getQueryFromSlug } from '../../../../lib/queryFromSlug'
+import { getQueryFromSlug } from '../../../../../lib/queryFromSlug'
 import dynamic from 'next/dynamic'
 import { notFound } from 'next/navigation'
 import { getPageData } from '@/sanity/lib/fetchData'
