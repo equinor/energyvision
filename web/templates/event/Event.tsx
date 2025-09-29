@@ -1,59 +1,66 @@
 'use client'
-import { BackgroundContainer } from '@/core/Backgrounds'
-import { FormattedDate, FormattedTime } from '@/core/FormattedDateTime'
+import { FormattedTime } from '@/core/FormattedDateTime'
 import { toPlainText } from '@portabletext/react'
 import { getEventDates } from '../../common/helpers/dateUtilities'
 import Promotion from '../../sections/promotions/PromotionsBlock'
 import type { PortableTextBlock } from '@portabletext/types'
-import Seo from '../../pageComponents/shared/Seo'
 import type { EventSchema } from '../../types/index'
 import { EventJsonLd } from 'next-seo'
 import { twMerge } from 'tailwind-merge'
 import RelatedContent from '../../pageComponents/shared/RelatedContent'
-import { useTranslations } from 'next-intl'
-import { Typography } from '@/core/Typography'
+import { useTranslations, useLocale } from 'next-intl'
 import AddToCalendar from '@/pageComponents/topicPages/AddToCalendar'
 import ContactList from '@/pageComponents/shared/ContactList'
 import Blocks from '@/portableText/Blocks'
+import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
 
 export default function Event({ data }: { data: EventSchema }): JSX.Element {
   const { title } = data
   const t = useTranslations()
+  const locale = useLocale()
   const { location, ingress, content, promotedPeople, relatedLinks, contactList, eventDate } = data.content
 
   const plainTitle = title ? toPlainText(title as PortableTextBlock[]) : ''
   const { start, end } = getEventDates(eventDate)
+
+  const { bg, dark } = getBgAndDarkFromBackground({ background: { backgroundColor: 'Moss Green Light' } })
+
+  // Day-month-year formatter (forces en-GB order for English locales)
+  const dayMonthYearFormatter = new Intl.DateTimeFormat(locale.startsWith('en') ? 'en-GB' : locale, {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  })
+
   return (
     <>
       {eventDate?.date && start && end && (
         <EventJsonLd
           name={plainTitle}
-          startDate={start.toDateString()}
-          endDate={end.toDateString()}
+          startDate={start.toISOString()}
+          endDate={end.toISOString()}
           location={location}
         />
       )}
       <main className="flex flex-col [:not(:has(.sticky-menu))]:pt-topbar">
         <article>
-          <BackgroundContainer className="px-layout-md py-32" background={{ backgroundColor: 'Moss Green Light' }}>
+          <div className={`${bg} ${dark ? 'dark' : ''} px-layout-md py-32`}>
             <div className="mx-auto max-w-[1186px]">
-              {title && (
-                <Typography as="h1" variant="3xl">
-                  {plainTitle}
-                </Typography>
-              )}
+              {title && <Blocks as="h1" variant="3xl" value={title} />}
               {start && (
-                <div className="mt-7 mb-5 text-xl text-norwegian-woods-100">
-                  <FormattedDate datetime={start.toDateString()} />
-                </div>
+                <span className="mt-7 mb-5 inline-block text-xl text-norwegian-woods-100">
+                  <time suppressHydrationWarning dateTime={start.toISOString()}>
+                    {dayMonthYearFormatter.format(start)}
+                  </time>
+                </span>
               )}
 
               <div className="flex-center mb-2 flex gap-1 text-norwegian-woods-100">
                 {start && end ? (
                   <>
-                    <FormattedTime datetime={start.toDateString()} />
+                    <FormattedTime datetime={start.toISOString()} />
                     <span>-</span>
-                    <FormattedTime datetime={end.toDateString()} showTimezone />
+                    <FormattedTime datetime={end.toISOString()} showTimezone />
                   </>
                 ) : (
                   <span>{t('tba')}</span>
@@ -63,11 +70,11 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
               {location && <div className="mb-4 text-norwegian-woods-100">{location}</div>}
               <AddToCalendar eventDate={eventDate} location={location} title={plainTitle} />
             </div>
-          </BackgroundContainer>
+          </div>
           {(ingress || content) && (
-            <div className={`mt-16 px-0 pb-page-content md:px-8 lg:px-0`}>
-              {ingress && <Blocks variant="ingress" value={ingress} className="mx-auto px-layout-lg pb-16" />}
-              {content && <Blocks group="article" value={content} className="mx-auto" />}
+            <div className={`mx-auto mt-16 px-layout-lg pb-page-content`}>
+              {ingress && <Blocks variant="ingress" value={ingress} className="pb-16" />}
+              {content && <Blocks value={content} />}
             </div>
           )}
           {promotedPeople?.people && promotedPeople?.people.length > 0 && (
