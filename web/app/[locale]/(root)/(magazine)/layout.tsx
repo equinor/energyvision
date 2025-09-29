@@ -1,8 +1,8 @@
 // @ts-ignore: missing type declarations for side-effect import of global CSS
-import '../../globals.css'
+import '../../../globals.css'
 import { hasLocale } from 'next-intl'
 import { notFound } from 'next/navigation'
-import { routing } from '../../../i18n/routing'
+import { routing } from '../../../../i18n/routing'
 import { getHeaderData } from '@/sanity/lib/fetchData'
 import { getNameFromLocale } from '@/lib/localization'
 import Header from '@/sections/Header/Header'

@@ -32,6 +32,6 @@ export async function generateMetadata(
   }
 }
 
-export default async function LocaleLayout() {
-  return null
+export default async function LocaleLayout({ children }: { children: React.ReactNode }) {
+  return <>{children}</>
 }

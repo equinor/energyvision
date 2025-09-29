@@ -34,7 +34,6 @@ export const getHeaderData = async (queryParams: QueryParams) => {
     query: menuQuery,
     params: {
       lang: queryParams?.lang ?? 'en_GB',
-      slug: queryParams?.slug ?? '/',
     },
   })
   return menuResults.data

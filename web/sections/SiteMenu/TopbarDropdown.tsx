@@ -15,7 +15,7 @@ export const TopbarDropdown = forwardRef<HTMLDivElement, TopbarDropdownProps>(fu
     <div
       ref={ref}
       className={twMerge(
-        `${variant === 'dark' ? 'dark slate-blue-95' : 'white-100'} fixed inset-0 overflow-auto`,
+        `${variant === 'dark' ? 'dark bg-slate-blue-95' : 'bg-white-100'} fixed inset-0 overflow-auto`,
         className,
       )}
       {...rest}
