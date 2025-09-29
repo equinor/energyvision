@@ -1,5 +1,4 @@
 'use client'
-import { Typography } from '@/core/Typography'
 import { EventCardData } from '../../../types/index'
 import { forwardRef, HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
@@ -8,6 +7,7 @@ import { BaseLink } from '@/core/Link'
 import { Icon } from '@equinor/eds-core-react'
 import { world } from '@equinor/eds-icons'
 import Blocks from '@/portableText/Blocks'
+import { useLocale } from 'next-intl'
 
 export type PastEventsListItemProps = {
   event: EventCardData
@@ -20,6 +20,10 @@ const PastEventsListItem = forwardRef<HTMLAnchorElement, PastEventsListItemProps
 ) {
   const { title, eventDate, location, slug } = event
   const { start } = getEventDates(eventDate)
+  const locale = useLocale()
+
+  const dayMonth = start ? new Intl.DateTimeFormat(locale, { day: '2-digit', month: 'short' }).format(start) : ''
+  const year = start ? new Intl.DateTimeFormat(locale, { year: 'numeric' }).format(start) : ''
 
   return (
     <BaseLink
@@ -29,19 +33,12 @@ const PastEventsListItem = forwardRef<HTMLAnchorElement, PastEventsListItemProps
       {...rest}
     >
       <div className="flex aspect-square h-full w-full items-center justify-center bg-norwegian-woods-100 p-2 text-white-100">
-        {
-          start && ''
-          /*<FormattedDateParts value={start} year="numeric" month="short" day="2-digit">
-            {(parts) => {
-              return (
-                <div className="flex flex-col gap-4 justify-start items-center text-center">
-                  <span className="text-md">{`${parts[0].value} ${parts[2].value}`}</span>
-                  <span className="text-sm">{parts[4].value}</span>
-                </div>
-              )
-            }}
-          </FormattedDateParts>*/
-        }
+        {start && (
+          <div className="flex flex-col items-center justify-start gap-4 text-center">
+            <span className="text-md">{dayMonth}</span>
+            <span className="text-sm">{year}</span>
+          </div>
+        )}
       </div>
       <div className="px-6 py-6">
         <Blocks
@@ -58,9 +55,7 @@ const PastEventsListItem = forwardRef<HTMLAnchorElement, PastEventsListItemProps
               style={{ fontSize: 'var(--typeScale-0)' }}
               className="text-norwegian-woods-100"
             />
-            <Typography variant="body" className="max-w-text text-sm text-pretty">
-              {location}
-            </Typography>
+            <p className="max-w-text pl-3 text-sm text-pretty">{location}</p>
           </div>
         )}
       </div>
