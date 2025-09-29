@@ -19,13 +19,13 @@ import { Suspense } from 'react'
 import { NavigationEvents } from '../NavigationEvents'
 
 const equinorRegular = localFont({
-  src: '../fonts/equinor/Equinor-Regular.woff',
+  src: '../../fonts/equinor/Equinor-Regular.woff',
 })
 const equinorVariableWoff = localFont({
-  src: '../fonts/equinor/EquinorVariable-VF.woff',
+  src: '../../fonts/equinor/EquinorVariable-VF.woff',
 })
 const equinorVariableWoff2 = localFont({
-  src: '../fonts/equinor/EquinorVariable-VF.woff2',
+  src: '../../fonts/equinor/EquinorVariable-VF.woff2',
 })
 
 type Params = Promise<{ locale: string; slug?: string }>
