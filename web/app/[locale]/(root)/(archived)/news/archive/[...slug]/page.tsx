@@ -1,5 +1,5 @@
 import { Flags } from '@/common/helpers/datasetHelpers'
-import archivedNews from '../../../../../../lib/archive/archivedNewsPaths.json'
+import archivedNews from '../../../../../../../lib/archive/archivedNewsPaths.json'
 import { languages } from '@/languages'
 import { notFound } from 'next/navigation'
 import ArchivedNews from '@/templates/archivedNews/ArchivedNews'
