@@ -8,7 +8,7 @@ import type { EventSchema } from '../../types/index'
 import { EventJsonLd } from 'next-seo'
 import { twMerge } from 'tailwind-merge'
 import RelatedContent from '../../pageComponents/shared/RelatedContent'
-import { useTranslations, useLocale } from 'next-intl'
+import { useTranslations, useFormatter } from 'next-intl'
 import AddToCalendar from '@/pageComponents/topicPages/AddToCalendar'
 import ContactList from '@/pageComponents/shared/ContactList'
 import Blocks from '@/portableText/Blocks'
@@ -17,20 +17,13 @@ import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
 export default function Event({ data }: { data: EventSchema }): JSX.Element {
   const { title } = data
   const t = useTranslations()
-  const locale = useLocale()
+  const format = useFormatter()
   const { location, ingress, content, promotedPeople, relatedLinks, contactList, eventDate } = data.content
 
   const plainTitle = title ? toPlainText(title as PortableTextBlock[]) : ''
   const { start, end } = getEventDates(eventDate)
 
   const { bg, dark } = getBgAndDarkFromBackground({ background: { backgroundColor: 'Moss Green Light' } })
-
-  // Day-month-year formatter (forces en-GB order for English locales)
-  const dayMonthYearFormatter = new Intl.DateTimeFormat(locale.startsWith('en') ? 'en-GB' : locale, {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  })
 
   return (
     <>
@@ -50,7 +43,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
               {start && (
                 <span className="mt-7 mb-5 inline-block text-xl text-norwegian-woods-100">
                   <time suppressHydrationWarning dateTime={start.toISOString()}>
-                    {dayMonthYearFormatter.format(start)}
+                    {format.dateTime(start, { dateStyle: 'long' })}
                   </time>
                 </span>
               )}
@@ -58,9 +51,9 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
               <div className="flex-center mb-2 flex gap-1 text-norwegian-woods-100">
                 {start && end ? (
                   <div className={`flex h-full items-center gap-1 py-2`}>
-                    <FormattedTime datetime={eventDate?.startTime} />
+                    <FormattedTime datetime={start} />
                     {`-`}
-                    <FormattedTime datetime={eventDate?.endTime} showTimezone />
+                    <FormattedTime datetime={end} showTimezone />
                   </div>
                 ) : (
                   <span>{t('tba')}</span>
