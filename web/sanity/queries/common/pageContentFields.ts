@@ -1,6 +1,6 @@
 import gridContentFields from '../gridContentFields'
 import { iframeCarouselFields } from '../iframeCarouselFields'
-import { tableFields } from '../table'
+import { importTableFields, tableV2Fields } from '../table'
 import { videoPlayerCarouselFields } from '../videoPlayerCarouselFields'
 import { videoPlayerFields } from '../videoPlayerFields'
 import downloadableFileFields from './actions/downloadableFileFields'
@@ -523,8 +523,11 @@ _type == "keyNumbers" =>{
   _type == "videoPlayerCarousel" => {
     ${videoPlayerCarouselFields}
   },
-  _type == "table" => {
-    ${tableFields}
+    _type == "tableV2" => {
+    ${tableV2Fields}
+  },
+    _type == "importTable" => {
+    ${importTableFields}
   },
   _type == "cardsList" => {
     "type": _type,

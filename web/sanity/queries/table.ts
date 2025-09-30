@@ -1,9 +1,6 @@
-import downloadableFileFields from './common/actions/downloadableFileFields'
-import downloadableImageFields from './common/actions/downloadableImageFields'
-import background from './common/background'
 import markDefs from './common/blockEditorMarks'
 
-export const tableFields = /* groq */ `
+export const tableV2Fields = /* groq */ `
   "type": _type,
   "id": _key,
   title[]{
@@ -14,32 +11,47 @@ export const tableFields = /* groq */ `
     ...,
     ${markDefs},
   },
+  tableCaption,
   tableHeaders[]{
     "id": _key,
+    formatAsDate,
     headerCell[]{
       ...,
       ${markDefs},
     }
   },
-  tableRows[]{
+  rows[]{
     "id": _key,
-    row[] {
+    cells[] {
       "type": _type,
       "id": _key,
-      "text": tableRichText[] {
+      content[]{
         ...,
         ${markDefs}
       },
-      label,
-      ...links::getLinkFields(link[0]),
-      ${downloadableFileFields},
-      ${downloadableImageFields},
-      ...
     },
   },
-  "designOptions": {
-    "theme": coalesce(lower(theme.title), 'grey'),
-    height,
-    ${background}
-  }
+  useBorder,
+  theme,
+  useFullContainerWidth,
+  useInnerContentWidth,
+  reducePaddingBottom,
+  noPaddingTop
+`
+
+export const importTableFields = /* groq */ `
+  "type": _type,
+  "id": _key,
+  title[]{
+    ...,
+    ${markDefs},
+  },
+  ingress[]{
+    ...,
+    ${markDefs},
+  },
+  tableCaption,
+  "rows": importedTable.rows,
+  useBorder,
+  theme
 `
