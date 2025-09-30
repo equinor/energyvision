@@ -15,7 +15,7 @@ import { metaTitleSuffix } from '@/languages'
 import { Metadata, ResolvingMetadata } from 'next'
 
 export function generateStaticParams() {
-  return Flags.HAS_NEWSROOM ? [{ locale: 'en' }] : []
+  return Flags.HAS_NEWSROOM ? [{ locale: 'en-GB' }] : []
 }
 
 export async function generateMetadata(
@@ -89,7 +89,7 @@ export default async function NewsPage({ params }: { params: Promise<{ locale: s
   // See https://github.com/vercel/next.js/discussions/18485
   // Only build when newsroom allowed, satellites has english
 
-  if (!Flags.HAS_NEWSROOM || locale !== 'en') {
+  if (!Flags.HAS_NEWSROOM || locale !== 'en-GB') {
     notFound()
   }
 
