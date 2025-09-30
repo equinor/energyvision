@@ -1,3 +1,4 @@
+import { TeaserData } from '@/sections/teasers/Teaser/Teaser'
 import {
   ImageWithAlt,
   ImageWithCaptionData,
@@ -9,7 +10,6 @@ import {
   SeoData,
   HeroType,
   ContentType,
-  TeaserData,
   SubMenuGroupData,
   IFrameData,
   DesignOptions,

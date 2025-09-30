@@ -67,9 +67,10 @@
 
   --leading-text: 2.3rem;
   --leading-inherit: inherit;
-  --leading-earthy: 1.2;
+  --leading-lofty: 1.02; /* 49.7px h3 large screen */
+  --leading-earthy: 1.172; /* 57.1828px h2 large screen */
   --leading-misty: 1.25;
-  --leading-cloudy: 1.35;
+  --leading-cloudy: 1.4; /*68.3071px h1 larger screen */
   --leading-planetary: 1.5;
 
   --scale-99: 0.99;

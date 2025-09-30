@@ -43,6 +43,7 @@ _type == "keyNumbers" =>{
     "designOptions": {
       ${background},
       "imagePosition": coalesce(imagePosition, 'left'),
+      containImage,
       imageSize,
     },
     "image": image {

@@ -12,7 +12,6 @@ type TopicPageProps = {
 
 const TopicPage = ({ data }: TopicPageProps) => {
   const titleStyles = useSharedTitleStyles(data?.hero?.type, data?.content?.[0])
-  console.log('TopicPage titleStyles', titleStyles)
   const { breadcrumbs } = data
 
   return (

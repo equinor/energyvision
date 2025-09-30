@@ -18,6 +18,7 @@ import { LoopingVideoData } from '@/sections/Hero/LoopingVideo'
 import { FullWidthVideoProps } from '@/sections/FullWidthVideo/FullWidthVideo'
 import { VideoPlayerCarouselData } from '@/sections/VideoPlayerCarousel/VideoPlayerCarousel'
 import { VideoPlayerBlockProps } from '@/sections/VideoPlayerBlock/VideoPlayerBlock'
+import { TeaserData } from '@/sections/teasers/Teaser/Teaser'
 
 export type IntlData = {
   locale: string
@@ -111,21 +112,6 @@ export type CallToActionData = {
   type: string
   id: string
   action: LinkData
-}
-
-export type TeaserData = {
-  type: string
-  id: string
-  title: PortableTextBlock[]
-  text: PortableTextBlock[]
-  overline?: string
-  isBigText?: boolean
-  image: ImageWithAlt
-  actions?: LinkData[]
-  designOptions: DesignOptions & {
-    imagePosition?: 'left' | 'right'
-    imageSize?: 'full' | 'small'
-  }
 }
 
 export type TextTeaserData = {

@@ -158,7 +158,7 @@ export default {
     {
       name: 'imageSize',
       title: 'Image size',
-      description: 'Select whether the image should be full size or have padding around it (SVG only)',
+      description: 'Set if image/svg should be full container width or with padding around it',
       type: 'string',
       fieldset: 'design',
       components: {
@@ -174,6 +174,13 @@ export default {
           )
         },
       },
+    },
+    {
+      title: 'Contain image/svg',
+      description: 'Maintain aspect ratio and fit within container. Dont clip if bad fit',
+      name: 'containImage',
+      type: 'boolean',
+      fieldset: 'design',
     },
     {
       title: 'Background',

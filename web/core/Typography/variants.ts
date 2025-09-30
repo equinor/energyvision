@@ -1,13 +1,13 @@
 const variants = {
   heading: {
     unstyled: '',
-    h1: 'text-3xl leading-earthy pb-11 my-0',
+    h1: 'text-3xl leading-cloudy pb-11 my-0',
     //many places has gap-6 + mb-2 so pb-8
     //Teaser isBigText was set to 2xl...
     //TextBlock isBigText set to 3xl
     // isBigText set to common pattern 2xl now with classname mb-2 leading-cloudy
-    h2: `text-2xl leading-cloudy pb-8 my-0`,
-    h3: `text-lg pb-4 my-0`, //needs pt and pb?
+    h2: `text-2xl leading-earthy pb-8 my-0`,
+    h3: `text-lg leading-lofty pb-4 my-0`, //needs pt and pb?
     h4: 'text-lg pb-0',
     h5: 'text-md pb-0',
     h6: 'text-base pb-0',
@@ -15,12 +15,12 @@ const variants = {
     xs: 'text-xs leading-earthy',
     sm: 'text-sm',
     base: 'text-base',
-    md: 'text-md',
-    lg: 'text-lg',
+    md: 'text-md leading-lofty pb-2',
+    lg: 'text-lg leading-lofty pb-4',
     //why is xl for most sections/blocks? is h2 really text-xl and not 2xl?
-    xl: 'text-xl',
-    '2xl': 'text-2xl leading-cloudy',
-    '3xl': 'text-3xl leading-earthy',
+    xl: 'text-xl leading-earthy pb-6',
+    '2xl': 'text-2xl leading-earthy pb-6',
+    '3xl': 'text-3xl leading-cloudy',
     '4xl': 'text-4xl leading-cloudy',
     '5xl': 'text-5xl leading-cloudy',
     '8xl': 'text-5xl lg:text-6xl 2xl:text-8xl leading-cloudy lg:leading-cloudy 2xl:leading-cloudy ',

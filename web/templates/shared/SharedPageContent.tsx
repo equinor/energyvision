@@ -240,7 +240,7 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
       `Applying top spacing: ${topSpacingClassName} to ${c?.type} with title ${Array.isArray(c?.title) ? toPlainText(c?.title) : c?.title}`,
     ) */
     const spacingClassName = `${topSpacingClassName} pb-page-content`
-    console.log('c.type', c.type)
+
     switch (c.type) {
       case 'teaser':
         return <Teaser key={c.id} data={c as TeaserData} anchor={anchorReference} />

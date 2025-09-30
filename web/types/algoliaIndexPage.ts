@@ -2,7 +2,6 @@ import { InstantSearchServerState } from 'react-instantsearch'
 import type {
   FooterColumns,
   IntlData,
-  TeaserData,
   HeroType,
   ImageWithCaptionData,
   SeoData,
@@ -14,6 +13,7 @@ import type {
 import { PortableTextBlock } from '@portabletext/types'
 import { SanityImageObject } from '@sanity/image-url/lib/types/types'
 import { SearchResponse } from 'instantsearch.js'
+import { TeaserData } from '@/sections/teasers/Teaser/Teaser'
 
 export type AlgoliaIndexPageType = {
   serverState?: InstantSearchServerState
