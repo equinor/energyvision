@@ -11,7 +11,8 @@ import { hasLocale } from 'next-intl'
 import { routing } from '@/i18n/routing'
 
 const getPageData = cache(async (params: any) => {
-  const { locale, slug: pagePathArray } = await params
+  const { locale: routeLocale, slug: pagePathArray } = await params
+  const locale = routeLocale == 'en-GB' ? 'en' : routeLocale
   if (!Flags.HAS_ARCHIVED_NEWS) return { notFound: true }
 
   const pagePath = pagePathArray.join('/')
