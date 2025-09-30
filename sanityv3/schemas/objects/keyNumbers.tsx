@@ -48,9 +48,8 @@ export default {
     },
     {
       name: 'useHorizontalScroll',
-      title: 'Use horizontal scroll',
-      description:
-        'When this is enabled, the key numbers will use horizontal scroll if the amount of content is greater than the screen size allows. Only for mobiles.',
+      title: 'Show as carousel',
+      description: 'Displays the key numbers in a scrollable carousel',
       type: 'boolean',
       initialValue: false,
     },

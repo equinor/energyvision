@@ -1,12 +1,19 @@
-import type { CardData, PeopleCardData, EventCardData, EventPromotionSettings } from '../../types/index'
+import type { CardData, PeopleCardData, EventCardData } from '../../types/index'
 import MultipleEventCards from './MultipleEventCards'
 
 import PeopleCard from '@/sections/cards/PeopleCard/PeopleCard'
 import { EventCard } from '@/sections/cards/EventCard'
-import { closestIndexTo } from 'date-fns'
 import PromotionCard from '@/sections/cards/PromotionCard/PromotionCard'
 import { twMerge } from 'tailwind-merge'
-import { PromotionType } from './PromotionsBlock'
+import {
+  EventPromotion,
+  MagazinePromotion,
+  NewsPromotion,
+  PeoplePromotion,
+  PromotionType,
+  TopicPromotion,
+} from './PromotionsBlock'
+import PastEvents from './pastEvents/PastEvents'
 
 type CardProps = CardData | PeopleCardData | EventCardData
 
@@ -14,15 +21,14 @@ const MultiplePromotions = ({
   data,
   variant,
   hasSectionTitle,
-  eventPromotionSettings,
   labelledbyId,
 }: {
-  data: CardData[] | PeopleCardData[] | EventCardData[]
+  data: EventPromotion | MagazinePromotion | TopicPromotion | NewsPromotion | PeoplePromotion
   variant: PromotionType
   hasSectionTitle: boolean
   labelledbyId?: string
-  eventPromotionSettings?: EventPromotionSettings
 }) => {
+  const { promotions = [] } = data
   const getCard = (data: CardProps) => {
     switch (data.type) {
       case 'news':
@@ -59,38 +65,29 @@ const MultiplePromotions = ({
     }
   }
 
-  let closestToTodayIndex = undefined
-  if (
-    variant === 'promoteEvents' &&
-    (eventPromotionSettings?.promoteSingleUpcomingEvent || eventPromotionSettings?.upcomingEventsCount === 1)
-  ) {
-    const events = data as EventCardData[]
-    closestToTodayIndex = closestIndexTo(
-      new Date(),
-      events?.map((event) => new Date(event?.eventDate?.date)),
-    )
-  }
-
   if (variant === 'promoteEvents') {
     return (
       <>
-        {typeof closestToTodayIndex === 'number' &&
-        closestToTodayIndex >= 0 &&
-        (eventPromotionSettings?.promoteSingleUpcomingEvent || eventPromotionSettings?.upcomingEventsCount === 1) ? (
-          <EventCard
-            data={data[closestToTodayIndex] as EventCardData}
-            hasSectionTitle={hasSectionTitle}
-            variant="single"
-            className="light"
-          />
+        {(data as EventPromotion)?.promotePastEvents ? (
+          <PastEvents events={data?.promotions as EventCardData[]} hasSectionTitle={hasSectionTitle} />
         ) : (
-          <MultipleEventCards
-            data={data as EventCardData[]}
-            hasSectionTitle={hasSectionTitle}
-            eventPromotionSettings={eventPromotionSettings}
-            renderScroll={false}
-            labelledbyId={labelledbyId}
-          />
+          <>
+            {promotions?.length === 1 ? (
+              <EventCard
+                data={promotions[0] as EventCardData}
+                hasSectionTitle={hasSectionTitle}
+                variant="single"
+                className="light"
+              />
+            ) : (
+              <MultipleEventCards
+                data={promotions as EventCardData[]}
+                hasSectionTitle={hasSectionTitle}
+                renderScroll={false}
+                labelledbyId={labelledbyId}
+              />
+            )}
+          </>
         )}
       </>
     )
@@ -99,11 +96,11 @@ const MultiplePromotions = ({
   return (
     <ul
       className={twMerge(
-        `grid max-lg:w-full ${getRowGap(variant)} auto-rows-fr grid-cols-1 content-center justify-center ${data?.length === 3 ? 'md:grid-cols-3' : 'md:grid-cols-2 2xl:grid-cols-3'}`,
+        `grid max-lg:w-full ${getRowGap(variant)} auto-rows-fr grid-cols-1 content-center justify-center ${promotions?.length === 3 ? 'md:grid-cols-3' : 'md:grid-cols-2 2xl:grid-cols-3'}`,
       )}
     >
       <>
-        {data.map((item) => {
+        {promotions.map((item) => {
           return getCard(item)
         })}
       </>

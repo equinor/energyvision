@@ -17,48 +17,49 @@ type KeyNumbersProps = {
   className?: string
 }
 const KeyNumber = ({ data, anchor, className }: KeyNumbersProps) => {
-  const { title, hideTitle, items, designOptions, ingress, action, disclaimer, useHorizontalScroll } = data
+  const { title, hideTitle, items, designOptions, ingress, action, disclaimer, useHorizontalScroll = false } = data
   const url = action && getUrlFromAction(action)
   const isMobile = useMediaQuery(`(max-width: 800px)`)
   const headingId = useId()
   const { bg, dark } = getBgAndDarkFromBackground(designOptions)
 
-  const renderScroll = useHorizontalScroll && isMobile
-
   return (
     <section className={twMerge(`${bg} ${dark ? 'dark' : ''} pb-page-content`, className)} id={anchor}>
-      <div className="px-layout-lg">
+      <div className="px-layout-sm lg:px-layout-md">
         {title && <Blocks value={title} id={headingId} variant="h2" blockClassName={hideTitle ? 'sr-only' : ''} />}
         {ingress && <Blocks variant="ingress" value={ingress} />}
       </div>
+      <div className="px-layout-sm lg:px-layout-md">
+        {useHorizontalScroll && (
+          <Carousel
+            items={items}
+            displayMode="scroll"
+            variant="keyNumber"
+            {...(title && { labelledbyId: headingId })}
+            hasSectionTitle={!!title}
+          />
+        )}
+        {!useHorizontalScroll && (
+          <ul className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {items.map((item) => (
+              <KeyNumberItem key={item.id} {...item} />
+            ))}
+          </ul>
+        )}
 
-      {renderScroll && (
-        <Carousel
-          items={items}
-          displayMode="scroll"
-          variant="keyNumber"
-          labelledbyId={title ? headingId : undefined}
-          hasSectionTitle={!!title}
-        />
-      )}
-      {!renderScroll && (
-        <div className="gap-lg mb-lg grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-          {items.map((item) => (
-            <KeyNumberItem key={item.id} {...item} />
-          ))}
-        </div>
-      )}
-
-      {disclaimer && <Blocks group="paragraph" variant="small" value={disclaimer} blockClassName="pb-lg max-w-text" />}
-      {action && (
-        <ResourceLink
-          href={url as string}
-          {...(action.link?.lang && { hrefLang: getLocaleFromName(action.link?.lang) })}
-          type={action.type}
-        >
-          {`${action.label} ${action.extension ? `(${action.extension.toUpperCase()})` : ''}`}
-        </ResourceLink>
-      )}
+        {disclaimer && (
+          <Blocks group="paragraph" variant="small" value={disclaimer} blockClassName="pb-lg max-w-text" />
+        )}
+        {action && (
+          <ResourceLink
+            href={url as string}
+            {...(action.link?.lang && { hrefLang: getLocaleFromName(action.link?.lang) })}
+            type={action.type}
+          >
+            {`${action.label} ${action.extension ? `(${action.extension.toUpperCase()})` : ''}`}
+          </ResourceLink>
+        )}
+      </div>
     </section>
   )
 }

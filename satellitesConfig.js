@@ -8,7 +8,7 @@
   }
 */
 const languages = [
-  { id: 'english', title: 'English (UK)', iso: 'en-GB', name: 'en_GB', locale: 'en' },
+  { id: 'english', title: 'English (UK)', iso: 'en-GB', name: 'en_GB', locale: 'en-GB' },
   { id: 'norwegian', title: 'Norwegian', iso: 'nb-NO', name: 'nb_NO', locale: 'no' },
   { id: 'portuguese', title: 'Portuguese (BR)', iso: 'pt-BR', name: 'pt_BR', locale: 'pt' },
   { id: 'german', title: 'German', iso: 'de-DE', name: 'de_DE', locale: 'de' },

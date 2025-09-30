@@ -24,8 +24,9 @@ import { EventCard } from '@/sections/cards/EventCard'
 import KeyNumberItem from '@/sections/KeyNumber/KeyNumberItem'
 import { useTranslations } from 'next-intl'
 import { IFrame } from '@/core/IFrame/IFrame'
-import { VideoPlayer } from '../VideoJsPlayer/VideoPlayer'
+import { VideoPlayer, VideoPlayerProps } from '../VideoJsPlayer/VideoPlayer'
 import { VideoPlayerCarouselItem } from '@/sections/VideoPlayerCarousel/VideoPlayerCarousel'
+import { twMerge } from 'tailwind-merge'
 
 export type DisplayModes = 'single' | 'scroll'
 export type Layouts = 'full' | 'default'
@@ -45,7 +46,10 @@ type CarouselProps = {
   displayMode?: DisplayModes
   /* If carousel has a title/sectionTitle over it */
   labelledbyId?: string
+  /* grouped controls and list */
   className?: string
+  /* Outer container */
+  containerClassName?: string
   listClassName?: string
   autoRotation?: boolean
   hasSectionTitle?: boolean
@@ -67,6 +71,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
     labelledbyId,
     title,
     className = '',
+    containerClassName = '',
     listClassName = '',
     hasSectionTitle = false,
     sectionTitle,
@@ -102,7 +107,9 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
   if (isLarge) {
     TRANSLATE_X_AMOUNT = TRANSLATE_X_AMOUNT_LG
   }
-  const [scrollPosition, setScrollPosition] = useState<'start' | 'middle' | 'end'>('start')
+  /* Remove?, didnt work well with scroll container   
+const [scrollPosition, setScrollPosition] = useState<'start' | 'middle' | 'end'>('start') */
+
   const initialPositions = useMemo(() => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
@@ -124,7 +131,8 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
     const isFirst = currentIndex === 0
     const newIndex = isFirst ? items?.length - 1 : currentIndex - 1
     setCurrentIndex(newIndex)
-    if (sliderRef?.current) {
+    //Remove? didnt work well with scroll container
+    /*     if (sliderRef?.current) {
       const noOfItems = sliderRef?.current?.childElementCount
       const itemWidth = sliderRef?.current?.lastElementChild?.clientWidth || 0
       const padding = (sliderRef?.current?.scrollWidth - itemWidth * noOfItems) / (noOfItems - 1)
@@ -142,14 +150,15 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
       if (isAtStart) {
         setScrollPosition('start')
       }
-    }
+    } */
   }
 
   const nextSlide = () => {
     const isLast = currentIndex === items?.length - 1
     const newIndex = isLast ? 0 : currentIndex + 1
     setCurrentIndex(newIndex)
-    if (sliderRef?.current) {
+    //Remove? didnt work well with scroll container
+    /*     if (sliderRef?.current) {
       const noOfItems = sliderRef?.current?.childElementCount
       const itemWidth = sliderRef?.current?.lastElementChild?.clientWidth || 0
       const padding = (sliderRef?.current?.scrollWidth - itemWidth * noOfItems) / (noOfItems - 1)
@@ -168,7 +177,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
       if (isAtEnd) {
         setScrollPosition('end')
       }
-    }
+    } */
   }
 
   const loopSlideNext = useCallback(() => {
@@ -316,11 +325,13 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
   }
   const getVideoVariantBody = (itemData: VideoPlayerCarouselItem, index: number) => {
     const { title, video, id } = itemData
-    const props = {
-      ...video,
-      aspectRatio: displayMode === 'single' ? '16:9' : '9:16',
-      playButton: true,
-      controls: true,
+    const props: VideoPlayerProps = {
+      title: video?.title,
+      poster: video?.poster,
+      src: video?.src,
+      aspectRatio: displayMode === 'scroll' ? '9:16' : '16:9',
+      figureCaption: title,
+      className: 'min-w-[24rem] h-full',
     }
     //@ts-ignore: TODO
     const element = <VideoPlayer {...props} />
@@ -331,10 +342,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
         aria-label={getTranslatedItemCountLabel(index + 1)}
         displayMode={displayMode}
         active={index === currentIndex}
-        variant={title ? 'richTextBelow' : 'default'}
-        //@ts-ignore:TODO- didnt work with type assertion as PortableTextBlock[]
-        title={title}
-        className={`${displayMode === 'scroll' ? 'h-full w-[260px] md:w-[372px] lg:w-[405px]' : ''}`}
+        /*         className={`${displayMode === 'scroll' ? 'h-full w-[260px] md:w-[372px] lg:w-[405px]' : ''}`} */
         {...(displayMode === 'single' && {
           style: {
             transform: `translate3d(${itemsXPositions[index]}px, 0px, 0px)`,
@@ -368,7 +376,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
     )
   }
   const getKeyNumberVariantBody = (itemData: KeyNumberItemData, index: number) => {
-    const element = <KeyNumberItem {...itemData} isScrollable />
+    const element = <KeyNumberItem as="div" variant="card" {...itemData} />
 
     return (
       <CarouselItem
@@ -376,7 +384,6 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
         key={itemData.id}
         displayMode="scroll"
         variant="default"
-        className={`w-[37vw]`}
       >
         {element}
       </CarouselItem>
@@ -424,14 +431,16 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
   }
 
   const commonScrollListContainerClassName = `
-    no-scrollbar
-    flex 
+    envis-scrollbar
+    grid
+    auto-cols-auto
+    grid-flow-col 
     gap-3 
     lg:gap-6 
-    h-full 
+    h-fit 
     overflow-x-auto
     snap-x
-    pb-6`
+    pb-1`
 
   const commonSingleListContainerClassName = `
     grid 
@@ -451,13 +460,9 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
   return (
     <CarouselTag
       ref={ref}
-      className={envisTwMerge(
-        `${
-          displayMode === 'single'
-            ? 'relative flex flex-col overflow-hidden'
-            : 'mx-auto w-full px-4 md:p-0 lg:px-layout-sm'
-        }`,
-        className,
+      className={twMerge(
+        `${displayMode === 'single' ? 'relative flex flex-col overflow-hidden' : 'w-full'}`,
+        containerClassName,
       )}
     >
       <div
@@ -469,98 +474,101 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
           title && {
             'aria-label': toPlainText(title),
           })}
-        className={envisTwMerge(
-          `${displayMode === 'single' ? `relative mx-auto grid grid-flow-row` : 'flex flex-col-reverse'}`,
+        className={twMerge(
+          `${displayMode === 'single' ? `relative grid grid-flow-row justify-center` : ''}`,
           className,
         )}
       >
-        {/* Controls - should be before slide in DOM but not visually
+        {/* Controls - should be before slide in DOM but not necessarily visually
          */}
-        <div
-          aria-labelledby={controlsId}
-          className={`flex pt-6 pb-2 ${internalAutoRotation ? 'justify-between' : 'justify-end'} ${
-            displayMode === 'single'
-              ? `mx-auto w-single-carousel-card-w-sm md:w-single-carousel-card-w-md lg:w-single-carousel-card-w-lg`
-              : ''
-          } ${getCarouselItemVariant() === 'richTextBelow' ? carouselGridTop : carouselGridBottom} `}
-        >
-          <div id={controlsId} className="sr-only">
-            {intl('carousel_controls')}
-          </div>
-          {/** Only image should have autoplay */}
-          {internalAutoRotation && variant === 'image' && displayMode === 'single' && (
-            <MediaButton
-              key={`play_pause_button_${currentIndex}`}
-              title={
-                pauseAutoRotation
-                  ? intl(
-                      'carouselPlay',
+        {displayMode === 'single' && (
+          <div
+            aria-labelledby={controlsId}
+            className={`flex pt-6 pb-2 ${internalAutoRotation ? 'justify-between' : 'justify-end'} ${
+              displayMode === 'single'
+                ? `mx-auto w-single-carousel-card-w-sm md:w-single-carousel-card-w-md lg:w-single-carousel-card-w-lg`
+                : ''
+            } ${getCarouselItemVariant() === 'richTextBelow' ? carouselGridTop : carouselGridBottom} `}
+          >
+            <div id={controlsId} className="sr-only">
+              {intl('carousel_controls')}
+            </div>
+            {/** Only image should have autoplay */}
+            {internalAutoRotation && variant === 'image' && displayMode === 'single' && (
+              <MediaButton
+                key={`play_pause_button_${currentIndex}`}
+                title={
+                  pauseAutoRotation
+                    ? intl(
+                        'carouselPlay',
 
-                      {
+                        {
+                          title: translatedPlayPauseAutoRotationTitle,
+                        },
+                      )
+                    : intl('carouselPause', {
                         title: translatedPlayPauseAutoRotationTitle,
-                      },
-                    )
-                  : intl('carouselPause', {
-                      title: translatedPlayPauseAutoRotationTitle,
-                    })
-              }
-              mode={pauseAutoRotation ? 'play' : 'pause'}
-              onClick={() => {
-                setPauseAutoRotation(!pauseAutoRotation)
-              }}
-              paused={pauseAutoRotation}
-              useTimer
-              className="[grid-area:left]"
-            />
-          )}
-          {/** From W3.org:
-           * Allow the user to maintain control of the keyboard focus.
-           * When the carousel advances automatically, users should not be
-           * drawn away from their current place in the page. Also, do not
-           * move keyboard focus when the previous or next buttons are
-           * used; moving the focus makes it harder for users to browse
-           * back and forth between the slides.
-           */}
-          <div className="flex items-center gap-3">
-            <MediaButton
-              title={intl('previous')}
-              aria-controls={carouselItemsId}
-              mode="previous"
-              disabled={(displayMode === 'scroll' && scrollPosition === 'start') ?? false}
-              onClick={() => {
-                if (displayMode === 'single') {
-                  loopSlidePrev()
-                  if (variant === 'image' && !pauseAutoRotation) {
-                    setPauseAutoRotation(true)
-                  }
-                } else {
-                  prevSlide()
+                      })
                 }
-              }}
-            />
-            <MediaButton
-              title={intl('next')}
-              mode="next"
-              aria-controls={carouselItemsId}
-              disabled={(displayMode === 'scroll' && scrollPosition === 'end') ?? false}
-              onClick={() => {
-                if (displayMode === 'single') {
-                  loopSlideNext()
-                  if (variant === 'image' && !pauseAutoRotation) {
-                    setPauseAutoRotation(true)
+                mode={pauseAutoRotation ? 'play' : 'pause'}
+                onClick={() => {
+                  setPauseAutoRotation(!pauseAutoRotation)
+                }}
+                paused={pauseAutoRotation}
+                useTimer
+                className="[grid-area:left]"
+              />
+            )}
+            {/** From W3.org:
+             * Allow the user to maintain control of the keyboard focus.
+             * When the carousel advances automatically, users should not be
+             * drawn away from their current place in the page. Also, do not
+             * move keyboard focus when the previous or next buttons are
+             * used; moving the focus makes it harder for users to browse
+             * back and forth between the slides.
+             */}
+            <div className="flex items-center gap-3">
+              <MediaButton
+                title={intl('previous')}
+                aria-controls={carouselItemsId}
+                mode="previous"
+                onClick={() => {
+                  if (displayMode === 'single') {
+                    loopSlidePrev()
+                    if (variant === 'image' && !pauseAutoRotation) {
+                      setPauseAutoRotation(true)
+                    }
+                  } else {
+                    prevSlide()
                   }
-                } else {
-                  nextSlide()
-                }
-              }}
-            />
+                }}
+              />
+              <MediaButton
+                title={intl('next')}
+                mode="next"
+                aria-controls={carouselItemsId}
+                onClick={() => {
+                  if (displayMode === 'single') {
+                    loopSlideNext()
+                    if (variant === 'image' && !pauseAutoRotation) {
+                      setPauseAutoRotation(true)
+                    }
+                  } else {
+                    nextSlide()
+                  }
+                }}
+              />
+            </div>
           </div>
-        </div>
+        )}
         <ul
           ref={sliderRef}
           id={carouselItemsId}
-          className={envisTwMerge(
-            `m-auto w-full focus:outline-1 focus:outline-grey-60 focus:outline-dashed ${displayMode === 'single' ? commonSingleListContainerClassName : commonScrollListContainerClassName} ${customListVariantClassName[variant]} `,
+          {...(displayMode === 'scroll' && {
+            tabIndex: 0,
+          })}
+          className={twMerge(
+            `w-full focus:outline-1 focus:outline-grey-60 focus:outline-dashed ${displayMode === 'single' ? commonSingleListContainerClassName : commonScrollListContainerClassName} ${customListVariantClassName[variant]} `,
             listClassName,
           )}
           {...(displayMode === 'single' && {

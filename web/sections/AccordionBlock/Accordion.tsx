@@ -14,7 +14,6 @@ type AccordionProps = {
 }
 
 const Accordion = ({ data, id, hasSectionTitle = true }: AccordionProps) => {
-  console.log("Accordion",data);
   return (
     <EnvisAccordion type="multiple" id={id}>
       {data.map((item) => {
@@ -34,7 +33,7 @@ const Accordion = ({ data, id, hasSectionTitle = true }: AccordionProps) => {
                 />
               )}
               {content && <Blocks value={content} />}
-              {links && <CallToActions callToActions={links} linkVariant='fit' />}
+              {links && <CallToActions callToActions={links} linkVariant="fit" />}
             </Content>
           </Item>
         )

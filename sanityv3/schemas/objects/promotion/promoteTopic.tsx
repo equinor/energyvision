@@ -6,16 +6,7 @@ import type { Image, PortableTextBlock, Reference, Rule } from 'sanity'
 import { topicPromotionFilter } from '../../../helpers/referenceFilters'
 import { Flags } from '../../../src/lib/datasetHelpers'
 import routes from '../../routes'
-
-const introBlockContentType = configureBlockContent({
-  h2: false,
-  h3: false,
-  h4: false,
-  internalLink: false,
-  externalLink: false,
-  attachment: false,
-  lists: false,
-})
+import { background, ingress, title, viewAllLink, viewAllLinkLabel } from '../commonFields/commonFields'
 
 type PromotedTopicPage = {
   _key: string
@@ -33,8 +24,15 @@ export default {
   title: 'Topic/magazine promotion',
   name: 'promoteTopics',
   type: 'object',
-
+  fieldsets: [
+    {
+      name: 'design',
+      title: 'Design options',
+    },
+  ],
   fields: [
+    title,
+    ingress,
     {
       name: 'references',
       type: 'array',
@@ -60,7 +58,7 @@ export default {
               title: 'Ingress',
               description: 'A short and catchy introduction text for this topic content card (max. 215 chars)',
               type: 'array',
-              of: [introBlockContentType],
+              of: [configureBlockContent({ variant: 'ingress' })],
               validation: (Rule: Rule) => Rule.custom((value: any) => validateCharCounterEditor(value, 215, true)),
             },
           ],
@@ -95,6 +93,9 @@ export default {
       ],
       validation: (Rule: Rule) => Rule.unique(),
     },
+    viewAllLink,
+    viewAllLinkLabel,
+    background,
   ],
   preview: {
     select: {

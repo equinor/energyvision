@@ -1,74 +1,67 @@
 import type { Reference, Rule, ValidationContext } from 'sanity'
 import { filterByRouteEvents } from '../../../helpers/referenceFilters'
-import { Flags } from '../../../src/lib/datasetHelpers'
 import routes from '../../routes'
-import { EventPromotionPreview } from '../../components/EventPromotion'
-import { EventPromotionInput } from '../../components/EventPromotion/EventPromotionInput'
+import { RiCalendarEventFill } from 'react-icons/ri'
+import { title, ingress, viewAllLink, viewAllLinkLabel, background } from '../commonFields/commonFields'
+import { capitalizeFirstLetter } from '../../../helpers/formatters'
+import { PortableTextBlock } from '@portabletext/react'
+import blocksToText from '../../../helpers/blocksToText'
 
 export type EventPromotion = {
   _key: string
   _type: 'promoteEvents'
   tags?: string[]
-  manuallySelectEvents?: boolean
+  promotionType?: 'automatic' | 'manual'
   promotedEvents?: Reference[]
   promotePastEvents?: boolean
-  promoteSingleUpcomingEvent?: boolean
-  pastEventsCount?: number
-  useTags?: boolean
+  eventsCount?: number
 }
 
 export default {
   title: 'Events promotion',
   name: 'promoteEvents',
   type: 'object',
-  components: {
-    input: EventPromotionInput,
-    preview: EventPromotionPreview,
-  },
-  fields: [
+  fieldsets: [
     {
-      name: 'manuallySelectEvents',
-      type: 'boolean',
-      title: 'Manually select events',
-      initialValue: false,
+      name: 'design',
+      title: 'Design options',
+    },
+  ],
+  fields: [
+    title,
+    ingress,
+    {
+      title: 'Set how events should be picked',
+      name: 'promotionType',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Automatic', value: 'automatic' },
+          { title: 'Manually', value: 'manual' },
+        ],
+      },
+      initialValue: 'automatic',
     },
     {
       name: 'promotePastEvents',
       type: 'boolean',
-      title: 'Select past events',
+      title: 'Only past events',
+      description: 'Only select from past events',
       initialValue: false,
+      hidden: ({ parent }: any) => parent?.promotionType === 'manual',
     },
     {
-      name: 'pastEventsCount',
-      title: 'How many number of past events to show?',
+      name: 'eventsCount',
+      title: 'Number of events',
+      description: 'Set this if you want to restrict the number of events to show',
       type: 'number',
-      description: 'Leave empty to show all the past events (max limit 50).',
-      validation: (Rule: Rule) => Rule.integer().positive().greaterThan(0).lessThan(50),
+      validation: (Rule: Rule) => Rule.max(50).error('Max 50'),
+      hidden: ({ parent }: any) => parent?.promotionType === 'manual',
     },
     {
-      name: 'upcomingEventsCount',
-      title: 'How many number of future events to show?',
-      type: 'number',
-      description: 'Leave empty to show all the future events (max limit 50).',
-      validation: (Rule: Rule) => Rule.integer().positive().greaterThan(0).lessThan(50),
-    },
-    {
-      name: 'promoteSingleUpcomingEvent',
-      type: 'boolean',
-      title: 'Promote singe upcoming event',
-      initialValue: false,
-      hidden: ({ parent }: { parent: EventPromotion }) => parent?.manuallySelectEvents,
-    },
-    {
-      name: 'useTags',
-      type: 'boolean',
-      title: 'Select events from tags',
-      initialValue: true,
-    },
-    Flags.HAS_EVENT && {
-      title: 'Tags',
+      title: 'Select from tags',
       name: 'tags',
-      description: 'Select the tags you want to promote events from',
+      description: 'Select specific tags if you want to promote events from a selection. Default is from all tags',
       type: 'array',
       of: [
         {
@@ -78,18 +71,12 @@ export default {
           options: { disableNew: true },
         },
       ],
-      validation: (Rule: Rule) =>
-        Rule.custom((value: string, context: ValidationContext) => {
-          const { parent } = context as { parent: EventPromotion }
-          if (!parent.useTags || parent?.manuallySelectEvents === true) return true
-          if (!value || value.length === 0) return 'You must select at least one tag'
-          return true
-        }).unique(),
+      hidden: ({ parent }: any) => parent?.promotionType === 'manual',
     },
     {
-      title: 'Events to be promoted',
+      title: 'Selected Events',
       name: 'promotedEvents',
-      description: 'Select the events you want to promote',
+      description: 'Select the specific events you want to promote',
       type: 'array',
       of: [
         {
@@ -102,24 +89,61 @@ export default {
           },
         },
       ],
+      hidden: ({ parent }: any) => parent?.promotionType !== 'manual',
       validation: (Rule: Rule) =>
         Rule.custom((value: string, context: ValidationContext) => {
           const { parent } = context as { parent: EventPromotion }
-          if (!parent.manuallySelectEvents) return true
+          if (parent?.promotionType === 'automatic') return true
           if (!value || value.length === 0) return 'You must select at least one event'
           return true
         }).unique(),
     },
+    viewAllLink,
+    viewAllLinkLabel,
+    background,
   ].filter((e) => e),
+  /*   components: {
+    preview: PromoteEventsPreview,
+  }, */
   preview: {
     select: {
-      useTags: 'useTags',
+      title: 'title',
       tags: 'tags',
       promotedEvents: 'promotedEvents',
-      manuallySelectEvents: 'manuallySelectEvents',
+      promotionType: 'promotionType',
       promotePastEvents: 'promotePastEvents',
-      promoteSingleUpcomingEvent: 'promoteSingleUpcomingEvent',
-      pastEventsCount: 'pastEventsCount',
+      eventsCount: 'eventsCount',
+    },
+    prepare({
+      title,
+      promotionType,
+      promotePastEvents,
+      eventsCount,
+      tags,
+      promotedEvents,
+    }: {
+      title?: PortableTextBlock[]
+      promotionType: 'automatic' | 'manual'
+      promotePastEvents?: boolean
+      eventsCount?: number
+      tags?: string[]
+      promotedEvents?: Reference[]
+    }) {
+      //@ts-ignore:todo
+      const plainTitle = blocksToText(title)
+      let mainTitle = 'Event promotion'
+      if (promotionType === 'automatic') {
+        mainTitle = `${capitalizeFirstLetter(promotionType ?? '')} | ${promotePastEvents ? 'past' : ''} ${eventsCount ? `${eventsCount}` : 'all'} event(s) ${tags && tags?.length > 0 ? 'on tag(s)' : 'on all tags'}`
+      }
+      if (promotionType === 'manual') {
+        mainTitle = `${capitalizeFirstLetter(promotionType ?? '')} | ${promotedEvents && promotedEvents?.length > 0 ? promotedEvents?.length : 'No'} event(s)`
+      }
+
+      return {
+        title: plainTitle ? plainTitle : mainTitle,
+        subtitle: `Event promotion${plainTitle ? `: ${mainTitle}` : ''}`,
+        media: RiCalendarEventFill,
+      }
     },
   },
 }

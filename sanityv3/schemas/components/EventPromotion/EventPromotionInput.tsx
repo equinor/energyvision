@@ -27,17 +27,20 @@ const InlinePreview = ({ value }: { value: EventPromotion | undefined }) => {
 
 export const EventPromotionInput = (props: EventPromotionInputProps) => {
   const { value, members, renderField, renderInput, renderItem, renderPreview, onChange, renderDefault } = props
-
-  const useTags = getObjectMemberField(members, 'useTags')
+  console.log('value', value)
+  const useTagsObject = getObjectMemberField(members, 'useTags')
+  const useTags = useTagsObject?.field?.schemaType?.initialValue ?? true
   const promotePastEvents = getObjectMemberField(members, 'promotePastEvents')
   const pastEventsCount = getObjectMemberField(members, 'pastEventsCount')
   const upcomingEventsCount = getObjectMemberField(members, 'upcomingEventsCount')
   const selectedTags = getObjectMemberField(members, 'tags')
   const promotedEvents = getObjectMemberField(members, 'promotedEvents')
 
-  if (!promotePastEvents || !pastEventsCount || !upcomingEventsCount || !useTags || !selectedTags || !promotedEvents)
-    return renderDefault(props)
+  console.log('useTags', useTags)
 
+  /*   if (!promotePastEvents || !pastEventsCount || !upcomingEventsCount || !useTags || !selectedTags || !promotedEvents)
+    return renderDefault(props)
+ */
   return (
     <Stack space={4}>
       <Heading size={1}>How do you want to promote events?</Heading>
@@ -88,7 +91,7 @@ export const EventPromotionInput = (props: EventPromotionInputProps) => {
         <>
           <Grid columns={2} gap={3}>
             <MemberField
-              member={useTags}
+              member={useTagsObject}
               renderInput={renderInput}
               renderField={renderField}
               renderItem={renderItem}

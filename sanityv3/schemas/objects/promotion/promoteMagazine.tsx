@@ -1,7 +1,9 @@
-import { library_books } from '@equinor/eds-icons'
 import type { Rule, Reference } from 'sanity'
 import { filterMagazineByLang } from '../../../helpers/referenceFilters'
-import { EdsIcon } from '../../../icons'
+import { IoNewspaperOutline } from 'react-icons/io5'
+import { background, ingress, title, viewAllLink, viewAllLinkLabel } from '../commonFields/commonFields'
+import { PortableTextBlock } from '@portabletext/react'
+import blocksToText from '../../../helpers/blocksToText'
 
 export type MagazinePromotion = {
   manuallySelectArticles: boolean
@@ -13,7 +15,15 @@ export default {
   title: 'Magazine promotion',
   name: 'promoteMagazine',
   type: 'object',
+  fieldsets: [
+    {
+      name: 'design',
+      title: 'Design options',
+    },
+  ],
   fields: [
+    title,
+    ingress,
     {
       name: 'manuallySelectArticles',
       type: 'boolean',
@@ -61,34 +71,42 @@ export default {
       options: { sortable: false },
       hidden: ({ parent }: { parent: MagazinePromotion }) => parent?.manuallySelectArticles === true,
     },
+    viewAllLink,
+    viewAllLinkLabel,
+    background,
   ],
   preview: {
     select: {
+      title: 'title',
       tags: 'tags',
       articles: 'promotedArticles',
       manualSelection: 'manuallySelectArticles',
     },
     prepare({
+      title,
       tags,
       articles,
       manualSelection,
     }: {
+      title: any
       tags: Reference[]
       articles: Reference[]
       manualSelection: boolean
     }) {
-      if (manualSelection) {
-        return {
-          title: `Showing ${articles.length || 0} manually selected articles`,
-          subtitle: `Magazine promotion | Manual`,
-          media: EdsIcon(library_books),
-        }
+      //@ts-ignore:todo
+      const plainTitle = blocksToText(title) ?? 'No title, only articles'
+      let count = ''
+      if (manualSelection && articles && articles?.length > 0) {
+        count = `${articles.length} articles`
+      }
+      if (!manualSelection && tags && tags?.length > 0) {
+        count = `${tags.length} tags`
       }
 
       return {
-        title: `Automatically selecting articles from ${tags.length || 0} tags`,
-        subtitle: `Magazine promotion | Automatic`,
-        media: EdsIcon(library_books),
+        title: plainTitle,
+        subtitle: `Magazine promotion | ${manualSelection ? 'manual' : 'automatic'} ${count ? `| ${count}` : ''}`,
+        media: IoNewspaperOutline,
       }
     },
   },

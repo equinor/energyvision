@@ -57,11 +57,11 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
 
               <div className="flex-center mb-2 flex gap-1 text-norwegian-woods-100">
                 {start && end ? (
-                  <>
-                    <FormattedTime datetime={start.toISOString()} />
-                    <span>-</span>
-                    <FormattedTime datetime={end.toISOString()} showTimezone />
-                  </>
+                  <div className={`flex h-full items-center gap-1 py-2`}>
+                    <FormattedTime datetime={eventDate?.startTime} />
+                    {`-`}
+                    <FormattedTime datetime={eventDate?.endTime} showTimezone />
+                  </div>
                 ) : (
                   <span>{t('tba')}</span>
                 )}
@@ -79,11 +79,12 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
           )}
           {promotedPeople?.people && promotedPeople?.people.length > 0 && (
             <Promotion
+              variant="promotePeople"
               data={{
                 id: 'promotedPeople',
                 type: 'people',
                 title: promotedPeople.title,
-                content: { promotions: promotedPeople.people, type: 'promotePeople' },
+                promotions: promotedPeople.people,
               }}
             />
           )}

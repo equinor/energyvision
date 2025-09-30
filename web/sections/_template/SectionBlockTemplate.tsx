@@ -45,12 +45,12 @@ const SectionBlockTemplate = ({
   designOptions,
 }: SectionBlockTemplateProps) => {
   const { bg, dark } = getBgAndDarkFromBackground(designOptions)
-  //Send down for those that use hasSectionTitle
+  //Send down for those that has prop hasSectionTitle
   const headingId = useId()
 
   return (
     <section
-      className={twMerge(`${bg} ${dark ? 'dark' : ''} mx-auto px-layout-lg pb-page-content`, className)}
+      className={twMerge(`${bg} ${dark ? 'dark' : ''} px-layout-sm pb-page-content lg:px-layout-lg`, className)}
       id={anchor}
     >
       {/* Heading has more padding bottom than the rest, padding is taken care of with Typography */}

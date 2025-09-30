@@ -37,7 +37,7 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
     <article id={anchor} className={`${bg} ${dark ? 'dark' : ''} flex flex-col lg:grid lg:grid-cols-2`}>
       {(imagePosition === 'left' || useFlexCol) && imageElement}
       <div
-        className={`max-w-text pt-8 pb-10 lg:pt-18 lg:pb-22 ${imagePosition === 'left' ? 'pr-8 lg:pr-44' : 'pl-8 lg:pl-44'}`}
+        className={`max-w-text pt-8 pb-10 lg:pt-18 lg:pb-22 ${imagePosition === 'left' ? 'pr-8 pl-8 lg:pr-44' : 'pl-8 lg:pl-44'}`}
       >
         {isBigText ? (
           text && <Blocks value={text} variant="h2" />

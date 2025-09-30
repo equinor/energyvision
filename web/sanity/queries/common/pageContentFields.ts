@@ -17,6 +17,13 @@ import { lastUpdatedTimeQuery, publishDateTimeQuery } from './publishDateTime'
 import { anchorLinkReferenceFields } from './anchorLinkReferenceFields'
 import { tabsComponentFields } from './tabsComponentFields'
 import homepageContentFields from './homepageContentFields'
+import {
+  eventPromotion,
+  magazinePromotion,
+  newsPromotion,
+  peoplePromotion,
+  topicsPromotion,
+} from './promotions/allPromotions'
 
 const pageContentFields = /* groq */ `
 _type == "keyNumbers" =>{
@@ -233,6 +240,21 @@ _type == "keyNumbers" =>{
       ${background},
       height,
     },
+  },
+  _type == "promoteEvents" => {
+    ${eventPromotion}
+  },
+  _type == "promoteNews" => {
+    ${newsPromotion}
+  },
+  _type == "promoteMagazine" => {
+    ${magazinePromotion}
+  },
+  _type == "promotePeople" => {
+    ${peoplePromotion}
+  },
+    _type == "promoteTopics" => {
+    ${topicsPromotion}
   },
   _type == "promotion" => {
     "type": _type,
@@ -593,7 +615,7 @@ _type == "keyNumbers" =>{
   _type == "tabs"=>{
     ${tabsComponentFields}
   },
-    _type == "tableV2" => {"table": table::getTablefields(@)},
+  _type == "tableV2" => {"table": table::getTablefields(@)},
   //Remove from here and place with homepage template query only
   ${homepageContentFields}
 `

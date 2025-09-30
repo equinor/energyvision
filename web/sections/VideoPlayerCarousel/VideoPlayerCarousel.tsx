@@ -23,7 +23,6 @@ export type VideoPlayerCarouselData = {
   designOptions: DesignOptions & {
     aspectRatio: AspectRatioVariants
   }
-  scrollMode?: boolean
   title?: PortableTextBlock[]
   hideTitle?: boolean
   ingress?: PortableTextBlock[]
@@ -39,10 +38,11 @@ const VideoPlayerCarousel = forwardRef<HTMLUListElement, VideoPlayerCarouselProp
   { anchor, data, className },
   ref,
 ) {
-  const { title, hideTitle, ingress, items, scrollMode, designOptions } = data
+  const { title, hideTitle, ingress, items, designOptions } = data
   const { aspectRatio } = designOptions
   const headingId = useId()
   const { bg, dark } = getBgAndDarkFromBackground(designOptions)
+  const scrollMode = designOptions?.aspectRatio === '9:16'
 
   return (
     <section id={anchor} className={twMerge(`${bg} ${dark ? 'dark' : ''}`, className)}>
@@ -70,6 +70,7 @@ const VideoPlayerCarousel = forwardRef<HTMLUListElement, VideoPlayerCarouselProp
         variant="video"
         labelledbyId={title ? headingId : undefined}
         autoRotation={false}
+        containerClassName={`${scrollMode ? 'px-layout-sm lg:px-layout-md' : ''}`}
       />
     </section>
   )

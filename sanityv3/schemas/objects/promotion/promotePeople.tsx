@@ -1,8 +1,10 @@
 import type { Rule, Reference } from 'sanity'
 import type { ImageWithAlt } from '../imageWithAlt'
-import { contacts } from '@equinor/eds-icons'
-import { EdsIcon } from '../../../icons'
+import { MdOutlineContactEmergency } from 'react-icons/md'
 import linkSelector from '../linkSelector/linkSelector'
+import { background, ingress, title, viewAllLink, viewAllLinkLabel } from '../commonFields/commonFields'
+import { PortableTextBlock } from '@portabletext/react'
+import blocksToText from '../../../helpers/blocksToText'
 
 export type Promotion = {
   image?: ImageWithAlt
@@ -27,7 +29,15 @@ export default {
   title: 'People promotion',
   name: 'promotePeople',
   type: 'object',
+  fieldsets: [
+    {
+      name: 'design',
+      title: 'Design options',
+    },
+  ],
   fields: [
+    title,
+    ingress,
     {
       type: 'array',
       name: 'peopleList',
@@ -135,33 +145,22 @@ export default {
         },
       ],
     },
+    viewAllLink,
+    viewAllLinkLabel,
+    background,
   ],
   preview: {
     select: {
-      people1: 'peopleList.0.name',
-      people2: 'peopleList.1.name',
-      people3: 'peopleList.2.name',
-      people4: 'peopleList.3.name',
+      title: 'title',
+      peopleList: 'peopleList',
     },
-    prepare({
-      people1,
-      people2,
-      people3,
-      people4,
-    }: {
-      people1: string
-      people2: string
-      people3: string
-      people4: string
-    }) {
-      const people = [people1, people2, people3].filter(Boolean)
-      const hasMorePeople = Boolean(people4)
-      const peopleList = people.length > 0 ? `People: ${people.join(', ')}` : ''
-
+    prepare({ title, peopleList }: { title?: PortableTextBlock[]; peopleList?: any[] }) {
+      //@ts-ignore:todo
+      const plainTitle = blocksToText(title) ?? 'No title, only people'
       return {
-        title: hasMorePeople ? `${peopleList}...` : peopleList,
-        subtitle: `People promotions.`,
-        media: EdsIcon(contacts),
+        title: `${plainTitle}`,
+        subtitle: `People promotion | ${peopleList?.length} people`,
+        media: MdOutlineContactEmergency,
       }
     },
   },

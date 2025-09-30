@@ -18,6 +18,8 @@ const getElementType = (variant: string, link: boolean): ElementType => {
       return variant
     case 'highlight':
       return 'span'
+    case 'div':
+      return 'div'
     case 'caption':
     case 'eyebrow':
     case 'overline':

@@ -12,13 +12,25 @@ const FormattedDate = ({
   uppercase = false,
   className = '',
   ...rest
-}: DateProps): JSX.Element => {
+}: DateProps) => {
   const formatter = useFormatter()
+
+  let date = undefined
+  if (typeof date === 'string' && datetime) {
+    date = new Date(datetime)
+  } else {
+    date = datetime as Date
+  }
+
+  if (!date) {
+    return null
+  }
+
   return (
     <span {...rest} className={twMerge(`inline-flex items-center gap-2 text-base`, className)}>
       {icon && <DateIcon />}
       <span className={twMerge(`shrink ${icon ? '-mb-1' : ''}${uppercase ? 'uppercase' : ''}`)}>
-        <time suppressHydrationWarning dateTime={datetime}>
+        <time suppressHydrationWarning dateTime={datetime?.toLocaleString()}>
           {formatter.dateTime(new Date(datetime), {
             year: year,
             month: month,

@@ -4,7 +4,7 @@ import { useFormatter } from 'next-intl'
 import { twMerge } from 'tailwind-merge'
 
 export type FormattedTimeProps = {
-  datetime: string
+  datetime?: Date | string
   icon?: boolean
   showTimezone?: boolean
   small?: boolean
@@ -17,19 +17,29 @@ const FormattedTime = ({
   showTimezone = false,
   className = '',
   ...rest
-}: FormattedTimeProps): JSX.Element => {
-  //Fix getEventDates DAte and string mixins
-  const date = new Date(datetime)
+}: FormattedTimeProps) => {
   const format = useFormatter()
+
+  let date = undefined
+  if (typeof date === 'string' && datetime) {
+    date = new Date(datetime)
+  } else {
+    date = datetime as Date
+  }
+
+  if (!date) {
+    return null
+  }
+
   return (
-    <span {...rest} className={twMerge('inline-flex items-center gap-2 text-base', className)}>
+    <span {...rest} className={twMerge('flex h-full items-center gap-2 text-base', className)}>
       {icon && <TimeIcon />}
-      <span className={`box-content shrink ${small ? 'mt-1' : 'mt-0'}`}>
-        <time suppressHydrationWarning dateTime={datetime}>
-          {format.dateTime(date, { hour: 'numeric', minute: 'numeric', hour12: false }) + ' '}
-        </time>
-        {showTimezone && <span>(CEST)</span>}
-      </span>
+      <time suppressHydrationWarning dateTime={datetime?.toLocaleString()}>
+        <div className="mt-1 flex content-center items-center justify-center text-center align-middle">
+          {format.dateTime(date, { timeStyle: 'short' })}
+          {showTimezone && ` (CEST)`}
+        </div>
+      </time>
     </span>
   )
 }

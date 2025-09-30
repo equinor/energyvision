@@ -63,5 +63,27 @@ export const content = {
     { type: 'anchorLinkList' },
     { type: 'tabs' },
     { type: 'importTable' },
+    Flags.HAS_EVENT && { type: 'promoteEvents', title: 'Event promotion' },
+    Flags.HAS_MAGAZINE && { type: 'promoteMagazine', title: 'Magazine promotion' },
+    { type: 'promotePeople', title: 'People promotion' },
+    { type: 'promoteTopics', title: 'Topic page promotion' },
+    Flags.HAS_NEWS && { type: 'promoteNews', title: 'News promotions' },
   ].filter((e) => e),
+  options: {
+    insertMenu: {
+      filter: true,
+      groups: [
+        {
+          name: 'promotions',
+          title: 'Promotions',
+          of: ['promotion', 'promoteMagazine', 'promoteTopics', 'promotePeople', 'promoteEvents', 'promoteNews'],
+        },
+        {
+          name: 'carousels',
+          title: 'Carousels',
+          of: ['imageCarousel', 'videoPlayerCarousel', 'iframeCarousel'],
+        },
+      ],
+    },
+  },
 }

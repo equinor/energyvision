@@ -5,7 +5,14 @@ import { configureBlockContent } from '../../editors'
 import type { MagazinePromotion } from './promoteMagazine'
 import type { TopicPromotion } from './promoteTopic'
 import { calendar_event, contacts, library_books } from '@equinor/eds-icons'
-import type { CustomValidatorResult, PortableTextBlock, Rule, ValidationError } from 'sanity'
+import {
+  defineField,
+  defineType,
+  type CustomValidatorResult,
+  type PortableTextBlock,
+  type Rule,
+  type ValidationError,
+} from 'sanity'
 import type { ColorSelectorValue } from '../../components/ColorSelector'
 import { EdsIcon } from '../../../icons'
 import { Flags } from '../../../src/lib/datasetHelpers'
@@ -49,7 +56,8 @@ export type Promotion = {
 type PromotionType = 'promoteTopics' | 'promoteNews' | 'promotePeople' | 'promoteEvents' | 'promoteMagazine'
 
 export default {
-  title: 'Promotion',
+  title: 'Promotion (Deprecated, use direct types)',
+  description: 'Deprecated - Use direct promotion types instead',
   name: 'promotion',
   type: 'object',
   fieldsets: [
@@ -90,23 +98,20 @@ export default {
       type: 'array',
       of: [configureBlockContent({ variant: 'ingress' })],
     },
-    singleItemArray(
-      {
-        type: 'array',
-        name: 'promotion',
-        description: 'Select what type of content you want to promote',
-        title: 'Type of promotion',
-        of: [
-          Flags.HAS_NEWS && { type: 'promoteNews', title: 'Promote news' },
-          { type: 'promoteTopics', title: 'Promote topic' },
-          { type: 'promotePeople', title: 'Promote people' },
-          Flags.HAS_EVENT && { type: 'promoteEvents', title: 'Promote events' },
-          Flags.HAS_MAGAZINE && { type: 'promoteMagazine', title: 'Promote magazine' },
-        ].filter((e) => e),
-        options: { sortable: false },
-      },
-      true,
-    ),
+    {
+      type: 'array',
+      name: 'promotion',
+      description: 'Select what type of content you want to promote',
+      title: 'Type of promotion',
+      of: [
+        Flags.HAS_NEWS && { type: 'promoteNews', title: 'Promote news' },
+        { type: 'promoteTopics', title: 'Promote topic' },
+        { type: 'promotePeople', title: 'Promote people' },
+        Flags.HAS_EVENT && { type: 'promoteEvents', title: 'Promote events' },
+        Flags.HAS_MAGAZINE && { type: 'promoteMagazine', title: 'Promote magazine' },
+      ].filter((e) => e),
+      options: { sortable: false },
+    },
     {
       name: 'viewAllLink',
       title: 'View all internal link',

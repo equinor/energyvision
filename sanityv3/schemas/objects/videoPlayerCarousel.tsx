@@ -94,6 +94,7 @@ export default {
       name: 'aspectRatio',
       type: 'string',
       title: 'Aspect ratio',
+      description: '9:16 will be in the mode scrollable',
       options: {
         list: [
           { title: '16:9', value: '16:9' },
@@ -105,15 +106,6 @@ export default {
       initialValue: '16:9',
       fieldset: 'design',
       validation: (Rule: Rule) => Rule.required(),
-    },
-    {
-      type: 'boolean',
-      name: 'scrollMode',
-      title: 'Scroll mode',
-      description: 'Displays the carousel as scroll container',
-      initialValue: false,
-      fieldset: 'design',
-      hidden: ({ parent }: { parent: any }) => parent?.aspectRatio !== '9:16',
     },
     {
       title: 'Background',

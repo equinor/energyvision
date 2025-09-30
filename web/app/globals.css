@@ -234,13 +234,16 @@ and not use important in textteaser theme
 
 @utility envis-scrollbar {
   &::-webkit-scrollbar {
-    @apply h-2.5 bg-grey-20;
+    @apply h-2;
   }
   &::-webkit-scrollbar-track {
-    @apply h-2.5 bg-grey-20;
+    @apply h-2.5 bg-neutral-50;
   }
   &::-webkit-scrollbar-thumb {
-    @apply h-2.5 rounded-2xs bg-grey-50 hover:bg-grey-60;
+    @apply h-2.5 rounded-sm bg-neutral-300;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    @apply bg-neutral-400;
   }
 }
 

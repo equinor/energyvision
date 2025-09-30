@@ -4,7 +4,6 @@ import type { PortableTextBlock } from '@portabletext/types'
 import { forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 import isEmpty from '../helpers/isEmpty'
-import { TypographyGroups, variants } from '@/core/Typography/variants'
 
 export type BlockProps = {
   children: PortableTextBlock[]

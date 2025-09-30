@@ -28,7 +28,7 @@ const variants = {
   paragraph: {
     caption: '',
     overline: 'text-md pb-2',
-    ingress: 'text-md my-6 first:mt-0 last:mb-0',
+    ingress: 'text-md my-6 first:mt-0',
     eyebrow: 'text-xs font-medium uppercase',
     body: 'my-5 first:mt-0 last:mb-0 [:where(h2+*,h3+*)]:mt-0 text-base',
     small: 'text-sm',
@@ -43,6 +43,9 @@ const variants = {
   marks: {
     highlight: 'text-energy-red-100 dark:text-spruce-wood-100',
   },
+  plain: {
+    div: '',
+  },
 }
 /*   ingress: {
     //mt-10 mb-16 in news
@@ -55,22 +58,25 @@ export type TypographyTokens = {
   }
 }
 
-const { heading, paragraph, marks } = variants
+const { heading, paragraph, marks, plain } = variants
 
 export type QuickTypographyVariants =
   | TypographyTokens['heading']
   | TypographyTokens['paragraph']
   | TypographyTokens['marks']
+  | TypographyTokens['plain']
 
 const quickVariants: QuickTypographyVariants = {
   ...heading,
   ...paragraph,
   ...marks,
+  ...plain,
 }
 type TypographyVariants =
   | keyof TypographyTokens['heading']
   | keyof TypographyTokens['paragraph']
   | keyof TypographyTokens['marks']
+  | keyof TypographyTokens['plain']
 
 type TypographyGroups = keyof typeof variants
 

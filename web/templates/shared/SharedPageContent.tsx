@@ -114,7 +114,6 @@ export type PageContentProps = {
 const getBackgroundOptions = (component: Component) => {
   if (!component?.designOptions || !Object.hasOwn(component, 'designOptions')) {
     //white if no designOptions
-    console.log('return default with background options')
     return {
       backgroundUtility: 'white-100',
     }
@@ -179,14 +178,14 @@ const applyPaddingTopIfApplicable = (currentComponent: Component, prevComponent:
   }
 
   const currentComponentsDO = getBackgroundOptions(currentComponent)
-  console.log('currentComponentsDO', currentComponentsDO)
   const previousComponentsDO = getBackgroundOptions(prevComponent)
-  console.log('previousComponentsDO', previousComponentsDO)
+  /*console.log('currentComponentsDO', currentComponentsDO)
+  console.log('previousComponentsDO', previousComponentsDO)*/
   const specialCases = ['teaser', 'fullWidthImage', 'fullWidthVideo', 'backgroundImage', 'campaignBanner']
 
   const currentIsWhiteColorBackground = isWhiteColorBackground(currentComponentsDO, currentComponent)
   const previousIsWhiteColorBackground = isWhiteColorBackground(previousComponentsDO, prevComponent)
-  console.log('currentComponent', currentComponent)
+  /*console.log('currentComponent', currentComponent)
   console.log(
     `Current component ${currentComponent?.type}: ${Array.isArray(currentComponent?.title) ? toPlainText(currentComponent?.title) : currentComponent?.title}`,
   )
@@ -195,7 +194,7 @@ const applyPaddingTopIfApplicable = (currentComponent: Component, prevComponent:
   console.log(
     `Previous component ${prevComponent?.type}:  ${Array.isArray(prevComponent?.title) ? toPlainText(prevComponent?.title) : prevComponent?.title}`,
   )
-  console.log('previousIsWhiteColorBackground', previousIsWhiteColorBackground)
+console.log('previousIsWhiteColorBackground', previousIsWhiteColorBackground) */
   const previousComponentIsASpecialCaseAndNeedPT =
     specialCases.includes(prevComponent?.type) || specialCases.includes(previousComponentsDO?.type)
 
@@ -237,10 +236,11 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
         : (data?.content?.[previousComponentIndex] as unknown as Component)
 
     const topSpacingClassName = applyPaddingTopIfApplicable(c, previousComponentToCompare)
-    console.log(
+    /*     console.log(
       `Applying top spacing: ${topSpacingClassName} to ${c?.type} with title ${Array.isArray(c?.title) ? toPlainText(c?.title) : c?.title}`,
-    )
+    ) */
     const spacingClassName = `${topSpacingClassName} pb-page-content`
+    console.log('c.type', c.type)
     switch (c.type) {
       case 'teaser':
         return <Teaser key={c.id} data={c as TeaserData} anchor={anchorReference} />
@@ -286,6 +286,56 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
         return (
           <PromotionsBlock
             key={c.id}
+            data={c as PromotionsBlockData}
+            anchor={anchorReference}
+            className={spacingClassName}
+          />
+        )
+      case 'promoteEvents':
+        return (
+          <PromotionsBlock
+            key={c.id}
+            variant="promoteEvents"
+            data={c as PromotionsBlockData}
+            anchor={anchorReference}
+            className={spacingClassName}
+          />
+        )
+      case 'promoteNews':
+        return (
+          <PromotionsBlock
+            key={c.id}
+            variant="promoteNews"
+            data={c as PromotionsBlockData}
+            anchor={anchorReference}
+            className={spacingClassName}
+          />
+        )
+      case 'promotePeople':
+        return (
+          <PromotionsBlock
+            key={c.id}
+            variant="promotePeople"
+            data={c as PromotionsBlockData}
+            anchor={anchorReference}
+            className={spacingClassName}
+          />
+        )
+      case 'promoteMagazine':
+        return (
+          <PromotionsBlock
+            key={c.id}
+            variant="promoteMagazine"
+            data={c as PromotionsBlockData}
+            anchor={anchorReference}
+            className={spacingClassName}
+          />
+        )
+      case 'promoteTopics':
+        return (
+          <PromotionsBlock
+            key={c.id}
+            variant="promoteTopics"
             data={c as PromotionsBlockData}
             anchor={anchorReference}
             className={spacingClassName}

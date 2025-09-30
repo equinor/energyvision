@@ -39,7 +39,7 @@ type CarouselItemProps = {
  */
 export const CarouselItem = forwardRef<HTMLLIElement, CarouselItemProps>(function CarouselItem(
   {
-    variant = 'richTextBelow',
+    variant = 'default',
     displayMode = 'scroll',
     wasUserPress = false,
     overrideHeights = false,
@@ -95,12 +95,12 @@ export const CarouselItem = forwardRef<HTMLLIElement, CarouselItemProps>(functio
   group
   shrink-0
   grow
-  snap-center
-  pb-6
-  last:mr-lg 
-  lg:last:mr-layout-sm
-  max-h-[500px] 
-  lg:max-h-[740px]`
+  snap-start
+  scroll-ml-0.5
+  first:pl-0.5
+  last:pr-6`
+  //  max-h-[500px]
+  //lg:max-h-[740px]
 
   const singleVariantClassNames = `
   h-full
@@ -121,10 +121,10 @@ export const CarouselItem = forwardRef<HTMLLIElement, CarouselItemProps>(functio
     switch (variant) {
       case 'richTextBelow': {
         return (
-          <figure className={`flex flex-col ${displayMode === 'single' ? `${singleWidths}` : ''}`}>
+          <figure className={`flex h-full flex-col ${displayMode === 'single' ? `${singleWidths}` : ''}`}>
             <div
               className={`${
-                displayMode === 'scroll' ? 'aspect-9/16' : `aspect-4/3 md:aspect-video` //` ${overrideHeights ? 'aspect-video' : `${singleHeigths} aspect-9/16 md:aspect-video`}`
+                displayMode === 'scroll' ? '' : `aspect-4/3 md:aspect-video` //` ${overrideHeights ? 'aspect-video' : `${singleHeigths} aspect-9/16 md:aspect-video`}`
               }`}
             >
               {children}
@@ -173,9 +173,6 @@ export const CarouselItem = forwardRef<HTMLLIElement, CarouselItemProps>(functio
       {...(displayMode === 'single' && {
         'aria-current': active,
         tabIndex: active ? 0 : -1,
-      })}
-      {...(displayMode === 'scroll' && {
-        tabIndex: 0,
       })}
       className={envisTwMerge(
         `relative mt-1 focus:outline-hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grey-50 focus-visible:outline-dashed dark:focus-visible:outline-white-100 ${displayMode === 'single' ? singleVariantClassNames : scrollVariantClassNames}`,

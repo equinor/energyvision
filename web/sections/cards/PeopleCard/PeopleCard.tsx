@@ -27,8 +27,12 @@ const PeopleCard = forwardRef<HTMLDivElement, PeopleCardProps>(function PeopleCa
   const linkClassNames = 'text-norwegian-woods-100 no-underline hover:underline text-sm'
 
   const variantClassNames = {
-    default: `grid-cols-1 grid-rows-[max-content_1fr] justify-items-center items-start gap-0`,
-    single: `grid-cols-[30%_60%] grid-rows-1 gap-4 lg:gap-8 items-start lg:items-center`,
+    default: `w-full flex gap-4 lg:gap-8 lg:flex-col `,
+    single: `w-full lg:w-fit flex flex-col lg:flex-row gap-8 lg:gap-12`,
+  }
+  const variantContentClassNames = {
+    default: `justify-center items-start lg:items-center`,
+    single: `justify-center items-center lg:items-start`,
   }
 
   return (
@@ -36,17 +40,13 @@ const PeopleCard = forwardRef<HTMLDivElement, PeopleCardProps>(function PeopleCa
       <div
         ref={ref}
         className={twMerge(
-          `grid h-full w-full ${variantClassNames[variant]} active:shadow-white-100-interact focus-visible:envis-outline dark:focus-visible:envis-outline-invert rounded-xs bg-white-100 px-6 py-8 text-slate-80 shadow-card focus:outline-hidden active:box-shadow-crisp-interact dark:text-white-100`,
+          `grid h-full items-center justify-center ${variantClassNames[variant]} active:shadow-white-100-interact focus-visible:envis-outline dark:focus-visible:envis-outline-invert rounded-xs bg-white-100 px-6 py-8 text-slate-80 shadow-card focus:outline-hidden active:box-shadow-crisp-interact dark:text-white-100`,
           className,
         )}
         {...rest}
       >
         {image && (
-          <div
-            className={`relative ${variant === 'single' ? 'lg:p-4' : 'size-[150px]'} box-content ${
-              variant === 'single' ? '' : 'mb-10'
-            }`}
-          >
+          <div className={`relative ${variant === 'single' ? 'size-64' : 'size-40'}`}>
             <Image
               image={image}
               maxWidth={400}
@@ -57,53 +57,39 @@ const PeopleCard = forwardRef<HTMLDivElement, PeopleCardProps>(function PeopleCa
             />
           </div>
         )}
-        <div className={`grid h-full grid-cols-1 grid-rows-[1fr_auto]`}>
-          <div
-            className={`flex flex-col ${
-              variant === 'single' ? 'items-start justify-center' : 'items-center justify-start text-center'
-            } max-w-prose`}
+        <div className={`flex flex-col ${variantContentClassNames[variant]}`}>
+          <Typography
+            as={hasSectionTitle ? 'h3' : 'h2'}
+            variant={`${variant === 'single' ? 'md' : 'sm'}`}
+            className="mb-4 font-medium"
           >
-            <Typography
-              as={hasSectionTitle ? 'h3' : 'h2'}
-              variant={`${variant === 'single' ? 'md' : 'sm'}`}
-              className="mb-4 font-medium"
+            {name}
+          </Typography>
+          {title && <div className="text-sm text-pretty text-slate-80 dark:text-white-100">{title}</div>}
+          {department && <div className="mt-2 text-sm text-pretty text-slate-80 dark:text-white-100">{department}</div>}
+          {isLink && cv && cvUrl ? (
+            <ResourceLink
+              href={cvUrl}
+              hrefLang={cv?.type === 'internalUrl' ? getLocaleFromName(cv?.link?.lang) : undefined}
+              variant="fit"
+              className="mt-4"
             >
-              {name}
-            </Typography>
-            {title && <div className="text-sm text-pretty text-slate-80 dark:text-white-100">{title}</div>}
-            {department && (
-              <div className="mt-2 text-sm text-pretty text-slate-80 dark:text-white-100">{department}</div>
-            )}
-          </div>
-
-          <div
-            className={`flex flex-col ${
-              variant === 'single' ? 'items-start justify-center' : 'items-center justify-start text-center'
-            } gap-2 pt-6`}
-          >
-            {isLink && cv && cvUrl ? (
-              <ResourceLink
-                href={cvUrl}
-                hrefLang={cv?.type === 'internalUrl' ? getLocaleFromName(cv?.link?.lang) : undefined}
-                variant="fit"
-              >
-                {cv?.label}
-              </ResourceLink>
-            ) : (
-              <>
-                {email && (
-                  <BaseLink href={`mailto:${email}`} className={linkClassNames}>
-                    {email}
-                  </BaseLink>
-                )}
-                {phone && (
-                  <BaseLink href={`tel:${phone}`} className={linkClassNames}>
-                    {phone}
-                  </BaseLink>
-                )}
-              </>
-            )}
-          </div>
+              {cv?.label}
+            </ResourceLink>
+          ) : (
+            <div className="mt-4">
+              {email && (
+                <BaseLink href={`mailto:${email}`} className={linkClassNames}>
+                  {email}
+                </BaseLink>
+              )}
+              {phone && (
+                <BaseLink href={`tel:${phone}`} className={linkClassNames}>
+                  {phone}
+                </BaseLink>
+              )}
+            </div>
+          )}
         </div>
       </div>
       {enableStructuredMarkup && (

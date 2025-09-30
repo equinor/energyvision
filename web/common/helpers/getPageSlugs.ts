@@ -1,5 +1,5 @@
 import { defaultLanguage, languages } from '../../languages'
-import { AllSlugsType } from '../../pageComponents/shared/LocalizationSwitch'
+import { AllSlugsType } from '../../core/LocalizationSwitch'
 
 const getValidSlugs = (allSlugs: AllSlugsType) => {
   if (!allSlugs) return []

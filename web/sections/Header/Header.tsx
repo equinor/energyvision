@@ -1,7 +1,7 @@
 'use client'
 import { useLocale, useTranslations } from 'next-intl'
 import { default as NextLink } from 'next/link'
-import { AllSlugsType, LocalizationSwitch } from '../../pageComponents/shared/LocalizationSwitch'
+import { AllSlugsType, LocalizationSwitch } from '../../core/LocalizationSwitch'
 import type { MenuData, SimpleMenuData, StickyMenuData } from '../../types/index'
 import { Flags } from '../../common/helpers/datasetHelpers'
 import { languages, defaultLanguage } from '../../languages'

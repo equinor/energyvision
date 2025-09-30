@@ -1,6 +1,6 @@
 'use client'
 import { useTranslations } from 'next-intl'
-import { languages } from '../../languages'
+import { languages } from '../languages'
 import { ButtonLink } from '@/core/Link'
 
 export type AllSlugsType = { slug: string; lang: string }[]
@@ -16,7 +16,7 @@ export const LocalizationSwitch = ({ allSlugs: slugs, activeLocale, ...rest }: L
   if (slugs.length < 1) return null
 
   return (
-    <ul className="flex items-center md:divide-x md:divide-dashed md:divide-gray-400 " {...rest}>
+    <ul className="flex items-center md:divide-x md:divide-dashed md:divide-gray-400" {...rest}>
       {slugs.map((obj) => {
         const language = languages.find((lang) => lang.name === obj.lang)
         return (
@@ -28,17 +28,14 @@ export const LocalizationSwitch = ({ allSlugs: slugs, activeLocale, ...rest }: L
               variant="ghost"
               href={obj.slug}
               hrefLang={`${language?.locale}`}
-              className={`
-                ${activeLocale === String(language?.locale) ? 'hidden md:block' : ''}
-                flex flex-col gap-0 items-stretch px-2 text-xs
-                `}
+              className={` ${activeLocale === String(language?.locale) ? 'hidden md:block' : ''} flex flex-col items-stretch gap-0 px-2 text-xs`}
             >
               <span className="sr-only">{`${intl('switch_to')} ${language?.title}`}</span>
               <span
                 aria-hidden
                 className={`uppercase ${activeLocale === String(language?.locale) ? 'font-semibold' : 'font-normal'}`}
               >
-                {language?.locale}
+                {language?.locale === 'en-GB' ? 'en' : language?.locale}
               </span>
             </ButtonLink>
           </li>

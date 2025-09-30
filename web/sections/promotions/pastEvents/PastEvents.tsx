@@ -9,7 +9,7 @@ type PastEventsProp = {
 
 const PastEvents = ({ events, hasSectionTitle }: PastEventsProp) => {
   return (
-    <ul className="w-full flex flex-col divide-y-[1px] divide-autumn-storm-60">
+    <ul className="grid w-full grid-flow-row auto-rows-max divide-y-[1px] divide-autumn-storm-60">
       {events.map((event) => {
         return (
           <li key={event.id}>

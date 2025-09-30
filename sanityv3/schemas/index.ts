@@ -231,7 +231,7 @@ const RemainingSchemas = [
   homepageBanner,
   tableV2,
   tableTheme,
-    importTable,
+  importTable,
 ]
 
 // Then we give our schema to the builder and provide the result to Sanity

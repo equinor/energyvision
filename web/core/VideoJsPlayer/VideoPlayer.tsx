@@ -22,7 +22,7 @@ export type VideoControlsType = {
   muted?: boolean
 }
 
-type VideoPlayerProps = Omit<HTMLProps<HTMLVideoElement>, 'src'> & {
+export type VideoPlayerProps = Omit<HTMLProps<HTMLVideoElement>, 'src' | 'poster'> & {
   variant?: Variants
   src: string
   figureCaption?: string | PortableTextBlock[]
@@ -145,20 +145,19 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
   }
 
   return (
-    <figure
-      {...(id && { id })}
-      className={twMerge(`relative ${variantClassName[variant]} ${aspectRatioClassName[aspectRatio]}`, className)}
-    >
-      <Video
-        //@ts-ignore: TODO
-        options={videoJsOptions}
-        onReady={handlePlayerReady}
-        useBrandTheme={useBrandTheme}
-        containVideo={containVideo}
-        variant={variant}
-      />
+    <figure {...(id && { id })} className={twMerge(`relative flex flex-col ${variantClassName[variant]}`, className)}>
+      <div className={`${aspectRatioClassName[aspectRatio]}`}>
+        <Video
+          //@ts-ignore: TODO
+          options={videoJsOptions}
+          onReady={handlePlayerReady}
+          useBrandTheme={useBrandTheme}
+          containVideo={containVideo}
+          variant={variant}
+        />
+      </div>
       {figureCaption && (
-        <figcaption className={twMerge(`text-md ${title ? 'py-2' : ''} `, captionClassName)}>
+        <figcaption className={twMerge(`w-full text-md ${title ? 'py-2' : ''} `, captionClassName)}>
           {figureCaption && Array.isArray(figureCaption) && <Blocks value={figureCaption} />}
           {figureCaption && !Array.isArray(figureCaption) && figureCaption}
         </figcaption>

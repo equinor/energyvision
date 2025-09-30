@@ -59,21 +59,21 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
       >
         {start && (
           <div className="h-full py-2">
-            <FormattedDate icon datetime={start.toDateString()} className="text-xs" />
+            <FormattedDate icon datetime={start} className="text-xs" />
           </div>
         )}
         {location && (
-          <div className={`grid h-full grid-cols-[24px_auto] items-center gap-2 py-2`}>
+          <div className={`flex h-full items-center gap-2 py-2`}>
             <Icon data={world} color={'currentColor'} className="text-2xs text-norwegian-woods-100" />
-            <span className="text-xs">{location}</span>
+            <div className="mt-1 flex text-xs">{location}</div>
           </div>
         )}
 
         {start && end ? (
-          <div className={`flex h-full items-center gap-1 py-2`}>
-            <FormattedTime icon datetime={start.toDateString()} className="text-xs" />
-            <span className="w-max">-</span>
-            <FormattedTime datetime={end.toDateString()} showTimezone className="text-xs" />
+          <div className={`flex h-full items-start gap-1 py-2`}>
+            <FormattedTime icon datetime={start} className="text-xs" />
+            {`-`}
+            <FormattedTime datetime={end} showTimezone className="text-xs" />
           </div>
         ) : (
           <div className={`gap-sm grid h-full grid-cols-[24px_auto] items-center py-2`}>

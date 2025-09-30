@@ -5,49 +5,91 @@ import { ResourceLink } from '@/core/Link'
 import { useId } from 'react'
 import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
 import { PortableTextBlock } from 'next-sanity'
-import { CardData, DesignOptions, EventCardData, EventPromotionSettings, LinkData, PeopleCardData, Tag } from '@/types'
+import { CardData, DesignOptions, EventCardData, LinkData, PeopleCardData, Tag } from '@/types'
 import Blocks from '@/portableText/Blocks'
+import { getEventDates } from '@/common/helpers/dateUtilities'
 
 // Do we have a way to share types between studio and web?
 export type PromotionType = 'promoteTopics' | 'promoteNews' | 'promotePeople' | 'promoteEvents' | 'promoteMagazine'
 
-export type PromotionsBlockData = {
+type PromotionBlock = {
   id: string
   type: string
   title?: PortableTextBlock[]
   ingress?: PortableTextBlock[]
-  content: {
-    tags?: Tag[]
-    countryTags?: Tag[]
-    localNewsTags?: Tag[]
-    promotions: CardData[] | PeopleCardData[] | EventCardData[]
-    type: PromotionType
-    eventPromotionSettings?: EventPromotionSettings
-  }
   viewAllLink?: LinkData
   designOptions?: DesignOptions
 }
 
+export type NewsPromotion = {
+  tags?: Tag[]
+  countryTags?: Tag[]
+  localNewsTags?: Tag[]
+  promotions?: CardData[]
+} & PromotionBlock
+
+export type PeoplePromotion = {
+  promotions?: PeopleCardData[]
+} & PromotionBlock
+
+export type MagazinePromotion = {
+  manuallySelectArticles?: boolean
+  tags?: Tag[]
+  promotions?: CardData[]
+} & PromotionBlock
+
+export type TopicPromotion = {
+  promotions?: CardData[]
+} & PromotionBlock
+
+export type EventPromotion = {
+  tags?: Tag[]
+  promotionType?: 'automatic' | 'manual'
+  eventsCount?: number
+  promotePastEvents?: boolean
+  promotions?: EventCardData[]
+} & PromotionBlock
+
+/* export type PromotionsBlockData = {
+  content: {
+    promotions: CardData[] | PeopleCardData[] | EventCardData[]
+    type: PromotionType
+    eventPromotionSettings?: EventPromotionSettings
+  }
+} */
+
 const PromotionsBlock = ({
+  variant,
   data,
   anchor,
   className,
 }: {
-  data: PromotionsBlockData
+  variant: PromotionType
+  data: EventPromotion | MagazinePromotion | TopicPromotion | NewsPromotion | PeoplePromotion
   anchor?: string
   className?: string
 }) => {
-  const { title, ingress, content, viewAllLink, designOptions } = data
+  const { title, ingress, viewAllLink, designOptions, ...restData } = data
   const { bg, dark } = getBgAndDarkFromBackground(designOptions)
-  const promotions = content?.promotions || []
-  const variant = data.content?.type
-  const promoteSingleUpcomingEvent = data?.content?.eventPromotionSettings?.promoteSingleUpcomingEvent
+
   const sectionTitleId = useId()
+  let promotionsCount = data?.promotions?.length
+  let promotionList = data?.promotions ?? []
+  if (variant === 'promoteEvents' && 'eventsCount' in data && data?.eventsCount && data?.promotions) {
+    promotionsCount = data?.eventsCount ?? data?.promotions?.length
+    /*     const sortedPromotions = (promotions as EventCardData[]).sort((a, b) => {
+          return (
+            new Date(getEventDates(a.eventDate).start || a.eventDate.date).getTime() -
+            new Date(getEventDates(b.eventDate).start || b.eventDate.date).getTime()
+          )
+        }) */
+    promotionList = data?.promotions.slice(0, data?.eventsCount)
+  }
 
   const paddingClassName = `px-layout-sm 3xl:px-layout-lg`
 
   return (
-    <section className={twMerge(`${bg} ${dark ? 'dark' : ''} mx-auto pb-page-content`, className)} id={anchor}>
+    <section className={twMerge(`${bg} ${dark ? 'dark' : ''} pb-page-content`, className)} id={anchor}>
       {title && (
         <div className={paddingClassName}>
           <Blocks variant="h2" id={sectionTitleId} value={title} />
@@ -67,24 +109,19 @@ const PromotionsBlock = ({
           </div>
         )}
         <div
-          className={`mx-auto pt-6 ${
-            (variant === 'promoteEvents' &&
-              (promoteSingleUpcomingEvent ||
-                promotions?.length === 1 ||
-                data?.content?.eventPromotionSettings?.promotePastEvents)) ||
-            (variant === 'promotePeople' && promotions?.length === 1)
-              ? 'px-layout-sm md:px-layout-lg'
-              : `px-layout-sm 3xl:px-layout-md`
-          }`}
+          className={`pt-6 ${promotionsCount === 1 ? 'px-layout-sm md:px-layout-lg' : `px-layout-sm 3xl:px-layout-md`}`}
         >
-          {promotions?.length === 1 || promoteSingleUpcomingEvent ? (
-            <Promotion promotion={promotions[0]} hasSectionTitle={!!title} />
+          {promotionsCount === 1 ? (
+            <Promotion promotion={promotionList[0]} hasSectionTitle={!!title} />
           ) : (
             <MultiplePromotions
-              data={promotions}
+              //@ts-ignore: todo
+              data={{
+                ...restData,
+                promotions: promotionList,
+              }}
               variant={variant}
               hasSectionTitle={!!title}
-              eventPromotionSettings={content?.eventPromotionSettings}
               labelledbyId={sectionTitleId}
             />
           )}

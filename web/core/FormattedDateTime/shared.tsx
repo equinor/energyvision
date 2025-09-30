@@ -4,7 +4,7 @@ import { Icon } from '@equinor/eds-core-react'
 import { calendar, time } from '@equinor/eds-icons'
 
 export type DateProps = {
-  datetime: string
+  datetime: string | Date
   icon?: boolean
   year?: 'numeric' | '2-digit'
   month?: 'numeric' | '2-digit' | 'long' | 'short' | 'narrow'
