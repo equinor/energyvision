@@ -8,6 +8,7 @@ import { Icon } from '@equinor/eds-core-react'
 import { world } from '@equinor/eds-icons'
 import Blocks from '@/portableText/Blocks'
 import { useFormatter } from 'next-intl'
+import { Typography } from '@/core/Typography'
 
 export type PastEventsListItemProps = {
   event: EventCardData
