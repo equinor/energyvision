@@ -1,4 +1,5 @@
 import { Flags } from '../../../src/lib/datasetHelpers'
+import { RolesBasedArrayInput } from '../../components/RolesBasedArrayInput'
 import { defaultColors } from '../../defaultColors'
 
 export const seo = {
@@ -27,6 +28,7 @@ export const stickyMenu = {
   type: 'stickyMenu',
   fieldset: 'stickymenu',
 }
+
 export const content = {
   name: 'content',
   type: 'array',
@@ -69,6 +71,9 @@ export const content = {
     { type: 'promoteTopics', title: 'Topic page promotion' },
     Flags.HAS_NEWS && { type: 'promoteNews', title: 'News promotions' },
   ].filter((e) => e),
+  components: {
+    input: RolesBasedArrayInput,
+  },
   options: {
     insertMenu: {
       filter: true,
