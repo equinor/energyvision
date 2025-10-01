@@ -51,3 +51,6 @@ __queuestorage*
 
 # tsc
 tsconfig.tsbuildinfo
+
+#ignore pnpm-lock.yaml for search
+search/pnpm-lock.yaml
