@@ -6,6 +6,7 @@ RUN npm install -g pnpm@8.5.1
 
 WORKDIR /opt/app
 
+# Install dependencies
 RUN npm install dotenv fs
 
 COPY ./package.json ./
@@ -53,6 +54,7 @@ ENV SANITY_STUDIO_FOTOWARE_AF_API_ACCESS_URL ${ARG_FOTOWARE_AF_API_ACCESS_URL}
 ENV SANITY_STUDIO_SCREEN9_ACCOUNT_ID ${ARG_SCREEN9_ACCOUNT_ID}
 ENV SANITY_STUDIO_SCREEN9_TOKEN ${ARG_SCREEN9_TOKEN}
 
+
 RUN pnpm m i --frozen-lockfile
 RUN pnpm sanityv3 build
 
@@ -67,14 +69,7 @@ ENV UID 12345
 ENV GID 23456
 
 RUN addgroup -S "$USER" && \
-  adduser -S \
-  --disabled-password \
-  --gecos "" \
-  --home "/opt/app" \
-  --ingroup "$USER" \
-  --no-create-home \
-  --uid "$UID" \
-  "$USER"
+  adduser -S --disabled-password --gecos "" --home "/opt/app" --ingroup "$USER" --no-create-home --uid "$UID" "$USER"
 
 RUN chown -R "$USER":"$USER" .
 
@@ -82,8 +77,8 @@ USER "$UID"
 
 RUN mkdir dist
 
-COPY --from=builder ./opt/app/sanityv3/dist ./dist
-COPY --from=builder ./opt/app/sanityv3/server.js .
+COPY --from=builder /opt/app/sanityv3/dist ./dist
+COPY --from=builder /opt/app/sanityv3/server.js .
 
 RUN npm install express@4.16.3 express-history-api-fallback@2.2.1
 

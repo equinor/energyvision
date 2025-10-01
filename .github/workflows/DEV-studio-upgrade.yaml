@@ -1,9 +1,9 @@
-name: DEV - Build & deploy studio v3
+name: DEV - Build & deploy studio v3 upgrade
 on:
   workflow_dispatch:
   push:
     branches:
-      - staging
+      - upgrade-next-intl
     paths:
       - 'sanityv3/**/*'
       - './FeatureFlags.js'
@@ -49,11 +49,11 @@ jobs:
         if: failure()
 
   deploy-studio:
-    runs-on: ubuntu-latest
     needs: check-code
+    runs-on: ubuntu-latest
     environment:
       name: development
-      url: https://studiov3-global-development-energyvision-dev.radix.equinor.com/
+      url: https://studiov3-global-development-upgrade-energyvision-dev.radix.equinor.com/
     strategy:
       matrix:
         dataset: [global-development]
@@ -66,7 +66,7 @@ jobs:
       - id: deploy-satellite
         uses: ./.github/workflows/deploy-v3/
         with:
-          imageName: ghcr.io/equinor/energyvision/studiov3-${{ matrix.dataset }}
+          imageName: ghcr.io/equinor/energyvision/studiov3-${{ matrix.dataset }}-upgrade
           datasetName: ${{ matrix.dataset }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           sanityApiToken: ${{ secrets.SANITY_API_TOKEN }}
@@ -77,11 +77,8 @@ jobs:
           fotowareClientId: ${{ secrets.SANITY_STUDIO_FOTOWARE_CLIENT_ID }}
           fotowareTenantUrl: ${{ secrets.SANITY_STUDIO_FOTOWARE_TENANT_URL }}
           fotowareRedirectOrigin: ${{ secrets.SANITY_STUDIO_FOTOWARE_REDIRECT_ORIGIN }}
-          fotowareRedirectUri: ${{ secrets.SANITY_STUDIO_FOTOWARE_REDIRECT_URI}}
           fotowareAfExportUrl: ${{ secrets.SANITY_STUDIO_FOTOWARE_AF_EXPORT_URL }}
           fotowareAfExportKey: ${{ secrets.SANITY_STUDIO_FOTOWARE_AF_EXPORT_KEY }}
-          fotowareAfApiAccessKey: ${{ secrets.SANITY_STUDIO_FOTOWARE_AF_API_ACCESS_KEY }}
-          fotowareAfApiAccessUrl: ${{ secrets.SANITY_STUDIO_FOTOWARE_AF_API_ACCESS_URL }}
           screen9accountId: ${{ secrets.SANITY_STUDIO_SCREEN9_ACCOUNT_ID }}
           screen9token: ${{ secrets.SANITY_STUDIO_SCREEN9_TOKEN }}
           environment: ${{ secrets.ENV }}

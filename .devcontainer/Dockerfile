@@ -43,15 +43,9 @@ RUN fish install --noninteractive
 # [Optional] Uncomment if you want to install an additional version of node using nvm
 # ARG EXTRA_NODE_VERSION=10
 # RUN su node -c "source /usr/local/share/nvm/nvm.sh && nvm install ${EXTRA_NODE_VERSION}"
+RUN su node -c "npm install -g pnpm@8.6.1 gitmoji-cli azure-functions-core-tools@4 --unsafe-perm=true azurite @sanity/cli"
 
 VOLUME [ "/var/lib/docker" ]
-
-# [Optional] Uncomment if you want to install more global node packages
-RUN su node -c "npm install -g pnpm@8.6.1"
-RUN su node -c "npm install -g gitmoji-cli"
-RUN su node -c "npm install -g azure-functions-core-tools@4 --unsafe-perm true"
-RUN su node -c "npm install -g azurite"
-RUN su node -c "npm install -g @sanity/cli"
 
 # Setting the ENTRYPOINT to docker-init.sh will start up the Docker Engine
 # inside the container "overrideCommand": false is set in devcontainer.json.
