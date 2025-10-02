@@ -77,7 +77,7 @@ const PeopleCard = forwardRef<HTMLDivElement, PeopleCardProps>(function PeopleCa
               {cv?.label}
             </ResourceLink>
           ) : (
-            <div className="mt-4">
+            <div className="mt-4 flex flex-col items-center gap-1 text-center">
               {email && (
                 <BaseLink href={`mailto:${email}`} className={linkClassNames}>
                   {email}
