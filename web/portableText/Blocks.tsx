@@ -158,10 +158,10 @@ const typesSerializers = {
   //@ts-ignore:todo
   pullQuote: (props) => <Quote {...props} />,
   //@ts-ignore:todo
-  basicIframe: (props) => {
+  /*   basicIframe: (props) => {
     const { value } = props
-    return <IFrame {...value} className="mx-auto px-layout-md py-14" />
-  },
+    return <IFrame {...value} className="px-layout-md" />
+  }, */
 }
 const footnoteSerializer = {
   footnote: (props: any) => {
@@ -210,7 +210,7 @@ export type BlocksProps = {
   noInvert?: boolean
 } & TypographyProps
 
-const inlineBlockTypes = ['block', 'positionedInlineImage', 'pullQuote', 'basicIframe']
+const inlineBlockTypes = ['block', 'positionedInlineImage', 'pullQuote']
 
 export default function Blocks({
   group,
@@ -320,6 +320,32 @@ export default function Blocks({
                 types: {
                   //@ts-ignore:todo
                   factbox: (props) => <FactBox className={`${marginOverride}`} {...props} />,
+                },
+              }}
+            />
+          )
+        } else if (block._type === 'basicIframe') {
+          let marginOverride = ''
+          // If the next block is a basicIframe, remove margin bottom
+          if (blocks[i + 1]?._type === 'basicIframe') {
+            marginOverride = 'mb-0'
+          }
+          // If the previous block was a basicIframe, remove margin top
+          if (blocks[i - 1]?._type === 'basicIframe') {
+            marginOverride = 'mt-0'
+          }
+
+          return (
+            <PortableText
+              key={block._key}
+              value={block}
+              components={{
+                types: {
+                  //@ts-ignore:todo
+                  basicIframe: (props) => {
+                    const { value } = props
+                    return <IFrame {...value} className={`px-layout-md ${marginOverride}`} />
+                  },
                 },
               }}
             />

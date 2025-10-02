@@ -9,6 +9,7 @@ import { PortableTextBlock } from '@portabletext/types'
 import Blocks from '../../portableText/Blocks'
 import Transcript from '@/sections/Transcript/Transcript'
 import { useIsPresentationTool } from 'next-sanity/hooks'
+import { twMerge } from 'tailwind-merge'
 
 const calculatePadding = (aspectRatio: string): string => {
   const ratio = aspectRatio.split(':')
@@ -79,7 +80,7 @@ export const IFrame = forwardRef<HTMLDivElement, IFrameProps>(function IFrame(
   const containerPadding = height ? `${height}px` : calculatePadding(aspectRatio)
 
   const iframeElement = (
-    <section ref={ref} className={envisTwMerge('h-min', className)}>
+    <>
       {title && showTitleAbove && (
         <Blocks value={title} id={titleId} className={envisTwMerge('pb-8 text-xl', titleClassName)} />
       )}
@@ -125,7 +126,7 @@ export const IFrame = forwardRef<HTMLDivElement, IFrameProps>(function IFrame(
           )}
         />
       )}
-    </section>
+    </>
   )
 
   if (isPreview) {
@@ -133,12 +134,12 @@ export const IFrame = forwardRef<HTMLDivElement, IFrameProps>(function IFrame(
   }
 
   return (
-    <>
+    <section ref={ref} className={twMerge('my-20 h-min', className)}>
       {consented ? (
         iframeElement
       ) : (
         <RequestConsentContainer hasSectionTitle={hasSectionTitle} cookiePolicy={cookiePolicy} />
       )}
-    </>
+    </section>
   )
 })

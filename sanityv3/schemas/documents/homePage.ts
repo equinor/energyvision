@@ -7,6 +7,7 @@ import { lang } from './langField'
 import { isCampaign, openGraphImage, seo, stickyMenu, content } from './topic/sharedTopicPageFields'
 import { Flags } from '../../src/lib/datasetHelpers'
 import { defaultColors } from '../defaultColors'
+import { RolesBasedArrayInput } from '../components/RolesBasedArrayInput'
 
 export default {
   type: 'document',
@@ -79,7 +80,32 @@ export default {
         { type: 'anchorLinkList' },
         { type: 'tabs' },
         { type: 'homepageBanner' },
+        Flags.HAS_EVENT && { type: 'promoteEvents', title: 'Event promotion' },
+        Flags.HAS_MAGAZINE && { type: 'promoteMagazine', title: 'Magazine promotion' },
+        { type: 'promotePeople', title: 'People promotion' },
+        { type: 'promoteTopics', title: 'Topic page promotion' },
+        Flags.HAS_NEWS && { type: 'promoteNews', title: 'News promotions' },
       ].filter((e) => e),
+      components: {
+        input: RolesBasedArrayInput,
+      },
+      options: {
+        insertMenu: {
+          filter: true,
+          groups: [
+            {
+              name: 'promotions',
+              title: 'Promotions',
+              of: ['promotion', 'promoteMagazine', 'promoteTopics', 'promotePeople', 'promoteEvents', 'promoteNews'],
+            },
+            {
+              name: 'carousels',
+              title: 'Carousels',
+              of: ['imageCarousel', 'videoPlayerCarousel', 'iframeCarousel'],
+            },
+          ],
+        },
+      },
     },
   ].filter((e) => e),
   orderings: [

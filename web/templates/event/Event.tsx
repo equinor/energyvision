@@ -65,9 +65,9 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
             </div>
           </div>
           {(ingress || content) && (
-            <div className={`mx-auto mt-16 px-layout-lg pb-page-content`}>
-              {ingress && <Blocks variant="ingress" value={ingress} className="pb-16" />}
-              {content && <Blocks value={content} />}
+            <div className={`mt-14 pb-page-content`}>
+              {ingress && <Blocks variant="ingress" value={ingress} className="px-layout-lg" />}
+              {content && <Blocks value={content} className="px-layout-lg" />}
             </div>
           )}
           {promotedPeople?.people && promotedPeople?.people.length > 0 && (
@@ -81,11 +81,8 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
               }}
             />
           )}
-          {contactList && <ContactList data={contactList} className="my-12" />}
-
-          {relatedLinks?.links && relatedLinks.links.length > 0 && (
-            <RelatedContent data={relatedLinks} className={twMerge(`mx-auto px-layout-lg pb-page-content`)} />
-          )}
+          {contactList && <ContactList data={contactList} />}
+          {relatedLinks?.links && relatedLinks.links.length > 0 && <RelatedContent data={relatedLinks} />}
         </article>
       </main>
     </>

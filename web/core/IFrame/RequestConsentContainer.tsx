@@ -52,13 +52,13 @@ const RequestConsentContainer = ({ hasSectionTitle = true, cookiePolicy }: Reque
     })
   }
   return (
-    <div className="flex flex-col rounded-md ">
-      <div className="bg-slate-blue-95 dark px-6 py-4 rounded-t-md border border-slate-blue-95">
+    <div className="flex w-fit flex-col rounded-md">
+      <div className="dark w-full rounded-t-md border border-slate-blue-95 bg-slate-blue-95 px-6 py-4">
         <Typography variant="lg" as={hasSectionTitle ? 'h3' : 'h2'}>
           {intl('cookie_consent_header')}
         </Typography>
       </div>
-      <div className="flex flex-row items-start gap-6 px-6 py-4 border border-grey-40 rounded-b-md">
+      <div className="border-grey-40 flex flex-row items-start gap-6 rounded-b-md border px-6 py-4">
         <svg
           width="69"
           height="68"
@@ -66,7 +66,7 @@ const RequestConsentContainer = ({ hasSectionTitle = true, cookiePolicy }: Reque
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
           aria-hidden={true}
-          className="w-full h-auto max-w-[69px]"
+          className="h-auto w-full max-w-[69px]"
         >
           <path
             d="M59.6418 28.8779C59.0543 27.9655 57.0021 27.989 57.0021 27.989C55.1336 30.6031 50.6422 27.8263 50.6422 27.8263C47.3063 29.2316 45.2709 24.7532 45.2709 24.7532C40.7823 24.1212 41.4757 19.6822 41.4757 19.6822C39.2426 19.26 39.8692 15.4581 39.8692 15.4581C39.8692 15.4581 41.1083 14.5011 40.4985 13.8011C40.1108 13.356 40.0868 12.0786 40.1206 11.2066C37.2065 10.3721 34.177 9.94901 31.1311 9.95115C14.1076 9.95115 0.307373 22.9458 0.307373 38.9756C0.307373 55.0053 14.1076 68 31.1311 68C48.1545 68 61.9547 55.0053 61.9547 38.9756C61.9584 35.4931 61.295 32.0386 59.9963 28.7779C59.8381 28.9461 59.7154 28.9923 59.6418 28.8779Z"
@@ -101,7 +101,7 @@ const RequestConsentContainer = ({ hasSectionTitle = true, cookiePolicy }: Reque
           />
         </svg>
 
-        <div className="flex flex-col gap-6">
+        <div className="flex w-fit flex-col gap-6">
           <Typography variant="body">{getCookieInformationText(cookiePolicy)}</Typography>
           <Button onClick={() => handleCookiebotRenew(locale)} variant="outlined" className="text-left">
             {intl('cookie_settings')}

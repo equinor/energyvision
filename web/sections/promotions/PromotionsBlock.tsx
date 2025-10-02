@@ -86,7 +86,7 @@ const PromotionsBlock = ({
     promotionList = data?.promotions.slice(0, data?.eventsCount)
   }
 
-  const paddingClassName = `px-layout-sm 3xl:px-layout-lg`
+  const paddingClassName = `px-layout-sm lg:px-layout-lg`
 
   return (
     <section className={twMerge(`${bg} ${dark ? 'dark' : ''} pb-page-content`, className)} id={anchor}>

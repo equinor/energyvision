@@ -179,13 +179,13 @@ const applyPaddingTopIfApplicable = (currentComponent: Component, prevComponent:
 
   const currentComponentsDO = getBackgroundOptions(currentComponent)
   const previousComponentsDO = getBackgroundOptions(prevComponent)
-  /*console.log('currentComponentsDO', currentComponentsDO)
-  console.log('previousComponentsDO', previousComponentsDO)*/
+  console.log('currentComponentsDO', currentComponentsDO)
+  console.log('previousComponentsDO', previousComponentsDO)
   const specialCases = ['teaser', 'fullWidthImage', 'fullWidthVideo', 'backgroundImage', 'campaignBanner']
 
   const currentIsWhiteColorBackground = isWhiteColorBackground(currentComponentsDO, currentComponent)
   const previousIsWhiteColorBackground = isWhiteColorBackground(previousComponentsDO, prevComponent)
-  /*console.log('currentComponent', currentComponent)
+  console.log('currentComponent', currentComponent)
   console.log(
     `Current component ${currentComponent?.type}: ${Array.isArray(currentComponent?.title) ? toPlainText(currentComponent?.title) : currentComponent?.title}`,
   )
@@ -194,7 +194,8 @@ const applyPaddingTopIfApplicable = (currentComponent: Component, prevComponent:
   console.log(
     `Previous component ${prevComponent?.type}:  ${Array.isArray(prevComponent?.title) ? toPlainText(prevComponent?.title) : prevComponent?.title}`,
   )
-console.log('previousIsWhiteColorBackground', previousIsWhiteColorBackground) */
+  console.log('previousIsWhiteColorBackground', previousIsWhiteColorBackground)
+
   const previousComponentIsASpecialCaseAndNeedPT =
     specialCases.includes(prevComponent?.type) || specialCases.includes(previousComponentsDO?.type)
 

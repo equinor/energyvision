@@ -4,18 +4,19 @@ import { ResourceLink } from '@/core/Link'
 import { Typography } from '@/core/Typography'
 import { getUrlFromAction } from '../../common/helpers'
 import { getLocaleFromName } from '../../lib/localization'
+import { twMerge } from 'tailwind-merge'
 
 type RelatedContentProps = {
   data: RelatedLinksData
 } & HTMLAttributes<HTMLDivElement>
 
-const RelatedContent = ({ data, ...rest }: RelatedContentProps) => {
+const RelatedContent = ({ data, className = '', ...rest }: RelatedContentProps) => {
   return (
-    <aside {...rest}>
+    <aside className={twMerge(`w-full px-layout-lg py-20`, className)} {...rest}>
       <Typography className="pb-4 text-left" variant="xl" as="h2">
         {data.title}
       </Typography>
-      <ul>
+      <ul className="max-w-text">
         {data.links.length > 0 &&
           data.links.map((item: LinkData) => {
             const url = getUrlFromAction(item)
