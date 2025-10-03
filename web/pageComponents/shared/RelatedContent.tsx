@@ -12,7 +12,7 @@ type RelatedContentProps = {
 
 const RelatedContent = ({ data, className = '', ...rest }: RelatedContentProps) => {
   return (
-    <aside className={twMerge(`w-full px-layout-lg py-20`, className)} {...rest}>
+    <aside className={twMerge(`sm:px-layout-lg" mx-auto w-full px-layout-sm py-20`, className)} {...rest}>
       <Typography className="pb-4 text-left" variant="xl" as="h2">
         {data.title}
       </Typography>

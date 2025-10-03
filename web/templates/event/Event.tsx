@@ -66,8 +66,8 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
           </div>
           {(ingress || content) && (
             <div className={`mt-14 pb-page-content`}>
-              {ingress && <Blocks variant="ingress" value={ingress} className="px-layout-lg" />}
-              {content && <Blocks value={content} className="px-layout-lg" />}
+              {ingress && <Blocks variant="ingress" value={ingress} className="px-layout-sm sm:px-layout-lg" />}
+              {content && <Blocks value={content} className="px-layout-sm sm:px-layout-lg" />}
             </div>
           )}
           {promotedPeople?.people && promotedPeople?.people.length > 0 && (
