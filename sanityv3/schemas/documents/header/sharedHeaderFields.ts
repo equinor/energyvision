@@ -5,6 +5,7 @@ import { configureBlockContent } from '../../editors'
 import { HeroTypes } from '../../HeroTypes'
 import { ImageWithAltAndCaption } from '../../objects/imageWithAltAndCaption'
 import singleItemArray from '../../objects/singleItemArray'
+import HeroTypeInput from './HeroTypeInput'
 
 const bigTitleRoles = ['administrator', 'developer', 'editor'] // allow editor until designer role is created.
 
@@ -12,6 +13,7 @@ type DocumentType = { parent: Hero; currentUser: CurrentUser }
 type Hero = {
   heroType?: HeroTypes
   isBigTitle?: boolean
+  heroLoopingVideoRatio?: 'tall' | 'narrow' | '0.5'
 }
 
 const isBigTitle = {
@@ -93,6 +95,9 @@ const heroType = {
       { title: '50-50 Banner', value: HeroTypes.FIFTY_FIFTY },
       { title: 'Looping Video', value: HeroTypes.LOOPING_VIDEO },
     ].filter((e) => e),
+  },
+  components: {
+    input: HeroTypeInput,
   },
   initialValue: 'default',
   fieldset: 'header',
@@ -254,8 +259,7 @@ const containVideo = {
   type: 'boolean',
   initialValue: false,
   hidden: ({ parent }: DocumentType) => {
-    console.log('parent?.heroType', parent?.heroType)
-    return parent?.heroType !== HeroTypes.LOOPING_VIDEO || parent?.heroLoopingVideoRatio === '2:1'
+    return parent?.heroType !== HeroTypes.LOOPING_VIDEO || parent?.heroLoopingVideoRatio === '0.5'
   },
 }
 
