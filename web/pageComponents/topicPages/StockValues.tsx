@@ -1,10 +1,10 @@
 'use client'
 import useSWR from 'swr'
 import * as xml2js from 'xml2js'
-import { BackgroundContainer } from '@/core/Backgrounds'
 import { FormattedDate } from '@/core/FormattedDateTime'
 import type { StockValuesData } from '../../types/index'
 import { twMerge } from 'tailwind-merge'
+import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
 import { useTranslations } from 'next-intl'
 
 const fetchData = async (url: string) => {
@@ -61,12 +61,14 @@ const StockValues = ({
 
   if (!data) return null
 
-  const { background } = designOptions
+  const { bg, dark } = getBgAndDarkFromBackground(designOptions)
 
   return (
-    <BackgroundContainer
-      className={twMerge(`grid grid-cols-[1fr] gap-8 sm:grid-cols-[1fr,1fr]`, className)}
-      background={background}
+    <div
+      className={twMerge(
+        `${bg} ${dark ? 'dark' : ''} grid grid-cols-[1fr] gap-8 pt-20 sm:grid-cols-[1fr_1fr]`,
+        className,
+      )}
       {...rest}
       id={anchor}
     >
@@ -90,10 +92,10 @@ const StockValues = ({
         <p className="mx-0 mt-0 mb-1 p-0 font-semibold uppercase">{data.NYSE?.title}</p>
         <p className="mx-0 mt-0 mb-1 p-0 font-semibold">
           <FormattedDate datetime={data.NYSE?.Date} /> CET{' '}
-          <span className="font-medium italic">{'stock_nyse_time_delay_message'}</span>
+          <span className="font-medium italic">{t('stock_nyse_time_delay_message')}</span>
         </p>
       </div>
-    </BackgroundContainer>
+    </div>
   )
 }
 
