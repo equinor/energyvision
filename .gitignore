@@ -52,5 +52,5 @@ __queuestorage*
 # tsc
 tsconfig.tsbuildinfo
 
-#ignore pnpm-lock.yaml for search
+# gitignore pnpm-lock file in search as it should use package.lock
 search/pnpm-lock.yaml
