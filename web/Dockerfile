@@ -1,5 +1,7 @@
 FROM node:20-alpine AS base
-COPY web/ /app
+WORKDIR /app/web
+COPY . .
+RUN ls -l
 WORKDIR /app
 
 # 1. Install dependencies only when needed
@@ -9,7 +11,7 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
 # Install dependencies based on the preferred package manager
-COPY package.json pnpm-lock.yaml* .npmrc* ./
+COPY package.json pnpm-lock.yaml* ./
 RUN \
   if [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm i --frozen-lockfile; \
   else echo "Lockfile not found." && exit 1; \
@@ -60,7 +62,6 @@ RUN adduser -S --uid "$UID" "$USER"
 RUN apk add --no-cache tini
 
 COPY --from=builder /app/public ./public
-
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=builder --chown="$USER":"$USER" /app/.next/standalone ./
