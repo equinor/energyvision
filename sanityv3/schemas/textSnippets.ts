@@ -752,6 +752,11 @@ const snippets: textSnippet = {
     defaultValue: 'Switch to',
     group: groups.others,
   },
+  current_language: {
+    title: 'Current language',
+    defaultValue: 'Current language',
+    group: groups.others,
+  },
   next: {
     title: 'Next',
     defaultValue: 'Next',

@@ -30,9 +30,12 @@ export const LocalizationSwitch = ({ allSlugs: slugs, activeLocale, ...rest }: L
               hrefLang={`${language?.locale}`}
               className={` ${activeLocale === String(language?.locale) ? 'hidden md:block' : ''} flex flex-col items-stretch gap-0 px-2 text-xs`}
             >
-              <span className="sr-only">{`${intl('switch_to')} ${language?.title}`}</span>
+              <span className="sr-only">
+                {activeLocale === String(language?.locale)
+                  ? `${intl('current_language')}: ${language?.title}`
+                  : `${intl('switch_to')} ${language?.title}`}
+              </span>
               <span
-                aria-hidden
                 className={`uppercase ${activeLocale === String(language?.locale) ? 'font-semibold' : 'font-normal'}`}
               >
                 {language?.locale === 'en-GB' ? 'en' : language?.locale}
