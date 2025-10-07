@@ -1,16 +1,11 @@
 import { AzureFunction, Context, Timer } from '@azure/functions'
 import axios from 'axios'
-
-// eslint-disable-next-line import/no-named-as-default
-import DotenvAzure from 'dotenv-azure'
+import { loadEnv } from '../common/env'
 
 const timerTrigger: AzureFunction = async function (context: Context, myTimer: Timer): Promise<void> {
   const timeStamp = new Date().toISOString()
 
-  await new DotenvAzure().config({
-    allowEmptyValues: true,
-    debug: false,
-  })
+  await loadEnv(context.log)
 
   if (myTimer.isPastDue) {
     context.log('Timer function is running late!')

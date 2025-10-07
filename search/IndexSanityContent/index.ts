@@ -1,7 +1,4 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions'
-//import { dotenv } from 'dotenv-azure'
-// eslint-disable-next-line import/no-named-as-default
-import DotenvAzure from 'dotenv-azure'
 import { indexEvents } from './events'
 import { indexTopic } from './topic'
 import { indexNews } from './news'
@@ -12,6 +9,7 @@ import { indexLocalNews } from './localNews'
 import * as O from 'fp-ts/Option'
 import * as E from 'fp-ts/lib/Either'
 import * as T from 'fp-ts/lib/Task'
+import { loadEnv } from '../common/env'
 
 const indexes = ['EVENTS', 'TOPICS', 'MAGAZINE', 'NEWS', 'LOCALNEWS']
 
@@ -26,14 +24,10 @@ const indexTasks: {
 }
 
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
-  await new DotenvAzure().config({
-    allowEmptyValues: true,
-    debug: false,
-  })
-  //await dotenv.config()
-
   const logger = context.log
   logger.info(JSON.stringify(req.body))
+  await loadEnv(logger)
+
   const language = pipe(languageFromIso(req.body.language), languageOrDefault)
 
   const getIndex = pipe(
