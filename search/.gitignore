@@ -1,0 +1,2 @@
+# gitignore pnpm-lock file in search as it should use package.lock
+pnpm-lock.yaml
