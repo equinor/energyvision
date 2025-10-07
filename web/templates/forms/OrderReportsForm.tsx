@@ -116,18 +116,18 @@ const OrderReportsForm = () => {
           <>
             <fieldset className="p-0 pb-4">
               {!errors.reports && (
-                <legend className="text-base font-semibold max-w-text">
+                <legend className="max-w-text text-base font-semibold">
                   {`${intl('order_reports_form_choose')}*`}
                 </legend>
               )}
               {errors.reports && (
                 <div
-                  className="text-slate-80 border border-clear-red-100 px-6 py-4 text-sm font-semibold items-center flex gap-2"
+                  className="flex items-center gap-2 border border-clear-red-100 px-6 py-4 text-sm font-semibold text-slate-80"
                   role="alert"
                   id="atleast-one-report-required"
                 >
-                  <Icon data={error_filled} aria-hidden="true" />
-                  <legend className="leading-none mt-1">{`${intl('order_reports_form_choose')}*`}</legend>
+                  <Icon data={error_filled} aria-label="Error icon" />
+                  <legend className="mt-1 leading-none">{`${intl('order_reports_form_choose')}*`}</legend>
                 </div>
               )}
               <ul>
@@ -287,11 +287,11 @@ const OrderReportsForm = () => {
               {errors?.root?.notCompletedCaptcha && (
                 <p
                   role="alert"
-                  className="text-slate-80 border border-clear-red-100 px-6 py-4 flex gap-2 font-semibold"
+                  className="flex gap-2 border border-clear-red-100 px-6 py-4 font-semibold text-slate-80"
                 >
                   {/*@ts-ignore: TODO: types*/}
                   <span className="mt-1">{errors.root.notCompletedCaptcha.message}</span>
-                  <Icon data={error_filled} aria-hidden="true" />
+                  <Icon data={error_filled} aria-label="Error icon" />
                 </p>
               )}
             </div>

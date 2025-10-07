@@ -23,31 +23,18 @@ const FooterLink = forwardRef<HTMLAnchorElement, FooterLinkProps>(function Foote
       target={target}
       type={type}
       {...rest}
-      className={`group 
-        hover:underline 
-        hover:text-moss-green-90 
-        dark:hover:text-moss-green-90
-        min-w-11 
-        min-h-11 
-        no-underline 
-        flex 
-        items-center
-        gap-1
-        text-sm  
-        text-white-100
-        `}
+      className={`group flex min-h-11 min-w-11 items-center gap-1 text-sm text-white-100 no-underline hover:text-moss-green-90 hover:underline dark:hover:text-moss-green-90`}
     >
       {icon && (
-        <span className="group-hover:fill-moss-green-90 leading-none size-6 fill-white-100 mr-1.5" aria-hidden={true}>
+        <span className="mr-1.5 size-6 fill-white-100 leading-none group-hover:fill-moss-green-90" aria-hidden={true}>
           {icon}
         </span>
       )}
       <span className="flex leading-none">{children}</span>
       {isExternal && (
         <ArrowRight
-          aria-hidden="false"
-          aria-label={intl('externalLink')}
-          className="size-5 text-gray-500 group-hover:text-moss-green-90 transform -translate-y-0.5 rotate-[-50deg]"
+          aria-label={`${intl('externalLink')} arrow right icon`}
+          className="size-5 -translate-y-0.5 rotate-[-50deg] transform text-gray-500 group-hover:text-moss-green-90"
         />
       )}
     </BaseLink>

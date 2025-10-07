@@ -11,7 +11,6 @@ import { Select } from '@/core/Select/Select'
 import { FormMessageBox } from '@/core/Form/FormMessageBox'
 import { useTranslations } from 'next-intl'
 
-
 type FormValues = {
   name: string
   email: string
@@ -26,7 +25,7 @@ const ContactEquinorForm = () => {
   const [isSuccessfullySubmitted, setSuccessfullySubmitted] = useState(false)
 
   const getCatalog = (category: string): ContactFormCatalogType | null => {
-     if (category.includes(intl('contact_form_login_issues'))) return 'loginIssues'
+    if (category.includes(intl('contact_form_login_issues'))) return 'loginIssues'
     else return null
   }
   const {
@@ -189,11 +188,11 @@ const ContactEquinorForm = () => {
               {errors?.root?.notCompletedCaptcha && (
                 <p
                   role="alert"
-                  className="text-slate-80 border border-clear-red-100 px-6 py-4  flex gap-2 font-semibold"
+                  className="flex gap-2 border border-clear-red-100 px-6 py-4 font-semibold text-slate-80"
                 >
                   {/*@ts-ignore: TODO: types*/}
                   <span className="mt-1">{errors.root.notCompletedCaptcha.message}</span>
-                  <Icon data={error_filled} aria-hidden="true" />
+                  <Icon data={error_filled} aria-label="Erro icon" />
                 </p>
               )}
             </div>

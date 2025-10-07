@@ -65,7 +65,7 @@ const RequestConsentContainer = ({ hasSectionTitle = true, cookiePolicy }: Reque
           viewBox="0 0 69 68"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          aria-hidden={true}
+          aria-label="Cookie consent illustration"
           className="h-auto w-full max-w-[69px]"
         >
           <path
