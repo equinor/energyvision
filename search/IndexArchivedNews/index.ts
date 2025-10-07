@@ -1,6 +1,4 @@
 import { AzureFunction, Context, HttpRequest } from '@azure/functions'
-// eslint-disable-next-line import/no-named-as-default
-import DotenvAzure from 'dotenv-azure'
 import { tmpdir } from 'os'
 import { flow, pipe } from 'fp-ts/lib/function'
 import * as A from 'fp-ts/lib/ReadonlyArray'
@@ -14,12 +12,9 @@ import { update, generateIndexName, getEnvironment, languageFromIso, languageOrD
 import { indexSettings } from '../IndexSanityContent/common/news/algolia'
 import { mapData } from './mapper'
 import { loadJson } from './fileStorage'
+import { loadEnv } from '../common/env'
 
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
-  await new DotenvAzure().config({
-    allowEmptyValues: true,
-    debug: false,
-  })
   // New trigger to be used from now on
   // TODO:
   // 1. Read list of files from somewhere. Could be httpTrigger or blobTrigger ✅
@@ -29,6 +24,7 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
   const indexIdentifier = 'NEWS'
   context.log('Language: ', req.body.language)
   const logger = context.log
+  await loadEnv(logger)
 
   const language = pipe(languageFromIso(req.body.language), languageOrDefault)
 
