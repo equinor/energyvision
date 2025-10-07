@@ -9,7 +9,7 @@ WORKDIR /app
 # Install dependencies based on the preferred package manager
 COPY web/package.json web/pnpm-lock.yaml* web/
 RUN \
-  if [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm web i --frozen-lockfile; \
+  if [ -f web/pnpm-lock.yaml ]; then corepack enable pnpm && pnpm web i --frozen-lockfile; \
   else echo "Lockfile not found." && exit 1; \
   fi
 
