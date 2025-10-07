@@ -36,6 +36,7 @@ export const LocalizationSwitch = ({ allSlugs: slugs, activeLocale, ...rest }: L
                   : `${intl('switch_to')} ${language?.title}`}
               </span>
               <span
+                aria-hidden
                 className={`uppercase ${activeLocale === String(language?.locale) ? 'font-semibold' : 'font-normal'}`}
               >
                 {language?.locale === 'en-GB' ? 'en' : language?.locale}
