@@ -8,10 +8,11 @@ import { update, remove, generateIndexName, getEnvironment, Language, getSanityC
 import { fetchData, NewsArticle } from './sanity'
 import { indexSettings } from '../common/news/algolia'
 import { mapData } from './mapper'
+import { Logger } from '@azure/functions'
 
 const indexIdentifier = 'NEWS'
 
-export const indexNews = (language: Language) => (docId: string) => {
+export const indexNews = (language: Language, logger: Logger) => (docId: string) => {
   const indexName = flow(getEnvironment, E.map(generateIndexName(indexIdentifier)(language.isoCode)))
   const updateAlgolia = flow(indexName, E.map(flow(update, ap(indexSettings))))
   const removeIndexFromAlgolia = flow(indexName, E.map(remove))
@@ -28,7 +29,7 @@ export const indexNews = (language: Language) => (docId: string) => {
             E.ap(E.of(page.slug)),
             TE.fromEither,
             TE.flatten,
-            T.map(E.fold(console.error, console.log)),
+            T.map(E.fold(logger.error, logger.info)),
           )(),
         ),
     )
@@ -42,6 +43,6 @@ export const indexNews = (language: Language) => (docId: string) => {
     TE.chainW((pages) => TE.fromTask(() => removeAndMap(pages))),
     TE.chainW((data) => pipe(updateAlgolia(), E.ap(E.of(data)), TE.fromEither)),
     TE.flatten,
-    T.map(E.fold(console.error, console.log)),
+    T.map(E.fold(logger.error, logger.info)),
   )
 }

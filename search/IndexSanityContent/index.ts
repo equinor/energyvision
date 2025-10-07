@@ -1,4 +1,4 @@
-import { AzureFunction, Context, HttpRequest } from '@azure/functions'
+import { AzureFunction, Context, HttpRequest, Logger } from '@azure/functions'
 import { indexEvents } from './events'
 import { indexTopic } from './topic'
 import { indexNews } from './news'
@@ -14,7 +14,7 @@ import { loadEnv } from '../common/env'
 const indexes = ['EVENTS', 'TOPICS', 'MAGAZINE', 'NEWS', 'LOCALNEWS']
 
 const indexTasks: {
-  [key: string]: (language: Language) => (docId: string) => T.Task<void>
+  [key: string]: (language: Language, logger: Logger) => (docId: string) => T.Task<void>
 } = {
   EVENTS: indexEvents,
   MAGAZINE: indexMagazine,
@@ -38,7 +38,9 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
 
   const getDocId = O.getOrElse(() => 'no id')(O.fromNullable(req.body?.docToClear))
 
-  pipe(getIndex, (indexArray) => indexArray.map((index) => indexTasks[index](language)(getDocId)().catch(logger.error)))
+  pipe(getIndex, (indexArray) =>
+    indexArray.map((index) => indexTasks[index](language, logger)(getDocId)().catch(logger.error)),
+  )
 }
 
 export default httpTrigger
