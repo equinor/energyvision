@@ -1,7 +1,7 @@
 import { ImageWithAlt, BackgroundColours, LinkData, IFrameData, ImageBackground } from './index'
 import { PortableTextBlock } from '@portabletext/types'
 import { RowType } from '@/sections/Grid/mapGridContent'
-import { FigureData } from '../pageComponents/topicPages/Figure'
+import { FigureData } from '../sections/Figure/Figure'
 import { VideoPlayerBlockProps } from '@/sections/VideoPlayerBlock/VideoPlayerBlock'
 
 export type GridTeaserData = {

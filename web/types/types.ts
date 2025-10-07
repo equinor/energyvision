@@ -12,7 +12,7 @@ import type {
   GridData,
   StickyMenuLinkType,
 } from './index'
-import { FigureData } from '../pageComponents/topicPages/Figure'
+import { FigureData } from '../sections/Figure/Figure'
 import { FullWidthImageData } from '../sections/FullwidthImage/FullWidthImage'
 import { LoopingVideoData } from '@/sections/Hero/LoopingVideo'
 import { FullWidthVideoProps } from '@/sections/FullWidthVideo/FullWidthVideo'

@@ -43,6 +43,13 @@ export default {
       validation: (Rule: Rule) => Rule.required(),
     },
     {
+      title: 'Align with text width',
+      description:
+        'Since text width (readability 810px) is smaller than the inner content grid, setting this will align image with the text width',
+      name: 'alignWithText',
+      type: 'boolean',
+    },
+    {
       title: 'Background',
       description: 'Pick a colour for the background. Default is white.',
       name: 'background',
@@ -53,13 +60,30 @@ export default {
   preview: {
     select: {
       alt: 'figure.image.alt',
+      caption: 'figure.caption',
+      credit: 'figure.attribution',
       image: 'figure.image.asset',
+      aspectRatio: 'aspectRatio',
+      background: 'background',
     },
-    prepare({ alt, image }: { alt: string; image: Reference }) {
-      const altText = alt === undefined ? 'Decorative image' : alt
+    prepare({
+      alt,
+      image,
+      aspectRatio,
+      credit,
+      caption,
+      background,
+    }: {
+      alt: string
+      image: Reference
+      aspectRatio?: string
+      credit?: string
+      caption?: string
+      background?: string
+    }) {
       return {
-        title: `Alt text: ${altText}`,
-        subtitle: 'Image',
+        title: `${aspectRatio} image ${alt ? '| alt ' : ''}${credit ? '| credit ' : ''}${caption ? '| caption ' : ''} `,
+        subtitle: `Image component ${background ? `| ${background?.title}` : ''}`,
         media: image,
       }
     },

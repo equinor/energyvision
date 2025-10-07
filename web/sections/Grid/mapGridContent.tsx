@@ -4,7 +4,7 @@ import IFrame from '../IFrameBlock/IFrameBlock'
 import GridTextBlock from './GridTextBlock'
 import { GridTeaser } from './GridTeaser'
 import GridFigure from './GridFigure'
-import { FigureData } from '../../pageComponents/topicPages/Figure'
+import { FigureData } from '../Figure/Figure'
 import { VideoPlayer } from '@/core/VideoJsPlayer/VideoPlayer'
 import { VideoPlayerBlockProps } from '../VideoPlayerBlock/VideoPlayerBlock'
 

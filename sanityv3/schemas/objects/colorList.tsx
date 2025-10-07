@@ -1,12 +1,35 @@
+import { Flex, Text } from '@sanity/ui'
 import { ColorSelector } from '../components/ColorSelector'
 import { defaultBackgroundColors } from '../defaultColors'
-import { defineType, defineField } from 'sanity'
+import { defineType, defineField, PreviewProps } from 'sanity'
 
 export type ColorType = {
   title: string
   value: string
   key: string
   dark: boolean
+}
+
+type ColorListPreviewProps = {
+  title?: string
+  value?: string
+} & PreviewProps
+
+export function ColorListPreview(props: ColorListPreviewProps) {
+  const { title, value } = props
+
+  return (
+    <Flex gap={2} padding={2} align={'center'}>
+      <div
+        style={{
+          background: value,
+          width: '33px',
+          height: '33px',
+        }}
+      />
+      <Text size={1}>{title}</Text>
+    </Flex>
+  )
 }
 
 export default defineType({
@@ -33,25 +56,12 @@ export default defineType({
     input: (props) => {
       return <ColorSelector {...props} />
     },
+    preview: ColorListPreview,
   },
   preview: {
     select: {
       value: 'value',
       title: 'title',
-    },
-    prepare({ value, title }: { value: string; title: string }) {
-      return {
-        title: `Color '${title}'`,
-        media: (
-          <span
-            style={{
-              backgroundColor: value,
-              padding: '15px',
-              borderRadius: '50%',
-            }}
-          />
-        ),
-      }
     },
   },
 })

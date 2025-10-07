@@ -120,6 +120,7 @@ _type == "keyNumbers" =>{
       attribution,
       caption
     },
+    "alignWithText": coalesce(alignWithText, false),
     "designOptions": {
       ${background},
       "aspectRatio": coalesce(aspectRatio, '16:9'),

@@ -56,6 +56,7 @@ type TextBlock = {
 
 type TextBlockDocument = {
   parent: TextBlock
+  value?: string
 }
 
 export default {
@@ -141,7 +142,7 @@ export default {
       name: 'isBigText',
       type: 'boolean',
       fieldset: 'titleOptions',
-      readOnly: ({ value }: { value?: string }) => !value,
+      hidden: ({ value }: { value?: string }) => !value,
     },
     {
       name: 'bigTitle',
@@ -150,21 +151,20 @@ export default {
       fieldset: 'titleOptions',
       type: 'array',
       of: [configureBlockContent({ variant: 'withXLTitle' })],
-      hidden: ({ parent }: TextBlockDocument) => !parent.isBigText,
+      hidden: ({ parent, value }: TextBlockDocument) => !value || !parent.isBigText,
       validation: (Rule: Rule) =>
         Rule.custom((value: PortableTextBlock[], ctx: ValidationContext) =>
           value && (ctx.parent as TextBlock)?.isBigText
             ? 'Clear this field and use regular title without big text boolean'
             : true,
         ).warning(),
-      readOnly: ({ value }: { value?: string }) => !value,
     },
     {
       name: 'ingress',
       title: 'Ingress',
       type: 'array',
       of: [configureBlockContent({ variant: 'ingress' })],
-      hidden: ({ parent }: TextBlockDocument) => parent.isBigText,
+      hidden: ({ parent }: TextBlockDocument) => parent?.isBigText,
     },
     {
       name: 'text',
@@ -195,7 +195,7 @@ export default {
     {
       name: 'designOptions',
       type: 'backgroundOptions',
-      readOnly: ({ parent }: { parent: TextBlock }) => parent.useBrandTheme,
+      readOnly: ({ parent }: { parent: TextBlock }) => parent?.useBrandTheme,
     },
     {
       title: 'Background (Deprecated)',
@@ -203,6 +203,7 @@ export default {
       name: 'background',
       readOnly: true,
       type: 'colorlist',
+      hidden: ({ value }: { value?: string }) => !value,
     },
   ].filter((e) => e),
   preview: {

@@ -61,6 +61,17 @@
   --text-6xl: clamp(calc(58.05 / 16 * 1rem), 2.94vw + 2.925rem, calc(103.39 / 16 * 1rem));
   --text-8xl: clamp(calc(59.19 / 16 * 1rem), 3.72vw + 3.495rem, calc(115.47 / 16 * 1rem));
 
+  --spacing-single-carousel-card-w-sm: 350px; /*275px;*/
+  --spacing-single-carousel-card-w-md: 692px;
+  --spacing-single-carousel-card-w-lg: 980px;
+  --spacing-single-carousel-card-h-sm: 400px;
+  --spacing-single-carousel-card-h-md: 430px;
+  --spacing-single-carousel-card-h-lg: 516px;
+  --spacing-event-carousel-card-w: 383px;
+  --spacing-arrow-right: 1.58rem;
+  --spacing-envis-prose: 75ch; /* recommended 66ch, can we go 80ch*/
+  --spacing-text: clamp(75ch, 1200px);
+
   --font-weight-semibolder: 650;
 
   --radius-2xs: 0.1rem;
@@ -117,15 +128,8 @@
   --spacing-layout-md: clamp(16px, calc(-69.4369px + 22.7832vw), 17.8dvw); /*figma:255 old:368px*/
   --spacing-layout-lg: clamp(16px, calc(-101.4757px + 31.3269vw), 22.3dvw); /*figma:320 old: 500px*/
   --spacing-news-banner-vertical: clamp(40px, calc(14.3125px + 11.0032vw), 210px);
-  --spacing-single-carousel-card-w-sm: 350px; /*275px;*/
-  --spacing-single-carousel-card-w-md: 692px;
-  --spacing-single-carousel-card-w-lg: 980px;
-  --spacing-single-carousel-card-h-sm: 400px;
-  --spacing-single-carousel-card-h-md: 430px;
-  --spacing-single-carousel-card-h-lg: 516px;
-  --spacing-event-carousel-card-w: 383px;
-  --spacing-arrow-right: 1.58rem;
-  --spacing-text: 810px; /* recommended 760px */
+  --spacing-envis-prose: 75ch; /* recommended 66ch, can we go 80ch*/
+  --spacing-envis-prose: 75ch; /* recommended 66ch, can we go 80ch*/
 
   /* PROSE - Typography to be used with blocks */
 
@@ -498,7 +502,7 @@ treat the value and modifier as a single value:
     @apply px-layout-lg;
   } */
   /* PROSE-MEDIUM */
-  .prose-medium {
+  /*   .prose-medium {
     @apply text-md;
   }
   .prose-medium :where(h2):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
@@ -507,10 +511,9 @@ treat the value and modifier as a single value:
   .prose-medium :where(h3):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
     @apply my-6 text-lg;
   }
-  /* PROSE-CAMPAIGN */
   .prose-campaign :where(p):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
     @apply my-0 text-balance;
-  }
+  } */
   /** PROSE END  */
 
   .clickbound-area {
