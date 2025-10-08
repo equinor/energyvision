@@ -25,6 +25,10 @@ export const loadEnv = async (logger: Logger) => {
   logger.info('Dataset' + settings.get('SANITY_DATASET'))
   logger.info('Key size ' + settings.size)
 
+  for (const [key, value] of settings) {
+    logger.info(`${key}: ${value}`)
+  }
+
   const parsed = {
     SANITY_DATASET: settings.get('SANITY_DATASET'),
     ALGOLIA_API_KEY: settings.get('ALGOLIA_API_KEY'),
