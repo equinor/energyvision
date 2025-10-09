@@ -1,54 +1,72 @@
-# ---------- BASE IMAGE ----------
-FROM node:18-alpine AS base
-ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
-ENV NODE_OPTIONS="--max_old_space_size=8192"
-RUN corepack enable && corepack prepare pnpm@8.5.1 --activate
-WORKDIR /app
+# -------------------------------------------------------- #
+# 0. Build Arguments
+# -------------------------------------------------------- #
 
-# ---------- DEPS LAYER ----------
-FROM base AS deps
-RUN apk add --no-cache libc6-compat
+ARG NODE_VERSION=20
+ARG PNPM_VERSION=10.10
+ARG PNPM_HOME="/pnpm"
+ARG PATH="${PNPM_HOME}:${PATH}"
+ARG PNPM_STORE="/pnpm/store"
+
+# -------------------------------------------------------- #
+# 1. Base system environment
+# -------------------------------------------------------- #
+FROM node:${NODE_VERSION}-alpine AS core-os
+LABEL stage=core
+RUN apk update
+RUN apk add --no-cache libc6-compat curl
+
+# -------------------------------------------------------- #
+# 2. Core tooling setup (PNPM, etc.)
+# -------------------------------------------------------- #
+FROM core-os as base
+ARG PNPM_STORE
+LABEL builder=true
+# Set the working directory inside the container
 WORKDIR /app/web
+#WORKDIR /app
+#COPY /app/web .
+#COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 
-# Only copy what is needed to install dependencies for the web workspace
-COPY web/pnpm-lock.yaml ./pnpm-lock.yaml
-COPY web/package.json ./package.json
-COPY web/patches ./patches
-RUN pnpm install --frozen-lockfile
+RUN corepack enable && corepack prepare pnpm@${PNPM_VERSION} --activate
+RUN --mount=type=cache,id=pnpm,target=${PNPM_STORE} pnpm config set store-dir ${PNPM_STORE}
 
-# ---------- BUILD LAYER ----------
-FROM base AS builder
-WORKDIR /app
-# Copy full repo, then bring in the web workspace node_modules from deps
-COPY . .
-COPY --from=deps /app/web/node_modules ./web/node_modules
 
-ARG ARG_SANITY_DATASET
-ARG ARG_SANITY_API_TOKEN
-ARG ARG_SANITY_PROJECT_ID
-ARG ARG_ALGOLIA_APP_ID
-ARG ARG_ALGOLIA_SEARCH_API_KEY
-ARG ARG_ARCHIVE_CONTENT_LINK
-ARG ARG_FRIENDLY_CAPTCHA_SITEKEY
-ARG ARG_FRIENDLY_CAPTCHA_PUZZLE_ENDPOINT
+# -------------------------------------------------------- #
+# 4. Build application
+# -------------------------------------------------------- #
+FROM base AS build
+LABEL stage=builder
 
-ENV NEXT_PUBLIC_SANITY_DATASET=${ARG_SANITY_DATASET}
-ENV NEXT_PUBLIC_SANITY_PROJECT_ID=${ARG_SANITY_PROJECT_ID}
-ENV SANITY_API_TOKEN=${ARG_SANITY_API_TOKEN}
-ENV NEXT_PUBLIC_ALGOLIA_APP_ID=${ARG_ALGOLIA_APP_ID}
-ENV NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY=${ARG_ALGOLIA_SEARCH_API_KEY}
-ENV NEXT_PUBLIC_ARCHIVE_CONTENT_LINK=${ARG_ARCHIVE_CONTENT_LINK}
-ENV NEXT_PUBLIC_FRIENDLY_CAPTCHA_SITEKEY=${ARG_FRIENDLY_CAPTCHA_SITEKEY}
-ENV NEXT_PUBLIC_FRIENDLY_CAPTCHA_PUZZLE_ENDPOINT=${ARG_FRIENDLY_CAPTCHA_PUZZLE_ENDPOINT}
+WORKDIR /app/web
+RUN ls -l
+
+# Copy only the web package's package.json and pnpm-lock.yaml
+COPY package.json pnpm-lock.yaml ./
+
+ENV CI=true
 ENV NEXT_TELEMETRY_DISABLED=1
 
-# Build only the web workspace
-RUN pnpm -C web build
+RUN \
+  if [ -f pnpm-lock.yaml ]; then pnpm install --prod --frozen-lockfile; \
+  else echo "Lockfile not found." && exit 1; \
+  fi
 
-# ---------- RUNTIME LAYER ----------
-FROM base AS runner
-WORKDIR /app
+# Copy the rest of the web package's source code
+COPY . .
+
+RUN pnpm run build
+#RUN pnpm run build --filter=web
+
+
+# -------------------------------------------------------- #
+# 6. Runtime container
+# -------------------------------------------------------- #
+FROM core-os AS runner
+ARG APP_PORT
+LABEL stage=runner
+WORKDIR /app/web
+
 ENV NODE_ENV=production
 
 ARG ARG_ENV
@@ -70,11 +88,16 @@ ENV USER nextjs
 ENV UID 12345
 ENV NEXT_TELEMETRY_DISABLED 1
 
-RUN addgroup -S "$USER" && adduser -S --uid "$UID" "$USER" && apk add --no-cache tini
+COPY --from=build /app/web/public ./public
+# Automatically leverage output traces to reduce image size
+# https://nextjs.org/docs/advanced-features/output-file-tracing
+COPY --from=build --chown="$USER":"$USER" /app/web/.next/standalone ./
+COPY --from=build --chown="$USER":"$USER" /app/web/.next/static ./.next/static
 
-COPY --from=builder /app/web/public ./public
-COPY --from=builder --chown="$USER":"$USER" /app/web/.next/standalone .
-COPY --from=builder --chown="$USER":"$USER" /app/web/.next/static ./.next/static
+RUN addgroup -S "$USER"
+RUN adduser -S --uid "$UID" "$USER"
+RUN apk add --no-cache tini
+
 
 USER "$UID"
 ENV NEXT_MANUAL_SIG_HANDLE=true

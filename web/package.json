@@ -9,11 +9,12 @@
     "email": "fg_envis@equinor.com"
   },
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbopack",
     "info": "next info",
-    "build": "next build",
+    "build": "next build --turbopack",
     "start": "next start",
-    "type-check": "tsc --project tsconfig.json --pretty --noEmit"
+    "type-check": "tsc --project tsconfig.json --pretty --noEmit",
+    "check-types": "tsc --noEmit"
   },
   "dependencies": {
     "@algolia/cache-browser-local-storage": "^4.22.1",
@@ -44,9 +45,9 @@
     "http-proxy": "^1.18.1",
     "ics": "^3.1.0",
     "instantsearch.js": "^4.79.0",
-    "next": "15.3.4",
-    "next-intl": "4.3.3",
-    "next-sanity": "10.0.13",
+    "next": "15.5.4",
+    "next-intl": "4.3.11",
+    "next-sanity": "11.4.2",
     "next-sanity-image": "^6.2.0",
     "next-seo": "^6.8.0",
     "qs": "^6.11.1",
@@ -90,5 +91,6 @@
     "prettier-plugin-tailwindcss": "^0.6.14",
     "tailwindcss": "^4.1.11",
     "typescript": "5.8.3"
-  }
+  },
+  "packageManager": "pnpm@10.18.1"
 }
