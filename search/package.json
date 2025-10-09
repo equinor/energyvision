@@ -27,8 +27,8 @@
     "@types/jest": "^27.0.2",
     "@types/node": "^24.7.0",
     "@types/progress-stream": "^2.0.5",
-    "jest": "^28.1.0",
-    "ts-jest": "^28.0.2",
+    "jest": "^29.4.4",
+    "ts-jest": "^29.4.4",
     "typescript": "5.9.3"
   },
   "dependencies": {
