@@ -53,7 +53,6 @@ export const warnHttpOrNotValidSlugExternal = (slug: string) => {
   const validSlug = stringIsSlug.test(slug)
   const slugWithOutQueryParam = slug.split('?')[0]
   const isPotentialArchivedNewsUrl = isEquinorUrl(slug) && Flags.HAS_ARCHIVED_NEWS && slug.includes("/news")
-  console.log("isPotentialArchivedNewsUrl",isPotentialArchivedNewsUrl);
   const isInvalidEquinorUrl = slugWithOutQueryParam !== slugWithOutQueryParam.toLowerCase() && isEquinorUrl(slug)
 
   if (isHttp) {
