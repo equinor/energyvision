@@ -7,10 +7,11 @@ import { EventIndex, update, remove, generateIndexName, getEnvironment, Language
 import { fetchData, Event } from './sanity'
 import { mapData } from './mapper'
 import { indexSettings } from './algolia'
+import { Logger } from '@azure/functions'
 
 const indexIdentifier = 'EVENTS'
 
-export const indexEvents = (language: Language) => (docId: string) => {
+export const indexEvents = (language: Language, logger: Logger) => (docId: string) => {
   const indexName = flow(getEnvironment, E.map(generateIndexName(indexIdentifier)(language.isoCode)))
   const updateAlgolia = flow(indexName, E.map(flow(update, ap(indexSettings))))
   const removeIndexFromAlgolia = flow(indexName, E.map(remove))
@@ -26,7 +27,7 @@ export const indexEvents = (language: Language) => (docId: string) => {
             E.ap(E.of(page.slug)),
             TE.fromEither,
             TE.flatten,
-            T.map(E.fold(console.error, console.log)),
+            T.map(E.fold(logger.error, logger.info)),
           )(),
         ),
     )
@@ -40,6 +41,6 @@ export const indexEvents = (language: Language) => (docId: string) => {
     TE.chainW((pages) => TE.fromTask(() => removeAndMap(pages))),
     TE.chainW((data) => pipe(updateAlgolia(), E.ap(E.of(data)), TE.fromEither)),
     TE.flatten,
-    T.map(E.fold(console.error, console.log)),
+    T.map(E.fold(logger.error, logger.info)),
   )
 }
