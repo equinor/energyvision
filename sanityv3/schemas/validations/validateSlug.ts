@@ -52,18 +52,21 @@ export const warnHttpOrNotValidSlugExternal = (slug: string) => {
   const isHttp = httpRegex.test(slug)
   const validSlug = stringIsSlug.test(slug)
   const slugWithOutQueryParam = slug.split('?')[0]
+  const isPotentialArchivedNewsUrl = isEquinorUrl(slug) && Flags.HAS_ARCHIVED_NEWS && slug.includes("/news")
   const isInvalidEquinorUrl = slugWithOutQueryParam !== slugWithOutQueryParam.toLowerCase() && isEquinorUrl(slug)
 
-  let message = ''
   if (isHttp) {
-    message = 'Use https in url. '
+    return 'Use https in url. '
   }
   if (!validSlug) {
-    message = message.concat(`Not a valid url.`)
+    return `Not a valid url.`
+  }
+  if(isPotentialArchivedNewsUrl){
+      return true
   }
 
   if (isInvalidEquinorUrl) {
-    message = message.concat('Equinor urls should contain lowercase letters only.')
+    return 'Equinor urls should contain lowercase letters only.'
   }
-  return isHttp || !validSlug || isInvalidEquinorUrl ? message : true
+  return true
 }
