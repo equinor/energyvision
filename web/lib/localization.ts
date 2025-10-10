@@ -11,3 +11,6 @@ export const getIsoFromLocale = (locale: string | undefined): string => {
 export const getLocaleFromName = (name: string | undefined): string => {
   return languages.find((lang) => lang.name === name)?.locale || defaultLanguage.locale
 }
+export const getLocaleFromLocale = (locale: string | undefined): string => {
+  return languages.find((lang) => lang.locale === locale)?.name || defaultLanguage.name
+}
