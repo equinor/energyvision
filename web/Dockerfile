@@ -15,16 +15,15 @@ FROM base AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-# Copy only required root files and web workspace files
+COPY package.json pnpm-lock.yaml ./
 COPY web/package.json web/pnpm-lock.yaml web/
 COPY web/patches web/patches
 
 RUN \
   if [ -f pnpm-lock.yaml ]; then pnpm m i --frozen-lockfile;\
   else echo "Lockfile not found." && exit 1; \
-# ---------- BUILD LAYER ----------
-
-FROM base AS builder
+  # ---------- BUILD LAYER ----------
+  FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY --from=deps /app/web/node_modules ./web/node_modules
