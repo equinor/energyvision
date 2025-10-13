@@ -118,8 +118,6 @@ export const VideoJS: React.FC<VideoJSProps> = ({
           playButton ? 'vjs-envis-hasPlayButton' : ''
         }`}
         poster={poster}
-        playsInline={!!playsInline}
-        muted={!!muted}
       ></video>
       {!playButton && !controls && autoPlay && (
         <button
