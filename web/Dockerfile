@@ -23,7 +23,7 @@ RUN \
   if [ -f pnpm-lock.yaml ]; then pnpm m i --frozen-lockfile;\
   else echo "Lockfile not found." && exit 1; \
   # ---------- BUILD LAYER ----------
-  FROM base AS builder
+FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY --from=deps /app/web/node_modules ./web/node_modules
