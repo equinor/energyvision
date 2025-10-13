@@ -14,7 +14,8 @@ on:
         description: 'Enter the branch name in fotoware repository. Default is master'
         default: master
         type: string
-
+permissions:
+  contents: read
 env:
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
   BUILD_PACKAGE_NAME: fotoware.zip

@@ -19,6 +19,9 @@ on:
       - '!./README.md'
       - '!./.env.template'
 
+permissions:
+  contents: read
+
 env:
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
   BUILD_OUTPUT_PATH: ${{ github.workspace }}/search
