@@ -56,33 +56,23 @@ export const VideoJS: React.FC<VideoJSProps> = ({
       const player = videojs(
         node,
         {
-          sources: [
-            {
-              src: src,
-              type: 'application/x-mpegURL',
-            },
-          ],
-          muted: muted ? 'muted' : false,
-          playsinline: playsInline,
-          autoplay: autoPlay,
+          sources: [{ src, type: 'application/x-mpegURL' }],
+          muted: !!muted,
+          playsinline: !!playsInline,
+          autoplay: !!autoPlay,
           preload: autoPlay ? 'auto' : 'none',
           controls: controls ?? !autoPlay,
           responsive: true,
-          ...(!useFillMode && { aspectRatio: aspectRatio }),
+          ...(!useFillMode && { aspectRatio }),
           ...(useFillMode && { fill: true }),
-          bigPlayButton: playButton && !autoPlay,
-          controlbar: true,
-          loadingSpinner: !autoPlay,
+          bigPlayButton: !!playButton && !autoPlay,
+          loadingSpinner: loadingSpinner ?? !autoPlay,
           controlBar: {
-            fullscreenToggle: allowFullScreen,
+            fullscreenToggle: !!allowFullScreen,
           },
-          html5: {
+          vhs: {
             useDevicePixelRatio: true,
             limitRenditionByPlayerDimensions: false,
-            hls: {
-              useDevicePixelRatio: true,
-              limitRenditionByPlayerDimensions: false,
-            },
           },
           ...rest,
         },
@@ -124,9 +114,12 @@ export const VideoJS: React.FC<VideoJSProps> = ({
       {/* eslint-disable-next-line */}
       <video
         ref={measuredRef}
-        className={`video-js vjs-layout-large vjs-fill vjs-envis ${useBrandTheme ? 'vjs-envis-brand' : ''}
-        ${playButton ? 'vjs-envis-hasPlayButton' : ''}`}
+        className={`video-js vjs-layout-large vjs-fill vjs-envis ${useBrandTheme ? 'vjs-envis-brand' : ''} ${
+          playButton ? 'vjs-envis-hasPlayButton' : ''
+        }`}
         poster={poster}
+        playsInline={!!playsInline}
+        muted={!!muted}
       ></video>
       {!playButton && !controls && autoPlay && (
         <button
