@@ -32,16 +32,15 @@ export const BackgroundContainer = forwardRef<HTMLElement, BackgroundContainerPr
 
   return (
     <>
-      {!isColor ? (
+      {!isColor && backgroundImage ? (
         <ImageBackgroundContainer
           as={as}
           ref={ref}
           id={id}
-          //@ts-ignore:todo
-          image={backgroundImage}
           className={twMerge(commonClassNames, className)}
           scrimClassName={scrimClassName}
           dontSplit={dontSplit}
+          {...backgroundImage}
         >
           {children}
         </ImageBackgroundContainer>

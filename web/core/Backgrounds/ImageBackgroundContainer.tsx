@@ -1,10 +1,11 @@
 'use client'
-import { forwardRef, HTMLAttributes, CSSProperties, ElementType } from 'react'
+import { forwardRef, HTMLAttributes, CSSProperties, ElementType, useRef, useEffect } from 'react'
 import { useSanityLoader } from '../../lib/hooks/useSanityLoader'
 import { ImageBackground } from '../../types/index'
 import { twMerge } from 'tailwind-merge'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
 import { ImageRatioKeys, mapSanityImageRatio } from '@/core/SanityImage/SanityImage'
+import { motion, useInView, useAnimate } from 'framer-motion'
 
 type ImageBackgroundContainerProps = {
   scrimClassName?: string
@@ -82,6 +83,23 @@ export const ImageBackgroundContainer = forwardRef<HTMLElement, ImageBackgroundC
         : `black-center-gradient ${darkGradientForContentAlignment[contentAlignment]}`
     }
 
+    /* const controls = useAnimate()
+    const animref = useRef(null)
+    const inView = useInView(animref, { amount: 0.3 })
+
+    useEffect(() => {
+      if (inView) {
+        controls.start({ opacity: 1 })
+      } else {
+        controls.start({ opacity: 0 })
+      }
+    }, [inView, controls])
+
+    // Manually set opacity to 0 on mount without using initial prop
+    useEffect(() => {
+      controls.set({ opacity: 0 })
+    }, [controls])*/
+
     return useAnimation && !isMobile ? (
       <ReturnElement
         ref={ref}
@@ -94,11 +112,15 @@ export const ImageBackgroundContainer = forwardRef<HTMLElement, ImageBackgroundC
         {...rest}
       >
         {/** Scrim */}
-        <div
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: false, amount: 0.2 }}
+          transition={{ duration: 1 }}
           className={twMerge(`py-40 lg:py-[25dvh] ${animatedScrimGradient} animate-timeline relative`, scrimClassName)}
         >
           <div className={className}>{children}</div>
-        </div>
+        </motion.div>
       </ReturnElement>
     ) : isMobile && !dontSplit ? (
       <ReturnElement ref={ref} {...rest}>
