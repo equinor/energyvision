@@ -16,7 +16,7 @@ import { defaultLanguage, languages } from '../../../languages'
 import archivedNews from '../../../lib/archive/archivedNewsPaths.json'
 import { removeHTMLExtension } from '../../../lib/archive/archiveUtils'
 import { filterDataToSingleItem } from '../../../lib/filterDataToSingleItem'
-import { getNameFromLocale } from '../../../lib/localization'
+import { getLocaleFromLocale, getNameFromLocale } from '../../../lib/localization'
 import { footerQuery } from '../../../lib/queries/footer'
 import { menuQuery as globalMenuQuery } from '../../../lib/queries/menu'
 import { simpleMenuQuery } from '../../../lib/queries/simpleMenu'
@@ -133,18 +133,28 @@ OldArchivedNewsPage.getLayout = (page: AppProps) => {
   )
 }
 
-const fetchArchiveData = async (pagePathArray: string[], pagePath: string, locale: string): Promise<Response> => {
+const fetchArchiveData = async (
+  pagePathArray: string[],
+  pagePath: string,
+  locale: string,
+): Promise<Response | null> => {
   if (pagePath.includes('.')) return Promise.reject()
 
   const archiveSeverURL = publicRuntimeConfig.archiveStorageURL
-
-  if (pagePathArray.length > 1 && pagePathArray[0] !== 'crudeoilassays') {
-    /** Check if the required page is old archived AEM page or not
-     * because AEM also has archived pages which has 'archive' the page path */
-    return await fetch(`${archiveSeverURL}/${locale}/news/archive/${pagePath}.json`)
+  let lang
+  if (typeof locale === 'string') {
+    lang = getLocaleFromLocale(locale)
   }
+  if (lang && archivedNews.find((e) => e.slug === `/news/archive/${pagePath}`)) {
+    if (pagePathArray.length > 1 && pagePathArray[0] !== 'crudeoilassays') {
+      /** Check if the required page is old archived AEM page or not
+       * because AEM also has archived pages which has 'archive' the page path */
+      return await fetch(`${archiveSeverURL}/${locale}/news/archive/${pagePath}.json`)
+    }
 
-  return await fetch(`${archiveSeverURL}/${locale}/news/${pagePath}.json`)
+    return await fetch(`${archiveSeverURL}/${locale}/news/${pagePath}.json`)
+  }
+  return null
 }
 
 const parseResponse = async (response: Response) => {
@@ -182,7 +192,7 @@ const fallbackToAnotherLanguage = async (
       res: await fetchArchiveData(pagePathArray, pagePath, locale),
     })),
   )
-  const response = responses && responses.find((e) => e.res.status === 200)
+  const response = responses && responses.find((e) => e?.res && e.res.status === 200)
   if (response) {
     console.log(`Archived page does not exist with request locale: ${locale}`)
     console.log(`Redirecting to existing path: /${response.locale}/news/archive/${pagePath}`)
@@ -205,12 +215,13 @@ export const getStaticProps: GetStaticProps = async ({ preview = false, params, 
 
   const archivedItems = archivedNews.filter((e) => e.slug === `/news/archive/${pagePath}`)
   if (archivedItems.length === 0) return { notFound: true }
-
+  let pageData = {}
   const response = await fetchArchiveData(pagePathArray, pagePath, locale)
+  if (response) {
+    if (response.status === 404) return fallbackToAnotherLanguage(pagePathArray, pagePath, locale)
+    pageData = await parseResponse(response)
+  }
 
-  if (response.status === 404) return fallbackToAnotherLanguage(pagePathArray, pagePath, locale)
-
-  const pageData = await parseResponse(response)
   const menuQuery = Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery
   const menuDataWithDrafts = await getClient(preview).fetch(menuQuery, { lang: getNameFromLocale(locale) })
   const footerDataWithDrafts = await getClient(preview).fetch(footerQuery, { lang: getNameFromLocale(locale) })
