@@ -208,7 +208,6 @@ const GridTextBlock = forwardRef<HTMLDivElement, GridTextBlockProps>(function Gr
 
   return imageBackground?.image ? (
     <BackgroundContainer
-      ref={ref}
       {...imageBgOptions}
       className={`aspect-auto`}
       dontSplit
