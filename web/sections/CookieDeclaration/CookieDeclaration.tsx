@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react'
 import { CookieDeclarationData } from '../../types/index'
 import { useLocale } from 'next-intl'
 import Blocks from '@/portableText/Blocks'
+import { twMerge } from 'tailwind-merge'
 
 type CookieDeclarationProps = {
   data: CookieDeclarationData
@@ -26,7 +27,7 @@ const CookieDeclaration = ({ data, anchor, className = '' }: CookieDeclarationPr
     }
   }, [language])
   return (
-    <section id={anchor} className={className}>
+    <section id={anchor} className={twMerge(`px-layout-lg`, className)}>
       <div id="cookie-declaration-wrapper">
         {title && <Blocks variant="h2" value={title} />}
         <div ref={placeholderRef}></div>
