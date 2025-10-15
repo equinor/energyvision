@@ -1,6 +1,8 @@
 name: Notify on wiki updates
 on:
   gollum
+permissions:
+  contents: read
 jobs:
   check_for_updates:
     runs-on: ubuntu-latest

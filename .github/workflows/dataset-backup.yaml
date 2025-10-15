@@ -14,6 +14,8 @@ on:
   schedule:
     # Runs at 02:00 UTC every sunday
     - cron: '0 2 * * 0'
+permissions:
+  contents: read
 env:
   BUILD_ARTIFACT_PATH: ${{ github.workspace }}/backups
 jobs:
