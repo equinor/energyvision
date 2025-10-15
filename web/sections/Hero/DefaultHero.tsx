@@ -44,12 +44,12 @@ export const DefaultHero = ({ title, image, isBigTitle, bigTitle, tags, publishe
               <ul className="flex flex-wrap gap-y-4 divide-x-2 divide-energy-red-100">
                 {tags.map((tag: string) => {
                   return (
-                    <span
+                    <li
                       key={`magazine_tag_key_${tag}`}
                       className="inline-block text-sm font-medium pl-3 pr-3 first:pl-0 lg:text-xs whitespace-nowrap"
                     >
                       {tag}
-                    </span>
+                    </li>
                   )
                 })}
               </ul>

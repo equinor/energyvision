@@ -167,6 +167,10 @@ const CareersContactForm = () => {
                     defaultMessage: 'Enter phone number with country code',
                   })}
                   type="tel"
+                  aria-label={`${intl.formatMessage({
+                    id: 'careers_contact_form_phone',
+                    defaultMessage: 'Phone Number',
+                  })}*`}
                   inputRef={ref}
                   inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
                   helperText={error?.message}
@@ -196,6 +200,10 @@ const CareersContactForm = () => {
                   {...props}
                   id={props.name}
                   label={`${intl.formatMessage({
+                    id: 'email',
+                    defaultMessage: 'Email',
+                  })}*`}
+                  aria-label={`${intl.formatMessage({
                     id: 'email',
                     defaultMessage: 'Email',
                   })}*`}
