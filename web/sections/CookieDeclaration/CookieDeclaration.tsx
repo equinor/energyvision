@@ -27,7 +27,7 @@ const CookieDeclaration = ({ data, anchor, className = '' }: CookieDeclarationPr
     }
   }, [language])
   return (
-    <section id={anchor} className={twMerge(`px-layout-lg`, className)}>
+    <section id={anchor} className={twMerge(`px-layout-sm md:px-layout-lg`, className)}>
       <div id="cookie-declaration-wrapper">
         {title && <Blocks variant="h2" value={title} />}
         <div ref={placeholderRef}></div>
