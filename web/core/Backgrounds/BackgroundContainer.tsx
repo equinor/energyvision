@@ -1,5 +1,5 @@
 import { ElementType, forwardRef, HTMLAttributes } from 'react'
-import type { Background, ImageBackground } from '../../types/index'
+import type { Background } from '../../types/index'
 import { getBgAndDarkFromBackground } from '../../styles/colorKeyToUtilityMap'
 import { ImageBackgroundContainer } from './ImageBackgroundContainer'
 import { twMerge } from 'tailwind-merge'
@@ -14,10 +14,15 @@ export type BackgroundContainerProps = {
   as?: ElementType
 } & HTMLAttributes<HTMLElement>
 
-export const BackgroundContainer = forwardRef<HTMLElement, BackgroundContainerProps>(function BackgroundContainer(
-  { background, children, className = '', scrimClassName = '', id, dontSplit = false, as = 'section' },
-  ref,
-) {
+export const BackgroundContainer = ({
+  background,
+  children,
+  className = '',
+  scrimClassName = '',
+  id,
+  dontSplit = false,
+  as = 'section',
+}: BackgroundContainerProps) => {
   const ContainerElement = as ?? (`section` as ElementType)
   const isColor =
     !background ||
@@ -35,7 +40,6 @@ export const BackgroundContainer = forwardRef<HTMLElement, BackgroundContainerPr
       {!isColor && backgroundImage ? (
         <ImageBackgroundContainer
           as={as}
-          ref={ref}
           id={id}
           className={twMerge(commonClassNames, className)}
           scrimClassName={scrimClassName}
@@ -45,14 +49,10 @@ export const BackgroundContainer = forwardRef<HTMLElement, BackgroundContainerPr
           {children}
         </ImageBackgroundContainer>
       ) : (
-        <ContainerElement
-          id={id}
-          ref={ref}
-          className={twMerge(commonClassNames, `${bg} ${dark ? 'dark' : ''}`, className)}
-        >
+        <ContainerElement id={id} className={twMerge(commonClassNames, `${bg} ${dark ? 'dark' : ''}`, className)}>
           {children}
         </ContainerElement>
       )}
     </>
   )
-})
+}
