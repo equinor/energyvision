@@ -237,7 +237,7 @@ const GridTextBlock = forwardRef<HTMLDivElement, GridTextBlockProps>(function Gr
   ) : (
     <div
       ref={ref}
-      className={`p-10 lg:p-12 relative w-full h-full flex overflow-y-auto ${bgColor} ${
+      className={`p-10 lg:p-12 relative w-full h-full flex ${bgColor} ${
         contentAlignmentUtilities[contentAlignment ?? 'center']
       }`}
     >
