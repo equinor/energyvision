@@ -1,11 +1,11 @@
 'use client'
-import { forwardRef, HTMLAttributes, CSSProperties, ElementType, useRef, useEffect } from 'react'
+import { forwardRef, HTMLAttributes, CSSProperties, ElementType, useRef, useEffect, useState } from 'react'
 import { useSanityLoader } from '../../lib/hooks/useSanityLoader'
 import { ImageBackground } from '../../types/index'
 import { twMerge } from 'tailwind-merge'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
 import { ImageRatioKeys, mapSanityImageRatio } from '@/core/SanityImage/SanityImage'
-import { motion, useInView, useAnimate, useTransform, useScroll } from 'framer-motion'
+import { motion, useInView, useAnimate, useTransform, useScroll, useMotionValueEvent } from 'framer-motion'
 
 type ImageBackgroundContainerProps = {
   scrimClassName?: string
@@ -79,14 +79,17 @@ export const ImageBackgroundContainer = ({
       : `black-center-gradient ${darkGradientForContentAlignment[contentAlignment]}`
   }
   const ref = useRef(null)
+  const [opacity, setOpacity] = useState(0)
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ['start center', 'end center'],
   })
 
-  const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [0, 1, 0])
+  const opacityTransformed = useTransform(scrollYProgress, [0, 0.18, 0.85, 1], [0, 1, 1, 0])
+  useMotionValueEvent(opacityTransformed, 'change', (latest) => {
+    setOpacity(latest)
+  })
   if (useAnimation && !isMobile) {
-    console.log('Scroll y ' + JSON.stringify(scrollYProgress) + ' ' + JSON.stringify(opacity))
     return (
       <ReturnElement
         className={backgroundClassNames}
