@@ -32,7 +32,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Deploy website 🌐
         id: deploy-website
-        uses: ./.github/workflows/deploy-websites/
+        uses: ./.github/workflows/deploy-web/
         with:
           projectId: h61q9gi9
           imageName: ghcr.io/equinor/energyvision/web-${{ matrix.dataset }}-upgrade
