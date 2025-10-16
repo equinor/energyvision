@@ -1,4 +1,4 @@
-name: PREPROD - Build & Deploy all webs
+name: UPGRADE PREPROD - Build & Deploy all webs
 on:
   workflow_dispatch:
   push:
@@ -83,7 +83,7 @@ jobs:
 
       - name: Deploy website 🌐
         id: deploy-website
-        uses: ./.github/workflows/deploy-websites/
+        uses: ./.github/workflows/deploy-web/
         with:
           projectId: h61q9gi9
           imageName: ghcr.io/equinor/energyvision/web-${{ matrix.dataset }}-upgrade
