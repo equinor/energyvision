@@ -1,59 +1,25 @@
-name: DEV - Build & deploy studio v3 upgrade
+name: UPGRADE DEV - Build & deploy studio
 on:
   workflow_dispatch:
   push:
     branches:
       - upgrade-next-intl
     paths:
-      - 'sanityv3/**/*'
+      - 'studio/**/*'
       - './FeatureFlags.js'
       - '!./README.md'
       - '!./.env.development.template'
-      - '!./sanityv3/scripts/**/*'
+      - '!./studio/scripts/**/*'
 permissions:
   id-token: write
   packages: write
 jobs:
-  check-code:
-    runs-on: ubuntu-latest
-    env:
-      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-    steps:
-      - name: Checkout 🛎️
-        uses: actions/checkout@v3
-        with:
-          ref: staging
-      - name: Install pnpm 📦
-        id: install-pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: '8.5.1'
-      - name: Cache pnpm modules 💾
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: 'pnpm'
-      - name: Install dependencies 🔧
-        id: install-dependencies
-        run: |
-          pnpm install
-          pnpm sanityv3 install
-      - name: Run ESLint 🔎
-        id: lint
-        run: |
-          pnpm lint:sanityv3
-      - uses: act10ns/slack@v1
-        with:
-          status: ${{ job.status }}
-          steps: ${{ toJson(steps) }}
-        if: failure()
-
   deploy-studio:
     needs: check-code
     runs-on: ubuntu-latest
     environment:
       name: development
-      url: https://studiov3-global-development-upgrade-energyvision-dev.radix.equinor.com/
+      url: https://studio-global-development-upgrade-energyvision-dev.radix.equinor.com/
     strategy:
       matrix:
         dataset: [global-development]
@@ -62,11 +28,11 @@ jobs:
       DOCKER_BUILDKIT: 1
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - id: deploy-satellite
-        uses: ./.github/workflows/deploy-v3/
+        uses: ./.github/workflows/deploy-studio/
         with:
-          imageName: ghcr.io/equinor/energyvision/studiov3-${{ matrix.dataset }}-upgrade
+          imageName: ghcr.io/equinor/energyvision/studio-${{ matrix.dataset }}-upgrade
           datasetName: ${{ matrix.dataset }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           sanityApiToken: ${{ secrets.SANITY_API_TOKEN }}
@@ -82,7 +48,9 @@ jobs:
           screen9accountId: ${{ secrets.SANITY_STUDIO_SCREEN9_ACCOUNT_ID }}
           screen9token: ${{ secrets.SANITY_STUDIO_SCREEN9_TOKEN }}
           environment: ${{ secrets.ENV }}
-      - uses: act10ns/slack@v1
+          previewUrl: ${{ vars.SANITY_STUDIO_PREVIEW_URL}}
+
+      - uses: act10ns/slack@v2
         with:
           status: ${{ job.status }}
           steps: ${{ toJson(steps) }}
