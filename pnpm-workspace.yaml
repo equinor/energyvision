@@ -4,5 +4,3 @@ packages:
   - 'studio'
   - 'search'
   - 'packages/*'
-overrides:
-  'tar-fs': '^3.0.9'
