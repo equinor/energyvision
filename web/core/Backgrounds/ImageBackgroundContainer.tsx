@@ -92,6 +92,7 @@ export const ImageBackgroundContainer = ({
   if (useAnimation && !isMobile) {
     return (
       <ReturnElement
+        ref={ref}
         className={backgroundClassNames}
         style={
           {
@@ -100,17 +101,15 @@ export const ImageBackgroundContainer = ({
         }
         {...rest}
       >
-        <div ref={ref}>
-          {/** Scrim */}
-          <motion.div
-            style={{
-              opacity: opacity,
-            }}
-            className={twMerge(`py-40 lg:py-[25dvh] ${animatedScrimGradient} relative`, scrimClassName)}
-          >
-            <div className={className}>{children}</div>
-          </motion.div>
-        </div>
+        {/** Scrim */}
+        <motion.div
+          style={{
+            opacity: opacity,
+          }}
+          className={twMerge(`py-40 lg:py-[25dvh] ${animatedScrimGradient} relative`, scrimClassName)}
+        >
+          <div className={className}>{children}</div>
+        </motion.div>
       </ReturnElement>
     )
   } else if (isMobile && !dontSplit) {
