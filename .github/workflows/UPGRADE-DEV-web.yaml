@@ -1,4 +1,4 @@
-name: DEV - Build & Deploy equinor.com in next 15
+name: UPGRADE DEV - Build & Deploy equinor.com
 on:
   workflow_dispatch:
   push:
@@ -25,18 +25,16 @@ jobs:
       DOCKER_BUILDKIT: 1
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: staging
       - name: Install pnpm 📦
         id: install-pnpm
         uses: pnpm/action-setup@v4
-        with:
-          version: '8.5.1'
       - name: Cache pnpm modules 💾
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
           cache: 'pnpm'
       - name: Install dependencies 🔧
         id: install-dependencies
@@ -73,7 +71,7 @@ jobs:
       DOCKER_BUILDKIT: 1
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - id: deploy-global-development
         uses: ./.github/workflows/deploy-websites/
         with:
@@ -89,6 +87,7 @@ jobs:
           friendlyCaptchaSitekey: ${{ matrix.dataset == 'brazil' && vars.BRAZIL_FC_SITEKEY || vars.GLOBAL_FC_SITEKEY }}
           friendlyCaptchaPuzzleEndpoint: ${{ matrix.dataset == 'brazil' && vars.BRAZIL_FC_PUZZLE_END_POINT || vars.GLOBAL_FC_PUZZLE_END_POINT }}
           environment: ${{ secrets.ENV }}
+
       - uses: act10ns/slack@v2
         with:
           status: ${{ job.status }}
