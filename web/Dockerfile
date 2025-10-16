@@ -17,39 +17,53 @@ ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
 COPY . /app
 WORKDIR /app
+#COPY package.json pnpm-lock.yaml pnpm-workspace.yaml FeatureFlags ./
 RUN ls -l
 
 # -------------------------------------------------------- #
 # 4. Build application
 # -------------------------------------------------------- #
 FROM base AS prod-deps
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm web install --prod --frozen-lockfile 
+WORKDIR /app/web
+COPY web/pnpm-lock.yaml ./pnpm-lock.yaml
+COPY web/package.json ./package.json
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile 
 
 # -------------------------------------------------------- #
 # 4. Build application
 # -------------------------------------------------------- #
 FROM base AS build
-ENV CI=true
-ENV NEXT_TELEMETRY_DISABLED=1
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm web install --frozen-lockfile
-RUN pnpm web build
 
-# Copy only the web package's package.json and pnpm-lock.yaml
-#COPY package.json pnpm-lock.yaml ./
-#RUN \
-#  if [ -f pnpm-lock.yaml ]; then pnpm install --prod --frozen-lockfile; \
-#  else echo "Lockfile not found." && exit 1; \
-#  fi
-# Copy the rest of the web package's source code
-#COPY . .
-#RUN pnpm run build --filter=web
+WORKDIR /app
+# Copy full repo, then bring in the web workspace node_modules from deps
+COPY . .
+COPY --from=prod-deps /app/web/node_modules ./web/node_modules
+ARG ARG_SANITY_DATASET
+ARG ARG_SANITY_API_TOKEN
+ARG ARG_SANITY_PROJECT_ID
+ARG ARG_ALGOLIA_APP_ID
+ARG ARG_ALGOLIA_SEARCH_API_KEY
+ARG ARG_ARCHIVE_CONTENT_LINK
+ARG ARG_FRIENDLY_CAPTCHA_SITEKEY
+ARG ARG_FRIENDLY_CAPTCHA_PUZZLE_ENDPOINT
+
+ENV NEXT_PUBLIC_SANITY_DATASET=${ARG_SANITY_DATASET}
+ENV NEXT_PUBLIC_SANITY_PROJECT_ID=${ARG_SANITY_PROJECT_ID}
+ENV SANITY_API_TOKEN=${ARG_SANITY_API_TOKEN}
+ENV NEXT_PUBLIC_ALGOLIA_APP_ID=${ARG_ALGOLIA_APP_ID}
+ENV NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY=${ARG_ALGOLIA_SEARCH_API_KEY}
+ENV NEXT_PUBLIC_ARCHIVE_CONTENT_LINK=${ARG_ARCHIVE_CONTENT_LINK}
+ENV NEXT_PUBLIC_FRIENDLY_CAPTCHA_SITEKEY=${ARG_FRIENDLY_CAPTCHA_SITEKEY}
+ENV NEXT_PUBLIC_FRIENDLY_CAPTCHA_PUZZLE_ENDPOINT=${ARG_FRIENDLY_CAPTCHA_PUZZLE_ENDPOINT}
+ENV NEXT_TELEMETRY_DISABLED=1
+
+RUN pnpm -C web build
 
 
 # -------------------------------------------------------- #
 # 6. Runtime container
 # -------------------------------------------------------- #
 FROM core-os AS runner
-ARG APP_PORT
 
 ENV NODE_ENV=production
 
@@ -72,7 +86,6 @@ ENV USER nextjs
 ENV UID 12345
 ENV NEXT_TELEMETRY_DISABLED 1
 
-COPY --from=prod-deps /app/web/node_modules /app/web/node_modules
 COPY --from=build /app/web/public ./public
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
