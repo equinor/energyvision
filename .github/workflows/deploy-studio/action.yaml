@@ -1,5 +1,5 @@
-name: 'Deploy satellite studio'
-description: 'Steps needed to deploy a satellite studio to Radix'
+name: 'Deploy studio'
+description: 'Steps needed to deploy a studio to Radix'
 inputs:
   imageName:
     description: 'The path to where the image is to be copied'

@@ -1,4 +1,4 @@
-name: 'Deploy websites'
+name: 'Deploy web'
 description: 'Steps needed to deploy all websites to Radix'
 inputs:
   imageName:

@@ -34,7 +34,7 @@ jobs:
       - name: Checkout 🛎️
         uses: actions/checkout@v4
       - id: deploy-global-development
-        uses: ./.github/workflows/deploy-websites/
+        uses: ./.github/workflows/deploy-web/
         with:
           imageName: ghcr.io/equinor/energyvision/web-${{ matrix.dataset }}-upgrade
           projectId: h61q9gi9
