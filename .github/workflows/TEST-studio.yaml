@@ -1,4 +1,4 @@
-name: Test - Build & deploy studio v3
+name: Test - Build & deploy studio
 on:
   workflow_dispatch:
   push:
@@ -20,18 +20,16 @@ jobs:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: staging
       - name: Install pnpm 📦
         id: install-pnpm
         uses: pnpm/action-setup@v4
-        with:
-          version: '8.5.1'
       - name: Cache pnpm modules 💾
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
           cache: 'pnpm'
       - name: Install dependencies 🔧
         id: install-dependencies
@@ -42,7 +40,7 @@ jobs:
         id: lint
         run: |
           pnpm lint:studio
-      - uses: act10ns/slack@v1
+      - uses: act10ns/slack@v2
         with:
           status: ${{ job.status }}
           steps: ${{ toJson(steps) }}
@@ -57,7 +55,7 @@ jobs:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: staging
       - name: Set image tag 🏷
@@ -67,7 +65,7 @@ jobs:
           echo "IMAGE_TAG_SHA=$(git rev-parse --short=12 ${GITHUB_SHA})" >> $GITHUB_ENV
       - name: Checkout internal 🛎️
         id: checkout-internal
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: 'equinor/energyvision-internal'
           ref: main
@@ -102,7 +100,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: test
-      url: https://studiov3-global-test-energyvision-test.radix.equinor.com/
+      url: https://studio-global-test-energyvision-test.radix.equinor.com/
     strategy:
       matrix:
         dataset: [global-test]
@@ -111,11 +109,11 @@ jobs:
       DOCKER_BUILDKIT: 1
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - id: deploy-satellite
-        uses: ./.github/workflows/deploy-v3/
+        uses: ./.github/workflows/deploy-studio/
         with:
-          imageName: ghcr.io/equinor/energyvision/studiov3-${{ matrix.dataset }}
+          imageName: ghcr.io/equinor/energyvision/studio-${{ matrix.dataset }}
           datasetName: ${{ matrix.dataset }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           sanityApiToken: ${{ secrets.SANITY_API_TOKEN }}
@@ -131,7 +129,7 @@ jobs:
           screen9accountId: ${{ secrets.SANITY_STUDIO_SCREEN9_ACCOUNT_ID }}
           screen9token: ${{ secrets.SANITY_STUDIO_SCREEN9_TOKEN }}
           environment: ${{ secrets.ENV }}
-      - uses: act10ns/slack@v1
+      - uses: act10ns/slack@v2
         with:
           status: ${{ job.status }}
           steps: ${{ toJson(steps) }}

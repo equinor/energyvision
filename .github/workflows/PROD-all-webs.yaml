@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Checkout internal 🛎️
         id: checkout-internal
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: 'equinor/energyvision-internal'
           ref: main
@@ -52,7 +52,7 @@ jobs:
       DOCKER_BUILDKIT: 1
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # MAIN CLUSTER PLATFORM2
       - name: Deploy to Radix 🚀
@@ -80,15 +80,15 @@ jobs:
     steps:
       - name: Checkout internal 🛎️
         id: checkout-internal
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: 'equinor/energyvision-internal'
           ref: main
           token: ${{ secrets.PADMS_PAT }}
       - name: Setup Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
-          node-version: '14' # Or any version you prefer
+          node-version: '20' # Or any version you prefer
 
       # Check if this can be removed
       - name: Install dependencies
@@ -114,7 +114,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: 'Move cards and create discussion and post it to channel'
         id: 'get-list'

@@ -1,4 +1,4 @@
-name: PROD - Deploy all studios v3
+name: PROD - Deploy all studios
 on:
   workflow_dispatch:
 permissions:
@@ -27,7 +27,7 @@ jobs:
     steps:
       - name: Checkout internal 🛎️
         id: checkout-internal
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: 'equinor/energyvision-internal'
           ref: main
@@ -41,7 +41,7 @@ jobs:
           echo "sha=$(python ci/returnComponentVersion.py preprod studio-global)" >> $GITHUB_OUTPUT
       - name: Checkout 🛎️
         id: checkout-main
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: 'equinor/energyvision'
           fetch-depth: 0
@@ -53,7 +53,7 @@ jobs:
           echo "sha=$(git rev-parse ${{ steps.get-preprod-sha.outputs.sha }})" >> $GITHUB_OUTPUT
       - name: Checkout 🛎️
         id: checkout-specific-branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: 'equinor/energyvision'
           fetch-depth: 0
@@ -61,12 +61,10 @@ jobs:
       - name: Install pnpm 📦
         id: install-pnpm
         uses: pnpm/action-setup@v4
-        with:
-          version: '8.5.1'
       - name: Cache pnpm modules 💾
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
           cache: 'pnpm'
       - name: Install dependencies 🔧
         id: install-dependencies
@@ -109,7 +107,7 @@ jobs:
     steps:
       - name: Checkout internal 🛎️
         id: checkout-internal
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: 'equinor/energyvision-internal'
           ref: main
@@ -123,7 +121,7 @@ jobs:
           echo "sha=$(python ci/returnGlobalStudioVersion.py preprod)" >> $GITHUB_OUTPUT
       - name: Checkout 🛎️
         id: checkout-main
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: 'equinor/energyvision'
           fetch-depth: 0
@@ -135,7 +133,7 @@ jobs:
           echo "sha=$(git rev-parse ${{ steps.get-preprod-sha.outputs.sha }})" >> $GITHUB_OUTPUT
       - name: Checkout 🛎️
         id: checkout-specific-branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: 'equinor/energyvision'
           fetch-depth: 0
@@ -143,12 +141,10 @@ jobs:
       - name: Install pnpm 📦
         id: install-pnpm
         uses: pnpm/action-setup@v4
-        with:
-          version: '8.5.1'
       - name: Cache pnpm modules 💾
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
           cache: 'pnpm'
       - name: Install dependencies 🔧
         id: install-dependencies
@@ -175,7 +171,7 @@ jobs:
     steps:
       - name: Checkout internal 🛎️
         id: checkout-internal
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: 'equinor/energyvision-internal'
           ref: main
@@ -215,7 +211,7 @@ jobs:
       DOCKER_BUILDKIT: 1
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # PRODUCTION CLUSTERS
       - name: Deploy to Radix 🚀
@@ -244,15 +240,15 @@ jobs:
     steps:
       - name: Checkout internal 🛎️
         id: checkout-internal
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: 'equinor/energyvision-internal'
           ref: main
           token: ${{ secrets.PADMS_PAT }}
       - name: Setup Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
-          node-version: '14' # Or any version you prefer
+          node-version: '20' # Or any version you prefer
 
       - name: Install dependencies
         run: |
@@ -277,7 +273,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: 'Move cards and create discussion and post it to channel'
         id: 'get-list'

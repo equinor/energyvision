@@ -58,7 +58,7 @@ runs:
   using: 'composite'
   steps:
     - name: Checkout 🛎️
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         fetch-depth: 0
     - name: Get long sha ️🏷️
@@ -70,7 +70,7 @@ runs:
     - name: Checkout specific branch 🛎️
       if: "${{ inputs.commitSha != '' }}"
       id: checkout-specific-branch
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         repository: 'equinor/energyvision'
         fetch-depth: 0
@@ -124,7 +124,7 @@ runs:
       id: get-component-name
       shell: bash
       run: |
-        component=${{ inputs.datasetName == 'global-development' && 'studiov3-global-development'|| inputs.datasetName == 'global-test' && 'studiov3-global-test' || format('{0}{1}', 'studio-', inputs.datasetName) }}
+        component=${{ inputs.datasetName == 'global-development' && 'studio-global-development'|| inputs.datasetName == 'global-test' && 'studio-global-test' || format('{0}{1}', 'studio-', inputs.datasetName) }}
         echo "Component name is $component"
         echo "COMPONENT_NAME=$component" >> $GITHUB_ENV
       # MAIN CLUSTER

@@ -1,4 +1,4 @@
-name: PREPROD - Build & deploy all studios v3
+name: PREPROD - Build & deploy all studios
 on:
   workflow_dispatch:
   push:
@@ -22,7 +22,7 @@ jobs:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set image tag 🏷
         shell: bash
@@ -32,7 +32,7 @@ jobs:
 
       - name: Checkout internal 🛎️
         id: checkout-internal
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: 'equinor/energyvision-internal'
           ref: main
@@ -70,7 +70,7 @@ jobs:
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - id: set-matrix
         name: Read from satellites.json
         run: |
@@ -97,9 +97,9 @@ jobs:
       DOCKER_BUILDKIT: 1
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - id: deploy-satellite
-        uses: ./.github/workflows/deploy-v3/
+        uses: ./.github/workflows/deploy-studio/
         with:
           imageName: ghcr.io/equinor/energyvision/studio-${{ matrix.dataset }}
           datasetName: ${{ matrix.dataset }}

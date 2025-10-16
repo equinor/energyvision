@@ -1,4 +1,4 @@
-name: DEV - Build & deploy studio v3 upgrade
+name: DEV - Build & deploy studio upgrade
 on:
   workflow_dispatch:
   push:
@@ -20,18 +20,16 @@ jobs:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: staging
       - name: Install pnpm 📦
         id: install-pnpm
         uses: pnpm/action-setup@v4
-        with:
-          version: '8.5.1'
       - name: Cache pnpm modules 💾
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
           cache: 'pnpm'
       - name: Install dependencies 🔧
         id: install-dependencies
@@ -42,7 +40,7 @@ jobs:
         id: lint
         run: |
           pnpm lint:studio
-      - uses: act10ns/slack@v1
+      - uses: act10ns/slack@v2
         with:
           status: ${{ job.status }}
           steps: ${{ toJson(steps) }}
@@ -53,7 +51,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: development
-      url: https://studiov3-global-development-upgrade-energyvision-dev.radix.equinor.com/
+      url: https://studio-global-development-upgrade-energyvision-dev.radix.equinor.com/
     strategy:
       matrix:
         dataset: [global-development]
@@ -62,11 +60,11 @@ jobs:
       DOCKER_BUILDKIT: 1
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - id: deploy-satellite
-        uses: ./.github/workflows/deploy-v3/
+        uses: ./.github/workflows/deploy-studio/
         with:
-          imageName: ghcr.io/equinor/energyvision/studiov3-${{ matrix.dataset }}-upgrade
+          imageName: ghcr.io/equinor/energyvision/studio-${{ matrix.dataset }}-upgrade
           datasetName: ${{ matrix.dataset }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           sanityApiToken: ${{ secrets.SANITY_API_TOKEN }}
@@ -84,7 +82,7 @@ jobs:
           environment: ${{ secrets.ENV }}
           previewUrl: ${{ vars.SANITY_STUDIO_PREVIEW_URL}}
 
-      - uses: act10ns/slack@v1
+      - uses: act10ns/slack@v2
         with:
           status: ${{ job.status }}
           steps: ${{ toJson(steps) }}
