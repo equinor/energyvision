@@ -1,4 +1,4 @@
-name: PREPROD - Build & Deploy all webs
+name: UPGRADE PREPROD - Build & Deploy all webs
 on:
   workflow_dispatch:
   push:

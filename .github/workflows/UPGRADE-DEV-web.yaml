@@ -1,4 +1,4 @@
-name: UPGRADE DEV - Build & Deploy equinor.com
+name: UPGRADE DEV - Build & Deploy energyvision
 on:
   workflow_dispatch:
   push:
