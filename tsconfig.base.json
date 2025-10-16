@@ -7,10 +7,10 @@
     "noEmit": true,
     "resolveJsonModule": true,
     "strict": true,
+    "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "module": "preserve",
     "isolatedModules": true,
-    "esModuleInterop": true,
     "jsx": "preserve",
     "incremental": true
     /*     "paths": {

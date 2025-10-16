@@ -1,5 +1,5 @@
 {
-  "name": "equinor",
+  "name": "energy-vision-studio",
   "private": true,
   "version": "1.0.0",
   "main": "package.json",
@@ -53,17 +53,5 @@
     "nanoid": "^5.0.9",
     "prettier": "^3.6.2",
     "typescript": "^5.8.3"
-  },
-  "overrides": {
-    "minimatch": "10.0.1",
-    "brace-expansion": "^2.0.2",
-    "glob": {
-      "minimatch": "10.0.1",
-      "brace-expansion": "^2.0.2"
-    }
-  },
-  "resolutions": {
-    "minimatch": "10.0.1",
-    "brace-expansion": "^2.0.2"
   }
 }

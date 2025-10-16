@@ -100,3 +100,4 @@ RUN npm install express@5.1.0 express-history-api-fallback@2.2.1
 EXPOSE "$PORT"
 
 CMD ["npm", "start"]
+
