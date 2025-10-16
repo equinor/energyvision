@@ -72,10 +72,10 @@ jobs:
         id: install-dependencies
         run: |
           pnpm install
-          pnpm sanityv3 install
+          pnpm studio install
       - name: Deploy 🚀
         id: deploy
-        working-directory: ./sanityv3
+        working-directory: ./studio
         run: |
           pnpm run deploy
         env:
@@ -154,10 +154,10 @@ jobs:
         id: install-dependencies
         run: |
           pnpm install
-          pnpm sanityv3 install
+          pnpm studio install
       - name: Deploy 🚀
         id: deploy
-        working-directory: ./sanityv3
+        working-directory: ./studio
         run: |
           pnpm run deploy
         env:

@@ -63,10 +63,10 @@ jobs:
       - name: Install dependencies 🔧
         id: install-dependencies
         run: |
-          pnpm sanityv3 install
+          pnpm studio install
       - name: Export Data
         id: export-data
-        working-directory: ./sanityv3
+        working-directory: ./studio
         env:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_BACKUP_TOKEN }}
         run: |

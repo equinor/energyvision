@@ -1,7 +1,8 @@
 packages:
   - 'web'
   - 'e2e'
-  - 'sanityv3'
+  - 'studio'
   - 'search'
+  - 'packages/*'
 overrides:
   'tar-fs': '^3.0.9'

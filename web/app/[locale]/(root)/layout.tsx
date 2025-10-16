@@ -1,3 +1,4 @@
+//@ts-ignore:followiong documentation but ts complain
 import '../../globals.css'
 import { NextIntlClientProvider, hasLocale } from 'next-intl'
 import { notFound } from 'next/navigation'
@@ -6,7 +7,9 @@ import localFont from 'next/font/local'
 import { draftMode } from 'next/headers'
 import { Toaster } from 'sonner'
 import DraftModeToast from '@/sections/DraftMode/DraftModeToast'
-import { VisualEditing } from 'next-sanity'
+//@ts-ignore:followiong documentation but ts complain
+// eslint-disable-next-line import/no-unresolved
+import { VisualEditing } from 'next-sanity/visual-editing'
 import { SanityLive } from '@/sanity/lib/live'
 import { handleError } from '../../client-utils'
 import { getFooterData } from '@/sanity/lib/fetchData'

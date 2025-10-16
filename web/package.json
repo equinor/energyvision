@@ -9,12 +9,12 @@
     "email": "fg_envis@equinor.com"
   },
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev",
     "info": "next info",
-    "build": "next build --turbopack",
+    "build": "next build",
     "start": "next start",
-    "type-check": "tsc --project tsconfig.json --pretty --noEmit",
-    "check-types": "tsc --noEmit"
+    "type-check": "tsc --project tsconfig.json --pretty",
+    "check-types": "tsc"
   },
   "dependencies": {
     "@algolia/cache-browser-local-storage": "^4.22.1",

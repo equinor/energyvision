@@ -1,0 +1,108 @@
+@theme {
+  --font-sans: 'Equinor', 'Open Sans', sans-serif;
+  --breakpoint-md: 43.75rem;
+  --breakpoint-xl: 81.25rem;
+  --breakpoint-3xl: 100rem;
+  --breakpoint-4xl: 120rem;
+  --breakpoint-6xl: 140rem;
+
+  --color-moss-green-100: hsl(184, 100%, 17%);
+  --color-moss-green-95: hsl(184, 100%, 24%);
+  --color-moss-green-90: hsl(184, 31%, 58%);
+  --color-moss-green-80: hsl(184, 31%, 74%);
+  --color-moss-green-60: hsl(184, 31%, 89%);
+  --color-moss-green-50: hsl(184, 30%, 96%);
+  --color-energy-red-100: hsl(348, 100%, 54%);
+  --color-clear-red-100: hsl(0, 100%, 46%);
+  --color-black-100: hsl(0, 0%, 0%);
+  --color-black-80: hsl(0, 0%, 20%);
+  --color-slate-blue-100: hsl(206, 34%, 14%);
+  --color-slate-blue-95: hsl(206, 32%, 21%);
+  --color-slate-blue-90: hsl(207, 14%, 37%);
+  --color-slate-80: rgba(61, 61, 61, 1);
+  --color-mist-blue-100: hsl(199, 58%, 90%);
+  --color-spruce-wood-100: hsl(25, 100%, 92%);
+  --color-spruce-wood-90: hsl(25, 100%, 94%);
+  --color-green-50: #c3e4ce;
+  --color-yellow-50: #fff5b8;
+  --color-blue-50: #49709c;
+  --color-orange-50: #f8d1af;
+  --color-north-sea-90: #051b33;
+  --color-north-sea-80: #2a4d74;
+  --color-north-sea-50: #a8c3db;
+  --color-norwegian-woods-100: #007079;
+  --color-norwegian-woods-70: #aad5bb;
+  --color-norwegian-woods-60: #c3e4ce;
+  --color-norwegian-woods-40: #e6faec;
+  --color-sand-and-summer-50: #ffe7d6;
+  --color-autumn-storm-60: #86a7ac;
+  --color-autumn-storm-40: #c2d4d6;
+  --color-grey-20: hsl(0, 0%, 92%);
+  --color-grey-50: hsl(0, 0%, 55%);
+  --color-grey-60: hsl(0, 0%, 44%);
+  --color-white-100: hsl(0, 0%, 100%);
+
+  --text-2xs: clamp(calc(11.11 / 16 * 1rem), 0.19vw + 0.65rem, calc(14.08 / 16 * 1rem));
+  --text-xs: clamp(calc(13.33 / 16 * 1rem), 0.28vw + 0.77rem, calc(17.6 / 16 * 1rem));
+  --text-sm: clamp(calc(14.61 / 16 * 1rem), 0.33vw + 0.84rem, calc(19.68 / 16 * 1rem));
+  --text-base: clamp(calc(16 / 16 * 1rem), 0.39vw + 0.91rem, calc(22 / 16 * 1rem));
+  --text-md: clamp(calc(19.2 / 16 * 1rem), 0.54vw + 1.07rem, calc(27.5 / 16 * 1rem));
+  --text-lg: clamp(calc(23.04 / 16 * 1rem), 0.73vw + 1.27rem, calc(34.38 / 16 * 1rem));
+  --text-xl: clamp(calc(27.65 / 16 * 1rem), 0.99vw + 1.5rem, calc(42.97 / 16 * 1rem));
+  --text-2xl: clamp(calc(33.73 / 16 * 1rem), 1.38vw + 1.785rem, calc(55.055 / 16 * 1rem));
+  --text-3xl: clamp(calc(39.81 / 16 * 1rem), 1.77vw + 2.07rem, calc(67.14 / 16 * 1rem));
+  --text-4xl: clamp(calc(45.89 / 16 * 1rem), 2.16vw + 2.355rem, calc(79.225 / 16 * 1rem));
+  --text-5xl: clamp(calc(51.97 / 16 * 1rem), 2.55vw + 2.64rem, calc(91.31 / 16 * 1rem));
+  --text-6xl: clamp(calc(58.05 / 16 * 1rem), 2.94vw + 2.925rem, calc(103.39 / 16 * 1rem));
+  --text-8xl: clamp(calc(59.19 / 16 * 1rem), 3.72vw + 3.495rem, calc(115.47 / 16 * 1rem));
+
+  --spacing-single-carousel-card-w-sm: 350px; /*275px;*/
+  --spacing-single-carousel-card-w-md: 692px;
+  --spacing-single-carousel-card-w-lg: 980px;
+  --spacing-single-carousel-card-h-sm: 400px;
+  --spacing-single-carousel-card-h-md: 430px;
+  --spacing-single-carousel-card-h-lg: 516px;
+  --spacing-event-carousel-card-w: 383px;
+  --spacing-arrow-right: 1.58rem;
+  --spacing-envis-prose: 75ch; /* recommended 66ch, can we go 80ch*/
+  --spacing-text: clamp(75ch, 1200px);
+
+  --font-weight-semibolder: 650;
+
+  --radius-2xs: 0.1rem;
+
+  --leading-text: 2.3rem;
+  --leading-inherit: inherit;
+  --leading-lofty: 1.02; /* 49.7px h3 large screen */
+  --leading-earthy: 1.172; /* 57.1828px h2 large screen */
+  --leading-misty: 1.25;
+  --leading-cloudy: 1.4; /*68.3071px h1 larger screen */
+  --leading-planetary: 1.5;
+
+  --scale-99: 0.99;
+
+  --shadow-card: rgba(0, 0, 0, 0.08) 0px 1px 3px, 1px -1px 2px 0px rgba(0, 0, 0, 0.07), rgba(0, 0, 0, 0.2) 0px 1px 2px;
+  --shadow-card-interact: rgba(0, 0, 0, 0.14) 0px 1px 3px, rgba(0, 0, 0, 0.36) 0px 1px 2px;
+
+  --ease-scroll: cubic-bezier(0.645, 0.045, 0.355, 1);
+  --ease-ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+
+  /* Modal */
+  --modal-transition-duration: 0.4s;
+  --modal-transition-easing: cubic-bezier(0.45, 0, 0.55, 1);
+
+  /* or just --fr? flex-(--fr) */
+  --flex-fr: 1 1 1;
+
+  /* or just --motion-safe? transition-(--my-properties) */
+  --transition-motion-safe: motion-safe;
+
+  /*just --card ? grid-cols-(--my-grid-cols) */
+  --grid-cols-card: repeat(auto-fill, minmax(min(100%, 220px), 400px));
+
+  /* Implement in code and check
+        flex: {
+        fr: '1 1 1',
+      },
+  */
+}

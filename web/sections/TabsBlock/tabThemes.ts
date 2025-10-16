@@ -3,7 +3,7 @@ export type TabsThemeColors = {
   cardBackground?: string
   dark?: boolean
 }
-//Keep in sync with sanityv3/schemas/objects/tabs/tabsThemes
+//Keep in sync with studio/schemas/objects/tabs/tabsThemes
 export const getColorForTabsTheme = (pattern?: number): TabsThemeColors => {
   switch (pattern) {
     case 0:

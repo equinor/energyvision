@@ -1,4 +1,4 @@
-//Keep in sync with sanityv3/schemas/objects/table/tableThemes
+//Keep in sync with studio/schemas/objects/table/tableThemes
 export const getColorConfigForTableTheme = (title: string) => {
   switch (title) {
     case 'blue':

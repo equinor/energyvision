@@ -2,7 +2,7 @@ const archiveServerHostname = process.env.NEXT_PUBLIC_ARCHIVE_CONTENT_LINK
 import type { NextConfig } from 'next'
 import createNextIntlPlugin from 'next-intl/plugin'
 import { withSentryConfig } from '@sentry/nextjs'
-import securityHeaders from './securityHeaders.js'
+import securityHeaders from './securityHeaders'
 import { dataset } from './languages.js'
 
 const withNextIntl = createNextIntlPlugin()

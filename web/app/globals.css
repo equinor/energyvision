@@ -195,10 +195,10 @@ and not use important in textteaser theme
 /* @custom-variant highlight (&:where([data-highlight], [data-highlight] *)) */
 
 @custom-variant envis-outline {
-  @apply outline-2 outline-offset-3 outline-norwegian-woods-100 outline-dashed;
+  @apply outline-offset-3 outline-norwegian-woods-100 outline-dashed outline-2;
 }
 @custom-variant envis-outline-invert {
-  @apply outline-2 outline-offset-3 outline-white-100 outline-dashed;
+  @apply outline-offset-3 outline-white-100 outline-dashed outline-2;
 }
 @custom-variant envis-outline-invert {
   word-break: 'break-word';
@@ -517,7 +517,7 @@ treat the value and modifier as a single value:
   /** PROSE END  */
 
   .clickbound-area {
-    @apply before:absolute before:top-1/2 before:left-1/2 before:aspect-square before:w-[48px] before:translate-x-[-50%] before:translate-y-[-50%] before:cursor-pointer before:rounded-[100%] before:content-[''];
+    @apply before:absolute before:left-1/2 before:top-1/2 before:aspect-square before:w-[48px] before:translate-x-[-50%] before:translate-y-[-50%] before:cursor-pointer before:rounded-[100%] before:content-[''];
   }
 
   /**
@@ -525,7 +525,7 @@ treat the value and modifier as a single value:
  * 1. Increment the counter at each new reference
  */
   a[aria-describedby='footnote-label'] {
-    @apply relative cursor-default text-inherit outline-hidden;
+    @apply outline-hidden relative cursor-default text-inherit;
     counter-increment: footnotes;
     text-decoration: none;
     /* outline: none;*/
@@ -546,7 +546,7 @@ treat the value and modifier as a single value:
  * 1. Display the current state of the counter (e.g. `[1]`)
  */
   a[aria-describedby='footnote-label']::after {
-    @apply cursor-pointer pr-[2px] pl-[2px] align-super text-xs font-medium text-slate-blue-95 no-underline hover:font-medium hover:underline;
+    @apply text-slate-blue-95 cursor-pointer pl-[2px] pr-[2px] align-super text-xs font-medium no-underline hover:font-medium hover:underline;
     content: counter(footnotes); /* 1 */
   }
 
@@ -554,11 +554,11 @@ treat the value and modifier as a single value:
  * Resetting the default focused styles on the number
  */
   a[aria-describedby='footnote-label']:focus::after {
-    @apply outline-2 outline-offset-2 outline-norwegian-woods-100 outline-dashed;
+    @apply outline-norwegian-woods-100 outline-dashed outline-2 outline-offset-2;
   }
 
   /* highlight the note in the footer */
   footer :target {
-    @apply w-fit bg-autumn-storm-40;
+    @apply bg-autumn-storm-40 w-fit;
   }
 }

@@ -1,0 +1,29 @@
+{
+  "name": "@equinor/energyvision-config",
+  "version": "1.0.0",
+  "description": "Configurations and Tailwind theme for EnergyVision platform",
+  "author": "Envis team",
+  "license": "MIT",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "exports": {
+    ".": {
+      "types": "./types.d.ts",
+      "default": "./brand/tailwind/theme.css"
+    },
+    "./brand": "./brand/tailwind/theme.css",
+    "./satelliteConfig": "./src/configs/satellites.ts",
+    "./featureFlags": "./src/configs/featureFlags.ts"
+  },
+  "files": [
+    "dist",
+    "*.css",
+    "*.ts"
+  ],
+  "devDependencies": {
+    "typescript": "5.8.3"
+  },
+  "packageManager": "pnpm@10.18.1"
+}

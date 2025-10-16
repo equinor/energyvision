@@ -1,6 +1,6 @@
 'use client'
 import { useTranslations } from 'next-intl'
-import { languages } from '../languages'
+import { languages } from '../../languages'
 import { ButtonLink } from '@/core/Link'
 
 export type AllSlugsType = { slug: string; lang: string }[]

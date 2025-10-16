@@ -7,7 +7,7 @@ export type ThemeColors = {
   textUtility?: string
   dark?: boolean
 }
-//Keep in sync with sanityv3/schemas/components/ThemeSelector/themeColors
+//Keep in sync with studio/schemas/components/ThemeSelector/themeColors
 export const getColorForTheme = (pattern?: number): ThemeColors => {
   switch (pattern) {
     case 1:

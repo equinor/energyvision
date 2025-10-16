@@ -5,11 +5,11 @@ on:
     branches:
       - upgrade-next-intl
     paths:
-      - 'sanityv3/**/*'
+      - 'studio/**/*'
       - './FeatureFlags.js'
       - '!./README.md'
       - '!./.env.development.template'
-      - '!./sanityv3/scripts/**/*'
+      - '!./studio/scripts/**/*'
 permissions:
   id-token: write
   packages: write
@@ -37,11 +37,11 @@ jobs:
         id: install-dependencies
         run: |
           pnpm install
-          pnpm sanityv3 install
+          pnpm studio install
       - name: Run ESLint 🔎
         id: lint
         run: |
-          pnpm lint:sanityv3
+          pnpm lint:studio
       - uses: act10ns/slack@v1
         with:
           status: ${{ job.status }}

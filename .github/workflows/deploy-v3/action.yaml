@@ -110,7 +110,7 @@ runs:
           --build-arg ARG_SCREEN9_ACCOUNT_ID="${{ inputs.screen9accountId }}" \
           --build-arg ARG_SCREEN9_TOKEN="${{ inputs.screen9token }}" \
           --build-arg ARG_SANITY_STUDIO_PREVIEW_URL="${{ inputs.previewUrl }}" \
-          --file sanityv3/Dockerfile \
+          --file studio/Dockerfile \
           --tag ${{ inputs.imageName }}:${{ env.IMAGE_TAG }} \
           --tag ${{ inputs.imageName }}:${{ env.IMAGE_TAG_SHA }} \
           --build-arg BUILDKIT_INLINE_CACHE=1

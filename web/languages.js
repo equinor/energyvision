@@ -4,9 +4,9 @@ export const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET
 
 export const languages = getLanguages(dataset)
 
-export const getValidLanguagesLocales = () => getLanguages(dataset).map((lang) => lang.locale)
+export const getValidLanguagesLocales = () => getLanguages(dataset).map((lang) => lang?.locale)
 
-export const defaultLanguage = languages.find((lang) => lang.id === defaultWebLanguage[dataset]) || languages[0]
+export const defaultLanguage = languages.find((lang) => lang?.id === defaultWebLanguage[dataset]) ?? languages[0]
 
 export const domain = getDomain(dataset)
 

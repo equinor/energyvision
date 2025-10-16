@@ -1,8 +1,22 @@
+# -------------------------------------------------------- #
+# 0. Build Arguments
+# -------------------------------------------------------- #
+
+ARG NODE_VERSION=20
+ARG PNPM_VERSION=10.10
+ARG PNPM_HOME="/pnpm"
+ARG PATH="${PNPM_HOME}:${PATH}"
+ARG PNPM_STORE="/pnpm/store"
+
+
 # Build
 FROM node:lts-alpine AS builder
+RUN apk update
+RUN apk add --no-cache libc6-compat curl
 
 ENV NODE_OPTIONS="--max_old_space_size=8192"
-RUN npm install -g pnpm@8.5.1
+RUN corepack enable && corepack prepare pnpm@${PNPM_VERSION} --activate
+RUN --mount=type=cache,id=pnpm,target=${PNPM_STORE} pnpm config set store-dir ${PNPM_STORE}
 
 WORKDIR /opt/app
 
@@ -13,7 +27,7 @@ COPY ./pnpm-lock.yaml ./
 COPY ./tsconfig.base.json ./
 COPY ./satellitesConfig.js ./
 COPY ./FeatureFlags.js ./
-COPY ./sanityv3 ./sanityv3
+COPY ./studio ./studio
 
 ARG ARG_SANITY_API_TOKEN
 ARG ARG_SANITY_MUTATION_TOKEN
@@ -49,8 +63,8 @@ ENV SANITY_STUDIO_SCREEN9_ACCOUNT_ID ${ARG_SCREEN9_ACCOUNT_ID}
 ENV SANITY_STUDIO_SCREEN9_TOKEN ${ARG_SCREEN9_TOKEN}
 ENV SANITY_STUDIO_PREVIEW_URL ${ARG_SANITY_STUDIO_PREVIEW_URL}
 
-RUN pnpm m i --frozen-lockfile
-RUN pnpm sanityv3 build
+RUN pnpm studio install --frozen-lockfile
+RUN pnpm studio build
 
 # Run
 FROM node:lts-alpine AS runner
@@ -78,10 +92,10 @@ USER "$UID"
 
 RUN mkdir dist
 
-COPY --from=builder ./opt/app/sanityv3/dist ./dist
-COPY --from=builder ./opt/app/sanityv3/server.js .
+COPY --from=builder ./opt/app/studio/dist ./dist
+COPY --from=builder ./opt/app/studio/server.js .
 
-RUN npm install express@4.16.3 express-history-api-fallback@2.2.1
+RUN npm install express@5.1.0 express-history-api-fallback@2.2.1
 
 EXPOSE "$PORT"
 

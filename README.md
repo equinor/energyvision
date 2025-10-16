@@ -24,13 +24,13 @@ pnpm setup-project
 
 For compatibility reasons, the Sanity Studio uses the Yarn package manager, and the search indexer uses npm. The `pnpm setup-project` script will automatically install the dependencies for the Studio as well as the workspace packages listed in `pnpm-workspace.yaml`. See the [section on package managers](#package-managers) for more information.
 
-This project requires several environment variables to run. These environment variables should be added in `sanityv3/.env.development`, `web/.env.local`, and `search/.env` respectively.
+This project requires several environment variables to run. These environment variables should be added in `studio/.env.development`, `web/.env.local`, and `search/.env` respectively.
 
 ## Project overview
 
 This monorepo is organized into several folder. Please refer to README files inside each folder for more information.
 
-- `sanityv3` - [Sanity](https://www.sanity.io/) powered content platform.
+- `studio` - [Sanity](https://www.sanity.io/) powered content platform.
 - `web` - Web application using [Next.js](https://nextjs.org/) and React components.
 - `search` - Azure functions for maintaining search indexes at [Algolia](https://www.algolia.com/apps/24ZMKUY18Z/dashboard).
 
@@ -63,7 +63,7 @@ pnpm web add chalk -- --save-dev
 
 ```bash
 # Start studio in dev mode
-pnpm sanityv3 dev
+pnpm studio dev
 ```
 
 ### Search

@@ -1,4 +1,6 @@
-import { defineLive } from 'next-sanity'
+//@ts-ignore:followiong documentation but ts complain
+// eslint-disable-next-line import/no-unresolved
+import { defineLive } from 'next-sanity/live'
 import { client } from './client'
 import { token } from './token'
 

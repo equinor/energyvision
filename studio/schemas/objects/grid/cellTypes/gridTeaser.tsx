@@ -4,7 +4,7 @@ import { configureBlockContent } from '../../../editors'
 import { validateCharCounterEditor } from '../../../validations/validateCharCounterEditor'
 
 import type { PortableTextBlock, Reference, Rule } from 'sanity'
-import type { DownloadableImage } from './../../downloadableImage'
+import type { DownloadableImage } from '../../downloadableImage'
 import type { DownloadableFile } from '../../files'
 import type { ImageWithAlt } from '../../imageWithAlt'
 import type { LinkSelector } from '../../linkSelector'

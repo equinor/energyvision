@@ -5,11 +5,11 @@ on:
     branches:
       - main
     paths:
-      - 'sanityv3/**/*'
+      - 'studio/**/*'
       - './FeatureFlags.js'
       - '!./README.md'
       - '!./.env.development.template'
-      - '!./sanityv3/scripts/**/*'
+      - '!./studio/scripts/**/*'
 permissions:
   id-token: write
   packages: write

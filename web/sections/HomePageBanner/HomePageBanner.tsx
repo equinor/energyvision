@@ -16,7 +16,7 @@ export type HomePageBannerThemeColors = {
   foreground?: string
   dark?: boolean
 }
-//Keep in sync with sanityv3/schemas/objects/homepageBanner/getColorForHomePageBannerTheme
+//Keep in sync with studio/schemas/objects/homepageBanner/getColorForHomePageBannerTheme
 export const getColorForHomepageBannerTheme = (pattern?: number): HomePageBannerThemeColors => {
   switch (pattern) {
     //White
