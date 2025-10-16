@@ -48,15 +48,15 @@ ENV CI=true
 ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN \
-  if [ -f pnpm-lock.yaml ]; then pnpm install --prod; \
+  if [ -f pnpm-lock.yaml ]; then pnpm install --prod --frozen-lockfile; \
   else echo "Lockfile not found." && exit 1; \
   fi
 
 # Copy the rest of the web package's source code
 COPY . .
 
-RUN pnpm run build
-#RUN pnpm run build --filter=web
+#RUN pnpm run build
+RUN pnpm run build --filter=web
 
 
 # -------------------------------------------------------- #
