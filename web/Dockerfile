@@ -1,18 +1,7 @@
 # -------------------------------------------------------- #
-# 0. Build Arguments
-# -------------------------------------------------------- #
-
-ARG NODE_VERSION=20
-ARG PNPM_VERSION=10.10
-ARG PNPM_HOME="/pnpm"
-ARG PATH="${PNPM_HOME}:${PATH}"
-ARG PNPM_STORE="/pnpm/store"
-
-# -------------------------------------------------------- #
 # 1. Base system environment
 # -------------------------------------------------------- #
-FROM node:${NODE_VERSION}-alpine AS core-os
-LABEL stage=core
+FROM node:20-alpine AS core-os
 RUN apk update
 RUN apk add --no-cache libc6-compat curl
 
@@ -20,44 +9,42 @@ RUN apk add --no-cache libc6-compat curl
 # 2. Core tooling setup (PNPM, etc.)
 # -------------------------------------------------------- #
 FROM core-os AS base
-ARG PNPM_STORE
-LABEL builder=true
-# Set the working directory inside the container
-WORKDIR /app
-RUN ls -l
-COPY /app/web .
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+
 #WORKDIR /app
 #COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 
-RUN corepack enable && corepack prepare pnpm@${PNPM_VERSION} --activate
-RUN --mount=type=cache,id=pnpm,target=${PNPM_STORE} pnpm config set store-dir ${PNPM_STORE}
+RUN corepack enable
+COPY ./web /app
+RUN ls -l
+WORKDIR /app
+RUN ls -l
 
+# -------------------------------------------------------- #
+# 4. Build application
+# -------------------------------------------------------- #
+FROM base AS prod-deps
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile
 
 # -------------------------------------------------------- #
 # 4. Build application
 # -------------------------------------------------------- #
 FROM base AS build
-LABEL stage=builder
-
-WORKDIR /app
-RUN ls -l
-
-# Copy only the web package's package.json and pnpm-lock.yaml
-COPY package.json pnpm-lock.yaml ./
-
 ENV CI=true
 ENV NEXT_TELEMETRY_DISABLED=1
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+RUN pnpm run build
 
-RUN \
-  if [ -f pnpm-lock.yaml ]; then pnpm install --prod --frozen-lockfile; \
-  else echo "Lockfile not found." && exit 1; \
-  fi
-
+# Copy only the web package's package.json and pnpm-lock.yaml
+#COPY package.json pnpm-lock.yaml ./
+#RUN \
+#  if [ -f pnpm-lock.yaml ]; then pnpm install --prod --frozen-lockfile; \
+#  else echo "Lockfile not found." && exit 1; \
+#  fi
 # Copy the rest of the web package's source code
-COPY . .
-
-#RUN pnpm run build
-RUN pnpm run build --filter=web
+#COPY . .
+#RUN pnpm run build --filter=web
 
 
 # -------------------------------------------------------- #
@@ -65,8 +52,6 @@ RUN pnpm run build --filter=web
 # -------------------------------------------------------- #
 FROM core-os AS runner
 ARG APP_PORT
-LABEL stage=runner
-WORKDIR /app/web
 
 ENV NODE_ENV=production
 
@@ -89,6 +74,7 @@ ENV USER nextjs
 ENV UID 12345
 ENV NEXT_TELEMETRY_DISABLED 1
 
+COPY --from=prod-deps /app/node_modules /app/node_modules
 COPY --from=build /app/web/public ./public
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
