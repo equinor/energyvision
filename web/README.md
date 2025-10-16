@@ -38,7 +38,7 @@ interpolation functions. [The styled-components happy path blogpost](https://sty
 To structure the global CSS we follow the
 [Inverted Triangle CSS](https://www.xfive.co/blog/itcss-scalable-maintainable-css-architecture/) approach.
 
-Most of the general styles (such as colours and fonts) are based on the [Equinor Design System (EDS)](https://eds.equinor.com), additionally several EDS React components are used where possible. Adjustments had to be made to certain styles and components due to the EDS being created primarily for data heavy applications instead of presentation style websites/applications.
+Most of the general styles (such as colours and fonts) are based on the [Equinor Design System (EDS)](https://eds.equinor.com), additionally EDS React components are used where possible. Adjustments had to be made to certain styles and components due to the EDS being created primarily for data heavy applications instead of presentation style websites/applications.
 
 ## Algolia Search
 
