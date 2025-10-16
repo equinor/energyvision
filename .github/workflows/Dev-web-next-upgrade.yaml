@@ -1,4 +1,4 @@
-name: DEV - Build & Deploy equinor.com in next 15
+name: UPGRADE DEV - Build & Deploy equinor.com
 on:
   workflow_dispatch:
   push:
