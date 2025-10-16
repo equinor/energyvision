@@ -12,12 +12,10 @@ FROM core-os AS base
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 
-#WORKDIR /app
 #COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 
 RUN corepack enable
-COPY ./web /app
-RUN ls -l
+COPY . /app
 WORKDIR /app
 RUN ls -l
 
@@ -25,7 +23,7 @@ RUN ls -l
 # 4. Build application
 # -------------------------------------------------------- #
 FROM base AS prod-deps
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm web install --prod --frozen-lockfile 
 
 # -------------------------------------------------------- #
 # 4. Build application
@@ -33,8 +31,8 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-l
 FROM base AS build
 ENV CI=true
 ENV NEXT_TELEMETRY_DISABLED=1
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
-RUN pnpm run build
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm web install --frozen-lockfile
+RUN pnpm web build
 
 # Copy only the web package's package.json and pnpm-lock.yaml
 #COPY package.json pnpm-lock.yaml ./
@@ -74,7 +72,7 @@ ENV USER nextjs
 ENV UID 12345
 ENV NEXT_TELEMETRY_DISABLED 1
 
-COPY --from=prod-deps /app/node_modules /app/node_modules
+COPY --from=prod-deps /app/web/node_modules /app/web/node_modules
 COPY --from=build /app/web/public ./public
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
