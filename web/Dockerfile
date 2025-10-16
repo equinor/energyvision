@@ -33,7 +33,7 @@ WORKDIR /app
 COPY . .
 RUN ls
 #COPY --from=prod-deps /app/web/node_modules ./web/node_modules
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm -C web install --frozen-lockfile 
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm web install --frozen-lockfile 
 ARG ARG_SANITY_DATASET
 ARG ARG_SANITY_API_TOKEN
 ARG ARG_SANITY_PROJECT_ID
@@ -53,7 +53,7 @@ ENV NEXT_PUBLIC_FRIENDLY_CAPTCHA_SITEKEY=${ARG_FRIENDLY_CAPTCHA_SITEKEY}
 ENV NEXT_PUBLIC_FRIENDLY_CAPTCHA_PUZZLE_ENDPOINT=${ARG_FRIENDLY_CAPTCHA_PUZZLE_ENDPOINT}
 ENV NEXT_TELEMETRY_DISABLED=1
 
-RUN pnpm -C web build
+RUN pnpm web build
 
 
 # -------------------------------------------------------- #
