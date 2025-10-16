@@ -18,9 +18,9 @@ RUN corepack enable
 # -------------------------------------------------------- #
 FROM base AS prod-deps
 WORKDIR /app/web
-RUN ls -l
 COPY web/pnpm-lock.yaml ./pnpm-lock.yaml
 COPY web/package.json ./package.json
+RUN ls
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile 
 
 # -------------------------------------------------------- #
@@ -31,7 +31,9 @@ FROM base AS build
 WORKDIR /app
 # Copy full repo, then bring in the web workspace node_modules from deps
 COPY . .
-COPY --from=prod-deps /app/web/node_modules ./web/node_modules
+RUN ls
+#COPY --from=prod-deps /app/web/node_modules ./web/node_modules
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm -C web install --frozen-lockfile 
 ARG ARG_SANITY_DATASET
 ARG ARG_SANITY_API_TOKEN
 ARG ARG_SANITY_PROJECT_ID
