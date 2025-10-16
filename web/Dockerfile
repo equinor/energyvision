@@ -11,20 +11,14 @@ RUN apk add --no-cache libc6-compat curl
 FROM core-os AS base
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
-
-#COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-
 RUN corepack enable
-COPY . /app
-WORKDIR /app
-#COPY package.json pnpm-lock.yaml pnpm-workspace.yaml FeatureFlags ./
-RUN ls -l
 
 # -------------------------------------------------------- #
 # 4. Build application
 # -------------------------------------------------------- #
 FROM base AS prod-deps
 WORKDIR /app/web
+RUN ls -l
 COPY web/pnpm-lock.yaml ./pnpm-lock.yaml
 COPY web/package.json ./package.json
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile 
