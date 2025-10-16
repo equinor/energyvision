@@ -19,13 +19,14 @@ RUN apk add --no-cache libc6-compat curl
 # -------------------------------------------------------- #
 # 2. Core tooling setup (PNPM, etc.)
 # -------------------------------------------------------- #
-FROM core-os as base
+FROM core-os AS base
 ARG PNPM_STORE
 LABEL builder=true
 # Set the working directory inside the container
-WORKDIR /app/web
+WORKDIR /app
+RUN ls -l
+COPY /app/web .
 #WORKDIR /app
-#COPY /app/web .
 #COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 
 RUN corepack enable && corepack prepare pnpm@${PNPM_VERSION} --activate
@@ -38,7 +39,7 @@ RUN --mount=type=cache,id=pnpm,target=${PNPM_STORE} pnpm config set store-dir ${
 FROM base AS build
 LABEL stage=builder
 
-WORKDIR /app/web
+WORKDIR /app
 RUN ls -l
 
 # Copy only the web package's package.json and pnpm-lock.yaml
