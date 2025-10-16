@@ -23,9 +23,8 @@
     "docker:inspect": "docker run -p 3000:3000 --env-file=web/.env.local -it envis/web /bin/sh",
     "prepare": "is-ci || husky install",
     "start:web": "pnpm web dev",
-    "v3:dev": "pnpm studio dev",
-    "v3:docker": "DOCKER_BUILDKIT=1 docker build --build-arg ARG_SANITY_DATASET=global-development -t envis/v3 -f studio/Dockerfile .",
-    "v3:run": "docker run -p 3333:3333 envis/v3",
+    "studio:docker": "DOCKER_BUILDKIT=1 docker build --build-arg ARG_SANITY_DATASET=global-development -t envis/studio -f studio/Dockerfile .",
+    "studio:run": "docker run -p 3333:3333 envis/studio",
     "lint-staged": "lint-staged -c ./lint-staged-config.js",
     "cleandep": "rm -rf node_modules && rm -rf pnpm-lock.yaml && pnpm -r exec rm -rf node_modules"
   },
