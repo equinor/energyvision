@@ -81,49 +81,6 @@ jobs:
       - name: Checkout 🔔
         uses: actions/checkout@v4
 
-      - name: Set image tag 🏷
-        shell: bash
-        id: set-default-image-tag
-        run: |
-          echo "IMAGE_TAG_SHA=$(git rev-parse --short=12 ${GITHUB_SHA})" >> $GITHUB_ENV
-
-      - name: Checkout internal 🛎️
-        id: checkout-internal
-        uses: actions/checkout@v4
-        with:
-          repository: 'equinor/energyvision-internal'
-          ref: main
-          token: ${{ secrets.PADMS_PAT }} # Replace with ssh as per https://stackoverflow.com/questions/60222741/github-actions-and-git-clone-issue
-
-      - name: Modify radixconfig tag for preprod on main branch 🗒️
-        if: github.ref == 'refs/heads/main'
-        shell: bash
-        id: modify-radix
-        run: |
-          # Install pre-requisite
-          python3 -m venv venv
-          source venv/bin/activate
-          python -m pip install ruamel.yaml
-          python ci/upgradeEnvironment.py web-upgrade ${{ env.IMAGE_TAG_SHA }} ${{ secrets.ENV }}
-          git config --global user.name 'github'
-          git config --global user.email 'padms@users.noreply.github.com'
-          git remote set-url origin https://x-access-token:${{ secrets.PADMS_PAT }}@github.com/equinor/energyvision-internal
-          if [[ `git status --porcelain` ]]
-          then
-            git commit -am "🚀 Deploy webs to preprod with tag ${{ env.IMAGE_TAG_SHA }}" --allow-empty
-            git pull --rebase origin main
-            git push origin HEAD:main
-          fi
-
-      - uses: act10ns/slack@v2
-        with:
-          status: ${{ job.status }}
-          steps: ${{ toJson(steps) }}
-        if: failure()
-
-      - name: Checkout 🔔
-        uses: actions/checkout@v4
-
       - name: Deploy website 🌐
         id: deploy-website
         uses: ./.github/workflows/deploy-websites/
