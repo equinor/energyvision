@@ -7,15 +7,16 @@ import { getNameFromLocale } from '@/lib/localization'
 import Header from '@/sections/Header/Header'
 import getPageSlugs from '@/common/helpers/getPageSlugs'
 
-type Params = Promise<{ locale: string; slug: string }>
+type Params = Promise<{ locale: string; slug: string | string[] }>
 export default async function LocaleLayout({ children, params }: { children: React.ReactNode; params: Params }) {
   // Ensure that the incoming `locale` is valid
-  const { locale, slug } = await params
+  const locale = (await params).locale
+  const slug = (await params).slug as string[]
 
   if (!hasLocale(routing.locales, locale)) {
     notFound()
   }
-  const menuData = await getHeaderData({ slug, lang: getNameFromLocale(locale) })
+  const menuData = await getHeaderData({ slug: slug.join('/'), lang: getNameFromLocale(locale) })
   const { pageData: data } = await getPageDataForHeader({ slug: '', lang: getNameFromLocale(locale) })
   const slugs = getPageSlugs(data.pageData)
   return (
