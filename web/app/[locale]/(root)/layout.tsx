@@ -31,11 +31,11 @@ const equinorVariableWoff2 = localFont({
   src: '../../fonts/equinor/EquinorVariable-VF.woff2',
 })
 
-type Params = Promise<{ locale: string; slug?: string }>
+type Params = Promise<{ locale: string }>
 
 export default async function LocaleLayout({ children, params }: { children: React.ReactNode; params: Params }) {
   // Ensure that the incoming `locale` is valid
-  const { locale, slug } = await params
+  const { locale } = await params
   const { isEnabled: isDraftMode } = await draftMode()
 
   if (!hasLocale(routing.locales, locale)) {
@@ -67,27 +67,22 @@ export default async function LocaleLayout({ children, params }: { children: Rea
         <Suspense fallback={null}>
           <NavigationEvents />
         </Suspense>
-        {slug}
-        {slug !== 'search' ? (
-          <>
-            {/* The <Toaster> component is responsible for rendering toast notifications used in /app/client-utils.ts and /sections/DraftMode/DraftModeToast.tsx */}
-            <Toaster />
-            {isDraftMode && (
-              <>
-                <DraftModeToast />
-                <VisualEditing />
-              </>
-            )}
-            {/* The <SanityLive> component is responsible for making all sanityFetch calls in your application live, so should always be rendered. */}
-            <SanityLive onError={handleError} />
-            <NextIntlClientProvider>
-              {children}
-              <Footer footerData={footerData} />
-            </NextIntlClientProvider>
-          </>
-        ) : (
-          <NextIntlClientProvider>{children}</NextIntlClientProvider>
-        )}
+        <>
+          {/* The <Toaster> component is responsible for rendering toast notifications used in /app/client-utils.ts and /sections/DraftMode/DraftModeToast.tsx */}
+          <Toaster />
+          {isDraftMode && (
+            <>
+              <DraftModeToast />
+              <VisualEditing />
+            </>
+          )}
+          {/* The <SanityLive> component is responsible for making all sanityFetch calls in your application live, so should always be rendered. */}
+          <SanityLive onError={handleError} />
+          <NextIntlClientProvider>
+            {children}
+            <Footer footerData={footerData} />
+          </NextIntlClientProvider>
+        </>
       </body>
     </html>
   )
