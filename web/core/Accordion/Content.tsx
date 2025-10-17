@@ -3,7 +3,7 @@ import { forwardRef } from 'react'
 import { AccordionContent, AccordionContentProps as _AccordionContentProps } from '@radix-ui/react-accordion'
 import envisTwMerge from '../../twMerge'
 import { Variants } from './Accordion'
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
 
 const contentVariants = {
@@ -39,16 +39,18 @@ export const Content = forwardRef<HTMLDivElement, AccordionContentProps>(functio
     switch (variant) {
       case 'menu':
         return useComplex ? (
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            exit="hidden"
-            variants={contentVariants}
-            transition={{ duration: 0.3 }}
-            className="absolute top-[260px] right-0 left-0 mx-auto bg-white-100"
-          >
-            {children}
-          </motion.div>
+          <AnimatePresence>
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+              variants={contentVariants}
+              transition={{ duration: 0.3 }}
+              className="absolute top-[260px] right-0 left-0 mx-auto bg-white-100"
+            >
+              {children}
+            </motion.div>
+          </AnimatePresence>
         ) : (
           <>{children}</>
         )

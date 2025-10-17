@@ -5,7 +5,7 @@ import { ImageBackground } from '../../types/index'
 import { twMerge } from 'tailwind-merge'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
 import { ImageRatioKeys, mapSanityImageRatio } from '@/core/SanityImage/SanityImage'
-import { motion, useInView, useAnimate, useTransform, useScroll, useMotionValueEvent } from 'framer-motion'
+import { motion, useTransform, useScroll, useMotionValueEvent } from 'framer-motion'
 
 type ImageBackgroundContainerProps = {
   scrimClassName?: string
