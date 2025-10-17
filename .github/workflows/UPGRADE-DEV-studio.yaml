@@ -48,6 +48,7 @@ jobs:
           screen9token: ${{ secrets.SANITY_STUDIO_SCREEN9_TOKEN }}
           environment: ${{ secrets.ENV }}
           previewUrl: ${{ vars.SANITY_STUDIO_PREVIEW_URL}}
+          componentSuffix: 'upgrade-'
 
       - uses: act10ns/slack@v2
         with:

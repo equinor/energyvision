@@ -54,6 +54,10 @@ inputs:
     required: true
   previewUrl:
     description: 'Preview url for presentation'
+  componentSuffix:
+    description: 'Radix component name suffix. Temporary fix for upgrade.'
+    required: false
+
 runs:
   using: 'composite'
   steps:
@@ -124,7 +128,7 @@ runs:
       id: get-component-name
       shell: bash
       run: |
-        component=${{ inputs.datasetName == 'global-development' && 'studio-global-development'|| inputs.datasetName == 'global-test' && 'studio-global-test' || format('{0}{1}', 'studio-', inputs.datasetName) }}
+        component=${{ inputs.datasetName == 'global-development' && format('{0}{1}','studio-global-development',inputs.componentSuffix) || inputs.datasetName == 'global-test' && 'studio-global-test' || format('{0}{1}{3}', 'studio-', inputs.datasetName,inputs.componentSuffix) }}
         echo "Component name is $component"
         echo "COMPONENT_NAME=$component" >> $GITHUB_ENV
       # MAIN CLUSTER
