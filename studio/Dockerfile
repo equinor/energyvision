@@ -1,26 +1,16 @@
-# -------------------------------------------------------- #
-# 0. Build Arguments
-# -------------------------------------------------------- #
-
-ARG NODE_VERSION=20
-ARG PNPM_VERSION=10.10
-ARG PNPM_HOME="/pnpm"
-ARG PATH="${PNPM_HOME}:${PATH}"
-ARG PNPM_STORE="/pnpm/store"
-
-
-# Build
 FROM node:lts-alpine AS builder
 RUN apk update
 RUN apk add --no-cache libc6-compat curl
 
 ENV NODE_OPTIONS="--max_old_space_size=8192"
-RUN corepack enable && corepack prepare pnpm@${PNPM_VERSION} --activate
-RUN --mount=type=cache,id=pnpm,target=${PNPM_STORE} pnpm config set store-dir ${PNPM_STORE}
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
 
 WORKDIR /opt/app
 
-RUN npm install dotenv fs
+#In use?
+#RUN npm install dotenv fs
 
 COPY ./package.json ./
 COPY ./pnpm-lock.yaml ./
@@ -63,7 +53,7 @@ ENV SANITY_STUDIO_SCREEN9_ACCOUNT_ID ${ARG_SCREEN9_ACCOUNT_ID}
 ENV SANITY_STUDIO_SCREEN9_TOKEN ${ARG_SCREEN9_TOKEN}
 ENV SANITY_STUDIO_PREVIEW_URL ${ARG_SANITY_STUDIO_PREVIEW_URL}
 
-RUN pnpm studio install --frozen-lockfile
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm studio install --frozen-lockfile 
 RUN pnpm studio build
 
 # Run
