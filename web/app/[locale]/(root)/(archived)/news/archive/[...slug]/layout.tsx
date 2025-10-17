@@ -1,3 +1,4 @@
+// @ts-ignore: missing type declarations for side-effect import of global CSS
 import '../../../../../../globals.css'
 import { hasLocale } from 'next-intl'
 import { notFound } from 'next/navigation'
@@ -9,7 +10,9 @@ import archivedNews from '../../../../../../../lib/archive/archivedNewsPaths.jso
 import { PathType } from '@/sanity/queries/paths/getPaths'
 import { Flags } from '@/common/helpers/datasetHelpers'
 
-export default async function LocaleLayout({ children, params }: { children: React.ReactNode; params: any }) {
+type Params = Promise<{ locale: string; slug: string[] }>
+
+export default async function LocaleLayout({ children, params }: { children: React.ReactNode; params: Params }) {
   // Ensure that the incoming `locale` is valid
   const { locale, slug } = await params
 
@@ -19,6 +22,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
   if (!hasLocale(routing.locales, locale) || !Flags.HAS_ARCHIVED_NEWS) {
     notFound()
   }
+  //@ts-ignore: Fix slug here because [...slug] is string[]
   const { menuData } = await getHeaderData({ slug, lang: getNameFromLocale(locale) })
   const archivedItems = archivedNews.filter((e) => e.slug === `/news/archive/${pagePath}`)
   const slugs =
@@ -29,13 +33,6 @@ export default async function LocaleLayout({ children, params }: { children: Rea
 
   return (
     <>
-      <head>
-        {/*  eslint-disable-next-line @next/next/no-css-tags */}
-        <link rel="stylesheet" href="/legacy/styles/legacy.minified.css" />
-        {/*  eslint-disable-next-line @next/next/no-css-tags */}
-        <link rel="stylesheet" href="/legacy/styles/legacy.spacing.css" />
-        {/*eslint-disable-next-line react/no-unknown-property*/}
-      </head>
       <div className={`text-slate-80 [:not(:has(.sticky-menu))]:pt-topbar`}>
         <Header slugs={slugs} menuData={menuData} />
         {children}

@@ -1,5 +1,6 @@
+// @ts-ignore: missing type declarations for side-effect import of global CSS
 import '../../globals.css'
-import { Metadata, ResolvingMetadata } from 'next'
+import { Metadata } from 'next'
 import { metaTitleSuffix } from '@/languages'
 import { getTranslations } from 'next-intl/server'
 import { NextIntlClientProvider } from 'next-intl'
@@ -10,10 +11,7 @@ import { Suspense } from 'react'
 import { NavigationEvents } from '../NavigationEvents'
 import localFont from 'next/font/local'
 
-export async function generateMetadata(
-  { params }: { params: Promise<{ locale: string }> },
-  _: ResolvingMetadata,
-): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params
   const intl = await getTranslations()
   const title = intl('search_page_title')
@@ -58,6 +56,8 @@ export default async function LocaleLayout({ children, params }: { children: Rea
       className={`${equinorRegular.className} ${equinorVariableWoff.className} ${equinorVariableWoff2.className}`}
     >
       <head>
+        {/* TODO look into script placement */}
+        {/* eslint-disable-next-line @next/next/no-before-interactive-script-outside-document*/}
         <Script
           src="https://consent.cookiebot.com/uc.js"
           id="Cookiebot"

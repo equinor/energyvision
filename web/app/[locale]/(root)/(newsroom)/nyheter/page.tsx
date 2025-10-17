@@ -9,7 +9,7 @@ import { NewsRoomPageType } from '../../../../../types'
 import { setRequestLocale } from 'next-intl/server'
 import { newsroomQuery } from '@/sanity/queries/newsroom'
 import { algoliasearch } from 'algoliasearch'
-import { Metadata, ResolvingMetadata } from 'next'
+import { Metadata } from 'next'
 import { metaTitleSuffix } from '@/languages'
 import getOpenGraphImages from '@/common/helpers/getOpenGraphImages'
 import { toPlainText } from 'next-sanity'
@@ -39,10 +39,7 @@ const getInitialResponse = unstable_cache(
   { revalidate: 3600, tags: ['news'] },
 )
 
-export async function generateMetadata(
-  { params }: { params: Promise<{ locale: string }> },
-  _: ResolvingMetadata,
-): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params
   const lang = getNameFromLocale(locale)
 

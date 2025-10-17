@@ -13,15 +13,6 @@ ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
 
-# -------------------------------------------------------- #
-# 4. Build application
-# -------------------------------------------------------- #
-FROM base AS prod-deps
-WORKDIR /app/web
-COPY web/pnpm-lock.yaml ./pnpm-lock.yaml
-COPY web/package.json ./package.json
-RUN ls
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile 
 
 # -------------------------------------------------------- #
 # 4. Build application
@@ -29,10 +20,7 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-l
 FROM base AS build
 
 WORKDIR /app
-# Copy full repo, then bring in the web workspace node_modules from deps
 COPY . .
-RUN ls
-#COPY --from=prod-deps /app/web/node_modules ./web/node_modules
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm web install --frozen-lockfile 
 ARG ARG_SANITY_DATASET
 ARG ARG_SANITY_API_TOKEN

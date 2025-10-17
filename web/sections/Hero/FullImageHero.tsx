@@ -1,4 +1,4 @@
-import type { DesignOptions, HeroType, ImageWithCaptionData } from 'types'
+import type { DesignOptions, HeroType, ImageWithCaptionData } from '@/types'
 import { useSanityLoader } from '../../lib/hooks/useSanityLoader'
 import Image, { getFullScreenSizes, mapSanityImageRatio } from '../../core/SanityImage/SanityImage'
 import { FigureCaption } from '@/core/FigureCaption/FigureCaption'

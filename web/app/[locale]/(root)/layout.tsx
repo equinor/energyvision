@@ -1,4 +1,3 @@
-//@ts-ignore:followiong documentation but ts complain
 import '../../globals.css'
 import { NextIntlClientProvider, hasLocale } from 'next-intl'
 import { notFound } from 'next/navigation'
@@ -7,7 +6,6 @@ import localFont from 'next/font/local'
 import { draftMode } from 'next/headers'
 import { Toaster } from 'sonner'
 import DraftModeToast from '@/sections/DraftMode/DraftModeToast'
-//@ts-ignore:followiong documentation but ts complain
 // eslint-disable-next-line import/no-unresolved
 import { VisualEditing } from 'next-sanity/visual-editing'
 import { SanityLive } from '@/sanity/lib/live'
@@ -50,6 +48,8 @@ export default async function LocaleLayout({ children, params }: { children: Rea
       className={`${equinorRegular.className} ${equinorVariableWoff.className} ${equinorVariableWoff2.className}`}
     >
       <head>
+        {/** TODO look into scripts */}
+        {/* eslint-disable-next-line @next/next/no-before-interactive-script-outside-document*/}
         <Script
           src="https://consent.cookiebot.com/uc.js"
           id="Cookiebot"

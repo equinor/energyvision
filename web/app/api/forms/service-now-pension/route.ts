@@ -1,4 +1,3 @@
-import { NextApiRequest, NextApiResponse } from 'next'
 import { PensionFormCatalogType } from '../../../../types'
 import { sendRequestToServiceNow } from '../service-now-base'
 import { validateFormRequest } from '../validateFormRequest'

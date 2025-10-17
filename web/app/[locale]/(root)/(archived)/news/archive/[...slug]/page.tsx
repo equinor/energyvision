@@ -3,13 +3,15 @@ import archivedNews from '../../../../../../../lib/archive/archivedNewsPaths.jso
 import { languages } from '@/languages'
 import { notFound } from 'next/navigation'
 import ArchivedNews from '@/templates/archivedNews/ArchivedNews'
-import { Metadata, ResolvingMetadata } from 'next'
+import { Metadata } from 'next'
 import { cache } from 'react'
 import { host } from '@/lib/config'
 import { PathType } from '@/sanity/queries/paths/getPaths'
 import { hasLocale } from 'next-intl'
 import { routing } from '@/i18n/routing'
 
+//TODO types
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getPageData = cache(async (params: any) => {
   const { locale: routeLocale, slug: pagePathArray } = await params
   const locale = routeLocale == 'en-GB' ? 'en' : routeLocale
@@ -28,7 +30,9 @@ const getPageData = cache(async (params: any) => {
   return pageData
 })
 
-export async function generateMetadata({ params }: { params: any }, _: ResolvingMetadata): Promise<Metadata> {
+//TODO types
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function generateMetadata({ params }: { params: any }): Promise<Metadata> {
   const { locale, slug: pagePathArray } = await params
 
   if (!hasLocale(routing.locales, locale) || !Flags.HAS_ARCHIVED_NEWS) {
@@ -132,6 +136,8 @@ const fallbackToAnotherLanguage = async (
   }
 }
 
+//TODO types
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default async function Page({ params }: any) {
   const pageData = await getPageData(params)
   if (!pageData) notFound()

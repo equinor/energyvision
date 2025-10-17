@@ -1,3 +1,5 @@
+//@ts-ignore: works, dunno why complains
+// eslint-disable-next-line import/no-unresolved
 import { defineEnableDraftMode } from 'next-sanity/draft-mode'
 import { client } from '@/sanity/lib/client'
 import { token } from '@/sanity/lib/token'

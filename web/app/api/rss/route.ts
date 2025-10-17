@@ -27,7 +27,7 @@ type LatestNewsItem = {
   slug: string
   publishDateTime: string
   ingress?: PortableTextBlock[]
-  heroImage?: { image?: { asset?: { _ref?: string } | any; alt?: string } }
+  heroImage?: { image?: { asset?: { _ref?: string } | undefined; alt?: string } }
 }
 
 function mapFor(lang: 'no' | 'en') {
@@ -46,14 +46,15 @@ function renderIngress(blocks?: PortableTextBlock[]) {
       sup: ({ children }: { children: string }) => `<sup>${children}</sup>`,
     },
   }
-  return toHTML(blocks as any, { components, onMissingComponent: (e) => String(e) })
+  //@ts-ignore: todo
+  return toHTML(blocks as TypedObject | TypedObject[], { components, onMissingComponent: (e) => String(e) })
 }
 
 function buildItemHTML(item: LatestNewsItem, langCfg: ReturnType<typeof mapFor>) {
   const descriptionHtml = renderIngress(item.ingress)
   const img = item.heroImage?.image
   const imgUrl = img?.asset ? urlForImage(img)?.width(560).height(280).fit('crop').url() : ''
-  const imgAlt = img && (img as any).alt ? ` alt="${(img as any).alt}"` : ''
+  const imgAlt = img && img.alt ? ` alt="${img.alt}"` : ''
   const section = newsSlug[langCfg.language as keyof typeof newsSlug] || 'news'
   const link = `https://www.equinor.com${langCfg.localePrefix}/${section}/${item.slug}`
     .replace(/\/+/, '/')

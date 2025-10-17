@@ -1,5 +1,5 @@
+import { AllSlugsType } from '@/core/LocalizationSwitch/LocalizationSwitch'
 import { defaultLanguage, languages } from '../../languages'
-import { AllSlugsType } from '../../core/LocalizationSwitch'
 
 const getValidSlugs = (allSlugs: AllSlugsType) => {
   if (!allSlugs) return []
@@ -10,7 +10,7 @@ const getValidSlugs = (allSlugs: AllSlugsType) => {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getPageSlugs = (data: any) => {
   //localnews?
-  const isNewsPage = !!data?.pageData?.news
+  //const isNewsPage = !!data?.pageData?.news
   /*   const pageSlugs = isNewsPage
     ? data?.pageData?.news[0]?.slugs?.allSlugs
     : (data?.pageData?.slugsFromTranslations ?? data?.pageData?.slugs?.allSlugs) */

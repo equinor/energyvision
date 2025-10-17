@@ -12,16 +12,13 @@ import { algoliasearch } from 'algoliasearch'
 import { toPlainText } from 'next-sanity'
 import getOpenGraphImages from '@/common/helpers/getOpenGraphImages'
 import { metaTitleSuffix } from '@/languages'
-import { Metadata, ResolvingMetadata } from 'next'
+import { Metadata } from 'next'
 
 export function generateStaticParams() {
   return Flags.HAS_NEWSROOM ? [{ locale: 'en-GB' }] : []
 }
 
-export async function generateMetadata(
-  { params }: { params: Promise<{ locale: string }> },
-  _: ResolvingMetadata,
-): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params
   const lang = getNameFromLocale(locale)
 

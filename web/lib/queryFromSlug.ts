@@ -1,7 +1,7 @@
 import { newsQuery } from '@/sanity/queries/news'
 import { routeQuery } from '@/sanity/queries/routes'
 import { magazineQuery } from '@/sanity/queries/magazine'
-import { contentQueryById } from '@/sanity/queries/contentById'
+//import { contentQueryById } from '@/sanity/queries/contentById'
 import { getNameFromLocale } from './localization'
 import { newsSlug, magazineSlug } from '../../satellitesConfig'
 import { getClient } from './sanity.server'
@@ -15,15 +15,15 @@ export type QueryParams = {
   lang?: string
   date?: string
 }
-
+/* 
 const isSlugID = (slug: string): boolean => {
   const regExp = /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/gi
   return regExp.test(slug.replace('drafts.', '').substr(0, 36))
-}
+} */
 
 // API is case sensitive, and we are getting an all lowercase ID from the browser
 // while a i18n document has an uppercase ISO code, example: __i18n_nb_NO
-const parseSlug = (slug: string): string => {
+/* const parseSlug = (slug: string): string => {
   if (slug.includes('_i18n_')) {
     const length = slug.length
     const iso = slug.slice(length - 2, length)
@@ -31,7 +31,7 @@ const parseSlug = (slug: string): string => {
   }
 
   return slug
-}
+} */
 
 const localNewsTagsQuery = (lang: string) => /* groq */ `*[_type == 'localNewsTag'] {${lang}}`
 
@@ -59,7 +59,7 @@ const getQuery = async (firstPiece: string, secondPiece: string | undefined, lan
   }
 }
 
-const getPreviewByIdQuery = (slugStart: string, locale: string, currentDate: string) => {
+/* const getPreviewByIdQuery = (slugStart: string, locale: string, currentDate: string) => {
   // We are in preview mode for content that has currently no slug (no routes)
   // We need to figure out of which type
   const documentID = parseSlug(slugStart)
@@ -72,7 +72,7 @@ const getPreviewByIdQuery = (slugStart: string, locale: string, currentDate: str
     },
     query: contentQueryById,
   }
-}
+} */
 
 export const getQueryFromSlug = async (
   slugArray: string[] = [''],

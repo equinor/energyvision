@@ -2,7 +2,7 @@ import { getQueryFromSlug } from '../../../../../lib/queryFromSlug'
 import dynamic from 'next/dynamic'
 import { notFound } from 'next/navigation'
 import { getPageData } from '@/sanity/lib/fetchData'
-import { Metadata, ResolvingMetadata } from 'next'
+import { Metadata } from 'next'
 import { getLocaleFromName, getNameFromLocale } from '@/lib/localization'
 import getOpenGraphImages from '@/common/helpers/getOpenGraphImages'
 import { defaultLanguage, metaTitleSuffix, domain } from '@/languages'
@@ -17,18 +17,18 @@ const NewsPage = dynamic(() => import('@/templates/news/News'))
 const TopicPage = dynamic(() => import('@/templates/topic/TopicPage'))
 
 type Props = {
-  params: Promise<{ slug: string | string[]; locale: string }>
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+  params: Promise<{ slug: string[]; locale: string }>
+  searchParams: Promise<{ [key: string]: string[] | undefined }>
 }
 
-export async function generateMetadata({ params }: Props, _: ResolvingMetadata): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   //array, separated by /. e.g. [news, last slug]
-  const slug = (await params).slug as string[]
+  const slug = (await params).slug
   const defaultLocale = defaultLanguage.locale
   const locale = (await params).locale ?? defaultLocale
   const fullSlug = `${domain}/${locale !== defaultLocale ? `${locale}/` : ''}${slug.join('/')}`
 
-  const { query, queryParams } = await getQueryFromSlug(slug as string[], locale)
+  const { query, queryParams } = await getQueryFromSlug(slug, locale)
   const { pageData } = await getPageData({
     query,
     queryParams,

@@ -1,5 +1,6 @@
 import { validateCaptcha } from './validateCaptcha'
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function validateFormRequest(method: string, body: any, formName: string) {
   if (method !== 'POST') {
     return { status: 405, message: 'Invalid request' }

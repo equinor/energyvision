@@ -29,6 +29,7 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
   }
 }*/
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default async function Page({ params }: any) {
   const { locale } = await params
   if (!languages.map((it) => it.locale).includes(locale)) notFound()
