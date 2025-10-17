@@ -47,7 +47,6 @@ const getQuery = async (firstPiece: string, secondPiece: string | undefined, lan
       // is local news
       return localNewsQuery
     } else {
-      console.log('return newsQuery')
       return newsQuery
     }
   } else if (Flags.HAS_MAGAZINE && magazineSlug[lang] === firstPiece && secondPiece) {
