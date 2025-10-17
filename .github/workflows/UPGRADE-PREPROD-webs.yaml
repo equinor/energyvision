@@ -41,7 +41,7 @@ jobs:
           token: ${{ secrets.PADMS_PAT }} # Replace with ssh as per https://stackoverflow.com/questions/60222741/github-actions-and-git-clone-issue
 
       - name: Modify radixconfig tag for preprod on main branch 🗒️
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/upgrade-next-intl'
         shell: bash
         id: modify-radix
         run: |
