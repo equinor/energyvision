@@ -56,7 +56,10 @@ export async function generateMetadata({ params }: Props, _: ResolvingMetadata):
 
   const slugs = getPageSlugs(pageData) ?? []
 
-  const activeSlug = slugs.length > 0 ? slugs.find((slug) => slug.lang === getNameFromLocale(locale))?.slug : slug
+  const activeSlug =
+    slugs.length > 0
+      ? slugs.find((slug: { lang: string; slug: string }) => slug.lang === getNameFromLocale(locale))?.slug
+      : slug
 
   const canonicalSlug =
     locale === defaultLocale
@@ -64,7 +67,7 @@ export async function generateMetadata({ params }: Props, _: ResolvingMetadata):
       : `${domain}/${locale}${activeSlug !== '/' ? activeSlug : ''}`
 
   const alternateLinks: Record<string, string> = {}
-  slugs.forEach((slug) => {
+  slugs.forEach((slug: { lang: string; slug: string }) => {
     const slugLocale = getLocaleFromName(slug.lang)
     const correctedSlug = (defaultLocale !== slugLocale ? `/${slugLocale}` : '').concat(
       slug.slug !== '/' ? slug.slug : '',
@@ -73,7 +76,7 @@ export async function generateMetadata({ params }: Props, _: ResolvingMetadata):
   })
 
   //Fallback page if no locale
-  const defaultSlug = slugs.find((slug) => slug.lang === defaultLanguage.name)?.slug
+  const defaultSlug = slugs.find((slug: { lang: string; slug: string }) => slug.lang === defaultLanguage.name)?.slug
   const xDefaultSlug = `${domain}${defaultSlug === '/' ? '' : defaultSlug}`
 
   //@ts-ignore: todo
