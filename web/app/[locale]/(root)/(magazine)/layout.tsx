@@ -22,7 +22,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
     { slug: '/no/magasin', lang: 'nb_NO' },
   ]
 
-  const slug = slugs.find((it) => it.lang == getLocaleFromName(locale))?.slug || slugs[0].slug
+  const slug = slugs.find((it) => it.lang == getLocaleFromName(locale))?.slug
   const { menuData } = await getHeaderData({ slug, lang: getNameFromLocale(locale) })
 
   return (
