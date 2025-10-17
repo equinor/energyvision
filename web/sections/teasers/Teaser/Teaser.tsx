@@ -7,7 +7,7 @@ import { Typography } from '@/core/Typography'
 import Blocks from '@/portableText/Blocks'
 import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
 import { useMediaQuery } from '@/lib/hooks/useMediaQuery'
-import { PortableTextBlock } from 'next-sanity'
+import { PortableTextBlock } from '@portabletext/types'
 
 export type TeaserData = {
   type: string
@@ -39,7 +39,6 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
   if ([title, overline, text, image?.asset, actions].every((i) => !i)) {
     return null
   }
-  console.log('imageSize', imageSize)
 
   // Svg can be "pictures"/illustrations and small svgs...
   const imageElement = (
