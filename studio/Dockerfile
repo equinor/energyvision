@@ -10,7 +10,7 @@ RUN corepack enable
 WORKDIR /opt/app
 
 #In use?
-#RUN npm install dotenv fs
+RUN npm install dotenv fs
 
 COPY ./package.json ./
 COPY ./pnpm-lock.yaml ./
