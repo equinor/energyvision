@@ -68,8 +68,6 @@ export default async function LocaleLayout({ children, params }: { children: Rea
         />
         <GoogleTagManagerHead />
         <SiteImprove />
-        {/*eslint-disable-next-line react/no-unknown-property*/}
-        <link rel="stylesheet" precedence="default" href="https://cdn.eds.equinor.com/font/equinor-font.css" />
       </head>
       <body>
         <Suspense fallback={null}>
