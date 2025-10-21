@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { Flags } from '@/common/helpers/datasetHelpers'; // adjust path if needed
 
-const crawlableDomains = [
+export const crawlableDomains = [
   'www.equinor.com',
   'www.equinor.ar',
   'www.equinor.pl',
