@@ -24,5 +24,5 @@ export function NavigationEvents() {
       }
     }
   }, [pathname])
-  return '...'
+  return null
 }
