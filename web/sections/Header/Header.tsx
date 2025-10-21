@@ -89,7 +89,6 @@ const Header = ({ slugs, menuData, stickyMenuData }: HeaderProps) => {
   /* Filter objects that have translations but no routes */
   const validSlugs = slugs?.filter((obj) => obj.slug)
   const t = useTranslations()
-  const searchLabel = t('search')
 
   return (
     <Topbar stickyMenuData={stickyMenuData}>
@@ -104,7 +103,7 @@ const Header = ({ slugs, menuData, stickyMenuData }: HeaderProps) => {
             <ButtonLink
               variant="ghost"
               aria-expanded="false"
-              aria-label={searchLabel}
+              aria-label={t('search')}
               href={localization.activeLocale === 'no' ? '/no/search' : '/search'}
               className="clickbound-area w-full p-2 md:px-5 md:py-3"
             >
