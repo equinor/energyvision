@@ -1,5 +1,5 @@
 /* eslint-disable consistent-return */
-import { Box, Button, Card, Stack, Flex, Inline, Text } from '@sanity/ui'
+import { Box, Card, Stack, Flex, Text } from '@sanity/ui'
 import { uuid } from '@sanity/uuid'
 import { type FormEvent, useState } from 'react'
 import { type ObjectInputProps, set, unset } from 'sanity'

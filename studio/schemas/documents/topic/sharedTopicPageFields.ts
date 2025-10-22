@@ -70,6 +70,7 @@ export const content = {
     { type: 'promotePeople', title: 'People promotion' },
     { type: 'promoteTopics', title: 'Topic page promotion' },
     Flags.HAS_NEWS && { type: 'promoteNews', title: 'News promotions' },
+    { type: 'pieChart', title: 'Pie chart component' },
   ].filter((e) => e),
   components: {
     input: RolesBasedArrayInput,

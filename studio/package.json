@@ -34,6 +34,7 @@
     "react-dom": "^19.2.0",
     "react-icons": "^5.5.0",
     "react-is": "^19.0.1",
+    "recharts": "^3.3.0",
     "rxjs": "^7.8.0",
     "sanity": "^4.10.3",
     "sanity-plugin-documents-pane": "^3.0.0",

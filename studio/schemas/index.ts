@@ -95,6 +95,7 @@ import homepageBanner from './objects/homepageBanner'
 import tableV2 from './objects/tableV2'
 import tableTheme from './objects/tableV2/tableTheme'
 import importTable from './objects/importTable'
+import pieChart from './objects/pieChart'
 
 const {
   pageNotFound,
@@ -232,6 +233,7 @@ const RemainingSchemas = [
   tableV2,
   tableTheme,
   importTable,
+  pieChart,
 ]
 
 // Then we give our schema to the builder and provide the result to Sanity
