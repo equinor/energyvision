@@ -53,7 +53,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
         <Script
           src="https://consent.cookiebot.com/uc.js"
           id="Cookiebot"
-          strategy="beforeInteractive"
+          strategy="afterInteractive"
           data-cbid="f1327b03-7951-45da-a2fd-9181babc783f"
           data-blockingmode="auto"
           data-culture={locale == 'no' ? 'nb' : locale}
@@ -62,9 +62,9 @@ export default async function LocaleLayout({ children, params }: { children: Rea
         <SiteImprove />
       </head>
       <body>
-        <Suspense fallback={null}>
+        {/*         <Suspense fallback={null}>
           <NavigationEvents />
-        </Suspense>
+        </Suspense> */}
         <>
           {/* The <Toaster> component is responsible for rendering toast notifications used in /app/client-utils.ts and /sections/DraftMode/DraftModeToast.tsx */}
           <Toaster />

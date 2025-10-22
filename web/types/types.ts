@@ -19,6 +19,7 @@ import { FullWidthVideoProps } from '@/sections/FullWidthVideo/FullWidthVideo'
 import { VideoPlayerCarouselData } from '@/sections/VideoPlayerCarousel/VideoPlayerCarousel'
 import { VideoPlayerBlockProps } from '@/sections/VideoPlayerBlock/VideoPlayerBlock'
 import { TeaserData } from '@/sections/teasers/Teaser/Teaser'
+import { StockValuesProps } from '@/sections/StockValues/StockValues'
 
 export type IntlData = {
   locale: string
@@ -85,7 +86,7 @@ export type ContentType =
   | TableData
   | CookieDeclarationData
   | NewsListData
-  | StockValuesData
+  | StockValuesProps
   | TwitterEmbedData
   | VideoPlayerCarouselData
   | VideoPlayerBlockProps
@@ -325,12 +326,6 @@ export type NewsListData = {
   tags?: [id: string]
   countryTags?: [id: string]
   localNewsTags?: [id: string]
-}
-
-export type StockValuesData = {
-  id: string
-  type: string
-  designOptions: DesignOptions
 }
 
 export type TwitterEmbedData = {

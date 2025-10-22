@@ -1,18 +1,17 @@
 'use client'
-import { FormattedTime } from '@/core/FormattedDateTime'
 import { toPlainText } from '@portabletext/react'
 import { getEventDates } from '../../common/helpers/dateUtilities'
 import Promotion from '../../sections/promotions/PromotionsBlock'
 import type { PortableTextBlock } from '@portabletext/types'
 import type { EventSchema } from '../../types/index'
 import { EventJsonLd } from 'next-seo'
-import { twMerge } from 'tailwind-merge'
 import RelatedContent from '../../pageComponents/shared/RelatedContent'
 import { useTranslations, useFormatter } from 'next-intl'
 import AddToCalendar from '@/pageComponents/topicPages/AddToCalendar'
 import ContactList from '@/pageComponents/shared/ContactList'
 import Blocks from '@/portableText/Blocks'
 import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
+import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
 
 export default function Event({ data }: { data: EventSchema }): JSX.Element {
   const { title } = data
@@ -51,9 +50,9 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
               <div className="flex-center mb-2 flex gap-1 text-norwegian-woods-100">
                 {start && end ? (
                   <div className={`flex h-full items-center gap-1 py-2`}>
-                    <FormattedTime datetime={start} />
-                    {`-`}
-                    <FormattedTime datetime={end} showTimezone />
+                    <FormattedDateTime variant="time" datetime={start} />
+                    <span>-</span>
+                    <FormattedDateTime variant="time" datetime={end} showTimezone />
                   </div>
                 ) : (
                   <span>{t('tba')}</span>

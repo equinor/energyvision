@@ -20,7 +20,6 @@ import {
   FormData,
   TableData,
   NewsListData,
-  StockValuesData,
   TwitterEmbedData,
   CookieDeclarationData,
   ImageCarouselData,
@@ -58,7 +57,7 @@ import PageQuote from '@/pageComponents/topicPages/PageQuote'
 import PromoTileArray from '@/sections/PromoTiles/PromoTileArray'
 import CookieDeclaration from '@/sections/CookieDeclaration/CookieDeclaration'
 import NewsList from '@/pageComponents/topicPages/NewsList'
-import StockValues from '@/pageComponents/topicPages/StockValues'
+import StockValues, { StockValuesProps } from '@/sections/StockValues/StockValues'
 import TwitterEmbed from '@/pageComponents/topicPages/TwitterEmbed'
 import VideoPlayer, { VideoPlayerBlockProps } from '@/sections/VideoPlayerBlock/VideoPlayerBlock'
 import { HomePageBanner } from '@/sections/HomePageBanner/HomePageBanner'
@@ -179,13 +178,13 @@ const applyPaddingTopIfApplicable = (currentComponent: Component, prevComponent:
 
   const currentComponentsDO = getBackgroundOptions(currentComponent)
   const previousComponentsDO = getBackgroundOptions(prevComponent)
-  console.log('currentComponentsDO', currentComponentsDO)
-  console.log('previousComponentsDO', previousComponentsDO)
+  /*   console.log('currentComponentsDO', currentComponentsDO)
+  console.log('previousComponentsDO', previousComponentsDO) */
   const specialCases = ['teaser', 'fullWidthImage', 'fullWidthVideo', 'backgroundImage', 'campaignBanner']
 
   const currentIsWhiteColorBackground = isWhiteColorBackground(currentComponentsDO, currentComponent)
   const previousIsWhiteColorBackground = isWhiteColorBackground(previousComponentsDO, prevComponent)
-  console.log('currentComponent', currentComponent)
+  /*   console.log('currentComponent', currentComponent)
   console.log(
     `Current component ${currentComponent?.type}: ${Array.isArray(currentComponent?.title) ? toPlainText(currentComponent?.title) : currentComponent?.title}`,
   )
@@ -194,7 +193,7 @@ const applyPaddingTopIfApplicable = (currentComponent: Component, prevComponent:
   console.log(
     `Previous component ${prevComponent?.type}:  ${Array.isArray(prevComponent?.title) ? toPlainText(prevComponent?.title) : prevComponent?.title}`,
   )
-  console.log('previousIsWhiteColorBackground', previousIsWhiteColorBackground)
+  console.log('previousIsWhiteColorBackground', previousIsWhiteColorBackground) */
 
   const previousComponentIsASpecialCaseAndNeedPT =
     specialCases.includes(prevComponent?.type) || specialCases.includes(previousComponentsDO?.type)
@@ -366,7 +365,7 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
         )
       case 'stockValuesApi':
         return (
-          <StockValues key={c.id} data={c as StockValuesData} anchor={anchorReference} className={spacingClassName} />
+          <StockValues key={c.id} {...(c as StockValuesProps)} anchor={anchorReference} className={spacingClassName} />
         )
       case 'twitterEmbed':
         return (

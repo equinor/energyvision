@@ -150,7 +150,7 @@ importers:
         specifier: ^2.0.5
         version: 2.0.7(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       swr:
-        specifier: ^2.3.3
+        specifier: ^2.3.6
         version: 2.3.6(react@19.2.0)
       tailwind-merge:
         specifier: ^3.3.1
@@ -162,7 +162,7 @@ importers:
         specifier: ^8.23.3
         version: 8.23.4
       xml2js:
-        specifier: ^0.6.0
+        specifier: ^0.6.2
         version: 0.6.2
     devDependencies:
       '@algolia/client-search':

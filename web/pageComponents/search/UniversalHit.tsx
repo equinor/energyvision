@@ -1,12 +1,12 @@
 import { Highlight } from './Highlight'
 import type { Hit as AlgoliaHit } from '@algolia/client-search'
 import DisplayLink from './hit/DisplayLink'
-import { FormattedDate } from '@/core/FormattedDateTime'
 import { defaultLanguage } from '../../languages'
 import { Typography } from '@/core/Typography'
 import { useLocale } from 'next-intl'
 import { host } from '@/lib/config'
 import { BaseLink } from '@/core/Link'
+import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
 
 export type HitData = {
   slug?: string
@@ -52,7 +52,12 @@ const UniversalHit: React.FC<HitProps> = ({ hit }) => {
     <article className="border-b border-white-100/20 pt-6 pb-8">
       <BaseLink href={slug} className="group">
         {formattedDate && type !== 'magazine' && (
-          <FormattedDate uppercase datetime={formattedDate} className={`pb-3 text-xs tracking-wide`} />
+          <FormattedDateTime
+            variant="date"
+            uppercase
+            datetime={formattedDate}
+            className={`pb-3 text-xs tracking-wide`}
+          />
         )}
         {pageTitle && (
           <Typography as="h2" variant="h6" className={`${commonLinkClassName}`}>

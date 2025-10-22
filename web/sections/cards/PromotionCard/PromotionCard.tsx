@@ -1,11 +1,11 @@
 'use client'
 import { useMediaQuery } from '../../../lib/hooks/useMediaQuery'
 import Card from '@/sections/cards/Card'
-import { FormattedDate } from '@/core/FormattedDateTime'
 import Blocks from '../../../portableText/Blocks'
 import type { CardData } from '../../../types/index'
 import { forwardRef, HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
+import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
 
 export type PromotionCardProps = {
   data: CardData
@@ -51,7 +51,7 @@ const PromotionCard = forwardRef<HTMLAnchorElement, PromotionCardProps>(function
               })}
           titleLevel={hasSectionTitle ? 'h3' : 'h2'}
           {...(publishDateTime && {
-            eyebrow: <FormattedDate datetime={publishDateTime} uppercase className="text-xs" />,
+            eyebrow: <FormattedDateTime variant="date" datetime={publishDateTime} uppercase className="text-xs" />,
           })}
           titleClassName={titleClassName}
         />

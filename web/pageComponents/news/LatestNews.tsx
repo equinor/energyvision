@@ -1,11 +1,11 @@
 'use client'
 import type { CardData } from '../../types/index'
-import { FormattedDate } from '@/core/FormattedDateTime'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
 import Card from '@/sections/cards/Card'
 import Blocks from '../../portableText/Blocks'
 import { Typography } from '@/core/Typography'
 import { useTranslations } from 'next-intl'
+import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
 
 type LatestNewsProp = {
   data: CardData[]
@@ -35,7 +35,7 @@ const LatestNews = ({ data }: LatestNewsProp) => {
                           titleBlock: newsItem?.title,
                         })}
                     {...(newsItem?.publishDateTime && {
-                      eyebrow: <FormattedDate datetime={newsItem?.publishDateTime} uppercase />,
+                      eyebrow: <FormattedDateTime variant="date" datetime={newsItem?.publishDateTime} uppercase />,
                     })}
                     variant={isMobile ? 'compact' : 'primary'}
                   />

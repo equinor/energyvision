@@ -2,7 +2,6 @@
 import { usePathname } from 'next/navigation'
 import { NewsArticleJsonLd } from 'next-seo'
 import { Typography } from '@/core/Typography'
-import { FormattedDateTime } from '@/core/FormattedDateTime'
 import { Icon } from '@equinor/eds-core-react'
 import { calendar } from '@equinor/eds-icons'
 import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
@@ -18,6 +17,7 @@ import { isDateAfter } from '@/common/helpers/dateUtilities'
 import DefaulHeroImage from '@/sections/Hero/DefaultHeroImage'
 import LatestNews from '@/pageComponents/news/LatestNews'
 import { getFullUrl } from '@/common/helpers/getFullUrl'
+import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
 
 type ArticleProps = {
   data: NewsSchema

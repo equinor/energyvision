@@ -2,7 +2,6 @@
 import { EventCardData } from '../../../types/index'
 import { forwardRef, HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { FormattedDate, FormattedTime, TimeIcon } from '@/core/FormattedDateTime/'
 import { world } from '@equinor/eds-icons'
 import { Icon } from '@equinor/eds-core-react'
 import { getEventDates } from '../../../common/helpers/dateUtilities'
@@ -12,6 +11,7 @@ import AddToCalendar from '../../../pageComponents/topicPages/AddToCalendar'
 import { BaseLink } from '@/core/Link'
 import Blocks from '../../../portableText/Blocks'
 import { useTranslations } from 'next-intl'
+import FormattedDateTime, { TimeIcon } from '@/core/FormattedDateTime/FormattedDateTime'
 
 type Variants = 'default' | 'single' | 'carousel'
 export type EventCardProps = {
@@ -59,7 +59,7 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
       >
         {start && (
           <div className="h-full py-2">
-            <FormattedDate icon datetime={start} className="text-xs" />
+            <FormattedDateTime variant="date" dateIcon={true} datetime={start} className="text-xs" />
           </div>
         )}
         {location && (
@@ -71,9 +71,9 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
 
         {start && end ? (
           <div className={`flex h-full items-start gap-1 py-2`}>
-            <FormattedTime icon datetime={start} className="text-xs" />
-            {`-`}
-            <FormattedTime datetime={end} showTimezone className="text-xs" />
+            <FormattedDateTime variant="time" timeIcon={true} datetime={start} className="text-xs" />
+            <span>-</span>
+            <FormattedDateTime variant="time" datetime={end} showTimezone className="text-xs" />
           </div>
         ) : (
           <div className={`gap-sm grid h-full grid-cols-[24px_auto] items-center py-2`}>

@@ -1,4 +1,3 @@
-import { FormattedDate, FormattedTime } from '@/core/FormattedDateTime'
 import { forwardRef, HTMLAttributes } from 'react'
 import { BaseLink } from '@/core/Link'
 import { Typography } from '@/core/Typography'
@@ -7,6 +6,7 @@ import Image, { getPxLgSizes, getSmallerThanPxLgSizes } from '../../../core/Sani
 import envisTwMerge from '../../../twMerge'
 import { NewsRoomNewsItem } from '../../../types/algoliaIndexPage'
 import { SanityImageObject } from '@sanity/image-url/lib/types/types'
+import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
 
 export type NewsListItemProps = {
   data: NewsRoomNewsItem
@@ -27,13 +27,18 @@ const NewsItem = forwardRef<HTMLLIElement, NewsListItemProps>(function NewsItem(
         <div className="max-w-[65%]">
           {publishDateTime && (
             <div>
-              <FormattedDate
+              <FormattedDateTime
+                variant="date"
                 datetime={publishDateTime}
                 uppercase
                 className="pb-1 text-2xs leading-normal font-normal"
               />
               <span className="mx-2 pb-1 text-2xs leading-normal font-normal">|</span>
-              <FormattedTime datetime={publishDateTime} className="pb-1 text-2xs leading-normal font-normal" />
+              <FormattedDateTime
+                variant="time"
+                datetime={publishDateTime}
+                className="pb-1 text-2xs leading-normal font-normal"
+              />
             </div>
           )}
           {title && (

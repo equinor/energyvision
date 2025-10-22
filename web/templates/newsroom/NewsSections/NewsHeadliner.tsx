@@ -1,4 +1,3 @@
-import { FormattedDate, FormattedTime } from '@/core/FormattedDateTime'
 import { forwardRef, HTMLAttributes } from 'react'
 import { BaseLink } from '@/core/Link'
 import { Typography } from '@/core/Typography'
@@ -8,6 +7,7 @@ import envisTwMerge from '../../../twMerge'
 import { NewsRoomNewsItem } from '../../../types/algoliaIndexPage'
 import { SanityImageObject } from '@sanity/image-url/lib/types/types'
 import Blocks from '../../../portableText/Blocks'
+import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
 
 export type NewsHeadlinerProps = {
   data: NewsRoomNewsItem
@@ -50,9 +50,18 @@ const NewsHeadliner = forwardRef<HTMLLIElement, NewsHeadlinerProps>(function New
         )}
         {publishDateTime && (
           <div>
-            <FormattedDate datetime={publishDateTime} uppercase className="text-2xs leading-normal font-normal" />
+            <FormattedDateTime
+              variant="date"
+              datetime={publishDateTime}
+              uppercase
+              className="text-2xs leading-normal font-normal"
+            />
             <span className="mx-2 pb-1 text-2xs leading-normal font-normal">|</span>
-            <FormattedTime datetime={publishDateTime} className="pb-1 text-2xs leading-normal font-normal" />
+            <FormattedDateTime
+              variant="time"
+              datetime={publishDateTime}
+              className="pb-1 text-2xs leading-normal font-normal"
+            />
           </div>
         )}
         {title && (

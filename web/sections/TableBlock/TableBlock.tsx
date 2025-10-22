@@ -3,11 +3,11 @@ import { forwardRef, useMemo } from 'react'
 import { PortableTextBlock } from '@portabletext/types'
 import { useReactTable, createColumnHelper, flexRender, getCoreRowModel } from '@tanstack/react-table'
 import { toPlainText } from '@portabletext/react'
-import { FormattedDate } from '@/core/FormattedDateTime'
 import { isValid, parse } from 'date-fns'
 import Blocks from '@/portableText/Blocks'
 import { ThemeVariants } from '@/core/Table/Table'
 import { Table } from '@/core/Table'
+import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
 
 export type TableTheme = {
   title?: ThemeVariants
@@ -92,21 +92,24 @@ const TableBlock = forwardRef<HTMLDivElement, TableBlockProps>(function TableBlo
             const dateObjAlternative = parse(plainDateString, formatStringAlternative, new Date()) // The third arg is a reference date
             if (isValid(dateObj)) {
               return (
-                <time suppressHydrationWarning dateTime={dateObj.toDateString()} className="text-base">
-                  <FormattedDate datetime={dateObj.toDateString()} day="numeric" year="numeric" month="short" />
-                </time>
+                <FormattedDateTime
+                  variant="date"
+                  datetime={dateObj.toDateString()}
+                  day="numeric"
+                  year="numeric"
+                  month="short"
+                />
               )
             }
             if (isValid(dateObjAlternative)) {
               return (
-                <time suppressHydrationWarning dateTime={dateObjAlternative.toDateString()} className="text-base">
-                  <FormattedDate
-                    datetime={dateObjAlternative.toDateString()}
-                    day="numeric"
-                    year="numeric"
-                    month="short"
-                  />
-                </time>
+                <FormattedDateTime
+                  variant="date"
+                  datetime={dateObjAlternative.toDateString()}
+                  day="numeric"
+                  year="numeric"
+                  month="short"
+                />
               )
             }
             return <Blocks value={value} />

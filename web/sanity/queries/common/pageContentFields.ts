@@ -486,6 +486,8 @@ _type == "keyNumbers" =>{
   _type == "stockValuesApi"=>{
     "type": _type,
     "id": _key,
+    title, 
+    hideTitle,
     "designOptions": {
       ${background},
     },
