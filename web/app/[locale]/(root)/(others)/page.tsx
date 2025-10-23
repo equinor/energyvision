@@ -1,33 +1,60 @@
 import { getQueryFromSlug } from '../../../../lib/queryFromSlug'
 import { notFound } from 'next/navigation'
 import HomePage from '../../../../templates/homepage/HomePage'
-import { languages } from '@/languages'
-import { getPageData } from '@/sanity/lib/fetchData'
+import { defaultLanguage, domain, languages, metaTitleSuffix } from '@/languages'
+import { getPageData, getPageDataForHeader } from '@/sanity/lib/fetchData'
+import { Metadata } from 'next'
+import { isDateAfter } from '@/common/helpers/dateUtilities'
+import getOpenGraphImages from '@/common/helpers/getOpenGraphImages'
+import { toPlainText } from 'next-sanity'
 
 export const dynamicParams = true // fallback to true in app router
 
-/*type Props = {
-  params: Promise<{ id: string }>
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
-}
+type Params = Promise<{ locale: string }>
+export async function generateMetadata(params: Params): Promise<Metadata> {
+  //const slug = (await params).slug
+  const defaultLocale = defaultLanguage.locale
+  const locale = (await params).locale ?? defaultLocale
+  const fullSlug = `${domain}/${locale !== defaultLocale ? `${locale}/` : ''}`
 
-export async function generateMetadata({ params, searchParams }: Props, parent: ResolvingMetadata): Promise<Metadata> {
-  // read route params
-  const { id } = await params
+  const { query, queryParams } = await getQueryFromSlug(undefined, locale)
 
-  // fetch data
-  const product = await fetch(`https://.../${id}`).then((res) => res.json())
+  const { pageData: fullData } = await getPageData({
+    query,
+    queryParams,
+  })
+  //@ts-ignore: todo
+  const { documentTitle, title, metaDescription, openGraphImage, heroImage } = fullData.pageData
+  const plainTitle = Array.isArray(title) ? toPlainText(title) : title
 
-  // optionally access and extend (rather than replace) parent metadata
-  const previousImages = (await parent).openGraph?.images || []
+  const openGraphImages = getOpenGraphImages((openGraphImage?.asset ? openGraphImage : null) || heroImage?.image)
 
+  const alternateLinks: Record<string, string> = {}
+  languages.forEach(({ locale }) => {
+    Object.assign(alternateLinks, { [locale]: `${domain}${defaultLocale !== locale ? `/${locale}` : ''}` })
+  })
   return {
-    title: product.title,
+    title: `${documentTitle || plainTitle} - ${metaTitleSuffix}`,
+    description: metaDescription,
     openGraph: {
-      images: ['/some-specific-page-image.jpg', ...previousImages],
+      title: plainTitle,
+      description: metaDescription,
+      url: fullSlug,
+      locale,
+      type: 'article',
+      siteName: 'Equinor',
+
+      images: openGraphImages,
+    },
+    alternates: {
+      languages: {
+        'en-GB': `${domain}/`,
+        ...alternateLinks,
+        'x-default': `${domain}/`,
+      },
     },
   }
-}*/
+}
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default async function Page({ params }: any) {
