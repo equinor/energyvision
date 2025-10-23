@@ -4,7 +4,7 @@ import linkSelectorFields from './actions/linkSelectorFields'
 import markDefs from './blockEditorMarks'
 
 const homepageContentFields = /* groq */ `
-_type == "homepageBanner" =>{
+_type == "homepageBanner" => {
   "type": _type,
   "id": _key,
   title[]{..., ${markDefs}},
@@ -26,7 +26,7 @@ _type == "homepageBanner" =>{
       useGradient,
       "theme":colorTheme,
   }
-  },
+  }
 `
 
 export default homepageContentFields

@@ -1,204 +1,32 @@
 /* eslint-disable consistent-return */
-import { Box, Card, Stack, Flex, Text, Inline, Button, Label, TextInput } from '@sanity/ui'
+import { Box, Card, Stack, Text, Inline, TextInput } from '@sanity/ui'
 import { uuid } from '@sanity/uuid'
-import { CSSProperties, type FormEvent, useState } from 'react'
-import { type ObjectInputProps, set, unset } from 'sanity'
+import { set, unset } from 'sanity'
 import Papa from 'papaparse'
-import {
-  Cell,
-  LabelList,
-  Legend,
-  Pie,
-  PieChart,
-  PieLabelRenderProps,
-  ResponsiveContainer,
-  Sector,
-  SectorProps,
-  Tooltip,
-} from 'recharts'
-import { TooltipIndex } from 'recharts/types/state/tooltipSlice'
+import { Cell, Legend, Pie, PieChart, PieLabelRenderProps, Tooltip } from 'recharts'
+import { useEffect, useState } from 'react'
 
-type Coordinate = {
-  x: number
-  y: number
-}
-
-type PieSectorData = {
-  percent?: number
-  name?: string | number
-  midAngle?: number
-  middleRadius?: number
-  tooltipPosition?: Coordinate
-  value?: number
-  paddingAngle?: number
-  dataKey?: string
-  payload?: any
-  labelPrefix?: string
-  labelPostfix?: string
-}
-
-type PieSectorDataItem = React.SVGProps<SVGPathElement> & Partial<SectorProps> & PieSectorData
-
-const renderActiveShape = ({
-  cx,
-  cy,
-  midAngle,
-  innerRadius,
-  outerRadius,
-  startAngle,
-  endAngle,
-  fill,
-  payload,
-  percent,
-  value,
-  labelPrefix = '',
-  labelPostfix = '',
-}: PieSectorDataItem) => {
+const renderCustomizedLabel = ({ cx, cy, midAngle, outerRadius, value, fill, payload }: PieLabelRenderProps) => {
   const RADIAN = Math.PI / 180
-  const sin = Math.sin(-RADIAN * (midAngle ?? 1))
-  const cos = Math.cos(-RADIAN * (midAngle ?? 1))
-  const sx = (cx ?? 0) + ((outerRadius ?? 0) + 10) * cos
-  const sy = (cy ?? 0) + ((outerRadius ?? 0) + 10) * sin
-  const mx = (cx ?? 0) + ((outerRadius ?? 0) + 30) * cos
-  const my = (cy ?? 0) + ((outerRadius ?? 0) + 30) * sin
+  const sin = Math.sin(-RADIAN * (Number(midAngle) ?? 1))
+  const cos = Math.cos(-RADIAN * (Number(midAngle) ?? 1))
+  const sx = (Number(cx) ?? 0) + ((Number(outerRadius) ?? 0) + 10) * cos
+  const sy = (Number(cy) ?? 0) + ((Number(outerRadius) ?? 0) + 10) * sin
+  const mx = (Number(cx) ?? 0) + ((Number(outerRadius) ?? 0) + 30) * cos
+  const my = (Number(cy) ?? 0) + ((Number(outerRadius) ?? 0) + 30) * sin
   const ex = mx + (cos >= 0 ? 1 : -1) * 22
   const ey = my
   const textAnchor = cos >= 0 ? 'start' : 'end'
 
   return (
     <g>
-      <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>
-        {payload.name}
+      <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill="none" />
+      <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
+      <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#333">
+        {/* @ts-ignore: todo merge custom with payload defautl */}
+        {`${payload?.labelPrefix ? payload?.labelPrefix : ''}${value}${payload?.labelPostfix ? payload?.labelPostfix : ''}`}
       </text>
-      <Sector
-        cx={cx}
-        cy={cy}
-        innerRadius={innerRadius}
-        outerRadius={outerRadius}
-        startAngle={startAngle}
-        endAngle={endAngle}
-        fill={fill}
-      />
-      <Sector
-        cx={cx}
-        cy={cy}
-        startAngle={startAngle}
-        endAngle={endAngle}
-        innerRadius={(outerRadius ?? 0) + 6}
-        outerRadius={(outerRadius ?? 0) + 10}
-        fill={fill}
-      />
-      <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill="none" />
-      <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
-      <text
-        x={ex + (cos >= 0 ? 1 : -1) * 12}
-        y={ey}
-        textAnchor={textAnchor}
-        fill="#333"
-      >{`${labelPrefix} ${value}${labelPostfix}`}</text>
-      {/*       <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} dy={18} textAnchor={textAnchor} fill="#999">
-        {`(Rate ${((percent ?? 1) * 100).toFixed(2)}%)`}
-      </text> */}
     </g>
-  )
-}
-
-function CustomActiveShapePieChart({
-  isAnimationActive = true,
-  defaultIndex = undefined,
-  data = [],
-  labelPrefix = '',
-  labelPostfix = '',
-}: {
-  data?: any
-  isAnimationActive?: boolean
-  defaultIndex?: TooltipIndex
-  labelPrefix?: string
-  labelPostfix?: string
-}) {
-  console.log('CustomActiveShapePieChart data', data)
-  const formattedData = data?.map((dataItem: any) => {
-    return {
-      name: dataItem.name,
-      value: Number(dataItem.value),
-    }
-  })
-  console.log('CustomActiveShapePieChart formattedData', formattedData)
-  return (
-    <PieChart
-      style={{ width: '100%', maxWidth: '500px', maxHeight: '80vh', aspectRatio: 1 }}
-      responsive
-      margin={{
-        top: 50,
-        right: 120,
-        bottom: 0,
-        left: 120,
-      }}
-    >
-      <Pie
-        // @ts-expect-error the parameter type doesn't match
-        activeShape={renderActiveShape}
-        data={formattedData}
-        cx="50%"
-        cy="50%"
-        innerRadius="60%"
-        outerRadius="80%"
-        fill="#8884d8"
-        dataKey="value"
-        isAnimationActive={isAnimationActive}
-      />
-      <Tooltip content={() => null} defaultIndex={defaultIndex} />
-    </PieChart>
-  )
-}
-
-const renderCustomizedLabel = ({
-  cx,
-  cy,
-  x,
-  y,
-  midAngle,
-  innerRadius,
-  outerRadius,
-  percent,
-  name,
-  value,
-  labelPrefix = '',
-  labelPostfix = '',
-  startAngle,
-  endAngle,
-  fill,
-  payload,
-}: PieLabelRenderProps & { labelPrefix?: string; labelPostfix?: string }) => {
-  console.log('custom name', name)
-  console.log('custom value', value)
-  console.log('custom labelPrefix', labelPrefix)
-  console.log('custom labelPostfix', labelPostfix)
-
-  const RADIAN = Math.PI / 180
-  const sin = Math.sin(-RADIAN * (midAngle ?? 1))
-  const cos = Math.cos(-RADIAN * (midAngle ?? 1))
-  const sx = (cx ?? 0) + ((outerRadius ?? 0) + 10) * cos
-  const sy = (cy ?? 0) + ((outerRadius ?? 0) + 10) * sin
-  const mx = (cx ?? 0) + ((outerRadius ?? 0) + 30) * cos
-  const my = (cy ?? 0) + ((outerRadius ?? 0) + 30) * sin
-  const ex = mx + (cos >= 0 ? 1 : -1) * 22
-  const ey = my
-  const textAnchor = cos >= 0 ? 'start' : 'end'
-
-  return (
-    <g>
-      <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill="none" />
-      <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
-      <text
-        x={ex + (cos >= 0 ? 1 : -1) * 12}
-        y={ey}
-        textAnchor={textAnchor}
-        fill="#333"
-      >{`${labelPrefix} ${value}${labelPostfix}`}</text>
-    </g>
-
-    /*     <text x={x} y={y}>{`${labelPrefix} ${value}${labelPostfix}`}</text> */
   )
 }
 
@@ -216,11 +44,11 @@ function SimplePieChart({
   console.log('SimplePieChart data', data)
   const formattedData = data?.map((dataItem: any) => {
     return {
+      ...dataItem,
       name: dataItem.name,
       value: Number(dataItem.value),
     }
   })
-  console.log('SimplePieChart formattedData', formattedData)
   const COLORS = ['#007079', '#FBDD79', '#86A7AC', '#DF6D62', '#49709C', '#7D0023', '#243746']
 
   return (
@@ -236,16 +64,12 @@ function SimplePieChart({
         cx="50%"
         cy="50%"
         fill="#8884d8"
-        label={(props: any) => {
-          console.log('props', props)
-          return renderCustomizedLabel({ ...props, labelPrefix, labelPostfix })
-        }}
+        label={(props) => renderCustomizedLabel(props)}
         legendType="circle"
         isAnimationActive={isAnimationActive}
       >
         {data.map((entry: any, index: number) => (
-          // eslint-disable-next-line react/no-array-index-key
-          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+          <Cell key={`cell-${entry._key}`} fill={COLORS[index % COLORS.length]} />
         ))}
       </Pie>
       <Tooltip />
@@ -254,12 +78,35 @@ function SimplePieChart({
   )
 }
 
+function useDebounce(cb: any, delay: any) {
+  const [debounceValue, setDebounceValue] = useState(cb)
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebounceValue(cb)
+    }, delay)
+
+    return () => {
+      clearTimeout(handler)
+    }
+  }, [cb, delay])
+  return debounceValue
+}
+
 export const PieChartInputComponent = (props: any) => {
   const { value, onChange } = props
   const { title, data, labelPrefix = '', labelPostfix = '' } = value
+  const [fileName, setFileName] = useState('')
+  const [titleElement, setTitleElement] = useState('')
+  /*   const [debounceVal, setDebounceVal] = useState('') */
 
   console.log('value', value)
   console.log('props', props)
+
+  /*   useEffect(() => {
+    console.log('Debounced:', titleVal)
+    setDebounceVal(titleVal)
+  }, [debounceValue, titleVal]) */
+
   const updateValue = (v?: any) => {
     return onChange(set(v))
   }
@@ -269,7 +116,7 @@ export const PieChartInputComponent = (props: any) => {
 
   const handlePrefix = (event: any) => {
     const prefix = event.currentTarget.value
-    console.log('pre event.currentTarget.value', event.currentTarget.value)
+    console.log('PREFIX', event.currentTarget.value)
     const newValue = {
       labelPrefix: prefix,
     }
@@ -277,24 +124,29 @@ export const PieChartInputComponent = (props: any) => {
   }
   const handlePostfix = (event: any) => {
     const postfix = event.currentTarget.value
-    console.log('post event.currentTarget.value', event.currentTarget.value)
+    console.log('POSTFIX', event.currentTarget.value)
     const newValue = {
       labelPostfix: postfix,
     }
     updateValue({ ...value, ...newValue })
   }
 
-  const handleTitle = (event: any) => {
-    const title = event.currentTarget.value
-    console.log('post event.currentTarget.value', event.currentTarget.value)
+  const handleTitleBlur = (event: any) => {
+    console.log('BLUR event.currentTarget.value', event.currentTarget.value)
     const newValue = {
-      title: title,
+      title: titleElement,
     }
     updateValue({ ...value, ...newValue })
   }
 
+  const handleTitle = (event: any) => {
+    console.log('post event.currentTarget.value', event.currentTarget.value)
+    setTitleElement(event.currentTarget.value)
+  }
+
   const handleFileUpload = (e: any) => {
     const files = e.target.files
+    console.log('files', files)
     if (files) {
       Papa.parse(files[0], {
         header: false,
@@ -309,8 +161,6 @@ export const PieChartInputComponent = (props: any) => {
               value: row[1],
             }
           })
-          console.log('formattedData', formattedData)
-
           const newValue = {
             data: [...formattedData],
           }
@@ -352,9 +202,10 @@ export const PieChartInputComponent = (props: any) => {
       )}
 
       <Stack padding={3} space={[3, 3, 4, 5]}>
+        <Text size={3}>{`Spreadsheet:....`}</Text>
         <LabelWrapper>
           Title
-          <TextInput onChange={handleTitle} value={title} />
+          <TextInput onChange={handleTitle} onBlur={handleTitleBlur} value={title} />
         </LabelWrapper>
         <LabelWrapper>
           Label prefix
@@ -365,10 +216,10 @@ export const PieChartInputComponent = (props: any) => {
           <TextInput onChange={handlePostfix} value={labelPostfix} />
         </LabelWrapper>
       </Stack>
-      <Stack padding={3} space={[3, 3, 4, 5]}>
+      {/*       <Stack padding={3} space={[3, 3, 4, 5]}>
         <Text>Pie chart preview</Text>
         <SimplePieChart data={data ?? []} labelPrefix={labelPrefix} labelPostfix={labelPostfix} />
-      </Stack>
+      </Stack> */}
     </div>
   )
 }

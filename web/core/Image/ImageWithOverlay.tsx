@@ -114,7 +114,7 @@ export const ImageWithOverlay = forwardRef<HTMLDivElement, ImageWithOverlayProps
           onClick={() => setShowOverlay(!showOverlay)}
           className={`focus-visible:envis-outline absolute right-0 bottom-0 z-[3] flex items-end justify-end p-1.5 focus:outline-hidden lg:px-8 lg:py-6`}
         >
-          <span className="sr-only">{intl('readMore')}</span>
+          <span className="sr-only">{intl('readMore') ?? 'Read more'}</span>
           <div
             className={`group focus-visible:envis-outline-invert flex size-3 items-center justify-center rounded-full p-5 text-2xl focus:outline-hidden md:size-4 md:p-6 ${
               showOverlay

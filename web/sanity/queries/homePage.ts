@@ -4,8 +4,6 @@ import { seoAndSomeFields } from './common/seoAndSomeFields'
 import { breadcrumbsQuery } from './common/breadcrumbs'
 import { stickyMenu, stickyMenuOutSideContent } from './common/stickyMenu'
 import { functions, pageContentFunctions } from './common/functions'
-import downloadableFileFields from './common/actions/downloadableFileFields'
-import { anchorLinkReferenceFields } from './common/anchorLinkReferenceFields'
 
 const allSlugsQuery = /* groq */ `
     "currentSlug": {

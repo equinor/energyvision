@@ -624,7 +624,13 @@ _type == "keyNumbers" =>{
   },
   _type == "tableV2" => {"table": table::getTablefields(@)},
   //Remove from here and place with homepage template query only
-  ${homepageContentFields}
+  ${homepageContentFields},
+  _type == "pieChart" => {
+    "type": _type,
+    "id": _key,
+    ...,
+  },
+
 `
 
 export default pageContentFields

@@ -45,7 +45,7 @@ export const PromoTile = forwardRef<HTMLAnchorElement, PromoTileProps>(function 
       variant={variant}
       className={`${theme?.dark || background?.dark ? 'dark' : ''} `}
     >
-      <Card.Content variant={variant} className={`${theme.background}`}>
+      <Card.Content variant={variant} className={`${theme?.background}`}>
         <Card.Header
           titleLevel={hasSectionTitle ? 'h3' : 'h2'}
           {...(!linkLabelAsTitle && { titleBlock: title })}

@@ -64,6 +64,7 @@ import { HomePageBanner } from '@/sections/HomePageBanner/HomePageBanner'
 import TableBlock, { TableBlockProps } from '@/sections/TableBlock/TableBlock'
 import PromotionsBlock, { PromotionsBlockData } from '@/sections/promotions/PromotionsBlock'
 import { toPlainText } from 'next-sanity'
+import PieChartBlock, { PieChartBlockProps } from '@/sections/PieChartBlock/PieChartBlock'
 
 // How could we do this for several different component types?
 export type ComponentSections =
@@ -449,6 +450,15 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
             variant="import"
             key={c.id}
             {...(c as any)}
+            anchor={anchorReference}
+            className={topSpacingClassName}
+          />
+        )
+      case 'pieChart':
+        return (
+          <PieChartBlock
+            key={c.id}
+            {...(c as PieChartBlockProps)}
             anchor={anchorReference}
             className={topSpacingClassName}
           />
