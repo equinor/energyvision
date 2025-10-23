@@ -56,18 +56,18 @@ const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
     return menuItems
       .findIndex((menuItem) => {
         if (variant === 'simple') {
-          if ('link' in menuItem && menuItem?.link && menuItem.link.slug === router.asPath) {
+          if (menuItem && 'link' in menuItem && menuItem?.link && menuItem.link.slug === router.asPath) {
             return menuItem.link.slug === router.asPath
           }
           if (
-            'links' in menuItem &&
+            menuItem && 'links' in menuItem &&
             menuItem?.links &&
             menuItem.links.some((link) => link.link?.slug === router.asPath)
           ) {
             return menuItem.links.some((link) => link.link?.slug === router.asPath)
           }
           if (
-            'readMoreLink' in menuItem &&
+            menuItem && 'readMoreLink' in menuItem &&
             menuItem?.readMoreLink?.link?.slug &&
             menuItem.readMoreLink.link.slug === router.asPath
           ) {
@@ -75,14 +75,14 @@ const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
           }
         } else if (variant === 'default') {
           if (
-            'groups' in menuItem &&
+            menuItem && 'groups' in menuItem &&
             menuItem.groups &&
             menuItem.groups?.some((group) => group.links.some((link) => link.link?.slug === router.asPath))
           ) {
             return menuItem.groups?.some((group) => group.links.some((link) => link.link?.slug === router.asPath))
           }
           if (
-            'topLevelLink' in menuItem &&
+            menuItem && 'topLevelLink' in menuItem &&
             menuItem?.topLevelLink?.link?.slug &&
             menuItem?.topLevelLink?.link?.slug === router.asPath
           ) {
