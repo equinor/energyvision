@@ -10,7 +10,7 @@ import { toPlainText } from 'next-sanity'
 export const dynamicParams = true // fallback to true in app router
 
 type Params = Promise<{ locale: string }>
-export async function generateMetadata(params: Params): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const defaultLocale = defaultLanguage.locale
   const locale = (await params).locale ?? defaultLocale
   const fullSlug = `${domain}/${locale !== defaultLocale ? `${locale}/` : ''}`
