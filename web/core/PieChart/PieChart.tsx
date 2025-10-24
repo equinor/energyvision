@@ -42,7 +42,7 @@ export const PieChart = forwardRef<SVGSVGElement, PieChartProps>(function PieCha
     <_PieChart
       ref={ref}
       responsive
-      style={{ width: '100%', maxWidth: '500px', maxHeight: '80vh', aspectRatio: 1 }}
+      className="*:focus-visible:envis-outline aspect-square max-h-[50vh] w-full max-w-[500px] *:focus:outline-none"
       margin={{ top: 50, right: 50, bottom: 50, left: 50 }}
     >
       <Pie

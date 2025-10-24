@@ -1,10 +1,9 @@
 /* eslint-disable consistent-return */
 import { Box, Card, Stack, Text, Inline, TextInput } from '@sanity/ui'
 import { uuid } from '@sanity/uuid'
-import { set, unset } from 'sanity'
+import { set } from 'sanity'
 import Papa from 'papaparse'
 import { Cell, Legend, Pie, PieChart, PieLabelRenderProps, Tooltip } from 'recharts'
-import { useEffect, useState } from 'react'
 
 const renderCustomizedLabel = ({ cx, cy, midAngle, outerRadius, value, fill, payload }: PieLabelRenderProps) => {
   const RADIAN = Math.PI / 180
@@ -45,8 +44,9 @@ function SimplePieChart({
   const formattedData = data?.map((dataItem: any) => {
     return {
       ...dataItem,
-      name: dataItem.name,
       value: Number(dataItem.value),
+      labelPostfix,
+      labelPrefix,
     }
   })
   const COLORS = ['#007079', '#FBDD79', '#86A7AC', '#DF6D62', '#49709C', '#7D0023', '#243746']
@@ -78,45 +78,16 @@ function SimplePieChart({
   )
 }
 
-function useDebounce(cb: any, delay: any) {
-  const [debounceValue, setDebounceValue] = useState(cb)
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebounceValue(cb)
-    }, delay)
-
-    return () => {
-      clearTimeout(handler)
-    }
-  }, [cb, delay])
-  return debounceValue
-}
-
 export const PieChartInputComponent = (props: any) => {
   const { value, onChange } = props
-  const { title, data, labelPrefix = '', labelPostfix = '' } = value
-  const [fileName, setFileName] = useState('')
-  const [titleElement, setTitleElement] = useState('')
-  /*   const [debounceVal, setDebounceVal] = useState('') */
-
-  console.log('value', value)
-  console.log('props', props)
-
-  /*   useEffect(() => {
-    console.log('Debounced:', titleVal)
-    setDebounceVal(titleVal)
-  }, [debounceValue, titleVal]) */
+  const { data, labelPrefix = '', labelPostfix = '' } = value || {}
 
   const updateValue = (v?: any) => {
     return onChange(set(v))
   }
-  const resetValue = () => {
-    return onChange(unset())
-  }
 
   const handlePrefix = (event: any) => {
     const prefix = event.currentTarget.value
-    console.log('PREFIX', event.currentTarget.value)
     const newValue = {
       labelPrefix: prefix,
     }
@@ -124,24 +95,10 @@ export const PieChartInputComponent = (props: any) => {
   }
   const handlePostfix = (event: any) => {
     const postfix = event.currentTarget.value
-    console.log('POSTFIX', event.currentTarget.value)
     const newValue = {
       labelPostfix: postfix,
     }
     updateValue({ ...value, ...newValue })
-  }
-
-  const handleTitleBlur = (event: any) => {
-    console.log('BLUR event.currentTarget.value', event.currentTarget.value)
-    const newValue = {
-      title: titleElement,
-    }
-    updateValue({ ...value, ...newValue })
-  }
-
-  const handleTitle = (event: any) => {
-    console.log('post event.currentTarget.value', event.currentTarget.value)
-    setTitleElement(event.currentTarget.value)
   }
 
   const handleFileUpload = (e: any) => {
@@ -170,7 +127,6 @@ export const PieChartInputComponent = (props: any) => {
     }
   }
 
-  /*   type Props = { children: ReactNode } */
   const LabelWrapper = ({ children }: { children: React.ReactNode }) => {
     return (
       <label
@@ -190,23 +146,17 @@ export const PieChartInputComponent = (props: any) => {
 
   return (
     <div>
-      {/*           {data && <Button text="Reset all" mode="ghost" onClick={() => resetValue()} />} */}
       {!data && (
-        <Card padding={[3, 3, 4, 5]} radius={2} shadow={1}>
-          <Stack padding={3} space={[3, 3, 4, 5]}>
-            <Text size={3}> Import a spreadsheet</Text>
-            <Text size={2}>Column A (1) should hold the names and Column B (2) should be the values to the names</Text>
+        <Card padding={3} radius={2} shadow={1}>
+          <Stack padding={4} space={4}>
+            <Text size={2}> Import a spreadsheet</Text>
+            <Text size={1}>Column A (1) should hold the names and Column B (2) should be the values to the names</Text>
             <input type="file" accept=".csv,.xlsx,.xls" onChange={handleFileUpload} />
           </Stack>
         </Card>
       )}
 
       <Stack padding={3} space={[3, 3, 4, 5]}>
-        <Text size={3}>{`Spreadsheet:....`}</Text>
-        <LabelWrapper>
-          Title
-          <TextInput onChange={handleTitle} onBlur={handleTitleBlur} value={title} />
-        </LabelWrapper>
         <LabelWrapper>
           Label prefix
           <TextInput onChange={handlePrefix} value={labelPrefix} />
@@ -216,10 +166,10 @@ export const PieChartInputComponent = (props: any) => {
           <TextInput onChange={handlePostfix} value={labelPostfix} />
         </LabelWrapper>
       </Stack>
-      {/*       <Stack padding={3} space={[3, 3, 4, 5]}>
+      <Stack padding={3} space={[3, 3, 4, 5]}>
         <Text>Pie chart preview</Text>
         <SimplePieChart data={data ?? []} labelPrefix={labelPrefix} labelPostfix={labelPostfix} />
-      </Stack> */}
+      </Stack>
     </div>
   )
 }

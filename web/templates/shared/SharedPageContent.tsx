@@ -454,7 +454,7 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
             className={topSpacingClassName}
           />
         )
-      case 'pieChart':
+      case 'pieChartBlock':
         return (
           <PieChartBlock
             key={c.id}
