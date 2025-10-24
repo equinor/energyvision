@@ -19,7 +19,7 @@
     "@algolia/cache-browser-local-storage": "^4.22.1",
     "@algolia/cache-common": "^4.22.1",
     "@algolia/cache-in-memory": "^4.22.1",
-    "@equinor/eds-core-react": "0.39.0",
+    "@equinor/eds-core-react": "0.46.0",
     "@equinor/eds-icons": "^0.19.1",
     "@equinor/eds-tokens": "^0.9.0",
     "@equinor/eds-utils": "^0.8.4",
