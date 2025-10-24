@@ -102,6 +102,8 @@ const MultiplePromotions = ({
     )
   }
 
+  const gridColsClassName = "grid-cols-3"
+
   return (
     <ul
       className={twMerge(`
@@ -110,9 +112,10 @@ const MultiplePromotions = ({
       ${getRowGap(variant)}
       justify-center
       content-center
-      grid-cols-1
+      auto-cols-fr 
+      grid-flow-col
       auto-rows-fr
-      ${data?.length === 3 ? 'md:grid-cols-3' : 'md:grid-cols-2 2xl:grid-cols-3'}`)}
+      `)}
     >
       <>
         {data.map((item) => {
