@@ -39,10 +39,10 @@ const defaultSerializers = {
     //@ts-ignore
     pullQuote: (props) => <Quote {...props} className="not-prose" />,
     //@ts-ignore
-    basicIframe: (props) => {
+/*     basicIframe: (props) => {
       const { value } = props
       return <IFrame {...value} className="not-prose px-layout-md py-14 mx-auto" />
-    },
+    }, */
   },
   marks: {
     sub: ({ children }: TypeProps) => <sub>{children}</sub>,
@@ -168,7 +168,7 @@ export type BlockProps = {
   noInvert?: boolean
 } & PortableTextProps
 
-const inlineBlockTypes = ['block', 'positionedInlineImage', 'pullQuote', 'basicIframe']
+const inlineBlockTypes = ['block', 'positionedInlineImage', 'pullQuote']
 
 //@ts-ignore
 export default function Blocks({
@@ -249,7 +249,33 @@ export default function Blocks({
                 }}
               />
             )
-          } else {
+          }else if (block._type === 'basicIframe') {
+          let marginOverride = ''
+          // If the next block is a basicIframe, remove margin bottom
+          if (blocks[i + 1]?._type === 'basicIframe') {
+            marginOverride = 'mb-0'
+          }
+          // If the previous block was a basicIframe, remove margin top
+          if (blocks[i - 1]?._type === 'basicIframe') {
+            marginOverride = 'mt-0'
+          }
+
+          return (
+            <PortableText
+              key={block._key}
+              value={block}
+              components={{
+                types: {
+                  //@ts-ignore:todo
+                  basicIframe: (props) => {
+                    const { value } = props
+                    return <IFrame {...value} className={`px-layout-md ${marginOverride}`} />
+                  },
+                },
+              }}
+            />
+          )
+        } else {
             // Non-text blocks (modules, sections, etc.) — note that these can recursively render text
             // blocks again
             return (
