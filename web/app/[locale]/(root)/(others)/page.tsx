@@ -2,9 +2,8 @@ import { getQueryFromSlug } from '../../../../lib/queryFromSlug'
 import { notFound } from 'next/navigation'
 import HomePage from '../../../../templates/homepage/HomePage'
 import { defaultLanguage, domain, languages, metaTitleSuffix } from '@/languages'
-import { getPageData, getPageDataForHeader } from '@/sanity/lib/fetchData'
+import { getPageData } from '@/sanity/lib/fetchData'
 import { Metadata } from 'next'
-import { isDateAfter } from '@/common/helpers/dateUtilities'
 import getOpenGraphImages from '@/common/helpers/getOpenGraphImages'
 import { toPlainText } from 'next-sanity'
 
@@ -12,7 +11,6 @@ export const dynamicParams = true // fallback to true in app router
 
 type Params = Promise<{ locale: string }>
 export async function generateMetadata(params: Params): Promise<Metadata> {
-  //const slug = (await params).slug
   const defaultLocale = defaultLanguage.locale
   const locale = (await params).locale ?? defaultLocale
   const fullSlug = `${domain}/${locale !== defaultLocale ? `${locale}/` : ''}`
@@ -43,7 +41,6 @@ export async function generateMetadata(params: Params): Promise<Metadata> {
       locale,
       type: 'article',
       siteName: 'Equinor',
-
       images: openGraphImages,
     },
     alternates: {
@@ -71,24 +68,11 @@ export default async function Page({ params }: any) {
   const pageData = { ...data, s }
   if (!pageData) notFound()
 
-  //const router = useRouter()
-
   const slug = pageData?.slug
-  /*if (!router.isFallback && !slug && queryParams?.id) {
-    return <ErrorPage pageData={pageData} />
-  }*/
 
   const template = pageData?.template || null
 
   if (!template) console.warn('Missing template for', slug)
-
-  /*if (router.isFallback) {
-    return (
-      <p>
-        <FormattedMessage id="loading" defaultMessage="Loading..." />
-      </p>
-    )
-  }*/
 
   return <HomePage data={pageData} />
 }
