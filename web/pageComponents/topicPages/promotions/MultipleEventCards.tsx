@@ -53,8 +53,8 @@ const MultipleEventCards = ({
                 justify-center
                 content-center
                 auto-rows-auto
-                md:grid-cols-2
-                2xl:grid-cols-3`}
+                auto-cols-fr 
+                grid-flow-col`}
             >
               {data.map((item) => {
                 return (

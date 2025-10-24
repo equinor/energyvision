@@ -40,7 +40,7 @@ type IFrameProps = {
   transcript?: any
 } & HTMLAttributes<HTMLElement>
 
-export const IFrame = forwardRef<HTMLDivElement, IFrameProps>(function IFrame(
+export const IFrame = forwardRef<HTMLElement, IFrameProps>(function IFrame(
   {
     hasSectionTitle = true,
     title,
@@ -78,7 +78,7 @@ export const IFrame = forwardRef<HTMLDivElement, IFrameProps>(function IFrame(
   const containerPadding = height ? `${height}px` : calculatePadding(aspectRatio)
 
   const iframeElement = (
-    <div ref={ref} className={envisTwMerge('h-min', className)}>
+    <>
       {title && showTitleAbove && (
         <Blocks value={title} id={titleId} className={envisTwMerge('text-xl pb-8', titleClassName)} />
       )}
@@ -124,16 +124,21 @@ export const IFrame = forwardRef<HTMLDivElement, IFrameProps>(function IFrame(
           )}
         />
       )}
-    </div>
+    </>
   )
 
   if (isPreview) {
     return iframeElement
   }
 
-  return consented ? (
+  return (
+    <section ref={ref} className={envisTwMerge('h-min my-20', className)}>
+    {consented ? (
     iframeElement
   ) : (
     <RequestConsentContainer hasSectionTitle={hasSectionTitle} cookiePolicy={cookiePolicy} />
+  )
+  }
+  </section>
   )
 })

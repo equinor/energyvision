@@ -1,4 +1,4 @@
-name: DEV - Build & Deploy equinor.com in next 15
+name: UPGRADE DEV - Build & Deploy energyvision
 on:
   workflow_dispatch:
   push:
@@ -18,48 +18,7 @@ permissions:
   id-token: write
   packages: write
 jobs:
-  check-code:
-    runs-on: ubuntu-latest
-    env:
-      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-      DOCKER_BUILDKIT: 1
-    steps:
-      - name: Checkout 🛎️
-        uses: actions/checkout@v3
-        with:
-          ref: staging
-      - name: Install pnpm 📦
-        id: install-pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: '8.5.1'
-      - name: Cache pnpm modules 💾
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: 'pnpm'
-      - name: Install dependencies 🔧
-        id: install-dependencies
-        run: |
-          pnpm install
-          pnpm install --filter energy-vision-web
-      - name: Run ESLint 🔎
-        id: lint
-        run: |
-          pnpm lint:web
-      - name: Run tests 🔍
-        id: test
-        run: |
-          pnpm test --filter energy-vision-web
-      - name: log-errors-to-slack 📄
-        uses: act10ns/slack@v2
-        with:
-          status: ${{ job.status }}
-          steps: ${{ toJson(steps) }}
-        if: failure()
-
   deploy-global-development:
-    needs: check-code
     runs-on: ubuntu-latest
     environment:
       name: development
@@ -73,9 +32,9 @@ jobs:
       DOCKER_BUILDKIT: 1
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - id: deploy-global-development
-        uses: ./.github/workflows/deploy-websites/
+        uses: ./.github/workflows/deploy-web/
         with:
           imageName: ghcr.io/equinor/energyvision/web-${{ matrix.dataset }}-upgrade
           projectId: h61q9gi9
@@ -89,6 +48,7 @@ jobs:
           friendlyCaptchaSitekey: ${{ matrix.dataset == 'brazil' && vars.BRAZIL_FC_SITEKEY || vars.GLOBAL_FC_SITEKEY }}
           friendlyCaptchaPuzzleEndpoint: ${{ matrix.dataset == 'brazil' && vars.BRAZIL_FC_PUZZLE_END_POINT || vars.GLOBAL_FC_PUZZLE_END_POINT }}
           environment: ${{ secrets.ENV }}
+
       - uses: act10ns/slack@v2
         with:
           status: ${{ job.status }}
