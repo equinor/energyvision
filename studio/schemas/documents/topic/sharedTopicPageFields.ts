@@ -71,6 +71,8 @@ export const content = {
     { type: 'promoteTopics', title: 'Topic page promotion' },
     Flags.HAS_NEWS && { type: 'promoteNews', title: 'News promotions' },
     { type: 'pieChartBlock', title: 'Pie chart' },
+    { type: 'lineChartBlock', title: 'Line chart' },
+    { type: 'barChartBlock', title: 'Bar chart' },
   ].filter((e) => e),
   components: {
     input: RolesBasedArrayInput,
@@ -88,6 +90,11 @@ export const content = {
           name: 'carousels',
           title: 'Carousels',
           of: ['imageCarousel', 'videoPlayerCarousel', 'iframeCarousel'],
+        },
+        {
+          name: 'charts',
+          title: 'Charts',
+          of: ['barChartBlock', 'pieChartBlock', 'lineChartBlock'],
         },
       ],
     },

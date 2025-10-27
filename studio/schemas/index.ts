@@ -97,6 +97,10 @@ import tableTheme from './objects/tableV2/tableTheme'
 import importTable from './objects/importTable'
 import pieChart from './objects/pieChartBlock/pieChart'
 import pieChartBlock from './objects/pieChartBlock/pieChartBlock'
+import lineChart from './objects/LineChartBlock/lineChart'
+import lineChartBlock from './objects/LineChartBlock/lineChartBlock'
+import barChart from './objects/BarChartBlock/barChart'
+import barChartBlock from './objects/BarChartBlock/barChartBlock'
 
 const {
   pageNotFound,
@@ -236,6 +240,10 @@ const RemainingSchemas = [
   importTable,
   pieChart,
   pieChartBlock,
+  lineChart,
+  lineChartBlock,
+  barChart,
+  barChartBlock,
 ]
 
 // Then we give our schema to the builder and provide the result to Sanity

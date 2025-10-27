@@ -196,11 +196,6 @@ export default {
   type: 'object',
   fields: [
     {
-      name: 'title',
-      type: 'string',
-      title: 'Title',
-    },
-    {
       name: 'labelPrefix',
       type: 'string',
       title: 'Label prefix',
