@@ -55,13 +55,13 @@ const MultiplePromotions = ({
         return console.warn('Missing card type for ', data)
     }
   }
-  const getRowGap = (type: string) => {
+  const getGridConfig = (type: string) => {
     switch (type) {
       case 'promotePeople':
-        return 'gap-y-3 lg:gap-y-8 gap-x-4'
+        return `${data?.length === 3 ? 'md:grid-cols-3' : 'md:grid-cols-2 2xl:grid-cols-3'} gap-y-3 lg:gap-y-8 gap-x-4`
 
       default:
-        return 'gap-y-3 gap-x-4'
+        return 'auto-cols-fr grid-flow-col gap-y-3 gap-x-4'
     }
   }
 
@@ -102,19 +102,15 @@ const MultiplePromotions = ({
     )
   }
 
-  const gridColsClassName = "grid-cols-3"
-
   return (
     <ul
       className={twMerge(`
       max-lg:w-full
       grid 
-      ${getRowGap(variant)}
       justify-center
       content-center
-      auto-cols-fr 
-      grid-flow-col
       auto-rows-fr
+      ${getGridConfig(variant)}
       `)}
     >
       <>
