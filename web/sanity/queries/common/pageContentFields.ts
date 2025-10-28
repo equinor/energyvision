@@ -636,6 +636,17 @@ _type == "keyNumbers" =>{
       ...,
     }
   },
+    _type == "barChartBlock" => {
+    "type": _type,
+    "id": _key,
+    title,
+    hideTitle,
+    "chartData": chartData{
+      "type": _type,
+      "id": _key,
+      ...,
+    }
+  },
 
 `
 

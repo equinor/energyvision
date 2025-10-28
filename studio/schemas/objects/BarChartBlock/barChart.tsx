@@ -16,15 +16,15 @@ function SimpleBarChart({
 }) {
   console.log('SimpleBarChart data', data)
 
-  const dataKeys = Object.keys(data[0])?.filter((key: any) => String(key).toLowerCase() !== 'name')
-  console.log('dataKeys', dataKeys)
+  const dataKeys = Object.keys(data[0].data)?.filter((key: any) => String(key).toLowerCase() !== 'name')
+  const chartData = data?.map((dataItem: any) => dataItem.data)
   const COLORS = ['#007079', '#FBDD79', '#86A7AC', '#DF6D62', '#49709C', '#7D0023', '#243746']
 
   return (
     <BarChart
       style={{ width: '100%', maxWidth: '700px', maxHeight: '70vh', aspectRatio: 1.618 }}
       responsive
-      data={data}
+      data={chartData}
       margin={{
         top: 20,
         right: 0,
@@ -34,14 +34,12 @@ function SimpleBarChart({
     >
       <CartesianGrid strokeDasharray="3 3" />
       <XAxis dataKey="name" />
-      <YAxis width="auto" />
+      <YAxis width="auto" label={{ value: yUnitLabel, angle: -90, position: 'insideLeft' }} />
       <Tooltip />
       <Legend />
       {dataKeys.map((key: any, index: number) => (
         <Bar key={key} dataKey={key} stackId="a" fill={COLORS[index % COLORS.length]} />
       ))}
-      {/*       <Bar dataKey="pv" stackId="a" fill="#8884d8" />
-      <Bar dataKey="uv" stackId="a" fill="#82ca9d" /> */}
     </BarChart>
   )
 }
@@ -62,6 +60,18 @@ const LabelWrapper = ({ children }: { children: React.ReactNode }) => {
     </label>
   )
 }
+function isNumericString(str: any) {
+  return Number.isFinite(+str)
+}
+
+function isNumeric(str: any) {
+  return !isNaN(str) && typeof str === 'string' && str.trim() !== ''
+}
+
+/* function isNumeric(str: string) {
+  if (typeof str != "string") return false // we only process strings!  
+  return !isNaN(str) && !isNaN(parseFloat(str)) 
+} */
 
 export const BarChartInputComponent = (props: any) => {
   const { value, onChange } = props
@@ -78,23 +88,15 @@ export const BarChartInputComponent = (props: any) => {
       Papa.parse(files[0], {
         header: true,
         skipEmptyLines: true,
-        transform: function (value: any, headerName: any) {
-          console.log('transform value', value)
-          console.log('transform headerName', headerName)
-          return value
-        },
         complete: function (results: any) {
           console.log('Finished, set spreadsheet data', results.data)
           const formattedData = Object.values(results.data).map((row: any) => {
-            console.log('row', row)
             const chartData = Object.fromEntries(
               Object.entries(row).map(([k, v]) => {
-                console.log('v', v)
-                console.log()
-                return [k, Number.isInteger(v) ? Number(v) : v]
+                const isNumber = k !== 'name' && (isNumericString(v) || isNumeric(v))
+                return [k, isNumber ? Number(v) : v]
               }),
             )
-            console.log('chartData', chartData)
             return {
               _type: 'dataItem',
               _key: uuid(),
