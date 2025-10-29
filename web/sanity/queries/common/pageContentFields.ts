@@ -641,7 +641,9 @@ _type == "keyNumbers" =>{
     "id": _key,
     title,
     hideTitle,
-    "chartData": chartData{
+    useLayoutMd,
+    useTextWidth,
+    "charts": charts[]{
       "type": _type,
       "id": _key,
       ...,

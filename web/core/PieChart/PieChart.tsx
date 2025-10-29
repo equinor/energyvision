@@ -35,7 +35,6 @@ export const PieChart = forwardRef<SVGSVGElement, PieChartProps>(function PieCha
   { data = [], isAnimationActive = true },
   ref,
 ) {
-  console.log('Core PieChart data', data)
   const COLORS = ['#007079', '#FBDD79', '#86A7AC', '#DF6D62', '#49709C', '#7D0023', '#243746']
 
   return (

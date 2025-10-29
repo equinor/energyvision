@@ -11,18 +11,33 @@ export type BarChartBlockProps = {
   className?: string
   title?: PortableTextBlock[]
   hideTitle?: boolean
-  chartData: BarChartProps
+  useLayoutMd?: boolean
+  useTextWidth?: boolean
+  charts: BarChartProps[]
 }
 
-const BarChartBlock = ({ anchor, className, chartData, title, hideTitle }: BarChartBlockProps) => {
-  const { data, yUnitLabel } = chartData || {}
-
-  console.log('data', data)
-
+const BarChartBlock = ({
+  anchor,
+  className,
+  charts,
+  title,
+  hideTitle,
+  useLayoutMd,
+  useTextWidth,
+}: BarChartBlockProps) => {
+  console.log('BarChartBlock charts', charts)
   return (
-    <section className={twMerge(`px-layout-lg pb-page-content`, className)} id={anchor}>
+    <section
+      className={twMerge(
+        `px-layout-sm ${useLayoutMd && !useTextWidth ? 'lg:px-layout-md' : 'lg:px-layout-lg'} ${useTextWidth ? 'max-w-text' : ''} pb-page-content`,
+        className,
+      )}
+      id={anchor}
+    >
       {title && <Blocks variant="h2" value={title} className={`${hideTitle ? 'sr-only' : ''}`} />}
-      {data && data?.length > 0 && <BarChart data={data} yUnitLabel={yUnitLabel} />}
+      <div className="flex">
+        {charts && charts?.length > 0 && charts?.map((chart: BarChartProps) => <BarChart key={chart.id} {...chart} />)}
+      </div>
     </section>
   )
 }

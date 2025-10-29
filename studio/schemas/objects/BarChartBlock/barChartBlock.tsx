@@ -5,7 +5,7 @@ import { PortableTextBlock, Rule } from 'sanity'
 import blocksToText from '../../../helpers/blocksToText'
 
 export default {
-  title: 'Bar chart',
+  title: 'Bar chart block',
   name: 'barChartBlock',
   type: 'object',
   fields: [
@@ -26,9 +26,26 @@ export default {
       description: 'Hides the title, but screen readers will read title',
     },
     {
-      type: 'barChart',
-      title: 'Bar chart',
-      name: 'chartData',
+      name: 'charts',
+      title: 'Charts',
+      type: 'array',
+      of: [
+        {
+          type: 'barChart',
+          title: 'Bar chart',
+        },
+      ],
+    },
+    {
+      title: 'Stretch to second outer content grid',
+      type: 'boolean',
+      name: 'useLayoutMd',
+    },
+    {
+      title: 'Align with text in the inner content width',
+      description: 'Text is narrower than the inner most grid, check this to align with text width',
+      type: 'boolean',
+      name: 'useTextWidth',
     },
   ],
   preview: {
@@ -36,11 +53,11 @@ export default {
       title: 'title',
     },
     prepare({ title }: { title?: PortableTextBlock[] }) {
-      const plainTitle = title ? blocksToText(title) : 'Bar Chart'
+      const plainTitle = title ? blocksToText(title) : 'Bar Chart Block'
 
       return {
         title: plainTitle,
-        subtitle: 'Bar chart component',
+        subtitle: 'Bar chart block component',
         media: AiOutlineBarChart,
       }
     },

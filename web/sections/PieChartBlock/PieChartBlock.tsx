@@ -28,7 +28,6 @@ const PieChartBlock = ({ anchor, className, chartData, title, hideTitle }: PieCh
       labelPrefix,
     }
   })
-  console.log('formattedData', formattedData)
 
   return (
     <section className={twMerge(`px-layout-lg pb-page-content`, className)} id={anchor}>
