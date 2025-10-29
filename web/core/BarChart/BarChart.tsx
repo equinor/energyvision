@@ -1,5 +1,15 @@
 import { forwardRef } from 'react'
-import { Legend, BarChart as _BarChart, Tooltip, BarProps, Bar, YAxis, XAxis, CartesianGrid } from 'recharts'
+import {
+  Legend,
+  BarChart as _BarChart,
+  Tooltip,
+  BarProps,
+  Bar,
+  YAxis,
+  XAxis,
+  CartesianGrid,
+  TooltipContentProps,
+} from 'recharts'
 import { Typography } from '../Typography'
 
 type themeVariant = 'green' | 'blue' | 'red'
@@ -20,6 +30,29 @@ const themes: Record<themeVariant, string[]> = {
   red: ['#ff1243'],
 }
 
+const CustomTooltip = ({ active, payload, label }: TooltipContentProps<string | number, string>) => {
+  const isVisible = active && payload && payload.length
+  return (
+    <div
+      className={`flex flex-col items-start gap-1 border border-grey-20 bg-white-100 p-2 ${isVisible ? 'visible' : 'hidden'}`}
+    >
+      {isVisible && (
+        <>
+          <span>{label}:</span>
+          {payload?.map((set: any) => {
+            return (
+              <span key={set.dataKey} className="flex gap-2">
+                <span className="aspect-square size-1 rounded-full" style={{ color: set.color }} />
+                <span className="text-slate-80">{`${String(set.name).replaceAll('_', ' ')}: ${set.value}`}</span>
+              </span>
+            )
+          })}
+        </>
+      )}
+    </div>
+  )
+}
+
 export const BarChart = forwardRef<HTMLDivElement, BarChartProps>(function BarChart(
   { chartTitle, chartSource, data = [], yUnitLabel, xAxisDataKey, yUnitLabelPlacement, showLegend, theme = 'blue' },
   ref,
@@ -27,19 +60,14 @@ export const BarChart = forwardRef<HTMLDivElement, BarChartProps>(function BarCh
   console.log('Core BarChart data', data)
   const dataKeys = Object.keys(data[0].data).filter((key: any) => key !== xAxisDataKey)
   const chartData = data?.map((dataItem: any) => dataItem.data)
-  console.log('Core BarChart chartData', chartData)
   const COLORS = themes[theme]
 
   const renderLegendText = (value: string, entry: any) => {
-    const { color } = entry
-    return <span style={{ color }}>{String(value).replaceAll('_', ' ')}</span>
+    return <span className="text-slate-80">{String(value).replaceAll('_', ' ')}</span>
   }
-  const renderTooltip = (value: any, name: any, props: any) => {
-    console.log('renderTooltip value', value)
-    console.log('renderTooltip name', name)
-    console.log('renderTooltip props', props)
+  /*   const renderTooltip = (value: any, name: any, props: any) => {
     return [`${value}${yUnitLabel}`, String(name).replaceAll('_', ' ')]
-  }
+  } */
 
   return (
     <div ref={ref} className="relative h-full w-full">
@@ -72,7 +100,7 @@ export const BarChart = forwardRef<HTMLDivElement, BarChartProps>(function BarCh
             },
           })}
         />
-        <Tooltip formatter={renderTooltip} />
+        <Tooltip content={CustomTooltip} />
         {showLegend && <Legend formatter={renderLegendText} />}
         {dataKeys.map((key: any, index: number) => (
           <Bar key={key} dataKey={key} stackId="a" fill={COLORS[index % COLORS.length]} />
