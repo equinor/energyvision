@@ -4,28 +4,33 @@ import FriendlyCaptcha from '@templates/forms/FriendlyCaptcha'
 import { ArrowRight } from '../../icons'
 import { forwardRef, useState } from 'react'
 import { useIntl } from 'react-intl'
-import { ResourceLink } from './ResourceLink'
-import { BaseLinkProps } from './BaseLink'
+import { getArrowElement, ResourceLinkProps } from './ResourceLink'
+import { BaseLink } from './BaseLink'
+import { BsFiletypePdf, BsFiletypeXlsx } from 'react-icons/bs'
+import envisTwMerge from '../../twMerge'
 
 export type DownloadableLinkProps = {
   fileName?: string
   label?: string
-  /* Link extension */
-  extension?: string | undefined
-} & BaseLinkProps
+} & ResourceLinkProps
 
 const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(function DownloadableLink(
-  { href, locale, fileName, label, id, type, extension },
+  { fileName, label, type = 'downloadableFile', extension, showExtensionIcon, ariaHideText, variant = 'fit' },
   ref,
 ) {
   const intl = useIntl()
   const [showModal, setShowModal] = useState(false)
   const [isFriendlyChallengeDone, setIsFriendlyChallengeDone] = useState(false)
-  /*   const [downloadRequestUrl, setDownloadRequestUrl] = useState(null) */
+  const [downloadRequestUrl, setDownloadRequestUrl] = useState(null)
 
   const [notHuman, setNotHuman] = useState(false)
   console.log('DownloadableLink fileName', fileName)
-  console.log('DownloadableLink id', id)
+  console.log('DownloadableLink downloadRequestUrl', downloadRequestUrl)
+
+  const contentVariantClassName: Partial<Record<string, string>> = {
+    default: 'pb-3 pr-2',
+    fit: 'pb-3 pr-2',
+  }
 
   const handleRequestFile = () => {
     setShowModal(!showModal)
@@ -35,28 +40,85 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
     setShowModal(false)
   }
 
-  const handleSuccessfullFriendlyChallenge = async () => {
-    console.log('File request friendly challenge successfully done')
-    setIsFriendlyChallengeDone(true)
-    /*     const res = await fetch('/api/download/getFileUrl', {
-      body: JSON.stringify({
-        filename: props.fileName,
-        id: props.id,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      method: 'GET',
-    }) */
+  const getTranslation = () => {
+    return intl.formatMessage({ id: 'downloadDocument', defaultMessage: 'Download document' })
   }
 
-  return (
-    <div ref={ref}>
-      <button
-        type="button"
-        onClick={handleRequestFile}
-        className={`
-            group
+  const getContentElements = (children?: React.ReactNode) => {
+    const textClassNames = `pt-1 grow leading-none`
+    switch (type) {
+      case 'downloadableFile':
+        return extension &&
+          (extension.toUpperCase() === 'PDF' ||
+            extension.toUpperCase() === 'XLS' ||
+            extension.toUpperCase() === 'XLSX') &&
+          showExtensionIcon ? (
+          <>
+            {extension.toUpperCase() === 'PDF' ? (
+              <BsFiletypePdf aria-label="pdf" size={24} className="mr-2 min-w-6 min-h-6" />
+            ) : (
+              <BsFiletypeXlsx aria-label="xlsx" size={24} className="mr-2 min-w-6 min-h-6" />
+            )}
+            <span
+              className={textClassNames}
+              {...(ariaHideText && {
+                'aria-hidden': true,
+              })}
+            >
+              {children}
+            </span>
+          </>
+        ) : (
+          <span
+            className={textClassNames}
+            {...(ariaHideText && {
+              'aria-hidden': true,
+            })}
+          >
+            {children}
+            {(extension && !showExtensionIcon) ||
+            (extension &&
+              (extension.toUpperCase() !== 'PDF' ||
+                extension.toUpperCase() !== 'XLS' ||
+                extension.toUpperCase() !== 'XLSX') &&
+              showExtensionIcon) ? (
+              <span
+                aria-label={`, ${getTranslation()} ${extension.toUpperCase()}`}
+              >{`(${extension.toUpperCase()})`}</span>
+            ) : null}
+          </span>
+        )
+      default:
+        return (
+          <span
+            className={textClassNames}
+            {...(ariaHideText && {
+              'aria-hidden': true,
+            })}
+          >
+            {children}
+            {extension ? (
+              <span aria-label={`, ${getTranslation()} ${extension.toUpperCase()}`}>
+                {`(${extension.toUpperCase()})`}
+              </span>
+            ) : null}
+          </span>
+        )
+    }
+  }
+
+  const handleSuccessfullFriendlyChallenge = async () => {
+    if (fileName) {
+      console.log('File request friendly challenge successfully done')
+      setIsFriendlyChallengeDone(true)
+      const response = await fetch(`/api/download/getFileUrl?fileName=${encodeURIComponent(fileName)}`)
+      const url = await response.json()
+      console.log('response data url', url)
+      setDownloadRequestUrl(url.url)
+    }
+  }
+  const commonLinkWrapperClassName = `
+              group
             text-base
             relative
             flex
@@ -69,8 +131,14 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
             pt-3
             border-b
             border-grey-50
-            dark:border-white-100 no-underline
-        `}
+            dark:border-white-100 no-underline`
+
+  return (
+    <div ref={ref}>
+      <button
+        type="button"
+        onClick={handleRequestFile}
+        className={commonLinkWrapperClassName}
         aria-haspopup="dialog"
         aria-label={`Request file download modal`}
       >
@@ -123,21 +191,35 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
           }}
         />
         {notHuman && (
-          <Typography variant="body" role="alert" className="text-slate-80 text-md">
+          <Typography variant="body" role="alert" className="py-6 text-slate-80 text-base">
             We are sorry, but anti-robot protection failed and we cannot proceed
           </Typography>
         )}
-        {isFriendlyChallengeDone && !notHuman && (
-          <ResourceLink
-            href={href}
-            locale={locale}
+        {downloadRequestUrl && isFriendlyChallengeDone && !notHuman && (
+          <BaseLink
+            className={envisTwMerge(`${commonLinkWrapperClassName}`, 'pt-20')}
             type={type}
-            extension={extension}
-            showExtensionIcon={true}
-            variant="default"
+            href={downloadRequestUrl}
+            {...(extension &&
+              extension.toLowerCase() === 'pdf' && {
+                target: '_blank',
+              })}
           >
-            {`${label}`}
-          </ResourceLink>
+            <span
+              className={`h-full
+          w-inherit 
+          flex
+          justify-start
+          items-center
+          gap-x-2
+          ${contentVariantClassName[variant]}`}
+            >
+              {getContentElements(<>{`${label}`}</>)}
+              {getArrowElement(type)}
+            </span>
+
+            <span className="w-[0%] h-[1px] bg-grey-40 transition-all duration-300 group-hover:w-full" />
+          </BaseLink>
         )}
       </Modal>
     </div>
