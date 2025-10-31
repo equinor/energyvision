@@ -3,13 +3,49 @@ import { Box, Card, Stack, Text, Inline, TextInput, Radio, Switch, Select } from
 import { uuid } from '@sanity/uuid'
 import { set } from 'sanity'
 import Papa from 'papaparse'
-import { Bar, BarChart, CartesianGrid, Legend, Tooltip, XAxis, YAxis } from 'recharts'
-import { useState } from 'react'
+import { Bar, BarChart, CartesianGrid, Legend, Tooltip, TooltipContentProps, XAxis, YAxis } from 'recharts'
 
 const themes = {
   green: ['#0e7c78', '#63a893', '#aad5bb', '#d6f0de'],
   blue: ['#c2daeb', '#234057', '#49709c', '#a8c3db'],
   red: ['#ff1243'],
+}
+
+type CustomTooltipProps = {
+  headerNames?: any
+} & TooltipContentProps<string | number, string>
+const CustomTooltip = ({ active, payload, label, headerNames }: CustomTooltipProps) => {
+  const isVisible = active && payload && payload.length
+  console.log('CustomTooltip headernames', headerNames)
+  return (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'start',
+        gap: 1,
+        padding: 8,
+        border: '1px solid #ebebeb',
+        backgroundColor: '#fff',
+        visibility: isVisible ? 'visible' : 'hidden',
+      }}
+    >
+      {isVisible && (
+        <>
+          <span>{label}:</span>
+          {payload?.map((set: any) => {
+            const headerName = headerNames?.find((item: any) => item.value === set.name).title
+            return (
+              <span key={set.dataKey} className="flex gap-2">
+                <span className="aspect-square size-1 rounded-full" style={{ color: set.color }} />
+                <span className="text-slate-80">{`${headerName}: ${set.value}`}</span>
+              </span>
+            )
+          })}
+        </>
+      )}
+    </div>
+  )
 }
 
 function SimpleBarChart({
@@ -19,6 +55,8 @@ function SimpleBarChart({
   theme = 'blue',
   showLegend = false,
   yUnitLabelPlacement,
+  headerNames,
+  unitLabel,
 }: {
   data?: any
   yUnitLabel?: string
@@ -30,24 +68,38 @@ function SimpleBarChart({
   stackId?: string
   xAxisType?: 'number' | 'category'
   theme?: 'green' | 'blue' | 'red'
+  headerNames?: any
+  unitLabel?: string
 }) {
-  console.log('SimpleBarChart data', data)
-  console.log('SimpleBarChart xAxisDataKey', xAxisDataKey)
-
+  let hasNegatives = false
   const dataKeys = Object.keys(data[0].data).filter((key: any) => key !== xAxisDataKey)
-  const chartData = data?.map((dataItem: any) => dataItem.data)
+  const chartData = data?.map((dataItem: any) => {
+    if (Object.values(dataItem.data).some((value) => Math.sign(Number(value)) <= -1)) {
+      hasNegatives = true
+    }
+    return dataItem.data
+  })
   console.log('chartData', chartData)
   const COLORS = themes[theme]
 
   const renderLegendText = (value: string, entry: any) => {
     const { color } = entry
-    return <span style={{ color }}>{String(value).replaceAll('_', ' ')}</span>
+    const headerName = headerNames?.find((item: any) => item.value === value).title
+    return <span style={{ color: '#3d3d3d' }}>{headerName}</span>
   }
   const renderTooltip = (value: any, name: any, props: any) => {
-    console.log('renderTooltip value', value)
-    console.log('renderTooltip name', name)
-    console.log('renderTooltip props', props)
-    return [`${value}${yUnitLabel}`, String(name).replaceAll('_', ' ')]
+    const headerName = headerNames?.find((item: any) => item.value === name).title
+    return [`${value}${unitLabel ? unitLabel : ''}`, headerName]
+  }
+
+  let yAxisPadding = {
+    top: 20,
+  }
+  if (hasNegatives) {
+    yAxisPadding = Object.assign(yAxisPadding, {
+      ...yAxisPadding,
+      bottom: 20,
+    })
   }
 
   return (
@@ -63,9 +115,10 @@ function SimpleBarChart({
       }}
     >
       <CartesianGrid strokeDasharray="3 3" />
-      <XAxis allowDecimals={true} dataKey={xAxisDataKey} />
+      <XAxis dataKey={xAxisDataKey} />
       <YAxis
         width="auto"
+        padding={yAxisPadding}
         {...(yUnitLabelPlacement !== 'false' && {
           label: {
             value: yUnitLabel,
@@ -74,10 +127,10 @@ function SimpleBarChart({
           },
         })}
       />
-      <Tooltip formatter={renderTooltip} />
+      <Tooltip content={<CustomTooltip headerNames={headerNames} />} />
       {showLegend && <Legend formatter={renderLegendText} />}
       {dataKeys.map((key: any, index: number) => (
-        <Bar key={key} dataKey={key} stackId="a" fill={COLORS[index % COLORS.length]} />
+        <Bar key={key} dataKey={key} fill={COLORS[index % COLORS.length]} />
       ))}
     </BarChart>
   )
@@ -118,20 +171,19 @@ export const BarChartInputComponent = (props: any) => {
     showLegend = false,
     xAxisDataKey,
     theme,
+    headerNames,
+    unitLabel,
   } = value || {}
-  console.log('theme value', theme)
 
-  const [headerNames, setHeadersNames] = useState<any[]>(
-    Object.keys(data?.[0].data ?? []).map((item: any) => {
-      return {
-        title: String(item).replaceAll('_', ' '),
-        value: item,
-      }
-    }),
-  )
+  const replaceSpecialChars = (s: string) => {
+    const replacedString = s.replace(/[^a-zA-Z0-9_-]/g, '_')
+    return replacedString
+  }
+
   const updateValue = (v?: any) => {
     return onChange(set(v))
   }
+
   const handleFileUpload = (e: any) => {
     const files = e.target.files
     if (files) {
@@ -141,18 +193,19 @@ export const BarChartInputComponent = (props: any) => {
         dynamicTyping: true,
         complete: function (results: any) {
           console.log('Finished, set spreadsheet data', results.data)
-          const headerss = Object.keys(results.data[0]).map((item) => {
+          const headerNames = Object.keys(results.data[0]).map((item) => {
             return {
               title: item,
-              value: String(item).replaceAll(' ', '_'),
+              value: replaceSpecialChars(item),
             }
           })
-          setHeadersNames(headerss)
+          console.log('headerNames', headerNames)
+
           const formattedData = Object.values(results.data).map((row: any) => {
             console.log('row', row)
             const chartData = Object.fromEntries(
               Object.entries(row).map(([k, v]) => {
-                const key = String(k).replaceAll(' ', '_')
+                const key = replaceSpecialChars(k)
                 return [key, v]
               }),
             )
@@ -166,6 +219,7 @@ export const BarChartInputComponent = (props: any) => {
 
           const newValue = {
             data: [...formattedData],
+            headerNames,
           }
           updateValue({ ...value, ...newValue })
         },
@@ -204,6 +258,8 @@ export const BarChartInputComponent = (props: any) => {
     showLegend,
     yUnitLabelPlacement,
     data: data ?? [],
+    headerNames,
+    unitLabel,
   }
 
   return (
@@ -212,15 +268,13 @@ export const BarChartInputComponent = (props: any) => {
         <Card padding={3} radius={2} shadow={1}>
           <Stack padding={4} space={4}>
             <Text size={2}> Import a spreadsheet</Text>
-            <Text size={1}>
-              First row should contain headers, where first column is for x axis and the following values along y{' '}
-            </Text>
+            <Text size={1}>First row should contain headers</Text>
             <input type="file" accept=".csv,.xlsx,.xls" onChange={handleFileUpload} />
           </Stack>
         </Card>
       )}
       {data && (
-        <Stack padding={3} space={[3]}>
+        <Stack padding={3} space={3}>
           <LabelWrapper>
             Chart title
             <TextInput onChange={(e) => handleChange('chartTitle', e)} value={chartTitle} />
@@ -230,7 +284,7 @@ export const BarChartInputComponent = (props: any) => {
             <TextInput onChange={(e) => handleChange('chartSource', e)} value={chartSource} />
           </LabelWrapper>
           <LabelWrapper>
-            Y unit label. Used for y axis label and tooltip unit for values
+            Y axis label
             <TextInput onChange={(e) => handleChange('yUnitLabel', e)} value={yUnitLabel} />
           </LabelWrapper>
           <LabelWrapper>
@@ -250,7 +304,7 @@ export const BarChartInputComponent = (props: any) => {
             X axis data key
             <Select value={xAxisDataKey} onChange={(e) => handleAxisDataKey('x', e)}>
               <option value="---">Select an option </option>
-              {headerNames.map((headerName) => {
+              {headerNames?.map((headerName: { title: string; value: string }) => {
                 return (
                   <option key={headerName.value} value={headerName.value}>
                     {headerName.title}
@@ -258,6 +312,10 @@ export const BarChartInputComponent = (props: any) => {
                 )
               })}
             </Select>
+          </LabelWrapper>
+          <LabelWrapper>
+            Unit label used in tooltip for values unit
+            <TextInput onChange={(e) => handleChange('unitLabel', e)} value={unitLabel} />
           </LabelWrapper>
           {/*<LabelWrapper>
             X axis type
@@ -312,18 +370,20 @@ export const BarChartInputComponent = (props: any) => {
 }
 
 const BarChartPreview = (props?: any) => {
-  const { schemaType } = props
+  const { schemaType, chartTitle } = props
+  console.log('BarChartPreview props', props)
 
   return (
-    <>
-      <Box padding={3}>
-        <Inline space={3}>
-          <Card>
-            <Text>{schemaType?.title ?? 'Bar chart component'}</Text>
-          </Card>
-        </Inline>
-      </Box>
-    </>
+    <Box padding={3}>
+      <Stack space={2}>
+        <Text size={1} weight="medium">
+          {chartTitle ?? schemaType?.title ?? 'Untitled'}
+        </Text>
+        <Text size={1} muted>
+          {'Bar chart component'}
+        </Text>
+      </Stack>
+    </Box>
   )
 }
 
@@ -340,7 +400,12 @@ export default {
     {
       name: 'yUnitLabel',
       type: 'string',
-      title: 'Y axis unit label',
+      title: 'Y axis label',
+    },
+    {
+      name: 'unitLabel',
+      type: 'string',
+      title: 'Unit label',
     },
     {
       name: 'yUnitLabelPlacement',
@@ -356,6 +421,29 @@ export default {
         ],
       },
       initialValue: 'insideLeft',
+    },
+    {
+      title: 'Header names',
+      name: 'headerNames',
+      type: 'array',
+      of: [
+        {
+          name: 'headerName',
+          type: 'object',
+          fields: [
+            {
+              type: 'string',
+              name: 'title',
+              title: 'Title',
+            },
+            {
+              type: 'string',
+              name: 'value',
+              title: 'Json Value',
+            },
+          ],
+        },
+      ],
     },
     /*     {
       name: 'xAxisType',
@@ -424,6 +512,8 @@ export default {
     preview: BarChartPreview,
   },
   preview: {
-    select: {},
+    select: {
+      chartTitle: 'chartTitle',
+    },
   },
 }

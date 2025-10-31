@@ -5,7 +5,7 @@ import { PortableTextBlock, Rule } from 'sanity'
 import blocksToText from '../../../helpers/blocksToText'
 
 export default {
-  title: 'Line chart',
+  title: 'Line chart block',
   name: 'lineChartBlock',
   type: 'object',
   fields: [
@@ -26,9 +26,26 @@ export default {
       description: 'Hides the title, but screen readers will read title',
     },
     {
-      type: 'lineChart',
-      title: 'Line chart',
-      name: 'chartData',
+      name: 'charts',
+      title: 'Charts',
+      type: 'array',
+      of: [
+        {
+          type: 'lineChart',
+          title: 'Line chart',
+        },
+      ],
+    },
+    {
+      title: 'Stretch to second outer content grid',
+      type: 'boolean',
+      name: 'useLayoutMd',
+    },
+    {
+      title: 'Align with text in the inner content width',
+      description: 'Text is narrower than the inner most grid, check this to align with text width',
+      type: 'boolean',
+      name: 'useTextWidth',
     },
   ],
   preview: {
@@ -36,11 +53,11 @@ export default {
       title: 'title',
     },
     prepare({ title }: { title?: PortableTextBlock[] }) {
-      const plainTitle = title ? blocksToText(title) : 'Pie Chart'
+      const plainTitle = title ? blocksToText(title) : 'Line Chart Block'
 
       return {
         title: plainTitle,
-        subtitle: 'Line chart component',
+        subtitle: 'Line chart block component',
         media: PiChartLineLight,
       }
     },
