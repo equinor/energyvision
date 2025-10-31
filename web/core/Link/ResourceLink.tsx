@@ -25,7 +25,9 @@ export type ResourceLinkProps = {
   showExtensionIcon?: boolean
   /** Display as a regular link without the border bottom effect and reduced spacing */
   useAsRegular?: boolean
-} & BaseLinkProps
+  /** not provided with downloads */
+  href?: string | undefined
+} & Omit<BaseLinkProps, 'href'>
 
 export const iconRotation: Record<string, string> = {
   externalUrl: '-rotate-45',
@@ -104,7 +106,15 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
   const intl = useIntl()
 
   if (type === 'downloadableFile' || type === 'downloadableImage') {
-    return <DownloadableLink href={href} type={type} extension={extension} {...rest} />
+    return (
+      <DownloadableLink
+        type={type}
+        extension={extension}
+        showExtensionIcon={showExtensionIcon}
+        ariaHideText={ariaHideText}
+        {...rest}
+      />
+    )
   }
 
   const variantClassName: Partial<Record<Variants, string>> = {
@@ -231,7 +241,7 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
     }
   }
 
-  return (
+  return href ? (
     <BaseLink
       className={classNames}
       type={type}
@@ -259,7 +269,7 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
       </span>
       {!useAsRegular && <span className="w-[0%] h-[1px] bg-grey-40 transition-all duration-300 group-hover:w-full" />}
     </BaseLink>
-  )
+  ) : null
 })
 
 export default ResourceLink
