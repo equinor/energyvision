@@ -49,7 +49,7 @@ const SubscribeForm = () => {
       const res = await fetch('/api/subscribe-form', {
         body: JSON.stringify({
           subscribeFormParamers,
-          frcCaptchaSolution: (event?.target as any)['frc-captcha-solution'].value,
+          frcCaptchaSolution: (event?.target as any)['frc-captcha-response'].value,
         }),
         headers: {
           'Content-Type': 'application/json',

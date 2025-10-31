@@ -1,16 +1,18 @@
-const FRIENDLY_CAPTCHA_SITEVERIFY_API_URL = 'https://api.friendlycaptcha.com/api/v1/siteverify'
+const FRIENDLY_CAPTCHA_SITEVERIFY_API_URL = "https://eu.frcapi.com/api/v2/captcha/siteverify"
 
+const API_KEY = process.env.FRIENDLY_CAPTCHA_API_KEY || ""
 export async function validateCaptcha(captchaSolution: string) {
-  // API docs here: http://docs.friendlycaptcha.com/#/verification_api
+  // API docs here: https://developer.friendlycaptcha.com/docs/v2/api/siteverify
   const res = await fetch(FRIENDLY_CAPTCHA_SITEVERIFY_API_URL, {
+
     method: 'POST',
     body: JSON.stringify({
-      solution: captchaSolution,
-      secret: process.env.FRIENDLY_CAPTCHA_API_KEY,
+      response: captchaSolution,
       sitekey: process.env.NEXT_PUBLIC_FRIENDLY_CAPTCHA_SITEKEY,
     }),
     headers: {
       'Content-Type': 'application/json',
+      "X-API-Key": API_KEY,
     },
   })
 
@@ -32,12 +34,12 @@ export async function validateCaptcha(captchaSolution: string) {
     )
     return {
       accept: true, // We accept submissions anyway so we don't lock out our users, but spam/abuse protection won't work.
-      errorCode: respBody.errors[0],
+      errorCode: respBody.error.errorCode,
     }
   } else if (res.status === 200) {
     return {
       accept: respBody.success,
-      errorCode: respBody.errors && respBody.errors[0],
+      errorCode: respBody.error && respBody.error.errorCode,
     }
   } else {
     // Maybe the Friendly Captcha API are down or something else went wrong, send a warning to yourself to
