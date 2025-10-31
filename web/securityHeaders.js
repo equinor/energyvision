@@ -35,6 +35,7 @@ const iframeSrcs = [
   dataset === 'global-development' && 'https://careers.peopleclick.eu.com',
   'https://h61q9gi9.api.sanity.io',
   'http://localhost:3333',
+  'https://eu.frcapi.com/',
 ]
   .filter((e) => e)
   .join(' ')
@@ -74,7 +75,6 @@ const selfSrcUrls = [
   'https://*.algolia.net',
   'https://*.algolianet.com',
   'https://*.cookiebot.com',
-  dataset !== 'brazil' ? 'https://eu-api.friendlycaptcha.eu' : 'https://api.friendlycaptcha.com/',
   isProduction ? '' : 'ws:',
 ]
   .filter((e) => e)

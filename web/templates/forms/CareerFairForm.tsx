@@ -57,7 +57,7 @@ const CareerFairForm = () => {
         body: JSON.stringify({
           data,
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          frcCaptchaSolution: (event?.target as any)['frc-captcha-solution'].value,
+          frcCaptchaSolution: (event?.target as any)['frc-captcha-response'].value,
         }),
         headers: {
           'Content-Type': 'application/json',

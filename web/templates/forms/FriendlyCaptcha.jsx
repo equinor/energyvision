@@ -1,27 +1,55 @@
 import { useEffect, useRef } from 'react'
-import { WidgetInstance } from 'friendly-challenge'
+import { FriendlyCaptchaSDK } from "@friendlycaptcha/sdk";
 import { useRouter } from 'next/router'
 import { friendlyCaptcha } from '../../lib/config'
 
-const FriendlyCaptcha = ({ doneCallback, errorCallback }) => {
-  const puzzleEndpoint = friendlyCaptcha.puzzleEndpoint
+const FriendlyCaptcha = ({ doneCallback, errorCallback, focusMode= "focus"}) => {
   const container = useRef()
   const widget = useRef()
   const router = useRouter()
+  let sdk
+
+  useEffect(()=>{
+  // Create a SDK instance, you should only create one and re-use it.
+  if(!sdk)
+   sdk = new FriendlyCaptchaSDK();
+  },[])
+
 
   useEffect(() => {
     if (!widget.current && container.current) {
-      widget.current = new WidgetInstance(container.current, {
-        startMode: 'focus',
-        doneCallback: doneCallback,
-        errorCallback: errorCallback,
-        puzzleEndpoint: puzzleEndpoint,
-      })
+  widget.current = sdk.createWidget({
+    element: container.current,
+    sitekey: friendlyCaptcha.siteKey,
+    startMode:focusMode,
+    language:"no",
+   apiEndpoint: "https://eu.frcapi.com/api/v2/captcha"
+})
+
+widget.current.addEventListener("frc:widget.complete", (event) => {
+    const detail = event.detail;
+    doneCallback()
+    console.log("Widget completed, the response: ", detail.response)
+})
+
+widget.current.addEventListener("frc:widget.error", (event) => {
+    const detail = event.detail;
+    errorCallback(detail.error)
+    console.error("Something went wrong in solving the captcha: ", detail.error)
+})
+
+widget.current.addEventListener("frc:widget.expire", (event) => {
+    console.warn("The captcha solution is no longer valid, the user waited too long.")
+    //TODO
+})
     }
-  }, [container, doneCallback, errorCallback, puzzleEndpoint])
+    ()=>{
+      widget.current?.destroy()
+    }
+  }, [container, doneCallback, errorCallback])
 
   return (
-    <div ref={container} className="frc-captcha" data-sitekey={friendlyCaptcha.siteKey} data-lang={router.locale} />
+    <div ref={container} />
   )
 }
 

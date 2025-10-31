@@ -55,7 +55,7 @@ const ContactEquinorForm = () => {
       const res = await fetch('/api/forms/service-now-contact-us', {
         body: JSON.stringify({
           data,
-          frcCaptchaSolution: (event?.target as any)['frc-captcha-solution'].value,
+          frcCaptchaSolution: (event?.target as any)['frc-captcha-response'].value,
           catalogType: getCatalog(data.category),
         }),
         headers: {
