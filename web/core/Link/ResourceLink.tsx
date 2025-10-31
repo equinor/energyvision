@@ -7,6 +7,7 @@ import { TransformableIcon } from '../../icons/TransformableIcon'
 import { add, calendar } from '@equinor/eds-icons'
 import { BsFiletypePdf, BsFiletypeXlsx } from 'react-icons/bs'
 import { useIntl } from 'react-intl'
+import DownloadableLink from './DownloadableLink'
 
 export type Variants = 'default' | 'fit'
 
@@ -97,7 +98,15 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
   },
   ref,
 ) {
+  console.log('ResourceLink type', type)
+  console.log('ResourceLink href', href)
+  console.log('ResourceLink rest', rest)
   const intl = useIntl()
+
+  if (type === 'downloadableFile' || type === 'downloadableImage') {
+    return <DownloadableLink href={href} type={type} extension={extension} {...rest} />
+  }
+
   const variantClassName: Partial<Record<Variants, string>> = {
     default: 'w-full pt-3',
     fit: 'w-fit pt-3',
@@ -127,7 +136,6 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
     border-grey-50
     dark:border-white-100 no-underline`
     }
-
     ${variantClassName[variant]}
   `,
     className,
@@ -137,8 +145,8 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
     switch (type) {
       case 'externalUrl':
         return intl.formatMessage({ id: 'externalLink', defaultMessage: 'External link' })
-      case 'downloadableFile':
-      case 'downloadableImage':
+      /*       case 'downloadableFile':
+      case 'downloadableImage': */
       case 'icsLink':
         return intl.formatMessage({ id: 'downloadDocument', defaultMessage: 'Download document' })
       default:
@@ -149,7 +157,7 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
   const getContentElements = () => {
     const textClassNames = envisTwMerge(`pt-1 grow leading-none`, textClassName)
     switch (type) {
-      case 'downloadableFile':
+      /*       case 'downloadableFile':
         return extension &&
           (extension.toUpperCase() === 'PDF' ||
             extension.toUpperCase() === 'XLS' ||
@@ -189,7 +197,7 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
               >{`(${extension.toUpperCase()})`}</span>
             ) : null}
           </span>
-        )
+        ) */
       case 'icsLink':
         return (
           <>
