@@ -22,14 +22,12 @@ const FriendlyCaptcha = ({ doneCallback, errorCallback, focusMode= "focus"}) => 
     element: container.current,
     sitekey: friendlyCaptcha.siteKey,
     startMode:focusMode,
-    language:"no",
-   apiEndpoint: "https://eu.frcapi.com/api/v2/captcha"
+    language:router.locale,
+    apiEndpoint: "https://eu.frcapi.com/api/v2/captcha"
 })
 
 widget.current.addEventListener("frc:widget.complete", (event) => {
-    const detail = event.detail;
     doneCallback()
-    console.log("Widget completed, the response: ", detail.response)
 })
 
 widget.current.addEventListener("frc:widget.error", (event) => {
