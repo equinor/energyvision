@@ -11,6 +11,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
   { children, type = 'internalUrl', className = '', href = '', ...rest },
   ref,
 ) {
+  console.log('Link rest', rest)
   const intl = useIntl()
 
   const classNames = twMerge(
