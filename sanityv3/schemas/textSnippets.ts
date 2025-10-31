@@ -16,6 +16,7 @@ export const groups = {
   carousel: { title: 'Carousel' },
   others: { title: 'Others' },
   common: { title: 'Common' },
+  downloadableFiles: { title: 'Downloadable files' },
 }
 const snippets: textSnippet = {
   country_code_format: {
@@ -886,6 +887,21 @@ const snippets: textSnippet = {
     title: 'Search page title',
     defaultValue: 'Search',
     group: groups.search,
+  },
+  not_human_message: {
+    title: 'Anti-robot fail message',
+    defaultValue: 'We are sorry, but anti-robot protection failed and we cannot proceed',
+    group: groups.downloadableFiles,
+  },
+  request_download_action_prefix: {
+    title: 'Prefix for the label that opens download modal for files',
+    defaultValue: 'Request',
+    group: groups.downloadableFiles,
+  },
+  download_modal_ingress: {
+    title: 'Ingress for download modal',
+    defaultValue: 'Please confirm that you are human below and the link will appear.',
+    group: groups.downloadableFiles,
   },
 }
 
