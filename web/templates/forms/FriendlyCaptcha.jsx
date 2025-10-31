@@ -22,7 +22,7 @@ const FriendlyCaptcha = ({ doneCallback, errorCallback, focusMode= "focus"}) => 
     element: container.current,
     sitekey: friendlyCaptcha.siteKey,
     startMode:focusMode,
-    language:router.locale,
+    language:router.locale=="no"? "nb": router.locale,
     apiEndpoint: "https://eu.frcapi.com/api/v2/captcha"
 })
 
