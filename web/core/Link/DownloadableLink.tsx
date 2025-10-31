@@ -118,20 +118,20 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
     }
   }
   const commonLinkWrapperClassName = `
-              group
-            text-base
-            relative
-            flex
-            flex-col
-            justify-end
-            gap-0
-            text-slate-blue-95
-            dark:text-white-100
-            w-fit 
-            pt-3
-            border-b
-            border-grey-50
-            dark:border-white-100 no-underline`
+    group
+    text-base
+    relative
+    flex
+    flex-col
+    justify-end
+    gap-0
+    text-slate-blue-95
+    dark:text-white-100
+    w-fit 
+    pt-3
+    border-b
+    border-grey-50
+    dark:border-white-100 no-underline`
 
   return (
     <div ref={ref}>
@@ -153,7 +153,7 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
           pr-2`}
         >
           <span className="pt-1 grow leading-none">
-            {intl.formatMessage({ id: 'request', defaultMessage: 'Request' })}
+            {intl.formatMessage({ id: 'request_download_action_prefix', defaultMessage: 'Request' })}
             {` ${label}`}
           </span>
           <ArrowRight
@@ -175,10 +175,14 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
       </button>
       <Modal isOpen={showModal} onClose={handleClose} title="Request file download">
         <Typography as="h2" variant="h5" className="mb-4">
-          {`Request for ${label} download`}
+          {intl.formatMessage({ id: 'request_download_action_prefix', defaultMessage: 'Request' })}
+          {` ${label}`}
         </Typography>
         <Typography variant="body" className="mb-10">
-          {`Please confirm that you are human below and the link to ${label} will appear `}
+          {intl.formatMessage({
+            id: 'download_modal_ingress',
+            defaultMessage: 'Please confirm that you are human below and the link will appear.',
+          })}
         </Typography>
         <FriendlyCaptcha
           doneCallback={() => {
@@ -192,7 +196,10 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
         />
         {notHuman && (
           <Typography variant="body" role="alert" className="py-6 text-slate-80 text-base">
-            We are sorry, but anti-robot protection failed and we cannot proceed
+            {intl.formatMessage({
+              id: 'not_human_message',
+              defaultMessage: 'We are sorry, but anti-robot protection failed and we cannot proceed',
+            })}
           </Typography>
         )}
         {downloadRequestUrl && isFriendlyChallengeDone && !notHuman && (
@@ -206,13 +213,13 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
               })}
           >
             <span
-              className={`h-full
-          w-inherit 
-          flex
-          justify-start
-          items-center
-          gap-x-2
-          ${contentVariantClassName[variant]}`}
+              className={`h-full 
+                w-inherit 
+                flex
+                justify-start
+                items-center
+                gap-x-2
+                ${contentVariantClassName[variant]}`}
             >
               {getContentElements(<>{`${label}`}</>)}
               {getArrowElement(type)}
