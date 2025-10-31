@@ -93,8 +93,8 @@ importers:
         specifier: ^3.1.0
         version: 3.8.1
       instantsearch.js:
-        specifier: ^4.79.0
-        version: 4.80.0(algoliasearch@5.40.0)
+        specifier: ^4.81.0
+        version: 4.81.0(algoliasearch@5.40.0)
       next:
         specifier: 16.0.0
         version: 16.0.0(@babel/core@7.28.4)(@opentelemetry/api@1.9.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
@@ -132,14 +132,14 @@ importers:
         specifier: ^5.4.0
         version: 5.5.0(react@19.2.0)
       react-instantsearch:
-        specifier: ^7.16.2
-        version: 7.16.3(algoliasearch@5.40.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+        specifier: ^7.17.0
+        version: 7.17.0(algoliasearch@5.40.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       react-instantsearch-nextjs:
         specifier: 1.0.3
-        version: 1.0.3(next@16.0.0(@babel/core@7.28.4)(@opentelemetry/api@1.9.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-instantsearch@7.16.3(algoliasearch@5.40.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))
+        version: 1.0.3(next@16.0.0(@babel/core@7.28.4)(@opentelemetry/api@1.9.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-instantsearch@7.17.0(algoliasearch@5.40.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))
       react-instantsearch-router-nextjs:
-        specifier: 7.16.2
-        version: 7.16.2(algoliasearch@5.40.0)(next@16.0.0(@babel/core@7.28.4)(@opentelemetry/api@1.9.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0)
+        specifier: 7.17.0
+        version: 7.17.0(algoliasearch@5.40.0)(next@16.0.0(@babel/core@7.28.4)(@opentelemetry/api@1.9.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0)
       react-twitter-embed:
         specifier: ^4.0.4
         version: 4.0.4(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
@@ -202,8 +202,8 @@ importers:
         specifier: ^19.2.2
         version: 19.2.2(@types/react@19.2.2)
       '@types/react-instantsearch':
-        specifier: ^6.10.1
-        version: 6.10.4(algoliasearch@5.40.0)(react@19.2.0)
+        specifier: ^7.0.0
+        version: 7.0.0(algoliasearch@5.40.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       '@types/uuid':
         specifier: ^8.3.4
         version: 8.3.4
@@ -245,6 +245,22 @@ packages:
 
   '@actions/io@1.1.3':
     resolution: {integrity: sha512-wi9JjgKLYS7U/z8PPbco+PvTb/nRWjeoFlJ1Qer83k/3C5PHQi28hiVdeE2kHXmIL99mQFawx8qt/JPjZilJ8Q==}
+
+  '@ai-sdk/gateway@2.0.4':
+    resolution: {integrity: sha512-YakzaijPayJI244AOAXX+29WY+6i40vbvyMggfBB5D75ui8GyJPHvD/1TCSdD8lUyD4/QJvi9xSQ26QnPjmhag==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      zod: ^3.25.76 || ^4.1.8
+
+  '@ai-sdk/provider-utils@3.0.14':
+    resolution: {integrity: sha512-CYRU6L7IlR7KslSBVxvlqlybQvXJln/PI57O8swhOaDIURZbjRP2AY3igKgUsrmWqqnFFUHP+AwTN8xqJAknnA==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      zod: ^3.25.76 || ^4.1.8
+
+  '@ai-sdk/provider@2.0.0':
+    resolution: {integrity: sha512-6o7Y2SeO9vFKB8lArHXehNuusnpddKPk7xqL7T2/b+OvXMRIXUO1rR4wcv1hAFUAT9avGZshty3Wlua/XA7TvA==}
+    engines: {node: '>=18'}
 
   '@algolia/abtesting@1.6.0':
     resolution: {integrity: sha512-c4M/Z/KWkEG+RHpZsWKDTTlApXu3fe4vlABNcpankWBhdMe4oPZ/r4JxEr2zKUP6K+BT66tnp8UbHmgOd/vvqQ==}
@@ -3563,21 +3579,9 @@ packages:
     peerDependencies:
       '@types/react': ^19.2.0
 
-  '@types/react-instantsearch-core@6.26.10':
-    resolution: {integrity: sha512-izn21BqXtO3GA5Tx3x7SP6kfk1GJppkVdowuenKIOUj1sCJ3VHwoggsqVWv1DYVcsS8wydjR8Ra91XtI2a12rw==}
-
-  '@types/react-instantsearch-core@7.0.0':
-    resolution: {integrity: sha512-1hsG6qoKwM1KWB03CloMI/FYZgAqb8iGpAXZVLpWnpUIyPmuFLRoqJ9o6pHVYkztOWGn+hZ4+YCTMNVyaHuHoQ==}
-    deprecated: This is a stub types definition. react-instantsearch-core provides its own type definitions, so you do not need this installed.
-
-  '@types/react-instantsearch-dom@6.12.9':
-    resolution: {integrity: sha512-OQ8kvnhwXcGznThPRgd5LCt7fj4BNar1dCs+MdHgrH67XN/jb97OA+wwtaQ04p9kJXFGDZASzWJjvdu2CkMPkA==}
-
-  '@types/react-instantsearch-native@6.3.6':
-    resolution: {integrity: sha512-01a6lh6CW4A+cZ5060JSzZQnQ6ozkBvhC0W/kz5ysPzLLCqVGcJInIZrLRd8fnMcav1KLrvLQZlyWq74f1oeVA==}
-
-  '@types/react-instantsearch@6.10.4':
-    resolution: {integrity: sha512-I2at92uSs4ZDMb2Tplh6HMCC23WvJ5684i8BNOD8Rwl/a+P7UpfnJDYpaFE9uyGerIrhArHmRe8oIFPGRSe5sA==}
+  '@types/react-instantsearch@7.0.0':
+    resolution: {integrity: sha512-MV7pkwgUvey1S3/ATsq/q50wIMz+lusfqqHuHEle0HKYtPZxGFAe5xjG0I34XOUNRFSPKqmm7iawPdjIFFfMvw==}
+    deprecated: This is a stub types definition. react-instantsearch provides its own type definitions, so you do not need this installed.
 
   '@types/react-is@19.2.0':
     resolution: {integrity: sha512-NP2xtcjZfORsOa4g2JwdseyEnF+wUCx25fTdG/J/HIY6yKga6+NozRBg2xR2gyh7kKYyd6DXndbq0YbQuTJ7Ew==}
@@ -3632,6 +3636,10 @@ packages:
 
   '@vercel/edge@1.2.2':
     resolution: {integrity: sha512-1+y+f6rk0Yc9ss9bRDgz/gdpLimwoRteKHhrcgHvEpjbP1nyT3ByqEMWm2BTcpIO5UtDmIFXc8zdq4LR190PDA==}
+
+  '@vercel/oidc@3.0.3':
+    resolution: {integrity: sha512-yNEQvPcVrK9sIe637+I0jD6leluPxzwJKx/Haw6F4H77CdDsszUn5V3o96LPziXkSNE2B83+Z3mjqGKBK/R6Gg==}
+    engines: {node: '>= 20'}
 
   '@vercel/stega@0.1.2':
     resolution: {integrity: sha512-P7mafQXjkrsoyTRppnt0N21udKS9wUmLXHRyP9saLXLHw32j/FgUJ3FscSWgvSqRs4cj7wKZtwqJEvWJ2jbGmA==}
@@ -3764,6 +3772,12 @@ packages:
   agent-base@7.1.4:
     resolution: {integrity: sha512-MnA+YT8fwfJPgBx3m60MNqakm30XOkyIoH1y6huTQvC0PwZG7ki8NacLBcrPbNoo8vEZy7Jpuk7+jMO+CUovTQ==}
     engines: {node: '>= 14'}
+
+  ai@5.0.83:
+    resolution: {integrity: sha512-tMc1wqc9khzETBN0X4/MHw9RbeP5uKFdoG5sUIUJ3p7lSgfDU6yZMwT6jrnA3Nk2AvxM0T43P1h2LfPlBSwGKA==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      zod: ^3.25.76 || ^4.1.8
 
   ajv-formats@2.1.1:
     resolution: {integrity: sha512-Wx0Kx52hxE7C18hkMEggYlEifqWZtYaRgouJor+WMdPnQyEK13vgEWyVNup7SoeeoLMsr4kf5h6dOW11I15MUA==}
@@ -5016,16 +5030,11 @@ packages:
       '@types/node':
         optional: true
 
-  instantsearch-ui-components@0.11.2:
-    resolution: {integrity: sha512-XxwqUY6NifxSvHYfyfJRiGhqYqHXQFcFNOEjNyFptB9HOkx14yCdayKar4BZxGx353FnFD6b4Z8LdzbGud+RFA==}
+  instantsearch-ui-components@0.12.0:
+    resolution: {integrity: sha512-WcyrNJ5sqeqAWLibztnssSKDhgFEdj4C1prZOHSCONxF+5RSfCsD0oqKiZrTMx3dlAL/Qx7eZxKhD56u5mxJMA==}
 
-  instantsearch.js@4.79.2:
-    resolution: {integrity: sha512-UwTsbzkb/dsNBAWiFCFlxV1vKviPSKETi5OOQbCVqpoGcHVayXDLlEqFx+WCoFJT0nxzxpNI9QmitbYH5ufoVw==}
-    peerDependencies:
-      algoliasearch: '>= 3.1 < 6'
-
-  instantsearch.js@4.80.0:
-    resolution: {integrity: sha512-l2HTW6+tBs2hGrby43Y7HbWayTifFFKk/ikRU5BXFpCigG6CRAYZLE1NFifAskaj3SVQiY8O8B/T6hJyeMsScA==}
+  instantsearch.js@4.81.0:
+    resolution: {integrity: sha512-zyIUSrikpst5eaBMrruGRGmRHOHQciDyJ8UW7i4xhPVNRwxr5Ls/NBez9AdNne+7OvALCOeaTI3t9LoBQakWhw==}
     peerDependencies:
       algoliasearch: '>= 3.1 < 6'
 
@@ -5244,6 +5253,9 @@ packages:
   json-schema-traverse@1.0.0:
     resolution: {integrity: sha512-NM8/P9n3XjXhIZn1lLhkFaACTOURQXjWhV4BA/RnOv8xvgqtqpAX9IO4mRQxSx1Rlo4tqzeqb0sOlruaOy3dug==}
 
+  json-schema@0.4.0:
+    resolution: {integrity: sha512-es94M3nTIfsEPisRafak+HDLfHXnKBhV3vU5eqPcS3flIWqcxJWgXHXiey3YrpaNsanY5ei1VoYEbOzijuq9BA==}
+
   json-stream-stringify@2.0.4:
     resolution: {integrity: sha512-gIPoa6K5w6j/RnQ3fOtmvICKNJGViI83A7dnTIL+0QJ/1GKuNvCPFvbFWxt0agruF4iGgDFJvge4Gua4ZoiggQ==}
 
@@ -5430,6 +5442,15 @@ packages:
   map-obj@4.3.0:
     resolution: {integrity: sha512-hdN1wVrZbb29eBGiGjJbeP8JbKjq1urkHJ/LIP/NY48MZ1QVXUsQBV1G1zvYFHn1XE06cwjBsOI2K3Ulnj1YXQ==}
     engines: {node: '>=8'}
+
+  markdown-to-jsx@7.7.17:
+    resolution: {integrity: sha512-7mG/1feQ0TX5I7YyMZVDgCC/y2I3CiEhIRQIhyov9nGBP5eoVrOXXHuL5ZP8GRfxVZKRiXWJgwXkb9It+nQZfQ==}
+    engines: {node: '>= 10'}
+    peerDependencies:
+      react: '>= 0.14.0'
+    peerDependenciesMeta:
+      react:
+        optional: true
 
   math-intrinsics@1.1.0:
     resolution: {integrity: sha512-/IXtbwEk5HTPyEwyKX6hGkYXxM9nbj64B+ilVJnC/R6B0pH5G4V3b0pVbL7DBj4tkhBAppbQUlf6F6Xl9LHu1g==}
@@ -6214,14 +6235,8 @@ packages:
     peerDependencies:
       react: '*'
 
-  react-instantsearch-core@7.16.2:
-    resolution: {integrity: sha512-NJ7KN/JMEwNL6pztVWNj4qucSu9DXZOAPJ1c94lRSub5BiNPsKKDNNaC3CN+Yv7uH0PWllSNMHGyuxmkM6hGGg==}
-    peerDependencies:
-      algoliasearch: '>= 3.1 < 6'
-      react: '>= 16.8.0 < 20'
-
-  react-instantsearch-core@7.16.3:
-    resolution: {integrity: sha512-Cxp/ebSHibkE+4KwsDiF2JLe6RC0Xo/1psmuyPImGYvrVm3+Ghsp+gq5F5GR9bYNqwQa958bB+6hDy7ebSopLg==}
+  react-instantsearch-core@7.17.0:
+    resolution: {integrity: sha512-Rws1jXfnL955NdGnClk4bNIKXSk3abyqk+wUT1uffAdc2xHin/tj+erIWotJtkynRdldPDD4VavpmvoUKdMmDg==}
     peerDependencies:
       algoliasearch: '>= 3.1 < 6'
       react: '>= 16.8.0 < 20'
@@ -6232,13 +6247,13 @@ packages:
       next: '>= 13.4 < 16'
       react-instantsearch: '>= 7.1.0 < 8'
 
-  react-instantsearch-router-nextjs@7.16.2:
-    resolution: {integrity: sha512-d7ZhkeuyyXfz09S+bqLsYTgx1OLKi5F2D6lpC475Ndd4eeUHAVzmVc8eX/4R9Cb/FxbA4DCq0jZtHDjAN/E+fg==}
+  react-instantsearch-router-nextjs@7.17.0:
+    resolution: {integrity: sha512-EHDgeHpLcdLFbiftP4Cud/BhZobP/B/fZx3KPAazQ4ADj6NQMuNE9g+jeIKYvluTRc6Gice75yGztqIBFsny2A==}
     peerDependencies:
       next: '>= 9 && < 16'
 
-  react-instantsearch@7.16.3:
-    resolution: {integrity: sha512-pvPKx5xZhzP+0TbQCmVQPtrmP6k6TCuxhxIygqO/zNZHoaMM2l28ycD0WQzg/LCLriOqud0G8pgAUVU6z/XJXw==}
+  react-instantsearch@7.17.0:
+    resolution: {integrity: sha512-YUqT3Q4NSO7eCtwOUVVKFtTw7sL+3zhsHJ4SFZBnf0np18U1nTw3LTSZVg8vMmzCwJgFNU8z0pJzZjStIWuYpA==}
     peerDependencies:
       algoliasearch: '>= 3.1 < 6'
       react: '>= 16.8.0 < 20'
@@ -7420,6 +7435,11 @@ packages:
     resolution: {integrity: sha512-zK7YHHz4ZXpW89AHXUPbQVGKI7uvkd3hzusTdotCg1UxyaVtg0zFJSTfW/Dq5f7OBBVnq6cZIaC8Ti4hb6dtCA==}
     engines: {node: '>= 14'}
 
+  zod-to-json-schema@3.24.6:
+    resolution: {integrity: sha512-h/z3PKvcTcTetyjl1fkj79MHNEjm+HpD6NXheWjzOekY7kV+lwDYnHw+ivHkijnCSMz1yJaWBD9vu/Fcmk+vEg==}
+    peerDependencies:
+      zod: ^3.24.1
+
   zod@3.25.76:
     resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==}
 
@@ -7468,6 +7488,24 @@ snapshots:
       undici: 5.29.0
 
   '@actions/io@1.1.3': {}
+
+  '@ai-sdk/gateway@2.0.4(zod@3.25.76)':
+    dependencies:
+      '@ai-sdk/provider': 2.0.0
+      '@ai-sdk/provider-utils': 3.0.14(zod@3.25.76)
+      '@vercel/oidc': 3.0.3
+      zod: 3.25.76
+
+  '@ai-sdk/provider-utils@3.0.14(zod@3.25.76)':
+    dependencies:
+      '@ai-sdk/provider': 2.0.0
+      '@standard-schema/spec': 1.0.0
+      eventsource-parser: 3.0.6
+      zod: 3.25.76
+
+  '@ai-sdk/provider@2.0.0':
+    dependencies:
+      json-schema: 0.4.0
 
   '@algolia/abtesting@1.6.0':
     dependencies:
@@ -11704,37 +11742,13 @@ snapshots:
     dependencies:
       '@types/react': 19.2.2
 
-  '@types/react-instantsearch-core@6.26.10':
+  '@types/react-instantsearch@7.0.0(algoliasearch@5.40.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)':
     dependencies:
-      '@types/react': 19.2.2
-      algoliasearch: 5.40.0
-      algoliasearch-helper: 3.26.0(algoliasearch@5.40.0)
-
-  '@types/react-instantsearch-core@7.0.0(algoliasearch@5.40.0)(react@19.2.0)':
-    dependencies:
-      react-instantsearch-core: 7.16.3(algoliasearch@5.40.0)(react@19.2.0)
+      react-instantsearch: 7.17.0(algoliasearch@5.40.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
     transitivePeerDependencies:
       - algoliasearch
       - react
-
-  '@types/react-instantsearch-dom@6.12.9':
-    dependencies:
-      '@types/react': 19.2.2
-      '@types/react-instantsearch-core': 6.26.10
-
-  '@types/react-instantsearch-native@6.3.6':
-    dependencies:
-      '@types/react': 19.2.2
-      '@types/react-instantsearch-core': 6.26.10
-
-  '@types/react-instantsearch@6.10.4(algoliasearch@5.40.0)(react@19.2.0)':
-    dependencies:
-      '@types/react-instantsearch-core': 7.0.0(algoliasearch@5.40.0)(react@19.2.0)
-      '@types/react-instantsearch-dom': 6.12.9
-      '@types/react-instantsearch-native': 6.3.6
-    transitivePeerDependencies:
-      - algoliasearch
-      - react
+      - react-dom
 
   '@types/react-is@19.2.0':
     dependencies:
@@ -11782,6 +11796,8 @@ snapshots:
       '@types/node': 22.18.11
 
   '@vercel/edge@1.2.2': {}
+
+  '@vercel/oidc@3.0.3': {}
 
   '@vercel/stega@0.1.2': {}
 
@@ -11951,6 +11967,14 @@ snapshots:
       - supports-color
 
   agent-base@7.1.4: {}
+
+  ai@5.0.83(zod@3.25.76):
+    dependencies:
+      '@ai-sdk/gateway': 2.0.4(zod@3.25.76)
+      '@ai-sdk/provider': 2.0.0
+      '@ai-sdk/provider-utils': 3.0.14(zod@3.25.76)
+      '@opentelemetry/api': 1.9.0
+      zod: 3.25.76
 
   ajv-formats@2.1.1(ajv@8.17.1):
     optionalDependencies:
@@ -13254,41 +13278,35 @@ snapshots:
     optionalDependencies:
       '@types/node': 22.18.11
 
-  instantsearch-ui-components@0.11.2:
+  instantsearch-ui-components@0.12.0(react@19.2.0):
     dependencies:
       '@babel/runtime': 7.28.4
+      ai: 5.0.83(zod@3.25.76)
+      markdown-to-jsx: 7.7.17(react@19.2.0)
+      zod: 3.25.76
+      zod-to-json-schema: 3.24.6(zod@3.25.76)
+    transitivePeerDependencies:
+      - react
 
-  instantsearch.js@4.79.2(algoliasearch@5.40.0):
+  instantsearch.js@4.81.0(algoliasearch@5.40.0):
     dependencies:
       '@algolia/events': 4.0.1
       '@types/dom-speech-recognition': 0.0.1
       '@types/google.maps': 3.58.1
       '@types/hogan.js': 3.0.5
       '@types/qs': 6.14.0
+      ai: 5.0.83(zod@3.25.76)
       algoliasearch: 5.40.0
       algoliasearch-helper: 3.26.0(algoliasearch@5.40.0)
       hogan.js: 3.0.2
       htm: 3.1.1
-      instantsearch-ui-components: 0.11.2
+      instantsearch-ui-components: 0.12.0(react@19.2.0)
       preact: 10.27.2
       qs: 6.9.7
+      react: 19.2.0
       search-insights: 2.17.3
-
-  instantsearch.js@4.80.0(algoliasearch@5.40.0):
-    dependencies:
-      '@algolia/events': 4.0.1
-      '@types/dom-speech-recognition': 0.0.1
-      '@types/google.maps': 3.58.1
-      '@types/hogan.js': 3.0.5
-      '@types/qs': 6.14.0
-      algoliasearch: 5.40.0
-      algoliasearch-helper: 3.26.0(algoliasearch@5.40.0)
-      hogan.js: 3.0.2
-      htm: 3.1.1
-      instantsearch-ui-components: 0.11.2
-      preact: 10.27.2
-      qs: 6.9.7
-      search-insights: 2.17.3
+      zod: 3.25.76
+      zod-to-json-schema: 3.24.6(zod@3.25.76)
 
   internmap@2.0.3: {}
 
@@ -13502,6 +13520,8 @@ snapshots:
 
   json-schema-traverse@1.0.0: {}
 
+  json-schema@0.4.0: {}
+
   json-stream-stringify@2.0.4: {}
 
   json5@2.2.3: {}
@@ -13655,6 +13675,10 @@ snapshots:
   map-obj@1.0.1: {}
 
   map-obj@4.3.0: {}
+
+  markdown-to-jsx@7.7.17(react@19.2.0):
+    optionalDependencies:
+      react: 19.2.0
 
   math-intrinsics@1.1.0: {}
 
@@ -14426,47 +14450,41 @@ snapshots:
     dependencies:
       react: 19.2.0
 
-  react-instantsearch-core@7.16.2(algoliasearch@5.40.0)(react@19.2.0):
+  react-instantsearch-core@7.17.0(algoliasearch@5.40.0)(react@19.2.0):
     dependencies:
       '@babel/runtime': 7.28.4
+      ai: 5.0.83(zod@3.25.76)
       algoliasearch: 5.40.0
       algoliasearch-helper: 3.26.0(algoliasearch@5.40.0)
-      instantsearch.js: 4.79.2(algoliasearch@5.40.0)
+      instantsearch.js: 4.81.0(algoliasearch@5.40.0)
       react: 19.2.0
       use-sync-external-store: 1.6.0(react@19.2.0)
+      zod: 3.25.76
+      zod-to-json-schema: 3.24.6(zod@3.25.76)
 
-  react-instantsearch-core@7.16.3(algoliasearch@5.40.0)(react@19.2.0):
-    dependencies:
-      '@babel/runtime': 7.28.4
-      algoliasearch: 5.40.0
-      algoliasearch-helper: 3.26.0(algoliasearch@5.40.0)
-      instantsearch.js: 4.80.0(algoliasearch@5.40.0)
-      react: 19.2.0
-      use-sync-external-store: 1.6.0(react@19.2.0)
-
-  react-instantsearch-nextjs@1.0.3(next@16.0.0(@babel/core@7.28.4)(@opentelemetry/api@1.9.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-instantsearch@7.16.3(algoliasearch@5.40.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)):
+  react-instantsearch-nextjs@1.0.3(next@16.0.0(@babel/core@7.28.4)(@opentelemetry/api@1.9.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react-instantsearch@7.17.0(algoliasearch@5.40.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)):
     dependencies:
       next: 16.0.0(@babel/core@7.28.4)(@opentelemetry/api@1.9.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
-      react-instantsearch: 7.16.3(algoliasearch@5.40.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      react-instantsearch: 7.17.0(algoliasearch@5.40.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
 
-  react-instantsearch-router-nextjs@7.16.2(algoliasearch@5.40.0)(next@16.0.0(@babel/core@7.28.4)(@opentelemetry/api@1.9.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0):
+  react-instantsearch-router-nextjs@7.17.0(algoliasearch@5.40.0)(next@16.0.0(@babel/core@7.28.4)(@opentelemetry/api@1.9.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0):
     dependencies:
-      instantsearch.js: 4.79.2(algoliasearch@5.40.0)
+      instantsearch.js: 4.81.0(algoliasearch@5.40.0)
       next: 16.0.0(@babel/core@7.28.4)(@opentelemetry/api@1.9.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
-      react-instantsearch-core: 7.16.2(algoliasearch@5.40.0)(react@19.2.0)
+      react-instantsearch-core: 7.17.0(algoliasearch@5.40.0)(react@19.2.0)
     transitivePeerDependencies:
       - algoliasearch
       - react
 
-  react-instantsearch@7.16.3(algoliasearch@5.40.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0):
+  react-instantsearch@7.17.0(algoliasearch@5.40.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0):
     dependencies:
       '@babel/runtime': 7.28.4
       algoliasearch: 5.40.0
-      instantsearch-ui-components: 0.11.2
-      instantsearch.js: 4.80.0(algoliasearch@5.40.0)
+      instantsearch-ui-components: 0.12.0(react@19.2.0)
+      instantsearch.js: 4.81.0(algoliasearch@5.40.0)
       react: 19.2.0
       react-dom: 19.2.0(react@19.2.0)
-      react-instantsearch-core: 7.16.3(algoliasearch@5.40.0)(react@19.2.0)
+      react-instantsearch-core: 7.17.0(algoliasearch@5.40.0)(react@19.2.0)
 
   react-is@16.13.1: {}
 
@@ -15848,6 +15866,10 @@ snapshots:
       archiver-utils: 5.0.2
       compress-commons: 6.0.2
       readable-stream: 4.7.0
+
+  zod-to-json-schema@3.24.6(zod@3.25.76):
+    dependencies:
+      zod: 3.25.76
 
   zod@3.25.76: {}
 

@@ -65,16 +65,17 @@ ENV NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY=${ARG_ALGOLIA_SEARCH_API_KEY}
 ENV NEXT_PUBLIC_FRIENDLY_CAPTCHA_SITEKEY=${ARG_FRIENDLY_CAPTCHA_SITEKEY}
 ENV NEXT_PUBLIC_FRIENDLY_CAPTCHA_PUZZLE_ENDPOINT=${ARG_FRIENDLY_CAPTCHA_PUZZLE_ENDPOINT}
 
-ENV PORT 3000
-ENV USER nextjs
-ENV UID 12345
-ENV NEXT_TELEMETRY_DISABLED 1
+ENV PORT=3000
+ENV USER=nextjs
+ENV UID=12345
+ENV NEXT_TELEMETRY_DISABLED=1
 
 COPY --from=build /app/web/public ./public
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=build --chown="$USER":"$USER" /app/web/.next/standalone ./
 COPY --from=build --chown="$USER":"$USER" /app/web/.next/static ./.next/static
+COPY --from=build --chown="$USER":"$USER" /app/web/server/proxy.js ./.next/standalone/.next/server/proxy.js
 
 RUN addgroup -S "$USER"
 RUN adduser -S --uid "$UID" "$USER"
