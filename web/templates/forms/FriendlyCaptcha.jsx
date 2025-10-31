@@ -44,7 +44,7 @@ widget.current.addEventListener("frc:widget.expire", (event) => {
     ()=>{
       widget.current?.destroy()
     }
-  }, [container, doneCallback, errorCallback])
+  }, [container, doneCallback, errorCallback,router.locale])
 
   return (
     <div ref={container} />
