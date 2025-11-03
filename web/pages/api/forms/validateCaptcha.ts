@@ -1,18 +1,17 @@
-const FRIENDLY_CAPTCHA_SITEVERIFY_API_URL = "https://eu.frcapi.com/api/v2/captcha/siteverify"
+const FRIENDLY_CAPTCHA_SITEVERIFY_API_URL = 'https://eu.frcapi.com/api/v2/captcha/siteverify'
 
-const API_KEY = process.env.FRIENDLY_CAPTCHA_API_KEY || ""
+const API_KEY = process.env.FRIENDLY_CAPTCHA_API_KEY || ''
 export async function validateCaptcha(captchaSolution: string) {
   // API docs here: https://developer.friendlycaptcha.com/docs/v2/api/siteverify
   const res = await fetch(FRIENDLY_CAPTCHA_SITEVERIFY_API_URL, {
-
     method: 'POST',
     body: JSON.stringify({
       response: captchaSolution,
-      sitekey: process.env.NEXT_PUBLIC_FRIENDLY_CAPTCHA_SITEKEY,
+      sitekey: process.env.FRIENDLY_CAPTCHA_SITEKEY,
     }),
     headers: {
       'Content-Type': 'application/json',
-      "X-API-Key": API_KEY,
+      'X-API-Key': API_KEY,
     },
   })
 
