@@ -105,11 +105,12 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
   if (type === 'downloadableFile' || type === 'downloadableImage') {
     return (
       <DownloadableLink
+        {...rest}
         type={type}
+        variant={variant}
         extension={extension}
         showExtensionIcon={showExtensionIcon}
         ariaHideText={ariaHideText}
-        {...rest}
       />
     )
   }
@@ -240,11 +241,11 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
 
   return href ? (
     <BaseLink
+      {...rest}
       className={classNames}
       type={type}
       ref={ref}
       href={href}
-      {...rest}
       {...(extension &&
         extension.toLowerCase() === 'pdf' && {
           target: '_blank',

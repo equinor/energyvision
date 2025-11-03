@@ -25,6 +25,11 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
 
   const [notHuman, setNotHuman] = useState(false)
 
+  const variantClassName: Partial<Record<string, string>> = {
+    default: 'w-full',
+    fit: 'w-fit',
+  }
+
   const contentVariantClassName: Partial<Record<string, string>> = {
     default: 'pb-3 pr-2',
     fit: 'pb-3 pr-2',
@@ -123,11 +128,12 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
     gap-0
     text-slate-blue-95
     dark:text-white-100
-    w-fit 
     pt-3
     border-b
     border-grey-50
-    dark:border-white-100 no-underline`
+    dark:border-white-100 
+    no-underline
+    ${variantClassName[variant]}`
 
   return (
     <div ref={ref}>
