@@ -34,12 +34,6 @@ inputs:
   archiveContentLink:
     description: 'Archive storage link'
     required: true
-  friendlyCaptchaSitekey:
-    description: 'Friendly captcha site key'
-    required: true
-  friendlyCaptchaPuzzleEndpoint:
-    description: 'Friendly captcha puzzle endpoint'
-    required: true
 runs:
   using: 'composite'
   steps:
