@@ -47,7 +47,6 @@ const CallToActions = ({ callToActions = [], splitList, className }: CallToActio
       )}
     >
       {callToActions.map((callToAction: LinkData) => {
-        console.log('callToAction', callToAction)
         const url = getUrlFromAction(callToAction)
         return url ? (
           <li key={callToAction.id}>
@@ -56,8 +55,6 @@ const CallToActions = ({ callToActions = [], splitList, className }: CallToActio
               {...callToAction}
               href={url}
               {...(callToAction.link?.lang && { locale: getLocaleFromName(callToAction.link?.lang) })}
-              /*               type={callToAction.type} */
-              /*               extension={callToAction.extension} */
               showExtensionIcon={true}
               variant="default"
             >

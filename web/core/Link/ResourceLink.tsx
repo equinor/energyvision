@@ -100,9 +100,6 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
   },
   ref,
 ) {
-  console.log('ResourceLink type', type)
-  console.log('ResourceLink href', href)
-  console.log('ResourceLink rest', rest)
   const intl = useIntl()
 
   if (type === 'downloadableFile' || type === 'downloadableImage') {
