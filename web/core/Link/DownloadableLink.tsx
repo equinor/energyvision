@@ -24,8 +24,6 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
   const [downloadRequestUrl, setDownloadRequestUrl] = useState(null)
 
   const [notHuman, setNotHuman] = useState(false)
-  console.log('DownloadableLink fileName', fileName)
-  console.log('DownloadableLink downloadRequestUrl', downloadRequestUrl)
 
   const contentVariantClassName: Partial<Record<string, string>> = {
     default: 'pb-3 pr-2',
