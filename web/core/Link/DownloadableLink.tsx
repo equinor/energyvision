@@ -154,7 +154,7 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
           pb-3 
           pr-2`}
         >
-          <span className="flex justify-start pt-1 grow leading-none">
+          <span className="flex justify-start text-start text-pretty pt-1 grow leading-none">
             {intl.formatMessage({ id: 'request_download_action_prefix', defaultMessage: 'Request' })}
             {` ${label}`}
           </span>
