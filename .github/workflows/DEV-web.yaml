@@ -42,7 +42,6 @@ jobs:
           algoliaAppId: ${{ secrets.ALGOLIA_APP_ID }}
           algoliaApiKey: ${{ secrets.ALGOLIA_SEARCH_API_KEY }}
           archiveContentLink: ${{ vars.ARCHIVE_CONTENT_LINK }}
-          friendlyCaptchaSitekey: ${{ vars.GLOBAL_FC_SITEKEY }}
           environment: ${{ secrets.ENV }}
       - uses: act10ns/slack@v2
         with:
