@@ -107,11 +107,9 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
 
   const handleSuccessfullFriendlyChallenge = async () => {
     if (fileName) {
-      console.log('File request friendly challenge successfully done')
       setIsFriendlyChallengeDone(true)
       const response = await fetch(`/api/download/getFileUrl?fileName=${encodeURIComponent(fileName)}`)
       const url = await response.json()
-      console.log('response data url', url)
       setDownloadRequestUrl(url.url)
     }
   }
