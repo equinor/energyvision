@@ -7,6 +7,7 @@ import { TransformableIcon } from '../../icons/TransformableIcon'
 import { add, calendar } from '@equinor/eds-icons'
 import { BsFiletypePdf, BsFiletypeXlsx } from 'react-icons/bs'
 import { useIntl } from 'react-intl'
+import DownloadableLink from './DownloadableLink'
 
 export type Variants = 'default' | 'fit'
 
@@ -24,7 +25,9 @@ export type ResourceLinkProps = {
   showExtensionIcon?: boolean
   /** Display as a regular link without the border bottom effect and reduced spacing */
   useAsRegular?: boolean
-} & BaseLinkProps
+  /** not provided with downloads */
+  href?: string | undefined
+} & Omit<BaseLinkProps, 'href'>
 
 export const iconRotation: Record<string, string> = {
   externalUrl: '-rotate-45',
@@ -98,6 +101,19 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
   ref,
 ) {
   const intl = useIntl()
+
+  if (type === 'downloadableFile' || type === 'downloadableImage') {
+    return (
+      <DownloadableLink
+        type={type}
+        extension={extension}
+        showExtensionIcon={showExtensionIcon}
+        ariaHideText={ariaHideText}
+        {...rest}
+      />
+    )
+  }
+
   const variantClassName: Partial<Record<Variants, string>> = {
     default: 'w-full pt-3',
     fit: 'w-fit pt-3',
@@ -127,7 +143,6 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
     border-grey-50
     dark:border-white-100 no-underline`
     }
-
     ${variantClassName[variant]}
   `,
     className,
@@ -137,8 +152,8 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
     switch (type) {
       case 'externalUrl':
         return intl.formatMessage({ id: 'externalLink', defaultMessage: 'External link' })
-      case 'downloadableFile':
-      case 'downloadableImage':
+      /*       case 'downloadableFile':
+      case 'downloadableImage': */
       case 'icsLink':
         return intl.formatMessage({ id: 'downloadDocument', defaultMessage: 'Download document' })
       default:
@@ -149,7 +164,7 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
   const getContentElements = () => {
     const textClassNames = envisTwMerge(`pt-1 grow leading-none`, textClassName)
     switch (type) {
-      case 'downloadableFile':
+      /*       case 'downloadableFile':
         return extension &&
           (extension.toUpperCase() === 'PDF' ||
             extension.toUpperCase() === 'XLS' ||
@@ -189,7 +204,7 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
               >{`(${extension.toUpperCase()})`}</span>
             ) : null}
           </span>
-        )
+        ) */
       case 'icsLink':
         return (
           <>
@@ -223,7 +238,7 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
     }
   }
 
-  return (
+  return href ? (
     <BaseLink
       className={classNames}
       type={type}
@@ -251,7 +266,7 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
       </span>
       {!useAsRegular && <span className="w-[0%] h-[1px] bg-grey-40 transition-all duration-300 group-hover:w-full" />}
     </BaseLink>
-  )
+  ) : null
 })
 
 export default ResourceLink

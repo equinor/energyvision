@@ -15,17 +15,17 @@ const CallToActions = ({ callToActions = [], splitList, className }: CallToActio
   if (!callToActions) return null
 
   const getSingleAction = () => {
-    const { label, extension, type, link } = callToActions[0]
+    const { label, type, link } = callToActions[0]
     const url = getUrlFromAction(callToActions[0])
-    if (!url) {
+    if (!url && type !== 'downloadableFile') {
       console.warn(`CallToActions: Missing URL on Call to action link with type: '${type}' and label: '${label}'`)
       return null
     }
 
     return (
       <ResourceLink
+        {...callToActions[0]}
         href={url}
-        extension={extension}
         showExtensionIcon={true}
         {...(link?.lang && { locale: getLocaleFromName(link?.lang) })}
         type={type}
@@ -52,10 +52,9 @@ const CallToActions = ({ callToActions = [], splitList, className }: CallToActio
           <li key={callToAction.id}>
             {/*  If the URL is a static AEM page it should behave as an internal link in the web */}
             <ResourceLink
+              {...callToAction}
               href={url}
               {...(callToAction.link?.lang && { locale: getLocaleFromName(callToAction.link?.lang) })}
-              type={callToAction.type}
-              extension={callToAction.extension}
               showExtensionIcon={true}
               variant="default"
             >

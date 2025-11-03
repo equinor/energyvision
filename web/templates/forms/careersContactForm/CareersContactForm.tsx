@@ -73,7 +73,7 @@ const CareersContactForm = () => {
       const res = await fetch('/api/forms/service-now-careers-contact', {
         body: JSON.stringify({
           data,
-          frcCaptchaSolution: (event?.target as any)['frc-captcha-solution'].value,
+          frcCaptchaSolution: (event?.target as any)['frc-captcha-response'].value,
           catalogType: getCatalogType(intl, data.category, data.candidateType),
         }),
         headers: {
