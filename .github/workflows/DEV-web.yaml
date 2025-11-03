@@ -42,7 +42,7 @@ jobs:
           algoliaAppId: ${{ secrets.ALGOLIA_APP_ID }}
           algoliaApiKey: ${{ secrets.ALGOLIA_SEARCH_API_KEY }}
           archiveContentLink: ${{ vars.ARCHIVE_CONTENT_LINK }}
-          friendlyCaptchaSitekey: ${{ matrix.dataset == 'brazil' && vars.BRAZIL_FC_SITEKEY || vars.GLOBAL_FC_SITEKEY }}
+          friendlyCaptchaSitekey: ${{ vars.GLOBAL_FC_SITEKEY }}
           environment: ${{ secrets.ENV }}
       - uses: act10ns/slack@v2
         with:
