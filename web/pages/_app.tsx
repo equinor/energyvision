@@ -5,7 +5,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { GlobalStyle, GlobalFontStyle } from '../styles/globalStyles'
 import '../styles/tailwind.css'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { GTM_ID, pageview } from '../lib/gtm'
 import Script from 'next/script'
 import { ErrorBoundary } from 'react-error-boundary'
@@ -18,6 +18,8 @@ import { PreviewContextProvider } from '../lib/contexts/PreviewContext'
 import { defaultLanguage } from '../languages'
 import { default as NextLink } from 'next/link'
 import { useProd } from '../lib/hooks/useProd'
+import { FriendlyCaptchaSDK } from '@friendlycaptcha/sdk'
+import { FriendlyCaptchaContext } from '@templates/forms/FriendlyCaptcha'
 
 /**
  * TODO:
@@ -67,6 +69,7 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
   const getLayout = Component.getLayout || ((page: ReactNode): ReactNode => page)
   const IS_LIVE = process.env.NODE_ENV !== 'development'
   const isProd = useProd()
+  const sdk = useRef<FriendlyCaptchaSDK>()
 
   useEffect(() => {
     if (!GTM_ID) return
@@ -88,6 +91,10 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
       }
     }
   }, [router.asPath])
+
+  useEffect(() => {
+    sdk.current = new FriendlyCaptchaSDK()
+  }, [])
 
   const GoogleTagManagerHead = () => (
     // eslint-disable-next-line @next/next/next-script-for-ga
@@ -120,7 +127,10 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
           >
             skip to content
           </NextLink>
-          <PreviewContextProvider>{getLayout(<Component {...pageProps} />)}</PreviewContextProvider>
+
+          <FriendlyCaptchaContext.Provider value={sdk.current}>
+            <PreviewContextProvider>{getLayout(<Component {...pageProps} />)}</PreviewContextProvider>
+          </FriendlyCaptchaContext.Provider>
         </>
       </ErrorBoundary>
     </SWRConfig>

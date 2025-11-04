@@ -133,6 +133,12 @@ jobs:
     steps:
       - name: Checkout 🔔
         uses: actions/checkout@v3
+      - name: Extract sitekey
+        id: extract
+        run: |
+          sitekey=$(echo "$FRIENDLYCAPTCHA_SITEKEYS" | jq -r --arg dataset "${{matrix.dataset}}" '.[] | select(.dataset==$dataset) | .siteKey')
+          echo "Found sitekey: $sitekey"
+          echo "sitekey=$sitekey" >> $GITHUB_OUTPUT
       - name: Deploy website 🌐
         id: deploy-website
         uses: ./.github/workflows/deploy-websites/
@@ -146,7 +152,8 @@ jobs:
           algoliaApiKey: ${{ secrets.ALGOLIA_SEARCH_API_KEY }}
           environment: ${{ secrets.ENV }}
           archiveContentLink: ${{ vars.ARCHIVE_CONTENT_LINK }}
-          friendlyCaptchaSitekey: ${{ matrix.dataset == 'brazil' && vars.BRAZIL_FC_SITEKEY || vars.GLOBAL_FC_SITEKEY }}
+          friendlyCaptchaSitekey: ${{ steps.extract.outputs.sitekey }}
+
       - uses: act10ns/slack@v2
         with:
           status: ${{ job.status }}

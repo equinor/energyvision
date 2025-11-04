@@ -35,8 +35,9 @@ inputs:
     description: 'Archive storage link'
     required: true
   friendlyCaptchaSitekey:
-    description: 'Friendly captcha site key'
+    description: 'Friendly Captcha Sitekey'
     required: true
+
   componentSuffix:
     description: 'Radix component name suffix. Temporary fix for upgrade.'
     required: false

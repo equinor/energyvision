@@ -38,7 +38,7 @@ export default withBundle({
     optimizePackageImports: ['@components', '@equinor/eds-core-react', '@equinor/eds-icons', 'video.js'],
   },
   swcMinify: true,
-  transpilePackages: ['friendly-challenge'],
+  transpilePackages: ['@friendlycaptcha/sdk'],
   eslint: {
     // Warning: Dangerously allow production builds to successfully complete even if
     // your project has ESLint errors.
