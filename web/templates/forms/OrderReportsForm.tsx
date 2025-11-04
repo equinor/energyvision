@@ -66,7 +66,7 @@ const OrderReportsForm = () => {
     reset,
     register,
     setError,
-    formState: { errors, isSubmitSuccessful, isSubmitted, isSubmitting },
+    formState: { errors, isSubmitted, isSubmitting },
   } = useForm({
     defaultValues: {
       name: '',
@@ -108,22 +108,20 @@ const OrderReportsForm = () => {
 
   return (
     <>
-      {!isSuccessfullySubmitted && !isServerError && (
-        <div className="pb-6 text-sm">
-          <FormattedMessage id="all_fields_mandatory" defaultMessage="All fields with *  are mandatory" />
-        </div>
-      )}
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        onReset={() => {
-          reset()
-          setIsFriendlyChallengeDone(false)
-          setSuccessfullySubmitted(false)
-        }}
-        className="flex flex-col gap-12"
-      >
-        {!isSuccessfullySubmitted && !isServerError && (
-          <>
+      {!isSuccessfullySubmitted && (
+        <>
+          <div className="pb-6 text-sm">
+            <FormattedMessage id="all_fields_mandatory" defaultMessage="All fields with *  are mandatory" />
+          </div>
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            onReset={() => {
+              reset()
+              setIsFriendlyChallengeDone(false)
+              setSuccessfullySubmitted(false)
+            }}
+            className="flex flex-col gap-12"
+          >
             <fieldset className="p-0 pb-4">
               {!errors.reports && (
                 <legend className="text-base font-semibold max-w-text">
@@ -261,7 +259,6 @@ const OrderReportsForm = () => {
                 />
               )}
             />
-
             <Controller
               name="zipcode"
               control={control}
@@ -287,7 +284,6 @@ const OrderReportsForm = () => {
                 />
               )}
             />
-
             <Controller
               name="city"
               control={control}
@@ -367,21 +363,21 @@ const OrderReportsForm = () => {
                 <FormattedMessage id="order_reports_form_cta" defaultMessage="Order printed copies" />
               )}
             </Button>
-          </>
-        )}
-        <div role="region" aria-live="assertive">
-          {isSubmitSuccessful && !isServerError && <FormMessageBox variant="success" />}
-          {isSubmitted && isServerError && (
-            <FormMessageBox
-              variant="error"
-              onClick={() => {
-                reset(undefined, { keepValues: true })
-                setServerError(false)
-              }}
-            />
-          )}
-        </div>
-      </form>
+            <div role="region" aria-live="assertive">
+              {isSubmitted && isServerError && (
+                <FormMessageBox
+                  variant="error"
+                  onClick={() => {
+                    reset(undefined, { keepValues: true })
+                    setServerError(false)
+                  }}
+                />
+              )}
+            </div>
+          </form>
+        </>
+      )}
+      {isSuccessfullySubmitted && <FormMessageBox variant="success" />}
     </>
   )
 }

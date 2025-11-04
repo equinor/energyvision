@@ -35,7 +35,7 @@ const CareersContactForm = () => {
     control,
     reset,
     register,
-    formState: { errors, isSubmitted, isSubmitting, isSubmitSuccessful },
+    formState: { errors, isSubmitted, isSubmitting },
     setError,
   } = useForm({
     defaultValues: {
@@ -97,22 +97,20 @@ const CareersContactForm = () => {
 
   return (
     <>
-      {!isSuccessfullySubmitted && !isServerError && (
-        <div className="pb-6 text-sm">
-          <FormattedMessage id="all_fields_mandatory" defaultMessage="All fields with *  are mandatory" />
-        </div>
-      )}
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        onReset={() => {
-          reset()
-          setIsFriendlyChallengeDone(false)
-          setSuccessfullySubmitted(false)
-        }}
-        className="flex flex-col gap-12"
-      >
-        {!isSuccessfullySubmitted && !isServerError && (
-          <>
+      {!isSuccessfullySubmitted && (
+        <>
+          <div className="pb-6 text-sm">
+            <FormattedMessage id="all_fields_mandatory" defaultMessage="All fields with *  are mandatory" />
+          </div>
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            onReset={() => {
+              reset()
+              setIsFriendlyChallengeDone(false)
+              setSuccessfullySubmitted(false)
+            }}
+            className="flex flex-col gap-12"
+          >
             <Controller
               name="name"
               control={control}
@@ -444,21 +442,21 @@ const CareersContactForm = () => {
                 <FormattedMessage id="careers_contact_form_cta" defaultMessage="Submit Form" />
               )}
             </Button>
-          </>
+          </form>
+        </>
+      )}
+      <div role="region" aria-live="assertive">
+        {isSuccessfullySubmitted && <FormMessageBox variant="success" />}
+        {isSubmitted && isServerError && (
+          <FormMessageBox
+            variant="error"
+            onClick={() => {
+              reset(undefined, { keepValues: true })
+              setServerError(false)
+            }}
+          />
         )}
-        <div role="region" aria-live="assertive">
-          {isSubmitSuccessful && !isServerError && <FormMessageBox variant="success" />}
-          {isSubmitted && isServerError && (
-            <FormMessageBox
-              variant="error"
-              onClick={() => {
-                reset(undefined, { keepValues: true })
-                setServerError(false)
-              }}
-            />
-          )}
-        </div>
-      </form>
+      </div>
     </>
   )
 }
