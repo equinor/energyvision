@@ -28,9 +28,17 @@ jobs:
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       DOCKER_BUILDKIT: 1
+      FRIENDLYCAPTCHA_SITEKEYS: ${{ vars.FRIENDLYCAPTCHA_SITEKEYS }}
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
+      - name: Extract sitekey
+        id: extract
+        run: |
+          sitekey=$(echo "$FRIENDLYCAPTCHA_SITEKEYS" | jq -r --arg dataset "${{matrix.dataset}}" '.[] | select(.dataset==$dataset) | .siteKey')
+          echo "Found sitekey: $sitekey"
+          echo "sitekey=$sitekey" >> $GITHUB_OUTPUT
+
       - id: deploy-global-development
         uses: ./.github/workflows/deploy-websites/
         with:
@@ -43,6 +51,7 @@ jobs:
           algoliaApiKey: ${{ secrets.ALGOLIA_SEARCH_API_KEY }}
           archiveContentLink: ${{ vars.ARCHIVE_CONTENT_LINK }}
           environment: ${{ secrets.ENV }}
+          friendlyCaptchaSitekey: ${{ steps.extract.outputs.sitekey }}
       - uses: act10ns/slack@v2
         with:
           status: ${{ job.status }}

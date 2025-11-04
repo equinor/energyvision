@@ -1,21 +1,17 @@
-import { useEffect, useRef } from 'react'
-import { FriendlyCaptchaSDK } from '@friendlycaptcha/sdk'
+import { createContext, useContext, useEffect, useRef } from 'react'
 import { useRouter } from 'next/router'
 import { friendlyCaptcha } from '../../lib/config'
+
+export const FriendlyCaptchaContext = createContext()
 
 const FriendlyCaptcha = ({ doneCallback, errorCallback, focusMode = 'focus' }) => {
   const container = useRef()
   const widget = useRef()
   const router = useRouter()
-  const sdk = useRef()
+  const sdk = useContext(FriendlyCaptchaContext)
 
   useEffect(() => {
-    // Create a SDK instance, you should only create one and re-use it.
-    if (!sdk) sdk.current = new FriendlyCaptchaSDK()
-  }, [])
-
-  useEffect(() => {
-    if (!widget.current && container.current) {
+    if (!widget.current && container.current && sdk) {
       widget.current = sdk.createWidget({
         element: container.current,
         sitekey: friendlyCaptcha.siteKey,
@@ -30,19 +26,19 @@ const FriendlyCaptcha = ({ doneCallback, errorCallback, focusMode = 'focus' }) =
 
       widget.current.addEventListener('frc:widget.error', (event) => {
         const detail = event.detail
-        errorCallback(detail.error)
+        errorCallback(detail.error.detail)
         console.error('Something went wrong in solving the captcha: ', detail.error)
       })
 
       widget.current.addEventListener('frc:widget.expire', (event) => {
         console.warn('The captcha solution is no longer valid, the user waited too long.')
-        errorCallback()
+        errorCallback(event.detail.response)
       })
     }
     ;() => {
       widget.current?.destroy()
     }
-  }, [container, doneCallback, errorCallback, router.locale])
+  }, [container, doneCallback, errorCallback, router.locale, sdk, focusMode])
 
   return <div ref={container} />
 }
