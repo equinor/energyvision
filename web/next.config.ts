@@ -72,6 +72,11 @@ const getRedirects = () => {
 
 const nextConfig: NextConfig = {
   output: 'standalone',
+  turbopack: {
+    resolveAlias: {
+      '@/*': './*',
+    },
+  }, // Essential for next-intl alias resolution
   outputFileTracingRoot: __dirname,
   transpilePackages: ['friendly-challenge'],
   images: {

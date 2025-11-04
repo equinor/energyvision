@@ -12,10 +12,11 @@
     "module": "preserve",
     "isolatedModules": true,
     "jsx": "preserve",
-    "incremental": true
-    /*     "paths": {
+    "incremental": true,
+    "baseUrl": "."
+    /*"paths": {
       "~/*": ["./studio/*"],
-       "$/*": ["./packages/energyvision/*"], 
+       "$/*": ["./packages/energyvision/*"],
       "@/*": ["./web/*"],
       "@@/*": ["./*"]
     } */

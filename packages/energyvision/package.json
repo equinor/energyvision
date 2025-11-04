@@ -4,9 +4,10 @@
   "description": "Configurations and Tailwind theme for EnergyVision platform",
   "author": "Envis team",
   "license": "MIT",
+  "type": "module",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc"
+    "build": "tsx"
   },
   "exports": {
     ".": {
