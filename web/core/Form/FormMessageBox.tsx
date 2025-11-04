@@ -44,25 +44,18 @@ export const FormMessageBox = forwardRef<HTMLDivElement, FormMessageBoxProps>(fu
           ) : (
             <>
               <FormattedMessage id="form_failure_line1" defaultMessage=" The form was not submitted." />{' '}
-              <FormattedMessage id="form_failure_line2" defaultMessage="Please try again." />
+              <FormattedMessage
+                id="form_failure_line2"
+                defaultMessage="Please try again or contact us if problem is not resolved."
+              />
             </>
           )}
         </Typography>
-        <Button
-          variant="outlined-secondary"
-          {...(variant === 'error' &&
-            onClick && {
-              onClick,
-            })}
-          type={variant === 'success' ? 'reset' : 'button'}
-          className="mt-4"
-        >
-          {variant === 'success' ? (
+        {variant === 'error' && (
+          <Button variant="outlined-secondary" onClick={onClick} type={'button'} className="mt-4">
             <FormattedMessage id="form_failure_cta" defaultMessage="Try again" />
-          ) : (
-            <FormattedMessage id="form_success_cta" defaultMessage="Reopen the form" />
-          )}
-        </Button>
+          </Button>
+        )}
       </div>
     </div>
   )

@@ -110,10 +110,21 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
     }
   }
 
-  const handleSuccessfullFriendlyChallenge = async () => {
+  const handleSuccessfullFriendlyChallenge = async (event: any) => {
+    console.log('captcha event', event)
+    const solution = event.detail.response
     if (fileName) {
       setIsFriendlyChallengeDone(true)
-      const response = await fetch(`/api/download/getFileUrl?fileName=${encodeURIComponent(fileName)}`)
+      const response = await fetch('/api/download/getFileUrl', {
+        body: JSON.stringify({
+          fileName: fileName,
+          frcCaptchaSolution: solution,
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        method: 'POST',
+      })
       const url = await response.json()
       setDownloadRequestUrl(url.url)
     }
@@ -187,8 +198,8 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
           })}
         </Typography>
         <FriendlyCaptcha
-          doneCallback={() => {
-            handleSuccessfullFriendlyChallenge()
+          doneCallback={(event: any) => {
+            handleSuccessfullFriendlyChallenge(event)
           }}
           errorCallback={(error: any) => {
             console.error('FriendlyCaptcha encountered an error', error)

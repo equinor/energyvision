@@ -10,7 +10,7 @@ const FriendlyCaptcha = ({
   errorCallback,
   focusMode = 'focus',
 }: {
-  doneCallback: () => void
+  doneCallback: (event: any) => void
   errorCallback: (error: string) => void
   focusMode?: StartMode
 }) => {

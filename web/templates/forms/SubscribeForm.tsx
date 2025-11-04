@@ -72,22 +72,20 @@ const SubscribeForm = () => {
 
   return (
     <>
-      {!isSuccessfullySubmitted && !isServerError && (
-        <div className="pt-8 pb-6 text-sm">
-          <FormattedMessage id="all_fields_mandatory" defaultMessage="All fields with *  are mandatory" />
-        </div>
-      )}
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        onReset={() => {
-          reset()
-          setIsFriendlyChallengeDone(false)
-          setSuccessfullySubmitted(false)
-        }}
-        className="flex flex-col gap-12"
-      >
-        {!isSuccessfullySubmitted && !isServerError && (
-          <>
+      {!isSuccessfullySubmitted && (
+        <>
+          <div className="pt-8 pb-6 text-sm">
+            <FormattedMessage id="all_fields_mandatory" defaultMessage="All fields with *  are mandatory" />
+          </div>
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            onReset={() => {
+              reset()
+              setIsFriendlyChallengeDone(false)
+              setSuccessfullySubmitted(false)
+            }}
+            className="flex flex-col gap-12"
+          >
             <fieldset className="p-0 pb-4">
               {!errors.categories && (
                 <legend id="atleast-one-category-required" className="text-base font-semibold max-w-text">
@@ -244,21 +242,21 @@ const SubscribeForm = () => {
                 <FormattedMessage id="subscribe_form_cta" defaultMessage={'Subscribe'} />
               )}
             </Button>
-          </>
+          </form>
+        </>
+      )}
+      <div role="region" aria-live="assertive">
+        {isSubmitted && isServerError && (
+          <FormMessageBox
+            variant="error"
+            onClick={() => {
+              reset(undefined, { keepValues: true })
+              setServerError(false)
+            }}
+          />
         )}
-        <div role="region" aria-live="assertive">
-          {isSubmitSuccessful && !isServerError && <FormMessageBox variant="success" />}
-          {isSubmitted && isServerError && (
-            <FormMessageBox
-              variant="error"
-              onClick={() => {
-                reset(undefined, { keepValues: true })
-                setServerError(false)
-              }}
-            />
-          )}
-        </div>
-      </form>
+        {isSuccessfullySubmitted && <FormMessageBox variant="success" />}
+      </div>
     </>
   )
 }
