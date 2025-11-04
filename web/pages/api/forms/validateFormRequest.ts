@@ -13,9 +13,11 @@ export async function validateFormRequest(req: NextApiRequest, formName: string)
 
   try {
     const allowErrors = formName === 'contact us form'
-    const { accept, errorCode } = await validateCaptcha(frcCaptchaSolution, allowErrors)
+    const { accept, errorCode, captchaDetail, captchaError } = await validateCaptcha(frcCaptchaSolution, allowErrors)
+
     if (!accept) {
       console.log(`Anti-robot check failed [code=${errorCode}] for ${formName}`)
+      console.error(`Captcha internal error: ${captchaError} - ${captchaDetail}`)
       return { status: 400, message: `Anti-robot check failed [code=${errorCode}], please try again.` }
     }
   } catch (err) {
