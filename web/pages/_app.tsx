@@ -93,9 +93,7 @@ function MyApp({ Component, pageProps }: CustomAppProps): JSX.Element {
   }, [router.asPath])
 
   useEffect(() => {
-    if (!sdk.current) {
-      sdk.current = new FriendlyCaptchaSDK()
-    }
+    sdk.current = new FriendlyCaptchaSDK()
   }, [])
 
   const GoogleTagManagerHead = () => (

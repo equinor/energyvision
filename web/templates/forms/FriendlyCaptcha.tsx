@@ -21,9 +21,7 @@ const FriendlyCaptcha = ({
 
   useEffect(() => {
     if (!widget.current && container.current && sdk) {
-      console.log(sdk)
-      const { createWidget } = sdk
-      widget.current = createWidget({
+      widget.current = sdk?.createWidget({
         element: container.current,
         sitekey: friendlyCaptcha.siteKey,
         startMode: focusMode,
