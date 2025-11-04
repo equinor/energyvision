@@ -75,6 +75,7 @@ jobs:
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       DOCKER_BUILDKIT: 1
+      FRIENDLYCAPTCHA_SITEKEYS: ${{ vars.FRIENDLYCAPTCHA_SITEKEYS }}
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
@@ -153,7 +154,7 @@ jobs:
           algoliaApiKey: ${{ secrets.ALGOLIA_SEARCH_API_KEY }}
           environment: ${{ secrets.ENV }}
           archiveContentLink: ${{ vars.ARCHIVE_CONTENT_LINK }}
-          friendlyCaptchaSitekey: ${{ steps.extract.outputs.sitekey }}F
+          friendlyCaptchaSitekey: ${{ steps.extract.outputs.sitekey }}
 
       - uses: act10ns/slack@v2
         with:
