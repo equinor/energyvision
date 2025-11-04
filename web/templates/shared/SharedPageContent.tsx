@@ -31,7 +31,7 @@ import {
   CampaignBannerData,
   DesignOptions,
   AnchorLinkListData,
-  ImageForTextData,
+  ImageForTextData
 } from '@/types'
 import { getColorForTheme } from '@/sections/teasers/TextTeaser/theme'
 import Grid from '@/sections/Grid/Grid'
@@ -65,6 +65,7 @@ import TableBlock, { TableBlockProps } from '@/sections/TableBlock/TableBlock'
 import PromotionsBlock, { PromotionsBlockData } from '@/sections/promotions/PromotionsBlock'
 import PieChartBlock, { PieChartBlockProps } from '@/sections/PieChartBlock/PieChartBlock'
 import BarChartBlock, { BarChartBlockProps } from '@/sections/BarChartBlock/BarChartBlock'
+import LineChartBlock, { LineChartBlockProps } from '@/sections/LineChartBlock/LineChartBlock'
 
 // How could we do this for several different component types?
 export type ComponentSections =
@@ -468,6 +469,15 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
           <BarChartBlock
             key={c.id}
             {...(c as BarChartBlockProps)}
+            anchor={anchorReference}
+            className={topSpacingClassName}
+          />
+        )
+              case 'lineChartBlock':
+        return (
+          <LineChartBlock
+            key={c.id}
+            {...(c as LineChartBlockProps)}
             anchor={anchorReference}
             className={topSpacingClassName}
           />

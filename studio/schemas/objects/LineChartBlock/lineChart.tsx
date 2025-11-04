@@ -14,6 +14,7 @@ const themes = {
 type CustomTooltipProps = {
   headerNames?: any
 } & TooltipContentProps<string | number, string>
+
 const CustomTooltip = ({ active, payload, label, headerNames }: CustomTooltipProps) => {
   const isVisible = active && payload && payload.length
   console.log('CustomTooltip headernames', headerNames)

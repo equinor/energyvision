@@ -636,7 +636,7 @@ _type == "keyNumbers" =>{
       ...,
     }
   },
-    _type == "barChartBlock" => {
+    _type == "barChartBlock" ||  _type == "lineChartBlock" => {
     "type": _type,
     "id": _key,
     title,
