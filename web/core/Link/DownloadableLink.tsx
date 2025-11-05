@@ -229,6 +229,7 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
           })}
         </Typography>
         <FriendlyCaptcha
+          startMode="auto"
           doneCallback={(event: any) => {
             handleSuccessfullFriendlyChallenge(event)
           }}
