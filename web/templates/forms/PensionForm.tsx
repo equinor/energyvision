@@ -74,7 +74,7 @@ const PensionForm = () => {
     control,
     reset,
     setError,
-    formState: { errors, isSubmitted, isSubmitting, isSubmitSuccessful },
+    formState: { errors, isSubmitted, isSubmitting },
   } = useForm<PensionFormValues>({
     defaultValues: {
       name: '',
@@ -87,23 +87,20 @@ const PensionForm = () => {
 
   return (
     <>
-      {!isSuccessfullySubmitted && !isServerError && (
-        <div className="pb-6 text-sm">
-          <FormattedMessage id="all_fields_mandatory" defaultMessage="All fields with *  are mandatory" />
-        </div>
-      )}
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        onReset={() => {
-          reset()
-          setIsFriendlyChallengeDone(false)
-          setSuccessfullySubmitted(false)
-        }}
-        className="flex flex-col gap-12"
-      >
-        {!isSuccessfullySubmitted && !isServerError && (
-          <>
-            {/* Name field */}
+      {!isSuccessfullySubmitted && (
+        <>
+          <div className="pb-6 text-sm">
+            <FormattedMessage id="all_fields_mandatory" defaultMessage="All fields with *  are mandatory" />
+          </div>
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            onReset={() => {
+              reset()
+              setIsFriendlyChallengeDone(false)
+              setSuccessfullySubmitted(false)
+            }}
+            className="flex flex-col gap-12"
+          >
             <Controller
               name="name"
               control={control}
@@ -132,8 +129,6 @@ const PensionForm = () => {
                 )
               }}
             />
-
-            {/* Email field */}
             <Controller
               name="email"
               control={control}
@@ -169,7 +164,6 @@ const PensionForm = () => {
                 )
               }}
             />
-            {/* Pension Category field */}
             <Controller
               name="pensionCategory"
               control={control}
@@ -210,8 +204,6 @@ const PensionForm = () => {
                 )
               }}
             />
-
-            {/* requests field */}
             <Controller
               name="requests"
               control={control}
@@ -275,22 +267,21 @@ const PensionForm = () => {
                 <FormattedMessage id="pension_form_submit" defaultMessage="Submit Form" />
               )}
             </Button>
-          </>
+          </form>
+        </>
+      )}
+      <div role="region" aria-live="assertive">
+        {isSubmitted && isServerError && (
+          <FormMessageBox
+            variant="error"
+            onClick={() => {
+              reset(undefined, { keepValues: true })
+              setServerError(false)
+            }}
+          />
         )}
-
-        <div role="region" aria-live="assertive">
-          {isSubmitSuccessful && !isServerError && <FormMessageBox variant="success" />}
-          {isSubmitted && isServerError && (
-            <FormMessageBox
-              variant="error"
-              onClick={() => {
-                reset(undefined, { keepValues: true })
-                setServerError(false)
-              }}
-            />
-          )}
-        </div>
-      </form>
+        {isSuccessfullySubmitted && <FormMessageBox variant="success" />}
+      </div>
     </>
   )
 }
