@@ -82,22 +82,20 @@ const CareerFairForm = () => {
   const watchEvent = watch('event')
   return (
     <>
-      {!isSuccessfullySubmitted && !isServerError && (
-        <div className="pb-6 text-sm">
-          <FormattedMessage id="all_fields_mandatory" defaultMessage="All fields with *  are mandatory" />
-        </div>
-      )}
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        onReset={() => {
-          reset()
-          setIsFriendlyChallengeDone(false)
-          setSuccessfullySubmitted(false)
-        }}
-        className="flex flex-col gap-12"
-      >
-        {!isSuccessfullySubmitted && !isServerError && (
-          <>
+      {!isSuccessfullySubmitted && (
+        <>
+          <div className="pb-6 text-sm">
+            <FormattedMessage id="all_fields_mandatory" defaultMessage="All fields with *  are mandatory" />
+          </div>
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            onReset={() => {
+              reset()
+              setIsFriendlyChallengeDone(false)
+              setSuccessfullySubmitted(false)
+            }}
+            className="flex flex-col gap-12"
+          >
             <Controller
               name="organisation"
               control={control}
@@ -185,7 +183,6 @@ const CareerFairForm = () => {
                 />
               )}
             />
-
             <Controller
               name="email"
               control={control}
@@ -265,7 +262,6 @@ const CareerFairForm = () => {
                 </>
               )}
             />
-
             <Controller
               name="eventDescription"
               control={control}
@@ -328,7 +324,6 @@ const CareerFairForm = () => {
               value="Yes"
               {...register('supportingDocuments')}
             />
-
             <div className="flex flex-col gap-2">
               <FriendlyCaptcha
                 doneCallback={() => {
@@ -355,21 +350,21 @@ const CareerFairForm = () => {
                 <FormattedMessage id="career_fair_form_cta" defaultMessage="Submit Form" />
               )}
             </Button>
-          </>
+          </form>
+        </>
+      )}
+      <div role="region" aria-live="assertive">
+        {isSubmitted && isServerError && (
+          <FormMessageBox
+            variant="error"
+            onClick={() => {
+              reset(undefined, { keepValues: true })
+              setServerError(false)
+            }}
+          />
         )}
-        <div role="region" aria-live="assertive">
-          {isSubmitSuccessful && !isServerError && <FormMessageBox variant="success" />}
-          {isSubmitted && isServerError && (
-            <FormMessageBox
-              variant="error"
-              onClick={() => {
-                reset(undefined, { keepValues: true })
-                setServerError(false)
-              }}
-            />
-          )}
-        </div>
-      </form>
+        {isSuccessfullySubmitted && <FormMessageBox variant="success" />}
+      </div>
     </>
   )
 }
