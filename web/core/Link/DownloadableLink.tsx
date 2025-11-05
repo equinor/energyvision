@@ -9,10 +9,13 @@ import { BaseLink } from './BaseLink'
 import { BsFiletypePdf, BsFiletypeXlsx } from 'react-icons/bs'
 import envisTwMerge from '../../twMerge'
 
+type Variants = 'default' | 'fit' | 'stickyMenu'
+
 export type DownloadableLinkProps = {
+  variant?: Variants
   fileName?: string
   label?: string
-} & ResourceLinkProps
+} & Omit<ResourceLinkProps, 'variant'>
 
 const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(function DownloadableLink(
   { fileName, label, type = 'downloadableFile', extension, showExtensionIcon, ariaHideText, variant = 'fit' },
@@ -28,10 +31,12 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
   const variantClassName: Partial<Record<string, string>> = {
     default: 'w-full',
     fit: 'w-fit',
+    stickyMenu: 'w-fit',
   }
 
   const contentVariantClassName: Partial<Record<string, string>> = {
     default: 'pb-3 pr-2',
+    stickyMenu: 'pb-3 pr-2',
     fit: 'pb-3 pr-2',
   }
 
@@ -129,7 +134,8 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
       setDownloadRequestUrl(url.url)
     }
   }
-  const commonLinkWrapperClassName = `
+
+  const commonResourceLinkWrapperClassName = `
     group
     text-base
     relative
@@ -151,7 +157,18 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
       <button
         type="button"
         onClick={handleRequestFile}
-        className={commonLinkWrapperClassName}
+        className={
+          variant !== 'stickyMenu'
+            ? commonResourceLinkWrapperClassName
+            : `group 
+            relative 
+            flex
+            justify-center
+            w-fit
+            underline-offset-2
+            text-slate-80
+            text-sm`
+        }
         aria-haspopup="dialog"
         aria-label={`Request file download modal`}
       >
@@ -162,15 +179,26 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
           justify-start
           items-center
           gap-x-2
-          pb-3 
-          pr-2`}
+          ${variant !== 'stickyMenu' ? 'pb-3 pr-2' : ''}
+`}
         >
-          <span className="flex justify-start text-start text-pretty pt-1 grow leading-none">
+          <span
+            className={`flex 
+            justify-start 
+            text-start 
+            text-pretty 
+            pt-1 
+            grow 
+            leading-none
+          ${variant === 'stickyMenu' ? 'w-fit group-hover:underline no-underline leading-none align-middle' : ''}
+            `}
+          >
             {intl.formatMessage({ id: 'request_download_action_prefix', defaultMessage: 'Request' })}
             {` ${label}`}
           </span>
-          <ArrowRight
-            className={`ml-6 
+          {variant !== 'stickyMenu' && (
+            <ArrowRight
+              className={`ml-6 
                 xl:ml-8
                 size-arrow-right
                 text-energy-red-100
@@ -182,9 +210,12 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
                 duration-300
                 translate-y-0.5 
                 group-hover:translate-x-2`}
-          />
+            />
+          )}
         </span>
-        <span className="w-[0%] h-[1px] bg-grey-40 transition-all duration-300 group-hover:w-full" />
+        {variant !== 'stickyMenu' && (
+          <span className="w-[0%] h-[1px] bg-grey-40 transition-all duration-300 group-hover:w-full" />
+        )}
       </button>
       <Modal isOpen={showModal} onClose={handleClose} title="Request file download">
         <Typography as="h2" variant="h5" className="mb-4">
@@ -217,7 +248,7 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
         )}
         {downloadRequestUrl && isFriendlyChallengeDone && !notHuman && (
           <BaseLink
-            className={envisTwMerge(`${commonLinkWrapperClassName}`, 'pt-20')}
+            className={envisTwMerge(`${commonResourceLinkWrapperClassName}`, 'pt-20')}
             type={type}
             href={downloadRequestUrl}
             {...(extension &&
