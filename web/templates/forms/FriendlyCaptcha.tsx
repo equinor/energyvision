@@ -8,11 +8,11 @@ export const FriendlyCaptchaContext = createContext<FriendlyCaptchaSDK | undefin
 const FriendlyCaptcha = ({
   doneCallback,
   errorCallback,
-  focusMode = 'focus',
+  startMode = 'focus',
 }: {
   doneCallback: () => void
   errorCallback: (error: string) => void
-  focusMode?: StartMode
+  startMode?: StartMode
 }) => {
   const container = useRef(null)
   const widget = useRef<WidgetHandle>()
@@ -24,7 +24,7 @@ const FriendlyCaptcha = ({
       widget.current = sdk?.createWidget({
         element: container.current,
         sitekey: friendlyCaptcha.siteKey,
-        startMode: focusMode,
+        startMode: startMode,
         language: router.locale == 'no' ? 'nb' : router.locale,
         apiEndpoint: 'https://eu.frcapi.com/api/v2/captcha',
       })
@@ -45,7 +45,7 @@ const FriendlyCaptcha = ({
     ;() => {
       widget.current?.destroy()
     }
-  }, [container, doneCallback, errorCallback, router.locale, sdk, focusMode])
+  }, [container, doneCallback, errorCallback, router.locale, sdk, startMode])
 
   return <div ref={container} />
 }
