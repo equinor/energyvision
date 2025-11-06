@@ -97,11 +97,10 @@ export const colorKeyToUtilityMap: Record<string, TWColor> = {
     background: 'bg-blue-20',
     text: 'text-blue-20',
   },
-  //gray did not work with bg- and text-. trying another name
   'gray-20': {
     backgroundName: 'Light gray',
-    background: 'bg-stone-20',
-    text: 'text-stone-20',
+    background: 'bg-gray-20',
+    text: 'text-gray-20',
   },
 }
 export type ColorKeys = keyof typeof colorKeyToUtilityMap
