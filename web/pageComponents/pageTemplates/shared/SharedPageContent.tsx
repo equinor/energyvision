@@ -65,7 +65,7 @@ import Form from '@templates/forms/Form'
 import IFrameBlock from '../../../sections/IFrameBlock/IFrameBlock'
 import { HomePageBanner } from '@sections/HomePageBanner/HomePageBanner'
 import TableBlock, { TableBlockProps } from '@sections/TableBlock/TableBlock'
-import PromotionBlock from '@sections/promotionsV2/PromotionBlock'
+import PromotionBlock from '@sections/promotionBlock/PromotionBlock'
 
 type DefaultComponent = {
   id?: string
