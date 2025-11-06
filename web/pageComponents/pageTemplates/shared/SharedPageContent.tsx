@@ -65,6 +65,7 @@ import Form from '@templates/forms/Form'
 import IFrameBlock from '../../../sections/IFrameBlock/IFrameBlock'
 import { HomePageBanner } from '@sections/HomePageBanner/HomePageBanner'
 import TableBlock, { TableBlockProps } from '@sections/TableBlock/TableBlock'
+import PromotionBlock from '@sections/promotionsV2/PromotionBlock'
 
 type DefaultComponent = {
   id?: string
@@ -382,6 +383,9 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
             className={topSpacingClassName}
           />
         )
+      case 'promoteExternalLinkV2':
+      case 'promoteTopicsV2':
+        return <PromotionBlock key={c.id} {...(c as any)} anchor={anchorReference} className={topSpacingClassName} />
       default:
         return null
     }

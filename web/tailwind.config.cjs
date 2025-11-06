@@ -87,6 +87,7 @@ module.exports = {
           100: 'hsl(25, 100%, 92%)',
           90: 'hsl(25, 100%, 94%)',
           70: 'hsl(26, 100%, 97%)',
+          20: 'FEF8F4',
         },
         'heritage-red': {
           100: 'hsl(343, 100%, 25%)',
@@ -120,12 +121,14 @@ module.exports = {
           //--mid-yellow
           //--bg-mid-yellow
           50: '#fff5b8',
+          20: '#FEFBDF',
         },
         blue: {
           //--mid-blue
           //--bg-mid-blue
           //north-sea-70
           50: '#49709c',
+          20: '#F2F9FC',
         },
         orange: {
           100: 'hsl(34, 100%, 34%)',
@@ -190,7 +193,9 @@ module.exports = {
           30: '#D3DFDE',
           20: '#E3EDEA',
         },
-
+        stone: {
+          20: '#F8F8F8',
+        },
         'modal-background': {
           100: 'hsla(212, 82%, 11%, 1)',
         },
