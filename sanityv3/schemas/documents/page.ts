@@ -15,6 +15,10 @@ export default {
     {
       title: 'Header',
       name: 'header',
+      options: {
+        collapsible: true,
+        collapsed: false,
+      },
     },
     {
       title: 'SEO & metadata',
@@ -26,12 +30,7 @@ export default {
       },
     },
     {
-      title: 'Sticky Menu',
       name: 'stickymenu',
-      options: {
-        collapsible: true,
-        collaped: true,
-      },
     },
   ],
   fields: [

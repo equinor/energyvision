@@ -62,5 +62,24 @@ export const content = {
     { type: 'tabs' },
     { type: 'tableV2' },
     { type: 'importTable' },
+    { type: 'promoteExternalLinkV2' },
+    { type: 'promoteTopicsV2' },
   ].filter((e) => e),
+  options: {
+    insertMenu: {
+      filter: true,
+      groups: [
+        {
+          name: 'promotions',
+          title: 'Promotions (v2)',
+          of: ['promoteExternalLinkV2', 'promoteTopicsV2'],
+        },
+        {
+          name: 'carousels',
+          title: 'Carousels',
+          of: ['imageCarousel', 'videoPlayerCarousel', 'iframeCarousel'],
+        },
+      ],
+    },
+  },
 }

@@ -5,7 +5,6 @@ import { ArrowRight } from '../../icons'
 import envisTwMerge from '../../twMerge'
 import { TransformableIcon } from '../../icons/TransformableIcon'
 import { add, calendar } from '@equinor/eds-icons'
-import { BsFiletypePdf, BsFiletypeXlsx } from 'react-icons/bs'
 import { useIntl } from 'react-intl'
 import DownloadableLink from './DownloadableLink'
 
@@ -45,6 +44,8 @@ export const getArrowAnimation = (type: LinkType) => {
       return 'translate-y-0.5 group-hover:translate-y-2'
     case 'icsLink':
       return 'translate-y-0.5'
+    case 'externalUrl':
+      return 'translate-y-0.5 group-hover:-translate-y-0.5'
     default:
       return 'translate-y-0.5 group-hover:translate-x-2'
   }

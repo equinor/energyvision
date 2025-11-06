@@ -18,6 +18,7 @@ import { tabsComponentFields } from './tabsComponentFields'
 import homepageContentFields from './homepageContentFields'
 import { importTableFields } from '../importTable'
 import { tableV2Fields } from '../tableV2'
+import { externalLinksPromotionV2, topicsPromotionV2 } from './promotions/v2/promotionsV2'
 
 const pageContentFields = /* groq */ `
 _type == "keyNumbers" =>{
@@ -600,7 +601,13 @@ _type == "keyNumbers" =>{
     ${tabsComponentFields}
   },
   //Remove from here and place with homepage template query only
-  ${homepageContentFields}
+  ${homepageContentFields},
+   _type == "promoteTopicsV2" => {
+    ${topicsPromotionV2}
+  },
+  _type == "promoteExternalLinkV2" => {
+    ${externalLinksPromotionV2}
+  },
 `
 
 export default pageContentFields
