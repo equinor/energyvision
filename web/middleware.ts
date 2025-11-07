@@ -44,7 +44,7 @@ const pathExistsInSanity = async (pathname: string): Promise<boolean> => {
   return Boolean(article)
 }
 
-export async function proxy(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const { origin, locale } = request.nextUrl
   console.log('Middleware')
   console.log(request.nextUrl.href)
