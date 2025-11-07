@@ -6,7 +6,6 @@ import Image, { getPxLgSizes } from '@core/SanityImage/SanityImage'
 import { PortableTextBlock } from '@portabletext/types'
 import { Heading, Typography } from '@core/Typography'
 import { getArrowElement } from '@core/Link/ResourceLink'
-import IngressText from '../../pageComponents/shared/portableText/IngressText'
 import { BaseLink, BaseLinkProps } from '@core/Link'
 import { GridColumnVariant } from '../../common/helpers/getCommonUtillities'
 
@@ -18,24 +17,12 @@ export type PromotionProps = {
   background?: ColorKeys
   image: ImageWithAlt
   title: string | PortableTextBlock[]
-  ingress?: PortableTextBlock[]
   layoutDirection?: PromotionLayoutDirection
   gridColumns?: GridColumnVariant
 } & BaseLinkProps
 
 export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(function Promotion(
-  {
-    background,
-    title,
-    ingress,
-    image,
-    href,
-    className = '',
-    locale,
-    variant = 'default',
-    gridColumns,
-    layoutDirection = 'col',
-  },
+  { background, title, image, href, className = '', locale, variant = 'default', gridColumns, layoutDirection = 'col' },
   ref,
 ) {
   const titleClassNames = 'group-hover:underline'
@@ -54,9 +41,14 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(function 
   }
 
   const layoutDirectionImageClassNames: Record<PromotionLayoutDirection, string> = {
-    col: `aspect-video w-full`,
-    row: `${gridColumns && gridColumns === '2' ? 'aspect-[1.08]' : 'aspect-[4/5]'}`,
+    col: `aspect-video w-full h-auto`,
+    row: `h-full w-auto ${gridColumns && gridColumns === '2' ? 'aspect-[1.08]' : 'aspect-[4/5]'}`,
   }
+
+  /**
+   *         flex
+        ${layoutDirection === 'col' ? 'flex-col' : 'flex-row'}
+   */
   return (
     <BaseLink
       ref={ref}
@@ -70,8 +62,12 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(function 
         h-full
         rounded-[13px]
         ${colorKeyToUtilityMap[background ?? 'gray-20'].background}
-        flex
-        ${layoutDirection === 'col' ? 'flex-col' : 'flex-row'}
+        grid
+        ${
+          layoutDirection === 'col'
+            ? 'grid-cols-1 grid-rows-[65%_35%]'
+            : `${gridColumns && gridColumns === '2' ? 'grid-cols-[30%_70%]' : 'grid-cols-[25%_75%]'} grid-rows-1`
+        }
         focus:outline-none
         focus-visible:envis-outline
         dark:focus-visible:envis-outline-invert
@@ -86,22 +82,23 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(function 
             image={image}
             fill
             aspectRatio={layoutDirection === 'col' ? '16:9' : '4:5'}
-            className={`${layoutDirection !== 'col' ? 'rounded-[13px]' : 'rounded-t-[13px]'}`}
+            className={`${layoutDirection !== 'col' ? 'rounded-s-[13px]' : 'rounded-t-[13px]'}`}
           />
         )}
       </div>
       <div
         className={`w-full 
         relative 
-        ${layoutDirection === 'col' ? 'px-6 py-8' : 'pl-4 pr-3 py-12'}
+        ${layoutDirection === 'col' ? 'px-6 py-8' : 'pl-4 pr-3 py-4'}
         flex 
         flex-col 
+        flex-wrap
+        overflow-clip
         justify-center 
         max-w-prose`}
       >
         {getTitleElement()}
-        {ingress && <IngressText value={ingress} clampLines={3} className={`text-sm py-2`} />}
-        <div className="absolute right-2.5 bottom-2.5">
+        <div className="absolute right-3.5 bottom-3.5">
           {getArrowElement(variant === 'externalLink' ? 'externalUrl' : 'internalUrl')}
         </div>
       </div>

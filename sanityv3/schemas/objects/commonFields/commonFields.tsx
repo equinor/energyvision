@@ -97,6 +97,9 @@ export const gridColumns = {
     ],
   },
   initialValue: '3',
+  hidden: ({ parent }: DocumentType) => {
+    return parent?.layoutGrid === 'lg'
+  },
   fieldset: 'design',
 }
 export const layoutDirection = {

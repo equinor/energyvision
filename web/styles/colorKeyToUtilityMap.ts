@@ -82,10 +82,10 @@ export const colorKeyToUtilityMap: Record<string, TWColor> = {
     background: 'bg-norwegian-woods-40',
     text: 'text-norwegian-woods-40',
   },
-  'sprucewood-20': {
+  'spruce-wood-20': {
     backgroundName: 'Light Spruce wood',
-    background: 'bg-sprucewood-20',
-    text: 'text-sprucewood-20',
+    background: 'bg-spruce-wood-20',
+    text: 'text-spruce-wood-20',
   },
   'yellow-20': {
     backgroundName: 'Light yellow',

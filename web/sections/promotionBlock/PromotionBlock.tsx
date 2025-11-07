@@ -51,16 +51,12 @@ const PromotionBlock = forwardRef<HTMLDivElement, PromotionBlockProps>(function 
 
   const px = getLayoutPx(layoutGrid ?? 'lg')
   const cols = getGridTemplateColumns(gridColumns ?? '3')
-  const bg = colorKeyToUtilityMap[backgroundUtility ?? 'white-100'].background
+  const bg = colorKeyToUtilityMap[backgroundUtility ?? 'white-100']?.background
 
   return (
-    <section
-      ref={ref}
-      id={anchor}
-      className={twMerge(`${id ? 'scroll-mt-topbar' : ''} ${bg} pb-page-content mx-auto max-w-viewport`, className)}
-    >
+    <section ref={ref} id={anchor} className={twMerge(`${id ? 'scroll-mt-topbar' : ''} ${bg}`, className)}>
       {title && <Heading as="h2" variant="xl" value={title} className={'pb-lg px-layout-sm lg:px-layout-lg'} />}
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-6 pb-page-content mx-auto max-w-viewport">
         {ingress && <IngressText value={ingress} className={'pb-md px-layout-sm lg:px-layout-lg'} />}
         <ul className={`px-layout-sm ${px} grid ${cols} auto-rows-auto gap-4`}>
           {promoteList.map((promotion: any) => {
@@ -73,7 +69,6 @@ const PromotionBlock = forwardRef<HTMLDivElement, PromotionBlockProps>(function 
                   gridColumns={gridColumns}
                   background={foreground}
                   title={promotion.title}
-                  ingress={promotion.ingress}
                   image={promotion.image}
                   href={href}
                   layoutDirection={layoutDirection}

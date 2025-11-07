@@ -20,7 +20,6 @@ export default {
   ],
   fields: [
     title,
-    ingress,
     {
       name: 'promoteList',
       title: 'List of promotions',
