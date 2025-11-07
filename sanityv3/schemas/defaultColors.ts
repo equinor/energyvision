@@ -96,7 +96,7 @@ export const defaultColors: Color[] = [
     dark: false,
   },
   //19
-  { title: 'Light Spruce wood', value: '#FEF8F4', key: 'sprucewood-20', dark: false },
+  { title: 'Light Spruce wood', value: '#FEF8F4', key: 'spruce-wood-20', dark: false },
   //20
   { title: 'Light yellow', value: '#FEFBDF', key: 'yellow-20', dark: false },
   //21
