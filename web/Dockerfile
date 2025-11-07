@@ -75,7 +75,6 @@ COPY --from=build /app/web/public ./public
 # https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=build --chown="$USER":"$USER" /app/web/.next/standalone ./
 COPY --from=build --chown="$USER":"$USER" /app/web/.next/static ./.next/static
-COPY --from=build --chown="$USER":"$USER" /app/web/server/proxy.js ./.next/standalone/.next/server/proxy.js
 
 RUN addgroup -S "$USER"
 RUN adduser -S --uid "$UID" "$USER"
