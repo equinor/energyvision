@@ -1,120 +1,154 @@
-import soapRequest from 'easy-soap-request'
-import * as xml2js from 'xml2js'
-import { LoginResult, SubscribeFormParameters, NewsDistributionParameters } from '../../types/index'
-//import { appInsights } from '../../common'
+import axios from 'axios'
 
-const subscriptionUrl = process.env.BRANDMASTER_EMAIL_SUBSCRIPTION_URL || ''
-export const authenticationUrl = process.env.BRANDMASTER_EMAIL_AUTHENTICATION_URL || ''
-const clientSecret = process.env.BRANDMASTER_EMAIL_CLIENT_SECRET
-const password = process.env.BRANDMASTER_EMAIL_PASSWORD
-const apnId = process.env.BRANDMASTER_EMAIL_APN_ID
-const otyId = process.env.BRANDMASTER_EMAIL_OTY_ID
-const ptlId = process.env.BRANDMASTER_EMAIL_PTL_ID
-
-const sampleHeaders = {
-  'Content-Type': 'text/xml;charset=UTF-8',
-}
-const xml = `<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"><s:Body><Authentication___Login xmlns="http://tempuri.org/"><clientSecret>${clientSecret}</clientSecret><userName>SUBSCRIPTIONAPI</userName><password>${password}</password><comId>34</comId><ptlId>${ptlId}</ptlId><otyId>${otyId}</otyId><laeId>1</laeId><apnId>${apnId}</apnId></Authentication___Login></s:Body></s:Envelope>`
-const authenticate = async () => {
-  const { response } = await soapRequest({
-    url: authenticationUrl,
-    headers: sampleHeaders,
-    xml: xml,
-    timeout: 5000,
-  })
-  const { body } = response
-  let apiSecret = ''
-  let instId = ''
-  xml2js.parseString(body, function (err, result) {
-    if (err != null) console.error('Error while authenticating from Brandmaster : ----------------\n' + err)
-    if (parsedError(result, 'could not get apiSecret and instId ') != undefined) return
-
-    const soapBody = result['SOAP-ENV:Envelope']['SOAP-ENV:Body']['0']
-    const loginResult = soapBody['v1:Authentication___LoginResponse']['0']['v1:Result']['0']
-    apiSecret = loginResult['v1:apiSecret']['0']
-    instId = loginResult['v1:instId']['0']
-  })
-  return { apiSecret, instId }
+export type SubscribeFormParameters = {
+  firstName: string
+  email: string
+  crudeOilAssays?: boolean
+  generalNews?: boolean
+  magazineStories?: boolean
+  stockMarketAnnouncements?: boolean
+  languageCode: string
 }
 
-const createSignUpRequest = async (loginResult: LoginResult, formParameters: SubscribeFormParameters) => {
-  const additionalParameters = `
-  {
-    "stock_market": "${formParameters.stockMarketAnnouncements ? 'Y' : 'N'}",
-    "company_news": "${formParameters.generalNews ? 'Y' : 'N'}",
-    "crude_oil_assays": "${formParameters.crudeOilAssays ? 'Y' : 'N'}",
-    "magazine": "${formParameters.magazineStories ? 'Y' : 'N'}",
-    "type": "Investor",
-    "lang": "${formParameters.languageCode}"
-  }`
+const MAKE_SUBSCRIBER_API_BASE_URL = process.env.MAKE_SUBSCRIBER_API_BASE_URL
+const MAKE_NEWSLETTER_API_BASE_URL = process.env.MAKE_NEWSLETTER_API_BASE_URL
+const MAKE_API_KEY = process.env.MAKE_API_KEY || ''
+const SUBSCRIBER_LIST_ID_EN = process.env.MAKE_SUBSCRIBER_LIST_ID_EN
+const SUBSCRIBER_LIST_ID_NO = process.env.MAKE_SUBSCRIBER_LIST_ID_NO
+const MAKE_API_USER = process.env.MAKE_API_USERID || ''
+const MAKE_NEWSLETTER_ID_EN = process.env.MAKE_NEWSLETTER_ID_EN
+const MAKE_NEWSLETTER_ID_NO = process.env.MAKE_NEWSLETTER_ID_NO
 
-  const envelope = `<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"><s:Body><Subscription___SignUp xmlns="http://tempuri.org/"><clientSecret>${clientSecret}</clientSecret><apiSecret>${loginResult.apiSecret}</apiSecret><instId>${loginResult.instId}</instId><firstName>${formParameters.firstName}</firstName><email>${formParameters.email}</email><additionalParams>${additionalParameters}</additionalParams></Subscription___SignUp></s:Body></s:Envelope>`
-  const { response } = await soapRequest({
-    url: subscriptionUrl,
-    headers: sampleHeaders,
-    xml: envelope,
-    timeout: 5000,
-  })
-  xml2js.parseString(response.body, function (err, result) {
-    if (err != null) {
-      console.log('Error while creating signup request to Brandmaster : ----------------\n' + err)
-      response.statusCode = 500
-    }
-    if (parsedError(result, 'could not create sign up request ') != undefined) {
-      response.statusCode = 500
-      return
-    }
-  })
-  return response.statusCode == 200
+export type NewsDistributionParameters = {
+  languageCode?: string
 }
 
-const createDistributeRequest = async (loginResult: LoginResult, parameters: NewsDistributionParameters) => {
-  const envelope = `<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"><s:Body><Subscription___Distribute xmlns="http://tempuri.org/"><clientSecret>${clientSecret}</clientSecret><apiSecret>${loginResult.apiSecret}</apiSecret><instId>${loginResult.instId}</instId><timeStamp>${parameters.timeStamp}</timeStamp><Title><![CDATA[${parameters.title}]]></Title><Ingress><![CDATA[${parameters.ingress}]]></Ingress><newsURL><![CDATA[${parameters.link}]]></newsURL><newsType><![CDATA[${parameters.newsType}]]></newsType><language><![CDATA[${parameters.languageCode}]]></language><additionalParams/></Subscription___Distribute></s:Body></s:Envelope>`
-  const { response } = await soapRequest({
-    url: subscriptionUrl,
-    headers: sampleHeaders,
-    xml: envelope,
-    timeout: 5000,
-  })
-  xml2js.parseString(response.body, function (err, result) {
-    if (err != null) {
-      console.error('Error while creating distribute request to Brandmaster : ----------------\n' + err)
-      response.statusCode = 400
-    }
-    const error = parsedError(
-      result,
-      'could not distribute newsletter ' + parameters.link + ' published at ' + parameters.timeStamp,
-    )
-    if (error != undefined) {
-      // should trigger mail...
-      console.log('Newsletter distribution failure', response.body.toString())
-      // @TODO Move to Sentry
-      // appInsights.trackEvent({name:"Newsletter distribution failure"},{message:error})
-      response.statusCode = 400
-    }
-  })
+const subscriberApi = axios.create({
+  baseURL: MAKE_SUBSCRIBER_API_BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+    Authorization: `Basic ${Buffer.from(`${MAKE_API_USER}:${MAKE_API_KEY}`).toString('base64')}`,
+  },
+})
 
-  return response.statusCode == 200
+/* Used when sign up and distribution */
+export const mapCategoryToId = (category: string, locale: 'no' | 'en') => {
+  if (locale === 'no') {
+    switch (category) {
+      case 'generalNews':
+        return 'generelle nyheter' 
+      case 'Company':
+        return 'generelle nyheter' 
+      case 'crudeOilAssays':
+        return 'crude oil assays' 
+      case 'Crude':
+        return 'crude oil assays'
+      case 'magazineStories':
+        return 'magasinsaker'
+      case 'stockMarketAnnouncements':
+        return 'børsmeldinger'
+      case 'Stock':
+        return 'børsmeldinger'
+    }
+  } else {
+    switch (category) {
+      case 'generalNews':
+        return 'general news' 
+      case 'Company':
+        return 'general news'
+      case 'crudeOilAssays':
+        return 'crude oil assays'
+      case 'Crude':
+        return 'crude oil assays'
+      case 'magazineStories':
+        return 'magazine stories'
+      case 'stockMarketAnnouncements':
+        return 'stock market announcements'
+      case 'Stock':
+        return 'stock market announcements'
+    }
+  }
+  return ''
 }
 
+/**
+ *  Subscribe a user using subscriber_list_id and tags
+ */
 export const signUp = async (formParameters: SubscribeFormParameters) => {
-  const loginResult = await authenticate()
-  if (loginResult.apiSecret != '' && loginResult.instId != '') return createSignUpRequest(loginResult, formParameters)
-  else return false
+  try {
+    const requestedTags: string[] = []
+    if (formParameters.stockMarketAnnouncements) {
+      formParameters.languageCode === 'no'
+        ? requestedTags.push(mapCategoryToId('stockMarketAnnouncements', 'no'))
+        : requestedTags.push(mapCategoryToId('stockMarketAnnouncements', 'en'))
+    }
+    if (formParameters.generalNews) {
+      formParameters.languageCode === 'no'
+        ? requestedTags.push(mapCategoryToId('generalNews', 'no'))
+        : requestedTags.push(mapCategoryToId('generalNews', 'en'))
+    }
+    if (formParameters.crudeOilAssays) {
+      formParameters.languageCode === 'no'
+        ? requestedTags.push(mapCategoryToId('crudeOilAssays', 'no'))
+        : requestedTags.push(mapCategoryToId('crudeOilAssays', 'en'))
+    }
+    if (formParameters.magazineStories) {
+      formParameters.languageCode === 'no'
+        ? requestedTags.push(mapCategoryToId('magazineStories', 'no'))
+        : requestedTags.push(mapCategoryToId('magazineStories', 'en'))
+    }
+
+    const requestBody = {
+      email: formParameters.email,
+      tags: requestedTags,
+    }
+
+    const response = await subscriberApi.post(
+      `/subscribers?subscriber_list_id=${
+        formParameters.languageCode === 'no' ? SUBSCRIBER_LIST_ID_NO : SUBSCRIBER_LIST_ID_EN
+      }&tag=merge`,
+      requestBody,
+    )
+
+    return response.status === 200
+  } catch (error: any) {
+    console.error('❌ Error in signUp:', {
+      message: error.message,
+      responseData: error.response?.data,
+      responseStatus: error.response?.status,
+      requestHeaders: error.config?.headers,
+    })
+    return false
+  }
 }
 
-export const distribute = async (parameters: NewsDistributionParameters) => {
-  const loginResult = await authenticate()
-  if (loginResult.apiSecret != '' && loginResult.instId != '') {
-    return createDistributeRequest(loginResult, parameters)
-  } else return false
-}
+const newsletterApi = axios.create({
+  baseURL: MAKE_NEWSLETTER_API_BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+    Authorization: `Basic ${Buffer.from(`${MAKE_API_USER}:${MAKE_API_KEY}`).toString('base64')}`,
+  },
+})
 
-const parsedError = (result: any, prefix: string) => {
-  const soapBody = result['SOAP-ENV:Envelope']['SOAP-ENV:Body']['0']
-  if (soapBody['SOAP-ENV:Fault'] != undefined) {
-    const error = soapBody['SOAP-ENV:Fault']['0']['faultstring']
-    console.error(Date() + ' : Newsletter Failure Error: ' + prefix + '\n' + error)
-    return error
+/**
+ *  Distribute a newsletter
+ */
+export const distribute = async (newsDistributionParameters: NewsDistributionParameters) => {
+  try {
+    const url = `${MAKE_NEWSLETTER_API_BASE_URL}/recurring_actions/${
+      newsDistributionParameters.languageCode === 'no' ? MAKE_NEWSLETTER_ID_NO : MAKE_NEWSLETTER_ID_EN
+    }/trigger`
+
+    const response = await newsletterApi.post(url)
+    return response.status === 200
+  } catch (error: any) {
+    console.error('❌ Error in distribute:', {
+      message: error.message,
+      responseData: error.response?.data,
+      responseStatus: error.response?.status,
+      requestHeaders: error.config?.headers,
+    })
+
+    return false
   }
 }
