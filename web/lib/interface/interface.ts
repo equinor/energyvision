@@ -1,12 +1,10 @@
-import { getServerClient } from './client.server'
+import { getClient } from '../../lib/sanity.server'
+import { groq } from 'next-sanity'
 
 export const getAllRedirects = async () => {
-  const client = getServerClient()
-
   try {
-    const results = await client.fetch(
-      /* groq */
-      `*[_type == "externalRedirect" || _type == "redirect" && ${noDrafts}]{
+    const results = await getClient(false).fetch(
+      groq`*[_type == "externalRedirect" || _type == "redirect" && !(_id in path('drafts.**'))]{
       "lang": lang,
       from,
       "to": select(_type == "externalRedirect" => to, to->slug.current)
