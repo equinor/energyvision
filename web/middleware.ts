@@ -69,14 +69,12 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  // Redirect external links to news which is now archived if link doesn't exist in Sanity
-  if (Flags.HAS_ARCHIVED_NEWS && pathname.startsWith('/news') && !pathname.startsWith('/news/archive')) {
-    const existsInSanity = await pathExistsInSanity(pathname, isPreview)
-    if (!existsInSanity) {
-      const archivedPath = pathname.replace('news', 'news/archive')
-      const existsInArchive = archivedNews.some((e) => e.slug === archivedPath)
-      if (existsInArchive) return NextResponse.redirect(`${origin}${archivedPath}`, PERMANENT_REDIRECT)
-    }
+  // Redirect external links to news which is now archived
+  if (Flags.HAS_ARCHIVED_NEWS && pathname.startsWith('/news') && pathname.startsWith('/news/archive')) {
+    //const existsInSanity = await pathExistsInSanity(pathname, isPreview)
+    const archivedPath = pathname.replace('news', 'news/archive')
+    const existsInArchive = archivedNews.some((e) => e.slug === archivedPath)
+    if (existsInArchive) return NextResponse.redirect(`${origin}${archivedPath}`, PERMANENT_REDIRECT)
   }
 
   // Redirect to the same url lowercased if necessary

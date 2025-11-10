@@ -191,3 +191,9 @@ export const getMagazineIndexPaths = async (): Promise<PathType[]> => {
     },
   ]
 }
+
+// Check if a given path exists in Sanity or not
+export const pathExistsInSanity = async (pathname: string, isPreview = false): Promise<boolean> => {
+  const article = await getDocumentBySlug(pathname, isPreview)
+  return Boolean(article)
+}

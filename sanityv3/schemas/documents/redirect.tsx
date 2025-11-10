@@ -7,6 +7,15 @@ import { EdsIcon } from '../../icons'
 import { directions } from '@equinor/eds-icons'
 import { apiVersion } from '../../sanity.client'
 import { lang } from './langField'
+import { Box, Text } from '@sanity/ui'
+
+const Description = () => {
+  return (
+    <Box>
+      <Text size={2}>Remember to inform the dev team that a new external redirect has been added.</Text>
+    </Box>
+  )
+}
 
 export default {
   title: 'Redirect',
