@@ -16,8 +16,7 @@ import Footer from '@/sections/Footer/Footer'
 import Script from 'next/script'
 import { SiteImprove } from '../SiteImprove'
 import { GoogleTagManagerHead } from '../GTMHead'
-import { Suspense } from 'react'
-import { NavigationEvents } from '../NavigationEvents'
+import { FriendlyCaptchaSdkWrapper } from '../FriendlyCaptchaWrapper'
 
 const equinorRegular = localFont({
   src: '../../fonts/equinor/Equinor-Regular.woff',
@@ -77,8 +76,10 @@ export default async function LocaleLayout({ children, params }: { children: Rea
           {/* The <SanityLive> component is responsible for making all sanityFetch calls in your application live, so should always be rendered. */}
           <SanityLive onError={handleError} />
           <NextIntlClientProvider>
-            {children}
-            <Footer footerData={footerData} />
+            <FriendlyCaptchaSdkWrapper>
+              {children}
+              <Footer footerData={footerData} />
+            </FriendlyCaptchaSdkWrapper>
           </NextIntlClientProvider>
         </>
       </body>

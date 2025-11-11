@@ -30,7 +30,7 @@ const PensionForm = () => {
       const res = await fetch('/api/forms/service-now-pension', {
         body: JSON.stringify({
           data,
-          frcCaptchaSolution: (event?.target as any)['frc-captcha-solution'].value,
+          frcCaptchaSolution: (event?.target as any)['frc-captcha-response'].value,
           catalogType: getCatalog(data.pensionCategory),
         }),
         headers: {
@@ -74,154 +74,157 @@ const PensionForm = () => {
 
   return (
     <>
-      {!isSuccessfullySubmitted && !isServerError && (
-        <div className="pb-6 text-sm">{intl('all_fields_mandatory')} </div>
-      )}
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        onReset={() => {
-          reset()
-          setIsFriendlyChallengeDone(false)
-          setSuccessfullySubmitted(false)
-        }}
-        className="flex flex-col gap-12"
-      >
-        {!isSuccessfullySubmitted && !isServerError && (
-          <>
-            {/* Name field */}
-            <Controller
-              name="name"
-              control={control}
-              rules={{
-                required: intl('name_validation'),
-              }}
-              render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => {
-                const { name } = props
-                return (
-                  <TextField
-                    {...props}
-                    id={name}
-                    label={`${intl('name')}*`}
-                    inputRef={ref}
-                    aria-required="true"
-                    inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
-                    helperText={error?.message}
-                    {...(invalid && { variant: 'error' })}
-                  />
-                )
-              }}
-            />
+      {!isSuccessfullySubmitted && (
+        <>
+          <div className="pb-6 text-sm">{intl('all_fields_mandatory')} </div>
 
-            {/* Email field */}
-            <Controller
-              name="email"
-              control={control}
-              rules={{
-                required: intl('email_validation'),
-                pattern: {
-                  value: /^[\w!#$%&'*+/=?`{|}~^-]+(?:\.[\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}$/g,
-                  message: intl('email_validation'),
-                },
-              }}
-              render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => {
-                const { name } = props
-                return (
-                  <TextField
-                    {...props}
-                    id={name}
-                    label={`${intl('email')}*`}
-                    inputRef={ref}
-                    inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
-                    helperText={error?.message}
-                    aria-required="true"
-                    {...(invalid && { variant: 'error' })}
-                  />
-                )
-              }}
-            />
-            {/* Pension Category field */}
-            <Controller
-              name="pensionCategory"
-              control={control}
-              render={({ field: { ref, ...props } }) => {
-                const { name } = props
-                return (
-                  <Select {...props} selectRef={ref} id={name} label={intl('category')}>
-                    <option value="">{intl('form_please_select_an_option')}</option>
-                    <option value="pension">{intl('pension_form_category_pension')}</option>
-                    <option value="travelInsurance">{intl('pension_form_category_travel_insurance')}</option>
-                    <option value="otherPensionInsuranceRelated">{intl('pension_form_category_other')}</option>
-                  </Select>
-                )
-              }}
-            />
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            onReset={() => {
+              reset()
+              setIsFriendlyChallengeDone(false)
+              setSuccessfullySubmitted(false)
+            }}
+            className="flex flex-col gap-12"
+          >
+            {!isSuccessfullySubmitted && !isServerError && (
+              <>
+                {/* Name field */}
+                <Controller
+                  name="name"
+                  control={control}
+                  rules={{
+                    required: intl('name_validation'),
+                  }}
+                  render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => {
+                    const { name } = props
+                    return (
+                      <TextField
+                        {...props}
+                        id={name}
+                        label={`${intl('name')}*`}
+                        inputRef={ref}
+                        aria-required="true"
+                        inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
+                        helperText={error?.message}
+                        {...(invalid && { variant: 'error' })}
+                      />
+                    )
+                  }}
+                />
 
-            {/* requests field */}
-            <Controller
-              name="requests"
-              control={control}
-              rules={{
-                required: intl('pension_form_what_is_your_request_validation'),
-              }}
-              render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => {
-                const { name } = props
-                return (
-                  <TextField
-                    {...props}
-                    id={name}
-                    description={intl('dont_enter_personal_info')}
-                    label={`${intl('pension_form_what_is_your_request')}*`}
-                    inputRef={ref}
-                    multiline
-                    rowsMax={10}
-                    aria-required="true"
-                    inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
-                    helperText={error?.message}
-                    {...(invalid && { variant: 'error' })}
+                {/* Email field */}
+                <Controller
+                  name="email"
+                  control={control}
+                  rules={{
+                    required: intl('email_validation'),
+                    pattern: {
+                      value:
+                        /^[\w!#$%&'*+/=?`{|}~^-]+(?:\.[\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}$/g,
+                      message: intl('email_validation'),
+                    },
+                  }}
+                  render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => {
+                    const { name } = props
+                    return (
+                      <TextField
+                        {...props}
+                        id={name}
+                        label={`${intl('email')}*`}
+                        inputRef={ref}
+                        inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
+                        helperText={error?.message}
+                        aria-required="true"
+                        {...(invalid && { variant: 'error' })}
+                      />
+                    )
+                  }}
+                />
+                {/* Pension Category field */}
+                <Controller
+                  name="pensionCategory"
+                  control={control}
+                  render={({ field: { ref, ...props } }) => {
+                    const { name } = props
+                    return (
+                      <Select {...props} selectRef={ref} id={name} label={intl('category')}>
+                        <option value="">{intl('form_please_select_an_option')}</option>
+                        <option value="pension">{intl('pension_form_category_pension')}</option>
+                        <option value="travelInsurance">{intl('pension_form_category_travel_insurance')}</option>
+                        <option value="otherPensionInsuranceRelated">{intl('pension_form_category_other')}</option>
+                      </Select>
+                    )
+                  }}
+                />
+
+                {/* requests field */}
+                <Controller
+                  name="requests"
+                  control={control}
+                  rules={{
+                    required: intl('pension_form_what_is_your_request_validation'),
+                  }}
+                  render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => {
+                    const { name } = props
+                    return (
+                      <TextField
+                        {...props}
+                        id={name}
+                        description={intl('dont_enter_personal_info')}
+                        label={`${intl('pension_form_what_is_your_request')}*`}
+                        inputRef={ref}
+                        multiline
+                        rowsMax={10}
+                        aria-required="true"
+                        inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
+                        helperText={error?.message}
+                        {...(invalid && { variant: 'error' })}
+                      />
+                    )
+                  }}
+                />
+                <div className="flex flex-col gap-2">
+                  <FriendlyCaptcha
+                    doneCallback={() => {
+                      setIsFriendlyChallengeDone(true)
+                    }}
+                    errorCallback={(error: any) => {
+                      console.error('FriendlyCaptcha encountered an error', error)
+                      setIsFriendlyChallengeDone(true)
+                    }}
                   />
-                )
-              }}
-            />
-            <div className="flex flex-col gap-2">
-              <FriendlyCaptcha
-                doneCallback={() => {
-                  setIsFriendlyChallengeDone(true)
-                }}
-                errorCallback={(error: any) => {
-                  console.error('FriendlyCaptcha encountered an error', error)
-                  setIsFriendlyChallengeDone(true)
-                }}
-              />
-              {/*@ts-ignore: TODO: types*/}
-              {errors?.root?.notCompletedCaptcha && (
-                <p
-                  role="alert"
-                  className="text-slate-80 border border-clear-red-100 px-6 py-4 flex gap-2 font-semibold"
-                >
                   {/*@ts-ignore: TODO: types*/}
-                  <span className="mt-1">{errors.root.notCompletedCaptcha.message}</span>
-                  <Icon data={error_filled} aria-label="Error icon" />
-                </p>
-              )}
-            </div>
+                  {errors?.root?.notCompletedCaptcha && (
+                    <p
+                      role="alert"
+                      className="flex gap-2 border border-clear-red-100 px-6 py-4 font-semibold text-slate-80"
+                    >
+                      {/*@ts-ignore: TODO: types*/}
+                      <span className="mt-1">{errors.root.notCompletedCaptcha.message}</span>
+                      <Icon data={error_filled} aria-label="Error icon" />
+                    </p>
+                  )}
+                </div>
 
-            <Button type="submit">{isSubmitting ? intl('form_sending') : intl('pension_form_submit')}</Button>
-          </>
+                <Button type="submit">{isSubmitting ? intl('form_sending') : intl('pension_form_submit')}</Button>
+              </>
+            )}
+          </form>
+        </>
+      )}
+      <div role="region" aria-live="assertive">
+        {isSubmitSuccessful && <FormMessageBox variant="success" />}
+        {isSubmitted && isServerError && (
+          <FormMessageBox
+            variant="error"
+            onClick={() => {
+              reset(undefined, { keepValues: true })
+              setServerError(false)
+            }}
+          />
         )}
-
-        <div role="region" aria-live="assertive">
-          {isSubmitSuccessful && !isServerError && <FormMessageBox variant="success" />}
-          {isSubmitted && isServerError && (
-            <FormMessageBox
-              variant="error"
-              onClick={() => {
-                reset(undefined, { keepValues: true })
-                setServerError(false)
-              }}
-            />
-          )}
-        </div>
-      </form>
+      </div>
     </>
   )
 }

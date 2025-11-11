@@ -80,7 +80,7 @@ const OrderReportsForm = () => {
       const res = await fetch('/api/forms/service-now-order-reports', {
         body: JSON.stringify({
           data,
-          frcCaptchaSolution: (event?.target as any)['frc-captcha-solution'].value,
+          frcCaptchaSolution: (event?.target as any)['frc-captcha-response'].value,
         }),
         headers: {
           'Content-Type': 'application/json',
@@ -100,25 +100,21 @@ const OrderReportsForm = () => {
 
   return (
     <>
-      {!isSuccessfullySubmitted && !isServerError && (
-        <div className="pb-6 text-sm">{intl('all_fields_mandatory')} </div>
-      )}
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        onReset={() => {
-          reset()
-          setIsFriendlyChallengeDone(false)
-          setSuccessfullySubmitted(false)
-        }}
-        className="flex flex-col gap-12"
-      >
-        {!isSuccessfullySubmitted && !isServerError && (
-          <>
+      {!isSuccessfullySubmitted && (
+        <>
+          <div className="pb-6 text-sm">{intl('all_fields_mandatory')} </div>
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            onReset={() => {
+              reset()
+              setIsFriendlyChallengeDone(false)
+              setSuccessfullySubmitted(false)
+            }}
+            className="flex flex-col gap-12"
+          >
             <fieldset className="p-0 pb-4">
               {!errors.reports && (
-                <legend className="max-w-text text-base font-semibold">
-                  {`${intl('order_reports_form_choose')}*`}
-                </legend>
+                <legend className="max-w-text text-base font-semibold">{`${intl('order_reports_form_choose')}*`}</legend>
               )}
               {errors.reports && (
                 <div
@@ -296,22 +292,23 @@ const OrderReportsForm = () => {
               )}
             </div>
             <Button type="submit">{isSubmitting ? intl('form_sending') : intl('order_reports_form_cta')}</Button>
-          </>
+          </form>
+        </>
+      )}
+      <div role="region" aria-live="assertive">
+        {isSubmitSuccessful && <FormMessageBox variant="success" />}
+        {isSubmitted && isServerError && (
+          <FormMessageBox
+            variant="error"
+            onClick={() => {
+              reset(undefined, { keepValues: true })
+              setServerError(false)
+            }}
+          />
         )}
-        <div role="region" aria-live="assertive">
-          {isSubmitSuccessful && !isServerError && <FormMessageBox variant="success" />}
-          {isSubmitted && isServerError && (
-            <FormMessageBox
-              variant="error"
-              onClick={() => {
-                reset(undefined, { keepValues: true })
-                setServerError(false)
-              }}
-            />
-          )}
-        </div>
-      </form>
+      </div>
     </>
   )
 }
+
 export default OrderReportsForm

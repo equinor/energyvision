@@ -21,7 +21,6 @@ export const algolia = {
 
 export const friendlyCaptcha = {
   siteKey: process.env.NEXT_PUBLIC_FRIENDLY_CAPTCHA_SITEKEY || '',
-  puzzleEndpoint: process.env.NEXT_PUBLIC_FRIENDLY_CAPTCHA_PUZZLE_ENDPOINT || '',
 }
 
 export const host = {

@@ -60,7 +60,7 @@ const CareerFairForm = () => {
         body: JSON.stringify({
           data,
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          frcCaptchaSolution: (event?.target as any)['frc-captcha-solution'].value,
+          frcCaptchaSolution: (event?.target as any)['frc-captcha-response'].value,
         }),
         headers: {
           'Content-Type': 'application/json',
@@ -82,204 +82,209 @@ const CareerFairForm = () => {
   const watchEvent = watch('event')
   return (
     <>
-      {!isSuccessfullySubmitted && !isServerError && <div className="pb-6 text-sm">{intl('all_fields_mandatory')}</div>}
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        onReset={() => {
-          reset()
-          setIsFriendlyChallengeDone(false)
-          setSuccessfullySubmitted(false)
-        }}
-        className="flex flex-col gap-12"
-      >
-        {!isSuccessfullySubmitted && !isServerError && (
-          <>
-            <Controller
-              name="organisation"
-              control={control}
-              rules={{
-                required: intl('career_fair_form_organisation_validation'),
-              }}
-              render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
-                <TextField
-                  {...props}
-                  id={props.name}
-                  label={`${intl('career_fair_form_organisation')}*`}
-                  inputRef={ref}
-                  aria-required="true"
-                  inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
-                  helperText={error?.message}
-                  {...(invalid && { variant: 'error' })}
-                />
-              )}
-            />
-            <Controller
-              name="contactPerson"
-              control={control}
-              rules={{
-                required: intl('career_fair_form_contact_person_validation'),
-              }}
-              render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
-                <TextField
-                  {...props}
-                  id={props.name}
-                  label={`${intl('career_fair_form_contact_person')}*`}
-                  inputRef={ref}
-                  aria-required="true"
-                  inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
-                  helperText={error?.message}
-                  {...(invalid && { variant: 'error' })}
-                />
-              )}
-            />
-            <Controller
-              name="phone"
-              control={control}
-              rules={{
-                required: intl('career_fair_form_phone_validation'),
-                pattern: {
-                  value: /^[+]?([0-9]?[()]|[0-9]+|[0-9]+-){8,20}(?:x[0-9]{0,10})?$/g,
-                  message: intl('career_fair_form_phone_validation'),
-                },
-              }}
-              render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
-                <TextField
-                  {...props}
-                  id={props.name}
-                  label={`${intl('career_fair_form_phone')}*`}
-                  description={intl('country_code_format')}
-                  type="tel"
-                  inputRef={ref}
-                  inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
-                  helperText={error?.message}
-                  aria-required="true"
-                  {...(invalid && { variant: 'error' })}
-                />
-              )}
-            />
-
-            <Controller
-              name="email"
-              control={control}
-              rules={{
-                required: intl('email_validation'),
-                pattern: {
-                  value: /^[\w!#$%&'*+/=?`{|}~^-]+(?:\.[\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}$/g,
-                  message: intl('email_validation'),
-                },
-              }}
-              render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
-                <TextField
-                  {...props}
-                  id={props.name}
-                  label={`${intl('email')}*`}
-                  inputRef={ref}
-                  inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
-                  helperText={error?.message}
-                  aria-required="true"
-                  {...(invalid && { variant: 'error' })}
-                />
-              )}
-            />
-            <Controller
-              name="event"
-              control={control}
-              render={({ field: { ref, ...props } }) => (
-                <>
-                  <Select
+      {!isSuccessfullySubmitted && (
+        <>
+          <div className="pb-6 text-sm">{intl('all_fields_mandatory')}</div>
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            onReset={() => {
+              reset()
+              setIsFriendlyChallengeDone(false)
+              setSuccessfullySubmitted(false)
+            }}
+            className="flex flex-col gap-12"
+          >
+            <>
+              <Controller
+                name="organisation"
+                control={control}
+                rules={{
+                  required: intl('career_fair_form_organisation_validation'),
+                }}
+                render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
+                  <TextField
                     {...props}
-                    selectRef={ref}
                     id={props.name}
-                    aria-describedby="select-helper-text-${id}"
-                    label={intl('career_fair_form_event')}
-                  >
-                    <option value="">{intl('form_please_select_an_option')}</option>
-                    <option>{intl('career_fair_form_invite_career_fair')}</option>
-                    <option>{intl('career_fair_form_visit_equinor')}</option>
-                  </Select>
-                  {watchEvent == intl('career_fair_form_visit_equinor') && (
-                    <p className="-mt-2" id="select-helper-text">
-                      {intl('career_fair_form_visit_equinor_helper_text')}
-                    </p>
-                  )}
-                </>
-              )}
-            />
-
-            <Controller
-              name="eventDescription"
-              control={control}
-              rules={{
-                required: intl('career_fair_form_event_description_validation'),
-              }}
-              render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
-                <TextField
-                  {...props}
-                  id={props.name}
-                  multiline
-                  rowsMax={10}
-                  maxLength={3400}
-                  aria-required="true"
-                  label={`${intl('career_fair_form_event_description')}*`}
-                  description={intl('form_validation_maxChars', {
-                    maxChars: '3400',
-                  })}
-                  inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
-                  helperText={error?.message}
-                  inputRef={ref}
-                  {...(invalid && { variant: 'error' })}
-                />
-              )}
-            />
-            <Controller
-              name="website"
-              control={control}
-              render={({ field: { ref, ...props } }) => (
-                <TextField {...props} id={props.name} label={intl('career_fair_form_website')} inputRef={ref} />
-              )}
-            />
-            <Checkbox
-              className="pb-4"
-              label={intl('career_fair_form_supporting_documents')}
-              value="Yes"
-              {...register('supportingDocuments')}
-            />
-
-            <div className="flex flex-col gap-2">
-              <FriendlyCaptcha
-                doneCallback={() => {
-                  setIsFriendlyChallengeDone(true)
-                }}
-                errorCallback={(error: any) => {
-                  console.error('FriendlyCaptcha encountered an error', error)
-                  setIsFriendlyChallengeDone(true)
-                }}
+                    label={`${intl('career_fair_form_organisation')}*`}
+                    inputRef={ref}
+                    aria-required="true"
+                    inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
+                    helperText={error?.message}
+                    {...(invalid && { variant: 'error' })}
+                  />
+                )}
               />
-              {/*@ts-ignore: TODO: types*/}
-              {errors?.root?.notCompletedCaptcha && (
-                <p role="alert" className="text-slate-80 border border-clear-red-100 px-6 py-4flex gap-2 font-semibold">
-                  {/*@ts-ignore: TODO: types*/}
-                  <span className="mt-1">{errors.root.notCompletedCaptcha.message}</span>
-                  <Icon data={error_filled} aria-label="Error icon" />
-                </p>
-              )}
-            </div>
-            <Button type="submit">{isSubmitting ? intl('form_sending') : intl('career_fair_form_cta')}</Button>
-          </>
+              <Controller
+                name="contactPerson"
+                control={control}
+                rules={{
+                  required: intl('career_fair_form_contact_person_validation'),
+                }}
+                render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
+                  <TextField
+                    {...props}
+                    id={props.name}
+                    label={`${intl('career_fair_form_contact_person')}*`}
+                    inputRef={ref}
+                    aria-required="true"
+                    inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
+                    helperText={error?.message}
+                    {...(invalid && { variant: 'error' })}
+                  />
+                )}
+              />
+              <Controller
+                name="phone"
+                control={control}
+                rules={{
+                  required: intl('career_fair_form_phone_validation'),
+                  pattern: {
+                    value: /^[+]?([0-9]?[()]|[0-9]+|[0-9]+-){8,20}(?:x[0-9]{0,10})?$/g,
+                    message: intl('career_fair_form_phone_validation'),
+                  },
+                }}
+                render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
+                  <TextField
+                    {...props}
+                    id={props.name}
+                    label={`${intl('career_fair_form_phone')}*`}
+                    description={intl('country_code_format')}
+                    type="tel"
+                    inputRef={ref}
+                    inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
+                    helperText={error?.message}
+                    aria-required="true"
+                    {...(invalid && { variant: 'error' })}
+                  />
+                )}
+              />
+
+              <Controller
+                name="email"
+                control={control}
+                rules={{
+                  required: intl('email_validation'),
+                  pattern: {
+                    value: /^[\w!#$%&'*+/=?`{|}~^-]+(?:\.[\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}$/g,
+                    message: intl('email_validation'),
+                  },
+                }}
+                render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
+                  <TextField
+                    {...props}
+                    id={props.name}
+                    label={`${intl('email')}*`}
+                    inputRef={ref}
+                    inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
+                    helperText={error?.message}
+                    aria-required="true"
+                    {...(invalid && { variant: 'error' })}
+                  />
+                )}
+              />
+              <Controller
+                name="event"
+                control={control}
+                render={({ field: { ref, ...props } }) => (
+                  <>
+                    <Select
+                      {...props}
+                      selectRef={ref}
+                      id={props.name}
+                      aria-describedby="select-helper-text-${id}"
+                      label={intl('career_fair_form_event')}
+                    >
+                      <option value="">{intl('form_please_select_an_option')}</option>
+                      <option>{intl('career_fair_form_invite_career_fair')}</option>
+                      <option>{intl('career_fair_form_visit_equinor')}</option>
+                    </Select>
+                    {watchEvent == intl('career_fair_form_visit_equinor') && (
+                      <p className="-mt-2" id="select-helper-text">
+                        {intl('career_fair_form_visit_equinor_helper_text')}
+                      </p>
+                    )}
+                  </>
+                )}
+              />
+
+              <Controller
+                name="eventDescription"
+                control={control}
+                rules={{
+                  required: intl('career_fair_form_event_description_validation'),
+                }}
+                render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
+                  <TextField
+                    {...props}
+                    id={props.name}
+                    multiline
+                    rowsMax={10}
+                    maxLength={3400}
+                    aria-required="true"
+                    label={`${intl('career_fair_form_event_description')}*`}
+                    description={intl('form_validation_maxChars', {
+                      maxChars: '3400',
+                    })}
+                    inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
+                    helperText={error?.message}
+                    inputRef={ref}
+                    {...(invalid && { variant: 'error' })}
+                  />
+                )}
+              />
+              <Controller
+                name="website"
+                control={control}
+                render={({ field: { ref, ...props } }) => (
+                  <TextField {...props} id={props.name} label={intl('career_fair_form_website')} inputRef={ref} />
+                )}
+              />
+              <Checkbox
+                className="pb-4"
+                label={intl('career_fair_form_supporting_documents')}
+                value="Yes"
+                {...register('supportingDocuments')}
+              />
+
+              <div className="flex flex-col gap-2">
+                <FriendlyCaptcha
+                  doneCallback={() => {
+                    setIsFriendlyChallengeDone(true)
+                  }}
+                  errorCallback={(error: any) => {
+                    console.error('FriendlyCaptcha encountered an error', error)
+                    setIsFriendlyChallengeDone(true)
+                  }}
+                />
+                {/*@ts-ignore: TODO: types*/}
+                {errors?.root?.notCompletedCaptcha && (
+                  <p
+                    role="alert"
+                    className="py-4flex gap-2 border border-clear-red-100 px-6 font-semibold text-slate-80"
+                  >
+                    {/*@ts-ignore: TODO: types*/}
+                    <span className="mt-1">{errors.root.notCompletedCaptcha.message}</span>
+                    <Icon data={error_filled} aria-label="Error icon" />
+                  </p>
+                )}
+              </div>
+              <Button type="submit">{isSubmitting ? intl('form_sending') : intl('career_fair_form_cta')}</Button>
+            </>
+          </form>
+        </>
+      )}
+      <div role="region" aria-live="assertive">
+        {isSubmitSuccessful && <FormMessageBox variant="success" />}
+        {isSubmitted && isServerError && (
+          <FormMessageBox
+            variant="error"
+            onClick={() => {
+              reset(undefined, { keepValues: true })
+              setServerError(false)
+            }}
+          />
         )}
-        <div role="region" aria-live="assertive">
-          {isSubmitSuccessful && !isServerError && <FormMessageBox variant="success" />}
-          {isSubmitted && isServerError && (
-            <FormMessageBox
-              variant="error"
-              onClick={() => {
-                reset(undefined, { keepValues: true })
-                setServerError(false)
-              }}
-            />
-          )}
-        </div>
-      </form>
+      </div>
     </>
   )
 }
