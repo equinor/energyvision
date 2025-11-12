@@ -1,3 +1,4 @@
+'use client'
 import { Typography } from '@/core/Typography'
 import { Modal } from '@/sections/Modal'
 import FriendlyCaptcha from '@/templates/forms/FriendlyCaptcha'

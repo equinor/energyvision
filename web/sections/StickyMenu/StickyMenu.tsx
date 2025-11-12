@@ -36,13 +36,13 @@ export const StickyMenu = forwardRef<HTMLElement, StickyMenuProps>(function Stic
         <div className={`text-start text-base font-medium`}>{stickyMenuData?.title}</div>
         <div className="flex items-center gap-10">
           {anchorReference && (
-            <StickyMenuLink className="" href={`#${anchorReference.anchorReference}`}>
+            <StickyMenuLink className="" href={`#${anchorReference?.anchorReference}`}>
               {anchorReference.title}
             </StickyMenuLink>
           )}
           {resourceLink && (
-            <StickyMenuLink className="" href={resourceLink.href} isDownloadable>
-              {resourceLink.label}
+            <StickyMenuLink {...resourceLink} type="downloadableFile">
+              {resourceLink?.label}
             </StickyMenuLink>
           )}
         </div>

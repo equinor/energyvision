@@ -2,6 +2,7 @@ import { forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { BaseLink, BaseLinkProps } from './BaseLink'
 import { BsFiletypePdf } from 'react-icons/bs'
+import DownloadableLink from './DownloadableLink'
 
 export type StickMenuLinkProps = {
   isDownloadable?: boolean
@@ -9,35 +10,24 @@ export type StickMenuLinkProps = {
 
 /** Sticky menu link style */
 export const StickyMenuLink = forwardRef<HTMLAnchorElement, StickMenuLinkProps>(function StickyMenuLink(
-  { children, type = 'internalUrl', className = '', href = '', isDownloadable = false, ...rest },
+  { children, type = 'internalUrl', className = '', href = '', ...rest },
   ref,
 ) {
-  const isPDF = href?.toLowerCase().endsWith('.pdf')
-  const pdfIconElement = <>{isPDF ? <BsFiletypePdf aria-label="pdf" size={18} className="mr-2" /> : null}</>
-
+  if (type === 'downloadableFile') {
+    return <DownloadableLink {...rest} type={type} variant="stickyMenu" showExtensionIcon={true} />
+  }
   return (
     <BaseLink
       type={type}
       className={twMerge(
-        `group
-        relative 
-        flex
-        justify-center
-        w-fit
-        underline-offset-2
-        text-slate-80
-        text-sm`,
+        `group relative flex w-fit justify-center text-sm text-slate-80 underline-offset-2`,
         className,
       )}
       ref={ref}
       href={href}
-      {...(isPDF && {
-        target: '_blank',
-      })}
       {...rest}
     >
-      {isDownloadable && pdfIconElement}
-      <div className={`w-fit group-hover:underline no-underline leading-none align-middle`}>{children}</div>
+      <div className={`w-fit align-middle leading-none no-underline group-hover:underline`}>{children}</div>
     </BaseLink>
   )
 })
