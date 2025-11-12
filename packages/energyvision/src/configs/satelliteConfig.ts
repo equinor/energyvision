@@ -1,4 +1,3 @@
-//@ts-nocheck
 /*
   {
     id: The key for this language
@@ -8,6 +7,13 @@
     locale: The actual locale name as used by Next.js and locale folders/structure ([site]/locale)
   }
 */
+export type Language = {
+  id: string
+  title: string
+  iso: string
+  name: string
+  locale: string
+}
 const languages = [
   { id: 'english', title: 'English (UK)', iso: 'en-GB', name: 'en_GB', locale: 'en-GB' },
   { id: 'norwegian', title: 'Norwegian', iso: 'nb-NO', name: 'nb_NO', locale: 'no' },
@@ -73,13 +79,17 @@ const datasets = {
   'global-development': ['english', 'norwegian', 'japanese'],
   'global-test': ['english', 'norwegian', 'japanese'],
 }
+export type DatasetsKeys = keyof typeof datasets
+
+/* export type Dataset = string[] */
+export type Dataset = (typeof datasets)[DatasetsKeys]
 
 /**
  * The default language to be used on the website
  * If not set, the first language of the datasets array will be used
  * @type {Record<string, string>}
  */
-export const defaultWebLanguage = {
+export const defaultWebLanguage: Partial<Record<DatasetsKeys, string>> = {
   argentina: 'spanish-ar',
   storage: 'german',
   southkorea: 'korean',
@@ -92,7 +102,7 @@ export const defaultWebLanguage = {
  * This is necessary for static generation
  * @type {Record<string, { url: string, meta: string }>}
  */
-const websiteDomains = {
+const websiteDomains: Partial<Record<DatasetsKeys, { url: string; meta: string }>> = {
   global: {
     url: 'https://www.equinor.com',
     meta: 'Equinor',
@@ -152,10 +162,10 @@ const websiteDomains = {
  *  locale: string
  * }[]}
  */
-const filterLanguages = (dataset: any) =>
-  dataset.map((lang: any) => languages.find((e) => e.id === lang)).filter((e) => e)
+const filterLanguages = (dataset: Dataset) =>
+  dataset.map((lang) => languages.find((e) => e.id === lang)).filter((e) => e)
 
-const logAndFallback = (dataset: any) => {
+const logAndFallback = (dataset: DatasetsKeys) => {
   console.error(
     `Selected dataset (${dataset}) not found! Possibly a typo in the env variable.\nFalling back to first in the list.`,
   )
@@ -165,21 +175,22 @@ const logAndFallback = (dataset: any) => {
 /**
  * @param {string} dataset
  */
-export const getLanguages = (dataset: any) =>
+export const getLanguages = (dataset: DatasetsKeys) =>
   Object.keys(datasets).some((name) => name === dataset) ? filterLanguages(datasets[dataset]) : logAndFallback(dataset)
 
 /**
  * @param {string} dataset
  */
-export const getDomain = (dataset: any) => websiteDomains[dataset]?.url || 'Domain not set'
+export const getDomain = (dataset: DatasetsKeys) => websiteDomains[dataset]?.url ?? 'Domain not set'
 
 /**
  * @param {string} dataset
  */
-export const getMetaTitleSuffix = (dataset: any) => {
-  return websiteDomains[dataset]?.meta || 'Equinor'
+export const getMetaTitleSuffix = (dataset: DatasetsKeys) => {
+  return websiteDomains[dataset]?.meta ?? 'Equinor'
 }
 
 export const getAllDomainUrls = () => {
-  return Object.keys(datasets).map((dataset) => websiteDomains[dataset]?.url)
+  return Object.values(websiteDomains).map((dataset) => dataset.url)
+  //return Object.keys(datasets).map((dataset) => websiteDomains[dataset]?.url)
 }

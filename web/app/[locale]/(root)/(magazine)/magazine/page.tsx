@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 //TODO types
-import { getNameFromLocale } from '../../../../../lib/localization'
-import { Flags } from '../../../../../common/helpers/datasetHelpers'
+import { getNameFromLocale } from '../../../../../sanity/localization'
+import { Flags } from '../../../../../common/helpers/datasetHelpers.ts'
 import { getPageData, getData } from '../../../../../sanity/lib/fetchData'
 import { notFound } from 'next/navigation'
 import MagazineRoom from '@/templates/magazine/Magazineroom'

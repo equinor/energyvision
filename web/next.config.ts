@@ -3,7 +3,7 @@ import type { NextConfig } from 'next'
 import createNextIntlPlugin from 'next-intl/plugin'
 import { withSentryConfig } from '@sentry/nextjs'
 import securityHeaders from './securityHeaders'
-import { dataset } from './languages.js'
+/* import { getAllRedirects } from './sanity/interface/redirects' */
 
 const withNextIntl = createNextIntlPlugin()
 
@@ -19,7 +19,7 @@ const sentryConfig = {
 }
 
 //TODO: Find the Redirect type from config that is not in /dist.
-type ConfigRedirect = {
+export type ConfigRedirect = {
   source: string
   destination: string
   basePath?: false | undefined
@@ -36,39 +36,6 @@ type ConfigRedirect = {
       permanent?: never
     }
 )
-const getRedirects = () => {
-  const redirects: ConfigRedirect[] = [
-    // Redirect IE users to not-supported page
-    {
-      source: '/',
-      has: [
-        {
-          type: 'header',
-          key: 'user-agent',
-          value: '.*(MSIE|Trident).*',
-        },
-      ],
-      permanent: true,
-      destination: '/not-supported.html',
-    },
-  ]
-  if (dataset && ['global', 'global-development', 'global-test'].includes(dataset)) {
-    const fiftySiteRedirects: ConfigRedirect[] = [
-      {
-        source: '/50/en/:slug*',
-        destination: '/magazine',
-        permanent: true,
-      },
-      {
-        source: '/50/:slug*',
-        destination: '/no/magasin',
-        permanent: true,
-      },
-    ]
-    redirects.concat(fiftySiteRedirects)
-  }
-  return redirects.filter((e) => e)
-}
 
 const nextConfig: NextConfig = {
   output: 'standalone',
@@ -78,7 +45,7 @@ const nextConfig: NextConfig = {
     },
   }, // Essential for next-intl alias resolution
   outputFileTracingRoot: __dirname,
-  transpilePackages: ['friendly-challenge'],
+  transpilePackages: ['friendly-challenge', '@energyvision/shared'],
   images: {
     remotePatterns: [
       {
@@ -127,9 +94,9 @@ const nextConfig: NextConfig = {
       },
     ].filter((e) => e)
   },
-  async redirects() {
-    return getRedirects()
-  },
+  /*   async redirects() {
+    return getAllRedirects()
+  }, */
   env: {
     // Matches the behavior of `sanity dev` which sets styled-components to use the fastest way of inserting CSS rules in both dev and production. It's default behavior is to disable it in dev mode.
     SC_DISABLE_SPEEDY: 'false',

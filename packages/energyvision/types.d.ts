@@ -1,1 +1,3 @@
-export type * from './src/configs'
+import { Dataset, DatasetsKeys, Language } from './src/configs/satelliteConfig'
+
+export { Dataset, DatasetsKeys, Language }

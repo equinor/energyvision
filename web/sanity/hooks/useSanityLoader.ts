@@ -1,7 +1,7 @@
 import { useNextSanityImage, UseNextSanityImageProps } from 'next-sanity-image'
 import type { ImageWithAlt } from '@/types'
-import { sanityClientWithEquinorCDN } from '../../lib/sanity.server'
 import { SanityImageObject } from '@sanity/image-url/lib/types/types'
+import { sanityClientWithEquinorCDN } from '../lib/client'
 
 export const useSanityLoader = (
   image: ImageWithAlt | SanityImageObject,

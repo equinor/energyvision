@@ -4,7 +4,7 @@ import { ColorKeyTokens, colorKeyToUtilityMap } from '../../styles/colorKeyToUti
 import { PromoTileData } from '../../types/index'
 import { forwardRef } from 'react'
 import { Variants } from '../cards/Card/Card'
-import { getLocaleFromName } from '../../lib/localization'
+import { getLocaleFromName } from '../../sanity/localization'
 import { useLocale } from 'next-intl'
 
 type PromoTileProps = {

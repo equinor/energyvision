@@ -1,4 +1,4 @@
-import { getNameFromLocale } from '@/lib/localization'
+import { getNameFromLocale } from '@/sanity/localization'
 import { getPageData } from '@/sanity/lib/fetchData'
 import { pageNotFoundQuery } from '@/sanity/queries/pageNotFound'
 import NotFoundPage from '@/templates/notFound/NotFoundPage'

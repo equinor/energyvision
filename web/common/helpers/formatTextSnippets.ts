@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { languages } from '../../languages'
+
+import { languages } from "@/languageConfig"
+
 
 const getFormattedSnippets = (lang: string, snippets: any) => {
   return Object.assign(
@@ -15,9 +17,10 @@ const getFormattedSnippets = (lang: string, snippets: any) => {
 }
 
 const formatTextSnippets = (snippets: any): Record<string, Record<string, string>> => {
+  //@ts-ignore:todo possibly undefined
   const langs = languages.map((e) => e.name)
   return langs.reduce(
-    (o, lang) => ({
+    (o:any, lang:any) => ({
       ...o,
       [lang]: getFormattedSnippets(lang, snippets),
     }),

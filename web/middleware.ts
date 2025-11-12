@@ -25,11 +25,11 @@ export const config = {
 import createMiddleware from 'next-intl/middleware'
 import { routing } from './i18n/routing'
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { getRedirectUrl, getDnsRedirect, getExternalRedirectUrl, getWWWRedirect } from './common/helpers/redirects'
+import { getDnsRedirect, getWWWRedirect } from './sanity/interface/redirects'
 import { NextRequest, NextResponse } from 'next/server'
-import { getLocaleFromName } from './lib/localization'
-import { Flags } from './common/helpers/datasetHelpers'
-import { getDocumentBySlug } from './sanity/queries/paths/getPaths'
+/* import { getLocaleFromName } from './sanity/localization' */
+import { Flags } from './common/helpers/datasetHelpers.ts'
+/* import { getDocumentBySlug } from './sanity/queries/paths/getPaths' */
 import archivedNews from './lib/archive/archivedNewsPaths.json'
 
 const PERMANENT_REDIRECT = 301
@@ -39,10 +39,10 @@ const DOT_HTML = '.html'
 const IS_ARCHIVED_NEWS_DOWNLOADS = /(.*)\/news\/archive\/[0-9]{4}\/[0-9]{2}\/[0-9]{2}\/downloads\/(.*)\.(.*)$/
 
 // Check if a given path exists in Sanity or not
-const pathExistsInSanity = async (pathname: string): Promise<boolean> => {
+/* const pathExistsInSanity = async (pathname: string): Promise<boolean> => {
   const article = await getDocumentBySlug(pathname)
   return Boolean(article)
-}
+} */
 
 export async function middleware(request: NextRequest) {
   const { origin, locale } = request.nextUrl
@@ -87,12 +87,12 @@ export async function middleware(request: NextRequest) {
 
   // Redirect external links to news which is now archived if link doesn't exist in Sanity
   if (Flags.HAS_ARCHIVED_NEWS && pathname.startsWith('/news') && !pathname.startsWith('/news/archive')) {
-    const existsInSanity = await pathExistsInSanity(pathname)
-    if (!existsInSanity) {
+    //const existsInSanity = await pathExistsInSanity(pathname)
+    //if (!existsInSanity) {
       const archivedPath = pathname.replace('news', 'news/archive')
       const existsInArchive = archivedNews.some((e) => e.slug === archivedPath)
       if (existsInArchive) return NextResponse.redirect(`${origin}${archivedPath}`, PERMANENT_REDIRECT)
-    }
+    //}
   }
 
   // Redirect to the same url lowercased if necessary
@@ -100,18 +100,18 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(`${origin}${pathname.toLowerCase()}`, PERMANENT_REDIRECT)
   }
 
-  // Check if an external redirect exists in sanity
-  const externalRedirect = await getExternalRedirectUrl(pathname, request.nextUrl.locale)
+// Check if an external redirect exists in sanity
+  /*   const externalRedirect = await getExternalRedirectUrl(pathname, request.nextUrl.locale)
   if (externalRedirect) {
     return NextResponse.redirect(externalRedirect.to, PERMANENT_REDIRECT)
-  }
+  } */
 
   // Check if an internal redirect exists in sanity
-  const redirect = await getRedirectUrl(pathname, request.nextUrl.locale)
+/*   const redirect = await getRedirectUrl(pathname, request.nextUrl.locale)
   if (redirect) {
     const locale = getLocaleFromName(redirect.lang)
     return NextResponse.redirect(`${origin}/${locale}${redirect.to !== '/' ? redirect.to : ''}`, PERMANENT_REDIRECT)
-  }
+  } */
 
   // Check if pathname ends with .html
   if (isDotHtml) {

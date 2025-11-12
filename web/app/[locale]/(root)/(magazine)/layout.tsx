@@ -4,7 +4,7 @@ import { hasLocale } from 'next-intl'
 import { notFound } from 'next/navigation'
 import { routing } from '../../../../i18n/routing'
 import { getHeaderData } from '@/sanity/lib/fetchData'
-import { getLocaleFromName, getNameFromLocale } from '@/lib/localization'
+import { getLocaleFromName, getNameFromLocale } from '@/sanity/localization'
 import Header from '@/sections/Header/Header'
 import { Flags } from '@/common/helpers/datasetHelpers'
 

@@ -1,7 +1,7 @@
-import { sanityClientWithEquinorCDN } from '../../lib/sanity.server'
 import imageUrlBuilder from '@sanity/image-url'
 import { SanityImageObject } from '@sanity/image-url/lib/types/types'
 import { ImageUrlBuilder } from '@sanity/image-url/lib/types/builder'
+import { sanityClientWithEquinorCDN } from '@/sanity/lib/client'
 
 const builder = imageUrlBuilder(sanityClientWithEquinorCDN)
 

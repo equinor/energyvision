@@ -1,7 +1,7 @@
 import { getUrlFromAction } from '@/common/helpers'
 import { ResourceLink } from '@/core/Link'
 import Image, { getPxSmSizes } from '@/core/SanityImage/SanityImage'
-import { getLocaleFromName } from '@/lib/localization'
+import { getLocaleFromName } from '@/sanity/localization'
 import Blocks from '@/portableText/Blocks'
 import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
 import { HeroType } from '@/types'

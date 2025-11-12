@@ -3,7 +3,7 @@ import { IFrame } from '@/core/IFrame/IFrame'
 import { useId } from 'react'
 import { getUrlFromAction } from '../../common/helpers'
 import { ResourceLink } from '@/core/Link'
-import { getLocaleFromName } from '../../lib/localization'
+import { getLocaleFromName } from '../../sanity/localization'
 import Blocks from '@/portableText/Blocks'
 
 import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'

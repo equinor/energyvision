@@ -1,7 +1,7 @@
 import { ResourceLink } from '@/core/Link'
 import type { LinkData } from '../../types/index'
 import { getUrlFromAction } from '../../common/helpers'
-import { getLocaleFromName } from '../../lib/localization'
+import { getLocaleFromName } from '../../sanity/localization'
 import { twMerge } from 'tailwind-merge'
 import { call } from '@equinor/eds-icons'
 

@@ -7,7 +7,7 @@ import { twMerge } from 'tailwind-merge'
 import Blocks from '@/portableText/Blocks'
 import 'video.js/dist/video-js.css'
 import { ImageWithAlt } from '@/types'
-import { useSanityLoader } from '@/lib/hooks/useSanityLoader'
+import { useSanityLoader } from '@/sanity/hooks/useSanityLoader'
 import { mapSanityImageRatio, MAX_WIDTH_LAYOUT_MD } from '../SanityImage/SanityImage'
 
 export type VideoType = {

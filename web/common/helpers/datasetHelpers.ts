@@ -1,7 +1,6 @@
-/* import { FeatureFlags } from "@@/" */
+import { DatasetsKeys } from '@energyvision/shared'
+import { FeatureFlags } from '@energyvision/shared/featureFlags'
 
-import { FeatureFlags } from "@@/featureFlags"
+export const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET as DatasetsKeys
 
-
-export const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || ''
 export const Flags = FeatureFlags(dataset)

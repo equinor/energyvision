@@ -2,7 +2,7 @@
 import { twMerge } from 'tailwind-merge'
 import { getUrlFromAction } from '../../common/helpers'
 import { BaseLink } from '@/core/Link'
-import { getLocaleFromName } from '../../lib/localization'
+import { getLocaleFromName } from '../../sanity/localization'
 import { ArrowRight } from '../../icons'
 import { LinkData } from '../../types/index'
 import { forwardRef } from 'react'

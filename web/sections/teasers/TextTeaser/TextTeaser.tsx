@@ -4,7 +4,7 @@ import { getColorForTheme } from './theme'
 import { twMerge } from 'tailwind-merge'
 import { ResourceLink } from '@/core/Link'
 import { getUrlFromAction } from '../../../common/helpers/getUrlFromAction'
-import { getLocaleFromName } from '../../../lib/localization'
+import { getLocaleFromName } from '../../../sanity/localization'
 import Blocks from '@/portableText/Blocks'
 
 type TextTeaserProps = {

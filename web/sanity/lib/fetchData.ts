@@ -1,5 +1,4 @@
 import { cache } from 'react'
-import { getClient } from '../../lib/sanity.server'
 import type { QueryParams } from '../../lib/queryFromSlug'
 import { Flags } from '../../common/helpers/datasetHelpers'
 import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu'
@@ -71,10 +70,12 @@ export type MagazineQueryParams = {
 }
 
 export const getData = async (fetchQuery: { query: string; queryParams: MagazineQueryParams }, preview = false) => {
-  const client = getClient(preview)
   const { query, queryParams } = fetchQuery
   try {
-    const results = await client.fetch(query, queryParams)
+    const results = await sanityFetch({
+      query,
+      params: queryParams,
+    })
     return {
       isSuccess: true,
       data: results,

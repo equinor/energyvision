@@ -1,5 +1,5 @@
 import { Flags } from '@/common/helpers/datasetHelpers'
-import { getIsoFromLocale } from '@/lib/localization'
+import { getIsoFromLocale } from '@/sanity/localization'
 import { useLocale, useTranslations } from 'next-intl'
 import { InstantSearchNext } from 'react-instantsearch-nextjs'
 import { searchClient as client } from '../../lib/algolia'

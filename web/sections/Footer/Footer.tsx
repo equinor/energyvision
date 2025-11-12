@@ -5,7 +5,7 @@ import { Facebook, Instagram, Linkedin, Twitter, Youtube } from '../../icons'
 import { LinkButton } from '@/core/Button'
 import FooterLink from '@/core/Link/FooterLink'
 import type { FooterLinkData, SomeType, FooterColumns } from '../../types/index'
-import { getLocaleFromName } from '../../lib/localization'
+import { getLocaleFromName } from '../../sanity/localization'
 import { getUrlFromAction } from '../../common/helpers'
 import { twMerge } from 'tailwind-merge'
 

@@ -1,6 +1,6 @@
 'use client'
 import { forwardRef, HTMLAttributes, CSSProperties, ElementType, useRef, useEffect, useState } from 'react'
-import { useSanityLoader } from '../../lib/hooks/useSanityLoader'
+import { useSanityLoader } from '../../sanity/hooks/useSanityLoader'
 import { ImageBackground } from '../../types/index'
 import { twMerge } from 'tailwind-merge'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'

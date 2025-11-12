@@ -8,7 +8,7 @@ import { Typography } from '@/core/Typography'
 import Blocks from '../../portableText/Blocks'
 import { ResourceLink } from '@/core/Link'
 import { getUrlFromAction } from '../../common/helpers'
-import { getLocaleFromName } from '../../lib/localization'
+import { getLocaleFromName } from '../../sanity/localization'
 import { mergeRefs } from '@equinor/eds-utils'
 
 export type Variants = 'richTextBelow' | 'default'

@@ -1,5 +1,5 @@
 'use client'
-import { Flags } from '../../common/helpers/datasetHelpers'
+import { Flags } from '../../common/helpers/datasetHelpers.ts'
 import { useEffect, useState } from 'react'
 
 export function useProd() {

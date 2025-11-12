@@ -1,5 +1,5 @@
 import { liteClient } from 'algoliasearch/lite'
-import { algolia } from './config'
+import { algolia } from '../sanity/config'
 import { createInMemoryCache } from '@algolia/cache-in-memory'
 import { createFallbackableCache } from '@algolia/cache-common'
 import { createBrowserLocalStorageCache } from '@algolia/cache-browser-local-storage'

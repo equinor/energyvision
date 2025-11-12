@@ -1,5 +1,5 @@
 import { SanityImageObject } from '@sanity/image-url/lib/types/types'
-import { useSanityLoader } from '../../lib/hooks/useSanityLoader'
+import { useSanityLoader } from '../../sanity/hooks/useSanityLoader'
 import Img, { ImageProps } from 'next/image'
 import { twMerge } from 'tailwind-merge'
 import { ImageWithAlt } from '@/types'

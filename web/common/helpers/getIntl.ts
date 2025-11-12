@@ -1,18 +1,22 @@
 import formatTextSnippets from './formatTextSnippets'
-import { getNameFromLocale } from '../../lib/localization'
-import { defaultLanguage } from '../../languages'
-import { textSnippetsQuery } from '@/sanity/queries/textSnippets'
 import { sanityFetch } from '@/sanity/lib/live'
+import { getNameFromLocale } from '../../sanity/localization'
+
+import translations from "../../sanity/interface/translations.json"
+import { defaultLanguage } from '@/languageConfig'
 
 export default async (locale: string) => {
   const {data: textSnippetsArray} = await sanityFetch({
-      query: textSnippetsQuery
+      query: `*[_type == "textSnippet"]`
     })
+    console.log("textSnippetsArray",textSnippetsArray);
+    console.log("translations",translations);
   const textSnippetsData = formatTextSnippets(textSnippetsArray ?? [])
   const lang = getNameFromLocale(locale)
 
   return {
     locale: locale,
+    //@ts-ignore:config file, dunno why undefined possible
     defaultLocale: defaultLanguage.locale,
     messages: textSnippetsData[lang],
   }

@@ -1,4 +1,4 @@
-import { getValidLanguagesLocales } from '@/languages'
+import { getValidLanguagesLocales } from '@/languageConfig'
 import { defineRouting } from 'next-intl/routing'
 
 export const routing = defineRouting({

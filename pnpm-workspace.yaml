@@ -1,6 +1,6 @@
 packages:
   - 'web'
-  - 'e2e'
   - 'studio'
   - 'search'
+  - 'shared'
   - 'packages/*'

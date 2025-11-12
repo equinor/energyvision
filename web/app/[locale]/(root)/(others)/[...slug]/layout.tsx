@@ -3,7 +3,7 @@ import { hasLocale } from 'next-intl'
 import { notFound } from 'next/navigation'
 import { routing } from '../../../../../i18n/routing'
 import { getHeaderData, getPageDataForHeader } from '@/sanity/lib/fetchData'
-import { getNameFromLocale } from '@/lib/localization'
+import { getNameFromLocale } from '@/sanity/localization'
 import Header from '@/sections/Header/Header'
 import getPageSlugs from '@/common/helpers/getPageSlugs'
 

@@ -1,6 +1,6 @@
 import imageUrlBuilder from '@sanity/image-url'
-import { sanityClientWithEquinorCDN } from '../../lib/sanity.server'
 import type { ImageWithAlt } from '../../types/index'
+import { sanityClientWithEquinorCDN } from '@/sanity/lib/client'
 
 const builder = imageUrlBuilder(sanityClientWithEquinorCDN)
 

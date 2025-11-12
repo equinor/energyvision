@@ -1,5 +1,5 @@
 import slugsForNewsAndMagazine, { querySuffixForNewsAndMagazine } from './slugsForNewsAndMagazine'
-import { Flags } from '../../common/helpers/datasetHelpers'
+import { Flags } from '../../common/helpers/datasetHelpers.ts'
 import { sameLang, fixPreviewForDrafts } from './common/langAndDrafts'
 import {
   contentForNewsQuery,

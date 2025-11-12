@@ -9,9 +9,9 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./*"],
-      "@@/*": ["../*"]
+      "@shared/*": ["../shared/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "../featureFlags.ts", "../sitesConfig.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "../shared/*"],
   "exclude": ["node_modules"]
 }

@@ -3,7 +3,7 @@ import type { RelatedLinksData, LinkData } from '../../types/index'
 import { ResourceLink } from '@/core/Link'
 import { Typography } from '@/core/Typography'
 import { getUrlFromAction } from '../../common/helpers'
-import { getLocaleFromName } from '../../lib/localization'
+import { getLocaleFromName } from '../../sanity/localization'
 import { twMerge } from 'tailwind-merge'
 
 type RelatedContentProps = {

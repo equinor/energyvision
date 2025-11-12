@@ -1,5 +1,5 @@
 import type { DesignOptions, HeroType, ImageWithCaptionData } from '@/types'
-import { useSanityLoader } from '../../lib/hooks/useSanityLoader'
+import { useSanityLoader } from '../../sanity/hooks/useSanityLoader'
 import Image, { getFullScreenSizes, mapSanityImageRatio } from '../../core/SanityImage/SanityImage'
 import { FigureCaption } from '@/core/FigureCaption/FigureCaption'
 import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'

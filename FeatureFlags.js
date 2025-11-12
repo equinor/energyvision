@@ -47,7 +47,7 @@ const CAMPAIGN = [...GLOBAL_PROD, ...GLOBAL_DEV]
 /**
  * @param {string} dataset
  */
-export default (dataset) => ({
+export const FeatureFlags = (dataset) => ({
   HAS_NEWS: NEWS.includes(dataset),
   HAS_NEWSROOM: NEWSROOM.includes(dataset),
   HAS_MAGAZINE_INDEX: MAGAZINE_INDEX.includes(dataset),

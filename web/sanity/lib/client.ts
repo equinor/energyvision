@@ -1,6 +1,12 @@
-import { ClientConfig, createClient } from '@sanity/client'
-import { apiVersion, dataset, projectId, studioUrl } from '@/sanity/lib/api'
-import { token } from './token'
+/*import { ClientConfig, createClient } from '@sanity/client'*/
+import { ClientConfig, createClient } from 'next-sanity'
+import { apiVersion, dataset, projectId, studioUrl } from '../lib/api'
+
+const token = process.env.SANITY_API_TOKEN
+
+if (!token) {
+  throw new Error('Missing SANITY_API_TOKEN')
+}
 
 const sanityConfig: ClientConfig = {
   projectId,
@@ -29,3 +35,9 @@ export const sanityClientWithEquinorCDN = createClient({
   ...sanityConfig,
   apiHost: 'https://cdn.equinor.com',
 })
+
+export const noCdnClient = () =>
+  createClient({
+    ...sanityConfig,
+    useCdn: false,
+  })

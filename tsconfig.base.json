@@ -12,13 +12,10 @@
     "module": "preserve",
     "isolatedModules": true,
     "jsx": "preserve",
-    "incremental": true,
-    "baseUrl": "."
-    /*"paths": {
-      "~/*": ["./studio/*"],
-       "$/*": ["./packages/energyvision/*"],
-      "@/*": ["./web/*"],
-      "@@/*": ["./*"]
+    "incremental": true
+    /*     "baseUrl": ".", */
+    /*     "paths": {
+      "@repo/*": ["shared/*"]
     } */
   },
   "include": ["**/*.ts", "**/*.tsx"],
