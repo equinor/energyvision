@@ -20,5 +20,5 @@ export const algolia = {
 }
 
 export const friendlyCaptcha = {
-  siteKey: process.env.FRIENDLY_CAPTCHA_SITEKEY || '',
+  siteKey: process.env.NEXT_PUBLIC_FRIENDLY_CAPTCHA_SITEKEY || '',
 }
