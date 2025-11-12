@@ -18,13 +18,8 @@ export const getUrlFromAction = ({
     return link?.slug + anchor || ''
   }
 
-  if (!href) {
+  if (!href && type !== 'downloadableFile') {
     console.warn('Missing external url in action:', fileName)
-  }
-
-  if (type === 'downloadableFile' && fileName) {
-    const equinorHref = href.replace('cdn.sanity.io', 'cdn.equinor.com')
-    return equinorHref + '?' + fileName.replace(/ /g, '-')
   }
 
   return href + anchor || '/'
