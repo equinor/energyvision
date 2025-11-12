@@ -7,7 +7,7 @@ const getFileUrlQuery = /* groq */ `
 }
 `
 
-export default async function POST(req: Request) {
+export async function POST(req: Request) {
   const body = await req.json()
   const result = await validateFormRequest(req.method, body, 'download url')
   if (result.status !== 200) {
