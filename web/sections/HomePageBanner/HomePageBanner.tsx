@@ -2,7 +2,7 @@
 import { forwardRef } from 'react'
 import Image, { getSmallerThanPxLgSizes, ImageRatios } from '../../core/SanityImage/SanityImage'
 import { useSanityLoader } from '../../sanity/hooks/useSanityLoader'
-import { getUrlFromAction } from '../../common/helpers'
+import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import { getArrowElement } from '@/core/Link/ResourceLink'
 import { BaseLink } from '@/core/Link'
 import { ImageWithAlt, LinkData } from '../../types'

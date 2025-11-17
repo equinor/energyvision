@@ -2,8 +2,8 @@
 import { Icon } from '@equinor/eds-core-react'
 import { chevron_left, chevron_right, first_page, last_page } from '@equinor/eds-icons'
 import { useContext, useEffect, useRef, useState } from 'react'
-import { usePrefersReducedMotion } from '../../../../common/hooks/usePrefersReducedMotion'
-import { PaginationContext } from '../../../../common/contexts/PaginationContext'
+import { usePrefersReducedMotion } from '../../../../lib/hooks/usePrefersReducedMotion'
+import { PaginationContext } from '../../../../lib/contexts/PaginationContext'
 import { PaginationItem } from '../pagination/PaginationItem'
 
 type PaginationProps = {
@@ -55,7 +55,7 @@ export const Pagination = ({ totalPages, onPageChange }: PaginationProps) => {
   const isCurrentPage = (page: number) => page === currentPage
 
   return (
-    <ul className="pt-4 grid gap-2 auto-cols-min grid-flow-col justify-center">
+    <ul className="grid auto-cols-min grid-flow-col justify-center gap-2 pt-4">
       <PaginationItem
         ariaLabel="First page"
         value={0}

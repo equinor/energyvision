@@ -3,12 +3,12 @@ import { forwardRef, HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
 import Img from 'next/image'
 import { GridTeaserData } from '../../types/index'
-import { urlFor } from '../../common/helpers'
 import { RowType } from './mapGridContent'
 import GridLinkArrow from './GridLinkArrow'
 import Blocks from '../../portableText/Blocks'
 import { PortableTextBlock } from '@portabletext/types'
 import { getColorForTheme } from '@/sections/teasers/TextTeaser/theme'
+import { urlFor } from '@/sanity/helpers/urlFor'
 
 export type GridTeaserProps = {
   data: GridTeaserData

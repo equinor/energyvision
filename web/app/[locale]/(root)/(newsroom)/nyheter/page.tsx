@@ -1,6 +1,4 @@
 import { getIsoFromLocale, getNameFromLocale } from '../../../../../sanity/localization'
-import { Flags } from '../../../../../common/helpers/datasetHelpers.ts'
-import { algolia } from '../../../../../sanity/config'
 import { getPageData } from '../../../../../sanity/lib/fetchData'
 import { notFound } from 'next/navigation'
 import { unstable_cache } from 'next/cache'
@@ -11,8 +9,10 @@ import { newsroomQuery } from '@/sanity/queries/newsroom'
 import { algoliasearch } from 'algoliasearch'
 import { Metadata } from 'next'
 import { metaTitleSuffix } from '@/languages'
-import getOpenGraphImages from '@/common/helpers/getOpenGraphImages'
+import getOpenGraphImages from '@/sanity/helpers/getOpenGraphImages'
 import { toPlainText } from 'next-sanity'
+import { Flags } from '@/sanity/helpers/datasetHelpers'
+import { algolia } from '@/lib/config'
 
 export function generateStaticParams() {
   return Flags.HAS_NEWSROOM ? [{ locale: 'no' }] : []

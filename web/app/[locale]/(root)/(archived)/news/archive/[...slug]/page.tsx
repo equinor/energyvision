@@ -1,14 +1,14 @@
-import { Flags } from '@/common/helpers/datasetHelpers'
-import archivedNews from '../../../../../../../lib/archive/archivedNewsPaths.json'
+import archivedNews from '@/lib/archive/archivedNewsPaths.json'
 import { languages } from '@/languages'
 import { notFound } from 'next/navigation'
 import ArchivedNews from '@/templates/archivedNews/ArchivedNews'
 import { Metadata } from 'next'
 import { cache } from 'react'
-import { host } from '@/sanity/config'
 import { PathType } from '@/sanity/queries/paths/getPaths'
 import { hasLocale } from 'next-intl'
 import { routing } from '@/i18n/routing'
+import { host } from '@/lib/config'
+import { Flags } from '@/sanity/helpers/datasetHelpers'
 
 //TODO types
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

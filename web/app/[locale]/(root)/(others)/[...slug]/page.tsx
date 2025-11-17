@@ -1,14 +1,14 @@
-import { getQueryFromSlug } from '../../../../../lib/queryFromSlug'
+import { getQueryFromSlug } from '../../../../../sanity/helpers/queryFromSlug'
 import dynamic from 'next/dynamic'
 import { notFound } from 'next/navigation'
 import { getPageData } from '@/sanity/lib/fetchData'
 import { Metadata } from 'next'
 import { getLocaleFromName, getNameFromLocale } from '@/sanity/localization'
-import getOpenGraphImages from '@/common/helpers/getOpenGraphImages'
+import getOpenGraphImages from '@/sanity/helpers/getOpenGraphImages'
 import { defaultLanguage, metaTitleSuffix, domain } from '@/languages'
-import getPageSlugs from '@/common/helpers/getPageSlugs'
-import { isDateAfter } from '@/common/helpers/dateUtilities'
 import { toPlainText } from 'next-sanity'
+import getPageSlugs from '@/sanity/helpers/getPageSlugs'
+import { isDateAfter } from '@/lib/helpers/dateUtilities'
 
 const MagazinePage = dynamic(() => import('@/templates/magazine/MagazinePage'))
 const LandingPage = dynamic(() => import('@/templates/landingpage/LandingPage'))

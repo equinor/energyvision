@@ -9,11 +9,11 @@ import { SanityImageObject } from '@sanity/image-url/lib/types/types'
 import { Typography } from '@equinor/eds-core-react'
 import Blocks from '../../portableText/Blocks'
 import { ResourceLink } from '@/core/Link'
-import { getUrlFromAction } from '../../common/helpers'
 import { getLocaleFromName } from '../../sanity/localization'
 import { DisplayModes } from '@/core/Carousel/Carousel'
 import { useTranslations } from 'next-intl'
 import { useMediaQuery } from '@/lib/hooks/useMediaQuery'
+import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 
 export type ImageWithOverlayProps = {
   image?: SanityImageObject

@@ -2,13 +2,13 @@ import { newsQuery } from '@/sanity/queries/news'
 import { routeQuery } from '@/sanity/queries/routes'
 import { magazineQuery } from '@/sanity/queries/magazine'
 //import { contentQueryById } from '@/sanity/queries/contentById'
-import { getNameFromLocale } from '../sanity/localization'
-import { newsSlug, magazineSlug } from '../../satellitesConfig'
+import { getNameFromLocale } from '../localization'
+import { newsSlug, magazineSlug } from '../../../satellitesConfig'
 
 import { localNewsQuery } from '@/sanity/queries/localNews'
 import { homePageQuery } from '@/sanity/queries/homePage'
-import { Flags } from '@/common/helpers/datasetHelpers'
 import { sanityFetch } from '@/sanity/lib/live'
+import { Flags } from '@/sanity/helpers/datasetHelpers'
 
 export type QueryParams = {
   id?: string

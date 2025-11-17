@@ -28,9 +28,9 @@ import { routing } from './i18n/routing'
 import { getDnsRedirect, getWWWRedirect } from './sanity/interface/redirects'
 import { NextRequest, NextResponse } from 'next/server'
 /* import { getLocaleFromName } from './sanity/localization' */
-import { Flags } from './common/helpers/datasetHelpers.ts'
 /* import { getDocumentBySlug } from './sanity/queries/paths/getPaths' */
 import archivedNews from './lib/archive/archivedNewsPaths.json'
+import { Flags } from './sanity/helpers/datasetHelpers'
 
 const PERMANENT_REDIRECT = 301
 //const TEMPORARY_REDIRECT = 302
@@ -89,9 +89,9 @@ export async function middleware(request: NextRequest) {
   if (Flags.HAS_ARCHIVED_NEWS && pathname.startsWith('/news') && !pathname.startsWith('/news/archive')) {
     //const existsInSanity = await pathExistsInSanity(pathname)
     //if (!existsInSanity) {
-      const archivedPath = pathname.replace('news', 'news/archive')
-      const existsInArchive = archivedNews.some((e) => e.slug === archivedPath)
-      if (existsInArchive) return NextResponse.redirect(`${origin}${archivedPath}`, PERMANENT_REDIRECT)
+    const archivedPath = pathname.replace('news', 'news/archive')
+    const existsInArchive = archivedNews.some((e) => e.slug === archivedPath)
+    if (existsInArchive) return NextResponse.redirect(`${origin}${archivedPath}`, PERMANENT_REDIRECT)
     //}
   }
 
@@ -100,14 +100,14 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(`${origin}${pathname.toLowerCase()}`, PERMANENT_REDIRECT)
   }
 
-// Check if an external redirect exists in sanity
+  // Check if an external redirect exists in sanity
   /*   const externalRedirect = await getExternalRedirectUrl(pathname, request.nextUrl.locale)
   if (externalRedirect) {
     return NextResponse.redirect(externalRedirect.to, PERMANENT_REDIRECT)
   } */
 
   // Check if an internal redirect exists in sanity
-/*   const redirect = await getRedirectUrl(pathname, request.nextUrl.locale)
+  /*   const redirect = await getRedirectUrl(pathname, request.nextUrl.locale)
   if (redirect) {
     const locale = getLocaleFromName(redirect.lang)
     return NextResponse.redirect(`${origin}/${locale}${redirect.to !== '/' ? redirect.to : ''}`, PERMANENT_REDIRECT)

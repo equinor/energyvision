@@ -12,10 +12,9 @@ import {
   useRef,
   useState,
 } from 'react'
-import envisTwMerge from '../../twMerge'
 import { MediaButton } from '@/core/MediaButton/MediaButton'
 import { CarouselImageItem } from './CarouselImageItem'
-import { usePrefersReducedMotion } from '../../common/hooks/usePrefersReducedMotion'
+import { usePrefersReducedMotion } from '../../lib/hooks/usePrefersReducedMotion'
 import { PortableTextBlock } from '@portabletext/types'
 import { toPlainText } from '@portabletext/react'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'

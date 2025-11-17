@@ -7,9 +7,9 @@ import { DisplayModes } from './Carousel'
 import { Typography } from '@/core/Typography'
 import Blocks from '../../portableText/Blocks'
 import { ResourceLink } from '@/core/Link'
-import { getUrlFromAction } from '../../common/helpers'
 import { getLocaleFromName } from '../../sanity/localization'
 import { mergeRefs } from '@equinor/eds-utils'
+import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 
 export type Variants = 'richTextBelow' | 'default'
 

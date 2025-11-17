@@ -10,7 +10,7 @@ import { ImageBackgroundContainer } from '@/core/Backgrounds/ImageBackgroundCont
 import MagazineCard from '@/sections/cards/MagazineCard/MagazineCard'
 import { SimplePagination } from '@/core/SimplePagination/SimplePagination'
 import CardSkeleton from '@/sections/cards/CardSkeleton/CardSkeleton'
-import { PaginationContextProvider } from '../../common/contexts/PaginationContext'
+import { PaginationContextProvider } from '../../lib/contexts/PaginationContext'
 import { SharedBanner } from '../shared/SharedBanner'
 import SharedTitle from '../shared/SharedTitle'
 import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'

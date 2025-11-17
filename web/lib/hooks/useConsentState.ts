@@ -1,9 +1,9 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { CookieType } from '../../types'
-import { checkCookieConsent } from '../../common/helpers/checkCookieConsent'
 import { useProd } from './useProd'
 import { usePathname } from 'next/navigation'
+import { checkCookieConsent } from '../helpers/checkCookieConsent'
 
 //COOKIEBOT
 declare global {

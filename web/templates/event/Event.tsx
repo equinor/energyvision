@@ -1,17 +1,17 @@
 'use client'
 import { toPlainText } from '@portabletext/react'
-import { getEventDates } from '../../common/helpers/dateUtilities'
 import Promotion from '../../sections/promotions/PromotionsBlock'
 import type { PortableTextBlock } from '@portabletext/types'
 import type { EventSchema } from '../../types/index'
 import { EventJsonLd } from 'next-seo'
 import RelatedContent from '../../pageComponents/shared/RelatedContent'
 import { useTranslations, useFormatter } from 'next-intl'
-import AddToCalendar from '@/pageComponents/topicPages/AddToCalendar'
+import AddToCalendar from '@/core/AddToCalendar/AddToCalendar'
 import ContactList from '@/pageComponents/shared/ContactList'
 import Blocks from '@/portableText/Blocks'
 import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
 import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
+import { getEventDates } from '@/lib/helpers/dateUtilities'
 
 export default function Event({ data }: { data: EventSchema }): JSX.Element {
   const { title } = data

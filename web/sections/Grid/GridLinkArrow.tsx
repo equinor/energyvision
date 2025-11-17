@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { twMerge } from 'tailwind-merge'
-import { getUrlFromAction } from '../../common/helpers'
+import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import { BaseLink } from '@/core/Link'
 import { getLocaleFromName } from '../../sanity/localization'
 import { ArrowRight } from '../../icons'
@@ -53,7 +53,7 @@ const GridLinkArrow = forwardRef<HTMLDivElement, GridLinkArrowProps>(function Gr
         <div
           ref={ref}
           className={twMerge(
-            `absolute bottom-0 right-0 focus-visible:-translate-y-[5px] focus-visible:-translate-x-[5px] pt-4 3xl:pt-12 w-full flex justify-end`,
+            `absolute right-0 bottom-0 flex w-full justify-end pt-4 focus-visible:-translate-x-[5px] focus-visible:-translate-y-[5px] 3xl:pt-12`,
             className,
           )}
         >
@@ -62,14 +62,7 @@ const GridLinkArrow = forwardRef<HTMLDivElement, GridLinkArrowProps>(function Gr
             {...(action.link?.lang && { hrefLang: getLocaleFromName(action.link?.lang) })}
             type={action.type}
             className={twMerge(
-              `group
-              py-2
-              px-4
-              focus:outline-hidden
-              ${bgClassName()}
-              ${variantClassName()}
-              focus-visible:envis-outline
-              dark:focus-visible:envis-outline`,
+              `group px-4 py-2 focus:outline-hidden ${bgClassName()} ${variantClassName()} focus-visible:envis-outline dark:focus-visible:envis-outline`,
             )}
           >
             <span className="sr-only">{`${action.label} ${

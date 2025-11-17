@@ -4,9 +4,10 @@ import { twMerge } from 'tailwind-merge'
 import { BaseLink, ResourceLink } from '@/core/Link'
 import Image, { getSmallerThanPxLgSizes } from '../../../core/SanityImage/SanityImage'
 import { getLocaleFromName } from '../../../sanity/localization'
-import { getUrlFromAction, urlFor } from '../../../common/helpers'
+import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import { PeopleCardData } from '../../../types/index'
 import { SocialProfileJsonLd } from 'next-seo'
+import { urlFor } from '@/sanity/helpers/urlFor'
 
 export type PeopleCardProps = {
   data: PeopleCardData

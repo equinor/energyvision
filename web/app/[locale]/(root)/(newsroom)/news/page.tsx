@@ -10,7 +10,7 @@ import { setRequestLocale } from 'next-intl/server'
 import { newsroomQuery } from '@/sanity/queries/newsroom'
 import { algoliasearch } from 'algoliasearch'
 import { toPlainText } from 'next-sanity'
-import getOpenGraphImages from '@/common/helpers/getOpenGraphImages'
+import getOpenGraphImages from '@/sanity/helpers/getOpenGraphImages'
 import { metaTitleSuffix } from '@/languages'
 import { Metadata } from 'next'
 

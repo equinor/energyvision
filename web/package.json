@@ -9,9 +9,9 @@
     "email": "fg_envis@equinor.com"
   },
   "scripts": {
-    "dev": "next dev --webpack",
+    "dev": "next dev",
     "info": "next info",
-    "build": "next build --webpack",
+    "build": "next build",
     "start": "next start",
     "type-check": "tsc --project tsconfig.json --pretty",
     "check-types": "tsc",

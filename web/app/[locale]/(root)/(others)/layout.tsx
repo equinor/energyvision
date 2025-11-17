@@ -5,7 +5,7 @@ import { routing } from '../../../../i18n/routing'
 import { getHeaderData, getPageDataForHeader } from '@/sanity/lib/fetchData'
 import { getNameFromLocale } from '@/sanity/localization'
 import Header from '@/sections/Header/Header'
-import getPageSlugs from '@/common/helpers/getPageSlugs'
+import getPageSlugs from '@/sanity/helpers/getPageSlugs'
 
 type Params = Promise<{ locale: string }>
 export default async function LocaleLayout({ children, params }: { children: React.ReactNode; params: Params }) {

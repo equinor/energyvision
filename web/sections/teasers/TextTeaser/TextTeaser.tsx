@@ -1,10 +1,9 @@
 import type { TextTeaserData } from '../../../types/index'
 import { getColorForTheme } from './theme'
-
 import { twMerge } from 'tailwind-merge'
 import { ResourceLink } from '@/core/Link'
-import { getUrlFromAction } from '../../../common/helpers/getUrlFromAction'
-import { getLocaleFromName } from '../../../sanity/localization'
+import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
+import { getLocaleFromName } from '@/sanity/localization'
 import Blocks from '@/portableText/Blocks'
 
 type TextTeaserProps = {

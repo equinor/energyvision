@@ -1,7 +1,7 @@
 import type { IFrameData } from '../../types/index'
 import { IFrame } from '@/core/IFrame/IFrame'
 import { useId } from 'react'
-import { getUrlFromAction } from '../../common/helpers'
+import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import { ResourceLink } from '@/core/Link'
 import { getLocaleFromName } from '../../sanity/localization'
 import Blocks from '@/portableText/Blocks'

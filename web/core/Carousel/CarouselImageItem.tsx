@@ -6,7 +6,6 @@ import { forwardRef, HTMLAttributes, useEffect, useMemo, useRef } from 'react'
 import { PortableTextBlock } from '@portabletext/types'
 import { SanityImageObject } from '@sanity/image-url/lib/types/types'
 import { BaseLink, ResourceLink } from '@/core/Link'
-import { getUrlFromAction } from '../../common/helpers'
 import { getLocaleFromName } from '../../sanity/localization'
 import { ArrowRight } from '../../icons'
 import { ImageWithOverlay } from '@/core/Image/ImageWithOverlay'
@@ -14,6 +13,7 @@ import Blocks from '../../portableText/Blocks'
 import { mergeRefs } from '@equinor/eds-utils'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
 import { twMerge } from 'tailwind-merge'
+import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 
 type CarouselImageItemProps = {
   type: string

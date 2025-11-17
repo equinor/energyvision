@@ -3,14 +3,14 @@ import { useLocale, useTranslations } from 'next-intl'
 import { default as NextLink } from 'next/link'
 import { AllSlugsType, LocalizationSwitch } from '../../core/LocalizationSwitch/LocalizationSwitch'
 import type { MenuData, SimpleMenuData, StickyMenuData } from '../../types/index'
-import { Flags } from '../../common/helpers/datasetHelpers.ts'
 import { languages, defaultLanguage } from '../../languages'
 import { search } from '@equinor/eds-icons'
-import { getAllSitesLink } from '../../common/helpers/getAllSitesLink'
 import { Icon } from '@equinor/eds-core-react'
 import { ButtonLink, LogoLink } from '@/core/Link'
 import SiteMenu from '@/sections/SiteMenu/SiteMenu'
 import Topbar from '@/core/Topbar/Topbar'
+import { getAllSitesLink } from '@/lib/helpers/getAllSitesLink'
+import { Flags } from '@/sanity/helpers/datasetHelpers'
 
 export type HeaderProps = {
   menuData?: MenuData | SimpleMenuData

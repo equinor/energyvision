@@ -1,20 +1,15 @@
 /*import { ClientConfig, createClient } from '@sanity/client'*/
 import { ClientConfig, createClient } from 'next-sanity'
 import { apiVersion, dataset, projectId, studioUrl } from '../lib/api'
-
-const token = process.env.SANITY_API_TOKEN
-
-if (!token) {
-  throw new Error('Missing SANITY_API_TOKEN')
-}
+import { token } from './token'
 
 const sanityConfig: ClientConfig = {
   projectId,
   dataset,
   apiVersion,
-  token,
   perspective: 'published',
   useCdn: true,
+  token,
   stega: {
     studioUrl,
     // Set logger to 'console' for more verbose logging
@@ -29,11 +24,8 @@ const sanityConfig: ClientConfig = {
   },
 }
 
-export const client = createClient({ ...sanityConfig })
-
-export const sanityClientWithEquinorCDN = createClient({
+export const client = createClient({
   ...sanityConfig,
-  apiHost: 'https://cdn.equinor.com',
 })
 
 export const noCdnClient = () =>

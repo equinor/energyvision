@@ -1,11 +1,10 @@
-import { NextSeo, WebPageJsonLd } from 'next-seo'
+import { WebPageJsonLd } from 'next-seo'
 import { ImageWithAlt } from '../../types/index'
-import { metaTitleSuffix } from '../../languages'
-import getOpenGraphImages from '../../common/helpers/getOpenGraphImages'
 import { toPlainText } from '@portabletext/react'
 import { PortableTextBlock } from '@portabletext/types'
-import { getFullUrl } from '../../common/helpers/getFullUrl'
+
 import { useRouter } from 'next/compat/router'
+import { getFullUrl } from '@/lib/helpers/getFullUrl'
 
 type SeoProps = {
   seoAndSome?: {
@@ -32,17 +31,6 @@ const Seo = (props: SeoProps) => {
 
   return (
     <>
-      <NextSeo
-        title={`${seoAndSome?.documentTitle || title} - ${metaTitleSuffix}`}
-        description={seoAndSome?.metaDescription}
-        openGraph={{
-          title: title,
-          description: seoAndSome?.metaDescription,
-          type: 'website',
-          url: fullUrl(),
-          images: ogImage ? getOpenGraphImages(ogImage) : undefined,
-        }}
-      ></NextSeo>
       <WebPageJsonLd
         id={fullUrl() || ''}
         description={title}

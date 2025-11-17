@@ -8,10 +8,10 @@ import {
   getMagazineIndexPaths,
   getMagazinePaths,
   PathType,
-} from '../../common/helpers/getPaths'
-import { Flags } from '@/common/helpers/datasetHelpers'
+} from '../../sanity/helpers/getPaths'
 import archivedNews from '@/lib/archive/archivedNewsPaths.json'
-import { crawlableDomains } from '@/common/helpers/domainHelpers'
+import { crawlableDomains } from '@/lib/helpers/domainHelpers'
+import { Flags } from '@/sanity/helpers/datasetHelpers'
 
 const formatPath = ({ slug, locale: urlLocale }: PathType) => {
   const locale = urlLocale === defaultLanguage.locale ? '' : urlLocale

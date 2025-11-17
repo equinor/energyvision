@@ -5,7 +5,7 @@ import Blocks, { MarkType } from '../../portableText/Blocks'
 import { PortableTextBlock } from '@portabletext/types'
 import isEmpty from '../../portableText/helpers/isEmpty'
 import { colorKeyToUtilityMap } from '../../styles/colorKeyToUtilityMap'
-import { urlFor } from '../../common/helpers'
+import { urlFor } from '@/sanity/helpers/urlFor'
 
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 const campaignTitleBlocks: MarkType = {

@@ -1,8 +1,8 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { checkCookieConsent } from '../../common/helpers/checkCookieConsent'
 import { CookieType } from '../../types'
 import { usePathname } from 'next/navigation'
+import { checkCookieConsent } from '../helpers/checkCookieConsent'
 
 /**
  * Returns true if the consent is given for the given consentType.

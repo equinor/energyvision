@@ -1,5 +1,6 @@
 'use client'
-import { Flags } from '../../common/helpers/datasetHelpers.ts'
+
+import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { useEffect, useState } from 'react'
 
 export function useProd() {

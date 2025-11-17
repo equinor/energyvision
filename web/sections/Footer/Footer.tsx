@@ -6,7 +6,7 @@ import { LinkButton } from '@/core/Button'
 import FooterLink from '@/core/Link/FooterLink'
 import type { FooterLinkData, SomeType, FooterColumns } from '../../types/index'
 import { getLocaleFromName } from '../../sanity/localization'
-import { getUrlFromAction } from '../../common/helpers'
+import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import { twMerge } from 'tailwind-merge'
 
 function getSomeSvg(someType: SomeType) {

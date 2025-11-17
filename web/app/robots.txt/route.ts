@@ -1,6 +1,6 @@
+import { crawlableDomains } from '@/lib/helpers/domainHelpers'
+import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { NextResponse } from 'next/server'
-import { Flags } from '@/common/helpers/datasetHelpers' // adjust path if needed
-import { crawlableDomains } from '@/common/helpers/domainHelpers'
 
 const generateRobotsTxt = (domain: string) => `User-agent: *
 ${crawlableDomains.includes(domain) ? 'Allow' : 'Disallow'}: /

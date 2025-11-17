@@ -1,10 +1,10 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { isAfter } from 'date-fns'
-import { getEventDates, toUTCDateParts } from '../../common/helpers/dateUtilities'
 import type { EventDateType } from '../../types/index'
 import { ResourceLink } from '@/core/Link'
 import { useTranslations } from 'next-intl'
+import { getEventDates, toUTCDateParts } from '@/lib/helpers/dateUtilities'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const ics = require('ics')

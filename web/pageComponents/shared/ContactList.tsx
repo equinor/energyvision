@@ -1,7 +1,7 @@
 import type { ContactListData } from '../../types/index'
-import { removeWhiteSpace } from '../../common/helpers/removeWhiteSpace'
 import { twMerge } from 'tailwind-merge'
 import { Typography } from '@/core/Typography'
+import { removeWhiteSpace } from '@/lib/helpers/removeWhiteSpace'
 
 type ContactListProps = {
   data: ContactListData

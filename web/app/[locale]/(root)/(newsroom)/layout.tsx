@@ -6,7 +6,7 @@ import { routing } from '../../../../i18n/routing'
 import { getHeaderData } from '@/sanity/lib/fetchData'
 import { getLocaleFromName, getNameFromLocale } from '@/sanity/localization'
 import Header from '@/sections/Header/Header'
-import { Flags } from '@/common/helpers/datasetHelpers'
+import { Flags } from '@/sanity/helpers/datasetHelpers'
 
 type Params = Promise<{ locale: string }>
 

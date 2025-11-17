@@ -2,13 +2,13 @@
 import { EventCardData } from '../../../types/index'
 import { forwardRef, HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { getEventDates } from '../../../common/helpers/dateUtilities'
 import { BaseLink } from '@/core/Link'
 import { Icon } from '@equinor/eds-core-react'
 import { world } from '@equinor/eds-icons'
 import Blocks from '@/portableText/Blocks'
 import { useFormatter } from 'next-intl'
 import { Typography } from '@/core/Typography'
+import { getEventDates } from '@/lib/helpers/dateUtilities'
 
 export type PastEventsListItemProps = {
   event: EventCardData

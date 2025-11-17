@@ -1,9 +1,9 @@
 import { ResourceLink } from '@/core/Link'
 import type { LinkData } from '../../types/index'
-import { getUrlFromAction } from '../../common/helpers'
 import { getLocaleFromName } from '../../sanity/localization'
 import { twMerge } from 'tailwind-merge'
 import { call } from '@equinor/eds-icons'
+import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 
 type CallToActionsProps = {
   callToActions: LinkData[]

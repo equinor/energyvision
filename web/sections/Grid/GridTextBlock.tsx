@@ -1,5 +1,5 @@
 import { twMerge } from 'tailwind-merge'
-import { getUrlFromAction } from '../../common/helpers'
+import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import GridLinkArrow from './GridLinkArrow'
 import { getColorForTheme } from '@/sections/teasers/TextTeaser/theme'
 import { BackgroundTypes, GridTextBlockData } from '../../types/index'

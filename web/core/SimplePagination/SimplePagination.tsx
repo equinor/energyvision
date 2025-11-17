@@ -2,8 +2,8 @@
 import envisTwMerge from '../../twMerge'
 import { MediaButton } from '@/core/MediaButton/MediaButton'
 import { useContext } from 'react'
-import { PaginationContext } from '../../common/contexts/PaginationContext'
-import { usePrefersReducedMotion } from '../../common/hooks/usePrefersReducedMotion'
+import { PaginationContext } from '../../lib/contexts/PaginationContext'
+import { usePrefersReducedMotion } from '../../lib/hooks/usePrefersReducedMotion'
 import { useTranslations } from 'next-intl'
 
 export type SimplePaginationProps = {

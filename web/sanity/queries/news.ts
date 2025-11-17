@@ -1,5 +1,4 @@
 import slugsForNewsAndMagazine, { querySuffixForNewsAndMagazine } from './slugsForNewsAndMagazine'
-import { Flags } from '../../common/helpers/datasetHelpers.ts'
 import { sameLang, fixPreviewForDrafts } from './common/langAndDrafts'
 import {
   contentForNewsQuery,
@@ -9,6 +8,7 @@ import {
 } from './common/newsSubqueries'
 import { lastUpdatedTimeQuery, publishDateTimeQuery } from './common/publishDateTime'
 import { functions } from './common/functions'
+import { Flags } from '../helpers/datasetHelpers'
 
 export const excludeCrudeOilAssays =
   Flags.IS_DEV || Flags.IS_GLOBAL_PROD ? /* groq */ `!('crude-oil-assays' in tags[]->key.current) &&` : ''

@@ -1,10 +1,10 @@
-import { getQueryFromSlug } from '../../../../lib/queryFromSlug'
+import { getQueryFromSlug } from '../../../../sanity/helpers/queryFromSlug'
 import { notFound } from 'next/navigation'
 import HomePage from '../../../../templates/homepage/HomePage'
 import { defaultLanguage, domain, languages, metaTitleSuffix } from '@/languages'
 import { getPageData } from '@/sanity/lib/fetchData'
 import { Metadata } from 'next'
-import getOpenGraphImages from '@/common/helpers/getOpenGraphImages'
+import getOpenGraphImages from '@/sanity/helpers/getOpenGraphImages'
 import { toPlainText } from 'next-sanity'
 
 export const dynamicParams = true // fallback to true in app router

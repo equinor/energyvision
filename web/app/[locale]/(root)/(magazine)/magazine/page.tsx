@@ -8,7 +8,7 @@ import MagazineRoom from '@/templates/magazine/Magazineroom'
 import { MagazineIndexPageType } from '../../../../../types'
 import { setRequestLocale } from 'next-intl/server'
 import { allMagazineDocuments, magazineIndexQuery, getMagazineArticlesByTag } from '@/sanity/queries/magazine'
-import getOpenGraphImages from '@/common/helpers/getOpenGraphImages'
+import getOpenGraphImages from '@/sanity/helpers/getOpenGraphImages'
 import { metaTitleSuffix } from '@/languages'
 import { Metadata } from 'next'
 

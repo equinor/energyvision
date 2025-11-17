@@ -1,6 +1,5 @@
 import { cache } from 'react'
-import type { QueryParams } from '../../lib/queryFromSlug'
-import { Flags } from '../../common/helpers/datasetHelpers'
+import type { QueryParams } from '../helpers/queryFromSlug'
 import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu'
 import { footerQuery } from '@/sanity/queries/footer'
 import { simpleMenuQuery } from '@/sanity/queries/simpleMenu'
@@ -8,6 +7,7 @@ import { sanityFetch } from '@/sanity/lib/live'
 import { pageDataForHeaderQuery } from '../queries/routes'
 import { homePageDataForHeaderQuery } from '../queries/homePage'
 import { newsroomDataForHeaderQuery } from '../queries/newsroom'
+import { Flags } from '@/sanity/helpers/datasetHelpers'
 
 //export const getPageData = async (page: { query: string; queryParams: QueryParams }) => {
 export const getPageData = cache(async (page: { query: string; queryParams: QueryParams }) => {

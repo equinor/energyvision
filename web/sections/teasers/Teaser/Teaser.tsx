@@ -1,5 +1,5 @@
-import { getUrlFromAction } from '../../../common/helpers'
-import Image, { getPxLgSizes, getPxSmSizes } from '../../../core/SanityImage/SanityImage'
+import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
+import Image, { getPxLgSizes } from '../../../core/SanityImage/SanityImage'
 import type { DesignOptions, ImageWithAlt, LinkData } from '../../../types/index'
 import { ResourceLink } from '../../../core/Link'
 import { getLocaleFromName } from '../../../sanity/localization'

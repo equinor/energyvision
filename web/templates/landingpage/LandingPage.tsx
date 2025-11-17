@@ -1,6 +1,5 @@
 import type { LandingPageSchema, PortableTextBlock } from '../../types/index'
 import ContentGroup from '../../pageComponents/landingPages/ContentGroup'
-import Seo from '../../pageComponents/shared/Seo'
 import { Typography } from '@/core/Typography'
 import { toPlainText } from '@portabletext/react'
 import Blocks from '@/portableText/Blocks'
@@ -15,7 +14,6 @@ const LandingPage = ({ data }: LandingPageProps) => {
 
   return (
     <>
-      <Seo seoAndSome={data?.seoAndSome} slug={data?.slug} pageTitle={data?.title} />
       <main className="flex flex-col [:not(:has(.sticky-menu))]:pt-topbar">
         <div className="px-layout-lg">
           {title && (

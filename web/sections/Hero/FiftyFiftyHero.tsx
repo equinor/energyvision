@@ -1,4 +1,4 @@
-import { getUrlFromAction } from '@/common/helpers'
+import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import { ResourceLink } from '@/core/Link'
 import Image, { getPxSmSizes } from '@/core/SanityImage/SanityImage'
 import { getLocaleFromName } from '@/sanity/localization'

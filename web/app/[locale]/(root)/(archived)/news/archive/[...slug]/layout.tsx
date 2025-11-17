@@ -1,14 +1,14 @@
 // @ts-ignore: missing type declarations for side-effect import of global CSS
-import '../../../../../../globals.css'
+import '@/globals.css'
 import { hasLocale } from 'next-intl'
 import { notFound } from 'next/navigation'
-import { routing } from '../../../../../../../i18n/routing'
+import { routing } from '@/i18n/routing'
 import { getHeaderData } from '@/sanity/lib/fetchData'
 import { getNameFromLocale } from '@/sanity/localization'
 import Header from '@/sections/Header/Header'
-import archivedNews from '../../../../../../../lib/archive/archivedNewsPaths.json'
+import archivedNews from '@/lib/archive/archivedNewsPaths.json'
 import { PathType } from '@/sanity/queries/paths/getPaths'
-import { Flags } from '@/common/helpers/datasetHelpers'
+import { Flags } from '@/sanity/helpers/datasetHelpers'
 
 type Params = Promise<{ locale: string; slug: string[] }>
 

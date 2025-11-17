@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { getNameFromLocale } from '../../../../../sanity/localization'
-import { Flags } from '../../../../../common/helpers/datasetHelpers.ts'
-import { getPageData, getData } from '../../../../../sanity/lib/fetchData'
+import { getNameFromLocale } from '@/sanity/localization'
+import { getPageData, getData } from '@/sanity/lib/fetchData'
 import { notFound } from 'next/navigation'
 import MagazineRoom from '@/templates/magazine/Magazineroom'
-import { MagazineIndexPageType } from '../../../../../types'
+import { MagazineIndexPageType } from '@/types'
 import { setRequestLocale } from 'next-intl/server'
 import { allMagazineDocuments, magazineIndexQuery, getMagazineArticlesByTag } from '@/sanity/queries/magazine'
-import getOpenGraphImages from '@/common/helpers/getOpenGraphImages'
+import getOpenGraphImages from '@/sanity/helpers/getOpenGraphImages'
 import { metaTitleSuffix } from '@/languages'
 import { Metadata } from 'next'
+import { Flags } from '@/sanity/helpers/datasetHelpers'
 
 export function generateStaticParams() {
   return Flags.HAS_MAGAZINE ? [{ locale: 'no' }] : []
@@ -85,15 +85,17 @@ export default async function MagazinePage({
 
   // Fetch list of articles (by tag or all)
   const tag = (await searchParams)?.tag
-  let magazineArticles: any[] = []
+  let magazineArticles = []
   if (tag && tag !== 'all') {
     const { data } = await getData({
       query: getMagazineArticlesByTag(false, false),
       queryParams: { ...(queryParams as any), tag } as any,
     })
+    //@ts-ignore:todo types
     magazineArticles = data
   } else {
     const { data } = await getData({ query: allMagazineDocuments, queryParams: queryParams as any })
+    //@ts-ignore:todo types
     magazineArticles = data
   }
 
