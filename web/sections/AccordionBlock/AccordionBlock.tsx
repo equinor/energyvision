@@ -4,7 +4,7 @@ import type { AccordionData, AccordionListData } from '../../types/index'
 import { toPlainText } from '@portabletext/react'
 import { Typography } from '../../core/Typography'
 import { twMerge } from 'tailwind-merge'
-import Image, { getSmallerThanPxLgSizes } from '../../core/SanityImage/SanityImage'
+import { Image } from '@/core/Image/Image'
 import Blocks from '@/portableText/Blocks'
 import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
 
@@ -32,13 +32,7 @@ const AccordionBlock = ({ data, anchor, className }: AccordionBlockProps) => {
       <section id={anchor} className={twMerge(`${bg} ${dark ? 'dark' : ''} px-layout-lg pb-page-content`, className)}>
         {image?.asset && (
           <div className="w-1/4">
-            <Image
-              image={image}
-              maxWidth={570}
-              sizes={getSmallerThanPxLgSizes()}
-              aspectRatio={'1:1'}
-              className="aspect-square rounded-full"
-            />
+            <Image image={image} grid="xs" aspectRatio={'1:1'} className="aspect-square rounded-full" />
           </div>
         )}
         {title &&

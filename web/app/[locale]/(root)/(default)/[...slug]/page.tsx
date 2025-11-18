@@ -4,11 +4,11 @@ import { notFound } from 'next/navigation'
 import { getPageData } from '@/sanity/lib/fetchData'
 import { Metadata } from 'next'
 import { getLocaleFromName, getNameFromLocale } from '@/sanity/localization'
-import getOpenGraphImages from '@/sanity/helpers/getOpenGraphImages'
 import { defaultLanguage, metaTitleSuffix, domain } from '@/languages'
 import { toPlainText } from 'next-sanity'
 import getPageSlugs from '@/sanity/helpers/getPageSlugs'
 import { isDateAfter } from '@/lib/helpers/dateUtilities'
+import { resolveOpenGraphImage } from '@/sanity/lib/utils'
 
 const MagazinePage = dynamic(() => import('@/templates/magazine/MagazinePage'))
 const LandingPage = dynamic(() => import('@/templates/landingpage/LandingPage'))
@@ -28,6 +28,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const locale = (await params).locale ?? defaultLocale
   const fullSlug = `${domain}/${locale !== defaultLocale ? `${locale}/` : ''}${slug.join('/')}`
 
+  console.log('generateMetadata [...slug], slug', slug)
+  console.log('generateMetadata [...slug], locale', locale)
   const { query, queryParams } = await getQueryFromSlug(slug, locale)
   const { pageData } = await getPageData({
     query,
@@ -84,8 +86,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const plainTitle = Array.isArray(title) ? toPlainText(title) : title
 
   const modifiedDate = isDateAfter(publishDateTime, updatedAt) ? publishDateTime : updatedAt
-  const openGraphImages = getOpenGraphImages((openGraphImage?.asset ? openGraphImage : null) || heroImage?.image)
-
+  console.log('[...slug] openGraphImage', openGraphImage)
+  const ogImage = resolveOpenGraphImage(openGraphImage ?? heroImage?.image)
+  console.log('[...slug] ogUrl', ogImage)
   return {
     title: `${documentTitle || plainTitle} - ${metaTitleSuffix}`,
     description: metaDescription,
@@ -98,7 +101,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       siteName: 'Equinor',
       publishedTime: publishDateTime,
       modifiedTime: modifiedDate,
-      images: openGraphImages,
+      images: ogImage,
     },
     alternates: {
       ...(locale === defaultLocale && { canonical: canonicalSlug }),

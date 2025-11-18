@@ -1,13 +1,13 @@
 import { forwardRef, HTMLAttributes } from 'react'
 import { BaseLink } from '@/core/Link'
 import { Typography } from '@/core/Typography'
-import Image, { getPxSmSizes, getSmallerThanPxLgSizes } from '../../../core/SanityImage/SanityImage'
+import { getSmallerThanPxLgSizes, Image } from '../../../core/Image/Image'
 import NextImage from 'next/image'
-import envisTwMerge from '../../../twMerge'
 import { NewsRoomNewsItem } from '../../../types/algoliaIndexPage'
 import { SanityImageObject } from '@sanity/image-url/lib/types/types'
 import Blocks from '../../../portableText/Blocks'
 import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
+import { twMerge } from 'tailwind-merge'
 
 export type NewsHeadlinerProps = {
   data: NewsRoomNewsItem
@@ -21,7 +21,7 @@ const NewsHeadliner = forwardRef<HTMLLIElement, NewsHeadlinerProps>(function New
   const { slug, title, ingress, publishDateTime, heroImage, thumbnailUrl } = data
 
   return (
-    <section ref={ref} {...rest} className={envisTwMerge('', className)}>
+    <section ref={ref} {...rest} className={twMerge('', className)}>
       <BaseLink href={slug} className="group flex flex-col gap-2 pb-6">
         {(heroImage?.image?.asset || fallbackImage || thumbnailUrl) && (
           <div className="relative mb-2 aspect-video max-h-[324px]">
@@ -39,8 +39,7 @@ const NewsHeadliner = forwardRef<HTMLLIElement, NewsHeadlinerProps>(function New
                   //@ts-ignore: TODO Fix SanityImage to take SanityImageObject
                   image={heroImage?.image?.asset ? heroImage?.image : fallbackImage}
                   aria-hidden
-                  aspectRatio="16:9"
-                  sizes={getPxSmSizes()}
+                  grid="sm"
                   fill
                   className="rounded-2xs"
                 />

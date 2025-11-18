@@ -44,8 +44,9 @@ _site
 .secret
 output
 
-# old sanity folder
+# old sanity and deleted e2e folder
 sanityv3
+e2e
 
 # azureite
 __azurite*

@@ -1,9 +1,9 @@
 import { liteClient } from 'algoliasearch/lite'
-import { algolia } from '../sanity/config'
 import { createInMemoryCache } from '@algolia/cache-in-memory'
 import { createFallbackableCache } from '@algolia/cache-common'
 import { createBrowserLocalStorageCache } from '@algolia/cache-browser-local-storage'
 import { SearchOptions } from 'instantsearch.js'
+import { algolia } from './config'
 
 export const searchClient = (options?: SearchOptions) =>
   liteClient(algolia.applicationId, algolia.searchApiKey, {

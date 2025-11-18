@@ -1,11 +1,11 @@
 'use client'
-import { forwardRef, HTMLAttributes, CSSProperties, ElementType, useRef, useEffect, useState } from 'react'
-import { useSanityLoader } from '../../sanity/hooks/useSanityLoader'
+import { HTMLAttributes, CSSProperties, ElementType, useRef, useState } from 'react'
 import { ImageBackground } from '../../types/index'
 import { twMerge } from 'tailwind-merge'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
-import { ImageRatioKeys, mapSanityImageRatio } from '@/core/SanityImage/SanityImage'
+import { ImageRatioKeys, mapSanityImageRatio } from '@/core/Image/Image'
 import { motion, useTransform, useScroll, useMotionValueEvent } from 'framer-motion'
+import { resolveImage } from '@/sanity/lib/utils'
 
 type ImageBackgroundContainerProps = {
   scrimClassName?: string
@@ -18,7 +18,6 @@ type ImageBackgroundContainerProps = {
   as?: ElementType
 } & ImageBackground &
   HTMLAttributes<HTMLElement>
-const DEFAULT_MAX_WIDTH = 1920
 
 export const ImageBackgroundContainer = ({
   image,
@@ -30,13 +29,16 @@ export const ImageBackgroundContainer = ({
   scrimClassName = '',
   overrideGradient = false,
   dontSplit = false,
-  aspectRatio,
   as = 'section',
   ...rest
 }: ImageBackgroundContainerProps) => {
-  const props = useSanityLoader(image, DEFAULT_MAX_WIDTH, mapSanityImageRatio(aspectRatio ?? '16:9'))
-  const src = props?.src
-  const isMobile = useMediaQuery(`(max-width: 800px)`)
+  const isLargerDisplays = useMediaQuery(`(min-width: 800px)`)
+
+  const { url } = resolveImage({
+    image,
+    grid: 'full',
+    isLargerDisplays,
+  })
   const ReturnElement = as
 
   const fadedFilter = `
@@ -46,12 +48,13 @@ export const ImageBackgroundContainer = ({
     ${useLight ? `before:bg-white-100 before:opacity-[35%]` : `before:bg-black-100 before:opacity-[25%]`}
     `
 
-  const backgroundClassNames = `[container:inline-size]
+  const backgroundClassNames = `
+      [container:inline-size]
       relative
       ${useLight ? '' : 'dark'}
       w-full
       h-full
-      ${useAnimation && !isMobile ? `bg-fixed ${fadedFilter}` : 'bg-local'}
+      ${useAnimation && isLargerDisplays ? `bg-fixed ${fadedFilter}` : 'bg-local'}
       bg-center
       bg-no-repeat
       bg-cover
@@ -89,14 +92,14 @@ export const ImageBackgroundContainer = ({
   useMotionValueEvent(opacityTransformed, 'change', (latest) => {
     setOpacity(latest)
   })
-  if (useAnimation && !isMobile) {
+  if (useAnimation && isLargerDisplays) {
     return (
       <ReturnElement
         ref={ref}
         className={backgroundClassNames}
         style={
           {
-            backgroundImage: `url(${src})`,
+            backgroundImage: `url(${url})`,
           } as CSSProperties
         }
         {...rest}
@@ -112,13 +115,13 @@ export const ImageBackgroundContainer = ({
         </motion.div>
       </ReturnElement>
     )
-  } else if (isMobile && !dontSplit) {
+  } else if (!isLargerDisplays && !dontSplit) {
     return (
       <ReturnElement {...rest}>
         <div
-          className={twMerge(`aspect-video`, backgroundClassNames)}
+          className={twMerge(`aspect-4/3`, backgroundClassNames)}
           style={{
-            backgroundImage: `url(${src})`,
+            backgroundImage: `url(${url})`,
           }}
         />
         <div className={className}>{children}</div>
@@ -129,7 +132,7 @@ export const ImageBackgroundContainer = ({
       <ReturnElement
         className={`${backgroundClassNames} `}
         style={{
-          backgroundImage: `url(${src})`,
+          backgroundImage: `url(${url})`,
         }}
         {...rest}
       >

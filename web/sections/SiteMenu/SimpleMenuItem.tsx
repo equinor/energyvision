@@ -3,7 +3,7 @@ import type { SimpleGroupData } from '../../types/index'
 import { Menu } from '@/core/MenuAccordion'
 import { usePathname } from 'next/navigation'
 import { useId } from 'react'
-import envisTwMerge from '../../twMerge'
+import { twMerge } from 'tailwind-merge'
 
 const { MenuItem, MenuHeader, MenuContent } = Menu
 
@@ -40,16 +40,8 @@ export const SimpleMenuItem = ({ item, index, nextIsSimpleLink }: MenuGroupType)
               item.link.slug === pathname && {
                 'aria-current': 'page',
               })}
-            className={envisTwMerge(
-              `w-full
-              relative
-              py-3
-              px-2
-              hover:underline
-              dark:hover:text-north-sea-50
-              underline-offset-2
-              text-lg
-              no-underline`,
+            className={twMerge(
+              `relative w-full px-2 py-3 text-lg no-underline underline-offset-2 hover:underline dark:hover:text-north-sea-50`,
               ariaCurrentStyling,
               `aria-current:before:-left-2`,
             )}
@@ -71,7 +63,7 @@ export const SimpleMenuItem = ({ item, index, nextIsSimpleLink }: MenuGroupType)
                 {!!readMoreLink?.link?.slug && (
                   <ResourceLink
                     href={readMoreLink.link?.slug}
-                    className={`w-fit pt-0 mb-10 ${ariaCurrentStyling}`}
+                    className={`mb-10 w-fit pt-0 ${ariaCurrentStyling}`}
                     aria-current={pathname == readMoreLink?.link?.slug ? 'page' : 'false'}
                   >
                     {readMoreLink.label}
@@ -82,15 +74,7 @@ export const SimpleMenuItem = ({ item, index, nextIsSimpleLink }: MenuGroupType)
                 {links?.map((link: any) => (
                   <li key={link.id}>
                     <Link
-                      className={`
-                        relative
-                        ${ariaCurrentStyling}
-                        py-4
-                        no-underline
-                        hover:underline 
-                        dark:hover:text-north-sea-50
-                        underline-offset-2
-                        text-base`}
+                      className={`relative ${ariaCurrentStyling} py-4 text-base no-underline underline-offset-2 hover:underline dark:hover:text-north-sea-50`}
                       href={link?.link?.slug || '/'}
                       aria-current={pathname == link?.link?.slug ? 'page' : 'false'}
                     >

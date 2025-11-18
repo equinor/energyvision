@@ -3,8 +3,8 @@ import { useRef, useState, ChangeEvent, ComponentProps, useId } from 'react'
 import { useSearchBox, UseSearchBoxProps } from 'react-instantsearch'
 import { close, search } from '@equinor/eds-icons'
 import { Icon } from '@equinor/eds-core-react'
-import envisTwMerge from '../../twMerge'
 import { useTranslations } from 'next-intl'
+import { twMerge } from 'tailwind-merge'
 
 type Variants = 'default' | 'inverted'
 export type SearchBoxProps = {
@@ -85,7 +85,7 @@ export function SearchBox({
       {label && (
         <label
           htmlFor={searchId}
-          className={envisTwMerge(
+          className={twMerge(
             `col-span-2 row-start-1 row-end-1 max-w-text py-4 text-base leading-inherit font-normal text-slate-80 dark:text-white-100`,
             labelClassName,
           )}
@@ -103,6 +103,8 @@ export function SearchBox({
           autoComplete="off"
           autoCorrect="off"
           autoCapitalize="off"
+          //It is the only element on the page
+          //eslint-disable-next-line jsx-a11y/no-autofocus
           autoFocus={true}
           placeholder={placeholder ?? intl('search')}
           spellCheck={false}
@@ -110,7 +112,7 @@ export function SearchBox({
           type="search"
           value={value}
           onChange={onChange}
-          className={envisTwMerge(
+          className={twMerge(
             `grow rounded-s-xs rounded-e-none bg-white-100 py-4 pr-12 pl-6 text-white-100 focus:outline-hidden ${inputVariantClassName[variant]} `,
             className,
           )}
@@ -118,7 +120,7 @@ export function SearchBox({
         <button
           type="reset"
           aria-label={intl('search_reset')}
-          className={envisTwMerge(
+          className={twMerge(
             `${value.length === 0 ? 'hidden' : 'flex'} absolute right-2 size-8 items-center justify-center rounded-full focus:outline-hidden ${resetVariantClassName[variant]}`,
             resetClassName,
           )}
@@ -129,7 +131,7 @@ export function SearchBox({
       <button
         type="submit"
         aria-label={intl('search_submit')}
-        className={envisTwMerge(
+        className={twMerge(
           `h-inherit rounded-e-xs px-4 py-3 focus:outline-hidden ${label ? 'row-start-2 row-end-2' : ''} ${submitVariantClassName[variant]} `,
           submitClassName,
         )}

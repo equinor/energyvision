@@ -3,12 +3,11 @@ import { forwardRef } from 'react'
 import { BaseLink, BaseLinkProps } from './BaseLink'
 import { LinkType } from '../../types/index'
 import { ArrowRight } from '../../icons'
-import envisTwMerge from '../../twMerge'
 import { TransformableIcon } from '../../icons/TransformableIcon'
 import { add, calendar } from '@equinor/eds-icons'
-import { BsFiletypePdf, BsFiletypeXlsx } from 'react-icons/bs'
 import { useTranslations } from 'next-intl'
 import DownloadableLink from './DownloadableLink'
+import { twMerge } from 'tailwind-merge'
 
 export type Variants = 'default' | 'fit'
 
@@ -50,7 +49,7 @@ export const getArrowAnimation = (type: LinkType) => {
 }
 
 export const getArrowElement = (type: LinkType, iconClassName?: string, marginClassName?: string) => {
-  const iconClassNames = envisTwMerge(
+  const iconClassNames = twMerge(
     `size-arrow-right
     text-energy-red-100
     dark:text-white-100
@@ -64,7 +63,7 @@ export const getArrowElement = (type: LinkType, iconClassName?: string, marginCl
   `,
     iconClassName,
   )
-  const marginClassNames = envisTwMerge(`ml-6 xl:ml-8`, marginClassName)
+  const marginClassNames = twMerge(`ml-6 xl:ml-8`, marginClassName)
 
   switch (type) {
     case 'downloadableFile':
@@ -120,7 +119,7 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
     fit: 'pb-3 pr-2',
   }
 
-  const classNames = envisTwMerge(
+  const classNames = twMerge(
     `group
     text-base
     relative
@@ -153,7 +152,7 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
   }
 
   const getContentElements = () => {
-    const textClassNames = envisTwMerge(`pt-1 grow leading-none`, textClassName)
+    const textClassNames = twMerge(`pt-1 grow leading-none`, textClassName)
     switch (type) {
       /*case 'downloadableFile':
         return extension &&
@@ -242,7 +241,7 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
         })}
     >
       <div
-        className={envisTwMerge(
+        className={twMerge(
           `w-inherit flex h-full items-center justify-start gap-x-2 ${contentVariantClassName[variant]}`,
         )}
       >

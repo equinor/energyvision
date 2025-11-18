@@ -1,7 +1,7 @@
 import { ArrowRight, Pause, Play } from '../../icons'
 import { ButtonHTMLAttributes, forwardRef } from 'react'
-import envisTwMerge from '../../twMerge'
 import { CircularProgress } from '@/core/Progress/CircularProgress'
+import { twMerge } from 'tailwind-merge'
 
 type ModeVariants = 'play' | 'pause' | 'next' | 'previous'
 type Variants = 'video' | 'default'
@@ -75,18 +75,8 @@ export const MediaButton = forwardRef<HTMLButtonElement, ButtonProps>(
       <button
         ref={ref}
         type="button"
-        className={envisTwMerge(
-          `group/mediabutton
-          relative
-          flex 
-          justify-center
-          rounded-full
-          items-center
-          cursor-pointer 
-          focus-none
-          focus-visible:envis-outline
-          dark:focus-visible:envis-outline-invert
-          ${getButtonVariantClassNames()}`,
+        className={twMerge(
+          `group/mediabutton focus-none focus-visible:envis-outline dark:focus-visible:envis-outline-invert relative flex cursor-pointer items-center justify-center rounded-full ${getButtonVariantClassNames()}`,
           className,
         )}
         {...rest}
@@ -102,14 +92,8 @@ export const MediaButton = forwardRef<HTMLButtonElement, ButtonProps>(
           />
         )}
         <div
-          className={envisTwMerge(
-            `
-          flex 
-          justify-center
-          items-center
-          rounded-full 
-          ${getIconVariantClassNames()}
-          `,
+          className={twMerge(
+            `flex items-center justify-center rounded-full ${getIconVariantClassNames()} `,
             iconClassName,
           )}
         >

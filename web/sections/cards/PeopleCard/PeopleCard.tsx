@@ -2,12 +2,12 @@ import { Typography } from '@/core/Typography'
 import { forwardRef, HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { BaseLink, ResourceLink } from '@/core/Link'
-import Image, { getSmallerThanPxLgSizes } from '../../../core/SanityImage/SanityImage'
+import { Image } from '../../../core/Image/Image'
 import { getLocaleFromName } from '../../../sanity/localization'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import { PeopleCardData } from '../../../types/index'
 import { SocialProfileJsonLd } from 'next-seo'
-import { urlFor } from '@/sanity/helpers/urlFor'
+import { urlForImage } from '@/sanity/lib/utils'
 
 export type PeopleCardProps = {
   data: PeopleCardData
@@ -47,15 +47,8 @@ const PeopleCard = forwardRef<HTMLDivElement, PeopleCardProps>(function PeopleCa
         {...rest}
       >
         {image && (
-          <div className={`relative ${variant === 'single' ? 'size-64' : 'size-40'}`}>
-            <Image
-              image={image}
-              maxWidth={400}
-              sizes={getSmallerThanPxLgSizes()}
-              aspectRatio="1:1"
-              quality={100}
-              className="rounded-full"
-            />
+          <div className={`${variant === 'single' ? 'size-64' : 'size-40'}`}>
+            <Image image={image} grid="xs" aspectRatio="1:1" imageClassName="rounded-full" />
           </div>
         )}
         <div className={`flex flex-col ${variantContentClassNames[variant]}`}>
@@ -105,7 +98,7 @@ const PeopleCard = forwardRef<HTMLDivElement, PeopleCardProps>(function PeopleCa
             name: 'Equinor',
             url: 'https://www.equinor.com',
           }}
-          image={image ? urlFor(image).url : undefined}
+          image={image ? urlForImage(image) : undefined}
           telephone={phone}
           email={email}
         />

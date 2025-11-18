@@ -3,8 +3,7 @@
 import { forwardRef, HTMLAttributes, useId, useState } from 'react'
 import { PortableTextBlock } from '@portabletext/types'
 import { ImageWithAlt, LinkData } from '../../types'
-import Image, { getPxSmSizes } from '../SanityImage/SanityImage'
-import envisTwMerge from '../../twMerge'
+import { Image } from '../Image/Image'
 import { SanityImageObject } from '@sanity/image-url/lib/types/types'
 import { Typography } from '@equinor/eds-core-react'
 import Blocks from '../../portableText/Blocks'
@@ -14,6 +13,7 @@ import { DisplayModes } from '@/core/Carousel/Carousel'
 import { useTranslations } from 'next-intl'
 import { useMediaQuery } from '@/lib/hooks/useMediaQuery'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
+import { twMerge } from 'tailwind-merge'
 
 export type ImageWithOverlayProps = {
   image?: SanityImageObject
@@ -63,16 +63,9 @@ export const ImageWithOverlay = forwardRef<HTMLDivElement, ImageWithOverlayProps
   )
 
   return (
-    <figure ref={ref} className={envisTwMerge(`h-full w-full rounded-md`, className)}>
-      <Image
-        aspectRatio={isMobile ? '4:3' : '16:9'}
-        maxWidth={1420}
-        sizes={getPxSmSizes()}
-        image={image as ImageWithAlt}
-        fill
-        className={`aspect-4/3 rounded-md md:aspect-video`}
-      />
-      <figcaption className={envisTwMerge(`h-full w-full transition-opacity`, captionClassname)}>
+    <figure ref={ref} className={twMerge(`h-full w-full rounded-md`, className)}>
+      <Image grid="sm" image={image as ImageWithAlt} fill className={`aspect-4/3 rounded-md md:aspect-video`} />
+      <figcaption className={twMerge(`h-full w-full transition-opacity`, captionClassname)}>
         <div
           className={`absolute inset-0 z-[1] rounded-md transition-colors duration-[250ms] ${showOverlay ? 'bg-slate-blue-95' : ''} flex flex-col-reverse rounded-b-md`}
         >
@@ -128,8 +121,8 @@ export const ImageWithOverlay = forwardRef<HTMLDivElement, ImageWithOverlayProps
               } relative flex h-4 min-h-4 w-4 min-w-4 flex-col items-center justify-center gap-3 overflow-hidden *:transition-transform *:duration-[250ms] md:h-6 md:min-h-6 md:w-6 md:min-w-6`}
               aria-hidden="true"
             >
-              <span className={envisTwMerge(`${showOverlay ? 'rotate-45' : 'rotate-90'}`, lineClassName)}></span>
-              <span className={envisTwMerge(`${showOverlay ? '-rotate-45' : 'rotate-180'}`, lineClassName)}></span>
+              <span className={twMerge(`${showOverlay ? 'rotate-45' : 'rotate-90'}`, lineClassName)}></span>
+              <span className={twMerge(`${showOverlay ? '-rotate-45' : 'rotate-180'}`, lineClassName)}></span>
             </span>
           </div>
         </button>

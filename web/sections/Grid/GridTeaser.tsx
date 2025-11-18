@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { forwardRef, HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
-import Img from 'next/image'
 import { GridTeaserData } from '../../types/index'
 import { RowType } from './mapGridContent'
 import GridLinkArrow from './GridLinkArrow'
 import Blocks from '../../portableText/Blocks'
 import { PortableTextBlock } from '@portabletext/types'
 import { getColorForTheme } from '@/sections/teasers/TextTeaser/theme'
-import { urlFor } from '@/sanity/helpers/urlFor'
+import { resolveImage } from '@/sanity/lib/utils'
+import { Image } from '@/core/Image/Image'
 
 export type GridTeaserProps = {
   data: GridTeaserData
@@ -29,9 +29,6 @@ export const GridTeaser = forwardRef<HTMLDivElement, GridTeaserProps>(function G
     themeFromLarger,
     theme,
   } = data
-
-  const imageSrc = urlFor(image).size(1200, 800).auto('format').toString()
-  const altTag = image?.isDecorative ? '' : image?.alt || ''
 
   let contentTextColor = 'text-slate-80'
   let bgColor = 'bg-white-100'
@@ -61,18 +58,7 @@ export const GridTeaser = forwardRef<HTMLDivElement, GridTeaserProps>(function G
         `grid h-full grid-rows-2 lg:grid-rows-[250px_1fr] ${String(rowType) === 'span3' ? 'lg:grid-cols-[40%_60%] lg:grid-rows-1' : ''} ${bgColor} `,
       )}
     >
-      {image && (
-        <div className="relative">
-          <Img
-            src={imageSrc}
-            alt={altTag}
-            style={{ objectFit: 'cover' }}
-            fill
-            sizes="(max-width: 800px) 100vw, 800px"
-            role={image?.isDecorative ? 'presentation' : undefined}
-          />
-        </div>
-      )}
+      {image && <Image image={image} grid="xs" customHeight={800} customWidth={1200} fill />}
 
       <div className={`relative h-full ${contentTextColor}`}>
         <div

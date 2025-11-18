@@ -1,6 +1,6 @@
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import { ResourceLink } from '@/core/Link'
-import Image, { getPxSmSizes } from '@/core/SanityImage/SanityImage'
+import { Image } from '@/core/Image/Image'
 import { getLocaleFromName } from '@/sanity/localization'
 import Blocks from '@/portableText/Blocks'
 import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
@@ -17,7 +17,7 @@ export const FiftyFiftyHero = ({ title, ingress, link: action, background, figur
         {/* Image Section */}
         {figure && (
           <div className="relative min-h-[350px] md:order-2">
-            <Image sizes={getPxSmSizes()} image={figure.image} fill priority />
+            <Image grid="sm" image={figure.image} fill />
           </div>
         )}
 

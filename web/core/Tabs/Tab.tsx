@@ -1,6 +1,6 @@
 import { forwardRef } from 'react'
 import * as RadixTabs from '@radix-ui/react-tabs'
-import envisTwMerge from '../../twMerge'
+import { twMerge } from 'tailwind-merge'
 
 export type TabProps = RadixTabs.TabsTriggerProps
 
@@ -8,32 +8,8 @@ export const Tab = forwardRef<HTMLButtonElement, TabProps>(function Tab({ childr
   return (
     <RadixTabs.Trigger
       ref={ref}
-      className={envisTwMerge(
-        `w-full
-        text-slate-80
-        dark:text-white-100
-        bg-transparent
-        whitespace-normal
-        text-base
-        pt-4
-        pb-2
-        px-1
-        lg:px-4
-        border-b
-        data-active:border-b-2
-        border-grey-50
-        data-active:border-slate-80
-        data-active:dark:border-white-100
-        hover:underline
-        data-active:hover:no-underline
-        underline-offset-2
-        decoration-1
-        hover:cursor-pointer
-        data-active:font-semibold
-        focus:outline-hidden
-        focus-visible:envis-outline
-        dark:focus-visible:envis-outline-invert
-    `,
+      className={twMerge(
+        `focus-visible:envis-outline dark:focus-visible:envis-outline-invert w-full border-b border-grey-50 bg-transparent px-1 pt-4 pb-2 text-base whitespace-normal text-slate-80 decoration-1 underline-offset-2 hover:cursor-pointer hover:underline focus:outline-hidden lg:px-4 dark:text-white-100 data-active:border-b-2 data-active:border-slate-80 data-active:font-semibold data-active:hover:no-underline data-active:dark:border-white-100`,
         className,
       )}
       {...rest}

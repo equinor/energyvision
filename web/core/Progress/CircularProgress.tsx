@@ -1,6 +1,5 @@
 'use client'
 import { forwardRef, SVGProps, useEffect, useState, CSSProperties } from 'react'
-import envisTwMerge from '../../twMerge'
 import { useTranslations } from 'next-intl'
 import { twMerge } from 'tailwind-merge'
 
@@ -151,7 +150,7 @@ const CircularProgress = forwardRef<SVGSVGElement, CircularProgressProps>(functi
           strokeLinecap="round"
           strokeWidth={thickness}
           stroke="currentColor"
-          className={envisTwMerge('stroke-grey-60', progressClassName)}
+          className={twMerge('stroke-grey-60', progressClassName)}
           opacity={paused ? 0 : 1}
         />
       </svg>

@@ -6,10 +6,10 @@ import {
 } from '@radix-ui/react-accordion'
 import { GoPlus, GoDash } from 'react-icons/go'
 import { add_circle_filled, add_circle_outlined, remove, remove_outlined } from '@equinor/eds-icons'
-import envisTwMerge from '../../twMerge'
 import { TransformableIcon } from '../../icons/TransformableIcon'
 import { Variants } from './Accordion'
 import { Typography } from '@/core/Typography'
+import { twMerge } from 'tailwind-merge'
 
 export type AccordionHeaderProps = {
   hasSectionTitle?: boolean
@@ -132,7 +132,7 @@ export const Header = forwardRef<HTMLButtonElement, AccordionHeaderProps>(functi
     <ChildElementType className={headerClassName}>
       <AccordionTrigger
         ref={ref}
-        className={envisTwMerge(
+        className={twMerge(
           `group focus-visible:envis-outline dark:focus-visible:envis-outline-invert flex w-full cursor-pointer decoration-1 underline-offset-4 outline-hidden hover:underline focus:no-underline focus:outline-hidden ${variantClassName[variant]} `,
           className,
         )}

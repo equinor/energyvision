@@ -1,7 +1,7 @@
 import { Accordion as EnvisAccordion } from '@/core/Accordion'
 import CallToActions from '@/sections/CallToActions'
 import Blocks from '@/portableText/Blocks'
-import Image, { getSmallerThanPxLgSizes } from '@/core/SanityImage/SanityImage'
+import { Image } from '@/core/Image/Image'
 import { AccordionListData } from '@/types'
 
 const { Item, Header, Content } = EnvisAccordion
@@ -25,11 +25,11 @@ const Accordion = ({ data, id, hasSectionTitle = true }: AccordionProps) => {
             <Content>
               {image && image?.asset && (
                 <Image
-                  maxWidth={570}
+                  grid="xs"
                   aspectRatio="16:9"
-                  sizes={getSmallerThanPxLgSizes()}
                   image={image}
-                  className="aspect-video max-w-72 rounded-2xs"
+                  className="max-w-72"
+                  imageClassName="lg:aspect-video rounded-2xs"
                 />
               )}
               {content && <Blocks value={content} />}

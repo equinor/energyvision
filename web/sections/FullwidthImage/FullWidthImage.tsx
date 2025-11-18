@@ -1,6 +1,6 @@
 'use client'
 import type { DesignOptions, ImageWithCaptionData } from '../../types/index'
-import Image, { getFullScreenSizes, ImageRatioKeys } from '../../core/SanityImage/SanityImage'
+import { Image, ImageRatioKeys } from '../../core/Image/Image'
 import { FigureCaption } from '@/core/FigureCaption/FigureCaption'
 
 export type FullWidthImageData = {
@@ -25,15 +25,7 @@ const FullWidthImage = ({ data, anchor }: FullWidthImageProps) => {
 
   return (
     <section className="flex w-full justify-center">
-      <Image
-        id={anchor}
-        image={image}
-        sizes={getFullScreenSizes()}
-        maxWidth={2000}
-        aspectRatio={aspectRatio}
-        alt={image.alt}
-        className="max-w-[1800px]"
-      />
+      <Image id={anchor} image={image} grid="full" aspectRatio={aspectRatio} className="max-w-[1800px]" />
       {image.asset && (caption || attribution) && (
         <FigureCaption className={'mx-auto px-layout-sm pt-0 pb-8'}>
           {caption && <div>{caption}</div>}

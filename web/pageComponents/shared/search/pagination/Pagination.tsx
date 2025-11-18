@@ -6,8 +6,8 @@ import { usePagination, UsePaginationProps } from 'react-instantsearch'
 import { usePrefersReducedMotion } from '../../../../lib/hooks/usePrefersReducedMotion'
 import { PaginationContext } from '../../../../lib/contexts/PaginationContext'
 import { isModifierClick, PaginationItem } from './PaginationItem'
-import envisTwMerge from '../../../../twMerge'
 import { useTranslations } from 'next-intl'
+import { twMerge } from 'tailwind-merge'
 
 // Based on: https://github.com/algolia/react-instantsearch/blob/master/examples/hooks/components/Pagination.tsx
 export type PaginationProps = {
@@ -49,7 +49,7 @@ export const Pagination = ({ className = '', totalPages, padding, hitsPerPage = 
   }
 
   return (
-    <ul className={envisTwMerge(`my-2 flex flex-wrap gap-2`, className)} {...rest}>
+    <ul className={twMerge(`my-2 flex flex-wrap gap-2`, className)} {...rest}>
       <PaginationItem
         ariaLabel={intl('search_pagination_first_page')}
         isCurrent={false}

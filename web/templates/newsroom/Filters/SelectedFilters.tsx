@@ -4,9 +4,9 @@ import { forwardRef, HTMLAttributes } from 'react'
 import { useClearRefinements, useCurrentRefinements, UseRefinementListProps } from 'react-instantsearch'
 import { close_circle_outlined, close } from '@equinor/eds-icons'
 import { Typography } from '@/core/Typography'
-import envisTwMerge from '../../../twMerge'
 import { isModifierClick } from '../../../pageComponents/shared/search/pagination/PaginationItem'
 import { useTranslations } from 'next-intl'
+import { twMerge } from 'tailwind-merge'
 
 type SelectedFiltersProps = HTMLAttributes<HTMLDivElement>
 
@@ -28,7 +28,7 @@ const SelectedFilters = forwardRef<HTMLDivElement, SelectedFiltersProps>(functio
   })
 
   return items?.length > 0 ? (
-    <div ref={ref} className={envisTwMerge('flex flex-col gap-2 border border-norwegian-woods-100 p-4', className)}>
+    <div ref={ref} className={twMerge('flex flex-col gap-2 border border-norwegian-woods-100 p-4', className)}>
       <div className="flex justify-between">
         <Typography as="h2" variant="h6" className="">
           Selected filters

@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "esnext",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "target": "ES2022",
+    "lib": ["dom", "dom.iterable", "es2022"],
     "allowJs": true,
     "skipLibCheck": true,
     "noEmit": true,
@@ -9,7 +9,8 @@
     "strict": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "module": "preserve",
+    "module": "esnext",
+    "moduleResolution": "Bundler",
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true

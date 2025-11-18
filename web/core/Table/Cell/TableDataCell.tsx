@@ -1,7 +1,7 @@
 import { type TdHTMLAttributes, forwardRef } from 'react'
-import envisTwMerge from '../../../twMerge'
 import { ThemeVariants, Variants } from '../Table'
 import { getColorConfigForTableTheme } from '../TableTheme'
+import { twMerge } from 'tailwind-merge'
 
 export type TableDataCellProps = {
   /**
@@ -23,13 +23,12 @@ export const TableDataCell = forwardRef<HTMLTableCellElement, TableDataCellProps
   return (
     <td
       ref={ref}
-      className={envisTwMerge(
-        `text-xs p-4 text-balance
-          ${
-            variant === 'border'
-              ? `border-b ${getColorConfigForTableTheme(themeVariant)?.rowBorder}`
-              : `[&:not(:first-child)]:border-l [&:not(:first-child)]:border-white-100`
-          }`,
+      className={twMerge(
+        `p-4 text-xs text-balance ${
+          variant === 'border'
+            ? `border-b ${getColorConfigForTableTheme(themeVariant)?.rowBorder}`
+            : `[&:not(:first-child)]:border-l [&:not(:first-child)]:border-white-100`
+        }`,
         className,
       )}
       {...rest}

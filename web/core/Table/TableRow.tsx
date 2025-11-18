@@ -1,7 +1,7 @@
 import { type HTMLAttributes, forwardRef } from 'react'
-import envisTwMerge from '../../twMerge'
 import { getColorConfigForTableTheme } from './TableTheme'
 import { useTable } from './Inner.context'
+import { twMerge } from 'tailwind-merge'
 
 export type TableRowProps = HTMLAttributes<HTMLTableRowElement>
 
@@ -13,7 +13,7 @@ export const TableRow = forwardRef<HTMLTableRowElement, TableRowProps>(function 
   return (
     <tr
       ref={ref}
-      className={envisTwMerge(
+      className={twMerge(
         `${
           variant === 'zebra'
             ? `${getColorConfigForTableTheme(themeVariant)?.rowZebraBackground} odd:last:border-b ${

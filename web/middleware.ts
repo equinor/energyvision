@@ -100,19 +100,6 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(`${origin}${pathname.toLowerCase()}`, PERMANENT_REDIRECT)
   }
 
-  // Check if an external redirect exists in sanity
-  /*   const externalRedirect = await getExternalRedirectUrl(pathname, request.nextUrl.locale)
-  if (externalRedirect) {
-    return NextResponse.redirect(externalRedirect.to, PERMANENT_REDIRECT)
-  } */
-
-  // Check if an internal redirect exists in sanity
-  /*   const redirect = await getRedirectUrl(pathname, request.nextUrl.locale)
-  if (redirect) {
-    const locale = getLocaleFromName(redirect.lang)
-    return NextResponse.redirect(`${origin}/${locale}${redirect.to !== '/' ? redirect.to : ''}`, PERMANENT_REDIRECT)
-  } */
-
   // Check if pathname ends with .html
   if (isDotHtml) {
     return NextResponse.redirect(`${origin}${pathname.replace(DOT_HTML, '')}`, PERMANENT_REDIRECT)

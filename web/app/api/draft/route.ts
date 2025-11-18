@@ -1,4 +1,4 @@
-import { Flags } from '@/common/helpers/datasetHelpers'
+import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { draftMode } from 'next/headers'
 import { redirect } from 'next/navigation'
 

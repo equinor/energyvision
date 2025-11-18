@@ -1,6 +1,9 @@
-import { defaultWebLanguage, getDomain, getLanguages, getMetaTitleSuffix, type DatasetsKeys } from '@shared/sitesConfig'
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+//@ts-nocheck
+//import { defaultWebLanguage, getDomain, getLanguages, getMetaTitleSuffix, type DatasetsKeys } from '@shared/sitesConfig'
+import { defaultWebLanguage, getDomain, getLanguages, getMetaTitleSuffix } from '../satellitesConfig.js'
 
-export const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET as DatasetsKeys
+export const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET //as DatasetsKeys
 
 export const languages = getLanguages(dataset)
 

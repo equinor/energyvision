@@ -22,11 +22,11 @@ export default async function LocaleLayout({ children, params }: { children: Rea
     { slug: '/no/nyheter', lang: 'nb_NO' },
   ]
   const slug = slugs.find((it) => it.lang == getLocaleFromName(locale))?.slug
-  const menuData = await getHeaderData({ slug, lang: getNameFromLocale(locale) })
+  const { headerData } = await getHeaderData({ slug, lang: getNameFromLocale(locale) })
 
   return (
     <div className={`[:not(:has(.sticky-menu))]:pt-topbar`}>
-      <Header slugs={slugs} menuData={menuData} />
+      <Header slugs={slugs} menuData={headerData} />
       {children}
     </div>
   )

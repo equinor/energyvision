@@ -1,15 +1,15 @@
 'use client'
 import { forwardRef } from 'react'
-import Image, { getSmallerThanPxLgSizes, ImageRatios } from '../../core/SanityImage/SanityImage'
-import { useSanityLoader } from '../../sanity/hooks/useSanityLoader'
+import { Image } from '@/core/Image/Image'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import { getArrowElement } from '@/core/Link/ResourceLink'
 import { BaseLink } from '@/core/Link'
-import { ImageWithAlt, LinkData } from '../../types'
+import { ImageWithAlt, LinkData } from '@/types'
 import { PortableTextBlock } from '@portabletext/types'
 import { Typography } from '@/core/Typography'
-import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
+import { useMediaQuery } from '@/lib/hooks/useMediaQuery'
 import Blocks from '@/portableText/Blocks'
+import { resolveImage } from '@/sanity/lib/utils'
 
 export type HomePageBannerThemeColors = {
   background?: string
@@ -66,8 +66,10 @@ export const HomePageBanner = forwardRef<HTMLDivElement, HomePageBannerProps>(fu
   { anchor, title, rightAlignTitle, useWhiteTitle = false, image, ctaCards, designOptions },
   ref,
 ) {
-  const desktopUrl = useSanityLoader(image, 2560, ImageRatios['16:9'])
-  // 4:3 for small screens and 10:3 for large screens
+  const { url: desktopUrl } = resolveImage({
+    image,
+    grid: 'full',
+  })
   const { backgroundType, theme, useGradient = false } = designOptions
   const { foreground, background } = getColorForHomepageBannerTheme(theme?.value ?? 0)
   const useImage = backgroundType == 0
@@ -91,8 +93,8 @@ export const HomePageBanner = forwardRef<HTMLDivElement, HomePageBannerProps>(fu
       {useImage && (
         <picture className={`relative inset-0 flex h-auto w-full max-lg:aspect-video lg:absolute`}>
           {useGradient && <div className={`absolute inset-0 z-[1] ${useGradient ? gradient : ''}`} />}
-          <source srcSet={desktopUrl?.src} media="(min-width: 1024px)" />
-          <Image maxWidth={810} sizes={getSmallerThanPxLgSizes()} aspectRatio={'16:9'} image={image} fill priority />
+          <source srcSet={desktopUrl} media="(min-width: 1024px)" />
+          <Image grid="xs" image={image} fill />
         </picture>
       )}
       <div

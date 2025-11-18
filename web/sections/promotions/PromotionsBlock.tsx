@@ -7,7 +7,6 @@ import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
 import { PortableTextBlock } from 'next-sanity'
 import { CardData, DesignOptions, EventCardData, LinkData, PeopleCardData, Tag } from '@/types'
 import Blocks from '@/portableText/Blocks'
-import { getEventDates } from '@/common/helpers/dateUtilities'
 
 // Do we have a way to share types between studio and web?
 export type PromotionType = 'promoteTopics' | 'promoteNews' | 'promotePeople' | 'promoteEvents' | 'promoteMagazine'

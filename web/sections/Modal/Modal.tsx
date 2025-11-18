@@ -4,8 +4,8 @@ import { TransformableIcon } from '../../icons/TransformableIcon'
 import { forwardRef, useEffect, useMemo, useRef } from 'react'
 import { mergeRefs } from '@equinor/eds-utils'
 import { Button } from '@/core/Button'
-import envisTwMerge from '../../twMerge'
 import { useTranslations } from 'next-intl'
+import { twMerge } from 'tailwind-merge'
 
 export type ModalProps = {
   isOpen: boolean
@@ -41,51 +41,26 @@ const Modal = forwardRef<HTMLDialogElement, ModalProps>(function Modal(
   return (
     <dialog
       ref={combinedDialogRef}
-      className={envisTwMerge(
-        `p-0
-        starting:open:opacity-0
-        opacity-0
-        open:opacity-100
-        open:transition-opacity
-        backdrop:transition-all
-        starting:open:backdrop:backdrop-blur-sm-none
-        starting:open:backdrop:bg-transparent
-        open:backdrop:backdrop-blur-sm-md
-        open:backdrop:bg-north-sea-90/50
-        rounded-lg
-      `,
+      className={twMerge(
+        `starting:open:backdrop:backdrop-blur-sm-none open:backdrop:backdrop-blur-sm-md rounded-lg p-0 opacity-0 backdrop:transition-all open:opacity-100 open:transition-opacity open:backdrop:bg-north-sea-90/50 starting:open:opacity-0 starting:open:backdrop:bg-transparent`,
         dialogClassName,
       )}
       aria-label={title}
       onKeyDown={handleKeyDown}
     >
       <div
-        className={envisTwMerge(
-          `bg-white-100 
-          w-[90vw] 
-          lg:w-[997px] 
-          max-h-[90vh]
-          relative
-          flex 
-          flex-col 
-          items-start
-          py-4 
-          px-4 
-          overscroll-contain
-          overflow-y-auto
-          rounded-lg
-          md:shadow-lg
-          `,
+        className={twMerge(
+          `relative flex max-h-[90vh] w-[90vw] flex-col items-start overflow-y-auto overscroll-contain rounded-lg bg-white-100 px-4 py-4 md:shadow-lg lg:w-[997px]`,
           className,
         )}
         // Scrollable, needs to be keyboard accessible
         // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
         tabIndex={0}
       >
-        <Button variant="ghost" className="ml-auto sticky top-0 p-3" onClick={onClose} aria-label={intl('close')}>
-          <TransformableIcon iconData={close} className="w-full h-auto" />
+        <Button variant="ghost" className="sticky top-0 ml-auto p-3" onClick={onClose} aria-label={intl('close')}>
+          <TransformableIcon iconData={close} className="h-auto w-full" />
         </Button>
-        <div className="pl-2 pr-12 md:px-12 py-12">{children}</div>
+        <div className="py-12 pr-12 pl-2 md:px-12">{children}</div>
       </div>
     </dialog>
   )

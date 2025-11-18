@@ -1,8 +1,7 @@
 import { forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
-import Image, { getSmallerThanPxLgSizes, ImageRatioKeys } from '../../../core/SanityImage/SanityImage'
+import { Image, ImageRatioKeys } from '../../../core/Image/Image'
 import { ImageWithAlt } from '../../../types/index'
-import envisTwMerge from '../../../twMerge'
 import { BaseLink, BaseLinkProps } from '@/core/Link'
 
 export type Variants = 'primary' | 'secondary' | 'compact' | 'single'
@@ -80,20 +79,13 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
       {...rest}
     >
       {image && image.asset && (
-        <div
-          className={envisTwMerge(
-            `relative w-full ${imageVariantClassNames[variant]} ${imageRatio[variant]} `,
-            imageClassName,
-          )}
-        >
-          <Image
-            image={image}
-            fill
-            maxWidth={600}
-            aspectRatio={variantAspectRatio[variant]}
-            sizes={getSmallerThanPxLgSizes()}
-          />
-        </div>
+        <Image
+          image={image}
+          fill
+          grid="xs"
+          aspectRatio={variantAspectRatio[variant]}
+          className={twMerge(`w-full ${imageVariantClassNames[variant]} ${imageRatio[variant]} `, imageClassName)}
+        />
       )}
       {children}
     </BaseLink>

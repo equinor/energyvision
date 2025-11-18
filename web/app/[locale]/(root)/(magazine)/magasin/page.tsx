@@ -6,10 +6,10 @@ import MagazineRoom from '@/templates/magazine/Magazineroom'
 import { MagazineIndexPageType } from '@/types'
 import { setRequestLocale } from 'next-intl/server'
 import { allMagazineDocuments, magazineIndexQuery, getMagazineArticlesByTag } from '@/sanity/queries/magazine'
-import getOpenGraphImages from '@/sanity/helpers/getOpenGraphImages'
 import { metaTitleSuffix } from '@/languages'
 import { Metadata } from 'next'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
+import { resolveOpenGraphImage } from '@/sanity/lib/utils'
 
 export function generateStaticParams() {
   return Flags.HAS_MAGAZINE ? [{ locale: 'no' }] : []
@@ -31,8 +31,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const metaDescription = index?.seoAndSome?.metaDescription
   const title = index?.title
   const heroImage = index?.hero?.figure?.image
-  const ogImage = index?.seoAndSome?.openGraphImage
-  const openGraphImages = getOpenGraphImages((ogImage?.asset ? ogImage : null) || heroImage)
+  const ogImage = resolveOpenGraphImage(index?.seoAndSome?.openGraphImage ?? heroImage)
 
   return {
     title: `${documentTitle || title || 'Magasin'} - ${metaTitleSuffix}`,
@@ -44,7 +43,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       locale,
       type: 'website',
       siteName: 'Equinor',
-      images: openGraphImages,
+      images: ogImage,
     },
     alternates: {
       canonical: 'https://www.equinor.com/no/magasin',

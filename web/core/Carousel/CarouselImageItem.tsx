@@ -1,5 +1,5 @@
 'use client'
-import Image, { getPxSmSizes } from '../SanityImage/SanityImage'
+import { Image } from '../Image/Image'
 import { ImageWithAlt, LinkData } from '../../types/index'
 import { DisplayModes } from './Carousel'
 import { forwardRef, HTMLAttributes, useEffect, useMemo, useRef } from 'react'
@@ -8,10 +8,9 @@ import { SanityImageObject } from '@sanity/image-url/lib/types/types'
 import { BaseLink, ResourceLink } from '@/core/Link'
 import { getLocaleFromName } from '../../sanity/localization'
 import { ArrowRight } from '../../icons'
-import { ImageWithOverlay } from '@/core/Image/ImageWithOverlay'
+import { ImageWithOverlay } from '@/core/ImageWithOverlay/ImageWithOverlay'
 import Blocks from '../../portableText/Blocks'
 import { mergeRefs } from '@equinor/eds-utils'
-import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
 import { twMerge } from 'tailwind-merge'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 
@@ -57,36 +56,25 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
   const isImageWithJustLink = type === 'imageWithLinkAndOrOverlay' && action && (!captionTitle || !captionText)
   const isImageWithOverlay = type === 'imageWithLinkAndOrOverlay' && (!!captionTitle || !!captionText)
   const url = action && getUrlFromAction(action)
-  const isMobile = useMediaQuery(`(max-width: 700px)`)
 
   const singleHeights = `min-h-single-carousel-card-h-sm md:min-h-single-carousel-card-h-md lg:min-h-single-carousel-card-h-lg`
 
   const getBody = () => {
     if (isJustImage) {
       return (
-        <div className={`relative aspect-4/3 h-full w-full rounded-md md:aspect-video`}>
-          <Image
-            aspectRatio={isMobile ? '4:3' : '16:9'}
-            maxWidth={1420}
-            sizes={getPxSmSizes()}
-            image={image as ImageWithAlt}
-            fill
-            className="rounded-md"
-          />
-        </div>
+        <Image
+          grid="sm"
+          image={image}
+          fill
+          className={`relative aspect-4/3 h-full w-full rounded-md md:aspect-video`}
+          imageClassName="rounded-md"
+        />
       )
     }
     if (isImageWithSimpleCaption) {
       return (
-        <figure className="relative flex aspect-4/3 h-full w-full items-end rounded-md md:aspect-video">
-          <Image
-            aspectRatio={isMobile ? '4:3' : '16:9'}
-            maxWidth={1420}
-            sizes={getPxSmSizes()}
-            image={image as ImageWithAlt}
-            fill
-            className={`rounded-md`}
-          />
+        <figure className="flex aspect-4/3 h-full w-full items-end rounded-md md:aspect-video">
+          <Image grid="sm" image={image} fill className={`rounded-md`} />
           <figcaption
             className={`z-[1] w-full rounded-b-md fade-in-black-gradient ${displayMode === 'single' ? (active ? 'opacity-100' : 'opacity-50') : ''}`}
           >
@@ -102,15 +90,8 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
     }
     if (isImageWithJustLink) {
       return (
-        <figure className="relative h-full w-full">
-          <Image
-            aspectRatio={isMobile ? '4:3' : '16:9'}
-            maxWidth={1420}
-            sizes={getPxSmSizes()}
-            image={image as ImageWithAlt}
-            fill
-            className={`aspect-4/3 rounded-md md:aspect-video`}
-          />
+        <figure className="h-full w-full">
+          <Image grid="sm" image={image} fill className={`aspect-4/3 rounded-md md:aspect-video`} />
           <div className="flex h-full w-full items-end rounded-b-md fade-in-black-gradient pt-10 lg:pt-20">
             <BaseLink
               href={url as string}
@@ -144,14 +125,7 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
       return (
         <figure className="flex h-full w-full flex-col">
           <div className={`relative w-full rounded-md ${singleHeights}`}>
-            <Image
-              aspectRatio={isMobile ? '4:3' : '16:9'}
-              maxWidth={1420}
-              sizes={getPxSmSizes()}
-              image={image as ImageWithAlt}
-              fill
-              className="md:aspect-videorounded-md aspect-4/3 rounded-md"
-            />
+            <Image grid="sm" image={image} fill className="aspect-4/3 rounded-md md:aspect-video" />
           </div>
           <figcaption
             className={`h-fit max-w-text p-4 lg:px-8 lg:py-6 ${
@@ -184,7 +158,6 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
   }
 
   const scrollListItemWidthsClassNames = `w-[75vw] md:w-[70vw] lg:w-[62vw] max-w-[1030px]`
-  const singleListItemWidthsClassNames = `w-single-carousel-card-w-sm md:w-single-carousel-card-w-md lg:w-single-carousel-card-w-lg`
 
   useEffect(() => {
     if (displayMode === 'single') {

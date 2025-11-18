@@ -3,8 +3,8 @@ import { forwardRef, HTMLAttributes } from 'react'
 import { StickyMenuData } from '../../types/index'
 import { ColorKeyTokens, colorKeyToUtilityMap } from '../../styles/colorKeyToUtilityMap'
 import { StickyMenuLink } from '@/core/Link'
-import envisTwMerge from '../../twMerge'
 import { useTranslations } from 'next-intl'
+import { twMerge } from 'tailwind-merge'
 
 export type StickyMenuProps = {
   stickyMenuData?: StickyMenuData
@@ -27,7 +27,7 @@ export const StickyMenu = forwardRef<HTMLElement, StickyMenuProps>(function Stic
       ref={ref}
       aria-label={intl('local')}
       role="navigation"
-      className={envisTwMerge(
+      className={twMerge(
         `sticky top-0 [transition-property:top] duration-300 ease-in-out ${twBg} z-10 w-full py-4 shadow-md`,
         className,
       )}

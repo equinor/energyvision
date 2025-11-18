@@ -2,11 +2,11 @@
 import { forwardRef } from 'react'
 import NewsHeadliner from './NewsHeadliner'
 import NewsItem from './NewsItem'
-import envisTwMerge from '../../../twMerge'
 import { SanityImageObject } from '@sanity/image-url/lib/types/types'
 import { useHits, useInstantSearch } from 'react-instantsearch'
 import NewsSectionsSkeleton from './NewsSectionsSkeleton'
 import { useTranslations } from 'next-intl'
+import { twMerge } from 'tailwind-merge'
 
 type NewsSectionsProps = {
   fallbackImages?: SanityImageObject[]
@@ -25,7 +25,7 @@ const NewsSections = forwardRef<HTMLDivElement, NewsSectionsProps>(function News
   }
 
   return status !== 'loading' && status !== 'stalled' ? (
-    <div ref={ref} className={envisTwMerge(`flex flex-col gap-4`, className)}>
+    <div ref={ref} className={twMerge(`flex flex-col gap-4`, className)}>
       {items.map((hit, index) => {
         return index === 0 ? (
           <NewsHeadliner

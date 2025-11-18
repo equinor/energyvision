@@ -7,5 +7,5 @@ export const sanityClientWithEquinorCDN = createClient({
   apiVersion,
   perspective: 'published',
   useCdn: true,
-  apiHost: 'https://cdn.equinor.com',
+  ...(process.env.NODE_ENV === 'production' && { apiHost: 'https://cdn.equinor.com' }),
 })

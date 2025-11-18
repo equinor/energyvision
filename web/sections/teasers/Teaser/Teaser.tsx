@@ -1,5 +1,5 @@
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
-import Image, { getPxLgSizes } from '../../../core/SanityImage/SanityImage'
+import { Image } from '../../../core/Image/Image'
 import type { DesignOptions, ImageWithAlt, LinkData } from '../../../types/index'
 import { ResourceLink } from '../../../core/Link'
 import { getLocaleFromName } from '../../../sanity/localization'
@@ -45,13 +45,7 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
     <div
       className={`relative ${imageSize === 'small' ? 'm-18 flex items-center justify-center' : 'h-auto min-h-[25rem] w-full'}`}
     >
-      <Image
-        image={image}
-        fill
-        sizes={getPxLgSizes()}
-        maxWidth={1100}
-        className={`${containImage ? 'object-contain' : ''}`}
-      />
+      <Image image={image} fill grid="lg" imageClassName={`${containImage ? 'object-contain' : ''}`} />
     </div>
   )
 

@@ -7,7 +7,6 @@ import Blocks from '../../portableText/Blocks'
 import { BackgroundContainer } from '@/core/Backgrounds'
 import { Typography } from '@/core/Typography'
 import { RowType } from './mapGridContent'
-import envisTwMerge from '../../twMerge'
 import { forwardRef } from 'react'
 
 type GridTextBlockProps = {
@@ -153,7 +152,7 @@ const GridTextBlock = forwardRef<HTMLDivElement, GridTextBlockProps>(function Gr
   const mainContent = (
     <>
       <div
-        className={envisTwMerge(
+        className={twMerge(
           `h-fit ${
             (title || (useThemedTitle && themedTitle)) && content ? `flex flex-col text-balance ${getLayout()}` : ``
           }`,

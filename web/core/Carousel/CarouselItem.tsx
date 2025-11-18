@@ -1,6 +1,5 @@
 'use client'
 import { LinkData } from '../../types'
-import envisTwMerge from '../../twMerge'
 import { forwardRef, HTMLAttributes, ReactNode, useEffect, useId, useMemo, useRef } from 'react'
 import { PortableTextBlock } from '@portabletext/types'
 import { DisplayModes } from './Carousel'
@@ -10,6 +9,7 @@ import { ResourceLink } from '@/core/Link'
 import { getLocaleFromName } from '../../sanity/localization'
 import { mergeRefs } from '@equinor/eds-utils'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
+import { twMerge } from 'tailwind-merge'
 
 export type Variants = 'richTextBelow' | 'default'
 
@@ -174,7 +174,7 @@ export const CarouselItem = forwardRef<HTMLLIElement, CarouselItemProps>(functio
         'aria-current': active,
         tabIndex: active ? 0 : -1,
       })}
-      className={envisTwMerge(
+      className={twMerge(
         `relative mt-1 focus:outline-hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-grey-50 focus-visible:outline-dashed dark:focus-visible:outline-white-100 ${displayMode === 'single' ? singleVariantClassNames : scrollVariantClassNames}`,
         className,
       )}

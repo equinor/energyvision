@@ -3,7 +3,6 @@ import { KeyNumbersData } from '../../types'
 import KeyNumberItem from './KeyNumberItem'
 import { ResourceLink } from '@/core/Link'
 import { Carousel } from '@/core/Carousel/Carousel'
-import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
 import { twMerge } from 'tailwind-merge'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import { getLocaleFromName } from '../../sanity/localization'
@@ -19,7 +18,6 @@ type KeyNumbersProps = {
 const KeyNumber = ({ data, anchor, className }: KeyNumbersProps) => {
   const { title, hideTitle, items, designOptions, ingress, action, disclaimer, useHorizontalScroll = false } = data
   const url = action && getUrlFromAction(action)
-  const isMobile = useMediaQuery(`(max-width: 800px)`)
   const headingId = useId()
   const { bg, dark } = getBgAndDarkFromBackground(designOptions)
 

@@ -1,6 +1,13 @@
 'use client'
 import { useCallback, useState, useMemo, useEffect } from 'react'
-import { useFloating, useInteractions, useDismiss, FloatingOverlay, FloatingFocusManager } from '@floating-ui/react'
+import {
+  useFloating,
+  useInteractions,
+  useDismiss,
+  FloatingOverlay,
+  FloatingFocusManager,
+  OpenChangeReason,
+} from '@floating-ui/react'
 import { usePathname } from 'next/navigation'
 import { Menu, MenuButton } from '@/core/MenuAccordion'
 import { TopbarDropdown } from './TopbarDropdown'
@@ -30,7 +37,11 @@ const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
   const intl = useTranslations()
   const { refs, context } = useFloating({
     open: isOpen,
-    onOpenChange: setIsOpen,
+    onOpenChange: (open: boolean, event?: Event, reason?: OpenChangeReason) => {
+      console.log('onOpenChange open', open)
+      console.log('onOpenChange reason', reason)
+      setIsOpen(!isOpen)
+    },
   })
   const { getReferenceProps, getFloatingProps } = useInteractions([useDismiss(context)])
   const useComplex = useMediaQuery(`(min-width: 1300px)`)
@@ -42,10 +53,10 @@ const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
     return data && variant === 'simple' ? (data as SimpleMenuData).groups : (data as MenuData).subMenus
   }, [data, variant])
 
-  useEffect(() => {
+  /*   useEffect(() => {
     console.log('closing ')
     setIsOpen(false)
-  }, [pathname, setIsOpen])
+  }, [pathname, setIsOpen]) */
 
   const title = intl('menu')
   const allSitesURL = getAllSitesLink(Flags.IS_GLOBAL_PROD ? 'internal' : 'external', locale || 'en')

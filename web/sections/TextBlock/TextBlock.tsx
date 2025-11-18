@@ -1,7 +1,7 @@
 import { BackgroundContainer } from '@/core/Backgrounds'
-import { Typography } from '../../core/Typography'
-import Image, { getSmallerThanPxLgSizes } from '../../core/SanityImage/SanityImage'
-import type { TextBlockData } from '../../types/index'
+import { Typography } from '@/core/Typography'
+import { Image } from '@/core/Image/Image'
+import type { TextBlockData } from '@/types/index'
 import CallToActions from '../CallToActions'
 import { twMerge } from 'tailwind-merge'
 import Blocks from '@/portableText/Blocks'
@@ -70,13 +70,7 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
         <>
           {image?.asset && (
             <div className="w-[300px]">
-              <Image
-                image={image}
-                maxWidth={300}
-                sizes={getSmallerThanPxLgSizes()}
-                aspectRatio={'16:9'}
-                className="object-cover"
-              />
+              <Image image={image} grid="xs" aspectRatio={'16:9'} className="object-cover" />
             </div>
           )}
           {overline ? (

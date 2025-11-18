@@ -6,7 +6,7 @@ import { routing } from '../../../../i18n/routing'
 import { getHeaderData } from '@/sanity/lib/fetchData'
 import { getLocaleFromName, getNameFromLocale } from '@/sanity/localization'
 import Header from '@/sections/Header/Header'
-import { Flags } from '@/common/helpers/datasetHelpers'
+import { Flags } from '@/sanity/helpers/datasetHelpers'
 
 type Params = Promise<{ locale: string }>
 
@@ -23,11 +23,11 @@ export default async function LocaleLayout({ children, params }: { children: Rea
   ]
 
   const slug = slugs.find((it) => it.lang == getLocaleFromName(locale))?.slug
-  const { menuData } = await getHeaderData({ slug, lang: getNameFromLocale(locale) })
+  const { headerData } = await getHeaderData({ slug, lang: getNameFromLocale(locale) })
 
   return (
     <div className={`[:not(:has(.sticky-menu))]:pt-topbar`}>
-      <Header slugs={slugs} menuData={menuData} />
+      <Header slugs={slugs} menuData={headerData} />
       {children}
     </div>
   )

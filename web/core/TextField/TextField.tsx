@@ -1,7 +1,7 @@
 import { InputProps, Input } from '@equinor/eds-core-react'
 import { ReactNode, InputHTMLAttributes, forwardRef, ForwardedRef, useId, TextareaHTMLAttributes } from 'react'
-import envisTwMerge from '../../twMerge'
 import { Textarea } from './TextArea'
+import { twMerge } from 'tailwind-merge'
 
 export type Variants = 'error' | 'warning' | 'success'
 
@@ -43,7 +43,7 @@ type FieldProps = SharedTextFieldProps & {
 } & React.HTMLAttributes<HTMLTextAreaElement | HTMLInputElement>
 /** Proxy component for working around typescript and element type switching */
 const Field = forwardRef<HTMLTextAreaElement | HTMLInputElement, FieldProps>(function Field(props, ref) {
-  const {multiline, ...rest} = props
+  const { multiline, ...rest } = props
   return multiline ? (
     <Textarea ref={ref as ForwardedRef<HTMLTextAreaElement>} {...rest} className={`[&_textarea]:text-base`} />
   ) : (
@@ -113,7 +113,7 @@ export const TextField = forwardRef<HTMLDivElement, TextFieldProps>(function Tex
   }
 
   return (
-    <div ref={ref} className={envisTwMerge(``, className)}>
+    <div ref={ref} className={className}>
       <label htmlFor={id} className="mx-2 text-base font-medium">
         {label}
       </label>
@@ -126,10 +126,10 @@ export const TextField = forwardRef<HTMLDivElement, TextFieldProps>(function Tex
       {!!helperText && (
         <div
           id={helperTextId}
-          className={envisTwMerge(
+          className={twMerge(
             `${
               variant ? variantClassName[variant] : ''
-            } mt-2 grid auto-cols-auto gap-2 items-start justify-start whitespace-pre-line font-semibold`,
+            } mt-2 grid auto-cols-auto items-start justify-start gap-2 font-semibold whitespace-pre-line`,
             helperTextClassName,
           )}
         >

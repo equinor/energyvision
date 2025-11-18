@@ -1,7 +1,7 @@
 import { forwardRef } from 'react'
-import envisTwMerge from '../../twMerge'
 import { Variants } from './MenuAccordion'
 import { Accordion, AccordionHeaderProps } from '@/core/Accordion'
+import { twMerge } from 'tailwind-merge'
 
 export type MenuHeaderProps = {
   variant?: Variants
@@ -21,7 +21,7 @@ export const MenuHeader = forwardRef<HTMLButtonElement, MenuHeaderProps>(functio
       {...rest}
       ref={ref}
       variant={variant === 'simple' ? 'simpleMenu' : 'menu'}
-      className={envisTwMerge(`${variantClassName[variant]}`, className)}
+      className={twMerge(`${variantClassName[variant]}`, className)}
     >
       {children}
     </Accordion.Header>

@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 //TODO types
 import { getNameFromLocale } from '../../../../../sanity/localization'
-import { Flags } from '../../../../../common/helpers/datasetHelpers.ts'
 import { getPageData, getData } from '../../../../../sanity/lib/fetchData'
 import { notFound } from 'next/navigation'
 import MagazineRoom from '@/templates/magazine/Magazineroom'
 import { MagazineIndexPageType } from '../../../../../types'
 import { setRequestLocale } from 'next-intl/server'
 import { allMagazineDocuments, magazineIndexQuery, getMagazineArticlesByTag } from '@/sanity/queries/magazine'
-import getOpenGraphImages from '@/sanity/helpers/getOpenGraphImages'
 import { metaTitleSuffix } from '@/languages'
 import { Metadata } from 'next'
+import { Flags } from '@/sanity/helpers/datasetHelpers'
+import { resolveOpenGraphImage } from '@/sanity/lib/utils'
 
 export function generateStaticParams() {
   return Flags.HAS_MAGAZINE ? [{ locale: 'en' }] : []
@@ -32,8 +32,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const metaDescription = index?.seoAndSome?.metaDescription
   const title = index?.title
   const heroImage = index?.hero?.figure?.image
-  const ogImage = index?.seoAndSome?.openGraphImage
-  const openGraphImages = getOpenGraphImages((ogImage?.asset ? ogImage : null) || heroImage)
+  const ogImage = resolveOpenGraphImage(index?.seoAndSome?.openGraphImage ?? heroImage)
 
   return {
     title: `${documentTitle || title || 'Magazine'} - ${metaTitleSuffix}`,
@@ -45,7 +44,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       locale,
       type: 'website',
       siteName: 'Equinor',
-      images: openGraphImages,
+      images: ogImage,
     },
     alternates: {
       canonical: 'https://www.equinor.com/magazine',
@@ -87,7 +86,7 @@ export default async function MagazinePage({
 
   // Fetch list of articles (by tag or all)
   const tag = (await searchParams)?.tag
-  let magazineArticles: any[] = []
+  let magazineArticles = undefined
   if (tag && tag !== 'all') {
     const { data } = await getData({
       query: getMagazineArticlesByTag(false, false),
@@ -99,7 +98,7 @@ export default async function MagazinePage({
     magazineArticles = data
   }
 
-  const pageData: MagazineIndexPageType = { ...(index as any), magazineArticles } as any
+  const pageData = { ...(index as any), magazineArticles: magazineArticles ?? [] } as any
 
   return <MagazineRoom pageData={pageData} />
 }

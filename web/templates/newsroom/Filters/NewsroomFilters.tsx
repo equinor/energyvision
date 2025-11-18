@@ -1,11 +1,11 @@
 'use client'
 import { forwardRef, HTMLAttributes } from 'react'
-import envisTwMerge from '../../../twMerge'
 import { useMediaQuery } from '../../../lib/hooks/useMediaQuery'
 import { Accordion } from '@/core/Accordion'
 import RefinementListFilter from './RefinementListFilter'
 import SelectedFilters from './SelectedFilters'
 import { useTranslations } from 'next-intl'
+import { twMerge } from 'tailwind-merge'
 
 type NewsRoomFiltersProps = HTMLAttributes<HTMLDivElement>
 
@@ -16,20 +16,10 @@ const NewsRoomFilters = forwardRef<HTMLDivElement, NewsRoomFiltersProps>(functio
   const intl = useTranslations()
   const isMobile = useMediaQuery(`(max-width: 768px)`)
   return (
-    <div ref={ref} className={envisTwMerge(`flex flex-col gap-4`, className)}>
+    <div ref={ref} className={twMerge(`flex flex-col gap-4`, className)}>
       <a
         href="#newsroom_news"
-        className="sr-only
-        focus:outline-hidden
-        focus-visible:not-sr-only
-        text-sm
-        underline
-        hover:no-underline
-        focus-visible:envis-outline
-        px-4
-        py-3
-        rounded-xs
-        "
+        className="focus-visible:envis-outline sr-only rounded-xs px-4 py-3 text-sm underline hover:no-underline focus:outline-hidden focus-visible:not-sr-only"
       >
         {intl('newsroom_skip_to_news')}
       </a>

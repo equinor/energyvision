@@ -1,4 +1,4 @@
-import { sanityClient } from '@/lib/sanity.server'
+import { client } from '@/sanity/lib/client'
 import { validateFormRequest } from '../../forms/validateFormRequest'
 
 const getFileUrlQuery = /* groq */ `
@@ -15,7 +15,7 @@ export async function POST(req: Request) {
   }
 
   try {
-    const result = await sanityClient.fetch(getFileUrlQuery, {
+    const result = await client.fetch(getFileUrlQuery, {
       fileName: body.fileName,
     })
     const equinorHref = result[0].url.replace('cdn.sanity.io', 'cdn.equinor.com')

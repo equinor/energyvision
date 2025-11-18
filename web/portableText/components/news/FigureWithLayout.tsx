@@ -3,7 +3,7 @@ import { twMerge } from 'tailwind-merge'
 
 import type { ImageWithAlt } from '../../../types/index'
 import { FigureCaption } from '@/core/FigureCaption/FigureCaption'
-import Image, { getPxLgSizes, getSmallerThanPxLgSizes } from '@/core/SanityImage/SanityImage'
+import { Image } from '@/core/Image/Image'
 
 type Layout = 'full' | 'left' | 'right'
 
@@ -32,12 +32,7 @@ export const FigureWithLayout = (block: BlockProps) => {
         `mx-auto w-full px-layout-md py-0 ${layout !== 'full' ? 'md:w-1/2' : ''} ${layout === 'right' ? 'md:float-right md:pl-8' : ''} ${layout === 'left' ? 'md:float-left md:pr-8' : ''} mt-14 mb-16`,
       )}
     >
-      <Image
-        image={image}
-        aspectRatio={layout === 'full' ? '16:9' : '4:3'}
-        sizes={layout === 'full' ? getPxLgSizes() : getSmallerThanPxLgSizes()}
-        maxWidth={layout === 'full' ? 1184 : 570}
-      />
+      <Image image={image} grid={layout === 'full' ? 'full' : 'xs'} aspectRatio={layout === 'full' ? '16:9' : '4:3'} />
       {(caption || attribution) && (
         <FigureCaption>
           {caption && <div>{caption}</div>}

@@ -4,7 +4,6 @@ import { NewsArticleJsonLd } from 'next-seo'
 import { Typography } from '@/core/Typography'
 import { Icon } from '@equinor/eds-core-react'
 import { calendar } from '@equinor/eds-icons'
-import getOpenGraphImages from '../../sanity/helpers/getOpenGraphImages'
 import type { NewsSchema } from '../../types/index'
 import { toPlainText } from '@portabletext/react'
 import Blocks from '../../portableText/Blocks'
@@ -18,6 +17,7 @@ import LatestNews from '@/pageComponents/news/LatestNews'
 import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
 import { getFullUrl } from '@/lib/helpers/getFullUrl'
 import { isDateAfter } from '@/lib/helpers/dateUtilities'
+import { resolveOpenGraphImage } from '@/sanity/lib/utils'
 
 type ArticleProps = {
   data: NewsSchema
@@ -45,7 +45,7 @@ const NewsPage = ({ data: news }: ArticleProps) => {
   } = news
 
   const modifiedDate = isDateAfter(publishDateTime, updatedAt) ? publishDateTime : updatedAt
-  const openGraphImages = getOpenGraphImages((openGraphImage?.asset ? openGraphImage : null) || heroImage?.image)
+  const ogImage = resolveOpenGraphImage(openGraphImage ?? heroImage?.image)
 
   const formattedContent = content.map((block) => ({
     ...block,
@@ -57,7 +57,7 @@ const NewsPage = ({ data: news }: ArticleProps) => {
       <NewsArticleJsonLd
         url={fullUrl}
         title={title}
-        images={openGraphImages.map((it) => it.url)}
+        images={[ogImage?.url ?? '']}
         dateCreated={publishDateTime}
         datePublished={publishDateTime}
         dateModified={modifiedDate}

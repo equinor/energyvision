@@ -4,8 +4,8 @@ import HomePage from '../../../../templates/homepage/HomePage'
 import { defaultLanguage, domain, languages, metaTitleSuffix } from '@/languages'
 import { getPageData } from '@/sanity/lib/fetchData'
 import { Metadata } from 'next'
-import getOpenGraphImages from '@/sanity/helpers/getOpenGraphImages'
 import { toPlainText } from 'next-sanity'
+import { resolveOpenGraphImage } from '@/sanity/lib/utils'
 
 export const dynamicParams = true // fallback to true in app router
 
@@ -15,6 +15,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   const locale = (await params).locale ?? defaultLocale
   const fullSlug = `${domain}/${locale !== defaultLocale ? `${locale}/` : ''}`
 
+  console.log('generateMetadata (default) page, locale', locale)
   const { query, queryParams } = await getQueryFromSlug(undefined, locale)
 
   const { pageData: fullData } = await getPageData({
@@ -24,8 +25,10 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   //@ts-ignore: todo
   const { documentTitle, title, metaDescription, openGraphImage, heroImage } = fullData.pageData
   const plainTitle = Array.isArray(title) ? toPlainText(title) : title
+  console.log('openGraphImage', openGraphImage)
 
-  const openGraphImages = getOpenGraphImages((openGraphImage?.asset ? openGraphImage : null) || heroImage?.image)
+  const ogImage = resolveOpenGraphImage(openGraphImage ?? heroImage?.image)
+  console.log('ogImage', ogImage)
 
   const alternateLinks: Record<string, string> = {}
   languages.forEach(({ locale }) => {
@@ -41,7 +44,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
       locale,
       type: 'article',
       siteName: 'Equinor',
-      images: openGraphImages,
+      images: ogImage,
     },
     alternates: {
       languages: {

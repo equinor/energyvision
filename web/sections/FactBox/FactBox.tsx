@@ -4,9 +4,9 @@ import Blocks from '../../portableText/Blocks'
 import { Typography } from '@/core/Typography'
 import { forwardRef, HTMLAttributes } from 'react'
 import { ColorKeyTokens, colorKeyToUtilityMap } from '../../styles/colorKeyToUtilityMap'
-import Image from '../../core/SanityImage/SanityImage'
-import envisTwMerge from '../../twMerge'
+import { Image } from '../../core/Image/Image'
 import { toPlainText } from '@portabletext/react'
+import { twMerge } from 'tailwind-merge'
 
 type FactImagePosition = 'left' | 'right'
 
@@ -53,10 +53,7 @@ export const FactBox = forwardRef<HTMLElement, FactBoxProps>(function FactBox({ 
   const imgPos = imagePosition ?? 'left'
 
   return (
-    <aside
-      className={envisTwMerge(`my-24 h-full w-full ${twBg} ${background?.dark ? 'dark' : ''}`, className)}
-      ref={ref}
-    >
+    <aside className={twMerge(`my-24 h-full w-full ${twBg} ${background?.dark ? 'dark' : ''}`, className)} ref={ref}>
       <div
         className={`flex flex-col lg:flex-row ${hasImage && imgPos === 'right' ? 'lg:flex-row-reverse' : ''} ${hasImage ? '' : contentXPadding}`}
       >

@@ -3,9 +3,9 @@ import { forwardRef } from 'react'
 import { PortableTextBlock } from '@portabletext/types'
 import { ResourceLink } from '@/core/Link'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
-import { getLocaleFromName } from '../../sanity/localization'
-import Blocks from '../../portableText/Blocks'
-import Image, { getPxSmSizes } from '../../core/SanityImage/SanityImage'
+import { getLocaleFromName } from '@/sanity/localization'
+import Blocks from '@/portableText/Blocks'
+import { Image } from '@/core/Image/Image'
 import { ImageWithAlt, LinkData } from '../../types'
 import { InfoPanelImageVariant, InfoPanelKeyInfo } from './TabsBlock.types'
 
@@ -38,7 +38,7 @@ const TabsInfoPanelItem = forwardRef<HTMLDivElement, TabsInfoPanelItemProps>(fun
       )}
     >
       {image?.asset && imageVariant === 'backgroundImage' && (
-        <Image sizes={getPxSmSizes()} aria-hidden image={image} fill className="z-[1] object-center" />
+        <Image grid="sm" aria-hidden image={image} fill className="z-[1]" imageClassName="object-center" />
       )}
       <div
         className={`relative flex flex-col ${

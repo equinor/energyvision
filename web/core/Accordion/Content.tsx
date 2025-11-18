@@ -1,10 +1,10 @@
 'use client'
 import { forwardRef } from 'react'
 import { AccordionContent, AccordionContentProps as _AccordionContentProps } from '@radix-ui/react-accordion'
-import envisTwMerge from '../../twMerge'
 import { Variants } from './Accordion'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
+import { twMerge } from 'tailwind-merge'
 
 const contentVariants = {
   hidden: { opacity: 0 },
@@ -74,7 +74,7 @@ export const Content = forwardRef<HTMLDivElement, AccordionContentProps>(functio
         useComplex && {
           asChild: true,
         })}
-      className={envisTwMerge(`${variantClassName[variant]}`, className)}
+      className={twMerge(`${variantClassName[variant]}`, className)}
     >
       {getVariantBody()}
     </AccordionContent>

@@ -1,7 +1,7 @@
 import { ButtonHTMLAttributes, forwardRef } from 'react'
-import envisTwMerge from '../../twMerge'
 import { IconData } from '@equinor/eds-icons'
 import { TransformableIcon } from '../../icons/TransformableIcon'
+import { twMerge } from 'tailwind-merge'
 
 export type LinkButtonProps = {
   iconData?: IconData
@@ -14,15 +14,8 @@ export const LinkButton = forwardRef<HTMLButtonElement, LinkButtonProps>(
       <button
         ref={ref}
         type="button"
-        className={envisTwMerge(
-          `flex 
-          gap-1
-          text-xs
-          underline
-          hover:no-underline
-          focus:outline-hidden
-          focus-visible:envis-outline
-          active:scale-99`,
+        className={twMerge(
+          `focus-visible:envis-outline flex gap-1 text-xs underline hover:no-underline focus:outline-hidden active:scale-99`,
           className,
         )}
         {...rest}

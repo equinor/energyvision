@@ -1,4 +1,3 @@
-import { Flags } from '@/common/helpers/datasetHelpers'
 import { getIsoFromLocale } from '@/sanity/localization'
 import { useLocale, useTranslations } from 'next-intl'
 import { InstantSearchNext } from 'react-instantsearch-nextjs'
@@ -12,6 +11,7 @@ import { PaginationContextProvider } from '@/lib/contexts/PaginationContext'
 import { useRef } from 'react'
 import { Pagination } from '@/pageComponents/shared/search/pagination/Pagination'
 import usePaginationPadding from '@/lib/hooks/usePaginationPadding'
+import { Flags } from '@/sanity/helpers/datasetHelpers'
 
 const searchClient = client()
 const queriedSearchClient: SearchClient = {

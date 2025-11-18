@@ -1,10 +1,10 @@
 'use client'
-import envisTwMerge from '../../twMerge'
 import { MediaButton } from '@/core/MediaButton/MediaButton'
 import { useContext } from 'react'
 import { PaginationContext } from '../../lib/contexts/PaginationContext'
 import { usePrefersReducedMotion } from '../../lib/hooks/usePrefersReducedMotion'
 import { useTranslations } from 'next-intl'
+import { twMerge } from 'tailwind-merge'
 
 export type SimplePaginationProps = {
   className?: string
@@ -40,7 +40,7 @@ export const SimplePagination = ({
   }
 
   return (
-    <ul className={envisTwMerge(`my-2 flex flex-wrap items-center gap-3`, className)} {...rest}>
+    <ul className={twMerge(`my-2 flex flex-wrap items-center gap-3`, className)} {...rest}>
       <li>
         <MediaButton
           title={intl('previous')}

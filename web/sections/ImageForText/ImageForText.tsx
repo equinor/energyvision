@@ -1,6 +1,6 @@
 import { ImageForTextData } from '../../types/types'
 import { forwardRef } from 'react'
-import Image from '../../core/SanityImage/SanityImage'
+import { Image } from '../../core/Image/Image'
 import Blocks from '../../portableText/Blocks'
 
 type ImageForTextProps = {
@@ -15,7 +15,7 @@ const ImageForText = forwardRef<HTMLDivElement, ImageForTextProps>(function Imag
       <div className="">
         <Image
           image={image}
-          maxWidth={2000}
+          grid="lg"
           {...(aspectRatio === 'fullWidth' ? { aspectRatio: '10:3' } : { aspectRatio: '16:9' })}
           aria-hidden
           className=""

@@ -1,6 +1,5 @@
-import { IconType } from '@equinor/eds-core-react/dist/types/components/Icon/Icon.types'
 import { ButtonHTMLAttributes, forwardRef } from 'react'
-import envisTwMerge from '../../twMerge'
+import { twMerge } from 'tailwind-merge'
 
 export const commonButtonStyling = `
 w-fit
@@ -113,7 +112,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ variant = 'contained', type = 'button', children, className = '', ...rest }, ref) => {
     const variantClassNames = getVariant(variant)
 
-    const buttonClassNames = envisTwMerge(commonButtonStyling, variantClassNames, className)
+    const buttonClassNames = twMerge(commonButtonStyling, variantClassNames, className)
 
     return (
       <button ref={ref} type={type} className={buttonClassNames} {...rest}>

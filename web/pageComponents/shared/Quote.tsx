@@ -1,5 +1,5 @@
 'use client'
-import Image, { getSmallerThanPxLgSizes } from '../../core/SanityImage/SanityImage'
+import { Image } from '../../core/Image/Image'
 import type { ImageWithAlt, DesignOptions } from '../../types/index'
 import { QuoteSymbol } from '../../icons'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
@@ -30,13 +30,7 @@ const Quote = ({ data: { quote, authorTitle, author, image, designOptions } }: {
   const ImageComponent = hasImage && (
     <div className="flex justify-center">
       <div className={`${isMobile ? 'w-[81px]' : 'min-w-[194px] md:w-52 xl:w-[242px]'} `}>
-        <Image
-          maxWidth={242}
-          aspectRatio={'1:1'}
-          image={image!}
-          sizes={getSmallerThanPxLgSizes()}
-          className="rounded-full"
-        />
+        <Image grid="xs" aspectRatio={'1:1'} image={image} imageClassName="rounded-full" />
       </div>
     </div>
   )

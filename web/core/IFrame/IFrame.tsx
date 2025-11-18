@@ -3,11 +3,12 @@ import { forwardRef, HTMLAttributes, useId, useState } from 'react'
 import useConsentState from '../../lib/hooks/useConsentState'
 import { CookieType } from '../../types'
 import useConsent from '../../lib/hooks/useConsent'
-import envisTwMerge from '../../twMerge'
 import RequestConsentContainer from './RequestConsentContainer'
 import { PortableTextBlock } from '@portabletext/types'
 import Blocks from '../../portableText/Blocks'
 import Transcript from '@/sections/Transcript/Transcript'
+//TODO check this
+// eslint-disable-next-line import/no-unresolved
 import { useIsPresentationTool } from 'next-sanity/hooks'
 import { twMerge } from 'tailwind-merge'
 
@@ -82,7 +83,7 @@ export const IFrame = forwardRef<HTMLDivElement, IFrameProps>(function IFrame(
   const iframeElement = (
     <>
       {title && showTitleAbove && (
-        <Blocks value={title} id={titleId} className={envisTwMerge('pb-8 text-xl', titleClassName)} />
+        <Blocks value={title} id={titleId} className={twMerge('pb-8 text-xl', titleClassName)} />
       )}
       <div
         className="relative w-full overflow-hidden"
@@ -112,18 +113,14 @@ export const IFrame = forwardRef<HTMLDivElement, IFrameProps>(function IFrame(
         <Blocks
           value={title}
           id={titleId}
-          className={envisTwMerge('pt-4 text-md', description ? 'pb-2' : '', titleClassName)}
+          className={twMerge('pt-4 text-md', description ? 'pb-2' : '', titleClassName)}
         />
       )}
       {description && (
         <Blocks
           value={description}
           id={descriptionId}
-          className={envisTwMerge(
-            'text-base',
-            !title || (!title && !showTitleAbove) ? 'pt-4' : '',
-            descriptionClassName,
-          )}
+          className={twMerge('text-base', !title || (!title && !showTitleAbove) ? 'pt-4' : '', descriptionClassName)}
         />
       )}
     </>

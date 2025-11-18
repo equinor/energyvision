@@ -1,6 +1,6 @@
 import type { DesignOptions, ImageWithCaptionData } from '../../types/index'
 import { FigureCaption } from '@/core/FigureCaption/FigureCaption'
-import Image, { getPxLgSizes, ImageRatioKeys } from '../../core/SanityImage/SanityImage'
+import { Image, ImageRatioKeys } from '../../core/Image/Image'
 import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
 import { twMerge } from 'tailwind-merge'
 
@@ -39,11 +39,9 @@ const Figure = ({ data, anchor, className = '' }: FigureProps) => {
       <Image
         image={image}
         aspectRatio={aspectRatio}
-        sizes={getPxLgSizes()}
+        grid="lg"
         className={`${alignWithText ? 'max-w-envis-text' : ''}`}
-        maxWidth={alignWithText ? 810 : 1100}
         {...(useFitMin && {
-          maxHeight: 800,
           useFitMin: true,
         })}
       />

@@ -7,8 +7,8 @@ import { twMerge } from 'tailwind-merge'
 import Blocks from '@/portableText/Blocks'
 import 'video.js/dist/video-js.css'
 import { ImageWithAlt } from '@/types'
-import { useSanityLoader } from '@/sanity/hooks/useSanityLoader'
-import { mapSanityImageRatio, MAX_WIDTH_LAYOUT_MD } from '../SanityImage/SanityImage'
+import { resolveImage } from '@/sanity/lib/utils'
+import { mapSanityImageRatio } from '../Image/Image'
 
 export type VideoType = {
   title: string
@@ -56,8 +56,11 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
   className,
   containVideo,
 }) => {
-  //@ts-ignore: Look into our hooks and undefined params: Type 'undefined' is not assignable to type 'ImageWithAlt | SanityImageObject'. <- poster
-  const posterProps = useSanityLoader(poster, MAX_WIDTH_LAYOUT_MD, mapSanityImageRatio(aspectRatio))
+  const { url: posterUrl } = resolveImage({
+    image: poster,
+    grid: 'lg',
+    aspectRatio: mapSanityImageRatio(aspectRatio === '9:16' ? '9:16' : '16:9'),
+  })
   const playerRef = useRef<Player>(null)
   const useFill = !containVideo && (useFillMode || aspectRatio === '10:3' || aspectRatio === '21:9')
 
@@ -112,8 +115,8 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
       },
     },
     ...(poster &&
-      posterProps?.src && {
-        poster: posterProps?.src,
+      posterUrl && {
+        poster: posterUrl,
       }),
     ...(title && {
       title: title,

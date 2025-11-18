@@ -2,9 +2,8 @@ import { forwardRef, HTMLAttributes } from 'react'
 import { BaseLink } from '@/core/Link'
 import { Typography } from '@/core/Typography'
 import NextImage from 'next/image'
-import Image, { getPxLgSizes, getSmallerThanPxLgSizes } from '../../../core/SanityImage/SanityImage'
-import envisTwMerge from '../../../twMerge'
-import { NewsRoomNewsItem } from '../../../types/algoliaIndexPage'
+import { getSmallerThanPxLgSizes, Image } from '@/core/Image/Image'
+import { NewsRoomNewsItem } from '@/types/algoliaIndexPage'
 import { SanityImageObject } from '@sanity/image-url/lib/types/types'
 import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
 
@@ -15,14 +14,14 @@ export type NewsListItemProps = {
 
 /* Not a semantic list even tho name implies it, used as other news pages with sections */
 const NewsItem = forwardRef<HTMLLIElement, NewsListItemProps>(function NewsItem(
-  { data, fallbackImage, className = '', ...rest },
+  { data, fallbackImage, className = '' },
   ref,
 ) {
   const { slug, title, publishDateTime, heroImage, thumbnailUrl } = data || {}
   if (!slug) return null
 
   return (
-    <section ref={ref} className={envisTwMerge('', className)} {...rest}>
+    <section ref={ref} className={className}>
       <BaseLink href={slug} className="group flex justify-between gap-4 lg:gap-6">
         <div className="max-w-[65%]">
           {publishDateTime && (
@@ -64,8 +63,7 @@ const NewsItem = forwardRef<HTMLLIElement, NewsListItemProps>(function NewsItem(
                     //@ts-ignore: TODO Fix SanityImage to take SanityImageObject
                     image={heroImage?.image?.asset ? heroImage?.image : fallbackImage}
                     aria-hidden
-                    aspectRatio="16:9"
-                    sizes={getPxLgSizes()}
+                    grid="lg"
                     fill
                     className="rounded-2xs"
                   />

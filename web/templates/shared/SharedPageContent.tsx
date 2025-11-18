@@ -31,7 +31,7 @@ import {
   CampaignBannerData,
   DesignOptions,
   AnchorLinkListData,
-  ImageForTextData
+  ImageForTextData,
 } from '@/types'
 import { getColorForTheme } from '@/sections/teasers/TextTeaser/theme'
 import Grid from '@/sections/Grid/Grid'
@@ -58,7 +58,7 @@ import PromoTileArray from '@/sections/PromoTiles/PromoTileArray'
 import CookieDeclaration from '@/sections/CookieDeclaration/CookieDeclaration'
 import NewsList from '@/pageComponents/topicPages/NewsList'
 import StockValues, { StockValuesProps } from '@/sections/StockValues/StockValues'
-import TwitterEmbed from '@/pageComponents/topicPages/TwitterEmbed'
+/* import TwitterEmbed from '@/pageComponents/topicPages/TwitterEmbed' */
 import VideoPlayer, { VideoPlayerBlockProps } from '@/sections/VideoPlayerBlock/VideoPlayerBlock'
 import { HomePageBanner } from '@/sections/HomePageBanner/HomePageBanner'
 import TableBlock, { TableBlockProps } from '@/sections/TableBlock/TableBlock'
@@ -83,7 +83,6 @@ export type ComponentSections =
   | FormData
   | TableData
   | StockValuesData
-  | TwitterEmbedData
   | AnchorLinkData
   | VideoPlayerCarouselData
   | CookieDeclarationData
@@ -369,10 +368,10 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
         return (
           <StockValues key={c.id} {...(c as StockValuesProps)} anchor={anchorReference} className={spacingClassName} />
         )
-      case 'twitterEmbed':
+      /*       case 'twitterEmbed':
         return (
           <TwitterEmbed key={c.id} data={c as TwitterEmbedData} anchor={anchorReference} className={spacingClassName} />
-        )
+        ) */
       case 'imageCarousel':
         return (
           <ImageCarousel
@@ -473,7 +472,7 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
             className={topSpacingClassName}
           />
         )
-              case 'lineChartBlock':
+      case 'lineChartBlock':
         return (
           <LineChartBlock
             key={c.id}

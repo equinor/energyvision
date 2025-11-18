@@ -1,38 +1,40 @@
 import type { DesignOptions, HeroType, ImageWithCaptionData } from '@/types'
-import { useSanityLoader } from '../../sanity/hooks/useSanityLoader'
-import Image, { getFullScreenSizes, mapSanityImageRatio } from '../../core/SanityImage/SanityImage'
+import { Image, mapSanityImageRatio } from '../../core/Image/Image'
 import { FigureCaption } from '@/core/FigureCaption/FigureCaption'
 import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
+import { resolveImage } from '@/sanity/lib/utils'
 
 type FullImageHeroType = {
   figure: ImageWithCaptionData
   ratio?: string
 }
 
-const imageSizes = getFullScreenSizes()
-
 const NarrowHero = ({ figure }: FullImageHeroType) => {
   // 4:3 for small screens and 10:3 for large screens
-  const desktopUrl = useSanityLoader(figure.image, 2560, mapSanityImageRatio('10:3'))
+  const { url: desktopUrl } = resolveImage({
+    image: figure.image,
+    grid: 'full',
+    aspectRatio: mapSanityImageRatio('10:3'),
+  })
 
   // Using picture with mobile and dekstop source to avoid initial load layout shift between aspect ratio
   return (
     <picture>
-      <source srcSet={desktopUrl.src} media="(min-width: 750px)" />
-      <Image maxWidth={1024} aspectRatio={'4:3'} image={figure.image} sizes={imageSizes} priority />
+      <source srcSet={desktopUrl} media="(min-width: 750px)" />
+      <Image aspectRatio={'4:3'} image={figure.image} />
     </picture>
   )
 }
 const TallHero = ({ figure }: FullImageHeroType) => {
   return (
     <div className="relative h-auto w-full max-md:aspect-4/3 md:h-[53dvh] lg:h-[65dvh] 4xl:h-[67dvh]">
-      <Image maxWidth={2560} fill aspectRatio={'5:4'} image={figure.image} sizes={imageSizes} priority />
+      <Image grid="full" fill aspectRatio={'5:4'} image={figure.image} />
     </div>
   )
 }
 
 const RatioHero = ({ figure }: FullImageHeroType) => {
-  return <Image maxWidth={2560} aspectRatio={'2:1'} image={figure.image} sizes={imageSizes} priority />
+  return <Image grid="full" aspectRatio={'2:1'} image={figure.image} />
 }
 
 export const FullImageHero = ({ ratio, figure, hideImageCaption, captionBg }: HeroType) => {

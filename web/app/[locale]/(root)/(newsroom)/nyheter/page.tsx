@@ -9,10 +9,10 @@ import { newsroomQuery } from '@/sanity/queries/newsroom'
 import { algoliasearch } from 'algoliasearch'
 import { Metadata } from 'next'
 import { metaTitleSuffix } from '@/languages'
-import getOpenGraphImages from '@/sanity/helpers/getOpenGraphImages'
 import { toPlainText } from 'next-sanity'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { algolia } from '@/lib/config'
+import { resolveOpenGraphImage } from '@/sanity/lib/utils'
 
 export function generateStaticParams() {
   return Flags.HAS_NEWSROOM ? [{ locale: 'no' }] : []
@@ -54,7 +54,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const { documentTitle, title, metaDescription, openGraphImage, heroImage } = pageData
   const plainTitle = Array.isArray(title) ? toPlainText(title) : title
 
-  const openGraphImages = getOpenGraphImages((openGraphImage?.asset ? openGraphImage : null) || heroImage?.image)
+  const ogImage = resolveOpenGraphImage(openGraphImage ?? heroImage?.image)
 
   return {
     title: `${documentTitle || plainTitle} - ${metaTitleSuffix}`,
@@ -66,7 +66,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       locale,
       type: 'website',
       siteName: 'Equinor',
-      images: openGraphImages,
+      images: ogImage,
     },
     alternates: {
       canonical: 'https://www.equinor.com/no/nyheter',

@@ -7,8 +7,8 @@ import { forwardRef, useState } from 'react'
 import { getArrowElement, ResourceLinkProps } from './ResourceLink'
 import { BaseLink } from './BaseLink'
 import { BsFiletypePdf, BsFiletypeXlsx } from 'react-icons/bs'
-import envisTwMerge from '../../twMerge'
 import { useTranslations } from 'next-intl'
+import { twMerge } from 'tailwind-merge'
 
 type Variants = 'default' | 'fit' | 'stickyMenu'
 
@@ -211,7 +211,7 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
         )}
         {downloadRequestUrl && isFriendlyChallengeDone && !notHuman && (
           <BaseLink
-            className={envisTwMerge(`${commonResourceLinkWrapperClassName}`, 'pt-20')}
+            className={twMerge(`${commonResourceLinkWrapperClassName}`, 'pt-20')}
             type={type}
             href={downloadRequestUrl}
             {...(extension &&

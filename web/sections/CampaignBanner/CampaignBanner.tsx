@@ -5,7 +5,7 @@ import Blocks, { MarkType } from '../../portableText/Blocks'
 import { PortableTextBlock } from '@portabletext/types'
 import isEmpty from '../../portableText/helpers/isEmpty'
 import { colorKeyToUtilityMap } from '../../styles/colorKeyToUtilityMap'
-import { urlFor } from '@/sanity/helpers/urlFor'
+import { urlForImage } from '@/sanity/lib/utils'
 
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 const campaignTitleBlocks: MarkType = {
@@ -66,7 +66,7 @@ const CampaignBanner = forwardRef<HTMLElement, CampaignBannerProps>(function Cam
   `,
     className,
   )
-  const imgUrl = backgroundImage?.image ? urlFor(backgroundImage.image) : ''
+  const imgUrl = backgroundImage?.image ? urlForImage(backgroundImage.image) : ''
   const props = {
     ...(backgroundImage?.image && {
       style: {

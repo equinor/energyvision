@@ -1,4 +1,4 @@
-'use client'
+/* 'use client'
 import { PortableTextBlock, TwitterEmbedData } from '../../types/index'
 import { TwitterTimelineEmbed, TwitterTweetEmbed } from 'react-twitter-embed'
 import { Typography } from '@/core/Typography'
@@ -42,7 +42,6 @@ const TwitterEmbed = ({ data, anchor, className }: TwitterEmbedProps) => {
     <section id={anchor} className={twMerge(`${bg} ${dark ? 'dark' : ''}`, className)}>
       {title && (
         <div className="mb-11">
-          {/* variant h3 or h4? */}
           <Typography as="h2" variant="h3">
             {plainTitle}
           </Typography>
@@ -61,3 +60,4 @@ const TwitterEmbed = ({ data, anchor, className }: TwitterEmbedProps) => {
 }
 
 export default TwitterEmbed
+ */

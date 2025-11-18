@@ -1,8 +1,8 @@
 'use client'
 import { forwardRef, useEffect, useMemo, useRef, useState } from 'react'
 import * as RadixTabs from '@radix-ui/react-tabs'
-import envisTwMerge from '../../twMerge'
 import { mergeRefs } from '@equinor/eds-utils'
+import { twMerge } from 'tailwind-merge'
 
 export type TabListProps = {
   /* Provides a label that describes the purpose of the set of tabs. */
@@ -53,18 +53,8 @@ export const TabList = forwardRef<HTMLDivElement, TabListProps>(function TabList
   return (
     <RadixTabs.List
       ref={combinedRef}
-      className={envisTwMerge(
-        `relative
-          w-full
-          group/tablist
-          overflow-x-auto
-          grid
-          grid-flow-col-dense
-          grid-rows-1
-          ${averageTabWidth}
-          place-content-start
-          no-scrollbar
-        `,
+      className={twMerge(
+        `group/tablist relative grid w-full grid-flow-col-dense grid-rows-1 overflow-x-auto ${averageTabWidth} no-scrollbar place-content-start`,
         className,
       )}
       aria-label={ariaLabel}

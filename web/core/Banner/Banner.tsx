@@ -5,9 +5,9 @@ import { PortableTextBlock } from '@portabletext/types'
 import { ImageWithAlt } from '../../types'
 import { ColorKeyTokens } from '../../styles/colorKeyToUtilityMap'
 import { BaseLink, ResourceLink } from '@/core/Link'
-import Image from '../SanityImage/SanityImage'
+import { Image } from '../Image/Image'
 import { Typography } from '@/core/Typography'
-import envisTwMerge from '../../twMerge'
+import { twMerge } from 'tailwind-merge'
 
 export type Variants = 'primary' | 'secondary'
 
@@ -38,7 +38,7 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
     primary: 'text-md',
     secondary: 'text-base pb-4',
   }
-  const titleClassNames = envisTwMerge(
+  const titleClassNames = twMerge(
     `${!ctaLabel ? 'group-hover:underline peer-hover:underline' : ''}
     ${titleVariantClassName[variant]}`,
     titleClassName,
@@ -67,22 +67,13 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
   return (
     <div
       ref={ref}
-      className={envisTwMerge(
+      className={twMerge(
         `flex flex-col gap-4 xl:grid xl:grid-cols-[max-content_auto] xl:items-center xl:gap-14 xl:py-6 xl:pr-6`,
         className,
       )}
     >
       <div className="relative aspect-video h-full w-full max-w-[420px] xl:min-w-[320px]">
-        {image && (
-          <Image
-            aria-hidden
-            sizes="(max-width: 800px) 100vw, 800px"
-            image={image}
-            fill
-            aspectRatio={'16:9'}
-            className="rounded-md"
-          />
-        )}
+        {image && <Image aria-hidden grid="xs" image={image} fill className="rounded-md" />}
       </div>
       {ctaLink && (
         <div className={`${contentVariantClassName[variant]}`}>

@@ -39,7 +39,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
     notFound()
   }
 
-  const footerData = await getFooterData(getNameFromLocale(locale))
+  const { footerData } = await getFooterData(getNameFromLocale(locale))
 
   return (
     <html

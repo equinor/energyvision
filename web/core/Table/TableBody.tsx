@@ -1,7 +1,7 @@
 import { type HTMLAttributes, forwardRef } from 'react'
-import envisTwMerge from '../../twMerge'
 import { InnerContext } from './Inner.context'
 import { ThemeVariants, Variants } from './Table'
+import { twMerge } from 'tailwind-merge'
 
 export type TableBodyProps = {
   /**
@@ -22,7 +22,7 @@ export const TableBody = forwardRef<HTMLTableSectionElement, TableBodyProps>(fun
 ) {
   return (
     <InnerContext.Provider value={{ variant, themeVariant, section: 'body' }}>
-      <tbody ref={ref} className={envisTwMerge(``, className)} {...rest} />
+      <tbody ref={ref} className={twMerge(``, className)} {...rest} />
     </InnerContext.Provider>
   )
 })

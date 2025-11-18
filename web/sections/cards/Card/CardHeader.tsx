@@ -2,8 +2,8 @@ import { PortableTextBlock } from '@portabletext/types'
 import { Typography, TypographyVariants } from '@/core/Typography'
 import { forwardRef, HTMLAttributes } from 'react'
 import { Variants } from './Card'
-import envisTwMerge from '../../../twMerge'
 import Blocks from '@/portableText/Blocks'
+import { twMerge } from 'tailwind-merge'
 
 export type CardHeaderProps = {
   /** Title string content */
@@ -56,7 +56,7 @@ export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(function C
     single: `text-lg leading-planetary`,
   }
 
-  const titleClassNames = envisTwMerge(
+  const titleClassNames = twMerge(
     `group-hover/card:underline
     group-focus-visible/card:underline
     ${variantTitle[variant]}
@@ -68,7 +68,7 @@ export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(function C
   )
 
   return eyebrow ? (
-    <hgroup ref={ref} className={envisTwMerge('flex w-full flex-col gap-2 text-pretty', className)} {...rest}>
+    <hgroup ref={ref} className={twMerge('flex w-full flex-col gap-2 text-pretty', className)} {...rest}>
       <Typography variant="eyebrow" className={eyebrowClassName}>
         {eyebrow}
       </Typography>
