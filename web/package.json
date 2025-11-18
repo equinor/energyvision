@@ -9,7 +9,7 @@
     "email": "fg_envis@equinor.com"
   },
   "scripts": {
-    "dev": "NEXT_TURBOPACK_TRACING=1 next dev",
+    "dev": "next dev",
     "info": "next info",
     "build": "next build",
     "start": "next start",

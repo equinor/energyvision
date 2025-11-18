@@ -6,11 +6,12 @@ import type { MenuData, SimpleMenuData, StickyMenuData } from '../../types/index
 import { languages, defaultLanguage } from '../../languages'
 import { search } from '@equinor/eds-icons'
 import { Icon } from '@equinor/eds-core-react'
-import { ButtonLink, LogoLink } from '@/core/Link'
+import { ButtonLink } from '@/core/Link'
 import SiteMenu from '@/sections/SiteMenu/SiteMenu'
 import Topbar from '@/core/Topbar/Topbar'
 import { getAllSitesLink } from '@/lib/helpers/getAllSitesLink'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
+import { LogoLink } from '@/core/Link/LogoLink'
 
 export type HeaderProps = {
   menuData?: MenuData | SimpleMenuData

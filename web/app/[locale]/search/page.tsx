@@ -1,5 +1,5 @@
 'use client'
-import LogoLink from '@/core/Link/LogoLink'
+import { LogoLink } from '@/core/Link/LogoLink'
 import { Search } from '@/sections/Search/Search'
 import { NavTopbar } from '@/sections/SiteMenu/NavTopbar'
 import { TopbarDropdown } from '@/sections/SiteMenu/TopbarDropdown'

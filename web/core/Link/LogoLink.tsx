@@ -15,7 +15,7 @@ export const LogoLink = ({ className, ...rest }: LogoLinkProps) => {
       aria-label={intl('logolink_title')}
       {...rest}
       className={twMerge(
-        'text-energy-red-100 dark:text-white-100 flex items-center justify-self-start h-full focus:outline-hidden focus-visible:envis-outline dark:focus-visible:envis-outline-invert',
+        'focus-visible:envis-outline dark:focus-visible:envis-outline-invert flex h-full items-center justify-self-start text-energy-red-100 focus:outline-hidden dark:text-white-100',
         className,
       )}
       prefetch={false}
@@ -24,5 +24,3 @@ export const LogoLink = ({ className, ...rest }: LogoLinkProps) => {
     </NextLink>
   )
 }
-
-export default LogoLink
