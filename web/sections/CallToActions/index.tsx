@@ -2,7 +2,6 @@ import { ResourceLink } from '@/core/Link'
 import type { LinkData } from '../../types/index'
 import { getLocaleFromName } from '../../sanity/localization'
 import { twMerge } from 'tailwind-merge'
-import { call } from '@equinor/eds-icons'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 
 type CallToActionsProps = {
@@ -48,7 +47,6 @@ const CallToActions = ({ callToActions = [], splitList, linkVariant, className =
     >
       {callToActions.map((callToAction: LinkData) => {
         const url = getUrlFromAction(callToAction)
-
         return url ? (
           <li key={callToAction.id}>
             {/*  If the URL is a static AEM page it should behave as an internal link in the web */}

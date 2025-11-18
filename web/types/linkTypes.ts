@@ -16,13 +16,14 @@ export type LinkData = {
   type?: LinkType
   id?: string
   label: string
-  ariaLabel?: string
+  'aria-label'?: string
   link?: { slug: string; type: string; lang: string }
   href?: string
   extension?: string
   fileName?: string
   anchorReference?: string
   filename?: string
+  someType?: any
 }
 
 export type RelatedLinksData = {

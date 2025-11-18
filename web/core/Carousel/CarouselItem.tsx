@@ -139,7 +139,7 @@ export const CarouselItem = forwardRef<HTMLLIElement, CarouselItemProps>(functio
                 {action && action.label && (
                   <ResourceLink
                     href={getUrlFromAction(action) || ''}
-                    aria-label={action?.ariaLabel}
+                    aria-label={action?.['aria-label']}
                     variant="fit"
                     className="mt-auto"
                     hrefLang={action?.type === 'internalUrl' ? getLocaleFromName(action?.link?.lang) : undefined}

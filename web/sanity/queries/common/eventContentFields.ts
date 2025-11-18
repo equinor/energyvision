@@ -52,7 +52,7 @@ export const eventContentFields = /* groq */ `
             defined(url) => "externalUrl", "internalUrl"
           ),
           label,
-          ariaLabel,
+          "aria-label":ariaLabel,
           "link": reference-> {
             "type": _type,
             "slug": slug.current,

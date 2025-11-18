@@ -234,7 +234,6 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
       type={type}
       ref={ref}
       href={href}
-      {...rest}
       {...(extension &&
         extension.toLowerCase() === 'pdf' && {
           target: '_blank',

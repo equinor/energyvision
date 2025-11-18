@@ -131,7 +131,7 @@ export const peoplePromotion = /* groq */ `
     isLink => linkSelector{
         "cv": {
             label,
-            ariaLabel,
+            "aria-label":ariaLabel,
             ...links::getLinkFields(link[0]),
             anchorReference,
         },

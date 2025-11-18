@@ -203,7 +203,7 @@ _type == "keyNumbers" =>{
       },
       "action": {
         "label": link.label,
-        "ariaLabel": link.ariaLabel,
+        "aria-label": link.ariaLabel,
         ...links::getLinkFields(link.link[0])
       },
       "image": image{
@@ -364,7 +364,7 @@ _type == "keyNumbers" =>{
           isLink => linkSelector{
             "cv": {
               label,
-              ariaLabel,
+              "aria-label":ariaLabel,
               ...links::getLinkFields(link[0]),
               anchorReference,
             },
