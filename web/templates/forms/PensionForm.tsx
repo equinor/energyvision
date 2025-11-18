@@ -31,7 +31,7 @@ const PensionForm = () => {
         body: JSON.stringify({
           data,
           frcCaptchaSolution: (event?.target as any)['frc-captcha-response'].value,
-          catalogType: getCatalog(data.pensionCategory),
+          catalogType: data.pensionCategory,
         }),
         headers: {
           'Content-Type': 'application/json',
@@ -49,13 +49,6 @@ const PensionForm = () => {
     }
   }
 
-  const getCatalog = (category: string): PensionFormCatalogType | null => {
-    if (category.includes(intl('pension_form_pension'))) return 'pension'
-    else if (category.includes(intl('pension_form_travel_insurance'))) return 'travelInsurance'
-    else if (category.includes(intl('pension_form_other_pension_insurance_related')))
-      return 'otherPensionInsuranceRelated'
-    else return null
-  }
   const {
     handleSubmit,
     control,

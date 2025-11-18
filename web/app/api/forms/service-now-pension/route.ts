@@ -4,12 +4,8 @@ import { validateFormRequest } from '../validateFormRequest'
 
 const getCatalogIdentifier = (catalogType: PensionFormCatalogType | null) => {
   switch (catalogType) {
-    case 'pension':
-      return '6777904f938a2950eaf1f4527cba1048'
     case 'travelInsurance':
       return '1818180393ca2950eaf1f4527cba101d'
-    case 'otherPensionInsuranceRelated':
-      return '6777904f938a2950eaf1f4527cba1048'
     default:
       return '6777904f938a2950eaf1f4527cba1048'
   }
