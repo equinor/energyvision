@@ -9,9 +9,9 @@
     "email": "fg_envis@equinor.com"
   },
   "scripts": {
-    "dev": "next dev --webpack",
+    "dev": "next dev",
     "info": "next info",
-    "build": "next build --webpack",
+    "build": "next build",
     "start": "next start",
     "type-check": "tsc --project tsconfig.json --pretty",
     "check-types": "tsc"
@@ -45,9 +45,9 @@
     "http-proxy": "^1.18.1",
     "ics": "^3.1.0",
     "instantsearch.js": "^4.81.0",
-    "next": "16.0.3",
+    "next": "15.5.2",
     "next-intl": "4.4.0",
-    "next-sanity": "11.6.7",
+    "next-sanity": "11.5.0",
     "next-sanity-image": "^6.2.0",
     "next-seo": "^6.8.0",
     "qs": "^6.11.1",
