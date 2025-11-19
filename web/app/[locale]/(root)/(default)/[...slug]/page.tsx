@@ -1,14 +1,14 @@
-import { getQueryFromSlug } from '../../../../../sanity/helpers/queryFromSlug'
+import type { Metadata } from 'next'
 import dynamic from 'next/dynamic'
 import { notFound } from 'next/navigation'
-import { getPageData } from '@/sanity/lib/fetchData'
-import { Metadata } from 'next'
-import { getLocaleFromName, getNameFromLocale } from '@/sanity/localization'
-import { defaultLanguage, metaTitleSuffix, domain } from '@/languages'
 import { toPlainText } from 'next-sanity'
-import getPageSlugs from '@/sanity/helpers/getPageSlugs'
+import { defaultLanguage, domain, metaTitleSuffix } from '@/languageConfig'
 import { isDateAfter } from '@/lib/helpers/dateUtilities'
+import getPageSlugs from '@/sanity/helpers/getPageSlugs'
+import { getPageData } from '@/sanity/lib/fetchData'
 import { resolveOpenGraphImage } from '@/sanity/lib/utils'
+import { getLocaleFromName, getNameFromLocale } from '@/sanity/localization'
+import { getQueryFromSlug } from '../../../../../sanity/helpers/queryFromSlug'
 
 const MagazinePage = dynamic(() => import('@/templates/magazine/MagazinePage'))
 const LandingPage = dynamic(() => import('@/templates/landingpage/LandingPage'))
@@ -60,7 +60,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const activeSlug =
     slugs.length > 0
-      ? slugs.find((slug: { lang: string; slug: string }) => slug.lang === getNameFromLocale(locale))?.slug
+      ? slugs.find(
+          (slug: { lang: string; slug: string }) =>
+            slug.lang === getNameFromLocale(locale),
+        )?.slug
       : slug
 
   const canonicalSlug =
@@ -71,21 +74,34 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const alternateLinks: Record<string, string> = {}
   slugs.forEach((slug: { lang: string; slug: string }) => {
     const slugLocale = getLocaleFromName(slug.lang)
-    const correctedSlug = (defaultLocale !== slugLocale ? `/${slugLocale}` : '').concat(
-      slug.slug !== '/' ? slug.slug : '',
-    )
+    const correctedSlug = (
+      defaultLocale !== slugLocale ? `/${slugLocale}` : ''
+    ).concat(slug.slug !== '/' ? slug.slug : '')
     Object.assign(alternateLinks, { [slugLocale]: `${domain}${correctedSlug}` })
   })
 
   //Fallback page if no locale
-  const defaultSlug = slugs.find((slug: { lang: string; slug: string }) => slug.lang === defaultLanguage.name)?.slug
+  const defaultSlug = slugs.find(
+    (slug: { lang: string; slug: string }) =>
+      slug.lang === defaultLanguage.name,
+  )?.slug
   const xDefaultSlug = `${domain}${defaultSlug === '/' ? '' : defaultSlug}`
 
   //@ts-ignore: todo
-  const { publishDateTime, updatedAt, documentTitle, title, metaDescription, openGraphImage, heroImage } = pageData
+  const {
+    publishDateTime,
+    updatedAt,
+    documentTitle,
+    title,
+    metaDescription,
+    openGraphImage,
+    heroImage,
+  } = pageData
   const plainTitle = Array.isArray(title) ? toPlainText(title) : title
 
-  const modifiedDate = isDateAfter(publishDateTime, updatedAt) ? publishDateTime : updatedAt
+  const modifiedDate = isDateAfter(publishDateTime, updatedAt)
+    ? publishDateTime
+    : updatedAt
   console.log('[...slug] openGraphImage', openGraphImage)
   const ogImage = resolveOpenGraphImage(openGraphImage ?? heroImage?.image)
   console.log('[...slug] ogUrl', ogImage)

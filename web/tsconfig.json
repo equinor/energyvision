@@ -1,5 +1,4 @@
 {
-  "extends": "../tsconfig.base.json",
   "compilerOptions": {
     "plugins": [
       {
@@ -10,14 +9,28 @@
     "paths": {
       "@/*": ["./*"],
       "@shared/*": ["../shared/*"]
-    }
+    },
+    "target": "esnext",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "preserve",
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "incremental": true
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "../shared/*"
+    "../shared/*",
+    ".next/dev/types/**/*.ts"
   ],
   "exclude": ["node_modules", ".next"]
 }

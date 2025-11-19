@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server'
 import { client } from '@/sanity/lib/client'
 import { urlForImage } from '@/sanity/lib/utils'
 import { publishDateTimeQuery } from '@/sanity/queries/common/publishDateTime'
-import { newsSlug } from '../../../../satellitesConfig.mjs'
+import { newsSlug } from '../../../../satellitesConfig.js'
 
 const latestNews = `
 *[_type == "news" && lang == $lang]

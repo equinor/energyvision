@@ -1,6 +1,6 @@
 import { file_add } from '@equinor/eds-icons'
 import slugify from 'slugify'
-import { newsSlug } from '../../../satellitesConfig.mjs'
+import { newsSlug } from '../../../satellitesConfig.js'
 import { formatDate } from '../../helpers/formatDate'
 import { EdsIcon } from '../../icons'
 import { defaultLanguage } from '../../languages'

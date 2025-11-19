@@ -1,8 +1,9 @@
+import DocumentsPane from 'sanity-plugin-documents-pane'
 import items from './src/lib/structure'
 import FilePreview from './src/previews/file/filePreview'
-import DocumentsPane from 'sanity-plugin-documents-pane'
 
-export default (S, context) => S.list().title('Content').items(items(S, context))
+export default (S, context) =>
+  S.list().title('Content').items(items(S, context))
 
 const docsWithNormalPreview = [
   'news',
@@ -18,7 +19,14 @@ const docsWithNormalPreview = [
   'internalServerError',
 ]
 const docsWithRoute = ['page', 'event']
-const tagDocTypes = ['tag', 'localNewsTag', 'countryTag', 'magazineTag', 'eventTag', 'assetTag']
+const tagDocTypes = [
+  'tag',
+  'localNewsTag',
+  'countryTag',
+  'magazineTag',
+  'eventTag',
+  'assetTag',
+]
 const fileDocTypes = ['assetFile', 'videoFile']
 
 export const defaultDocumentNodeResolver = (S, { schemaType }) => {
@@ -75,8 +83,8 @@ export const defaultDocumentNodeResolver = (S, { schemaType }) => {
       schemaType === 'assetTag'
         ? 'References'
         : schemaType === 'eventTag'
-        ? 'Connected event(s)'
-        : 'Connected article(s)'
+          ? 'Connected event(s)'
+          : 'Connected article(s)'
 
     views.push(
       S.view

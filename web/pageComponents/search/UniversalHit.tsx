@@ -4,7 +4,7 @@ import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
 import { BaseLink } from '@/core/Link'
 import { Typography } from '@/core/Typography'
 import { host } from '@/lib/config'
-import { defaultLanguage } from '../../languages.mjs'
+import { defaultLanguage } from '../../languages.js'
 import { Highlight } from './Highlight'
 import DisplayLink from './hit/DisplayLink'
 

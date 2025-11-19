@@ -6,6 +6,7 @@ import { useLocale, useTranslations } from 'next-intl'
 import { ButtonLink } from '@/core/Link'
 import { LogoLink } from '@/core/Link/LogoLink'
 import Topbar from '@/core/Topbar/Topbar'
+import { defaultLanguage, languages } from '@/languageConfig'
 import { getAllSitesLink } from '@/lib/helpers/getAllSitesLink'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import SiteMenu from '@/sections/SiteMenu/SiteMenu'
@@ -13,7 +14,6 @@ import {
   type AllSlugsType,
   LocalizationSwitch,
 } from '../../core/LocalizationSwitch/LocalizationSwitch'
-import { defaultLanguage, languages } from '../../languages.mjs'
 import type {
   MenuData,
   SimpleMenuData,

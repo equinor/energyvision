@@ -1,16 +1,25 @@
-import { getQueryFromSlug } from '../../../../sanity/helpers/queryFromSlug'
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import HomePage from '../../../../templates/homepage/HomePage'
-import { defaultLanguage, domain, languages, metaTitleSuffix } from '@/languages'
-import { getPageData } from '@/sanity/lib/fetchData'
-import { Metadata } from 'next'
 import { toPlainText } from 'next-sanity'
+import {
+  defaultLanguage,
+  domain,
+  languages,
+  metaTitleSuffix,
+} from '@/languageConfig'
+import { getPageData } from '@/sanity/lib/fetchData'
 import { resolveOpenGraphImage } from '@/sanity/lib/utils'
+import { getQueryFromSlug } from '../../../../sanity/helpers/queryFromSlug'
+import HomePage from '../../../../templates/homepage/HomePage'
 
 export const dynamicParams = true // fallback to true in app router
 
 type Params = Promise<{ locale: string }>
-export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: Params
+}): Promise<Metadata> {
   const defaultLocale = defaultLanguage.locale
   const locale = (await params).locale ?? defaultLocale
   const fullSlug = `${domain}/${locale !== defaultLocale ? `${locale}/` : ''}`
@@ -23,7 +32,8 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
     queryParams,
   })
   //@ts-ignore: todo
-  const { documentTitle, title, metaDescription, openGraphImage, heroImage } = fullData.pageData
+  const { documentTitle, title, metaDescription, openGraphImage, heroImage } =
+    fullData.pageData
   const plainTitle = Array.isArray(title) ? toPlainText(title) : title
   console.log('openGraphImage', openGraphImage)
 
@@ -32,7 +42,9 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
 
   const alternateLinks: Record<string, string> = {}
   languages.forEach(({ locale }) => {
-    Object.assign(alternateLinks, { [locale]: `${domain}${defaultLocale !== locale ? `/${locale}` : ''}` })
+    Object.assign(alternateLinks, {
+      [locale]: `${domain}${defaultLocale !== locale ? `/${locale}` : ''}`,
+    })
   })
   return {
     title: `${documentTitle || plainTitle} - ${metaTitleSuffix}`,
@@ -59,9 +71,12 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default async function Page({ params }: any) {
   const { locale } = await params
-  if (!languages.map((it) => it.locale).includes(locale)) notFound()
+  if (!languages.map(it => it.locale).includes(locale)) notFound()
 
-  const { query, queryParams } = await getQueryFromSlug(params?.slug as string[], locale)
+  const { query, queryParams } = await getQueryFromSlug(
+    params?.slug as string[],
+    locale,
+  )
 
   const { pageData: fullData } = await getPageData({
     query,

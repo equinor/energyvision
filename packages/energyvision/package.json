@@ -23,7 +23,7 @@
     "./featureFlags": "./src/configs/featureFlags.ts"
   },
   "devDependencies": {
-    "typescript": "5.8.3"
+    "typescript": "5.9.3"
   },
   "packageManager": "pnpm@10.18.1"
 }

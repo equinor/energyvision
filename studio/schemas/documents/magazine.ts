@@ -1,7 +1,7 @@
 import { bookmarks } from '@equinor/eds-icons'
 import type { Rule, SanityDocument } from 'sanity'
 import slugify from 'slugify'
-import { magazineSlug } from '../../../satellitesConfig.mjs'
+import { magazineSlug } from '../../../satellitesConfig.js'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
 import { defaultLanguage } from '../../languages'

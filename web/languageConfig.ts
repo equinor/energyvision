@@ -1,12 +1,13 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-nocheck
 //import { defaultWebLanguage, getDomain, getLanguages, getMetaTitleSuffix, type DatasetsKeys } from '@shared/sitesConfig'
+
 import {
   defaultWebLanguage,
   getDomain,
   getLanguages,
   getMetaTitleSuffix,
-} from '../satellitesConfig.mjs'
+} from '@shared/sitesConfig'
 
 export const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET //as DatasetsKeys
 

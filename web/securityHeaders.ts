@@ -3,8 +3,9 @@
  * https://nextjs.org/docs/advanced-features/security-headers
  */
 
+import { dataset } from './languageConfig'
+
 //import { dataset } from '@/languageConfig'
-import { dataset } from './languages.mjs'
 
 const isProduction = process.env.NODE_ENV === 'production'
 

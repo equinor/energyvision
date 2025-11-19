@@ -2,7 +2,7 @@
 import { useLocale, useTranslations } from 'next-intl'
 import { Button } from '@/core/Button'
 import { Typography } from '@/core/Typography'
-import { defaultLanguage } from '../../languages.mjs'
+import { defaultLanguage } from '@/languageConfig'
 import type { CookieType } from '../../types'
 
 declare global {
