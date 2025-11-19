@@ -1,6 +1,6 @@
 'use client'
-import { useEffect } from 'react'
 import { usePathname, useSearchParams } from 'next/navigation'
+import { useEffect } from 'react'
 import { GTM_ID, pageview } from '@/lib/gtm'
 
 export function NavigationEvents() {
@@ -13,13 +13,17 @@ export function NavigationEvents() {
     pageview(url)
   }, [pathname, searchParams])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (window.self === window.top) {
       if (window?.Cookiebot) {
         try {
           window.Cookiebot?.runScripts()
         } catch (error) {
-          console.error('An error occured while trying to run the Cookiebot script: ', error)
+          console.error(
+            'An error occured while trying to run the Cookiebot script: ',
+            error,
+          )
         }
       }
     }

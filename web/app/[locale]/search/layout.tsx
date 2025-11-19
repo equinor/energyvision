@@ -1,17 +1,21 @@
 // @ts-ignore: missing type declarations for side-effect import of global CSS
 import '../../globals.css'
-import { Metadata } from 'next'
-import { metaTitleSuffix } from '@/languages'
-import { getTranslations } from 'next-intl/server'
-import { NextIntlClientProvider } from 'next-intl'
-import { GoogleTagManagerHead } from '../GTMHead'
-import Script from 'next/script'
-import { SiteImprove } from '../SiteImprove'
-import { Suspense } from 'react'
-import { NavigationEvents } from '../NavigationEvents'
+import type { Metadata } from 'next'
 import localFont from 'next/font/local'
+import Script from 'next/script'
+import { NextIntlClientProvider } from 'next-intl'
+import { getTranslations } from 'next-intl/server'
+import { Suspense } from 'react'
+import { metaTitleSuffix } from '@/languages.mjs'
+import { GoogleTagManagerHead } from '../GTMHead'
+import { NavigationEvents } from '../NavigationEvents'
+import { SiteImprove } from '../SiteImprove'
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
   const { locale } = await params
   const intl = await getTranslations()
   const title = intl('search_page_title')
@@ -48,7 +52,13 @@ const equinorVariableWoff2 = localFont({
   src: '../../fonts/equinor/EquinorVariable-VF.woff2',
 })
 
-export default async function LocaleLayout({ children, params }: { children: React.ReactNode; params: Params }) {
+export default async function LocaleLayout({
+  children,
+  params,
+}: {
+  children: React.ReactNode
+  params: Params
+}) {
   const { locale } = await params
   return (
     <html
@@ -59,12 +69,12 @@ export default async function LocaleLayout({ children, params }: { children: Rea
         {/* TODO look into script placement */}
         {/* eslint-disable-next-line @next/next/no-before-interactive-script-outside-document*/}
         <Script
-          src="https://consent.cookiebot.com/uc.js"
-          id="Cookiebot"
-          strategy="beforeInteractive"
-          data-cbid="f1327b03-7951-45da-a2fd-9181babc783f"
-          data-blockingmode="auto"
-          data-culture={locale == 'no' ? 'nb' : locale}
+          src='https://consent.cookiebot.com/uc.js'
+          id='Cookiebot'
+          strategy='beforeInteractive'
+          data-cbid='f1327b03-7951-45da-a2fd-9181babc783f'
+          data-blockingmode='auto'
+          data-culture={locale === 'no' ? 'nb' : locale}
         />
         <GoogleTagManagerHead />
         <SiteImprove />

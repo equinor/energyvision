@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { forwardRef, HTMLAttributes } from 'react'
+
+import type { PortableTextBlock } from '@portabletext/types'
+import { forwardRef, type HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { GridTeaserData } from '../../types/index'
-import { RowType } from './mapGridContent'
-import GridLinkArrow from './GridLinkArrow'
-import Blocks from '../../portableText/Blocks'
-import { PortableTextBlock } from '@portabletext/types'
-import { getColorForTheme } from '@/sections/teasers/TextTeaser/theme'
-import { resolveImage } from '@/sanity/lib/utils'
 import { Image } from '@/core/Image/Image'
+import { getColorForTheme } from '@/sections/teasers/TextTeaser/theme'
+import Blocks from '../../portableText/Blocks'
+import type { GridTeaserData } from '../../types/index'
+import GridLinkArrow from './GridLinkArrow'
+import type { RowType } from './mapGridContent'
 
 export type GridTeaserProps = {
   data: GridTeaserData
@@ -16,61 +16,76 @@ export type GridTeaserProps = {
   className?: string
 } & HTMLAttributes<HTMLDivElement>
 
-export const GridTeaser = forwardRef<HTMLDivElement, GridTeaserProps>(function GridTeaser({ data, rowType }, ref) {
-  const {
-    image,
-    action,
-    content,
-    themedContent,
-    quote,
-    author,
-    authorTitle,
-    useExtendedThemes,
-    themeFromLarger,
-    theme,
-  } = data
+export const GridTeaser = forwardRef<HTMLDivElement, GridTeaserProps>(
+  function GridTeaser({ data, rowType }, ref) {
+    const {
+      image,
+      action,
+      content,
+      themedContent,
+      quote,
+      author,
+      authorTitle,
+      useExtendedThemes,
+      themeFromLarger,
+      theme,
+    } = data
 
-  let contentTextColor = 'text-slate-80'
-  let bgColor = 'bg-white-100'
-  if (useExtendedThemes && themeFromLarger) {
-    const { backgroundUtility: extendedBg, textUtility: extendedTxt } = getColorForTheme(themeFromLarger)
-    if (extendedTxt) {
-      contentTextColor = extendedTxt
+    let contentTextColor = 'text-slate-80'
+    let bgColor = 'bg-white-100'
+    if (useExtendedThemes && themeFromLarger) {
+      const { backgroundUtility: extendedBg, textUtility: extendedTxt } =
+        getColorForTheme(themeFromLarger)
+      if (extendedTxt) {
+        contentTextColor = extendedTxt
+      }
+      if (extendedBg) {
+        bgColor = extendedBg
+      }
     }
-    if (extendedBg) {
-      bgColor = extendedBg
+    if (!useExtendedThemes && theme) {
+      const { backgroundUtility: themeBg, textUtility: themeTxt } =
+        getColorForTheme(theme)
+      if (themeTxt) {
+        contentTextColor = themeTxt
+      }
+      if (themeBg) {
+        bgColor = themeBg
+      }
     }
-  }
-  if (!useExtendedThemes && theme) {
-    const { backgroundUtility: themeBg, textUtility: themeTxt } = getColorForTheme(theme)
-    if (themeTxt) {
-      contentTextColor = themeTxt
-    }
-    if (themeBg) {
-      bgColor = themeBg
-    }
-  }
 
-  return (
-    <div
-      ref={ref}
-      className={twMerge(
-        `grid h-full grid-rows-2 lg:grid-rows-[250px_1fr] ${String(rowType) === 'span3' ? 'lg:grid-cols-[40%_60%] lg:grid-rows-1' : ''} ${bgColor} `,
-      )}
-    >
-      {image && <Image image={image} grid="xs" customHeight={800} customWidth={1200} fill />}
+    return (
+      <div
+        ref={ref}
+        className={twMerge(
+          `grid h-full grid-rows-2 lg:grid-rows-[250px_1fr] ${String(rowType) === 'span3' ? 'lg:grid-cols-[40%_60%] lg:grid-rows-1' : ''} ${bgColor} `,
+        )}
+      >
+        {image && (
+          <Image
+            image={image}
+            grid='xs'
+            customHeight={800}
+            customWidth={1200}
+            fill
+          />
+        )}
 
-      <div className={`relative h-full ${contentTextColor}`}>
-        <div
-          className={`flex h-full flex-col items-center justify-center gap-6 px-6 py-6 ${
-            rowType !== 'span3' ? 'lg:py-8' : 'lg:py-12'
-          } `}
-        >
-          {(content || (useExtendedThemes && themedContent)) && (
-            <Blocks
-              value={(useExtendedThemes ? themedContent : content) as PortableTextBlock[]}
-              blockClassName={`text-md ${contentTextColor}`}
-              /*               {...(useExtendedThemes && {
+        <div className={`relative h-full ${contentTextColor}`}>
+          <div
+            className={`flex h-full flex-col items-center justify-center gap-6 px-6 py-6 ${
+              rowType !== 'span3' ? 'lg:py-8' : 'lg:py-12'
+            } `}
+          >
+            {(content || (useExtendedThemes && themedContent)) && (
+              <Blocks
+                value={
+                  (useExtendedThemes
+                    ? themedContent
+                    : content) as PortableTextBlock[]
+                }
+                blockClassName={`text-md ${contentTextColor}`}
+                /*               {...(useExtendedThemes && {
                 blocksComponents: {
                   normal: ({ children }: PortableTextBlock) => {
                     if (isEmpty(children)) return null
@@ -82,35 +97,42 @@ export const GridTeaser = forwardRef<HTMLDivElement, GridTeaserProps>(function G
                   },
                 } as Partial<PortableTextReactComponents>,
               })} */
-            />
-          )}
-          {quote && (
-            <figure className="flex flex-col px-1">
-              <div className="h-full">
-                <svg
-                  fill="currentColor"
-                  width="36px"
-                  height="36px"
-                  viewBox="0 0 48 48"
-                  aria-label="Quote icon"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <title>Quote symbol</title>
-                  <path d="M24.3178 27.4196C24.3178 20.9682 29.485 14.2193 37.5942 12.7059L40.9409 15.5294C38.0002 16.5773 33.3736 20.0696 33.0856 22.5845C36.3927 23.0764 38.9218 25.7807 38.9218 29.046C38.9218 33.0391 35.4912 35.2941 32.0195 35.2941C28.0166 35.2941 24.3178 32.4016 24.3178 27.4196ZM7.05859 27.4196C7.05859 20.9682 12.2257 14.2193 20.3349 12.7059L23.3221 15.5294C20.3814 16.5773 16.1144 20.0696 15.8263 22.5845C19.1334 23.0764 21.6626 25.7807 21.6626 29.046C21.6626 33.0391 18.232 35.2941 14.7602 35.2941C10.7574 35.2941 7.05859 32.4016 7.05859 27.4196Z" />
-                </svg>
-                {quote && <p className="line-clamp-4 text-md leading-normal text-ellipsis">{quote}</p>}
-              </div>
-              <figcaption className="flex w-full justify-end pt-6">
-                <div className="flex w-fit flex-col items-start">
-                  {author && <strong className="text-base">{author}</strong>}
-                  {authorTitle && <div className="text-sm">{authorTitle}</div>}
+              />
+            )}
+            {quote && (
+              <figure className='flex flex-col px-1'>
+                <div className='h-full'>
+                  <svg
+                    fill='currentColor'
+                    width='36px'
+                    height='36px'
+                    viewBox='0 0 48 48'
+                    aria-label='Quote icon'
+                    xmlns='http://www.w3.org/2000/svg'
+                  >
+                    <title>Quote symbol</title>
+                    <path d='M24.3178 27.4196C24.3178 20.9682 29.485 14.2193 37.5942 12.7059L40.9409 15.5294C38.0002 16.5773 33.3736 20.0696 33.0856 22.5845C36.3927 23.0764 38.9218 25.7807 38.9218 29.046C38.9218 33.0391 35.4912 35.2941 32.0195 35.2941C28.0166 35.2941 24.3178 32.4016 24.3178 27.4196ZM7.05859 27.4196C7.05859 20.9682 12.2257 14.2193 20.3349 12.7059L23.3221 15.5294C20.3814 16.5773 16.1144 20.0696 15.8263 22.5845C19.1334 23.0764 21.6626 25.7807 21.6626 29.046C21.6626 33.0391 18.232 35.2941 14.7602 35.2941C10.7574 35.2941 7.05859 32.4016 7.05859 27.4196Z' />
+                  </svg>
+                  {quote && (
+                    <p className='line-clamp-4 text-ellipsis text-md leading-normal'>
+                      {quote}
+                    </p>
+                  )}
                 </div>
-              </figcaption>
-            </figure>
-          )}
+                <figcaption className='flex w-full justify-end pt-6'>
+                  <div className='flex w-fit flex-col items-start'>
+                    {author && <strong className='text-base'>{author}</strong>}
+                    {authorTitle && (
+                      <div className='text-sm'>{authorTitle}</div>
+                    )}
+                  </div>
+                </figcaption>
+              </figure>
+            )}
+          </div>
+          {action && <GridLinkArrow bgColor={bgColor} action={action} />}
         </div>
-        {action && <GridLinkArrow bgColor={bgColor} action={action} />}
       </div>
-    </div>
-  )
-})
+    )
+  },
+)

@@ -1,10 +1,10 @@
+import { defaultComponents, toHTML } from '@portabletext/to-html'
+import type { PortableTextBlock } from '@portabletext/types'
 import { NextResponse } from 'next/server'
 import { client } from '@/sanity/lib/client'
-import { PortableTextBlock } from '@portabletext/types'
-import { toHTML, defaultComponents } from '@portabletext/to-html'
 import { urlForImage } from '@/sanity/lib/utils'
 import { publishDateTimeQuery } from '@/sanity/queries/common/publishDateTime'
-import { newsSlug } from '../../../../satellitesConfig'
+import { newsSlug } from '../../../../satellitesConfig.mjs'
 
 const latestNews = `
 *[_type == "news" && lang == $lang]
@@ -27,13 +27,25 @@ type LatestNewsItem = {
   slug: string
   publishDateTime: string
   ingress?: PortableTextBlock[]
-  heroImage?: { image?: { asset?: { _ref?: string } | undefined; alt?: string } }
+  heroImage?: {
+    image?: { asset?: { _ref?: string } | undefined; alt?: string }
+  }
 }
 
 function mapFor(lang: 'no' | 'en') {
   return lang === 'no'
-    ? { language: 'nb_NO', title: 'Equinor Nyheter', description: 'Siste nytt', localePrefix: '/no' }
-    : { language: 'en_GB', title: 'Equinor News', description: 'Latest news', localePrefix: '' }
+    ? {
+        language: 'nb_NO',
+        title: 'Equinor Nyheter',
+        description: 'Siste nytt',
+        localePrefix: '/no',
+      }
+    : {
+        language: 'en_GB',
+        title: 'Equinor News',
+        description: 'Latest news',
+        localePrefix: '',
+      }
 }
 
 function renderIngress(blocks?: PortableTextBlock[]) {
@@ -47,18 +59,27 @@ function renderIngress(blocks?: PortableTextBlock[]) {
     },
   }
   //@ts-ignore: todo
-  return toHTML(blocks as TypedObject | TypedObject[], { components, onMissingComponent: (e) => String(e) })
+  return toHTML(blocks as TypedObject | TypedObject[], {
+    components,
+    onMissingComponent: e => String(e),
+  })
 }
 
-function buildItemHTML(item: LatestNewsItem, langCfg: ReturnType<typeof mapFor>) {
+function buildItemHTML(
+  item: LatestNewsItem,
+  langCfg: ReturnType<typeof mapFor>,
+) {
   const descriptionHtml = renderIngress(item.ingress)
   const img = item.heroImage?.image
-  const imgUrl = img?.asset ? urlForImage(img)?.width(560).height(280).fit('crop').url() : ''
+  const imgUrl = img?.asset
+    ? urlForImage(img)?.width(560).height(280).fit('crop').url()
+    : ''
   const imgAlt = img && img.alt ? ` alt="${img.alt}"` : ''
   const section = newsSlug[langCfg.language as keyof typeof newsSlug] || 'news'
-  const link = `https://www.equinor.com${langCfg.localePrefix}/${section}/${item.slug}`
-    .replace(/\/+/, '/')
-    .replace(':/', '://')
+  const link =
+    `https://www.equinor.com${langCfg.localePrefix}/${section}/${item.slug}`
+      .replace(/\/+/, '/')
+      .replace(':/', '://')
   return `
     <item>
       <title>${escapeXml(item.title)}</title>
@@ -85,7 +106,9 @@ export async function GET(req: Request) {
 
   const sanityLang = lang === 'no' ? 'nb_NO' : 'en_GB'
 
-  const articles: LatestNewsItem[] = await client.fetch(latestNews, { lang: sanityLang })
+  const articles: LatestNewsItem[] = await client.fetch(latestNews, {
+    lang: sanityLang,
+  })
 
   let rss = `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0">\n  <channel>\n    <title>${langCfg.title}</title>\n    <description>${langCfg.description}</description>\n    <language>${lang}</language>\n    <link>https://www.equinor.com</link>`
 

@@ -1,42 +1,19 @@
-/* import createMiddleware from 'next-intl/middleware'
-import { NextRequest } from 'next/server'
-import { routing } from './i18n/routing'
-
-export default async function middleware(request: NextRequest) {
-  const defaultLocale = request.headers.get('x-your-custom-locale') || 'en'
-  const [, locale, ...segments] = request.nextUrl.pathname.split('/')
-  console.log('request.nextUrl.pathname', request.nextUrl.pathname)
-  console.log('middleware defaultLocale', locale)
-  console.log('middleware locale', locale)
-
-  const handleI18nRouting = createMiddleware(routing)
-  const response = handleI18nRouting(request)
-  return response
-}
-
-export const config = {
-  // Match all pathnames except for
-  // - … if they start with `/api`, `/_next`
-  // - … the ones containing a dot (e.g. `favicon.ico`)
-  matcher: '/((?!api|_next|.*\\..*).*)',
-}
- */
-
+import { type NextRequest, NextResponse } from 'next/server'
 import createMiddleware from 'next-intl/middleware'
 import { routing } from './i18n/routing'
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-import { getDnsRedirect, getWWWRedirect } from './sanity/interface/redirects'
-import { NextRequest, NextResponse } from 'next/server'
 /* import { getLocaleFromName } from './sanity/localization' */
 /* import { getDocumentBySlug } from './sanity/queries/paths/getPaths' */
 import archivedNews from './lib/archive/archivedNewsPaths.json'
 import { Flags } from './sanity/helpers/datasetHelpers'
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+import { getDnsRedirect, getWWWRedirect } from './sanity/interface/redirects'
 
 const PERMANENT_REDIRECT = 301
 //const TEMPORARY_REDIRECT = 302
 const PUBLIC_FILE = /\.(.*)$/
 const DOT_HTML = '.html'
-const IS_ARCHIVED_NEWS_DOWNLOADS = /(.*)\/news\/archive\/[0-9]{4}\/[0-9]{2}\/[0-9]{2}\/downloads\/(.*)\.(.*)$/
+const IS_ARCHIVED_NEWS_DOWNLOADS =
+  /(.*)\/news\/archive\/[0-9]{4}\/[0-9]{2}\/[0-9]{2}\/downloads\/(.*)\.(.*)$/
 
 // Check if a given path exists in Sanity or not
 /* const pathExistsInSanity = async (pathname: string): Promise<boolean> => {
@@ -52,18 +29,34 @@ export async function middleware(request: NextRequest) {
   const isDotHtml = pathname.slice(-5) === DOT_HTML
 
   // Rewrite the correct path for assets in download section of achived news (older than 2016)
-  if (IS_ARCHIVED_NEWS_DOWNLOADS.test(pathname) && (Flags.IS_DEV || Flags.IS_GLOBAL_PROD)) {
-    const rewrite = pathname.replace(pathname, `/content/dam/archive-assets/${locale}${pathname}`)
+  if (
+    IS_ARCHIVED_NEWS_DOWNLOADS.test(pathname) &&
+    (Flags.IS_DEV || Flags.IS_GLOBAL_PROD)
+  ) {
+    const rewrite = pathname.replace(
+      pathname,
+      `/content/dam/archive-assets/${locale}${pathname}`,
+    )
     return NextResponse.rewrite(`${origin}${rewrite}`)
   }
 
   // Redirect statoil enrollment pdf
-  if (pathname.includes('/content/dam/statoil/documents/supply-chain/statoil-deposit-enrollment-form.pdf')) {
-    return NextResponse.redirect(`${origin}/where-we-are/us-owner-relations`, PERMANENT_REDIRECT)
+  if (
+    pathname.includes(
+      '/content/dam/statoil/documents/supply-chain/statoil-deposit-enrollment-form.pdf',
+    )
+  ) {
+    return NextResponse.redirect(
+      `${origin}/where-we-are/us-owner-relations`,
+      PERMANENT_REDIRECT,
+    )
   }
 
   // Check if pathname is irrelevant (.svg, .png, /api/, etcs)
-  if ((PUBLIC_FILE.test(pathname) && !isDotHtml) || pathname.includes('/api/')) {
+  if (
+    (PUBLIC_FILE.test(pathname) && !isDotHtml) ||
+    pathname.includes('/api/')
+  ) {
     return undefined
   }
   // Check if it is a DNS redirect
@@ -86,23 +79,40 @@ export async function middleware(request: NextRequest) {
   }
 
   // Redirect external links to news which is now archived if link doesn't exist in Sanity
-  if (Flags.HAS_ARCHIVED_NEWS && pathname.startsWith('/news') && !pathname.startsWith('/news/archive')) {
+  if (
+    Flags.HAS_ARCHIVED_NEWS &&
+    pathname.startsWith('/news') &&
+    !pathname.startsWith('/news/archive')
+  ) {
     //const existsInSanity = await pathExistsInSanity(pathname)
     //if (!existsInSanity) {
     const archivedPath = pathname.replace('news', 'news/archive')
-    const existsInArchive = archivedNews.some((e) => e.slug === archivedPath)
-    if (existsInArchive) return NextResponse.redirect(`${origin}${archivedPath}`, PERMANENT_REDIRECT)
+    const existsInArchive = archivedNews.some(e => e.slug === archivedPath)
+    if (existsInArchive)
+      return NextResponse.redirect(
+        `${origin}${archivedPath}`,
+        PERMANENT_REDIRECT,
+      )
     //}
   }
 
   // Redirect to the same url lowercased if necessary
-  if (pathname !== pathname.toLowerCase() && !pathname.includes('/news/archive')) {
-    return NextResponse.redirect(`${origin}${pathname.toLowerCase()}`, PERMANENT_REDIRECT)
+  if (
+    pathname !== pathname.toLowerCase() &&
+    !pathname.includes('/news/archive')
+  ) {
+    return NextResponse.redirect(
+      `${origin}${pathname.toLowerCase()}`,
+      PERMANENT_REDIRECT,
+    )
   }
 
   // Check if pathname ends with .html
   if (isDotHtml) {
-    return NextResponse.redirect(`${origin}${pathname.replace(DOT_HTML, '')}`, PERMANENT_REDIRECT)
+    return NextResponse.redirect(
+      `${origin}${pathname.replace(DOT_HTML, '')}`,
+      PERMANENT_REDIRECT,
+    )
   }
 
   const handleI18nRequest = createMiddleware(routing)

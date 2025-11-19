@@ -1,14 +1,17 @@
-import type { QueryParams } from '../helpers/queryFromSlug'
-import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu'
-import { footerQuery } from '@/sanity/queries/footer'
-import { simpleMenuQuery } from '@/sanity/queries/simpleMenu'
+import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { sanityFetch } from '@/sanity/lib/live'
-import { pageDataForHeaderQuery } from '../queries/routes'
+import { footerQuery } from '@/sanity/queries/footer'
+import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu'
+import { simpleMenuQuery } from '@/sanity/queries/simpleMenu'
+import type { QueryParams } from '../helpers/queryFromSlug'
 import { homePageDataForHeaderQuery } from '../queries/homePage'
 import { newsroomDataForHeaderQuery } from '../queries/newsroom'
-import { Flags } from '@/sanity/helpers/datasetHelpers'
+import { pageDataForHeaderQuery } from '../queries/routes'
 
-export const getPageData = async (page: { query: string; queryParams: QueryParams }) => {
+export const getPageData = async (page: {
+  query: string
+  queryParams: QueryParams
+}) => {
   try {
     const { data } = await sanityFetch({
       query: page.query,
@@ -55,7 +58,8 @@ export const getHeaderData = async (queryParams: QueryParams) => {
 
 //export const getPageDataForHeader = async (queryParams: QueryParams) => {
 export const getPageDataForHeader = async (queryParams: QueryParams) => {
-  const isHomepage = typeof queryParams?.slug === undefined || queryParams?.slug === ''
+  const isHomepage =
+    typeof queryParams?.slug === 'undefined' || queryParams?.slug === ''
   try {
     const { data } = await sanityFetch({
       query: isHomepage ? homePageDataForHeaderQuery : pageDataForHeaderQuery,
@@ -93,7 +97,10 @@ export type MagazineQueryParams = {
   lastPublishedAt?: string
 }
 
-export const getData = async (fetchQuery: { query: string; queryParams: MagazineQueryParams }, preview = false) => {
+export const getData = async (fetchQuery: {
+  query: string
+  queryParams: MagazineQueryParams
+}) => {
   const { query, queryParams } = fetchQuery
   try {
     const results = await sanityFetch({

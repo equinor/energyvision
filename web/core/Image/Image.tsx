@@ -1,4 +1,4 @@
-import NextImage, { ImageProps as NextImageProps } from 'next/image'
+import NextImage, { type ImageProps as NextImageProps } from 'next/image'
 import { twMerge } from 'tailwind-merge'
 import { useMediaQuery } from '@/lib/hooks/useMediaQuery'
 import { resolveImage } from '@/sanity/lib/utils'
@@ -161,7 +161,10 @@ export const Image = ({
       src={url}
       sizes={getSizes(grid, isLargerDisplays)}
       alt={getAltText()}
-      className={twMerge(`${fill ? 'object-cover' : 'flex h-auto w-full'}`, imageClassName)}
+      className={twMerge(
+        `${fill ? 'object-cover' : 'flex h-auto w-full'}`,
+        imageClassName,
+      )}
     />
   ) : null
 

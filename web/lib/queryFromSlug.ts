@@ -5,9 +5,9 @@ import { localNewsQuery } from '@/sanity/queries/localNews'
 import { magazineQuery } from '@/sanity/queries/magazine'
 import { newsQuery } from '@/sanity/queries/news'
 import { routeQuery } from '@/sanity/queries/routes'
-import { magazineSlug, newsSlug } from '../../../satellitesConfig.mjs'
+import { magazineSlug, newsSlug } from '../../satellitesConfig.mjs'
 //import { contentQueryById } from '@/sanity/queries/contentById'
-import { getNameFromLocale } from '../localization'
+import { getNameFromLocale } from '../sanity/localization'
 
 export type QueryParams = {
   id?: string

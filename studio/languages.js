@@ -1,4 +1,4 @@
-import { getLanguages } from '../satellitesConfig'
+import { getLanguages } from '../satellitesConfig.mjs'
 import { dataset } from './sanity.client'
 
 export const languages = getLanguages(dataset)

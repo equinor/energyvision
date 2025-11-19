@@ -1,28 +1,38 @@
 'use client'
 import { toPlainText } from '@portabletext/react'
-import Promotion from '../../sections/promotions/PromotionsBlock'
 import type { PortableTextBlock } from '@portabletext/types'
-import type { EventSchema } from '../../types/index'
+import { useFormatter, useTranslations } from 'next-intl'
 import { EventJsonLd } from 'next-seo'
-import RelatedContent from '../../pageComponents/shared/RelatedContent'
-import { useTranslations, useFormatter } from 'next-intl'
 import AddToCalendar from '@/core/AddToCalendar/AddToCalendar'
+import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
+import { getEventDates } from '@/lib/helpers/dateUtilities'
 import ContactList from '@/pageComponents/shared/ContactList'
 import Blocks from '@/portableText/Blocks'
 import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
-import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
-import { getEventDates } from '@/lib/helpers/dateUtilities'
+import RelatedContent from '../../pageComponents/shared/RelatedContent'
+import Promotion from '../../sections/promotions/PromotionsBlock'
+import type { EventSchema } from '../../types/index'
 
 export default function Event({ data }: { data: EventSchema }): JSX.Element {
   const { title } = data
   const t = useTranslations()
   const format = useFormatter()
-  const { location, ingress, content, promotedPeople, relatedLinks, contactList, eventDate } = data.content
+  const {
+    location,
+    ingress,
+    content,
+    promotedPeople,
+    relatedLinks,
+    contactList,
+    eventDate,
+  } = data.content
 
   const plainTitle = title ? toPlainText(title as PortableTextBlock[]) : ''
   const { start, end } = getEventDates(eventDate)
 
-  const { bg, dark } = getBgAndDarkFromBackground({ background: { backgroundColor: 'Moss Green Light' } })
+  const { bg, dark } = getBgAndDarkFromBackground({
+    background: { backgroundColor: 'Moss Green Light' },
+  })
 
   return (
     <>
@@ -34,44 +44,65 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
           location={location}
         />
       )}
-      <main className="flex flex-col [:not(:has(.sticky-menu))]:pt-topbar">
+      <main className='flex flex-col [:not(:has(.sticky-menu))]:pt-topbar'>
         <article>
           <div className={`${bg} ${dark ? 'dark' : ''} px-layout-md py-32`}>
-            <div className="mx-auto max-w-[1186px]">
-              {title && <Blocks as="h1" variant="3xl" value={title} />}
+            <div className='mx-auto max-w-[1186px]'>
+              {title && <Blocks as='h1' variant='3xl' value={title} />}
               {start && (
-                <span className="mt-7 mb-5 inline-block text-xl text-norwegian-woods-100">
+                <span className='mt-7 mb-5 inline-block text-norwegian-woods-100 text-xl'>
                   <time suppressHydrationWarning dateTime={start.toISOString()}>
                     {format.dateTime(start, { dateStyle: 'long' })}
                   </time>
                 </span>
               )}
 
-              <div className="flex-center mb-2 flex gap-1 text-norwegian-woods-100">
+              <div className='mb-2 flex flex-center gap-1 text-norwegian-woods-100'>
                 {start && end ? (
                   <div className={`flex h-full items-center gap-1 py-2`}>
-                    <FormattedDateTime variant="time" datetime={start} />
+                    <FormattedDateTime variant='time' datetime={start} />
                     <span>-</span>
-                    <FormattedDateTime variant="time" datetime={end} showTimezone />
+                    <FormattedDateTime
+                      variant='time'
+                      datetime={end}
+                      showTimezone
+                    />
                   </div>
                 ) : (
                   <span>{t('tba')}</span>
                 )}
               </div>
 
-              {location && <div className="mb-4 text-norwegian-woods-100">{location}</div>}
-              <AddToCalendar eventDate={eventDate} location={location} title={plainTitle} />
+              {location && (
+                <div className='mb-4 text-norwegian-woods-100'>{location}</div>
+              )}
+              <AddToCalendar
+                eventDate={eventDate}
+                location={location}
+                title={plainTitle}
+              />
             </div>
           </div>
           {(ingress || content) && (
             <div className={`mt-14 pb-page-content`}>
-              {ingress && <Blocks variant="ingress" value={ingress} className="px-layout-sm sm:px-layout-lg" />}
-              {content && <Blocks value={content} className="px-layout-sm sm:px-layout-lg" />}
+              {ingress && (
+                <Blocks
+                  variant='ingress'
+                  value={ingress}
+                  className='px-layout-sm sm:px-layout-lg'
+                />
+              )}
+              {content && (
+                <Blocks
+                  value={content}
+                  className='px-layout-sm sm:px-layout-lg'
+                />
+              )}
             </div>
           )}
           {promotedPeople?.people && promotedPeople?.people.length > 0 && (
             <Promotion
-              variant="promotePeople"
+              variant='promotePeople'
               data={{
                 id: 'promotedPeople',
                 type: 'people',
@@ -81,7 +112,9 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
             />
           )}
           {contactList && <ContactList data={contactList} />}
-          {relatedLinks?.links && relatedLinks.links.length > 0 && <RelatedContent data={relatedLinks} />}
+          {relatedLinks?.links && relatedLinks.links.length > 0 && (
+            <RelatedContent data={relatedLinks} />
+          )}
         </article>
       </main>
     </>

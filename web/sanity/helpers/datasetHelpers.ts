@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-nocheck
-import { FeatureFlags } from '../../../FeatureFlags'
+import { FeatureFlags } from '../../../FeatureFlags.mjs'
 //import { DatasetsKeys } from '@energyvision/shared'
 //import { FeatureFlags } from '@energyvision/shared/featureFlags'
 

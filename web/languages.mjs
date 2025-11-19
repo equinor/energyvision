@@ -1,6 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-//@ts-nocheck
-//import { defaultWebLanguage, getDomain, getLanguages, getMetaTitleSuffix, type DatasetsKeys } from '@shared/sitesConfig'
 import {
   defaultWebLanguage,
   getDomain,
@@ -8,13 +5,12 @@ import {
   getMetaTitleSuffix,
 } from '../satellitesConfig.mjs'
 
-export const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET //as DatasetsKeys
+export const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET
 
 export const languages = getLanguages(dataset)
 
-//@ts-ignore: configuration files set with lang
 export const getValidLanguagesLocales = () =>
-  getLanguages(dataset).map(lang => lang.locale)
+  getLanguages(dataset).map(lang => lang?.locale)
 
 export const defaultLanguage =
   languages.find(lang => lang?.id === defaultWebLanguage[dataset]) ??

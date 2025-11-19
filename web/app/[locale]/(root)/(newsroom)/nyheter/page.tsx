@@ -1,18 +1,21 @@
-import { getIsoFromLocale, getNameFromLocale } from '../../../../../sanity/localization'
-import { getPageData } from '../../../../../sanity/lib/fetchData'
-import { notFound } from 'next/navigation'
-import { unstable_cache } from 'next/cache'
-import NewsRoomTemplate from '@/templates/newsroom/Newsroom'
-import { NewsRoomPageType } from '../../../../../types'
-import { setRequestLocale } from 'next-intl/server'
-import { newsroomQuery } from '@/sanity/queries/newsroom'
 import { algoliasearch } from 'algoliasearch'
-import { Metadata } from 'next'
-import { metaTitleSuffix } from '@/languages'
+import type { Metadata } from 'next'
+import { unstable_cache } from 'next/cache'
+import { notFound } from 'next/navigation'
+import { setRequestLocale } from 'next-intl/server'
 import { toPlainText } from 'next-sanity'
-import { Flags } from '@/sanity/helpers/datasetHelpers'
+import { metaTitleSuffix } from '@/languages.mjs'
 import { algolia } from '@/lib/config'
+import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { resolveOpenGraphImage } from '@/sanity/lib/utils'
+import { newsroomQuery } from '@/sanity/queries/newsroom'
+import NewsRoomTemplate from '@/templates/newsroom/Newsroom'
+import { getPageData } from '../../../../../sanity/lib/fetchData'
+import {
+  getIsoFromLocale,
+  getNameFromLocale,
+} from '../../../../../sanity/localization'
+import type { NewsRoomPageType } from '../../../../../types'
 
 export function generateStaticParams() {
   return Flags.HAS_NEWSROOM ? [{ locale: 'no' }] : []
@@ -23,7 +26,10 @@ const getInitialResponse = unstable_cache(
     const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
     const indexName = `${envPrefix}_NEWS_${locale}`
 
-    const searchClient = algoliasearch(algolia.applicationId, algolia.searchApiKey)
+    const searchClient = algoliasearch(
+      algolia.applicationId,
+      algolia.searchApiKey,
+    )
     const response = await searchClient.searchSingleIndex({
       indexName: indexName,
       searchParams: {
@@ -39,7 +45,11 @@ const getInitialResponse = unstable_cache(
   { revalidate: 3600, tags: ['news'] },
 )
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
   const { locale } = await params
   const lang = getNameFromLocale(locale)
 
@@ -51,7 +61,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     queryParams,
   })
 
-  const { documentTitle, title, metaDescription, openGraphImage, heroImage } = pageData
+  const { documentTitle, title, metaDescription, openGraphImage, heroImage } =
+    pageData
   const plainTitle = Array.isArray(title) ? toPlainText(title) : title
 
   const ogImage = resolveOpenGraphImage(openGraphImage ?? heroImage?.image)
@@ -78,7 +89,11 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   }
 }
 
-export default async function NewsPage({ params }: { params: Promise<{ locale: string }> }) {
+export default async function NewsPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}) {
   const { locale } = await params
 
   // For the time being, let's just give 404 for satellites
@@ -108,5 +123,11 @@ export default async function NewsPage({ params }: { params: Promise<{ locale: s
 
   const response = await getInitialResponse(isoLocale)
 
-  return <NewsRoomTemplate locale={locale} pageData={pageData as NewsRoomPageType} initialSearchResponse={response} />
+  return (
+    <NewsRoomTemplate
+      locale={locale}
+      pageData={pageData as NewsRoomPageType}
+      initialSearchResponse={response}
+    />
+  )
 }

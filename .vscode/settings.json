@@ -1,5 +1,4 @@
 {
-  "cssvar.files": ["./web/styles/settings.ts"],
   "azureFunctions.deploySubpath": ".",
   "azureFunctions.postDeployTask": "npm install (functions)",
   "azureFunctions.projectLanguage": "TypeScript",
@@ -7,6 +6,32 @@
   "debug.internalConsoleOptions": "neverOpen",
   "azureFunctions.preDeployTask": "npm prune (functions)",
   "typescript.tsdk": "node_modules/typescript/lib",
-  "compile-hero.disable-compile-files-on-did-save-code": false,
-  "postman.settings.dotenv-detection-notification-visibility": false
+  "git.rebaseWhenSync": true,
+  "git.autofetch": true,
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+/*  First go through manual, since it changes a lot  
+    "source.fixAll.biome": "explicit",
+    "quickfix.biome":"explicit", */
+    "source.organizeImports.biome": "explicit"
+  },
+  "editor.defaultFormatter": "biomejs.biome",
+    "[css]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[github-actions-workflow]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+    "[typescript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  }
 }

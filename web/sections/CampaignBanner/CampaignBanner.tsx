@@ -1,24 +1,28 @@
-import { forwardRef, HTMLAttributes } from 'react'
+import type { PortableTextBlock } from '@portabletext/types'
+import { forwardRef, type HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { CampaignBannerData } from '../../types/index'
-import Blocks, { MarkType } from '../../portableText/Blocks'
-import { PortableTextBlock } from '@portabletext/types'
+import { urlForImage } from '@/sanity/lib/utils'
+import Blocks, { type MarkType } from '../../portableText/Blocks'
 import isEmpty from '../../portableText/helpers/isEmpty'
 import { colorKeyToUtilityMap } from '../../styles/colorKeyToUtilityMap'
-import { urlForImage } from '@/sanity/lib/utils'
+import type { CampaignBannerData } from '../../types/index'
 
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 const campaignTitleBlocks: MarkType = {
   //@ts-ignore
-  smallText: ({ children }: PortableTextBlock) => <p className="text-sm">{<>{children}</>}</p>,
+  smallText: ({ children }: PortableTextBlock) => (
+    <p className='text-sm'>{<>{children}</>}</p>
+  ),
   //@ts-ignore
   largeText: ({ children }: PortableTextBlock) => (
-    <p className="block w-fit rounded-xs bg-white-100 text-2xl leading-none text-pretty">{<>{children}</>}</p>
+    <p className='block w-fit text-pretty rounded-xs bg-white-100 text-2xl leading-none'>
+      {<>{children}</>}
+    </p>
   ),
   //@ts-ignore
   extraLargeText: ({ children }: PortableTextBlock) => {
     return (
-      <p className="mt-4 block w-fit rounded-xs bg-white-100 text-4xl leading-none font-semibold text-pretty lg:text-8xl">
+      <p className='mt-4 block w-fit text-pretty rounded-xs bg-white-100 font-semibold text-4xl leading-none lg:text-8xl'>
         {<>{children}</>}
       </p>
     )
@@ -40,12 +44,13 @@ export type CampaignBannerProps = {
   className?: string
 } & HTMLAttributes<HTMLElement>
 
-const CampaignBanner = forwardRef<HTMLElement, CampaignBannerProps>(function CampaignBanner({ data, className }, ref) {
-  const { title, designOptions } = data
-  const { background } = designOptions
-  const { backgroundImage, backgroundUtility, dark } = background ?? {}
+const CampaignBanner = forwardRef<HTMLElement, CampaignBannerProps>(
+  function CampaignBanner({ data, className }, ref) {
+    const { title, designOptions } = data
+    const { background } = designOptions
+    const { backgroundImage, backgroundUtility, dark } = background ?? {}
 
-  const bgImageClassNames = `[container:inline-size]
+    const bgImageClassNames = `[container:inline-size]
   relative
   w-full
   bg-local
@@ -59,37 +64,42 @@ const CampaignBanner = forwardRef<HTMLElement, CampaignBannerProps>(function Cam
   2xl:pb-64
 `
 
-  const bgColor = backgroundUtility ? colorKeyToUtilityMap[backgroundUtility].background : ''
-  const backgroundClassNames = twMerge(
-    `${dark ? 'dark' : ''}
+    const bgColor = backgroundUtility
+      ? colorKeyToUtilityMap[backgroundUtility].background
+      : ''
+    const backgroundClassNames = twMerge(
+      `${dark ? 'dark' : ''}
     ${backgroundImage?.image ? bgImageClassNames : `${bgColor} pt-12 pb-12 lg:pb-18`}
   `,
-    className,
-  )
-  const imgUrl = backgroundImage?.image ? urlForImage(backgroundImage.image) : ''
-  const props = {
-    ...(backgroundImage?.image && {
-      style: {
-        backgroundImage: `url(${imgUrl})`,
-      },
-    }),
-  }
+      className,
+    )
+    const imgUrl = backgroundImage?.image
+      ? urlForImage(backgroundImage.image)
+      : ''
+    const props = {
+      ...(backgroundImage?.image && {
+        style: {
+          backgroundImage: `url(${imgUrl})`,
+        },
+      }),
+    }
 
-  return (
-    <section ref={ref} className={`${backgroundClassNames}`} {...props}>
-      <div className={`mx-auto px-layout-md`}>
-        <div className="flex justify-start">
-          <h2 className="">
-            <Blocks
-              value={title}
-              blockClassName="my-0 text-energy-red-100"
-              blocksComponents={campaignTitleBlocks}
-              className="w-fit max-w-prose text-energy-red-100"
-            />
-          </h2>
+    return (
+      <section ref={ref} className={`${backgroundClassNames}`} {...props}>
+        <div className={`mx-auto px-layout-md`}>
+          <div className='flex justify-start'>
+            <h2 className=''>
+              <Blocks
+                value={title}
+                blockClassName='my-0 text-energy-red-100'
+                blocksComponents={campaignTitleBlocks}
+                className='w-fit max-w-prose text-energy-red-100'
+              />
+            </h2>
+          </div>
         </div>
-      </div>
-    </section>
-  )
-})
+      </section>
+    )
+  },
+)
 export default CampaignBanner

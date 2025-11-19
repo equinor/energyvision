@@ -1,23 +1,23 @@
 'use client'
-import { usePathname } from 'next/navigation'
-import { NewsArticleJsonLd } from 'next-seo'
-import { Typography } from '@/core/Typography'
 import { Icon } from '@equinor/eds-core-react'
 import { calendar } from '@equinor/eds-icons'
-import type { NewsSchema } from '../../types/index'
 import { toPlainText } from '@portabletext/react'
-import Blocks from '../../portableText/Blocks'
-import { twMerge } from 'tailwind-merge'
-import RelatedContent from '../../pageComponents/shared/RelatedContent'
-import Footnotes from '../../portableText/components/Footnotes'
+import { usePathname } from 'next/navigation'
 import { useLocale } from 'next-intl'
-import { IFrame } from '@/core/IFrame/IFrame'
-import DefaulHeroImage from '@/sections/Hero/DefaultHeroImage'
-import LatestNews from '@/pageComponents/news/LatestNews'
+import { NewsArticleJsonLd } from 'next-seo'
+import { twMerge } from 'tailwind-merge'
 import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
-import { getFullUrl } from '@/lib/helpers/getFullUrl'
+import { IFrame } from '@/core/IFrame/IFrame'
+import { Typography } from '@/core/Typography'
 import { isDateAfter } from '@/lib/helpers/dateUtilities'
+import { getFullUrl } from '@/lib/helpers/getFullUrl'
+import LatestNews from '@/pageComponents/news/LatestNews'
 import { resolveOpenGraphImage } from '@/sanity/lib/utils'
+import DefaulHeroImage from '@/sections/Hero/DefaultHeroImage'
+import RelatedContent from '../../pageComponents/shared/RelatedContent'
+import Blocks from '../../portableText/Blocks'
+import Footnotes from '../../portableText/components/Footnotes'
+import type { NewsSchema } from '../../types/index'
 
 type ArticleProps = {
   data: NewsSchema
@@ -44,10 +44,12 @@ const NewsPage = ({ data: news }: ArticleProps) => {
     latestNews,
   } = news
 
-  const modifiedDate = isDateAfter(publishDateTime, updatedAt) ? publishDateTime : updatedAt
+  const modifiedDate = isDateAfter(publishDateTime, updatedAt)
+    ? publishDateTime
+    : updatedAt
   const ogImage = resolveOpenGraphImage(openGraphImage ?? heroImage?.image)
 
-  const formattedContent = content.map((block) => ({
+  const formattedContent = content.map(block => ({
     ...block,
     markDefs: block.markDefs || [],
   }))
@@ -61,37 +63,42 @@ const NewsPage = ({ data: news }: ArticleProps) => {
         dateCreated={publishDateTime}
         datePublished={publishDateTime}
         dateModified={modifiedDate}
-        section=""
-        keywords=""
-        authorName=""
-        publisherName="Equinor"
-        publisherLogo="https://cdn.eds.equinor.com/logo/equinor-logo-horizontal.svg#red"
+        section=''
+        keywords=''
+        authorName=''
+        publisherName='Equinor'
+        publisherLogo='https://cdn.eds.equinor.com/logo/equinor-logo-horizontal.svg#red'
         description={toPlainText(ingress)}
         body={toPlainText(content)}
       />
       <main>
-        <article className="flex flex-col items-center pb-28">
+        <article className='flex flex-col items-center pb-28'>
           <div className={'dark w-full bg-slate-blue-95'}>
-            <div className="px-layout-lg py-news-banner-vertical">
-              <Typography id="mainTitle" variant="h1">
+            <div className='px-layout-lg py-news-banner-vertical'>
+              <Typography id='mainTitle' variant='h1'>
                 {title}
               </Typography>
               {publishDateTime && (
-                <div className="my-12 grid grid-cols-[min-content_1fr] gap-4">
-                  <Icon data={calendar} className="text-white-100" />
-                  <div className="text-base leading-planetary wrap-break-word text-white-100">
+                <div className='my-12 grid grid-cols-[min-content_1fr] gap-4'>
+                  <Icon data={calendar} className='text-white-100' />
+                  <div className='wrap-break-word text-base text-white-100 leading-planetary'>
                     <FormattedDateTime uppercase datetime={publishDateTime} />
                     {
                       // publishDateTime + 5 minutes
                       isDateAfter(
                         modifiedDate,
-                        new Date(new Date(publishDateTime).getTime() + 5 * 60000).toISOString(),
+                        new Date(
+                          new Date(publishDateTime).getTime() + 5 * 60000,
+                        ).toISOString(),
                       ) && (
                         <>
                           <span className='mx-4 my-0 uppercase before:mr-4 before:content-["|"] after:content-[":"]'>
                             Last modified
                           </span>
-                          <FormattedDateTime uppercase datetime={modifiedDate} />
+                          <FormattedDateTime
+                            uppercase
+                            datetime={modifiedDate}
+                          />
                         </>
                       )
                     }
@@ -101,16 +108,23 @@ const NewsPage = ({ data: news }: ArticleProps) => {
             </div>
           </div>
           {heroImage.image.asset && (
-            <div className="-mt-news-banner-vertical px-layout-sm">
+            <div className='-mt-news-banner-vertical px-layout-sm'>
               <DefaulHeroImage data={heroImage} />
             </div>
           )}
           {ingress && ingress.length > 0 && (
-            <Blocks variant="ingress" value={ingress} includeFootnotes blockClassName="px-layout-lg" />
+            <Blocks
+              variant='ingress'
+              value={ingress}
+              includeFootnotes
+              blockClassName='px-layout-lg'
+            />
           )}
-          {content && content.length > 0 && <Blocks group="article" value={formattedContent} includeFootnotes />}
-          <div className="px-layout-lg">
-            <div className="mt-8 mb-2">
+          {content && content.length > 0 && (
+            <Blocks group='article' value={formattedContent} includeFootnotes />
+          )}
+          <div className='px-layout-lg'>
+            <div className='mt-8 mb-2'>
               <Footnotes blocks={[...ingress, ...content]} />
             </div>
 
@@ -128,10 +142,15 @@ const NewsPage = ({ data: news }: ArticleProps) => {
             )}
 
             {relatedLinks?.links && relatedLinks.links.length > 0 && (
-              <RelatedContent data={relatedLinks} className={twMerge(`my-3xl`)} />
+              <RelatedContent
+                data={relatedLinks}
+                className={twMerge(`my-3xl`)}
+              />
             )}
           </div>
-          {latestNews && latestNews.length > 0 && <LatestNews data={latestNews} />}
+          {latestNews && latestNews.length > 0 && (
+            <LatestNews data={latestNews} />
+          )}
         </article>
       </main>
     </>

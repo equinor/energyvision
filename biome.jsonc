@@ -1,0 +1,140 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.3.6/schema.json",
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+    //"defaultBranch": "main"
+  },
+  "files": {
+    "ignoreUnknown": false,
+    "includes": [
+      "**/*",
+      "!.vscode",
+      "!.github",
+      "!.husky",
+      "!.devcontainer",
+      "!sanity.types.ts",
+      "!**/.sanity",
+      "!**/packages/energyvision/**/*.css",
+      "!**/tsconfig.*.json", // https://github.com/biomejs/biome/issues/1151
+      "!**/.next",
+      "!**/node_modules",
+      "!**/dist",
+      "!**/build"
+    ]
+  },
+  "formatter": {
+    "enabled": true,
+    "formatWithErrors": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineEnding": "lf",
+    "lineWidth": 80,
+    "includes": ["**", "**/*", "!**/public"]
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "nursery": {
+        "useSortedClasses": {
+          "level": "error",
+          "fix": "safe",
+          "options": {
+            "attributes": ["className"],
+            "functions": ["tw", "tw.*", "twMerge"]
+          }
+        }
+      },
+      "a11y": {
+        "noSvgWithoutTitle": "off",
+        "noNoninteractiveElementToInteractiveRole": "off",
+        "useValidAnchor": "off",
+        "useButtonType": "off",
+        "useValidAriaRole": "off",
+        "useValidAriaValues": "off",
+        "useMediaCaption": "off",
+        "useKeyWithClickEvents": "off",
+        "noNoninteractiveTabindex": "off",
+        "useAriaPropsForRole": "off",
+        "useSemanticElements": "warn"
+      },
+      "style": {
+        "useTemplate": "off",
+        "noUnusedTemplateLiteral": "off",
+        "noParameterAssign": "off",
+        "useNumberNamespace": "off",
+        "useSelfClosingElements": "off",
+        "useAsConstAssertion": "error",
+        "useDefaultParameterLast": "error",
+        "useEnumInitializers": "error",
+        "useSingleVarDeclarator": "error",
+        "noInferrableTypes": "error",
+        "noUselessElse": "error"
+      },
+      "correctness": { "noUnusedVariables": "warn" },
+      "suspicious": {
+        "noUnknownAtRules": "off",
+        "noExplicitAny": "off",
+        "noArrayIndexKey": "warn",
+        "noTsIgnore": "off"
+      },
+      "complexity": {
+        "noForEach": "off",
+        "useArrowFunction": "off",
+        "noImportantStyles": "warn"
+      }
+    },
+    "includes": ["**", "**/*", "!**/node_modules", "!**/.next", "!**/dist"]
+  },
+  "javascript": {
+    "globals": ["React", "JSX"],
+    "formatter": {
+      "enabled": true,
+      "jsxQuoteStyle": "single",
+      "quoteProperties": "asNeeded",
+      "trailingCommas": "all",
+      "quoteStyle": "single",
+      "arrowParentheses": "asNeeded",
+      "semicolons": "asNeeded"
+    }
+  },
+  "json": {
+    "formatter": {
+      "enabled": true
+    }
+  },
+  "css": {
+    "formatter": {
+      "enabled": true,
+      "quoteStyle": "single"
+    },
+    "parser": {
+      "tailwindDirectives": true
+    }
+  },
+  "html": {
+    "formatter": {
+      "indentScriptAndStyle": false,
+      "selfCloseVoidElements": "always"
+    }
+  },
+  "assist": {
+    "enabled": true,
+    "actions": { "source": { "organizeImports": "on" } }
+  },
+  "overrides": [
+    {
+      "includes": ["**/*.css"],
+      "formatter": { "lineWidth": 160 },
+      "linter": {
+        "rules": {
+          "style": {
+            "noDescendingSpecificity": "off"
+          }
+        }
+      }
+    }
+  ]
+}

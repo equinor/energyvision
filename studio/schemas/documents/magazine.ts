@@ -1,17 +1,17 @@
+import { bookmarks } from '@equinor/eds-icons'
 import type { Rule, SanityDocument } from 'sanity'
 import slugify from 'slugify'
-import { magazineSlug } from '../../../satellitesConfig'
+import { magazineSlug } from '../../../satellitesConfig.mjs'
 import blocksToText from '../../helpers/blocksToText'
-import { defaultColors } from '../defaultColors'
+import { EdsIcon } from '../../icons'
 import { defaultLanguage } from '../../languages'
 import { Flags } from '../../src/lib/datasetHelpers'
 import SlugInput from '../components/SlugInput'
+import { defaultColors } from '../defaultColors'
 import { configureBlockContent } from '../editors/blockContentType'
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
 import { withSlugValidation } from '../validations/validateSlug'
 import sharedHeaderFields from './header/sharedHeaderFields'
-import { EdsIcon } from '../../icons'
-import { bookmarks } from '@equinor/eds-icons'
 import { lang } from './langField'
 
 const ingressBlockContentType = configureBlockContent({
@@ -37,7 +37,8 @@ export default {
     {
       title: 'Slug',
       name: 'slug',
-      description: '⚠️ Changing the slug after publishing it has negative impacts in the SEO ⚠️',
+      description:
+        '⚠️ Changing the slug after publishing it has negative impacts in the SEO ⚠️',
       options: {
         collapsible: true,
         collapsed: false,
@@ -46,7 +47,8 @@ export default {
     {
       title: 'SEO & metadata',
       name: 'metadata',
-      description: 'This part is used for meta information when this content is used on the web',
+      description:
+        'This part is used for meta information when this content is used on the web',
       options: {
         collapsible: true,
         collapsed: true,
@@ -95,7 +97,8 @@ export default {
       title: 'Open Graph Image',
       name: 'openGraphImage',
       type: 'imageWithAlt',
-      description: 'You can override the hero image as the SoMe image by uploading another image here.',
+      description:
+        'You can override the hero image as the SoMe image by uploading another image here.',
       fieldset: 'metadata',
     },
     {
@@ -104,13 +107,15 @@ export default {
       description: 'Shown in newsletters and promotions. Max 400 characters',
       type: 'array',
       of: [ingressBlockContentType],
-      validation: (Rule: Rule) => Rule.custom((value: any) => validateCharCounterEditor(value, 400)),
+      validation: (Rule: Rule) =>
+        Rule.custom((value: any) => validateCharCounterEditor(value, 400)),
     },
     ...sharedHeaderFields,
     Flags.HAS_MAGAZINE_SUBSCRIPTION && {
       title: 'Send to subscribers',
       name: 'shouldDistributeMagazine',
-      description: 'Activate (change to green) to send to subscribers when you publish the magazine article.',
+      description:
+        'Activate (change to green) to send to subscribers when you publish the magazine article.',
       type: 'boolean',
       initialValue: false,
     },
@@ -120,7 +125,8 @@ export default {
       type: 'string',
       fieldset: 'slug',
       placeholder: 'For example "Experienced professionals"',
-      description: 'The unique part of the URL for this magazine. Should probably be something like the page title.',
+      description:
+        'The unique part of the URL for this magazine. Should probably be something like the page title.',
     },
     {
       name: 'slug',
@@ -132,14 +138,17 @@ export default {
       },
       options: withSlugValidation({
         source: (doc: SanityDocument) => {
-          const translatedMagazine = doc.lang ? magazineSlug[doc.lang as string] : magazineSlug[defaultLanguage.name]
+          const translatedMagazine = doc.lang
+            ? magazineSlug[doc.lang as string]
+            : magazineSlug[defaultLanguage.name]
           return doc.magazineSlug
             ? `/${translatedMagazine}/${slugify(doc.magazineSlug as string, { lower: true })}`
             : ''
         },
         slugify: (value: string) => value,
       }),
-      description: '⚠️ Double check for typos and get it right on the first time! ⚠️',
+      description:
+        '⚠️ Double check for typos and get it right on the first time! ⚠️',
       validation: (Rule: Rule) => Rule.required(),
     },
     {
@@ -170,12 +179,13 @@ export default {
     },
     {
       title: 'Hide footer component',
-      description: 'Toggle this to hide the shared magazine footer component on this article',
+      description:
+        'Toggle this to hide the shared magazine footer component on this article',
       type: 'boolean',
       name: 'hideFooterComponent',
       initialValue: false,
     },
-  ].filter((e) => e),
+  ].filter(e => e),
   orderings: [
     {
       title: 'Title ',

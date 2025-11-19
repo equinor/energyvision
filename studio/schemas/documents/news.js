@@ -1,11 +1,12 @@
+import { file_add } from '@equinor/eds-icons'
 import slugify from 'slugify'
-import { newsSlug } from '../../../satellitesConfig'
+import { newsSlug } from '../../../satellitesConfig.mjs'
 import { formatDate } from '../../helpers/formatDate'
+import { EdsIcon } from '../../icons'
 import { defaultLanguage } from '../../languages'
 import { Flags } from '../../src/lib/datasetHelpers'
 import SlugInput from '../components/SlugInput'
 import { withSlugValidation } from '../validations/validateSlug'
-import { file_add } from '@equinor/eds-icons'
 import { lang } from './langField'
 import {
   content,
@@ -24,7 +25,6 @@ import {
   tags,
   title,
 } from './news/sharedNewsFields'
-import { EdsIcon } from '../../icons'
 
 export default {
   title: 'News',
@@ -35,7 +35,8 @@ export default {
     {
       title: 'SEO & metadata',
       name: 'metadata',
-      description: 'This part is used for meta information when this content is used on the web',
+      description:
+        'This part is used for meta information when this content is used on the web',
       options: {
         collapsible: true,
         collapsed: true,
@@ -44,7 +45,8 @@ export default {
     {
       title: 'Slug',
       name: 'slug',
-      description: '⚠️ Changing the slug after publishing it has negative impacts in the SEO ⚠️',
+      description:
+        '⚠️ Changing the slug after publishing it has negative impacts in the SEO ⚠️',
       options: {
         collapsible: true,
         collapsed: false,
@@ -88,19 +90,22 @@ export default {
         input: SlugInput,
       },
       options: withSlugValidation({
-        source: (doc) => {
+        source: doc => {
           // translated document ids end with _i18n__lang while base documents don't
           return doc.newsSlug ? `${slugify(doc.newsSlug, { lower: true })}` : ''
         },
         slugify: (input, _schemaType, context) => {
           const slug = slugify(input)
           const { parent: document } = context
-          const translatedNews = document.lang ? `/${newsSlug[document.lang]}` : `/${newsSlug[defaultLanguage.name]}`
+          const translatedNews = document.lang
+            ? `/${newsSlug[document.lang]}`
+            : `/${newsSlug[defaultLanguage.name]}`
           return `${translatedNews}/${slug}`
         },
       }),
-      description: '⚠️ Double check for typos and get it right on the first time! ⚠️',
-      validation: (Rule) => Rule.required(),
+      description:
+        '⚠️ Double check for typos and get it right on the first time! ⚠️',
+      validation: Rule => Rule.required(),
     },
     heroImage,
     ingress,
@@ -108,7 +113,7 @@ export default {
     iframe,
     relatedLinks,
     excludeFromSearch,
-  ].filter((e) => e),
+  ].filter(e => e),
   preview: {
     select: {
       title: 'title',
@@ -119,21 +124,35 @@ export default {
       isCustomDate: 'customPublicationDate',
     },
     prepare(selection) {
-      const { title, media, description, publishedDate, firstPublishedAt, isCustomDate } = selection
+      const {
+        title,
+        media,
+        description,
+        publishedDate,
+        firstPublishedAt,
+        isCustomDate,
+      } = selection
       const currentDate = new Date()
       const date =
-        publishedDate && isCustomDate ? new Date(publishedDate) : firstPublishedAt ? new Date(firstPublishedAt) : null
+        publishedDate && isCustomDate
+          ? new Date(publishedDate)
+          : firstPublishedAt
+            ? new Date(firstPublishedAt)
+            : null
 
-      const displayDate = date && date <= currentDate ? formatDate(date) : 'Not Published'
+      const displayDate =
+        date && date <= currentDate ? formatDate(date) : 'Not Published'
 
-      const ingressBlock = (description || []).find((ingressBlock) => ingressBlock._type === 'block')
+      const ingressBlock = (description || []).find(
+        ingressBlock => ingressBlock._type === 'block',
+      )
       return {
         title,
         subtitle: `Published date: ${displayDate}`,
         description: ingressBlock
           ? ingressBlock.children
-              .filter((child) => child._type === 'span')
-              .map((span) => span.text)
+              .filter(child => child._type === 'span')
+              .map(span => span.text)
               .join('')
           : 'Missing lead',
         media,

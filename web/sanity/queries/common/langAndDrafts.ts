@@ -1,4 +1,4 @@
-import { defaultLanguage } from '../../../languages'
+import { defaultLanguage } from '../../../languages.mjs'
 
 export const sameLang = /* groq */ `
   lang == $lang

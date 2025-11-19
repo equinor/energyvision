@@ -5,6 +5,7 @@ export const GoogleTagManagerHead = () =>
   GTM_ID ? (
     // eslint-disable-next-line @next/next/next-script-for-ga
     <script
+      // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
       dangerouslySetInnerHTML={{
         __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
           new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],

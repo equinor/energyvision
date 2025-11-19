@@ -1,71 +1,78 @@
+import { crossDatasetDuplicator } from '@sanity/cross-dataset-duplicator'
+import { documentInternationalization } from '@sanity/document-internationalization'
+import { DatabaseIcon } from '@sanity/icons'
 import { visionTool } from '@sanity/vision'
-import { media } from 'sanity-plugin-media'
-import {
-  ConfigContext,
-  createAuthStore,
-  defineConfig,
-  DocumentActionComponent,
-  PluginOptions,
-  SchemaTypeDefinition,
-  Template,
-  buildLegacyTheme,
-} from 'sanity'
-
 import type {
-  InputProps,
   ArrayOfObjectsInputProps,
-  SchemaType,
   ArraySchemaType,
   DocumentBadgeComponent,
   DocumentFieldAction,
+  InputProps,
+  SchemaType,
+} from 'sanity'
+import {
+  buildLegacyTheme,
+  type ConfigContext,
+  createAuthStore,
+  type DocumentActionComponent,
+  defineConfig,
+  type PluginOptions,
+  type SchemaTypeDefinition,
+  type Template,
 } from 'sanity'
 import { structureTool } from 'sanity/structure'
-import deskStructure, { defaultDocumentNodeResolver } from './deskStructure'
-import { schemaTypes } from './schemas'
-import { initialValueTemplates } from './initialValueTemplates'
-import { CharCounterEditor } from './schemas/components/CharCounterEditor'
-import { DeleteTranslationAction } from './actions/customDelete/DeleteTranslationAction'
-import { documentInternationalization } from '@sanity/document-internationalization'
-import { FotowareAssetSource } from './plugins/asset-source-fotoware'
-import { BrandmasterAssetSource } from './plugins/asset-source-brandmaster'
-import { SetAndPublishAction } from './actions/CustomPublishAction'
-import { dataset, projectId } from './sanity.client'
-import { DatabaseIcon } from '@sanity/icons'
-import { crossDatasetDuplicator } from '@sanity/cross-dataset-duplicator'
-import { i18n } from './schemas/documentTranslation'
-import { ResetCrossDatasetToken } from './actions/ResetCrossDatasetToken'
-import { getMetaTitleSuffix } from '../satellitesConfig'
-import { defaultLanguage } from './languages'
+import { media } from 'sanity-plugin-media'
+import { getMetaTitleSuffix } from '../satellitesConfig.mjs'
 import { createCustomDuplicateAction } from './actions/CustomDuplicateAction'
+import { SetAndPublishAction } from './actions/CustomPublishAction'
+import { DeleteTranslationAction } from './actions/customDelete/DeleteTranslationAction'
+import { ResetCrossDatasetToken } from './actions/ResetCrossDatasetToken'
+import deskStructure, { defaultDocumentNodeResolver } from './deskStructure'
+import { initialValueTemplates } from './initialValueTemplates'
+import { defaultLanguage } from './languages'
+import { BrandmasterAssetSource } from './plugins/asset-source-brandmaster'
+import { FotowareAssetSource } from './plugins/asset-source-fotoware'
+import { dataset, projectId } from './sanity.client'
+import { schemaTypes } from './schemas'
+import { CharCounterEditor } from './schemas/components/CharCounterEditor'
 import { LangBadge } from './schemas/components/LangBadge'
+import { i18n } from './schemas/documentTranslation'
 import './customStyles.css'
-import { partialStudioTheme } from './studioTheme'
-import { copyAction } from './actions/fieldActions/CustomCopyFieldAction'
-import CustomDocumentInternationalizationMenu from './schemas/components/CustomDocumentInternationalizationMenu'
 import { presentationTool } from 'sanity/presentation'
-import { locations } from './presentation/locations'
-
-
+import { copyAction } from './actions/fieldActions/CustomCopyFieldAction'
 //Table plugin
 import { table } from './plugins/importTable'
+import { locations } from './presentation/locations'
+import CustomDocumentInternationalizationMenu from './schemas/components/CustomDocumentInternationalizationMenu'
+import { partialStudioTheme } from './studioTheme'
 
 export const customTheme = buildLegacyTheme(partialStudioTheme)
 
 // URL for preview functionality, defaults to localhost:3000 if not set
-const SANITY_STUDIO_PREVIEW_URL = process.env.SANITY_STUDIO_PREVIEW_URL || 'http://localhost:3000'
+const SANITY_STUDIO_PREVIEW_URL =
+  process.env.SANITY_STUDIO_PREVIEW_URL || 'http://localhost:3000'
 
 // @TODO:
 // isArrayOfBlocksSchemaType helper function from Sanity is listed as @internal
 // refactor to use that once stable
-const isArraySchemaType = (schema: SchemaType): schema is ArraySchemaType => schema.name === 'array'
+const isArraySchemaType = (schema: SchemaType): schema is ArraySchemaType =>
+  schema.name === 'array'
 const isPortableTextEditor = (schema: SchemaType) => {
   if (!isArraySchemaType(schema)) return false
 
-  return schema?.of && Array.isArray(schema.of) && schema.of[0]?.name === 'block'
+  return (
+    schema?.of && Array.isArray(schema.of) && schema.of[0]?.name === 'block'
+  )
 }
 
 // create the singleton docs before adding here...
-const singletonTemplates = ['route_homepage', 'newsroom', 'pageNotFound', 'internalServerError', 'magazineIndex']
+const singletonTemplates = [
+  'route_homepage',
+  'newsroom',
+  'pageNotFound',
+  'internalServerError',
+  'magazineIndex',
+]
 
 const handleInputComponents = (inputProps: InputProps) => {
   if (isPortableTextEditor(inputProps.schemaType))
@@ -87,7 +94,11 @@ const getStudioTitle = (dataset: string) => {
   }
 }
 
-const getConfig = (datasetParam: string, projectIdParam: string, isSecret = false) => ({
+const getConfig = (
+  datasetParam: string,
+  projectIdParam: string,
+  isSecret = false,
+) => ({
   name: 'equinor-' + datasetParam,
   title: 'Studio [' + getStudioTitle(datasetParam) + ']',
   icon: DatabaseIcon,
@@ -132,18 +143,24 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret = fals
       },
     }),
     table(),
-  ].filter((e) => e) as PluginOptions[],
+  ].filter(e => e) as PluginOptions[],
   schema: {
     types: schemaTypes as SchemaTypeDefinition[],
-    templates: (prev: Template<any, any>[]) => [...filterTemplates(prev), ...initialValueTemplates],
+    templates: (prev: Template<any, any>[]) => [
+      ...filterTemplates(prev),
+      ...initialValueTemplates,
+    ],
   },
   document: {
     unstable_languageFilter: (prev: DocumentActionComponent[], ctx: any) => {
       const { schemaType, documentId } = ctx
-      return schemaTypes.map((it) => it.name).includes(schemaType) && documentId
+      return schemaTypes.map(it => it.name).includes(schemaType) && documentId
         ? [
             (props: any) => {
-              return CustomDocumentInternationalizationMenu({ ...props, documentId })
+              return CustomDocumentInternationalizationMenu({
+                ...props,
+                documentId,
+              })
             },
           ]
         : prev
@@ -151,18 +168,24 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret = fals
     actions: (prev: DocumentActionComponent[], context: any) => {
       // do not allow delete or duplicate action on singletons
       if (singletonTemplates.includes(context.schemaType))
-        return prev.filter((it) => !['delete', 'duplicate'].includes(it.action))
+        //@ts-ignore
+        return prev.filter(it => !['delete', 'duplicate'].includes(it.action))
 
       if (isSecret) prev.push(ResetCrossDatasetToken)
-      if (i18n.schemaTypes.includes(context.schemaType)) prev.push(DeleteTranslationAction)
+      if (i18n.schemaTypes.includes(context.schemaType))
+        prev.push(DeleteTranslationAction)
       return prev
         .filter(({ action }: DocumentActionComponent) => {
-          return !(action === 'delete' && i18n.schemaTypes.includes(context.schemaType))
+          return !(
+            action === 'delete' && i18n.schemaTypes.includes(context.schemaType)
+          )
         })
-        .map((originalAction) => {
+        .map(originalAction => {
           switch (originalAction.action) {
             case 'publish':
-              return ['news', 'localNews'].includes(context.schemaType) ? SetAndPublishAction : originalAction
+              return ['news', 'localNews'].includes(context.schemaType)
+                ? SetAndPublishAction
+                : originalAction
             case 'duplicate':
               return createCustomDuplicateAction(originalAction)
             default:
@@ -174,10 +197,12 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret = fals
       enabled: false,
     },
     badges: (prev: DocumentBadgeComponent[], context: any) => {
-      return i18n.schemaTypes.includes(context.schemaType) ? [LangBadge, ...prev] : prev
+      return i18n.schemaTypes.includes(context.schemaType)
+        ? [LangBadge, ...prev]
+        : prev
     },
     unstable_fieldActions: (previous: DocumentFieldAction[]) => {
-      return previous.map((it) => (it.name === 'copyField' ? copyAction : it))
+      return previous.map(it => (it.name === 'copyField' ? copyAction : it))
     },
     tasks: { enabled: false },
   },
@@ -205,20 +230,21 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret = fals
 
 export default dataset === 'secret'
   ? defineConfig(
+      //@ts-ignore:todo
       [
         { dataset: 'secret', projectId: projectId },
         { dataset: 'global-development', projectId: 'h61q9gi9' },
         { dataset: 'global', projectId: 'h61q9gi9' },
-      ].map((e) => getConfig(e.dataset, e.projectId, true)),
+      ].map(e => getConfig(e.dataset, e.projectId, true)),
     )
   : getConfig(dataset, projectId)
 
 const filterTemplates = (prev: Template<any, any>[]) => {
   const excludedTemplates = i18n.supportedLanguages
-    .filter((lang) => lang.title != defaultLanguage.title)
-    .flatMap((lang) => i18n.schemaTypes.map((type) => `${type}-${lang.id}`))
+    .filter(lang => lang.title !== defaultLanguage.title)
+    .flatMap(lang => i18n.schemaTypes.map(type => `${type}-${lang.id}`))
   return prev.filter(
-    (template) =>
+    template =>
       !(
         i18n.schemaTypes.includes(template.id) ||
         excludedTemplates.includes(template.id) ||

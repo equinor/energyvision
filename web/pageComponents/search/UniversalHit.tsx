@@ -1,12 +1,12 @@
-import { Highlight } from './Highlight'
 import type { Hit as AlgoliaHit } from '@algolia/client-search'
-import DisplayLink from './hit/DisplayLink'
-import { defaultLanguage } from '../../languages'
-import { Typography } from '@/core/Typography'
 import { useLocale } from 'next-intl'
-import { host } from '@/lib/config'
-import { BaseLink } from '@/core/Link'
 import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
+import { BaseLink } from '@/core/Link'
+import { Typography } from '@/core/Typography'
+import { host } from '@/lib/config'
+import { defaultLanguage } from '../../languages.mjs'
+import { Highlight } from './Highlight'
+import DisplayLink from './hit/DisplayLink'
 
 export type HitData = {
   slug?: string
@@ -23,8 +23,9 @@ export type HitData = {
 export type UniversalHitType = AlgoliaHit<HitData>
 export type HitProps = { hit: UniversalHitType }
 
-const buildDisplayURL = (slug = '', locale: string | undefined): string => {
-  const startsWithLocale = slug.startsWith(`${locale}/`) || slug.startsWith(`/${locale}/`)
+const buildDisplayURL = (slug: string, locale: string | undefined): string => {
+  const startsWithLocale =
+    slug.startsWith(`${locale}/`) || slug.startsWith(`/${locale}/`)
 
   return locale && locale !== defaultLanguage?.locale && !startsWithLocale
     ? `${host.url}/${locale}/${slug.replace(/^\//, '')}`
@@ -32,7 +33,17 @@ const buildDisplayURL = (slug = '', locale: string | undefined): string => {
 }
 
 const UniversalHit: React.FC<HitProps> = ({ hit }) => {
-  const { slug = '', title, ingress, text, eventDescription, eventDate, publishDateTime, pageTitle, type } = hit
+  const {
+    slug = '',
+    title,
+    ingress,
+    text,
+    eventDescription,
+    eventDate,
+    publishDateTime,
+    pageTitle,
+    type,
+  } = hit
   const locale = useLocale()
   const fullUrl = buildDisplayURL(slug, locale)
   const formattedDate = eventDate || publishDateTime
@@ -49,24 +60,26 @@ const UniversalHit: React.FC<HitProps> = ({ hit }) => {
     dark:group-active:envis-outline-invert`
 
   return (
-    <article className="border-b border-white-100/20 pt-6 pb-8">
-      <BaseLink href={slug} className="group">
+    <article className='border-white-100/20 border-b pt-6 pb-8'>
+      <BaseLink href={slug} className='group'>
         {formattedDate && type !== 'magazine' && (
           <FormattedDateTime
-            variant="date"
+            variant='date'
             uppercase
             datetime={formattedDate}
             className={`pb-3 text-xs tracking-wide`}
           />
         )}
         {pageTitle && (
-          <Typography as="h2" variant="h6" className={`${commonLinkClassName}`}>
-            <Highlight hit={hit} attribute="pageTitle" />
+          <Typography as='h2' variant='h6' className={`${commonLinkClassName}`}>
+            <Highlight hit={hit} attribute='pageTitle' />
           </Typography>
         )}
         {title && (
-          <div className={`${title && pageTitle ? 'text-sm' : ''} ${!pageTitle ? commonLinkClassName : ''}`}>
-            <Highlight hit={hit} attribute="title" />
+          <div
+            className={`${title && pageTitle ? 'text-sm' : ''} ${!pageTitle ? commonLinkClassName : ''}`}
+          >
+            <Highlight hit={hit} attribute='title' />
           </div>
         )}
 

@@ -1,12 +1,12 @@
 'use client'
+import { Icon } from '@equinor/eds-core-react'
+import { close } from '@equinor/eds-icons'
+import { FloatingOverlay } from '@floating-ui/react'
+import { useRouter } from 'next/navigation'
 import { LogoLink } from '@/core/Link/LogoLink'
 import { Search } from '@/sections/Search/Search'
 import { NavTopbar } from '@/sections/SiteMenu/NavTopbar'
 import { TopbarDropdown } from '@/sections/SiteMenu/TopbarDropdown'
-import { Icon } from '@equinor/eds-core-react'
-import { FloatingOverlay } from '@floating-ui/react'
-import { close } from '@equinor/eds-icons'
-import { useRouter } from 'next/navigation'
 
 export const dynamic = 'force-dynamic'
 // Multiple versions of this page will be statically generated
@@ -14,15 +14,15 @@ export const dynamic = 'force-dynamic'
 export default function Page() {
   const router = useRouter()
   return (
-    <div className="dark fixed inset-0 overflow-auto bg-slate-blue-95">
+    <div className='dark fixed inset-0 overflow-auto bg-slate-blue-95'>
       <FloatingOverlay lockScroll>
-        <TopbarDropdown variant="dark">
+        <TopbarDropdown variant='dark'>
           <NavTopbar>
             <LogoLink />
             <button
-              type="button"
+              type='button'
               aria-expanded={true}
-              aria-label="Close search"
+              aria-label='Close search'
               onClick={() => {
                 router.back()
               }}

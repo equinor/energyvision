@@ -1,17 +1,24 @@
 'use client'
-import { useLocale, useTranslations } from 'next-intl'
-import { default as NextLink } from 'next/link'
-import { AllSlugsType, LocalizationSwitch } from '../../core/LocalizationSwitch/LocalizationSwitch'
-import type { MenuData, SimpleMenuData, StickyMenuData } from '../../types/index'
-import { languages, defaultLanguage } from '../../languages'
-import { search } from '@equinor/eds-icons'
 import { Icon } from '@equinor/eds-core-react'
+import { search } from '@equinor/eds-icons'
+import { default as NextLink } from 'next/link'
+import { useLocale, useTranslations } from 'next-intl'
 import { ButtonLink } from '@/core/Link'
-import SiteMenu from '@/sections/SiteMenu/SiteMenu'
+import { LogoLink } from '@/core/Link/LogoLink'
 import Topbar from '@/core/Topbar/Topbar'
 import { getAllSitesLink } from '@/lib/helpers/getAllSitesLink'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
-import { LogoLink } from '@/core/Link/LogoLink'
+import SiteMenu from '@/sections/SiteMenu/SiteMenu'
+import {
+  type AllSlugsType,
+  LocalizationSwitch,
+} from '../../core/LocalizationSwitch/LocalizationSwitch'
+import { defaultLanguage, languages } from '../../languages.mjs'
+import type {
+  MenuData,
+  SimpleMenuData,
+  StickyMenuData,
+} from '../../types/index'
 
 export type HeaderProps = {
   menuData?: MenuData | SimpleMenuData
@@ -65,7 +72,11 @@ const AllSites = () => {
   const allSitesURL = getAllSitesLink('external')
   const t = useTranslations()
   return (
-    <NextLink className="cursor-pointer text-base no-underline hover:underline" href={allSitesURL} prefetch={false}>
+    <NextLink
+      className='cursor-pointer text-base no-underline hover:underline'
+      href={allSitesURL}
+      prefetch={false}
+    >
       {t('all_sites')}
     </NextLink>
   )
@@ -88,7 +99,7 @@ const Header = ({ slugs, menuData, stickyMenuData }: HeaderProps) => {
   const shouldDisplayAllSites = !menuData
 
   /* Filter objects that have translations but no routes */
-  const validSlugs = slugs?.filter((obj) => obj.slug)
+  const validSlugs = slugs?.filter(obj => obj.slug)
   const t = useTranslations()
 
   return (
@@ -96,25 +107,34 @@ const Header = ({ slugs, menuData, stickyMenuData }: HeaderProps) => {
       <LogoLink />
       <div
         className={`grid ${
-          columns == 3 ? 'grid-cols-[repeat(3,auto)]' : columns == 2 ? 'grid-cols-[repeat(2,auto)]' : 'grid-cols-1'
+          columns === 3
+            ? 'grid-cols-[repeat(3,auto)]'
+            : columns === 2
+              ? 'grid-cols-[repeat(2,auto)]'
+              : 'grid-cols-1'
         } items-center gap-x-4 sm:gap-x-6`}
       >
         {hasSearch && (
           <div>
             <ButtonLink
-              variant="ghost"
-              aria-expanded="false"
+              variant='ghost'
+              aria-expanded='false'
               aria-label={t('search')}
-              href={localization.activeLocale === 'no' ? '/no/search' : '/search'}
-              className="clickbound-area w-full p-2 md:px-5 md:py-3"
+              href={
+                localization.activeLocale === 'no' ? '/no/search' : '/search'
+              }
+              className='clickbound-area w-full p-2 md:px-5 md:py-3'
             >
               <Icon size={24} data={search} />
-              <span className="max-md:sr-only">{t('search')}</span>
+              <span className='max-md:sr-only'>{t('search')}</span>
             </ButtonLink>
           </div>
         )}
         {hasMoreThanOneLanguage && (
-          <LocalizationSwitch activeLocale={localization.activeLocale} allSlugs={validSlugs} />
+          <LocalizationSwitch
+            activeLocale={localization.activeLocale}
+            allSlugs={validSlugs}
+          />
         )}
         {shouldDisplayAllSites ? (
           <AllSites />
@@ -123,7 +143,9 @@ const Header = ({ slugs, menuData, stickyMenuData }: HeaderProps) => {
             <SiteMenu data={menuData as MenuData} />
           </div>
         ) : (
-          <div>{<SiteMenu variant="simple" data={menuData as SimpleMenuData} />}</div>
+          <div>
+            {<SiteMenu variant='simple' data={menuData as SimpleMenuData} />}
+          </div>
         )}
       </div>
     </Topbar>

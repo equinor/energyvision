@@ -1,13 +1,13 @@
 'use client'
-import { forwardRef } from 'react'
-import { BaseLink, BaseLinkProps } from './BaseLink'
-import { LinkType } from '../../types/index'
-import { ArrowRight } from '../../icons'
-import { TransformableIcon } from '../../icons/TransformableIcon'
 import { add, calendar } from '@equinor/eds-icons'
 import { useTranslations } from 'next-intl'
-import DownloadableLink from './DownloadableLink'
+import { forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { ArrowRight } from '../../icons'
+import { TransformableIcon } from '../../icons/TransformableIcon'
+import type { LinkType } from '../../types/index'
+import { BaseLink, type BaseLinkProps } from './BaseLink'
+import DownloadableLink from './DownloadableLink'
 
 export type Variants = 'default' | 'fit'
 
@@ -48,7 +48,11 @@ export const getArrowAnimation = (type: LinkType) => {
   }
 }
 
-export const getArrowElement = (type: LinkType, iconClassName?: string, marginClassName?: string) => {
+export const getArrowElement = (
+  type: LinkType,
+  iconClassName?: string,
+  marginClassName?: string,
+) => {
   const iconClassNames = twMerge(
     `size-arrow-right
     text-energy-red-100
@@ -69,58 +73,66 @@ export const getArrowElement = (type: LinkType, iconClassName?: string, marginCl
     case 'downloadableFile':
     case 'downloadableImage':
       return (
-        <div className={`flex flex-col px-1 ${marginClassNames} translate-y-[1px]`}>
+        <div
+          className={`flex flex-col px-1 ${marginClassNames} translate-y-[1px]`}
+        >
           <ArrowRight className={iconClassNames} />
-          <div className="h-[2px] w-full bg-energy-red-100 dark:bg-white-100" />
+          <div className='h-[2px] w-full bg-energy-red-100 dark:bg-white-100' />
         </div>
       )
     case 'icsLink':
-      return <TransformableIcon iconData={add} className={`${marginClassName} ${iconClassNames}`} />
+      return (
+        <TransformableIcon
+          iconData={add}
+          className={`${marginClassName} ${iconClassNames}`}
+        />
+      )
     default:
       return <ArrowRight className={`${marginClassName} ${iconClassNames}`} />
   }
 }
 
-export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(function ResourceLink(
-  {
-    variant = 'default',
-    children,
-    type = 'internalUrl',
-    extension,
-    className = '',
-    iconClassName = '',
-    textClassName = '',
-    showExtensionIcon = false,
-    ariaHideText = false,
-    href = '',
-    ...rest
-  },
-  ref,
-) {
-  const intl = useTranslations()
-  if (type === 'downloadableFile' || type === 'downloadableImage') {
-    return (
-      <DownloadableLink
-        type={type}
-        extension={extension}
-        showExtensionIcon={showExtensionIcon}
-        ariaHideText={ariaHideText}
-        {...rest}
-      />
-    )
-  }
-  const variantClassName: Partial<Record<Variants, string>> = {
-    default: 'w-full pt-3',
-    fit: 'w-fit pt-3',
-  }
+export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(
+  function ResourceLink(
+    {
+      variant = 'default',
+      children,
+      type = 'internalUrl',
+      extension,
+      className = '',
+      iconClassName = '',
+      textClassName = '',
+      showExtensionIcon = false,
+      ariaHideText = false,
+      href = '',
+      ...rest
+    },
+    ref,
+  ) {
+    const intl = useTranslations()
+    if (type === 'downloadableFile' || type === 'downloadableImage') {
+      return (
+        <DownloadableLink
+          type={type}
+          extension={extension}
+          showExtensionIcon={showExtensionIcon}
+          ariaHideText={ariaHideText}
+          {...rest}
+        />
+      )
+    }
+    const variantClassName: Partial<Record<Variants, string>> = {
+      default: 'w-full pt-3',
+      fit: 'w-fit pt-3',
+    }
 
-  const contentVariantClassName: Partial<Record<Variants, string>> = {
-    default: 'pb-3 pr-2',
-    fit: 'pb-3 pr-2',
-  }
+    const contentVariantClassName: Partial<Record<Variants, string>> = {
+      default: 'pb-3 pr-2',
+      fit: 'pb-3 pr-2',
+    }
 
-  const classNames = twMerge(
-    `group
+    const classNames = twMerge(
+      `group
     text-base
     relative
     flex
@@ -135,26 +147,26 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
     no-underline
     ${variantClassName[variant]}
   `,
-    className,
-  )
+      className,
+    )
 
-  const getTranslation = () => {
-    switch (type) {
-      case 'externalUrl':
-        return intl('externalLink')
-      /*case 'downloadableFile':
+    const getTranslation = () => {
+      switch (type) {
+        case 'externalUrl':
+          return intl('externalLink')
+        /*case 'downloadableFile':
       case 'downloadableImage':*/
-      case 'icsLink':
-        return intl('downloadDocument')
-      default:
-        return intl('internalLink')
+        case 'icsLink':
+          return intl('downloadDocument')
+        default:
+          return intl('internalLink')
+      }
     }
-  }
 
-  const getContentElements = () => {
-    const textClassNames = twMerge(`pt-1 grow leading-none`, textClassName)
-    switch (type) {
-      /*case 'downloadableFile':
+    const getContentElements = () => {
+      const textClassNames = twMerge(`pt-1 grow leading-none`, textClassName)
+      switch (type) {
+        /*case 'downloadableFile':
         return extension &&
           (extension.toUpperCase() === 'PDF' ||
             extension.toUpperCase() === 'XLS' ||
@@ -195,10 +207,26 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
             ) : null}
           </div>
         )*/
-      case 'icsLink':
-        return (
-          <>
-            <TransformableIcon aria-label={`, ${getTranslation()}`} iconData={calendar} className="mr-2" />
+        case 'icsLink':
+          return (
+            <>
+              <TransformableIcon
+                aria-label={`, ${getTranslation()}`}
+                iconData={calendar}
+                className='mr-2'
+              />
+              <div
+                className={textClassNames}
+                {...(ariaHideText && {
+                  'aria-hidden': true,
+                })}
+              >
+                {children}
+              </div>
+            </>
+          )
+        default:
+          return (
             <div
               className={textClassNames}
               {...(ariaHideText && {
@@ -206,50 +234,39 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
               })}
             >
               {children}
+              {extension ? (
+                <div title={`, ${getTranslation()} ${extension.toUpperCase()}`}>
+                  {`(${extension.toUpperCase()})`}
+                </div>
+              ) : null}
             </div>
-          </>
-        )
-      default:
-        return (
-          <div
-            className={textClassNames}
-            {...(ariaHideText && {
-              'aria-hidden': true,
-            })}
-          >
-            {children}
-            {extension ? (
-              <span aria-label={`, ${getTranslation()} ${extension.toUpperCase()}`}>
-                {`(${extension.toUpperCase()})`}
-              </span>
-            ) : null}
-          </div>
-        )
+          )
+      }
     }
-  }
 
-  return href ? (
-    <BaseLink
-      className={classNames}
-      type={type}
-      ref={ref}
-      href={href}
-      {...(extension &&
-        extension.toLowerCase() === 'pdf' && {
-          target: '_blank',
-        })}
-    >
-      <div
-        className={twMerge(
-          `w-inherit flex h-full items-center justify-start gap-x-2 ${contentVariantClassName[variant]}`,
-        )}
+    return href ? (
+      <BaseLink
+        className={classNames}
+        type={type}
+        ref={ref}
+        href={href}
+        {...(extension &&
+          extension.toLowerCase() === 'pdf' && {
+            target: '_blank',
+          })}
       >
-        {getContentElements()}
-        {getArrowElement(type, iconClassName)}
-      </div>
-      <div className="bg-grey-40 h-[1px] w-[0%] transition-all duration-300 group-hover:w-full" />
-    </BaseLink>
-  ) : null
-})
+        <div
+          className={twMerge(
+            `flex h-full w-inherit items-center justify-start gap-x-2 ${contentVariantClassName[variant]}`,
+          )}
+        >
+          {getContentElements()}
+          {getArrowElement(type, iconClassName)}
+        </div>
+        <div className='h-px w-[0%] bg-grey-40 transition-all duration-300 group-hover:w-full' />
+      </BaseLink>
+    ) : null
+  },
+)
 
 export default ResourceLink

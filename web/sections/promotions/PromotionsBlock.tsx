@@ -1,15 +1,27 @@
-import Promotion from './Promotion'
-import MultiplePromotions from './MultiplePromotions'
+import type { PortableTextBlock } from 'next-sanity'
+import { useId } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { ResourceLink } from '@/core/Link'
-import { useId } from 'react'
-import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
-import { PortableTextBlock } from 'next-sanity'
-import { CardData, DesignOptions, EventCardData, LinkData, PeopleCardData, Tag } from '@/types'
 import Blocks from '@/portableText/Blocks'
+import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
+import type {
+  CardData,
+  DesignOptions,
+  EventCardData,
+  LinkData,
+  PeopleCardData,
+  Tag,
+} from '@/types'
+import MultiplePromotions from './MultiplePromotions'
+import Promotion from './Promotion'
 
 // Do we have a way to share types between studio and web?
-export type PromotionType = 'promoteTopics' | 'promoteNews' | 'promotePeople' | 'promoteEvents' | 'promoteMagazine'
+export type PromotionType =
+  | 'promoteTopics'
+  | 'promoteNews'
+  | 'promotePeople'
+  | 'promoteEvents'
+  | 'promoteMagazine'
 
 type PromotionBlock = {
   id: string
@@ -64,7 +76,12 @@ const PromotionsBlock = ({
   className,
 }: {
   variant: PromotionType
-  data: EventPromotion | MagazinePromotion | TopicPromotion | NewsPromotion | PeoplePromotion
+  data:
+    | EventPromotion
+    | MagazinePromotion
+    | TopicPromotion
+    | NewsPromotion
+    | PeoplePromotion
   anchor?: string
   className?: string
 }) => {
@@ -74,7 +91,12 @@ const PromotionsBlock = ({
   const sectionTitleId = useId()
   let promotionsCount = data?.promotions?.length
   let promotionList = data?.promotions ?? []
-  if (variant === 'promoteEvents' && 'eventsCount' in data && data?.eventsCount && data?.promotions) {
+  if (
+    variant === 'promoteEvents' &&
+    'eventsCount' in data &&
+    data?.eventsCount &&
+    data?.promotions
+  ) {
     promotionsCount = data?.eventsCount ?? data?.promotions?.length
     /*     const sortedPromotions = (promotions as EventCardData[]).sort((a, b) => {
           return (
@@ -88,27 +110,39 @@ const PromotionsBlock = ({
   const paddingClassName = `px-layout-sm lg:px-layout-lg`
 
   return (
-    <section className={twMerge(`${bg} ${dark ? 'dark' : ''} pb-page-content`, className)} id={anchor}>
+    <section
+      className={twMerge(
+        `${bg} ${dark ? 'dark' : ''} pb-page-content`,
+        className,
+      )}
+      id={anchor}
+    >
       {title && (
         <div className={paddingClassName}>
-          <Blocks variant="h2" id={sectionTitleId} value={title} />
+          <Blocks variant='h2' id={sectionTitleId} value={title} />
         </div>
       )}
-      <div className="flex flex-col gap-6">
+      <div className='flex flex-col gap-6'>
         {ingress && (
-          <div className={`${paddingClassName} ${viewAllLink?.link?.slug ? '' : ''}`}>
-            <Blocks variant="ingress" value={ingress} />
+          <div
+            className={`${paddingClassName} ${viewAllLink?.link?.slug ? '' : ''}`}
+          >
+            <Blocks variant='ingress' value={ingress} />
           </div>
         )}
         {viewAllLink?.link?.slug && (
           <div className={`${paddingClassName}`}>
-            <ResourceLink type="internalUrl" variant="fit" href={viewAllLink?.link?.slug}>
+            <ResourceLink
+              type='internalUrl'
+              variant='fit'
+              href={viewAllLink?.link?.slug}
+            >
               {viewAllLink?.label}
             </ResourceLink>
           </div>
         )}
         <div
-          className={`pt-6 ${promotionsCount === 1 ? 'px-layout-sm md:px-layout-lg' : `px-layout-sm 3xl:px-layout-md`}`}
+          className={`pt-6 ${promotionsCount === 1 ? 'px-layout-sm md:px-layout-lg' : `3xl:px-layout-md px-layout-sm`}`}
         >
           {promotionsCount === 1 ? (
             <Promotion promotion={promotionList[0]} hasSectionTitle={!!title} />

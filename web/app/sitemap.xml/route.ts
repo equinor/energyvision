@@ -1,17 +1,17 @@
 import { NextResponse } from 'next/server'
-import { languages, defaultLanguage } from '@/languages'
-import {
-  getRoutePaths,
-  getNewsPaths,
-  getLocalNewsPaths,
-  getNewsroomPaths,
-  getMagazineIndexPaths,
-  getMagazinePaths,
-  PathType,
-} from '../../sanity/helpers/getPaths'
+import { defaultLanguage, languages } from '@/languages.mjs'
 import archivedNews from '@/lib/archive/archivedNewsPaths.json'
 import { crawlableDomains } from '@/lib/helpers/domainHelpers'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
+import {
+  getLocalNewsPaths,
+  getMagazineIndexPaths,
+  getMagazinePaths,
+  getNewsPaths,
+  getNewsroomPaths,
+  getRoutePaths,
+  type PathType,
+} from '../../sanity/helpers/getPaths'
 
 const formatPath = ({ slug, locale: urlLocale }: PathType) => {
   const locale = urlLocale === defaultLanguage.locale ? '' : urlLocale
@@ -21,11 +21,14 @@ const formatPath = ({ slug, locale: urlLocale }: PathType) => {
   return locale ? `/${locale}${path}` : path
 }
 
-const getSitemapUrls = (domain: string, paths: PathType[]) => `<?xml version="1.0" encoding="UTF-8"?>
+const getSitemapUrls = (
+  domain: string,
+  paths: PathType[],
+) => `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${paths
   .map(
-    (path) => `
+    path => `
   <url>
     <loc>${domain + formatPath(path)}</loc>
     <lastmod>${path.updatedAt}</lastmod>
@@ -34,11 +37,14 @@ ${paths
   .join('')}
 </urlset>`
 
-const getSitemapIndex = (domain: string, locales: string[]) => `<?xml version="1.0" encoding="UTF-8"?>
+const getSitemapIndex = (
+  domain: string,
+  locales: string[],
+) => `<?xml version="1.0" encoding="UTF-8"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${locales
   .map(
-    (locale) => `
+    locale => `
   <sitemap>
     <loc>${domain}/sitemap.xml?lang=${locale}</loc>
   </sitemap>`,
@@ -57,16 +63,24 @@ export async function GET(request: Request) {
 
   domain = domain.startsWith('www') ? `https://${domain}` : domain
 
-  const locales = languages.map((lang) => lang.locale)
+  const locales = languages.map(lang => lang.locale)
   const isMultilanguage = locales.length > 1
 
   const routeSlugs = await getRoutePaths(locales)
   const newsSlugs = Flags.HAS_NEWS ? await getNewsPaths(locales) : []
   const newsroomSlugs = Flags.HAS_NEWSROOM ? await getNewsroomPaths() : []
-  const magazineSlugs = Flags.HAS_MAGAZINE ? await getMagazinePaths(locales) : []
-  const magazineIndexSlugs = Flags.HAS_MAGAZINE ? await getMagazineIndexPaths() : []
-  const localNewsSlugs = Flags.HAS_LOCAL_NEWS ? await getLocalNewsPaths(locales) : []
-  const archivedNewsSlugs = Flags.HAS_ARCHIVED_NEWS ? (archivedNews as PathType[]) : []
+  const magazineSlugs = Flags.HAS_MAGAZINE
+    ? await getMagazinePaths(locales)
+    : []
+  const magazineIndexSlugs = Flags.HAS_MAGAZINE
+    ? await getMagazineIndexPaths()
+    : []
+  const localNewsSlugs = Flags.HAS_LOCAL_NEWS
+    ? await getLocalNewsPaths(locales)
+    : []
+  const archivedNewsSlugs = Flags.HAS_ARCHIVED_NEWS
+    ? (archivedNews as PathType[])
+    : []
 
   const allSlugs = [
     ...routeSlugs,
@@ -88,7 +102,7 @@ export async function GET(request: Request) {
     return new NextResponse(indexXml, { headers })
   }
 
-  const paths = allSlugs.filter((route) => route.locale === locale)
+  const paths = allSlugs.filter(route => route.locale === locale)
   const sitemapXml = getSitemapUrls(domain, paths)
   return new NextResponse(sitemapXml, { headers })
 }

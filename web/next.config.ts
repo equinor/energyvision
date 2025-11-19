@@ -1,14 +1,16 @@
 const archiveServerHostname = process.env.NEXT_PUBLIC_ARCHIVE_CONTENT_LINK
+
+/* import { withSentryConfig } from '@sentry/nextjs' */
 import type { NextConfig } from 'next'
 import createNextIntlPlugin from 'next-intl/plugin'
-import { withSentryConfig } from '@sentry/nextjs'
 import securityHeaders from './securityHeaders'
+
 /* import { getAllRedirects } from './sanity/interface/redirects' */
 
 const withNextIntl = createNextIntlPlugin()
 
 const isProd = process.env.NODE_ENV === 'production'
-const sentryConfig = {
+/* const sentryConfig = {
   org: 'equinor',
   project: 'equinor-com',
   silent: true,
@@ -16,7 +18,7 @@ const sentryConfig = {
   widenClientFileUpload: true,
   disableClientWebpackPlugin: !isProd,
   disableServerWebpackPlugin: !isProd,
-}
+} */
 
 //TODO: Find the Redirect type from config that is not in /dist.
 export type ConfigRedirect = {
@@ -70,7 +72,7 @@ const nextConfig: NextConfig = {
         source: '/legacy/:slug*',
         destination: `${archiveServerHostname}/:slug*`,
       },
-    ].filter((e) => e)
+    ].filter(e => e)
   },
   async headers() {
     return [
@@ -87,7 +89,7 @@ const nextConfig: NextConfig = {
           },
         ],
       },
-    ].filter((e) => e)
+    ].filter(e => e)
   },
   /*   async redirects() {
     return getAllRedirects()
@@ -97,8 +99,13 @@ const nextConfig: NextConfig = {
     SC_DISABLE_SPEEDY: 'false',
   },
   experimental: {
-    optimizePackageImports: ['@equinor/eds-core-react', '@equinor/eds-icons', 'video.js'],
+    optimizePackageImports: [
+      '@equinor/eds-core-react',
+      '@equinor/eds-icons',
+      'video.js',
+    ],
+    serverComponentsExternalPackages: [`require-in-the-middle`],
   },
 }
 
-export default withSentryConfig(withNextIntl(nextConfig), sentryConfig)
+export default withNextIntl(nextConfig)

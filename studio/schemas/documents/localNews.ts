@@ -1,15 +1,15 @@
 import { file_description } from '@equinor/eds-icons'
-import {
+import type {
+  SlugParent as DefaultSlugParent,
+  Reference,
   Rule,
+  SanityClient,
   SanityDocument,
   SlugSchemaType,
   SlugSourceContext,
-  SlugParent as DefaultSlugParent,
-  Reference,
-  SanityClient,
 } from 'sanity'
 import slugify from 'slugify'
-import { newsSlug } from '../../../satellitesConfig'
+import { newsSlug } from '../../../satellitesConfig.mjs'
 import { formatDate } from '../../helpers/formatDate'
 import { EdsIcon } from '../../icons'
 import { defaultLanguage } from '../../languages'
@@ -18,6 +18,7 @@ import { withSlugValidation } from '../validations/validateSlug'
 import { lang } from './langField'
 import {
   content,
+  excludeFromSearch,
   heroImage,
   iframe,
   ingress,
@@ -29,7 +30,6 @@ import {
   relatedLinks,
   seo,
   title,
-  excludeFromSearch,
 } from './news/sharedNewsFields'
 
 type SlugParent = {
@@ -49,7 +49,8 @@ export default {
     {
       title: 'SEO & metadata',
       name: 'metadata',
-      description: 'This part is used for meta information when this content is used on the web',
+      description:
+        'This part is used for meta information when this content is used on the web',
       options: {
         collapsible: true,
         collapsed: true,
@@ -58,7 +59,8 @@ export default {
     {
       title: 'Slug',
       name: 'slug',
-      description: '⚠️ Changing the slug after publishing it has negative impacts in the SEO ⚠️',
+      description:
+        '⚠️ Changing the slug after publishing it has negative impacts in the SEO ⚠️',
       options: {
         collapsible: true,
         collapsed: false,
@@ -119,16 +121,21 @@ export default {
           const document = parent as SlugParent
           const query = /* groq */ `*[_id == $id && _type == "localNewsTag"][0]`
           const params = { id: document.localNewsTag._ref }
-          return client.fetch(query, params).then((localNewsTag: SanityDocument) => {
-            const translatedNews = document.lang ? `/${newsSlug[document.lang]}` : `/${newsSlug[defaultLanguage.name]}`
-            const localNewsPath = document.lang
-              ? (localNewsTag[document.lang] as string)
-              : (localNewsTag[defaultLanguage.name] as string)
-            return `${translatedNews}/${slugify(localNewsPath, { lower: true })}/${slug}`
-          })
+          return client
+            .fetch(query, params)
+            .then((localNewsTag: SanityDocument) => {
+              const translatedNews = document.lang
+                ? `/${newsSlug[document.lang]}`
+                : `/${newsSlug[defaultLanguage.name]}`
+              const localNewsPath = document.lang
+                ? (localNewsTag[document.lang] as string)
+                : (localNewsTag[defaultLanguage.name] as string)
+              return `${translatedNews}/${slugify(localNewsPath, { lower: true })}/${slug}`
+            })
         },
       }),
-      description: '⚠️ Double check for typos and get it right on the first time! ⚠️',
+      description:
+        '⚠️ Double check for typos and get it right on the first time! ⚠️',
       validation: (Rule: Rule) => Rule.required(),
     },
     heroImage,
@@ -137,7 +144,7 @@ export default {
     iframe,
     relatedLinks,
     excludeFromSearch,
-  ].filter((e) => e),
+  ].filter(e => e),
   preview: {
     select: {
       title: 'title',
@@ -148,14 +155,28 @@ export default {
       isCustomDate: 'customPublicationDate',
     },
     prepare(selection: any) {
-      const { title, media, description, publishedDate, firstPublishedAt, isCustomDate } = selection
+      const {
+        title,
+        media,
+        description,
+        publishedDate,
+        firstPublishedAt,
+        isCustomDate,
+      } = selection
       const currentDate = new Date()
       const date =
-        publishedDate && isCustomDate ? new Date(publishedDate) : firstPublishedAt ? new Date(firstPublishedAt) : null
+        publishedDate && isCustomDate
+          ? new Date(publishedDate)
+          : firstPublishedAt
+            ? new Date(firstPublishedAt)
+            : null
 
-      const displayDate = date && date <= currentDate ? formatDate(date) : 'Not Published'
+      const displayDate =
+        date && date <= currentDate ? formatDate(date) : 'Not Published'
 
-      const ingressBlock = (description || []).find((ingressBlock: any) => ingressBlock._type === 'block')
+      const ingressBlock = (description || []).find(
+        (ingressBlock: any) => ingressBlock._type === 'block',
+      )
       return {
         title,
         subtitle: `Published date: ${displayDate}`,

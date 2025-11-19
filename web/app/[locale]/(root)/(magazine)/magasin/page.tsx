@@ -1,21 +1,30 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { getNameFromLocale } from '@/sanity/localization'
-import { getPageData, getData } from '@/sanity/lib/fetchData'
+
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import MagazineRoom from '@/templates/magazine/Magazineroom'
-import { MagazineIndexPageType } from '@/types'
 import { setRequestLocale } from 'next-intl/server'
-import { allMagazineDocuments, magazineIndexQuery, getMagazineArticlesByTag } from '@/sanity/queries/magazine'
-import { metaTitleSuffix } from '@/languages'
-import { Metadata } from 'next'
+import { metaTitleSuffix } from '@/languages.mjs'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
+import { getData, getPageData } from '@/sanity/lib/fetchData'
 import { resolveOpenGraphImage } from '@/sanity/lib/utils'
+import { getNameFromLocale } from '@/sanity/localization'
+import {
+  allMagazineDocuments,
+  getMagazineArticlesByTag,
+  magazineIndexQuery,
+} from '@/sanity/queries/magazine'
+import MagazineRoom from '@/templates/magazine/Magazineroom'
+import type { MagazineIndexPageType } from '@/types'
 
 export function generateStaticParams() {
   return Flags.HAS_MAGAZINE ? [{ locale: 'no' }] : []
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
   const { locale } = await params
   const lang = getNameFromLocale(locale)
 
@@ -31,7 +40,9 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const metaDescription = index?.seoAndSome?.metaDescription
   const title = index?.title
   const heroImage = index?.hero?.figure?.image
-  const ogImage = resolveOpenGraphImage(index?.seoAndSome?.openGraphImage ?? heroImage)
+  const ogImage = resolveOpenGraphImage(
+    index?.seoAndSome?.openGraphImage ?? heroImage,
+  )
 
   return {
     title: `${documentTitle || title || 'Magasin'} - ${metaTitleSuffix}`,
@@ -93,7 +104,10 @@ export default async function MagazinePage({
     //@ts-ignore:todo types
     magazineArticles = data
   } else {
-    const { data } = await getData({ query: allMagazineDocuments, queryParams: queryParams as any })
+    const { data } = await getData({
+      query: allMagazineDocuments,
+      queryParams: queryParams as any,
+    })
     //@ts-ignore:todo types
     magazineArticles = data
   }

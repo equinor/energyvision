@@ -3,20 +3,34 @@
  * https://nextjs.org/docs/advanced-features/security-headers
  */
 
-import { dataset } from '@/languageConfig'
+//import { dataset } from '@/languageConfig'
+import { dataset } from './languages.mjs'
 
 const isProduction = process.env.NODE_ENV === 'production'
 
 const envs = ['preprod', 'prod']
-const localUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:3333' : ''
+const localUrl =
+  process.env.NODE_ENV === 'development' ? 'http://localhost:3333' : ''
 const globalUrl = dataset === 'global' ? 'https://equinor.sanity.studio' : ''
-const secretUrl = dataset === 'secret' ? 'https://equinor-restricted.sanity.studio' : ''
-const studioUrls = envs.map((env) => `https://studio-${dataset}-equinor-web-sites-${env}.c2.radix.equinor.com`)
+const secretUrl =
+  dataset === 'secret' ? 'https://equinor-restricted.sanity.studio' : ''
+const studioUrls = envs.map(
+  env =>
+    `https://studio-${dataset}-equinor-web-sites-${env}.c2.radix.equinor.com`,
+)
 const studioV3Urls = [
   'http://studiov3-global-development-equinor-web-sites-dev.c2.radix.equinor.com',
   'http://studiov3-global-development-upgrade-equinor-web-sites-dev.c2.radix.equinor.com',
 ]
-const xFrameUrls = [localUrl, ...studioUrls, ...studioV3Urls, globalUrl, secretUrl].filter((e) => e).join(' ')
+const xFrameUrls = [
+  localUrl,
+  ...studioUrls,
+  ...studioV3Urls,
+  globalUrl,
+  secretUrl,
+]
+  .filter(e => e)
+  .join(' ')
 const edsCdnUrl = 'https://cdn.eds.equinor.com'
 const iframeSrcs = [
   'https://consentcdn.cookiebot.com',
@@ -35,13 +49,14 @@ const iframeSrcs = [
   'https://pixel.as',
   'https://www.youtube-nocookie.com',
   dataset === 'global-development' && 'https://api.screen9.com',
-  dataset === 'global-development' && 'https://equinor-gms1.wd3.myworkdayjobs-impl.com',
+  dataset === 'global-development' &&
+    'https://equinor-gms1.wd3.myworkdayjobs-impl.com',
   dataset === 'global-development' && 'https://careers.peopleclick.eu.com',
   'https://h61q9gi9.api.sanity.io',
   'http://localhost:3333',
   'https://eu.frcapi.com/',
 ]
-  .filter((e) => e)
+  .filter(e => e)
   .join(' ')
 
 const blobSrcUrls = [
@@ -82,7 +97,7 @@ const selfSrcUrls = [
   'https://*.ingest.de.sentry.io',
   isProduction ? '' : 'ws:',
 ]
-  .filter((e) => e)
+  .filter(e => e)
   .join(' ')
 
 const ContentSecurityPolicy = `

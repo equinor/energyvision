@@ -1,22 +1,31 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 //TODO types
-import { getNameFromLocale } from '../../../../../sanity/localization'
-import { getPageData, getData } from '../../../../../sanity/lib/fetchData'
+
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import MagazineRoom from '@/templates/magazine/Magazineroom'
-import { MagazineIndexPageType } from '../../../../../types'
 import { setRequestLocale } from 'next-intl/server'
-import { allMagazineDocuments, magazineIndexQuery, getMagazineArticlesByTag } from '@/sanity/queries/magazine'
-import { metaTitleSuffix } from '@/languages'
-import { Metadata } from 'next'
+import type { ContentSourceMap } from 'next-sanity'
+import { metaTitleSuffix } from '@/languages.mjs'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { resolveOpenGraphImage } from '@/sanity/lib/utils'
+import {
+  allMagazineDocuments,
+  getMagazineArticlesByTag,
+  magazineIndexQuery,
+} from '@/sanity/queries/magazine'
+import MagazineRoom from '@/templates/magazine/Magazineroom'
+import { getData, getPageData } from '../../../../../sanity/lib/fetchData'
+import { getNameFromLocale } from '../../../../../sanity/localization'
 
 export function generateStaticParams() {
   return Flags.HAS_MAGAZINE ? [{ locale: 'en' }] : []
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
   const { locale } = await params
   const lang = getNameFromLocale(locale)
 
@@ -32,7 +41,9 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const metaDescription = index?.seoAndSome?.metaDescription
   const title = index?.title
   const heroImage = index?.hero?.figure?.image
-  const ogImage = resolveOpenGraphImage(index?.seoAndSome?.openGraphImage ?? heroImage)
+  const ogImage = resolveOpenGraphImage(
+    index?.seoAndSome?.openGraphImage ?? heroImage,
+  )
 
   return {
     title: `${documentTitle || title || 'Magazine'} - ${metaTitleSuffix}`,
@@ -86,7 +97,13 @@ export default async function MagazinePage({
 
   // Fetch list of articles (by tag or all)
   const tag = (await searchParams)?.tag
-  let magazineArticles = undefined
+  let magazineArticles:
+    | {
+        data: any
+        sourceMap: ContentSourceMap | null
+        tags: string[]
+      }
+    | never[]
   if (tag && tag !== 'all') {
     const { data } = await getData({
       query: getMagazineArticlesByTag(false, false),
@@ -94,11 +111,17 @@ export default async function MagazinePage({
     })
     magazineArticles = data
   } else {
-    const { data } = await getData({ query: allMagazineDocuments, queryParams: queryParams as any })
+    const { data } = await getData({
+      query: allMagazineDocuments,
+      queryParams: queryParams as any,
+    })
     magazineArticles = data
   }
 
-  const pageData = { ...(index as any), magazineArticles: magazineArticles ?? [] } as any
+  const pageData = {
+    ...(index as any),
+    magazineArticles: magazineArticles ?? [],
+  } as any
 
   return <MagazineRoom pageData={pageData} />
 }

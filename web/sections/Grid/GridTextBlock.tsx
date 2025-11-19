@@ -1,13 +1,13 @@
+import { forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
-import GridLinkArrow from './GridLinkArrow'
-import { getColorForTheme } from '@/sections/teasers/TextTeaser/theme'
-import { BackgroundTypes, GridTextBlockData } from '../../types/index'
-import Blocks from '../../portableText/Blocks'
 import { BackgroundContainer } from '@/core/Backgrounds'
 import { Typography } from '@/core/Typography'
-import { RowType } from './mapGridContent'
-import { forwardRef } from 'react'
+import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
+import { getColorForTheme } from '@/sections/teasers/TextTeaser/theme'
+import Blocks from '../../portableText/Blocks'
+import type { BackgroundTypes, GridTextBlockData } from '../../types/index'
+import GridLinkArrow from './GridLinkArrow'
+import type { RowType } from './mapGridContent'
 
 type GridTextBlockProps = {
   data: GridTextBlockData
@@ -15,202 +15,218 @@ type GridTextBlockProps = {
   className?: string
 }
 
-const GridTextBlock = forwardRef<HTMLDivElement, GridTextBlockProps>(function GridTextBlock(
-  { data, className, rowType },
-  ref,
-) {
-  const {
-    action,
-    overline,
-    title,
-    content,
-    useThemedTitle,
-    themedTitle,
-    titleThemeFromLarger,
-    contentTheme,
-    theme,
-    contentAlignment,
-    imageBackground,
-  } = data
-  const url = action && getUrlFromAction(action)
-
-  const contentAlignmentUtilities = {
-    center: 'justify-center items-center',
-    right: 'justify-end items-center',
-    left: 'justify-start items-center',
-    'bottom-left': 'justify-start items-end',
-    'bottom-center': 'justify-center items-end',
-  }
-  const textContentAlignmentUtilities = {
-    center: 'text-center',
-    right: 'text-end',
-    left: 'text-start',
-    'bottom-left': 'text-start',
-    'bottom-center': 'text-center',
-  }
-
-  const textClassNames = twMerge(`${(title || themedTitle) && content ? 'text-sm' : 'text-md'}`, className)
-
-  let titleTextColor = 'text-slate-80'
-  let contentTextColor = 'text-slate-80'
-  let bgColor = 'bg-white-100'
-
-  if (useThemedTitle) {
+const GridTextBlock = forwardRef<HTMLDivElement, GridTextBlockProps>(
+  function GridTextBlock({ data, className, rowType }, ref) {
     const {
-      backgroundUtility: titleBgUtility,
-      textUtility: titleTextUtility,
-      dark,
-    } = getColorForTheme(titleThemeFromLarger)
-    if (titleTextUtility) {
-      titleTextColor = titleTextUtility
-    }
-    const { textUtility: contentTextUtility, backgroundUtility: contentBgUtility } = getColorForTheme(contentTheme)
-    if (contentBgUtility === titleBgUtility && contentTextUtility) {
-      contentTextColor = contentTextUtility
-    }
-    if (contentBgUtility !== titleBgUtility) {
-      contentTextColor = dark ? 'text-white-100' : 'text-slate-80'
-    }
-    bgColor = titleBgUtility ?? contentBgUtility ?? 'bg-white-100'
-  }
-  if (!useThemedTitle && theme) {
-    const { backgroundUtility: commonBgUtility, textUtility: commonTextUtility } = getColorForTheme(theme)
-    if (commonTextUtility) {
-      titleTextColor = commonTextUtility
-      contentTextColor = commonTextUtility
-    }
-    if (commonBgUtility) {
-      bgColor = commonBgUtility
-    }
-  }
+      action,
+      overline,
+      title,
+      content,
+      useThemedTitle,
+      themedTitle,
+      titleThemeFromLarger,
+      contentTheme,
+      theme,
+      contentAlignment,
+      imageBackground,
+    } = data
+    const url = action && getUrlFromAction(action)
 
-  const imageBgOptions = {
-    background: {
-      type: 'backgroundImage' as BackgroundTypes,
-      backgroundImage: imageBackground,
-      dark:
-        (((useThemedTitle && titleThemeFromLarger) || contentTheme) ?? theme) === 12 && !imageBackground?.useLight
-          ? true
-          : false,
-    },
-  }
-
-  if (imageBackground?.image) {
-    titleTextColor = 'text-white-100'
-    if (imageBackground?.useLight) {
-      titleTextColor = 'text-slate-80'
+    const contentAlignmentUtilities = {
+      center: 'justify-center items-center',
+      right: 'justify-end items-center',
+      left: 'justify-start items-center',
+      'bottom-left': 'justify-start items-end',
+      'bottom-center': 'justify-center items-end',
     }
-  }
-
-  if (imageBackground?.image) {
-    bgColor = 'bg-slate-80'
-    contentTextColor = 'text-white-100'
-    if (imageBackground?.useLight) {
-      contentTextColor = 'text-slate-80'
-      bgColor = 'bg-white-100'
+    const textContentAlignmentUtilities = {
+      center: 'text-center',
+      right: 'text-end',
+      left: 'text-start',
+      'bottom-left': 'text-start',
+      'bottom-center': 'text-center',
     }
-  }
 
-  const lightGradientForContentAlignment = {
-    center: '',
-    right: '',
-    left: '',
-    'bottom-left':
-      rowType === 'span3' ? 'white-to-top-tall-gradient lg:white-to-top-gradient' : 'white-to-top-tall-gradient',
-    'bottom-center':
-      rowType === 'span3' ? 'white-to-top-tall-gradient lg:white-to-top-gradient' : 'white-to-top-tall-gradient',
-  }
-  const darkGradientForContentAlignment = {
-    center: '',
-    right: '',
-    left: '',
-    'bottom-left':
-      rowType === 'span3' ? 'black-to-top-tall-gradient lg:black-to-top-gradient' : 'black-to-top-tall-gradient',
-    'bottom-center':
-      rowType === 'span3' ? 'black-to-top-tall-gradient lg:black-to-top-gradient' : 'black-to-top-tall-gradient',
-  }
+    const textClassNames = twMerge(
+      `${(title || themedTitle) && content ? 'text-sm' : 'text-md'}`,
+      className,
+    )
 
-  const getLayout = () => {
-    switch (rowType) {
-      case 'span3':
-        return 'lg:grid lg:grid-cols-[35%_60%] gap-10'
-      case 'span2and1':
-        return '4xl:grid 4xl:grid-cols-[35%_60%] gap-10'
-      case 'threeColumns':
-      default:
-        return ''
+    let titleTextColor = 'text-slate-80'
+    let contentTextColor = 'text-slate-80'
+    let bgColor = 'bg-white-100'
+
+    if (useThemedTitle) {
+      const {
+        backgroundUtility: titleBgUtility,
+        textUtility: titleTextUtility,
+        dark,
+      } = getColorForTheme(titleThemeFromLarger)
+      if (titleTextUtility) {
+        titleTextColor = titleTextUtility
+      }
+      const {
+        textUtility: contentTextUtility,
+        backgroundUtility: contentBgUtility,
+      } = getColorForTheme(contentTheme)
+      if (contentBgUtility === titleBgUtility && contentTextUtility) {
+        contentTextColor = contentTextUtility
+      }
+      if (contentBgUtility !== titleBgUtility) {
+        contentTextColor = dark ? 'text-white-100' : 'text-slate-80'
+      }
+      bgColor = titleBgUtility ?? contentBgUtility ?? 'bg-white-100'
     }
-  }
+    if (!useThemedTitle && theme) {
+      const {
+        backgroundUtility: commonBgUtility,
+        textUtility: commonTextUtility,
+      } = getColorForTheme(theme)
+      if (commonTextUtility) {
+        titleTextColor = commonTextUtility
+        contentTextColor = commonTextUtility
+      }
+      if (commonBgUtility) {
+        bgColor = commonBgUtility
+      }
+    }
 
-  // TODO check the serializers here
-  const serializerClassnames = `${titleTextColor}`
-  /*   {
+    const imageBgOptions = {
+      background: {
+        type: 'backgroundImage' as BackgroundTypes,
+        backgroundImage: imageBackground,
+        dark: !!(
+          (((useThemedTitle && titleThemeFromLarger) || contentTheme) ??
+            theme) === 12 && !imageBackground?.useLight
+        ),
+      },
+    }
+
+    if (imageBackground?.image) {
+      titleTextColor = 'text-white-100'
+      if (imageBackground?.useLight) {
+        titleTextColor = 'text-slate-80'
+      }
+    }
+
+    if (imageBackground?.image) {
+      bgColor = 'bg-slate-80'
+      contentTextColor = 'text-white-100'
+      if (imageBackground?.useLight) {
+        contentTextColor = 'text-slate-80'
+        bgColor = 'bg-white-100'
+      }
+    }
+
+    const lightGradientForContentAlignment = {
+      center: '',
+      right: '',
+      left: '',
+      'bottom-left':
+        rowType === 'span3'
+          ? 'white-to-top-tall-gradient lg:white-to-top-gradient'
+          : 'white-to-top-tall-gradient',
+      'bottom-center':
+        rowType === 'span3'
+          ? 'white-to-top-tall-gradient lg:white-to-top-gradient'
+          : 'white-to-top-tall-gradient',
+    }
+    const darkGradientForContentAlignment = {
+      center: '',
+      right: '',
+      left: '',
+      'bottom-left':
+        rowType === 'span3'
+          ? 'black-to-top-tall-gradient lg:black-to-top-gradient'
+          : 'black-to-top-tall-gradient',
+      'bottom-center':
+        rowType === 'span3'
+          ? 'black-to-top-tall-gradient lg:black-to-top-gradient'
+          : 'black-to-top-tall-gradient',
+    }
+
+    const getLayout = () => {
+      switch (rowType) {
+        case 'span3':
+          return 'lg:grid lg:grid-cols-[35%_60%] gap-10'
+        case 'span2and1':
+          return '4xl:grid 4xl:grid-cols-[35%_60%] gap-10'
+        default:
+          return ''
+      }
+    }
+
+    // TODO check the serializers here
+    const serializerClassnames = `${titleTextColor}`
+    /*   {
     largeText: `leading-tight text-balance ${titleTextColor}`,
     normal: `text-2xl leading-snug text-balance ${titleTextColor}`,
   } */
 
-  const mainContent = (
-    <>
-      <div
-        className={twMerge(
-          `h-fit ${
-            (title || (useThemedTitle && themedTitle)) && content ? `flex flex-col text-balance ${getLayout()}` : ``
-          }`,
-        )}
-      >
-        {overline ? (
-          <hgroup
-            className={`flex max-w-text flex-col gap-2 ${
-              textContentAlignmentUtilities[contentAlignment ?? 'left']
-            } ${titleTextColor}`}
-          >
-            <Typography variant="overline" className="text-sm">
-              {overline}
-            </Typography>
-            {(title || (useThemedTitle && themedTitle)) && (
+    const mainContent = (
+      <>
+        <div
+          className={twMerge(
+            `h-fit ${
+              (title || (useThemedTitle && themedTitle)) && content
+                ? `flex flex-col text-balance ${getLayout()}`
+                : ``
+            }`,
+          )}
+        >
+          {overline ? (
+            <hgroup
+              className={`flex max-w-text flex-col gap-2 ${
+                textContentAlignmentUtilities[contentAlignment ?? 'left']
+              } ${titleTextColor}`}
+            >
+              <Typography variant='overline' className='text-sm'>
+                {overline}
+              </Typography>
+              {(title || (useThemedTitle && themedTitle)) && (
+                <Blocks
+                  variant='h2'
+                  //@ts-ignore: todo
+                  value={useThemedTitle ? themedTitle : title}
+                  blockClassName={serializerClassnames}
+                />
+              )}
+            </hgroup>
+          ) : (
+            (title || (useThemedTitle && themedTitle)) && (
               <Blocks
-                variant="h2"
-                //@ts-ignore: todo
-                value={useThemedTitle ? themedTitle : title}
-                blockClassName={serializerClassnames}
-              />
-            )}
-          </hgroup>
-        ) : (
-          <>
-            {(title || (useThemedTitle && themedTitle)) && (
-              <Blocks
-                variant="h2"
+                variant='h2'
                 //@ts-ignore: todo
                 value={useThemedTitle ? themedTitle : title}
                 blockClassName={serializerClassnames}
                 className={`${textContentAlignmentUtilities[contentAlignment ?? 'left']}`}
               />
-            )}
-          </>
-        )}
-        {content && (
-          <div className={`flex flex-col justify-end ${rowType === 'span3' ? 'lg:-translate-y-[10px]' : ''}`}>
-            <Blocks
-              value={content}
-              blockClassName="my-0"
-              className={`gap-sm flex flex-col ${textClassNames} ${contentTextColor} ${
-                textContentAlignmentUtilities[contentAlignment ?? 'left']
-              } text-balance`}
-            />
-          </div>
-        )}
-      </div>
-      {action && url && <GridLinkArrow bgColor={bgColor} action={action} />}
-    </>
-  )
+            )
+          )}
+          {content && (
+            <div
+              className={`flex flex-col justify-end ${rowType === 'span3' ? 'lg:-translate-y-2.5' : ''}`}
+            >
+              <Blocks
+                value={content}
+                blockClassName='my-0'
+                className={`flex flex-col gap-sm ${textClassNames} ${contentTextColor} ${
+                  textContentAlignmentUtilities[contentAlignment ?? 'left']
+                } text-balance`}
+              />
+            </div>
+          )}
+        </div>
+        {action && url && <GridLinkArrow bgColor={bgColor} action={action} />}
+      </>
+    )
 
-  return imageBackground?.image ? (
-    <BackgroundContainer
-      {...imageBgOptions}
-      className={`aspect-auto`}
-      dontSplit
-      scrimClassName={`
+    return imageBackground?.image ? (
+      <BackgroundContainer
+        {...imageBgOptions}
+        className={`aspect-auto`}
+        dontSplit
+        scrimClassName={`
         py-10
         pl-8
         pr-20 
@@ -227,19 +243,20 @@ const GridTextBlock = forwardRef<HTMLDivElement, GridTextBlockProps>(function Gr
             : darkGradientForContentAlignment[contentAlignment ?? 'center']
         }
         `}
-    >
-      {mainContent}
-    </BackgroundContainer>
-  ) : (
-    <div
-      ref={ref}
-      className={`relative flex h-full w-full overflow-y-auto p-10 lg:p-12 ${bgColor} ${
-        contentAlignmentUtilities[contentAlignment ?? 'center']
-      }`}
-    >
-      {mainContent}
-    </div>
-  )
-})
+      >
+        {mainContent}
+      </BackgroundContainer>
+    ) : (
+      <div
+        ref={ref}
+        className={`relative flex h-full w-full overflow-y-auto p-10 lg:p-12 ${bgColor} ${
+          contentAlignmentUtilities[contentAlignment ?? 'center']
+        }`}
+      >
+        {mainContent}
+      </div>
+    )
+  },
+)
 
 export default GridTextBlock

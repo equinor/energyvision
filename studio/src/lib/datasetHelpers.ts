@@ -1,4 +1,4 @@
-import { FeatureFlags } from '../../../FeatureFlags'
+import { FeatureFlags } from '../../../FeatureFlags.mjs'
 import { dataset as sanityDataset } from '../../sanity.client'
 
 export const dataset = sanityDataset

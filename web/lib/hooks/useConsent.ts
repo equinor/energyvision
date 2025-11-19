@@ -1,7 +1,8 @@
 'use client'
-import { useEffect, useState } from 'react'
-import { CookieType } from '../../types'
 import { usePathname } from 'next/navigation'
+import { useEffect, useState } from 'react'
+
+import type { CookieType } from '../../types'
 import { checkCookieConsent } from '../helpers/checkCookieConsent'
 
 /**
@@ -9,9 +10,14 @@ import { checkCookieConsent } from '../helpers/checkCookieConsent'
  * @param consentType Can be either marketing or statistics
  * @returns
  */
-export default function useConsent(consentType: CookieType[]): boolean | undefined {
-  const [consent, setConsent] = useState<boolean>(checkCookieConsent(consentType))
+export default function useConsent(
+  consentType: CookieType[],
+): boolean | undefined {
+  const [consent, setConsent] = useState<boolean>(
+    checkCookieConsent(consentType),
+  )
   const pathname = usePathname()
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     setConsent(checkCookieConsent(consentType))
   }, [consentType, pathname])
