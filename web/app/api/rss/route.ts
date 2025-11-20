@@ -1,10 +1,10 @@
 import { defaultComponents, toHTML } from '@portabletext/to-html'
 import type { PortableTextBlock } from '@portabletext/types'
+import { newsSlug } from '@shared/sitesConfig'
 import { NextResponse } from 'next/server'
 import { client } from '@/sanity/lib/client'
 import { urlForImage } from '@/sanity/lib/utils'
 import { publishDateTimeQuery } from '@/sanity/queries/common/publishDateTime'
-import { newsSlug } from '../../../../satellitesConfig.js'
 
 const latestNews = `
 *[_type == "news" && lang == $lang]
@@ -74,7 +74,7 @@ function buildItemHTML(
   const imgUrl = img?.asset
     ? urlForImage(img)?.width(560).height(280).fit('crop').url()
     : ''
-  const imgAlt = img && img.alt ? ` alt="${img.alt}"` : ''
+  const imgAlt = img?.alt ? ` alt="${img.alt}"` : ''
   const section = newsSlug[langCfg.language as keyof typeof newsSlug] || 'news'
   const link =
     `https://www.equinor.com${langCfg.localePrefix}/${section}/${item.slug}`

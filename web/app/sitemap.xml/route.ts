@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { defaultLanguage, languages } from '@/languages.mjs'
+import { defaultLanguage, languages } from '@/languageConfig'
 import archivedNews from '@/lib/archive/archivedNewsPaths.json'
 import { crawlableDomains } from '@/lib/helpers/domainHelpers'
 import { Flags } from '@/sanity/helpers/datasetHelpers'

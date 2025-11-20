@@ -1,22 +1,22 @@
 import '../../globals.css'
-import { NextIntlClientProvider, hasLocale } from 'next-intl'
-import { notFound } from 'next/navigation'
-import { routing } from '../../../i18n/routing'
 import localFont from 'next/font/local'
 import { draftMode } from 'next/headers'
-import { Toaster } from 'sonner'
-import DraftModeToast from '@/sections/DraftMode/DraftModeToast'
+import { notFound } from 'next/navigation'
+import Script from 'next/script'
+import { hasLocale, NextIntlClientProvider } from 'next-intl'
 // eslint-disable-next-line import/no-unresolved
 import { VisualEditing } from 'next-sanity/visual-editing'
-import { SanityLive } from '@/sanity/lib/live'
-import { handleError } from '../../client-utils'
+import { Toaster } from 'sonner'
 import { getFooterData } from '@/sanity/lib/fetchData'
+import { SanityLive } from '@/sanity/lib/live'
 import { getNameFromLocale } from '@/sanity/localization'
+import DraftModeToast from '@/sections/DraftMode/DraftModeToast'
 import Footer from '@/sections/Footer/Footer'
-import Script from 'next/script'
-import { SiteImprove } from '../SiteImprove'
-import { GoogleTagManagerHead } from '../GTMHead'
+import { routing } from '../../../i18n/routing'
+import { handleError } from '../../client-utils'
 import { FriendlyCaptchaSdkWrapper } from '../FriendlyCaptchaWrapper'
+import { GoogleTagManagerHead } from '../GTMHead'
+import { SiteImprove } from '../SiteImprove'
 
 const equinorRegular = localFont({
   src: '../../fonts/equinor/Equinor-Regular.woff',
@@ -30,7 +30,13 @@ const equinorVariableWoff2 = localFont({
 
 type Params = Promise<{ locale: string }>
 
-export default async function LocaleLayout({ children, params }: { children: React.ReactNode; params: Params }) {
+export default async function LocaleLayout({
+  children,
+  params,
+}: {
+  children: React.ReactNode
+  params: Params
+}) {
   // Ensure that the incoming `locale` is valid
   const { locale } = await params
   const { isEnabled: isDraftMode } = await draftMode()
@@ -50,12 +56,12 @@ export default async function LocaleLayout({ children, params }: { children: Rea
         {/** TODO look into scripts */}
         {/* eslint-disable-next-line @next/next/no-before-interactive-script-outside-document*/}
         <Script
-          src="https://consent.cookiebot.com/uc.js"
-          id="Cookiebot"
-          strategy="afterInteractive"
-          data-cbid="f1327b03-7951-45da-a2fd-9181babc783f"
-          data-blockingmode="auto"
-          data-culture={locale == 'no' ? 'nb' : locale}
+          src='https://consent.cookiebot.com/uc.js'
+          id='Cookiebot'
+          strategy='afterInteractive'
+          data-cbid='f1327b03-7951-45da-a2fd-9181babc783f'
+          data-blockingmode='auto'
+          data-culture={locale === 'no' ? 'nb' : locale}
         />
         <GoogleTagManagerHead />
         <SiteImprove />

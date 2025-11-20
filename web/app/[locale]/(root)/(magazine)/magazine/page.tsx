@@ -5,7 +5,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { setRequestLocale } from 'next-intl/server'
 import type { ContentSourceMap } from 'next-sanity'
-import { metaTitleSuffix } from '@/languages.mjs'
+import { metaTitleSuffix } from '@/languageConfig'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { resolveOpenGraphImage } from '@/sanity/lib/utils'
 import {

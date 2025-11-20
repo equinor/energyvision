@@ -1,8 +1,8 @@
-import { getNameFromLocale } from '@/sanity/localization'
+import { getLocale } from 'next-intl/server'
 import { getPageData } from '@/sanity/lib/fetchData'
+import { getNameFromLocale } from '@/sanity/localization'
 import { pageNotFoundQuery } from '@/sanity/queries/pageNotFound'
 import NotFoundPage from '@/templates/notFound/NotFoundPage'
-import { getLocale } from 'next-intl/server'
 
 // Note that `app/[locale]/[...slug]/page.tsx`
 // is necessary for this page to render.

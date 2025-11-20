@@ -15,13 +15,43 @@ export type Language = {
   locale: string
 }
 const languages = [
-  { id: 'english', title: 'English (UK)', iso: 'en-GB', name: 'en_GB', locale: 'en-GB' },
-  { id: 'norwegian', title: 'Norwegian', iso: 'nb-NO', name: 'nb_NO', locale: 'no' },
-  { id: 'portuguese', title: 'Portuguese (BR)', iso: 'pt-BR', name: 'pt_BR', locale: 'pt' },
+  {
+    id: 'english',
+    title: 'English (UK)',
+    iso: 'en-GB',
+    name: 'en_GB',
+    locale: 'en-GB',
+  },
+  {
+    id: 'norwegian',
+    title: 'Norwegian',
+    iso: 'nb-NO',
+    name: 'nb_NO',
+    locale: 'no',
+  },
+  {
+    id: 'portuguese',
+    title: 'Portuguese (BR)',
+    iso: 'pt-BR',
+    name: 'pt_BR',
+    locale: 'pt',
+  },
   { id: 'german', title: 'German', iso: 'de-DE', name: 'de_DE', locale: 'de' },
-  { id: 'spanish-ar', title: 'Spanish', iso: 'es-AR', name: 'es_AR', locale: 'es' },
+  {
+    id: 'spanish-ar',
+    title: 'Spanish',
+    iso: 'es-AR',
+    name: 'es_AR',
+    locale: 'es',
+  },
   { id: 'polish', title: 'Polish', iso: 'pl-PL', name: 'pl_PL', locale: 'pl' },
-  { id: 'japanese', title: 'Japanese', iso: 'ja-JP', name: 'ja_JP', locale: 'ja' },
+  {
+    id: 'japanese',
+    title: 'Japanese',
+    iso: 'ja-JP',
+    name: 'ja_JP',
+    locale: 'ja',
+  },
   { id: 'korean', title: 'Korean', iso: 'ko-KR', name: 'ko_KR', locale: 'ko' },
   { id: 'welsh', title: 'Welsh', iso: 'cy-CY', name: 'cy_CY', locale: 'cy' },
 ]
@@ -102,7 +132,9 @@ export const defaultWebLanguage: Partial<Record<DatasetsKeys, string>> = {
  * This is necessary for static generation
  * @type {Record<string, { url: string, meta: string }>}
  */
-const websiteDomains: Partial<Record<DatasetsKeys, { url: string; meta: string }>> = {
+const websiteDomains: Partial<
+  Record<DatasetsKeys, { url: string; meta: string }>
+> = {
   global: {
     url: 'https://www.equinor.com',
     meta: 'Equinor',
@@ -162,26 +194,37 @@ const websiteDomains: Partial<Record<DatasetsKeys, { url: string; meta: string }
  *  locale: string
  * }[]}
  */
-const filterLanguages = (dataset: Dataset) =>
-  dataset.map((lang) => languages.find((e) => e.id === lang)).filter((e) => e)
+const filterLanguages = (dataset: Dataset) => {
+  // Not using map and find method because Typescript would return | undefined
+  // and we would have to silence possibly undefined in every use of languages
+  const langs: Language[] = []
+  dataset.forEach(lang => {
+    const curr = languages[languages.map(e => e.id).indexOf(lang)]
+    if (curr) {
+      langs.push(curr)
+    }
+  })
 
-const logAndFallback = (dataset: DatasetsKeys) => {
-  console.error(
-    `Selected dataset (${dataset}) not found! Possibly a typo in the env variable.\nFalling back to first in the list.`,
-  )
-  return filterLanguages(Object.values(datasets)[0])
+  return langs?.length > 0 ? langs : [languages[0], languages[1]]
 }
 
 /**
  * @param {string} dataset
  */
-export const getLanguages = (dataset: DatasetsKeys) =>
-  Object.keys(datasets).some((name) => name === dataset) ? filterLanguages(datasets[dataset]) : logAndFallback(dataset)
-
+export const getLanguages = (dataset: DatasetsKeys): Language[] => {
+  if (Object.keys(datasets).some(name => name === dataset)) {
+    return filterLanguages(datasets[dataset])
+  }
+  console.error(
+    `Selected dataset (${dataset}) not found! Possibly a typo in the env variable.\nFalling back to first in the list.`,
+  )
+  return [languages[0], languages[1]]
+}
 /**
  * @param {string} dataset
  */
-export const getDomain = (dataset: DatasetsKeys) => websiteDomains[dataset]?.url ?? 'Domain not set'
+export const getDomain = (dataset: DatasetsKeys) =>
+  websiteDomains[dataset]?.url ?? 'Domain not set'
 
 /**
  * @param {string} dataset
@@ -191,6 +234,6 @@ export const getMetaTitleSuffix = (dataset: DatasetsKeys) => {
 }
 
 export const getAllDomainUrls = () => {
-  return Object.values(websiteDomains).map((dataset) => dataset.url)
+  return Object.values(websiteDomains).map(dataset => dataset.url)
   //return Object.keys(datasets).map((dataset) => websiteDomains[dataset]?.url)
 }

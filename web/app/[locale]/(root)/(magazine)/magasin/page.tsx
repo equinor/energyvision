@@ -3,7 +3,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { setRequestLocale } from 'next-intl/server'
-import { metaTitleSuffix } from '@/languages.mjs'
+import { metaTitleSuffix } from '@/languageConfig'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { getData, getPageData } from '@/sanity/lib/fetchData'
 import { resolveOpenGraphImage } from '@/sanity/lib/utils'
