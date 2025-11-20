@@ -15,8 +15,8 @@ RUN npm install dotenv fs
 COPY ./package.json ./
 COPY ./pnpm-lock.yaml ./
 COPY ./tsconfig.base.json ./
-COPY ./satellitesConfig.js ./
-COPY ./FeatureFlags.js ./
+COPY ./shared/sitesConfig.ts ./
+COPY ./shared/featureFlags.ts ./
 COPY ./studio ./studio
 
 ARG ARG_SANITY_API_TOKEN
@@ -60,6 +60,7 @@ RUN pnpm studio build
 FROM node:lts-alpine AS runner
 
 WORKDIR /opt/app
+RUN ls -la
 
 ENV PORT=3333
 ENV USER=sanity
