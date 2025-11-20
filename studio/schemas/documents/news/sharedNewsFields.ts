@@ -1,6 +1,6 @@
+import type { Rule, ValidationContext } from 'sanity'
 import { configureBlockContent } from '../../editors/blockContentType'
 import { validateCharCounterEditor } from '../../validations/validateCharCounterEditor'
-import type { Rule, ValidationContext } from 'sanity'
 
 const validateRelatedLinksTitle = (value: any, context: any) => {
   const links = context.document.relatedLinks.links
@@ -34,14 +34,18 @@ export const openGraphImage = {
   name: 'openGraphImage',
   type: 'imageWithAlt',
   title: 'Open Graph Image',
-  description: 'You can override the hero image as the SoMe image by uploading another image here.',
+  description:
+    'You can override the hero image as the SoMe image by uploading another image here.',
 }
 
 export const title = {
   name: 'title',
   title: 'Title',
   type: 'string',
-  validation: (Rule: Rule) => [Rule.required(), Rule.max(100).warning('Title should be max 100 characters')],
+  validation: (Rule: Rule) => [
+    Rule.required(),
+    Rule.max(100).warning('Title should be max 100 characters'),
+  ],
 }
 
 type PublishDateTimeType = {
@@ -66,7 +70,8 @@ export const publishDateTime = [
       timeStep: 1,
       calendarTodayLabel: 'Today',
     },
-    hidden: ({ parent }: { parent: PublishDateTimeType }) => !parent.customPublicationDate,
+    hidden: ({ parent }: { parent: PublishDateTimeType }) =>
+      !parent.customPublicationDate,
     validation: (Rule: Rule) =>
       Rule.custom((value: PublishDateTimeType, context: ValidationContext) => {
         const { parent } = context as { parent: PublishDateTimeType }
@@ -90,14 +95,17 @@ export const publishDateTime = [
           publishedDate.getMonth(),
           publishedDate.getDate(),
         )
-        const todayNoTime = new Date(today.getFullYear(), today.getMonth(), today.getDate())
+        const todayNoTime = new Date(
+          today.getFullYear(),
+          today.getMonth(),
+          today.getDate(),
+        )
 
         // Allow publication if the selected date is today or in the past
         if (publishedDateNoTime <= todayNoTime) {
           return true // Valid date
-        } else {
-          return 'The date can’t be in the future'
         }
+        return 'The date can’t be in the future'
       }),
   },
   {
@@ -136,7 +144,8 @@ export const countryTags = {
   title: 'Country tags',
   name: 'countryTags',
   type: 'array',
-  description: 'Select the country or countries this news article is relevant for',
+  description:
+    'Select the country or countries this news article is relevant for',
   of: [
     {
       type: 'reference',
@@ -150,7 +159,8 @@ export const subscriptionType = {
   title: 'News Subscription Type',
   name: 'subscriptionType',
   type: 'string',
-  description: 'This news article will be sent to all the users who subscribed to below selected type.',
+  description:
+    'This news article will be sent to all the users who subscribed to below selected type.',
   options: {
     list: [
       { title: 'General News', value: 'Company' },
@@ -166,7 +176,8 @@ export const newsSlugField = {
   title: 'News slug',
   type: 'string',
   placeholder: 'For example "Experienced professionals"',
-  description: 'The unique part of the URL for this topic page. Should probably be something like the page title.',
+  description:
+    'The unique part of the URL for this topic page. Should probably be something like the page title.',
   // validation: (Rule) => Rule.max(200),
 }
 
@@ -180,10 +191,12 @@ export const heroImage = {
 export const ingress = {
   name: 'ingress',
   title: 'Ingress',
-  description: 'Lead paragraph. Shown in article and on cards. Max 400 characters',
+  description:
+    'Lead paragraph. Shown in article and on cards. Max 400 characters',
   type: 'array',
   of: [configureBlockContent({ variant: 'ingress' })],
-  validation: (Rule: Rule) => Rule.custom((value: any) => validateCharCounterEditor(value, 400)),
+  validation: (Rule: Rule) =>
+    Rule.custom((value: any) => validateCharCounterEditor(value, 400)),
 }
 
 export const content = {
@@ -208,7 +221,8 @@ export const content = {
 export const iframe = {
   title: 'IFrame',
   name: 'iframe',
-  description: 'Use this to add an iframe to this article. This could for example be a livestream, video, or map.',
+  description:
+    'Use this to add an iframe to this article. This could for example be a livestream, video, or map.',
   type: 'basicIframe',
   options: {
     collapsible: true,
@@ -226,7 +240,10 @@ export const relatedLinks = {
       name: 'title',
       type: 'string',
       title: 'Title',
-      validation: (Rule: Rule) => Rule.custom((value, context) => validateRelatedLinksTitle(value, context)),
+      validation: (Rule: Rule) =>
+        Rule.custom((value, context) =>
+          validateRelatedLinksTitle(value, context),
+        ),
     },
     {
       name: 'links',

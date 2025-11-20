@@ -56,10 +56,7 @@ const languages = [
   { id: 'welsh', title: 'Welsh', iso: 'cy-CY', name: 'cy_CY', locale: 'cy' },
 ]
 
-/**
- * @type {Record<string, string>}
- */
-export const newsSlug = {
+export const newsSlug: Record<string, string> = {
   en_GB: 'news',
   nb_NO: 'nyheter',
   pt_BR: 'noticias',
@@ -70,10 +67,7 @@ export const newsSlug = {
   cy_CY: 'newyddion',
 }
 
-/**
- * @type {Record<string, string>}
- */
-export const magazineSlug = {
+export const magazineSlug: Record<string, string> = {
   en_GB: 'magazine',
   nb_NO: 'magasin',
 }
@@ -220,15 +214,10 @@ export const getLanguages = (dataset: DatasetsKeys): Language[] => {
   )
   return [languages[0], languages[1]]
 }
-/**
- * @param {string} dataset
- */
+
 export const getDomain = (dataset: DatasetsKeys) =>
   websiteDomains[dataset]?.url ?? 'Domain not set'
 
-/**
- * @param {string} dataset
- */
 export const getMetaTitleSuffix = (dataset: DatasetsKeys) => {
   return websiteDomains[dataset]?.meta ?? 'Equinor'
 }

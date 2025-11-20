@@ -1,12 +1,14 @@
 import { defaultLanguage } from './languages'
-import { dataset } from './src/lib/datasetHelpers'
+import { dataset } from './sanity.client'
 import { getLocaleFromName } from './src/lib/localization'
 
 // Any random string, must match SANITY_PREVIEW_SECRET in the Next.js .env.local file
 const previewSecret = import.meta.env.SANITY_STUDIO_PREVIEW_SECRET
 
 const remoteUrl = () => {
-  const env = window.location.hostname.includes('equinor-web-sites-preprod') ? 'preprod' : 'prod'
+  const env = window.location.hostname.includes('equinor-web-sites-preprod')
+    ? 'preprod'
+    : 'prod'
   switch (dataset) {
     case 'global':
       return `https://web-equinor-web-sites-${env}.c2.radix.equinor.com`
@@ -21,14 +23,18 @@ const remoteUrl = () => {
 
 const localUrl = import.meta.env.SANITY_STUDIO_PROJECT_URL
 
-export const baseUrl = window.location.hostname === 'localhost' ? localUrl : remoteUrl()
+export const baseUrl =
+  window.location.hostname === 'localhost' ? localUrl : remoteUrl()
 
 export default function resolveProductionUrl(doc) {
   const previewUrl = new URL(baseUrl)
 
   previewUrl.pathname = '/api/preview'
   previewUrl.searchParams.append('type', doc?._type)
-  previewUrl.searchParams.append('locale', getLocaleFromName(doc?.lang) || defaultLanguage.locale)
+  previewUrl.searchParams.append(
+    'locale',
+    getLocaleFromName(doc?.lang) || defaultLanguage.locale,
+  )
   if (doc?.slug?.current) {
     previewUrl.searchParams.append('slug', doc?.slug?.current)
   } else if (doc?._id) {

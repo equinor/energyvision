@@ -1,6 +1,6 @@
 import { file_add } from '@equinor/eds-icons'
+import { newsSlug } from '@shared/sitesConfig'
 import slugify from 'slugify'
-import { newsSlug } from '../../../satellitesConfig.js'
 import { formatDate } from '../../helpers/formatDate'
 import { EdsIcon } from '../../icons'
 import { defaultLanguage } from '../../languages'
@@ -90,11 +90,15 @@ export default {
         input: SlugInput,
       },
       options: withSlugValidation({
-        source: doc => {
+        source: (doc: { newsSlug: string }) => {
           // translated document ids end with _i18n__lang while base documents don't
           return doc.newsSlug ? `${slugify(doc.newsSlug, { lower: true })}` : ''
         },
-        slugify: (input, _schemaType, context) => {
+        slugify: (
+          input: string,
+          _schemaType: any,
+          context: { parent: any },
+        ) => {
           const slug = slugify(input)
           const { parent: document } = context
           const translatedNews = document.lang
@@ -105,7 +109,7 @@ export default {
       }),
       description:
         '⚠️ Double check for typos and get it right on the first time! ⚠️',
-      validation: Rule => Rule.required(),
+      validation: (Rule: { required: () => any }) => Rule.required(),
     },
     heroImage,
     ingress,
@@ -123,7 +127,14 @@ export default {
       firstPublishedAt: 'firstPublishedAt',
       isCustomDate: 'customPublicationDate',
     },
-    prepare(selection) {
+    prepare(selection: {
+      title: any
+      media: any
+      description: any
+      publishedDate: any
+      firstPublishedAt: any
+      isCustomDate: any
+    }) {
       const {
         title,
         media,
@@ -144,15 +155,15 @@ export default {
         date && date <= currentDate ? formatDate(date) : 'Not Published'
 
       const ingressBlock = (description || []).find(
-        ingressBlock => ingressBlock._type === 'block',
+        (ingressBlock: { _type: string }) => ingressBlock._type === 'block',
       )
       return {
         title,
         subtitle: `Published date: ${displayDate}`,
         description: ingressBlock
           ? ingressBlock.children
-              .filter(child => child._type === 'span')
-              .map(span => span.text)
+              .filter((child: { _type: string }) => child._type === 'span')
+              .map((span: { text: any }) => span.text)
               .join('')
           : 'Missing lead',
         media,

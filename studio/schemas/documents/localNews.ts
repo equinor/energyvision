@@ -1,4 +1,5 @@
 import { file_description } from '@equinor/eds-icons'
+import { newsSlug } from '@shared/sitesConfig'
 import type {
   SlugParent as DefaultSlugParent,
   Reference,
@@ -9,7 +10,6 @@ import type {
   SlugSourceContext,
 } from 'sanity'
 import slugify from 'slugify'
-import { newsSlug } from '../../../satellitesConfig.js'
 import { formatDate } from '../../helpers/formatDate'
 import { EdsIcon } from '../../icons'
 import { defaultLanguage } from '../../languages'

@@ -1,4 +1,4 @@
-import { getAllDomainUrls } from '../../../satellitesConfig.js'
+import { getAllDomainUrls } from '@shared/sitesConfig'
 
 export const isEquinorUrl = (slug: string) => {
   return getAllDomainUrls().some(allowedUrl =>
