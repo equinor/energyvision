@@ -105,7 +105,6 @@ const nextConfig: NextConfig = {
       '@equinor/eds-icons',
       'video.js',
     ],
-    serverComponentsExternalPackages: [`require-in-the-middle`],
   },
 }
 
