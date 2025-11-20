@@ -8,7 +8,7 @@ ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
 
 WORKDIR /opt/app
-
+RUN ls -la
 #In use?
 RUN npm install dotenv fs
 
