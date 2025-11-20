@@ -118,7 +118,7 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
 
   const handleSuccessfullFriendlyChallenge = async (event: any) => {
     console.log('captcha event', event)
-    const solution = (event?.target as any)['frc-captcha-response'].value
+    const solution = event.detail.response
     if (fileName) {
       setIsFriendlyChallengeDone(true)
       const response = await fetch('/api/download/getFileUrl', {
