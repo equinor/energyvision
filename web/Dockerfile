@@ -69,6 +69,7 @@ ENV UID=12345
 ENV NEXT_TELEMETRY_DISABLED=1
 
 COPY --from=build /app/web/public ./public
+COPY --from=build /app/shared ./shared
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=build --chown="$USER":"$USER" /app/web/.next/standalone ./

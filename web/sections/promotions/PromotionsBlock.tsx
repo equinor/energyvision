@@ -91,7 +91,7 @@ const PromotionsBlock = ({
   className?: string
 }) => {
   const { title, ingress, viewAllLink, designOptions, ...restData } = data
-  const { foreground } = designOptions
+  const { foreground } = designOptions || {}
   const { bg, dark } = getBgAndDarkFromBackground(designOptions)
 
   const sectionTitleId = useId()

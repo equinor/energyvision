@@ -253,7 +253,6 @@ export default function Blocks({
                       variant,
                       as,
                       className: blockClassName,
-                      clampLines,
                     }),
                     ...blocksComponents,
                   },

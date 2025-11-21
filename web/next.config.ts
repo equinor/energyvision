@@ -1,6 +1,6 @@
 const archiveServerHostname = process.env.NEXT_PUBLIC_ARCHIVE_CONTENT_LINK
 
-import { join } from 'node:path'
+import path from 'node:path'
 /* import { withSentryConfig } from '@sentry/nextjs' */
 import type { NextConfig } from 'next'
 import createNextIntlPlugin from 'next-intl/plugin'
@@ -43,7 +43,10 @@ export type ConfigRedirect = {
 const nextConfig: NextConfig = {
   output: 'standalone',
   transpilePackages: ['friendly-challenge', '@energyvision/shared'],
-  outputFileTracingRoot: join(__dirname, '..'),
+  turbopack: {
+    root: path.join(__dirname, '..'),
+  },
+  /*   outputFileTracingRoot: join(__dirname, '../'), */
   images: {
     remotePatterns: [
       {
