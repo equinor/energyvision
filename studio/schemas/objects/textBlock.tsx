@@ -1,45 +1,15 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { text_field } from '@equinor/eds-icons'
-import type { PortableTextBlock, Reference, Rule, ValidationContext } from 'sanity'
-import type { ColorSelectorValue } from '../components/ColorSelector'
+import type {
+  PortableTextBlock,
+  Reference,
+  Rule,
+  ValidationContext,
+} from 'sanity'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
+import type { ColorSelectorValue } from '../components/ColorSelector'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import { configureBlockContent } from '../editors'
-
-/* const blockContentType = configureBlockContent({
-  h2: false,
-  h3: true,
-  h4: false,
-  attachment: false,
-})
-
-const ingressContentType = configureBlockContent({
-  h2: false,
-  h3: false,
-  h4: false,
-  attachment: false,
-})
-
-const blockContentTypeForBigText = configureBlockContent({
-  h2: false,
-  h3: false,
-  h4: false,
-  attachment: false,
-  smallText: false,
-  largeText: true,
-  extraLargeText: true,
-  normalTextOverride: {
-    title: 'Normal',
-    value: 'normal',
-    component: ({ children }: { children: React.ReactNode }) => <span style={{ fontSize: '42px' }}>{children}</span>,
-  },
-})
-const titleContentType = configureTitleBlockContent({
-  largeText: true,
-  extraLargeText: true,
-  twoXLText: true,
-}) */
 
 type TextBlock = {
   overline?: string
@@ -68,7 +38,6 @@ export default {
     {
       title: 'Thumbnail Image',
       name: 'thumbnail',
-      description: 'A small image acting as a thumbnail above the title.',
       options: {
         collapsible: true,
         collapsed: true,
@@ -78,7 +47,6 @@ export default {
     {
       title: 'Eyebrow headline',
       name: 'eyebrow',
-      description: 'A descriptive keyword, category or phrase that appears over the main headline.',
       options: {
         collapsible: true,
         collapsed: true,
@@ -96,7 +64,6 @@ export default {
     {
       name: 'titleOptions',
       title: 'Title',
-      description: '',
       options: {
         collapsible: true,
         collapsed: false,
@@ -127,18 +94,22 @@ export default {
       },
       of: [configureBlockContent({ variant: 'with2XLTitle' })],
       validation: (Rule: Rule) =>
-        Rule.custom((value: PortableTextBlock[]) => (!value ? 'A title is recommended' : true)).warning(),
+        Rule.custom((value: PortableTextBlock[]) =>
+          !value ? 'A title is recommended' : true,
+        ).warning(),
     },
     {
       title: 'Use brand theme for title',
-      description: 'Sets background to white and text color to brand red. Will disable other background options',
+      description:
+        'Sets background to white and text color to brand red. Will disable other background options',
       name: 'useBrandTheme',
       type: 'boolean',
       fieldset: 'titleOptions',
     },
     {
       title: 'Big text (Deprecated)',
-      description: 'Set big text to false. Will be removed after a transition period',
+      description:
+        'Set big text to false. Will be removed after a transition period',
       name: 'isBigText',
       type: 'boolean',
       fieldset: 'titleOptions',
@@ -147,11 +118,13 @@ export default {
     {
       name: 'bigTitle',
       title: 'Title (Deprecated)',
-      description: 'Use regular title and set big text to false. Will be removed after a transition period',
+      description:
+        'Use regular title and set big text to false. Will be removed after a transition period',
       fieldset: 'titleOptions',
       type: 'array',
       of: [configureBlockContent({ variant: 'withXLTitle' })],
-      hidden: ({ parent, value }: TextBlockDocument) => !value || !parent.isBigText,
+      hidden: ({ parent, value }: TextBlockDocument) =>
+        !value || !parent.isBigText,
       validation: (Rule: Rule) =>
         Rule.custom((value: PortableTextBlock[], ctx: ValidationContext) =>
           value && (ctx.parent as TextBlock)?.isBigText
@@ -197,15 +170,7 @@ export default {
       type: 'backgroundOptions',
       readOnly: ({ parent }: { parent: TextBlock }) => parent?.useBrandTheme,
     },
-    {
-      title: 'Background (Deprecated)',
-      description: 'This field will be phased out over time. Please use Design options above. Default is white',
-      name: 'background',
-      readOnly: true,
-      type: 'colorlist',
-      hidden: ({ value }: { value?: string }) => !value,
-    },
-  ].filter((e) => e),
+  ].filter(e => e),
   preview: {
     select: {
       title: 'title',
@@ -227,11 +192,15 @@ export default {
       bigTitle: PortableTextBlock[]
       text: PortableTextBlock[]
     }) {
-      const plainTitle = isBigText ? blocksToText(bigTitle) : blocksToText(title || ingress || text)
+      const plainTitle = isBigText
+        ? blocksToText(bigTitle)
+        : blocksToText(title || ingress || text)
 
       return {
         title: plainTitle || 'Missing title/content',
-        subtitle: isBigText ? 'Text block component (BIG TEXT)' : 'Text block component',
+        subtitle: isBigText
+          ? 'Text block component (BIG TEXT)'
+          : 'Text block component',
         media: EdsIcon(text_field),
       }
     },

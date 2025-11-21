@@ -1,13 +1,18 @@
+import { paste } from '@equinor/eds-icons'
 import blocksToText from '../../helpers/blocksToText'
+import { EdsIcon } from '../../icons'
+import { Flags } from '../../src/lib/datasetHelpers'
+import { RolesBasedArrayInput } from '../components/RolesBasedArrayInput'
+import { defaultColors } from '../defaultColors'
 import { HeroTypes } from '../HeroTypes'
 import sharedHeroFields from './header/sharedHeaderFields'
-import { EdsIcon } from '../../icons'
-import { paste } from '@equinor/eds-icons'
 import { lang } from './langField'
-import { isCampaign, openGraphImage, seo, stickyMenu, content } from './topic/sharedTopicPageFields'
-import { Flags } from '../../src/lib/datasetHelpers'
-import { defaultColors } from '../defaultColors'
-import { RolesBasedArrayInput } from '../components/RolesBasedArrayInput'
+import {
+  isCampaign,
+  openGraphImage,
+  seo,
+  stickyMenu,
+} from './topic/sharedTopicPageFields'
 
 export default {
   type: 'document',
@@ -22,7 +27,8 @@ export default {
     {
       title: 'SEO & metadata',
       name: 'metadata',
-      description: 'This part is used for meta information when this content is used on the web',
+      description:
+        'This part is used for meta information when this content is used on the web',
       options: {
         collapsible: true,
         collapsed: true,
@@ -81,11 +87,16 @@ export default {
         { type: 'tabs' },
         { type: 'homepageBanner' },
         Flags.HAS_EVENT && { type: 'promoteEvents', title: 'Event promotion' },
-        Flags.HAS_MAGAZINE && { type: 'promoteMagazine', title: 'Magazine promotion' },
+        Flags.HAS_MAGAZINE && {
+          type: 'promoteMagazine',
+          title: 'Magazine promotion',
+        },
         { type: 'promotePeople', title: 'People promotion' },
         { type: 'promoteTopics', title: 'Topic page promotion' },
         Flags.HAS_NEWS && { type: 'promoteNews', title: 'News promotions' },
-      ].filter((e) => e),
+        { type: 'promoteExternalLinkV2' },
+        { type: 'promoteTopicsV2' },
+      ].filter(e => e),
       components: {
         input: RolesBasedArrayInput,
       },
@@ -96,7 +107,19 @@ export default {
             {
               name: 'promotions',
               title: 'Promotions',
-              of: ['promotion', 'promoteMagazine', 'promoteTopics', 'promotePeople', 'promoteEvents', 'promoteNews'],
+              of: [
+                'promotion',
+                'promoteMagazine',
+                'promoteTopics',
+                'promotePeople',
+                'promoteEvents',
+                'promoteNews',
+              ],
+            },
+            {
+              name: 'promotionsV2',
+              title: 'Promotions(v2)',
+              of: ['promoteExternalLinkV2', 'promoteTopicsV2'],
             },
             {
               name: 'carousels',
@@ -107,7 +130,7 @@ export default {
         },
       },
     },
-  ].filter((e) => e),
+  ].filter(e => e),
   orderings: [
     {
       title: 'Title ',

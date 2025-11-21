@@ -1,8 +1,11 @@
-import background from '../background'
 import markDefs from '../blockEditorMarks'
 import { sameLang } from '../langAndDrafts'
 import { lastUpdatedTimeQuery, publishDateTimeQuery } from '../publishDateTime'
-import { eventPromotionFields, futureEventsQuery, pastEventsQuery } from './eventPromotion'
+import {
+  eventPromotionFields,
+  futureEventsQuery,
+  pastEventsQuery,
+} from './eventPromotion'
 import promoteMagazine from './promoteMagazine'
 
 const commonPromotionFields = /* groq */ `
@@ -21,7 +24,13 @@ const commonPromotionFields = /* groq */ `
     ...links::getLinkFields(viewAllLink),
     },
     "designOptions": {
-      ${background},
+        "background": {
+            "backgroundUtility": 
+            coalesce(designOptions.theme.theme.background.key, designOptions.background[0].key, background.key, ""),    
+            "type": coalesce(designOptions.background[0]._type, "backgroundColor"),
+            "backgroundColor": coalesce(designOptions.background[0].title, background.title, 'White'),
+        },
+        "foreground": designOptions.theme.theme.foreground.key,
     }
 `
 export const eventPromotion = /* groq */ `

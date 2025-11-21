@@ -6,17 +6,13 @@ import { videoPlayerFields } from '../videoPlayerFields'
 import downloadableFileFields from './actions/downloadableFileFields'
 import downloadableImageFields from './actions/downloadableImageFields'
 import linkSelectorFields from './actions/linkSelectorFields'
+import { anchorLinkReferenceFields } from './anchorLinkReferenceFields'
 import background from './background'
 import markDefs from './blockEditorMarks'
-import { eventPromotionFields, futureEventsQuery, pastEventsQuery } from './promotions/eventPromotion'
+import homepageContentFields from './homepageContentFields'
 import { imageCarouselFields } from './imageCarouselFields'
 import { keyNumbersFields } from './keyNumbersFields'
 import { sameLang } from './langAndDrafts'
-import promoteMagazine from './promotions/promoteMagazine'
-import { lastUpdatedTimeQuery, publishDateTimeQuery } from './publishDateTime'
-import { anchorLinkReferenceFields } from './anchorLinkReferenceFields'
-import { tabsComponentFields } from './tabsComponentFields'
-import homepageContentFields from './homepageContentFields'
 import {
   eventPromotion,
   magazinePromotion,
@@ -24,6 +20,18 @@ import {
   peoplePromotion,
   topicsPromotion,
 } from './promotions/allPromotions'
+import {
+  eventPromotionFields,
+  futureEventsQuery,
+  pastEventsQuery,
+} from './promotions/eventPromotion'
+import promoteMagazine from './promotions/promoteMagazine'
+import {
+  externalLinksPromotionV2,
+  topicsPromotionV2,
+} from './promotions/v2/promotionsV2'
+import { lastUpdatedTimeQuery, publishDateTimeQuery } from './publishDateTime'
+import { tabsComponentFields } from './tabsComponentFields'
 
 const pageContentFields = /* groq */ `
 _type == "keyNumbers" =>{
@@ -481,6 +489,12 @@ _type == "keyNumbers" =>{
         ${markDefs},
       },
     },
+    "designOptions": {
+        "background": {
+            "backgroundUtility": selectedTags.theme.theme.background.key,
+        },
+        "foreground": selectedTags.theme.theme.foreground.key,
+    }
   },
 
   _type == "stockValuesApi"=>{
@@ -648,6 +662,12 @@ _type == "keyNumbers" =>{
       "id": _key,
       ...,
     }
+  },
+     _type == "promoteTopicsV2" => {
+    ${topicsPromotionV2}
+  },
+  _type == "promoteExternalLinkV2" => {
+    ${externalLinksPromotionV2}
   },
 
 `

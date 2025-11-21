@@ -1,12 +1,17 @@
-import blocksToText from '../../../helpers/blocksToText'
-import { configureBlockContent } from '../../editors/blockContentType'
-import { validateCharCounterEditor } from '../../validations/validateCharCounterEditor'
-
 import type { Image, PortableTextBlock, Reference, Rule } from 'sanity'
+import blocksToText from '../../../helpers/blocksToText'
 import { topicPromotionFilter } from '../../../helpers/referenceFilters'
 import { Flags } from '../../../src/lib/datasetHelpers'
+import { configureBlockContent } from '../../editors/blockContentType'
 import routes from '../../routes'
-import { background, ingress, title, viewAllLink, viewAllLinkLabel } from '../commonFields/commonFields'
+import { validateCharCounterEditor } from '../../validations/validateCharCounterEditor'
+import {
+  ingress,
+  theme,
+  title,
+  viewAllLink,
+  viewAllLinkLabel,
+} from '../commonFields/commonFields'
 
 type PromotedTopicPage = {
   _key: string
@@ -47,7 +52,10 @@ export default {
               name: 'reference',
               description: 'Select the page you want to promote',
               type: 'reference',
-              to: [...routes, Flags.HAS_MAGAZINE && { type: 'magazine' }].filter((e) => e),
+              to: [
+                ...routes,
+                Flags.HAS_MAGAZINE && { type: 'magazine' },
+              ].filter(e => e),
               options: {
                 filter: topicPromotionFilter,
                 disableNew: true,
@@ -56,10 +64,14 @@ export default {
             {
               name: 'ingress',
               title: 'Ingress',
-              description: 'A short and catchy introduction text for this topic content card (max. 215 chars)',
+              description:
+                'A short and catchy introduction text for this topic content card (max. 215 chars)',
               type: 'array',
               of: [configureBlockContent({ variant: 'ingress' })],
-              validation: (Rule: Rule) => Rule.custom((value: any) => validateCharCounterEditor(value, 215, true)),
+              validation: (Rule: Rule) =>
+                Rule.custom((value: any) =>
+                  validateCharCounterEditor(value, 215, true),
+                ),
             },
           ],
           preview: {
@@ -95,7 +107,18 @@ export default {
     },
     viewAllLink,
     viewAllLinkLabel,
-    background,
+    theme,
+    {
+      title: 'Background (Deprecated)',
+      description: 'Please select a theme instead',
+      name: 'background',
+      type: 'colorlist',
+      fieldset: 'design',
+      readonly: true,
+      hidden: ({ value }: any) => {
+        return !value || value.title === 'White'
+      },
+    },
   ],
   preview: {
     select: {
@@ -110,7 +133,7 @@ export default {
     },
     prepare({ references }: { references: any[] }) {
       const titles = Object.entries(references)
-        .map((reference) => {
+        .map(reference => {
           if (reference[1]?.reference) {
             const ref = reference[1].reference
             if (ref?.title) {
@@ -121,6 +144,7 @@ export default {
               return blocksToText(ref.content.title)
             }
           }
+          return ''
         })
         .filter(Boolean)
       return {

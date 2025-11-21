@@ -28,10 +28,13 @@
   --color-slate-blue-90: hsl(207, 14%, 37%);
   --color-slate-80: rgba(61, 61, 61, 1);
   --color-mist-blue-100: hsl(199, 58%, 90%);
-  --color-spruce-wood-100: hsl(25, 100%, 92%);
+  --color-spruce-wood-20: #fef8f4;
   --color-spruce-wood-90: hsl(25, 100%, 94%);
+  --color-spruce-wood-100: hsl(25, 100%, 92%);
   --color-green-50: #c3e4ce;
+  --color-yellow-20: #fefbdf;
   --color-yellow-50: #fff5b8;
+  --color-blue-20: #f2f9fc;
   --color-blue-50: #49709c;
   --color-orange-50: #f8d1af;
   --color-north-sea-90: #051b33;
@@ -44,6 +47,7 @@
   --color-sand-and-summer-50: #ffe7d6;
   --color-autumn-storm-60: #86a7ac;
   --color-autumn-storm-40: #c2d4d6;
+  --color-gray-20: #f8f8f8;
   --color-grey-20: hsl(0, 0%, 92%);
   --color-grey-50: hsl(0, 0%, 55%);
   --color-grey-60: hsl(0, 0%, 44%);
@@ -87,6 +91,8 @@
   --leading-planetary: 1.5;
 
   --scale-99: 0.99;
+
+  --radius-card: 13px;
 
   --shadow-card: rgba(0, 0, 0, 0.08) 0px 1px 3px, 1px -1px 2px 0px rgba(0, 0, 0, 0.07), rgba(0, 0, 0, 0.2) 0px 1px 2px;
   --shadow-card-interact: rgba(0, 0, 0, 0.14) 0px 1px 3px, rgba(0, 0, 0, 0.36) 0px 1px 2px;
@@ -146,15 +152,15 @@
 @custom-variant data-checked (&[data-ui~="checked"]);
 data-ui="checked active" class="data-checked:underline">
 */
-@custom-variant data-open (&[data-state~="open"]);
-@custom-variant data-closed (&[data-state~="closed"]);
-@custom-variant data-active (&[data-state~="active"]);
-@custom-variant data-vertical (&[data-orientation~="vertical"]);
-@custom-variant data-horizontal (&[data-orientation~="horizontal"]);
-@custom-variant data-selected (&[data-selected~="true"]);
-@custom-variant data-expanded (&[data-expanded~="true"]);
-@custom-variant data-overflowing (&[data-overflowing~="true"]);
-@custom-variant aria-current (&[aria-current~="page"]);
+@custom-variant data-open (&[data-state~='open']);
+@custom-variant data-closed (&[data-state~='closed']);
+@custom-variant data-active (&[data-state~='active']);
+@custom-variant data-vertical (&[data-orientation~='vertical']);
+@custom-variant data-horizontal (&[data-orientation~='horizontal']);
+@custom-variant data-selected (&[data-selected~='true']);
+@custom-variant data-expanded (&[data-expanded~='true']);
+@custom-variant data-overflowing (&[data-overflowing~='true']);
+@custom-variant aria-current (&[aria-current~='page']);
 
 @custom-variant sticky-menu {
   &:where([data-sticky-menu='true'] *) {

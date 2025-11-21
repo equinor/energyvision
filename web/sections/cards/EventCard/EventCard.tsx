@@ -11,6 +11,10 @@ import FormattedDateTime, {
 } from '@/core/FormattedDateTime/FormattedDateTime'
 import { BaseLink } from '@/core/Link'
 import { getEventDates } from '@/lib/helpers/dateUtilities'
+import {
+  type ColorKeys,
+  colorKeyToUtilityMap,
+} from '@/styles/colorKeyToUtilityMap'
 import AddToCalendar from '../../../core/AddToCalendar/AddToCalendar'
 import Blocks from '../../../portableText/Blocks'
 import type { EventCardData } from '../../../types/index'
@@ -18,6 +22,7 @@ import type { EventCardData } from '../../../types/index'
 type Variants = 'default' | 'single' | 'carousel'
 export type EventCardProps = {
   data: EventCardData
+  background?: ColorKeys
   hasSectionTitle: boolean
   variant?: Variants
 } & HTMLAttributes<HTMLDivElement>
@@ -29,6 +34,7 @@ export type EventCardProps = {
 const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
   {
     data,
+    background,
     className = '',
     variant = 'default',
     hasSectionTitle = true,
@@ -52,7 +58,7 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
     <div
       ref={ref}
       className={twMerge(
-        `focus-visible:envis-outline dark:focus-visible:envis-outline-invert active:box-shadow-crisp-interact grid h-full w-full grid-rows-[1fr_max-content_max-content] gap-4 rounded-xs bg-white-100 px-6 py-8 text-slate-80 shadow-card focus:outline-hidden active:shadow-white-100-interact dark:text-white-100 ${variantClassName[variant]} `,
+        `focus-visible:envis-outline dark:focus-visible:envis-outline-invert grid h-full w-full grid-rows-[1fr_max-content_max-content] gap-4 rounded-card px-6 py-8 text-slate-80 focus:outline-hidden dark:text-white-100 ${colorKeyToUtilityMap[background ?? 'gray-20'].background} ${variantClassName[variant]} `,
         className,
       )}
       {...rest}

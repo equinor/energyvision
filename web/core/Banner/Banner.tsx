@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { forwardRef, HTMLAttributes } from 'react'
-import Blocks from '../../portableText/Blocks'
-import { PortableTextBlock } from '@portabletext/types'
-import { ImageWithAlt } from '../../types'
-import { ColorKeyTokens } from '../../styles/colorKeyToUtilityMap'
-import { BaseLink, ResourceLink } from '@/core/Link'
-import { Image } from '../Image/Image'
-import { Typography } from '@/core/Typography'
+
+import type { PortableTextBlock } from '@portabletext/types'
+import { forwardRef, type HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { BaseLink, ResourceLink } from '@/core/Link'
+import { Typography } from '@/core/Typography'
+import Blocks from '../../portableText/Blocks'
+import type { ColorKeyTokens } from '../../styles/colorKeyToUtilityMap'
+import type { ImageWithAlt } from '../../types'
+import { Image } from '../Image/Image'
 
 export type Variants = 'primary' | 'secondary'
 
@@ -27,7 +28,17 @@ export type BannerProps = {
 
 /** Generic Banner component */
 export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
-  { title, ingress, content, image, ctaLabel, ctaLink, className = '', variant = 'primary', titleClassName = '' },
+  {
+    title,
+    ingress,
+    content,
+    image,
+    ctaLabel,
+    ctaLink,
+    className = '',
+    variant = 'primary',
+    titleClassName = '',
+  },
   ref,
 ) {
   const contentVariantClassName: Partial<Record<Variants, string>> = {
@@ -47,20 +58,34 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
   const getTitleElement = () => {
     if (title && (title === 'string' || typeof title === 'string')) {
       return (
-        <Typography as="h2" variant="h4" className={titleClassNames}>
+        <Typography as='h2' variant='h4' className={titleClassNames}>
           {title}
         </Typography>
       )
     }
     if (title && Array.isArray(title)) {
-      return <Blocks as="h2" variant="h4" className={titleClassNames} value={title} />
+      return (
+        <Blocks
+          as='h2'
+          variant='h4'
+          className={titleClassNames}
+          value={title}
+        />
+      )
     }
     return null
   }
 
   const contentElements = (
     <>
-      {ingress && <Blocks variant="ingress" value={ingress} clampLines={3} className={`py-2 text-sm`} />}
+      {ingress && (
+        <Blocks
+          variant='ingress'
+          value={ingress}
+          clampLines={3}
+          className={`py-2 text-sm`}
+        />
+      )}
       {content && variant !== 'secondary' && <Blocks value={content} />}
     </>
   )
@@ -72,8 +97,16 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
         className,
       )}
     >
-      <div className="relative aspect-video h-full w-full max-w-[420px] xl:min-w-[320px]">
-        {image && <Image aria-hidden grid="xs" image={image} fill className="rounded-md" />}
+      <div className='relative aspect-video h-full w-full max-w-[420px] xl:min-w-[320px]'>
+        {image && (
+          <Image
+            aria-hidden
+            grid='xs'
+            image={image}
+            fill
+            className='rounded-md'
+          />
+        )}
       </div>
       {ctaLink && (
         <div className={`${contentVariantClassName[variant]}`}>
@@ -81,13 +114,13 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
             <>
               {title && getTitleElement()}
               {contentElements}
-              <ResourceLink href={ctaLink} type="internalUrl" className="w-fit">
+              <ResourceLink href={ctaLink} type='internalUrl' className='w-fit'>
                 {ctaLabel}
               </ResourceLink>
             </>
           ) : (
             <>
-              <BaseLink href={ctaLink} type="internalUrl">
+              <BaseLink href={ctaLink} type='internalUrl'>
                 {getTitleElement() ?? 'Missing title'}
               </BaseLink>
               {contentElements}

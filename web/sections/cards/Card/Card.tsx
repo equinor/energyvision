@@ -1,8 +1,12 @@
 import { forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { Image, ImageRatioKeys } from '../../../core/Image/Image'
-import { ImageWithAlt } from '../../../types/index'
-import { BaseLink, BaseLinkProps } from '@/core/Link'
+import { BaseLink, type BaseLinkProps } from '@/core/Link'
+import {
+  type ColorKeys,
+  colorKeyToUtilityMap,
+} from '@/styles/colorKeyToUtilityMap'
+import { Image, type ImageRatioKeys } from '../../../core/Image/Image'
+import type { ImageWithAlt } from '../../../types/index'
 
 export type Variants = 'primary' | 'secondary' | 'compact' | 'single'
 export type CardProps = {
@@ -14,6 +18,7 @@ export type CardProps = {
   image?: ImageWithAlt
   /** Override background image styling */
   imageClassName?: string
+  background?: ColorKeys
 } & BaseLinkProps
 
 /**
@@ -28,16 +33,22 @@ export type CardProps = {
  * @example
  * */
 export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
-  { variant = 'primary', href, className = '', imageClassName = '', children, image, ...rest },
+  {
+    variant = 'primary',
+    href,
+    className = '',
+    imageClassName = '',
+    children,
+    image,
+    background,
+  },
   ref,
 ) {
   const commonStyling = `
   flex 
   flex-col
   gap-0
-  shadow-card 
-  rounded-xs 
-  active:shadow-card-interact
+  rounded-card 
   w-full
   h-full
   `
@@ -45,8 +56,8 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
   const variantClassNames: Record<Variants, string> = {
     primary: `${commonStyling}`,
     secondary: `${commonStyling}`,
-    compact: `w-full h-full rounded-xs flex gap-4`,
-    single: `grid grid-cols-[40%_1fr] min-h-[450px] shadow-card rounded-xs active:shadow-card-interact`,
+    compact: `w-full h-full rounded-card flex gap-4`,
+    single: `grid grid-cols-[40%_1fr] min-h-[450px] rounded-card`,
   }
   const variantAspectRatio: Record<Variants, ImageRatioKeys> = {
     primary: '16:9',
@@ -61,10 +72,10 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
     single: '',
   }
   const imageVariantClassNames: Record<Variants, string> = {
-    primary: `rounded-t-sm *:rounded-t-sm`,
-    secondary: `rounded-t-sm *:rounded-t-sm`,
-    compact: 'rounded-xs w-[25vw] h-auto *:rounded-xs',
-    single: 'w-auto h-full',
+    primary: `h-[35%] rounded-t-card *:rounded-t-card`,
+    secondary: `h-[35%] rounded-t-card *:rounded-t-card`,
+    compact: 'rounded-card w-[25vw] h-auto *:rounded-card',
+    single: 'h-[35%] w-auto h-full',
   }
 
   return (
@@ -73,18 +84,21 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
       href={href}
       prefetch={false}
       className={twMerge(
-        `group/card focus-visible:envis-outline dark:focus-visible:envis-outline-invert bg-white-100 text-slate-80 focus:outline-hidden dark:text-white-100 ${variantClassNames[variant]} `,
+        `group/card focus-visible:envis-outline dark:focus-visible:envis-outline-invert text-slate-80 focus:outline-hidden dark:text-white-100 ${colorKeyToUtilityMap[background ?? 'gray-20'].background} ${variantClassNames[variant]} `,
         className,
       )}
-      {...rest}
     >
-      {image && image.asset && (
+      {image?.asset && (
         <Image
           image={image}
           fill
-          grid="xs"
+          grid='xs'
           aspectRatio={variantAspectRatio[variant]}
-          className={twMerge(`w-full ${imageVariantClassNames[variant]} ${imageRatio[variant]} `, imageClassName)}
+          className={`${imageVariantClassNames[variant]} ${imageRatio[variant]}`}
+          imageClassName={twMerge(
+            `w-full ${imageVariantClassNames[variant]} ${imageRatio[variant]} `,
+            imageClassName,
+          )}
         />
       )}
       {children}

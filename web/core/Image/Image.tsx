@@ -90,10 +90,34 @@ const getSizes = (paddingGrid?: GridType, isLargerDisplays = false) => {
       return isLargerDisplays ? getSmallerThanPxLgSizes() : getPxLgSizes()
     case 'full':
       return isLargerDisplays ? getFullScreenSizes() : getPxLgSizes()
-    case 'lg':
     default:
       return isLargerDisplays ? getPxLgSizes() : getPxLgSizes()
   }
+}
+
+export type ObjectPositions =
+  | 'center_left'
+  | 'center_center'
+  | 'center_right'
+  | 'top_left'
+  | 'top_center'
+  | 'top_right'
+  | 'bottom_left'
+  | 'bottom_center'
+  | 'bottom_right'
+
+export const getObjectPositionForImage = (position: ObjectPositions) => {
+  return {
+    center_center: 'object-center',
+    center_left: 'object-left',
+    center_right: 'object-right',
+    top_left: 'object-top-left',
+    top_center: 'object-top',
+    top_right: 'object-top-right',
+    bottom_left: 'object-bottom-left',
+    bottom_center: 'object-bottom',
+    bottom_right: 'object-bottom-right',
+  }[position]
 }
 
 type ImageProps = Omit<NextImageProps, 'src' | 'alt' | 'sizes'> & {
@@ -129,10 +153,11 @@ export const Image = ({
   className = '',
   imageClassName = '',
   useFitMin = false,
+  loading,
 }: ImageProps) => {
   const isLargerDisplays = useMediaQuery(`(min-width: 800px)`)
 
-  if (!image?.asset) return <></>
+  if (!image?.asset) return null
 
   const { url, width, height } = resolveImage({
     image,
@@ -159,6 +184,7 @@ export const Image = ({
           }
         : { width, height })}
       src={url}
+      loading={loading}
       sizes={getSizes(grid, isLargerDisplays)}
       alt={getAltText()}
       className={twMerge(
@@ -168,5 +194,9 @@ export const Image = ({
     />
   ) : null
 
-  return <div className={twMerge(`relative`, className)}>{nextImage}</div>
+  return (
+    <div className={twMerge(`relative h-full w-full`, className)}>
+      {nextImage}
+    </div>
+  )
 }

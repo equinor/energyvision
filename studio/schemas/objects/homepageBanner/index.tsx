@@ -1,19 +1,25 @@
 /* eslint-disable react/display-name */
 import { Flex, Stack, Text } from '@sanity/ui'
+import {
+  defineField,
+  type PortableTextBlock,
+  type PreviewProps,
+  type Rule,
+} from 'sanity'
+import styled from 'styled-components'
 import blocksToText from '../../../helpers/blocksToText'
 import CompactBlockEditor from '../../components/CompactBlockEditor'
 import {
   CardTheme,
   ThemePreview,
   ThemeSelector,
-  ThemeSelectorColor,
-  ThemeSelectorValue,
+  type ThemeSelectorColor,
+  type ThemeSelectorValue,
 } from '../../components/ThemeSelector'
 import { defaultColors } from '../../defaultColors'
-import { defineField, PreviewProps, type PortableTextBlock, type Rule } from 'sanity'
-import styled from 'styled-components'
-import { ImageWithAlt } from '../imageWithAlt'
 import { configureBlockContent } from '../../editors'
+import { backgroundPosition } from '../commonFields/commonFields'
+import type { ImageWithAlt } from '../imageWithAlt'
 
 const MediaContainer = styled.div`
   position: relative;
@@ -44,7 +50,9 @@ export const homepageBannerThemeColors = [
 ]
 
 //Keep in sync with web/sections/HomePageBanner/homepageBannerthemes
-export const getColorForHomePageBannerTheme = (color: ThemeSelectorValue): ThemeSelectorColor => {
+export const getColorForHomePageBannerTheme = (
+  color: ThemeSelectorValue,
+): ThemeSelectorColor => {
   switch (color.value) {
     //White
     case 1:
@@ -71,7 +79,6 @@ export const getColorForHomePageBannerTheme = (color: ThemeSelectorValue): Theme
         },
       }
     //Green
-    case 0:
     default:
       return {
         background: {
@@ -105,10 +112,15 @@ export function HomepageBannerPreview(props: HomepageBannerPreviewProps) {
   return (
     <Flex gap={2} padding={2} align={'center'}>
       {backgroundType !== '0' ? (
-        <CardTheme getColorForThemeHandler={getColorForHomePageBannerTheme} color={color} preview thumbnail />
+        <CardTheme
+          getColorForThemeHandler={getColorForHomePageBannerTheme}
+          color={color}
+          preview
+          thumbnail
+        />
       ) : (
         <MediaContainer>
-          <StyledImage src={imageUrl} alt="" />
+          <StyledImage src={imageUrl} alt='' />
         </MediaContainer>
       )}
       <Stack space={2}>
@@ -153,7 +165,8 @@ export default {
     {
       name: 'rightAlignTitle',
       title: 'Align title to the right',
-      description: 'Use this when image has left hotspot, to align the tagline to the right',
+      description:
+        'Use this when image has left hotspot, to align the tagline to the right',
       type: 'boolean',
     },
     {
@@ -183,6 +196,7 @@ export default {
       fieldset: 'design',
       hidden: ({ parent }: any) => parent?.backgroundType !== '0',
     },
+    backgroundPosition(undefined, 'design'),
     {
       name: 'useGradient',
       title: 'Apply gradient',
@@ -206,16 +220,17 @@ export default {
         }),
       ],
       components: {
-        input: (props) => {
+        input: props => {
           return (
             <ThemeSelector
-              variant="cards"
+              variant='cards'
               themeColors={homepageBannerThemeColors}
               getColorForThemeHandler={getColorForHomePageBannerTheme}
               {...props}
             />
           )
         },
+        //@ts-ignore
         preview: ThemePreview,
       },
       preview: {
@@ -246,10 +261,17 @@ export default {
               title: 'Link or download',
               of: [
                 { type: 'linkSelector', title: 'Link' },
-                { type: 'downloadableImage', title: 'Call to action: Download image' },
-                { type: 'downloadableFile', title: 'Call to action: Download file' },
+                {
+                  type: 'downloadableImage',
+                  title: 'Call to action: Download image',
+                },
+                {
+                  type: 'downloadableFile',
+                  title: 'Call to action: Download file',
+                },
               ],
-              validation: (Rule: Rule) => Rule.max(1).error('Only one is permitted'),
+              validation: (Rule: Rule) =>
+                Rule.max(1).error('Only one is permitted'),
             },
           ],
         },

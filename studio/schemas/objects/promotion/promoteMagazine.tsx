@@ -1,9 +1,14 @@
-import type { Rule, Reference } from 'sanity'
-import { filterMagazineByLang } from '../../../helpers/referenceFilters'
 import { IoNewspaperOutline } from 'react-icons/io5'
-import { background, ingress, title, viewAllLink, viewAllLinkLabel } from '../commonFields/commonFields'
-import { PortableTextBlock } from '@portabletext/react'
+import type { Reference, Rule } from 'sanity'
 import blocksToText from '../../../helpers/blocksToText'
+import { filterMagazineByLang } from '../../../helpers/referenceFilters'
+import {
+  ingress,
+  theme,
+  title,
+  viewAllLink,
+  viewAllLinkLabel,
+} from '../commonFields/commonFields'
 
 export type MagazinePromotion = {
   manuallySelectArticles: boolean
@@ -52,7 +57,8 @@ export default {
         },
       ],
       validation: (Rule: Rule) => Rule.unique(),
-      hidden: ({ parent }: { parent: MagazinePromotion }) => parent?.manuallySelectArticles === false,
+      hidden: ({ parent }: { parent: MagazinePromotion }) =>
+        parent?.manuallySelectArticles === false,
     },
     {
       title: 'Magazine tag(s)',
@@ -69,11 +75,23 @@ export default {
       ],
       validation: (Rule: Rule) => Rule.unique(),
       options: { sortable: false },
-      hidden: ({ parent }: { parent: MagazinePromotion }) => parent?.manuallySelectArticles === true,
+      hidden: ({ parent }: { parent: MagazinePromotion }) =>
+        parent?.manuallySelectArticles === true,
     },
     viewAllLink,
     viewAllLinkLabel,
-    background,
+    theme,
+    {
+      title: 'Background (Deprecated)',
+      description: 'Please select a theme instead',
+      name: 'background',
+      type: 'colorlist',
+      fieldset: 'design',
+      readonly: true,
+      hidden: ({ value }: any) => {
+        return !value || value.title === 'White'
+      },
+    },
   ],
   preview: {
     select: {

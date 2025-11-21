@@ -1,8 +1,8 @@
-import { ElementType, forwardRef, HTMLAttributes } from 'react'
-import type { Background } from '../../types/index'
-import { getBgAndDarkFromBackground } from '../../styles/colorKeyToUtilityMap'
-import { ImageBackgroundContainer } from './ImageBackgroundContainer'
+import type { ElementType, HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { getBgAndDarkFromBackground } from '../../styles/colorKeyToUtilityMap'
+import type { Background } from '../../types/index'
+import { ImageBackgroundContainer } from './ImageBackgroundContainer'
 
 export type BackgroundContainerProps = {
   background?: Background
@@ -27,7 +27,8 @@ export const BackgroundContainer = ({
   const isColor =
     !background ||
     background?.type !== 'backgroundImage' ||
-    (background?.type === 'backgroundImage' && !background?.backgroundImage?.image?.asset)
+    (background?.type === 'backgroundImage' &&
+      !background?.backgroundImage?.image?.asset)
 
   const { backgroundImage } = background ?? {}
   //If no background, falls back to empty bg.
@@ -49,7 +50,14 @@ export const BackgroundContainer = ({
           {children}
         </ImageBackgroundContainer>
       ) : (
-        <ContainerElement id={id} className={twMerge(commonClassNames, `${bg} ${dark ? 'dark' : ''}`, className)}>
+        <ContainerElement
+          id={id}
+          className={twMerge(
+            commonClassNames,
+            `${bg} ${dark ? 'dark' : ''}`,
+            className,
+          )}
+        >
           {children}
         </ContainerElement>
       )}

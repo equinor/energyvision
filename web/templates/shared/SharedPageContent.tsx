@@ -1,71 +1,94 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-nocheck
 'use client'
-import IframeCarousel from '@/sections/IframeCarousel/IframeCarousel'
-import TextTeaser from '@/sections/teasers/TextTeaser/TextTeaser'
-import KeyNumbers from '@/sections/KeyNumber/KeyNumber'
+import type { BackgroundContainerProps } from '@/core/Backgrounds'
+import NewsList from '@/pageComponents/topicPages/NewsList'
+import PageQuote from '@/pageComponents/topicPages/PageQuote'
+import AccordionBlock from '@/sections/AccordionBlock/AccordionBlock'
+import { AnchorLinkList } from '@/sections/AnchorLinkList'
+import BarChartBlock, {
+  type BarChartBlockProps,
+} from '@/sections/BarChartBlock/BarChartBlock'
+import { CampaignBanner } from '@/sections/CampaignBanner'
+import CookieDeclaration from '@/sections/CookieDeclaration/CookieDeclaration'
 import CardsList from '@/sections/cards/CardsList/CardsList'
+import Figure, { type FigureData } from '@/sections/Figure/Figure'
+import FullWidthVideo, {
+  type FullWidthVideoProps,
+} from '@/sections/FullWidthVideo/FullWidthVideo'
+import FullWidthImage, {
+  type FullWidthImageData,
+} from '@/sections/FullwidthImage/FullWidthImage'
+import Grid from '@/sections/Grid/Grid'
+import { HomePageBanner } from '@/sections/HomePageBanner/HomePageBanner'
+import IFrameBlock from '@/sections/IFrameBlock/IFrameBlock'
+import IframeCarousel from '@/sections/IframeCarousel/IframeCarousel'
+import ImageCarousel from '@/sections/ImageCarousel/ImageCarousel'
+import ImageForText from '@/sections/ImageForText/ImageForText'
+import KeyNumbers from '@/sections/KeyNumber/KeyNumber'
+import LineChartBlock, {
+  type LineChartBlockProps,
+} from '@/sections/LineChartBlock/LineChartBlock'
+import PieChartBlock, {
+  type PieChartBlockProps,
+} from '@/sections/PieChartBlock/PieChartBlock'
+import PromoTileArray from '@/sections/PromoTiles/PromoTileArray'
+import PromotionsBlock, {
+  type PromotionsBlockData,
+} from '@/sections/promotions/PromotionsBlock'
+import { PromotionBlockV2 } from '@/sections/promotions/v2/PromotionBlockV2'
+import StockValues, {
+  type StockValuesProps,
+} from '@/sections/StockValues/StockValues'
+import TableBlock, {
+  type TableBlockProps,
+} from '@/sections/TableBlock/TableBlock'
+import TabsBlock, { type TabsBlockProps } from '@/sections/TabsBlock/TabsBlock'
+import { getColorForTabsTheme } from '@/sections/TabsBlock/tabThemes'
+import TextBlock from '@/sections/TextBlock/TextBlock'
+import TextWithIconArray from '@/sections/TextWithIconArray/TextWithIconArray'
+import Teaser from '@/sections/teasers/Teaser/Teaser'
+import TextTeaser from '@/sections/teasers/TextTeaser/TextTeaser'
+import { getColorForTheme } from '@/sections/teasers/TextTeaser/theme'
+/* import TwitterEmbed from '@/pageComponents/topicPages/TwitterEmbed' */
+import VideoPlayer, {
+  type VideoPlayerBlockProps,
+} from '@/sections/VideoPlayerBlock/VideoPlayerBlock'
+import VideoPlayerCarousel, {
+  type VideoPlayerCarouselData,
+} from '@/sections/VideoPlayerCarousel/VideoPlayerCarousel'
 import {
+  type ColorKeyTokens,
+  colorKeyToUtilityMap,
+} from '@/styles/colorKeyToUtilityMap'
+import Form from '@/templates/forms/Form'
+import type {
+  AccordionData,
   AnchorLinkData,
-  TopicPageSchema,
+  AnchorLinkListData,
+  CallToActionData,
+  CampaignBannerData,
+  CardsListData,
+  CookieDeclarationData,
+  DesignOptions,
+  FormData,
+  GridData,
+  IFrameData,
+  IframeCarouselData,
+  ImageCarouselData,
+  ImageForTextData,
+  KeyNumbersData,
   MagazinePageSchema,
+  NewsListData,
+  PromoTileArrayData,
+  QuoteData,
+  TableData,
   TeaserData,
   TextBlockData,
-  TextWithIconArrayData,
-  CallToActionData,
-  QuoteData,
-  AccordionData,
-  PromoTileArrayData,
-  IFrameData,
-  FormData,
-  TableData,
-  NewsListData,
-  TwitterEmbedData,
-  CookieDeclarationData,
-  ImageCarouselData,
-  IframeCarouselData,
   TextTeaserData,
-  KeyNumbersData,
-  CardsListData,
-  GridData,
-  CampaignBannerData,
-  DesignOptions,
-  AnchorLinkListData,
-  ImageForTextData,
+  TextWithIconArrayData,
+  TopicPageSchema,
 } from '@/types'
-import { getColorForTheme } from '@/sections/teasers/TextTeaser/theme'
-import Grid from '@/sections/Grid/Grid'
-import { CampaignBanner } from '@/sections/CampaignBanner'
-import { BackgroundContainerProps } from '@/core/Backgrounds'
-import VideoPlayerCarousel, { VideoPlayerCarouselData } from '@/sections/VideoPlayerCarousel/VideoPlayerCarousel'
-import ImageCarousel from '@/sections/ImageCarousel/ImageCarousel'
-import { AnchorLinkList } from '@/sections/AnchorLinkList'
-import ImageForText from '@/sections/ImageForText/ImageForText'
-import TextWithIconArray from '@/sections/TextWithIconArray/TextWithIconArray'
-import AccordionBlock from '@/sections/AccordionBlock/AccordionBlock'
-import TabsBlock, { TabsBlockProps } from '@/sections/TabsBlock/TabsBlock'
-import { getColorForTabsTheme } from '@/sections/TabsBlock/tabThemes'
-import { ColorKeyTokens, colorKeyToUtilityMap } from '@/styles/colorKeyToUtilityMap'
-import Form from '@/templates/forms/Form'
-import IFrameBlock from '@/sections/IFrameBlock/IFrameBlock'
-import Teaser from '@/sections/teasers/Teaser/Teaser'
-import TextBlock from '@/sections/TextBlock/TextBlock'
-import FullWidthImage, { FullWidthImageData } from '@/sections/FullwidthImage/FullWidthImage'
-import FullWidthVideo, { FullWidthVideoProps } from '@/sections/FullWidthVideo/FullWidthVideo'
-import Figure, { FigureData } from '@/sections/Figure/Figure'
-import PageQuote from '@/pageComponents/topicPages/PageQuote'
-import PromoTileArray from '@/sections/PromoTiles/PromoTileArray'
-import CookieDeclaration from '@/sections/CookieDeclaration/CookieDeclaration'
-import NewsList from '@/pageComponents/topicPages/NewsList'
-import StockValues, { StockValuesProps } from '@/sections/StockValues/StockValues'
-/* import TwitterEmbed from '@/pageComponents/topicPages/TwitterEmbed' */
-import VideoPlayer, { VideoPlayerBlockProps } from '@/sections/VideoPlayerBlock/VideoPlayerBlock'
-import { HomePageBanner } from '@/sections/HomePageBanner/HomePageBanner'
-import TableBlock, { TableBlockProps } from '@/sections/TableBlock/TableBlock'
-import PromotionsBlock, { PromotionsBlockData } from '@/sections/promotions/PromotionsBlock'
-import PieChartBlock, { PieChartBlockProps } from '@/sections/PieChartBlock/PieChartBlock'
-import BarChartBlock, { BarChartBlockProps } from '@/sections/BarChartBlock/BarChartBlock'
-import LineChartBlock, { LineChartBlockProps } from '@/sections/LineChartBlock/LineChartBlock'
 
 // How could we do this for several different component types?
 export type ComponentSections =
@@ -123,7 +146,10 @@ const getBackgroundOptions = (component: Component) => {
     return getColorForTabsTheme(component?.designOptions?.theme?.value)
   }
 
-  return component?.designOptions?.background || getColorForTheme(component?.designOptions?.theme)
+  return (
+    component?.designOptions?.background ||
+    getColorForTheme(component?.designOptions?.theme)
+  )
 }
 
 const cleanBgUtility = (value: string) => value?.replace('bg-', '')
@@ -139,7 +165,10 @@ const isWhiteColorBackground = (componentsDO: any, component: Component) => {
   )
 }
 
-const isSameColorBackground = (currentComponentsDO: any, previousComponentsDO: any) => {
+const isSameColorBackground = (
+  currentComponentsDO: any,
+  previousComponentsDO: any,
+) => {
   if (
     currentComponentsDO?.backgroundUtility &&
     currentComponentsDO?.backgroundUtility !== '' &&
@@ -147,7 +176,8 @@ const isSameColorBackground = (currentComponentsDO: any, previousComponentsDO: a
     previousComponentsDO?.backgroundUtility !== ''
   ) {
     return (
-      cleanBgUtility(currentComponentsDO?.backgroundUtility) === cleanBgUtility(previousComponentsDO?.backgroundUtility)
+      cleanBgUtility(currentComponentsDO?.backgroundUtility) ===
+      cleanBgUtility(previousComponentsDO?.backgroundUtility)
     )
   }
   if (
@@ -156,8 +186,9 @@ const isSameColorBackground = (currentComponentsDO: any, previousComponentsDO: a
     previousComponentsDO?.backgroundColor
   ) {
     return (
-      colorKeyToUtilityMap[currentComponentsDO?.backgroundUtility as keyof ColorKeyTokens]?.backgroundName ===
-      previousComponentsDO?.backgroundColor
+      colorKeyToUtilityMap[
+        currentComponentsDO?.backgroundUtility as keyof ColorKeyTokens
+      ]?.backgroundName === previousComponentsDO?.backgroundColor
     )
   }
   if (
@@ -166,13 +197,21 @@ const isSameColorBackground = (currentComponentsDO: any, previousComponentsDO: a
     previousComponentsDO?.backgroundUtility
   ) {
     currentComponentsDO?.backgroundColor ===
-      colorKeyToUtilityMap[previousComponentsDO?.backgroundUtility as keyof ColorKeyTokens]?.backgroundName
+      colorKeyToUtilityMap[
+        previousComponentsDO?.backgroundUtility as keyof ColorKeyTokens
+      ]?.backgroundName
   }
 
-  return currentComponentsDO?.backgroundColor === previousComponentsDO?.backgroundColor
+  return (
+    currentComponentsDO?.backgroundColor ===
+    previousComponentsDO?.backgroundColor
+  )
 }
 
-const applyPaddingTopIfApplicable = (currentComponent: Component, prevComponent: Component): string => {
+const applyPaddingTopIfApplicable = (
+  currentComponent: Component,
+  prevComponent: Component,
+): string => {
   if (currentComponent?.type === 'anchorLink') {
     return
   }
@@ -181,10 +220,22 @@ const applyPaddingTopIfApplicable = (currentComponent: Component, prevComponent:
   const previousComponentsDO = getBackgroundOptions(prevComponent)
   /*   console.log('currentComponentsDO', currentComponentsDO)
   console.log('previousComponentsDO', previousComponentsDO) */
-  const specialCases = ['teaser', 'fullWidthImage', 'fullWidthVideo', 'backgroundImage', 'campaignBanner']
+  const specialCases = [
+    'teaser',
+    'fullWidthImage',
+    'fullWidthVideo',
+    'backgroundImage',
+    'campaignBanner',
+  ]
 
-  const currentIsWhiteColorBackground = isWhiteColorBackground(currentComponentsDO, currentComponent)
-  const previousIsWhiteColorBackground = isWhiteColorBackground(previousComponentsDO, prevComponent)
+  const currentIsWhiteColorBackground = isWhiteColorBackground(
+    currentComponentsDO,
+    currentComponent,
+  )
+  const previousIsWhiteColorBackground = isWhiteColorBackground(
+    previousComponentsDO,
+    prevComponent,
+  )
   /*   console.log('currentComponent', currentComponent)
   console.log(
     `Current component ${currentComponent?.type}: ${Array.isArray(currentComponent?.title) ? toPlainText(currentComponent?.title) : currentComponent?.title}`,
@@ -197,18 +248,31 @@ const applyPaddingTopIfApplicable = (currentComponent: Component, prevComponent:
   console.log('previousIsWhiteColorBackground', previousIsWhiteColorBackground) */
 
   const previousComponentIsASpecialCaseAndNeedPT =
-    specialCases.includes(prevComponent?.type) || specialCases.includes(previousComponentsDO?.type)
+    specialCases.includes(prevComponent?.type) ||
+    specialCases.includes(previousComponentsDO?.type)
 
-  if (currentIsWhiteColorBackground && previousIsWhiteColorBackground && !previousComponentIsASpecialCaseAndNeedPT) {
+  if (
+    currentIsWhiteColorBackground &&
+    previousIsWhiteColorBackground &&
+    !previousComponentIsASpecialCaseAndNeedPT
+  ) {
     return ''
   }
 
   if (prevComponent?.type === 'homepageBanner') {
-    return prevComponent?.designOptions?.backgroundType === '0' ? 'lg:pt-20' : 'pt-20'
+    return prevComponent?.designOptions?.backgroundType === '0'
+      ? 'lg:pt-20'
+      : 'pt-20'
   }
 
-  const previousIsSameColorAsCurrent = isSameColorBackground(currentComponentsDO, previousComponentsDO)
-  if (previousIsSameColorAsCurrent && !previousComponentIsASpecialCaseAndNeedPT) {
+  const previousIsSameColorAsCurrent = isSameColorBackground(
+    currentComponentsDO,
+    previousComponentsDO,
+  )
+  if (
+    previousIsSameColorAsCurrent &&
+    !previousComponentIsASpecialCaseAndNeedPT
+  ) {
     return ''
   }
 
@@ -224,7 +288,8 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
         : undefined
 
     //Returns pt-20 when applicable or empty string
-    const previousComponentIndex = prevComponent?.type === 'anchorLink' ? index - 2 : index - 1
+    const previousComponentIndex =
+      prevComponent?.type === 'anchorLink' ? index - 2 : index - 1
 
     const previousComponentToCompare =
       index === 0
@@ -236,7 +301,10 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
           } as Component)
         : (data?.content?.[previousComponentIndex] as unknown as Component)
 
-    const topSpacingClassName = applyPaddingTopIfApplicable(c, previousComponentToCompare)
+    const topSpacingClassName = applyPaddingTopIfApplicable(
+      c,
+      previousComponentToCompare,
+    )
     /*     console.log(
       `Applying top spacing: ${topSpacingClassName} to ${c?.type} with title ${Array.isArray(c?.title) ? toPlainText(c?.title) : c?.title}`,
     ) */
@@ -244,19 +312,52 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
 
     switch (c.type) {
       case 'teaser':
-        return <Teaser key={c.id} data={c as TeaserData} anchor={anchorReference} />
+        return (
+          <Teaser key={c.id} data={c as TeaserData} anchor={anchorReference} />
+        )
       case 'textTeaser':
         return (
-          <TextTeaser key={c.id} data={c as TextTeaserData} anchor={anchorReference} className={spacingClassName} />
+          <TextTeaser
+            key={c.id}
+            data={c as TextTeaserData}
+            anchor={anchorReference}
+            className={spacingClassName}
+          />
         )
       case 'textBlock':
-        return <TextBlock key={c.id} data={c as TextBlockData} anchor={anchorReference} className={spacingClassName} />
+        return (
+          <TextBlock
+            key={c.id}
+            data={c as TextBlockData}
+            anchor={anchorReference}
+            className={spacingClassName}
+          />
+        )
       case 'fullWidthImage':
-        return <FullWidthImage key={c.id} data={c as FullWidthImageData} anchor={anchorReference} />
+        return (
+          <FullWidthImage
+            key={c.id}
+            data={c as FullWidthImageData}
+            anchor={anchorReference}
+          />
+        )
       case 'fullWidthVideo':
-        return <FullWidthVideo key={c.id} {...(c as FullWidthVideoProps)} anchor={anchorReference} />
+        return (
+          <FullWidthVideo
+            key={c.id}
+            {...(c as FullWidthVideoProps)}
+            anchor={anchorReference}
+          />
+        )
       case 'figure':
-        return <Figure key={c.id} data={c as FigureData} anchor={anchorReference} className={spacingClassName} />
+        return (
+          <Figure
+            key={c.id}
+            data={c as FigureData}
+            anchor={anchorReference}
+            className={spacingClassName}
+          />
+        )
       case 'textWithIconArray':
         return (
           <TextWithIconArray
@@ -267,10 +368,22 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
           />
         )
       case 'pullQuote':
-        return <PageQuote key={c.id} data={c as QuoteData} anchor={anchorReference} className={spacingClassName} />
+        return (
+          <PageQuote
+            key={c.id}
+            data={c as QuoteData}
+            anchor={anchorReference}
+            className={spacingClassName}
+          />
+        )
       case 'accordion':
         return (
-          <AccordionBlock key={c.id} data={c as AccordionData} anchor={anchorReference} className={spacingClassName} />
+          <AccordionBlock
+            key={c.id}
+            data={c as AccordionData}
+            anchor={anchorReference}
+            className={spacingClassName}
+          />
         )
       case 'promoTileArray':
         return (
@@ -282,7 +395,14 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
           />
         )
       case 'iframe':
-        return <IFrameBlock key={c.id} data={c as IFrameData} anchor={anchorReference} className={spacingClassName} />
+        return (
+          <IFrameBlock
+            key={c.id}
+            data={c as IFrameData}
+            anchor={anchorReference}
+            className={spacingClassName}
+          />
+        )
       case 'promotion':
         return (
           <PromotionsBlock
@@ -296,7 +416,7 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
         return (
           <PromotionsBlock
             key={c.id}
-            variant="promoteEvents"
+            variant='promoteEvents'
             data={c as PromotionsBlockData}
             anchor={anchorReference}
             className={spacingClassName}
@@ -306,7 +426,7 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
         return (
           <PromotionsBlock
             key={c.id}
-            variant="promoteNews"
+            variant='promoteNews'
             data={c as PromotionsBlockData}
             anchor={anchorReference}
             className={spacingClassName}
@@ -316,7 +436,7 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
         return (
           <PromotionsBlock
             key={c.id}
-            variant="promotePeople"
+            variant='promotePeople'
             data={c as PromotionsBlockData}
             anchor={anchorReference}
             className={spacingClassName}
@@ -326,7 +446,7 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
         return (
           <PromotionsBlock
             key={c.id}
-            variant="promoteMagazine"
+            variant='promoteMagazine'
             data={c as PromotionsBlockData}
             anchor={anchorReference}
             className={spacingClassName}
@@ -336,14 +456,21 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
         return (
           <PromotionsBlock
             key={c.id}
-            variant="promoteTopics"
+            variant='promoteTopics'
             data={c as PromotionsBlockData}
             anchor={anchorReference}
             className={spacingClassName}
           />
         )
       case 'form':
-        return <Form key={c.id} data={c as FormData} anchor={anchorReference} className={spacingClassName} />
+        return (
+          <Form
+            key={c.id}
+            data={c as FormData}
+            anchor={anchorReference}
+            className={spacingClassName}
+          />
+        )
       case 'table':
         return <>To be updated to new table</> //<Table key={c.id} data={c as TableData} anchor={anchorReference} className={spacingClassName} />
       case 'cookieDeclaration':
@@ -366,12 +493,13 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
         )
       case 'stockValuesApi':
         return (
-          <StockValues key={c.id} {...(c as StockValuesProps)} anchor={anchorReference} className={spacingClassName} />
+          <StockValues
+            key={c.id}
+            {...(c as StockValuesProps)}
+            anchor={anchorReference}
+            className={spacingClassName}
+          />
         )
-      /*       case 'twitterEmbed':
-        return (
-          <TwitterEmbed key={c.id} data={c as TwitterEmbedData} anchor={anchorReference} className={spacingClassName} />
-        ) */
       case 'imageCarousel':
         return (
           <ImageCarousel
@@ -410,12 +538,31 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
         )
       case 'keyNumbers':
         return (
-          <KeyNumbers key={c.id} data={c as KeyNumbersData} anchor={anchorReference} className={spacingClassName} />
+          <KeyNumbers
+            key={c.id}
+            data={c as KeyNumbersData}
+            anchor={anchorReference}
+            className={spacingClassName}
+          />
         )
       case 'cardsList':
-        return <CardsList key={c.id} data={c as CardsListData} anchor={anchorReference} className={spacingClassName} />
+        return (
+          <CardsList
+            key={c.id}
+            data={c as CardsListData}
+            anchor={anchorReference}
+            className={spacingClassName}
+          />
+        )
       case 'grid':
-        return <Grid key={c.id} data={c as GridData} anchor={anchorReference} className={spacingClassName} />
+        return (
+          <Grid
+            key={c.id}
+            data={c as GridData}
+            anchor={anchorReference}
+            className={spacingClassName}
+          />
+        )
       case 'campaignBanner':
         return <CampaignBanner key={c.id} data={c as CampaignBannerData} />
       case 'anchorLinkList':
@@ -430,14 +577,16 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
       case 'imageForText':
         return <ImageForText key={c.id} data={c as ImageForTextData} />
       case 'tabs':
-        return <TabsBlock key={c.id} {...(c as any)} className={spacingClassName} />
+        return (
+          <TabsBlock key={c.id} {...(c as any)} className={spacingClassName} />
+        )
       /* Remove from here and move to Homepage Template PageContent */
       case 'homepageBanner':
         return <HomePageBanner key={c.id} {...(c as any)} />
       case 'tableV2':
         return (
           <TableBlock
-            variant="default"
+            variant='default'
             key={c.id}
             {...(c as any)}
             anchor={anchorReference}
@@ -447,7 +596,7 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
       case 'importTable':
         return (
           <TableBlock
-            variant="import"
+            variant='import'
             key={c.id}
             {...(c as any)}
             anchor={anchorReference}
@@ -481,9 +630,19 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
             className={topSpacingClassName}
           />
         )
+      case 'promoteExternalLinkV2':
+      case 'promoteTopicsV2':
+        return (
+          <PromotionBlockV2
+            key={c.id}
+            {...(c as any)}
+            anchor={anchorReference}
+            className={topSpacingClassName}
+          />
+        )
       default:
         return null
     }
   })
-  return <>{content}</>
+  return content
 }

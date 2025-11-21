@@ -1,13 +1,17 @@
-import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
-import { Image } from '../../../core/Image/Image'
-import type { DesignOptions, ImageWithAlt, LinkData } from '../../../types/index'
-import { ResourceLink } from '../../../core/Link'
-import { getLocaleFromName } from '../../../sanity/localization'
+import type { PortableTextBlock } from '@portabletext/types'
 import { Typography } from '@/core/Typography'
+import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
+import { useMediaQuery } from '@/lib/hooks/useMediaQuery'
 import Blocks from '@/portableText/Blocks'
 import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
-import { useMediaQuery } from '@/lib/hooks/useMediaQuery'
-import { PortableTextBlock } from '@portabletext/types'
+import { getObjectPositionForImage, Image } from '../../../core/Image/Image'
+import { ResourceLink } from '../../../core/Link'
+import { getLocaleFromName } from '../../../sanity/localization'
+import type {
+  DesignOptions,
+  ImageWithAlt,
+  LinkData,
+} from '../../../types/index'
 
 export type TeaserData = {
   type: string
@@ -31,12 +35,20 @@ type TeaserProps = {
 }
 
 const Teaser = ({ data, anchor }: TeaserProps) => {
-  const { title, overline, text, image, actions, designOptions, isBigText } = data
-  const { imageSize = 'full', imagePosition, containImage = false } = designOptions
+  const { title, overline, text, image, actions, designOptions, isBigText } =
+    data
+  const {
+    imageSize = 'full',
+    imagePosition,
+    containImage = false,
+    background,
+  } = designOptions
+  console.log('teaser background', background)
+  const { backgroundPosition } = background || {}
   const useFlexCol = useMediaQuery(`(max-width: 1023px)`)
   const { bg, dark } = getBgAndDarkFromBackground(designOptions)
 
-  if ([title, overline, text, image?.asset, actions].every((i) => !i)) {
+  if ([title, overline, text, image?.asset, actions].every(i => !i)) {
     return null
   }
 
@@ -45,42 +57,52 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
     <div
       className={`relative ${imageSize === 'small' ? 'm-18 flex items-center justify-center' : 'h-auto min-h-[25rem] w-full'}`}
     >
-      <Image image={image} fill grid="lg" imageClassName={`${containImage ? 'object-contain' : ''}`} />
+      <Image
+        image={image}
+        fill
+        grid='lg'
+        imageClassName={`${containImage ? 'object-contain' : ''} ${getObjectPositionForImage(backgroundPosition ?? 'center_center')}`}
+      />
     </div>
   )
 
   return (
-    <article id={anchor} className={`${bg} ${dark ? 'dark' : ''} flex flex-col lg:grid lg:grid-cols-2`}>
+    <article
+      id={anchor}
+      className={`${bg} ${dark ? 'dark' : ''} flex flex-col lg:grid lg:grid-cols-2`}
+    >
       {(imagePosition === 'left' || useFlexCol) && imageElement}
       <div
         className={`max-w-text pt-8 pb-10 lg:pt-18 lg:pb-22 ${imagePosition === 'left' ? 'pr-8 pl-8 lg:pr-44' : 'pr-8 pl-8 lg:pl-44'}`}
       >
         {isBigText ? (
-          text && <Blocks value={text} variant="h2" />
+          text && <Blocks value={text} variant='h2' />
         ) : (
           <>
             {overline ? (
-              <hgroup className="mb-1">
-                <Typography variant="overline">{overline}</Typography>
-                {title && <Blocks value={title} as="h2" variant="xl" />}
+              <hgroup className='mb-1'>
+                <Typography variant='overline'>{overline}</Typography>
+                {title && <Blocks value={title} as='h2' variant='xl' />}
               </hgroup>
             ) : (
-              <>{title && <Blocks value={title} as="h2" variant="xl" />}</>
+              title && <Blocks value={title} as='h2' variant='xl' />
             )}
-            {text && <Blocks variant="ingress" value={text} />}
+            {text && <Blocks variant='ingress' value={text} />}
           </>
         )}
         {actions && (
-          <div className="flex flex-col gap-8">
+          <div className='flex flex-col gap-8'>
             {actions?.map((action, idx) => {
               const url = action && getUrlFromAction(action)
               return (
                 <ResourceLink
                   href={url as string}
-                  {...(action.link?.lang && { hrefLang: getLocaleFromName(action.link?.lang) })}
+                  {...(action.link?.lang && {
+                    hrefLang: getLocaleFromName(action.link?.lang),
+                  })}
                   type={action.type}
                   key={action.id || idx}
-                  variant="fit"
+                  variant='fit'
                   extension={action.extension}
                   showExtensionIcon
                 >

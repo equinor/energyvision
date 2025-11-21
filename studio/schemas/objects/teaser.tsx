@@ -1,17 +1,28 @@
 /* eslint-disable react/display-name */
+
+import type {
+  PortableTextBlock,
+  Reference,
+  Rule,
+  ValidationContext,
+} from 'sanity'
 import blocksToText from '../../helpers/blocksToText'
-import { FullSizeImage, LeftAlignedImage, RightAlignedImage, SmallSizeImage } from '../../icons'
+import {
+  FullSizeImage,
+  LeftAlignedImage,
+  RightAlignedImage,
+  SmallSizeImage,
+} from '../../icons'
 import { RadioIconSelector } from '../components'
+import type { ColorSelectorValue } from '../components/ColorSelector'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import { configureBlockContent } from '../editors'
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
-
-import type { PortableTextBlock, Reference, Rule, ValidationContext } from 'sanity'
+import { backgroundPosition } from './commonFields/commonFields'
 import type { DownloadableImage } from './downloadableImage'
 import type { DownloadableFile } from './files'
 import type { ImageWithAlt } from './imageWithAlt'
 import type { LinkSelector } from './linkSelector'
-import type { ColorSelectorValue } from '../components/ColorSelector'
 
 const imageSizeOptions = [
   { value: 'full', icon: FullSizeImage },
@@ -50,7 +61,8 @@ export default {
     {
       title: 'Eyebrow headline',
       name: 'eyebrow',
-      description: 'A descriptive keyword, category or phrase that appears over the main headline.',
+      description:
+        'A descriptive keyword, category or phrase that appears over the main headline.',
       options: {
         collapsible: true,
         collapsed: true,
@@ -127,7 +139,8 @@ export default {
         { type: 'downloadableImage', title: 'Downloadable image' },
         { type: 'downloadableFile', title: 'Downloadable file' },
       ],
-      validation: (Rule: Rule) => Rule.max(2).error('Only two action is permitted'),
+      validation: (Rule: Rule) =>
+        Rule.max(2).error('Only two action is permitted'),
     },
     {
       name: 'image',
@@ -138,16 +151,23 @@ export default {
     {
       name: 'imagePosition',
       title: 'Image position',
-      description: 'Select which side of the teaser the image should be displayed at on larger screens.',
+      description:
+        'Select which side of the teaser the image should be displayed at on larger screens.',
       type: 'string',
       fieldset: 'design',
       components: {
-        input: function ({ onChange, value }: { onChange: any; value: string }) {
+        input: function ({
+          onChange,
+          value,
+        }: {
+          onChange: any
+          value: string
+        }) {
           return (
             <RadioIconSelector
-              name="imageAlignmentSelector"
+              name='imageAlignmentSelector'
               options={imageAlignmentOptions}
-              defaultValue="left"
+              defaultValue='left'
               currentValue={value}
               onChange={onChange}
             />
@@ -158,16 +178,23 @@ export default {
     {
       name: 'imageSize',
       title: 'Image size',
-      description: 'Set if image/svg should be full container width or with padding around it',
+      description:
+        'Set if image/svg should be full container width or with padding around it',
       type: 'string',
       fieldset: 'design',
       components: {
-        input: function ({ onChange, value }: { onChange: any; value: string }) {
+        input: function ({
+          onChange,
+          value,
+        }: {
+          onChange: any
+          value: string
+        }) {
           return (
             <RadioIconSelector
-              name="imageSizeSelector"
+              name='imageSizeSelector'
               options={imageSizeOptions}
-              defaultValue="full"
+              defaultValue='full'
               currentValue={value}
               onChange={onChange}
             />
@@ -175,9 +202,11 @@ export default {
         },
       },
     },
+    backgroundPosition(() => false, 'design'),
     {
       title: 'Contain image/svg',
-      description: 'Maintain aspect ratio and fit within container. Dont clip if bad fit',
+      description:
+        'Maintain aspect ratio and fit within container. Dont clip if bad fit',
       name: 'containImage',
       type: 'boolean',
       fieldset: 'design',
@@ -211,11 +240,15 @@ export default {
       bigText: PortableTextBlock[]
       image: Reference
     }) {
-      const plainTitle = isBigText ? blocksToText(bigText) : blocksToText(title || text)
+      const plainTitle = isBigText
+        ? blocksToText(bigText)
+        : blocksToText(title || text)
 
       return {
         title: plainTitle || 'Missing title/content',
-        subtitle: isBigText ? 'Teaser component (BIG TEXT)' : 'Teaser component',
+        subtitle: isBigText
+          ? 'Teaser component (BIG TEXT)'
+          : 'Teaser component',
         media: image,
       }
     },

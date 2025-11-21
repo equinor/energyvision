@@ -1,9 +1,9 @@
+import { forwardRef, type HTMLAttributes } from 'react'
+import { twMerge } from 'tailwind-merge'
+import Blocks from '@/portableText/Blocks'
+import { colorKeyToUtilityMap } from '../../../styles/colorKeyToUtilityMap'
 import type { CardsListData } from '../../../types/index'
 import CardItem from './CardItem'
-import { colorKeyToUtilityMap } from '../../../styles/colorKeyToUtilityMap'
-import { twMerge } from 'tailwind-merge'
-import { HTMLAttributes, forwardRef } from 'react'
-import Blocks from '@/portableText/Blocks'
 
 export type CardsListProps = {
   data: CardsListData
@@ -17,7 +17,7 @@ const CardsList = forwardRef<HTMLElement, CardsListProps>(function CardsList(
 ) {
   const { title, cards = [], designOptions } = data
   const { background } = designOptions || {}
-  const { backgroundUtility, dark } = background || {}
+  const { backgroundUtility } = background || {}
 
   // For 2 or 4 cards
   let gridColumns = 'grid-cols-1 lg:grid-cols-2'
@@ -31,10 +31,17 @@ const CardsList = forwardRef<HTMLElement, CardsListProps>(function CardsList(
     : { background: 'bg-blue-50', dark: true }
 
   return (
-    <section ref={ref} className={twMerge(`mx-auto px-layout-md pb-page-content`, className)} id={anchor} {...rest}>
-      {title && <Blocks value={title} variant="h3" as="h2" blockClassName="pb-10" />}
+    <section
+      ref={ref}
+      className={twMerge(`px-layout-md pb-page-content`, className)}
+      id={anchor}
+      {...rest}
+    >
+      {title && (
+        <Blocks value={title} variant='h3' as='h2' blockClassName='pb-10' />
+      )}
       <ul className={`grid ${gridColumns} gap-4`}>
-        {cards?.map((card) => {
+        {cards?.map(card => {
           return (
             <CardItem
               key={`card_item_${card?.id}`}

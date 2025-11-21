@@ -5,28 +5,33 @@ import { BaseLink, ResourceLink } from '@/core/Link'
 import { Typography } from '@/core/Typography'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import { urlForImage } from '@/sanity/lib/utils'
+import {
+  type ColorKeys,
+  colorKeyToUtilityMap,
+} from '@/styles/colorKeyToUtilityMap'
 import { Image } from '../../../core/Image/Image'
 import { getLocaleFromName } from '../../../sanity/localization'
 import type { PeopleCardData } from '../../../types/index'
 
 export type PeopleCardProps = {
   data: PeopleCardData
+  background?: ColorKeys
   hasSectionTitle: boolean
   variant?: 'default' | 'single'
 } & HTMLAttributes<HTMLDivElement>
 
 /**
- * Event Card component.
+ * People Card component.
  * Remember to wrap in ul and li if in a list.
  * */
 const PeopleCard = forwardRef<HTMLDivElement, PeopleCardProps>(
   function PeopleCard(
     {
       data,
+      background,
       className = '',
       variant = 'default',
       hasSectionTitle = true,
-      ...rest
     },
     ref,
   ) {
@@ -59,20 +64,18 @@ const PeopleCard = forwardRef<HTMLDivElement, PeopleCardProps>(
         <div
           ref={ref}
           className={twMerge(
-            `grid h-full items-center justify-center ${variantClassNames[variant]} focus-visible:envis-outline dark:focus-visible:envis-outline-invert active:box-shadow-crisp-interact rounded-xs bg-white-100 px-6 py-8 text-slate-80 shadow-card focus:outline-hidden active:shadow-white-100-interact dark:text-white-100`,
+            `grid h-full items-center justify-center ${variantClassNames[variant]} focus-visible:envis-outline dark:focus-visible:envis-outline-invert rounded-card px-6 py-8 text-slate-80 focus:outline-hidden dark:text-white-100 ${colorKeyToUtilityMap[background ?? 'gray-20'].background}`,
             className,
           )}
-          {...rest}
         >
           {image && (
-            <div className={`${variant === 'single' ? 'size-64' : 'size-40'}`}>
-              <Image
-                image={image}
-                grid='xs'
-                aspectRatio='1:1'
-                imageClassName='rounded-full'
-              />
-            </div>
+            <Image
+              image={image}
+              grid='xs'
+              aspectRatio='1:1'
+              className={`${variant === 'single' ? 'size-64' : 'size-40'}`}
+              imageClassName='rounded-full'
+            />
           )}
           <div className={`flex flex-col ${variantContentClassNames[variant]}`}>
             <Typography

@@ -1,14 +1,17 @@
 'use client'
 import type { PortableTextBlock } from '@portabletext/types'
 import { forwardRef } from 'react'
-import { Image } from '@/core/Image/Image'
+import {
+  getObjectPositionForImage,
+  Image,
+  type ObjectPositions,
+} from '@/core/Image/Image'
 import { BaseLink } from '@/core/Link'
 import { getArrowElement } from '@/core/Link/ResourceLink'
 import { Typography } from '@/core/Typography'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import { useMediaQuery } from '@/lib/hooks/useMediaQuery'
 import Blocks from '@/portableText/Blocks'
-import { resolveImage } from '@/sanity/lib/utils'
 import type { ImageWithAlt, LinkData } from '@/types'
 
 export type HomePageBannerThemeColors = {
@@ -54,6 +57,7 @@ type HomePageBannerProps = {
   useWhiteTitle?: boolean
   designOptions: {
     useGradient?: boolean
+    backgroundPosition?: ObjectPositions
     theme?: {
       title: string
       value: number
@@ -76,15 +80,18 @@ export const HomePageBanner = forwardRef<HTMLDivElement, HomePageBannerProps>(
     },
     ref,
   ) {
-    const { url: desktopUrl } = resolveImage({
-      image,
-      grid: 'full',
-    })
-    const { backgroundType, theme, useGradient = false } = designOptions
+    const {
+      backgroundType,
+      theme,
+      useGradient = false,
+      backgroundPosition,
+    } = designOptions
     const { foreground, background } = getColorForHomepageBannerTheme(
       theme?.value ?? 0,
     )
-    const useImage = backgroundType === 0
+    const useImage = String(backgroundType) === String(0)
+    console.log('image', image)
+
     const isMobile = useMediaQuery(`(max-width: 1024px)`)
     let gradient = rightAlignTitle
       ? 'lg:homepage-banner-white-right-gradient'
@@ -112,15 +119,20 @@ export const HomePageBanner = forwardRef<HTMLDivElement, HomePageBannerProps>(
       >
         {useImage && (
           <picture
-            className={`relative inset-0 flex h-auto w-full max-lg:aspect-video lg:absolute`}
+            className={`absolute inset-0 flex h-auto w-full max-lg:aspect-video`}
           >
             {useGradient && (
               <div
                 className={`absolute inset-0 z-1 ${useGradient ? gradient : ''}`}
               />
             )}
-            <source srcSet={desktopUrl} media='(min-width: 1024px)' />
-            <Image grid='xs' image={image} fill />
+            <Image
+              grid='full'
+              loading='eager'
+              image={image}
+              fill
+              imageClassName={`${getObjectPositionForImage(backgroundPosition ?? 'center_center')}`}
+            />
           </picture>
         )}
         <div

@@ -1,9 +1,15 @@
-import type { Rule } from 'sanity'
+import type { PortableTextBlock } from '@portabletext/react'
 import { TiNews } from 'react-icons/ti'
-import { Flags } from '../../../src/lib/datasetHelpers'
-import { background, ingress, title, viewAllLink, viewAllLinkLabel } from '../commonFields/commonFields'
-import { PortableTextBlock } from '@portabletext/react'
+import type { Rule } from 'sanity'
 import blocksToText from '../../../helpers/blocksToText'
+import { Flags } from '../../../src/lib/datasetHelpers'
+import {
+  ingress,
+  theme,
+  title,
+  viewAllLink,
+  viewAllLinkLabel,
+} from '../commonFields/commonFields'
 
 export default {
   title: 'News promotion',
@@ -74,8 +80,19 @@ export default {
     },
     viewAllLink,
     viewAllLinkLabel,
-    background,
-  ].filter((e) => e),
+    theme,
+    {
+      title: 'Background (Deprecated)',
+      description: 'Please select a theme instead',
+      name: 'background',
+      type: 'colorlist',
+      fieldset: 'design',
+      readonly: true,
+      hidden: ({ value }: any) => {
+        return !value || value.title === 'White'
+      },
+    },
+  ].filter(e => e),
   preview: {
     select: {
       title: 'title',

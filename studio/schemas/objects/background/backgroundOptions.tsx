@@ -1,10 +1,9 @@
-import { defineType, defineField } from 'sanity'
+import { defineType } from 'sanity'
 import singleItemArray from '../singleItemArray'
 
 export default defineType({
   type: 'object',
   name: 'backgroundOptions',
-
   fields: [
     singleItemArray({
       type: 'array',
@@ -19,7 +18,7 @@ export default defineType({
           name: 'backgroundColor',
           type: 'colorlist',
         },
-      ].filter((e) => e),
+      ].filter(e => e),
     }),
   ],
 })

@@ -1,5 +1,13 @@
 //Keep these colors in sync with correspondent tailwind config colors
-export const defaultColors = [
+export type Color = {
+  title: string
+  key: string
+  dark?: boolean
+  value: string
+  onlyTextColor?: boolean
+}
+
+export const defaultColors: Color[] = [
   //0
   {
     title: 'White',
@@ -22,7 +30,12 @@ export const defaultColors = [
     dark: false,
   },
   //3
-  { title: 'Mist Blue', value: 'hsl(199, 58%, 90%)', key: 'mist-blue-100', dark: false },
+  {
+    title: 'Mist Blue',
+    value: 'hsl(199, 58%, 90%)',
+    key: 'mist-blue-100',
+    dark: false,
+  },
   //4
   { title: 'Mid Yellow', value: '#fff5b8', key: 'yellow-50', dark: false },
   //5
@@ -32,13 +45,30 @@ export const defaultColors = [
   //7
   { title: 'Mid Green', value: '#c3e4ce', key: 'green-50', dark: false },
   //8
-  { title: 'Energy Red', value: 'hsl(348, 100%, 54%)', key: 'energy-red-50', dark: false, onlyTextColor: true },
+  {
+    title: 'Energy Red',
+    value: 'hsl(348, 100%, 54%)',
+    key: 'energy-red-50',
+    dark: false,
+    onlyTextColor: true,
+  },
   //9
-  { title: 'Black', value: 'rgba(61, 61, 61, 1)', key: 'slate-80', dark: false, onlyTextColor: true },
+  {
+    title: 'Black',
+    value: 'rgba(61, 61, 61, 1)',
+    key: 'slate-80',
+    dark: false,
+    onlyTextColor: true,
+  },
   //10
   { title: 'Sand', value: '#FFE7D6', key: 'sand-and-summer-50', dark: false },
   //11
-  { title: 'Light green', value: '#E6FAEC', key: 'norwegian-woods-40', dark: false },
+  {
+    title: 'Light green',
+    value: '#E6FAEC',
+    key: 'norwegian-woods-40',
+    dark: false,
+  },
   //12
   {
     title: 'Moss Green 60',
@@ -88,38 +118,36 @@ export const defaultColors = [
     key: 'autumn-storm-20',
     dark: false,
   },
+  //19
+  {
+    title: 'Light Spruce wood',
+    value: '#FEF8F4',
+    key: 'spruce-wood-20',
+    dark: false,
+  },
+  //20
+  { title: 'Light yellow', value: '#FEFBDF', key: 'yellow-20', dark: false },
+  //21
+  { title: 'Light blue', value: '#F2F9FC', key: 'blue-20', dark: false },
+  //22
+  { title: 'Light gray', value: '#F8F8F8', key: 'gray-20', dark: false },
 ]
 
-export const defaultBackgroundColors = [
+export const defaultBackgroundColors: Color[] = [
   //0
-  {
-    title: 'White',
-    value: 'hsl(0, 0%, 100%)',
-    key: 'white-100',
-    dark: false,
-  },
+  defaultColors[0],
   //1
-  {
-    title: 'Moss Green Light',
-    value: 'hsl(184, 30%, 96%)',
-    key: 'moss-green-50',
-    dark: false,
-  },
+  defaultColors[1],
   //2
-  {
-    title: 'Spruce Wood',
-    value: 'hsl(25, 100%, 94%)',
-    key: 'spruce-wood-90',
-    dark: false,
-  },
+  defaultColors[2],
   //3
-  { title: 'Mist Blue', value: 'hsl(199, 58%, 90%)', key: 'mist-blue-100', dark: false },
+  defaultColors[3],
   //4
-  { title: 'Mid Yellow', value: '#fff5b8', key: 'yellow-50', dark: false },
+  defaultColors[4],
   //5
-  { title: 'Mid Orange', value: '#f8d1af', key: 'orange-50', dark: false },
+  defaultColors[5],
   //6
-  { title: 'Mid Blue', value: '#49709c', key: 'blue-50', dark: true },
+  defaultColors[6],
   //7
-  { title: 'Mid Green', value: '#c3e4ce', key: 'green-50', dark: false },
+  defaultColors[7],
 ]

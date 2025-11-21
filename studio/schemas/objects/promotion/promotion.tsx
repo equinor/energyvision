@@ -1,30 +1,32 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import blocksToText from '../../../helpers/blocksToText'
-import CompactBlockEditor from '../../components/CompactBlockEditor'
-import { configureBlockContent } from '../../editors'
-import type { MagazinePromotion } from './promoteMagazine'
-import type { TopicPromotion } from './promoteTopic'
+
 import { calendar_event, contacts, library_books } from '@equinor/eds-icons'
-import {
-  defineField,
-  defineType,
-  type CustomValidatorResult,
-  type PortableTextBlock,
-  type Rule,
-  type ValidationError,
+import type {
+  CustomValidatorResult,
+  PortableTextBlock,
+  Rule,
+  ValidationError,
 } from 'sanity'
-import type { ColorSelectorValue } from '../../components/ColorSelector'
+import blocksToText from '../../../helpers/blocksToText'
+import { filterByRoute } from '../../../helpers/referenceFilters'
 import { EdsIcon } from '../../../icons'
 import { Flags } from '../../../src/lib/datasetHelpers'
-
+import type { ColorSelectorValue } from '../../components/ColorSelector'
+import CompactBlockEditor from '../../components/CompactBlockEditor'
+import { configureBlockContent } from '../../editors'
 import routes from '../../routes'
-import { filterByRoute } from '../../../helpers/referenceFilters'
-import singleItemArray from '../singleItemArray'
+import type { MagazinePromotion } from './promoteMagazine'
+import type { TopicPromotion } from './promoteTopic'
 
-const promotionLengthValidation = (context: Promotion): true | ValidationError => {
+const promotionLengthValidation = (
+  context: Promotion,
+): true | ValidationError => {
   const { promotion } = context
   const promo = promotion[0]
-  const numberOfItems = promo._type === 'promoteTopics' ? promo.references?.length : promo.promotedArticles?.length
+  const numberOfItems =
+    promo._type === 'promoteTopics'
+      ? promo.references?.length
+      : promo.promotedArticles?.length
   const MIN = 3
   const MAX = 3
 
@@ -39,7 +41,8 @@ const promotionLengthValidation = (context: Promotion): true | ValidationError =
     return true
   }
 
-  if (promo._type === 'promoteMagazine' && !promo.manuallySelectArticles) return true
+  if (promo._type === 'promoteMagazine' && !promo.manuallySelectArticles)
+    return true
 
   return validateNumber(numberOfItems)
 }
@@ -53,7 +56,12 @@ export type Promotion = {
   background?: ColorSelectorValue
 }
 
-type PromotionType = 'promoteTopics' | 'promoteNews' | 'promotePeople' | 'promoteEvents' | 'promoteMagazine'
+type PromotionType =
+  | 'promoteTopics'
+  | 'promoteNews'
+  | 'promotePeople'
+  | 'promoteEvents'
+  | 'promoteMagazine'
 
 export default {
   title: 'Promotion (Deprecated, use direct types)',
@@ -73,7 +81,11 @@ export default {
   ],
   validation: (Rule: Rule) =>
     Rule.custom((value: Promotion): CustomValidatorResult => {
-      const typesToValidate = ['promoteTopics', 'promoteMagazine', 'promoteNews']
+      const typesToValidate = [
+        'promoteTopics',
+        'promoteMagazine',
+        'promoteNews',
+      ]
 
       if (typesToValidate.includes(value.promotion[0]._type)) {
         return promotionLengthValidation(value)
@@ -90,7 +102,8 @@ export default {
         input: CompactBlockEditor,
       },
       of: [configureBlockContent({ variant: 'title' })],
-      validation: (Rule: Rule) => Rule.required().warning('In most cases you should add a title'),
+      validation: (Rule: Rule) =>
+        Rule.required().warning('In most cases you should add a title'),
     },
     {
       name: 'ingress',
@@ -108,14 +121,18 @@ export default {
         { type: 'promoteTopics', title: 'Promote topic' },
         { type: 'promotePeople', title: 'Promote people' },
         Flags.HAS_EVENT && { type: 'promoteEvents', title: 'Promote events' },
-        Flags.HAS_MAGAZINE && { type: 'promoteMagazine', title: 'Promote magazine' },
-      ].filter((e) => e),
+        Flags.HAS_MAGAZINE && {
+          type: 'promoteMagazine',
+          title: 'Promote magazine',
+        },
+      ].filter(e => e),
       options: { sortable: false },
     },
     {
       name: 'viewAllLink',
       title: 'View all internal link',
-      description: 'Use this if you want a "View all ..." link to e.g. all news',
+      description:
+        'Use this if you want a "View all ..." link to e.g. all news',
       type: 'reference',
       to: routes,
       options: {
@@ -130,7 +147,8 @@ export default {
     {
       name: 'useHorizontalScroll',
       title: 'Use horizontal scroll',
-      description: '(Deprecated) Not used anymore. Will be removed after an interval',
+      description:
+        '(Deprecated) Not used anymore. Will be removed after an interval',
       type: 'boolean',
       initialValue: false,
     },
@@ -141,34 +159,45 @@ export default {
       type: 'colorlist',
       fieldset: 'design',
     },
-  ].filter((e) => e),
+  ].filter(e => e),
   preview: {
     select: {
       title: 'title',
       type: 'promotion[0]._type',
     },
-    prepare({ title = [], type }: { title: PortableTextBlock[]; type: PromotionType }) {
+    prepare({
+      title = [],
+      type,
+    }: {
+      title: PortableTextBlock[]
+      type: PromotionType
+    }) {
       const plainTitle = title ? blocksToText(title) : undefined
 
       const getPromotionType = (type: PromotionType) => {
         if (type === 'promoteTopics') {
           return 'Topic page promotion'
-        } else if (type == 'promotePeople') {
+        }
+        if (type === 'promotePeople') {
           return 'People promotion'
-        } else if (type == 'promoteEvents') {
+        }
+        if (type === 'promoteEvents') {
           return 'Events promotion'
-        } else if (type == 'promoteMagazine') {
+        }
+        if (type === 'promoteMagazine') {
           return 'Magazine promotion'
         }
         return 'News promotions'
       }
 
       const getPromotionIcon = (type: PromotionType) => {
-        if (type == 'promotePeople') {
+        if (type === 'promotePeople') {
           return EdsIcon(contacts)
-        } else if (type == 'promoteEvents') {
+        }
+        if (type === 'promoteEvents') {
           return EdsIcon(calendar_event)
-        } else if (type == 'promoteMagazine') {
+        }
+        if (type === 'promoteMagazine') {
           return EdsIcon(library_books)
         }
         return

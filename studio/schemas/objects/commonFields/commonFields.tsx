@@ -1,8 +1,8 @@
-import { configureBlockContent } from '../../editors'
-import CompactBlockEditor from '../../components/CompactBlockEditor'
-import { Rule } from 'sanity'
-import routes from '../../routes'
+import { defineField, type Rule } from 'sanity'
 import { filterByRoute } from '../../../helpers/referenceFilters'
+import CompactBlockEditor from '../../components/CompactBlockEditor'
+import { configureBlockContent } from '../../editors'
+import routes from '../../routes'
 
 export const title = {
   title: 'Title',
@@ -12,7 +12,8 @@ export const title = {
     input: CompactBlockEditor,
   },
   of: [configureBlockContent({ variant: 'title' })],
-  validation: (Rule: Rule) => Rule.required().warning('In most cases you should add a title'),
+  validation: (Rule: Rule) =>
+    Rule.required().warning('In most cases you should add a title'),
 }
 
 export const ingress = {
@@ -45,4 +46,90 @@ export const background = {
   name: 'background',
   type: 'colorlist',
   fieldset: 'design',
+}
+
+export const backgroundPosition = (hiddenCallBack?: any, fieldset?: string) => {
+  const defaultHiddenFunction = ({ parent }: any) =>
+    parent?.backgroundType !== '0'
+  return defineField({
+    title: 'Select positioning of the image',
+    description:
+      'Optional - select focus origin in the image. Useful if the image gets cropped when not contained within its container. Use together with hotspot option in Sanity studio to make sure focal point is kept',
+    name: 'backgroundPosition',
+    type: 'string',
+    options: {
+      list: [
+        { title: 'Center Left', value: 'center_left' },
+        { title: 'Center Center', value: 'center_center' },
+        { title: 'Center Right', value: 'center_right' },
+        { title: 'Top Left', value: 'top_left' },
+        { title: 'Top Center', value: 'top_center' },
+        { title: 'Top Right', value: 'top_right' },
+        { title: 'Bottom Left', value: 'bottom_left' },
+        { title: 'Bottom Center', value: 'bottom_center' },
+        { title: 'Bottom Right', value: 'bottom_right' },
+      ],
+      layout: 'dropdown',
+    },
+    initialValue: 'center_center',
+    ...(fieldset && { fieldset }),
+    hidden: hiddenCallBack ? hiddenCallBack : defaultHiddenFunction,
+  })
+}
+
+export const theme = {
+  title: 'Theme',
+  description:
+    'Theme consisting of an background color and a foreground color for cards or similar',
+  name: 'theme',
+  type: 'themeSelector',
+  fieldset: 'design',
+}
+export const layoutGrid = {
+  title: 'Layout grid',
+  name: 'layoutGrid',
+  type: 'string',
+  description: 'Select content grid column',
+  options: {
+    list: [
+      { title: 'Third outer', value: 'sm' },
+      { title: 'Second outer', value: 'md' },
+      { title: 'Innermost', value: 'lg' },
+    ],
+  },
+  initialValue: 'lg',
+  fieldset: 'design',
+}
+export const gridColumns = {
+  title: 'Number of grid columns',
+  name: 'gridColumns',
+  type: 'string',
+  description: 'Select number of grid column. Mobile it will only be 1 column.',
+  options: {
+    list: [
+      { title: '2', value: '2' },
+      { title: '3', value: '3' },
+      { title: '4', value: '4' },
+    ],
+  },
+  initialValue: '3',
+  hidden: ({ parent }: any) => {
+    return parent?.layoutGrid === 'lg'
+  },
+  fieldset: 'design',
+}
+export const layoutDirection = {
+  title: 'Layout direction',
+  name: 'layoutDirection',
+  type: 'string',
+  description: 'Select layout direction. ',
+  options: {
+    list: [
+      { title: 'Stack in column', value: 'col' },
+      { title: 'Stack in row', value: 'row' },
+    ],
+    layout: 'radio',
+  },
+  fieldset: 'design',
+  initialValue: 'col',
 }

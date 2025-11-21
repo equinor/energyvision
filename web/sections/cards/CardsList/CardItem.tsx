@@ -1,15 +1,18 @@
-import type { CardListItemData } from '../../../types/index'
-import { Typography } from '@/core/Typography'
+import { forwardRef, type HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { HTMLAttributes, forwardRef } from 'react'
+import { Typography } from '@/core/Typography'
 import Blocks from '@/portableText/Blocks'
+import type { CardListItemData } from '../../../types/index'
 
 export type CardItemProps = {
   className?: string
   data: CardListItemData
 } & HTMLAttributes<HTMLLIElement>
 
-const CardItem = forwardRef<HTMLLIElement, CardItemProps>(function CardItem({ data, className = '', ...rest }, ref) {
+const CardItem = forwardRef<HTMLLIElement, CardItemProps>(function CardItem(
+  { data, className = '', ...rest },
+  ref,
+) {
   const { title, content } = data
 
   return (
@@ -21,7 +24,7 @@ const CardItem = forwardRef<HTMLLIElement, CardItemProps>(function CardItem({ da
       )}
       {...rest}
     >
-      <Typography variant="h4" as={content ? 'h3' : 'p'} className={`pb-0`}>
+      <Typography variant='h4' as={content ? 'h3' : 'p'} className={`pb-0`}>
         {title}
       </Typography>
       {content && <Blocks value={content} />}

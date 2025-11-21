@@ -1,18 +1,18 @@
 'use client'
+import type { PortableTextBlock } from 'next-sanity'
 import { useId } from 'react'
+import { twMerge } from 'tailwind-merge'
 import Blocks from '@/portableText/Blocks'
 import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
-import { twMerge } from 'tailwind-merge'
-import { PortableTextBlock } from 'next-sanity'
-import { DesignOptions } from '@/types'
-
+import type { DesignOptions } from '@/types'
+/**
 export type SectionData = {
-  /**
    * Define data types here and use below or directly in type below.
    * To avoid getting a large types file
    * and coupling relevate type to react component
-   */
+
 }
+*/
 
 export type SectionBlockTemplateProps = {
   //id and type should always be in groq and passed on to section
@@ -50,14 +50,24 @@ const SectionBlockTemplate = ({
 
   return (
     <section
-      className={twMerge(`${bg} ${dark ? 'dark' : ''} px-layout-sm pb-page-content lg:px-layout-lg`, className)}
+      className={twMerge(
+        `${bg} ${dark ? 'dark' : ''} px-layout-sm pb-page-content lg:px-layout-lg`,
+        className,
+      )}
       id={anchor}
     >
       {/* Heading has more padding bottom than the rest, padding is taken care of with Typography */}
-      {title && <Blocks variant="h2" id={headingId} value={title} className={`${hideTitle ? 'sr-only' : ''}`} />}
+      {title && (
+        <Blocks
+          variant='h2'
+          id={headingId}
+          value={title}
+          className={`${hideTitle ? 'sr-only' : ''}`}
+        />
+      )}
       {/* Rest of content can have gap-6 between them */}
-      <div className="flex flex-col gap-6">
-        {ingress && <Blocks variant="ingress" value={ingress} />}
+      <div className='flex flex-col gap-6'>
+        {ingress && <Blocks variant='ingress' value={ingress} />}
         {/*
             section specific parts
         */}

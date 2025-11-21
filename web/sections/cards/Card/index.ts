@@ -1,6 +1,6 @@
-import { Card as CardWrapper, CardProps } from './Card'
-import { CardHeader, CardHeaderProps } from './CardHeader'
-import { CardContent, CardContentProps } from './CardContent'
+import { type CardProps, Card as CardWrapper } from './Card'
+import { CardContent, type CardContentProps } from './CardContent'
+import { CardHeader, type CardHeaderProps } from './CardHeader'
 
 type CardCompoundProps = typeof CardWrapper & {
   Header: typeof CardHeader

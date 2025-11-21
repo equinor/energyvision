@@ -1,11 +1,17 @@
+import type { PortableTextBlock } from '@portabletext/react'
+import { RiCalendarEventFill } from 'react-icons/ri'
 import type { Reference, Rule, ValidationContext } from 'sanity'
+import blocksToText from '../../../helpers/blocksToText'
+import { capitalizeFirstLetter } from '../../../helpers/formatters'
 import { filterByRouteEvents } from '../../../helpers/referenceFilters'
 import routes from '../../routes'
-import { RiCalendarEventFill } from 'react-icons/ri'
-import { title, ingress, viewAllLink, viewAllLinkLabel, background } from '../commonFields/commonFields'
-import { capitalizeFirstLetter } from '../../../helpers/formatters'
-import { PortableTextBlock } from '@portabletext/react'
-import blocksToText from '../../../helpers/blocksToText'
+import {
+  ingress,
+  theme,
+  title,
+  viewAllLink,
+  viewAllLinkLabel,
+} from '../commonFields/commonFields'
 
 export type EventPromotion = {
   _key: string
@@ -53,7 +59,8 @@ export default {
     {
       name: 'eventsCount',
       title: 'Number of events',
-      description: 'Set this if you want to restrict the number of events to show',
+      description:
+        'Set this if you want to restrict the number of events to show',
       type: 'number',
       validation: (Rule: Rule) => Rule.max(50).error('Max 50'),
       hidden: ({ parent }: any) => parent?.promotionType === 'manual',
@@ -61,7 +68,8 @@ export default {
     {
       title: 'Select from tags',
       name: 'tags',
-      description: 'Select specific tags if you want to promote events from a selection. Default is from all tags',
+      description:
+        'Select specific tags if you want to promote events from a selection. Default is from all tags',
       type: 'array',
       of: [
         {
@@ -94,14 +102,26 @@ export default {
         Rule.custom((value: string, context: ValidationContext) => {
           const { parent } = context as { parent: EventPromotion }
           if (parent?.promotionType === 'automatic') return true
-          if (!value || value.length === 0) return 'You must select at least one event'
+          if (!value || value.length === 0)
+            return 'You must select at least one event'
           return true
         }).unique(),
     },
     viewAllLink,
     viewAllLinkLabel,
-    background,
-  ].filter((e) => e),
+    theme,
+    {
+      title: 'Background (Deprecated)',
+      description: 'Please select a theme instead',
+      name: 'background',
+      type: 'colorlist',
+      fieldset: 'design',
+      readonly: true,
+      hidden: ({ value }: any) => {
+        return !value || value.title === 'White'
+      },
+    },
+  ].filter(e => e),
   /*   components: {
     preview: PromoteEventsPreview,
   }, */

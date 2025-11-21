@@ -3,7 +3,10 @@ import { useId } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { ResourceLink } from '@/core/Link'
 import Blocks from '@/portableText/Blocks'
-import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
+import {
+  type ColorKeys,
+  getBgAndDarkFromBackground,
+} from '@/styles/colorKeyToUtilityMap'
 import type {
   CardData,
   DesignOptions,
@@ -29,7 +32,9 @@ type PromotionBlock = {
   title?: PortableTextBlock[]
   ingress?: PortableTextBlock[]
   viewAllLink?: LinkData
-  designOptions?: DesignOptions
+  designOptions?: {
+    foreground?: ColorKeys
+  } & DesignOptions
 }
 
 export type NewsPromotion = {
@@ -86,6 +91,7 @@ const PromotionsBlock = ({
   className?: string
 }) => {
   const { title, ingress, viewAllLink, designOptions, ...restData } = data
+  const { foreground } = designOptions
   const { bg, dark } = getBgAndDarkFromBackground(designOptions)
 
   const sectionTitleId = useId()
@@ -145,7 +151,11 @@ const PromotionsBlock = ({
           className={`pt-6 ${promotionsCount === 1 ? 'px-layout-sm md:px-layout-lg' : `3xl:px-layout-md px-layout-sm`}`}
         >
           {promotionsCount === 1 ? (
-            <Promotion promotion={promotionList[0]} hasSectionTitle={!!title} />
+            <Promotion
+              background={foreground}
+              promotion={promotionList[0]}
+              hasSectionTitle={!!title}
+            />
           ) : (
             <MultiplePromotions
               //@ts-ignore: todo
@@ -153,6 +163,7 @@ const PromotionsBlock = ({
                 ...restData,
                 promotions: promotionList,
               }}
+              background={foreground}
               variant={variant}
               hasSectionTitle={!!title}
               labelledbyId={sectionTitleId}

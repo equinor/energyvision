@@ -1,8 +1,8 @@
-import { Flex, Button, Tooltip, Text, Radio, Box } from '@sanity/ui'
-import { ArrayOfObjectsInputProps, set } from 'sanity'
+import { AddCircleIcon } from '@sanity/icons'
+import { Button, Flex, Radio, Text, Tooltip } from '@sanity/ui'
 import { customAlphabet } from 'nanoid'
 import { useCallback } from 'react'
-import { AddCircleIcon } from '@sanity/icons'
+import { type ArrayOfObjectsInputProps, set } from 'sanity'
 
 const nanoid = customAlphabet('1234567890abcdef', 12)
 
@@ -23,8 +23,8 @@ export const SingleItemSelectorInput = (props: SingleItemSelectorProps) => {
   return (
     <>
       {objectTypes.length > 1 ? (
-        <Flex align="center" wrap="wrap" gap={4}>
-          {objectTypes.map((it) => {
+        <Flex align='center' wrap='wrap' gap={3}>
+          {objectTypes.map(it => {
             const { icon: Icon } = it
             return Icon ? (
               <Tooltip
@@ -36,7 +36,7 @@ export const SingleItemSelectorInput = (props: SingleItemSelectorProps) => {
                 }
                 animate
                 fallbackPlacements={['right', 'left']}
-                placement="bottom"
+                placement='bottom'
                 portal
               >
                 <Button
@@ -44,8 +44,8 @@ export const SingleItemSelectorInput = (props: SingleItemSelectorProps) => {
                   fontSize={[2, 2, 3]}
                   iconRight={Icon}
                   padding={[3, 3, 4]}
-                  mode="ghost"
-                  tone="default"
+                  mode='ghost'
+                  tone='default'
                   onClick={() => handleClick(it)}
                 />
               </Tooltip>
@@ -64,9 +64,9 @@ export const SingleItemSelectorInput = (props: SingleItemSelectorProps) => {
           })}
         </Flex>
       ) : (
-        members.length == 0 && (
+        members.length === 0 && (
           <Button
-            mode="ghost"
+            mode='ghost'
             padding={4}
             icon={AddCircleIcon}
             title={`Add ${objectTypes[0]?.title}`}

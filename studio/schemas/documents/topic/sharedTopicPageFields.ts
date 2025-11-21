@@ -12,7 +12,8 @@ export const openGraphImage = {
   title: 'Open Graph Image',
   name: 'openGraphImage',
   type: 'imageWithAlt',
-  description: 'You can override the hero image as the SoMe image by uploading another image here.',
+  description:
+    'You can override the hero image as the SoMe image by uploading another image here.',
   fieldset: 'metadata',
 }
 export const isCampaign = {
@@ -66,14 +67,19 @@ export const content = {
     { type: 'tabs' },
     { type: 'importTable' },
     Flags.HAS_EVENT && { type: 'promoteEvents', title: 'Event promotion' },
-    Flags.HAS_MAGAZINE && { type: 'promoteMagazine', title: 'Magazine promotion' },
+    Flags.HAS_MAGAZINE && {
+      type: 'promoteMagazine',
+      title: 'Magazine promotion',
+    },
     { type: 'promotePeople', title: 'People promotion' },
     { type: 'promoteTopics', title: 'Topic page promotion' },
     Flags.HAS_NEWS && { type: 'promoteNews', title: 'News promotions' },
     { type: 'pieChartBlock', title: 'Pie chart' },
     { type: 'lineChartBlock', title: 'Line chart' },
     { type: 'barChartBlock', title: 'Bar chart' },
-  ].filter((e) => e),
+    { type: 'promoteExternalLinkV2' },
+    { type: 'promoteTopicsV2' },
+  ].filter(e => e),
   components: {
     input: RolesBasedArrayInput,
   },
@@ -84,7 +90,19 @@ export const content = {
         {
           name: 'promotions',
           title: 'Promotions',
-          of: ['promotion', 'promoteMagazine', 'promoteTopics', 'promotePeople', 'promoteEvents', 'promoteNews'],
+          of: [
+            'promotion',
+            'promoteMagazine',
+            'promoteTopics',
+            'promotePeople',
+            'promoteEvents',
+            'promoteNews',
+          ],
+        },
+        {
+          name: 'promotionsV2',
+          title: 'Promotions(v2)',
+          of: ['promoteExternalLinkV2', 'promoteTopicsV2'],
         },
         {
           name: 'carousels',

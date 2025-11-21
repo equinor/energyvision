@@ -1,10 +1,16 @@
-import type { Rule, Reference } from 'sanity'
-import type { ImageWithAlt } from '../imageWithAlt'
+import type { PortableTextBlock } from '@portabletext/react'
 import { MdOutlineContactEmergency } from 'react-icons/md'
-import linkSelector from '../linkSelector/linkSelector'
-import { background, ingress, title, viewAllLink, viewAllLinkLabel } from '../commonFields/commonFields'
-import { PortableTextBlock } from '@portabletext/react'
+import type { Reference, Rule } from 'sanity'
 import blocksToText from '../../../helpers/blocksToText'
+import {
+  ingress,
+  theme,
+  title,
+  viewAllLink,
+  viewAllLinkLabel,
+} from '../commonFields/commonFields'
+import type { ImageWithAlt } from '../imageWithAlt'
+import linkSelector from '../linkSelector/linkSelector'
 
 export type Promotion = {
   image?: ImageWithAlt
@@ -51,7 +57,8 @@ export default {
             {
               name: 'seo',
               title: 'SEO',
-              description: 'Enable structured markup to show rich results on Google search',
+              description:
+                'Enable structured markup to show rich results on Google search',
             },
           ],
           fields: [
@@ -71,7 +78,8 @@ export default {
               title: 'Name',
               name: 'name',
               type: 'string',
-              validation: (Rule: Rule) => Rule.required().error('Please provide a name'),
+              validation: (Rule: Rule) =>
+                Rule.required().error('Please provide a name'),
             },
             {
               title: 'Title',
@@ -87,7 +95,8 @@ export default {
               name: 'isLink',
               type: 'boolean',
               title: 'Use a link',
-              description: 'Link to another piece of content instead of adding contact information',
+              description:
+                'Link to another piece of content instead of adding contact information',
               initialValue: false,
             },
             {
@@ -147,14 +156,31 @@ export default {
     },
     viewAllLink,
     viewAllLinkLabel,
-    background,
+    theme,
+    {
+      title: 'Background (Deprecated)',
+      description: 'Please select a theme instead',
+      name: 'background',
+      type: 'colorlist',
+      fieldset: 'design',
+      readonly: true,
+      hidden: ({ value }: any) => {
+        return !value || value.title === 'White'
+      },
+    },
   ],
   preview: {
     select: {
       title: 'title',
       peopleList: 'peopleList',
     },
-    prepare({ title, peopleList }: { title?: PortableTextBlock[]; peopleList?: any[] }) {
+    prepare({
+      title,
+      peopleList,
+    }: {
+      title?: PortableTextBlock[]
+      peopleList?: any[]
+    }) {
       //@ts-ignore:todo
       const plainTitle = blocksToText(title) ?? 'No title, only people'
       return {

@@ -1,5 +1,6 @@
-import { ColorKeyTokens } from '../styles/colorKeyToUtilityMap'
-import { ImageBackground } from './imageTypes'
+import type { ObjectPositions } from '@/core/Image/Image'
+import type { ColorKeyTokens } from '../styles/colorKeyToUtilityMap'
+import type { ImageBackground } from './imageTypes'
 
 export type BackgroundColours =
   | 'White'
@@ -23,6 +24,7 @@ export type Background = {
   backgroundColor?: BackgroundColours
   backgroundImage?: ImageBackground
   backgroundUtility?: keyof ColorKeyTokens
+  backgroundPosition?: ObjectPositions
   dark?: boolean
 }
 

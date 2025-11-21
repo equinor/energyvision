@@ -1,11 +1,22 @@
 'use client'
-import { HTMLAttributes, CSSProperties, ElementType, useRef, useState } from 'react'
-import { ImageBackground } from '../../types/index'
+import {
+  motion,
+  useMotionValueEvent,
+  useScroll,
+  useTransform,
+} from 'framer-motion'
+import {
+  type CSSProperties,
+  type ElementType,
+  type HTMLAttributes,
+  useRef,
+  useState,
+} from 'react'
 import { twMerge } from 'tailwind-merge'
-import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
-import { ImageRatioKeys, mapSanityImageRatio } from '@/core/Image/Image'
-import { motion, useTransform, useScroll, useMotionValueEvent } from 'framer-motion'
+import type { ImageRatioKeys } from '@/core/Image/Image'
 import { resolveImage } from '@/sanity/lib/utils'
+import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
+import type { ImageBackground } from '../../types/index'
 
 type ImageBackgroundContainerProps = {
   scrimClassName?: string
@@ -30,7 +41,6 @@ export const ImageBackgroundContainer = ({
   overrideGradient = false,
   dontSplit = false,
   as = 'section',
-  ...rest
 }: ImageBackgroundContainerProps) => {
   const isLargerDisplays = useMediaQuery(`(min-width: 800px)`)
 
@@ -88,36 +98,47 @@ export const ImageBackgroundContainer = ({
     offset: ['start center', 'end center'],
   })
 
-  const opacityTransformed = useTransform(scrollYProgress, [0, 0.18, 0.85, 1], [0, 1, 1, 0])
-  useMotionValueEvent(opacityTransformed, 'change', (latest) => {
+  const opacityTransformed = useTransform(
+    scrollYProgress,
+    [0, 0.18, 0.85, 1],
+    [0, 1, 1, 0],
+  )
+  useMotionValueEvent(opacityTransformed, 'change', latest => {
     setOpacity(latest)
   })
+
+  const props = {
+    ref,
+  }
   if (useAnimation && isLargerDisplays) {
     return (
       <ReturnElement
-        ref={ref}
         className={backgroundClassNames}
         style={
           {
             backgroundImage: `url(${url})`,
           } as CSSProperties
         }
-        {...rest}
+        {...props}
       >
         {/** Scrim */}
         <motion.div
           style={{
             opacity: opacity,
           }}
-          className={twMerge(`py-40 lg:py-[25dvh] ${animatedScrimGradient} relative`, scrimClassName)}
+          className={twMerge(
+            `py-40 lg:py-[25dvh] ${animatedScrimGradient} relative`,
+            scrimClassName,
+          )}
         >
           <div className={className}>{children}</div>
         </motion.div>
       </ReturnElement>
     )
-  } else if (!isLargerDisplays && !dontSplit) {
+  }
+  if (!isLargerDisplays && !dontSplit) {
     return (
-      <ReturnElement {...rest}>
+      <ReturnElement {...props}>
         <div
           className={twMerge(`aspect-4/3`, backgroundClassNames)}
           style={{
@@ -127,20 +148,24 @@ export const ImageBackgroundContainer = ({
         <div className={className}>{children}</div>
       </ReturnElement>
     )
-  } else {
-    return (
-      <ReturnElement
-        className={`${backgroundClassNames} `}
-        style={{
-          backgroundImage: `url(${url})`,
-        }}
-        {...rest}
-      >
-        {/** Scrim */}
-        <div className={twMerge(`relative h-full py-40 lg:py-52 ${animatedScrimGradient}`, scrimClassName)}>
-          <div className={className}>{children}</div>
-        </div>
-      </ReturnElement>
-    )
   }
+  return (
+    <ReturnElement
+      className={`${backgroundClassNames} `}
+      style={{
+        backgroundImage: `url(${url})`,
+      }}
+      {...props}
+    >
+      {/** Scrim */}
+      <div
+        className={twMerge(
+          `relative h-full py-40 lg:py-52 ${animatedScrimGradient}`,
+          scrimClassName,
+        )}
+      >
+        <div className={className}>{children}</div>
+      </div>
+    </ReturnElement>
+  )
 }

@@ -1,45 +1,61 @@
-import type { PeopleCardData, EventCardData, CardData } from '../../types/index'
 import { EventCard } from '@/sections/cards/EventCard'
 import PeopleCard from '@/sections/cards/PeopleCard/PeopleCard'
 import PromotionCard from '@/sections/cards/PromotionCard/PromotionCard'
+import type { ColorKeys } from '@/styles/colorKeyToUtilityMap'
+import type { CardData, EventCardData, PeopleCardData } from '../../types/index'
 
 type CardProps = CardData | PeopleCardData | EventCardData
 
 type PromotionProps = {
   promotion: PeopleCardData | CardData | EventCardData
+  background?: ColorKeys
   hasSectionTitle?: boolean
 }
 
-const Promotion = ({ promotion, hasSectionTitle = false }: PromotionProps) => {
+const Promotion = ({
+  promotion,
+  hasSectionTitle = false,
+  background,
+}: PromotionProps) => {
   if (!promotion) return null
   const getCard = (data: CardProps) => {
     switch (data?.type) {
       case 'news':
       case 'localNews':
         return (
-          <PromotionCard className="light" data={data as CardData} hasSectionTitle={hasSectionTitle} variant="single" />
+          <PromotionCard
+            background={background}
+            data={data as CardData}
+            hasSectionTitle={hasSectionTitle}
+            variant='single'
+          />
         )
       case 'topics':
       case 'magazine':
         return (
-          <PromotionCard className="light" data={data as CardData} hasSectionTitle={hasSectionTitle} variant="single" />
+          <PromotionCard
+            background={background}
+            data={data as CardData}
+            hasSectionTitle={hasSectionTitle}
+            variant='single'
+          />
         )
       case 'people':
         return (
           <PeopleCard
-            className="light"
+            background={background}
             data={data as PeopleCardData}
             hasSectionTitle={hasSectionTitle}
-            variant="single"
+            variant='single'
           />
         )
       case 'events':
         return (
           <EventCard
-            className="light"
+            background={background}
             data={data as EventCardData}
             hasSectionTitle={hasSectionTitle}
-            variant="single"
+            variant='single'
           />
         )
       default:

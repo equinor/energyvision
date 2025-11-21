@@ -1,14 +1,16 @@
 'use client'
-import { useMediaQuery } from '../../../lib/hooks/useMediaQuery'
-import Card from '@/sections/cards/Card'
-import Blocks from '../../../portableText/Blocks'
-import type { CardData } from '../../../types/index'
-import { forwardRef, HTMLAttributes } from 'react'
+import { forwardRef, type HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
 import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
+import Card from '@/sections/cards/Card'
+import type { ColorKeys } from '@/styles/colorKeyToUtilityMap'
+import { useMediaQuery } from '../../../lib/hooks/useMediaQuery'
+import Blocks from '../../../portableText/Blocks'
+import type { CardData } from '../../../types/index'
 
 export type PromotionCardProps = {
   data: CardData
+  background?: ColorKeys
   hasSectionTitle: boolean
   variant?: 'default' | 'single'
   /** Override background image styling for card element */
@@ -22,55 +24,81 @@ export type PromotionCardProps = {
  * Event and people are solved in their own
  * Remember to wrap in ul and li if in a list.
  * */
-const PromotionCard = forwardRef<HTMLAnchorElement, PromotionCardProps>(function PromotionCard(
-  { data, className = '', imageClassName = '', titleClassName = '', variant = 'default', hasSectionTitle = true },
-  ref,
-) {
-  const isMobile = useMediaQuery(`(max-width: 768px)`)
-  const { slug, title, ingress, publishDateTime, heroImage, id, type } = data
+const PromotionCard = forwardRef<HTMLAnchorElement, PromotionCardProps>(
+  function PromotionCard(
+    {
+      data,
+      background,
+      className = '',
+      imageClassName = '',
+      titleClassName = '',
+      variant = 'default',
+      hasSectionTitle = true,
+    },
+    ref,
+  ) {
+    const isMobile = useMediaQuery(`(max-width: 768px)`)
+    const { slug, title, ingress, publishDateTime, heroImage, id, type } = data
 
-  return (
-    <Card
-      ref={ref}
-      href={slug}
-      image={heroImage?.image}
-      variant={variant === 'single' && !isMobile ? 'single' : 'primary'}
-      className={twMerge(`h-full w-full`, className)}
-      imageClassName={imageClassName}
-      key={id}
-    >
-      <Card.Content variant={variant === 'single' && !isMobile ? 'single' : 'primary'}>
-        <Card.Header
+    return (
+      <Card
+        ref={ref}
+        href={slug}
+        background={background}
+        image={heroImage?.image}
+        variant={variant === 'single' && !isMobile ? 'single' : 'primary'}
+        className={twMerge(`h-full w-full`, className)}
+        imageClassName={imageClassName}
+        key={id}
+      >
+        <Card.Content
           variant={variant === 'single' && !isMobile ? 'single' : 'primary'}
-          {...(typeof title === 'string'
-            ? {
-                title: title,
-              }
-            : {
-                titleBlock: title,
-              })}
-          titleLevel={hasSectionTitle ? 'h3' : 'h2'}
-          {...(publishDateTime && {
-            eyebrow: <FormattedDateTime variant="date" datetime={publishDateTime} uppercase className="text-xs" />,
-          })}
-          titleClassName={titleClassName}
-        />
-        {ingress && (
-          <Blocks
-            noInvert
-            value={ingress}
-            blockClassName={`break-word max-w-prose grow ${
-              type !== 'news' && type !== 'localNews' ? '' : 'hidden lg:block'
-            }`}
-            {...(!(variant === 'single' && !isMobile) && { clampLines: isMobile ? 3 : 5 })}
-            marks={{
-              em: ({ children }: { children?: React.ReactNode }) => <>{children}</>,
-              strong: ({ children }: { children?: React.ReactNode }) => <>{children}</>,
-            }}
+        >
+          <Card.Header
+            variant={variant === 'single' && !isMobile ? 'single' : 'primary'}
+            {...(typeof title === 'string'
+              ? {
+                  title: title,
+                }
+              : {
+                  titleBlock: title,
+                })}
+            titleLevel={hasSectionTitle ? 'h3' : 'h2'}
+            {...(publishDateTime && {
+              eyebrow: (
+                <FormattedDateTime
+                  variant='date'
+                  datetime={publishDateTime}
+                  uppercase
+                  className='text-xs'
+                />
+              ),
+            })}
+            titleClassName={titleClassName}
           />
-        )}
-      </Card.Content>
-    </Card>
-  )
-})
+          {ingress && (
+            <Blocks
+              noInvert
+              value={ingress}
+              blockClassName={`break-word max-w-prose text-ellipsis ${
+                type !== 'news' && type !== 'localNews' ? '' : 'hidden lg:block'
+              }`}
+              {...(!(variant === 'single' && !isMobile) && {
+                clampLines: isMobile ? 3 : 5,
+              })}
+              marks={{
+                em: ({ children }: { children?: React.ReactNode }) => (
+                  <>{children}</>
+                ),
+                strong: ({ children }: { children?: React.ReactNode }) => (
+                  <>{children}</>
+                ),
+              }}
+            />
+          )}
+        </Card.Content>
+      </Card>
+    )
+  },
+)
 export default PromotionCard

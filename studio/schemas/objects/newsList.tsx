@@ -1,10 +1,10 @@
-import { defaultLanguage } from '../../languages'
-import { EdsIcon } from '../../icons'
 import { list } from '@equinor/eds-icons'
-import { configureBlockContent } from '../editors'
-import CompactBlockEditor from '../components/CompactBlockEditor'
-import { Card, Text, Box, Stack } from '@sanity/ui'
+import { Box, Card, Stack, Text } from '@sanity/ui'
 import type { Rule } from 'sanity'
+import { EdsIcon } from '../../icons'
+import { defaultLanguage } from '../../languages'
+import CompactBlockEditor from '../components/CompactBlockEditor'
+import { configureBlockContent } from '../editors'
 
 // eslint-disable-next-line react/display-name
 const ComponentDescription = () => {
@@ -12,18 +12,24 @@ const ComponentDescription = () => {
     <Card padding={4}>
       <Box padding={[3, 3, 4, 5]} style={{ outline: '1px solid gray' }}>
         <Stack space={[3, 3, 4, 5]}>
-          <Text align="center" size={[2, 2, 3, 4]}>
+          <Text align='center' size={[2, 2, 3, 4]}>
             How to use
           </Text>
-          <Text align="left" size={[1, 1, 2]}>
-            This component will automatically generate a list of news articles based on the tags you select.
+          <Text align='left' size={[1, 1, 2]}>
+            This component will automatically generate a list of news articles
+            based on the tags you select.
           </Text>
-          <Text align="left" size={[1, 1, 2]}>
-            <span role="img" aria-label="warning icon" style={{ marginRight: '5px' }}>
+          <Text align='left' size={[1, 1, 2]}>
+            <span
+              role='img'
+              aria-label='warning icon'
+              style={{ marginRight: '5px' }}
+            >
               ⚠️
             </span>
-            Please note that there is no limit on this list: it will generate a list of <strong>all</strong> articles
-            that match the selected tag(s).
+            Please note that there is no limit on this list: it will generate a
+            list of <strong>all</strong> articles that match the selected
+            tag(s).
           </Text>
         </Stack>
       </Box>
@@ -35,6 +41,16 @@ export default {
   title: 'News list',
   name: 'newsList',
   type: 'object',
+  fieldsets: [
+    {
+      title: 'Design options',
+      name: 'design',
+      options: {
+        collapsible: true,
+        collapsed: false,
+      },
+    },
+  ],
   fields: [
     {
       name: 'description',
@@ -57,7 +73,8 @@ export default {
       type: 'promoteNews',
       name: 'selectedTags',
       title: 'News tags',
-      description: 'Select which tags should be used to generate the news list.',
+      description:
+        'Select which tags should be used to generate the news list.',
       validation: (Rule: Rule) => Rule.required(),
     },
   ],
@@ -94,12 +111,19 @@ export default {
       localNewsTags2?: string
       localNewsTags3?: string
     }) {
-      const topicTags = [newsTags1, newsTags2, newsTags3].map((tag) => tag && `${tag} (topic)`)
-      const countryTags = [countryTags1, countryTags2, countryTags3].map((tag) => tag && `${tag} (country)`)
-      const localTags = [localNewsTags1, localNewsTags2, localNewsTags3].map((tag) => tag && `${tag} (local)`)
+      const topicTags = [newsTags1, newsTags2, newsTags3].map(
+        tag => tag && `${tag} (topic)`,
+      )
+      const countryTags = [countryTags1, countryTags2, countryTags3].map(
+        tag => tag && `${tag} (country)`,
+      )
+      const localTags = [localNewsTags1, localNewsTags2, localNewsTags3].map(
+        tag => tag && `${tag} (local)`,
+      )
 
       const tags = [...topicTags, ...countryTags, ...localTags].filter(Boolean)
-      const title = tags.length > 0 ? `Tags: ${tags.join(', ')}` : 'No tags selected yet!'
+      const title =
+        tags.length > 0 ? `Tags: ${tags.join(', ')}` : 'No tags selected yet!'
 
       return {
         title: title,

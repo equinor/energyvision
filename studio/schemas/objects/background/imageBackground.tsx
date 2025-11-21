@@ -1,7 +1,12 @@
-import { defineType, defineField } from 'sanity'
-import { RadioIconSelector } from '../../components'
-import { ContentRightImage, ContentLeftImage, ContentCenterImage } from '../../../icons'
+import { FaRegImage } from 'react-icons/fa6'
+import { defineField, defineType, type ObjectInputProps } from 'sanity'
 import { capitalizeFirstLetter } from '../../../helpers/formatters'
+import {
+  ContentCenterImage,
+  ContentLeftImage,
+  ContentRightImage,
+} from '../../../icons'
+import { RadioIconSelector } from '../../components'
 
 export type ColorType = {
   title: string
@@ -27,14 +32,14 @@ export default defineType({
         hotspot: true,
         collapsed: false,
       },
-      validation: (Rule) => Rule.required(),
+      validation: Rule => Rule.required(),
     }),
     defineField({
       title: 'Apply scroll animation',
       name: 'useAnimation',
       type: 'boolean',
       description: 'Animates content over the background image.',
-      hidden: ({ parent }: any) => {
+      hidden: () => {
         return false
       },
     }),
@@ -42,22 +47,27 @@ export default defineType({
       title: 'Apply light gradient',
       name: 'useLight',
       type: 'boolean',
-      description: 'Applies a white gradient over semi transparent background image.',
+      description:
+        'Applies a white gradient over semi transparent background image.',
     }),
     defineField({
       name: 'contentAlignment',
       title: 'Content Alignment',
-      description: 'Select the content alignment on larger screens. Bottom alignments can be kept on mobile',
+      description:
+        'Select the content alignment on larger screens. Bottom alignments can be kept on mobile',
       type: 'string',
       initialValue: 'left',
       components: {
-        input: function ({ onChange, value }: { onChange: any; value: string }) {
+        //@ts-ignore
+        input: function (props: ObjectInputProps) {
+          const { value, onChange, schemaType } = props
+          const { initialValue } = schemaType
           return (
             <RadioIconSelector
-              name="imageAlignmentSelector"
+              name='imageAlignmentSelector'
               options={contentAlignmentOptions}
-              defaultValue={'left'}
-              currentValue={value}
+              defaultValue={String(initialValue) ?? 'left'}
+              currentValue={String(value)}
               onChange={onChange}
             />
           )
@@ -75,10 +85,10 @@ export default defineType({
     prepare({ image, useAnimation, contentAlignment }) {
       return {
         title: `Image background`,
-        subtitle: `${capitalizeFirstLetter(contentAlignment) + ' aligned '} ${
+        subtitle: `${contentAlignment ? capitalizeFirstLetter(contentAlignment) + ' aligned ' : ''} ${
           useAnimation ? ' | Animated ' : ''
         } content`,
-        media: image.asset,
+        media: image?.asset ?? FaRegImage,
       }
     },
   },

@@ -5,6 +5,7 @@ const background = /* groq */ `
     "backgroundUtility":coalesce(designOptions.background[0].key, background.key, ""),
     "backgroundImage": coalesce(designOptions.background[0],""),
     "dark": coalesce(designOptions.background[0].dark, background.dark, false),
+    "backgroundPosition": coalesce(designOptions.backgroundPosition, 'center_center'),
 }
 `
 export default background

@@ -1,4 +1,9 @@
-import type { Rule, ValidationContext, CustomValidatorResult, Reference } from 'sanity'
+import type {
+  CustomValidatorResult,
+  Reference,
+  Rule,
+  ValidationContext,
+} from 'sanity'
 
 export type ImageWithAlt = {
   _type: string
@@ -29,20 +34,26 @@ export default {
       title: 'Alt text',
       description: 'Alt attribute text description for image',
       validation: (Rule: Rule) =>
-        Rule.custom((value: string, context: ValidationContext): CustomValidatorResult => {
-          const { parent } = context as { parent: ImageWithAlt }
+        Rule.custom(
+          (
+            value: string,
+            context: ValidationContext,
+          ): CustomValidatorResult => {
+            const { parent } = context as { parent: ImageWithAlt }
 
-          // Only  make the alt tag required if an image has been selected
-          if (!parent?.asset) return true
+            // Only  make the alt tag required if an image has been selected
+            if (!parent?.asset) return true
 
-          // Alt tag should only be required if the image is not decorative
-          if (!parent?.isDecorative && !value) {
-            return 'Alt attribute is required'
-          }
+            // Alt tag should only be required if the image is not decorative
+            if (!parent?.isDecorative && !value) {
+              return 'Alt attribute is required'
+            }
 
-          return true
-        }),
-      hidden: ({ parent }: { parent: ImageWithAlt }) => parent?.isDecorative === true,
+            return true
+          },
+        ),
+      hidden: ({ parent }: { parent: ImageWithAlt }) =>
+        parent?.isDecorative === true,
     },
   ],
 }
