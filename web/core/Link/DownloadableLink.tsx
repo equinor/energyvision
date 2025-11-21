@@ -251,7 +251,7 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
           )}
           {downloadRequestUrl && isFriendlyChallengeDone && !notHuman && (
             <BaseLink
-              className={envisTwMerge(`${commonLinkWrapperClassName}`, 'pt-20')}
+              className={envisTwMerge(`${commonResourceLinkWrapperClassName}`, 'pt-20')}
               type={type}
               href={downloadRequestUrl}
               {...(extension &&
