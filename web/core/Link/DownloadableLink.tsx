@@ -2,7 +2,7 @@ import { Typography } from '@core/Typography'
 import { Modal } from '@sections/Modal'
 import FriendlyCaptcha from '@templates/forms/FriendlyCaptcha'
 import { ArrowRight } from '../../icons'
-import { forwardRef, useState } from 'react'
+import { forwardRef, useCallback, useState } from 'react'
 import { useIntl } from 'react-intl'
 import { getArrowElement, ResourceLinkProps } from './ResourceLink'
 import { BaseLink } from './BaseLink'
@@ -115,25 +115,27 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
     }
   }
 
-  const handleSuccessfullFriendlyChallenge = async (event: any) => {
-    console.log('captcha event', event)
-    const solution = event.detail.response
-    if (fileName) {
-      setIsFriendlyChallengeDone(true)
-      const response = await fetch('/api/download/getFileUrl', {
-        body: JSON.stringify({
-          fileName: fileName,
-          frcCaptchaSolution: solution,
-        }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        method: 'POST',
-      })
-      const url = await response.json()
-      setDownloadRequestUrl(url.url)
-    }
-  }
+  const handleSuccessfullFriendlyChallenge = useCallback(
+    async (event: any) => {
+      const solution = event.detail.response
+      if (fileName) {
+        setIsFriendlyChallengeDone(true)
+        const response = await fetch('/api/download/getFileUrl', {
+          body: JSON.stringify({
+            fileName: fileName,
+            frcCaptchaSolution: solution,
+          }),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          method: 'POST',
+        })
+        const url = await response.json()
+        setDownloadRequestUrl(url.url)
+      }
+    },
+    [fileName],
+  )
 
   const commonResourceLinkWrapperClassName = `
     group
@@ -217,63 +219,65 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
           <span className="w-[0%] h-[1px] bg-grey-40 transition-all duration-300 group-hover:w-full" />
         )}
       </button>
-      <Modal isOpen={showModal} onClose={handleClose} title="Request file download">
-        <Typography as="h2" variant="h5" className="mb-4">
-          {intl.formatMessage({ id: 'request_download_action_prefix', defaultMessage: 'Request' })}
-          {` ${label}`}
-        </Typography>
-        <Typography variant="body" className="mb-10">
-          {intl.formatMessage({
-            id: 'download_modal_ingress',
-            defaultMessage: 'Please confirm that you are human below and the link will appear.',
-          })}
-        </Typography>
-        <FriendlyCaptcha
-          startMode="auto"
-          doneCallback={(event: any) => {
-            handleSuccessfullFriendlyChallenge(event)
-          }}
-          errorCallback={(error: any) => {
-            console.error('FriendlyCaptcha encountered an error', error)
-            setNotHuman(true)
-            setIsFriendlyChallengeDone(false)
-          }}
-        />
-        {notHuman && (
-          <Typography variant="body" role="alert" className="py-6 text-slate-80 text-base">
+      {showModal && (
+        <Modal isOpen={showModal} onClose={handleClose} title="Request file download">
+          <Typography as="h2" variant="h5" className="mb-4">
+            {intl.formatMessage({ id: 'request_download_action_prefix', defaultMessage: 'Request' })}
+            {` ${label}`}
+          </Typography>
+          <Typography variant="body" className="mb-10">
             {intl.formatMessage({
-              id: 'not_human_message',
-              defaultMessage: 'We are sorry, but anti-robot protection failed and we cannot proceed',
+              id: 'download_modal_ingress',
+              defaultMessage: 'Please confirm that you are human below and the link will appear.',
             })}
           </Typography>
-        )}
-        {downloadRequestUrl && isFriendlyChallengeDone && !notHuman && (
-          <BaseLink
-            className={envisTwMerge(`${commonResourceLinkWrapperClassName}`, 'pt-20')}
-            type={type}
-            href={downloadRequestUrl}
-            {...(extension &&
-              extension.toLowerCase() === 'pdf' && {
-                target: '_blank',
+          <FriendlyCaptcha
+            startMode="auto"
+            doneCallback={(event: any) => {
+              handleSuccessfullFriendlyChallenge(event)
+            }}
+            errorCallback={(error: any) => {
+              console.error('FriendlyCaptcha encountered an error', error)
+              setNotHuman(true)
+              setIsFriendlyChallengeDone(false)
+            }}
+          />
+          {notHuman && (
+            <Typography variant="body" role="alert" className="py-6 text-slate-80 text-base">
+              {intl.formatMessage({
+                id: 'not_human_message',
+                defaultMessage: 'We are sorry, but anti-robot protection failed and we cannot proceed',
               })}
-          >
-            <span
-              className={`h-full 
+            </Typography>
+          )}
+          {downloadRequestUrl && isFriendlyChallengeDone && !notHuman && (
+            <BaseLink
+              className={envisTwMerge(`${commonResourceLinkWrapperClassName}`, 'pt-20')}
+              type={type}
+              href={downloadRequestUrl}
+              {...(extension &&
+                extension.toLowerCase() === 'pdf' && {
+                  target: '_blank',
+                })}
+            >
+              <span
+                className={`h-full 
                 w-inherit 
                 flex
                 justify-start
                 items-center
                 gap-x-2
                 ${contentVariantClassName[variant]}`}
-            >
-              {getContentElements(<>{`${label}`}</>)}
-              {getArrowElement(type)}
-            </span>
+              >
+                {getContentElements(<>{`${label}`}</>)}
+                {getArrowElement(type)}
+              </span>
 
-            <span className="w-[0%] h-[1px] bg-grey-40 transition-all duration-300 group-hover:w-full" />
-          </BaseLink>
-        )}
-      </Modal>
+              <span className="w-[0%] h-[1px] bg-grey-40 transition-all duration-300 group-hover:w-full" />
+            </BaseLink>
+          )}
+        </Modal>
+      )}
     </div>
   )
 })
