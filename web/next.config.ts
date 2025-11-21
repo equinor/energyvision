@@ -44,7 +44,7 @@ const nextConfig: NextConfig = {
   output: 'standalone',
   transpilePackages: ['friendly-challenge', '@energyvision/shared'],
   turbopack: {
-    root: path.join(__dirname, '..'),
+    root: path.join(__dirname, '../../'),
   },
   /*   outputFileTracingRoot: join(__dirname, '../'), */
   images: {
