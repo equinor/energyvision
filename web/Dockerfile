@@ -74,6 +74,7 @@ COPY --from=build /app/shared ./shared
 # https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=build --chown="$USER":"$USER" /app/web/.next/standalone ./
 COPY --from=build --chown="$USER":"$USER" /app/web/.next/static ./.next/static
+RUN ls -la
 
 RUN addgroup -S "$USER"
 RUN adduser -S --uid "$UID" "$USER"
@@ -85,4 +86,4 @@ ENV NEXT_MANUAL_SIG_HANDLE=true
 EXPOSE "$PORT"
 
 ENTRYPOINT ["/sbin/tini", "--"]
-CMD ["node", "server.js"]
+CMD ["node", "/app/web/server.js"]
