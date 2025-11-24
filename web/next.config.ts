@@ -43,10 +43,10 @@ export type ConfigRedirect = {
 const nextConfig: NextConfig = {
   output: 'standalone',
   transpilePackages: ['friendly-challenge', '@energyvision/shared'],
-  // this includes files from the monorepo base one directories up
-  outputFileTracingRoot: join(__dirname, '../'),
-  typescript: {
-    tsconfigPath: isProd ? 'tsconfig.build.json' : 'tsconfig.json',
+  // this includes files from the monorepo base two directories up
+  outputFileTracingRoot: join(__dirname, '../../'),
+  outputFileTracingIncludes: {
+    '/shared/*': ['../shared/*'],
   },
   images: {
     remotePatterns: [

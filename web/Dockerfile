@@ -70,7 +70,6 @@ RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 USER nextjs
 
-COPY --from=build  --chown=nextjs:nodejs /app/shared ./shared
 COPY --from=build  --chown=nextjs:nodejs /app/web/.next/standalone ./
 COPY --from=build  --chown=nextjs:nodejs /app/web/.next/static ./.next/static
 
