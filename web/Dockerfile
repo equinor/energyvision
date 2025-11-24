@@ -1,7 +1,7 @@
 # -------------------------------------------------------- #
 # 1. Base system environment
 # -------------------------------------------------------- #
-FROM node:20-alpine AS core-os
+FROM node:22-alpine AS core-os
 RUN apk update
 RUN apk add --no-cache libc6-compat curl
 
@@ -72,6 +72,7 @@ RUN addgroup -S "$USER" && adduser -S --uid "$UID" "$USER" && apk add --no-cache
 COPY --from=build /app/web/public ./public
 COPY --from=build  --chown="$USER":"$USER" /app/web/.next/standalone ./
 COPY --from=build  --chown="$USER":"$USER" /app/web/.next/static ./.next/static
+RUN ls -la
 
 USER "$UID"
 EXPOSE 3000
