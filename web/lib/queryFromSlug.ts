@@ -1,4 +1,3 @@
-import { magazineSlug, newsSlug } from '@shared/sitesConfig'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { sanityFetch } from '@/sanity/lib/live'
 import { homePageQuery } from '@/sanity/queries/homePage'
@@ -6,6 +5,7 @@ import { localNewsQuery } from '@/sanity/queries/localNews'
 import { magazineQuery } from '@/sanity/queries/magazine'
 import { newsQuery } from '@/sanity/queries/news'
 import { routeQuery } from '@/sanity/queries/routes'
+import { magazineSlug, newsSlug } from '@/sitesConfig'
 //import { contentQueryById } from '@/sanity/queries/contentById'
 import { getNameFromLocale } from '../sanity/localization'
 

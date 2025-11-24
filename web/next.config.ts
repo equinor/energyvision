@@ -44,12 +44,7 @@ const nextConfig: NextConfig = {
   output: 'standalone',
   transpilePackages: ['friendly-challenge', '@energyvision/shared'],
   turbopack: {
-    root: join(__dirname, '../../'),
-  },
-  //this includes files from the monorepo base two directories up
-  outputFileTracingRoot: join(__dirname, '../../'),
-  outputFileTracingIncludes: {
-    '../shared/*': ['../shared/*'],
+    root: join(__dirname),
   },
   images: {
     remotePatterns: [

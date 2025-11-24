@@ -4,7 +4,7 @@ import {
   getDomain,
   getLanguages,
   getMetaTitleSuffix,
-} from '@shared/sitesConfig'
+} from '@/sitesConfig'
 
 export const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET as DatasetsKeys
 
