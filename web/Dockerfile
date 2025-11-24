@@ -72,10 +72,10 @@ RUN addgroup -S "$USER" && adduser -S --uid "$UID" "$USER" && apk add --no-cache
 COPY --from=build /app/web/public ./public
 COPY --from=build  --chown="$USER":"$USER" /app/web/.next/standalone ./
 COPY --from=build  --chown="$USER":"$USER" /app/web/.next/static ./.next/static
-RUN ls -la
+RUN ls
 
 USER "$UID"
 EXPOSE 3000
 
 ENTRYPOINT ["/sbin/tini", "--"]
-CMD ["node", "web/server.js"]
+CMD ["node", "app/web/server.js"]
