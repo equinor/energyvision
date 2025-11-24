@@ -1,6 +1,6 @@
 const archiveServerHostname = process.env.NEXT_PUBLIC_ARCHIVE_CONTENT_LINK
 
-import path from 'node:path'
+import { join } from 'node:path'
 /* import { withSentryConfig } from '@sentry/nextjs' */
 import type { NextConfig } from 'next'
 import createNextIntlPlugin from 'next-intl/plugin'
@@ -43,10 +43,11 @@ export type ConfigRedirect = {
 const nextConfig: NextConfig = {
   output: 'standalone',
   transpilePackages: ['friendly-challenge', '@energyvision/shared'],
-  turbopack: {
-    root: path.join(__dirname, '../../'),
+  // this includes files from the monorepo base one directories up
+  outputFileTracingRoot: join(__dirname, '../'),
+  typescript: {
+    tsconfigPath: isProd ? 'tsconfig.build.json' : 'tsconfig.json',
   },
-  /*   outputFileTracingRoot: join(__dirname, '../'), */
   images: {
     remotePatterns: [
       {

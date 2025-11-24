@@ -63,26 +63,20 @@ ENV NEXT_PUBLIC_ALGOLIA_APP_ID=${ARG_ALGOLIA_APP_ID}
 ENV NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY=${ARG_ALGOLIA_SEARCH_API_KEY}
 ENV NEXT_PUBLIC_FRIENDLY_CAPTCHA_SITEKEY=${ARG_FRIENDLY_CAPTCHA_SITEKEY}
 
-
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
-ENV UID=12345
 ENV NEXT_TELEMETRY_DISABLED=1
 
-COPY --from=build --chown=nextjs:nodejs /app/web/public ./public
-COPY --from=build --chown=nextjs:nodejs  /app/shared ./shared
-# Automatically leverage output traces to reduce image size
-# https://nextjs.org/docs/advanced-features/output-file-tracing
-COPY --from=build --chown=nextjs:nodejs /app/web/.next/standalone ./
-COPY --from=build --chown=nextjs:nodejs /app/web/.next/static ./.next/static
+# Don't run production as root
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+USER nextjs
+
+COPY --from=build  --chown=nextjs:nodejs /app/shared ./shared
+COPY --from=build  --chown=nextjs:nodejs /app/web/.next/standalone ./
+COPY --from=build  --chown=nextjs:nodejs /app/web/.next/static ./.next/static
 
 RUN apk add --no-cache tini
 
-USER nextjs
-
 EXPOSE 3000
 
-ENV PORT=3000
-
 ENTRYPOINT ["/sbin/tini", "--"]
-CMD ["node", "/app/web/server.js"]
+CMD ["node", "server.js"]
