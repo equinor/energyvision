@@ -43,10 +43,13 @@ export type ConfigRedirect = {
 const nextConfig: NextConfig = {
   output: 'standalone',
   transpilePackages: ['friendly-challenge', '@energyvision/shared'],
-  // this includes files from the monorepo base two directories up
+  turbopack: {
+    root: join(__dirname, '../../'),
+  },
+  //this includes files from the monorepo base two directories up
   outputFileTracingRoot: join(__dirname, '../../'),
   outputFileTracingIncludes: {
-    '/shared/*': ['../shared/*'],
+    '../shared/*': ['../shared/*'],
   },
   images: {
     remotePatterns: [
