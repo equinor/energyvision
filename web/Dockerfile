@@ -64,17 +64,16 @@ ENV NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY=${ARG_ALGOLIA_SEARCH_API_KEY}
 ENV NEXT_PUBLIC_FRIENDLY_CAPTCHA_SITEKEY=${ARG_FRIENDLY_CAPTCHA_SITEKEY}
 
 ENV NEXT_TELEMETRY_DISABLED=1
+ENV USER nextjs
+ENV UID 12345
 
-# Don't run production as root
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
-USER nextjs
+RUN addgroup -S "$USER" && adduser -S --uid "$UID" "$USER" && apk add --no-cache tini
 
-COPY --from=build  --chown=nextjs:nodejs /app/web/.next/standalone ./
-COPY --from=build  --chown=nextjs:nodejs /app/web/.next/static ./.next/static
+COPY --from=builder /app/web/public ./public
+COPY --from=build  --chown="$USER":"$USER" /app/web/.next/standalone ./
+COPY --from=build  --chown="$USER":"$USER" /app/web/.next/static ./.next/static
 
-RUN apk add --no-cache tini
-
+USER "$UID"
 EXPOSE 3000
 
 ENTRYPOINT ["/sbin/tini", "--"]
