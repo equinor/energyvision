@@ -85,7 +85,7 @@ const getInitialResponse = unstable_cache(
     return response
   },
   ['news'],
-  { revalidate: 3600, tags: ['news'] },
+  { tags: ['news'] },
 )
 
 export default async function NewsPage({
