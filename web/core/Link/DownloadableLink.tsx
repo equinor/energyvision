@@ -3,7 +3,7 @@ import { Typography } from '@/core/Typography'
 import { Modal } from '@/sections/Modal'
 import FriendlyCaptcha from '@/templates/forms/FriendlyCaptcha'
 import { ArrowRight } from '../../icons'
-import { forwardRef, useState } from 'react'
+import { forwardRef, useCallback, useState } from 'react'
 import { getArrowElement, ResourceLinkProps } from './ResourceLink'
 import { BaseLink } from './BaseLink'
 import { BsFiletypePdf, BsFiletypeXlsx } from 'react-icons/bs'
@@ -116,8 +116,7 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
     }
   }
 
-  const handleSuccessfullFriendlyChallenge = async (event: any) => {
-    console.log('captcha event', event)
+  const handleSuccessfullFriendlyChallenge = useCallback(async (event: any) => {
     const solution = event.detail.response
     if (fileName) {
       setIsFriendlyChallengeDone(true)
@@ -134,7 +133,7 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
       const url = await response.json()
       setDownloadRequestUrl(url.url)
     }
-  }
+  },[fileName])
 
   const commonResourceLinkWrapperClassName = `
     group
@@ -185,7 +184,7 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
           <span className="bg-grey-40 h-[1px] w-[0%] transition-all duration-300 group-hover:w-full" />
         )}
       </button>
-      <Modal isOpen={showModal} onClose={handleClose} title="Request file download">
+      { showModal  && <Modal isOpen={showModal} onClose={handleClose} title="Request file download">
         <Typography as="h2" variant="h5" className="mb-4">
           {intl('request_download_action_prefix')}
           {` ${label}`}
@@ -229,7 +228,7 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
             <span className="bg-grey-40 h-[1px] w-[0%] transition-all duration-300 group-hover:w-full" />
           </BaseLink>
         )}
-      </Modal>
+      </Modal>}
     </div>
   )
 })
