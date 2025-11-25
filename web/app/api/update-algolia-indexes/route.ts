@@ -2,7 +2,7 @@ import { isValidSignature, SIGNATURE_HEADER_NAME } from '@sanity/webhook'
 import { groq } from 'next-sanity'
 import { sanityClientWithEquinorCDN } from '@/sanity/lib/equinorCdnClient'
 import { NextRequest } from 'next/server'
-import { revalidateTag } from 'next/cache'
+import { revalidatePath } from 'next/cache'
 
 const SANITY_API_TOKEN = process.env.SANITY_API_TOKEN || ''
 const ALGOLIA_FUNCTION_URL = process.env.ALGOLIA_FUNCTION_URL || ''
@@ -40,7 +40,8 @@ export async function POST(req: NextRequest) {
 
   const revalidateNewsroomPages = async () => {
     console.log(new Date(), 'Revalidating: /news')
-    revalidateTag('news', 'max')
+    revalidatePath('/news')
+    revalidatePath('/no/nyheter')
   }
 
   if (data._type === 'news') {
