@@ -1,7 +1,6 @@
 import { isValidSignature, SIGNATURE_HEADER_NAME } from '@sanity/webhook'
 import { groq } from 'next-sanity'
-import getRawBody from 'raw-body'
-import { sanityClient } from '../../../../studio/sanity.client'
+import { sanityClientWithEquinorCDN } from '@/sanity/lib/equinorCdnClient'
 import { NextRequest } from 'next/server'
 import { revalidateTag } from 'next/cache'
 
@@ -58,7 +57,7 @@ export default async function POST(req: NextRequest) {
       return new Response(JSON.stringify({ message: "Error occured while updating newsroom revalidation" }), { status: 400 })
     }
   }
-  const result = await sanityClient.fetch(
+  const result = await sanityClientWithEquinorCDN.fetch(
     groq`*[_type match "route_*" && content._ref == $id && excludeFromSearch != true][0]{"slug": slug.current}`,
     {
       id: data._id,
