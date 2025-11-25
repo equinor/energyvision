@@ -1,4 +1,6 @@
+'use client'
 import NextImage, { type ImageProps as NextImageProps } from 'next/image'
+import type { PortableTextBlock } from 'next-sanity'
 import { twMerge } from 'tailwind-merge'
 import { useMediaQuery } from '@/lib/hooks/useMediaQuery'
 import { resolveImage } from '@/sanity/lib/utils'
@@ -140,6 +142,7 @@ type ImageProps = Omit<NextImageProps, 'src' | 'alt' | 'sizes'> & {
   className?: string
   /** overrides for the next image */
   imageClassName?: string
+  caption?: PortableTextBlock[]
 }
 
 //Double check crop and hotspot information comes to sanity fetch image

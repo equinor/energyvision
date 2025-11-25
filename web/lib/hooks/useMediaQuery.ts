@@ -1,6 +1,6 @@
 'use client'
-import { useEffect, useState } from 'react'
 import { useIsomorphicLayoutEffect } from '@equinor/eds-utils'
+import { useState } from 'react'
 
 const getMatches = (query: string): boolean => {
   // Prevents SSR issues
@@ -31,7 +31,7 @@ export function useMediaQuery(query: string): boolean | undefined {
     setHasMatches(getMatches(query))
   }
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const matchMedia = window.matchMedia(query)
     handleChange()
     matchMedia.addEventListener('change', handleChange)

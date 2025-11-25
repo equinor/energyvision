@@ -1,8 +1,8 @@
-import createImageUrlBuilder from '@sanity/image-url'
-import { dataset, projectId, studioUrl } from '@/sanity/lib/api'
-import { createDataAttribute, CreateDataAttributeProps } from 'next-sanity'
 import { getImageDimensions } from '@sanity/asset-utils'
-import { GridType } from '@/core/Image/Image'
+import createImageUrlBuilder from '@sanity/image-url'
+import { type CreateDataAttributeProps, createDataAttribute } from 'next-sanity'
+import type { GridType } from '@/core/Image/Image'
+import { dataset, projectId, studioUrl } from '@/sanity/lib/api'
 import { sanityClientWithEquinorCDN } from './equinorCdnClient'
 
 const imageBuilder = createImageUrlBuilder(sanityClientWithEquinorCDN)
@@ -17,7 +17,6 @@ const getMaxWidth = (paddingGrid?: GridType, isLargerDisplays = false) => {
       return isLargerDisplays ? 570 : 800
     case 'full':
       return isLargerDisplays ? 2560 : 800
-    case 'lg':
     default:
       return isLargerDisplays ? 1100 : 800
   }
@@ -29,7 +28,6 @@ export const urlForImage = (source: any) => {
   if (!source?.asset?._ref) {
     return undefined
   }
-  console.log('source', source)
   const imageRef = source?.asset?._ref
   const crop = source.crop
   // get the image's og dimensions
@@ -45,7 +43,10 @@ export const urlForImage = (source: any) => {
     const top = Math.floor(height * crop.top)
 
     // gather into a url
-    return imageBuilder?.image(source).rect(left, top, croppedWidth, croppedHeight).auto('format')
+    return imageBuilder
+      ?.image(source)
+      .rect(left, top, croppedWidth, croppedHeight)
+      .auto('format')
   }
 
   return imageBuilder?.image(source).auto('format')
@@ -90,7 +91,9 @@ export const resolveImage = (props: ResolveImageProps) => {
 
   const { width: imageWidth, height: imageHeight } = getImageDimensions(image)
 
-  let width = customWidth ? customWidth : Math.round(Math.min(imageWidth, getMaxWidth(grid, isLargerDisplays)))
+  let width = customWidth
+    ? customWidth
+    : Math.round(Math.min(imageWidth, getMaxWidth(grid, isLargerDisplays)))
   let height = Math.round(width / ratio)
 
   // If portrait and one wants to control height and keep aspect
@@ -106,6 +109,7 @@ export const resolveImage = (props: ResolveImageProps) => {
 
   return { url, width, height }
 }
+
 export type OGImage =
   | {
       url: string
@@ -115,13 +119,18 @@ export type OGImage =
     }
   | undefined
 
-export function resolveOpenGraphImage(image: any, width = 1200, height = 627): OGImage {
+export function resolveOpenGraphImage(
+  image: any,
+  width = 1200,
+  height = 627,
+): OGImage {
   if (!image) return
   const url = urlForImage(image)?.width(1200).height(627).fit('crop').url()
   if (!url) return
   return { url, alt: image?.alt as string, width, height }
 }
-type DataAttributeConfig = CreateDataAttributeProps & Required<Pick<CreateDataAttributeProps, 'id' | 'type' | 'path'>>
+type DataAttributeConfig = CreateDataAttributeProps &
+  Required<Pick<CreateDataAttributeProps, 'id' | 'type' | 'path'>>
 
 export function dataAttr(config: DataAttributeConfig) {
   return createDataAttribute({

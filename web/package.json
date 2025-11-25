@@ -15,7 +15,8 @@
     "start": "next start",
     "type-check": "tsc --project tsconfig.json --pretty",
     "check-types": "tsc",
-    "generate-translations": "pnpm tsx --env-file-if-exists=.env ./scripts/generate-translations.ts"
+    "generate-translations": "pnpm tsx --env-file-if-exists=.env ./scripts/generate-translations.ts",
+    "generate-redirects": "pnpm tsx --env-file-if-exists=.env ./scripts/generate-redirects.ts"
   },
   "dependencies": {
     "@algolia/cache-browser-local-storage": "^4.22.1",

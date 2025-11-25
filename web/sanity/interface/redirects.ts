@@ -2,9 +2,9 @@
 //@ts-nocheck
 
 //import { ConfigRedirect } from '@/next.config'
-import { client } from '../lib/client'
+import { dataset } from '../../languageConfig'
+import { notSecuredTokenClient } from '../lib/client'
 import { getLocaleFromName } from '../localization'
-import { dataset } from '@/languageConfig'
 
 /* export const getAllRedirects = async () => {
   try {
@@ -29,10 +29,12 @@ import { dataset } from '@/languageConfig'
 } */
 
 const getExternalRedirects = async () => {
-  const result = await client.fetch(`*[_type == "externalRedirect"]{from,to}`)
+  const result = await notSecuredTokenClient.fetch(
+    `*[_type == "externalRedirect"]{from,to}`,
+  )
   const externalRedirects = result
-    .filter((e) => e)
-    .map((externalRedirect) => {
+    .filter(e => e)
+    .map(externalRedirect => {
       return {
         source: externalRedirect.from,
         permanent: true,
@@ -56,7 +58,10 @@ const getExternalRedirects = async () => {
     },
     ...externalRedirects,
   ]
-  if (dataset && ['global', 'global-development', 'global-test'].includes(dataset)) {
+  if (
+    dataset &&
+    ['global', 'global-development', 'global-test'].includes(dataset)
+  ) {
     const fiftySiteRedirects = [
       {
         source: '/50/en/:slug*',
@@ -71,18 +76,18 @@ const getExternalRedirects = async () => {
     ]
     redirects.concat(fiftySiteRedirects)
   }
-  return redirects.filter((e) => e)
+  return redirects.filter(e => e)
 }
 
-const getInternalRedirects = async () => {
-  const result = await client.fetch(`*[_type == "redirect"]{
+export const getInternalRedirects = async () => {
+  const result = await notSecuredTokenClient.fetch(`*[_type == "redirect"]{
   lang,
   from,
   "to": to->slug.current
 }`)
   const redirects = result
-    .filter((e) => e)
-    .map((redirect) => {
+    .filter(e => e)
+    .map(redirect => {
       const to = redirect.to === '/' ? '' : redirect.to
       console.log('redirect data', redirect)
       const locale = getLocaleFromName(redirect.lang)
@@ -94,14 +99,19 @@ const getInternalRedirects = async () => {
         destination: des,
         permanent: true,
       }
-      return redirect.from.startsWith(locale) ? { ...nextRedirect, locale: false } : nextRedirect
+      return redirect.from.startsWith(locale)
+        ? { ...nextRedirect, locale: false }
+        : nextRedirect
     })
   console.log('internal redirects', redirects)
   return [...redirects]
 }
 
 export const getAllRedirects = async () => {
-  const result = await Promise.all([getExternalRedirects(), getInternalRedirects()])
+  const result = await Promise.all([
+    getExternalRedirects(),
+    getInternalRedirects(),
+  ])
 
   return result.flat()
 }
@@ -114,7 +124,10 @@ export const getWWWRedirect = (host, pathname) => {
 }
 
 export const getDnsRedirect = (host, pathname) => {
-  const dns = host.replace('http://', '').replace('https://', '').replace('www.', '')
+  const dns = host
+    .replace('http://', '')
+    .replace('https://', '')
+    .replace('www.', '')
 
   if (dns === 'statoil.com') {
     return `https://www.equinor.com${pathname}`
@@ -129,8 +142,8 @@ export const getDnsRedirect = (host, pathname) => {
   }
 
   const redirect =
-    dnsRedirects.find((redirect) => redirect.from === dns + pathname) ||
-    dnsRedirects.find((redirect) => redirect.from === dns)
+    dnsRedirects.find(redirect => redirect.from === dns + pathname) ||
+    dnsRedirects.find(redirect => redirect.from === dns)
 
   return redirect && `https://www.equinor.com${redirect.to}`
 }

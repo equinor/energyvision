@@ -102,9 +102,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const modifiedDate = isDateAfter(publishDateTime, updatedAt)
     ? publishDateTime
     : updatedAt
-  console.log('[...slug] openGraphImage', openGraphImage)
+
   const ogImage = resolveOpenGraphImage(openGraphImage ?? heroImage?.image)
-  console.log('[...slug] ogUrl', ogImage)
+
   return {
     title: `${documentTitle || plainTitle} - ${metaTitleSuffix}`,
     description: metaDescription,

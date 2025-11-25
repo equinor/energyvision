@@ -4,6 +4,7 @@ import { join } from 'node:path'
 /* import { withSentryConfig } from '@sentry/nextjs' */
 import type { NextConfig } from 'next'
 import createNextIntlPlugin from 'next-intl/plugin'
+//import { getAllRedirects } from './sanity/interface/redirects'
 import securityHeaders from './securityHeaders'
 
 /* import { getAllRedirects } from './sanity/interface/redirects' */
@@ -95,10 +96,9 @@ const nextConfig: NextConfig = {
     ].filter(e => e)
   },
   /*   async redirects() {
-    return getAllRedirects()
+    return await getAllRedirects()
   }, */
   env: {
-    // Matches the behavior of `sanity dev` which sets styled-components to use the fastest way of inserting CSS rules in both dev and production. It's default behavior is to disable it in dev mode.
     SC_DISABLE_SPEEDY: 'false',
   },
   experimental: {
@@ -107,6 +107,7 @@ const nextConfig: NextConfig = {
       '@equinor/eds-icons',
       'video.js',
     ],
+    browserDebugInfoInTerminal: true,
   },
 }
 

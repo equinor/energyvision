@@ -21,9 +21,8 @@ const IS_ARCHIVED_NEWS_DOWNLOADS =
   return Boolean(article)
 } */
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { origin, locale } = request.nextUrl
-  console.log('Middleware')
   console.log(request.nextUrl.href)
   const pathname = decodeURI(request.nextUrl.pathname)
   const isDotHtml = pathname.slice(-5) === DOT_HTML

@@ -1,9 +1,9 @@
-import pageContentFields from './common/pageContentFields'
-import { heroFields } from './common/heroFields'
-import { seoAndSomeFields } from './common/seoAndSomeFields'
 import { breadcrumbsQuery } from './common/breadcrumbs'
-import { stickyMenu, stickyMenuOutSideContent } from './common/stickyMenu'
 import { functions, pageContentFunctions } from './common/functions'
+import { heroFields } from './common/heroFields'
+import pageContentFields from './common/pageContentFields'
+import { seoAndSomeFields } from './common/seoAndSomeFields'
+import { stickyMenu, stickyMenuOutSideContent } from './common/stickyMenu'
 
 const allSlugsQuery = /* groq */ `
     "currentSlug": {
