@@ -27,7 +27,7 @@ const updateAlgoliaIndex = async (body: any) => {
   return response
 }
 
-export default async function POST(req: NextRequest) {
+export async function POST(req: NextRequest) {
     const signature = req.headers.get(SIGNATURE_HEADER_NAME)
     const body = await req.text()
 
