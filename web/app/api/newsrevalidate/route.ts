@@ -1,9 +1,6 @@
 import { isValidSignature, SIGNATURE_HEADER_NAME } from '@sanity/webhook'
-import { groq } from 'next-sanity'
-import { languages } from '../../../languageConfig'
-import { sanityClient } from '../../../../studio/sanity.client'
 import { NextRequest } from 'next/server'
-import { revalidatePath, revalidateTag } from 'next/cache'
+import { revalidateTag } from 'next/cache'
 
 const SANITY_API_TOKEN = process.env.SANITY_API_TOKEN || ''
 
