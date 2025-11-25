@@ -23,6 +23,7 @@ const updateAlgoliaIndex = async (body: any) => {
     method: 'POST',
     headers: headersList,
     body,
+    cache: "no-store"
   })
   return response
 }
