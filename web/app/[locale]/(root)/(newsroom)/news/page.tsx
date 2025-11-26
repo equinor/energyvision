@@ -17,6 +17,8 @@ import {
 } from '../../../../../sanity/localization'
 import type { NewsRoomPageType } from '../../../../../types'
 
+export const dynamic = "force-dynamic";
+
 export function generateStaticParams() {
   return Flags.HAS_NEWSROOM ? [{ locale: 'en-GB' }] : []
 }
