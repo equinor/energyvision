@@ -9,6 +9,7 @@ import { BaseLink } from './BaseLink'
 import { BsFiletypePdf, BsFiletypeXlsx } from 'react-icons/bs'
 import { useTranslations } from 'next-intl'
 import { twMerge } from 'tailwind-merge'
+import { getFileUrl } from '@/lib/actions/getFileUrl'
 
 type Variants = 'default' | 'fit' | 'stickyMenu'
 
@@ -25,7 +26,7 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
   const intl = useTranslations()
   const [showModal, setShowModal] = useState(false)
   const [isFriendlyChallengeDone, setIsFriendlyChallengeDone] = useState(false)
-  const [downloadRequestUrl, setDownloadRequestUrl] = useState(null)
+  const [downloadRequestUrl, setDownloadRequestUrl] = useState<string|null>(null)
 
   const [notHuman, setNotHuman] = useState(false)
 
@@ -120,18 +121,14 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
     const solution = event.detail.response
     if (fileName) {
       setIsFriendlyChallengeDone(true)
-      const response = await fetch('/api/download/getFileUrl', {
-        body: JSON.stringify({
-          fileName: fileName,
-          frcCaptchaSolution: solution,
-        }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        method: 'POST',
-      })
-      const url = await response.json()
-      setDownloadRequestUrl(url.url)
+      const result = await getFileUrl(fileName,solution)
+      if("url" in result){
+        setNotHuman(false)
+        setDownloadRequestUrl(result.url)
+      }
+      else {
+        setNotHuman(true)
+      }
     }
   },[fileName])
 

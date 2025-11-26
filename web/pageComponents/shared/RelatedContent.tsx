@@ -33,6 +33,7 @@ const RelatedContent = ({
             return (
               <li key={item.id}>
                 <ResourceLink
+                  {...item}
                   href={url as string}
                   {...(item.link?.lang && {
                     hrefLang: getLocaleFromName(item.link?.lang),
@@ -40,6 +41,7 @@ const RelatedContent = ({
                   type={item.type}
                   extension={item.extension}
                   showExtensionIcon={true}
+                  
                 >
                   {`${item.label}`}
                 </ResourceLink>
