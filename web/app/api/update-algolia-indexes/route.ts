@@ -25,7 +25,20 @@ const updateAlgoliaIndex = async (body: any) => {
     body,
     cache: "no-store"
   })
-  return response
+
+  console.log("YAYAYAYAYAYAY", response)
+
+  const data = await response.json();
+  const taskID = data.taskID;
+
+  await fetch(
+    `https://${process.env.ALGOLIA_APP_ID}.algolia.net/1/indexes/news/task/${taskID}`,
+    {
+      headers: headersList
+    }
+  );
+
+  return new Response(data, { status: 204 });
 }
 
 export async function POST(req: NextRequest) {
@@ -50,9 +63,6 @@ export async function POST(req: NextRequest) {
     const response = await updateAlgoliaIndex(body)
     if (response.status == 204) {
       console.log('Algolia Indexing Success , Revalidating newsroom')
-      // wait for a second revalidate newsroom pages
-      const sleep = (delay: number) => new Promise((resolve) => setTimeout(resolve, delay))
-      await sleep(1000) // wait for a second to let algolia index temporary fix as we dont know the status yet
       await revalidateNewsroomPages()
       return new Response(JSON.stringify({ message: "Index updated and newsroom revalidated" }), { status: 200 })
     } else {
