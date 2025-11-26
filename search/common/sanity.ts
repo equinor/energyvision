@@ -25,8 +25,9 @@ export const getSanityClient = flow(
       dataset,
       projectId,
       token,
-      useCdn: true,
-      apiVersion: '2021-12-17',
+      //  useCdn: true,
+      apiVersion: '2025-11-26',
+      perspective: 'published',
     }),
   ),
 )
