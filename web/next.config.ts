@@ -44,6 +44,11 @@ export type ConfigRedirect = {
 const nextConfig: NextConfig = {
   output: 'standalone',
   transpilePackages: ['friendly-challenge', '@energyvision/shared'],
+  logging: {
+    fetches: {
+      fullUrl: true, // shows logs only when using fetch
+    },
+  },
   turbopack: {
     root: join(__dirname),
   },
