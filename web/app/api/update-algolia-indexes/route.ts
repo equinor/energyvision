@@ -7,8 +7,6 @@ import { revalidatePath } from 'next/cache'
 const SANITY_API_TOKEN = process.env.SANITY_API_TOKEN || ''
 const ALGOLIA_FUNCTION_URL = process.env.ALGOLIA_FUNCTION_URL || ''
 
-// Next.js will by default parse the body, which can lead to invalid signatures
-// https://nextjs.org/docs/api-routes/api-middlewares#custom-config
 export const config = {
   api: {
     bodyParser: false,
@@ -16,40 +14,50 @@ export const config = {
 }
 
 const updateAlgoliaIndex = async (body: any) => {
-  const headersList = {
-    Accept: '*/*',
-  }
   const response = await fetch(ALGOLIA_FUNCTION_URL, {
     method: 'POST',
-    headers: headersList,
+    headers: { Accept: '*/*' },
     body,
     cache: "no-store"
   })
 
-  try{
+  // Debug logs
+  try {
     const text = await response.text()
-    if(text){
-      let _data = JSON.parse(text)
-      console.log("text Update Algolia Index", text)
-      console.log("PARSED TEXT Update Algolia Index", _data)
+    if (text) {
+      console.log("Update Algolia Index Response:", text)
     }
-    console.log("RESPONSE Update Algolia Index", response)
-  }catch(err){
-    console.log("ERROR ON RESPONSE Alglia", err)
-    console.log("RESPONSE Update Algolia Index", response)
+  } catch (err) {
+    console.log("Error parsing Algolia response:", err)
   }
+
   return response
 }
 
-export async function POST(req: NextRequest) {
-    const signature = req.headers.get(SIGNATURE_HEADER_NAME)
-    const body = await req.text()
+// ✅ Polling function to confirm indexing
+const waitForIndexConfirmation = async (objectID: string) => {
+  const CHECK_URL = `${ALGOLIA_FUNCTION_URL}/checkRecord?objectID=${encodeURIComponent(objectID)}`
+  let isIndexed = false
 
-    if (!isValidSignature(body, signature || '', SANITY_API_TOKEN)) {
-        console.log('Unauthorized request: Revalidate Endpoint')
-        return new Response(JSON.stringify({ success: false, msg: 'Unauthorized!' }), { status: 401 })
+  while (!isIndexed) {
+    const checkResponse = await fetch(CHECK_URL)
+    if (checkResponse.status === 200) {
+      isIndexed = true
+    } else {
+      await new Promise(resolve => setTimeout(resolve, 500)) // retry after 0.5s
     }
-    
+  }
+}
+
+export async function POST(req: NextRequest) {
+  const signature = req.headers.get(SIGNATURE_HEADER_NAME)
+  const body = await req.text()
+
+  if (!isValidSignature(body, signature || '', SANITY_API_TOKEN)) {
+    console.log('Unauthorized request: Revalidate Endpoint')
+    return new Response(JSON.stringify({ success: false, msg: 'Unauthorized!' }), { status: 401 })
+  }
+
   const data = JSON.parse(body)
 
   const revalidateNewsroomPages = async () => {
@@ -59,39 +67,45 @@ export async function POST(req: NextRequest) {
   }
 
   if (data._type === 'news') {
-    // wait for news index and revalidate...
-    const response = await updateAlgoliaIndex(body)
-    if (response.status == 204) {
-      console.log('Algolia Indexing Success , Revalidating newsroom')
-      // wait for a second revalidate newsroom pages
-      const sleep = (delay: number) => new Promise((resolve) => setTimeout(resolve, delay))
-      await sleep(1000) // wait for a second to let algolia index temporary fix as we dont know the status yet
-      await revalidateNewsroomPages()
-      return new Response(JSON.stringify({ message: "Index updated and newsroom revalidated" }), { status: 200 })
-    } else {
-      return new Response(JSON.stringify({ message: "Error occured while updating newsroom revalidation" }), { status: 400 })
+    try {
+      const response = await updateAlgoliaIndex(body)
+
+      if (response.status === 204) {
+        console.log('Algolia Indexing Success, waiting for confirmation...')
+        await waitForIndexConfirmation(data._id) // Use Sanity _id or Algolia objectID
+
+        console.log('Revalidating newsroom pages...')
+        await revalidateNewsroomPages()
+
+        return new Response(JSON.stringify({ message: "Index updated and newsroom revalidated" }), { status: 200 })
+      } else {
+        return new Response(JSON.stringify({ message: "Error occurred while updating Algolia index" }), { status: 400 })
+      }
+    } catch (error) {
+      console.error(error)
+      return new Response(JSON.stringify({ message: "Unexpected error", error: error }), { status: 500 })
     }
   }
+
+  // Handle other types
   const result = await sanityClientWithEquinorCDN.fetch(
     groq`*[_type match "route_*" && content._ref == $id && excludeFromSearch != true][0]{"slug": slug.current}`,
-    {
-      id: data._id,
-    },
+    { id: data._id }
   )
+
   try {
     if (result?.slug) {
-      // slug exists for the topic or event
       const response = await updateAlgoliaIndex(body)
-      if (response.status == 204) {
+      if (response.status === 204) {
         return new Response(JSON.stringify({ message: "Index updated" }), { status: 200 })
+      } else {
+        return new Response(JSON.stringify({ message: "Error updating index" }), { status: 400 })
+      }
     } else {
-        return new Response(JSON.stringify(response.body), { status: 400 })
-    }
-    } else {
-        return new Response(JSON.stringify({ message: "No slug" }), { status: 200 })
+      return new Response(JSON.stringify({ message: "No slug" }), { status: 200 })
     }
   } catch (err) {
     console.log(err)
     return new Response(JSON.stringify({ message: "Internal server error" }), { status: 500 })
-}
+  }
 }
