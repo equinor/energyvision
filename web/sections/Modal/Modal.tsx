@@ -42,7 +42,7 @@ const Modal = forwardRef<HTMLDialogElement, ModalProps>(function Modal(
     <dialog
       ref={combinedDialogRef}
       className={twMerge(
-        `starting:open:backdrop:backdrop-blur-sm-none open:backdrop:backdrop-blur-sm-md rounded-lg p-0 opacity-0 backdrop:transition-all open:opacity-100 open:transition-opacity open:backdrop:bg-north-sea-90/50 starting:open:opacity-0 starting:open:backdrop:bg-transparent`,
+        `m-auto starting:open:backdrop:backdrop-blur-sm-none open:backdrop:backdrop-blur-sm-md rounded-lg p-0 opacity-0 backdrop:transition-all open:opacity-100 open:transition-opacity open:backdrop:bg-north-sea-90/50 starting:open:opacity-0 starting:open:backdrop:bg-transparent`,
         dialogClassName,
       )}
       aria-label={title}
