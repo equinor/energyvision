@@ -26,9 +26,14 @@ const updateAlgoliaIndex = async (body: any) => {
     cache: "no-store"
   })
 
-  const data = await response.json()
-  console.log("RESPONSE Update Algolia Index", response)
-  console.log("PARSED RESPONSE Update Algolia Index", data)
+  try{
+    const data = await response.json()
+    console.log("RESPONSE Update Algolia Index", response)
+    console.log("PARSED RESPONSE Update Algolia Index", data)
+  }catch(err){
+    console.log("ERROR ON RESPONSE Alglia", err)
+    console.log("RESPONSE Update Algolia Index", response)
+  }
   return response
 }
 
