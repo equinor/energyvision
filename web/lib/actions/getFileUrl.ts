@@ -1,6 +1,5 @@
 "use server"
 import { validateCaptcha } from '@/app/api/forms/validateCaptcha'
-import { validateFormRequest } from '@/app/api/forms/validateFormRequest'
 import { client } from '@/sanity/lib/client'
 
 const getFileUrlQuery = /* groq */ `
@@ -15,7 +14,8 @@ async function fetchUrl(fileName:string){
      fileName,
     })
     const equinorHref = result[0].url.replace('cdn.sanity.io', 'cdn.equinor.com')
-    console.log('Returning fileUrl ', equinorHref)
+    if(!equinorHref)
+      console.log('Missing url for download link',fileName)
     return { url: equinorHref }
   } catch (err) {
     return { error: 'Failed to fetch file url' }
