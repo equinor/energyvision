@@ -163,8 +163,7 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(
 
         if (hasEmptyQueryOrFirstPage && facetFilterSet.size === 2) {
           console.log('Server cache hit')
-          console.log(facetFilterSet)
-          console.log(JSON.stringify(requests))
+          console.log(initialSearchResponse.hits[0])
           return Promise.resolve({
             results: requests.map(() => initialSearchResponse),
           })
