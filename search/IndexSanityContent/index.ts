@@ -38,7 +38,7 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
 
   const getDocId = O.getOrElse(() => 'no id')(O.fromNullable(req.body?.docToClear))
 
-  pipe(getIndex, (indexArray) =>
+  await pipe(getIndex, (indexArray) =>
     indexArray.map((index) => indexTasks[index](language, logger)(getDocId)().catch(logger.error)),
   )
 }
