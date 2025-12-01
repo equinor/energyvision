@@ -1,8 +1,8 @@
-import CompactBlockEditor from '../components/CompactBlockEditor'
-import { configureBlockContent } from '../editors'
-import { PortableTextBlock, Rule } from 'sanity'
 import { NumberIcon } from '@sanity/icons'
+import type { PortableTextBlock, Rule } from 'sanity'
 import blocksToText from '../../helpers/blocksToText'
+import { CompactBlockEditor } from '../components/CompactBlockEditor'
+import { configureBlockContent } from '../editors'
 import singleItemArray from './singleItemArray'
 
 export default {
@@ -25,13 +25,15 @@ export default {
         input: CompactBlockEditor,
       },
       of: [configureBlockContent({ variant: 'title' })],
-      validation: (Rule: Rule) => Rule.required().warning('In most cases you should add a title'),
+      validation: (Rule: Rule) =>
+        Rule.required().warning('In most cases you should add a title'),
     },
     {
       type: 'boolean',
       name: 'hideTitle',
       title: 'Hide title',
-      description: 'Hides the title, but screen readers will read title of carousel',
+      description:
+        'Hides the title, but screen readers will read title of carousel',
     },
     {
       name: 'ingress',
@@ -44,7 +46,8 @@ export default {
       title: 'Key Number Items',
       type: 'array',
       of: [{ type: 'keyNumberItem' }],
-      validation: (Rule: Rule) => Rule.min(2).error('Need minimum 2 key numbers'),
+      validation: (Rule: Rule) =>
+        Rule.min(2).error('Need minimum 2 key numbers'),
     },
     {
       name: 'useHorizontalScroll',

@@ -1,12 +1,12 @@
-import { EdsIcon } from '../../icons'
 import { play_circle } from '@equinor/eds-icons'
+import type { PortableTextBlock, Reference, Rule } from 'sanity'
 import blocksToText from '../../helpers/blocksToText'
-import type { Reference, Rule, PortableTextBlock } from 'sanity'
-import { title } from './iframe/sharedIframeFields'
-import { configureBlockContent } from '../editors'
-import CompactBlockEditor from '../components/CompactBlockEditor'
+import { EdsIcon } from '../../icons'
+import { CompactBlockEditor } from '../components/CompactBlockEditor'
 import { defaultColors } from '../defaultColors'
+import { configureBlockContent } from '../editors'
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
+import { title } from './iframe/sharedIframeFields'
 
 export default {
   name: 'videoPlayerCarousel',
@@ -28,7 +28,8 @@ export default {
       type: 'boolean',
       name: 'hideTitle',
       title: 'Hide title',
-      description: 'Hides the title, but screen readers will read title of carousel',
+      description:
+        'Hides the title, but screen readers will read title of carousel',
     },
     {
       name: 'ingress',
@@ -36,7 +37,10 @@ export default {
       description: 'Optional short description. Max 400 characters',
       type: 'array',
       of: [configureBlockContent({ variant: 'ingress' })],
-      validation: (Rule: Rule) => Rule.custom((value: any) => validateCharCounterEditor(value, 400, true)),
+      validation: (Rule: Rule) =>
+        Rule.custom((value: any) =>
+          validateCharCounterEditor(value, 400, true),
+        ),
     },
     {
       type: 'array',

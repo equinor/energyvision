@@ -1,24 +1,23 @@
 'use client'
-import type { DesignOptions, MagazineIndexPageType } from '../../types'
+import type { PortableTextBlock } from 'next-sanity'
 import { useMemo, useRef, useState } from 'react'
-import { HeroTypes } from '../../types/index'
-import { BackgroundContainer } from '@/core/Backgrounds'
-import Teaser from '../../sections/teasers/Teaser/Teaser'
-import Blocks from '../../portableText/Blocks'
-import MagazineTagBar from '@/sections/MagazineTags/MagazineTagBar'
 import { ImageBackgroundContainer } from '@/core/Backgrounds/ImageBackgroundContainer'
-import MagazineCard from '@/sections/cards/MagazineCard/MagazineCard'
 import { SimplePagination } from '@/core/SimplePagination/SimplePagination'
 import CardSkeleton from '@/sections/cards/CardSkeleton/CardSkeleton'
-import { PaginationContextProvider } from '../../lib/contexts/PaginationContext'
-import { SharedBanner } from '../shared/SharedBanner'
-import SharedTitle from '../shared/SharedTitle'
+import MagazineCard from '@/sections/cards/MagazineCard/MagazineCard'
+import { HeroBlock, type HeroData } from '@/sections/Hero/HeroBlock'
+import MagazineTagBar from '@/sections/MagazineTags/MagazineTagBar'
 import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
-
-type MagazineIndexTemplateProps = {
-  pageData: MagazineIndexPageType
-  slug?: string
-}
+import { PaginationContextProvider } from '../../lib/contexts/PaginationContext'
+import Blocks from '../../portableText/Blocks'
+import Teaser, { type TeaserData } from '../../sections/teasers/Teaser/Teaser'
+import type {
+  Background,
+  DesignOptions,
+  ImageWithCaptionData,
+  MagazineCardData,
+  SeoData,
+} from '../../types'
 
 const chunkArray = (array: any[] = [], chunkSize: number) => {
   const chunkedArray = []
@@ -28,8 +27,36 @@ const chunkArray = (array: any[] = [], chunkSize: number) => {
   return chunkedArray
 }
 
-const MagazineRoom = ({ pageData }: MagazineIndexTemplateProps) => {
-  const { ingress, title, hero, magazineTags, magazineArticles, footerComponent } = pageData || {}
+export type MagazineIndexPageData = {
+  seoAndSome: SeoData
+  title: PortableTextBlock[]
+  hero: HeroData
+  ingress: {
+    content: PortableTextBlock[]
+    background: Background
+  }
+  query?: any
+  magazineArticles: MagazineCardData[]
+  heroImage: ImageWithCaptionData
+  footerComponent?: TeaserData
+  magazineTags: { id: string; title: string; key: string }[]
+  background: Background
+}
+// Sanity MagazineIndexPage
+type MagazineRoomProps = {
+  pageData: MagazineIndexPageData
+  slug?: string
+}
+
+const MagazineRoom = ({ pageData }: MagazineRoomProps) => {
+  const {
+    ingress,
+    title,
+    hero,
+    magazineTags,
+    magazineArticles,
+    footerComponent,
+  } = pageData || {}
   const isArray = Array.isArray(pageData)
   const page = isArray ? null : (pageData as any)
 
@@ -41,14 +68,26 @@ const MagazineRoom = ({ pageData }: MagazineIndexTemplateProps) => {
     return page?.magazineArticles || []
   }, [isArray, pageData, page])
 
-  const pagedList = useMemo(() => chunkArray(magazineList || [], 12), [magazineList])
+  const pagedList = useMemo(
+    () => chunkArray(magazineList || [], 12),
+    [magazineList],
+  )
   const [pageIdx, setPage] = useState(0)
-  const captionDesignOtions: DesignOptions = {
-    background: {
-      backgroundColor: ingress?.background,
-    },
+
+  const { figure, ratio } = hero
+  console.log('Magazieneroom hero', hero)
+  const heroBackground = ingress ? ingress.background : undefined
+
+  const heroProps = {
+    title,
+    figure,
+    ratio,
+    ingress: ingress.content,
+    //@ts-ignore
+    background: heroBackground.background,
+    className: `${ingress.background.dark ? 'dark' : ''}`,
+    tags: magazineTags,
   }
-  const { bg, dark } = getBgAndDarkFromBackground(captionDesignOtions)
 
   const getNext = async () => {
     setIsLoading(true)
@@ -62,16 +101,23 @@ const MagazineRoom = ({ pageData }: MagazineIndexTemplateProps) => {
   }
 
   return (
-    <main className="flex flex-col [:not(:has(.sticky-menu))]:pt-topbar">
-      {!!hero && hero?.type !== HeroTypes.BACKGROUND_IMAGE && (
+    <main className='flex flex-col [:not(:has(.sticky-menu))]:pt-topbar'>
+      <HeroBlock {...heroProps} />
+
+      {/*       {!!hero && hero?.type !== HeroTypes.BACKGROUND_IMAGE && (
         <>
           <SharedBanner title={title} hero={hero} hideImageCaption={true} />
           {hero?.type !== HeroTypes.DEFAULT && title && (
-            <div className="py-11">
-              <SharedTitle sharedTitle={title} background={{ backgroundColor: ingress?.background }} />
+            <div className='py-11'>
+              <SharedTitle
+                sharedTitle={title}
+                background={{ backgroundColor: ingress?.background }}
+              />
             </div>
           )}
-          <div className={`w-full ${bg} ${dark ? 'dark' : ''} mx-auto px-layout-sm pb-16 max-lg:py-11 lg:px-layout-lg`}>
+          <div
+            className={`w-full ${bg} ${dark ? 'dark' : ''} mx-auto px-layout-sm pb-16 max-lg:py-11 lg:px-layout-lg`}
+          >
             {ingress?.content && <Blocks value={ingress.content} />}
           </div>
         </>
@@ -82,33 +128,37 @@ const MagazineRoom = ({ pageData }: MagazineIndexTemplateProps) => {
             <ImageBackgroundContainer
               image={hero.figure.image}
               overrideGradient
-              scrimClassName="py-40 lg:py-44 black-blue-center-gradient"
+              scrimClassName='py-40 lg:py-44 black-blue-center-gradient'
               aspectRatio={'9:16'}
             >
-              <div className="mx-auto px-layout-lg max-lg:py-11">
-                <Blocks value={title} id="mainTitle" variant="h1" />
-                <div className="pt-6">{ingress?.content && <Blocks value={ingress.content} />}</div>
+              <div className='mx-auto px-layout-lg max-lg:py-11'>
+                <Blocks value={title} id='mainTitle' variant='h1' />
+                <div className='pt-6'>
+                  {ingress?.content && <Blocks value={ingress.content} />}
+                </div>
               </div>
             </ImageBackgroundContainer>
           ) : (
-            <div className="mx-auto px-layout-lg max-lg:py-11">
-              <Blocks value={title} id="mainTitle" variant="h1" />
-              <div className="pt-6">{ingress?.content && <Blocks value={ingress.content} />}</div>
+            <div className='mx-auto px-layout-lg max-lg:py-11'>
+              <Blocks value={title} id='mainTitle' variant='h1' />
+              <div className='pt-6'>
+                {ingress?.content && <Blocks value={ingress.content} />}
+              </div>
             </div>
           )}
         </>
-      )}
-      {magazineTags?.length > 0 && <MagazineTagBar tags={magazineTags} />}
+      )} */}
+      {/*       {magazineTags?.length > 0 && <MagazineTagBar tags={magazineTags} />} */}
       <PaginationContextProvider defaultRef={resultsRef}>
-        <ul className="mx-auto grid w-full scroll-mt-24 auto-rows-fr grid-cols-1 gap-8 px-layout-sm py-12 sm:grid-cols-2 xl:grid-cols-3">
+        <ul className='mx-auto grid w-full scroll-mt-24 auto-rows-fr grid-cols-1 gap-8 px-layout-sm py-12 sm:grid-cols-2 xl:grid-cols-3'>
           {isLoading &&
-            Array.from({ length: 5 }, (_v, i) => i).map((item) => (
+            Array.from({ length: 5 }, (_v, i) => i).map(item => (
               <li key={item}>
                 <CardSkeleton hideEyebrow hideIngress />
               </li>
             ))}
           {!isLoading &&
-            pagedList?.[pageIdx]?.map((article) => (
+            pagedList?.[pageIdx]?.map(article => (
               <li key={article.id}>
                 <MagazineCard data={article} />
               </li>
@@ -120,11 +170,13 @@ const MagazineRoom = ({ pageData }: MagazineIndexTemplateProps) => {
             onPreviousPage={getPrevious}
             isFirstPage={pageIdx === 0}
             isLastPage={pageIdx === pagedList.length - 1}
-            className="justify-center pt-12"
+            className='justify-center pt-12'
           />
         )}
       </PaginationContextProvider>
-      <div className="pt-24">{footerComponent && <Teaser data={footerComponent} />}</div>
+      <div className='pt-24'>
+        {footerComponent && <Teaser data={footerComponent} />}
+      </div>
     </main>
   )
 }

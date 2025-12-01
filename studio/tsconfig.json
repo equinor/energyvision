@@ -4,8 +4,8 @@
     "moduleDetection": "force",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"],
-      "@shared/*": ["../shared/*"]
+      "@/*": ["./*"]
+      /*       "@shared/*": ["../shared/*"] */
     }
   },
   "include": ["**/*.ts", "**/*.tsx", "../shared/*"],

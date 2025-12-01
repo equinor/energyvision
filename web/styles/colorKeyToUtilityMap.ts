@@ -14,7 +14,7 @@ export type TWColor = {
   text: string
 }
 
-export const colorKeyToUtilityMap: Record<string, TWColor> = {
+export const colorKeyToUtilityMap = {
   'blue-50': {
     backgroundName: 'Mid Blue',
     background: 'bg-blue-50',
@@ -125,12 +125,12 @@ export const getBgAndDarkFromBackground = (designOptions?: DesignOptions) => {
   if (backwardCompabilityColorName && backwardCompabilityColorName !== '') {
     bgKey = backwardCompabilityColorName
   }
-  if (background?.backgroundUtility && background?.backgroundUtility !== '') {
+  if (background?.backgroundUtility) {
     bgKey = background?.backgroundUtility
   }
 
   return {
-    bg: colorKeyToUtilityMap[bgKey].background,
-    dark: colorKeyToUtilityMap[bgKey].dark,
+    bg: colorKeyToUtilityMap[bgKey as ColorKeys].background,
+    dark: colorKeyToUtilityMap[bgKey as ColorKeys]?.dark,
   }
 }

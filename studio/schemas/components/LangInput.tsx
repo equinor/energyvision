@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { languages } from '../../languages'
+
+import { Badge, Inline, Label } from '@sanity/ui'
 import countries from '../../icons/countries'
-import { Label, Inline, Badge } from '@sanity/ui'
+import { languages } from '../../languages'
 
 function Flag({ lang }: any) {
   //@ts-ignore
@@ -10,13 +11,13 @@ function Flag({ lang }: any) {
 }
 
 export default function LangInput({ value }: any) {
-  const language = languages.filter((it) => it.name === value).at(0)
+  const language = languages.filter(it => it.name === value).at(0)
   return language ? (
     <Inline space={2}>
       <Flag lang={language.id} />
       <Label size={4}>{language?.title}</Label>
     </Inline>
   ) : (
-    <Badge value="Language not set" />
+    <Badge value='Language not set' />
   )
 }

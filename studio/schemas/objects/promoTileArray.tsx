@@ -1,10 +1,10 @@
 import { collection_2 } from '@equinor/eds-icons'
-import { EdsIcon } from '../../icons'
 import type { PortableTextBlock, Rule } from 'sanity'
-import type { PromoTile } from './promoTile'
 import blocksToText from '../../helpers/blocksToText'
-import CompactBlockEditor from '../components/CompactBlockEditor'
+import { EdsIcon } from '../../icons'
+import { CompactBlockEditor } from '../components/CompactBlockEditor'
 import { configureBlockContent } from '../editors'
+import type { PromoTile } from './promoTile'
 
 export type PromoTileArray = {
   _type: 'promoTileArray'
@@ -24,7 +24,8 @@ export default {
         input: CompactBlockEditor,
       },
       of: [configureBlockContent({ variant: 'title' })],
-      validation: (Rule: Rule) => Rule.required().warning('In most cases you should add a title'),
+      validation: (Rule: Rule) =>
+        Rule.required().warning('In most cases you should add a title'),
     },
     {
       type: 'boolean',
@@ -53,17 +54,25 @@ export default {
       type: 'boolean',
       initialValue: false,
     },
-  ].filter((e) => e),
+  ].filter(e => e),
   preview: {
     select: {
       title: 'title',
       group: 'group',
     },
-    prepare({ group, title }: { title?: PortableTextBlock[]; group: PromoTile[] }) {
+    prepare({
+      group,
+      title,
+    }: {
+      title?: PortableTextBlock[]
+      group: PromoTile[]
+    }) {
       const compTitle = title ? blocksToText(title) : undefined
 
       const getGroupTitle = (promoTile: PromoTile) => {
-        return promoTile.linkLabelAsTitle ? promoTile.link?.label : blocksToText(promoTile.title as PortableTextBlock[])
+        return promoTile.linkLabelAsTitle
+          ? promoTile.link?.label
+          : blocksToText(promoTile.title as PortableTextBlock[])
       }
       return {
         title: compTitle

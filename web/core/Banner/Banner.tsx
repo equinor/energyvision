@@ -47,7 +47,7 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
   }
   const titleVariantClassName: Partial<Record<Variants, string>> = {
     primary: 'text-md',
-    secondary: 'text-base pb-4',
+    secondary: 'text-base',
   }
   const titleClassNames = twMerge(
     `${!ctaLabel ? 'group-hover:underline peer-hover:underline' : ''}
@@ -83,7 +83,7 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
           variant='ingress'
           value={ingress}
           clampLines={3}
-          className={`py-2 text-sm`}
+          blockClassName={`text-sm max-w-prose`}
         />
       )}
       {content && variant !== 'secondary' && <Blocks value={content} />}
@@ -104,7 +104,7 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
             grid='xs'
             image={image}
             fill
-            className='rounded-md'
+            imageClassName='rounded-card'
           />
         )}
       </div>

@@ -1,8 +1,11 @@
+import { CiRoute } from 'react-icons/ci'
+import { PiGlobeLight } from 'react-icons/pi'
 import { map } from 'rxjs/operators'
 import { RouteDocuments } from '../../../../icons'
-import { languages } from '../../../../languages'
 import flags from '../../../../icons/countries'
+import { languages } from '../../../../languages'
 import { apiVersion } from '../../../../sanity.client'
+import { singletonListItem } from './SingletonItem'
 
 /**
  * This is an example of a Structure Builder list item that:
@@ -14,13 +17,16 @@ import { apiVersion } from '../../../../sanity.client'
  *    the 'parent' reference field with the 'parent' _id
  */
 
-const views = (S) => [S.view.form().title('Edit route')]
+const views = S => [S.view.form().title('Edit route')]
 
 const schema = 'route'
 
 const topicRoutes = (S, context) =>
-  languages.map((lang) =>
-    S.listItem().title(`${lang.title} routes`).icon(flags[lang.id]).child(routeStructure(S, context, lang.name)),
+  languages.map(lang =>
+    S.listItem()
+      .title(`${lang.title} routes`)
+      .icon(flags[lang.id])
+      .child(routeStructure(S, context, lang.name)),
   )
 
 function routeStructure(S, context, isoCode) {
@@ -31,7 +37,7 @@ function routeStructure(S, context, isoCode) {
 
   return () =>
     documentStore.listenQuery(`*[${categoryParents}]`).pipe(
-      map((parents) =>
+      map(parents =>
         S.list()
           .title('All Routes')
           .items([
@@ -43,28 +49,44 @@ function routeStructure(S, context, isoCode) {
                   .schemaType(documentName)
                   .apiVersion(apiVersion)
                   .filter(categoryParentsWithDrafts)
-                  .canHandleIntent((intent, { type }) => type === documentName && ['create', 'edit'].includes(intent))
-                  .child((id) => S.document().documentId(id).views(views(S)).schemaType(documentName)),
+                  .canHandleIntent(
+                    (intent, { type }) =>
+                      type === documentName &&
+                      ['create', 'edit'].includes(intent),
+                  )
+                  .child(id =>
+                    S.document()
+                      .documentId(id)
+                      .views(views(S))
+                      .schemaType(documentName),
+                  ),
               ),
             S.divider(),
-            ...parents.map((parent) =>
+            ...parents.map(parent =>
               S.listItem(`{documentName}`)
                 // Fix to avoid multiple list items with the same id
                 .id(`${parent._id}`)
                 .title(`${parent.slug?.current || 'Missing slug'}`)
-                .icon(RouteDocuments)
+                .icon(CiRoute)
                 .child(
                   S.documentList()
                     .apiVersion(apiVersion)
-                    .title('Child Routes')
+                    .title(`${parent.slug?.current} child routes`) //Child routes
                     .schemaType(documentName)
-                    .filter(`_type == "${documentName}" && parent._ref == $parentId`)
+                    .filter(
+                      `_type == "${documentName}" && parent._ref == $parentId`,
+                    )
                     .params({ parentId: parent._id })
-                    .canHandleIntent(S.documentTypeList(documentName).getCanHandleIntent())
-                    .child((id) =>
-                      S.documentWithInitialValueTemplate(`parent-route-${isoCode}`, {
-                        parentId: parent._id,
-                      })
+                    .canHandleIntent(
+                      S.documentTypeList(documentName).getCanHandleIntent(),
+                    )
+                    .child(id =>
+                      S.documentWithInitialValueTemplate(
+                        `parent-route-${isoCode}`,
+                        {
+                          parentId: parent._id,
+                        },
+                      )
                         .documentId(id)
                         .views(views(S))
                         .schemaType(documentName),
@@ -78,6 +100,9 @@ function routeStructure(S, context, isoCode) {
 
 export const Routes = (S, context) =>
   S.listItem()
-    .title('Topic Routes')
+    .title('Topic routes')
     .icon(RouteDocuments)
     .child(S.list().id('routes').title('Routes').items(topicRoutes(S, context)))
+
+export const HomePageRoute = S =>
+  singletonListItem(S, 'route_homepage', 'Homepage route').icon(PiGlobeLight)

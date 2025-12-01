@@ -1,10 +1,10 @@
 import { play_circle } from '@equinor/eds-icons'
-import { EdsIcon } from '../../icons'
-import { configureBlockContent } from '../editors'
-import CompactBlockEditor from '../components/CompactBlockEditor'
-import blocksToText from '../../helpers/blocksToText'
 import type { PortableTextBlock, Rule } from 'sanity'
-import { ImageWithAlt } from './imageWithAlt'
+import blocksToText from '../../helpers/blocksToText'
+import { EdsIcon } from '../../icons'
+import { CompactBlockEditor } from '../components/CompactBlockEditor'
+import { configureBlockContent } from '../editors'
+import type { ImageWithAlt } from './imageWithAlt'
 import singleItemArray from './singleItemArray'
 
 export default {
@@ -40,7 +40,8 @@ export default {
     singleItemArray({
       name: 'action',
       title: 'Link/action',
-      description: 'You can add one separate link if you need. The link will show up at the bottom of the component.',
+      description:
+        'You can add one separate link if you need. The link will show up at the bottom of the component.',
       type: 'array',
       of: [{ type: 'linkSelector', title: 'Link' }],
     }),
@@ -117,7 +118,15 @@ export default {
       videoTitle: 'videoFile.video.title',
       media: 'videoFile.thumbnail',
     },
-    prepare({ title, videoTitle, media }: { title: PortableTextBlock[]; videoTitle: string; media: ImageWithAlt }) {
+    prepare({
+      title,
+      videoTitle,
+      media,
+    }: {
+      title: PortableTextBlock[]
+      videoTitle: string
+      media: ImageWithAlt
+    }) {
       const plainTitle = title ? blocksToText(title) : undefined
 
       return {

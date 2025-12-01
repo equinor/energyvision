@@ -1,8 +1,7 @@
-
-import { Rule } from 'sanity'
-import { TablePreview } from './tableV2'
+import type { Rule } from 'sanity'
+import { CompactBlockEditor } from '../components/CompactBlockEditor'
 import { configureBlockContent } from '../editors'
-import CompactBlockEditor from '../components/CompactBlockEditor'
+import { TablePreview } from './tableV2'
 
 export default {
   title: 'Import Table',
@@ -28,19 +27,21 @@ export default {
       components: {
         input: CompactBlockEditor,
       },
-      of: [configureBlockContent({ variant:"title"})],
-      validation: (Rule: Rule) => Rule.required().warning('In most cases you should add a title'),
+      of: [configureBlockContent({ variant: 'title' })],
+      validation: (Rule: Rule) =>
+        Rule.required().warning('In most cases you should add a title'),
     },
     {
       name: 'ingress',
       title: 'Ingress',
       type: 'array',
-      of: [configureBlockContent({ variant:"ingress"})],
+      of: [configureBlockContent({ variant: 'ingress' })],
     },
     {
       name: 'tableCaption',
       title: 'Table caption',
-      description: 'Tables should have caption, will render as caption just above table',
+      description:
+        'Tables should have caption, will render as caption just above table',
       type: 'string',
     },
     {

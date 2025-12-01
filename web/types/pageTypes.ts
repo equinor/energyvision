@@ -1,21 +1,20 @@
-import { TeaserData } from '@/sections/teasers/Teaser/Teaser'
-import {
+import type { SanityImageSource } from '@sanity/asset-utils'
+import type { Templates } from 'instantsearch.js'
+import type { BreadcrumbData, HeroData } from '@/sections/Hero/HeroBlock'
+import type { TeaserData } from '@/sections/teasers/Teaser/Teaser'
+import type {
+  CardData,
+  ContactListData,
+  ContentType,
+  EventDateType,
+  IFrameData,
   ImageWithAlt,
   ImageWithCaptionData,
-  RelatedLinksData,
-  CardData,
-  EventDateType,
-  ContactListData,
   PeopleCardData,
+  RelatedLinksData,
   SeoData,
-  HeroType,
-  ContentType,
   SubMenuGroupData,
-  IFrameData,
-  DesignOptions,
 } from './index'
-import { SanityImageSource } from '@sanity/asset-utils'
-import { Templates } from 'instantsearch.js'
 
 export type PortableTextBlock = any // Adjust as per actual definition
 
@@ -30,20 +29,14 @@ export type ErrorPageData = {
 export type PageSchema = {
   slug: string
   title: PortableTextBlock[]
-  hero: HeroType
+  hero: HeroData
   template: Templates
   seoAndSome: SeoData
   content?: ContentType[]
   id: string
   type: string
   isCampaign?: boolean
-  breadcrumbs: {
-    enableBreadcrumbs: boolean
-    useCustomBreadcrumbs: boolean
-    defaultBreadcrumbs: Breadcrumb[]
-    customBreadcrumbs: Breadcrumb[]
-    designOptions?: DesignOptions
-  }
+  breadcrumbs: BreadcrumbData
 }
 
 export type TopicPageSchema = PageSchema
@@ -83,12 +76,6 @@ export type NewsSchema = {
   relatedLinks: RelatedLinksData
   iframe: IFrameData
   latestNews: CardData[]
-}
-
-export type Breadcrumb = {
-  label: string
-  slug: string
-  type?: string
 }
 
 export type EventSchema = {

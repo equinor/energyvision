@@ -1,16 +1,16 @@
-import { TopicDocuments } from '../../../../icons'
+import { RiPagesLine } from 'react-icons/ri'
 import { defaultLanguage } from '../../../../languages'
 import { apiVersion } from '../../../../sanity.client'
 
-export const TopicContent = (S) =>
+export const TopicContent = S =>
   S.listItem()
-    .title('Topic content')
-    .icon(TopicDocuments)
+    .title('Topic page')
+    .icon(RiPagesLine)
     .schemaType('page')
     .child(
       S.documentTypeList('page')
         .id('pages')
-        .title('Topic content')
+        .title('Topic pages')
         .apiVersion(apiVersion)
         .filter('_type == "page" && (!defined(lang) || lang == $baseLang)')
         .params({ baseLang: defaultLanguage.name })

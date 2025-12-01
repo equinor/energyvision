@@ -3,21 +3,8 @@ import items from './src/lib/structure'
 import FilePreview from './src/previews/file/filePreview'
 
 export default (S, context) =>
-  S.list().title('Content').items(items(S, context))
+  S.list().title('Energyvision').items(items(S, context))
 
-const docsWithNormalPreview = [
-  'news',
-  'localNews',
-  'landingPage',
-  'magazine',
-  'newsroom',
-  'magazineIndex',
-  'page',
-  'homePage',
-  'event',
-  'pageNotFound',
-  'internalServerError',
-]
 const docsWithRoute = ['page', 'event']
 const tagDocTypes = [
   'tag',
@@ -32,35 +19,8 @@ const fileDocTypes = ['assetFile', 'videoFile']
 export const defaultDocumentNodeResolver = (S, { schemaType }) => {
   const views = [S.view.form()]
 
-  /*     if (docsWithNormalPreview.includes(schemaType)) {
-    views.push(
-      S.view
-        .component(Iframe)
-        .options({
-          url: (doc) => resolvePreviewUrl(doc),
-          loader: 'Loading preview...',
-          reload: {
-            button: true,
-          },
-          showDisplayUrl: false,
-        })
-        .title('Preview'),
-    ) 
-  } */
-
   if (docsWithRoute.includes(schemaType))
     if (fileDocTypes.includes(schemaType))
-      /*     views.push(
-      S.view
-        .component(DocumentsPane)
-        .options({
-          query: `*[!(_id in path("drafts.**")) && references($id) && _type match "route_*"]`,
-          params: { id: `_id` },
-          useDraft: false,
-        })
-        .title('Connected routes'),
-    ) */
-
       views.push(
         S.view
           .component(DocumentsPane)

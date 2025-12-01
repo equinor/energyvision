@@ -1,7 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-nocheck
 'use client'
-import type { BackgroundContainerProps } from '@/core/Backgrounds'
 import NewsList from '@/pageComponents/topicPages/NewsList'
 import PageQuote from '@/pageComponents/topicPages/PageQuote'
 import AccordionBlock from '@/sections/AccordionBlock/AccordionBlock'
@@ -66,6 +65,7 @@ import type {
   AccordionData,
   AnchorLinkData,
   AnchorLinkListData,
+  Background,
   CallToActionData,
   CampaignBannerData,
   CardsListData,
@@ -123,7 +123,7 @@ type Component = {
 
 export type PageContentProps = {
   data: TopicPageSchema | MagazinePageSchema
-  titleBackground?: BackgroundContainerProps
+  heroBackground?: Background
 }
 
 /* eslint-disable @typescript-eslint/ban-ts-comment */
@@ -134,7 +134,8 @@ export type PageContentProps = {
  * Remember to think about the prev section of condition with top spacing
  * E.g. 2 colored background of same color content, only first need but not second
  */
-const getBackgroundOptions = (component: Component) => {
+const getBackgroundObject = (component: Component) => {
+  console.log('getBackgroundObject component', component)
   if (!component?.designOptions || !Object.hasOwn(component, 'designOptions')) {
     //white if no designOptions
     return {
@@ -154,57 +155,57 @@ const getBackgroundOptions = (component: Component) => {
 
 const cleanBgUtility = (value: string) => value?.replace('bg-', '')
 
-const isWhiteColorBackground = (componentsDO: any, component: Component) => {
+const isWhiteColorBackground = (componentsBO: any, component: Component) => {
   const casesWhichHaveBackgroundButIsWhite = ['cardsList']
   return (
-    cleanBgUtility(componentsDO?.backgroundUtility) === 'white-100' ||
-    componentsDO?.backgroundColor === 'White' ||
-    componentsDO?.background === 'White' ||
+    cleanBgUtility(componentsBO?.backgroundUtility) === 'white-100' ||
+    componentsBO?.backgroundColor === 'White' ||
+    componentsBO?.background === 'White' ||
     casesWhichHaveBackgroundButIsWhite.includes(component?.type) ||
     !component?.designOptions
   )
 }
 
 const isSameColorBackground = (
-  currentComponentsDO: any,
-  previousComponentsDO: any,
+  currentComponentsBO: any,
+  previousComponentsBO: any,
 ) => {
   if (
-    currentComponentsDO?.backgroundUtility &&
-    currentComponentsDO?.backgroundUtility !== '' &&
-    previousComponentsDO?.backgroundUtility &&
-    previousComponentsDO?.backgroundUtility !== ''
+    currentComponentsBO?.backgroundUtility &&
+    currentComponentsBO?.backgroundUtility !== '' &&
+    previousComponentsBO?.backgroundUtility &&
+    previousComponentsBO?.backgroundUtility !== ''
   ) {
     return (
-      cleanBgUtility(currentComponentsDO?.backgroundUtility) ===
-      cleanBgUtility(previousComponentsDO?.backgroundUtility)
+      cleanBgUtility(currentComponentsBO?.backgroundUtility) ===
+      cleanBgUtility(previousComponentsBO?.backgroundUtility)
     )
   }
   if (
-    currentComponentsDO?.backgroundUtility &&
-    !previousComponentsDO?.backgroundUtility &&
-    previousComponentsDO?.backgroundColor
+    currentComponentsBO?.backgroundUtility &&
+    !previousComponentsBO?.backgroundUtility &&
+    previousComponentsBO?.backgroundColor
   ) {
     return (
       colorKeyToUtilityMap[
-        currentComponentsDO?.backgroundUtility as keyof ColorKeyTokens
-      ]?.backgroundName === previousComponentsDO?.backgroundColor
+        currentComponentsBO?.backgroundUtility as keyof ColorKeyTokens
+      ]?.backgroundName === previousComponentsBO?.backgroundColor
     )
   }
   if (
-    !currentComponentsDO?.backgroundUtility &&
-    currentComponentsDO?.backgroundColor &&
-    previousComponentsDO?.backgroundUtility
+    !currentComponentsBO?.backgroundUtility &&
+    currentComponentsBO?.backgroundColor &&
+    previousComponentsBO?.backgroundUtility
   ) {
-    currentComponentsDO?.backgroundColor ===
+    currentComponentsBO?.backgroundColor ===
       colorKeyToUtilityMap[
-        previousComponentsDO?.backgroundUtility as keyof ColorKeyTokens
+        previousComponentsBO?.backgroundUtility as keyof ColorKeyTokens
       ]?.backgroundName
   }
 
   return (
-    currentComponentsDO?.backgroundColor ===
-    previousComponentsDO?.backgroundColor
+    currentComponentsBO?.backgroundColor ===
+    previousComponentsBO?.backgroundColor
   )
 }
 
@@ -215,11 +216,18 @@ const applyPaddingTopIfApplicable = (
   if (currentComponent?.type === 'anchorLink') {
     return
   }
+  /*   console.log(
+    `Current: ${currentComponent?.type}:${Array.isArray(currentComponent?.title) ? toPlainText(currentComponent?.title) : currentComponent?.title}`,
+  )
+  console.log(
+    `Previous component ${prevComponent?.type}:${Array.isArray(prevComponent?.title) ? toPlainText(prevComponent?.title) : prevComponent?.title}`,
+  ) */
 
-  const currentComponentsDO = getBackgroundOptions(currentComponent)
-  const previousComponentsDO = getBackgroundOptions(prevComponent)
-  /*   console.log('currentComponentsDO', currentComponentsDO)
-  console.log('previousComponentsDO', previousComponentsDO) */
+  const currentBackgroundObject = getBackgroundObject(currentComponent)
+  const previousBackgroundObject = getBackgroundObject(prevComponent)
+  /*   console.log('currentBackgroundObject', currentBackgroundObject)
+  console.log('previousBackgroundObject', previousCompreviousBackgroundObjectponentsDO) */
+
   const specialCases = [
     'teaser',
     'fullWidthImage',
@@ -229,27 +237,20 @@ const applyPaddingTopIfApplicable = (
   ]
 
   const currentIsWhiteColorBackground = isWhiteColorBackground(
-    currentComponentsDO,
+    currentBackgroundObject,
     currentComponent,
   )
   const previousIsWhiteColorBackground = isWhiteColorBackground(
-    previousComponentsDO,
+    previousBackgroundObject,
     prevComponent,
   )
-  /*   console.log('currentComponent', currentComponent)
-  console.log(
-    `Current component ${currentComponent?.type}: ${Array.isArray(currentComponent?.title) ? toPlainText(currentComponent?.title) : currentComponent?.title}`,
-  )
+  /* 
   console.log('currentIsWhiteColorBackground', currentIsWhiteColorBackground)
-  console.log('prevComponent', prevComponent)
-  console.log(
-    `Previous component ${prevComponent?.type}:  ${Array.isArray(prevComponent?.title) ? toPlainText(prevComponent?.title) : prevComponent?.title}`,
-  )
-  console.log('previousIsWhiteColorBackground', previousIsWhiteColorBackground) */
+  console.log('previousIsWhiteColorBackground', previousIsWhiteColorBackground)*/
 
   const previousComponentIsASpecialCaseAndNeedPT =
     specialCases.includes(prevComponent?.type) ||
-    specialCases.includes(previousComponentsDO?.type)
+    specialCases.includes(previousBackgroundObject?.type)
 
   if (
     currentIsWhiteColorBackground &&
@@ -266,9 +267,10 @@ const applyPaddingTopIfApplicable = (
   }
 
   const previousIsSameColorAsCurrent = isSameColorBackground(
-    currentComponentsDO,
-    previousComponentsDO,
+    currentBackgroundObject,
+    previousBackgroundObject,
   )
+  /*   console.log('previousIsSameColorAsCurrent', previousIsSameColorAsCurrent) */
   if (
     previousIsSameColorAsCurrent &&
     !previousComponentIsASpecialCaseAndNeedPT
@@ -279,7 +281,7 @@ const applyPaddingTopIfApplicable = (
   return 'pt-20'
 }
 
-export const PageContent = ({ data, titleBackground }: PageContentProps) => {
+export const PageContent = ({ data, heroBackground }: PageContentProps) => {
   const content = (data?.content || []).map((c: Component, index) => {
     const prevComponent = data?.content?.[index - 1]
     const anchorReference =
@@ -291,13 +293,12 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
     const previousComponentIndex =
       prevComponent?.type === 'anchorLink' ? index - 2 : index - 1
 
+    console.log('heroBackground', heroBackground)
     const previousComponentToCompare =
       index === 0
         ? ({
             type: 'pageTitle',
-            designOptions: {
-              background: titleBackground?.background,
-            },
+            designOptions: { background: heroBackground },
           } as Component)
         : (data?.content?.[previousComponentIndex] as unknown as Component)
 

@@ -4,15 +4,9 @@ import { EdsIcon } from '../../icons'
 import { Flags } from '../../src/lib/datasetHelpers'
 import { RolesBasedArrayInput } from '../components/RolesBasedArrayInput'
 import { defaultColors } from '../defaultColors'
-import { HeroTypes } from '../HeroTypes'
-import sharedHeroFields from './header/sharedHeaderFields'
+import sharedHeroFields, { HeroTypes } from './header/sharedHeaderFields'
 import { lang } from './langField'
-import {
-  isCampaign,
-  openGraphImage,
-  seo,
-  stickyMenu,
-} from './topic/sharedTopicPageFields'
+import { openGraphImage, seo, stickyMenu } from './topic/sharedTopicPageFields'
 
 export default {
   type: 'document',
@@ -21,34 +15,28 @@ export default {
   icon: () => EdsIcon(paste),
   fieldsets: [
     {
-      title: 'Header',
-      name: 'header',
-    },
-    {
-      title: 'SEO & metadata',
-      name: 'metadata',
-      description:
-        'This part is used for meta information when this content is used on the web',
+      title: 'More page options',
+      description: 'SEO, meta and sticky menu',
       options: {
         collapsible: true,
         collapsed: true,
       },
+      name: 'other',
     },
     {
-      title: 'Sticky Menu',
-      name: 'stickymenu',
+      title: 'Hero configuration',
       options: {
         collapsible: true,
-        collaped: true,
+        collapsed: true,
       },
+      name: 'hero',
     },
   ],
   fields: [
     lang,
+    ...sharedHeroFields,
     seo,
     openGraphImage,
-    ...sharedHeroFields,
-    isCampaign,
     stickyMenu,
     {
       name: 'content',

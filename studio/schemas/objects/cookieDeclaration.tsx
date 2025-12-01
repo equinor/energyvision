@@ -1,7 +1,7 @@
 import { table_chart } from '@equinor/eds-icons'
+import { Box, Heading, Text } from '@sanity/ui'
 import { EdsIcon } from '../../icons'
-import { Heading, Text, Box } from '@sanity/ui'
-import CompactBlockEditor from '../components/CompactBlockEditor'
+import { CompactBlockEditor } from '../components/CompactBlockEditor'
 import { configureBlockContent } from '../editors'
 
 // eslint-disable-next-line react/display-name
@@ -10,8 +10,9 @@ const ApiDescription = () => {
     <Box>
       <Heading size={2}>How to use</Heading>
       <Text style={{ margin: '1em 0' }}>
-        This component will automatically display cookies identified in the website. No configuration is required. This
-        component is to be used on Cookie Policy page.
+        This component will automatically display cookies identified in the
+        website. No configuration is required. This component is to be used on
+        Cookie Policy page.
       </Text>
     </Box>
   )
@@ -47,7 +48,7 @@ export default {
       },
       initialValue: 'Cookie Declaration',
     },
-  ].filter((e) => e),
+  ].filter(e => e),
   preview: {
     prepare() {
       return {

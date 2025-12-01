@@ -1,8 +1,8 @@
-import CompactBlockEditor from '../../components/CompactBlockEditor'
 import { LiaChartPieSolid } from 'react-icons/lia'
-import { configureBlockContent } from '../../editors'
-import { PortableTextBlock, Rule } from 'sanity'
+import type { PortableTextBlock, Rule } from 'sanity'
 import blocksToText from '../../../helpers/blocksToText'
+import { CompactBlockEditor } from '../../components/CompactBlockEditor'
+import { configureBlockContent } from '../../editors'
 
 export default {
   title: 'Pie chart',
@@ -17,7 +17,8 @@ export default {
         input: CompactBlockEditor,
       },
       of: [configureBlockContent({ variant: 'title' })],
-      validation: (Rule: Rule) => Rule.required().warning('In most cases you should add a title'),
+      validation: (Rule: Rule) =>
+        Rule.required().warning('In most cases you should add a title'),
     },
     {
       type: 'boolean',

@@ -1,9 +1,10 @@
 'use client'
 import NextImage, { type ImageProps as NextImageProps } from 'next/image'
-import type { PortableTextBlock } from 'next-sanity'
-import { twMerge } from 'tailwind-merge'
+import { useMemo } from 'react'
 import { useMediaQuery } from '@/lib/hooks/useMediaQuery'
+import { twMerge } from '@/lib/twMerge/twMerge'
 import { resolveImage } from '@/sanity/lib/utils'
+import { Typography } from '../Typography'
 
 export const ImageRatios = {
   original: 0,
@@ -122,6 +123,26 @@ export const getObjectPositionForImage = (position: ObjectPositions) => {
   }[position]
 }
 
+export const getTwAspectRatioUtilityOnRatio = (ratio: ImageRatioKeys) => {
+  return {
+    original: '',
+    '1:1': 'aspect-square',
+    '3:10': 'aspect-3/10',
+    '10:3': 'aspect-10/3',
+    '19:40': 'aspect-19/40',
+    '1:2': 'aspect-1/2',
+    '2:1': 'aspect-2/1',
+    '2:3': 'aspect-2/3',
+    '16:9': 'aspect-video',
+    '9:16': 'aspect-9/16',
+    '3:4': 'aspect-3/4',
+    '4:3': 'aspect-4/3',
+    '4:5': 'aspect-4/5',
+    '5:4': 'aspect-5/4',
+    '5:3': 'aspect-5/3',
+  }[ratio]
+}
+
 type ImageProps = Omit<NextImageProps, 'src' | 'alt' | 'sizes'> & {
   image: any
   /** Grid column the image is contained within on larger displays.
@@ -140,9 +161,15 @@ type ImageProps = Omit<NextImageProps, 'src' | 'alt' | 'sizes'> & {
   useFitMin?: boolean
   /** overrides for relative wrapper for image */
   className?: string
-  /** overrides for the next image */
+  /** overrides for the figure container when caption/attribution */
+  figureClassName?: string
+  /** overrides for image container */
   imageClassName?: string
-  caption?: PortableTextBlock[]
+  caption?: string
+  attribution?: string
+  /** The complete background color utility to put on figCaption */
+  figCaptionBackground?: string
+  figCaptionClassName?: string
 }
 
 //Double check crop and hotspot information comes to sanity fetch image
@@ -155,10 +182,20 @@ export const Image = ({
   fill,
   className = '',
   imageClassName = '',
+  figureClassName = '',
   useFitMin = false,
   loading,
+  caption,
+  attribution,
+  figCaptionBackground,
+  figCaptionClassName = '',
 }: ImageProps) => {
   const isLargerDisplays = useMediaQuery(`(min-width: 800px)`)
+  const twAspectRatioUtility = useMemo(() => {
+    return isLargerDisplays
+      ? getTwAspectRatioUtilityOnRatio(aspectRatio)
+      : 'aspect-4/3'
+  }, [isLargerDisplays, aspectRatio])
 
   if (!image?.asset) return null
 
@@ -197,8 +234,37 @@ export const Image = ({
     />
   ) : null
 
-  return (
-    <div className={twMerge(`relative h-full w-full`, className)}>
+  return caption || attribution ? (
+    <figure className={twMerge(``, figureClassName)}>
+      <div className={twMerge(`relative h-auto w-full`, className)}>
+        {nextImage}
+      </div>
+      <figcaption
+        className={twMerge(
+          `px-layout-lg pt-2 pb-8 text-xs`,
+          figCaptionBackground,
+          figCaptionClassName,
+        )}
+      >
+        {caption && (
+          <Typography group='plain' variant='div' className='leading-normal'>
+            {caption}
+          </Typography>
+        )}
+        {attribution && (
+          <Typography group='plain' variant='div' className='leading-normal'>
+            {attribution}
+          </Typography>
+        )}
+      </figcaption>
+    </figure>
+  ) : (
+    <div
+      className={twMerge(
+        `relative h-full w-full ${twAspectRatioUtility}`,
+        className,
+      )}
+    >
       {nextImage}
     </div>
   )

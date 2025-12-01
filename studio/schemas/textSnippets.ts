@@ -6,10 +6,22 @@ export const groups = {
   search: { title: 'Search', hidden: !Flags.HAS_SEARCH },
   eventPromotion: { title: 'Event', hidden: !Flags.HAS_EVENT },
   subscribeForm: { title: 'Subscribe form', hidden: !Flags.HAS_SUBSCRIBE_FORM },
-  careerFairForm: { title: 'Career fair form', hidden: !Flags.HAS_CAREER_FAIR_AND_VISITS_FORM },
-  contactForm: { title: 'Contact form', hidden: !Flags.HAS_CONTACT_EQUINOR_FORM },
-  careerContactForm: { title: 'Careers Contact Form', hidden: !Flags.HAS_CAREERS_CONTACT_FORM },
-  orderAnnualReportsForm: { title: 'Order annual reports form', hidden: !Flags.HAS_ORDER_REPORT_FORM },
+  careerFairForm: {
+    title: 'Career fair form',
+    hidden: !Flags.HAS_CAREER_FAIR_AND_VISITS_FORM,
+  },
+  contactForm: {
+    title: 'Contact form',
+    hidden: !Flags.HAS_CONTACT_EQUINOR_FORM,
+  },
+  careerContactForm: {
+    title: 'Careers Contact Form',
+    hidden: !Flags.HAS_CAREERS_CONTACT_FORM,
+  },
+  orderAnnualReportsForm: {
+    title: 'Order annual reports form',
+    hidden: !Flags.HAS_ORDER_REPORT_FORM,
+  },
   pensionForm: { title: 'Pension form', hidden: !Flags.HAS_PENSION_FORM },
   form: { title: 'Form', hidden: !Flags.HAS_FORMS },
   cookie: { title: 'Cookie' },
@@ -126,7 +138,8 @@ const snippets: textSnippet = {
   },
   search_no_results_generic: {
     title: 'No search results, generic',
-    defaultValue: 'Sorry, no results were found. Please try again with some different keywords.',
+    defaultValue:
+      'Sorry, no results were found. Please try again with some different keywords.',
     group: groups.search,
   },
   search_submit: {
@@ -380,7 +393,8 @@ const snippets: textSnippet = {
   },
   career_fair_form_supporting_documents: {
     title: 'Supporting Documents checkbox',
-    defaultValue: 'Tick the box if you would like to send supporting documents, and we will get in touch with you',
+    defaultValue:
+      'Tick the box if you would like to send supporting documents, and we will get in touch with you',
     group: groups.careerFairForm,
   },
   career_fair_form_invite_career_fair: {
@@ -582,7 +596,8 @@ const snippets: textSnippet = {
   },
   careers_contact_form_supporting_documents: {
     title: 'Supporting Documents checkbox',
-    defaultValue: 'Tick the box if you would like to send supporting documents, and we will get in touch with you',
+    defaultValue:
+      'Tick the box if you would like to send supporting documents, and we will get in touch with you',
     group: groups.careerContactForm,
   },
   form_sending: {
@@ -892,6 +907,11 @@ const snippets: textSnippet = {
     defaultValue: 'Search',
     group: groups.search,
   },
+  last_modified: {
+    title: 'Last modified',
+    defaultValue: 'Last modified',
+    group: groups.newsroom,
+  },
 }
 
 type textSnippetGroup = { title: string; hidden?: boolean }
@@ -906,7 +926,7 @@ type textSnippet = Record<
 >
 
 const sortedTextSnippets = Object.keys(snippets)
-  .filter((key) => !snippets[key].hidden)
+  .filter(key => !snippets[key].hidden)
   .sort()
   .reduce((obj: textSnippet, key) => {
     obj[key] = snippets[key]

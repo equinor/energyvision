@@ -1,7 +1,7 @@
-import CompactBlockEditor from '../../components/CompactBlockEditor'
-import { configureBlockContent } from '../../editors'
-import { Rule } from 'sanity'
 import { NumberIcon } from '@sanity/icons'
+import type { Rule } from 'sanity'
+import { CompactBlockEditor } from '../../components/CompactBlockEditor'
+import { configureBlockContent } from '../../editors'
 
 const disclaimerContentType = configureBlockContent({
   h2: false,
@@ -21,7 +21,8 @@ export default {
       title: 'Tab Key Number Items',
       type: 'array',
       of: [{ type: 'tabsKeyNumberItem' }],
-      validation: (Rule: Rule) => Rule.min(2).error('Need minimum 2 key numbers'),
+      validation: (Rule: Rule) =>
+        Rule.min(2).error('Need minimum 2 key numbers'),
     },
     {
       name: 'disclaimer',

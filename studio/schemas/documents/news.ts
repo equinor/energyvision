@@ -1,6 +1,6 @@
 import { file_add } from '@equinor/eds-icons'
-import { newsSlug } from '@shared/sitesConfig'
 import slugify from 'slugify'
+import { newsSlug } from '@/sitesConfig'
 import { formatDate } from '../../helpers/formatDate'
 import { EdsIcon } from '../../icons'
 import { defaultLanguage } from '../../languages'

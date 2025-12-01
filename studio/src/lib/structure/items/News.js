@@ -1,20 +1,22 @@
-import { NewsDocuments } from '../../../../icons'
+import { BsNewspaper } from 'react-icons/bs'
+import { GiNewspaper } from 'react-icons/gi'
+import { defaultLanguage } from '../../../../languages'
 import { apiVersion } from '../../../../sanity.client'
 import { Flags } from '../../datasetHelpers'
 import { EmptyItem } from './EmptyItem'
-import { defaultLanguage } from '../../../../languages'
+import { singletonListItem } from './SingletonItem'
 
-export const News = (S) =>
+export const News = S =>
   Flags.HAS_NEWS
     ? S.listItem()
-        .title('News')
-        .icon(NewsDocuments)
+        .title('Newspage')
+        .icon(BsNewspaper)
         .schemaType('news')
         .child(
           S.documentTypeList('news')
             .apiVersion(apiVersion)
             .id('news')
-            .title('News articles')
+            .title('Newspages')
             .filter(' _type == "news" && (!defined(lang) || lang == $baseLang)')
             .params({ baseLang: defaultLanguage.name })
             .canHandleIntent((_name, params) => {
@@ -22,4 +24,9 @@ export const News = (S) =>
               return params.type === 'news'
             }),
         )
+    : EmptyItem
+
+export const NewsRoom = S =>
+  Flags.HAS_NEWSROOM
+    ? singletonListItem(S, 'newsroom', 'Newsroom').icon(GiNewspaper)
     : EmptyItem

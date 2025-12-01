@@ -1,8 +1,19 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { forwardRef, ElementType, HTMLAttributes, AnchorHTMLAttributes } from 'react'
-import { TypographyGroups, TypographyVariants, quickVariants, variants } from './variants'
-import { OverridableComponent } from '@equinor/eds-utils'
+
+import type { OverridableComponent } from '@equinor/eds-utils'
+import {
+  type AnchorHTMLAttributes,
+  type ElementType,
+  forwardRef,
+  type HTMLAttributes,
+} from 'react'
 import { twMerge } from 'tailwind-merge'
+import {
+  quickVariants,
+  type TypographyGroups,
+  type TypographyVariants,
+  variants,
+} from './variants'
 
 const getElementType = (variant: string, link: boolean): ElementType => {
   if (link) {
@@ -20,16 +31,15 @@ const getElementType = (variant: string, link: boolean): ElementType => {
       return 'span'
     case 'div':
       return 'div'
-    case 'caption':
-    case 'eyebrow':
-    case 'overline':
-    case 'body':
     default:
       return 'p'
   }
 }
 
-const findTypography = (variantName: TypographyVariants, group?: TypographyGroups): string => {
+const findTypography = (
+  variantName: TypographyVariants,
+  group?: TypographyGroups,
+): string => {
   // For quick use when using paragraphs and headings we can skip group
   //@ts-ignore
   if (!group && quickVariants[variantName]) {
@@ -72,26 +82,43 @@ export type TypographyProps = {
  *     </Typography>
  * ```
  */
-export const Typography: OverridableComponent<TypographyProps, HTMLElement> = forwardRef(function Typography(
-  { variant = 'body', group, children, as: providedAs, link = false, className = '', ...rest },
-  ref,
-) {
-  const as: ElementType = providedAs ? providedAs : getElementType(variant, link)
-  const typography = findTypography(variant, group)
+export const Typography: OverridableComponent<TypographyProps, HTMLElement> =
+  forwardRef(function Typography(
+    {
+      variant = 'body',
+      group,
+      children,
+      as: providedAs,
+      link = false,
+      className = '',
+      ...rest
+    },
+    ref,
+  ) {
+    const as: ElementType = providedAs
+      ? providedAs
+      : getElementType(variant, link)
+    const typography = findTypography(variant, group)
 
-  if (typeof typography === 'undefined') {
-    throw new Error(`Typography variant not found for variant "${variant}" ("${variant}") & group "${group || ''}"`)
-  }
-  const TypographyTag = as ?? (`p` as React.ElementType)
+    if (typeof typography === 'undefined') {
+      throw new Error(
+        `Typography variant not found for variant "${variant}" ("${variant}") & group "${group || ''}"`,
+      )
+    }
+    const TypographyTag = as ?? (`p` as React.ElementType)
 
-  // text color for regular and dark is applied in globals base body. is it necessary here?
-  return (
-    <TypographyTag
-      {...rest}
-      ref={ref}
-      className={twMerge('max-w-text text-pretty break-words text-slate-80 dark:text-white-100', typography, className)}
-    >
-      {children}
-    </TypographyTag>
-  )
-})
+    // text color for regular and dark is applied in globals base body. is it necessary here?
+    return (
+      <TypographyTag
+        {...rest}
+        ref={ref}
+        className={twMerge(
+          'wrap-break-word max-w-text text-pretty text-slate-80 dark:text-white-100',
+          typography,
+          className,
+        )}
+      >
+        {children}
+      </TypographyTag>
+    )
+  })

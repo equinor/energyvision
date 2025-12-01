@@ -15,8 +15,8 @@ RUN npm install dotenv fs
 COPY ./package.json ./
 COPY ./pnpm-lock.yaml ./
 COPY ./tsconfig.base.json ./
-COPY ./shared/sitesConfig.ts ./shared/sitesConfig.ts
-COPY ./shared/featureFlags.ts ./shared/featureFlags.ts
+COPY ./sitesConfig.ts ./
+COPY ./featureFlags.ts ./
 COPY ./studio ./studio
 
 ARG ARG_SANITY_API_TOKEN

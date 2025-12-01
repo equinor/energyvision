@@ -1,10 +1,10 @@
 'use client'
-import type { EventCardData, FeaturedContentData } from '../../types/index'
-import { EventCard } from '@/sections/cards/EventCard'
+import type { PortableTextBlock } from '@portabletext/types'
+import { useTranslations } from 'next-intl'
 import { Banner } from '@/core/Banner/Banner'
 import { Typography } from '@/core/Typography'
-import { PortableTextBlock } from '@portabletext/types'
-import { useTranslations } from 'next-intl'
+import { EventCard } from '@/sections/cards/EventCard'
+import type { EventCardData, FeaturedContentData } from '../../types/index'
 
 type Props = {
   featuredContent: FeaturedContentData
@@ -12,29 +12,24 @@ type Props = {
   featuredIngress: PortableTextBlock[] | undefined
 }
 
-const FeaturedContent = ({ featuredContent, featuredCTALabel, featuredIngress }: Props) => {
+const FeaturedContent = ({
+  featuredContent,
+  featuredCTALabel,
+  featuredIngress,
+}: Props) => {
   const t = useTranslations()
   if (!featuredContent.type) return null
 
-  const isEvent = (data: FeaturedContentData): boolean => data?.routeContentType === 'event'
+  const isEvent = (data: FeaturedContentData): boolean =>
+    data?.routeContentType === 'event'
   const { type, heroImage, title, ingress, slug } = featuredContent
 
   return (
-    <div className="">
+    <div className=''>
       <Typography
-        as="h3"
-        variant="h5"
-        className={`uppercase
-          text-moss-green-95
-            font-semibolder
-            text-sm
-            leading-earthy
-            pt-2
-            pb-4
-            xl:pb-6
-            xl:font-semibold
-            xl:text-xs
-            `}
+        as='h3'
+        variant='h5'
+        className={`pt-2 pb-4 font-semibolder text-moss-green-95 text-sm uppercase leading-earthy xl:pb-6 xl:font-semibold xl:text-xs`}
       >
         {t('featured_content')}
       </Typography>
@@ -47,12 +42,14 @@ const FeaturedContent = ({ featuredContent, featuredCTALabel, featuredIngress }:
             } as EventCardData
           }
           hasSectionTitle={false}
-          className="h-fit"
+          className='h-fit'
         />
       ) : (
         <Banner
           image={heroImage.image}
-          variant={type === 'news' || type === 'localNews' ? 'secondary' : 'primary'}
+          variant={
+            type === 'news' || type === 'localNews' ? 'secondary' : 'primary'
+          }
           //@ts-ignore:TODO - find out why any[] and not portabletext[]
           title={title}
           ingress={ingress ?? featuredIngress}

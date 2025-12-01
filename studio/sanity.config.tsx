@@ -37,8 +37,8 @@ import { CharCounterEditor } from './schemas/components/CharCounterEditor'
 import { LangBadge } from './schemas/components/LangBadge'
 import { i18n } from './schemas/documentTranslation'
 import './customStyles.css'
-import { getMetaTitleSuffix } from '@shared/sitesConfig'
 import { presentationTool } from 'sanity/presentation'
+import { getMetaTitleSuffix } from '@/sitesConfig'
 import { copyAction } from './actions/fieldActions/CustomCopyFieldAction'
 //Table plugin
 import { table } from './plugins/importTable'
@@ -90,6 +90,7 @@ const getStudioTitle = (dataset: string) => {
     case 'global-test':
       return 'Test'
     default:
+      //@ts-ignore
       return getMetaTitleSuffix(dataset)
   }
 }

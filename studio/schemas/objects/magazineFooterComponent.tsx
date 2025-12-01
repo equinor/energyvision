@@ -1,12 +1,13 @@
 /* eslint-disable react/display-name */
+
+import type { PortableTextBlock, Reference, Rule } from 'sanity'
 import blocksToText from '../../helpers/blocksToText'
 import { LeftAlignedImage, RightAlignedImage } from '../../icons'
 import { RadioIconSelector } from '../components'
-import CompactBlockEditor from '../components/CompactBlockEditor'
+import type { ColorSelectorValue } from '../components/ColorSelector'
+import { CompactBlockEditor } from '../components/CompactBlockEditor'
 import { configureBlockContent } from '../editors'
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
-import type { PortableTextBlock, Reference, Rule } from 'sanity'
-import type { ColorSelectorValue } from '../components/ColorSelector'
 import type { DownloadableImage } from './downloadableImage'
 import type { DownloadableFile } from './files'
 import type { ImageWithAlt } from './imageWithAlt'
@@ -30,7 +31,7 @@ export type Teaser = {
 
 export default {
   name: 'footerComponent',
-  title: 'Footer component',
+  title: 'Footer',
   description:
     'This component will display at the bottom of each magazine article as well as on the magazine landing page.',
   type: 'object',
@@ -61,7 +62,9 @@ export default {
       type: 'array',
       of: [configureBlockContent({ variant: 'simpleBlock' })],
       validation: (Rule: Rule) =>
-        Rule.custom((value: PortableTextBlock[]) => validateCharCounterEditor(value, 600)).warning(),
+        Rule.custom((value: PortableTextBlock[]) =>
+          validateCharCounterEditor(value, 600),
+        ).warning(),
     },
     singleItemArray({
       name: 'action',
@@ -83,16 +86,23 @@ export default {
     {
       name: 'imagePosition',
       title: 'Image position',
-      description: 'Select which side the image should be displayed at on larger screens.',
+      description:
+        'Select which side the image should be displayed at on larger screens.',
       type: 'string',
       fieldset: 'design',
       components: {
-        input: function ({ onChange, value }: { onChange: any; value: string }) {
+        input: function ({
+          onChange,
+          value,
+        }: {
+          onChange: any
+          value: string
+        }) {
           return (
             <RadioIconSelector
-              name="imageAlignmentSelector"
+              name='imageAlignmentSelector'
               options={imageAlignmentOptions}
-              defaultValue="left"
+              defaultValue='left'
               currentValue={value}
               onChange={onChange}
             />
@@ -113,7 +123,13 @@ export default {
       title: 'title',
       image: 'image.asset',
     },
-    prepare({ title, image }: { title: PortableTextBlock[]; image: Reference }) {
+    prepare({
+      title,
+      image,
+    }: {
+      title: PortableTextBlock[]
+      image: Reference
+    }) {
       const plainTitle = title ? blocksToText(title) : undefined
 
       return {

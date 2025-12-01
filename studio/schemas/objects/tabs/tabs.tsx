@@ -1,12 +1,16 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { defineField, defineType, PreviewProps, type Rule } from 'sanity'
-import blocksToText from '../../../helpers/blocksToText'
-import CompactBlockEditor from '../../components/CompactBlockEditor'
-import { configureBlockContent } from '../../editors/blockContentType'
-import type { ColorSelectorValue } from '../../components/ColorSelector'
+
 import { Flex, Stack, Text } from '@sanity/ui'
+import { defineField, defineType, type PreviewProps, type Rule } from 'sanity'
+import blocksToText from '../../../helpers/blocksToText'
 import { capitalizeFirstLetter } from '../../../helpers/formatters'
-import { CardTheme, ThemeSelectorValue } from '../../components/ThemeSelector'
+import type { ColorSelectorValue } from '../../components/ColorSelector'
+import { CompactBlockEditor } from '../../components/CompactBlockEditor'
+import {
+  CardTheme,
+  type ThemeSelectorValue,
+} from '../../components/ThemeSelector'
+import { configureBlockContent } from '../../editors/blockContentType'
 import { getColorForTabTheme } from './tabsThemes'
 
 type TabsPreviewProps = {
@@ -29,7 +33,12 @@ export function TabsPreview(props: TabsPreviewProps) {
   }
   return (
     <Flex gap={2} padding={2} align={'center'}>
-      <CardTheme getColorForThemeHandler={getColorForTabTheme} color={color} preview thumbnail />
+      <CardTheme
+        getColorForThemeHandler={getColorForTabTheme}
+        color={color}
+        preview
+        thumbnail
+      />
       <Stack space={2}>
         <Text size={1}>{plainTitle}</Text>
         <Text muted size={1}>
@@ -62,13 +71,15 @@ export default defineType({
         input: CompactBlockEditor,
       },
       of: [configureBlockContent({ variant: 'title' })],
-      validation: (Rule: Rule) => Rule.required().warning('Should we warn for missing title'),
+      validation: (Rule: Rule) =>
+        Rule.required().warning('Should we warn for missing title'),
     }),
     defineField({
       name: 'hideTitle',
       type: 'boolean',
       title: 'Hide title',
-      description: 'Hides title, but is available for screen readers and gives an meaningful heading for the tabs list',
+      description:
+        'Hides title, but is available for screen readers and gives an meaningful heading for the tabs list',
     }),
     defineField({
       title: 'Ingress',
@@ -87,7 +98,7 @@ export default defineType({
       name: 'tabsBackground',
       type: 'tabsBackground',
     }),
-  ].filter((e) => e),
+  ].filter(e => e),
   components: {
     preview: TabsPreview,
   },

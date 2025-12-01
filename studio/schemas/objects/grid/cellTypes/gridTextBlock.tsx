@@ -1,25 +1,30 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { text_field } from '@equinor/eds-icons'
 import type { PortableTextBlock, Reference, Rule } from 'sanity'
-import type { ColorSelectorValue } from '../../../components/ColorSelector'
-import CompactBlockEditor from '../../../components/CompactBlockEditor'
 import blocksToText from '../../../../helpers/blocksToText'
-import {
-  EdsIcon,
-  ContentRightImage,
-  ContentLeftImage,
-  ContentCenterImage,
-  ContentBottomLeftImage,
-  ContentBottomCenterImage,
-} from '../../../../icons'
-import { configureBlockContent } from '../../../editors'
 import { capitalizeFirstLetter } from '../../../../helpers/formatters'
+import {
+  ContentBottomCenterImage,
+  ContentBottomLeftImage,
+  ContentCenterImage,
+  ContentLeftImage,
+  ContentRightImage,
+  EdsIcon,
+} from '../../../../icons'
 import { RadioIconSelector } from '../../../components'
+import type { ColorSelectorValue } from '../../../components/ColorSelector'
+import { CompactBlockEditor } from '../../../components/CompactBlockEditor'
+import { configureBlockContent } from '../../../editors'
 import singleItemArray from '../../singleItemArray'
-import { fromLargerTextThemeColors, fromNormalTextThemeColors } from '../../textTeaser'
+import {
+  fromLargerTextThemeColors,
+  fromNormalTextThemeColors,
+} from '../../textTeaser'
 
 const blockContentType = configureBlockContent({ variant: 'extendedBlock' })
-const themedTitleContentType = configureBlockContent({ variant: 'with2XLTitle' })
+const themedTitleContentType = configureBlockContent({
+  variant: 'with2XLTitle',
+})
 const titleContentType = configureBlockContent({ variant: 'title' })
 
 const contentAlignmentOptions = [
@@ -63,7 +68,8 @@ export default {
     {
       title: 'Use themed title',
       name: 'useThemedTitle',
-      description: 'Enabling this removes normal text style, but gives more theme options for the title',
+      description:
+        'Enabling this removes normal text style, but gives more theme options for the title',
       type: 'boolean',
       fieldset: 'title',
     },
@@ -77,7 +83,9 @@ export default {
       of: [titleContentType],
       hidden: ({ parent }: GridTextBlockDocument) => parent.useThemedTitle,
       validation: (Rule: Rule) =>
-        Rule.custom((value: PortableTextBlock[]) => (!value ? 'A title is recommended' : true)).warning(),
+        Rule.custom((value: PortableTextBlock[]) =>
+          !value ? 'A title is recommended' : true,
+        ).warning(),
     },
     {
       name: 'themedTitle',
@@ -89,7 +97,9 @@ export default {
       of: [themedTitleContentType],
       hidden: ({ parent }: GridTextBlockDocument) => !parent.useThemedTitle,
       validation: (Rule: Rule) =>
-        Rule.custom((value: PortableTextBlock[]) => (!value ? 'A title is recommended' : true)).warning(),
+        Rule.custom((value: PortableTextBlock[]) =>
+          !value ? 'A title is recommended' : true,
+        ).warning(),
     },
     {
       name: 'titleThemeFromLarger',
@@ -143,14 +153,21 @@ export default {
     {
       name: 'contentAlignment',
       title: 'Content Alignment',
-      description: 'Select the content alignment on larger screens. Bottom alignments can be kept on mobile',
+      description:
+        'Select the content alignment on larger screens. Bottom alignments can be kept on mobile',
       type: 'string',
       initialValue: 'left',
       components: {
-        input: function ({ onChange, value }: { onChange: any; value: string }) {
+        input: function ({
+          onChange,
+          value,
+        }: {
+          onChange: any
+          value: string
+        }) {
           return (
             <RadioIconSelector
-              name="imageAlignmentSelector"
+              name='imageAlignmentSelector'
               options={contentAlignmentOptions}
               defaultValue={'left'}
               currentValue={value}
@@ -178,7 +195,8 @@ export default {
           title: 'Apply light gradient',
           name: 'useLight',
           type: 'boolean',
-          description: 'Applies a white gradient over semi transparent background image.',
+          description:
+            'Applies a white gradient over semi transparent background image.',
         },
       ],
 
@@ -197,7 +215,7 @@ export default {
         },
       },
     },
-  ].filter((e) => e),
+  ].filter(e => e),
   preview: {
     select: {
       title: 'title',

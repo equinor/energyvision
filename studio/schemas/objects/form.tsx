@@ -1,10 +1,10 @@
 import type { PortableTextBlock, Rule, ValidationContext } from 'sanity'
 import blocksToText from '../../helpers/blocksToText'
-import CompactBlockEditor from '../components/CompactBlockEditor'
+import { Flags } from '../../src/lib/datasetHelpers'
+import { CompactBlockEditor } from '../components/CompactBlockEditor'
 import { configureBlockContent } from '../editors'
 import { validateRequiredIfVisible } from '../validations/validateRequiredIfVisible'
-import { DownloadableFile } from './files'
-import { Flags } from '../../src/lib/datasetHelpers'
+import type { DownloadableFile } from './files'
 
 const titleContentType = configureBlockContent({ variant: 'title' })
 
@@ -53,16 +53,31 @@ export default {
       title: 'Type of form',
       options: {
         list: [
-          Flags.HAS_SUBSCRIBE_FORM && { title: 'Subscribe Form', value: 'subscribeForm' },
-          Flags.HAS_CONTACT_EQUINOR_FORM && { title: 'Contact Equinor form', value: 'contactEquinorForm' },
-          Flags.HAS_CAREERS_CONTACT_FORM && { title: 'Careers contact form', value: 'careersContactForm' },
-          Flags.HAS_ORDER_REPORT_FORM && { title: 'Order reports', value: 'orderReportsForm' },
+          Flags.HAS_SUBSCRIBE_FORM && {
+            title: 'Subscribe Form',
+            value: 'subscribeForm',
+          },
+          Flags.HAS_CONTACT_EQUINOR_FORM && {
+            title: 'Contact Equinor form',
+            value: 'contactEquinorForm',
+          },
+          Flags.HAS_CAREERS_CONTACT_FORM && {
+            title: 'Careers contact form',
+            value: 'careersContactForm',
+          },
+          Flags.HAS_ORDER_REPORT_FORM && {
+            title: 'Order reports',
+            value: 'orderReportsForm',
+          },
           Flags.HAS_CAREER_FAIR_AND_VISITS_FORM && {
             title: 'Career fairs and visits',
             value: 'careerFairAndVisitsForm',
           },
-          Flags.HAS_PENSION_FORM && { title: 'Pension form', value: 'pensionForm' },
-        ].filter((e) => e),
+          Flags.HAS_PENSION_FORM && {
+            title: 'Pension form',
+            value: 'pensionForm',
+          },
+        ].filter(e => e),
         layout: 'dropdown',
       },
       validation: (Rule: Rule) => Rule.required(),
@@ -76,9 +91,14 @@ export default {
       validation: (Rule: Rule) =>
         Rule.custom((value: string, context: ValidationContext) => {
           const { parent } = context as { parent: Form }
-          return validateRequiredIfVisible(parent?.form === 'orderReportsForm', value, 'You must add reports')
+          return validateRequiredIfVisible(
+            parent?.form === 'orderReportsForm',
+            value,
+            'You must add reports',
+          )
         }).unique(),
-      hidden: ({ parent }: { parent: Form }) => parent?.form !== 'orderReportsForm',
+      hidden: ({ parent }: { parent: Form }) =>
+        parent?.form !== 'orderReportsForm',
     },
   ],
   preview: {
@@ -86,19 +106,29 @@ export default {
       title: 'title',
       type: 'form',
     },
-    prepare({ title = [], type }: { title: PortableTextBlock[]; type: FormType }) {
+    prepare({
+      title = [],
+      type,
+    }: {
+      title: PortableTextBlock[]
+      type: FormType
+    }) {
       const plainTitle = title ? blocksToText(title) : undefined
 
       const getFormType = (type: FormType) => {
         if (type === 'subscribeForm') {
           return 'Subscribe Form'
-        } else if (type == 'contactEquinorForm') {
+        }
+        if (type === 'contactEquinorForm') {
           return 'Contact Equinor form'
-        } else if (type == 'careersContactForm') {
+        }
+        if (type === 'careersContactForm') {
           return 'Careers contact form'
-        } else if (type == 'orderReportsForm') {
+        }
+        if (type === 'orderReportsForm') {
           return 'Order reports'
-        } else if (type == 'pensionForm') {
+        }
+        if (type === 'pensionForm') {
           return 'Pension form'
         }
         return 'Career fairs and visits'

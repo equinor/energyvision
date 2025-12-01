@@ -1,6 +1,6 @@
 import { defineField, type Rule } from 'sanity'
 import { filterByRoute } from '../../../helpers/referenceFilters'
-import CompactBlockEditor from '../../components/CompactBlockEditor'
+import { CompactBlockEditor } from '../../components/CompactBlockEditor'
 import { configureBlockContent } from '../../editors'
 import routes from '../../routes'
 

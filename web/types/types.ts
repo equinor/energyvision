@@ -1,25 +1,22 @@
-import { PortableTextBlock } from '@portabletext/types'
-import { SanityImageObject } from '@sanity/image-url/lib/types/types'
+import type { PortableTextBlock } from '@portabletext/types'
+import type { SanityImageObject } from '@sanity/image-url/lib/types/types'
+import type { FullWidthVideoProps } from '@/sections/FullWidthVideo/FullWidthVideo'
+import type { StockValuesProps } from '@/sections/StockValues/StockValues'
+import type { TeaserData } from '@/sections/teasers/Teaser/Teaser'
+import type { VideoPlayerBlockProps } from '@/sections/VideoPlayerBlock/VideoPlayerBlock'
+import type { VideoPlayerCarouselData } from '@/sections/VideoPlayerCarousel/VideoPlayerCarousel'
+import type { FigureData } from '../sections/Figure/Figure'
+import type { FullWidthImageData } from '../sections/FullwidthImage/FullWidthImage'
 import type {
-  ImageWithCaptionData,
+  CardData,
+  DesignOptions,
+  EventDateType,
+  GridData,
   ImageWithAlt,
   LinkData,
   LinkType,
-  EventDateType,
-  CardData,
-  BackgroundColours,
-  DesignOptions,
-  GridData,
   StickyMenuLinkType,
 } from './index'
-import { FigureData } from '../sections/Figure/Figure'
-import { FullWidthImageData } from '../sections/FullwidthImage/FullWidthImage'
-import { LoopingVideoData } from '@/sections/Hero/LoopingVideo'
-import { FullWidthVideoProps } from '@/sections/FullWidthVideo/FullWidthVideo'
-import { VideoPlayerCarouselData } from '@/sections/VideoPlayerCarousel/VideoPlayerCarousel'
-import { VideoPlayerBlockProps } from '@/sections/VideoPlayerBlock/VideoPlayerBlock'
-import { TeaserData } from '@/sections/teasers/Teaser/Teaser'
-import { StockValuesProps } from '@/sections/StockValues/StockValues'
 
 export type IntlData = {
   locale: string
@@ -48,28 +45,6 @@ export type PortableTextChild = {
 }
 
 export type Templates = 'landingPage' | 'page' | 'news'
-
-export enum HeroTypes {
-  DEFAULT = 'default',
-  FIFTY_FIFTY = 'fiftyFifty',
-  FULL_WIDTH_IMAGE = 'fullWidthImage',
-  LOOPING_VIDEO = 'loopingVideo',
-  BACKGROUND_IMAGE = 'backgroundImage',
-}
-
-export type HeroType = {
-  figure?: ImageWithCaptionData
-  isBigTitle?: boolean
-  title?: PortableTextBlock[]
-  ingress?: PortableTextBlock[]
-  link?: LinkData
-  type?: HeroTypes
-  ratio?: string
-  background?: BackgroundColours
-  loopingVideo?: LoopingVideoData
-  hideImageCaption?: boolean
-  captionBg?: BackgroundColours
-}
 
 export type ContentType =
   | TeaserData
@@ -257,7 +232,12 @@ export type FooterColumns = {
   linkList?: FooterLinkData[]
 }
 
-export type SomeType = 'facebook' | 'instagram' | 'youtube' | 'twitter' | 'linkedin'
+export type SomeType =
+  | 'facebook'
+  | 'instagram'
+  | 'youtube'
+  | 'twitter'
+  | 'linkedin'
 
 export type FooterLinkData = {
   id: string
@@ -374,7 +354,10 @@ export type CareersContactFormCatalogType =
   | 'onboarding'
   | 'emergingTalentsQueries'
   | 'others'
-export type PensionFormCatalogType = 'pension' | 'travelInsurance' | 'otherPensionInsuranceRelated'
+export type PensionFormCatalogType =
+  | 'pension'
+  | 'travelInsurance'
+  | 'otherPensionInsuranceRelated'
 export type KeyNumberItemData = {
   type: 'keyNumberItem'
   id: string

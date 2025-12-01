@@ -80,7 +80,7 @@ const PromotionCard = forwardRef<HTMLAnchorElement, PromotionCardProps>(
             <Blocks
               noInvert
               value={ingress}
-              blockClassName={`break-word max-w-prose text-ellipsis ${
+              blockClassName={`break-word max-w-prose ${
                 type !== 'news' && type !== 'localNews' ? '' : 'hidden lg:block'
               }`}
               {...(!(variant === 'single' && !isMobile) && {

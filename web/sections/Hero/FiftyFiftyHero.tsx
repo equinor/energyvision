@@ -1,38 +1,64 @@
+import type { HTMLAttributes } from 'react'
+import { twMerge } from 'tailwind-merge'
 import { Image } from '@/core/Image/Image'
 import { ResourceLink } from '@/core/Link'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import Blocks from '@/portableText/Blocks'
 import { getLocaleFromName } from '@/sanity/localization'
 import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
-import type { HeroType } from '@/types'
+import type { DesignOptions } from '@/types'
+import type { HeroData } from './HeroBlock'
+
+type FiftyFiftyHeroProps = {
+  nextSectionDesignOptions?: DesignOptions
+} & HeroData &
+  HTMLAttributes<HTMLElement>
 
 export const FiftyFiftyHero = ({
   title,
+  heroTitle,
   ingress,
-  link: action,
+  link,
+  heroLink,
   background,
+  nextSectionDesignOptions,
   figure,
   isBigTitle,
-}: HeroType) => {
-  const url = action && getUrlFromAction(action)
-  //@ts-ignore: Todo
-  const { bg, dark } = getBgAndDarkFromBackground({ background })
+  className = '',
+}: FiftyFiftyHeroProps) => {
+  const heroUrl = heroLink && getUrlFromAction(heroLink)
+  const url = link && getUrlFromAction(link)
+  const action = heroLink ?? link
+
+  const { bg: nextCompBg, dark: nextCompDark } = getBgAndDarkFromBackground(
+    nextSectionDesignOptions,
+  )
 
   return (
-    <section className={`${bg} ${dark ? 'dark' : ''}`}>
-      <div className='mx-auto grid min-h-[350px] md:grid-cols-2'>
+    <section className={twMerge(`flex flex-col-reverse`, className)}>
+      <Blocks
+        //@ts-ignore
+        value={title}
+        id='mainTitle'
+        variant='h1'
+        blockClassName={`pt-11 px-layout-lg ${nextCompBg} ${nextCompDark ? nextCompDark : ''}`}
+      />
+      <div className={`${background} grid min-h-[350px] md:grid-cols-2`}>
         {/* Image Section */}
         {figure && (
-          <div className='relative min-h-[350px] md:order-2'>
-            <Image grid='sm' image={figure.image} fill />
-          </div>
+          <Image
+            grid='sm'
+            image={figure.image}
+            fill
+            className='min-h-[350px] md:order-2'
+          />
         )}
 
         {/* Content Section */}
         <div className='flex max-w-full flex-col justify-center gap-8 px-layout-sm py-16 md:min-h-[450px] md:justify-self-end md:px-12 xl:pr-4xl xl:pl-layout-sm'>
-          {title && (
+          {heroTitle && (
             <Blocks
-              value={title}
+              value={heroTitle}
               as='h2'
               variant={isBigTitle ? '2xl' : 'xl'}
               blockClassName={`max-w-[1186px] ${isBigTitle ? 'font-normal' : 'font-medium'}`}
@@ -43,9 +69,9 @@ export const FiftyFiftyHero = ({
             <Blocks value={ingress} blockClassName='hidden md:block' />
           )}
 
-          {action && !isBigTitle && (
+          {action && (heroUrl || url) && !isBigTitle && (
             <ResourceLink
-              href={url as string}
+              href={heroUrl ?? url}
               {...(action.link?.lang && {
                 hrefLang: getLocaleFromName(action.link?.lang),
               })}

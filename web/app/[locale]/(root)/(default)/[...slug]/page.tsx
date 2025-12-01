@@ -28,8 +28,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const locale = (await params).locale ?? defaultLocale
   const fullSlug = `${domain}/${locale !== defaultLocale ? `${locale}/` : ''}${slug.join('/')}`
 
-  console.log('generateMetadata [...slug], slug', slug)
-  console.log('generateMetadata [...slug], locale', locale)
   const { query, queryParams } = await getQueryFromSlug(slug, locale)
   const { pageData } = await getPageData({
     query,
@@ -141,25 +139,11 @@ export default async function Page({ params }: Props) {
     queryParams,
   })
   if (!pageData) notFound()
-  //console.log('[locale]>Page pageData', pageData)
-
-  //const router = useRouter()
 
   const slug = pageData?.slug
-  /*if (!router.isFallback && !slug && queryParams?.id) {
-    return <ErrorPage pageData={pageData} />
-  }*/
 
   const template = pageData?.template || null
   if (!template) console.warn('Missing template for', slug)
-
-  /*if (router.isFallback) {
-    return (
-      <p>
-        <FormattedMessage id="loading" defaultMessage="Loading..." />
-      </p>
-    )
-  }*/
 
   const getTemplate = () => {
     switch (template) {

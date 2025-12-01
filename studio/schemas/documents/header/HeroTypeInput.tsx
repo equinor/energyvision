@@ -1,9 +1,17 @@
 import { Select } from '@sanity/ui'
 import { useCallback } from 'react'
-import { Role, set, StringInputProps, TitledListValue, useCurrentUser, userHasRole } from 'sanity'
+import {
+  type Role,
+  type StringInputProps,
+  set,
+  type TitledListValue,
+  useCurrentUser,
+} from 'sanity'
 
+const restrictedHeroTypes = ['loopingVideo', 'noHero']
 export default function HeroTypeInput(props: StringInputProps) {
   const { value, onChange, schemaType } = props
+  const { options } = schemaType
   //@ts-ignore CurrentUser has roles in types...
   const { roles } = useCurrentUser()
 
@@ -16,21 +24,29 @@ export default function HeroTypeInput(props: StringInputProps) {
   )
 
   const allowedRoles = ['administrator', 'developer', 'designer']
-  const herotypes = (schemaType?.options?.list as Array<TitledListValue<'string'>>)?.filter((option) => {
-    //@ts-ignore: works despite ts
-    if (option?.value === 'loopingVideo') {
-      return roles.some((userRole: Role) => allowedRoles.includes(userRole.name))
-    }
-    return true
-  })
+  const herotypes = (options?.list as Array<TitledListValue<'string'>>)?.filter(
+    option => {
+      //@ts-ignore: works despite ts
+      if (restrictedHeroTypes.includes(option?.value)) {
+        return roles.some((userRole: Role) =>
+          allowedRoles.includes(userRole.name),
+        )
+      }
+      return true
+    },
+  )
 
   return (
-    <Select onChange={handleChange} value={value}>
-      {herotypes?.map((herotype) => (
-        <option key={herotype.value} value={herotype.value}>
-          {herotype.title}
-        </option>
-      ))}
-    </Select>
+    <div>
+      <Select onChange={handleChange} value={value}>
+        {herotypes?.map(herotype => {
+          return (
+            <option key={herotype.value} value={herotype.value}>
+              {herotype.title}
+            </option>
+          )
+        })}
+      </Select>
+    </div>
   )
 }

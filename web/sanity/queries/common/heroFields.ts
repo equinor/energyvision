@@ -4,15 +4,15 @@ export const heroFields = /* groq */ `{
     "type": coalesce(heroType, 'default'),
     "ratio": heroRatio,
     "isBigTitle":isBigTitle,
-    "title": heroTitle,
+    "heroTitle": heroTitle,
     heroType == 'fiftyFifty' && isBigTitle => {
-      "title" : heroBigTitleFiftyFifty,
+      "heroTitle" : heroBigTitleFiftyFifty,
     },
     heroType == "default" && isBigTitle => {
-      "title" : heroBigTitleDefault,
+      "heroTitle" : heroBigTitleDefault,
     },
     "ingress": heroIngress,
-    "background": coalesce(heroBackground.title, 'White'),
+    "background": coalesce(heroBackground.key, 'white-100'),
     "figure":  select(
       heroType == 'loopingVideo' => { "image": heroLoopingVideo->thumbnail},
       heroFigure),
@@ -24,6 +24,9 @@ export const heroFields = /* groq */ `{
       containVideo,
     },
     "link": heroLink[0]{
+      ${linkSelectorFields}
+    },
+    "herolink": heroLink{
       ${linkSelectorFields}
     }
   }`

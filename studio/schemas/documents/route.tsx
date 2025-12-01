@@ -1,13 +1,20 @@
-import slugify from 'slugify'
-import { Reference, Rule, SlugParent, SlugSchemaType, SlugSourceContext } from 'sanity'
-import blocksToText from '../../helpers/blocksToText'
-import { calendar_event, library_books } from '@equinor/eds-icons'
-import { EdsIcon, TopicDocuments } from '../../icons'
-import { Flags } from '../../src/lib/datasetHelpers'
-import { withSlugValidation } from '../validations/validateSlug'
-import SlugInput from '../components/SlugInput'
+import { library_books } from '@equinor/eds-icons'
 // eslint-disable-next-line import/namespace
-import { SanityClient, SanityDocument } from '@sanity/client'
+import type { SanityClient, SanityDocument } from '@sanity/client'
+import { CiRoute, CiWarning } from 'react-icons/ci'
+import { MdOutlineEvent } from 'react-icons/md'
+import type {
+  Reference,
+  Rule,
+  SlugParent,
+  SlugSchemaType,
+  SlugSourceContext,
+} from 'sanity'
+import slugify from 'slugify'
+import { EdsIcon } from '../../icons'
+import { Flags } from '../../src/lib/datasetHelpers'
+import SlugInput from '../components/SlugInput'
+import { withSlugValidation } from '../validations/validateSlug'
 
 export default (isoCode: string, title: string) => {
   return {
@@ -19,7 +26,6 @@ export default (isoCode: string, title: string) => {
       {
         title: 'Slug',
         name: 'slug',
-        description: '⚠️ This feature is still actively being worked on ⚠️',
         options: {
           collapsible: true,
           collapsed: false,
@@ -31,7 +37,8 @@ export default (isoCode: string, title: string) => {
       {
         title: 'Content',
         name: 'content',
-        description: 'The content you want to appear at this path. Remember it needs to be published.',
+        description:
+          'The content you want to appear at this path. Remember it needs to be published.',
         validation: (Rule: Rule) => Rule.required(),
         type: 'reference',
         to: [
@@ -50,7 +57,7 @@ export default (isoCode: string, title: string) => {
           Flags.HAS_MAGAZINE && {
             type: 'magazineIndex',
           },
-        ].filter((e) => e),
+        ].filter(e => e),
         options: {
           filter: 'lang == $lang',
           filterParams: { lang: `${isoCode}` },
@@ -60,7 +67,8 @@ export default (isoCode: string, title: string) => {
       {
         title: 'Parent',
         name: 'parent',
-        description: 'Unless this route is a top level route, it should have a parent.',
+        description:
+          'Unless this route is a top level route, it should have a parent.',
         type: 'reference',
         // Only allow a reference to the same language
         to: [{ type: `route_${isoCode}` }],
@@ -77,7 +85,8 @@ export default (isoCode: string, title: string) => {
         type: 'string',
 
         placeholder: 'For example "Experienced professionals"',
-        description: 'The unique part of the URL for this page. Should probably be something like the page title.',
+        description:
+          'The unique part of the URL for this page. Should probably be something like the page title.',
         // validation: (Rule) => Rule.max(200),
         fieldset: 'slug',
       },
@@ -90,7 +99,8 @@ export default (isoCode: string, title: string) => {
           input: SlugInput,
         },
         options: withSlugValidation({
-          source: (doc: SanityDocument) => slugify(doc['topicSlug'], { lower: true }),
+          source: (doc: SanityDocument) =>
+            slugify(doc.topicSlug, { lower: true }),
           slugify: async (
             input: string,
             _schemaType: SlugSchemaType,
@@ -102,11 +112,12 @@ export default (isoCode: string, title: string) => {
 
             if (refId) {
               return client
-                .fetch(/* groq */ `*[_id == $refId][0].slug.current`, { refId: refId })
+                .fetch(/* groq */ `*[_id == $refId][0].slug.current`, {
+                  refId: refId,
+                })
                 .then((parentSlug: string) => `${parentSlug}/${slugify(input)}`)
-            } else {
-              return `/${slugify(input)}`
             }
+            return `/${slugify(input)}`
           },
         }),
         validation: (Rule: Rule) => Rule.required(),
@@ -123,8 +134,21 @@ export default (isoCode: string, title: string) => {
         type: 'boolean',
         name: 'includeInBuild',
         title: 'Include in static build',
-        description: 'Enable this if this route should be generated at build time',
+        description:
+          'Enable this if this route should be generated at build time',
         initialValue: false,
+      },
+    ],
+    orderings: [
+      {
+        title: 'Slug (desc)',
+        name: 'slugDesc',
+        by: [{ field: 'slug', direction: 'desc' }],
+      },
+      {
+        title: 'Slug (Asc)',
+        name: 'slugAsc',
+        by: [{ field: 'slug', direction: 'asc' }],
       },
     ],
     preview: {
@@ -135,15 +159,19 @@ export default (isoCode: string, title: string) => {
         type: 'content._type',
       },
       prepare(selection: any) {
-        const { title, slug, media, type } = selection
-        const plainTitle = title ? blocksToText(title) : ''
+        const { slug, media, type } = selection
+        const withoutParent = slug ? slug.split('/').at(-1) : ''
+        console.log('withoutParent', withoutParent)
 
-        const thumbnail = media ? media : type === 'event' ? EdsIcon(calendar_event) : TopicDocuments
+        const thumbnail = media
+          ? media
+          : type === 'event'
+            ? MdOutlineEvent
+            : CiRoute
 
         return {
-          title: plainTitle,
-          subtitle: slug,
-          media: thumbnail,
+          title: slug ? `/${withoutParent}` : 'Missing route',
+          media: !slug ? CiWarning : thumbnail,
         }
       },
     },

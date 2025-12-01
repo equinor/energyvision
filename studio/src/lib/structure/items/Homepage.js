@@ -1,16 +1,16 @@
-import { TopicDocuments } from '../../../../icons'
+import { PiStorefrontLight } from 'react-icons/pi'
 import { defaultLanguage } from '../../../../languages'
 import { apiVersion } from '../../../../sanity.client'
 
-export const HomePage = (S) =>
+export const HomePage = S =>
   S.listItem()
-    .title('Home Page')
-    .icon(TopicDocuments)
+    .title('Homepage')
+    .icon(PiStorefrontLight)
     .schemaType('homePage')
     .child(
       S.documentTypeList('homePage')
         .id('pages')
-        .title('Home Page')
+        .title('Homepage')
         .apiVersion(apiVersion)
         .filter('_type == "homePage" && (!defined(lang) || lang == $baseLang)')
         .params({ baseLang: defaultLanguage.name })

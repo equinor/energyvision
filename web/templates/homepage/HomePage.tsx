@@ -1,27 +1,39 @@
-import { toPlainText } from '@portabletext/react'
-import useSharedTitleStyles from '../../lib/hooks/useSharedTitleStyles'
-import { HeroTypes, HomePageSchema } from '../../types/index'
-import { SharedBanner } from '@/templates/shared/SharedBanner'
-import SharedTitle from '@/templates/shared/SharedTitle'
+import {
+  HeroBlock,
+  type HeroBlockProps,
+  HeroTypes,
+} from '@/sections/Hero/HeroBlock'
 import { PageContent } from '@/templates/shared/SharedPageContent'
-import { Breadcrumbs } from '@/core/Breadcrumbs/Breadcrumbs'
+import type { HomePageSchema } from '../../types/index'
 
 type HomePageProps = {
   data: HomePageSchema
 }
 
 const HomePage = ({ data }: HomePageProps) => {
-  const titleStyles = useSharedTitleStyles(data?.hero?.type, data?.content?.[0])
-  const { breadcrumbs } = data
-
+  const { hero, title, ...restData } = data
+  console.log('HomePage hero', hero)
+  console.log('data.title', data.title)
+  const heroProps: HeroBlockProps = {
+    //@ts-ignore
+    title: title,
+    ...hero,
+    //@ts-ignore
+    nextSectionDesignOptions: restData?.content?.[0]?.designOptions,
+  }
   return (
-    <main className="flex flex-col [:not(:has(.sticky-menu))]:pt-topbar">
-      {data.isCampaign ? (
-        <h1 className="sr-only">{toPlainText(data.title)}</h1>
+    <main className='flex flex-col [:not(:has(.sticky-menu))]:pt-topbar'>
+      <HeroBlock {...heroProps} />
+      {/*       {data.isCampaign ? (
+        <h1 className='sr-only'>{toPlainText(data.title)}</h1>
       ) : (
-        <SharedBanner title={data.title} hero={data.hero} captionBg={titleStyles.background?.backgroundColor} />
+        <SharedBanner
+          title={data.title}
+          hero={data.hero}
+          captionBg={titleStyles.background?.backgroundColor}
+        />
       )}
-      {breadcrumbs && breadcrumbs?.enableBreadcrumbs && (
+      {breadcrumbs?.enableBreadcrumbs && (
         <Breadcrumbs
           designOptions={{ background: titleStyles.background ?? {} }}
           slug={data?.slug}
@@ -33,9 +45,19 @@ const HomePage = ({ data }: HomePageProps) => {
       )}
 
       {data?.hero?.type !== HeroTypes.DEFAULT && !data?.isCampaign && (
-        <SharedTitle sharedTitle={data.title} background={titleStyles?.background} />
-      )}
-      <PageContent data={data} titleBackground={titleStyles} />
+        <SharedTitle
+          sharedTitle={data.title}
+          background={titleStyles?.background}
+        />
+      )} */}
+      <PageContent
+        data={data}
+        heroBackground={
+          hero.type !== HeroTypes.DEFAULT
+            ? restData?.content?.[0]?.designOptions.background
+            : hero?.background
+        }
+      />
     </main>
   )
 }

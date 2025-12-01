@@ -1,14 +1,14 @@
-import { TopicDocuments } from '../../../../icons'
+import { MdOutlineEvent } from 'react-icons/md'
 import { defaultLanguage } from '../../../../languages'
 import { apiVersion } from '../../../../sanity.client'
 import { Flags } from '../../datasetHelpers'
 import { EmptyItem } from './EmptyItem'
 
-export const Event = (S) =>
+export const Event = S =>
   Flags.HAS_EVENT
     ? S.listItem()
         .title('Event')
-        .icon(TopicDocuments)
+        .icon(MdOutlineEvent)
         .schemaType('event')
         .child(
           S.documentTypeList('event')

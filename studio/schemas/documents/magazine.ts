@@ -1,7 +1,7 @@
 import { bookmarks } from '@equinor/eds-icons'
-import { magazineSlug } from '@shared/sitesConfig'
 import type { Rule, SanityDocument } from 'sanity'
 import slugify from 'slugify'
+import { magazineSlug } from '@/sitesConfig'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
 import { defaultLanguage } from '../../languages'
@@ -31,8 +31,21 @@ export default {
   icon: () => EdsIcon(bookmarks),
   fieldsets: [
     {
-      title: 'Header',
-      name: 'header',
+      title: 'More page options',
+      description: 'SEO, meta and sticky menu',
+      options: {
+        collapsible: true,
+        collapsed: true,
+      },
+      name: 'other',
+    },
+    {
+      title: 'Hero configuration',
+      options: {
+        collapsible: true,
+        collapsed: true,
+      },
+      name: 'hero',
     },
     {
       title: 'Slug',
@@ -42,16 +55,6 @@ export default {
       options: {
         collapsible: true,
         collapsed: false,
-      },
-    },
-    {
-      title: 'SEO & metadata',
-      name: 'metadata',
-      description:
-        'This part is used for meta information when this content is used on the web',
-      options: {
-        collapsible: true,
-        collapsed: true,
       },
     },
     {
@@ -77,7 +80,7 @@ export default {
       title: 'Meta information',
       name: 'seo',
       type: 'titleAndMeta',
-      fieldset: 'metadata',
+      fieldset: 'other',
     },
     {
       title: 'Magazine tags',
@@ -99,7 +102,7 @@ export default {
       type: 'imageWithAlt',
       description:
         'You can override the hero image as the SoMe image by uploading another image here.',
-      fieldset: 'metadata',
+      fieldset: 'other',
     },
     {
       name: 'ingress',

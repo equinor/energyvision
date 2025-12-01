@@ -2,15 +2,20 @@ import { calendar_event, image } from '@equinor/eds-icons'
 import type { PortableTextBlock, Rule, ValidationContext } from 'sanity'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
-import CompactBlockEditor from '../components/CompactBlockEditor'
+import { CompactBlockEditor } from '../components/CompactBlockEditor'
 import { configureBlockContent } from '../editors'
+import basicIframe from '../objects/basicIframe'
 import type { EventDate } from '../objects/eventDate'
 import type { RelatedLinksArray } from '../objects/relatedLinks'
 import { lang } from './langField'
-import basicIframe from '../objects/basicIframe'
 
-const validateRelatedLinksTitle = (value: string, context: ValidationContext) => {
-  const { parent } = context as { parent: { title: string; links: RelatedLinksArray } }
+const validateRelatedLinksTitle = (
+  value: string,
+  context: ValidationContext,
+) => {
+  const { parent } = context as {
+    parent: { title: string; links: RelatedLinksArray }
+  }
   const links = parent.links
 
   if (!links) return true
@@ -31,7 +36,8 @@ export default {
     {
       title: 'SEO & metadata',
       name: 'metadata',
-      description: 'This part is used for meta information when this content is used on the web',
+      description:
+        'This part is used for meta information when this content is used on the web',
       options: {
         collapsible: true,
         collapsed: true,
@@ -66,7 +72,8 @@ export default {
       name: 'openGraphImage',
       type: 'image',
       title: 'Open Graph Image',
-      description: 'You can override the hero image as the SoMe image by uploading another image here.',
+      description:
+        'You can override the hero image as the SoMe image by uploading another image here.',
       fieldset: 'metadata',
     },
     {
@@ -144,7 +151,9 @@ export default {
           type: 'string',
           title: 'Title',
           validation: (Rule: Rule) =>
-            Rule.custom((value: string, context: ValidationContext) => validateRelatedLinksTitle(value, context)),
+            Rule.custom((value: string, context: ValidationContext) =>
+              validateRelatedLinksTitle(value, context),
+            ),
         },
         {
           name: 'links',
@@ -160,7 +169,9 @@ export default {
       date: 'eventDate',
     },
     prepare({ title, date }: { title: PortableTextBlock[]; date: EventDate }) {
-      const eventDate = date?.date ? `${date.date} ${date?.timezone}` : 'No date set'
+      const eventDate = date?.date
+        ? `${date.date} ${date?.timezone}`
+        : 'No date set'
       return {
         title: title ? blocksToText(title) : 'Untitled event',
         subtitle: eventDate,

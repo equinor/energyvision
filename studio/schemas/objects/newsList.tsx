@@ -3,7 +3,7 @@ import { Box, Card, Stack, Text } from '@sanity/ui'
 import type { Rule } from 'sanity'
 import { EdsIcon } from '../../icons'
 import { defaultLanguage } from '../../languages'
-import CompactBlockEditor from '../components/CompactBlockEditor'
+import { CompactBlockEditor } from '../components/CompactBlockEditor'
 import { configureBlockContent } from '../editors'
 
 // eslint-disable-next-line react/display-name

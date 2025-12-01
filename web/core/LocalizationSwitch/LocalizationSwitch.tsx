@@ -39,7 +39,7 @@ export const LocalizationSwitch = ({
             >
               <span className='sr-only'>
                 {activeLocale === String(language?.locale)
-                  ? `${intl('current_language')}: ${language?.title}`
+                  ? `${intl('current_language') ?? 'current language'}: ${language?.title}`
                   : `${intl('switch_to')} ${language?.title}`}
               </span>
               <span

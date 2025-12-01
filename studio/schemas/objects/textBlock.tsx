@@ -8,7 +8,7 @@ import type {
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
 import type { ColorSelectorValue } from '../components/ColorSelector'
-import CompactBlockEditor from '../components/CompactBlockEditor'
+import { CompactBlockEditor } from '../components/CompactBlockEditor'
 import { configureBlockContent } from '../editors'
 
 type TextBlock = {

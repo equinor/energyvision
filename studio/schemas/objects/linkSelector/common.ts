@@ -1,18 +1,26 @@
+import { external_link, facebook, home, link } from '@equinor/eds-icons'
+import { LinkIcon } from '@sanity/icons'
 import type { Reference, Rule, ValidationContext } from 'sanity'
-import { filterByPages, filterByPagesInOtherLanguages } from '../../../helpers/referenceFilters'
-import { Flags } from '../../../src/lib/datasetHelpers'
-import routes from '../../routes'
-import { AnchorLinkDescription } from '../anchorReferenceField'
+import {
+  filterByPages,
+  filterByPagesInOtherLanguages,
+} from '../../../helpers/referenceFilters'
+import { EdsBlockEditorIcon } from '../../../icons'
 // eslint-disable-next-line import/no-unresolved
 import { defaultLanguage, languages } from '../../../languages'
 import { apiVersion } from '../../../sanity.client'
-import { EdsBlockEditorIcon } from '../../../icons'
-import { external_link, facebook, home, language, link } from '@equinor/eds-icons'
+import { Flags } from '../../../src/lib/datasetHelpers'
 import { ExternalLinkRenderer } from '../../components'
-import { LinkIcon } from '@sanity/icons'
+import routes from '../../routes'
 import { warnHttpOrNotValidSlugExternal } from '../../validations/validateSlug'
+import { AnchorLinkDescription } from '../anchorReferenceField'
 
-export type LinkType = 'link' | 'reference' | 'homePageLink' | 'referenceToOtherLanguage' | 'socialMediaLink'
+export type LinkType =
+  | 'link'
+  | 'reference'
+  | 'homePageLink'
+  | 'referenceToOtherLanguage'
+  | 'socialMediaLink'
 export type ReferenceTarget = {
   type: string
 }
@@ -40,26 +48,40 @@ const types = [
   Flags.HAS_MAGAZINE && {
     type: 'magazineIndex',
   },
-].filter((e) => e)
+].filter(e => e)
 
-const defaultReferenceTargets: ReferenceTarget[] = [...(types as ReferenceTarget[]), ...routes]
+const defaultReferenceTargets: ReferenceTarget[] = [
+  ...(types as ReferenceTarget[]),
+  ...routes,
+]
 
 const validation =
   (linkToAnotherLanguage = false) =>
   (Rule: Rule) =>
     Rule.custom(async (value: any, context: ValidationContext) => {
       if (value?._ref && linkToAnotherLanguage) return true
-      const { document } = context as { parent: LinkSelector; document: { lang?: string } }
+      const { document } = context as {
+        parent: LinkSelector
+        document: { lang?: string }
+      }
       if (value?._ref) {
         const referenceLang = await context
           .getClient({ apiVersion: apiVersion })
-          .fetch(/* groq */ `*[_id == $id][0]{"lang": coalesce(content->lang, lang)}.lang`, {
-            id: value._ref,
-          })
-        if (document.lang ? document.lang !== referenceLang : defaultLanguage.name !== referenceLang)
+          .fetch(
+            /* groq */ `*[_id == $id][0]{"lang": coalesce(content->lang, lang)}.lang`,
+            {
+              id: value._ref,
+            },
+          )
+        if (
+          document.lang
+            ? document.lang !== referenceLang
+            : defaultLanguage.name !== referenceLang
+        )
           return 'Reference must have the same language as the document'
-        else return true
-      } else return 'Required'
+        return true
+      }
+      return 'Required'
     })
 
 export const externalLink = {
@@ -119,7 +141,7 @@ export const homepageLink = {
       type: 'string',
       validation: (Rule: Rule) => Rule.required(),
       options: {
-        list: languages.map((it) => ({ title: it.title, value: it.name })),
+        list: languages.map(it => ({ title: it.title, value: it.name })),
       },
       initialValue: defaultLanguage.name,
     },
@@ -131,7 +153,7 @@ export const homepageLink = {
     prepare({ title }: { title: string }) {
       return {
         title: title
-          ? `Linking to ${languages.find((it) => it.name == title)?.title} home page`
+          ? `Linking to ${languages.find(it => it.name === title)?.title} home page`
           : 'Select language of the home page',
       }
     },
@@ -141,7 +163,8 @@ export const homepageLink = {
 export const internalReferenceOtherLanguage = {
   name: 'referenceToOtherLanguage',
   title: 'Internal link to another language',
-  description: 'Use this field to reference an internal page in other language.',
+  description:
+    'Use this field to reference an internal page in other language.',
   type: 'reference',
   icon: LinkIcon,
   validation: validation(true),

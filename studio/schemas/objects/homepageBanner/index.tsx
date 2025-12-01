@@ -8,7 +8,7 @@ import {
 } from 'sanity'
 import styled from 'styled-components'
 import blocksToText from '../../../helpers/blocksToText'
-import CompactBlockEditor from '../../components/CompactBlockEditor'
+import { CompactBlockEditor } from '../../components/CompactBlockEditor'
 import {
   CardTheme,
   ThemePreview,

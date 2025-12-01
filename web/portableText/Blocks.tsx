@@ -13,13 +13,13 @@ import type {
   PortableTextBlockStyle,
 } from '@portabletext/types'
 import type { ElementType } from 'react'
-import { twMerge } from 'tailwind-merge'
 import { IFrame } from '@/core/IFrame/IFrame'
 import type { TypographyProps } from '@/core/Typography'
 import type {
   TypographyGroups,
   TypographyVariants,
 } from '@/core/Typography/variants'
+import { twMerge } from '@/lib/twMerge/twMerge'
 import { FactBox } from '@/sections/FactBox/FactBox'
 import { FigureWithLayout, Quote } from './components'
 import { Block } from './components/Block'
@@ -240,7 +240,6 @@ export default function Blocks({
                 key={block._key}
                 className={twMerge(
                   ` ${group === 'article' ? 'px-layout-lg' : ''}`,
-                  clampLines && twLineClampUtility[clampLines],
                   className,
                 )}
                 id={id}
@@ -252,7 +251,10 @@ export default function Blocks({
                       group,
                       variant,
                       as,
-                      className: blockClassName,
+                      className: twMerge(
+                        clampLines && twLineClampUtility[clampLines],
+                        blockClassName,
+                      ),
                     }),
                     ...blocksComponents,
                   },
@@ -286,7 +288,6 @@ export default function Blocks({
               key={block._key}
               className={twMerge(
                 `${group === 'article' ? 'px-layout-lg' : ''}`,
-                clampLines && twLineClampUtility[clampLines],
                 className,
               )}
               id={id}
@@ -300,7 +301,10 @@ export default function Blocks({
                       group,
                       variant,
                       as,
-                      className: blockClassName,
+                      className: twMerge(
+                        clampLines && twLineClampUtility[clampLines],
+                        blockClassName,
+                      ),
                     }),
                     ...blocksComponents,
                   },

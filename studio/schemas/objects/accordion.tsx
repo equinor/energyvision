@@ -2,9 +2,9 @@
 import type { Rule } from 'sanity'
 import blocksToText from '../../helpers/blocksToText'
 import { AccordionComponent } from '../../icons'
-import CompactBlockEditor from '../components/CompactBlockEditor'
-import { configureBlockContent } from '../editors/blockContentType'
 import type { ColorSelectorValue } from '../components/ColorSelector'
+import { CompactBlockEditor } from '../components/CompactBlockEditor'
+import { configureBlockContent } from '../editors/blockContentType'
 
 export type Accordion = {
   _type: 'accordion'
@@ -36,7 +36,8 @@ export default {
     {
       name: 'seo',
       title: 'SEO',
-      description: 'Enable structured markup to show rich results on Google search',
+      description:
+        'Enable structured markup to show rich results on Google search',
     },
   ],
   fields: [
@@ -55,7 +56,8 @@ export default {
         input: CompactBlockEditor,
       },
       of: [configureBlockContent({ variant: 'title' })],
-      validation: (Rule: Rule) => Rule.required().warning('Should we warn for missing title'),
+      validation: (Rule: Rule) =>
+        Rule.required().warning('Should we warn for missing title'),
     },
     {
       title: 'Ingress',
@@ -84,7 +86,7 @@ export default {
       type: 'colorlist',
       fieldset: 'design',
     },
-  ].filter((e) => e),
+  ].filter(e => e),
   preview: {
     select: {
       title: 'title',

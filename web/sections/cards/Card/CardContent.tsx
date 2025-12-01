@@ -1,7 +1,7 @@
-import { ArrowRight } from '../../../icons'
-import { forwardRef, HTMLAttributes } from 'react'
+import { forwardRef, type HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { Variants } from './Card'
+import { ArrowRight } from '../../../icons'
+import type { Variants } from './Card'
 
 export type CardContentProps = {
   /** Variant to use
@@ -23,25 +23,33 @@ export type CardContentProps = {
  * @summary Card Content wrapper for structure
  * @example
  * */
-export const CardContent = forwardRef<HTMLDivElement, CardContentProps>(function CardContent(
-  { variant = 'primary', className = '', iconClassName = '', noArrow = false, children, ...rest },
-  ref,
-) {
-  const commonStyling = `pt-6 md:pt-8 pb-6 px-6`
-  const variantClassNames = {
-    primary: `${commonStyling} flex-col items-start`,
-    secondary: `${commonStyling} flex-col items-start`,
-    compact: `pb-4 pt-2`,
-    single: `${commonStyling} px-10 flex-col items-start`,
-  }
-  const variantLinkClassNames = {
-    primary: `self-end mt-auto max-lg:hidden`,
-    secondary: `self-end mt-auto max-lg:hidden`,
-    compact: `max-xl:hidden`,
-    single: 'self-end mt-auto max-lg:hidden',
-  }
-  const iconClassNames = twMerge(
-    `size-arrow-right
+export const CardContent = forwardRef<HTMLDivElement, CardContentProps>(
+  function CardContent(
+    {
+      variant = 'primary',
+      className = '',
+      iconClassName = '',
+      noArrow = false,
+      children,
+      ...rest
+    },
+    ref,
+  ) {
+    const commonStyling = `h-full pt-6 md:pt-8 pb-6 px-6`
+    const variantClassNames = {
+      primary: `${commonStyling} flex-col items-start`,
+      secondary: `${commonStyling} flex-col items-start`,
+      compact: `pb-4 pt-2`,
+      single: `${commonStyling} px-10 flex-col items-start`,
+    }
+    const variantLinkClassNames = {
+      primary: `self-end mt-auto max-lg:hidden`,
+      secondary: `self-end mt-auto max-lg:hidden`,
+      compact: `max-xl:hidden`,
+      single: 'self-end mt-auto max-lg:hidden',
+    }
+    const iconClassNames = twMerge(
+      `size-arrow-right
     text-energy-red-100
     dark:text-white-100
     mr-2
@@ -50,34 +58,35 @@ export const CardContent = forwardRef<HTMLDivElement, CardContentProps>(function
     duration-300
     ${variantLinkClassNames[variant]}
   `,
-    iconClassName,
-  )
-  return (
-    <div
-      ref={ref}
-      className={twMerge(
-        `basis-0
-        grow
-        flex
-        gap-4
-        md:gap-6
-      ${variantClassNames[variant]}
-      `,
-        className,
-      )}
-      {...rest}
-    >
-      {variant === 'secondary' || variant === 'single' ? (
-        <>
-          <div className={`${variant === 'single' ? 'pr-12 flex flex-col gap-12' : ''}`}>{children}</div>
-          {!noArrow && <ArrowRight className={iconClassNames} />}
-        </>
-      ) : (
-        <>
-          {children}
-          {!noArrow && <ArrowRight className={iconClassNames} />}
-        </>
-      )}
-    </div>
-  )
-})
+      iconClassName,
+    )
+    return (
+      <div
+        ref={ref}
+        className={twMerge(
+          `flex gap-4 md:gap-6 ${variantClassNames[variant]}`,
+          className,
+        )}
+        {...rest}
+      >
+        {variant === 'secondary' || variant === 'single' ? (
+          <>
+            <div
+              className={`max-h-[60%] overflow-hidden text-ellipsis ${variant === 'single' ? 'flex flex-col gap-12 pr-12' : ''}`}
+            >
+              {children}
+            </div>
+            {!noArrow && <ArrowRight className={iconClassNames} />}
+          </>
+        ) : (
+          <>
+            <div className='max-h-[60%] overflow-hidden text-ellipsis'>
+              {children}
+            </div>
+            {!noArrow && <ArrowRight className={iconClassNames} />}
+          </>
+        )}
+      </div>
+    )
+  },
+)

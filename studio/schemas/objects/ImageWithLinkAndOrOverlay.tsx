@@ -1,9 +1,8 @@
-import { ImageWithAlt } from './imageWithAlt'
-import type { PortableTextBlock, Reference } from 'sanity'
-import { Rule } from 'sanity'
-import CompactBlockEditor from '../components/CompactBlockEditor'
+import type { PortableTextBlock, Reference, Rule } from 'sanity'
+import { CompactBlockEditor } from '../components/CompactBlockEditor'
 import { configureBlockContent } from '../editors'
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
+import type { ImageWithAlt } from './imageWithAlt'
 import singleItemArray from './singleItemArray'
 
 export type CarouselImageWithLinkAndOrOverlay = {
@@ -72,11 +71,17 @@ export default {
       imageUrl: 'image.asset.url',
       captionTeaserTitle: 'captionTeaserTitle',
     },
-    prepare({ imageUrl, captionTeaserTitle }: { imageUrl: string; captionTeaserTitle: string }) {
+    prepare({
+      imageUrl,
+      captionTeaserTitle,
+    }: {
+      imageUrl: string
+      captionTeaserTitle: string
+    }) {
       return {
         title: 'Image with link and or overlay',
         subtitle: captionTeaserTitle || '',
-        media: <img src={imageUrl} alt="" style={{ height: '100%' }} />,
+        media: <img src={imageUrl} alt='' style={{ height: '100%' }} />,
       }
     },
   },

@@ -1,4 +1,4 @@
-import { getLanguages } from '@shared/sitesConfig'
+import { getLanguages } from '@/sitesConfig'
 import { dataset } from './sanity.client'
 
 export const languages = getLanguages(dataset)

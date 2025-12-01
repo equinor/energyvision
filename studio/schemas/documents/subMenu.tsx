@@ -1,15 +1,16 @@
 import { format_line_spacing, playlist_add } from '@equinor/eds-icons'
+import type { Reference, Rule, ValidationContext } from 'sanity'
+import {
+  filterByRoute,
+  filterByRouteNewsMagazineAndTitle,
+} from '../../helpers/referenceFilters'
 import { EdsIcon } from '../../icons'
-import { configureBlockContent } from '../editors/blockContentType'
-import { validateInternalOrExternalUrl } from '../validations/validateInternalOrExternalUrl'
-import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
-
-import type { Rule, ValidationContext, Reference } from 'sanity'
-import routes from '../routes'
-import { filterByRoute, filterByRouteNewsMagazineAndTitle } from '../../helpers/referenceFilters'
 import { Flags } from '../../src/lib/datasetHelpers'
+import { configureBlockContent } from '../editors/blockContentType'
+import routes from '../routes'
+import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
+import { validateInternalOrExternalUrl } from '../validations/validateInternalOrExternalUrl'
 import { lang } from './langField'
-import { description } from '../objects/iframe/sharedIframeFields'
 
 export type SubMenu = {
   _type: 'subMenu'
@@ -107,7 +108,11 @@ export default {
       name: 'featuredContent',
       type: 'reference',
       title: 'Featured content',
-      to: [Flags.HAS_NEWS && { type: 'news' }, Flags.HAS_MAGAZINE && { type: 'magazine' }, ...routes].filter((e) => e),
+      to: [
+        Flags.HAS_NEWS && { type: 'news' },
+        Flags.HAS_MAGAZINE && { type: 'magazine' },
+        ...routes,
+      ].filter(e => e),
       options: {
         filter: filterByRouteNewsMagazineAndTitle,
         disableNew: true,
@@ -121,23 +126,31 @@ export default {
         'If the featured content does not have ingress and is not event, you can add an ingress here (max. 215 chars)',
       type: 'array',
       of: [introBlockContentType],
-      validation: (Rule: Rule) => Rule.custom((value: any) => validateCharCounterEditor(value, 215, true)),
+      validation: (Rule: Rule) =>
+        Rule.custom((value: any) =>
+          validateCharCounterEditor(value, 215, true),
+        ),
       fieldset: 'featured',
     },
     {
       name: 'featuredCTALabel',
       title: 'Featured CTA label text',
-      description: 'The label text appearing with the CTA arrow link style if not event',
+      description:
+        'The label text appearing with the CTA arrow link style if not event',
       fieldset: 'featured',
       type: 'string',
     },
     {
       name: 'intro',
       title: 'Intro text',
-      description: 'A short and catchy introduction text for this menu item (max. 215 chars)',
+      description:
+        'A short and catchy introduction text for this menu item (max. 215 chars)',
       type: 'array',
       of: [introBlockContentType],
-      validation: (Rule: Rule) => Rule.custom((value: any) => validateCharCounterEditor(value, 215, true)),
+      validation: (Rule: Rule) =>
+        Rule.custom((value: any) =>
+          validateCharCounterEditor(value, 215, true),
+        ),
     },
   ],
   preview: {

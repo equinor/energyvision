@@ -1,10 +1,10 @@
-import { SchemaType } from '../../types'
-import blocksToText from '../../helpers/blocksToText'
 import { calendar_event, home } from '@equinor/eds-icons'
+import type { ValidationContext } from 'sanity'
+import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon, TopicDocuments } from '../../icons'
 import { defaultLanguage, languages } from '../../languages'
-import { ValidationContext } from 'sanity'
 import { apiVersion } from '../../sanity.client'
+import type { SchemaType } from '../../types'
 
 export default {
   type: 'document',
@@ -20,15 +20,22 @@ export default {
       validation: (Rule: SchemaType.ValidationRule) => {
         return Rule.custom(async (value: any, context: ValidationContext) => {
           if (value) {
-            const result = await context.getClient({ apiVersion: apiVersion }).fetch(
-              /* groq */ `coalesce(count(*[_type=="translation.metadata" && references($id)][0].translations[]),0)`,
-              {
-                id: value._ref,
-              },
-              { perspective: 'published' },
+            const result = await context
+              .getClient({ apiVersion: apiVersion })
+              .fetch(
+                /* groq */ `coalesce(count(*[_type=="translation.metadata" && references($id)][0].translations[]),0)`,
+                {
+                  id: value._ref,
+                },
+                { perspective: 'published' },
+              )
+            return (
+              result === languages.length ||
+              result === 0 ||
+              'Translations of this home page must be published'
             )
-            return result == languages.length || result == 0 || 'Translations of this home page must be published'
-          } else return 'Required'
+          }
+          return 'Required'
         })
       },
       type: 'reference',
@@ -56,7 +63,11 @@ export default {
       const { title, slug, media, type } = selection
       const plainTitle = title ? blocksToText(title) : ''
 
-      const thumbnail = media ? media : type === 'event' ? EdsIcon(calendar_event) : TopicDocuments
+      const thumbnail = media
+        ? media
+        : type === 'event'
+          ? EdsIcon(calendar_event)
+          : TopicDocuments
 
       return {
         title: plainTitle,

@@ -1,9 +1,9 @@
-import CompactBlockEditor from '../components/CompactBlockEditor'
-import { configureBlockContent } from '../editors'
-import { EdsIcon } from '../../icons'
 import { library_image } from '@equinor/eds-icons'
-import blocksToText from '../../helpers/blocksToText'
 import type { Rule } from 'sanity'
+import blocksToText from '../../helpers/blocksToText'
+import { EdsIcon } from '../../icons'
+import { CompactBlockEditor } from '../components/CompactBlockEditor'
+import { configureBlockContent } from '../editors'
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
 
 export default {
@@ -45,7 +45,8 @@ export default {
       type: 'boolean',
       name: 'hideTitle',
       title: 'Hide title',
-      description: 'Hides the title, but screen readers will read title of carousel',
+      description:
+        'Hides the title, but screen readers will read title of carousel',
     },
     {
       name: 'ingress',
@@ -53,7 +54,10 @@ export default {
       description: 'Optional short description. Max 400 characters',
       type: 'array',
       of: [configureBlockContent({ variant: 'ingress' })],
-      validation: (Rule: Rule) => Rule.custom((value: any) => validateCharCounterEditor(value, 400, true)),
+      validation: (Rule: Rule) =>
+        Rule.custom((value: any) =>
+          validateCharCounterEditor(value, 400, true),
+        ),
     },
     {
       type: 'array',
@@ -85,7 +89,8 @@ export default {
       type: 'number',
       name: 'delay',
       title: 'Delay( Not in use anymore )',
-      description: 'Time in seconds that an image should be visible for before transitioning to the next.',
+      description:
+        'Time in seconds that an image should be visible for before transitioning to the next.',
       initialValue: 3,
       fieldset: 'carouselOptions',
       validation: (Rule: Rule) => Rule.required().min(2),

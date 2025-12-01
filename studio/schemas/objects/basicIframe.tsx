@@ -1,13 +1,12 @@
 // This version of the iframe is used by the Event and News templates
 
 import { code } from '@equinor/eds-icons'
-import { EdsIcon } from '../../icons'
-
 import type { PortableTextBlock, Rule, ValidationContext } from 'sanity'
 import blocksToText from '../../helpers/blocksToText'
-import CompactBlockEditor from '../components/CompactBlockEditor'
-import { configureBlockContent } from '../editors'
+import { EdsIcon } from '../../icons'
 import type { ColorSelectorValue } from '../components/ColorSelector'
+import { CompactBlockEditor } from '../components/CompactBlockEditor'
+import { configureBlockContent } from '../editors'
 import { cookiePolicy } from './iframe/sharedIframeFields'
 
 export type IFrame = {
@@ -53,7 +52,8 @@ export default {
       title: 'Frame title',
       fieldset: 'iframe',
 
-      description: 'The title of the iframe. This value is not visible on the page but is required for accessibility.',
+      description:
+        'The title of the iframe. This value is not visible on the page but is required for accessibility.',
       validation: (Rule: Rule) =>
         Rule.custom((value: string, context: ValidationContext) => {
           const { parent } = context as { parent: IFrame }
@@ -69,7 +69,9 @@ export default {
       validation: (Rule: Rule) =>
         Rule.custom((value: any, context: ValidationContext) => {
           const { parent } = context as { parent: IFrame }
-          return (parent?.title || parent?.frameTitle) && value === undefined ? 'Required' : true
+          return (parent?.title || parent?.frameTitle) && value === undefined
+            ? 'Required'
+            : true
         }),
     },
     cookiePolicy,
@@ -93,7 +95,8 @@ export default {
       name: 'height',
       type: 'number',
       title: 'Height',
-      description: 'Set a fixed height in pixels for the iframe. Note: this will override the aspect ratio setting.',
+      description:
+        'Set a fixed height in pixels for the iframe. Note: this will override the aspect ratio setting.',
       fieldset: 'iframe',
       validation: (Rule: Rule) => Rule.positive().greaterThan(0).precision(0),
     },
@@ -103,7 +106,13 @@ export default {
       title: 'title',
       frameTitle: 'frameTitle',
     },
-    prepare({ title, frameTitle }: { title: PortableTextBlock[]; frameTitle: string }) {
+    prepare({
+      title,
+      frameTitle,
+    }: {
+      title: PortableTextBlock[]
+      frameTitle: string
+    }) {
       const plainTitle = title ? blocksToText(title) : undefined
 
       return {

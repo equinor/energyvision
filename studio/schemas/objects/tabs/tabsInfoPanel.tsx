@@ -1,8 +1,16 @@
-import { defineField, PortableTextBlock, Role, Rule, set, StringInputProps, useCurrentUser } from 'sanity'
-import { configureBlockContent } from '../../editors'
-import CompactBlockEditor from '../../components/CompactBlockEditor'
-import { useCallback, useState } from 'react'
 import { Badge, Card, Flex, Grid, Radio, Stack, Text } from '@sanity/ui'
+import { useCallback, useState } from 'react'
+import {
+  defineField,
+  type PortableTextBlock,
+  type Role,
+  type Rule,
+  type StringInputProps,
+  set,
+  useCurrentUser,
+} from 'sanity'
+import { CompactBlockEditor } from '../../components/CompactBlockEditor'
+import { configureBlockContent } from '../../editors'
 
 const titleContentType = configureBlockContent({
   h2: false,
@@ -34,7 +42,9 @@ export const ImageVariantInput = (props: ImageVariantInputProps) => {
     (event: any) => {
       const nextValue = event.currentTarget.value
       if (nextValue === 'backgroundImage') {
-        const isDesigner = user && user.roles.some((userRole: Role) => userRole.name === 'designer')
+        const isDesigner = user?.roles.some(
+          (userRole: Role) => userRole.name === 'designer',
+        )
         if (isDesigner) {
           onChange(set(nextValue))
         } else {
@@ -55,8 +65,14 @@ export const ImageVariantInput = (props: ImageVariantInputProps) => {
       <Grid columns={schemaType?.options?.list?.length} rows={1} gap={2}>
         {schemaType?.options?.list?.map((option: any) => {
           return (
-            <Card key={option.value} paddingY={2} paddingX={3} radius={2} shadow={1}>
-              <Flex direction="row" align="flex-start" gap={2}>
+            <Card
+              key={option.value}
+              paddingY={2}
+              paddingX={3}
+              radius={2}
+              shadow={1}
+            >
+              <Flex direction='row' align='flex-start' gap={2}>
                 <Radio
                   checked={value === option.value}
                   name={option.value}
@@ -64,12 +80,12 @@ export const ImageVariantInput = (props: ImageVariantInputProps) => {
                   onChange={handleChange}
                   value={option.value}
                 />
-                <Flex direction="column" align={'flex-start'} gap={2}>
-                  <Text as="label" htmlFor={option.value}>
+                <Flex direction='column' align={'flex-start'} gap={2}>
+                  <Text as='label' htmlFor={option.value}>
                     {option.title}
                   </Text>
                   {option?.description && (
-                    <Badge tone="primary" fontSize={1}>
+                    <Badge tone='primary' fontSize={1}>
                       {option?.description}
                     </Badge>
                   )}
@@ -80,8 +96,8 @@ export const ImageVariantInput = (props: ImageVariantInputProps) => {
         })}
       </Grid>
       {error && (
-        <Card padding={[2]} radius={2} shadow={1} tone="caution">
-          <Text align="center" size={[1]}>
+        <Card padding={[2]} radius={2} shadow={1} tone='caution'>
+          <Text align='center' size={[1]}>
             Cannot perform change, missing designer role!
           </Text>
         </Card>
@@ -110,7 +126,11 @@ export default {
       type: 'string',
       options: {
         list: [
-          { title: 'Background image', description: 'Designer only', value: 'backgroundImage' },
+          {
+            title: 'Background image',
+            description: 'Designer only',
+            value: 'backgroundImage',
+          },
           { title: 'Side image', value: 'sideImage' },
         ],
         layout: 'radio',
@@ -128,7 +148,9 @@ export default {
       },
       of: [titleContentType],
       validation: (Rule: Rule) =>
-        Rule.custom((value: PortableTextBlock[]) => (!value ? 'A title is recommended' : true)).warning(),
+        Rule.custom((value: PortableTextBlock[]) =>
+          !value ? 'A title is recommended' : true,
+        ).warning(),
     }),
     defineField({
       name: 'text',
@@ -174,7 +196,7 @@ export default {
             },
           ],
         },
-      ].filter((e) => e),
+      ].filter(e => e),
       validation: (Rule: Rule) => Rule.max(4),
     }),
   ],

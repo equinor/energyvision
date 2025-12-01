@@ -15,7 +15,7 @@ import {
 } from '../../icons'
 import { RadioIconSelector } from '../components'
 import type { ColorSelectorValue } from '../components/ColorSelector'
-import CompactBlockEditor from '../components/CompactBlockEditor'
+import { CompactBlockEditor } from '../components/CompactBlockEditor'
 import { configureBlockContent } from '../editors'
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
 import { backgroundPosition } from './commonFields/commonFields'

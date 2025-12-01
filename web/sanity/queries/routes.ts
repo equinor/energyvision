@@ -1,11 +1,11 @@
-import pageContentFields from './common/pageContentFields'
-import { landingPageContentFields } from './common/landingPageContentFields'
-import { eventContentFields } from './common/eventContentFields'
-import { heroFields } from './common/heroFields'
-import { seoAndSomeFields } from './common/seoAndSomeFields'
 import { breadcrumbsQuery } from './common/breadcrumbs'
-import { stickyMenu } from './common/stickyMenu'
+import { eventContentFields } from './common/eventContentFields'
 import { functions, pageContentFunctions } from './common/functions'
+import { heroFields } from './common/heroFields'
+import { landingPageContentFields } from './common/landingPageContentFields'
+import pageContentFields from './common/pageContentFields'
+import { seoAndSomeFields } from './common/seoAndSomeFields'
+import { stickyMenu } from './common/stickyMenu'
 
 const allSlugsQuery = /* groq */ `
     "currentSlug": {
@@ -45,9 +45,6 @@ export const routeQuery = /* groq */ `
     ${stickyMenu},
     "hero": content->${heroFields},
     "template": content->_type,
-    content->_type == "page" => {
-      "isCampaign":content->isCampaign
-    },
     "breadcrumbs": {
       ${breadcrumbsQuery}
     },

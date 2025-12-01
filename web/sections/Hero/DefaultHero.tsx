@@ -1,41 +1,88 @@
 import type { PortableTextBlock } from '@portabletext/types'
+import type { HTMLAttributes, ReactNode } from 'react'
+import { Image, type ImageRatioKeys } from '@/core/Image/Image'
+import { Typography } from '@/core/Typography'
+import { twMerge } from '@/lib/twMerge/twMerge'
 import Blocks from '@/portableText/Blocks'
 import type { ImageWithCaptionData } from '../../types/index'
-import DefaulHeroImage from './DefaultHeroImage'
 
-type Props = {
-  title?: PortableTextBlock[]
-  image?: ImageWithCaptionData
+type DefaultHeroProps = {
+  title?: PortableTextBlock[] | string
+  /**Override title wrapper classnames */
+  titleClassName?: string
+  /**Override figure classnames if caption/attribution */
+  figureClassName?: string
+  /**Override figcaption classnames */
+  figCaptionClassName?: string
+  /**Override image wrapper classnames */
+  imageWrapperClassName?: string
+  /**Override image classnames */
+  imageClassName?: string
+  /* For news published information */
+  subTitle?: ReactNode
+  figure?: ImageWithCaptionData
   isBigTitle?: boolean
+  /**bg-<colorkey> */
+  background?: string
   bigTitle?: PortableTextBlock[]
   /* Magazine */
   tags?: string[]
-}
+  ratio?: ImageRatioKeys
+} & HTMLAttributes<HTMLElement>
 
 export const DefaultHero = ({
   title,
-  image,
+  subTitle,
+  titleClassName = '',
+  background,
+  figure,
   isBigTitle,
   bigTitle,
   tags,
-}: Props) => {
+  className = '',
+  figureClassName = '',
+  imageWrapperClassName = '',
+  figCaptionClassName = '',
+  imageClassName = '',
+  ratio = '2:1',
+}: DefaultHeroProps) => {
+  const px = isBigTitle ? 'px-layout-sm' : 'px-layout-sm lg:px-layout-md'
+  const isPlainTitle =
+    title && (title === 'string' || typeof title === 'string')
+
   return (
-    <>
-      {isBigTitle && (
-        <>
-          <div className='pt-10 pr-16 pb-0 pl-layout-sm'>
-            {title && <Blocks value={title} as='h1' variant='xl' />}
-          </div>
-          <div className='px-layout-sm py-10'>
-            {bigTitle && <Blocks value={bigTitle} as='h2' variant='3xl' />}
-          </div>
-        </>
+    <div className={twMerge(className, `relative h-full w-full`)}>
+      {background && (
+        <div
+          className={`-z-1 absolute inset-0 aspect-video h-[48dvh] w-full ${background}`}
+        />
       )}
-      {!isBigTitle && (
-        <div className='px-layout-md py-10'>
-          {title && <Blocks value={title} as='h1' variant='3xl' />}
-        </div>
-      )}
+      <div className={twMerge(`py-10`, px, titleClassName)}>
+        {title && isBigTitle && !isPlainTitle && (
+          <>
+            <div className='pr-16'>
+              {title && (
+                <Blocks id='mainTitle' value={title} as='h1' variant='xl' />
+              )}
+            </div>
+            <div>
+              {bigTitle && <Blocks value={bigTitle} as='h2' variant='3xl' />}
+            </div>
+          </>
+        )}
+        {title && !isBigTitle && !isPlainTitle && (
+          <div>
+            {title && (
+              <Blocks id='mainTitle' value={title} as='h1' variant='3xl' />
+            )}
+          </div>
+        )}
+        {title && isPlainTitle && (
+          <Typography variant='h1' id='mainTitle'>
+            {title}
+          </Typography>
+        )}
+      </div>
       {tags && tags?.length > 0 && (
         <div className='px-layout-md pb-12'>
           {tags && tags?.length > 0 && (
@@ -54,10 +101,20 @@ export const DefaultHero = ({
           )}
         </div>
       )}
-
-      {image && (
-        <DefaulHeroImage className='px-layout-sm pt-0 pb-16' data={image} />
+      {subTitle && subTitle}
+      {figure && (
+        <Image
+          grid='sm'
+          loading='eager'
+          className={twMerge(`lg:px-layout-sm`, imageWrapperClassName)}
+          aspectRatio={ratio}
+          image={figure.image}
+          caption={figure.caption}
+          attribution={figure.attribution}
+          imageClassName={twMerge(``, imageClassName)}
+          figCaptionClassName={figCaptionClassName}
+        />
       )}
-    </>
+    </div>
   )
 }

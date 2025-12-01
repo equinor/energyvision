@@ -1,13 +1,12 @@
-import blocksToText from '../../helpers/blocksToText'
-import { configureBlockContent } from '../editors/blockContentType'
-import CompactBlockEditor from '../components/CompactBlockEditor'
-import MagazineFooterComponent from '../objects/magazineFooterComponent'
-import { EdsIcon } from '../../icons'
 import { bookmarks } from '@equinor/eds-icons'
-
 import type { PortableTextBlock, Rule, ValidationContext } from 'sanity'
+import blocksToText from '../../helpers/blocksToText'
+import { EdsIcon } from '../../icons'
+import { CompactBlockEditor } from '../components/CompactBlockEditor'
+import { configureBlockContent } from '../editors/blockContentType'
+import MagazineFooterComponent from '../objects/magazineFooterComponent'
+import { HeroTypes } from './header/sharedHeaderFields'
 import { lang } from './langField'
-import { HeroTypes } from '../HeroTypes'
 
 export default {
   type: 'document',
@@ -16,13 +15,10 @@ export default {
   icon: () => EdsIcon(bookmarks),
   fieldsets: [
     {
-      title: 'Header',
-      name: 'header',
-    },
-    {
       title: 'SEO & metadata',
       name: 'metadata',
-      description: 'This part is used for meta information when this content is used on the web',
+      description:
+        'This part is used for meta information when this content is used on the web',
       options: {
         collapsible: true,
         collapsed: true,
@@ -31,6 +27,16 @@ export default {
   ],
   fields: [
     lang,
+    {
+      name: 'title',
+      type: 'array',
+      title: 'Title',
+      components: {
+        input: CompactBlockEditor,
+      },
+      of: [configureBlockContent({ variant: 'title' })],
+      validation: (Rule: Rule) => Rule.required(),
+    },
     {
       title: 'Meta information',
       name: 'seo',
@@ -41,19 +47,9 @@ export default {
       title: 'Open Graph Image',
       name: 'openGraphImage',
       type: 'imageWithAlt',
-      description: 'You can override the hero image as the SoMe image by uploading another image here.',
+      description:
+        'You can override the hero image as the SoMe image by uploading another image here.',
       fieldset: 'metadata',
-    },
-    {
-      name: 'title',
-      type: 'array',
-      title: 'Title',
-      components: {
-        input: CompactBlockEditor,
-      },
-      of: [configureBlockContent({ variant: 'title' })],
-      fieldset: 'header',
-      validation: (Rule: Rule) => Rule.required(),
     },
     {
       title: 'Type',
@@ -63,17 +59,18 @@ export default {
         list: [
           { title: 'Default', value: HeroTypes.DEFAULT },
           { title: 'Full Image', value: HeroTypes.FULL_WIDTH_IMAGE },
-          { title: 'Background image', value: HeroTypes.BACKGROUND_IMAGE },
-        ].filter((e) => e),
+          {
+            title: 'Title and/or ingress on background image',
+            value: HeroTypes.BACKGROUND_IMAGE,
+          },
+        ].filter(e => e),
       },
-      initialValue: 'default',
-      fieldset: 'header',
+      initialValue: HeroTypes.FULL_WIDTH_IMAGE,
     },
     {
       title: 'Hero image',
       name: 'heroFigure',
       type: 'imageWithAltAndCaption',
-      fieldset: 'header',
     },
     {
       title: 'Hero image ratio',
@@ -92,25 +89,23 @@ export default {
       validation: (Rule: Rule) =>
         Rule.custom((value: string, context: ValidationContext) => {
           const { parent } = context as any
-          if (parent?.heroType === HeroTypes.FULL_WIDTH_IMAGE && !value) return 'Field is required'
+          if (parent?.heroType === HeroTypes.FULL_WIDTH_IMAGE && !value)
+            return 'Field is required'
           return true
         }),
-      initialValue: '0.5',
-      fieldset: 'header',
+      initialValue: 'narrow',
     },
     {
-      title: 'Text',
+      title: 'Ingress',
       name: 'ingress',
       type: 'array',
       of: [configureBlockContent({ variant: 'fullBlock' })],
-      fieldset: 'header',
     },
     {
       title: 'Ingress Background',
       description: 'Pick a colour for the background. Default is white.',
       name: 'ingressBackground',
       type: 'colorlist',
-      fieldset: 'header',
     },
     {
       title: 'Promoted Magazine Tags',
@@ -138,7 +133,13 @@ export default {
       title: 'title',
       ingress: 'ingress',
     },
-    prepare({ title, ingress }: { title: PortableTextBlock[]; ingress: PortableTextBlock[] }) {
+    prepare({
+      title,
+      ingress,
+    }: {
+      title: PortableTextBlock[]
+      ingress: PortableTextBlock[]
+    }) {
       const plainTitle = title ? blocksToText(title) : ''
 
       return {

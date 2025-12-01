@@ -1,7 +1,7 @@
 import { twitter } from '@equinor/eds-icons'
-import { Rule, ValidationContext } from 'sanity'
+import type { Rule, ValidationContext } from 'sanity'
 import { EdsIcon } from '../../icons'
-import CompactBlockEditor from '../components/CompactBlockEditor'
+import { CompactBlockEditor } from '../components/CompactBlockEditor'
 import { configureBlockContent } from '../editors'
 
 export type TwitterEmbed = {
@@ -64,13 +64,13 @@ export default {
       validation: (Rule: Rule) =>
         Rule.custom((embedValue: string, context: ValidationContext) => {
           const { parent } = context as { parent: TwitterEmbed }
-          if (parent.embedType === 'tweet') return /^\d+$/.test(embedValue) ? true : 'Invalid tweetid'
-          else
-            return embedValue?.startsWith('@')
-              ? "Enter twitter handle without '@'"
-              : embedValue === undefined
-                ? 'Twitter handle is required'
-                : true
+          if (parent.embedType === 'tweet')
+            return /^\d+$/.test(embedValue) ? true : 'Invalid tweetid'
+          return embedValue?.startsWith('@')
+            ? "Enter twitter handle without '@'"
+            : embedValue === undefined
+              ? 'Twitter handle is required'
+              : true
         }).error(),
     },
     {

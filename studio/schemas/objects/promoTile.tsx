@@ -1,14 +1,13 @@
 import { label } from '@equinor/eds-icons'
 import type { PortableTextBlock, Rule, ValidationContext } from 'sanity'
-import type { ColorSelectorValue } from '../components/ColorSelector'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
-import CompactBlockEditor from '../components/CompactBlockEditor'
-import type { ImageWithAlt } from './imageWithAlt'
-
+import type { ColorSelectorValue } from '../components/ColorSelector'
+import { CompactBlockEditor } from '../components/CompactBlockEditor'
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { configureBlockContent } from '../editors'
-import { LinkSelector } from './linkSelector/common'
+import type { ImageWithAlt } from './imageWithAlt'
+import type { LinkSelector } from './linkSelector/common'
 
 export type PromoTile = {
   _type: 'promoTile'
@@ -54,11 +53,13 @@ export default {
       title: 'Title',
       hidden: ({ parent }: { parent: PromoTile }) => parent?.linkLabelAsTitle,
       validation: (Rule: Rule) =>
-        Rule.custom((value: PortableTextBlock[], context: ValidationContext) => {
-          const { parent } = context as { parent: PromoTile }
-          if (parent?.linkLabelAsTitle || value) return true
-          return 'Required'
-        }),
+        Rule.custom(
+          (value: PortableTextBlock[], context: ValidationContext) => {
+            const { parent } = context as { parent: PromoTile }
+            if (parent?.linkLabelAsTitle || value) return true
+            return 'Required'
+          },
+        ),
     },
     {
       name: 'image',
@@ -99,7 +100,11 @@ export default {
       return {
         title: linkLabelAsTitle ? link : blocksToText(title as any[]),
         subtitle: `Promo tile component`,
-        media: imageUrl ? <img src={imageUrl} alt="" style={{ height: '100%' }} /> : EdsIcon(label),
+        media: imageUrl ? (
+          <img src={imageUrl} alt='' style={{ height: '100%' }} />
+        ) : (
+          EdsIcon(label)
+        ),
       }
     },
   },

@@ -1,24 +1,29 @@
 'use client'
-import { BreadcrumbJsonLd } from 'next-seo'
 import { usePathname } from 'next/navigation'
-import { twMerge } from 'tailwind-merge'
-import type { Breadcrumb, DesignOptions } from '../../types'
+import { BreadcrumbJsonLd } from 'next-seo'
 import { forwardRef } from 'react'
+import { twMerge } from 'tailwind-merge'
+import type { ColorKeys } from '@/styles/colorKeyToUtilityMap'
+import { BaseLink } from '../Link'
 import { BreadcrumbsList } from './BreadcrumbList'
 import { BreadcrumbsListItem } from './BreadcrumbListItem'
-import { BaseLink } from '../Link'
-import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
 
-type BreadcrumbsProps = {
+export type Breadcrumb = {
+  label: string
   slug: string
+  type?: string
+}
+export type BreadcrumbData = {
+  enableBreadcrumbs: boolean
   useCustomBreadcrumbs: boolean
   defaultBreadcrumbs: Breadcrumb[]
   customBreadcrumbs: Breadcrumb[]
-  className?: string
-  designOptions?: DesignOptions
 }
 
-const buildJsonLdElements = (crumbs: Breadcrumb[], pathname: ReturnType<typeof usePathname>) => {
+const buildJsonLdElements = (
+  crumbs: Breadcrumb[],
+  pathname: ReturnType<typeof usePathname>,
+) => {
   return crumbs.map((item, index) => ({
     position: index + 1,
     name: item.label,
@@ -26,12 +31,13 @@ const buildJsonLdElements = (crumbs: Breadcrumb[], pathname: ReturnType<typeof u
   }))
 }
 
-const capitalize = (text: string): string => text?.[0].toUpperCase() + text?.slice(1)
+const capitalize = (text: string): string =>
+  text?.[0].toUpperCase() + text?.slice(1)
 
 const parseBreadcrumbs = (crumbs: Breadcrumb[]) => {
   return crumbs
-    .filter((item) => item?.slug && item?.label)
-    .map((item) => {
+    .filter(item => item?.slug && item?.label)
+    .map(item => {
       return {
         ...item,
         label: capitalize(item.label),
@@ -39,8 +45,24 @@ const parseBreadcrumbs = (crumbs: Breadcrumb[]) => {
     })
 }
 
+type BreadcrumbsProps = {
+  currentSlug?: string
+  className?: string
+  background?: ColorKeys
+} & Omit<BreadcrumbData, 'enableBreadcrumbs'>
+
 export const Breadcrumbs = forwardRef<HTMLElement, BreadcrumbsProps>(
-  ({ slug, useCustomBreadcrumbs, defaultBreadcrumbs, customBreadcrumbs, designOptions, className = '' }, ref) => {
+  (
+    {
+      currentSlug,
+      useCustomBreadcrumbs,
+      defaultBreadcrumbs,
+      customBreadcrumbs,
+      background,
+      className = '',
+    },
+    ref,
+  ) => {
     const pathname = usePathname()
     const crumbs =
       useCustomBreadcrumbs && customBreadcrumbs.length >= 3
@@ -49,20 +71,25 @@ export const Breadcrumbs = forwardRef<HTMLElement, BreadcrumbsProps>(
 
     if (crumbs.length < 2) return null
 
-    const { bg, dark } = getBgAndDarkFromBackground(designOptions)
-
     return (
-      <nav ref={ref} aria-label="Breadcrumbs" className={`px-layout-lg ${bg} ${dark ? 'dark' : ''}`}>
+      <nav
+        ref={ref}
+        aria-label='Breadcrumbs'
+        className={`px-layout-lg ${background ?? ''}`}
+      >
         <BreadcrumbsList className={twMerge(`py-6`, className)}>
-          {crumbs.map((item) => {
-            const isActive = item.slug === slug
+          {crumbs.map(item => {
+            const isActive = item.slug === currentSlug
             const label = item.label
             return (
               <BreadcrumbsListItem key={item.slug} active={isActive}>
                 {isActive ? (
-                  <span aria-current="page">{label}</span>
+                  <span aria-current='page'>{label}</span>
                 ) : (
-                  <BaseLink href={item.slug} className="no-underline hover:underline">
+                  <BaseLink
+                    href={item.slug}
+                    className='no-underline hover:underline'
+                  >
                     {label}
                   </BaseLink>
                 )}
@@ -70,7 +97,9 @@ export const Breadcrumbs = forwardRef<HTMLElement, BreadcrumbsProps>(
             )
           })}
         </BreadcrumbsList>
-        <BreadcrumbJsonLd itemListElements={buildJsonLdElements(crumbs, pathname)} />
+        <BreadcrumbJsonLd
+          itemListElements={buildJsonLdElements(crumbs, pathname)}
+        />
       </nav>
     )
   },

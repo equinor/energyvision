@@ -1,10 +1,10 @@
-import blocksToText from '../../../helpers/blocksToText'
-import CompactBlockEditor from '../../components/CompactBlockEditor'
-import { configureBlockContent } from '../../editors'
-import { PortableTextBlock, PreviewProps, Rule } from 'sanity'
-import type { ColorSelectorValue } from '../../components/ColorSelector'
 import { Flex, Stack, Text } from '@sanity/ui'
-import { TableTheme, TableThemeSelectorValue } from './tableThemes'
+import type { PortableTextBlock, PreviewProps, Rule } from 'sanity'
+import blocksToText from '../../../helpers/blocksToText'
+import type { ColorSelectorValue } from '../../components/ColorSelector'
+import { CompactBlockEditor } from '../../components/CompactBlockEditor'
+import { configureBlockContent } from '../../editors'
+import { TableTheme, type TableThemeSelectorValue } from './tableThemes'
 
 export type Table = {
   _type: 'table'
@@ -103,7 +103,8 @@ export default {
         input: CompactBlockEditor,
       },
       of: [configureBlockContent({ variant: 'title' })],
-      validation: (Rule: Rule) => Rule.required().warning('In most cases you should add a heading'),
+      validation: (Rule: Rule) =>
+        Rule.required().warning('In most cases you should add a heading'),
       fieldset: 'textContent',
     },
     {
@@ -116,7 +117,8 @@ export default {
     {
       name: 'tableCaption',
       title: 'Table caption',
-      description: 'Tables should have caption, will render as caption just above table',
+      description:
+        'Tables should have caption, will render as caption just above table',
       type: 'string',
     },
     {
@@ -184,13 +186,26 @@ export default {
               const [cellOne, cellTwo, cellThree, cellFour] = cells
               const numberOfCells = cells.length
 
-              const plainTitleOne = cellOne ? (blocksToText(cellOne.content) ?? '') : undefined
-              const plainTitleTwo = cellTwo ? (blocksToText(cellTwo.content) ?? '') : undefined
-              const plainTitleThree = cellThree ? (blocksToText(cellThree.content) ?? '') : undefined
-              const plainTitleFour = cellFour ? (blocksToText(cellFour.content) ?? '') : undefined
+              const plainTitleOne = cellOne
+                ? (blocksToText(cellOne.content) ?? '')
+                : undefined
+              const plainTitleTwo = cellTwo
+                ? (blocksToText(cellTwo.content) ?? '')
+                : undefined
+              const plainTitleThree = cellThree
+                ? (blocksToText(cellThree.content) ?? '')
+                : undefined
+              const plainTitleFour = cellFour
+                ? (blocksToText(cellFour.content) ?? '')
+                : undefined
               const hasMoreCells = Boolean(plainTitleFour)
-              const titles = [plainTitleOne, plainTitleTwo, plainTitleThree].filter(Boolean)
-              const titleTexts = titles.length > 0 ? `${titles.join(' | ')}` : ''
+              const titles = [
+                plainTitleOne,
+                plainTitleTwo,
+                plainTitleThree,
+              ].filter(Boolean)
+              const titleTexts =
+                titles.length > 0 ? `${titles.join(' | ')}` : ''
               const title = hasMoreCells ? `${titleTexts}...` : titleTexts
               return {
                 title: title,

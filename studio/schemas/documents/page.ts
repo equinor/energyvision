@@ -1,10 +1,14 @@
-import blocksToText from '../../helpers/blocksToText'
-import { HeroTypes } from '../HeroTypes'
-import sharedHeroFields from './header/sharedHeaderFields'
-import { EdsIcon } from '../../icons'
 import { paste } from '@equinor/eds-icons'
+import blocksToText from '../../helpers/blocksToText'
+import { EdsIcon } from '../../icons'
+import sharedHeroFields, { HeroTypes } from './header/sharedHeaderFields'
 import { lang } from './langField'
-import { isCampaign, openGraphImage, seo, stickyMenu, content } from './topic/sharedTopicPageFields'
+import {
+  content,
+  openGraphImage,
+  seo,
+  stickyMenu,
+} from './topic/sharedTopicPageFields'
 
 export default {
   type: 'document',
@@ -13,36 +17,31 @@ export default {
   icon: () => EdsIcon(paste),
   fieldsets: [
     {
-      title: 'Header',
-      name: 'header',
-    },
-    {
-      title: 'SEO & metadata',
-      name: 'metadata',
-      description: 'This part is used for meta information when this content is used on the web',
+      title: 'Hero configuration',
       options: {
         collapsible: true,
         collapsed: true,
       },
+      name: 'hero',
     },
     {
-      title: 'Sticky Menu',
-      name: 'stickymenu',
+      title: 'More page options',
+      description: 'SEO, meta and sticky menu',
       options: {
         collapsible: true,
-        collaped: true,
+        collapsed: true,
       },
+      name: 'other',
     },
   ],
   fields: [
     lang,
+    ...sharedHeroFields,
     seo,
     openGraphImage,
-    ...sharedHeroFields.map((it) => ({ fieldset: 'header', ...it })),
-    isCampaign,
     stickyMenu,
     content,
-  ].filter((e) => e),
+  ].filter(e => e),
   orderings: [
     {
       title: 'Title ',

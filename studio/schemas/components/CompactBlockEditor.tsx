@@ -1,21 +1,29 @@
-import { forwardRef } from 'react'
-// eslint-disable-next-line import/no-unresolved
-import { BlockEditor } from 'sanity'
+import type { PortableTextInputProps } from 'sanity'
 import styled from 'styled-components'
 
-// How future proof will this be?
-// - not so far #753
+export const CompactBlockEditor = (props: PortableTextInputProps) => {
+  // check if validations exist
+  // @ts-ignore
+  /*   const validationRules = schemaType.validation[0]._rules || []
+  const characters = value ? toPlainText(value).length : 0 */
+  //check if max Character validation exists and get the value
+  /*   const max = validationRules
+    .filter((rule: any) => rule.flag === 'max')
+    .map((rule: any) => rule.constraint)[0] */
+
+  return (
+    <Container id={'PTE-height-container'}>
+      {props.renderDefault({
+        ...props,
+        // remove the need to activate the PTE
+        initialActive: true,
+      })}
+    </Container>
+  )
+}
+// add a specific height to the PTE without losing the ability to resize it
 const Container = styled.div`
   [data-testid='pt-editor'][data-fullscreen='false'] {
     height: 100px;
   }
 `
-
-const SingleLineEditor = forwardRef((props: any, ref) => {
-  return (
-    <Container>
-      <BlockEditor ref={ref} {...props} />
-    </Container>
-  )
-})
-export default SingleLineEditor

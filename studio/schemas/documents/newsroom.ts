@@ -1,12 +1,12 @@
-import blocksToText from '../../helpers/blocksToText'
-import CompactBlockEditor from '../components/CompactBlockEditor'
-import { configureBlockContent } from '../editors/blockContentType'
 import { file } from '@equinor/eds-icons'
-import { EdsIcon } from '../../icons'
 import type { PortableTextBlock, Rule } from 'sanity'
-import { lang } from './langField'
-import routes from '../routes'
+import blocksToText from '../../helpers/blocksToText'
 import { filterByRoute } from '../../helpers/referenceFilters'
+import { EdsIcon } from '../../icons'
+import { CompactBlockEditor } from '../components/CompactBlockEditor'
+import { configureBlockContent } from '../editors/blockContentType'
+import routes from '../routes'
+import { lang } from './langField'
 
 export default {
   type: 'document',
@@ -17,7 +17,8 @@ export default {
     {
       title: 'SEO & metadata',
       name: 'metadata',
-      description: 'This part is used for meta information when this content is used on the web',
+      description:
+        'This part is used for meta information when this content is used on the web',
       options: {
         collapsible: true,
         collapsed: true,
@@ -36,7 +37,8 @@ export default {
       title: 'Open Graph Image',
       name: 'openGraphImage',
       type: 'imageWithAlt',
-      description: 'You can override the hero image as the SoMe image by uploading another image here.',
+      description:
+        'You can override the hero image as the SoMe image by uploading another image here.',
       fieldset: 'metadata',
     },
     {
@@ -98,7 +100,13 @@ export default {
       title: 'title',
       ingress: 'ingress',
     },
-    prepare({ title, ingress }: { title: PortableTextBlock[]; ingress: PortableTextBlock[] }) {
+    prepare({
+      title,
+      ingress,
+    }: {
+      title: PortableTextBlock[]
+      ingress: PortableTextBlock[]
+    }) {
       const plainTitle = title ? blocksToText(title) : ''
 
       return {

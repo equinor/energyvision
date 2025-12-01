@@ -1,9 +1,8 @@
-import { ImageWithAlt } from './imageWithAlt'
-import type { PortableTextBlock, Reference } from 'sanity'
-import { Rule } from 'sanity'
-import CompactBlockEditor from '../components/CompactBlockEditor'
+import type { PortableTextBlock, Reference, Rule } from 'sanity'
+import { CompactBlockEditor } from '../components/CompactBlockEditor'
 import { configureBlockContent } from '../editors'
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
+import type { ImageWithAlt } from './imageWithAlt'
 import singleItemArray from './singleItemArray'
 
 export type CarouselImage = {
@@ -63,7 +62,15 @@ export default {
       alt: 'image.alt',
       caption: 'caption',
     },
-    prepare({ imageUrl, caption, alt }: { imageUrl: string; alt: string; caption: string }) {
+    prepare({
+      imageUrl,
+      caption,
+      alt,
+    }: {
+      imageUrl: string
+      alt: string
+      caption: string
+    }) {
       return {
         title: alt || 'No alt text',
         subtitle: caption || 'No caption',

@@ -1,18 +1,21 @@
 /* eslint-disable react/display-name */
+
+import type { PortableTextBlock, Rule } from 'sanity'
 import blocksToText from '../../helpers/blocksToText'
 import { LeftAlignedImage, RightAlignedImage } from '../../icons'
 import { RadioIconSelector } from '../components'
-import CompactBlockEditor from '../components/CompactBlockEditor'
+import { CompactBlockEditor } from '../components/CompactBlockEditor'
+import type {
+  ThemeSelectorColor,
+  ThemeSelectorValue,
+} from '../components/ThemeSelector'
+import { defaultColors } from '../defaultColors'
 import { configureBlockContent } from '../editors'
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
-
-import type { PortableTextBlock, Rule } from 'sanity'
 import type { DownloadableImage } from './downloadableImage'
 import type { DownloadableFile } from './files'
-import type { LinkSelector } from './linkSelector'
+import type { LinkSelector } from './linkSelector/common'
 import singleItemArray from './singleItemArray'
-import { ThemeSelectorColor, ThemeSelectorValue } from '../components/ThemeSelector'
-import { defaultColors } from '../defaultColors'
 
 const titleAlignmentOptions = [
   { value: 'left', icon: LeftAlignedImage },
@@ -57,7 +60,9 @@ export const fromNormalTextThemeColors = [
 ]
 
 //Keep in sync with web/pageComponents/shared/textTeaser/theme
-export const getColorForThemeTextTeaser = (color: ThemeSelectorValue): ThemeSelectorColor => {
+export const getColorForThemeTextTeaser = (
+  color: ThemeSelectorValue,
+): ThemeSelectorColor => {
   switch (color.value) {
     case 1:
       return {
@@ -205,8 +210,6 @@ export const getColorForThemeTextTeaser = (color: ThemeSelectorValue): ThemeSele
         },
       }
     }
-
-    case 0:
     default:
       return {
         background: {
@@ -281,16 +284,23 @@ export default {
     {
       name: 'titlePosition',
       title: 'Title position',
-      description: 'Select which side of the teaser the title should be displayed at on larger screens.',
+      description:
+        'Select which side of the teaser the title should be displayed at on larger screens.',
       type: 'string',
       fieldset: 'design',
       components: {
-        input: function ({ onChange, value }: { onChange: any; value: string }) {
+        input: function ({
+          onChange,
+          value,
+        }: {
+          onChange: any
+          value: string
+        }) {
           return (
             <RadioIconSelector
-              name="imageAlignmentSelector"
+              name='imageAlignmentSelector'
               options={titleAlignmentOptions}
-              defaultValue="left"
+              defaultValue='left'
               currentValue={value}
               onChange={onChange}
             />
@@ -312,7 +322,13 @@ export default {
       title: 'title',
       text: 'text',
     },
-    prepare({ title, text }: { title: PortableTextBlock[]; text: PortableTextBlock[] }) {
+    prepare({
+      title,
+      text,
+    }: {
+      title: PortableTextBlock[]
+      text: PortableTextBlock[]
+    }) {
       const plainTitle = blocksToText(title)
       return {
         title: plainTitle || 'Missing teaser title',

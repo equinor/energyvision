@@ -6,7 +6,7 @@ export const seo = {
   title: 'Meta information',
   name: 'seo',
   type: 'titleAndMeta',
-  fieldset: 'metadata',
+  fieldset: 'other',
 }
 export const openGraphImage = {
   title: 'Open Graph Image',
@@ -14,20 +14,14 @@ export const openGraphImage = {
   type: 'imageWithAlt',
   description:
     'You can override the hero image as the SoMe image by uploading another image here.',
-  fieldset: 'metadata',
+  fieldset: 'other',
 }
-export const isCampaign = {
-  title: 'Dont show title (h1) and hero image',
-  description:
-    'This option hides the main title and hero image on page, but will still be available for screenreaders and SEO/SOME purposes. The first content block will be the first to show',
-  name: 'isCampaign',
-  type: 'boolean',
-}
+
 export const stickyMenu = {
   name: 'stickyMenu',
   title: 'Sticky Menu',
   type: 'stickyMenu',
-  fieldset: 'stickymenu',
+  fieldset: 'other',
 }
 
 export const content = {

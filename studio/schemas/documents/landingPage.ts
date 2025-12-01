@@ -3,7 +3,7 @@ import type { PortableTextBlock, Rule } from 'sanity'
 import blocksToText from '../../helpers/blocksToText'
 import { filterByLang } from '../../helpers/referenceFilters'
 import { EdsIcon } from '../../icons'
-import CompactBlockEditor from '../components/CompactBlockEditor'
+import { CompactBlockEditor } from '../components/CompactBlockEditor'
 import { configureBlockContent } from '../editors/blockContentType'
 import { lang } from './langField'
 
@@ -16,7 +16,8 @@ export default {
     {
       title: 'SEO & metadata',
       name: 'metadata',
-      description: 'This part is used for meta information when this content is used on the web',
+      description:
+        'This part is used for meta information when this content is used on the web',
       options: {
         collapsible: true,
         collapsed: true,
@@ -56,7 +57,8 @@ export default {
     {
       title: 'Landing page content',
       name: 'tocContent',
-      description: 'Reference the sub menu you want to populate this landing page with',
+      description:
+        'Reference the sub menu you want to populate this landing page with',
       type: 'reference',
       to: [{ type: 'subMenu' }],
       options: {

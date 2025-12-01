@@ -4,3 +4,7 @@
 [data-ui='Switch'] input:checked + * {
   --switch-bg-color: #0f9d58 !important;
 }
+
+.custom-block[data-testid='pt-editor'][data-fullscreen='false'] {
+  height: 100px;
+}

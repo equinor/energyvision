@@ -1,8 +1,8 @@
-import CompactBlockEditor from '../../components/CompactBlockEditor'
 import { AiOutlineBarChart } from 'react-icons/ai'
-import { configureBlockContent } from '../../editors'
-import { PortableTextBlock, Rule } from 'sanity'
+import type { PortableTextBlock, Rule } from 'sanity'
 import blocksToText from '../../../helpers/blocksToText'
+import { CompactBlockEditor } from '../../components/CompactBlockEditor'
+import { configureBlockContent } from '../../editors'
 
 export default {
   title: 'Bar chart block',
@@ -17,7 +17,8 @@ export default {
         input: CompactBlockEditor,
       },
       of: [configureBlockContent({ variant: 'title' })],
-      validation: (Rule: Rule) => Rule.required().warning('In most cases you should add a title'),
+      validation: (Rule: Rule) =>
+        Rule.required().warning('In most cases you should add a title'),
     },
     {
       type: 'boolean',
@@ -43,7 +44,8 @@ export default {
     },
     {
       title: 'Align with text in the inner content width',
-      description: 'Text is narrower than the inner most grid, check this to align with text width',
+      description:
+        'Text is narrower than the inner most grid, check this to align with text width',
       type: 'boolean',
       name: 'useTextWidth',
     },

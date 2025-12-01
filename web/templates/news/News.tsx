@@ -1,19 +1,18 @@
 'use client'
-import { Icon } from '@equinor/eds-core-react'
 import { calendar } from '@equinor/eds-icons'
 import { toPlainText } from '@portabletext/react'
 import { usePathname } from 'next/navigation'
-import { useLocale } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 import { NewsArticleJsonLd } from 'next-seo'
-import { twMerge } from 'tailwind-merge'
 import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
 import { IFrame } from '@/core/IFrame/IFrame'
-import { Typography } from '@/core/Typography'
+import TransformableIcon from '@/icons/TransformableIcon'
 import { isDateAfter } from '@/lib/helpers/dateUtilities'
 import { getFullUrl } from '@/lib/helpers/getFullUrl'
 import LatestNews from '@/pageComponents/news/LatestNews'
 import { resolveOpenGraphImage } from '@/sanity/lib/utils'
-import DefaulHeroImage from '@/sections/Hero/DefaultHeroImage'
+import { DefaultHero } from '@/sections/Hero/DefaultHero'
+import { colorKeyToUtilityMap } from '@/styles/colorKeyToUtilityMap'
 import RelatedContent from '../../pageComponents/shared/RelatedContent'
 import Blocks from '../../portableText/Blocks'
 import Footnotes from '../../portableText/components/Footnotes'
@@ -28,6 +27,7 @@ const NewsPage = ({ data: news }: ArticleProps) => {
 
   const pathname = usePathname()
   const locale = useLocale()
+  const intl = useTranslations()
 
   const fullUrl = getFullUrl(pathname ?? '', slug ?? '', locale)
 
@@ -49,10 +49,35 @@ const NewsPage = ({ data: news }: ArticleProps) => {
     : updatedAt
   const ogImage = resolveOpenGraphImage(openGraphImage ?? heroImage?.image)
 
+  console.log('heroImage', heroImage)
+
   const formattedContent = content.map(block => ({
     ...block,
     markDefs: block.markDefs || [],
   }))
+
+  const publishedInformation = (
+    <div className='flex items-center gap-2 px-layout-md pb-12 text-base dark:text-white-100'>
+      <TransformableIcon iconData={calendar} className='-mt-1' />
+      <FormattedDateTime datetime={publishDateTime} />
+      {
+        // publishDateTime + 5 minutes
+        isDateAfter(
+          modifiedDate,
+          new Date(
+            new Date(publishDateTime).getTime() + 5 * 60000,
+          ).toISOString(),
+        ) && (
+          <>
+            <span>|</span>
+            {intl('last_modified') ?? 'Last modified'}
+            {` `}
+            <FormattedDateTime datetime={modifiedDate} />
+          </>
+        )
+      }
+    </div>
+  )
 
   return (
     <>
@@ -71,9 +96,18 @@ const NewsPage = ({ data: news }: ArticleProps) => {
         description={toPlainText(ingress)}
         body={toPlainText(content)}
       />
-      <main>
+      <main className='[:not(:has(.sticky-menu))]:pt-topbar'>
         <article className='flex flex-col items-center pb-28'>
-          <div className={'dark w-full bg-slate-blue-95'}>
+          <DefaultHero
+            figure={heroImage}
+            background={colorKeyToUtilityMap['slate-blue-95'].background}
+            className='dark'
+            title={title}
+            subTitle={publishedInformation}
+            imageWrapperClassName='light'
+            figCaptionClassName='px-layout-lg'
+          />
+          {/*           <div className={'dark w-full bg-slate-blue-95'}>
             <div className='px-layout-lg py-news-banner-vertical'>
               <Typography id='mainTitle' variant='h1'>
                 {title}
@@ -109,9 +143,10 @@ const NewsPage = ({ data: news }: ArticleProps) => {
           </div>
           {heroImage.image.asset && (
             <div className='-mt-news-banner-vertical px-layout-sm'>
-              <DefaulHeroImage data={heroImage} />
+              <DefaultHero image={heroImage} />
             </div>
-          )}
+          )} */}
+
           {ingress && ingress.length > 0 && (
             <Blocks
               variant='ingress'
@@ -142,10 +177,7 @@ const NewsPage = ({ data: news }: ArticleProps) => {
             )}
 
             {relatedLinks?.links && relatedLinks.links.length > 0 && (
-              <RelatedContent
-                data={relatedLinks}
-                className={twMerge(`my-3xl`)}
-              />
+              <RelatedContent data={relatedLinks} className={`my-3xl`} />
             )}
           </div>
           {latestNews && latestNews.length > 0 && (

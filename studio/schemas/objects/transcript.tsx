@@ -1,5 +1,5 @@
+import { CompactBlockEditor } from '../components/CompactBlockEditor'
 import { configureBlockContent } from '../editors/blockContentType'
-import CompactBlockEditor from '../components/CompactBlockEditor'
 
 const blockConfig = {
   h2: false,
