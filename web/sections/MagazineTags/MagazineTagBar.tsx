@@ -9,11 +9,8 @@ import {
   useMemo,
 } from 'react'
 import { Link } from '@/core/Link'
+import { twMerge } from '@/lib/twMerge/twMerge'
 import { TransformableIcon } from '../../icons/TransformableIcon'
-
-export type MagazineTagBarProps = {
-  tags: { id: string; title: string; key: string }[]
-}
 
 export type TagLink = {
   id: string
@@ -22,8 +19,13 @@ export type TagLink = {
   active: boolean
 } & AnchorHTMLAttributes<HTMLAnchorElement>
 
+export type MagazineTagBarProps = {
+  tags: { id: string; title: string; key: string }[]
+  className?: string
+}
+
 const MagazineTagBar = forwardRef<HTMLDivElement, MagazineTagBarProps>(
-  function MagazineTagBar({ tags = [] }, ref) {
+  function MagazineTagBar({ tags = [], className = '' }, ref) {
     const pathname = usePathname()
     const searchParams = useSearchParams()
     const parentSlug = pathname || ''
@@ -57,7 +59,10 @@ const MagazineTagBar = forwardRef<HTMLDivElement, MagazineTagBarProps>(
     return (
       <div
         ref={ref}
-        className='mb-8 flex items-center gap-2 overflow-x-auto border-grey-20 border-y-[0.5px] p-8 xl:justify-center'
+        className={twMerge(
+          `my-8 flex items-center gap-2 overflow-x-auto border-grey-20 border-y-[0.5px] p-8 xl:justify-center`,
+          className,
+        )}
       >
         <h2 className='flex items-center gap-1 font-medium text-sm'>
           <TransformableIcon

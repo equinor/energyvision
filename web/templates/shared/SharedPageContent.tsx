@@ -293,7 +293,6 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
     const previousComponentIndex =
       prevComponent?.type === 'anchorLink' ? index - 2 : index - 1
 
-    console.log('heroBackground', heroBackground)
     const previousComponentToCompare =
       index === 0
         ? ({

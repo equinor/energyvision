@@ -1,10 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 //TODO types
-
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { setRequestLocale } from 'next-intl/server'
-import type { ContentSourceMap } from 'next-sanity'
+import { type ContentSourceMap, toPlainText } from 'next-sanity'
 import { metaTitleSuffix } from '@/languageConfig'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { resolveOpenGraphImage } from '@/sanity/lib/utils'
@@ -17,9 +15,9 @@ import MagazineRoom from '@/templates/magazine/Magazineroom'
 import { getData, getPageData } from '../../../../../sanity/lib/fetchData'
 import { getNameFromLocale } from '../../../../../sanity/localization'
 
-export function generateStaticParams() {
+/* export function generateStaticParams() {
   return Flags.HAS_MAGAZINE ? [{ locale: 'en' }] : []
-}
+} */
 
 export async function generateMetadata({
   params,
@@ -36,10 +34,13 @@ export async function generateMetadata({
     query: magazineIndexQuery,
     queryParams,
   })
+  console.log('pageData', pageData)
   const index = Array.isArray(pageData) ? pageData[0] : pageData
   const documentTitle = index?.seoAndSome?.documentTitle
   const metaDescription = index?.seoAndSome?.metaDescription
-  const title = index?.title
+  const title = toPlainText(index?.title)
+  console.log('metadata documentTitle', documentTitle)
+  console.log('metadata title', title)
   const heroImage = index?.hero?.figure?.image
   const ogImage = resolveOpenGraphImage(
     index?.seoAndSome?.openGraphImage ?? heroImage,
@@ -75,13 +76,14 @@ export default async function MagazinePage({
   searchParams?: Promise<{ tag?: string }>
 }) {
   const { locale } = await params
+  console.log('MagazinePage locale', locale)
 
-  if (!Flags.HAS_MAGAZINE_INDEX || locale !== 'en') {
+  if (!Flags.HAS_MAGAZINE_INDEX) {
     notFound()
   }
 
-  setRequestLocale(locale)
-
+  /*   setRequestLocale(locale) */
+  //Can assume english lang, dont actually need to get locale? Since english route
   const lang = getNameFromLocale(locale)
 
   const queryParams = {
@@ -89,6 +91,7 @@ export default async function MagazinePage({
   }
   console.log('[MagazinePage][en] Locale:', locale, 'Lang param:', lang)
   // Fetch index (hero, tags, footer)
+
   const { pageData: indexPageData } = await getPageData({
     query: magazineIndexQuery,
     queryParams,
@@ -120,7 +123,7 @@ export default async function MagazinePage({
 
   const pageData = {
     ...(index as any),
-    magazineArticles: magazineArticles ?? [],
+    magazineArticles: magazineArticles?.data ?? [],
   } as any
 
   return <MagazineRoom pageData={pageData} />

@@ -70,24 +70,23 @@ export default async function LocaleLayout({
         {/*         <Suspense fallback={null}>
           <NavigationEvents />
         </Suspense> */}
-        <>
-          {/* The <Toaster> component is responsible for rendering toast notifications used in /app/client-utils.ts and /sections/DraftMode/DraftModeToast.tsx */}
-          <Toaster />
-          {isDraftMode && (
-            <>
-              <DraftModeToast />
-              <VisualEditing />
-            </>
-          )}
-          {/* The <SanityLive> component is responsible for making all sanityFetch calls in your application live, so should always be rendered. */}
-          <SanityLive onError={handleError} />
-          <NextIntlClientProvider>
-            <FriendlyCaptchaSdkWrapper>
-              {children}
-              <Footer footerData={footerData} />
-            </FriendlyCaptchaSdkWrapper>
-          </NextIntlClientProvider>
-        </>
+
+        {/* The <Toaster> component is responsible for rendering toast notifications used in /app/client-utils.ts and /sections/DraftMode/DraftModeToast.tsx */}
+        <Toaster />
+        {isDraftMode && (
+          <>
+            <DraftModeToast />
+            <VisualEditing />
+          </>
+        )}
+        {/* The <SanityLive> component is responsible for making all sanityFetch calls in your application live, so should always be rendered. */}
+        <SanityLive onError={handleError} />
+        <NextIntlClientProvider>
+          <FriendlyCaptchaSdkWrapper>
+            {children}
+            <Footer footerData={footerData} />
+          </FriendlyCaptchaSdkWrapper>
+        </NextIntlClientProvider>
       </body>
     </html>
   )

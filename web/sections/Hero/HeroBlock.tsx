@@ -1,6 +1,6 @@
 'use client'
 import type { PortableTextBlock } from 'next-sanity'
-import type { HTMLAttributes } from 'react'
+import type { HTMLAttributes, ReactNode } from 'react'
 import { Breadcrumbs } from '@/core/Breadcrumbs/Breadcrumbs'
 import Blocks from '@/portableText/Blocks'
 import {
@@ -35,7 +35,13 @@ export type HeroData = {
   isBigTitle?: boolean
   /**Page title */
   title?: PortableTextBlock[]
+  /* For new or magazine published information */
+  subTitle?: ReactNode
   /** 50/50 Text/image */
+  /* Magazine */
+  tags?: string[]
+  /* Magazine promoted tagline */
+  magazineTags?: string[]
   heroTitle?: PortableTextBlock[] | string
   ingress?: PortableTextBlock[]
   link?: LinkData
@@ -51,8 +57,6 @@ export type HeroData = {
 export type HeroBlockProps = {
   nextSectionDesignOptions?: DesignOptions
   breadcrumbs?: any
-  /* Magazine */
-  tags?: string[]
 } & HeroData &
   HTMLAttributes<HTMLElement>
 /**
@@ -63,12 +67,14 @@ export type HeroBlockProps = {
 export const HeroBlock = ({
   title,
   heroTitle,
+  subTitle,
   figure,
   ratio,
   background,
   isBigTitle = false,
   type = HeroTypes.DEFAULT,
   tags,
+  magazineTags,
   link,
   heroLink,
   loopingVideo,
@@ -81,17 +87,20 @@ export const HeroBlock = ({
     nextSectionDesignOptions,
   )
 
+  console.log('Heroblock background', background)
+
   const heroProps = {
     figure,
     ratio: type === HeroTypes.DEFAULT ? '2:1' : ratio,
     title,
+    subTitle,
     heroTitle,
-    ingress,
     //@ts-ignore
-    background: colorKeyToUtilityMap[background].background,
+    background: colorKeyToUtilityMap[background]?.background,
     nextSectionDesignOptions: nextSectionDesignOptions,
     isBigTitle,
     ...(tags && { tags }),
+    ...(magazineTags && { magazineTags }),
     ...((link || (heroLink && type === HeroTypes.FIFTY_FIFTY)) && {
       link: heroLink ?? link,
     }),
@@ -132,8 +141,6 @@ export const HeroBlock = ({
           className={`${nextCompDark ? nextCompDark : ''} ${type === HeroTypes.DEFAULT ? 'pt-0' : ''}`}
         />
       )}
-      {/** Default hero has also tags?  */}
-      {tags && tags?.length > 0 && <MagazineTagBar tags={tags} />}
     </section>
   ) : (
     /** @ts-ignore */

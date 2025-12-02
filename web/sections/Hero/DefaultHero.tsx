@@ -5,6 +5,8 @@ import { Typography } from '@/core/Typography'
 import { twMerge } from '@/lib/twMerge/twMerge'
 import Blocks from '@/portableText/Blocks'
 import type { ImageWithCaptionData } from '../../types/index'
+import MagazineTagBar from '../MagazineTags/MagazineTagBar'
+import type { HeroData } from './HeroBlock'
 
 type DefaultHeroProps = {
   title?: PortableTextBlock[] | string
@@ -25,10 +27,9 @@ type DefaultHeroProps = {
   /**bg-<colorkey> */
   background?: string
   bigTitle?: PortableTextBlock[]
-  /* Magazine */
-  tags?: string[]
   ratio?: ImageRatioKeys
-} & HTMLAttributes<HTMLElement>
+} & HeroData &
+  HTMLAttributes<HTMLElement>
 
 export const DefaultHero = ({
   title,
@@ -38,9 +39,8 @@ export const DefaultHero = ({
   figure,
   isBigTitle,
   bigTitle,
-  tags,
   className = '',
-  figureClassName = '',
+  magazineTags,
   imageWrapperClassName = '',
   figCaptionClassName = '',
   imageClassName = '',
@@ -83,24 +83,6 @@ export const DefaultHero = ({
           </Typography>
         )}
       </div>
-      {tags && tags?.length > 0 && (
-        <div className='px-layout-md pb-12'>
-          {tags && tags?.length > 0 && (
-            <ul className='flex flex-wrap gap-y-4 divide-x-2 divide-energy-red-100'>
-              {tags.map((tag: string) => {
-                return (
-                  <span
-                    key={`magazine_tag_key_${tag}`}
-                    className='inline-block whitespace-nowrap pr-3 pl-3 font-medium text-sm first:pl-0 lg:text-xs'
-                  >
-                    {tag}
-                  </span>
-                )
-              })}
-            </ul>
-          )}
-        </div>
-      )}
       {subTitle && subTitle}
       {figure && (
         <Image
@@ -114,6 +96,9 @@ export const DefaultHero = ({
           imageClassName={twMerge(``, imageClassName)}
           figCaptionClassName={figCaptionClassName}
         />
+      )}
+      {magazineTags && magazineTags?.length > 0 && (
+        <MagazineTagBar tags={magazineTags} />
       )}
     </div>
   )

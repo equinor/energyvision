@@ -102,12 +102,6 @@ export default {
       of: [configureBlockContent({ variant: 'fullBlock' })],
     },
     {
-      title: 'Ingress Background',
-      description: 'Pick a colour for the background. Default is white.',
-      name: 'ingressBackground',
-      type: 'colorlist',
-    },
-    {
       title: 'Promoted Magazine Tags',
       name: 'promotedMagazineTags',
       description: 'Place the magazine tags in the correct order',

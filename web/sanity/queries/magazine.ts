@@ -1,15 +1,17 @@
-import { heroFields } from './common/heroFields'
-import pageContentFields from './common/pageContentFields'
-import slugsForNewsAndMagazine, { querySuffixForNewsAndMagazine } from './slugsForNewsAndMagazine'
-import linkSelectorFields from './common/actions/linkSelectorFields'
 import downloadableFileFields from './common/actions/downloadableFileFields'
 import downloadableImageFields from './common/actions/downloadableImageFields'
-import markDefs from './common/blockEditorMarks'
-import { seoAndSomeFields } from './common/seoAndSomeFields'
-import { sameLang, fixPreviewForDrafts } from './common/langAndDrafts'
-import { publishDateTimeQuery } from './common/publishDateTime'
+import linkSelectorFields from './common/actions/linkSelectorFields'
 import background from './common/background'
+import markDefs from './common/blockEditorMarks'
 import { functions, pageContentFunctions } from './common/functions'
+import { heroFields } from './common/heroFields'
+import { fixPreviewForDrafts, sameLang } from './common/langAndDrafts'
+import pageContentFields from './common/pageContentFields'
+import { publishDateTimeQuery } from './common/publishDateTime'
+import { seoAndSomeFields } from './common/seoAndSomeFields'
+import slugsForNewsAndMagazine, {
+  querySuffixForNewsAndMagazine,
+} from './slugsForNewsAndMagazine'
 
 const footerComponentFields = /* groq */ `
   title,
@@ -54,6 +56,7 @@ export const magazineQuery = /* groq */ `
           ${pageContentFields}
       },
       ${slugsForNewsAndMagazine},
+    "firstPublishedAt": coalesce(firstPublishedAt, _createdAt),
     "footerComponent": *[_type == 'magazineIndex' && ${sameLang}][0]{
       "data": footerComponent{
         ${footerComponentFields}
@@ -69,12 +72,9 @@ export const magazineIndexQuery = /* groq */ `
     "seoAndSome": ${seoAndSomeFields},
     title,
     "hero": ${heroFields},
-    "ingress": {
-      "content": ingress[]{
+    ingress[]{
         ...,
         ${markDefs},
-      },
-      "background": coalesce(ingressBackground.title, 'White'),
     },
     "magazineTags": promotedMagazineTags[]->{
       "id": _id,
@@ -107,7 +107,10 @@ const nextDirectionFilter = /* groq */ `
 && (${publishDateTimeQuery} < $lastPublishedAt || (${publishDateTimeQuery} == $lastPublishedAt && _id < $lastId))
 `
 
-export const getMagazineArticlesByTag = (hasFirstId = false, hasLastId = false) => /* groq */ `
+export const getMagazineArticlesByTag = (
+  hasFirstId = false,
+  hasLastId = false,
+) => /* groq */ `
 ${functions}
 {
  "tagsParam": *[_type == 'magazineTag'

@@ -18,6 +18,7 @@ export type CardProps = {
   image?: ImageWithAlt
   /** Override background image styling */
   imageClassName?: string
+  imageWrapperClassName?: string
   background?: ColorKeys
 } & BaseLinkProps
 
@@ -38,6 +39,7 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
     href,
     className = '',
     imageClassName = '',
+    imageWrapperClassName = '',
     children,
     image,
     background,
@@ -94,7 +96,10 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
           fill
           grid='xs'
           aspectRatio={variantAspectRatio[variant]}
-          className={`${imageVariantClassNames[variant]} ${imageRatio[variant]}`}
+          className={twMerge(
+            `${imageVariantClassNames[variant]} ${imageRatio[variant]}`,
+            imageWrapperClassName,
+          )}
           imageClassName={twMerge(
             `w-full ${imageVariantClassNames[variant]} ${imageRatio[variant]} `,
             imageClassName,

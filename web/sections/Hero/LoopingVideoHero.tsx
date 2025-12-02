@@ -52,7 +52,7 @@ export const LoopingVideoHero = ({
         value={title}
         id='mainTitle'
         variant='h1'
-        blockClassName={`pt-10 px-layout-lg ${nextCompBg} ${nextCompDark ? nextCompDark : ''}`}
+        blockClassName={`py-11 px-layout-lg ${nextCompBg} ${nextCompDark ? nextCompDark : ''}`}
       />
     </>
   )

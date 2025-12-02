@@ -43,7 +43,7 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
     containImage = false,
     background,
   } = designOptions
-  console.log('teaser background', background)
+
   const { backgroundPosition } = background || {}
   const useFlexCol = useMediaQuery(`(max-width: 1023px)`)
   const { bg, dark } = getBgAndDarkFromBackground(designOptions)

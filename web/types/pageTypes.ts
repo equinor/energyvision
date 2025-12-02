@@ -1,6 +1,7 @@
 import type { SanityImageSource } from '@sanity/asset-utils'
 import type { Templates } from 'instantsearch.js'
-import type { BreadcrumbData, HeroData } from '@/sections/Hero/HeroBlock'
+import type { BreadcrumbData } from '@/core/Breadcrumbs/Breadcrumbs'
+import type { HeroData } from '@/sections/Hero/HeroBlock'
 import type { TeaserData } from '@/sections/teasers/Teaser/Teaser'
 import type {
   CardData,
@@ -29,6 +30,7 @@ export type ErrorPageData = {
 export type PageSchema = {
   slug: string
   title: PortableTextBlock[]
+  firstPublishedAt?: string
   hero: HeroData
   template: Templates
   seoAndSome: SeoData

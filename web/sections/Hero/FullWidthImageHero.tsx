@@ -5,6 +5,7 @@ import { Image, type ImageRatioKeys } from '@/core/Image/Image'
 import Blocks from '@/portableText/Blocks'
 import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
 import type { DesignOptions } from '@/types'
+import MagazineTagBar from '../MagazineTags/MagazineTagBar'
 import type { HeroData } from './HeroBlock'
 
 type FullWidthImageHeroVariant = 'default' | 'tall' | 'narrow'
@@ -20,6 +21,8 @@ export const FullWidthImageHero = ({
   variant = 'default',
   figure,
   title,
+  magazineTags,
+  subTitle,
   nextSectionDesignOptions,
   className = '',
 }: FullWidthImageHeroProps) => {
@@ -53,13 +56,17 @@ export const FullWidthImageHero = ({
           imageClassName={twMerge(variantClassName[variant], className)}
         />
       )}
+      {magazineTags && magazineTags?.length > 0 && (
+        <MagazineTagBar tags={magazineTags} className='mt-0' />
+      )}
       <Blocks
         //@ts-ignore
         value={title}
         id='mainTitle'
         variant='h1'
-        blockClassName={`px-layout-lg ${nextCompBg} ${nextCompDark ? nextCompDark : ''}`}
+        blockClassName={`py-11 px-layput-sm lg:px-layout-lg ${nextCompBg} ${nextCompDark ? nextCompDark : ''}`}
       />
+      {subTitle && subTitle}
     </>
   )
 }

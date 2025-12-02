@@ -41,7 +41,7 @@ export const FiftyFiftyHero = ({
         value={title}
         id='mainTitle'
         variant='h1'
-        blockClassName={`pt-11 px-layout-lg ${nextCompBg} ${nextCompDark ? nextCompDark : ''}`}
+        blockClassName={`py-11 px-layout-sm lg:px-layout-lg ${nextCompBg} ${nextCompDark ? nextCompDark : ''}`}
       />
       <div className={`${background} grid min-h-[350px] md:grid-cols-2`}>
         {/* Image Section */}
