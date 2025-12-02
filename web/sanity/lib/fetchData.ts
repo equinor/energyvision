@@ -7,6 +7,7 @@ import type { QueryParams } from '../helpers/queryFromSlug'
 import { homePageDataForHeaderQuery } from '../queries/homePage'
 import { newsroomDataForHeaderQuery } from '../queries/newsroom'
 import { pageDataForHeaderQuery } from '../queries/routes'
+import { dataset } from './api'
 
 export const getPageData = async (page: {
   query: string
@@ -16,6 +17,7 @@ export const getPageData = async (page: {
     const { data } = await sanityFetch({
       query: page.query,
       params: { ...page.queryParams },
+      requestTag: "getPageData"+"."+dataset
     })
 
     return { pageData: data }
