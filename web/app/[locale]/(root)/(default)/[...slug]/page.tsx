@@ -134,6 +134,8 @@ export default async function Page({ params }: Props) {
   const locale = (await params).locale
   const { query, queryParams } = await getQueryFromSlug(s as string[], locale)
 
+  console.log("Fetching data for Topic Content Page")
+
   const { pageData } = await getPageData({
     query,
     queryParams,
