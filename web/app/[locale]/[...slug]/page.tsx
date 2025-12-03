@@ -150,7 +150,7 @@ export default async function Page({ params }: Props) {
     }),
     sanityFetch({
       query: pageQuery,
-      params: { ...pageQueryParams, tags: [slug] },
+      params: { ...pageQueryParams, tags: `page:[slug]` },
     }),
   ])
 
