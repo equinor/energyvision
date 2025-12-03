@@ -5,6 +5,7 @@ import { parseBody } from 'next-sanity/webhook'
 import { sanityClientWithEquinorCDN } from '@/sanity/lib/equinorCdnClient'
 
 type WebhookPayload = {
+  id: string
   tags: string[]
 }
 
