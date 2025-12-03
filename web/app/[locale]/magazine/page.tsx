@@ -11,11 +11,18 @@ import {
   getMagazineArticlesByTag,
   magazineIndexQuery,
 } from '@/sanity/queries/magazine'
+import { menuQuery } from '@/sanity/queries/menu'
+import Header from '@/sections/Header/Header'
 import MagazineRoom from '@/templates/magazine/Magazineroom'
 
 /* export function generateStaticParams() {
   return Flags.HAS_MAGAZINE ? [{ locale: 'en' }] : []
 } */
+
+export const magazineSlugs = [
+  { slug: '/magazine', lang: 'en_GB' },
+  { slug: '/no/magasin', lang: 'nb_NO' },
+]
 
 export async function generateMetadata({
   params,
@@ -79,26 +86,29 @@ export default async function MagazinePage({
 
   /*   setRequestLocale(locale) */
   //Can assume english lang, dont actually need to get locale? Since english route
-  const lang = getNameFromLocale(locale)
 
-  const queryParams = {
-    lang,
-  }
+  const queryParams = { lang: getNameFromLocale(locale) }
 
   const articlesQuery =
     tag && tag !== 'all'
       ? getMagazineArticlesByTag(false, false)
       : allMagazineDocuments
+
   const articlesParams =
     tag && tag !== 'all' ? { ...queryParams, tag } : queryParams
 
-  const [{ data: magazineroomData }, { data: articles }] = await Promise.all([
-    sanityFetch({ query: magazineIndexQuery, params: queryParams }),
-    sanityFetch({
-      query: articlesQuery,
-      params: articlesParams as QueryParams,
-    }),
-  ])
+  const [{ data: headerData }, { data: magazineroomData }, { data: articles }] =
+    await Promise.all([
+      sanityFetch({
+        query: menuQuery,
+        params: { ...queryParams, slug: '/magazine' },
+      }),
+      sanityFetch({ query: magazineIndexQuery, params: queryParams }),
+      sanityFetch({
+        query: articlesQuery,
+        params: articlesParams as QueryParams,
+      }),
+    ])
 
   const magazineroom = Array.isArray(magazineroomData)
     ? magazineroomData[0]
@@ -109,5 +119,10 @@ export default async function MagazinePage({
     magazineArticles: articles ?? [],
   }
 
-  return <MagazineRoom {...pageData} />
+  return (
+    <>
+      <Header slugs={magazineSlugs} menuData={headerData} />
+      <MagazineRoom {...pageData} />
+    </>
+  )
 }

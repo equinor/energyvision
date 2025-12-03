@@ -12,8 +12,6 @@ type HomePageProps = {
 
 const HomePage = ({ data }: HomePageProps) => {
   const { hero, title, ...restData } = data
-  console.log('HomePage hero', hero)
-  console.log('data.title', data.title)
   const heroProps: HeroBlockProps = {
     //@ts-ignore
     title: title,
@@ -22,34 +20,8 @@ const HomePage = ({ data }: HomePageProps) => {
     nextSectionDesignOptions: restData?.content?.[0]?.designOptions,
   }
   return (
-    <main className='flex flex-col [:not(:has(.sticky-menu))]:pt-topbar'>
+    <main className='flex flex-col pt-topbar peer-data-[sticky=true]:pt-0'>
       <HeroBlock {...heroProps} />
-      {/*       {data.isCampaign ? (
-        <h1 className='sr-only'>{toPlainText(data.title)}</h1>
-      ) : (
-        <SharedBanner
-          title={data.title}
-          hero={data.hero}
-          captionBg={titleStyles.background?.backgroundColor}
-        />
-      )}
-      {breadcrumbs?.enableBreadcrumbs && (
-        <Breadcrumbs
-          designOptions={{ background: titleStyles.background ?? {} }}
-          slug={data?.slug}
-          useCustomBreadcrumbs={breadcrumbs?.useCustomBreadcrumbs}
-          defaultBreadcrumbs={breadcrumbs?.defaultBreadcrumbs}
-          customBreadcrumbs={breadcrumbs?.customBreadcrumbs}
-          className={data?.hero?.type === HeroTypes.DEFAULT ? 'pt-0' : ''}
-        />
-      )}
-
-      {data?.hero?.type !== HeroTypes.DEFAULT && !data?.isCampaign && (
-        <SharedTitle
-          sharedTitle={data.title}
-          background={titleStyles?.background}
-        />
-      )} */}
       <PageContent
         data={data}
         heroBackground={

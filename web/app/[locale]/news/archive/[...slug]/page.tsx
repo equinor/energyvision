@@ -152,7 +152,7 @@ const fallbackToAnotherLanguage = async (
 
 //TODO types
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default async function Page({ params }: any) {
+export default async function ArchivedNewsPage({ params }: any) {
   const pageData = await getPageData(params)
   if (!pageData) notFound()
   return <ArchivedNews {...pageData} />

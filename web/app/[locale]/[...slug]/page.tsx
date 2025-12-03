@@ -4,12 +4,16 @@ import { notFound } from 'next/navigation'
 import { toPlainText } from 'next-sanity'
 import { defaultLanguage, domain, metaTitleSuffix } from '@/languageConfig'
 import { isDateAfter } from '@/lib/helpers/dateUtilities'
+import { Flags } from '@/sanity/helpers/datasetHelpers'
 import getPageSlugs from '@/sanity/helpers/getPageSlugs'
 import { getPageData } from '@/sanity/lib/fetchData'
 import { sanityFetch } from '@/sanity/lib/live'
 import { resolveOpenGraphImage } from '@/sanity/lib/utils'
 import { getLocaleFromName, getNameFromLocale } from '@/sanity/localization'
-import { getQueryFromSlug } from '../../../../../sanity/helpers/queryFromSlug'
+import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu'
+import { simpleMenuQuery } from '@/sanity/queries/simpleMenu'
+import Header from '@/sections/Header/Header'
+import { getQueryFromSlug } from '../../../sanity/helpers/queryFromSlug'
 
 const MagazinePage = dynamic(() => import('@/templates/magazine/MagazinePage'))
 const LandingPage = dynamic(() => import('@/templates/landingpage/LandingPage'))
@@ -129,20 +133,34 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function Page({ params }: Props) {
-  const { slug: s, locale } = await params
-  const { query, queryParams } = await getQueryFromSlug(s as string[], locale)
+  const { slug, locale } = await params
+  const menuQuery = Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery
+  const queryParams = {
+    lang: getNameFromLocale(locale),
+  }
 
-  const { data: pageData } = await sanityFetch({
-    query,
-    params: queryParams,
-  })
+  const { query: pageQuery, queryParams: pageQueryParams } =
+    await getQueryFromSlug(slug as string[], locale)
+  console.log('pageslug', slug)
+
+  const [{ data: headerData }, { data: pageData }] = await Promise.all([
+    sanityFetch({
+      query: menuQuery,
+      params: { ...queryParams },
+    }),
+    sanityFetch({
+      query: pageQuery,
+      params: { ...pageQueryParams, tags: [slug] },
+    }),
+  ])
 
   if (!pageData) notFound()
 
-  const slug = pageData?.slug
+  const pageSlug = pageData?.slug
+  const slugs = getPageSlugs(pageData)
 
   const template = pageData?.template || null
-  if (!template) console.warn('Missing template for', slug)
+  if (!template) console.warn('Missing template for', pageSlug)
 
   const getTemplate = () => {
     switch (template) {
@@ -160,5 +178,14 @@ export default async function Page({ params }: Props) {
     }
   }
 
-  return getTemplate()
+  return (
+    <>
+      <Header
+        slugs={slugs}
+        menuData={headerData}
+        stickyMenuData={pageData?.stickyMenu}
+      />
+      {getTemplate()}
+    </>
+  )
 }

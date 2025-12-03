@@ -11,7 +11,10 @@ import {
   getMagazineArticlesByTag,
   magazineIndexQuery,
 } from '@/sanity/queries/magazine'
+import { menuQuery } from '@/sanity/queries/menu'
+import Header from '@/sections/Header/Header'
 import MagazineRoom from '@/templates/magazine/Magazineroom'
+import { magazineSlugs } from '../magazine/page'
 
 /* export function generateStaticParams() {
   return Flags.HAS_MAGAZINE ? [{ locale: 'no' }] : []
@@ -73,15 +76,12 @@ export default async function MagazinePage({
   const { locale } = await params
   const tag = (await searchParams)?.tag
 
-  if (!Flags.HAS_MAGAZINE) {
+  if (!Flags.HAS_MAGAZINE_INDEX) {
     notFound()
   }
   /*   setRequestLocale(locale) */
-
-  const lang = getNameFromLocale(locale)
-
   const queryParams = {
-    lang,
+    lang: getNameFromLocale(locale),
   }
   const articlesQuery =
     tag && tag !== 'all'
@@ -90,13 +90,18 @@ export default async function MagazinePage({
   const articlesParams =
     tag && tag !== 'all' ? { ...queryParams, tag } : queryParams
 
-  const [{ data: magazineroomData }, { data: articles }] = await Promise.all([
-    sanityFetch({ query: magazineIndexQuery, params: queryParams }),
-    sanityFetch({
-      query: articlesQuery,
-      params: articlesParams as QueryParams,
-    }),
-  ])
+  const [{ data: headerData }, { data: magazineroomData }, { data: articles }] =
+    await Promise.all([
+      sanityFetch({
+        query: menuQuery,
+        params: { ...queryParams, slug: '/no/magasin' },
+      }),
+      sanityFetch({ query: magazineIndexQuery, params: queryParams }),
+      sanityFetch({
+        query: articlesQuery,
+        params: articlesParams as QueryParams,
+      }),
+    ])
 
   const magazineroom = Array.isArray(magazineroomData)
     ? magazineroomData[0]
@@ -107,5 +112,10 @@ export default async function MagazinePage({
     magazineArticles: articles ?? [],
   }
 
-  return <MagazineRoom {...pageData} />
+  return (
+    <>
+      <Header slugs={magazineSlugs} menuData={headerData} />
+      <MagazineRoom {...pageData} />
+    </>
+  )
 }

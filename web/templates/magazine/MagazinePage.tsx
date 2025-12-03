@@ -72,7 +72,7 @@ const MagazinePage = ({
   }
 
   return (
-    <main className='flex flex-col [:not(:has(.sticky-menu))]:pt-topbar'>
+    <main className='flex flex-col pt-topbar'>
       <HeroBlock {...heroProps} />
       <PageContent
         data={{

@@ -135,7 +135,6 @@ export type PageContentProps = {
  * E.g. 2 colored background of same color content, only first need but not second
  */
 const getBackgroundObject = (component: Component) => {
-  console.log('getBackgroundObject component', component)
   if (!component?.designOptions || !Object.hasOwn(component, 'designOptions')) {
     //white if no designOptions
     return {

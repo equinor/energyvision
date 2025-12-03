@@ -70,7 +70,7 @@ const MagazineRoom = ({
   }
 
   return (
-    <main className='flex flex-col'>
+    <main className='flex flex-col pt-topbar'>
       {/*@ts-ignore*/}
       <HeroBlock {...heroProps} />
       {ingress && (

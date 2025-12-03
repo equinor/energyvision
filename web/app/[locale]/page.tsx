@@ -7,14 +7,23 @@ import {
   languages,
   metaTitleSuffix,
 } from '@/languageConfig'
+import { Flags } from '@/sanity/helpers/datasetHelpers'
+import getPageSlugs from '@/sanity/helpers/getPageSlugs'
+import { getQueryFromSlug } from '@/sanity/helpers/queryFromSlug'
 import { getPageData } from '@/sanity/lib/fetchData'
+import { sanityFetch } from '@/sanity/lib/live'
 import { resolveOpenGraphImage } from '@/sanity/lib/utils'
-import { getQueryFromSlug } from '../../../../sanity/helpers/queryFromSlug'
-import HomePage from '../../../../templates/homepage/HomePage'
+import { getNameFromLocale } from '@/sanity/localization'
+import { homePageQuery } from '@/sanity/queries/homePage'
+import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu'
+import { simpleMenuQuery } from '@/sanity/queries/simpleMenu'
+import Header from '@/sections/Header/Header'
+import HomePage from '@/templates/homepage/HomePage'
 
 export const dynamicParams = true // fallback to true in app router
 
-type Params = Promise<{ locale: string }>
+type Params = Promise<{ locale: string; slug: string }>
+
 export async function generateMetadata({
   params,
 }: {
@@ -68,29 +77,49 @@ export async function generateMetadata({
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default async function Page({ params }: any) {
-  const { locale } = await params
+export default async function IndexPage({ params }: any) {
+  const { locale, slug } = await params
   if (!languages.map(it => it.locale).includes(locale)) notFound()
+  const menuQuery = Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery
+  const queryParams = {
+    lang: getNameFromLocale(locale),
+  }
+  console.log('IndexPage(homepage) slug', slug)
+  /*  const { query, queryParams } = await getQueryFromSlug(slug, locale) */
+  const date = new Date().toISOString().substring(0, 10)
 
-  const { query, queryParams } = await getQueryFromSlug(
-    params?.slug as string[],
-    locale,
-  )
+  const [{ data: headerData }, { data: fullData }] = await Promise.all([
+    sanityFetch({
+      query: menuQuery,
+      params: { ...queryParams },
+    }),
+    sanityFetch({
+      query: homePageQuery,
+      params: { ...queryParams, date },
+      tags: ['homePage'],
+    }),
+  ])
 
-  const { pageData: fullData } = await getPageData({
-    query,
-    queryParams,
-  })
-  const { pageData: data, slugs: s } = fullData
-  const pageData = { ...data, s }
+  console.log('IndexPage(homepage) fullData', fullData)
+  const { pageData } = fullData
+
   if (!pageData) notFound()
 
-  const slug = pageData?.slug
+  const pageSlug = pageData?.slug
+  const slugs = getPageSlugs(pageData)
 
   const template = pageData?.template || null
 
-  if (!template) console.warn('Missing template for', slug)
+  if (!template) console.warn('Missing template for', pageSlug)
 
-  return <HomePage data={pageData} />
+  return (
+    <>
+      <Header
+        slugs={slugs}
+        menuData={headerData}
+        stickyMenuData={pageData?.stickyMenu}
+      />
+      <HomePage data={pageData} />
+    </>
+  )
 }

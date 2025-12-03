@@ -44,7 +44,7 @@ export default async function LocaleLayout({
     })) ?? []
 
   return (
-    <div className={`text-slate-80 [:not(:has(.sticky-menu))]:pt-topbar`}>
+    <div className={`pt-topbar text-slate-80 peer-data-[sticky=true]:pt-0`}>
       <Header slugs={slugs} menuData={headerData} />
       {children}
       <div className='clear-both'></div>

@@ -89,10 +89,6 @@ export const getQueryFromSlug = async (
   )
   const date = new Date().toISOString().substring(0, 10)
 
-  /*   if (isSlugID(firstPiece)) {
-    return getPreviewByIdQuery(firstPiece, locale, date)
-  } */
-
   const slug = `/${slugArray.join('/')}`
   const lang = getNameFromLocale(locale)
 

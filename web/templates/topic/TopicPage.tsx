@@ -26,7 +26,7 @@ const TopicPage = ({ data }: TopicPageProps) => {
   }
 
   return (
-    <main className='flex flex-col [:not(:has(.sticky-menu))]:pt-topbar'>
+    <main className='flex flex-col pt-topbar peer-data-[sticky=true]:pt-0'>
       <HeroBlock {...heroProps} />
       <PageContent
         data={data}

@@ -7,63 +7,17 @@ import { toPlainText } from 'next-sanity'
 import { metaTitleSuffix } from '@/languageConfig'
 import { algolia } from '@/lib/config'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
+import { sanityFetch } from '@/sanity/lib/live'
 import { resolveOpenGraphImage } from '@/sanity/lib/utils'
+import { getIsoFromLocale, getNameFromLocale } from '@/sanity/localization'
+import { menuQuery } from '@/sanity/queries/menu'
 import { newsroomQuery } from '@/sanity/queries/newsroom'
+import Header from '@/sections/Header/Header'
 import NewsRoomTemplate from '@/templates/newsroom/Newsroom'
-import { getPageData } from '../../../../../sanity/lib/fetchData'
-import {
-  getIsoFromLocale,
-  getNameFromLocale,
-} from '../../../../../sanity/localization'
-import type { NewsRoomPageType } from '../../../../../types'
-
-export const dynamic = "force-dynamic";
+import { newsroomSlugs } from '../news/page'
 
 export function generateStaticParams() {
-  return Flags.HAS_NEWSROOM ? [{ locale: 'en-GB' }] : []
-}
-
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ locale: string }>
-}): Promise<Metadata> {
-  const { locale } = await params
-  const lang = getNameFromLocale(locale)
-
-  const queryParams = {
-    lang,
-  }
-  const { pageData } = await getPageData({
-    query: newsroomQuery,
-    queryParams,
-  })
-
-  const { documentTitle, title, metaDescription, openGraphImage, heroImage } =
-    pageData
-  const plainTitle = Array.isArray(title) ? toPlainText(title) : title
-  const ogImage = resolveOpenGraphImage(openGraphImage ?? heroImage?.image)
-
-  return {
-    title: `${documentTitle || plainTitle} - ${metaTitleSuffix}`,
-    description: metaDescription,
-    openGraph: {
-      title: plainTitle,
-      description: metaDescription,
-      url: 'https://www.equinor.com/news',
-      locale,
-      type: 'website',
-      siteName: 'Equinor',
-      images: ogImage,
-    },
-    alternates: {
-      canonical: 'https://www.equinor.com/news',
-      languages: {
-        no: 'https://www.equinor.com/no/nyheter',
-        'x-default': 'https://www.equinor.com/news',
-      },
-    },
-  }
+  return Flags.HAS_NEWSROOM ? [{ locale: 'no' }] : []
 }
 
 const getInitialResponse = unstable_cache(
@@ -87,10 +41,54 @@ const getInitialResponse = unstable_cache(
     return response
   },
   ['news'],
-  { tags: ['news'] },
+  { revalidate: 3600, tags: ['news'] },
 )
 
-export default async function NewsPage({
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+  const { locale } = await params
+  const lang = getNameFromLocale(locale)
+
+  const queryParams = {
+    lang,
+  }
+  const { data: pageData } = await sanityFetch({
+    query: newsroomQuery,
+    params: queryParams,
+  })
+
+  const { documentTitle, title, metaDescription, openGraphImage, heroImage } =
+    pageData
+  const plainTitle = Array.isArray(title) ? toPlainText(title) : title
+
+  const ogImage = resolveOpenGraphImage(openGraphImage ?? heroImage?.image)
+
+  return {
+    title: `${documentTitle || plainTitle} - ${metaTitleSuffix}`,
+    description: metaDescription,
+    openGraph: {
+      title: plainTitle,
+      description: metaDescription,
+      url: 'https://www.equinor.com/no/nyheter',
+      locale,
+      type: 'website',
+      siteName: 'Equinor',
+      images: ogImage,
+    },
+    alternates: {
+      canonical: 'https://www.equinor.com/no/nyheter',
+      languages: {
+        en: 'https://www.equinor.com/news',
+        'x-default': 'https://www.equinor.com/news',
+      },
+    },
+  }
+}
+
+export default async function NewsroomPage({
   params,
 }: {
   params: Promise<{ locale: string }>
@@ -98,12 +96,12 @@ export default async function NewsPage({
   const { locale } = await params
 
   // For the time being, let's just give 404 for satellites
-  // We will also return 404 if the locale is not English.
+  // We will also return 404 if the locale is not Norwegian.
   // This is a hack and and we should improve this at some point
   // See https://github.com/vercel/next.js/discussions/18485
-  // Only build when newsroom allowed, satellites has english
+  // Only build when newsroom allowed, satellites has norwegian
 
-  if (!Flags.HAS_NEWSROOM || locale !== 'en-GB') {
+  if (!Flags.HAS_NEWSROOM) {
     notFound()
   }
 
@@ -116,19 +114,24 @@ export default async function NewsPage({
   const queryParams = {
     lang,
   }
-
-  const { pageData } = await getPageData({
-    query: newsroomQuery,
-    queryParams,
-  })
+  const [{ data: headerData }, { data: newsroomData }] = await Promise.all([
+    sanityFetch({
+      query: menuQuery,
+      params: { ...queryParams, slug: '/news' },
+    }),
+    sanityFetch({ query: newsroomQuery, params: queryParams }),
+  ])
 
   const response = await getInitialResponse(isoLocale)
 
   return (
-    <NewsRoomTemplate
-      locale={locale}
-      pageData={pageData as NewsRoomPageType}
-      initialSearchResponse={response}
-    />
+    <>
+      <Header slugs={newsroomSlugs} menuData={headerData} />
+      <NewsRoomTemplate
+        locale={locale}
+        pageData={newsroomData}
+        initialSearchResponse={response}
+      />
+    </>
   )
 }

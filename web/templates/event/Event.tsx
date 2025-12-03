@@ -44,7 +44,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
           location={location}
         />
       )}
-      <main className='flex flex-col [:not(:has(.sticky-menu))]:pt-topbar'>
+      <main className='flex flex-col pt-topbar'>
         <article>
           <div className={`${bg} ${dark ? 'dark' : ''} px-layout-md py-32`}>
             <div className='mx-auto max-w-[1186px]'>

@@ -177,7 +177,7 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(
 
     return (
       <PaginationContextProvider defaultRef={resultsRef}>
-        <main ref={ref}>
+        <main ref={ref} className={`pt-topbar`}>
           <InstantSearchNext
             searchClient={queriedSearchClient}
             future={{ preserveSharedStateOnUnmount: false }}

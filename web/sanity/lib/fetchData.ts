@@ -98,26 +98,3 @@ export type MagazineQueryParams = {
   lastId?: string
   lastPublishedAt?: string
 }
-
-export const getData = async (fetchQuery: {
-  query: string
-  queryParams: MagazineQueryParams
-}) => {
-  const { query, queryParams } = fetchQuery
-  try {
-    const results = await sanityFetch({
-      query,
-      params: queryParams,
-    })
-    return {
-      isSuccess: true,
-      data: results,
-    }
-  } catch (error) {
-    console.log('Error when fetching from Sanity', error)
-  }
-  return {
-    isError: true,
-    data: [],
-  }
-}

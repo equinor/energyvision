@@ -110,7 +110,7 @@ const NewsPage = ({
         description={toPlainText(ingress)}
         body={toPlainText(content)}
       />
-      <main className='[:not(:has(.sticky-menu))]:pt-topbar'>
+      <main className='pt-topbar'>
         <article className='flex flex-col items-center pb-28'>
           <DefaultHero
             figure={heroImage}
