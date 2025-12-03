@@ -8,15 +8,13 @@ ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
 
 WORKDIR /opt/app
-RUN ls -la
+RUN ls
 #In use?
 RUN npm install dotenv fs
 
 COPY ./package.json ./
 COPY ./pnpm-lock.yaml ./
 COPY ./tsconfig.base.json ./
-COPY ./sitesConfig.ts ./
-COPY ./featureFlags.ts ./
 COPY ./studio ./studio
 
 ARG ARG_SANITY_API_TOKEN
