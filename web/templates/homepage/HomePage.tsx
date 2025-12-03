@@ -54,7 +54,8 @@ const HomePage = ({ data }: HomePageProps) => {
         data={data}
         heroBackground={
           hero.type !== HeroTypes.DEFAULT
-            ? restData?.content?.[0]?.designOptions.background
+            ? //@ts-ignore
+              restData?.content?.[0]?.designOptions.background
             : hero?.background
         }
       />

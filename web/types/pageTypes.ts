@@ -2,7 +2,6 @@ import type { SanityImageSource } from '@sanity/asset-utils'
 import type { Templates } from 'instantsearch.js'
 import type { BreadcrumbData } from '@/core/Breadcrumbs/Breadcrumbs'
 import type { HeroData } from '@/sections/Hero/HeroBlock'
-import type { TeaserData } from '@/sections/teasers/Teaser/Teaser'
 import type {
   CardData,
   ContactListData,
@@ -52,23 +51,6 @@ export type LandingPageSchema = {
   subGroups: SubMenuGroupData[]
   template: Templates
   seoAndSome: SeoData
-}
-
-export type NewsSchema = {
-  slug: string
-  title: string
-  documentTitle?: string
-  metaDescription?: string
-  openGraphImage?: ImageWithAlt
-  id: string
-  updatedAt: string
-  publishDateTime: string
-  heroImage: ImageWithCaptionData
-  ingress: PortableTextBlock[]
-  content: PortableTextBlock[]
-  relatedLinks: RelatedLinksData
-  iframe: IFrameData
-  latestNews: CardData[]
 }
 
 export type EventSchema = {

@@ -1,17 +1,24 @@
-import slugsForNewsAndMagazine, { querySuffixForNewsAndMagazine } from './slugsForNewsAndMagazine'
-import { sameLang, fixPreviewForDrafts } from './common/langAndDrafts'
+import { Flags } from '../helpers/datasetHelpers'
+import { functions } from './common/functions'
+import { fixPreviewForDrafts, sameLang } from './common/langAndDrafts'
 import {
   contentForNewsQuery,
   iframeForNewsQuery,
   ingressForNewsQuery,
   relatedLinksForNewsQuery,
 } from './common/newsSubqueries'
-import { lastUpdatedTimeQuery, publishDateTimeQuery } from './common/publishDateTime'
-import { functions } from './common/functions'
-import { Flags } from '../helpers/datasetHelpers'
+import {
+  lastUpdatedTimeQuery,
+  publishDateTimeQuery,
+} from './common/publishDateTime'
+import slugsForNewsAndMagazine, {
+  querySuffixForNewsAndMagazine,
+} from './slugsForNewsAndMagazine'
 
 export const excludeCrudeOilAssays =
-  Flags.IS_DEV || Flags.IS_GLOBAL_PROD ? /* groq */ `!('crude-oil-assays' in tags[]->key.current) &&` : ''
+  Flags.IS_DEV || Flags.IS_GLOBAL_PROD
+    ? /* groq */ `!('crude-oil-assays' in tags[]->key.current) &&`
+    : ''
 
 const latestNewsFields = /* groq */ `
   "id": _id,

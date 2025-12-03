@@ -3,6 +3,7 @@ import { calendar } from '@equinor/eds-icons'
 import { toPlainText } from '@portabletext/react'
 import { usePathname } from 'next/navigation'
 import { useLocale, useTranslations } from 'next-intl'
+import type { PortableTextBlock } from 'next-sanity'
 import { NewsArticleJsonLd } from 'next-seo'
 import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
 import { IFrame } from '@/core/IFrame/IFrame'
@@ -12,44 +13,57 @@ import { getFullUrl } from '@/lib/helpers/getFullUrl'
 import LatestNews from '@/pageComponents/news/LatestNews'
 import { resolveOpenGraphImage } from '@/sanity/lib/utils'
 import { DefaultHero } from '@/sections/Hero/DefaultHero'
-import { colorKeyToUtilityMap } from '@/styles/colorKeyToUtilityMap'
+import type {
+  CardData,
+  IFrameData,
+  ImageWithAlt,
+  ImageWithCaptionData,
+  RelatedLinksData,
+} from '@/types'
 import RelatedContent from '../../pageComponents/shared/RelatedContent'
 import Blocks from '../../portableText/Blocks'
 import Footnotes from '../../portableText/components/Footnotes'
-import type { NewsSchema } from '../../types/index'
 
-type ArticleProps = {
-  data: NewsSchema
+export type NewsPageProps = {
+  slug: string
+  title: string
+  documentTitle?: string
+  metaDescription?: string
+  openGraphImage?: ImageWithAlt
+  id: string
+  updatedAt: string
+  publishDateTime: string
+  heroImage: ImageWithCaptionData
+  ingress: PortableTextBlock[]
+  content: PortableTextBlock[]
+  relatedLinks: RelatedLinksData
+  iframe: IFrameData
+  latestNews: CardData[]
 }
 
-const NewsPage = ({ data: news }: ArticleProps) => {
-  const slug = news?.slug
-
+const NewsPage = ({
+  publishDateTime,
+  updatedAt,
+  title,
+  openGraphImage,
+  heroImage,
+  ingress,
+  content,
+  iframe,
+  relatedLinks,
+  latestNews,
+  slug,
+}: NewsPageProps) => {
   const pathname = usePathname()
   const locale = useLocale()
   const intl = useTranslations()
 
   const fullUrl = getFullUrl(pathname ?? '', slug ?? '', locale)
 
-  const {
-    publishDateTime,
-    updatedAt,
-    title,
-    openGraphImage,
-    heroImage,
-    ingress,
-    content,
-    iframe,
-    relatedLinks,
-    latestNews,
-  } = news
-
   const modifiedDate = isDateAfter(publishDateTime, updatedAt)
     ? publishDateTime
     : updatedAt
   const ogImage = resolveOpenGraphImage(openGraphImage ?? heroImage?.image)
-
-  console.log('heroImage', heroImage)
 
   const formattedContent = content.map(block => ({
     ...block,
@@ -100,8 +114,9 @@ const NewsPage = ({ data: news }: ArticleProps) => {
         <article className='flex flex-col items-center pb-28'>
           <DefaultHero
             figure={heroImage}
-            background={colorKeyToUtilityMap['slate-blue-95'].background}
+            background={'slate-blue-95'}
             className='dark'
+            //@ts-ignore
             title={title}
             subTitle={publishedInformation}
             imageWrapperClassName='light'

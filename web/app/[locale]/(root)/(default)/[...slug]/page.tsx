@@ -152,7 +152,7 @@ export default async function Page({ params }: Props) {
         return <EventPage data={pageData} />
       case 'news':
       case 'localNews':
-        return <NewsPage data={pageData} />
+        return <NewsPage {...pageData} />
       case 'magazine':
         return <MagazinePage {...pageData} />
       default:
