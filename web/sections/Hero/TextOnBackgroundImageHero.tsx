@@ -24,6 +24,7 @@ export const TextOnBackgroundImageHero = ({
       aspectRatio={'9:16'}
     >
       <div className='px-layout-lg max-lg:py-11'>
+        {/*@ts-ignore */}
         <Blocks value={title} id='mainTitle' variant='h1' />
         <div className='pt-6'>
           {ingress && <Blocks value={ingress} variant='ingress' />}
