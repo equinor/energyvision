@@ -13,8 +13,9 @@ import {
   getMagazineArticlesByTag,
   magazineIndexQuery,
 } from '@/sanity/queries/magazine'
-import MagazineRoom from '@/templates/magazine/Magazineroom'
-import type { MagazineIndexPageType } from '@/types'
+import MagazineRoom, {
+  type MagazineIndexPageData,
+} from '@/templates/magazine/Magazineroom'
 
 export function generateStaticParams() {
   return Flags.HAS_MAGAZINE ? [{ locale: 'no' }] : []
@@ -113,7 +114,7 @@ export default async function MagazinePage({
   }
 
   // Compose pageData even if index is missing so the list still renders
-  const pageData: MagazineIndexPageType = index
+  const pageData: MagazineIndexPageData = index
     ? ({ ...(index as any), magazineArticles } as any)
     : ({ magazineArticles } as any)
 
