@@ -1,12 +1,11 @@
-import {
+import type { HeroData, HeroTypes } from '@/sections/Hero/HeroBlock'
+import type {
+  DesignOptions,
+  EventDateType,
   ImageWithAlt,
   ImageWithCaptionData,
-  PortableTextBlock,
   LinkData,
-  HeroTypes,
-  EventDateType,
-  DesignOptions,
-  HeroType,
+  PortableTextBlock,
 } from './index'
 
 export type CardTypes = 'news' | 'topics' | 'people' | 'events'
@@ -29,7 +28,7 @@ export type MagazineCardData = {
   title: string | PortableTextBlock[]
   firstPublishedAt?: string
   publishDateTime?: string
-  hero?: HeroType
+  hero?: HeroData
 }
 
 export type PeopleCardData = {
