@@ -104,8 +104,8 @@ export default async function MagazinePage({
 
   const pageData = {
     ...magazineroom,
-    magazineArticles: articles?.data ? articles.data : [],
+    magazineArticles: articles ?? [],
   }
 
-  return <MagazineRoom pageData={pageData} />
+  return <MagazineRoom {...pageData} />
 }

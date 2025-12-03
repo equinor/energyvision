@@ -19,8 +19,10 @@ export type TagLink = {
   active: boolean
 } & AnchorHTMLAttributes<HTMLAnchorElement>
 
+export type MagazineTag = { id: string; title: string; key: string }
+
 export type MagazineTagBarProps = {
-  tags: { id: string; title: string; key: string }[]
+  tags: MagazineTag[]
   className?: string
 }
 

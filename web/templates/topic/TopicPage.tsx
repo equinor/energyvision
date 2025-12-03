@@ -12,7 +12,6 @@ type TopicPageProps = {
 
 const TopicPage = ({ data }: TopicPageProps) => {
   const { breadcrumbs, hero, title, slug, ...restData } = data
-  console.log('TopicPage hero', hero)
 
   const heroProps: HeroBlockProps = {
     //@ts-ignore
@@ -33,7 +32,8 @@ const TopicPage = ({ data }: TopicPageProps) => {
         data={data}
         heroBackground={
           hero.type !== HeroTypes.DEFAULT
-            ? restData?.content?.[0]?.designOptions?.background
+            ? //@ts-ignore
+              restData?.content?.[0]?.designOptions?.background
             : hero?.background
         }
       />

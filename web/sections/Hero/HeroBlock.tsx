@@ -14,10 +14,13 @@ import type {
   ImageWithCaptionData,
   LinkData,
 } from '@/types'
-import MagazineTagBar from '../MagazineTags/MagazineTagBar'
+import type { MagazineTag } from '../MagazineTags/MagazineTagBar'
 import { DefaultHero } from './DefaultHero'
 import { FiftyFiftyHero } from './FiftyFiftyHero'
-import { FullWidthImageHero } from './FullWidthImageHero'
+import {
+  FullWidthImageHero,
+  type FullWidthImageHeroVariant,
+} from './FullWidthImageHero'
 import { type LoopingVideoData, LoopingVideoHero } from './LoopingVideoHero'
 import { TextOnBackgroundImageHero } from './TextOnBackgroundImageHero'
 
@@ -41,7 +44,7 @@ export type HeroData = {
   /* Magazine */
   tags?: string[]
   /* Magazine promoted tagline */
-  magazineTags?: string[]
+  magazineTags?: MagazineTag[]
   heroTitle?: PortableTextBlock[] | string
   ingress?: PortableTextBlock[]
   link?: LinkData
@@ -78,8 +81,6 @@ export const HeroBlock = ({
   link,
   heroLink,
   loopingVideo,
-  ingress,
-  className = '',
   nextSectionDesignOptions,
   breadcrumbs,
 }: HeroBlockProps) => {
@@ -87,11 +88,8 @@ export const HeroBlock = ({
     nextSectionDesignOptions,
   )
 
-  console.log('Heroblock background', background)
-
   const heroProps = {
     figure,
-    ratio: type === HeroTypes.DEFAULT ? '2:1' : ratio,
     title,
     subTitle,
     heroTitle,
@@ -109,12 +107,16 @@ export const HeroBlock = ({
     }),
     figCaptionClassName: 'px-layout-lg',
   }
-  console.log('HeroBlock heroProps', heroProps)
 
   const getHero = () => {
     switch (type) {
       case HeroTypes.FULL_WIDTH_IMAGE:
-        return <FullWidthImageHero {...heroProps} variant={ratio} />
+        return (
+          <FullWidthImageHero
+            {...heroProps}
+            variant={(ratio as FullWidthImageHeroVariant) ?? 'narrow'}
+          />
+        )
       case HeroTypes.FIFTY_FIFTY:
         return <FiftyFiftyHero {...heroProps} />
       case HeroTypes.BACKGROUND_IMAGE:
@@ -123,7 +125,7 @@ export const HeroBlock = ({
         //@ts-ignore
         return <LoopingVideoHero {...heroProps} />
       default:
-        return <DefaultHero {...heroProps} />
+        return <DefaultHero {...heroProps} ratio='2:1' />
     }
   }
 
@@ -143,8 +145,8 @@ export const HeroBlock = ({
       )}
     </section>
   ) : (
-    /** @ts-ignore */
     <h1 id='mainTitle' className='sr-only'>
+      {/** @ts-ignore */}
       <Blocks value={title} />
     </h1>
   )

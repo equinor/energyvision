@@ -9,12 +9,7 @@ import { HeroBlock, type HeroData } from '@/sections/Hero/HeroBlock'
 import MagazineTagBar from '@/sections/MagazineTags/MagazineTagBar'
 import { PaginationContextProvider } from '../../lib/contexts/PaginationContext'
 import Teaser, { type TeaserData } from '../../sections/teasers/Teaser/Teaser'
-import type {
-  Background,
-  ImageWithCaptionData,
-  MagazineCardData,
-  SeoData,
-} from '../../types'
+import type { MagazineCardData, SeoData } from '../../types'
 
 const chunkArray = (array: any[], chunkSize: number) => {
   const chunkedArray = []
@@ -24,37 +19,29 @@ const chunkArray = (array: any[], chunkSize: number) => {
   return chunkedArray
 }
 
-export type MagazineIndexPageData = {
+// Sanity MagazineIndexPage
+type MagazineRoomProps = {
   seoAndSome: SeoData
   title: PortableTextBlock[]
   hero: HeroData
   ingress: PortableTextBlock[]
-  query?: any
   magazineArticles: MagazineCardData[]
-  heroImage: ImageWithCaptionData
   footerComponent?: TeaserData
   magazineTags: { id: string; title: string; key: string }[]
-  background: Background
-}
-// Sanity MagazineIndexPage
-type MagazineRoomProps = {
-  pageData: MagazineIndexPageData
-  slug?: string
 }
 
-const MagazineRoom = ({ pageData }: MagazineRoomProps) => {
-  const {
-    ingress,
-    title,
-    hero,
-    magazineTags,
-    magazineArticles,
-    footerComponent,
-  } = pageData || {}
-
+const MagazineRoom = ({
+  ingress,
+  title,
+  hero,
+  magazineTags,
+  magazineArticles,
+  footerComponent,
+}: MagazineRoomProps) => {
   const resultsRef = useRef<HTMLDivElement>(null)
   const [isLoading, setIsLoading] = useState(false)
 
+  console.log('magazineArticles', magazineArticles)
   const pagedList = useMemo(
     () => chunkArray(magazineArticles ?? [], 12),
     [magazineArticles],
@@ -84,6 +71,7 @@ const MagazineRoom = ({ pageData }: MagazineRoomProps) => {
 
   return (
     <main className='flex flex-col'>
+      {/*@ts-ignore*/}
       <HeroBlock {...heroProps} />
       {ingress && (
         <Blocks

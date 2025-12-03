@@ -6,6 +6,7 @@ import { defaultLanguage, domain, metaTitleSuffix } from '@/languageConfig'
 import { isDateAfter } from '@/lib/helpers/dateUtilities'
 import getPageSlugs from '@/sanity/helpers/getPageSlugs'
 import { getPageData } from '@/sanity/lib/fetchData'
+import { sanityFetch } from '@/sanity/lib/live'
 import { resolveOpenGraphImage } from '@/sanity/lib/utils'
 import { getLocaleFromName, getNameFromLocale } from '@/sanity/localization'
 import { getQueryFromSlug } from '../../../../../sanity/helpers/queryFromSlug'
@@ -128,16 +129,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function Page({ params }: Props) {
-  const s = (await params).slug
-  const locale = (await params).locale
+  const { slug: s, locale } = await params
   const { query, queryParams } = await getQueryFromSlug(s as string[], locale)
 
-  console.log("Fetching data for Topic Content Page")
-
-  const { pageData } = await getPageData({
+  const { data: pageData } = await sanityFetch({
     query,
-    queryParams,
+    params: queryParams,
   })
+
   if (!pageData) notFound()
 
   const slug = pageData?.slug
@@ -155,7 +154,7 @@ export default async function Page({ params }: Props) {
       case 'localNews':
         return <NewsPage data={pageData} />
       case 'magazine':
-        return <MagazinePage data={pageData} />
+        return <MagazinePage {...pageData} />
       default:
         return <TopicPage data={pageData} />
     }

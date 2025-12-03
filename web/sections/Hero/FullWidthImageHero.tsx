@@ -8,7 +8,7 @@ import type { DesignOptions } from '@/types'
 import MagazineTagBar from '../MagazineTags/MagazineTagBar'
 import type { HeroData } from './HeroBlock'
 
-type FullWidthImageHeroVariant = 'default' | 'tall' | 'narrow'
+export type FullWidthImageHeroVariant = 'default' | 'tall' | 'narrow'
 
 type FullWidthImageHeroProps = {
   variant?: FullWidthImageHeroVariant
