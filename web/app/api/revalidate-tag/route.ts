@@ -2,7 +2,7 @@ import { revalidateTag } from 'next/cache'
 import { type NextRequest, NextResponse } from 'next/server'
 import { groq } from 'next-sanity'
 import { parseBody } from 'next-sanity/webhook'
-import { sanityClientWithEquinorCDN } from '@/sanity/lib/equinorCdnClient'
+import { client } from '@/sanity/lib/client'
 
 type WebhookPayload = {
   id: string
@@ -48,17 +48,17 @@ export async function POST(req: NextRequest) {
     ]
     //@ts-ignore
     if (docsWithoutSlugCurrent.includes(docType)) {
-      const { data } = await sanityClientWithEquinorCDN.fetch(
-        groq`*[_id==$id][0]{"slugs": *[_type match "route_*" && references(^._id)]}`,
+      const routes = await client.fetch(
+        groq`*[_type match "route_*" && content._ref == $id]{"slug": slug.current}`,
         {
           id: docId,
         },
       )
 
-      data.slugs.forEach((slug: any) => {
-        console.log(`fetched route on id ${docId}, slug`, slug)
-        const tag = `sanity:${docType}:${slug}`
+      routes.forEach((route: any) => {
+        const tag = `sanity:${docType}:${route.slug}`
         revalidateTag(tag, 'max')
+        console.log(`revalidated tag: ${tag}`)
       })
     } else {
       body.tags.forEach(_tag => {
