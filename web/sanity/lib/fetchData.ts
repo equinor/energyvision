@@ -17,7 +17,7 @@ export const getPageData = async (page: {
     const { data } = await sanityFetch({
       query: page.query,
       params: { ...page.queryParams },
-      requestTag: "getPageData"+"."+dataset
+      requestTag: 'getPageData' + '.' + dataset,
     })
 
     return { pageData: data }
@@ -115,9 +115,9 @@ export const getData = async (fetchQuery: {
     }
   } catch (error) {
     console.log('Error when fetching from Sanity', error)
-    return {
-      isError: true,
-      data: [],
-    }
+  }
+  return {
+    isError: true,
+    data: [],
   }
 }

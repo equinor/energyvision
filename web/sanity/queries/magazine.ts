@@ -114,7 +114,6 @@ export const getMagazineArticlesByTag = (
 ${functions}
 {
  "tagsParam": *[_type == 'magazineTag'
-                && !(_id in path('drafts.**'))
                 && key.current == $tag]
                 { _id, "key": key.current },
 }{

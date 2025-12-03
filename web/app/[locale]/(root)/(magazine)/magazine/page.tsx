@@ -1,19 +1,17 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-//TODO types
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { type ContentSourceMap, toPlainText } from 'next-sanity'
+import { type QueryParams, toPlainText } from 'next-sanity'
 import { metaTitleSuffix } from '@/languageConfig'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
+import { sanityFetch } from '@/sanity/lib/live'
 import { resolveOpenGraphImage } from '@/sanity/lib/utils'
+import { getNameFromLocale } from '@/sanity/localization'
 import {
   allMagazineDocuments,
   getMagazineArticlesByTag,
   magazineIndexQuery,
 } from '@/sanity/queries/magazine'
 import MagazineRoom from '@/templates/magazine/Magazineroom'
-import { getData, getPageData } from '../../../../../sanity/lib/fetchData'
-import { getNameFromLocale } from '../../../../../sanity/localization'
 
 /* export function generateStaticParams() {
   return Flags.HAS_MAGAZINE ? [{ locale: 'en' }] : []
@@ -30,17 +28,14 @@ export async function generateMetadata({
   const queryParams = {
     lang,
   }
-  const { pageData } = await getPageData({
+  const { data: pageData } = await sanityFetch({
     query: magazineIndexQuery,
-    queryParams,
+    params: queryParams,
   })
-  console.log('pageData', pageData)
   const index = Array.isArray(pageData) ? pageData[0] : pageData
   const documentTitle = index?.seoAndSome?.documentTitle
   const metaDescription = index?.seoAndSome?.metaDescription
   const title = toPlainText(index?.title)
-  console.log('metadata documentTitle', documentTitle)
-  console.log('metadata title', title)
   const heroImage = index?.hero?.figure?.image
   const ogImage = resolveOpenGraphImage(
     index?.seoAndSome?.openGraphImage ?? heroImage,
@@ -76,7 +71,7 @@ export default async function MagazinePage({
   searchParams?: Promise<{ tag?: string }>
 }) {
   const { locale } = await params
-  console.log('MagazinePage locale', locale)
+  const tag = (await searchParams)?.tag
 
   if (!Flags.HAS_MAGAZINE_INDEX) {
     notFound()
@@ -89,42 +84,30 @@ export default async function MagazinePage({
   const queryParams = {
     lang,
   }
-  console.log('[MagazinePage][en] Locale:', locale, 'Lang param:', lang)
-  // Fetch index (hero, tags, footer)
 
-  const { pageData: indexPageData } = await getPageData({
-    query: magazineIndexQuery,
-    queryParams,
-  })
-  const index = Array.isArray(indexPageData) ? indexPageData[0] : indexPageData
+  const articlesQuery =
+    tag && tag !== 'all'
+      ? getMagazineArticlesByTag(false, false)
+      : allMagazineDocuments
+  const articlesParams =
+    tag && tag !== 'all' ? { ...queryParams, tag } : queryParams
 
-  // Fetch list of articles (by tag or all)
-  const tag = (await searchParams)?.tag
-  let magazineArticles:
-    | {
-        data: any
-        sourceMap: ContentSourceMap | null
-        tags: string[]
-      }
-    | never[]
-  if (tag && tag !== 'all') {
-    const { data } = await getData({
-      query: getMagazineArticlesByTag(false, false),
-      queryParams: { ...(queryParams as any), tag } as any,
-    })
-    magazineArticles = data
-  } else {
-    const { data } = await getData({
-      query: allMagazineDocuments,
-      queryParams: queryParams as any,
-    })
-    magazineArticles = data
-  }
+  const [{ data: magazineroomData }, { data: articles }] = await Promise.all([
+    sanityFetch({ query: magazineIndexQuery, params: queryParams }),
+    sanityFetch({
+      query: articlesQuery,
+      params: articlesParams as QueryParams,
+    }),
+  ])
+
+  const magazineroom = Array.isArray(magazineroomData)
+    ? magazineroomData[0]
+    : magazineroomData
 
   const pageData = {
-    ...(index as any),
-    magazineArticles: magazineArticles?.data ?? [],
-  } as any
+    ...magazineroom,
+    magazineArticles: articles?.data ? articles.data : [],
+  }
 
   return <MagazineRoom pageData={pageData} />
 }
