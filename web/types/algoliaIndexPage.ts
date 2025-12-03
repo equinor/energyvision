@@ -17,7 +17,7 @@ export type AlgoliaIndexPageType = {
     menuData?: MenuData
     footerData?: { footerColumns: FooterColumns[] }
     intl: IntlData
-    pageData: MagazineIndexPageType | NewsRoomPageType
+    pageData: NewsRoomPageType
     slug?: string
     response: SearchResponse<any>
   }
