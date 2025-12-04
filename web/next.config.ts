@@ -100,9 +100,32 @@ const nextConfig: NextConfig = {
       },
     ].filter(e => e)
   },
-  /*   async redirects() {
-    return await getAllRedirects()
-  }, */
+  async redirects() {
+    return [
+      {
+        source: '/sitemap.xml',
+        has: [
+          {
+            type: 'host',
+            value: 'equinor.com'
+          }
+        ],
+        destination: 'https://www.equinor.com/sitemap.xml',
+        permanent: true,
+      },  
+      {
+        source: '/robots.txt',
+        has: [
+          {
+            type: 'host',
+            value: 'equinor.com'
+          }
+        ],
+        destination: 'https://www.equinor.com/robots.txt',
+        permanent: true,
+      } 
+    ]
+  },
   env: {
     SC_DISABLE_SPEEDY: 'false',
   },
