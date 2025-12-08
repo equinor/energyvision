@@ -9,9 +9,13 @@ export const FriendlyCaptchaSdkWrapper = ({
   children: ReactNode
 }) => {
   const sdk = useRef<FriendlyCaptchaSDK>(undefined)
+
   useEffect(() => {
-    sdk.current = new FriendlyCaptchaSDK()
+    if (!sdk?.current) {
+      sdk.current = new FriendlyCaptchaSDK()
+    }
   }, [])
+
   return (
     <FriendlyCaptchaContext.Provider value={sdk.current}>
       {children}

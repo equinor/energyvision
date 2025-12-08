@@ -1,12 +1,12 @@
-'use client'
-
-import { useTranslations } from 'next-intl'
+import { getLocale, getTranslations } from 'next-intl/server'
 import { twMerge } from 'tailwind-merge'
 import { LinkButton } from '@/core/Button'
 import FooterLink from '@/core/Link/FooterLink'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
+import { sanityFetch } from '@/sanity/lib/fetch'
+import { footerQuery } from '@/sanity/queries/footer'
 import { Facebook, Instagram, Linkedin, Twitter, Youtube } from '../../icons'
-import { getLocaleFromName } from '../../sanity/localization'
+import { getLocaleFromName, getNameFromLocale } from '../../sanity/localization'
 import type { FooterColumns, FooterLinkData, SomeType } from '../../types/index'
 
 function getSomeSvg(someType: SomeType) {
@@ -30,16 +30,21 @@ type FooterProps = {
   className?: string
 }
 
-const Footer = ({ footerData, className = '', ...rest }: FooterProps) => {
-  const t = useTranslations()
+const Footer = async (_props: FooterProps) => {
+  const locale = await getLocale()
+  const t = await getTranslations()
+  const { data: footerData } = await sanityFetch({
+    query: footerQuery,
+    params: {
+      lang: getNameFromLocale(locale) ?? 'en_GB',
+    },
+  })
 
   return (
     <footer
       className={twMerge(
         `dark min-h-12 bg-slate-blue-95 px-0 py-4 *:text-white-100`,
-        className,
       )}
-      {...rest}
     >
       <div className='mx-auto my-0 flex max-w-screen-2xl flex-row flex-wrap justify-between px-layout-sm pb-2 max-md:flex-col'>
         {footerData?.footerColumns?.map(({ header, linkList }) => (
@@ -74,12 +79,7 @@ const Footer = ({ footerData, className = '', ...rest }: FooterProps) => {
           </section>
         ))}
         <section className='flex flex-col max-md:w-4/5 max-md:py-4'>
-          <LinkButton
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className={`group px-0 py-2 text-sm underline underline-offset-8 hover:text-moss-green-90 hover:underline`}
-          >
-            {t('footer_to_top_button')}
-          </LinkButton>
+          <LinkButton variant='toTop'>{t('footer_to_top_button')}</LinkButton>
         </section>
       </div>
       <div className='flex justify-start pt-12 pb-3 pl-4 md:justify-center'>

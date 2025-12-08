@@ -1,10 +1,16 @@
 'use client'
+import type {
+  FriendlyCaptchaSDK,
+  StartMode,
+  WidgetHandle,
+} from '@friendlycaptcha/sdk'
+import { useLocale } from 'next-intl'
 import { createContext, useContext, useEffect, useRef } from 'react'
 import { friendlyCaptcha } from '../../lib/config'
-import { FriendlyCaptchaSDK, StartMode, WidgetHandle } from '@friendlycaptcha/sdk'
-import { useLocale } from 'next-intl'
 
-export const FriendlyCaptchaContext = createContext<FriendlyCaptchaSDK | undefined>(undefined)
+export const FriendlyCaptchaContext = createContext<
+  FriendlyCaptchaSDK | undefined
+>(undefined)
 
 const FriendlyCaptcha = ({
   doneCallback,
@@ -26,27 +32,32 @@ const FriendlyCaptcha = ({
         element: container.current,
         sitekey: friendlyCaptcha.siteKey,
         startMode: startMode,
-        language: locale == 'no' ? 'nb' : locale,
+        language: locale === 'no' ? 'nb' : locale,
         apiEndpoint: 'https://eu.frcapi.com/api/v2/captcha',
       })
 
       widget.current.addEventListener('frc:widget.complete', doneCallback)
 
-      widget.current.addEventListener('frc:widget.error', (event) => {
+      widget.current.addEventListener('frc:widget.error', event => {
         const detail = event.detail
         errorCallback(detail.error.detail)
-        console.error('Something went wrong in solving the captcha: ', detail.error)
+        console.error(
+          'Something went wrong in solving the captcha: ',
+          detail.error,
+        )
       })
 
-      widget.current.addEventListener('frc:widget.expire', (event) => {
-        console.warn('The captcha solution is no longer valid, the user waited too long.')
+      widget.current.addEventListener('frc:widget.expire', event => {
+        console.warn(
+          'The captcha solution is no longer valid, the user waited too long.',
+        )
         errorCallback(event.detail.response)
       })
     }
     ;() => {
       widget.current?.destroy()
     }
-  }, [container, doneCallback, errorCallback, locale, sdk, startMode])
+  }, [doneCallback, errorCallback, locale, sdk, startMode])
 
   return <div ref={container} />
 }

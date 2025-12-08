@@ -2,12 +2,14 @@ import type { Metadata } from 'next'
 import dynamic from 'next/dynamic'
 import { notFound } from 'next/navigation'
 import { toPlainText } from 'next-sanity'
+import { Suspense } from 'react'
+import { TimeSince } from '@/app/TimeSince'
 import { defaultLanguage, domain, metaTitleSuffix } from '@/languageConfig'
 import { isDateAfter } from '@/lib/helpers/dateUtilities'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import getPageSlugs from '@/sanity/helpers/getPageSlugs'
+import { sanityFetch } from '@/sanity/lib/fetch'
 import { getPageData } from '@/sanity/lib/fetchData'
-import { sanityFetch } from '@/sanity/lib/live'
 import { resolveOpenGraphImage } from '@/sanity/lib/utils'
 import { getLocaleFromName, getNameFromLocale } from '@/sanity/localization'
 import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu'
@@ -143,16 +145,17 @@ export default async function Page({ params }: Props) {
     await getQueryFromSlug(slug as string[], locale)
   console.log('pageslug', slug)
 
-  const [{ data: headerData }, { data: pageData }] = await Promise.all([
-    sanityFetch({
-      query: menuQuery,
-      params: { ...queryParams },
-    }),
-    sanityFetch({
-      query: pageQuery,
-      params: { ...pageQueryParams, tags: `page:[slug]` },
-    }),
-  ])
+  const [{ data: headerData }, { data: pageData, fetchedAt }] =
+    await Promise.all([
+      sanityFetch({
+        query: menuQuery,
+        params: { ...queryParams },
+      }),
+      sanityFetch({
+        query: pageQuery,
+        params: { ...pageQueryParams },
+      }),
+    ])
 
   if (!pageData) notFound()
 
@@ -180,11 +183,13 @@ export default async function Page({ params }: Props) {
 
   return (
     <>
-      <Header
-        slugs={slugs}
-        menuData={headerData}
-        stickyMenuData={pageData?.stickyMenu}
-      />
+      <Suspense>
+        <Header
+          slugs={slugs}
+          menuData={headerData}
+          stickyMenuData={pageData?.stickyMenu}
+        />
+      </Suspense>
       {getTemplate()}
     </>
   )

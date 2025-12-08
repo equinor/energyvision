@@ -5,15 +5,12 @@ import { notFound } from 'next/navigation'
 import Script from 'next/script'
 import { hasLocale, NextIntlClientProvider } from 'next-intl'
 // eslint-disable-next-line import/no-unresolved
-import { VisualEditing } from 'next-sanity/visual-editing'
+import { type ReactNode, Suspense } from 'react'
 import { Toaster } from 'sonner'
-import { getFooterData } from '@/sanity/lib/fetchData'
 import { SanityLive } from '@/sanity/lib/live'
-import { getNameFromLocale } from '@/sanity/localization'
 import DraftModeToast from '@/sections/DraftMode/DraftModeToast'
 import Footer from '@/sections/Footer/Footer'
 import { routing } from '../../i18n/routing'
-import { handleError } from '../client-utils'
 import { FriendlyCaptchaSdkWrapper } from './FriendlyCaptchaWrapper'
 import { GoogleTagManagerHead } from './GTMHead'
 import { SiteImprove } from './SiteImprove'
@@ -30,44 +27,25 @@ const equinorVariableWoff2 = localFont({
 
 type Params = Promise<{ locale: string }>
 
-export default async function LocaleLayout({
-  children,
+async function CachedLocaleLayout({
   params,
+  children,
 }: {
-  children: React.ReactNode
   params: Params
+  children?: ReactNode
 }) {
-  // Ensure that the incoming `locale` is valid
+  'use cache'
   const { locale } = await params
-  const { isEnabled: isDraftMode } = await draftMode()
 
   if (!hasLocale(routing.locales, locale)) {
     notFound()
   }
-
-  const { footerData } = await getFooterData(getNameFromLocale(locale))
-
   return (
     <html
       lang={locale}
       className={`${equinorRegular.className} ${equinorVariableWoff.className} ${equinorVariableWoff2.className}`}
     >
-      <body>
-        <Toaster />
-        {isDraftMode && (
-          <>
-            <DraftModeToast />
-            <VisualEditing />
-          </>
-        )}
-        <SanityLive onError={handleError} />
-        <NextIntlClientProvider>
-          <FriendlyCaptchaSdkWrapper>
-            {children}
-            <Footer footerData={footerData} />
-          </FriendlyCaptchaSdkWrapper>
-        </NextIntlClientProvider>
-      </body>
+      {children}
       {/** TODO look into scripts */}
       <Script
         src='https://consent.cookiebot.com/uc.js'
@@ -80,5 +58,41 @@ export default async function LocaleLayout({
       <GoogleTagManagerHead />
       <SiteImprove />
     </html>
+  )
+}
+
+export default async function LocaleLayout({
+  children,
+  params,
+}: {
+  children: React.ReactNode
+  params: Params
+}) {
+  const { isEnabled: isDraftMode } = await draftMode()
+
+  return (
+    <Suspense>
+      <CachedLocaleLayout params={params}>
+        <body>
+          <Toaster />
+          {isDraftMode && (
+            <>
+              <DraftModeToast />
+              {/*             <VisualEditing /> */}
+            </>
+          )}
+          {/*         <SanityLive onError={handleError} /> */}
+          <NextIntlClientProvider>
+            <FriendlyCaptchaSdkWrapper>
+              {children}
+              <Suspense>
+                <Footer />
+                <SanityLive />
+              </Suspense>
+            </FriendlyCaptchaSdkWrapper>
+          </NextIntlClientProvider>
+        </body>
+      </CachedLocaleLayout>
+    </Suspense>
   )
 }

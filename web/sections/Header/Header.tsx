@@ -5,7 +5,7 @@ import { default as NextLink } from 'next/link'
 import { useLocale, useTranslations } from 'next-intl'
 import { ButtonLink } from '@/core/Link'
 import { LogoLink } from '@/core/Link/LogoLink'
-import Topbar from '@/core/Topbar/Topbar'
+import { TopbarWrapper } from '@/core/TopbarWrapper/TopbarWrapper'
 import { defaultLanguage, languages } from '@/languageConfig'
 import { getAllSitesLink } from '@/lib/helpers/getAllSitesLink'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
@@ -103,7 +103,7 @@ const Header = ({ slugs, menuData, stickyMenuData }: HeaderProps) => {
   const t = useTranslations()
 
   return (
-    <Topbar stickyMenuData={stickyMenuData}>
+    <TopbarWrapper stickyMenuData={stickyMenuData}>
       <LogoLink />
       <div
         className={`grid ${
@@ -148,7 +148,7 @@ const Header = ({ slugs, menuData, stickyMenuData }: HeaderProps) => {
           </div>
         )}
       </div>
-    </Topbar>
+    </TopbarWrapper>
   )
 }
 
