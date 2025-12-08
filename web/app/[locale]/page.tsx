@@ -20,15 +20,13 @@ import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu'
 import { simpleMenuQuery } from '@/sanity/queries/simpleMenu'
 import Header from '@/sections/Header/Header'
 import HomePage from '@/templates/homepage/HomePage'
-import { TimeSince } from '../TimeSince'
 
-type Params = Promise<{ locale: string; slug: string }>
+type Props = {
+  params: Promise<{ slug: string; locale: string }>
+  searchParams: Promise<{ [key: string]: string[] | undefined }>
+}
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Params
-}): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const defaultLocale = defaultLanguage.locale
   const locale = (await params).locale ?? defaultLocale
   const fullSlug = `${domain}/${locale !== defaultLocale ? `${locale}/` : ''}`
@@ -77,8 +75,11 @@ export async function generateMetadata({
   }
 }
 
-export default async function Home({ params }: any) {
+export default async function Home({ params }: Props) {
   const { locale, slug } = await params
+
+  console.log('HOME page')
+
   if (!languages.map(it => it.locale).includes(locale)) notFound()
   const menuQuery = Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery
   const queryParams = {
@@ -101,6 +102,7 @@ export default async function Home({ params }: any) {
     ])
 
   console.log('Home fullData', fullData)
+  console.log('Home fetchedAt', fetchedAt)
   const { pageData } = fullData
 
   if (!pageData) notFound()
@@ -119,12 +121,6 @@ export default async function Home({ params }: any) {
         menuData={headerData}
         stickyMenuData={pageData?.stickyMenu}
       />
-      <TimeSince
-        label='page.tsx'
-        since={fetchedAt}
-        rendered={new Date().toJSON()}
-      />
-
       <HomePage data={pageData} />
     </Suspense>
   )

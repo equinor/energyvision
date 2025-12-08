@@ -35,11 +35,7 @@ async function CachedLocaleLayout({
   children?: ReactNode
 }) {
   'use cache'
-  const { locale } = await params
 
-  if (!hasLocale(routing.locales, locale)) {
-    notFound()
-  }
   return (
     <html
       lang={locale}
@@ -68,31 +64,48 @@ export default async function LocaleLayout({
   children: React.ReactNode
   params: Params
 }) {
+  const { locale } = await params
+
+  if (!hasLocale(routing.locales, locale)) {
+    notFound()
+  }
   const { isEnabled: isDraftMode } = await draftMode()
 
   return (
-    <Suspense>
-      <CachedLocaleLayout params={params}>
-        <body>
-          <Toaster />
-          {isDraftMode && (
-            <>
-              <DraftModeToast />
-              {/*             <VisualEditing /> */}
-            </>
-          )}
-          {/*         <SanityLive onError={handleError} /> */}
-          <NextIntlClientProvider>
-            <FriendlyCaptchaSdkWrapper>
-              {children}
-              <Suspense>
-                <Footer />
-                <SanityLive />
-              </Suspense>
-            </FriendlyCaptchaSdkWrapper>
-          </NextIntlClientProvider>
-        </body>
-      </CachedLocaleLayout>
-    </Suspense>
+    <html
+      lang={locale}
+      className={`${equinorRegular.className} ${equinorVariableWoff.className} ${equinorVariableWoff2.className}`}
+    >
+      <body>
+        <Toaster />
+        {isDraftMode && (
+          <>
+            <DraftModeToast />
+            {/*             <VisualEditing /> */}
+          </>
+        )}
+        {/*         <SanityLive onError={handleError} /> */}
+        <NextIntlClientProvider>
+          <FriendlyCaptchaSdkWrapper>
+            {children}
+            <Suspense>
+              <Footer />
+              <SanityLive />
+            </Suspense>
+          </FriendlyCaptchaSdkWrapper>
+        </NextIntlClientProvider>
+      </body>
+      {/** TODO look into scripts */}
+      <Script
+        src='https://consent.cookiebot.com/uc.js'
+        id='Cookiebot'
+        strategy='afterInteractive'
+        data-cbid='f1327b03-7951-45da-a2fd-9181babc783f'
+        data-blockingmode='auto'
+        data-culture={locale === 'no' ? 'nb' : locale}
+      />
+      <GoogleTagManagerHead />
+      <SiteImprove />
+    </html>
   )
 }

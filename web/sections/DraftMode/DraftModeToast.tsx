@@ -1,6 +1,9 @@
 'use client'
-import { useDraftModeEnvironment, useIsPresentationTool } from 'next-sanity/hooks'
 import { useRouter } from 'next/navigation'
+import {
+  useDraftModeEnvironment,
+  useIsPresentationTool,
+} from 'next-sanity/hooks'
 import { useEffect, useTransition } from 'react'
 import { toast } from 'sonner'
 import { disableDraftMode } from '@/app/actions'
@@ -17,7 +20,10 @@ export default function DraftModeToast() {
        * We delay the toast in case we're inside Presentation Tool
        */
       const toastId = toast('Draft Mode Enabled', {
-        description: env === 'live' ? 'Content is live, refreshing automatically' : 'Refresh manually to see changes',
+        description:
+          env === 'live'
+            ? 'Content is live, refreshing automatically'
+            : 'Refresh manually to see changes',
         duration: Infinity,
         action: {
           label: 'Disable',

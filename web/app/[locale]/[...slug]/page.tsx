@@ -3,7 +3,6 @@ import dynamic from 'next/dynamic'
 import { notFound } from 'next/navigation'
 import { toPlainText } from 'next-sanity'
 import { Suspense } from 'react'
-import { TimeSince } from '@/app/TimeSince'
 import { defaultLanguage, domain, metaTitleSuffix } from '@/languageConfig'
 import { isDateAfter } from '@/lib/helpers/dateUtilities'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
@@ -136,6 +135,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function Page({ params }: Props) {
   const { slug, locale } = await params
+  console.log('Catch all page locale', locale)
+
   const menuQuery = Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery
   const queryParams = {
     lang: getNameFromLocale(locale),
