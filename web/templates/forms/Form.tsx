@@ -44,7 +44,7 @@ const Form = ({ data, anchor, className }: { data: FormData; anchor?: string; cl
 
   return (
     <div className={twMerge(`pb-page-content px-layout-lg max-w-viewport mx-auto`, className)} id={anchor}>
-      {title && <Heading as="h2" className="px-0 pt-0 pr-6" value={title} />}
+      {title && <Heading as="h2" variant="h5" value={title} />}
       {ingress && <Blocks value={ingress} />}
 
       {renderForm(variant)}

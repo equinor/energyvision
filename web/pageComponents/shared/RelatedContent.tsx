@@ -22,6 +22,7 @@ const RelatedContent = ({ data, ...rest }: RelatedContentProps) => {
             return (
               <li key={item.id}>
                 <ResourceLink
+                  {...item}
                   href={url as string}
                   {...(item.link?.lang && { locale: getLocaleFromName(item.link?.lang) })}
                   type={item.type}

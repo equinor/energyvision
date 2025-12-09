@@ -1,5 +1,5 @@
 import { NextApiRequest } from 'next'
-import { validateCaptcha } from './validateCaptcha'
+import { validateCaptcha } from '../validate/validateCaptcha'
 
 export async function validateFormRequest(req: NextApiRequest, formName: string) {
   if (req.method !== 'POST') {
@@ -12,9 +12,12 @@ export async function validateFormRequest(req: NextApiRequest, formName: string)
   }
 
   try {
-    const { accept, errorCode } = await validateCaptcha(frcCaptchaSolution)
+    const allowErrors = formName === 'contact us form'
+    const { accept, errorCode, captchaDetail, captchaError } = await validateCaptcha(frcCaptchaSolution, allowErrors)
+
     if (!accept) {
       console.log(`Anti-robot check failed [code=${errorCode}] for ${formName}`)
+      console.error(`Captcha internal error: ${captchaError} - ${captchaDetail}`)
       return { status: 400, message: `Anti-robot check failed [code=${errorCode}], please try again.` }
     }
   } catch (err) {
