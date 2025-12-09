@@ -1,14 +1,14 @@
 import linkSelectorFields from './common/actions/linkSelectorFields'
 import markDefs from './common/blockEditorMarks'
-import { sameLang } from './common/langAndDrafts'
 import { functions } from './common/functions'
+import { sameLang } from './common/langAndDrafts'
 import { ingressForNewsQuery } from './common/newsSubqueries'
 import { publishDateTimeQuery } from './common/publishDateTime'
 import { seoAndSomeFields } from './common/seoAndSomeFields'
 import slugsForNewsAndMagazine from './slugsForNewsAndMagazine'
 
 export const newsroomDataForHeaderQuery = /* groq */ `
-  *[_type == "newsroom" && && ${sameLang}] {
+  *[_type == "newsroom" && ${sameLang}] {
     _id, //used for data filtering
     "title": content->title,
     "seoAndSome": content->${seoAndSomeFields},
@@ -64,7 +64,10 @@ ${slugsForNewsAndMagazine},
 ${ingressForNewsQuery},
 }`
 
-export const getNewsArticlesByPage = (hasFirstId = false, hasLastId = false) => /* groq */ `
+export const getNewsArticlesByPage = (
+  hasFirstId = false,
+  hasLastId = false,
+) => /* groq */ `
 *[_type == 'news' && ${sameLang}
   ${hasLastId ? nextDirectionFilter : ''}
   ${hasFirstId ? prevDirectionFilter : ''}

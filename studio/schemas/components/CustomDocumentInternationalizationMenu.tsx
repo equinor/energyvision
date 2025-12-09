@@ -1,12 +1,14 @@
 import {
   DocumentInternationalizationMenu,
-  DocumentInternationalizationMenuProps,
+  type DocumentInternationalizationMenuProps,
 } from '@sanity/document-internationalization'
 
 import { useEffect, useRef } from 'react'
-import { Role, useCurrentUser } from 'sanity'
+import { type Role, useCurrentUser } from 'sanity'
 
-export default function CustomDocumentInternationalizationMenu(props: DocumentInternationalizationMenuProps) {
+export default function CustomDocumentInternationalizationMenu(
+  props: DocumentInternationalizationMenuProps,
+) {
   const parentRef = useRef(null)
   // Get current user
   const currentUser = useCurrentUser()
@@ -18,13 +20,20 @@ export default function CustomDocumentInternationalizationMenu(props: DocumentIn
     if (parentRef.current) {
       const targetNode = document.querySelector('[data-portal]')
       // Create a MutationObserver instance
-      const observer = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
+      const observer = new MutationObserver(mutations => {
+        mutations.forEach(mutation => {
           if (mutation.type === 'childList') {
             const buttons = targetNode?.querySelectorAll('button')
-            if (buttons && buttons?.length > 1 && buttons[0].innerText == 'Manage Translations') {
+            if (
+              buttons &&
+              buttons?.length > 1 &&
+              buttons[0].innerText === 'Manage Translations'
+            ) {
               buttons[0].disabled = !enableManageTranslation || true
-              buttons[0].setAttribute('data-disabled', enableManageTranslation ? 'false' : 'true')
+              buttons[0].setAttribute(
+                'data-disabled',
+                enableManageTranslation ? 'false' : 'true',
+              )
             }
           }
         })
@@ -36,6 +45,6 @@ export default function CustomDocumentInternationalizationMenu(props: DocumentIn
           childList: true, // Watch for text/content changes
         })
     }
-  }, [])
+  }, [enableManageTranslation])
   return <div ref={parentRef}>{DocumentInternationalizationMenu(props)}</div>
 }
