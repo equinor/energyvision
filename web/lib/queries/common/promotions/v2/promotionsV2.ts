@@ -4,7 +4,6 @@ const commonPromotionFields = /* groq */ `
     "type": _type,
     "id": _key,
     title[]{...,${markDefs}},
-    ingress[]{...,${markDefs}},
     "designOptions": {
         "background": {
             "backgroundUtility": theme.theme.background.key
