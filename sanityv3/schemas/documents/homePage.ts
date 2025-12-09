@@ -1,12 +1,13 @@
+import { paste } from '@equinor/eds-icons'
 import blocksToText from '../../helpers/blocksToText'
+import { EdsIcon } from '../../icons'
+import { Flags } from '../../src/lib/datasetHelpers'
+import { RolesBasedArrayInput } from '../components/RoledBasedAccess/RoleBasedAccess'
+import { defaultBackgroundColors } from '../defaultColors'
 import { HeroTypes } from '../HeroTypes'
 import sharedHeroFields from './header/sharedHeaderFields'
-import { EdsIcon } from '../../icons'
-import { paste } from '@equinor/eds-icons'
 import { lang } from './langField'
-import { isCampaign, openGraphImage, seo, stickyMenu, content } from './topic/sharedTopicPageFields'
-import { Flags } from '../../src/lib/datasetHelpers'
-import { defaultBackgroundColors } from '../defaultColors'
+import { isCampaign, openGraphImage, seo, stickyMenu } from './topic/sharedTopicPageFields'
 
 export default {
   type: 'document',
@@ -53,7 +54,10 @@ export default {
         { type: 'cardsList' },
         { type: 'figure' },
         { type: 'fullWidthImage' },
-        { type: 'pullQuote', initialValue: { background: defaultBackgroundColors[0] } },
+        {
+          type: 'pullQuote',
+          initialValue: { background: defaultBackgroundColors[0] },
+        },
         { type: 'accordion' },
         { type: 'promoTileArray' },
         { type: 'iframe' },
@@ -77,10 +81,34 @@ export default {
         { type: 'cookieDeclaration' },
         { type: 'anchorLinkList' },
         { type: 'tabs' },
+        { type: 'tableV2' },
+        { type: 'importTable' },
         { type: 'homepageBanner' },
+        { type: 'promoteExternalLinkV2' },
+        { type: 'promoteTopicsV2' },
       ].filter((e) => e),
     },
   ].filter((e) => e),
+  components: {
+    input: RolesBasedArrayInput,
+  },
+  options: {
+    insertMenu: {
+      filter: true,
+      groups: [
+        {
+          name: 'promotions',
+          title: 'Promotions (v2)',
+          of: ['promoteExternalLinkV2', 'promoteTopicsV2'],
+        },
+        {
+          name: 'carousels',
+          title: 'Carousels',
+          of: ['imageCarousel', 'videoPlayerCarousel', 'iframeCarousel'],
+        },
+      ],
+    },
+  },
   orderings: [
     {
       title: 'Title ',
