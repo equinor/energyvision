@@ -42,7 +42,6 @@ export type ConfigRedirect = {
 const nextConfig: NextConfig = {
   output: 'standalone',
   transpilePackages: ['friendly-challenge', '@energyvision/shared'],
-  cacheComponents: true,
   logging: {
     fetches: {
       fullUrl: true, // shows logs only when using fetch

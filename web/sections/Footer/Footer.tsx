@@ -1,12 +1,10 @@
-import { getLocale, getTranslations } from 'next-intl/server'
+import { getTranslations } from 'next-intl/server'
 import { twMerge } from 'tailwind-merge'
 import { LinkButton } from '@/core/Button'
 import FooterLink from '@/core/Link/FooterLink'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
-import { sanityFetch } from '@/sanity/lib/fetch'
-import { footerQuery } from '@/sanity/queries/footer'
 import { Facebook, Instagram, Linkedin, Twitter, Youtube } from '../../icons'
-import { getLocaleFromName, getNameFromLocale } from '../../sanity/localization'
+import { getLocaleFromName } from '../../sanity/localization'
 import type { FooterColumns, FooterLinkData, SomeType } from '../../types/index'
 
 function getSomeSvg(someType: SomeType) {
@@ -26,19 +24,12 @@ function getSomeSvg(someType: SomeType) {
 }
 
 type FooterProps = {
-  footerData?: { footerColumns: FooterColumns[] }
+  footerColumns: FooterColumns[]
   className?: string
 }
 
-const Footer = async (_props: FooterProps) => {
-  const locale = await getLocale()
+const Footer = async ({footerColumns = []}: FooterProps) => {
   const t = await getTranslations()
-  const { data: footerData } = await sanityFetch({
-    query: footerQuery,
-    params: {
-      lang: getNameFromLocale(locale) ?? 'en_GB',
-    },
-  })
 
   return (
     <footer
@@ -47,7 +38,7 @@ const Footer = async (_props: FooterProps) => {
       )}
     >
       <div className='mx-auto my-0 flex max-w-screen-2xl flex-row flex-wrap justify-between px-layout-sm pb-2 max-md:flex-col'>
-        {footerData?.footerColumns?.map(({ header, linkList }) => (
+        {footerColumns?.map(({ header, linkList }) => (
           <section
             className='flex flex-col max-md:w-4/5 max-md:py-4'
             key={header}

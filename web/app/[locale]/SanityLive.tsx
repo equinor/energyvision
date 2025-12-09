@@ -4,7 +4,8 @@ import type { LiveEvent } from '@sanity/client'
 import { CorsOriginError } from '@sanity/client'
 import { startTransition, useEffect, useEffectEvent } from 'react'
 import { client } from '@/sanity/lib/client'
-import { liveRefresh, updateTags } from './actions'
+import { liveRefresh, updateTags } from '../actions'
+
 
 export function SanityLive() {
   const handleLiveEvent = useEffectEvent((event: LiveEvent) => {

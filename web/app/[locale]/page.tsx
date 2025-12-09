@@ -1,25 +1,21 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { toPlainText } from 'next-sanity'
-import { Suspense } from 'react'
 import {
   defaultLanguage,
   domain,
   languages,
   metaTitleSuffix,
 } from '@/languageConfig'
-import { Flags } from '@/sanity/helpers/datasetHelpers'
-import getPageSlugs from '@/sanity/helpers/getPageSlugs'
 import { getQueryFromSlug } from '@/sanity/helpers/queryFromSlug'
-import { sanityFetch } from '@/sanity/lib/fetch'
 import { getPageData } from '@/sanity/lib/fetchData'
 import { resolveOpenGraphImage } from '@/sanity/lib/utils'
-import { getNameFromLocale } from '@/sanity/localization'
-import { homePageQuery } from '@/sanity/queries/homePage'
-import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu'
-import { simpleMenuQuery } from '@/sanity/queries/simpleMenu'
 import Header from '@/sections/Header/Header'
 import HomePage from '@/templates/homepage/HomePage'
+import { constructSanityMetadata, getPage } from './(pages)/[...slug]/page'
+import Footer from '@/sections/Footer/Footer'
+import { sanityFetch } from '@/sanity/lib/sanityFetch'
+
 
 type Props = {
   params: Promise<{ slug: string; locale: string }>
@@ -27,52 +23,17 @@ type Props = {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const defaultLocale = defaultLanguage.locale
-  const locale = (await params).locale ?? defaultLocale
-  const fullSlug = `${domain}/${locale !== defaultLocale ? `${locale}/` : ''}`
-
+  const {slug, locale} = await params
   console.log('generateMetadata (default) page, locale', locale)
   const { query, queryParams } = await getQueryFromSlug(undefined, locale)
 
-  const { pageData: fullData } = await getPageData({
-    query,
-    queryParams,
+  const pageData = await sanityFetch({
+          query: query,
+          params: queryParams,
+          stega:false
   })
-  //@ts-ignore: todo
-  const { documentTitle, title, metaDescription, openGraphImage, heroImage } =
-    fullData.pageData
-  const plainTitle = Array.isArray(title) ? toPlainText(title) : title
-  console.log('openGraphImage', openGraphImage)
 
-  const ogImage = resolveOpenGraphImage(openGraphImage ?? heroImage?.image)
-  console.log('ogImage', ogImage)
-
-  const alternateLinks: Record<string, string> = {}
-  languages.forEach(({ locale }) => {
-    Object.assign(alternateLinks, {
-      [locale]: `${domain}${defaultLocale !== locale ? `/${locale}` : ''}`,
-    })
-  })
-  return {
-    title: `${documentTitle || plainTitle} - ${metaTitleSuffix}`,
-    description: metaDescription,
-    openGraph: {
-      title: plainTitle,
-      description: metaDescription,
-      url: fullSlug,
-      locale,
-      type: 'article',
-      siteName: 'Equinor',
-      images: ogImage,
-    },
-    alternates: {
-      languages: {
-        'en-GB': `${domain}/`,
-        ...alternateLinks,
-        'x-default': `${domain}/`,
-      },
-    },
-  }
+  return constructSanityMetadata(slug, locale, pageData)
 }
 
 export default async function Home({ params }: Props) {
@@ -81,47 +42,21 @@ export default async function Home({ params }: Props) {
   console.log('HOME page')
 
   if (!languages.map(it => it.locale).includes(locale)) notFound()
-  const menuQuery = Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery
-  const queryParams = {
-    lang: getNameFromLocale(locale),
-  }
-  console.log('Home slug', slug)
-  /*  const { query, queryParams } = await getQueryFromSlug(slug, locale) */
-  const date = new Date().toISOString().substring(0, 10)
 
-  const [{ data: headerData }, { data: fullData, fetchedAt }] =
-    await Promise.all([
-      sanityFetch({
-        query: menuQuery,
-        params: { ...queryParams },
-      }),
-      sanityFetch({
-        query: homePageQuery,
-        params: { ...queryParams, date },
-      }),
-    ])
+  const {headerData, pageData, footerData} = await getPage({slug, locale})
 
-  console.log('Home fullData', fullData)
-  console.log('Home fetchedAt', fetchedAt)
-  const { pageData } = fullData
 
   if (!pageData) notFound()
 
-  const pageSlug = pageData?.slug
-  const slugs = getPageSlugs(pageData)
-
   const template = pageData?.template || null
 
-  if (!template) console.warn('Missing template for', pageSlug)
+  if (!template) console.warn('Missing homepage template', pageData?.slug)
 
   return (
-    <Suspense>
-      <Header
-        slugs={slugs}
-        menuData={headerData}
-        stickyMenuData={pageData?.stickyMenu}
-      />
-      <HomePage data={pageData} />
-    </Suspense>
+     <>
+      <Header {...headerData}/>
+      <HomePage {...pageData} />
+      <Footer {...footerData} />
+      </>
   )
 }

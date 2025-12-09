@@ -8,8 +8,6 @@ import { Search } from '@/sections/Search/Search'
 import { NavTopbar } from '@/sections/SiteMenu/NavTopbar'
 import { TopbarDropdown } from '@/sections/SiteMenu/TopbarDropdown'
 
-export const dynamic = 'force-dynamic'
-
 /* export async function generateMetadata({
   params,
 }: {
@@ -40,8 +38,6 @@ export const dynamic = 'force-dynamic'
   }
 } */
 
-// Multiple versions of this page will be statically generated
-// using the `params` returned by `generateStaticParams`
 export default function Page() {
   const router = useRouter()
 

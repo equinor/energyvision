@@ -6,12 +6,9 @@ import {
 import type { TopicPageSchema } from '../../types/index'
 import { PageContent } from '../shared/SharedPageContent'
 
-type TopicPageProps = {
-  data: TopicPageSchema
-}
+type TopicPageProps = TopicPageSchema
 
-const TopicPage = ({ data }: TopicPageProps) => {
-  const { breadcrumbs, hero, title, slug, ...restData } = data
+const TopicPage = ({ breadcrumbs, hero, title, slug, ...restData }: TopicPageProps) => {
 
   const heroProps: HeroBlockProps = {
     //@ts-ignore
@@ -29,9 +26,9 @@ const TopicPage = ({ data }: TopicPageProps) => {
     <main className='flex flex-col pt-topbar peer-data-[sticky=true]:pt-0'>
       <HeroBlock {...heroProps} />
       <PageContent
-        data={data}
+        data={restData}
         heroBackground={
-          hero.type !== HeroTypes.DEFAULT
+          hero?.type !== HeroTypes.DEFAULT
             ? //@ts-ignore
               restData?.content?.[0]?.designOptions?.background
             : hero?.background

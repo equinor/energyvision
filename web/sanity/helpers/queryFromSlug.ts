@@ -38,7 +38,12 @@ const getQuery = async (
   secondPiece: string | undefined,
   lang: string,
 ) => {
-  if (firstPiece === '') return homePageQuery
+  console.log("firstPiece",firstPiece);
+  console.log("secondPiece",secondPiece);
+  if (typeof firstPiece === undefined ||  firstPiece === '') {
+      console.log("return homePageQuery");
+    return homePageQuery
+  }
   if (Flags.HAS_NEWS && newsSlug[lang] === firstPiece && secondPiece) {
     // is news
     const { data: localNewsTagsData } = await sanityFetch({
@@ -84,13 +89,15 @@ export const getQueryFromSlug = async (
   slugArray: string[] = [''],
   locale = '',
 ): Promise<{ query: string; queryParams: QueryParams }> => {
+
+  console.log("getQueryFromSlug slugArray", slugArray);
   const [firstPiece, secondPiece] = slugArray.filter(
     (part: string) => part !== locale,
   )
   const date = new Date().toISOString().substring(0, 10)
 
   const slug = `/${slugArray.join('/')}`
-  const lang = getNameFromLocale(locale)
+  const lang = getNameFromLocale(locale) ?? "en_GB"
 
   const query = await getQuery(firstPiece, secondPiece, lang)
   return {
