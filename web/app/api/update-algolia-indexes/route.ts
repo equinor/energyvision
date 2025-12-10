@@ -81,7 +81,7 @@ export async function POST(req: NextRequest) {
     if (result?.slug) {
       // slug exists for the topic or event
       const response = await updateAlgoliaIndex(body)
-      if (Number(response.status) === 204) {
+      if (Number(response.status) === 200) {
         return new Response(JSON.stringify({ message: 'Index updated' }), {
           status: 200,
         })
