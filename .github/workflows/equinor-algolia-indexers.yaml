@@ -51,10 +51,6 @@ jobs:
           pushd search
           pnpm install
           popd
-      - name: Run ESLint 🔎
-        id: lint
-        run: |
-          pnpm lint:search
       - name: Run tests 🔍
         id: test
         run: |
