@@ -39,11 +39,11 @@ jobs:
         id: install-pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: '8.5.1'
+          version: '10.24.0'
       - name: Cache pnpm modules 💾
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 24
           # cache: 'npm'
       - name: Install dependencies 🔧
         id: install-dependencies
@@ -82,7 +82,7 @@ jobs:
       - name: Cache pnpm modules 💾
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 24
           # cache: 'npm'
       - name: Install dependencies 🔧
         id: install-dependencies
