@@ -1,4 +1,3 @@
-
 {
   "disabled": false,
   "bindings": [
@@ -7,6 +6,11 @@
       "route": "indexSanityContent",
       "name": "req",
       "direction": "in"
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "res"
     }
   ],
   "scriptFile": "../dist/IndexSanityContent/index.js"

@@ -1,4 +1,4 @@
-import createClient from '@sanity/client'
+import { createClient } from '@sanity/client'
 import { flow } from 'fp-ts/lib/function'
 import * as E from 'fp-ts/lib/Either'
 import { getSanityApiToken, getSanityDataset, getSanityProjectId } from './env'
@@ -25,8 +25,9 @@ export const getSanityClient = flow(
       dataset,
       projectId,
       token,
-      useCdn: true,
-      apiVersion: '2021-12-17',
+      useCdn: false, // To get fresh content from sanity immediately after publish
+      apiVersion: '2025-12-08',
+      requestTagPrefix:"algolia-indexers"
     }),
   ),
 )

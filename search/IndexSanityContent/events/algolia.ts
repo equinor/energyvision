@@ -1,6 +1,6 @@
-import { Settings } from '@algolia/client-search'
+import { IndexSettings } from '@algolia/client-search'
 
-export const indexSettings: Settings = {
+export const indexSettings: IndexSettings = {
   searchableAttributes: ['title', 'ingress', 'eventDescription'], // date should not be searchable?
   attributesToSnippet: ['ingress', 'eventDescription'], // 10 words are default. eventDescription:30 for 30 words
   attributeForDistinct: 'slug',
