@@ -7,8 +7,6 @@ import createNextIntlPlugin from 'next-intl/plugin'
 //import { getAllRedirects } from './sanity/interface/redirects'
 import securityHeaders from './securityHeaders'
 
-/* import { getAllRedirects } from './sanity/interface/redirects' */
-
 const withNextIntl = createNextIntlPlugin()
 
 const isProd = process.env.NODE_ENV === 'production'
@@ -101,32 +99,9 @@ const nextConfig: NextConfig = {
       },
     ].filter(e => e)
   },
-  async redirects() {
-    return [
-      {
-        source: '/sitemap.xml',
-        has: [
-          {
-            type: 'host',
-            value: 'equinor.com'
-          }
-        ],
-        destination: 'https://www.equinor.com/sitemap.xml',
-        permanent: true,
-      },  
-      {
-        source: '/robots.txt',
-        has: [
-          {
-            type: 'host',
-            value: 'equinor.com'
-          }
-        ],
-        destination: 'https://www.equinor.com/robots.txt',
-        permanent: true,
-      } 
-    ]
-  },
+  // async redirects() {
+  //   return await getAllRedirects()
+  // },
   env: {
     SC_DISABLE_SPEEDY: 'false',
   },
