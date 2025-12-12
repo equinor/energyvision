@@ -161,7 +161,6 @@ export default (isoCode: string, title: string) => {
       prepare(selection: any) {
         const { slug, media, type } = selection
         const withoutParent = slug ? slug.split('/').at(-1) : ''
-        console.log('withoutParent', withoutParent)
 
         const thumbnail = media
           ? media

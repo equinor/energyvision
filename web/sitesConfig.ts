@@ -20,7 +20,7 @@ const languages = [
     title: 'English (UK)',
     iso: 'en-GB',
     name: 'en_GB',
-    locale: 'en-GB',
+    locale: 'en',
   },
   {
     id: 'norwegian',
@@ -70,6 +70,12 @@ export const newsSlug: Record<string, string> = {
 export const magazineSlug: Record<string, string> = {
   en_GB: 'magazine',
   nb_NO: 'magasin',
+}
+/**
+ *
+ */
+export const localNewsTags: Record<string, string[]> = {
+  en_GB: ['ev', 'uk', 'us'],
 }
 
 /*

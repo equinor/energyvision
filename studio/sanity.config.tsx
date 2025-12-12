@@ -66,7 +66,7 @@ const isPortableTextEditor = (schema: SchemaType) => {
 }
 
 // create the singleton docs before adding here...
-const singletonTemplates = [
+export const singletonTemplates = [
   'route_homepage',
   'newsroom',
   'pageNotFound',
@@ -155,7 +155,8 @@ const getConfig = (
   document: {
     unstable_languageFilter: (prev: DocumentActionComponent[], ctx: any) => {
       const { schemaType, documentId } = ctx
-      return schemaTypes.map(it => it.name).includes(schemaType) && documentId
+      return i18n.schemaTypes.map(it => it.name).includes(schemaType) &&
+        documentId
         ? [
             (props: any) => {
               return CustomDocumentInternationalizationMenu({

@@ -41,7 +41,7 @@ type NewsRoomTemplateProps = {
   initialSearchResponse: SearchResponse<any>
 }
 
-const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(
+const NewsRoomTemplate = forwardRef<HTMLDivElement, NewsRoomTemplateProps>(
   function NewsRoomTemplate({ locale, pageData, initialSearchResponse }, ref) {
     const {
       ingress,
@@ -177,7 +177,7 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(
 
     return (
       <PaginationContextProvider defaultRef={resultsRef}>
-        <main ref={ref} className={`pt-topbar`}>
+        <div ref={ref}>
           <InstantSearchNext
             searchClient={queriedSearchClient}
             future={{ preserveSharedStateOnUnmount: false }}
@@ -248,7 +248,7 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(
               </div>
             </div>
           </InstantSearchNext>
-        </main>
+        </div>
       </PaginationContextProvider>
     )
   },

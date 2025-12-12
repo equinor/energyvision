@@ -1,3 +1,4 @@
+import { inlineSlugsQuery, singletonsSlugsQuery } from '../metaData'
 import linkSelectorFields from './common/actions/linkSelectorFields'
 import markDefs from './common/blockEditorMarks'
 import { functions } from './common/functions'
@@ -5,7 +6,6 @@ import { sameLang } from './common/langAndDrafts'
 import { ingressForNewsQuery } from './common/newsSubqueries'
 import { publishDateTimeQuery } from './common/publishDateTime'
 import { seoAndSomeFields } from './common/seoAndSomeFields'
-import slugsForNewsAndMagazine from './slugsForNewsAndMagazine'
 
 export const newsroomDataForHeaderQuery = /* groq */ `
   *[_type == "newsroom" && ${sameLang}] {
@@ -25,6 +25,7 @@ export const newsroomQuery = /* groq */ `
       ...,
       ${markDefs},
     },
+    "slugs": {${singletonsSlugsQuery}},
     subscriptionHeading,
     "subscriptionLink": links::getLinkFields(subscriptionLink),
     subscriptionLinkTitle,
@@ -60,7 +61,7 @@ heroImage,
   "label":title[$lang],
 },
 "publishDateTime": ${publishDateTimeQuery},
-${slugsForNewsAndMagazine},
+"slugs":{${inlineSlugsQuery}},
 ${ingressForNewsQuery},
 }`
 
@@ -86,7 +87,7 @@ heroImage,
   "label":title[$lang],
 },
 "publishDateTime": ${publishDateTimeQuery},
-${slugsForNewsAndMagazine},
+"slugs":{${inlineSlugsQuery}},
 ${ingressForNewsQuery},
   }
 `

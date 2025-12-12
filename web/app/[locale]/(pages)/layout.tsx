@@ -1,17 +1,12 @@
-
 import { notFound } from 'next/navigation'
-import { hasLocale, NextIntlClientProvider } from 'next-intl'
-import Footer from '@/sections/Footer/Footer'
-import { footerQuery } from '@/sanity/queries/footer'
-import { getNameFromLocale } from '@/sanity/localization'
-import { sanityFetch } from '@/sanity/lib/sanityFetch'
-import { FriendlyCaptchaSdkWrapper } from '../FriendlyCaptchaWrapper'
+import { hasLocale } from 'next-intl'
+import { InfoProvider } from '@/contexts/infoContext'
 import { routing } from '@/i18n/routing'
-
+import { FriendlyCaptchaSdkWrapper } from '../FriendlyCaptchaWrapper'
 
 type Params = Promise<{ locale: string }>
 
-export default async function LocaleLayout({
+export default async function PagesLayout({
   children,
   params,
 }: {
@@ -24,12 +19,9 @@ export default async function LocaleLayout({
     notFound()
   }
 
-
-
   return (
-  <FriendlyCaptchaSdkWrapper>
-    {children}
-    {/*<SanityLive /> */}
-    </FriendlyCaptchaSdkWrapper>
+    <InfoProvider>
+      <FriendlyCaptchaSdkWrapper>{children}</FriendlyCaptchaSdkWrapper>
+    </InfoProvider>
   )
 }

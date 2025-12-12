@@ -22,6 +22,8 @@ const equinorVariableWoff2 = localFont({
 
 type Params = Promise<{ locale: string }>
 
+//the [locale] segment corresponds to the locale (iso format), not the prefix(/no).
+
 export default async function LocaleLayout({
   children,
   params,
@@ -36,7 +38,6 @@ export default async function LocaleLayout({
   }
   const { isEnabled: isDraftMode } = await draftMode()
 
-
   return (
     <html
       lang={locale}
@@ -44,13 +45,9 @@ export default async function LocaleLayout({
     >
       <body>
         <Toaster />
-        {isDraftMode && (
-            <DraftModeToast />
-        )}
+        {isDraftMode && <DraftModeToast />}
         {/* <SanityLive onError={handleError} /> */}
-        <NextIntlClientProvider>
-            {children}
-        </NextIntlClientProvider>
+        <NextIntlClientProvider>{children}</NextIntlClientProvider>
       </body>
       {/** TODO look into scripts */}
       <Script
@@ -59,7 +56,7 @@ export default async function LocaleLayout({
         strategy='afterInteractive'
         data-cbid='f1327b03-7951-45da-a2fd-9181babc783f'
         data-blockingmode='auto'
-        data-culture={locale === 'no' ? 'nb' : locale}
+        data-culture={locale === 'nb_NO' ? 'nb' : locale}
       />
       <GoogleTagManagerHead />
       <SiteImprove />

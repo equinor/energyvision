@@ -90,7 +90,6 @@ export const HomePageBanner = forwardRef<HTMLDivElement, HomePageBannerProps>(
       theme?.value ?? 0,
     )
     const useImage = String(backgroundType) === String(0)
-    console.log('image', image)
 
     const isMobile = useMediaQuery(`(max-width: 1024px)`)
     let gradient = rightAlignTitle

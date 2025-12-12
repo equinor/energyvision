@@ -1,3 +1,4 @@
+import { inlineSlugsQuery } from '../metaData'
 import downloadableFileFields from './common/actions/downloadableFileFields'
 import downloadableImageFields from './common/actions/downloadableImageFields'
 import linkSelectorFields from './common/actions/linkSelectorFields'
@@ -5,13 +6,10 @@ import background from './common/background'
 import markDefs from './common/blockEditorMarks'
 import { functions, pageContentFunctions } from './common/functions'
 import { heroFields } from './common/heroFields'
-import { fixPreviewForDrafts, sameLang } from './common/langAndDrafts'
+import { sameLang } from './common/langAndDrafts'
 import pageContentFields from './common/pageContentFields'
 import { publishDateTimeQuery } from './common/publishDateTime'
 import { seoAndSomeFields } from './common/seoAndSomeFields'
-import slugsForNewsAndMagazine, {
-  querySuffixForNewsAndMagazine,
-} from './slugsForNewsAndMagazine'
 
 const footerComponentFields = /* groq */ `
   title,
@@ -43,19 +41,19 @@ const promotedmagazineTags = /* groq */ `... *[_type == "magazineIndex" && ${sam
 export const magazineQuery = /* groq */ `
   ${functions}
   ${pageContentFunctions}
-*[_type == "magazine" && slug.current == $slug && ${fixPreviewForDrafts}] {
+*[_type == "magazine" && slug.current == $slug] {
     _id, //used for data filtering
     "slug": slug.current,
     "title": title,
     "seoAndSome": ${seoAndSomeFields},
     "hero": ${heroFields},
+    "slugs": {${inlineSlugsQuery}},
     "template": _type,
     ${promotedmagazineTags},
     "tags": magazineTags[]->title[$lang],
     "content": content[] {
           ${pageContentFields}
       },
-      ${slugsForNewsAndMagazine},
     "firstPublishedAt": coalesce(firstPublishedAt, _createdAt),
     "footerComponent": *[_type == 'magazineIndex' && ${sameLang}][0]{
       "data": footerComponent{
@@ -63,7 +61,7 @@ export const magazineQuery = /* groq */ `
       }
     },
     hideFooterComponent,
-}[0]${querySuffixForNewsAndMagazine}`
+}[0]`
 
 export const magazineIndexQuery = /* groq */ `
  ${functions}

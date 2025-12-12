@@ -3,21 +3,24 @@ import type { Metadata } from 'next'
 import { unstable_cache } from 'next/cache'
 import { notFound } from 'next/navigation'
 import { setRequestLocale } from 'next-intl/server'
-import { toPlainText } from 'next-sanity'
-import { metaTitleSuffix } from '@/languageConfig'
 import { algolia } from '@/lib/config'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
-import { sanityFetch } from '@/sanity/lib/live'
-import { resolveOpenGraphImage } from '@/sanity/lib/utils'
-import { getIsoFromLocale, getNameFromLocale } from '@/sanity/localization'
+import { sanityFetch } from '@/sanity/lib/sanityFetch'
+import {
+  getLocaleFromName,
+  getNameFromIso,
+  getNameFromLocale,
+} from '@/sanity/localization'
+import { newsroomMetaQuery } from '@/sanity/metaData'
 import { menuQuery } from '@/sanity/queries/menu'
 import { newsroomQuery } from '@/sanity/queries/newsroom'
+import Footer from '@/sections/Footer/Footer'
 import Header from '@/sections/Header/Header'
 import NewsRoomTemplate from '@/templates/newsroom/Newsroom'
-import { newsroomSlugs } from '../news/page'
+import { constructSanityMetadata, getPage } from '../[...slug]/page'
 
 export function generateStaticParams() {
-  return Flags.HAS_NEWSROOM ? [{ locale: 'no' }] : []
+  return Flags.HAS_NEWSROOM ? [{ locale: 'nb-NO' }] : []
 }
 
 const getInitialResponse = unstable_cache(
@@ -50,50 +53,29 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>
 }): Promise<Metadata> {
   const { locale } = await params
-  const lang = getNameFromLocale(locale)
 
-  const queryParams = {
-    lang,
-  }
-  const { data: pageData } = await sanityFetch({
-    query: newsroomQuery,
-    params: queryParams,
+  const metaData = await sanityFetch({
+    query: newsroomMetaQuery,
+    params: {
+      lang: getNameFromIso(locale),
+    },
+    stega: false,
   })
-
-  const { documentTitle, title, metaDescription, openGraphImage, heroImage } =
-    pageData
-  const plainTitle = Array.isArray(title) ? toPlainText(title) : title
-
-  const ogImage = resolveOpenGraphImage(openGraphImage ?? heroImage?.image)
-
-  return {
-    title: `${documentTitle || plainTitle} - ${metaTitleSuffix}`,
-    description: metaDescription,
-    openGraph: {
-      title: plainTitle,
-      description: metaDescription,
-      url: 'https://www.equinor.com/no/nyheter',
-      locale,
-      type: 'website',
-      siteName: 'Equinor',
-      images: ogImage,
-    },
-    alternates: {
-      canonical: 'https://www.equinor.com/no/nyheter',
-      languages: {
-        en: 'https://www.equinor.com/news',
-        'x-default': 'https://www.equinor.com/news',
-      },
-    },
-  }
+  const localizedCurrentSlug =
+    `/${getLocaleFromName(metaData?.slugs?.currentSlug?.lang)}` +
+    metaData?.slugs?.currentSlug?.slug
+  console.log(
+    'NO Newsroom Generate meta localizedCurrentSlug',
+    localizedCurrentSlug,
+  )
+  return constructSanityMetadata(localizedCurrentSlug, locale, metaData)
 }
-
 export default async function NewsroomPage({
   params,
 }: {
-  params: Promise<{ locale: string }>
+  params: Promise<{ slug: string; locale: string }>
 }) {
-  const { locale } = await params
+  const { slug, locale } = await params
 
   // For the time being, let's just give 404 for satellites
   // We will also return 404 if the locale is not Norwegian.
@@ -108,30 +90,19 @@ export default async function NewsroomPage({
   // Enable static rendering
   setRequestLocale(locale)
 
-  const lang = getNameFromLocale(locale)
-  const isoLocale = getIsoFromLocale(locale)
+  const { headerData, pageData, footerData } = await getPage({ slug, locale })
 
-  const queryParams = {
-    lang,
-  }
-  const [{ data: headerData }, { data: newsroomData }] = await Promise.all([
-    sanityFetch({
-      query: menuQuery,
-      params: { ...queryParams, slug: '/news' },
-    }),
-    sanityFetch({ query: newsroomQuery, params: queryParams }),
-  ])
-
-  const response = await getInitialResponse(isoLocale)
+  const response = await getInitialResponse(locale)
 
   return (
     <>
-      <Header slugs={newsroomSlugs} menuData={headerData} />
+      <Header {...headerData} />
       <NewsRoomTemplate
         locale={locale}
-        pageData={newsroomData}
+        pageData={pageData}
         initialSearchResponse={response}
       />
+      <Footer {...footerData} />
     </>
   )
 }

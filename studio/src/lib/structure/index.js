@@ -71,7 +71,7 @@ const LOCAL_NEWS_EDITOR_ITEMS = (S, context) =>
 
 const getItems = (S, context) => {
   const { roles } = useCurrentUser()
-  console.log('roles', roles)
+
   const isAdmin = roles.some(
     role =>
       role?.name.startsWith('editor') ||

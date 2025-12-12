@@ -4,18 +4,20 @@ import {
 } from '@sanity/document-internationalization'
 
 import { useEffect, useRef } from 'react'
-import { type Role, useCurrentUser } from 'sanity'
+import { useCurrentUser } from 'sanity'
 
 export default function CustomDocumentInternationalizationMenu(
   props: DocumentInternationalizationMenuProps,
 ) {
   const parentRef = useRef(null)
-  // Get current user
-  const currentUser = useCurrentUser()
+  //@ts-ignore
+  const { roles } = useCurrentUser()
+  const enableManageTranslation =
+    roles.some(
+      (role: any) =>
+        role?.name === 'administrator' || role?.name === 'developer',
+    ) ?? false
 
-  const enableManageTranslation = currentUser?.roles.some((role: Role) =>
-    ['administrator', 'developer'].includes(role.name),
-  )
   useEffect(() => {
     if (parentRef.current) {
       const targetNode = document.querySelector('[data-portal]')
@@ -24,16 +26,21 @@ export default function CustomDocumentInternationalizationMenu(
         mutations.forEach(mutation => {
           if (mutation.type === 'childList') {
             const buttons = targetNode?.querySelectorAll('button')
-            if (
+            const translateButton =
               buttons &&
-              buttons?.length > 1 &&
-              buttons[0].innerText === 'Manage Translations'
-            ) {
-              buttons[0].disabled = !enableManageTranslation || true
-              buttons[0].setAttribute(
+              Array.from(buttons)?.find(
+                (button: any) => button.innerText === 'Manage Translations',
+              )
+
+            if (translateButton) {
+              translateButton.disabled = !enableManageTranslation
+              translateButton.setAttribute(
                 'data-disabled',
                 enableManageTranslation ? 'false' : 'true',
               )
+              translateButton.style.display = enableManageTranslation
+                ? 'block'
+                : 'none'
             }
           }
         })

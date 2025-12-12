@@ -46,7 +46,7 @@ export const homePageQuery = /* groq */ `
   fn ex::content($docRef)=$docRef{
     "_id": _ref, //used for data filtering
     "slug": "/",
-    ${allSlugsQuery},
+    "slugs":{${allSlugsQuery}},
     "title": @->title,
     "seoAndSome": @->${seoAndSomeFields},
     ${stickyMenuOutSideContent},
@@ -68,8 +68,5 @@ export const homePageQuery = /* groq */ `
 }
  {
   "pageData": data.pageData,
- "slugs":{
-      "allSlugs" : select(count(data.slugsFromTranslations)> 0 => data.slugsFromTranslations, [data.currentSlug])
-    }
   }
 `

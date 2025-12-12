@@ -1,95 +1,38 @@
-'use client'
 import { Icon } from '@equinor/eds-core-react'
 import { search } from '@equinor/eds-icons'
 import { default as NextLink } from 'next/link'
-import { useLocale, useTranslations } from 'next-intl'
+import { getLocale, getTranslations } from 'next-intl/server'
+import type { LocaleSlug } from '@/app/[locale]/(pages)/[...slug]/page'
 import { ButtonLink } from '@/core/Link'
 import { LogoLink } from '@/core/Link/LogoLink'
+import { LocalizationSwitch } from '@/core/LocalizationSwitch/LocalizationSwitch'
 import { TopbarWrapper } from '@/core/TopbarWrapper/TopbarWrapper'
 import { defaultLanguage, languages } from '@/languageConfig'
 import { getAllSitesLink } from '@/lib/helpers/getAllSitesLink'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import SiteMenu from '@/sections/SiteMenu/SiteMenu'
-import {
-  type AllSlugsType,
-  LocalizationSwitch,
-} from '../../core/LocalizationSwitch/LocalizationSwitch'
-import type {
-  MenuData,
-  SimpleMenuData,
-  StickyMenuData,
-} from '../../types/index'
+import type { MenuData, SimpleMenuData, StickyMenuData } from '@/types/index'
 
 export type HeaderProps = {
   menuData?: MenuData | SimpleMenuData
-  slugs: AllSlugsType
+  slugs: LocaleSlug[]
   stickyMenuData?: StickyMenuData
 }
 
-/* const HeadTags = ({ slugs }: { slugs: AllSlugsType }) => {
-  //const router = useRouter()
-  console.log('slugs', slugs)
-  const locale = useLocale()
-  const pathname = usePathname()
-
+const Header = async ({
+  slugs = [],
+  menuData,
+  stickyMenuData,
+}: HeaderProps) => {
+  console.log('header slugs', slugs)
+  const locale = await getLocale()
   const localization = {
-    activeLocale: locale || defaultLanguage.locale,
-  }
-  //const { publicRuntimeConfig } = getConfig()
-
-  const activeSlug = slugs.find((slug) => slug.lang === getNameFromLocale(localization.activeLocale))?.slug || pathname
-  const defaultSlug = slugs.find((slug) => slug.lang === defaultLanguage.name)?.slug
-  const defaultLocale = defaultLanguage.locale
-  const canonicalSlug =
-    localization.activeLocale === defaultLocale
-      ? `${activeSlug !== '/' ? activeSlug : ''}`
-      : `/${localization.activeLocale}${activeSlug !== '/' ? activeSlug : ''}`
-
-  console.log('defaultSlug', defaultSlug)
-  console.log('canonicalSlug', canonicalSlug)
-  return (
-    <Head>
-      {slugs.length > 1 &&
-        slugs.map((slug) => {
-          const locale = getLocaleFromName(slug.lang)
-          const correctedSlug = (defaultLocale !== locale ? `/${locale}` : '').concat(
-            slug.slug !== '/' ? slug.slug : '',
-          )
-          console.log('correctedSlug', correctedSlug)
-          return <link key={locale} rel="alternate" hrefLang={locale} href={`${correctedSlug}`} />
-        })}
-
-      {slugs.length > 1 && (
-        <link key="x-default" rel="alternate" hrefLang="x-default" href={`${defaultSlug === '/' ? '' : defaultSlug}`} />
-      )}
-
-      <link rel="canonical" href={`${canonicalSlug}`} />
-    </Head>
-  )
-} */
-
-const AllSites = () => {
-  const allSitesURL = getAllSitesLink('external')
-  const t = useTranslations()
-  return (
-    <NextLink
-      className='cursor-pointer text-base no-underline hover:underline'
-      href={allSitesURL}
-      prefetch={false}
-    >
-      {t('all_sites')}
-    </NextLink>
-  )
-}
-
-const Header = ({ slugs, menuData, stickyMenuData }: HeaderProps) => {
-  const locale = useLocale()
-  const localization = {
-    activeLocale: locale || defaultLanguage.locale,
+    activeLocale: locale ?? defaultLanguage.iso,
   }
   const hasSearch = Flags.HAS_SEARCH
   const hasMoreThanOneLanguage = languages.length > 1
   const is404 = slugs?.length === 0
+  const allSitesURL = getAllSitesLink('external')
 
   let columns = 1
   if (hasSearch) columns++
@@ -99,8 +42,8 @@ const Header = ({ slugs, menuData, stickyMenuData }: HeaderProps) => {
   const shouldDisplayAllSites = !menuData
 
   /* Filter objects that have translations but no routes */
-  const validSlugs = slugs?.filter(obj => obj.slug)
-  const t = useTranslations()
+  const validSlugs = slugs?.filter(obj => obj?.slug)
+  const t = await getTranslations()
 
   return (
     <TopbarWrapper stickyMenuData={stickyMenuData}>
@@ -121,7 +64,7 @@ const Header = ({ slugs, menuData, stickyMenuData }: HeaderProps) => {
               aria-expanded='false'
               aria-label={t('search')}
               href={
-                localization.activeLocale === 'no' ? '/no/search' : '/search'
+                localization.activeLocale === 'nb-NO' ? '/no/search' : '/search'
               }
               className='clickbound-area w-full p-2 md:px-5 md:py-3'
             >
@@ -133,11 +76,17 @@ const Header = ({ slugs, menuData, stickyMenuData }: HeaderProps) => {
         {hasMoreThanOneLanguage && (
           <LocalizationSwitch
             activeLocale={localization.activeLocale}
-            allSlugs={validSlugs}
+            slugs={validSlugs}
           />
         )}
         {shouldDisplayAllSites ? (
-          <AllSites />
+          <NextLink
+            className='cursor-pointer text-base no-underline hover:underline'
+            href={allSitesURL}
+            prefetch={false}
+          >
+            {t('all_sites')}
+          </NextLink>
         ) : Flags.HAS_FANCY_MENU ? (
           <div>
             <SiteMenu data={menuData as MenuData} />

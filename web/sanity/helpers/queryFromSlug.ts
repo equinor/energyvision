@@ -1,13 +1,13 @@
+import { useInfo } from '@/contexts/infoContext'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
-import { sanityFetch } from '@/sanity/lib/live'
 import { homePageQuery } from '@/sanity/queries/homePage'
 import { localNewsQuery } from '@/sanity/queries/localNews'
-import { magazineQuery } from '@/sanity/queries/magazine'
+import { magazineIndexQuery, magazineQuery } from '@/sanity/queries/magazine'
 import { newsQuery } from '@/sanity/queries/news'
 import { routeQuery } from '@/sanity/queries/routes'
-import { magazineSlug, newsSlug } from '@/sitesConfig'
-//import { contentQueryById } from '@/sanity/queries/contentById'
-import { getNameFromLocale } from '../localization'
+import { localNewsTags, magazineSlug, newsSlug } from '@/sitesConfig'
+import { getNameFromIso, getNameFromLocale } from '../localization'
+import { newsroomQuery } from '../queries/newsroom'
 
 export type QueryParams = {
   id?: string
@@ -15,93 +15,80 @@ export type QueryParams = {
   lang?: string
   date?: string
 }
-/* 
-const isSlugID = (slug: string): boolean => {
-  const regExp = /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/gi
-  return regExp.test(slug.replace('drafts.', '').substr(0, 36))
-} */
-
-// API is case sensitive, and we are getting an all lowercase ID from the browser
-// while a i18n document has an uppercase ISO code, example: __i18n_nb_NO
-/* const parseSlug = (slug: string): string => {
-  if (slug.includes('_i18n_')) {
-    const length = slug.length
-    const iso = slug.slice(length - 2, length)
-    return slug.slice(0, length - 2) + iso.toUpperCase()
-  }
-
-  return slug
-} */
 
 const getQuery = async (
   firstPiece: string,
   secondPiece: string | undefined,
   lang: string,
 ) => {
-  console.log("firstPiece",firstPiece);
-  console.log("secondPiece",secondPiece);
-  if (typeof firstPiece === undefined ||  firstPiece === '') {
-      console.log("return homePageQuery");
+  console.log('firstPiece', firstPiece)
+  console.log('secondPiece', secondPiece)
+
+  if (!firstPiece || typeof firstPiece === 'undefined' || firstPiece === '') {
+    console.log('return homePageQuery')
     return homePageQuery
   }
-  if (Flags.HAS_NEWS && newsSlug[lang] === firstPiece && secondPiece) {
-    // is news
-    const { data: localNewsTagsData } = await sanityFetch({
-      query: `*[_type == 'localNewsTag']{${lang}}`,
-    })
-    const localNewsTags = localNewsTagsData
-      .map((e: any) => Object.values(e))
-      //@ts-ignore:todo
-      .flatMap(([e]) => e.toLowerCase().replace(' ', '-'))
+  if (Flags.HAS_NEWS && newsSlug[lang] === firstPiece) {
     if (
-      Flags.HAS_LOCAL_NEWS &&
-      localNewsTags.includes(secondPiece.toLowerCase())
+      !secondPiece ||
+      typeof secondPiece === 'undefined' ||
+      secondPiece === ''
     ) {
-      // is local news
-      return localNewsQuery
+      return newsroomQuery
     }
-    return newsQuery
+    if (secondPiece) {
+      //Check for local news. For now it seems only path /news/... has local news
+      if (
+        Flags.HAS_LOCAL_NEWS &&
+        lang === 'en_GB' &&
+        secondPiece &&
+        localNewsTags[lang].includes(secondPiece.toLowerCase())
+      ) {
+        return localNewsQuery
+      }
+      return newsQuery
+    }
   }
-  if (Flags.HAS_MAGAZINE && magazineSlug[lang] === firstPiece && secondPiece) {
-    // is magazine
-    return magazineQuery
+  if (Flags.HAS_MAGAZINE && magazineSlug[lang] === firstPiece) {
+    if (
+      !secondPiece ||
+      typeof secondPiece === 'undefined' ||
+      secondPiece === ''
+    ) {
+      return magazineIndexQuery
+    }
+    if (secondPiece) {
+      return magazineQuery
+    }
   }
-  // is route
   return routeQuery
 }
 
-/* const getPreviewByIdQuery = (slugStart: string, locale: string, currentDate: string) => {
-  // We are in preview mode for content that has currently no slug (no routes)
-  // We need to figure out of which type
-  const documentID = parseSlug(slugStart)
-
-  return {
-    queryParams: {
-      id: documentID,
-      lang: getNameFromLocale(locale),
-      date: currentDate,
-    },
-    query: contentQueryById,
-  }
-} */
-
 export const getQueryFromSlug = async (
-  slugArray: string[] = [''],
+  slug: string | string[] | undefined,
   locale = '',
 ): Promise<{ query: string; queryParams: QueryParams }> => {
+  console.log('getQueryFromSlug slug', slug)
+  let topLevelRoute = ''
+  let childRoute: string | undefined
+  if (slug && Array.isArray(slug)) {
+    const [firstPiece, secondPiece] = slug.filter(
+      (part: string) => part !== locale,
+    )
+    topLevelRoute = firstPiece
+    childRoute = secondPiece
+  } else if (slug) {
+    topLevelRoute = slug
+  }
 
-  console.log("getQueryFromSlug slugArray", slugArray);
-  const [firstPiece, secondPiece] = slugArray.filter(
-    (part: string) => part !== locale,
-  )
-  const date = new Date().toISOString().substring(0, 10)
+  const lang = getNameFromIso(locale) ?? 'en_GB'
 
-  const slug = `/${slugArray.join('/')}`
-  const lang = getNameFromLocale(locale) ?? "en_GB"
-
-  const query = await getQuery(firstPiece, secondPiece, lang)
+  const query = await getQuery(topLevelRoute, childRoute, lang)
   return {
     query,
-    queryParams: { slug, lang, date },
+    queryParams: {
+      slug: Array.isArray(slug) ? `/${slug.join('/')}` : `/${slug ?? ''}`,
+      lang,
+    },
   }
 }

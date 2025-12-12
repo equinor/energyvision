@@ -1,21 +1,19 @@
-'use client'
-import { useTranslations } from 'next-intl'
+import { getTranslations } from 'next-intl/server'
+import type { LocaleSlug } from '@/app/[locale]/(pages)/[...slug]/page'
 import { ButtonLink } from '@/core/Link'
 import { languages } from '@/languageConfig'
 
-export type AllSlugsType = { slug: string; lang: string }[]
-
 export type LocalizationSwitchProps = {
-  allSlugs: AllSlugsType
+  slugs: LocaleSlug[]
   activeLocale: string
 }
 
-export const LocalizationSwitch = ({
-  allSlugs: slugs,
+export const LocalizationSwitch = async ({
+  slugs = [],
   activeLocale,
   ...rest
 }: LocalizationSwitchProps) => {
-  const intl = useTranslations()
+  const intl = await getTranslations()
 
   if (slugs.length < 1) return null
 
@@ -25,7 +23,7 @@ export const LocalizationSwitch = ({
       {...rest}
     >
       {slugs.map(obj => {
-        const language = languages.find(lang => lang.name === obj.lang)
+        const language = languages.find(lang => lang.iso === obj.lang)
         return (
           <li
             className={`flex items-center ${activeLocale === String(language?.locale) ? 'hidden md:block' : ''} `}
@@ -34,19 +32,19 @@ export const LocalizationSwitch = ({
             <ButtonLink
               variant='ghost'
               href={obj.slug}
-              hrefLang={`${language?.locale}`}
-              className={` ${activeLocale === String(language?.locale) ? 'hidden md:block' : ''} flex flex-col items-stretch gap-0 px-2 text-xs`}
+              hrefLang={`${language?.iso}`}
+              className={` ${activeLocale === String(language?.iso) ? 'hidden md:block' : ''} flex flex-col items-stretch gap-0 px-2 text-xs`}
             >
               <span className='sr-only'>
-                {activeLocale === String(language?.locale)
+                {activeLocale === String(language?.iso)
                   ? `${intl('current_language') ?? 'current language'}: ${language?.title}`
                   : `${intl('switch_to')} ${language?.title}`}
               </span>
               <span
                 aria-hidden
-                className={`uppercase ${activeLocale === String(language?.locale) ? 'font-semibold' : 'font-normal'}`}
+                className={`uppercase ${activeLocale === String(language?.iso) ? 'font-semibold' : 'font-normal'}`}
               >
-                {language?.locale === 'en-GB' ? 'en' : language?.locale}
+                {language?.iso === 'en-GB' ? 'en' : language?.locale}
               </span>
             </ButtonLink>
           </li>

@@ -1,4 +1,5 @@
 import { Flags } from '../helpers/datasetHelpers'
+import { inlineSlugsQuery } from '../metaData'
 import { functions } from './common/functions'
 import { fixPreviewForDrafts, sameLang } from './common/langAndDrafts'
 import {
@@ -11,9 +12,6 @@ import {
   lastUpdatedTimeQuery,
   publishDateTimeQuery,
 } from './common/publishDateTime'
-import slugsForNewsAndMagazine, {
-  querySuffixForNewsAndMagazine,
-} from './slugsForNewsAndMagazine'
 
 export const excludeCrudeOilAssays =
   Flags.IS_DEV || Flags.IS_GLOBAL_PROD
@@ -25,7 +23,7 @@ const latestNewsFields = /* groq */ `
   "updatedAt": ${lastUpdatedTimeQuery},
   title,
   heroImage,
-  ${slugsForNewsAndMagazine},
+  "slugs":{${inlineSlugsQuery}},
   ${ingressForNewsQuery},
   "publishDateTime": ${publishDateTimeQuery},
   "slug": slug.current,
@@ -38,7 +36,7 @@ const newsFields = /* groq */ `
   title,
   heroImage,
   "publishDateTime": ${publishDateTimeQuery},
-  ${slugsForNewsAndMagazine},
+  "slugs":{${inlineSlugsQuery}},
   ${ingressForNewsQuery},
   "iframe": ${iframeForNewsQuery},
   "content": ${contentForNewsQuery},
@@ -58,12 +56,13 @@ export const newsQuery = /* groq */ `
   *[_type == "news" && slug.current == $slug && ${fixPreviewForDrafts}] | order(${publishDateTimeQuery} desc) {
     _id, //used for data filtering
     "slug": slug.current,
+    "slugs": {${inlineSlugsQuery}},
     "documentTitle": seo.documentTitle,
     "metaDescription": seo.metaDescription,
     "template": _type,
     openGraphImage,
     ${newsFields}
-  }[0]${querySuffixForNewsAndMagazine}
+  }[0]
 `
 
 export const newsPromotionQuery = /* groq */ `

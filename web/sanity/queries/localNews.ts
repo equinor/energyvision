@@ -1,20 +1,23 @@
-import slugsForNewsAndMagazine, { querySuffixForNewsAndMagazine } from './slugsForNewsAndMagazine'
+import { inlineSlugsQuery } from '../metaData'
+import { functions } from './common/functions/functions'
+import { fixPreviewForDrafts } from './common/langAndDrafts'
 import {
   contentForNewsQuery,
   iframeForNewsQuery,
   ingressForNewsQuery,
   relatedLinksForNewsQuery,
 } from './common/newsSubqueries'
-import { publishDateTimeQuery, lastUpdatedTimeQuery } from './common/publishDateTime'
-import { fixPreviewForDrafts } from './common/langAndDrafts'
-import { functions } from './common/functions/functions'
+import {
+  lastUpdatedTimeQuery,
+  publishDateTimeQuery,
+} from './common/publishDateTime'
 
 const localNewsFields = /* groq */ `
   "id": _id,
   "updatedAt":  ${lastUpdatedTimeQuery},
   title,
   heroImage,
-  ${slugsForNewsAndMagazine},
+  "slugs":{${inlineSlugsQuery}},
   ${ingressForNewsQuery},
   "publishDateTime": ${publishDateTimeQuery},
   "iframe": ${iframeForNewsQuery},
@@ -30,10 +33,11 @@ export const localNewsQuery = /* groq */ `
   *[_type == "localNews" && slug.current == $slug && ${fixPreviewForDrafts}] | order(${publishDateTimeQuery} desc) {
     _id, //used for data filtering
     "slug": slug.current,
+    "slugs":{${inlineSlugsQuery}},
     "documentTitle": seo.documentTitle,
     "metaDescription": seo.metaDescription,
     "template": _type,
     openGraphImage,
     ${localNewsFields}
-  }${querySuffixForNewsAndMagazine}
+  }
 `
