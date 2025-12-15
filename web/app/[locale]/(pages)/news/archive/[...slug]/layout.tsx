@@ -3,10 +3,8 @@ import { hasLocale } from 'next-intl'
 import { routing } from '@/i18n/routing'
 import archivedNews from '@/lib/archive/archivedNewsPaths.json'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
-import { getHeaderData } from '@/sanity/lib/fetchData'
-import { getNameFromLocale } from '@/sanity/localization'
+import { PageWrapper } from '@/sanity/pages/PageWrapper'
 import type { PathType } from '@/sanity/queries/paths/getPaths'
-import Header from '@/sections/Header/Header'
 
 type Params = Promise<{ locale: string; slug: string[] }>
 
@@ -27,11 +25,6 @@ export default async function LocaleLayout({
     notFound()
   }
 
-  const { headerData } = await getHeaderData({
-    //@ts-ignore: Fix slug here because [...slug] is string[]
-    slug,
-    lang: getNameFromLocale(locale),
-  })
   const archivedItems = archivedNews.filter(
     e => e.slug === `/news/archive/${pagePath}`,
   )
@@ -43,8 +36,13 @@ export default async function LocaleLayout({
 
   return (
     <div className={`pt-topbar text-slate-80 peer-data-[sticky=true]:pt-0`}>
-      <Header slugs={slugs} menuData={headerData} />
-      {children}
+      <PageWrapper
+        headerData={{
+          slugs,
+        }}
+      >
+        {children}
+      </PageWrapper>
       <div className='clear-both'></div>
     </div>
   )

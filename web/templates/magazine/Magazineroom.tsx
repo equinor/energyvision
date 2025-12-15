@@ -7,7 +7,7 @@ import CardSkeleton from '@/sections/cards/CardSkeleton/CardSkeleton'
 import MagazineCard from '@/sections/cards/MagazineCard/MagazineCard'
 import { HeroBlock, type HeroData } from '@/sections/Hero/HeroBlock'
 import MagazineTagBar from '@/sections/MagazineTags/MagazineTagBar'
-import { PaginationContextProvider } from '../../lib/contexts/PaginationContext'
+import { PaginationContextProvider } from '../../contexts/PaginationContext'
 import Teaser, { type TeaserData } from '../../sections/teasers/Teaser/Teaser'
 import type { MagazineCardData, SeoData } from '../../types'
 

@@ -8,10 +8,10 @@ import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { sanityFetch } from '@/sanity/lib/sanityFetch'
 import { getNameFromIso } from '@/sanity/localization'
 import { newsroomMetaQuery } from '@/sanity/metaData'
-import Footer from '@/sections/Footer/Footer'
-import Header from '@/sections/Header/Header'
+import { PageWrapper } from '@/sanity/pages/PageWrapper'
+import { constructSanityMetadata, getPage } from '@/sanity/pages/utils'
+import { newsSlug } from '@/sitesConfig'
 import NewsRoomTemplate from '@/templates/newsroom/Newsroom'
-import { constructSanityMetadata, getPage } from '../[...slug]/page'
 
 export async function generateStaticParams() {
   if (Flags.HAS_NEWSROOM) {
@@ -26,22 +26,22 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>
 }): Promise<Metadata> {
   const { locale } = await params
+  const pageSlug = newsSlug[getNameFromIso(locale)]
+  if (Flags.HAS_NEWSROOM) {
+    const metaData = await sanityFetch({
+      query: newsroomMetaQuery,
+      params: {
+        lang: getNameFromIso(locale),
+      },
+      stega: false,
+    })
 
-  const metaData = await sanityFetch({
-    query: newsroomMetaQuery,
-    params: {
-      lang: getNameFromIso(locale),
-    },
-    stega: false,
-  })
+    console.log('english newsroom metadata', metaData)
 
-  console.log('NO newsroom metadata', metaData)
+    return constructSanityMetadata(pageSlug, locale, metaData)
+  }
 
-  return constructSanityMetadata(
-    metaData?.slugs?.currentSlug?.slug,
-    locale,
-    metaData,
-  )
+  return constructSanityMetadata(pageSlug, locale, undefined)
 }
 
 const getInitialResponse = unstable_cache(
@@ -84,19 +84,21 @@ export default async function NewsroomPage({
   // Enable static rendering
   setRequestLocale(locale)
 
-  const { headerData, pageData, footerData } = await getPage({ slug, locale })
+  const { headerData, pageData } = await getPage({
+    slug: slug ?? newsSlug[getNameFromIso(locale)],
+    locale,
+    tags: ['newsroom'],
+  })
 
   const response = await getInitialResponse(locale)
 
   return (
-    <>
-      <Header {...headerData} />
+    <PageWrapper headerData={headerData}>
       <NewsRoomTemplate
         locale={locale}
         pageData={pageData}
         initialSearchResponse={response}
       />
-      <Footer {...footerData} />
-    </>
+    </PageWrapper>
   )
 }

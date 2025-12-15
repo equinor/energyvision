@@ -1,4 +1,4 @@
-import { inlineSlugsQuery } from '../metaData'
+import { inlineSlugsQuery, singletonsSlugsQuery } from '../metaData'
 import downloadableFileFields from './common/actions/downloadableFileFields'
 import downloadableImageFields from './common/actions/downloadableImageFields'
 import linkSelectorFields from './common/actions/linkSelectorFields'
@@ -74,6 +74,7 @@ export const magazineIndexQuery = /* groq */ `
         ...,
         ${markDefs},
     },
+    "slugs": {${singletonsSlugsQuery}},
     "magazineTags": promotedMagazineTags[]->{
       "id": _id,
       "key": key.current,
@@ -82,7 +83,7 @@ export const magazineIndexQuery = /* groq */ `
     "footerComponent": footerComponent{
       ${footerComponentFields}
     }
-}`
+}[0]`
 
 export const allMagazineDocuments = /* groq */ `
   ${functions}

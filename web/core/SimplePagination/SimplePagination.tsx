@@ -1,10 +1,10 @@
 'use client'
-import { MediaButton } from '@/core/MediaButton/MediaButton'
-import { useContext } from 'react'
-import { PaginationContext } from '../../lib/contexts/PaginationContext'
-import { usePrefersReducedMotion } from '../../lib/hooks/usePrefersReducedMotion'
 import { useTranslations } from 'next-intl'
+import { useContext } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { MediaButton } from '@/core/MediaButton/MediaButton'
+import { PaginationContext } from '../../contexts/PaginationContext'
+import { usePrefersReducedMotion } from '../../lib/hooks/usePrefersReducedMotion'
 
 export type SimplePaginationProps = {
   className?: string
@@ -40,23 +40,26 @@ export const SimplePagination = ({
   }
 
   return (
-    <ul className={twMerge(`my-2 flex flex-wrap items-center gap-3`, className)} {...rest}>
+    <ul
+      className={twMerge(`my-2 flex flex-wrap items-center gap-3`, className)}
+      {...rest}
+    >
       <li>
         <MediaButton
           title={intl('previous')}
-          mode="previous"
+          mode='previous'
           disabled={isFirstPage}
           onClick={handlePrevPagination}
-          className=""
+          className=''
         />
       </li>
       <li>
         <MediaButton
           title={intl('next')}
-          mode="next"
+          mode='next'
           disabled={isLastPage}
           onClick={handleNextPagination}
-          className=""
+          className=''
         />
       </li>
     </ul>

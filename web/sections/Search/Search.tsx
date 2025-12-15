@@ -1,17 +1,17 @@
-import { getIsoFromLocale } from '@/sanity/localization'
-import { useLocale, useTranslations } from 'next-intl'
-import { InstantSearchNext } from 'react-instantsearch-nextjs'
-import { searchClient as client } from '../../lib/algolia'
-import { SearchClient } from 'instantsearch.js'
+import type { SearchClient } from 'instantsearch.js'
 import { useRouter } from 'next/navigation'
-import { SearchBox } from '@/core/AlgoliaSearchBox/SearchBox'
-import { Configure, Index } from 'react-instantsearch'
-import SearchResults from '@/pageComponents/search/SearchResults'
-import { PaginationContextProvider } from '@/lib/contexts/PaginationContext'
+import { useLocale, useTranslations } from 'next-intl'
 import { useRef } from 'react'
-import { Pagination } from '@/pageComponents/shared/search/pagination/Pagination'
+import { Configure, Index } from 'react-instantsearch'
+import { InstantSearchNext } from 'react-instantsearch-nextjs'
+import { PaginationContextProvider } from '@/contexts/PaginationContext'
+import { SearchBox } from '@/core/AlgoliaSearchBox/SearchBox'
 import usePaginationPadding from '@/lib/hooks/usePaginationPadding'
+import SearchResults from '@/pageComponents/search/SearchResults'
+import { Pagination } from '@/pageComponents/shared/search/pagination/Pagination'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
+import { getIsoFromLocale } from '@/sanity/localization'
+import { searchClient as client } from '../../lib/algolia'
 
 const searchClient = client()
 const queriedSearchClient: SearchClient = {
@@ -91,7 +91,11 @@ export function Search() {
   // eslint-disable-next-line
   // @ts-ignore: @TODO: The types are not correct
   const parseURL = ({ qsModule, location }) => {
-    const { query = '', page, tab = '' }: any = qsModule.parse(location.search.slice(1))
+    const {
+      query = '',
+      page,
+      tab = '',
+    }: any = qsModule.parse(location.search.slice(1))
     return {
       ...(query && { query: query }),
       ...(page && { page: page as number }),
@@ -135,27 +139,37 @@ export function Search() {
               [mainIndex]: {
                 ...(routeState.query && { query: routeState.query }),
                 ...(routeState.page && { page: routeState.page as number }),
-                ...(routeState.tab && { sortBy: `${envPrefix}_${routeState.tab.toUpperCase()}_${isoCode}` }),
+                ...(routeState.tab && {
+                  sortBy: `${envPrefix}_${routeState.tab.toUpperCase()}_${isoCode}`,
+                }),
               },
             }
           },
         },
       }}
     >
-      <Configure hitsPerPage={5} snippetEllipsisText="..." />
-      {indices.map((index) => (
-        <Index indexName={index.value} key={index.label} indexId={index.value} />
+      <Configure hitsPerPage={5} snippetEllipsisText='...' />
+      {indices.map(index => (
+        <Index
+          indexName={index.value}
+          key={index.label}
+          indexId={index.value}
+        />
       ))}
-      <div className="mx-auto p-8 px-layout-sm lg:px-layout-lg">
-        <h1 className="sr-only">{intl('search_page_title')}</h1>
+      <div className='mx-auto p-8 px-layout-sm lg:px-layout-lg'>
+        <h1 className='sr-only'>{intl('search_page_title')}</h1>
 
-        <div className="max-w-[700px]">
-          <SearchBox variant="inverted" />
+        <div className='max-w-[700px]'>
+          <SearchBox variant='inverted' />
         </div>
 
         <SearchResults resultsRef={resultsRef} items={indices} />
         <PaginationContextProvider defaultRef={resultsRef}>
-          <Pagination className="mt-12 justify-center" padding={padding} hitsPerPage={5} />
+          <Pagination
+            className='mt-12 justify-center'
+            padding={padding}
+            hitsPerPage={5}
+          />
         </PaginationContextProvider>
       </div>
     </InstantSearchNext>

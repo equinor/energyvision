@@ -1,121 +1,86 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import { setRequestLocale } from 'next-intl/server'
 import type { QueryParams } from 'next-sanity'
-import { metaTitleSuffix } from '@/languageConfig'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
-import { sanityFetch } from '@/sanity/lib/live'
-import { resolveOpenGraphImage } from '@/sanity/lib/utils'
-import { getNameFromLocale } from '@/sanity/localization'
+import { sanityFetch } from '@/sanity/lib/sanityFetch'
+import { getNameFromIso, getNameFromLocale } from '@/sanity/localization'
+import { magazineroomMetaQuery } from '@/sanity/metaData'
+import { PageWrapper } from '@/sanity/pages/PageWrapper'
+import { constructSanityMetadata, getPage } from '@/sanity/pages/utils'
 import {
   allMagazineDocuments,
   getMagazineArticlesByTag,
-  magazineIndexQuery,
 } from '@/sanity/queries/magazine'
-import { menuQuery } from '@/sanity/queries/menu'
-import Header from '@/sections/Header/Header'
+import { magazineSlug } from '@/sitesConfig'
 import MagazineRoom from '@/templates/magazine/Magazineroom'
-import { magazineSlugs } from '../magazine/page'
 
-/* export function generateStaticParams() {
-  return Flags.HAS_MAGAZINE ? [{ locale: 'no' }] : []
-} */
+export function generateStaticParams() {
+  return Flags.HAS_MAGAZINE ? [{ locale: 'nb-NO' }] : []
+}
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ locale: string }>
+  params: Promise<{ slug: string; locale: string }>
 }): Promise<Metadata> {
-  const { locale } = await params
-  const lang = getNameFromLocale(locale)
-
-  const queryParams = {
-    lang,
-  }
-  const { data: pageData } = await sanityFetch({
-    query: magazineIndexQuery,
-    params: queryParams,
+  const { locale, slug } = await params
+  console.log('/magasin generateMetadata slug', slug)
+  const pageSlug = slug ?? magazineSlug[getNameFromIso(locale)]
+  const metaData = await sanityFetch({
+    query: magazineroomMetaQuery,
+    params: {
+      lang: getNameFromLocale(locale),
+      slug: `/${pageSlug}`,
+      tags: ['magazineIndexPage'],
+    },
+    stega: false,
   })
-  const index = Array.isArray(pageData) ? pageData[0] : pageData
-  const documentTitle = index?.seoAndSome?.documentTitle
-  const metaDescription = index?.seoAndSome?.metaDescription
-  const title = index?.title
-  const heroImage = index?.hero?.figure?.image
-  const ogImage = resolveOpenGraphImage(
-    index?.seoAndSome?.openGraphImage ?? heroImage,
-  )
 
-  return {
-    title: `${documentTitle || title || 'Magasin'} - ${metaTitleSuffix}`,
-    description: metaDescription,
-    openGraph: {
-      title: title || 'Magasin',
-      description: metaDescription,
-      url: 'https://www.equinor.com/no/magasin',
-      locale,
-      type: 'website',
-      siteName: 'Equinor',
-      images: ogImage,
-    },
-    alternates: {
-      canonical: 'https://www.equinor.com/no/magasin',
-      languages: {
-        en: 'https://www.equinor.com/magazine',
-        'x-default': 'https://www.equinor.com/magazine',
-      },
-    },
-  }
+  return constructSanityMetadata(pageSlug, locale, metaData)
 }
 
-export default async function MagazinePage({
+export default async function MagazineRoomPage({
   params,
   searchParams,
 }: {
-  params: Promise<{ locale: string }>
+  params: Promise<{ slug: string; locale: string }>
   searchParams?: Promise<{ tag?: string }>
 }) {
-  const { locale } = await params
+  const { locale, slug } = await params
   const tag = (await searchParams)?.tag
-
+  const pageSlug = slug ?? magazineSlug[getNameFromIso(locale)]
   if (!Flags.HAS_MAGAZINE_INDEX) {
     notFound()
   }
-  /*   setRequestLocale(locale) */
-  const queryParams = {
-    lang: getNameFromLocale(locale),
-  }
-  const articlesQuery =
-    tag && tag !== 'all'
-      ? getMagazineArticlesByTag(false, false)
-      : allMagazineDocuments
-  const articlesParams =
-    tag && tag !== 'all' ? { ...queryParams, tag } : queryParams
+  setRequestLocale(locale)
 
-  const [{ data: headerData }, { data: magazineroomData }, { data: articles }] =
-    await Promise.all([
-      sanityFetch({
-        query: menuQuery,
-        params: { ...queryParams, slug: '/no/magasin' },
-      }),
-      sanityFetch({ query: magazineIndexQuery, params: queryParams }),
-      sanityFetch({
-        query: articlesQuery,
-        params: articlesParams as QueryParams,
-      }),
-    ])
+  const { headerData, pageData: magazineroomData } = await getPage({
+    slug: pageSlug,
+    locale,
+    tags: ['magazineIndexPage'],
+  })
 
-  const magazineroom = Array.isArray(magazineroomData)
-    ? magazineroomData[0]
-    : magazineroomData
+  const articles = await sanityFetch({
+    query:
+      tag && tag !== 'all'
+        ? getMagazineArticlesByTag(false, false)
+        : allMagazineDocuments,
+    params: {
+      lang: getNameFromIso(locale),
+      ...(tag && tag !== 'all' && { tag }),
+    } as QueryParams,
+    tags: ['magazine'],
+  })
 
   const pageData = {
-    ...magazineroom,
+    ...magazineroomData,
     magazineArticles: articles ?? [],
   }
 
   return (
-    <>
-      <Header slugs={magazineSlugs} menuData={headerData} />
+    <PageWrapper headerData={headerData}>
       <MagazineRoom {...pageData} />
-    </>
+    </PageWrapper>
   )
 }

@@ -66,7 +66,7 @@ export const homePageQuery = /* groq */ `
    "pageData":ex::content(value)
   }, ex::content(*[_id=="route_homepage" || _id=="drafts.route_homepage"][0].content))
 }
- {
+{
   "pageData": data.pageData,
-  }
+}.pageData
 `

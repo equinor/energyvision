@@ -10,6 +10,7 @@ import {
 import { usePathname } from 'next/navigation'
 import { useLocale, useTranslations } from 'next-intl'
 import { useCallback, useMemo, useState } from 'react'
+import { usePage } from '@/contexts/pageContext'
 import { BaseLink } from '@/core/Link'
 import { LogoLink } from '@/core/Link/LogoLink'
 import { Menu, MenuButton } from '@/core/MenuAccordion'
@@ -32,11 +33,11 @@ import { TopbarDropdown } from './TopbarDropdown'
 export type Variants = 'default' | 'simple'
 
 export type MenuProps = {
-  data?: MenuData | SimpleMenuData
   variant?: Variants
 }
 
-const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
+const SiteMenu = ({ variant = 'default', ...rest }: MenuProps) => {
+  const { siteMenuData } = usePage()
   const pathname = usePathname()
   const locale = useLocale()
   const [isOpen, setIsOpen] = useState(false)
@@ -55,13 +56,13 @@ const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
   const useComplex = useMediaQuery(`(min-width: 1300px)`)
 
   const menuItems = useMemo(() => {
-    if (!data) {
+    if (!siteMenuData) {
       return []
     }
-    return data && variant === 'simple'
-      ? (data as SimpleMenuData).groups
-      : (data as MenuData).subMenus
-  }, [data, variant])
+    return siteMenuData && variant === 'simple'
+      ? (siteMenuData as SimpleMenuData).groups
+      : (siteMenuData as MenuData).subMenus
+  }, [siteMenuData, variant])
 
   /*   useEffect(() => {
     console.log('closing ')
@@ -134,7 +135,7 @@ const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
   }
 
   return (
-    <>
+    <div>
       <MenuButton
         ref={refs.setReference}
         title={title}
@@ -239,7 +240,7 @@ const SiteMenu = ({ data, variant = 'default', ...rest }: MenuProps) => {
           </FloatingOverlay>
         </FloatingFocusManager>
       )}
-    </>
+    </div>
   )
 }
 

@@ -1,13 +1,18 @@
 'use client'
 import { Icon } from '@equinor/eds-core-react'
-import { chevron_left, chevron_right, first_page, last_page } from '@equinor/eds-icons'
-import { useContext, useEffect, useRef } from 'react'
-import { usePagination, UsePaginationProps } from 'react-instantsearch'
-import { usePrefersReducedMotion } from '../../../../lib/hooks/usePrefersReducedMotion'
-import { PaginationContext } from '../../../../lib/contexts/PaginationContext'
-import { isModifierClick, PaginationItem } from './PaginationItem'
+import {
+  chevron_left,
+  chevron_right,
+  first_page,
+  last_page,
+} from '@equinor/eds-icons'
 import { useTranslations } from 'next-intl'
+import { useContext, useEffect, useRef } from 'react'
+import { type UsePaginationProps, usePagination } from 'react-instantsearch'
 import { twMerge } from 'tailwind-merge'
+import { PaginationContext } from '../../../../contexts/PaginationContext'
+import { usePrefersReducedMotion } from '../../../../lib/hooks/usePrefersReducedMotion'
+import { isModifierClick, PaginationItem } from './PaginationItem'
 
 // Based on: https://github.com/algolia/react-instantsearch/blob/master/examples/hooks/components/Pagination.tsx
 export type PaginationProps = {
@@ -16,8 +21,23 @@ export type PaginationProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 } & UsePaginationProps
 
-export const Pagination = ({ className = '', totalPages, padding, hitsPerPage = 5, ...rest }: PaginationProps) => {
-  const { refine, createURL, pages, currentRefinement, isFirstPage, isLastPage, nbPages, nbHits } = usePagination({
+export const Pagination = ({
+  className = '',
+  totalPages,
+  padding,
+  hitsPerPage = 5,
+  ...rest
+}: PaginationProps) => {
+  const {
+    refine,
+    createURL,
+    pages,
+    currentRefinement,
+    isFirstPage,
+    isLastPage,
+    nbPages,
+    nbHits,
+  } = usePagination({
     totalPages,
     padding,
   })
@@ -35,7 +55,11 @@ export const Pagination = ({ className = '', totalPages, padding, hitsPerPage = 
   }
 
   useEffect(() => {
-    if (!prefersReducedMotion && resultsRef?.current && currentRefinement !== prevRefinement.current) {
+    if (
+      !prefersReducedMotion &&
+      resultsRef?.current &&
+      currentRefinement !== prevRefinement.current
+    ) {
       resultsRef.current.scrollIntoView({ behavior: 'smooth' })
     }
   }, [currentRefinement, prefersReducedMotion, resultsRef])
@@ -53,25 +77,25 @@ export const Pagination = ({ className = '', totalPages, padding, hitsPerPage = 
       <PaginationItem
         ariaLabel={intl('search_pagination_first_page')}
         isCurrent={false}
-        onClick={(e) => handleClick(e, 0)}
+        onClick={e => handleClick(e, 0)}
         isDisabled={isFirstPage}
       >
         <Icon data={first_page} />
       </PaginationItem>
       <PaginationItem
         ariaLabel={intl('previous')}
-        onClick={(e) => handleClick(e, currentRefinement - 1)}
+        onClick={e => handleClick(e, currentRefinement - 1)}
         isCurrent={false}
         isDisabled={isFirstPage}
       >
         <Icon data={chevron_left} />
       </PaginationItem>
 
-      {pages.map((page) => (
+      {pages.map(page => (
         <PaginationItem
           key={page}
           ariaLabel={`${intl('page')} ${page + 1}`}
-          onClick={(e) => handleClick(e, page)}
+          onClick={e => handleClick(e, page)}
           isCurrent={page === currentRefinement}
           isDisabled={false}
         >
@@ -83,7 +107,7 @@ export const Pagination = ({ className = '', totalPages, padding, hitsPerPage = 
         ariaLabel={intl('next')}
         isCurrent={false}
         isDisabled={isLastPage}
-        onClick={(e) => handleClick(e, currentRefinement + 1)}
+        onClick={e => handleClick(e, currentRefinement + 1)}
       >
         <Icon data={chevron_right} />
       </PaginationItem>
@@ -92,7 +116,7 @@ export const Pagination = ({ className = '', totalPages, padding, hitsPerPage = 
         ariaLabel={intl('search_pagination_last_page')}
         isCurrent={false}
         isDisabled={isLastPage}
-        onClick={(e) => handleClick(e, nbPages - 1)}
+        onClick={e => handleClick(e, nbPages - 1)}
       >
         <Icon data={last_page} size={16} className={`size-6`} />
       </PaginationItem>

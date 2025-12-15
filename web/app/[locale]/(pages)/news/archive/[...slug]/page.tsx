@@ -1,9 +1,6 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { hasLocale } from 'next-intl'
-import { cache } from 'react'
-import { routing } from '@/i18n/routing'
-import { languages } from '@/languageConfig'
+import { defaultLanguage, languages, metaTitleSuffix } from '@/languageConfig'
 import archivedNews from '@/lib/archive/archivedNewsPaths.json'
 import { host } from '@/lib/config'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
@@ -11,8 +8,8 @@ import type { PathType } from '@/sanity/queries/paths/getPaths'
 import ArchivedNews from '@/templates/archivedNews/ArchivedNews'
 
 //TODO types
-const getPageData = cache(async (params: any) => {
-  const { locale: routeLocale, slug: pagePathArray } = await params
+async function getArchivedPageData(params: any) {
+  const { locale: routeLocale, slug: pagePathArray } = params
   const locale = routeLocale === 'en-GB' ? 'en' : routeLocale
   if (!Flags.HAS_ARCHIVED_NEWS) return { notFound: true }
 
@@ -30,19 +27,14 @@ const getPageData = cache(async (params: any) => {
 
   const pageData = await parseResponse(response)
   return pageData
-})
+}
 
-//TODO types
 export async function generateMetadata({
   params,
 }: {
   params: any
 }): Promise<Metadata> {
   const { locale, slug: pagePathArray } = await params
-
-  if (!hasLocale(routing.locales, locale) || !Flags.HAS_ARCHIVED_NEWS) {
-    notFound()
-  }
 
   const archivedItems = archivedNews.filter(
     e => e.slug === `/news/archive/${pagePathArray.join('/')}`,
@@ -53,10 +45,27 @@ export async function generateMetadata({
       lang: data.locale === 'en' ? 'en_GB' : 'nb_NO',
     })) ?? []
 
-  const pageData = await getPageData(params)
+  const fullUrl = `${host.url}${slugs.find(it => it.lang === (locale === 'en' ? 'en_GB' : 'nb_NO'))?.slug}`
+
+  const pageData = await getArchivedPageData({ locale, slug: pagePathArray })
+  if (!pageData) {
+    return {
+      title: metaTitleSuffix,
+      openGraph: {
+        title: metaTitleSuffix,
+        url: fullUrl,
+        locale,
+        type: 'article',
+        siteName: 'Equinor',
+      },
+      alternates: {
+        ...(locale === defaultLanguage.iso && { canonical: fullUrl }),
+        languages: {},
+      },
+    }
+  }
   const { title, description } = pageData
 
-  const fullUrl = `${host.url}${slugs.find(it => it.lang === (locale === 'en' ? 'en_GB' : 'nb_NO'))?.slug}`
   return {
     title,
     description,
@@ -153,7 +162,7 @@ const fallbackToAnotherLanguage = async (
 //TODO types
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default async function ArchivedNewsPage({ params }: any) {
-  const pageData = await getPageData(params)
+  const pageData = await getArchivedPageData(params)
   if (!pageData) notFound()
   return <ArchivedNews {...pageData} />
 }

@@ -6,18 +6,12 @@ import { setRequestLocale } from 'next-intl/server'
 import { algolia } from '@/lib/config'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { sanityFetch } from '@/sanity/lib/sanityFetch'
-import {
-  getLocaleFromName,
-  getNameFromIso,
-  getNameFromLocale,
-} from '@/sanity/localization'
+import { getNameFromIso } from '@/sanity/localization'
 import { newsroomMetaQuery } from '@/sanity/metaData'
-import { menuQuery } from '@/sanity/queries/menu'
-import { newsroomQuery } from '@/sanity/queries/newsroom'
-import Footer from '@/sections/Footer/Footer'
-import Header from '@/sections/Header/Header'
+import { PageWrapper } from '@/sanity/pages/PageWrapper'
+import { constructSanityMetadata, getPage } from '@/sanity/pages/utils'
+import { newsSlug } from '@/sitesConfig'
 import NewsRoomTemplate from '@/templates/newsroom/Newsroom'
-import { constructSanityMetadata, getPage } from '../[...slug]/page'
 
 export function generateStaticParams() {
   return Flags.HAS_NEWSROOM ? [{ locale: 'nb-NO' }] : []
@@ -54,21 +48,29 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params
 
-  const metaData = await sanityFetch({
-    query: newsroomMetaQuery,
-    params: {
-      lang: getNameFromIso(locale),
-    },
-    stega: false,
-  })
-  const localizedCurrentSlug =
-    `/${getLocaleFromName(metaData?.slugs?.currentSlug?.lang)}` +
-    metaData?.slugs?.currentSlug?.slug
-  console.log(
-    'NO Newsroom Generate meta localizedCurrentSlug',
-    localizedCurrentSlug,
+  if (Flags.HAS_NEWSROOM) {
+    const metaData = await sanityFetch({
+      query: newsroomMetaQuery,
+      params: {
+        lang: getNameFromIso(locale),
+      },
+      stega: false,
+    })
+
+    console.log('norwegian newsroom metadata', metaData)
+
+    return constructSanityMetadata(
+      newsSlug[getNameFromIso(locale)],
+      locale,
+      metaData,
+    )
+  }
+
+  return constructSanityMetadata(
+    newsSlug[getNameFromIso(locale)],
+    locale,
+    undefined,
   )
-  return constructSanityMetadata(localizedCurrentSlug, locale, metaData)
 }
 export default async function NewsroomPage({
   params,
@@ -90,19 +92,21 @@ export default async function NewsroomPage({
   // Enable static rendering
   setRequestLocale(locale)
 
-  const { headerData, pageData, footerData } = await getPage({ slug, locale })
+  const { headerData, pageData } = await getPage({
+    slug: slug ?? newsSlug[getNameFromIso(locale)],
+    locale,
+    tags: ['newsroom'],
+  })
 
   const response = await getInitialResponse(locale)
 
   return (
-    <>
-      <Header {...headerData} />
+    <PageWrapper headerData={headerData}>
       <NewsRoomTemplate
         locale={locale}
         pageData={pageData}
         initialSearchResponse={response}
       />
-      <Footer {...footerData} />
-    </>
+    </PageWrapper>
   )
 }

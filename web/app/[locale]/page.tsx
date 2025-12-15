@@ -4,10 +4,10 @@ import { languages } from '@/languageConfig'
 import { sanityFetch } from '@/sanity/lib/sanityFetch'
 import { getNameFromIso } from '@/sanity/localization'
 import { homePageMetaQuery } from '@/sanity/metaData'
+import { constructSanityMetadata, getPage } from '@/sanity/pages/utils'
 import Footer from '@/sections/Footer/Footer'
 import Header from '@/sections/Header/Header'
 import HomePage from '@/templates/homepage/HomePage'
-import { constructSanityMetadata, getPage } from './(pages)/[...slug]/page'
 
 type Props = {
   params: Promise<{ slug: string; locale: string }>
@@ -37,7 +37,11 @@ export default async function Home({ params }: Props) {
 
   if (!languages.map(it => it.iso).includes(locale)) notFound()
 
-  const { headerData, pageData, footerData } = await getPage({ slug, locale })
+  const { headerData, pageData } = await getPage({
+    slug,
+    locale,
+    tags: ['homePage'],
+  })
 
   if (!pageData) notFound()
 
@@ -47,9 +51,9 @@ export default async function Home({ params }: Props) {
 
   return (
     <>
-      <Header {...headerData} />
-      <HomePage {...pageData} />
-      <Footer {...footerData} />
+      <Header />
+      <HomePage headerData={headerData} {...pageData} />
+      <Footer />
     </>
   )
 }

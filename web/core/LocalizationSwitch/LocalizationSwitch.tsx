@@ -1,27 +1,23 @@
-import { getTranslations } from 'next-intl/server'
-import type { LocaleSlug } from '@/app/[locale]/(pages)/[...slug]/page'
+'use client'
+import { useLocale, useTranslations } from 'next-intl'
+import type { HTMLAttributes } from 'react'
+import { usePage } from '@/contexts/pageContext'
 import { ButtonLink } from '@/core/Link'
-import { languages } from '@/languageConfig'
+import { defaultLanguage, languages } from '@/languageConfig'
 
-export type LocalizationSwitchProps = {
-  slugs: LocaleSlug[]
-  activeLocale: string
-}
+export type LocalizationSwitchProps = HTMLAttributes<HTMLUListElement>
 
-export const LocalizationSwitch = async ({
-  slugs = [],
-  activeLocale,
-  ...rest
-}: LocalizationSwitchProps) => {
-  const intl = await getTranslations()
+export const LocalizationSwitch = (_props: LocalizationSwitchProps) => {
+  const intl = useTranslations()
+  const locale = useLocale()
+  const { headerData } = usePage()
+  const { slugs } = headerData || { slugs: [] }
+  const activeLocale = locale ?? defaultLanguage.iso
 
   if (slugs.length < 1) return null
 
   return (
-    <ul
-      className='flex items-center md:divide-x md:divide-dashed md:divide-gray-400'
-      {...rest}
-    >
+    <ul className='flex items-center md:divide-x md:divide-dashed md:divide-gray-400'>
       {slugs.map(obj => {
         const language = languages.find(lang => lang.iso === obj.lang)
         return (

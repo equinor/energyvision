@@ -1,5 +1,5 @@
 import { getLocale } from 'next-intl/server'
-import { sanityFetch } from '@/sanity/lib/live'
+import { sanityFetch } from '@/sanity/lib/sanityFetch'
 import { getNameFromLocale } from '@/sanity/localization'
 import { pageNotFoundQuery } from '@/sanity/queries/pageNotFound'
 import NotFoundPage from '@/templates/notFound/NotFoundPage'
@@ -11,6 +11,7 @@ export default async function NotFound() {
   const { data: pageData } = await sanityFetch({
     query: pageNotFoundQuery,
     params: { lang: getNameFromLocale(locale) },
+    tags: ['notFound'],
   })
 
   return <NotFoundPage {...pageData} />

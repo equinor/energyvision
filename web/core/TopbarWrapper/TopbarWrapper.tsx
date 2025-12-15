@@ -8,15 +8,15 @@ import {
   useRef,
   useState,
 } from 'react'
+import { usePage } from '@/contexts/pageContext'
 import StickyMenu from '@/sections/StickyMenu/StickyMenu'
-import type { StickyMenuData } from '../../types/index'
 
-export type TopbarWrapperProps = {
-  stickyMenuData?: StickyMenuData
-} & HTMLAttributes<HTMLDivElement>
+export type TopbarWrapperProps = HTMLAttributes<HTMLDivElement>
 
 export const TopbarWrapper = forwardRef<HTMLDivElement, TopbarWrapperProps>(
-  function TopbarWrapper({ stickyMenuData, children, ...rest }, ref) {
+  function TopbarWrapper({ children }, ref) {
+    const { headerData } = usePage()
+    const { stickyMenuData } = headerData || {}
     const topbarRef = useRef<HTMLDivElement>(null)
     const combinedTopbarRef = useMemo(
       () => mergeRefs<HTMLDivElement>(topbarRef, ref),
@@ -97,7 +97,6 @@ export const TopbarWrapper = forwardRef<HTMLDivElement, TopbarWrapperProps>(
           ref={combinedTopbarRef}
           aria-label={'Global ' /*intl('global') TODO*/}
           className={`h-topbar w-full overflow-hidden ${showSticky ? 'sticky' : 'fixed'} z-40 animate-height bg-white-100 duration-300 ease-in-out [transition-property:top] ${isVisible ? 'top-0' : '-top-topbar'} ${hasDropShadow && !showSticky ? 'shadow-md' : ''} `}
-          {...rest}
         >
           <div className='mx-auto flex items-center justify-between px-layout-sm py-4'>
             {children}

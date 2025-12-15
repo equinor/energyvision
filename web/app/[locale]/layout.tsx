@@ -5,6 +5,13 @@ import { notFound } from 'next/navigation'
 import Script from 'next/script'
 import { hasLocale, NextIntlClientProvider } from 'next-intl'
 import { Toaster } from 'sonner'
+import { PageProvider } from '@/contexts/pageContext'
+import { Flags } from '@/sanity/helpers/datasetHelpers'
+import { sanityFetch } from '@/sanity/lib/sanityFetch'
+import { getNameFromIso } from '@/sanity/localization'
+import { footerQuery } from '@/sanity/queries/footer'
+import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu'
+import { simpleMenuQuery } from '@/sanity/queries/simpleMenu'
 import DraftModeToast from '@/sections/DraftMode/DraftModeToast'
 import { routing } from '../../i18n/routing'
 import { GoogleTagManagerHead } from './GTMHead'
@@ -38,6 +45,22 @@ export default async function LocaleLayout({
   }
   const { isEnabled: isDraftMode } = await draftMode()
 
+  const queryParams = {
+    lang: getNameFromIso(locale) ?? 'en_GB',
+  }
+  const [siteMenuData, footerData] = await Promise.all([
+    sanityFetch({
+      query: Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery,
+      params: queryParams,
+      tags: ['siteMenu', 'subMenu'],
+    }),
+    sanityFetch({
+      query: footerQuery,
+      params: queryParams,
+      tags: ['footer'],
+    }),
+  ])
+
   return (
     <html
       lang={locale}
@@ -47,7 +70,14 @@ export default async function LocaleLayout({
         <Toaster />
         {isDraftMode && <DraftModeToast />}
         {/* <SanityLive onError={handleError} /> */}
-        <NextIntlClientProvider>{children}</NextIntlClientProvider>
+        <NextIntlClientProvider>
+          <PageProvider
+            initialFooterData={footerData}
+            initialSiteMenuData={siteMenuData}
+          >
+            {children}
+          </PageProvider>
+        </NextIntlClientProvider>
       </body>
       {/** TODO look into scripts */}
       <Script

@@ -1,4 +1,3 @@
-import { useInfo } from '@/contexts/infoContext'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { homePageQuery } from '@/sanity/queries/homePage'
 import { localNewsQuery } from '@/sanity/queries/localNews'
@@ -6,7 +5,7 @@ import { magazineIndexQuery, magazineQuery } from '@/sanity/queries/magazine'
 import { newsQuery } from '@/sanity/queries/news'
 import { routeQuery } from '@/sanity/queries/routes'
 import { localNewsTags, magazineSlug, newsSlug } from '@/sitesConfig'
-import { getNameFromIso, getNameFromLocale } from '../localization'
+import { getNameFromIso } from '../localization'
 import { newsroomQuery } from '../queries/newsroom'
 
 export type QueryParams = {
@@ -34,6 +33,7 @@ const getQuery = async (
       typeof secondPiece === 'undefined' ||
       secondPiece === ''
     ) {
+      console.log('return newsroomQuery')
       return newsroomQuery
     }
     if (secondPiece) {
@@ -44,6 +44,7 @@ const getQuery = async (
         secondPiece &&
         localNewsTags[lang].includes(secondPiece.toLowerCase())
       ) {
+        console.log('return localNewsQuery')
         return localNewsQuery
       }
       return newsQuery
@@ -55,12 +56,15 @@ const getQuery = async (
       typeof secondPiece === 'undefined' ||
       secondPiece === ''
     ) {
+      console.log('return magazineIndexQuery')
       return magazineIndexQuery
     }
     if (secondPiece) {
+      console.log('return magazineQuery')
       return magazineQuery
     }
   }
+  console.log('return routeQuery')
   return routeQuery
 }
 

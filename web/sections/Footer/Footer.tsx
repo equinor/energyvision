@@ -1,11 +1,14 @@
-import { getTranslations } from 'next-intl/server'
+'use client'
+import { useTranslations } from 'next-intl'
+import type { HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { usePage } from '@/contexts/pageContext'
 import { LinkButton } from '@/core/Button'
 import FooterLink from '@/core/Link/FooterLink'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import { Facebook, Instagram, Linkedin, Twitter, Youtube } from '../../icons'
 import { getLocaleFromName } from '../../sanity/localization'
-import type { FooterColumns, FooterLinkData, SomeType } from '../../types/index'
+import type { FooterLinkData, SomeType } from '../../types/index'
 
 function getSomeSvg(someType: SomeType) {
   const iconMap = {
@@ -23,13 +26,12 @@ function getSomeSvg(someType: SomeType) {
   return iconMap[someType] || null
 }
 
-type FooterProps = {
-  footerColumns: FooterColumns[]
-  className?: string
-}
+type FooterProps = HTMLAttributes<HTMLElement>
 
-const Footer = async ({footerColumns = []}: FooterProps) => {
-  const t = await getTranslations()
+const Footer = (_props: FooterProps) => {
+  const { footerData } = usePage()
+  const { footerColumns } = footerData || {}
+  const t = useTranslations()
 
   return (
     <footer

@@ -1,9 +1,14 @@
 'use client'
 import { Icon } from '@equinor/eds-core-react'
-import { chevron_left, chevron_right, first_page, last_page } from '@equinor/eds-icons'
+import {
+  chevron_left,
+  chevron_right,
+  first_page,
+  last_page,
+} from '@equinor/eds-icons'
 import { useContext, useEffect, useRef, useState } from 'react'
+import { PaginationContext } from '../../../../contexts/PaginationContext'
 import { usePrefersReducedMotion } from '../../../../lib/hooks/usePrefersReducedMotion'
-import { PaginationContext } from '../../../../lib/contexts/PaginationContext'
 import { PaginationItem } from '../pagination/PaginationItem'
 
 type PaginationProps = {
@@ -18,7 +23,11 @@ export const Pagination = ({ totalPages, onPageChange }: PaginationProps) => {
   const prefersReducedMotion = usePrefersReducedMotion()
 
   useEffect(() => {
-    if (!prefersReducedMotion && resultsRef?.current && currentPage !== prevPage.current) {
+    if (
+      !prefersReducedMotion &&
+      resultsRef?.current &&
+      currentPage !== prevPage.current
+    ) {
       resultsRef.current.scrollIntoView({ behavior: 'smooth' })
     }
   }, [currentPage, prefersReducedMotion, resultsRef])
@@ -55,9 +64,9 @@ export const Pagination = ({ totalPages, onPageChange }: PaginationProps) => {
   const isCurrentPage = (page: number) => page === currentPage
 
   return (
-    <ul className="grid auto-cols-min grid-flow-col justify-center gap-2 pt-4">
+    <ul className='grid auto-cols-min grid-flow-col justify-center gap-2 pt-4'>
       <PaginationItem
-        ariaLabel="First page"
+        ariaLabel='First page'
         value={0}
         isCurrent={false}
         isDisabled={currentPage === 0}
@@ -67,7 +76,7 @@ export const Pagination = ({ totalPages, onPageChange }: PaginationProps) => {
       </PaginationItem>
 
       <PaginationItem
-        ariaLabel="Previous"
+        ariaLabel='Previous'
         value={currentPage - 1}
         isCurrent={false}
         isDisabled={currentPage === 0}
@@ -77,14 +86,18 @@ export const Pagination = ({ totalPages, onPageChange }: PaginationProps) => {
       </PaginationItem>
 
       {pages
-        .filter((page) => {
+        .filter(page => {
           const lowerBound = Math.max(currentPage - 1, 0)
           const upperBound = Math.min(currentPage + 1, totalPages - 1)
-          if (currentPage === totalPages - 1) return page >= lowerBound - 1 && page <= upperBound
-          if (currentPage === 0) return page <= 2 || (page >= lowerBound && page <= upperBound)
-          return page === lowerBound || page === currentPage || page === upperBound
+          if (currentPage === totalPages - 1)
+            return page >= lowerBound - 1 && page <= upperBound
+          if (currentPage === 0)
+            return page <= 2 || (page >= lowerBound && page <= upperBound)
+          return (
+            page === lowerBound || page === currentPage || page === upperBound
+          )
         })
-        .map((page) => (
+        .map(page => (
           <PaginationItem
             key={page}
             ariaLabel={`Page ${page + 1}`}
@@ -98,7 +111,7 @@ export const Pagination = ({ totalPages, onPageChange }: PaginationProps) => {
         ))}
 
       <PaginationItem
-        ariaLabel="Next"
+        ariaLabel='Next'
         value={currentPage + 1}
         isCurrent={false}
         isDisabled={currentPage === totalPages - 1}
@@ -108,7 +121,7 @@ export const Pagination = ({ totalPages, onPageChange }: PaginationProps) => {
       </PaginationItem>
 
       <PaginationItem
-        ariaLabel="Last page"
+        ariaLabel='Last page'
         value={totalPages - 1}
         isCurrent={false}
         isDisabled={currentPage === totalPages - 1}
