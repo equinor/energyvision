@@ -84,7 +84,7 @@ jobs:
         id: install-dependencies
         run: |
           pushd search
-          pnpm install
+          pnpm install --prod --node-linker=hoisted
           popd
       - name: Build ⚙
         id: build-functions

@@ -33,8 +33,6 @@
     "@azure/storage-blob": "^12.28.0",
     "@sanity/client": "^7.13.1",
     "algoliasearch": "^5.46.0",
-    "@algolia/abtesting": "1.12.0",
-    "@algolia/requester-node-http": "5.46.0",
     "@azure/app-configuration-provider": "2.2.0",
     "@azure/identity": "4.13.0",
     "fp-ts": "^2.16.11",
