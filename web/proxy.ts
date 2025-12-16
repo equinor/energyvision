@@ -26,6 +26,9 @@ export async function proxy(request: NextRequest) {
   console.log(request.nextUrl.href)
   const pathname = decodeURI(request.nextUrl.pathname)
   const isDotHtml = pathname.slice(-5) === DOT_HTML
+  const isRobotsTxt = pathname.slice(-10) === "robots.txt"
+  const isSitemapXml = pathname.slice(-11) === "sitemap.xml"
+  const isSecurityTxt = pathname.slice(-12) === "security.txt"
 
   // Rewrite the correct path for assets in download section of achived news (older than 2016)
   if (
@@ -53,7 +56,7 @@ export async function proxy(request: NextRequest) {
 
   // Check if pathname is irrelevant (.svg, .png, /api/, etcs)
   if (
-    (PUBLIC_FILE.test(pathname) && !isDotHtml) ||
+    (PUBLIC_FILE.test(pathname) && !isDotHtml && !isRobotsTxt && !isSitemapXml && !isSecurityTxt) ||
     pathname.includes('/api/')
   ) {
     return undefined
