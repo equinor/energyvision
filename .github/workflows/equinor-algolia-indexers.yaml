@@ -83,7 +83,7 @@ jobs:
       - name: Install dependencies 🔧
         id: install-dependencies
         run: |
-          pnpm search-indexers install --prod --node-linker=hoisted
+          pnpm search-indexers install --node-linker=hoisted
       - name: Build ⚙
         id: build-functions
         run: |
