@@ -21,7 +21,6 @@
     "indexer"
   ],
   "devDependencies": {
-    "@algolia/client-search": "^5.46.0",
     "@azure/functions": "^3.0.0",
     "@types/jest": "^27.0.2",
     "@types/node": "^24.7.0",

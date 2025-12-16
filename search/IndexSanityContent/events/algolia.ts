@@ -1,4 +1,4 @@
-import { IndexSettings } from '@algolia/client-search'
+import { IndexSettings } from 'algoliasearch'
 
 export const indexSettings: IndexSettings = {
   searchableAttributes: ['title', 'ingress', 'eventDescription'], // date should not be searchable?

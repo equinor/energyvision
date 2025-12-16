@@ -1,5 +1,4 @@
-import { Algoliasearch,algoliasearch } from 'algoliasearch'
-import { BatchResponse, IndexSettings } from '@algolia/client-search'
+import { Algoliasearch,algoliasearch , BatchResponse, IndexSettings} from 'algoliasearch'
 import * as E from 'fp-ts/lib/Either'
 import * as TE from 'fp-ts/lib/TaskEither'
 import { pipe } from 'fp-ts/lib/function'
