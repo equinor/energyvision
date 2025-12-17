@@ -3,8 +3,8 @@
 
 //import { ConfigRedirect } from '@/next.config'
 import { dataset } from '../../languageConfig'
+import { getLocaleFromName } from '../helpers/localization'
 import { notSecuredTokenClient } from '../lib/client'
-import { getLocaleFromName } from '../localization'
 
 /* export const getAllRedirects = async () => {
   try {

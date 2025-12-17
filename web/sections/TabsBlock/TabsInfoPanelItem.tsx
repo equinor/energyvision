@@ -5,7 +5,7 @@ import { Image } from '@/core/Image/Image'
 import { ResourceLink } from '@/core/Link'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import Blocks from '@/portableText/Blocks'
-import { getLocaleFromName } from '@/sanity/localization'
+import { getLocaleFromName } from '@/sanity/helpers/localization'
 import type { ImageWithAlt, LinkData } from '../../types'
 import type { InfoPanelImageVariant, InfoPanelKeyInfo } from './TabsBlock.types'
 

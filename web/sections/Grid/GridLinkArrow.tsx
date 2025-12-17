@@ -5,7 +5,7 @@ import { twMerge } from 'tailwind-merge'
 import { BaseLink } from '@/core/Link'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import { ArrowRight } from '../../icons'
-import { getLocaleFromName } from '../../sanity/localization'
+import { getLocaleFromName } from '../../sanity/helpers/localization'
 import type { LinkData } from '../../types/index'
 
 type GridLinkArrowProps = {

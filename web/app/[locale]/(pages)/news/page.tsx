@@ -5,11 +5,11 @@ import { notFound } from 'next/navigation'
 import { setRequestLocale } from 'next-intl/server'
 import { algolia } from '@/lib/config'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
+import { getNameFromIso } from '@/sanity/helpers/localization'
 import { sanityFetch } from '@/sanity/lib/sanityFetch'
-import { getNameFromIso } from '@/sanity/localization'
-import { newsroomMetaQuery } from '@/sanity/metaData'
 import { PageWrapper } from '@/sanity/pages/PageWrapper'
 import { constructSanityMetadata, getPage } from '@/sanity/pages/utils'
+import { newsroomMetaQuery } from '@/sanity/queries/metaData'
 import { newsSlug } from '@/sitesConfig'
 import NewsRoomTemplate from '@/templates/newsroom/Newsroom'
 
@@ -74,8 +74,6 @@ export default async function NewsroomPage({
   params: Promise<{ slug: string; locale: string }>
 }) {
   const { locale, slug } = await params
-  console.log('NewsroomPage locale', locale)
-  console.log('NewsroomPage slug', slug)
 
   if (!Flags.HAS_NEWSROOM) {
     notFound()

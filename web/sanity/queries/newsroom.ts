@@ -1,4 +1,3 @@
-import { inlineSlugsQuery, singletonsSlugsQuery } from '../metaData'
 import linkSelectorFields from './common/actions/linkSelectorFields'
 import markDefs from './common/blockEditorMarks'
 import { functions } from './common/functions'
@@ -6,15 +5,8 @@ import { sameLang } from './common/langAndDrafts'
 import { ingressForNewsQuery } from './common/newsSubqueries'
 import { publishDateTimeQuery } from './common/publishDateTime'
 import { seoAndSomeFields } from './common/seoAndSomeFields'
+import { inlineSlugsQuery, singletonsSlugsQuery } from './metaData'
 
-export const newsroomDataForHeaderQuery = /* groq */ `
-  *[_type == "newsroom" && ${sameLang}] {
-    _id, //used for data filtering
-    "title": content->title,
-    "seoAndSome": content->${seoAndSomeFields},
-    "template": content->_type,
-  }[0]
-`
 export const newsroomQuery = /* groq */ `
   ${functions}
   *[_type == "newsroom" && ${sameLang}] {

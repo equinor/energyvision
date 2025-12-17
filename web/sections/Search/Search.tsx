@@ -10,7 +10,7 @@ import usePaginationPadding from '@/lib/hooks/usePaginationPadding'
 import SearchResults from '@/pageComponents/search/SearchResults'
 import { Pagination } from '@/pageComponents/shared/search/pagination/Pagination'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
-import { getIsoFromLocale } from '@/sanity/localization'
+import { getIsoFromLocale } from '@/sanity/helpers/localization'
 import { searchClient as client } from '../../lib/algolia'
 
 const searchClient = client()

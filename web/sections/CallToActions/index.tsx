@@ -1,8 +1,8 @@
-import { ResourceLink } from '@/core/Link'
-import type { LinkData } from '../../types/index'
-import { getLocaleFromName } from '../../sanity/localization'
 import { twMerge } from 'tailwind-merge'
+import { ResourceLink } from '@/core/Link'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
+import { getLocaleFromName } from '../../sanity/helpers/localization'
+import type { LinkData } from '../../types/index'
 
 type CallToActionsProps = {
   callToActions: LinkData[]
@@ -11,13 +11,20 @@ type CallToActionsProps = {
   linkVariant?: 'default' | 'fit'
 }
 
-const CallToActions = ({ callToActions = [], splitList, linkVariant, className = '' }: CallToActionsProps) => {
+const CallToActions = ({
+  callToActions = [],
+  splitList,
+  linkVariant,
+  className = '',
+}: CallToActionsProps) => {
   if (!callToActions) return null
   const getSingleAction = () => {
     const { label, extension, type, link } = callToActions[0]
     const url = getUrlFromAction(callToActions[0])
     if (!url && type !== 'downloadableFile') {
-      console.warn(`CallToActions: Missing URL on Call to action link with type: '${type}' and label: '${label}'`)
+      console.warn(
+        `CallToActions: Missing URL on Call to action link with type: '${type}' and label: '${label}'`,
+      )
       return null
     }
 
@@ -29,7 +36,7 @@ const CallToActions = ({ callToActions = [], splitList, linkVariant, className =
         showExtensionIcon={true}
         {...(link?.lang && { hrefLang: getLocaleFromName(link?.lang) })}
         type={type}
-        variant="fit"
+        variant='fit'
       >
         {label}
       </ResourceLink>
@@ -53,7 +60,9 @@ const CallToActions = ({ callToActions = [], splitList, linkVariant, className =
             <ResourceLink
               {...callToAction}
               href={url}
-              {...(callToAction.link?.lang && { hrefLang: getLocaleFromName(callToAction.link?.lang) })}
+              {...(callToAction.link?.lang && {
+                hrefLang: getLocaleFromName(callToAction.link?.lang),
+              })}
               type={callToAction.type}
               extension={callToAction.extension}
               showExtensionIcon={true}

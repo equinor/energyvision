@@ -1,5 +1,5 @@
-import { Link as CoreLink, LinkProps as _LinkProps } from '@/core/Link'
-import { getLocaleFromName } from '@/sanity/localization'
+import { type LinkProps as _LinkProps, Link as CoreLink } from '@/core/Link'
+import { getLocaleFromName } from '@/sanity/helpers/localization'
 
 type InternalLinkProps = {
   _key: string
@@ -48,7 +48,7 @@ export const Link = ({ value, children, type, ...rest }: LinkProps) => {
       }
     }
     return props.href && props.href !== '' ? (
-      <CoreLink {...rest} {...props} type="externalUrl">
+      <CoreLink {...rest} {...props} type='externalUrl'>
         {children}
       </CoreLink>
     ) : (

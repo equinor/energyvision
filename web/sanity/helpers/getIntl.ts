@@ -1,8 +1,8 @@
-import formatTextSnippets from './formatTextSnippets'
-import { sanityFetch } from '@/sanity/lib/live'
-import { getNameFromLocale } from '../localization'
 //import translations from '../interface/translations.json'
 import { defaultLanguage } from '@/languageConfig'
+import { sanityFetch } from '@/sanity/lib/live'
+import formatTextSnippets from './formatTextSnippets'
+import { getNameFromLocale } from './localization'
 
 export default async (locale: string) => {
   const { data: textSnippetsArray } = await sanityFetch({

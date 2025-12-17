@@ -15,7 +15,7 @@ import { ResourceLink } from '@/core/Link'
 import { Typography } from '@/core/Typography'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import Blocks from '../../portableText/Blocks'
-import { getLocaleFromName } from '../../sanity/localization'
+import { getLocaleFromName } from '../../sanity/helpers/localization'
 import type { LinkData } from '../../types'
 import type { DisplayModes } from './Carousel'
 

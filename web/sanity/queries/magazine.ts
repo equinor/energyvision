@@ -1,4 +1,3 @@
-import { inlineSlugsQuery, singletonsSlugsQuery } from '../metaData'
 import downloadableFileFields from './common/actions/downloadableFileFields'
 import downloadableImageFields from './common/actions/downloadableImageFields'
 import linkSelectorFields from './common/actions/linkSelectorFields'
@@ -10,6 +9,7 @@ import { sameLang } from './common/langAndDrafts'
 import pageContentFields from './common/pageContentFields'
 import { publishDateTimeQuery } from './common/publishDateTime'
 import { seoAndSomeFields } from './common/seoAndSomeFields'
+import { inlineSlugsQuery, singletonsSlugsQuery } from './metaData'
 
 const footerComponentFields = /* groq */ `
   title,

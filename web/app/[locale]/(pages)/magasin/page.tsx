@@ -3,15 +3,18 @@ import { notFound } from 'next/navigation'
 import { setRequestLocale } from 'next-intl/server'
 import type { QueryParams } from 'next-sanity'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
+import {
+  getNameFromIso,
+  getNameFromLocale,
+} from '@/sanity/helpers/localization'
 import { sanityFetch } from '@/sanity/lib/sanityFetch'
-import { getNameFromIso, getNameFromLocale } from '@/sanity/localization'
-import { magazineroomMetaQuery } from '@/sanity/metaData'
 import { PageWrapper } from '@/sanity/pages/PageWrapper'
 import { constructSanityMetadata, getPage } from '@/sanity/pages/utils'
 import {
   allMagazineDocuments,
   getMagazineArticlesByTag,
 } from '@/sanity/queries/magazine'
+import { magazineroomMetaQuery } from '@/sanity/queries/metaData'
 import { magazineSlug } from '@/sitesConfig'
 import MagazineRoom from '@/templates/magazine/Magazineroom'
 

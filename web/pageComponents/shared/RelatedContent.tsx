@@ -3,7 +3,7 @@ import { twMerge } from 'tailwind-merge'
 import { ResourceLink } from '@/core/Link'
 import { Typography } from '@/core/Typography'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
-import { getLocaleFromName } from '../../sanity/localization'
+import { getLocaleFromName } from '../../sanity/helpers/localization'
 import type { LinkData, RelatedLinksData } from '../../types/index'
 
 type RelatedContentProps = {
@@ -41,7 +41,6 @@ const RelatedContent = ({
                   type={item.type}
                   extension={item.extension}
                   showExtensionIcon={true}
-                  
                 >
                   {`${item.label}`}
                 </ResourceLink>

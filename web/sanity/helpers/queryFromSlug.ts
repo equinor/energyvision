@@ -5,8 +5,8 @@ import { magazineIndexQuery, magazineQuery } from '@/sanity/queries/magazine'
 import { newsQuery } from '@/sanity/queries/news'
 import { routeQuery } from '@/sanity/queries/routes'
 import { localNewsTags, magazineSlug, newsSlug } from '@/sitesConfig'
-import { getNameFromIso } from '../localization'
 import { newsroomQuery } from '../queries/newsroom'
+import { getNameFromIso } from './localization'
 
 export type QueryParams = {
   id?: string
@@ -20,9 +20,6 @@ const getQuery = async (
   secondPiece: string | undefined,
   lang: string,
 ) => {
-  console.log('firstPiece', firstPiece)
-  console.log('secondPiece', secondPiece)
-
   if (!firstPiece || typeof firstPiece === 'undefined' || firstPiece === '') {
     console.log('return homePageQuery')
     return homePageQuery
@@ -72,7 +69,6 @@ export const getQueryFromSlug = async (
   slug: string | string[] | undefined,
   locale = '',
 ): Promise<{ query: string; queryParams: QueryParams }> => {
-  console.log('getQueryFromSlug slug', slug)
   let topLevelRoute = ''
   let childRoute: string | undefined
   if (slug && Array.isArray(slug)) {

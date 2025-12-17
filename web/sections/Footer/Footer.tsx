@@ -7,7 +7,7 @@ import { LinkButton } from '@/core/Button'
 import FooterLink from '@/core/Link/FooterLink'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import { Facebook, Instagram, Linkedin, Twitter, Youtube } from '../../icons'
-import { getLocaleFromName } from '../../sanity/localization'
+import { getLocaleFromName } from '../../sanity/helpers/localization'
 import type { FooterLinkData, SomeType } from '../../types/index'
 
 function getSomeSvg(someType: SomeType) {

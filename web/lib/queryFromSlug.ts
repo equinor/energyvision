@@ -7,7 +7,7 @@ import { newsQuery } from '@/sanity/queries/news'
 import { routeQuery } from '@/sanity/queries/routes'
 import { magazineSlug, newsSlug } from '@/sitesConfig'
 //import { contentQueryById } from '@/sanity/queries/contentById'
-import { getNameFromLocale } from '../sanity/localization'
+import { getNameFromLocale } from '../sanity/helpers/localization'
 
 export type QueryParams = {
   id?: string

@@ -1,10 +1,10 @@
-import type { TextTeaserData } from '../../../types/index'
-import { getColorForTheme } from './theme'
 import { twMerge } from 'tailwind-merge'
 import { ResourceLink } from '@/core/Link'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
-import { getLocaleFromName } from '@/sanity/localization'
 import Blocks from '@/portableText/Blocks'
+import { getLocaleFromName } from '@/sanity/helpers/localization'
+import type { TextTeaserData } from '../../../types/index'
+import { getColorForTheme } from './theme'
 
 type TextTeaserProps = {
   data: TextTeaserData
@@ -18,7 +18,9 @@ const TextTeaser = ({ data, anchor, className }: TextTeaserProps) => {
   const { backgroundUtility, highlight, dark } = getColorForTheme(theme)
   const url = action && getUrlFromAction(action)
 
-  const bigTextElement = <Blocks blockClassName={`${highlight}`} variant="h2" value={title} />
+  const bigTextElement = (
+    <Blocks blockClassName={`${highlight}`} variant='h2' value={title} />
+  )
 
   return (
     <article
@@ -29,16 +31,18 @@ const TextTeaser = ({ data, anchor, className }: TextTeaserProps) => {
       )}
     >
       {titlePosition === 'left' && bigTextElement}
-      <div className="">
+      <div className=''>
         {text && (
-          <div className="pb-8 last:pb-0">
-            <Blocks variant="ingress" value={text} />
+          <div className='pb-8 last:pb-0'>
+            <Blocks variant='ingress' value={text} />
           </div>
         )}
         {action && (
           <ResourceLink
             href={url as string}
-            {...(action.link?.lang && { hrefLang: getLocaleFromName(action.link?.lang) })}
+            {...(action.link?.lang && {
+              hrefLang: getLocaleFromName(action.link?.lang),
+            })}
             type={action.type}
           >
             {`${action.label} ${action.extension ? `(${action.extension.toUpperCase()})` : ''}`}

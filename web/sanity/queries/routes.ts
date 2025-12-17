@@ -1,4 +1,3 @@
-import { contentRefSlugsQuery } from '../metaData'
 import { breadcrumbsQuery } from './common/breadcrumbs'
 import { eventContentFields } from './common/eventContentFields'
 import { functions, pageContentFunctions } from './common/functions'
@@ -7,6 +6,7 @@ import { landingPageContentFields } from './common/landingPageContentFields'
 import pageContentFields from './common/pageContentFields'
 import { seoAndSomeFields } from './common/seoAndSomeFields'
 import { stickyMenu } from './common/stickyMenu'
+import { contentRefSlugsQuery } from './metaData'
 
 export const routeQuery = /* groq */ `
   ${functions}

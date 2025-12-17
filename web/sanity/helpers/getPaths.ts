@@ -1,9 +1,9 @@
 import { groq } from 'next-sanity'
-import { getNameFromLocale } from '../localization'
 import { client } from '@/sanity/lib/client'
-import { sameLang } from '../queries/common/langAndDrafts'
 import { sanityFetch } from '../lib/live'
+import { sameLang } from '../queries/common/langAndDrafts'
 import { publishDateTimeQuery } from '../queries/common/publishDateTime'
+import { getNameFromLocale } from './localization'
 
 const getTopicRoutesForLocale = async (locale: string) => {
   const lang = getNameFromLocale(locale)
@@ -33,7 +33,10 @@ const getTopicRoutesForLocaleToStaticallyBuild = async (locale: string) => {
   return data
 }
 
-const getDocumentsForLocale = async (type: 'news' | 'localNews' | 'magazine', locale: string) => {
+const getDocumentsForLocale = async (
+  type: 'news' | 'localNews' | 'magazine',
+  locale: string,
+) => {
   const lang = getNameFromLocale(locale)
   const data: { slug: string; _updatedAt: string }[] = await client.fetch(
     groq`*[_type == $type && defined(slug.current) && ${sameLang} ][] {
@@ -67,11 +70,13 @@ export type PathType = {
   locale: string
 }
 
-export const getStaticBuildRoutePaths = async (locales: string[]): Promise<PathType[]> => {
-  const fetchPaths = locales.map(async (locale) => {
+export const getStaticBuildRoutePaths = async (
+  locales: string[],
+): Promise<PathType[]> => {
+  const fetchPaths = locales.map(async locale => {
     const pages = await getTopicRoutesForLocaleToStaticallyBuild(locale)
-    return pages.map((page) => ({
-      slug: page.slug.split('/').filter((p) => p),
+    return pages.map(page => ({
+      slug: page.slug.split('/').filter(p => p),
       updatedAt: page._updatedAt,
       locale,
     }))
@@ -81,10 +86,10 @@ export const getStaticBuildRoutePaths = async (locales: string[]): Promise<PathT
 }
 
 export const getRoutePaths = async (locales: string[]): Promise<PathType[]> => {
-  const fetchPaths = locales.map(async (locale) => {
+  const fetchPaths = locales.map(async locale => {
     const pages = await getTopicRoutesForLocale(locale)
-    return pages.map((page) => ({
-      slug: page.slug.split('/').filter((p) => p),
+    return pages.map(page => ({
+      slug: page.slug.split('/').filter(p => p),
       updatedAt: page._updatedAt,
       locale,
     }))
@@ -94,10 +99,10 @@ export const getRoutePaths = async (locales: string[]): Promise<PathType[]> => {
 }
 
 export const getNewsPaths = async (locales: string[]): Promise<PathType[]> => {
-  const fetchPaths = locales.map(async (locale) => {
+  const fetchPaths = locales.map(async locale => {
     const pages = await getDocumentsForLocale('news', locale)
-    return pages.map((page) => ({
-      slug: page.slug.split('/').filter((p) => p),
+    return pages.map(page => ({
+      slug: page.slug.split('/').filter(p => p),
       updatedAt: page._updatedAt,
       locale,
     }))
@@ -106,11 +111,13 @@ export const getNewsPaths = async (locales: string[]): Promise<PathType[]> => {
   return (await Promise.all(fetchPaths)).flat()
 }
 
-export const getMagazinePaths = async (locales: string[]): Promise<PathType[]> => {
-  const fetchPaths = locales.map(async (locale) => {
+export const getMagazinePaths = async (
+  locales: string[],
+): Promise<PathType[]> => {
+  const fetchPaths = locales.map(async locale => {
     const pages = await getDocumentsForLocale('magazine', locale)
-    return pages.map((page) => ({
-      slug: page.slug.split('/').filter((p) => p),
+    return pages.map(page => ({
+      slug: page.slug.split('/').filter(p => p),
       updatedAt: page._updatedAt,
       locale,
     }))
@@ -119,11 +126,13 @@ export const getMagazinePaths = async (locales: string[]): Promise<PathType[]> =
   return (await Promise.all(fetchPaths)).flat()
 }
 
-export const getLocalNewsPaths = async (locales: string[]): Promise<PathType[]> => {
-  const fetchPaths = locales.map(async (locale) => {
+export const getLocalNewsPaths = async (
+  locales: string[],
+): Promise<PathType[]> => {
+  const fetchPaths = locales.map(async locale => {
     const pages = await getDocumentsForLocale('localNews', locale)
-    return pages.map((page) => ({
-      slug: page.slug.split('/').filter((p) => p),
+    return pages.map(page => ({
+      slug: page.slug.split('/').filter(p => p),
       updatedAt: page._updatedAt,
       locale,
     }))
@@ -134,7 +143,9 @@ export const getLocalNewsPaths = async (locales: string[]): Promise<PathType[]> 
 
 export const getNewsroomPaths = async (): Promise<PathType[]> => {
   // Use last published news as updatedAt field for newsroom
-  const getUpdatedAt = async (lang: 'en_GB' | 'nb_NO'): Promise<{ _updatedAt: string }> =>
+  const getUpdatedAt = async (
+    lang: 'en_GB' | 'nb_NO',
+  ): Promise<{ _updatedAt: string }> =>
     await client.fetch(
       groq`*[_type == 'news' && ${sameLang}] | order(${publishDateTimeQuery} desc)[0] {
       _updatedAt,
@@ -163,7 +174,9 @@ export const getNewsroomPaths = async (): Promise<PathType[]> => {
 
 export const getMagazineIndexPaths = async (): Promise<PathType[]> => {
   // Use last published news as updatedAt field for newsroom
-  const getUpdatedAt = async (lang: 'en_GB' | 'nb_NO'): Promise<{ _updatedAt: string }> =>
+  const getUpdatedAt = async (
+    lang: 'en_GB' | 'nb_NO',
+  ): Promise<{ _updatedAt: string }> =>
     await client.fetch(
       groq`*[_type == 'magazine' && ${sameLang}] | order(_createdAt desc)[0] {
       _updatedAt,

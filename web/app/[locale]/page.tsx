@@ -1,10 +1,10 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { languages } from '@/languageConfig'
+import { getNameFromIso } from '@/sanity/helpers/localization'
 import { sanityFetch } from '@/sanity/lib/sanityFetch'
-import { getNameFromIso } from '@/sanity/localization'
-import { homePageMetaQuery } from '@/sanity/metaData'
 import { constructSanityMetadata, getPage } from '@/sanity/pages/utils'
+import { homePageMetaQuery } from '@/sanity/queries/metaData'
 import Footer from '@/sections/Footer/Footer'
 import Header from '@/sections/Header/Header'
 import HomePage from '@/templates/homepage/HomePage'
@@ -15,9 +15,7 @@ type Props = {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug, locale } = await params
-  console.log('generateMetadata homepage, locale', locale)
-
+  const { locale } = await params
   const metaData = await sanityFetch({
     query: homePageMetaQuery,
     params: {
@@ -26,14 +24,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     stega: false,
   })
 
-  console.log('Homepage metadata', metaData)
   return constructSanityMetadata('', locale, metaData)
 }
 
 export default async function Home({ params }: Props) {
   const { locale, slug } = await params
-
-  console.log('HOME page locale', locale)
 
   if (!languages.map(it => it.iso).includes(locale)) notFound()
 

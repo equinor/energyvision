@@ -1,15 +1,19 @@
 'use client'
-import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
+import type { PortableTextBlock } from '@portabletext/types'
 import { twMerge } from 'tailwind-merge'
-import { PortableTextBlock } from '@portabletext/types'
-import Transcript from '../Transcript/Transcript'
 import { ResourceLink } from '@/core/Link'
-import { getLocaleFromName } from '@/sanity/localization'
-import { DesignOptions, LinkData } from '@/types'
-import { VideoControlsType, VideoPlayer, VideoType } from '@/core/VideoJsPlayer/VideoPlayer'
-import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
-import { AspectRatioVariants } from '@/core/VideoJsPlayer/Video'
+import type { AspectRatioVariants } from '@/core/VideoJsPlayer/Video'
+import {
+  type VideoControlsType,
+  VideoPlayer,
+  type VideoType,
+} from '@/core/VideoJsPlayer/VideoPlayer'
+import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import Blocks from '@/portableText/Blocks'
+import { getLocaleFromName } from '@/sanity/helpers/localization'
+import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
+import type { DesignOptions, LinkData } from '@/types'
+import Transcript from '../Transcript/Transcript'
 
 export type VideoDesignOptionsType = {
   aspectRatio: AspectRatioVariants
@@ -56,10 +60,10 @@ const VideoPlayerBlock = ({
       id={anchor}
     >
       {/* classname mb-2 pb-2  or common heading 2 styling pb-8 and inheriting pt-20 if applicable */}
-      {title && <Blocks value={title} variant="h2" />}
+      {title && <Blocks value={title} variant='h2' />}
       {ingress && (
         <Blocks
-          variant="ingress"
+          variant='ingress'
           value={ingress}
           blockClassName={`${action && action.label && actionUrl ? 'mb-4' : 'mb-8'}`}
         />
@@ -69,15 +73,23 @@ const VideoPlayerBlock = ({
           href={actionUrl || ''}
           extension={action?.extension}
           showExtensionIcon={true}
-          variant="fit"
-          hrefLang={action?.type === 'internalUrl' ? getLocaleFromName(action?.link?.lang) : undefined}
-          className="mt-4 mb-8"
+          variant='fit'
+          hrefLang={
+            action?.type === 'internalUrl'
+              ? getLocaleFromName(action?.link?.lang)
+              : undefined
+          }
+          className='mt-4 mb-8'
         >
           {action.label}
         </ResourceLink>
       )}
       {/*@ts-ignore: TODO*/}
-      <VideoPlayer {...video} {...videoPlayerDesignOptions} {...videoControls} />
+      <VideoPlayer
+        {...video}
+        {...videoPlayerDesignOptions}
+        {...videoControls}
+      />
       <Transcript transcript={transcript} ariaTitle={video.title} />
     </section>
   )

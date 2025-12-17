@@ -1,4 +1,3 @@
-import { inlineSlugsQuery } from '../metaData'
 import { functions } from './common/functions/functions'
 import { fixPreviewForDrafts } from './common/langAndDrafts'
 import {
@@ -11,6 +10,7 @@ import {
   lastUpdatedTimeQuery,
   publishDateTimeQuery,
 } from './common/publishDateTime'
+import { inlineSlugsQuery } from './metaData'
 
 const localNewsFields = /* groq */ `
   "id": _id,

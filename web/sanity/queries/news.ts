@@ -1,5 +1,4 @@
 import { Flags } from '../helpers/datasetHelpers'
-import { inlineSlugsQuery } from '../metaData'
 import { functions } from './common/functions'
 import { fixPreviewForDrafts, sameLang } from './common/langAndDrafts'
 import {
@@ -12,6 +11,7 @@ import {
   lastUpdatedTimeQuery,
   publishDateTimeQuery,
 } from './common/publishDateTime'
+import { inlineSlugsQuery } from './metaData'
 
 export const excludeCrudeOilAssays =
   Flags.IS_DEV || Flags.IS_GLOBAL_PROD

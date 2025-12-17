@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-nocheck
-import { defaultLanguage, languages } from '../languageConfig'
+import { defaultLanguage, languages } from '../../languageConfig'
 
 export const getNameFromLocale = (locale: string | undefined): string => {
   return (

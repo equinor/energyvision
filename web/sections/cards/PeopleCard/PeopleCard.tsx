@@ -10,7 +10,7 @@ import {
   colorKeyToUtilityMap,
 } from '@/styles/colorKeyToUtilityMap'
 import { Image } from '../../../core/Image/Image'
-import { getLocaleFromName } from '../../../sanity/localization'
+import { getLocaleFromName } from '../../../sanity/helpers/localization'
 import type { PeopleCardData } from '../../../types/index'
 
 export type PeopleCardProps = {

@@ -3,42 +3,16 @@ import { functions, pageContentFunctions } from './common/functions'
 import { heroFields } from './common/heroFields'
 import pageContentFields from './common/pageContentFields'
 import { seoAndSomeFields } from './common/seoAndSomeFields'
-import { stickyMenu, stickyMenuOutSideContent } from './common/stickyMenu'
+import { stickyMenuOutSideContent } from './common/stickyMenu'
 
-const allSlugsQuery = /* groq */ `
+const homepageSlugsQuery = /* groq */ `
     "currentSlug": {
       "slug": "/",
       "lang":$lang
     },
-    "slugsFromTranslations": *[_type == "translation.metadata" && references(^._ref)].translations[].value->{
+    "translationSlugs": *[_type == "translation.metadata" && references(^._ref)].translations[].value->{
     "slug":"/",
-    lang
-
-  }`
-
-export const homePageDataForHeaderQuery = /* groq */ `
-  fn ex::content($docRef)=$docRef{
-    "_id": _ref, //used for data filtering
-    "slug": "/",
-    ${allSlugsQuery},
-    "title": @->title,
-    "seoAndSome": @->${seoAndSomeFields},
-    ${stickyMenu},
-    "template": @->_type,
-  };
-{
- "data": select(count(*[ _type =="translation.metadata"])>0 =>*[_type == "translation.metadata" && references(*[_id=="route_homepage" || _id=="drafts.route_homepage"][0].content._ref)][0].translations[_key==$lang][0] 
- {
-   "pageData":ex::content(value)
-  }, ex::content(*[_id=="route_homepage" || _id=="drafts.route_homepage"][0].content))
-}
- {
-  "pageData": data.pageData,
- "slugs":{
-      "allSlugs" : select(count(data.slugsFromTranslations)> 0 => data.slugsFromTranslations, [data.currentSlug])
-    }
-  }
-`
+    lang}`
 
 export const homePageQuery = /* groq */ `
    ${functions}
@@ -46,7 +20,7 @@ export const homePageQuery = /* groq */ `
   fn ex::content($docRef)=$docRef{
     "_id": _ref, //used for data filtering
     "slug": "/",
-    "slugs":{${allSlugsQuery}},
+    "slugs":{${homepageSlugsQuery}},
     "title": @->title,
     "seoAndSome": @->${seoAndSomeFields},
     ${stickyMenuOutSideContent},

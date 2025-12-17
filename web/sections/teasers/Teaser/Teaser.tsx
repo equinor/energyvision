@@ -6,7 +6,7 @@ import Blocks from '@/portableText/Blocks'
 import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
 import { getObjectPositionForImage, Image } from '../../../core/Image/Image'
 import { ResourceLink } from '../../../core/Link'
-import { getLocaleFromName } from '../../../sanity/localization'
+import { getLocaleFromName } from '../../../sanity/helpers/localization'
 import type {
   DesignOptions,
   ImageWithAlt,

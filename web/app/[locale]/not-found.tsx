@@ -1,6 +1,6 @@
 import { getLocale } from 'next-intl/server'
+import { getNameFromLocale } from '@/sanity/helpers/localization'
 import { sanityFetch } from '@/sanity/lib/sanityFetch'
-import { getNameFromLocale } from '@/sanity/localization'
 import { pageNotFoundQuery } from '@/sanity/queries/pageNotFound'
 import NotFoundPage from '@/templates/notFound/NotFoundPage'
 

@@ -7,7 +7,7 @@ import {
   colorKeyToUtilityMap,
 } from '@/styles/colorKeyToUtilityMap'
 import type { PromoTileData } from '@/types/index'
-import { getLocaleFromName } from '../../sanity/localization'
+import { getLocaleFromName } from '../../sanity/helpers/localization'
 import type { Variants } from '../cards/Card/Card'
 
 type PromoTileProps = {

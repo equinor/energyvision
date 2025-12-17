@@ -1,9 +1,9 @@
-import { sameLang } from './queries/common/langAndDrafts'
+import { sameLang } from './common/langAndDrafts'
 import {
   lastUpdatedTimeQuery,
   publishDateTimeQuery,
-} from './queries/common/publishDateTime'
-import { seoAndSomeFields } from './queries/common/seoAndSomeFields'
+} from './common/publishDateTime'
+import { seoAndSomeFields } from './common/seoAndSomeFields'
 
 //page, magazine, landingpage,news, localnews, event
 export const contentRefSlugsQuery = /* groq */ `
@@ -40,7 +40,7 @@ export const pageMetaQuery = /* groq */ `
   *[(_type match "route_" + $lang) && slug.current == $slug] {
     _id, //used for data filtering
     "slug": slug.current,
-    "slugs": {${contentRefSlugsQuery}},
+    "slugs": {${contentRefSlugsQuery}}.translationSlugs,
     "title": content->title,
     "heroImage": content->heroImage,
     "seoAndSome": content->${seoAndSomeFields},
@@ -64,7 +64,7 @@ export const newsroomMetaQuery = /* groq */ `
     "title": title,
     "seoAndSome": ${seoAndSomeFields},
     "template": _type,
-    "slugs": {${singletonsSlugsQuery}}
+    "slugs": {${singletonsSlugsQuery}}.translationSlugs
   }[0]
 `
 export const newsPageMetaQuery = /* groq */ `
@@ -82,7 +82,7 @@ export const newsPageMetaQuery = /* groq */ `
     "publishDateTime": ${publishDateTimeQuery},
     "firstPublishedAt": coalesce(firstPublishedAt, _createdAt),
     "updatedAt":  ${lastUpdatedTimeQuery},
-    "slugs": {${inlineSlugsQuery}}
+    "slugs": {${inlineSlugsQuery}}.translationSlugs
   }[0]
 `
 
@@ -93,7 +93,7 @@ export const magazineroomMetaQuery = /* groq */ `
     "heroImage": heroFigure,
     "seoAndSome": ${seoAndSomeFields},
     "template": _type,
-    "slugs": {${singletonsSlugsQuery}}
+    "slugs": {${singletonsSlugsQuery}}.translationSlugs
   }[0]
 `
 
@@ -112,7 +112,7 @@ export const magazinePageMetaQuery = /* groq */ `
     "publishDateTime": ${publishDateTimeQuery},
     "firstPublishedAt": coalesce(firstPublishedAt, _createdAt),
     "updatedAt":  ${lastUpdatedTimeQuery},
-    "slugs": {${inlineSlugsQuery}}
+    "slugs": {${inlineSlugsQuery}}.translationSlugs
   }[0]
 `
 
@@ -129,6 +129,6 @@ export const localNewsMetaQuery = /* groq */ `
     "template": _type,
     "publishDateTime": ${publishDateTimeQuery},
     "updatedAt":  ${lastUpdatedTimeQuery},
-    "slugs": {${inlineSlugsQuery}},
+    "slugs": {${inlineSlugsQuery}}.translationSlugs,
   }[0]
 `
