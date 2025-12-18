@@ -1,8 +1,10 @@
-import { configureBlockContent } from '../../editors'
-import CompactBlockEditor from '../../components/CompactBlockEditor'
-import { Rule } from 'sanity'
-import routes from '../../routes'
+import { Card, Flex, Grid, Radio, Text } from '@sanity/ui'
+import { useCallback } from 'react'
+import { type Rule, type StringInputProps, set } from 'sanity'
 import { filterByRoute } from '../../../helpers/referenceFilters'
+import CompactBlockEditor from '../../components/CompactBlockEditor'
+import { configureBlockContent } from '../../editors'
+import routes from '../../routes'
 
 const titleVariantOptions = {
   h2: false,
@@ -69,6 +71,105 @@ export const theme = {
   type: 'themeSelector',
   fieldset: 'design',
 }
+
+type LayoutGridInputProps = {
+  options: any[]
+} & StringInputProps
+
+export const LayoutGridInput = (props: LayoutGridInputProps) => {
+  const { onChange, schemaType, value = '' } = props
+
+  const handleChange = useCallback(
+    (event: any) => {
+      const nextValue = event.currentTarget.value
+      onChange(set(nextValue))
+    },
+    [onChange],
+  )
+
+  return (
+    <Grid columns={schemaType?.options?.list?.length} rows={1} gap={2}>
+      {schemaType?.options?.list?.map((option: any) => {
+        return (
+          <Card key={option.value} paddingY={2} paddingX={3} radius={2} shadow={1}>
+            <Flex direction="row" align="center" width="100%" height="stretch" gap={2}>
+              <Radio
+                checked={value === option.value}
+                name={option.value}
+                id={option.value}
+                onChange={handleChange}
+                value={option.value}
+              />
+              <Flex gap={2} width="100%" align="center">
+                <Text as="label" htmlFor={option.value}>
+                  {option.title}
+                </Text>
+                <div
+                  style={{
+                    marginLeft: 'auto',
+                    border: '1px solid lightgrey',
+                    height: '33px',
+                    width: '33px',
+                    padding: '4px',
+                    borderRadius: '5px',
+                    display: 'flex',
+                    gap: '5px',
+                  }}
+                >
+                  <div
+                    style={{
+                      width: '2px',
+                      height: '100%',
+                      backgroundColor: option.value === 'sm' ? 'black' : 'lightgrey',
+                    }}
+                  />
+                  <div
+                    style={{
+                      width: '2px',
+                      height: '100%',
+                      backgroundColor: option.value === 'md' ? 'black' : 'lightgrey',
+                    }}
+                  />
+                  <div
+                    style={{
+                      width: '2px',
+                      height: '100%',
+                      backgroundColor: option.value === 'lg' ? 'black' : 'lightgrey',
+                      marginRight: '2px',
+                    }}
+                  />
+                  <div
+                    style={{
+                      width: '2px',
+                      height: '100%',
+                      backgroundColor: option.value === 'lg' ? 'black' : 'lightgrey',
+                      marginLeft: '2px',
+                    }}
+                  />
+                  <div
+                    style={{
+                      width: '2px',
+                      height: '100%',
+                      backgroundColor: option.value === 'md' ? 'black' : 'lightgrey',
+                    }}
+                  />
+                  <div
+                    style={{
+                      width: '2px',
+                      height: '100%',
+                      backgroundColor: option.value === 'sm' ? 'black' : 'lightgrey',
+                    }}
+                  />
+                </div>
+              </Flex>
+            </Flex>
+          </Card>
+        )
+      })}
+    </Grid>
+  )
+}
+
 export const layoutGrid = {
   title: 'Layout grid',
   name: 'layoutGrid',
@@ -83,6 +184,9 @@ export const layoutGrid = {
   },
   initialValue: 'lg',
   fieldset: 'design',
+  components: {
+    input: LayoutGridInput,
+  },
 }
 export const gridColumns = {
   title: 'Number of grid columns',
