@@ -1,6 +1,6 @@
 import { Flags } from '../helpers/datasetHelpers'
 import { functions } from './common/functions'
-import { fixPreviewForDrafts, sameLang } from './common/langAndDrafts'
+import { sameLang } from './common/langAndDrafts'
 import {
   contentForNewsQuery,
   iframeForNewsQuery,
@@ -30,38 +30,33 @@ const latestNewsFields = /* groq */ `
   "iframe": ${iframeForNewsQuery},
 `
 
-const newsFields = /* groq */ `
-  "id": _id,
-  "updatedAt": ${lastUpdatedTimeQuery},
-  title,
-  heroImage,
-  "publishDateTime": ${publishDateTimeQuery},
-  "slugs":{${inlineSlugsQuery}},
-  ${ingressForNewsQuery},
-  "iframe": ${iframeForNewsQuery},
-  "content": ${contentForNewsQuery},
-  "relatedLinks": ${relatedLinksForNewsQuery},
-  "latestNews": *[
-    _type == "news" &&
-    slug.current != $slug &&
-    heroImage.image.asset != null &&
-    ${excludeCrudeOilAssays}
-    ${sameLang}] | order(${publishDateTimeQuery} desc)[0...3] {
-      ${latestNewsFields}
-    }
-`
-
 export const newsQuery = /* groq */ `
   ${functions}
-  *[_type == "news" && slug.current == $slug && ${fixPreviewForDrafts}] | order(${publishDateTimeQuery} desc) {
+  *[_type == "news" && slug.current == $slug] | order(${publishDateTimeQuery} desc) {
     _id, //used for data filtering
+    "id": _id,
+    "updatedAt": ${lastUpdatedTimeQuery},
+    title,
+    heroImage,
+    "publishDateTime": ${publishDateTimeQuery},
     "slug": slug.current,
     "slugs": {${inlineSlugsQuery}},
     "documentTitle": seo.documentTitle,
     "metaDescription": seo.metaDescription,
     "template": _type,
     openGraphImage,
-    ${newsFields}
+    ${ingressForNewsQuery},
+    "iframe": ${iframeForNewsQuery},
+    "content": ${contentForNewsQuery},
+    "relatedLinks": ${relatedLinksForNewsQuery},
+    "latestNews": *[
+      _type == "news" &&
+      slug.current != $slug &&
+      heroImage.image.asset != null &&
+      ${excludeCrudeOilAssays}
+      ${sameLang}] | order(${publishDateTimeQuery} desc)[0...3] {
+        ${latestNewsFields}
+      }
   }[0]
 `
 

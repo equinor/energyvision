@@ -22,6 +22,7 @@ export const ImageRatios = {
   '4:5': 0.8,
   '5:4': 1.25,
   '5:3': 1.66,
+  '21:9': 2.33,
 } as const
 
 export type ImageRatioKeys = keyof typeof ImageRatios
@@ -140,6 +141,7 @@ export const getTwAspectRatioUtilityOnRatio = (ratio: ImageRatioKeys) => {
     '4:5': 'aspect-4/5',
     '5:4': 'aspect-5/4',
     '5:3': 'aspect-5/3',
+    '21:9': 'aspect-21/9',
   }[ratio]
 }
 
@@ -241,18 +243,15 @@ export const Image = ({
       </div>
       <figcaption
         className={twMerge(
-          `px-layout-lg pt-2 pb-8 text-xs`,
+          `px-layout-lg pt-2 pb-4 text-xs`,
           figCaptionBackground,
           figCaptionClassName,
         )}
       >
-        {caption && (
+        {(caption || attribution) && (
           <Typography group='plain' variant='div' className='leading-normal'>
             {caption}
-          </Typography>
-        )}
-        {attribution && (
-          <Typography group='plain' variant='div' className='leading-normal'>
+            {`${caption && attribution ? ' ' : ''}`}
             {attribution}
           </Typography>
         )}

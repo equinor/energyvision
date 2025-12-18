@@ -52,7 +52,7 @@
     "next-intl": "4.5.8",
     "next-sanity": "11.6.10",
     "next-sanity-image": "^6.2.0",
-    "next-seo": "^6.8.0",
+    "next-seo": "^7.0.1",
     "qs": "^6.11.1",
     "query-string": "^9.2.1",
     "raw-body": "^2.5.1",

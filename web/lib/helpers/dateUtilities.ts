@@ -1,5 +1,12 @@
-import { getYear, getMonth, getDate, getHours, getMinutes, getSeconds } from 'date-fns'
-import { EventDateType } from '../../../web/types/index'
+import {
+  getDate,
+  getHours,
+  getMinutes,
+  getMonth,
+  getSeconds,
+  getYear,
+} from 'date-fns'
+import type { EventDateType } from '../../../web/types/index'
 
 export const toDateParts = (datetime: Date): number[] => {
   return [
@@ -24,8 +31,8 @@ export const toUTCDateParts = (datetime: Date): number[] => {
 }
 
 export const getEventDates = (eventDate: EventDateType | undefined) => {
-  let start = undefined
-  let end = undefined
+  let start
+  let end
   if (!eventDate) {
     console.warn('Missing eventDate object for event')
     return { start, end }

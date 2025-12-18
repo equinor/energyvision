@@ -49,6 +49,7 @@ export const FullWidthImageHero = ({
           image={figure.image}
           aspectRatio={ratioToVariant[variant]}
           grid='full'
+          loading='eager'
           figCaptionBackground={nextCompBg}
           figCaptionClassName={`${nextCompDark ? nextCompDark : ''}`}
           caption={figure?.caption}

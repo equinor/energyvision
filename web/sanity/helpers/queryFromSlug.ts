@@ -25,6 +25,7 @@ const getQuery = async (
     return homePageQuery
   }
   if (Flags.HAS_NEWS && newsSlug[lang] === firstPiece) {
+    console.log('is news')
     if (
       !secondPiece ||
       typeof secondPiece === 'undefined' ||
@@ -44,6 +45,7 @@ const getQuery = async (
         console.log('return localNewsQuery')
         return localNewsQuery
       }
+      console.log('return newspage Query')
       return newsQuery
     }
   }
@@ -80,7 +82,6 @@ export const getQueryFromSlug = async (
   } else if (slug) {
     topLevelRoute = slug
   }
-
   const lang = getNameFromIso(locale) ?? 'en_GB'
 
   const query = await getQuery(topLevelRoute, childRoute, lang)

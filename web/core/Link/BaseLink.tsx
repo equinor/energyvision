@@ -1,7 +1,7 @@
-import { AnchorHTMLAttributes, forwardRef } from 'react'
-import NextLink, { LinkProps } from 'next/link'
+import NextLink, { type LinkProps } from 'next/link'
+import { type AnchorHTMLAttributes, forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { LinkType } from '../../types/index'
+import type { LinkType } from '../../types/index'
 
 export type BaseLinkProps = {
   /** What kind of content is it  */
@@ -17,14 +17,24 @@ export type BaseLinkProps = {
  * Contains the common focus and active styling
  * And the strict origin policy when external for using blank
  */
-export const BaseLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(function BaseLink(
-  { children, type = 'internalUrl', className = '', href = '', skipInternalStyle = false, prefetch = false, ...rest },
-  ref,
-) {
-  const classNames = skipInternalStyle
-    ? className
-    : twMerge(
-        `
+export const BaseLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(
+  function BaseLink(
+    {
+      children,
+      type = 'internalUrl',
+      className = '',
+      href = '',
+      skipInternalStyle = false,
+      prefetch = false,
+      locale,
+      ...rest
+    },
+    ref,
+  ) {
+    const classNames = skipInternalStyle
+      ? className
+      : twMerge(
+          `
     text-slate-80
     focus:outline-hidden
     focus-visible:envis-outline
@@ -33,46 +43,53 @@ export const BaseLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(function Ba
     dark:focus-visible:envis-outline-invert
     dark:active:envis-outline-invert
   `,
-        className,
-      )
-
-  const getLinkElement = () => {
-    switch (type) {
-      case 'externalUrl':
-        return (
-          // https://web.dev/articles/referrer-best-practices
-          // strict-origin-when-cross-origin only share the origin
-          // and thus protects privacy but gives Referrer origin
-          // for SEO
-          // eslint-disable-next-line react/jsx-no-target-blank
-          <a
-            className={classNames}
-            ref={ref}
-            href={href}
-            target="_blank"
-            {...rest}
-            rel="noopener"
-            referrerPolicy="strict-origin-when-cross-origin"
-          >
-            {children}
-          </a>
-        )
-      case 'icsLink':
-        return (
-          <a className={classNames} ref={ref} href={href} {...rest}>
-            {children}
-          </a>
+          className,
         )
 
-      default:
-        return (
-          <NextLink {...rest} ref={ref} href={href} className={classNames} prefetch={prefetch}>
-            {children}
-          </NextLink>
-        )
+    const getLinkElement = () => {
+      switch (type) {
+        case 'externalUrl':
+          return (
+            // https://web.dev/articles/referrer-best-practices
+            // strict-origin-when-cross-origin only share the origin
+            // and thus protects privacy but gives Referrer origin
+            // for SEO
+            // eslint-disable-next-line react/jsx-no-target-blank
+            <a
+              className={classNames}
+              ref={ref}
+              href={href}
+              target='_blank'
+              {...rest}
+              rel='noopener'
+              referrerPolicy='strict-origin-when-cross-origin'
+            >
+              {children}
+            </a>
+          )
+        case 'icsLink':
+          return (
+            <a className={classNames} ref={ref} href={href} {...rest}>
+              {children}
+            </a>
+          )
+
+        default:
+          return (
+            <NextLink
+              {...rest}
+              ref={ref}
+              href={href}
+              className={classNames}
+              prefetch={prefetch}
+            >
+              {children}
+            </NextLink>
+          )
+      }
     }
-  }
 
-  return getLinkElement()
-})
+    return getLinkElement()
+  },
+)
 export default BaseLink

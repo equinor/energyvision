@@ -5,28 +5,34 @@ import { getNameFromLocale } from '@/sanity/helpers/localization'
 import { sanityFetch } from '@/sanity/lib/sanityFetch'
 import { PageWrapper } from '@/sanity/pages/PageWrapper'
 import { constructSanityMetadata, getPage } from '@/sanity/pages/utils'
-import { pageMetaQuery } from '@/sanity/queries/metaData'
+import { docWithSlugMetaQuery, pageMetaQuery } from '@/sanity/queries/metaData'
+import { magazineSlug, newsSlug } from '@/sitesConfig'
 
+type Props = {
+  params: Promise<{ slug: string[]; locale: string }>
+  searchParams: Promise<{ [key: string]: string[] | undefined }>
+}
 const MagazinePage = dynamic(() => import('@/templates/magazine/MagazinePage'))
 const LandingPage = dynamic(() => import('@/templates/landingpage/LandingPage'))
 const EventPage = dynamic(() => import('@/templates/event/Event'))
 const NewsPage = dynamic(() => import('@/templates/news/News'))
 const TopicPage = dynamic(() => import('@/templates/topic/TopicPage'))
 
-type Props = {
-  params: Promise<{ slug: string[]; locale: string }>
-  searchParams: Promise<{ [key: string]: string[] | undefined }>
-}
-
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   //array, separated by /. e.g. [news, last slug]
   const { slug, locale } = await params
+  const sanityLang = getNameFromLocale(locale)
+  //news, magazinepage has slug in document
+  const isNewsPage = slug[0] === newsSlug[sanityLang]
+  const isMagazinePage = slug[0] === magazineSlug[sanityLang]
+  const type = isMagazinePage ? 'magazine' : 'news'
 
   const metaData = await sanityFetch({
-    query: pageMetaQuery,
+    query: isNewsPage || isMagazinePage ? docWithSlugMetaQuery : pageMetaQuery,
     params: {
-      lang: getNameFromLocale(locale),
+      lang: sanityLang,
       slug: `/${slug.join('/')}`,
+      ...((isNewsPage || isMagazinePage) && { type }),
     },
     stega: false,
   })
@@ -63,6 +69,5 @@ export default async function Page({ params }: Props) {
         return <TopicPage {...pageData} />
     }
   }
-
   return <PageWrapper headerData={headerData}>{getTemplate()}</PageWrapper>
 }

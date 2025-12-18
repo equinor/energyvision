@@ -1,4 +1,4 @@
-import { SocialProfileJsonLd } from 'next-seo'
+import { ProfilePageJsonLd } from 'next-seo'
 import { forwardRef, type HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { BaseLink, ResourceLink } from '@/core/Link'
@@ -125,20 +125,11 @@ const PeopleCard = forwardRef<HTMLDivElement, PeopleCardProps>(
           </div>
         </div>
         {enableStructuredMarkup && (
-          <SocialProfileJsonLd
-            type='Person'
-            name={name}
-            jobTitle={title}
-            url=''
-            sameAs={['']}
-            worksFor={{
-              type: 'Organization',
-              name: 'Equinor',
-              url: 'https://www.equinor.com',
+          <ProfilePageJsonLd
+            mainEntity={{
+              name: name,
+              ...(image && { image: urlForImage(image)?.toString() }),
             }}
-            image={image ? urlForImage(image) : undefined}
-            telephone={phone}
-            email={email}
           />
         )}
       </>

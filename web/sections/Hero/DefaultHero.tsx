@@ -28,7 +28,7 @@ type DefaultHeroProps = {
   background?: string
   bigTitle?: PortableTextBlock[]
   ratio?: ImageRatioKeys
-} & HeroData &
+} & Omit<HeroData, 'background'> &
   HTMLAttributes<HTMLElement>
 
 export const DefaultHero = ({
@@ -50,6 +50,7 @@ export const DefaultHero = ({
   const isPlainTitle =
     title && (title === 'string' || typeof title === 'string')
 
+  console.log('DefaultHero background', background)
   return (
     <div className={twMerge(className, `relative h-full w-full`)}>
       {background && (
@@ -57,7 +58,7 @@ export const DefaultHero = ({
           className={`-z-1 absolute inset-0 aspect-video h-[48dvh] w-full ${background}`}
         />
       )}
-      <div className={twMerge(`py-10`, px, titleClassName)}>
+      <div className={twMerge(`pt-10`, px, titleClassName)}>
         {title && isBigTitle && !isPlainTitle && (
           <>
             <div className='pr-16'>

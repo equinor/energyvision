@@ -1,10 +1,8 @@
-'use client'
 import { calendar } from '@equinor/eds-icons'
 import { toPlainText } from '@portabletext/react'
-import { usePathname } from 'next/navigation'
-import { useLocale, useTranslations } from 'next-intl'
+import { getLocale, getTranslations } from 'next-intl/server'
 import type { PortableTextBlock } from 'next-sanity'
-import { NewsArticleJsonLd } from 'next-seo'
+import { ArticleJsonLd } from 'next-seo'
 import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
 import { IFrame } from '@/core/IFrame/IFrame'
 import TransformableIcon from '@/icons/TransformableIcon'
@@ -41,7 +39,7 @@ export type NewsPageProps = {
   latestNews: CardData[]
 }
 
-const NewsPage = ({
+const NewsPage = async ({
   publishDateTime,
   updatedAt,
   title,
@@ -54,11 +52,10 @@ const NewsPage = ({
   latestNews,
   slug,
 }: NewsPageProps) => {
-  const pathname = usePathname()
-  const locale = useLocale()
-  const intl = useTranslations()
+  const locale = await getLocale()
+  const intl = await getTranslations()
 
-  const fullUrl = getFullUrl(pathname ?? '', slug ?? '', locale)
+  const fullUrl = getFullUrl(slug ?? '', locale)
 
   const modifiedDate = isDateAfter(publishDateTime, updatedAt)
     ? publishDateTime
@@ -93,75 +90,23 @@ const NewsPage = ({
     </div>
   )
 
+  console.log('')
+
   return (
     <>
-      <NewsArticleJsonLd
-        url={fullUrl}
-        title={title}
-        images={[ogImage?.url ?? '']}
-        dateCreated={publishDateTime}
-        datePublished={publishDateTime}
-        dateModified={modifiedDate}
-        section=''
-        keywords=''
-        authorName=''
-        publisherName='Equinor'
-        publisherLogo='https://cdn.eds.equinor.com/logo/equinor-logo-horizontal.svg#red'
-        description={toPlainText(ingress)}
-        body={toPlainText(content)}
-      />
       <main className='pt-topbar'>
         <article className='flex flex-col items-center pb-28'>
           <DefaultHero
             figure={heroImage}
-            background={'slate-blue-95'}
+            background='bg-slate-blue-95'
             className='dark'
             //@ts-ignore
             title={title}
+            ratio='21:9'
             subTitle={publishedInformation}
-            imageWrapperClassName='light'
-            figCaptionClassName='px-layout-lg'
+            imageWrapperClassName='lg:px-layout-md'
+            figCaptionClassName='light px-layout-lg'
           />
-          {/*           <div className={'dark w-full bg-slate-blue-95'}>
-            <div className='px-layout-lg py-news-banner-vertical'>
-              <Typography id='mainTitle' variant='h1'>
-                {title}
-              </Typography>
-              {publishDateTime && (
-                <div className='my-12 grid grid-cols-[min-content_1fr] gap-4'>
-                  <Icon data={calendar} className='text-white-100' />
-                  <div className='wrap-break-word text-base text-white-100 leading-planetary'>
-                    <FormattedDateTime uppercase datetime={publishDateTime} />
-                    {
-                      // publishDateTime + 5 minutes
-                      isDateAfter(
-                        modifiedDate,
-                        new Date(
-                          new Date(publishDateTime).getTime() + 5 * 60000,
-                        ).toISOString(),
-                      ) && (
-                        <>
-                          <span className='mx-4 my-0 uppercase before:mr-4 before:content-["|"] after:content-[":"]'>
-                            Last modified
-                          </span>
-                          <FormattedDateTime
-                            uppercase
-                            datetime={modifiedDate}
-                          />
-                        </>
-                      )
-                    }
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-          {heroImage.image.asset && (
-            <div className='-mt-news-banner-vertical px-layout-sm'>
-              <DefaultHero image={heroImage} />
-            </div>
-          )} */}
-
           {ingress && ingress.length > 0 && (
             <Blocks
               variant='ingress'
@@ -200,6 +145,20 @@ const NewsPage = ({
           )}
         </article>
       </main>
+      <ArticleJsonLd
+        url={fullUrl}
+        type='NewsArticle'
+        headline={title}
+        image={[ogImage?.url ?? '']}
+        datePublished={publishDateTime}
+        dateModified={modifiedDate}
+        publisher={{
+          '@type': 'Organization',
+          name: 'Equinor',
+          logo: 'https://cdn.eds.equinor.com/logo/equinor-logo-horizontal.svg#red',
+        }}
+        description={toPlainText(ingress)}
+      />
     </>
   )
 }

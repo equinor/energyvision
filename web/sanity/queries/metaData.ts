@@ -20,7 +20,7 @@ export const inlineSlugsQuery = /* groq */ `
       "slug": slug.current,
       lang
     },
-    "translationSlugs": *[_type == "translation.metadata" && references(^.id)].translations[].value->{
+    "translationSlugs": *[_type == "translation.metadata" && references(^._id)].translations[].value->{
       "slug": slug.current,
       lang
     }`
@@ -57,7 +57,6 @@ export const homePageMetaQuery = /* groq */ `
     }
 }
 `
-
 export const newsroomMetaQuery = /* groq */ `
   *[_type == "newsroom" && ${sameLang}] {
     _id, //used for data filtering
@@ -67,8 +66,8 @@ export const newsroomMetaQuery = /* groq */ `
     "slugs": {${singletonsSlugsQuery}}.translationSlugs
   }[0]
 `
-export const newsPageMetaQuery = /* groq */ `
-  *[_type == "news" && ${sameLang} && slug.current == $slug] {
+export const docWithSlugMetaQuery = /* groq */ `
+  *[_type == $type && ${sameLang} && slug.current == $slug] {
     _id, //used for data filtering
     title,
     heroImage,
@@ -85,7 +84,6 @@ export const newsPageMetaQuery = /* groq */ `
     "slugs": {${inlineSlugsQuery}}.translationSlugs
   }[0]
 `
-
 export const magazineroomMetaQuery = /* groq */ `
   *[_type == "magazineIndex" && ${sameLang}] {
     _id, //used for data filtering
@@ -94,41 +92,5 @@ export const magazineroomMetaQuery = /* groq */ `
     "seoAndSome": ${seoAndSomeFields},
     "template": _type,
     "slugs": {${singletonsSlugsQuery}}.translationSlugs
-  }[0]
-`
-
-export const magazinePageMetaQuery = /* groq */ `
-  *[_type == "magazine" && ${sameLang} && slug.current == $slug] {
-    _id, //used for data filtering
-    title,
-    heroImage,
-    "slug": slug.current,
-    "seoAndSome":{
-    "documentTitle": seo.documentTitle,
-    "metaDescription": seo.metaDescription,
-    openGraphImage,
-    },
-    "template": _type,
-    "publishDateTime": ${publishDateTimeQuery},
-    "firstPublishedAt": coalesce(firstPublishedAt, _createdAt),
-    "updatedAt":  ${lastUpdatedTimeQuery},
-    "slugs": {${inlineSlugsQuery}}.translationSlugs
-  }[0]
-`
-
-export const localNewsMetaQuery = /* groq */ `
-  *[_type == "localNews" && ${sameLang} && slug.current == $slug] {
-    _id, //used for data filtering
-    title,
-    "slug": slug.current,
-    "seoAndSome":{
-        "documentTitle": seo.documentTitle,
-        "metaDescription": seo.metaDescription,
-        openGraphImage,
-    },
-    "template": _type,
-    "publishDateTime": ${publishDateTimeQuery},
-    "updatedAt":  ${lastUpdatedTimeQuery},
-    "slugs": {${inlineSlugsQuery}}.translationSlugs,
   }[0]
 `

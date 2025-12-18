@@ -92,7 +92,7 @@ export const TopbarWrapper = forwardRef<HTMLDivElement, TopbarWrapperProps>(
     }, [isVisible])
 
     return (
-      <>
+      <header>
         <nav
           ref={combinedTopbarRef}
           aria-label={'Global ' /*intl('global') TODO*/}
@@ -108,7 +108,7 @@ export const TopbarWrapper = forwardRef<HTMLDivElement, TopbarWrapperProps>(
             className={`${isVisible ? 'top-topbar pt-2' : 'top-0'}`}
           />
         )}
-      </>
+      </header>
     )
   },
 )
