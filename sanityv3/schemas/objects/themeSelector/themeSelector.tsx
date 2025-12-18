@@ -1,8 +1,8 @@
-import { Card, Flex, Stack } from '@sanity/ui'
+import { Flex, Stack } from '@sanity/ui'
 import { useCallback, useId } from 'react'
-import { ObjectInputProps, set } from 'sanity'
+import { type ObjectInputProps, set } from 'sanity'
 import { capitalizeFirstLetter } from '../../../helpers/formatters'
-import { Color, defaultColors } from '../../defaultColors'
+import { type Color, defaultColors } from '../../defaultColors'
 
 const availableColors: Color[] = [
   //[0] - White
@@ -80,7 +80,8 @@ export const ThemeComponent = ({ theme, active, onClickHandler }: ThemeComponent
         style={{
           position: 'relative',
           width: '100%',
-          height: '100%',
+          flexGrow: '1',
+          height: 'auto',
           minHeight: '2rem',
         }}
       >
@@ -103,6 +104,7 @@ export const ThemeComponent = ({ theme, active, onClickHandler }: ThemeComponent
             height: '100%',
             minHeight: '2rem',
             backgroundColor: theme?.background?.value,
+            borderBottom: '1px solid lightgrey',
           }}
         />
       </div>
@@ -112,9 +114,11 @@ export const ThemeComponent = ({ theme, active, onClickHandler }: ThemeComponent
           maxWidth: '150px',
           textWrap: 'pretty',
           display: 'flex',
-          justifyContent: 'start',
-          width: 'fit-content',
-          height: 'fit-content',
+          justifyContent: 'center',
+          alignItems: 'center',
+          textAlign: 'center',
+          width: '100%',
+          height: '40px',
           fontSize: '0.8125rem',
         }}
       >

@@ -1,28 +1,12 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { PortableText, PortableTextProps } from '@portabletext/react'
-import type { PortableTextBlock } from '@portabletext/types'
-import { Typography, TypographyProps } from './Typography'
-import isEmpty from '../../pageComponents/shared/portableText/helpers/isEmpty'
-import { Highlight } from '@core/Typography/Highlight'
-import { BlockProps } from '../../pageComponents/shared/portableText/Blocks'
-import { twMerge } from 'tailwind-merge'
 
-export type HeadingProps = {
-  value?: PortableTextBlock[]
-  /**
-   * If needed to connect with aria-labelledby and such
-   */
-  id?: string
-  noProse?: boolean
-  serializerClassnames?: {
-    largeText?: string
-    normal?: string
-    extraLargeText?: string
-    twoXLText?: string
-  }
-} & PortableTextProps &
-  TypographyProps &
-  BlockProps
+import { Highlight } from '@core/Typography/Highlight'
+import { PortableText, type PortableTextProps } from '@portabletext/react'
+import type { PortableTextBlock } from '@portabletext/types'
+import { twMerge } from 'tailwind-merge'
+import type { BlockProps } from '../../pageComponents/shared/portableText/Blocks'
+import isEmpty from '../../pageComponents/shared/portableText/helpers/isEmpty'
+import { Typography, type TypographyProps } from './Typography'
 
 type DefaultComponentsProps = {
   serializerClassnames?: {
@@ -115,6 +99,23 @@ const defaultComponents = ({
   }
 }
 
+export type HeadingProps = {
+  value?: PortableTextBlock[]
+  /**
+   * If needed to connect with aria-labelledby and such
+   */
+  id?: string
+  noProse?: boolean
+  serializerClassnames?: {
+    largeText?: string
+    normal?: string
+    extraLargeText?: string
+    twoXLText?: string
+  }
+} & PortableTextProps &
+  TypographyProps &
+  BlockProps
+
 /**
  * Component to use with portabletext headings
  */
@@ -135,7 +136,14 @@ export const Heading = ({
     // eslint-disable-next-line
     // @ts-ignore
     block: {
-      ...defaultComponents({ variant, group, as, serializerClassnames, className, id }).block,
+      ...defaultComponents({
+        variant,
+        group,
+        as,
+        serializerClassnames,
+        className,
+        id,
+      }).block,
     },
     // eslint-disable-next-line
     // @ts-ignore
@@ -165,11 +173,17 @@ export const Heading = ({
               // eslint-disable-next-line
               // @ts-ignore
               block: {
-                ...defaultComponents({ variant, group, as: PortableTextTag, serializerClassnames, className }).block,
+                ...defaultComponents({
+                  variant,
+                  group,
+                  as: PortableTextTag,
+                  serializerClassnames,
+                  className,
+                }).block,
                 ...blocksComponents,
               },
               // eslint-disable-next-line
-              // @ts-ignore
+              //@ts-ignore
               marks: {
                 ...defaultComponents({ variant, group, as: PortableTextTag }).marks,
               },
@@ -194,7 +208,7 @@ export const Heading = ({
         <PortableText
           {...props}
           value={value}
-          /*@ts-ignore */
+          /*@ts-expect-error */
           components={serializers}
         />
       )}

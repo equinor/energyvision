@@ -1,7 +1,7 @@
 import { BaseLink, type BaseLinkProps } from '@core/Link'
 import { getArrowElement } from '@core/Link/ResourceLink'
 import Image, { getPxLgSizes } from '@core/SanityImage/SanityImage'
-import { Heading, Typography } from '@core/Typography'
+import { Typography } from '@core/Typography'
 import type { PortableTextBlock } from '@portabletext/types'
 import { forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
@@ -25,30 +25,20 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(function 
   { background, title, image, href, className = '', locale, variant = 'default', gridColumns, layoutDirection = 'col' },
   ref,
 ) {
-  const titleClassNames = 'group-hover:underline'
-  const getTitleElement = () => {
-    if (title && (title === 'string' || typeof title === 'string')) {
-      return (
-        <Typography as="p" variant="h6" className={titleClassNames}>
-          {title}
-        </Typography>
-      )
-    }
-    if (title && Array.isArray(title)) {
-      return <Heading as="p" variant="h6" className={titleClassNames} value={title} />
-    }
-    return null
-  }
+  const plainText = Array.isArray(title)
+    ? title
+        .map((block) => block.children.map((span) => span.text).join(''))
+        .join('\n')
+        .replace(/\n/g, ' ')
+    : title
 
   const layoutDirectionImageClassNames: Record<PromotionLayoutDirection, string> = {
     col: `aspect-video w-full h-auto`,
     row: `h-full w-auto ${gridColumns && gridColumns === '2' ? 'aspect-[1.08]' : 'aspect-[4/5]'}`,
   }
 
-  /**
-   *         flex
-        ${layoutDirection === 'col' ? 'flex-col' : 'flex-row'}
-   */
+  const titleClassNames = `group-hover:underline ${layoutDirection === 'col' ? 'line-clamp-2' : 'line-clamp-3'}`
+
   return (
     <BaseLink
       ref={ref}
@@ -63,11 +53,7 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(function 
         rounded-[13px]
         ${colorKeyToUtilityMap[background ?? 'gray-20'].background}
         grid
-        ${
-          layoutDirection === 'col'
-            ? 'grid-cols-1 grid-rows-[65%_35%]'
-            : `${gridColumns && gridColumns === '2' ? 'grid-cols-[30%_70%]' : 'grid-cols-[25%_75%]'} grid-rows-1`
-        }
+        ${layoutDirection === 'col' ? 'grid-cols-1 grid-rows-[65%_35%]' : 'grid-cols-[30%_70%] grid-rows-1'}
         focus:outline-none
         focus-visible:envis-outline
         dark:focus-visible:envis-outline-invert
@@ -87,18 +73,22 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(function 
         )}
       </div>
       <div
-        className={`w-full 
+        className={`
+          w-inherit 
+          h-inherit
         relative 
-        ${layoutDirection === 'col' ? 'px-6 py-8' : 'pl-4 pr-3 py-4'}
-        flex 
-        flex-col 
-        flex-wrap
-        overflow-clip
-        justify-center 
-        max-w-prose`}
+        ${layoutDirection === 'col' ? 'p-4' : 'pl-4 pr-3 py-4'}
+        flex
+        overflow-hidden
+        `}
       >
-        {getTitleElement()}
-        <div className="absolute right-3.5 bottom-3.5">
+        <div className="min-h-[50px] grow max-w-prose ">
+          <Typography as="p" variant="h6" className={titleClassNames}>
+            {plainText}
+          </Typography>
+        </div>
+
+        <div className="flex p-1 justify-end items-end">
           {getArrowElement(variant === 'externalLink' ? 'externalUrl' : 'internalUrl')}
         </div>
       </div>
