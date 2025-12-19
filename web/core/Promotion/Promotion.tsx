@@ -34,7 +34,7 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(function 
 
   const layoutDirectionImageClassNames: Record<PromotionLayoutDirection, string> = {
     col: `aspect-video w-full h-auto`,
-    row: `h-full w-auto ${gridColumns && gridColumns === '2' ? 'aspect-[1.08]' : 'aspect-[4/5]'}`,
+    row: `h-full w-auto ${gridColumns && gridColumns === '2' ? 'xl:aspect-[1.08]' : 'xl:aspect-[4/5]'}`,
   }
 
   const titleClassNames = `group-hover:underline ${layoutDirection === 'col' ? 'line-clamp-2' : 'line-clamp-3'}`
@@ -53,7 +53,11 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(function 
         rounded-[13px]
         ${colorKeyToUtilityMap[background ?? 'gray-20'].background}
         grid
-        ${layoutDirection === 'col' ? 'grid-cols-1 grid-rows-[65%_35%]' : 'grid-cols-[30%_70%] grid-rows-1'}
+        ${
+          layoutDirection === 'col'
+            ? 'grid-cols-1 grid-rows-[65%_35%]'
+            : 'min-h-[120px] grid-cols-[30%_70%] grid-rows-1'
+        }
         focus:outline-none
         focus-visible:envis-outline
         dark:focus-visible:envis-outline-invert
@@ -82,7 +86,7 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(function 
         overflow-hidden
         `}
       >
-        <div className="min-h-[50px] grow max-w-prose ">
+        <div className="grow max-w-prose ">
           <Typography as="p" variant="h6" className={titleClassNames}>
             {plainText}
           </Typography>
