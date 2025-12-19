@@ -160,8 +160,9 @@ export default {
         Rule.custom((value: string, ctx: ValidationContext) => {
           //@ts-ignore:todo
           if (Number(ctx.parent?.promoteList?.length) < Number(value)) {
-            return 'Fewer promotions than grid columns.Please select lower grid columns'
+            return 'Fewer promotions than grid columns. Please select lower grid columns'
           }
+          //@ts-ignore:todo
           if (ctx.parent?.layoutDirection === 'row' && ctx.parent?.layoutGrid !== 'sm') {
             if (value === '4') {
               return 'Please use only 2 or 3 cols when using the smaller layout grids with side by side promotions'
