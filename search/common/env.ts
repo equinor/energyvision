@@ -39,6 +39,7 @@ export const loadEnv = async (logger: Logger) => {
   catch(err){
     console.log("Error loading app config", err)
   }
+}
 
  
 export const getAzureConnectionString: GetProcessEnvType = () =>
