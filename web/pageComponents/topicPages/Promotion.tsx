@@ -24,9 +24,8 @@ const Promotion = ({
   const variant = data.content?.type
   const promoteSingleUpcomingEvent = data?.content?.eventPromotionSettings?.promoteSingleUpcomingEvent
   const sectionTitleId = useId()
-  const onColorBg =
-    designOptions?.background.backgroundUtility !== 'white-100' ||
-    designOptions?.background?.backgroundColor !== 'White'
+
+  const onColorBg = designOptions?.background?.backgroundColor !== 'White'
 
   const paddingClassName = `px-layout-sm 3xl:px-layout-lg`
 
