@@ -37,7 +37,9 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(function 
     row: `h-full w-auto ${gridColumns && gridColumns === '2' ? '2xl:aspect-[1.08]' : '2xl:aspect-[4/5]'}`,
   }
 
-  const titleClassNames = `group-hover:underline ${layoutDirection === 'col' ? 'line-clamp-2' : 'line-clamp-3'}`
+  const titleClassNames = `group-hover:underline leading-tight ${
+    layoutDirection === 'col' ? 'line-clamp-2' : 'line-clamp-3'
+  }`
 
   return (
     <BaseLink
