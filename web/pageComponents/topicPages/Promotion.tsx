@@ -1,12 +1,12 @@
 import { BackgroundContainer } from '@core/Backgrounds'
-import SinglePromotion from './promotions/SinglePromotion'
-import MultiplePromotions from './promotions/MultiplePromotions'
-import IngressText from '../shared/portableText/IngressText'
-import type { PromotionData } from '../../types/index'
-import { twMerge } from 'tailwind-merge'
 import { ResourceLink } from '@core/Link'
 import { Heading } from '@core/Typography'
 import { useId } from 'react'
+import { twMerge } from 'tailwind-merge'
+import type { PromotionData } from '../../types/index'
+import IngressText from '../shared/portableText/IngressText'
+import MultiplePromotions from './promotions/MultiplePromotions'
+import SinglePromotion from './promotions/SinglePromotion'
 
 const Promotion = ({
   data,
@@ -24,6 +24,9 @@ const Promotion = ({
   const variant = data.content?.type
   const promoteSingleUpcomingEvent = data?.content?.eventPromotionSettings?.promoteSingleUpcomingEvent
   const sectionTitleId = useId()
+  const onColorBg =
+    designOptions?.background.backgroundUtility !== 'white-100' ||
+    designOptions?.background?.backgroundColor !== 'White'
 
   const paddingClassName = `px-layout-sm 3xl:px-layout-lg`
 
@@ -69,7 +72,7 @@ const Promotion = ({
         }`}
       >
         {promotions?.length === 1 || promoteSingleUpcomingEvent ? (
-          <SinglePromotion promotion={promotions[0]} hasSectionTitle={!!title} />
+          <SinglePromotion onColorBg={onColorBg} promotion={promotions[0]} hasSectionTitle={!!title} />
         ) : (
           <MultiplePromotions
             data={promotions}
@@ -78,6 +81,7 @@ const Promotion = ({
             eventPromotionSettings={content?.eventPromotionSettings}
             useHorizontalScroll={useHorizontalScroll}
             labelledbyId={sectionTitleId}
+            onColorBg={onColorBg}
           />
         )}
       </div>
