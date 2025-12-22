@@ -3,11 +3,9 @@ import { routeQuery } from './queries/routes'
 import { magazineQuery } from './queries/magazine'
 import { contentQueryById } from './queries/contentById'
 import { getNameFromLocale } from './localization'
-import { newsSlug, magazineSlug } from '../../satellitesConfig'
-import { getClient } from './sanity.server'
+import { newsSlug, magazineSlug, localNewsTags } from '../../satellitesConfig'
 import { Flags } from '../common/helpers/datasetHelpers'
 import { localNewsQuery } from './queries/localNews'
-import { noDrafts } from './queries/common/langAndDrafts'
 import { homePageQuery } from './queries/homePage'
 
 export type QueryParams = {
@@ -34,17 +32,12 @@ const parseSlug = (slug: string): string => {
   return slug
 }
 
-const localNewsTagsQuery = (lang: string) => /* groq */ `*[_type == 'localNewsTag' && ${noDrafts}] {${lang}}`
-
 const getQuery = async (firstPiece: string, secondPiece: string | undefined, lang: string) => {
   if (firstPiece == '') return homePageQuery
   if (Flags.HAS_NEWS && newsSlug[lang] === firstPiece && secondPiece) {
     // is news
-    const localNewsTagsData: Record<string, string>[] = await getClient(false).fetch(localNewsTagsQuery(lang))
-    const localNewsTags = localNewsTagsData
-      .map((e) => Object.values(e))
-      .flatMap(([e]) => e.toLowerCase().replace(' ', '-'))
-    if (Flags.HAS_LOCAL_NEWS && localNewsTags.includes(secondPiece.toLowerCase())) {
+    //@ts-ignore:todo
+    if (Flags.HAS_LOCAL_NEWS && localNewsTags[lang].includes(secondPiece.toLowerCase())) {
       // is local news
       return localNewsQuery
     } else {

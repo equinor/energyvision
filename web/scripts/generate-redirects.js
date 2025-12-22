@@ -66,18 +66,15 @@ export const getInternalRedirects = async () => {
   from,
   "to": to->slug.current
 }`)
-  const locales = getLanguages(dataset).map((l) => `/${l.locale}/`)
 
   const redirects = result
     .filter((e) => e.from && e.to)
     .map((redirect) => {
       const locale = getLanguages(dataset).find((lang) => lang.name === redirect.lang)?.locale
       const fromIsLocale = redirect.from.startsWith(`/${locale}`)
-      console.log('redirect.to', redirect.to)
       const to = redirect.to === '/' ? '' : redirect.to
       const des = `${locale !== 'en' ? `/${locale}` : ''}${to}`
-      const toIsLocale = locales.some((locale) => des.includes(locale))
-      console.log('toIsLocale', toIsLocale)
+
       return {
         source: redirect.from,
         destination: des,
