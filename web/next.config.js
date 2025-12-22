@@ -1,4 +1,5 @@
 const archiveServerHostname = process.env.NEXT_PUBLIC_ARCHIVE_CONTENT_LINK
+
 /* eslint-disable @typescript-eslint/no-var-requires */
 import withBundleAnalyzer from '@next/bundle-analyzer'
 import { dataset, defaultLanguage, domain, languages } from './languages.js'
@@ -53,8 +54,16 @@ export default withBundle({
     archiveStorageURL: archiveServerHostname,
   },
   images: {
-    domains: ['cdn.sanity.io', 'cdn.equinor.com'],
-    dangerouslyAllowSVG: true,
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'cdn.sanity.io',
+      },
+      {
+        protocol: 'https',
+        hostname: 'cdn.equinor.com',
+      },
+    ],
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
   i18n: {
