@@ -3,6 +3,7 @@ const archiveServerHostname = process.env.NEXT_PUBLIC_ARCHIVE_CONTENT_LINK
 import withBundleAnalyzer from '@next/bundle-analyzer'
 import { dataset, defaultLanguage, domain, languages } from './languages.js'
 import securityHeaders from './securityHeaders.js'
+import redirects from './lib/interface/redirects.json' with { type: 'json' }
 
 const withBundle = withBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
@@ -98,31 +99,6 @@ export default withBundle({
     ].filter((e) => e)
   },
   async redirects() {
-    return [
-      // Redirect IE users to not-supported page
-      {
-        source: '/',
-        has: [
-          {
-            type: 'header',
-            key: 'user-agent',
-            value: '.*(MSIE|Trident).*',
-          },
-        ],
-        permanent: true,
-        destination: '/not-supported.html',
-      },
-      // redirects for /50 site
-      ['global', 'global-development', 'global-test'].includes(dataset) && {
-        source: '/50/en/:slug*',
-        destination: '/magazine',
-        permanent: true,
-      },
-      ['global', 'global-development', 'global-test'].includes(dataset) && {
-        source: '/50/:slug*',
-        destination: '/no/magasin',
-        permanent: true,
-      },
-    ].filter((e) => e)
+    return [...redirects].filter((e) => e)
   },
 })

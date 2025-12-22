@@ -25,6 +25,15 @@
       }
     ]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "jest-setup.ts", ".next/types/**/*.ts"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "jest-setup.ts",
+    ".next/types/**/*.ts",
+    "lib/interface/interface.js",
+    "scripts/generate-redirects.js",
+    "lib/interface/client.server.js"
+  ],
   "exclude": ["node_modules", "pages-disabled/*.tsx"]
 }
