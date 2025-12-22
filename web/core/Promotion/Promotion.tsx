@@ -83,6 +83,7 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(function 
         relative 
         ${layoutDirection === 'col' ? 'p-4' : 'pl-4 pr-3 py-4'}
         flex
+        items-center
         overflow-hidden
         `}
       >
@@ -92,7 +93,7 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(function 
           </Typography>
         </div>
 
-        <div className="flex p-1 justify-end items-end">
+        <div className="flex p-1 self-end justify-end items-end">
           {getArrowElement(variant === 'externalLink' ? 'externalUrl' : 'internalUrl')}
         </div>
       </div>
