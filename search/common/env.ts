@@ -23,6 +23,7 @@ export const loadEnv = async (logger: Logger) => {
       },
     },
   )
+  console.log("Settings ", settings.size)
  const parsed = {
     SANITY_DATASET: settings.get('SANITY_DATASET'),
     ALGOLIA_API_KEY: settings.get('ALGOLIA_API_KEY'),
