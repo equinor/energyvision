@@ -64,6 +64,7 @@ export default withBundle({
         hostname: 'cdn.equinor.com',
       },
     ],
+    dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
   i18n: {
