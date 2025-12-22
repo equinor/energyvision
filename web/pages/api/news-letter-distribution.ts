@@ -1,10 +1,11 @@
 import { distribute } from './subscription'
 import { languages } from '../../languages'
-import { NewsDistributionParameters } from '../../types/index'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { isValidSignature, SIGNATURE_HEADER_NAME } from '@sanity/webhook'
 import getRawBody from 'raw-body'
 import getConfig from 'next/config'
+import { distributeOld } from './old-distribution'
+
 
 const SANITY_API_TOKEN = process.env.SANITY_API_TOKEN || ''
 const SLACK_NEWSLETTER_WEBHOOK_URL = process.env.SLACK_NEWSLETTER_WEBHOOK_URL
@@ -15,6 +16,11 @@ export const config = {
   api: {
     bodyParser: false,
   },
+}
+export type NewsDistributionParameters = {
+  title: string
+  link: string
+  languageCode?: string
 }
 
 const logRequest = (req: NextApiRequest, title: string) => {
@@ -40,7 +46,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const { publicRuntimeConfig } = getConfig()
   const data = JSON.parse(body)
   const locale = languages.find((lang) => lang.name == data.languageCode)?.locale || 'en'
-  const newsDistributionParameters: NewsDistributionParameters = {
+
+  //To be removed after migration period
+    const oldNewsDistributionParameters: any = {
     timeStamp: data.timeStamp,
     title: data.title,
     ingress: data.ingress,
@@ -48,10 +56,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     newsType: data.newsType,
     languageCode: locale,
   }
+  // END
+
+  const newsDistributionParameters: NewsDistributionParameters = {
+    title: data.title,
+    link: `${publicRuntimeConfig.domain}/${locale}${data.link}`,
+    languageCode: locale,
+  }
 
   console.log('Newsletter link: ', newsDistributionParameters.link)
 
-  await distributeWithRetry(newsDistributionParameters)
+  await distributeWithRetry(newsDistributionParameters, oldNewsDistributionParameters)
     .then((result) => {
       if (result.success) {
         res.status(200).json({ msg: result.message })
@@ -73,6 +88,7 @@ interface DistributionResult {
 
 async function distributeWithRetry(
   newsDistributionParameters: NewsDistributionParameters,
+  oldNewsDistributionParameters: any,
   attempt = 1,
 ): Promise<DistributionResult> {
   let res: DistributionResult = {
@@ -83,7 +99,12 @@ async function distributeWithRetry(
   const date = getDateWithMs()
 
   try {
-    const isSuccessful = await distribute(newsDistributionParameters)
+    //For migration period just log.
+    const isNewSuccessful = await distribute(newsDistributionParameters)
+    console.log(`New distribution was successful: ${isNewSuccessful}`)
+
+    const isSuccessful = await distributeOld(oldNewsDistributionParameters)
+
     if (!isSuccessful) throw new Error('Distribution was unsuccessful.')
     res = {
       success: true,
