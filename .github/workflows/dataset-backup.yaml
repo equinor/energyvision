@@ -86,7 +86,7 @@ jobs:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_BACKUP_TOKEN }}
         run: |
           mkdir ${{ env.BUILD_ARTIFACT_PATH }}
-          pnpm sanity dataset export ${{ matrix.dataset }} ${{ env.BUILD_ARTIFACT_PATH }}/${{ matrix.dataset }}.tar.gz ${{ steps.last_sunday.outputs.is_last_sunday == 'true' &&  '--no-assets' || ''}}
+          pnpm sanity dataset export ${{ matrix.dataset }} ${{ env.BUILD_ARTIFACT_PATH }}/${{ matrix.dataset }}.tar.gz ${{ steps.last_sunday.outputs.is_last_sunday == 'false' &&  '--no-assets' || ''}}
       
       - name: Upload backup.tar.gz
         id: upload-backup
