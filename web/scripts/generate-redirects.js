@@ -1,5 +1,5 @@
 import fs from 'node:fs'
-import '@dotenvx/dotenvx/config'
+//import '@dotenvx/dotenvx/config' // uncomment to use this in local
 import { nextSanityClient } from '../lib/interface/client.server.js'
 import { getLanguages } from '../../satellitesConfig.js'
 
