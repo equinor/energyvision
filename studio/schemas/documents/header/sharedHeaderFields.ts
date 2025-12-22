@@ -131,6 +131,10 @@ const heroType = {
         title: 'No hero (title+image hidden, first section content as hero)',
         value: HeroTypes.NO_HERO,
       },
+      {
+        title: 'Title and/or ingress on background image',
+        value: HeroTypes.BACKGROUND_IMAGE,
+      }
     ].filter(e => e),
   },
   components: {
