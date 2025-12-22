@@ -10,6 +10,12 @@
     /* Modal */
     --modal-transition-duration: 0.4s;
     --modal-transition-easing: cubic-bezier(0.45, 0, 0.55, 1);
+
+    /* tw4 is vars */
+    --color-yellow-20: #fefbdf;
+    --color-spruce-wood-20: #fef8f4;
+    --color-blue-20: #f2f9fc;
+    --color-gray-20: #f8f8f8;
   }
 
   p,

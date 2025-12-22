@@ -26,7 +26,7 @@ _type == "homepageBanner" =>{
       useGradient,
       "theme":colorTheme,
   }
-  },
+  }
 `
 
 export default homepageContentFields

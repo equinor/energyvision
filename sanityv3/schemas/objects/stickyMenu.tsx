@@ -43,4 +43,8 @@ export default {
       },
     },
   ],
+  options: {
+    collapsible: true,
+    collapsed: true,
+  },
 }
