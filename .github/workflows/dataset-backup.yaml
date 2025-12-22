@@ -14,8 +14,6 @@ on:
   schedule:
     # Runs at 02:00 UTC every sunday
     - cron: '0 2 * * 0'
-    # Runs at 02:00 UTC every 4th sunday of the month
-    - cron: '0 2 * * 0#4'
 
 permissions:
   contents: read
@@ -69,26 +67,27 @@ jobs:
         id: install-dependencies
         run: |
           pnpm sanityv3 install
+      - name: Check if today is the last Sunday
+        id: last_sunday
+        run: |
+          next_week_month=$(date -d "+7 days" +%m)
+          this_month=$(date +%m)
+
+          if [ "$next_week_month" != "$this_month" ]; then
+            echo "is_last_sunday=true" >> $GITHUB_OUTPUT
+          else
+            echo "is_last_sunday=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Export Data with assets
         id: export-data-with-assets
-        # Run this step only on fourth sunday
-        if: github.event.schedule != '0 2 * * 0#4'
         working-directory: ./sanityv3
         env:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_BACKUP_TOKEN }}
         run: |
           mkdir ${{ env.BUILD_ARTIFACT_PATH }}
-          pnpm sanity dataset export ${{ matrix.dataset }} ${{ env.BUILD_ARTIFACT_PATH }}/${{ matrix.dataset }}.tar.gz
-      - name: Export Data
-        id: export-data
-        # Run this step every sunday
-        if: github.event.schedule != '0 2 * * 0'
-        working-directory: ./sanityv3
-        env:
-          SANITY_AUTH_TOKEN: ${{ secrets.SANITY_BACKUP_TOKEN }}
-        run: |
-          mkdir ${{ env.BUILD_ARTIFACT_PATH }}
-          pnpm sanity dataset export ${{ matrix.dataset }} ${{ env.BUILD_ARTIFACT_PATH }}/${{ matrix.dataset }}.tar.gz --no-assets
+          pnpm sanity dataset export ${{ matrix.dataset }} ${{ env.BUILD_ARTIFACT_PATH }}/${{ matrix.dataset }}.tar.gz ${{ steps.last_sunday.outputs.is_last_sunday == 'false' &&  '--no-assets' || ''}}
+
       - name: Upload backup.tar.gz
         id: upload-backup
         uses: actions/upload-artifact@v4
