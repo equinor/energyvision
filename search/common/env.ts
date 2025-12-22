@@ -13,9 +13,9 @@ export const loadEnv = async (logger: Logger) => {
     return
   }
   const credential = new DefaultAzureCredential()
-  let settings
+ 
   try { 
-  settings = await load(
+  const settings = await load(
     connectionString, // Or endpoint and credential
     {
       keyVaultOptions: {
