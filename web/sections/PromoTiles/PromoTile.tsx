@@ -1,11 +1,11 @@
 import Card from '@sections/cards/Card'
-import { getUrlFromAction } from '../../common/helpers'
-import { ColorKeyTokens, colorKeyToUtilityMap } from '../../styles/colorKeyToUtilityMap'
-import { PromoTileData } from '../../types/index'
 import { forwardRef } from 'react'
-import { Variants } from '../cards/Card/Card'
-import { getLocaleFromName } from '../../lib/localization'
 import { useIntl } from 'react-intl'
+import { getUrlFromAction } from '../../common/helpers'
+import { getLocaleFromName } from '../../lib/localization'
+import { type ColorKeyTokens, colorKeyToUtilityMap } from '../../styles/colorKeyToUtilityMap'
+import type { PromoTileData } from '../../types/index'
+import type { Variants } from '../cards/Card/Card'
 
 type PromoTileProps = {
   hasSectionTitle?: boolean
@@ -44,7 +44,7 @@ export const PromoTile = forwardRef<HTMLAnchorElement, PromoTileProps>(function 
       variant={variant}
       className={`${theme?.dark || background.dark ? 'dark' : ''} `}
     >
-      <Card.Content variant={variant} className={`${theme.background}`}>
+      <Card.Content variant={variant} className={`${theme.background !== 'bg-white-100' ? theme.background : ''}`}>
         <Card.Header
           titleLevel={hasSectionTitle ? 'h3' : 'h2'}
           {...(!linkLabelAsTitle && { titleBlock: title })}
