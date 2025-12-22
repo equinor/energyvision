@@ -7,6 +7,7 @@ import { HomePageBanner } from '@sections/HomePageBanner/HomePageBanner'
 import IframeCarousel from '@sections/IframeCarousel/IframeCarousel'
 import ImageCarousel from '@sections/ImageCarousel/ImageCarousel'
 import ImageForText from '@sections/ImageForText/ImageForText'
+import PromotionBlock from '@sections/promotionBlock/PromotionBlock'
 import TableBlock, { type TableBlockProps } from '@sections/TableBlock/TableBlock'
 import TabsBlock, { type TabsBlockProps } from '@sections/TabsBlock/TabsBlock'
 import { getColorForTabsTheme } from '@sections/TabsBlock/tabThemes'
@@ -65,7 +66,6 @@ import PageQuote from '../../topicPages/PageQuote'
 import Promotion from '../../topicPages/Promotion'
 import StockValues from '../../topicPages/StockValues'
 import TwitterEmbed from '../../topicPages/TwitterEmbed'
-import PromotionBlock from '@sections/promotionBlock/PromotionBlock'
 
 type DefaultComponent = {
   id?: string
@@ -113,19 +113,19 @@ type PageContentProps = {
  * E.g. 2 colored background of same color content, only first need but not second
  */
 const getBackgroundOptions = (component: ComponentProps) => {
-  //@ts-ignore:Too many types
+  //@ts-expect-error:Too many types
   if (!component?.designOptions || !Object.hasOwn(component, 'designOptions')) {
     //Return white default if no designOptions
     return {
       backgroundUtility: 'white-100',
     }
   }
-  //@ts-ignore
+  //@ts-expect-error
   if (component?.type === 'tabs') {
-    //@ts-ignore:so many types
+    //@ts-expect-error:so many types
     return getColorForTabsTheme(component?.designOptions?.theme?.value)
   }
-  //@ts-ignore:so many types
+  //@ts-expect-error:so many types
   return component?.designOptions?.background || getColorForTheme(component?.designOptions?.theme)
 }
 
