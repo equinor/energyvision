@@ -8,7 +8,8 @@ const markDefs = /* groq */ `
           "type": _type,
           "href": reference->asset.asset->url,
           "extension": reference->asset.asset->extension,
-          "fileName": reference->asset.asset->originalFilename
+          "fileName": reference->asset.asset->originalFilename,
+          "title":reference->asset->title,
         }
     }
 },[])

@@ -24,6 +24,13 @@ export type TypesType = Record<string, PortableTextTypeComponent<any> | undefine
 type TypeProps = {
   children?: React.ReactNode
 }
+const attachmentBlockSerializers = {
+  block: {
+    normal: ({ children }: TypeProps) => {
+      return <>{children}</>
+    },
+  },
+}
 
 const defaultSerializers = {
   block: {
@@ -39,7 +46,7 @@ const defaultSerializers = {
     //@ts-ignore
     pullQuote: (props) => <Quote {...props} className="not-prose" />,
     //@ts-ignore
-/*     basicIframe: (props) => {
+    /*     basicIframe: (props) => {
       const { value } = props
       return <IFrame {...value} className="not-prose px-layout-md py-14 mx-auto" />
     }, */
@@ -77,6 +84,8 @@ const defaultSerializers = {
           href={attachment?.href}
           extension={attachment?.extension}
           showExtensionIcon={true}
+          isAttachment={true}
+          fileName={attachment.fileName}
         >
           {children}
         </ResourceLink>
@@ -184,6 +193,7 @@ export default function Blocks({
   noInvert = false,
 }: BlockProps) {
   let div: PortableTextBlock[] = []
+
   return (
     <>
       {
@@ -192,13 +202,13 @@ export default function Blocks({
           // Normal text blocks (p, h1, h2, etc.) — these are grouped so we can wrap them in a prose div
           if (inlineBlockTypes.includes(block._type)) {
             div.push(block)
-
             // If the next block is also text/pullQuote, group it with this one
             if (inlineBlockTypes.includes(blocks[i + 1]?._type)) return null
 
             // Otherwise, render the group of text blocks we have
             const value = div
             div = []
+            const hasAttachment = block?.markDefs?.some((mark) => mark?._type === 'attachment')
 
             return (
               <div
@@ -211,7 +221,7 @@ export default function Blocks({
                   //@ts-ignore
                   components={{
                     block: {
-                      ...defaultSerializers.block,
+                      ...(hasAttachment ? attachmentBlockSerializers.block : defaultSerializers.block),
                       ...blocksComponents,
                       ...(clampLines && getLineClampNormalBlock(clampLines)),
                     },
@@ -249,33 +259,33 @@ export default function Blocks({
                 }}
               />
             )
-          }else if (block._type === 'basicIframe') {
-          let marginOverride = ''
-          // If the next block is a basicIframe, remove margin bottom
-          if (blocks[i + 1]?._type === 'basicIframe') {
-            marginOverride = 'mb-0'
-          }
-          // If the previous block was a basicIframe, remove margin top
-          if (blocks[i - 1]?._type === 'basicIframe') {
-            marginOverride = 'mt-0'
-          }
+          } else if (block._type === 'basicIframe') {
+            let marginOverride = ''
+            // If the next block is a basicIframe, remove margin bottom
+            if (blocks[i + 1]?._type === 'basicIframe') {
+              marginOverride = 'mb-0'
+            }
+            // If the previous block was a basicIframe, remove margin top
+            if (blocks[i - 1]?._type === 'basicIframe') {
+              marginOverride = 'mt-0'
+            }
 
-          return (
-            <PortableText
-              key={block._key}
-              value={block}
-              components={{
-                types: {
-                  //@ts-ignore:todo
-                  basicIframe: (props) => {
-                    const { value } = props
-                    return <IFrame {...value} className={`px-layout-md ${marginOverride}`} />
+            return (
+              <PortableText
+                key={block._key}
+                value={block}
+                components={{
+                  types: {
+                    //@ts-ignore:todo
+                    basicIframe: (props) => {
+                      const { value } = props
+                      return <IFrame {...value} className={`px-layout-md ${marginOverride}`} />
+                    },
                   },
-                },
-              }}
-            />
-          )
-        } else {
+                }}
+              />
+            )
+          } else {
             // Non-text blocks (modules, sections, etc.) — note that these can recursively render text
             // blocks again
             return (
