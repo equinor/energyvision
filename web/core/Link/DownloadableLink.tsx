@@ -32,8 +32,6 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
   },
   ref,
 ) {
-  console.log('label', label)
-  console.log('children', children)
   const intl = useIntl()
   const [showModal, setShowModal] = useState(false)
   const [isFriendlyChallengeDone, setIsFriendlyChallengeDone] = useState(false)
@@ -131,12 +129,8 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
 
   const handleSuccessfullFriendlyChallenge = useCallback(
     async (event: any) => {
-      console.log('handleSuccessfullFriendlyChallenge event', event)
-      console.log('handleSuccessfullFriendlyChallenge fileName', fileName)
-
       const solution = event.detail.response
       if (fileName) {
-        console.log('setIsFriendlyChallengeDone')
         setIsFriendlyChallengeDone(true)
         const response = await fetch('/api/download/getFileUrl', {
           body: JSON.stringify({
@@ -149,7 +143,6 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
           method: 'POST',
         })
         const url = await response.json()
-        console.log('handleSuccessfullFriendlyChallenge url', url)
         setDownloadRequestUrl(url.url)
       }
     },
