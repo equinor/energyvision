@@ -17,6 +17,11 @@
     "prod:generate-redirects": "node ./scripts/generate-redirects.js",
     "dev:generate-redirects": "dotenvx run -f .env.local -- node ./scripts/generate-redirects.js"
   },
+  "pnpm": {
+    "overrides": {
+      "form-data": "4.0.4"
+    }
+  },
   "dependencies": {
     "@algolia/cache-browser-local-storage": "^4.22.1",
     "@algolia/cache-common": "^4.22.1",
