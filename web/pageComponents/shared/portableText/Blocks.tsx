@@ -193,7 +193,7 @@ export default function Blocks({
   noInvert = false,
 }: BlockProps) {
   let div: PortableTextBlock[] = []
-  console.log('Blocks value', value)
+
   return (
     <>
       {
