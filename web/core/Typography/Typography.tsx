@@ -16,10 +16,8 @@ const getElementType = (variant: string, link: boolean): ElementType => {
     case 'h5':
     case 'h6':
       return variant
-    case 'caption':
-    case 'ingress':
-    case 'overline':
-    case 'body':
+    case 'div':
+      return 'div'
     default:
       return 'p'
   }

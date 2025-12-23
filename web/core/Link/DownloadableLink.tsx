@@ -15,16 +15,30 @@ export type DownloadableLinkProps = {
   variant?: Variants
   fileName?: string
   label?: string
+  isAttachment?: boolean
 } & Omit<ResourceLinkProps, 'variant'>
 
 const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(function DownloadableLink(
-  { fileName, label, type = 'downloadableFile', extension, showExtensionIcon, ariaHideText, variant = 'fit' },
+  {
+    children,
+    fileName,
+    label,
+    type = 'downloadableFile',
+    extension,
+    showExtensionIcon,
+    ariaHideText,
+    variant = 'fit',
+    isAttachment = false,
+  },
   ref,
 ) {
+  console.log('label', label)
+  console.log('children', children)
   const intl = useIntl()
   const [showModal, setShowModal] = useState(false)
   const [isFriendlyChallengeDone, setIsFriendlyChallengeDone] = useState(false)
   const [downloadRequestUrl, setDownloadRequestUrl] = useState(null)
+  const downloadLabel = label ?? (Array.isArray(children) ? children?.[0] : '')
 
   const [notHuman, setNotHuman] = useState(false)
 
@@ -117,8 +131,12 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
 
   const handleSuccessfullFriendlyChallenge = useCallback(
     async (event: any) => {
+      console.log('handleSuccessfullFriendlyChallenge event', event)
+      console.log('handleSuccessfullFriendlyChallenge fileName', fileName)
+
       const solution = event.detail.response
       if (fileName) {
+        console.log('setIsFriendlyChallengeDone')
         setIsFriendlyChallengeDone(true)
         const response = await fetch('/api/download/getFileUrl', {
           body: JSON.stringify({
@@ -131,6 +149,7 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
           method: 'POST',
         })
         const url = await response.json()
+        console.log('handleSuccessfullFriendlyChallenge url', url)
         setDownloadRequestUrl(url.url)
       }
     },
@@ -174,7 +193,7 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
         aria-haspopup="dialog"
         aria-label={`Request file download modal`}
       >
-        <span
+        <div
           className={`h-full
           w-inherit 
           flex
@@ -184,7 +203,7 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
           ${variant !== 'stickyMenu' ? 'pb-3 pr-2' : ''}
 `}
         >
-          <span
+          <div
             className={`flex 
             justify-start 
             text-start 
@@ -195,10 +214,10 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
           ${variant === 'stickyMenu' ? 'w-fit group-hover:underline no-underline leading-none align-middle' : ''}
             `}
           >
-            {intl.formatMessage({ id: 'request_download_action_prefix', defaultMessage: 'Request' })}
-            {` ${label}`}
-          </span>
-          {variant !== 'stickyMenu' && (
+            {!isAttachment && intl.formatMessage({ id: 'request_download_action_prefix', defaultMessage: 'Request' })}
+            {` ${downloadLabel}`}
+          </div>
+          {variant !== 'stickyMenu' && !isAttachment && (
             <ArrowRight
               className={`ml-6 
                 xl:ml-8
@@ -214,18 +233,18 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
                 group-hover:translate-x-2`}
             />
           )}
-        </span>
+        </div>
         {variant !== 'stickyMenu' && (
-          <span className="w-[0%] h-[1px] bg-grey-40 transition-all duration-300 group-hover:w-full" />
+          <div className="w-[0%] h-[1px] bg-grey-40 transition-all duration-300 group-hover:w-full" />
         )}
       </button>
       {showModal && (
         <Modal isOpen={showModal} onClose={handleClose} title="Request file download">
           <Typography as="h2" variant="h5" className="mb-4">
             {intl.formatMessage({ id: 'request_download_action_prefix', defaultMessage: 'Request' })}
-            {` ${label}`}
+            {` ${downloadLabel}`}
           </Typography>
-          <Typography variant="body" className="mb-10">
+          <Typography group="plain" variant="div" className="mb-10">
             {intl.formatMessage({
               id: 'download_modal_ingress',
               defaultMessage: 'Please confirm that you are human below and the link will appear.',
@@ -269,7 +288,7 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
                 gap-x-2
                 ${contentVariantClassName[variant]}`}
               >
-                {getContentElements(<>{`${label}`}</>)}
+                {getContentElements(<>{`${downloadLabel}`}</>)}
                 {getArrowElement(type)}
               </span>
 

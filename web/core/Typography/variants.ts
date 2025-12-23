@@ -26,6 +26,9 @@ const variants = {
     overline: 'text-md text-slate-80 dark:text-white-100',
     body: 'text-base font-normal text-slate-80 dark:text-white-100',
   },
+  plain: {
+    div: '',
+  },
 }
 export type TypographyTokens = {
   [P1 in keyof typeof variants]: {
@@ -41,7 +44,10 @@ const quickVariants: QuickTypographyVariants = {
   ...heading,
   ...paragraph,
 }
-type TypographyVariants = keyof TypographyTokens['heading'] | keyof TypographyTokens['paragraph']
+type TypographyVariants =
+  | keyof TypographyTokens['heading']
+  | keyof TypographyTokens['paragraph']
+  | keyof TypographyTokens['plain']
 
 type TypographyGroups = keyof typeof variants
 

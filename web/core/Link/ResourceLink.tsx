@@ -26,6 +26,8 @@ export type ResourceLinkProps = {
   useAsRegular?: boolean
   /** not provided with downloads */
   href?: string | undefined
+  isAttachment?: boolean
+  fileName?: string
 } & Omit<BaseLinkProps, 'href'>
 
 export const iconRotation: Record<string, string> = {
@@ -97,6 +99,8 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
     ariaHideText = false,
     useAsRegular = false,
     href = '',
+    isAttachment = false,
+    fileName,
     ...rest
   },
   ref,
@@ -112,7 +116,11 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
         extension={extension}
         showExtensionIcon={showExtensionIcon}
         ariaHideText={ariaHideText}
-      />
+        isAttachment={isAttachment}
+        fileName={fileName}
+      >
+        {children}
+      </DownloadableLink>
     )
   }
 
