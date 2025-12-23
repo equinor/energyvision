@@ -52,7 +52,7 @@ export async function POST(req: NextRequest) {
     // wait for news index and revalidate...
     const response = await updateAlgoliaIndex(body)
     if (Number(response.status) === 200) {
-      const algoliaTaskIds = response.json()
+      const algoliaTaskIds = await response.json()
       console.log('Algolia Indexing Success , Revalidating newsroom', algoliaTaskIds)
       // wait for a second revalidate newsroom pages
       const sleep = (delay: number) =>
