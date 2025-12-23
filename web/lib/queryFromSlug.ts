@@ -37,7 +37,7 @@ const getQuery = async (firstPiece: string, secondPiece: string | undefined, lan
   if (Flags.HAS_NEWS && newsSlug[lang] === firstPiece && secondPiece) {
     // is news
     //@ts-ignore:todo
-    if (Flags.HAS_LOCAL_NEWS && localNewsTags[lang].includes(secondPiece.toLowerCase())) {
+    if (Flags.HAS_LOCAL_NEWS && localNewsTags[lang]?.includes(secondPiece.toLowerCase())) {
       // is local news
       return localNewsQuery
     } else {
