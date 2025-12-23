@@ -181,3 +181,6 @@ export const getMetaTitleSuffix = (dataset) => {
 export const getAllDomainUrls = () => {
   return Object.keys(datasets).map((dataset) => websiteDomains[dataset]?.url)
 }
+export const localNewsTags = {
+  en_GB: ['ev', 'uk', 'us'],
+}
