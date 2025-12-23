@@ -18,6 +18,7 @@ export function generateStaticParams() {
 }
 
 const getInitialResponse = unstable_cache(
+   // this gets revalidated by path 
   async (locale: string) => {
     const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
     const indexName = `${envPrefix}_NEWS_${locale}`
@@ -36,9 +37,7 @@ const getInitialResponse = unstable_cache(
       },
     })
     return response
-  },
-  ['news'],
-  { revalidate: 3600, tags: ['news'] },
+  }
 )
 
 export async function generateMetadata({

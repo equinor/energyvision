@@ -45,6 +45,7 @@ export async function generateMetadata({
 }
 
 const getInitialResponse = unstable_cache(
+  // this gets revalidated by path 
   async (locale: string) => {
     const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
     const indexName = `${envPrefix}_NEWS_${locale}`
@@ -63,9 +64,7 @@ const getInitialResponse = unstable_cache(
       },
     })
     return response
-  },
-  ['news'],
-  { tags: ['news'] },
+  }
 )
 
 export default async function NewsroomPage({
