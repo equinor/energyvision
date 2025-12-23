@@ -15,6 +15,8 @@ export type CardProps = {
   image?: ImageWithAlt
   /** Override background image styling */
   imageClassName?: string
+  /* grey card background as long as not on colored background */
+  onColorBg?: boolean
 } & BaseLinkProps
 
 /**
@@ -29,16 +31,24 @@ export type CardProps = {
  * @example
  * */
 export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
-  { variant = 'primary', href, className = '', imageClassName = '', children, locale, image, ...rest },
+  {
+    variant = 'primary',
+    href,
+    className = '',
+    imageClassName = '',
+    onColorBg = false,
+    children,
+    locale,
+    image,
+    ...rest
+  },
   ref,
 ) {
   const commonStyling = `
   flex 
   flex-col
-  gap-0
-  shadow-card 
-  rounded-sm 
-  active:shadow-card-interact
+  gap-0 
+  rounded-[13px] 
   w-full
   h-full
   `
@@ -46,8 +56,8 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
   const variantClassNames: Record<Variants, string> = {
     primary: `${commonStyling}`,
     secondary: `${commonStyling}`,
-    compact: `w-full h-full rounded-sm flex gap-4`,
-    single: `grid grid-cols-[40%_1fr] min-h-[450px] shadow-card rounded-sm active:shadow-card-interact`,
+    compact: `w-full h-full rounded-[13px] flex gap-4`,
+    single: `grid grid-cols-[40%_1fr] min-h-[450px] rounded-[13px] `,
   }
   const variantAspectRatio: Record<Variants, ImageRatioKeys> = {
     primary: '16:9',
@@ -62,9 +72,9 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
     single: '',
   }
   const imageVariantClassNames: Record<Variants, string> = {
-    primary: `rounded-t-sm *:rounded-t-sm`,
-    secondary: `rounded-t-sm *:rounded-t-sm`,
-    compact: 'rounded-sm w-[25vw] h-auto *:rounded-sm',
+    primary: `rounded-t-[13px] *:rounded-t-[13px]`,
+    secondary: `rounded-t-[13px] *:rounded-t-[13px]`,
+    compact: 'rounded-[13px] w-[25vw] h-auto *:rounded-[13px]',
     single: 'w-auto h-full',
   }
 
@@ -76,7 +86,7 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
       prefetch={false}
       className={twMerge(
         `group/card
-        bg-white-100
+        ${onColorBg ? 'bg-white-100' : 'bg-gray-20'}
         text-slate-80
         dark:text-white-100
         focus:outline-none

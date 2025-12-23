@@ -95,6 +95,9 @@ import tableTheme from './objects/tableV2/tableTheme'
 import homePage from './documents/homePage'
 import homepageBanner from './objects/homepageBanner'
 import tableV2 from './objects/tableV2'
+import themeSelector from './objects/themeSelector/themeSelector'
+import promoteTopicsV2 from './objects/promoteV2/promoteTopicsV2'
+import promoteExternalLinkV2 from './objects/promoteV2/promoteExternalLinkV2'
 
 const {
   pageNotFound,
@@ -232,6 +235,9 @@ const RemainingSchemas = [
   importTable,
   tableV2,
   tableTheme,
+  themeSelector,
+  promoteTopicsV2,
+  promoteExternalLinkV2,
 ]
 
 // Then we give our schema to the builder and provide the result to Sanity

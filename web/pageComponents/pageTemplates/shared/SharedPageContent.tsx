@@ -65,6 +65,7 @@ import PageQuote from '../../topicPages/PageQuote'
 import Promotion from '../../topicPages/Promotion'
 import StockValues from '../../topicPages/StockValues'
 import TwitterEmbed from '../../topicPages/TwitterEmbed'
+import PromotionBlock from '@sections/promotionBlock/PromotionBlock'
 
 type DefaultComponent = {
   id?: string
@@ -382,6 +383,9 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
             className={topSpacingClassName}
           />
         )
+      case 'promoteExternalLinkV2':
+      case 'promoteTopicsV2':
+        return <PromotionBlock key={c.id} {...(c as any)} anchor={anchorReference} className={topSpacingClassName} />
       default:
         return null
     }
