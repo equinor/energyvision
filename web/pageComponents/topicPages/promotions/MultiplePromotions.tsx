@@ -1,17 +1,16 @@
+import { EventCard } from '@sections/cards/EventCard'
+import PeopleCard from '@sections/cards/PeopleCard/PeopleCard'
+import PromotionCard from '@sections/cards/PromotionCard/PromotionCard'
+import { closestIndexTo } from 'date-fns'
+import { twMerge } from 'tailwind-merge'
 import type {
   CardData,
-  PeopleCardData,
   EventCardData,
-  PromotionType,
   EventPromotionSettings,
+  PeopleCardData,
+  PromotionType,
 } from '../../../types/index'
 import MultipleEventCards from './MultipleEventCards'
-
-import PeopleCard from '@sections/cards/PeopleCard/PeopleCard'
-import { EventCard } from '@sections/cards/EventCard'
-import { closestIndexTo } from 'date-fns'
-import PromotionCard from '@sections/cards/PromotionCard/PromotionCard'
-import { twMerge } from 'tailwind-merge'
 
 type CardProps = CardData | PeopleCardData | EventCardData
 
@@ -21,6 +20,7 @@ const MultiplePromotions = ({
   hasSectionTitle,
   eventPromotionSettings,
   labelledbyId,
+  onColorBg = false,
 }: {
   data: CardData[] | PeopleCardData[] | EventCardData[]
   variant: PromotionType
@@ -28,6 +28,8 @@ const MultiplePromotions = ({
   labelledbyId?: string
   eventPromotionSettings?: EventPromotionSettings
   useHorizontalScroll?: boolean | undefined
+  /* grey card background as long as not on colored background */
+  onColorBg?: boolean
 }) => {
   const getCard = (data: CardProps) => {
     switch (data.type) {
@@ -35,14 +37,24 @@ const MultiplePromotions = ({
       case 'localNews':
         return (
           <li key={data?.id} className="flex justify-center">
-            <PromotionCard className="light" data={data as CardData} hasSectionTitle={hasSectionTitle} />
+            <PromotionCard
+              onColorBg={onColorBg}
+              className="light"
+              data={data as CardData}
+              hasSectionTitle={hasSectionTitle}
+            />
           </li>
         )
       case 'topics':
       case 'magazine':
         return (
           <li key={data?.id} className="flex justify-center">
-            <PromotionCard className="light" data={data as CardData} hasSectionTitle={hasSectionTitle} />
+            <PromotionCard
+              onColorBg={onColorBg}
+              className="light"
+              data={data as CardData}
+              hasSectionTitle={hasSectionTitle}
+            />
           </li>
         )
       case 'people':
@@ -75,7 +87,7 @@ const MultiplePromotions = ({
     }
   }
 
-  let closestToTodayIndex = undefined
+  let closestToTodayIndex
   if (
     variant === 'promoteEvents' &&
     (eventPromotionSettings?.promoteSingleUpcomingEvent || eventPromotionSettings?.upcomingEventsCount === 1)

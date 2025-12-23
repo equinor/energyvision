@@ -1,10 +1,10 @@
-import { useMediaQuery } from '../../../lib/hooks/useMediaQuery'
-import Card from '@sections/cards/Card'
 import { FormattedDate } from '@core/FormattedDateTime'
+import Card from '@sections/cards/Card'
+import { forwardRef, type HTMLAttributes } from 'react'
+import { twMerge } from 'tailwind-merge'
+import { useMediaQuery } from '../../../lib/hooks/useMediaQuery'
 import Blocks from '../../../pageComponents/shared/portableText/Blocks'
 import type { CardData } from '../../../types/index'
-import { forwardRef, HTMLAttributes } from 'react'
-import { twMerge } from 'tailwind-merge'
 
 export type PromotionCardProps = {
   data: CardData
@@ -14,6 +14,8 @@ export type PromotionCardProps = {
   imageClassName?: string
   /* Override styling on card header title element */
   titleClassName?: string
+  /* grey card background as long as not on colored background */
+  onColorBg?: boolean
 } & HTMLAttributes<HTMLAnchorElement>
 
 /**
@@ -22,7 +24,15 @@ export type PromotionCardProps = {
  * Remember to wrap in ul and li if in a list.
  * */
 const PromotionCard = forwardRef<HTMLAnchorElement, PromotionCardProps>(function PromotionCard(
-  { data, className = '', imageClassName = '', titleClassName = '', variant = 'default', hasSectionTitle = true },
+  {
+    data,
+    className = '',
+    imageClassName = '',
+    titleClassName = '',
+    variant = 'default',
+    hasSectionTitle = true,
+    onColorBg = false,
+  },
   ref,
 ) {
   const isMobile = useMediaQuery(`(max-width: 768px)`)
@@ -37,6 +47,7 @@ const PromotionCard = forwardRef<HTMLAnchorElement, PromotionCardProps>(function
       className={twMerge(`w-full h-full`, className)}
       imageClassName={imageClassName}
       key={id}
+      onColorBg={onColorBg}
     >
       <Card.Content variant={variant === 'single' && !isMobile ? 'single' : 'primary'}>
         <Card.Header
@@ -61,7 +72,9 @@ const PromotionCard = forwardRef<HTMLAnchorElement, PromotionCardProps>(function
             className={`break-word max-w-prose grow ${
               type !== 'news' && type !== 'localNews' ? '' : 'hidden lg:block'
             }`}
-            {...(!(variant === 'single' && !isMobile) && { clampLines: isMobile ? 3 : 5 })}
+            {...(!(variant === 'single' && !isMobile) && {
+              clampLines: isMobile ? 3 : 5,
+            })}
             marks={{
               em: ({ children }: { children?: React.ReactNode }) => <>{children}</>,
               strong: ({ children }: { children?: React.ReactNode }) => <>{children}</>,

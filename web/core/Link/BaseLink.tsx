@@ -18,7 +18,7 @@ export type BaseLinkProps = {
  * And the strict origin policy when external for using blank
  */
 export const BaseLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(function BaseLink(
-  { children, type = 'internalUrl', className = '', href = '', skipInternalStyle = false, ...rest },
+  { children, type = 'internalUrl', className = '', href = '', skipInternalStyle = false },
   ref,
 ) {
   const classNames = skipInternalStyle
@@ -50,7 +50,6 @@ export const BaseLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(function Ba
             ref={ref}
             href={href}
             target="_blank"
-            {...rest}
             rel="noopener"
             referrerPolicy="strict-origin-when-cross-origin"
           >
@@ -59,14 +58,14 @@ export const BaseLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(function Ba
         )
       case 'icsLink':
         return (
-          <a className={classNames} ref={ref} href={href} {...rest}>
+          <a className={classNames} ref={ref} href={href}>
             {children}
           </a>
         )
 
       default:
         return (
-          <NextLink {...rest} ref={ref} href={href} prefetch={false} className={classNames}>
+          <NextLink ref={ref} href={href} prefetch={false} className={classNames}>
             {children}
           </NextLink>
         )

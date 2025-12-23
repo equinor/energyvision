@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { getDnsRedirect, getWWWRedirect } from './common/helpers/redirects'
-import { NextRequest, NextResponse } from 'next/server'
+
+import { type NextRequest, NextResponse } from 'next/server'
 import { Flags } from './common/helpers/datasetHelpers'
-import { getDocumentBySlug } from './common/helpers/getPaths'
+import { getDnsRedirect, getWWWRedirect } from './common/helpers/redirects'
 import archivedNews from './lib/archive/archivedNewsPaths.json'
 
 const PERMANENT_REDIRECT = 301
@@ -10,23 +10,6 @@ const PERMANENT_REDIRECT = 301
 const PUBLIC_FILE = /\.(.*)$/
 const DOT_HTML = '.html'
 const IS_ARCHIVED_NEWS_DOWNLOADS = /(.*)\/news\/archive\/[0-9]{4}\/[0-9]{2}\/[0-9]{2}\/downloads\/(.*)\.(.*)$/
-
-// Check if a given path exists in Sanity or not
-const pathExistsInSanity = async (pathname: string, isPreview = false): Promise<boolean> => {
-  const article = await getDocumentBySlug(pathname, isPreview)
-  return Boolean(article)
-}
-
-// Check if preview mode is enabled in Sanity
-const isPreviewEnabled = (request: NextRequest): boolean => {
-  const { searchParams } = request.nextUrl
-  const previewCookie = request.cookies.get('__next_preview_data')
-  const previewParam = searchParams.get('preview')
-
-  if (previewCookie && previewParam) return true
-
-  return false
-}
 
 export async function middleware(request: NextRequest) {
   const { origin, locale } = request.nextUrl
