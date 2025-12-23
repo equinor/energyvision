@@ -13,7 +13,14 @@
     "info": "next info",
     "build": "next build",
     "start": "next start",
-    "type-check": "tsc --project tsconfig.json --pretty --noEmit"
+    "type-check": "tsc --project tsconfig.json --pretty --noEmit",
+    "prod:generate-redirects": "node ./scripts/generate-redirects.js",
+    "dev:generate-redirects": "dotenvx run -f .env.local -- node ./scripts/generate-redirects.js"
+  },
+  "pnpm": {
+    "overrides": {
+      "form-data": "4.0.4"
+    }
   },
   "dependencies": {
     "@algolia/cache-browser-local-storage": "^4.22.1",
@@ -73,6 +80,7 @@
   "devDependencies": {
     "@algolia/client-search": "^4.16.0",
     "@babel/core": "^7.21.4",
+    "@dotenvx/dotenvx": "^1.51.2",
     "@next/eslint-plugin-next": "^13.4.7",
     "@tailwindcss/typography": "^0.5.10",
     "@types/easy-soap-request": "^4.1.1",

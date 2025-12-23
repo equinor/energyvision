@@ -43,7 +43,6 @@ export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContaine
     dontSplit = false,
     as = 'div',
     backgroundStyle = 'regular',
-    ...rest
   },
   ref,
 ) {
@@ -54,7 +53,6 @@ export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContaine
       {type === 'backgroundImage' && backgroundImage && (
         <ImageBackgroundContainer
           as={as}
-          {...rest}
           ref={ref}
           id={id}
           {...backgroundImage}
@@ -82,7 +80,6 @@ export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContaine
               as={as}
               backgroundStyle={backgroundStyle}
               className={envisTwMerge(`${id ? 'scroll-mt-topbar' : ''}`, className, twClassName)}
-              {...rest}
             >
               {children}
             </ColouredContainer>
