@@ -39,7 +39,7 @@ ENV NEXT_PUBLIC_FRIENDLY_CAPTCHA_SITEKEY=${ARG_FRIENDLY_CAPTCHA_SITEKEY}
 ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN --mount=type=secret,id=sanity_api_token,env=SANITY_API_TOKEN \
-    pnpm web build'
+    pnpm web build
 
 
 # -------------------------------------------------------- #
