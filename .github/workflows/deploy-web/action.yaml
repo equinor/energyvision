@@ -86,7 +86,7 @@ runs:
           --cache-from ${{ inputs.imageName }}:${{ env.IMAGE_TAG}} \
           --build-arg ARG_SANITY_PROJECT_ID=${{ inputs.projectId }} \
           --build-arg ARG_SANITY_DATASET=${{ inputs.datasetName }} \
-          --secret id=sanity_api_token,env=SANITY_API_TOKEN \
+          --secret id=SANITY_API_TOKEN \
           --build-arg ARG_ALGOLIA_APP_ID=${{ inputs.algoliaAppId }} \
           --build-arg ARG_ALGOLIA_SEARCH_API_KEY=${{ inputs.algoliaApiKey }} \
           --build-arg ARG_ENV=${{ inputs.environment }} \

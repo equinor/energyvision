@@ -96,13 +96,17 @@ runs:
     - name: Build sanity container ⚙️
       id: build
       shell: bash
+      env:
+        SANITY_API_TOKEN: ${{ inputs.sanityApiToken }}
+        FOTOWARE_AF_EXPORT_KEY: ${{ inputs.fotowareAfExportKey }}
+        SCREEN9_TOKEN: ${{ inputs.screen9token }}
+        SANITY_STUDIO_PREVIEW_SECRET: ${{ inputs.sanityPreviewToken }}
       run: |
         docker build . \
           --cache-from ${{ inputs.imageName }}:${{ env.IMAGE_TAG }} \
           --build-arg ARG_SANITY_DATASET=${{ inputs.datasetName }} \
-          --build-arg ARG_SANITY_PREVIEW=${{ inputs.sanityPreviewToken }} \
-          --build-arg ARG_SANITY_API_TOKEN=${{ inputs.sanityApiToken }} \
-          --build-arg ARG_SANITY_HISTORY_API_TOKEN=${{ inputs.sanityHistoryApiToken }} \
+          --secret id=SANITY_STUDIO_PREVIEW_SECRET \
+          --secret id=SANITY_API_TOKEN \
           --build-arg ARG_BRANDMASTER_URL=${{ inputs.brandmasterUrl }} \
           --build-arg ARG_BRANDMASTER_PLUGIN="${{ inputs.brandmasterPluginSource }}" \
           --build-arg ARG_FOTOWARE_CLIENT_ID="${{ inputs.fotowareClientId }}" \
@@ -110,9 +114,9 @@ runs:
           --build-arg ARG_FOTOWARE_REDIRECT_ORIGIN="${{ inputs.fotowareRedirectOrigin }}" \
           --build-arg ARG_FOTOWARE_REDIRECT_URI="${{ inputs.fotowareRedirectUri }}" \
           --build-arg ARG_FOTOWARE_AF_EXPORT_URL="${{ inputs.fotowareAfExportUrl }}" \
-          --build-arg ARG_FOTOWARE_AF_EXPORT_KEY="${{ inputs.fotowareAfExportKey }}" \
+          --secret id=FOTOWARE_AF_EXPORT_KEY \
           --build-arg ARG_SCREEN9_ACCOUNT_ID="${{ inputs.screen9accountId }}" \
-          --build-arg ARG_SCREEN9_TOKEN="${{ inputs.screen9token }}" \
+          --secret id=SCREEN9_TOKEN \
           --build-arg ARG_SANITY_STUDIO_PREVIEW_URL="${{ inputs.previewUrl }}" \
           --file studio/Dockerfile \
           --tag ${{ inputs.imageName }}:${{ env.IMAGE_TAG }} \
