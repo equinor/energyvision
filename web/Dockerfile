@@ -38,9 +38,8 @@ ENV NEXT_PUBLIC_ARCHIVE_CONTENT_LINK=${ARG_ARCHIVE_CONTENT_LINK}
 ENV NEXT_PUBLIC_FRIENDLY_CAPTCHA_SITEKEY=${ARG_FRIENDLY_CAPTCHA_SITEKEY}
 ENV NEXT_TELEMETRY_DISABLED=1
 
-RUN --mount=type=secret,id=sanity_api_token\
-    SANITY_API_TOKEN=$(cat /run/secrets/sanity_api_token) \
-    pnpm web build
+RUN --mount=type=secret,id=sanity_api_token,env=SANITY_API_TOKEN \
+    pnpm web build'
 
 
 # -------------------------------------------------------- #
