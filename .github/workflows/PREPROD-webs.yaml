@@ -86,7 +86,6 @@ jobs:
           datasetName: secret
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           sanityApiToken: ${{ secrets.SANITY_API_SECRET_TOKEN }}
-          sanityPreviewSecret: ${{ secrets.SANITY_STUDIO_SECRET_PREVIEW_SECRET }}
           algoliaAppId: ${{ secrets.ALGOLIA_APP_ID }}
           algoliaApiKey: ${{ secrets.ALGOLIA_SEARCH_API_KEY }}
           environment: ${{ secrets.ENV }}
@@ -143,9 +142,9 @@ jobs:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           sanityApiToken: ${{ secrets.SANITY_API_TOKEN }}
           sanityPreviewSecret: ${{ secrets.SANITY_STUDIO_PREVIEW_SECRET }}
-          algoliaAppId: ${{ secrets.ALGOLIA_APP_ID }}
-          algoliaApiKey: ${{ secrets.ALGOLIA_SEARCH_API_KEY }}
-          environment: ${{ secrets.ENV }}
+          algoliaAppId: ${{ vars.ALGOLIA_APP_ID }}
+          algoliaApiKey: ${{ vars.ALGOLIA_SEARCH_API_KEY }}
+          environment: ${{ vars.ENV }}
           archiveContentLink: ${{ vars.ARCHIVE_CONTENT_LINK }}
           friendlyCaptchaSitekey: ${{ matrix.dataset == 'brazil' && vars.BRAZIL_FC_SITEKEY || vars.GLOBAL_FC_SITEKEY }}
           friendlyCaptchaPuzzleEndpoint: ${{ matrix.dataset == 'brazil' && vars.BRAZIL_FC_PUZZLE_END_POINT || vars.GLOBAL_FC_PUZZLE_END_POINT }}

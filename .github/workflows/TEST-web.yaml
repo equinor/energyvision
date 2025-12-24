@@ -129,10 +129,9 @@ jobs:
           datasetName: ${{ matrix.dataset }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           sanityApiToken: ${{ secrets.SANITY_API_TOKEN }}
-          sanityPreviewSecret: ${{ secrets.SANITY_STUDIO_PREVIEW_SECRET }}
-          algoliaAppId: ${{ secrets.ALGOLIA_APP_ID }}
-          algoliaApiKey: ${{ secrets.ALGOLIA_SEARCH_API_KEY }}
-          environment: ${{ secrets.ENV }}
+          algoliaAppId: ${{ vars.ALGOLIA_APP_ID }}
+          algoliaApiKey: ${{ vars.ALGOLIA_SEARCH_API_KEY }}
+          environment: ${{ vars.ENV }}
           archiveContentLink: ${{ vars.ARCHIVE_CONTENT_LINK }}
       - uses: act10ns/slack@v2
         with:
