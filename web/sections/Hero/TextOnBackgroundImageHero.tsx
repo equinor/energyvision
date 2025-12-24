@@ -19,9 +19,9 @@ export const TextOnBackgroundImageHero = ({
   return (
     <ImageBackgroundContainer
       image={image as ImageWithAlt}
-      overrideGradient
       scrimClassName='py-40 lg:py-44 black-blue-center-gradient'
       aspectRatio={'9:16'}
+      useLight={image?.useLight}
     >
       <div className='px-layout-lg max-lg:py-11'>
         {/*@ts-ignore */}

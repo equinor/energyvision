@@ -64,7 +64,7 @@ export const ImageBackgroundContainer = ({
       ${useLight ? '' : 'dark'}
       w-full
       h-full
-      ${useAnimation && isLargerDisplays ? `bg-fixed ${fadedFilter}` : 'bg-local'}
+      ${(useAnimation && isLargerDisplays) ? `bg-fixed ${fadedFilter}` : 'bg-local'}
       bg-center
       bg-no-repeat
       bg-cover

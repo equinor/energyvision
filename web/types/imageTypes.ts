@@ -15,6 +15,7 @@ export type ImageWithAlt = {
   hotspot?: SanityImageHotspot
   _type: 'imageWithAlt'
   extension?: string
+  useLight?: boolean
 }
 
 export type ImageWithCaptionData = {

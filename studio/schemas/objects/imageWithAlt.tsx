@@ -29,6 +29,13 @@ export default {
         'If this image is purely decorative you can disable the alt tag input here. Please note that this makes the image invisible for screen reader users.',
     },
     {
+      title: 'Apply light gradient',
+      name: 'useLight',
+      type: 'boolean',
+      description:
+        'Applies a white gradient over semi transparent background image.',
+    },
+    {
       name: 'alt',
       type: 'string',
       title: 'Alt text',
