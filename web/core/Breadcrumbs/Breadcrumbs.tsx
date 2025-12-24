@@ -98,7 +98,7 @@ export const Breadcrumbs = forwardRef<HTMLElement, BreadcrumbsProps>(
           })}
         </BreadcrumbsList>
         <BreadcrumbJsonLd
-          itemListElements={buildJsonLdElements(crumbs, pathname)}
+          items={buildJsonLdElements(crumbs, pathname)}
         />
       </nav>
     )

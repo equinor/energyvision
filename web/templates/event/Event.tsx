@@ -41,7 +41,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
           name={plainTitle}
           startDate={start.toISOString()}
           endDate={end.toISOString()}
-          location={location}
+          location={location||""}
         />
       )}
       <main className='flex flex-col pt-topbar'>

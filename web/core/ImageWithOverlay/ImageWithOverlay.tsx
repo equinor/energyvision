@@ -67,8 +67,7 @@ export const ImageWithOverlay = forwardRef<
           {title}
         </Typography>
       ) : (
-        //@ts-ignore: Checked earlier for undefined title
-        <Blocks
+        title && <Blocks
           as='h2'
           variant='h4'
           className='text-md lg:text-lg'
