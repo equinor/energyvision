@@ -25,7 +25,6 @@ import { media } from 'sanity-plugin-media'
 import { createCustomDuplicateAction } from './actions/CustomDuplicateAction'
 import { SetAndPublishAction } from './actions/CustomPublishAction'
 import { DeleteTranslationAction } from './actions/customDelete/DeleteTranslationAction'
-import { ResetCrossDatasetToken } from './actions/ResetCrossDatasetToken'
 import deskStructure, { defaultDocumentNodeResolver } from './deskStructure'
 import { initialValueTemplates } from './initialValueTemplates'
 import { defaultLanguage } from './languages'
@@ -172,8 +171,7 @@ const getConfig = (
       if (singletonTemplates.includes(context.schemaType))
         //@ts-ignore
         return prev.filter(it => !['delete', 'duplicate'].includes(it.action))
-
-      if (isSecret) prev.push(ResetCrossDatasetToken)
+        
       if (i18n.schemaTypes.includes(context.schemaType))
         prev.push(DeleteTranslationAction)
       return prev

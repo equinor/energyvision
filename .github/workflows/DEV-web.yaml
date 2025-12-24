@@ -37,7 +37,6 @@ jobs:
           imageName: ghcr.io/equinor/energyvision/web-${{ matrix.dataset }}
           datasetName: ${{ matrix.dataset }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
-          sanityApiToken: ${{ secrets.SANITY_API_TOKEN }}
           algoliaAppId: ${{ vars.ALGOLIA_APP_ID }}
           algoliaApiKey: ${{ vars.ALGOLIA_SEARCH_API_KEY }}
           archiveContentLink: ${{ vars.ARCHIVE_CONTENT_LINK }}
