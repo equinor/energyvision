@@ -89,7 +89,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
                 <Blocks
                   variant='ingress'
                   value={ingress}
-                  className='px-layout-sm sm:px-layout-lg'
+                  blockClassName='px-layout-sm sm:px-layout-lg'
                 />
               )}
               {content && (
