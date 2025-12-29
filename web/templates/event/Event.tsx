@@ -113,7 +113,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
           )}
           {contactList && <ContactList data={contactList} />}
           {relatedLinks?.links && relatedLinks.links.length > 0 && (
-            <RelatedContent data={relatedLinks} />
+            <RelatedContent data={relatedLinks} className='px-layout-sm sm:px-layout-lg'/>
           )}
         </article>
       </main>
