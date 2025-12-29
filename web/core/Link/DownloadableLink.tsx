@@ -20,7 +20,7 @@ export type DownloadableLinkProps = {
 } & Omit<ResourceLinkProps, 'variant'>
 
 const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(function DownloadableLink(
-  { fileName, label, type = 'downloadableFile', extension, showExtensionIcon, ariaHideText, variant = 'fit' },
+  { fileName, label, type = 'downloadableFile', extension, showExtensionIcon, ariaHideText, variant = 'default' },
   ref,
 ) {
   const intl = useTranslations()
