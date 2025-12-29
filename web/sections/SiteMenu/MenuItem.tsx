@@ -56,7 +56,7 @@ export const MenuItem = ({ item, index }: MenuGroupType) => {
           </div>
           <div className="grow py-4 xl:py-10">
             {groups && groups.length > 0 && (
-              <div className="flex flex-col xl:grid xl:grid-flow-col xl:grid-cols-[repeat(auto-fill,_minmax(8em,1fr)))] xl:grid-rows-[min-content_min-content] xl:gap-x-20 xl:gap-y-2">
+              <div className="flex flex-col xl:grid xl:grid-flow-col xl:grid-rows-[min-content_min-content] xl:gap-x-20 xl:gap-y-2">
                 {groups.map((groupItem: SubMenuGroupData) => {
                   return (
                     <Fragment key={groupItem.id}>
