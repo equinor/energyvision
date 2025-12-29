@@ -44,17 +44,6 @@ const ADMIN_ITEMS = (S, context) =>
     Settings(S),
   ].filter(e => e)
 
-const SUB_EDITOR_ITEMS = (S, context) =>
-  [
-    News(S),
-    LocalNews(S, context),
-    TopicContent(S),
-    LandingPage(S),
-    Magazine(S),
-    Event(S),
-    S.divider(),
-    AssetLibrary(S, context),
-  ].filter(e => e)
 
 const LOCAL_NEWS_EDITOR_ITEMS = (S, context) =>
   [LocalNews(S, context)].filter(e => e)
@@ -78,16 +67,12 @@ const getItems = (S, context) => {
       role?.name === 'administrator' ||
       role?.name === 'developer',
   )
-  const isSubEditor = roles.some(role => String(role)?.startsWith('sub-editor'))
   const isLocalNewsEditor = roles.some(role =>
     role?.name.startsWith('local-news-editor'),
   )
 
   if (isAdmin) {
     return ADMIN_ITEMS(S, context)
-  }
-  if (isSubEditor) {
-    return SUB_EDITOR_ITEMS(S, context)
   }
   if (isLocalNewsEditor) {
     return LOCAL_NEWS_EDITOR_ITEMS(S, context)
