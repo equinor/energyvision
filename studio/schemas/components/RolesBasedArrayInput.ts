@@ -22,7 +22,7 @@ export function RolesBasedArrayInput(props: any) {
   //if the user has the required roles, return all types. If not, filter some of them out.
   const allowedTypes = hasAccess
     ? schemaType.of
-    : schemaType.of.filter(
+    : schemaType.of?.filter(
         (type: any) => !restrictedComponents.includes(type.name),
       )
 

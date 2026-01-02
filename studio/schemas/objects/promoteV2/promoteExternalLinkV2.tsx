@@ -10,6 +10,7 @@ import {
   title,
 } from '../commonFields/commonFields'
 import { externalLink } from '../linkSelector/common'
+import { PromotionLayoutInput } from './promoteTopicsV2'
 
 export type promoteExternal = {
   _type: 'promoteExternalV2'
@@ -72,8 +73,57 @@ export default {
     },
     theme,
     layoutGrid,
-    gridColumns,
-    layoutDirection,
+{
+      title: 'Number of grid columns',
+      name: 'gridColumns',
+      type: 'string',
+      description: 'Select number of grid column. Mobile it will only be 1 column.',
+      options: {
+        list: [
+          { title: '2', value: '2' },
+          { title: '3', value: '3' },
+          { title: '4', value: '4' },
+        ],
+      },
+      initialValue: '3',
+      //@ts-ignore:todo
+      hidden: ({ parent }: DocumentType) => {
+        return parent?.layoutGrid === 'lg'
+      },
+      fieldset: 'design',
+      validation: (Rule: Rule) =>
+        Rule.custom((value: string, ctx: ValidationContext) => {
+          //@ts-ignore:todo
+          if (Number(ctx.parent?.promoteList?.length) < Number(value)) {
+            return 'Fewer promotions than grid columns. Please select lower grid columns'
+          }
+          //@ts-ignore:todo
+          if (ctx.parent?.layoutDirection === 'row' && ctx.parent?.layoutGrid !== 'sm') {
+            if (value === '4') {
+              return 'Please use only 2 or 3 cols when using the smaller layout grids with side by side promotions'
+            }
+          }
+          return true
+        }),
+    },
+    {
+      title: 'Layout variant',
+      name: 'layoutDirection',
+      type: 'string',
+      description: 'Select  variant for image and content ',
+      options: {
+        list: [
+          { title: 'Stacked', value: 'col' },
+          { title: 'Side by side', value: 'row' },
+        ],
+        layout: 'radio',
+      },
+      fieldset: 'design',
+      initialValue: 'col',
+      components: {
+        input: PromotionLayoutInput,
+      },
+    },
   ],
   preview: {
     select: {
