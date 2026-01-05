@@ -60,7 +60,6 @@ export const BaseLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(
               ref={ref}
               href={href}
               target='_blank'
-              {...rest}
               rel='noopener'
               referrerPolicy='strict-origin-when-cross-origin'
             >
@@ -69,7 +68,7 @@ export const BaseLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(
           )
         case 'icsLink':
           return (
-            <a className={classNames} ref={ref} href={href} {...rest}>
+            <a className={classNames} ref={ref} href={href}>
               {children}
             </a>
           )
@@ -77,7 +76,6 @@ export const BaseLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(
         default:
           return (
             <NextLink
-              {...rest}
               ref={ref}
               href={href}
               className={classNames}
