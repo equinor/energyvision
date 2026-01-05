@@ -23,7 +23,7 @@ const MultiplePromotions = ({
   variant,
   hasSectionTitle,
   labelledbyId,
-  background,
+  onColorBg = false,
 }: {
   data:
     | EventPromotion
@@ -35,27 +35,17 @@ const MultiplePromotions = ({
   background?: ColorKeys
   hasSectionTitle: boolean
   labelledbyId?: string
+  /* grey card background as long as not on colored background */
+  onColorBg?: boolean
 }) => {
   const { promotions = [] } = data
 
   const getCard = (data: CardProps) => {
     switch (data.type) {
-      case 'news':
-      case 'localNews':
-        return (
-          <li key={data?.id} className='flex justify-center'>
-            <PromotionCard
-              background={background}
-              data={data as CardData}
-              hasSectionTitle={hasSectionTitle}
-            />
-          </li>
-        )
       case 'people':
         return (
-          <li key={data.id} className='flex justify-center'>
+          <li key={data.id}>
             <PeopleCard
-              background={background}
               data={data as PeopleCardData}
               hasSectionTitle={hasSectionTitle}
             />
@@ -63,9 +53,9 @@ const MultiplePromotions = ({
         )
       default:
         return (
-          <li key={data?.id} className='flex justify-center'>
+          <li key={data?.id}>
             <PromotionCard
-              background={background}
+              onColorBg={onColorBg}
               data={data as CardData}
               hasSectionTitle={hasSectionTitle}
             />

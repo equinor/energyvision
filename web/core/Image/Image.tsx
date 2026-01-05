@@ -230,7 +230,7 @@ export const Image = ({
       sizes={getSizes(grid, isLargerDisplays)}
       alt={getAltText()}
       className={twMerge(
-        `${fill ? 'object-cover' : 'flex h-auto w-full'}  ${twAspectRatioUtility}`,
+        `${fill ? 'object-cover' : 'flex h-full w-full'} ${twAspectRatioUtility}`,
         imageClassName,
       )}
     />
@@ -238,12 +238,12 @@ export const Image = ({
 
   return caption || attribution ? (
     <figure className={twMerge(``, figureClassName)}>
-      <div className={twMerge(`relative h-auto w-full`, className)}>
+      <div className={twMerge(`relative h-full w-full`, className)}>
         {nextImage}
       </div>
       <figcaption
         className={twMerge(
-          `px-layout-lg pt-2 pb-4 text-xs`,
+          `px-layout-sm pt-2 pb-4 text-xs lg:px-layout-lg`,
           figCaptionBackground,
           figCaptionClassName,
         )}

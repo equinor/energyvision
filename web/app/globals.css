@@ -54,18 +54,39 @@
   --color-white-100: hsl(0, 0%, 100%);
 
   --text-2xs: clamp(calc(11.11 / 16 * 1rem), 0.19vw + 0.65rem, calc(14.08 / 16 * 1rem));
+  --text-2xs--line-height: calc(1 / 0.75);
   --text-xs: clamp(calc(13.33 / 16 * 1rem), 0.28vw + 0.77rem, calc(17.6 / 16 * 1rem));
+  --text-xs--line-height: calc(1 / 0.75);
   --text-sm: clamp(calc(14.61 / 16 * 1rem), 0.33vw + 0.84rem, calc(19.68 / 16 * 1rem));
+  --text-sm--line-height: calc(1.25 / 0.875);
   --text-base: clamp(calc(16 / 16 * 1rem), 0.39vw + 0.91rem, calc(22 / 16 * 1rem));
+  --text-base--line-height: calc(1.5 / 1);
   --text-md: clamp(calc(19.2 / 16 * 1rem), 0.54vw + 1.07rem, calc(27.5 / 16 * 1rem));
+  --text-md--line-height: calc(1.5 / 1);
   --text-lg: clamp(calc(23.04 / 16 * 1rem), 0.73vw + 1.27rem, calc(34.38 / 16 * 1rem));
+  --text-lg--line-height: calc(1.75 / 1.125);
   --text-xl: clamp(calc(27.65 / 16 * 1rem), 0.99vw + 1.5rem, calc(42.97 / 16 * 1rem));
+  --text-xl--line-height: calc(1.75 / 1.25);
   --text-2xl: clamp(calc(33.73 / 16 * 1rem), 1.38vw + 1.785rem, calc(55.055 / 16 * 1rem));
+  --text-2xl--line-height: calc(2 / 1.5);
   --text-3xl: clamp(calc(39.81 / 16 * 1rem), 1.77vw + 2.07rem, calc(67.14 / 16 * 1rem));
+  --text-3xl--line-height: calc(2.25 / 1.875);
   --text-4xl: clamp(calc(45.89 / 16 * 1rem), 2.16vw + 2.355rem, calc(79.225 / 16 * 1rem));
+  --text-4xl--line-height: calc(2.5 / 2.25);
   --text-5xl: clamp(calc(51.97 / 16 * 1rem), 2.55vw + 2.64rem, calc(91.31 / 16 * 1rem));
+  --text-5xl--line-height: 1;
   --text-6xl: clamp(calc(58.05 / 16 * 1rem), 2.94vw + 2.925rem, calc(103.39 / 16 * 1rem));
+  --text-6xl--line-height: 1;
   --text-8xl: clamp(calc(59.19 / 16 * 1rem), 3.72vw + 3.495rem, calc(115.47 / 16 * 1rem));
+  --text-8xl--line-height: 1;
+
+  --leading-text: 2.3rem;
+  --leading-inherit: inherit;
+  --leading-lofty: 1.02; /* 49.7px h3 large screen */
+  --leading-earthy: 1.172; /* 57.1828px h2 large screen */
+  --leading-misty: 1.25;
+  --leading-cloudy: 1.4; /*68.3071px h1 larger screen */
+  --leading-planetary: 1.5;
 
   --spacing-single-carousel-card-w-sm: 350px; /*275px;*/
   --spacing-single-carousel-card-w-md: 692px;
@@ -75,20 +96,11 @@
   --spacing-single-carousel-card-h-lg: 516px;
   --spacing-event-carousel-card-w: 383px;
   --spacing-arrow-right: 1.58rem;
-  --spacing-envis-prose: 75ch; /* recommended 66ch, can we go 80ch*/
-  --spacing-text: clamp(75ch, 1200px);
+  --spacing-text: clamp(60ch, 75ch, 750px);
 
   --font-weight-semibolder: 650;
 
   --radius-2xs: 0.1rem;
-
-  --leading-text: 2.3rem;
-  --leading-inherit: inherit;
-  --leading-lofty: 1.02; /* 49.7px h3 large screen */
-  --leading-earthy: 1.172; /* 57.1828px h2 large screen */
-  --leading-misty: 1.25;
-  --leading-cloudy: 1.4; /*68.3071px h1 larger screen */
-  --leading-planetary: 1.5;
 
   --scale-99: 0.99;
 
@@ -132,12 +144,13 @@
   --spacing-smContainer: calc(100vw - --spacing(layout-sm) - --spacing(layout-sm));
   --spacing-menuText: calc(35 * --spacing(6));
   --spacing-topbar: 85px;
-  --spacing-layout-sm: clamp(16px, calc(-38.3689px + 14.4984vw), 12dvw); /*figma:170 old:250px*/
-  --spacing-layout-md: clamp(16px, calc(-69.4369px + 22.7832vw), 17.8dvw); /*figma:255 old:368px*/
-  --spacing-layout-lg: clamp(16px, calc(-101.4757px + 31.3269vw), 22.3dvw); /*figma:320 old: 500px*/
+  --spacing-layout-sm: clamp(16px, calc(-38.3689px + 15.4984vw), 13dvw);
+  --spacing-layout-md: clamp(16px, calc(-69.4369px + 23.7832vw), 18.8dvw);
+  --spacing-layout-lg: clamp(16px, calc(-101.4757px + 32.3269vw), 23.3dvw);
+  /* --spacing-layout-sm: clamp(16px, calc(-38.3689px + 14.4984vw), 12dvw);
+  --spacing-layout-md: clamp(16px, calc(-69.4369px + 22.7832vw), 17.8dvw);
+  --spacing-layout-lg: clamp(16px, calc(-101.4757px + 31.3269vw), 22.3dvw); */
   --spacing-news-banner-vertical: clamp(40px, calc(14.3125px + 11.0032vw), 210px);
-  --spacing-envis-prose: 75ch; /* recommended 66ch, can we go 80ch*/
-  --spacing-envis-prose: 75ch; /* recommended 66ch, can we go 80ch*/
 
   /* PROSE - Typography to be used with blocks */
 
@@ -405,33 +418,33 @@ treat the value and modifier as a single value:
 
   /* VIDEOJS */
   .video-js.vjs-fill .vjs-control-bar {
-    @apply !bg-transparent;
+    @apply bg-transparent!;
   }
   .video-js.vjs-fill .vjs-play-control {
-    @apply !bg-slate-blue-100;
+    @apply bg-slate-blue-100!;
   }
   .video-js:not(.vjs-fill) .vjs-control-bar {
-    @apply !bg-slate-blue-100;
+    @apply bg-slate-blue-100!;
   }
 
   .video-js .vjs-big-play-button {
-    @apply flex !h-[2.3em] !w-[2.3em] items-center justify-center !rounded-full !border-none;
+    @apply flex h-[2.3em]! w-[2.3em]! items-center justify-center rounded-full! border-none!;
   }
   .video-js .vjs-big-play-button .vjs-icon-placeholder::before {
-    @apply !text-2xl max-lg:mt-2.5;
+    @apply text-2xl! max-lg:mt-2.5;
   }
   .video-js .vjs-audio-button,
   .vjs-picture-in-picture-control {
-    @apply !hidden;
+    @apply hidden!;
   }
   .vjs-poster img {
-    @apply !object-cover;
+    @apply object-cover!;
   }
   .vjs-loading-spinner {
     border: 0.6em solid transparent !important;
   }
   .vjs-fullwidth:not(.vjs-playing.vjs-has-started) .vjs-loading-spinner {
-    @apply !visible !flex;
+    @apply visible! flex!;
     animation: vjs-spinner-show 0s linear 0.3s forwards;
   }
   .vjs-fullwidth:not(.vjs-playing.vjs-has-started) .vjs-loading-spinner:before,
@@ -451,10 +464,10 @@ treat the value and modifier as a single value:
 
   /* BRAND THEMING */
   .vjs-envis-brand:hover .vjs-big-play-button {
-    @apply !bg-energy-red-100;
+    @apply bg-energy-red-100!;
   }
   .vjs-envis-brand .vjs-big-play-button:focus {
-    @apply !bg-energy-red-100;
+    @apply bg-energy-red-100!;
   }
 }
 
@@ -554,7 +567,7 @@ treat the value and modifier as a single value:
  * 1. Display the current state of the counter (e.g. `[1]`)
  */
   a[aria-describedby='footnote-label']::after {
-    @apply cursor-pointer pr-[2px] pl-[2px] align-super text-xs font-medium text-slate-blue-95 no-underline hover:font-medium hover:underline;
+    @apply cursor-pointer pr-0.5 pl-0.5 align-super text-xs font-medium text-slate-blue-95 no-underline hover:font-medium hover:underline;
     content: counter(footnotes); /* 1 */
   }
 

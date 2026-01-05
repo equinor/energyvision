@@ -1,10 +1,7 @@
 import { forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { BaseLink, type BaseLinkProps } from '@/core/Link'
-import {
-  type ColorKeys,
-  colorKeyToUtilityMap,
-} from '@/styles/colorKeyToUtilityMap'
+import { colorKeyToUtilityMap } from '@/styles/colorKeyToUtilityMap'
 import { Image, type ImageRatioKeys } from '../../../core/Image/Image'
 import type { ImageWithAlt } from '../../../types/index'
 
@@ -19,7 +16,8 @@ export type CardProps = {
   /** Override background image styling */
   imageClassName?: string
   imageWrapperClassName?: string
-  background?: ColorKeys
+  /* grey card background as long as not on colored background */
+  onColorBg?: boolean
 } & BaseLinkProps
 
 /**
@@ -42,12 +40,14 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
     imageWrapperClassName = '',
     children,
     image,
-    background,
+    onColorBg = false,
   },
   ref,
 ) {
   const commonStyling = `
-  flex 
+  grid
+  grid-cols-1 
+  grid-rows-[35%_65%]
   flex-col
   gap-0
   rounded-card 
@@ -59,7 +59,7 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
     primary: `${commonStyling}`,
     secondary: `${commonStyling}`,
     compact: `w-full h-full rounded-card flex gap-4`,
-    single: `grid grid-cols-[40%_1fr] min-h-[450px] rounded-card`,
+    single: `grid grid-cols-[40%_auto] min-h-[450px] rounded-card`,
   }
   const variantAspectRatio: Record<Variants, ImageRatioKeys> = {
     primary: '16:9',
@@ -74,10 +74,10 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
     single: '',
   }
   const imageVariantClassNames: Record<Variants, string> = {
-    primary: `h-[35%] rounded-t-card *:rounded-t-card`,
-    secondary: `h-[35%] rounded-t-card *:rounded-t-card`,
-    compact: 'rounded-card w-[25vw] h-auto *:rounded-card',
-    single: 'h-[35%] w-auto h-full',
+    primary: `rounded-t-card *:rounded-t-card`,
+    secondary: `rounded-t-card *:rounded-t-card`,
+    compact: 'rounded-card w-[25vw] h-full *:rounded-card',
+    single: 'w-full h-full',
   }
 
   return (
@@ -86,7 +86,7 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
       href={href}
       prefetch={false}
       className={twMerge(
-        `group/card focus-visible:envis-outline dark:focus-visible:envis-outline-invert text-slate-80 focus:outline-hidden dark:text-white-100 ${colorKeyToUtilityMap[background ?? 'gray-20'].background} ${variantClassNames[variant]} `,
+        `group/card ${onColorBg ? 'bg-white-100' : 'bg-gray-20'} ${variantClassNames[variant]}`,
         className,
       )}
     >

@@ -1,12 +1,12 @@
 const variants = {
   heading: {
     unstyled: '',
-    h1: 'text-3xl leading-cloudy pb-11 my-0',
+    h1: 'text-3xl leading-earthy pb-11 my-0',
     //many places has gap-6 + mb-2 so pb-8
     //Teaser isBigText was set to 2xl...
     //TextBlock isBigText set to 3xl
     // isBigText set to common pattern 2xl now with classname mb-2 leading-cloudy
-    h2: `text-2xl leading-earthy pb-8 my-0`,
+    h2: `text-xl leading-earthy pb-8 my-0`,
     h3: `text-lg leading-lofty pb-4 my-0`, //needs pt and pb?
     h4: 'text-lg pb-0',
     h5: 'text-md pb-0',
@@ -23,16 +23,23 @@ const variants = {
     '3xl': 'text-3xl leading-cloudy',
     '4xl': 'text-4xl leading-cloudy',
     '5xl': 'text-5xl leading-cloudy',
-    '8xl': 'text-5xl lg:text-6xl 2xl:text-8xl leading-cloudy lg:leading-cloudy 2xl:leading-cloudy ',
+    '8xl':
+      'text-5xl lg:text-6xl 2xl:text-8xl leading-cloudy lg:leading-cloudy 2xl:leading-cloudy ',
   },
   paragraph: {
     caption: '',
     overline: 'text-md pb-2',
-    ingress: 'text-md my-6 first:mt-0',
+    ingress: 'text-md my-6 first:mt-0 last:mb-0',
     eyebrow: 'text-xs font-medium uppercase',
     body: 'my-5 first:mt-0 last:mb-0 [:where(h2+*,h3+*)]:mt-0 text-base',
     small: 'text-sm',
     simple: 'text-base',
+  },
+  card: {
+    eyebrow: 'text-xs font-medium uppercase',
+    h2: 'text-lg leading-misty pb-4',
+    h3: 'text-md leading-misty pb-4',
+    ingress: 'text-base leading-cloudy',
   },
   article: {
     body: 'my-5 first:mt-0 last:mb-0 [:where(h2+*,h3+*)]:mt-0 text-base',
@@ -77,6 +84,7 @@ type TypographyVariants =
   | keyof TypographyTokens['paragraph']
   | keyof TypographyTokens['marks']
   | keyof TypographyTokens['plain']
+  | keyof TypographyTokens['card']
 
 type TypographyGroups = keyof typeof variants
 

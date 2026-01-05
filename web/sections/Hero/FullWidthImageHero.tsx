@@ -65,7 +65,7 @@ export const FullWidthImageHero = ({
         value={title}
         id='mainTitle'
         variant='h1'
-        blockClassName={`py-11 px-layput-sm lg:px-layout-lg ${nextCompBg} ${nextCompDark ? nextCompDark : ''}`}
+        blockClassName={`py-4 lg:pt-6 lg:pb-4 px-layout-sm lg:px-layout-lg ${nextCompBg} ${nextCompDark ? nextCompDark : ''}`}
       />
       {subTitle && subTitle}
     </>

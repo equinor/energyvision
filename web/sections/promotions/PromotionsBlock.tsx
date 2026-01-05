@@ -113,6 +113,7 @@ const PromotionsBlock = ({
     promotionList = data?.promotions.slice(0, data?.eventsCount)
   }
 
+  const onColorBg = designOptions?.background?.backgroundColor !== 'White'
   const paddingClassName = `px-layout-sm lg:px-layout-lg`
 
   return (

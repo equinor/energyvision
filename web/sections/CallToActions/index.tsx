@@ -18,6 +18,7 @@ const CallToActions = ({
   className = '',
 }: CallToActionsProps) => {
   if (!callToActions) return null
+
   const getSingleAction = () => {
     const { label, extension, type, link } = callToActions[0]
     const url = getUrlFromAction(callToActions[0])

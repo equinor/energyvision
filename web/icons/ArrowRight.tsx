@@ -1,5 +1,5 @@
-import { forwardRef, Ref, SVGProps } from 'react'
 import { arrow_forward } from '@equinor/eds-icons'
+import { forwardRef, type Ref, type SVGProps } from 'react'
 import { TransformableIcon } from './TransformableIcon'
 
 export type ArrowRightProps = {
@@ -11,7 +11,9 @@ export type ArrowRightProps = {
   ref?: Ref<SVGSVGElement>
 } & SVGProps<SVGSVGElement>
 
-export const ArrowRight = forwardRef<SVGSVGElement, ArrowRightProps>(function ArrowRight({ ...rest }, ref) {
-  return <TransformableIcon iconData={arrow_forward} {...rest} ref={ref} />
-})
+export const ArrowRight = forwardRef<SVGSVGElement, ArrowRightProps>(
+  function ArrowRight({ ...rest }, ref) {
+    return <TransformableIcon iconData={arrow_forward} {...rest} ref={ref} />
+  },
+)
 export default ArrowRight

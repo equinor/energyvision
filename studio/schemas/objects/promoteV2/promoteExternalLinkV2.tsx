@@ -1,14 +1,7 @@
 import { HiOutlineViewColumns } from 'react-icons/hi2'
 import type { Image, PortableTextBlock, Rule } from 'sanity'
 import blocksToText from '../../../helpers/blocksToText'
-import {
-  gridColumns,
-  ingress,
-  layoutDirection,
-  layoutGrid,
-  theme,
-  title,
-} from '../commonFields/commonFields'
+import { ingress, layoutGrid, theme, title } from '../commonFields/commonFields'
 import { externalLink } from '../linkSelector/common'
 import { PromotionLayoutInput } from './promoteTopicsV2'
 
@@ -73,11 +66,12 @@ export default {
     },
     theme,
     layoutGrid,
-{
+    {
       title: 'Number of grid columns',
       name: 'gridColumns',
       type: 'string',
-      description: 'Select number of grid column. Mobile it will only be 1 column.',
+      description:
+        'Select number of grid column. Mobile it will only be 1 column.',
       options: {
         list: [
           { title: '2', value: '2' },
@@ -98,7 +92,10 @@ export default {
             return 'Fewer promotions than grid columns. Please select lower grid columns'
           }
           //@ts-ignore:todo
-          if (ctx.parent?.layoutDirection === 'row' && ctx.parent?.layoutGrid !== 'sm') {
+          if (
+            ctx.parent?.layoutDirection === 'row' &&
+            ctx.parent?.layoutGrid !== 'sm'
+          ) {
             if (value === '4') {
               return 'Please use only 2 or 3 cols when using the smaller layout grids with side by side promotions'
             }

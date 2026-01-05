@@ -2,10 +2,10 @@
 import { forwardRef, type HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
 import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
+import { Typography } from '@/core/Typography'
 import Card from '@/sections/cards/Card'
 import type { ColorKeys } from '@/styles/colorKeyToUtilityMap'
 import { useMediaQuery } from '../../../lib/hooks/useMediaQuery'
-import Blocks from '../../../portableText/Blocks'
 import type { CardData } from '../../../types/index'
 
 export type PromotionCardProps = {
@@ -17,6 +17,8 @@ export type PromotionCardProps = {
   imageClassName?: string
   /* Override styling on card header title element */
   titleClassName?: string
+  /* grey card background as long as not on colored background */
+  onColorBg?: boolean
 } & HTMLAttributes<HTMLAnchorElement>
 
 /**
@@ -28,23 +30,30 @@ const PromotionCard = forwardRef<HTMLAnchorElement, PromotionCardProps>(
   function PromotionCard(
     {
       data,
-      background,
       className = '',
       imageClassName = '',
       titleClassName = '',
       variant = 'default',
       hasSectionTitle = true,
+      onColorBg = false,
     },
     ref,
   ) {
     const isMobile = useMediaQuery(`(max-width: 768px)`)
     const { slug, title, ingress, publishDateTime, heroImage, id, type } = data
 
+    const plainIngress = Array.isArray(ingress)
+      ? ingress
+          .map(block => block.children.map((span: any) => span.text).join(''))
+          .join('\n')
+          .replace(/\n/g, ' ')
+      : ingress
+
     return (
       <Card
         ref={ref}
         href={slug}
-        background={background}
+        onColorBg={onColorBg}
         image={heroImage?.image}
         variant={variant === 'single' && !isMobile ? 'single' : 'primary'}
         className={twMerge(`h-full w-full`, className)}
@@ -77,24 +86,13 @@ const PromotionCard = forwardRef<HTMLAnchorElement, PromotionCardProps>(
             titleClassName={titleClassName}
           />
           {ingress && (
-            <Blocks
-              noInvert
-              value={ingress}
-              blockClassName={`break-word max-w-prose ${
-                type !== 'news' && type !== 'localNews' ? '' : 'hidden lg:block'
-              }`}
-              {...(!(variant === 'single' && !isMobile) && {
-                clampLines: isMobile ? 3 : 5,
-              })}
-              marks={{
-                em: ({ children }: { children?: React.ReactNode }) => (
-                  <>{children}</>
-                ),
-                strong: ({ children }: { children?: React.ReactNode }) => (
-                  <>{children}</>
-                ),
-              }}
-            />
+            <Typography
+              group='card'
+              variant='ingress'
+              className={`truncate ${type !== 'news' && type !== 'localNews' ? '' : 'max-lg:hidden'} line-clamp-3 lg:line-clamp-5`}
+            >
+              {plainIngress}
+            </Typography>
           )}
         </Card.Content>
       </Card>

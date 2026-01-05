@@ -66,7 +66,20 @@ export const PromotionBlockV2 = forwardRef<HTMLDivElement, PromotionBlockProps>(
     const { backgroundUtility } = background || {}
 
     const px = getLayoutPx(layoutGrid ?? 'lg')
-    const cols = getGridTemplateColumns(gridColumns ?? '3')
+
+    let templateColumns =
+      promoteList?.length < 3 ? promoteList?.length.toString() : gridColumns
+
+    if (layoutGrid === 'lg') {
+      if (layoutDirection === 'row') {
+        templateColumns = '2'
+      } else {
+        templateColumns =
+          promoteList?.length < 3 ? promoteList?.length.toString() : '3'
+      }
+    }
+
+    const cols = getGridTemplateColumns(templateColumns as GridColumnVariant)
     const bg =
       colorKeyToUtilityMap[backgroundUtility ?? 'white-100']?.background
 
@@ -91,9 +104,7 @@ export const PromotionBlockV2 = forwardRef<HTMLDivElement, PromotionBlockProps>(
               className={'px-layout-sm lg:px-layout-lg'}
             />
           )}
-          <ul
-            className={`px-layout-sm ${px} grid ${cols} auto-rows-auto gap-4`}
-          >
+          <ul className={`${px} grid ${cols} auto-rows-fr gap-4`}>
             {promoteList.map((promotion: any) => {
               const variant = getVariantOnType(type)
               const href =
@@ -110,6 +121,7 @@ export const PromotionBlockV2 = forwardRef<HTMLDivElement, PromotionBlockProps>(
                     image={promotion.image}
                     href={href}
                     layoutDirection={layoutDirection}
+                    hasSectionTitle={!!title}
                   />
                 </li>
               )

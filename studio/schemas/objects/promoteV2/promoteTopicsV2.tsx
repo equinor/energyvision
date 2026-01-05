@@ -9,13 +9,13 @@ import {
   type Reference,
   type Rule,
   type StringInputProps,
-  ValidationContext,
   set,
+  type ValidationContext,
 } from 'sanity'
 import blocksToText from '../../../helpers/blocksToText'
 import { topicPromotionFilter } from '../../../helpers/referenceFilters'
 import routes from '../../routes'
-import { gridColumns, layoutGrid, theme, title } from '../commonFields/commonFields'
+import { layoutGrid, theme, title } from '../commonFields/commonFields'
 
 type PromotionLayoutInputProps = {
   options: any[]
@@ -36,8 +36,20 @@ export const PromotionLayoutInput = (props: PromotionLayoutInputProps) => {
     <Grid columns={schemaType?.options?.list?.length} rows={1} gap={2}>
       {schemaType?.options?.list?.map((option: any) => {
         return (
-          <Card key={option.value} paddingY={2} paddingX={3} radius={2} shadow={1}>
-            <Flex direction="row" align="center" width="100%" height="stretch" gap={2}>
+          <Card
+            key={option.value}
+            paddingY={2}
+            paddingX={3}
+            radius={2}
+            shadow={1}
+          >
+            <Flex
+              direction='row'
+              align='center'
+              width='100%'
+              height='stretch'
+              gap={2}
+            >
               <Radio
                 checked={value === option.value}
                 name={option.value}
@@ -45,8 +57,8 @@ export const PromotionLayoutInput = (props: PromotionLayoutInputProps) => {
                 onChange={handleChange}
                 value={option.value}
               />
-              <Flex gap={2} align="center" width="100%">
-                <Text as="label" htmlFor={option.value}>
+              <Flex gap={2} align='center' width='100%'>
+                <Text as='label' htmlFor={option.value}>
                   {option.title}
                 </Text>
                 <div
@@ -111,7 +123,7 @@ export default {
               name: 'reference',
               description: 'Select the page you want to promote',
               type: 'reference',
-              to: [...routes].filter((e) => e),
+              to: [...routes].filter(e => e),
               options: {
                 filter: topicPromotionFilter,
                 disableNew: true,
@@ -123,8 +135,16 @@ export default {
               topicTitle: 'reference.content.title',
               topicMedia: 'reference.content.heroFigure.image',
             },
-            prepare({ topicTitle, topicMedia }: { topicTitle: PortableTextBlock[]; topicMedia: Image }) {
-              const plainTitle = topicTitle ? blocksToText(topicTitle) : 'Untitled'
+            prepare({
+              topicTitle,
+              topicMedia,
+            }: {
+              topicTitle: PortableTextBlock[]
+              topicMedia: Image
+            }) {
+              const plainTitle = topicTitle
+                ? blocksToText(topicTitle)
+                : 'Untitled'
 
               return {
                 title: plainTitle,
@@ -142,7 +162,8 @@ export default {
       title: 'Number of grid columns',
       name: 'gridColumns',
       type: 'string',
-      description: 'Select number of grid column. Mobile it will only be 1 column.',
+      description:
+        'Select number of grid column. Mobile it will only be 1 column.',
       options: {
         list: [
           { title: '2', value: '2' },
@@ -163,7 +184,10 @@ export default {
             return 'Fewer promotions than grid columns. Please select lower grid columns'
           }
           //@ts-ignore:todo
-          if (ctx.parent?.layoutDirection === 'row' && ctx.parent?.layoutGrid !== 'sm') {
+          if (
+            ctx.parent?.layoutDirection === 'row' &&
+            ctx.parent?.layoutGrid !== 'sm'
+          ) {
             if (value === '4') {
               return 'Please use only 2 or 3 cols when using the smaller layout grids with side by side promotions'
             }
@@ -196,7 +220,14 @@ export default {
       promoteList: 'promoteList',
       theme: 'theme',
     },
-    prepare({ title, promoteList, theme }: { title?: PortableTextBlock[]; promoteList: any[]; theme?: any }) {
+    prepare({
+      title,
+      promoteList,
+    }: {
+      title?: PortableTextBlock[]
+      promoteList: any[]
+      theme?: any
+    }) {
       const plainTitle = title ? blocksToText(title) : 'Untitled'
       const subTitle = `Promote ${promoteList && promoteList?.length > 0 ? promoteList.length : ''} topics`
       return {

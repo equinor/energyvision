@@ -1,6 +1,6 @@
-import { DocumentLocationResolver } from 'sanity/presentation'
-import { getDraftId } from 'sanity'
 import { map } from 'rxjs'
+import { getDraftId } from 'sanity'
+import type { DocumentLocationResolver } from 'sanity/presentation'
 import { getLocaleFromName } from '../src/lib/localization'
 
 export const locations: DocumentLocationResolver = (params, context) => {
@@ -27,7 +27,7 @@ export const locations: DocumentLocationResolver = (params, context) => {
 
     // Return a streaming list of locations
     return doc$.pipe(
-      map((doc) => {
+      map(doc => {
         // If the document doesn't exist or have a slug, return null
         if (!doc?.slugs || doc.slugs?.length === 0) {
           return null

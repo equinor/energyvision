@@ -75,9 +75,9 @@ export const Breadcrumbs = forwardRef<HTMLElement, BreadcrumbsProps>(
       <nav
         ref={ref}
         aria-label='Breadcrumbs'
-        className={`px-layout-lg ${background ?? ''}`}
+        className={`px-layout-sm lg:px-layout-lg ${background ?? ''}`}
       >
-        <BreadcrumbsList className={twMerge(`py-6`, className)}>
+        <BreadcrumbsList className={twMerge(`py-2 lg:py-4`, className)}>
           {crumbs.map(item => {
             const isActive = item.slug === currentSlug
             const label = item.label
@@ -97,9 +97,7 @@ export const Breadcrumbs = forwardRef<HTMLElement, BreadcrumbsProps>(
             )
           })}
         </BreadcrumbsList>
-        <BreadcrumbJsonLd
-          items={buildJsonLdElements(crumbs, pathname)}
-        />
+        <BreadcrumbJsonLd items={buildJsonLdElements(crumbs, pathname)} />
       </nav>
     )
   },

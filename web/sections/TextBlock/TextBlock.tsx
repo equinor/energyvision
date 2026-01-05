@@ -97,7 +97,7 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
           )}
           {overline ? (
             <hgroup
-              className={`mb-1${useBrandTheme ? 'text-energy-red-100' : ''} text-balance`}
+              className={`mb-1 ${useBrandTheme ? 'text-energy-red-100' : ''} text-balance`}
             >
               <Typography variant='overline'>{overline}</Typography>
               {title && <Blocks variant='h2' value={title} />}
@@ -105,12 +105,12 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
           ) : (
             title && <Blocks value={title} variant='h2' />
           )}
-          {ingress && (
-            <Blocks variant='ingress' value={ingress} blockClassName='mb-6' />
-          )}
         </>
       )}
       <div className='flex flex-col gap-6'>
+        {ingress && (
+          <Blocks variant='ingress' value={ingress} blockClassName='mb-6' />
+        )}
         {text && <Blocks value={text} />}
         {callToActions && (
           <CallToActions callToActions={callToActions} splitList={splitList} />

@@ -10,40 +10,22 @@ type PromotionProps = {
   promotion: PeopleCardData | CardData | EventCardData
   background?: ColorKeys
   hasSectionTitle?: boolean
+  /* grey card background as long as not on colored background */
+  onColorBg?: boolean
 }
 
 const Promotion = ({
   promotion,
   hasSectionTitle = false,
-  background,
+  onColorBg = false,
 }: PromotionProps) => {
   if (!promotion) return null
+
   const getCard = (data: CardProps) => {
     switch (data?.type) {
-      case 'news':
-      case 'localNews':
-        return (
-          <PromotionCard
-            background={background}
-            data={data as CardData}
-            hasSectionTitle={hasSectionTitle}
-            variant='single'
-          />
-        )
-      case 'topics':
-      case 'magazine':
-        return (
-          <PromotionCard
-            background={background}
-            data={data as CardData}
-            hasSectionTitle={hasSectionTitle}
-            variant='single'
-          />
-        )
       case 'people':
         return (
           <PeopleCard
-            background={background}
             data={data as PeopleCardData}
             hasSectionTitle={hasSectionTitle}
             variant='single'
@@ -52,15 +34,20 @@ const Promotion = ({
       case 'events':
         return (
           <EventCard
-            background={background}
             data={data as EventCardData}
             hasSectionTitle={hasSectionTitle}
             variant='single'
           />
         )
       default:
-        console.warn('Missing card type for ', data)
-        return <div />
+        return (
+          <PromotionCard
+            onColorBg={onColorBg}
+            data={data as CardData}
+            hasSectionTitle={hasSectionTitle}
+            variant='single'
+          />
+        )
     }
   }
 

@@ -31,60 +31,38 @@ export const CardContent = forwardRef<HTMLDivElement, CardContentProps>(
       iconClassName = '',
       noArrow = false,
       children,
-      ...rest
     },
     ref,
   ) {
-    const commonStyling = `h-full pt-6 md:pt-8 pb-6 px-6`
+    const commonStyling = `pt-6 md:pt-8 pb-6 px-6`
+
     const variantClassNames = {
       primary: `${commonStyling} flex-col items-start`,
       secondary: `${commonStyling} flex-col items-start`,
       compact: `pb-4 pt-2`,
       single: `${commonStyling} px-10 flex-col items-start`,
     }
-    const variantLinkClassNames = {
-      primary: `self-end mt-auto max-lg:hidden`,
-      secondary: `self-end mt-auto max-lg:hidden`,
-      compact: `max-xl:hidden`,
-      single: 'self-end mt-auto max-lg:hidden',
-    }
-    const iconClassNames = twMerge(
-      `size-arrow-right
-    text-energy-red-100
-    dark:text-white-100
-    mr-2
-    group-hover/card:translate-x-2
-    transition-all
-    duration-300
-    ${variantLinkClassNames[variant]}
-  `,
-      iconClassName,
-    )
+
     return (
       <div
         ref={ref}
         className={twMerge(
-          `flex gap-4 md:gap-6 ${variantClassNames[variant]}`,
+          `flex h-full gap-4 md:gap-6 ${variantClassNames[variant]}`,
           className,
         )}
-        {...rest}
       >
-        {variant === 'secondary' || variant === 'single' ? (
-          <>
-            <div
-              className={`max-h-[60%] overflow-hidden text-ellipsis ${variant === 'single' ? 'flex flex-col gap-12 pr-12' : ''}`}
-            >
-              {children}
-            </div>
-            {!noArrow && <ArrowRight className={iconClassNames} />}
-          </>
-        ) : (
-          <>
-            <div className='max-h-[60%] overflow-hidden text-ellipsis'>
-              {children}
-            </div>
-            {!noArrow && <ArrowRight className={iconClassNames} />}
-          </>
+        <div className='max-w-prose grow'>{children}</div>
+        {!noArrow && (
+          <div
+            className={`flex items-end justify-end self-end p-1 ${variant === 'compact' ? 'max-xl:hidden' : ''}`}
+          >
+            <ArrowRight
+              className={twMerge(
+                `mr-2 size-arrow-right text-energy-red-100 transition-all duration-300 group-hover/card:translate-x-2 dark:text-white-100`,
+                iconClassName,
+              )}
+            />
+          </div>
         )}
       </div>
     )
