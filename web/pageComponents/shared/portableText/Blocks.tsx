@@ -1,20 +1,21 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import {
-  PortableText,
-  PortableTextProps,
-  PortableTextReactComponents,
-  PortableTextMarkComponent,
-  PortableTextBlockComponent,
-  PortableTextTypeComponent,
-} from '@portabletext/react'
-import { PortableTextBlock, PortableTextBlockStyle } from '@portabletext/types'
-import { FigureWithLayout, Quote, ExternalLink, InternalLink, BulletList, NumberedList } from './components'
-import { FactBox } from '@sections/FactBox/FactBox'
-import { twMerge } from 'tailwind-merge'
-import { FormattedMessage } from 'react-intl'
-import { Highlight } from '@core/Typography/Highlight'
+
 import { IFrame } from '@core/IFrame/IFrame'
 import { ResourceLink } from '@core/Link'
+import { Highlight } from '@core/Typography/Highlight'
+import {
+  PortableText,
+  type PortableTextBlockComponent,
+  type PortableTextMarkComponent,
+  type PortableTextProps,
+  type PortableTextReactComponents,
+  type PortableTextTypeComponent,
+} from '@portabletext/react'
+import type { PortableTextBlock, PortableTextBlockStyle } from '@portabletext/types'
+import { FactBox } from '@sections/FactBox/FactBox'
+import { FormattedMessage } from 'react-intl'
+import { twMerge } from 'tailwind-merge'
+import { BulletList, ExternalLink, FigureWithLayout, InternalLink, NumberedList, Quote } from './components'
 
 export type BlockType = Record<PortableTextBlockStyle, PortableTextBlockComponent | undefined>
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -41,11 +42,8 @@ const defaultSerializers = {
     },
   },
   types: {
-    //@ts-ignore
     positionedInlineImage: (props) => <FigureWithLayout {...props} />,
-    //@ts-ignore
-    pullQuote: (props) => <Quote {...props} className="not-prose" />,
-    //@ts-ignore
+    pullQuote: (props: any) => <Quote {...props} className="not-prose" />,
     /*     basicIframe: (props) => {
       const { value } = props
       return <IFrame {...value} className="not-prose px-layout-md py-14 mx-auto" />
@@ -82,6 +80,8 @@ const defaultSerializers = {
           variant="fit"
           type="downloadableFile"
           href={attachment?.href}
+          fileId={attachment?.fileId}
+          label={attachment.label}
           extension={attachment?.extension}
           showExtensionIcon={true}
           isAttachment={true}
@@ -179,7 +179,6 @@ export type BlockProps = {
 
 const inlineBlockTypes = ['block', 'positionedInlineImage', 'pullQuote']
 
-//@ts-ignore
 export default function Blocks({
   value,
   blocksComponents,
@@ -197,7 +196,7 @@ export default function Blocks({
   return (
     <>
       {
-        //@ts-ignore
+        //@ts-expect-error
         value?.map((block: PortableTextBlock, i: number, blocks: PortableTextBlock[]) => {
           // Normal text blocks (p, h1, h2, etc.) — these are grouped so we can wrap them in a prose div
           if (inlineBlockTypes.includes(block._type)) {
@@ -218,7 +217,6 @@ export default function Blocks({
               >
                 <PortableText
                   value={value}
-                  //@ts-ignore
                   components={{
                     block: {
                       ...(hasAttachment ? attachmentBlockSerializers.block : defaultSerializers.block),
@@ -253,7 +251,6 @@ export default function Blocks({
                 value={block}
                 components={{
                   types: {
-                    //@ts-ignore
                     factbox: (props) => <FactBox className={`${marginOverride}`} {...props} />,
                   },
                 }}
@@ -276,7 +273,6 @@ export default function Blocks({
                 value={block}
                 components={{
                   types: {
-                    //@ts-ignore:todo
                     basicIframe: (props) => {
                       const { value } = props
                       return <IFrame {...value} className={`px-layout-md ${marginOverride}`} />
