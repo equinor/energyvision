@@ -1,4 +1,4 @@
-import { AnchorLinkReference } from '../types'
+import type { AnchorLinkReference } from '../types'
 
 export type LinkType =
   | 'internalUrl'
@@ -22,7 +22,7 @@ export type LinkData = {
   extension?: string
   fileName?: string
   anchorReference?: string
-  filename?: string
+  fileId?: string
 }
 
 export type RelatedLinksData = {

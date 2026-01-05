@@ -1,20 +1,18 @@
 import { Typography } from '@core/Typography'
 import { Modal } from '@sections/Modal'
 import FriendlyCaptcha from '@templates/forms/FriendlyCaptcha'
-import { ArrowRight } from '../../icons'
 import { forwardRef, useCallback, useState } from 'react'
-import { useIntl } from 'react-intl'
-import { getArrowElement, ResourceLinkProps } from './ResourceLink'
-import { BaseLink } from './BaseLink'
 import { BsFiletypePdf, BsFiletypeXlsx } from 'react-icons/bs'
+import { useIntl } from 'react-intl'
+import { ArrowRight } from '../../icons'
 import envisTwMerge from '../../twMerge'
+import { BaseLink } from './BaseLink'
+import { getArrowElement, type ResourceLinkProps } from './ResourceLink'
 
 type Variants = 'default' | 'fit' | 'stickyMenu'
 
 export type DownloadableLinkProps = {
   variant?: Variants
-  fileName?: string
-  label?: string
   isAttachment?: boolean
 } & Omit<ResourceLinkProps, 'variant'>
 
@@ -22,10 +20,11 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
   {
     children,
     fileName,
+    fileId,
     label,
     type = 'downloadableFile',
     extension,
-    showExtensionIcon,
+    showExtensionIcon = true,
     ariaHideText,
     variant = 'fit',
     isAttachment = false,
@@ -61,7 +60,10 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
   }
 
   const getTranslation = () => {
-    return intl.formatMessage({ id: 'downloadDocument', defaultMessage: 'Download document' })
+    return intl.formatMessage({
+      id: 'downloadDocument',
+      defaultMessage: 'Download document',
+    })
   }
 
   const getContentElements = (children?: React.ReactNode) => {
@@ -75,9 +77,9 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
           showExtensionIcon ? (
           <>
             {extension.toUpperCase() === 'PDF' ? (
-              <BsFiletypePdf aria-label="pdf" size={24} className="mr-2 min-w-6 min-h-6" />
+              <BsFiletypePdf title="pdf" size={24} className="mr-2 min-w-6 min-h-6" />
             ) : (
-              <BsFiletypeXlsx aria-label="xlsx" size={24} className="mr-2 min-w-6 min-h-6" />
+              <BsFiletypeXlsx title="xlsx" size={24} className="mr-2 min-w-6 min-h-6" />
             )}
             <span
               className={textClassNames}
@@ -102,9 +104,7 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
                 extension.toUpperCase() !== 'XLS' ||
                 extension.toUpperCase() !== 'XLSX') &&
               showExtensionIcon) ? (
-              <span
-                aria-label={`, ${getTranslation()} ${extension.toUpperCase()}`}
-              >{`(${extension.toUpperCase()})`}</span>
+              <span>{`(${extension.toUpperCase()})`}</span>
             ) : null}
           </span>
         )
@@ -117,11 +117,7 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
             })}
           >
             {children}
-            {extension ? (
-              <span aria-label={`, ${getTranslation()} ${extension.toUpperCase()}`}>
-                {`(${extension.toUpperCase()})`}
-              </span>
-            ) : null}
+            {extension ? <span>{`(${extension.toUpperCase()})`}</span> : null}
           </span>
         )
     }
@@ -130,11 +126,12 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
   const handleSuccessfullFriendlyChallenge = useCallback(
     async (event: any) => {
       const solution = event.detail.response
-      if (fileName) {
+      if (fileId || fileName) {
         setIsFriendlyChallengeDone(true)
         const response = await fetch('/api/download/getFileUrl', {
           body: JSON.stringify({
             fileName: fileName,
+            fileId: fileId,
             frcCaptchaSolution: solution,
           }),
           headers: {
@@ -146,7 +143,7 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
         setDownloadRequestUrl(url.url)
       }
     },
-    [fileName],
+    [fileName, fileId],
   )
 
   const commonResourceLinkWrapperClassName = `
@@ -178,13 +175,14 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
             relative 
             flex
             justify-center
+            items-end
             w-fit
             underline-offset-2
             text-slate-80
             text-sm`
         }
+        title={`${getTranslation()}: ${fileName}`}
         aria-haspopup="dialog"
-        aria-label={`Request file download modal`}
       >
         <div
           className={`h-full
@@ -204,16 +202,20 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
             pt-1 
             grow 
             leading-none
-          ${variant === 'stickyMenu' ? 'w-fit group-hover:underline no-underline leading-none align-middle' : ''}
+          ${
+            variant === 'stickyMenu'
+              ? 'w-fit group-hover:underline no-underline leading-none align-middle items-end'
+              : ''
+          }
             `}
           >
-            {!isAttachment && intl.formatMessage({ id: 'request_download_action_prefix', defaultMessage: 'Request' })}
-            {` ${downloadLabel}`}
+            {getContentElements(<>{`${downloadLabel}`}</>)}
           </div>
           {variant !== 'stickyMenu' && !isAttachment && (
-            <ArrowRight
-              className={`ml-6 
-                xl:ml-8
+            <div className={`flex flex-col px-1 translate-y-[1px]`}>
+              <ArrowRight
+                className={`
+                rotate-90
                 size-arrow-right
                 text-energy-red-100
                 dark:text-white-100
@@ -222,9 +224,10 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
                 min-w-arrow-right
                 transition-all
                 duration-300
-                translate-y-0.5 
-                group-hover:translate-x-2`}
-            />
+                group-hover:translate-y-0.5`}
+              />
+              <div className="bg-energy-red-100 dark:bg-white-100 h-[2px] w-full" />
+            </div>
           )}
         </div>
         {variant !== 'stickyMenu' && (
@@ -234,7 +237,10 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
       {showModal && (
         <Modal isOpen={showModal} onClose={handleClose} title="Request file download">
           <Typography as="h2" variant="h5" className="mb-4">
-            {intl.formatMessage({ id: 'request_download_action_prefix', defaultMessage: 'Request' })}
+            {intl.formatMessage({
+              id: 'request_download_action_prefix',
+              defaultMessage: 'Request',
+            })}
             {` ${downloadLabel}`}
           </Typography>
           <Typography group="plain" variant="div" className="mb-10">
@@ -271,6 +277,7 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
                 extension.toLowerCase() === 'pdf' && {
                   target: '_blank',
                 })}
+              aria-description={fileName}
             >
               <span
                 className={`h-full 
@@ -281,8 +288,8 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(funct
                 gap-x-2
                 ${contentVariantClassName[variant]}`}
               >
-                {getContentElements(<>{`${downloadLabel}`}</>)}
-                {getArrowElement(type)}
+                {getContentElements(`${downloadLabel}`)}
+                {getArrowElement(extension && extension.toLowerCase() === 'pdf' ? 'externalUrl' : type)}
               </span>
 
               <span className="w-[0%] h-[1px] bg-grey-40 transition-all duration-300 group-hover:w-full" />
