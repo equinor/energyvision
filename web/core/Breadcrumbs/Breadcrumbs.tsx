@@ -27,7 +27,7 @@ const buildJsonLdElements = (
   return crumbs.map((item, index) => ({
     position: index + 1,
     name: item.label,
-    item: `${pathname}/${item.slug}`,
+    item: `${pathname}`,
   }))
 }
 
