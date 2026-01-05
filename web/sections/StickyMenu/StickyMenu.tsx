@@ -1,9 +1,9 @@
-import { forwardRef, HTMLAttributes } from 'react'
-import { StickyMenuData } from '../../types/index'
-import { useIntl } from 'react-intl'
-import { ColorKeyTokens, colorKeyToUtilityMap } from '../../styles/colorKeyToUtilityMap'
 import { StickyMenuLink } from '@core/Link'
+import { forwardRef, type HTMLAttributes } from 'react'
+import { useIntl } from 'react-intl'
+import { type ColorKeyTokens, colorKeyToUtilityMap } from '../../styles/colorKeyToUtilityMap'
 import envisTwMerge from '../../twMerge'
+import type { StickyMenuData } from '../../types/index'
 
 export type StickyMenuProps = {
   stickyMenuData?: StickyMenuData
@@ -14,8 +14,8 @@ export const StickyMenu = forwardRef<HTMLElement, StickyMenuProps>(function Stic
   ref,
 ) {
   const intl = useIntl()
-  const anchorReference = stickyMenuData?.links.find((it) => it.type == 'anchorLinkReference')
-  const resourceLink = stickyMenuData?.links.find((it) => it.type == 'downloadableFile')
+  const anchorReference = stickyMenuData?.links.find((it) => it.type === 'anchorLinkReference')
+  const resourceLink = stickyMenuData?.links.find((it) => it.type === 'downloadableFile')
 
   const stickyMenuKey = (stickyMenuData?.background as keyof ColorKeyTokens) || ('white-100' as keyof ColorKeyTokens)
   const twBg = colorKeyToUtilityMap[stickyMenuKey]?.background
@@ -28,7 +28,6 @@ export const StickyMenu = forwardRef<HTMLElement, StickyMenuProps>(function Stic
         id: 'local',
         defaultMessage: 'Local',
       })}
-      role="navigation"
       className={envisTwMerge(
         `
         sticky
@@ -46,22 +45,15 @@ export const StickyMenu = forwardRef<HTMLElement, StickyMenuProps>(function Stic
     >
       <div className={`flex flex-col lg:flex-row gap-y-3 lg:justify-between px-layout-sm max-w-viewport mx-auto`}>
         <div className={`text-start font-medium text-base`}>{stickyMenuData?.title}</div>
-        <div className="flex gap-10 items-center">
+        <div className="flex gap-10 items-end">
           {anchorReference && (
-            //@ts-ignore:todo types
             <StickyMenuLink className="" href={`#${anchorReference?.anchorReference}`}>
-              {
-                //@ts-ignore:todo types
-                anchorReference.title
-              }
+              {anchorReference.title}
             </StickyMenuLink>
           )}
           {resourceLink && (
             <StickyMenuLink {...resourceLink} type="downloadableFile">
-              {
-                //@ts-ignore:todo types
-                resourceLink?.label
-              }
+              {resourceLink?.label}
             </StickyMenuLink>
           )}
         </div>

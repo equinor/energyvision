@@ -1,7 +1,7 @@
 import { forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { BaseLink, BaseLinkProps } from './BaseLink'
-import DownloadableLink, { DownloadableLinkProps } from './DownloadableLink'
+import { BaseLink, type BaseLinkProps } from './BaseLink'
+import DownloadableLink, { type DownloadableLinkProps } from './DownloadableLink'
 
 export type StickMenuLinkProps = BaseLinkProps | DownloadableLinkProps
 
@@ -21,7 +21,7 @@ export const StickyMenuLink = forwardRef<HTMLAnchorElement, StickMenuLinkProps>(
         `group
         relative 
         flex
-        justify-center
+        justify-end
         w-fit
         underline-offset-2
         text-slate-80

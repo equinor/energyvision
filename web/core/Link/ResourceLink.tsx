@@ -1,11 +1,11 @@
-import { forwardRef } from 'react'
-import { BaseLink, BaseLinkProps } from './BaseLink'
-import { LinkType } from '../../types/index'
-import { ArrowRight } from '../../icons'
-import envisTwMerge from '../../twMerge'
-import { TransformableIcon } from '../../icons/TransformableIcon'
 import { add, calendar } from '@equinor/eds-icons'
+import { forwardRef } from 'react'
 import { useIntl } from 'react-intl'
+import { ArrowRight } from '../../icons'
+import { TransformableIcon } from '../../icons/TransformableIcon'
+import envisTwMerge from '../../twMerge'
+import type { LinkType } from '../../types/index'
+import { BaseLink, type BaseLinkProps } from './BaseLink'
 import DownloadableLink from './DownloadableLink'
 
 export type Variants = 'default' | 'fit'
@@ -28,6 +28,8 @@ export type ResourceLinkProps = {
   href?: string | undefined
   isAttachment?: boolean
   fileName?: string
+  fileId?: string
+  label?: string
 } & Omit<BaseLinkProps, 'href'>
 
 export const iconRotation: Record<string, string> = {
@@ -92,6 +94,7 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
     children,
     type = 'internalUrl',
     extension,
+    label,
     className = '',
     iconClassName = '',
     textClassName = '',
@@ -101,7 +104,7 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
     href = '',
     isAttachment = false,
     fileName,
-    ...rest
+    fileId,
   },
   ref,
 ) {
@@ -110,7 +113,8 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
   if (type === 'downloadableFile' || type === 'downloadableImage') {
     return (
       <DownloadableLink
-        {...rest}
+        fileId={fileId}
+        label={label}
         type={type}
         variant={variant}
         extension={extension}
@@ -161,64 +165,32 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
   const getTranslation = () => {
     switch (type) {
       case 'externalUrl':
-        return intl.formatMessage({ id: 'externalLink', defaultMessage: 'External link' })
+        return intl.formatMessage({
+          id: 'externalLink',
+          defaultMessage: 'External link',
+        })
       /*       case 'downloadableFile':
       case 'downloadableImage': */
       case 'icsLink':
-        return intl.formatMessage({ id: 'downloadDocument', defaultMessage: 'Download document' })
+        return intl.formatMessage({
+          id: 'downloadDocument',
+          defaultMessage: 'Download document',
+        })
       default:
-        return intl.formatMessage({ id: 'internalLink', defaultMessage: 'Internal link' })
+        return intl.formatMessage({
+          id: 'internalLink',
+          defaultMessage: 'Internal link',
+        })
     }
   }
 
   const getContentElements = () => {
     const textClassNames = envisTwMerge(`pt-1 grow leading-none`, textClassName)
     switch (type) {
-      /*       case 'downloadableFile':
-        return extension &&
-          (extension.toUpperCase() === 'PDF' ||
-            extension.toUpperCase() === 'XLS' ||
-            extension.toUpperCase() === 'XLSX') &&
-          showExtensionIcon ? (
-          <>
-            {extension.toUpperCase() === 'PDF' ? (
-              <BsFiletypePdf aria-label="pdf" size={24} className="mr-2 min-w-6 min-h-6" />
-            ) : (
-              <BsFiletypeXlsx aria-label="xlsx" size={24} className="mr-2 min-w-6 min-h-6" />
-            )}
-            <span
-              className={textClassNames}
-              {...(ariaHideText && {
-                'aria-hidden': true,
-              })}
-            >
-              {children}
-            </span>
-          </>
-        ) : (
-          <span
-            className={textClassNames}
-            {...(ariaHideText && {
-              'aria-hidden': true,
-            })}
-          >
-            {children}
-            {(extension && !showExtensionIcon) ||
-            (extension &&
-              (extension.toUpperCase() !== 'PDF' ||
-                extension.toUpperCase() !== 'XLS' ||
-                extension.toUpperCase() !== 'XLSX') &&
-              showExtensionIcon) ? (
-              <span
-                aria-label={`, ${getTranslation()} ${extension.toUpperCase()}`}
-              >{`(${extension.toUpperCase()})`}</span>
-            ) : null}
-          </span>
-        ) */
       case 'icsLink':
         return (
           <>
-            <TransformableIcon aria-label={`, ${getTranslation()}`} iconData={calendar} className="mr-2" />
+            <TransformableIcon title={`, ${getTranslation()}`} iconData={calendar} className="mr-2" />
             <span
               className={textClassNames}
               {...(ariaHideText && {
@@ -239,9 +211,7 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
           >
             {children}
             {extension ? (
-              <span aria-label={`, ${getTranslation()} ${extension.toUpperCase()}`}>
-                {`(${extension.toUpperCase()})`}
-              </span>
+              <span title={`, ${getTranslation()} ${extension.toUpperCase()}`}>{`(${extension.toUpperCase()})`}</span>
             ) : null}
           </span>
         )
@@ -250,7 +220,6 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
 
   return href ? (
     <BaseLink
-      {...rest}
       className={classNames}
       type={type}
       ref={ref}
