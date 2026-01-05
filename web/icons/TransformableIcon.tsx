@@ -1,5 +1,5 @@
-import { forwardRef, Ref, SVGProps } from 'react'
-import { IconData } from '@equinor/eds-icons'
+import type { IconData } from '@equinor/eds-icons'
+import { forwardRef, type Ref, type SVGProps } from 'react'
 
 /**
  *  Use this to transform an icon for example arrow right can be rotated to
@@ -7,6 +7,7 @@ import { IconData } from '@equinor/eds-icons'
  *  Similarly the + and close
  */
 export type TransformableIconProps = {
+  title?: string
   iconData: IconData
   /** Size, use if you need large icon resolutions
    * @default 24
@@ -17,7 +18,7 @@ export type TransformableIconProps = {
 } & SVGProps<SVGSVGElement>
 
 export const TransformableIcon = forwardRef<SVGSVGElement, TransformableIconProps>(function ArrowRight(
-  { iconData, size = 24, className = '', ...rest },
+  { iconData, title, size = 24, className = '' },
   ref,
 ) {
   let icon = iconData
@@ -33,10 +34,9 @@ export const TransformableIcon = forwardRef<SVGSVGElement, TransformableIconProp
       height={size}
       viewBox={`0 0 ${size} ${size}`}
       fill="currentColor"
-      aria-label={`${icon.name} icon`}
       className={className}
-      {...rest}
     >
+      <title>{title ?? ''}</title>
       {Array.isArray(icon.svgPathData) ? (
         icon.svgPathData.map((pathData) => {
           return <path key={pathData} fillRule="evenodd" clipRule="evenodd" d={pathData} />

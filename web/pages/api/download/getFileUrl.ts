@@ -1,9 +1,9 @@
-import { NextApiRequest, NextApiResponse } from 'next'
+import type { NextApiRequest, NextApiResponse } from 'next'
 import { sanityClient } from '../../../lib/sanity.server'
 import { validateCaptcha } from '../validate/validateCaptcha'
 
 const getFileUrlQuery = /* groq */ `
-*[_type == "sanity.fileAsset" && originalFilename match $fileName]{
+*[_type == "sanity.fileAsset" && _id == $fileId]{
     url
 }
 `
@@ -19,17 +19,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     if (!accept || !!errorCode) {
       console.log(`Anti-robot check failed [code=${errorCode}]`)
-      res.status(400).json({ error: 'Anti-robot check failed [code=${errorCode}], please try again.' })
+      res.status(400).json({
+        error: 'Anti-robot check failed [code=${errorCode}], please try again.',
+      })
     }
     if (accept && !errorCode) {
       try {
         const result = await sanityClient.fetch(getFileUrlQuery, {
-          fileName: req.body.fileName,
+          fileId: req.body.fileId,
         })
         const equinorHref = result[0].url.replace('cdn.sanity.io', 'cdn.equinor.com')
-        console.log('Returning fileUrl ', equinorHref)
         res.status(200).json({ url: equinorHref })
       } catch (err) {
+        console.log('error getting file url:', err)
         res.status(500).json({ error: 'Failed to fetch file url' })
       }
     }

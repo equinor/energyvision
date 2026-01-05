@@ -1,11 +1,11 @@
 import { BackgroundContainer } from '@core/Backgrounds'
-import { Heading, Typography } from '../../core/Typography'
+import { twMerge } from 'tailwind-merge'
 import Image, { getSmallerThanPxLgSizes } from '../../core/SanityImage/SanityImage'
+import { Heading, Typography } from '../../core/Typography'
+import Blocks from '../../pageComponents/shared/portableText/Blocks'
+import IngressText from '../../pageComponents/shared/portableText/IngressText'
 import type { TextBlockData } from '../../types/index'
 import CallToActions from '../CallToActions'
-import Blocks from '../../pageComponents/shared/portableText/Blocks'
-import { twMerge } from 'tailwind-merge'
-import IngressText from '../../pageComponents/shared/portableText/IngressText'
 
 type TextBlockProps = {
   data: TextBlockData
@@ -99,17 +99,15 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
               {title && <Heading value={title} as="h2" variant="xl" serializerClassnames={serializerClassnames} />}
             </hgroup>
           ) : (
-            <>
-              {title && (
-                <Heading
-                  value={title}
-                  as="h2"
-                  variant="xl"
-                  serializerClassnames={serializerClassnames}
-                  className={`mb-2`}
-                />
-              )}
-            </>
+            title && (
+              <Heading
+                value={title}
+                as="h2"
+                variant="xl"
+                serializerClassnames={serializerClassnames}
+                className={`mb-2`}
+              />
+            )
           )}
           {ingress && <IngressText value={ingress} />}
         </>
