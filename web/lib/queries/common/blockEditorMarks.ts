@@ -10,6 +10,7 @@ const markDefs = /* groq */ `
           "extension": reference->asset.asset->extension,
           "fileName": reference->asset.asset->originalFilename,
           "title":reference->asset->title,
+          "fileId": reference->asset.asset->_id,
         }
     }
 },[])

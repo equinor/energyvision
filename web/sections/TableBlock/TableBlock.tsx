@@ -1,14 +1,14 @@
-import { Heading, Paragraph } from '../../core/Typography'
-import { twMerge } from 'tailwind-merge'
-import { forwardRef, useMemo } from 'react'
-import { PortableTextBlock } from '@portabletext/types'
-import { useReactTable, createColumnHelper, flexRender, getCoreRowModel } from '@tanstack/react-table'
-import { toPlainText } from '@portabletext/react'
 import { Table } from '@core/Table'
-import Blocks from '../../pageComponents/shared/portableText/Blocks'
-import { ThemeVariants } from '@core/Table/Table'
-import { FormattedDate } from 'react-intl'
+import type { ThemeVariants } from '@core/Table/Table'
+import { toPlainText } from '@portabletext/react'
+import type { PortableTextBlock } from '@portabletext/types'
+import { createColumnHelper, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
 import { isValid, parse } from 'date-fns'
+import { forwardRef, useMemo } from 'react'
+import { FormattedDate } from 'react-intl'
+import { twMerge } from 'tailwind-merge'
+import { Heading, Paragraph } from '../../core/Typography'
+import Blocks from '../../pageComponents/shared/portableText/Blocks'
 
 export type TableTheme = {
   title?: ThemeVariants
