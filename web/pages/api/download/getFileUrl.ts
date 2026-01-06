@@ -1,12 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { sanityClient } from '../../../lib/sanity.server'
 import { validateCaptcha } from '../validate/validateCaptcha'
-
-const getFileUrlQuery = /* groq */ `
-*[_type == "sanity.fileAsset" && _id == $fileId]{
-    url
-}
-`
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const frcCaptchaSolution = req.body.frcCaptchaSolution
@@ -24,16 +17,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       })
     }
     if (accept && !errorCode) {
-      try {
-        const result = await sanityClient.fetch(getFileUrlQuery, {
-          fileId: req.body.fileId,
-        })
-        const equinorHref = result[0].url.replace('cdn.sanity.io', 'cdn.equinor.com')
-        res.status(200).json({ url: equinorHref })
-      } catch (err) {
-        console.log('error getting file url:', err)
-        res.status(500).json({ error: 'Failed to fetch file url' })
-      }
+      res.status(200).end()
     }
   } catch (err) {
     console.error('Error occured while attempting to validate captcha', err)

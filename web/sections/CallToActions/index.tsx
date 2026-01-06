@@ -15,19 +15,19 @@ const CallToActions = ({ callToActions = [], splitList, className }: CallToActio
   if (!callToActions) return null
 
   const getSingleAction = () => {
-    const { label, type, link, extension, fileId, fileName } = callToActions[0]
+    const { label, type, link, file } = callToActions[0]
     const url = getUrlFromAction(callToActions[0])
-    if (!url && type !== 'downloadableFile') {
+    if (!url && !(type === 'downloadableFile' || type === 'downloadableImage')) {
       console.warn(`CallToActions: Missing URL on Call to action link with type: '${type}' and label: '${label}'`)
       return null
     }
 
     return (
       <ResourceLink
-        fileId={fileId}
-        fileName={fileName}
-        label={label}
-        extension={extension}
+        file={{
+          ...file,
+          label,
+        }}
         href={url}
         showExtensionIcon={true}
         {...(link?.lang && { locale: getLocaleFromName(link?.lang) })}
@@ -51,18 +51,17 @@ const CallToActions = ({ callToActions = [], splitList, className }: CallToActio
     >
       {callToActions.map((callToAction: LinkData) => {
         const url = getUrlFromAction(callToAction)
-        const { id, label, type, link, extension, fileId, fileName } = callToAction
-
+        const { id, label, type, link, file } = callToAction
         return url ? (
           <li key={id}>
             {/*  If the URL is a static AEM page it should behave as an internal link in the web */}
             <ResourceLink
-              extension={extension}
-              fileId={fileId}
-              fileName={fileName}
-              href={url}
+              file={{
+                ...file,
+                label,
+              }}
               type={type}
-              label={label}
+              href={url}
               {...(link?.lang && {
                 locale: getLocaleFromName(link?.lang),
               })}

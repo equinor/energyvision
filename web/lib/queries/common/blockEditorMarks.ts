@@ -6,11 +6,12 @@ const markDefs = /* groq */ `
         "attachment": {
           "id": _key,
           "type": _type,
-          "href": reference->asset.asset->url,
-          "extension": reference->asset.asset->extension,
-          "fileName": reference->asset.asset->originalFilename,
-          "title":reference->asset->title,
-          "fileId": reference->asset.asset->_id,
+          "file": reference->asset.asset->{
+            url,
+            extension,
+            originalFilename,
+            title,
+          }
         }
     }
 },[])

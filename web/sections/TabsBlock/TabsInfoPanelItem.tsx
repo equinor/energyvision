@@ -1,14 +1,14 @@
-import { twMerge } from 'tailwind-merge'
-import { forwardRef } from 'react'
-import { PortableTextBlock } from '@portabletext/types'
 import { ResourceLink } from '@core/Link'
-import { getUrlFromAction } from '../../common/helpers'
-import { getLocaleFromName } from '../../lib/localization'
 import { Heading } from '@core/Typography'
-import Blocks from '../../pageComponents/shared/portableText/Blocks'
+import type { PortableTextBlock } from '@portabletext/types'
+import { forwardRef } from 'react'
+import { twMerge } from 'tailwind-merge'
+import { getUrlFromAction } from '../../common/helpers'
 import Image, { getPxSmSizes } from '../../core/SanityImage/SanityImage'
-import { ImageWithAlt, LinkData } from '../../types'
-import { InfoPanelImageVariant, InfoPanelKeyInfo } from './TabsBlock.types'
+import { getLocaleFromName } from '../../lib/localization'
+import Blocks from '../../pageComponents/shared/portableText/Blocks'
+import type { ImageWithAlt, LinkData } from '../../types'
+import type { InfoPanelImageVariant, InfoPanelKeyInfo } from './TabsBlock.types'
 
 type TabsInfoPanelItemProps = {
   theme?: number
@@ -69,9 +69,14 @@ const TabsInfoPanelItem = forwardRef<HTMLDivElement, TabsInfoPanelItemProps>(fun
           {action && url && (
             <ResourceLink
               href={url}
-              {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
+              {...(action.link?.lang && {
+                locale: getLocaleFromName(action.link?.lang),
+              })}
               type={action.type}
-              extension={action.extension}
+              file={{
+                ...action?.file,
+                label: action?.label,
+              }}
               showExtensionIcon={true}
               variant="fit"
               className="mt-12"
