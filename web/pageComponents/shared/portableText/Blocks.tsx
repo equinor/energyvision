@@ -42,7 +42,7 @@ const defaultSerializers = {
     },
   },
   types: {
-    positionedInlineImage: (props) => <FigureWithLayout {...props} />,
+    positionedInlineImage: (props: any) => <FigureWithLayout {...props} />,
     pullQuote: (props: any) => <Quote {...props} className="not-prose" />,
     /*     basicIframe: (props) => {
       const { value } = props
@@ -80,12 +80,12 @@ const defaultSerializers = {
           variant="fit"
           type="downloadableFile"
           href={attachment?.href}
-          fileId={attachment?.fileId}
-          label={attachment.label}
-          extension={attachment?.extension}
+          file={{
+            ...attachment?.file,
+            label: attachment?.label,
+          }}
           showExtensionIcon={true}
           isAttachment={true}
-          fileName={attachment.fileName}
         >
           {children}
         </ResourceLink>
@@ -251,6 +251,7 @@ export default function Blocks({
                 value={block}
                 components={{
                   types: {
+                    //@ts-expect-error
                     factbox: (props) => <FactBox className={`${marginOverride}`} {...props} />,
                   },
                 }}

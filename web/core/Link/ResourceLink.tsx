@@ -18,18 +18,16 @@ export type ResourceLinkProps = {
   textClassName?: string
   /** When using aria-label on the link, e.g add to calendar  */
   ariaHideText?: boolean
-  /* Link extension */
-  extension?: string | undefined
   /** If type is of an extension type (PDF), show the extention as icon */
   showExtensionIcon?: boolean
   /** Display as a regular link without the border bottom effect and reduced spacing */
   useAsRegular?: boolean
   /** not provided with downloads */
   href?: string | undefined
+  /** Inline block attachment */
   isAttachment?: boolean
-  fileName?: string
-  fileId?: string
   label?: string
+  file?: any
 } & Omit<BaseLinkProps, 'href'>
 
 export const iconRotation: Record<string, string> = {
@@ -93,8 +91,6 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
     variant = 'default',
     children,
     type = 'internalUrl',
-    extension,
-    label,
     className = '',
     iconClassName = '',
     textClassName = '',
@@ -103,25 +99,19 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
     useAsRegular = false,
     href = '',
     isAttachment = false,
-    fileName,
-    fileId,
+    file,
   },
   ref,
 ) {
-  const intl = useIntl()
-
   if (type === 'downloadableFile' || type === 'downloadableImage') {
     return (
       <DownloadableLink
-        fileId={fileId}
-        label={label}
+        file={file}
         type={type}
         variant={variant}
-        extension={extension}
         showExtensionIcon={showExtensionIcon}
         ariaHideText={ariaHideText}
         isAttachment={isAttachment}
-        fileName={fileName}
       >
         {children}
       </DownloadableLink>
@@ -162,35 +152,13 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
     className,
   )
 
-  const getTranslation = () => {
-    switch (type) {
-      case 'externalUrl':
-        return intl.formatMessage({
-          id: 'externalLink',
-          defaultMessage: 'External link',
-        })
-      /*       case 'downloadableFile':
-      case 'downloadableImage': */
-      case 'icsLink':
-        return intl.formatMessage({
-          id: 'downloadDocument',
-          defaultMessage: 'Download document',
-        })
-      default:
-        return intl.formatMessage({
-          id: 'internalLink',
-          defaultMessage: 'Internal link',
-        })
-    }
-  }
-
   const getContentElements = () => {
     const textClassNames = envisTwMerge(`pt-1 grow leading-none`, textClassName)
     switch (type) {
       case 'icsLink':
         return (
           <>
-            <TransformableIcon title={`, ${getTranslation()}`} iconData={calendar} className="mr-2" />
+            <TransformableIcon title={`calendar`} iconData={calendar} className="mr-2" />
             <span
               className={textClassNames}
               {...(ariaHideText && {
@@ -210,25 +178,13 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
             })}
           >
             {children}
-            {extension ? (
-              <span title={`, ${getTranslation()} ${extension.toUpperCase()}`}>{`(${extension.toUpperCase()})`}</span>
-            ) : null}
           </span>
         )
     }
   }
 
   return href ? (
-    <BaseLink
-      className={classNames}
-      type={type}
-      ref={ref}
-      href={href}
-      {...(extension &&
-        extension.toLowerCase() === 'pdf' && {
-          target: '_blank',
-        })}
-    >
+    <BaseLink className={classNames} type={type} ref={ref} href={href}>
       <span
         className={envisTwMerge(
           `h-full

@@ -1,11 +1,11 @@
-import Image, { getPxSmSizes } from '../../core/SanityImage/SanityImage'
-import { Heading } from '@core/Typography'
-import type { HeroType } from '../../types/index'
 import { BackgroundContainer } from '@core/Backgrounds'
 import { ResourceLink } from '@core/Link'
-import Blocks from '../../pageComponents/shared/portableText/Blocks'
+import { Heading } from '@core/Typography'
 import { getUrlFromAction } from '../../common/helpers'
+import Image, { getPxSmSizes } from '../../core/SanityImage/SanityImage'
 import { getLocaleFromName } from '../../lib/localization'
+import Blocks from '../../pageComponents/shared/portableText/Blocks'
+import type { HeroType } from '../../types/index'
 
 export const FiftyFiftyHero = ({ title, ingress, link: action, background, figure, isBigTitle }: HeroType) => {
   const url = action && getUrlFromAction(action)
@@ -35,9 +35,14 @@ export const FiftyFiftyHero = ({ title, ingress, link: action, background, figur
           {action && !isBigTitle && (
             <ResourceLink
               href={url as string}
-              {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
+              {...(action.link?.lang && {
+                locale: getLocaleFromName(action.link?.lang),
+              })}
               type={action.type}
-              extension={action.extension}
+              file={{
+                ...action?.file,
+                label: action?.label,
+              }}
               showExtensionIcon
             >
               {action.label}
