@@ -41,7 +41,6 @@ const MagazineRoom = ({
   const resultsRef = useRef<HTMLDivElement>(null)
   const [isLoading, setIsLoading] = useState(false)
 
-  console.log('magazineArticles', magazineArticles)
   const pagedList = useMemo(
     () => chunkArray(magazineArticles ?? [], 12),
     [magazineArticles],

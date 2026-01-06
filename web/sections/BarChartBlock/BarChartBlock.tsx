@@ -25,7 +25,6 @@ const BarChartBlock = ({
   useLayoutMd,
   useTextWidth,
 }: BarChartBlockProps) => {
-  console.log('BarChartBlock charts', charts)
   return (
     <section
       className={twMerge(

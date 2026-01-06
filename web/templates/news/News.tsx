@@ -90,7 +90,6 @@ const NewsPage = async ({
     </div>
   )
 
-  console.log('')
 
   return (
     <>

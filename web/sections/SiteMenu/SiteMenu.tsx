@@ -45,8 +45,6 @@ const SiteMenu = ({ variant = 'default', ...rest }: MenuProps) => {
   const { refs, context } = useFloating({
     open: isOpen,
     onOpenChange: (open: boolean, event?: Event, reason?: OpenChangeReason) => {
-      console.log('onOpenChange open', open)
-      console.log('onOpenChange reason', reason)
       setIsOpen(!isOpen)
     },
   })

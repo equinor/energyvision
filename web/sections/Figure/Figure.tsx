@@ -23,7 +23,7 @@ type FigureProps = {
 const Figure = ({ data, anchor, className = '' }: FigureProps) => {
   const { figure, alignWithText, designOptions } = data
   const { aspectRatio = '16:9' } = designOptions
-  console.log('alignWithText', alignWithText)
+
 
   const useFitMin = aspectRatio.trim() === '2:3' || aspectRatio.trim() === '1:1'
   if (!figure?.image) return null

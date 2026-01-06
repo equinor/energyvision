@@ -21,17 +21,14 @@ const getQuery = async (
   lang: string,
 ) => {
   if (!firstPiece || typeof firstPiece === 'undefined' || firstPiece === '') {
-    console.log('return homePageQuery')
     return homePageQuery
   }
   if (Flags.HAS_NEWS && newsSlug[lang] === firstPiece) {
-    console.log('is news')
     if (
       !secondPiece ||
       typeof secondPiece === 'undefined' ||
       secondPiece === ''
     ) {
-      console.log('return newsroomQuery')
       return newsroomQuery
     }
     if (secondPiece) {
@@ -42,10 +39,8 @@ const getQuery = async (
         secondPiece &&
         localNewsTags[lang].includes(secondPiece.toLowerCase())
       ) {
-        console.log('return localNewsQuery')
         return localNewsQuery
       }
-      console.log('return newspage Query')
       return newsQuery
     }
   }
@@ -55,15 +50,12 @@ const getQuery = async (
       typeof secondPiece === 'undefined' ||
       secondPiece === ''
     ) {
-      console.log('return magazineIndexQuery')
       return magazineIndexQuery
     }
     if (secondPiece) {
-      console.log('return magazineQuery')
       return magazineQuery
     }
   }
-  console.log('return routeQuery')
   return routeQuery
 }
 

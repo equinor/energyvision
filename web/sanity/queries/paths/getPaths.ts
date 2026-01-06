@@ -25,7 +25,6 @@ const getTopicRoutesForLocaleToStaticallyBuild = async (locale: string) => {
     stega: false,
     params: { lang },
   })
-  console.log('topic routes data', data)
   return data as { slug: string; _updatedAt: string }[]
 }
 

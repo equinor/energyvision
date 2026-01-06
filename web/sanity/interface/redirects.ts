@@ -41,7 +41,6 @@ const getExternalRedirects = async () => {
         destination: externalRedirect.to,
       }
     })
-  console.log('externalRedirects', externalRedirects)
   const redirects = [
     // Redirect IE users to not-supported page
     {
@@ -89,11 +88,9 @@ export const getInternalRedirects = async () => {
     .filter(e => e)
     .map(redirect => {
       const to = redirect.to === '/' ? '' : redirect.to
-      console.log('redirect data', redirect)
       const locale = getLocaleFromName(redirect.lang)
-      console.log('getLocaleFromName', locale)
       const des = `${locale !== 'en' ? `/${locale}` : ''}${to}`
-      console.log('des', des)
+
       const nextRedirect = {
         source: redirect.from,
         destination: des,
@@ -103,7 +100,6 @@ export const getInternalRedirects = async () => {
         ? { ...nextRedirect, locale: false }
         : nextRedirect
     })
-  console.log('internal redirects', redirects)
   return [...redirects]
 }
 

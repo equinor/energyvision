@@ -67,7 +67,7 @@ export const LineChart = forwardRef<HTMLDivElement, LineChartProps>(function Lin
   { chartTitle, chartSource, data = [], yUnitLabel, xAxisDataKey, yUnitLabelPlacement, showLegend, headerNames, theme = 'blue' },
   ref,
 ) {
-  console.log('Core BarChart data', data)
+ 
   const dataKeys = Object.keys(data[0].data).filter((key: any) => key !== xAxisDataKey)
   let hasNegatives = false
   const chartData = data?.map((dataItem: any) => {

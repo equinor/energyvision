@@ -25,7 +25,6 @@ const LineChartBlock = ({
   useLayoutMd,
   useTextWidth,
 }: LineChartBlockProps) => {
-  console.log('LineChartBlock charts', charts)
   return (
     <section
       className={twMerge(

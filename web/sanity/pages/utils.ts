@@ -158,7 +158,6 @@ type Params = { slug?: string | string[]; locale: string; tags?: string[] }
 
 export async function getPage(params: Params) {
   const { slug, locale, tags = [] } = params
-  console.log(`${locale} getPage slug:${slug}`)
 
   const { query: pageQuery, queryParams: pageQueryParams } =
     await getQueryFromSlug(slug, locale)

@@ -10,8 +10,7 @@ export async function GET(request: Request) {
   const secret = searchParams.get('secret')
   const slug = searchParams.get('slug')
   const previewLocale = searchParams.get('locale')
-  console.log('slug', slug)
-  console.log('previewLocale', previewLocale)
+
 
   // Check the secret and next parameters
   // This secret should only be known to this Route Handler and the CMS

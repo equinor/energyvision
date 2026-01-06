@@ -28,7 +28,6 @@ export async function generateMetadata({
   params: Promise<{ slug: string; locale: string }>
 }): Promise<Metadata> {
   const { locale, slug } = await params
-  console.log('/magasin generateMetadata slug', slug)
   const pageSlug = slug ?? magazineSlug[getNameFromIso(locale)]
   const metaData = await sanityFetch({
     query: magazineroomMetaQuery,

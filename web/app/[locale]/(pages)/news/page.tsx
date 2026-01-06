@@ -36,8 +36,6 @@ export async function generateMetadata({
       stega: false,
     })
 
-    console.log('english newsroom metadata', metaData)
-
     return constructSanityMetadata(pageSlug, locale, metaData)
   }
 

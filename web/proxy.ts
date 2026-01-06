@@ -23,7 +23,6 @@ const IS_ARCHIVED_NEWS_DOWNLOADS =
 
 export async function proxy(request: NextRequest) {
   const { origin, locale } = request.nextUrl
-  console.log(request.nextUrl.href)
   const pathname = decodeURI(request.nextUrl.pathname)
   const isDotHtml = pathname.slice(-5) === DOT_HTML
   const isRobotsTxt = pathname.slice(-10) === "robots.txt"

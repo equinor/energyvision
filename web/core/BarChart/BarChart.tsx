@@ -57,7 +57,7 @@ export const BarChart = forwardRef<HTMLDivElement, BarChartProps>(function BarCh
   { chartTitle, chartSource, data = [], yUnitLabel, xAxisDataKey, yUnitLabelPlacement, showLegend, theme = 'blue' },
   ref,
 ) {
-  console.log('Core BarChart data', data)
+  
   const dataKeys = Object.keys(data[0].data).filter((key: any) => key !== xAxisDataKey)
   const chartData = data?.map((dataItem: any) => dataItem.data)
   const COLORS = themes[theme]
