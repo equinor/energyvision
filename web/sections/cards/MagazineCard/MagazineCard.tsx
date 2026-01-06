@@ -21,7 +21,6 @@ const MagazineCard = forwardRef<HTMLAnchorElement, MagazineCardProps>(
       <Card
         ref={ref}
         href={slug}
-        background={background}
         image={hero?.figure?.image}
         variant={'primary'}
         className={twMerge(`h-full w-full`, className)}
