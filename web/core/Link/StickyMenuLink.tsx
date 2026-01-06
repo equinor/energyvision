@@ -1,17 +1,18 @@
 import { forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { BaseLink, type BaseLinkProps } from './BaseLink'
-import DownloadableLink, { type DownloadableLinkProps } from './DownloadableLink'
+import { BaseLink } from './BaseLink'
+import DownloadableLink from './DownloadableLink'
+import type { ResourceLinkProps } from './ResourceLink'
 
-export type StickMenuLinkProps = BaseLinkProps | DownloadableLinkProps
+export type StickMenuLinkProps = ResourceLinkProps
 
 /** Sticky menu link style */
 export const StickyMenuLink = forwardRef<HTMLAnchorElement, StickMenuLinkProps>(function StickyMenuLink(
-  { children, type = 'internalUrl', className = '', href = '', ...rest },
+  { children, type = 'internalUrl', className = '', href = '', file },
   ref,
 ) {
-  if (type === 'downloadableFile') {
-    return <DownloadableLink {...rest} type={type} variant="stickyMenu" showExtensionIcon={true} />
+  if (type === 'downloadableFile' || type === 'downloadableImage') {
+    return <DownloadableLink file={file} type={type} variant="stickyMenu" showExtensionIcon={true} />
   }
 
   return (
@@ -30,7 +31,6 @@ export const StickyMenuLink = forwardRef<HTMLAnchorElement, StickMenuLinkProps>(
       )}
       ref={ref}
       href={href}
-      {...rest}
     >
       <div className={`w-fit group-hover:underline no-underline leading-none align-middle`}>{children}</div>
     </BaseLink>

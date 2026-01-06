@@ -18,7 +18,7 @@ export const getUrlFromAction = ({
     return link?.slug + anchor || ''
   }
 
-  if (!href && type !== 'downloadableFile') {
+  if (!href && !(type === 'downloadableFile' || type === 'downloadableImage')) {
     console.warn('Missing external url in action:', fileName)
   }
 

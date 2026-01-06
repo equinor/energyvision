@@ -1,23 +1,24 @@
 /* eslint-disable jsx-a11y/media-has-caption */
-import dynamic from 'next/dynamic'
-import {
-  VideoControlsType,
-  VideoPlayerData,
-  VideoPlayerRatios,
-  VideoType,
-  VideoDesignOptionsType,
-} from '../../types/index'
+
 import { BackgroundContainer } from '@core/Backgrounds'
-import { getUrlFromAction, urlFor } from '../../common/helpers'
-import IngressText from './portableText/IngressText'
-import { VideoJS } from '@core/VideoJsPlayer'
-import { twMerge } from 'tailwind-merge'
-import { Heading } from '@core/Typography'
-import { PortableTextBlock } from '@portabletext/types'
-import Blocks from './portableText/Blocks'
-import Transcript from '../../sections/Transcript/Transcript'
 import { ResourceLink } from '@core/Link'
+import { Heading } from '@core/Typography'
+import type { VideoJS } from '@core/VideoJsPlayer'
+import type { PortableTextBlock } from '@portabletext/types'
+import dynamic from 'next/dynamic'
+import { twMerge } from 'tailwind-merge'
+import { getUrlFromAction, urlFor } from '../../common/helpers'
 import { getLocaleFromName } from '../../lib/localization'
+import Transcript from '../../sections/Transcript/Transcript'
+import {
+  type VideoControlsType,
+  type VideoDesignOptionsType,
+  type VideoPlayerData,
+  VideoPlayerRatios,
+  type VideoType,
+} from '../../types/index'
+import Blocks from './portableText/Blocks'
+import IngressText from './portableText/IngressText'
 
 const DynamicVideoJsComponent = dynamic<React.ComponentProps<typeof VideoJS>>(
   () => import('@core/VideoJsPlayer').then((mod) => mod.VideoJS),
@@ -170,10 +171,13 @@ const VideoPlayer = ({ anchor, data, className }: { data: VideoPlayerData; ancho
     >
       {title && <Heading value={title} as="h2" variant="xl" className="mb-2 pb-2" />}
       {ingress && <IngressText value={ingress} className="mb-lg" />}
-      {action && action.label && actionUrl && (
+      {action && action?.label && actionUrl && (
         <ResourceLink
           href={actionUrl || ''}
-          extension={action?.extension}
+          file={{
+            ...action?.file,
+            label: action?.label,
+          }}
           showExtensionIcon={true}
           variant="fit"
           locale={action?.type === 'internalUrl' ? getLocaleFromName(action?.link?.lang) : undefined}

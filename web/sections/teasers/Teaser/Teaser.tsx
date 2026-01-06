@@ -1,12 +1,12 @@
 import { Teaser as TeaserLayout } from '@core/Teaser'
-import IngressText from '../../../pageComponents/shared/portableText/IngressText'
+import { Typography } from '@core/Typography'
 import { getUrlFromAction } from '../../../common/helpers'
-import Image, { getPxLgSizes } from '../../../core/SanityImage/SanityImage'
-import type { TeaserData, ImageWithAlt } from '../../../types/index'
 import { ResourceLink } from '../../../core/Link'
+import Image, { getPxLgSizes } from '../../../core/SanityImage/SanityImage'
 import { Heading } from '../../../core/Typography'
 import { getLocaleFromName } from '../../../lib/localization'
-import { Typography } from '@core/Typography'
+import IngressText from '../../../pageComponents/shared/portableText/IngressText'
+import type { ImageWithAlt, TeaserData } from '../../../types/index'
 
 const { Content, Media } = TeaserLayout
 
@@ -65,7 +65,7 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
                 {title && <Heading value={title} as="h2" variant="xl" />}
               </hgroup>
             ) : (
-              <>{title && <Heading value={title} as="h2" variant="xl" className="mb-2" />}</>
+              title && <Heading value={title} as="h2" variant="xl" className="mb-2" />
             )}
             {text && <IngressText value={text} />}
           </>
@@ -74,17 +74,23 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
           <div className="flex flex-col gap-8">
             {actions?.map((action, idx) => {
               const url = action && getUrlFromAction(action)
+              const { id, label, type, link, file } = action
               return (
                 <ResourceLink
                   href={url as string}
-                  {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
-                  type={action.type}
-                  key={action.id || idx}
+                  file={{
+                    ...file,
+                    label,
+                  }}
+                  {...(link?.lang && {
+                    locale: getLocaleFromName(link?.lang),
+                  })}
+                  type={type}
+                  key={id ?? idx}
                   variant="fit"
-                  extension={action.extension}
-                  showExtensionIcon
+                  showExtensionIcon={true}
                 >
-                  {`${action.label}`}
+                  {`${label}`}
                 </ResourceLink>
               )
             })}

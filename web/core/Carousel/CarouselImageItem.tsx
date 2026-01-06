@@ -1,17 +1,17 @@
-import envisTwMerge from '../../twMerge'
-import Image, { getPxSmSizes } from '../SanityImage/SanityImage'
-import { ImageWithAlt, LinkData } from '../../types/index'
-import { DisplayModes } from './Carousel'
-import { forwardRef, HTMLAttributes, useEffect, useMemo, useRef } from 'react'
-import { PortableTextBlock } from '@portabletext/types'
-import { SanityImageObject } from '@sanity/image-url/lib/types/types'
-import { BaseLink, ResourceLink } from '@core/Link'
-import { getUrlFromAction } from '../../common/helpers'
-import { getLocaleFromName } from '../../lib/localization'
-import { ArrowRight } from '../../icons'
 import { ImageWithOverlay } from '@core/Image/ImageWithOverlay'
-import Blocks from '../../pageComponents/shared/portableText/Blocks'
+import { BaseLink, ResourceLink } from '@core/Link'
 import { mergeRefs } from '@equinor/eds-utils'
+import type { PortableTextBlock } from '@portabletext/types'
+import type { SanityImageObject } from '@sanity/image-url/lib/types/types'
+import { forwardRef, type HTMLAttributes, useEffect, useMemo, useRef } from 'react'
+import { getUrlFromAction } from '../../common/helpers'
+import { ArrowRight } from '../../icons'
+import { getLocaleFromName } from '../../lib/localization'
+import Blocks from '../../pageComponents/shared/portableText/Blocks'
+import envisTwMerge from '../../twMerge'
+import type { ImageWithAlt, LinkData } from '../../types/index'
+import Image, { getPxSmSizes } from '../SanityImage/SanityImage'
+import type { DisplayModes } from './Carousel'
 
 type CarouselImageItemProps = {
   type: string
@@ -103,7 +103,9 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
           <div className="h-full w-full fade-in-black-gradient pt-20 flex items-end rounded-b-md">
             <BaseLink
               href={url as string}
-              {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
+              {...(action.link?.lang && {
+                locale: getLocaleFromName(action.link?.lang),
+              })}
               type={action.type}
               className="group flex gap-2"
             >
@@ -118,7 +120,7 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
       return (
         <ImageWithOverlay
           teaserTitle={captionTeaserTitle}
-          //@ts-ignore:TODO
+          //@ts-expect-error:TODO
           title={captionTitle as PortableTextBlock[]}
           text={captionText}
           image={image}
@@ -142,16 +144,21 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
           >
             {caption && (
               <Blocks
-                //@ts-ignore:TODO
+                //@ts-expect-error:TODO
                 value={caption}
               />
             )}
             {action && url && (
               <ResourceLink
                 href={url}
-                extension={action?.extension}
+                file={{
+                  ...action?.file,
+                  label: action?.label,
+                }}
                 showExtensionIcon={true}
-                {...(action?.link?.lang && { locale: getLocaleFromName(action?.link?.lang) })}
+                {...(action?.link?.lang && {
+                  locale: getLocaleFromName(action?.link?.lang),
+                })}
                 type={action?.type}
                 variant="fit"
                 className="mt-4"

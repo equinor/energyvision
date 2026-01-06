@@ -1,9 +1,9 @@
-import { StickyMenuLink } from '@core/Link'
+import { type ResourceLinkProps, StickyMenuLink } from '@core/Link'
 import { forwardRef, type HTMLAttributes } from 'react'
 import { useIntl } from 'react-intl'
 import { type ColorKeyTokens, colorKeyToUtilityMap } from '../../styles/colorKeyToUtilityMap'
 import envisTwMerge from '../../twMerge'
-import type { StickyMenuData } from '../../types/index'
+import type { AnchorLinkReference, StickyMenuData } from '../../types/index'
 
 export type StickyMenuProps = {
   stickyMenuData?: StickyMenuData
@@ -14,8 +14,8 @@ export const StickyMenu = forwardRef<HTMLElement, StickyMenuProps>(function Stic
   ref,
 ) {
   const intl = useIntl()
-  const anchorReference = stickyMenuData?.links.find((it) => it.type === 'anchorLinkReference')
-  const resourceLink = stickyMenuData?.links.find((it) => it.type === 'downloadableFile')
+  const anchorReference = stickyMenuData?.links.find((it) => it.type === 'anchorLinkReference') as AnchorLinkReference
+  const resourceLink = stickyMenuData?.links.find((it) => it.type === 'downloadableFile') as ResourceLinkProps
 
   const stickyMenuKey = (stickyMenuData?.background as keyof ColorKeyTokens) || ('white-100' as keyof ColorKeyTokens)
   const twBg = colorKeyToUtilityMap[stickyMenuKey]?.background
@@ -48,11 +48,18 @@ export const StickyMenu = forwardRef<HTMLElement, StickyMenuProps>(function Stic
         <div className="flex gap-10 items-end">
           {anchorReference && (
             <StickyMenuLink className="" href={`#${anchorReference?.anchorReference}`}>
-              {anchorReference.title}
+              {anchorReference?.title}
             </StickyMenuLink>
           )}
           {resourceLink && (
-            <StickyMenuLink {...resourceLink} type="downloadableFile">
+            <StickyMenuLink
+              {...resourceLink}
+              file={{
+                ...resourceLink?.file,
+                label: resourceLink?.label,
+              }}
+              type="downloadableFile"
+            >
               {resourceLink?.label}
             </StickyMenuLink>
           )}

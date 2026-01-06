@@ -1,18 +1,19 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { forwardRef, HTMLAttributes, useId, useState } from 'react'
-import { PortableTextBlock } from '@portabletext/types'
-import { ImageWithAlt, LinkData } from '../../types'
-import Image, { getPxSmSizes } from '../SanityImage/SanityImage'
-import envisTwMerge from '../../twMerge'
-import { SanityImageObject } from '@sanity/image-url/lib/types/types'
-import { Typography } from '@equinor/eds-core-react'
-import { Heading } from '@core/Typography'
-import Blocks from '../../pageComponents/shared/portableText/Blocks'
+
+import type { DisplayModes } from '@core/Carousel/Carousel'
 import { ResourceLink } from '@core/Link'
+import { Heading } from '@core/Typography'
+import { Typography } from '@equinor/eds-core-react'
+import type { PortableTextBlock } from '@portabletext/types'
+import type { SanityImageObject } from '@sanity/image-url/lib/types/types'
+import { forwardRef, type HTMLAttributes, useId, useState } from 'react'
+import { FormattedMessage } from 'react-intl'
 import { getUrlFromAction } from '../../common/helpers'
 import { getLocaleFromName } from '../../lib/localization'
-import { DisplayModes } from '@core/Carousel/Carousel'
-import { FormattedMessage } from 'react-intl'
+import Blocks from '../../pageComponents/shared/portableText/Blocks'
+import envisTwMerge from '../../twMerge'
+import type { ImageWithAlt, LinkData } from '../../types'
+import Image, { getPxSmSizes } from '../SanityImage/SanityImage'
 
 export type ImageWithOverlayProps = {
   image?: SanityImageObject
@@ -53,7 +54,7 @@ export const ImageWithOverlay = forwardRef<HTMLDivElement, ImageWithOverlayProps
           {title}
         </Typography>
       ) : (
-        //@ts-ignore: Checked earlier for undefined title
+        //@ts-expect-error: Checked earlier for undefined title
         <Heading as="h2" variant="h4" className="text-md lg:text-lg" value={title} />
       )}
     </>
@@ -103,9 +104,14 @@ export const ImageWithOverlay = forwardRef<HTMLDivElement, ImageWithOverlayProps
             {action && (
               <ResourceLink
                 href={url as string}
-                extension={action.extension}
+                file={{
+                  ...action?.file,
+                  label: action?.label,
+                }}
                 showExtensionIcon={true}
-                {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
+                {...(action.link?.lang && {
+                  locale: getLocaleFromName(action.link?.lang),
+                })}
                 type={action.type}
                 variant="fit"
               >
