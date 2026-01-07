@@ -38,6 +38,18 @@ export default {
       type: 'string',
     },
     {
+      title: 'image orientation',
+      name: 'imageOrientation',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Portrait', value: 'portrait' },
+          { title: 'Landscape', value: 'landscape' },
+        ],
+        layout: 'radio',
+      },
+    },
+    {
       name: 'layout',
       title: 'Layout',
       type: 'string',
@@ -54,6 +66,11 @@ export default {
           )
         },
       },
+    },
+    {
+      name: 'enableImageZoom',
+      title: 'Enable image zoom',
+      type: 'boolean',
     },
   ],
 

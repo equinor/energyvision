@@ -29,13 +29,7 @@ export const contentForNewsQuery = /* groq */ `content[] {
     },
     _type == "positionedInlineImage" => {
       ...,
-      // For these images, we don't want crop and hotspot
-      // because we don't know the aspect ratio
-      "image": image{
-        _type,
-        "asset": asset,
-        "alt": alt
-      }
+      image
     },
     ${markDefs},
   }`

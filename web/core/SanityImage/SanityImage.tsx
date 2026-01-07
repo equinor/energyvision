@@ -20,6 +20,7 @@ export const ImageRatios = {
   '4:5': 0.8,
   '5:4': 1.25,
   '5:3': 1.66,
+  '3:2': 1.5,
 } as const
 
 export type ImageRatioKeys = keyof typeof ImageRatios
