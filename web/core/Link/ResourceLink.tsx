@@ -1,6 +1,5 @@
 'use client'
 import { add, calendar } from '@equinor/eds-icons'
-import { useTranslations } from 'next-intl'
 import { forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { ArrowRight } from '../../icons'
@@ -19,12 +18,12 @@ export type ResourceLinkProps = {
   textClassName?: string
   /** When using aria-label on the link, e.g add to calendar  */
   ariaHideText?: boolean
-  /* Link extension */
-  extension?: string | undefined
   /** If type is of an extension type (PDF), show the extention as icon */
   showExtensionIcon?: boolean
   /** not provided with downloads */
   href?: string | undefined
+  label?: string
+  file?: any
 } & Omit<BaseLinkProps, 'href'>
 
 export const iconRotation: Record<string, string> = {
@@ -76,10 +75,10 @@ export const getArrowElement = (
     case 'downloadableImage':
       return (
         <div
-          className={`flex flex-col px-1 ${marginClassNames} translate-y-[1px]`}
+          className={`flex flex-col px-1 ${marginClassNames} translate-y-px`}
         >
           <ArrowRight className={iconClassNames} />
-          <div className='h-[2px] w-full bg-energy-red-100 dark:bg-white-100' />
+          <div className='h-0.5 w-full bg-energy-red-100 dark:bg-white-100' />
         </div>
       )
     case 'icsLink':
@@ -100,27 +99,26 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(
       variant = 'default',
       children,
       type = 'internalUrl',
-      extension,
       className = '',
       iconClassName = '',
       textClassName = '',
       showExtensionIcon = false,
       ariaHideText = false,
       href = '',
-      ...rest
+      file,
     },
     ref,
   ) {
-    const intl = useTranslations()
     if (type === 'downloadableFile' || type === 'downloadableImage') {
       return (
         <DownloadableLink
-          type={type}
-          extension={extension}
+          file={file}
+          linkType={type}
+          variant={variant}
           showExtensionIcon={showExtensionIcon}
-          ariaHideText={ariaHideText}
-          {...rest}
-        />
+        >
+          {children}
+        </DownloadableLink>
       )
     }
     const variantClassName: Partial<Record<Variants, string>> = {
@@ -152,111 +150,43 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(
       className,
     )
 
-    const getTranslation = () => {
-      switch (type) {
-        case 'externalUrl':
-          return intl('externalLink')
-        /*case 'downloadableFile':
-      case 'downloadableImage':*/
-        case 'icsLink':
-          return intl('downloadDocument')
-        default:
-          return intl('internalLink')
-      }
-    }
-
     const getContentElements = () => {
       const textClassNames = twMerge(`pt-1 grow leading-none`, textClassName)
       switch (type) {
-        /*case 'downloadableFile':
-        return extension &&
-          (extension.toUpperCase() === 'PDF' ||
-            extension.toUpperCase() === 'XLS' ||
-            extension.toUpperCase() === 'XLSX') &&
-          showExtensionIcon ? (
-          <>
-            {extension.toUpperCase() === 'PDF' ? (
-              <BsFiletypePdf aria-label="pdf" size={24} className="mr-2 min-h-6 min-w-6" />
-            ) : (
-              <BsFiletypeXlsx aria-label="xlsx" size={24} className="mr-2 min-h-6 min-w-6" />
-            )}
-            <div
-              className={textClassNames}
-              {...(ariaHideText && {
-                'aria-hidden': true,
-              })}
-            >
-              {children}
-            </div>
-          </>
-        ) : (
-          <div
-            className={textClassNames}
-            {...(ariaHideText && {
-              'aria-hidden': true,
-            })}
-          >
-            {children}
-            {(extension && !showExtensionIcon) ||
-            (extension &&
-              (extension.toUpperCase() !== 'PDF' ||
-                extension.toUpperCase() !== 'XLS' ||
-                extension.toUpperCase() !== 'XLSX') &&
-              showExtensionIcon) ? (
-              <span
-                aria-label={`, ${getTranslation()} ${extension.toUpperCase()}`}
-              >{`(${extension.toUpperCase()})`}</span>
-            ) : null}
-          </div>
-        )*/
         case 'icsLink':
           return (
             <>
               <TransformableIcon
-                aria-label={`, ${getTranslation()}`}
+                title={`calendar`}
                 iconData={calendar}
                 className='mr-2'
               />
-              <div
+              <span
                 className={textClassNames}
                 {...(ariaHideText && {
                   'aria-hidden': true,
                 })}
               >
                 {children}
-              </div>
+              </span>
             </>
           )
         default:
           return (
-            <div
+            <span
               className={textClassNames}
               {...(ariaHideText && {
                 'aria-hidden': true,
               })}
             >
               {children}
-              {extension ? (
-                <div title={`, ${getTranslation()} ${extension.toUpperCase()}`}>
-                  {`(${extension.toUpperCase()})`}
-                </div>
-              ) : null}
-            </div>
+            </span>
           )
       }
     }
 
     return href ? (
-      <BaseLink
-        className={classNames}
-        type={type}
-        ref={ref}
-        href={href}
-        {...(extension &&
-          extension.toLowerCase() === 'pdf' && {
-            target: '_blank',
-          })}
-      >
+      <BaseLink className={classNames} type={type} ref={ref} href={href}>
         <div
           className={twMerge(
             `flex h-full w-inherit items-center justify-start gap-x-2 ${contentVariantClassName[variant]}`,

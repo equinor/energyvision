@@ -46,11 +46,11 @@ export const DefaultHero = ({
   imageClassName = '',
   ratio = '2:1',
 }: DefaultHeroProps) => {
-  const px = isBigTitle ? 'px-layout-sm' : 'px-layout-sm lg:px-layout-md'
+  const px =
+    isBigTitle && bigTitle ? 'px-layout-sm' : 'px-layout-sm lg:px-layout-md'
   const isPlainTitle =
     title && (title === 'string' || typeof title === 'string')
 
-  console.log('DefaultHero background', background)
   return (
     <div className={twMerge(className, `relative h-full w-full`)}>
       {background && (
@@ -58,31 +58,26 @@ export const DefaultHero = ({
           className={`-z-1 absolute inset-0 aspect-video h-[48dvh] w-full ${background}`}
         />
       )}
-      <div className={twMerge(`pt-10`, px, titleClassName)}>
-        {title && isBigTitle && !isPlainTitle && (
-          <>
-            <div className='pr-16'>
-              {title && (
+      <div className={twMerge(`pt-20`, px, titleClassName)}>
+        {title &&
+          (isPlainTitle ? (
+            <Typography variant='h1' id='mainTitle'>
+              {title}
+            </Typography>
+          ) : isBigTitle && bigTitle ? (
+            <>
+              <div className='pr-16'>
                 <Blocks id='mainTitle' value={title} as='h1' variant='xl' />
-              )}
-            </div>
+              </div>
+              <div>
+                <Blocks value={bigTitle} as='h2' variant='3xl' />
+              </div>
+            </>
+          ) : (
             <div>
-              {bigTitle && <Blocks value={bigTitle} as='h2' variant='3xl' />}
-            </div>
-          </>
-        )}
-        {title && !isBigTitle && !isPlainTitle && (
-          <div>
-            {title && (
               <Blocks id='mainTitle' value={title} as='h1' variant='3xl' />
-            )}
-          </div>
-        )}
-        {title && isPlainTitle && (
-          <Typography variant='h1' id='mainTitle'>
-            {title}
-          </Typography>
-        )}
+            </div>
+          ))}
       </div>
       {subTitle && subTitle}
       {figure && (

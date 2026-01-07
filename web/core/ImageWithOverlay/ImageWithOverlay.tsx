@@ -7,13 +7,13 @@ import { useTranslations } from 'next-intl'
 import { forwardRef, type HTMLAttributes, useId, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import type { DisplayModes } from '@/core/Carousel/Carousel'
-import { ResourceLink } from '@/core/Link'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import { useMediaQuery } from '@/lib/hooks/useMediaQuery'
 import Blocks from '../../portableText/Blocks'
 import { getLocaleFromName } from '../../sanity/helpers/localization'
 import type { ImageWithAlt, LinkData } from '../../types'
 import { Image } from '../Image/Image'
+import ResourceLink from '../Link/ResourceLink'
 
 export type ImageWithOverlayProps = {
   image?: SanityImageObject
@@ -67,12 +67,14 @@ export const ImageWithOverlay = forwardRef<
           {title}
         </Typography>
       ) : (
-        title && <Blocks
-          as='h2'
-          variant='h4'
-          className='text-md lg:text-lg'
-          value={title}
-        />
+        title && (
+          <Blocks
+            as='h2'
+            variant='h4'
+            className='text-md lg:text-lg'
+            value={title}
+          />
+        )
       )}
     </>
   )
@@ -126,8 +128,10 @@ export const ImageWithOverlay = forwardRef<
             {action && (
               <ResourceLink
                 href={url as string}
-                extension={action.extension}
-                showExtensionIcon={true}
+                file={{
+                  ...action?.file,
+                  label: action?.label,
+                }}
                 {...(action.link?.lang && {
                   locale: getLocaleFromName(action.link?.lang),
                 })}

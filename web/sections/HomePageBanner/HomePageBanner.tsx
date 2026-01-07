@@ -6,7 +6,7 @@ import {
   Image,
   type ObjectPositions,
 } from '@/core/Image/Image'
-import { BaseLink } from '@/core/Link'
+import BaseLink from '@/core/Link/BaseLink'
 import { getArrowElement } from '@/core/Link/ResourceLink'
 import { Typography } from '@/core/Typography'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'

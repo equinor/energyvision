@@ -18,6 +18,7 @@ export const ImageRatios = {
   '16:9': 1.77,
   '9:16': 0.5625,
   '3:4': 0.75,
+  '3:2': 1.5,
   '4:3': 1.33,
   '4:5': 0.8,
   '5:4': 1.25,
@@ -137,6 +138,7 @@ export const getTwAspectRatioUtilityOnRatio = (ratio: ImageRatioKeys) => {
     '16:9': 'aspect-video',
     '9:16': 'aspect-9/16',
     '3:4': 'aspect-3/4',
+    '3:2': 'aspect-3/2',
     '4:3': 'aspect-4/3',
     '4:5': 'aspect-4/5',
     '5:4': 'aspect-5/4',
@@ -172,6 +174,7 @@ type ImageProps = Omit<NextImageProps, 'src' | 'alt' | 'sizes'> & {
   /** The complete background color utility to put on figCaption */
   figCaptionBackground?: string
   figCaptionClassName?: string
+  keepRatioOnMobile?: boolean
 }
 
 //Double check crop and hotspot information comes to sanity fetch image
@@ -191,13 +194,17 @@ export const Image = ({
   attribution,
   figCaptionBackground,
   figCaptionClassName = '',
+  keepRatioOnMobile = false,
 }: ImageProps) => {
   const isLargerDisplays = useMediaQuery(`(min-width: 800px)`)
   const twAspectRatioUtility = useMemo(() => {
+    if (keepRatioOnMobile) {
+      return getTwAspectRatioUtilityOnRatio(aspectRatio)
+    }
     return isLargerDisplays
       ? getTwAspectRatioUtilityOnRatio(aspectRatio)
       : 'aspect-4/3'
-  }, [isLargerDisplays, aspectRatio])
+  }, [isLargerDisplays, aspectRatio, keepRatioOnMobile])
 
   if (!image?.asset) return null
 

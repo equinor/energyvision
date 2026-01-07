@@ -2,7 +2,7 @@ import type { PortableTextBlock } from '@portabletext/types'
 import { forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { Image } from '@/core/Image/Image'
-import { ResourceLink } from '@/core/Link'
+import ResourceLink from '@/core/Link/ResourceLink'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import Blocks from '@/portableText/Blocks'
 import { getLocaleFromName } from '@/sanity/helpers/localization'
@@ -68,9 +68,11 @@ const TabsInfoPanelItem = forwardRef<HTMLDivElement, TabsInfoPanelItemProps>(
                 {...(action.link?.lang && {
                   hrefLang: getLocaleFromName(action.link?.lang),
                 })}
+                file={{
+                  ...action?.file,
+                  label: action?.label,
+                }}
                 type={action.type}
-                extension={action.extension}
-                showExtensionIcon={true}
                 variant='fit'
                 className='mt-12'
               >

@@ -1,7 +1,7 @@
 import type { HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { Image } from '@/core/Image/Image'
-import { ResourceLink } from '@/core/Link'
+import ResourceLink from '@/core/Link/ResourceLink'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import Blocks from '@/portableText/Blocks'
 import { getLocaleFromName } from '@/sanity/helpers/localization'
@@ -72,12 +72,15 @@ export const FiftyFiftyHero = ({
 
           {action && (heroUrl || url) && !isBigTitle && (
             <ResourceLink
+              file={{
+                ...action?.file,
+                label: action?.label,
+              }}
               href={heroUrl ?? url}
               {...(action.link?.lang && {
                 hrefLang: getLocaleFromName(action.link?.lang),
               })}
               type={action.type}
-              extension={action.extension}
               showExtensionIcon
             >
               {action.label}

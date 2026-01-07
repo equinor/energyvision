@@ -1,7 +1,7 @@
 import { useId } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { IFrame } from '@/core/IFrame/IFrame'
-import { ResourceLink } from '@/core/Link'
+import ResourceLink from '@/core/Link/ResourceLink'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import Blocks from '@/portableText/Blocks'
 import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
@@ -59,18 +59,19 @@ const IFrameBlock = ({
           hasSectionTitle={!!title}
           transcript={transcript}
         />
-        {action && action.label && actionUrl && (
+        {action?.label && actionUrl && (
           <ResourceLink
-            href={actionUrl || ''}
-            extension={action?.extension}
-            showExtensionIcon={true}
+            href={actionUrl}
             variant='fit'
             hrefLang={
               action?.type === 'internalUrl'
                 ? getLocaleFromName(action?.link?.lang)
                 : undefined
             }
-            className=''
+            file={{
+              ...action?.file,
+              label: action?.label,
+            }}
           >
             {action.label}
           </ResourceLink>

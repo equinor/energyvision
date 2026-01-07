@@ -1,4 +1,5 @@
-@import 'tailwindcss';
+@import 'tailwindcss' source("../");
+/* @source '../styles/components/imagezoom.css'; */
 @source '../styles/components/videojs.css';
 @source '../styles/components/cookiebot.css';
 @source 'video.js/dist/video-js.css';
@@ -96,7 +97,7 @@
   --spacing-single-carousel-card-h-lg: 516px;
   --spacing-event-carousel-card-w: 383px;
   --spacing-arrow-right: 1.58rem;
-  --spacing-text: clamp(60ch, 75ch, 750px);
+  --spacing-text: 75ch;
 
   --font-weight-semibolder: 650;
 
@@ -353,28 +354,12 @@ and not use important in textteaser theme
     rgba(0, 0, 0, 0.08) 0px 3px 4px 0px;
 }
 
-/* Works out of the box?
-aspect-<ratio> -> aspect-ratio: <ratio>;
-Use aspect-<ratio> utilities like aspect-3/2 to give an element a specific aspect ratio:
-
-To handle fractions, we rely on the CSS ratio data type. 
-If this is used with --value(), it's a signal to Tailwind to 
-treat the value and modifier as a single value:
-
-  --aspect-4/5': '0.8';
-  --aspect-5/4': '1.25';
-  --aspect-9/16': '0.56';
-  --aspect-4/3': '4/3';
-
-  @utility aspect-* {
-  aspect-ratio: --value(--aspect-ratio- *, ratio, [ratio]);
-}*/
-
 @layer base {
   body {
     @apply text-slate-80 dark:text-white-100;
     -webkit-font-smoothing: antialiased;
   }
+
   p,
   h1,
   h2,
@@ -416,7 +401,6 @@ treat the value and modifier as a single value:
     }
   }
 
-  /* VIDEOJS */
   .video-js.vjs-fill .vjs-control-bar {
     @apply bg-transparent!;
   }
@@ -462,7 +446,6 @@ treat the value and modifier as a single value:
     animation-delay: 0.44s;
   }
 
-  /* BRAND THEMING */
   .vjs-envis-brand:hover .vjs-big-play-button {
     @apply bg-energy-red-100!;
   }
@@ -480,76 +463,14 @@ treat the value and modifier as a single value:
 }
 
 @layer components {
-  /*   .prose :where(li):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
-    @apply my-2;
-  } */
-  /*   .prose :where(ul > li):not(:where([class~='not-prose'], [class~='not-prose'] *)),
-  .prose :where(ol > li):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
-    @apply ml-2 pl-1.5;
-  } */
-  /* .prose :where(.prose>ul>li p):not(:where([class~=not-prose],[class~=not-prose] *)) {
-
-} */
-  /*   .prose :where(.prose > ul > li > :first-child):not(:where([class~='not-prose'], [class~='not-prose'] *)),
-  .prose :where(.prose > ol > li > :first-child):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
-    @apply mt-0;
-  } */
-
-  /*   .prose :where(.prose > ul > li > :last-child):not(:where([class~='not-prose'], [class~='not-prose'] *)),
-  .prose :where(.prose > ol > li > :last-child):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
-    @apply mt-0;
-  }
-  .prose :where(ul ul, ul ol, ol ul, ol ol):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
-    @apply my-3 pl-6;
-  } */
-
-  /*   .prose :where(ol > li):not(:where([class~='not-prose'], [class~='not-prose'] *))::marker {
-    font-weight: 400;
-    color: var(--tw-prose-counters);
-  }
-
-  .prose :where(ul > li):not(:where([class~='not-prose'], [class~='not-prose'] *))::marker {
-    color: var(--tw-prose-bullets);
-  } */
-
-  /* PROSE-ARTICLE */
-  /*   .prose-article :where(h2):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
-    @apply px-layout-lg text-lg;
-  }
-  .prose-article :where(h3):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
-    @apply px-layout-lg text-md;
-  } */
-  /*   .prose-article :where(p):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
-    @apply px-layout-lg;
-  } */
-  /* PROSE-MEDIUM */
-  /*   .prose-medium {
-    @apply text-md;
-  }
-  .prose-medium :where(h2):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
-    @apply my-6 text-xl;
-  }
-  .prose-medium :where(h3):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
-    @apply my-6 text-lg;
-  }
-  .prose-campaign :where(p):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
-    @apply my-0 text-balance;
-  } */
-  /** PROSE END  */
-
   .clickbound-area {
     @apply before:absolute before:top-1/2 before:left-1/2 before:aspect-square before:w-[48px] before:translate-x-[-50%] before:translate-y-[-50%] before:cursor-pointer before:rounded-[100%] before:content-[''];
   }
 
-  /**
- * Inline footnotes references
- * 1. Increment the counter at each new reference
- */
   a[aria-describedby='footnote-label'] {
     @apply relative cursor-default text-inherit outline-hidden;
     counter-increment: footnotes;
     text-decoration: none;
-    /* outline: none;*/
   }
   a[aria-describedby='footnote-label']::before {
     @apply cursor-pointer;
@@ -582,4 +503,89 @@ treat the value and modifier as a single value:
   footer :target {
     @apply w-fit bg-autumn-storm-40;
   }
+
+[data-rmiz-ghost] {
+  @apply absolute;
+  pointer-events: none;
+}
+[data-rmiz-btn-zoom],
+[data-rmiz-btn-unzoom] {
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 50%;
+  border: none;
+  box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+  color: #fff;
+  height: 40px;
+  margin: 0;
+  outline-offset: 2px;
+  padding: 9px;
+  touch-action: manipulation;
+  width: 40px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+[data-rmiz-btn-zoom]:not(:focus):not(:active) {
+  position: absolute;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  pointer-events: none;
+  white-space: nowrap;
+  width: 1px;
+}
+[data-rmiz-btn-zoom] {
+  position: absolute;
+  inset: 10px 10px auto auto;
+  cursor: zoom-in;
+}
+[data-rmiz-btn-unzoom] {
+  position: absolute;
+  inset: 20px 20px auto auto;
+  cursor: zoom-out;
+  z-index: 1;
+}
+[data-rmiz-content='found'] img,
+[data-rmiz-content='found'] svg,
+[data-rmiz-content='found'] [role='img'],
+[data-rmiz-content='found'] [data-zoom] {
+  cursor: zoom-in;
+}
+[data-rmiz-modal]::backdrop {
+  @apply hidden;
+}
+[data-rmiz-modal][open] {
+  @apply fixed overflow-hidden max-w-none max-h-none m-0 p-0 border-0 bg-transparent;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: all;
+}
+[data-rmiz-modal-overlay] {
+  @apply absolute w-screen h-screen;
+  
+ ;transition: background-color 0.3s;
+}
+[data-rmiz-modal-overlay='hidden'] {
+  background-color: rgba(255, 255, 255, 0);
+}
+[data-rmiz-modal-overlay='visible'] {
+  background-color: rgba(255, 255, 255, 1);
+}
+[data-rmiz-modal-content] {
+  @apply relative w-full h-full;
+}
+[data-rmiz-modal-img] {
+  position: absolute;
+  cursor: zoom-out;
+  image-rendering: high-quality;
+  transform-origin: top left;
+  transition: transform 0.3s;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-rmiz-modal-overlay],
+  [data-rmiz-modal-img] {
+    transition-duration: 0.01ms !important;
+  }
+}
 }

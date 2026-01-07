@@ -3,12 +3,13 @@
 import type { PortableTextBlock } from '@portabletext/types'
 import { forwardRef, type HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { BaseLink, ResourceLink } from '@/core/Link'
 import { Typography } from '@/core/Typography'
 import Blocks from '../../portableText/Blocks'
 import type { ColorKeyTokens } from '../../styles/colorKeyToUtilityMap'
 import type { ImageWithAlt } from '../../types'
 import { Image } from '../Image/Image'
+import BaseLink from '../Link/BaseLink'
+import ResourceLink from '../Link/ResourceLink'
 
 export type Variants = 'primary' | 'secondary'
 

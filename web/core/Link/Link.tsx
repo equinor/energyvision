@@ -1,9 +1,9 @@
 'use client'
+import { useTranslations } from 'next-intl'
 import { forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { BaseLink, BaseLinkProps } from './BaseLink'
 import { ArrowRight } from '../../icons'
-import { useTranslations } from 'next-intl'
+import { BaseLink, type BaseLinkProps } from './BaseLink'
 
 export type LinkProps = BaseLinkProps
 
@@ -27,13 +27,19 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
   )
 
   return (
-    <BaseLink className={classNames} type={type} ref={ref} href={href} {...rest}>
+    <BaseLink
+      className={classNames}
+      type={type}
+      ref={ref}
+      href={href}
+      {...rest}
+    >
       {children}
       {type === 'externalUrl' && (
         <ArrowRight
-          aria-hidden="false"
+          aria-hidden='false'
           aria-label={t('externalLink')}
-          className="text-no inline-block pb-1 -rotate-45 origin-center"
+          className='-rotate-45 inline-block origin-center pb-1 text-no'
         />
       )}
     </BaseLink>

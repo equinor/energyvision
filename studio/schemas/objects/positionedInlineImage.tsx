@@ -1,5 +1,10 @@
 /* eslint-disable import/no-unresolved */
-import { InlineImageFullWidth, InlineImageLeftAlign, InlineImageRightAlign } from '../../icons'
+import type { Rule, ValidationContext } from 'sanity'
+import {
+  InlineImageFullWidth,
+  InlineImageLeftAlign,
+  InlineImageRightAlign,
+} from '../../icons'
 import { RadioIconSelector } from '../components'
 import type { ImageWithAlt } from './imageWithAlt'
 
@@ -38,16 +43,49 @@ export default {
       type: 'string',
     },
     {
+      title: 'image orientation',
+      name: 'imageOrientation',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Portrait', value: 'portrait' },
+          { title: 'Landscape', value: 'landscape' },
+          { title: 'Square', value: 'square' },
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'landscape',
+      validation: (Rule: Rule) =>
+        Rule.custom((value: string, context: ValidationContext) => {
+          const { parent } = context
+          //@ts-ignore:todo
+          return value !== 'landscape' && parent?.layout === 'full'
+            ? 'Use landscape with layout full'
+            : true
+        }),
+    },
+    {
+      name: 'enableImageZoom',
+      title: 'Enable image zoom',
+      type: 'boolean',
+    },
+    {
       name: 'layout',
       title: 'Layout',
       type: 'string',
       components: {
-        input: function ImagePosition({ onChange, value }: { onChange: any; value: string }) {
+        input: function ImagePosition({
+          onChange,
+          value,
+        }: {
+          onChange: any
+          value: string
+        }) {
           return (
             <RadioIconSelector
-              name="imageAlignmentSelector"
+              name='imageAlignmentSelector'
               options={imageAlignmentOptions}
-              defaultValue="full"
+              defaultValue='full'
               currentValue={value}
               onChange={onChange}
             />
@@ -63,7 +101,15 @@ export default {
       alt: 'image.alt',
       caption: 'caption',
     },
-    prepare({ imageUrl, caption, alt }: { imageUrl: string; alt: string; caption: string }) {
+    prepare({
+      imageUrl,
+      caption,
+      alt,
+    }: {
+      imageUrl: string
+      alt: string
+      caption: string
+    }) {
       return {
         title: alt,
         subtitle: caption,

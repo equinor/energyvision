@@ -11,12 +11,12 @@ import {
   useRef,
 } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { ResourceLink } from '@/core/Link'
 import { Typography } from '@/core/Typography'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import Blocks from '../../portableText/Blocks'
 import { getLocaleFromName } from '../../sanity/helpers/localization'
 import type { LinkData } from '../../types'
+import ResourceLink from '../Link/ResourceLink'
 import type { DisplayModes } from './Carousel'
 
 export type Variants = 'richTextBelow' | 'default'
@@ -155,6 +155,10 @@ export const CarouselItem = forwardRef<HTMLLIElement, CarouselItemProps>(
                   {action?.label && (
                     <ResourceLink
                       href={getUrlFromAction(action) || ''}
+                      file={{
+                        ...action?.file,
+                        label: action?.label,
+                      }}
                       aria-label={action?.['aria-label']}
                       variant='fit'
                       className='mt-auto'

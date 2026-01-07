@@ -1,5 +1,3 @@
-import { AnchorLinkReference } from '../types'
-
 export type LinkType =
   | 'internalUrl'
   | 'externalUrl'
@@ -24,6 +22,7 @@ export type LinkData = {
   anchorReference?: string
   filename?: string
   someType?: any
+  file?: any
 }
 
 export type RelatedLinksData = {
@@ -31,13 +30,9 @@ export type RelatedLinksData = {
   links: LinkData[]
 }
 
-export type StickyMenuLinkType =
-  | AnchorLinkReference
-  | {
-      type: 'downloadableFile'
-      fileName: string
-      id: string
-      label: string
-      href: string
-      extension: string
-    }
+export type AnchorLinkReference = {
+  id: string
+  type: 'anchorLinkReference'
+  title?: string
+  anchorReference?: string
+}

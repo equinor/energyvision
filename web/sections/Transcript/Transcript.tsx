@@ -1,13 +1,13 @@
 'use client'
-import { useState } from 'react'
-import { PortableTextBlock } from '@portabletext/types'
-import Modal from '@/sections/Modal/Modal'
 import { add_circle_filled, add_circle_outlined } from '@equinor/eds-icons'
+import type { PortableTextBlock } from '@portabletext/types'
+import { useTranslations } from 'next-intl'
+import { useState } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { Typography } from '@/core/Typography'
+import Modal from '@/sections/Modal/Modal'
 import { TransformableIcon } from '../../icons/TransformableIcon'
 import Blocks from '../../portableText/Blocks'
-import { Typography } from '@/core/Typography'
-import { useTranslations } from 'next-intl'
 
 type TranscriptProps = {
   className?: string
@@ -30,15 +30,15 @@ const Transcript = ({ transcript, className, ariaTitle }: TranscriptProps) => {
         <>
           <button
             onClick={handleOpen}
-            aria-haspopup="dialog"
+            aria-haspopup='dialog'
             aria-label={`${readTranscript} ${ariaTitle}`}
-            className={`group focus-visible:envis-outline dark:focus-visible:envis-outline-invert border-grey-40 flex w-fit items-center gap-4 border-b pr-4 pb-2 focus:outline-hidden dark:border-white-100 dark:focus:outline-hidden`}
+            className={`group focus-visible:envis-outline dark:focus-visible:envis-outline-invert flex w-fit items-center gap-4 border-grey-40 border-b pr-4 pb-2 focus:outline-hidden dark:border-white-100 dark:focus:outline-hidden`}
           >
             <span className={`grid`}>
               <TransformableIcon
                 size={24}
                 iconData={add_circle_outlined}
-                className="col-span-full row-span-full fill-slate-80 opacity-100 transition-opacity group-hover:opacity-0 group-data-open:opacity-0 dark:fill-white-100"
+                className='col-span-full row-span-full fill-slate-80 opacity-100 transition-opacity group-hover:opacity-0 group-data-open:opacity-0 dark:fill-white-100'
               />
               <TransformableIcon
                 className={`col-span-full row-span-full fill-slate-80 opacity-0 transition-opacity group-hover:opacity-100 group-data-open:opacity-0 dark:fill-white-100`}
@@ -46,7 +46,7 @@ const Transcript = ({ transcript, className, ariaTitle }: TranscriptProps) => {
                 iconData={add_circle_filled}
               />
             </span>
-            <Typography variant="simple">{readTranscript}</Typography>
+            <Typography variant='simple'>{readTranscript}</Typography>
           </button>
           <Modal isOpen={isOpen} onClose={handleClose} title={ariaTitle}>
             <Blocks value={transcript} />

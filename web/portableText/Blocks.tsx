@@ -1,5 +1,4 @@
 'use client'
-
 import {
   PortableText,
   type PortableTextBlockComponent,
@@ -14,6 +13,7 @@ import type {
 } from '@portabletext/types'
 import type { ElementType } from 'react'
 import { IFrame } from '@/core/IFrame/IFrame'
+import DownloadableLink from '@/core/Link/DownloadableLink'
 import type { TypographyProps } from '@/core/Typography'
 import type {
   TypographyGroups,
@@ -159,6 +159,22 @@ const markSerializers: MarkType = {
   strong: ({ children }: any) => (
     <strong className='font-bold'>{children}</strong>
   ),
+  attachment: ({ children, value }: any) => {
+    const { attachment } = value
+    return (
+      <DownloadableLink
+        type='simple'
+        variant='fit'
+        linkType='downloadableFile'
+        file={{
+          ...attachment?.file,
+          label: attachment?.label,
+        }}
+      >
+        {children}
+      </DownloadableLink>
+    )
+  },
 }
 
 const listSerializers: ListType = {
@@ -234,22 +250,28 @@ export default function Blocks({
             5: 'line-clamp-5',
           }
 
+          const hasAttachment = block?.markDefs?.some(
+            mark => mark?._type === 'attachment',
+          )
+          const blocksGroup = (
+            hasAttachment ? 'plain' : group
+          ) as TypographyGroups
+          const blocksVariant = (
+            hasAttachment ? 'div' : variant
+          ) as TypographyVariants
+
           if (blocks?.length === 1) {
             return (
               <PortableText
                 key={block._key}
-                className={twMerge(
-                  ` ${group === 'article' ? 'px-layout-lg' : ''}`,
-                  className,
-                )}
                 id={id}
                 value={block}
                 components={{
                   //@ts-ignore:todo
                   block: {
                     ...getBlockComponents({
-                      group,
-                      variant,
+                      group: blocksGroup,
+                      variant: blocksVariant,
                       as,
                       className: twMerge(
                         clampLines && twLineClampUtility[clampLines],
@@ -275,31 +297,22 @@ export default function Blocks({
             )
           }
           div.push(block)
-
           // If the next block is also text/pullQuote, group it with this one
           if (inlineBlockTypes.includes(blocks[i + 1]?._type)) return null
-
           // Otherwise, render the group of text blocks we have
           const value = div
           div = []
 
           return (
-            <div
-              key={block._key}
-              className={twMerge(
-                `${group === 'article' ? 'px-layout-lg' : ''}`,
-                className,
-              )}
-              id={id}
-            >
+            <div key={block._key} className={twMerge(``, className)} id={id}>
               <PortableText
                 value={value}
                 components={{
                   //@ts-ignore:todo
                   block: {
                     ...getBlockComponents({
-                      group,
-                      variant,
+                      group: blocksGroup,
+                      variant: blocksVariant,
                       as,
                       className: twMerge(
                         clampLines && twLineClampUtility[clampLines],

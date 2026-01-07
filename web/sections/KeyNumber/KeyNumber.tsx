@@ -2,7 +2,7 @@
 import { useId } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { Carousel } from '@/core/Carousel/Carousel'
-import { ResourceLink } from '@/core/Link'
+import ResourceLink from '@/core/Link/ResourceLink'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import Blocks from '@/portableText/Blocks'
 import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
@@ -77,13 +77,17 @@ const KeyNumber = ({ data, anchor, className }: KeyNumbersProps) => {
         )}
         {action && (
           <ResourceLink
+            file={{
+              ...action?.file,
+              label: action?.label,
+            }}
             href={url as string}
             {...(action.link?.lang && {
               hrefLang: getLocaleFromName(action.link?.lang),
             })}
             type={action.type}
           >
-            {`${action.label} ${action.extension ? `(${action.extension.toUpperCase()})` : ''}`}
+            {`${action.label}`}
           </ResourceLink>
         )}
       </div>

@@ -1,11 +1,11 @@
 import type { PortableTextBlock } from '@portabletext/types'
+import ResourceLink from '@/core/Link/ResourceLink'
 import { Typography } from '@/core/Typography'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import { useMediaQuery } from '@/lib/hooks/useMediaQuery'
 import Blocks from '@/portableText/Blocks'
 import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
 import { getObjectPositionForImage, Image } from '../../../core/Image/Image'
-import { ResourceLink } from '../../../core/Link'
 import { getLocaleFromName } from '../../../sanity/helpers/localization'
 import type {
   DesignOptions,
@@ -103,8 +103,10 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
                   type={action.type}
                   key={action.id || idx}
                   variant='fit'
-                  extension={action.extension}
-                  showExtensionIcon
+                  file={{
+                    ...action?.file,
+                    label: action?.label,
+                  }}
                 >
                   {`${action.label}`}
                 </ResourceLink>

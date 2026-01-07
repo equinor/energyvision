@@ -11,13 +11,14 @@ import {
 } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { ImageWithOverlay } from '@/core/ImageWithOverlay/ImageWithOverlay'
-import { BaseLink, ResourceLink } from '@/core/Link'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import { ArrowRight } from '../../icons'
 import Blocks from '../../portableText/Blocks'
 import { getLocaleFromName } from '../../sanity/helpers/localization'
 import type { ImageWithAlt, LinkData } from '../../types/index'
 import { Image } from '../Image/Image'
+import BaseLink from '../Link/BaseLink'
+import ResourceLink from '../Link/ResourceLink'
 import type { DisplayModes } from './Carousel'
 
 type CarouselImageItemProps = {
@@ -186,7 +187,10 @@ export const CarouselImageItem = forwardRef<
             {action && url && (
               <ResourceLink
                 href={url}
-                extension={action?.extension}
+                file={{
+                  ...action?.file,
+                  label: action?.label,
+                }}
                 showExtensionIcon={true}
                 {...(action?.link?.lang && {
                   locale: getLocaleFromName(action?.link?.lang),

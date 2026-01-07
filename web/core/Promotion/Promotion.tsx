@@ -2,7 +2,6 @@ import type { PortableTextBlock } from '@portabletext/types'
 import { forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { Image } from '@/core/Image/Image'
-import { BaseLink, type BaseLinkProps } from '@/core/Link'
 import { getArrowElement } from '@/core/Link/ResourceLink'
 import { Typography } from '@/core/Typography'
 import type { GridColumnVariant } from '@/lib/helpers/getCommonUtilities'
@@ -11,6 +10,7 @@ import {
   colorKeyToUtilityMap,
 } from '@/styles/colorKeyToUtilityMap'
 import type { ImageWithAlt } from '../../types'
+import BaseLink, { type BaseLinkProps } from '../Link/BaseLink'
 
 export type PromotionType = 'extended' | 'compact'
 export type PromotionVariant = 'externalLink' | 'default'

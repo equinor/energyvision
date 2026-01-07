@@ -1,4 +1,7 @@
-import { type LinkProps as _LinkProps, Link as CoreLink } from '@/core/Link'
+import {
+  type LinkProps as _LinkProps,
+  Link as CoreLink,
+} from '@/core/Link/Link'
 import { getLocaleFromName } from '@/sanity/helpers/localization'
 
 type InternalLinkProps = {

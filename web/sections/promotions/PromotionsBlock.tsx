@@ -1,7 +1,7 @@
 import type { PortableTextBlock } from 'next-sanity'
 import { useId } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { ResourceLink } from '@/core/Link'
+import { ResourceLink } from '@/core/Link/ResourceLink'
 import Blocks from '@/portableText/Blocks'
 import {
   type ColorKeys,
@@ -153,6 +153,7 @@ const PromotionsBlock = ({
         >
           {promotionsCount === 1 ? (
             <Promotion
+              onColorBg={onColorBg}
               background={foreground}
               promotion={promotionList[0]}
               hasSectionTitle={!!title}
@@ -164,6 +165,7 @@ const PromotionsBlock = ({
                 ...restData,
                 promotions: promotionList,
               }}
+              onColorBg={onColorBg}
               background={foreground}
               variant={variant}
               hasSectionTitle={!!title}

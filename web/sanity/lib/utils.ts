@@ -1,5 +1,5 @@
 import { getImageDimensions } from '@sanity/asset-utils'
-import createImageUrlBuilder from '@sanity/image-url'
+import { createImageUrlBuilder } from '@sanity/image-url'
 import { type CreateDataAttributeProps, createDataAttribute } from 'next-sanity'
 import type { GridType } from '@/core/Image/Image'
 import { dataset, projectId, studioUrl } from '@/sanity/lib/api'
@@ -28,26 +28,6 @@ export const urlForImage = (source: any) => {
   if (!source?.asset?._ref) {
     return undefined
   }
-  const imageRef = source?.asset?._ref
-  const crop = source.crop
-  // get the image's og dimensions
-  const { width, height } = getImageDimensions(imageRef)
-
-  if (crop) {
-    // compute the cropped image's area
-    const croppedWidth = Math.floor(width * (1 - (crop.right + crop.left)))
-    const croppedHeight = Math.floor(height * (1 - (crop.top + crop.bottom)))
-
-    // compute the cropped image's position
-    const left = Math.floor(width * crop.left)
-    const top = Math.floor(height * crop.top)
-
-    // gather into a url
-    return imageBuilder
-      ?.image(source)
-      .rect(left, top, croppedWidth, croppedHeight)
-      .auto('format')
-  }
 
   return imageBuilder?.image(source).auto('format')
 }
@@ -68,6 +48,7 @@ export type ResolveImageProps = {
   customWidth?: number | undefined
   /* Custom height */
   customHeight?: number | undefined
+  keepRatioOnMobile?: boolean
 }
 /**
  * Single point of entry to fetch images from Sanity for pages and components,
@@ -84,16 +65,26 @@ export const resolveImage = (props: ResolveImageProps) => {
     customHeight,
     grid = 'lg',
     isLargerDisplays = false,
+    keepRatioOnMobile = false,
   } = props
 
   // 4:3 for mobile images and serverside. Default 16:9 on larger
-  const ratio = isLargerDisplays ? aspectRatio : 1.33
+  const ratio = keepRatioOnMobile
+    ? aspectRatio
+    : isLargerDisplays
+      ? aspectRatio
+      : 1.33
 
   const { width: imageWidth, height: imageHeight } = getImageDimensions(image)
 
   let width = customWidth
     ? customWidth
-    : Math.round(Math.min(imageWidth, getMaxWidth(grid, isLargerDisplays)))
+    : Math.round(
+        Math.min(
+          imageWidth,
+          getMaxWidth(grid, keepRatioOnMobile ? true : isLargerDisplays),
+        ),
+      )
   let height = Math.round(width / ratio)
 
   // If portrait and one wants to control height and keep aspect

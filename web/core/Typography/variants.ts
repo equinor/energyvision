@@ -42,7 +42,24 @@ const variants = {
     ingress: 'text-base leading-cloudy',
   },
   article: {
-    body: 'my-5 first:mt-0 last:mb-0 [:where(h2+*,h3+*)]:mt-0 text-base',
+    ingress: `text-md 
+    my-6
+    :not-only-child:first:mt-0 
+    :not-only-child:last:mb-0
+    me-layout-sm
+    lg:me-layout-lg
+    ms-layout-sm
+    lg:ms-layout-lg`,
+    body: `
+    my-5 
+     :not-only-child:first:mt-0 
+     :not-only-child:last:mb-0 
+    me-layout-sm
+    lg:me-layout-lg
+    ms-layout-sm
+    lg:ms-layout-lg
+    [:where(h2+*,h3+*)]:mt-0
+    text-base`,
     h2: `mt-2 mb-2 text-lg`,
     h3: `mt-2 text-md `,
     h4: `mt-2 text-base font-medium`,

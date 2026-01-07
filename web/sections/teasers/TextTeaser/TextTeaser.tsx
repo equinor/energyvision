@@ -1,5 +1,5 @@
 import { twMerge } from 'tailwind-merge'
-import { ResourceLink } from '@/core/Link'
+import { ResourceLink } from '@/core/Link/ResourceLink'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import Blocks from '@/portableText/Blocks'
 import { getLocaleFromName } from '@/sanity/helpers/localization'
@@ -40,12 +40,16 @@ const TextTeaser = ({ data, anchor, className }: TextTeaserProps) => {
         {action && (
           <ResourceLink
             href={url as string}
+            file={{
+              ...action?.file,
+              label: action?.label,
+            }}
             {...(action.link?.lang && {
               hrefLang: getLocaleFromName(action.link?.lang),
             })}
             type={action.type}
           >
-            {`${action.label} ${action.extension ? `(${action.extension.toUpperCase()})` : ''}`}
+            {action.label}
           </ResourceLink>
         )}
       </div>

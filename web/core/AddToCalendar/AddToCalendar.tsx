@@ -1,10 +1,10 @@
 'use client'
-import { useEffect, useState } from 'react'
 import { isAfter } from 'date-fns'
-import type { EventDateType } from '../../types/index'
-import { ResourceLink } from '@/core/Link'
 import { useTranslations } from 'next-intl'
+import { useEffect, useState } from 'react'
 import { getEventDates, toUTCDateParts } from '@/lib/helpers/dateUtilities'
+import type { EventDateType } from '../../types/index'
+import ResourceLink from '../Link/ResourceLink'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const ics = require('ics')
@@ -91,9 +91,9 @@ const AddToCalendar = ({ eventDate, title, location }: AddToCalendarProps) => {
     <ResourceLink
       href={fileData as string}
       download={`${title.replace(/ /g, '_')}.ics`}
-      type="icsLink"
+      type='icsLink'
       aria-label={atcAriaLabel}
-      variant="fit"
+      variant='fit'
       ariaHideText
     >
       {atc}

@@ -9,7 +9,7 @@ import { twMerge } from 'tailwind-merge'
 import FormattedDateTime, {
   TimeIcon,
 } from '@/core/FormattedDateTime/FormattedDateTime'
-import { BaseLink } from '@/core/Link'
+import { BaseLink } from '@/core/Link/BaseLink'
 import { getEventDates } from '@/lib/helpers/dateUtilities'
 import {
   type ColorKeys,

@@ -8,6 +8,7 @@ import { twMerge } from 'tailwind-merge'
  *  Similarly the + and close
  */
 export type TransformableIconProps = {
+  title?: string
   iconData: IconData
   /** Size, use if you need large icon resolutions
    * @default 24
@@ -20,7 +21,10 @@ export type TransformableIconProps = {
 export const TransformableIcon = forwardRef<
   SVGSVGElement,
   TransformableIconProps
->(function ArrowRight({ iconData, size = 24, className = '', ...rest }, ref) {
+>(function ArrowRight(
+  { title, iconData, size = 24, className = '', ...rest },
+  ref,
+) {
   let icon = iconData
   if (size < 24) {
     // fallback to normal icon if small is not made yet
@@ -34,10 +38,10 @@ export const TransformableIcon = forwardRef<
       height={size}
       viewBox={`0 0 ${size} ${size}`}
       fill='currentColor'
-      aria-label={`${icon.name} icon`}
       className={twMerge('dark:text-white-100', className)}
       {...rest}
     >
+      <title>{title ?? ''}</title>
       {Array.isArray(icon.svgPathData) ? (
         icon.svgPathData.map(pathData => {
           return (

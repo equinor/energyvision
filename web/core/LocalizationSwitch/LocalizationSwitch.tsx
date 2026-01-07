@@ -2,8 +2,8 @@
 import { useLocale, useTranslations } from 'next-intl'
 import type { HTMLAttributes } from 'react'
 import { usePage } from '@/contexts/pageContext'
-import { ButtonLink } from '@/core/Link'
 import { defaultLanguage, languages } from '@/languageConfig'
+import ButtonLink from '../Link/ButtonLink'
 
 export type LocalizationSwitchProps = HTMLAttributes<HTMLUListElement>
 

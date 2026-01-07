@@ -1,5 +1,5 @@
 import { twMerge } from 'tailwind-merge'
-import { ResourceLink } from '@/core/Link'
+import ResourceLink from '@/core/Link/ResourceLink'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import { getLocaleFromName } from '../../sanity/helpers/localization'
 import type { LinkData } from '../../types/index'
@@ -20,9 +20,12 @@ const CallToActions = ({
   if (!callToActions) return null
 
   const getSingleAction = () => {
-    const { label, extension, type, link } = callToActions[0]
+    const { label, type, link, file } = callToActions[0]
     const url = getUrlFromAction(callToActions[0])
-    if (!url && type !== 'downloadableFile') {
+    if (
+      !url &&
+      !(type === 'downloadableFile' || type === 'downloadableImage')
+    ) {
       console.warn(
         `CallToActions: Missing URL on Call to action link with type: '${type}' and label: '${label}'`,
       )
@@ -31,10 +34,11 @@ const CallToActions = ({
 
     return (
       <ResourceLink
-        {...callToActions[0]}
+        file={{
+          ...file,
+          label,
+        }}
         href={url}
-        extension={extension}
-        showExtensionIcon={true}
         {...(link?.lang && { hrefLang: getLocaleFromName(link?.lang) })}
         type={type}
         variant='fit'
@@ -55,21 +59,23 @@ const CallToActions = ({
     >
       {callToActions.map((callToAction: LinkData) => {
         const url = getUrlFromAction(callToAction)
+        const { id, label, type, link, file } = callToAction
         return url ? (
-          <li key={callToAction.id}>
+          <li key={id}>
             {/*  If the URL is a static AEM page it should behave as an internal link in the web */}
             <ResourceLink
-              {...callToAction}
+              file={{
+                ...file,
+                label,
+              }}
               href={url}
-              {...(callToAction.link?.lang && {
-                hrefLang: getLocaleFromName(callToAction.link?.lang),
+              {...(link?.lang && {
+                hrefLang: getLocaleFromName(link?.lang),
               })}
-              type={callToAction.type}
-              extension={callToAction.extension}
-              showExtensionIcon={true}
+              type={type}
               variant={linkVariant ? linkVariant : 'default'}
             >
-              {`${callToAction?.label}`}
+              {`${label}`}
             </ResourceLink>
           </li>
         ) : null

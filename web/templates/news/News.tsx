@@ -90,7 +90,6 @@ const NewsPage = async ({
     </div>
   )
 
-
   return (
     <>
       <main className='pt-topbar'>
@@ -104,14 +103,15 @@ const NewsPage = async ({
             ratio='21:9'
             subTitle={publishedInformation}
             imageWrapperClassName='lg:px-layout-md'
-            figCaptionClassName='light px-layout-lg'
+            figCaptionClassName='light px-layout-sm lg:px-layout-lg'
           />
           {ingress && ingress.length > 0 && (
             <Blocks
+              group='article'
               variant='ingress'
               value={ingress}
               includeFootnotes
-              blockClassName='px-layout-lg'
+              className='my-6'
             />
           )}
           {content && content.length > 0 && (

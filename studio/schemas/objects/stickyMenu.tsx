@@ -1,8 +1,10 @@
-import { Rule } from 'sanity'
+import type { Rule } from 'sanity'
 import { defaultColors } from '../defaultColors'
 
 const chosenColors = ['White', 'Moss Green Light']
-const backgroundColors = defaultColors.filter((color) => chosenColors.includes(color.title))
+const backgroundColors = defaultColors.filter(color =>
+  chosenColors.includes(color.title),
+)
 
 export default {
   name: 'stickyMenu',
@@ -25,13 +27,7 @@ export default {
         },
         { type: 'downloadableFile', title: 'Downloadable file' },
       ],
-      validation: (Rule: Rule) =>
-        Rule.unique()
-          .max(2)
-          .custom((value: any) => {
-            if (value?.length == 2 && value[0]._type == value[1]._type) return 'Cannot have two links of same type'
-            return true
-          }),
+      validation: (Rule: Rule) => Rule.unique().max(2),
     },
     {
       title: 'Color',

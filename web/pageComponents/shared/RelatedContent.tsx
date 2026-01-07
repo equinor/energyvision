@@ -1,6 +1,6 @@
 import type { HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { ResourceLink } from '@/core/Link'
+import ResourceLink from '@/core/Link/ResourceLink'
 import { Typography } from '@/core/Typography'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import { getLocaleFromName } from '../../sanity/helpers/localization'
@@ -39,8 +39,10 @@ const RelatedContent = ({
                     hrefLang: getLocaleFromName(item.link?.lang),
                   })}
                   type={item.type}
-                  extension={item.extension}
-                  showExtensionIcon={true}
+                  file={{
+                    ...item?.file,
+                    label: item?.label,
+                  }}
                 >
                   {`${item.label}`}
                 </ResourceLink>

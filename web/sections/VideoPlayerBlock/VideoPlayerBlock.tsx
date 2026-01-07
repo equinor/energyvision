@@ -1,7 +1,6 @@
 'use client'
 import type { PortableTextBlock } from '@portabletext/types'
-import { twMerge } from 'tailwind-merge'
-import { ResourceLink } from '@/core/Link'
+import ResourceLink from '@/core/Link/ResourceLink'
 import type { AspectRatioVariants } from '@/core/VideoJsPlayer/Video'
 import {
   type VideoControlsType,
@@ -9,6 +8,7 @@ import {
   type VideoType,
 } from '@/core/VideoJsPlayer/VideoPlayer'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
+import { twMerge } from '@/lib/twMerge/twMerge'
 import Blocks from '@/portableText/Blocks'
 import { getLocaleFromName } from '@/sanity/helpers/localization'
 import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
@@ -65,14 +65,16 @@ const VideoPlayerBlock = ({
         <Blocks
           variant='ingress'
           value={ingress}
-          blockClassName={`${action && action.label && actionUrl ? 'mb-4' : 'mb-8'}`}
+          blockClassName={`${action?.label && actionUrl ? 'mb-4' : 'mb-8'}`}
         />
       )}
-      {action && action.label && actionUrl && (
+      {action?.label && actionUrl && (
         <ResourceLink
           href={actionUrl || ''}
-          extension={action?.extension}
-          showExtensionIcon={true}
+          file={{
+            ...action?.file,
+            label: action?.label,
+          }}
           variant='fit'
           hrefLang={
             action?.type === 'internalUrl'

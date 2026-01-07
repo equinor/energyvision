@@ -1,11 +1,16 @@
-import { Fragment } from 'react'
-import { Link, ResourceLink } from '@/core/Link'
-import { Menu } from '@/core/MenuAccordion'
-import type { MenuLinkData, SubMenuData, SubMenuGroupData } from '../../types/index'
-import FeaturedContent from './FeaturedContent'
 import { usePathname } from 'next/navigation'
-import Blocks from '../../portableText/Blocks'
+import { Fragment } from 'react'
+import Link from '@/core/Link/Link'
+import ResourceLink from '@/core/Link/ResourceLink'
+import { Menu } from '@/core/MenuAccordion'
 import { Typography } from '@/core/Typography'
+import Blocks from '../../portableText/Blocks'
+import type {
+  MenuLinkData,
+  SubMenuData,
+  SubMenuGroupData,
+} from '../../types/index'
+import FeaturedContent from './FeaturedContent'
 
 const { MenuItem: _MenuItem, MenuHeader, MenuContent } = Menu
 
@@ -16,7 +21,7 @@ function getLink(linkData: MenuLinkData) {
   if (!linkData) return 'something-wrong'
   const { link } = linkData
 
-  return (link && link.slug) || '/'
+  return link?.slug || '/'
 }
 
 type MenuGroupType = {
@@ -25,7 +30,14 @@ type MenuGroupType = {
 }
 
 export const MenuItem = ({ item, index }: MenuGroupType) => {
-  const { topLevelLink, groups, intro, featuredContent, featuredCTALabel, featuredIngress } = item
+  const {
+    topLevelLink,
+    groups,
+    intro,
+    featuredContent,
+    featuredCTALabel,
+    featuredIngress,
+  } = item
 
   const menuItemHref = getLink(topLevelLink)
 
@@ -42,35 +54,37 @@ export const MenuItem = ({ item, index }: MenuGroupType) => {
   return (
     <_MenuItem value={`${index}`}>
       <MenuHeader>{topLevelLink?.label}</MenuHeader>
-      <MenuContent className="">
-        <div className="px-4 max-xl:py-4 xl:mx-auto xl:px-layout-sm">
-          <div className="flex w-full flex-col gap-2 pb-6">
+      <MenuContent className=''>
+        <div className='px-4 max-xl:py-4 xl:mx-auto xl:px-layout-sm'>
+          <div className='flex w-full flex-col gap-2 pb-6'>
             {intro && <Blocks value={intro} />}
             <ResourceLink
               href={menuItemHref}
               className={`relative w-fit ${ariaCurrentStyling}`}
-              aria-current={pathname == topLevelLink?.link?.slug ? 'page' : 'false'}
+              aria-current={
+                pathname === topLevelLink?.link?.slug ? 'page' : 'false'
+              }
             >
               {topLevelLink?.label}
             </ResourceLink>
           </div>
-          <div className="grow py-4 xl:py-10">
+          <div className='grow py-4 xl:py-10'>
             {groups && groups.length > 0 && (
-              <div className="flex flex-col xl:grid xl:grid-flow-col xl:grid-rows-[min-content_min-content] xl:gap-x-20 xl:gap-y-2">
+              <div className='flex flex-col xl:grid xl:grid-flow-col xl:grid-rows-[min-content_min-content] xl:gap-x-20 xl:gap-y-2'>
                 {groups.map((groupItem: SubMenuGroupData) => {
                   return (
                     <Fragment key={groupItem.id}>
                       {groupItem.label && (
                         <Typography
-                          as="h3"
-                          variant="h5"
-                          className={`text-xs leading-earthy font-semibolder text-moss-green-95 uppercase max-xl:pb-2 xl:text-xs xl:font-semibold`}
+                          as='h3'
+                          variant='h5'
+                          className={`font-semibolder text-moss-green-95 text-xs uppercase leading-earthy max-xl:pb-2 xl:font-semibold xl:text-xs`}
                         >
                           {groupItem.label}
                         </Typography>
                       )}
                       <ul
-                        className="flex flex-col max-xl:pb-6 xl:h-full xl:flex-wrap"
+                        className='flex flex-col max-xl:pb-6 xl:h-full xl:flex-wrap'
                         aria-label={groupItem.label || topLevelLink?.label}
                       >
                         {groupItem.links?.map((link: MenuLinkData) => (
@@ -78,7 +92,9 @@ export const MenuItem = ({ item, index }: MenuGroupType) => {
                             <Link
                               className={`relative py-2 text-sm no-underline underline-offset-2 hover:underline ${ariaCurrentStyling} `}
                               href={getLink(link)}
-                              aria-current={pathname == link?.link?.slug ? 'page' : 'false'}
+                              aria-current={
+                                pathname === link?.link?.slug ? 'page' : 'false'
+                              }
                             >
                               {link.label}
                             </Link>
@@ -92,7 +108,7 @@ export const MenuItem = ({ item, index }: MenuGroupType) => {
             )}
           </div>
         </div>
-        <div className="px-4 pt-4 pb-12 xl:mx-auto xl:px-layout-sm xl:pt-6">
+        <div className='px-4 pt-4 pb-12 xl:mx-auto xl:px-layout-sm xl:pt-6'>
           {featuredContent && (
             <FeaturedContent
               featuredContent={featuredContent}

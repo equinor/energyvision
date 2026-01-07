@@ -8,10 +8,10 @@ import {
   useCallback,
   useMemo,
 } from 'react'
-import { Link } from '@/core/Link'
+import Link from '@/core/Link/Link'
 import { twMerge } from '@/lib/twMerge/twMerge'
-import { TransformableIcon } from '../../icons/TransformableIcon'
 import { magazineSlug } from '@/sitesConfig'
+import { TransformableIcon } from '../../icons/TransformableIcon'
 
 export type TagLink = {
   id: string
@@ -27,17 +27,19 @@ export type MagazineTagBarProps = {
   className?: string
 }
 
-const getPath = (pathname:string):string=>{
-  const paths = pathname.split("/")
-  const isIndexPage = paths[paths.length-1] === magazineSlug["en_GB"] || paths[paths.length-1] === magazineSlug["nb_NO"]
-  return isIndexPage ? pathname : paths.slice(0, paths.length-1).join("/")
+const getPath = (pathname: string): string => {
+  const paths = pathname.split('/')
+  const isIndexPage =
+    paths[paths.length - 1] === magazineSlug.en_GB ||
+    paths[paths.length - 1] === magazineSlug.nb_NO
+  return isIndexPage ? pathname : paths.slice(0, paths.length - 1).join('/')
 }
 
 const MagazineTagBar = forwardRef<HTMLDivElement, MagazineTagBarProps>(
   function MagazineTagBar({ tags = [], className = '' }, ref) {
     const pathname = usePathname()
     const searchParams = useSearchParams()
-    const parentSlug = getPath(pathname)|| ''
+    const parentSlug = getPath(pathname) || ''
     const query = searchParams?.get('tag') ?? null
     const isAllActive = !query || query === 'all'
 

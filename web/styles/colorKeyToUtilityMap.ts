@@ -14,7 +14,7 @@ export type TWColor = {
   text: string
 }
 
-export const colorKeyToUtilityMap = {
+export const colorKeyToUtilityMap: Record<string, TWColor> = {
   'blue-50': {
     backgroundName: 'Mid Blue',
     background: 'bg-blue-50',

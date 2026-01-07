@@ -1,7 +1,6 @@
 'use client'
 import type { PortableTextBlock } from '@portabletext/types'
 import { forwardRef } from 'react'
-import { twMerge } from 'tailwind-merge'
 import { Typography, type TypographyProps } from '@/core/Typography'
 import isEmpty from '../helpers/isEmpty'
 
@@ -24,7 +23,7 @@ export const Block = forwardRef<HTMLParagraphElement, BlockProps>(
         ref={ref}
         group={group}
         variant={variant}
-        className={twMerge(``, className)}
+        className={className}
       >
         {children}
       </Typography>

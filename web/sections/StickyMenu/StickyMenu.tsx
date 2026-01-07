@@ -2,35 +2,30 @@
 import { useTranslations } from 'next-intl'
 import { forwardRef, type HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { StickyMenuLink } from '@/core/Link'
+import type { DownloadableLinkProps } from '@/core/Link/DownloadableLink'
+import DownloadableLink from '@/core/Link/DownloadableLink'
+import Link from '@/core/Link/Link'
+import type { AnchorLinkReference, LinkType } from '@/types'
 import {
   type ColorKeyTokens,
   colorKeyToUtilityMap,
 } from '../../styles/colorKeyToUtilityMap'
-import type { StickyMenuData } from '../../types/index'
+
+export type StickyMenuLinkType = AnchorLinkReference | DownloadableLinkProps
 
 export type StickyMenuProps = {
-  stickyMenuData?: StickyMenuData
+  title: string
+  links: StickyMenuLinkType[]
+  background: keyof ColorKeyTokens
 } & HTMLAttributes<HTMLElement>
 
 export const StickyMenu = forwardRef<HTMLElement, StickyMenuProps>(
-  function StickyMenu({ stickyMenuData, className = '', ...rest }, ref) {
+  function StickyMenu({ background, title, links, className = '' }, ref) {
     const intl = useTranslations()
-    const anchorReference = stickyMenuData?.links.find(
-      it => it.type === 'anchorLinkReference',
-    )
-    const resourceLink = stickyMenuData?.links.find(
-      it => it.type === 'downloadableFile',
-    )
-
-    const stickyMenuKey =
-      (stickyMenuData?.background as keyof ColorKeyTokens) ||
-      ('white-100' as keyof ColorKeyTokens)
-    const twBg = colorKeyToUtilityMap[stickyMenuKey]?.background
+    const twBg = colorKeyToUtilityMap[background ?? 'white-100']?.background
 
     return (
       <nav
-        {...rest}
         ref={ref}
         data-sticky='true'
         aria-label={intl('local')}
@@ -42,23 +37,29 @@ export const StickyMenu = forwardRef<HTMLElement, StickyMenuProps>(
         <div
           className={`mx-auto flex flex-col gap-y-3 px-layout-sm lg:flex-row lg:justify-between`}
         >
-          <div className={`text-start font-medium text-base`}>
-            {stickyMenuData?.title}
-          </div>
+          <div className={`text-start font-medium text-base`}>{title}</div>
           <div className='flex items-center gap-10'>
-            {anchorReference && (
-              <StickyMenuLink
-                className=''
-                href={`#${anchorReference?.anchorReference}`}
-              >
-                {anchorReference.title}
-              </StickyMenuLink>
-            )}
-            {resourceLink && (
-              <StickyMenuLink {...resourceLink} type='downloadableFile'>
-                {resourceLink?.label}
-              </StickyMenuLink>
-            )}
+            {links?.map(link => {
+              return link?.type === 'anchorLinkReference' ? (
+                <Link
+                  key={link?.id}
+                  href={`#${link?.anchorReference}`}
+                  className={`text-sm`}
+                >
+                  {title}
+                </Link>
+              ) : (
+                <DownloadableLink
+                  key={link?.id}
+                  file={{
+                    ...link?.file,
+                    label: link?.label,
+                  }}
+                  linkType={link?.type as LinkType}
+                  type='stickyMenu'
+                />
+              )
+            })}
           </div>
         </div>
       </nav>

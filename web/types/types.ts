@@ -15,7 +15,6 @@ import type {
   ImageWithAlt,
   LinkData,
   LinkType,
-  StickyMenuLinkType,
 } from './index'
 
 export type IntlData = {
@@ -397,31 +396,10 @@ export type PodcastTeaserData = {
   designOptions: DesignOptions
 }
 
-export type AnchorLinkReference = {
-  id: string
-  type: 'anchorLinkReference'
-  title?: string
-  anchorReference?: string
-}
-
-export type AnchorLinkListData = {
-  id: string
-  type: 'anchorLinkList'
-  title?: string
-  columns?: string
-  anchorList?: AnchorLinkReference[]
-}
 export type ImageForTextData = {
   type: 'imageForText'
   id: string
   image: ImageWithAlt
   content?: PortableTextBlock[]
   aspectRatio?: '16:9' | 'fullWidth'
-}
-
-export type StickyMenuData = {
-  type: 'stickyMenu'
-  title: string
-  links: StickyMenuLinkType[]
-  background: string
 }

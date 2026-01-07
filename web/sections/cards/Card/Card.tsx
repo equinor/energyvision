@@ -1,7 +1,6 @@
 import { forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { BaseLink, type BaseLinkProps } from '@/core/Link'
-import { colorKeyToUtilityMap } from '@/styles/colorKeyToUtilityMap'
+import BaseLink, { type BaseLinkProps } from '@/core/Link/BaseLink'
 import { Image, type ImageRatioKeys } from '../../../core/Image/Image'
 import type { ImageWithAlt } from '../../../types/index'
 

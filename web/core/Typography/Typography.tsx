@@ -7,7 +7,7 @@ import {
   forwardRef,
   type HTMLAttributes,
 } from 'react'
-import { twMerge } from 'tailwind-merge'
+import { twMerge } from '@/lib/twMerge/twMerge'
 import {
   quickVariants,
   type TypographyGroups,
@@ -113,7 +113,8 @@ export const Typography: OverridableComponent<TypographyProps, HTMLElement> =
         {...rest}
         ref={ref}
         className={twMerge(
-          'wrap-break-word max-w-text text-pretty text-slate-80 dark:text-white-100',
+          'wrap-break-word text-pretty text-slate-80 dark:text-white-100',
+          group !== 'article' && 'max-w-text',
           typography,
           className,
         )}
