@@ -51,7 +51,7 @@ export const CardContent = forwardRef<HTMLDivElement, CardContentProps>(
           className,
         )}
       >
-        <div className='max-w-prose grow'>{children}</div>
+        <div className='max-w-prose grow max-h-full overflow-hidden'>{children}</div>
         {!noArrow && (
           <div
             className={`flex items-end justify-end self-end p-1 ${variant === 'compact' ? 'max-xl:hidden' : ''}`}
