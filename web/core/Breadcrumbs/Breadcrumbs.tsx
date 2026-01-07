@@ -7,6 +7,7 @@ import type { ColorKeys } from '@/styles/colorKeyToUtilityMap'
 import { BaseLink } from '../Link'
 import { BreadcrumbsList } from './BreadcrumbList'
 import { BreadcrumbsListItem } from './BreadcrumbListItem'
+import { domain } from '@/languageConfig'
 
 export type Breadcrumb = {
   label: string
@@ -27,7 +28,7 @@ const buildJsonLdElements = (
   return crumbs.map((item, index) => ({
     position: index + 1,
     name: item.label,
-    item: `${pathname}`,
+    item: `${domain}${item.slug}`,
   }))
 }
 
