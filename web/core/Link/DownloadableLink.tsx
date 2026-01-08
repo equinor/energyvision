@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl'
 import { forwardRef, useCallback, useState } from 'react'
 //BsFiletypeDoc, BsFiletypeMov,
 import {
@@ -8,7 +9,6 @@ import {
   BsFiletypeXlsx,
   BsFileZip,
 } from 'react-icons/bs'
-import { useIntl } from 'react-intl'
 import { Typography } from '@/core/Typography'
 import { twMerge } from '@/lib/twMerge/twMerge'
 import { Modal } from '@/sections/Modal'
@@ -52,7 +52,7 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(
     const fileUrl = url
       ? `${url.replace('cdn.sanity.io', 'cdn.equinor.com')}?${originalFilename.replace(/ /g, '-')}`
       : null
-    const intl = useIntl()
+    const intl = useTranslations()
     const [showModal, setShowModal] = useState(false)
     const [isFriendlyChallengeDone, setIsFriendlyChallengeDone] =
       useState(false)
@@ -209,18 +209,11 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(
             title='Request file download'
           >
             <Typography as='h2' variant='h5' className='mb-4'>
-              {intl.formatMessage({
-                id: 'request_download_action_prefix',
-                defaultMessage: 'Request',
-              })}
+              {intl('request_download_action_prefix')}
               {` ${assetLabel}`}
             </Typography>
             <Typography group='plain' variant='div' className='mb-10'>
-              {intl.formatMessage({
-                id: 'download_modal_ingress',
-                defaultMessage:
-                  'Please confirm that you are human below and the link will appear.',
-              })}
+              {intl('download_modal_ingress')}
             </Typography>
             <FriendlyCaptcha
               startMode='auto'
@@ -239,11 +232,7 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(
                 role='alert'
                 className='py-6 text-base text-slate-80'
               >
-                {intl.formatMessage({
-                  id: 'not_human_message',
-                  defaultMessage:
-                    'We are sorry, but anti-robot protection failed and we cannot proceed',
-                })}
+                {intl('not_human_message')}
               </Typography>
             )}
             {isFriendlyChallengeDone && !notHuman && (

@@ -12,7 +12,7 @@ import {
   InstantSearchNext,
   type InstantSearchNextRouting,
 } from 'react-instantsearch-nextjs'
-import { ResourceLink } from '@/core/Link'
+import { ResourceLink } from '@/core/Link/ResourceLink'
 import { List } from '@/core/List'
 import { Typography } from '@/core/Typography'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
