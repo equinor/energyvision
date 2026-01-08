@@ -8,17 +8,12 @@ import {
   useState,
 } from 'react'
 import type { LocaleSlug } from '@/sanity/pages/utils'
-
-import type {
-  FooterColumns,
-  MenuData,
-  SimpleMenuData,
-  StickyMenuData,
-} from '@/types'
+import type { FooterColumns, MenuData, SimpleMenuData } from '@/types'
+import type { StickyMenuProps } from '../sections/StickyMenu/StickyMenu'
 
 export type HeaderData = {
   slugs: LocaleSlug[]
-  stickyMenuData?: StickyMenuData
+  stickyMenuData?: StickyMenuProps
 }
 export interface PageContextType {
   headerData: HeaderData | undefined
