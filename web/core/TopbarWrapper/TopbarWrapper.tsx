@@ -104,7 +104,7 @@ export const TopbarWrapper = forwardRef<HTMLDivElement, TopbarWrapperProps>(
         </nav>
         {showSticky && (
           <StickyMenu
-            stickyMenuData={stickyMenuData}
+            {...stickyMenuData}
             className={`${isVisible ? 'top-topbar pt-2' : 'top-0'}`}
           />
         )}
