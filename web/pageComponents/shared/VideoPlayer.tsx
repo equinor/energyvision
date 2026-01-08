@@ -91,9 +91,9 @@ export const VideoComponentWithCaption = ({
   return (
     <figure
       className={twMerge(
-        `${useFillMode ? 'h-full w-full' : getHeightWidth(designOptions.aspectRatio, designOptions.height)} 
-        [&video::-webkit-media-controls-fullscreen-button]:hidden relative mx-auto my-0
-        `,
+        `${
+          useFillMode ? 'h-full w-full' : getHeightWidth(designOptions.aspectRatio, designOptions.height)
+        } relative mx-auto my-0 [&video::-webkit-media-controls-fullscreen-button]:hidden`,
         className,
       )}
     >
@@ -136,9 +136,9 @@ export const VideoJsComponent = ({
     <figure
       className={twMerge(
         `
-        ${useFillMode ? 'h-full w-full' : getHeightWidth(designOptions.aspectRatio, designOptions.height)} 
-        [&video::-webkit-media-controls-fullscreen-button]:hidden relative mx-auto my-0
-        `,
+        ${
+          useFillMode ? 'h-full w-full' : getHeightWidth(designOptions.aspectRatio, designOptions.height)
+        } relative mx-auto my-0 [&video::-webkit-media-controls-fullscreen-button]:hidden`,
         className,
       )}
     >

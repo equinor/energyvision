@@ -1,10 +1,10 @@
-import { useEffect, HTMLProps, useState, useCallback } from 'react'
+import { type HTMLProps, useCallback, useEffect, useState } from 'react'
 import videojs from 'video.js'
-import Player from 'video.js/dist/types/player'
 //import 'video.js/dist/video-js.css'
-import MediaError from 'video.js/dist/types/media-error'
+import type MediaError from 'video.js/dist/types/media-error'
+import type Player from 'video.js/dist/types/player'
+import { Pause, Play } from '../../icons'
 import useVideojsAnalytics from './useVideojsAnalytics'
-import { Play, Pause } from '../../icons'
 
 type VideoJSProps = Omit<HTMLProps<HTMLVideoElement>, 'src'> & {
   src: string
@@ -121,36 +121,14 @@ export const VideoJS: React.FC<VideoJSProps> = ({
       ></video>
       {!playButton && !controls && autoPlay && (
         <button
-          className="absolute 
-          bottom-0 
-          right-0 
-          m-auto 
-          size-[48px] 
-          flex 
-          justify-center 
-          items-center
-          z-10 
-          border-none 
-          cursor-pointer 
-          focus-none
-          focus-visible:envis-outline
-          "
+          className="focus-none focus-visible:envis-outline absolute right-0 bottom-0 z-10 m-auto flex size-[48px] cursor-pointer items-center justify-center border-none"
           onClick={handlePlayButton}
           aria-label={isPlaying ? 'Pause' : 'Play'}
         >
           <div
-            className={`
-          relative
-          flex 
-          justify-center
-          items-center
-          rounded-full 
-          size-10 
-          bg-black-100/60 
-          hover:bg-black-100 
-          `}
+            className={`relative flex size-10 items-center justify-center rounded-full bg-black-100/60 hover:bg-black-100`}
           >
-            <div className=" text-white-100">{isPlaying ? <Pause /> : <Play />}</div>
+            <div className="text-white-100">{isPlaying ? <Pause /> : <Play />}</div>
           </div>
         </button>
       )}
