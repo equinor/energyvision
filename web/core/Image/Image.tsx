@@ -162,7 +162,7 @@ type ImageProps = Omit<NextImageProps, 'src' | 'alt' | 'sizes'> & {
    */
   aspectRatio?: ImageRatioKeys
   alt?: string
-  useFitMin?: boolean
+  useFitMax?: boolean
   /** overrides for relative wrapper for image */
   className?: string
   /** overrides for the figure container when caption/attribution */
@@ -175,6 +175,7 @@ type ImageProps = Omit<NextImageProps, 'src' | 'alt' | 'sizes'> & {
   figCaptionBackground?: string
   figCaptionClassName?: string
   keepRatioOnMobile?: boolean
+  hasImageZoom?: boolean
 }
 
 //Double check crop and hotspot information comes to sanity fetch image
@@ -188,13 +189,14 @@ export const Image = ({
   className = '',
   imageClassName = '',
   figureClassName = '',
-  useFitMin = false,
+  useFitMax = false,
   loading,
   caption,
   attribution,
   figCaptionBackground,
   figCaptionClassName = '',
   keepRatioOnMobile = false,
+  hasImageZoom = false,
 }: ImageProps) => {
   const isLargerDisplays = useMediaQuery(`(min-width: 800px)`)
   const twAspectRatioUtility = useMemo(() => {
@@ -212,10 +214,11 @@ export const Image = ({
     image,
     grid,
     aspectRatio: mapSanityImageRatio(aspectRatio),
-    useFitMin,
+    useFitMax,
     customWidth,
     customHeight,
     isLargerDisplays,
+    keepRatioOnMobile,
   })
 
   const getAltText = () => {
@@ -224,6 +227,10 @@ export const Image = ({
     }
     return ''
   }
+
+  const imageSizes = hasImageZoom
+    ? getSizes('sm', true)
+    : getSizes(grid, isLargerDisplays)
 
   const nextImage = url ? (
     <NextImage
@@ -234,7 +241,7 @@ export const Image = ({
         : { width, height })}
       src={url}
       loading={loading}
-      sizes={getSizes(grid, isLargerDisplays)}
+      sizes={imageSizes}
       alt={getAltText()}
       className={twMerge(
         `${fill ? 'object-cover' : 'flex h-full w-full'} ${twAspectRatioUtility}`,

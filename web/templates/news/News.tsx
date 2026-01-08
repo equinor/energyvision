@@ -68,25 +68,29 @@ const NewsPage = async ({
   }))
 
   const publishedInformation = (
-    <div className='flex items-center gap-2 px-layout-md pb-12 text-base dark:text-white-100'>
-      <TransformableIcon iconData={calendar} className='-mt-1' />
-      <FormattedDateTime datetime={publishDateTime} />
-      {
-        // publishDateTime + 5 minutes
-        isDateAfter(
-          modifiedDate,
-          new Date(
-            new Date(publishDateTime).getTime() + 5 * 60000,
-          ).toISOString(),
-        ) && (
-          <>
-            <span>|</span>
-            {intl('last_modified') ?? 'Last modified'}
-            {` `}
-            <FormattedDateTime datetime={modifiedDate} />
-          </>
-        )
-      }
+    <div className='grid grid-cols-[min-content_1fr] items-start gap-2 px-layout-md pb-12 text-base md:flex md:items-center dark:text-white-100'>
+      <TransformableIcon iconData={calendar} className='md:-mt-1' />
+      <div className='flex flex-col items-start gap-2 md:flex-row md:items-center'>
+        <FormattedDateTime datetime={publishDateTime} />
+        <div className='flex md:items-center'>
+          {
+            // publishDateTime + 5 minutes
+            isDateAfter(
+              modifiedDate,
+              new Date(
+                new Date(publishDateTime).getTime() + 5 * 60000,
+              ).toISOString(),
+            ) && (
+              <>
+                <div className='mr-2 hidden md:flex'>|</div>
+                {intl('last_modified') ?? 'Last modified'}
+                <span className='w-1' />
+                <FormattedDateTime datetime={modifiedDate} />
+              </>
+            )
+          }
+        </div>
+      </div>
     </div>
   )
 

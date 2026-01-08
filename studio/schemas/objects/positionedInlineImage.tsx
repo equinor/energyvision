@@ -1,17 +1,16 @@
 /* eslint-disable import/no-unresolved */
+
+import { TbFloatCenter, TbFloatLeft, TbFloatRight } from 'react-icons/tb'
 import type { Rule, ValidationContext } from 'sanity'
-import {
-  InlineImageFullWidth,
-  InlineImageLeftAlign,
-  InlineImageRightAlign,
-} from '../../icons'
+import { InlineImageFullWidth } from '../../icons'
 import { RadioIconSelector } from '../components'
 import type { ImageWithAlt } from './imageWithAlt'
 
 const imageAlignmentOptions = [
   { value: 'full', icon: InlineImageFullWidth },
-  { value: 'left', icon: InlineImageLeftAlign },
-  { value: 'right', icon: InlineImageRightAlign },
+  { value: 'left', icon: <TbFloatLeft size={33} /> },
+  { value: 'right', icon: <TbFloatRight size={33} /> },
+  { value: 'center', icon: <TbFloatCenter size={33} /> },
 ]
 
 export type PositionedInlineImage = {

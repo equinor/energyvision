@@ -5,7 +5,7 @@ import { FigureCaption } from '@/core/FigureCaption/FigureCaption'
 import { type GridType, Image, type ImageRatioKeys } from '@/core/Image/Image'
 import type { ImageWithAlt } from '../../../types/index'
 
-type Layout = 'full' | 'left' | 'right'
+type Layout = 'full' | 'left' | 'right' | 'center'
 
 type FigureNode = {
   _key: string
@@ -44,7 +44,7 @@ export const FigureWithLayout = (block: BlockProps) => {
     imageRatio = '3:2'
   }
   if (imageOrientation === 'portrait') {
-    imageRatio = '4:5'
+    imageRatio = 'original'
   }
 
   const layoutVariantClassName = {
@@ -52,6 +52,7 @@ export const FigureWithLayout = (block: BlockProps) => {
     //md:ps-8
     right: `${imageOrientation !== 'landscape' ? 'md:w-[35vw]' : 'md:w-[44vw]'} md:pe-layout-sm md:float-end md:ps-8`,
     left: `${imageOrientation !== 'landscape' ? 'md:w-[35vw]' : 'md:w-[44vw]'} md:ps-layout-sm md:float-start md:pe-8`,
+    center: `w-full md:ps-layout-lg md:pe-layout-lg md:grid md:grid-cols-[45%_40%] items-center md:gap-4`,
   }
   let imageGrid = 'xs' as GridType
   if (layout === 'full') {
@@ -65,7 +66,11 @@ export const FigureWithLayout = (block: BlockProps) => {
       image={image}
       grid={imageGrid}
       aspectRatio={imageRatio}
-      keepRatioOnMobile={true}
+      hasImageZoom={enableImageZoom}
+      {...(imageOrientation === 'portrait' && {
+        keepRatioOnMobile: true,
+        useFitMax: true,
+      })}
     />
   )
 
@@ -75,7 +80,7 @@ export const FigureWithLayout = (block: BlockProps) => {
 
   return enableImageZoom ? (
     <figure className={figureClassName}>
-      <Zoom zoomMargin={45}>{imageElement}</Zoom>
+      <Zoom zoomMargin={25}>{imageElement}</Zoom>
       {(caption || attribution) && (
         <FigureCaption>
           {caption && <div>{caption}</div>}

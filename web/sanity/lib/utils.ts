@@ -43,12 +43,13 @@ export type ResolveImageProps = {
    * @default 16:9
    */
   aspectRatio?: number
-  useFitMin?: boolean
+  useFitMax?: boolean
   /* Custom width */
   customWidth?: number | undefined
   /* Custom height */
   customHeight?: number | undefined
   keepRatioOnMobile?: boolean
+  useNativeImageRatio?: boolean
 }
 /**
  * Single point of entry to fetch images from Sanity for pages and components,
@@ -60,22 +61,23 @@ export const resolveImage = (props: ResolveImageProps) => {
   const {
     image,
     aspectRatio = 1.77,
-    useFitMin,
+    useFitMax,
     customWidth,
     customHeight,
     grid = 'lg',
     isLargerDisplays = false,
     keepRatioOnMobile = false,
   } = props
-
-  // 4:3 for mobile images and serverside. Default 16:9 on larger
-  const ratio = keepRatioOnMobile
-    ? aspectRatio
-    : isLargerDisplays
-      ? aspectRatio
-      : 1.33
-
+  console.log('resolveImage aspectRatio', aspectRatio)
   const { width: imageWidth, height: imageHeight } = getImageDimensions(image)
+  // 4:3 for mobile images and serverside. Default 16:9 on larger
+  let ratio = isLargerDisplays ? aspectRatio : 1.33
+  if (keepRatioOnMobile) {
+    ratio = aspectRatio
+  }
+  if (aspectRatio <= 0) {
+    ratio = imageWidth / imageHeight
+  }
 
   let width = customWidth
     ? customWidth
@@ -93,8 +95,8 @@ export const resolveImage = (props: ResolveImageProps) => {
     width = Math.round(aspectRatio * customHeight)
   }
   let url = null
-  if (useFitMin) {
-    url = urlForImage(image)?.width(width).height(height).fit('min')
+  if (useFitMax) {
+    url = urlForImage(image)?.width(width).height(height).fit('max').url()
   }
   url = urlForImage(image)?.width(width).height(height).fit('crop').url()
 
