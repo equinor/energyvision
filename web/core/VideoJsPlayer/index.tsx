@@ -33,12 +33,11 @@ export const VideoJS: React.FC<VideoJSProps> = ({
   useFillMode = false,
   poster,
   allowFullScreen,
-  ...rest
 }) => {
   /*   const [isLoading, setIsLoading] = useState<boolean>(true) */
   const [player, setPlayer] = useState<Player | null>(null)
   const [isPlaying, setIsPlaying] = useState(autoPlay)
-
+  console.log('player', player)
   const handlePlayButton = useCallback(() => {
     if (player) {
       if (player.paused()) {
@@ -74,10 +73,9 @@ export const VideoJS: React.FC<VideoJSProps> = ({
             useDevicePixelRatio: true,
             limitRenditionByPlayerDimensions: false,
           },
-          ...rest,
         },
         () => {
-          onReady && onReady(player)
+          onReady?.(player)
         },
       )
 
@@ -86,12 +84,24 @@ export const VideoJS: React.FC<VideoJSProps> = ({
       })
       return player
     },
-    [allowFullScreen, aspectRatio, autoPlay, controls, muted, onReady, playButton, playsInline, rest, src, useFillMode],
+    [
+      allowFullScreen,
+      aspectRatio,
+      autoPlay,
+      controls,
+      muted,
+      onReady,
+      playButton,
+      playsInline,
+      src,
+      useFillMode,
+      loadingSpinner,
+    ],
   )
 
   const measuredRef = useCallback(
     (node: any) => {
-      if (node !== null) {
+      if (node !== null && typeof window !== 'undefined') {
         setPlayer(getPlayer(node))
       }
     },
@@ -99,6 +109,7 @@ export const VideoJS: React.FC<VideoJSProps> = ({
   )
 
   useEffect(() => {
+    console.log('use effect videoplayer')
     return () => {
       if (player && !player.isDisposed()) {
         player.dispose()

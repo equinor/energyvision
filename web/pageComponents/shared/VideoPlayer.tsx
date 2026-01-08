@@ -88,6 +88,8 @@ export const VideoComponentWithCaption = ({
   captionClassName = '',
 }: VideoComponentWithCaptionType) => {
   const { width: w, height: h } = getThumbnailRatio(designOptions.aspectRatio)
+  console.log('video', video)
+
   return (
     <figure
       className={twMerge(
