@@ -55,10 +55,10 @@ export const DefaultHero = ({
     <div className={twMerge(className, `relative h-full w-full`)}>
       {background && (
         <div
-          className={`-z-1 absolute inset-0 aspect-video h-[48dvh] w-full ${background}`}
+          className={`-z-1 absolute inset-0 aspect-video h-[60dvh] w-full ${background}`}
         />
       )}
-      <div className={twMerge(`pt-20`, px, titleClassName)}>
+      <div className={twMerge(`pt-10 lg:pt-20`, px, titleClassName)}>
         {title &&
           (isPlainTitle ? (
             <Typography variant='h1' id='mainTitle'>
