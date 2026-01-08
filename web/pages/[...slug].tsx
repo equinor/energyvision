@@ -1,20 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { GetStaticProps, GetStaticPaths } from 'next'
+import type { GetStaticPaths, GetStaticProps } from 'next'
 import type { AppProps } from 'next/app'
-import { useRouter } from 'next/router'
-import ErrorPage from 'next/error'
 import dynamic from 'next/dynamic'
-import { getQueryFromSlug } from '../lib/queryFromSlug'
-import { Layout } from '../sections/Layout/Layout'
-import { defaultLanguage } from '../languages'
-import Header from '../sections/Header/Header'
+import ErrorPage from 'next/error'
+import { useRouter } from 'next/router'
+import { useContext, useEffect } from 'react'
 import { FormattedMessage } from 'react-intl'
 import getIntl from '../common/helpers/getIntl'
-import { getStaticBuildRoutePaths } from '../common/helpers/getPaths'
 import getPageSlugs from '../common/helpers/getPageSlugs'
-import { getComponentsData } from '../lib/fetchData'
-import { useContext, useEffect } from 'react'
+import { getStaticBuildRoutePaths } from '../common/helpers/getPaths'
+import { defaultLanguage } from '../languages'
 import { PreviewContext } from '../lib/contexts/PreviewContext'
+import { getComponentsData } from '../lib/fetchData'
+import { getQueryFromSlug } from '../lib/queryFromSlug'
+import Header from '../sections/Header/Header'
+import { Layout } from '../sections/Layout/Layout'
 
 const MagazinePage = dynamic(() => import('../templates/magazine/MagazinePage'))
 const LandingPage = dynamic(() => import('../pageComponents/pageTemplates/LandingPage'))
@@ -79,7 +79,7 @@ Page.getLayout = (page: AppProps) => {
   If this is a problem, we need to see if we are able to find another solution  */
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
+  // @ts-expect-error
   const { props } = page
   const { data, preview } = props
 

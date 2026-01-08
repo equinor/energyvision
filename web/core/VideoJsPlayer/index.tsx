@@ -1,3 +1,4 @@
+'use client'
 import { type HTMLProps, useCallback, useEffect, useState } from 'react'
 import videojs from 'video.js'
 //import 'video.js/dist/video-js.css'
@@ -22,6 +23,7 @@ export const VideoJS: React.FC<VideoJSProps> = ({
   playButton,
   controls,
   autoPlay,
+  loop = false,
   title,
   src,
   muted,
@@ -39,6 +41,7 @@ export const VideoJS: React.FC<VideoJSProps> = ({
   const [isPlaying, setIsPlaying] = useState(autoPlay)
   console.log('player', player)
   const handlePlayButton = useCallback(() => {
+    console.log('handlePlayButton')
     if (player) {
       if (player.paused()) {
         player.play()
@@ -52,15 +55,18 @@ export const VideoJS: React.FC<VideoJSProps> = ({
 
   const getPlayer = useCallback(
     (node: Element) => {
+      console.log('get player')
+      console.log('video src', src)
+      console.log('video autoPlay', autoPlay)
       const player = videojs(
         node,
         {
-          sources: [{ src, type: 'application/x-mpegURL' }],
           muted: !!muted,
           playsinline: !!playsInline,
           autoplay: !!autoPlay,
           preload: autoPlay ? 'auto' : 'none',
           controls: controls ?? !autoPlay,
+          loop: loop,
           responsive: true,
           ...(!useFillMode && { aspectRatio }),
           ...(useFillMode && { fill: true }),
@@ -73,11 +79,27 @@ export const VideoJS: React.FC<VideoJSProps> = ({
             useDevicePixelRatio: true,
             limitRenditionByPlayerDimensions: false,
           },
+          html5: {
+            useDevicePixelRatio: true,
+            limitRenditionByPlayerDimensions: false,
+            hls: {
+              useDevicePixelRatio: true,
+              limitRenditionByPlayerDimensions: false,
+            },
+          },
         },
         () => {
-          onReady?.(player)
+          videojs.log('player is ready')
+          if (onReady) {
+            onReady(player)
+          }
         },
       )
+      /*       if (typeof window !== 'undefined') {
+        player.src({
+          src: src,
+        })
+      } */
 
       player.on('error', (error: MediaError) => {
         console.log(error.message)
@@ -96,12 +118,15 @@ export const VideoJS: React.FC<VideoJSProps> = ({
       src,
       useFillMode,
       loadingSpinner,
+      loop,
     ],
   )
 
   const measuredRef = useCallback(
     (node: any) => {
-      if (node !== null && typeof window !== 'undefined') {
+      console.log('node', node)
+      if (node !== null && (!window || typeof window !== 'undefined')) {
+        console.log('set and get video player')
         setPlayer(getPlayer(node))
       }
     },
@@ -109,21 +134,30 @@ export const VideoJS: React.FC<VideoJSProps> = ({
   )
 
   useEffect(() => {
-    console.log('use effect videoplayer')
+    if (player) {
+      console.log('use effect vplayer', player)
+      console.log('use effect window', window)
+      player.src({
+        src: src,
+        type: 'application/x-mpegURL',
+      })
+    }
     return () => {
+      console.log('use effect unmount')
+
       if (player && !player.isDisposed()) {
         player.dispose()
         setPlayer(null)
       }
     }
-  }, [player])
+  }, [player, src])
 
   useVideojsAnalytics(player, src, title, autoPlay)
 
   return (
     <>
-      {/* eslint-disable-next-line */}
-      <video
+      <video src={src} loop muted playsInline autoPlay className="w-1/2 h-1/2" />
+      {/*       <video
         ref={measuredRef}
         className={`video-js vjs-layout-large vjs-fill vjs-envis ${useBrandTheme ? 'vjs-envis-brand' : ''} ${
           playButton ? 'vjs-envis-hasPlayButton' : ''
@@ -142,7 +176,7 @@ export const VideoJS: React.FC<VideoJSProps> = ({
             <div className="text-white-100">{isPlaying ? <Pause /> : <Play />}</div>
           </div>
         </button>
-      )}
+      )} */}
     </>
   )
 }

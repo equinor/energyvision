@@ -79,6 +79,9 @@ dependencies:
   framer-motion:
     specifier: ^11.2.12
     version: 11.2.12(react-dom@18.3.1)(react@18.3.1)
+  hls.js:
+    specifier: ^1.6.15
+    version: 1.6.15
   html-entities:
     specifier: ^2.3.2
     version: 2.3.2
@@ -7717,6 +7720,10 @@ packages:
     resolution: {integrity: sha512-ZqaKwjjrAYUYfLG+htGaIIZ4nioX2L70ZUMIFysS3xvBsSG4x/n1V6TXV3N8ZYNuFGlDirFg32T7B6WOUPDYcQ==}
     dependencies:
       '@babel/runtime': 7.25.6
+    dev: false
+
+  /hls.js@1.6.15:
+    resolution: {integrity: sha512-E3a5VwgXimGHwpRGV+WxRTKeSp2DW5DI5MWv34ulL3t5UNmyJWCQ1KmLEHbYzcfThfXG8amBL+fCYPneGHC4VA==}
     dev: false
 
   /hogan.js@3.0.2:
