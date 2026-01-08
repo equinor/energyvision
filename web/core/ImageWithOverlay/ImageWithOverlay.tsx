@@ -1,7 +1,7 @@
 'use client'
 import { Typography } from '@equinor/eds-core-react'
 import type { PortableTextBlock } from '@portabletext/types'
-import type { SanityImageObject } from '@sanity/image-url/lib/types/types'
+import type { SanityImageObject } from '@sanity/image-url'
 import { useTranslations } from 'next-intl'
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { forwardRef, type HTMLAttributes, useId, useState } from 'react'

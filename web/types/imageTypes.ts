@@ -1,6 +1,10 @@
-import { ContentAlignmentTypes, DesignOptions, LinkData } from './index'
-import { SanityImageCrop, SanityImageHotspot, SanityImageObject } from '@sanity/image-url/lib/types/types'
-import { PortableTextBlock } from '@portabletext/types'
+import type { PortableTextBlock } from '@portabletext/types'
+import type {
+  SanityImageCrop,
+  SanityImageHotspot,
+  SanityImageObject,
+} from '@sanity/image-url'
+import type { ContentAlignmentTypes, DesignOptions, LinkData } from './index'
 
 export type CaptionData = {
   attribution?: string

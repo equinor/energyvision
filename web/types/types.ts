@@ -1,5 +1,5 @@
 import type { PortableTextBlock } from '@portabletext/types'
-import type { SanityImageObject } from '@sanity/image-url/lib/types/types'
+import type { SanityImageObject } from '@sanity/image-url'
 import type { FullWidthVideoProps } from '@/sections/FullWidthVideo/FullWidthVideo'
 import type { StockValuesProps } from '@/sections/StockValues/StockValues'
 import type { TeaserData } from '@/sections/teasers/Teaser/Teaser'
