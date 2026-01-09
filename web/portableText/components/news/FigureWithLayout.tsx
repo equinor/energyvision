@@ -48,11 +48,11 @@ export const FigureWithLayout = (block: BlockProps) => {
   }
 
   const layoutVariantClassName = {
-    full: 'md:ps-layout-sm md:pe-layout-sm',
+    full: 'md:ps-layout-md md:pe-layout-md',
     //md:ps-8
-    right: `${imageOrientation !== 'landscape' ? 'md:w-[35vw]' : 'md:w-[44vw]'} md:pe-layout-sm md:float-end md:ps-8`,
-    left: `${imageOrientation !== 'landscape' ? 'md:w-[35vw]' : 'md:w-[44vw]'} md:ps-layout-sm md:float-start md:pe-8`,
-    center: `w-full md:ps-layout-lg md:pe-layout-lg md:grid md:grid-cols-[45%_40%] items-center md:gap-4`,
+    right: `${imageOrientation !== 'landscape' ? 'md:w-[38vw]' : 'md:w-[46vw]'} md:pe-layout-md md:float-end md:ps-8`,
+    left: `${imageOrientation !== 'landscape' ? 'md:w-[38vw]' : 'md:w-[46vw]'} md:ps-layout-md md:float-start md:pe-8`,
+    center: `w-full md:ps-layout-lg md:pe-layout-lg md:grid md:grid-cols-[45%_40%] items-start md:gap-4`,
   }
   let imageGrid = 'xs' as GridType
   if (layout === 'full') {
