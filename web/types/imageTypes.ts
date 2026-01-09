@@ -20,6 +20,7 @@ export type ImageWithAlt = {
   _type: 'imageWithAlt'
   extension?: string
   useLight?: boolean
+  backgroundGradient?: string
 }
 
 export type ImageWithCaptionData = {
