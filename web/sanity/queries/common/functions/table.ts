@@ -1,3 +1,4 @@
+import markDefs from "../blockEditorMarks"
 
 const tableFunction = /* groq */ `
 fn table::getTablefields($table) = $table{
@@ -5,11 +6,11 @@ fn table::getTablefields($table) = $table{
   "id": _key,
   title[]{
     ...,
-    "markDefs": portableText::markDefs(@),
+    ${markDefs}
   },
   ingress[]{
     ...,
-    "markDefs": portableText::markDefs(@),
+   ${markDefs}
   },
   tableCaption,
   tableHeaders[]{
@@ -17,7 +18,7 @@ fn table::getTablefields($table) = $table{
     formatAsDate,
     headerCell[]{
       ...,
-      "markDefs": portableText::markDefs(@),
+      ${markDefs},
     }
   },
   rows[]{
@@ -27,7 +28,7 @@ fn table::getTablefields($table) = $table{
       "id": _key,
       content[]{
         ...,
-        "markDefs": portableText::markDefs(@),
+        ${markDefs},
       },
     },
   },
