@@ -1,6 +1,5 @@
 export const markDefsFunction = /* groq */ `
-fn portableText::markDefs($param) = $param{
- ...coalesce(markDefs[]{
+fn portableText::markDefs($param) = $param[]{
   ...,
   _type == "reference_block" || _type == "homePageLink_block" || _type == "referenceToOtherLanguage_block" => {"internalLink" :links::getLinkFields(link[0]){ ..., "id":link.slug, "lang": link.lang},"_type":"internalLink"},
     _type == "attachment" => {
@@ -12,6 +11,5 @@ fn portableText::markDefs($param) = $param{
           "fileName": reference->asset.asset->originalFilename
         }
     }
-},[])
 };
 `

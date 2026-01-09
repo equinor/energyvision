@@ -16,6 +16,13 @@ export const iframeForNewsQuery = /* groq */ ` iframe{
 
 export const contentForNewsQuery = /* groq */ `content[] {
     ...,
+    _type == "factbox" => {
+      ...,
+      content[]{
+        ...,
+        ${markDefs},
+      },
+    },
     _type == "pullQuote" => {
       "type": _type,
       "id": _key,
