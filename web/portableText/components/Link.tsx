@@ -51,7 +51,7 @@ export const Link = ({ value, children, type, ...rest }: LinkProps) => {
       }
     }
     return props.href && props.href !== '' ? (
-      <CoreLink {...rest} {...props} type='externalUrl'>
+      <CoreLink {...rest} {...props} type={type}>
         {children}
       </CoreLink>
     ) : (
