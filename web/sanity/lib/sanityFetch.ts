@@ -22,11 +22,11 @@ export async function sanityFetch<const QueryString extends string>({
   stega?: boolean
 }) {
   return client.fetch(query, params, {
-    cache: 'force-cache',
+   /* cache: 'force-cache',
     next: {
       revalidate: tags.length ? false : revalidate, // for simple, time-based revalidation
       tags, // for tag-based revalidation
     },
-    ...(stega && { stega }),
+    ...(stega && { stega }),*/
   })
 }
