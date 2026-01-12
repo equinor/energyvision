@@ -331,7 +331,6 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
   const getVideoVariantBody = (itemData: VideoPlayerCarouselItem, index: number) => {
     const { title, video, id, aspectRatio } = itemData
     const { width: w, height: h } = getThumbnailRatio(displayMode === 'single' ? '16:9' : '9:16')
-    console.log('itemData', itemData)
     const element = (
       /*       <VideoJsComponent
         video={video}

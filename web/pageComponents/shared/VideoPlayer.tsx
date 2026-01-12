@@ -169,10 +169,6 @@ const VideoPlayer = ({ anchor, data, className }: { data: VideoPlayerData; ancho
   const { width } = designOptions
   const actionUrl = action ? getUrlFromAction(action) : ''
 
-  console.log('VideoPlayer transcript', transcript)
-  console.log('VideoPlayer data', data)
-  console.log('VideoPlayer video', video)
-
   return (
     <BackgroundContainer
       {...designOptions.background}
