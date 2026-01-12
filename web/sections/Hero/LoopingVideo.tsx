@@ -1,39 +1,35 @@
-import { VideoJS } from '@core/VideoJsPlayer'
-import { VideoPlayer } from '@core/VideoPlayer/VideoPlayer'
-import { Suspense } from 'react'
-import { useSanityLoader } from '../../lib/hooks/useSanityLoader'
-import type { LoopingVideoData } from '../../types'
+'use client'
+import { ImageWithAlt } from '../../types'
+import HlsVideoPlayer, { getThumbnailRatio } from '@core/HlsVideoPlayer/HlsVideoPlayer'
+import { urlFor } from '../../common/helpers'
 
-const DEFAULT_MAX_WIDTH = 1920
+export type LoopingVideoRatio = '1:2' | 'narrow'
 
-/* const DynamicVideoJsComponent = dynamic<React.ComponentProps<typeof VideoJS>>(
-  () => import('@core/VideoJsPlayer').then((mod) => mod.VideoJS),
-  {
-    ssr: false,
-    loading: () => <p>Loading...</p>,
-  },
-) */
+export type LoopingVideoData = {
+  title: string
+  thumbnail: ImageWithAlt
+  url: string
+  ratio: LoopingVideoRatio
+}
 
 export const LoopingVideo = ({ video }: { video: LoopingVideoData }) => {
   const { title, url, thumbnail, ratio } = video
-  const thumbnailURL = useSanityLoader(thumbnail, DEFAULT_MAX_WIDTH, undefined)
-  console.log('video', video)
+
+  const { width: w, height: h } = getThumbnailRatio(ratio)
+  const posterUrl = thumbnail?.asset ? urlFor(thumbnail?.asset).width(w).height(h)?.url() : undefined
+
   return (
     <div className={`relative ${ratio === 'narrow' ? 'pb-[75%] md:pb-[30%]' : 'pb-[50%]'}`}>
-      <figure className="justify-center flex m-0 w-full h-full absolute">
-        <VideoPlayer
-          className="absolute w-full h-full object-cover"
-          loop
-          muted
-          autoPlay
-          playsInline
-          /*             playButton={false} */
-          title={title}
-          poster={thumbnailURL?.src}
-          src={url}
-          /*             videoDescription={thumbnail.alt} */
-        />
-      </figure>
+      <HlsVideoPlayer
+        //@ts-ignore:todo
+        aspectRatio={ratio}
+        src={url}
+        autoPlay
+        loop
+        muted
+        poster={posterUrl}
+        title={title}
+      />
     </div>
   )
 }

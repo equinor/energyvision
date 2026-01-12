@@ -31,17 +31,16 @@ export const VideoJS: React.FC<VideoJSProps> = ({
   aspectRatio,
   loadingSpinner,
   onReady,
-  useBrandTheme = false,
   useFillMode = false,
-  poster,
   allowFullScreen,
+  useBrandTheme,
+  poster,
 }) => {
   /*   const [isLoading, setIsLoading] = useState<boolean>(true) */
   const [player, setPlayer] = useState<Player | null>(null)
   const [isPlaying, setIsPlaying] = useState(autoPlay)
-  console.log('player', player)
+
   const handlePlayButton = useCallback(() => {
-    console.log('handlePlayButton')
     if (player) {
       if (player.paused()) {
         player.play()
@@ -55,9 +54,6 @@ export const VideoJS: React.FC<VideoJSProps> = ({
 
   const getPlayer = useCallback(
     (node: Element) => {
-      console.log('get player')
-      console.log('video src', src)
-      console.log('video autoPlay', autoPlay)
       const player = videojs(
         node,
         {
@@ -124,9 +120,7 @@ export const VideoJS: React.FC<VideoJSProps> = ({
 
   const measuredRef = useCallback(
     (node: any) => {
-      console.log('node', node)
       if (node !== null && (!window || typeof window !== 'undefined')) {
-        console.log('set and get video player')
         setPlayer(getPlayer(node))
       }
     },
@@ -135,16 +129,12 @@ export const VideoJS: React.FC<VideoJSProps> = ({
 
   useEffect(() => {
     if (player) {
-      console.log('use effect vplayer', player)
-      console.log('use effect window', window)
       player.src({
         src: src,
         type: 'application/x-mpegURL',
       })
     }
     return () => {
-      console.log('use effect unmount')
-
       if (player && !player.isDisposed()) {
         player.dispose()
         setPlayer(null)
@@ -156,8 +146,8 @@ export const VideoJS: React.FC<VideoJSProps> = ({
 
   return (
     <>
-      <video src={src} loop muted playsInline autoPlay className="w-1/2 h-1/2" />
-      {/*       <video
+      {/* eslint-disable-next-line jsx-a11y/media-has-caption*/}
+      <video
         ref={measuredRef}
         className={`video-js vjs-layout-large vjs-fill vjs-envis ${useBrandTheme ? 'vjs-envis-brand' : ''} ${
           playButton ? 'vjs-envis-hasPlayButton' : ''
@@ -176,7 +166,7 @@ export const VideoJS: React.FC<VideoJSProps> = ({
             <div className="text-white-100">{isPlaying ? <Pause /> : <Play />}</div>
           </div>
         </button>
-      )} */}
+      )}
     </>
   )
 }

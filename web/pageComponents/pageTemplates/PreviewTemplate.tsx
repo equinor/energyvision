@@ -1,5 +1,5 @@
 /* eslint-disable import/no-unresolved */
-import { lazy } from 'react'
+import { lazy, Suspense } from 'react'
 import { usePreview } from '../../lib/sanity'
 import ErrorPage from 'next/error'
 
@@ -40,7 +40,11 @@ const PreviewTemplate = ({ token, template, query, queryParams }: PreviewTemplat
     return <ErrorPage statusCode={404} />
   }
 
-  return <Page data={pageData} />
+  return (
+    <Suspense>
+      <Page data={pageData} />
+    </Suspense>
+  )
 }
 
 export default PreviewTemplate

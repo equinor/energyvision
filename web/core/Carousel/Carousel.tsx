@@ -28,9 +28,11 @@ import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
 import { FormattedMessage, useIntl } from 'react-intl'
 import { CarouselItem } from './CarouselItem'
 import { EventCard } from '@sections/cards/EventCard'
-import { VideoJsComponent } from '../../pageComponents/shared/VideoPlayer'
 import KeyNumberItem from '@sections/KeyNumber/KeyNumberItem'
 import { IFrame } from '@core/IFrame/IFrame'
+import HlsVideoPlayer, { getThumbnailRatio } from '@core/HlsVideoPlayer/HlsVideoPlayer'
+import { urlFor } from '../../common/helpers'
+import { getTwAspectRatioUtilityOnRatio, ImageRatioKeys } from '@core/SanityImage/SanityImage'
 
 export type DisplayModes = 'single' | 'scroll'
 export type Layouts = 'full' | 'default'
@@ -327,9 +329,11 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
     )
   }
   const getVideoVariantBody = (itemData: VideoPlayerCarouselItem, index: number) => {
-    const { title, video, id } = itemData
+    const { title, video, id, aspectRatio } = itemData
+    const { width: w, height: h } = getThumbnailRatio(displayMode === 'single' ? '16:9' : '9:16')
+    console.log('itemData', itemData)
     const element = (
-      <VideoJsComponent
+      /*       <VideoJsComponent
         video={video}
         designOptions={{
           aspectRatio: displayMode === 'single' ? VideoPlayerRatios['16:9'] : VideoPlayerRatios['9:16'],
@@ -343,6 +347,12 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
         ${displayMode === 'single' ? '' : 'aspect-9/16'}
           object-cover
           `}
+      /> */
+      <HlsVideoPlayer
+        src={video.url}
+        title={video.title}
+        poster={urlFor(video.thumbnail?.asset).width(w).height(h).url()}
+        aspectRatio={displayMode === 'single' ? '16:9' : '9:16'}
       />
     )
 
@@ -355,7 +365,13 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
         variant={title ? 'richTextBelow' : 'default'}
         //@ts-ignore:TODO- didnt work with type assertion as PortableTextBlock[]
         title={title}
-        className={`${displayMode === 'scroll' ? 'h-full w-[260px] md:w-[372px] lg:w-[405px]' : ''}`}
+        className={`${
+          displayMode === 'scroll'
+            ? `h-full w-[260px] md:w-[372px] lg:w-[405px] ${getTwAspectRatioUtilityOnRatio(
+                aspectRatio as ImageRatioKeys,
+              )}`
+            : ''
+        }`}
         {...(displayMode === 'single' && {
           style: {
             transform: `translate3d(${itemsXPositions[index]}px, 0px, 0px)`,
@@ -472,6 +488,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
   }
 
   return (
+    //@ts-ignore:todo
     <CarouselTag
       ref={ref}
       className={envisTwMerge(
@@ -519,6 +536,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
           `}
         >
           <div id={controlsId} className="sr-only">
+            {/*@ts-ignore:todo*/}
             <FormattedMessage id="carousel_controls" defaultMessage="Carousel controls" />
           </div>
           {/** Only image should have autoplay */}
@@ -631,6 +649,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(function Carousel
         </ul>
         {displayMode === 'single' && (
           <div aria-live={pauseAutoRotation ? 'polite' : 'off'} aria-atomic={true} className="sr-only">
+            {/*@ts-ignore:todo */}
             <FormattedMessage
               id="carouselLiveAnnoucement"
               defaultMessage="Showing item {x} of {carouselLength}"
