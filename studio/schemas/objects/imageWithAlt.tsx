@@ -29,21 +29,6 @@ export default {
         'If this image is purely decorative you can disable the alt tag input here. Please note that this makes the image invisible for screen reader users.',
     },
     {
-      title: 'Background Gradient',
-      name: 'backgroundGradient',
-      type: 'string',
-      description: 'Controls the gradient over semi-transparent background image.',
-      initialValue: 'none', // default
-      options: {
-        list: [
-          { title: 'None', value: 'none' },
-          { title: 'Dark', value: 'dark' },
-          { title: 'Light', value: 'light' },
-        ],
-      },
-      validation: (Rule: Rule) => Rule.required()
-    },
-    {
       name: 'alt',
       type: 'string',
       title: 'Alt text',

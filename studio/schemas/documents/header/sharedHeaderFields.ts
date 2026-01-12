@@ -218,6 +218,25 @@ const heroIngress = {
   },
 }
 
+const backgroundGradient = {
+  title: 'Background Gradient',
+  name: 'backgroundGradient',
+  type: 'string',
+  description: 'Controls the gradient over semi-transparent background image.',
+  initialValue: 'none', // default
+  options: {
+    list: [
+      { title: 'None', value: 'none' },
+      { title: 'Dark', value: 'dark' },
+      { title: 'Light', value: 'light' },
+    ],
+  },
+  validation: (Rule: Rule) => Rule.required(),
+  hidden: ({ parent }: DocumentType) => {
+    return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE
+  }
+}
+
 const heroLink = singleItemArray({
   name: 'heroLink',
   title: 'Hero link',
@@ -361,4 +380,5 @@ export default [
   heroLoopingVideo,
   heroLoopingVideoRatio,
   containVideo,
+  backgroundGradient
 ]

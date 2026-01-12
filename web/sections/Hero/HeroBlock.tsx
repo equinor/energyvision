@@ -55,6 +55,7 @@ export type HeroData = {
   loopingVideo?: LoopingVideoData
   hideImageCaption?: boolean
   captionBg?: BackgroundColours
+  backgroundGradient?: string
 }
 
 export type HeroBlockProps = {
@@ -83,6 +84,7 @@ export const HeroBlock = ({
   loopingVideo,
   nextSectionDesignOptions,
   breadcrumbs,
+  backgroundGradient
 }: HeroBlockProps) => {
   const { bg: nextCompBg, dark: nextCompDark } = getBgAndDarkFromBackground(
     nextSectionDesignOptions,
@@ -106,6 +108,7 @@ export const HeroBlock = ({
       video: loopingVideo,
     }),
     figCaptionClassName: 'px-layout-lg',
+    backgroundGradient
   }
 
   const getHero = () => {

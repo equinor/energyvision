@@ -13,6 +13,7 @@ export const heroFields = /* groq */ `{
     },
     "ingress": heroIngress,
     "background": coalesce(heroBackground.key, 'white-100'),
+    "backgroundGradient": backgroundGradient,
     "figure":  select(
       heroType == 'loopingVideo' => { "image": heroLoopingVideo->thumbnail},
       heroFigure),
