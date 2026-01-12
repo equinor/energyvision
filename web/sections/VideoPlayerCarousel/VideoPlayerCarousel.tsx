@@ -1,5 +1,4 @@
 import { Heading, Paragraph } from '@core/Typography'
-import envisTwMerge from '../../twMerge'
 import { VideoPlayerCarouselData } from '../../types/index'
 import { BackgroundContainer } from '@core/Backgrounds'
 import { Carousel } from '@core/Carousel/Carousel'

@@ -62,15 +62,6 @@ export type VideoPlayerCarouselData = {
   ingress?: PortableTextBlock[]
 }
 
-export type LoopingVideoRatio = '1:2' | 'narrow'
-
-export type LoopingVideoData = {
-  title: string
-  thumbnail: ImageWithAlt
-  url: string
-  ratio: LoopingVideoRatio
-}
-
 export type FullWidthVideoData = {
   type: string
   id: string

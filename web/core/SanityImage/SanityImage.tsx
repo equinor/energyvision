@@ -29,6 +29,28 @@ export const mapSanityImageRatio = (ratio: ImageRatioKeys) => {
   return ImageRatios[ratio]
 }
 
+export const getTwAspectRatioUtilityOnRatio = (ratio: ImageRatioKeys) => {
+  return {
+    original: '',
+    '1:1': 'aspect-square',
+    '3:10': 'aspect-[3/10]',
+    '10:3': 'aspect-[10/3]',
+    '19:40': 'aspect-[19/40]',
+    '1:2': 'aspect-[1/2]',
+    '2:1': 'aspect-[2/1]',
+    '2:3': 'aspect-[2/3]',
+    '16:9': 'aspect-video',
+    '9:16': 'aspect-[9/16]',
+    '3:4': 'aspect-[3/4]',
+    '3:2': 'aspect-[3/2]',
+    '4:3': 'aspect-[4/3]',
+    '4:5': 'aspect-[4/5]',
+    '5:4': 'aspect-[5/4]',
+    '5:3': 'aspect-[5/3]',
+    '21:9': 'aspect-[21/9]',
+  }[ratio]
+}
+
 /** Use when image is smaller than px-layout-lg
  * eg the side image on textblock, 50/50 teaser image, promotiles image, card images
  * max width for image size 570px

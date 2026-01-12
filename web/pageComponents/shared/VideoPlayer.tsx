@@ -1,11 +1,12 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 
 import { BackgroundContainer } from '@core/Backgrounds'
+import HlsVideoPlayer from '@core/HlsVideoPlayer/HlsVideoPlayer'
 import { ResourceLink } from '@core/Link'
+import { getTwAspectRatioUtilityOnRatio, ImageRatioKeys } from '@core/SanityImage/SanityImage'
 import { Heading } from '@core/Typography'
-import type { VideoJS } from '@core/VideoJsPlayer'
+/* import type { VideoJS } from '@core/VideoJsPlayer' */
 import type { PortableTextBlock } from '@portabletext/types'
-import dynamic from 'next/dynamic'
 import { twMerge } from 'tailwind-merge'
 import { getUrlFromAction, urlFor } from '../../common/helpers'
 import { getLocaleFromName } from '../../lib/localization'
@@ -19,14 +20,6 @@ import {
 } from '../../types/index'
 import Blocks from './portableText/Blocks'
 import IngressText from './portableText/IngressText'
-
-const DynamicVideoJsComponent = dynamic<React.ComponentProps<typeof VideoJS>>(
-  () => import('@core/VideoJsPlayer').then((mod) => mod.VideoJS),
-  {
-    ssr: false,
-    loading: () => <p>Loading...</p>,
-  },
-)
 
 const getHeightWidth = (aspectRatio: string, height?: number | string) => {
   if (!height) {
@@ -44,7 +37,7 @@ const getHeightWidth = (aspectRatio: string, height?: number | string) => {
   return `h-[${typeof height == 'string' ? height : `${height}px`}] w-full`
 }
 
-const getThumbnailRatio = (aspectRatio: string, height?: number) => {
+export const getThumbnailRatio = (aspectRatio: string, height?: number) => {
   switch (aspectRatio) {
     case VideoPlayerRatios['16:9']:
       return {
@@ -81,24 +74,25 @@ type VideoComponentWithCaptionType = {
 export const VideoComponentWithCaption = ({
   video,
   title,
-  videoControls,
   designOptions,
   useFillMode = false,
   className = '',
   captionClassName = '',
 }: VideoComponentWithCaptionType) => {
   const { width: w, height: h } = getThumbnailRatio(designOptions.aspectRatio)
+
   return (
+    //[&video::-webkit-media-controls-fullscreen-button]:hidden
     <figure
       className={twMerge(
-        `${useFillMode ? 'h-full w-full' : getHeightWidth(designOptions.aspectRatio, designOptions.height)} 
-        [&video::-webkit-media-controls-fullscreen-button]:hidden relative mx-auto my-0
-        `,
+        `${
+          useFillMode ? 'h-full w-full' : getHeightWidth(designOptions.aspectRatio, designOptions.height)
+        } relative mx-auto my-0 `,
         className,
       )}
     >
       {video && (
-        <DynamicVideoJsComponent
+        /*         <DynamicVideoJsComponent
           className="object-cover"
           src={video.url}
           title={video.title}
@@ -108,6 +102,14 @@ export const VideoComponentWithCaption = ({
           useBrandTheme={designOptions?.useBrandTheme}
           useFillMode={useFillMode}
           {...videoControls}
+        /> */
+        <HlsVideoPlayer
+          variant="default"
+          src={video.url}
+          //@ts-ignore:todo
+          aspectRatio={designOptions.aspectRatio}
+          poster={urlFor(video.thumbnail?.asset).width(w).height(h).url()}
+          title={video.title}
         />
       )}
       <figcaption className={twMerge(`text-md ${title ? 'py-2' : ''}`, captionClassName)}>
@@ -124,25 +126,20 @@ type VideoJsComponentType = {
   useFillMode?: boolean
   className?: string
 }
-export const VideoJsComponent = ({
-  video,
-  videoControls,
-  designOptions,
-  useFillMode = false,
-  className = '',
-}: VideoJsComponentType) => {
+export const VideoComponent = ({ video, designOptions, useFillMode = false, className = '' }: VideoJsComponentType) => {
   const { width: w, height: h } = getThumbnailRatio(designOptions.aspectRatio)
+  const ratioUtility = getTwAspectRatioUtilityOnRatio(designOptions.aspectRatio as ImageRatioKeys)
+
   return (
     <figure
       className={twMerge(
-        `
-        ${useFillMode ? 'h-full w-full' : getHeightWidth(designOptions.aspectRatio, designOptions.height)} 
-        [&video::-webkit-media-controls-fullscreen-button]:hidden relative mx-auto my-0
-        `,
+        `relative [&video::-webkit-media-controls-fullscreen-button]:hidden`,
+        ratioUtility,
+        useFillMode ? 'h-full w-full' : getHeightWidth(designOptions?.aspectRatio, designOptions?.height),
         className,
       )}
     >
-      <DynamicVideoJsComponent
+      {/*       <DynamicVideoJsComponent
         className="object-cover"
         src={video.url}
         title={video.title}
@@ -152,7 +149,17 @@ export const VideoJsComponent = ({
         useBrandTheme={designOptions?.useBrandTheme}
         useFillMode={useFillMode}
         {...videoControls}
-      />
+      /> */}
+      {video && (
+        <HlsVideoPlayer
+          variant="default"
+          src={video?.url}
+          //@ts-ignore:todo
+          aspectRatio={designOptions?.aspectRatio}
+          poster={urlFor(video.thumbnail?.asset).width(w).height(h).url()}
+          title={video.title}
+        />
+      )}
     </figure>
   )
 }
@@ -165,28 +172,37 @@ const VideoPlayer = ({ anchor, data, className }: { data: VideoPlayerData; ancho
   return (
     <BackgroundContainer
       {...designOptions.background}
-      className={twMerge(` ${width === 'extraWide' ? 'px-layout-md' : 'px-layout-lg'}`, className)}
+      className={twMerge(`px-layout-sm ${width === 'extraWide' ? 'lg:px-layout-md' : 'lg:px-layout-lg'}`, className)}
       id={anchor}
       renderFragmentWhenPossible
     >
-      {title && <Heading value={title} as="h2" variant="xl" className="mb-2 pb-2" />}
-      {ingress && <IngressText value={ingress} className="mb-lg" />}
-      {action && action?.label && actionUrl && (
-        <ResourceLink
-          href={actionUrl || ''}
-          file={{
-            ...action?.file,
-            label: action?.label,
-          }}
-          showExtensionIcon={true}
-          variant="fit"
-          locale={action?.type === 'internalUrl' ? getLocaleFromName(action?.link?.lang) : undefined}
-          className="mt-4 mb-2"
-        >
-          {action.label}
-        </ResourceLink>
+      {(title || ingress || action) && (
+        <div className={`pb-6`}>
+          {title && <Heading value={title} as="h2" variant="xl" className="mb-2 pb-2" />}
+          {ingress && <IngressText value={ingress} className="mb-lg" />}
+          {action && action?.label && actionUrl && (
+            <ResourceLink
+              href={actionUrl || ''}
+              file={{
+                ...action?.file,
+                label: action?.label,
+              }}
+              showExtensionIcon={true}
+              variant="fit"
+              locale={action?.type === 'internalUrl' ? getLocaleFromName(action?.link?.lang) : undefined}
+              className="mt-4"
+            >
+              {action.label}
+            </ResourceLink>
+          )}
+        </div>
       )}
-      <VideoJsComponent video={video} designOptions={designOptions} videoControls={videoControls} />
+      <VideoComponent
+        video={video}
+        designOptions={designOptions}
+        videoControls={videoControls}
+        className={`flex ${title || ingress || action ? 'justify-start' : 'justify-center'}`}
+      />
       <Transcript transcript={transcript} ariaTitle={video.title} />
     </BackgroundContainer>
   )
