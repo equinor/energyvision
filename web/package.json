@@ -75,8 +75,9 @@
     "tailwind-merge": "^2.2.1",
     "@tanstack/react-table": "^8.21.3",
     "uuid": "^9.0.0",
-    "video.js": "^8.17.3",
-    "xml2js": "^0.6.0"
+    "video.js": "^8.23.4",
+    "xml2js": "^0.6.0",
+    "hls.js": "^1.6.15"
   },
   "devDependencies": {
     "@algolia/client-search": "^4.16.0",

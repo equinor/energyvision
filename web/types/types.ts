@@ -13,7 +13,6 @@ import type {
   PeopleCardData,
   BackgroundColours,
   DesignOptions,
-  LoopingVideoData,
   VideoPlayerData,
   VideoPlayerCarouselData,
   FullWidthVideoData,
@@ -23,6 +22,7 @@ import type {
 import { MediaPosition } from '@core/Teaser/Media'
 import { FigureData } from '../pageComponents/topicPages/Figure'
 import { FullWidthImageData } from '../pageComponents/topicPages/FullWidthImage'
+import { LoopingVideoData } from '@sections/Hero/LoopingVideo'
 
 export type IntlData = {
   locale: string
