@@ -3,7 +3,6 @@ import { urlFor } from '../../common/helpers'
 import { FullWidthVideoData, FullWidthVideoRatio } from '../../types/index'
 
 const FullWidthVideo = ({ anchor, data }: { data: FullWidthVideoData; anchor?: string }) => {
-  console.log('FullWidthVideo data', data)
   const { video, designOptions, spacing } = data
   const { aspectRatio } = designOptions
 
