@@ -73,9 +73,10 @@ export const Video: React.FC<VideoProps> = ({
       videoRef.current?.appendChild(videoElement)
 
       const player = (playerRef.current = videojs(videoElement, options, () => {
-        videojs.log('player is ready')
         if (onReady) {
           videoElement.classList.remove('vjs-custom-waiting')
+          player.autoplay(autoplay)
+          player.src(src)
           onReady(player)
         }
       }))
