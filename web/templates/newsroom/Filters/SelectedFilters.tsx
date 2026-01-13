@@ -4,7 +4,7 @@ import { forwardRef, HTMLAttributes } from 'react'
 import { useClearRefinements, useCurrentRefinements, UseRefinementListProps } from 'react-instantsearch'
 import { close_circle_outlined, close } from '@equinor/eds-icons'
 import { Typography } from '@/core/Typography'
-import { isModifierClick } from '../../../pageComponents/shared/search/pagination/PaginationItem'
+import { isModifierClick } from '@/sections/searchBlocks/pagination/PaginationItem'
 import { useTranslations } from 'next-intl'
 import { twMerge } from 'tailwind-merge'
 
