@@ -1,9 +1,9 @@
 'use client'
-import { useHits } from 'react-instantsearch'
 import type { Hit as AlgoliaHit } from '@algolia/client-search'
-import { HitData } from './UniversalHit'
-import { Typography } from '@/core/Typography'
 import { useTranslations } from 'next-intl'
+import { useHits } from 'react-instantsearch'
+import { Typography } from '@/core/Typography'
+import type { HitData } from './UniversalHit'
 
 export type HitProps = { hit: AlgoliaHit<HitData> }
 
@@ -16,11 +16,11 @@ const Hits = ({ hitComponent: Hit }: HitsProps) => {
   const t = useTranslations()
   if (!items || items.length === 0) {
     return (
-      <div className="px-0 py-12">
-        <Typography as="h2" variant="lg" className="uppercase">
+      <div className='px-0 py-12'>
+        <Typography as='h2' variant='lg' className='uppercase'>
           {t('search_no_results_heading')}
         </Typography>
-        <Typography variant="body" className="mt-2">
+        <Typography variant='body' className='mt-2'>
           {t('search_no_results_generic')}
         </Typography>
       </div>
@@ -28,9 +28,9 @@ const Hits = ({ hitComponent: Hit }: HitsProps) => {
   }
 
   return (
-    <div className="relative">
+    <div className='relative'>
       <ol>
-        {items.map((item) => (
+        {items.map(item => (
           <li key={item.objectID}>
             <Hit hit={item} />
           </li>

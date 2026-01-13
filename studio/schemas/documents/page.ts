@@ -1,4 +1,5 @@
 import { paste } from '@equinor/eds-icons'
+import { RiPagesLine } from 'react-icons/ri'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
 import sharedHeroFields, { HeroTypes } from './header/sharedHeaderFields'
@@ -52,7 +53,7 @@ export default {
   preview: {
     select: {
       title: 'title',
-      image: 'heroFigure.image',
+      image: 'heroFigure.image.asset',
       video: 'heroLoopingVideo.thumbnail',
       type: 'heroType',
     },
@@ -63,7 +64,7 @@ export default {
       return {
         title: plainTitle,
         subtitle: 'Topic content',
-        media,
+        media: media ?? RiPagesLine,
       }
     },
   },

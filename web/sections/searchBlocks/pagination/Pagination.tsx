@@ -10,8 +10,7 @@ import { useTranslations } from 'next-intl'
 import { useContext, useEffect, useRef } from 'react'
 import { type UsePaginationProps, usePagination } from 'react-instantsearch'
 import { twMerge } from 'tailwind-merge'
-import { PaginationContext } from '../../../../contexts/PaginationContext'
-import { usePrefersReducedMotion } from '../../../../lib/hooks/usePrefersReducedMotion'
+import { usePrefersReducedMotion } from '@/lib/hooks/usePrefersReducedMotion'
 import { isModifierClick, PaginationItem } from './PaginationItem'
 
 // Based on: https://github.com/algolia/react-instantsearch/blob/master/examples/hooks/components/Pagination.tsx
@@ -30,7 +29,7 @@ export const Pagination = ({
 }: PaginationProps) => {
   const {
     refine,
-    createURL,
+    //createURL,
     pages,
     currentRefinement,
     isFirstPage,
@@ -42,6 +41,7 @@ export const Pagination = ({
     padding,
   })
   const intl = useTranslations()
+  //@ts-ignore:todo
   const { resultsRef } = useContext(PaginationContext)
   const prevRefinement = useRef<number>(currentRefinement)
   const prefersReducedMotion = usePrefersReducedMotion()

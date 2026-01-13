@@ -1,4 +1,5 @@
 import { paste } from '@equinor/eds-icons'
+import { PiStorefrontLight } from 'react-icons/pi'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
 import { Flags } from '../../src/lib/datasetHelpers'
@@ -129,7 +130,7 @@ export default {
   preview: {
     select: {
       title: 'title',
-      image: 'heroFigure.image',
+      image: 'heroFigure.image.asset',
       video: 'heroLoopingVideo.thumbnail',
       type: 'heroType',
     },
@@ -137,10 +138,11 @@ export default {
       const { title, image, video, type } = selection
       const plainTitle = title ? blocksToText(title) : ''
       const media = type === HeroTypes.LOOPING_VIDEO ? video : image
+      console.log('media', media)
       return {
         title: plainTitle,
         subtitle: 'Home Page',
-        media,
+        media: media ?? PiStorefrontLight,
       }
     },
   },

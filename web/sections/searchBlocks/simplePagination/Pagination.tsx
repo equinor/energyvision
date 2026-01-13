@@ -7,8 +7,8 @@ import {
   last_page,
 } from '@equinor/eds-icons'
 import { useContext, useEffect, useRef, useState } from 'react'
-import { PaginationContext } from '../../../../contexts/PaginationContext'
-import { usePrefersReducedMotion } from '../../../../lib/hooks/usePrefersReducedMotion'
+import { PaginationContext } from '../../../contexts/PaginationContext'
+import { usePrefersReducedMotion } from '../../../lib/hooks/usePrefersReducedMotion'
 import { PaginationItem } from '../pagination/PaginationItem'
 
 type PaginationProps = {

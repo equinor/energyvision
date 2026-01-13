@@ -3,8 +3,8 @@ import { toPlainText } from '@portabletext/react'
 import { useTranslations } from 'next-intl'
 import { ResourceLink } from '@/core/Link/ResourceLink'
 import { Typography } from '@/core/Typography'
-import BackgroundImage from '@/pageComponents/errorPages/BackgroundImage'
 import Blocks from '@/portableText/Blocks'
+import BackgroundImage from '@/sections/errorPages/BackgroundImage'
 
 export default function NotFoundPage({ backgroundImage, title, text }: any) {
   const intl = useTranslations()

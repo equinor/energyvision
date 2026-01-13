@@ -8,7 +8,7 @@ import {
   colorKeyToUtilityMap,
 } from '@/styles/colorKeyToUtilityMap'
 import type { NewsListData } from '../../types/index'
-import { Pagination } from '../shared/search/simplePagination/Pagination'
+import { Pagination } from '../searchBlocks/simplePagination/Pagination'
 
 const NewsList = ({
   data,

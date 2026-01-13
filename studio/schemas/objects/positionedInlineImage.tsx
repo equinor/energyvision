@@ -1,23 +1,27 @@
 /* eslint-disable import/no-unresolved */
 
-import { TbFloatCenter, TbFloatLeft, TbFloatRight } from 'react-icons/tb'
-import { set, useFormValue, type StringInputProps} from 'sanity'
-import { InlineImageFullWidth } from '../../icons'
-import type { ImageWithAlt } from './imageWithAlt'
-import { useCallback } from 'react'
 import { Card, Flex, Radio, Text } from '@sanity/ui'
-import { FaImage } from "react-icons/fa";
-import { BsFileImageFill } from "react-icons/bs";
-import { MdImage } from "react-icons/md";
-import { PiTextAlignJustifyBold } from "react-icons/pi";
+import { useCallback } from 'react'
+import { BsFileImageFill } from 'react-icons/bs'
+import { FaImage } from 'react-icons/fa'
 import { LuText } from 'react-icons/lu'
+import { MdImage } from 'react-icons/md'
+import { PiTextAlignJustifyBold } from 'react-icons/pi'
+import {
+  RxTextAlignBottom,
+  RxTextAlignCenter,
+  RxTextAlignTop,
+} from 'react-icons/rx'
+import { TbFloatLeft, TbFloatRight } from 'react-icons/tb'
+import { type StringInputProps, set, useFormValue } from 'sanity'
+import { InlineImageFullWidth } from '../../icons'
 import { RadioIconSelector } from '../components'
-import { RxTextAlignTop,RxTextAlignCenter, RxTextAlignBottom  } from "react-icons/rx";
+import type { ImageWithAlt } from './imageWithAlt'
 
 const contentAlignmentOptions = [
-  { value: 'left', icon: <RxTextAlignTop size={24} /> },
+  { value: 'top', icon: <RxTextAlignTop size={24} /> },
   { value: 'center', icon: <RxTextAlignCenter size={24} /> },
-  { value: 'right', icon: <RxTextAlignBottom size={24} /> },
+  { value: 'bottom', icon: <RxTextAlignBottom size={24} /> },
 ]
 
 type LayoutInputProps = {
@@ -25,16 +29,16 @@ type LayoutInputProps = {
 } & StringInputProps
 
 export const OrientationInput = (props: LayoutInputProps) => {
-  const { onChange, schemaType, value = '', path } = props
+  const { onChange, schemaType, value = '' } = props
 
-  const getOrientationIcon = (orientation:string) => {
+  const getOrientationIcon = (orientation: string) => {
     switch (orientation) {
       case 'square':
-        return <MdImage size={33} /> 
+        return <MdImage size={33} />
       case 'portrait':
-        return <BsFileImageFill size={33} />      
+        return <BsFileImageFill size={33} />
       default:
-        return <FaImage size={33} />   
+        return <FaImage size={33} />
     }
   }
 
@@ -57,7 +61,7 @@ export const OrientationInput = (props: LayoutInputProps) => {
             paddingX={3}
             radius={2}
             shadow={1}
-            width="fit-content"
+            width='fit-content'
           >
             <Flex
               direction='row'
@@ -73,8 +77,8 @@ export const OrientationInput = (props: LayoutInputProps) => {
                 onChange={handleChange}
                 value={option.value}
               />
-              <Flex gap={2} direction="column" align='center' width='100%'>
-                  {getOrientationIcon(option?.value)}
+              <Flex gap={2} direction='column' align='center' width='100%'>
+                {getOrientationIcon(option?.value)}
                 <Text as='label' htmlFor={option.value} size={1}>
                   {option.title}
                 </Text>
@@ -109,7 +113,7 @@ export const ImageCaptionLayoutInput = (props: LayoutInputProps) => {
             paddingX={3}
             radius={2}
             shadow={1}
-            width="fit-content"
+            width='fit-content'
           >
             <Flex
               direction='row'
@@ -125,16 +129,19 @@ export const ImageCaptionLayoutInput = (props: LayoutInputProps) => {
                 onChange={handleChange}
                 value={option.value}
               />
-              <Flex gap={2} direction="column" align='center' width='100%'>
-                 <div style={{
+              <Flex gap={2} direction='column' align='center' width='100%'>
+                <div
+                  style={{
                     display: 'flex',
-                    flexDirection: option?.value === 'left' ? 'row' : 'row-reverse',
-                  }}>
-                    {/*@ts-ignore:todo*/}
-                    <MdImage size={20} />
-                    {/*@ts-ignore:todo*/}
-                    <LuText size={20} />
-                 </div>
+                    flexDirection:
+                      option?.value === 'left' ? 'row' : 'row-reverse',
+                  }}
+                >
+                  {/*@ts-ignore:todo*/}
+                  <MdImage size={20} />
+                  {/*@ts-ignore:todo*/}
+                  <LuText size={20} />
+                </div>
                 <Text as='label' htmlFor={option.value} size={1}>
                   {option.title}
                 </Text>
@@ -151,29 +158,37 @@ export const LayoutInput = (props: LayoutInputProps) => {
   const { onChange, schemaType, value = '', path } = props
 
   const parentPath = path.slice(0, -1) // Remove the last segment to get parent path
-  const selectedImageOrientationField = useFormValue([...parentPath, 'imageOrientation'])
+  const selectedImageOrientationField = useFormValue([
+    ...parentPath,
+    'imageOrientation',
+  ])
   const validOptions = {
-    square: ["right", "left"],
-    landscape: ["right", "left","full", "center"],
+    square: ['right', 'left'],
+    landscape: ['right', 'left', 'full', 'center'],
   }
 
-  const getAlignmentIcon = (alignment:string) => {
+  const getAlignmentIcon = (alignment: string) => {
     switch (alignment) {
       case 'full':
-        return <InlineImageFullWidth /> 
+        return <InlineImageFullWidth />
       case 'center':
-        return <PiTextAlignJustifyBold size={33} />    
+        return <PiTextAlignJustifyBold size={33} />
       case 'right':
-        return <TbFloatRight size={33} />   
+        return <TbFloatRight size={33} />
       default:
-        return <TbFloatLeft size={33} />   
+        return <TbFloatLeft size={33} />
     }
   }
-  //@ts-ignore
-  const validList = validOptions[String(selectedImageOrientationField) ?? "landscape"] 
 
-  const filteredOptions = schemaType?.options?.list?.filter((option) => validList.includes(option?.value))
- 
+  const validList =
+    //@ts-ignore
+    validOptions[String(selectedImageOrientationField) ?? 'landscape']
+
+  const filteredOptions = schemaType?.options?.list?.filter(option =>
+    //@ts-ignore
+    validList.includes(option?.value),
+  )
+
   const handleChange = useCallback(
     (event: any) => {
       const nextValue = event.currentTarget.value
@@ -193,7 +208,7 @@ export const LayoutInput = (props: LayoutInputProps) => {
             paddingX={3}
             radius={2}
             shadow={1}
-            width="fit-content"
+            width='fit-content'
           >
             <Flex
               direction='row'
@@ -209,8 +224,8 @@ export const LayoutInput = (props: LayoutInputProps) => {
                 onChange={handleChange}
                 value={option.value}
               />
-              <Flex gap={2} direction="column" align='center' width='100%'>
-                  {getAlignmentIcon(option?.value)}
+              <Flex gap={2} direction='column' align='center' width='100%'>
+                {getAlignmentIcon(option?.value)}
                 <Text as='label' htmlFor={option.value} size={1}>
                   {option.title}
                 </Text>
@@ -309,27 +324,28 @@ export default {
       },
     },
     {
-          name: 'centerCaptionAlignment',
-          title: 'Caption vertical alignment',
-          type: 'string',
-          initialValue: 'left',
-          components: {
-            //@ts-ignore
-            input: function (props: ObjectInputProps) {
-              const { value, onChange, schemaType } = props
-              const { initialValue } = schemaType
-              return (
-                <RadioIconSelector
-                  name='centerCaptionAlignment'
-                  options={contentAlignmentOptions}
-                  defaultValue={String(initialValue) ?? 'left'}
-                  currentValue={String(value)}
-                  onChange={onChange}
-                />
-              )
-            },
-          },
+      name: 'centerCaptionAlignment',
+      title: 'Caption vertical alignment',
+      type: 'string',
+      initialValue: 'left',
+      components: {
+        //@ts-ignore
+        input: function (props: ObjectInputProps) {
+          const { value, onChange, schemaType } = props
+          const { initialValue } = schemaType
+          return (
+            <RadioIconSelector
+              name='centerCaptionAlignment'
+              //@ts-ignore
+              options={contentAlignmentOptions}
+              defaultValue={String(initialValue) ?? 'left'}
+              currentValue={String(value)}
+              onChange={onChange}
+            />
+          )
         },
+      },
+    },
     {
       name: 'enableImageZoom',
       title: 'Enable image zoom',

@@ -1,12 +1,15 @@
 'use client'
 import { useTranslations } from 'next-intl'
-import { usePagination, UsePaginationProps } from 'react-instantsearch'
+import { type UsePaginationProps, usePagination } from 'react-instantsearch'
 
 type TotalResultsStatProps = {
   hitsPerPage: number
 } & UsePaginationProps
 
-const TotalResultsStat = ({ totalPages, hitsPerPage }: TotalResultsStatProps) => {
+const TotalResultsStat = ({
+  totalPages,
+  hitsPerPage,
+}: TotalResultsStatProps) => {
   const { nbHits, currentRefinement } = usePagination({ totalPages })
   const t = useTranslations()
   if (nbHits === 0) return null
@@ -15,7 +18,7 @@ const TotalResultsStat = ({ totalPages, hitsPerPage }: TotalResultsStatProps) =>
   const currentHighestNumber = Math.min(potentialHighestNumber, nbHits)
 
   return (
-    <div className="my-3 mt-5 dark:text-white-100">
+    <div className='my-3 mt-5 dark:text-white-100'>
       {t('search_showing_results_number', {
         nbHits: nbHits,
         currentlyShowing: `${currentLowestNumber} - ${currentHighestNumber}`,

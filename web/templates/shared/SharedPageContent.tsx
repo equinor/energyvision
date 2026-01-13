@@ -1,8 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-nocheck
 'use client'
-import NewsList from '@/pageComponents/topicPages/NewsList'
-import PageQuote from '@/pageComponents/topicPages/PageQuote'
 import AccordionBlock from '@/sections/AccordionBlock/AccordionBlock'
 import { AnchorLinkList } from '@/sections/AnchorLinkList'
 import BarChartBlock, {
@@ -28,6 +26,7 @@ import KeyNumbers from '@/sections/KeyNumber/KeyNumber'
 import LineChartBlock, {
   type LineChartBlockProps,
 } from '@/sections/LineChartBlock/LineChartBlock'
+import NewsList from '@/sections/NewsList/NewsList'
 import PieChartBlock, {
   type PieChartBlockProps,
 } from '@/sections/PieChartBlock/PieChartBlock'
@@ -36,6 +35,7 @@ import PromotionsBlock, {
   type PromotionsBlockData,
 } from '@/sections/promotions/PromotionsBlock'
 import { PromotionBlockV2 } from '@/sections/promotions/v2/PromotionBlockV2'
+import QuoteBlock from '@/sections/QuoteBlock/QuoteBlock'
 import StockValues, {
   type StockValuesProps,
 } from '@/sections/StockValues/StockValues'
@@ -368,7 +368,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
         )
       case 'pullQuote':
         return (
-          <PageQuote
+          <QuoteBlock
             key={c.id}
             data={c as QuoteData}
             anchor={anchorReference}

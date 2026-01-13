@@ -1,4 +1,5 @@
 import { Button } from '@/core/Button'
+
 // Based on: https://github.com/algolia/react-instantsearch/blob/master/examples/hooks/components/Pagination.tsx
 
 type PaginationItemProps = React.ComponentProps<'button'> & {
@@ -9,10 +10,22 @@ type PaginationItemProps = React.ComponentProps<'button'> & {
 
 export function isModifierClick(event: React.MouseEvent) {
   const isMiddleClick = event.button === 1
-  return Boolean(isMiddleClick || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey)
+  return Boolean(
+    isMiddleClick ||
+      event.altKey ||
+      event.ctrlKey ||
+      event.metaKey ||
+      event.shiftKey,
+  )
 }
 
-export const PaginationItem = ({ isDisabled, isCurrent, ariaLabel, onClick, children }: PaginationItemProps) => {
+export const PaginationItem = ({
+  isDisabled,
+  isCurrent,
+  ariaLabel,
+  onClick,
+  children,
+}: PaginationItemProps) => {
   const itemClassNames = `
   flex
   justify-center
@@ -30,7 +43,12 @@ export const PaginationItem = ({ isDisabled, isCurrent, ariaLabel, onClick, chil
   if (isDisabled || isCurrent) {
     return (
       <li>
-        <Button disabled={isDisabled} variant="ghost" className={itemClassNames} aria-label={ariaLabel}>
+        <Button
+          disabled={isDisabled}
+          variant='ghost'
+          className={itemClassNames}
+          aria-label={ariaLabel}
+        >
           {children}
         </Button>
       </li>
@@ -39,7 +57,12 @@ export const PaginationItem = ({ isDisabled, isCurrent, ariaLabel, onClick, chil
 
   return (
     <li>
-      <Button variant="ghost" aria-label={ariaLabel} className={itemClassNames} onClick={onClick}>
+      <Button
+        variant='ghost'
+        aria-label={ariaLabel}
+        className={itemClassNames}
+        onClick={onClick}
+      >
         {children}
       </Button>
     </li>

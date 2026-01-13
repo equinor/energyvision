@@ -1,7 +1,7 @@
 import { toPlainText } from '@portabletext/react'
 import { Typography } from '@/core/Typography'
 import Blocks from '@/portableText/Blocks'
-import ContentGroup from '../../pageComponents/landingPages/ContentGroup'
+import ContentGroup from '../../sections/ContentGroup/ContentGroup'
 import type { LandingPageSchema, PortableTextBlock } from '../../types/index'
 
 type LandingPageProps = {

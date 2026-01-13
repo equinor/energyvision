@@ -39,7 +39,7 @@ export const CardContent = forwardRef<HTMLDivElement, CardContentProps>(
     const variantClassNames = {
       primary: `${commonStyling} flex-col items-start`,
       secondary: `${commonStyling} flex-col items-start`,
-      compact: `pb-4 pt-2`,
+      compact: `pb-4 pt-2 items-center`,
       single: `${commonStyling} px-10 flex-col items-start`,
     }
 
@@ -51,7 +51,9 @@ export const CardContent = forwardRef<HTMLDivElement, CardContentProps>(
           className,
         )}
       >
-        <div className='max-w-prose grow max-h-full overflow-hidden'>{children}</div>
+        <div className='max-h-full max-w-prose grow overflow-hidden'>
+          {children}
+        </div>
         {!noArrow && (
           <div
             className={`flex items-end justify-end self-end p-1 ${variant === 'compact' ? 'max-xl:hidden' : ''}`}

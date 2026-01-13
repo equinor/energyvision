@@ -7,10 +7,10 @@ import { InstantSearchNext } from 'react-instantsearch-nextjs'
 import { PaginationContextProvider } from '@/contexts/PaginationContext'
 import { SearchBox } from '@/core/AlgoliaSearchBox/SearchBox'
 import usePaginationPadding from '@/lib/hooks/usePaginationPadding'
-import SearchResults from '@/pageComponents/search/SearchResults'
-import { Pagination } from '@/pageComponents/shared/search/pagination/Pagination'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { getIsoFromLocale } from '@/sanity/helpers/localization'
+import { Pagination } from '@/sections/searchBlocks/pagination/Pagination'
+import SearchResults from '@/sections/searchBlocks/SearchResults'
 import { searchClient as client } from '../../lib/algolia'
 
 const searchClient = client()

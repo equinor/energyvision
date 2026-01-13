@@ -6,11 +6,11 @@ import { EventJsonLd } from 'next-seo'
 import AddToCalendar from '@/core/AddToCalendar/AddToCalendar'
 import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
 import { getEventDates } from '@/lib/helpers/dateUtilities'
-import ContactList from '@/pageComponents/shared/ContactList'
 import Blocks from '@/portableText/Blocks'
+import ContactList from '@/sections/ContactList/ContactList'
 import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
-import RelatedContent from '../../pageComponents/shared/RelatedContent'
 import Promotion from '../../sections/promotions/PromotionsBlock'
+import RelatedContent from '../../sections/RelatedContent/RelatedContent'
 import type { EventSchema } from '../../types/index'
 
 export default function Event({ data }: { data: EventSchema }): JSX.Element {
@@ -41,7 +41,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
           name={plainTitle}
           startDate={start.toISOString()}
           endDate={end.toISOString()}
-          location={location||""}
+          location={location || ''}
         />
       )}
       <main className='flex flex-col pt-topbar'>
@@ -113,7 +113,10 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
           )}
           {contactList && <ContactList data={contactList} />}
           {relatedLinks?.links && relatedLinks.links.length > 0 && (
-            <RelatedContent data={relatedLinks} className='px-layout-sm sm:px-layout-lg'/>
+            <RelatedContent
+              data={relatedLinks}
+              className='px-layout-sm sm:px-layout-lg'
+            />
           )}
         </article>
       </main>

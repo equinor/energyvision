@@ -8,9 +8,9 @@ import { IFrame } from '@/core/IFrame/IFrame'
 import TransformableIcon from '@/icons/TransformableIcon'
 import { isDateAfter } from '@/lib/helpers/dateUtilities'
 import { getFullUrl } from '@/lib/helpers/getFullUrl'
-import LatestNews from '@/pageComponents/news/LatestNews'
 import { resolveOpenGraphImage } from '@/sanity/lib/utils'
 import { DefaultHero } from '@/sections/Hero/DefaultHero'
+import LatestNews from '@/sections/LatestNews/LatestNews'
 import type {
   CardData,
   IFrameData,
@@ -18,9 +18,9 @@ import type {
   ImageWithCaptionData,
   RelatedLinksData,
 } from '@/types'
-import RelatedContent from '../../pageComponents/shared/RelatedContent'
 import Blocks from '../../portableText/Blocks'
 import Footnotes from '../../portableText/components/Footnotes'
+import RelatedContent from '../../sections/RelatedContent/RelatedContent'
 
 export type NewsPageProps = {
   slug: string
@@ -68,11 +68,11 @@ const NewsPage = async ({
   }))
 
   const publishedInformation = (
-    <div className='grid grid-cols-[min-content_1fr] items-start gap-2 px-layout-md pb-12 text-base md:flex md:items-center dark:text-white-100'>
+    <div className='grid grid-cols-[min-content_1fr] items-start gap-2 px-layout-sm pb-12 text-base lg:flex lg:items-center lg:px-layout-md dark:text-white-100'>
       <TransformableIcon iconData={calendar} className='md:-mt-1' />
-      <div className='flex flex-col items-start gap-2 md:flex-row md:items-center'>
+      <div className='flex flex-col items-start gap-2 lg:flex-row lg:items-center'>
         <FormattedDateTime datetime={publishDateTime} />
-        <div className='flex md:items-center'>
+        <div className='flex lg:items-center'>
           {
             // publishDateTime + 5 minutes
             isDateAfter(
@@ -82,7 +82,7 @@ const NewsPage = async ({
               ).toISOString(),
             ) && (
               <>
-                <div className='mr-2 hidden md:flex'>|</div>
+                <div className='mr-2 hidden lg:flex'>|</div>
                 {intl('last_modified') ?? 'Last modified'}
                 <span className='w-1' />
                 <FormattedDateTime datetime={modifiedDate} />

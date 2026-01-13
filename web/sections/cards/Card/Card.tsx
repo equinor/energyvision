@@ -75,7 +75,7 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
   const imageVariantClassNames: Record<Variants, string> = {
     primary: `rounded-t-card *:rounded-t-card`,
     secondary: `rounded-t-card *:rounded-t-card`,
-    compact: 'rounded-card w-[25vw] h-full *:rounded-card',
+    compact: 'rounded-s-card w-[25vw] h-full *:rounded-s-card',
     single: 'w-full h-full',
   }
 

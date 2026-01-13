@@ -1,10 +1,10 @@
 'use client'
+import { toPlainText } from '@portabletext/react'
 import { useTranslations } from 'next-intl'
 import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
 import { Typography } from '@/core/Typography'
 import Card from '@/sections/cards/Card'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
-import Blocks from '../../portableText/Blocks'
 import type { CardData } from '../../types/index'
 
 type LatestNewsProp = {
@@ -22,6 +22,8 @@ const LatestNews = ({ data }: LatestNewsProp) => {
       </Typography>
       <ul className='grid auto-rows-fr grid-cols-1 gap-x-6 gap-y-3 max-lg:w-full md:auto-cols-fr md:grid-flow-col'>
         {data.map((newsItem: CardData) => {
+          //@ts-ignore:todo
+          const plainIngress = toPlainText(newsItem?.ingress)
           return (
             <li key={newsItem.id} className=''>
               <Card
@@ -50,11 +52,13 @@ const LatestNews = ({ data }: LatestNewsProp) => {
                     variant={isMobile ? 'compact' : 'primary'}
                   />
                   {newsItem?.ingress && (
-                    <Blocks
-                      value={newsItem?.ingress}
-                      className={`break-word hidden lg:block`}
-                      clampLines={5}
-                    />
+                    <Typography
+                      group='paragraph'
+                      variant='simple'
+                      className='line-clamp-5 max-lg:hidden'
+                    >
+                      {plainIngress}
+                    </Typography>
                   )}
                 </Card.Content>
               </Card>
