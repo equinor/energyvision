@@ -1,7 +1,7 @@
 'use client'
-import { ImageWithAlt } from '../../types'
 import HlsVideoPlayer, { getThumbnailRatio } from '@core/HlsVideoPlayer/HlsVideoPlayer'
 import { urlFor } from '../../common/helpers'
+import type { ImageWithAlt } from '../../types'
 
 export type LoopingVideoRatio = '1:2' | 'narrow'
 
@@ -21,7 +21,7 @@ export const LoopingVideo = ({ video }: { video: LoopingVideoData }) => {
   return (
     <div className={`relative ${ratio === 'narrow' ? 'pb-[75%] md:pb-[30%]' : 'pb-[50%]'}`}>
       <HlsVideoPlayer
-        //@ts-ignore:todo
+        //@ts-expect-error:todo
         aspectRatio={ratio}
         src={url}
         autoPlay

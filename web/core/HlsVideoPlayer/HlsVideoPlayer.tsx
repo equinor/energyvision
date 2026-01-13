@@ -1,8 +1,8 @@
 'use client'
-import { getPxLgSizes, getTwAspectRatioUtilityOnRatio, ImageRatioKeys } from '@core/SanityImage/SanityImage'
+import { getPxLgSizes, getTwAspectRatioUtilityOnRatio, type ImageRatioKeys } from '@core/SanityImage/SanityImage'
 import type { PortableTextBlock } from '@portabletext/types'
 import Img from 'next/image'
-import { useMemo, type HTMLProps } from 'react'
+import { type HTMLProps, useMemo } from 'react'
 import envisTwMerge from '../../twMerge'
 import { HlsPlayer } from './HlsPlayer'
 
@@ -61,8 +61,8 @@ export const HlsVideoPlayer = ({
 }: HlsVideoPlayerProps) => {
   const videoOptions = useMemo(() => {
     return {
-      muted: muted ? 'muted' : false,
-      playsinline: playsInline,
+      muted: muted,
+      playsInline: playsInline,
       loop: loop,
       autoPlay: autoPlay,
       preload: autoPlay ? 'auto' : 'none',

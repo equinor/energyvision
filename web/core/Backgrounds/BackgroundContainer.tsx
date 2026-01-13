@@ -1,8 +1,8 @@
-import { forwardRef, HTMLAttributes } from 'react'
-import type { BackgroundColours, BackgroundTypes, ImageBackground } from '../../types/index'
-import { BackgroundContainerType, BackgroundStyle, ColouredContainer } from './ColouredContainer'
-import { ColorKeyTokens } from '../../styles/colorKeyToUtilityMap'
+import { forwardRef, type HTMLAttributes } from 'react'
+import type { ColorKeyTokens } from '../../styles/colorKeyToUtilityMap'
 import envisTwMerge from '../../twMerge'
+import type { BackgroundColours, BackgroundTypes, ImageBackground } from '../../types/index'
+import { type BackgroundContainerType, type BackgroundStyle, ColouredContainer } from './ColouredContainer'
 import { ImageBackgroundContainer } from './ImageBackgroundContainer'
 
 export type BackgroundContainerProps = {
@@ -63,29 +63,26 @@ export const BackgroundContainer = forwardRef<HTMLDivElement, BackgroundContaine
           {children}
         </ImageBackgroundContainer>
       )}
-      {(type === 'backgroundColor' || !type) && (
-        <>
-          {as == 'div' &&
-          renderFragmentWhenPossible &&
-          (restBackground?.backgroundColor === 'White' || restBackground?.backgroundUtility === 'white-100') &&
-          className === '' &&
-          !id ? (
-            <>{children}</>
-          ) : (
-            <ColouredContainer
-              ref={ref}
-              id={id}
-              {...restBackground}
-              style={style}
-              as={as}
-              backgroundStyle={backgroundStyle}
-              className={envisTwMerge(`${id ? 'scroll-mt-topbar' : ''}`, className, twClassName)}
-            >
-              {children}
-            </ColouredContainer>
-          )}
-        </>
-      )}
+      {(type === 'backgroundColor' || !type) &&
+        (as === 'div' &&
+        renderFragmentWhenPossible &&
+        (restBackground?.backgroundColor === 'White' || restBackground?.backgroundUtility === 'white-100') &&
+        className === '' &&
+        !id ? (
+          children
+        ) : (
+          <ColouredContainer
+            ref={ref}
+            id={id}
+            {...restBackground}
+            style={style}
+            as={as}
+            backgroundStyle={backgroundStyle}
+            className={envisTwMerge(`${id ? 'scroll-mt-topbar' : ''}`, className, twClassName)}
+          >
+            {children}
+          </ColouredContainer>
+        ))}
     </>
   )
 })

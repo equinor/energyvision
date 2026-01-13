@@ -3,7 +3,7 @@
 import { BackgroundContainer } from '@core/Backgrounds'
 import HlsVideoPlayer from '@core/HlsVideoPlayer/HlsVideoPlayer'
 import { ResourceLink } from '@core/Link'
-import { getTwAspectRatioUtilityOnRatio, ImageRatioKeys } from '@core/SanityImage/SanityImage'
+import { getTwAspectRatioUtilityOnRatio, type ImageRatioKeys } from '@core/SanityImage/SanityImage'
 import { Heading } from '@core/Typography'
 /* import type { VideoJS } from '@core/VideoJsPlayer' */
 import type { PortableTextBlock } from '@portabletext/types'
@@ -34,7 +34,7 @@ const getHeightWidth = (aspectRatio: string, height?: number | string) => {
         return 'w-full h-full'
     }
   }
-  return `h-[${typeof height == 'string' ? height : `${height}px`}] w-full`
+  return `h-[${typeof height === 'string' ? height : `${height}px`}] w-full`
 }
 
 export const getThumbnailRatio = (aspectRatio: string, height?: number) => {
@@ -106,7 +106,7 @@ export const VideoComponentWithCaption = ({
         <HlsVideoPlayer
           variant="default"
           src={video.url}
-          //@ts-ignore:todo
+          //@ts-expect-error:todo
           aspectRatio={designOptions.aspectRatio}
           poster={urlFor(video.thumbnail?.asset).width(w).height(h).url()}
           title={video.title}
@@ -154,7 +154,7 @@ export const VideoComponent = ({ video, designOptions, useFillMode = false, clas
         <HlsVideoPlayer
           variant="default"
           src={video?.url}
-          //@ts-ignore:todo
+          //@ts-expect-error:todo
           aspectRatio={designOptions?.aspectRatio}
           poster={urlFor(video.thumbnail?.asset).width(w).height(h).url()}
           title={video.title}
@@ -180,7 +180,7 @@ const VideoPlayer = ({ anchor, data, className }: { data: VideoPlayerData; ancho
         <div className={`pb-6`}>
           {title && <Heading value={title} as="h2" variant="xl" className="mb-2 pb-2" />}
           {ingress && <IngressText value={ingress} className="mb-lg" />}
-          {action && action?.label && actionUrl && (
+          {action?.label && actionUrl && (
             <ResourceLink
               href={actionUrl || ''}
               file={{
