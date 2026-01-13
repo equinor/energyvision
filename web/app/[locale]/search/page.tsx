@@ -4,9 +4,9 @@ import { close } from '@equinor/eds-icons'
 import { FloatingOverlay } from '@floating-ui/react'
 import { useRouter } from 'next/navigation'
 import { LogoLink } from '@/core/Link/LogoLink'
-import { Search } from '@/sections/Search/Search'
 import { NavTopbar } from '@/sections/SiteMenu/NavTopbar'
 import { TopbarDropdown } from '@/sections/SiteMenu/TopbarDropdown'
+import { Search } from '@/sections/searchBlocks/Search'
 
 /* export async function generateMetadata({
   params,

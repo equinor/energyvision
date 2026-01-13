@@ -1,3 +1,4 @@
+import type { PortableTextBlock } from '@portabletext/types'
 import type { HeroData, HeroTypes } from '@/sections/Hero/HeroBlock'
 import type {
   DesignOptions,
@@ -5,7 +6,6 @@ import type {
   ImageWithAlt,
   ImageWithCaptionData,
   LinkData,
-  PortableTextBlock,
 } from './index'
 
 export type CardTypes = 'news' | 'topics' | 'people' | 'events'

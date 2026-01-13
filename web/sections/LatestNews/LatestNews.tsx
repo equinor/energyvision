@@ -2,6 +2,7 @@
 import { toPlainText } from '@portabletext/react'
 import { useTranslations } from 'next-intl'
 import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
+import { Promotion } from '@/core/Promotion/Promotion'
 import { Typography } from '@/core/Typography'
 import Card from '@/sections/cards/Card'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
@@ -22,10 +23,30 @@ const LatestNews = ({ data }: LatestNewsProp) => {
       </Typography>
       <ul className='grid auto-rows-fr grid-cols-1 gap-x-6 gap-y-3 max-lg:w-full md:auto-cols-fr md:grid-flow-col'>
         {data.map((newsItem: CardData) => {
-          //@ts-ignore:todo
-          const plainIngress = toPlainText(newsItem?.ingress)
           return (
-            <li key={newsItem.id} className=''>
+            <li key={newsItem.id}>
+              <Promotion
+                variant='default'
+                type='extended'
+                //@ts-ignore:todo
+                title={newsItem?.title}
+                ingress={newsItem?.ingress}
+                {...(newsItem?.publishDateTime && {
+                  eyebrow: (
+                    <FormattedDateTime
+                      variant='date'
+                      datetime={newsItem?.publishDateTime}
+                      uppercase
+                      className='pb-2'
+                    />
+                  ),
+                })}
+                image={newsItem?.heroImage?.image}
+                href={newsItem?.slug}
+                hasSectionTitle={true}
+              />
+            </li>
+            /*             <li key={newsItem.id} className=''>
               <Card
                 href={newsItem?.slug}
                 image={newsItem?.heroImage?.image}
@@ -61,8 +82,7 @@ const LatestNews = ({ data }: LatestNewsProp) => {
                     </Typography>
                   )}
                 </Card.Content>
-              </Card>
-            </li>
+              </Card>           </li>*/
           )
         })}
       </ul>
