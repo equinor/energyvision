@@ -12,6 +12,7 @@ import { type UsePaginationProps, usePagination } from 'react-instantsearch'
 import { twMerge } from 'tailwind-merge'
 import { usePrefersReducedMotion } from '@/lib/hooks/usePrefersReducedMotion'
 import { isModifierClick, PaginationItem } from './PaginationItem'
+import { PaginationContext } from '@/contexts/PaginationContext'
 
 // Based on: https://github.com/algolia/react-instantsearch/blob/master/examples/hooks/components/Pagination.tsx
 export type PaginationProps = {
@@ -41,7 +42,6 @@ export const Pagination = ({
     padding,
   })
   const intl = useTranslations()
-  //@ts-ignore:todo
   const { resultsRef } = useContext(PaginationContext)
   const prevRefinement = useRef<number>(currentRefinement)
   const prefersReducedMotion = usePrefersReducedMotion()
