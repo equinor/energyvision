@@ -5,7 +5,7 @@ import PeopleCard from '@/sections/cards/PeopleCard/PeopleCard'
 import PromotionCard from '@/sections/cards/PromotionCard/PromotionCard'
 import type { ColorKeys } from '@/styles/colorKeyToUtilityMap'
 import type { CardData, EventCardData, PeopleCardData } from '../../types/index'
-import MultipleEventCards from './MultipleEventCards'
+import MultipleEventCards from './event/EventPromotions'
 import type {
   EventPromotion,
   MagazinePromotion,

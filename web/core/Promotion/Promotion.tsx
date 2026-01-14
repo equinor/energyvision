@@ -1,11 +1,10 @@
 import type { PortableTextBlock } from '@portabletext/types'
 import { forwardRef, type ReactNode } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { Image, type ImageRatioKeys } from '@/core/Image/Image'
+import { Image } from '@/core/Image/Image'
 import { getArrowElement } from '@/core/Link/ResourceLink'
 import { Typography } from '@/core/Typography'
 import type { GridColumnVariant } from '@/lib/helpers/getCommonUtilities'
-import { useMediaQuery } from '@/lib/hooks/useMediaQuery'
 import {
   type ColorKeys,
   colorKeyToUtilityMap,
@@ -100,9 +99,10 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
     const layoutOnTypes: Record<PromotionType, string> = {
       compact:
         _layoutDirection === 'col'
-          ? 'grid-cols-1 grid-rows-[16vh_auto]'
+          ? 'grid-cols-1 grid-rows-[31vw_auto] md:grid-rows-[20vw_auto] lg:grid-rows-[13vw_auto] 5xl:lg:grid-rows-[10vw_auto]'
           : `min-h-[120px] grid-cols-[23vw_auto] md:grid-cols-[15vw_auto] lg:grid-cols-[10vw_auto] grid-rows-1`,
-      extended: 'grid-cols-1 grid-rows-[16vh_auto]',
+      extended:
+        'grid-cols-1 grid-rows-[31vw_auto] md:grid-rows-[20vw_auto] lg:grid-rows-[13vw_auto] 5xl:lg:grid-rows-[10vw_auto]',
     }
     const lineClampOnTypes: Record<PromotionType, string> = {
       compact: layoutDirection === 'col' ? 'line-clamp-2' : 'line-clamp-3',

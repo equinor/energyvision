@@ -1,7 +1,9 @@
 import type { PortableTextBlock } from 'next-sanity'
-import { useId } from 'react'
+import { useId, useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
+import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
 import { ResourceLink } from '@/core/Link/ResourceLink'
+import { Promotion } from '@/core/Promotion/Promotion'
 import Blocks from '@/portableText/Blocks'
 import {
   type ColorKeys,
@@ -15,8 +17,8 @@ import type {
   PeopleCardData,
   Tag,
 } from '@/types'
-import MultiplePromotions from './MultiplePromotions'
-import Promotion from './Promotion'
+import PeopleCard from '../cards/PeopleCard/PeopleCard'
+import EventPromotions from './event/EventPromotions'
 
 // Do we have a way to share types between studio and web?
 export type PromotionType =
@@ -66,20 +68,7 @@ export type EventPromotion = {
   promotions?: EventCardData[]
 } & PromotionBlock
 
-/* export type PromotionsBlockData = {
-  content: {
-    promotions: CardData[] | PeopleCardData[] | EventCardData[]
-    type: PromotionType
-    eventPromotionSettings?: EventPromotionSettings
-  }
-} */
-
-const PromotionsBlock = ({
-  variant,
-  data,
-  anchor,
-  className,
-}: {
+export type PromotionsBlockProps = {
   variant: PromotionType
   data:
     | EventPromotion
@@ -89,29 +78,59 @@ const PromotionsBlock = ({
     | PeoplePromotion
   anchor?: string
   className?: string
-}) => {
-  const { title, ingress, viewAllLink, designOptions, ...restData } = data
-  const { foreground } = designOptions || {}
+}
+
+const mapOldPromoType = (
+  oldType:
+    | 'news'
+    | 'topics'
+    | 'localNews'
+    | 'magazine'
+    | 'people'
+    | 'events'
+    | undefined,
+) => {
+  switch (oldType) {
+    case 'people':
+      return 'promotePeople'
+    case 'events':
+      return 'promoteEvents'
+    case 'news':
+    case 'localNews':
+      return 'promoteNews'
+    case undefined:
+      return undefined
+    default:
+      return 'promoteTopics'
+  }
+}
+
+const PromotionsBlock = ({
+  variant,
+  data,
+  anchor,
+  className,
+}: PromotionsBlockProps) => {
+  const {
+    title,
+    ingress,
+    viewAllLink,
+    designOptions,
+    promotions,
+    //@ts-ignore: how to spread union types
+    eventsCount,
+    //@ts-ignore: how to spread union types
+    promotePastEvents,
+  } = data
+  //const { foreground } = designOptions || {}
   const { bg, dark } = getBgAndDarkFromBackground(designOptions)
+  const promotionVariant =
+    variant ?? mapOldPromoType(data.promotions?.[0]?.type) ?? 'promoteTopics'
 
   const sectionTitleId = useId()
-  let promotionsCount = data?.promotions?.length
-  let promotionList = data?.promotions ?? []
-  if (
-    variant === 'promoteEvents' &&
-    'eventsCount' in data &&
-    data?.eventsCount &&
-    data?.promotions
-  ) {
-    promotionsCount = data?.eventsCount ?? data?.promotions?.length
-    /*     const sortedPromotions = (promotions as EventCardData[]).sort((a, b) => {
-          return (
-            new Date(getEventDates(a.eventDate).start || a.eventDate.date).getTime() -
-            new Date(getEventDates(b.eventDate).start || b.eventDate.date).getTime()
-          )
-        }) */
-    promotionList = data?.promotions.slice(0, data?.eventsCount)
-  }
+  const promotionList = useMemo(() => {
+    return (eventsCount ? promotions?.slice(0, eventsCount) : promotions) ?? []
+  }, [promotions, eventsCount])
 
   const onColorBg = designOptions?.background?.backgroundColor !== 'White'
   const paddingClassName = `px-layout-sm lg:px-layout-lg`
@@ -148,31 +167,58 @@ const PromotionsBlock = ({
             </ResourceLink>
           </div>
         )}
-        <div
-          className={`pt-6 ${promotionsCount === 1 ? 'px-layout-sm md:px-layout-lg' : `3xl:px-layout-md px-layout-sm`}`}
-        >
-          {promotionsCount === 1 ? (
-            <Promotion
-              onColorBg={onColorBg}
-              background={foreground}
-              promotion={promotionList[0]}
-              hasSectionTitle={!!title}
-            />
-          ) : (
-            <MultiplePromotions
-              //@ts-ignore: todo
-              data={{
-                ...restData,
-                promotions: promotionList,
-              }}
-              onColorBg={onColorBg}
-              background={foreground}
-              variant={variant}
-              hasSectionTitle={!!title}
-              labelledbyId={sectionTitleId}
-            />
-          )}
-        </div>
+
+        {promotionVariant === 'promoteEvents' ? (
+          <EventPromotions
+            promotions={promotionList as EventCardData[]}
+            hasSectionTitle={!!title}
+            promotePastEvents={promotePastEvents}
+          />
+        ) : (
+          <ul
+            className={`pt-6 ${promotionList?.length === 1 ? 'mx-layout-sm md:mx-layout-lg' : `3xl:mx-layout-md mx-layout-sm grid auto-rows-fr grid-cols-1 ${promotionList?.length === 3 ? 'md:grid-cols-3' : 'md:grid-cols-2 2xl:grid-cols-3'} gap-x-4 gap-y-3`}
+              `}
+          >
+            {promotionList?.map((promotion: any) => {
+              return (
+                <li key={promotion?.id}>
+                  {variant === 'promotePeople' && (
+                    <PeopleCard
+                      data={data as PeopleCardData}
+                      hasSectionTitle={!!title}
+                      variant='single'
+                    />
+                  )}
+                  {variant !== 'promotePeople' && (
+                    <Promotion
+                      variant='default'
+                      type='extended'
+                      //@ts-ignore:todo
+                      title={promotion?.title}
+                      ingress={promotion?.ingress}
+                      {...(onColorBg && {
+                        background: 'white-100',
+                      })}
+                      {...(promotion?.publishDateTime && {
+                        eyebrow: (
+                          <FormattedDateTime
+                            variant='date'
+                            datetime={promotion?.publishDateTime}
+                            uppercase
+                            className='pb-2 text-sm'
+                          />
+                        ),
+                      })}
+                      image={promotion?.heroImage?.image}
+                      href={promotion?.slug}
+                      hasSectionTitle={!!title}
+                    />
+                  )}
+                </li>
+              )
+            })}
+          </ul>
+        )}
       </div>
     </section>
   )
