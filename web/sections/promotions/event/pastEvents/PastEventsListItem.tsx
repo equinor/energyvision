@@ -8,7 +8,7 @@ import { BaseLink } from '@/core/Link/BaseLink'
 import { Typography } from '@/core/Typography'
 import { getEventDates } from '@/lib/helpers/dateUtilities'
 import Blocks from '@/portableText/Blocks'
-import type { EventCardData } from '../../../types/index'
+import type { EventCardData } from '@/types'
 
 export type PastEventsListItemProps = {
   event: EventCardData
