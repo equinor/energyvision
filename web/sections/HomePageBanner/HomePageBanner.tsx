@@ -12,6 +12,10 @@ import { Typography } from '@/core/Typography'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import { useMediaQuery } from '@/lib/hooks/useMediaQuery'
 import Blocks from '@/portableText/Blocks'
+import {
+  type ColorKeys,
+  colorKeyToUtilityMap,
+} from '@/styles/colorKeyToUtilityMap'
 import type { ImageWithAlt, LinkData } from '@/types'
 
 export type HomePageBannerThemeColors = {
@@ -65,6 +69,8 @@ type HomePageBannerProps = {
     backgroundType?: number
   }
   anchor?: string
+  /* if next comp is colored the mobile version should have colored bg for title */
+  nextCompBg?: ColorKeys
 }
 
 export const HomePageBanner = forwardRef<HTMLDivElement, HomePageBannerProps>(
@@ -77,6 +83,7 @@ export const HomePageBanner = forwardRef<HTMLDivElement, HomePageBannerProps>(
       image,
       ctaCards,
       designOptions,
+      nextCompBg,
     },
     ref,
   ) {
@@ -86,9 +93,12 @@ export const HomePageBanner = forwardRef<HTMLDivElement, HomePageBannerProps>(
       useGradient = false,
       backgroundPosition,
     } = designOptions
+
     const { foreground, background } = getColorForHomepageBannerTheme(
       theme?.value ?? 0,
     )
+    const nextCompBgUtility =
+      nextCompBg && colorKeyToUtilityMap[nextCompBg]?.background
     const useImage = String(backgroundType) === String(0)
 
     const isMobile = useMediaQuery(`(max-width: 1024px)`)
@@ -106,7 +116,7 @@ export const HomePageBanner = forwardRef<HTMLDivElement, HomePageBannerProps>(
         variant='h2'
         //@ts-ignore:todo
         value={title}
-        blockClassName={`h-fit w-full px-layout-md text-3xl tracking-tighter text-pretty backdrop-blur-[1.1px] max-lg:pt-6 lg:px-0 lg:text-4xl ${rightAlignTitle ? 'lg:mr-20 lg:ml-auto' : 'lg:mr-auto lg:ml-20'} ${useWhiteTitle ? 'text-white-100' : ''} ${useImage ? 'lg:z-10' : ''} max-w-text`}
+        blockClassName={`h-fit w-full px-layout-sm lg:px-layout-md text-3xl tracking-tighter text-pretty backdrop-blur-[1.1px] max-lg:pt-6 lg:px-0 lg:text-4xl ${rightAlignTitle ? 'lg:mr-20 lg:ml-auto' : 'lg:mr-auto lg:ml-20'} ${useWhiteTitle ? 'text-white-100' : ''} ${useImage ? 'lg:z-10' : ''} max-w-text`}
       />
     )
 
@@ -118,7 +128,7 @@ export const HomePageBanner = forwardRef<HTMLDivElement, HomePageBannerProps>(
       >
         {useImage && (
           <picture
-            className={`absolute inset-0 flex h-auto w-full max-lg:aspect-video`}
+            className={`flex h-auto w-full max-lg:aspect-21/9 lg:absolute lg:inset-0`}
           >
             {useGradient && (
               <div
@@ -135,12 +145,12 @@ export const HomePageBanner = forwardRef<HTMLDivElement, HomePageBannerProps>(
           </picture>
         )}
         <div
-          className={`mx-auto grid grid-cols-1 grid-rows-[max-content_min-content] gap-4 pl-sm lg:gap-12 lg:px-layout-sm ${useImage ? '-mt-12 lg:pt-40' : 'pt-16'} pb-2 lg:pt-32 lg:pb-14`}
+          className={`mx-auto grid grid-cols-1 grid-rows-[max-content_min-content] gap-4 pl-sm lg:gap-12 lg:px-layout-sm ${useImage ? `-mt-12 lg:pt-40 ${title && isMobile ? nextCompBgUtility : ''}` : 'pt-16'} pb-2 lg:pt-32 lg:pb-14`}
         >
           {title && ((useImage && !isMobile) || !useImage) && headingElement}
           {ctaCards?.length && (
             <ul
-              className={`flex w-full snap-x gap-4 overflow-x-auto ${useImage ? 'z-10' : ''}`}
+              className={`relative flex w-full snap-x gap-4 overflow-x-auto ${useImage ? 'z-10' : ''}`}
             >
               {ctaCards?.map(ctaCard => {
                 const { id, link, overline } = ctaCard

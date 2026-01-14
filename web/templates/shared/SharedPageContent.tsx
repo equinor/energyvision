@@ -581,7 +581,16 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
         )
       /* Remove from here and move to Homepage Template PageContent */
       case 'homepageBanner':
-        return <HomePageBanner key={c.id} {...(c as any)} />
+        return (
+          <HomePageBanner
+            key={c.id}
+            {...(c as any)}
+            nextCompBg={
+              data?.content?.[index + 1]?.designOptions?.background
+                ?.backgroundUtility
+            }
+          />
+        )
       case 'tableV2':
         return (
           <TableBlock

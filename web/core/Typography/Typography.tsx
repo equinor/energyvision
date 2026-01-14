@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 
 import type { OverridableComponent } from '@equinor/eds-utils'
+import { clsx } from 'clsx'
 import {
   type AnchorHTMLAttributes,
   type ElementType,
   forwardRef,
   type HTMLAttributes,
 } from 'react'
-import { twMerge } from '@/lib/twMerge/twMerge'
 import {
   quickVariants,
   type TypographyGroups,
@@ -91,7 +91,6 @@ export const Typography: OverridableComponent<TypographyProps, HTMLElement> =
       as: providedAs,
       link = false,
       className = '',
-      ...rest
     },
     ref,
   ) {
@@ -106,13 +105,11 @@ export const Typography: OverridableComponent<TypographyProps, HTMLElement> =
       )
     }
     const TypographyTag = as ?? (`p` as React.ElementType)
-
     // text color for regular and dark is applied in globals base body. is it necessary here?
     return (
       <TypographyTag
-        {...rest}
         ref={ref}
-        className={twMerge(
+        className={clsx(
           'wrap-break-word text-pretty text-slate-80 dark:text-white-100',
           group !== 'article' && 'max-w-text',
           typography,

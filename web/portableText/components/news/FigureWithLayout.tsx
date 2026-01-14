@@ -54,9 +54,9 @@ export const FigureWithLayout = (block: BlockProps) => {
   const layoutVariantClassName = {
     full: 'lg:ps-layout-md lg:pe-layout-md',
     //md:ps-8
-    right: `${imageOrientation !== 'landscape' ? 'lg:w-[38vw]' : 'lg:w-[46vw]'} lg:pe-layout-md lg:float-end lg:ps-6`,
-    left: `${imageOrientation !== 'landscape' ? 'lg:w-[38vw]' : 'lg:w-[46vw]'} lg:ps-layout-md lg:float-start lg:pe-6`,
-    center: `w-full lg:ps-layout-lg lg:pe-layout-lg lg:grid ${centerImageLayout === 'left' ? 'lg:grid-cols-[auto_45%]' : 'lg:grid-cols-[45%_auto]'} items-start lg:gap-4`,
+    right: `${imageOrientation !== 'landscape' ? 'md:w-[40vw]' : 'md:w-[46vw]'} lg:pe-layout-md md:float-end md:ps-6`,
+    left: `${imageOrientation !== 'landscape' ? 'md:w-[40vw]' : 'md:w-[46vw]'} lg:ps-layout-md md:float-start md:pe-6`,
+    center: `w-full lg:ps-layout-lg lg:pe-layout-lg md:grid ${centerImageLayout === 'left' ? 'md:grid-cols-[auto_45%]' : 'md:grid-cols-[45%_auto]'} items-start md:gap-4`,
   }
   let imageGrid = 'xs' as GridType
   if (layout === 'full') {
@@ -103,11 +103,6 @@ export const FigureWithLayout = (block: BlockProps) => {
       </div>
     </FigureCaption>
   )
-  console.log('value', value)
-
-  console.log('centerImageLayout', centerImageLayout)
-  console.log('layout', layout)
-  console.log('centerCaptionAlignment', centerCaptionAlignment)
 
   return (
     <figure className={figureClassName}>

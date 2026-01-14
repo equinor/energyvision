@@ -39,7 +39,8 @@ const variants = {
     eyebrow: 'text-xs font-medium uppercase',
     h2: 'text-lg leading-misty pb-4',
     h3: 'text-md leading-misty pb-4',
-    ingress: 'text-base leading-cloudy',
+    //on cards ingress is hidden and needs webkit-box with line-clamp
+    ingress: 'hidden lg:[display:-webkit-box] text-base leading-cloudy',
   },
   article: {
     ingress: `text-md 

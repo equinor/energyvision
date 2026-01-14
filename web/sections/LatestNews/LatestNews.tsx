@@ -1,11 +1,8 @@
 'use client'
-import { toPlainText } from '@portabletext/react'
 import { useTranslations } from 'next-intl'
 import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
 import { Promotion } from '@/core/Promotion/Promotion'
 import { Typography } from '@/core/Typography'
-import Card from '@/sections/cards/Card'
-import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
 import type { CardData } from '../../types/index'
 
 type LatestNewsProp = {
@@ -13,15 +10,15 @@ type LatestNewsProp = {
 }
 
 const LatestNews = ({ data }: LatestNewsProp) => {
-  const isMobile = useMediaQuery(`(max-width: 800px)`)
   const t = useTranslations()
 
   return (
-    <section className='flex flex-col items-start 3xl:px-layout-md px-layout-sm py-20'>
+    <section className='flex w-full flex-col items-start 3xl:px-layout-md px-layout-sm py-20'>
       <Typography variant='h2' className='mb-10'>
         {t('latest_news')}
       </Typography>
-      <ul className='grid auto-rows-fr grid-cols-1 gap-x-6 gap-y-3 max-lg:w-full md:auto-cols-fr md:grid-flow-col'>
+      {/*grid auto-rows-fr grid-cols-1 gap-x-6 gap-y-3 max-lg:w-full md:auto-cols-fr md:grid-flow-col*/}
+      <ul className='flex w-full flex-col gap-6 lg:flex-row'>
         {data.map((newsItem: CardData) => {
           return (
             <li key={newsItem.id}>
@@ -37,7 +34,7 @@ const LatestNews = ({ data }: LatestNewsProp) => {
                       variant='date'
                       datetime={newsItem?.publishDateTime}
                       uppercase
-                      className='pb-2'
+                      className='pb-2 text-sm'
                     />
                   ),
                 })}

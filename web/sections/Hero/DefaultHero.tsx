@@ -55,7 +55,7 @@ export const DefaultHero = ({
     <div className={twMerge(className, `relative h-full w-full`)}>
       {background && (
         <div
-          className={`-z-1 absolute inset-0 w-full lg:h-[60dvh] ${background}`}
+          className={`-z-1 absolute inset-0 w-full lg:mb-news-banner-vertical ${background}`}
         />
       )}
       <div className={twMerge(`pt-10 lg:pt-20`, px, titleClassName)}>

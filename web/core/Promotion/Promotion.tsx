@@ -1,7 +1,7 @@
 import type { PortableTextBlock } from '@portabletext/types'
 import { forwardRef, type ReactNode } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { Image } from '@/core/Image/Image'
+import { Image, type ImageRatioKeys } from '@/core/Image/Image'
 import { getArrowElement } from '@/core/Link/ResourceLink'
 import { Typography } from '@/core/Typography'
 import type { GridColumnVariant } from '@/lib/helpers/getCommonUtilities'
@@ -19,8 +19,8 @@ export type PromotionLayoutDirection = 'col' | 'row'
 
 export type PromotionProps = {
   /**
-   * compact - only title with v2 promo options
-   * extended - title, ingress and date eyebrow, side by side mobile then stacked from lg. News promotion
+   * compact - only title with v2 promo options in studio
+   * extended - title, ingress and date eyebrow, stacked layout. E.g. News promotion
    * @default compact
    */
   type?: PromotionType
@@ -70,7 +70,6 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
     },
     ref,
   ) {
-    const isMobile = useMediaQuery(`(max-width: 800px)`)
     const plainText = Array.isArray(title)
       ? title
           .map(block => block.children.map(span => span.text).join(''))
@@ -92,8 +91,7 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
     }
 
     const showArrow = type !== 'extended'
-    const _layoutDirection =
-      type === 'extended' ? (isMobile ? 'row' : 'col') : layoutDirection
+    const _layoutDirection = type === 'extended' ? 'col' : layoutDirection
 
     const paddingOnTypes: Record<PromotionType, string> = {
       compact: _layoutDirection === 'col' ? 'p-4' : 'py-4 pr-3 pl-4',
@@ -102,10 +100,9 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
     const layoutOnTypes: Record<PromotionType, string> = {
       compact:
         _layoutDirection === 'col'
-          ? 'grid-cols-1 grid-rows-[65%_35%]'
-          : `min-h-[120px] grid-cols-[30%_70%] grid-rows-1`,
-      extended:
-        'grid-cols-[30%_70%] grid-rows-1 lg:grid-rows-2 lg:grid-cols-1 ',
+          ? 'grid-cols-1 grid-rows-[16vh_auto]'
+          : `min-h-[120px] grid-cols-[23vw_auto] md:grid-cols-[15vw_auto] lg:grid-cols-[10vw_auto] grid-rows-1`,
+      extended: 'grid-cols-1 grid-rows-[16vh_auto]',
     }
     const lineClampOnTypes: Record<PromotionType, string> = {
       compact: layoutDirection === 'col' ? 'line-clamp-2' : 'line-clamp-3',
@@ -130,14 +127,14 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
             image={image}
             fill
             className={`${layoutDirectionImageClassNames[_layoutDirection]}`}
-            aspectRatio={_layoutDirection === 'col' ? '16:9' : '4:5'}
+            aspectRatio={_layoutDirection === 'col' ? '16:9' : '4:3'}
             imageClassName={`${_layoutDirection !== 'col' ? 'rounded-s-card' : 'rounded-t-card'}`}
           />
         )}
         <div
-          className={`h-inherit w-inherit ${paddingOnTypes[type]} flex items-center overflow-hidden`}
+          className={`h-full min-h-[8vh] w-full ${paddingOnTypes[type]} flex ${type === 'extended' ? 'items-start' : 'items-center'} `}
         >
-          <div className='max-w-prose grow'>
+          <div className={`max-w-prose grow`}>
             {eyebrow && eyebrow}
             {plainText && (
               <Typography
@@ -150,10 +147,9 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
             )}
             {plainIngress && (
               <Typography
-                as='p'
-                variant='h6'
-                className={`pt-3 ${type === 'extended' ? 'hidden lg:[display:-webkit-box]' : ''}
-                  ${lineClampOnTypes[type]}`}
+                group='card'
+                variant='ingress'
+                className={`pt-3 ${lineClampOnTypes[type]}`}
               >
                 {plainIngress}
               </Typography>

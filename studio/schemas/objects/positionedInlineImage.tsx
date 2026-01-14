@@ -301,6 +301,7 @@ export default {
         input: LayoutInput,
       },
       hidden: ({ parent }: any) => {
+        //hide it since the web component will use center layout only for it. No need for editors to see
         return parent?.imageOrientation === 'portrait'
       },
     },
@@ -344,6 +345,9 @@ export default {
             />
           )
         },
+      },
+      hidden: ({ parent }: any) => {
+        return parent?.imageOrientation !== 'portrait'
       },
     },
     {
