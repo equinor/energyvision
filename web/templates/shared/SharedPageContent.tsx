@@ -31,10 +31,10 @@ import PieChartBlock, {
   type PieChartBlockProps,
 } from '@/sections/PieChartBlock/PieChartBlock'
 import PromoTileArray from '@/sections/PromoTiles/PromoTileArray'
+import { PromotionBlockV2 } from '@/sections/promotions/PromotionBlockV2'
 import PromotionsBlock, {
   type PromotionsBlockData,
 } from '@/sections/promotions/PromotionsBlock'
-import { PromotionBlockV2 } from '@/sections/promotions/v2/PromotionBlockV2'
 import QuoteBlock from '@/sections/QuoteBlock/QuoteBlock'
 import StockValues, {
   type StockValuesProps,
