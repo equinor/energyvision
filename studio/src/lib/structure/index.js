@@ -1,6 +1,7 @@
 import { useCurrentUser } from 'sanity'
 import { Flags } from '../datasetHelpers'
 import { AssetLibrary } from './items/AssetLibrary'
+import { DeveloperContent } from './items/DeveloperPages'
 import { Event as EventStructure } from './items/Event'
 import { Footer } from './items/Footer'
 import { HomePage } from './items/Homepage'
@@ -44,6 +45,7 @@ const ADMIN_ITEMS = (S, context) =>
     Settings(S),
   ].filter(e => e)
 
+const DEVELOPER_ITEMS = S => [DeveloperContent(S), S.divider()].filter(e => e)
 
 const LOCAL_NEWS_EDITOR_ITEMS = (S, context) =>
   [LocalNews(S, context)].filter(e => e)
@@ -62,18 +64,23 @@ const getItems = (S, context) => {
   const { roles } = useCurrentUser()
 
   const isAdmin = roles.some(
-    role =>
-      role?.name.startsWith('editor') ||
-      role?.name === 'administrator' ||
-      role?.name === 'developer',
+    role => role?.name.startsWith('editor') || role?.name === 'administrator',
   )
+  console.log('roles', roles)
+  const isDeveloper = roles.some(role => role?.name === 'developer')
   const isLocalNewsEditor = roles.some(role =>
     role?.name.startsWith('local-news-editor'),
   )
 
+  if (isDeveloper) {
+    console.log('is developer')
+    return [...DEVELOPER_ITEMS(S), ...ADMIN_ITEMS(S, context)]
+  }
   if (isAdmin) {
+    console.log('is admin')
     return ADMIN_ITEMS(S, context)
   }
+
   if (isLocalNewsEditor) {
     return LOCAL_NEWS_EDITOR_ITEMS(S, context)
   }
