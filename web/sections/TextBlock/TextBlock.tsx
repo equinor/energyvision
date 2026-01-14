@@ -34,7 +34,7 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
   )
     return null
 
-  const contentAlignment = {
+  const contentAlignmentClassNames = {
     center: 'items-start text-start px-layout-lg',
     right:
       'items-start text-start px-layout-lg xl:items-end xl:text-end xl:max-w-[45dvw] xl:ml-auto xl:pr-layout-sm xl:pl-0 ',
@@ -45,10 +45,11 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
       'items-start text-start px-layout-lg xl:pl-layout-sm xl:pr-0',
   }
   let backgroundImageContentClassNames = `justify-center py-14`
-  if (designOptions?.background?.backgroundImage?.contentAlignment) {
+  const contentAlignment = designOptions?.background?.backgroundImage?.contentAlignment
+  if (contentAlignment) {
     backgroundImageContentClassNames = twMerge(
       backgroundImageContentClassNames,
-      `${contentAlignment[designOptions?.background?.backgroundImage?.contentAlignment]}`,
+      `${contentAlignmentClassNames[contentAlignment]}`,
     )
   }
 
@@ -107,7 +108,7 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
           )}
         </>
       )}
-      <div className='flex flex-col gap-6'>
+      <div className={`flex flex-col gap-6 ${contentAlignment === "right" && "items-end"}`}>
         {ingress && (
           <Blocks variant='ingress' value={ingress} blockClassName='mb-6' />
         )}
