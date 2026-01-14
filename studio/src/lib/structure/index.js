@@ -1,4 +1,5 @@
 import { useCurrentUser } from 'sanity'
+import { dataset } from '@/sanity.client'
 import { Flags } from '../datasetHelpers'
 import { AssetLibrary } from './items/AssetLibrary'
 import { DeveloperContent } from './items/DeveloperPages'
@@ -73,11 +74,11 @@ const getItems = (S, context) => {
   )
 
   if (isDeveloper) {
-    console.log('is developer')
-    return [...DEVELOPER_ITEMS(S), ...ADMIN_ITEMS(S, context)]
+    return dataset === 'global-development'
+      ? [...DEVELOPER_ITEMS(S), ...ADMIN_ITEMS(S, context)]
+      : ADMIN_ITEMS(S, context)
   }
   if (isAdmin) {
-    console.log('is admin')
     return ADMIN_ITEMS(S, context)
   }
 
