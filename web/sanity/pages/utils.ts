@@ -26,7 +26,7 @@ const formatToValidPrefixedIsoSlugs = (
   const validLanguages = languages.map(lang => lang.name)
 
   return (
-    slugs?.reduce(function (result: LocaleSlug[], metaSlug: LocaleSlug) {
+    slugs?.filter(e=>e).reduce(function (result: LocaleSlug[], metaSlug: LocaleSlug) {
       if (validLanguages.includes(metaSlug.lang)) {
         result.push({
           lang: getIsoFromName(metaSlug.lang),
