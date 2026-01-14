@@ -231,7 +231,13 @@ const backgroundGradient = {
       { title: 'Light', value: 'light' },
     ],
   },
-  validation: (Rule: Rule) => Rule.required(),
+  validation: (Rule: Rule) =>
+    Rule.custom((value: string, context: ValidationContext) => {
+      const { parent } = context as unknown as DocumentType
+      if (parent?.heroType === HeroTypes.BACKGROUND_IMAGE && !value)
+        return 'Field is required'
+      return true
+  }),
   hidden: ({ parent }: DocumentType) => {
     return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE
   }
