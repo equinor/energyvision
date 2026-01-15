@@ -58,6 +58,7 @@
     "raw-body": "^2.5.1",
     "react": "19.2.3",
     "react-dom": "19.2.3",
+    "react-error-boundary": "^6.0.3",
     "react-hook-form": "7.70.0",
     "react-icons": "^5.5.0",
     "react-instantsearch": "^7.19.0",

@@ -177,13 +177,29 @@ const markSerializers: MarkType = {
   },
 }
 
-const listSerializers: ListType = {
-  bullet: ({ children }: any) => {
-    return <List as='ul'>{children}</List>
-  },
-  number: ({ children }: any) => {
-    return <List as='ol'>{children}</List>
-  },
+const getListComponents = ({
+  group,
+}: {
+  className?: string
+  group?: TypographyGroups
+  variant?: TypographyVariants
+}) => {
+  return {
+    bullet: ({ children }: TypeProps) => {
+      return (
+        <List as='ul' group={group}>
+          {/*@ts-ignore*/}
+          {children}
+        </List>
+      )
+    },
+    number: ({ children }: TypeProps) => (
+      <List as='ol' group={group}>
+        {/*@ts-ignore*/}
+        {children}
+      </List>
+    ),
+  }
 }
 
 const typesSerializers = {
@@ -286,7 +302,14 @@ export default function Blocks({
                     ...marksComponents,
                     ...(includeFootnotes && footnoteSerializer),
                   },
-                  list: { ...listSerializers },
+                  //@ts-ignore:todo
+                  list: {
+                    ...getListComponents({
+                      ...(group === 'article' && {
+                        group: 'article',
+                      }),
+                    }),
+                  },
                 }}
                 onMissingComponent={(message, options) => {
                   console.warn(
@@ -327,7 +350,14 @@ export default function Blocks({
                     ...marksComponents,
                     ...(includeFootnotes && footnoteSerializer),
                   },
-                  list: { ...listSerializers },
+                  //@ts-ignore:todo
+                  list: {
+                    ...getListComponents({
+                      ...(group === 'article' && {
+                        group: 'article',
+                      }),
+                    }),
+                  },
                 }}
                 onMissingComponent={(message, options) => {
                   console.warn(

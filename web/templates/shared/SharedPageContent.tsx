@@ -1,6 +1,11 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-nocheck
 'use client'
+import { toPlainText } from 'next-sanity'
+import { ErrorBoundary } from 'react-error-boundary'
+import { TbFaceIdError } from 'react-icons/tb'
+import { Typography } from '@/core/Typography'
+import { dataset } from '@/languageConfig'
 import AccordionBlock from '@/sections/AccordionBlock/AccordionBlock'
 import { AnchorLinkList } from '@/sections/AnchorLinkList'
 import BarChartBlock, {
@@ -280,35 +285,23 @@ const applyPaddingTopIfApplicable = (
   return 'pt-20'
 }
 
+const FallbackSection = (componentName: string, children: ReactNode) => {
+  try {
+    return children
+  } catch (error) {
+    console.error(`Error rendering section ${componentName}`, error)
+    return dataset === 'global-development' ? (
+      <div className='py-20 text-lg'>{`Failed to load ${componentName}`}</div>
+    ) : null
+  }
+}
+
 export const PageContent = ({ data, heroBackground }: PageContentProps) => {
-  const content = (data?.content || []).map((c: Component, index) => {
-    const prevComponent = data?.content?.[index - 1]
-    const anchorReference =
-      (prevComponent as unknown as ComponentProps)?.type === 'anchorLink'
-        ? (prevComponent as unknown as AnchorLinkData)?.anchorReference
-        : undefined
-
-    //Returns pt-20 when applicable or empty string
-    const previousComponentIndex =
-      prevComponent?.type === 'anchorLink' ? index - 2 : index - 1
-
-    const previousComponentToCompare =
-      index === 0
-        ? ({
-            type: 'pageTitle',
-            designOptions: { background: heroBackground },
-          } as Component)
-        : (data?.content?.[previousComponentIndex] as unknown as Component)
-
-    const topSpacingClassName = applyPaddingTopIfApplicable(
-      c,
-      previousComponentToCompare,
-    )
-    /*     console.log(
-      `Applying top spacing: ${topSpacingClassName} to ${c?.type} with title ${Array.isArray(c?.title) ? toPlainText(c?.title) : c?.title}`,
-    ) */
-    const spacingClassName = `${topSpacingClassName} pb-page-content`
-
+  const mapSection = (
+    c: any,
+    anchorReference: string,
+    spacingClassName: string,
+  ) => {
     switch (c.type) {
       case 'teaser':
         return (
@@ -598,7 +591,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
             key={c.id}
             {...(c as any)}
             anchor={anchorReference}
-            className={topSpacingClassName}
+            className={spacingClassName}
           />
         )
       case 'importTable':
@@ -608,7 +601,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
             key={c.id}
             {...(c as any)}
             anchor={anchorReference}
-            className={topSpacingClassName}
+            className={spacingClassName}
           />
         )
       case 'pieChartBlock':
@@ -617,7 +610,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
             key={c.id}
             {...(c as PieChartBlockProps)}
             anchor={anchorReference}
-            className={topSpacingClassName}
+            className={spacingClassName}
           />
         )
       case 'barChartBlock':
@@ -626,7 +619,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
             key={c.id}
             {...(c as BarChartBlockProps)}
             anchor={anchorReference}
-            className={topSpacingClassName}
+            className={spacingClassName}
           />
         )
       case 'lineChartBlock':
@@ -635,7 +628,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
             key={c.id}
             {...(c as LineChartBlockProps)}
             anchor={anchorReference}
-            className={topSpacingClassName}
+            className={spacingClassName}
           />
         )
       case 'promoteExternalLinkV2':
@@ -645,12 +638,67 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
             key={c.id}
             {...(c as any)}
             anchor={anchorReference}
-            className={topSpacingClassName}
+            className={spacingClassName}
           />
         )
       default:
         return null
     }
+  }
+  const content = (data?.content || []).map((c: Component, index) => {
+    const prevComponent = data?.content?.[index - 1]
+    const anchorReference =
+      (prevComponent as unknown as ComponentProps)?.type === 'anchorLink'
+        ? (prevComponent as unknown as AnchorLinkData)?.anchorReference
+        : undefined
+
+    //Returns pt-20 when applicable or empty string
+    const previousComponentIndex =
+      prevComponent?.type === 'anchorLink' ? index - 2 : index - 1
+
+    const previousComponentToCompare =
+      index === 0
+        ? ({
+            type: 'pageTitle',
+            designOptions: { background: heroBackground },
+          } as Component)
+        : (data?.content?.[previousComponentIndex] as unknown as Component)
+
+    const topSpacingClassName = applyPaddingTopIfApplicable(
+      c,
+      previousComponentToCompare,
+    )
+    /*     console.log(
+      `Applying top spacing: ${topSpacingClassName} to ${c?.type} with title ${Array.isArray(c?.title) ? toPlainText(c?.title) : c?.title}`,
+    ) */
+    const spacingClassName = `${topSpacingClassName} pb-page-content`
+    return (
+      <ErrorBoundary
+        key={c.id}
+        fallbackRender={({ error }) => {
+          console.error(
+            `Error in component ${c.type}: ${c?.title ? toPlainText(c.title) : ''}`,
+            error,
+          )
+          return (
+            <div
+              role='alert'
+              className={`mx-layout-sm mb-page-content flex flex-col items-center gap-8 rounded-card bg-gray-20 px-6 py-8 lg:mx-layout-lg`}
+            >
+              <TbFaceIdError size={64} />
+              <Typography as='h2' variant='h3' className='text-center'>
+                Sorry,
+                {dataset === 'global-development'
+                  ? ` error in component ${c.type}: ${c?.title ? toPlainText(c.title) : ''}`
+                  : ` this section could not be shown`}
+              </Typography>
+            </div>
+          )
+        }}
+      >
+        {mapSection(c, anchorReference, spacingClassName)}
+      </ErrorBoundary>
+    )
   })
   return content
 }

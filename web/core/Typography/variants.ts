@@ -61,9 +61,18 @@ const variants = {
     lg:ms-layout-lg
     [:where(h2+*,h3+*)]:mt-0
     text-base`,
-    h2: `mt-2 mb-2 text-lg`,
-    h3: `mt-2 text-md `,
-    h4: `mt-2 text-base font-medium`,
+    h2: `me-layout-sm
+    lg:me-layout-lg
+    ms-layout-sm
+    lg:ms-layout-lg mt-2 mb-2 text-lg`,
+    h3: `me-layout-sm
+    lg:me-layout-lg
+    ms-layout-sm
+    lg:ms-layout-lg mt-2 text-md `,
+    h4: `me-layout-sm
+    lg:me-layout-lg
+    ms-layout-sm
+    lg:ms-layout-lg mt-2 text-base font-medium`,
   },
   marks: {
     highlight: 'text-energy-red-100 dark:text-spruce-wood-100',
