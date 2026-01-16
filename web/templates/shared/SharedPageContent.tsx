@@ -287,6 +287,7 @@ const applyPaddingTopIfApplicable = (
 
 export const PageContent = ({ data, heroBackground }: PageContentProps) => {
   const mapSection = (
+    index: number,
     c: any,
     anchorReference: string,
     spacingClassName: string,
@@ -687,7 +688,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
           )
         }}
       >
-        {mapSection(c, anchorReference, spacingClassName)}
+        {mapSection(index, c, anchorReference, spacingClassName)}
       </ErrorBoundary>
     )
   })
