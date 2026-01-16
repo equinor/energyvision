@@ -3,11 +3,11 @@ import { usePathname } from 'next/navigation'
 import { BreadcrumbJsonLd } from 'next-seo'
 import { forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { domain } from '@/languageConfig'
 import type { ColorKeys } from '@/styles/colorKeyToUtilityMap'
 import BaseLink from '../Link/BaseLink'
 import { BreadcrumbsList } from './BreadcrumbList'
 import { BreadcrumbsListItem } from './BreadcrumbListItem'
-import { domain } from '@/languageConfig'
 
 export type Breadcrumb = {
   label: string
@@ -76,7 +76,7 @@ export const Breadcrumbs = forwardRef<HTMLElement, BreadcrumbsProps>(
       <nav
         ref={ref}
         aria-label='Breadcrumbs'
-        className={`px-layout-sm lg:px-layout-lg py-8 ${background ?? ''}`}
+        className={`px-layout-sm lg:px-layout-lg ${background ?? ''}`}
       >
         <BreadcrumbsList className={twMerge(`py-2 lg:py-4`, className)}>
           {crumbs.map(item => {

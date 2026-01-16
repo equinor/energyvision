@@ -134,13 +134,12 @@ const PromotionsBlock = ({
 
   const onColorBg = designOptions?.background?.backgroundColor !== 'White'
   const paddingClassName = `px-layout-sm lg:px-layout-lg`
+  console.log('PromotionsBlock variant', variant)
+  console.log('PromotionsBlock data', data)
 
   return (
     <section
-      className={twMerge(
-        `${bg} ${dark ? 'dark' : ''} pb-page-content`,
-        className,
-      )}
+      className={twMerge(`${bg} ${dark ? 'dark' : ''}`, className)}
       id={anchor}
     >
       {title && (
@@ -180,13 +179,16 @@ const PromotionsBlock = ({
               `}
           >
             {promotionList?.map((promotion: any) => {
+              console.log('promotion item', promotion)
               return (
                 <li key={promotion?.id}>
                   {variant === 'promotePeople' && (
                     <PeopleCard
-                      data={data as PeopleCardData}
+                      data={promotion as PeopleCardData}
                       hasSectionTitle={!!title}
-                      variant='single'
+                      variant={
+                        promotionList?.length === 1 ? 'single' : 'default'
+                      }
                     />
                   )}
                   {variant !== 'promotePeople' && (

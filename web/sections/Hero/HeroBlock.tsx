@@ -84,7 +84,7 @@ export const HeroBlock = ({
   loopingVideo,
   nextSectionDesignOptions,
   breadcrumbs,
-  backgroundGradient
+  backgroundGradient,
 }: HeroBlockProps) => {
   const { bg: nextCompBg, dark: nextCompDark } = getBgAndDarkFromBackground(
     nextSectionDesignOptions,
@@ -107,8 +107,8 @@ export const HeroBlock = ({
     ...(type === HeroTypes.LOOPING_VIDEO && {
       video: loopingVideo,
     }),
-    figCaptionClassName: 'px-layout-lg',
-    backgroundGradient
+    //figCaptionClassName: 'lg:px-layout-lg',
+    backgroundGradient,
   }
 
   const getHero = () => {
@@ -133,7 +133,7 @@ export const HeroBlock = ({
   }
 
   return type !== HeroTypes.NO_HERO ? (
-    <section className='h-full w-full'>
+    <section className='mb-6 h-full w-full'>
       {getHero()}
       {breadcrumbs?.enableBreadcrumbs && (
         <Breadcrumbs
@@ -143,7 +143,7 @@ export const HeroBlock = ({
           useCustomBreadcrumbs={breadcrumbs?.useCustomBreadcrumbs}
           defaultBreadcrumbs={breadcrumbs?.defaultBreadcrumbs}
           customBreadcrumbs={breadcrumbs?.customBreadcrumbs}
-          className={`${nextCompDark ? nextCompDark : ''} ${type === HeroTypes.DEFAULT ? 'pt-0' : ''}`}
+          className={`${nextCompDark ? nextCompDark : ''} ${type === HeroTypes.DEFAULT && (heroProps?.figure?.caption || heroProps?.figure?.attribution) ? 'pt-2' : ''}`}
         />
       )}
     </section>

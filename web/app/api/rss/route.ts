@@ -1,128 +1,173 @@
-import { defaultComponents, toHTML } from '@portabletext/to-html'
-import type { PortableTextBlock } from '@portabletext/types'
+import { TZDate } from '@date-fns/tz'
+import { format } from 'date-fns'
+import { enGB, nb } from 'date-fns/locale'
 import { NextResponse } from 'next/server'
+import { toPlainText } from 'next-sanity'
 import { client } from '@/sanity/lib/client'
 import { urlForImage } from '@/sanity/lib/utils'
-import { publishDateTimeQuery } from '@/sanity/queries/common/publishDateTime'
-import { newsSlug } from '@/sitesConfig'
+import { type LatestNewsType, latestMagazine, latestNews } from './groq.global'
 
-const latestNews = `
-*[_type == "news" && lang == $lang]
-  | order(${publishDateTimeQuery} desc)[0...20]{
-    title,
-    'slug': slug.current,
-    'publishDateTime': ${publishDateTimeQuery},
-    ingress,
-    heroImage{
-      image{
-        asset,
-        alt
-      }
+/* Used when sign up and distribution */
+export const mapCategoryToId = (category: string, locale: 'no' | 'en') => {
+  if (locale === 'no') {
+    switch (category) {
+      case 'generalNews':
+        return 'generelle nyheter'
+      case 'Company':
+        return 'generelle nyheter'
+      case 'crudeOilAssays':
+        return 'crude oil assays'
+      case 'Crude':
+        return 'crude oil assays'
+      case 'magazineStories':
+        return 'magasinsaker'
+      case 'stockMarketAnnouncements':
+        return 'børsmeldinger'
+      case 'Stock':
+        return 'børsmeldinger'
     }
   }
-`
-
-type LatestNewsItem = {
-  title: string
-  slug: string
-  publishDateTime: string
-  ingress?: PortableTextBlock[]
-  heroImage?: {
-    image?: { asset?: { _ref?: string } | undefined; alt?: string }
+  switch (category) {
+    case 'generalNews':
+      return 'general news'
+    case 'Company':
+      return 'general news'
+    case 'crudeOilAssays':
+      return 'crude oil assays'
+    case 'Crude':
+      return 'crude oil assays'
+    case 'magazineStories':
+      return 'magazine stories'
+    case 'stockMarketAnnouncements':
+      return 'stock market announcements'
+    case 'Stock':
+      return 'stock market announcements'
   }
+  return ''
 }
+const generateRssFeed = async (locale: 'en_GB' | 'nb_NO') => {
+  try {
+    // Fetch both English and Norwegian articles from news and magazine
+    const [newsArticles, magazineArticles] = await Promise.all([
+      client.fetch(latestNews, { lang: locale }),
+      client.fetch(latestMagazine, { lang: locale }),
+    ])
 
-function mapFor(lang: 'no' | 'en') {
-  return lang === 'no'
-    ? {
-        language: 'nb_NO',
-        title: 'Equinor Nyheter',
-        description: 'Siste nytt',
-        localePrefix: '/no',
-      }
-    : {
-        language: 'en_GB',
-        title: 'Equinor News',
-        description: 'Latest news',
-        localePrefix: '',
-      }
-}
+    // Merge the articles and sort by publish date (newest first)
+    const articles: LatestNewsType[] = [
+      ...newsArticles,
+      ...magazineArticles,
+    ].sort(
+      (a, b) =>
+        new Date(b.publishDateTime).getTime() -
+        new Date(a.publishDateTime).getTime(),
+    )
+    const newsLink =
+      locale === 'en_GB'
+        ? 'https://www.equinor.com/news/'
+        : 'https://www.equinor.com/no/nyheter/'
+    const newsRSSLink =
+      locale === 'en_GB'
+        ? 'https://www.equinor.com/api/rss?lang=en'
+        : 'https://www.equinor.com/api/rss?lang=no'
 
-function renderIngress(blocks?: PortableTextBlock[]) {
-  if (!blocks) return ''
-  const components = {
-    ...defaultComponents,
-    marks: {
-      ...defaultComponents.marks,
-      sub: ({ children }: { children: string }) => `<sub>${children}</sub>`,
-      sup: ({ children }: { children: string }) => `<sup>${children}</sup>`,
-    },
+    let rss = `<?xml version="1.0" encoding="UTF-8"?>
+    <rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:media="http://search.yahoo.com/mrss/" xmlns:nl="http://www.w3.org" version="2.0">
+      <channel>
+        <title>${
+          locale === 'en_GB'
+            ? 'Latest news and magazine stories - Equinor'
+            : 'Siste nyheter og magasinsaker - Equinor'
+        }</title>
+        <link>${newsLink}</link>
+        <description />
+        <language>${locale === 'en_GB' ? 'en-gb' : 'no'}</language>
+        <atom:link href="${newsLink}" type="text/html" rel="alternate"/>
+        <atom:link href="${newsRSSLink}" type="application/rss+xml" rel="self"/>
+    `
+
+    articles.forEach(article => {
+      const langPath = article.lang === 'nb_NO' ? '/no' : ''
+      const locale = article.lang === 'nb_NO' ? 'no' : 'en'
+
+      const hero = article.hero
+      const bannerImageUrl = hero?.image?.asset
+        ? //@ts-ignore:todo
+          urlForImage(hero.image)
+            .size(560, 280)
+            .auto('format')
+            .toString()
+        : ''
+      const encodedUrl = bannerImageUrl.replace(/&/g, '&amp;')
+
+      const publishDate = new Date(article.publishDateTime).toUTCString()
+      console.log('article.publishDateTime', article.publishDateTime)
+      console.log('publishDate', publishDate)
+
+      // Format the main pubDate
+      //const formattedPubDate =  //format(new TZDate(publishDate, 'Europe/Oslo'), 'EEE, dd MMM yyyy HH:mm:ss xxxx')
+
+      const categoryTag =
+        article.type === 'magazine'
+          ? 'magazineStories'
+          : article.subscriptionType
+      const title =
+        article.type === 'magazine'
+          ? //@ts-ignore: todo
+            toPlainText(article.title)
+          : article.title
+
+      rss += `
+        <item>
+          <title>${title}</title>
+          <link>https://equinor.com${langPath}${article.slug}</link>
+          <guid>https://equinor.com${langPath}${article.slug}</guid>
+          <pubDate>${publishDate}</pubDate>
+          <description>${toPlainText(article.ingress)}</description>
+          ${categoryTag ? `<category>${mapCategoryToId(categoryTag, locale)}</category>` : '<category />'}
+          <nl:extra1>${format(
+            new TZDate(publishDate, 'Europe/Oslo'),
+            "d.MMMM yyyy hh:mm ('CEST')",
+            {
+              locale: article.lang === 'nb_NO' ? nb : enGB,
+            },
+          )}</nl:extra1>
+          ${
+            hero?.image?.asset
+              ? `<media:content medium="image" type="image/jpeg" url="${encodedUrl}">
+            ${
+              article.hero?.attribution
+                ? `<media:credit role="photographer" scheme="urn:ebu">${article.hero?.attribution}</media:credit>`
+                : '<media:credit/>'
+            }
+            ${article.hero?.image?.alt ? `<media:title>${article.hero?.image?.alt}</media:title>` : '<media:title />'}
+          </media:content>`
+              : ''
+          }
+        </item>`
+    })
+
+    rss += `
+      </channel>
+    </rss>`
+
+    return rss
+  } catch (error) {
+    console.error('Error generating RSS feed:', error)
+    throw new Error('Failed to generate RSS feed.')
   }
-  //@ts-ignore: todo
-  return toHTML(blocks as TypedObject | TypedObject[], {
-    components,
-    onMissingComponent: e => String(e),
-  })
-}
-
-function buildItemHTML(
-  item: LatestNewsItem,
-  langCfg: ReturnType<typeof mapFor>,
-) {
-  const descriptionHtml = renderIngress(item.ingress)
-  const img = item.heroImage?.image
-  const imgUrl = img?.asset
-    ? urlForImage(img)?.width(560).height(280).fit('crop').url()
-    : ''
-  const imgAlt = img?.alt ? ` alt="${img.alt}"` : ''
-  const section = newsSlug[langCfg.language as keyof typeof newsSlug] || 'news'
-  const link =
-    `https://www.equinor.com${langCfg.localePrefix}/${section}/${item.slug}`
-      .replace(/\/+/, '/')
-      .replace(':/', '://')
-  return `
-    <item>
-      <title>${escapeXml(item.title)}</title>
-      <link>${link}</link>
-      <guid>${link}</guid>
-      <pubDate>${new Date(item.publishDateTime).toUTCString()}</pubDate>
-      <description><![CDATA[${imgUrl ? `<img src="${imgUrl}"${imgAlt}/><br/>` : ''}${descriptionHtml}]]></description>
-    </item>`
-}
-
-function escapeXml(str: string) {
-  return str
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&apos;')
 }
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url)
-  const lang: 'no' | 'en' = searchParams.get('lang') === 'no' ? 'no' : 'en'
-  const langCfg = mapFor(lang)
-
-  const sanityLang = lang === 'no' ? 'nb_NO' : 'en_GB'
-
-  const articles: LatestNewsItem[] = await client.fetch(latestNews, {
-    lang: sanityLang,
-  })
-
-  let rss = `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0">\n  <channel>\n    <title>${langCfg.title}</title>\n    <description>${langCfg.description}</description>\n    <language>${lang}</language>\n    <link>https://www.equinor.com</link>`
-
-  for (const a of articles) {
-    rss += buildItemHTML(a, langCfg)
-  }
-
-  rss += `\n  </channel>\n</rss>`
+  const lang = searchParams.get('lang')
+  const locale = lang === 'no' ? 'nb_NO' : 'en_GB'
+  const rss = await generateRssFeed(locale)
 
   return new NextResponse(rss, {
-    status: 200,
     headers: {
-      'Content-Type': 'application/xml; charset=utf-8',
-      'Cache-Control': 's-maxage=300, stale-while-revalidate=600',
+      'Content-Type': 'text/xml; charset=utf-8',
+      'Cache-Control': 'public, s-maxage=1200, stale-while-revalidate=600',
     },
   })
 }

@@ -285,17 +285,6 @@ const applyPaddingTopIfApplicable = (
   return 'pt-20'
 }
 
-const FallbackSection = (componentName: string, children: ReactNode) => {
-  try {
-    return children
-  } catch (error) {
-    console.error(`Error rendering section ${componentName}`, error)
-    return dataset === 'global-development' ? (
-      <div className='py-20 text-lg'>{`Failed to load ${componentName}`}</div>
-    ) : null
-  }
-}
-
 export const PageContent = ({ data, heroBackground }: PageContentProps) => {
   const mapSection = (
     c: any,
@@ -424,6 +413,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
             className={spacingClassName}
           />
         )
+      //spread!
       case 'promotePeople':
         return (
           <PromotionsBlock
@@ -672,6 +662,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
       `Applying top spacing: ${topSpacingClassName} to ${c?.type} with title ${Array.isArray(c?.title) ? toPlainText(c?.title) : c?.title}`,
     ) */
     const spacingClassName = `${topSpacingClassName} pb-page-content`
+
     return (
       <ErrorBoundary
         key={c.id}

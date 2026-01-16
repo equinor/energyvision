@@ -75,7 +75,7 @@ export const DefaultHero = ({
             </>
           ) : (
             <div>
-              <Blocks id='mainTitle' value={title} as='h1' variant='3xl' />
+              <Blocks id='mainTitle' value={title} variant='h1' />
             </div>
           ))}
       </div>
@@ -84,7 +84,7 @@ export const DefaultHero = ({
         <Image
           grid='sm'
           loading='eager'
-          className={twMerge(`lg:px-layout-sm`, imageWrapperClassName)}
+          className={twMerge(`lg:px-layout-md`, imageWrapperClassName)}
           aspectRatio={ratio}
           image={figure.image}
           caption={figure.caption}

@@ -47,6 +47,7 @@ const PeopleCard = forwardRef<HTMLDivElement, PeopleCardProps>(
       cv,
       enableStructuredMarkup,
     } = data
+
     const cvUrl = cv ? getUrlFromAction(cv) : ''
     const linkClassNames =
       'text-norwegian-woods-100 no-underline hover:underline text-sm'
@@ -56,7 +57,7 @@ const PeopleCard = forwardRef<HTMLDivElement, PeopleCardProps>(
       single: `w-full lg:w-fit flex flex-col lg:flex-row gap-8 lg:gap-12`,
     }
     const variantContentClassNames = {
-      default: `justify-center items-start lg:items-center`,
+      default: `justify-center items-start lg:items-center *:text-center`,
       single: `justify-center items-center lg:items-start`,
     }
 

@@ -1,7 +1,7 @@
 const variants = {
   heading: {
     unstyled: '',
-    h1: 'text-3xl leading-earthy pb-11 my-0',
+    h1: 'text-3xl leading-earthy pb-6 lg:pb-12 my-0',
     //many places has gap-6 + mb-2 so pb-8
     //Teaser isBigText was set to 2xl...
     //TextBlock isBigText set to 3xl
