@@ -17,6 +17,9 @@ importers:
       '@algolia/cache-in-memory':
         specifier: ^4.22.1
         version: 4.25.2
+      '@date-fns/tz':
+        specifier: ^1.4.1
+        version: 1.4.1
       '@energyvision/shared':
         specifier: workspace:*
         version: link:../packages/energyvision
