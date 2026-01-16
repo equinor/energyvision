@@ -209,4 +209,8 @@ const dnsRedirects = [
     from: 'morgendagenshelter.no',
     to: '/no/om-oss/sponsing-og-stotte',
   },
+   {
+    from: "data.equinor.com",
+    to:"/energy/data-sharing"
+  }
 ]
