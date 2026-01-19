@@ -12,14 +12,21 @@ import {
 import { twMerge } from 'tailwind-merge'
 import { ImageWithOverlay } from '@/core/ImageWithOverlay/ImageWithOverlay'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
+import type {
+  ImageWithAlt,
+  ImageWithCaptionData,
+  ImageWithLinkOrOverlay,
+  LinkData,
+} from '@/types/index'
 import { ArrowRight } from '../../icons'
 import Blocks from '../../portableText/Blocks'
 import { getLocaleFromName } from '../../sanity/helpers/localization'
-import type { ImageWithAlt, LinkData } from '../../types/index'
 import { Image } from '../Image/Image'
 import BaseLink from '../Link/BaseLink'
 import ResourceLink from '../Link/ResourceLink'
 import type { DisplayModes } from './Carousel'
+
+export type ImageCarouselItem = ImageWithCaptionData | ImageWithLinkOrOverlay
 
 type CarouselImageItemProps = {
   type: string
@@ -96,9 +103,21 @@ export const CarouselImageItem = forwardRef<
     if (isImageWithSimpleCaption) {
       return (
         <figure className='flex aspect-4/3 h-full w-full items-end rounded-md md:aspect-video'>
-          <Image grid='sm' image={image} fill className={`rounded-md`} />
+          <Image
+            grid='sm'
+            image={image}
+            fill
+            className='absolute'
+            imageClassName={`rounded-md`}
+          />
           <figcaption
-            className={`fade-in-black-gradient z-1 w-full rounded-b-md ${displayMode === 'single' ? (active ? 'opacity-100' : 'opacity-50') : ''}`}
+            className={`fade-in-black-gradient z-1 w-full rounded-b-md ${
+              displayMode === 'single'
+                ? active
+                  ? 'opacity-100'
+                  : 'opacity-50'
+                : ''
+            }`}
           >
             <div className={`h-fit w-full px-4 pt-20 pb-6 lg:px-8`}>
               <span className='flex w-full flex-col gap-1 lg:w-2/3'>
@@ -127,7 +146,8 @@ export const CarouselImageItem = forwardRef<
             grid='sm'
             image={image}
             fill
-            className={`aspect-4/3 rounded-md md:aspect-video`}
+            className='absolute'
+            imageClassName={`aspect-4/3 rounded-md md:aspect-video`}
           />
           <div className='fade-in-black-gradient flex h-full w-full items-end rounded-b-md pt-10 lg:pt-20'>
             <BaseLink
@@ -165,14 +185,13 @@ export const CarouselImageItem = forwardRef<
       const scrollClassname = ``
       return (
         <figure className='flex h-full w-full flex-col'>
-          <div className={`relative w-full rounded-md ${singleHeights}`}>
-            <Image
-              grid='sm'
-              image={image}
-              fill
-              className='aspect-4/3 rounded-md md:aspect-video'
-            />
-          </div>
+          <Image
+            grid='sm'
+            image={image}
+            fill
+            className={`absolute w-full rounded-md ${singleHeights}`}
+            imageClassName='aspect-4/3 rounded-md md:aspect-video'
+          />
           <figcaption
             className={`h-fit max-w-text p-4 lg:px-8 lg:py-6 ${
               displayMode === 'single' ? singleClassname : scrollClassname
@@ -230,9 +249,15 @@ export const CarouselImageItem = forwardRef<
         tabIndex: 0,
       })}
       className={twMerge(
-        `relative mt-1 focus:outline-hidden focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-grey-50 focus-visible:outline-offset-2 dark:focus-visible:outline-white-100 ${displayMode === 'single' ? 'w-single-carousel-card-w-sm md:w-single-carousel-card-w-md lg:w-single-carousel-card-w-lg' : scrollListItemWidthsClassNames} ${
+        `relative mt-1 focus:outline-hidden focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-grey-50 focus-visible:outline-offset-2 dark:focus-visible:outline-white-100 ${
           displayMode === 'single'
-            ? ` ${!active ? 'opacity-30' : 'opacity-100'} col-start-1 col-end-1 row-start-1 row-end-1 ms-2 me-2 transition-opacity duration-1000 ease-ease`
+            ? 'w-single-carousel-card-w-sm md:w-single-carousel-card-w-md lg:w-single-carousel-card-w-lg'
+            : scrollListItemWidthsClassNames
+        } ${
+          displayMode === 'single'
+            ? ` ${
+                !active ? 'opacity-30' : 'opacity-100'
+              } col-start-1 col-end-1 row-start-1 row-end-1 ms-2 me-2 transition-opacity duration-1000 ease-ease`
             : `shrink-0 snap-mandatory snap-center`
         } `,
         className,

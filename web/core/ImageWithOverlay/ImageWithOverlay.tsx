@@ -8,7 +8,6 @@ import { forwardRef, type HTMLAttributes, useId, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import type { DisplayModes } from '@/core/Carousel/Carousel'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
-import { useMediaQuery } from '@/lib/hooks/useMediaQuery'
 import Blocks from '../../portableText/Blocks'
 import { getLocaleFromName } from '../../sanity/helpers/localization'
 import type { ImageWithAlt, LinkData } from '../../types'
@@ -47,7 +46,6 @@ export const ImageWithOverlay = forwardRef<
   const overlayId = useId()
   const url = action && getUrlFromAction(action)
   const intl = useTranslations()
-  const isMobile = useMediaQuery(`(max-width: 700px)`)
 
   const lineClassName = `
     block
@@ -60,24 +58,13 @@ export const ImageWithOverlay = forwardRef<
     duration-[250ms]
     origin-center
     `
-  const titleElement = (
-    <>
-      {typeof title === 'string' ? (
-        <Typography as='h2' variant='h4' className='text-md lg:text-lg'>
-          {title}
-        </Typography>
-      ) : (
-        title && (
-          <Blocks
-            as='h2'
-            variant='h4'
-            className='text-md lg:text-lg'
-            value={title}
-          />
-        )
-      )}
-    </>
-  )
+
+  const plainText = Array.isArray(title)
+    ? title
+        .map(block => block.children.map(span => span.text).join(''))
+        .join('\n')
+        .replace(/\n/g, ' ')
+    : title
 
   return (
     <figure
@@ -88,7 +75,8 @@ export const ImageWithOverlay = forwardRef<
         grid='sm'
         image={image as ImageWithAlt}
         fill
-        className={`aspect-4/3 rounded-md md:aspect-video`}
+        className='absolute'
+        imageClassName={`aspect-4/3 rounded-md md:aspect-video`}
       />
       <figcaption
         className={twMerge(
@@ -97,7 +85,9 @@ export const ImageWithOverlay = forwardRef<
         )}
       >
         <div
-          className={`absolute inset-0 z-[1] rounded-md transition-colors duration-[250ms] ${showOverlay ? 'bg-slate-blue-95' : ''} flex flex-col-reverse rounded-b-md`}
+          className={`absolute inset-0 z-1 rounded-md transition-colors duration-250 ${
+            showOverlay ? 'bg-slate-blue-95' : ''
+          } flex flex-col-reverse rounded-b-md`}
         >
           <div
             className={`h-fit rounded-b-md ${
@@ -108,7 +98,9 @@ export const ImageWithOverlay = forwardRef<
           >
             {teaserTitle && (
               <div
-                className={`w-2/3 pt-40 text-left text-lg text-white-100 ${showOverlay ? 'hidden' : 'block'}`}
+                className={`w-2/3 pt-40 text-left text-lg text-white-100 ${
+                  showOverlay ? 'hidden' : 'block'
+                }`}
               >
                 {teaserTitle}
               </div>
@@ -116,13 +108,23 @@ export const ImageWithOverlay = forwardRef<
           </div>
           <div
             id={overlayId}
-            className={`dark max-w-text px-4 py-2 lg:px-8 lg:py-6 ${showOverlay ? 'opacity-100' : 'opacity-0'} ${showOverlay ? 'visible' : 'invisible'} `}
+            className={`dark max-w-text px-4 py-2 lg:px-8 lg:py-6 ${
+              showOverlay ? 'opacity-100' : 'opacity-0'
+            } ${showOverlay ? 'visible' : 'invisible'} `}
           >
-            <div className={`pb-1 lg:pb-6`}>{title && titleElement}</div>
+            <div className={`pb-1 lg:pb-6`}>
+              {title && (
+                <Typography as='h2' variant='h4' className='text-md lg:text-lg'>
+                  {plainText}
+                </Typography>
+              )}
+            </div>
             {text && (
               <Blocks
                 value={text}
-                className={`text-sm md:text-base ${action ? 'pb-1 lg:pb-4' : ''}`}
+                className={`text-sm md:text-base ${
+                  action ? 'pb-1 lg:pb-4' : ''
+                }`}
               />
             )}
             {action && (
@@ -148,7 +150,7 @@ export const ImageWithOverlay = forwardRef<
           aria-expanded={showOverlay}
           aria-controls={overlayId}
           onClick={() => setShowOverlay(!showOverlay)}
-          className={`focus-visible:envis-outline absolute right-0 bottom-0 z-[3] flex items-end justify-end p-1.5 focus:outline-hidden lg:px-8 lg:py-6`}
+          className={`focus-visible:envis-outline absolute right-0 bottom-0 z-3 flex items-end justify-end p-1.5 focus:outline-hidden lg:px-8 lg:py-6`}
         >
           <span className='sr-only'>{intl('readMore') ?? 'Read more'}</span>
           <div
@@ -163,7 +165,7 @@ export const ImageWithOverlay = forwardRef<
                 showOverlay
                   ? '*:bg-slate-80 *:group-hover:bg-white-100'
                   : '*:bg-white-100 *:group-hover:bg-slate-80'
-              } relative flex h-4 min-h-4 w-4 min-w-4 flex-col items-center justify-center gap-3 overflow-hidden *:transition-transform *:duration-[250ms] md:h-6 md:min-h-6 md:w-6 md:min-w-6`}
+              } relative flex h-4 min-h-4 w-4 min-w-4 flex-col items-center justify-center gap-3 overflow-hidden *:transition-transform *:duration-250 md:h-6 md:min-h-6 md:w-6 md:min-w-6`}
               aria-hidden='true'
             >
               <span

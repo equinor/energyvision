@@ -4,7 +4,7 @@ import type {
   SanityImageHotspot,
   SanityImageObject,
 } from '@sanity/image-url'
-import type { ContentAlignmentTypes, DesignOptions, LinkData } from './index'
+import type { ContentAlignmentTypes, LinkData } from './index'
 
 export type CaptionData = {
   attribution?: string
@@ -47,9 +47,7 @@ export type ImageWithLinkOrOverlay = {
   captionText?: PortableTextBlock[]
 }
 
-export type ImageCarouselItem = ImageWithCaptionData | ImageWithLinkOrOverlay
-
-export type ImageCarouselData = {
+/* export type ImageCarouselData = {
   type: 'imageCarousel'
   id: string
   title?: PortableTextBlock[]
@@ -62,3 +60,4 @@ export type ImageCarouselData = {
   }
   designOptions: DesignOptions
 }
+ */

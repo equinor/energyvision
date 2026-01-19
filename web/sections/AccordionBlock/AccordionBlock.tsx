@@ -50,7 +50,8 @@ const AccordionBlock = ({ data, anchor, className }: AccordionBlockProps) => {
               image={image}
               grid='xs'
               aspectRatio={'1:1'}
-              className='aspect-square rounded-full'
+              className='mb-4'
+              imageClassName='aspect-square rounded-full'
             />
           </div>
         )}

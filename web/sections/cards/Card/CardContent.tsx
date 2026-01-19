@@ -51,12 +51,12 @@ export const CardContent = forwardRef<HTMLDivElement, CardContentProps>(
           className,
         )}
       >
-        <div className='max-h-full max-w-prose grow overflow-hidden'>
-          {children}
-        </div>
+        <div className='max-w-prose grow overflow-hidden'>{children}</div>
         {!noArrow && (
           <div
-            className={`flex items-end justify-end self-end p-1 ${variant === 'compact' ? 'max-xl:hidden' : ''}`}
+            className={`flex items-end justify-end self-end p-1 ${
+              variant === 'compact' ? 'max-xl:hidden' : ''
+            }`}
           >
             <ArrowRight
               className={twMerge(

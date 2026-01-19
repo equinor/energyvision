@@ -134,8 +134,6 @@ const PromotionsBlock = ({
 
   const onColorBg = designOptions?.background?.backgroundColor !== 'White'
   const paddingClassName = `px-layout-sm lg:px-layout-lg`
-  console.log('PromotionsBlock variant', variant)
-  console.log('PromotionsBlock data', data)
 
   return (
     <section
@@ -150,7 +148,9 @@ const PromotionsBlock = ({
       <div className='flex flex-col gap-6'>
         {ingress && (
           <div
-            className={`${paddingClassName} ${viewAllLink?.link?.slug ? '' : ''}`}
+            className={`${paddingClassName} ${
+              viewAllLink?.link?.slug ? '' : ''
+            }`}
           >
             <Blocks variant='ingress' value={ingress} />
           </div>
@@ -175,11 +175,18 @@ const PromotionsBlock = ({
           />
         ) : (
           <ul
-            className={`pt-6 ${promotionList?.length === 1 ? 'mx-layout-sm md:mx-layout-lg' : `3xl:mx-layout-md mx-layout-sm grid auto-rows-fr grid-cols-1 ${promotionList?.length === 3 ? 'md:grid-cols-3' : 'md:grid-cols-2 2xl:grid-cols-3'} gap-x-4 gap-y-3`}
+            className={`pt-6 ${
+              promotionList?.length === 1
+                ? 'mx-layout-sm md:mx-layout-lg'
+                : `3xl:mx-layout-md mx-layout-sm grid auto-rows-fr grid-cols-1 ${
+                    promotionList?.length === 3
+                      ? 'md:grid-cols-3'
+                      : 'md:grid-cols-2 2xl:grid-cols-3'
+                  } gap-x-4 gap-y-3`
+            }
               `}
           >
             {promotionList?.map((promotion: any) => {
-              console.log('promotion item', promotion)
               return (
                 <li key={promotion?.id}>
                   {variant === 'promotePeople' && (

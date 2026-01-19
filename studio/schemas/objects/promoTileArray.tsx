@@ -47,13 +47,6 @@ export default {
       of: [{ type: 'promoTile' }],
       validation: (Rule: Rule) => Rule.required().min(2),
     },
-    {
-      name: 'useHorizontalScroll',
-      title: 'Use horizontal scroll',
-      description: '(Deprecated)',
-      type: 'boolean',
-      initialValue: false,
-    },
   ].filter(e => e),
   preview: {
     select: {
