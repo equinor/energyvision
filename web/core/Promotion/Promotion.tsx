@@ -41,7 +41,7 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(function 
     layoutDirection === 'col' ? 'line-clamp-2' : 'line-clamp-3'
   }`
 
-  return (
+  return href ? (
     <BaseLink
       ref={ref}
       type={variant === 'externalLink' ? 'externalUrl' : 'internalUrl'}
@@ -100,5 +100,5 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(function 
         </div>
       </div>
     </BaseLink>
-  )
+  ) : null
 })
