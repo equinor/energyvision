@@ -15,6 +15,12 @@ export const title = {
   validation: (Rule: Rule) =>
     Rule.required().warning('In most cases you should add a title'),
 }
+export const hideTitle = {
+  type: 'boolean',
+  name: 'hideTitle',
+  title: 'Hide title',
+  description: 'Hides the title, but screen readers will read title',
+}
 
 export const ingress = {
   name: 'ingress',

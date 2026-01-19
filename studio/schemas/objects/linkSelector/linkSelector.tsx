@@ -1,4 +1,4 @@
-import type { Rule } from 'sanity'
+import type { Rule, ValidationContext } from 'sanity'
 import singleItemArray from '../singleItemArray'
 import {
   anchorReference,
@@ -22,19 +22,9 @@ const linkSelector = (
   includeLabels = true,
 ) => ({
   name: 'linkSelector',
-  title: 'Link',
   type: 'object',
   hidden: hidden,
   fields: [
-    includeLabels && {
-      name: 'label',
-      title: 'Link label',
-      type: 'string',
-      validation: (Rule: Rule) =>
-        Rule.custom((value: string) => {
-          return value ? true : 'You must add a label'
-        }),
-    },
     singleItemArray(
       {
         name: 'link',
@@ -54,6 +44,23 @@ const linkSelector = (
       },
       true,
     ),
+    includeLabels && {
+      name: 'label',
+      title: 'Label',
+      description:
+        'Leave empty if you want to use referenced page title. Required for external and social media links',
+      type: 'string',
+      validation: (Rule: Rule) =>
+        Rule.custom((value: string, ctx: ValidationContext) => {
+          if (
+            ctx.parent?.link?.[0]?._type === 'link' ||
+            ctx?.parent?.link?.[0]?._type === 'socialMediaLink'
+          ) {
+            return value ? true : 'You must add a label'
+          }
+          return true
+        }),
+    },
     anchorReference,
   ].filter(e => e),
 })

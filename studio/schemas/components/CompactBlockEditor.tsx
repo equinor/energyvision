@@ -12,7 +12,12 @@ export const CompactBlockEditor = (props: PortableTextInputProps) => {
     .map((rule: any) => rule.constraint)[0] */
 
   return (
-    <Container id={'PTE-height-container'}>
+    <Container
+      id={'PTE-height-container'}
+      /*       style={{
+        height: '100px',
+      }} */
+    >
       {props.renderDefault({
         ...props,
         // remove the need to activate the PTE
@@ -23,7 +28,7 @@ export const CompactBlockEditor = (props: PortableTextInputProps) => {
 }
 // add a specific height to the PTE without losing the ability to resize it
 const Container = styled.div`
-  [data-testid='pt-editor'][data-fullscreen='false'] {
+  [data-testid="pt-editor"][data-fullscreen="false"] {
     height: 100px;
   }
 `

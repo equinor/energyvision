@@ -73,6 +73,7 @@ export const content = {
     { type: 'barChartBlock', title: 'Bar chart' },
     { type: 'promoteExternalLinkV2' },
     { type: 'promoteTopicsV2' },
+    { type: 'promotionsV2' },
   ].filter(e => e),
   components: {
     input: RolesBasedArrayInput,
@@ -96,7 +97,7 @@ export const content = {
         {
           name: 'promotionsV2',
           title: 'Promotions(v2)',
-          of: ['promoteExternalLinkV2', 'promoteTopicsV2'],
+          of: ['promotionsV2', 'promoteExternalLinkV2', 'promoteTopicsV2'],
         },
         {
           name: 'carousels',

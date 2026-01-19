@@ -68,6 +68,7 @@ import promoTile from './objects/promoTile'
 import promoTileArray from './objects/promoTileArray'
 import promoteExternalLinkV2 from './objects/promoteV2/promoteExternalLinkV2'
 import promoteTopicsV2 from './objects/promoteV2/promoteTopicsV2'
+import promotionsV2 from './objects/promoteV2/promotionV2'
 import promoteEvents from './objects/promotion/promoteEvents'
 import promoteMagazine from './objects/promotion/promoteMagazine'
 import promoteNews from './objects/promotion/promoteNews'
@@ -250,6 +251,7 @@ const RemainingSchemas = [
   themeSelector,
   promoteTopicsV2,
   promoteExternalLinkV2,
+  promotionsV2,
 ]
 
 // Then we give our schema to the builder and provide the result to Sanity
