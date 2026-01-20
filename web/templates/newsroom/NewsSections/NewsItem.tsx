@@ -28,14 +28,14 @@ const NewsItem = forwardRef<HTMLLIElement, NewsListItemProps>(function NewsItem(
       >
         <div className='max-w-[65%]'>
           {publishDateTime && (
-            <div>
+            <div className='flex align-center'>
               <FormattedDateTime
                 variant='date'
                 datetime={publishDateTime}
                 uppercase
                 className='pb-1 font-normal text-2xs leading-normal'
               />
-              <span className='mx-2 pb-1 font-normal text-2xs leading-normal'>
+              <span className='mx-2 font-normal leading-normal'>
                 |
               </span>
               <FormattedDateTime
