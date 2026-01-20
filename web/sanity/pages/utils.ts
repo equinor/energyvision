@@ -177,7 +177,7 @@ export async function getPage(params: Params) {
         slug,
         slugs?.translationSlugs,
       ),
-      stickyMenu,
+      stickyMenuData:stickyMenu,
     },
     pageData: restPageData,
   }
