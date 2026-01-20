@@ -70,10 +70,6 @@ export const Content = forwardRef<HTMLDivElement, AccordionContentProps>(functio
     <AccordionContent
       {...rest}
       ref={ref}
-      {...(variant === 'menu' &&
-        useComplex && {
-          asChild: true,
-        })}
       className={twMerge(`${variantClassName[variant]}`, className)}
     >
       {getVariantBody()}
