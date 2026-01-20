@@ -121,7 +121,7 @@ const NewsPage = async ({
           {content && content.length > 0 && (
             <Blocks group='article' value={formattedContent} includeFootnotes />
           )}
-          <div className='px-layout-lg'>
+          <div className='px-layout-lg w-full'>
             <div className='mt-8 mb-2'>
               <Footnotes blocks={[...ingress, ...content]} />
             </div>
