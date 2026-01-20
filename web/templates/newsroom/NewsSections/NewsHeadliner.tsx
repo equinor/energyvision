@@ -57,7 +57,7 @@ const NewsHeadliner = forwardRef<HTMLLIElement, NewsHeadlinerProps>(
                 variant='date'
                 datetime={publishDateTime}
                 uppercase
-                className='font-normal text-2xs leading-normal'
+                className='font-normal text-2xs leading-normal pb-1'
               />
               <span className='mx-2 font-normal leading-normal'>
                 |
