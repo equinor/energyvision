@@ -32,7 +32,6 @@ export type PromotionBlockProps = {
   }
   promoteList?: any[]
   id?: string
-  type: string
   anchor?: string
   className?: string
 }
@@ -40,6 +39,8 @@ export type PromotionBlockProps = {
 const getVariantOnType = (type: string): PromotionVariant => {
   switch (type) {
     case 'promoteExternalLinkV2':
+    case 'externalLinkItem':
+    case 'link':
       return 'externalLink'
     default:
       return 'default'
@@ -53,7 +54,6 @@ export const PromotionBlockV2 = forwardRef<HTMLDivElement, PromotionBlockProps>(
       ingress,
       promoteList = [],
       id,
-      type,
       anchor,
       className = '',
       designOptions,
@@ -106,20 +106,16 @@ export const PromotionBlockV2 = forwardRef<HTMLDivElement, PromotionBlockProps>(
           )}
           <ul className={`${px} grid ${cols} auto-rows-fr gap-4`}>
             {promoteList.map((promotion: any) => {
-              const variant = getVariantOnType(type)
-              const href =
-                variant === 'externalLink'
-                  ? promotion.link.href
-                  : promotion.slug
+              const variant = getVariantOnType(promotion?.type)
               return (
                 <li key={promotion.id}>
                   <Promotion
-                    variant={getVariantOnType(type)}
+                    variant={variant}
                     gridColumns={gridColumns}
                     background={foreground}
-                    title={promotion.title}
+                    title={promotion.label}
                     image={promotion.image}
-                    href={href}
+                    href={promotion.href}
                     layoutDirection={layoutDirection}
                     hasSectionTitle={!!title}
                   />

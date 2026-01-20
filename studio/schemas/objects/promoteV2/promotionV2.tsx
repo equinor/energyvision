@@ -1,8 +1,8 @@
 import { Card, Flex, Grid, Radio, Text } from '@sanity/ui'
 import { useCallback } from 'react'
-import { HiOutlineViewColumns } from 'react-icons/hi2'
 import { LuText } from 'react-icons/lu'
 import { MdImage } from 'react-icons/md'
+import { RiMegaphoneLine } from 'react-icons/ri'
 import {
   type Image,
   type PortableTextBlock,
@@ -12,7 +12,9 @@ import {
   set,
   type ValidationContext,
 } from 'sanity'
+import { capitalizeFirstLetter } from '@/helpers/formatters'
 import blocksToText from '../../../helpers/blocksToText'
+import anchorLinkReference from '../anchorLinkList/anchorLinkReference'
 import {
   hideTitle,
   ingress,
@@ -20,6 +22,12 @@ import {
   theme,
   title,
 } from '../commonFields/commonFields'
+import {
+  externalLink,
+  homepageLink,
+  internalReference,
+  internalReferenceOtherLanguage,
+} from '../linkSelector/common'
 
 type PromotionLayoutInputProps = {
   options: any[]
@@ -125,50 +133,125 @@ export default {
           name: 'promotedItem',
           title: 'Promoted item',
           fields: [
-            /*             {
-              title: 'Page to be promoted',
-              name: 'reference',
-              description: 'Select the page you want to promote',
-              type: 'reference',
-              to: [...routes].filter(e => e),
-              options: {
-                filter: topicPromotionFilter,
-                disableNew: true,
-              },
-            }, */
             {
               name: 'link',
-              type: 'linkSelector',
-              validation: (Rule: Rule) => Rule.required(),
+              type: 'array',
+              of: [
+                externalLink,
+                internalReference,
+                internalReferenceOtherLanguage,
+                homepageLink,
+                anchorLinkReference,
+              ],
+              validation: (Rule: Rule) => Rule.length(1).required(),
+            },
+            {
+              name: 'label',
+              title: 'Link label',
+              description:
+                'Required when external, leave empty if you want to use referenced title',
+              type: 'string',
+              validation: (Rule: Rule) =>
+                Rule.custom((value: string, ctx: ValidationContext) => {
+                  if (ctx.parent?.link?.[0]?._type === 'link') {
+                    return value ? true : 'You must add a label'
+                  }
+                  return true
+                }),
             },
             {
               name: 'image',
               title: 'Image',
               type: 'imageWithAlt',
               hidden: ({ parent }: DocumentType) => {
-                return parent?.link?.[0]?._type !== 'link'
+                return (
+                  parent?.link?.[0]?._type !== 'link' &&
+                  parent?.link?.[0]?._type !== 'anchorLinkReference'
+                )
               },
+              validation: (Rule: Rule) =>
+                Rule.custom((value: string, ctx: ValidationContext) => {
+                  if (
+                    ctx.parent?.link?.[0]?._type === 'link' ||
+                    ctx.parent?.link?.[0]?._type === 'anchorLinkReference'
+                  ) {
+                    return value ? true : 'You must add an image'
+                  }
+                  return true
+                }),
             },
           ],
           preview: {
             select: {
-              topicTitle: 'reference.content.title',
-              topicMedia: 'reference.content.heroFigure.image',
+              referenceNewsMagTitle: 'link.0.title',
+              referenceNewsMedia: 'link.0.heroImage.image',
+              referenceMagMedia: 'link.0.heroFigure.image',
+              referenceTopicTitle: 'link.0.content.title',
+              referenceTopicMedia: 'link.0.content.heroFigure.image',
+              customImage: 'image',
+              link: 'link',
+              label: 'label',
+              type: 'link.0._type',
             },
             prepare({
-              topicTitle,
-              topicMedia,
+              referenceNewsMagTitle,
+              referenceNewsMedia,
+              referenceMagMedia,
+              referenceTopicTitle,
+              referenceTopicMedia,
+              customImage,
+              link,
+              label,
+              type,
             }: {
-              topicTitle: PortableTextBlock[]
-              topicMedia: Image
+              referenceNewsMagTitle?: PortableTextBlock[]
+              referenceNewsMedia?: Image
+              referenceMagMedia?: Image
+              referenceTopicTitle?: PortableTextBlock[]
+              referenceTopicMedia?: Image
+              customImage?: Image
+              link?: any
+              label?: string
+              type?: string
             }) {
-              const plainTitle = topicTitle
-                ? blocksToText(topicTitle)
-                : 'Untitled'
+              let promoType = type ?? 'not set'
+
+              if (type?.includes('route')) {
+                promoType = 'internal route'
+              }
+              if (type?.includes('anchorLinkReference')) {
+                promoType = 'anchor link'
+              }
+              if (type === 'link') {
+                promoType = 'external link'
+              }
+              const referenceTitle =
+                referenceTopicTitle ?? referenceNewsMagTitle
+              let title = label ?? 'Missing title'
+              if (
+                link?.[0]?._type === 'anchorLinkReference' &&
+                typeof label === 'undefined'
+              ) {
+                title = link?.[0]?.title
+              }
+              if (
+                link?.[0]?._type !== 'link' &&
+                link?.[0]?._type !== 'anchorLinkReference' &&
+                typeof label === 'undefined' &&
+                referenceTitle
+              ) {
+                title = blocksToText(referenceTitle) ?? 'Missing title'
+              }
 
               return {
-                title: plainTitle,
-                media: topicMedia,
+                title: title,
+                subtitle: `${capitalizeFirstLetter(promoType)}`,
+                media:
+                  customImage ??
+                  referenceTopicMedia ??
+                  referenceNewsMedia ??
+                  referenceMagMedia ??
+                  RiMegaphoneLine,
               }
             },
           },
@@ -203,9 +286,11 @@ export default {
           if (Number(ctx.parent?.promoteList?.length) < Number(value)) {
             return 'Fewer promotions than grid columns. Please select lower grid columns'
           }
-          //@ts-ignore:todo
+
           if (
+            //@ts-ignore:todo
             ctx.parent?.layoutDirection === 'row' &&
+            //@ts-ignore:todo
             ctx.parent?.layoutGrid !== 'sm'
           ) {
             if (value === '4') {
@@ -253,7 +338,7 @@ export default {
       return {
         title: plainTitle,
         subtitle: subTitle,
-        media: HiOutlineViewColumns,
+        media: RiMegaphoneLine,
       }
     },
   },

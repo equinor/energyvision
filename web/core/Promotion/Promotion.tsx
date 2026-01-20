@@ -2,7 +2,11 @@ import type { PortableTextBlock } from '@portabletext/types'
 import { forwardRef, type ReactNode } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { Image } from '@/core/Image/Image'
-import { getArrowElement } from '@/core/Link/ResourceLink'
+import {
+  getArrowAnimation,
+  getArrowElement,
+  iconRotation,
+} from '@/core/Link/ResourceLink'
 import { Typography } from '@/core/Typography'
 import type { GridColumnVariant } from '@/lib/helpers/getCommonUtilities'
 import {
@@ -69,6 +73,7 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
     },
     ref,
   ) {
+    console.log('Promotion variant', variant)
     const plainText = Array.isArray(title)
       ? title
           .map(block => block.children.map(span => span.text).join(''))
@@ -86,7 +91,11 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
       string
     > = {
       col: `aspect-video w-full h-full`,
-      row: `h-full w-full ${gridColumns && gridColumns === '2' ? '2xl:aspect-[1.08]' : '2xl:aspect-4/5'}`,
+      row: `h-full w-full ${
+        gridColumns && gridColumns === '2'
+          ? '2xl:aspect-[1.08]'
+          : '2xl:aspect-4/5'
+      }`,
     }
 
     const showArrow = type !== 'extended'
@@ -109,7 +118,7 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
       extended: 'line-clamp-5',
     }
 
-    return (
+    return href ? (
       <BaseLink
         ref={ref}
         type={variant === 'externalLink' ? 'externalUrl' : 'internalUrl'}
@@ -117,7 +126,11 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
         locale={locale}
         prefetch={false}
         className={twMerge(
-          `group h-full w-full rounded-card ${colorKeyToUtilityMap[background ?? 'gray-20'].background} grid ${layoutOnTypes[type]} focus-visible:envis-outline dark:focus-visible:envis-outline-invert focus:outline-none`,
+          `group h-full w-full rounded-card ${
+            colorKeyToUtilityMap[background ?? 'gray-20'].background
+          } grid ${
+            layoutOnTypes[type]
+          } focus-visible:envis-outline dark:focus-visible:envis-outline-invert focus:outline-none`,
           className,
         )}
       >
@@ -128,11 +141,15 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
             fill
             className={`${layoutDirectionImageClassNames[_layoutDirection]}`}
             aspectRatio={_layoutDirection === 'col' ? '16:9' : '4:3'}
-            imageClassName={`${_layoutDirection !== 'col' ? 'rounded-s-card' : 'rounded-t-card'}`}
+            imageClassName={`${
+              _layoutDirection !== 'col' ? 'rounded-s-card' : 'rounded-t-card'
+            }`}
           />
         )}
         <div
-          className={`h-full min-h-[8vh] w-full ${paddingOnTypes[type]} flex ${type === 'extended' ? 'items-start' : 'items-center'} `}
+          className={`h-full min-h-[8vh] w-full ${paddingOnTypes[type]} flex ${
+            type === 'extended' ? 'items-start' : 'items-center'
+          } `}
         >
           <div className={`max-w-prose grow`}>
             {eyebrow && eyebrow}
@@ -157,14 +174,19 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
           </div>
 
           {showArrow && (
-            <div className='flex items-end justify-end self-end p-1'>
+            <div className={`flex items-end justify-end self-end p-1`}>
               {getArrowElement(
                 variant === 'externalLink' ? 'externalUrl' : 'internalUrl',
+                `${
+                  variant === 'externalLink' ? iconRotation.externalUrl : ''
+                } ${getArrowAnimation(
+                  variant === 'externalLink' ? 'externalUrl' : 'internalUrl',
+                )}`,
               )}
             </div>
           )}
         </div>
       </BaseLink>
-    )
+    ) : null
   },
 )

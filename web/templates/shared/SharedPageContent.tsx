@@ -624,6 +624,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
         )
       case 'promoteExternalLinkV2':
       case 'promoteTopicsV2':
+      case 'promotionsV2':
         return (
           <PromotionBlockV2
             key={c.id}
@@ -669,7 +670,9 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
         key={c.id}
         fallbackRender={({ error }) => {
           console.error(
-            `Error in component ${c.type}: ${c?.title ? toPlainText(c.title) : ''}`,
+            `Error in component ${c.type}: ${
+              c?.title ? toPlainText(c.title) : ''
+            }`,
             error,
           )
           return (
@@ -681,7 +684,9 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
               <Typography as='h2' variant='h3' className='text-center'>
                 Sorry,
                 {dataset === 'global-development'
-                  ? ` error in component ${c.type}: ${c?.title ? toPlainText(c.title) : ''}`
+                  ? ` error in component ${c.type}: ${
+                      c?.title ? toPlainText(c.title) : ''
+                    }`
                   : ` this section could not be shown`}
               </Typography>
             </div>

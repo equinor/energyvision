@@ -26,6 +26,9 @@ export const ingress = {
   name: 'ingress',
   title: 'Ingress',
   type: 'array',
+  components: {
+    input: CompactBlockEditor,
+  },
   of: [configureBlockContent({ variant: 'ingress' })],
 }
 

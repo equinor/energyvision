@@ -28,6 +28,7 @@ import {
 import promoteMagazine from './promotions/promoteMagazine'
 import {
   externalLinksPromotionV2,
+  promotionsV2,
   topicsPromotionV2,
 } from './promotions/v2/promotionsV2'
 import { lastUpdatedTimeQuery, publishDateTimeQuery } from './publishDateTime'
@@ -663,11 +664,15 @@ _type == "keyNumbers" =>{
       ...,
     }
   },
-     _type == "promoteTopicsV2" => {
-    ${topicsPromotionV2}
+  //Remove promoteTopicsV2 and promoteExternalLinkV2 when the combined promotionsV2/promotiles is done testing
+  _type == "promoteTopicsV2" => {
+    ${topicsPromotionV2},
   },
   _type == "promoteExternalLinkV2" => {
-    ${externalLinksPromotionV2}
+    ${externalLinksPromotionV2},
+  },
+  _type == "promotionsV2" => {
+       ${promotionsV2},
   },
 
 `

@@ -110,6 +110,7 @@ export const externalLink = {
     prepare({ href }: { href: string }) {
       return {
         title: href || 'Add external link',
+        media: EdsBlockEditorIcon(external_link),
       }
     },
   },
