@@ -47,8 +47,7 @@ export default async function Page({ params }: Props) {
     locale,
     tags: ['page', 'event', 'landingPage', 'magazine', 'news', 'localNews'],
   })
-
-  if (!pageData) notFound()
+  if (Object.keys(pageData).length == 0) notFound()
 
   const template = pageData?.template
   if (!template || typeof template === 'undefined')
