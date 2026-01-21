@@ -9,8 +9,8 @@ import ArchivedNews from '@/templates/archivedNews/ArchivedNews'
 
 type Params = Promise<{ locale: string; slug: string[] }>
 //TODO types
-async function getArchivedPageData(params: Params) {
-  const { locale: routeLocale, slug: pagePathArray } = await params
+async function getArchivedPageData(params: { locale: string; slug: string[] }) {
+  const { locale: routeLocale, slug: pagePathArray } = params
   const locale = routeLocale === 'en-GB' ? 'en' : routeLocale
   if (!Flags.HAS_ARCHIVED_NEWS) return { notFound: true }
 
