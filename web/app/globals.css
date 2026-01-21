@@ -3,8 +3,6 @@
 @source '../styles/components/videojs.css';
 @source '../styles/components/cookiebot.css';
 @source 'video.js/dist/video-js.css';
-@source '/legacy/styles/legacy.minified.css';
-@source '/legacy/styles/legacy.spacing.css';
 
 @theme {
   --font-sans: 'Equinor', 'Open Sans', sans-serif;

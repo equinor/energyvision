@@ -35,6 +35,11 @@ export default async function LocaleLayout({
     })) ?? []
 
   return (
+    <>
+    <head>
+      <link rel="stylesheet" href="/legacy/styles/legacy.spacing.css" />
+      <link rel="stylesheet" href="/legacy/styles/legacy.minified.css"/>
+    </head>
     <div className={`pt-topbar text-slate-80 peer-data-[sticky=true]:pt-0`}>
       <PageWrapper
         headerData={{
@@ -45,5 +50,6 @@ export default async function LocaleLayout({
       </PageWrapper>
       <div className='clear-both'></div>
     </div>
+    </>
   )
 }
