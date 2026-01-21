@@ -47,7 +47,7 @@ export const CardContent = forwardRef<HTMLDivElement, CardContentProps>(
       <div
         ref={ref}
         className={twMerge(
-          `flex h-full gap-4 md:gap-6 ${variantClassNames[variant]}`,
+          `flex gap-4 md:gap-6 ${variantClassNames[variant]}`,
           className,
         )}
       >

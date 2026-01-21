@@ -45,18 +45,14 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
 ) {
   const commonStyling = `
   grid
-  grid-cols-1 
-  grid-rows-[35%_65%]
-  flex-col
-  gap-0
   rounded-card 
   w-full
   h-full
   `
 
   const variantClassNames: Record<Variants, string> = {
-    primary: `${commonStyling}`,
-    secondary: `${commonStyling}`,
+    primary: `${commonStyling} grid-rows-[auto_1fr]`,
+    secondary: `${commonStyling} grid-rows-[auto_1fr]`,
     compact: `w-full h-full rounded-card flex gap-4`,
     single: `grid grid-cols-[40%_auto] min-h-[450px] rounded-card`,
   }
