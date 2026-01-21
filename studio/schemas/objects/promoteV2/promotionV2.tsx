@@ -1,8 +1,7 @@
 import { Card, Flex, Grid, Radio, Text } from '@sanity/ui'
 import { useCallback } from 'react'
-import { LuText } from 'react-icons/lu'
+import { LuPanelBottom, LuText } from 'react-icons/lu'
 import { MdImage } from 'react-icons/md'
-import { RiMegaphoneLine } from 'react-icons/ri'
 import {
   type Image,
   type PortableTextBlock,
@@ -251,7 +250,7 @@ export default {
                   referenceTopicMedia ??
                   referenceNewsMedia ??
                   referenceMagMedia ??
-                  RiMegaphoneLine,
+                  LuPanelBottom,
               }
             },
           },
@@ -338,7 +337,7 @@ export default {
       return {
         title: plainTitle,
         subtitle: subTitle,
-        media: RiMegaphoneLine,
+        media: LuPanelBottom,
       }
     },
   },
