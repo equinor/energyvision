@@ -15,7 +15,6 @@ async function getArchivedPageData(params: { locale: string; slug: string[] }) {
   if (!Flags.HAS_ARCHIVED_NEWS) return { notFound: true }
 
   const pagePath = pagePathArray?.join('/')
-
   const archivedItems = archivedNews.filter(
     e => e.slug === `/news/archive/${pagePath}`,
   )
@@ -160,10 +159,8 @@ const fallbackToAnotherLanguage = async (
   return { notFound: true }
 }
 
-//TODO types
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default async function ArchivedNewsPage({ params }: any) {
-  const pageData = await getArchivedPageData(params)
+export default async function ArchivedNewsPage( {params} : {params: Params}) {
+  const pageData = await getArchivedPageData(await params)
   if (!pageData) notFound()
   return <ArchivedNews {...pageData} />
 }
