@@ -7,13 +7,14 @@ import { Flags } from '@/sanity/helpers/datasetHelpers'
 import type { PathType } from '@/sanity/queries/paths/getPaths'
 import ArchivedNews from '@/templates/archivedNews/ArchivedNews'
 
+type Params = Promise<{ locale: string; slug: string[] }>
 //TODO types
-async function getArchivedPageData(params: any) {
-  const { locale: routeLocale, slug: pagePathArray } = params
+async function getArchivedPageData(params: Params) {
+  const { locale: routeLocale, slug: pagePathArray } = await params
   const locale = routeLocale === 'en-GB' ? 'en' : routeLocale
   if (!Flags.HAS_ARCHIVED_NEWS) return { notFound: true }
 
-  const pagePath = pagePathArray.join('/')
+  const pagePath = pagePathArray?.join('/')
 
   const archivedItems = archivedNews.filter(
     e => e.slug === `/news/archive/${pagePath}`,
@@ -32,7 +33,7 @@ async function getArchivedPageData(params: any) {
 export async function generateMetadata({
   params,
 }: {
-  params: any
+  params: Params
 }): Promise<Metadata> {
   const { locale, slug: pagePathArray } = await params
 
