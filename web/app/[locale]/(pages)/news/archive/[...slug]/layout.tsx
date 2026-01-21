@@ -31,7 +31,7 @@ export default async function LocaleLayout({
   const slugs =
     archivedItems?.map((data: PathType) => ({
       slug: `${data.locale === 'no' ? '/no' : ''}${data.slug as string}`,
-      lang: data.locale === 'en' ? 'en_GB' : 'nb_NO',
+      lang: data.locale === 'en' ? 'en-GB' : 'nb-NO',
     })) ?? []
 
   return (
