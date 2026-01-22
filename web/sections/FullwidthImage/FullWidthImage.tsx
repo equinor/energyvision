@@ -24,13 +24,15 @@ const FullWidthImage = ({ data, anchor }: FullWidthImageProps) => {
   if (!image) return null
 
   return (
-    <section className="flex w-full justify-center">
+    <section className="w-full justify-center">
       <Image id={anchor} image={image} grid="full" aspectRatio={aspectRatio} className="max-w-[1800px]" />
       {image.asset && (caption || attribution) && (
-        <FigureCaption className={'mx-auto px-layout-sm pt-0 pb-8'}>
+        <div className='max-w-viewport mx-auto px-layout-sm'>
+        <FigureCaption className={' pt-0 mt-2 pb-8'}>
           {caption && <div>{caption}</div>}
           {attribution && <div>{attribution}</div>}
         </FigureCaption>
+        </div>
       )}
     </section>
   )
