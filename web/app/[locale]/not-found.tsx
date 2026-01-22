@@ -8,11 +8,10 @@ import NotFoundPage from '@/templates/notFound/NotFoundPage'
 // is necessary for this page to render.
 export default async function NotFound() {
   const locale = await getLocale()
-  const { data: pageData } = await sanityFetch({
+  const pageData  = await sanityFetch({
     query: pageNotFoundQuery,
     params: { lang: getNameFromLocale(locale) },
     tags: ['notFound'],
   })
-
   return <NotFoundPage {...pageData} />
 }
