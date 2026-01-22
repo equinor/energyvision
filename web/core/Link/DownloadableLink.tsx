@@ -17,6 +17,7 @@ import type { LinkType } from '@/types'
 import { ArrowRight } from '../../icons'
 import { BaseLink } from './BaseLink'
 import { getArrowElement, type ResourceLinkProps } from './ResourceLink'
+import { verifyCaptcha } from '@/lib/actions/verifyCaptcha'
 
 type Variants = 'default' | 'fit'
 type Type = 'simple' | 'resource' | 'stickyMenu'
@@ -117,19 +118,13 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(
       async (event: any) => {
         const solution = event.detail.response
         setIsFriendlyChallengeDone(true)
-        const response = await fetch('/api/download/getFileUrl', {
-          body: JSON.stringify({
-            frcCaptchaSolution: solution,
-          }),
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          method: 'POST',
-        })
-        console.log('response')
-        if (!response.ok) {
-          setNotHuman(true)
-        }
+              const result = await verifyCaptcha(solution)
+      if(result !== true){
+        setNotHuman(false)
+      }
+      else {
+        setNotHuman(true)
+      }
       },
       [],
     )
