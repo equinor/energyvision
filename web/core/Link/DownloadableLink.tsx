@@ -118,13 +118,8 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(
       async (event: any) => {
         const solution = event.detail.response
         setIsFriendlyChallengeDone(true)
-              const result = await verifyCaptcha(solution)
-      if(result !== true){
-        setNotHuman(false)
-      }
-      else {
-        setNotHuman(true)
-      }
+        const result = await verifyCaptcha(solution)
+        setNotHuman(result!== true)
       },
       [],
     )
