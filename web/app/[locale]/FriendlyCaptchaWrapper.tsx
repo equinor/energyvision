@@ -1,6 +1,6 @@
 'use client'
 import { FriendlyCaptchaSDK } from '@friendlycaptcha/sdk'
-import { type ReactNode, useEffect, useRef } from 'react'
+import { type ReactNode, useEffect, useState } from 'react'
 import { FriendlyCaptchaContext } from '@/templates/forms/FriendlyCaptcha'
 
 export const FriendlyCaptchaSdkWrapper = ({
@@ -8,16 +8,16 @@ export const FriendlyCaptchaSdkWrapper = ({
 }: {
   children: ReactNode
 }) => {
-  const sdk = useRef<FriendlyCaptchaSDK>(undefined)
+  const [sdk, setSdk] = useState<FriendlyCaptchaSDK|undefined>(undefined)
 
   useEffect(() => {
-    if (!sdk?.current) {
-      sdk.current = new FriendlyCaptchaSDK()
+    if (!sdk) {
+      setSdk(new FriendlyCaptchaSDK())
     }
   }, [])
 
   return (
-    <FriendlyCaptchaContext.Provider value={sdk.current}>
+    <FriendlyCaptchaContext.Provider value={sdk}>
       {children}
     </FriendlyCaptchaContext.Provider>
   )

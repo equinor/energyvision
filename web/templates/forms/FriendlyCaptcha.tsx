@@ -57,7 +57,7 @@ const FriendlyCaptcha = ({
     ;() => {
       widget.current?.destroy()
     }
-  }, [doneCallback, errorCallback, locale, sdk, startMode])
+  }, [doneCallback, errorCallback, locale, startMode])
 
   return <div ref={container} />
 }
