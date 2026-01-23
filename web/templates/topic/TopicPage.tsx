@@ -8,8 +8,13 @@ import { PageContent } from '../shared/SharedPageContent'
 
 type TopicPageProps = TopicPageSchema
 
-const TopicPage = ({ breadcrumbs, hero, title, slug, ...restData }: TopicPageProps) => {
-
+const TopicPage = ({
+  breadcrumbs,
+  hero,
+  title,
+  slug,
+  ...restData
+}: TopicPageProps) => {
   const heroProps: HeroBlockProps = {
     //@ts-ignore
     title: title,
@@ -23,7 +28,7 @@ const TopicPage = ({ breadcrumbs, hero, title, slug, ...restData }: TopicPagePro
   }
 
   return (
-    <main className='flex flex-col pt-topbar peer-data-[sticky=true]:pt-0'>
+    <main className='flex flex-col peer-data-[sticky=false]:pt-topbar'>
       <HeroBlock {...heroProps} />
       <PageContent
         data={restData}

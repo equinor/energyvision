@@ -27,10 +27,9 @@ export const StickyMenu = forwardRef<HTMLElement, StickyMenuProps>(
     return (
       <nav
         ref={ref}
-        data-sticky='true'
         aria-label={intl('local')}
         className={twMerge(
-          `peer sticky top-0 duration-300 ease-in-out [transition-property:top] ${twBg} z-10 w-full py-4 shadow-md`,
+          `sticky top-0 duration-300 ease-in-out [transition-property:top] ${twBg} z-10 w-full py-4 shadow-md`,
           className,
         )}
       >
