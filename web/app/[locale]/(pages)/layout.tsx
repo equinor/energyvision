@@ -21,10 +21,10 @@ export default async function PagesLayout({
   }
 
   return (
-    <>
+    <FriendlyCaptchaSdkWrapper>
       <Header />
-      <FriendlyCaptchaSdkWrapper>{children}</FriendlyCaptchaSdkWrapper>
+      {children}
       <Footer />
-    </>
+    </FriendlyCaptchaSdkWrapper>
   )
 }
