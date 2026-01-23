@@ -73,7 +73,6 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
     },
     ref,
   ) {
-    console.log('Promotion variant', variant)
     const plainText = Array.isArray(title)
       ? title
           .map(block => block.children.map(span => span.text).join(''))

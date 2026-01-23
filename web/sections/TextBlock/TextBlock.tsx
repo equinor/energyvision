@@ -78,20 +78,17 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
       )}
     >
       {image?.asset && (
-        <div className='w-75'>
-          <Image
-            image={image}
-            grid='xs'
-            aspectRatio={'16:9'}
-            className='object-cover'
-          />
-        </div>
+        <Image
+          image={image}
+          grid='xs'
+          aspectRatio='4:3'
+          imageClassName='object-contain object-left'
+          className='mb-8 aspect-4/3 w-1/2 lg:mb-16 lg:w-1/3'
+        />
       )}
       {overline ? (
         <hgroup
-          className={`mb-1 ${
-            useBrandTheme ? 'text-energy-red-100' : ''
-          } text-balance`}
+          className={`mb-1 ${useBrandTheme ? 'text-energy-red-100' : ''}`}
         >
           <Typography variant='overline'>{overline}</Typography>
           {title && (
@@ -99,8 +96,8 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
               value={title}
               as='h2'
               asOneElementType
-              //same as variants h2
-              className='pb-8'
+              group='heading'
+              variant='h2'
             />
           )}
         </hgroup>
@@ -110,14 +107,14 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
             value={title}
             as='h2'
             asOneElementType
-            //same as variants h2
-            className='pb-8'
+            group='heading'
+            variant='h2'
           />
         )
       )}
       {(ingress || text || callToActions) && (
         <div
-          className={`flex flex-col gap-6 ${
+          className={`flex flex-col gap-6 pt-lg ${
             contentAlignment === 'right' ? 'items-end' : ''
           }`}
         >

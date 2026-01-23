@@ -24,8 +24,8 @@ const TextTeaser = ({ data, anchor, className }: TextTeaserProps) => {
       value={title}
       as='h2'
       asOneElementType
-      //same as variants h2
-      className='pb-8'
+      group='heading'
+      variant='h2'
     />
   )
 

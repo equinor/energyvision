@@ -17,7 +17,7 @@ export type TeaserData = {
   type: string
   id: string
   title: PortableTextBlock[]
-  text: PortableTextBlock[]
+  content: PortableTextBlock[]
   overline?: string
   image: ImageWithAlt
   actions?: LinkData[]
@@ -34,7 +34,7 @@ type TeaserProps = {
 }
 
 const Teaser = ({ data, anchor }: TeaserProps) => {
-  const { title, overline, text, image, actions, designOptions } = data
+  const { title, overline, content, image, actions, designOptions } = data
   const {
     imageSize = 'full',
     imagePosition,
@@ -46,7 +46,7 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
   const useFlexCol = useMediaQuery(`(max-width: 1023px)`)
   const { bg, dark } = getBgAndDarkFromBackground(designOptions)
 
-  if ([title, overline, text, image?.asset, actions].every(i => !i)) {
+  if ([title, overline, content, image?.asset, actions].every(i => !i)) {
     return null
   }
 
@@ -91,8 +91,8 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
                 value={title}
                 as='h2'
                 asOneElementType
-                //same as variants h2
-                className='pb-8'
+                group='heading'
+                variant='h2'
               />
             )}
           </hgroup>
@@ -101,15 +101,15 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
             <Blocks
               value={title}
               as='h2'
+              group='heading'
+              variant='h2'
               asOneElementType
-              //same as variants h2
-              className='pb-8'
             />
           )
         )}
-        {text && <Blocks variant='ingress' value={text} />}
+        {content && <Blocks variant='ingress' value={content} />}
         {actions && (
-          <div className='flex flex-col gap-8'>
+          <div className='mt-8 flex flex-col gap-x-8 gap-y-6'>
             {actions?.map((action, idx) => {
               const url = action && getUrlFromAction(action)
               return (

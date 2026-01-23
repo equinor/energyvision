@@ -1,8 +1,13 @@
 @font-face {
-  font-family: 'Equinor';
-  src: url('../static/Equinor-Regular.woff') format('woff');
-  font-weight: normal;
+  font-family: Equinor;
+  src:
+    local('ðŸ˜Š'),
+    url(https://cdn.eds.equinor.com/font/EquinorVariable-VF.woff2) format('woff2-variations'),
+    url(https://cdn.eds.equinor.com/font/EquinorVariable-VF.woff) format('woff-variations'),
+    url(https://cdn.eds.equinor.com/font/Equinor-Regular.woff) format('woff');
   font-style: normal;
+  font-weight: 1 999;
+  font-display: fallback;
 }
 :root {
   --font-sm: clamp(calc(14.61 / 16 * 1rem), 0.33vw + 0.84rem, calc(19.68 / 16 * 1rem));
@@ -31,13 +36,13 @@
 
 /* Preflight */
 
-.pt-editable [data-text] .m-0 *:where([data-slate-string='true']) {
+.pt-editable [data-text] .m-0 *:where([data-slate-leaf='true']) {
   margin: 0;
 }
 /* .pt-editable [data-text] .p-0{
   padding:0;
 } */
-.pt-editable [data-text] *:where([data-slate-string='true']) {
+.pt-editable [data-text] *:where([data-slate-leaf='true']) {
   /*white-space: normal;*/
   font-family: Equinor, 'Open Sans', sans-serif !important;
   font-size: 16px;
@@ -45,46 +50,46 @@
 .pt-editable [data-text] [data-group='display'] {
   margin: 0;
 }
-.pt-editable .pt-block:has([data-group='display']) [data-text] *:where([data-slate-string='true']) {
+.pt-editable .pt-block:has([data-group='display']) [data-text] *:where([data-slate-leaf='true']) {
   white-space: normal;
 }
-.pt-editable .text-sm *:where([data-slate-string='true']) {
+.pt-editable .text-sm *:where([data-slate-leaf='true']) {
   font-size: var(--font-sm);
 }
-.pt-editable .text-base *:where([data-slate-string='true']) {
+.pt-editable .text-base *:where([data-slate-leaf='true']) {
   font-size: var(--font-base);
 }
-.pt-editable .text-md *:where([data-slate-string='true']) {
+.pt-editable .text-md *:where([data-slate-leaf='true']) {
   font-size: var(--font-md);
 }
-.pt-editable .text-lg *:where([data-slate-string='true']) {
+.pt-editable .text-lg *:where([data-slate-leaf='true']) {
   font-size: var(--font-lg);
 }
-.pt-editable .text-xl *:where([data-slate-string='true']) {
+.pt-editable .text-xl *:where([data-slate-leaf='true']) {
   font-size: var(--font-xl);
 }
-.pt-editable .text-2xl *:where([data-slate-string='true']) {
+.pt-editable .text-2xl *:where([data-slate-leaf='true']) {
   font-size: var(--font-2xl);
 }
-.pt-editable .text-3xl *:where([data-slate-string='true']) {
+.pt-editable .text-3xl *:where([data-slate-leaf='true']) {
   font-size: var(--font-3xl);
 }
-.pt-editable .text-4xl *:where([data-slate-string='true']) {
+.pt-editable .text-4xl *:where([data-slate-leaf='true']) {
   font-size: var(--font-4xl);
 }
-.pt-editable .text-5xl *:where([data-slate-string='true']) {
+.pt-editable .text-5xl *:where([data-slate-leaf='true']) {
   font-size: var(--font-5xl);
 }
-.pt-editable .tracking-display *:where([data-slate-string='true']) {
+.pt-editable .tracking-display *:where([data-slate-leaf='true']) {
   letter-spacing: var(--tracking-display);
 }
-.pt-editable .leading-md *:where([data-slate-string='true']) {
+.pt-editable .leading-md *:where([data-slate-leaf='true']) {
   line-height: var(--leading-md);
 }
-.pt-editable .leading-lg *:where([data-slate-string='true']) {
+.pt-editable .leading-lg *:where([data-slate-leaf='true']) {
   line-height: var(--leading-lg);
 }
-.pt-editable .leading-xl *:where([data-slate-string='true']) {
+.pt-editable .leading-xl *:where([data-slate-leaf='true']) {
   line-height: var(--leading-xl);
 }
 .pt-editable .py-2 {
@@ -97,12 +102,12 @@
 .pt-editable .pb-8 {
   padding-bottom: var(--spacing-8);
 }
-.pt-editable .font-normal *:where([data-slate-string='true']) {
+.pt-editable .font-normal *:where([data-slate-leaf='true']) {
   font-weight: var(--font-weight-normal);
 }
-.pt-editable .font-md *:where([data-slate-string='true']) {
+.pt-editable .font-md *:where([data-slate-leaf='true']) {
   font-weight: var(--font-weight-md);
 }
-.pt-editable .font-semibold *:where([data-slate-string='true']) {
+.pt-editable .font-semibold *:where([data-slate-leaf='true']) {
   font-weight: var(--font-weight-semibold);
 }

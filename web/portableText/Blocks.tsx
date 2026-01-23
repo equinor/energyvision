@@ -119,18 +119,21 @@ const getBlockComponents = ({
         </Block>
       )
     },
-    h2: ({ children }: TypeProps) => (
+    h2: ({ children }: TypeProps) => {
       //expect 'article' as group when news other can be undefined group and fall back to heading
-      <Block
-        as={as}
-        group={group ?? 'heading'}
-        variant='h2'
-        className={className}
-      >
-        {/**@ts-ignore:todo */}
-        {children}
-      </Block>
-    ),
+      console.log('children h2', children)
+      return (
+        <Block
+          as={as}
+          group={group ?? 'heading'}
+          variant='h2'
+          className={className}
+        >
+          {/**@ts-ignore:todo */}
+          {children}
+        </Block>
+      )
+    },
     h3: ({ children }: TypeProps) => (
       <Block
         as={as}
@@ -377,7 +380,7 @@ export default function Blocks({
                     ...getBlockComponents({
                       group: blocksGroup,
                       variant: blocksVariant,
-                      as: 'span',
+                      as: 'div',
                       className: twMerge(
                         clampLines && twLineClampUtility[clampLines],
                         blockClassName,
