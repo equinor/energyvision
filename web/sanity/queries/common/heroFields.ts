@@ -1,16 +1,15 @@
 import linkSelectorFields from './actions/linkSelectorFields'
+export const heroTitle = /* groq */ `
+"title": select(
+      content->heroType == 'fiftyFifty' => content->richTitle,
+      content->heroType == 'fullWidthImage' => content->richTitle,
+      content->heroType == 'backgroundImage' => content->richTitle,
+      content->title)
+`
 
 export const heroFields = /* groq */ `{
     "type": coalesce(heroType, 'default'),
     "ratio": heroRatio,
-    "isBigTitle":isBigTitle,
-    "heroTitle": heroTitle,
-    heroType == 'fiftyFifty' && isBigTitle => {
-      "heroTitle" : heroBigTitleFiftyFifty,
-    },
-    heroType == "default" && isBigTitle => {
-      "heroTitle" : heroBigTitleDefault,
-    },
     "ingress": heroIngress,
     "background": coalesce(heroBackground.key, 'white-100'),
     "backgroundGradient": backgroundGradient,

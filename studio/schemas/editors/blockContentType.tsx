@@ -1,4 +1,5 @@
 import { attach_file, format_color_text, star_filled } from '@equinor/eds-icons'
+import type { ElementType } from 'react'
 import type { BlockDefinition, BlockStyleDefinition } from 'sanity'
 import styled from 'styled-components'
 import {
@@ -17,7 +18,6 @@ import {
   type LinkType,
 } from '../objects/linkSelector/common'
 import linkSelector from '../objects/linkSelector/linkSelector'
-import { fontSizes, fontWeight, spacing } from './typography'
 
 const externalLinkConfig = {
   ...externalLink,
@@ -32,150 +32,6 @@ export const textColorConfig = {
   },
 }
 
-const SmallTextRender = (props: any) => {
-  const { children } = props
-  return <span style={{ fontSize: fontSizes['sm'] }}>{children}</span>
-}
-// add a specific height to the PTE without losing the ability to resize it
-const DisplayTextRenderer = styled.span<{
-  $fontSize?: string
-  $fontWeight?: string
-}>`
-  letter-spacing: "-3px";
-
-  &:not[data-ui="MenuItem"] {
-    fontweight: ${({ $fontWeight }) => $fontWeight};
-    fontsize: ${({ $fontSize }) => $fontSize};
-  }
-`
-
-export const LargeTextRender = (props: any) => {
-  const { children } = props
-  console.log('LargeTextRender')
-  //<span style={{ fontSize: fontSizes['2xl'] }}>{children}</span>
-  return (
-    <span style={{ fontSize: fontSizes['2xl'] }}>{children}</span>
-    /*     <DisplayTextRenderer $fontSize={fontSizes['2xl']}>
-      {children}
-    </DisplayTextRenderer> */
-  )
-}
-//[data-ui='MenuItem']
-export const ExtraLargeTextRender = (props: any) => {
-  const { children } = props
-  /*   return (
-    <span
-      style={{ fontSize: fontSizes['5xl'], fontWeight: fontWeight['medium'] }}
-    >
-      {children}
-    </span>
-  ) */
-  return (
-    <DisplayTextRenderer
-      $fontSize={fontSizes['5xl']}
-      $fontWeight={fontWeight['medium']}
-    >
-      {children}
-    </DisplayTextRenderer>
-  )
-}
-export const TwoXLTextRender = (props: any) => {
-  const { children } = props
-  return (
-    <DisplayTextRenderer
-      $fontSize={fontSizes['8xl']}
-      $fontWeight={fontWeight['medium']}
-    >
-      {children}
-    </DisplayTextRenderer>
-    /*     <span
-      style={{ fontSize: fontSizes['8xl'], fontWeight: fontWeight['medium'] }}
-    >
-      {children}
-    </span> */
-  )
-}
-
-type TypographyGroups = 'heading' | 'paragraph' | 'article'
-type TypographyVariants = 'h2' | 'h3' | 'h4'
-const getGroupStyle = (group: TypographyGroups) => {
-  switch (group) {
-    case 'article':
-      return {
-        h2: {
-          marginTop: spacing[2],
-          marginBottom: spacing[2],
-          fontSize: fontSizes['lg'],
-        },
-        h3: {
-          fontSize: fontSizes['md'],
-        },
-        h4: {
-          fontSize: fontSizes['base'],
-          fontWeight: fontWeight['medium'],
-        },
-      }
-    case 'paragraph':
-      return {
-        smallText: {
-          fontSize: fontSizes['sm'],
-        },
-      }
-    default:
-      return {
-        h2: {
-          paddingBottom: spacing[8],
-          fontSize: fontSizes['2xl'],
-        },
-        h3: {
-          fontSize: fontSizes['xl'],
-        },
-        h4: {
-          fontSize: fontSizes['lg'],
-          fontWeight: fontWeight['medium'],
-        },
-        largeText: {
-          fontSize: fontSizes['2xl'],
-        },
-        extraLargeText: {
-          fontSize: fontSizes['5xl'],
-        },
-        twoXLText: {
-          fontSize: fontSizes['8xl'],
-        },
-      }
-  }
-}
-const getHeadingStyle = (
-  group: TypographyGroups,
-  level: TypographyVariants,
-) => {
-  const groupStyle = getGroupStyle(group)
-  return groupStyle[level]
-}
-
-const Heading2Decorator = (
-  children: React.ReactNode,
-  group: TypographyGroups,
-) => {
-  const headingStyle = getHeadingStyle(group, 'h2')
-  return <h2 style={{ ...headingStyle }}>{children}</h2>
-}
-const Heading3Decorator = (
-  children: React.ReactNode,
-  group: TypographyGroups,
-) => {
-  const headingStyle = getHeadingStyle(group, 'h3')
-  return <h3 style={{ ...headingStyle }}>{children}</h3>
-}
-const Heading4Decorator = (
-  children: React.ReactNode,
-  group: TypographyGroups,
-) => {
-  const headingStyle = getHeadingStyle(group, 'h4')
-  return <h4 style={{ ...headingStyle }}>{children}</h4>
-}
-
 export type BlockContentProps = {
   h2?: boolean
   h3?: boolean
@@ -183,17 +39,15 @@ export type BlockContentProps = {
   /** Preconfigured options variants
    * simbleBlock - lists and normal text
    * withH2SimpleBlock - only h2 and normal text
-   * extendedBlock - h3,normal,lists,links, small,larger,xl text and 2xl text
+   * extendedBlock - h2,h3,normal,lists,links, small, display h2
    * fullBlock - all headings,lists,links,attachment.
-   * title - just normal text
-   * the other title variants has the title config plus up to either larger xl text and 2xl text
+   * title - just normal text(as h1 in web)
+   * richTitle - normal text(as h1 in web) and display h1
    * ingress  - normal and small text
    */
   variant?:
     | 'title'
-    | 'withLargerTitle'
-    | 'withXLTitle'
-    | 'with2XLTitle'
+    | 'richTitle'
     | 'ingress'
     | 'simpleBlock'
     | 'withH2SimpleBlock'
@@ -210,9 +64,8 @@ export type BlockContentProps = {
   attachment?: boolean
   lists?: boolean
   smallText?: boolean
-  largeText?: boolean
-  extraLargeText?: boolean
-  twoXLText?: boolean
+  displayH1?: boolean
+  displayH2?: boolean
   highlight?: boolean
   extendedStyles?: BlockStyleDefinition[]
   onlySubSupScriptDecorators?: boolean
@@ -226,26 +79,18 @@ const titleVariantOptions: BlockContentProps = {
   externalLink: false,
   lists: false,
 }
-const withLargerTitleStylesOptions: BlockContentProps = {
-  ...titleVariantOptions,
-  largeText: true,
-}
-const withXLTitleStylesOptions: BlockContentProps = {
-  ...titleVariantOptions,
-  largeText: true,
-  extraLargeText: true,
-}
-const with2XLTitleStylesOptions: BlockContentProps = {
-  ...titleVariantOptions,
-  largeText: true,
-  extraLargeText: true,
-  twoXLText: true,
+const richTitleVariantOptions: BlockContentProps = {
+  h2: false,
+  h3: false,
+  displayH1: true,
+  internalLink: false,
+  externalLink: false,
+  lists: false,
 }
 const extendedBlockStylesOptions: BlockContentProps = {
-  largeText: true,
-  extraLargeText: true,
-  twoXLText: true,
-  smallText: true,
+  h2: true,
+  displayH2: true,
+  //smallText: true,
 }
 const ingressStylesOptions: BlockContentProps = {
   lists: false,
@@ -275,7 +120,55 @@ const withH2SimpleBlockStylesOptions: BlockContentProps = {
 const fullBlockStylesOptions: BlockContentProps = {
   h2: true,
   h4: true,
+  displayH2: true,
   attachment: true,
+  smallText: true,
+}
+
+type TypographyGroups = 'normal' | 'paragraph' | 'article' | 'display'
+
+const getGroupStyle = (group: TypographyGroups) => {
+  switch (group) {
+    case 'article':
+      return {
+        h2: 'text-lg font-normal py-2 m-0',
+        h3: 'text-md font-normal pt-2 m-0',
+        h4: 'text-md font-md m-0',
+      }
+    case 'display':
+      return {
+        h1_base: 'text-3xl tracking-display font-normal m-0 ',
+        h1_lg: 'text-4xl leading-md tracking-display font-normal m-0 ',
+        h1_xl: 'text-5xl tracking-display font-normal m-0',
+        h2_base: 'text-3xl tracking-display font-normal m-0 ',
+        h2_lg: 'text-4xl leading-md tracking-display font-normal m-0 ',
+        h2_xl: 'text-5xl tracking-display font-normal m-0',
+      }
+    case 'normal':
+      return {
+        h2: 'text-2xl pb-8 m-0',
+        h3: 'text-xl m-0',
+        h4: 'text-lg font-md m-0',
+        sm: 'text-sm',
+      }
+  }
+}
+
+export const TextRenderer = (
+  props: any,
+  as: ElementType,
+  group?: TypographyGroups,
+  level?: string,
+) => {
+  const { children } = props
+  const ElementTag = as ?? (`span` as React.ElementType)
+  const classNames = getGroupStyle(group)[level] ?? ''
+
+  return (
+    <span className={classNames} data-group={group}>
+      {children}
+    </span>
+  )
 }
 
 // H1 not allowed in block content since it should be a document title.
@@ -289,12 +182,12 @@ export const configureBlockContent = (
     internalLink: true,
     externalLink: true,
     variant: 'block',
-    group: 'paragraph',
+    group: options?.group ?? 'normal',
     h2: false,
     h4: false,
     attachment: false,
-    largeText: false,
-    extraLargeText: false,
+    displayH1: false,
+    displayH2: false,
     smallText: false,
     highlight: false,
     //Big title seems to have large 42 and extra large 56px options
@@ -321,24 +214,10 @@ export const configureBlockContent = (
       options,
     )
   }
-  if (options?.variant === 'withLargerTitle') {
+  if (options?.variant === 'richTitle') {
     defaultConfigOptions = Object.assign(
       defaultConfigOptions,
-      withLargerTitleStylesOptions,
-      options,
-    )
-  }
-  if (options?.variant === 'withXLTitle') {
-    defaultConfigOptions = Object.assign(
-      defaultConfigOptions,
-      withXLTitleStylesOptions,
-      options,
-    )
-  }
-  if (options?.variant === 'with2XLTitle') {
-    defaultConfigOptions = Object.assign(
-      defaultConfigOptions,
-      with2XLTitleStylesOptions,
+      richTitleVariantOptions,
       options,
     )
   }
@@ -385,13 +264,11 @@ export const configureBlockContent = (
     lists,
     internalLink,
     externalLink,
-    variant,
     group,
     attachment,
-    largeText,
-    extraLargeText,
+    displayH1,
+    displayH2,
     smallText,
-    twoXLText,
     highlight,
     footnote,
     onlySubSupScriptDecorators,
@@ -434,37 +311,54 @@ export const configureBlockContent = (
   const h2Config = {
     title: 'Heading 2',
     value: 'h2',
-    component: (props: any) => Heading2Decorator(props.children, group),
+    component: (props: any) => TextRenderer(props, 'h2', group, 'h2'),
   }
   const h3Config = {
     title: 'Heading 3',
     value: 'h3',
-    component: (props: any) => Heading3Decorator(props.children, group),
+    component: (props: any) => TextRenderer(props, 'h3', group, 'h3'),
   }
   const h4Config = {
     title: 'Heading 4',
     value: 'h4',
-    component: (props: any) => Heading4Decorator(props.children, group),
+    component: (props: any) => TextRenderer(props, 'h4', group, 'h4'),
   }
+  const displayH1BaseConfig = {
+    title: 'Display base',
+    value: 'display_h1_base',
+    component: (props: any) =>
+      TextRenderer(props, 'span', 'display', 'h1_base'),
+  }
+  const displayH1LgConfig = {
+    title: 'Display large',
+    value: 'display_h1_lg',
+    component: (props: any) => TextRenderer(props, 'span', 'display', 'h1_lg'),
+  }
+  const displayH1XlConfig = {
+    title: 'Display extra large',
+    value: 'display_h1_xl',
+    component: (props: any) => TextRenderer(props, 'span', 'display', 'h1_xl'),
+  }
+  const displayH2BaseConfig = {
+    title: 'Display H2 base',
+    value: 'display_h2_base',
+    component: (props: any) => TextRenderer(props, 'h2', 'display', 'h2_base'),
+  }
+  const displayH2LgConfig = {
+    title: 'Display h2 large',
+    value: 'display_h2_lg',
+    component: (props: any) => TextRenderer(props, 'h2', 'display', 'h2_lg'),
+  }
+  const displayH2XlConfig = {
+    title: 'Display h2 extra large',
+    value: 'display_h2_xl',
+    component: (props: any) => TextRenderer(props, 'h2', 'display', 'h2_xl'),
+  }
+
   const smallTextConfig = {
     title: 'Small text',
     value: 'smallText',
-    component: SmallTextRender,
-  }
-  const largeTextConfig = {
-    title: 'Display text Large',
-    value: 'largeText',
-    component: LargeTextRender,
-  }
-  const extraLargeTextConfig = {
-    title: 'Display text XL',
-    value: 'extraLargeText',
-    component: ExtraLargeTextRender,
-  }
-  const twoExtraLargeTextConfig = {
-    title: 'Display text 2xl',
-    value: 'twoXLText',
-    component: TwoXLTextRender,
+    component: (props: any) => TextRenderer(props, 'span', group, 'sm'),
   }
 
   const internalLinkConfig = (linkConfig: any) => {
@@ -507,13 +401,7 @@ export const configureBlockContent = (
         of: [
           {
             type: 'block',
-            styles: [
-              {
-                title: 'Small text',
-                value: 'smallText',
-                component: SmallTextRender,
-              },
-            ],
+            styles: [smallTextConfig],
             lists: [],
             marks: {
               decorators: [
@@ -556,21 +444,24 @@ export const configureBlockContent = (
   if (smallText) {
     config?.styles?.push(smallTextConfig)
   }
-  if (largeText) {
-    config?.styles?.push(largeTextConfig)
+  if (displayH1) {
+    config?.styles?.push(
+      displayH1BaseConfig,
+      displayH1LgConfig,
+      displayH1XlConfig,
+    )
   }
-  if (extraLargeText) {
-    config?.styles?.push(extraLargeTextConfig)
+  if (displayH2) {
+    config?.styles?.push(
+      displayH2BaseConfig,
+      displayH2LgConfig,
+      displayH2XlConfig,
+    )
   }
-  if (twoXLText) {
-    config?.styles?.push(twoExtraLargeTextConfig)
-  }
-
   if (externalLink) {
     //@ts-ignore
     config?.marks?.annotations?.push(externalLinkConfig)
   }
-
   if (internalLink) {
     config?.marks?.annotations?.push(internalLinkConfig(internalReference))
     config?.marks?.annotations?.push(
@@ -578,18 +469,16 @@ export const configureBlockContent = (
     )
     config?.marks?.annotations?.push(internalLinkConfig(homepageLink))
   }
-
   if (attachment) {
     config?.marks?.annotations?.push(attachmentConfig)
   }
-
   if (footnote) {
     config?.marks?.annotations?.push(footnoteConfig)
   }
-
   if (highlight) {
     config.marks?.decorators?.push(textColorConfig)
   }
+  console.log('config.styles', config.styles)
 
   return config
 }

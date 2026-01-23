@@ -26,6 +26,14 @@ const variants = {
     '8xl':
       'text-5xl lg:text-6xl 2xl:text-8xl leading-cloudy lg:leading-cloudy 2xl:leading-cloudy ',
   },
+  display: {
+    h1_base: 'text-3xl leading-lofty tracking-display',
+    h1_lg: 'text-4xl leading-earthy tracking-display ',
+    h1_xl: 'text-5xl leading-earthy tracking-display ',
+    h2_base: 'text-3xl leading-lofty tracking-display ',
+    h2_lg: 'text-4xl leading-earthy tracking-display ',
+    h2_xl: 'text-5xl leading-earthy tracking-display ',
+  },
   paragraph: {
     caption: '',
     overline: 'text-md pb-2',
@@ -112,6 +120,7 @@ type TypographyVariants =
   | keyof TypographyTokens['marks']
   | keyof TypographyTokens['plain']
   | keyof TypographyTokens['card']
+  | keyof TypographyTokens['display']
 
 type TypographyGroups = keyof typeof variants
 

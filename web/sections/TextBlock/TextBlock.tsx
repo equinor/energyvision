@@ -22,7 +22,6 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
     designOptions,
     callToActions,
     splitList,
-    isBigText,
     useBrandTheme = false,
   } = data
   /* Don't render the component if it only has an eyebrow */
@@ -78,49 +77,62 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
         className,
       )}
     >
-      {isBigText && title && (
-        <Blocks
-          value={title}
-          as='h2'
-          variant='2xl'
-          blockClassName='mb-2 leading-cloudy'
-        />
+      {image?.asset && (
+        <div className='w-75'>
+          <Image
+            image={image}
+            grid='xs'
+            aspectRatio={'16:9'}
+            className='object-cover'
+          />
+        </div>
       )}
-      {!isBigText && (
-        <>
-          {image?.asset && (
-            <div className='w-[300px]'>
-              <Image
-                image={image}
-                grid='xs'
-                aspectRatio={'16:9'}
-                className='object-cover'
-              />
-            </div>
+      {overline ? (
+        <hgroup
+          className={`mb-1 ${
+            useBrandTheme ? 'text-energy-red-100' : ''
+          } text-balance`}
+        >
+          <Typography variant='overline'>{overline}</Typography>
+          {title && (
+            <Blocks
+              value={title}
+              as='h2'
+              asOneElementType
+              //same as variants h2
+              className='pb-8'
+            />
           )}
-          {overline ? (
-            <hgroup
-              className={`mb-1 ${useBrandTheme ? 'text-energy-red-100' : ''} text-balance`}
-            >
-              <Typography variant='overline'>{overline}</Typography>
-              {title && <Blocks variant='h2' value={title} />}
-            </hgroup>
-          ) : (
-            title && <Blocks value={title} variant='h2' />
-          )}
-        </>
+        </hgroup>
+      ) : (
+        title && (
+          <Blocks
+            value={title}
+            as='h2'
+            asOneElementType
+            //same as variants h2
+            className='pb-8'
+          />
+        )
       )}
-      <div
-        className={`flex flex-col gap-6 ${contentAlignment === 'right' && 'items-end'}`}
-      >
-        {ingress && (
-          <Blocks variant='ingress' value={ingress} blockClassName='mb-6' />
-        )}
-        {text && <Blocks value={text} />}
-        {callToActions && (
-          <CallToActions callToActions={callToActions} splitList={splitList} />
-        )}
-      </div>
+      {(ingress || text || callToActions) && (
+        <div
+          className={`flex flex-col gap-6 ${
+            contentAlignment === 'right' ? 'items-end' : ''
+          }`}
+        >
+          {ingress && (
+            <Blocks variant='ingress' value={ingress} blockClassName='mb-6' />
+          )}
+          {text && <Blocks value={text} />}
+          {callToActions && (
+            <CallToActions
+              callToActions={callToActions}
+              splitList={splitList}
+            />
+          )}
+        </div>
+      )}
     </BackgroundContainer>
   )
 }

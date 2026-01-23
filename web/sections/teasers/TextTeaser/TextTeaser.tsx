@@ -18,19 +18,28 @@ const TextTeaser = ({ data, anchor, className }: TextTeaserProps) => {
   const { backgroundUtility, highlight, dark } = getColorForTheme(theme)
   const url = action && getUrlFromAction(action)
 
-  const bigTextElement = (
-    <Blocks blockClassName={`${highlight}`} variant='h2' value={title} />
+  const titleElement = (
+    <Blocks
+      blockClassName={`${highlight}`}
+      value={title}
+      as='h2'
+      asOneElementType
+      //same as variants h2
+      className='pb-8'
+    />
   )
 
   return (
     <article
       id={anchor}
       className={twMerge(
-        `min-h-[400px] ${backgroundUtility} flex flex-col gap-x-12 gap-y-6 px-layout-md py-6 md:flex-row ${dark ? 'dark' : ''} `,
+        `min-h-[400px] ${backgroundUtility} flex flex-col gap-x-12 gap-y-6 px-layout-md py-6 md:flex-row ${
+          dark ? 'dark' : ''
+        } `,
         className,
       )}
     >
-      {titlePosition === 'left' && bigTextElement}
+      {titlePosition === 'left' && titleElement}
       <div className=''>
         {text && (
           <div className='pb-8 last:pb-0'>
@@ -53,7 +62,7 @@ const TextTeaser = ({ data, anchor, className }: TextTeaserProps) => {
           </ResourceLink>
         )}
       </div>
-      {titlePosition === 'right' && bigTextElement}
+      {titlePosition === 'right' && titleElement}
     </article>
   )
 }

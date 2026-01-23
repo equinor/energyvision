@@ -1,20 +1,15 @@
 import type {
   ConditionalPropertyCallbackContext,
   CurrentUser,
-  FieldProps,
-  PortableTextBlock,
   Rule,
   ValidationContext,
 } from 'sanity'
 import { isAllowed } from '@/helpers/isAllowed'
-import blocksToText from '../../../helpers/blocksToText'
 import { CompactBlockEditor } from '../../components/CompactBlockEditor'
 import { configureBlockContent } from '../../editors'
 import type { ImageWithAltAndCaption } from '../../objects/imageWithAltAndCaption'
 import singleItemArray from '../../objects/singleItemArray'
 import HeroTypeInput from './HeroTypeInput'
-
-const bigTitleRoles = ['administrator', 'developer', 'editor'] // allow editor until designer role is created.
 
 export enum HeroTypes {
   DEFAULT = 'default',
@@ -22,77 +17,20 @@ export enum HeroTypes {
   FULL_WIDTH_IMAGE = 'fullWidthImage',
   LOOPING_VIDEO = 'loopingVideo',
   NO_HERO = 'noHero',
-  //MagazineIndexPage
   BACKGROUND_IMAGE = 'backgroundImage',
 }
 
 type DocumentType = { parent: Hero; currentUser: CurrentUser }
 type Hero = {
   heroType?: HeroTypes
-  isBigTitle?: boolean
   heroLoopingVideoRatio?: 'tall' | 'narrow' | '0.5'
 }
 
-const isBigTitle = {
-  title: 'Show the title as big text',
-  name: 'isBigTitle',
-  type: 'boolean',
-  fieldset: 'hero',
-  hidden: ({ parent }: DocumentType) => {
-    return !(
-      parent?.heroType === HeroTypes.FIFTY_FIFTY ||
-      parent?.heroType === HeroTypes.DEFAULT
-    )
-  },
-  readOnly: ({ currentUser }: DocumentType) => {
-    return !currentUser.roles.find(({ name }) => bigTitleRoles.includes(name))
-  },
-}
-
-const heroBigTitleDefault = {
-  name: 'heroBigTitleDefault',
-  title: 'Hero Title',
-  type: 'array',
-  of: [
-    configureBlockContent({
-      variant: 'withXLTitle',
-      highlight: true,
-    }),
-  ],
-  hidden: ({ parent }: DocumentType) =>
-    !parent.isBigTitle || parent.heroType !== HeroTypes.DEFAULT,
-  validation: (Rule: Rule) =>
-    Rule.custom((value: PortableTextBlock[], ctx: ValidationContext) =>
-      (!value || blocksToText(value)?.length === 0) &&
-      (ctx.parent as Hero)?.isBigTitle &&
-      (ctx.parent as Hero)?.heroType === HeroTypes.DEFAULT
-        ? 'Title is required'
-        : true,
-    ),
-  readOnly: ({ currentUser }: DocumentType) => {
-    return !currentUser.roles.find(({ name }) => bigTitleRoles.includes(name))
-  },
-}
-
-const heroBigTitleFiftyFifty = {
-  name: 'heroBigTitleFiftyFifty',
-  title: 'Hero Title',
-  type: 'array',
-  of: [configureBlockContent({ variant: 'withLargerTitle' })],
-  hidden: ({ parent }: DocumentType) =>
-    !parent.isBigTitle || parent.heroType !== HeroTypes.FIFTY_FIFTY,
-  validation: (Rule: Rule) =>
-    Rule.custom((value: PortableTextBlock[], ctx: ValidationContext) =>
-      !value &&
-      (ctx.parent as Hero)?.isBigTitle &&
-      (ctx.parent as Hero)?.heroType === HeroTypes.FIFTY_FIFTY
-        ? 'Title is required'
-        : true,
-    ),
-  readOnly: ({ currentUser }: DocumentType) => {
-    return !currentUser.roles.find(({ name }) => bigTitleRoles.includes(name))
-  },
-}
+const richTitleHeros = [
+  HeroTypes.FIFTY_FIFTY,
+  HeroTypes.BACKGROUND_IMAGE,
+  HeroTypes.FULL_WIDTH_IMAGE,
+]
 
 const title = {
   name: 'title',
@@ -102,7 +40,36 @@ const title = {
     input: CompactBlockEditor,
   },
   of: [configureBlockContent({ variant: 'title' })],
-  validation: (Rule: Rule) => Rule.required(),
+  hidden: ({ parent }: DocumentType) => {
+    return richTitleHeros.includes(parent?.heroType as HeroTypes)
+  },
+  validation: (Rule: Rule) =>
+    Rule.custom((value: string, ctx: ValidationContext) => {
+      if (!richTitleHeros.includes(ctx?.parent?.heroType as HeroTypes)) {
+        return value ? true : 'Required'
+      }
+      return true
+    }),
+}
+const richTitle = {
+  name: 'richTitle',
+  type: 'array',
+  title: 'Title',
+  of: [
+    configureBlockContent({
+      variant: 'richTitle',
+    }),
+  ],
+  hidden: ({ parent }: DocumentType) => {
+    return !richTitleHeros.includes(parent?.heroType as HeroTypes)
+  },
+  validation: (Rule: Rule) =>
+    Rule.custom((value: string, ctx: ValidationContext) => {
+      if (richTitleHeros.includes(ctx?.parent?.heroType as HeroTypes)) {
+        return value ? true : 'Required'
+      }
+      return true
+    }),
 }
 
 const heroType = {
@@ -134,7 +101,7 @@ const heroType = {
       {
         title: 'Title and/or ingress on background image',
         value: HeroTypes.BACKGROUND_IMAGE,
-      }
+      },
     ].filter(e => e),
   },
   components: {
@@ -166,42 +133,6 @@ const heroRatio = {
       return true
     }),
   initialValue: 'narrow',
-}
-
-const heroTitle = {
-  name: 'heroTitle',
-  type: 'array',
-  title: 'Hero title',
-  fieldset: 'hero',
-  components: {
-    field: (props: FieldProps) => {
-      console.log('field props', props)
-      return props.renderDefault({ ...props })
-    },
-    input: CompactBlockEditor,
-  },
-  of: [
-    configureBlockContent({
-      variant: 'title',
-    }),
-  ],
-  hidden: ({ parent }: DocumentType) => {
-    return (
-      parent?.heroType !== HeroTypes.FIFTY_FIFTY ||
-      (parent?.heroType === HeroTypes.FIFTY_FIFTY && parent.isBigTitle)
-    )
-  },
-  validation: (Rule: Rule) =>
-    Rule.custom((value: string, context: ValidationContext) => {
-      const { parent } = context as unknown as DocumentType
-      if (
-        parent?.heroType === HeroTypes.FIFTY_FIFTY &&
-        !value &&
-        !parent.isBigTitle
-      )
-        return 'Field is required'
-      return true
-    }),
 }
 
 const heroIngress = {
@@ -237,10 +168,10 @@ const backgroundGradient = {
       if (parent?.heroType === HeroTypes.BACKGROUND_IMAGE && !value)
         return 'Field is required'
       return true
-  }),
+    }),
   hidden: ({ parent }: DocumentType) => {
     return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE
-  }
+  },
 }
 
 const heroLink = singleItemArray({
@@ -371,13 +302,10 @@ const containVideo = {
 }
 
 export default [
-  title,
   heroType,
+  title,
+  richTitle,
   heroRatio,
-  heroTitle,
-  isBigTitle,
-  heroBigTitleDefault,
-  heroBigTitleFiftyFifty,
   heroIngress,
   heroLink,
   heroLinkV2,
@@ -386,5 +314,5 @@ export default [
   heroLoopingVideo,
   heroLoopingVideoRatio,
   containVideo,
-  backgroundGradient
+  backgroundGradient,
 ]

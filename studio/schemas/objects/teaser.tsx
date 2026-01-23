@@ -39,8 +39,6 @@ export type Teaser = {
   overline?: string
   title?: PortableTextBlock[]
   text?: PortableTextBlock[]
-  isBigText?: boolean
-  bigText?: PortableTextBlock[]
   action?: (LinkSelector | DownloadableFile | DownloadableImage)[]
   image: ImageWithAlt
   imagePosition?: string
@@ -81,13 +79,9 @@ export default {
   ],
   fields: [
     {
-      title: 'Big text',
-      name: 'isBigText',
-      type: 'boolean',
-    },
-    {
       name: 'overline',
       title: 'Eyebrow',
+      description: "Please don't use with display text",
       type: 'string',
       fieldset: 'eyebrow',
     },
@@ -97,37 +91,17 @@ export default {
       components: {
         input: CompactBlockEditor,
       },
-      of: [configureBlockContent({ variant: 'title' })],
-      hidden: ({ parent }: TeaserDocument) => parent.isBigText,
+      of: [configureBlockContent({ variant: 'richTitle' })],
     },
-    // Maybe teaser could have links in block content and use ingress style?
     {
       name: 'text',
-      title: 'Text content',
+      title: 'Content',
       type: 'array',
       of: [configureBlockContent({ variant: 'simpleBlock' })],
       validation: (Rule: Rule) =>
-        Rule.custom((value: PortableTextBlock[], ctx: ValidationContext) => {
-          if (!(ctx.parent as Teaser)?.isBigText) {
-            return validateCharCounterEditor(value, 600)
-          }
-          return true
+        Rule.custom((value: PortableTextBlock[]) => {
+          return validateCharCounterEditor(value, 600, true)
         }).warning(),
-      hidden: ({ parent }: TeaserDocument) => parent.isBigText,
-    },
-    {
-      name: 'bigText',
-      title: 'Text content',
-      type: 'array',
-      of: [configureBlockContent({ variant: 'withLargerTitle' })],
-      validation: (Rule: Rule) =>
-        Rule.custom((value: PortableTextBlock[], ctx: ValidationContext) => {
-          if ((ctx.parent as Teaser)?.isBigText) {
-            return validateCharCounterEditor(value, 600)
-          }
-          return true
-        }),
-      hidden: ({ parent }: TeaserDocument) => !parent.isBigText,
     },
     {
       name: 'action',
@@ -230,25 +204,17 @@ export default {
     prepare({
       title,
       text,
-      isBigText,
-      bigText,
       image,
     }: {
       title: PortableTextBlock[]
       text: PortableTextBlock[]
-      isBigText: boolean
-      bigText: PortableTextBlock[]
       image: Reference
     }) {
-      const plainTitle = isBigText
-        ? blocksToText(bigText)
-        : blocksToText(title || text)
+      const plainTitle = blocksToText(title ?? text)
 
       return {
         title: plainTitle || 'Missing title/content',
-        subtitle: isBigText
-          ? 'Teaser component (BIG TEXT)'
-          : 'Teaser component',
+        subtitle: 'Teaser component',
         media: image,
       }
     },

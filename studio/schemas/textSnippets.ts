@@ -912,6 +912,11 @@ const snippets: textSnippet = {
     defaultValue: 'Last modified',
     group: groups.newsroom,
   },
+  not_valid_input: {
+    title: 'Invalid characters found',
+    defaultValue: 'Invalid characters found',
+    group: groups.common,
+  },
 }
 
 type textSnippetGroup = { title: string; hidden?: boolean }

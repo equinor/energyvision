@@ -19,7 +19,6 @@ export type TeaserData = {
   title: PortableTextBlock[]
   text: PortableTextBlock[]
   overline?: string
-  isBigText?: boolean
   image: ImageWithAlt
   actions?: LinkData[]
   designOptions: DesignOptions & {
@@ -35,8 +34,7 @@ type TeaserProps = {
 }
 
 const Teaser = ({ data, anchor }: TeaserProps) => {
-  const { title, overline, text, image, actions, designOptions, isBigText } =
-    data
+  const { title, overline, text, image, actions, designOptions } = data
   const {
     imageSize = 'full',
     imagePosition,
@@ -55,13 +53,19 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
   // Svg can be "pictures"/illustrations and small svgs...
   const imageElement = (
     <div
-      className={`relative ${imageSize === 'small' ? 'm-18 flex items-center justify-center' : 'h-auto min-h-[25rem] w-full'}`}
+      className={`relative ${
+        imageSize === 'small'
+          ? 'm-18 flex items-center justify-center'
+          : 'h-auto min-h-[25rem] w-full'
+      }`}
     >
       <Image
         image={image}
         fill
         grid='lg'
-        imageClassName={`${containImage ? 'object-contain' : ''} ${getObjectPositionForImage(backgroundPosition ?? 'center_center')}`}
+        imageClassName={`${
+          containImage ? 'object-contain' : ''
+        } ${getObjectPositionForImage(backgroundPosition ?? 'center_center')}`}
       />
     </div>
   )
@@ -69,27 +73,41 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
   return (
     <article
       id={anchor}
-      className={`${bg} ${dark ? 'dark' : ''} flex flex-col lg:grid lg:grid-cols-2`}
+      className={`${bg} ${
+        dark ? 'dark' : ''
+      } flex flex-col lg:grid lg:grid-cols-2`}
     >
       {(imagePosition === 'left' || useFlexCol) && imageElement}
       <div
-        className={`max-w-text pt-8 pb-10 lg:pt-18 lg:pb-22 ${imagePosition === 'left' ? 'pr-8 pl-8 lg:pr-44' : 'pr-8 pl-8 lg:pl-44'}`}
+        className={`max-w-text pt-8 pb-10 lg:pt-18 lg:pb-22 ${
+          imagePosition === 'left' ? 'pr-8 pl-8 lg:pr-44' : 'pr-8 pl-8 lg:pl-44'
+        }`}
       >
-        {isBigText ? (
-          text && <Blocks value={text} variant='h2' />
-        ) : (
-          <>
-            {overline ? (
-              <hgroup className='mb-1'>
-                <Typography variant='overline'>{overline}</Typography>
-                {title && <Blocks value={title} as='h2' variant='xl' />}
-              </hgroup>
-            ) : (
-              title && <Blocks value={title} as='h2' variant='xl' />
+        {overline ? (
+          <hgroup className='mb-1'>
+            <Typography variant='overline'>{overline}</Typography>
+            {title && (
+              <Blocks
+                value={title}
+                as='h2'
+                asOneElementType
+                //same as variants h2
+                className='pb-8'
+              />
             )}
-            {text && <Blocks variant='ingress' value={text} />}
-          </>
+          </hgroup>
+        ) : (
+          title && (
+            <Blocks
+              value={title}
+              as='h2'
+              asOneElementType
+              //same as variants h2
+              className='pb-8'
+            />
+          )
         )}
+        {text && <Blocks variant='ingress' value={text} />}
         {actions && (
           <div className='flex flex-col gap-8'>
             {actions?.map((action, idx) => {

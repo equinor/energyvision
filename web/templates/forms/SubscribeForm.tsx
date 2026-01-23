@@ -1,15 +1,16 @@
 'use client'
-import type { SubscribeFormParameters } from '../../types/index'
 import { Icon } from '@equinor/eds-core-react'
-import { useForm, Controller } from 'react-hook-form'
 import { error_filled } from '@equinor/eds-icons'
-import { BaseSyntheticEvent, useState } from 'react'
-import FriendlyCaptcha from './FriendlyCaptcha'
+import { useLocale, useTranslations } from 'next-intl'
+import { type BaseSyntheticEvent, useState } from 'react'
+import { Controller, useForm } from 'react-hook-form'
 import { Button } from '@/core/Button'
 import { Checkbox } from '@/core/Checkbox/Checkbox'
-import { TextField } from '@/core/TextField/TextField'
 import { FormMessageBox } from '@/core/Form/FormMessageBox'
-import { useLocale, useTranslations } from 'next-intl'
+import { TextField } from '@/core/TextField/TextField'
+import type { SubscribeFormParameters } from '../../types/index'
+import FriendlyCaptcha from './FriendlyCaptcha'
+import { emailRegex } from './validations'
 
 type FormValues = {
   firstName: string
@@ -39,25 +40,29 @@ const SubscribeForm = () => {
       const subscribeFormParamers: SubscribeFormParameters = {
         firstName: data.firstName,
         email: data.email,
-        crudeOilAssays: allCategories || data.categories.includes('crudeOilAssays'),
+        crudeOilAssays:
+          allCategories || data.categories.includes('crudeOilAssays'),
         generalNews: allCategories || data.categories.includes('generalNews'),
-        stockMarketAnnouncements: allCategories || data.categories.includes('stockMarketAnnouncements'),
-        magazineStories: allCategories || data.categories.includes('magazineStories'),
-        languageCode: locale == 'en' ? 'en' : 'no',
+        stockMarketAnnouncements:
+          allCategories || data.categories.includes('stockMarketAnnouncements'),
+        magazineStories:
+          allCategories || data.categories.includes('magazineStories'),
+        languageCode: locale === 'en' ? 'en' : 'no',
       }
 
       const res = await fetch('/api/subscribe-form', {
         body: JSON.stringify({
           subscribeFormParamers,
-          frcCaptchaSolution: (event?.target as any)['frc-captcha-response'].value,
+          frcCaptchaSolution: (event?.target as any)['frc-captcha-response']
+            .value,
         }),
         headers: {
           'Content-Type': 'application/json',
         },
         method: 'POST',
       })
-      setServerError(res.status != 200)
-      setSuccessfullySubmitted(res.status == 200)
+      setServerError(res.status !== 200)
+      setSuccessfullySubmitted(res.status === 200)
     } else {
       //@ts-ignore: TODO: types
       setError('root.notCompletedCaptcha', {
@@ -71,7 +76,9 @@ const SubscribeForm = () => {
     <>
       {!isSuccessfullySubmitted && (
         <>
-          <div className="pt-8 pb-6 text-sm">{intl('all_fields_mandatory')} </div>
+          <div className='pt-8 pb-6 text-sm'>
+            {intl('all_fields_mandatory')}{' '}
+          </div>
 
           <form
             onSubmit={handleSubmit(onSubmit)}
@@ -80,34 +87,37 @@ const SubscribeForm = () => {
               setIsFriendlyChallengeDone(false)
               setSuccessfullySubmitted(false)
             }}
-            className="flex flex-col gap-12"
+            className='flex flex-col gap-12'
           >
             {!isSuccessfullySubmitted && !isServerError && (
               <>
-                <fieldset className="p-0 pb-4">
+                <fieldset className='p-0 pb-4'>
                   {!errors.categories && (
-                    <legend id="atleast-one-category-required" className="max-w-text text-base font-semibold">
+                    <legend
+                      id='atleast-one-category-required'
+                      className='max-w-text font-semibold text-base'
+                    >
                       {intl('subscribe_form_choose')}*
                     </legend>
                   )}
                   {errors.categories && (
                     <div
-                      className="flex items-center gap-2 border border-clear-red-100 px-6 py-4 text-sm font-semibold text-slate-80"
-                      role="alert"
-                      id="atleast-one-category-required"
+                      className='flex items-center gap-2 border border-clear-red-100 px-6 py-4 font-semibold text-slate-80 text-sm'
+                      role='alert'
+                      id='atleast-one-category-required'
                     >
                       <legend>{intl('subscribe_form_choose')}</legend>
-                      <Icon data={error_filled} aria-hidden="true" />
+                      <Icon data={error_filled} aria-hidden='true' />
                     </div>
                   )}
                   <ul>
                     <li>
                       <Checkbox
                         label={intl('subscribe_form_general_news')}
-                        value="generalNews"
-                        aria-describedby="atleast-one-category-required"
+                        value='generalNews'
+                        aria-describedby='atleast-one-category-required'
                         {...register('categories', {
-                          validate: (values) => values.length > 0,
+                          validate: values => values.length > 0,
                         })}
                         aria-required
                         aria-invalid={errors.categories ? 'true' : 'false'}
@@ -117,8 +127,8 @@ const SubscribeForm = () => {
                       <Checkbox
                         label={intl('subscribe_form_magazine_stories')}
                         aria-invalid={errors.categories ? 'true' : 'false'}
-                        aria-describedby="atleast-one-category-required"
-                        value="magazineStories"
+                        aria-describedby='atleast-one-category-required'
+                        value='magazineStories'
                         aria-required
                         {...register('categories')}
                       />
@@ -126,9 +136,9 @@ const SubscribeForm = () => {
                     <li>
                       <Checkbox
                         label={intl('subscribe_form_stock_market')}
-                        value="stockMarketAnnouncements"
+                        value='stockMarketAnnouncements'
                         aria-invalid={errors.categories ? 'true' : 'false'}
-                        aria-describedby="atleast-one-category-required"
+                        aria-describedby='atleast-one-category-required'
                         aria-required
                         {...register('categories')}
                       />
@@ -137,8 +147,8 @@ const SubscribeForm = () => {
                       <Checkbox
                         label={intl('subscribe_form_cruide_oil')}
                         aria-invalid={errors.categories ? 'true' : 'false'}
-                        aria-describedby="atleast-one-category-required"
-                        value="crudeOilAssays"
+                        aria-describedby='atleast-one-category-required'
+                        value='crudeOilAssays'
                         aria-required
                         {...register('categories')}
                       />
@@ -147,8 +157,8 @@ const SubscribeForm = () => {
                       <Checkbox
                         label={intl('subscribe_form_all')}
                         aria-invalid={errors.categories ? 'true' : 'false'}
-                        aria-describedby="atleast-one-category-required"
-                        value="all"
+                        aria-describedby='atleast-one-category-required'
+                        value='all'
                         aria-required
                         {...register('categories')}
                       />
@@ -156,62 +166,77 @@ const SubscribeForm = () => {
                   </ul>
                 </fieldset>
                 <Controller
-                  name="email"
+                  name='email'
                   control={control}
                   rules={{
                     required: intl('email_validation'),
                     pattern: {
-                      value:
-                        /^[\w!#$%&'*+/=?`{|}~^-]+(?:\.[\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}$/g,
+                      value: emailRegex,
                       message: intl('email_validation'),
                     },
                   }}
-                  render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
+                  render={({
+                    field: { ref, ...props },
+                    fieldState: { invalid, error },
+                  }) => (
                     <TextField
                       {...props}
                       id={props.name}
                       label={`${intl('email')}*`}
                       inputRef={ref}
-                      inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
+                      inputIcon={
+                        invalid ? (
+                          <Icon data={error_filled} title='error' />
+                        ) : undefined
+                      }
                       helperText={error?.message}
-                      aria-required="true"
+                      aria-required='true'
                       {...(invalid && { variant: 'error' })}
                     />
                   )}
                 />
-                <div className="flex flex-col gap-2">
+                <div className='flex flex-col gap-2'>
                   <FriendlyCaptcha
                     doneCallback={() => {
                       setIsFriendlyChallengeDone(true)
                     }}
                     errorCallback={(error: any) => {
-                      console.error('FriendlyCaptcha encountered an error', error)
+                      console.error(
+                        'FriendlyCaptcha encountered an error',
+                        error,
+                      )
                       setIsFriendlyChallengeDone(true)
                     }}
                   />
                   {/*@ts-ignore: TODO: types*/}
                   {errors?.root?.notCompletedCaptcha && (
                     <p
-                      role="alert"
-                      className="flex gap-2 border border-clear-red-100 px-6 py-4 font-semibold text-slate-80"
+                      role='alert'
+                      className='flex gap-2 border border-clear-red-100 px-6 py-4 font-semibold text-slate-80'
                     >
                       {/*@ts-ignore: TODO: types*/}
-                      <span className="mt-1">{errors.root.notCompletedCaptcha.message}</span>
-                      <Icon data={error_filled} aria-label="Error Icon" />
+                      <span className='mt-1'>
+                        {errors.root.notCompletedCaptcha.message}
+                      </span>
+                      <Icon data={error_filled} aria-label='Error Icon' />
                     </p>
                   )}
                 </div>
-                <Button type="submit">{isSubmitting ? intl('form_sending') : intl('subscribe_form_cta')}</Button>
+                <Button type='submit'>
+                  {isSubmitting
+                    ? intl('form_sending')
+                    : intl('subscribe_form_cta')}
+                </Button>
               </>
             )}
           </form>
         </>
       )}
-      <div role="region" aria-live="assertive">
-        {isSubmitSuccessful && <FormMessageBox variant="success" />}
+      <div role='region' aria-live='assertive'>
+        {isSubmitSuccessful && <FormMessageBox variant='success' />}
         {isSubmitted && isServerError && (
           <FormMessageBox
-            variant="error"
+            variant='error'
             onClick={() => {
               reset(undefined, { keepValues: true })
               setServerError(false)

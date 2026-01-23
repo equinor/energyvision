@@ -79,42 +79,76 @@ const getBlockComponents = ({
         {children}
       </Block>
     ),
-    largeText: ({ children }: TypeProps) => (
-      <Block as={as} variant='2xl' className={className}>
+    display_h1_base: ({ children }: TypeProps) => (
+      <Block group='display' variant='h1_base' className={className}>
         {/**@ts-ignore:todo */}
         {children}
       </Block>
     ),
-    extraLargeText: ({ children }: TypeProps) => {
+    display_h1_lg: ({ children }: TypeProps) => (
+      <Block group='display' variant='h1_lg' className={className}>
+        {/**@ts-ignore:todo */}
+        {children}
+      </Block>
+    ),
+    display_h1_xl: ({ children }: TypeProps) => {
       return (
-        <Block as={as} variant='5xl' className={className}>
+        <Block group='display' variant='h1_xl' className={className}>
           {/**@ts-ignore:todo */}
           {children}
         </Block>
       )
     },
-    twoXLText: ({ children }: TypeProps) => {
+    display_h2_base: ({ children }: TypeProps) => (
+      <Block group='display' variant='h2_base' className={className}>
+        {/**@ts-ignore:todo */}
+        {children}
+      </Block>
+    ),
+    display_h2_lg: ({ children }: TypeProps) => (
+      <Block group='display' variant='h2_lg' className={className}>
+        {/**@ts-ignore:todo */}
+        {children}
+      </Block>
+    ),
+    display_h2_xl: ({ children }: TypeProps) => {
       return (
-        <Block as={as} variant='8xl' className={className}>
+        <Block group='display' variant='h2_xl' className={className}>
           {/**@ts-ignore:todo */}
           {children}
         </Block>
       )
     },
     h2: ({ children }: TypeProps) => (
-      <Block as={as} group={group} variant='h2' className={className}>
+      //expect 'article' as group when news other can be undefined group and fall back to heading
+      <Block
+        as={as}
+        group={group ?? 'heading'}
+        variant='h2'
+        className={className}
+      >
         {/**@ts-ignore:todo */}
         {children}
       </Block>
     ),
     h3: ({ children }: TypeProps) => (
-      <Block as={as} group={group} variant='h3' className={className}>
+      <Block
+        as={as}
+        group={group ?? 'heading'}
+        variant='h3'
+        className={className}
+      >
         {/**@ts-ignore:todo */}
         {children}
       </Block>
     ),
     h4: ({ children }: TypeProps) => (
-      <Block as={as} group={group} variant='h4' className={className}>
+      <Block
+        as={as}
+        group={group ?? 'heading'}
+        variant='h4'
+        className={className}
+      >
         {/**@ts-ignore:todo */}
         {children}
       </Block>
@@ -157,7 +191,7 @@ const markSerializers: MarkType = {
     )
   },
   strong: ({ children }: any) => (
-    <strong className='font-bold'>{children}</strong>
+    <strong className='font-semibold'>{children}</strong>
   ),
   attachment: ({ children, value }: any) => {
     const { attachment } = value
@@ -233,6 +267,10 @@ export type BlocksProps = {
   clampLines?: 3 | 4 | 5
   includeFootnotes?: boolean
   noInvert?: boolean
+  /** joins the value to one element type, requires 'as' prop to be set
+   * @default false
+   */
+  asOneElementType?: boolean
 } & TypographyProps
 
 const inlineBlockTypes = ['block', 'positionedInlineImage', 'pullQuote']
@@ -249,11 +287,13 @@ export default function Blocks({
   id,
   clampLines,
   includeFootnotes = false,
+  asOneElementType = false,
   as,
 }: BlocksProps) {
   let div: PortableTextBlock[] = []
   if (!value) return
-
+  console.log('Blocks as', as)
+  console.log('Blocks asOneElementType', asOneElementType)
   return (
     //@ts-ignore:todo
     value.map(
@@ -276,7 +316,7 @@ export default function Blocks({
             hasAttachment ? 'div' : variant
           ) as TypographyVariants
 
-          if (blocks?.length === 1) {
+          if (!asOneElementType && blocks?.length === 1) {
             return (
               <PortableText
                 key={block._key}
@@ -324,10 +364,51 @@ export default function Blocks({
           if (inlineBlockTypes.includes(blocks[i + 1]?._type)) return null
           // Otherwise, render the group of text blocks we have
           const value = div
+          const CustomElementType = as ?? (`div` as React.ElementType)
           div = []
 
-          return (
-            <div key={block._key} className={twMerge(``, className)} id={id}>
+          return asOneElementType && as ? (
+            <CustomElementType className={className} id={id}>
+              <PortableText
+                value={value}
+                components={{
+                  //@ts-ignore:todo
+                  block: {
+                    ...getBlockComponents({
+                      group: blocksGroup,
+                      variant: blocksVariant,
+                      as: 'span',
+                      className: twMerge(
+                        clampLines && twLineClampUtility[clampLines],
+                        blockClassName,
+                      ),
+                    }),
+                    ...blocksComponents,
+                  },
+                  types: { ...typesSerializers },
+                  marks: {
+                    ...markSerializers,
+                    ...marksComponents,
+                    ...(includeFootnotes && footnoteSerializer),
+                  },
+                  //@ts-ignore:todo
+                  list: {
+                    ...getListComponents({
+                      ...(group === 'article' && {
+                        group: 'article',
+                      }),
+                    }),
+                  },
+                }}
+                onMissingComponent={(message, options) => {
+                  console.warn(
+                    `${message},type:${options.type},nodeType:${options.nodeType}`,
+                  )
+                }}
+              />
+            </CustomElementType>
+          ) : (
+            <div key={block._key} className={className} id={id}>
               <PortableText
                 value={value}
                 components={{

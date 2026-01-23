@@ -68,7 +68,12 @@ export const magazineIndexQuery = /* groq */ `
   *[_type == "magazineIndex" && ${sameLang}] {
     _id,
     "seoAndSome": ${seoAndSomeFields},
-    title,
+    //title,
+    "title": select(
+      heroType == 'fiftyFifty' => richTitle,
+      heroType == 'fullWidthImage' => richTitle,
+      heroType == 'backgroundImage' => richTitle,
+      title),
     "hero": ${heroFields},
     ingress[]{
         ...,

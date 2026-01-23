@@ -1,10 +1,5 @@
 import { text_field } from '@equinor/eds-icons'
-import type {
-  PortableTextBlock,
-  Reference,
-  Rule,
-  ValidationContext,
-} from 'sanity'
+import type { PortableTextBlock, Reference, Rule } from 'sanity'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
 import type { ColorSelectorValue } from '../components/ColorSelector'
@@ -16,9 +11,7 @@ type TextBlock = {
   title?: string
   ingress?: string
   text?: string
-  isBigText?: boolean
   useBrandTheme?: boolean
-  bigText?: PortableTextBlock[]
   action?: Reference[]
   splitList?: boolean
   background?: ColorSelectorValue
@@ -42,7 +35,6 @@ export default {
         collapsible: true,
         collapsed: true,
       },
-      hidden: ({ parent }: TextBlockDocument) => parent.isBigText,
     },
     {
       title: 'Eyebrow headline',
@@ -51,7 +43,6 @@ export default {
         collapsible: true,
         collapsed: true,
       },
-      hidden: ({ parent }: TextBlockDocument) => parent.isBigText,
     },
     {
       title: 'Call to action(s)',
@@ -92,7 +83,7 @@ export default {
       components: {
         input: CompactBlockEditor,
       },
-      of: [configureBlockContent({ variant: 'with2XLTitle' })],
+      of: [configureBlockContent({ variant: 'extendedBlock' })],
       validation: (Rule: Rule) =>
         Rule.custom((value: PortableTextBlock[]) =>
           !value ? 'A title is recommended' : true,
@@ -107,37 +98,10 @@ export default {
       fieldset: 'titleOptions',
     },
     {
-      title: 'Big text (Deprecated)',
-      description:
-        'Set big text to false. Will be removed after a transition period',
-      name: 'isBigText',
-      type: 'boolean',
-      fieldset: 'titleOptions',
-      hidden: ({ value }: { value?: string }) => !value,
-    },
-    {
-      name: 'bigTitle',
-      title: 'Title (Deprecated)',
-      description:
-        'Use regular title and set big text to false. Will be removed after a transition period',
-      fieldset: 'titleOptions',
-      type: 'array',
-      of: [configureBlockContent({ variant: 'withXLTitle' })],
-      hidden: ({ parent, value }: TextBlockDocument) =>
-        !value || !parent.isBigText,
-      validation: (Rule: Rule) =>
-        Rule.custom((value: PortableTextBlock[], ctx: ValidationContext) =>
-          value && (ctx.parent as TextBlock)?.isBigText
-            ? 'Clear this field and use regular title without big text boolean'
-            : true,
-        ).warning(),
-    },
-    {
       name: 'ingress',
       title: 'Ingress',
       type: 'array',
       of: [configureBlockContent({ variant: 'ingress' })],
-      hidden: ({ parent }: TextBlockDocument) => parent?.isBigText,
     },
     {
       name: 'text',
@@ -176,31 +140,21 @@ export default {
       title: 'title',
       ingress: 'ingress',
       text: 'text',
-      isBigText: 'isBigText',
-      bigTitle: 'bigTitle',
     },
     prepare({
       title,
-      isBigText,
-      bigTitle,
       ingress,
       text,
     }: {
       title: PortableTextBlock[]
       ingress: PortableTextBlock[]
-      isBigText: boolean
-      bigTitle: PortableTextBlock[]
       text: PortableTextBlock[]
     }) {
-      const plainTitle = isBigText
-        ? blocksToText(bigTitle)
-        : blocksToText(title || ingress || text)
+      const plainTitle = blocksToText(title ?? ingress ?? text)
 
       return {
         title: plainTitle || 'Missing title/content',
-        subtitle: isBigText
-          ? 'Text block component (BIG TEXT)'
-          : 'Text block component',
+        subtitle: 'Text block component',
         media: EdsIcon(text_field),
       }
     },

@@ -15,7 +15,12 @@ export const routeQuery = /* groq */ `
     _id, //used for data filtering
     "slug": slug.current,
     "slugs":{${contentRefSlugsQuery}},
-    "title": content->title,
+    //"title": content->title,
+    "title": select(
+      content->heroType == 'fiftyFifty' => content->richTitle,
+      content->heroType == 'fullWidthImage' => content->richTitle,
+      content->heroType == 'backgroundImage' => content->richTitle,
+      content->title),
     "seoAndSome": content->${seoAndSomeFields},
     ${stickyMenu},
     "hero": content->${heroFields},

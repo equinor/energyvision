@@ -64,8 +64,11 @@ export const FullWidthImageHero = ({
         //@ts-ignore
         value={title}
         id='mainTitle'
-        variant='h1'
-        blockClassName={`py-4 lg:pt-6 lg:pb-4 px-layout-sm lg:px-layout-lg ${nextCompBg} ${nextCompDark ? nextCompDark : ''}`}
+        asOneElementType
+        as='h1'
+        className={`px-layout-sm py-4 lg:px-layout-lg lg:pt-6 lg:pb-4 ${nextCompBg} ${
+          nextCompDark ? nextCompDark : ''
+        }`}
       />
       {subTitle && subTitle}
     </>

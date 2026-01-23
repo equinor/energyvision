@@ -28,6 +28,12 @@ const getElementType = (variant: string, link: boolean): ElementType => {
     case 'h6':
       return variant
     case 'highlight':
+    case 'h1_base':
+    case 'h1_lg':
+    case 'h1_xl':
+    case 'h2_base':
+    case 'h2_lg':
+    case 'h2_xl':
       return 'span'
     case 'div':
       return 'div'
@@ -101,7 +107,9 @@ export const Typography: OverridableComponent<TypographyProps, HTMLElement> =
 
     if (typeof typography === 'undefined') {
       throw new Error(
-        `Typography variant not found for variant "${variant}" ("${variant}") & group "${group || ''}"`,
+        `Typography variant not found for variant "${variant}" ("${variant}") & group "${
+          group || ''
+        }"`,
       )
     }
     const TypographyTag = as ?? (`p` as React.ElementType)

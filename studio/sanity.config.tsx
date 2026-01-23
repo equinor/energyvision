@@ -44,6 +44,7 @@ import { table } from './plugins/importTable'
 import { locations } from './presentation/locations'
 import CustomDocumentInternationalizationMenu from './schemas/components/CustomDocumentInternationalizationMenu'
 import { partialStudioTheme } from './studioTheme'
+import './styles/fonts.css'
 
 export const customTheme = buildLegacyTheme(partialStudioTheme)
 
@@ -171,7 +172,7 @@ const getConfig = (
       if (singletonTemplates.includes(context.schemaType))
         //@ts-ignore
         return prev.filter(it => !['delete', 'duplicate'].includes(it.action))
-        
+
       if (i18n.schemaTypes.includes(context.schemaType))
         prev.push(DeleteTranslationAction)
       return prev

@@ -43,12 +43,7 @@ _type == "keyNumbers" =>{
     "id": _key,
     overline,
     title,
-    isBigText,
-    "text": select(
-      isBigText =>
-        bigText[]{..., ${markDefs}},
-        text[]{..., ${markDefs}}
-      ),
+    "content": text[]{..., ${markDefs}},
     "designOptions": {
       ${background},
       "imagePosition": coalesce(imagePosition, 'left'),
@@ -87,13 +82,7 @@ _type == "keyNumbers" =>{
     "id": _key,
     image,
     overline,
-    //Deprecate big text after a while
-    isBigText,
-    "title": select(
-      isBigText =>
-        bigTitle[]{..., ${markDefs}},
-        title[]{..., ${markDefs}}
-      ),
+    title[]{..., ${markDefs}},
     'useBrandTheme': coalesce(useBrandTheme, false),
     ingress[]{..., ${markDefs}},
     text[]{..., ${markDefs}},
