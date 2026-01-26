@@ -1,7 +1,7 @@
-import { AnchorHTMLAttributes, forwardRef } from 'react'
-import NextLink, { LinkProps } from 'next/link'
+import NextLink, { type LinkProps } from 'next/link'
+import { type AnchorHTMLAttributes, forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { LinkType } from '../../types/index'
+import type { LinkType } from '../../types/index'
 
 export type BaseLinkProps = {
   /** What kind of content is it  */
@@ -18,7 +18,7 @@ export type BaseLinkProps = {
  * And the strict origin policy when external for using blank
  */
 export const BaseLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(function BaseLink(
-  { children, type = 'internalUrl', className = '', href = '', skipInternalStyle = false },
+  { children, type = 'internalUrl', className = '', href = '', skipInternalStyle = false, locale },
   ref,
 ) {
   const classNames = skipInternalStyle
@@ -65,7 +65,7 @@ export const BaseLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(function Ba
 
       default:
         return (
-          <NextLink ref={ref} href={href} prefetch={false} className={classNames}>
+          <NextLink ref={ref} href={href} locale={locale} prefetch={false} className={classNames}>
             {children}
           </NextLink>
         )

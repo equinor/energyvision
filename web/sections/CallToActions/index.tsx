@@ -52,6 +52,7 @@ const CallToActions = ({ callToActions = [], splitList, className }: CallToActio
       {callToActions.map((callToAction: LinkData) => {
         const url = getUrlFromAction(callToAction)
         const { id, label, type, link, file } = callToAction
+
         return url ? (
           <li key={id}>
             {/*  If the URL is a static AEM page it should behave as an internal link in the web */}
