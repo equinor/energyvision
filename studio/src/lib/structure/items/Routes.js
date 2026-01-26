@@ -45,7 +45,7 @@ function routeStructure(S, context, isoCode) {
               .title('Top Level Routes')
               .child(
                 S.documentList()
-                  .title('Topic Categories')
+                  .title('Top level routes')
                   .schemaType(documentName)
                   .apiVersion(apiVersion)
                   .filter(categoryParentsWithDrafts)

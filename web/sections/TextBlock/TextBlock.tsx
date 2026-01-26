@@ -114,7 +114,7 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
       )}
       {(ingress || text || callToActions) && (
         <div
-          className={`flex flex-col gap-6 pt-lg ${
+          className={`flex flex-col gap-6 pt-8 ${
             contentAlignment === 'right' ? 'items-end' : ''
           }`}
         >
