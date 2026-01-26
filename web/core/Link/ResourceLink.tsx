@@ -1,6 +1,5 @@
 import { add, calendar } from '@equinor/eds-icons'
 import { forwardRef } from 'react'
-import { useIntl } from 'react-intl'
 import { ArrowRight } from '../../icons'
 import { TransformableIcon } from '../../icons/TransformableIcon'
 import envisTwMerge from '../../twMerge'
@@ -100,6 +99,7 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
     href = '',
     isAttachment = false,
     file,
+    locale,
   },
   ref,
 ) {
@@ -143,9 +143,7 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
         ? `underline 
         hover:text-norwegian-woods-100 
         dark:hover:text-slate-blue-95`
-        : `border-b
-    border-grey-50
-    dark:border-white-100 no-underline`
+        : `border-b border-grey-50 dark:border-white-100 no-underline`
     }
     ${variantClassName[variant]}
   `,
@@ -184,7 +182,7 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
   }
 
   return href ? (
-    <BaseLink className={classNames} type={type} ref={ref} href={href}>
+    <BaseLink className={classNames} type={type} ref={ref} href={href} locale={locale}>
       <span
         className={envisTwMerge(
           `h-full
