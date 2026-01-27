@@ -1,12 +1,12 @@
+import MagazineTagBar from '@sections/MagazineTags/MagazineTagBar'
 import { useRouter } from 'next/router'
+import useSharedTitleStyles from '../../lib/hooks/useSharedTitleStyles'
+import { SharedBanner } from '../../pageComponents/pageTemplates/shared/SharedBanner'
 import { PageContent } from '../../pageComponents/pageTemplates/shared/SharedPageContent'
 import SharedTitle from '../../pageComponents/pageTemplates/shared/SharedTitle'
-import { HeroTypes, MagazinePageSchema } from '../../types/index'
-import { SharedBanner } from '../../pageComponents/pageTemplates/shared/SharedBanner'
-import Teaser from '../../sections/teasers/Teaser/Teaser'
 import Seo from '../../pageComponents/shared/Seo'
-import useSharedTitleStyles from '../../lib/hooks/useSharedTitleStyles'
-import MagazineTagBar from '@sections/MagazineTags/MagazineTagBar'
+import Teaser from '../../sections/teasers/Teaser/Teaser'
+import { HeroTypes, type MagazinePageSchema } from '../../types/index'
 import MagazineDate from './MagazineDate'
 
 type MagazinePageProps = {
@@ -66,14 +66,14 @@ const MagazinePage = ({ data }: MagazinePageProps) => {
           </>
         )}
         {data.hero.type !== HeroTypes.DEFAULT && (
-          <div className="max-w-viewport px-layout-lg mx-auto pb-6">
+          <div className="mx-auto max-w-viewport px-layout-lg pb-6">
             {tags && tags?.length > 0 && (
               <ul className="flex flex-wrap gap-y-4 divide-x-2 divide-energy-red-100">
                 {tags.map((tag: string) => {
                   return (
                     <li
                       key={`magazine_tag_key_${tag}`}
-                      className="inline-block text-sm font-medium pl-3 pr-3 first:pl-0 lg:text-xs whitespace-nowrap"
+                      className="inline-block whitespace-nowrap pr-3 pl-3 font-medium text-sm first:pl-0 lg:text-xs"
                     >
                       {tag}
                     </li>
