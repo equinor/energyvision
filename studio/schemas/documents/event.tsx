@@ -1,5 +1,16 @@
 import { calendar_event, image } from '@equinor/eds-icons'
-import type { PortableTextBlock, Rule, ValidationContext } from 'sanity'
+import { Card, Stack } from '@sanity/ui'
+import { useCallback } from 'react'
+import {
+  type ArrayOfObjectsInputProps,
+  type DateTimeInputProps,
+  defineField,
+  type PortableTextBlock,
+  type Rule,
+  set,
+  unset,
+  type ValidationContext,
+} from 'sanity'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
 import { CompactBlockEditor } from '../components/CompactBlockEditor'
@@ -27,6 +38,12 @@ const validateRelatedLinksTitle = (
   return true
 }
 
+type CustomDatetimeInputProps = {} & DateTimeInputProps
+
+const CustomDatesInput = (props: ArrayOfObjectsInputProps) => {
+  return <Stack space={3}>{props.renderDefault(props)}</Stack>
+}
+
 export default {
   type: 'document',
   title: 'Event',
@@ -51,17 +68,83 @@ export default {
         collapsed: false,
       },
     },
-    {
-      title: 'Tags',
-      name: 'tagFieldset',
-      options: {
-        collapsible: true,
-        collapsed: false,
-      },
-    },
   ],
   fields: [
     lang,
+    {
+      name: 'title',
+      type: 'array',
+      title: 'Title',
+      components: {
+        input: CompactBlockEditor,
+      },
+      of: [configureBlockContent({ variant: 'titleH1' })],
+      validation: (Rule: Rule) => Rule.required(),
+    },
+    {
+      name: 'location',
+      type: 'string',
+      title: 'Location',
+    },
+    {
+      title: 'Date information',
+      name: 'eventDate',
+      type: 'eventDate',
+      hidden: ({ value }: any) => {
+        return !value
+      },
+    },
+    defineField({
+      type: 'object',
+      name: 'startDayAndTime',
+      title: 'Event start',
+      fields: [
+        {
+          title: 'Date and optional time',
+          description: 'Set time label below to ignore time here',
+          name: 'dayTime',
+          type: 'datetime',
+        },
+        {
+          name: 'overrideTimeLabel',
+          title: 'Time label',
+          description: 'Override time with e.g. "To be announced"',
+          type: 'string',
+        },
+      ],
+    }),
+    defineField({
+      type: 'object',
+      name: 'endDayAndTime',
+      title: 'Event end',
+      description: 'Optional',
+      fields: [
+        {
+          title: 'Date and optional time',
+          description: 'Set time label below to ignore time here',
+          name: 'dayTime',
+          type: 'datetime',
+        },
+        {
+          name: 'overrideTimeLabel',
+          title: 'Time label',
+          description: 'Override time with e.g. "To be announced"',
+          type: 'string',
+        },
+      ],
+    }),
+    {
+      title: 'Event tags',
+      name: 'eventTags',
+      type: 'array',
+      of: [
+        {
+          type: 'reference',
+          to: [{ type: 'eventTag' }],
+          options: { disableNew: true },
+        },
+      ],
+    },
     {
       title: 'Meta information',
       name: 'seo',
@@ -75,41 +158,6 @@ export default {
       description:
         'You can override the hero image as the SoMe image by uploading another image here.',
       fieldset: 'metadata',
-    },
-    {
-      title: 'Event tags',
-      name: 'eventTags',
-      type: 'array',
-      description: 'Add tags to this event',
-      of: [
-        {
-          type: 'reference',
-          to: [{ type: 'eventTag' }],
-          options: { disableNew: true },
-        },
-      ],
-      fieldset: 'tagFieldset',
-    },
-    {
-      name: 'title',
-      type: 'array',
-      title: 'Title',
-      components: {
-        input: CompactBlockEditor,
-      },
-      of: [configureBlockContent({ variant: 'title' })],
-      validation: (Rule: Rule) => Rule.required(),
-    },
-
-    {
-      name: 'location',
-      type: 'string',
-      title: 'Location',
-    },
-    {
-      title: 'Date information',
-      name: 'eventDate',
-      type: 'eventDate',
     },
     {
       title: 'Ingress',
@@ -131,7 +179,7 @@ export default {
       components: {
         input: CompactBlockEditor,
       },
-      of: [configureBlockContent({ variant: 'title' })],
+      of: [configureBlockContent({ variant: 'titleH2' })],
     },
     {
       title: ' ',
@@ -169,9 +217,7 @@ export default {
       date: 'eventDate',
     },
     prepare({ title, date }: { title: PortableTextBlock[]; date: EventDate }) {
-      const eventDate = date?.date
-        ? `${date.date} ${date?.timezone}`
-        : 'No date set'
+      const eventDate = date?.date ? `${date.date}` : 'No date set'
       return {
         title: title ? blocksToText(title) : 'Untitled event',
         subtitle: eventDate,

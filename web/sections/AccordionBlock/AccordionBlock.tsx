@@ -61,7 +61,7 @@ const AccordionBlock = ({ data, anchor, className }: AccordionBlockProps) => {
           ) : (
             <Typography variant='h2'>{title}</Typography>
           ))}
-        <div className='flex flex-col gap-6'>
+        <div className='flex flex-col'>
           {ingress && <Blocks variant='ingress' value={ingress} />}
           {accordion && accordion.length > 0 && (
             <Accordion

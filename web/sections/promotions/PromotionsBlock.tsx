@@ -145,7 +145,7 @@ const PromotionsBlock = ({
           <Blocks variant='h2' id={sectionTitleId} value={title} />
         </div>
       )}
-      <div className='flex flex-col gap-6'>
+      <div className='flex flex-col'>
         {ingress && (
           <div
             className={`${paddingClassName} ${
@@ -172,6 +172,7 @@ const PromotionsBlock = ({
             promotions={promotionList as EventCardData[]}
             hasSectionTitle={!!title}
             promotePastEvents={promotePastEvents}
+            onColorBg={onColorBg}
           />
         ) : (
           <ul

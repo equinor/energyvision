@@ -2,7 +2,6 @@ import type { PortableTextBlock } from '@portabletext/types'
 import type { HeroData, HeroTypes } from '@/sections/Hero/HeroBlock'
 import type {
   DesignOptions,
-  EventDateType,
   ImageWithAlt,
   ImageWithCaptionData,
   LinkData,
@@ -43,16 +42,6 @@ export type PeopleCardData = {
   isLink: boolean
   cv?: LinkData
   enableStructuredMarkup?: boolean
-}
-
-export type EventCardData = {
-  id: string
-  type: 'events'
-  title: PortableTextBlock[]
-  slug: string
-  location?: string
-  eventDate: EventDateType
-  ingress?: PortableTextBlock[]
 }
 
 export type CardsListData = {

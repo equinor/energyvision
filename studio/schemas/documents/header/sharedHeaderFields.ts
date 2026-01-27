@@ -39,7 +39,7 @@ const title = {
   components: {
     input: CompactBlockEditor,
   },
-  of: [configureBlockContent({ variant: 'title' })],
+  of: [configureBlockContent({ variant: 'titleH1' })],
   hidden: ({ parent }: DocumentType) => {
     return richTitleHeros.includes(parent?.heroType as HeroTypes)
   },
@@ -57,7 +57,7 @@ const richTitle = {
   title: 'Title',
   of: [
     configureBlockContent({
-      variant: 'richTitle',
+      variant: 'richTitleH1',
     }),
   ],
   hidden: ({ parent }: DocumentType) => {

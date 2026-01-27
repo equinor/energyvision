@@ -10,6 +10,7 @@ import {
   BsFileZip,
 } from 'react-icons/bs'
 import { Typography } from '@/core/Typography'
+import { verifyCaptcha } from '@/lib/actions/verifyCaptcha'
 import { twMerge } from '@/lib/twMerge/twMerge'
 import { Modal } from '@/sections/Modal'
 import FriendlyCaptcha from '@/templates/forms/FriendlyCaptcha'
@@ -17,7 +18,6 @@ import type { LinkType } from '@/types'
 import { ArrowRight } from '../../icons'
 import { BaseLink } from './BaseLink'
 import { getArrowElement, type ResourceLinkProps } from './ResourceLink'
-import { verifyCaptcha } from '@/lib/actions/verifyCaptcha'
 
 type Variants = 'default' | 'fit'
 type Type = 'simple' | 'resource' | 'stickyMenu'
@@ -119,7 +119,7 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(
         const solution = event.detail.response
         setIsFriendlyChallengeDone(true)
         const result = await verifyCaptcha(solution)
-        setNotHuman(result!== true)
+        setNotHuman(result !== true)
       },
       [],
     )

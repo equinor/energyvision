@@ -67,7 +67,6 @@ const getItems = (S, context) => {
   const isAdmin = roles.some(
     role => role?.name.startsWith('editor') || role?.name === 'administrator',
   )
-  console.log('roles', roles)
   const isDeveloper = roles.some(role => role?.name === 'developer')
   const isLocalNewsEditor = roles.some(role =>
     role?.name.startsWith('local-news-editor'),

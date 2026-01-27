@@ -83,7 +83,7 @@ export default {
       components: {
         input: CompactBlockEditor,
       },
-      of: [configureBlockContent({ variant: 'extendedBlock' })],
+      of: [configureBlockContent({ variant: 'richTitleH2' })],
       validation: (Rule: Rule) =>
         Rule.custom((value: PortableTextBlock[]) =>
           !value ? 'A title is recommended' : true,

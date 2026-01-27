@@ -17,9 +17,28 @@ import {
 } from '@/styles/colorKeyToUtilityMap'
 import AddToCalendar from '../../../core/AddToCalendar/AddToCalendar'
 import Blocks from '../../../portableText/Blocks'
-import type { EventCardData } from '../../../types/index'
 
 type Variants = 'default' | 'single' | 'carousel'
+
+export type EventDateType = {
+  date: string
+  startTime?: string
+  endTime?: string
+  timezone: string
+}
+
+export type EventCardData = {
+  id: string
+  type: 'events'
+  title: PortableTextBlock[]
+  slug: string
+  location?: string
+  eventDate: EventDateType
+  ingress?: PortableTextBlock[]
+  startDayAndTime?: any
+  endDayAndTime?: any
+}
+
 export type EventCardProps = {
   data: EventCardData
   background?: ColorKeys
@@ -42,7 +61,17 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
   },
   ref,
 ) {
-  const { title, location, eventDate, slug, ingress } = data
+  const {
+    title,
+    location,
+    eventDate,
+    slug,
+    ingress,
+    startDayAndTime,
+    endDayAndTime,
+  } = data
+  console.log('startDayAndTime', startDayAndTime)
+  console.log('endDayAndTime', endDayAndTime)
   const { start, end } = getEventDates(eventDate)
   const plainTitle = title ? toPlainText(title as PortableTextBlock[]) : ''
 

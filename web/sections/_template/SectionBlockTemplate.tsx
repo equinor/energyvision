@@ -65,8 +65,8 @@ const SectionBlockTemplate = ({
           className={`${hideTitle ? 'sr-only' : ''}`}
         />
       )}
-      {/* Rest of content can have gap-6 between them */}
-      <div className='flex flex-col gap-6'>
+      {/*  */}
+      <div className='flex flex-col'>
         {ingress && <Blocks variant='ingress' value={ingress} />}
         {/*
             section specific parts

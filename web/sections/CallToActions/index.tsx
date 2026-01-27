@@ -48,7 +48,9 @@ const CallToActions = ({
     )
   }
 
-  return callToActions?.length === 1 ? (
+  return <div className='pt-8'>
+    {
+    callToActions?.length === 1 ? (
     getSingleAction()
   ) : (
     <ul
@@ -81,7 +83,8 @@ const CallToActions = ({
         ) : null
       })}
     </ul>
-  )
+  )}
+  </div>
 }
 
 export default CallToActions

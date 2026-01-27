@@ -295,8 +295,7 @@ export default function Blocks({
 }: BlocksProps) {
   let div: PortableTextBlock[] = []
   if (!value) return
-  console.log('Blocks as', as)
-  console.log('Blocks asOneElementType', asOneElementType)
+
   return (
     //@ts-ignore:todo
     value.map(
@@ -371,7 +370,7 @@ export default function Blocks({
           div = []
 
           return asOneElementType && as ? (
-            <CustomElementType className={className} id={id}>
+            <CustomElementType key={block._key} className={className} id={id}>
               <PortableText
                 value={value}
                 components={{

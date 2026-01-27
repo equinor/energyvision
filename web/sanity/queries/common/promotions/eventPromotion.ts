@@ -5,6 +5,8 @@ export const eventPromotionFields = /* groq */ `
     "title": content->title,
     "location": content->location,
     "eventDate": content->eventDate,
+    "startDayAndTime": content->startDayAndTime,
+    "endDayAndTime": content->endDayAndTime,
     "ingress": content->ingress,
     `
 

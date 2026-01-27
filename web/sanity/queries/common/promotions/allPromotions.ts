@@ -45,6 +45,8 @@ export const eventPromotion = /* groq */ `
             "title": content->title,
             "location": content->location,
             "eventDate": content->eventDate,
+            "startDayAndTime": content->startDayAndTime,
+            "endDayAndTime": content->endDayAndTime,
             "ingress": content->ingress,
         },
     },
@@ -151,7 +153,6 @@ export const magazinePromotion = /* groq */ `
     ${commonPromotionFields},
     ${promoteMagazine}
 `
-
 export const topicsPromotion = /* groq */ `
 ${commonPromotionFields},
         "promotions": references[0...3]{
@@ -182,4 +183,4 @@ ${commonPromotionFields},
           "openGraphImage": reference->openGraphImage,
           "heroType": coalesce(reference->content->heroType, 'default'),
          },
-       },`
+},`

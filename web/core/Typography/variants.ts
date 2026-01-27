@@ -1,13 +1,13 @@
 const variants = {
   heading: {
     unstyled: '',
-    h1: 'text-3xl leading-earthy pb-6 lg:pb-12 my-0',
+    h1: 'text-4xl leading-earthy lg:leading-misty pb-6 lg:pb-12 my-0',
     //many places has gap-6 + mb-2 so pb-8
     //Teaser isBigText was set to 2xl...
     //TextBlock isBigText set to 3xl
     // isBigText set to common pattern 2xl now with classname mb-2 leading-cloudy
-    h2: `text-xl leading-earthy pb-8 my-0`,
-    h3: `text-lg leading-lofty pb-4 my-0`, //needs pt and pb?
+    h2: `text-2xl leading-earthy lg:leading-misty pb-10 my-0`,
+    h3: `text-xl leading-lofty pt-4 pb-8 my-0`, //needs pt and pb?
     h4: 'text-lg pb-0',
     h5: 'text-md pb-0',
     h6: 'text-base pb-0',
@@ -27,9 +27,9 @@ const variants = {
       'text-5xl lg:text-6xl 2xl:text-8xl leading-cloudy lg:leading-cloudy 2xl:leading-cloudy ',
   },
   display: {
-    h1_base: 'text-3xl leading-earthy tracking-display',
-    h1_lg: 'text-4xl leading-cloudy tracking-display ',
-    h1_xl: 'text-5xl leading-cloudy tracking-display ',
+    h1_base: 'text-4xl leading-earthy tracking-display',
+    h1_lg: 'text-5xl leading-cloudy tracking-display ',
+    h1_xl: 'text-6xl leading-cloudy tracking-display ',
     h2_base: 'text-3xl leading-earthy tracking-display ',
     h2_lg: 'text-4xl leading-cloudy tracking-display ',
     h2_xl: 'text-5xl leading-cloudy tracking-display ',
@@ -37,9 +37,9 @@ const variants = {
   paragraph: {
     caption: '',
     overline: 'text-md pb-2',
-    ingress: 'text-md my-6 first:mt-0 last:mb-0',
+    ingress: 'text-md pt-5 pb-5 first:pt-0 last:pb-24',
     eyebrow: 'text-xs font-medium uppercase',
-    body: 'my-5 first:mt-0 last:mb-0 [:where(h2+*,h3+*)]:mt-0 text-base',
+    body: 'py-5 first:pt-0 last:mp-0 [:where(h2+*,h3+*)]:pt-0 text-base',
     small: 'text-sm',
     simple: 'text-base',
   },

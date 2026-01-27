@@ -44,7 +44,7 @@ const IFrameBlock = ({
       id={anchor}
     >
       {title && <Blocks variant='h2' id={headingId} value={title} />}
-      <div className='flex flex-col gap-6'>
+      <div className='flex flex-col'>
         {ingress && <Blocks variant='ingress' value={ingress} />}
         <IFrame
           frameTitle={frameTitle}

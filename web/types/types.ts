@@ -1,5 +1,6 @@
 import type { PortableTextBlock } from '@portabletext/types'
 import type { SanityImageObject } from '@sanity/image-url'
+import type { EventDateType } from '@/sections/cards/EventCard/EventCard'
 import type { FullWidthVideoProps } from '@/sections/FullWidthVideo/FullWidthVideo'
 import type { StockValuesProps } from '@/sections/StockValues/StockValues'
 import type { TeaserData } from '@/sections/teasers/Teaser/Teaser'
@@ -10,7 +11,6 @@ import type { FullWidthImageData } from '../sections/FullwidthImage/FullWidthIma
 import type {
   CardData,
   DesignOptions,
-  EventDateType,
   GridData,
   ImageWithAlt,
   LinkData,

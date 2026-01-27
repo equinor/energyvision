@@ -1,12 +1,14 @@
-import markDefs from './blockEditorMarks'
-import linkSelectorFields from './actions/linkSelectorFields'
 import downloadableFileFields from './actions/downloadableFileFields'
 import downloadableImageFields from './actions/downloadableImageFields'
+import linkSelectorFields from './actions/linkSelectorFields'
 import background from './background'
+import markDefs from './blockEditorMarks'
 
 export const eventContentFields = /* groq */ `
   location,
   eventDate,
+  startDayAndTime,
+  endDayAndTime,
   ingress[]{
     ...,
     ${markDefs},

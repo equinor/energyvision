@@ -1,7 +1,6 @@
 import { attach_file, format_color_text, star_filled } from '@equinor/eds-icons'
 import type { ElementType } from 'react'
 import type { BlockDefinition, BlockStyleDefinition } from 'sanity'
-import styled from 'styled-components'
 import {
   EdsBlockEditorIcon,
   EdsIcon,
@@ -46,8 +45,10 @@ export type BlockContentProps = {
    * ingress  - normal and small text
    */
   variant?:
-    | 'title'
-    | 'richTitle'
+    | 'titleH1'
+    | 'richTitleH1'
+    | 'titleH2'
+    | 'richTitleH2'
     | 'ingress'
     | 'simpleBlock'
     | 'withH2SimpleBlock'
@@ -72,17 +73,33 @@ export type BlockContentProps = {
 }
 
 // Only need to override the default true
-const titleVariantOptions: BlockContentProps = {
+const titleH1VariantOptions: BlockContentProps = {
   h2: false,
   h3: false,
   internalLink: false,
   externalLink: false,
   lists: false,
 }
-const richTitleVariantOptions: BlockContentProps = {
+const richTitleH1VariantOptions: BlockContentProps = {
   h2: false,
   h3: false,
   displayH1: true,
+  internalLink: false,
+  externalLink: false,
+  lists: false,
+}
+
+const titleH2VariantOptions: BlockContentProps = {
+  h2: true,
+  h3: false,
+  internalLink: false,
+  externalLink: false,
+  lists: false,
+}
+const richTitleH2VariantOptions: BlockContentProps = {
+  h2: false,
+  h3: false,
+  displayH2: true,
   internalLink: false,
   externalLink: false,
   lists: false,
@@ -137,9 +154,9 @@ const getGroupStyle = (group: TypographyGroups) => {
       }
     case 'display':
       return {
-        h1_base: 'text-3xl tracking-display font-normal m-0 ',
-        h1_lg: 'text-4xl leading-md tracking-display font-normal m-0 ',
-        h1_xl: 'text-5xl tracking-display font-normal m-0',
+        h1_base: 'text-4xl tracking-display font-normal m-0 ',
+        h1_lg: 'text-5xl leading-md tracking-display font-normal m-0 ',
+        h1_xl: 'text-6xl tracking-display font-normal m-0',
         h2_base: 'text-3xl tracking-display font-normal m-0 ',
         h2_lg: 'text-4xl leading-md tracking-display font-normal m-0 ',
         h2_xl: 'text-5xl tracking-display font-normal m-0',
@@ -207,17 +224,31 @@ export const configureBlockContent = (
       options,
     )
   }
-  if (options?.variant === 'title') {
+  if (options?.variant === 'titleH1') {
     defaultConfigOptions = Object.assign(
       defaultConfigOptions,
-      titleVariantOptions,
+      titleH1VariantOptions,
       options,
     )
   }
-  if (options?.variant === 'richTitle') {
+  if (options?.variant === 'richTitleH1') {
     defaultConfigOptions = Object.assign(
       defaultConfigOptions,
-      richTitleVariantOptions,
+      richTitleH1VariantOptions,
+      options,
+    )
+  }
+  if (options?.variant === 'titleH2') {
+    defaultConfigOptions = Object.assign(
+      defaultConfigOptions,
+      titleH2VariantOptions,
+      options,
+    )
+  }
+  if (options?.variant === 'richTitleH2') {
+    defaultConfigOptions = Object.assign(
+      defaultConfigOptions,
+      richTitleH2VariantOptions,
       options,
     )
   }
@@ -478,7 +509,6 @@ export const configureBlockContent = (
   if (highlight) {
     config.marks?.decorators?.push(textColorConfig)
   }
-  console.log('config.styles', config.styles)
 
   return config
 }

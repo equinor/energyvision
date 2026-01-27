@@ -19,7 +19,7 @@ export default function ({ as = 'li', variant = 'default', keyNumber, descriptio
         <Typography
           group="plain"
           variant="div"
-          className="text-4xl leading-planetary font-medium"
+          className="text-3xl leading-planetary font-medium"
         >{`${keyNumber?.toLocaleString()} `}</Typography>
         {unit && (
           <Typography group="plain" variant="div" className="text-xl font-medium">

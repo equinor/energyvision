@@ -61,8 +61,6 @@ export const ThemeComponent = ({
   active,
   onClickHandler,
 }: ThemeComponentProps) => {
-  console.log('ThemeComponent theme', theme)
-
   return (
     <div
       style={{

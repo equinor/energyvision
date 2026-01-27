@@ -19,6 +19,8 @@
   --font-3xl: clamp(calc(39.81 / 16 * 1rem), 1.77vw + 2.07rem, calc(67.14 / 16 * 1rem));
   --font-4xl: clamp(calc(45.89 / 16 * 1rem), 2.16vw + 2.355rem, calc(79.225 / 16 * 1rem));
   --font-5xl: clamp(calc(51.97 / 16 * 1rem), 2.55vw + 2.64rem, calc(91.31 / 16 * 1rem));
+  --font-5xl: clamp(calc(51.97 / 16 * 1rem), 2.55vw + 2.64rem, calc(91.31 / 16 * 1rem));
+  --font-6xl: clamp(calc(58.05 / 16 * 1rem), 2.94vw + 2.925rem, calc(103.39 / 16 * 1rem));
   --font-8xl: clamp(calc(59.19 / 16 * 1rem), 3.72vw + 3.495rem, calc(115.47 / 16 * 1rem));
   --tracking-display: -3px;
 
@@ -79,6 +81,9 @@
 }
 .pt-editable .text-5xl *:where([data-slate-leaf='true']) {
   font-size: var(--font-5xl);
+}
+.pt-editable .text-6xl *:where([data-slate-leaf='true']) {
+  font-size: var(--font-6xl);
 }
 .pt-editable .tracking-display *:where([data-slate-leaf='true']) {
   letter-spacing: var(--tracking-display);
