@@ -1,17 +1,17 @@
+import { bookmarks } from '@equinor/eds-icons'
 import type { Rule, SanityDocument } from 'sanity'
 import slugify from 'slugify'
 import { magazineSlug } from '../../../satellitesConfig'
 import blocksToText from '../../helpers/blocksToText'
-import { defaultBackgroundColors } from '../defaultColors'
+import { EdsIcon } from '../../icons'
 import { defaultLanguage } from '../../languages'
 import { Flags } from '../../src/lib/datasetHelpers'
 import SlugInput from '../components/SlugInput'
+import { defaultBackgroundColors } from '../defaultColors'
 import { configureBlockContent } from '../editors/blockContentType'
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
 import { withSlugValidation } from '../validations/validateSlug'
 import sharedHeaderFields from './header/sharedHeaderFields'
-import { EdsIcon } from '../../icons'
-import { bookmarks } from '@equinor/eds-icons'
 import { lang } from './langField'
 
 const ingressBlockContentType = configureBlockContent({
@@ -154,7 +154,10 @@ export default {
         { type: 'fullWidthVideo' },
         { type: 'figure' },
         { type: 'textWithIconArray' },
-        { type: 'pullQuote', initialValue: { background: defaultBackgroundColors[0] } },
+        {
+          type: 'pullQuote',
+          initialValue: { background: defaultBackgroundColors[0] },
+        },
         { type: 'accordion' },
         { type: 'promoTileArray' },
         { type: 'promotion' },
@@ -162,6 +165,7 @@ export default {
         { type: 'imageCarousel' },
         { type: 'iframeCarousel' },
         { type: 'videoPlayer' },
+        { type: 'tabs' },
       ],
     },
     {
