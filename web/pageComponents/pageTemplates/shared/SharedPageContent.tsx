@@ -232,6 +232,7 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
         : (data?.content?.[previousComponentIndex] as unknown as ComponentProps)
 
     const topSpacingClassName = applyPaddingTopIfApplicable(c, previousComponentToCompare)
+    //In general most sections should get pb-page-content or it needs to take care of this customly
     const spacingClassName = `${topSpacingClassName} pb-page-content`
     //@ts-expect-error:so many types
     switch (c.type) {
@@ -359,7 +360,7 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
       case 'imageForText':
         return <ImageForText key={c.id} data={c as ImageForTextData} />
       case 'tabs':
-        return <TabsBlock key={c.id} {...(c as any)} className={spacingClassName} />
+        return <TabsBlock key={c.id} {...(c as any)} className={topSpacingClassName} />
       /* Remove from here and move to Homepage Template PageContent */
       case 'homepageBanner':
         return <HomePageBanner key={c.id} {...(c as any)} />

@@ -49,21 +49,11 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(function 
       locale={locale}
       prefetch={false}
       className={twMerge(
-        `group
-        w-full
-        h-full
-        rounded-[13px]
-        ${colorKeyToUtilityMap[background ?? 'gray-20'].background}
-        grid
-        ${
+        `group h-full w-full rounded-[13px] ${colorKeyToUtilityMap[background ?? 'gray-20'].background}grid ${
           layoutDirection === 'col'
             ? 'grid-cols-1 grid-rows-[65%_35%]'
             : 'min-h-[120px] grid-cols-[30%_70%] grid-rows-1'
-        }
-        focus:outline-none
-        focus-visible:envis-outline
-        dark:focus-visible:envis-outline-invert
-      `,
+        }focus:outline-none focus-visible:envis-outline dark:focus-visible:envis-outline-invert`,
         className,
       )}
     >
@@ -79,23 +69,17 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(function 
         )}
       </div>
       <div
-        className={`
-          w-inherit 
-          h-inherit
-        relative 
-        ${layoutDirection === 'col' ? 'p-4' : 'pl-4 pr-3 py-4'}
-        flex
-        items-center
-        overflow-hidden
-        `}
+        className={`relative h-inherit w-inherit ${
+          layoutDirection === 'col' ? 'p-4' : 'py-4 pr-3 pl-4'
+        }flex items-center overflow-hidden`}
       >
-        <div className="grow max-w-prose ">
+        <div className="max-w-prose grow">
           <Typography as="p" variant="h6" className={titleClassNames}>
             {plainText}
           </Typography>
         </div>
 
-        <div className="flex p-1 self-end justify-end items-end">
+        <div className="flex items-end justify-end self-end p-1">
           {getArrowElement(variant === 'externalLink' ? 'externalUrl' : 'internalUrl')}
         </div>
       </div>
