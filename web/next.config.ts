@@ -6,6 +6,8 @@ import type { NextConfig } from 'next'
 import createNextIntlPlugin from 'next-intl/plugin'
 //import { getAllRedirects } from './sanity/interface/redirects'
 import securityHeaders from './securityHeaders'
+import { withSentryConfig } from "@sentry/nextjs";
+
 
 const withNextIntl = createNextIntlPlugin()
 
@@ -39,7 +41,7 @@ export type ConfigRedirect = {
     }
 )
 
-const nextConfig: NextConfig = {
+const nextConfig: NextConfig = withNextIntl({
   output: 'standalone',
   transpilePackages: ['friendly-challenge', '@energyvision/shared'],
   logging: {
@@ -112,6 +114,11 @@ const nextConfig: NextConfig = {
     ],
     browserDebugInfoInTerminal: true,
   },
-}
+})
 
-export default withNextIntl(nextConfig)
+export default withSentryConfig(nextConfig,{
+  org: 'equinor',
+  project: 'equinor-com',
+  silent: !process.env.CI,
+  disableLogger: true,
+})

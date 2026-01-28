@@ -59,3 +59,6 @@ tsconfig.tsbuildinfo
 # gitignore pnpm-lock file in search as it should use package.lock
 #search/pnpm-lock.yaml
 search/AzuriteConfig
+
+# Sentry Config File
+.env.sentry-build-plugin
