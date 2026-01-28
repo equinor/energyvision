@@ -30,42 +30,29 @@ const TabsInfoPanelItem = forwardRef<HTMLDivElement, TabsInfoPanelItemProps>(fun
     <div
       ref={ref}
       className={twMerge(
-        `relative 
-        ${
-          imageVariant === 'sideImage'
-            ? `flex 
-            flex-col-reverse 
-            lg:grid 
-            lg:grid-cols-2 
-            gap-12 
-            items-start 
-            px-8
-            lg:px-16
-            py-12`
-            : ''
+        `relative grid grid-cols-1 grid-rows-[auto_auto] gap-12 px-layout-sm pt-12 pb-page-content lg:px-16 ${
+          imageVariant === 'sideImage' ? `items-start gap-12` : 'lg:grid-cols-auto-2'
         }`,
         className,
       )}
     >
       {image?.asset && imageVariant === 'backgroundImage' && (
-        <Image sizes={getPxSmSizes()} aria-hidden image={image} fill className="z-[1] object-center" />
+        <Image
+          sizes={getPxSmSizes()}
+          aria-hidden
+          image={image}
+          fill
+          className="z-[0] col-span-2 row-span-2 object-center"
+        />
       )}
       <div
-        className={`relative 
-          flex 
-          flex-col 
-          ${
-            imageVariant === 'sideImage'
-              ? ''
-              : 'lg:grid lg:grid-cols-2 px-8 lg:px-12 pt-12 pb-16 lg:pt-16 lg:pb-40 z-10'
-          }
-           gap-x-12 lg:gap-x-20 gap-y-12 `}
+        className={`relative flex flex-col lg:row-start-1 lg:row-end-1 ${
+          imageVariant === 'sideImage' ? 'grid grid-cols-1 gap-y-6 lg:grid-cols-2' : 'z-10'
+        }`}
       >
-        <div>
-          <div className="flex flex-col gap-4">
-            {title && <Heading value={title} as="h3" variant="h5" className={``} />}
-            {text && <Blocks value={text} className={`text-sm`} />}
-          </div>
+        <div className="order-2 flex flex-col lg:order-1">
+          {title && <Heading value={title} variant="h2" className={`text-lg lg:text-lg`} />}
+          {text && <Blocks value={text} className={`text-sm`} />}
           {action && url && (
             <ResourceLink
               href={url}
@@ -79,29 +66,33 @@ const TabsInfoPanelItem = forwardRef<HTMLDivElement, TabsInfoPanelItemProps>(fun
               }}
               showExtensionIcon={true}
               variant="fit"
-              className="mt-12"
+              className="mt-2"
             >
               {`${action?.label}`}
             </ResourceLink>
           )}
         </div>
-        {keyInfo && (
-          <div className={`grid grid-cols-1 ${keyInfo?.length % 2 ? 'xl:grid-cols-1' : 'xl:grid-cols-2'} gap-6`}>
-            {keyInfo?.map((item) => {
-              return (
-                <div key={item?.id}>
-                  <div className="text-sm font-semibold">{item?.title}</div>
-                  <div className="text-md font-semibold">{item?.keyFigure}</div>
-                  <div className="text-xs">{item?.explanation}</div>
-                </div>
-              )
-            })}
+        {image?.asset && imageVariant === 'sideImage' && (
+          <div className="relative order-1 aspect-video w-full rounded-md lg:order-2 lg:aspect-5/4">
+            <Image image={image} fill className="rounded-md" />
           </div>
         )}
       </div>
-      {image?.asset && imageVariant === 'sideImage' && (
-        <div className="w-full relative rounded-md aspect-video lg:aspect-5/4">
-          <Image image={image} fill className="rounded-md" />
+      {keyInfo && (
+        <div
+          className={`grid auto-rows-min grid-cols-2 gap-x-10 gap-y-6 lg:row-start-2 lg:row-end-2 lg:flex lg:flex-wrap ${
+            imageVariant === 'sideImage' ? '' : 'z-10'
+          }`}
+        >
+          {keyInfo?.map((item) => {
+            return (
+              <div key={item?.id} className="text-balance">
+                <div className="font-semibold text-md">{item?.title}</div>
+                <div className="font-semibold text-lg">{item?.keyFigure}</div>
+                <div className="text-base">{item?.explanation}</div>
+              </div>
+            )
+          })}
         </div>
       )}
     </div>
