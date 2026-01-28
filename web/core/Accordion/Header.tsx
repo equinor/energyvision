@@ -140,6 +140,8 @@ export const Header = forwardRef<HTMLButtonElement, AccordionHeaderProps>(functi
         {variant === 'primary' && defaultIconsElement}
         <Typography
           as="span"
+          group='plain'
+          variant='div'
           className={`grow ${
             variant === 'menu'
               ? `xl:motion-safe:transition-all xl:motion-safe:duration-100 xl:motion-safe:ease-in-out`
