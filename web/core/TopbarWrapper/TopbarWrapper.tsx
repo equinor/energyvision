@@ -96,7 +96,7 @@ export const TopbarWrapper = ({ children }: TopbarWrapperProps) => {
           {children}
         </div>
       </nav>
-      {showSticky && (
+      {showSticky && stickyMenuData && (
         <StickyMenu
           {...stickyMenuData}
           className={`${isVisible ? 'top-topbar pt-2' : 'top-0'}`}
