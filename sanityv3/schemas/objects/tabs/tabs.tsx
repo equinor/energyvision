@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { defineField, defineType, PreviewProps, type Rule } from 'sanity'
+
+import { Flex, Stack, Text } from '@sanity/ui'
+import { defineField, defineType, type PreviewProps, type Rule } from 'sanity'
 import blocksToText from '../../../helpers/blocksToText'
+import { capitalizeFirstLetter } from '../../../helpers/formatters'
+import type { ColorSelectorValue } from '../../components/ColorSelector'
 import CompactBlockEditor from '../../components/CompactBlockEditor'
+import { CardTheme, type ThemeSelectorValue } from '../../components/ThemeSelector'
 import { configureTitleBlockContent } from '../../editors'
 import { configureBlockContent } from '../../editors/blockContentType'
-import type { ColorSelectorValue } from '../../components/ColorSelector'
-import { Flex, Stack, Text } from '@sanity/ui'
-import { capitalizeFirstLetter } from '../../../helpers/formatters'
-import { CardTheme, ThemeSelectorValue } from '../../components/ThemeSelector'
 import { getColorForTabTheme } from './tabsThemes'
 
 type TabsPreviewProps = {

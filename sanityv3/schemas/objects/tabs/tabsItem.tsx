@@ -1,7 +1,7 @@
 import { text_field } from '@equinor/eds-icons'
-import { defineField, type PortableTextBlock, type Rule } from 'sanity'
-import { EdsIcon } from '../../../icons'
+import type { PortableTextBlock, Rule } from 'sanity'
 import { capitalizeFirstLetter } from '../../../helpers/formatters'
+import { EdsIcon } from '../../../icons'
 import singleItemArray from '../singleItemArray'
 
 export type TabsItem = {
@@ -31,7 +31,11 @@ export default {
           description: 'Add tab panel. Select the same panel type for all tab items',
           title: 'Tab panel',
           of: [
-            { name: 'tabsKeyNumbers', type: 'tabsKeyNumbers', title: 'Key numbers' },
+            {
+              name: 'tabsKeyNumbers',
+              type: 'tabsKeyNumbers',
+              title: 'Key numbers',
+            },
             {
               name: 'tabsInfoPanel',
               type: 'tabsInfoPanel',

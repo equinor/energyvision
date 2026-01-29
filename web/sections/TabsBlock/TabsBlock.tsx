@@ -53,18 +53,14 @@ const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
       )}
     >
       <div
-        className={`mx-auto flex max-w-viewport flex-col gap-6 ${
+        className={`mx-auto flex max-w-viewport flex-col gap-6 pb-page-content ${
           tabPanelVariant === 'tabsKeyNumbers'
-            ? `px-layout-sm pb-page-content lg:px-layout-md`
-            : `lg:mx-layout-sm ${theme?.backgroundUtility} rounded-md`
+            ? `px-layout-sm lg:px-layout-md`
+            : `px-layout-sm lg:mx-layout-sm lg:px-20 ${theme?.backgroundUtility} rounded-md`
         }
             `}
       >
-        <div
-          className={`${
-            tabPanelVariant === 'tabsInfoPanel' && !hideTitle ? `max-w-innerColumn pl-layout-sm lg:pt-20` : ``
-          }`}
-        >
+        <div className={`${tabPanelVariant === 'tabsInfoPanel' && !hideTitle ? `lg:pt-16` : ``}`}>
           {title && (
             <Heading id={headingId} value={title} as="h2" variant="xl" className={`${hideTitle ? 'sr-only' : ''}`} />
           )}

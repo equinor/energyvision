@@ -903,6 +903,11 @@ const snippets: textSnippet = {
     defaultValue: 'Please confirm that you are human below and the link will appear.',
     group: groups.downloadableFiles,
   },
+  keyFigures: {
+    title: 'Key figures',
+    defaultValue: 'Key figures',
+    group: groups.common,
+  },
 }
 
 type textSnippetGroup = { title: string; hidden?: boolean }

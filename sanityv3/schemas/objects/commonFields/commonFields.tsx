@@ -1,6 +1,6 @@
 import { Card, Flex, Grid, Radio, Text } from '@sanity/ui'
 import { useCallback } from 'react'
-import { type Rule, type StringInputProps, set } from 'sanity'
+import { defineField, type Rule, type StringInputProps, set } from 'sanity'
 import { filterByRoute } from '../../../helpers/referenceFilters'
 import CompactBlockEditor from '../../components/CompactBlockEditor'
 import { configureBlockContent } from '../../editors'
@@ -62,6 +62,33 @@ export const background = {
   name: 'background',
   type: 'colorlist',
   fieldset: 'design',
+}
+
+export const backgroundPosition = (hiddenCallBack?: any, fieldset?: string) => {
+  return {
+    title: 'Select positioning of the image',
+    description:
+      'Optional - select focus origin in the image. Useful if the image gets cropped when not contained within its container. Use together with hotspot option in Sanity studio to make sure focal point is kept',
+    name: 'backgroundPosition',
+    type: 'string',
+    options: {
+      list: [
+        { title: 'Center Left', value: 'center_left' },
+        { title: 'Center Center', value: 'center_center' },
+        { title: 'Center Right', value: 'center_right' },
+        { title: 'Top Left', value: 'top_left' },
+        { title: 'Top Center', value: 'top_center' },
+        { title: 'Top Right', value: 'top_right' },
+        { title: 'Bottom Left', value: 'bottom_left' },
+        { title: 'Bottom Center', value: 'bottom_center' },
+        { title: 'Bottom Right', value: 'bottom_right' },
+      ],
+      layout: 'dropdown',
+    },
+    initialValue: 'center_center',
+    ...(fieldset && { fieldset }),
+    ...(hiddenCallBack && { hidden: hiddenCallBack }),
+  }
 }
 
 export const theme = {
