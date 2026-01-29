@@ -1,14 +1,14 @@
-import { Heading } from '../../core/Typography'
-import { twMerge } from 'tailwind-merge'
-import IngressText from '../../pageComponents/shared/portableText/IngressText'
-import { getColorForTabsTheme } from './tabThemes'
 import { Tabs } from '@core/Tabs'
+import type { PortableTextBlock } from '@portabletext/types'
 import { forwardRef, useId, useRef } from 'react'
-import TabsKeyNumberItem from './TabsKeyNumberItem'
+import { twMerge } from 'tailwind-merge'
+import { Heading } from '../../core/Typography'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
+import IngressText from '../../pageComponents/shared/portableText/IngressText'
+import type { TabItem } from './TabsBlock.types'
 import TabsInfoPanelItem from './TabsInfoPanelItem'
-import { PortableTextBlock } from '@portabletext/types'
-import { TabItem } from './TabsBlock.types'
+import TabsKeyNumberItem from './TabsKeyNumberItem'
+import { getColorForTabsTheme } from './tabThemes'
 
 const { TabList, Tab, TabPanel } = Tabs
 
@@ -53,23 +53,14 @@ const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
       )}
     >
       <div
-        className={`flex
-            flex-col
-            gap-6
-            max-w-viewport
-            mx-auto
-            ${
-              tabPanelVariant === 'tabsKeyNumbers'
-                ? `px-layout-sm lg:px-layout-md pb-page-content`
-                : `lg:mx-layout-sm ${theme?.backgroundUtility} rounded-md`
-            }
+        className={`mx-auto flex max-w-viewport flex-col gap-6 pb-page-content ${
+          tabPanelVariant === 'tabsKeyNumbers'
+            ? `px-layout-sm lg:px-layout-md`
+            : `px-layout-sm lg:mx-layout-sm lg:px-20 ${theme?.backgroundUtility} rounded-md`
+        }
             `}
       >
-        <div
-          className={`${
-            tabPanelVariant === 'tabsInfoPanel' && !hideTitle ? `lg:pt-20 pl-layout-sm max-w-innerColumn` : ``
-          }`}
-        >
+        <div className={`${tabPanelVariant === 'tabsInfoPanel' && !hideTitle ? `lg:pt-16` : ``}`}>
           {title && (
             <Heading id={headingId} value={title} as="h2" variant="xl" className={`${hideTitle ? 'sr-only' : ''}`} />
           )}
@@ -79,11 +70,7 @@ const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
           <Tabs
             defaultValue={tabList[0]?.id}
             {...(hideTitle && { 'aria-labelledby': headingId })}
-            className={`w-full 
-              flex 
-              flex-col 
-              items-center
-              ${tabPanelVariant === 'tabsInfoPanel' ? 'mt-4' : ''}
+            className={`flex w-full flex-col items-center ${tabPanelVariant === 'tabsInfoPanel' ? 'mt-4' : ''}
               `}
           >
             <TabList ref={tabsListRef}>
@@ -105,19 +92,15 @@ const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
                   className={`${
                     tabPanelVariant === 'tabsKeyNumbers'
                       ? 'w-full py-14 max-lg:px-layout-sm'
-                      : 'w-full h-full rounded-md overflow-hidden'
+                      : 'h-full w-full overflow-hidden rounded-md'
                   }`}
                 >
                   {tabItem.panel?.type === 'tabsKeyNumbers' && tabItem.panel?.items && (
                     <ul
                       {...(title && hideTitle && { 'aria-labelledby': headingId })}
-                      className={`
-                        flex 
-                        flex-col
-                        md:grid
-                        md:grid-cols-2
-                        ${tabItem.panel?.items?.length < 4 ? '3xl:grid-flow-col 3xl:auto-cols-fr' : ''} 
-                        gap-6`}
+                      className={`flex flex-col md:grid md:grid-cols-2 ${
+                        tabItem.panel?.items?.length < 4 ? '3xl:auto-cols-fr 3xl:grid-flow-col' : ''
+                      } gap-6`}
                     >
                       {tabItem.panel?.items?.map((tabsKeyNumber: any) => {
                         return (
@@ -137,7 +120,7 @@ const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
                     <TabsInfoPanelItem theme={designOptions.theme?.value} {...tabItem.panel} />
                   )}
                   {tabItem.panel?.type === 'tabsKeyNumbers' && tabItem?.panel?.disclaimer && (
-                    <Blocks value={tabItem?.panel?.disclaimer} className="italic text-sm mt-6" />
+                    <Blocks value={tabItem?.panel?.disclaimer} className="mt-6 text-sm italic" />
                   )}
                 </TabPanel>
               )

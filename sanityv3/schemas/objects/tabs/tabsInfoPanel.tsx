@@ -1,8 +1,10 @@
-import { defineField, PortableTextBlock, Role, Rule, set, StringInputProps, useCurrentUser } from 'sanity'
-import { configureBlockContent } from '../../editors'
+import { Card, Flex, Radio, Text } from '@sanity/ui'
+import { useCallback } from 'react'
+import { HiOutlineInformationCircle } from 'react-icons/hi2'
+import { type PortableTextBlock, type Role, type Rule, type StringInputProps, set, useCurrentUser } from 'sanity'
 import CompactBlockEditor from '../../components/CompactBlockEditor'
-import { useCallback, useState } from 'react'
-import { Badge, Card, Flex, Grid, Radio, Stack, Text } from '@sanity/ui'
+import { configureBlockContent } from '../../editors'
+import { backgroundPosition } from '../commonFields/commonFields'
 
 const titleContentType = configureBlockContent({
   h2: false,
@@ -27,66 +29,45 @@ type ImageVariantInputProps = {
 export const ImageVariantInput = (props: ImageVariantInputProps) => {
   const { onChange, schemaType, value = '' } = props
 
-  const user = useCurrentUser()
-  const [error, setError] = useState(false)
+  //get the role of the current user
+  //@ts-ignore CurrentUser has roles in types...
+  const { roles } = useCurrentUser()
+
+  const options = schemaType?.options?.list?.filter((option: any) => {
+    return option.value === 'backgroundImage'
+      ? roles.some((userRole: Role) => userRole.name === 'designer' || userRole.name === 'developer')
+      : true
+  })
 
   const handleChange = useCallback(
     (event: any) => {
       const nextValue = event.currentTarget.value
-      if (nextValue === 'backgroundImage') {
-        const isDesigner = user && user.roles.some((userRole: Role) => userRole.name === 'designer')
-        if (isDesigner) {
-          onChange(set(nextValue))
-        } else {
-          setError(true)
-        }
-      } else if (nextValue === 'sideImage') {
-        if (error) {
-          setError(false)
-        }
-        onChange(set(nextValue))
-      }
+      onChange(set(nextValue))
     },
-    [onChange, user, error],
+    [onChange],
   )
 
   return (
-    <Stack space={3}>
-      <Grid columns={schemaType?.options?.list?.length} rows={1} gap={2}>
-        {schemaType?.options?.list?.map((option: any) => {
-          return (
-            <Card key={option.value} paddingY={2} paddingX={3} radius={2} shadow={1}>
-              <Flex direction="row" align="flex-start" gap={2}>
-                <Radio
-                  checked={value === option.value}
-                  name={option.value}
-                  id={option.value}
-                  onChange={handleChange}
-                  value={option.value}
-                />
-                <Flex direction="column" align={'flex-start'} gap={2}>
-                  <Text as="label" htmlFor={option.value}>
-                    {option.title}
-                  </Text>
-                  {option?.description && (
-                    <Badge tone="primary" fontSize={1}>
-                      {option?.description}
-                    </Badge>
-                  )}
-                </Flex>
-              </Flex>
-            </Card>
-          )
-        })}
-      </Grid>
-      {error && (
-        <Card padding={[2]} radius={2} shadow={1} tone="caution">
-          <Text align="center" size={[1]}>
-            Cannot perform change, missing designer role!
-          </Text>
-        </Card>
-      )}
-    </Stack>
+    <Flex gap={2}>
+      {options?.map((option: any) => {
+        return (
+          <Card key={option.value} paddingY={2} paddingX={3} radius={2}>
+            <Flex direction="row" align="center" gap={2}>
+              <Radio
+                checked={value === option.value}
+                name={option.value}
+                id={option.value}
+                onChange={handleChange}
+                value={option.value}
+              />
+              <Text as="label" htmlFor={option.value}>
+                {option.title}
+              </Text>
+            </Flex>
+          </Card>
+        )
+      })}
+    </Flex>
   )
 }
 
@@ -95,23 +76,18 @@ export default {
   type: 'object',
   name: 'tabsInfoPanel',
   fields: [
-    defineField({
-      name: 'image',
-      title: 'image',
-      type: 'image',
-      options: {
-        hotspot: true,
-      },
-    }),
-    defineField({
+    {
       name: 'imageVariant',
       title: 'Select image variant',
-      description: 'Use same image variant for all information panels.',
       type: 'string',
       options: {
         list: [
-          { title: 'Background image', description: 'Designer only', value: 'backgroundImage' },
+          {
+            title: 'Background image',
+            value: 'backgroundImage',
+          },
           { title: 'Side image', value: 'sideImage' },
+          { title: 'Banner image', value: 'bannerImage' },
         ],
         layout: 'radio',
       },
@@ -119,8 +95,17 @@ export default {
       components: {
         input: ImageVariantInput,
       },
-    }),
-    defineField({
+    },
+    {
+      name: 'image',
+      title: 'Image',
+      type: 'image',
+      options: {
+        hotspot: true,
+      },
+    },
+    backgroundPosition(),
+    {
       name: 'title',
       type: 'array',
       components: {
@@ -129,14 +114,14 @@ export default {
       of: [titleContentType],
       validation: (Rule: Rule) =>
         Rule.custom((value: PortableTextBlock[]) => (!value ? 'A title is recommended' : true)).warning(),
-    }),
-    defineField({
+    },
+    {
       name: 'text',
-      title: 'Text content',
+      title: 'Content',
       type: 'array',
       of: [blockContentType],
-    }),
-    defineField({
+    },
+    {
       name: 'action',
       type: 'array',
       title: 'CTA',
@@ -145,8 +130,16 @@ export default {
         { type: 'downloadableImage', title: 'Call to action: Download image' },
         { type: 'downloadableFile', title: 'Call to action: Download file' },
       ],
-    }),
-    defineField({
+      validation: (Rule: Rule) => Rule.max(1).error('Only 1'),
+    },
+    {
+      name: 'keyInfoTitle',
+      title: 'Key figures title',
+      description:
+        'Used for context for screen readers.Not visible and optional, but if empty then textsnippet for Key figures will be used',
+      type: 'string',
+    },
+    {
       type: 'array',
       name: 'keyInfo',
       description: 'Up to 4 key information bits',
@@ -164,7 +157,7 @@ export default {
             },
             {
               name: 'keyFigure',
-              title: 'Key figure highlighted',
+              title: 'Key figure',
               type: 'string',
             },
             {
@@ -173,9 +166,24 @@ export default {
               type: 'text',
             },
           ],
+          preview: {
+            select: {
+              title: 'title',
+              keyFigure: 'keyFigure',
+              explanation: 'explanation',
+            },
+            prepare(selection: Record<string, string | number>) {
+              const { title, keyFigure, explanation } = selection
+              return {
+                title: `${title ?? ''} ${keyFigure ?? ''}`,
+                subtitle: `${explanation ?? ''}`,
+                media: HiOutlineInformationCircle,
+              }
+            },
+          },
         },
       ].filter((e) => e),
       validation: (Rule: Rule) => Rule.max(4),
-    }),
+    },
   ],
 }

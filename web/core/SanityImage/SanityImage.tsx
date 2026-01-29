@@ -1,8 +1,33 @@
-import { SanityImageObject } from '@sanity/image-url/lib/types/types'
-import { useSanityLoader } from '../../lib/hooks/useSanityLoader'
-import Img, { ImageProps } from 'next/image'
+import type { SanityImageObject } from '@sanity/image-url/lib/types/types'
+import Img, { type ImageProps } from 'next/image'
 import type { ImageWithAlt } from 'types'
+import { useSanityLoader } from '../../lib/hooks/useSanityLoader'
 import envisTwMerge from '../../twMerge'
+
+export type ObjectPositions =
+  | 'center_left'
+  | 'center_center'
+  | 'center_right'
+  | 'top_left'
+  | 'top_center'
+  | 'top_right'
+  | 'bottom_left'
+  | 'bottom_center'
+  | 'bottom_right'
+
+export const getObjectPositionForImage = (position: ObjectPositions) => {
+  return {
+    center_center: 'object-center',
+    center_left: 'object-left',
+    center_right: 'object-right',
+    top_left: 'object-top-left',
+    top_center: 'object-top',
+    top_right: 'object-top-right',
+    bottom_left: 'object-bottom-left',
+    bottom_center: 'object-bottom',
+    bottom_right: 'object-bottom-right',
+  }[position]
+}
 
 export const ImageRatios = {
   original: 0,
@@ -150,7 +175,7 @@ const Image = ({
       src={src}
       alt={getAltText()}
       sizes={sizes}
-      className={envisTwMerge(`${fill ? 'object-cover' : 'flex w-full h-auto'}`, className)}
+      className={envisTwMerge(`${fill ? 'object-cover' : 'flex h-auto w-full'}`, className)}
     />
   )
 }

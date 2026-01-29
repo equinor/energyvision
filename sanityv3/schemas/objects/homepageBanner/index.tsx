@@ -1,19 +1,19 @@
 /* eslint-disable react/display-name */
 import { Flex, Stack, Text } from '@sanity/ui'
+import { defineField, type PortableTextBlock, type PreviewProps, type Rule } from 'sanity'
+import styled from 'styled-components'
 import blocksToText from '../../../helpers/blocksToText'
 import CompactBlockEditor from '../../components/CompactBlockEditor'
 import {
   CardTheme,
   ThemePreview,
   ThemeSelector,
-  ThemeSelectorColor,
-  ThemeSelectorValue,
+  type ThemeSelectorColor,
+  type ThemeSelectorValue,
 } from '../../components/ThemeSelector'
 import { defaultColors } from '../../defaultColors'
 import { configureTitleBlockContent } from '../../editors'
-import { defineField, PreviewProps, type PortableTextBlock, type Rule } from 'sanity'
-import styled from 'styled-components'
-import { ImageWithAlt } from '../imageWithAlt'
+import type { ImageWithAlt } from '../imageWithAlt'
 
 const MediaContainer = styled.div`
   position: relative;
@@ -248,8 +248,14 @@ export default {
               title: 'Link or download',
               of: [
                 { type: 'linkSelector', title: 'Link' },
-                { type: 'downloadableImage', title: 'Call to action: Download image' },
-                { type: 'downloadableFile', title: 'Call to action: Download file' },
+                {
+                  type: 'downloadableImage',
+                  title: 'Call to action: Download image',
+                },
+                {
+                  type: 'downloadableFile',
+                  title: 'Call to action: Download file',
+                },
               ],
               validation: (Rule: Rule) => Rule.max(1).error('Only one is permitted'),
             },

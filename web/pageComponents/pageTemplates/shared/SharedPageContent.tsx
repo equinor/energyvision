@@ -1,71 +1,71 @@
-import Teaser from '../../../sections/teasers/Teaser/Teaser'
-import TextBlock from '../../../sections/TextBlock/TextBlock'
-import FullWidthImage, { FullWidthImageData } from '../../topicPages/FullWidthImage'
-import FullWidthVideo from '../../topicPages/FullWidthVideo'
-import Figure, { FigureData } from '../../topicPages/Figure'
-import PageQuote from '../../topicPages/PageQuote'
-import PromoTileArray from '../../../sections/PromoTiles/PromoTileArray'
-import Promotion from '../../topicPages/Promotion'
-import NewsList from '../../topicPages/NewsList'
-import StockValues from '../../topicPages/StockValues'
-import CookieDeclaration from '../../topicPages/CookieDeclaration'
-import TwitterEmbed from '../../topicPages/TwitterEmbed'
+import type { BackgroundContainerProps } from '@core/Backgrounds'
+import AccordionBlock from '@sections/AccordionBlock/AccordionBlock'
+import { AnchorLinkList } from '@sections/AnchorLinkList'
+import { CampaignBanner } from '@sections/CampaignBanner'
+import Grid from '@sections/Grid/Grid'
+import { HomePageBanner } from '@sections/HomePageBanner/HomePageBanner'
 import IframeCarousel from '@sections/IframeCarousel/IframeCarousel'
-import VideoPlayer from '../../shared/VideoPlayer'
+import ImageCarousel from '@sections/ImageCarousel/ImageCarousel'
+import ImageForText from '@sections/ImageForText/ImageForText'
+import PromotionBlock from '@sections/promotionBlock/PromotionBlock'
+import TableBlock, { type TableBlockProps } from '@sections/TableBlock/TableBlock'
+import TabsBlock, { type TabsBlockProps } from '@sections/TabsBlock/TabsBlock'
+import { getColorForTabsTheme } from '@sections/TabsBlock/tabThemes'
+import TextWithIconArray from '@sections/TextWithIconArray/TextWithIconArray'
 import TextTeaser from '@sections/teasers/TextTeaser/TextTeaser'
-import KeyNumbers from '../../../sections/KeyNumber/KeyNumber'
+import { getColorForTheme } from '@sections/teasers/TextTeaser/theme'
+import VideoPlayerCarousel from '@sections/VideoPlayerCarousel/VideoPlayerCarousel'
+import Form from '@templates/forms/Form'
 import CardsList from '../../../sections/cards/CardsList/CardsList'
-import {
+import IFrameBlock from '../../../sections/IFrameBlock/IFrameBlock'
+import KeyNumbers from '../../../sections/KeyNumber/KeyNumber'
+import PromoTileArray from '../../../sections/PromoTiles/PromoTileArray'
+import TextBlock from '../../../sections/TextBlock/TextBlock'
+import Teaser from '../../../sections/teasers/Teaser/Teaser'
+import { type ColorKeyTokens, colorKeyToUtilityMap } from '../../../styles/colorKeyToUtilityMap'
+import type {
+  AccordionData,
   AnchorLinkData,
-  TopicPageSchema,
+  AnchorLinkListData,
+  CallToActionData,
+  CampaignBannerData,
+  CardsListData,
+  CookieDeclarationData,
+  DesignOptions,
+  FormData,
+  FullWidthVideoData,
+  GridData,
+  IFrameData,
+  IframeCarouselData,
+  ImageCarouselData,
+  ImageForTextData,
+  KeyNumbersData,
   MagazinePageSchema,
+  NewsListData,
+  PromoTileArrayData,
+  PromotionData,
+  QuoteData,
+  StockValuesData,
+  TableData,
   TeaserData,
   TextBlockData,
-  FullWidthVideoData,
-  TextWithIconArrayData,
-  CallToActionData,
-  QuoteData,
-  AccordionData,
-  PromoTileArrayData,
-  IFrameData,
-  PromotionData,
-  FormData,
-  TableData,
-  NewsListData,
-  StockValuesData,
-  TwitterEmbedData,
-  CookieDeclarationData,
-  ImageCarouselData,
-  IframeCarouselData,
-  VideoPlayerData,
-  VideoPlayerCarouselData,
   TextTeaserData,
-  KeyNumbersData,
-  CardsListData,
-  GridData,
-  CampaignBannerData,
-  DesignOptions,
-  AnchorLinkListData,
-  ImageForTextData,
+  TextWithIconArrayData,
+  TopicPageSchema,
+  TwitterEmbedData,
+  VideoPlayerCarouselData,
+  VideoPlayerData,
 } from '../../../types/index'
-import { getColorForTheme } from '@sections/teasers/TextTeaser/theme'
-import Grid from '@sections/Grid/Grid'
-import { CampaignBanner } from '@sections/CampaignBanner'
-import { BackgroundContainerProps } from '@core/Backgrounds'
-import VideoPlayerCarousel from '@sections/VideoPlayerCarousel/VideoPlayerCarousel'
-import ImageCarousel from '@sections/ImageCarousel/ImageCarousel'
-import { AnchorLinkList } from '@sections/AnchorLinkList'
-import ImageForText from '@sections/ImageForText/ImageForText'
-import TextWithIconArray from '@sections/TextWithIconArray/TextWithIconArray'
-import AccordionBlock from '@sections/AccordionBlock/AccordionBlock'
-import TabsBlock, { TabsBlockProps } from '@sections/TabsBlock/TabsBlock'
-import { getColorForTabsTheme } from '@sections/TabsBlock/tabThemes'
-import { ColorKeyTokens, colorKeyToUtilityMap } from '../../../styles/colorKeyToUtilityMap'
-import Form from '@templates/forms/Form'
-import IFrameBlock from '../../../sections/IFrameBlock/IFrameBlock'
-import { HomePageBanner } from '@sections/HomePageBanner/HomePageBanner'
-import TableBlock, { TableBlockProps } from '@sections/TableBlock/TableBlock'
-import PromotionBlock from '@sections/promotionBlock/PromotionBlock'
+import VideoPlayer from '../../shared/VideoPlayer'
+import CookieDeclaration from '../../topicPages/CookieDeclaration'
+import Figure, { type FigureData } from '../../topicPages/Figure'
+import FullWidthImage, { type FullWidthImageData } from '../../topicPages/FullWidthImage'
+import FullWidthVideo from '../../topicPages/FullWidthVideo'
+import NewsList from '../../topicPages/NewsList'
+import PageQuote from '../../topicPages/PageQuote'
+import Promotion from '../../topicPages/Promotion'
+import StockValues from '../../topicPages/StockValues'
+import TwitterEmbed from '../../topicPages/TwitterEmbed'
 
 type DefaultComponent = {
   id?: string
@@ -232,6 +232,7 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
         : (data?.content?.[previousComponentIndex] as unknown as ComponentProps)
 
     const topSpacingClassName = applyPaddingTopIfApplicable(c, previousComponentToCompare)
+    //In general most sections should get pb-page-content or it needs to take care of this customly
     const spacingClassName = `${topSpacingClassName} pb-page-content`
     //@ts-ignore:so many types
     switch (c.type) {
@@ -359,7 +360,7 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
       case 'imageForText':
         return <ImageForText key={c.id} data={c as ImageForTextData} />
       case 'tabs':
-        return <TabsBlock key={c.id} {...(c as any)} className={spacingClassName} />
+        return <TabsBlock key={c.id} {...(c as any)} className={topSpacingClassName} />
       /* Remove from here and move to Homepage Template PageContent */
       case 'homepageBanner':
         return <HomePageBanner key={c.id} {...(c as any)} />
