@@ -429,6 +429,14 @@ const CareersContactForm = () => {
           </form>
         </>
       )}
+      <button
+  type="button"
+  onClick={() => {
+    throw new Error("Sentry Test Error");
+  }}
+>
+  Break the world
+</button>
       <section aria-live='assertive'>
         {isSubmitSuccessful && <FormMessageBox variant='success' />}
         {isSubmitted && isServerError && (
