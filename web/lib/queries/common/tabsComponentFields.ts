@@ -29,10 +29,14 @@ export const tabsComponentFields = /*groq*/ `
             disclaimer[]{..., ${markDefs}},
           },
           _type == "tabsInfoPanel" => {
+            "id": _key,
+            "type": _type,
             image,
             imageVariant,
+            backgroundPosition,
             title[]{..., ${markDefs}},
             text[]{..., ${markDefs}},
+            keyInfoTitle,
             keyInfo[]{
               "id": _key,
               "type": _type,
