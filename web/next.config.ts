@@ -12,7 +12,7 @@ import { withSentryConfig } from "@sentry/nextjs";
 const withNextIntl = createNextIntlPlugin()
 
 const isProd = process.env.NODE_ENV === 'production'
-/* const sentryConfig = {
+ const sentryConfig = {
   org: 'equinor',
   project: 'equinor-com',
   silent: true,
@@ -20,7 +20,7 @@ const isProd = process.env.NODE_ENV === 'production'
   widenClientFileUpload: true,
   disableClientWebpackPlugin: !isProd,
   disableServerWebpackPlugin: !isProd,
-} */
+} 
 
 //TODO: Find the Redirect type from config that is not in /dist.
 export type ConfigRedirect = {
@@ -116,9 +116,4 @@ const nextConfig: NextConfig = withNextIntl({
   },
 })
 
-export default withSentryConfig(nextConfig,{
-  org: 'equinor',
-  project: 'equinor-com',
-  silent: !process.env.CI,
-  disableLogger: true,
-})
+export default withSentryConfig(nextConfig,sentryConfig)
