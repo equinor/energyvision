@@ -16,6 +16,7 @@ import DraftModeToast from '@/sections/DraftMode/DraftModeToast'
 import { routing } from '../../i18n/routing'
 import { GoogleTagManagerHead } from './GTMHead'
 import { SiteImprove } from './SiteImprove'
+import GoToTopButton from '@/sections/GoToTopButton'
 
 const equinorRegular = localFont({
   src: '../fonts/equinor/Equinor-Regular.woff',
@@ -69,6 +70,7 @@ export default async function LocaleLayout({
       <body>
         <Toaster />
         {isDraftMode && <DraftModeToast />}
+        <GoToTopButton/>
         {/* <SanityLive onError={handleError} /> */}
         <NextIntlClientProvider>
           <PageProvider
