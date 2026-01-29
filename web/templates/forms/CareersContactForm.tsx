@@ -3,7 +3,7 @@
 import { Icon } from '@equinor/eds-core-react'
 import { error_filled } from '@equinor/eds-icons'
 import { useLocale, useTranslations } from 'next-intl'
-import { type BaseSyntheticEvent, useMemo, useState } from 'react'
+import { type BaseSyntheticEvent, useId, useMemo, useState } from 'react'
 import { Controller, useForm, useWatch } from 'react-hook-form'
 import { Button } from '@/core/Button'
 import { Checkbox } from '@/core/Checkbox/Checkbox'
@@ -37,6 +37,7 @@ const CareersContactForm = () => {
   const [isFriendlyChallengeDone, setIsFriendlyChallengeDone] = useState(false)
   const [isServerError, setServerError] = useState(false)
   const [isSuccessfullySubmitted, setSuccessfullySubmitted] = useState(false)
+  const formId = useId()
 
   const {
     handleSubmit,
@@ -148,7 +149,7 @@ const CareersContactForm = () => {
                   }) => (
                     <TextField
                       {...props}
-                      id={props.name}
+                      id={`${props.name}_${formId}`}
                       label={`${intl('name')}*`}
                       inputRef={ref}
                       aria-required='true'
@@ -178,7 +179,7 @@ const CareersContactForm = () => {
                   }) => (
                     <TextField
                       {...props}
-                      id={props.name}
+                      id={`${props.name}_${formId}`}
                       label={`${intl('careers_contact_form_phone')}*`}
                       description={intl('country_code_format')}
                       type='tel'
@@ -210,7 +211,7 @@ const CareersContactForm = () => {
                   }) => (
                     <TextField
                       {...props}
-                      id={props.name}
+                      id={`${props.name}_${formId}`}
                       label={`${intl('email')}*`}
                       inputRef={ref}
                       inputIcon={
@@ -231,7 +232,7 @@ const CareersContactForm = () => {
                     <Select
                       {...props}
                       selectRef={ref}
-                      id={props.name}
+                      id={`${props.name}_${formId}`}
                       label={intl('category')}
                     >
                       <option value=''>
@@ -277,7 +278,7 @@ const CareersContactForm = () => {
                   }) => (
                     <TextField
                       {...props}
-                      id={props.name}
+                      id={`${props.name}_${formId}`}
                       label={`${intl('careers_contact_form_position')}${setPositionIdMandatory ? '*' : ''}`}
                       inputIcon={
                         invalid ? (
@@ -310,7 +311,7 @@ const CareersContactForm = () => {
                   }) => (
                     <TextField
                       {...props}
-                      id={props.name}
+                      id={`${props.name}_${formId}`}
                       label={`${intl('careers_contact_form_location')}*`}
                       description={intl(
                         'careers_contact_form_location_placeholder',
@@ -335,7 +336,7 @@ const CareersContactForm = () => {
                     <Select
                       {...props}
                       selectRef={ref}
-                      id={props.name}
+                      id={`${props.name}_${formId}`}
                       label={intl('careers_contact_form_candidate_type')}
                     >
                       <option value=''>
@@ -368,7 +369,7 @@ const CareersContactForm = () => {
                   }) => (
                     <TextField
                       {...props}
-                      id={props.name}
+                      id={`${props.name}_${formId}`}
                       label={`${intl('careers_contact_form_questions')}*`}
                       inputRef={ref}
                       multiline
