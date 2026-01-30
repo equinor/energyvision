@@ -1,14 +1,14 @@
 const variants = {
   heading: {
     unstyled: '',
-    h1: 'text-4xl leading-earthy lg:leading-misty pb-6 lg:pb-12 my-0',
+    h1: 'text-3xl leading-earthy lg:leading-misty pb-6 lg:pb-12 my-0',
     //many places has gap-6 + mb-2 so pb-8
     //Teaser isBigText was set to 2xl...
     //TextBlock isBigText set to 3xl
     // isBigText set to common pattern 2xl now with classname mb-2 leading-cloudy
-    h2: `text-2xl leading-earthy lg:leading-misty pb-10 my-0`,
-    h3: `text-xl leading-lofty pt-4 pb-8 my-0`, //needs pt and pb?
-    h4: 'text-lg pb-0',
+    h2: `text-xl leading-earthy lg:leading-misty pb-10 my-0`,
+    h3: `text-lg leading-lofty pt-4 pb-8 my-0`, //needs pt and pb?
+    h4: 'text-md pb-0',
     h5: 'text-md pb-0',
     h6: 'text-base pb-0',
     h7: 'text-xs leading-earthy pb-0',
