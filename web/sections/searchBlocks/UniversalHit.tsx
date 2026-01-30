@@ -7,6 +7,7 @@ import { defaultLanguage } from '@/languageConfig'
 import { host } from '@/lib/config'
 import { Highlight } from './Highlight'
 import DisplayLink from './hit/DisplayLink'
+import { getLocaleFromIso, getNameFromLocale } from '@/sanity/helpers/localization'
 
 export type HitData = {
   slug?: string
@@ -26,9 +27,8 @@ export type HitProps = { hit: UniversalHitType }
 const buildDisplayURL = (slug: string, locale: string | undefined): string => {
   const startsWithLocale =
     slug.startsWith(`${locale}/`) || slug.startsWith(`/${locale}/`)
-
-  return locale && locale !== defaultLanguage?.locale && !startsWithLocale
-    ? `${host.url}/${locale}/${slug.replace(/^\//, '')}`
+  return locale && locale !== defaultLanguage?.iso && !startsWithLocale
+    ? `${host.url}/${getLocaleFromIso(locale)}/${slug.replace(/^\//, '')}`
     : `${host.url}${slug}`
 }
 
