@@ -1,15 +1,12 @@
 import type { SanityImageSource } from '@sanity/asset-utils'
 import type { Templates } from 'instantsearch.js'
 import type { BreadcrumbData } from '@/core/Breadcrumbs/Breadcrumbs'
+import type { EventDateType } from '@/sections/cards/EventCard/EventCard'
 import type { HeroData } from '@/sections/Hero/HeroBlock'
 import type {
-  CardData,
   ContactListData,
   ContentType,
-  EventDateType,
   IFrameData,
-  ImageWithAlt,
-  ImageWithCaptionData,
   PeopleCardData,
   RelatedLinksData,
   SeoData,
