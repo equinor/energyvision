@@ -105,7 +105,7 @@ const ContactEquinorForm = () => {
                     return (
                       <TextField
                         {...props}
-                        id={`${name}+_+${formId}`}
+                        id={`${name}_${formId}`}
                         label={`${intl('name')}*`}
                         inputRef={ref}
                         aria-required='true'
@@ -138,7 +138,7 @@ const ContactEquinorForm = () => {
                     return (
                       <TextField
                         {...props}
-                        id={`${name}+_+${formId}`}
+                        id={`${name}_${formId}`}
                         label={`${intl('email')}*`}
                         inputRef={ref}
                         inputIcon={
@@ -162,7 +162,7 @@ const ContactEquinorForm = () => {
                       <Select
                         {...props}
                         selectRef={ref}
-                        id={`${name}+_+${formId}`}
+                        id={`${name}_${formId}`}
                         label={intl('category')}
                       >
                         <option value=''>
@@ -200,7 +200,7 @@ const ContactEquinorForm = () => {
                     return (
                       <TextField
                         {...props}
-                        id={`${name}+_+${formId}`}
+                        id={`${name}_${formId}`}
                         description={intl('dont_enter_personal_info')}
                         label={`${intl('contact_form_how_to_help')}*`}
                         inputRef={ref}

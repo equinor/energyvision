@@ -107,7 +107,7 @@ const PensionForm = () => {
                     return (
                       <TextField
                         {...props}
-                        id={`${name}+_+${formId}`}
+                        id={`${name}_${formId}`}
                         label={`${intl('name')}*`}
                         inputRef={ref}
                         aria-required='true'
@@ -142,7 +142,7 @@ const PensionForm = () => {
                     return (
                       <TextField
                         {...props}
-                        id={`${name}+_+${formId}`}
+                        id={`${name}_${formId}`}
                         label={`${intl('email')}*`}
                         inputRef={ref}
                         inputIcon={
@@ -167,7 +167,7 @@ const PensionForm = () => {
                       <Select
                         {...props}
                         selectRef={ref}
-                        id={`${name}+_+${formId}`}
+                        id={`${name}_${formId}`}
                         label={intl('category')}
                       >
                         <option value=''>
@@ -208,7 +208,7 @@ const PensionForm = () => {
                     return (
                       <TextField
                         {...props}
-                        id={`${name}+_+${formId}`}
+                        id={`${name}_${formId}`}
                         description={intl('dont_enter_personal_info')}
                         label={`${intl('pension_form_what_is_your_request')}*`}
                         inputRef={ref}
