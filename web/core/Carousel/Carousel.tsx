@@ -17,13 +17,13 @@ import { twMerge } from 'tailwind-merge'
 import { IFrame } from '@/core/IFrame/IFrame'
 import { MediaButton } from '@/core/MediaButton/MediaButton'
 import { EventCard } from '@/sections/cards/EventCard'
+import type { EventCardData } from '@/sections/cards/EventCard/EventCard'
 import KeyNumberItem from '@/sections/KeyNumber/KeyNumberItem'
 import type { VideoPlayerCarouselItem } from '@/sections/VideoPlayerCarousel/VideoPlayerCarousel'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
 import { usePrefersReducedMotion } from '../../lib/hooks/usePrefersReducedMotion'
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import type {
-  EventCardData,
   IFrameCarouselItemData,
   KeyNumberItemData,
 } from '../../types/index'
