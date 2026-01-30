@@ -4,7 +4,8 @@ import { useTranslations } from 'next-intl'
 import { Banner } from '@/core/Banner/Banner'
 import { Typography } from '@/core/Typography'
 import { EventCard } from '@/sections/cards/EventCard'
-import type { EventCardData, FeaturedContentData } from '../../types/index'
+import type { FeaturedContentData } from '../../types/index'
+import type { EventCardData } from '../cards/EventCard/EventCard'
 
 type Props = {
   featuredContent: FeaturedContentData
