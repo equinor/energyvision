@@ -1,5 +1,6 @@
-import { Badge, Card, Flex, Grid, Radio, Stack, Text } from '@sanity/ui'
-import { useCallback, useState } from 'react'
+import { Card, Flex, Radio, Text } from '@sanity/ui'
+import { useCallback } from 'react'
+import { HiOutlineInformationCircle } from 'react-icons/hi2'
 import {
   defineField,
   type PortableTextBlock,
@@ -11,22 +12,7 @@ import {
 } from 'sanity'
 import { CompactBlockEditor } from '../../components/CompactBlockEditor'
 import { configureBlockContent } from '../../editors'
-
-const titleContentType = configureBlockContent({
-  h2: false,
-  h3: false,
-  h4: false,
-  attachment: false,
-  internalLink: false,
-  externalLink: false,
-  lists: false,
-})
-const blockContentType = configureBlockContent({
-  h2: false,
-  h3: false,
-  h4: false,
-  attachment: false,
-})
+import { backgroundPosition } from '../commonFields/commonFields'
 
 type ImageVariantInputProps = {
   options: any[]
@@ -35,74 +21,47 @@ type ImageVariantInputProps = {
 export const ImageVariantInput = (props: ImageVariantInputProps) => {
   const { onChange, schemaType, value = '' } = props
 
-  const user = useCurrentUser()
-  const [error, setError] = useState(false)
+  //get the role of the current user
+  //@ts-ignore CurrentUser has roles in types...
+  const { roles } = useCurrentUser()
+
+  const options = schemaType?.options?.list?.filter((option: any) => {
+    return option.value === 'backgroundImage'
+      ? roles.some(
+          (userRole: Role) =>
+            userRole.name === 'designer' || userRole.name === 'developer',
+        )
+      : true
+  })
 
   const handleChange = useCallback(
     (event: any) => {
-      const nextValue = event.currentTarget.value
-      if (nextValue === 'backgroundImage') {
-        const isDesigner = user?.roles.some(
-          (userRole: Role) => userRole.name === 'designer',
-        )
-        if (isDesigner) {
-          onChange(set(nextValue))
-        } else {
-          setError(true)
-        }
-      } else if (nextValue === 'sideImage') {
-        if (error) {
-          setError(false)
-        }
-        onChange(set(nextValue))
-      }
+      onChange(set(event.currentTarget.value))
     },
-    [onChange, user, error],
+    [onChange],
   )
 
   return (
-    <Stack space={3}>
-      <Grid columns={schemaType?.options?.list?.length} rows={1} gap={2}>
-        {schemaType?.options?.list?.map((option: any) => {
-          return (
-            <Card
-              key={option.value}
-              paddingY={2}
-              paddingX={3}
-              radius={2}
-              shadow={1}
-            >
-              <Flex direction='row' align='flex-start' gap={2}>
-                <Radio
-                  checked={value === option.value}
-                  name={option.value}
-                  id={option.value}
-                  onChange={handleChange}
-                  value={option.value}
-                />
-                <Flex direction='column' align={'flex-start'} gap={2}>
-                  <Text as='label' htmlFor={option.value}>
-                    {option.title}
-                  </Text>
-                  {option?.description && (
-                    <Badge tone='primary' fontSize={1}>
-                      {option?.description}
-                    </Badge>
-                  )}
-                </Flex>
-              </Flex>
-            </Card>
-          )
-        })}
-      </Grid>
-      {error && (
-        <Card padding={[2]} radius={2} shadow={1} tone='caution'>
-          <Text align='center' size={[1]}>
-            Cannot perform change, missing designer role!
-          </Text>
-        </Card>
-      )}
-    </Stack>
+    <Flex gap={2}>
+      {options?.map((option: any) => {
+        return (
+          <Card key={option.value} paddingY={2} paddingX={3} radius={2}>
+            <Flex direction='row' align='center' gap={2}>
+              <Radio
+                checked={value === option.value}
+                name={option.value}
+                id={option.value}
+                onChange={handleChange}
+                value={option.value}
+              />
+              <Text as='label' htmlFor={option.value}>
+                {option.title}
+              </Text>
+            </Flex>
+          </Card>
+        )
+      })}
+    </Flex>
   )
 }
 
@@ -112,14 +71,6 @@ export default {
   name: 'tabsInfoPanel',
   fields: [
     defineField({
-      name: 'image',
-      title: 'image',
-      type: 'image',
-      options: {
-        hotspot: true,
-      },
-    }),
-    defineField({
       name: 'imageVariant',
       title: 'Select image variant',
       description: 'Use same image variant for all information panels.',
@@ -128,10 +79,10 @@ export default {
         list: [
           {
             title: 'Background image',
-            description: 'Designer only',
             value: 'backgroundImage',
           },
           { title: 'Side image', value: 'sideImage' },
+          { title: 'Banner image', value: 'bannerImage' },
         ],
         layout: 'radio',
       },
@@ -141,12 +92,21 @@ export default {
       },
     }),
     defineField({
+      name: 'image',
+      title: 'Image',
+      type: 'image',
+      options: {
+        hotspot: true,
+      },
+    }),
+    backgroundPosition(),
+    defineField({
       name: 'title',
       type: 'array',
       components: {
         input: CompactBlockEditor,
       },
-      of: [titleContentType],
+      of: [configureBlockContent({ variant: 'titleH2' })],
       validation: (Rule: Rule) =>
         Rule.custom((value: PortableTextBlock[]) =>
           !value ? 'A title is recommended' : true,
@@ -154,9 +114,9 @@ export default {
     }),
     defineField({
       name: 'text',
-      title: 'Text content',
+      title: 'Content',
       type: 'array',
-      of: [blockContentType],
+      of: [configureBlockContent({ variant: 'simpleBlock' })],
     }),
     defineField({
       name: 'action',
@@ -167,16 +127,24 @@ export default {
         { type: 'downloadableImage', title: 'Call to action: Download image' },
         { type: 'downloadableFile', title: 'Call to action: Download file' },
       ],
+      validation: (Rule: Rule) => Rule.max(1).error('Only 1'),
     }),
+    {
+      name: 'keyInfoTitle',
+      title: 'Key figures title',
+      description:
+        'Used for context for screen readers.Not visible and optional, but if empty then textsnippet for Key figures will be used',
+      type: 'string',
+    },
     defineField({
       type: 'array',
       name: 'keyInfo',
       description: 'Up to 4 key information bits',
-      title: 'Summary keys',
+      title: 'Key information',
       of: [
         {
           name: 'keyInfo',
-          title: 'Summary key',
+          title: 'Key figure',
           type: 'object',
           fields: [
             {
@@ -186,7 +154,7 @@ export default {
             },
             {
               name: 'keyFigure',
-              title: 'Key figure highlighted',
+              title: 'Figure',
               type: 'string',
             },
             {
@@ -195,6 +163,21 @@ export default {
               type: 'text',
             },
           ],
+          preview: {
+            select: {
+              title: 'title',
+              keyFigure: 'keyFigure',
+              explanation: 'explanation',
+            },
+            prepare(selection: Record<string, string | number>) {
+              const { title, keyFigure, explanation } = selection
+              return {
+                title: `${title ?? ''} ${keyFigure ?? ''}`,
+                subtitle: `${explanation ?? ''}`,
+                media: HiOutlineInformationCircle,
+              }
+            },
+          },
         },
       ].filter(e => e),
       validation: (Rule: Rule) => Rule.max(4),

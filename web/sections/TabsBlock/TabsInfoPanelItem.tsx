@@ -1,7 +1,12 @@
 import type { PortableTextBlock } from '@portabletext/types'
+import { useTranslations } from 'next-intl'
 import { forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { Image } from '@/core/Image/Image'
+import {
+  getObjectPositionForImage,
+  Image,
+  type ObjectPositions,
+} from '@/core/Image/Image'
 import ResourceLink from '@/core/Link/ResourceLink'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import Blocks from '@/portableText/Blocks'
@@ -16,93 +21,150 @@ type TabsInfoPanelItemProps = {
   title?: PortableTextBlock[]
   text?: PortableTextBlock[]
   keyInfo?: InfoPanelKeyInfo[]
+  backgroundPosition?: ObjectPositions
   action?: LinkData
   className?: string
+  keyInfoTitle?: string
 }
 
 const TabsInfoPanelItem = forwardRef<HTMLDivElement, TabsInfoPanelItemProps>(
   function TabsInfoPanelItem(
-    { image, imageVariant, title, text, keyInfo, action, className = '' },
+    {
+      image,
+      imageVariant,
+      backgroundPosition,
+      title,
+      text,
+      keyInfo,
+      action,
+      keyInfoTitle,
+      className = '',
+    },
     ref,
   ) {
     const url = action ? getUrlFromAction(action) : undefined
+    const intl = useTranslations()
+
+    const keyFiguresElement = (
+      <div
+        className={`${imageVariant === 'backgroundImage' ? 'z-11 row-start-2 row-end-2' : ''} ${
+          imageVariant === 'bannerImage'
+            ? 'col-span-1 row-start-2 row-end-2'
+            : ''
+        } ${imageVariant === 'sideImage' ? 'order-2 lg:order-1 lg:pt-14' : ''}`}
+      >
+        <div className='sr-only'>
+          {keyInfoTitle ? keyInfoTitle : intl('keyFigures')}
+        </div>
+        <div
+          className={`gap-x-10 gap-y-6 ${
+            imageVariant !== 'backgroundImage'
+              ? `grid auto-rows-min ${keyInfo && keyInfo?.length % 2 ? 'grid-cols-1' : 'grid-cols-2'}`
+              : 'flex flex-wrap'
+          }`}
+        >
+          {keyInfo?.map(item => {
+            return (
+              <div key={item?.id} className='text-balance'>
+                <div className='font-semibold text-md'>{item?.title}</div>
+                <div className='font-semibold text-lg'>{item?.keyFigure}</div>
+                <div className='text-base'>{item?.explanation}</div>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    )
+
     return (
       <div
         ref={ref}
         className={twMerge(
-          `relative ${
-            imageVariant === 'sideImage'
-              ? `flex flex-col-reverse items-start gap-12 px-8 py-12 lg:grid lg:grid-cols-2 lg:px-16`
-              : ''
+          `relative flex flex-col gap-12 lg:grid lg:grid-cols-[60%_40%] lg:grid-rows-[auto_auto] ${
+            imageVariant === 'sideImage' ? `items-start gap-12` : ''
           }`,
           className,
         )}
       >
-        {image?.asset && imageVariant === 'backgroundImage' && (
-          <Image
-            grid='sm'
-            aria-hidden
-            image={image}
-            fill
-            className='z-1'
-            imageClassName='object-center'
-          />
-        )}
-        <div
-          className={`relative flex flex-col ${
-            imageVariant === 'sideImage'
-              ? ''
-              : 'z-10 px-8 pt-12 pb-16 lg:grid lg:grid-cols-2 lg:px-12 lg:pt-16 lg:pb-40'
-          } gap-x-12 gap-y-12 lg:gap-x-20`}
-        >
-          <div>
-            <div className='flex flex-col gap-4'>
-              {title && <Blocks value={title} as='h3' variant='h5' />}
-              {text && (
-                <Blocks group='paragraph' variant='small' value={text} />
-              )}
-            </div>
-            {action && url && (
-              <ResourceLink
-                href={url}
-                {...(action.link?.lang && {
-                  hrefLang: getLocaleFromName(action.link?.lang),
-                })}
-                file={{
-                  ...action?.file,
-                  label: action?.label,
-                }}
-                type={action.type}
-                variant='fit'
-                className='mt-12'
-              >
-                {`${action?.label}`}
-              </ResourceLink>
-            )}
+        {image?.asset && (
+          <div
+            className={`h-auto w-full ${
+              imageVariant === 'bannerImage'
+                ? 'relative col-span-full row-span-1 aspect-4/3 lg:aspect-21/9'
+                : ''
+            } ${imageVariant === 'backgroundImage' ? 'absolute inset-0 z-0 col-span-full row-span-full' : ''} ${
+              imageVariant === 'sideImage'
+                ? 'relative aspect-4/3 lg:aspect-2/1'
+                : ''
+            }`}
+          >
+            <Image
+              grid='sm'
+              aria-hidden
+              image={image}
+              fill
+              className={`h-auto w-full ${
+                imageVariant === 'bannerImage'
+                  ? 'relative col-span-full row-span-1 aspect-4/3 lg:aspect-21/9'
+                  : ''
+              } ${imageVariant === 'backgroundImage' ? 'absolute inset-0 z-0 col-span-full row-span-full' : ''} ${
+                imageVariant === 'sideImage'
+                  ? 'relative aspect-4/3 lg:aspect-2/1'
+                  : ''
+              }`}
+              imageClassName={`${imageVariant === 'sideImage' ? 'rounded-md' : ''} ${
+                backgroundPosition
+                  ? getObjectPositionForImage(backgroundPosition)
+                  : ''
+              }`}
+            />
           </div>
-          {keyInfo && (
-            <div
-              className={`grid grid-cols-1 ${keyInfo?.length % 2 ? 'xl:grid-cols-1' : 'xl:grid-cols-2'} gap-6`}
-            >
-              {keyInfo?.map(item => {
-                return (
-                  <div key={item?.id}>
-                    <div className='font-semibold text-sm'>{item?.title}</div>
-                    <div className='font-semibold text-md'>
-                      {item?.keyFigure}
-                    </div>
-                    <div className='text-xs'>{item?.explanation}</div>
-                  </div>
-                )
+        )}
+        {imageVariant === 'sideImage' &&
+          keyInfo &&
+          keyInfo?.length > 0 &&
+          keyFiguresElement}
+        <div
+          className={`flex flex-col ${
+            imageVariant === 'backgroundImage'
+              ? 'z-10 row-start-1 row-end-1 pt-14'
+              : `row-start-2 row-end-2`
+          } ${
+            imageVariant === 'sideImage'
+              ? 'order-1 col-span-full lg:order-2'
+              : `${keyInfo && keyInfo?.length > 0 ? 'col-span-1' : ''}`
+          }`}
+        >
+          {title && (
+            <Blocks
+              value={title}
+              variant='h3'
+              blockClassName='text-lg lg:text-lg'
+            />
+          )}
+          {text && <Blocks group='paragraph' variant='small' value={text} />}
+          {action && url && (
+            <ResourceLink
+              href={url}
+              {...(action.link?.lang && {
+                hrefLang: getLocaleFromName(action.link?.lang),
               })}
-            </div>
+              file={{
+                ...action?.file,
+                label: action?.label,
+              }}
+              type={action.type}
+              variant='fit'
+              className='mt-2'
+            >
+              {`${action?.label}`}
+            </ResourceLink>
           )}
         </div>
-        {image?.asset && imageVariant === 'sideImage' && (
-          <div className='relative aspect-video w-full rounded-md lg:aspect-5/4'>
-            <Image image={image} fill className='rounded-md' />
-          </div>
-        )}
+        {imageVariant !== 'sideImage' &&
+          keyInfo &&
+          keyInfo?.length > 0 &&
+          keyFiguresElement}
       </div>
     )
   },

@@ -31,6 +31,8 @@ const commonPromotionFields = /* groq */ `
             "backgroundColor": coalesce(designOptions.background[0].title, background.title, 'White'),
         },
         "foreground": designOptions.theme.theme.foreground.key,
+        backgroundImage,
+        backgroundPosition,
     }
 `
 export const eventPromotion = /* groq */ `

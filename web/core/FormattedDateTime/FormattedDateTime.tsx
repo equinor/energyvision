@@ -17,11 +17,17 @@ type Variant = 'datetime' | 'date' | 'time'
 export type FormattedDateTimeProps = {
   variant?: Variant
   datetime: string | Date
+  /* Show a date icon
+   * @default false
+   */
   dateIcon?: boolean
+  /* @default false */
   timeIcon?: boolean
   /* Render date with uppercase */
+  /* @default false */
   uppercase?: boolean
   /* Render time with timezone */
+  /* @default false */
   showTimezone?: boolean
 } & HTMLAttributes<HTMLSpanElement> &
   DateTimeFormatOptions

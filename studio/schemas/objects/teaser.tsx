@@ -1,11 +1,6 @@
 /* eslint-disable react/display-name */
 
-import type {
-  PortableTextBlock,
-  Reference,
-  Rule,
-  ValidationContext,
-} from 'sanity'
+import type { PortableTextBlock, Reference, Rule } from 'sanity'
 import blocksToText from '../../helpers/blocksToText'
 import {
   FullSizeImage,
@@ -176,7 +171,7 @@ export default {
         },
       },
     },
-    backgroundPosition(() => false, 'design'),
+    backgroundPosition(undefined, 'design'),
     {
       title: 'Contain image/svg',
       description:

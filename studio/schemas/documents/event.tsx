@@ -1,14 +1,11 @@
 import { calendar_event, image } from '@equinor/eds-icons'
-import { Card, Stack } from '@sanity/ui'
-import { useCallback } from 'react'
+import { Stack } from '@sanity/ui'
 import {
   type ArrayOfObjectsInputProps,
   type DateTimeInputProps,
   defineField,
   type PortableTextBlock,
   type Rule,
-  set,
-  unset,
   type ValidationContext,
 } from 'sanity'
 import blocksToText from '../../helpers/blocksToText'
@@ -36,12 +33,6 @@ const validateRelatedLinksTitle = (
   }
 
   return true
-}
-
-type CustomDatetimeInputProps = {} & DateTimeInputProps
-
-const CustomDatesInput = (props: ArrayOfObjectsInputProps) => {
-  return <Stack space={3}>{props.renderDefault(props)}</Stack>
 }
 
 export default {
@@ -108,7 +99,8 @@ export default {
         {
           name: 'overrideTimeLabel',
           title: 'Time label',
-          description: 'Override time with e.g. "To be announced"',
+          description:
+            'Override time with e.g. "To be announced" or "-" if you dont want to show time at all',
           type: 'string',
         },
       ],
@@ -128,7 +120,8 @@ export default {
         {
           name: 'overrideTimeLabel',
           title: 'Time label',
-          description: 'Override time with e.g. "To be announced"',
+          description:
+            'Override time with e.g. "To be announced" or "-" if you dont want to show time at all',
           type: 'string',
         },
       ],

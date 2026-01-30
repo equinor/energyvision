@@ -917,6 +917,11 @@ const snippets: textSnippet = {
     defaultValue: 'Invalid characters found',
     group: groups.common,
   },
+  keyFigures: {
+    title: 'Key figures',
+    defaultValue: 'Key figures',
+    group: groups.common,
+  },
 }
 
 type textSnippetGroup = { title: string; hidden?: boolean }

@@ -1,13 +1,13 @@
 'use client'
-import { twMerge } from 'tailwind-merge'
-import { getColorForTabsTheme } from './tabThemes'
-import { Tabs } from '@/core/Tabs'
+import type { PortableTextBlock } from '@portabletext/types'
 import { forwardRef, useId, useRef } from 'react'
-import TabsKeyNumberItem from './TabsKeyNumberItem'
-import TabsInfoPanelItem from './TabsInfoPanelItem'
-import { PortableTextBlock } from '@portabletext/types'
-import { TabItem } from './TabsBlock.types'
+import { twMerge } from 'tailwind-merge'
+import { Tabs } from '@/core/Tabs'
 import Blocks from '@/portableText/Blocks'
+import type { TabItem } from './TabsBlock.types'
+import TabsInfoPanelItem from './TabsInfoPanelItem'
+import TabsKeyNumberItem from './TabsKeyNumberItem'
+import { getColorForTabsTheme } from './tabThemes'
 
 const { TabList, Tab, TabPanel } = Tabs
 
@@ -27,7 +27,16 @@ export type TabsBlockProps = {
 }
 
 const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
-  { title, ingress, designOptions, tabList, id, hideTitle = false, anchor, className = '' },
+  {
+    title,
+    ingress,
+    designOptions,
+    tabList,
+    id,
+    hideTitle = false,
+    anchor,
+    className = '',
+  },
   ref,
 ) {
   const theme = getColorForTabsTheme(designOptions?.theme?.value ?? 0)
@@ -51,31 +60,39 @@ const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
       )}
     >
       <div
-        className={`flex flex-col gap-6 ${
+        className={`flex flex-col pb-page-content ${
           tabPanelVariant === 'tabsKeyNumbers'
-            ? `px-layout-sm pb-page-content lg:px-layout-md`
-            : `lg:mx-layout-sm ${theme?.backgroundUtility} rounded-md`
+            ? `gap-6 px-layout-sm lg:px-layout-md`
+            : `px-layout-sm lg:mx-layout-sm lg:px-20 ${theme?.backgroundUtility} rounded-md`
         } `}
       >
         <div
           className={`${
-            tabPanelVariant === 'tabsInfoPanel' && !hideTitle ? `max-w-innerColumn pl-layout-sm lg:pt-20` : ``
+            tabPanelVariant === 'tabsInfoPanel' && !hideTitle ? `lg:pt-14` : ``
           }`}
         >
-          {title && <Blocks id={headingId} value={title} as="h2" className={`${hideTitle ? 'sr-only' : ''}`} />}
-          {ingress && <Blocks variant="ingress" value={ingress} />}
+          {title && (
+            <Blocks
+              id={headingId}
+              value={title}
+              as='h2'
+              variant='h3'
+              className={`${hideTitle ? 'sr-only' : ''}`}
+            />
+          )}
+          {ingress && <Blocks variant='ingress' value={ingress} />}
         </div>
         {tabList && tabList?.length > 0 && (
           <Tabs
             defaultValue={tabList[0]?.id}
             {...(hideTitle && { 'aria-labelledby': headingId })}
-            className={`flex w-full flex-col items-center ${tabPanelVariant === 'tabsInfoPanel' ? 'mt-4' : ''} `}
+            className={`flex w-full flex-col items-center`}
           >
             <TabList ref={tabsListRef}>
               {tabList?.map((tab: TabItem, i: number) => {
                 return (
                   // eslint-disable-next-line react/no-array-index-key
-                  <Tab key={`${tab.id}_index_${i}`} value={tab.id} className={`${``}`}>
+                  <Tab key={`${tab.id}_index_${i}`} value={tab.id}>
                     {tab.title}
                   </Tab>
                 )
@@ -93,31 +110,40 @@ const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
                       : 'h-full w-full overflow-hidden rounded-md'
                   }`}
                 >
-                  {tabItem.panel?.type === 'tabsKeyNumbers' && tabItem.panel?.items && (
-                    <ul
-                      {...(title && hideTitle && { 'aria-labelledby': headingId })}
-                      className={`flex flex-col md:grid md:grid-cols-2 ${tabItem.panel?.items?.length < 4 ? '3xl:auto-cols-fr 3xl:grid-flow-col' : ''} gap-6`}
-                    >
-                      {tabItem.panel?.items?.map((tabsKeyNumber: any) => {
-                        return (
-                          <li key={tabsKeyNumber.id}>
-                            <TabsKeyNumberItem
-                              theme={designOptions.theme?.value}
-                              keyNumber={tabsKeyNumber?.keyNumber}
-                              unit={tabsKeyNumber?.unit}
-                              description={tabsKeyNumber?.description}
-                            />
-                          </li>
-                        )
-                      })}
-                    </ul>
-                  )}
+                  {tabItem.panel?.type === 'tabsKeyNumbers' &&
+                    tabItem.panel?.items && (
+                      <ul
+                        {...(title &&
+                          hideTitle && { 'aria-labelledby': headingId })}
+                        className={`flex flex-col md:grid md:grid-cols-2 ${tabItem.panel?.items?.length < 4 ? '3xl:auto-cols-fr 3xl:grid-flow-col' : ''} gap-6`}
+                      >
+                        {tabItem.panel?.items?.map((tabsKeyNumber: any) => {
+                          return (
+                            <li key={tabsKeyNumber.id}>
+                              <TabsKeyNumberItem
+                                theme={designOptions.theme?.value}
+                                keyNumber={tabsKeyNumber?.keyNumber}
+                                unit={tabsKeyNumber?.unit}
+                                description={tabsKeyNumber?.description}
+                              />
+                            </li>
+                          )
+                        })}
+                      </ul>
+                    )}
                   {tabItem.panel?.type === 'tabsInfoPanel' && (
-                    <TabsInfoPanelItem theme={designOptions.theme?.value} {...tabItem.panel} />
+                    <TabsInfoPanelItem
+                      theme={designOptions.theme?.value}
+                      {...tabItem.panel}
+                    />
                   )}
-                  {tabItem.panel?.type === 'tabsKeyNumbers' && tabItem?.panel?.disclaimer && (
-                    <Blocks value={tabItem?.panel?.disclaimer} className="mt-6 text-sm italic" />
-                  )}
+                  {tabItem.panel?.type === 'tabsKeyNumbers' &&
+                    tabItem?.panel?.disclaimer && (
+                      <Blocks
+                        value={tabItem?.panel?.disclaimer}
+                        className='mt-6 text-sm italic'
+                      />
+                    )}
                 </TabPanel>
               )
             })}

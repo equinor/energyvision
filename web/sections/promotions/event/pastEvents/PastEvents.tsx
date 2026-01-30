@@ -1,4 +1,5 @@
-import type { EventCardData, EventPromotionSettings } from '@/types'
+import type { EventCardData } from '@/sections/cards/EventCard/EventCard'
+import type { EventPromotionSettings } from '@/types'
 import PastEventsListItem from './PastEventsListItem'
 
 type PastEventsProp = {
@@ -8,7 +9,7 @@ type PastEventsProp = {
 }
 
 const PastEvents = ({ events, hasSectionTitle }: PastEventsProp) => {
-  console.log("PastEvents events", events);
+  console.log('PastEvents events', events)
   return (
     <ul className='grid w-full grid-flow-row auto-rows-max divide-y divide-autumn-storm-60'>
       {events.map(event => {

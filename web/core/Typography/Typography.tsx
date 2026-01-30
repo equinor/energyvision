@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 
 import type { OverridableComponent } from '@equinor/eds-utils'
-import { clsx } from 'clsx'
+//import { clsx } from 'clsx'
 import {
   type AnchorHTMLAttributes,
   type ElementType,
   forwardRef,
   type HTMLAttributes,
 } from 'react'
+import { twMerge } from 'tailwind-merge'
 import {
   quickVariants,
   type TypographyGroups,
@@ -117,11 +118,12 @@ export const Typography: OverridableComponent<TypographyProps, HTMLElement> =
     return (
       <TypographyTag
         ref={ref}
-        className={clsx(
+        //clsx news template merging?
+        className={twMerge(
+          className,
+          typography,
           'wrap-break-word text-pretty text-slate-80 dark:text-white-100',
           group !== 'article' && 'max-w-text',
-          typography,
-          className,
         )}
       >
         {children}

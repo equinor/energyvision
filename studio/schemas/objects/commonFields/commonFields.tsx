@@ -58,8 +58,6 @@ export const background = {
 }
 
 export const backgroundPosition = (hiddenCallBack?: any, fieldset?: string) => {
-  const defaultHiddenFunction = ({ parent }: any) =>
-    parent?.backgroundType !== '0'
   return defineField({
     title: 'Select positioning of the image',
     description:
@@ -82,7 +80,7 @@ export const backgroundPosition = (hiddenCallBack?: any, fieldset?: string) => {
     },
     initialValue: 'center_center',
     ...(fieldset && { fieldset }),
-    hidden: hiddenCallBack ? hiddenCallBack : defaultHiddenFunction,
+    ...(hiddenCallBack && { hidden: hiddenCallBack }),
   })
 }
 

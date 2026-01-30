@@ -238,6 +238,9 @@ const applyPaddingTopIfApplicable = (
     'fullWidthVideo',
     'backgroundImage',
     'campaignBanner',
+    prevComponent?.type === 'promoteEvents' &&
+      prevComponent?.designOptions?.backgroundImage?.asset &&
+      'promoteEvents',
   ]
 
   const currentIsWhiteColorBackground = isWhiteColorBackground(
@@ -290,6 +293,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
     index: number,
     c: any,
     anchorReference: string,
+    topSpacingClassName: string,
     spacingClassName: string,
   ) => {
     switch (c.type) {
@@ -561,7 +565,12 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
         return <ImageForText key={c.id} data={c as ImageForTextData} />
       case 'tabs':
         return (
-          <TabsBlock key={c.id} {...(c as any)} className={spacingClassName} />
+          <TabsBlock
+            key={c.id}
+            {...(c as any)}
+            //handling pb-page-content self
+            className={topSpacingClassName}
+          />
         )
       /* Remove from here and move to Homepage Template PageContent */
       case 'homepageBanner':
@@ -693,7 +702,13 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
           )
         }}
       >
-        {mapSection(index, c, anchorReference, spacingClassName)}
+        {mapSection(
+          index,
+          c,
+          anchorReference,
+          topSpacingClassName,
+          spacingClassName,
+        )}
       </ErrorBoundary>
     )
   })

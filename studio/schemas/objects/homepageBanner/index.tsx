@@ -208,7 +208,7 @@ export default {
       name: 'colorTheme',
       title: 'Theme',
       type: 'object',
-      hidden: ({ parent }) => parent?.backgroundType !== '1',
+      hidden: ({ parent }: { parent?: any }) => parent?.backgroundType !== '1',
       fields: [
         defineField({
           name: 'title',
@@ -220,7 +220,7 @@ export default {
         }),
       ],
       components: {
-        input: props => {
+        input: (props: any) => {
           return (
             <ThemeSelector
               variant='cards'

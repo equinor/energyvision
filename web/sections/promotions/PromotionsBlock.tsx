@@ -1,10 +1,16 @@
+import type { SanityImageObject } from '@sanity/image-url'
 import type { PortableTextBlock } from 'next-sanity'
 import { useId, useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
+import {
+  getObjectPositionForImage,
+  type ObjectPositions,
+} from '@/core/Image/Image'
 import { ResourceLink } from '@/core/Link/ResourceLink'
 import { Promotion } from '@/core/Promotion/Promotion'
 import Blocks from '@/portableText/Blocks'
+import { resolveImage } from '@/sanity/lib/utils'
 import {
   type ColorKeys,
   getBgAndDarkFromBackground,
@@ -12,11 +18,11 @@ import {
 import type {
   CardData,
   DesignOptions,
-  EventCardData,
   LinkData,
   PeopleCardData,
   Tag,
 } from '@/types'
+import type { EventCardData } from '../cards/EventCard/EventCard'
 import PeopleCard from '../cards/PeopleCard/PeopleCard'
 import EventPromotions from './event/EventPromotions'
 
@@ -36,6 +42,10 @@ type PromotionBlock = {
   viewAllLink?: LinkData
   designOptions?: {
     foreground?: ColorKeys
+    //event
+    backgroundImage?: SanityImageObject
+    //event
+    backgroundPosition?: ObjectPositions
   } & DesignOptions
 }
 
@@ -122,10 +132,24 @@ const PromotionsBlock = ({
     //@ts-ignore: how to spread union types
     promotePastEvents,
   } = data
-  //const { foreground } = designOptions || {}
-  const { bg, dark } = getBgAndDarkFromBackground(designOptions)
+
+  const { backgroundImage, backgroundPosition } = designOptions || {}
+
   const promotionVariant =
     variant ?? mapOldPromoType(data.promotions?.[0]?.type) ?? 'promoteTopics'
+
+  const { bg, dark } = getBgAndDarkFromBackground(designOptions)
+  let imageUrl: string
+  if (promotionVariant === 'promoteEvents' && backgroundImage) {
+    const { url } = resolveImage({
+      image: backgroundImage,
+      grid: 'full',
+      isLargerDisplays: true,
+    })
+    if (url) {
+      imageUrl = url
+    }
+  }
 
   const sectionTitleId = useId()
   const promotionList = useMemo(() => {
@@ -137,26 +161,18 @@ const PromotionsBlock = ({
 
   return (
     <section
-      className={twMerge(`${bg} ${dark ? 'dark' : ''}`, className)}
+      className={twMerge(`relative ${bg} ${dark ? 'dark' : ''}`, className)}
       id={anchor}
     >
-      {title && (
-        <div className={paddingClassName}>
+      {(title || ingress || viewAllLink?.link?.slug) && (
+        <div
+          className={`flex flex-col ${promotionVariant === 'promoteEvents' && backgroundImage ? 'dark relative z-10 pt-30' : ''} ${paddingClassName}`}
+        >
           <Blocks variant='h2' id={sectionTitleId} value={title} />
-        </div>
-      )}
-      <div className='flex flex-col'>
-        {ingress && (
-          <div
-            className={`${paddingClassName} ${
-              viewAllLink?.link?.slug ? '' : ''
-            }`}
-          >
-            <Blocks variant='ingress' value={ingress} />
-          </div>
-        )}
-        {viewAllLink?.link?.slug && (
-          <div className={`${paddingClassName}`}>
+          {ingress && (
+            <Blocks group='paragraph' variant='overline' value={ingress} />
+          )}
+          {viewAllLink?.link?.slug && (
             <ResourceLink
               type='internalUrl'
               variant='fit'
@@ -164,72 +180,88 @@ const PromotionsBlock = ({
             >
               {viewAllLink?.label}
             </ResourceLink>
-          </div>
-        )}
-
-        {promotionVariant === 'promoteEvents' ? (
-          <EventPromotions
-            promotions={promotionList as EventCardData[]}
-            hasSectionTitle={!!title}
-            promotePastEvents={promotePastEvents}
-            onColorBg={onColorBg}
-          />
-        ) : (
-          <ul
-            className={`pt-6 ${
-              promotionList?.length === 1
-                ? 'mx-layout-sm md:mx-layout-lg'
-                : `3xl:mx-layout-md mx-layout-sm grid auto-rows-fr grid-cols-1 ${
-                    promotionList?.length === 3
-                      ? 'md:grid-cols-3'
-                      : 'md:grid-cols-2 2xl:grid-cols-3'
-                  } gap-x-4 gap-y-3`
-            }
+          )}
+        </div>
+      )}
+      {promotionVariant === 'promoteEvents' ? (
+        <EventPromotions
+          promotions={promotionList as EventCardData[]}
+          hasSectionTitle={!!title}
+          promotePastEvents={promotePastEvents}
+          onColorBg={onColorBg}
+          hasBackgroundImage={!!backgroundImage?.asset}
+        />
+      ) : (
+        <ul
+          className={`pt-6 ${
+            promotionList?.length === 1
+              ? 'mx-layout-sm md:mx-layout-lg'
+              : `3xl:mx-layout-md mx-layout-sm grid auto-rows-fr grid-cols-1 ${
+                  promotionList?.length === 3
+                    ? 'md:grid-cols-3'
+                    : 'md:grid-cols-2 2xl:grid-cols-3'
+                } gap-x-4 gap-y-3`
+          }
               `}
-          >
-            {promotionList?.map((promotion: any) => {
-              return (
-                <li key={promotion?.id}>
-                  {variant === 'promotePeople' && (
-                    <PeopleCard
-                      data={promotion as PeopleCardData}
-                      hasSectionTitle={!!title}
-                      variant={
-                        promotionList?.length === 1 ? 'single' : 'default'
-                      }
-                    />
-                  )}
-                  {variant !== 'promotePeople' && (
-                    <Promotion
-                      variant='default'
-                      type='extended'
-                      //@ts-ignore:todo
-                      title={promotion?.title}
-                      ingress={promotion?.ingress}
-                      {...(onColorBg && {
-                        background: 'white-100',
-                      })}
-                      {...(promotion?.publishDateTime && {
-                        eyebrow: (
-                          <FormattedDateTime
-                            variant='date'
-                            datetime={promotion?.publishDateTime}
-                            uppercase
-                            className='pb-2 text-sm'
-                          />
-                        ),
-                      })}
-                      image={promotion?.heroImage?.image}
-                      href={promotion?.slug}
-                      hasSectionTitle={!!title}
-                    />
-                  )}
-                </li>
-              )
-            })}
-          </ul>
-        )}
-      </div>
+        >
+          {promotionList?.map((promotion: any) => {
+            return (
+              <li key={promotion?.id}>
+                {variant === 'promotePeople' && (
+                  <PeopleCard
+                    data={promotion as PeopleCardData}
+                    hasSectionTitle={!!title}
+                    variant={promotionList?.length === 1 ? 'single' : 'default'}
+                  />
+                )}
+                {variant !== 'promotePeople' && (
+                  <Promotion
+                    variant='default'
+                    type='extended'
+                    //@ts-ignore:todo
+                    title={promotion?.title}
+                    ingress={promotion?.ingress}
+                    {...(onColorBg && {
+                      background: 'white-100',
+                    })}
+                    {...(promotion?.publishDateTime && {
+                      eyebrow: (
+                        <FormattedDateTime
+                          variant='date'
+                          datetime={promotion?.publishDateTime}
+                          uppercase
+                          className='pb-2 text-sm'
+                        />
+                      ),
+                    })}
+                    image={promotion?.heroImage?.image}
+                    href={promotion?.slug}
+                    hasSectionTitle={!!title}
+                  />
+                )}
+              </li>
+            )
+          })}
+        </ul>
+      )}
+      {promotionVariant === 'promoteEvents' && backgroundImage && (
+        <div
+          className={`absolute inset-0 z-0 bg-cover bg-no-repeat ${
+            backgroundPosition
+              ? getObjectPositionForImage(backgroundPosition)
+              : ''
+          } `}
+          style={{
+            backgroundImage: `url(${imageUrl})`,
+          }}
+        >
+          <div className='h-full w-full bg-black/20 px-50 py-20'>
+            <div
+              className={`h-full w-full rounded-card border border-white-100/40 bg-black-100/10 backdrop-blur-lg`}
+            />
+          </div>
+        </div>
+      )}
     </section>
   )
 }

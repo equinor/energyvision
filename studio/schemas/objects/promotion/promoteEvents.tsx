@@ -6,6 +6,7 @@ import { capitalizeFirstLetter } from '../../../helpers/formatters'
 import { filterByRouteEvents } from '../../../helpers/referenceFilters'
 import routes from '../../routes'
 import {
+  backgroundPosition,
   ingress,
   theme,
   title,
@@ -107,20 +108,23 @@ export default {
           return true
         }).unique(),
     },
+    {
+      title: 'Background image',
+      description:
+        'If this is used theme will be ignored and a background filter will be applied for title and ingress above',
+      name: 'backgroundImage',
+      type: 'image',
+      options: {
+        hotspot: true,
+        collapsed: false,
+      },
+      hidden: ({ parent }: any) =>
+        parent?.promotionType !== 'manual' && parent?.eventsCount > 1,
+    },
+    backgroundPosition(),
     viewAllLink,
     viewAllLinkLabel,
     theme,
-    {
-      title: 'Background (Deprecated)',
-      description: 'Please select a theme instead',
-      name: 'background',
-      type: 'colorlist',
-      fieldset: 'design',
-      readonly: true,
-      hidden: ({ value }: any) => {
-        return !value || value.title === 'White'
-      },
-    },
   ].filter(e => e),
   /*   components: {
     preview: PromoteEventsPreview,
