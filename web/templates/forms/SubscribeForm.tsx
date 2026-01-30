@@ -2,7 +2,7 @@
 import { Icon } from '@equinor/eds-core-react'
 import { error_filled } from '@equinor/eds-icons'
 import { useLocale, useTranslations } from 'next-intl'
-import { type BaseSyntheticEvent, useState } from 'react'
+import { type BaseSyntheticEvent, useState, useId } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { Button } from '@/core/Button'
 import { Checkbox } from '@/core/Checkbox/Checkbox'
@@ -24,6 +24,7 @@ const SubscribeForm = () => {
   const [isFriendlyChallengeDone, setIsFriendlyChallengeDone] = useState(false)
   const [isServerError, setServerError] = useState(false)
   const [isSuccessfullySubmitted, setSuccessfullySubmitted] = useState(false)
+  const formId = useId()
 
   const {
     handleSubmit,
@@ -181,7 +182,7 @@ const SubscribeForm = () => {
                   }) => (
                     <TextField
                       {...props}
-                      id={props.name}
+                      id={`${props.name}_${formId}`}
                       label={`${intl('email')}*`}
                       inputRef={ref}
                       inputIcon={

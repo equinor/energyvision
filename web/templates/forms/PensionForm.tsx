@@ -2,7 +2,7 @@
 import { Icon } from '@equinor/eds-core-react'
 import { error_filled } from '@equinor/eds-icons'
 import { useTranslations } from 'next-intl'
-import { type BaseSyntheticEvent, useState } from 'react'
+import { type BaseSyntheticEvent, useState, useId } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { Button } from '@/core/Button'
 import { FormMessageBox } from '@/core/Form/FormMessageBox'
@@ -25,6 +25,7 @@ const PensionForm = () => {
   const [isServerError, setServerError] = useState(false)
   const [isFriendlyChallengeDone, setIsFriendlyChallengeDone] = useState(false)
   const [isSuccessfullySubmitted, setSuccessfullySubmitted] = useState(false)
+  const formId = useId()
 
   const onSubmit = async (
     data: PensionFormValues,
@@ -106,7 +107,7 @@ const PensionForm = () => {
                     return (
                       <TextField
                         {...props}
-                        id={name}
+                        id={`${name}+_+${formId}`}
                         label={`${intl('name')}*`}
                         inputRef={ref}
                         aria-required='true'
@@ -141,7 +142,7 @@ const PensionForm = () => {
                     return (
                       <TextField
                         {...props}
-                        id={name}
+                        id={`${name}+_+${formId}`}
                         label={`${intl('email')}*`}
                         inputRef={ref}
                         inputIcon={
@@ -166,7 +167,7 @@ const PensionForm = () => {
                       <Select
                         {...props}
                         selectRef={ref}
-                        id={name}
+                        id={`${name}+_+${formId}`}
                         label={intl('category')}
                       >
                         <option value=''>
@@ -207,7 +208,7 @@ const PensionForm = () => {
                     return (
                       <TextField
                         {...props}
-                        id={name}
+                        id={`${name}+_+${formId}`}
                         description={intl('dont_enter_personal_info')}
                         label={`${intl('pension_form_what_is_your_request')}*`}
                         inputRef={ref}

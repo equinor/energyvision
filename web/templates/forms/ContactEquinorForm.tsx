@@ -2,7 +2,7 @@
 import { Icon } from '@equinor/eds-core-react'
 import { error_filled } from '@equinor/eds-icons'
 import { useTranslations } from 'next-intl'
-import { type BaseSyntheticEvent, useState } from 'react'
+import { type BaseSyntheticEvent, useState, useId } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { Button } from '@/core/Button'
 import { FormMessageBox } from '@/core/Form/FormMessageBox'
@@ -24,6 +24,7 @@ const ContactEquinorForm = () => {
   const [isServerError, setServerError] = useState(false)
   const [isFriendlyChallengeDone, setIsFriendlyChallengeDone] = useState(false)
   const [isSuccessfullySubmitted, setSuccessfullySubmitted] = useState(false)
+  const formId = useId()
 
   const getCatalog = (category: string): ContactFormCatalogType | null => {
     if (category.includes(intl('contact_form_login_issues')))
@@ -104,7 +105,7 @@ const ContactEquinorForm = () => {
                     return (
                       <TextField
                         {...props}
-                        id={name}
+                        id={`${name}+_+${formId}`}
                         label={`${intl('name')}*`}
                         inputRef={ref}
                         aria-required='true'
@@ -137,7 +138,7 @@ const ContactEquinorForm = () => {
                     return (
                       <TextField
                         {...props}
-                        id={name}
+                        id={`${name}+_+${formId}`}
                         label={`${intl('email')}*`}
                         inputRef={ref}
                         inputIcon={
@@ -161,7 +162,7 @@ const ContactEquinorForm = () => {
                       <Select
                         {...props}
                         selectRef={ref}
-                        id={name}
+                        id={`${name}+_+${formId}`}
                         label={intl('category')}
                       >
                         <option value=''>
@@ -199,7 +200,7 @@ const ContactEquinorForm = () => {
                     return (
                       <TextField
                         {...props}
-                        id={name}
+                        id={`${name}+_+${formId}`}
                         description={intl('dont_enter_personal_info')}
                         label={`${intl('contact_form_how_to_help')}*`}
                         inputRef={ref}

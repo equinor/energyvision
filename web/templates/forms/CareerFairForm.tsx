@@ -2,7 +2,7 @@
 import { Icon } from '@equinor/eds-core-react'
 import { error_filled } from '@equinor/eds-icons'
 import { useLocale, useTranslations } from 'next-intl'
-import { type BaseSyntheticEvent, useState } from 'react'
+import { type BaseSyntheticEvent, useState, useId } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { Button } from '@/core/Button'
 import { Checkbox } from '@/core/Checkbox/Checkbox'
@@ -33,7 +33,7 @@ type FormValues = {
 const CareerFairForm = () => {
   const intl = useTranslations()
   const locale = useLocale()
-
+  const formId = useId()
   const [isFriendlyChallengeDone, setIsFriendlyChallengeDone] = useState(false)
   const [isServerError, setServerError] = useState(false)
   const [isSuccessfullySubmitted, setSuccessfullySubmitted] = useState(false)
@@ -118,7 +118,7 @@ const CareerFairForm = () => {
               }) => (
                 <TextField
                   {...props}
-                  id={props.name}
+                  id={`${props.name}_${formId}`}
                   label={`${intl('career_fair_form_organisation')}*`}
                   inputRef={ref}
                   aria-required='true'
@@ -148,7 +148,7 @@ const CareerFairForm = () => {
               }) => (
                 <TextField
                   {...props}
-                  id={props.name}
+                  id={`${props.name}_${formId}`}
                   label={`${intl('career_fair_form_contact_person')}*`}
                   inputRef={ref}
                   aria-required='true'
@@ -178,7 +178,7 @@ const CareerFairForm = () => {
               }) => (
                 <TextField
                   {...props}
-                  id={props.name}
+                  id={`${props.name}_${formId}`}
                   label={`${intl('career_fair_form_phone')}*`}
                   description={intl('country_code_format')}
                   type='tel'
@@ -211,7 +211,7 @@ const CareerFairForm = () => {
               }) => (
                 <TextField
                   {...props}
-                  id={props.name}
+                  id={`${props.name}_${formId}`}
                   label={`${intl('email')}*`}
                   inputRef={ref}
                   inputIcon={
@@ -233,7 +233,7 @@ const CareerFairForm = () => {
                   <Select
                     {...props}
                     selectRef={ref}
-                    id={props.name}
+                    id={`${props.name}_${formId}`}
                     aria-describedby='select-helper-text-${id}'
                     label={intl('career_fair_form_event')}
                   >
@@ -270,7 +270,7 @@ const CareerFairForm = () => {
               }) => (
                 <TextField
                   {...props}
-                  id={props.name}
+                  id={`${props.name}_${formId}`}
                   multiline
                   rowsMax={10}
                   maxLength={3400}
@@ -302,7 +302,7 @@ const CareerFairForm = () => {
               render={({ field: { ref, ...props } }) => (
                 <TextField
                   {...props}
-                  id={props.name}
+                  id={`${props.name}_${formId}`}
                   label={intl('career_fair_form_website')}
                   inputRef={ref}
                 />
