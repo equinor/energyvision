@@ -168,6 +168,7 @@ const PromotionsBlock = ({
         <div
           className={`flex flex-col ${promotionVariant === 'promoteEvents' && backgroundImage ? 'dark relative z-10 pt-30' : ''} ${paddingClassName}`}
         >
+          {/*@ts-ignore:todo */}
           <Blocks variant='h2' id={sectionTitleId} value={title} />
           {ingress && (
             <Blocks group='paragraph' variant='overline' value={ingress} />
@@ -252,6 +253,7 @@ const PromotionsBlock = ({
               : ''
           } `}
           style={{
+            //@ts-ignore:todo
             backgroundImage: `url(${imageUrl})`,
           }}
         >
