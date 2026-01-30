@@ -3,7 +3,7 @@ import { isAfter } from 'date-fns'
 import { useTranslations } from 'next-intl'
 import { useEffect, useState } from 'react'
 import { getEventDates, toUTCDateParts } from '@/lib/helpers/dateUtilities'
-import type { EventDateType } from '../../types/index'
+import type { EventDateType } from '@/sections/cards/EventCard/EventCard'
 import ResourceLink from '../Link/ResourceLink'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
