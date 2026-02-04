@@ -1,5 +1,5 @@
 import { useTranslations } from 'next-intl'
-import { forwardRef, useCallback, useState } from 'react'
+import { forwardRef, useCallback, useContext, useState } from 'react'
 //BsFiletypeDoc, BsFiletypeMov,
 import {
   BsFiletypeJpg,
@@ -18,6 +18,7 @@ import type { LinkType } from '@/types'
 import { ArrowRight } from '../../icons'
 import { BaseLink } from './BaseLink'
 import { getArrowElement, type ResourceLinkProps } from './ResourceLink'
+import { FriendlyCaptchaContext } from '@/contexts/FriendlyCaptchaContext'
 
 type Variants = 'default' | 'fit'
 type Type = 'simple' | 'resource' | 'stickyMenu'
@@ -63,6 +64,7 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(
     const openInNewTab = ['pdf', 'png', 'jpg']
 
     const [notHuman, setNotHuman] = useState(false)
+    const {isHuman, setIsHuman} = useContext(FriendlyCaptchaContext)
 
     const variantClassName: Partial<Record<string, string>> = {
       default: 'w-full',
@@ -120,6 +122,7 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(
         setIsFriendlyChallengeDone(true)
         const result = await verifyCaptcha(solution)
         setNotHuman(result !== true)
+        setIsHuman(result==true)
       },
       [],
     )
@@ -153,9 +156,38 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(
       </div>
     )
 
+    const downloadable = (
+      <BaseLink
+                className={twMerge(
+                  `${commonResourceLinkWrapperClassName}`,
+                  !isHuman && 'pt-20',
+                )}
+                type={linkType}
+                href={linkType === 'downloadableFile' ? fileUrl : url}
+                {...(extension &&
+                  openInNewTab?.includes(extension.toLowerCase()) && {
+                    target: '_blank',
+                  })}
+              >
+                <span
+                  className={`flex h-full w-inherit items-center justify-start gap-x-2 ${contentVariantClassName[variant]}`}
+                >
+                  {linkElement}
+                  {getArrowElement(
+                    extension && openInNewTab?.includes(extension.toLowerCase())
+                      ? 'externalUrl'
+                      : linkType,
+                  )}
+                </span>
+
+                <span className='h-px w-[0%] bg-grey-40 transition-all duration-300 group-hover:w-full' />
+              </BaseLink>
+    )
+
+
     return (
       <div ref={ref}>
-        <button
+      { !isHuman &&  <button
           type='button'
           onClick={handleRequestFile}
           className={
@@ -192,7 +224,8 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(
             <div className='h-px w-[0%] bg-grey-40 transition-all duration-300 group-hover:w-full' />
           )}
         </button>
-        {showModal && (
+  }
+        { showModal && !notHuman &&(
           <Modal
             isOpen={showModal}
             onClose={handleClose}
@@ -226,34 +259,12 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(
               </Typography>
             )}
             {isFriendlyChallengeDone && !notHuman && (
-              <BaseLink
-                className={twMerge(
-                  `${commonResourceLinkWrapperClassName}`,
-                  'pt-20',
-                )}
-                type={linkType}
-                href={linkType === 'downloadableFile' ? fileUrl : url}
-                {...(extension &&
-                  openInNewTab?.includes(extension.toLowerCase()) && {
-                    target: '_blank',
-                  })}
-              >
-                <span
-                  className={`flex h-full w-inherit items-center justify-start gap-x-2 ${contentVariantClassName[variant]}`}
-                >
-                  {linkElement}
-                  {getArrowElement(
-                    extension && openInNewTab?.includes(extension.toLowerCase())
-                      ? 'externalUrl'
-                      : linkType,
-                  )}
-                </span>
-
-                <span className='h-px w-[0%] bg-grey-40 transition-all duration-300 group-hover:w-full' />
-              </BaseLink>
+              downloadable
             )}
           </Modal>
-        )}
+      
+    )}
+        {isHuman && downloadable}
       </div>
     )
   },
