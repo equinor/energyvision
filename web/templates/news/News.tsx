@@ -68,7 +68,7 @@ const NewsPage = async ({
   }))
 
   const publishedInformation = (
-    <div className='grid grid-cols-[min-content_1fr] items-start gap-2 px-layout-sm pb-12 text-base lg:flex lg:items-center lg:px-layout-md dark:text-white-100'>
+    <div className='grid grid-cols-[min-content_1fr] items-start gap-2 pb-12 text-base lg:flex lg:items-center dark:text-white-100'>
       <TransformableIcon iconData={calendar} className='md:-mt-1' />
       <div className='flex flex-col items-start gap-2 lg:flex-row lg:items-center'>
         <FormattedDateTime datetime={publishDateTime} />
@@ -121,7 +121,7 @@ const NewsPage = async ({
           {content && content.length > 0 && (
             <Blocks group='article' value={formattedContent} includeFootnotes />
           )}
-          <div className='px-layout-lg w-full'>
+          <div className='w-full px-layout-sm lg:px-layout-lg'>
             <div className='mt-8 mb-2'>
               <Footnotes blocks={[...ingress, ...content]} />
             </div>

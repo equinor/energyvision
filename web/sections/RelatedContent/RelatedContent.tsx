@@ -1,5 +1,4 @@
 import type { HTMLAttributes } from 'react'
-import { twMerge } from 'tailwind-merge'
 import ResourceLink from '@/core/Link/ResourceLink'
 import { Typography } from '@/core/Typography'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
@@ -10,16 +9,9 @@ type RelatedContentProps = {
   data: RelatedLinksData
 } & HTMLAttributes<HTMLDivElement>
 
-const RelatedContent = ({
-  data,
-  className = '',
-  ...rest
-}: RelatedContentProps) => {
+const RelatedContent = ({ data, className = '' }: RelatedContentProps) => {
   return (
-    <aside
-      className={className}
-      {...rest}
-    >
+    <aside className={className}>
       <Typography className='pb-4 text-left' variant='xl' as='h2'>
         {data.title}
       </Typography>

@@ -46,45 +46,54 @@ export const DefaultHero = ({
   imageClassName = '',
   ratio = '2:1',
 }: DefaultHeroProps) => {
+  console.log('DefaultHero background', background)
+
   const px =
     isBigTitle && bigTitle ? 'px-layout-sm' : 'px-layout-sm lg:px-layout-md'
   const isPlainTitle =
     title && (title === 'string' || typeof title === 'string')
+  const isColorBg = background && background !== 'bg-white-100'
 
   return (
     <div className={twMerge(className, `relative h-full w-full`)}>
-      {background && (
+      <div>
         <div
-          className={`-z-1 absolute inset-0 w-full lg:mb-news-banner-vertical ${background}`}
-        />
-      )}
-      <div className={twMerge(`pt-10 lg:pt-20`, px, titleClassName)}>
-        {title &&
-          (isPlainTitle ? (
-            <Typography variant='h1' id='mainTitle'>
-              {title}
-            </Typography>
-          ) : isBigTitle && bigTitle ? (
-            <>
-              <div className='pr-16'>
-                <Blocks id='mainTitle' value={title} as='h1' variant='xl' />
-              </div>
+          className={twMerge(
+            `pt-10 lg:pt-16 ${isColorBg ? `${isColorBg} pb-news-banner-vertical` : ''}`,
+            px,
+            titleClassName,
+          )}
+        >
+          {title &&
+            (isPlainTitle ? (
+              <Typography variant='h1' id='mainTitle'>
+                {title}
+              </Typography>
+            ) : isBigTitle && bigTitle ? (
+              <>
+                <div className='pr-16'>
+                  <Blocks id='mainTitle' value={title} as='h1' variant='xl' />
+                </div>
+                <div>
+                  <Blocks value={bigTitle} as='h2' variant='3xl' />
+                </div>
+              </>
+            ) : (
               <div>
-                <Blocks value={bigTitle} as='h2' variant='3xl' />
+                <Blocks id='mainTitle' value={title} variant='h1' />
               </div>
-            </>
-          ) : (
-            <div>
-              <Blocks id='mainTitle' value={title} variant='h1' />
-            </div>
-          ))}
+            ))}
+          {subTitle && subTitle}
+        </div>
       </div>
-      {subTitle && subTitle}
       {figure && (
         <Image
           grid='sm'
           loading='eager'
-          className={twMerge(`lg:px-layout-md`, imageWrapperClassName)}
+          className={twMerge(
+            `${isColorBg ? 'lg:-mt-news-banner-vertical' : ''} lg:px-layout-md`,
+            imageWrapperClassName,
+          )}
           aspectRatio={ratio}
           image={figure.image}
           caption={figure.caption}

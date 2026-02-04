@@ -133,7 +133,7 @@ export const HeroBlock = ({
   }
 
   return type !== HeroTypes.NO_HERO ? (
-    <section className='mb-6 h-full w-full'>
+    <section className='mb-8 h-full w-full'>
       {getHero()}
       {breadcrumbs?.enableBreadcrumbs && (
         <Breadcrumbs

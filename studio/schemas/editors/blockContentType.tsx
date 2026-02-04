@@ -119,6 +119,7 @@ const ingressStylesOptions: BlockContentProps = {
 const articleStylesOptions: BlockContentProps = {
   h2: true,
   h4: true,
+  smallText: true,
 }
 const simpleBlockStylesOptions: BlockContentProps = {
   h2: false,

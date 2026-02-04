@@ -67,7 +67,7 @@ export const FigureWithLayout = (block: BlockProps) => {
   }
 
   const figureClassName = twMerge(
-    `ps-layout-sm pe-layout-sm ${layoutVariantClassName[layout]} ${layout === 'center' ? `${centerImageLayout === 'right' ? '' : ''}` : ''} my-6`,
+    `ps-layout-sm pe-layout-sm ${layoutVariantClassName[layout]} ${layout === 'center' ? `${centerImageLayout === 'right' ? '' : ''}` : ''} my-12`,
   )
   const centerImageCaptionClassName = {
     top: 'flex h-full items-start',

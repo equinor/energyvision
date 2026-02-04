@@ -74,7 +74,7 @@ const getBlockComponents = ({
       )
     },
     smallText: ({ children }: TypeProps) => (
-      <Block as={as} variant='sm' className={className}>
+      <Block as={as} group={group} variant='sm' className={className}>
         {/**@ts-ignore:todo */}
         {children}
       </Block>
@@ -121,7 +121,6 @@ const getBlockComponents = ({
     },
     h2: ({ children }: TypeProps) => {
       //expect 'article' as group when news other can be undefined group and fall back to heading
-      console.log('children h2', children)
       return (
         <Block
           as={as}

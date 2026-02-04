@@ -69,6 +69,16 @@ const variants = {
     lg:ms-layout-lg
     [:where(h2+*,h3+*)]:mt-0
     text-base`,
+    sm: `
+    my-5 
+     :not-only-child:first:mt-0 
+     :not-only-child:last:mb-0 
+    me-layout-sm
+    lg:me-layout-lg
+    ms-layout-sm
+    lg:ms-layout-lg
+    [:where(h2+*,h3+*)]:mt-0
+    text-sm`,
     h2: `me-layout-sm
     lg:me-layout-lg
     ms-layout-sm

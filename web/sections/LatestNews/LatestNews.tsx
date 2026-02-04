@@ -18,7 +18,7 @@ const LatestNews = ({ data }: LatestNewsProp) => {
         {t('latest_news')}
       </Typography>
       {/*grid auto-rows-fr grid-cols-1 gap-x-6 gap-y-3 max-lg:w-full md:auto-cols-fr md:grid-flow-col*/}
-      <ul className='flex w-full flex-col gap-6 lg:flex-row'>
+      <ul className='flex w-full flex-col gap-6 lg:grid lg:grid-cols-3'>
         {data.map((newsItem: CardData) => {
           return (
             <li key={newsItem.id}>
