@@ -145,7 +145,7 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(
     ${variantClassName[variant]}`
 
     const linkElement = (
-      <div className='flex items-baseline gap-1'>
+      <div className={`flex items-baseline gap-1 ${isHuman && 'grow'}`}>
         {showExtensionIcon && getExtensionIcon()}
         <div className='pt-1 leading-none'>
           {assetLabel}
@@ -160,7 +160,7 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(
       <BaseLink
                 className={twMerge(
                   `${commonResourceLinkWrapperClassName}`,
-                  !isHuman && 'pt-20',
+                   showModal && 'pt-20',
                 )}
                 type={linkType}
                 href={linkType === 'downloadableFile' ? fileUrl : url}
