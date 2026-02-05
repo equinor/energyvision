@@ -7,6 +7,7 @@ import { useFormatter, useTranslations } from 'next-intl'
 import { forwardRef, type HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
 import FormattedDateTime, {
+  DateIcon,
   TimeIcon,
 } from '@/core/FormattedDateTime/FormattedDateTime'
 import { BaseLink } from '@/core/Link/BaseLink'
@@ -77,9 +78,6 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
   const { dayTime: endDayTime, overrideTimeLabel: endTimeLabel } =
     endDayAndTime || {}
   const plainTitle = title ? toPlainText(title as PortableTextBlock[]) : ''
-  const t = useTranslations()
-
-  console.log('Event card startTimeLabel', startTimeLabel)
 
   const variantClassName: Partial<Record<Variants, string>> = {
     default: '',
@@ -95,58 +93,7 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
         className,
       )}
     >
-      <div className='flex items-end text-xs'>
-        {!startDayTime && (start || eventDate?.date) && (
-          <FormattedDateTime
-            variant='date'
-            datetime={start ?? eventDate?.date}
-            className='text-sm'
-            timeClassName='leading-none'
-          />
-        )}
-        {(startDayTime || endDayTime) && (
-          <>
-            <time
-              dateTime={startDayTime.toLocaleString()}
-              className='leading-none'
-            >
-              {`${
-                endDayTime
-                  ? formatter
-                      .dateTime(new Date(startDayTime), {
-                        year: 'numeric',
-                        month: 'short',
-                        day: '2-digit',
-                      })
-                      .split(' ')
-                      .slice(0, 2)
-                      .join(' ')
-                  : formatter.dateTime(new Date(startDayTime), {
-                      year: 'numeric',
-                      month: 'long',
-                      day: '2-digit',
-                    })
-              }`}
-            </time>
-            {endDayTime && (
-              <>
-                <span className='flex items-end px-1 leading-none'>-</span>
-                <time
-                  dateTime={endDayTime.toLocaleString()}
-                  className='leading-none'
-                >
-                  {formatter.dateTime(new Date(endDayTime), {
-                    year: 'numeric',
-                    month: 'short',
-                    day: '2-digit',
-                  })}
-                </time>
-              </>
-            )}
-          </>
-        )}
-      </div>
-      <BaseLink href={slug} className='mt-4 mb-4 hover:underline'>
+      <BaseLink href={slug} className='mb-6 hover:underline'>
         <Blocks
           value={title}
           as={hasSectionTitle ? 'h3' : 'h2'}
@@ -155,19 +102,22 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
         />
       </BaseLink>
 
-      <div className={`flex grow flex-col justify-end`}>
-        {/*         {!startDayTime && (start || eventDate?.date) && (
-          <div className='h-full py-2'>
+      <div
+        className={`flex w-fit grow flex-col justify-end divide-y divide-autumn-storm-60 *:pt-2 *:pr-8 *:pb-2 *:first:pt-0 *:last:pb-0`}
+      >
+        {!startDayTime && (start || eventDate?.date) && (
+          <div className=''>
             <FormattedDateTime
               variant='date'
               dateIcon={true}
               datetime={start ?? eventDate?.date}
-              className='text-xs'
+              className='text-sm'
+              timeClassName='leading-none'
             />
           </div>
-        )} */}
-        {/*         {(startDayTime || endDayTime) && (
-          <div className='flex h-full items-end gap-2 py-2 text-xs'>
+        )}
+        {(startDayTime || endDayTime) && (
+          <div className='flex items-end gap-2 text-sm'>
             <DateIcon />
             <time
               dateTime={startDayTime.toLocaleString()}
@@ -193,7 +143,7 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
             </time>
             {endDayTime && (
               <>
-                <span className=''>-</span>
+                <span className='leading-none'>-</span>
                 <time
                   dateTime={endDayTime.toLocaleString()}
                   className='leading-none'
@@ -207,9 +157,9 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
               </>
             )}
           </div>
-        )} */}
+        )}
         {startDayTime && startTimeLabel !== '-' && (
-          <div className='flex items-end gap-2 py-2 text-xs'>
+          <div className='flex items-end gap-2 text-sm'>
             <TimeIcon />
             {startTimeLabel
               ? startTimeLabel
@@ -225,42 +175,44 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
         )}
 
         {!startDayAndTime && start && end && (
-          <div className={`flex items-start gap-1 py-2`}>
+          <div className={`flex items-end gap-1`}>
             <FormattedDateTime
               variant='time'
               timeIcon={true}
               datetime={start}
-              className='text-xs'
+              className='text-sm'
+              timeClassName='leading-none'
             />
             <span>-</span>
             <FormattedDateTime
               variant='time'
               datetime={end}
               showTimezone
-              className='text-xs'
+              className='text-sm'
+              timeClassName='leading-none'
             />
           </div>
         )}
         {location && (
-          <div className={`flex items-center gap-2 py-2`}>
+          <div className={`flex items-start gap-2`}>
             <Icon
               data={world}
               color={'currentColor'}
               className='text-2xs text-norwegian-woods-100'
             />
-            <div className='mt-1 flex text-sm'>{location}</div>
+            <div className='mt-1 flex text-sm leading-none'>{location}</div>
           </div>
         )}
-        {variant === 'single' && ingress && (
-          <Blocks
-            group='card'
-            variant='ingress'
-            value={ingress}
-            blockClassName='pt-2 pb-3'
-          />
-        )}
       </div>
-      <div className='mt-auto'>
+      {variant === 'single' && ingress && (
+        <Blocks
+          group='card'
+          variant='ingress'
+          value={ingress}
+          blockClassName='pt-6'
+        />
+      )}
+      <div className='mt-auto pt-8'>
         <AddToCalendar
           eventDate={eventDate}
           startDateTime={startDayTime}

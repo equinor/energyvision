@@ -442,7 +442,7 @@ const [scrollPosition, setScrollPosition] = useState<'start' | 'middle' | 'end'>
     h-fit 
     overflow-x-auto
     snap-x
-    pb-1`
+    pb-2`
 
     const commonSingleListContainerClassName = `
     grid 

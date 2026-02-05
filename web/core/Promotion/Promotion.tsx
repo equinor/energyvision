@@ -101,7 +101,7 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
     const _layoutDirection = type === 'extended' ? 'col' : layoutDirection
 
     const paddingOnTypes: Record<PromotionType, string> = {
-      compact: _layoutDirection === 'col' ? 'p-4' : 'py-4 pr-3 pl-4',
+      compact: _layoutDirection === 'col' ? 'px-6 pt-6 pb-8' : 'py-4 pr-3 pl-4',
       extended: 'pt-6 md:pt-8 pb-6 px-6',
     }
     const layoutOnTypes: Record<PromotionType, string> = {
