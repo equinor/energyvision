@@ -58,6 +58,7 @@ export const background = {
 }
 
 export const backgroundPosition = (hiddenCallBack?: any, fieldset?: string) => {
+  console.log('hiddenCallBack', hiddenCallBack)
   return defineField({
     title: 'Select positioning of the image',
     description:

@@ -1,8 +1,5 @@
 import { calendar_event, image } from '@equinor/eds-icons'
-import { Stack } from '@sanity/ui'
 import {
-  type ArrayOfObjectsInputProps,
-  type DateTimeInputProps,
   defineField,
   type PortableTextBlock,
   type Rule,
@@ -33,6 +30,12 @@ const validateRelatedLinksTitle = (
   }
 
   return true
+}
+
+export type EventDayAndTime = {
+  _type: 'eventDayAndTime'
+  dayTime: Date
+  overrideTimeLabel?: string
 }
 
 export default {
@@ -204,13 +207,41 @@ export default {
       ],
     },
   ],
+  orderings: [
+    {
+      title: 'Start date ',
+      name: 'startDateAsc',
+      by: [{ field: 'startDayAndTime.dayTime', direction: 'asc' }],
+    },
+  ],
   preview: {
     select: {
       title: 'title',
       date: 'eventDate',
+      startDayAndTime: 'startDayAndTime',
+      endDayAndTime: 'endDayAndTime',
     },
-    prepare({ title, date }: { title: PortableTextBlock[]; date: EventDate }) {
-      const eventDate = date?.date ? `${date.date}` : 'No date set'
+    prepare({
+      title,
+      date,
+      startDayAndTime,
+      endDayAndTime,
+    }: {
+      title?: PortableTextBlock[]
+      date?: EventDate
+      startDayAndTime?: EventDayAndTime
+      endDayAndTime?: EventDayAndTime
+    }) {
+      let eventDate = date?.date ? `${date.date}` : 'No date set'
+      if (startDayAndTime) {
+        if (endDayAndTime && !startDayAndTime?.overrideTimeLabel) {
+          eventDate = `${startDayAndTime?.dayTime} - ${endDayAndTime?.dayTime}`
+        } else {
+          eventDate = startDayAndTime?.overrideTimeLabel
+            ? `${startDayAndTime?.overrideTimeLabel}`
+            : `${startDayAndTime?.dayTime}`
+        }
+      }
       return {
         title: title ? blocksToText(title) : 'Untitled event',
         subtitle: eventDate,

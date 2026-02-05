@@ -23,7 +23,6 @@ const EventPromotions = ({
   onColorBg = false,
   hasBackgroundImage = false,
 }: EventPromotionsProp) => {
-  console.log('promotePastEvents', promotePastEvents)
   return (
     <div
       className={`pt-6 ${promotions?.length === 1 ? 'px-layout-sm md:px-layout-lg' : `3xl:px-layout-md px-layout-sm`}`}

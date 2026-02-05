@@ -132,7 +132,7 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(
     }
 
     const classNames = twMerge(
-      `group
+      `group/link
     text-base
     relative
     flex
@@ -141,9 +141,6 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(
     gap-0
     text-slate-blue-95
     dark:text-white-100
-    border-b
-    border-grey-50
-    dark:border-white-100
     no-underline
     ${variantClassName[variant]}
   `,
@@ -195,7 +192,10 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(
           {getContentElements()}
           {getArrowElement(type, iconClassName)}
         </div>
-        <div className='h-px w-[0%] bg-grey-40 transition-all duration-300 group-hover:w-full' />
+        <div className='relative h-0.5'>
+          <div className='absolute inset-0 z-10 h-0.5 w-[0%] bg-grey-50 transition-all duration-300 group-hover/link:w-full dark:bg-white-100' />
+          <div className='absolute inset-0 z-0 h-px w-full bg-grey-50 dark:bg-white-100' />
+        </div>
       </BaseLink>
     ) : null
   },

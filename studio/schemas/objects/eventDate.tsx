@@ -1,6 +1,5 @@
 import type { Rule, ValidationContext } from 'sanity'
 import TimeInput, { EMPTY, INVALID_TIME_FORMAT } from '../components/TimeInput'
-import TimezoneInput from '../components/TimezoneInput'
 
 export type EventDate = {
   _type: 'eventDate'
@@ -42,13 +41,14 @@ export default {
           const { parent } = context as { parent: EventDate }
           if (!isValid(field)) {
             return INVALID_TIME_FORMAT
-          } else if (!field && parent.endTime) {
-            return 'Start time must not be empty'
-          } else if (field && !parent.date) {
-            return 'Date must be defined'
-          } else {
-            return true
           }
+          if (!field && parent.endTime) {
+            return 'Start time must not be empty'
+          }
+          if (field && !parent.date) {
+            return 'Date must be defined'
+          }
+          return true
         }),
     },
     {
@@ -63,15 +63,17 @@ export default {
           const { parent } = context as { parent: EventDate }
           if (!isValid(field)) {
             return INVALID_TIME_FORMAT
-          } else if (!field && parent.startTime) {
-            return 'End time must not be empty'
-          } else if (parent.startTime && field && field <= parent.startTime) {
-            return 'End time must be greather than start time'
-          } else if (field && !parent.date) {
-            return 'Date must be defined'
-          } else {
-            return true
           }
+          if (!field && parent.startTime) {
+            return 'End time must not be empty'
+          }
+          if (parent.startTime && field && field <= parent.startTime) {
+            return 'End time must be greather than start time'
+          }
+          if (field && !parent.date) {
+            return 'Date must be defined'
+          }
+          return true
         }),
     },
   ],

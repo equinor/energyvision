@@ -11,6 +11,8 @@ const ics = require('ics')
 
 type AddToCalendarProps = {
   eventDate: EventDateType
+  startDateTime: Date
+  endDateTime: Date
   location?: string
   title: string
 }
@@ -50,25 +52,30 @@ const createICS = (eventData: ICSProps): string | boolean => {
   })
 }
 
-const AddToCalendar = ({ eventDate, title, location }: AddToCalendarProps) => {
+const AddToCalendar = ({
+  eventDate,
+  startDateTime,
+  endDateTime,
+  title,
+  location,
+}: AddToCalendarProps) => {
   const intl = useTranslations()
   const [fileData, setFileData] = useState<string | boolean>(false)
 
   useEffect(() => {
     const { start: startString, end: endString } = getEventDates(eventDate)
+    if (!startString && !eventDate?.date && !startDateTime) return
 
-    if (!startString) return
-
-    const start = new Date(startString)
+    const start = new Date(startDateTime ?? startString ?? eventDate?.date)
 
     let end: Date
-    if (!endString) {
+    if (!endString || !endDateTime) {
       /* If time is not specified add to calendar as a full day */
-      end = new Date(startString)
+      end = new Date(startDateTime ?? startString ?? eventDate?.date)
       start.setHours(0, 0, 0)
       end.setHours(23, 59, 59)
     } else {
-      end = new Date(endString)
+      end = new Date(endDateTime)
     }
 
     if (isUpcoming(end)) {
@@ -82,7 +89,7 @@ const AddToCalendar = ({ eventDate, title, location }: AddToCalendarProps) => {
       }
       setFileData(createICS(eventData))
     }
-  }, [eventDate, location, title])
+  }, [eventDate, startDateTime, endDateTime, location, title])
 
   if (!fileData) return null
   const atc = intl('add_to_calendar_event')

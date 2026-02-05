@@ -39,7 +39,7 @@ const variants = {
     overline: 'text-md pb-2',
     ingress: 'text-md pt-5 pb-5 first:pt-0 last:pb-24',
     eyebrow: 'text-xs font-medium uppercase',
-    body: 'py-5 first:pt-0 last:mp-0 [:where(h2+*,h3+*)]:pt-0 text-base',
+    body: 'py-5 first:pt-0 last:mb-0 [:where(h2+*,h3+*)]:pt-0 text-base',
     small: 'text-sm',
     simple: 'text-base',
   },

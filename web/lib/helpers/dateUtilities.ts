@@ -34,12 +34,10 @@ export const getEventDates = (eventDate: EventDateType | undefined) => {
   let start: any
   let end: any
   if (!eventDate) {
-    console.warn('Missing eventDate object for event')
     return { start, end }
   }
   const { date, startTime, endTime } = eventDate
   if (!date) return { start, end }
-
   if (startTime) {
     const [startHH, startMM] = startTime.split(':')
     const startDateTime = new Date(date)

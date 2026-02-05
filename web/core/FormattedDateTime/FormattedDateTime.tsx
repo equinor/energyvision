@@ -29,6 +29,7 @@ export type FormattedDateTimeProps = {
   /* Render time with timezone */
   /* @default false */
   showTimezone?: boolean
+  timeClassName?: string
 } & HTMLAttributes<HTMLSpanElement> &
   DateTimeFormatOptions
 
@@ -46,6 +47,7 @@ const FormattedDateTime = forwardRef<HTMLSpanElement, FormattedDateTimeProps>(
       showTimezone = false,
       uppercase = false,
       className = '',
+      timeClassName = '',
     },
     ref,
   ) => {
@@ -110,7 +112,7 @@ const FormattedDateTime = forwardRef<HTMLSpanElement, FormattedDateTimeProps>(
         {dateIcon && <DateIcon />}
         {timeIcon && <TimeIcon />}
         <time suppressHydrationWarning dateTime={datetime?.toLocaleString()}>
-          <span className={`mt-auto block leading-6`}>
+          <span className={twMerge(`mt-auto block leading-6`, timeClassName)}>
             {formatter.dateTime(new Date(datetime), config)}
           </span>
         </time>

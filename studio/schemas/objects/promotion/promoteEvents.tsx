@@ -119,9 +119,12 @@ export default {
         collapsed: false,
       },
       hidden: ({ parent }: any) =>
-        parent?.promotionType !== 'manual' && parent?.eventsCount > 1,
+        parent?.promotionType !== 'manual' || parent?.eventsCount > 1,
     },
-    backgroundPosition(),
+    backgroundPosition(
+      (parent: any) =>
+        parent?.promotionType !== 'manual' || parent?.eventsCount > 1,
+    ),
     viewAllLink,
     viewAllLinkLabel,
     theme,

@@ -97,7 +97,7 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
       }`,
     }
 
-    const showArrow = type !== 'extended'
+    const showArrow = true //type !== 'extended'
     const _layoutDirection = type === 'extended' ? 'col' : layoutDirection
 
     const paddingOnTypes: Record<PromotionType, string> = {
@@ -150,7 +150,9 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
             type === 'extended' ? 'items-start' : 'items-center'
           } `}
         >
-          <div className={`max-w-prose grow`}>
+          <div
+            className={`${type === 'extended' ? 'mb-12' : ''} max-w-prose grow`}
+          >
             {eyebrow && eyebrow}
             {plainText && (
               <Typography

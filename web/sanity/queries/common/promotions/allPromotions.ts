@@ -40,17 +40,7 @@ export const eventPromotion = /* groq */ `
     promotionType,
     promotePastEvents,
     promotionType == "manual" => {
-        "promotions": promotedEvents[]->{
-            "type": "events",
-            "id": _id,
-            "slug": slug.current,
-            "title": content->title,
-            "location": content->location,
-            "eventDate": content->eventDate,
-            "startDayAndTime": content->startDayAndTime,
-            "endDayAndTime": content->endDayAndTime,
-            "ingress": content->ingress,
-        },
+        "promotions": promotedEvents[]->{${eventPromotionFields}},
     },
     promotionType == "automatic" => {
     "tags": tags[]->{
@@ -66,7 +56,7 @@ export const eventPromotion = /* groq */ `
                  ${eventPromotionFields}
               },
         },
-        (defined(tags) && count(tags) > 0) => {
+        (defined(tags) || count(tags) > 0) => {
               "promotions": ${futureEventsQuery(true)}[]{
                  ${eventPromotionFields}
               },

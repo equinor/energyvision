@@ -9,6 +9,7 @@ import {
   BsFiletypeXlsx,
   BsFileZip,
 } from 'react-icons/bs'
+import { FriendlyCaptchaContext } from '@/contexts/FriendlyCaptchaContext'
 import { Typography } from '@/core/Typography'
 import { verifyCaptcha } from '@/lib/actions/verifyCaptcha'
 import { twMerge } from '@/lib/twMerge/twMerge'
@@ -18,7 +19,6 @@ import type { LinkType } from '@/types'
 import { ArrowRight } from '../../icons'
 import { BaseLink } from './BaseLink'
 import { getArrowElement, type ResourceLinkProps } from './ResourceLink'
-import { FriendlyCaptchaContext } from '@/contexts/FriendlyCaptchaContext'
 
 type Variants = 'default' | 'fit'
 type Type = 'simple' | 'resource' | 'stickyMenu'
@@ -64,7 +64,7 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(
     const openInNewTab = ['pdf', 'png', 'jpg']
 
     const [notHuman, setNotHuman] = useState(false)
-    const {isHuman, setIsHuman} = useContext(FriendlyCaptchaContext)
+    const { isHuman, setIsHuman } = useContext(FriendlyCaptchaContext)
 
     const variantClassName: Partial<Record<string, string>> = {
       default: 'w-full',
@@ -122,13 +122,13 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(
         setIsFriendlyChallengeDone(true)
         const result = await verifyCaptcha(solution)
         setNotHuman(result !== true)
-        setIsHuman(result==true)
+        setIsHuman(result == true)
       },
       [],
     )
 
     const commonResourceLinkWrapperClassName = `
-    group
+    group/link
     text-base
     relative
     flex
@@ -138,9 +138,6 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(
     text-slate-blue-95
     dark:text-white-100
     pt-3
-    border-b
-    border-grey-50
-    dark:border-white-100 
     no-underline
     ${variantClassName[variant]}`
 
@@ -158,74 +155,80 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(
 
     const downloadable = (
       <BaseLink
-                className={twMerge(
-                  `${commonResourceLinkWrapperClassName}`,
-                   showModal && 'pt-20',
-                )}
-                type={linkType}
-                href={linkType === 'downloadableFile' ? fileUrl : url}
-                {...(extension &&
-                  openInNewTab?.includes(extension.toLowerCase()) && {
-                    target: '_blank',
-                  })}
-              >
-                <span
-                  className={`flex h-full w-inherit items-center justify-start gap-x-2 ${contentVariantClassName[variant]}`}
-                >
-                  {linkElement}
-                  {getArrowElement(
-                    extension && openInNewTab?.includes(extension.toLowerCase())
-                      ? 'externalUrl'
-                      : linkType,
-                  )}
-                </span>
+        className={twMerge(
+          `${commonResourceLinkWrapperClassName}`,
+          showModal && 'pt-20',
+        )}
+        type={linkType}
+        href={linkType === 'downloadableFile' ? fileUrl : url}
+        {...(extension &&
+          openInNewTab?.includes(extension.toLowerCase()) && {
+            target: '_blank',
+          })}
+      >
+        <span
+          className={`flex h-full w-inherit items-center justify-start gap-x-2 ${contentVariantClassName[variant]}`}
+        >
+          {linkElement}
+          {getArrowElement(
+            extension && openInNewTab?.includes(extension.toLowerCase())
+              ? 'externalUrl'
+              : linkType,
+          )}
+        </span>
 
-                <span className='h-px w-[0%] bg-grey-40 transition-all duration-300 group-hover:w-full' />
-              </BaseLink>
+        <div className='relative h-0.5'>
+          <div className='absolute inset-0 z-10 h-0.5 w-[0%] bg-grey-50 transition-all duration-300 group-hover/link:w-full dark:bg-white-100' />
+          <div className='absolute inset-0 z-0 h-px w-full bg-grey-50 dark:bg-white-100' />
+        </div>
+      </BaseLink>
     )
-
 
     return (
       <div ref={ref}>
-      { !isHuman &&  <button
-          type='button'
-          onClick={handleRequestFile}
-          className={
-            type !== 'stickyMenu'
-              ? commonResourceLinkWrapperClassName
-              : `group relative flex w-fit items-end justify-center text-slate-80 text-sm underline-offset-2`
-          }
-          title={`${assetLabel}`}
-          aria-haspopup='dialog'
-        >
-          <div
-            className={`flex h-full w-inherit items-center justify-start gap-x-2 ${type !== 'stickyMenu' ? 'pr-2 pb-3' : ''}
-`}
+        {!isHuman && (
+          <button
+            type='button'
+            onClick={handleRequestFile}
+            className={
+              type !== 'stickyMenu'
+                ? commonResourceLinkWrapperClassName
+                : `group/link relative flex w-fit items-end justify-center text-slate-80 text-sm underline-offset-2`
+            }
+            title={`${assetLabel}`}
+            aria-haspopup='dialog'
           >
             <div
-              className={`flex grow justify-start text-pretty pt-1 text-start leading-none ${
-                type === 'stickyMenu'
-                  ? 'w-fit items-end align-middle leading-none no-underline group-hover:underline'
-                  : ''
-              }`}
+              className={`flex h-full w-inherit items-center justify-start gap-x-2 ${type !== 'stickyMenu' ? 'pr-2 pb-3' : ''}
+`}
             >
-              {linkElement}
+              <div
+                className={`flex grow justify-start text-pretty pt-1 text-start leading-none ${
+                  type === 'stickyMenu'
+                    ? 'w-fit items-end align-middle leading-none no-underline group-hover:underline'
+                    : ''
+                }`}
+              >
+                {linkElement}
+              </div>
+              {!(type === 'stickyMenu' || type === 'simple') && (
+                <div className={`flex translate-y-px flex-col px-1`}>
+                  <ArrowRight
+                    className={`size-arrow-right min-h-arrow-right min-w-arrow-right rotate-90 justify-self-end text-energy-red-100 transition-all duration-300 group-hover:translate-y-0.5 dark:text-white-100`}
+                  />
+                  <div className='h-0.5 w-full bg-energy-red-100 dark:bg-white-100' />
+                </div>
+              )}
             </div>
-            {!(type === 'stickyMenu' || type === 'simple') && (
-              <div className={`flex translate-y-px flex-col px-1`}>
-                <ArrowRight
-                  className={`size-arrow-right min-h-arrow-right min-w-arrow-right rotate-90 justify-self-end text-energy-red-100 transition-all duration-300 group-hover:translate-y-0.5 dark:text-white-100`}
-                />
-                <div className='h-0.5 w-full bg-energy-red-100 dark:bg-white-100' />
+            {type !== 'stickyMenu' && (
+              <div className='relative h-0.5'>
+                <div className='absolute inset-0 z-10 h-0.5 w-[0%] bg-grey-50 transition-all duration-300 group-hover/link:w-full dark:bg-white-100' />
+                <div className='absolute inset-0 z-0 h-px w-full bg-grey-50 dark:bg-white-100' />
               </div>
             )}
-          </div>
-          {type !== 'stickyMenu' && (
-            <div className='h-px w-[0%] bg-grey-40 transition-all duration-300 group-hover:w-full' />
-          )}
-        </button>
-  }
-        { showModal && !notHuman &&(
+          </button>
+        )}
+        {showModal && !notHuman && (
           <Modal
             isOpen={showModal}
             onClose={handleClose}
@@ -258,12 +261,9 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(
                 {intl('not_human_message')}
               </Typography>
             )}
-            {isFriendlyChallengeDone && !notHuman && (
-              downloadable
-            )}
+            {isFriendlyChallengeDone && !notHuman && downloadable}
           </Modal>
-      
-    )}
+        )}
         {isHuman && downloadable}
       </div>
     )

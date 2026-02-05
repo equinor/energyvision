@@ -129,7 +129,7 @@ const StockValues = ({
   return (
     <section
       className={twMerge(
-        `flex flex-col px-layout-sm lg:px-layout-lg ${bg} ${
+        `flex flex-col items-center px-layout-sm lg:px-layout-lg ${bg} ${
           dark ? 'dark' : ''
         }`,
         className,
@@ -143,7 +143,7 @@ const StockValues = ({
           blockClassName={`${hideTitle ? 'sr-only' : ''}`}
         />
       )}
-      <div className='flex w-full max-w-text justify-between px-20'>
+      <div className='flex w-full justify-center gap-22 px-20'>
         {getOSETemplate(
           data?.OSE?.Quote,
           data?.OSE?.currency,
