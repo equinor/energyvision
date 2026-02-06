@@ -46,8 +46,6 @@ export const DefaultHero = ({
   imageClassName = '',
   ratio = '2:1',
 }: DefaultHeroProps) => {
-  console.log('DefaultHero background', background)
-
   const px =
     isBigTitle && bigTitle ? 'px-layout-sm' : 'px-layout-sm lg:px-layout-md'
   const isPlainTitle =
@@ -59,7 +57,7 @@ export const DefaultHero = ({
       <div>
         <div
           className={twMerge(
-            `pt-10 lg:pt-16 ${isColorBg ? `${isColorBg} pb-news-banner-vertical` : ''}`,
+            `pt-10 lg:pt-16 ${isColorBg ? `${background} pb-news-banner-vertical` : ''}`,
             px,
             titleClassName,
           )}
