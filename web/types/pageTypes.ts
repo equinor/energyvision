@@ -49,23 +49,3 @@ export type LandingPageSchema = {
   template: Templates
   seoAndSome: SeoData
 }
-
-export type EventSchema = {
-  id: string
-  title: PortableTextBlock[]
-  slug: string
-  seoAndSome: SeoData
-  content: {
-    location?: string
-    eventDate: EventDateType
-    ingress?: PortableTextBlock[]
-    content?: PortableTextBlock[]
-    iframe?: IFrameData
-    promotedPeople?: {
-      title?: PortableTextBlock[]
-      people?: PeopleCardData[]
-    }
-    contactList?: ContactListData
-    relatedLinks?: RelatedLinksData
-  }
-}

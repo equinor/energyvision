@@ -8,10 +8,39 @@ import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
 import { getEventDates } from '@/lib/helpers/dateUtilities'
 import Blocks from '@/portableText/Blocks'
 import ContactList from '@/sections/ContactList/ContactList'
+import type { EventDateType } from '@/sections/cards/EventCard/EventCard'
 import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
+import type {
+  ContactListData,
+  IFrameData,
+  PeopleCardData,
+  RelatedLinksData,
+  SeoData,
+} from '@/types'
 import Promotion from '../../sections/promotions/PromotionsBlock'
 import RelatedContent from '../../sections/RelatedContent/RelatedContent'
-import type { EventSchema } from '../../types/index'
+
+export type EventSchema = {
+  id: string
+  title: PortableTextBlock[]
+  slug: string
+  seoAndSome: SeoData
+  content: {
+    location?: string
+    eventDate: EventDateType
+    startDayAndTime?: any
+    endDayAndTime?: any
+    ingress?: PortableTextBlock[]
+    content?: PortableTextBlock[]
+    iframe?: IFrameData
+    promotedPeople?: {
+      title?: PortableTextBlock[]
+      people?: PeopleCardData[]
+    }
+    contactList?: ContactListData
+    relatedLinks?: RelatedLinksData
+  }
+}
 
 export default function Event({ data }: { data: EventSchema }): JSX.Element {
   const { title } = data
@@ -25,6 +54,8 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
     relatedLinks,
     contactList,
     eventDate,
+    startDayAndTime,
+    endDayAndTime,
   } = data.content
 
   const plainTitle = title ? toPlainText(title as PortableTextBlock[]) : ''
@@ -78,6 +109,8 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
               )}
               <AddToCalendar
                 eventDate={eventDate}
+                startDateTime={startDayAndTime.dayTime}
+                endDateTime={endDayAndTime.dayTime}
                 location={location}
                 title={plainTitle}
               />

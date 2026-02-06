@@ -10,9 +10,9 @@ import ResourceLink from '../Link/ResourceLink'
 const ics = require('ics')
 
 type AddToCalendarProps = {
-  eventDate: EventDateType
-  startDateTime: Date
-  endDateTime: Date
+  eventDate?: EventDateType
+  startDateTime?: Date
+  endDateTime?: Date
   location?: string
   title: string
 }
