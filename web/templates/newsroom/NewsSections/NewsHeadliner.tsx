@@ -8,6 +8,9 @@ import { Typography } from '@/core/Typography'
 import { getSmallerThanPxLgSizes, Image } from '../../../core/Image/Image'
 import Blocks from '../../../portableText/Blocks'
 import type { NewsRoomNewsItem } from '../../../types/algoliaIndexPage'
+import { defaultLanguage } from '@/languageConfig'
+import { useLocale } from 'next-intl'
+import { getLocaleFromIso } from '@/sanity/helpers/localization'
 
 export type NewsHeadlinerProps = {
   data: NewsRoomNewsItem
@@ -21,10 +24,11 @@ const NewsHeadliner = forwardRef<HTMLLIElement, NewsHeadlinerProps>(
   ) {
     const { slug, title, ingress, publishDateTime, heroImage, thumbnailUrl } =
       data
-
+    const lang = useLocale()
+    const locale = getLocaleFromIso(lang)
     return (
       <section ref={ref} {...rest} className={twMerge('', className)}>
-        <BaseLink href={slug} className='group flex flex-col gap-2 pb-6'>
+        <BaseLink href={`${locale!=defaultLanguage.locale? `/${locale}`: ""}${slug}`} className='group flex flex-col gap-2 pb-6'>
           {(heroImage?.image?.asset || fallbackImage || thumbnailUrl) && (
             <div className='relative mb-2 aspect-video max-h-[324px]'>
               {thumbnailUrl ? (

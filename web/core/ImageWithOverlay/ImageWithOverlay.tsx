@@ -134,9 +134,6 @@ export const ImageWithOverlay = forwardRef<
                   ...action?.file,
                   label: action?.label,
                 }}
-                {...(action.link?.lang && {
-                  locale: getLocaleFromName(action.link?.lang),
-                })}
                 type={action.type}
                 variant='fit'
               >

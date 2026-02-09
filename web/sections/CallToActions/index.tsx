@@ -39,7 +39,6 @@ const CallToActions = ({
           label,
         }}
         href={url}
-        {...(link?.lang && { hrefLang: getLocaleFromName(link?.lang) })}
         type={type}
         variant='fit'
       >
@@ -71,9 +70,6 @@ const CallToActions = ({
                 label,
               }}
               href={url}
-              {...(link?.lang && {
-                hrefLang: getLocaleFromName(link?.lang),
-              })}
               type={type}
               variant={linkVariant ? linkVariant : 'default'}
             >

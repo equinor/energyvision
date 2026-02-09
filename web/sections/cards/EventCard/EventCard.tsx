@@ -3,7 +3,7 @@ import { Icon } from '@equinor/eds-core-react'
 import { world } from '@equinor/eds-icons'
 import { toPlainText } from '@portabletext/react'
 import type { PortableTextBlock } from '@portabletext/types'
-import { useFormatter, useTranslations } from 'next-intl'
+import { useFormatter, useLocale, useTranslations } from 'next-intl'
 import { forwardRef, type HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
 import FormattedDateTime, {
@@ -18,6 +18,8 @@ import {
 } from '@/styles/colorKeyToUtilityMap'
 import AddToCalendar from '../../../core/AddToCalendar/AddToCalendar'
 import Blocks from '../../../portableText/Blocks'
+import { defaultLanguage } from '@/languageConfig'
+import { getLocaleFromIso } from '@/sanity/helpers/localization'
 
 type Variants = 'default' | 'single' | 'carousel'
 
@@ -71,6 +73,10 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
     endDayAndTime,
   } = data
 
+  const iso = useLocale()
+  const locale = iso!== defaultLanguage.name? getLocaleFromIso(iso) :""
+  const href =  ("/"+locale+ slug) || ''
+    
   const formatter = useFormatter()
   const { start, end } = getEventDates(eventDate)
   const { dayTime: startDayTime, overrideTimeLabel: startTimeLabel } =
@@ -93,7 +99,7 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
         className,
       )}
     >
-      <BaseLink href={slug} className='mb-6 hover:underline'>
+      <BaseLink href={href} className='mb-6 hover:underline'>
         <Blocks
           value={title}
           as={hasSectionTitle ? 'h3' : 'h2'}

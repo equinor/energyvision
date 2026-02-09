@@ -6,6 +6,9 @@ import { getSmallerThanPxLgSizes, Image } from '@/core/Image/Image'
 import { BaseLink } from '@/core/Link/BaseLink'
 import { Typography } from '@/core/Typography'
 import type { NewsRoomNewsItem } from '@/types/algoliaIndexPage'
+import { useLocale } from 'next-intl'
+import { getLocaleFromIso } from '@/sanity/helpers/localization'
+import { defaultLanguage } from '@/languageConfig'
 
 export type NewsListItemProps = {
   data: NewsRoomNewsItem
@@ -20,10 +23,13 @@ const NewsItem = forwardRef<HTMLLIElement, NewsListItemProps>(function NewsItem(
   const { slug, title, publishDateTime, heroImage, thumbnailUrl } = data || {}
   if (!slug) return null
 
+  const lang = useLocale()
+  const locale = getLocaleFromIso(lang)
+  
   return (
     <section ref={ref} className={className}>
       <BaseLink
-        href={slug}
+        href={`${locale!=defaultLanguage.locale? `/${locale}`: ""}${slug}`}
         className='group flex justify-between gap-4 lg:gap-6'
       >
         <div className='max-w-[65%]'>

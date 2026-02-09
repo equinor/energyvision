@@ -1,11 +1,13 @@
 'use client'
 import type { PortableTextBlock } from '@portabletext/types'
-import { useTranslations } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 import { Banner } from '@/core/Banner/Banner'
 import { Typography } from '@/core/Typography'
 import { EventCard } from '@/sections/cards/EventCard'
 import type { FeaturedContentData } from '../../types/index'
 import type { EventCardData } from '../cards/EventCard/EventCard'
+import { defaultLanguage } from '@/languageConfig'
+import { getLocaleFromIso } from '@/sanity/helpers/localization'
 
 type Props = {
   featuredContent: FeaturedContentData
@@ -25,6 +27,9 @@ const FeaturedContent = ({
     data?.routeContentType === 'event'
   const { type, heroImage, title, ingress, slug } = featuredContent
 
+  const iso = useLocale()
+  const locale = iso!== defaultLanguage.name? getLocaleFromIso(iso) :""
+  const href =  ("/"+locale+ slug) || ''
   return (
     <div className=''>
       <Typography
@@ -54,7 +59,7 @@ const FeaturedContent = ({
           //@ts-ignore:TODO - find out why any[] and not portabletext[]
           title={title}
           ingress={ingress ?? featuredIngress}
-          ctaLink={slug}
+          ctaLink={href}
           ctaLabel={featuredCTALabel}
         />
       )}

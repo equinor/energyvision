@@ -25,6 +25,7 @@ import type { NewsRoomPageType } from '../../types'
 import NewsRoomFilters from './Filters/NewsroomFilters'
 import NewsSections from './NewsSections/NewsSections'
 import QuickSearch from './QuickSearch/QuickSearch'
+import { defaultLanguage } from '@/languageConfig'
 
 type NewsRouteState = {
   query?: string
@@ -202,7 +203,7 @@ const NewsRoomTemplate = forwardRef<HTMLDivElement, NewsRoomTemplateProps>(
                     >
                       <List.Item className='w-full'>
                         {subscriptionLink?.link?.slug && (
-                          <ResourceLink href={subscriptionLink.link.slug}>
+                          <ResourceLink href={`${locale!=defaultLanguage.locale? `/${locale}`: ""}${subscriptionLink.link.slug}`}>
                             {subscriptionLinkTitle}
                           </ResourceLink>
                         )}
@@ -217,7 +218,7 @@ const NewsRoomTemplate = forwardRef<HTMLDivElement, NewsRoomTemplateProps>(
                             >
                               <ResourceLink
                                 type={localNewsPage.type}
-                                href={localNewsPage?.link?.slug}
+                                href={`${locale!=defaultLanguage.locale? `/${locale}`: ""}${localNewsPage?.link?.slug}`}
                               >
                                 {localNewsPage?.label}
                               </ResourceLink>
