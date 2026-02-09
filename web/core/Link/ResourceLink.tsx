@@ -105,6 +105,7 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(
       showExtensionIcon = false,
       ariaHideText = false,
       href = '',
+      hrefLang,
       file,
     },
     ref,
@@ -183,7 +184,7 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(
     }
 
     return href ? (
-      <BaseLink className={classNames} type={type} ref={ref} href={href}>
+      <BaseLink className={classNames} type={type} ref={ref} href={href} hrefLang={hrefLang}>
         <div
           className={twMerge(
             `flex h-full w-inherit items-center justify-start gap-x-2 ${contentVariantClassName[variant]}`,

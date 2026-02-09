@@ -12,14 +12,13 @@ export const getUrlFromAction = ({
   if (!type && !href) return undefined
 
   const anchor = anchorReference ? `#${anchorReference}` : ''
-  const locale = link?.lang !== defaultLanguage.name? getLocaleFromName(link?.lang) :""
-  
+  const locale = link?.lang !== defaultLanguage.name? `/${getLocaleFromName(link?.lang)}` :""
 
   if (type === 'internalUrl') {
     if (!link?.slug) {
       console.warn('Missing slug in action:', fileName)
     }
-    return ("/"+locale+ link?.slug + anchor) || ''
+    return (locale+ link?.slug + anchor) || ''
   }
 
   if (!href && type !== 'downloadableFile') {

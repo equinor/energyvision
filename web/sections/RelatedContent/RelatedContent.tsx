@@ -22,7 +22,6 @@ const RelatedContent = ({ data, className = '' }: RelatedContentProps) => {
             return (
               <li key={item.id}>
                 <ResourceLink
-                  {...item}
                   href={url as string}
                   {...(item.link?.lang && {
                     hrefLang: getLocaleFromName(item.link?.lang),
