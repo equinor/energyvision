@@ -5,46 +5,13 @@ import { NextResponse } from 'next/server'
 import { toPlainText } from 'next-sanity'
 import { client } from '@/sanity/lib/client'
 import { urlForImage } from '@/sanity/lib/utils'
+import {
+  type newsletterCategoryKeys,
+  type newsletterCategoryLocale,
+  newsletterCategoryMap,
+} from '../newsletter/subscription/route'
 import { type LatestNewsType, latestMagazine, latestNews } from './groq.global'
 
-/* Used when sign up and distribution */
-export const mapCategoryToId = (category: string, locale: 'no' | 'en') => {
-  if (locale === 'no') {
-    switch (category) {
-      case 'generalNews':
-        return 'generelle nyheter'
-      case 'Company':
-        return 'generelle nyheter'
-      case 'crudeOilAssays':
-        return 'crude oil assays'
-      case 'Crude':
-        return 'crude oil assays'
-      case 'magazineStories':
-        return 'magasinsaker'
-      case 'stockMarketAnnouncements':
-        return 'børsmeldinger'
-      case 'Stock':
-        return 'børsmeldinger'
-    }
-  }
-  switch (category) {
-    case 'generalNews':
-      return 'general news'
-    case 'Company':
-      return 'general news'
-    case 'crudeOilAssays':
-      return 'crude oil assays'
-    case 'Crude':
-      return 'crude oil assays'
-    case 'magazineStories':
-      return 'magazine stories'
-    case 'stockMarketAnnouncements':
-      return 'stock market announcements'
-    case 'Stock':
-      return 'stock market announcements'
-  }
-  return ''
-}
 const generateRssFeed = async (locale: 'en_GB' | 'nb_NO') => {
   try {
     // Fetch both English and Norwegian articles from news and magazine
@@ -88,7 +55,9 @@ const generateRssFeed = async (locale: 'en_GB' | 'nb_NO') => {
 
     articles.forEach(article => {
       const langPath = article.lang === 'nb_NO' ? '/no' : ''
-      const locale = article.lang === 'nb_NO' ? 'no' : 'en'
+      const locale = (
+        article.lang === 'nb_NO' ? 'no' : 'en'
+      ) as newsletterCategoryLocale
 
       const hero = article.hero
       const bannerImageUrl = hero?.image?.asset
@@ -107,10 +76,11 @@ const generateRssFeed = async (locale: 'en_GB' | 'nb_NO') => {
       // Format the main pubDate
       //const formattedPubDate =  //format(new TZDate(publishDate, 'Europe/Oslo'), 'EEE, dd MMM yyyy HH:mm:ss xxxx')
 
-      const categoryTag =
+      const categoryTag = (
         article.type === 'magazine'
           ? 'magazineStories'
           : article.subscriptionType
+      ) as newsletterCategoryKeys
       const title =
         article.type === 'magazine'
           ? //@ts-ignore: todo
@@ -124,7 +94,7 @@ const generateRssFeed = async (locale: 'en_GB' | 'nb_NO') => {
           <guid>https://equinor.com${langPath}${article.slug}</guid>
           <pubDate>${publishDate}</pubDate>
           <description>${toPlainText(article.ingress)}</description>
-          ${categoryTag ? `<category>${mapCategoryToId(categoryTag, locale)}</category>` : '<category />'}
+          ${categoryTag ? `<category>${newsletterCategoryMap[locale][categoryTag]}</category>` : '<category />'}
           <nl:extra1>${format(
             new TZDate(publishDate, 'Europe/Oslo'),
             "d.MMMM yyyy hh:mm ('CEST')",
