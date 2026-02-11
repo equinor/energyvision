@@ -130,6 +130,7 @@ const {
   siteMenu,
   simpleMenu,
   routeHomepage,
+  settings,
 } = documentSchemaTypes
 
 const routeSchemas = languages.map(({ name, title }) => {
@@ -157,6 +158,7 @@ const RemainingSchemas = [
   routeHomepage,
   pageNotFound,
   internalServerError,
+  settings,
   imageWithAlt,
   imageWithAltAndCaption,
   carouselImage,

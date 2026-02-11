@@ -30,7 +30,7 @@ export type ImageCarouselItem = ImageWithCaptionData | ImageWithLinkOrOverlay
 
 type CarouselImageItemProps = {
   type: string
-  image?: ImageWithAlt | SanityImageObject
+  image?: ImageWithAlt | ImageWithCaptionData | SanityImageObject
   displayMode?: DisplayModes
   className?: string
   caption?: PortableTextBlock[] | string
@@ -89,7 +89,7 @@ export const CarouselImageItem = forwardRef<
   const singleHeights = `min-h-single-carousel-card-h-sm md:min-h-single-carousel-card-h-md lg:min-h-single-carousel-card-h-lg`
 
   const getBody = () => {
-    if (isJustImage) {
+    if (isJustImage && image) {
       return (
         <Image
           grid='sm'
@@ -100,7 +100,7 @@ export const CarouselImageItem = forwardRef<
         />
       )
     }
-    if (isImageWithSimpleCaption) {
+    if (isImageWithSimpleCaption && image) {
       return (
         <figure className='flex aspect-4/3 h-full w-full items-end rounded-md md:aspect-video'>
           <Image
@@ -139,7 +139,7 @@ export const CarouselImageItem = forwardRef<
         </figure>
       )
     }
-    if (isImageWithJustLink) {
+    if (isImageWithJustLink && image) {
       return (
         <figure className='h-full w-full'>
           <Image
@@ -180,7 +180,7 @@ export const CarouselImageItem = forwardRef<
         />
       )
     }
-    if (isImageWithRichTextCaption) {
+    if (isImageWithRichTextCaption && image) {
       const singleClassname = `${active ? 'opacity-100' : 'opacity-50'}`
       const scrollClassname = ``
       return (

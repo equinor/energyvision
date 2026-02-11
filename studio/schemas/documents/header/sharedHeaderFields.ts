@@ -153,6 +153,7 @@ const backgroundGradient = {
   title: 'Background Gradient',
   name: 'backgroundGradient',
   type: 'string',
+  fieldset: 'hero',
   description: 'Controls the gradient over semi-transparent background image.',
   initialValue: 'none', // default
   options: {

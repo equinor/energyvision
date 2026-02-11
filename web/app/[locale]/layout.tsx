@@ -9,14 +9,14 @@ import { PageProvider } from '@/contexts/pageContext'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { getNameFromIso } from '@/sanity/helpers/localization'
 import { sanityFetch } from '@/sanity/lib/sanityFetch'
-import { footerQuery } from '@/sanity/queries/footer'
+import { footerAndErrorImageQuery } from '@/sanity/queries/footer'
 import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu'
 import { simpleMenuQuery } from '@/sanity/queries/simpleMenu'
 import DraftModeToast from '@/sections/DraftMode/DraftModeToast'
+import GoToTopButton from '@/sections/GoToTopButton'
 import { routing } from '../../i18n/routing'
 import { GoogleTagManagerHead } from './GTMHead'
 import { SiteImprove } from './SiteImprove'
-import GoToTopButton from '@/sections/GoToTopButton'
 
 const equinorRegular = localFont({
   src: '../fonts/equinor/Equinor-Regular.woff',
@@ -49,18 +49,20 @@ export default async function LocaleLayout({
   const queryParams = {
     lang: getNameFromIso(locale) ?? 'en_GB',
   }
-  const [siteMenuData, footerData] = await Promise.all([
+  const [siteMenuData, footerAndErrorImageData] = await Promise.all([
     sanityFetch({
       query: Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery,
       params: queryParams,
       tags: ['siteMenu', 'subMenu'],
     }),
     sanityFetch({
-      query: footerQuery,
+      query: footerAndErrorImageQuery,
       params: queryParams,
-      tags: ['footer'],
+      tags: ['footer', 'settings'],
     }),
   ])
+
+  const { errorImage, ...footerData } = footerAndErrorImageData
 
   return (
     <html
@@ -70,11 +72,12 @@ export default async function LocaleLayout({
       <body>
         <Toaster />
         {isDraftMode && <DraftModeToast />}
-        <GoToTopButton/>
+        <GoToTopButton />
         {/* <SanityLive onError={handleError} /> */}
         <NextIntlClientProvider>
           <PageProvider
             initialFooterData={footerData}
+            initialErrorImage={errorImage}
             initialSiteMenuData={siteMenuData}
           >
             {children}

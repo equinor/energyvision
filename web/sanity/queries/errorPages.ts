@@ -13,3 +13,14 @@ ${functions}
     backgroundImage
   }[0]
  `
+export const internalServerErrorQuery = /* groq */ `
+${functions}
+  *[_type == "internalServerError" && ${sameLang}] {
+    _id,
+    "documentTitle": seo.documentTitle,
+    "metaDescription": seo.metaDescription,
+    title,
+    text[]{..., ${markDefs}},
+    backgroundImage
+  }[0]
+ `

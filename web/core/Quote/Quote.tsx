@@ -31,7 +31,7 @@ const Quote = ({
   const size = quote.length < textSizeLimit ? 'text-3xl' : 'text-md'
   const iconSize = quote.length < textSizeLimit ? 'w-12 h-12' : 'w-9 h-9'
 
-  const ImageComponent = hasImage && (
+  const ImageComponent = hasImage && image && (
     <div className='flex justify-center'>
       <div
         className={`${isMobile ? 'w-20.25' : 'min-w-48.5 md:w-52 xl:w-60.5'} `}

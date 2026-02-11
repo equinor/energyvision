@@ -39,8 +39,8 @@ export type ResolveImageProps = {
    * @default lg
    */
   grid?: GridType
-  /** Aspect ratio for larger displays, 4:3 on mobile
-   * @default 16:9
+  /** Aspect ratio for larger displays, default 16:9. 4:3 on mobile
+   * @default 1.77
    */
   aspectRatio?: number
   useFitMax?: boolean

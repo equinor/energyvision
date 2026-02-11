@@ -69,9 +69,12 @@ const isPortableTextEditor = (schema: SchemaType) => {
 export const singletonTemplates = [
   'route_homepage',
   'newsroom',
-  'pageNotFound',
-  'internalServerError',
   'magazineIndex',
+  'settings',
+  //To be remove after upgrade
+  'pageNotFound',
+  //To be remove after upgrade
+  'internalServerError',
 ]
 
 const handleInputComponents = (inputProps: InputProps) => {

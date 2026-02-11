@@ -1,7 +1,8 @@
 'use client'
 import type { HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { Image, type ImageRatioKeys } from '@/core/Image/Image'
+import type { ImageRatioKeys } from '@/core/Image/Image'
+import { Picture } from '@/core/Picture/Picture'
 import Blocks from '@/portableText/Blocks'
 import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
 import type { DesignOptions } from '@/types'
@@ -37,24 +38,21 @@ export const FullWidthImageHero = ({
   }
 
   const variantClassName: Record<FullWidthImageHeroVariant, string> = {
-    narrow: `aspect-4/3 lg:aspect-10/3`,
-    tall: `4xl:h-[67dvh] h-auto w-full max-md:aspect-4/3 md:h-[53dvh] lg:h-[65dvh]`,
+    narrow: ``,
+    tall: `4xl:h-[67vh] h-auto w-full h-[43vh] md:h-[53vh] lg:h-[65vh]`,
     default: ``,
   }
 
   return (
     <>
       {figure?.image && (
-        <Image
+        <Picture
           image={figure.image}
-          aspectRatio={ratioToVariant[variant]}
-          grid='full'
-          loading='eager'
-          figCaptionBackground={nextCompBg}
-          figCaptionClassName={`${nextCompDark ? nextCompDark : ''}`}
+          desktopAspectRatio={ratioToVariant[variant]}
+          figCaptionClassName={`${nextCompBg ? nextCompBg : ''} ${nextCompDark ? nextCompDark : ''}`}
           caption={figure?.caption}
           attribution={figure?.attribution}
-          imageClassName={twMerge(variantClassName[variant], className)}
+          className={twMerge(variantClassName[variant], className)}
         />
       )}
       {magazineTags && magazineTags?.length > 0 && (

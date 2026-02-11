@@ -1,17 +1,15 @@
-import { getLocale } from 'next-intl/server'
-import { getNameFromLocale } from '@/sanity/helpers/localization'
-import { sanityFetch } from '@/sanity/lib/sanityFetch'
-import { pageNotFoundQuery } from '@/sanity/queries/pageNotFound'
-import NotFoundPage from '@/templates/notFound/NotFoundPage'
+import Footer from '@/sections/Footer/Footer'
+import Header from '@/sections/Header/HeaderBar'
+import ErrorPage from '@/templates/errorPage/ErrorPage'
 
 // Note that `app/[locale]/[...slug]/page.tsx`
 // is necessary for this page to render.
 export default async function NotFound() {
-  const locale = await getLocale()
-  const pageData  = await sanityFetch({
-    query: pageNotFoundQuery,
-    params: { lang: getNameFromLocale(locale) },
-    tags: ['notFound'],
-  })
-  return <NotFoundPage {...pageData} />
+  return (
+    <main>
+      <Header />
+      <ErrorPage variant='404' />
+      <Footer />
+    </main>
+  )
 }

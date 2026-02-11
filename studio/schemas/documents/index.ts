@@ -20,13 +20,16 @@ import page from './page'
 import redirect from './redirect'
 import route from './route'
 import routeHomepage from './routeHomepage'
+import { settings } from './settings'
 import simpleMenu from './simpleMenu'
 import siteMenu from './siteMenu'
 import subMenu from './subMenu'
 import tag from './tag'
 
 export const documentsWithI18n = {
+  //To be remove after upgrade
   pageNotFound,
+  //To be remove after upgrade
   internalServerError,
   event,
   landingPage,
@@ -55,4 +58,5 @@ export default {
   magazineTag,
   route,
   subMenu,
+  settings,
 }

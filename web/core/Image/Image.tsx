@@ -1,10 +1,11 @@
 'use client'
+import type { SanityImageObject } from '@sanity/image-url'
 import NextImage, { type ImageProps as NextImageProps } from 'next/image'
-import { useMemo } from 'react'
 import { useMediaQuery } from '@/lib/hooks/useMediaQuery'
 import { twMerge } from '@/lib/twMerge/twMerge'
 import { resolveImage } from '@/sanity/lib/utils'
-import { Typography } from '../Typography'
+import type { ImageWithAlt, ImageWithCaptionData } from '@/types'
+import { FigureCaption } from '../FigureCaption/FigureCaption'
 
 export const ImageRatios = {
   original: 0,
@@ -148,7 +149,11 @@ export const getTwAspectRatioUtilityOnRatio = (ratio: ImageRatioKeys) => {
 }
 
 type ImageProps = Omit<NextImageProps, 'src' | 'alt' | 'sizes'> & {
-  image: any
+  /** Wraps image in div with relative or none,but then relative needs to be set on a parent
+   * @default simple
+   */
+  wrapperVariant?: 'simple' | 'none'
+  image: ImageWithAlt | ImageWithCaptionData | SanityImageObject
   /** Grid column the image is contained within on larger displays.
    * Determines the sizes param on Next image and width for sanity fetch.
    * Tests for mobile and uses smallest sizes automically
@@ -171,16 +176,22 @@ type ImageProps = Omit<NextImageProps, 'src' | 'alt' | 'sizes'> & {
   imageClassName?: string
   caption?: string
   attribution?: string
-  /** The complete background color utility to put on figCaption */
+  /** Background color utility to put on figCaption, e.g. if next comp has color bg
+   * e.g bg-<color>
+   */
   figCaptionBackground?: string
+  /** Override figure caption classname */
   figCaptionClassName?: string
+  /** Ignores 4:3 ratio on mobile */
   keepRatioOnMobile?: boolean
+  /** Enables image zoom functionality on image */
   hasImageZoom?: boolean
 }
 
 //Double check crop and hotspot information comes to sanity fetch image
 export const Image = ({
   image,
+  wrapperVariant = 'simple',
   grid = 'lg',
   aspectRatio = '16:9',
   customWidth,
@@ -191,22 +202,14 @@ export const Image = ({
   figureClassName = '',
   useFitMax = false,
   loading,
+  fetchPriority,
   caption,
   attribution,
-  figCaptionBackground,
   figCaptionClassName = '',
   keepRatioOnMobile = false,
   hasImageZoom = false,
 }: ImageProps) => {
   const isLargerDisplays = useMediaQuery(`(min-width: 800px)`)
-  const twAspectRatioUtility = useMemo(() => {
-    if (keepRatioOnMobile) {
-      return getTwAspectRatioUtilityOnRatio(aspectRatio)
-    }
-    return isLargerDisplays
-      ? getTwAspectRatioUtilityOnRatio(aspectRatio)
-      : 'aspect-4/3'
-  }, [isLargerDisplays, aspectRatio, keepRatioOnMobile])
 
   if (!image?.asset) return null
 
@@ -221,59 +224,43 @@ export const Image = ({
     keepRatioOnMobile,
   })
 
-  const getAltText = () => {
-    if ('alt' in image && image.alt) {
-      return image.alt
-    }
-    return ''
-  }
-
-  const imageSizes = hasImageZoom
-    ? getSizes('sm', true)
-    : getSizes(grid, isLargerDisplays)
-
   const nextImage = url ? (
     <NextImage
-      {...(fill
-        ? {
-            fill: true,
-          }
-        : { width, height })}
+      {...(fill ? { fill: true } : { width, height })}
       src={url}
       loading={loading}
-      sizes={imageSizes}
-      alt={getAltText()}
+      fetchPriority={fetchPriority}
+      sizes={
+        hasImageZoom ? getSizes('sm', true) : getSizes(grid, isLargerDisplays)
+      }
+      alt={'alt' in image && image.alt ? image.alt : ''}
       className={twMerge(
-        `${fill ? 'object-cover' : 'flex h-full w-full'} ${twAspectRatioUtility}`,
+        `${fill ? 'object-cover' : 'flex h-full w-full'}`,
         imageClassName,
       )}
     />
   ) : null
 
-  return caption || attribution ? (
-    <figure className={twMerge(``, figureClassName)}>
+  const imageElement =
+    wrapperVariant === 'simple' ? (
       <div className={twMerge(`relative h-full w-full`, className)}>
         {nextImage}
       </div>
-      <figcaption
-        className={twMerge(
-          `px-layout-sm pt-2 pb-4 text-xs lg:px-layout-lg`,
-          figCaptionBackground,
-          figCaptionClassName,
-        )}
-      >
-        {(caption || attribution) && (
-          <Typography group='plain' variant='div' className='leading-normal'>
-            {caption}
-            {`${caption && attribution ? ' ' : ''}`}
-            {attribution}
-          </Typography>
-        )}
-      </figcaption>
+    ) : (
+      nextImage
+    )
+
+  return caption || attribution ? (
+    <figure className={twMerge(``, figureClassName)}>
+      {imageElement}
+      <FigureCaption
+        className={figCaptionClassName}
+        withLayoutPx
+        caption={caption}
+        attribution={attribution}
+      />
     </figure>
   ) : (
-    <div className={twMerge(`relative h-full w-full`, className)}>
-      {nextImage}
-    </div>
+    imageElement
   )
 }

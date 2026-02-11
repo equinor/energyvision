@@ -1,4 +1,5 @@
 'use client'
+import type { SanityImageObject } from '@sanity/image-url'
 import {
   createContext,
   type PropsWithChildren,
@@ -18,6 +19,7 @@ export type HeaderData = {
 export interface PageContextType {
   headerData: HeaderData | undefined
   siteMenuData: MenuData | SimpleMenuData
+  errorImage: SanityImageObject
   footerData: {
     footerColumns: FooterColumns[]
   }
@@ -40,12 +42,15 @@ export const PageProvider = ({
   children,
   initialSiteMenuData,
   initialFooterData,
+  initialErrorImage,
 }: PropsWithChildren<{
   initialSiteMenuData: PageContextType['siteMenuData']
   initialFooterData: PageContextType['footerData']
+  initialErrorImage: PageContextType['errorImage']
 }>) => {
   const [headerData, setHeaderData] = useState<HeaderData>()
   const [siteMenuData, setSiteMenuData] = useState<any>(initialSiteMenuData)
+  const [errorImage] = useState<any>(initialErrorImage)
   const [footerData, setFooterData] = useState<any>(initialFooterData)
 
   // Memoize functions using useCallback
@@ -68,6 +73,7 @@ export const PageProvider = ({
       storeFooterData,
       storeSiteMenuData,
       updateHeaderData,
+      errorImage,
     }),
     [
       headerData,
@@ -76,6 +82,7 @@ export const PageProvider = ({
       siteMenuData,
       storeFooterData,
       storeSiteMenuData,
+      errorImage,
     ],
   )
 

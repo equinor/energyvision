@@ -1,7 +1,7 @@
 import { functions } from './common/functions'
 import { sameLang } from './common/langAndDrafts'
 
-export const footerQuery = /* groq */ `
+export const footerAndErrorImageQuery = /* groq */ `
 ${functions}
  *[_type == "footer" && ${sameLang}] {
   _id,
@@ -14,6 +14,7 @@ ${functions}
         label,
   	    ...links::getLinkFields(link[0]),
     }
-  }
+  },
+  "errorImage": *[_type == "settings"]{backgroundImage}[0].backgroundImage,
 }[0]
 `

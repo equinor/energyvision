@@ -28,6 +28,7 @@ export const groups = {
   carousel: { title: 'Carousel' },
   others: { title: 'Others' },
   common: { title: 'Common' },
+  error: { title: 'Error' },
 }
 const snippets: textSnippet = {
   country_code_format: {
@@ -921,6 +922,38 @@ const snippets: textSnippet = {
     title: 'Key figures',
     defaultValue: 'Key figures',
     group: groups.common,
+  },
+  serverErrorTitle: {
+    title: 'Server error title',
+    defaultValue: 'Something has happened',
+    group: groups.error,
+  },
+  serverErrorSubtitle: {
+    title: 'Server error subtitle',
+    defaultValue: 'We are sorry!',
+    group: groups.error,
+  },
+  serverErrorContent: {
+    title: 'Server error content',
+    defaultValue:
+      'Our site encountered some problem, please navigate back to our frontpage',
+    group: groups.error,
+  },
+  notFoundErrorTitle: {
+    title: 'Not found error title',
+    defaultValue: 'You have wandered into unknown territory',
+    group: groups.error,
+  },
+  notFoundErrorSubtitle: {
+    title: 'Not found error subtitle',
+    defaultValue: 'We love the curiosity!',
+    group: groups.error,
+  },
+  notFoundErrorContent: {
+    title: 'Not found error content',
+    defaultValue:
+      'But this page could not be found, please navigate back to our frontpage',
+    group: groups.error,
   },
 }
 

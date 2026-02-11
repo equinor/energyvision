@@ -37,15 +37,15 @@ export const getArrowAnimation = (type: LinkType) => {
   switch (type) {
     case 'downloadableFile':
     case 'downloadableImage':
-      return 'group-hover:translate-y-0.5'
+      return 'group-hover/link:translate-y-0.5'
     case 'anchorLink':
-      return 'translate-y-0.5 group-hover:translate-y-2'
+      return 'translate-y-0.5 group-hover/link:translate-y-2'
     case 'icsLink':
       return 'translate-y-0.5'
     case 'externalUrl':
-      return 'translate-y-0.5 group-hover:-translate-y-0.5'
+      return 'translate-y-0.5 group-hover/link:-translate-y-0.5'
     default:
-      return 'translate-y-0.5 group-hover:translate-x-2'
+      return 'translate-y-0.5 group-hover/link:translate-x-2'
   }
 }
 

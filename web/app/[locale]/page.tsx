@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import { OrganizationJsonLd } from 'next-seo'
 import { languages } from '@/languageConfig'
 import { getNameFromIso } from '@/sanity/helpers/localization'
 import { sanityFetch } from '@/sanity/lib/sanityFetch'
@@ -8,7 +9,6 @@ import { homePageMetaQuery } from '@/sanity/queries/metaData'
 import Footer from '@/sections/Footer/Footer'
 import Header from '@/sections/Header/Header'
 import HomePage from '@/templates/homepage/HomePage'
-import { OrganizationJsonLd } from 'next-seo'
 
 type Props = {
   params: Promise<{ slug: string; locale: string }>
@@ -48,20 +48,20 @@ export default async function Home({ params }: Props) {
   return (
     <>
       <Header />
-       <OrganizationJsonLd
-        name="Equinor ASA"
-        url="https://www.equinor.com"
-        logo= "https://cdn.eds.equinor.com/logo/equinor-logo-horizontal.svg#red"
+      <OrganizationJsonLd
+        name='Equinor ASA'
+        url='https://www.equinor.com'
+        logo='https://cdn.eds.equinor.com/logo/equinor-logo-horizontal.svg#red'
         description={pageData?.seoAndSome?.metaDescription}
         sameAs={[
-          "https://twitter.com/Equinor",
-          "https://facebook.com/Equinor",
-          "https://linkedin.com/company/equinor",
-          "https://www.instagram.com/equinor/",
-          "https://www.youtube.com/equinor"
+          'https://twitter.com/Equinor',
+          'https://facebook.com/Equinor',
+          'https://linkedin.com/company/equinor',
+          'https://www.instagram.com/equinor/',
+          'https://www.youtube.com/equinor',
         ]}
       />
-   
+
       <HomePage headerData={headerData} {...pageData} />
       <Footer />
     </>
