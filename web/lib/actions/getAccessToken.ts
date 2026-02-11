@@ -8,7 +8,7 @@ export async function getAccessToken() {
         grant_type: 'client_credentials',
         client_id: process.env.ACTION_FORM_CLIENT_ID!,
         client_secret: process.env.ACTION_FORM_CLIENT_SECRET!,
-        scope: process.env.ACTION_FORM_SCOPE!
+        scope: `openid ${process.env.ACTION_FORM_SCOPE!}/.default`
       }),
     });
   
