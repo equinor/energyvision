@@ -12,5 +12,5 @@ export const subscribeSchema = z.object({
   categories: z
     .array(z.enum(AllowedCategories))
     .min(1, { message: 'At least one category must be selected' }),
-  email: z.email(),
+  email: z.email().nonempty('Email is required'),
 })

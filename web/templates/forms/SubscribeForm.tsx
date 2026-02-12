@@ -12,7 +12,6 @@ import { FormMessageBox } from '@/core/Form/FormMessageBox'
 import { TextField } from '@/core/TextField/TextField'
 import { subscribeSchema } from '@/lib/zodSchemas/zodSchemas'
 import FriendlyCaptcha from './FriendlyCaptcha'
-import { emailRegex } from './validations'
 
 const SubscribeForm = () => {
   const locale = useLocale()
@@ -21,10 +20,6 @@ const SubscribeForm = () => {
   const [isServerError, setServerError] = useState(false)
   const [isSuccessfullySubmitted, setSuccessfullySubmitted] = useState(false)
   const formId = useId()
-
-  const atLeastOneChecked = (value: string) => {
-    return value.length > 0 || 'At least one option must be selected'
-  }
 
   const {
     handleSubmit,
@@ -109,9 +104,7 @@ const SubscribeForm = () => {
                         label={intl('subscribe_form_general_news')}
                         value='generalNews'
                         aria-describedby='atleast-one-category-required'
-                        {...register('categories', {
-                          validate: atLeastOneChecked,
-                        })}
+                        {...register('categories')}
                         aria-invalid={errors.categories ? 'true' : 'false'}
                       />
                     </li>
@@ -121,9 +114,7 @@ const SubscribeForm = () => {
                         aria-invalid={errors.categories ? 'true' : 'false'}
                         aria-describedby='atleast-one-category-required'
                         value='magazineStories'
-                        {...register('categories', {
-                          validate: atLeastOneChecked,
-                        })}
+                        {...register('categories')}
                       />
                     </li>
                     <li>
@@ -132,9 +123,7 @@ const SubscribeForm = () => {
                         value='stockMarketAnnouncements'
                         aria-invalid={errors.categories ? 'true' : 'false'}
                         aria-describedby='atleast-one-category-required'
-                        {...register('categories', {
-                          validate: atLeastOneChecked,
-                        })}
+                        {...register('categories')}
                       />
                     </li>
                     <li>
@@ -143,9 +132,7 @@ const SubscribeForm = () => {
                         aria-invalid={errors.categories ? 'true' : 'false'}
                         aria-describedby='atleast-one-category-required'
                         value='crudeOilAssays'
-                        {...register('categories', {
-                          validate: atLeastOneChecked,
-                        })}
+                        {...register('categories')}
                       />
                     </li>
                   </ul>
@@ -153,13 +140,6 @@ const SubscribeForm = () => {
                 <Controller
                   name='email'
                   control={control}
-                  rules={{
-                    required: intl('email_validation'),
-                    pattern: {
-                      value: emailRegex,
-                      message: intl('email_validation'),
-                    },
-                  }}
                   render={({
                     field: { ref, ...props },
                     fieldState: { invalid, error },

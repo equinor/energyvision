@@ -84,7 +84,6 @@ export const signUp = async (
 }
 
 export async function POST(req: NextRequest) {
-  //const signature = req.headers.get(SIGNATURE_HEADER_NAME)
   const body = await req.json()
   const { frcCaptchaSolution, languageCode, data } = body
 
