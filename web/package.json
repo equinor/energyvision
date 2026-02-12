@@ -29,6 +29,7 @@
     "@equinor/eds-utils": "^0.8.7",
     "@energyvision/shared": "workspace:*",
     "@floating-ui/react": "^0.26.9",
+    "@hookform/resolvers": "^5.2.2",
     "@next/bundle-analyzer": "^12.1.0",
     "@portabletext/react": "^3.2.1",
     "@portabletext/to-html": "^2.0.14",
@@ -39,6 +40,7 @@
     "@sanity/client": "7.14.0",
     "@sanity/image-url": "^2.0.2",
     "@sanity/webhook": "^4.0.4",
+    "@sentry/nextjs": "10.37.0",
     "algoliasearch": "^5.30.0",
     "axios": "^1.13.5",
     "clsx": "^2.1.1",
@@ -60,7 +62,7 @@
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-error-boundary": "^6.0.3",
-    "react-hook-form": "7.70.0",
+    "react-hook-form": "7.71.1",
     "react-icons": "^5.5.0",
     "react-instantsearch": "^7.19.0",
     "react-instantsearch-nextjs": "1.0.5",
@@ -75,7 +77,7 @@
     "uuid": "^9.0.0",
     "video.js": "^8.23.3",
     "xml2js": "^0.6.2",
-    "@sentry/nextjs": "10.37.0"
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@algolia/client-search": "^4.16.0",

@@ -3,7 +3,10 @@ import { validateFormRequest } from '../validateFormRequest'
 
 export async function POST(req: Request) {
   const body = await req.json()
-  const result = await validateFormRequest(req.method, body, 'order reports form')
+  const result = await validateFormRequest(
+    body?.frcCaptchaSolution,
+    'order reports form',
+  )
   if (result.status !== 200) {
     return Response.json({ msg: result.message }, { status: result.status })
   }
@@ -18,8 +21,12 @@ export async function POST(req: Request) {
   const country = encodeURI(data.country)
   const company = encodeURI(data.company)
   const annualReport = data.reports.includes('annualReport') ? 'Yes' : 'No'
-  const prospectusReport = data.reports.includes('prospectusReport') ? 'Yes' : 'No'
-  const statutoryReport = data.reports.includes('statutoryReport') ? 'Yes' : 'No'
+  const prospectusReport = data.reports.includes('prospectusReport')
+    ? 'Yes'
+    : 'No'
+  const statutoryReport = data.reports.includes('statutoryReport')
+    ? 'Yes'
+    : 'No'
 
   const urlString =
     process.env.SERVICE_NOW_FORM_URL +
@@ -49,14 +56,17 @@ export async function POST(req: Request) {
     prospectusReport
 
   const response = await sendRequestToServiceNow(urlString)
-    .then((response) => {
-      if (JSON.parse(response).status == 'failure' || JSON.parse(response).Status?.includes('Failure')) {
+    .then(response => {
+      if (
+        JSON.parse(response).status === 'failure' ||
+        JSON.parse(response).Status?.includes('Failure')
+      ) {
         console.log('Failed to create ticket in service-now')
         return Response.json({ status: 500 })
       }
       return Response.json({ status: 200 })
     })
-    .catch((error) => {
+    .catch(error => {
       console.log('Error occured while sending request to ServiceNow', error)
       return Response.json({ status: 500 })
     })

@@ -1,22 +1,18 @@
 'use client'
 import { Icon } from '@equinor/eds-core-react'
 import { error_filled } from '@equinor/eds-icons'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useLocale, useTranslations } from 'next-intl'
-import { type BaseSyntheticEvent, useState, useId } from 'react'
+import { type BaseSyntheticEvent, useId, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
+import type * as z from 'zod'
 import { Button } from '@/core/Button'
 import { Checkbox } from '@/core/Checkbox/Checkbox'
 import { FormMessageBox } from '@/core/Form/FormMessageBox'
 import { TextField } from '@/core/TextField/TextField'
-import type { SubscribeFormParameters } from '../../types/index'
+import { subscribeSchema } from '@/lib/zodSchemas/zodSchemas'
 import FriendlyCaptcha from './FriendlyCaptcha'
 import { emailRegex } from './validations'
-
-type FormValues = {
-  firstName: string
-  email: string
-  categories: string[]
-}
 
 const SubscribeForm = () => {
   const locale = useLocale()
@@ -26,6 +22,10 @@ const SubscribeForm = () => {
   const [isSuccessfullySubmitted, setSuccessfullySubmitted] = useState(false)
   const formId = useId()
 
+  const atLeastOneChecked = (value: string) => {
+    return value.length > 0 || 'At least one option must be selected'
+  }
+
   const {
     handleSubmit,
     reset,
@@ -33,27 +33,20 @@ const SubscribeForm = () => {
     register,
     setError,
     formState: { errors, isSubmitting, isSubmitted, isSubmitSuccessful },
-  } = useForm({ defaultValues: { firstName: '', email: '', categories: [] } })
+  } = useForm({
+    resolver: zodResolver(subscribeSchema),
+    defaultValues: { email: '', categories: [] },
+  })
 
-  const onSubmit = async (data: FormValues, event?: BaseSyntheticEvent) => {
+  const onSubmit = async (
+    data: z.infer<typeof subscribeSchema>,
+    event?: BaseSyntheticEvent,
+  ) => {
     if (isFriendlyChallengeDone) {
-      const allCategories = data.categories.includes('all')
-      const subscribeFormParamers: SubscribeFormParameters = {
-        firstName: data.firstName,
-        email: data.email,
-        crudeOilAssays:
-          allCategories || data.categories.includes('crudeOilAssays'),
-        generalNews: allCategories || data.categories.includes('generalNews'),
-        stockMarketAnnouncements:
-          allCategories || data.categories.includes('stockMarketAnnouncements'),
-        magazineStories:
-          allCategories || data.categories.includes('magazineStories'),
-        languageCode: locale === 'en' ? 'en' : 'no',
-      }
-
-      const res = await fetch('/api/subscribe-form', {
+      const res = await fetch('/api/newsletter/subscription', {
         body: JSON.stringify({
-          subscribeFormParamers,
+          data,
+          languageCode: locale === 'en' ? 'en' : 'no',
           frcCaptchaSolution: (event?.target as any)['frc-captcha-response']
             .value,
         }),
@@ -78,9 +71,8 @@ const SubscribeForm = () => {
       {!isSuccessfullySubmitted && (
         <>
           <div className='pt-8 pb-6 text-sm'>
-            {intl('all_fields_mandatory')}{' '}
+            {intl('all_fields_mandatory')}
           </div>
-
           <form
             onSubmit={handleSubmit(onSubmit)}
             onReset={() => {
@@ -118,9 +110,8 @@ const SubscribeForm = () => {
                         value='generalNews'
                         aria-describedby='atleast-one-category-required'
                         {...register('categories', {
-                          validate: values => values.length > 0,
+                          validate: atLeastOneChecked,
                         })}
-                        aria-required
                         aria-invalid={errors.categories ? 'true' : 'false'}
                       />
                     </li>
@@ -130,8 +121,9 @@ const SubscribeForm = () => {
                         aria-invalid={errors.categories ? 'true' : 'false'}
                         aria-describedby='atleast-one-category-required'
                         value='magazineStories'
-                        aria-required
-                        {...register('categories')}
+                        {...register('categories', {
+                          validate: atLeastOneChecked,
+                        })}
                       />
                     </li>
                     <li>
@@ -140,8 +132,9 @@ const SubscribeForm = () => {
                         value='stockMarketAnnouncements'
                         aria-invalid={errors.categories ? 'true' : 'false'}
                         aria-describedby='atleast-one-category-required'
-                        aria-required
-                        {...register('categories')}
+                        {...register('categories', {
+                          validate: atLeastOneChecked,
+                        })}
                       />
                     </li>
                     <li>
@@ -150,18 +143,9 @@ const SubscribeForm = () => {
                         aria-invalid={errors.categories ? 'true' : 'false'}
                         aria-describedby='atleast-one-category-required'
                         value='crudeOilAssays'
-                        aria-required
-                        {...register('categories')}
-                      />
-                    </li>
-                    <li>
-                      <Checkbox
-                        label={intl('subscribe_form_all')}
-                        aria-invalid={errors.categories ? 'true' : 'false'}
-                        aria-describedby='atleast-one-category-required'
-                        value='all'
-                        aria-required
-                        {...register('categories')}
+                        {...register('categories', {
+                          validate: atLeastOneChecked,
+                        })}
                       />
                     </li>
                   </ul>
@@ -233,7 +217,7 @@ const SubscribeForm = () => {
           </form>
         </>
       )}
-      <div role='region' aria-live='assertive'>
+      <section aria-live='assertive'>
         {isSubmitSuccessful && <FormMessageBox variant='success' />}
         {isSubmitted && isServerError && (
           <FormMessageBox
@@ -244,7 +228,7 @@ const SubscribeForm = () => {
             }}
           />
         )}
-      </div>
+      </section>
     </>
   )
 }

@@ -1,8 +1,10 @@
+import type { CareersContactFormCatalogType } from '../../../../types'
 import { sendRequestToServiceNow } from '../service-now-base'
 import { validateFormRequest } from '../validateFormRequest'
-import { CareersContactFormCatalogType } from '../../../../types'
 
-const getCatalogIdentifier = (catalogType: CareersContactFormCatalogType | null) => {
+const getCatalogIdentifier = (
+  catalogType: CareersContactFormCatalogType | null,
+) => {
   switch (catalogType) {
     case 'suspectedRecruitmentScamRequest':
       return 'b04a9748832d8610347af830feaad382'
@@ -15,7 +17,10 @@ const getCatalogIdentifier = (catalogType: CareersContactFormCatalogType | null)
 
 export async function POST(req: Request) {
   const body = await req.json()
-  const result = await validateFormRequest(req.method, body, 'careers contact form')
+  const result = await validateFormRequest(
+    body?.frcCaptchaSolution,
+    'careers contact form',
+  )
   if (result.status !== 200) {
     return Response.json({ msg: result.message }, { status: result.status })
   }
@@ -64,14 +69,17 @@ export async function POST(req: Request) {
     candidateType
 
   const response = await sendRequestToServiceNow(urlString)
-    .then((response) => {
-      if (JSON.parse(response).status == 'failure' || JSON.parse(response).Status?.includes('Failure')) {
+    .then(response => {
+      if (
+        JSON.parse(response).status === 'failure' ||
+        JSON.parse(response).Status?.includes('Failure')
+      ) {
         console.log('Failed to create ticket in service-now')
         return Response.json({ status: 500 })
       }
       return Response.json({ status: 200 })
     })
-    .catch((error) => {
+    .catch(error => {
       console.log('Error occured while sending request to ServiceNow', error)
       return Response.json({ status: 500 })
     })

@@ -1,34 +1,17 @@
 import axios from 'axios'
+import type { NextRequest } from 'next/server'
+import type z from 'zod'
 import type { Level2Keys } from '@/lib/helpers/typescriptTyping'
+import { subscribeSchema } from '@/lib/zodSchemas/zodSchemas'
+import { validateFormRequest } from '../../forms/validateFormRequest'
 
-type NewsletterCategories = {
-  crudeOilAssays?: boolean
-  generalNews?: boolean
-  magazineStories?: boolean
-  stockMarketAnnouncements?: boolean
-}
-export type SubscribeFormParameters = {
-  email: string
-  languageCode: string
-} & NewsletterCategories
+export type SubscribeFormParameters = z.infer<typeof subscribeSchema>
 
 const MAKE_SUBSCRIBER_API_BASE_URL = process.env.MAKE_SUBSCRIBER_API_BASE_URL
 const MAKE_API_KEY = process.env.MAKE_API_KEY || ''
 const SUBSCRIBER_LIST_ID_EN = process.env.MAKE_SUBSCRIBER_LIST_ID_EN
 const SUBSCRIBER_LIST_ID_NO = process.env.MAKE_SUBSCRIBER_LIST_ID_NO
 const MAKE_API_USER = process.env.MAKE_API_USERID || ''
-
-export type NewsDistributionParameters = {
-  languageCode?: string
-}
-
-const subscriberApi = axios.create({
-  baseURL: MAKE_SUBSCRIBER_API_BASE_URL,
-  headers: {
-    'Content-Type': 'application/json',
-    Authorization: `Basic ${Buffer.from(`${MAKE_API_USER}:${MAKE_API_KEY}`).toString('base64')}`,
-  },
-})
 
 export const newsletterCategoryMap = {
   no: {
@@ -54,47 +37,39 @@ export const newsletterCategoryMap = {
 export type newsletterCategoryLocale = keyof typeof newsletterCategoryMap
 export type newsletterCategoryKeys = Level2Keys<typeof newsletterCategoryMap>
 
+const subscriberApi = axios.create({
+  baseURL: MAKE_SUBSCRIBER_API_BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+    Authorization: `Basic ${Buffer.from(`${MAKE_API_USER}:${MAKE_API_KEY}`).toString('base64')}`,
+  },
+})
+
 /**
  *  Subscribe a user using subscriber_list_id and tags
  */
-export const signUp = async (formParameters: SubscribeFormParameters) => {
-  const {
-    stockMarketAnnouncements,
-    generalNews,
-    crudeOilAssays,
-    magazineStories,
-    email,
-    languageCode,
-  } = formParameters
-  const locale = languageCode as newsletterCategoryLocale
+export const signUp = async (
+  data: SubscribeFormParameters,
+  languageCode: newsletterCategoryLocale,
+) => {
+  const { email, categories } = data
+  console.log('categories', categories)
   try {
-    const requestedTags: string[] = []
-    if (stockMarketAnnouncements) {
-      requestedTags.push(newsletterCategoryMap[locale].stockMarketAnnouncements)
-    }
-    if (generalNews) {
-      requestedTags.push(newsletterCategoryMap[locale].generalNews)
-    }
-    if (crudeOilAssays) {
-      requestedTags.push(newsletterCategoryMap[locale].crudeOilAssays)
-    }
-    if (magazineStories) {
-      requestedTags.push(newsletterCategoryMap[locale].magazineStories)
-    }
-
-    const requestBody = {
-      email: email,
-      tags: requestedTags,
-    }
+    const tags = categories?.map(
+      category => newsletterCategoryMap[languageCode][category],
+    )
+    console.log('newsletter tags', tags)
 
     const response = await subscriberApi.post(
       `/subscribers?subscriber_list_id=${
-        formParameters.languageCode === 'no'
-          ? SUBSCRIBER_LIST_ID_NO
-          : SUBSCRIBER_LIST_ID_EN
+        languageCode === 'no' ? SUBSCRIBER_LIST_ID_NO : SUBSCRIBER_LIST_ID_EN
       }&tag=merge`,
-      requestBody,
+      {
+        email,
+        tags,
+      },
     )
+    console.log('Response from Make subscriber api', response.statusText)
 
     return response.status === 200
   } catch (error: any) {
@@ -106,4 +81,46 @@ export const signUp = async (formParameters: SubscribeFormParameters) => {
     })
     return false
   }
+}
+
+export async function POST(req: NextRequest) {
+  //const signature = req.headers.get(SIGNATURE_HEADER_NAME)
+  const body = await req.json()
+  const { frcCaptchaSolution, languageCode, data } = body
+
+  const captchaResult = await validateFormRequest(
+    frcCaptchaSolution,
+    'subscription form',
+  )
+  if (captchaResult.status !== 200) {
+    return Response.json(
+      { msg: captchaResult.message },
+      { status: captchaResult.status },
+    )
+  }
+
+  const validatedData = subscribeSchema.safeParse(data)
+
+  if (!validatedData.success) {
+    return Response.json({ msg: 'Invalid data' }, { status: 400 })
+  }
+
+  await signUp(data, languageCode)
+    .then(isSuccessful => {
+      if (!isSuccessful) {
+        console.log('Signup was not successfull while newsletter subscription')
+        return Response.json(
+          { msg: 'Error during subscription' },
+          { status: 500 },
+        )
+      }
+      return Response.json({ msg: 'Successfully subscribed' }, { status: 200 })
+    })
+    .catch(error => {
+      console.log('Error occured while newsletter subscription', error)
+      return Response.json(
+        { msg: 'Error during subscription' },
+        { status: 500 },
+      )
+    })
 }

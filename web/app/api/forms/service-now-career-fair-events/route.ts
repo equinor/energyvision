@@ -3,7 +3,10 @@ import { validateFormRequest } from '../validateFormRequest'
 
 export async function POST(req: Request) {
   const body = await req.json()
-  const result = await validateFormRequest(req.method, body, 'career fair and events form')
+  const result = await validateFormRequest(
+    body?.frcCaptchaSolution,
+    'career fair and events form',
+  )
   if (result.status !== 200) {
     return Response.json({ msg: result.message }, { status: result.status })
   }
@@ -46,14 +49,17 @@ export async function POST(req: Request) {
     preferredLang
 
   const response = await sendRequestToServiceNow(urlString)
-    .then((response) => {
-      if (JSON.parse(response).status == 'failure' || JSON.parse(response).Status?.includes('Failure')) {
+    .then(response => {
+      if (
+        JSON.parse(response).status === 'failure' ||
+        JSON.parse(response).Status?.includes('Failure')
+      ) {
         console.log('Failed to create ticket in service-now')
         return Response.json({ status: 500 })
       }
       return Response.json({ status: 200 })
     })
-    .catch((error) => {
+    .catch(error => {
       console.log('Error occured while sending request to ServiceNow', error)
       return Response.json({ status: 500 })
     })
