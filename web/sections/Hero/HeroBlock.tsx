@@ -119,23 +119,43 @@ export const HeroBlock = ({
         return (
           <FullWidthImageHero
             {...heroProps}
+            // reduce pb when breadscrumbs
+            className={`${breadcrumbs?.enableBreadcrumbs ? 'pb-2' : ''}`}
             variant={(ratio as FullWidthImageHeroVariant) ?? 'narrow'}
           />
         )
       case HeroTypes.FIFTY_FIFTY:
-        return <FiftyFiftyHero {...heroProps} />
+        return (
+          <FiftyFiftyHero
+            {...heroProps}
+            className={`${breadcrumbs?.enableBreadcrumbs ? 'mb-2' : 'mb-4 lg:mb-6'}`}
+          />
+        )
       case HeroTypes.BACKGROUND_IMAGE:
         return <TextOnBackgroundImageHero {...heroProps} />
       case HeroTypes.LOOPING_VIDEO:
-        //@ts-ignore
-        return <LoopingVideoHero {...heroProps} />
+        return (
+          //@ts-ignore
+          <LoopingVideoHero
+            {...heroProps}
+            // reduce pb when breadscrumbs
+            className={`${breadcrumbs?.enableBreadcrumbs ? 'pb-2' : ''}`}
+          />
+        )
       default:
-        return <DefaultHero {...heroProps} ratio='2:1' />
+        return (
+          <DefaultHero
+            {...heroProps}
+            ratio='2:1'
+            // reduce pb when breadscrumbs
+            className={`${breadcrumbs?.enableBreadcrumbs ? 'pb-2' : ''}`}
+          />
+        )
     }
   }
 
   return type !== HeroTypes.NO_HERO ? (
-    <section className='mb-8 h-full w-full'>
+    <section className='h-full w-full'>
       {getHero()}
       {breadcrumbs?.enableBreadcrumbs && (
         <Breadcrumbs

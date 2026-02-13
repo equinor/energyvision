@@ -62,6 +62,7 @@ export default (isoCode: string, title: string) => {
           filter: 'lang == $lang',
           filterParams: { lang: `${isoCode}` },
           disableNew: true,
+          sort: [{ direction: 'desc', field: '_createdAt' }],
         },
       },
       {
@@ -77,6 +78,7 @@ export default (isoCode: string, title: string) => {
         options: {
           filter: '!defined(parent)',
           disableNew: true,
+          sort: [{ direction: 'desc', field: '_updatedAt' }],
         },
       },
       {

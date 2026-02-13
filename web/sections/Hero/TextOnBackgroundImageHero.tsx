@@ -14,7 +14,7 @@ export const TextOnBackgroundImageHero = ({
   figure,
   title,
   ingress,
-  backgroundGradient
+  backgroundGradient,
 }: TextOnBackgroundImageHeroProps) => {
   const { image } = figure || {}
   return (
@@ -25,7 +25,7 @@ export const TextOnBackgroundImageHero = ({
       useLight={backgroundGradient !== 'dark'}
       overrideGradient={backgroundGradient === 'none'}
     >
-      <div className='px-layout-lg max-lg:py-11'>
+      <div className='px-layout-sm max-lg:py-11 lg:px-layout-lg'>
         {/*@ts-ignore */}
         <Blocks value={title} id='mainTitle' variant='h1' />
         <div className='pt-6'>

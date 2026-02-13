@@ -1,6 +1,7 @@
 'use client'
 import type { PortableTextBlock } from 'next-sanity'
 import { VideoPlayer } from '@/core/VideoJsPlayer/VideoPlayer'
+import { twMerge } from '@/lib/twMerge/twMerge'
 import Blocks from '@/portableText/Blocks'
 import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
 import type { DesignOptions, ImageWithAlt } from '@/types'
@@ -19,12 +20,14 @@ export type LoopingVideoHeroProps = {
   title?: PortableTextBlock[]
   nextSectionDesignOptions?: DesignOptions
   video: LoopingVideoData
+  className?: string
 }
 
 export const LoopingVideoHero = ({
   title,
   video,
   nextSectionDesignOptions,
+  className = '',
 }: LoopingVideoHeroProps) => {
   const { ratio } = video
   const { bg: nextCompBg, dark: nextCompDark } = getBgAndDarkFromBackground(
@@ -51,8 +54,12 @@ export const LoopingVideoHero = ({
         //@ts-ignore
         value={title}
         id='mainTitle'
+        as='h1'
         variant='h1'
-        blockClassName={`py-11 px-layout-lg ${nextCompBg} ${nextCompDark ? nextCompDark : ''}`}
+        blockClassName={twMerge(
+          `pt-4 lg:pt-6 px-layout-sm lg:px-layout-lg ${nextCompBg} ${nextCompDark ? nextCompDark : ''}`,
+          className,
+        )}
       />
     </>
   )

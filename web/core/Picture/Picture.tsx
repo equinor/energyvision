@@ -1,17 +1,11 @@
 import type { SanityImageObject } from '@sanity/image-url'
-import { getImageProps, type ImageProps } from 'next/image'
+import type { ImageProps } from 'next/image'
 import { forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { resolveImage } from '@/sanity/lib/utils'
 import type { ImageWithAlt, ImageWithCaptionData } from '@/types'
 import { FigureCaption } from '../FigureCaption/FigureCaption'
-import {
-  getFullScreenSizes,
-  Image,
-  type ImageRatioKeys,
-  mapSanityImageRatio,
-} from '../Image/Image'
-import { Typography } from '../Typography'
+import { Image, type ImageRatioKeys, mapSanityImageRatio } from '../Image/Image'
 
 type PictureProps = {
   image: ImageWithAlt | ImageWithCaptionData | SanityImageObject

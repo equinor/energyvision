@@ -53,7 +53,7 @@ export const DefaultHero = ({
   const isColorBg = background && background !== 'bg-white-100'
 
   return (
-    <div className={twMerge(className, `relative h-full w-full`)}>
+    <div className={twMerge(className, `relative h-full w-full pb-4 lg:pb-6`)}>
       <div>
         <div
           className={twMerge(

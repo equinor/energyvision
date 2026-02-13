@@ -52,7 +52,7 @@ export const FullWidthImageHero = ({
           figCaptionClassName={`${nextCompBg ? nextCompBg : ''} ${nextCompDark ? nextCompDark : ''}`}
           caption={figure?.caption}
           attribution={figure?.attribution}
-          className={twMerge(variantClassName[variant], className)}
+          className={variantClassName[variant]}
         />
       )}
       {magazineTags && magazineTags?.length > 0 && (
@@ -64,9 +64,14 @@ export const FullWidthImageHero = ({
         id='mainTitle'
         asOneElementType
         as='h1'
-        className={`px-layout-sm py-4 lg:px-layout-lg lg:pt-6 lg:pb-4 ${nextCompBg} ${
-          nextCompDark ? nextCompDark : ''
-        }`}
+        variant='h1'
+        blockClassName='pb-0'
+        className={twMerge(
+          `px-layout-sm pt-4 lg:px-layout-lg lg:pt-6 ${nextCompBg} ${
+            nextCompDark ? nextCompDark : ''
+          }`,
+          className,
+        )}
       />
       {subTitle && subTitle}
     </>
