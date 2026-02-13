@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes, forwardRef } from 'react'
+import { type ButtonHTMLAttributes, forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 export const commonButtonStyling = `
@@ -17,7 +17,12 @@ items-center
 gap-3
 `
 
-export type Variants = 'contained' | 'outlined' | 'ghost' | 'contained-secondary' | 'outlined-secondary'
+export type Variants =
+  | 'contained'
+  | 'outlined'
+  | 'ghost'
+  | 'contained-secondary'
+  | 'outlined-secondary'
 
 /** Use for common button styling in Button,IconButton, Link/ButtonLink */
 export const getVariant = (variant: Variants): string => {
@@ -109,10 +114,23 @@ export type ButtonProps = {
 } & ButtonHTMLAttributes<HTMLButtonElement>
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ variant = 'contained', type = 'button', children, className = '', ...rest }, ref) => {
+  (
+    {
+      variant = 'contained',
+      type = 'button',
+      children,
+      className = '',
+      ...rest
+    },
+    ref,
+  ) => {
     const variantClassNames = getVariant(variant)
 
-    const buttonClassNames = twMerge(commonButtonStyling, variantClassNames, className)
+    const buttonClassNames = twMerge(
+      commonButtonStyling,
+      variantClassNames,
+      className,
+    )
 
     return (
       <button ref={ref} type={type} className={buttonClassNames} {...rest}>

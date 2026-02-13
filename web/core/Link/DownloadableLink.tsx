@@ -11,11 +11,11 @@ import {
 } from 'react-icons/bs'
 import { FriendlyCaptchaContext } from '@/contexts/FriendlyCaptchaContext'
 import { Typography } from '@/core/Typography'
-import verifyCaptcha from '../../app/_actions/verifyCaptcha'
 import { twMerge } from '@/lib/twMerge/twMerge'
 import { Modal } from '@/sections/Modal'
 import FriendlyCaptcha from '@/templates/forms/FriendlyCaptcha'
 import type { LinkType } from '@/types'
+import verifyCaptcha from '../../app/_actions/verifyCaptcha'
 import { ArrowRight } from '../../icons'
 import { BaseLink } from './BaseLink'
 import { getArrowElement, type ResourceLinkProps } from './ResourceLink'
@@ -122,16 +122,17 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(
         setIsFriendlyChallengeDone(true)
         const result = await verifyCaptcha(solution)
         setNotHuman(result !== true)
-        setIsHuman(result == true)
+        setIsHuman(result === true)
       },
-      [],
+      [setIsHuman],
     )
 
     const commonResourceLinkWrapperClassName = `
-    group/link
+    group
     text-base
     relative
     flex
+    cursor-pointer
     flex-col
     justify-end
     gap-0
@@ -193,7 +194,7 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(
             className={
               type !== 'stickyMenu'
                 ? commonResourceLinkWrapperClassName
-                : `group/link relative flex w-fit items-end justify-center text-slate-80 text-sm underline-offset-2`
+                : `group relative flex w-fit cursor-pointer items-end justify-center text-slate-80 text-sm underline-offset-2`
             }
             title={`${assetLabel}`}
             aria-haspopup='dialog'
@@ -222,7 +223,7 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(
             </div>
             {type !== 'stickyMenu' && (
               <div className='relative h-0.5'>
-                <div className='absolute inset-0 z-10 h-0.5 w-[0%] bg-grey-50 transition-all duration-300 group-hover/link:w-full dark:bg-white-100' />
+                <div className='absolute inset-0 z-10 h-0.5 w-[0%] bg-grey-50 transition-all duration-300 group-hover:w-full dark:bg-white-100' />
                 <div className='absolute inset-0 z-0 h-px w-full bg-grey-50 dark:bg-white-100' />
               </div>
             )}
