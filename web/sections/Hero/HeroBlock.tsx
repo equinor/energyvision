@@ -72,6 +72,7 @@ export const HeroBlock = ({
   title,
   heroTitle,
   subTitle,
+  ingress,
   figure,
   ratio,
   background,
@@ -95,6 +96,7 @@ export const HeroBlock = ({
     title,
     subTitle,
     heroTitle,
+    ingress,
     //@ts-ignore
     background: colorKeyToUtilityMap[background]?.background,
     nextSectionDesignOptions: nextSectionDesignOptions,

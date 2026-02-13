@@ -31,7 +31,7 @@ export const FiftyFiftyHero = ({
   const { bg: nextCompBg, dark: nextCompDark } = getBgAndDarkFromBackground(
     nextSectionDesignOptions,
   )
-  console.log('FiftyFiftyHero title', title)
+ 
 
   return (
     <section className={twMerge(`flex flex-col-reverse`, className)}>
