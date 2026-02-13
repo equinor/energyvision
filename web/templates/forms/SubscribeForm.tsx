@@ -6,10 +6,8 @@ import { useLocale, useTranslations } from 'next-intl'
 import { type BaseSyntheticEvent, useId, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import type * as z from 'zod'
-import {
-  type newsletterCategoryLocale,
-  subscribe,
-} from '@/app/_actions/subscription.actions'
+import { subscribe } from '@/app/_actions/subscription.actions'
+import {  type newsletterCategoryLocale} from '@/types/newsLetterTypes'
 import { Button } from '@/core/Button'
 import { Checkbox } from '@/core/Checkbox/Checkbox'
 import { FormMessageBox } from '@/core/Form/FormMessageBox'
