@@ -3,7 +3,9 @@ node_modules
 
 # Ignore local environment files
 .env
+.env.template
 .env.local
+.env.local.template
 .env.development
 .env.test
 .env.production

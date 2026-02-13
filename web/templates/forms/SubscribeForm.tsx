@@ -6,11 +6,16 @@ import { useLocale, useTranslations } from 'next-intl'
 import { type BaseSyntheticEvent, useId, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import type * as z from 'zod'
+import {
+  type newsletterCategoryLocale,
+  subscribe,
+} from '@/app/_actions/subscription.actions'
 import { Button } from '@/core/Button'
 import { Checkbox } from '@/core/Checkbox/Checkbox'
 import { FormMessageBox } from '@/core/Form/FormMessageBox'
 import { TextField } from '@/core/TextField/TextField'
 import { subscribeSchema } from '@/lib/zodSchemas/zodSchemas'
+import { getLocaleFromIso } from '@/sanity/helpers/localization'
 import FriendlyCaptcha from './FriendlyCaptcha'
 
 const SubscribeForm = () => {
@@ -34,11 +39,20 @@ const SubscribeForm = () => {
   })
 
   const onSubmit = async (
-    data: z.infer<typeof subscribeSchema>,
+    formData: z.infer<typeof subscribeSchema>,
     event?: BaseSyntheticEvent,
   ) => {
     if (isFriendlyChallengeDone) {
-      const res = await fetch('/api/newsletter/subscription', {
+      console.log('locale', locale)
+      const res = await subscribe({
+        locale: getLocaleFromIso(locale) as newsletterCategoryLocale,
+        frcCaptchaSolution: (event?.target as any)['frc-captcha-response']
+          .value,
+        formData,
+      })
+      console.log('subscribe res', res)
+
+      /*       const res = await fetch('/api/newsletter/subscription', {
         body: JSON.stringify({
           data,
           languageCode: locale === 'en' ? 'en' : 'no',
@@ -49,9 +63,12 @@ const SubscribeForm = () => {
           'Content-Type': 'application/json',
         },
         method: 'POST',
-      })
-      setServerError(res.status !== 200)
-      setSuccessfullySubmitted(res.status === 200)
+      }) */
+      if (res?.status) {
+        setSuccessfullySubmitted(res.status)
+      } else {
+        setServerError(!res?.status)
+      }
     } else {
       //@ts-ignore: TODO: types
       setError('root.notCompletedCaptcha', {
