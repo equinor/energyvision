@@ -11,7 +11,7 @@ import {
 } from 'react-icons/bs'
 import { FriendlyCaptchaContext } from '@/contexts/FriendlyCaptchaContext'
 import { Typography } from '@/core/Typography'
-import { verifyCaptcha } from '@/lib/actions/verifyCaptcha'
+import verifyCaptcha from '../../app/_actions/verifyCaptcha'
 import { twMerge } from '@/lib/twMerge/twMerge'
 import { Modal } from '@/sections/Modal'
 import FriendlyCaptcha from '@/templates/forms/FriendlyCaptcha'

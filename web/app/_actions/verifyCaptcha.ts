@@ -1,7 +1,7 @@
 "use server"
 import { validateCaptcha } from '@/app/api/forms/validateCaptcha'
 
-export async function verifyCaptcha(frcCaptchaSolution:any): Promise<boolean|{error:string}> {
+export default async function verifyCaptcha(frcCaptchaSolution:any): Promise<boolean|{error:string}> {
     try {
         const { accept, errorCode } = await validateCaptcha(frcCaptchaSolution)
         if (!accept) {

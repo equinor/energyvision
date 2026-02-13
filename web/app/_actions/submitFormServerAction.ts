@@ -3,7 +3,7 @@
 
 import { ContactFormCatalogType } from '../../types'
 import { validateFormRequest } from '../../app/api/forms/validateFormRequest'
-import { getAccessToken } from './getAccessToken'
+import { getAccessToken } from '../../lib/actions/getAccessToken'
 
 export default async function submitFormServerAction(formData: any, catelogNumber: string) {
   const urlString = process.env.ACTION_BASE_URL_FOR_FORMS + '/' + catelogNumber;

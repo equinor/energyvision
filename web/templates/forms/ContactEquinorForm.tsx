@@ -15,8 +15,8 @@ import FriendlyCaptcha from './FriendlyCaptcha'
 import { contentRegex, emailRegex, nameRegex } from './validations'
 
 // Import the server action
-import submitFormServerAction from '@/lib/actions/submitFormServerAction'
-import { verifyCaptcha } from '@/lib/actions/verifyCaptcha'
+import submitFormServerAction from '../../app/_actions/submitFormServerAction'
+import verifyCaptcha from '../../app/_actions/verifyCaptcha'
 
 type FormValues = {
   name: string
