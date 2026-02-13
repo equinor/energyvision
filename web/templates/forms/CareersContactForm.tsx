@@ -11,6 +11,8 @@ import { FormMessageBox } from '@/core/Form/FormMessageBox'
 import { Select } from '@/core/Select/Select'
 import { TextField } from '@/core/TextField/TextField'
 import FriendlyCaptcha from './FriendlyCaptcha'
+import verifyCaptcha from '@/app/_actions/verifyCaptcha'
+import submitFormServerAction from '@/app/_actions/submitFormServerAction'
 import {
   contentRegex,
   emailRegex,
@@ -29,6 +31,7 @@ type FormValues = {
   preferredLang: string
   candidateType: string
   supportingDocuments: string
+  location: string
 }
 
 const CareersContactForm = () => {
@@ -91,22 +94,37 @@ const CareersContactForm = () => {
   }
 
   const onSubmit = async (data: FormValues, event?: BaseSyntheticEvent) => {
+
     data.preferredLang = locale
     if (isFriendlyChallengeDone) {
-      const res = await fetch('/api/forms/service-now-careers-contact', {
-        body: JSON.stringify({
-          data,
-          frcCaptchaSolution: (event?.target as any)['frc-captcha-response']
-            .value,
-          catalogType: getCatalogType(data.category, data.candidateType),
-        }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        method: 'POST',
-      })
-      setSuccessfullySubmitted(res.status === 200)
-      setServerError(res.status !== 200)
+      const frcCaptchaSolution = (event?.target as any)['frc-captcha-response'].value
+      const isCaptchaVerified = await verifyCaptcha(frcCaptchaSolution)
+      const cid = getCatalogType(data.category, data.candidateType)
+      if(!isCaptchaVerified){
+        return
+      }
+
+      let finalFormData = {
+        "variables": {
+          "requested_for": "tpawe",
+          "cid": cid, //change
+          "name": data.name,
+          "phoneNumber": data.phone,
+          "external_emails": data.email,
+          "positionDetails": data.positionId,
+          "location": data.location,
+          "questions": data.questions,
+          "supportingdocuments": data.supportingDocuments,
+          "candidatetype": data.candidateType,
+          "positiondetails": data.positionId
+        }
+      }
+      
+      // Call the server action directly
+      const result = await submitFormServerAction(JSON.stringify(finalFormData), 'CAT0012840')
+
+      setServerError(result.status !== 200)
+      setSuccessfullySubmitted(result.status === 200)
     } else {
       //@ts-ignore: TODO: types
       setError('root.notCompletedCaptcha', {
