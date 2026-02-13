@@ -10,6 +10,8 @@ import { FormMessageBox } from '@/core/Form/FormMessageBox'
 import { TextField } from '@/core/TextField/TextField'
 import FriendlyCaptcha from './FriendlyCaptcha'
 import { englishTextRegex, nameRegex } from './validations'
+import verifyCaptcha from '@/app/_actions/verifyCaptcha'
+import submitFormServerAction from '@/app/_actions/submitFormServerAction'
 
 type FormValues = {
   name: string
@@ -78,20 +80,36 @@ const OrderReportsForm = () => {
   })
 
   const onSubmit = async (data: FormValues, event?: BaseSyntheticEvent) => {
+
     if (isFriendlyChallengeDone) {
-      const res = await fetch('/api/forms/service-now-order-reports', {
-        body: JSON.stringify({
-          data,
-          frcCaptchaSolution: (event?.target as any)['frc-captcha-response']
-            .value,
-        }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        method: 'POST',
-      })
-      setServerError(res.status !== 200)
-      setSuccessfullySubmitted(res.status === 200)
+          const frcCaptchaSolution = (event?.target as any)['frc-captcha-response'].value
+          const isCaptchaVerified = await verifyCaptcha(frcCaptchaSolution)
+    
+          if(!isCaptchaVerified){
+            return
+          }
+        
+          let finalFormData = {
+            "variables": {
+              "requested_for": "tpawe",
+              "external_emails": data.email,
+              "cid": "d1872741db26ea40977079e9bf961949",
+              "name": data.name,
+              "address": data.address,
+              "zip": data.zipcode,
+              "city": data.city,
+              "country": data.country,
+              "company": data.company,
+              "reports": data.reports
+            }
+          }
+          
+          // Call the server action directly
+          // CAT0012836 is CAT ID for Contact Equinor Form //
+          const result = await submitFormServerAction(JSON.stringify(finalFormData), 'CAT0012841')
+    
+          setServerError(result.status !== 200)
+          setSuccessfullySubmitted(result.status === 200)
     } else {
       //@ts-ignore: TODO: types
       setError('root.notCompletedCaptcha', {
