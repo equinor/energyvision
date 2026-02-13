@@ -9,7 +9,7 @@ import {
   type newsletterCategoryKeys,
   type newsletterCategoryLocale,
   newsletterCategoryMap,
-} from '@/app/_actions/subscription.actions'
+} from '@/types/newsLetterTypes'
 import { type LatestNewsType, latestMagazine, latestNews } from './groq.global'
 
 const generateRssFeed = async (locale: 'en_GB' | 'nb_NO') => {

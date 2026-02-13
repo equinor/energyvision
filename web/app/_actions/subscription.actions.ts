@@ -1,39 +1,15 @@
 'use server'
 import axios from 'axios'
 import type z from 'zod'
-import type { Level2Keys } from '@/lib/helpers/typescriptTyping'
 import { subscribeSchema } from '@/lib/zodSchemas/zodSchemas'
 import { validateFormRequest } from '../api/forms/validateFormRequest'
+import { newsletterCategoryLocale, newsletterCategoryMap } from '@/types/newsLetterTypes'
 
 const MAKE_SUBSCRIBER_API_BASE_URL = process.env.MAKE_SUBSCRIBER_API_BASE_URL
 const MAKE_API_KEY = process.env.MAKE_API_KEY || ''
 const SUBSCRIBER_LIST_ID_EN = process.env.MAKE_SUBSCRIBER_LIST_ID_EN
 const SUBSCRIBER_LIST_ID_NO = process.env.MAKE_SUBSCRIBER_LIST_ID_NO
 const MAKE_API_USER = process.env.MAKE_API_USERID || ''
-
-export const newsletterCategoryMap = {
-  no: {
-    generalNews: 'generelle nyheter',
-    Company: 'generelle nyheter',
-    crudeOilAssays: 'crude oil assays',
-    Crude: 'crude oil assays',
-    magazineStories: 'magasinsaker',
-    stockMarketAnnouncements: 'børsmeldinger',
-    Stock: 'børsmeldinger',
-  },
-  en: {
-    generalNews: 'general news',
-    Company: 'general news',
-    crudeOilAssays: 'crude oil assays',
-    Crude: 'crude oil assays',
-    magazineStories: 'magazine stories',
-    stockMarketAnnouncements: 'stock market announcements',
-    Stock: 'stock market announcements',
-  },
-}
-
-export type newsletterCategoryLocale = keyof typeof newsletterCategoryMap
-export type newsletterCategoryKeys = Level2Keys<typeof newsletterCategoryMap>
 
 const subscriberApi = axios.create({
   baseURL: MAKE_SUBSCRIBER_API_BASE_URL,
