@@ -17,6 +17,8 @@ import {
   phoneRegex,
   urlRegex,
 } from './validations'
+import verifyCaptcha from '@/app/_actions/verifyCaptcha'
+import submitFormServerAction from '@/app/_actions/submitFormServerAction'
 
 type FormValues = {
   organisation: string
@@ -63,21 +65,34 @@ const CareerFairForm = () => {
   const onSubmit = async (data: FormValues, event?: BaseSyntheticEvent) => {
     data.preferredLang = locale
     if (isFriendlyChallengeDone) {
-      const res = await fetch('/api/forms/service-now-career-fair-events', {
-        body: JSON.stringify({
-          data,
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          frcCaptchaSolution: (event?.target as any)['frc-captcha-response']
-            .value,
-        }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        method: 'POST',
-      })
+      const frcCaptchaSolution = (event?.target as any)['frc-captcha-response'].value
+      const isCaptchaVerified = await verifyCaptcha(frcCaptchaSolution)
 
-      setServerError(res.status !== 200)
-      setSuccessfullySubmitted(res.status === 200)
+      if(!isCaptchaVerified){
+        return
+      }
+    
+      let finalFormData = {
+        "variables": {
+          "requested_for": "tpawe",
+          "cid": "848f447ddb692600ff6272dabf961948",
+          "external_emails": data.email,
+          "phonenumber": data.phone,
+          "contactperson": data.contactPerson,
+          "schoolorganisation": data.organisation,
+          "event": data.event,
+          "descriptionofevent": data.eventDescription,
+          "linktowebsite": data.website,
+          "supportingdocuments": data.supportingDocuments      
+        }
+      }
+      
+      // Call the server action directly
+      // CAT0012839 is CAT ID for Career Fair Form //
+      const result = await submitFormServerAction(JSON.stringify(finalFormData), 'CAT0012839')
+
+      setServerError(result.status !== 200)
+      setSuccessfullySubmitted(result.status === 200)
     } else {
       //@ts-ignore: TODO: types
       setError('root.notCompletedCaptcha', {

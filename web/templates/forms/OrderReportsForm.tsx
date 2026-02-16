@@ -105,7 +105,7 @@ const OrderReportsForm = () => {
           }
           
           // Call the server action directly
-          // CAT0012836 is CAT ID for Contact Equinor Form //
+          // CAT0012841 is CAT ID for Order Reports Form //
           const result = await submitFormServerAction(JSON.stringify(finalFormData), 'CAT0012841')
     
           setServerError(result.status !== 200)
