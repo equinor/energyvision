@@ -272,7 +272,7 @@ _type == "keyNumbers" =>{
         "label": viewAllLinkLabel,
         ...links::getLinkFields(viewAllLink),
     },
-    "content": promotion[0]{
+    promotion[0]{
       "id": _key,
       "type": _type,
       _type == "promoteNews" => {

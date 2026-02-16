@@ -152,6 +152,7 @@ export default {
               type: 'string',
               validation: (Rule: Rule) =>
                 Rule.custom((value: string, ctx: ValidationContext) => {
+                  //@ts-ignore: todo
                   if (ctx.parent?.link?.[0]?._type === 'link') {
                     return value ? true : 'You must add a label'
                   }
@@ -162,7 +163,7 @@ export default {
               name: 'image',
               title: 'Image',
               type: 'imageWithAlt',
-              hidden: ({ parent }: DocumentType) => {
+              hidden: ({ parent }: any) => {
                 return (
                   parent?.link?.[0]?._type !== 'link' &&
                   parent?.link?.[0]?._type !== 'anchorLinkReference'
@@ -171,7 +172,9 @@ export default {
               validation: (Rule: Rule) =>
                 Rule.custom((value: string, ctx: ValidationContext) => {
                   if (
+                    //@ts-ignore: todo
                     ctx.parent?.link?.[0]?._type === 'link' ||
+                    //@ts-ignore: todo
                     ctx.parent?.link?.[0]?._type === 'anchorLinkReference'
                   ) {
                     return value ? true : 'You must add an image'

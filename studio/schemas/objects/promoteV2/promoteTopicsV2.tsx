@@ -98,7 +98,7 @@ export type promoteTopics = {
 }
 
 export default {
-  title: 'Promote topics (v2)',
+  title: 'Promotion v2 topics (deprecated, use promotions v2)',
   name: 'promoteTopicsV2',
   type: 'object',
   fieldsets: [

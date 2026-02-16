@@ -10,7 +10,7 @@ export type promoteExternal = {
 }
 
 export default {
-  title: 'Promote external links (v2)',
+  title: 'Promotion v2 external links (deprecated, use promotions v2)',
   name: 'promoteExternalLinkV2',
   type: 'object',
   fieldsets: [

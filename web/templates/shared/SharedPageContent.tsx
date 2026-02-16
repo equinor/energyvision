@@ -389,15 +389,22 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
             className={spacingClassName}
           />
         )
-      case 'promotion':
+      case 'promotion': {
+        const { promotion, ...restPromo } = c
         return (
           <PromotionsBlock
             key={c.id}
-            data={c as PromotionsBlockData}
+            data={
+              {
+                ...promotion,
+                ...restPromo,
+              } as PromotionsBlockData
+            }
             anchor={anchorReference}
             className={spacingClassName}
           />
         )
+      }
       case 'promoteEvents':
         return (
           <PromotionsBlock
