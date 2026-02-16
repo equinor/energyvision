@@ -125,7 +125,7 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
         locale={locale}
         prefetch={false}
         className={twMerge(
-          `group h-full w-full rounded-card ${
+          `group/link h-full w-full rounded-card ${
             colorKeyToUtilityMap[background ?? 'gray-20'].background
           } grid ${
             layoutOnTypes[type]
@@ -158,7 +158,7 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
               <Typography
                 as={hasSectionTitle ? 'h3' : 'h2'}
                 variant={ingress ? 'h5' : 'h6'}
-                className={`leading-tight group-hover:underline`}
+                className={`leading-tight group-hover/link:underline`}
               >
                 {plainText}
               </Typography>
