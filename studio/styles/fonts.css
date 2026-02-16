@@ -19,7 +19,6 @@
   --font-3xl: clamp(calc(39.81 / 16 * 1rem), 1.77vw + 2.07rem, calc(67.14 / 16 * 1rem));
   --font-4xl: clamp(calc(45.89 / 16 * 1rem), 2.16vw + 2.355rem, calc(79.225 / 16 * 1rem));
   --font-5xl: clamp(calc(51.97 / 16 * 1rem), 2.55vw + 2.64rem, calc(91.31 / 16 * 1rem));
-  --font-5xl: clamp(calc(51.97 / 16 * 1rem), 2.55vw + 2.64rem, calc(91.31 / 16 * 1rem));
   --font-6xl: clamp(calc(58.05 / 16 * 1rem), 2.94vw + 2.925rem, calc(103.39 / 16 * 1rem));
   --font-8xl: clamp(calc(59.19 / 16 * 1rem), 3.72vw + 3.495rem, calc(115.47 / 16 * 1rem));
   --tracking-display: -3px;
@@ -53,7 +52,9 @@
   margin: 0;
 }
 .pt-editable .pt-block:has([data-group='display']) [data-text] *:where([data-slate-leaf='true']) {
-  white-space: normal;
+  /*white-space: normal; Did not work, tried to avoid pre-wrap because used together with other styles it can make an empty line
+  in eitor when text gets wrapped. Looks wrong with the emtpy pre-wrapped line with a cursor to write... 
+  But with out pre-wrap the space doesnt show in editor... */
 }
 .pt-editable .text-sm *:where([data-slate-leaf='true']) {
   font-size: var(--font-sm);

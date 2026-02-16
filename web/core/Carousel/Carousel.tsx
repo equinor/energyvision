@@ -6,6 +6,7 @@ import {
   type ElementType,
   forwardRef,
   type HTMLAttributes,
+  type ReactNode,
   useCallback,
   useEffect,
   useId,
@@ -69,6 +70,7 @@ type CarouselProps = {
   title?: PortableTextBlock[]
   /** Variant Image: The section title to be used in translated autorotation control button */
   sectionTitle?: PortableTextBlock[]
+  getVariantElementBody?: (itemData: any, index?: number) => JSX.Element
 } & Omit<HTMLAttributes<HTMLDivElement>, 'title'>
 
 const TRANSLATE_X_AMOUNT_LG = 1000
@@ -89,6 +91,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
       listClassName = '',
       hasSectionTitle = false,
       sectionTitle,
+      getVariantElementBody,
     },
     ref,
   ) {
@@ -342,7 +345,9 @@ const [scrollPosition, setScrollPosition] = useState<'start' | 'middle' | 'end'>
       )
     }
     const getEventVariantBody = (itemData: EventCardData, index: number) => {
-      const element = (
+      const element = getVariantElementBody ? (
+        getVariantElementBody(itemData)
+      ) : (
         <EventCard
           hasSectionTitle={hasSectionTitle}
           data={itemData}

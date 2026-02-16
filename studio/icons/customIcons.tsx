@@ -64,6 +64,10 @@ export const SmallSizeImage = (): JSX.Element => (
   <svg
     width='48'
     height='48'
+    style={{
+      width: '100%',
+      height: 'auto',
+    }}
     viewBox='0 0 48 48'
     fill='none'
     xmlns='http://www.w3.org/2000/svg'
@@ -86,6 +90,10 @@ export const LeftAlignedImage = (): JSX.Element => (
     width='48'
     height='48'
     viewBox='0 0 48 48'
+    style={{
+      width: '100%',
+      height: 'auto',
+    }}
     aria-labelledby='leftAlignedTitle'
     fill='currentColor'
     stroke='currentColor'
@@ -103,7 +111,10 @@ export const LeftAlignedImage = (): JSX.Element => (
 export const ContentCenterImage = (): JSX.Element => (
   <svg
     xmlns='http://www.w3.org/2000/svg'
-    className='icon icon-tabler icon-tabler-align-box-center-middle-filled'
+    style={{
+      width: '100%',
+      height: 'auto',
+    }}
     width='48'
     height='48'
     viewBox='0 0 24 24'
@@ -124,9 +135,12 @@ export const ContentCenterImage = (): JSX.Element => (
 export const ContentLeftImage = (): JSX.Element => (
   <svg
     xmlns='http://www.w3.org/2000/svg'
-    className='icon icon-tabler icon-tabler-align-box-left-middle-filled'
     width='48'
     height='48'
+    style={{
+      width: '100%',
+      height: 'auto',
+    }}
     viewBox='0 0 24 24'
     strokeWidth='1.5'
     stroke='currentColor'
@@ -146,7 +160,10 @@ export const ContentLeftImage = (): JSX.Element => (
 export const ContentRightImage = (): JSX.Element => (
   <svg
     xmlns='http://www.w3.org/2000/svg'
-    className='icon icon-tabler icon-tabler-align-box-right-middle-filled'
+    style={{
+      width: '100%',
+      height: 'auto',
+    }}
     width='48'
     height='48'
     viewBox='0 0 24 24'
@@ -167,7 +184,10 @@ export const ContentRightImage = (): JSX.Element => (
 export const ContentBottomCenterImage = (): JSX.Element => (
   <svg
     xmlns='http://www.w3.org/2000/svg'
-    className='icon icon-tabler icon-tabler-align-box-right-middle-filled'
+    style={{
+      width: '100%',
+      height: 'auto',
+    }}
     width='48'
     height='48'
     viewBox='0 0 24 24'
@@ -181,7 +201,10 @@ export const ContentBottomCenterImage = (): JSX.Element => (
 export const ContentBottomLeftImage = (): JSX.Element => (
   <svg
     xmlns='http://www.w3.org/2000/svg'
-    className=''
+    style={{
+      width: '100%',
+      height: 'auto',
+    }}
     width='48'
     height='48'
     viewBox='0 0 24 24'
@@ -197,6 +220,10 @@ export const RightAlignedImage = (): JSX.Element => (
   <svg
     width='48'
     height='48'
+    style={{
+      width: '100%',
+      height: 'auto',
+    }}
     viewBox='0 0 48 48'
     aria-labelledby='rightAlignedTitle'
     fill='currentColor'

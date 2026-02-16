@@ -11,15 +11,15 @@ import FormattedDateTime, {
   TimeIcon,
 } from '@/core/FormattedDateTime/FormattedDateTime'
 import { BaseLink } from '@/core/Link/BaseLink'
+import { defaultLanguage } from '@/languageConfig'
 import { getEventDates } from '@/lib/helpers/dateUtilities'
+import { getLocaleFromIso } from '@/sanity/helpers/localization'
 import {
   type ColorKeys,
   colorKeyToUtilityMap,
 } from '@/styles/colorKeyToUtilityMap'
 import AddToCalendar from '../../../core/AddToCalendar/AddToCalendar'
 import Blocks from '../../../portableText/Blocks'
-import { defaultLanguage } from '@/languageConfig'
-import { getLocaleFromIso } from '@/sanity/helpers/localization'
 
 type Variants = 'default' | 'single' | 'carousel'
 
@@ -74,9 +74,9 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
   } = data
 
   const iso = useLocale()
-  const locale = iso!== defaultLanguage.name? getLocaleFromIso(iso) :""
-  const href =  ("/"+locale+ slug) || ''
-    
+  const locale = iso !== defaultLanguage.name ? getLocaleFromIso(iso) : ''
+  const href = '/' + locale + slug || ''
+
   const formatter = useFormatter()
   const { start, end } = getEventDates(eventDate)
   const { dayTime: startDayTime, overrideTimeLabel: startTimeLabel } =

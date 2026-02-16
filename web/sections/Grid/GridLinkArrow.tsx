@@ -20,6 +20,7 @@ const GridLinkArrow = forwardRef<HTMLDivElement, GridLinkArrowProps>(
     { action, className = '', bgColor, variant = 'square' },
     ref,
   ) {
+    console.log('GridLinkArrow bgColor', bgColor)
     const url = action && getUrlFromAction(action)
 
     const bgClassName = () => {
@@ -34,7 +35,7 @@ const GridLinkArrow = forwardRef<HTMLDivElement, GridLinkArrowProps>(
         case 'bg-white-100':
           return `text-slate-80 hover:bg-grey-50 hover:text-white-100 focus-visible:bg-grey-50 focus-visible:text-white-100`
         default:
-          return `text-white-100 hover:bg-white-100 hover:text-slate-80 dark:hover:bg-white-100 dark:hover:text-slate-80 focus-visible:bg-white-100 focus-visible:text-slate-80`
+          return `text-white-100 hover:bg-white-100 hover:text-slate-80 dark:hover:bg-white-100 dark:hover:*:text-slate-80 focus-visible:bg-white-100 focus-visible:text-slate-80`
       }
     }
 
@@ -53,7 +54,7 @@ const GridLinkArrow = forwardRef<HTMLDivElement, GridLinkArrowProps>(
           <div
             ref={ref}
             className={twMerge(
-              `focus-visible:-translate-x-[5px] focus-visible:-translate-y-[5px] absolute right-0 bottom-0 flex w-full justify-end 3xl:pt-12 pt-4`,
+              `focus-visible:-translate-x-1.25 focus-visible:-translate-y-1.25 absolute right-0 bottom-0 flex w-full justify-end 3xl:pt-12 pt-4`,
               className,
             )}
           >

@@ -93,7 +93,7 @@ export const RadioIconSelector = ({
                     ? option.icon()
                     : option.icon}
                 </div>
-                <p style={{ margin: 0 }}>{option.value}</p>
+                <p style={{ margin: 0, textAlign: 'center' }}>{option.value}</p>
               </div>
             </label>
           </div>

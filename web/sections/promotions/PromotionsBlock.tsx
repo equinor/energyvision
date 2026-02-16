@@ -135,6 +135,8 @@ const PromotionsBlock = ({
 
   const { backgroundImage, backgroundPosition } = designOptions || {}
 
+  console.log('promotion data', data)
+
   const promotionVariant =
     variant ?? mapOldPromoType(data.promotions?.[0]?.type) ?? 'promoteTopics'
 
@@ -157,6 +159,7 @@ const PromotionsBlock = ({
   }, [promotions, eventsCount])
 
   const onColorBg = designOptions?.background?.backgroundColor !== 'White'
+  console.log('onColorBg', onColorBg)
   const paddingClassName = `px-layout-sm lg:px-layout-lg`
 
   return (
