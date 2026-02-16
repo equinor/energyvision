@@ -1,3 +1,4 @@
+'use client'
 import type { SanityImageObject } from '@sanity/image-url'
 import type { ImageProps } from 'next/image'
 import { forwardRef } from 'react'
@@ -20,6 +21,11 @@ type PictureProps = {
    */
   mobileAspectRatio?: ImageRatioKeys
   figCaptionClassName?: string
+  figureClassName?: string
+  /** if figure caption should have the default px layouts
+   * @default true
+   */
+  withLayoutPx?: boolean
 } & Omit<ImageProps, 'src' | 'alt'>
 
 export const Picture = forwardRef<HTMLElement, PictureProps>(function Picture(
@@ -30,7 +36,9 @@ export const Picture = forwardRef<HTMLElement, PictureProps>(function Picture(
     caption,
     attribution,
     className = '',
+    figureClassName = '',
     figCaptionClassName = '',
+    withLayoutPx = true,
   },
   ref,
 ) {
@@ -46,16 +54,6 @@ export const Picture = forwardRef<HTMLElement, PictureProps>(function Picture(
     isLargerDisplays: true,
   })
   console.log('desktopUrl', desktopUrl)
-
-  // Get props for the desktop image source
-  /*     const {
-      props: { srcSet: desktopSrcSet },
-    } = getImageProps({
-      alt: 'alt' in image && image.alt ? image.alt : '',
-      width,
-      height,
-      src: desktopUrl as string,
-    }) */
 
   const pictureElement = (
     <picture ref={ref} className={twMerge(`relative h-full w-full`, className)}>
@@ -73,10 +71,10 @@ export const Picture = forwardRef<HTMLElement, PictureProps>(function Picture(
   )
 
   return caption || attribution ? (
-    <figure>
+    <figure className={figureClassName}>
       {pictureElement}
       <FigureCaption
-        withLayoutPx
+        withLayoutPx={withLayoutPx}
         className={figCaptionClassName}
         caption={caption}
         attribution={attribution}

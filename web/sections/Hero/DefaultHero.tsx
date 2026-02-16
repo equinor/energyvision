@@ -1,6 +1,8 @@
+'use client'
 import type { PortableTextBlock } from '@portabletext/types'
 import type { HTMLAttributes, ReactNode } from 'react'
-import { Image, type ImageRatioKeys } from '@/core/Image/Image'
+import type { ImageRatioKeys } from '@/core/Image/Image'
+import { Picture } from '@/core/Picture/Picture'
 import { Typography } from '@/core/Typography'
 import { twMerge } from '@/lib/twMerge/twMerge'
 import Blocks from '@/portableText/Blocks'
@@ -85,7 +87,19 @@ export const DefaultHero = ({
         </div>
       </div>
       {figure && (
-        <Image
+        <Picture
+          image={figure.image}
+          desktopAspectRatio={ratio}
+          figCaptionClassName={figCaptionClassName}
+          caption={figure?.caption}
+          attribution={figure?.attribution}
+          figureClassName={twMerge(
+            `${isColorBg ? 'lg:-mt-news-banner-vertical' : ''} lg:px-layout-md`,
+            imageWrapperClassName,
+          )}
+          withLayoutPx={false}
+        />
+        /*         <Image
           grid='sm'
           loading='eager'
           className={twMerge(
@@ -98,7 +112,7 @@ export const DefaultHero = ({
           attribution={figure.attribution}
           imageClassName={twMerge(``, imageClassName)}
           figCaptionClassName={figCaptionClassName}
-        />
+        /> */
       )}
       {magazineTags && magazineTags?.length > 0 && (
         <MagazineTagBar tags={magazineTags} />
