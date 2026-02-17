@@ -2,7 +2,7 @@ import { isValidSignature, SIGNATURE_HEADER_NAME } from '@sanity/webhook'
 import { revalidatePath } from 'next/cache'
 import type { NextRequest } from 'next/server'
 import { groq } from 'next-sanity'
-import { sanityClientWithEquinorCDN } from '@/sanity/lib/equinorCdnClient'
+import { client } from '@/sanity/lib/client'
 
 const SANITY_API_TOKEN = process.env.SANITY_API_TOKEN || ''
 const ALGOLIA_FUNCTION_URL = process.env.ALGOLIA_FUNCTION_URL || ''
@@ -71,7 +71,7 @@ export async function POST(req: NextRequest) {
       { status: 400 },
     )
   }
-  const result = await sanityClientWithEquinorCDN.fetch(
+  const result = await client.fetch(
     groq`*[_type match "route_*" && content._ref == $id && excludeFromSearch != true][0]{"slug": slug.current}`,
     {
       id: data._id,

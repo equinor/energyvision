@@ -3,9 +3,9 @@ import { createImageUrlBuilder } from '@sanity/image-url'
 import { type CreateDataAttributeProps, createDataAttribute } from 'next-sanity'
 import type { GridType } from '@/core/Image/Image'
 import { dataset, projectId, studioUrl } from '@/sanity/lib/api'
-import { sanityClientWithEquinorCDN } from './equinorCdnClient'
+import { assetOnlyCdnClient } from './equinorCdnClient'
 
-const imageBuilder = createImageUrlBuilder(sanityClientWithEquinorCDN)
+const imageBuilder = createImageUrlBuilder(assetOnlyCdnClient)
 
 const getMaxWidth = (paddingGrid?: GridType, isLargerDisplays = false) => {
   switch (paddingGrid) {

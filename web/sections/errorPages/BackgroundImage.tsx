@@ -2,7 +2,7 @@
 import type { SanityImageSource } from '@sanity/image-url'
 import Img from 'next/image'
 import { useNextSanityImage } from 'next-sanity-image'
-import { sanityClientWithEquinorCDN } from '@/sanity/lib/equinorCdnClient'
+import { assetOnlyCdnClient } from '@/sanity/lib/equinorCdnClient'
 
 const BackgroundImage = ({
   backgroundImage,
@@ -10,7 +10,7 @@ const BackgroundImage = ({
   backgroundImage: SanityImageSource
 }) => {
   const imageProps = useNextSanityImage(
-    sanityClientWithEquinorCDN,
+    assetOnlyCdnClient,
     backgroundImage,
   )
 
