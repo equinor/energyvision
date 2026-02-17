@@ -109,14 +109,14 @@ const CareersContactForm = () => {
           "requested_for": "tpawe",
           "cid": cid, //change
           "name": data.name,
-          "phoneNumber": data.phone,
-          "external_emails": data.email,
-          "positionDetails": data.positionId,
+          "phone": data.phone,
+          "email": data.email,
+          "positiondetails": data.positionId,
           "location": data.location,
           "questions": data.questions,
           "supportingdocuments": data.supportingDocuments,
           "candidatetype": data.candidateType,
-          "positiondetails": data.positionId
+          "category": data.category
         }
       }
       
