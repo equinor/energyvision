@@ -170,7 +170,6 @@ export const CarouselImageItem = forwardRef<
     if (isImageWithOverlay) {
       return (
         <ImageWithOverlay
-          ref={ref}
           className={`aspect-4/3 rounded-md md:aspect-video`}
           teaserTitle={captionTeaserTitle}
           //@ts-ignore:TODO
