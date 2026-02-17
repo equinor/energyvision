@@ -9,6 +9,7 @@ import { homePageMetaQuery } from '@/sanity/queries/metaData'
 import Footer from '@/sections/Footer/Footer'
 import Header from '@/sections/Header/Header'
 import HomePage from '@/templates/homepage/HomePage'
+import { FriendlyCaptchaSdkWrapper } from './FriendlyCaptchaWrapper'
 
 type Props = {
   params: Promise<{ slug: string; locale: string }>
@@ -46,7 +47,7 @@ export default async function Home({ params }: Props) {
   if (!template) console.warn('Missing homepage template', pageData?.slug)
 
   return (
-    <>
+    <FriendlyCaptchaSdkWrapper>
       <Header />
       <OrganizationJsonLd
         name='Equinor ASA'
@@ -64,6 +65,7 @@ export default async function Home({ params }: Props) {
 
       <HomePage headerData={headerData} {...pageData} />
       <Footer />
-    </>
+    </FriendlyCaptchaSdkWrapper>
+   
   )
 }
