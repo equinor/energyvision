@@ -8,7 +8,7 @@ import { getLocaleFromIso } from '@/sanity/helpers/localization'
 import { EventCard } from '@/sections/cards/EventCard'
 import type { FeaturedContentData } from '../../types/index'
 import type { EventCardData } from '../cards/EventCard/EventCard'
-import { de } from 'zod/v4/locales'
+
 
 type Props = {
   featuredContent: FeaturedContentData
