@@ -87,32 +87,20 @@ export const DefaultHero = ({
         </div>
       </div>
       {figure && (
-        <Picture
-          image={figure.image}
-          desktopAspectRatio={ratio}
-          figCaptionClassName={figCaptionClassName}
-          caption={figure?.caption}
-          attribution={figure?.attribution}
-          figureClassName={twMerge(
-            `${isColorBg ? 'lg:-mt-news-banner-vertical' : ''} lg:px-layout-md`,
-            imageWrapperClassName,
-          )}
-          withLayoutPx={false}
-        />
-        /*         <Image
-          grid='sm'
-          loading='eager'
-          className={twMerge(
-            `${isColorBg ? 'lg:-mt-news-banner-vertical' : ''} lg:px-layout-md`,
-            imageWrapperClassName,
-          )}
-          aspectRatio={ratio}
-          image={figure.image}
-          caption={figure.caption}
-          attribution={figure.attribution}
-          imageClassName={twMerge(``, imageClassName)}
-          figCaptionClassName={figCaptionClassName}
-        /> */
+        <div
+          className={`${isColorBg ? 'lg:-mt-news-banner-vertical' : ''} lg:px-layout-md`}
+        >
+          <Picture
+            image={figure.image}
+            desktopAspectRatio={ratio}
+            figCaptionClassName={figCaptionClassName}
+            caption={figure?.caption}
+            attribution={figure?.attribution}
+            figureClassName={twMerge(`w-full`, imageWrapperClassName)}
+            className={imageClassName}
+            withLayoutPx={false}
+          />
+        </div>
       )}
       {magazineTags && magazineTags?.length > 0 && (
         <MagazineTagBar tags={magazineTags} />

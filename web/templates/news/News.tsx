@@ -106,7 +106,6 @@ const NewsPage = async ({
             title={title}
             ratio='21:9'
             subTitle={publishedInformation}
-            imageWrapperClassName='lg:px-layout-md'
             figCaptionClassName='light'
           />
           {ingress && ingress.length > 0 && (
