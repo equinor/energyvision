@@ -1,5 +1,4 @@
 'use client'
-import { Typography } from '@equinor/eds-core-react'
 import type { PortableTextBlock } from '@portabletext/types'
 import type { SanityImageObject } from '@sanity/image-url'
 import { useTranslations } from 'next-intl'
@@ -9,10 +8,10 @@ import { twMerge } from 'tailwind-merge'
 import type { DisplayModes } from '@/core/Carousel/Carousel'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import Blocks from '../../portableText/Blocks'
-import { getLocaleFromName } from '../../sanity/helpers/localization'
 import type { ImageWithAlt, LinkData } from '../../types'
 import { Image } from '../Image/Image'
 import ResourceLink from '../Link/ResourceLink'
+import { Typography } from '../Typography'
 
 export type ImageWithOverlayProps = {
   image?: SanityImageObject
@@ -114,7 +113,7 @@ export const ImageWithOverlay = forwardRef<
           >
             <div className={`pb-1 lg:pb-6`}>
               {title && (
-                <Typography as='h2' variant='h4' className='text-md lg:text-lg'>
+                <Typography as='h2' variant='h4' className='text-md lg:text-lg text-white-100'>
                   {plainText}
                 </Typography>
               )}
