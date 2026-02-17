@@ -23,8 +23,8 @@ function getLink(menuLinkData: MenuLinkData, iso: string) {
   // the static pages are migrated
   if (!menuLinkData) return 'something-wrong'
   // manually setting lang here.. as menu links only allow same language links..
-  const locale = iso !== defaultLanguage.name ? getLocaleFromIso(iso) : ''
-  return '/' + locale + menuLinkData.link?.slug || ''
+  const locale = iso !== defaultLanguage.iso ? `/${getLocaleFromIso(iso)}` : ''
+  return  locale + menuLinkData.link?.slug || ''
 }
 
 type MenuGroupType = {

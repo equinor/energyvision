@@ -8,6 +8,7 @@ import { getLocaleFromIso } from '@/sanity/helpers/localization'
 import { EventCard } from '@/sections/cards/EventCard'
 import type { FeaturedContentData } from '../../types/index'
 import type { EventCardData } from '../cards/EventCard/EventCard'
+import { de } from 'zod/v4/locales'
 
 type Props = {
   featuredContent: FeaturedContentData
@@ -30,8 +31,8 @@ const FeaturedContent = ({
     data?.routeContentType === 'event'
   const { type, heroImage, title, ingress, slug } = featuredContent
 
-  const locale = iso !== defaultLanguage.name ? getLocaleFromIso(iso) : ''
-  const href = '/' + locale + slug || ''
+  const locale = iso !== defaultLanguage.iso ? `/${getLocaleFromIso(iso)}` : ''
+  const href =  locale + slug || ''
 
   return (
     <div className=''>
