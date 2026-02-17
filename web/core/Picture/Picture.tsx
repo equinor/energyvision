@@ -42,18 +42,13 @@ export const Picture = forwardRef<HTMLElement, PictureProps>(function Picture(
   },
   ref,
 ) {
-  const {
-    url: desktopUrl,
-    width,
-    height,
-  } = resolveImage({
+  const { url: desktopUrl } = resolveImage({
     image,
     grid: 'full',
     aspectRatio: mapSanityImageRatio(desktopAspectRatio),
     keepRatioOnMobile: true,
     isLargerDisplays: true,
   })
-  console.log('desktopUrl', desktopUrl)
 
   const pictureElement = (
     <picture ref={ref} className={twMerge(`relative h-full w-full`, className)}>

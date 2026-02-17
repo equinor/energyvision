@@ -12,10 +12,14 @@ type PaneMenuItemProps = {
   showSecondPane?: boolean
   onOpen?: (index: number) => void
   index: number
+  linkCallback?: () => void
 }
 
 export const PaneMenuItem = forwardRef<HTMLLIElement, PaneMenuItemProps>(
-  function PaneMenuItem({ item, showSecondPane, onOpen, index }, ref) {
+  function PaneMenuItem(
+    { item, showSecondPane, onOpen, index, linkCallback },
+    ref,
+  ) {
     const { type, label, links = [], readMoreLink } = item
     const pathname = usePathname()
     const id = useId()
@@ -52,8 +56,11 @@ export const PaneMenuItem = forwardRef<HTMLLIElement, PaneMenuItemProps>(
           {type === 'simpleMenuLink' ? (
             <Link
               className={`relative w-full ${ariaCurrentStyling}aria-current:before:bg-north-sea-50 text-lg no-underline underline-offset-2 hover:underline dark:hover:text-north-sea-50`}
-              href={(item.link && item.link.slug) || '/'}
+              href={item.link?.slug || '/'}
               aria-current={pathname === item?.link?.slug ? 'page' : 'false'}
+              {...(linkCallback && {
+                onClick: linkCallback,
+              })}
             >
               {item.label}
             </Link>
@@ -99,6 +106,9 @@ export const PaneMenuItem = forwardRef<HTMLLIElement, PaneMenuItemProps>(
                 aria-current={
                   pathname === readMoreLink?.link?.slug ? 'page' : 'false'
                 }
+                {...(linkCallback && {
+                  onClick: linkCallback,
+                })}
               >
                 {readMoreLink.label}
               </ResourceLink>
@@ -111,6 +121,9 @@ export const PaneMenuItem = forwardRef<HTMLLIElement, PaneMenuItemProps>(
                   aria-current={
                     pathname === link?.link?.slug ? 'page' : 'false'
                   }
+                  {...(linkCallback && {
+                    onClick: linkCallback,
+                  })}
                 >
                   {link.label}
                 </Link>

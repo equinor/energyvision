@@ -3,33 +3,36 @@ import type { PortableTextBlock } from '@portabletext/types'
 import { useLocale, useTranslations } from 'next-intl'
 import { Banner } from '@/core/Banner/Banner'
 import { Typography } from '@/core/Typography'
+import { defaultLanguage } from '@/languageConfig'
+import { getLocaleFromIso } from '@/sanity/helpers/localization'
 import { EventCard } from '@/sections/cards/EventCard'
 import type { FeaturedContentData } from '../../types/index'
 import type { EventCardData } from '../cards/EventCard/EventCard'
-import { defaultLanguage } from '@/languageConfig'
-import { getLocaleFromIso } from '@/sanity/helpers/localization'
 
 type Props = {
   featuredContent: FeaturedContentData
   featuredCTALabel?: string
   featuredIngress: PortableTextBlock[] | undefined
+  linkCallback: () => void
 }
 
 const FeaturedContent = ({
   featuredContent,
   featuredCTALabel,
   featuredIngress,
+  linkCallback,
 }: Props) => {
   const t = useTranslations()
+  const iso = useLocale()
   if (!featuredContent.type) return null
 
   const isEvent = (data: FeaturedContentData): boolean =>
     data?.routeContentType === 'event'
   const { type, heroImage, title, ingress, slug } = featuredContent
 
-  const iso = useLocale()
-  const locale = iso!== defaultLanguage.name? getLocaleFromIso(iso) :""
-  const href =  ("/"+locale+ slug) || ''
+  const locale = iso !== defaultLanguage.name ? getLocaleFromIso(iso) : ''
+  const href = '/' + locale + slug || ''
+
   return (
     <div className=''>
       <Typography
@@ -61,6 +64,7 @@ const FeaturedContent = ({
           ingress={ingress ?? featuredIngress}
           ctaLink={href}
           ctaLabel={featuredCTALabel}
+          linkCallback={linkCallback}
         />
       )}
     </div>

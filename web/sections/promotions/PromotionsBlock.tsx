@@ -135,8 +135,6 @@ const PromotionsBlock = ({
 
   const { backgroundImage, backgroundPosition } = designOptions || {}
 
-  console.log('promotion data', data)
-
   const promotionVariant =
     variant ?? mapOldPromoType(data.promotions?.[0]?.type) ?? 'promoteTopics'
 

@@ -1,9 +1,12 @@
 import { usePathname } from 'next/navigation'
+import { useLocale } from 'next-intl'
 import { Fragment } from 'react'
 import Link from '@/core/Link/Link'
 import ResourceLink from '@/core/Link/ResourceLink'
 import { Menu } from '@/core/MenuAccordion'
 import { Typography } from '@/core/Typography'
+import { defaultLanguage } from '@/languageConfig'
+import { getLocaleFromIso } from '@/sanity/helpers/localization'
 import Blocks from '../../portableText/Blocks'
 import type {
   MenuLinkData,
@@ -11,28 +14,27 @@ import type {
   SubMenuGroupData,
 } from '../../types/index'
 import FeaturedContent from './FeaturedContent'
-import { useLocale } from 'next-intl'
-import { getLocaleFromIso } from '@/sanity/helpers/localization'
-import { defaultLanguage } from '@/languageConfig'
 
 const { MenuItem: _MenuItem, MenuHeader, MenuContent } = Menu
 
-function getLink(menuLinkData: MenuLinkData, iso:string) {
+function getLink(menuLinkData: MenuLinkData, iso: string) {
   // Fallback to home page, if this happens it is an error somewhere
   // Sanity should take care of the validation here, and this is temp. until
   // the static pages are migrated
   if (!menuLinkData) return 'something-wrong'
-  // manually setting lang here.. as menu links only allow same language links.. 
-  const locale = iso!== defaultLanguage.name? getLocaleFromIso(iso) :""
- return ("/"+locale+ menuLinkData.link?.slug) || ''
+  // manually setting lang here.. as menu links only allow same language links..
+  const locale = iso !== defaultLanguage.name ? getLocaleFromIso(iso) : ''
+  return '/' + locale + menuLinkData.link?.slug || ''
 }
 
 type MenuGroupType = {
   item: SubMenuData
   index: number
+  /** Callback to state that handles open/close sitemenu */
+  linkCallback: () => void
 }
 
-export const MenuItem = ({ item, index }: MenuGroupType) => {
+export const MenuItem = ({ item, index, linkCallback }: MenuGroupType) => {
   const {
     topLevelLink,
     groups,
@@ -43,7 +45,7 @@ export const MenuItem = ({ item, index }: MenuGroupType) => {
   } = item
 
   const iso = useLocale()
-  const menuItemHref = getLink(topLevelLink,iso)
+  const menuItemHref = getLink(topLevelLink, iso)
 
   const pathname = usePathname()
 
@@ -68,6 +70,7 @@ export const MenuItem = ({ item, index }: MenuGroupType) => {
               aria-current={
                 pathname === topLevelLink?.link?.slug ? 'page' : 'false'
               }
+              onClick={linkCallback}
             >
               {topLevelLink?.label}
             </ResourceLink>
@@ -95,10 +98,11 @@ export const MenuItem = ({ item, index }: MenuGroupType) => {
                           <li key={link.id}>
                             <Link
                               className={`relative py-2 text-sm no-underline underline-offset-2 hover:underline ${ariaCurrentStyling} `}
-                              href={getLink(link,iso)|| "/"}
+                              href={getLink(link, iso) || '/'}
                               aria-current={
                                 pathname === link?.link?.slug ? 'page' : 'false'
                               }
+                              onClick={linkCallback}
                             >
                               {link.label}
                             </Link>
@@ -118,6 +122,7 @@ export const MenuItem = ({ item, index }: MenuGroupType) => {
               featuredContent={featuredContent}
               featuredIngress={featuredIngress}
               featuredCTALabel={featuredCTALabel}
+              linkCallback={linkCallback}
             />
           )}
         </div>

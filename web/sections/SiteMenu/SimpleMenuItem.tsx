@@ -12,6 +12,7 @@ type MenuGroupType = {
   item: SimpleGroupData
   index: number
   nextIsSimpleLink?: boolean
+  linkCallback?: () => void
 }
 
 //CHECK PATHNAME versus router.asPath before
@@ -19,6 +20,7 @@ export const SimpleMenuItem = ({
   item,
   index,
   nextIsSimpleLink,
+  linkCallback,
 }: MenuGroupType) => {
   const { type, label, links = [], readMoreLink } = item
   const pathname = usePathname()
@@ -50,6 +52,9 @@ export const SimpleMenuItem = ({
             `aria-current:before:-left-2`,
           )}
           href={item.link?.slug || '/'}
+          {...(linkCallback && {
+            onClick: linkCallback,
+          })}
         >
           {item.label}
         </Link>
@@ -73,6 +78,9 @@ export const SimpleMenuItem = ({
                   aria-current={
                     pathname === readMoreLink?.link?.slug ? 'page' : 'false'
                   }
+                  {...(linkCallback && {
+                    onClick: linkCallback,
+                  })}
                 >
                   {readMoreLink.label}
                 </ResourceLink>
@@ -87,6 +95,9 @@ export const SimpleMenuItem = ({
                     aria-current={
                       pathname === link?.link?.slug ? 'page' : 'false'
                     }
+                    {...(linkCallback && {
+                      onClick: linkCallback,
+                    })}
                   >
                     {link.label}
                   </Link>

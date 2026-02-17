@@ -25,6 +25,7 @@ export type BannerProps = {
   /* Override styling on typography element. */
   titleClassName?: string
   backgroundUtility?: keyof ColorKeyTokens
+  linkCallback?: () => void
 } & HTMLAttributes<HTMLDivElement>
 
 /** Generic Banner component */
@@ -39,6 +40,7 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
     className = '',
     variant = 'primary',
     titleClassName = '',
+    linkCallback,
   },
   ref,
 ) {
@@ -81,10 +83,10 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
     <>
       {ingress && (
         <Blocks
-          variant='ingress'
+          variant='small'
           value={ingress}
           clampLines={3}
-          blockClassName={`text-sm max-w-prose`}
+          blockClassName={`pt-2`}
         />
       )}
       {content && variant !== 'secondary' && <Blocks value={content} />}
@@ -115,13 +117,26 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
             <>
               {title && getTitleElement()}
               {contentElements}
-              <ResourceLink href={ctaLink} type='internalUrl' className='w-fit'>
+              <ResourceLink
+                href={ctaLink}
+                {...(linkCallback && {
+                  onClick: linkCallback,
+                })}
+                type='internalUrl'
+                className='w-fit'
+              >
                 {ctaLabel}
               </ResourceLink>
             </>
           ) : (
             <>
-              <BaseLink href={ctaLink} type='internalUrl'>
+              <BaseLink
+                {...(linkCallback && {
+                  onClick: linkCallback,
+                })}
+                href={ctaLink}
+                type='internalUrl'
+              >
                 {getTitleElement() ?? 'Missing title'}
               </BaseLink>
               {contentElements}

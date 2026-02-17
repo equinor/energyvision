@@ -36,7 +36,7 @@ export type MenuProps = {
   variant?: Variants
 }
 
-const SiteMenu = ({ variant = 'default', ...rest }: MenuProps) => {
+const SiteMenu = ({ variant = 'default' }: MenuProps) => {
   const { siteMenuData } = usePage()
   const pathname = usePathname()
   const locale = useLocale()
@@ -45,6 +45,8 @@ const SiteMenu = ({ variant = 'default', ...rest }: MenuProps) => {
   const { refs, context } = useFloating({
     open: isOpen,
     onOpenChange: (open: boolean, event?: Event, reason?: OpenChangeReason) => {
+      console.log('onOpenChange open', open)
+      console.log('onOpenChange reason', reason)
       setIsOpen(!isOpen)
     },
   })
@@ -62,10 +64,10 @@ const SiteMenu = ({ variant = 'default', ...rest }: MenuProps) => {
       : (siteMenuData as MenuData).subMenus
   }, [siteMenuData, variant])
 
-  /*   useEffect(() => {
-    console.log('closing ')
+  const handleLinkClick = () => {
+    console.log('Click inside sitemenu set is open false')
     setIsOpen(false)
-  }, [pathname, setIsOpen]) */
+  }
 
   const title = intl('menu')
   const allSitesURL = getAllSitesLink(
@@ -141,7 +143,6 @@ const SiteMenu = ({ variant = 'default', ...rest }: MenuProps) => {
         onClick={() => setIsOpen(!isOpen)}
         aria-expanded={isOpen}
         aria-haspopup={true}
-        {...rest}
       />
       {isOpen && (
         <FloatingFocusManager context={context}>
@@ -164,12 +165,13 @@ const SiteMenu = ({ variant = 'default', ...rest }: MenuProps) => {
                     onClick={() => setIsOpen(false)}
                   />
                 </NavTopbar>
-                <div className={variantClassName[variant]} {...rest}>
+                <div className={variantClassName[variant]}>
                   {variant === 'simple' ? (
                     useComplex ? (
                       <MenuPanes
                         menuItems={menuItems as SimpleGroupData[]}
                         currentMenuItemIndex={currentMenuItemIndex}
+                        linkCallback={handleLinkClick}
                       />
                     ) : (
                       <Menu
@@ -186,6 +188,7 @@ const SiteMenu = ({ variant = 'default', ...rest }: MenuProps) => {
                               index={idx}
                               item={item as SimpleGroupData}
                               nextIsSimpleLink={nextIsSimpleLink}
+                              linkCallback={handleLinkClick}
                             />
                           )
                         })}
@@ -206,6 +209,7 @@ const SiteMenu = ({ variant = 'default', ...rest }: MenuProps) => {
                             key={item.id}
                             index={idx}
                             item={item as SubMenuData}
+                            linkCallback={handleLinkClick}
                           />
                         )
                       })}
@@ -226,6 +230,7 @@ const SiteMenu = ({ variant = 'default', ...rest }: MenuProps) => {
                     } `}
                     type={Flags.IS_GLOBAL_PROD ? 'internalUrl' : 'externalUrl'}
                     href={allSitesURL}
+                    onClick={handleLinkClick}
                   >
                     {intl('all_sites')}
                     {!Flags.IS_GLOBAL_PROD && (
