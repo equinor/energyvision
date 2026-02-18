@@ -54,7 +54,7 @@ const PensionForm = () => {
 
       let finalFormData = {
         "variables": {
-          "requested_for": "guest",
+          "requested_for": "equinordotcom",
           "copytoemail": data.email,
           "name": data.name,
           "category": data.pensionCategory,

@@ -91,7 +91,7 @@ const OrderReportsForm = () => {
         
           let finalFormData = {
             "variables": {
-              "requested_for": "guest",
+              "requested_for": "equinordotcom",
               "external_emails": data.email,
               "cid": "d1872741db26ea40977079e9bf961949",
               "name": data.name,

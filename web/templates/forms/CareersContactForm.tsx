@@ -105,7 +105,7 @@ const CareersContactForm = () => {
 
       let finalFormData = {
         "variables": {
-          "requested_for": "guest",
+          "requested_for": "equinordotcom",
           "cid": cid, //change
           "name": data.name,
           "phone": data.phone,

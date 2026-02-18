@@ -74,7 +74,7 @@ const CareerFairForm = () => {
     
       let finalFormData = {
         "variables": {
-          "requested_for": "guest",
+          "requested_for": "equinordotcom",
           "cid": "848f447ddb692600ff6272dabf961948",
           "external_emails": data.email,
           "phonenumber": data.phone,
