@@ -67,7 +67,7 @@ const ContactEquinorForm = () => {
 
       let finalFormData = {
         "variables": {
-          "requested_for": "tpawe",
+          "requested_for": "guest",
           "cid": cid,
           "copytoemail": data.email,
           "external_emails": data.email,

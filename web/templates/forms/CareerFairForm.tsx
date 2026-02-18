@@ -74,7 +74,7 @@ const CareerFairForm = () => {
     
       let finalFormData = {
         "variables": {
-          "requested_for": "tpawe",
+          "requested_for": "guest",
           "cid": "848f447ddb692600ff6272dabf961948",
           "external_emails": data.email,
           "phonenumber": data.phone,
