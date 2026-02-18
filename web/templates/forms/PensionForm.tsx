@@ -59,7 +59,7 @@ const PensionForm = () => {
           "name": data.name,
           "category": data.pensionCategory,
           "howcanwehelp": data.requests,
-          "tryingtoreach": data.name,
+          "tryingtoreach": "whoever can assist",
           "cid": cid
         }
       }

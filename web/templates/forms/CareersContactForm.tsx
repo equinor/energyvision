@@ -82,15 +82,14 @@ const CareersContactForm = () => {
 
   const getCatalogType = (category: string, candidateType: string) => {
     if (category.includes(suspectedRecruitmentScam))
-      return 'suspectedRecruitmentScamRequest'
-    if (category.includes(onboarding)) return 'onboarding'
+      return 'b04a9748832d8610347af830feaad382'
     if (
       candidateType.includes(graduates) ||
       candidateType.includes(interns) ||
       candidateType.includes(apprentices)
     )
-      return 'emergingTalentsQueries'
-    return 'others'
+      return '3971e24c375a3640615af01643990ebf'
+    return '59e02ac8375a3640615af01643990e7c'
   }
 
   const onSubmit = async (data: FormValues, event?: BaseSyntheticEvent) => {
