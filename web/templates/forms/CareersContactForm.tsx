@@ -110,6 +110,7 @@ const CareersContactForm = () => {
           "name": data.name,
           "phone": data.phone,
           "email": data.email,
+          "external_emails": data.email,
           "positiondetails": data.positionId,
           "location": data.location,
           "questions": data.questions,
