@@ -11,6 +11,8 @@ import { TextField } from '@/core/TextField/TextField'
 import { PensionFormCatalogType } from '../../types'
 import FriendlyCaptcha from './FriendlyCaptcha'
 import { contentRegex, emailRegex, nameRegex } from './validations'
+import verifyCaptcha from '@/app/_actions/verifyCaptcha'
+import submitFormServerAction from '@/app/_actions/submitFormServerAction'
 
 type PensionFormValues = {
   name: string
@@ -18,6 +20,15 @@ type PensionFormValues = {
   phone: string
   pensionCategory: string
   requests: string
+}
+
+const getCatalogIdentifier = (catalogType: PensionFormCatalogType | string) => {
+  switch (catalogType) {
+    case 'travelInsurance':
+      return '1818180393ca2950eaf1f4527cba101d'
+    default:
+      return '6777904f938a2950eaf1f4527cba1048'
+  }
 }
 
 const PensionForm = () => {
@@ -32,20 +43,35 @@ const PensionForm = () => {
     event?: BaseSyntheticEvent,
   ) => {
     if (isFriendlyChallengeDone) {
-      const res = await fetch('/api/forms/service-now-pension', {
-        body: JSON.stringify({
-          data,
-          frcCaptchaSolution: (event?.target as any)['frc-captcha-response']
-            .value,
-          catalogType: data.pensionCategory,
-        }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        method: 'POST',
-      })
-      setServerError(res.status !== 200)
-      setSuccessfullySubmitted(res.status === 200)
+      const frcCaptchaSolution = (event?.target as any)['frc-captcha-response'].value
+      const isCaptchaVerified = await verifyCaptcha(frcCaptchaSolution)
+
+      if(!isCaptchaVerified){
+        return
+      }
+
+      const cid = getCatalogIdentifier(data.pensionCategory)
+
+      let finalFormData = {
+        "variables": {
+          "requested_for": "tpawe",
+          "copytoemail": data.email,
+          "name": data.name,
+          "category": data.pensionCategory,
+          "howcanwehelp": data.requests,
+          "tryingtoreach": data.name,
+          "cid": cid
+        }
+      }
+      // "category": data.category,
+      // "howcanwehelp": data.message,
+      
+      // Call the server action directly
+      // CAT0012836 is CAT ID for Contact Equinor Form //
+      const result = await submitFormServerAction(JSON.stringify(finalFormData), 'CAT0012836')
+
+      setServerError(result.status !== 200)
+      setSuccessfullySubmitted(result.status === 200)
     } else {
       //@ts-ignore: TODO: types
       setError('root.notCompletedCaptcha', {
