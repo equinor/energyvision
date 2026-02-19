@@ -100,7 +100,8 @@ const OrderReportsForm = () => {
               "city": data.city,
               "country": data.country,
               "company": data.company,
-              "reports": data.reports
+              "annualreport": data.reports.includes('annualReport') ? "Yes" : "No",
+              "annualreportnorwegian": data.reports.includes('statutoryReport') ? "Yes" : "No"
             }
           }
           
