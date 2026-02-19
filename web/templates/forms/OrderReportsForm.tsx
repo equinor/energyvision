@@ -48,8 +48,8 @@ const OrderReportsForm = () => {
         </li>
         <li>
           <Checkbox
-            label={intl('order_reports_checkbox_option_statutoryReport_label')}
-            value='statutoryReport'
+            label={intl('order_reports_checkbox_option_annualreportnorwegian_label')}
+            value='annualReportNorwegian'
             aria-invalid={errors.reports ? 'true' : 'false'}
             aria-describedby='atleast-one-report-required'
             {...register('reports')}
@@ -101,7 +101,7 @@ const OrderReportsForm = () => {
               "country": data.country,
               "company": data.company,
               "annualreport": data.reports.includes('annualReport') ? "Yes" : "No",
-              "annualreportnorwegian": data.reports.includes('statutoryReport') ? "Yes" : "No"
+              "annualreportnorwegian": data.reports.includes('annualReportNorwegian') ? "Yes" : "No"
             }
           }
           

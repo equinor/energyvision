@@ -24,7 +24,7 @@ export async function POST(req: Request) {
   const prospectusReport = data.reports.includes('prospectusReport')
     ? 'Yes'
     : 'No'
-  const statutoryReport = data.reports.includes('statutoryReport')
+  const annualReportNorwegian = data.reports.includes('annualReportNorwegian')
     ? 'Yes'
     : 'No'
 
@@ -44,8 +44,8 @@ export async function POST(req: Request) {
     name +
     '&ZIP=' +
     zipcode +
-    '&StatutoryReport=' +
-    statutoryReport +
+    '&annualReportNorwegian=' +
+    annualReportNorwegian +
     '&AnnualReport=' +
     annualReport +
     '&Country=' +

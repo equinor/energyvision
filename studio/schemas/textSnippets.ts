@@ -484,7 +484,7 @@ const snippets: textSnippet = {
     defaultValue: 'Annual report (english version)',
     group: groups.orderAnnualReportsForm,
   },
-  order_reports_checkbox_option_statutoryReport_label: {
+  order_reports_checkbox_option_annualReportNorwegian_label: {
     title: 'Annual report (norwegian version) option',
     defaultValue: 'Annual report (norwegian version)',
     group: groups.orderAnnualReportsForm,
