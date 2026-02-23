@@ -18,6 +18,7 @@ import type { LinkType } from '@/types'
 import verifyCaptcha from '../../app/_actions/verifyCaptcha'
 import { ArrowRight } from '../../icons'
 import { BaseLink } from './BaseLink'
+import Link from './Link'
 import { getArrowElement, type ResourceLinkProps } from './ResourceLink'
 
 type Variants = 'default' | 'fit'
@@ -265,7 +266,20 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(
             {isFriendlyChallengeDone && !notHuman && downloadable}
           </Modal>
         )}
-        {isHuman && downloadable}
+        {isHuman && type !== 'stickyMenu' && downloadable}
+        {isHuman && type === 'stickyMenu' && (
+          <Link
+            className='text-sm'
+            type={linkType}
+            href={linkType === 'downloadableFile' ? fileUrl : url}
+            {...(extension &&
+              openInNewTab?.includes(extension.toLowerCase()) && {
+                target: '_blank',
+              })}
+          >
+            {linkElement}
+          </Link>
+        )}
       </div>
     )
   },
