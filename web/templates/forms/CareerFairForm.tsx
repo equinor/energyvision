@@ -363,7 +363,7 @@ const CareerFairForm = () => {
         </>
       )}
       <section aria-live='assertive'>
-        {isSubmitSuccessful && <FormMessageBox variant='success' />}
+        {isSuccessfullySubmitted && <FormMessageBox variant='success' />}
         {isSubmitted && isServerError && (
           <FormMessageBox
             variant='error'

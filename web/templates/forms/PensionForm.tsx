@@ -291,7 +291,7 @@ const PensionForm = () => {
         </>
       )}
       <div role='region' aria-live='assertive'>
-        {isSubmitSuccessful && <FormMessageBox variant='success' />}
+        {isSuccessfullySubmitted && <FormMessageBox variant='success' />}
         {isSubmitted && isServerError && (
           <FormMessageBox
             variant='error'
