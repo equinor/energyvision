@@ -1,4 +1,4 @@
-name: UPGRADE PREPROD - Build & Deploy all webs
+name: PREPRODV2 - Build & Deploy all webs
 on:
   workflow_dispatch:
   push:
@@ -19,7 +19,7 @@ jobs:
   update-radix-config:
     runs-on: ubuntu-latest
     environment:
-      name: preprod
+      name: preprodv2
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
@@ -69,7 +69,7 @@ jobs:
     needs: [update-radix-config]
     runs-on: ubuntu-latest
     environment:
-      name: preprod
+      name: preprodv2
     strategy:
       fail-fast: false
       matrix:
