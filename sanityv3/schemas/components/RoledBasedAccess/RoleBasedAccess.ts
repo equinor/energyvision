@@ -1,12 +1,19 @@
-import { Role, useCurrentUser } from 'sanity'
+import { type Role, useCurrentUser } from 'sanity'
 
-const restrictedComponents = ['videoPlayer', 'videoPlayerCarousel', 'fullWidthVideo', 'promoteExternalLinkV2']
+const restrictedComponents = [
+  'videoPlayer',
+  'videoPlayerCarousel',
+  'fullWidthVideo',
+  'promoteExternalLinkV2',
+  'grid',
+  'campaignBanner',
+]
 
 export function RolesBasedArrayInput(props: any) {
   const { schemaType, renderDefault } = props
 
   //get the role of the current user
-  //@ts-ignore CurrentUser has roles in types...
+  //@ts-expect-error CurrentUser has roles in types...
   const { roles } = useCurrentUser()
 
   const allowedRoles = ['administrator', 'developer', 'designer']
@@ -18,5 +25,8 @@ export function RolesBasedArrayInput(props: any) {
     : schemaType.of?.filter((type: any) => !restrictedComponents.includes(type.name))
 
   //render the default component and replace the allowed types
-  return renderDefault({ ...props, schemaType: { ...schemaType, of: allowedTypes } })
+  return renderDefault({
+    ...props,
+    schemaType: { ...schemaType, of: allowedTypes },
+  })
 }

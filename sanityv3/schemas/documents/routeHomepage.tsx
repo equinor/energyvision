@@ -1,10 +1,10 @@
-import { SchemaType } from '../../types'
-import blocksToText from '../../helpers/blocksToText'
 import { calendar_event, home } from '@equinor/eds-icons'
+import type { ValidationContext } from 'sanity'
+import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon, TopicDocuments } from '../../icons'
 import { defaultLanguage, languages } from '../../languages'
-import { ValidationContext } from 'sanity'
 import { apiVersion } from '../../sanity.client'
+import type { SchemaType } from '../../types'
 
 export default {
   type: 'document',
@@ -27,7 +27,7 @@ export default {
               },
               { perspective: 'published' },
             )
-            return result == languages.length || result == 0 || 'Translations of this home page must be published'
+            return result === languages.length || result === 0 || 'Translations of this home page must be published'
           } else return 'Required'
         })
       },

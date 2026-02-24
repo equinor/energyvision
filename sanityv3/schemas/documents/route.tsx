@@ -1,13 +1,13 @@
-import slugify from 'slugify'
-import { Reference, Rule, SlugParent, SlugSchemaType, SlugSourceContext } from 'sanity'
-import blocksToText from '../../helpers/blocksToText'
 import { calendar_event, library_books } from '@equinor/eds-icons'
+// eslint-disable-next-line import/namespace
+import type { SanityClient, SanityDocument } from '@sanity/client'
+import type { Reference, Rule, SlugParent, SlugSchemaType, SlugSourceContext } from 'sanity'
+import slugify from 'slugify'
+import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon, TopicDocuments } from '../../icons'
 import { Flags } from '../../src/lib/datasetHelpers'
-import { withSlugValidation } from '../validations/validateSlug'
 import SlugInput from '../components/SlugInput'
-// eslint-disable-next-line import/namespace
-import { SanityClient, SanityDocument } from '@sanity/client'
+import { withSlugValidation } from '../validations/validateSlug'
 
 export default (isoCode: string, title: string) => {
   return {
@@ -102,7 +102,9 @@ export default (isoCode: string, title: string) => {
 
             if (refId) {
               return client
-                .fetch(/* groq */ `*[_id == $refId][0].slug.current`, { refId: refId })
+                .fetch(/* groq */ `*[_id == $refId][0].slug.current`, {
+                  refId: refId,
+                })
                 .then((parentSlug: string) => `${parentSlug}/${slugify(input)}`)
             } else {
               return `/${slugify(input)}`
