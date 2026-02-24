@@ -92,7 +92,6 @@ runs:
           --build-arg ARG_ENV=${{ inputs.environment }} \
           --build-arg ARG_ARCHIVE_CONTENT_LINK=${{ inputs.archiveContentLink }} \
           --build-arg ARG_FRIENDLY_CAPTCHA_SITEKEY=${{ inputs.friendlyCaptchaSitekey}} \
-          --build-arg ARG_FRIENDLY_CAPTCHA_PUZZLE_ENDPOINT=${{ inputs.friendlyCaptchaPuzzleEndpoint}} \
           --file web/Dockerfile \
           --tag ${{ inputs.imageName }}:${{ env.IMAGE_TAG }} \
           --tag ${{ inputs.imageName }}:${{ env.IMAGE_TAG_SHA }} \
@@ -107,7 +106,7 @@ runs:
       id: get-component-name
       shell: bash
       run: |
-        component=${{ inputs.datasetName == 'global' && format('{0}{1}','web-',inputs.componentSuffix) || format('{0}{1}{2}{3}', 'web-', inputs.datasetName,'-', inputs.componentSuffix) }}
+        component=${{ inputs.datasetName == 'global' && 'web' || format('{0}{1}{2}', 'web-', inputs.datasetName, inputs.componentSuffix) }}
         echo "Component name is $component"
         echo "COMPONENT_NAME=$component" >> $GITHUB_ENV
 
