@@ -1,7 +1,7 @@
-import { PortableTextBlock } from 'sanity'
-import { EdsIcon } from '../../../icons'
 import { table_chart } from '@equinor/eds-icons'
+import type { PortableTextBlock } from 'sanity'
 import blocksToText from '../../../helpers/blocksToText'
+import { EdsIcon } from '../../../icons'
 
 export type Grid = {
   _type: 'grid'

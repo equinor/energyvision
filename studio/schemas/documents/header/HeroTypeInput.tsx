@@ -9,6 +9,7 @@ import {
 } from 'sanity'
 
 const restrictedHeroTypes = ['loopingVideo', 'noHero']
+
 export default function HeroTypeInput(props: StringInputProps) {
   const { value, onChange, schemaType } = props
   const { options } = schemaType

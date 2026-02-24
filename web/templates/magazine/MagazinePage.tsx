@@ -26,14 +26,17 @@ const MagazinePage = ({
   footerComponent,
   hero,
   title,
+  titleStyle = 'normal',
   firstPublishedAt,
   tags,
   magazineTags,
   content,
 }: MagazinePageProps) => {
+  console.log('titleStyle', titleStyle)
+
   const subTitle = (
     <>
-      <div className='flex flex-col gap-6 px-layout-sm pb-6 lg:px-layout-md'>
+      <div className='flex flex-col gap-6 px-layout-sm pb-6 lg:px-layout-lg'>
         {firstPublishedAt && (
           <div className='flex items-center gap-2'>
             <TransformableIcon iconData={calendar} className='-mt-1' />
@@ -58,9 +61,12 @@ const MagazinePage = ({
       </div>
     </>
   )
+
+  console.log('')
   const heroProps: HeroBlockProps = {
     //@ts-ignore
     title,
+    titleStyle,
     ...hero,
     subTitle: subTitle,
     //@ts-ignore

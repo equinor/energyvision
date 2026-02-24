@@ -614,4 +614,99 @@ and not use important in textteaser theme
       transition-duration: 0.01ms !important;
     }
   }
+
+  @supports
+    (backdrop-filter: blur(16px)) or
+    (-webkit-backdrop-filter: blur(16px))
+  {
+
+    .backdrop-glass {
+      position: absolute;
+      inset: 0;
+      /*
+        These prefixed properties are usually
+        added automatically by tooling:
+      */
+      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(16px);/*16px*/
+      background: linear-gradient(
+        to bottom,
+        hsl(from var(--color-white-100) h s l / 0.2),
+        hsl(from var(--color-white-100) h s l / 0.1) 50%
+        /*transparent 50%*/
+      );
+    }
+    .backdrop-glass:before{
+      content:"";
+      position: absolute;
+      inset: 0;
+      z-index:-1;
+      border-radius:inherit;
+      border: 1px solid transparent;
+      background: linear-gradient(
+        hsl(from var(--color-white-100) h s l / 0.5),
+        hsl(from var(--color-white-100) h s l / 0.3)
+        );
+        mask: 
+        linear-gradient(black, black) border-box,
+        linear-gradient(black, black) padding-box;
+        mask-composite: subtract;
+    }
+
+    .backdrop-edge {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: var(--thickness);
+      background: hsl(0deg 0% 100% / 0.1);
+      -webkit-backdrop-filter: blur(12px) brightness(0.96);
+      backdrop-filter: blur(12px) brightness(0.96);
+      transform: translateY(100%);
+      pointer-events: none;
+    }
+  }
+
+  /*
+    This code gets applied for folks using
+    browsers that support mask-image. This
+    adds the "consider near elements"
+    optimization discussed in this article.
+  */
+  @supports
+    (mask-image: none) or
+    (-webkit-mask-image: none)
+  {
+    .backdrop {
+      height: 200%;
+      -webkit-mask-image: linear-gradient(
+        to bottom,
+        black 0% 50%,
+        transparent 50% 100%
+      );
+      mask-image: linear-gradient(
+        to bottom,
+        black 0% 50%,
+        transparent 50% 100%
+      );
+    }
+    .backdrop-edge {
+      height: 100%;
+      inset: 0;
+      -webkit-mask-image: linear-gradient(
+        to bottom,
+        black 0,
+        black var(--thickness),
+        transparent var(--thickness)
+      );
+      mask-image: linear-gradient(
+        to bottom,
+        black 0,
+        black var(--thickness),
+        transparent var(--thickness)
+      );
+    }
+  }
+
+
 }

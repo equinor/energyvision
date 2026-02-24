@@ -1,8 +1,18 @@
-import { Text, Card, Grid, Stack, Heading, Radio, Inline, Flex, Switch } from '@sanity/ui'
-import { set, MemberField } from 'sanity'
-import { getObjectMemberField } from '../utils/getObjectMemberField'
+import {
+  Card,
+  Flex,
+  Grid,
+  Heading,
+  Inline,
+  Radio,
+  Stack,
+  Switch,
+  Text,
+} from '@sanity/ui'
 import type { ObjectInputProps } from 'sanity'
+import { MemberField, set } from 'sanity'
 import type { EventPromotion } from '../../objects/promotion/promoteEvents'
+import { getObjectMemberField } from '../utils/getObjectMemberField'
 
 type EventPromotionInputProps = {
   value?: EventPromotion
@@ -12,27 +22,52 @@ const InlinePreview = ({ value }: { value: EventPromotion | undefined }) => {
   if (!value) return null
 
   const time = value?.promotePastEvents ? 'past' : 'upcoming'
-  const number = value?.promotePastEvents ? value?.pastEventsCount || '50 (max)' : ''
+  const number = value?.promotePastEvents
+    ? value?.pastEventsCount || '50 (max)'
+    : ''
   const withTags = value?.useTags ? 'from selected tags' : ''
   const automaticPromotion = value?.promoteSingleUpcomingEvent
     ? 'Automatically promoting single upcoming event'
     : `Automatically promoting ${number} ${time} events ${withTags}`
 
   return (
-    <Card padding={[4]} radius={2} shadow={1} tone="primary" marginTop={3} marginBottom={3}>
-      <Text>{value?.manuallySelectEvents ? 'Manually promoting selected events' : automaticPromotion}</Text>
+    <Card
+      padding={[4]}
+      radius={2}
+      shadow={1}
+      tone='primary'
+      marginTop={3}
+      marginBottom={3}
+    >
+      <Text>
+        {value?.manuallySelectEvents
+          ? 'Manually promoting selected events'
+          : automaticPromotion}
+      </Text>
     </Card>
   )
 }
 
 export const EventPromotionInput = (props: EventPromotionInputProps) => {
-  const { value, members, renderField, renderInput, renderItem, renderPreview, onChange, renderDefault } = props
+  const {
+    value,
+    members,
+    renderField,
+    renderInput,
+    renderItem,
+    renderPreview,
+    onChange,
+    renderDefault,
+  } = props
   console.log('value', value)
   const useTagsObject = getObjectMemberField(members, 'useTags')
   const useTags = useTagsObject?.field?.schemaType?.initialValue ?? true
   const promotePastEvents = getObjectMemberField(members, 'promotePastEvents')
   const pastEventsCount = getObjectMemberField(members, 'pastEventsCount')
-  const upcomingEventsCount = getObjectMemberField(members, 'upcomingEventsCount')
+  const upcomingEventsCount = getObjectMemberField(
+    members,
+    'upcomingEventsCount',
+  )
   const selectedTags = getObjectMemberField(members, 'tags')
   const promotedEvents = getObjectMemberField(members, 'promotedEvents')
 
@@ -47,29 +82,29 @@ export const EventPromotionInput = (props: EventPromotionInputProps) => {
       <Flex>
         <Card padding={2} radius={2} shadow={1} marginRight={3}>
           <Inline space={2}>
-            <Text as="label" htmlFor="selectModeAutomatic">
+            <Text as='label' htmlFor='selectModeAutomatic'>
               Automatic
             </Text>
             <Radio
               checked={!value?.manuallySelectEvents}
-              name="selectMode"
-              id="selectModeAutomatic"
+              name='selectMode'
+              id='selectModeAutomatic'
               onChange={() => onChange(set(false, ['manuallySelectEvents']))}
-              value="a"
+              value='a'
             ></Radio>
           </Inline>
         </Card>
         <Card padding={2} radius={2} shadow={1}>
           <Inline space={2}>
-            <Text as="label" htmlFor="selectModeManual">
+            <Text as='label' htmlFor='selectModeManual'>
               Manual
             </Text>
             <Radio
               checked={value?.manuallySelectEvents}
-              name="selectMode"
-              id="selectModeManual"
+              name='selectMode'
+              id='selectModeManual'
               onChange={() => onChange(set(true, ['manuallySelectEvents']))}
-              value="a"
+              value='a'
             />
           </Inline>
         </Card>
@@ -126,11 +161,17 @@ export const EventPromotionInput = (props: EventPromotionInputProps) => {
           <Card padding={2} radius={2} shadow={1}>
             <Inline space={2}>
               <Switch
-                id="selectSingleUpcomingPromotion"
+                id='selectSingleUpcomingPromotion'
                 checked={value?.promoteSingleUpcomingEvent}
-                onChange={() => onChange(set(!value?.promoteSingleUpcomingEvent, ['promoteSingleUpcomingEvent']))}
+                onChange={() =>
+                  onChange(
+                    set(!value?.promoteSingleUpcomingEvent, [
+                      'promoteSingleUpcomingEvent',
+                    ]),
+                  )
+                }
               />
-              <Text as="label" htmlFor="selectSingleUpcomingPromotion">
+              <Text as='label' htmlFor='selectSingleUpcomingPromotion'>
                 Promote single upcoming event
               </Text>
             </Inline>

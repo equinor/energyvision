@@ -2,6 +2,11 @@
 import type { PortableTextBlock } from 'next-sanity'
 import type { HTMLAttributes, ReactNode } from 'react'
 import { Breadcrumbs } from '@/core/Breadcrumbs/Breadcrumbs'
+import type {
+  DisplayTypographyVariants,
+  TypographyGroups,
+  TypographyVariants,
+} from '@/core/Typography/variants'
 import Blocks from '@/portableText/Blocks'
 import {
   type ColorKeys,
@@ -35,7 +40,6 @@ export enum HeroTypes {
 
 export type HeroData = {
   figure?: ImageWithCaptionData
-  isBigTitle?: boolean
   /**Page title */
   title?: PortableTextBlock[]
   /* For new or magazine published information */
@@ -56,6 +60,7 @@ export type HeroData = {
   hideImageCaption?: boolean
   captionBg?: BackgroundColours
   backgroundGradient?: string
+  backdropStyle?: boolean
 }
 
 export type HeroBlockProps = {
@@ -76,7 +81,6 @@ export const HeroBlock = ({
   figure,
   ratio,
   background,
-  isBigTitle = false,
   type = HeroTypes.DEFAULT,
   tags,
   magazineTags,
@@ -86,10 +90,12 @@ export const HeroBlock = ({
   nextSectionDesignOptions,
   breadcrumbs,
   backgroundGradient,
+  backdropStyle,
 }: HeroBlockProps) => {
   const { bg: nextCompBg, dark: nextCompDark } = getBgAndDarkFromBackground(
     nextSectionDesignOptions,
   )
+  console.log('backdropStyle', backdropStyle)
 
   const heroProps = {
     figure,
@@ -100,7 +106,6 @@ export const HeroBlock = ({
     //@ts-ignore
     background: colorKeyToUtilityMap[background]?.background,
     nextSectionDesignOptions: nextSectionDesignOptions,
-    isBigTitle,
     ...(tags && { tags }),
     ...(magazineTags && { magazineTags }),
     ...((link || (heroLink && type === HeroTypes.FIFTY_FIFTY)) && {
@@ -111,6 +116,7 @@ export const HeroBlock = ({
     }),
     //figCaptionClassName: 'lg:px-layout-lg',
     backgroundGradient,
+    backdropStyle,
   }
 
   const getHero = () => {

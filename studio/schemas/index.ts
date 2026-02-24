@@ -96,6 +96,7 @@ import textWithIcon from './objects/textWithIcon'
 import textWithIconArray from './objects/textWithIconArray'
 import themeList from './objects/themeList'
 import themeSelector from './objects/themeSelector/themeSelector'
+import thumbnail from './objects/thumbnail'
 import titleAndMeta from './objects/titleAndMeta'
 import transcript from './objects/transcript'
 import twitterEmbed from './objects/twitterEmbed'
@@ -254,6 +255,7 @@ const RemainingSchemas = [
   promoteTopicsV2,
   promoteExternalLinkV2,
   promotionsV2,
+  thumbnail,
 ]
 
 // Then we give our schema to the builder and provide the result to Sanity

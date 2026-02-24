@@ -26,6 +26,7 @@ export type ErrorPageData = {
 export type PageSchema = {
   slug: string
   title: PortableTextBlock[]
+  titleStyle: string
   firstPublishedAt?: string
   hero: HeroData
   template: Templates

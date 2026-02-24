@@ -64,7 +64,7 @@ export const FullWidthImageHero = ({
         id='mainTitle'
         asOneElementType
         as='h1'
-        variant='h1'
+        group='heading'
         blockClassName='pb-0'
         className={twMerge(
           `px-layout-sm pt-4 lg:px-layout-lg lg:pt-6 ${nextCompBg} ${

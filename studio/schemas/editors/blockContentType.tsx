@@ -1,6 +1,7 @@
 import { attach_file, format_color_text, star_filled } from '@equinor/eds-icons'
 import type { ElementType } from 'react'
 import type { BlockDefinition, BlockStyleDefinition } from 'sanity'
+import type { Level2Keys } from '@/helpers/Level2KeyTypes'
 import {
   EdsBlockEditorIcon,
   EdsIcon,
@@ -143,44 +144,39 @@ const fullBlockStylesOptions: BlockContentProps = {
   smallText: true,
 }
 
-type TypographyGroups = 'normal' | 'paragraph' | 'article' | 'display'
-
-const getGroupStyle = (group: TypographyGroups) => {
-  switch (group) {
-    case 'article':
-      return {
-        h2: 'text-lg font-normal py-2 m-0',
-        h3: 'text-md font-normal pt-2 m-0',
-        h4: 'text-md font-md m-0',
-      }
-    case 'display':
-      return {
-        h1_base: 'text-4xl tracking-display font-normal m-0 ',
-        h1_lg: 'text-5xl leading-md tracking-display font-normal m-0 ',
-        h1_xl: 'text-6xl tracking-display font-normal m-0',
-        h2_base: 'text-3xl tracking-display font-normal m-0 ',
-        h2_lg: 'text-4xl leading-md tracking-display font-normal m-0 ',
-        h2_xl: 'text-5xl tracking-display font-normal m-0',
-      }
-    case 'normal':
-      return {
-        h2: 'text-2xl pb-8 m-0',
-        h3: 'text-xl m-0',
-        h4: 'text-lg font-md m-0',
-        sm: 'text-sm',
-      }
-  }
+export const BlockTypography = {
+  article: {
+    h2: 'text-lg font-normal py-2 m-0',
+    h3: 'text-md font-normal pt-2 m-0',
+    h4: 'text-md font-md m-0',
+  },
+  display: {
+    h1_base: 'text-4xl tracking-display font-normal m-0 ',
+    h1_lg: 'text-5xl leading-md tracking-display font-normal m-0 ',
+    h1_xl: 'text-6xl tracking-display font-normal m-0',
+    h2_base: 'text-3xl tracking-display font-normal m-0 ',
+    h2_lg: 'text-4xl leading-md tracking-display font-normal m-0 ',
+    h2_xl: 'text-5xl tracking-display font-normal m-0',
+  },
+  normal: {
+    h2: 'text-2xl pb-8 m-0',
+    h3: 'text-xl m-0',
+    h4: 'text-lg font-md m-0',
+    sm: 'text-sm',
+  },
 }
+export type BlockTypographyGroups = keyof typeof BlockTypography
+export type BlockTypographyVariants = Level2Keys<typeof BlockTypography>
 
 export const TextRenderer = (
   props: any,
   as: ElementType,
-  group?: TypographyGroups,
-  level?: string,
+  group?: BlockTypographyGroups,
+  level?: BlockTypographyVariants,
 ) => {
   const { children } = props
-  const ElementTag = as ?? (`span` as React.ElementType)
-  const classNames = getGroupStyle(group)[level] ?? ''
+  //@ts-ignore: wont accept the types
+  const classNames = BlockTypography[group ?? 'normal'][level ?? 'h2'] ?? ''
 
   return (
     <span className={classNames} data-group={group}>
@@ -225,6 +221,7 @@ export const configureBlockContent = (
       options,
     )
   }
+
   if (options?.variant === 'titleH1') {
     defaultConfigOptions = Object.assign(
       defaultConfigOptions,
@@ -232,6 +229,7 @@ export const configureBlockContent = (
       options,
     )
   }
+  //with display font variants
   if (options?.variant === 'richTitleH1') {
     defaultConfigOptions = Object.assign(
       defaultConfigOptions,
@@ -246,6 +244,7 @@ export const configureBlockContent = (
       options,
     )
   }
+  //with display font variants
   if (options?.variant === 'richTitleH2') {
     defaultConfigOptions = Object.assign(
       defaultConfigOptions,
@@ -317,20 +316,7 @@ export const configureBlockContent = (
         ]
       : [],
     marks: {
-      decorators: [
-        {
-          title: 'Sub',
-          value: 'sub',
-          icon: IconSubScript,
-          component: SubScriptRenderer,
-        },
-        {
-          title: 'Super',
-          value: 'sup',
-          icon: IconSuperScript,
-          component: SuperScriptRenderer,
-        },
-      ],
+      decorators: [],
       annotations: [],
     },
   }
@@ -395,7 +381,7 @@ export const configureBlockContent = (
 
   const internalLinkConfig = (linkConfig: any) => {
     const linkType: LinkType = linkConfig.name
-    const linkSelectorSchema = linkSelector([linkType], undefined, false)
+    const linkSelectorSchema = linkSelector([linkType])
     return {
       icon: linkConfig.icon,
       ...linkSelectorSchema,

@@ -29,6 +29,6 @@ export const CompactBlockEditor = (props: PortableTextInputProps) => {
 // add a specific height to the PTE without losing the ability to resize it
 const Container = styled.div`
   [data-testid="pt-editor"][data-fullscreen="false"] {
-    height: 100px;
+    height: 150px;
   }
 `

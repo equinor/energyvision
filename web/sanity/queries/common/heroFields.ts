@@ -1,18 +1,26 @@
 import linkSelectorFields from './actions/linkSelectorFields'
+import markDefs from './blockEditorMarks'
 export const heroTitle = /* groq */ `
-"title": select(
-      content->heroType == 'fiftyFifty' => content->richTitle,
-      content->heroType == 'fullWidthImage' => content->richTitle,
-      content->heroType == 'backgroundImage' => content->richTitle,
-      content->title)
+"title": content->title
 `
 
 export const heroFields = /* groq */ `{
     "type": coalesce(heroType, 'default'),
     "ratio": heroRatio,
-    "ingress": heroIngress,
+    "ingress": heroIngress[]{
+        ...,
+        ${markDefs},
+        _type == "thumbnail" => {
+        ...,
+        text[]{
+          ...,
+          ${markDefs},
+        },
+    },
+    },
     "background": coalesce(heroBackground.key, 'white-100'),
-    "backgroundGradient": backgroundGradient,
+    backgroundGradient,
+    backdropStyle,
     "figure":  select(
       heroType == 'loopingVideo' => { "image": heroLoopingVideo->thumbnail},
       heroFigure),

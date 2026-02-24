@@ -28,11 +28,12 @@ type ExternalLinkProps = {
 export type LinkProps = {
   value?: InternalLinkProps | ExternalLinkProps
   children?: React.ReactNode
-} & Omit<_LinkProps, 'href'>
+} & Pick<_LinkProps, 'type'>
 
-export const Link = ({ value, children, type, ...rest }: LinkProps) => {
+export const Link = ({ value, children, type }: LinkProps) => {
+  if (!value) return null
+  console.log('Link value', value)
   try {
-    if (!value) return null
     let props: _LinkProps = {
       href: '',
     }
@@ -51,7 +52,7 @@ export const Link = ({ value, children, type, ...rest }: LinkProps) => {
       }
     }
     return props.href && props.href !== '' ? (
-      <CoreLink {...rest} {...props} type={type}>
+      <CoreLink {...props} type={type}>
         {children}
       </CoreLink>
     ) : (

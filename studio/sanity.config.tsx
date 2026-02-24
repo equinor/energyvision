@@ -113,6 +113,19 @@ const getConfig = (
   form: {
     components: {
       input: handleInputComponents,
+      portableText: {
+        plugins: (props: any) => {
+          return props.renderDefault({
+            ...props,
+            plugins: {
+              ...props.plugins,
+              typography: {
+                preset: 'all',
+              },
+            },
+          })
+        },
+      },
     },
   },
   plugins: [

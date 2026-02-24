@@ -39,8 +39,6 @@ export const DefaultHero = ({
   titleClassName = '',
   background,
   figure,
-  isBigTitle,
-  bigTitle,
   className = '',
   magazineTags,
   imageWrapperClassName = '',
@@ -48,8 +46,9 @@ export const DefaultHero = ({
   imageClassName = '',
   ratio = '2:1',
 }: DefaultHeroProps) => {
-  const px =
-    isBigTitle && bigTitle ? 'px-layout-sm' : 'px-layout-sm lg:px-layout-md'
+  console.log('title', title)
+  //find variant in title
+  const px = true ? 'px-layout-sm' : 'px-layout-sm lg:px-layout-md'
   const isPlainTitle =
     title && (title === 'string' || typeof title === 'string')
   const isColorBg = background && background !== 'bg-white-100'
@@ -66,21 +65,17 @@ export const DefaultHero = ({
         >
           {title &&
             (isPlainTitle ? (
-              <Typography variant='h1' id='mainTitle'>
+              <Typography group='heading' variant='h1' id='mainTitle'>
                 {title}
               </Typography>
-            ) : isBigTitle && bigTitle ? (
-              <>
-                <div className='pr-16'>
-                  <Blocks id='mainTitle' value={title} as='h1' variant='xl' />
-                </div>
-                <div>
-                  <Blocks value={bigTitle} as='h2' variant='3xl' />
-                </div>
-              </>
             ) : (
               <div>
-                <Blocks id='mainTitle' value={title} variant='h1' />
+                <Blocks
+                  id='mainTitle'
+                  value={title}
+                  group='heading'
+                  variant='h1'
+                />
               </div>
             ))}
           {subTitle && subTitle}

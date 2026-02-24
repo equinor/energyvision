@@ -68,6 +68,7 @@ export default {
   ],
   fields: [
     lang,
+    ...sharedHeaderFields,
     {
       // Set automatically in the custom action "ConfirmPublishWithi18n"
       title: 'Date and time of when the document was first published at',
@@ -76,12 +77,7 @@ export default {
       readOnly: true,
       hidden: true,
     },
-    {
-      title: 'Meta information',
-      name: 'seo',
-      type: 'titleAndMeta',
-      fieldset: 'other',
-    },
+
     {
       title: 'Magazine tags',
       name: 'magazineTags',
@@ -95,6 +91,12 @@ export default {
         },
       ],
       fieldset: 'tagFieldset',
+    },
+    {
+      title: 'Meta information',
+      name: 'seo',
+      type: 'titleAndMeta',
+      fieldset: 'other',
     },
     {
       title: 'Open Graph Image',
@@ -113,7 +115,6 @@ export default {
       validation: (Rule: Rule) =>
         Rule.custom((value: any) => validateCharCounterEditor(value, 400)),
     },
-    ...sharedHeaderFields,
     Flags.HAS_MAGAZINE_SUBSCRIPTION && {
       title: 'Send to subscribers',
       name: 'shouldDistributeMagazine',

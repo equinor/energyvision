@@ -45,6 +45,7 @@ export const magazineQuery = /* groq */ `
     _id, //used for data filtering
     "slug": slug.current,
     "title": title,
+    titleStyle,
     "seoAndSome": ${seoAndSomeFields},
     "hero": ${heroFields},
     "slugs": {${inlineSlugsQuery}},
@@ -68,12 +69,7 @@ export const magazineIndexQuery = /* groq */ `
   *[_type == "magazineIndex" && ${sameLang}] {
     _id,
     "seoAndSome": ${seoAndSomeFields},
-    //title,
-    "title": select(
-      heroType == 'fiftyFifty' => richTitle,
-      heroType == 'fullWidthImage' => richTitle,
-      heroType == 'backgroundImage' => richTitle,
-      title),
+    title,
     "hero": ${heroFields},
     ingress[]{
         ...,

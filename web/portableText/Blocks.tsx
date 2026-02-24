@@ -26,6 +26,7 @@ import { Block } from './components/Block'
 import { Footnote } from './components/Footnote'
 import { Link } from './components/Link'
 import { List } from './components/List'
+import { Thumbnail } from './Thumbnail'
 
 export type BlockType = Record<
   PortableTextBlockStyle,
@@ -241,6 +242,7 @@ const getListComponents = ({
 const typesSerializers = {
   positionedInlineImage: (props: any) => <FigureWithLayout {...props} />,
   pullQuote: (props: any) => <Quote {...props} />,
+  thumbnail: (props: any) => <Thumbnail {...props} />,
 }
 
 const footnoteSerializer = {
@@ -275,7 +277,12 @@ export type BlocksProps = {
   asOneElementType?: boolean
 } & TypographyProps
 
-const inlineBlockTypes = ['block', 'positionedInlineImage', 'pullQuote']
+const inlineBlockTypes = [
+  'block',
+  'positionedInlineImage',
+  'pullQuote',
+  'thumbnail',
+]
 
 export default function Blocks({
   group,
@@ -294,6 +301,7 @@ export default function Blocks({
 }: BlocksProps) {
   let div: PortableTextBlock[] = []
   if (!value) return
+  console.log('value', value)
 
   return (
     //@ts-ignore:todo

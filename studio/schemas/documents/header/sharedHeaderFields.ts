@@ -26,12 +26,6 @@ type Hero = {
   heroLoopingVideoRatio?: 'tall' | 'narrow' | '0.5'
 }
 
-const richTitleHeros = [
-  HeroTypes.FIFTY_FIFTY,
-  HeroTypes.BACKGROUND_IMAGE,
-  HeroTypes.FULL_WIDTH_IMAGE,
-]
-
 const title = {
   name: 'title',
   type: 'array',
@@ -39,36 +33,10 @@ const title = {
   components: {
     input: CompactBlockEditor,
   },
-  of: [configureBlockContent({ variant: 'titleH1' })],
-  hidden: ({ parent }: DocumentType) => {
-    return richTitleHeros.includes(parent?.heroType as HeroTypes)
-  },
+  of: [configureBlockContent({ variant: 'richTitleH1' })],
   validation: (Rule: Rule) =>
     Rule.custom((value: string, ctx: ValidationContext) => {
-      if (!richTitleHeros.includes(ctx?.parent?.heroType as HeroTypes)) {
-        return value ? true : 'Required'
-      }
-      return true
-    }),
-}
-const richTitle = {
-  name: 'richTitle',
-  type: 'array',
-  title: 'Title',
-  of: [
-    configureBlockContent({
-      variant: 'richTitleH1',
-    }),
-  ],
-  hidden: ({ parent }: DocumentType) => {
-    return !richTitleHeros.includes(parent?.heroType as HeroTypes)
-  },
-  validation: (Rule: Rule) =>
-    Rule.custom((value: string, ctx: ValidationContext) => {
-      if (richTitleHeros.includes(ctx?.parent?.heroType as HeroTypes)) {
-        return value ? true : 'Required'
-      }
-      return true
+      return value ? true : 'Required'
     }),
 }
 
@@ -79,27 +47,27 @@ const heroType = {
   options: {
     list: [
       {
-        title: 'Centered Image (default)',
+        title: 'Image(default centered)',
         value: HeroTypes.DEFAULT,
       },
       {
-        title: 'Fullwidth image',
+        title: 'Image(fullwidth)',
         value: HeroTypes.FULL_WIDTH_IMAGE,
       },
       {
-        title: 'Fullwidth 50/50 text and image',
+        title: '50/50 text/image(fullwidth)',
         value: HeroTypes.FIFTY_FIFTY,
       },
       {
-        title: 'Fullwidth looping video',
+        title: 'Looping video(fullwidth)',
         value: HeroTypes.LOOPING_VIDEO,
       },
       {
-        title: 'No hero (title+image hidden, first section content as hero)',
+        title: 'No hero(title+image hidden,first page section as top)',
         value: HeroTypes.NO_HERO,
       },
       {
-        title: 'Title and/or ingress on background image',
+        title: 'Background image with title/ingress over',
         value: HeroTypes.BACKGROUND_IMAGE,
       },
     ].filter(e => e),
@@ -135,17 +103,16 @@ const heroRatio = {
   initialValue: 'narrow',
 }
 
+const heroTypesWithIngress = [HeroTypes.FIFTY_FIFTY, HeroTypes.BACKGROUND_IMAGE]
+
 const heroIngress = {
   title: 'Hero ingress',
   name: 'heroIngress',
   type: 'array',
   fieldset: 'hero',
-  of: [configureBlockContent({ variant: 'ingress' })],
+  of: [configureBlockContent({ variant: 'ingress' }), { type: 'thumbnail' }],
   hidden: ({ parent }: DocumentType) => {
-    return (
-      parent?.heroType !== HeroTypes.FIFTY_FIFTY ||
-      (parent?.heroType === HeroTypes.FIFTY_FIFTY && parent.isBigTitle)
-    )
+    return !heroTypesWithIngress.includes(parent?.heroType)
   },
 }
 
@@ -154,7 +121,8 @@ const backgroundGradient = {
   name: 'backgroundGradient',
   type: 'string',
   fieldset: 'hero',
-  description: 'Controls the gradient over semi-transparent background image.',
+  description:
+    'Optional dark or light semi-transparent gradient over background image.',
   initialValue: 'none', // default
   options: {
     list: [
@@ -163,13 +131,18 @@ const backgroundGradient = {
       { title: 'Light', value: 'light' },
     ],
   },
-  validation: (Rule: Rule) =>
-    Rule.custom((value: string, context: ValidationContext) => {
-      const { parent } = context as unknown as DocumentType
-      if (parent?.heroType === HeroTypes.BACKGROUND_IMAGE && !value)
-        return 'Field is required'
-      return true
-    }),
+  hidden: ({ parent }: DocumentType) => {
+    return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE
+  },
+}
+const backdropStyle = {
+  title: 'Backdrop glass blur',
+  name: 'backdropStyle',
+  type: 'boolean',
+  fieldset: 'hero',
+  description:
+    'Applies a glass blur backdrop style behind text with padding and rounded corners',
+  initialValue: false,
   hidden: ({ parent }: DocumentType) => {
     return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE
   },
@@ -189,6 +162,7 @@ const heroLink = singleItemArray({
     )
   },
 })
+
 const heroLinkV2 = {
   name: 'heroLinkV2',
   title: 'Hero link',
@@ -303,9 +277,8 @@ const containVideo = {
 }
 
 export default [
-  heroType,
   title,
-  richTitle,
+  heroType,
   heroRatio,
   heroIngress,
   heroLink,
@@ -316,4 +289,5 @@ export default [
   heroLoopingVideoRatio,
   containVideo,
   backgroundGradient,
+  backdropStyle,
 ]

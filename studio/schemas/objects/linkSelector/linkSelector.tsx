@@ -1,4 +1,5 @@
-import type { Rule } from 'sanity'
+import { Box, Flex } from '@sanity/ui'
+import type { PreviewProps, Rule } from 'sanity'
 import singleItemArray from '../singleItemArray'
 import {
   anchorReference,
@@ -16,46 +17,72 @@ const defaultLinks = [
   'referenceToOtherLanguage',
   'homePageLink',
 ] as LinkType[]
+
+function LinkPreview(props: PreviewProps) {
+  console.log('LinkPreview props', props)
+  return (
+    <Flex align='center'>
+      <Box flex={1}>{props.renderDefault(props)}</Box>
+    </Flex>
+  )
+}
+
 const linkSelector = (
   linkTypes?: LinkType[],
-  hidden?: (arg0: any) => boolean,
+  hidden = false,
   includeLabels = true,
-) => ({
-  name: 'linkSelector',
-  title: 'Link',
-  type: 'object',
-  hidden: hidden,
-  fields: [
-    includeLabels && {
-      name: 'label',
-      title: 'Link label',
-      type: 'string',
-      validation: (Rule: Rule) =>
-        Rule.custom((value: string) => {
-          return value ? true : 'You must add a label'
-        }),
-    },
-    singleItemArray(
+) => {
+  /*   console.log('link selector method linkTypes', linkTypes)
+  console.log('link selector method hidden', hidden)
+  console.log('link selector method includeLabel', includeLabels) */
+  return {
+    name: 'linkSelector',
+    title: 'Link',
+    type: 'object',
+    hidden: hidden,
+    fields: [
+      singleItemArray(
+        {
+          name: 'link',
+          type: 'array',
+          of: [
+            externalLink,
+            internalReference,
+            internalReferenceOtherLanguage,
+            homepageLink,
+            socialMediaLink,
+          ].filter(it => {
+            const types = linkTypes
+              ? linkTypes.includes(it.name as LinkType)
+              : defaultLinks.includes(it.name as LinkType)
+            return types
+          }),
+        },
+        true,
+      ),
       {
-        name: 'link',
-        type: 'array',
-        of: [
-          externalLink,
-          internalReference,
-          internalReferenceOtherLanguage,
-          homepageLink,
-          socialMediaLink,
-        ].filter(it => {
-          const types = linkTypes
-            ? linkTypes.includes(it.name as LinkType)
-            : defaultLinks.includes(it.name as LinkType)
-          return types
-        }),
+        name: 'label',
+        title: 'Label',
+        description:
+          'Optional, if you want to overwrite the title from the referenced page',
+        type: 'string',
+        validation: (Rule: Rule) =>
+          Rule.custom((value: string) => {
+            return value ? true : 'You must add a label'
+          }),
+        hidden: !includeLabels,
       },
-      true,
-    ),
-    anchorReference,
-  ].filter(e => e),
-})
+      anchorReference,
+    ].filter(e => e),
+    components: {
+      preview: LinkPreview,
+    },
+    preview: {
+      select: {
+        link: 'link',
+      },
+    },
+  }
+}
 
 export default linkSelector

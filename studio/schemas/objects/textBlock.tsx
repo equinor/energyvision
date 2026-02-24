@@ -1,10 +1,38 @@
 import { text_field } from '@equinor/eds-icons'
+import { Card, Text } from '@sanity/ui'
 import type { PortableTextBlock, Reference, Rule } from 'sanity'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
 import type { ColorSelectorValue } from '../components/ColorSelector'
 import { CompactBlockEditor } from '../components/CompactBlockEditor'
 import { configureBlockContent } from '../editors'
+
+const DecorationComponent = () => {
+  return (
+    <Card paddingY={1}>
+      <Text size={2}>Text editor documentation</Text>
+      {/*       <Text size={1}>
+        {`emDash: -- → —
+          ellipsis: ... → …
+          openingDoubleQuote: " → “
+          closingDoubleQuote: " → ”
+          openingSingleQuote: ' → ‘
+          closingSingleQuote: ' → ’
+          leftArrow: <- → ←
+          rightArrow: -> → →
+          copyright: (c) → ©
+          registeredTrademark: (r) → ®
+          oneHalf: 1/2 → ½
+          plusMinus: +/- → ±
+          notEqual: != → ≠
+          superscriptTwo: ^2 → ²
+          superscriptThree: ^3 → ³
+          oneQuarter: 1/4 → ¼
+          threeQuarters: 3/4 → ¾`}
+      </Text> */}
+    </Card>
+  )
+}
 
 type TextBlock = {
   overline?: string
@@ -17,16 +45,10 @@ type TextBlock = {
   background?: ColorSelectorValue
 }
 
-type TextBlockDocument = {
-  parent: TextBlock
-  value?: string
-}
-
 export default {
   name: 'textBlock',
   title: 'Text block',
   type: 'object',
-
   fieldsets: [
     {
       title: 'Thumbnail Image',

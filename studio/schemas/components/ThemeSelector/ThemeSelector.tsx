@@ -1,10 +1,10 @@
-import { Box, Card, Flex, Stack, Tooltip, Text } from '@sanity/ui'
+import { text_field } from '@equinor/eds-icons'
+import { Box, Card, Flex, Stack, Text, Tooltip } from '@sanity/ui'
 import { useCallback, useId } from 'react'
-import { set } from 'sanity'
 import type { ObjectInputProps, PreviewProps } from 'sanity'
+import { set } from 'sanity'
 import styled from 'styled-components'
 import { EdsIcon } from '../../../icons'
-import { text_field } from '@equinor/eds-icons'
 
 /** Variant circles */
 const Circle = styled.div<{ $active: boolean }>`
@@ -25,7 +25,12 @@ const InnerCircle = styled.div<{ color: string; fillColor?: string }>`
 `
 
 /** Variant cards */
-const Container = styled.div<{ $active?: boolean; color: string; $preview?: any; $isThumbnail?: any }>`
+const Container = styled.div<{
+  $active?: boolean
+  color: string
+  $preview?: any
+  $isThumbnail?: any
+}>`
   width: ${({ $isThumbnail }) => ($isThumbnail ? '2.0625rem' : 'fit-content')};
   height: ${({ $isThumbnail }) => ($isThumbnail ? '2.0625rem' : 'fit-content')};
   display: flex;
@@ -76,7 +81,12 @@ type ColorCircleProps = {
   getColorForThemeHandler: (val: ThemeSelectorValue) => ThemeSelectorColor
 }
 
-const ColorCircle = ({ color, active, getColorForThemeHandler, onClickHandler }: ColorCircleProps) => {
+const ColorCircle = ({
+  color,
+  active,
+  getColorForThemeHandler,
+  onClickHandler,
+}: ColorCircleProps) => {
   const { background, foreground } = getColorForThemeHandler(color)
   return (
     <Card paddingY={1}>
@@ -89,7 +99,7 @@ const ColorCircle = ({ color, active, getColorForThemeHandler, onClickHandler }:
           </Box>
         }
         fallbackPlacements={['right', 'left']}
-        placement="top"
+        placement='top'
         portal
       >
         <Circle $active={active} onClick={() => onClickHandler(color)}>
@@ -124,7 +134,7 @@ export const CardTheme = ({
   return (
     <Flex
       direction={preview ? 'row' : 'column'}
-      justify="flex-start"
+      justify='flex-start'
       align={'center'}
       gap={thumbnail ? 2 : 4}
       padding={0}
@@ -163,7 +173,11 @@ export function ThemePreview(props: ThemePreviewProps) {
   }
   return (
     <>
-      <CardTheme color={color} preview getColorForThemeHandler={getColorForThemeHandler} />
+      <CardTheme
+        color={color}
+        preview
+        getColorForThemeHandler={getColorForThemeHandler}
+      />
     </>
   )
 }
@@ -221,7 +235,8 @@ export const ThemeSelector = ({
         <Card>
           <Flex direction={'row'} wrap={'wrap'} gap={2}>
             {colorThemes.map((colorItem: ThemeSelectorValue) => {
-              const { background, foreground } = getColorForThemeHandler(colorItem)
+              const { background, foreground } =
+                getColorForThemeHandler(colorItem)
               return variant === 'circles' ? (
                 <ColorCircle
                   key={`${theSelectorUniqueId}_${background.value}_${foreground.key}`}
@@ -243,8 +258,12 @@ export const ThemeSelector = ({
           </Flex>
         </Card>
       )}
-      {(!colorThemes || colorThemes?.length === 0) && <Text>Missing themeColors</Text>}
-      {!getColorForThemeHandler && <Text>Missing function getColorForThemeHandler </Text>}
+      {(!colorThemes || colorThemes?.length === 0) && (
+        <Text>Missing themeColors</Text>
+      )}
+      {!getColorForThemeHandler && (
+        <Text>Missing function getColorForThemeHandler </Text>
+      )}
     </Stack>
   )
 }

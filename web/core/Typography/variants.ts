@@ -6,7 +6,7 @@ const variants = {
     //Teaser isBigText was set to 2xl...
     //TextBlock isBigText set to 3xl
     // isBigText set to common pattern 2xl now with classname mb-2 leading-cloudy
-    h2: `text-xl leading-earthy lg:leading-misty pb-10 my-0`,
+    h2: `text-xl leading-earthy lg:leading-misty pb-4 lg:pb-10 my-0`,
     h3: `text-lg leading-lofty pt-4 pb-8 my-0`, //needs pt and pb?
     h4: 'text-md pb-0',
     h5: 'text-md pb-0',
@@ -27,19 +27,19 @@ const variants = {
       'text-5xl lg:text-6xl 2xl:text-8xl leading-cloudy lg:leading-cloudy 2xl:leading-cloudy ',
   },
   display: {
-    h1_base: 'text-4xl leading-earthy tracking-display',
-    h1_lg: 'text-5xl leading-cloudy tracking-display ',
-    h1_xl: 'text-6xl leading-cloudy tracking-display ',
-    h2_base: 'text-3xl leading-earthy tracking-display ',
-    h2_lg: 'text-4xl leading-cloudy tracking-display ',
-    h2_xl: 'text-5xl leading-cloudy tracking-display ',
+    h1_base: 'text-4xl leading-earthy tracking-display pb-6 lg:pb-12',
+    h1_lg: 'text-5xl leading-cloudy tracking-display pb-6 lg:pb-12',
+    h1_xl: 'text-6xl leading-cloudy tracking-display pb-6 lg:pb-12',
+    h2_base: 'text-3xl leading-earthy tracking-display pb-4 lg:pb-10',
+    h2_lg: 'text-4xl leading-cloudy tracking-display pb-4 lg:pb-10',
+    h2_xl: 'text-5xl leading-cloudy tracking-display pb-4 lg:pb-10',
   },
   paragraph: {
     caption: '',
     overline: 'text-md pb-2',
     ingress: 'text-md pt-5 pb-5 first:pt-0 last:pb-24',
     eyebrow: 'text-xs font-medium uppercase',
-    body: 'py-5 first:pt-0 last:mb-0 [:where(h2+*,h3+*)]:pt-0 text-base',
+    body: 'py-5 first:pt-0 last:pb-0 [:where(h2+*,h3+*)]:pt-0 text-base',
     small: 'text-sm',
     simple: 'text-base',
   },
@@ -117,6 +117,8 @@ export type QuickTypographyVariants =
   | TypographyTokens['paragraph']
   | TypographyTokens['marks']
   | TypographyTokens['plain']
+
+export type DisplayTypographyVariants = TypographyTokens['display']
 
 const quickVariants: QuickTypographyVariants = {
   ...heading,

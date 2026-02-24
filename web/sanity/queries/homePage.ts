@@ -21,12 +21,7 @@ export const homePageQuery = /* groq */ `
     "_id": _ref, //used for data filtering
     "slug": "/",
     "slugs":{${homepageSlugsQuery}},
-    //"title": @->title,
-      "title": select(
-      heroType == 'fiftyFifty' => @->richTitle,
-      heroType == 'fullWidthImage' => @->richTitle,
-      heroType == 'backgroundImage' => @->richTitle,
-      @->title),
+    "title": @->title,
     "seoAndSome": @->${seoAndSomeFields},
     ${stickyMenuOutSideContent},
     "hero": @->${heroFields},
