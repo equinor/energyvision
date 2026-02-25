@@ -42,7 +42,7 @@ const MAGAZINE = [...GLOBAL_PROD, ...GLOBAL_DEV]
 /* Allows same slug for different languages */
 const SAME_SLUG = [...GLOBAL_DEV, 'japan', 'southkorea']
 const LINE_BREAK_TYPO = ['southkorea']
-const CAMPAIGN = [...GLOBAL_PROD, ...GLOBAL_DEV]
+const CAMPAIGN = [...GLOBAL_PROD, 'sponsorship', ...GLOBAL_DEV]
 
 /**
  * @param {string} dataset
