@@ -1,7 +1,7 @@
 //web lib actions equinorFormServerAction
 'use server'
 
-import { getAccessToken } from '../../lib/actions/getAccessToken'
+import getToken from "@/lib/formTokenStore";
 
 // ContactEquinor - CAT0012836
 // OrderReports - CAT0012841
@@ -11,7 +11,7 @@ export default async function submitFormServerAction(formData: any, catelogNumbe
   const urlString = process.env.ACTION_BASE_URL_FOR_FORMS + '/' + catelogNumber;
 
   try {
-    const token = await getAccessToken()
+    const token = await getToken()
     const response = await fetch(urlString, {
       method: 'POST',
       headers: {
