@@ -5,6 +5,8 @@ const restrictedComponents = [
   'videoPlayerCarousel',
   'fullWidthVideo',
   'promoteExternalLinkV2',
+  'grid',
+  'campaignBanner',
 ]
 
 export function RolesBasedArrayInput(props: any) {
