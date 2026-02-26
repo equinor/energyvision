@@ -58,7 +58,6 @@ export const background = {
 }
 
 export const backgroundPosition = (hiddenCallBack?: any, fieldset?: string) => {
-  console.log('hiddenCallBack', hiddenCallBack)
   return defineField({
     title: 'Select positioning of the image',
     description:
@@ -140,4 +139,17 @@ export const layoutDirection = {
   },
   fieldset: 'design',
   initialValue: 'col',
+}
+
+export const backdropStyle = (hiddenCallBack?: any, fieldset?: string) => {
+  return {
+    title: 'Backdrop glass effect',
+    name: 'backdropStyle',
+    type: 'boolean',
+    description:
+      'Applies a glass blur backdrop style behind text with padding and rounded corners',
+    initialValue: false,
+    ...(fieldset && { fieldset }),
+    ...(hiddenCallBack && { hidden: hiddenCallBack }),
+  }
 }

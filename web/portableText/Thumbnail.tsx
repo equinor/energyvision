@@ -34,22 +34,6 @@ export const Thumbnail = ({ value }: ThumbnailProps) => {
           group='plain'
           variant='div'
           blockClassName='text-base'
-          marksComponents={{
-            link: ({ children, value }: any) => {
-              return (
-                <Link type='externalUrl' value={value} className=''>
-                  {children}
-                </Link>
-              )
-            },
-            internalLink: ({ children, value }: any) => {
-              return (
-                <Link type='internalUrl' value={value} className=''>
-                  {children}
-                </Link>
-              )
-            },
-          }}
         />
       )}
     </div>

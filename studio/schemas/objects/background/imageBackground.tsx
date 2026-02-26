@@ -7,6 +7,7 @@ import {
   ContentRightImage,
 } from '../../../icons'
 import { RadioIconSelector } from '../../components'
+import { backdropStyle } from '../commonFields/commonFields'
 
 export type ColorType = {
   title: string
@@ -50,6 +51,7 @@ export default defineType({
       description:
         'Applies a white gradient over semi transparent background image.',
     }),
+    backdropStyle(),
     defineField({
       name: 'contentAlignment',
       title: 'Content Alignment',

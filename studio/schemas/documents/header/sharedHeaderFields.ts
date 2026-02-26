@@ -103,7 +103,7 @@ const heroRatio = {
   initialValue: 'narrow',
 }
 
-const heroTypesWithIngress = [HeroTypes.FIFTY_FIFTY, HeroTypes.BACKGROUND_IMAGE]
+const heroTypesWithIngress = [HeroTypes.FIFTY_FIFTY]
 
 const heroIngress = {
   title: 'Hero ingress',
@@ -112,6 +112,7 @@ const heroIngress = {
   fieldset: 'hero',
   of: [configureBlockContent({ variant: 'ingress' }), { type: 'thumbnail' }],
   hidden: ({ parent }: DocumentType) => {
+    //@ts-expect-error: typing
     return !heroTypesWithIngress.includes(parent?.heroType)
   },
 }
@@ -131,18 +132,6 @@ const backgroundGradient = {
       { title: 'Light', value: 'light' },
     ],
   },
-  hidden: ({ parent }: DocumentType) => {
-    return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE
-  },
-}
-const backdropStyle = {
-  title: 'Backdrop glass blur',
-  name: 'backdropStyle',
-  type: 'boolean',
-  fieldset: 'hero',
-  description:
-    'Applies a glass blur backdrop style behind text with padding and rounded corners',
-  initialValue: false,
   hidden: ({ parent }: DocumentType) => {
     return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE
   },
@@ -289,5 +278,4 @@ export default [
   heroLoopingVideoRatio,
   containVideo,
   backgroundGradient,
-  backdropStyle,
 ]
