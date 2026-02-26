@@ -88,7 +88,7 @@ export default {
         { type: 'promoteTopicsV2' },
       ].filter((e) => e),
     },
-  ].filter((e) => e),
+  ],
   components: {
     input: RolesBasedArrayInput,
   },

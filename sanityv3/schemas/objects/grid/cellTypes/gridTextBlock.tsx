@@ -1,21 +1,21 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { text_field } from '@equinor/eds-icons'
 import type { PortableTextBlock, Reference, Rule } from 'sanity'
+import blocksToText from '../../../../helpers/blocksToText'
+import { capitalizeFirstLetter } from '../../../../helpers/formatters'
+import {
+  ContentBottomCenterImage,
+  ContentBottomLeftImage,
+  ContentCenterImage,
+  ContentLeftImage,
+  ContentRightImage,
+  EdsIcon,
+} from '../../../../icons'
+import { RadioIconSelector } from '../../../components'
 import type { ColorSelectorValue } from '../../../components/ColorSelector'
 import CompactBlockEditor from '../../../components/CompactBlockEditor'
-import blocksToText from '../../../../helpers/blocksToText'
-import {
-  EdsIcon,
-  ContentRightImage,
-  ContentLeftImage,
-  ContentCenterImage,
-  ContentBottomLeftImage,
-  ContentBottomCenterImage,
-} from '../../../../icons'
 import { configureBlockContent } from '../../../editors'
 import { configureThemedTitleBlockContent } from '../../../editors/themedTitleEditorContentType'
-import { capitalizeFirstLetter } from '../../../../helpers/formatters'
-import { RadioIconSelector } from '../../../components'
 import singleItemArray from '../../singleItemArray'
 import { fromLargerTextThemeColors, fromNormalTextThemeColors } from '../../textTeaser'
 
@@ -24,7 +24,9 @@ const blockContentType = configureBlockContent({
   largeText: true,
   extraLargeText: true,
 })
-const themedTitleContentType = configureThemedTitleBlockContent({ normalText: false })
+const themedTitleContentType = configureThemedTitleBlockContent({
+  normalText: false,
+})
 const titleContentType = configureThemedTitleBlockContent()
 
 const contentAlignmentOptions = [
@@ -152,17 +154,15 @@ export default {
       type: 'string',
       initialValue: 'left',
       components: {
-        input: function ({ onChange, value }: { onChange: any; value: string }) {
-          return (
-            <RadioIconSelector
-              name="imageAlignmentSelector"
-              options={contentAlignmentOptions}
-              defaultValue={'left'}
-              currentValue={value}
-              onChange={onChange}
-            />
-          )
-        },
+        input: ({ onChange, value }: { onChange: any; value: string }) => (
+          <RadioIconSelector
+            name="imageAlignmentSelector"
+            options={contentAlignmentOptions}
+            defaultValue={'left'}
+            currentValue={value}
+            onChange={onChange}
+          />
+        ),
       },
     },
     {

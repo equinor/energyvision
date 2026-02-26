@@ -1,14 +1,14 @@
-import { twMerge } from 'tailwind-merge'
-import { getUrlFromAction } from '../../common/helpers'
-import GridLinkArrow from './GridLinkArrow'
-import { getColorForTheme } from '@sections/teasers/TextTeaser/theme'
-import { BackgroundTypes, GridTextBlockData } from '../../types/index'
-import Blocks from '../../pageComponents/shared/portableText/Blocks'
 import { BackgroundContainer } from '@core/Backgrounds'
 import { Heading, Typography } from '@core/Typography'
-import { RowType } from './mapGridContent'
-import envisTwMerge from '../../twMerge'
+import { getColorForTheme } from '@sections/teasers/TextTeaser/theme'
 import { forwardRef } from 'react'
+import { twMerge } from 'tailwind-merge'
+import { getUrlFromAction } from '../../common/helpers'
+import Blocks from '../../pageComponents/shared/portableText/Blocks'
+import envisTwMerge from '../../twMerge'
+import type { BackgroundTypes, GridTextBlockData } from '../../types/index'
+import GridLinkArrow from './GridLinkArrow'
+import type { RowType } from './mapGridContent'
 
 type GridTextBlockProps = {
   data: GridTextBlockData
@@ -170,7 +170,7 @@ const GridTextBlock = forwardRef<HTMLDivElement, GridTextBlockProps>(function Gr
               <Heading
                 as="h2"
                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                //@ts-ignore
+                //@ts-expect-error
                 value={useThemedTitle ? themedTitle : title}
                 serializerClassnames={serializerClassnames}
                 noProse
@@ -183,7 +183,7 @@ const GridTextBlock = forwardRef<HTMLDivElement, GridTextBlockProps>(function Gr
               <Heading
                 as="h2"
                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                //@ts-ignore
+                //@ts-expect-error
                 value={useThemedTitle ? themedTitle : title}
                 serializerClassnames={serializerClassnames}
                 noProse
