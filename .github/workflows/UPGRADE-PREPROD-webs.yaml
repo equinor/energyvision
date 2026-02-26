@@ -86,7 +86,7 @@ jobs:
         uses: ./.github/workflows/deploy-web/
         with:
           projectId: h61q9gi9
-          imageName: ghcr.io/equinor/energyvision/web-${{ matrix.dataset }}
+          imageName: ghcr.io/equinor/energyvision/web-${{ matrix.dataset }}-upgrade
           datasetName: ${{ matrix.dataset }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           sanityApiToken: ${{ secrets.SANITY_API_TOKEN }}
@@ -95,8 +95,6 @@ jobs:
           environment: ${{ vars.ENV }}
           archiveContentLink: ${{ vars.ARCHIVE_CONTENT_LINK }}
           friendlyCaptchaSitekey: ${{ matrix.dataset == 'brazil' && vars.BRAZIL_FC_SITEKEY || vars.GLOBAL_FC_SITEKEY }}
-          friendlyCaptchaPuzzleEndpoint: "" ## can be removed ${{ matrix.dataset == 'brazil' && vars.BRAZIL_FC_PUZZLE_END_POINT || vars.GLOBAL_FC_PUZZLE_END_POINT }} 
-          componentSuffix: 'upgrade'
          
       - uses: act10ns/slack@v2
         with:
