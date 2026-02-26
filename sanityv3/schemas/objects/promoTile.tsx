@@ -1,14 +1,13 @@
 import { label } from '@equinor/eds-icons'
 import type { PortableTextBlock, Rule, ValidationContext } from 'sanity'
-import type { ColorSelectorValue } from '../components/ColorSelector'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
+import type { ColorSelectorValue } from '../components/ColorSelector'
 import CompactBlockEditor from '../components/CompactBlockEditor'
-import type { ImageWithAlt } from './imageWithAlt'
-
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { configureTitleBlockContent } from '../editors'
-import { LinkSelector } from './linkSelector/common'
+import type { ImageWithAlt } from './imageWithAlt'
+import type { LinkSelector } from './linkSelector/common'
 
 const titleContentType = configureTitleBlockContent()
 
@@ -51,7 +50,7 @@ export default {
     {
       name: 'title',
       type: 'array',
-      inputComponent: CompactBlockEditor,
+      components: { input: CompactBlockEditor },
       of: [titleContentType],
       title: 'Title',
       hidden: ({ parent }: { parent: PromoTile }) => parent?.linkLabelAsTitle,
