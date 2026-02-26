@@ -34,12 +34,6 @@ inputs:
   friendlyCaptchaSitekey:
     description: 'Friendly captcha site key'
     required: true
-  friendlyCaptchaPuzzleEndpoint:
-    description: 'Friendly captcha puzzle endpoint'
-    required: true
-  componentSuffix:
-    description: 'Radix component name suffix. Temporary fix for upgrade.'
-    required: false
 
 runs:
   using: 'composite'
@@ -101,16 +95,16 @@ runs:
       id: push-to-ghcr
       run: |
         echo "${{ inputs.githubToken }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-        docker push ghcr.io/equinor/energyvision/web-${{ inputs.datasetName == 'global-development' && 'global-development-upgrade' || inputs.datasetName }} --all-tags
+        docker push ghcr.io/equinor/energyvision/web-${{ inputs.datasetName }}-upgrade --all-tags
+   
     - name: Get component name
       id: get-component-name
       shell: bash
       run: |
-        component=${{ inputs.datasetName == 'global' && format('{0}{1}','web-',inputs.componentSuffix) || format('{0}{1}{2}{3}', 'web-', inputs.datasetName,'-', inputs.componentSuffix) }}
+        component=${{ inputs.datasetName == 'global' && 'web-upgrade' || format('{0}{1}{2}', 'web-', inputs.datasetName,'-upgrade') }}
         echo "Component name is $component"
         echo "COMPONENT_NAME=$component" >> $GITHUB_ENV
-
-    # MAIN CLUSTER
+   # MAIN CLUSTER
     - name: Deploy to Radix c2 🚀
       id: deploy-c2
       uses: equinor/radix-github-actions@v2
