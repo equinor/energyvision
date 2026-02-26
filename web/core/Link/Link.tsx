@@ -9,7 +9,7 @@ export type LinkProps = BaseLinkProps
 
 /** Regular link style for use*/
 export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
-  { children, type = 'internalUrl', className = '', href = '', ...rest },
+  { children, type = 'internalUrl', className = '', href = '', hrefLang },
   ref,
 ) {
   const t = useTranslations()
@@ -25,6 +25,10 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
   `,
     className,
   )
+  console.log('Link href', href)
+  const isTel = href.includes('tel:')
+  const isMailTo = href.includes('mailto:')
+  const showArrow = type === 'externalUrl' && !isTel && !isMailTo
 
   return (
     <BaseLink
@@ -32,10 +36,10 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
       type={type}
       ref={ref}
       href={href}
-      {...rest}
+      hrefLang={hrefLang}
     >
       {children}
-      {type === 'externalUrl' && (
+      {showArrow && (
         <ArrowRight
           aria-hidden='false'
           aria-label={t('externalLink')}

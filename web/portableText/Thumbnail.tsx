@@ -4,9 +4,10 @@ import { Image } from '@/core/Image/Image'
 import Blocks from './Blocks'
 
 type ThumbnailProps = {
-  /*   image: SanityImageObject
-  text: PortableTextBlock[] */
-  value?: any
+  value?: {
+    image: SanityImageObject
+    text: PortableTextBlock[]
+  }
 }
 
 export const Thumbnail = ({ value }: ThumbnailProps) => {
@@ -32,6 +33,22 @@ export const Thumbnail = ({ value }: ThumbnailProps) => {
           group='plain'
           variant='div'
           blockClassName='text-base'
+          marksComponents={{
+            link: ({ children, value }: any) => {
+              return (
+                <Link type='externalUrl' value={value} className=''>
+                  {children}
+                </Link>
+              )
+            },
+            internalLink: ({ children, value }: any) => {
+              return (
+                <Link type='internalUrl' value={value} className=''>
+                  {children}
+                </Link>
+              )
+            },
+          }}
         />
       )}
     </div>

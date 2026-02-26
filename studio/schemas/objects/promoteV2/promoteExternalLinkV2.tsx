@@ -3,6 +3,7 @@ import type { Image, PortableTextBlock, Rule } from 'sanity'
 import blocksToText from '../../../helpers/blocksToText'
 import { ingress, layoutGrid, theme, title } from '../commonFields/commonFields'
 import { externalLink } from '../linkSelector/common'
+
 import { PromotionLayoutInput } from './promoteTopicsV2'
 
 export type promoteExternal = {

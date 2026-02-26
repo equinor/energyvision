@@ -116,6 +116,16 @@ export const externalLink = {
   },
 }
 
+function InternalLinkPreview(props: PreviewProps) {
+  console.log('LinkPreview props', props)
+
+  return (
+    <Flex align='center'>
+      <Box flex={1}>{props.renderDefault(props)}</Box>
+    </Flex>
+  )
+}
+
 export const internalReference = {
   name: 'reference',
   title: 'Internal link',
@@ -128,6 +138,9 @@ export const internalReference = {
     filter: filterByPages,
     disableNew: true,
   },
+  /*   components: {
+    preview: InternalLinkPreview,
+  }, */
 }
 
 export const homepageLink = {

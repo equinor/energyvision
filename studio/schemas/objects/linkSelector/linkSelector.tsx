@@ -1,5 +1,7 @@
 import { Box, Flex } from '@sanity/ui'
 import type { PreviewProps, Rule } from 'sanity'
+import blocksToText from '@/helpers/blocksToText'
+import { capitalizeFirstLetter } from '@/helpers/formatters'
 import singleItemArray from '../singleItemArray'
 import {
   anchorReference,
@@ -20,6 +22,7 @@ const defaultLinks = [
 
 function LinkPreview(props: PreviewProps) {
   console.log('LinkPreview props', props)
+
   return (
     <Flex align='center'>
       <Box flex={1}>{props.renderDefault(props)}</Box>
@@ -67,19 +70,76 @@ const linkSelector = (
           'Optional, if you want to overwrite the title from the referenced page',
         type: 'string',
         validation: (Rule: Rule) =>
-          Rule.custom((value: string) => {
-            return value ? true : 'You must add a label'
+          Rule.custom((value: string, context: any) => {
+            console.log('valudate context', context)
+            const { parent } = context
+            if (parent?.link?.[0]?._type === 'link') {
+              return value ? true : 'You must add a label'
+            }
+            return true
           }),
         hidden: !includeLabels,
       },
       anchorReference,
     ].filter(e => e),
-    components: {
-      preview: LinkPreview,
-    },
     preview: {
       select: {
-        link: 'link',
+        link: 'link.0.content.title',
+        media: 'link.0.content.title',
+        label: 'label',
+        type: 'link.0._type',
+        anchorReference: 'anchorReference',
+        referenceNewsMagTitle: 'link.0.title',
+        referenceNewsMedia: 'link.0.heroImage.image',
+        referenceMagMedia: 'link.0.heroFigure.image',
+        referenceTopicTitle: 'link.0.content.title',
+        referenceTopicMedia: 'link.0.content.heroFigure.image',
+        slug: 'link.0.slug.current',
+        href: 'link.0.href',
+      },
+      prepare({
+        slug,
+        href,
+        label,
+        type,
+        anchorReference,
+        referenceNewsMagTitle,
+        referenceNewsMedia,
+        referenceMagMedia,
+        referenceTopicTitle,
+        referenceTopicMedia,
+      }: any) {
+        console.log('link selector slug', slug)
+
+        let title = label ?? 'Missing title'
+        if (!label && (referenceTopicTitle || referenceNewsMagTitle)) {
+          title = blocksToText(referenceTopicTitle ?? referenceNewsMagTitle)
+        }
+        if (!label && anchorReference) {
+          title = anchorReference
+        }
+
+        let linkType = type ?? 'not set'
+
+        if (type?.includes('route')) {
+          linkType = 'internal route'
+        }
+        if (type?.includes('news') || type?.includes('magazine')) {
+          linkType = `${type} route`
+        }
+        if (anchorReference || type?.includes('anchorLinkReference')) {
+          linkType = 'anchor link'
+        }
+        if (type === 'link') {
+          linkType = 'external link'
+        }
+        const subtitle = slug ?? href ?? `${capitalizeFirstLetter(linkType)}`
+
+        return {
+          title: title,
+          subtitle: subtitle,
+          media: referenceTopicMedia ?? referenceNewsMedia ?? referenceMagMedia,
+        }
       },
     },
   }

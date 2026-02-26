@@ -163,7 +163,10 @@ export default (isoCode: string, title: string) => {
       prepare(selection: any) {
         const { slug, media, type } = selection
         const withoutParent = slug ? slug.split('/').at(-1) : ''
-
+        let title = 'Missing route'
+        if (slug) {
+          title = withoutParent
+        }
         const thumbnail = media
           ? media
           : type === 'event'
@@ -171,7 +174,8 @@ export default (isoCode: string, title: string) => {
             : CiRoute
 
         return {
-          title: slug ? `/${withoutParent}` : 'Missing route',
+          title: title,
+          subTitle: slug,
           media: !slug ? CiWarning : thumbnail,
         }
       },

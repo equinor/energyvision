@@ -2,15 +2,15 @@ import type { ArrayDefinition, Rule } from 'sanity'
 import { SingleItemSelectorInput } from '../components/SingleItemSelector/SingleItemSelector'
 
 const singleItemArray = (it: ArrayDefinition, required = false) => {
-  const { options, components, preview } = it as ArrayDefinition
+  const { options, components } = it as ArrayDefinition
 
   const config = {
     ...it,
     validation: (Rule: Rule) =>
       required ? Rule.length(1).required() : Rule.length(1),
     components: {
+      ...components,
       input: SingleItemSelectorInput,
-      preview: components?.preview,
     },
     options: {
       ...options,
@@ -25,7 +25,6 @@ const singleItemArray = (it: ArrayDefinition, required = false) => {
         required && 'remove',
       ].filter(e => e),
     },
-    preview,
   }
   return config
 }

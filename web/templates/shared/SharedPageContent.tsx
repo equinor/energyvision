@@ -222,16 +222,20 @@ const applyPaddingTopIfApplicable = (
   }
   /*   console.log(
     `Current: ${currentComponent?.type}:${Array.isArray(currentComponent?.title) ? toPlainText(currentComponent?.title) : currentComponent?.title}`,
-  )
+  )*/
   console.log(
     `Previous component ${prevComponent?.type}:${Array.isArray(prevComponent?.title) ? toPlainText(prevComponent?.title) : prevComponent?.title}`,
-  ) */
+  )
 
   const currentBackgroundObject = getBackgroundObject(currentComponent)
   const previousBackgroundObject = getBackgroundObject(prevComponent)
   /*   console.log('currentBackgroundObject', currentBackgroundObject)
   console.log('previousBackgroundObject', previousCompreviousBackgroundObjectponentsDO) */
 
+  /**
+   * List of components that require current section to have pt-20
+   * usually because the previous has a background image
+   */
   const specialCases = [
     'teaser',
     'fullWidthImage',
