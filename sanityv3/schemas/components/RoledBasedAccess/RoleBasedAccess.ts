@@ -10,7 +10,7 @@ const restrictedComponents = [
 ]
 
 export function RolesBasedArrayInput(props: any) {
-  const { schemaType, renderDefault } = props
+  const { schemaType, renderDefault, ...restProps } = props
 
   //get the role of the current user
   //@ts-expect-error CurrentUser has roles in types...
@@ -19,14 +19,19 @@ export function RolesBasedArrayInput(props: any) {
   const allowedRoles = ['administrator', 'developer', 'designer']
   const hasAccess = roles.some((userRole: Role) => allowedRoles.includes(userRole.name))
 
+  let fieldsArray = schemaType.of
+  // Older sanity version doesnt seem to have of property.
+  if (typeof schemaType.of === 'undefined') {
+    fieldsArray = schemaType.fields
+  }
   //if the user has the required roles, return all types. If not, filter some of them out.
   const allowedTypes = hasAccess
-    ? schemaType.of
-    : schemaType.of?.filter((type: any) => !restrictedComponents.includes(type.name))
+    ? fieldsArray
+    : fieldsArray?.filter((type: any) => !restrictedComponents.includes(type.name))
 
   //render the default component and replace the allowed types
   return renderDefault({
-    ...props,
+    ...restProps,
     schemaType: { ...schemaType, of: allowedTypes },
   })
 }
