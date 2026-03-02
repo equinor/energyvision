@@ -29,6 +29,8 @@ export type ImageBackground = {
   image: ImageWithAlt | SanityImageObject
   useAnimation?: boolean
   useLight?: boolean
+  useNoGradient?: boolean
+  useGlass?: boolean
   contentAlignment?: ContentAlignmentTypes
 }
 

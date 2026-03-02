@@ -11,6 +11,8 @@ import HlsVideoPlayer from '@core/HlsVideoPlayer/HlsVideoPlayer'
 export type RowType = 'span3' | 'span2and1' | 'threeColumns' | undefined
 
 export const mapGridContent = (data: ComponentProps, rowType?: RowType, isMobile?: boolean): React.ReactNode => {
+  console.log('mapGridContent data.type', data.type)
+  console.log('mapGridContent data', data)
   //@ts-ignore:so many types
   switch (data.type) {
     case 'gridTextBlock':
@@ -22,13 +24,17 @@ export const mapGridContent = (data: ComponentProps, rowType?: RowType, isMobile
     case 'iframe':
       return <IFrame key={data.id} data={data as IFrameData} />
     case 'videoPlayer': {
+      const videoProps = {
+        src: data?.video?.url,
+        poster: data?.video?.thumbnail,
+        title: data?.video?.title,
+        aspectRatio: data?.designOptions?.aspectRatio,
+      }
       return (
         //@ts-ignore:todo
-        <HlsVideoPlayer
-          key={data.id}
-          {...(data as VideoPlayerData)}
-          className={`${isMobile ? '' : 'h-full sm:w-full'}`}
-        />
+        <div className="relative w-full h-full aspect-[21/9]">
+          <HlsVideoPlayer key={data.id} {...videoProps} className={`${isMobile ? '' : 'h-full sm:w-full'}`} />
+        </div>
       )
     }
     default:

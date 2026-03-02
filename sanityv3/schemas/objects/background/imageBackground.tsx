@@ -45,6 +45,25 @@ export default defineType({
       description: 'Applies a white gradient over semi transparent background image.',
     }),
     defineField({
+      title: 'Apply no gradient',
+      description: 'Ensure enough contrast between text and background then',
+      name: 'useNoGradient',
+      type: 'boolean',
+    }),
+    defineField({
+      title: 'Apply glass effect behind text',
+      name: 'useGlass',
+      type: 'boolean',
+      hidden: (props: any) => {
+        console.log('props', props)
+        const { currentUser } = props || {}
+        const allowedRoles = ['designer', 'administrator', 'developer']
+        const isAllowed = currentUser?.roles?.some((role) => allowedRoles?.includes(role?.name))
+        console.log('isAllowed galss effect', isAllowed)
+        return isAllowed ? false : true
+      },
+    }),
+    defineField({
       name: 'contentAlignment',
       title: 'Content Alignment',
       description: 'Select the content alignment on larger screens. Bottom alignments can be kept on mobile',
@@ -75,7 +94,7 @@ export default defineType({
     prepare({ image, useAnimation, contentAlignment }) {
       return {
         title: `Image background`,
-        subtitle: `${capitalizeFirstLetter(contentAlignment) + ' aligned '} ${
+        subtitle: `${capitalizeFirstLetter(contentAlignment ?? 'left') + ' aligned '} ${
           useAnimation ? ' | Animated ' : ''
         } content`,
         media: image.asset,

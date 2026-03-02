@@ -59,6 +59,7 @@ export const HlsVideoPlayer = ({
   className = '',
   videoClassName = '',
 }: HlsVideoPlayerProps) => {
+  console.log('src', src)
   const videoOptions = useMemo(() => {
     return {
       muted: muted,

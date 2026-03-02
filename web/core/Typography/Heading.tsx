@@ -51,7 +51,7 @@ const defaultComponents = ({
       largeText: ({ children }: PortableTextBlock) => {
         const classNames = serializerClassnames ? serializerClassnames['largeText'] : className
         return (
-          <Typography variant="2xl" id={id} as={providedAs} className={classNames}>
+          <Typography group="display" variant="h2_xl" id={id} as={providedAs} className={classNames}>
             <>{children}</>
           </Typography>
         )
@@ -59,7 +59,7 @@ const defaultComponents = ({
       extraLargeText: ({ children }: PortableTextBlock) => {
         const classNames = serializerClassnames ? serializerClassnames['extraLargeText'] : className
         return (
-          <Typography variant="5xl" id={id} as={providedAs} className={classNames}>
+          <Typography group="display" variant="h1_lg" id={id} as={providedAs} className={classNames}>
             <>{children}</>
           </Typography>
         )
@@ -67,7 +67,7 @@ const defaultComponents = ({
       twoXLText: ({ children }: PortableTextBlock) => {
         const classNames = serializerClassnames ? serializerClassnames['twoXLText'] : className
         return (
-          <Typography variant="8xl" id={id} as={providedAs} className={classNames}>
+          <Typography group="display" variant="h1_xl" id={id} as={providedAs} className={classNames}>
             <>{children}</>
           </Typography>
         )
@@ -75,7 +75,7 @@ const defaultComponents = ({
       //TODO Deprecate together with bigTitle option in text teaser
       extraLarge: ({ children }: PortableTextBlock) => {
         return (
-          <Typography variant="5xl" id={id} as={providedAs} className={className}>
+          <Typography group="display" variant="h1_lg" id={id} as={providedAs} className={className}>
             <>{children}</>
           </Typography>
         )

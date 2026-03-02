@@ -299,6 +299,7 @@ module.exports = {
       },
       borderRadius: {
         xs: '0.1rem',
+        card: '13px',
       },
       padding: {
         'page-content': 'theme(spacing.20)',

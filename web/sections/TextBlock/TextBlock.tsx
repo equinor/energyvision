@@ -37,17 +37,11 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
     'bottom-left': 'items-start text-start px-layout-lg xl:mr-auto xl:pl-layout-sm xl:pr-0',
     'bottom-center': 'items-start text-start px-layout-lg xl:pl-layout-sm xl:pr-0',
   }
-  let backgroundImageContentClassNames = `
+  const backgroundImageContentClassNames = `
   justify-center
   py-14
+  ${contentAlignment[designOptions?.background?.backgroundImage?.contentAlignment ?? 'left']}
   `
-  if (designOptions?.background?.backgroundImage?.contentAlignment) {
-    backgroundImageContentClassNames = twMerge(
-      backgroundImageContentClassNames,
-      `
-    ${contentAlignment[designOptions?.background?.backgroundImage?.contentAlignment]}`,
-    )
-  }
 
   let bgContainerOptions = designOptions
   if (useBrandTheme) {
@@ -61,6 +55,7 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
   }
 
   const common = `${useBrandTheme ? 'text-energy-red-100' : ''} text-balance`
+
   const serializerClassnames = {
     largeText: common,
     normal: common,
