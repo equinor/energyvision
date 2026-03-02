@@ -70,7 +70,7 @@ const getBlockComponents = ({
       return (
         <Block
           as={as}
-          group={group ?? 'paragraph'}
+          group={group}
           variant={variant ?? 'body'}
           className={className}
         >
@@ -80,12 +80,7 @@ const getBlockComponents = ({
       )
     },
     smallText: ({ children }: TypeProps) => (
-      <Block
-        as={as}
-        group={group ?? 'paragraph'}
-        variant='sm'
-        className={className}
-      >
+      <Block as={as} group={group} variant='sm' className={className}>
         {/**@ts-ignore:todo */}
         {children}
       </Block>
