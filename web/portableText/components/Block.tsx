@@ -10,16 +10,12 @@ export type BlockProps = {
 } & TypographyProps
 
 export const Block = forwardRef<HTMLParagraphElement, BlockProps>(
-  function Block(
-    { children, group, variant = 'body', className = '', ...rest },
-    ref,
-  ) {
+  function Block({ children, group, variant, className = '' }, ref) {
     //Check for empty blocks
     if (isEmpty(children) || typeof children === 'undefined') return null
 
     return (
       <Typography
-        {...rest}
         ref={ref}
         group={group}
         variant={variant}

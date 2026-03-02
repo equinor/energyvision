@@ -91,14 +91,7 @@ export type TypographyProps = {
  */
 export const Typography: OverridableComponent<TypographyProps, HTMLElement> =
   forwardRef(function Typography(
-    {
-      variant = 'body',
-      group,
-      children,
-      as: providedAs,
-      link = false,
-      className = '',
-    },
+    { variant, group, children, as: providedAs, link = false, className = '' },
     ref,
   ) {
     const as: ElementType = providedAs
@@ -107,7 +100,7 @@ export const Typography: OverridableComponent<TypographyProps, HTMLElement> =
     const typography = findTypography(variant, group)
 
     if (typeof typography === 'undefined') {
-      throw new Error(
+      console.warn(
         `Typography variant not found for variant "${variant}" ("${variant}") & group "${
           group || ''
         }"`,

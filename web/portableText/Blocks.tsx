@@ -68,14 +68,24 @@ const getBlockComponents = ({
   return {
     normal: ({ children }: TypeProps) => {
       return (
-        <Block as={as} group={group} variant={variant} className={className}>
+        <Block
+          as={as}
+          group={group ?? 'paragraph'}
+          variant={variant ?? 'body'}
+          className={className}
+        >
           {/**@ts-ignore:todo */}
           {children}
         </Block>
       )
     },
     smallText: ({ children }: TypeProps) => (
-      <Block as={as} group={group} variant='sm' className={className}>
+      <Block
+        as={as}
+        group={group ?? 'paragraph'}
+        variant='sm'
+        className={className}
+      >
         {/**@ts-ignore:todo */}
         {children}
       </Block>
@@ -286,7 +296,7 @@ const inlineBlockTypes = [
 
 export default function Blocks({
   group,
-  variant = 'body',
+  variant,
   value,
   blocksComponents,
   marks: marksComponents,
@@ -301,7 +311,6 @@ export default function Blocks({
 }: BlocksProps) {
   let div: PortableTextBlock[] = []
   if (!value) return
-  console.log('value', value)
 
   return (
     //@ts-ignore:todo

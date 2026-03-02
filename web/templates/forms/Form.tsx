@@ -57,8 +57,10 @@ const Form = ({
       )}
       id={anchor}
     >
-      {title && <Blocks variant='h2' value={title} />}
-      {ingress && <Blocks variant='ingress' value={ingress} />}
+      {title && <Blocks group='heading' variant='h2' value={title} />}
+      {ingress && (
+        <Blocks group='paragraph' variant='ingress' value={ingress} />
+      )}
       {renderForm(variant)}
     </section>
   )
