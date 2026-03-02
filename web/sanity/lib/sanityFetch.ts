@@ -21,6 +21,8 @@ export async function sanityFetch<const QueryString extends string>({
   tags?: string[]
   stega?: boolean
 }) {
+  console.log('process.env.NODE_ENV', process.env.NODE_ENV)
+
   return client.fetch(query, params, {
     cache: process.env.NODE_ENV === 'production' ? 'force-cache' : 'no-cache',
     next: {
