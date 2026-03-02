@@ -65,15 +65,35 @@ jobs:
           status: ${{ job.status }}
           steps: ${{ toJson(steps) }}
         if: failure()
+
+  read-satellites:
+    runs-on: ubuntu-latest
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: set-matrix
+        name: Read from satellites.json
+        run: |
+          MATRIX=$(cat satellites.json)
+          echo "matrix=${MATRIX}" >> $GITHUB_OUTPUT
+      - uses: act10ns/slack@v2
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        if: failure()
+
   deploy-all-sites:
-    needs: [update-radix-config]
+    needs:  [update-radix-config, read-satellites]
     runs-on: ubuntu-latest
     environment:
       name: preprodv2
     strategy:
       fail-fast: false
       matrix:
-        dataset: ['global', 'argentina']
+        dataset: ${{ fromJson(needs.read-satellites.outputs.matrix) }}
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       DOCKER_BUILDKIT: 1
