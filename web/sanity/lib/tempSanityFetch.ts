@@ -9,6 +9,7 @@ import type { DefinedSanityFetchType } from './live'
  * Examples: https://github.com/sanity-io/lcapi-examples/blob/main/next-16/src/sanity/fetch.ts
  */
 
+//@ts-ignore: look at a bit later why return type is missing some required props
 export const tempSanityFetch: DefinedSanityFetchType = ({
   query,
   params = {},

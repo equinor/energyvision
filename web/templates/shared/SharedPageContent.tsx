@@ -223,9 +223,9 @@ const applyPaddingTopIfApplicable = (
   /*   console.log(
     `Current: ${currentComponent?.type}:${Array.isArray(currentComponent?.title) ? toPlainText(currentComponent?.title) : currentComponent?.title}`,
   )*/
-  console.log(
+  /*   console.log(
     `Previous component ${prevComponent?.type}:${Array.isArray(prevComponent?.title) ? toPlainText(prevComponent?.title) : prevComponent?.title}`,
-  )
+  ) */
 
   const currentBackgroundObject = getBackgroundObject(currentComponent)
   const previousBackgroundObject = getBackgroundObject(prevComponent)
