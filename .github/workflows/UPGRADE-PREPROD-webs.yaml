@@ -113,6 +113,7 @@ jobs:
           algoliaAppId: ${{ vars.ALGOLIA_APP_ID }}
           algoliaApiKey: ${{ vars.ALGOLIA_SEARCH_API_KEY }}
           environment: ${{ vars.ENV }}
+          nodeEnvironment: production
           archiveContentLink: ${{ vars.ARCHIVE_CONTENT_LINK }}
           friendlyCaptchaSitekey: ${{ matrix.dataset == 'brazil' && vars.BRAZIL_FC_SITEKEY || vars.GLOBAL_FC_SITEKEY }}
          
