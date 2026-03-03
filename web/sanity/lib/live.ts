@@ -1,7 +1,13 @@
-//@ts-ignore:followiong documentation but ts complain
-// eslint-disable-next-line import/no-unresolved
+import type {
+  ClientPerspective,
+  ClientReturn,
+  ContentSourceMap,
+  QueryParams,
+} from 'next-sanity'
 import { defineLive } from 'next-sanity/live'
+import { dataset } from '@/languageConfig'
 import { client } from './client'
+import { tempSanityFetch } from './tempSanityFetch'
 import { token } from './token'
 
 export const { sanityFetch, SanityLive } = defineLive({
@@ -11,3 +17,48 @@ export const { sanityFetch, SanityLive } = defineLive({
   // Required for stand-alone live previews, the token is only shared to the browser if it's a valid Next.js Draft Mode session
   browserToken: token,
 })
+
+/**
+ * To be removed when issue fixed
+ * https://github.com/sanity-io/next-sanity/issues/2542
+ *
+ * Examples: https://github.com/sanity-io/lcapi-examples/blob/main/next-16/src/sanity/fetch.ts
+ */
+
+export type DefinedSanityFetchType = <
+  const QueryString extends string,
+>(options: {
+  query: QueryString
+  params?: QueryParams | Promise<QueryParams>
+  /**
+   * Add custom `next.tags` to the underlying fetch request.
+   * @see https://nextjs.org/docs/app/api-reference/functions/fetch#optionsnexttags
+   * This can be used in conjunction with custom fallback revalidation strategies, as well as with custom Server Actions that mutate data and want to render with fresh data right away (faster than the Live Event latency).
+   * @defaultValue `['sanity']`
+   */
+  tags?: string[]
+  perspective?: Exclude<ClientPerspective, 'raw'>
+  stega?: boolean
+  /**
+   * @deprecated use `requestTag` instead
+   */
+  tag?: never
+  /**
+   * This request tag is used to identify the request when viewing request logs from your Sanity Content Lake.
+   * @see https://www.sanity.io/docs/reference-api-request-tags
+   * @defaultValue 'next-loader.fetch'
+   */
+  requestTag?: string
+}) => Promise<{
+  data: ClientReturn<QueryString>
+  sourceMap: ContentSourceMap | null
+  tags: string[]
+}>
+
+export const routeSanityFetch: DefinedSanityFetchType = query => {
+  if (dataset === 'global-development') {
+    console.log('Environment is development, use defineLive')
+    return sanityFetch(query)
+  }
+  return tempSanityFetch(query)
+}

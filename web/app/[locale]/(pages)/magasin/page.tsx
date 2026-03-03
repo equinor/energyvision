@@ -7,7 +7,7 @@ import {
   getNameFromIso,
   getNameFromLocale,
 } from '@/sanity/helpers/localization'
-import { sanityFetch } from '@/sanity/lib/sanityFetch'
+import { routeSanityFetch } from '@/sanity/lib/live'
 import { PageWrapper } from '@/sanity/pages/PageWrapper'
 import { constructSanityMetadata, getPage } from '@/sanity/pages/utils'
 import {
@@ -29,7 +29,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale, slug } = await params
   const pageSlug = slug ?? magazineSlug[getNameFromIso(locale)]
-  const metaData = await sanityFetch({
+  const { data: metaData } = await routeSanityFetch({
     query: magazineroomMetaQuery,
     params: {
       lang: getNameFromLocale(locale),
@@ -63,7 +63,7 @@ export default async function MagazineRoomPage({
     tags: ['magazineIndexPage'],
   })
 
-  const articles = await sanityFetch({
+  const { data: articles } = await routeSanityFetch({
     query:
       tag && tag !== 'all'
         ? getMagazineArticlesByTag(false, false)

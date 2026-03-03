@@ -6,7 +6,7 @@ import { setRequestLocale } from 'next-intl/server'
 import { algolia } from '@/lib/config'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { getNameFromIso } from '@/sanity/helpers/localization'
-import { sanityFetch } from '@/sanity/lib/sanityFetch'
+import { routeSanityFetch } from '@/sanity/lib/live'
 import { PageWrapper } from '@/sanity/pages/PageWrapper'
 import { constructSanityMetadata, getPage } from '@/sanity/pages/utils'
 import { newsroomMetaQuery } from '@/sanity/queries/metaData'
@@ -18,7 +18,7 @@ export function generateStaticParams() {
 }
 
 const getInitialResponse = unstable_cache(
-   // this gets revalidated by path 
+  // this gets revalidated by path
   async (locale: string) => {
     const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
     const indexName = `${envPrefix}_NEWS_${locale}`
@@ -37,7 +37,7 @@ const getInitialResponse = unstable_cache(
       },
     })
     return response
-  }
+  },
 )
 
 export async function generateMetadata({
@@ -48,7 +48,7 @@ export async function generateMetadata({
   const { locale } = await params
 
   if (Flags.HAS_NEWSROOM) {
-    const metaData = await sanityFetch({
+    const { data: metaData } = await routeSanityFetch({
       query: newsroomMetaQuery,
       params: {
         lang: getNameFromIso(locale),

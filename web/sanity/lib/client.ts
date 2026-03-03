@@ -1,7 +1,10 @@
 /*import { ClientConfig, createClient } from '@sanity/client'*/
 import { type ClientConfig, createClient } from 'next-sanity'
 import { apiVersion, dataset, projectId, studioUrl } from '../lib/api'
-import { token } from './token'
+
+//import { token } from './token'
+
+//useCdn: true, // Set to false if statically generating pages, using ISR or tag-based revalidation
 
 const sanityConfig: ClientConfig = {
   projectId,
@@ -9,6 +12,7 @@ const sanityConfig: ClientConfig = {
   apiVersion,
   perspective: 'published',
   useCdn: dataset === 'global-development',
+  ignoreBrowserTokenWarning: dataset === 'global-development',
   stega: {
     studioUrl,
     // Set logger to 'console' for more verbose logging
@@ -25,7 +29,7 @@ const sanityConfig: ClientConfig = {
 
 export const client = createClient({
   ...sanityConfig,
-  token,
+  token: process.env.SANITY_API_TOKEN,
 })
 //only for next config
 export const notSecuredTokenClient = createClient({

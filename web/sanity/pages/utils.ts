@@ -11,9 +11,9 @@ import {
   getLocaleFromName,
 } from '@/sanity/helpers/localization'
 import { getQueryFromSlug } from '@/sanity/helpers/queryFromSlug'
-import { sanityFetch } from '@/sanity/lib/sanityFetch'
 import { resolveOpenGraphImage } from '@/sanity/lib/utils'
 import { isDateAfter } from '../../lib/helpers/dateUtilities'
+import { routeSanityFetch } from '../lib/live'
 
 export type LocaleSlug = { lang: string; slug: string }
 /**
@@ -26,21 +26,23 @@ const formatToValidPrefixedIsoSlugs = (
   const validLanguages = languages.map(lang => lang.name)
 
   return (
-    slugs?.filter(e=>e).reduce(function (result: LocaleSlug[], metaSlug: LocaleSlug) {
-      if (validLanguages.includes(metaSlug.lang)) {
-        result.push({
-          lang: getIsoFromName(metaSlug.lang),
-          slug:
-            metaSlug.lang !== 'en_GB'
-              ? // metaSlug.slug !== '/' <- To skip the homepage slugs which are only /
-                `/${getLocaleFromName(metaSlug.lang)}${metaSlug.slug && metaSlug.slug !== '/' ? metaSlug.slug : ''}`
-              : metaSlug.slug
-                ? metaSlug.slug
-                : '/',
-        })
-      }
-      return result
-    }, []) ?? [Array.isArray(slug) ? slug.join('/') : (slug ?? '/')]
+    slugs
+      ?.filter(e => e)
+      .reduce(function (result: LocaleSlug[], metaSlug: LocaleSlug) {
+        if (validLanguages.includes(metaSlug.lang)) {
+          result.push({
+            lang: getIsoFromName(metaSlug.lang),
+            slug:
+              metaSlug.lang !== 'en_GB'
+                ? // metaSlug.slug !== '/' <- To skip the homepage slugs which are only /
+                  `/${getLocaleFromName(metaSlug.lang)}${metaSlug.slug && metaSlug.slug !== '/' ? metaSlug.slug : ''}`
+                : metaSlug.slug
+                  ? metaSlug.slug
+                  : '/',
+          })
+        }
+        return result
+      }, []) ?? [Array.isArray(slug) ? slug.join('/') : (slug ?? '/')]
   )
 }
 
@@ -162,13 +164,13 @@ export async function getPage(params: Params) {
   const { query: pageQuery, queryParams: pageQueryParams } =
     await getQueryFromSlug(slug, locale)
 
-  const pageData = await sanityFetch({
+  const { data: pageData } = await routeSanityFetch({
     query: pageQuery,
     tags: [...tags],
     params: { ...pageQueryParams },
   })
 
-  const { stickyMenu, slugs, ...restPageData } = pageData || {}
+  const { stickyMenu, slugs, ...restPageData } = pageData
 
   return {
     headerData: {
@@ -177,7 +179,7 @@ export async function getPage(params: Params) {
         slug,
         slugs?.translationSlugs,
       ),
-      stickyMenuData:stickyMenu,
+      stickyMenuData: stickyMenu,
     },
     pageData: restPageData,
   }

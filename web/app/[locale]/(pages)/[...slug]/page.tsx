@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import dynamic from 'next/dynamic'
 import { notFound } from 'next/navigation'
 import { getNameFromLocale } from '@/sanity/helpers/localization'
-import { sanityFetch } from '@/sanity/lib/sanityFetch'
+import { routeSanityFetch } from '@/sanity/lib/live'
 import { PageWrapper } from '@/sanity/pages/PageWrapper'
 import { constructSanityMetadata, getPage } from '@/sanity/pages/utils'
 import { docWithSlugMetaQuery, pageMetaQuery } from '@/sanity/queries/metaData'
@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const isMagazinePage = slug[0] === magazineSlug[sanityLang]
   const type = isMagazinePage ? 'magazine' : 'news'
 
-  const metaData = await sanityFetch({
+  const { data: metaData } = await routeSanityFetch({
     query: isNewsPage || isMagazinePage ? docWithSlugMetaQuery : pageMetaQuery,
     params: {
       lang: sanityLang,
@@ -47,7 +47,7 @@ export default async function Page({ params }: Props) {
     locale,
     tags: ['page', 'event', 'landingPage', 'magazine', 'news', 'localNews'],
   })
-  if (Object.keys(pageData).length == 0) notFound()
+  if (Object.keys(pageData).length === 0) notFound()
 
   const template = pageData?.template
   if (!template || typeof template === 'undefined')

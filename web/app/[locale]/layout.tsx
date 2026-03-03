@@ -6,9 +6,10 @@ import Script from 'next/script'
 import { hasLocale, NextIntlClientProvider } from 'next-intl'
 import { Toaster } from 'sonner'
 import { PageProvider } from '@/contexts/pageContext'
+import { dataset } from '@/languageConfig'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { getNameFromIso } from '@/sanity/helpers/localization'
-import { sanityFetch } from '@/sanity/lib/sanityFetch'
+import { routeSanityFetch } from '@/sanity/lib/live'
 import { footerAndErrorImageQuery } from '@/sanity/queries/footer'
 import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu'
 import { simpleMenuQuery } from '@/sanity/queries/simpleMenu'
@@ -16,6 +17,7 @@ import DraftModeToast from '@/sections/DraftMode/DraftModeToast'
 import GoToTopButton from '@/sections/GoToTopButton'
 import { routing } from '../../i18n/routing'
 import { GoogleTagManagerHead } from './GTMHead'
+import { SanityLive } from './SanityLive'
 import { SiteImprove } from './SiteImprove'
 
 const equinorRegular = localFont({
@@ -49,20 +51,21 @@ export default async function LocaleLayout({
   const queryParams = {
     lang: getNameFromIso(locale) ?? 'en_GB',
   }
+
   const [siteMenuData, footerAndErrorImageData] = await Promise.all([
-    sanityFetch({
+    routeSanityFetch({
       query: Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery,
       params: queryParams,
       tags: ['siteMenu', 'subMenu'],
     }),
-    sanityFetch({
+    routeSanityFetch({
       query: footerAndErrorImageQuery,
       params: queryParams,
       tags: ['footer', 'settings'],
     }),
   ])
 
-  const { errorImage, ...footerData } = footerAndErrorImageData
+  const { errorImage, ...footerData } = footerAndErrorImageData.data || {}
 
   return (
     <html
@@ -73,12 +76,12 @@ export default async function LocaleLayout({
         <Toaster />
         {isDraftMode && <DraftModeToast />}
         <GoToTopButton />
-        {/* <SanityLive onError={handleError} /> */}
+        {dataset === 'global-development' && <SanityLive />}
         <NextIntlClientProvider>
           <PageProvider
             initialFooterData={footerData}
             initialErrorImage={errorImage}
-            initialSiteMenuData={siteMenuData}
+            initialSiteMenuData={siteMenuData.data}
           >
             {children}
           </PageProvider>

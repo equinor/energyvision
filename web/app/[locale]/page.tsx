@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation'
 import { OrganizationJsonLd } from 'next-seo'
 import { languages } from '@/languageConfig'
 import { getNameFromIso } from '@/sanity/helpers/localization'
-import { sanityFetch } from '@/sanity/lib/sanityFetch'
+import { routeSanityFetch } from '@/sanity/lib/live'
 import { constructSanityMetadata, getPage } from '@/sanity/pages/utils'
 import { homePageMetaQuery } from '@/sanity/queries/metaData'
 import Footer from '@/sections/Footer/Footer'
@@ -18,7 +18,7 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params
-  const metaData = await sanityFetch({
+  const { data: metaData } = await routeSanityFetch({
     query: homePageMetaQuery,
     params: {
       lang: getNameFromIso(locale),
@@ -66,6 +66,5 @@ export default async function Home({ params }: Props) {
       <HomePage headerData={headerData} {...pageData} />
       <Footer />
     </FriendlyCaptchaSdkWrapper>
-   
   )
 }
