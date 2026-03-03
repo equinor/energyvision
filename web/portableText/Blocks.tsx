@@ -359,7 +359,7 @@ export default function Blocks({
               }),
             },
           }
-
+          /* 
           if (blocks?.length === 1) {
             return (
               <PortableText
@@ -375,7 +375,7 @@ export default function Blocks({
                 }}
               />
             )
-          }
+          } */
           div.push(block)
           // If the next block is also text/pullQuote, group it with this one
           if (inlineBlockTypes.includes(blocks[i + 1]?._type)) return null
