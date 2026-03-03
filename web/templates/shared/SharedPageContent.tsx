@@ -659,6 +659,8 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
   }
   const content = (data?.content || []).map((c: Component, index) => {
     const prevComponent = data?.content?.[index - 1]
+    const nextComponent = data?.content?.[index + 1]
+
     const anchorReference =
       (prevComponent as unknown as ComponentProps)?.type === 'anchorLink'
         ? (prevComponent as unknown as AnchorLinkData)?.anchorReference
@@ -667,6 +669,9 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
     //Returns pt-20 when applicable or empty string
     const previousComponentIndex =
       prevComponent?.type === 'anchorLink' ? index - 2 : index - 1
+
+    const nextComponentIndex =
+      nextComponent?.type === 'anchorLink' ? index + 2 : index + 1
 
     const previousComponentToCompare =
       index === 0
@@ -680,10 +685,18 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
       c,
       previousComponentToCompare,
     )
+    let bottomSpacingClassName = 'pb-page-content'
+
+    if (
+      c?.type === 'textBlock' &&
+      data?.content?.[nextComponentIndex]?.type === 'textBlock'
+    ) {
+      bottomSpacingClassName = 'pb-12'
+    }
     /*     console.log(
       `Applying top spacing: ${topSpacingClassName} to ${c?.type} with title ${Array.isArray(c?.title) ? toPlainText(c?.title) : c?.title}`,
     ) */
-    const spacingClassName = `${topSpacingClassName} pb-page-content`
+    const spacingClassName = `${topSpacingClassName} ${bottomSpacingClassName}`
 
     return (
       <ErrorBoundary

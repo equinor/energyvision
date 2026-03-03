@@ -23,7 +23,6 @@ const TextTeaser = ({ data, anchor, className }: TextTeaserProps) => {
       blockClassName={`${highlight}`}
       value={title}
       as='h2'
-      asOneElementType
       group='heading'
       variant='h2'
     />

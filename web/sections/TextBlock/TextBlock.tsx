@@ -24,6 +24,7 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
     splitList,
     useBrandTheme = false,
   } = data
+
   /* Don't render the component if it only has an eyebrow */
   if (
     !title &&
@@ -65,6 +66,16 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
     }
   }
 
+  const contentElements = (
+    <>
+      {ingress && <Blocks variant='ingress' value={ingress} />}
+      {text && <Blocks value={text} variant='body' />}
+      {callToActions && (
+        <CallToActions callToActions={callToActions} splitList={splitList} />
+      )}
+    </>
+  )
+
   return (
     <BackgroundContainer
       {...bgContainerOptions}
@@ -92,44 +103,24 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
         >
           <Typography variant='overline'>{overline}</Typography>
           {title && (
-            <Blocks
-              value={title}
-              as='h2'
-              asOneElementType
-              group='heading'
-              variant='h2'
-            />
+            <Blocks value={title} as='h2' group='heading' variant='h2' />
           )}
         </hgroup>
       ) : (
-        title && (
-          <Blocks
-            value={title}
-            as='h2'
-            asOneElementType
-            group='heading'
-            variant='h2'
-          />
-        )
+        title && <Blocks value={title} as='h2' group='heading' variant='h2' />
       )}
-      {(ingress || text || callToActions) && (
-        <div
-          className={`flex flex-col ${
-            contentAlignment === 'right' ? 'items-end' : ''
-          }`}
-        >
-          {ingress && (
-            <Blocks variant='ingress' value={ingress} />
-          )}
-          {text && <Blocks value={text} />}
-          {callToActions && (
-            <CallToActions
-              callToActions={callToActions}
-              splitList={splitList}
-            />
-          )}
-        </div>
-      )}
+      {(ingress || text || callToActions) &&
+        (contentAlignment === 'right' ? (
+          <div
+            className={`flex flex-col ${
+              contentAlignment === 'right' ? 'items-end' : ''
+            }`}
+          >
+            {contentElements}
+          </div>
+        ) : (
+          contentElements
+        ))}
     </BackgroundContainer>
   )
 }

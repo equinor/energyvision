@@ -15,17 +15,17 @@ import {
 import { ResourceLink } from '@/core/Link/ResourceLink'
 import { List } from '@/core/List'
 import { Typography } from '@/core/Typography'
+import { defaultLanguage } from '@/languageConfig'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
+import { Pagination } from '@/sections/searchBlocks/pagination/Pagination'
 import { PaginationContextProvider } from '../../contexts/PaginationContext'
 import { searchClient as client } from '../../lib/algolia'
-import { Pagination } from '@/sections/searchBlocks/pagination/Pagination'
 import Blocks from '../../portableText/Blocks'
 import { getIsoFromLocale } from '../../sanity/helpers/localization'
 import type { NewsRoomPageType } from '../../types'
 import NewsRoomFilters from './Filters/NewsroomFilters'
 import NewsSections from './NewsSections/NewsSections'
 import QuickSearch from './QuickSearch/QuickSearch'
-import { defaultLanguage } from '@/languageConfig'
 
 type NewsRouteState = {
   query?: string
@@ -192,7 +192,13 @@ const NewsRoomTemplate = forwardRef<HTMLDivElement, NewsRoomTemplateProps>(
               <div className='dark bg-slate-blue-95 py-24'>
                 <div className='mx-auto flex grid-rows-2 flex-col gap-4 px-layout-sm'>
                   {title && <Blocks value={title} as='h1' variant='h2' />}
-                  {ingress && <Blocks value={ingress} />}
+                  {ingress && (
+                    <Blocks
+                      value={ingress}
+                      group='paragraph'
+                      variant='ingress'
+                    />
+                  )}
                   <div className='flex w-full flex-col items-center gap-8 lg:flex-row lg:justify-between'>
                     <QuickSearch />
                     <List
@@ -203,7 +209,9 @@ const NewsRoomTemplate = forwardRef<HTMLDivElement, NewsRoomTemplateProps>(
                     >
                       <List.Item className='w-full'>
                         {subscriptionLink?.link?.slug && (
-                          <ResourceLink href={`${locale!=defaultLanguage.locale? `/${locale}`: ""}${subscriptionLink.link.slug}`}>
+                          <ResourceLink
+                            href={`${locale !== defaultLanguage.locale ? `/${locale}` : ''}${subscriptionLink.link.slug}`}
+                          >
                             {subscriptionLinkTitle}
                           </ResourceLink>
                         )}
@@ -218,7 +226,7 @@ const NewsRoomTemplate = forwardRef<HTMLDivElement, NewsRoomTemplateProps>(
                             >
                               <ResourceLink
                                 type={localNewsPage.type}
-                                href={`${locale!=defaultLanguage.locale? `/${locale}`: ""}${localNewsPage?.link?.slug}`}
+                                href={`${locale !== defaultLanguage.locale ? `/${locale}` : ''}${localNewsPage?.link?.slug}`}
                               >
                                 {localNewsPage?.label}
                               </ResourceLink>

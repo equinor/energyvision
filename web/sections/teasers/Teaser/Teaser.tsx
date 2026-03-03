@@ -87,25 +87,11 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
           <hgroup className='mb-1'>
             <Typography variant='overline'>{overline}</Typography>
             {title && (
-              <Blocks
-                value={title}
-                as='h2'
-                asOneElementType
-                group='heading'
-                variant='h2'
-              />
+              <Blocks value={title} as='h2' group='heading' variant='h2' />
             )}
           </hgroup>
         ) : (
-          title && (
-            <Blocks
-              value={title}
-              as='h2'
-              group='heading'
-              variant='h2'
-              asOneElementType
-            />
-          )
+          title && <Blocks value={title} as='h2' group='heading' variant='h2' />
         )}
         {content && <Blocks variant='ingress' value={content} />}
         {actions && (

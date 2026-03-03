@@ -24,7 +24,7 @@ function getLink(menuLinkData: MenuLinkData, iso: string) {
   if (!menuLinkData) return 'something-wrong'
   // manually setting lang here.. as menu links only allow same language links..
   const locale = iso !== defaultLanguage.iso ? `/${getLocaleFromIso(iso)}` : ''
-  return  locale + menuLinkData.link?.slug || ''
+  return locale + menuLinkData.link?.slug || ''
 }
 
 type MenuGroupType = {
@@ -63,7 +63,7 @@ export const MenuItem = ({ item, index, linkCallback }: MenuGroupType) => {
       <MenuContent className=''>
         <div className='px-4 max-xl:py-4 xl:mx-auto xl:px-layout-sm'>
           <div className='flex w-full flex-col gap-2 pb-6'>
-            {intro && <Blocks value={intro} />}
+            {intro && <Blocks value={intro} variant='body' />}
             <ResourceLink
               href={menuItemHref}
               className={`relative w-fit ${ariaCurrentStyling}`}

@@ -1,8 +1,7 @@
 'use client'
-import type { PortableTextBlock } from 'next-sanity'
+import { type PortableTextBlock, toPlainText } from 'next-sanity'
 import type { HTMLAttributes, ReactNode } from 'react'
 import { Breadcrumbs } from '@/core/Breadcrumbs/Breadcrumbs'
-import Blocks from '@/portableText/Blocks'
 import {
   type ColorKeys,
   colorKeyToUtilityMap,
@@ -95,7 +94,7 @@ export const HeroBlock = ({
     <Breadcrumbs
       //@ts-ignore
       background={type !== HeroTypes.DEFAULT ? nextCompBg : undefined}
-      currentSlug={breadcrumbs.currentSlug}
+      currentSlug={breadcrumbs?.currentSlug}
       useCustomBreadcrumbs={breadcrumbs?.useCustomBreadcrumbs}
       defaultBreadcrumbs={breadcrumbs?.defaultBreadcrumbs}
       customBreadcrumbs={breadcrumbs?.customBreadcrumbs}
@@ -193,7 +192,7 @@ export const HeroBlock = ({
   ) : (
     <h1 id='mainTitle' className='sr-only'>
       {/** @ts-ignore */}
-      <Blocks value={title} />
+      {toPlainText(title)}
     </h1>
   )
 }

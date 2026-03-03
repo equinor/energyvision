@@ -21,7 +21,12 @@ const LandingPage = ({ data }: LandingPageProps) => {
           </Typography>
         )}
         {ingress && (
-          <Blocks variant='ingress' value={ingress} className='mb-6' />
+          <Blocks
+            group='paragraph'
+            variant='ingress'
+            value={ingress}
+            className='mb-6'
+          />
         )}
       </div>
       <div className='flex flex-col gap-6 px-layout-md'>

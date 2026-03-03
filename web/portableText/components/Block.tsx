@@ -10,7 +10,7 @@ export type BlockProps = {
 } & TypographyProps
 
 export const Block = forwardRef<HTMLParagraphElement, BlockProps>(
-  function Block({ children, group, variant, className = '' }, ref) {
+  function Block({ children, group, variant, className = '', id }, ref) {
     //Check for empty blocks
     if (isEmpty(children) || typeof children === 'undefined') return null
 
@@ -20,6 +20,7 @@ export const Block = forwardRef<HTMLParagraphElement, BlockProps>(
         group={group}
         variant={variant}
         className={className}
+        {...(id && { id: id })}
       >
         {children}
       </Typography>

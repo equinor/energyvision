@@ -16,7 +16,7 @@ export default function DraftModeToolbar() {
   const disable = () => startTransition(() => disableDraftMode())
 
   return isInsideTool ? null : (
-    <div className='fixed bottom-5 left-24 z-50 rounded-card bg-slate-blue-95 text-white-100 hover:bg-slate-600 hover:*:underline'>
+    <div className='fixed bottom-5 left-1/2 z-50 rounded-card border border-white-100 bg-slate-blue-95 text-white-100 hover:bg-slate-600 hover:*:underline'>
       {pending ? (
         'Disabling draft mode...'
       ) : (

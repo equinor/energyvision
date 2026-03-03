@@ -49,7 +49,7 @@ const Transcript = ({ transcript, className, ariaTitle }: TranscriptProps) => {
             <Typography variant='simple'>{readTranscript}</Typography>
           </button>
           <Modal isOpen={isOpen} onClose={handleClose} title={ariaTitle}>
-            <Blocks value={transcript} />
+            <Blocks value={transcript} variant='body' />
           </Modal>
         </>
       )}

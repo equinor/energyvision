@@ -28,10 +28,10 @@ export const FiftyFiftyHero = ({
   const url = link && getUrlFromAction(link)
   const action = heroLink ?? link
 
-  const { bg: nextCompBg, dark: nextCompDark } = getBgAndDarkFromBackground(
+  //@ts-ignore
+  /*   const { bg: nextCompBg, dark: nextCompDark } = getBgAndDarkFromBackground(
     nextSectionDesignOptions,
-  )
- 
+  ) */
 
   return (
     <section className={twMerge(`flex flex-col-reverse`, className)}>
@@ -60,14 +60,19 @@ export const FiftyFiftyHero = ({
               id='mainTitle'
               //@ts-ignore
               value={title}
-              asOneElementType
+              group='heading'
+              variant='h2'
               as='h1'
               //same as variants h1
               className={`pb-6 lg:pb-12`}
             />
           )}
           {ingress && (
-            <Blocks value={ingress} blockClassName='hidden md:block' />
+            <Blocks
+              value={ingress}
+              variant='ingress'
+              blockClassName='hidden md:block'
+            />
           )}
 
           {action && (heroUrl || url) && (

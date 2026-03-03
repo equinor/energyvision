@@ -89,7 +89,7 @@ export const CarouselItem = forwardRef<HTMLLIElement, CarouselItemProps>(
         return <Typography variant='caption'>{content}</Typography>
       }
       if (content && Array.isArray(content)) {
-        return <Blocks value={content} />
+        return <Blocks value={content} variant='body' />
       }
       return null
     }

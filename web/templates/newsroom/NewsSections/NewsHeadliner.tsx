@@ -1,16 +1,16 @@
 import type { SanityImageObject } from '@sanity/image-url'
 import NextImage from 'next/image'
+import { useLocale } from 'next-intl'
 import { forwardRef, type HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
 import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
 import { BaseLink } from '@/core/Link/BaseLink'
 import { Typography } from '@/core/Typography'
+import { defaultLanguage } from '@/languageConfig'
+import { getLocaleFromIso } from '@/sanity/helpers/localization'
 import { getSmallerThanPxLgSizes, Image } from '../../../core/Image/Image'
 import Blocks from '../../../portableText/Blocks'
 import type { NewsRoomNewsItem } from '../../../types/algoliaIndexPage'
-import { defaultLanguage } from '@/languageConfig'
-import { useLocale } from 'next-intl'
-import { getLocaleFromIso } from '@/sanity/helpers/localization'
 
 export type NewsHeadlinerProps = {
   data: NewsRoomNewsItem
@@ -28,7 +28,10 @@ const NewsHeadliner = forwardRef<HTMLLIElement, NewsHeadlinerProps>(
     const locale = getLocaleFromIso(lang)
     return (
       <section ref={ref} {...rest} className={twMerge('', className)}>
-        <BaseLink href={`${locale!=defaultLanguage.locale? `/${locale}`: ""}${slug}`} className='group flex flex-col gap-2 pb-6'>
+        <BaseLink
+          href={`${locale !== defaultLanguage.locale ? `/${locale}` : ''}${slug}`}
+          className='group flex flex-col gap-2 pb-6'
+        >
           {(heroImage?.image?.asset || fallbackImage || thumbnailUrl) && (
             <div className='relative mb-2 aspect-video max-h-[324px]'>
               {thumbnailUrl ? (
@@ -61,11 +64,9 @@ const NewsHeadliner = forwardRef<HTMLLIElement, NewsHeadlinerProps>(
                 variant='date'
                 datetime={publishDateTime}
                 uppercase
-                className='font-normal text-2xs leading-normal pb-1'
+                className='pb-1 font-normal text-2xs leading-normal'
               />
-              <span className='mx-2 font-normal leading-normal'>
-                |
-              </span>
+              <span className='mx-2 font-normal leading-normal'>|</span>
               <FormattedDateTime
                 variant='time'
                 datetime={publishDateTime}
@@ -79,7 +80,12 @@ const NewsHeadliner = forwardRef<HTMLLIElement, NewsHeadlinerProps>(
             </Typography>
           )}
           {Array.isArray(ingress) ? (
-            <Blocks value={ingress} className='max-w-prose text-sm' />
+            <Blocks
+              value={ingress}
+              variant='ingress'
+              group='paragraph'
+              className='max-w-prose text-sm'
+            />
           ) : (
             <Typography variant='body' className='max-w-prose` text-sm'>
               {ingress}

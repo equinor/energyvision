@@ -27,7 +27,7 @@ const CardItem = forwardRef<HTMLLIElement, CardItemProps>(function CardItem(
       <Typography variant='h4' as={content ? 'h3' : 'p'} className={`pb-0`}>
         {title}
       </Typography>
-      {content && <Blocks value={content} />}
+      {content && <Blocks value={content} variant='body' />}
     </li>
   )
 })

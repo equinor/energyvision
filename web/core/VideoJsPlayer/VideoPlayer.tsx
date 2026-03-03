@@ -1,13 +1,13 @@
 'use client'
-import { HTMLProps, useRef } from 'react'
-import { AspectRatioVariants, Variants, Video } from './Video'
-import Player from 'video.js/dist/types/player'
-import { PortableTextBlock } from 'next-sanity'
+import type { PortableTextBlock } from 'next-sanity'
+import { type HTMLProps, useRef } from 'react'
 import { twMerge } from 'tailwind-merge'
+import type Player from 'video.js/dist/types/player'
 import Blocks from '@/portableText/Blocks'
+import { type AspectRatioVariants, type Variants, Video } from './Video'
 import 'video.js/dist/video-js.css'
-import { ImageWithAlt } from '@/types'
 import { resolveImage } from '@/sanity/lib/utils'
+import type { ImageWithAlt } from '@/types'
 import { mapSanityImageRatio } from '../Image/Image'
 
 export type VideoType = {
@@ -22,7 +22,10 @@ export type VideoControlsType = {
   muted?: boolean
 }
 
-export type VideoPlayerProps = Omit<HTMLProps<HTMLVideoElement>, 'src' | 'poster'> & {
+export type VideoPlayerProps = Omit<
+  HTMLProps<HTMLVideoElement>,
+  'src' | 'poster'
+> & {
   variant?: Variants
   src: string
   figureCaption?: string | PortableTextBlock[]
@@ -62,7 +65,9 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
     aspectRatio: mapSanityImageRatio(aspectRatio === '9:16' ? '9:16' : '16:9'),
   })
   const playerRef = useRef<Player>(null)
-  const useFill = !containVideo && (useFillMode || aspectRatio === '10:3' || aspectRatio === '21:9')
+  const useFill =
+    !containVideo &&
+    (useFillMode || aspectRatio === '10:3' || aspectRatio === '21:9')
 
   const videoJsOptions = {
     src: [
@@ -95,7 +100,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
       chaptersButton: false,
       audioTrackButton: false,
       playbackRateMenuButton: false,
-      fullscreenToggle: variant !== 'fullwidth' ? true : false,
+      fullscreenToggle: variant !== 'fullwidth',
       ...(variant === 'fullwidth' && {
         progressControl: {
           seekBar: false,
@@ -148,7 +153,13 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
   }
 
   return (
-    <figure {...(id && { id })} className={twMerge(`relative flex flex-col ${variantClassName[variant]}`, className)}>
+    <figure
+      {...(id && { id })}
+      className={twMerge(
+        `relative flex flex-col ${variantClassName[variant]}`,
+        className,
+      )}
+    >
       <div className={`${aspectRatioClassName[aspectRatio]}`}>
         <Video
           //@ts-ignore: TODO
@@ -160,8 +171,15 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
         />
       </div>
       {figureCaption && (
-        <figcaption className={twMerge(`w-full text-md ${title ? 'py-2' : ''} `, captionClassName)}>
-          {figureCaption && Array.isArray(figureCaption) && <Blocks value={figureCaption} />}
+        <figcaption
+          className={twMerge(
+            `w-full text-md ${title ? 'py-2' : ''} `,
+            captionClassName,
+          )}
+        >
+          {figureCaption && Array.isArray(figureCaption) && (
+            <Blocks value={figureCaption} variant='body' />
+          )}
           {figureCaption && !Array.isArray(figureCaption) && figureCaption}
         </figcaption>
       )}

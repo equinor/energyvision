@@ -89,7 +89,9 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
           blockClassName={`pt-2`}
         />
       )}
-      {content && variant !== 'secondary' && <Blocks value={content} />}
+      {content && variant !== 'secondary' && (
+        <Blocks value={content} variant='body' />
+      )}
     </>
   )
   return (

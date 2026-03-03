@@ -1,25 +1,25 @@
 const variants = {
   heading: {
     unstyled: '',
-    h1: 'text-3xl leading-earthy lg:leading-misty pb-6 lg:pb-12 my-0',
+    h1: 'text-3xl leading-earthy lg:leading-misty mb-6 lg:mb-12',
     //many places has gap-6 + mb-2 so pb-8
     //Teaser isBigText was set to 2xl...
     //TextBlock isBigText set to 3xl
     // isBigText set to common pattern 2xl now with classname mb-2 leading-cloudy
-    h2: `text-xl leading-earthy lg:leading-misty pb-4 lg:pb-10 my-0`,
-    h3: `text-lg leading-lofty pt-4 pb-8 my-0`, //needs pt and pb?
-    h4: 'text-md pb-0',
-    h5: 'text-md pb-0',
-    h6: 'text-base pb-0',
-    h7: 'text-xs leading-earthy pb-0',
+    h2: `text-xl leading-earthy lg:leading-misty mb-4 lg:mb-8 `,
+    h3: `text-lg leading-lofty mt-4 mb-8`, //needs pt and pb?
+    h4: 'text-md',
+    h5: 'text-md',
+    h6: 'text-base',
+    h7: 'text-xs leading-earthy',
     xs: 'text-xs leading-earthy',
     sm: 'text-sm',
     base: 'text-base',
-    md: 'text-md leading-lofty pb-2',
-    lg: 'text-lg leading-lofty pb-4',
+    md: 'text-md leading-lofty mb-2',
+    lg: 'text-lg leading-lofty mb-4',
     //why is xl for most sections/blocks? is h2 really text-xl and not 2xl?
-    xl: 'text-xl leading-earthy pb-6',
-    '2xl': 'text-2xl leading-earthy pb-6',
+    xl: 'text-xl leading-earthy mb-6',
+    '2xl': 'text-2xl leading-earthy mb-6',
     '3xl': 'text-3xl leading-cloudy',
     '4xl': 'text-4xl leading-cloudy',
     '5xl': 'text-5xl leading-cloudy',
@@ -27,19 +27,19 @@ const variants = {
       'text-5xl lg:text-6xl 2xl:text-8xl leading-cloudy lg:leading-cloudy 2xl:leading-cloudy ',
   },
   display: {
-    h1_base: 'text-4xl leading-earthy tracking-display pb-6 lg:pb-12',
-    h1_lg: 'text-5xl leading-cloudy tracking-display pb-6 lg:pb-12',
-    h1_xl: 'text-6xl leading-cloudy tracking-display pb-6 lg:pb-12',
-    h2_base: 'text-3xl leading-earthy tracking-display pb-4 lg:pb-10',
-    h2_lg: 'text-4xl leading-cloudy tracking-display pb-4 lg:pb-10',
-    h2_xl: 'text-5xl leading-cloudy tracking-display pb-4 lg:pb-10',
+    h1_base: 'text-4xl leading-earthy tracking-display mb-6 lg:mb-12',
+    h1_lg: 'text-5xl leading-cloudy tracking-display mb-6 lg:mb-12',
+    h1_xl: 'text-6xl leading-cloudy tracking-display mb-6 lg:mb-12',
+    h2_base: 'text-3xl leading-earthy tracking-display mb-4 lg:mb-10',
+    h2_lg: 'text-4xl leading-cloudy tracking-display mb-4 lg:mb-10',
+    h2_xl: 'text-5xl leading-cloudy tracking-display mb-4 lg:mb-10',
   },
   paragraph: {
     caption: '',
     overline: 'text-md pb-2',
-    ingress: 'text-md pt-5 pb-5 first:pt-0 last:pb-24',
+    ingress: 'text-md mt-5 mb-5 first:mt-0 last:mb-10',
     eyebrow: 'text-xs font-medium uppercase',
-    body: 'py-5 first:pt-0 last:pb-0 [:where(h2+*,h3+*)]:pt-0 text-base',
+    body: 'my-5 first:mt-0 last:mb-0 [:where(h2+*,h3+*)]:mt-0 text-base',
     small: 'text-sm',
     simple: 'text-base',
   },

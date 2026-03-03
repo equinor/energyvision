@@ -118,7 +118,12 @@ const NewsPage = async ({
             />
           )}
           {content && content.length > 0 && (
-            <Blocks group='article' value={formattedContent} includeFootnotes />
+            <Blocks
+              group='article'
+              variant='body'
+              value={formattedContent}
+              includeFootnotes
+            />
           )}
           <div className='w-full px-layout-sm lg:px-layout-lg'>
             <div className='mt-8 mb-2'>

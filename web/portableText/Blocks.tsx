@@ -59,11 +59,14 @@ const getBlockComponents = ({
   className = '',
   group,
   variant,
+  id,
 }: {
   as?: ElementType
   className?: string
   group?: TypographyGroups
   variant?: TypographyVariants
+  //If blocks length is just 1, like a single h1 then have to pass id if its an anchor reference
+  id?: string
 }) => {
   return {
     normal: ({ children }: TypeProps) => {
@@ -73,6 +76,7 @@ const getBlockComponents = ({
           group={group}
           variant={variant ?? 'body'}
           className={className}
+          {...(id && { id: id })}
         >
           {/**@ts-ignore:todo */}
           {children}
@@ -86,40 +90,70 @@ const getBlockComponents = ({
       </Block>
     ),
     display_h1_base: ({ children }: TypeProps) => (
-      <Block group='display' variant='h1_base' className={className}>
+      <Block
+        group='display'
+        variant='h1_base'
+        className={className}
+        {...(id && { id: id })}
+      >
         {/**@ts-ignore:todo */}
         {children}
       </Block>
     ),
     display_h1_lg: ({ children }: TypeProps) => (
-      <Block group='display' variant='h1_lg' className={className}>
+      <Block
+        group='display'
+        variant='h1_lg'
+        className={className}
+        {...(id && { id: id })}
+      >
         {/**@ts-ignore:todo */}
         {children}
       </Block>
     ),
     display_h1_xl: ({ children }: TypeProps) => {
       return (
-        <Block group='display' variant='h1_xl' className={className}>
+        <Block
+          group='display'
+          variant='h1_xl'
+          className={className}
+          {...(id && { id: id })}
+        >
           {/**@ts-ignore:todo */}
           {children}
         </Block>
       )
     },
     display_h2_base: ({ children }: TypeProps) => (
-      <Block group='display' variant='h2_base' className={className}>
+      <Block
+        group='display'
+        variant='h2_base'
+        className={className}
+        {...(id && { id: id })}
+      >
         {/**@ts-ignore:todo */}
         {children}
       </Block>
     ),
     display_h2_lg: ({ children }: TypeProps) => (
-      <Block group='display' variant='h2_lg' className={className}>
+      <Block
+        group='display'
+        variant='h2_lg'
+        className={className}
+        {...(id && { id: id })}
+      >
         {/**@ts-ignore:todo */}
         {children}
       </Block>
     ),
     display_h2_xl: ({ children }: TypeProps) => {
       return (
-        <Block group='display' variant='h2_xl' className={className}>
+        <Block
+          group='display'
+          variant='h2_xl'
+          className={className}
+          {...(id && { id: id })}
+        >
           {/**@ts-ignore:todo */}
           {children}
         </Block>
@@ -133,6 +167,7 @@ const getBlockComponents = ({
           group={group ?? 'heading'}
           variant='h2'
           className={className}
+          {...(id && { id: id })}
         >
           {/**@ts-ignore:todo */}
           {children}
@@ -145,6 +180,7 @@ const getBlockComponents = ({
         group={group ?? 'heading'}
         variant='h3'
         className={className}
+        {...(id && { id: id })}
       >
         {/**@ts-ignore:todo */}
         {children}
@@ -156,6 +192,7 @@ const getBlockComponents = ({
         group={group ?? 'heading'}
         variant='h4'
         className={className}
+        {...(id && { id: id })}
       >
         {/**@ts-ignore:todo */}
         {children}
@@ -276,10 +313,6 @@ export type BlocksProps = {
   clampLines?: 3 | 4 | 5
   includeFootnotes?: boolean
   noInvert?: boolean
-  /** joins the value to one element type, requires 'as' prop to be set
-   * @default false
-   */
-  asOneElementType?: boolean
 } & TypographyProps
 
 const inlineBlockTypes = [
@@ -288,6 +321,12 @@ const inlineBlockTypes = [
   'pullQuote',
   'thumbnail',
 ]
+
+const twLineClampUtility: TWLineClamps = {
+  3: 'line-clamp-3',
+  4: 'line-clamp-4',
+  5: 'line-clamp-5',
+}
 
 export default function Blocks({
   group,
@@ -301,7 +340,6 @@ export default function Blocks({
   id,
   clampLines,
   includeFootnotes = false,
-  asOneElementType = false,
   as,
 }: BlocksProps) {
   let div: PortableTextBlock[] = []
@@ -313,18 +351,13 @@ export default function Blocks({
       (block: PortableTextBlock, i: number, blocks: PortableTextBlock[]) => {
         // Normal text blocks (p, h1, h2, etc.) — these are grouped so we can wrap them in a prose div
         if (inlineBlockTypes.includes(block._type)) {
-          const twLineClampUtility: TWLineClamps = {
-            3: 'line-clamp-3',
-            4: 'line-clamp-4',
-            5: 'line-clamp-5',
-          }
-
           const hasAttachment = block?.markDefs?.some(
             mark => mark?._type === 'attachment',
           )
           const blocksGroup = (
             hasAttachment ? 'plain' : group
           ) as TypographyGroups
+
           const blocksVariant = (
             hasAttachment ? 'div' : variant
           ) as TypographyVariants
@@ -341,6 +374,7 @@ export default function Blocks({
                   blocks?.length === 1 && className,
                   blockClassName,
                 ),
+                ...(blocks?.length === 1 && { id }),
               }),
               ...blocksComponents,
             },
@@ -359,12 +393,11 @@ export default function Blocks({
               }),
             },
           }
-          /* 
+
           if (blocks?.length === 1) {
             return (
               <PortableText
                 key={block._key}
-                id={id}
                 value={block}
                 components={componentsProps}
                 onMissingComponent={(message, options) => {
@@ -375,7 +408,7 @@ export default function Blocks({
                 }}
               />
             )
-          } */
+          }
           div.push(block)
           // If the next block is also text/pullQuote, group it with this one
           if (inlineBlockTypes.includes(blocks[i + 1]?._type)) return null

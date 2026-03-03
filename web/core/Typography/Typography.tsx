@@ -91,7 +91,15 @@ export type TypographyProps = {
  */
 export const Typography: OverridableComponent<TypographyProps, HTMLElement> =
   forwardRef(function Typography(
-    { variant, group, children, as: providedAs, link = false, className = '' },
+    {
+      variant,
+      group,
+      children,
+      as: providedAs,
+      link = false,
+      className = '',
+      id,
+    },
     ref,
   ) {
     const as: ElementType = providedAs
@@ -111,6 +119,7 @@ export const Typography: OverridableComponent<TypographyProps, HTMLElement> =
     return (
       <TypographyTag
         ref={ref}
+        {...(id && { id: id })}
         //clsx news template merging?
         className={twMerge(
           className,

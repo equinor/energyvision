@@ -1,20 +1,20 @@
 'use client'
-import { forwardRef, HTMLAttributes, useId, useState } from 'react'
-import useConsentState from '../../lib/hooks/useConsentState'
-import { CookieType } from '../../types'
-import useConsent from '../../lib/hooks/useConsent'
-import RequestConsentContainer from './RequestConsentContainer'
-import { PortableTextBlock } from '@portabletext/types'
-import Blocks from '../../portableText/Blocks'
-import Transcript from '@/sections/Transcript/Transcript'
+import type { PortableTextBlock } from '@portabletext/types'
 //TODO check this
 // eslint-disable-next-line import/no-unresolved
 import { useIsPresentationTool } from 'next-sanity/hooks'
+import { forwardRef, type HTMLAttributes, useId, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
+import Transcript from '@/sections/Transcript/Transcript'
+import useConsent from '../../lib/hooks/useConsent'
+import useConsentState from '../../lib/hooks/useConsentState'
+import Blocks from '../../portableText/Blocks'
+import type { CookieType } from '../../types'
+import RequestConsentContainer from './RequestConsentContainer'
 
 const calculatePadding = (aspectRatio: string): string => {
   const ratio = aspectRatio.split(':')
-  const percentage = (parseInt(ratio[1]) / parseInt(ratio[0])) * 100
+  const percentage = (parseInt(ratio[1], 10) / parseInt(ratio[0], 10)) * 100
 
   return `${percentage}%`
 }
@@ -78,23 +78,30 @@ export const IFrame = forwardRef<HTMLDivElement, IFrameProps>(function IFrame(
     },
   )
   if (!url) return null
-  const containerPadding = height ? `${height}px` : calculatePadding(aspectRatio)
+  const containerPadding = height
+    ? `${height}px`
+    : calculatePadding(aspectRatio)
 
   const iframeElement = (
     <>
       {title && showTitleAbove && (
-        <Blocks value={title} id={titleId} className={twMerge('pb-8 text-xl', titleClassName)} />
+        <Blocks
+          value={title}
+          id={titleId}
+          as='h3'
+          className={twMerge('pb-8 text-xl', titleClassName)}
+        />
       )}
       <div
-        className="relative w-full overflow-hidden"
+        className='relative w-full overflow-hidden'
         style={{
           paddingBottom: containerPadding,
         }}
       >
         <iframe
-          className="absolute inset-0 h-full w-full border-0"
+          className='absolute inset-0 h-full w-full border-0'
           allowFullScreen
-          loading="lazy"
+          loading='lazy'
           src={url}
           title={frameTitle}
           {...(!isPreview && {
@@ -108,19 +115,31 @@ export const IFrame = forwardRef<HTMLDivElement, IFrameProps>(function IFrame(
           })}
         />
       </div>
-      {transcript && <Transcript transcript={transcript} ariaTitle={frameTitle} />}
+      {transcript && (
+        <Transcript transcript={transcript} ariaTitle={frameTitle} />
+      )}
       {title && !showTitleAbove && (
         <Blocks
           value={title}
           id={titleId}
-          className={twMerge('pt-4 text-md', description ? 'pb-2' : '', titleClassName)}
+          as='h3'
+          className={twMerge(
+            'pt-4 text-md',
+            description ? 'pb-2' : '',
+            titleClassName,
+          )}
         />
       )}
       {description && (
         <Blocks
           value={description}
           id={descriptionId}
-          className={twMerge('text-base', !title || (!title && !showTitleAbove) ? 'pt-4' : '', descriptionClassName)}
+          variant='body'
+          className={twMerge(
+            'text-base',
+            !title || (!title && !showTitleAbove) ? 'pt-4' : '',
+            descriptionClassName,
+          )}
         />
       )}
     </>
@@ -135,7 +154,10 @@ export const IFrame = forwardRef<HTMLDivElement, IFrameProps>(function IFrame(
       {consented ? (
         iframeElement
       ) : (
-        <RequestConsentContainer hasSectionTitle={hasSectionTitle} cookiePolicy={cookiePolicy} />
+        <RequestConsentContainer
+          hasSectionTitle={hasSectionTitle}
+          cookiePolicy={cookiePolicy}
+        />
       )}
     </section>
   )
