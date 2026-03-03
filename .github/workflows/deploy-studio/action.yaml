@@ -124,7 +124,7 @@ runs:
       id: get-component-name
       shell: bash
       run: |
-        component=${{ format('{0}{1}{3}', 'studio-', inputs.datasetName,'-upgrade') }}
+        component=${{ format('{0}{1}{2}', 'studio-', inputs.datasetName,'-upgrade') }}
         echo "Component name is $component"
         echo "COMPONENT_NAME=$component" >> $GITHUB_ENV
       # MAIN CLUSTER
