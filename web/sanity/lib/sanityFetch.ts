@@ -1,4 +1,5 @@
 import type { QueryParams } from 'next-sanity'
+import { dataset } from '@/languageConfig'
 import { client } from './client'
 
 /**
@@ -21,10 +22,9 @@ export async function sanityFetch<const QueryString extends string>({
   tags?: string[]
   stega?: boolean
 }) {
-  console.log('process.env.NODE_ENV', process.env.NODE_ENV)
-
+  console.log('sanityFetch dataset', dataset)
   return client.fetch(query, params, {
-    cache: process.env.NODE_ENV === 'production' ? 'force-cache' : 'no-cache',
+    cache: dataset === 'global-development' ? 'force-cache' : 'no-cache',
     next: {
       ...(tags.length === 0 && { revalidate }), // for simple, time-based revalidation
       ...(tags.length > 0 && { tags }), // for tag-based revalidation

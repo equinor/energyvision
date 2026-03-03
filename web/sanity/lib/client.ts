@@ -8,7 +8,7 @@ const sanityConfig: ClientConfig = {
   dataset,
   apiVersion,
   perspective: 'published',
-  useCdn: process.env.NODE_ENV === 'production',
+  useCdn: dataset === 'global-development',
   stega: {
     studioUrl,
     // Set logger to 'console' for more verbose logging
