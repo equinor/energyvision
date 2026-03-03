@@ -119,6 +119,7 @@ _type == "keyNumbers" =>{
       caption
     },
     "alignWithText": coalesce(alignWithText, false),
+    "useContain": coalesce(containImage, false),
     "designOptions": {
       ${background},
       "aspectRatio": coalesce(aspectRatio, '16:9'),

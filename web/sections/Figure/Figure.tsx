@@ -9,6 +9,7 @@ export type FigureData = {
   id: string
   figure: ImageWithCaptionData
   alignWithText?: boolean
+  useContain?: boolean
   designOptions: DesignOptions & {
     aspectRatio: ImageRatioKeys
   }
@@ -21,7 +22,7 @@ type FigureProps = {
 }
 
 const Figure = ({ data, anchor, className = '' }: FigureProps) => {
-  const { figure, alignWithText, designOptions } = data
+  const { figure, alignWithText, useContain, designOptions } = data
   const { aspectRatio = '16:9' } = designOptions
 
   const useFitMax = aspectRatio.trim() === '2:3' || aspectRatio.trim() === '1:1'
@@ -44,6 +45,9 @@ const Figure = ({ data, anchor, className = '' }: FigureProps) => {
         className={`${alignWithText ? 'max-w-envis-text' : ''}`}
         {...(useFitMax && {
           useFitMax: true,
+        })}
+        {...(useContain && {
+          useContain: true,
         })}
       />
       {(caption || attribution) && (

@@ -25,13 +25,16 @@ export const ImageRatios = {
   '5:4': 1.25,
   '5:3': 1.66,
   '21:9': 2.33,
-} as const
+}
 
 export type ImageRatioKeys = keyof typeof ImageRatios
 export type ImageRatioValues = (typeof ImageRatios)[ImageRatioKeys]
 
-export const mapSanityImageRatio = (ratio: ImageRatioKeys) => {
-  return ImageRatios[ratio]
+export const mapSanityImageRatio = (ratio: string) => {
+  const ratioParts = ratio.trim().split(':')
+  const ratioWidth = parseInt(ratioParts[0], 10)
+  const ratioHeight = parseInt(ratioParts[1], 10)
+  return ratioWidth / ratioHeight
 }
 
 /** Use when image is smaller than px-layout-lg
@@ -168,6 +171,7 @@ type ImageProps = Omit<NextImageProps, 'src' | 'alt' | 'sizes'> & {
   aspectRatio?: ImageRatioKeys
   alt?: string
   useFitMax?: boolean
+  useContain?: boolean
   /** overrides for relative wrapper for image */
   className?: string
   /** overrides for the figure container when caption/attribution */
@@ -201,6 +205,7 @@ export const Image = ({
   imageClassName = '',
   figureClassName = '',
   useFitMax = false,
+  useContain = false,
   loading,
   fetchPriority,
   caption,
@@ -218,6 +223,7 @@ export const Image = ({
     grid,
     aspectRatio: mapSanityImageRatio(aspectRatio),
     useFitMax,
+    useContain,
     customWidth,
     customHeight,
     isLargerDisplays,

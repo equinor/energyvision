@@ -33,7 +33,7 @@ export type LinkProps = {
 
 export const Link = ({ value, children, type, className = '' }: LinkProps) => {
   if (!value) return null
-  console.log('Link value', value)
+
   try {
     let props: _LinkProps = {
       href: '',

@@ -25,7 +25,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
   `,
     className,
   )
-  console.log('Link href', href)
+
   const isTel = href.includes('tel:')
   const isMailTo = href.includes('mailto:')
   const showArrow = type === 'externalUrl' && !isTel && !isMailTo
