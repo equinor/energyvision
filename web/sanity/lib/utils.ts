@@ -72,7 +72,7 @@ export const resolveImage = (props: ResolveImageProps) => {
   } = props
 
   const { width: imageWidth, height: imageHeight } = getImageDimensions(image)
-  console.log('resolveImage aspectRatio', aspectRatio)
+
   // 4:3 for mobile images and serverside. Default 16:9 on larger
   let ratio = isLargerDisplays ? aspectRatio : 1.33
   if (keepRatioOnMobile) {
@@ -103,7 +103,6 @@ export const resolveImage = (props: ResolveImageProps) => {
     url = urlForImage(image)?.width(width).height(height).fit('max').url()
   }
   if (useContain) {
-    console.log('use contain')
     //Fit the image within the box you specify, but never scaling the image up.
     url = urlForImage(image)?.width(width).height(height).fit('clip').url()
   }

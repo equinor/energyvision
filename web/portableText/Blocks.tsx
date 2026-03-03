@@ -329,45 +329,49 @@ export default function Blocks({
             hasAttachment ? 'div' : variant
           ) as TypographyVariants
 
-          if (!asOneElementType && blocks?.length === 1) {
+          const componentsProps: Partial<PortableTextReactComponents> = {
+            //@ts-ignore:todo
+            block: {
+              ...getBlockComponents({
+                group: blocksGroup,
+                variant: blocksVariant,
+                as,
+                className: twMerge(
+                  clampLines && twLineClampUtility[clampLines],
+                  blocks?.length === 1 && className,
+                  blockClassName,
+                ),
+              }),
+              ...blocksComponents,
+            },
+            types: { ...typesSerializers },
+            marks: {
+              ...markSerializers,
+              ...marksComponents,
+              ...(includeFootnotes && footnoteSerializer),
+            },
+            //@ts-ignore:todo
+            list: {
+              ...getListComponents({
+                ...(group === 'article' && {
+                  group: 'article',
+                }),
+              }),
+            },
+          }
+
+          if (blocks?.length === 1) {
             return (
               <PortableText
                 key={block._key}
                 id={id}
                 value={block}
-                components={{
-                  //@ts-ignore:todo
-                  block: {
-                    ...getBlockComponents({
-                      group: blocksGroup,
-                      variant: blocksVariant,
-                      as,
-                      className: twMerge(
-                        clampLines && twLineClampUtility[clampLines],
-                        blockClassName,
-                      ),
-                    }),
-                    ...blocksComponents,
-                  },
-                  types: { ...typesSerializers },
-                  marks: {
-                    ...markSerializers,
-                    ...marksComponents,
-                    ...(includeFootnotes && footnoteSerializer),
-                  },
-                  //@ts-ignore:todo
-                  list: {
-                    ...getListComponents({
-                      ...(group === 'article' && {
-                        group: 'article',
-                      }),
-                    }),
-                  },
-                }}
+                components={componentsProps}
                 onMissingComponent={(message, options) => {
                   console.warn(
                     `${message},type:${options.type},nodeType:${options.nodeType}`,
                   )
+                  return false
                 }}
               />
             )
@@ -377,90 +381,40 @@ export default function Blocks({
           if (inlineBlockTypes.includes(blocks[i + 1]?._type)) return null
           // Otherwise, render the group of text blocks we have
           const value = div
-          const CustomElementType = as ?? (`div` as React.ElementType)
+          //const CustomElementType = as ?? (`div` as React.ElementType)
           div = []
 
+          /*
+          Find out why i, borghild put asOneElementTYpe           
           return asOneElementType && as ? (
             <CustomElementType key={block._key} className={className} id={id}>
               <PortableText
                 value={value}
-                components={{
-                  //@ts-ignore:todo
-                  block: {
-                    ...getBlockComponents({
-                      group: blocksGroup,
-                      variant: blocksVariant,
-                      as: 'div',
-                      className: twMerge(
-                        clampLines && twLineClampUtility[clampLines],
-                        blockClassName,
-                      ),
-                    }),
-                    ...blocksComponents,
-                  },
-                  types: { ...typesSerializers },
-                  marks: {
-                    ...markSerializers,
-                    ...marksComponents,
-                    ...(includeFootnotes && footnoteSerializer),
-                  },
-                  //@ts-ignore:todo
-                  list: {
-                    ...getListComponents({
-                      ...(group === 'article' && {
-                        group: 'article',
-                      }),
-                    }),
-                  },
-                }}
+                components={componentsProps}
                 onMissingComponent={(message, options) => {
                   console.warn(
                     `${message},type:${options.type},nodeType:${options.nodeType}`,
                   )
+                  return false
                 }}
               />
             </CustomElementType>
-          ) : (
+          ) : ( */
+          return (
             <div key={block._key} className={className} id={id}>
               <PortableText
                 value={value}
-                components={{
-                  //@ts-ignore:todo
-                  block: {
-                    ...getBlockComponents({
-                      group: blocksGroup,
-                      variant: blocksVariant,
-                      as,
-                      className: twMerge(
-                        clampLines && twLineClampUtility[clampLines],
-                        blockClassName,
-                      ),
-                    }),
-                    ...blocksComponents,
-                  },
-                  types: { ...typesSerializers },
-                  marks: {
-                    ...markSerializers,
-                    ...marksComponents,
-                    ...(includeFootnotes && footnoteSerializer),
-                  },
-                  //@ts-ignore:todo
-                  list: {
-                    ...getListComponents({
-                      ...(group === 'article' && {
-                        group: 'article',
-                      }),
-                    }),
-                  },
-                }}
+                components={componentsProps}
                 onMissingComponent={(message, options) => {
                   console.warn(
                     `${message},type:${options.type},nodeType:${options.nodeType}`,
                   )
+                  return false
                 }}
               />
             </div>
           )
+          /*           ) */
         }
         /** Factbox block */
         if (block._type === 'factbox') {

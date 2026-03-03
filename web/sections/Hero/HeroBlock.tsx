@@ -2,11 +2,6 @@
 import type { PortableTextBlock } from 'next-sanity'
 import type { HTMLAttributes, ReactNode } from 'react'
 import { Breadcrumbs } from '@/core/Breadcrumbs/Breadcrumbs'
-import type {
-  DisplayTypographyVariants,
-  TypographyGroups,
-  TypographyVariants,
-} from '@/core/Typography/variants'
 import Blocks from '@/portableText/Blocks'
 import {
   type ColorKeys,
@@ -95,7 +90,22 @@ export const HeroBlock = ({
   const { bg: nextCompBg, dark: nextCompDark } = getBgAndDarkFromBackground(
     nextSectionDesignOptions,
   )
-  console.log('backdropStyle', backdropStyle)
+
+  const breadcrumbsElement = (
+    <Breadcrumbs
+      //@ts-ignore
+      background={type !== HeroTypes.DEFAULT ? nextCompBg : undefined}
+      currentSlug={breadcrumbs.currentSlug}
+      useCustomBreadcrumbs={breadcrumbs?.useCustomBreadcrumbs}
+      defaultBreadcrumbs={breadcrumbs?.defaultBreadcrumbs}
+      customBreadcrumbs={breadcrumbs?.customBreadcrumbs}
+      className={`${nextCompDark ? nextCompDark : ''} ${type === HeroTypes.DEFAULT && (figure?.caption || figure?.attribution) ? 'pt-2' : ''}`}
+    />
+  )
+  const heroTypesThatHaveBreadcrumbsBelow = [
+    HeroTypes.FIFTY_FIFTY,
+    HeroTypes.DEFAULT,
+  ]
 
   const heroProps = {
     figure,
@@ -117,6 +127,10 @@ export const HeroBlock = ({
     //figCaptionClassName: 'lg:px-layout-lg',
     backgroundGradient,
     backdropStyle,
+    ...(HeroTypes.FULL_WIDTH_IMAGE &&
+      breadcrumbs?.enableBreadcrumbs && {
+        breadcrumbsComponent: breadcrumbsElement,
+      }),
   }
 
   const getHero = () => {
@@ -163,17 +177,18 @@ export const HeroBlock = ({
   return type !== HeroTypes.NO_HERO ? (
     <section className='h-full w-full'>
       {getHero()}
-      {breadcrumbs?.enableBreadcrumbs && (
-        <Breadcrumbs
-          //@ts-ignore
-          background={type !== HeroTypes.DEFAULT ? nextCompBg : undefined}
-          currentSlug={breadcrumbs.currentSlug}
-          useCustomBreadcrumbs={breadcrumbs?.useCustomBreadcrumbs}
-          defaultBreadcrumbs={breadcrumbs?.defaultBreadcrumbs}
-          customBreadcrumbs={breadcrumbs?.customBreadcrumbs}
-          className={`${nextCompDark ? nextCompDark : ''} ${type === HeroTypes.DEFAULT && (heroProps?.figure?.caption || heroProps?.figure?.attribution) ? 'pt-2' : ''}`}
-        />
-      )}
+      {breadcrumbs?.enableBreadcrumbs &&
+        heroTypesThatHaveBreadcrumbsBelow.includes(type) && (
+          <Breadcrumbs
+            //@ts-ignore
+            background={type !== HeroTypes.DEFAULT ? nextCompBg : undefined}
+            currentSlug={breadcrumbs.currentSlug}
+            useCustomBreadcrumbs={breadcrumbs?.useCustomBreadcrumbs}
+            defaultBreadcrumbs={breadcrumbs?.defaultBreadcrumbs}
+            customBreadcrumbs={breadcrumbs?.customBreadcrumbs}
+            className={`${nextCompDark ? nextCompDark : ''} ${type === HeroTypes.DEFAULT && (heroProps?.figure?.caption || heroProps?.figure?.attribution) ? 'pt-2' : ''}`}
+          />
+        )}
     </section>
   ) : (
     <h1 id='mainTitle' className='sr-only'>

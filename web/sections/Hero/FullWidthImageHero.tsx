@@ -1,5 +1,5 @@
 'use client'
-import type { HTMLAttributes } from 'react'
+import type { HTMLAttributes, ReactNode } from 'react'
 import { twMerge } from 'tailwind-merge'
 import type { ImageRatioKeys } from '@/core/Image/Image'
 import { Picture } from '@/core/Picture/Picture'
@@ -13,6 +13,7 @@ export type FullWidthImageHeroVariant = 'default' | 'tall' | 'narrow'
 
 type FullWidthImageHeroProps = {
   variant?: FullWidthImageHeroVariant
+  breadcrumbsComponent?: ReactNode
   nextSectionDesignOptions?: DesignOptions
 } & HeroData &
   HTMLAttributes<HTMLElement>
@@ -25,6 +26,7 @@ export const FullWidthImageHero = ({
   magazineTags,
   subTitle,
   nextSectionDesignOptions,
+  breadcrumbsComponent,
   className = '',
 }: FullWidthImageHeroProps) => {
   const { bg: nextCompBg, dark: nextCompDark } = getBgAndDarkFromBackground(
@@ -55,6 +57,7 @@ export const FullWidthImageHero = ({
           className={variantClassName[variant]}
         />
       )}
+      {breadcrumbsComponent && breadcrumbsComponent}
       {magazineTags && magazineTags?.length > 0 && (
         <MagazineTagBar tags={magazineTags} className='mt-0' />
       )}

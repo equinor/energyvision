@@ -4,19 +4,18 @@
 import { Icon } from '@equinor/eds-core-react'
 import { error_filled } from '@equinor/eds-icons'
 import { useTranslations } from 'next-intl'
-import { type BaseSyntheticEvent, useState, useId } from 'react'
+import { type BaseSyntheticEvent, useId, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { Button } from '@/core/Button'
 import { FormMessageBox } from '@/core/Form/FormMessageBox'
 import { Select } from '@/core/Select/Select'
 import { TextField } from '@/core/TextField/TextField'
-import type { ContactFormCatalogType } from '../../types'
-import FriendlyCaptcha from './FriendlyCaptcha'
-import { contentRegex, emailRegex, nameRegex } from './validations'
-
 // Import the server action
 import submitFormServerAction from '../../app/_actions/submitFormServerAction'
 import verifyCaptcha from '../../app/_actions/verifyCaptcha'
+import type { ContactFormCatalogType } from '../../types'
+import FriendlyCaptcha from './FriendlyCaptcha'
+import { contentRegex, emailRegex, nameRegex } from './validations'
 
 type FormValues = {
   name: string
@@ -26,6 +25,7 @@ type FormValues = {
 }
 
 const ContactEquinorForm = () => {
+  console.log('ContactEquinorForm', ContactEquinorForm)
   const intl = useTranslations()
   const [isServerError, setServerError] = useState(false)
   const [isFriendlyChallengeDone, setIsFriendlyChallengeDone] = useState(false)
@@ -54,33 +54,39 @@ const ContactEquinorForm = () => {
   })
 
   const onSubmit = async (data: FormValues, event?: BaseSyntheticEvent) => {
-
     if (isFriendlyChallengeDone) {
-      const frcCaptchaSolution = (event?.target as any)['frc-captcha-response'].value
+      const frcCaptchaSolution = (event?.target as any)['frc-captcha-response']
+        .value
       const isCaptchaVerified = await verifyCaptcha(frcCaptchaSolution)
 
-      if(!isCaptchaVerified){
+      if (!isCaptchaVerified) {
         return
       }
 
-      let cid = data.category.toLowerCase() === 'login issues' ? '49f29a93dbb2ac10f42b2208059619a7' : '66f0ff89db2e2644ff6272dabf961945';
+      const cid =
+        data.category.toLowerCase() === 'login issues'
+          ? '49f29a93dbb2ac10f42b2208059619a7'
+          : '66f0ff89db2e2644ff6272dabf961945'
 
-      let finalFormData = {
-        "variables": {
-          "requested_for": "equinordotcom",
-          "cid": cid,
-          "copytoemail": data.email,
-          "external_emails": data.email,
-          "tryingtoreach": "whoever can assist",
-          "name": data.name,
-          "category": data.category,
-          "howcanwehelp": data.message,
-        }
+      const finalFormData = {
+        variables: {
+          requested_for: 'equinordotcom',
+          cid: cid,
+          copytoemail: data.email,
+          external_emails: data.email,
+          tryingtoreach: 'whoever can assist',
+          name: data.name,
+          category: data.category,
+          howcanwehelp: data.message,
+        },
       }
-      
+
       // Call the server action directly
       // CAT0012836 is CAT ID for Contact Equinor Form //
-      const result = await submitFormServerAction(JSON.stringify(finalFormData), 'CAT0012836')
+      const result = await submitFormServerAction(
+        JSON.stringify(finalFormData),
+        'CAT0012836',
+      )
 
       setServerError(result.status !== 200)
       setSuccessfullySubmitted(result.status === 200)
@@ -92,7 +98,7 @@ const ContactEquinorForm = () => {
       })
     }
   }
-
+  console.log('isSuccessfullySubmitted', isSuccessfullySubmitted)
   return (
     <>
       {!isSuccessfullySubmitted && (
@@ -120,7 +126,10 @@ const ContactEquinorForm = () => {
                       message: intl('not_valid_input'),
                     },
                   }}
-                  render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => {
+                  render={({
+                    field: { ref, ...props },
+                    fieldState: { invalid, error },
+                  }) => {
                     const { name } = props
                     return (
                       <TextField
@@ -129,7 +138,11 @@ const ContactEquinorForm = () => {
                         label={`${intl('name')}*`}
                         inputRef={ref}
                         aria-required='true'
-                        inputIcon={invalid ? <Icon data={error_filled} title='error' /> : undefined}
+                        inputIcon={
+                          invalid ? (
+                            <Icon data={error_filled} title='error' />
+                          ) : undefined
+                        }
                         helperText={error?.message}
                         {...(invalid && { variant: 'error' })}
                       />
@@ -148,7 +161,10 @@ const ContactEquinorForm = () => {
                       message: intl('email_validation'),
                     },
                   }}
-                  render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => {
+                  render={({
+                    field: { ref, ...props },
+                    fieldState: { invalid, error },
+                  }) => {
                     const { name } = props
                     return (
                       <TextField
@@ -156,7 +172,11 @@ const ContactEquinorForm = () => {
                         id={`${name}_${formId}`}
                         label={`${intl('email')}*`}
                         inputRef={ref}
-                        inputIcon={invalid ? <Icon data={error_filled} title='error' /> : undefined}
+                        inputIcon={
+                          invalid ? (
+                            <Icon data={error_filled} title='error' />
+                          ) : undefined
+                        }
                         helperText={error?.message}
                         aria-required='true'
                         {...(invalid && { variant: 'error' })}
@@ -172,11 +192,22 @@ const ContactEquinorForm = () => {
                   render={({ field: { ref, ...props } }) => {
                     const { name } = props
                     return (
-                      <Select {...props} selectRef={ref} id={`${name}_${formId}`} label={intl('category')}>
-                        <option value=''>{intl('form_please_select_an_option')}</option>
+                      <Select
+                        {...props}
+                        selectRef={ref}
+                        id={`${name}_${formId}`}
+                        label={intl('category')}
+                      >
+                        <option value=''>
+                          {intl('form_please_select_an_option')}
+                        </option>
                         <option>{intl('contact_form_report_error')}</option>
-                        <option>{intl('contact_form_contact_department')}</option>
-                        <option>{intl('contact_form_investor_relations')}</option>
+                        <option>
+                          {intl('contact_form_contact_department')}
+                        </option>
+                        <option>
+                          {intl('contact_form_investor_relations')}
+                        </option>
                         <option>{intl('contact_form_login_issues')}</option>
                         <option>{intl('contact_form_other')}</option>
                       </Select>
@@ -195,7 +226,10 @@ const ContactEquinorForm = () => {
                       message: intl('not_valid_input'),
                     },
                   }}
-                  render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => {
+                  render={({
+                    field: { ref, ...props },
+                    fieldState: { invalid, error },
+                  }) => {
                     const { name } = props
                     return (
                       <TextField
@@ -207,7 +241,11 @@ const ContactEquinorForm = () => {
                         multiline
                         rowsMax={10}
                         aria-required='true'
-                        inputIcon={invalid ? <Icon data={error_filled} title='error' /> : undefined}
+                        inputIcon={
+                          invalid ? (
+                            <Icon data={error_filled} title='error' />
+                          ) : undefined
+                        }
                         helperText={error?.message}
                         {...(invalid && { variant: 'error' })}
                       />
@@ -220,20 +258,30 @@ const ContactEquinorForm = () => {
                   <FriendlyCaptcha
                     doneCallback={() => setIsFriendlyChallengeDone(true)}
                     errorCallback={(error: any) => {
-                      console.error('FriendlyCaptcha encountered an error', error)
+                      console.error(
+                        'FriendlyCaptcha encountered an error',
+                        error,
+                      )
                       setIsFriendlyChallengeDone(true)
                     }}
                   />
                   {errors?.root?.notCompletedCaptcha && (
-                    <p role='alert' className='flex gap-2 border border-clear-red-100 px-6 py-4 font-semibold text-slate-80'>
-                      <span className='mt-1'>{errors.root.notCompletedCaptcha.message}</span>
+                    <p
+                      role='alert'
+                      className='flex gap-2 border border-clear-red-100 px-6 py-4 font-semibold text-slate-80'
+                    >
+                      <span className='mt-1'>
+                        {errors.root.notCompletedCaptcha.message}
+                      </span>
                       <Icon data={error_filled} aria-label='Error' />
                     </p>
                   )}
                 </div>
 
                 <Button type='submit'>
-                  {isSubmitting ? intl('form_sending') : intl('contact_form_cta')}
+                  {isSubmitting
+                    ? intl('form_sending')
+                    : intl('contact_form_cta')}
                 </Button>
               </>
             )}
