@@ -87,7 +87,7 @@ jobs:
     needs: [update-radix-config, read-satellites]
     runs-on: ubuntu-latest
     environment:
-      name: preprod
+      name: preprodv2
     strategy:
       fail-fast: false
       matrix:
