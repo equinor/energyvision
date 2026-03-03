@@ -31,6 +31,9 @@ export const client = createClient({
   ...sanityConfig,
   token: process.env.SANITY_API_TOKEN,
 })
+export const liveClient = createClient({
+  ...sanityConfig,
+})
 //only for next config
 export const notSecuredTokenClient = createClient({
   ...sanityConfig,

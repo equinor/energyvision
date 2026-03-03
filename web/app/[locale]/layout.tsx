@@ -4,20 +4,20 @@ import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
 import Script from 'next/script'
 import { hasLocale, NextIntlClientProvider } from 'next-intl'
+import { VisualEditing } from 'next-sanity/visual-editing'
 import { Toaster } from 'sonner'
 import { PageProvider } from '@/contexts/pageContext'
 import { dataset } from '@/languageConfig'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { getNameFromIso } from '@/sanity/helpers/localization'
-import { routeSanityFetch } from '@/sanity/lib/live'
+import { routeSanityFetch, SanityLive } from '@/sanity/lib/live'
 import { footerAndErrorImageQuery } from '@/sanity/queries/footer'
 import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu'
 import { simpleMenuQuery } from '@/sanity/queries/simpleMenu'
-import DraftModeToast from '@/sections/DraftMode/DraftModeToast'
+/* import DraftModeToast from '@/sections/DraftMode/DraftModeToast' */
 import GoToTopButton from '@/sections/GoToTopButton'
 import { routing } from '../../i18n/routing'
 import { GoogleTagManagerHead } from './GTMHead'
-import { SanityLive } from './SanityLive'
 import { SiteImprove } from './SiteImprove'
 
 const equinorRegular = localFont({
@@ -46,7 +46,7 @@ export default async function LocaleLayout({
   if (!hasLocale(routing.locales, locale)) {
     notFound()
   }
-  const { isEnabled: isDraftMode } = await draftMode()
+  /*   const { isEnabled: isDraftMode } = await draftMode() */
 
   const queryParams = {
     lang: getNameFromIso(locale) ?? 'en_GB',
@@ -74,9 +74,14 @@ export default async function LocaleLayout({
     >
       <body>
         <Toaster />
-        {isDraftMode && <DraftModeToast />}
         <GoToTopButton />
-        {dataset === 'global-development' && <SanityLive />}
+        {dataset === 'global-development' && (
+          <>
+            {/*            <DraftModeToast /> */}
+            <SanityLive />
+            {(await draftMode()).isEnabled && <VisualEditing />}
+          </>
+        )}
         <NextIntlClientProvider>
           <PageProvider
             initialFooterData={footerData}
