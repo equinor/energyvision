@@ -10,7 +10,7 @@ const sanityConfig: ClientConfig = {
   projectId,
   dataset,
   apiVersion,
-  perspective: 'published',
+  perspective: dataset === 'global-development' ? 'drafts' : 'published',
   useCdn: dataset === 'global-development',
   ignoreBrowserTokenWarning: dataset === 'global-development',
   stega: {
@@ -31,9 +31,7 @@ export const client = createClient({
   ...sanityConfig,
   token: process.env.SANITY_API_TOKEN,
 })
-export const liveClient = createClient({
-  ...sanityConfig,
-})
+
 //only for next config
 export const notSecuredTokenClient = createClient({
   ...sanityConfig,

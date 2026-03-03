@@ -401,7 +401,11 @@ export default function Blocks({
             </CustomElementType>
           ) : ( */
           return (
-            <div key={block._key} className={className} id={id}>
+            <div
+              key={block._key}
+              className={`${blocks?.length > 1 ? className : ''}`}
+              id={id}
+            >
               <PortableText
                 value={value}
                 components={componentsProps}

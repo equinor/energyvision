@@ -14,6 +14,7 @@ import { routeSanityFetch, SanityLive } from '@/sanity/lib/live'
 import { footerAndErrorImageQuery } from '@/sanity/queries/footer'
 import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu'
 import { simpleMenuQuery } from '@/sanity/queries/simpleMenu'
+import DraftModeToolbar from '@/sections/DraftMode/DraftModeToolbar'
 /* import DraftModeToast from '@/sections/DraftMode/DraftModeToast' */
 import GoToTopButton from '@/sections/GoToTopButton'
 import { routing } from '../../i18n/routing'
@@ -77,7 +78,7 @@ export default async function LocaleLayout({
         <GoToTopButton />
         {dataset === 'global-development' && (
           <>
-            {/*            <DraftModeToast /> */}
+            <DraftModeToolbar />
             <SanityLive />
             {(await draftMode()).isEnabled && <VisualEditing />}
           </>

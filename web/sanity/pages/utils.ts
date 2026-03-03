@@ -1,3 +1,4 @@
+import { draftMode } from 'next/headers'
 import { toPlainText } from 'next-sanity'
 import {
   defaultLanguage,
@@ -160,7 +161,8 @@ type Params = { slug?: string | string[]; locale: string; tags?: string[] }
 
 export async function getPage(params: Params) {
   const { slug, locale, tags = [] } = params
-
+  const { isEnabled } = await draftMode()
+  console.log('getPage draftMode isEnabled', isEnabled)
   const { query: pageQuery, queryParams: pageQueryParams } =
     await getQueryFromSlug(slug, locale)
 
@@ -168,6 +170,11 @@ export async function getPage(params: Params) {
     query: pageQuery,
     tags: [...tags],
     params: { ...pageQueryParams },
+    ...(isEnabled && {
+      perspective: 'drafts',
+      useCdn: false,
+      stega: true,
+    }),
   })
 
   const { stickyMenu, slugs, ...restPageData } = pageData
