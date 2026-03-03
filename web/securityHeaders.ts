@@ -22,6 +22,7 @@ const studioUrls = envs.map(
 const studioV3Urls = [
   'http://studiov3-global-development-equinor-web-sites-dev.c2.radix.equinor.com',
   'http://studiov3-global-development-upgrade-equinor-web-sites-dev.c2.radix.equinor.com',
+  'https://studio-global-development-upgrade-equinor-web-sites-dev.c2.radix.equinor.com/',
 ]
 const xFrameUrls = [
   localUrl,
