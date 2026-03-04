@@ -109,8 +109,8 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
               )}
               <AddToCalendar
                 eventDate={eventDate}
-                startDateTime={startDayAndTime.dayTime}
-                endDateTime={endDayAndTime.dayTime}
+                startDateTime={startDayAndTime?.dayTime}
+                endDateTime={endDayAndTime?.dayTime}
                 location={location}
                 title={plainTitle}
               />

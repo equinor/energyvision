@@ -11,6 +11,7 @@ import type {
   SlugSourceContext,
 } from 'sanity'
 import slugify from 'slugify'
+import blocksToText from '@/helpers/blocksToText'
 import { EdsIcon } from '../../icons'
 import { Flags } from '../../src/lib/datasetHelpers'
 import SlugInput from '../components/SlugInput'
@@ -158,24 +159,44 @@ export default (isoCode: string, title: string) => {
         title: 'content.title',
         slug: 'slug.current',
         media: 'content.heroFigure.image',
+        eventDate: 'content.eventDate',
         type: 'content._type',
       },
       prepare(selection: any) {
-        const { slug, media, type } = selection
+        const { slug, media, eventDate, title: contentTitle, type } = selection
+
+        const mapType = (type: string | undefined) => {
+          switch (type) {
+            case 'page':
+              return 'Topic page'
+            case 'newsroom':
+              return 'Newsroom'
+            case 'landingPage':
+              return 'Landing page'
+            case 'event':
+              return 'Event page'
+            case 'magazineIndex':
+              return 'Magazine room'
+            default:
+              return undefined
+          }
+        }
+
+        const subTitle =
+          mapType(type) ??
+          (contentTitle && blocksToText(contentTitle)) ??
+          'Missing content'
+
         const withoutParent = slug ? slug.split('/').at(-1) : ''
         let title = 'Missing route'
         if (slug) {
           title = withoutParent
         }
-        const thumbnail = media
-          ? media
-          : type === 'event'
-            ? MdOutlineEvent
-            : CiRoute
+        const thumbnail = media ? media : eventDate ? MdOutlineEvent : CiRoute
 
         return {
-          title: title,
-          subTitle: slug,
+          title: '/' + title,
+          subtitle: subTitle,
           media: !slug ? CiWarning : thumbnail,
         }
       },

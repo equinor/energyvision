@@ -21,8 +21,6 @@ const defaultLinks = [
 ] as LinkType[]
 
 function LinkPreview(props: PreviewProps) {
-  console.log('LinkPreview props', props)
-
   return (
     <Flex align='center'>
       <Box flex={1}>{props.renderDefault(props)}</Box>
@@ -71,7 +69,6 @@ const linkSelector = (
         type: 'string',
         validation: (Rule: Rule) =>
           Rule.custom((value: string, context: any) => {
-            console.log('valudate context', context)
             const { parent } = context
             if (parent?.link?.[0]?._type === 'link') {
               return value ? true : 'You must add a label'

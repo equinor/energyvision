@@ -140,7 +140,6 @@ export default {
       const { title, image, video, type } = selection
       const plainTitle = title ? blocksToText(title) : ''
       const media = type === HeroTypes.LOOPING_VIDEO ? video : image
-      console.log('media', media)
       return {
         title: plainTitle,
         subtitle: 'Home Page',

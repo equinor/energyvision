@@ -178,7 +178,7 @@ export async function getPage(params: Params) {
   })
 
   const { stickyMenu, slugs, ...restPageData } = pageData || {}
-
+  console.log('slugs', slugs)
   return {
     headerData: {
       slugs: formatToValidPrefixedIsoSlugs(

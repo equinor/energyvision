@@ -37,6 +37,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     stega: false,
   })
 
+  console.log('[...slug] meta', metaData)
+
   return constructSanityMetadata(slug, locale, metaData)
 }
 
