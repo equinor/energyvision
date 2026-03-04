@@ -21,14 +21,12 @@ import { routing } from '../../i18n/routing'
 import { GoogleTagManagerHead } from './GTMHead'
 import { SiteImprove } from './SiteImprove'
 
-const equinorRegular = localFont({
-  src: '../fonts/equinor/Equinor-Regular.woff',
-})
-const equinorVariableWoff = localFont({
-  src: '../fonts/equinor/EquinorVariable-VF.woff',
-})
-const equinorVariableWoff2 = localFont({
-  src: '../fonts/equinor/EquinorVariable-VF.woff2',
+const equinor = localFont({
+  src: [
+    { path: '../fonts/equinor/Equinor-Regular.woff' },
+    { path: '../fonts/equinor/EquinorVariable-VF.woff' },
+    { path: '../fonts/equinor/EquinorVariable-VF.woff2' },
+  ],
 })
 
 type Params = Promise<{ locale: string }>
@@ -69,10 +67,7 @@ export default async function LocaleLayout({
   const { errorImage, ...footerData } = footerAndErrorImageData.data || {}
 
   return (
-    <html
-      lang={locale}
-      className={`${equinorRegular.className} ${equinorVariableWoff.className} ${equinorVariableWoff2.className}`}
-    >
+    <html lang={locale} className={`${equinor.className} `}>
       <body>
         <Toaster />
         <GoToTopButton />
