@@ -26,6 +26,7 @@ export default {
     },
     {
       title: 'Hero configuration',
+      description: 'Such as image,ingress,ratio and background',
       options: {
         collapsible: true,
         collapsed: true,

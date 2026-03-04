@@ -1,5 +1,6 @@
 // env.d.ts
 /// <reference types="vite/client" />
+/// <reference types="vite-plugin-svgr/client" />
 
 interface ImportMetaEnv {
   readonly SANITY_STUDIO_API_PROJECT_ID: string

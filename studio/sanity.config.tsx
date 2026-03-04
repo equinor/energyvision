@@ -1,6 +1,5 @@
 import { crossDatasetDuplicator } from '@sanity/cross-dataset-duplicator'
 import { documentInternationalization } from '@sanity/document-internationalization'
-import { DatabaseIcon } from '@sanity/icons'
 import { visionTool } from '@sanity/vision'
 import type {
   ArrayOfObjectsInputProps,
@@ -45,6 +44,7 @@ import { locations } from './presentation/locations'
 import CustomDocumentInternationalizationMenu from './schemas/components/CustomDocumentInternationalizationMenu'
 import { partialStudioTheme } from './studioTheme'
 import './styles/fonts.css'
+import EquinorLogo from './styles/icons/logo.svg?react'
 
 export const customTheme = buildLegacyTheme(partialStudioTheme)
 
@@ -104,8 +104,8 @@ const getConfig = (
   isSecret = false,
 ) => ({
   name: 'equinor-' + datasetParam,
-  title: 'Studio [' + getStudioTitle(datasetParam) + ']',
-  icon: DatabaseIcon,
+  title: `${getStudioTitle(datasetParam)} studio`,
+  icon: EquinorLogo,
   basePath: '/' + datasetParam,
   projectId: projectIdParam,
   dataset: datasetParam,

@@ -177,7 +177,7 @@ export async function getPage(params: Params) {
     }),
   })
 
-  const { stickyMenu, slugs, ...restPageData } = pageData
+  const { stickyMenu, slugs, ...restPageData } = pageData || {}
 
   return {
     headerData: {
