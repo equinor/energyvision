@@ -18,7 +18,6 @@ import { searchClient as client } from '../../lib/algolia'
 import { Pagination } from '../../pageComponents/shared/search/pagination/Pagination'
 import { List } from '@core/List'
 import { PaginationContextProvider } from '../../common/contexts/PaginationContext'
-import { FacetFilters } from 'algoliasearch'
 
 type NewsRoomTemplateProps = {
   locale?: string
@@ -136,7 +135,7 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
     ...searchClient,
     search(requests: any) {
       const facetFilterSet = new Set(
-        requests.map((it: { params: { facetFilters: FacetFilters } }) => it.params.facetFilters).flat(2),
+        requests.map((it: { params: { facetFilters: any } }) => it.params.facetFilters).flat(2),
       )
       const hasEmptyQueryOrFirstPage = requests.every(
         ({ params }: { indexName: string; params: SearchOptions }) => !params.query && params.page === 0,
