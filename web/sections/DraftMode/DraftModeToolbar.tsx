@@ -16,60 +16,20 @@ export default function DraftModeToolbar() {
   const disable = () => startTransition(() => disableDraftMode())
 
   return isInsideTool ? null : (
-    <div className='fixed bottom-5 left-1/2 z-50 rounded-card border border-white-100 bg-slate-blue-95 text-white-100 hover:bg-slate-600 hover:*:underline'>
+    <div className='fixed bottom-5 left-1/2 z-50 rounded-card border border-white-100 text-white-100 hover:bg-slate-600'>
       {pending ? (
-        'Disabling draft mode...'
+        <div className='rounded-card bg-grey-50 px-4 py-3'>
+          Disabling draft mode...
+        </div>
       ) : (
-        <button type='button' onClick={disable} className={commonButtonStyling}>
+        <button
+          type='button'
+          onClick={disable}
+          className={`${commonButtonStyling} rounded-card bg-slate-blue-95 hover:underline`}
+        >
           Disable draft mode
         </button>
       )}
     </div>
   )
 }
-
-/* export default function DraftModeToolbar() {
-  const isPresentationTool = useIsPresentationTool()
-  const env = useDraftModeEnvironment()
-  const environment = useVisualEditingEnvironment()
-  console.log('isPresentationTool', isPresentationTool)
-  console.log('environment', environment)
-  const router = useRouter()
-  const [pending, startTransition] = useTransition()
-
-  useEffect(() => {
-    if (isPresentationTool === false) {
-      // We delay the toast in case we're inside Presentation Tool
-      const toastId = toast('Draft Mode Enabled', {
-        description:
-          env === 'live'
-            ? 'Content is live, refreshing automatically'
-            : 'Refresh manually to see changes',
-        duration: Infinity,
-        action: {
-          label: 'Disable',
-          onClick: async () => {
-            await disableDraftMode()
-            startTransition(() => {
-              router.refresh()
-            })
-          },
-        },
-      })
-      return () => {
-        toast.dismiss(toastId)
-      }
-    }
-  }, [env, router, isPresentationTool])
-
-  useEffect(() => {
-    if (pending) {
-      const toastId = toast.loading('Disabling draft mode...')
-      return () => {
-        toast.dismiss(toastId)
-      }
-    }
-  }, [pending])
-
-  return null
-} */

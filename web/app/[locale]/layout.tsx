@@ -5,7 +5,6 @@ import { notFound } from 'next/navigation'
 import Script from 'next/script'
 import { hasLocale, NextIntlClientProvider } from 'next-intl'
 import { VisualEditing } from 'next-sanity/visual-editing'
-import { Toaster } from 'sonner'
 import { PageProvider } from '@/contexts/pageContext'
 import { dataset } from '@/languageConfig'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
@@ -15,7 +14,6 @@ import { footerAndErrorImageQuery } from '@/sanity/queries/footer'
 import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu'
 import { simpleMenuQuery } from '@/sanity/queries/simpleMenu'
 import DraftModeToolbar from '@/sections/DraftMode/DraftModeToolbar'
-/* import DraftModeToast from '@/sections/DraftMode/DraftModeToast' */
 import GoToTopButton from '@/sections/GoToTopButton'
 import { routing } from '../../i18n/routing'
 import { GoogleTagManagerHead } from './GTMHead'
@@ -45,7 +43,6 @@ export default async function LocaleLayout({
   if (!hasLocale(routing.locales, locale)) {
     notFound()
   }
-  /*   const { isEnabled: isDraftMode } = await draftMode() */
 
   const queryParams = {
     lang: getNameFromIso(locale) ?? 'en_GB',
@@ -69,13 +66,16 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} className={`${equinor.className} `}>
       <body>
-        <Toaster />
         <GoToTopButton />
         {dataset === 'global-development' && (
           <>
-            <DraftModeToolbar />
             <SanityLive />
-            {(await draftMode()).isEnabled && <VisualEditing />}
+            {(await draftMode()).isEnabled && (
+              <>
+                <DraftModeToolbar />
+                <VisualEditing />
+              </>
+            )}
           </>
         )}
         <NextIntlClientProvider>
