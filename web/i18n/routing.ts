@@ -1,5 +1,5 @@
 import { defineRouting } from 'next-intl/routing'
-import { getValidLanguagesLocales } from '@/languageConfig'
+import { defaultLanguage, getValidLanguagesLocales } from '@/languageConfig'
 
 export const routing = defineRouting({
   // A list of all locales that are supported
@@ -7,7 +7,7 @@ export const routing = defineRouting({
   localePrefix: {
     mode: 'as-needed',
     prefixes: {
-      'en-GB':"/en",
+      'en-GB': '/en',
       'nb-NO': '/no',
       'pt-BR': '/pt',
       'es-AR': '/es',
@@ -18,7 +18,7 @@ export const routing = defineRouting({
   },
   localeDetection: false,
   // Used when no locale matches
-  defaultLocale: 'en-GB',
+  defaultLocale: defaultLanguage.iso,
   /** Opt-out as using CMS to manage pathnames */
   alternateLinks: false,
 })
