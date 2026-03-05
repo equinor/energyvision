@@ -163,29 +163,10 @@ export default (isoCode: string, title: string) => {
         type: 'content._type',
       },
       prepare(selection: any) {
-        const { slug, media, eventDate, title: contentTitle, type } = selection
-
-        const mapType = (type: string | undefined) => {
-          switch (type) {
-            case 'page':
-              return 'Topic page'
-            case 'newsroom':
-              return 'Newsroom'
-            case 'landingPage':
-              return 'Landing page'
-            case 'event':
-              return 'Event page'
-            case 'magazineIndex':
-              return 'Magazine room'
-            default:
-              return undefined
-          }
-        }
+        const { slug, media, eventDate, title: contentTitle } = selection
 
         const subTitle =
-          mapType(type) ??
-          (contentTitle && blocksToText(contentTitle)) ??
-          'Missing content'
+          (contentTitle && blocksToText(contentTitle)) ?? 'Missing content'
 
         const withoutParent = slug ? slug.split('/').at(-1) : ''
         let title = 'Missing route'
