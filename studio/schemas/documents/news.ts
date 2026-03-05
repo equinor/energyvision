@@ -152,14 +152,16 @@ export default {
             : null
 
       const displayDate =
-        date && date <= currentDate ? formatDate(date) : 'Not Published'
+        date && date <= currentDate
+          ? `Published ${formatDate(date)}`
+          : 'Not published'
 
       const ingressBlock = (description || []).find(
         (ingressBlock: { _type: string }) => ingressBlock._type === 'block',
       )
       return {
         title,
-        subtitle: `Published date: ${displayDate}`,
+        subtitle: displayDate,
         description: ingressBlock
           ? ingressBlock.children
               .filter((child: { _type: string }) => child._type === 'span')

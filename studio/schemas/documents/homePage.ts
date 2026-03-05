@@ -1,5 +1,6 @@
 import { paste } from '@equinor/eds-icons'
 import { PiStorefrontLight } from 'react-icons/pi'
+import { formatDate } from '@/helpers/formatDate'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
 import { Flags } from '../../src/lib/datasetHelpers'
@@ -135,14 +136,15 @@ export default {
       image: 'heroFigure.image.asset',
       video: 'heroLoopingVideo.thumbnail',
       type: 'heroType',
+      updated: '_updatedAt',
     },
     prepare(selection: any) {
-      const { title, image, video, type } = selection
+      const { title, image, video, type, updated } = selection
       const plainTitle = title ? blocksToText(title) : ''
       const media = type === HeroTypes.LOOPING_VIDEO ? video : image
       return {
         title: plainTitle,
-        subtitle: 'Home Page',
+        subtitle: `Updated ${formatDate(updated)}`,
         media: media ?? PiStorefrontLight,
       }
     },

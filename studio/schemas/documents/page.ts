@@ -1,5 +1,6 @@
 import { paste } from '@equinor/eds-icons'
 import { RiPagesLine } from 'react-icons/ri'
+import { formatDate } from '@/helpers/formatDate'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
 import sharedHeroFields, { HeroTypes } from './header/sharedHeaderFields'
@@ -57,14 +58,15 @@ export default {
       image: 'heroFigure.image.asset',
       video: 'heroLoopingVideo.thumbnail',
       type: 'heroType',
+      updated: '_updatedAt',
     },
     prepare(selection: any) {
-      const { title, image, video, type } = selection
+      const { title, image, video, type, updated } = selection
       const plainTitle = title ? blocksToText(title) : ''
       const media = type === HeroTypes.LOOPING_VIDEO ? video : image
       return {
         title: plainTitle,
-        subtitle: 'Topic content',
+        subtitle: `Updated ${formatDate(updated)}`,
         media: media ?? RiPagesLine,
       }
     },

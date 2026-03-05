@@ -7,13 +7,21 @@ import { getIdFromName, getLocaleFromName } from '../src/lib/localization'
 
 export const locations: DocumentLocationResolver = (params, context) => {
   // Set up locations for page documents
-  console.log('params', params)
+
   let query = null
-  console.log('params.type', params.type)
-  if (params.type === 'page' || params?.type === 'event') {
-    console.log('return page or event query')
+  const routePages = [
+    'page',
+    'landingPage',
+    'event',
+    'newsroom',
+    'magazineIndex',
+  ]
+  const pagesWithSlugOnThem = ['news', 'magazine']
+
+  if (routePages?.includes(params.type)) {
     query = {
       fetch: `*[_id==$id][0]{
+      "slugs": *[_type match "route*" && references(^._id)].slug.current,
       "translationSlugs": *[_type == "translation.metadata" && references(^._id)].translations[].value->{
       "slug" : *[_type match "route*" && references(^._id)][0].slug.current, 
       lang,
@@ -36,10 +44,11 @@ export const locations: DocumentLocationResolver = (params, context) => {
       `,
       listen: `*[_id in [$id,$draftId]]`,
     }
-  } else {
+  } else if (pagesWithSlugOnThem?.includes(params.type)) {
     //pages with slugs on them
     query = {
       fetch: `*[_id==$id][0]{
+      "slugs": *[_type match "route*" && references(^._id)][0].slug.current,
     "translationSlugs": *[_type == "translation.metadata" && references(^._id)].translations[].value->{
       "slug": slug.current,
       lang
@@ -62,42 +71,60 @@ export const locations: DocumentLocationResolver = (params, context) => {
     // Return a streaming list of locations
     return doc$.pipe(
       map(doc => {
-        console.log('doc', doc)
         // If the document doesn't exist or have a slug, return null
         if (
-          !doc ||
-          (doc?._type === 'homePage' &&
-            !doc?.isActive &&
-            doc?.translationSlugs?.length < 1) ||
-          (doc?._type !== 'homePage' && doc?.translationSlugs?.length < 1)
+          (!doc &&
+            doc?.translationSlugs?.length === 0 &&
+            doc?.slugs?.length === 0) ||
+          (doc?._type === 'homePage' && !doc?.isActive)
         ) {
           return null
         }
 
         let locs = []
-        if (doc?.translationSlugs?.length > 0) {
-          locs = doc?.translationSlugs?.map((translation: any) => {
-            console.log('loc translationm', translation)
-            const locale = getLocaleFromName(translation?.lang)
-            return {
-              title: `${blocksToText(translation?.title)}`,
-              href: `${translation?.lang !== 'en_GB' ? `/${locale}` : ''}${translation?.slug}`,
-            }
-          })
+        if (routePages?.includes(params.type)) {
+          if (doc?.translationSlugs?.length > 0) {
+            locs = doc?.translationSlugs
+              ?.filter(
+                (translation: any) =>
+                  translation?.slug && doc?.lang === translation?.lang,
+              )
+              ?.map((translation: any) => {
+                const locale = getLocaleFromName(translation?.lang)
+                return {
+                  title: `${blocksToText(translation?.title)}`,
+                  href: `${translation?.lang !== 'en_GB' ? `/${locale}` : ''}${translation?.slug}`,
+                }
+              })
+          } else {
+            locs = doc?.slugs
+              ?.filter((slug: string) => slug)
+              ?.map((slug: string) => {
+                const locale = getLocaleFromName(doc?.lang)
+                return {
+                  title: `${blocksToText(doc?.title)}`,
+                  href: `${doc?.lang !== 'en_GB' ? `/${locale}` : ''}${slug}`,
+                }
+              })
+          }
         } else if (doc?._type === 'homePage' && doc?.isActive) {
           locs = doc?.translationSlugs?.map((item: any) => {
             const itemLocale = getLocaleFromName(item?.lang)
             const localeId = capitalizeFirstLetter(getIdFromName(item?.lang))
+
             return {
               title: `${localeId} homepage`,
               href: `${item?.lang !== 'en_GB' ? `/${itemLocale}` : '/'}`,
             }
           })
-        } else {
+        } else if (pagesWithSlugOnThem?.includes(params.type)) {
           const locale = getLocaleFromName(doc?.lang)
+          const plainTitle = Array.isArray(doc.title)
+            ? blocksToText(doc.title)
+            : doc.title
           locs = [
             {
-              title: doc.title || 'Untitled',
+              title: doc.title ? plainTitle : 'Untitled',
               href: `${doc?.lang !== 'en_GB' ? `/${locale}` : ''}${doc?.slug?.current}`,
             },
           ]

@@ -1,6 +1,7 @@
 import { bookmarks } from '@equinor/eds-icons'
 import type { Rule, SanityDocument } from 'sanity'
 import slugify from 'slugify'
+import { formatDate } from '@/helpers/formatDate'
 import { magazineSlug } from '@/sitesConfig'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
@@ -201,14 +202,15 @@ export default {
     select: {
       title: 'title',
       media: 'heroFigure.image',
+      updated: '_updatedAt',
     },
     prepare(selection: Record<string, any>) {
-      const { title, media } = selection
+      const { title, media, updated } = selection
       const plainTitle = title ? blocksToText(title) : ''
 
       return {
         title: plainTitle,
-        subtitle: 'Magazine',
+        subtitle: `Updated ${formatDate(updated)}`,
         media,
       }
     },
