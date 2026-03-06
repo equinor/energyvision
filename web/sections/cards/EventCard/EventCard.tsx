@@ -3,7 +3,7 @@ import { Icon } from '@equinor/eds-core-react'
 import { world } from '@equinor/eds-icons'
 import { toPlainText } from '@portabletext/react'
 import type { PortableTextBlock } from '@portabletext/types'
-import { useFormatter, useLocale, useTranslations } from 'next-intl'
+import { useFormatter, useLocale } from 'next-intl'
 import { forwardRef, type HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
 import FormattedDateTime, {

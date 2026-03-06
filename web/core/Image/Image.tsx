@@ -234,7 +234,7 @@ export const Image = ({
   if ('alt' in image && image?.alt) {
     altText = image.alt
   }
-  if (caption && !image?.alt) {
+  if (caption && 'alt' in image && !image?.alt) {
     altText = caption
   }
 

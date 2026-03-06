@@ -5,6 +5,7 @@ import {
   type Rule,
   type ValidationContext,
 } from 'sanity'
+import { formatDate } from '@/helpers/formatDate'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
 import { CompactBlockEditor } from '../components/CompactBlockEditor'
@@ -233,13 +234,12 @@ export default {
       endDayAndTime?: EventDayAndTime
     }) {
       let eventDate = date?.date ? `${date.date}` : 'No date set'
+
       if (startDayAndTime) {
-        if (endDayAndTime && !startDayAndTime?.overrideTimeLabel) {
-          eventDate = `${startDayAndTime?.dayTime} - ${endDayAndTime?.dayTime}`
+        if (endDayAndTime) {
+          eventDate = `${formatDate(startDayAndTime?.dayTime)} - ${formatDate(endDayAndTime?.dayTime)}`
         } else {
-          eventDate = startDayAndTime?.overrideTimeLabel
-            ? `${startDayAndTime?.overrideTimeLabel}`
-            : `${startDayAndTime?.dayTime}`
+          eventDate = `${formatDate(startDayAndTime?.dayTime)}`
         }
       }
       return {
