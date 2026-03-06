@@ -31,7 +31,7 @@ const ADMIN_ITEMS = (S, context) =>
     NewsRoom(S),
     News(S),
     LocalNews(S, context),
-    MagazineRoom(S).title('Magazine room'),
+    MagazineRoom(S),
     Magazine(S),
     LandingPage(S),
     Misc(S),
