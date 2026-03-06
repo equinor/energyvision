@@ -256,8 +256,18 @@ const backgroundBlur = {
   fieldset: 'hero',
   type: 'boolean',
   initialValue: false,
-  hidden: ({ parent }: DocumentType) => {
-    return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE
+  hidden: ({ parent, currentUser }: DocumentType) => {
+    if (
+      currentUser?.roles.some(
+        (role: any) =>
+          role?.name === 'administrator' ||
+          role?.name === 'developer' ||
+          role?.name === 'designer',
+      )
+    ) {
+      return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE
+    }
+    return true
   },
 }
 const containVideo = {
