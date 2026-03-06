@@ -1,7 +1,7 @@
 'use client'
-import type { DesignOptions, ImageWithCaptionData } from '../../types/index'
-import { Image, ImageRatioKeys } from '../../core/Image/Image'
 import { FigureCaption } from '@/core/FigureCaption/FigureCaption'
+import { Image, type ImageRatioKeys } from '../../core/Image/Image'
+import type { DesignOptions, ImageWithCaptionData } from '../../types/index'
 
 export type FullWidthImageData = {
   type: string
@@ -24,14 +24,21 @@ const FullWidthImage = ({ data, anchor }: FullWidthImageProps) => {
   if (!image) return null
 
   return (
-    <section className="w-full justify-center">
-      <Image id={anchor} image={image} grid="full" aspectRatio={aspectRatio} className="max-w-[1800px]" />
+    <section className='w-full justify-center'>
+      <Image
+        id={anchor}
+        image={image}
+        grid='full'
+        aspectRatio={aspectRatio}
+        className='max-w-[1800px]'
+      />
       {image.asset && (caption || attribution) && (
-        <div className='max-w-viewport mx-auto px-layout-sm'>
-        <FigureCaption className={' pt-0 mt-2 pb-8'}>
-          {caption && <div>{caption}</div>}
-          {attribution && <div>{attribution}</div>}
-        </FigureCaption>
+        <div className='mx-auto max-w-viewport px-layout-sm'>
+          <FigureCaption
+            className={'mt-2 pt-0 pb-8'}
+            caption={caption}
+            attribution={attribution}
+          />
         </div>
       )}
     </section>

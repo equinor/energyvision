@@ -51,10 +51,11 @@ const Figure = ({ data, anchor, className = '' }: FigureProps) => {
         })}
       />
       {(caption || attribution) && (
-        <FigureCaption>
-          {caption && <div>{caption}</div>}
-          {attribution && <div>{attribution}</div>}
-        </FigureCaption>
+        <FigureCaption
+          caption={caption}
+          attribution={attribution}
+          withLayoutPx={false}
+        />
       )}
     </figure>
   )
