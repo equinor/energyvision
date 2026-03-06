@@ -1,16 +1,12 @@
 import { file } from '@equinor/eds-icons'
 import type { PortableTextBlock, Rule, ValidationContext } from 'sanity'
-import slugify from 'slugify'
-import { defaultLanguage } from '@/languages'
-import { newsSlug } from '../../../shared/sitesConfig'
+import { newsSlug } from '@/sitesConfig'
 import blocksToText from '../../helpers/blocksToText'
 import { filterByRoute } from '../../helpers/referenceFilters'
 import { EdsIcon } from '../../icons'
 import { CompactBlockEditor } from '../components/CompactBlockEditor'
-import SlugInput from '../components/SlugInput'
 import { configureBlockContent } from '../editors/blockContentType'
 import routes from '../routes'
-import { withSlugValidation } from '../validations/validateSlug'
 import { lang } from './langField'
 
 export default {
