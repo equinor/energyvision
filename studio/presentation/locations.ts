@@ -5,8 +5,6 @@ import blocksToText from '@/helpers/blocksToText'
 import { capitalizeFirstLetter } from '@/helpers/formatters'
 import { getIdFromName, getLocaleFromName } from '../src/lib/localization'
 
-const previewSecret = import.meta.env.SANITY_STUDIO_PREVIEW_SECRET
-
 export const locations: DocumentLocationResolver = (params, context) => {
   let query = null
   const routePages = ['page', 'landingPage', 'event']
@@ -98,14 +96,10 @@ export const locations: DocumentLocationResolver = (params, context) => {
                 }
               })
           } else {
-            console.log('not published and not connected to route')
-            /*             previewUrl.searchParams.append('draftId', doc?._id)
-            previewUrl.searchParams.append('secret', previewSecret) */
-
             locs = [
               {
                 title: `${doc?.title ? blocksToText(doc?.title) : 'Untitled'}`,
-                href: `/api/draft?id=${doc?._id}&secret=${previewSecret}`,
+                href: `/api/draft/preview/${doc?._id}`,
               },
             ]
           }

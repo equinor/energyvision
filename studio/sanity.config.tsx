@@ -152,7 +152,7 @@ const getConfig = (
       previewUrl: {
         origin: SANITY_STUDIO_PREVIEW_URL,
         previewMode: {
-          enable: '/api/draft-mode/enable',
+          enable: '/api/draft',
         },
       },
       resolve: {

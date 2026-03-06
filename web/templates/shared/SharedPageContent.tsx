@@ -682,8 +682,6 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
           } as Component)
         : (data?.content?.[previousComponentIndex] as unknown as Component)
 
-    console.log('previousComponentToCompare', previousComponentToCompare)
-
     const topSpacingClassName = applyPaddingTopIfApplicable(
       c,
       previousComponentToCompare,

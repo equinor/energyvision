@@ -225,10 +225,9 @@ export async function getPage(params: Params) {
     })
     magazineArticles = articles
   }
-  console.log('Getpage pageData', pageData)
+
   const { stickyMenu, slugs = [], ...restPageData } = pageData || {}
 
-  console.log('slugs', slugs)
   return {
     headerData: {
       slugs: formatToValidPrefixedIsoSlugs(
