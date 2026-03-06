@@ -2,7 +2,6 @@ import { BsGrid3X2 } from 'react-icons/bs'
 import { defaultLanguage } from '../../../../languages'
 import { apiVersion } from '../../../../sanity.client'
 import { Flags } from '../../datasetHelpers'
-import { EmptyItem } from './EmptyItem'
 
 export const LandingPage = S =>
   Flags.HAS_LANDING_PAGE
@@ -24,4 +23,4 @@ export const LandingPage = S =>
               return params.type === 'landingPage'
             }),
         )
-    : EmptyItem
+    : S.EmptyItem

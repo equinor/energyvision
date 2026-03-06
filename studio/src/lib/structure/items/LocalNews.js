@@ -5,7 +5,6 @@ import { EdsIcon } from '../../../../icons'
 import { defaultLanguage } from '../../../../languages'
 import { apiVersion } from '../../../../sanity.client'
 import { Flags } from '../../datasetHelpers'
-import { EmptyItem } from './EmptyItem'
 
 const localNewsStructure = (S, context) => {
   const { documentStore } = context
@@ -75,4 +74,4 @@ export const LocalNews = (S, context) =>
         .icon(PiNewspaper)
         .schemaType('localNews')
         .child(localNewsStructure(S, context))
-    : EmptyItem
+    : S.EmptyItem

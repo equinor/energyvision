@@ -19,7 +19,16 @@ const SATELLITES = [
   'storage',
   'sponsorship',
 ]
-const NEWS = [...GLOBAL_DEV, ...GLOBAL_PROD, 'japan', 'poland', 'brazil', 'germany', 'southkorea', 'celticsea']
+const NEWS = [
+  ...GLOBAL_DEV,
+  ...GLOBAL_PROD,
+  'japan',
+  'poland',
+  'brazil',
+  'germany',
+  'southkorea',
+  'celticsea',
+]
 const ARCHIVED_NEWS = [...GLOBAL_PROD, ...GLOBAL_DEV]
 const NEWS_SUBSCRIPTION = [...GLOBAL_PROD, ...GLOBAL_DEV]
 const MAGAZINE_SUBSCRIPTION = [...GLOBAL_DEV, ...GLOBAL_PROD]
@@ -52,7 +61,6 @@ const CAMPAIGN = [...GLOBAL_PROD, ...GLOBAL_DEV]
 export const FeatureFlags = (dataset: DatasetsKeys) => ({
   HAS_NEWS: NEWS.includes(dataset),
   HAS_NEWSROOM: NEWSROOM.includes(dataset),
-  HAS_MAGAZINE_INDEX: MAGAZINE_INDEX.includes(dataset),
   HAS_ARCHIVED_NEWS: ARCHIVED_NEWS.includes(dataset),
   HAS_NEWS_SUBSCRIPTION: NEWS_SUBSCRIPTION.includes(dataset),
   HAS_MAGAZINE_SUBSCRIPTION: MAGAZINE_SUBSCRIPTION.includes(dataset),
@@ -69,14 +77,16 @@ export const FeatureFlags = (dataset: DatasetsKeys) => ({
 
   HAS_SUBSCRIBE_FORM: SUBSCRIBE_FORM.includes(dataset),
   HAS_CAREERS_CONTACT_FORM: CAREERS_CONTACT_FORM.includes(dataset),
-  HAS_CAREER_FAIR_AND_VISITS_FORM: CAREER_FAIR_AND_VISITS_FORM.includes(dataset),
+  HAS_CAREER_FAIR_AND_VISITS_FORM:
+    CAREER_FAIR_AND_VISITS_FORM.includes(dataset),
   HAS_ORDER_REPORT_FORM: ORDER_REPORT_FORM.includes(dataset),
   HAS_CONTACT_EQUINOR_FORM: CONTACT_EQUINOR_FORM.includes(dataset),
   HAS_PENSION_FORM: PENSION_FORM.includes(dataset),
 
   HAS_FANCY_MENU: FANCY_MENU.includes(dataset),
   /* LANDING_PAGE requires FANCY_MENU to work */
-  HAS_LANDING_PAGE: FANCY_MENU.includes(dataset) && LANDING_PAGE.includes(dataset),
+  HAS_LANDING_PAGE:
+    FANCY_MENU.includes(dataset) && LANDING_PAGE.includes(dataset),
   HAS_TWITTER_FEED: TWITTER_FEED.includes(dataset),
   HAS_MAGAZINE: MAGAZINE.includes(dataset),
   HAS_SAME_SLUG: SAME_SLUG.includes(dataset),

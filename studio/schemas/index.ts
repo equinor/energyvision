@@ -142,7 +142,9 @@ const MenuSchemas = Flags.HAS_FANCY_MENU
   ? [siteMenu, subMenu, menuGroup, menuLink]
   : [simpleMenu, simpleMenuGroup, simpleMenuLink]
 const LocalNewsSchemas = Flags.HAS_LOCAL_NEWS ? [localNews, localNewsTag] : []
-const EventSchemas = Flags.HAS_EVENT ? [event, eventDate, eventTag] : []
+const EventSchemas = Flags.HAS_EVENT
+  ? [event, eventDate, promoteEvents, eventTag]
+  : []
 const LandingPageSchemas = Flags.HAS_LANDING_PAGE ? [landingPage] : []
 const NewsSchemas = Flags.HAS_NEWS
   ? [news, newsList, promoteNews, tag, countryTag]
@@ -189,7 +191,6 @@ const RemainingSchemas = [
   footer,
   promotion,
   promoteTopics,
-  promoteEvents,
   promotePeople,
   contactList,
   assetFile,

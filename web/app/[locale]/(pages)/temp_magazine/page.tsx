@@ -53,7 +53,7 @@ export default async function MagazineRoomPage({
   const tag = (await searchParams)?.tag
   const pageSlug = slug ?? magazineSlug[getNameFromIso(locale)]
 
-  if (!Flags.HAS_MAGAZINE_INDEX) {
+  if (!Flags.HAS_MAGAZINE) {
     notFound()
   }
 

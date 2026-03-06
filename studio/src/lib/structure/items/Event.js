@@ -2,7 +2,6 @@ import { MdOutlineEvent } from 'react-icons/md'
 import { defaultLanguage } from '../../../../languages'
 import { apiVersion } from '../../../../sanity.client'
 import { Flags } from '../../datasetHelpers'
-import { EmptyItem } from './EmptyItem'
 
 export const Event = S =>
   Flags.HAS_EVENT
@@ -22,4 +21,4 @@ export const Event = S =>
               return params.type === 'event'
             }),
         )
-    : EmptyItem
+    : S.EmptyItem

@@ -3,7 +3,6 @@ import { GiNewspaper } from 'react-icons/gi'
 import { defaultLanguage } from '../../../../languages'
 import { apiVersion } from '../../../../sanity.client'
 import { Flags } from '../../datasetHelpers'
-import { EmptyItem } from './EmptyItem'
 import { singletonListItem } from './SingletonItem'
 
 export const Magazine = S =>
@@ -26,9 +25,9 @@ export const Magazine = S =>
               return params.type === 'magazine'
             }),
         )
-    : EmptyItem
+    : S.EmptyItem
 
 export const MagazineRoom = S =>
-  Flags.HAS_MAGAZINE_INDEX
+  Flags.HAS_MAGAZINE
     ? singletonListItem(S, 'magazineIndex', 'Magazine Index').icon(GiNewspaper)
-    : EmptyItem
+    : S.EmptyItem
