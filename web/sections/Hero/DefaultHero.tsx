@@ -46,9 +46,8 @@ export const DefaultHero = ({
   imageClassName = '',
   ratio = '2:1',
 }: DefaultHeroProps) => {
-  console.log('title', title)
   //find variant in title
-  const px = true ? 'px-layout-sm' : 'px-layout-sm lg:px-layout-md'
+  const px = 'px-layout-sm lg:px-layout-md'
   const isPlainTitle =
     title && (title === 'string' || typeof title === 'string')
   const isColorBg = background && background !== 'bg-white-100'

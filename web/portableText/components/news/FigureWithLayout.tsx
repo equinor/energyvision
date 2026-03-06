@@ -96,12 +96,10 @@ export const FigureWithLayout = (block: BlockProps) => {
   const captionElement = (caption || attribution) && (
     <FigureCaption
       className={centerImageCaptionClassName[centerCaptionAlignment]}
-    >
-      <div>
-        {caption && <div>{caption}</div>}
-        {attribution && <div>{attribution}</div>}
-      </div>
-    </FigureCaption>
+      caption={caption}
+      attribution={attribution}
+      withLayoutPx={false}
+    />
   )
 
   return (

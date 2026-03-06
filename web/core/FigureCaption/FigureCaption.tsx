@@ -44,7 +44,7 @@ export const FigureCaption = forwardRef<HTMLElement, FigureCaptionProps>(
             className='max-w-prose leading-normal'
           >
             {caption}
-            {`${caption && attribution ? ' ' : ''}`}
+            {`${caption && attribution ? '. ' : ''}`}
             {attribution}
           </Typography>
         )}
