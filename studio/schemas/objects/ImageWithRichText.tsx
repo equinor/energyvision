@@ -1,8 +1,7 @@
-import { ImageWithAlt } from './imageWithAlt'
-import type { PortableTextBlock, Reference } from 'sanity'
-import { Rule } from 'sanity'
+import type { PortableTextBlock, Reference, Rule } from 'sanity'
 import { configureBlockContent } from '../editors'
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
+import type { ImageWithAlt } from './imageWithAlt'
 import singleItemArray from './singleItemArray'
 
 const blockConfig = {
@@ -66,7 +65,7 @@ export default {
     prepare({ imageUrl }: { imageUrl: string }) {
       return {
         title: 'Image with rich text below',
-        media: <img src={imageUrl} alt="" style={{ height: '100%' }} />,
+        media: <img src={imageUrl} alt='' style={{ height: '100%' }} />,
       }
     },
   },

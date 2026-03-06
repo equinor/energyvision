@@ -1,9 +1,17 @@
-import pageContentFields from './common/pageContentFields'
-import { landingPageById } from './common/landingPageContentFields'
 import { eventContentFields } from './common/eventContentFields'
-import { heroFields } from './common/heroFields'
-import { seoAndSomeFields } from './common/seoAndSomeFields'
 import { functions, pageContentFunctions } from './common/functions'
+import { heroFields } from './common/heroFields'
+import { landingPageById } from './common/landingPageContentFields'
+import pageContentFields from './common/pageContentFields'
+import { seoAndSomeFields } from './common/seoAndSomeFields'
+
+export const pageInfoById = /* groq */ `
+  *[_id == $id] {
+    _id,
+    lang,
+    "template": _type,
+  }[0]
+`
 
 export const contentQueryById = /* groq */ `
   ${functions}
@@ -17,7 +25,7 @@ export const contentQueryById = /* groq */ `
      _type == "landingPage" => {
       ${landingPageById}
     },
-    _type == "page" || _type == "homePage" => {
+    _type == "page" || _type == "homePage" || _type == "magazine" => {
       "content": content[] {
         ${pageContentFields}
       },
@@ -27,5 +35,5 @@ export const contentQueryById = /* groq */ `
         ${eventContentFields}
       }
     },
-  }
+  }[0]
 `

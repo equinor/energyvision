@@ -249,6 +249,17 @@ const heroLoopingVideoRatio = {
       return true
     }),
 }
+
+const backgroundBlur = {
+  name: 'backgroundBlur',
+  title: 'Blur background',
+  fieldset: 'hero',
+  type: 'boolean',
+  initialValue: false,
+  hidden: ({ parent }: DocumentType) => {
+    return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE
+  },
+}
 const containVideo = {
   name: 'containVideo',
   title: 'Contain video',
@@ -278,4 +289,5 @@ export default [
   heroLoopingVideoRatio,
   containVideo,
   backgroundGradient,
+  backgroundBlur,
 ]

@@ -29,6 +29,7 @@ export const FullWidthImageHero = ({
   breadcrumbsComponent,
   className = '',
 }: FullWidthImageHeroProps) => {
+  console.log('FullWidthImageHero classname', className)
   const { bg: nextCompBg, dark: nextCompDark } = getBgAndDarkFromBackground(
     nextSectionDesignOptions,
   )
@@ -46,7 +47,9 @@ export const FullWidthImageHero = ({
   }
 
   return (
-    <>
+    <div
+      className={`overflow-hidden ${nextCompBg} ${nextCompDark ? nextCompDark : ''}`}
+    >
       {figure?.image && (
         <Picture
           image={figure.image}
@@ -70,13 +73,11 @@ export const FullWidthImageHero = ({
         variant='h1'
         blockClassName='pb-0'
         className={twMerge(
-          `mt-8 px-layout-sm lg:mt-10 lg:px-layout-lg ${nextCompBg} ${
-            nextCompDark ? nextCompDark : ''
-          }`,
+          `mt-8 px-layout-sm lg:mt-10 lg:px-layout-lg`,
           className,
         )}
       />
       {subTitle && subTitle}
-    </>
+    </div>
   )
 }

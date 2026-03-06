@@ -5,18 +5,12 @@ import blocksToText from '@/helpers/blocksToText'
 import { capitalizeFirstLetter } from '@/helpers/formatters'
 import { getIdFromName, getLocaleFromName } from '../src/lib/localization'
 
-export const locations: DocumentLocationResolver = (params, context) => {
-  // Set up locations for page documents
+const previewSecret = import.meta.env.SANITY_STUDIO_PREVIEW_SECRET
 
+export const locations: DocumentLocationResolver = (params, context) => {
   let query = null
-  const routePages = [
-    'page',
-    'landingPage',
-    'event',
-    'newsroom',
-    'magazineIndex',
-  ]
-  const pagesWithSlugOnThem = ['news', 'magazine']
+  const routePages = ['page', 'landingPage', 'event']
+  const pagesWithSlugOnThem = ['news', 'magazine', 'newsroom', 'magazineIndex']
 
   if (routePages?.includes(params.type)) {
     query = {
@@ -72,14 +66,11 @@ export const locations: DocumentLocationResolver = (params, context) => {
     return doc$.pipe(
       map(doc => {
         // If the document doesn't exist or have a slug, return null
-        if (
-          (!doc &&
-            doc?.translationSlugs?.length === 0 &&
-            doc?.slugs?.length === 0) ||
-          (doc?._type === 'homePage' && !doc?.isActive)
-        ) {
+        if (!doc || (doc?._type === 'homePage' && !doc?.isActive)) {
+          console.log('return no locations')
           return null
         }
+        console.log('doc', doc)
 
         let locs = []
         if (routePages?.includes(params.type)) {
@@ -93,19 +84,30 @@ export const locations: DocumentLocationResolver = (params, context) => {
                 const locale = getLocaleFromName(translation?.lang)
                 return {
                   title: `${blocksToText(translation?.title)}`,
-                  href: `${translation?.lang !== 'en_GB' ? `/${locale}` : ''}${translation?.slug}`,
+                  href: `${translation?.lang !== 'en_GB' ? `${locale}/` : ''}${translation?.slug}`,
                 }
               })
-          } else {
+          } else if (doc?.slugs?.length > 0) {
             locs = doc?.slugs
               ?.filter((slug: string) => slug)
               ?.map((slug: string) => {
                 const locale = getLocaleFromName(doc?.lang)
                 return {
                   title: `${blocksToText(doc?.title)}`,
-                  href: `${doc?.lang !== 'en_GB' ? `/${locale}` : ''}${slug}`,
+                  href: `${doc?.lang !== 'en_GB' ? `${locale}/` : ''}${slug}`,
                 }
               })
+          } else {
+            console.log('not published and not connected to route')
+            /*             previewUrl.searchParams.append('draftId', doc?._id)
+            previewUrl.searchParams.append('secret', previewSecret) */
+
+            locs = [
+              {
+                title: `${doc?.title ? blocksToText(doc?.title) : 'Untitled'}`,
+                href: `/api/draft?id=${doc?._id}&secret=${previewSecret}`,
+              },
+            ]
           }
         } else if (doc?._type === 'homePage' && doc?.isActive) {
           locs = doc?.translationSlugs?.map((item: any) => {
@@ -118,20 +120,22 @@ export const locations: DocumentLocationResolver = (params, context) => {
             }
           })
         } else if (pagesWithSlugOnThem?.includes(params.type)) {
+          console.log('pagesWithSlugOnThem')
           const locale = getLocaleFromName(doc?.lang)
           const plainTitle = Array.isArray(doc.title)
             ? blocksToText(doc.title)
             : doc.title
+
           locs = [
             {
               title: doc.title ? plainTitle : 'Untitled',
-              href: `${doc?.lang !== 'en_GB' ? `/${locale}` : ''}${doc?.slug?.current}`,
+              href: `${doc?.lang !== 'en_GB' ? `${locale}/` : ''}${doc?.slug?.current}`,
             },
           ]
         }
-
+        console.log('locs', locs)
         return {
-          locations: [...locs],
+          locations: locs ?? [],
         }
       }),
     )

@@ -89,6 +89,11 @@
 
   --tracking-display: -3px;
 
+  --spacing-layout-sm: clamp(16px, calc(-38.3689px + 15.4984vw), 13dvw);
+  --spacing-layout-md: clamp(16px, calc(-69.4369px + 23.7832vw), 18.8dvw);
+  --spacing-layout-lg: clamp(16px, calc(-101.4757px + 32.3269vw), 23.3dvw);
+  --spacing-text-end: clamp(16px, calc(-150px + 38vw), 26dvw);
+
   --spacing-single-carousel-card-w-sm: 350px; /*275px;*/
   --spacing-single-carousel-card-w-md: 692px;
   --spacing-single-carousel-card-w-lg: 980px;
@@ -97,7 +102,9 @@
   --spacing-single-carousel-card-h-lg: 516px;
   --spacing-event-carousel-card-w: 383px;
   --spacing-arrow-right: 1.58rem;
-  --spacing-text: 75ch;
+  --spacing-text: 70rem;
+  --spacing-topbar: 85px;
+  --spacing-news-banner-vertical: clamp(40px, calc(14.3125px + 11.0032vw), 210px);
 
   --font-weight-semibolder: 650;
 
@@ -141,24 +148,12 @@
 
 @theme inline {
   --spacing-page-content: --spacing(20);
-  --spacing-innerColumn: calc(100vw - (var(--spacing-layout-lg) * 2));
+  --spacing-innerColumn: calc(100vw - (--spacing(layout-lg) * 2));
   --spacing-smContainer: calc(100vw - --spacing(layout-sm) - --spacing(layout-sm));
   --spacing-menuText: calc(35 * --spacing(6));
-  --spacing-topbar: 85px;
-  --spacing-layout-sm: clamp(16px, calc(-38.3689px + 15.4984vw), 13dvw);
-  --spacing-layout-md: clamp(16px, calc(-69.4369px + 23.7832vw), 18.8dvw);
-  --spacing-layout-lg: clamp(16px, calc(-101.4757px + 32.3269vw), 23.3dvw);
-  /* --spacing-layout-sm: clamp(16px, calc(-38.3689px + 14.4984vw), 12dvw);
-  --spacing-layout-md: clamp(16px, calc(-69.4369px + 22.7832vw), 17.8dvw);
-  --spacing-layout-lg: clamp(16px, calc(-101.4757px + 31.3269vw), 22.3dvw); */
-  --spacing-news-banner-vertical: clamp(40px, calc(14.3125px + 11.0032vw), 210px);
 
   /* PROSE - Typography to be used with blocks */
-
-  /* font size: change --prose-text to reference var(--text-md) to replace prose-md */
   --prose-text-base: var(--text-base);
-
-  /* text color: change --prose-body to reference var(--color-.....) */
   --prose-body: var(--color-slate-80);
 }
 
@@ -620,6 +615,18 @@ and not use important in textteaser theme
     (-webkit-backdrop-filter: blur(16px))
   {
 
+    .backdrop-glass-light {
+      position: absolute;
+      inset: 0;
+      backdrop-filter: blur(5px);
+      background: linear-gradient(
+        to bottom,
+        hsl(from var(--color-white-100) h s l / 0.2),
+        hsl(from var(--color-white-100) h s l / 0.1) 50%
+        /*transparent 50%*/
+      );
+    }
+
     .backdrop-glass {
       position: absolute;
       inset: 0;
@@ -636,6 +643,7 @@ and not use important in textteaser theme
         /*transparent 50%*/
       );
     }
+
     .backdrop-glass:before{
       content:"";
       position: absolute;

@@ -66,6 +66,8 @@ export async function GET(request: Request) {
   const locales = languages.map(lang => lang.locale)
   const isMultilanguage = locales.length > 1
 
+  //remember to fetch the slug for newsroom and maazinIndex page from the templates itself now, on slug and translations slug
+
   const routeSlugs = await getRoutePaths(locales)
   const newsSlugs = Flags.HAS_NEWS ? await getNewsPaths(locales) : []
   const newsroomSlugs = Flags.HAS_NEWSROOM ? await getNewsroomPaths() : []

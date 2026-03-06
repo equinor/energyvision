@@ -119,17 +119,10 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
           {(ingress || content) && (
             <div className={`mt-14 pb-page-content`}>
               {ingress && (
-                <Blocks
-                  variant='ingress'
-                  value={ingress}
-                  blockClassName='px-layout-sm sm:px-layout-lg'
-                />
+                <Blocks group='article' variant='ingress' value={ingress} />
               )}
               {content && (
-                <Blocks
-                  value={content}
-                  className='px-layout-sm sm:px-layout-lg'
-                />
+                <Blocks group='article' variant='body' value={content} />
               )}
             </div>
           )}

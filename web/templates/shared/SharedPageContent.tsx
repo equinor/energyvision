@@ -657,6 +657,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
         return null
     }
   }
+
   const content = (data?.content || []).map((c: Component, index) => {
     const prevComponent = data?.content?.[index - 1]
     const nextComponent = data?.content?.[index + 1]
@@ -680,6 +681,8 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
             designOptions: { background: heroBackground },
           } as Component)
         : (data?.content?.[previousComponentIndex] as unknown as Component)
+
+    console.log('previousComponentToCompare', previousComponentToCompare)
 
     const topSpacingClassName = applyPaddingTopIfApplicable(
       c,

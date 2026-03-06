@@ -1,4 +1,4 @@
-import type { Reference } from 'sanity'
+import type { Reference, Rule } from 'sanity'
 
 export type ImageWithAlt = {
   _type: string
@@ -22,6 +22,10 @@ export default {
       title: 'Alternative text for screen readers',
       description:
         'Recommended. Describe whats seen in the image. Leave empty if purely decorative.',
+      validation: (Rule: Rule) =>
+        Rule.custom((value: string) =>
+          !value ? 'Alternative text is recommended' : true,
+        ).warning(),
     },
   ],
 }

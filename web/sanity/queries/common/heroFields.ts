@@ -20,7 +20,7 @@ export const heroFields = /* groq */ `{
     },
     "background": coalesce(heroBackground.key, 'white-100'),
     backgroundGradient,
-    backdropStyle,
+    backgroundBlur,
     "figure":  select(
       heroType == 'loopingVideo' => { "image": heroLoopingVideo->thumbnail},
       heroFigure),

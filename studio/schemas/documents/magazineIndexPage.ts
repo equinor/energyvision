@@ -1,5 +1,6 @@
 import { bookmarks } from '@equinor/eds-icons'
 import type { PortableTextBlock, Rule, ValidationContext } from 'sanity'
+import { magazineSlug } from '@/sitesConfig'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
 import { CompactBlockEditor } from '../components/CompactBlockEditor'
@@ -10,7 +11,7 @@ import { lang } from './langField'
 
 export default {
   type: 'document',
-  title: 'Magazine Index Page',
+  title: 'Magazine room',
   name: 'magazineIndex',
   icon: () => EdsIcon(bookmarks),
   fieldsets: [
@@ -36,6 +37,33 @@ export default {
       },
       of: [configureBlockContent({ variant: 'richTitleH1' })],
       validation: (Rule: Rule) => Rule.required(),
+    },
+    {
+      name: 'slug',
+      title: 'Slug',
+      type: 'slug',
+      readOnly: (props: any) => {
+        const { value, document } = props
+        if (typeof value === 'undefined' || !value) {
+          return false
+        }
+        if (value?.current === magazineSlug[document?.lang as string]) {
+          return true
+        }
+        return false
+      },
+      validation: (Rule: Rule) =>
+        Rule.custom((value: { current: string }, ctx: ValidationContext) => {
+          if (value?.current) {
+            if (
+              value?.current === magazineSlug[ctx?.document?.lang as string]
+            ) {
+              return true
+            }
+            return `Must be ${magazineSlug[ctx?.document?.lang as string]}`
+          }
+          return 'Required'
+        }),
     },
     {
       title: 'Meta information',

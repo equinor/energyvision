@@ -230,6 +230,14 @@ export const Image = ({
     keepRatioOnMobile,
   })
 
+  let altText = ''
+  if ('alt' in image && image?.alt) {
+    altText = image.alt
+  }
+  if (caption && !image?.alt) {
+    altText = caption
+  }
+
   const nextImage = url ? (
     <NextImage
       {...(fill ? { fill: true } : { width, height })}
@@ -239,7 +247,7 @@ export const Image = ({
       sizes={
         hasImageZoom ? getSizes('sm', true) : getSizes(grid, isLargerDisplays)
       }
-      alt={'alt' in image && image.alt ? image.alt : ''}
+      alt={altText}
       className={twMerge(
         `${fill ? 'object-cover' : 'flex h-full w-full'}`,
         imageClassName,

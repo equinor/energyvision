@@ -52,12 +52,6 @@ export default (isoCode: string, title: string) => {
           Flags.HAS_EVENT && {
             type: 'event',
           },
-          Flags.HAS_NEWSROOM && {
-            type: 'newsroom',
-          },
-          Flags.HAS_MAGAZINE && {
-            type: 'magazineIndex',
-          },
         ].filter(e => e),
         options: {
           filter: 'lang == $lang',
@@ -163,21 +157,25 @@ export default (isoCode: string, title: string) => {
         type: 'content._type',
       },
       prepare(selection: any) {
-        const { slug, media, eventDate, title: contentTitle } = selection
+        const { slug, media, eventDate, title: contentTitle, type } = selection
 
-        const subTitle =
+        const title =
           (contentTitle && blocksToText(contentTitle)) ?? 'Missing content'
 
         const withoutParent = slug ? slug.split('/').at(-1) : ''
-        let title = 'Missing route'
+        let subTitle = 'Missing route'
         if (slug) {
-          title = withoutParent
+          subTitle = withoutParent
         }
-        const thumbnail = media ? media : eventDate ? MdOutlineEvent : CiRoute
+        const thumbnail = media
+          ? media
+          : eventDate || type === 'event'
+            ? MdOutlineEvent
+            : CiRoute
 
         return {
-          title: '/' + title,
-          subtitle: subTitle,
+          title: title,
+          subtitle: '/' + subTitle,
           media: !slug ? CiWarning : thumbnail,
         }
       },

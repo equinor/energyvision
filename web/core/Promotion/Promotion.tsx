@@ -15,6 +15,7 @@ import {
 } from '@/styles/colorKeyToUtilityMap'
 import type { ImageWithAlt } from '../../types'
 import BaseLink, { type BaseLinkProps } from '../Link/BaseLink'
+import { LogoPrimary } from '../Logo/Logo'
 
 export type PromotionType = 'compact' | 'extended'
 export type PromotionVariant = 'externalLink' | 'default'
@@ -133,7 +134,7 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
           className,
         )}
       >
-        {image && (
+        {image ? (
           <Image
             grid='lg'
             image={image}
@@ -144,6 +145,12 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
               _layoutDirection !== 'col' ? 'rounded-s-card' : 'rounded-t-card'
             }`}
           />
+        ) : (
+          <div
+            className={`flex h-full w-full items-center justify-center bg-autumn-storm-60 ${_layoutDirection === 'col' ? 'aspect-video rounded-t-card' : 'aspect-4/3 rounded-s-card'}`}
+          >
+            <LogoPrimary className='h-auto w-[20%] text-white-100' />
+          </div>
         )}
         <div
           className={`h-full min-h-[8vh] w-full ${paddingOnTypes[type]} flex ${
@@ -167,7 +174,7 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
               <Typography
                 group='card'
                 variant='ingress'
-                className={`pt-3 ${lineClampOnTypes[type]}`}
+                className={`${lineClampOnTypes[type]}`}
               >
                 {plainIngress}
               </Typography>

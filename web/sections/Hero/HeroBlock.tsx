@@ -14,7 +14,6 @@ import type {
   LinkData,
 } from '@/types'
 import type { MagazineTag } from '../MagazineTags/MagazineTagBar'
-import { DefaultHero } from './DefaultHero'
 import { FiftyFiftyHero } from './FiftyFiftyHero'
 import {
   FullWidthImageHero,
@@ -54,19 +53,18 @@ export type HeroData = {
   hideImageCaption?: boolean
   captionBg?: BackgroundColours
   backgroundGradient?: string
-  backdropStyle?: boolean
+  backgroundBlur?: boolean
 }
 
 export type HeroBlockProps = {
   nextSectionDesignOptions?: DesignOptions
   breadcrumbs?: any
+  isMagazineRoom?: boolean
+  //To add custom styling to the outer container of the hero type
+  className?: string
 } & HeroData &
   HTMLAttributes<HTMLElement>
-/**
- * Use this as starting block for a section
- * Remove unrelevant suggetions
- * Rename SectionBlockTemplate to relevant section name
- */
+
 export const HeroBlock = ({
   title,
   heroTitle,
@@ -84,7 +82,9 @@ export const HeroBlock = ({
   nextSectionDesignOptions,
   breadcrumbs,
   backgroundGradient,
-  backdropStyle,
+  backgroundBlur,
+  isMagazineRoom = false,
+  className = '',
 }: HeroBlockProps) => {
   const { bg: nextCompBg, dark: nextCompDark } = getBgAndDarkFromBackground(
     nextSectionDesignOptions,
@@ -125,11 +125,12 @@ export const HeroBlock = ({
     }),
     //figCaptionClassName: 'lg:px-layout-lg',
     backgroundGradient,
-    backdropStyle,
+    backgroundBlur,
     ...(HeroTypes.FULL_WIDTH_IMAGE &&
       breadcrumbs?.enableBreadcrumbs && {
         breadcrumbsComponent: breadcrumbsElement,
       }),
+    className,
   }
 
   const getHero = () => {
@@ -151,7 +152,12 @@ export const HeroBlock = ({
           />
         )
       case HeroTypes.BACKGROUND_IMAGE:
-        return <TextOnBackgroundImageHero {...heroProps} />
+        return (
+          <TextOnBackgroundImageHero
+            {...heroProps}
+            isMagazineRoom={isMagazineRoom}
+          />
+        )
       case HeroTypes.LOOPING_VIDEO:
         return (
           //@ts-ignore
@@ -162,14 +168,6 @@ export const HeroBlock = ({
           />
         )
       default:
-        return (
-          <DefaultHero
-            {...heroProps}
-            ratio='2:1'
-            // reduce pb when breadscrumbs
-            className={`${breadcrumbs?.enableBreadcrumbs ? 'pb-2' : ''}`}
-          />
-        )
     }
   }
 

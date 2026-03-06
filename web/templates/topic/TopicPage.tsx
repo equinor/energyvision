@@ -1,8 +1,4 @@
-import {
-  HeroBlock,
-  type HeroBlockProps,
-  HeroTypes,
-} from '@/sections/Hero/HeroBlock'
+import { HeroBlock, type HeroBlockProps } from '@/sections/Hero/HeroBlock'
 import type { TopicPageSchema } from '../../types/index'
 import { PageContent } from '../shared/SharedPageContent'
 
@@ -27,16 +23,24 @@ const TopicPage = ({
     nextSectionDesignOptions: restData?.content?.[0]?.designOptions,
   }
 
+  const heroBackground =
+    hero?.type === 'backgroundImage'
+      ? {
+          type: 'backgroundImage',
+          backgroundImage: hero.figure,
+        }
+      : hero?.background
+
   return (
     <main className='flex flex-col peer-data-[sticky=false]:pt-topbar'>
       <HeroBlock {...heroProps} />
       <PageContent
         data={restData}
         heroBackground={
-          hero?.type !== HeroTypes.DEFAULT
+          hero?.type !== 'default' && hero?.type !== 'backgroundImage'
             ? //@ts-ignore
               restData?.content?.[0]?.designOptions?.background
-            : hero?.background
+            : heroBackground
         }
       />
     </main>

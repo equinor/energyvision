@@ -1,11 +1,16 @@
 import { file } from '@equinor/eds-icons'
-import type { PortableTextBlock, Rule } from 'sanity'
+import type { PortableTextBlock, Rule, ValidationContext } from 'sanity'
+import slugify from 'slugify'
+import { defaultLanguage } from '@/languages'
+import { newsSlug } from '../../../shared/sitesConfig'
 import blocksToText from '../../helpers/blocksToText'
 import { filterByRoute } from '../../helpers/referenceFilters'
 import { EdsIcon } from '../../icons'
 import { CompactBlockEditor } from '../components/CompactBlockEditor'
+import SlugInput from '../components/SlugInput'
 import { configureBlockContent } from '../editors/blockContentType'
 import routes from '../routes'
+import { withSlugValidation } from '../validations/validateSlug'
 import { lang } from './langField'
 
 export default {
@@ -28,6 +33,42 @@ export default {
   fields: [
     lang,
     {
+      name: 'title',
+      type: 'array',
+      title: 'Title',
+
+      components: {
+        input: CompactBlockEditor,
+      },
+      of: [configureBlockContent({ variant: 'richTitleH1' })],
+      validation: (Rule: Rule) => Rule.required(),
+    },
+    {
+      name: 'slug',
+      title: 'Slug',
+      type: 'slug',
+      readOnly: (props: any) => {
+        const { value, document } = props
+        if (typeof value === 'undefined' || !value) {
+          return false
+        }
+        if (value?.current === newsSlug[document?.lang as string]) {
+          return true
+        }
+        return false
+      },
+      validation: (Rule: Rule) =>
+        Rule.custom((value: { current: string }, ctx: ValidationContext) => {
+          if (value?.current) {
+            if (value?.current === newsSlug[ctx?.document?.lang as string]) {
+              return true
+            }
+            return `Must be ${newsSlug[ctx?.document?.lang as string]}`
+          }
+          return 'Required'
+        }),
+    },
+    {
       title: 'Meta information',
       name: 'seo',
       type: 'titleAndMeta',
@@ -40,17 +81,6 @@ export default {
       description:
         'You can override the hero image as the SoMe image by uploading another image here.',
       fieldset: 'metadata',
-    },
-    {
-      name: 'title',
-      type: 'array',
-      title: 'Title',
-
-      components: {
-        input: CompactBlockEditor,
-      },
-      of: [configureBlockContent({ variant: 'richTitleH1' })],
-      validation: (Rule: Rule) => Rule.required(),
     },
     {
       title: 'Text',

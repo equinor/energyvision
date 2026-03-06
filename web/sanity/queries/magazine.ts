@@ -68,9 +68,11 @@ export const magazineIndexQuery = /* groq */ `
  ${functions}
   *[_type == "magazineIndex" && ${sameLang}] {
     _id,
+    "type":_type,
     "seoAndSome": ${seoAndSomeFields},
     title,
     "hero": ${heroFields},
+    "template": _type,
     ingress[]{
         ...,
         ${markDefs},
@@ -94,7 +96,11 @@ export const allMagazineDocuments = /* groq */ `
     title[]{
     ...,
     ${markDefs},
-  },
+    },
+    ingress[]{
+    ...,
+    ${markDefs},
+    },
   "hero": ${heroFields}
 }`
 
@@ -127,6 +133,10 @@ ${functions}
     title[]{
       ...,
       ${markDefs},
+    },
+    ingress[]{
+    ...,
+    ${markDefs},
     },
     "hero": ${heroFields}
   }

@@ -24,6 +24,7 @@ export const inlineSlugsQuery = /* groq */ `
       "slug": slug.current,
       lang
     }`
+
 //newsroom, magazineIndex
 export const singletonsSlugsQuery = /* groq */ `
       "currentSlug": {
@@ -63,7 +64,7 @@ export const newsroomMetaQuery = /* groq */ `
     "title": title,
     "seoAndSome": ${seoAndSomeFields},
     "template": _type,
-    "slugs": {${singletonsSlugsQuery}}.translationSlugs
+    "allSlugs": {${singletonsSlugsQuery}}.translationSlugs
   }[0]
 `
 export const docWithSlugMetaQuery = /* groq */ `
@@ -81,7 +82,7 @@ export const docWithSlugMetaQuery = /* groq */ `
     "publishDateTime": ${publishDateTimeQuery},
     "firstPublishedAt": coalesce(firstPublishedAt, _createdAt),
     "updatedAt":  ${lastUpdatedTimeQuery},
-    "slugs": {${inlineSlugsQuery}}.translationSlugs
+    "allSlugs": {${inlineSlugsQuery}}
   }[0]
 `
 export const magazineroomMetaQuery = /* groq */ `
@@ -91,6 +92,6 @@ export const magazineroomMetaQuery = /* groq */ `
     "heroImage": heroFigure,
     "seoAndSome": ${seoAndSomeFields},
     "template": _type,
-    "slugs": {${singletonsSlugsQuery}}.translationSlugs
+    "allSlugs": {${singletonsSlugsQuery}}
   }[0]
 `

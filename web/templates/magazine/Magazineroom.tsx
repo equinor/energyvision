@@ -1,11 +1,11 @@
 'use client'
 import type { PortableTextBlock } from 'next-sanity'
 import { useMemo, useRef, useState } from 'react'
+import { Promotion } from '@/core/Promotion/Promotion'
 import { SimplePagination } from '@/core/SimplePagination/SimplePagination'
 import Blocks from '@/portableText/Blocks'
 import CardSkeleton from '@/sections/cards/CardSkeleton/CardSkeleton'
-import MagazineCard from '@/sections/cards/MagazineCard/MagazineCard'
-import { HeroBlock, type HeroData } from '@/sections/Hero/HeroBlock'
+import { HeroBlock, type HeroData, HeroTypes } from '@/sections/Hero/HeroBlock'
 import MagazineTagBar from '@/sections/MagazineTags/MagazineTagBar'
 import { PaginationContextProvider } from '../../contexts/PaginationContext'
 import Teaser, { type TeaserData } from '../../sections/teasers/Teaser/Teaser'
@@ -54,7 +54,11 @@ const MagazineRoom = ({
     figure,
     type,
     ratio,
-    ingress,
+    ...(type === HeroTypes.BACKGROUND_IMAGE && {
+      isMagazineRoom: true,
+      ingress,
+    }),
+    className: 'lg:pb-20',
   }
 
   const getNext = async () => {
@@ -72,7 +76,7 @@ const MagazineRoom = ({
     <main className='flex flex-col pt-topbar'>
       {/*@ts-ignore*/}
       <HeroBlock {...heroProps} />
-      {ingress && (
+      {!(type === HeroTypes.BACKGROUND_IMAGE) && ingress && (
         <Blocks
           //@ts-ignore
           value={ingress}
@@ -91,7 +95,14 @@ const MagazineRoom = ({
           {!isLoading &&
             pagedList?.[pageIdx]?.map(article => (
               <li key={article.id}>
-                <MagazineCard data={article} />
+                <Promotion
+                  href={article?.slug}
+                  image={article?.hero?.figure?.image}
+                  title={article?.title}
+                  ingress={article?.ingress}
+                  type='extended'
+                />
+                {/* <MagazineCard data={article} /> */}
               </li>
             ))}
         </ul>

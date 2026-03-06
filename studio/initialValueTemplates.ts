@@ -1,23 +1,32 @@
-import { Template } from 'sanity'
+import type { Template } from 'sanity'
 import { defaultLanguage, languages } from './languages'
 import textSnippets from './schemas/textSnippets'
+import { magazineSlug, newsSlug } from './sitesConfig'
 import { Flags } from './src/lib/datasetHelpers'
 
-const ParentRoutesTemplates: Template<any, any>[] = languages.map(({ name, title }) => ({
-  id: `parent-route-${name}`,
-  title: `Parent route - ${title}`,
-  schemaType: `route_${name}`,
-  parameters: [{ name: 'parentId', type: 'string' }],
-  value: (params: Record<string, unknown>) => ({ parent: { _type: 'reference', _ref: params.parentId } }),
-}))
+const ParentRoutesTemplates: Template<any, any>[] = languages.map(
+  ({ name, title }) => ({
+    id: `parent-route-${name}`,
+    title: `Parent route - ${title}`,
+    schemaType: `route_${name}`,
+    parameters: [{ name: 'parentId', type: 'string' }],
+    value: (params: Record<string, unknown>) => ({
+      parent: { _type: 'reference', _ref: params.parentId },
+    }),
+  }),
+)
 
-const TextSnippetsTemplates: Template<any, any>[] = Object.keys(textSnippets).map((key) => ({
+const TextSnippetsTemplates: Template<any, any>[] = Object.keys(
+  textSnippets,
+).map(key => ({
   id: `text-snippet-${key}`,
   title: `Text Snippet - ${textSnippets[key].title}`,
   schemaType: `textSnippet`,
   parameters: [{ name: 'defaultValue', type: 'string' }],
   value: (params: Record<string, unknown>) => {
-    const fields = languages.map(({ name }) => ({ [name]: params.defaultValue }))
+    const fields = languages.map(({ name }) => ({
+      [name]: params.defaultValue,
+    }))
     return Object.assign({}, ...fields)
   },
 }))
@@ -79,7 +88,10 @@ const localNewsWithTagTemplate: Template<any, any> = {
   id: 'localnews-with-tag',
   title: 'Local news',
   schemaType: 'localNews',
-  parameters: [{ name: 'localNewsTag', type: 'reference' }, { name: 'lang', type: 'string' }],
+  parameters: [
+    { name: 'localNewsTag', type: 'reference' },
+    { name: 'lang', type: 'string' },
+  ],
   value: (params: Record<string, unknown>) => ({
     localNewsTag: params.localNewsTag,
     lang: params.lang || defaultLanguage.name,

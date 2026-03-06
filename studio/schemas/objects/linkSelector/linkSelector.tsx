@@ -106,8 +106,6 @@ const linkSelector = (
         referenceTopicTitle,
         referenceTopicMedia,
       }: any) {
-        console.log('link selector slug', slug)
-
         let title = label ?? 'Missing title'
         if (!label && (referenceTopicTitle || referenceNewsMagTitle)) {
           title = blocksToText(referenceTopicTitle ?? referenceNewsMagTitle)

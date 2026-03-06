@@ -1,5 +1,5 @@
 import { draftMode } from 'next/headers'
-import { toPlainText } from 'next-sanity'
+import { type QueryParams, toPlainText } from 'next-sanity'
 import {
   defaultLanguage,
   domain,
@@ -10,11 +10,17 @@ import {
   getIsoFromName,
   getLocaleFromIso,
   getLocaleFromName,
+  getNameFromIso,
 } from '@/sanity/helpers/localization'
 import { getQueryFromSlug } from '@/sanity/helpers/queryFromSlug'
 import { resolveOpenGraphImage } from '@/sanity/lib/utils'
 import { isDateAfter } from '../../lib/helpers/dateUtilities'
 import { routeSanityFetch } from '../lib/live'
+import { contentQueryById, pageInfoById } from '../queries/contentById'
+import {
+  allMagazineDocuments,
+  getMagazineArticlesByTag,
+} from '../queries/magazine'
 
 export type LocaleSlug = { lang: string; slug: string }
 /**
@@ -99,7 +105,7 @@ export const constructSanityMetadata = (
 ) => {
   const relativeSlug = getRelativeWithPrefixSlug(slug, locale)
   const fullSlug = `${domain}${relativeSlug}`
-
+  console.log('metaData', metaData)
   if (!metaData) {
     if (process.env.NODE_ENV !== 'production') {
       console.warn('[generateMetadata] metaData is null', { slug, locale })
@@ -157,27 +163,71 @@ export const constructSanityMetadata = (
   }
 }
 
-type Params = { slug?: string | string[]; locale: string; tags?: string[] }
+type Params = {
+  slug?: string | string[]
+  locale: string
+  tags?: string[]
+  searchParams?: {
+    [key: string]: string[] | string | undefined
+  }
+}
 
 export async function getPage(params: Params) {
-  const { slug, locale, tags = [] } = params
-  const { isEnabled } = await draftMode()
+  const { slug, locale, tags = [], searchParams } = params
+  const { tag } = searchParams || {}
+  let pageData = null
+  if (slug?.[0]?.includes('preview')) {
+    const id = slug[1]
+    if (id) {
+      const { data: draftInfo } = await routeSanityFetch({
+        query: pageInfoById,
+        params: {
+          id,
+        },
+      })
 
-  const { query: pageQuery, queryParams: pageQueryParams } =
-    await getQueryFromSlug(slug, locale)
+      if (draftInfo?.lang) {
+        const { data } = await routeSanityFetch({
+          query: contentQueryById,
+          params: {
+            id,
+            lang: draftInfo?.lang,
+          },
+        })
+        pageData = data
+      }
+    }
+  } else {
+    const { query: pageQuery, queryParams: pageQueryParams } =
+      await getQueryFromSlug(slug, locale)
 
-  const { data: pageData } = await routeSanityFetch({
-    query: pageQuery,
-    tags: [...tags],
-    params: { ...pageQueryParams },
-    ...(isEnabled && {
-      perspective: 'drafts',
-      useCdn: false,
-      stega: true,
-    }),
-  })
+    const { data } = await routeSanityFetch({
+      query: pageQuery,
+      tags: [...tags],
+      params: { ...pageQueryParams },
+    })
+    pageData = data
+  }
 
-  const { stickyMenu, slugs, ...restPageData } = pageData || {}
+  let magazineArticles = null
+  if (pageData?.template === 'magazineIndex') {
+    console.log('template is magazine room fetch magazine articles')
+    const { data: articles } = await routeSanityFetch({
+      query:
+        tag && tag !== 'all'
+          ? getMagazineArticlesByTag(false, false)
+          : allMagazineDocuments,
+      params: {
+        lang: getNameFromIso(locale),
+        ...(tag && tag !== 'all' && { tag }),
+      } as QueryParams,
+      tags: ['magazine'],
+    })
+    magazineArticles = articles
+  }
+  console.log('Getpage pageData', pageData)
+  const { stickyMenu, slugs = [], ...restPageData } = pageData || {}
+
   console.log('slugs', slugs)
   return {
     headerData: {
@@ -188,6 +238,11 @@ export async function getPage(params: Params) {
       ),
       stickyMenuData: stickyMenu,
     },
-    pageData: restPageData,
+    pageData: {
+      ...(pageData?.template === 'magazineIndex' && {
+        magazineArticles,
+      }),
+      ...restPageData,
+    },
   }
 }

@@ -36,7 +36,7 @@ const variants = {
   },
   paragraph: {
     caption: '',
-    overline: 'text-md pb-2',
+    overline: 'text-md mb-2',
     ingress: 'text-md mt-5 mb-5 first:mt-0 last:mb-10',
     eyebrow: 'text-xs font-medium uppercase',
     body: 'my-5 first:mt-0 last:mb-0 [:where(h2+*,h3+*)]:mt-0 text-base',
@@ -45,52 +45,52 @@ const variants = {
   },
   card: {
     eyebrow: 'text-xs font-medium uppercase',
-    h2: 'text-lg leading-misty pb-4',
-    h3: 'text-md leading-misty pb-4',
+    h2: 'text-lg leading-misty mb-4',
+    h3: 'text-md leading-misty mb-4',
     //on cards ingress is hidden and needs webkit-box with line-clamp
-    ingress: 'hidden lg:[display:-webkit-box] text-base leading-cloudy',
+    ingress: 'hidden lg:[display:-webkit-box] text-sm leading-cloudy mt-4',
   },
   article: {
     ingress: `text-md 
     my-6
     :not-only-child:first:mt-0 
     :not-only-child:last:mb-0
-    me-layout-sm
-    lg:me-layout-lg
-    ms-layout-sm
-    lg:ms-layout-lg`,
+    pe-layout-sm
+    lg:pe-layout-lg
+    ps-layout-sm
+    lg:ps-layout-lg`,
     body: `
     my-5 
      :not-only-child:first:mt-0 
      :not-only-child:last:mb-0 
-    me-layout-sm
-    lg:me-layout-lg
-    ms-layout-sm
-    lg:ms-layout-lg
+    pe-layout-sm
+    lg:pe-layout-lg
+    ps-layout-sm
+    lg:ps-layout-lg
     [:where(h2+*,h3+*)]:mt-0
     text-base`,
     sm: `
     my-5 
      :not-only-child:first:mt-0 
      :not-only-child:last:mb-0 
-    me-layout-sm
-    lg:me-layout-lg
-    ms-layout-sm
-    lg:ms-layout-lg
+    pe-layout-sm
+    lg:pe-layout-lg
+    ps-layout-sm
+    lg:ps-layout-lg
     [:where(h2+*,h3+*)]:mt-0
     text-sm`,
-    h2: `me-layout-sm
-    lg:me-layout-lg
-    ms-layout-sm
-    lg:ms-layout-lg mt-2 mb-2 text-lg`,
-    h3: `me-layout-sm
-    lg:me-layout-lg
-    ms-layout-sm
-    lg:ms-layout-lg mt-2 text-md `,
-    h4: `me-layout-sm
-    lg:me-layout-lg
-    ms-layout-sm
-    lg:ms-layout-lg mt-2 text-base font-medium`,
+    h2: `pe-layout-sm
+    lg:pe-layout-lg
+    ps-layout-sm
+    lg:ps-layout-lg mt-2 mb-2 text-lg`,
+    h3: `pe-layout-sm
+    lg:pe-layout-lg
+    ps-layout-sm
+    lg:ps-layout-lg mt-2 text-md `,
+    h4: `pe-layout-sm
+    lg:pe-layout-lg
+    ps-layout-sm
+    lg:ps-layout-lg mt-2 text-base font-medium`,
   },
   marks: {
     highlight: 'text-energy-red-100 dark:text-spruce-wood-100',
