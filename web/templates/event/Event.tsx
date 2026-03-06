@@ -45,7 +45,7 @@ export type EventSchema = {
 export default function Event({ data }: { data: EventSchema }): JSX.Element {
   const { title } = data
   const t = useTranslations()
-  const format = useFormatter()
+  const formatter = useFormatter()
   const {
     location,
     ingress,
@@ -60,6 +60,10 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
 
   const plainTitle = title ? toPlainText(title as PortableTextBlock[]) : ''
   const { start, end } = getEventDates(eventDate)
+  const { dayTime: startDayTime, overrideTimeLabel: startTimeLabel } =
+    startDayAndTime || {}
+  const { dayTime: endDayTime, overrideTimeLabel: endTimeLabel } =
+    endDayAndTime || {}
 
   const { bg, dark } = getBgAndDarkFromBackground({
     background: { backgroundColor: 'Moss Green Light' },
@@ -75,38 +79,121 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
           location={location || ''}
         />
       )}
-      <main className='flex flex-col pt-topbar'>
+      <main className='flex flex-col pt-topbar pb-page-content'>
         <article>
-          <div className={`${bg} ${dark ? 'dark' : ''} px-layout-md py-32`}>
-            <div className='mx-auto max-w-[1186px]'>
-              {title && <Blocks as='h1' variant='3xl' value={title} />}
-              {start && (
-                <span className='mt-7 mb-5 inline-block text-norwegian-woods-100 text-xl'>
-                  <time suppressHydrationWarning dateTime={start.toISOString()}>
-                    {format.dateTime(start, { dateStyle: 'long' })}
+          <div
+            className={`flex flex-col items-start justify-center ${bg} ${dark ? 'dark' : ''} px-layout-lg lg:min-h-[28vh]`}
+          >
+            {title && <Blocks as='h1' variant='3xl' value={title} />}
+            <div className='mt-6 flex flex-col gap-2'>
+              {!startDayTime && (start || eventDate?.date) && (
+                <div className=''>
+                  <FormattedDateTime
+                    variant='date'
+                    dateIcon={true}
+                    datetime={start ?? eventDate?.date}
+                    className='text-sm'
+                    timeClassName='leading-none'
+                  />
+                </div>
+              )}
+              {(startDayTime || endDayTime) && (
+                <div className='flex items-end gap-2 text-base'>
+                  <time
+                    dateTime={startDayTime.toLocaleString()}
+                    className='leading-none'
+                  >
+                    {`${
+                      endDayTime
+                        ? formatter
+                            .dateTime(new Date(startDayTime), {
+                              year: 'numeric',
+                              month: 'short',
+                              day: '2-digit',
+                            })
+                            .split(' ')
+                            .slice(0, 2)
+                            .join(' ')
+                        : formatter.dateTime(new Date(startDayTime), {
+                            year: 'numeric',
+                            month: 'long',
+                            day: '2-digit',
+                          })
+                    }`}
                   </time>
-                </span>
+                  {endDayTime && (
+                    <>
+                      <span className='leading-none'>-</span>
+                      <time
+                        dateTime={endDayTime.toLocaleString()}
+                        className='leading-none'
+                      >
+                        {formatter.dateTime(new Date(endDayTime), {
+                          year: 'numeric',
+                          month: 'short',
+                          day: '2-digit',
+                        })}
+                      </time>
+                    </>
+                  )}
+                </div>
               )}
-
-              <div className='mb-2 flex flex-center gap-1 text-norwegian-woods-100'>
-                {start && end ? (
-                  <div className={`flex h-full items-center gap-1 py-2`}>
-                    <FormattedDateTime variant='time' datetime={start} />
-                    <span>-</span>
-                    <FormattedDateTime
-                      variant='time'
-                      datetime={end}
-                      showTimezone
-                    />
-                  </div>
-                ) : (
-                  <span>{t('tba')}</span>
-                )}
-              </div>
-
-              {location && (
-                <div className='mb-4 text-norwegian-woods-100'>{location}</div>
+              {startDayTime && startTimeLabel !== '-' && (
+                <div className='flex items-end gap-2 text-base'>
+                  {startTimeLabel
+                    ? startTimeLabel
+                    : new Date(startDayTime).toTimeString()}
+                  {endDayTime && endTimeLabel && endTimeLabel !== '-' && (
+                    <>
+                      <span className=''>-</span>
+                      {endTimeLabel && endTimeLabel !== '-' && endTimeLabel}
+                      {!endTimeLabel && new Date(startDayTime).toTimeString()}
+                    </>
+                  )}
+                </div>
               )}
+              {!startDayAndTime && start && end && (
+                <div className={`flex items-end gap-1 *:text-base`}>
+                  <FormattedDateTime
+                    variant='time'
+                    timeIcon={false}
+                    datetime={start}
+                    className='text-sm'
+                    timeClassName='leading-none'
+                  />
+                  <span>-</span>
+                  <FormattedDateTime
+                    variant='time'
+                    datetime={end}
+                    showTimezone
+                    className='text-sm'
+                    timeClassName='leading-none'
+                  />
+                </div>
+              )}
+              {/*             {start && (
+              <span className='mt-7 mb-5 inline-block text-xl'>
+                <time suppressHydrationWarning dateTime={start.toISOString()}>
+                  {format.dateTime(start, { dateStyle: 'long' })}
+                </time>
+              </span>
+            )}
+            <div className='mb-2 flex flex-center gap-1'>
+              {start && end ? (
+                <div className={`flex h-full items-center gap-1 py-2`}>
+                  <FormattedDateTime variant='time' datetime={start} />
+                  <span>-</span>
+                  <FormattedDateTime
+                    variant='time'
+                    datetime={end}
+                    showTimezone
+                  />
+                </div>
+              ) : (
+                <span>{t('tba')}</span>
+              )}
+            </div> */}
+              {location && <p className='text-base'>{location}</p>}
               <AddToCalendar
                 eventDate={eventDate}
                 startDateTime={startDayAndTime?.dayTime}
@@ -117,7 +204,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
             </div>
           </div>
           {(ingress || content) && (
-            <div className={`mt-14 pb-page-content`}>
+            <div className={`mt-14`}>
               {ingress && (
                 <Blocks group='article' variant='ingress' value={ingress} />
               )}
