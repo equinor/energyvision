@@ -9,7 +9,7 @@ import { dataset } from './languageConfig'
 
 const isProduction = process.env.NODE_ENV === 'production'
 
-const envs = ['preprod', 'prod']
+const envs = ['preprod', 'prod', 'preprodv2']
 const localUrl =
   process.env.NODE_ENV === 'development' ? 'http://localhost:3333' : ''
 const globalUrl = dataset === 'global' ? 'https://equinor.sanity.studio' : ''
@@ -17,7 +17,7 @@ const secretUrl =
   dataset === 'secret' ? 'https://equinor-restricted.sanity.studio' : ''
 const studioUrls = envs.map(
   env =>
-    `https://studio-${dataset}-equinor-web-sites-${env}.c2.radix.equinor.com`,
+    `https://studio-${dataset}${env === 'preprodv2' ? `-upgrade` : ''}-equinor-web-sites-${env}.c2.radix.equinor.com`,
 )
 const studioV3Urls = [
   'http://studiov3-global-development-equinor-web-sites-dev.c2.radix.equinor.com',
