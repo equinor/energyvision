@@ -203,12 +203,23 @@ export const getStaticProps: GetStaticProps = async ({ preview = false, params, 
   const pagePathArray = params?.pagePath as string[]
   const pagePath = pagePathArray.join('/')
 
+  // Basic path validation to avoid path traversal and unexpected characters
+  if (pagePath.includes('..')) {
+    return { notFound: true }
+  }
+  if (!/^[A-Za-z0-9\/-]+$/.test(pagePath)) {
+    return { notFound: true }
+  }
+
   const archivedItems = archivedNews.filter((e) => e.slug === `/news/archive/${pagePath}`)
   if (archivedItems.length === 0) return { notFound: true }
 
-  const response = await fetchArchiveData(pagePathArray, pagePath, locale)
+  // Derive canonical page path from the archived slug to avoid using raw user input
+  const canonicalPagePath = archivedItems[0].slug.replace(/^\/news\/archive\//, '')
 
-  if (response.status === 404) return fallbackToAnotherLanguage(pagePathArray, pagePath, locale)
+  const response = await fetchArchiveData(pagePathArray, canonicalPagePath, locale)
+
+  if (response.status === 404) return fallbackToAnotherLanguage(pagePathArray, canonicalPagePath, locale)
 
   const pageData = await parseResponse(response)
   const menuQuery = Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery
@@ -227,7 +238,7 @@ export const getStaticProps: GetStaticProps = async ({ preview = false, params, 
         archivedItems,
         news: {
           ...pageData,
-          slug: pagePath,
+          slug: canonicalPagePath,
         },
         intl,
       },
