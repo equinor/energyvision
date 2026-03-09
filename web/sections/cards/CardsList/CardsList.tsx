@@ -1,9 +1,9 @@
+import { forwardRef, type HTMLAttributes } from 'react'
+import { twMerge } from 'tailwind-merge'
+import { Heading } from '../../../core/Typography'
+import { colorKeyToUtilityMap } from '../../../styles/colorKeyToUtilityMap'
 import type { CardsListData } from '../../../types/index'
 import CardItem from './CardItem'
-import { colorKeyToUtilityMap } from '../../../styles/colorKeyToUtilityMap'
-import { Heading } from '../../../core/Typography'
-import { twMerge } from 'tailwind-merge'
-import { HTMLAttributes, forwardRef } from 'react'
 
 export type CardsListProps = {
   data: CardsListData

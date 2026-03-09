@@ -1,6 +1,7 @@
+import Image, { getSmallerThanPxLgSizes } from '@core/SanityImage/SanityImage'
+import { forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { getColorForTabsTheme } from './tabThemes'
-import { forwardRef } from 'react'
 
 type TabsKeyNumberItemProps = {
   theme?: number
@@ -8,10 +9,11 @@ type TabsKeyNumberItemProps = {
   unit?: string
   description?: string
   className?: string
+  thumbnail?: any
 }
 
 const TabsKeyNumberItem = forwardRef<HTMLDivElement, TabsKeyNumberItemProps>(function TabsKeyNumberItem(
-  { theme, keyNumber, unit, description, className = '' },
+  { theme, keyNumber, unit, description, thumbnail, className = '' },
   ref,
 ) {
   const { cardBackground } = getColorForTabsTheme(theme ?? 0)
@@ -32,6 +34,9 @@ const TabsKeyNumberItem = forwardRef<HTMLDivElement, TabsKeyNumberItemProps>(fun
         className,
       )}
     >
+      {thumbnail && (
+        <Image image={thumbnail} aspectRatio="1:1" sizes={getSmallerThanPxLgSizes()} className={`size-12 pb-2`} />
+      )}
       <div className="text-2xl leading-none flex flex-wrap text-balance gap-2 items-baseline">
         {keyNumber}
         <div className="text-base font-medium">{unit ? unit : ''}</div>

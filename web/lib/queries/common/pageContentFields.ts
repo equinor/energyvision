@@ -1,24 +1,24 @@
 import gridContentFields from '../gridContentFields'
 import { iframeCarouselFields } from '../iframeCarouselFields'
+import { importTableFields } from '../importTable'
+import { tableV2Fields } from '../tableV2'
 import { videoPlayerCarouselFields } from '../videoPlayerCarouselFields'
 import { videoPlayerFields } from '../videoPlayerFields'
 import downloadableFileFields from './actions/downloadableFileFields'
 import downloadableImageFields from './actions/downloadableImageFields'
 import linkSelectorFields from './actions/linkSelectorFields'
+import { anchorLinkReferenceFields } from './anchorLinkReferenceFields'
 import background from './background'
 import markDefs from './blockEditorMarks'
-import { eventPromotionFields, futureEventsQuery, pastEventsQuery } from './promotions/eventPromotion'
+import homepageContentFields from './homepageContentFields'
 import { imageCarouselFields } from './imageCarouselFields'
 import { keyNumbersFields } from './keyNumbersFields'
 import { noDrafts, sameLang } from './langAndDrafts'
+import { eventPromotionFields, futureEventsQuery, pastEventsQuery } from './promotions/eventPromotion'
 import promoteMagazine from './promotions/promoteMagazine'
-import { lastUpdatedTimeQuery, publishDateTimeQuery } from './publishDateTime'
-import { anchorLinkReferenceFields } from './anchorLinkReferenceFields'
-import { tabsComponentFields } from './tabsComponentFields'
-import homepageContentFields from './homepageContentFields'
-import { importTableFields } from '../importTable'
-import { tableV2Fields } from '../tableV2'
 import { externalLinksPromotionV2, topicsPromotionV2 } from './promotions/v2/promotionsV2'
+import { lastUpdatedTimeQuery, publishDateTimeQuery } from './publishDateTime'
+import { tabsComponentFields } from './tabsComponentFields'
 
 const pageContentFields = /* groq */ `
 _type == "keyNumbers" =>{
@@ -517,6 +517,7 @@ _type == "keyNumbers" =>{
     "cards": cards[]{
         "type": _type,
         "id": _key,
+        thumbnail,
         title,
         "content": defined(content[]){..., ${markDefs}},
         ...,

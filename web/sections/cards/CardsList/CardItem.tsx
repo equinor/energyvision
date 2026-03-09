@@ -1,7 +1,8 @@
-import type { CardListItemData } from '../../../types/index'
-import { Typography, Paragraph } from '@core/Typography'
+import Image, { getSmallerThanPxLgSizes } from '@core/SanityImage/SanityImage'
+import { Paragraph, Typography } from '@core/Typography'
+import { forwardRef, type HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { HTMLAttributes, forwardRef } from 'react'
+import type { CardListItemData } from '../../../types/index'
 
 export type CardItemProps = {
   className?: string
@@ -9,7 +10,7 @@ export type CardItemProps = {
 } & HTMLAttributes<HTMLLIElement>
 
 const CardItem = forwardRef<HTMLLIElement, CardItemProps>(function CardItem({ data, className = '', ...rest }, ref) {
-  const { title, content } = data
+  const { thumbnail, title, content } = data
 
   return (
     <li
@@ -26,6 +27,9 @@ const CardItem = forwardRef<HTMLLIElement, CardItemProps>(function CardItem({ da
       )}
       {...rest}
     >
+      {thumbnail && (
+        <Image image={thumbnail} aspectRatio="1:1" sizes={getSmallerThanPxLgSizes()} className={`size-12 pb-2`} />
+      )}
       <Typography variant="h4" as={content ? 'h3' : 'p'} className={`pb-0`}>
         {title}
       </Typography>
