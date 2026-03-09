@@ -37,6 +37,9 @@ export default function Page({ data, preview = false }: any) {
 
   const slug = pageData?.slug
   if (!router.isFallback && !slug && !data?.queryParams?.id) {
+    console.log('Return 404')
+    console.log('data?.queryParams?.id', data?.queryParams?.id)
+    console.log('slug', slug)
     return <ErrorPage statusCode={404} />
   }
 
