@@ -48,10 +48,6 @@ import EquinorLogo from './styles/icons/logo.svg?react'
 
 export const customTheme = buildLegacyTheme(partialStudioTheme)
 
-// URL for preview functionality, defaults to localhost:3000 if not set
-const SANITY_STUDIO_PREVIEW_URL =
-  process.env.SANITY_STUDIO_PREVIEW_URL || 'http://localhost:3000'
-
 // @TODO:
 // isArrayOfBlocksSchemaType helper function from Sanity is listed as @internal
 // refactor to use that once stable
@@ -150,7 +146,17 @@ const getConfig = (
       }),
     presentationTool({
       previewUrl: {
-        origin: SANITY_STUDIO_PREVIEW_URL,
+        initial: ({origin})=> { 
+          if(origin.includes("localhost")){
+            return "http://localhost:3000" 
+          }
+          if(origin.includes("radix.equinor.com")){ 
+            return origin.replace("studio","web")
+          }
+          return `https://web-${dataset}-equinor-web-sites-prod.c2.radix.equinor.com`
+            }
+          } ,
+        
         previewMode: {
           enable: '/api/draft',
         },
@@ -160,38 +166,43 @@ const getConfig = (
       },
     }),
     table(),
-  ].filter(e => e) as PluginOptions[],
-  schema: {
-    types: schemaTypes as SchemaTypeDefinition[],
-    templates: (prev: Template<any, any>[]) => [
+].filter(e => e) as PluginOptions[],
+  schema:
+{
+  types: schemaTypes as SchemaTypeDefinition[], templates
+  : (prev: Template<any, any>[]) => [
       ...filterTemplates(prev),
       ...initialValueTemplates,
     ],
+}
+,
+  document:
+{
+  unstable_languageFilter: (prev: DocumentActionComponent[], ctx: any) => {
+    const { schemaType, documentId } = ctx
+    return i18n.schemaTypes.map(it => it.name).includes(schemaType) &&
+      documentId
+      ? [
+          (props: any) => {
+            return CustomDocumentInternationalizationMenu({
+              ...props,
+              documentId,
+            })
+          },
+        ]
+      : prev
   },
-  document: {
-    unstable_languageFilter: (prev: DocumentActionComponent[], ctx: any) => {
-      const { schemaType, documentId } = ctx
-      return i18n.schemaTypes.map(it => it.name).includes(schemaType) &&
-        documentId
-        ? [
-            (props: any) => {
-              return CustomDocumentInternationalizationMenu({
-                ...props,
-                documentId,
-              })
-            },
-          ]
-        : prev
-    },
-    actions: (prev: DocumentActionComponent[], context: any) => {
-      // do not allow delete or duplicate action on singletons
-      if (singletonTemplates.includes(context.schemaType))
-        //@ts-ignore
-        return prev.filter(it => !['delete', 'duplicate'].includes(it.action))
+    actions
+  : (prev: DocumentActionComponent[], context: any) =>
+  {
+    // do not allow delete or duplicate action on singletons
+    if (singletonTemplates.includes(context.schemaType))
+      //@ts-ignore
+      return prev.filter(it => !['delete', 'duplicate'].includes(it.action))
 
-      if (i18n.schemaTypes.includes(context.schemaType))
-        prev.push(DeleteTranslationAction)
-      return prev
+    if (i18n.schemaTypes.includes(context.schemaType))
+      prev.push(DeleteTranslationAction)
+    return prev
         .filter(({ action }: DocumentActionComponent) => {
           return !(
             action === 'delete' && i18n.schemaTypes.includes(context.schemaType)
@@ -209,40 +220,59 @@ const getConfig = (
               return originalAction
           }
         })
-    },
-    unstable_comments: {
-      enabled: false,
-    },
-    badges: (prev: DocumentBadgeComponent[], context: any) => {
-      return i18n.schemaTypes.includes(context.schemaType)
+  }
+  ,
+    unstable_comments:
+  {
+    enabled: false,
+  }
+  ,
+    badges: (prev: DocumentBadgeComponent[], context: any) =>
+  {
+    return i18n.schemaTypes.includes(context.schemaType)
         ? [LangBadge, ...prev]
         : prev
-    },
-    unstable_fieldActions: (previous: DocumentFieldAction[]) => {
-      return previous.map(it => (it.name === 'copyField' ? copyAction : it))
-    },
-    tasks: { enabled: false },
-  },
-  auth: createAuthStore({
-    projectId: projectIdParam,
-    dataset: datasetParam,
+  }
+  ,
+    unstable_fieldActions: (previous: DocumentFieldAction[]) =>
+  {
+    return previous.map(it => (it.name === 'copyField' ? copyAction : it))
+  }
+  ,
+    tasks:
+  {
+    enabled: false
+  }
+  ,
+}
+,
+  auth: createAuthStore(
+{
+  projectId: projectIdParam, dataset
+  : datasetParam,
     mode: 'replace',
     redirectOnSingle: true,
     providers: [
-      {
-        name: 'saml',
-        title: 'Equinor SSO',
+  {
+    name: 'saml', title
+    : 'Equinor SSO',
         url: 'https://api.sanity.io/v2021-10-01/auth/saml/login/55ba173c',
         logo: '/static/favicon.ico',
-      },
+  }
+  ,
     ],
-  }),
-  releases: {
-    enabled: false,
-  },
-  scheduledPublishing: {
-    enabled: true,
-  },
+}
+),
+  releases:
+{
+  enabled: false,
+}
+,
+  scheduledPublishing:
+{
+  enabled: true,
+}
+,
 })
 
 export default dataset === 'secret'
