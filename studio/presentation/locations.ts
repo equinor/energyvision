@@ -72,7 +72,11 @@ export const locations: DocumentLocationResolver = (params, context) => {
 
         let locs = []
         if (routePages?.includes(params.type)) {
-          if (doc?.translationSlugs?.length > 0) {
+          if (
+            doc?.translationSlugs?.filter(
+              (translationSlug: any) => translationSlug?.slug,
+            )?.length > 0
+          ) {
             locs = doc?.translationSlugs
               ?.filter(
                 (translation: any) =>
@@ -85,7 +89,7 @@ export const locations: DocumentLocationResolver = (params, context) => {
                   href: `${translation?.lang !== 'en_GB' ? `${locale}/` : ''}${translation?.slug}`,
                 }
               })
-          } else if (doc?.slugs?.length > 0) {
+          } else if (doc?.slugs?.filter((slug: string) => slug)?.length > 0) {
             locs = doc?.slugs
               ?.filter((slug: string) => slug)
               ?.map((slug: string) => {
