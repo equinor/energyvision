@@ -46,8 +46,5 @@ export default function preview(req, res) {
   // We don't redirect to req.query.slug as that might lead to open redirect vulnerabilities
   console.log('Everything is fine, lets redirect', url)
 
-  //
   res.redirect(url ?? '/')
-  /*   res.writeHead(307, { Location: url ?? `/` })
-  return res.end() */
 }
