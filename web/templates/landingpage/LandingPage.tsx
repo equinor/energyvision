@@ -15,11 +15,7 @@ const LandingPage = ({ data }: LandingPageProps) => {
   return (
     <main className='flex flex-col [:not(:has(.sticky-menu))]:pt-topbar'>
       <div className='px-layout-lg'>
-        {title && (
-          <Typography className='mx-auto max-w-[1186px]' variant='h1'>
-            {plainTitle}
-          </Typography>
-        )}
+        {title && <Typography variant='h1'>{plainTitle}</Typography>}
         {ingress && (
           <Blocks
             group='paragraph'

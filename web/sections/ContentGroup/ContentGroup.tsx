@@ -1,3 +1,4 @@
+import { Promotion } from '@/core/Promotion/Promotion'
 import { Typography } from '@/core/Typography'
 import { PromoTile } from '@/sections/PromoTiles/PromoTile'
 
@@ -28,8 +29,8 @@ type ContentGroupProps = {
 const ContentGroup = ({ group }: ContentGroupProps) => {
   const { links, label, id } = group
 
-  const promoTiles = Array.isArray(links)
-    ? links.map(tile => ({
+  const promotions = Array.isArray(links)
+    ? links.map(link => ({
         ...tile,
         action: {
           label: tile.label,
@@ -64,6 +65,7 @@ const ContentGroup = ({ group }: ContentGroupProps) => {
         {promoTiles.map(tile => {
           return (
             <li key={tile.id} className='h-full w-full'>
+              <Promotion title={tile?.title} href={tile?.a} />
               <PromoTile
                 {...tile}
                 hasSectionTitle={!!label}
