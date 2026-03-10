@@ -67,15 +67,11 @@ export default async function LocaleLayout({
     <html lang={locale} className={`${equinor.className} `}>
       <body>
         <GoToTopButton />
-        {dataset === 'global-development' && (
+        <SanityLive />
+        {dataset === 'global-development' && (await draftMode()).isEnabled && (
           <>
-            <SanityLive />
-            {(await draftMode()).isEnabled && (
-              <>
-                <DraftModeToolbar />
-                <VisualEditing />
-              </>
-            )}
+            <DraftModeToolbar />
+            <VisualEditing />
           </>
         )}
         <NextIntlClientProvider>
