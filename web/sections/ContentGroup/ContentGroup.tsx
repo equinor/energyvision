@@ -30,7 +30,7 @@ const ContentGroup = ({ group }: ContentGroupProps) => {
   const { links, label, id } = group
 
   const promotions = Array.isArray(links)
-    ? links.map(link => ({
+    ? links.map(tile => ({
         ...tile,
         action: {
           label: tile.label,
