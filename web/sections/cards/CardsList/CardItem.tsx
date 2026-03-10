@@ -12,31 +12,37 @@ export type CardItemProps = {
 const CardItem = forwardRef<HTMLLIElement, CardItemProps>(function CardItem({ data, className = '', ...rest }, ref) {
   const { thumbnail, title, content } = data
 
+  let rowsTemplate = 'grid-rows-1'
+  if (thumbnail && !content) {
+    rowsTemplate = 'grid-rows-[3.5rem_auto_auto]'
+  }
+  if (!thumbnail && content) {
+    rowsTemplate = 'grid-rows-[20%_auto]'
+  }
+  if (thumbnail && content && title) {
+    rowsTemplate = 'grid-rows-[3.5rem_auto_auto]'
+  }
   return (
     <li
       ref={ref}
       className={twMerge(
-        `
-      ${content ? 'pt-7 pb-10' : 'py-14'}
-      px-10
-      rounded-md
-      text-slate-80
-      dark:text-white-100
-      `,
+        `grid grid-cols-1 ${rowsTemplate} ${
+          content ? 'pt-7 pb-10' : 'py-14'
+        } rounded-card px-10 text-slate-80 dark:text-white-100`,
         className,
       )}
       {...rest}
     >
       {thumbnail && (
-        <Image image={thumbnail} aspectRatio="1:1" sizes={getSmallerThanPxLgSizes()} className={`w-12 h-auto mb-3`} />
+        <Image image={thumbnail} aspectRatio="1:1" sizes={getSmallerThanPxLgSizes()} className={`h-auto w-12`} />
       )}
-      <Typography variant="h4" as={content ? 'h3' : 'p'} className={`pb-0`}>
+      <Typography variant="h4" as={content ? 'h3' : 'p'} className={`pb-0 align-bottom`}>
         {title}
       </Typography>
       {content && (
         <Paragraph
           value={content}
-          className="mt-4 prose-ul:pl-4 prose-ul:list-outside prose-li:pl-1 "
+          className="prose-ul:list-outside pt-4 prose-li:pl-1 prose-ul:pl-4"
           componentsClassName="p-0"
         />
       )}
