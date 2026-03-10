@@ -25,6 +25,8 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
       image,
       useAnimation = false,
       useLight = false,
+      useNoGradient = false,
+      useGlass = false,
       contentAlignment = 'center',
       children,
       className = '',
@@ -76,11 +78,22 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
     }
 
     let animatedScrimGradient = ''
-    if (!overrideGradient) {
+    if (!overrideGradient && !useNoGradient) {
       animatedScrimGradient = useLight
         ? `${lightGradientForContentAlignment[contentAlignment]}`
         : `black-center-gradient ${darkGradientForContentAlignment[contentAlignment]}`
     }
+
+    const contentElement = useGlass ? (
+      <div className={twMerge('', className)}>
+        <div className="relative rounded-card w-fit h-fit flex justify-end">
+          <div className="backdrop-glass z-0 h-full w-full" />
+          <div className={'z-1 px-6 lg:px-8 py-4 lg:py-6 rounded-[inherit] *:relative *:z-1'}>{children}</div>
+        </div>
+      </div>
+    ) : (
+      <div className={className}>{children}</div>
+    )
 
     return useAnimation && !isMobile ? (
       <ReturnElement
@@ -104,7 +117,7 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
             scrimClassName,
           )}
         >
-          <div className={className}>{children}</div>
+          {contentElement}
         </div>
       </ReturnElement>
     ) : isMobile && !dontSplit ? (
@@ -115,7 +128,7 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
             backgroundImage: `url(${src})`,
           }}
         />
-        <div className={className}>{children}</div>
+        {contentElement}
       </ReturnElement>
     ) : (
       <ReturnElement
@@ -137,7 +150,7 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
             scrimClassName,
           )}
         >
-          <div className={className}>{children}</div>
+          {contentElement}
         </div>
       </ReturnElement>
     )

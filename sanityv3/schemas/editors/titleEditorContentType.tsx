@@ -4,7 +4,7 @@ import { StrikethroughIcon } from '@sanity/icons'
 import { BlockDefinition, BlockStyleDefinition } from 'sanity'
 import { format_color_text } from '@equinor/eds-icons'
 import { defaultColors } from '../defaultColors'
-import { em, ExtraLargeTextRender, LargeTextRender } from './blockContentType'
+import { em, TextRenderer } from './blockContentType'
 
 export type TitleContentProps = {
   extendedStyles?: BlockStyleDefinition[]
@@ -66,17 +66,17 @@ export const configureTitleBlockContent = (options: TitleContentProps = {}): Blo
   const largeTextConfig = {
     title: 'Large text',
     value: 'largeText',
-    component: LargeTextRender,
+    component: (props: any) => TextRenderer(props, 'span', 'display', 'h2_xl'),
   }
   const extraLargeTextConfig = {
     title: 'Extra large text',
     value: 'extraLargeText',
-    component: ExtraLargeTextRender,
+    component: (props: any) => TextRenderer(props, 'span', 'display', 'h1_lg'),
   }
   const twoXLTextConfig = {
     title: '2XL text',
     value: 'twoXLText',
-    component: TwoXLTextRender,
+    component: (props: any) => TextRenderer(props, 'span', 'display', 'h1_xl'),
   }
 
   const textColorConfig = {

@@ -1,4 +1,5 @@
 import { attach_file, format_color_text, link, star_filled } from '@equinor/eds-icons'
+import { ElementType } from 'react'
 import type { BlockDefinition, BlockStyleDefinition } from 'sanity'
 import { EdsBlockEditorIcon, EdsIcon, IconSubScript, IconSuperScript } from '../../icons'
 import { SubScriptRenderer, SuperScriptRenderer } from '../components'
@@ -60,13 +61,47 @@ const SmallTextRender = (props: any) => {
   const { children } = props
   return <span style={{ fontSize: '0.8rem' }}>{children}</span>
 }
-export const LargeTextRender = (props: any) => {
+/* export const LargeTextRender = (props: any) => {
   const { children } = props
   return <span style={{ fontSize: `${em(36, 16)}`, fontWeight: '600' }}>{children}</span>
 }
 export const ExtraLargeTextRender = (props: any) => {
   const { children } = props
   return <span style={{ fontSize: `${em(56, 16)}`, fontWeight: '600' }}>{children}</span>
+} */
+
+export const BlockTypography = {
+  article: {
+    h2: 'text-lg font-normal py-2 m-0',
+    h3: 'text-md font-normal pt-2 m-0',
+    h4: 'text-md font-md m-0',
+  },
+  display: {
+    h1_base: 'text-4xl tracking-display font-normal m-0 ',
+    h1_lg: 'text-5xl leading-md tracking-display font-normal m-0 ',
+    h1_xl: 'text-6xl tracking-display font-normal m-0',
+    h2_base: 'text-3xl tracking-display font-normal m-0 ',
+    h2_lg: 'text-4xl leading-md tracking-display font-normal m-0 ',
+    h2_xl: 'text-5xl tracking-display font-normal m-0',
+  },
+  normal: {
+    h2: 'text-2xl pb-8 m-0',
+    h3: 'text-xl m-0',
+    h4: 'text-lg font-md m-0',
+    sm: 'text-sm',
+  },
+}
+
+export const TextRenderer = (props: any, as: ElementType, group?: any, level?: any) => {
+  const { children } = props
+  //@ts-ignore: wont accept the types
+  const classNames = BlockTypography[group ?? 'normal'][level ?? 'h2'] ?? ''
+
+  return (
+    <span className={classNames} data-group={group}>
+      {children}
+    </span>
+  )
 }
 
 // H1 not allowed in block content since it should be a document title.
@@ -194,12 +229,12 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockDef
   const largeTextConfig = {
     title: 'Large text',
     value: 'largeText',
-    component: LargeTextRender,
+    component: (props: any) => TextRenderer(props, 'span', 'display', 'h2_xl'),
   }
   const extraLargeTextConfig = {
     title: 'Extra large text',
     value: 'extraLargeText',
-    component: ExtraLargeTextRender,
+    component: (props: any) => TextRenderer(props, 'span', 'display', 'h1_lg'),
   }
 
   const internalLinkConfig = (linkConfig: any) => {

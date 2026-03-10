@@ -1,12 +1,12 @@
-import {
+import type {
+  DesignOptions,
+  EventDateType,
+  HeroType,
+  HeroTypes,
   ImageWithAlt,
   ImageWithCaptionData,
-  PortableTextBlock,
   LinkData,
-  HeroTypes,
-  EventDateType,
-  DesignOptions,
-  HeroType,
+  PortableTextBlock,
 } from './index'
 
 export type CardTypes = 'news' | 'topics' | 'people' | 'events'
@@ -67,6 +67,7 @@ export type CardsListData = {
 export type CardListItemData = {
   id: string
   type: 'card'
+  thumbnail?: any
   title?: string
   content?: PortableTextBlock[]
 }
