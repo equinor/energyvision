@@ -34,7 +34,9 @@ const GridTextBlock = forwardRef<HTMLDivElement, GridTextBlockProps>(function Gr
     imageBackground,
   } = data
   const url = action && getUrlFromAction(action)
-
+  console.log('useThemedTitle', useThemedTitle)
+  console.log('contentTheme', contentTheme)
+  console.log('theme', theme)
   const contentAlignmentUtilities = {
     center: 'justify-center items-center',
     right: 'justify-end items-center',
@@ -66,6 +68,7 @@ const GridTextBlock = forwardRef<HTMLDivElement, GridTextBlockProps>(function Gr
       titleTextColor = titleTextUtility
     }
     const { textUtility: contentTextUtility, backgroundUtility: contentBgUtility } = getColorForTheme(contentTheme)
+
     if (contentBgUtility === titleBgUtility && contentTextUtility) {
       contentTextColor = contentTextUtility
     }
@@ -74,8 +77,11 @@ const GridTextBlock = forwardRef<HTMLDivElement, GridTextBlockProps>(function Gr
     }
     bgColor = titleBgUtility ?? contentBgUtility ?? 'bg-white-100'
   }
-  if (!useThemedTitle && theme) {
-    const { backgroundUtility: commonBgUtility, textUtility: commonTextUtility } = getColorForTheme(theme)
+  if (!useThemedTitle && (theme || contentTheme)) {
+    const { backgroundUtility: commonBgUtility, textUtility: commonTextUtility } = getColorForTheme(
+      theme ?? contentTheme,
+    )
+    console.log('commonTextUtility', commonTextUtility)
     if (commonTextUtility) {
       titleTextColor = commonTextUtility
       contentTextColor = commonTextUtility
@@ -89,10 +95,9 @@ const GridTextBlock = forwardRef<HTMLDivElement, GridTextBlockProps>(function Gr
     background: {
       type: 'backgroundImage' as BackgroundTypes,
       backgroundImage: imageBackground,
-      dark:
+      dark: !!(
         (((useThemedTitle && titleThemeFromLarger) || contentTheme) ?? theme) === 12 && !imageBackground?.useLight
-          ? true
-          : false,
+      ),
     },
   }
 
@@ -137,7 +142,6 @@ const GridTextBlock = forwardRef<HTMLDivElement, GridTextBlockProps>(function Gr
         return 'lg:grid lg:grid-cols-[35%_60%] gap-10'
       case 'span2and1':
         return '4xl:grid 4xl:grid-cols-[35%_60%] gap-10'
-      case 'threeColumns':
       default:
         return ''
     }
@@ -152,8 +156,12 @@ const GridTextBlock = forwardRef<HTMLDivElement, GridTextBlockProps>(function Gr
     <>
       <div
         className={envisTwMerge(
-          `h-fit ${
-            (title || (useThemedTitle && themedTitle)) && content ? `flex flex-col text-balance ${getLayout()}` : ``
+          `h-fit 
+          ${
+            (title || (useThemedTitle && themedTitle)) && content
+              ? `flex flex-col text-balance 
+            ${getLayout()}`
+              : ``
           }`,
         )}
       >
@@ -237,7 +245,7 @@ const GridTextBlock = forwardRef<HTMLDivElement, GridTextBlockProps>(function Gr
   ) : (
     <div
       ref={ref}
-      className={`p-10 lg:p-12 relative w-full h-full flex ${bgColor} ${
+      className={`px-8 py-12 lg:px-12 lg:py-20 relative w-full h-full flex ${bgColor} ${
         contentAlignmentUtilities[contentAlignment ?? 'center']
       }`}
     >

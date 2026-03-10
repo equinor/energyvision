@@ -1,7 +1,7 @@
+import { forwardRef, type HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { HTMLAttributes, forwardRef } from 'react'
-import { mapGridContent } from './mapGridContent'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
+import { mapGridContent } from './mapGridContent'
 
 export type Span3Props = {
   data: any
@@ -10,7 +10,7 @@ export type Span3Props = {
 
 const Span3 = forwardRef<HTMLDivElement, Span3Props>(function Span3({ data, className = '', ...rest }, ref) {
   const isMobile = useMediaQuery(`(max-width: 800px)`)
-  const minHeight = data?.content?.type === 'videoPlayer' ? '' : 'min-h-[350px] lg:min-h-[600px]'
+  const minHeight = data?.content?.type === 'videoPlayer' ? '' : '' //min-h-[350px] lg:min-h-[600px]
 
   return (
     <div

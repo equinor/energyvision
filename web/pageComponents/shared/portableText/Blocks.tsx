@@ -2,6 +2,7 @@
 
 import { IFrame } from '@core/IFrame/IFrame'
 import { ResourceLink } from '@core/Link'
+import { Typography } from '@core/Typography'
 import { Highlight } from '@core/Typography/Highlight'
 import {
   PortableText,
@@ -36,9 +37,17 @@ const attachmentBlockSerializers = {
 const defaultSerializers = {
   block: {
     smallText: ({ children }: TypeProps) => <p className="text-sm">{children}</p>,
-    largeText: ({ children }: TypeProps) => <p className="text-2xl leading-snug">{children}</p>,
+    largeText: ({ children }: TypeProps) => (
+      <Typography as="p" group="display" variant="h1_lg">
+        {children}
+      </Typography>
+    ),
     extraLargeText: ({ children }: TypeProps) => {
-      return <p className={`text-4xl lg:text-5xl 2xl:text-8xl font-medium leading-planetary`}>{children}</p>
+      return (
+        <Typography as="p" group="display" variant="h1_xl">
+          {children}
+        </Typography>
+      )
     },
   },
   types: {

@@ -1,7 +1,7 @@
+import { Fragment, type HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { Fragment, HTMLAttributes } from 'react'
-import { mapGridContent } from './mapGridContent'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
+import { mapGridContent } from './mapGridContent'
 
 export type ThreeColumnsProps = {
   data: any
@@ -17,7 +17,7 @@ const ThreeColumns = ({ data, className = '' }: ThreeColumnsProps) => {
     <Fragment>
       {columns.map((column: any) => {
         return (
-          <div key={column?.id} className={twMerge(minHeight, borderStyling, className)}>
+          <div key={column?.id} className={twMerge(borderStyling, className)}>
             {mapGridContent(column, 'threeColumns', isMobile)}
           </div>
         )

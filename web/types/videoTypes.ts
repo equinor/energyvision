@@ -1,5 +1,5 @@
-import { ImageWithAlt, DesignOptions, LinkData } from './index'
-import { PortableTextBlock } from '@portabletext/types'
+import type { PortableTextBlock } from '@portabletext/types'
+import type { DesignOptions, ImageWithAlt, LinkData } from './index'
 
 export enum VideoPlayerRatios {
   '16:9' = '16:9',

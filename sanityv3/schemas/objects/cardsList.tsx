@@ -1,13 +1,13 @@
 /* eslint-disable react/display-name */
 import { grid_on } from '@equinor/eds-icons'
-import { configureTitleBlockContent } from '../editors'
-import CompactBlockEditor from '../components/CompactBlockEditor'
 import type { PortableTextBlock, Rule } from 'sanity'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
-import { Card } from './card'
-import { ColorSelectorValue } from '../components/ColorSelector'
+import type { ColorSelectorValue } from '../components/ColorSelector'
+import CompactBlockEditor from '../components/CompactBlockEditor'
 import { defaultBackgroundColors } from '../defaultColors'
+import { configureTitleBlockContent } from '../editors'
+import type { Card } from './card'
 
 const titleContentType = configureTitleBlockContent()
 
