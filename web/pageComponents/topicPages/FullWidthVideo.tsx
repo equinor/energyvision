@@ -1,6 +1,6 @@
 import HlsVideoPlayer, { getThumbnailRatio } from '@core/HlsVideoPlayer/HlsVideoPlayer'
 import { urlFor } from '../../common/helpers'
-import { FullWidthVideoData, FullWidthVideoRatio } from '../../types/index'
+import type { FullWidthVideoData, FullWidthVideoRatio } from '../../types/index'
 
 const FullWidthVideo = ({ anchor, data }: { data: FullWidthVideoData; anchor?: string }) => {
   const { video, designOptions, spacing } = data
@@ -50,7 +50,7 @@ const FullWidthVideo = ({ anchor, data }: { data: FullWidthVideoData; anchor?: s
         <HlsVideoPlayer
           variant="fullwidth"
           src={video.url}
-          //@ts-ignore:todo
+          //@ts-expect-error:todo
           aspectRatio={ratio[aspectRatio]}
           poster={posterUrl}
           autoPlay

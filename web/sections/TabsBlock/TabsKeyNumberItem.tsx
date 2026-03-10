@@ -35,7 +35,7 @@ const TabsKeyNumberItem = forwardRef<HTMLDivElement, TabsKeyNumberItemProps>(fun
       )}
     >
       {thumbnail && (
-        <Image image={thumbnail} aspectRatio="1:1" sizes={getSmallerThanPxLgSizes()} className={`size-12 pb-2`} />
+        <Image image={thumbnail} aspectRatio="1:1" sizes={getSmallerThanPxLgSizes()} className={`w-12 h-auto mb-3`} />
       )}
       <div className="text-2xl leading-none flex flex-wrap text-balance gap-2 items-baseline">
         {keyNumber}

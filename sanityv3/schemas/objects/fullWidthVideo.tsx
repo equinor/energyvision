@@ -1,8 +1,8 @@
 import { play_circle } from '@equinor/eds-icons'
-import { EdsIcon } from '../../icons'
-import blocksToText from '../../helpers/blocksToText'
 import type { PortableTextBlock, Rule } from 'sanity'
-import { ImageWithAlt } from './imageWithAlt'
+import blocksToText from '../../helpers/blocksToText'
+import { EdsIcon } from '../../icons'
+import type { ImageWithAlt } from './imageWithAlt'
 
 export default {
   name: 'fullWidthVideo',

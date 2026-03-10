@@ -6,7 +6,7 @@ import { type HTMLProps, useMemo } from 'react'
 import envisTwMerge from '../../twMerge'
 import { HlsPlayer } from './HlsPlayer'
 
-export type AspectRatioVariants = '16:9' | '9:16' | '2:1' | '10:3' | '4:3' | '21:9'
+export type AspectRatioVariants = '16:9' | '9:16' | '2:1' | '10:3' | '4:3' | '21:9' | '1:1'
 
 export type HlsVideoPlayerProps = Omit<HTMLProps<HTMLVideoElement>, 'src' | 'poster'> & {
   src: string

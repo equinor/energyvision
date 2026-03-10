@@ -28,7 +28,7 @@ const CardItem = forwardRef<HTMLLIElement, CardItemProps>(function CardItem({ da
       {...rest}
     >
       {thumbnail && (
-        <Image image={thumbnail} aspectRatio="1:1" sizes={getSmallerThanPxLgSizes()} className={`size-12 pb-2`} />
+        <Image image={thumbnail} aspectRatio="1:1" sizes={getSmallerThanPxLgSizes()} className={`w-12 h-auto mb-3`} />
       )}
       <Typography variant="h4" as={content ? 'h3' : 'p'} className={`pb-0`}>
         {title}
