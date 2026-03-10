@@ -62,7 +62,7 @@ const ContentGroup = ({ group }: ContentGroupProps) => {
       )}
 
       <ul className={`mx-auto grid list-none grid-cols-3 gap-6 px-layout-sm`}>
-        {promoTiles.map(tile => {
+        {promotions.map(tile => {
           return (
             <li key={tile.id} className='h-full w-full'>
               <Promotion title={tile?.title} href={tile?.a} />

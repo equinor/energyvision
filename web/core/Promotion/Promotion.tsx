@@ -36,7 +36,7 @@ export type PromotionProps = {
    * @default gray-20
    */
   background?: ColorKeys
-  image: ImageWithAlt
+  image?: ImageWithAlt
   /** Rendered as plain but accepts portable */
   title: string | PortableTextBlock[]
   /** Rendered as plain but accepts portable.
