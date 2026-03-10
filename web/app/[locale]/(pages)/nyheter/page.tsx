@@ -56,8 +56,6 @@ export async function generateMetadata({
       stega: false,
     })
 
-    console.log('norwegian newsroom metadata', metaData)
-
     return constructSanityMetadata(
       newsSlug[getNameFromIso(locale)],
       locale,

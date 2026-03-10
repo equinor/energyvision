@@ -55,15 +55,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     stega: false,
   })
 
-  console.log('[...slug] meta', metaData)
-
   return constructSanityMetadata(slug, locale, metaData)
 }
 
 export default async function Page({ params, searchParams }: Props) {
   const { slug, locale } = await params
   const search = await searchParams
-  console.log('page slug', slug)
 
   const { headerData, pageData } = await getPage({
     slug,

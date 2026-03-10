@@ -105,7 +105,7 @@ export const constructSanityMetadata = (
 ) => {
   const relativeSlug = getRelativeWithPrefixSlug(slug, locale)
   const fullSlug = `${domain}${relativeSlug}`
-  console.log('metaData', metaData)
+
   if (!metaData) {
     if (process.env.NODE_ENV !== 'production') {
       console.warn('[generateMetadata] metaData is null', { slug, locale })
