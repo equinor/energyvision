@@ -1,3 +1,4 @@
+/** biome-ignore-all assist/source/organizeImports: <explanation> */
 const archiveServerHostname = process.env.NEXT_PUBLIC_ARCHIVE_CONTENT_LINK
 
 import { join } from 'node:path'
@@ -6,13 +7,12 @@ import type { NextConfig } from 'next'
 import createNextIntlPlugin from 'next-intl/plugin'
 //import { getAllRedirects } from './sanity/interface/redirects'
 import securityHeaders from './securityHeaders'
-import { withSentryConfig } from "@sentry/nextjs";
-
+import { withSentryConfig } from '@sentry/nextjs'
 
 const withNextIntl = createNextIntlPlugin()
 
 const isProd = process.env.NODE_ENV === 'production'
- const sentryConfig = {
+const sentryConfig = {
   org: 'equinor',
   project: 'equinor-com',
   silent: true,
@@ -20,7 +20,7 @@ const isProd = process.env.NODE_ENV === 'production'
   widenClientFileUpload: true,
   disableClientWebpackPlugin: !isProd,
   disableServerWebpackPlugin: !isProd,
-} 
+}
 
 //TODO: Find the Redirect type from config that is not in /dist.
 export type ConfigRedirect = {
@@ -52,6 +52,7 @@ const nextConfig: NextConfig = withNextIntl({
   turbopack: {
     root: join(__dirname),
   },
+  cacheComponents: true,
   images: {
     remotePatterns: [
       {
@@ -116,4 +117,4 @@ const nextConfig: NextConfig = withNextIntl({
   },
 })
 
-export default withSentryConfig(nextConfig,sentryConfig)
+export default withSentryConfig(nextConfig, sentryConfig)

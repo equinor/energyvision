@@ -14,7 +14,12 @@ const PUBLIC_FILE = /\.(.*)$/
 const DOT_HTML = '.html'
 const IS_ARCHIVED_NEWS_DOWNLOADS =
   /(.*)\/news\/archive\/[0-9]{4}\/[0-9]{2}\/[0-9]{2}\/downloads\/(.*)\.(.*)$/
-  const wwwExcludedDomains = ['localhost:3000',process.env.RADIX_PUBLIC_DOMAIN_NAME,process.env.RADIX_CANONICAL_DOMAIN_NAME,'data.equinor.com']
+const wwwExcludedDomains = [
+  'localhost:3000',
+  process.env.RADIX_PUBLIC_DOMAIN_NAME,
+  process.env.RADIX_CANONICAL_DOMAIN_NAME,
+  'data.equinor.com',
+]
 
 // Check if a given path exists in Sanity or not
 /* const pathExistsInSanity = async (pathname: string): Promise<boolean> => {
@@ -26,9 +31,9 @@ export async function proxy(request: NextRequest) {
   const { origin, locale } = request.nextUrl
   const pathname = decodeURI(request.nextUrl.pathname)
   const isDotHtml = pathname.slice(-5) === DOT_HTML
-  const isRobotsTxt = pathname.slice(-10) === "robots.txt"
-  const isSitemapXml = pathname.slice(-11) === "sitemap.xml"
-  const isSecurityTxt = pathname.slice(-12) === "security.txt"
+  const isRobotsTxt = pathname.slice(-10) === 'robots.txt'
+  const isSitemapXml = pathname.slice(-11) === 'sitemap.xml'
+  const isSecurityTxt = pathname.slice(-12) === 'security.txt'
 
   // Rewrite the correct path for assets in download section of achived news (older than 2016)
   if (
@@ -56,7 +61,11 @@ export async function proxy(request: NextRequest) {
 
   // Check if pathname is irrelevant (.svg, .png, /api/, etcs)
   if (
-    (PUBLIC_FILE.test(pathname) && !isDotHtml && !isRobotsTxt && !isSitemapXml && !isSecurityTxt) ||
+    (PUBLIC_FILE.test(pathname) &&
+      !isDotHtml &&
+      !isRobotsTxt &&
+      !isSitemapXml &&
+      !isSecurityTxt) ||
     pathname.includes('/api/')
   ) {
     return undefined
@@ -69,9 +78,7 @@ export async function proxy(request: NextRequest) {
   }
 
   // Skip WWW redirect for Radix URLs and localhost
-  if (
-    !wwwExcludedDomains.includes(host)
-  ) {
+  if (!wwwExcludedDomains.includes(host)) {
     const wwwRedirect = getWWWRedirect(host, pathname)
     if (wwwRedirect) {
       return NextResponse.redirect(wwwRedirect, PERMANENT_REDIRECT)
@@ -125,5 +132,5 @@ export const config = {
   // - … if they start with `/api`, `/_next` or Next dev overlay routes
   // - … the ones containing a dot (e.g. `favicon.ico`)
   matcher:
-    '/((?!api|_next|favicon.ico|__nextjs|__nextjs_original-stack-frame|__nextjs_launch-editor|.well-known|legacy).*)',
+    '/((?!api|_next|icon|favicon.ico|__nextjs|__nextjs_original-stack-frame|__nextjs_launch-editor|.well-known|legacy).*)',
 }
