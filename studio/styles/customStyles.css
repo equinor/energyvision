@@ -1,0 +1,176 @@
+@import 'tailwindcss';
+/*
+* To change toggle color of sanity ui
+*/
+[data-ui='Switch'] input:checked + * {
+  --switch-bg-color: #0f9d58 !important;
+}
+
+.custom-block[data-testid='pt-editor'][data-fullscreen='false'] {
+  height: 100px;
+}
+
+.no-box-shadow{
+  box-shadow: none !important;
+}
+.flex{
+    display: flex;
+}
+.mx-auto {
+margin-inline: auto;
+}
+.flex-col{
+  flex-direction: column;
+}
+.flex-wrap {
+  flex-wrap: wrap;
+}
+.aspect-video {
+  aspect-ratio: "16/9";
+ }
+ .object-cover {
+  object-fit: "cover";
+ }
+ .w-full {
+  width: 100%;
+ }
+ .h-full {
+  height: 100%;
+ }
+.justify-center {
+    justify-content: center;
+}
+.items-center {
+  align-items: center;
+}
+.mt-3 {
+  margin-top: calc(var(--spacing) * 3);
+}
+.gap-2 {
+  gap: 4px;
+}
+.gap-4 {
+  gap: 8px;
+}
+.gap-1 {
+  gap: 2px;
+}
+.pr-2 {
+  padding-right: calc(var(--spacing) * 2);
+}
+.px-2 {
+padding-inline: calc(var(--spacing) * 2);
+}
+.px-4 {
+padding-inline: calc(var(--spacing) * 4);
+}
+.py-2{
+  padding-block: calc(var(--spacing) * 2);
+}
+.auto-cols-max{
+  grid-auto-columns: max-content;
+}
+.grid-flow-col{
+ grid-auto-flow: column;
+}
+
+/* Fotoware assets widget */
+.fotoware {
+height: 85vh;
+overflow-y: auto;
+overflow-x: hidden;
+display: grid;
+grid-template-columns: 1fr;
+grid-template-rows: min-content auto min-content;
+}
+.fotoware .text-md {
+  font-size: 18px;
+}
+.fotoware .text-sm {
+  font-size: 14px;
+}
+.fotoware > .grid {
+  display: grid;
+  gap: 20px;
+}
+
+.fotoware > .inner-grid {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.underline {
+  text-decoration: underline;
+}
+.log-in {
+  color:white;
+    background-color: hsl(184, 100%, 17%);
+}
+.log-in:hover{
+  color:black;
+  background-color: #e3edea;
+} 
+.fotoware > .image {
+      width: 100%;
+  height: auto;
+  object-fit: cover;
+  object-position: center;
+  aspect-ratio: 16/9;
+}
+.fotoware .card {
+  padding-bottom: 1.25rem;
+  width: 340px;
+  height: 300px;
+}
+.fotoware .link {
+  color: black;
+  text-decoration: underline;
+}
+.fotoware .link:hover {
+    color: hsl(184, 100%, 17%);
+}
+.fotoware > .sort-bar {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding-bottom: 1.25rem;
+}
+.fotoware select {
+  font-size: 16px;
+  padding:0.4rem 3.4375rem 0.4rem 1.25rem !important
+}
+.fotoware select option {
+    min-inline-size: 16px;
+}
+.fotoware [data-ui='Select']:hover{
+  cursor: pointer;
+
+  & > [data-ui="Box"]{
+  background-color: #e3edea;
+  }
+}
+.fotoware [data-ui='Select'] [data-ui="Box"]{
+  padding: 0.5rem !important;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.fotoware > select > div {
+    width: fit-content;
+  }
+
+.fotoware > label {
+  padding: 8px 0px;
+  text-transform: none; 
+}
+.fotoware > .pagination {
+  width: "100%";
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  background: #e3edea;
+  padding: 1.25rem 0.75rem;
+}

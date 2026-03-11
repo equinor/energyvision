@@ -26,8 +26,10 @@
   --font-weight-normal: 400;
   --font-weight-md: 500;
   --font-weight-semibold: 600;
-
+  
+  --spacing:0.25rem;
   --spacing-2: 0.5rem;
+  --spacing-4: 0.5rem;
   --spacing-8: 2rem;
 
   --leading-md: 1.4; /*68.3071px h1 larger screen */

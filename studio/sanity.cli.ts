@@ -10,12 +10,17 @@ export default defineCliConfig({
     projectId,
     dataset,
   },
-  vite: {
-    resolve: {
-      alias: {
-        '@': __dirname,
+  vite: async viteConfig => {
+    const { default: tailwindcss } = await import('@tailwindcss/vite')
+    return {
+      ...viteConfig,
+      resolve: {
+        alias: {
+          '@': __dirname,
+        },
       },
-    },
-    plugins: [tsconfigPaths(), svgr()],
+      //@ts-ignore : testing getting tailwind css
+      plugins: [...viteConfig.plugins, tsconfigPaths(), svgr(), tailwindcss()],
+    }
   },
 })

@@ -1,4 +1,5 @@
 import { crossDatasetDuplicator } from '@sanity/cross-dataset-duplicator'
+import { dashboardTool } from '@sanity/dashboard'
 import { documentInternationalization } from '@sanity/document-internationalization'
 import { visionTool } from '@sanity/vision'
 import type {
@@ -28,13 +29,14 @@ import deskStructure, { defaultDocumentNodeResolver } from './deskStructure'
 import { initialValueTemplates } from './initialValueTemplates'
 import { defaultLanguage } from './languages'
 import { BrandmasterAssetSource } from './plugins/asset-source-brandmaster'
-import { FotowareAssetSource } from './plugins/asset-source-fotoware'
+//import { FotowareAssetSource } from './plugins/asset-source-fotoware'
+import { FotowareAssetSource } from './plugins/asset-source-fotoware-v2'
 import { dataset, projectId } from './sanity.client'
 import { schemaTypes } from './schemas'
 import { CharCounterEditor } from './schemas/components/CharCounterEditor'
 import { LangBadge } from './schemas/components/LangBadge'
 import { i18n } from './schemas/documentTranslation'
-import './customStyles.css'
+import './styles/customStyles.css'
 import { presentationTool } from 'sanity/presentation'
 import { getMetaTitleSuffix } from '@/sitesConfig'
 import { copyAction } from './actions/fieldActions/CustomCopyFieldAction'
@@ -45,6 +47,7 @@ import CustomDocumentInternationalizationMenu from './schemas/components/CustomD
 import { partialStudioTheme } from './studioTheme'
 import './styles/fonts.css'
 import EquinorLogo from './styles/icons/logo.svg?react'
+import { fotowareWidget } from './widgets/ImportedFotowareAssetsWidget'
 
 export const customTheme = buildLegacyTheme(partialStudioTheme)
 
@@ -135,6 +138,10 @@ const getConfig = (
       title: 'Desk',
     }),
     media(),
+    dashboardTool({
+      title: 'Fotoware assets',
+      widgets: [fotowareWidget()],
+    }),
     datasetParam === 'global-development' && visionTool(),
     FotowareAssetSource(),
     BrandmasterAssetSource(),
