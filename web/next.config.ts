@@ -52,7 +52,7 @@ const nextConfig: NextConfig = withNextIntl({
   turbopack: {
     root: join(__dirname),
   },
-  cacheComponents: true,
+  //cacheComponents: true,
   images: {
     remotePatterns: [
       {
