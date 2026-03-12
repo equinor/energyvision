@@ -71,9 +71,11 @@ function ImportedFotowareAssetsWidget() {
                 : new Date(a.expirationDate) - new Date(b.expirationDate)
             },
           )
+        console.log('hasExpirationArray', hasExpirationArray)
         const theRestArray = formattedAssets.filter(
           item => item?.expirationDate === '',
         )
+        console.log('theRestArray', theRestArray)
         sorted = hasExpirationArray.concat(theRestArray)
       } else {
         sorted = formattedAssets.sort(
@@ -98,7 +100,7 @@ function ImportedFotowareAssetsWidget() {
       if (sortDirection !== direction) {
         setSortDirection(direction)
       }
-
+      console.log('sorted', sorted)
       const chunks = [...Array(Math.ceil(sorted.length / CHUNK_SIZE))].map(
         (_, i) => sorted.slice(CHUNK_SIZE * i, CHUNK_SIZE + CHUNK_SIZE * i),
       )
@@ -106,7 +108,7 @@ function ImportedFotowareAssetsWidget() {
       setPages(chunks)
       setCurrentPage(1)
     },
-    [formattedAssets.filter, formattedAssets.sort, sortDirection, sortType],
+    [formattedAssets, sortDirection, sortType],
   )
   useEffect(() => {
     if (formattedAssets?.length > 0) {
@@ -178,7 +180,7 @@ function ImportedFotowareAssetsWidget() {
                 </Select>
               </div>
             </div>
-            <div className='mx-auto flex w-full flex-wrap items-center justify-center gap-4'>
+            <div className='mx-auto flex w-full flex-wrap items-center justify-end gap-4'>
               {pages?.length > 0 ? (
                 pages[currentPage - 1]?.map(
                   (

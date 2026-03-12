@@ -117,9 +117,8 @@ export const checkAuthData = (data: any): boolean => {
 export const checkAPIAuthData = (data: any): boolean => {
   return (
     typeof data === 'object' &&
-    ['access_token', 'expires_in'].every(
-      (key: string) => data[key] && typeof data[key] === 'string',
-    )
+    typeof data.access_token === 'string' &&
+    typeof data.expires_in === 'number'
   )
 }
 

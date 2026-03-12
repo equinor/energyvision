@@ -15,13 +15,9 @@ import {
 import { createPortal } from 'react-dom'
 import type { FWAsset, FWAttributeField } from '../../types'
 import {
-  checkAPIAuthData,
-  checkAuthData,
   FotowareEvents,
   getAccessToken,
-  getApiAccessURL,
   getAuthURL,
-  getRenditionURL,
   getSelectionWidgetURL,
   HAS_ENV_VARS,
   storeAccessToken,
@@ -35,9 +31,6 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   const { onSelect, onClose } = props
   const [selectionToken, setSelectionToken] = useState<string | false>(
     getAccessToken('SelectionFotowareToken'),
-  )
-  const [apiToken, setApiToken] = useState<string | false>(
-    getAccessToken('ApiFotowareToken'),
   )
   const [container, setContainer] = useState<HTMLDivElement | null>(null)
   const requestState = useMemo(() => uuid(), [])
@@ -65,6 +58,34 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   }, [selectionToken])
 
   const selectionContainerRef = useRef<HTMLDivElement>(null)
+
+  const getAsset = useCallback(
+    async (renditionHref: string, mimeType: string) => {
+      const serviceUrl = `${process.env.SANITY_STUDIO_FOTOWARE_AF_EXPORT_URL}?code=${process.env.SANITY_STUDIO_FOTOWARE_AF_EXPORT_KEY}`
+      if (serviceUrl) {
+        const options = {
+          method: 'POST',
+          body: JSON.stringify({
+            href: renditionHref,
+            mimeType: mimeType,
+          }),
+        }
+        try {
+          const response = await fetch(serviceUrl, options)
+          console.log('getAsset response', response)
+          const arrayBuffer = await response.arrayBuffer()
+          setIsLoading(false)
+          return arrayBuffer
+        } catch (error) {
+          console.error('Error fetching rendition:', error)
+          setErrorText('Error downloading image')
+          setHasError(true)
+          return null
+        }
+      }
+    },
+    [],
+  )
 
   // Login & store access token
   const handleAuthEvent = useCallback(
@@ -121,123 +142,6 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
     [requestState],
   )
 
-  // Login API & store access token
-  const getApiAccessToken = useCallback(async () => {
-    if (apiToken) return
-
-    const apiUrl = getApiAccessURL()
-    console.log('getApiAccessToken apiUrl', apiUrl)
-    const response = await fetch(apiUrl)
-      .catch(error => {
-        console.error('An error occured while api access', error)
-        setHasError(true)
-        setErrorText(`Api error: ${error}`)
-      })
-      .then(res => {
-        console.log('getApiAccessToken res', res)
-        if (res && res.status !== 200) {
-          console.error(
-            'An error occured while retrieving api access',
-            res.statusText,
-          )
-          setHasError(true)
-          setErrorText(`Api error: ${res.statusText}`)
-        }
-        return res
-      })
-    console.log('getApiAccessToken response', response)
-
-    if (!response || response.status !== 200) return
-
-    const data = await response.json()
-    console.log('getApiAccessToken data', data)
-
-    if (!data?.access_token) {
-      setHasError(true)
-      setErrorText(
-        'Missing api access token. Make sure you have permission to access Fotoware and try again.',
-      )
-      return
-    }
-
-    if (!checkAPIAuthData(data)) {
-      setHasError(true)
-      setErrorText('Invalid event data.')
-      return
-    }
-    console.log('Store api access token')
-    storeAccessToken('ApiFotowareToken', data)
-    setApiToken(data.access_token)
-  }, [apiToken])
-
-  //REvalidate expirationDate /fotoweb/archives/{archiveid}/{folderid}/{asset}
-
-  const downloadRenditionAsset = useCallback(async (url: string) => {
-    try {
-      const response = await fetch(url)
-      //if (!response || response.status !== 200) return
-      console.log('downloadRenditionAsset response', response)
-      const data = await response.json()
-
-      // kall tilbake til export bag <date Sanity:dataset> -> Metadata field 870
-      // PATCH /fotoweb/archives/{archiveid}/{folderid}/{asset}
-      // kan vi bruke archiveHREF fra asset representation to /{archiveid}/{folderid}/
-      //Use the "href" or "linkstance" property value and store it. This url is used for getting the asset representation and update metadata.
-
-      console.log('downloadRenditionAsset data', data)
-      return data
-    } catch (error) {
-      console.error('An error occured while downloading asset', error)
-      return null
-    }
-  }, [])
-
-  const getRenditionServiceUrl = useCallback(async () => {
-    try {
-      const renditionServiceUrl = getRenditionURL()
-      const response = await fetch(renditionServiceUrl)
-      console.log('getRenditionServiceUrl response', response)
-      const data = await response.json()
-      console.log('getRenditionServiceUrl data', data)
-      return data?.services?.rendition_requests
-    } catch (error) {
-      console.error('An error occured retrieving rendition service url', error)
-      return null
-    }
-  }, [])
-
-  const getRendition = useCallback(
-    async (renditionHref: string) => {
-      const serviceUrl = await getRenditionServiceUrl()
-      if (serviceUrl) {
-        const options = {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${apiToken}`,
-          },
-          body: JSON.stringify({
-            href: renditionHref,
-          }),
-        }
-        try {
-          console.log('getRendition fetch rendition at FW api')
-          const response = await fetch(serviceUrl, options)
-          //const arrayBuffer = await response.arrayBuffer()
-          const data = await response.json()
-          if (data?.href) {
-            const asset = await downloadRenditionAsset(data?.href)
-            console.log('getRendition asset', asset)
-            return asset
-          }
-        } catch (error) {
-          console.error('Error fetching rendition:', error)
-          return null
-        }
-      }
-    },
-    [downloadRenditionAsset, getRenditionServiceUrl, apiToken],
-  )
-
   const handleWidgetEvent = useCallback(
     async (event: any) => {
       if (isLogin) return false
@@ -247,32 +151,29 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
         console.log('Fotoware: invalid event origin', event.origin)
         return false
       }
-
       const { data } = event
-
       if (!FotowareEvents.includes(data.event)) return false
-
       if (data.event === 'selectionWidgetCancel') {
         onClose()
       }
 
       if (data.event === 'assetSelected' && data.asset) {
-        console.log('Fotoware event assetSelected')
-
         const selectedAsset = data.asset
         console.log('selectedAsset', selectedAsset)
         setAsset(selectedAsset)
         const assetTitle = selectedAsset?.builtinFields.find(
           (item: FWAttributeField) => item.field === 'title',
-        )
+        ).value
+        const assetFilename = selectedAsset?.filename
         const assetDescription = selectedAsset?.builtinFields.find(
           (item: FWAttributeField) => item.field === 'description',
-        )
+        ).value
         const assetId = selectedAsset?.metadata?.[187]?.value
         const personShownInTheImage =
           selectedAsset?.metadata?.[368]?.value?.join(', ')
-        const description = assetDescription?.value
-          ? [assetDescription?.value, personShownInTheImage].join('\n')
+
+        const description = assetDescription
+          ? [assetDescription, personShownInTheImage].join('\n')
           : personShownInTheImage
 
         const assetExpirationDate =
@@ -285,137 +186,46 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
               ).href
             : event.data.asset.renditions[0]?.href
 
-        if (!apiToken) {
-          setHasError(true)
-          setErrorText(
-            'Missing api access token,downloading is not possible. Please check api access',
-          )
-        }
-        console.log('handleWidgetEvent put together renditionUrl', renditionUrl)
         setShowSelectionIframe(false)
-        if (apiToken) {
-          const asset = await getRendition(renditionUrl)
-          //const arrayBuffer = await response.arrayBuffer()
-          console.log('downloaded asset', asset)
-          setIsLoading(true)
-          setLoadingText(
-            `Downloading ${assetTitle} from Fotoware... Please hold`,
-          )
+        setIsLoading(true)
+        setLoadingText(
+          `Downloading ${assetFilename} from Fotoware... Please hold`,
+        )
+        const assetMimeType =
+          mime.getType(assetFilename) || 'application/octet-stream'
+        const arrayBuffer = await getAsset(renditionUrl, assetMimeType)
+        //@ts-ignore: TODO
+        const blob = arrayBufferToBlob(arrayBuffer)
 
-          if (asset) {
-            const assetMimeType =
-              mime.getType(selectedAsset.filename) || 'application/octet-stream'
-            //@ts-ignore: TODO
-            const blob = arrayBufferToBlob(asset)
-
-            if (blob) {
-              const file = new File(
-                [blob],
-                selectedAsset?.filename || 'image.jpg',
-                {
-                  type: assetMimeType,
+        if (blob) {
+          const file = new File([blob], assetFilename || 'image.jpg', {
+            type: assetMimeType,
+          })
+          onSelect([
+            {
+              kind: 'file',
+              value: file,
+              assetDocumentProps: {
+                originalFilename: assetFilename || '',
+                source: {
+                  name: `fotoware${assetExpirationDate ? `_${assetExpirationDate}` : ''}`,
+                  id: assetId || selectedAsset?.uniqueid,
+                  url:
+                    process.env.SANITY_STUDIO_FOTOWARE_TENANT_URL +
+                    selectedAsset?.linkstance,
                 },
-              )
-
-              console.log('file', file)
-              if (file) {
-                console.log('onSelect sanity event')
-                onSelect([
-                  {
-                    kind: 'file',
-                    value: file,
-                    assetDocumentProps: {
-                      originalFilename: selectedAsset?.filename || '',
-                      source: {
-                        name: `fotoware${assetExpirationDate ? `_${assetExpirationDate}` : ''}`,
-                        id: assetId || selectedAsset?.uniqueid,
-                        url:
-                          process.env.SANITY_STUDIO_FOTOWARE_TENANT_URL +
-                          selectedAsset?.linkstance,
-                      },
-                      metadata: {
-                        expirationDate: assetExpirationDate,
-                      },
-                      title: assetTitle?.value,
-                      description: description,
-                    },
-                  },
-                ])
-              }
-            }
-          }
-          /*   
-onSelect([
-          {
-            kind: 'url',
-            value: exportedImage.image.highCompression,
-            assetDocumentProps: {
-              originalFilename: asset?.filename || '',
-              source: {
-                name: 'fotoware',
-                id: assetId || asset?.uniqueid || exportedImage.image.highCompression,
-                url: exportedImage.source,
+                metadata: {
+                  expirationDate: assetExpirationDate,
+                },
+                title: assetTitle,
+                description: description,
               },
-              title: assetTitle?.value,
-              description: description,
-              expirationDate: assetExpirationDate,
             },
-          },
-        ]) */
+          ])
         }
-
-        /*         if (selectedAsset) {
-          setIsLoading(true)
-          setLoadingText(
-            `Downloading ${assetTitle?.value} from Fotoware... Please hold`,
-          )
-          console.log(
-            `Downloading ${assetTitle?.value} from Fotoware... Please hold`,
-          )
-          const assetMimeType =
-            mime.getType(selectedAsset.filename) || 'application/octet-stream'
-          const arrayBuffer = await getAsset(renditionUrl, assetMimeType)
-          //@ts-ignore: TODO
-          const blob = arrayBufferToBlob(arrayBuffer)
-
-          if (blob) {
-            const file = new File(
-              [blob],
-              selectedAsset?.filename || 'image.jpg',
-              {
-                type: assetMimeType,
-              },
-            )
-            onSelect([
-              {
-                kind: 'file',
-                value: file,
-                assetDocumentProps: {
-                  originalFilename: selectedAsset?.filename || '',
-                  source: {
-                    name: `fotoware${assetExpirationDate ? `_${assetExpirationDate}` : ''}`,
-                    id: assetId || selectedAsset?.uniqueid,
-                    url:
-                      process.env.SANITY_STUDIO_FOTOWARE_TENANT_URL +
-                      selectedAsset?.linkstance,
-                  },
-                  metadata: {
-                    expirationDate: assetExpirationDate,
-                  },
-                  title: assetTitle?.value,
-                  description: description,
-                },
-              },
-            ])
-          }
-        } */
-        /*             const assetMimeType = mime.getType(selectedAsset.filename) || 'application/octet-stream'
-          const arrayBuffer = await getAsset(renditionUrl, assetMimeType)
-          //@ts-ignore: TODO
-          const blob = arrayBufferToBlob(arrayBuffer) */
       }
     },
-    [onClose, apiToken, getRendition, isLogin, onSelect],
+    [onClose, isLogin, onSelect, getAsset],
   )
 
   //For selection widget
@@ -452,16 +262,9 @@ onSelect([
   }, [handleAuthEvent])
 
   useEffect(() => {
-    if (!apiToken) {
-      console.log('Missing api access token, get it')
-      getApiAccessToken()
-    }
-  }, [apiToken, getApiAccessToken])
-
-  useEffect(() => {
     if (selectionToken) {
       window.removeEventListener('message', handleAuthEvent)
-      //setShowSelectionIframe(true)
+      setShowSelectionIframe(true)
     }
   }, [selectionToken, handleAuthEvent])
 
@@ -519,16 +322,6 @@ onSelect([
             )}
 
             {container && createPortal(props.children, container)}
-          </Flex>
-        )}
-        {!apiToken && (
-          <Flex direction='column' align={'center'} gap={6}>
-            <Text align='center' size={[2, 2, 3, 3]}>
-              Have not got access token for api from AF, please hold or try
-              again.
-              <br />
-              If no luck, please contact support.
-            </Text>
           </Flex>
         )}
         {isLoading && (

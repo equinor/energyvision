@@ -10,35 +10,38 @@
   height: 100px;
 }
 
-.no-box-shadow{
+.no-box-shadow {
   box-shadow: none !important;
 }
-.flex{
-    display: flex;
+.flex {
+  display: flex;
 }
 .mx-auto {
-margin-inline: auto;
+  margin-inline: auto;
 }
-.flex-col{
+.flex-col {
   flex-direction: column;
 }
 .flex-wrap {
   flex-wrap: wrap;
 }
 .aspect-video {
-  aspect-ratio: "16/9";
- }
- .object-cover {
-  object-fit: "cover";
- }
- .w-full {
+  aspect-ratio: '16/9';
+}
+.object-cover {
+  object-fit: 'cover';
+}
+.w-full {
   width: 100%;
- }
- .h-full {
+}
+.h-full {
   height: 100%;
- }
+}
 .justify-center {
-    justify-content: center;
+  justify-content: center;
+}
+.justify-end {
+  justify-content: flex-end;
 }
 .items-center {
   align-items: center;
@@ -59,29 +62,29 @@ margin-inline: auto;
   padding-right: calc(var(--spacing) * 2);
 }
 .px-2 {
-padding-inline: calc(var(--spacing) * 2);
+  padding-inline: calc(var(--spacing) * 2);
 }
 .px-4 {
-padding-inline: calc(var(--spacing) * 4);
+  padding-inline: calc(var(--spacing) * 4);
 }
-.py-2{
+.py-2 {
   padding-block: calc(var(--spacing) * 2);
 }
-.auto-cols-max{
+.auto-cols-max {
   grid-auto-columns: max-content;
 }
-.grid-flow-col{
- grid-auto-flow: column;
+.grid-flow-col {
+  grid-auto-flow: column;
 }
 
 /* Fotoware assets widget */
 .fotoware {
-height: 85vh;
-overflow-y: auto;
-overflow-x: hidden;
-display: grid;
-grid-template-columns: 1fr;
-grid-template-rows: min-content auto min-content;
+  height: 85vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: min-content auto min-content;
 }
 .fotoware .text-md {
   font-size: 18px;
@@ -105,19 +108,19 @@ grid-template-rows: min-content auto min-content;
   text-decoration: underline;
 }
 .log-in {
-  color:white;
-    background-color: hsl(184, 100%, 17%);
+  color: white;
+  background-color: hsl(184, 100%, 17%);
 }
-.log-in:hover{
-  color:black;
+.log-in:hover {
+  color: black;
   background-color: #e3edea;
-} 
+}
 .fotoware > .image {
-      width: 100%;
+  width: 100%;
   height: auto;
   object-fit: cover;
   object-position: center;
-  aspect-ratio: 16/9;
+  aspect-ratio: 16 / 9;
 }
 .fotoware .card {
   padding-bottom: 1.25rem;
@@ -129,7 +132,7 @@ grid-template-rows: min-content auto min-content;
   text-decoration: underline;
 }
 .fotoware .link:hover {
-    color: hsl(184, 100%, 17%);
+  color: hsl(184, 100%, 17%);
 }
 .fotoware > .sort-bar {
   display: flex;
@@ -139,19 +142,19 @@ grid-template-rows: min-content auto min-content;
 }
 .fotoware select {
   font-size: 16px;
-  padding:0.4rem 3.4375rem 0.4rem 1.25rem !important
+  padding: 0.4rem 3.4375rem 0.4rem 1.25rem !important;
 }
 .fotoware select option {
-    min-inline-size: 16px;
+  min-inline-size: 16px;
 }
-.fotoware [data-ui='Select']:hover{
+.fotoware [data-ui='Select']:hover {
   cursor: pointer;
 
-  & > [data-ui="Box"]{
-  background-color: #e3edea;
+  & > [data-ui='Box'] {
+    background-color: #e3edea;
   }
 }
-.fotoware [data-ui='Select'] [data-ui="Box"]{
+.fotoware [data-ui='Select'] [data-ui='Box'] {
   padding: 0.5rem !important;
   height: 100%;
   display: flex;
@@ -159,15 +162,15 @@ grid-template-rows: min-content auto min-content;
   align-items: center;
 }
 .fotoware > select > div {
-    width: fit-content;
-  }
+  width: fit-content;
+}
 
 .fotoware > label {
   padding: 8px 0px;
-  text-transform: none; 
+  text-transform: none;
 }
 .fotoware > .pagination {
-  width: "100%";
+  width: '100%';
   display: flex;
   justify-content: center;
   gap: 12px;
