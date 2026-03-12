@@ -126,7 +126,7 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
     if (apiToken) return
 
     const apiUrl = getApiAccessURL()
-
+    console.log('getApiAccessToken apiUrl', apiUrl)
     const response = await fetch(apiUrl)
       .catch(error => {
         console.error('An error occured while api access', error)
@@ -134,6 +134,7 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
         setErrorText(`Api error: ${error}`)
       })
       .then(res => {
+        console.log('getApiAccessToken res', res)
         if (res && res.status !== 200) {
           console.error(
             'An error occured while retrieving api access',
@@ -144,10 +145,12 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
         }
         return res
       })
+    console.log('getApiAccessToken response', response)
 
     if (!response || response.status !== 200) return
 
     const data = await response.json()
+    console.log('getApiAccessToken data', data)
 
     if (!data?.access_token) {
       setHasError(true)
