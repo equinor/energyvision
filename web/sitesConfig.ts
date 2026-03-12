@@ -123,7 +123,7 @@ export const defaultWebLanguage: Partial<Record<DatasetsKeys, string>> = {
   argentina: 'spanish-ar',
   storage: 'german',
   southkorea: 'korean',
-  japan: 'japanese',
+  japan: 'english',
   sponsorship: 'norwegian',
 }
 
