@@ -89,11 +89,19 @@
 .fotoware .text-md {
   font-size: 18px;
 }
+.fotoware .text-base {
+  font-size: 16px;
+}
 .fotoware .text-sm {
   font-size: 14px;
 }
+.fotoware .text-xm {
+  font-size: 12px;
+}
 .fotoware > .grid {
   display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-rows: repeat(auto-fit, minmax(200px, 1fr));
   gap: 20px;
 }
 
@@ -123,9 +131,8 @@
   aspect-ratio: 16 / 9;
 }
 .fotoware .card {
-  padding-bottom: 1.25rem;
   width: 200px;
-  height: 250px;
+  height: 100%;
 }
 .fotoware .link {
   color: black;

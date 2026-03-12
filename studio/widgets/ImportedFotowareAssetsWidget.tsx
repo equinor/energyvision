@@ -180,7 +180,7 @@ function ImportedFotowareAssetsWidget() {
                 </Select>
               </div>
             </div>
-            <div className='mx-auto flex w-full flex-wrap items-center justify-end gap-4'>
+            <div className='grid w-full items-center justify-end gap-4 pb-4'>
               {pages?.length > 0 ? (
                 pages[currentPage - 1]?.map(
                   (
@@ -201,8 +201,8 @@ function ImportedFotowareAssetsWidget() {
                         </div>
                         <div className='flex flex-col gap-1'>
                           {/*@ts-ignore*/}
-                          <div className='mt-3 text-md'>{image.title}</div>
-                          <div className='text-sm'>
+                          <div className='mt-3 text-sm'>{image.title}</div>
+                          <div className='text-xs'>
                             {sortType === 'created' && (
                               <div>
                                 Created:{' '}
