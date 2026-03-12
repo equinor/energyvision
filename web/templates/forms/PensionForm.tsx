@@ -1,26 +1,22 @@
 'use client'
 import { Icon } from '@equinor/eds-core-react'
 import { error_filled } from '@equinor/eds-icons'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useTranslations } from 'next-intl'
-import { type BaseSyntheticEvent, useState, useId } from 'react'
+import { type BaseSyntheticEvent, useId, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
+import type { z } from 'zod'
+import submitFormServerAction from '@/app/_actions/submitFormServerAction'
+import verifyCaptcha from '@/app/_actions/verifyCaptcha'
 import { Button } from '@/core/Button'
 import { FormMessageBox } from '@/core/Form/FormMessageBox'
 import { Select } from '@/core/Select/Select'
 import { TextField } from '@/core/TextField/TextField'
-import { PensionFormCatalogType } from '../../types'
+import { pensionFormSchema } from '@/lib/zodSchemas/zodSchemas'
+import type { PensionFormCatalogType } from '../../types'
 import FriendlyCaptcha from './FriendlyCaptcha'
-import { contentRegex, emailRegex, nameRegex } from './validations'
-import verifyCaptcha from '@/app/_actions/verifyCaptcha'
-import submitFormServerAction from '@/app/_actions/submitFormServerAction'
 
-type PensionFormValues = {
-  name: string
-  email: string
-  phone: string
-  pensionCategory: string
-  requests: string
-}
+type PensionFormData = z.infer<typeof pensionFormSchema>
 
 const getCatalogIdentifier = (catalogType: PensionFormCatalogType | string) => {
   switch (catalogType) {
@@ -39,36 +35,49 @@ const PensionForm = () => {
   const formId = useId()
 
   const onSubmit = async (
-    data: PensionFormValues,
+    data: PensionFormData,
     event?: BaseSyntheticEvent,
   ) => {
     if (isFriendlyChallengeDone) {
-      const frcCaptchaSolution = (event?.target as any)['frc-captcha-response'].value
+      const frcCaptchaSolution = (event?.target as any)['frc-captcha-response']
+        .value
       const isCaptchaVerified = await verifyCaptcha(frcCaptchaSolution)
 
-      if(!isCaptchaVerified){
+      if (!isCaptchaVerified) {
         return
       }
 
-      const cid = getCatalogIdentifier(data.pensionCategory)
-
-      let finalFormData = {
-        "variables": {
-          "requested_for": "equinordotcom",
-          "external_emails": data.email,
-          "name": data.name,
-          "category": data.pensionCategory,
-          "howcanwehelp": data.requests,
-          "tryingtoreach": "whoever can assist",
-          "cid": cid
-        }
+      let cid = '6777904f938a2950eaf1f4527cba1048'
+      if (data.pensionCategory) {
+        cid = getCatalogIdentifier(data.pensionCategory)
       }
-      // "category": data.category,
-      // "howcanwehelp": data.message,
-      
+
+      const isDataValidated = pensionFormSchema.safeParse(data)
+
+      if (!isDataValidated.success) {
+        setServerError(true)
+        setSuccessfullySubmitted(false)
+      }
+
+      const finalFormData = {
+        variables: {
+          requested_for: 'equinordotcom',
+          external_emails: data.email,
+          copytoemail: data.email,
+          name: data.name,
+          category: data.pensionCategory,
+          howcanwehelp: data.requests,
+          tryingtoreach: 'whoever can assist',
+          cid: cid,
+        },
+      }
+
       // Call the server action directly
       // CAT0012836 is CAT ID for Contact Equinor Form //
-      const result = await submitFormServerAction(JSON.stringify(finalFormData), 'CAT0012836')
+      const result = await submitFormServerAction(
+        JSON.stringify(finalFormData),
+        'CAT0012836',
+      )
 
       setServerError(result.status !== 200)
       setSuccessfullySubmitted(result.status === 200)
@@ -86,12 +95,12 @@ const PensionForm = () => {
     control,
     reset,
     setError,
-    formState: { errors, isSubmitted, isSubmitting, isSubmitSuccessful },
-  } = useForm<PensionFormValues>({
+    formState: { errors, isSubmitted, isSubmitting },
+  } = useForm<PensionFormData>({
+    resolver: zodResolver(pensionFormSchema),
     defaultValues: {
       name: '',
       email: '',
-      phone: '',
       pensionCategory: '',
       requests: '',
     },
@@ -118,13 +127,6 @@ const PensionForm = () => {
                 <Controller
                   name='name'
                   control={control}
-                  rules={{
-                    required: intl('name_validation'),
-                    pattern: {
-                      value: nameRegex,
-                      message: intl('not_valid_input'),
-                    },
-                  }}
                   render={({
                     field: { ref, ...props },
                     fieldState: { invalid, error },
@@ -153,13 +155,6 @@ const PensionForm = () => {
                 <Controller
                   name='email'
                   control={control}
-                  rules={{
-                    required: intl('email_validation'),
-                    pattern: {
-                      value: emailRegex,
-                      message: intl('email_validation'),
-                    },
-                  }}
                   render={({
                     field: { ref, ...props },
                     fieldState: { invalid, error },
@@ -217,15 +212,6 @@ const PensionForm = () => {
                 <Controller
                   name='requests'
                   control={control}
-                  rules={{
-                    required: intl(
-                      'pension_form_what_is_your_request_validation',
-                    ),
-                    pattern: {
-                      value: contentRegex,
-                      message: intl('not_valid_input'),
-                    },
-                  }}
                   render={({
                     field: { ref, ...props },
                     fieldState: { invalid, error },
@@ -290,7 +276,7 @@ const PensionForm = () => {
           </form>
         </>
       )}
-      <div role='region' aria-live='assertive'>
+      <section aria-live='assertive'>
         {isSuccessfullySubmitted && <FormMessageBox variant='success' />}
         {isSubmitted && isServerError && (
           <FormMessageBox
@@ -301,7 +287,7 @@ const PensionForm = () => {
             }}
           />
         )}
-      </div>
+      </section>
     </>
   )
 }

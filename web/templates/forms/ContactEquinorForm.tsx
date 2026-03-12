@@ -3,48 +3,38 @@
 'use client'
 import { Icon } from '@equinor/eds-core-react'
 import { error_filled } from '@equinor/eds-icons'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useTranslations } from 'next-intl'
 import { type BaseSyntheticEvent, useId, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
+import type { z } from 'zod'
 import { Button } from '@/core/Button'
 import { FormMessageBox } from '@/core/Form/FormMessageBox'
 import { Select } from '@/core/Select/Select'
 import { TextField } from '@/core/TextField/TextField'
+import { contactEquinorFormSchema } from '@/lib/zodSchemas/zodSchemas'
 // Import the server action
 import submitFormServerAction from '../../app/_actions/submitFormServerAction'
 import verifyCaptcha from '../../app/_actions/verifyCaptcha'
-import type { ContactFormCatalogType } from '../../types'
 import FriendlyCaptcha from './FriendlyCaptcha'
-import { contentRegex, emailRegex, nameRegex } from './validations'
 
-type FormValues = {
-  name: string
-  email: string
-  category: string
-  message: string
-}
+type ContactEquinorFormData = z.infer<typeof contactEquinorFormSchema>
 
 const ContactEquinorForm = () => {
-  console.log('ContactEquinorForm', ContactEquinorForm)
   const intl = useTranslations()
   const [isServerError, setServerError] = useState(false)
   const [isFriendlyChallengeDone, setIsFriendlyChallengeDone] = useState(false)
   const [isSuccessfullySubmitted, setSuccessfullySubmitted] = useState(false)
   const formId = useId()
 
-  const getCatalog = (category: string): ContactFormCatalogType | null => {
-    if (category.includes(intl('contact_form_login_issues')))
-      return 'loginIssues'
-    return null
-  }
-
   const {
     handleSubmit,
     control,
     reset,
     setError,
-    formState: { errors, isSubmitted, isSubmitting, isSubmitSuccessful },
-  } = useForm<FormValues>({
+    formState: { errors, isSubmitted, isSubmitting },
+  } = useForm<ContactEquinorFormData>({
+    resolver: zodResolver(contactEquinorFormSchema),
     defaultValues: {
       name: '',
       email: '',
@@ -53,7 +43,10 @@ const ContactEquinorForm = () => {
     },
   })
 
-  const onSubmit = async (data: FormValues, event?: BaseSyntheticEvent) => {
+  const onSubmit = async (
+    data: ContactEquinorFormData,
+    event?: BaseSyntheticEvent,
+  ) => {
     if (isFriendlyChallengeDone) {
       const frcCaptchaSolution = (event?.target as any)['frc-captcha-response']
         .value
@@ -64,9 +57,16 @@ const ContactEquinorForm = () => {
       }
 
       const cid =
-        data.category.toLowerCase() === 'login issues'
+        data.category?.toLowerCase() === 'login issues'
           ? '49f29a93dbb2ac10f42b2208059619a7'
           : '66f0ff89db2e2644ff6272dabf961945'
+
+      const isDataValidated = contactEquinorFormSchema.safeParse(data)
+
+      if (!isDataValidated.success) {
+        setServerError(true)
+        setSuccessfullySubmitted(false)
+      }
 
       const finalFormData = {
         variables: {
@@ -98,7 +98,6 @@ const ContactEquinorForm = () => {
       })
     }
   }
-  console.log('isSuccessfullySubmitted', isSuccessfullySubmitted)
   return (
     <>
       {!isSuccessfullySubmitted && (
@@ -119,13 +118,6 @@ const ContactEquinorForm = () => {
                 <Controller
                   name='name'
                   control={control}
-                  rules={{
-                    required: intl('name_validation'),
-                    pattern: {
-                      value: nameRegex,
-                      message: intl('not_valid_input'),
-                    },
-                  }}
                   render={({
                     field: { ref, ...props },
                     fieldState: { invalid, error },
@@ -154,13 +146,6 @@ const ContactEquinorForm = () => {
                 <Controller
                   name='email'
                   control={control}
-                  rules={{
-                    required: intl('email_validation'),
-                    pattern: {
-                      value: emailRegex,
-                      message: intl('email_validation'),
-                    },
-                  }}
                   render={({
                     field: { ref, ...props },
                     fieldState: { invalid, error },
@@ -219,13 +204,6 @@ const ContactEquinorForm = () => {
                 <Controller
                   name='message'
                   control={control}
-                  rules={{
-                    required: intl('contact_form_how_to_help_validation'),
-                    pattern: {
-                      value: contentRegex,
-                      message: intl('not_valid_input'),
-                    },
-                  }}
                   render={({
                     field: { ref, ...props },
                     fieldState: { invalid, error },
@@ -288,7 +266,7 @@ const ContactEquinorForm = () => {
           </form>
         </>
       )}
-      <div role='region' aria-live='assertive'>
+      <section aria-live='assertive'>
         {isSuccessfullySubmitted && <FormMessageBox variant='success' />}
         {isSubmitted && isServerError && (
           <FormMessageBox
@@ -299,7 +277,7 @@ const ContactEquinorForm = () => {
             }}
           />
         )}
-      </div>
+      </section>
     </>
   )
 }

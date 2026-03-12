@@ -1,28 +1,21 @@
 'use client'
 import { Icon } from '@equinor/eds-core-react'
 import { error_filled } from '@equinor/eds-icons'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useTranslations } from 'next-intl'
-import { type BaseSyntheticEvent, useState, useId } from 'react'
+import { type BaseSyntheticEvent, useId, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
+import type { z } from 'zod'
+import submitFormServerAction from '@/app/_actions/submitFormServerAction'
+import verifyCaptcha from '@/app/_actions/verifyCaptcha'
 import { Button } from '@/core/Button'
 import { Checkbox } from '@/core/Checkbox/Checkbox'
 import { FormMessageBox } from '@/core/Form/FormMessageBox'
 import { TextField } from '@/core/TextField/TextField'
+import { orderReportsFormSchema } from '@/lib/zodSchemas/zodSchemas'
 import FriendlyCaptcha from './FriendlyCaptcha'
-import { englishTextRegex, nameRegex } from './validations'
-import verifyCaptcha from '@/app/_actions/verifyCaptcha'
-import submitFormServerAction from '@/app/_actions/submitFormServerAction'
 
-type FormValues = {
-  name: string
-  email: string
-  company: string
-  address: string
-  zipcode: string
-  city: string
-  country: string
-  reports: string[]
-}
+type OrderReportFormData = z.infer<typeof orderReportsFormSchema>
 
 const OrderReportsForm = () => {
   const intl = useTranslations()
@@ -48,7 +41,9 @@ const OrderReportsForm = () => {
         </li>
         <li>
           <Checkbox
-            label={intl('order_reports_checkbox_option_annualreportnorwegian_label')}
+            label={intl(
+              'order_reports_checkbox_option_annualreportnorwegian_label',
+            )}
             value='annualReportNorwegian'
             aria-invalid={errors.reports ? 'true' : 'false'}
             aria-describedby='atleast-one-report-required'
@@ -65,8 +60,9 @@ const OrderReportsForm = () => {
     reset,
     register,
     setError,
-    formState: { errors, isSubmitSuccessful, isSubmitted, isSubmitting },
-  } = useForm({
+    formState: { errors, isSubmitted, isSubmitting },
+  } = useForm<OrderReportFormData>({
+    resolver: zodResolver(orderReportsFormSchema),
     defaultValues: {
       name: '',
       email: '',
@@ -79,38 +75,53 @@ const OrderReportsForm = () => {
     },
   })
 
-  const onSubmit = async (data: FormValues, event?: BaseSyntheticEvent) => {
-
+  const onSubmit = async (
+    data: OrderReportFormData,
+    event?: BaseSyntheticEvent,
+  ) => {
     if (isFriendlyChallengeDone) {
-          const frcCaptchaSolution = (event?.target as any)['frc-captcha-response'].value
-          const isCaptchaVerified = await verifyCaptcha(frcCaptchaSolution)
-    
-          if(!isCaptchaVerified){
-            return
-          }
-        
-          let finalFormData = {
-            "variables": {
-              "requested_for": "equinordotcom",
-              "external_emails": data.email,
-              "cid": "d1872741db26ea40977079e9bf961949",
-              "name": data.name,
-              "address": data.address,
-              "zip": data.zipcode,
-              "city": data.city,
-              "country": data.country,
-              "company": data.company,
-              "annualreport": data.reports.includes('annualReport') ? "Yes" : "No",
-              "annualreportnorwegian": data.reports.includes('annualReportNorwegian') ? "Yes" : "No"
-            }
-          }
-          
-          // Call the server action directly
-          // CAT0012841 is CAT ID for Order Reports Form //
-          const result = await submitFormServerAction(JSON.stringify(finalFormData), 'CAT0012841')
-    
-          setServerError(result.status !== 200)
-          setSuccessfullySubmitted(result.status === 200)
+      const frcCaptchaSolution = (event?.target as any)['frc-captcha-response']
+        .value
+      const isCaptchaVerified = await verifyCaptcha(frcCaptchaSolution)
+
+      if (!isCaptchaVerified) {
+        return
+      }
+
+      const isDataValidated = orderReportsFormSchema.safeParse(data)
+
+      if (!isDataValidated.success) {
+        setServerError(true)
+        setSuccessfullySubmitted(false)
+      }
+
+      const finalFormData = {
+        variables: {
+          requested_for: 'equinordotcom',
+          external_emails: data.email,
+          cid: 'd1872741db26ea40977079e9bf961949',
+          name: data.name,
+          address: data.address,
+          zip: data.zipcode,
+          city: data.city,
+          country: data.country,
+          company: data.company,
+          annualreport: data.reports.includes('annualReport') ? 'Yes' : 'No',
+          annualreportnorwegian: data.reports.includes('annualReportNorwegian')
+            ? 'Yes'
+            : 'No',
+        },
+      }
+
+      // Call the server action directly
+      // CAT0012841 is CAT ID for Order Reports Form //
+      const result = await submitFormServerAction(
+        JSON.stringify(finalFormData),
+        'CAT0012841',
+      )
+
+      setServerError(result.status !== 200)
+      setSuccessfullySubmitted(result.status === 200)
     } else {
       //@ts-ignore: TODO: types
       setError('root.notCompletedCaptcha', {
@@ -155,13 +166,6 @@ const OrderReportsForm = () => {
             <Controller
               name='name'
               control={control}
-              rules={{
-                required: intl('name_validation'),
-                pattern: {
-                  value: nameRegex,
-                  message: intl('not_valid_input'),
-                },
-              }}
               render={({
                 field: { ref, ...props },
                 fieldState: { invalid, error },
@@ -185,14 +189,6 @@ const OrderReportsForm = () => {
             <Controller
               name='email'
               control={control}
-              rules={{
-                required: intl('email_validation'),
-                pattern: {
-                  value:
-                    /^[\w!#$%&'*+/=?`{|}~^-]+(?:\.[\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}$/g,
-                  message: intl('email_validation'),
-                },
-              }}
               render={({
                 field: { ref, ...props },
                 fieldState: { invalid, error },
@@ -216,9 +212,6 @@ const OrderReportsForm = () => {
             <Controller
               name='company'
               control={control}
-              rules={{
-                required: intl('order_reports_form_company_validation'),
-              }}
               render={({
                 field: { ref, ...props },
                 fieldState: { invalid, error },
@@ -242,9 +235,6 @@ const OrderReportsForm = () => {
             <Controller
               name='address'
               control={control}
-              rules={{
-                required: intl('order_reports_form_address_validation'),
-              }}
               render={({
                 field: { ref, ...props },
                 fieldState: { invalid, error },
@@ -269,13 +259,6 @@ const OrderReportsForm = () => {
             <Controller
               name='zipcode'
               control={control}
-              rules={{
-                required: intl('order_reports_form_zipcode_validation'),
-                pattern: {
-                  value: englishTextRegex,
-                  message: intl('not_valid_input'),
-                },
-              }}
               render={({
                 field: { ref, ...props },
                 fieldState: { invalid, error },
@@ -300,13 +283,6 @@ const OrderReportsForm = () => {
             <Controller
               name='city'
               control={control}
-              rules={{
-                required: intl('order_reports_form_city_validation'),
-                pattern: {
-                  value: nameRegex,
-                  message: intl('not_valid_input'),
-                },
-              }}
               render={({
                 field: { ref, ...props },
                 fieldState: { invalid, error },
@@ -330,13 +306,6 @@ const OrderReportsForm = () => {
             <Controller
               name='country'
               control={control}
-              rules={{
-                required: intl('order_reports_form_country_validation'),
-                pattern: {
-                  value: nameRegex,
-                  message: intl('not_valid_input'),
-                },
-              }}
               render={({
                 field: { ref, ...props },
                 fieldState: { invalid, error },
@@ -389,7 +358,7 @@ const OrderReportsForm = () => {
           </form>
         </>
       )}
-      <div role='region' aria-live='assertive'>
+      <section aria-live='assertive'>
         {isSuccessfullySubmitted && <FormMessageBox variant='success' />}
         {isSubmitted && isServerError && (
           <FormMessageBox
@@ -400,7 +369,7 @@ const OrderReportsForm = () => {
             }}
           />
         )}
-      </div>
+      </section>
     </>
   )
 }

@@ -7,13 +7,13 @@ import { type BaseSyntheticEvent, useId, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import type * as z from 'zod'
 import { subscribe } from '@/app/_actions/subscription.actions'
-import {  type newsletterCategoryLocale} from '@/types/newsLetterTypes'
 import { Button } from '@/core/Button'
 import { Checkbox } from '@/core/Checkbox/Checkbox'
 import { FormMessageBox } from '@/core/Form/FormMessageBox'
 import { TextField } from '@/core/TextField/TextField'
 import { subscribeSchema } from '@/lib/zodSchemas/zodSchemas'
 import { getLocaleFromIso } from '@/sanity/helpers/localization'
+import { type newsletterCategoryLocale } from '@/types/newsLetterTypes'
 import FriendlyCaptcha from './FriendlyCaptcha'
 
 const SubscribeForm = () => {
@@ -30,7 +30,7 @@ const SubscribeForm = () => {
     control,
     register,
     setError,
-    formState: { errors, isSubmitting, isSubmitted, isSubmitSuccessful },
+    formState: { errors, isSubmitting, isSubmitted },
   } = useForm({
     resolver: zodResolver(subscribeSchema),
     defaultValues: { email: '', categories: [] },
@@ -41,14 +41,12 @@ const SubscribeForm = () => {
     event?: BaseSyntheticEvent,
   ) => {
     if (isFriendlyChallengeDone) {
-      console.log('locale', locale)
       const res = await subscribe({
         locale: getLocaleFromIso(locale) as newsletterCategoryLocale,
         frcCaptchaSolution: (event?.target as any)['frc-captcha-response']
           .value,
         formData,
       })
-      console.log('subscribe res', res)
 
       /*       const res = await fetch('/api/newsletter/subscription', {
         body: JSON.stringify({
@@ -213,7 +211,7 @@ const SubscribeForm = () => {
         </>
       )}
       <section aria-live='assertive'>
-        {isSubmitSuccessful && <FormMessageBox variant='success' />}
+        {isSuccessfullySubmitted && <FormMessageBox variant='success' />}
         {isSubmitted && isServerError && (
           <FormMessageBox
             variant='error'

@@ -2,37 +2,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Icon } from '@equinor/eds-core-react'
 import { error_filled } from '@equinor/eds-icons'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useLocale, useTranslations } from 'next-intl'
 import { type BaseSyntheticEvent, useId, useMemo, useState } from 'react'
 import { Controller, useForm, useWatch } from 'react-hook-form'
+import type { z } from 'zod'
+import submitFormServerAction from '@/app/_actions/submitFormServerAction'
+import verifyCaptcha from '@/app/_actions/verifyCaptcha'
 import { Button } from '@/core/Button'
 import { Checkbox } from '@/core/Checkbox/Checkbox'
 import { FormMessageBox } from '@/core/Form/FormMessageBox'
 import { Select } from '@/core/Select/Select'
 import { TextField } from '@/core/TextField/TextField'
+import { careersContactFormSchema } from '@/lib/zodSchemas/zodSchemas'
 import FriendlyCaptcha from './FriendlyCaptcha'
-import verifyCaptcha from '@/app/_actions/verifyCaptcha'
-import submitFormServerAction from '@/app/_actions/submitFormServerAction'
-import {
-  contentRegex,
-  emailRegex,
-  englishTextRegex,
-  nameRegex,
-  phoneRegex,
-} from './validations'
 
-type FormValues = {
-  name: string
-  email: string
-  phone: string
-  category: string
-  questions: string
-  positionId: string
-  preferredLang: string
-  candidateType: string
-  supportingDocuments: string
-  location: string
-}
+type CareerContactFormData = z.infer<typeof careersContactFormSchema>
 
 const CareersContactForm = () => {
   const intl = useTranslations()
@@ -47,9 +32,10 @@ const CareersContactForm = () => {
     control,
     reset,
     register,
-    formState: { errors, isSubmitted, isSubmitting, isSubmitSuccessful },
+    formState: { errors, isSubmitted, isSubmitting },
     setError,
-  } = useForm({
+  } = useForm<CareerContactFormData>({
+    resolver: zodResolver(careersContactFormSchema),
     defaultValues: {
       name: '',
       email: '',
@@ -80,48 +66,66 @@ const CareersContactForm = () => {
     return watchCategory !== suspectedRecruitmentScam && watchCategory !== ''
   }, [watchCategory, suspectedRecruitmentScam])
 
-  const getCatalogType = (category: string, candidateType: string) => {
-    if (category.includes(suspectedRecruitmentScam))
+  const getCatalogType = (
+    category: string | undefined,
+    candidateType: string | undefined,
+  ) => {
+    if (category?.includes(suspectedRecruitmentScam))
       return 'b04a9748832d8610347af830feaad382'
     if (
-      candidateType.includes(graduates) ||
-      candidateType.includes(interns) ||
-      candidateType.includes(apprentices)
+      candidateType?.includes(graduates) ||
+      candidateType?.includes(interns) ||
+      candidateType?.includes(apprentices)
     )
       return '3971e24c375a3640615af01643990ebf'
     return '59e02ac8375a3640615af01643990e7c'
   }
 
-  const onSubmit = async (data: FormValues, event?: BaseSyntheticEvent) => {
-
+  const onSubmit = async (
+    data: CareerContactFormData,
+    event?: BaseSyntheticEvent,
+  ) => {
     data.preferredLang = locale
     if (isFriendlyChallengeDone) {
-      const frcCaptchaSolution = (event?.target as any)['frc-captcha-response'].value
+      const frcCaptchaSolution = (event?.target as any)['frc-captcha-response']
+        .value
       const isCaptchaVerified = await verifyCaptcha(frcCaptchaSolution)
+
       const cid = getCatalogType(data.category, data.candidateType)
-      if(!isCaptchaVerified){
+
+      if (!isCaptchaVerified) {
         return
       }
 
-      let finalFormData = {
-        "variables": {
-          "requested_for": "equinordotcom",
-          "cid": cid, //change
-          "name": data.name,
-          "phone": data.phone,
-          "email": data.email,
-          "external_emails": data.email,
-          "positiondetails": data.positionId,
-          "location": data.location,
-          "questions": data.questions,
-          "supportingdocuments": data.supportingDocuments,
-          "candidatetype": data.candidateType,
-          "category": data.category
-        }
+      const isDataValidated = careersContactFormSchema.safeParse(data)
+
+      if (!isDataValidated.success) {
+        setServerError(true)
+        setSuccessfullySubmitted(false)
       }
-      
+
+      const finalFormData = {
+        variables: {
+          requested_for: 'equinordotcom',
+          cid: cid, //change
+          name: data.name,
+          phone: data.phone,
+          email: data.email,
+          external_emails: data.email,
+          positiondetails: data.positionId,
+          location: data.location,
+          questions: data.questions,
+          supportingdocuments: data.supportingDocuments,
+          candidatetype: data.candidateType,
+          category: data.category,
+        },
+      }
+
       // Call the server action directly
-      const result = await submitFormServerAction(JSON.stringify(finalFormData), 'CAT0012840')
+      const result = await submitFormServerAction(
+        JSON.stringify(finalFormData),
+        'CAT0012840',
+      )
 
       setServerError(result.status !== 200)
       setSuccessfullySubmitted(result.status === 200)
@@ -154,13 +158,6 @@ const CareersContactForm = () => {
                 <Controller
                   name='name'
                   control={control}
-                  rules={{
-                    required: intl('name_validation'),
-                    pattern: {
-                      value: nameRegex,
-                      message: intl('not_valid_input'),
-                    },
-                  }}
                   render={({
                     field: { ref, ...props },
                     fieldState: { invalid, error },
@@ -184,13 +181,6 @@ const CareersContactForm = () => {
                 <Controller
                   name='phone'
                   control={control}
-                  rules={{
-                    required: intl('careers_contact_form_phone_validation'),
-                    pattern: {
-                      value: phoneRegex,
-                      message: intl('careers_contact_form_phone_validation'),
-                    },
-                  }}
                   render={({
                     field: { ref, ...props },
                     fieldState: { invalid, error },
@@ -216,13 +206,6 @@ const CareersContactForm = () => {
                 <Controller
                   name='email'
                   control={control}
-                  rules={{
-                    required: intl('email_validation'),
-                    pattern: {
-                      value: emailRegex,
-                      message: intl('email_validation'),
-                    },
-                  }}
                   render={({
                     field: { ref, ...props },
                     fieldState: { invalid, error },
@@ -273,23 +256,6 @@ const CareersContactForm = () => {
                 <Controller
                   name='positionId'
                   control={control}
-                  rules={{
-                    validate: {
-                      require: value => {
-                        if (!value && setPositionIdMandatory) {
-                          console.log('not validated required field')
-                          return intl(
-                            'careers_contact_form_positionId_validation',
-                          )
-                        }
-                        return true
-                      },
-                    },
-                    pattern: {
-                      value: englishTextRegex,
-                      message: intl('not_valid_input'),
-                    },
-                  }}
                   render={({
                     field: { ref, ...props },
                     fieldState: { invalid, error },
@@ -316,13 +282,6 @@ const CareersContactForm = () => {
                 <Controller
                   name='location'
                   control={control}
-                  rules={{
-                    required: intl('careers_contact_form_location_validation'),
-                    pattern: {
-                      value: nameRegex,
-                      message: intl('not_valid_input'),
-                    },
-                  }}
                   render={({
                     field: { ref, ...props },
                     fieldState: { invalid, error },
@@ -374,13 +333,6 @@ const CareersContactForm = () => {
                 <Controller
                   name='questions'
                   control={control}
-                  rules={{
-                    required: intl('careers_contact_form_questions_validation'),
-                    pattern: {
-                      value: contentRegex,
-                      message: intl('not_valid_input'),
-                    },
-                  }}
                   render={({
                     field: { ref, ...props },
                     fieldState: { invalid, error },

@@ -1,36 +1,42 @@
 'use client'
 import { Icon } from '@equinor/eds-core-react'
 import { error_filled } from '@equinor/eds-icons'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useLocale, useTranslations } from 'next-intl'
-import { type BaseSyntheticEvent, useState, useId } from 'react'
+import { type BaseSyntheticEvent, useId, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
+import type { z } from 'zod'
+import submitFormServerAction from '@/app/_actions/submitFormServerAction'
+import verifyCaptcha from '@/app/_actions/verifyCaptcha'
 import { Button } from '@/core/Button'
 import { Checkbox } from '@/core/Checkbox/Checkbox'
 import { FormMessageBox } from '@/core/Form/FormMessageBox'
 import { Select } from '@/core/Select/Select'
 import { TextField } from '@/core/TextField/TextField'
+import { careerFairFormSchema } from '@/lib/zodSchemas/zodSchemas'
 import FriendlyCaptcha from './FriendlyCaptcha'
-import {
-  contentRegex,
-  emailRegex,
-  nameRegex,
-  phoneRegex,
-  urlRegex,
-} from './validations'
-import verifyCaptcha from '@/app/_actions/verifyCaptcha'
-import submitFormServerAction from '@/app/_actions/submitFormServerAction'
 
-type FormValues = {
-  organisation: string
-  email: string
-  contactPerson: string
-  phone: string
-  event: string
-  eventDescription: string
-  website: string
-  supportingDocuments: string
-  preferredLang: string
-}
+// import {
+//   contentRegex,
+//   emailRegex,
+//   nameRegex,
+//   phoneRegex,
+//   urlRegex,
+// } from './validations'
+
+// type FormValues = {
+//   organisation: string
+//   email: string
+//   contactPerson: string
+//   phone: string
+//   event: string
+//   eventDescription: string
+//   website: string
+//   supportingDocuments: string
+//   preferredLang: string
+// }
+
+type CareerFairFormData = z.infer<typeof careerFairFormSchema>
 
 const CareerFairForm = () => {
   const intl = useTranslations()
@@ -47,8 +53,9 @@ const CareerFairForm = () => {
     register,
     watch,
     setError,
-    formState: { errors, isSubmitted, isSubmitting, isSubmitSuccessful },
-  } = useForm({
+    formState: { errors, isSubmitted, isSubmitting },
+  } = useForm<CareerFairFormData>({
+    resolver: zodResolver(careerFairFormSchema),
     defaultValues: {
       organisation: '',
       email: '',
@@ -62,34 +69,49 @@ const CareerFairForm = () => {
     },
   })
 
-  const onSubmit = async (data: FormValues, event?: BaseSyntheticEvent) => {
+  const onSubmit = async (
+    data: CareerFairFormData,
+    event?: BaseSyntheticEvent,
+  ) => {
     data.preferredLang = locale
     if (isFriendlyChallengeDone) {
-      const frcCaptchaSolution = (event?.target as any)['frc-captcha-response'].value
+      const frcCaptchaSolution = (event?.target as any)['frc-captcha-response']
+        .value
       const isCaptchaVerified = await verifyCaptcha(frcCaptchaSolution)
 
-      if(!isCaptchaVerified){
+      if (!isCaptchaVerified) {
         return
       }
-    
-      let finalFormData = {
-        "variables": {
-          "requested_for": "equinordotcom",
-          "cid": "848f447ddb692600ff6272dabf961948",
-          "external_emails": data.email,
-          "phonenumber": data.phone,
-          "contactperson": data.contactPerson,
-          "schoolorganisation": data.organisation,
-          "event": data.event,
-          "descriptionofevent": data.eventDescription,
-          "linktowebsite": data.website,
-          "supportingdocuments": data.supportingDocuments      
-        }
+
+      const isDataValidated = careerFairFormSchema.safeParse(data)
+
+      if (!isDataValidated.success) {
+        setServerError(true)
+        setSuccessfullySubmitted(false)
       }
-      
+
+      const finalFormData = {
+        variables: {
+          requested_for: 'equinordotcom',
+          cid: '848f447ddb692600ff6272dabf961948',
+          external_emails: data.email,
+          phonenumber: data.phone,
+          contactperson: data.contactPerson,
+          schoolorganisation: data.organisation,
+          event: data.event,
+          descriptionofevent: data.eventDescription,
+          linktowebsite: data.website,
+          supportingdocuments:
+            data.supportingDocuments === 'Yes' ? 'Yes' : 'No',
+        },
+      }
+
       // Call the server action directly
       // CAT0012839 is CAT ID for Career Fair Form //
-      const result = await submitFormServerAction(JSON.stringify(finalFormData), 'CAT0012839')
+      const result = await submitFormServerAction(
+        JSON.stringify(finalFormData),
+        'CAT0012839',
+      )
 
       setServerError(result.status !== 200)
       setSuccessfullySubmitted(result.status === 200)
@@ -120,13 +142,6 @@ const CareerFairForm = () => {
             <Controller
               name='organisation'
               control={control}
-              rules={{
-                required: intl('career_fair_form_organisation_validation'),
-                pattern: {
-                  value: /^[a-zA-Z0-9 ]*$/,
-                  message: intl('not_valid_input'),
-                },
-              }}
               render={({
                 field: { ref, ...props },
                 fieldState: { invalid, error },
@@ -150,13 +165,6 @@ const CareerFairForm = () => {
             <Controller
               name='contactPerson'
               control={control}
-              rules={{
-                required: intl('career_fair_form_contact_person_validation'),
-                pattern: {
-                  value: nameRegex,
-                  message: intl('not_valid_input'),
-                },
-              }}
               render={({
                 field: { ref, ...props },
                 fieldState: { invalid, error },
@@ -180,13 +188,6 @@ const CareerFairForm = () => {
             <Controller
               name='phone'
               control={control}
-              rules={{
-                required: intl('career_fair_form_phone_validation'),
-                pattern: {
-                  value: phoneRegex,
-                  message: intl('career_fair_form_phone_validation'),
-                },
-              }}
               render={({
                 field: { ref, ...props },
                 fieldState: { invalid, error },
@@ -213,13 +214,6 @@ const CareerFairForm = () => {
             <Controller
               name='email'
               control={control}
-              rules={{
-                required: intl('email_validation'),
-                pattern: {
-                  value: emailRegex,
-                  message: intl('email_validation'),
-                },
-              }}
               render={({
                 field: { ref, ...props },
                 fieldState: { invalid, error },
@@ -272,13 +266,6 @@ const CareerFairForm = () => {
             <Controller
               name='eventDescription'
               control={control}
-              rules={{
-                required: intl('career_fair_form_event_description_validation'),
-                pattern: {
-                  value: contentRegex,
-                  message: intl('not_valid_input'),
-                },
-              }}
               render={({
                 field: { ref, ...props },
                 fieldState: { invalid, error },
@@ -308,12 +295,6 @@ const CareerFairForm = () => {
             <Controller
               name='website'
               control={control}
-              rules={{
-                pattern: {
-                  value: urlRegex,
-                  message: intl('not_valid_input'),
-                },
-              }}
               render={({ field: { ref, ...props } }) => (
                 <TextField
                   {...props}
