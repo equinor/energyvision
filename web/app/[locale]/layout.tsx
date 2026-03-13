@@ -53,11 +53,13 @@ export default async function LocaleLayout({
       query: Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery,
       params: queryParams,
       tags: ['siteMenu', 'subMenu'],
+      requestTag: 'menu',
     }),
     routeSanityFetch({
       query: footerAndErrorImageQuery,
       params: queryParams,
       tags: ['footer', 'settings'],
+      requestTag: 'footer',
     }),
   ])
 

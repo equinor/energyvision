@@ -53,6 +53,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       ...((isNewsPage || isMagazineRoom || isMagazinePage) && { type }),
     },
     stega: false,
+    requestTag: 'page-meta',
   })
 
   return constructSanityMetadata(slug, locale, metaData)

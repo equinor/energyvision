@@ -34,6 +34,7 @@ export async function generateMetadata({
         lang: getNameFromIso(locale),
       },
       stega: false,
+      requestTag: 'meta-news',
     })
 
     return constructSanityMetadata(pageSlug, locale, metaData)

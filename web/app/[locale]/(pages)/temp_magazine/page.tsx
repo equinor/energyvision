@@ -37,6 +37,7 @@ export async function generateMetadata({
       tags: ['magazineIndexPage'],
     },
     stega: false,
+    requestTag: 'meta-magazine-room',
   })
 
   return constructSanityMetadata(pageSlug, locale, metaData)
@@ -74,6 +75,7 @@ export default async function MagazineRoomPage({
       ...(tag && tag !== 'all' && { tag }),
     } as QueryParams,
     tags: ['magazine'],
+    requestTag: 'magazine-room',
   })
 
   const pageData = {

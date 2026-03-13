@@ -54,6 +54,7 @@ export async function generateMetadata({
         lang: getNameFromIso(locale),
       },
       stega: false,
+      requestTag: 'meta-nyheter',
     })
 
     return constructSanityMetadata(

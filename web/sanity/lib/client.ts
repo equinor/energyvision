@@ -13,6 +13,7 @@ const sanityConfig: ClientConfig = {
   perspective: dataset === 'global-development' ? 'drafts' : 'published',
   useCdn: dataset === 'global-development',
   ignoreBrowserTokenWarning: dataset === 'global-development',
+  requestTagPrefix: 'website', // to track usage on web in sanity console
   stega: {
     studioUrl,
     // Set logger to 'console' for more verbose logging

@@ -23,6 +23,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     params: {
       lang: getNameFromIso(locale),
     },
+    requestTag: 'meta-home',
     stega: false,
   })
 

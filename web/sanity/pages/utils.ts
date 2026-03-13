@@ -184,6 +184,7 @@ export async function getPage(params: Params) {
         params: {
           id,
         },
+        requestTag: 'preview',
       })
 
       if (draftInfo?.lang) {
@@ -193,6 +194,7 @@ export async function getPage(params: Params) {
             id,
             lang: draftInfo?.lang,
           },
+          requestTag: 'preview',
         })
         pageData = data
       }
@@ -205,6 +207,7 @@ export async function getPage(params: Params) {
       query: pageQuery,
       tags: [...tags],
       params: { ...pageQueryParams },
+      requestTag: 'page-by-slug',
     })
     pageData = data
   }
@@ -222,6 +225,7 @@ export async function getPage(params: Params) {
         ...(tag && tag !== 'all' && { tag }),
       } as QueryParams,
       tags: ['magazine'],
+      requestTag: 'magazine-room',
     })
     magazineArticles = articles
   }
