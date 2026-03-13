@@ -2,8 +2,11 @@
 import axios from 'axios'
 import type z from 'zod'
 import { subscribeSchema } from '@/lib/zodSchemas/zodSchemas'
-import { validateFormRequest } from '../api/forms/validateFormRequest'
-import { newsletterCategoryLocale, newsletterCategoryMap } from '@/types/newsLetterTypes'
+import {
+  type newsletterCategoryLocale,
+  newsletterCategoryMap,
+} from '@/types/newsLetterTypes'
+import verifyCaptcha from './verifyCaptcha'
 
 const MAKE_SUBSCRIBER_API_BASE_URL = process.env.MAKE_SUBSCRIBER_API_BASE_URL
 const MAKE_API_KEY = process.env.MAKE_API_KEY || ''
@@ -30,14 +33,11 @@ export async function subscribe({
   frcCaptchaSolution,
   formData,
 }: SubscribeProps) {
-  const captchaResult = await validateFormRequest(
-    frcCaptchaSolution,
-    'subscription form',
-  )
-  if (captchaResult.status !== 200) {
+  const captchaResult = await verifyCaptcha(frcCaptchaSolution)
+  if (captchaResult !== true) {
     return {
       status: false,
-      message: captchaResult.message,
+      message: captchaResult,
     }
   }
 
