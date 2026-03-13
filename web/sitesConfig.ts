@@ -176,7 +176,7 @@ const websiteDomains: Partial<
     meta: 'equinorcelticsea.co.uk',
   },
   'global-development': {
-    url: 'localhost:3000',
+    url: 'https://web-global-development-upgrade-equinor-web-sites-dev.c2.radix.equinor.com',
     meta: 'Equinor',
   },
   sponsorship: {

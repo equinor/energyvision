@@ -178,7 +178,7 @@ export async function POST(req: NextRequest) {
 
   const newsDistributionParameters: NewsDistributionParameters = {
     title: data.title,
-    link: `${domain}/${locale}${data.link}`,
+    link: `${domain}${data.languageCode !== 'en_GB' ? `/${locale}` : ''}${data.link}`,
     languageCode: locale,
   }
   console.log('Newsletter link: ', newsDistributionParameters.link)
