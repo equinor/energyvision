@@ -2,7 +2,8 @@ import { isValidSignature, SIGNATURE_HEADER_NAME } from '@sanity/webhook'
 import axios from 'axios'
 import type { NextRequest } from 'next/server'
 import { domain, languages } from '@/languageConfig'
-import { distributeOld } from './old-distribution'
+
+//import { distributeOld } from './old-distribution'
 
 const SANITY_API_TOKEN = process.env.SANITY_API_TOKEN || ''
 const SLACK_NEWSLETTER_WEBHOOK_URL = process.env.SLACK_NEWSLETTER_WEBHOOK_URL
@@ -103,7 +104,7 @@ interface DistributionResult {
 
 async function distributeWithRetry(
   newsDistributionParameters: NewsDistributionParameters,
-  oldNewsDistributionParameters: any,
+  oldNewsDistributionParameters?: any,
   attempt = 1,
 ): Promise<DistributionResult> {
   let res: DistributionResult = {
@@ -115,10 +116,10 @@ async function distributeWithRetry(
 
   try {
     //For migration period just log.
-    const isNewSuccessful = await distribute(newsDistributionParameters)
-    console.log(`New distribution was successful: ${isNewSuccessful}`)
+    const isSuccessful = await distribute(newsDistributionParameters)
+    console.log(`New distribution was successful: ${isSuccessful}`)
 
-    const isSuccessful = await distributeOld(oldNewsDistributionParameters)
+    //const isSuccessful = await distributeOld(oldNewsDistributionParameters)
 
     if (!isSuccessful) throw new Error('Distribution was unsuccessful.')
     res = {
@@ -165,14 +166,14 @@ export async function POST(req: NextRequest) {
     languages.find(lang => lang.name === data.languageCode)?.locale || 'en'
 
   //To be removed after migration period
-  const oldNewsDistributionParameters: any = {
+  /*   const oldNewsDistributionParameters: any = {
     timeStamp: data.timeStamp,
     title: data.title,
     ingress: data.ingress,
     link: `${domain}/${locale}${data.link}`,
     newsType: data.newsType,
     languageCode: locale,
-  }
+  } */
   // END
 
   const newsDistributionParameters: NewsDistributionParameters = {
@@ -182,10 +183,11 @@ export async function POST(req: NextRequest) {
   }
   console.log('Newsletter link: ', newsDistributionParameters.link)
 
-  await distributeWithRetry(
+  /*   await distributeWithRetry(
     newsDistributionParameters,
     oldNewsDistributionParameters,
-  )
+  ) */
+  await distributeWithRetry(newsDistributionParameters)
     .then(result => {
       if (result.success) {
         return new Response(JSON.stringify({ message: result.message }), {
