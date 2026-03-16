@@ -15,8 +15,8 @@ import GridTextBlock from './GridTextBlock'
 export type RowType = 'span3' | 'span2and1' | 'threeColumns' | undefined
 
 export const mapGridContent = (data: ComponentProps, rowType?: RowType, isMobile?: boolean): React.ReactNode => {
-  //@ts-expect-error:so many types
-  switch (data.type) {
+  //@ts-ignore:so many types
+  switch (data?.type) {
     case 'gridTextBlock':
       return <GridTextBlock key={data.id} data={data as any} rowType={rowType} />
     case 'gridTeaser':

@@ -8,7 +8,7 @@ import { ResourceLink } from '@core/Link'
 import { getIsoFromLocale } from '../../lib/localization'
 import { Flags } from '../../common/helpers/datasetHelpers'
 import { createInstantSearchRouterNext } from 'react-instantsearch-router-nextjs'
-import { SearchClient, SearchResponse, UiState } from 'instantsearch.js'
+import { SearchClient, SearchOptions, SearchResponse, UiState } from 'instantsearch.js'
 import Seo from '../../pageComponents/shared/Seo'
 import { Configure, InstantSearch } from 'react-instantsearch'
 import { FormattedMessage, useIntl } from 'react-intl'
@@ -134,7 +134,14 @@ const NewsRoomTemplate = forwardRef<HTMLElement, NewsRoomTemplateProps>(function
   const queriedSearchClient: SearchClient = {
     ...searchClient,
     search(requests: any) {
-      if (requests.every(({ params }: any) => !params.query && params?.facetFilters?.flat().length > 2)) {
+      const facetFilterSet = new Set(
+        requests.map((it: { params: { facetFilters: any } }) => it.params.facetFilters).flat(2),
+      )
+      const hasEmptyQueryOrFirstPage = requests.every(
+        ({ params }: { indexName: string; params: SearchOptions }) => !params.query && params.page === 0,
+      )
+
+      if (hasEmptyQueryOrFirstPage && facetFilterSet.size === 2) {
         return Promise.resolve({
           results: requests.map(() => initialSearchResponse),
         })
