@@ -75,7 +75,7 @@ export const getStaticProps: GetStaticProps = async ({ preview = false, locale =
   // This is a hack and and we should improve this at some point
   // See https://github.com/vercel/next.js/discussions/18485
 
-  if (locale !== 'no' && !Flags.HAS_NEWSROOM) {
+  if (locale !== 'no' || !Flags.HAS_NEWSROOM) {
     return {
       notFound: true,
     }
