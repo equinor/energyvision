@@ -93,6 +93,7 @@ export const getStaticProps: GetStaticProps = async ({ preview = false, locale =
     facetFilters: ['type:news', 'topicTags:-Crude Oil Assays'],
     facetingAfterDistinct: true,
     facets: ['countryTags', 'topicTags', 'year'],
+    analyticsTags: ['server'],
   })
 
   const queryParams = {
@@ -117,7 +118,7 @@ export const getStaticProps: GetStaticProps = async ({ preview = false, locale =
         footerData,
         intl,
         pageData,
-        response: { clickAnalytics: null, ...response },
+        response: { ...response, clickAnalytics: null },
       },
       serverState,
     },
