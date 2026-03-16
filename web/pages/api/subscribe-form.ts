@@ -2,7 +2,7 @@ import { signUp as signUpWithMake } from './subscriptionNew'
 import { signUp } from './subscription'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { validateFormRequest } from './forms/validateFormRequest'
-import { Flags } from 'common/helpers/datasetHelpers'
+import { Flags } from '../../common/helpers/datasetHelpers'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const result = await validateFormRequest(req, 'subscribe form')
