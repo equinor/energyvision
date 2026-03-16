@@ -104,6 +104,22 @@ export const TextRenderer = (props: any, as: ElementType, group?: any, level?: a
   )
 }
 
+export const displayTextConfig = {
+  title: 'Display text',
+  value: 'displayText',
+  component: (props: any) => TextRenderer(props, 'span', 'display', 'h2_base'),
+}
+export const largeTextConfig = {
+  title: 'Large text',
+  value: 'largeText',
+  component: (props: any) => TextRenderer(props, 'span', 'display', 'h2_lg'),
+}
+export const extraLargeTextConfig = {
+  title: 'Extra large text',
+  value: 'extraLargeText',
+  component: (props: any) => TextRenderer(props, 'span', 'display', 'h2_xl'),
+}
+
 // H1 not allowed in block content since it should be a document title.
 export const configureBlockContent = (options: BlockContentProps = {}): BlockDefinition => {
   const {
@@ -226,16 +242,6 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockDef
     value: 'smallText',
     component: SmallTextRender,
   }
-  const largeTextConfig = {
-    title: 'Large text',
-    value: 'largeText',
-    component: (props: any) => TextRenderer(props, 'span', 'display', 'h2_xl'),
-  }
-  const extraLargeTextConfig = {
-    title: 'Extra large text',
-    value: 'extraLargeText',
-    component: (props: any) => TextRenderer(props, 'span', 'display', 'h1_lg'),
-  }
 
   const internalLinkConfig = (linkConfig: any) => {
     const linkType: LinkType = linkConfig.name
@@ -281,6 +287,7 @@ export const configureBlockContent = (options: BlockContentProps = {}): BlockDef
     config?.styles?.push(smallTextConfig)
   }
   if (largeText) {
+    config?.styles?.push(displayTextConfig)
     config?.styles?.push(largeTextConfig)
   }
   if (extraLargeText) {

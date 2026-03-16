@@ -34,9 +34,7 @@ const GridTextBlock = forwardRef<HTMLDivElement, GridTextBlockProps>(function Gr
     imageBackground,
   } = data
   const url = action && getUrlFromAction(action)
-  console.log('useThemedTitle', useThemedTitle)
-  console.log('contentTheme', contentTheme)
-  console.log('theme', theme)
+
   const contentAlignmentUtilities = {
     center: 'justify-center items-center',
     right: 'justify-end items-center',
@@ -139,7 +137,7 @@ const GridTextBlock = forwardRef<HTMLDivElement, GridTextBlockProps>(function Gr
   const getLayout = () => {
     switch (rowType) {
       case 'span3':
-        return 'lg:grid lg:grid-cols-[35%_60%] gap-10'
+        return `lg:grid lg:grid-cols-[35%_60%] gap-10`
       case 'span2and1':
         return '4xl:grid 4xl:grid-cols-[35%_60%] gap-10'
       default:
@@ -231,7 +229,7 @@ const GridTextBlock = forwardRef<HTMLDivElement, GridTextBlockProps>(function Gr
         w-full
         h-full
         text-balance
-        max-lg:min-h-[420px]
+        min-h-[420px]
         ${contentAlignmentUtilities[contentAlignment ?? 'center']}
         ${
           imageBackground?.useLight
