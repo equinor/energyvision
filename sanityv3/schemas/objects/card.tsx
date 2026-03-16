@@ -45,7 +45,7 @@ export default {
     input: CardField,
   },
   fields: [
-    {
+    /*     {
       name: 'thumbnail',
       title: 'Thumbnail icon',
       description: 'Optional',
@@ -61,7 +61,7 @@ export default {
           ['administrator', 'designer', 'developer'].includes(name),
         )
       },
-    },
+    }, */
     {
       name: 'title',
       type: 'text',
