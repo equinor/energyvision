@@ -6,7 +6,7 @@ export default {
   type: 'object',
   title: 'Tabs Key Number Item',
   fields: [
-    {
+    /*     {
       name: 'thumbnail',
       title: 'Thumbnail icon',
       description: 'Optional',
@@ -22,7 +22,7 @@ export default {
           ['administrator', 'designer', 'developer'].includes(name),
         )
       },
-    },
+    }, */
     {
       name: 'keyNumber',
       title: 'Key Number',
