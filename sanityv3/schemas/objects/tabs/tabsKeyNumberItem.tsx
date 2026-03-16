@@ -11,6 +11,17 @@ export default {
       title: 'Thumbnail icon',
       description: 'Optional',
       type: 'imageWithAlt',
+      hidden: ({
+        currentUser,
+      }: {
+        currentUser: {
+          roles: { name: string }[]
+        }
+      }) => {
+        return !currentUser.roles.find(({ name }: { name: string }) =>
+          ['administrator', 'designer', 'developer'].includes(name),
+        )
+      },
     },
     {
       name: 'keyNumber',

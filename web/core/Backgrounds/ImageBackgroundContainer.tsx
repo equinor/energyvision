@@ -53,10 +53,10 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
 
     const backgroundClassNames = `[container:inline-size]
       relative
-      ${useLight ? '' : 'dark'}
+      ${useLight || useNoGradient ? '' : 'dark'}
       w-full
       h-full
-      ${useAnimation && !isMobile ? `bg-fixed ${fadedFilter}` : 'bg-local'}
+      ${useAnimation && !isMobile && !useNoGradient ? `bg-fixed ${fadedFilter}` : 'bg-local'}
       bg-center
       bg-no-repeat
       bg-cover

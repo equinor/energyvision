@@ -2,7 +2,7 @@ import { SuperScriptRenderer, SubScriptRenderer, StrikeThroughRenderer } from '.
 import { IconSuperScript, IconSubScript } from '../../icons'
 import { StrikethroughIcon } from '@sanity/icons'
 import { BlockDefinition } from 'sanity'
-import { em, TextRenderer } from './blockContentType'
+import { displayTextConfig, em, extraLargeTextConfig, largeTextConfig, TextRenderer } from './blockContentType'
 
 export type ThemedTitleContentProps = {
   normalText?: boolean
@@ -53,24 +53,8 @@ export const configureThemedTitleBlockContent = (options: ThemedTitleContentProp
   const normalAsLargeTextConfig = {
     title: 'Large',
     value: 'normal',
-    component: (props: any) => TextRenderer(props, 'span', 'display', 'h2_xl'),
+    component: (props: any) => TextRenderer(props, 'span', 'display', 'h2_lg'),
     //blockEditor: { render: TextRenderer(undefined, 'span', 'display', 'h2_xl') },
-  }
-
-  const largeTextConfig = {
-    title: 'Large text',
-    value: 'largeText',
-    component: (props: any) => TextRenderer(props, 'span', 'display', 'h2_xl'),
-  }
-  const extraLargeTextConfig = {
-    title: 'Extra large text',
-    value: 'extraLargeText',
-    component: (props: any) => TextRenderer(props, 'span', 'display', 'h1_lg'),
-  }
-  const twoXLTextConfig = {
-    title: '2XL text',
-    value: 'twoXLText',
-    component: (props: any) => TextRenderer(props, 'span', 'display', 'h1_xl'),
   }
 
   if (normalText) {
@@ -80,13 +64,11 @@ export const configureThemedTitleBlockContent = (options: ThemedTitleContentProp
     config?.styles?.push(normalAsLargeTextConfig)
   }
   if (normalText && largeText) {
+    config?.styles?.push(displayTextConfig)
     config?.styles?.push(largeTextConfig)
   }
   if (extraLargeText) {
     config?.styles?.push(extraLargeTextConfig)
-  }
-  if (twoXLText) {
-    config?.styles?.push(twoXLTextConfig)
   }
 
   return config

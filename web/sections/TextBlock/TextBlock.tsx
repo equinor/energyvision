@@ -1,5 +1,5 @@
 import { BackgroundContainer } from '@core/Backgrounds'
-import { twMerge } from 'tailwind-merge'
+import { toPlainText } from '@portabletext/react'
 import Image, { getSmallerThanPxLgSizes } from '../../core/SanityImage/SanityImage'
 import { Heading, Typography } from '../../core/Typography'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
@@ -28,12 +28,22 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
   } = data
   /* Don't render the component if it only has an eyebrow */
   if (!title && !ingress && !text && (!callToActions || callToActions.length === 0)) return null
+  const isLongTitle = title && toPlainText(title).length > 30
 
   const contentAlignment = {
     center: 'items-start text-start px-layout-lg',
-    right:
-      'items-start text-start px-layout-lg xl:items-end xl:text-end xl:max-w-[45dvw] xl:ml-auto xl:pr-layout-sm xl:pl-0 ',
-    left: 'items-start text-start px-layout-lg xl:items-start xl:max-w-[45dvw] xl:mr-auto xl:pl-layout-sm xl:pr-0',
+    right: `items-start 
+      text-start 
+      px-layout-lg 
+      xl:items-end 
+      xl:text-end 
+      ${isLongTitle ? 'xl:max-w-[52dvw]' : 'xl:max-w-[45dvw]'} 
+      xl:ml-auto 
+      xl:pr-layout-sm 
+      xl:pl-0`,
+    left: `items-start text-start px-layout-lg xl:items-start ${
+      isLongTitle ? 'xl:max-w-[52dvw]' : 'xl:max-w-[45dvw]'
+    } xl:mr-auto xl:pl-layout-sm xl:pr-0`,
     'bottom-left': 'items-start text-start px-layout-lg xl:mr-auto xl:pl-layout-sm xl:pr-0',
     'bottom-center': 'items-start text-start px-layout-lg xl:pl-layout-sm xl:pr-0',
   }
@@ -72,7 +82,7 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
         designOptions?.background?.type === 'backgroundImage' ? backgroundImageContentClassNames : className
       }`}
     >
-      {isBigText && title && <Heading value={title} as="h2" variant="3xl" />}
+      {isBigText && title && <Heading value={title} as="h2" variant="3xl" useDisplay={true} />}
       {!isBigText && (
         <>
           {image?.asset && (
@@ -101,6 +111,7 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
                 variant="xl"
                 serializerClassnames={serializerClassnames}
                 className={`mb-2`}
+                useDisplay={true}
               />
             )
           )}
