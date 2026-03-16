@@ -86,7 +86,7 @@ export const locations: DocumentLocationResolver = (params, context) => {
                 const locale = getLocaleFromName(translation?.lang)
                 return {
                   title: `${blocksToText(translation?.title)}`,
-                  href: `${translation?.lang !== 'en_GB' ? `${locale}/` : ''}${translation?.slug}`,
+                  href: `${translation?.lang !== 'en_GB' ? `${locale}` : ''}${translation?.slug}`,
                 }
               })
           } else if (doc?.slugs?.filter((slug: string) => slug)?.length > 0) {
@@ -96,7 +96,7 @@ export const locations: DocumentLocationResolver = (params, context) => {
                 const locale = getLocaleFromName(doc?.lang)
                 return {
                   title: `${blocksToText(doc?.title)}`,
-                  href: `${doc?.lang !== 'en_GB' ? `${locale}/` : ''}${slug}`,
+                  href: `${doc?.lang !== 'en_GB' ? `${locale}` : ''}${slug}`,
                 }
               })
           } else {
@@ -127,7 +127,7 @@ export const locations: DocumentLocationResolver = (params, context) => {
           locs = [
             {
               title: doc.title ? plainTitle : 'Untitled',
-              href: `${doc?.lang !== 'en_GB' ? `${locale}/` : ''}${doc?.slug?.current}`,
+              href: `${doc?.lang !== 'en_GB' ? `${locale}` : ''}${doc?.slug?.current}`,
             },
           ]
         }
