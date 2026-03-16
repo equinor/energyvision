@@ -22,7 +22,9 @@ const SearchResults = (props: SearchResultsProps) => {
   const [userClicked, setUserClicked] = useState(false)
 
   useEffect(() => {
-    const indexWithHits = scopedResults.slice(1).filter((it) => it.results?.nbHits > 0 && it.results?.query)
+    const indexWithHits = scopedResults
+      .slice(1)
+      .filter((it) => it.results && it.results?.nbHits > 0 && it.results?.query)
     const firstIndexWithHits = options
       .map((it) => it.value)
       .find((index) => indexWithHits.map((it) => it.indexId).includes(index))
