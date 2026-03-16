@@ -1,17 +1,18 @@
 /* eslint-disable react/display-name */
-import { configureBlockContent } from '../editors'
+
+import { Box, Text } from '@sanity/ui'
 import type { PortableTextBlock, Rule } from 'sanity'
-import { Text, Card, Box } from '@sanity/ui'
 import blocksToText from '../../helpers/blocksToText'
+import { configureBlockContent } from '../editors'
 
 const CardField = (props: any) => {
   const { renderDefault } = props
   return (
     <Box>
-        <Text muted size={2} align="left" style={{marginBottom: 20}}>
-          If only title are used it will render only title as statement. If content below are used, both title and
-          content will be rendered.
-        </Text>
+      <Text muted size={2} align="left" style={{ marginBottom: 20 }}>
+        If only title are used it will render only title as statement. If content below are used, both title and content
+        will be rendered.
+      </Text>
       <>{renderDefault(props)}</>
     </Box>
   )
@@ -38,25 +39,41 @@ export type Card = {
 export default {
   name: 'card',
   title: 'Card',
-  description: `If only title are used it will render as big title statement. 
-  If content below are used, they will have regular heading and paragraph styling`,
   type: 'object',
   localize: true,
   components: {
     input: CardField,
   },
   fields: [
+    /*     {
+      name: 'thumbnail',
+      title: 'Thumbnail icon',
+      description: 'Optional',
+      type: 'imageWithAlt',
+      hidden: ({
+        currentUser,
+      }: {
+        currentUser: {
+          roles: { name: string }[]
+        }
+      }) => {
+        return !currentUser.roles.find(({ name }: { name: string }) =>
+          ['administrator', 'designer', 'developer'].includes(name),
+        )
+      },
+    }, */
     {
       name: 'title',
       type: 'text',
+      description: `If only title are used it will render as big title statement. 
+  If content below are used, they will have regular heading and paragraph styling`,
       validation: (Rule: Rule) =>
-        Rule.required()
-          .custom((value: string) => {
-            if (!value || value.trim() === '') {
-              return 'Card title cannot be empty or contain only blank spaces.';
-            }
-            return true;
-          }),
+        Rule.required().custom((value: string) => {
+          if (!value || value.trim() === '') {
+            return 'Card title cannot be empty or contain only blank spaces.'
+          }
+          return true
+        }),
     },
     {
       name: 'content',

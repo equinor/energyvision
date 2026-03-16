@@ -104,9 +104,7 @@ export const VideoComponentWithCaption = ({
           {...videoControls}
         /> */
         <HlsVideoPlayer
-          variant="default"
           src={video.url}
-          //@ts-expect-error:todo
           aspectRatio={designOptions.aspectRatio}
           poster={urlFor(video.thumbnail?.asset).width(w).height(h).url()}
           title={video.title}
@@ -152,9 +150,7 @@ export const VideoComponent = ({ video, designOptions, useFillMode = false, clas
       /> */}
       {video && (
         <HlsVideoPlayer
-          variant="default"
           src={video?.url}
-          //@ts-expect-error:todo
           aspectRatio={designOptions?.aspectRatio}
           poster={urlFor(video.thumbnail?.asset).width(w).height(h).url()}
           title={video.title}

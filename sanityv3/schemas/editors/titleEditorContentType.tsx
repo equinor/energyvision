@@ -4,7 +4,7 @@ import { StrikethroughIcon } from '@sanity/icons'
 import { BlockDefinition, BlockStyleDefinition } from 'sanity'
 import { format_color_text } from '@equinor/eds-icons'
 import { defaultColors } from '../defaultColors'
-import { em, ExtraLargeTextRender, LargeTextRender } from './blockContentType'
+import { displayTextConfig, extraLargeTextConfig, largeTextConfig } from './blockContentType'
 
 export type TitleContentProps = {
   extendedStyles?: BlockStyleDefinition[]
@@ -15,11 +15,6 @@ export type TitleContentProps = {
   twoXLText?: boolean
 }
 
-const TwoXLTextRender = (props: any) => {
-  const { children } = props
-  return <span style={{ fontSize: `${em(64, 16)}`, fontWeight: '400' }}>{children}</span>
-}
-
 // TODO: Add relevant styles for titles (i.e. highlighted text)
 export const configureTitleBlockContent = (options: TitleContentProps = {}): BlockDefinition => {
   const {
@@ -27,7 +22,6 @@ export const configureTitleBlockContent = (options: TitleContentProps = {}): Blo
     highlightTitle = 'Highlight',
     largeText = false,
     extraLargeText = false,
-    twoXLText = false,
     extendedStyles = [],
   } = options
 
@@ -63,22 +57,6 @@ export const configureTitleBlockContent = (options: TitleContentProps = {}): Blo
     },
   }
 
-  const largeTextConfig = {
-    title: 'Large text',
-    value: 'largeText',
-    component: LargeTextRender,
-  }
-  const extraLargeTextConfig = {
-    title: 'Extra large text',
-    value: 'extraLargeText',
-    component: ExtraLargeTextRender,
-  }
-  const twoXLTextConfig = {
-    title: '2XL text',
-    value: 'twoXLText',
-    component: TwoXLTextRender,
-  }
-
   const textColorConfig = {
     title: highlightTitle,
     value: 'highlight',
@@ -92,13 +70,11 @@ export const configureTitleBlockContent = (options: TitleContentProps = {}): Blo
     config.marks?.decorators?.push(textColorConfig)
   }
   if (largeText) {
+    config?.styles?.push(displayTextConfig)
     config?.styles?.push(largeTextConfig)
   }
   if (extraLargeText) {
     config?.styles?.push(extraLargeTextConfig)
-  }
-  if (twoXLText) {
-    config?.styles?.push(twoXLTextConfig)
   }
 
   return config

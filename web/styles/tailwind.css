@@ -16,6 +16,42 @@
     --color-spruce-wood-20: #fef8f4;
     --color-blue-20: #f2f9fc;
     --color-gray-20: #f8f8f8;
+    --tracking-display: -3px;
+    --color-white-100: hsl(0, 0%, 100%);
+
+    /* Leading */
+    --lofty: 1.02; /* 49.7px h3 large screen */
+    --earthy: 1.172; /* 57.1828px h2 large screen */
+    --misty: 1.25;
+    --cloudy: 1.4; /*68.3071px h1 larger screen */
+    --planetary: 1.5;
+
+    --text-2xs: clamp(calc(11.11 / 16 * 1rem), 0.19vw + 0.65rem, calc(14.08 / 16 * 1rem));
+    --text-2xs--line-height: calc(1 / 0.75);
+    --text-xs: clamp(calc(13.33 / 16 * 1rem), 0.28vw + 0.77rem, calc(17.6 / 16 * 1rem));
+    --text-xs--line-height: calc(1 / 0.75);
+    --text-sm: clamp(calc(14.61 / 16 * 1rem), 0.33vw + 0.84rem, calc(19.68 / 16 * 1rem));
+    --text-sm--line-height: calc(1.25 / 0.875);
+    --text-base: clamp(calc(16 / 16 * 1rem), 0.39vw + 0.91rem, calc(22 / 16 * 1rem));
+    --text-base--line-height: calc(1.5 / 1);
+    --text-md: clamp(calc(19.2 / 16 * 1rem), 0.54vw + 1.07rem, calc(27.5 / 16 * 1rem));
+    --text-md--line-height: calc(1.5 / 1);
+    --text-lg: clamp(calc(23.04 / 16 * 1rem), 0.73vw + 1.27rem, calc(34.38 / 16 * 1rem));
+    --text-lg--line-height: calc(1.75 / 1.125);
+    --text-xl: clamp(calc(27.65 / 16 * 1rem), 0.99vw + 1.5rem, calc(42.97 / 16 * 1rem));
+    --text-xl--line-height: calc(1.75 / 1.25);
+    --text-2xl: clamp(calc(33.73 / 16 * 1rem), 1.38vw + 1.785rem, calc(55.055 / 16 * 1rem));
+    --text-2xl--line-height: calc(2 / 1.5);
+    --text-3xl: clamp(calc(39.81 / 16 * 1rem), 1.77vw + 2.07rem, calc(67.14 / 16 * 1rem));
+    --text-3xl--line-height: calc(2.25 / 1.875);
+    --text-4xl: clamp(calc(45.89 / 16 * 1rem), 2.16vw + 2.355rem, calc(79.225 / 16 * 1rem));
+    --text-4xl--line-height: calc(2.5 / 2.25);
+    --text-5xl: clamp(calc(51.97 / 16 * 1rem), 2.55vw + 2.64rem, calc(91.31 / 16 * 1rem));
+    --text-5xl--line-height: 1;
+    --text-6xl: clamp(calc(58.05 / 16 * 1rem), 2.94vw + 2.925rem, calc(103.39 / 16 * 1rem));
+    --text-6xl--line-height: 1;
+    --text-8xl: clamp(calc(59.19 / 16 * 1rem), 3.72vw + 3.495rem, calc(115.47 / 16 * 1rem));
+    --text-8xl--line-height: 1;
   }
 
   p,
@@ -164,13 +200,59 @@
   .homepage-banner-black-left-gradient {
     background-image: linear-gradient(to left, transparent, rgba(0, 0, 0, 0.3) 44%, rgba(0, 0, 0, 0.4) 100%);
   }
+
+  @supports (backdrop-filter: blur(16px)) or (-webkit-backdrop-filter: blur(16px)) {
+    .backdrop-glass {
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      /*
+        These prefixed properties are usually
+        added automatically by tooling:
+      */
+      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(16px); /*16px*/
+      background: linear-gradient(
+        to bottom,
+        hsl(from var(--color-white-100) h s l / 0.23),
+        hsl(from var(--color-white-100) h s l / 0.13) 50% /*transparent 50%*/
+      );
+    }
+    .backdrop-glass:before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      border-radius: inherit;
+      border: 1px solid transparent;
+      background: linear-gradient(
+        hsl(from var(--color-white-100) h s l / 0.22),
+        hsl(from var(--color-white-100) h s l / 0.2)
+      );
+      mask: linear-gradient(black, black) border-box, linear-gradient(black, black) padding-box;
+      mask-composite: subtract;
+    }
+
+    .backdrop-edge {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: var(--thickness);
+      background: hsl(0deg 0% 100% / 0.1);
+      -webkit-backdrop-filter: blur(12px) brightness(0.96);
+      backdrop-filter: blur(12px) brightness(0.96);
+      transform: translateY(100%);
+      pointer-events: none;
+    }
+  }
 }
 
 @layer utilities {
   /* Scroll-Timeline Supported, Yay! */
   @supports (animation-timeline: view()) {
     .animate-timeline {
-      @apply animate-fadeInOut;
+      /*@apply animate-fadeInOut;*/
       animation-timeline: view();
       animation-range: cover 18% cover 85%;
     }

@@ -16,6 +16,7 @@ type DefaultComponentsProps = {
     twoXLText?: string
   }
   className?: string
+  useDisplay?: boolean
 } & TypographyProps
 
 const defaultComponents = ({
@@ -24,6 +25,7 @@ const defaultComponents = ({
   serializerClassnames,
   className,
   id,
+  useDisplay = false,
 }: DefaultComponentsProps) => {
   return {
     block: {
@@ -48,10 +50,24 @@ const defaultComponents = ({
           </Typography>
         )
       },
+      displayText: ({ children }: PortableTextBlock) => {
+        return (
+          <Typography group="display" variant="h2_base" id={id} as={providedAs}>
+            <>{children}</>
+          </Typography>
+        )
+      },
       largeText: ({ children }: PortableTextBlock) => {
         const classNames = serializerClassnames ? serializerClassnames['largeText'] : className
+
         return (
-          <Typography variant="2xl" id={id} as={providedAs} className={classNames}>
+          <Typography
+            group={useDisplay ? 'display' : 'heading'}
+            variant={useDisplay ? 'h2_lg' : '2xl'}
+            id={id}
+            as={providedAs}
+            className={classNames}
+          >
             <>{children}</>
           </Typography>
         )
@@ -59,7 +75,7 @@ const defaultComponents = ({
       extraLargeText: ({ children }: PortableTextBlock) => {
         const classNames = serializerClassnames ? serializerClassnames['extraLargeText'] : className
         return (
-          <Typography variant="5xl" id={id} as={providedAs} className={classNames}>
+          <Typography group="display" variant="h2_xl" id={id} as={providedAs} className={classNames}>
             <>{children}</>
           </Typography>
         )
@@ -67,7 +83,7 @@ const defaultComponents = ({
       twoXLText: ({ children }: PortableTextBlock) => {
         const classNames = serializerClassnames ? serializerClassnames['twoXLText'] : className
         return (
-          <Typography variant="8xl" id={id} as={providedAs} className={classNames}>
+          <Typography group="display" variant="h1_xl" id={id} as={providedAs} className={classNames}>
             <>{children}</>
           </Typography>
         )
@@ -75,7 +91,7 @@ const defaultComponents = ({
       //TODO Deprecate together with bigTitle option in text teaser
       extraLarge: ({ children }: PortableTextBlock) => {
         return (
-          <Typography variant="5xl" id={id} as={providedAs} className={className}>
+          <Typography group="display" variant="h1_lg" id={id} as={providedAs} className={className}>
             <>{children}</>
           </Typography>
         )
@@ -112,6 +128,7 @@ export type HeadingProps = {
     extraLargeText?: string
     twoXLText?: string
   }
+  useDisplay?: boolean
 } & PortableTextProps &
   TypographyProps &
   BlockProps
@@ -121,7 +138,7 @@ export type HeadingProps = {
  */
 export const Heading = ({
   value,
-  blocksComponents = {},
+  blocksComponents,
   variant,
   group,
   as,
@@ -130,6 +147,7 @@ export const Heading = ({
   proseClassName = '',
   serializerClassnames,
   id,
+  useDisplay = false,
   ...props
 }: HeadingProps) => {
   let serializers = {
@@ -138,12 +156,13 @@ export const Heading = ({
     block: {
       ...defaultComponents({
         variant,
-        group,
         as,
         serializerClassnames,
         className,
         id,
+        useDisplay,
       }).block,
+      ...(blocksComponents && blocksComponents),
     },
     // eslint-disable-next-line
     // @ts-ignore
@@ -153,6 +172,7 @@ export const Heading = ({
   }
 
   let div: PortableTextBlock[] = []
+
   return (
     <>
       {value?.length > 1 ? (
@@ -175,12 +195,13 @@ export const Heading = ({
               block: {
                 ...defaultComponents({
                   variant,
-                  group,
                   as: PortableTextTag,
                   serializerClassnames,
                   className,
+                  id,
+                  useDisplay,
                 }).block,
-                ...blocksComponents,
+                ...(blocksComponents && blocksComponents),
               },
               // eslint-disable-next-line
               //@ts-ignore

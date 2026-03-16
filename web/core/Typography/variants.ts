@@ -20,6 +20,14 @@ const variants = {
     '8xl':
       'text-slate-80 dark:text-white-100 text-5xl lg:text-6xl 2xl:text-8xl leading-cloudy lg:leading-cloudy 2xl:leading-cloudy font-normal',
   },
+  display: {
+    h1_base: 'text-4xl leading-tight tracking-[var(--tracking-display)] pb-6 lg:pb-12',
+    h1_lg: 'text-5xl leading-tight tracking-[var(--tracking-display)] pb-6 lg:pb-12',
+    h1_xl: 'text-6xl leading-tight tracking-[var(--tracking-display)] pb-6 lg:pb-12',
+    h2_base: 'text-3xl leading-tight tracking-[var(--tracking-display)] pb-4 lg:pb-10',
+    h2_lg: 'text-4xl leading-tight tracking-[var(--tracking-display)] pb-4 lg:pb-10',
+    h2_xl: 'text-5xl leading-tight tracking-[var(--tracking-display)] pb-4 lg:pb-10',
+  },
   paragraph: {
     ingress: '',
     caption: '',
@@ -48,6 +56,7 @@ type TypographyVariants =
   | keyof TypographyTokens['heading']
   | keyof TypographyTokens['paragraph']
   | keyof TypographyTokens['plain']
+  | keyof TypographyTokens['display']
 
 type TypographyGroups = keyof typeof variants
 

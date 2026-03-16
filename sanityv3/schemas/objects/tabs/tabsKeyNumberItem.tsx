@@ -1,11 +1,28 @@
-import { Rule } from 'sanity'
 import { NumberIcon } from '@sanity/icons'
+import type { Rule } from 'sanity'
 
 export default {
   name: 'tabsKeyNumberItem',
   type: 'object',
   title: 'Tabs Key Number Item',
   fields: [
+    /*     {
+      name: 'thumbnail',
+      title: 'Thumbnail icon',
+      description: 'Optional',
+      type: 'imageWithAlt',
+      hidden: ({
+        currentUser,
+      }: {
+        currentUser: {
+          roles: { name: string }[]
+        }
+      }) => {
+        return !currentUser.roles.find(({ name }: { name: string }) =>
+          ['administrator', 'designer', 'developer'].includes(name),
+        )
+      },
+    }, */
     {
       name: 'keyNumber',
       title: 'Key Number',

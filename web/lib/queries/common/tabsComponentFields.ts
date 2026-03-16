@@ -22,6 +22,7 @@ export const tabsComponentFields = /*groq*/ `
           _type == "tabsKeyNumbers" => {
             "items": keyNumberItems[]{
               "id": _key,
+              thumbnail,
               keyNumber,
               unit,
               description,

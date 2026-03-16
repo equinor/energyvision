@@ -105,12 +105,7 @@ const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
                       {tabItem.panel?.items?.map((tabsKeyNumber: any) => {
                         return (
                           <li key={tabsKeyNumber.id}>
-                            <TabsKeyNumberItem
-                              theme={designOptions.theme?.value}
-                              keyNumber={tabsKeyNumber?.keyNumber}
-                              unit={tabsKeyNumber?.unit}
-                              description={tabsKeyNumber?.description}
-                            />
+                            <TabsKeyNumberItem {...tabsKeyNumber} theme={designOptions.theme?.value} />
                           </li>
                         )
                       })}

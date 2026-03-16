@@ -39,7 +39,6 @@ const blockContentTypeForBigText = configureBlockContent({
 const titleContentType = configureTitleBlockContent({
   largeText: true,
   extraLargeText: true,
-  twoXLText: true,
 })
 
 type TextBlock = {
