@@ -48,7 +48,7 @@ export const careerFairFormSchema = (t: any) =>
     organisation: z
       .string()
       .nonempty(t('career_fair_form_organisation_validation'))
-      .regex(/^[a-zA-Z0-9 ]*$/, t('not_valid_input')),
+      .regex(nameRegex, t('not_valid_input')),
     contactPerson: z
       .string()
       .nonempty(t('career_fair_form_contact_person_validation'))
@@ -65,7 +65,8 @@ export const careerFairFormSchema = (t: any) =>
     eventDescription: z
       .string()
       .nonempty(t('career_fair_form_event_description_validation'))
-      .regex(contentRegex, t('not_valid_input')),
+      .length(3400)
+    .regex(contentRegex, t('not_valid_input')),
     website: z
       .string()
       .optional()
