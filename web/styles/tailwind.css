@@ -54,6 +54,10 @@
     --text-8xl--line-height: 1;
   }
 
+  * {
+    font-family: Equinor, 'Open Sans', sans-serif;
+  }
+
   p,
   h1,
   h2,

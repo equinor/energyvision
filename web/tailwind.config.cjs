@@ -399,17 +399,17 @@ module.exports = {
         DEFAULT: {
           css: [
             {
-              fontSize: theme('fontSize.base'),
+              fontSize: 'var(--text-base)',
               lineHeight: theme('lineHeight.planetary'),
               h2: {
-                fontSize: theme('fontSize.xl'),
+                fontSize: 'var(--text-xl)',
                 lineHeight: theme('lineHeight.inherit'),
                 fontWeight: theme('fontWeight.normal'),
                 marginTop: theme('spacing.2'),
                 marginBottom: theme('spacing.8'),
               },
               h3: {
-                fontSize: theme('fontSize.md'),
+                fontSize: 'var(--text-md)',
                 lineHeight: theme('lineHeight.inherit'),
                 fontWeight: theme('fontWeight.normal'),
                 marginTop: theme('spacing.2'),
@@ -458,7 +458,7 @@ module.exports = {
         article: {
           css: {
             h2: {
-              fontSize: theme('fontSize.lg'),
+              fontSize: 'var(--text-lg)',
               marginTop: theme('spacing.2'),
               marginBottom: theme('spacing.2'),
               paddingLeft: theme('padding.layout-lg'),
@@ -488,15 +488,15 @@ module.exports = {
         },
         md: {
           css: {
-            fontSize: theme('fontSize.md'),
+            fontSize: 'var(--text-md)',
             h2: {
-              fontSize: theme('fontSize.xl'),
+              fontSize: 'var(--text-xl)',
               lineHeight: theme('lineHeight.inherit'),
               fontWeight: theme('fontWeight.normal'),
               marginBottom: theme('spacing.6'),
             },
             h3: {
-              fontSize: theme('fontSize.lg'),
+              fontSize: 'var(--text-lg)',
               lineHeight: theme('lineHeight.inherit'),
               fontWeight: theme('fontWeight.normal'),
               marginBottom: theme('spacing.6'),
@@ -528,7 +528,7 @@ module.exports = {
   },
   plugins: [
     require('@tailwindcss/typography'),
-    plugin(function ({ addVariant, matchVariant, addUtilities, theme }) {
+    plugin(({ addVariant, matchVariant, addUtilities, theme }) => {
       matchVariant(
         'nth',
         (value) => {

@@ -1,5 +1,5 @@
-import Blocks, { BlockProps } from './Blocks'
 import { twMerge } from 'tailwind-merge'
+import Blocks, { type BlockProps } from './Blocks'
 
 type IngressTextProps = {
   centered?: boolean

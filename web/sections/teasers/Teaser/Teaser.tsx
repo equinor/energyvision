@@ -1,10 +1,12 @@
 import { Teaser as TeaserLayout } from '@core/Teaser'
 import { Typography } from '@core/Typography'
+import { toPlainText } from '@portabletext/react'
 import { getUrlFromAction } from '../../../common/helpers'
 import { ResourceLink } from '../../../core/Link'
-import Image, { getPxLgSizes } from '../../../core/SanityImage/SanityImage'
+import Image from '../../../core/SanityImage/SanityImage'
 import { Heading } from '../../../core/Typography'
 import { getLocaleFromName } from '../../../lib/localization'
+import Blocks from '../../../pageComponents/shared/portableText/Blocks'
 import IngressText from '../../../pageComponents/shared/portableText/IngressText'
 import type { ImageWithAlt, TeaserData } from '../../../types/index'
 
@@ -46,8 +48,8 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
     <TeaserLayout className="text-sm" id={anchor} {...restOptions} renderFragmentWhenPossible>
       <Media
         size={isSvg && imageSize === 'small' ? 'small' : 'full'}
-        center={isSvg ? true : false}
-        fixedHeight={isSvg ? false : true}
+        center={!!isSvg}
+        fixedHeight={!isSvg}
         mediaPosition={imagePosition || 'left'}
       >
         {image?.asset && <TeaserImage image={image} />}
@@ -67,7 +69,7 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
             ) : (
               title && <Heading value={title} as="h2" variant="xl" className="mb-2" />
             )}
-            {text && <IngressText value={text} />}
+            {toPlainText(text)?.length > 240 ? <Blocks value={text} /> : <IngressText value={text} />}
           </>
         )}
         {actions && (

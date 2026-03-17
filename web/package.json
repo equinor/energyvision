@@ -76,7 +76,7 @@
     "@algolia/client-search": "^4.16.0",
     "@babel/core": "^7.21.4",
     "@next/eslint-plugin-next": "^13.4.7",
-    "@tailwindcss/typography": "^0.5.10",
+    "@tailwindcss/typography": "^0.5.19",
     "@types/axios": "^0.14.4",
     "@types/easy-soap-request": "^4.1.1",
     "@types/http-proxy": "^1.17.10",
