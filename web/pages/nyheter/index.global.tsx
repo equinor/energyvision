@@ -94,7 +94,7 @@ export const getStaticProps: GetStaticProps = async ({ preview = false, locale =
     facetFilters: ['type:news', 'topicTags:-Crude Oil Assays'],
     facetingAfterDistinct: true,
     facets: ['countryTags', 'topicTags', 'year'],
-    analyticsTags: ['server'],
+    analyticsTags: ['server']
   })
 
   const queryParams = {
@@ -115,6 +115,8 @@ export const getStaticProps: GetStaticProps = async ({ preview = false, locale =
       renderToString,
     },
   )
+  const sanitizedServerState = JSON.parse(JSON.stringify(serverState))
+
   return {
     props: {
       data: {
@@ -122,9 +124,9 @@ export const getStaticProps: GetStaticProps = async ({ preview = false, locale =
         footerData,
         intl,
         pageData,
-        response: { ...response, clickAnalytics: null },
+        response,
       },
-      serverState,
+      serverState: sanitizedServerState,
     },
   }
 }
