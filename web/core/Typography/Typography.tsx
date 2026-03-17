@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { forwardRef, ElementType, HTMLAttributes, AnchorHTMLAttributes } from 'react'
-import { TypographyGroups, TypographyVariants, quickVariants, variants } from './variants'
-import { OverridableComponent } from '@equinor/eds-utils'
+
+import type { OverridableComponent } from '@equinor/eds-utils'
+import { type AnchorHTMLAttributes, type ElementType, forwardRef, type HTMLAttributes } from 'react'
 import envisTwMerge from '../../twMerge'
+import { quickVariants, type TypographyGroups, type TypographyVariants, variants } from './variants'
 
 const getElementType = (variant: string, link: boolean): ElementType => {
   if (link) {
@@ -25,12 +26,12 @@ const getElementType = (variant: string, link: boolean): ElementType => {
 
 const findTypography = (variantName: TypographyVariants, group?: TypographyGroups): string => {
   // For quick use when using paragraphs and headings we can skip group
-  //@ts-ignore
+  //@ts-expect-error
   if (!group && quickVariants[variantName]) {
-    //@ts-ignore
+    //@ts-expect-error
     return quickVariants[variantName] as string
   }
-  //@ts-ignores
+  //@ts-expect-errors
   return (variants[group] as unknown)[variantName] as string
 }
 
@@ -79,7 +80,11 @@ export const Typography: OverridableComponent<TypographyProps, HTMLElement> = fo
   const TypographyTag = as ?? (`p` as React.ElementType)
 
   return (
-    <TypographyTag {...rest} ref={ref} className={envisTwMerge(typography, className)}>
+    <TypographyTag
+      {...rest}
+      ref={ref}
+      className={envisTwMerge('text-slate-80 dark:text-white-100', typography, className)}
+    >
       {children}
     </TypographyTag>
   )
