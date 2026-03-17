@@ -2,7 +2,6 @@ import { breadcrumbsQuery } from './common/breadcrumbs'
 import { eventContentFields } from './common/eventContentFields'
 import { functions, pageContentFunctions } from './common/functions'
 import { heroFields } from './common/heroFields'
-import { landingPageContentFields } from './common/landingPageContentFields'
 import pageContentFields from './common/pageContentFields'
 import { seoAndSomeFields } from './common/seoAndSomeFields'
 import { stickyMenu } from './common/stickyMenu'
@@ -22,9 +21,6 @@ export const routeQuery = /* groq */ `
     "template": content->_type,
     "breadcrumbs": {
       ${breadcrumbsQuery}
-    },
-    content->_type == "landingPage" => {
-        ${landingPageContentFields}
     },
     content->_type == "page" || content->_type == "magazine"=> {
       "content": content->content[] {

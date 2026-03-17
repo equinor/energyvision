@@ -9,8 +9,8 @@ const datasetSpecificSchemas = [
   !Flags.HAS_MAGAZINE && documentsWithI18n.magazine.name,
   !Flags.HAS_MAGAZINE && documentsWithI18n.magazineIndex.name,
   !Flags.HAS_NEWSROOM && documentsWithI18n.newsroom.name,
-  !Flags.HAS_LANDING_PAGE && documentsWithI18n.landingPage.name,
 ].filter(e => e)
+
 export const i18n = {
   supportedLanguages: languages.map(it => {
     return {

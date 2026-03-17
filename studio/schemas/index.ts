@@ -99,7 +99,6 @@ import themeSelector from './objects/themeSelector/themeSelector'
 import thumbnail from './objects/thumbnail'
 import titleAndMeta from './objects/titleAndMeta'
 import transcript from './objects/transcript'
-import twitterEmbed from './objects/twitterEmbed'
 import videoControls from './objects/videoControls'
 import videoFile from './objects/videoFile'
 import videoPlayer from './objects/videoPlayer'
@@ -113,7 +112,6 @@ const {
   countryTag,
   event,
   eventTag,
-  landingPage,
   footer,
   externalRedirect,
   localNews,
@@ -145,7 +143,6 @@ const LocalNewsSchemas = Flags.HAS_LOCAL_NEWS ? [localNews, localNewsTag] : []
 const EventSchemas = Flags.HAS_EVENT
   ? [event, eventDate, promoteEvents, eventTag]
   : []
-const LandingPageSchemas = Flags.HAS_LANDING_PAGE ? [landingPage] : []
 const NewsSchemas = Flags.HAS_NEWS
   ? [news, newsList, promoteNews, tag, countryTag]
   : []
@@ -201,7 +198,6 @@ const RemainingSchemas = [
   largeTable,
   redirect,
   externalRedirect,
-  twitterEmbed,
   anchorLink,
   excludeFromSearch,
   videoFile,
@@ -265,7 +261,6 @@ export const schemaTypes = [
   ...MagazineSchemas,
   ...LocalNewsSchemas,
   ...EventSchemas,
-  ...LandingPageSchemas,
   ...FormSchemas,
   ...NewsSchemas,
   ...NewsRoomSchema,

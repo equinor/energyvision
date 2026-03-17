@@ -43,13 +43,10 @@ const CAREER_FAIR_AND_VISITS_FORM = [...GLOBAL_PROD, ...GLOBAL_DEV, 'brazil']
 const PENSION_FORM = [...GLOBAL_PROD, ...GLOBAL_DEV]
 
 const FANCY_MENU = [...GLOBAL_PROD, ...GLOBAL_DEV]
-/* LANDING_PAGE requires FANCY_MENU to work */
-const LANDING_PAGE = [...GLOBAL_PROD, ...GLOBAL_DEV]
 const TWITTER_FEED = [...GLOBAL_DEV, 'germany']
 const MAGAZINE = [...GLOBAL_PROD, ...GLOBAL_DEV]
 /* Allows same slug for different languages */
 const SAME_SLUG = [...GLOBAL_DEV, 'japan', 'southkorea']
-const LINE_BREAK_TYPO = ['southkorea']
 const CAMPAIGN = [...GLOBAL_PROD, ...GLOBAL_DEV]
 
 /**
@@ -81,13 +78,9 @@ export const FeatureFlags = (dataset: any) => ({
   HAS_PENSION_FORM: PENSION_FORM.includes(dataset),
 
   HAS_FANCY_MENU: FANCY_MENU.includes(dataset),
-  /* LANDING_PAGE requires FANCY_MENU to work */
-  HAS_LANDING_PAGE:
-    FANCY_MENU.includes(dataset) && LANDING_PAGE.includes(dataset),
   HAS_TWITTER_FEED: TWITTER_FEED.includes(dataset),
   HAS_MAGAZINE: MAGAZINE.includes(dataset),
   HAS_SAME_SLUG: SAME_SLUG.includes(dataset),
-  HAS_LINE_BREAK_TYPO: LINE_BREAK_TYPO.includes(dataset),
   IS_GLOBAL_PROD: GLOBAL_PROD.includes(dataset),
   IS_DEV: GLOBAL_DEV.includes(dataset),
   IS_SATELLITE: SATELLITES.includes(dataset),

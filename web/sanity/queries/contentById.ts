@@ -1,7 +1,6 @@
 import { eventContentFields } from './common/eventContentFields'
 import { functions, pageContentFunctions } from './common/functions'
 import { heroFields } from './common/heroFields'
-import { landingPageById } from './common/landingPageContentFields'
 import pageContentFields from './common/pageContentFields'
 import { seoAndSomeFields } from './common/seoAndSomeFields'
 
@@ -22,9 +21,6 @@ export const contentQueryById = /* groq */ `
     "seoAndSome": ${seoAndSomeFields},
     "hero": ${heroFields},
     "template": _type,
-     _type == "landingPage" => {
-      ${landingPageById}
-    },
     _type == "page" || _type == "homePage" || _type == "magazine" => {
       "content": content[] {
         ${pageContentFields}

@@ -72,7 +72,6 @@ export default {
         Flags.HAS_FORMS && { type: 'form' },
         Flags.HAS_NEWS && { type: 'newsList' },
         { type: 'stockValuesApi' },
-        Flags.HAS_TWITTER_FEED && { type: 'twitterEmbed' },
         { type: 'cookieDeclaration' },
         { type: 'anchorLinkList' },
         { type: 'tabs' },

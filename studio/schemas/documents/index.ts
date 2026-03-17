@@ -8,7 +8,6 @@ import eventTag from './eventTag'
 import externalRedirect from './externalRedirect'
 import footer from './footer'
 import homePage from './homePage'
-import landingPage from './landingPage'
 import localNews from './localNews'
 import localNewsTag from './localNewsTag'
 import magazine from './magazine'
@@ -32,7 +31,6 @@ export const documentsWithI18n = {
   //To be remove after upgrade
   internalServerError,
   event,
-  landingPage,
   localNews,
   magazine,
   magazineIndex,

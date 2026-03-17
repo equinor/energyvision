@@ -17,7 +17,6 @@ type Props = {
   searchParams: Promise<{ [key: string]: string[] | undefined }>
 }
 const MagazinePage = dynamic(() => import('@/templates/magazine/MagazinePage'))
-const LandingPage = dynamic(() => import('@/templates/landingpage/LandingPage'))
 const EventPage = dynamic(() => import('@/templates/event/Event'))
 const NewsPage = dynamic(() => import('@/templates/news/News'))
 const TopicPage = dynamic(() => import('@/templates/topic/TopicPage'))
@@ -66,15 +65,7 @@ export default async function Page({ params, searchParams }: Props) {
   const { headerData, pageData } = await getPage({
     slug,
     locale,
-    tags: [
-      'page',
-      'event',
-      'landingPage',
-      'magazine',
-      'magazinIndex',
-      'news',
-      'localNews',
-    ],
+    tags: ['page', 'event', 'magazine', 'magazinIndex', 'news', 'localNews'],
     searchParams: search,
   })
   if (Object.keys(pageData).length === 0) notFound()
@@ -85,8 +76,6 @@ export default async function Page({ params, searchParams }: Props) {
 
   const getTemplate = () => {
     switch (template) {
-      case 'landingPage':
-        return <LandingPage data={pageData} />
       case 'event':
         return <EventPage data={pageData} />
       case 'news':

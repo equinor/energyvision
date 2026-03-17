@@ -46,9 +46,6 @@ export default (isoCode: string, title: string) => {
           {
             type: 'page',
           },
-          Flags.HAS_LANDING_PAGE && {
-            type: 'landingPage',
-          },
           Flags.HAS_EVENT && {
             type: 'event',
           },

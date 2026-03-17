@@ -6,7 +6,6 @@ import { DeveloperContent } from './items/DeveloperPages'
 import { Event as EventStructure } from './items/Event'
 import { Footer } from './items/Footer'
 import { HomePage } from './items/Homepage'
-import { LandingPage as LandingPageStructure } from './items/LandingPage'
 import { LocalNews as LocalNewsStructure } from './items/LocalNews'
 import { MagazineRoom, Magazine as MagazineStructure } from './items/Magazine'
 import { Menu } from './items/Menu'
@@ -20,7 +19,6 @@ const News = S => Flags.HAS_NEWS && NewsStructure(S)
 const Magazine = S => Flags.HAS_MAGAZINE && MagazineStructure(S)
 const LocalNews = (S, context) =>
   Flags.HAS_LOCAL_NEWS && LocalNewsStructure(S, context)
-const LandingPage = S => Flags.HAS_LANDING_PAGE && LandingPageStructure(S)
 const Event = S => Flags.HAS_EVENT && EventStructure(S)
 
 const ADMIN_ITEMS = (S, context) =>
@@ -33,7 +31,6 @@ const ADMIN_ITEMS = (S, context) =>
     LocalNews(S, context),
     MagazineRoom(S),
     Magazine(S),
-    LandingPage(S),
     Misc(S),
     S.divider().title('Routing'),
     HomePageRoute(S),

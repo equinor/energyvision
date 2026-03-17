@@ -8,7 +8,6 @@ export const SCHEMA_TYPE = [
   `event`,
   `pageNotFound`,
   `internalServerError`,
-  `landingPage`,
   `siteMenu`,
   `footer`,
   //  Missing ones..

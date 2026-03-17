@@ -43,7 +43,7 @@ export type PortableTextChild = {
   text?: string
 }
 
-export type Templates = 'landingPage' | 'page' | 'news'
+export type Templates = 'page' | 'news'
 
 export type ContentType =
   | TeaserData
@@ -61,7 +61,6 @@ export type ContentType =
   | CookieDeclarationData
   | NewsListData
   | StockValuesProps
-  | TwitterEmbedData
   | VideoPlayerCarouselData
   | VideoPlayerBlockProps
   | GridData
@@ -305,16 +304,6 @@ export type NewsListData = {
   tags?: [id: string]
   countryTags?: [id: string]
   localNewsTags?: [id: string]
-}
-
-export type TwitterEmbedData = {
-  id: string
-  type: string
-  title?: PortableTextBlock[]
-  ingress?: PortableTextBlock[]
-  embedType: string
-  embedValue: string
-  designOptions: DesignOptions
 }
 
 export type AnchorLinkData = {

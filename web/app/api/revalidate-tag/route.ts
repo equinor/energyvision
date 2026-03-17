@@ -44,7 +44,6 @@ export async function POST(req: NextRequest) {
       'newsroom',
       'event',
       'homePage',
-      'landingPage',
     ]
     //@ts-ignore
     if (docsWithoutSlugCurrent.includes(docType)) {

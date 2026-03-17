@@ -1,17 +1,8 @@
 import type { SanityImageSource } from '@sanity/asset-utils'
 import type { Templates } from 'instantsearch.js'
 import type { BreadcrumbData } from '@/core/Breadcrumbs/Breadcrumbs'
-import type { EventDateType } from '@/sections/cards/EventCard/EventCard'
 import type { HeroData } from '@/sections/Hero/HeroBlock'
-import type {
-  ContactListData,
-  ContentType,
-  IFrameData,
-  PeopleCardData,
-  RelatedLinksData,
-  SeoData,
-  SubMenuGroupData,
-} from './index'
+import type { ContentType, SeoData } from './index'
 
 export type PortableTextBlock = any // Adjust as per actual definition
 
@@ -40,13 +31,3 @@ export type PageSchema = {
 
 export type TopicPageSchema = PageSchema
 export type HomePageSchema = PageSchema
-
-export type LandingPageSchema = {
-  id: string
-  slug: string
-  title: PortableTextBlock[]
-  ingress: PortableTextBlock[]
-  subGroups: SubMenuGroupData[]
-  template: Templates
-  seoAndSome: SeoData
-}

@@ -7,7 +7,7 @@ import { getIdFromName, getLocaleFromName } from '../src/lib/localization'
 
 export const locations: DocumentLocationResolver = (params, context) => {
   let query = null
-  const routePages = ['page', 'landingPage', 'event']
+  const routePages = ['page', 'event']
   const pagesWithSlugOnThem = ['news', 'magazine', 'newsroom', 'magazineIndex']
 
   if (routePages?.includes(params.type)) {

@@ -54,7 +54,6 @@ import TextWithIconArray from '@/sections/TextWithIconArray/TextWithIconArray'
 import Teaser from '@/sections/teasers/Teaser/Teaser'
 import TextTeaser from '@/sections/teasers/TextTeaser/TextTeaser'
 import { getColorForTheme } from '@/sections/teasers/TextTeaser/theme'
-/* import TwitterEmbed from '@/pageComponents/topicPages/TwitterEmbed' */
 import VideoPlayer, {
   type VideoPlayerBlockProps,
 } from '@/sections/VideoPlayerBlock/VideoPlayerBlock'

@@ -40,7 +40,7 @@ export default {
   icon: () => EdsIcon(playlist_add),
   fieldsets: [
     {
-      title: 'Top level/landing page link',
+      title: 'Top level link',
       name: 'link',
       options: {
         collapsible: true,

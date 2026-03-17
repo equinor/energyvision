@@ -497,22 +497,6 @@ _type == "keyNumbers" =>{
       ${background},
     },
   },
-
-  _type == "twitterEmbed"=>{
-    "type": _type,
-    "id": _key,
-    embedType,
-    embedValue,
-    title,
-    ingress[]{
-        ...,
-        ${markDefs},
-      },
-    "designOptions": {
-      ${background},
-    },
-  },
-
   _type == "anchorLink" =>{
     "type": _type,
     "id": _key,
