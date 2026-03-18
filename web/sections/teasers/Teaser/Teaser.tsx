@@ -54,13 +54,13 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
       >
         {image?.asset && <TeaserImage image={image} />}
       </Media>
-      <Content className={`gap-y-lg grid auto-cols-auto px-8 py-12`}>
+      <Content className={`grid auto-cols-auto gap-y-lg px-8 py-12`}>
         {isBigText ? (
-          text && <Heading value={text} as="h2" variant="2xl" className="leading-cloudy mb-2" />
+          text && <Heading value={text} as="h2" variant="2xl" className="mb-2 leading-cloudy" />
         ) : (
           <>
             {overline ? (
-              <hgroup className="flex flex-col gap-2 mb-1">
+              <hgroup className="mb-1 flex flex-col gap-2">
                 <Typography as="div" className="text-md">
                   {overline}
                 </Typography>
@@ -69,7 +69,7 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
             ) : (
               title && <Heading value={title} as="h2" variant="xl" className="mb-2" />
             )}
-            {toPlainText(text)?.length > 240 ? <Blocks value={text} /> : <IngressText value={text} />}
+            {text && toPlainText(text)?.length > 240 ? <Blocks value={text} /> : <IngressText value={text} />}
           </>
         )}
         {actions && (
