@@ -32,7 +32,7 @@ const SubscribeForm = () => {
     setError,
     formState: { errors, isSubmitting, isSubmitted },
   } = useForm({
-    resolver: zodResolver(subscribeSchema),
+    resolver: zodResolver(subscribeSchema(intl)),
     defaultValues: { email: '', categories: [] },
   })
 
