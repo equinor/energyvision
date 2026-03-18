@@ -83,7 +83,7 @@ export default async function NewsroomPage({
   // See https://github.com/vercel/next.js/discussions/18485
   // Only build when newsroom allowed, satellites has norwegian
 
-  if (!Flags.HAS_NEWSROOM) {
+  if (!Flags.HAS_NEWSROOM || locale !== "nb-NO") {
     notFound()
   }
 

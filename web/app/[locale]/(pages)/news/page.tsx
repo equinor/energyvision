@@ -73,7 +73,7 @@ export default async function NewsroomPage({
 }) {
   const { locale, slug } = await params
 
-  if (!Flags.HAS_NEWSROOM) {
+  if (!Flags.HAS_NEWSROOM || locale!=="en-GB") {
     notFound()
   }
 
