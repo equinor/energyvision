@@ -52,6 +52,14 @@ const PensionForm = () => {
         cid = getCatalogIdentifier(data.pensionCategory)
       }
 
+      const isDataValidated = pensionFormSchema(intl).safeParse(data)
+
+      if (!isDataValidated.success) {
+        setServerError(true)
+        setSuccessfullySubmitted(false)
+        return
+      }
+
       const finalFormData = {
         variables: {
           requested_for: 'equinordotcom',
@@ -67,15 +75,13 @@ const PensionForm = () => {
 
       // Call the server action directly
       // CAT0012836 is CAT ID for Contact Equinor Form //
-      const res = await submitFormServerAction(
+      const result = await submitFormServerAction(
         JSON.stringify(finalFormData),
-        'ContactEquinor',
+        'CAT0012836',
       )
-if (res?.status) {
-        setSuccessfullySubmitted(res.status)
-      } else {
-        setServerError(!res?.status)
-      }
+
+      setServerError(result.status !== 200)
+      setSuccessfullySubmitted(result.status === 200)
     } else {
       //@ts-ignore: TODO: types
       setError('root.notCompletedCaptcha', {
