@@ -14,7 +14,6 @@ import {
 } from 'react-instantsearch-nextjs'
 import { ResourceLink } from '@/core/Link/ResourceLink'
 import { List } from '@/core/List'
-import { Typography } from '@/core/Typography'
 import { defaultLanguage } from '@/languageConfig'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { Pagination } from '@/sections/searchBlocks/pagination/Pagination'
@@ -242,9 +241,9 @@ const NewsRoomTemplate = forwardRef<HTMLDivElement, NewsRoomTemplateProps>(
                   <NewsRoomFilters />
                 </aside>
                 <div className='flex flex-col max-lg:px-4'>
-                  <Typography id='newsroom_news' as='h2' className='sr-only'>
+                  <h2 id='newsroom_news' className='sr-only'>
                     {t('newsroom_newslist_header')}
-                  </Typography>
+                  </h2>
                   <NewsSections fallbackImages={fallbackImages} />
                   <Pagination
                     hitsPerPage={20}
