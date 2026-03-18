@@ -1,9 +1,9 @@
+import { Highlight } from '@core/Typography/Highlight'
 import { PortableText } from '@portabletext/react'
 import type { PortableTextBlock } from '@portabletext/types'
-import { Typography, TypographyProps } from './Typography'
-import isEmpty from '../../pageComponents/shared/portableText/helpers/isEmpty'
-import { Highlight } from '@core/Typography/Highlight'
 import { twMerge } from 'tailwind-merge'
+import isEmpty from '../../pageComponents/shared/portableText/helpers/isEmpty'
+import { Typography, type TypographyProps } from './Typography'
 
 const defaultComponents = ({ className }: TypographyProps) => {
   return {
@@ -69,11 +69,10 @@ const Paragraph = ({ value, className, componentsClassName }: ParagraphProps) =>
               />
             </div>
           )
-        } else {
-          // other than block type — note that these can recursively render text
-          // blocks again
-          return <PortableText key={block._key} value={block} />
         }
+        // other than block type — note that these can recursively render text
+        // blocks again
+        return <PortableText key={block._key} value={block} />
       })}
     </>
   )
