@@ -80,16 +80,20 @@ export const TopbarWrapper = ({ children }: TopbarWrapperProps) => {
     }
   }, [isVisible])
 
+  const globalNav = (
+    <nav
+      aria-label={'Global ' /*intl('global') TODO*/}
+      className={`${showSticky ? 'sticky' : 'fixed'} h-topbar w-full animate-height bg-white-100 duration-300 ease-in-out [transition-property:top] ${isVisible ? 'top-0' : '-top-topbar'} ${hasDropShadow && !showSticky ? 'shadow-md' : ''} `}
+    >
+      <div className='mx-auto flex items-center justify-between px-layout-sm py-4'>
+        {children}
+      </div>
+    </nav>
+  )
+
   return (
-    <header className='peer' data-sticky={showSticky}>
-      <nav
-        aria-label={'Global ' /*intl('global') TODO*/}
-        className={`fixed z-40 h-topbar w-full animate-height overflow-hidden bg-white-100 duration-300 ease-in-out [transition-property:top] ${isVisible ? 'top-0' : '-top-topbar'} ${hasDropShadow && !showSticky ? 'shadow-md' : ''} `}
-      >
-        <div className='mx-auto flex items-center justify-between px-layout-sm py-4'>
-          {children}
-        </div>
-      </nav>
+    <header className='peer z-40' data-sticky={showSticky}>
+      {showSticky ? <div className='h-topbar'>{globalNav}</div> : globalNav}
       {showSticky && stickyMenuData && (
         <StickyMenu
           {...stickyMenuData}

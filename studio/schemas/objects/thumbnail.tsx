@@ -8,7 +8,6 @@ import { FaImage } from 'react-icons/fa'
 import { MdImage } from 'react-icons/md'
 import { type StringInputProps, set } from 'sanity'
 import { configureBlockContent } from '../editors'
-import { description } from './iframe/sharedIframeFields'
 import type { ImageWithAlt } from './imageWithAlt'
 
 type IconInputProps = {

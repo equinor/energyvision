@@ -124,7 +124,6 @@ export const Typography: OverridableComponent<TypographyProps, HTMLElement> =
         className={twMerge(
           typography,
           'wrap-break-word text-pretty text-slate-80 dark:text-white-100',
-          //group !== 'article' && 'max-w-text',
           className,
         )}
       >

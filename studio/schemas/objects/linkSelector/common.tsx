@@ -230,5 +230,12 @@ export const anchorReference = {
   name: 'anchorReference',
   title: 'Anchor reference',
   type: 'anchorReferenceField',
-  description: AnchorLinkDescription(),
+  hidden: ({ value }: any) => {
+    return !value
+  },
+  description: () => (
+    <span style={{ display: 'block', wordWrap: 'break-word' }}>
+      Deprecated - use optional direct page anchor type.
+    </span>
+  ),
 }

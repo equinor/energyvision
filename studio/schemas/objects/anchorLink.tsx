@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { anchor } from '@equinor/eds-icons'
-import { Rule } from 'sanity'
-import { validateComponentAnchor } from '../validations/validateAnchorReference'
+import { Box, Heading, Text } from '@sanity/ui'
+import type { Rule } from 'sanity'
 import { EdsIcon } from '../../icons'
-import { Heading, Text, Box } from '@sanity/ui'
+import { validateComponentAnchor } from '../validations/validateAnchorReference'
 
 export type AnchorLink = {
   _type: 'anchorLink'
@@ -14,8 +14,9 @@ const Description = () => {
     <Box>
       <Heading size={2}>How to use</Heading>
       <Text style={{ margin: '1em 0' }}>
-        Add this component before the component for which you want to have an anchor reference. The anchor reference
-        will be ignored when there is no component following it.
+        Add this component before the component for which you want to have an
+        anchor reference. The anchor reference will be ignored when there is no
+        component following it.
       </Text>
     </Box>
   )
@@ -40,7 +41,9 @@ export default {
       title: 'Anchor reference',
       validation: (Rule: Rule) =>
         // @ts-ignore
-        Rule.custom((value: string, context: any) => validateComponentAnchor(value, context)),
+        Rule.custom((value: string, context: any) =>
+          validateComponentAnchor(value, context),
+        ),
     },
   ],
   preview: {

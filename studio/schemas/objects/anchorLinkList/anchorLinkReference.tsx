@@ -1,7 +1,6 @@
 import { anchor } from '@equinor/eds-icons'
 import type { Rule } from 'sanity'
 import { EdsBlockEditorIcon, EdsIcon } from '../../../icons'
-import { AnchorLinkDescription } from '../anchorReferenceField'
 
 export type AnchorLinkReference = {
   _type: 'anchorLinkReference'
@@ -23,7 +22,16 @@ export default {
       name: 'anchorReference',
       title: 'Anchor reference',
       type: 'anchorReferenceField',
-      description: AnchorLinkDescription(),
+      description: () => (
+        <>
+          <span style={{ display: 'block', wordWrap: 'break-word' }}>
+            Insert the anchor id, which needs to match the id in the
+            corresponding Anchorlink block component right before the section
+            one wants to jump to. Use letters, numbers, hyphens and underscores.
+            # is not needed.
+          </span>
+        </>
+      ),
     },
   ],
   preview: {

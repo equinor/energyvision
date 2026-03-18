@@ -1,6 +1,7 @@
 import { attach_file, format_color_text, star_filled } from '@equinor/eds-icons'
 import type { ElementType } from 'react'
-import type { BlockDefinition, BlockStyleDefinition } from 'sanity'
+import { MdOutlineAnchor } from 'react-icons/md'
+import type { BlockDefinition, BlockStyleDefinition, Rule } from 'sanity'
 import type { Level2Keys } from '@/helpers/Level2KeyTypes'
 import {
   EdsBlockEditorIcon,
@@ -18,6 +19,7 @@ import {
   type LinkType,
 } from '../objects/linkSelector/common'
 import linkSelector from '../objects/linkSelector/linkSelector'
+import { validateAnchorReference } from '../validations/validateAnchorReference'
 
 const externalLinkConfig = {
   ...externalLink,
@@ -394,6 +396,30 @@ export const configureBlockContent = (
     }
   }
 
+  const anchorLinkConfig = {
+    name: 'pageAnchor',
+    type: 'object',
+    title: 'Page anchor',
+    icon: () => <MdOutlineAnchor />,
+    fields: [
+      {
+        name: 'anchorId',
+        type: 'anchorReferenceField',
+      },
+    ],
+    preview: {
+      select: {
+        anchorId: 'anchorId',
+      },
+      prepare({ anchorId }: { anchorId: string }) {
+        return {
+          title: `#${anchorId}`,
+          subTitle: 'Page anchor',
+          media: MdOutlineAnchor,
+        }
+      },
+    },
+  }
   const attachmentConfig = {
     name: 'attachment',
     type: 'object',
@@ -486,6 +512,7 @@ export const configureBlockContent = (
       internalLinkConfig(internalReferenceOtherLanguage),
     )
     config?.marks?.annotations?.push(internalLinkConfig(homepageLink))
+    config?.marks?.annotations?.push(anchorLinkConfig)
   }
   if (attachment) {
     config?.marks?.annotations?.push(attachmentConfig)

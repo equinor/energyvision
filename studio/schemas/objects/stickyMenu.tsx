@@ -27,7 +27,7 @@ export default {
         },
         { type: 'downloadableFile', title: 'Downloadable file' },
       ],
-      validation: (Rule: Rule) => Rule.unique().max(2),
+      validation: (Rule: Rule) => Rule.unique().max(3),
     },
     {
       title: 'Color',

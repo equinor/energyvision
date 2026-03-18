@@ -5,10 +5,10 @@ import type { HTMLAttributes } from 'react'
 import ButtonLink from '@/core/Link/ButtonLink'
 import { LogoLink } from '@/core/Link/LogoLink'
 import { LocalizationSwitch } from '@/core/LocalizationSwitch/LocalizationSwitch'
-import { TopbarWrapper } from '@/core/TopbarWrapper/TopbarWrapper'
 import { defaultLanguage, languages } from '@/languageConfig'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import SiteMenu from '@/sections/SiteMenu/SiteMenu'
+import { TopbarWrapper } from '@/sections/TopbarWrapper/TopbarWrapper'
 
 export type HeaderBarProps = {
   locale?: string
