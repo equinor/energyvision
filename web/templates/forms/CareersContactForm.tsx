@@ -99,14 +99,6 @@ const CareersContactForm = () => {
         return
       }
 
-      const isDataValidated = careersContactFormSchema(intl).safeParse(data)
-
-      if (!isDataValidated.success) {
-        setServerError(true)
-        setSuccessfullySubmitted(false)
-        return
-      }
-
       const finalFormData = {
         variables: {
           requested_for: 'equinordotcom',
@@ -125,13 +117,16 @@ const CareersContactForm = () => {
       }
 
       // Call the server action directly
-      const result = await submitFormServerAction(
+      const res = await submitFormServerAction(
         JSON.stringify(finalFormData),
-        'CAT0012840',
+        'CareersContactUs',
       )
 
-      setServerError(result.status !== 200)
-      setSuccessfullySubmitted(result.status === 200)
+      if (res?.status) {
+        setSuccessfullySubmitted(res.status)
+      } else {
+        setServerError(!res?.status)
+      }
     } else {
       //@ts-ignore: TODO: types
       setError('root.notCompletedCaptcha', {

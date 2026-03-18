@@ -37,7 +37,7 @@ const SubscribeForm = () => {
   })
 
   const onSubmit = async (
-    formData: z.infer<typeof subscribeSchema>,
+    formData: z.infer<ReturnType<typeof subscribeSchema>>,
     event?: BaseSyntheticEvent,
   ) => {
     if (isFriendlyChallengeDone) {

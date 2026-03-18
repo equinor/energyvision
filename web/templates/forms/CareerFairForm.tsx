@@ -83,14 +83,6 @@ const CareerFairForm = () => {
         return
       }
 
-      const isDataValidated = careerFairFormSchema(intl).safeParse(data)
-
-      if (!isDataValidated.success) {
-        setServerError(true)
-        setSuccessfullySubmitted(false)
-        return
-      }
-
       const finalFormData = {
         variables: {
           requested_for: 'equinordotcom',
@@ -109,13 +101,16 @@ const CareerFairForm = () => {
 
       // Call the server action directly
       // CAT0012839 is CAT ID for Career Fair Form //
-      const result = await submitFormServerAction(
+      const res = await submitFormServerAction(
         JSON.stringify(finalFormData),
-        'CAT0012839',
+        'CareerFairs',
       )
 
-      setServerError(result.status !== 200)
-      setSuccessfullySubmitted(result.status === 200)
+      if (res?.status) {
+        setSuccessfullySubmitted(res.status)
+      } else {
+        setServerError(!res?.status)
+      }
     } else {
       //@ts-ignore: TODO: types
       setError('root.notCompletedCaptcha', {

@@ -2,6 +2,8 @@
 'use server'
 
 import getToken from '@/lib/formTokenStore'
+import { careerFairFormSchema, careersContactFormSchema, contactEquinorFormSchema, orderReportsFormSchema } from '@/lib/zodSchemas/zodSchemas';
+import { getTranslations } from 'next-intl/server';
 
 // ContactEquinor - CAT0012836
 // OrderReports - CAT0012841
@@ -9,9 +11,30 @@ import getToken from '@/lib/formTokenStore'
 // CareerFairs - CAT0012839
 export default async function submitFormServerAction(
   formData: any,
-  catelogNumber: string,
+  catalog: 'ContactEquinor'|'OrderReports' |  'CareersContactUs' | 'CareerFairs',
 ) {
-  const urlString = process.env.ACTION_BASE_URL_FOR_FORMS + '/' + catelogNumber
+  const t = await getTranslations();
+  let validatedData 
+   switch(catalog){
+    case 'ContactEquinor': validatedData = contactEquinorFormSchema(t).safeParse(formData)
+    case 'OrderReports': validatedData = orderReportsFormSchema(t).safeParse(formData)
+    case 'CareersContactUs': validatedData = careersContactFormSchema(t).safeParse(formData)
+    case 'CareerFairs': validatedData = careerFairFormSchema(t).safeParse(formData)
+  } 
+
+  if (!validatedData.success) {
+    return { status: false, errors: validatedData.error }
+  }
+  
+const getCatalogNumber = (catalog:string) =>{
+    switch(catalog){
+      case 'ContactEquinor': return "CAT0012836"
+      case 'OrderReports': return "CAT0012841"
+      case 'CareersContactUs': return "CAT0012840"
+      case 'CareerFairs': return "CAT0012839"
+    }
+  }
+  const urlString = process.env.ACTION_BASE_URL_FOR_FORMS + '/' + getCatalogNumber(catalog)
 
   try {
     const token = await getToken()
@@ -29,12 +52,12 @@ export default async function submitFormServerAction(
 
     if (parsed.status === 'failure' || parsed.Status?.includes('Failure')) {
       console.error('Failed to create ticket in ServiceNow')
-      return { status: 500 }
+      return { status: false, message: "Failed to submit." }
     }
 
-    return { status: 200 }
+    return { status: true,message:"Successfully submitted." }
   } catch (error) {
     console.error('Error occurred while sending request to ServiceNow', error)
-    return { status: 500 }
+    return { status: false, message: "Failed to submit." }
   }
 }

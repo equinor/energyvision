@@ -62,15 +62,6 @@ const ContactEquinorForm = () => {
         data.category?.toLowerCase() === 'login issues'
           ? '49f29a93dbb2ac10f42b2208059619a7'
           : '66f0ff89db2e2644ff6272dabf961945'
-
-      const isDataValidated = contactEquinorFormSchema(intl).safeParse(data)
-
-      if (!isDataValidated.success) {
-        setServerError(true)
-        setSuccessfullySubmitted(false)
-        return
-      }
-
       const finalFormData = {
         variables: {
           requested_for: 'equinordotcom',
@@ -86,13 +77,16 @@ const ContactEquinorForm = () => {
 
       // Call the server action directly
       // CAT0012836 is CAT ID for Contact Equinor Form //
-      const result = await submitFormServerAction(
+      const res = await submitFormServerAction(
         JSON.stringify(finalFormData),
-        'CAT0012836',
+        'ContactEquinor',
       )
 
-      setServerError(result.status !== 200)
-      setSuccessfullySubmitted(result.status === 200)
+      if (res?.status) {
+        setSuccessfullySubmitted(res.status)
+      } else {
+        setServerError(!res?.status)
+      }
     } else {
       //@ts-ignore: TODO: types
       setError('root.notCompletedCaptcha', {

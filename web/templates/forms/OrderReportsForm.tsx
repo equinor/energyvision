@@ -88,14 +88,6 @@ const OrderReportsForm = () => {
         return
       }
 
-      const isDataValidated = orderReportsFormSchema(intl).safeParse(data)
-
-      if (!isDataValidated.success) {
-        setServerError(true)
-        setSuccessfullySubmitted(false)
-        return
-      }
-
       const finalFormData = {
         variables: {
           requested_for: 'equinordotcom',
@@ -116,13 +108,15 @@ const OrderReportsForm = () => {
 
       // Call the server action directly
       // CAT0012841 is CAT ID for Order Reports Form //
-      const result = await submitFormServerAction(
+      const res = await submitFormServerAction(
         JSON.stringify(finalFormData),
-        'CAT0012841',
+        'OrderReports',
       )
-
-      setServerError(result.status !== 200)
-      setSuccessfullySubmitted(result.status === 200)
+    if (res?.status) {
+        setSuccessfullySubmitted(res.status)
+      } else {
+        setServerError(!res?.status)
+      }
     } else {
       //@ts-ignore: TODO: types
       setError('root.notCompletedCaptcha', {
