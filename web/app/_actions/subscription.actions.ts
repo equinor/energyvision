@@ -25,7 +25,7 @@ const subscriberApi = axios.create({
 type SubscribeProps = {
   locale: newsletterCategoryLocale
   frcCaptchaSolution: any
-  formData: z.infer<typeof subscribeSchema>
+  formData:z.infer<ReturnType<typeof subscribeSchema>>
 }
 
 export async function subscribe({
