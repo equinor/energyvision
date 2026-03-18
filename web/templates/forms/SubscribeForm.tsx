@@ -36,8 +36,7 @@ const SubscribeForm = () => {
     defaultValues: { email: '', categories: [] },
   })
 
-  const onSubmit = async (
-    formData: z.infer<typeof subscribeSchema>,
+  const onSubmit = async (  formData: z.infer<ReturnType<typeof subscribeSchema>>,
     event?: BaseSyntheticEvent,
   ) => {
     if (isFriendlyChallengeDone) {

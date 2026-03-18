@@ -7,6 +7,7 @@ import {
   newsletterCategoryMap,
 } from '@/types/newsLetterTypes'
 import verifyCaptcha from './verifyCaptcha'
+import { getTranslations } from 'next-intl/server'
 
 const MAKE_SUBSCRIBER_API_BASE_URL = process.env.MAKE_SUBSCRIBER_API_BASE_URL
 const MAKE_API_KEY = process.env.MAKE_API_KEY || ''
@@ -41,7 +42,8 @@ export async function subscribe({
     }
   }
 
-  const validatedData = subscribeSchema.safeParse(formData)
+  const t = await getTranslations();
+  const validatedData = subscribeSchema(t).safeParse(formData)
 
   if (!validatedData.success) {
     return { status: false, errors: validatedData.error }
