@@ -36,7 +36,7 @@ import FriendlyCaptcha from './FriendlyCaptcha'
 //   preferredLang: string
 // }
 
-type CareerFairFormData = z.infer<typeof careerFairFormSchema>
+type CareerFairFormData = z.infer<ReturnType<typeof careerFairFormSchema>>
 
 const CareerFairForm = () => {
   const intl = useTranslations()
@@ -55,7 +55,7 @@ const CareerFairForm = () => {
     setError,
     formState: { errors, isSubmitted, isSubmitting },
   } = useForm<CareerFairFormData>({
-    resolver: zodResolver(careerFairFormSchema),
+    resolver: zodResolver(careerFairFormSchema(intl)),
     defaultValues: {
       organisation: '',
       email: '',
@@ -83,11 +83,12 @@ const CareerFairForm = () => {
         return
       }
 
-      const isDataValidated = careerFairFormSchema.safeParse(data)
+      const isDataValidated = careerFairFormSchema(intl).safeParse(data)
 
       if (!isDataValidated.success) {
         setServerError(true)
         setSuccessfullySubmitted(false)
+        return
       }
 
       const finalFormData = {

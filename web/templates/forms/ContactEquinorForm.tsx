@@ -18,7 +18,9 @@ import submitFormServerAction from '../../app/_actions/submitFormServerAction'
 import verifyCaptcha from '../../app/_actions/verifyCaptcha'
 import FriendlyCaptcha from './FriendlyCaptcha'
 
-type ContactEquinorFormData = z.infer<typeof contactEquinorFormSchema>
+type ContactEquinorFormData = z.infer<
+  ReturnType<typeof contactEquinorFormSchema>
+>
 
 const ContactEquinorForm = () => {
   const intl = useTranslations()
@@ -34,7 +36,7 @@ const ContactEquinorForm = () => {
     setError,
     formState: { errors, isSubmitted, isSubmitting },
   } = useForm<ContactEquinorFormData>({
-    resolver: zodResolver(contactEquinorFormSchema),
+    resolver: zodResolver(contactEquinorFormSchema(intl)),
     defaultValues: {
       name: '',
       email: '',
@@ -61,11 +63,12 @@ const ContactEquinorForm = () => {
           ? '49f29a93dbb2ac10f42b2208059619a7'
           : '66f0ff89db2e2644ff6272dabf961945'
 
-      const isDataValidated = contactEquinorFormSchema.safeParse(data)
+      const isDataValidated = contactEquinorFormSchema(intl).safeParse(data)
 
       if (!isDataValidated.success) {
         setServerError(true)
         setSuccessfullySubmitted(false)
+        return
       }
 
       const finalFormData = {

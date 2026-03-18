@@ -15,7 +15,7 @@ import { TextField } from '@/core/TextField/TextField'
 import { orderReportsFormSchema } from '@/lib/zodSchemas/zodSchemas'
 import FriendlyCaptcha from './FriendlyCaptcha'
 
-type OrderReportFormData = z.infer<typeof orderReportsFormSchema>
+type OrderReportFormData = z.infer<ReturnType<typeof orderReportsFormSchema>>
 
 const OrderReportsForm = () => {
   const intl = useTranslations()
@@ -62,7 +62,7 @@ const OrderReportsForm = () => {
     setError,
     formState: { errors, isSubmitted, isSubmitting },
   } = useForm<OrderReportFormData>({
-    resolver: zodResolver(orderReportsFormSchema),
+    resolver: zodResolver(orderReportsFormSchema(intl)),
     defaultValues: {
       name: '',
       email: '',
@@ -88,11 +88,12 @@ const OrderReportsForm = () => {
         return
       }
 
-      const isDataValidated = orderReportsFormSchema.safeParse(data)
+      const isDataValidated = orderReportsFormSchema(intl).safeParse(data)
 
       if (!isDataValidated.success) {
         setServerError(true)
         setSuccessfullySubmitted(false)
+        return
       }
 
       const finalFormData = {

@@ -17,7 +17,9 @@ import { TextField } from '@/core/TextField/TextField'
 import { careersContactFormSchema } from '@/lib/zodSchemas/zodSchemas'
 import FriendlyCaptcha from './FriendlyCaptcha'
 
-type CareerContactFormData = z.infer<typeof careersContactFormSchema>
+type CareerContactFormData = z.infer<
+  ReturnType<typeof careersContactFormSchema>
+>
 
 const CareersContactForm = () => {
   const intl = useTranslations()
@@ -35,7 +37,7 @@ const CareersContactForm = () => {
     formState: { errors, isSubmitted, isSubmitting },
     setError,
   } = useForm<CareerContactFormData>({
-    resolver: zodResolver(careersContactFormSchema),
+    resolver: zodResolver(careersContactFormSchema(intl)),
     defaultValues: {
       name: '',
       email: '',
@@ -97,11 +99,12 @@ const CareersContactForm = () => {
         return
       }
 
-      const isDataValidated = careersContactFormSchema.safeParse(data)
+      const isDataValidated = careersContactFormSchema(intl).safeParse(data)
 
       if (!isDataValidated.success) {
         setServerError(true)
         setSuccessfullySubmitted(false)
+        return
       }
 
       const finalFormData = {

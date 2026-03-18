@@ -16,7 +16,7 @@ import { pensionFormSchema } from '@/lib/zodSchemas/zodSchemas'
 import type { PensionFormCatalogType } from '../../types'
 import FriendlyCaptcha from './FriendlyCaptcha'
 
-type PensionFormData = z.infer<typeof pensionFormSchema>
+type PensionFormData = z.infer<ReturnType<typeof pensionFormSchema>>
 
 const getCatalogIdentifier = (catalogType: PensionFormCatalogType | string) => {
   switch (catalogType) {
@@ -52,11 +52,12 @@ const PensionForm = () => {
         cid = getCatalogIdentifier(data.pensionCategory)
       }
 
-      const isDataValidated = pensionFormSchema.safeParse(data)
+      const isDataValidated = pensionFormSchema(intl).safeParse(data)
 
       if (!isDataValidated.success) {
         setServerError(true)
         setSuccessfullySubmitted(false)
+        return
       }
 
       const finalFormData = {
@@ -97,7 +98,7 @@ const PensionForm = () => {
     setError,
     formState: { errors, isSubmitted, isSubmitting },
   } = useForm<PensionFormData>({
-    resolver: zodResolver(pensionFormSchema),
+    resolver: zodResolver(pensionFormSchema(intl)),
     defaultValues: {
       name: '',
       email: '',
@@ -276,7 +277,7 @@ const PensionForm = () => {
           </form>
         </>
       )}
-      <section aria-live='assertive'>
+      <div aria-live='assertive'>
         {isSuccessfullySubmitted && <FormMessageBox variant='success' />}
         {isSubmitted && isServerError && (
           <FormMessageBox
@@ -287,7 +288,7 @@ const PensionForm = () => {
             }}
           />
         )}
-      </section>
+      </div>
     </>
   )
 }
