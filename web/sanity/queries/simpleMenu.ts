@@ -21,5 +21,5 @@ export const simpleMenuQuery = /* groq */ `
            "slug": slug.current,
          },
     },
-}
+}[0]
 `

@@ -49,7 +49,9 @@ export const PageProvider = ({
   initialErrorImage: PageContextType['errorImage']
 }>) => {
   const [headerData, setHeaderData] = useState<HeaderData>()
-  const [siteMenuData, setSiteMenuData] = useState<any>(initialSiteMenuData)
+  const [siteMenuData, setSiteMenuData] = useState<MenuData | SimpleMenuData>(
+    initialSiteMenuData,
+  )
   const [errorImage] = useState<any>(initialErrorImage)
   const [footerData, setFooterData] = useState<any>(initialFooterData)
 
