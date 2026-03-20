@@ -40,7 +40,7 @@ const formatToValidPrefixedIsoSlugs = (
           result.push({
             lang: getIsoFromName(metaSlug.lang),
             slug:
-              metaSlug.lang !== 'en_GB'
+              metaSlug.lang !== defaultLanguage.name
                 ? // metaSlug.slug !== '/' <- To skip the homepage slugs which are only /
                   `/${getLocaleFromName(metaSlug.lang)}${metaSlug.slug && metaSlug.slug !== '/' ? metaSlug.slug : ''}`
                 : metaSlug.slug
