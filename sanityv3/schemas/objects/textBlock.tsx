@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { text_field } from '@equinor/eds-icons'
 import type { PortableTextBlock, Reference, Rule, ValidationContext } from 'sanity'
-import type { ColorSelectorValue } from '../components/ColorSelector'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
+import type { ColorSelectorValue } from '../components/ColorSelector'
 import CompactBlockEditor from '../components/CompactBlockEditor'
 import { configureBlockContent, configureTitleBlockContent } from '../editors'
 

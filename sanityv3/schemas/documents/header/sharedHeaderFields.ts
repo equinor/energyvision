@@ -1,11 +1,18 @@
-import { PortableTextBlock, Rule, ValidationContext, CurrentUser, ConditionalPropertyCallbackContext } from 'sanity'
+import type {
+  ConditionalPropertyCallbackContext,
+  CurrentUser,
+  PortableTextBlock,
+  Rule,
+  ValidationContext,
+} from 'sanity'
 import blocksToText from '../../../helpers/blocksToText'
 import CompactBlockEditor from '../../components/CompactBlockEditor'
 import { configureBlockContent, configureTitleBlockContent } from '../../editors'
 import { HeroTypes } from '../../HeroTypes'
-import { defaultBannerBigTitletStyle, fiftyFiftyBigTitleStyle } from './bigTitleStyles'
-import { ImageWithAltAndCaption } from '../../objects/imageWithAltAndCaption'
+import type { ImageWithAltAndCaption } from '../../objects/imageWithAltAndCaption'
 import singleItemArray from '../../objects/singleItemArray'
+import { defaultBannerBigTitletStyle, fiftyFiftyBigTitleStyle } from './bigTitleStyles'
+import HeroTypeInput from './HeroTypeInput'
 
 const bigTitleRoles = ['administrator', 'developer', 'editor'] // allow editor until designer role is created.
 
@@ -16,6 +23,11 @@ type Hero = {
 }
 
 const titleContentType = configureTitleBlockContent()
+const titleWithDisplay = configureTitleBlockContent({
+  largeText: true,
+  extraLargeText: true,
+})
+
 const ingressContentType = configureBlockContent({
   h2: false,
   h3: false,
@@ -101,7 +113,14 @@ const heroType = {
       { title: 'Full Image', value: HeroTypes.FULL_WIDTH_IMAGE },
       { title: '50-50 Banner', value: HeroTypes.FIFTY_FIFTY },
       { title: 'Looping Video', value: HeroTypes.LOOPING_VIDEO },
+      {
+        title: 'Background image/white with title',
+        value: HeroTypes.BACKGROUND_IMAGE,
+      },
     ].filter((e) => e),
+  },
+  components: {
+    input: HeroTypeInput,
   },
   initialValue: 'default',
   fieldset: 'header',
@@ -252,10 +271,91 @@ const heroLoopingVideoRatio = {
   fieldset: 'header',
 }
 
+const backgroundGradient = {
+  title: 'Background Gradient',
+  name: 'heroBackgroundGradient',
+  type: 'string',
+  fieldset: 'header',
+  description: 'Optional dark or light semi-transparent gradient over background image.',
+  initialValue: 'none', // default
+  options: {
+    list: [
+      { title: 'None', value: 'none' },
+      { title: 'Dark', value: 'dark' },
+      { title: 'Light', value: 'light' },
+    ],
+  },
+  hidden: ({ parent }: DocumentType) => {
+    return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE
+  },
+}
+const useCenterBlur = {
+  title: 'Blur center',
+  name: 'useBlurCenter',
+  type: 'boolean',
+  fieldset: 'header',
+  description: 'Will blur center background behind text',
+  hidden: ({ parent }: DocumentType) => {
+    return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE
+  },
+}
+
+const applyDisplayText = {
+  title: 'Apply display text variant',
+  name: 'displayTextVariant',
+  type: 'string',
+  fieldset: 'header',
+  description: 'Sets a display variant on title',
+  initialValue: 'none', // default
+  options: {
+    list: [
+      { title: 'None', value: 'none' },
+      { title: 'Base', value: 'base' },
+      { title: 'Large', value: 'lg' },
+      { title: 'Extra large', value: 'xl' },
+    ],
+  },
+  hidden: ({ parent }: DocumentType) => {
+    return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE
+  },
+}
+const layoutGrid = {
+  title: 'Layout grid',
+  name: 'layoutGrid',
+  type: 'string',
+  description: 'Select content grid column',
+  options: {
+    list: [
+      { title: 'Third outer', value: 'sm' },
+      { title: 'Second outer', value: 'md' },
+      { title: 'Innermost', value: 'lg' },
+    ],
+  },
+  initialValue: 'lg',
+  fieldset: 'header',
+  hidden: ({ parent }: DocumentType) => {
+    return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE
+  },
+}
+
+const useBrandTheme = {
+  title: 'Apply red brand text color',
+  name: 'heroUseBrandTheme',
+  type: 'boolean',
+  fieldset: 'header',
+  description: 'Ensure enough contrast between text and image.If no hero image set,background will be white',
+  hidden: ({ parent }: DocumentType) => {
+    return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE
+  },
+}
+
 export default [
-  isBigTitle,
   title,
+  isBigTitle,
   heroType,
+  applyDisplayText,
+  useBrandTheme,
+  layoutGrid,
   heroRatio,
   heroTitle,
   heroBigTitleDefault,
@@ -266,4 +366,6 @@ export default [
   heroImage,
   heroLoopingVideo,
   heroLoopingVideoRatio,
+  backgroundGradient,
+  useCenterBlur,
 ]

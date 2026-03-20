@@ -1,15 +1,14 @@
-import blocksToText from '../../helpers/blocksToText'
-import { configureBlockContent } from '../editors/blockContentType'
-import CompactBlockEditor from '../components/CompactBlockEditor'
-import MagazineFooterComponent from '../objects/magazineFooterComponent'
-import { EdsIcon } from '../../icons'
 import { bookmarks } from '@equinor/eds-icons'
-
 import type { PortableTextBlock, Rule } from 'sanity'
-import { lang } from './langField'
-import { HeroTypes } from '../HeroTypes'
+import blocksToText from '../../helpers/blocksToText'
+import { EdsIcon } from '../../icons'
+import type { ValidationContext } from '../../types/schemaTypes'
+import CompactBlockEditor from '../components/CompactBlockEditor'
 import { configureTitleBlockContent } from '../editors'
-import { ValidationContext } from '../../types/schemaTypes'
+import { configureBlockContent } from '../editors/blockContentType'
+import { HeroTypes } from '../HeroTypes'
+import MagazineFooterComponent from '../objects/magazineFooterComponent'
+import { lang } from './langField'
 
 const titleContentType = configureTitleBlockContent()
 

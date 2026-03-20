@@ -224,7 +224,7 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
     const previousComponentToCompare =
       index === 0
         ? ({
-            type: 'pageTitle',
+            type: data?.hero?.type === 'backgroundImage' ? data?.hero?.type : 'pageTitle',
             designOptions: {
               background: titleBackground?.background,
             },
