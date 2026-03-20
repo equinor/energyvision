@@ -1,28 +1,28 @@
-import { TeaserImagePosition, TeaserImageSize } from '@core/Teaser'
-import { PortableTextBlock } from '@portabletext/types'
-import { SanityImageObject } from '@sanity/image-url/lib/types/types'
+import type { TeaserImagePosition, TeaserImageSize } from '@core/Teaser'
+import type { MediaPosition } from '@core/Teaser/Media'
+import type { PortableTextBlock } from '@portabletext/types'
+import type { SanityImageObject } from '@sanity/image-url/lib/types/types'
+import type { LoopingVideoData } from '@sections/Hero/LoopingVideo'
+import type { FigureData } from '../pageComponents/topicPages/Figure'
+import type { FullWidthImageData } from '../pageComponents/topicPages/FullWidthImage'
 import type {
-  ImageWithCaptionData,
-  ImageWithAlt,
-  LinkData,
-  LinkType,
+  BackgroundColours,
+  CardData,
+  DesignOptions,
+  EventCardData,
   EventDateType,
   EventPromotionSettings,
-  CardData,
-  EventCardData,
-  PeopleCardData,
-  BackgroundColours,
-  DesignOptions,
-  VideoPlayerData,
-  VideoPlayerCarouselData,
   FullWidthVideoData,
   GridData,
+  ImageWithAlt,
+  ImageWithCaptionData,
+  LinkData,
+  LinkType,
+  PeopleCardData,
   StickyMenuLinkType,
+  VideoPlayerCarouselData,
+  VideoPlayerData,
 } from './index'
-import { MediaPosition } from '@core/Teaser/Media'
-import { FigureData } from '../pageComponents/topicPages/Figure'
-import { FullWidthImageData } from '../pageComponents/topicPages/FullWidthImage'
-import { LoopingVideoData } from '@sections/Hero/LoopingVideo'
 
 export type IntlData = {
   locale: string
@@ -69,6 +69,11 @@ export type HeroType = {
   type?: HeroTypes
   ratio?: string
   background?: BackgroundColours
+  useBrandTheme?: boolean
+  useBlurCenter?: boolean
+  backgroundGradient?: 'none' | 'light' | 'dark'
+  displayTextVariant?: 'none' | 'base' | 'lg' | 'xl'
+  layoutGrid?: 'sm' | 'md' | 'lg'
   loopingVideo?: LoopingVideoData
   hideImageCaption?: boolean
   captionBg?: BackgroundColours

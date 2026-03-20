@@ -1,12 +1,13 @@
-import { forwardRef, HTMLAttributes } from 'react'
+import { Heading } from '@core/Typography'
+import type { PortableTextBlock } from '@portabletext/types'
+import { forwardRef, type HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { CampaignBannerData } from '../../types/index'
-import Blocks from '../../pageComponents/shared/portableText/Blocks'
-import { PortableTextBlock } from '@portabletext/types'
-import isEmpty from '../../pageComponents/shared/portableText/helpers/isEmpty'
-import { BlockType } from '../../pageComponents/shared/portableText/helpers/defaultSerializers'
-import { colorKeyToUtilityMap } from '../../styles/colorKeyToUtilityMap'
 import { urlFor } from '../../common/helpers'
+import Blocks from '../../pageComponents/shared/portableText/Blocks'
+import type { BlockType } from '../../pageComponents/shared/portableText/helpers/defaultSerializers'
+import isEmpty from '../../pageComponents/shared/portableText/helpers/isEmpty'
+import { colorKeyToUtilityMap } from '../../styles/colorKeyToUtilityMap'
+import type { CampaignBannerData } from '../../types/index'
 
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 const campaignTitleBlocks: BlockType = {
@@ -14,12 +15,12 @@ const campaignTitleBlocks: BlockType = {
   smallText: ({ children }: PortableTextBlock) => <p className="text-sm">{<>{children}</>}</p>,
   //@ts-ignore
   largeText: ({ children }: PortableTextBlock) => (
-    <p className="block w-fit text-pretty text-2xl leading-none bg-white-100 rounded-sm">{<>{children}</>}</p>
+    <p className="block w-fit text-pretty rounded-sm bg-white-100 text-2xl leading-none">{<>{children}</>}</p>
   ),
   //@ts-ignore
   extraLargeText: ({ children }: PortableTextBlock) => {
     return (
-      <p className="block w-fit text-pretty text-4xl leading-none lg:text-8xl font-semibold mt-4 bg-white-100 rounded-sm ">
+      <p className="mt-4 block w-fit text-pretty rounded-sm bg-white-100 font-semibold text-4xl leading-none lg:text-8xl">
         {<>{children}</>}
       </p>
     )
@@ -78,16 +79,23 @@ const CampaignBanner = forwardRef<HTMLElement, CampaignBannerProps>(function Cam
 
   return (
     <section ref={ref} className={`${backgroundClassNames}`} {...props}>
-      <div className={`px-layout-md mx-auto max-w-viewport`}>
+      <div className={`mx-auto max-w-viewport px-layout-md`}>
         <div className="flex justify-start">
-          <h2 className="">
+          <Heading
+            value={title}
+            as="h2"
+            variant="xl"
+            className="w-fit max-w-prose text-energy-red-100"
+            useDisplay={true}
+          />
+          {/*           <h2 className="">
             <Blocks
               value={title}
               proseClassName="prose-campaign"
               blocksComponents={campaignTitleBlocks}
               className="w-fit max-w-prose text-energy-red-100"
             />
-          </h2>
+          </h2> */}
         </div>
       </div>
     </section>

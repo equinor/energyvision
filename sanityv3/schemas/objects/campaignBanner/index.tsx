@@ -1,25 +1,15 @@
 /* eslint-disable react/display-name */
-import blocksToText from '../../../helpers/blocksToText'
-import { configureBlockContent } from '../../editors'
-import { validateCharCounterEditor } from '../../validations/validateCharCounterEditor'
 
 import type { Image, PortableTextBlock, Reference, Rule } from 'sanity'
+import blocksToText from '../../../helpers/blocksToText'
 import type { ColorSelectorValue } from '../../components/ColorSelector'
+import { configureBlockContent, configureTitleBlockContent } from '../../editors'
+import { validateCharCounterEditor } from '../../validations/validateCharCounterEditor'
 
-const blockConfigTitle = {
-  h2: false,
-  h3: false,
-  h4: false,
-  internalLink: false,
-  externalLink: false,
-  attachment: false,
-  lists: false,
-  smallText: true,
+const titleContentType = configureTitleBlockContent({
   largeText: true,
   extraLargeText: true,
-}
-
-const blockTitleType = configureBlockContent({ ...blockConfigTitle })
+})
 
 export type CampaignBanner = {
   _type: 'campaignBanner'
@@ -51,9 +41,9 @@ export default {
   fields: [
     {
       name: 'title',
-      title: 'Title content',
+      title: 'Title',
       type: 'array',
-      of: [blockTitleType],
+      of: [titleContentType],
       validation: (Rule: Rule) =>
         Rule.custom((value: PortableTextBlock[]) => {
           return validateCharCounterEditor(value, 600)

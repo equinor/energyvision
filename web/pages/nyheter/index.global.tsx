@@ -75,7 +75,7 @@ export const getStaticProps: GetStaticProps = async ({ preview = false, locale =
   // This is a hack and and we should improve this at some point
   // See https://github.com/vercel/next.js/discussions/18485
 
-  if (locale !== 'no') {
+  if (locale !== 'no' || !Flags.HAS_NEWSROOM) {
     return {
       notFound: true,
     }
@@ -94,6 +94,7 @@ export const getStaticProps: GetStaticProps = async ({ preview = false, locale =
     facetFilters: ['type:news', 'topicTags:-Crude Oil Assays'],
     facetingAfterDistinct: true,
     facets: ['countryTags', 'topicTags', 'year'],
+    analyticsTags: ['server']
   })
 
   const queryParams = {
@@ -114,6 +115,8 @@ export const getStaticProps: GetStaticProps = async ({ preview = false, locale =
       renderToString,
     },
   )
+  const sanitizedServerState = JSON.parse(JSON.stringify(serverState))
+
   return {
     props: {
       data: {
@@ -123,7 +126,7 @@ export const getStaticProps: GetStaticProps = async ({ preview = false, locale =
         pageData,
         response,
       },
-      serverState,
+      serverState: sanitizedServerState,
     },
   }
 }

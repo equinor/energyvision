@@ -26,17 +26,15 @@ const CardItem = forwardRef<HTMLLIElement, CardItemProps>(function CardItem({ da
     <li
       ref={ref}
       className={twMerge(
-        `grid grid-cols-1 ${rowsTemplate} ${
-          content ? 'pt-7 pb-10' : 'py-14'
-        } rounded-card px-10 text-slate-80 dark:text-white-100`,
+        `grid grid-flow-row auto-rows-max ${content ? 'pt-7 pb-10' : 'py-14'} rounded-card px-10`,
         className,
       )}
       {...rest}
     >
       {thumbnail && (
-        <Image image={thumbnail} aspectRatio="1:1" sizes={getSmallerThanPxLgSizes()} className={`h-auto w-12`} />
+        <Image image={thumbnail} aspectRatio="1:1" sizes={getSmallerThanPxLgSizes()} className={`h-[3.5rem] w-12`} />
       )}
-      <Typography variant="h4" as={content ? 'h3' : 'p'} className={`pb-0 align-bottom`}>
+      <Typography variant="h4" as={content ? 'h3' : 'p'} className={`h-full pb-0 align-bottom`}>
         {title}
       </Typography>
       {content && (

@@ -1,10 +1,12 @@
 import { Teaser as TeaserLayout } from '@core/Teaser'
 import { Typography } from '@core/Typography'
+import { toPlainText } from '@portabletext/react'
 import { getUrlFromAction } from '../../../common/helpers'
 import { ResourceLink } from '../../../core/Link'
-import Image, { getPxLgSizes } from '../../../core/SanityImage/SanityImage'
+import Image from '../../../core/SanityImage/SanityImage'
 import { Heading } from '../../../core/Typography'
 import { getLocaleFromName } from '../../../lib/localization'
+import Blocks from '../../../pageComponents/shared/portableText/Blocks'
 import IngressText from '../../../pageComponents/shared/portableText/IngressText'
 import type { ImageWithAlt, TeaserData } from '../../../types/index'
 
@@ -46,19 +48,19 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
     <TeaserLayout className="text-sm" id={anchor} {...restOptions} renderFragmentWhenPossible>
       <Media
         size={isSvg && imageSize === 'small' ? 'small' : 'full'}
-        center={isSvg ? true : false}
-        fixedHeight={isSvg ? false : true}
+        center={!!isSvg}
+        fixedHeight={!isSvg}
         mediaPosition={imagePosition || 'left'}
       >
         {image?.asset && <TeaserImage image={image} />}
       </Media>
-      <Content className={`gap-y-lg grid auto-cols-auto px-8 py-12`}>
+      <Content className={`grid auto-cols-auto gap-y-lg px-8 py-12`}>
         {isBigText ? (
-          text && <Heading value={text} as="h2" variant="2xl" className="leading-cloudy mb-2" />
+          text && <Heading value={text} as="h2" variant="2xl" className="mb-2 leading-cloudy" />
         ) : (
           <>
             {overline ? (
-              <hgroup className="flex flex-col gap-2 mb-1">
+              <hgroup className="mb-1 flex flex-col gap-2">
                 <Typography as="div" className="text-md">
                   {overline}
                 </Typography>
@@ -67,7 +69,7 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
             ) : (
               title && <Heading value={title} as="h2" variant="xl" className="mb-2" />
             )}
-            {text && <IngressText value={text} />}
+            {text && toPlainText(text)?.length > 240 ? <Blocks value={text} /> : <IngressText value={text} />}
           </>
         )}
         {actions && (

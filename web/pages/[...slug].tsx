@@ -37,9 +37,6 @@ export default function Page({ data, preview = false }: any) {
 
   const slug = pageData?.slug
   if (!router.isFallback && !slug && !data?.queryParams?.id) {
-    console.log('Return 404')
-    console.log('data?.queryParams?.id', data?.queryParams?.id)
-    console.log('slug', slug)
     return <ErrorPage statusCode={404} />
   }
 
@@ -87,8 +84,7 @@ Page.getLayout = (page: AppProps) => {
   const { data, preview } = props
 
   const slugs = getPageSlugs(data)
-  const hasSticky =
-    data?.pageData?.stickyMenu && data?.pageData?.stickyMenu?.links && data?.pageData?.stickyMenu?.links?.length > 0
+  const hasSticky = data?.pageData?.stickyMenu?.links && data?.pageData?.stickyMenu?.links?.length > 0
 
   return (
     <Layout footerData={data?.footerData} intl={data?.intl} hasSticky={hasSticky}>

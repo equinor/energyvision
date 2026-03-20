@@ -1,8 +1,8 @@
-import { SuperScriptRenderer, SubScriptRenderer, StrikeThroughRenderer } from '../components'
-import { IconSuperScript, IconSubScript, EdsBlockEditorIcon } from '../../icons'
-import { StrikethroughIcon } from '@sanity/icons'
-import { BlockDefinition, BlockStyleDefinition } from 'sanity'
 import { format_color_text } from '@equinor/eds-icons'
+import { StrikethroughIcon } from '@sanity/icons'
+import { type BlockDefinition, type BlockStyleDefinition, useFormValue } from 'sanity'
+import { EdsBlockEditorIcon, IconSubScript, IconSuperScript } from '../../icons'
+import { StrikeThroughRenderer, SubScriptRenderer, SuperScriptRenderer } from '../components'
 import { defaultColors } from '../defaultColors'
 import { displayTextConfig, extraLargeTextConfig, largeTextConfig } from './blockContentType'
 

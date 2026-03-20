@@ -1,13 +1,13 @@
-import { HTMLAttributes, forwardRef } from 'react'
-import envisTwMerge from '../../twMerge'
-import { IconData } from '@equinor/eds-icons'
-import { TransformableIcon } from '../../icons/TransformableIcon'
-import { ImageWithAlt } from '../../types'
-import Img from 'next/image'
-import { urlFor } from '../../common/helpers'
-import { PortableTextBlock } from '@portabletext/types'
 import { Typography } from '@core/Typography'
+import type { IconData } from '@equinor/eds-icons'
+import type { PortableTextBlock } from '@portabletext/types'
+import Img from 'next/image'
+import { forwardRef, type HTMLAttributes } from 'react'
+import { urlFor } from '../../common/helpers'
+import { TransformableIcon } from '../../icons/TransformableIcon'
 import Blocks from '../../pageComponents/shared/portableText/Blocks'
+import envisTwMerge from '../../twMerge'
+import type { ImageWithAlt } from '../../types'
 
 export type TextWithIconProps = {
   title?: string
@@ -23,7 +23,7 @@ export const TextWithIcon = forwardRef<HTMLDivElement, TextWithIconProps>(
     return (
       <div ref={ref} className={envisTwMerge(`flex flex-col gap-2 items-center`, className)} {...rest}>
         {iconData && <TransformableIcon iconData={iconData} className={iconClassName} />}
-        {image && image?.asset && (
+        {image?.asset && (
           <Img
             src={urlFor(image).size(150, 150).auto('format').toString()}
             width="150"
@@ -44,9 +44,7 @@ export const TextWithIcon = forwardRef<HTMLDivElement, TextWithIconProps>(
             {title}
           </Typography>
         )}
-        {content && (
-          <Blocks value={content} className={`${!title ? 'text-md' : ''} max-w-80 text-pretty text-center`} />
-        )}
+        {content && <Blocks value={content} className={`text-base max-w-80 text-pretty text-center`} />}
       </div>
     )
   },

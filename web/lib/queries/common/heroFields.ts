@@ -11,6 +11,11 @@ export const heroFields = /* groq */ `{
     heroType == "default" && isBigTitle => {
       "title" : heroBigTitleDefault,
     },
+    "backgroundGradient": heroBackgroundGradient,
+    "useBrandTheme":heroUseBrandTheme,
+    displayTextVariant,
+    layoutGrid,
+    useBlurCenter,
     "ingress": heroIngress,
     "background": coalesce(heroBackground.title, 'White'),
     "figure":  select(
