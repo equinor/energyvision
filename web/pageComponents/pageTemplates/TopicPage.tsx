@@ -15,7 +15,7 @@ const TopicPage = ({ data }: TopicPageProps) => {
   const titleStyles = useSharedTitleStyles(data?.hero?.type, data?.content?.[0])
   const { breadcrumbs } = data
   const showSharedTitle =
-    data?.hero?.type !== HeroTypes.DEFAULT && !data?.isCampaign && data.hero.type !== HeroTypes.BACKGROUND_IMAGE
+    data?.hero?.type !== HeroTypes.DEFAULT && !data?.isCampaign && data?.hero?.type !== HeroTypes.BACKGROUND_IMAGE
   return (
     <>
       <Seo
