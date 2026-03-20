@@ -70,8 +70,20 @@ const generateRssFeed = async (locale: 'en_GB' | 'nb_NO') => {
       const encodedUrl = bannerImageUrl.replace(/&/g, '&amp;')
 
       const publishDate = new Date(article.publishDateTime).toUTCString()
-      console.log('article.publishDateTime', article.publishDateTime)
-      console.log('publishDate', publishDate)
+      const dateFormat =
+        article.lang === 'nb_NO' ? 'd. MMMM yyyy hh:mm' : 'd MMMM yyyy hh:mm'
+
+      const getTimezoneAbbreviation = (date: Date, timeZone: string) => {
+        const parts = new Intl.DateTimeFormat('en-GB', {
+          timeZone,
+          timeZoneName: 'short',
+        }).formatToParts(date)
+
+        const tzPart = parts.find(p => p.type === 'timeZoneName')
+
+        // TS-safe: fallback in case it's undefined
+        return tzPart?.value ?? ''
+      }
 
       // Format the main pubDate
       //const formattedPubDate =  //format(new TZDate(publishDate, 'Europe/Oslo'), 'EEE, dd MMM yyyy HH:mm:ss xxxx')
@@ -95,13 +107,17 @@ const generateRssFeed = async (locale: 'en_GB' | 'nb_NO') => {
           <pubDate>${publishDate}</pubDate>
           <description>${toPlainText(article.ingress)}</description>
           ${categoryTag ? `<category>${newsletterCategoryMap[locale][categoryTag]}</category>` : '<category />'}
-          <nl:extra1>${format(
-            new TZDate(publishDate, 'Europe/Oslo'),
-            "d.MMMM yyyy hh:mm ('CEST')",
-            {
+          <nl:extra1>${
+            format(new TZDate(publishDate, 'Europe/Oslo'), dateFormat, {
               locale: article.lang === 'nb_NO' ? nb : enGB,
-            },
-          )}</nl:extra1>
+            }) +
+            ' (' +
+            getTimezoneAbbreviation(
+              new TZDate(publishDate, 'Europe/Oslo'),
+              'Europe/Oslo',
+            ) +
+            ')'
+          }</nl:extra1>
           ${
             hero?.image?.asset
               ? `<media:content medium="image" type="image/jpeg" url="${encodedUrl}">
