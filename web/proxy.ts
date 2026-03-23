@@ -79,7 +79,7 @@ export async function proxy(request: NextRequest) {
 
   // Skip WWW redirect for Radix URLs and localhost
   if (!wwwExcludedDomains.includes(host)) {
-    const wwwRedirect = getWWWRedirect(host, pathname)
+    const wwwRedirect = getWWWRedirect(locale,host, pathname)
     if (wwwRedirect) {
       return NextResponse.redirect(wwwRedirect, PERMANENT_REDIRECT)
     }

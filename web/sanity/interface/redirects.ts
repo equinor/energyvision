@@ -112,9 +112,9 @@ export const getAllRedirects = async () => {
   return result.flat()
 }
 
-export const getWWWRedirect = (host, pathname) => {
+export const getWWWRedirect = (requestLocale, host, pathname) => {
   if (!host.includes('www')) {
-    return `https://www.${host}${pathname}`
+    return `https://www.${host}/${requestLocale}${pathname}`
   }
   return undefined
 }
