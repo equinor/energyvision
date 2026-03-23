@@ -55,7 +55,7 @@ const CareersContactForm = () => {
     intl('careers_contact_form_suspected_recruitment_scam') ??
     'Suspected recruitment scam'
   const onboarding = intl('careers_contact_form_onboarding')
-  const graduates = intl(' careers_contact_form_graduates')
+  const graduates = intl('careers_contact_form_graduates')
   const interns = intl('careers_contact_form_interns')
   const apprentices = intl('careers_contact_form_apprentices')
 

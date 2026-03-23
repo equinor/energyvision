@@ -1,5 +1,5 @@
 export const nameRegex = /^[\p{Letter}\s\-.']+$/u
-export const contentRegex = /^[a-zA-Z0-9\s,.!?]+$/
+export const contentRegex = /^[a-zA-Z0-9\s,.&!?-]+$/
 export const englishTextRegex = /^[a-zA-Z0-9 ]*$/
 export const urlRegex =
   /^(https?:\/\/)?[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+(:\d+)?(\/.*)?$/
