@@ -15,6 +15,7 @@ type TextOnBackgroundImageHeroProps = {
   title: PortableTextBlock[]
   background?: string
   backgroundGradient?: 'none' | 'dark' | 'light'
+  alignContentY?: 'top' | 'center' | 'bottom'
   layoutGrid?: 'sm' | 'md' | 'lg'
   useBrandTheme?: boolean
   useBlurCenter?: boolean
@@ -31,6 +32,7 @@ export const TextOnBackgroundImageHero = ({
   layoutGrid = 'lg',
   useBlurCenter,
   heroMobileImage,
+  alignContentY = 'center',
 }: TextOnBackgroundImageHeroProps) => {
   //@ts-ignore:todo
   const imageProps = useSanityLoader(figure?.image, 2560, mapSanityImageRatio('10:3'))
@@ -47,12 +49,18 @@ export const TextOnBackgroundImageHero = ({
     xl: 'h2_xl',
   }
 
+  const contentAligment = {
+    top: 'items-start',
+    center: 'items-center',
+    bottom: 'items-end',
+  }
+
   return (
     <div
       className={twMerge(
-        `relative flex items-center lg:min-h-[28vh] ${backgroundGradient === 'dark' ? 'dark' : ''} ${
-          figure && imageProps?.src ? 'bg-center bg-cover bg-no-repeat' : ''
-        } ${px}`,
+        `relative flex py-12 ${contentAligment[alignContentY ?? 'center']} lg:min-h-[clamp(350px,35vh,40vh)] ${
+          backgroundGradient === 'dark' ? 'dark' : ''
+        } ${figure && imageProps?.src ? 'bg-center bg-cover bg-no-repeat' : ''} ${px}`,
         className,
       )}
       {...(url && {
@@ -61,18 +69,14 @@ export const TextOnBackgroundImageHero = ({
         },
       })}
     >
-      <div
-        className={`flex max-w-text flex-col justify-center pt-12 pb-40 md:pt-20 md:pb-26 ${
-          useBrandTheme ? '*:text-energy-red-100' : ''
-        }`}
-      >
+      <div className={`flex max-w-text flex-col ${useBrandTheme ? '*:text-energy-red-100' : ''}`}>
         <Heading
           value={title}
           id="mainTitle"
           as="h1"
           group={displayTextVariant !== 'none' ? 'display' : `heading`}
           variant={displayTextVariant !== 'none' ? (typographyVariant[displayTextVariant] as TypographyVariants) : `h1`}
-          className={`z-10 w-fit max-w-prose pb-0`}
+          className={`z-10 w-fit max-w-prose pb-0 lg:pb-0`}
         />
       </div>
       {useBlurCenter && <div className={`centerBlur absolute inset-0 z-1`}></div>}

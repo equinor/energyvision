@@ -17,7 +17,6 @@ type BannerProps = {
 }
 
 export const SharedBanner = ({ title, hero, hideImageCaption, captionBg, tags, publishedDate }: BannerProps) => {
-  console.log('hero', hero)
   switch (hero?.type) {
     case HeroTypes.FULL_WIDTH_IMAGE:
       return (

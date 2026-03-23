@@ -16,6 +16,7 @@ export const heroFields = /* groq */ `{
     displayTextVariant,
     layoutGrid,
     useBlurCenter,
+    alignContentY,
     "ingress": heroIngress,
     "background": coalesce(heroBackground.title, 'White'),
     "figure":  select(

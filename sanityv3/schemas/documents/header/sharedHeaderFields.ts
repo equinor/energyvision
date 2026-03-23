@@ -23,10 +23,6 @@ type Hero = {
 }
 
 const titleContentType = configureTitleBlockContent()
-const titleWithDisplay = configureTitleBlockContent({
-  largeText: true,
-  extraLargeText: true,
-})
 
 const ingressContentType = configureBlockContent({
   h2: false,
@@ -233,7 +229,7 @@ const heroImage = {
 const heroMobileImage = {
   title: 'Hero mobile image',
   name: 'heroMobileImage',
-  type: 'imageWithAltAndCaption',
+  type: 'imageWithAlt',
   hidden: ({ parent }: DocumentType) => {
     return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE
   },
@@ -347,6 +343,25 @@ const layoutGrid = {
   },
 }
 
+const alignContentY = {
+  title: 'Vertical content alignment',
+  name: 'alignContentY',
+  type: 'string',
+  fieldset: 'header',
+  description: 'Align content vertical',
+  initialValue: 'center', // default
+  options: {
+    list: [
+      { title: 'Top', value: 'top' },
+      { title: 'Center', value: 'center' },
+      { title: 'Bottom', value: 'bottom' },
+    ],
+  },
+  hidden: ({ parent }: DocumentType) => {
+    return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE
+  },
+}
+
 const useBrandTheme = {
   title: 'Apply red brand text color',
   name: 'heroUseBrandTheme',
@@ -371,6 +386,7 @@ export default [
   heroBigTitleFiftyFifty,
   heroIngress,
   heroLink,
+  alignContentY,
   background,
   heroImage,
   heroMobileImage,
