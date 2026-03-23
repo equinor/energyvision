@@ -42,7 +42,7 @@ const OrderReportsForm = () => {
         <li>
           <Checkbox
             label={intl(
-              'order_reports_checkbox_option_annualreportnorwegian_label',
+              'order_reports_checkbox_option_annualReportNorwegian_label',
             )}
             value='annualReportNorwegian'
             aria-invalid={errors.reports ? 'true' : 'false'}
