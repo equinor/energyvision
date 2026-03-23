@@ -9,9 +9,9 @@ export const getExternalRedirectUrl = async (slug: string, locale: string): Prom
   return getClient(false).fetch(externalRedirects, { slug: slug, slugWithLocale: `/${locale}${slug}` })
 }
 
-export const getWWWRedirect = (host: string, pathname: string): string | undefined => {
+export const getWWWRedirect = (requestLocale: string, host: string, pathname: string): string | undefined => {
   if (!host.includes('www')) {
-    return `https://www.${host}${pathname}`
+    return `https://www.${host}/${requestLocale}${pathname}`
   }
   return undefined
 }
@@ -100,7 +100,7 @@ const dnsRedirects = [
     to: '/no/om-oss/sponsing-og-stotte',
   },
   {
-    from: "data.equinor.com",
-    to:"/energy/data-sharing"
-  }
+    from: 'data.equinor.com',
+    to: '/energy/data-sharing',
+  },
 ]

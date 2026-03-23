@@ -11,7 +11,12 @@ const PERMANENT_REDIRECT = 301
 const PUBLIC_FILE = /\.(.*)$/
 const DOT_HTML = '.html'
 const IS_ARCHIVED_NEWS_DOWNLOADS = /(.*)\/news\/archive\/[0-9]{4}\/[0-9]{2}\/[0-9]{2}\/downloads\/(.*)\.(.*)$/
-const wwwExcludedDomains = ['localhost:3000',process.env.RADIX_PUBLIC_DOMAIN_NAME,process.env.RADIX_CANONICAL_DOMAIN_NAME,'data.equinor.com']
+const wwwExcludedDomains = [
+  'localhost:3000',
+  process.env.RADIX_PUBLIC_DOMAIN_NAME,
+  process.env.RADIX_CANONICAL_DOMAIN_NAME,
+  'data.equinor.com',
+]
 
 // Check if a given path exists in Sanity or not
 const pathExistsInSanity = async (pathname: string, isPreview = false): Promise<boolean> => {
@@ -59,10 +64,8 @@ export async function middleware(request: NextRequest) {
   }
 
   // Skip WWW redirect for Radix URLs and localhost
-  if (
-    !wwwExcludedDomains.includes(host)
-  ) {
-    const wwwRedirect = getWWWRedirect(host, pathname)
+  if (!wwwExcludedDomains.includes(host)) {
+    const wwwRedirect = getWWWRedirect(request.nextUrl.locale, host, pathname)
     if (wwwRedirect) {
       return NextResponse.redirect(wwwRedirect, PERMANENT_REDIRECT)
     }
