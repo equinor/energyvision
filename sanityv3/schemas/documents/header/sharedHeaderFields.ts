@@ -230,6 +230,15 @@ const heroImage = {
   },
   fieldset: 'header',
 }
+const heroMobileImage = {
+  title: 'Hero mobile image',
+  name: 'heroMobileImage',
+  type: 'imageWithAltAndCaption',
+  hidden: ({ parent }: DocumentType) => {
+    return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE
+  },
+  fieldset: 'header',
+}
 
 const heroLoopingVideo = {
   title: 'Video',
@@ -364,6 +373,7 @@ export default [
   heroLink,
   background,
   heroImage,
+  heroMobileImage,
   heroLoopingVideo,
   heroLoopingVideoRatio,
   backgroundGradient,

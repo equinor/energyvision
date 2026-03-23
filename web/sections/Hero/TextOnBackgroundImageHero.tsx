@@ -2,14 +2,16 @@
 import { mapSanityImageRatio } from '@core/SanityImage/SanityImage'
 import { Heading, type TypographyVariants } from '@core/Typography'
 import type { PortableTextBlock } from '@portabletext/types'
+import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
 import type { HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { getLayoutPx } from '../../common/helpers/getCommonUtillities'
 import { useSanityLoader } from '../../lib/hooks/useSanityLoader'
-import type { ImageWithCaptionData } from '../../types'
+import type { ImageWithAlt, ImageWithCaptionData } from '../../types'
 
 type TextOnBackgroundImageHeroProps = {
   figure?: ImageWithCaptionData
+  heroMobileImage?: ImageWithAlt
   title: PortableTextBlock[]
   background?: string
   backgroundGradient?: 'none' | 'dark' | 'light'
@@ -28,9 +30,15 @@ export const TextOnBackgroundImageHero = ({
   displayTextVariant = 'none',
   layoutGrid = 'lg',
   useBlurCenter,
+  heroMobileImage,
 }: TextOnBackgroundImageHeroProps) => {
   //@ts-ignore:todo
   const imageProps = useSanityLoader(figure?.image, 2560, mapSanityImageRatio('10:3'))
+  //@ts-ignore:todo
+  const mobileImageProps = useSanityLoader(heroMobileImage, 2560, mapSanityImageRatio('10:3'))
+  const isMobile = useMediaQuery(`(max-width: 800px)`)
+  const url = isMobile && mobileImageProps?.src ? mobileImageProps?.src : imageProps?.src
+
   const px = getLayoutPx(layoutGrid ?? 'lg')
 
   const typographyVariant = {
@@ -47,15 +55,14 @@ export const TextOnBackgroundImageHero = ({
         } ${px}`,
         className,
       )}
-      {...(figure &&
-        imageProps?.src && {
-          style: {
-            backgroundImage: `url(${imageProps.src})`,
-          },
-        })}
+      {...(url && {
+        style: {
+          backgroundImage: `url(${url})`,
+        },
+      })}
     >
       <div
-        className={`flex max-w-text flex-col justify-center py-6 lg:py-20 ${
+        className={`flex max-w-text flex-col justify-center pt-12 pb-40 md:pt-20 md:pb-26 ${
           useBrandTheme ? '*:text-energy-red-100' : ''
         }`}
       >
