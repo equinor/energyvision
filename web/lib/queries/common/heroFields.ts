@@ -21,6 +21,7 @@ export const heroFields = /* groq */ `{
     "figure":  select(
       heroType == 'loopingVideo' => { "image": heroLoopingVideo->thumbnail},
       heroFigure),
+    heroMobileImage,
     "loopingVideo": {
       "title": heroLoopingVideo->video.title,
       "thumbnail": heroLoopingVideo->thumbnail,
