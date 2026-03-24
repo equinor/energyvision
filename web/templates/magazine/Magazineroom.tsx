@@ -1,20 +1,20 @@
-import type { MagazineIndexPageType } from '../../types'
-import { useMemo, useRef, useState } from 'react'
-import Seo from '../../pageComponents/shared/Seo'
-import { HeroTypes } from '../../types/index'
 import { BackgroundContainer } from '@core/Backgrounds'
-import Teaser from '../../sections/teasers/Teaser/Teaser'
-import SharedTitle from '../../pageComponents/pageTemplates/shared/SharedTitle'
-import { SharedBanner } from '../../pageComponents/pageTemplates/shared/SharedBanner'
-import Blocks from '../../pageComponents/shared/portableText/Blocks'
+import { ImageBackgroundContainer } from '@core/Backgrounds/ImageBackgroundContainer'
+import { SimplePagination } from '@core/SimplePagination/SimplePagination'
+import { Heading } from '@core/Typography'
+import CardSkeleton from '@sections/cards/CardSkeleton/CardSkeleton'
+import MagazineCard from '@sections/cards/MagazineCard/MagazineCard'
 import MagazineTagBar from '@sections/MagazineTags/MagazineTagBar'
 import { useRouter } from 'next/router'
-import { ImageBackgroundContainer } from '@core/Backgrounds/ImageBackgroundContainer'
-import { Heading } from '@core/Typography'
-import MagazineCard from '@sections/cards/MagazineCard/MagazineCard'
-import { SimplePagination } from '@core/SimplePagination/SimplePagination'
-import CardSkeleton from '@sections/cards/CardSkeleton/CardSkeleton'
+import { useMemo, useRef, useState } from 'react'
 import { PaginationContextProvider } from '../../common/contexts/PaginationContext'
+import { SharedBanner } from '../../pageComponents/pageTemplates/shared/SharedBanner'
+import SharedTitle from '../../pageComponents/pageTemplates/shared/SharedTitle'
+import Blocks from '../../pageComponents/shared/portableText/Blocks'
+import Seo from '../../pageComponents/shared/Seo'
+import Teaser from '../../sections/teasers/Teaser/Teaser'
+import type { MagazineIndexPageType } from '../../types'
+import { HeroTypes } from '../../types/index'
 
 type MagazineIndexTemplateProps = {
   pageData: MagazineIndexPageType
@@ -82,45 +82,28 @@ const MagazineRoom = ({ pageData, slug }: MagazineIndexTemplateProps) => {
             </BackgroundContainer>
           </>
         )}
-        {hero.type === HeroTypes.BACKGROUND_IMAGE && (
-          <>
-            {hero?.figure?.image ? (
-              <ImageBackgroundContainer
-                image={hero.figure.image}
-                overrideGradient
-                scrimClassName="py-40 lg:py-44 black-blue-center-gradient"
-                aspectRatio={'9:16'}
-              >
-                <div className="px-layout-lg mx-auto max-w-viewport max-lg:py-11">
-                  <Heading value={title} id="mainTitle" variant="h1" className="text-pretty" />
-                  <div className="pt-6">{ingress && <Blocks value={ingress.content} />}</div>
-                </div>
-              </ImageBackgroundContainer>
-            ) : (
-              <div className="px-layout-lg mx-auto max-w-viewport max-lg:py-11">
+        {hero.type === HeroTypes.BACKGROUND_IMAGE &&
+          (hero?.figure?.image ? (
+            <ImageBackgroundContainer
+              image={hero.figure.image}
+              overrideGradient
+              scrimClassName="py-40 lg:py-44 black-blue-center-gradient"
+              aspectRatio={'9:16'}
+            >
+              <div className="mx-auto max-w-viewport px-layout-lg max-lg:py-11">
                 <Heading value={title} id="mainTitle" variant="h1" className="text-pretty" />
                 <div className="pt-6">{ingress && <Blocks value={ingress.content} />}</div>
               </div>
-            )}
-          </>
-        )}
+            </ImageBackgroundContainer>
+          ) : (
+            <div className="mx-auto max-w-viewport px-layout-lg max-lg:py-11">
+              <Heading value={title} id="mainTitle" variant="h1" className="text-pretty" />
+              <div className="pt-6">{ingress && <Blocks value={ingress.content} />}</div>
+            </div>
+          ))}
         {magazineTags && <MagazineTagBar tags={magazineTags} href={parentSlug} onClick={handleClickTag} />}
         <PaginationContextProvider defaultRef={resultsRef}>
-          <ul
-            className="
-          py-12
-          w-full
-          mx-auto
-          max-w-viewport
-          px-layout-sm
-          grid
-          gap-8 
-          justify-center 
-          content-center
-          grid-cols-card
-          auto-rows-fr
-          scroll-mt-24"
-          >
+          <ul className="mx-auto grid w-full max-w-viewport scroll-mt-24 auto-rows-fr grid-cols-card content-center justify-center gap-8 px-layout-sm py-12">
             {isLoading &&
               Array.from({ length: 5 }, (_v, i) => i).map((item) => (
                 <li key={item}>

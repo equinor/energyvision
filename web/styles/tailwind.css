@@ -277,6 +277,21 @@
       */
     }
   }
+
+  .centerBlur {
+    position: absolute;
+    inset: 0;
+    /* The element itself needs a semi-transparent background to see the effect */
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1));
+    /* Apply the mask to create the gradient effect for the blur */
+    mask-image: linear-gradient(to right, transparent 0%, black 31%, black 60%, transparent 100%);
+
+    /* Apply the blur to the backdrop */
+    backdrop-filter: blur(10px); /* Adjust blur strength as needed */
+    /* Vendor prefix for Safari */
+    -webkit-backdrop-filter: blur(10px);
+  }
+
   .white-right-gradient {
     background-image: linear-gradient(
       to right,

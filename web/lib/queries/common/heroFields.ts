@@ -11,11 +11,18 @@ export const heroFields = /* groq */ `{
     heroType == "default" && isBigTitle => {
       "title" : heroBigTitleDefault,
     },
+    "backgroundGradient": heroBackgroundGradient,
+    "useBrandTheme":heroUseBrandTheme,
+    displayTextVariant,
+    layoutGrid,
+    useBlurCenter,
+    alignContentY,
     "ingress": heroIngress,
     "background": coalesce(heroBackground.title, 'White'),
     "figure":  select(
       heroType == 'loopingVideo' => { "image": heroLoopingVideo->thumbnail},
       heroFigure),
+    heroMobileImage,
     "loopingVideo": {
       "title": heroLoopingVideo->video.title,
       "thumbnail": heroLoopingVideo->thumbnail,

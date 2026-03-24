@@ -1,9 +1,10 @@
-import { PortableTextBlock } from '@portabletext/types'
-import { BackgroundColours, HeroType, HeroTypes } from '../../../types/index'
-import { FullImageHero } from '@sections/Hero/FullImageHero'
-import { FiftyFiftyHero } from '@sections/Hero/FiftyFiftyHero'
-import { LoopingVideo, LoopingVideoData } from '@sections/Hero/LoopingVideo'
+import type { PortableTextBlock } from '@portabletext/types'
 import { DefaultHero } from '@sections/Hero/DefaultHero'
+import { FiftyFiftyHero } from '@sections/Hero/FiftyFiftyHero'
+import { FullImageHero } from '@sections/Hero/FullImageHero'
+import { LoopingVideo, type LoopingVideoData } from '@sections/Hero/LoopingVideo'
+import { TextOnBackgroundImageHero } from '@sections/Hero/TextOnBackgroundImageHero'
+import { type BackgroundColours, type HeroType, HeroTypes } from '../../../types/index'
 
 type BannerProps = {
   title: PortableTextBlock[]
@@ -40,6 +41,9 @@ export const SharedBanner = ({ title, hero, hideImageCaption, captionBg, tags, p
       )
     case HeroTypes.LOOPING_VIDEO:
       return <LoopingVideo video={hero.loopingVideo as LoopingVideoData} />
+    case HeroTypes.BACKGROUND_IMAGE:
+      //@ts-ignore: types
+      return <TextOnBackgroundImageHero {...hero} title={title} />
     default:
       return (
         <DefaultHero

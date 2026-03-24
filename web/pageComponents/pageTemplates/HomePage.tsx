@@ -1,11 +1,11 @@
+import { Breadcrumbs } from '@core/Breadcrumbs'
 import { toPlainText } from '@portabletext/react'
 import useSharedTitleStyles from '../../lib/hooks/useSharedTitleStyles'
-import { HeroTypes, HomePageSchema } from '../../types/index'
+import { HeroTypes, type HomePageSchema } from '../../types/index'
 import Seo from '../shared/Seo'
 import { SharedBanner } from './shared/SharedBanner'
 import { PageContent } from './shared/SharedPageContent'
 import SharedTitle from './shared/SharedTitle'
-import { Breadcrumbs } from '@core/Breadcrumbs'
 
 type HomePageProps = {
   data: HomePageSchema
@@ -14,6 +14,8 @@ type HomePageProps = {
 const HomePage = ({ data }: HomePageProps) => {
   const titleStyles = useSharedTitleStyles(data?.hero?.type, data?.content?.[0])
   const { breadcrumbs } = data
+  const showSharedTitle =
+    data?.hero?.type !== HeroTypes.DEFAULT && !data?.isCampaign && data?.hero?.type !== HeroTypes.BACKGROUND_IMAGE
 
   return (
     <>
@@ -29,7 +31,7 @@ const HomePage = ({ data }: HomePageProps) => {
         ) : (
           <SharedBanner title={data.title} hero={data.hero} captionBg={titleStyles.background?.backgroundColor} />
         )}
-        {breadcrumbs && breadcrumbs?.enableBreadcrumbs && (
+        {breadcrumbs?.enableBreadcrumbs && (
           <Breadcrumbs
             background={titleStyles.background}
             slug={data?.slug}
@@ -40,9 +42,7 @@ const HomePage = ({ data }: HomePageProps) => {
           />
         )}
 
-        {data.hero?.type !== HeroTypes.DEFAULT && !data?.isCampaign && (
-          <SharedTitle sharedTitle={data.title} background={titleStyles.background} />
-        )}
+        {showSharedTitle && <SharedTitle sharedTitle={data.title} background={titleStyles.background} />}
         <PageContent data={data} titleBackground={titleStyles} />
       </main>
     </>

@@ -20,6 +20,7 @@ type DefaultComponentsProps = {
 } & TypographyProps
 
 const defaultComponents = ({
+  group,
   variant,
   as: providedAs,
   serializerClassnames,
@@ -97,11 +98,12 @@ const defaultComponents = ({
         )
       },
       normal: ({ children }: PortableTextBlock) => {
-        const classNames = serializerClassnames ? serializerClassnames['normal'] : className
+        const classNames = serializerClassnames ? serializerClassnames.normal : className
         if (isEmpty(children)) return null
         return (
-          <Typography variant={variant} id={id} as={providedAs} className={classNames}>
-            <>{children}</>
+          <Typography {...(group && { group })} variant={variant} id={id} as={providedAs} className={classNames}>
+            {/**@ts-ignore */}
+            {children}
           </Typography>
         )
       },
@@ -155,6 +157,7 @@ export const Heading = ({
     // @ts-ignore
     block: {
       ...defaultComponents({
+        group,
         variant,
         as,
         serializerClassnames,
@@ -167,7 +170,7 @@ export const Heading = ({
     // eslint-disable-next-line
     // @ts-ignore
     marks: {
-      ...defaultComponents({ variant, group, as }).marks,
+      ...defaultComponents({ group, variant, as }).marks,
     },
   }
 
@@ -194,6 +197,7 @@ export const Heading = ({
               // @ts-ignore
               block: {
                 ...defaultComponents({
+                  group,
                   variant,
                   as: PortableTextTag,
                   serializerClassnames,
