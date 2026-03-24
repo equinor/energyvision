@@ -100,7 +100,6 @@ const datasets = {
   poland: ['polish'],
   japan: ['english', 'japanese'],
   storage: ['english', 'german'],
-  techstars: ['english'],
   equinorfunds: ['norwegian'],
   southkorea: ['english', 'korean'],
   celticsea: ['english', 'welsh'],
