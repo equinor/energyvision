@@ -72,8 +72,8 @@ const generateRssFeed = async (locale: 'en_GB' | 'nb_NO') => {
       rss += `
         <item>
           <title>${title}</title>
-          <link>https://equinor.com${langPath}${article.slug}</link>
-          <guid>https://equinor.com${langPath}${article.slug}</guid>
+          <link>https://www.equinor.com${langPath}${article.slug}</link>
+          <guid>https://www.equinor.com${langPath}${article.slug}</guid>
           <pubDate>${publishDate}</pubDate>
           <description>${toPlainText(article.ingress)}</description>
           ${categoryTag ? `<category>${mapCategoryToId(categoryTag, locale)}</category>` : '<category />'}
