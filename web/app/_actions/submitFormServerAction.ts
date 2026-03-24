@@ -27,6 +27,8 @@ export default async function submitFormServerAction(
 
     const parsed = await response.json()
 
+    console.log(parsed)
+
     if (parsed.status === 'failure' || parsed.Status?.includes('Failure')) {
       console.error('Failed to create ticket in ServiceNow')
       return { status: 500 }

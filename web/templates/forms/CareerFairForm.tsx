@@ -102,6 +102,7 @@ const CareerFairForm = () => {
           event: data.event,
           descriptionofevent: data.eventDescription,
           linktowebsite: data.website,
+          preferredlanguage: locale,
           supportingdocuments:
             data.supportingDocuments === 'Yes' ? 'Yes' : 'No',
         },
