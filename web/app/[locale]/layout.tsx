@@ -63,6 +63,7 @@ export default async function LocaleLayout({
     }),
   ])
 
+  console.log(footerAndErrorImageData)
   const { errorImage, ...footerData } = footerAndErrorImageData.data || {}
 
   return (
