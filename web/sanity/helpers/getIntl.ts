@@ -8,7 +8,7 @@ export default async (locale: string) => {
   const { data: textSnippetsArray } = await sanityFetch({
     query: `*[_type == "textSnippet"]`,
   })
-  console.log('Textsnippets', textSnippetsArray.size)
+  console.log('Textsnippets', textSnippetsArray.length)
   const textSnippetsData = formatTextSnippets(textSnippetsArray ?? [])
   const lang = getNameFromIso(locale)
 
