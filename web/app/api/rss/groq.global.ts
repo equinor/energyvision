@@ -21,7 +21,7 @@ export type LatestNewsType = {
 
 export const latestNews = /* groq */ `
 ${functions}
-  *[_type == "news" && defined(subscriptionType) && ${sameLang}] | order(${publishDateTimeQuery} desc)[0...5] {
+  *[_type == "news" && ((defined(subscriptionType) && ${sameLang}) || subscriptionType == "Crude")] | order(${publishDateTimeQuery} desc)[0...5] {
     _id,
     "type":_type,
     "slug": slug.current,
