@@ -1,8 +1,7 @@
-
 import { functions } from '../../../lib/queries/common/functions'
 import { ingressForNewsQuery } from '../../../lib/queries/common/newsSubqueries'
 import { publishDateTimeQuery } from '../../../lib/queries/common/publishDateTime'
-import { noDrafts, sameLang } from '../../../lib/queries/common/langAndDrafts'
+import { sameLang } from '../../../lib/queries/common/langAndDrafts'
 import type { ImageWithCaptionData } from '../../../types'
 import type { PortableTextBlock } from '@portabletext/types'
 
@@ -22,7 +21,7 @@ export type LatestNewsType = {
 
 export const latestNews = /* groq */ `
 ${functions}
-  *[_type == "news" && defined(subscriptionType) && ${sameLang} && ${noDrafts}] | order(${publishDateTimeQuery} desc)[0...5] {
+  *[_type == "news" && ((defined(subscriptionType) && ${sameLang}) || subscriptionType == "Crude")] | order(${publishDateTimeQuery} desc)[0...5] {
     _id,
     "type":_type,
     "slug": slug.current,
@@ -36,7 +35,7 @@ ${functions}
 `
 export const latestMagazine = /* groq */ `
 ${functions}
-  *[_type == "magazine" && shouldDistributeMagazine && ${sameLang} && ${noDrafts}] | order(${publishDateTimeQuery} desc)[0...5] {
+  *[_type == "magazine" && shouldDistributeMagazine && ${sameLang}] | order(${publishDateTimeQuery} desc)[0...5] {
     _id,
     "type":_type,
     "slug": slug.current,
