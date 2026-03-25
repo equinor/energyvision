@@ -2,7 +2,7 @@
 import { Icon } from '@equinor/eds-core-react'
 import { error_filled } from '@equinor/eds-icons'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useTranslations } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 import { type BaseSyntheticEvent, useId, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import type { z } from 'zod'
@@ -29,6 +29,7 @@ const getCatalogIdentifier = (catalogType: PensionFormCatalogType | string) => {
 
 const PensionForm = () => {
   const intl = useTranslations()
+  const locale = useLocale()
   const [isServerError, setServerError] = useState(false)
   const [isFriendlyChallengeDone, setIsFriendlyChallengeDone] = useState(false)
   const [isSuccessfullySubmitted, setSuccessfullySubmitted] = useState(false)
@@ -70,6 +71,7 @@ const PensionForm = () => {
           howcanwehelp: data.requests,
           tryingtoreach: 'whoever can assist',
           cid: cid,
+          preferredlanguage: locale,
         },
       }
 

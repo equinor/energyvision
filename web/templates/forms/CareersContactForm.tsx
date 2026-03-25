@@ -121,6 +121,7 @@ const CareersContactForm = () => {
           supportingdocuments: data.supportingDocuments,
           candidatetype: data.candidateType,
           category: data.category,
+          preferredlanguage: locale,
         },
       }
 

@@ -2,7 +2,7 @@
 import { Icon } from '@equinor/eds-core-react'
 import { error_filled } from '@equinor/eds-icons'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useTranslations } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 import { type BaseSyntheticEvent, useId, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import type { z } from 'zod'
@@ -23,6 +23,7 @@ const OrderReportsForm = () => {
   const [isServerError, setServerError] = useState(false)
   const [isSuccessfullySubmitted, setSuccessfullySubmitted] = useState(false)
   const formId = useId()
+  const locale = useLocale()
 
   const Checkboxes = () => {
     return (
@@ -108,6 +109,7 @@ const OrderReportsForm = () => {
           country: data.country,
           company: data.company,
           annualreport: data.reports.includes('annualReport') ? 'Yes' : 'No',
+          preferredlanguage: locale,
           annualreportnorwegian: data.reports.includes('annualReportNorwegian')
             ? 'Yes'
             : 'No',
