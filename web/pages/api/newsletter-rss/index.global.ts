@@ -13,8 +13,8 @@ const generateRssFeed = async (locale: 'en_GB' | 'nb_NO') => {
   try {
     // Fetch both English and Norwegian articles from news and magazine
     const [newsArticles, magazineArticles] = await Promise.all([
-      sanityClient.fetch(latestNews, { lang: locale }),
-      sanityClient.fetch(latestMagazine, { lang: locale }),
+      sanityClient.fetch(latestNews, { lang: locale }, { perspective: 'published' }),
+      sanityClient.fetch(latestMagazine, { lang: locale }, { perspective: 'published' }),
     ])
 
     // Merge the articles and sort by publish date (newest first)
@@ -72,8 +72,8 @@ const generateRssFeed = async (locale: 'en_GB' | 'nb_NO') => {
       rss += `
         <item>
           <title>${title}</title>
-          <link>https://www.equinor.com${langPath}${article.slug}</link>
-          <guid>https://www.equinor.com${langPath}${article.slug}</guid>
+          <link>https://www.equinor.com${langPath}${article.slug}?utm_source=newssubscription&utm_medium=email</link>
+          <guid>https://www.equinor.com${langPath}${article.slug}?utm_source=newssubscription&utm_medium=email</guid>
           <pubDate>${publishDate}</pubDate>
           <description>${toPlainText(article.ingress)}</description>
           ${categoryTag ? `<category>${mapCategoryToId(categoryTag, locale)}</category>` : '<category />'}
