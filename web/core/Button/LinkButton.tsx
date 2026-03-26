@@ -24,8 +24,10 @@ export const LinkButton = forwardRef<HTMLButtonElement, LinkButtonProps>(
     },
     ref,
   ) => {
-    const handleScrollToTop = () =>
+    const handleScrollToTop = () => {
       window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+
     const classNames = twMerge(
       'focus-visible:envis-outline flex gap-1 text-xs underline hover:no-underline focus:outline-hidden active:scale-99',
       variant === 'toTop' &&

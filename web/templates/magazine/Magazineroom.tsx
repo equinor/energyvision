@@ -3,6 +3,7 @@ import type { PortableTextBlock } from 'next-sanity'
 import { useMemo, useRef, useState } from 'react'
 import { Promotion } from '@/core/Promotion/Promotion'
 import { SimplePagination } from '@/core/SimplePagination/SimplePagination'
+import { chunkArray } from '@/lib/helpers/chunkArray'
 import Blocks from '@/portableText/Blocks'
 import CardSkeleton from '@/sections/cards/CardSkeleton/CardSkeleton'
 import { HeroBlock, type HeroData, HeroTypes } from '@/sections/Hero/HeroBlock'
@@ -10,14 +11,6 @@ import MagazineTagBar from '@/sections/MagazineTags/MagazineTagBar'
 import { PaginationContextProvider } from '../../contexts/PaginationContext'
 import Teaser, { type TeaserData } from '../../sections/teasers/Teaser/Teaser'
 import type { MagazineCardData, SeoData } from '../../types'
-
-const chunkArray = (array: any[], chunkSize: number) => {
-  const chunkedArray = []
-  for (let i = 0; i < array.length; i += chunkSize) {
-    chunkedArray.push(array.slice(i, i + chunkSize))
-  }
-  return chunkedArray
-}
 
 // Sanity MagazineIndexPage
 type MagazineRoomProps = {

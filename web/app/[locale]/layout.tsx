@@ -70,7 +70,6 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} className={`${equinor.className} `}>
       <body>
-        <GoToTopButton />
         <SanityLive />
         {dataset === 'global-development' && (await draftMode()).isEnabled && (
           <>
@@ -79,6 +78,7 @@ export default async function LocaleLayout({
           </>
         )}
         <NextIntlClientProvider>
+          <GoToTopButton />
           <PageProvider
             initialFooterData={footerData}
             initialErrorImage={errorImage}

@@ -5,6 +5,7 @@ import { EdsIcon } from '../../icons'
 import type { ColorSelectorValue } from '../components/ColorSelector'
 import { CompactBlockEditor } from '../components/CompactBlockEditor'
 import { configureBlockContent } from '../editors'
+import { validateComponentAnchor } from '../validations/validateAnchorReference'
 
 type TextBlock = {
   overline?: string
@@ -92,6 +93,18 @@ export default {
       fieldset: 'titleOptions',
     },
     {
+      name: 'anchorReference',
+      type: 'anchorReferenceField',
+      title: 'Anchor reference',
+      description:
+        'enter anchor id for this component, title will be used when compiling list of anchors on page together',
+      validation: (Rule: Rule) =>
+        // @ts-ignore
+        Rule.custom((value: string, context: any) =>
+          validateComponentAnchor(value, context),
+        ),
+    },
+    {
       name: 'ingress',
       title: 'Ingress',
       type: 'array',
@@ -134,21 +147,24 @@ export default {
       title: 'title',
       ingress: 'ingress',
       text: 'text',
+      anchor: 'anchorReference',
     },
     prepare({
       title,
       ingress,
       text,
+      anchor,
     }: {
       title: PortableTextBlock[]
       ingress: PortableTextBlock[]
       text: PortableTextBlock[]
+      anchor: string
     }) {
       const plainTitle = blocksToText(title ?? ingress ?? text)
 
       return {
         title: plainTitle || 'Missing title/content',
-        subtitle: 'Text block component',
+        subtitle: `Text block${anchor ? ` | #${anchor}` : ''}`,
         media: EdsIcon(text_field),
       }
     },

@@ -1,4 +1,5 @@
 import { Box, Button, Card, Flex, Stack, TextInput } from '@sanity/ui'
+import slugify from '@sindresorhus/slugify'
 import React, { type FormEvent, useCallback, useMemo } from 'react'
 import type {
   Path,
@@ -10,7 +11,6 @@ import type {
 } from 'sanity'
 import { PatchEvent, set, setIfMissing, unset, useFormValue } from 'sanity'
 import * as PathUtils from './utils/paths'
-import { slugify } from './utils/slugify'
 import { useAsync } from './utils/useAsync'
 import { type SlugContext, useSlugContext } from './utils/useSlugContext'
 
@@ -96,8 +96,9 @@ export function SlugInput(props: SlugInputProps) {
       ({ _type: schemaType.name } as SanityDocument)
     const sourceContext = getSlugSourceContext(path, doc, slugContext)
     return getNewFromSource(sourceField, doc, sourceContext)
-      .then(newFromSource =>
-        slugify(newFromSource || '', schemaType, sourceContext),
+      .then(
+        newFromSource => slugify(newFromSource ?? ''),
+        //slugify(newFromSource || '', schemaType, sourceContext),
       )
       .then(newSlug => updateSlug(newSlug))
   }, [sourceField, getFormValue, schemaType, path, slugContext, updateSlug])

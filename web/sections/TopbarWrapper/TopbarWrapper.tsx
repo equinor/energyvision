@@ -1,4 +1,5 @@
 'use client'
+import { useTranslations } from 'next-intl'
 import { type HTMLAttributes, useEffect, useRef, useState } from 'react'
 import { usePage } from '@/contexts/pageContext'
 import StickyMenu from '@/sections/StickyMenu/StickyMenu'
@@ -8,6 +9,7 @@ export type TopbarWrapperProps = HTMLAttributes<HTMLDivElement>
 export const TopbarWrapper = ({ children }: TopbarWrapperProps) => {
   const { headerData } = usePage()
   const { stickyMenuData } = headerData || {}
+  const t = useTranslations()
   const topbarRef = useRef<HTMLElement>(null)
   const [height, setHeight] = useState(0)
   const [prevScrollPos, setPrevScrollPos] = useState(0)
@@ -15,8 +17,6 @@ export const TopbarWrapper = ({ children }: TopbarWrapperProps) => {
   const [hasDropShadow, setHasDropShadow] = useState(false)
   const showSticky =
     (stickyMenuData?.links && stickyMenuData?.links?.length > 0) ?? false
-
-  console.log('showSticky', showSticky)
 
   useEffect(() => {
     if (topbarRef?.current) {
@@ -82,8 +82,9 @@ export const TopbarWrapper = ({ children }: TopbarWrapperProps) => {
 
   const globalNav = (
     <nav
-      aria-label={'Global ' /*intl('global') TODO*/}
-      className={`${showSticky ? 'sticky' : 'fixed'} h-topbar w-full animate-height bg-white-100 duration-300 ease-in-out [transition-property:top] ${isVisible ? 'top-0' : '-top-topbar'} ${hasDropShadow && !showSticky ? 'shadow-md' : ''} `}
+      aria-label={t('global') ?? 'Global'}
+      className={`h-topbar w-full animate-height bg-white-100 duration-300 ease-in-out [transition-property:margin-top] ${isVisible ? 'mt-0' : '-mt-topbar'} ${hasDropShadow && !showSticky ? 'shadow-md' : ''} `}
+      ref={topbarRef}
     >
       <div className='mx-auto flex items-center justify-between px-layout-sm py-4'>
         {children}
@@ -92,8 +93,8 @@ export const TopbarWrapper = ({ children }: TopbarWrapperProps) => {
   )
 
   return (
-    <header className='peer z-40' data-sticky={showSticky}>
-      {showSticky ? <div className='h-topbar'>{globalNav}</div> : globalNav}
+    <header className='peer fixed z-40 w-full' data-sticky={showSticky}>
+      {globalNav}
       {showSticky && stickyMenuData && (
         <StickyMenu
           {...stickyMenuData}

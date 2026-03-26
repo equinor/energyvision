@@ -1,7 +1,7 @@
 import { attach_file, format_color_text, star_filled } from '@equinor/eds-icons'
 import type { ElementType } from 'react'
 import { MdOutlineAnchor } from 'react-icons/md'
-import type { BlockDefinition, BlockStyleDefinition, Rule } from 'sanity'
+import type { BlockDefinition, BlockStyleDefinition } from 'sanity'
 import type { Level2Keys } from '@/helpers/Level2KeyTypes'
 import {
   EdsBlockEditorIcon,
@@ -19,7 +19,7 @@ import {
   type LinkType,
 } from '../objects/linkSelector/common'
 import linkSelector from '../objects/linkSelector/linkSelector'
-import { validateAnchorReference } from '../validations/validateAnchorReference'
+import { PageAnchorInput } from './annotations/PageAnchorInput'
 
 const externalLinkConfig = {
   ...externalLink,
@@ -172,7 +172,6 @@ export type BlockTypographyVariants = Level2Keys<typeof BlockTypography>
 
 export const TextRenderer = (
   props: any,
-  as: ElementType,
   group?: BlockTypographyGroups,
   level?: BlockTypographyVariants,
 ) => {
@@ -404,7 +403,10 @@ export const configureBlockContent = (
     fields: [
       {
         name: 'anchorId',
-        type: 'anchorReferenceField',
+        type: 'string',
+        components: {
+          input: PageAnchorInput,
+        },
       },
     ],
     preview: {

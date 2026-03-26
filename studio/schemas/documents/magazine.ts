@@ -1,6 +1,6 @@
 import { bookmarks } from '@equinor/eds-icons'
+import slugify from '@sindresorhus/slugify'
 import type { Rule, SanityDocument } from 'sanity'
-import slugify from 'slugify'
 import { formatDate } from '@/helpers/formatDate'
 import { magazineSlug } from '@/sitesConfig'
 import blocksToText from '../../helpers/blocksToText'
@@ -147,7 +147,7 @@ export default {
             ? magazineSlug[doc.lang as string]
             : magazineSlug[defaultLanguage.name]
           return doc.magazineSlug
-            ? `/${translatedMagazine}/${slugify(doc.magazineSlug as string, { lower: true })}`
+            ? `/${translatedMagazine}/${slugify(doc.magazineSlug as string)}`
             : ''
         },
         slugify: (value: string) => value,

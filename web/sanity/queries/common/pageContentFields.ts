@@ -84,6 +84,7 @@ _type == "keyNumbers" =>{
     overline,
     title[]{..., ${markDefs}},
     'useBrandTheme': coalesce(useBrandTheme, false),
+    anchorReference,
     ingress[]{..., ${markDefs}},
     text[]{..., ${markDefs}},
     "callToActions": action[]{
@@ -647,6 +648,11 @@ _type == "keyNumbers" =>{
   },
   _type == "promotionsV2" => {
        ${promotionsV2},
+  },
+  _type == "anchorSearch" => {
+    ...,
+    "type": _type,
+    "id": _key,
   },
 
 `

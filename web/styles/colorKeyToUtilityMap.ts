@@ -75,12 +75,6 @@ export const colorKeyToUtilityMap = {
     text: 'text-white-100',
     dark: true,
   },
-  'norwegin-woods-40': {
-    backgroundName: 'Light green',
-    background: 'bg-norwegin-woods-40',
-    text: 'text-norwegin-woods-40',
-    dark: false,
-  },
   'sand-and-summer-50': {
     backgroundName: 'Sand',
     background: 'bg-sand-and-summer-50',
@@ -93,7 +87,6 @@ export const colorKeyToUtilityMap = {
     text: 'text-norwegian-woods-40',
     dark: false,
   },
-
   'spruce-wood-20': {
     backgroundName: 'Light Spruce wood',
     background: 'bg-spruce-wood-20',

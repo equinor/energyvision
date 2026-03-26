@@ -1,5 +1,5 @@
 import { file_add } from '@equinor/eds-icons'
-import slugify from 'slugify'
+import slugify from '@sindresorhus/slugify'
 import { newsSlug } from '@/sitesConfig'
 import { formatDate } from '../../helpers/formatDate'
 import { EdsIcon } from '../../icons'
@@ -92,7 +92,7 @@ export default {
       options: withSlugValidation({
         source: (doc: { newsSlug: string }) => {
           // translated document ids end with _i18n__lang while base documents don't
-          return doc.newsSlug ? `${slugify(doc.newsSlug, { lower: true })}` : ''
+          return doc.newsSlug ? `${slugify(doc.newsSlug)}` : ''
         },
         slugify: (
           input: string,

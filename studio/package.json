@@ -18,6 +18,7 @@
   "dependencies": {
     "@equinor/eds-icons": "^0.17.0",
     "@reach/auto-id": "^0.18.0",
+    "@sindresorhus/slugify": "^3.0.0",
     "@sanity/asset-utils": "^2.3.0",
     "@sanity/dashboard": "^5.0.1",
     "@sanity/document-internationalization": "4.1.0",
@@ -46,8 +47,6 @@
     "sanity-plugin-iframe-pane": "^5.0.6",
     "sanity-plugin-media": "^4.1.1",
     "sanity-plugin-utils": "^1.8.0",
-    "slugify": "^1.6.5",
-    "speakingurl": "^14.0.1",
     "styled-components": "^6.3.11",
     "vite-plugin-svgr": "^4.5.0",
     "tailwindcss": "^4.2.1"

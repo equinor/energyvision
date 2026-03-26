@@ -5,6 +5,7 @@ import { Flags } from '../src/lib/datasetHelpers'
 import documentSchemaTypes from './documents'
 import homePage from './documents/homePage'
 import textSnippet from './documents/textSnippet'
+import anchorSearch from './objects/AnchorSearch'
 import accordion from './objects/accordion'
 import accordionItem from './objects/accordionItem'
 import anchorLink from './objects/anchorLink'
@@ -253,6 +254,7 @@ const RemainingSchemas = [
   promoteExternalLinkV2,
   promotionsV2,
   thumbnail,
+  anchorSearch,
 ]
 
 // Then we give our schema to the builder and provide the result to Sanity

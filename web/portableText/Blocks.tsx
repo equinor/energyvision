@@ -14,6 +14,7 @@ import type {
 import type { ElementType } from 'react'
 import { IFrame } from '@/core/IFrame/IFrame'
 import DownloadableLink from '@/core/Link/DownloadableLink'
+import { Link as CoreLink } from '@/core/Link/Link'
 import type { TypographyProps } from '@/core/Typography'
 import type {
   TypographyGroups,
@@ -220,6 +221,13 @@ const markSerializers: MarkType = {
       <Link type='internalUrl' value={value}>
         {children}
       </Link>
+    )
+  },
+  pageAnchor: ({ children, value }: any) => {
+    return (
+      <CoreLink type='internalUrl' href={`#${value?.anchorId}`}>
+        {children}
+      </CoreLink>
     )
   },
   footnote: () => null,

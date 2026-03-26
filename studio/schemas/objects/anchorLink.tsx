@@ -45,6 +45,12 @@ export default {
           validateComponentAnchor(value, context),
         ),
     },
+    {
+      name: 'anchorLabel',
+      type: 'string',
+      title: 'Anchor label',
+      description: 'Used when compiling list of anchors on page together',
+    },
   ],
   preview: {
     select: {

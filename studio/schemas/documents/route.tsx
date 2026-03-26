@@ -1,6 +1,7 @@
 import { library_books } from '@equinor/eds-icons'
 // eslint-disable-next-line import/namespace
 import type { SanityClient, SanityDocument } from '@sanity/client'
+import slugify from '@sindresorhus/slugify'
 import { CiRoute, CiWarning } from 'react-icons/ci'
 import { MdOutlineEvent } from 'react-icons/md'
 import type {
@@ -10,7 +11,6 @@ import type {
   SlugSchemaType,
   SlugSourceContext,
 } from 'sanity'
-import slugify from 'slugify'
 import blocksToText from '@/helpers/blocksToText'
 import { EdsIcon } from '../../icons'
 import { Flags } from '../../src/lib/datasetHelpers'
@@ -93,8 +93,7 @@ export default (isoCode: string, title: string) => {
           input: SlugInput,
         },
         options: withSlugValidation({
-          source: (doc: SanityDocument) =>
-            slugify(doc.topicSlug, { lower: true }),
+          source: (doc: SanityDocument) => slugify(doc.topicSlug),
           slugify: async (
             input: string,
             _schemaType: SlugSchemaType,

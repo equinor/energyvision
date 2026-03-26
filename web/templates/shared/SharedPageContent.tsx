@@ -8,6 +8,9 @@ import { Typography } from '@/core/Typography'
 import { dataset } from '@/languageConfig'
 import AccordionBlock from '@/sections/AccordionBlock/AccordionBlock'
 import { AnchorLinkList } from '@/sections/AnchorLinkList'
+import AnchorSearch, {
+  findAllAnchors,
+} from '@/sections/AnchorSearch/AnchorSearch'
 import BarChartBlock, {
   type BarChartBlockProps,
 } from '@/sections/BarChartBlock/BarChartBlock'
@@ -299,17 +302,20 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
     topSpacingClassName: string,
     spacingClassName: string,
   ) => {
+    const anchorId = anchorReference
+    const commonProps = {
+      anchor: anchorId,
+    }
+
     switch (c.type) {
       case 'teaser':
-        return (
-          <Teaser key={c.id} data={c as TeaserData} anchor={anchorReference} />
-        )
+        return <Teaser key={c.id} {...commonProps} data={c as TeaserData} />
       case 'textTeaser':
         return (
           <TextTeaser
             key={c.id}
+            {...commonProps}
             data={c as TextTeaserData}
-            anchor={anchorReference}
             className={spacingClassName}
           />
         )
@@ -317,8 +323,8 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
         return (
           <TextBlock
             key={c.id}
+            {...commonProps}
             data={c as TextBlockData}
-            anchor={anchorReference}
             className={spacingClassName}
           />
         )
@@ -326,24 +332,24 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
         return (
           <FullWidthImage
             key={c.id}
+            {...commonProps}
             data={c as FullWidthImageData}
-            anchor={anchorReference}
           />
         )
       case 'fullWidthVideo':
         return (
           <FullWidthVideo
             key={c.id}
+            {...commonProps}
             {...(c as FullWidthVideoProps)}
-            anchor={anchorReference}
           />
         )
       case 'figure':
         return (
           <Figure
             key={c.id}
+            {...commonProps}
             data={c as FigureData}
-            anchor={anchorReference}
             className={spacingClassName}
           />
         )
@@ -351,8 +357,8 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
         return (
           <TextWithIconArray
             key={c.id}
+            {...commonProps}
             data={c as TextWithIconArrayData}
-            anchor={anchorReference}
             className={spacingClassName}
           />
         )
@@ -360,8 +366,8 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
         return (
           <QuoteBlock
             key={c.id}
+            {...commonProps}
             data={c as QuoteData}
-            anchor={anchorReference}
             className={spacingClassName}
           />
         )
@@ -369,8 +375,8 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
         return (
           <AccordionBlock
             key={c.id}
+            {...commonProps}
             data={c as AccordionData}
-            anchor={anchorReference}
             className={spacingClassName}
           />
         )
@@ -378,8 +384,8 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
         return (
           <PromoTileArray
             key={c.id}
+            {...commonProps}
             data={c as PromoTileArrayData}
-            anchor={anchorReference}
             className={spacingClassName}
           />
         )
@@ -387,8 +393,8 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
         return (
           <IFrameBlock
             key={c.id}
+            {...commonProps}
             data={c as IFrameData}
-            anchor={anchorReference}
             className={spacingClassName}
           />
         )
@@ -397,13 +403,13 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
         return (
           <PromotionsBlock
             key={c.id}
+            {...commonProps}
             data={
               {
                 ...promotion,
                 ...restPromo,
               } as PromotionsBlockData
             }
-            anchor={anchorReference}
             className={spacingClassName}
           />
         )
@@ -412,9 +418,9 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
         return (
           <PromotionsBlock
             key={c.id}
+            {...commonProps}
             variant='promoteEvents'
             data={c as PromotionsBlockData}
-            anchor={anchorReference}
             className={spacingClassName}
           />
         )
@@ -422,9 +428,9 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
         return (
           <PromotionsBlock
             key={c.id}
+            {...commonProps}
             variant='promoteNews'
             data={c as PromotionsBlockData}
-            anchor={anchorReference}
             className={spacingClassName}
           />
         )
@@ -433,9 +439,9 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
         return (
           <PromotionsBlock
             key={c.id}
+            {...commonProps}
             variant='promotePeople'
             data={c as PromotionsBlockData}
-            anchor={anchorReference}
             className={spacingClassName}
           />
         )
@@ -443,9 +449,9 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
         return (
           <PromotionsBlock
             key={c.id}
+            {...commonProps}
             variant='promoteMagazine'
             data={c as PromotionsBlockData}
-            anchor={anchorReference}
             className={spacingClassName}
           />
         )
@@ -453,9 +459,9 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
         return (
           <PromotionsBlock
             key={c.id}
+            {...commonProps}
             variant='promoteTopics'
             data={c as PromotionsBlockData}
-            anchor={anchorReference}
             className={spacingClassName}
           />
         )
@@ -463,8 +469,8 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
         return (
           <Form
             key={c.id}
+            {...commonProps}
             data={c as FormData}
-            anchor={anchorReference}
             className={spacingClassName}
           />
         )
@@ -474,8 +480,8 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
         return (
           <CookieDeclaration
             key={c.id}
+            {...commonProps}
             data={c as CookieDeclarationData}
-            anchor={anchorReference}
             className={spacingClassName}
           />
         )
@@ -483,8 +489,8 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
         return (
           <NewsList
             key={c.id}
+            {...commonProps}
             data={c as unknown as NewsListData}
-            anchor={anchorReference}
             className={spacingClassName}
           />
         )
@@ -492,8 +498,8 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
         return (
           <StockValues
             key={c.id}
+            {...commonProps}
             {...(c as StockValuesProps)}
-            anchor={anchorReference}
             className={spacingClassName}
           />
         )
@@ -501,8 +507,8 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
         return (
           <ImageCarousel
             key={c.id}
+            {...commonProps}
             data={c as ImageCarouselData}
-            anchor={anchorReference}
             className={spacingClassName}
           />
         )
@@ -510,8 +516,8 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
         return (
           <IframeCarousel
             key={c.id}
+            {...commonProps}
             data={c as IframeCarouselData}
-            anchor={anchorReference}
             className={spacingClassName}
           />
         )
@@ -519,8 +525,8 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
         return (
           <VideoPlayer
             key={c.id}
+            {...commonProps}
             {...(c as VideoPlayerBlockProps)}
-            anchor={anchorReference}
             className={spacingClassName}
           />
         )
@@ -528,8 +534,8 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
         return (
           <VideoPlayerCarousel
             key={c.id}
+            {...commonProps}
             data={c as VideoPlayerCarouselData}
-            anchor={anchorReference}
             className={spacingClassName}
           />
         )
@@ -537,8 +543,8 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
         return (
           <KeyNumbers
             key={c.id}
+            {...commonProps}
             data={c as KeyNumbersData}
-            anchor={anchorReference}
             className={spacingClassName}
           />
         )
@@ -546,8 +552,8 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
         return (
           <CardsList
             key={c.id}
+            {...commonProps}
             data={c as CardsListData}
-            anchor={anchorReference}
             className={spacingClassName}
           />
         )
@@ -555,28 +561,41 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
         return (
           <Grid
             key={c.id}
+            {...commonProps}
             data={c as GridData}
-            anchor={anchorReference}
             className={spacingClassName}
           />
         )
       case 'campaignBanner':
-        return <CampaignBanner key={c.id} data={c as CampaignBannerData} />
+        return (
+          <CampaignBanner
+            key={c.id}
+            {...commonProps}
+            data={c as CampaignBannerData}
+          />
+        )
       case 'anchorLinkList':
         return (
           <AnchorLinkList
             key={c.id}
+            {...commonProps}
             data={c as AnchorLinkListData}
-            anchor={anchorReference}
             className={spacingClassName}
           />
         )
       case 'imageForText':
-        return <ImageForText key={c.id} data={c as ImageForTextData} />
+        return (
+          <ImageForText
+            key={c.id}
+            {...commonProps}
+            data={c as ImageForTextData}
+          />
+        )
       case 'tabs':
         return (
           <TabsBlock
             key={c.id}
+            {...commonProps}
             {...(c as any)}
             //handling pb-page-content self
             className={topSpacingClassName}
@@ -587,6 +606,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
         return (
           <HomePageBanner
             key={c.id}
+            {...commonProps}
             {...(c as any)}
             nextCompBg={
               data?.content?.[index + 1]?.designOptions?.background
@@ -597,20 +617,20 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
       case 'tableV2':
         return (
           <TableBlock
-            variant='default'
             key={c.id}
+            variant='default'
+            {...commonProps}
             {...(c as any)}
-            anchor={anchorReference}
             className={spacingClassName}
           />
         )
       case 'importTable':
         return (
           <TableBlock
-            variant='import'
             key={c.id}
+            variant='import'
+            {...commonProps}
             {...(c as any)}
-            anchor={anchorReference}
             className={spacingClassName}
           />
         )
@@ -618,8 +638,8 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
         return (
           <PieChartBlock
             key={c.id}
+            {...commonProps}
             {...(c as PieChartBlockProps)}
-            anchor={anchorReference}
             className={spacingClassName}
           />
         )
@@ -627,8 +647,8 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
         return (
           <BarChartBlock
             key={c.id}
+            {...commonProps}
             {...(c as BarChartBlockProps)}
-            anchor={anchorReference}
             className={spacingClassName}
           />
         )
@@ -636,8 +656,8 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
         return (
           <LineChartBlock
             key={c.id}
+            {...commonProps}
             {...(c as LineChartBlockProps)}
-            anchor={anchorReference}
             className={spacingClassName}
           />
         )
@@ -647,8 +667,18 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
         return (
           <PromotionBlockV2
             key={c.id}
+            {...commonProps}
             {...(c as any)}
-            anchor={anchorReference}
+            className={spacingClassName}
+          />
+        )
+      case 'anchorSearch':
+        return (
+          <AnchorSearch
+            key={c.id}
+            {...commonProps}
+            anchors={findAllAnchors(data?.content)}
+            {...(c as any)}
             className={spacingClassName}
           />
         )
@@ -661,10 +691,15 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
     const prevComponent = data?.content?.[index - 1]
     const nextComponent = data?.content?.[index + 1]
 
-    const anchorReference =
-      (prevComponent as unknown as ComponentProps)?.type === 'anchorLink'
-        ? (prevComponent as unknown as AnchorLinkData)?.anchorReference
-        : undefined
+    // biome-ignore lint/complexity/noUselessUndefinedInitialization: complains either way
+    let anchorReference = undefined
+    if (prevComponent?.type === 'anchorLink') {
+      anchorReference = (prevComponent as unknown as AnchorLinkData)
+        ?.anchorReference
+    }
+    if (c?.type === 'textBlock' && c?.anchorReference) {
+      anchorReference = c?.anchorReference
+    }
 
     //Returns pt-20 when applicable or empty string
     const previousComponentIndex =
@@ -687,6 +722,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
     )
     let bottomSpacingClassName = 'pb-page-content'
 
+    //If textblocks follow each other reduce the pb-page-content to tie text closer together
     if (
       c?.type === 'textBlock' &&
       data?.content?.[nextComponentIndex]?.type === 'textBlock'
@@ -736,5 +772,6 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
       </ErrorBoundary>
     )
   })
+
   return content
 }

@@ -1,4 +1,5 @@
 import { file_description } from '@equinor/eds-icons'
+import slugify from '@sindresorhus/slugify'
 import type {
   SlugParent as DefaultSlugParent,
   Reference,
@@ -8,7 +9,6 @@ import type {
   SlugSchemaType,
   SlugSourceContext,
 } from 'sanity'
-import slugify from 'slugify'
 import { newsSlug } from '@/sitesConfig'
 import { formatDate } from '../../helpers/formatDate'
 import { EdsIcon } from '../../icons'
@@ -105,11 +105,7 @@ export default {
       },
       options: withSlugValidation({
         source: (doc: SanityDocument) => {
-          return doc.newsSlug
-            ? `${slugify(doc.newsSlug as string, {
-                lower: true,
-              })}`
-            : ''
+          return doc.newsSlug ? `${slugify(doc.newsSlug as string)}` : ''
         },
         slugify: async (
           input: string,
@@ -130,7 +126,7 @@ export default {
               const localNewsPath = document.lang
                 ? (localNewsTag[document.lang] as string)
                 : (localNewsTag[defaultLanguage.name] as string)
-              return `${translatedNews}/${slugify(localNewsPath, { lower: true })}/${slug}`
+              return `${translatedNews}/${slugify(localNewsPath)}/${slug}`
             })
         },
       }),

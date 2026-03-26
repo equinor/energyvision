@@ -73,6 +73,7 @@ export const content = {
     { type: 'promoteExternalLinkV2' },
     { type: 'promoteTopicsV2' },
     { type: 'promotionsV2' },
+    { type: 'anchorSearch' },
   ].filter(e => e),
   components: {
     input: RolesBasedArrayInput,
