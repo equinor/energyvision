@@ -2,8 +2,8 @@
  * This hook returns a style object for the shared title
  * accordingly to its next component
  */
-import { BackgroundContainerProps } from '@core/Backgrounds'
-import { HeroTypes, TextBlockData, ContentType } from '../../types'
+import type { BackgroundContainerProps } from '@core/Backgrounds'
+import { type ContentType, HeroTypes, type TextBlockData } from '../../types'
 
 export type TitleStyles = BackgroundContainerProps
 

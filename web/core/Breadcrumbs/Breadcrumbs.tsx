@@ -55,7 +55,7 @@ export const Breadcrumbs = ({
 
   return (
     <BackgroundContainer as="nav" aria-label="Breadcrumbs" background={background} renderFragmentWhenPossible>
-      <BreadcrumbsList className={twMerge(`py-10`, className)}>
+      <BreadcrumbsList className={twMerge(`py-4 lg:py-8`, className)}>
         {crumbs.map((item) => {
           const isActive = item.slug === slug
           const label = item.label
