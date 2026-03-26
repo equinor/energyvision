@@ -233,7 +233,7 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
 
     let topSpacingClassName = applyPaddingTopIfApplicable(c, previousComponentToCompare)
 
-    if (data?.breadcrumbs?.enableBreadcrumbs) {
+    if (data?.breadcrumbs?.enableBreadcrumbs && index === 0) {
       topSpacingClassName = ''
     }
     //In general most sections should get pb-page-content or it needs to take care of this customly
