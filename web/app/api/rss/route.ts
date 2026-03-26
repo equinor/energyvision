@@ -55,9 +55,6 @@ const generateRssFeed = async (locale: 'en_GB' | 'nb_NO') => {
 
     articles.forEach(article => {
       const langPath = article.lang === 'nb_NO' ? '/no' : ''
-      const locale = (
-        article.lang === 'nb_NO' ? 'no' : 'en'
-      ) as newsletterCategoryLocale
 
       const hero = article.hero
       const bannerImageUrl = hero?.image?.asset
@@ -106,7 +103,7 @@ const generateRssFeed = async (locale: 'en_GB' | 'nb_NO') => {
           <guid><![CDATA[https://equinor.com${langPath}${article.slug}?utm_source=newssubscription&utm_medium=email]]></guid>
           <pubDate>${publishDate}</pubDate>
           <description><![CDATA[${toPlainText(article.ingress)}]]></description>
-          ${categoryTag ? `<category>${newsletterCategoryMap[locale][categoryTag]}</category>` : '<category />'}
+          ${categoryTag ? `<category>${newsletterCategoryMap[locale === 'nb_NO' ? 'no' : 'en'][categoryTag]}</category>` : '<category />'}
           <nl:extra1>${
             format(new TZDate(publishDate, 'Europe/Oslo'), dateFormat, {
               locale: article.lang === 'nb_NO' ? nb : enGB,
