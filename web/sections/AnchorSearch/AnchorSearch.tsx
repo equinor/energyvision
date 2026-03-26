@@ -9,19 +9,26 @@ import Blocks from '@/portableText/Blocks'
 
 export const findAllAnchors = (content = []) => {
   return content
-    ?.filter(
-      (block: any) =>
+    ?.filter((block: any) => {
+      return (
         (block?.type === 'anchorLink' && block?.anchorReference) ||
-        (block?.type === 'textBlock' && block?.anchorReference),
-    )
+        (block?.type === 'textBlock' && block?.anchorReference)
+      )
+    })
     ?.map((block: any) => {
+      let label =
+        block?.anchorLabel ??
+        block?.anchorReference.charAt(0).toUpperCase() +
+          block?.anchorReference.slice(1)
+      if (block?.type === 'textBlock') {
+        label = Array.isArray(block?.title)
+          ? toPlainText(block?.title)
+          : block?.title
+      }
       return {
         anchorReference: block?.anchorReference,
         //anchorLabel when AnchorLink comp, title when Textblock component
-        label:
-          (block?.anchorLabel ?? Array.isArray(block?.title))
-            ? toPlainText(block?.title)
-            : block?.title,
+        label,
       }
     })
 }
