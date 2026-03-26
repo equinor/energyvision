@@ -36,13 +36,13 @@ export const mapCategoryToId = (category: string, locale: 'no' | 'en') => {
   if (locale === 'no') {
     switch (category) {
       case 'generalNews':
-        return 'generelle nyheter' 
+        return 'generelle nyheter'
       case 'Company':
-        return 'generelle nyheter' 
+        return 'generelle nyheter'
       case 'crudeOilAssays':
-        return 'crude oil assays' 
+        return 'crude oil assays (englesk)'
       case 'Crude':
-        return 'crude oil assays'
+        return 'crude oil assays (englesk)'
       case 'magazineStories':
         return 'magasinsaker'
       case 'stockMarketAnnouncements':
@@ -53,7 +53,7 @@ export const mapCategoryToId = (category: string, locale: 'no' | 'en') => {
   } else {
     switch (category) {
       case 'generalNews':
-        return 'general news' 
+        return 'general news'
       case 'Company':
         return 'general news'
       case 'crudeOilAssays':

@@ -231,7 +231,11 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
           } as DefaultComponent)
         : (data?.content?.[previousComponentIndex] as unknown as ComponentProps)
 
-    const topSpacingClassName = applyPaddingTopIfApplicable(c, previousComponentToCompare)
+    let topSpacingClassName = applyPaddingTopIfApplicable(c, previousComponentToCompare)
+
+    if (data?.breadcrumbs?.enableBreadcrumbs) {
+      topSpacingClassName = ''
+    }
     //In general most sections should get pb-page-content or it needs to take care of this customly
     const spacingClassName = `${topSpacingClassName} pb-page-content`
     //@ts-expect-error:so many types
