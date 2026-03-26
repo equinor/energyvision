@@ -113,19 +113,19 @@ type PageContentProps = {
  * E.g. 2 colored background of same color content, only first need but not second
  */
 const getBackgroundOptions = (component: ComponentProps) => {
-  //@ts-ignore:Too many types
+  //@ts-expect-error:Too many types
   if (!component?.designOptions || !Object.hasOwn(component, 'designOptions')) {
     //Return white default if no designOptions
     return {
       backgroundUtility: 'white-100',
     }
   }
-  //@ts-ignore
+  //@ts-expect-error
   if (component?.type === 'tabs') {
-    //@ts-ignore:so many types
+    //@ts-expect-error:so many types
     return getColorForTabsTheme(component?.designOptions?.theme?.value)
   }
-  //@ts-ignore:so many types
+  //@ts-expect-error:so many types
   return component?.designOptions?.background || getColorForTheme(component?.designOptions?.theme)
 }
 
@@ -137,9 +137,9 @@ const isWhiteColorBackground = (componentsDO: any, component: ComponentProps) =>
     cleanBgUtility(componentsDO?.backgroundUtility) === 'white-100' ||
     componentsDO?.backgroundColor === 'White' ||
     componentsDO?.background === 'White' ||
-    //@ts-ignore
+    //@ts-expect-error
     casesWhichHaveBackgroundButIsWhite.includes(component?.type) ||
-    //@ts-ignore
+    //@ts-expect-error
     !component?.designOptions
   )
 }
@@ -186,16 +186,16 @@ const applyPaddingTopIfApplicable = (currentComponent: ComponentProps, prevCompo
   const previousIsWhiteColorBackground = isWhiteColorBackground(previousComponentsDO, prevComponent)
 
   const previousComponentIsASpecialCaseAndNeedPT =
-    //@ts-ignore: too many types
+    //@ts-expect-error: too many types
     specialCases.includes(prevComponent?.type) || specialCases.includes(previousComponentsDO?.type)
 
   if (currentIsWhiteColorBackground && previousIsWhiteColorBackground && !previousComponentIsASpecialCaseAndNeedPT) {
     return ''
   }
 
-  //@ts-ignore: too many types
+  //@ts-expect-error: too many types
   if (prevComponent?.type === 'homepageBanner') {
-    //@ts-ignore: too many types
+    //@ts-expect-error: too many types
     return prevComponent?.designOptions?.backgroundType === '0' ? 'lg:pt-20' : 'pt-20'
   }
 
@@ -213,7 +213,7 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
   const content = (data?.content || []).map((c: ComponentProps, index) => {
     const prevComponent = data?.content?.[index - 1]
     const anchorReference =
-      //@ts-ignore:so many types
+      //@ts-expect-error:so many types
       (prevComponent as unknown as ComponentProps)?.type === 'anchorLink'
         ? (prevComponent as unknown as AnchorLinkData)?.anchorReference
         : undefined
@@ -231,10 +231,14 @@ export const PageContent = ({ data, titleBackground }: PageContentProps) => {
           } as DefaultComponent)
         : (data?.content?.[previousComponentIndex] as unknown as ComponentProps)
 
-    const topSpacingClassName = applyPaddingTopIfApplicable(c, previousComponentToCompare)
+    let topSpacingClassName = applyPaddingTopIfApplicable(c, previousComponentToCompare)
+
+    if (data?.breadcrumbs?.enableBreadcrumbs) {
+      topSpacingClassName = ''
+    }
     //In general most sections should get pb-page-content or it needs to take care of this customly
     const spacingClassName = `${topSpacingClassName} pb-page-content`
-    //@ts-ignore:so many types
+    //@ts-expect-error:so many types
     switch (c.type) {
       case 'teaser':
         return <Teaser key={c.id} data={c as TeaserData} anchor={anchorReference} />
