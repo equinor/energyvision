@@ -2,7 +2,6 @@ import { toPlainText } from '@portabletext/react'
 import { Collapsible } from 'radix-ui'
 import { forwardRef, useMemo, useState } from 'react'
 import { GoDash, GoPlus } from 'react-icons/go'
-import { uuid } from 'zod'
 import BaseLink from '@/core/Link/BaseLink'
 import { Typography } from '@/core/Typography'
 import { chunkArray } from '@/lib/helpers/chunkArray'
@@ -169,7 +168,7 @@ const AnchorSearch = forwardRef<HTMLDivElement, AnchorSearchProps>(
                       {chunks?.map((chunk: any) => {
                         return (
                           <div
-                            key={`chunk_${uuid()}`}
+                            key={`chunk_${chunk?.toString()}`}
                             className='flex flex-col gap-2'
                           >
                             {chunk?.map((anchor: any) => {

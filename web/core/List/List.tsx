@@ -1,12 +1,13 @@
-import { forwardRef } from 'react'
-import { Typography, TypographyVariants } from '../Typography'
-import { ListItem } from './ListItem'
-import { ListProps } from './types'
-import { useId } from '@equinor/eds-utils'
+import { forwardRef, useId } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { Typography, type TypographyVariants } from '../Typography'
+import { ListItem } from './ListItem'
+import type { ListProps } from './types'
 
 export interface ListComponent
-  extends React.ForwardRefExoticComponent<ListProps & React.RefAttributes<HTMLDivElement>> {
+  extends React.ForwardRefExoticComponent<
+    ListProps & React.RefAttributes<HTMLDivElement>
+  > {
   /**
    * @see 🏷️ {@link ListItemProps}
    */
@@ -28,29 +29,27 @@ export const List = forwardRef<HTMLDivElement, ListProps>(
     },
     ref,
   ) => {
-    const ariaId = useId('envis-list-heading')
+    const ariaId = useId()
     return (
       <div
         {...rest}
         ref={ref}
-        className={twMerge(
-          `text-slate-80
-          dark:text-white-100
-        `,
-          className,
-        )}
+        className={twMerge(`text-slate-80 dark:text-white-100`, className)}
       >
         {title && (
-          <Typography id={ariaId} variant={headingTag as TypographyVariants} className={headingClassName}>
+          <Typography
+            id={ariaId}
+            variant={headingTag as TypographyVariants}
+            className={headingClassName}
+          >
             {title}
           </Typography>
         )}
         <ListTag
           aria-labelledby={title && `${ariaId}`}
           className={twMerge(
-            `list-inside
-          ${ListTag === 'ul' ? 'list-disc' : 'list-decimal'}
-          ${split ? 'md:grid md:grid-cols-2 gap-x-8 gap-y-6 items-end' : ''}`,
+            `list-inside ${ListTag === 'ul' ? 'list-disc' : 'list-decimal'}
+          ${split ? 'items-end gap-x-8 gap-y-6 md:grid md:grid-cols-2' : ''}`,
             listClassName,
           )}
         >
