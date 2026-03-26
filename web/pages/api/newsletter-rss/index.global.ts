@@ -73,7 +73,7 @@ const generateRssFeed = async (locale: 'en_GB' | 'nb_NO') => {
           <link><![CDATA[https://www.equinor.com${langPath}${article.slug}?utm_source=newssubscription&utm_medium=email]]></link>
           <guid><![CDATA[https://www.equinor.com${langPath}${article.slug}?utm_source=newssubscription&utm_medium=email]]></guid>
           <pubDate>${publishDate}</pubDate>
-          <description><![CDATA[${toPlainText(article.ingress)}]]</description>
+          <description><![CDATA[${toPlainText(article.ingress)}]]></description>
           ${categoryTag ? `<category>${mapCategoryToId(categoryTag, locale)}</category>` : '<category />'}
           <nl:extra1>${
             format(new TZDate(publishDate, 'Europe/Oslo'), dateFormat, {
