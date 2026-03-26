@@ -13,8 +13,8 @@ const generateRssFeed = async (locale: 'en_GB' | 'nb_NO') => {
   try {
     // Fetch both English and Norwegian articles from news and magazine
     const [newsArticles, magazineArticles] = await Promise.all([
-      sanityClient.fetch(latestNews, { lang: locale }, { perspective: 'published' }),
-      sanityClient.fetch(latestMagazine, { lang: locale }, { perspective: 'published' }),
+      sanityClient.fetch(latestNews, { lang: locale }),
+      sanityClient.fetch(latestMagazine, { lang: locale }),
     ])
 
     // Merge the articles and sort by publish date (newest first)
