@@ -47,8 +47,6 @@ const generateRssFeed = async (locale: 'en_GB' | 'nb_NO') => {
       const encodedUrl = bannerImageUrl.replace(/&/g, '&amp;')
 
       const publishDate = new Date(article.publishDateTime).toUTCString()
-      console.log('article.publishDateTime', article.publishDateTime)
-      console.log('publishDate', publishDate)
       const dateFormat = article.lang === 'nb_NO' ? 'd. MMMM yyyy hh:mm' : 'd MMMM yyyy hh:mm'
 
       const getTimezoneAbbreviation = (date: Date, timeZone: string) => {
@@ -72,10 +70,10 @@ const generateRssFeed = async (locale: 'en_GB' | 'nb_NO') => {
       rss += `
         <item>
           <title>${title}</title>
-          <link>https://www.equinor.com${langPath}${article.slug}?utm_source=newssubscription&utm_medium=email</link>
-          <guid>https://www.equinor.com${langPath}${article.slug}?utm_source=newssubscription&utm_medium=email</guid>
+          <link>![CDATA[https://www.equinor.com${langPath}${article.slug}?utm_source=newssubscription&utm_medium=email]]</link>
+          <guid>![CDATA[https://www.equinor.com${langPath}${article.slug}?utm_source=newssubscription&utm_medium=email]]</guid>
           <pubDate>${publishDate}</pubDate>
-          <description>${toPlainText(article.ingress)}</description>
+          <description>![CDATA[${toPlainText(article.ingress)}]]</description>
           ${categoryTag ? `<category>${mapCategoryToId(categoryTag, locale)}</category>` : '<category />'}
           <nl:extra1>${
             format(new TZDate(publishDate, 'Europe/Oslo'), dateFormat, {
