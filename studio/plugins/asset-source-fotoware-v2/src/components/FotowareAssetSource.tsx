@@ -15,6 +15,7 @@ import {
 import { createPortal } from 'react-dom'
 import type { FWAsset, FWAttributeField } from '../../types'
 import {
+  checkAuthData,
   FotowareEvents,
   getAccessToken,
   getAuthURL,

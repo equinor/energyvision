@@ -1,7 +1,6 @@
 import type { TokenType } from '../../types'
 
 export const HAS_ENV_VARS =
-  // process.env.SANITY_STUDIO_FOTOWARE_SELECTION_CLIENT_ID &&
   process.env.SANITY_STUDIO_FOTOWARE_CLIENT_ID && // OLD
   process.env.SANITY_STUDIO_FOTOWARE_TENANT_URL &&
   process.env.SANITY_STUDIO_FOTOWARE_REDIRECT_ORIGIN &&
@@ -114,19 +113,9 @@ export const checkAuthData = (data: any): boolean => {
     )
   )
 }
-export const checkAPIAuthData = (data: any): boolean => {
-  return (
-    typeof data === 'object' &&
-    typeof data.access_token === 'string' &&
-    typeof data.expires_in === 'number'
-  )
-}
 
 export const getExportURL = (uri: string): string =>
   `${process.env.SANITY_STUDIO_FOTOWARE_AF_EXPORT_URL}?code=${process.env.SANITY_STUDIO_FOTOWARE_AF_EXPORT_KEY}&uri=${uri}`
-
-export const getApiAccessURL = (): string =>
-  `${process.env.SANITY_STUDIO_FOTOWARE_AF_API_ACCESS_URL}?code=${process.env.SANITY_STUDIO_FOTOWARE_AF_API_ACCESS_KEY}`
 
 export const getSelectionWidgetURL = (accessToken: string) => {
   return `${process.env.SANITY_STUDIO_FOTOWARE_TENANT_URL}/fotoweb/widgets/selection?access_token=${accessToken}`
@@ -134,16 +123,6 @@ export const getSelectionWidgetURL = (accessToken: string) => {
 
 export const getRenditionURL = () => {
   return `${process.env.SANITY_STUDIO_FOTOWARE_TENANT_URL}/fotoweb/me`
-}
-
-export const getExportWidgetURL = (accessToken: string, href: string) => {
-  const assetURI = encodeURI(href)
-  const publicationText = encodeURI(
-    `Sanity (Dataset: ${process.env.SANITY_STUDIO_API_DATASET})`,
-  )
-  const params = `access_token=${accessToken}&i=${assetURI}&pub=${publicationText}&&caption=false&action=false&behaviour=false&publication=false&enhance=false`
-
-  return `${process.env.SANITY_STUDIO_FOTOWARE_TENANT_URL}/fotoweb/widgets/publish?${params}`
 }
 
 type ErrorTypes = 'generic' | 'auth' | 'export'
