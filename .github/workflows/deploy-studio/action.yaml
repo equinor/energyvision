@@ -112,8 +112,6 @@ runs:
           --build-arg ARG_FOTOWARE_REDIRECT_ORIGIN="${{ inputs.fotowareRedirectOrigin }}" \
           --build-arg ARG_FOTOWARE_REDIRECT_URI="${{ inputs.fotowareRedirectUri }}" \
           --build-arg ARG_FOTOWARE_AF_EXPORT_URL="${{ inputs.fotowareAfExportUrl }}" \
-          --build-arg ARG_FOTOWARE_AF_API_ACCESS_KEY="${{ inputs.fotowareAfApiAccessKey }}" \
-          --build-arg ARG_FOTOWARE_AF_API_ACCESS_URL="${{ inputs.fotowareAfApiAccessUrl }}" \
           --secret id=FOTOWARE_AF_EXPORT_KEY \
           --build-arg ARG_SCREEN9_ACCOUNT_ID="${{ inputs.screen9accountId }}" \
           --secret id=SCREEN9_TOKEN \
