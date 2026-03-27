@@ -1,7 +1,7 @@
-import { defineType, defineField } from 'sanity'
-import { RadioIconSelector } from '../../components'
-import { ContentRightImage, ContentLeftImage, ContentCenterImage } from '../../../icons'
+import { defineField, defineType } from 'sanity'
 import { capitalizeFirstLetter } from '../../../helpers/formatters'
+import { ContentCenterImage, ContentLeftImage, ContentRightImage } from '../../../icons'
+import { RadioIconSelector } from '../../components'
 
 export type ColorType = {
   title: string
@@ -59,8 +59,7 @@ export default defineType({
         const { currentUser } = props || {}
         const allowedRoles = ['designer', 'administrator', 'developer']
         const isAllowed = currentUser?.roles?.some((role) => allowedRoles?.includes(role?.name))
-        console.log('isAllowed galss effect', isAllowed)
-        return isAllowed ? false : true
+        return !isAllowed
       },
     }),
     defineField({
@@ -70,17 +69,15 @@ export default defineType({
       type: 'string',
       initialValue: 'left',
       components: {
-        input: function ({ onChange, value }: { onChange: any; value: string }) {
-          return (
-            <RadioIconSelector
-              name="imageAlignmentSelector"
-              options={contentAlignmentOptions}
-              defaultValue={'left'}
-              currentValue={value}
-              onChange={onChange}
-            />
-          )
-        },
+        input: ({ onChange, value }: { onChange: any; value: string }) => (
+          <RadioIconSelector
+            name="imageAlignmentSelector"
+            options={contentAlignmentOptions}
+            defaultValue={'left'}
+            currentValue={value}
+            onChange={onChange}
+          />
+        ),
       },
     }),
   ],
@@ -94,7 +91,7 @@ export default defineType({
     prepare({ image, useAnimation, contentAlignment }) {
       return {
         title: `Image background`,
-        subtitle: `${capitalizeFirstLetter(contentAlignment ?? 'left') + ' aligned '} ${
+        subtitle: `${`${capitalizeFirstLetter(contentAlignment ?? 'left')} aligned `} ${
           useAnimation ? ' | Animated ' : ''
         } content`,
         media: image.asset,
