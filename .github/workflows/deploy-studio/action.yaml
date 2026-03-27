@@ -48,12 +48,6 @@ inputs:
     required: true
   previewUrl:
     description: 'Preview url for presentation'
-  fotowareAfApiAccessKey:
-    description: 'Azure Function api auth function key'
-    required: true
-  fotowareAfApiAccessUrl:
-    description: 'Azure Function api auth function key'
-    required: true
 
 
 runs:

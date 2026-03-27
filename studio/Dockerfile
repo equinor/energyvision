@@ -26,8 +26,6 @@ ARG ARG_FOTOWARE_TENANT_URL
 ARG ARG_FOTOWARE_REDIRECT_ORIGIN
 ARG ARG_FOTOWARE_AF_EXPORT_URL
 ARG ARG_FOTOWARE_REDIRECT_URI
-ARG ARG_FOTOWARE_AF_API_ACCESS_KEY
-ARG ARG_FOTOWARE_AF_API_ACCESS_URL
 ARG ARG_SCREEN9_ACCOUNT_ID
 ARG ARG_SANITY_STUDIO_PREVIEW_URL
 
@@ -55,7 +53,6 @@ RUN --mount=type=secret,id=SANITY_STUDIO_PREVIEW_SECRET,env=SANITY_STUDIO_PREVIE
 FROM node:lts-alpine AS runner
 
 WORKDIR /opt/app
-RUN ls -la
 
 ENV PORT=3333
 ENV USER=sanity
@@ -82,6 +79,9 @@ COPY --from=builder ./opt/app/studio/dist ./dist
 COPY --from=builder ./opt/app/studio/server.js .
 
 RUN npm install express@5.1.0 express-history-api-fallback@2.2.1
+
+RUN --mount=type=secret,id=FOTOWARE_AF_EXPORT_KEY,env=FOTOWARE_AF_EXPORT_KEY \
+    --mount=type=secret,id=SCREEN9_TOKEN,env=SCREEN9_TOKEN \
 
 EXPOSE "$PORT"
 
