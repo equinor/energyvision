@@ -1,10 +1,10 @@
-import { forwardRef, HTMLAttributes, CSSProperties } from 'react'
-import { useSanityLoader } from '../../lib/hooks/useSanityLoader'
-import { ImageBackground } from '../../types/index'
+import { type ImageRatioKeys, mapSanityImageRatio } from '@core/SanityImage/SanityImage'
+import { type CSSProperties, forwardRef, type HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
-import { BackgroundContainerType } from './ColouredContainer'
-import { ImageRatioKeys, mapSanityImageRatio } from '@core/SanityImage/SanityImage'
+import { useSanityLoader } from '../../lib/hooks/useSanityLoader'
+import type { ImageBackground } from '../../types/index'
+import type { BackgroundContainerType } from './ColouredContainer'
 
 type ImageBackgroundContainerProps = {
   scrimClassName?: string
@@ -27,7 +27,7 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
       useLight = false,
       useNoGradient = false,
       useGlass = false,
-      contentAlignment = 'center',
+      contentAlignment = 'left',
       children,
       className = '',
       scrimClassName = '',
@@ -44,19 +44,12 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
     const isMobile = useMediaQuery(`(max-width: 800px)`)
     const ReturnElement = as
 
-    const fadedFilter = `
-    before:content-['']
-    before:absolute
-    before:inset-0
-    ${useLight ? `before:bg-white-100 before:opacity-[35%]` : `before:bg-black-100 before:opacity-[25%]`}
-    `
-
     const backgroundClassNames = `[container:inline-size]
       relative
       ${useLight || useNoGradient ? '' : 'dark'}
       w-full
       h-full
-      ${useAnimation && !isMobile && !useNoGradient ? `bg-fixed ${fadedFilter}` : 'bg-local'}
+      ${useAnimation && !isMobile ? `bg-fixed` : 'bg-local'}
       bg-center
       bg-no-repeat
       bg-cover
@@ -71,11 +64,13 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
     }
     const darkGradientForContentAlignment = {
       center: '',
-      right: 'xl:black-right-gradient',
-      left: 'xl:black-left-gradient',
+      right: 'xl:black-to-right-gradient',
+      left: 'xl:black-to-left-gradient',
       'bottom-left': 'black-to-top-gradient',
       'bottom-center': 'black-to-top-gradient',
     }
+
+    console.log('darkGradientForContentAlignment[contentAlignment]', darkGradientForContentAlignment[contentAlignment])
 
     let animatedScrimGradient = ''
     if (!overrideGradient && !useNoGradient) {
@@ -83,6 +78,7 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
         ? `${lightGradientForContentAlignment[contentAlignment]}`
         : `black-center-gradient ${darkGradientForContentAlignment[contentAlignment]}`
     }
+    console.log('animatedScrimGradient', animatedScrimGradient)
 
     const contentElement = useGlass ? (
       <div className={twMerge('', className)}>
