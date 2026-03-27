@@ -1,11 +1,11 @@
-import { Level2Keys } from "@/lib/helpers/typescriptTyping"
+import type { Level2Keys } from '@/lib/helpers/typescriptTyping'
 
 export const newsletterCategoryMap = {
   no: {
     generalNews: 'generelle nyheter',
     Company: 'generelle nyheter',
-    crudeOilAssays: 'crude oil assays',
-    Crude: 'crude oil assays',
+    crudeOilAssays: 'crude oil assays (engelsk)',
+    Crude: 'crude oil assays (engelsk)',
     magazineStories: 'magasinsaker',
     stockMarketAnnouncements: 'børsmeldinger',
     Stock: 'børsmeldinger',
