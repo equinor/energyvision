@@ -1,12 +1,36 @@
-import { ReactNode, useState, useCallback, useRef, forwardRef, useEffect } from 'react'
-import { MemberField, set, unset } from 'sanity'
+import {
+  ComponentIcon,
+  EllipsisVerticalIcon,
+  ResetIcon,
+  UploadIcon,
+} from '@sanity/icons'
+import {
+  Box,
+  Button,
+  Card,
+  Dialog,
+  Label,
+  Menu,
+  MenuButton,
+  MenuDivider,
+  MenuItem,
+  Stack,
+  Text,
+} from '@sanity/ui'
+import { Buffer } from 'buffer'
+import {
+  forwardRef,
+  type ReactNode,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 import { createPortal } from 'react-dom'
 import type { ObjectInputProps } from 'sanity'
-import { Buffer } from 'buffer'
-import { UploadIcon, ResetIcon, EllipsisVerticalIcon, ComponentIcon } from '@sanity/icons'
-import { Button, Dialog, Text, Label, Menu, MenuButton, MenuDivider, MenuItem, Stack, Card, Box } from '@sanity/ui'
-import HLSPlayer from './HLSPlayer'
+import { MemberField, set, unset } from 'sanity'
 import { baseUrl } from '../../resolveProductionUrl'
+import HLSPlayer from './HLSPlayer'
 import { getObjectMemberField } from './utils/getObjectMemberField'
 
 type VideoSelector = {
@@ -28,7 +52,9 @@ const MEDIABANK_IMPORT_TYPE = 'dam:assets-imported'
 
 const SCREEN9_ACCOUNT_ID = process.env.SANITY_STUDIO_SCREEN9_ACCOUNT_ID
 const SCREEN9_TOKEN = process.env.SANITY_STUDIO_SCREEN9_TOKEN
-const SCREEN9_AUTH = Buffer.from(`${SCREEN9_ACCOUNT_ID}:${SCREEN9_TOKEN}`).toString('base64')
+const SCREEN9_AUTH = Buffer.from(
+  `${SCREEN9_ACCOUNT_ID}:${SCREEN9_TOKEN}`,
+).toString('base64')
 
 const VideoSelector = forwardRef(function VideoSelector(
   props: VideoSelectorProps,
@@ -36,20 +62,29 @@ const VideoSelector = forwardRef(function VideoSelector(
 ) {
   const [container, setContainer] = useState<HTMLDivElement | null>(null)
   const [error, setError] = useState('')
-  const { value, members, children, renderField, renderInput, renderItem, renderPreview, onChange } = props
+  const {
+    value,
+    members,
+    children,
+    renderField,
+    renderInput,
+    renderItem,
+    renderPreview,
+    onChange,
+  } = props
 
   useEffect(() => {
     setContainer(document.createElement('div'))
   }, [])
 
-  const closeModal = () => {
+  const closeModal = useCallback(() => {
     newWindow?.current?.close()
-    window.removeEventListener('message', handleMediaBankEvent)
-  }
+  }, [])
 
   const handleMediaBankEvent = useCallback(
     async (event: MessageEvent) => {
-      if (!event || !event.data || event.origin !== MEDIABANK_DOMAIN) return false
+      if (!event || !event.data || event.origin !== MEDIABANK_DOMAIN)
+        return false
 
       const message = JSON.parse(event.data)
 
@@ -65,13 +100,17 @@ const VideoSelector = forwardRef(function VideoSelector(
               Authorization: `Basic ${SCREEN9_AUTH}`,
             },
           })
-            .then((res) =>
+            .then(res =>
               res.status !== 200
-                ? setError('Could not retrieve url from Screen9. Please report the error to the dev team.')
+                ? setError(
+                    'Could not retrieve url from Screen9. Please report the error to the dev team.',
+                  )
                 : res.json(),
             )
-            .catch((error) => {
-              setError(`Could not retrieve url from Screen9. Please report the error to the dev team. Error: ${error}`)
+            .catch(error => {
+              setError(
+                `Could not retrieve url from Screen9. Please report the error to the dev team. Error: ${error}`,
+              )
             })
 
           if (!data.error) {
@@ -84,12 +123,14 @@ const VideoSelector = forwardRef(function VideoSelector(
             onChange(set(video))
           }
         } else {
-          setError('File is not supported. Please select a equinor.com video file.')
+          setError(
+            'File is not supported. Please select a equinor.com video file.',
+          )
         }
         closeModal()
       }
     },
-    [onChange],
+    [onChange, closeModal],
   )
 
   const handleOpenModal = () => {
@@ -132,7 +173,7 @@ const VideoSelector = forwardRef(function VideoSelector(
     <>
       {container && createPortal(children, container)}
       {error && (
-        <Dialog id="error-dialog" header={'Error'} onClose={() => setError('')}>
+        <Dialog id='error-dialog' header={'Error'} onClose={() => setError('')}>
           <Box padding={4}>
             <Text>{error}</Text>
           </Box>
@@ -142,16 +183,16 @@ const VideoSelector = forwardRef(function VideoSelector(
         <Stack>
           <Button
             icon={UploadIcon}
-            mode="ghost"
-            type="button"
+            mode='ghost'
+            type='button'
             onClick={handleOpenModal}
-            text="Import from Media Bank"
+            text='Import from Media Bank'
           />
         </Stack>
       ) : (
         <Stack space={4} marginTop={2}>
           <Stack space={3}>
-            <Label as="label" htmlFor="text-input" size={1}>
+            <Label as='label' htmlFor='text-input' size={1}>
               Title
             </Label>
             {title && (
@@ -165,38 +206,44 @@ const VideoSelector = forwardRef(function VideoSelector(
             )}
           </Stack>
           <Stack space={3}>
-            <Label as="label" htmlFor="asset" size={1}>
+            <Label as='label' htmlFor='asset' size={1}>
               Asset
             </Label>
-            <div ref={forwardedRef} id="asset" style={{ position: 'relative' }}>
-              <Card border paddingX={6} tone="transparent">
+            <div ref={forwardedRef} id='asset' style={{ position: 'relative' }}>
+              <Card border paddingX={6} tone='transparent'>
                 <HLSPlayer
                   src={value.url}
                   controls={true}
-                  width="100%"
-                  height="350px"
+                  width='100%'
+                  height='350px'
                   style={{ marginBottom: '-5px', background: 'black' }}
                 />
               </Card>
 
               <div style={{ position: 'absolute', top: '8px', right: '8px' }}>
                 <MenuButton
-                  button={<Button icon={EllipsisVerticalIcon} mode="ghost" />}
-                  id="menu-video"
+                  button={<Button icon={EllipsisVerticalIcon} mode='ghost' />}
+                  id='menu-video'
                   menu={
                     <Menu>
-                      <MenuItem as="div">
+                      <MenuItem as='div'>
                         <Label size={2}>Replace</Label>
                       </MenuItem>
                       <MenuItem
-                        as="button"
+                        as='button'
                         icon={ComponentIcon}
-                        type="button"
+                        type='button'
                         onClick={handleOpenModal}
-                        text="Media Bank"
+                        text='Media Bank'
                       />
                       <MenuDivider />
-                      <MenuItem as="button" icon={ResetIcon} text="Clear field" tone="critical" onClick={handleReset} />
+                      <MenuItem
+                        as='button'
+                        icon={ResetIcon}
+                        text='Clear field'
+                        tone='critical'
+                        onClick={handleReset}
+                      />
                     </Menu>
                   }
                   popover={{ portal: true }}

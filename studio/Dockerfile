@@ -43,8 +43,8 @@ ENV SANITY_STUDIO_PREVIEW_URL=${ARG_SANITY_STUDIO_PREVIEW_URL}
 
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm studio install --frozen-lockfile 
 RUN --mount=type=secret,id=SANITY_STUDIO_PREVIEW_SECRET,env=SANITY_STUDIO_PREVIEW_SECRET \
-    --mount=type=secret,id=FOTOWARE_AF_EXPORT_KEY,env=FOTOWARE_AF_EXPORT_KEY \
-    --mount=type=secret,id=SCREEN9_TOKEN,env=SCREEN9_TOKEN && \
+    --mount=type=secret,id=FOTOWARE_AF_EXPORT_KEY,env=SANITY_STUDIO_FOTOWARE_AF_EXPORT_KEY \
+    --mount=type=secret,id=SCREEN9_TOKEN,env=SANITY_STUDIO_SCREEN9_TOKEN \
     pnpm studio build
 
 # Run
@@ -77,9 +77,6 @@ COPY --from=builder ./opt/app/studio/dist ./dist
 COPY --from=builder ./opt/app/studio/server.js .
 
 RUN npm install express@5.1.0 express-history-api-fallback@2.2.1
-
-RUN --mount=type=secret,id=FOTOWARE_AF_EXPORT_KEY,env=FOTOWARE_AF_EXPORT_KEY \
-    --mount=type=secret,id=SCREEN9_TOKEN,env=SCREEN9_TOKEN
 
 EXPOSE "$PORT"
 
