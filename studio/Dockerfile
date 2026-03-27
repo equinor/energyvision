@@ -81,7 +81,7 @@ COPY --from=builder ./opt/app/studio/server.js .
 RUN npm install express@5.1.0 express-history-api-fallback@2.2.1
 
 RUN --mount=type=secret,id=FOTOWARE_AF_EXPORT_KEY,env=FOTOWARE_AF_EXPORT_KEY \
-    --mount=type=secret,id=SCREEN9_TOKEN,env=SCREEN9_TOKEN \
+    --mount=type=secret,id=SCREEN9_TOKEN,env=SCREEN9_TOKEN
 
 EXPOSE "$PORT"
 
