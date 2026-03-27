@@ -1,6 +1,5 @@
 import DocumentsPane from 'sanity-plugin-documents-pane'
 import items from './src/lib/structure'
-import FilePreview from './src/previews/file/filePreview'
 
 export default (S, context) =>
   S.list().title('Energyvision').items(items(S, context))
@@ -30,7 +29,6 @@ export const defaultDocumentNodeResolver = (S, { schemaType }) => {
             useDraft: false,
           })
           .title('References'),
-        S.view.component(FilePreview).title('Preview'),
       )
 
   if (tagDocTypes.includes(schemaType)) {
