@@ -40,9 +40,9 @@ export const mapCategoryToId = (category: string, locale: 'no' | 'en') => {
       case 'Company':
         return 'generelle nyheter'
       case 'crudeOilAssays':
-        return 'crude oil assays (englesk)'
+        return 'crude oil assays (engelsk)'
       case 'Crude':
-        return 'crude oil assays (englesk)'
+        return 'crude oil assays (engelsk)'
       case 'magazineStories':
         return 'magasinsaker'
       case 'stockMarketAnnouncements':
