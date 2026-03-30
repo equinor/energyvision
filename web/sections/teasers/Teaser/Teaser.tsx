@@ -1,4 +1,5 @@
 import type { PortableTextBlock } from '@portabletext/types'
+import { toPlainText } from 'next-sanity'
 import ResourceLink from '@/core/Link/ResourceLink'
 import { Typography } from '@/core/Typography'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
@@ -12,7 +13,6 @@ import type {
   ImageWithAlt,
   LinkData,
 } from '../../../types/index'
-import { toPlainText } from 'next-sanity'
 
 export type TeaserData = {
   type: string
@@ -63,6 +63,7 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
       <Image
         image={image}
         fill
+        wrapperVariant='none'
         grid='lg'
         imageClassName={`${
           containImage ? 'object-contain' : ''
@@ -94,7 +95,12 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
         ) : (
           title && <Blocks value={title} as='h2' group='heading' variant='h2' />
         )}
-        {content && <Blocks variant={toPlainText(content)?.length > 240 ? 'body': 'ingress'} value={content} />}
+        {content && (
+          <Blocks
+            variant={toPlainText(content)?.length > 240 ? 'body' : 'ingress'}
+            value={content}
+          />
+        )}
         {actions && (
           <div className='mt-8 flex flex-col gap-x-8 gap-y-6'>
             {actions?.map((action, idx) => {
