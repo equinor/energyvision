@@ -12,6 +12,7 @@ import { useLocale, useTranslations } from 'next-intl'
 import { useCallback, useMemo, useState } from 'react'
 import { usePage } from '@/contexts/pageContext'
 import BaseLink from '@/core/Link/BaseLink'
+import Link from '@/core/Link/Link'
 import { LogoLink } from '@/core/Link/LogoLink'
 import { Menu, MenuButton } from '@/core/MenuAccordion'
 import { MenuPanes } from '@/core/MenuPanes/MenuPanes'
@@ -133,17 +134,33 @@ const SiteMenu = ({ variant = 'default' }: MenuProps) => {
       'h-full mt-8 xl:bg-moss-green-50 xl:mx-8 xl:flex xl:justify-between items-center',
     simple: ` ${Flags.HAS_FANCY_MENU ? '' : 'bg-north-sea-80'} mt-6 xl:mt-8 xl:px-layout-sm flex flex-col mx-auto`,
   }
-
+  if (menuItems.length === 0) {
+    // for sites with no menu
+    return (
+      <Link
+        className='text-base'
+        type={Flags.IS_GLOBAL_PROD ? 'internalUrl' : 'externalUrl'}
+        href={allSitesURL}
+        onClick={handleLinkClick}
+      >
+        {intl('all_sites')}
+      </Link>
+    )
+  }
   return (
     <div>
       <MenuButton
         ref={refs.setReference}
         title={title}
         {...getReferenceProps()}
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => {
+          console.log('Menu', 'initial opens')
+          setIsOpen(!isOpen)
+        }}
         aria-expanded={isOpen}
         aria-haspopup={true}
       />
+
       {isOpen && (
         <FloatingFocusManager context={context}>
           <FloatingOverlay
@@ -162,7 +179,10 @@ const SiteMenu = ({ variant = 'default' }: MenuProps) => {
                     aria-haspopup={true}
                     aria-expanded={true}
                     expanded
-                    onClick={() => setIsOpen(false)}
+                    onClick={() => {
+                      console.log('Menu', 'close ')
+                      setIsOpen(false)
+                    }}
                   />
                 </NavTopbar>
                 <div className={variantClassName[variant]}>

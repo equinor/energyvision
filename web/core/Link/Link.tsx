@@ -9,7 +9,14 @@ export type LinkProps = BaseLinkProps
 
 /** Regular link style for use*/
 export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
-  { children, type = 'internalUrl', className = '', href = '', hrefLang },
+  {
+    children,
+    type = 'internalUrl',
+    className = '',
+    href = '',
+    hrefLang,
+    ...rest
+  },
   ref,
 ) {
   const t = useTranslations()
@@ -37,6 +44,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
       ref={ref}
       href={href}
       hrefLang={hrefLang}
+      {...rest}
     >
       {children}
       {showArrow && (
