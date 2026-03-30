@@ -66,7 +66,6 @@ const SiteMenu = ({ variant = 'default' }: MenuProps) => {
   }, [siteMenuData, variant])
 
   const handleLinkClick = () => {
-    console.log('Click inside sitemenu set is open false')
     setIsOpen(false)
   }
 
@@ -153,10 +152,7 @@ const SiteMenu = ({ variant = 'default' }: MenuProps) => {
         ref={refs.setReference}
         title={title}
         {...getReferenceProps()}
-        onClick={() => {
-          console.log('Menu', 'initial opens')
-          setIsOpen(!isOpen)
-        }}
+        onClick={() => setIsOpen(!isOpen)}
         aria-expanded={isOpen}
         aria-haspopup={true}
       />
@@ -179,10 +175,7 @@ const SiteMenu = ({ variant = 'default' }: MenuProps) => {
                     aria-haspopup={true}
                     aria-expanded={true}
                     expanded
-                    onClick={() => {
-                      console.log('Menu', 'close ')
-                      setIsOpen(false)
-                    }}
+                    onClick={() => setIsOpen(false)}
                   />
                 </NavTopbar>
                 <div className={variantClassName[variant]}>
@@ -239,7 +232,7 @@ const SiteMenu = ({ variant = 'default' }: MenuProps) => {
                     <hr
                       className={`${
                         Flags.HAS_FANCY_MENU ? 'mt-12 xl:hidden' : 'max-xl:mt-8'
-                      } h-px w-full bg-grey-40 dark:bg-white-100`}
+                      } h-px w-full text-grey-40 dark:text-white-100`}
                     />
                   }
                   <BaseLink
