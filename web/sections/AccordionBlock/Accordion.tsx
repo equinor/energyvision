@@ -32,9 +32,13 @@ const Accordion = ({ data, id, hasSectionTitle = true }: AccordionProps) => {
                   imageClassName='lg:aspect-video rounded-2xs'
                 />
               )}
-              {content && <Blocks value={content} variant='body' />}
+              {content && <Blocks value={content} variant='simple' />}
               {links && (
-                <CallToActions callToActions={links} linkVariant='fit' />
+                <CallToActions
+                  callToActions={links}
+                  linkVariant='fit'
+                  className='pt-0'
+                />
               )}
             </Content>
           </Item>

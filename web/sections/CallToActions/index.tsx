@@ -15,7 +15,7 @@ const CallToActions = ({
   callToActions = [],
   splitList,
   linkVariant,
-  className = '',
+  className = 'pt-8',
 }: CallToActionsProps) => {
   if (!callToActions) return null
 
@@ -48,41 +48,43 @@ const CallToActions = ({
     )
   }
 
-  return <div className='pt-8'>
-    {
-    callToActions?.length === 1 ? (
-    getSingleAction()
-  ) : (
-    <ul
-      className={twMerge(
-        `grid grid-cols-[fit-content] gap-x-8 gap-y-6 ${splitList ? 'items-end md:grid md:grid-cols-2' : ''} `,
-        className,
+  return (
+    <div className={className}>
+      {callToActions?.length === 1 ? (
+        getSingleAction()
+      ) : (
+        <ul
+          className={twMerge(
+            `grid grid-cols-[fit-content] gap-x-8 gap-y-6 ${splitList ? 'items-end md:grid md:grid-cols-2' : ''} `,
+          )}
+        >
+          {callToActions.map((callToAction: LinkData) => {
+            const url = getUrlFromAction(callToAction)
+            const { id, label, type, link, file } = callToAction
+            return url ? (
+              <li key={id}>
+                {/*  If the URL is a static AEM page it should behave as an internal link in the web */}
+                <ResourceLink
+                  file={{
+                    ...file,
+                    label,
+                  }}
+                  {...(link?.lang && {
+                    hrefLang: getLocaleFromName(link?.lang),
+                  })}
+                  href={url}
+                  type={type}
+                  variant={linkVariant ? linkVariant : 'default'}
+                >
+                  {`${label}`}
+                </ResourceLink>
+              </li>
+            ) : null
+          })}
+        </ul>
       )}
-    >
-      {callToActions.map((callToAction: LinkData) => {
-        const url = getUrlFromAction(callToAction)
-        const { id, label, type, link, file } = callToAction
-        return url ? (
-          <li key={id}>
-            {/*  If the URL is a static AEM page it should behave as an internal link in the web */}
-            <ResourceLink
-              file={{
-                ...file,
-                label,
-              }}
-              {...(link?.lang && { hrefLang: getLocaleFromName(link?.lang) })}
-              href={url}
-              type={type}
-              variant={linkVariant ? linkVariant : 'default'}
-            >
-              {`${label}`}
-            </ResourceLink>
-          </li>
-        ) : null
-      })}
-    </ul>
-  )}
-  </div>
+    </div>
+  )
 }
 
 export default CallToActions
