@@ -1,17 +1,24 @@
 'use client'
 import type { HTMLAttributes } from 'react'
 import { mapSanityImageRatio } from '@/core/Image/Image'
+import type { TypographyVariants } from '@/core/Typography'
+import { getLayoutPx } from '@/lib/helpers/getCommonUtilities'
 import { useMediaQuery } from '@/lib/hooks/useMediaQuery'
 import { twMerge } from '@/lib/twMerge/twMerge'
 import Blocks from '@/portableText/Blocks'
 import { resolveImage } from '@/sanity/lib/utils'
+import type { ImageWithAlt } from '@/types'
 import type { HeroData } from './HeroBlock'
 
 type TextOnBackgroundImageHeroProps = {
   background?: string
   isMagazineRoom?: boolean
-  //On hold for later, creates an backdrop and frames the content with border
-  backdropStyle?: boolean
+  useBrandTheme?: boolean
+  useBlurCenter?: boolean
+  heroMobileImage?: ImageWithAlt
+  backgroundGradient?: 'none' | 'light' | 'dark'
+  displayTextVariant?: 'none' | 'base' | 'lg' | 'xl'
+  layoutGrid?: 'sm' | 'md' | 'lg'
 } & HeroData &
   HTMLAttributes<HTMLElement>
 
@@ -21,73 +28,90 @@ export const TextOnBackgroundImageHero = ({
   ingress,
   backgroundGradient,
   backgroundBlur = false,
-  backdropStyle = false,
   isMagazineRoom = false,
   className = '',
+  useBrandTheme = false,
+  displayTextVariant = 'none',
+  layoutGrid = 'lg',
+  useBlurCenter,
+  heroMobileImage,
+  alignContentY = 'center',
 }: TextOnBackgroundImageHeroProps) => {
   const { image } = figure || {}
 
   const isLargerDisplays = useMediaQuery(`(min-width: 800px)`)
 
-  const { url } = resolveImage({
+  const { url: imageUrl } = resolveImage({
     image,
     aspectRatio: mapSanityImageRatio('10:3'),
     grid: 'full',
     isLargerDisplays,
     useFitMax: true,
   })
+  const { url: mobileImageUrl } = resolveImage({
+    image: heroMobileImage,
+    aspectRatio: mapSanityImageRatio('10:3'),
+    grid: 'xs',
+    isLargerDisplays,
+  })
+  const isMobile = useMediaQuery(`(max-width: 800px)`)
+  const url = isMobile && mobileImageUrl ? mobileImageUrl : imageUrl
 
   console.log('backgroundBlur', backgroundBlur)
+
+  const typographyVariant = {
+    base: 'h2_base',
+    lg: 'h2_lg',
+    xl: 'h2_xl',
+  }
+
+  const contentAligment = {
+    top: 'items-start',
+    center: 'items-center',
+    bottom: 'items-end',
+  }
 
   const ingressElement = ingress && <Blocks value={ingress} variant='body' />
   const titleElement = title && (
     <Blocks
       value={title}
       id='mainTitle'
-      group='heading'
-      variant='h1'
+      group={displayTextVariant !== 'none' ? 'display' : `heading`}
+      variant={
+        displayTextVariant !== 'none'
+          ? (typographyVariant[displayTextVariant] as TypographyVariants)
+          : `h1`
+      }
       blockClassName={`${isMagazineRoom && ingress ? '' : 'my-0 lg:my-0'}`}
     />
   )
 
+  const px = getLayoutPx(layoutGrid ?? 'lg')
+
   return (
     <div
       className={twMerge(
-        `relative flex items-center lg:min-h-[28vh] ${backgroundGradient === 'dark' ? 'dark' : ''}
-        ${
-          backdropStyle
-            ? 'py-20 pr-[10vw] pl-layout-sm lg:pr-[25vw] lg:pl-layout-md'
-            : `px-layout-sm lg:px-layout-lg ${isMagazineRoom ? 'pt-6 pb-12 lg:pt-12 lg:pb-20' : ''}`
-        } bg-center bg-cover bg-no-repeat`,
+        `relative flex py-12 ${contentAligment[alignContentY ?? 'center']} lg:min-h-[clamp(350px,35vh,40vh)] ${
+          backgroundGradient === 'dark' ? 'dark' : ''
+        } ${figure && imageUrl ? 'bg-center bg-cover bg-no-repeat' : ''} ${px}`,
         className,
       )}
       style={{
         backgroundImage: `url(${url})`,
       }}
     >
-      {backdropStyle ? (
-        <div className='relative flex rounded-card'>
-          <div className='z-1 px-8 py-6'>
-            {titleElement}
-            {isMagazineRoom && ingressElement}
-          </div>
-          <div className='backdrop-glass z-0 h-full w-full' />
-        </div>
-      ) : (
-        <div className={`z-1 flex max-w-text flex-col justify-center`}>
-          {titleElement}
-          {isMagazineRoom && ingressElement}
-        </div>
+      <div
+        className={`flex max-w-text flex-col ${useBrandTheme ? '*:text-energy-red-100' : ''}`}
+      >
+        {titleElement}
+        {isMagazineRoom && ingressElement}
+      </div>
+      {useBlurCenter && (
+        <div className={`centerBlur absolute inset-0 z-1`}></div>
       )}
-      {(backgroundGradient === 'dark' ||
-        backgroundGradient === 'light' ||
-        backgroundBlur) && (
+      {(backgroundGradient === 'dark' || backgroundGradient === 'light') && (
         <div
-          className={`absolute inset-0 z-0 ${
-            backgroundGradient === 'dark' || backgroundGradient === 'light'
-              ? `${backgroundGradient === 'dark' ? 'bg-slate-80/20' : 'bg-white-100/20'}`
-              : `backdrop-glass-light`
-          }`}
+          className={`absolute inset-0 z-0 ${backgroundGradient === 'dark' ? 'bg-slate-80/20' : 'bg-white-100/20'}`}
         />
       )}
     </div>

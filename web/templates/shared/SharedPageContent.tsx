@@ -711,7 +711,10 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
     const previousComponentToCompare =
       index === 0
         ? ({
-            type: 'pageTitle',
+            type:
+              data?.hero?.type === 'backgroundImage'
+                ? data?.hero?.type
+                : 'pageTitle',
             designOptions: { background: heroBackground },
           } as Component)
         : (data?.content?.[previousComponentIndex] as unknown as Component)

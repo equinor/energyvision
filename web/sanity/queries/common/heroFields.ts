@@ -19,8 +19,12 @@ export const heroFields = /* groq */ `{
     },
     },
     "background": coalesce(heroBackground.key, 'white-100'),
-    backgroundGradient,
-    backgroundBlur,
+    "backgroundGradient": heroBackgroundGradient,
+    "useBrandTheme":heroUseBrandTheme,
+    displayTextVariant,
+    layoutGrid,
+    useBlurCenter,
+    alignContentY,
     "figure":  select(
       heroType == 'loopingVideo' => { "image": heroLoopingVideo->thumbnail},
       heroFigure),
@@ -31,6 +35,7 @@ export const heroFields = /* groq */ `{
       "ratio": heroLoopingVideoRatio,
       containVideo,
     },
+      heroMobileImage,
     "link": heroLink[0]{
       ${linkSelectorFields}
     },

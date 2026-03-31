@@ -207,6 +207,16 @@ const heroImage = {
   },
 }
 
+const heroMobileImage = {
+  title: 'Hero mobile image',
+  name: 'heroMobileImage',
+  type: 'imageWithAlt',
+  hidden: ({ parent }: DocumentType) => {
+    return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE
+  },
+  fieldset: 'hero',
+}
+
 const heroLoopingVideo = {
   title: 'Video',
   name: 'heroLoopingVideo',
@@ -250,26 +260,86 @@ const heroLoopingVideoRatio = {
     }),
 }
 
-const backgroundBlur = {
-  name: 'backgroundBlur',
-  title: 'Blur background',
-  fieldset: 'hero',
+const useCenterBlur = {
+  title: 'Blur center',
+  name: 'useBlurCenter',
   type: 'boolean',
-  initialValue: false,
-  hidden: ({ parent, currentUser }: DocumentType) => {
-    if (
-      currentUser?.roles.some(
-        (role: any) =>
-          role?.name === 'administrator' ||
-          role?.name === 'developer' ||
-          role?.name === 'designer',
-      )
-    ) {
-      return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE
-    }
-    return true
+  fieldset: 'header',
+  description: 'Will blur center background behind text',
+  hidden: ({ parent }: DocumentType) => {
+    return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE
   },
 }
+
+const applyDisplayText = {
+  title: 'Apply display text variant',
+  name: 'displayTextVariant',
+  type: 'string',
+  fieldset: 'header',
+  description: 'Sets a display variant on title',
+  initialValue: 'none', // default
+  options: {
+    list: [
+      { title: 'None', value: 'none' },
+      { title: 'Base', value: 'base' },
+      { title: 'Large', value: 'lg' },
+      { title: 'Extra large', value: 'xl' },
+    ],
+  },
+  hidden: ({ parent }: DocumentType) => {
+    return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE
+  },
+}
+
+const layoutGrid = {
+  title: 'Layout grid',
+  name: 'layoutGrid',
+  type: 'string',
+  description: 'Select content grid column',
+  options: {
+    list: [
+      { title: 'Third outer', value: 'sm' },
+      { title: 'Second outer', value: 'md' },
+      { title: 'Innermost', value: 'lg' },
+    ],
+  },
+  initialValue: 'lg',
+  fieldset: 'header',
+  hidden: ({ parent }: DocumentType) => {
+    return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE
+  },
+}
+const alignContentY = {
+  title: 'Vertical content alignment',
+  name: 'alignContentY',
+  type: 'string',
+  fieldset: 'header',
+  description: 'Align content vertical',
+  initialValue: 'center', // default
+  options: {
+    list: [
+      { title: 'Top', value: 'top' },
+      { title: 'Center', value: 'center' },
+      { title: 'Bottom', value: 'bottom' },
+    ],
+  },
+  hidden: ({ parent }: DocumentType) => {
+    return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE
+  },
+}
+
+const useBrandTheme = {
+  title: 'Apply red brand text color',
+  name: 'heroUseBrandTheme',
+  type: 'boolean',
+  fieldset: 'header',
+  description:
+    'Ensure enough contrast between text and image.If no hero image set,background will be white',
+  hidden: ({ parent }: DocumentType) => {
+    return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE
+  },
+}
+
 const containVideo = {
   name: 'containVideo',
   title: 'Contain video',
@@ -299,5 +369,10 @@ export default [
   heroLoopingVideoRatio,
   containVideo,
   backgroundGradient,
-  backgroundBlur,
+  useCenterBlur,
+  applyDisplayText,
+  useBrandTheme,
+  layoutGrid,
+  alignContentY,
+  heroMobileImage,
 ]
