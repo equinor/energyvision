@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import dynamic from 'next/dynamic'
 import { notFound } from 'next/navigation'
-import { getNameFromLocale } from '@/sanity/helpers/localization'
+import { getNameFromIso } from '@/sanity/helpers/localization'
 import { routeSanityFetch } from '@/sanity/lib/live'
 import { PageWrapper } from '@/sanity/pages/PageWrapper'
 import { constructSanityMetadata, getPage } from '@/sanity/pages/utils'
@@ -25,7 +25,7 @@ const MagazineRoom = dynamic(() => import('@/templates/magazine/Magazineroom'))
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   //array, separated by /. e.g. [news, last slug]
   const { slug, locale } = await params
-  const sanityLang = getNameFromLocale(locale)
+  const sanityLang = getNameFromIso(locale)
   //news, magazinepage has slug in document
   const isNewsPage = slug[0] === newsSlug[sanityLang]
   const isMagazineRoom =
@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     slug?.length > 1 && slug[0] === magazineSlug[sanityLang]
   let type = 'news'
   if (isMagazineRoom || isMagazinePage) {
-    type = isMagazineRoom ? 'magazinIndex' : 'magazine'
+    type = isMagazineRoom ? 'magazineIndex' : 'magazine'
   }
   let query = pageMetaQuery
   if (isNewsPage || isMagazinePage) {
@@ -65,7 +65,7 @@ export default async function Page({ params, searchParams }: Props) {
   const { headerData, pageData } = await getPage({
     slug,
     locale,
-    tags: ['page', 'event', 'magazine', 'magazinIndex', 'news', 'localNews'],
+    tags: ['page', 'event', 'magazine', 'magazineIndex', 'news', 'localNews'],
     searchParams: search,
   })
   if (Object.keys(pageData).length === 0) notFound()
