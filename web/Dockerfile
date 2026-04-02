@@ -17,7 +17,7 @@ RUN corepack enable
 RUN pnpm add turbo -g 
 COPY . .
 # Add lockfile and package.json's of isolated subworkspace
-RUN turbo prune web --docker
+RUN turbo prune energy-vision-web --docker
 
 
 # -------------------------------------------------------- #
