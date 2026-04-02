@@ -15,7 +15,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
     className = '',
     href = '',
     hrefLang,
-    ...rest
+    onClick,
   },
   ref,
 ) {
@@ -44,7 +44,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
       ref={ref}
       href={href}
       hrefLang={hrefLang}
-      {...rest}
+      onClick={onClick}
     >
       {children}
       {showArrow && (
