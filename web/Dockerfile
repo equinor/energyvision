@@ -5,17 +5,29 @@ FROM node:22-alpine AS core-os
 RUN apk update
 RUN apk add --no-cache libc6-compat curl
 
+# Set working directory
+WORKDIR /app
+
+# ---
+FROM base AS prepare
+RUN corepack enable
+RUN pnpm -g turbo
+COPY . .
+# Add lockfile and package.json's of isolated subworkspace
+RUN turbo prune web --docker
+
+
 # -------------------------------------------------------- #
 # 2. Core tooling setup (PNPM, etc.)
 # -------------------------------------------------------- #
-FROM core-os AS base
-ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
-RUN corepack enable
-RUN pnpm -g turbo
+#FROM core-os AS base
+#ENV PNPM_HOME="/pnpm"
+#ENV PATH="$PNPM_HOME:$PATH"
+#RUN corepack enable
+#RUN pnpm -g turbo
 
 # Add lockfile and package.json's of isolated subworkspace
-RUN turbo prune web --docker
+#RUN turbo prune web --docker
 
 # -------------------------------------------------------- #
 # 4. Build application
