@@ -1,6 +1,6 @@
+import { magazineSlug } from '@energyvision/shared/satelliteConfig'
 import { bookmarks } from '@equinor/eds-icons'
 import type { PortableTextBlock, Rule, ValidationContext } from 'sanity'
-import { magazineSlug } from '@/sitesConfig'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
 import { CompactBlockEditor } from '../components/CompactBlockEditor'

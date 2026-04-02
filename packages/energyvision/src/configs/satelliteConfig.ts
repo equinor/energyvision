@@ -194,13 +194,19 @@ const websiteDomains: Partial<
  * }[]}
  */
 const filterLanguages = (dataset: Dataset) =>
-  dataset.map(lang => languages.find(e => e.id === lang)).filter(e => e)
+  dataset
+    .map(lang => languages.find(e => e.id === lang))
+    .filter(e => e !== undefined)
 
 const logAndFallback = (dataset: DatasetsKeys) => {
   console.error(
     `Selected dataset (${dataset}) not found! Possibly a typo in the env variable.\nFalling back to first in the list.`,
   )
   return filterLanguages(Object.values(datasets)[0])
+}
+
+export const localNewsTags: Record<string, string[]> = {
+  en_GB: ['ev', 'uk', 'us'],
 }
 
 /**

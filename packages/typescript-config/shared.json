@@ -1,5 +1,5 @@
 {
-  "extends": "@repo/typescript-config/studio.json",
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "moduleDetection": "force",
     "baseUrl": ".",
@@ -7,6 +7,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["**/*.ts", "**/*.tsx", "../shared/*"],
+  "include": ["**/*.ts"],
   "exclude": ["node_modules"]
 }

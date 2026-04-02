@@ -1,7 +1,7 @@
 /** biome-ignore-all assist/source/organizeImports: <explanation> */
 const archiveServerHostname = process.env.NEXT_PUBLIC_ARCHIVE_CONTENT_LINK
 
-import { join } from 'node:path'
+import path, { join } from 'node:path'
 /* import { withSentryConfig } from '@sentry/nextjs' */
 import type { NextConfig } from 'next'
 import createNextIntlPlugin from 'next-intl/plugin'
@@ -16,7 +16,7 @@ const sentryConfig = {
   org: 'equinor',
   project: 'equinor-com',
   silent: true,
-  disableLogger: true,
+  //disableLogger: true,
   widenClientFileUpload: true,
   disableClientWebpackPlugin: !isProd,
   disableServerWebpackPlugin: !isProd,
@@ -43,15 +43,22 @@ export type ConfigRedirect = {
 
 const nextConfig: NextConfig = withNextIntl({
   output: 'standalone',
-  transpilePackages: ['friendly-challenge', '@energyvision/shared'],
+  transpilePackages: ['friendly-challenge', 'require-in-the-middle'],
   logging: {
     fetches: {
       fullUrl: true, // shows logs only when using fetch
     },
+    browserToTerminal: true,
   },
-  turbopack: {
-    root: join(__dirname),
-  },
+
+  /*turbopack: {
+     root: join(__dirname),
+    resolveExtensions: ['.mdx', '.tsx', '.ts', '.jsx', '.js', '.json'],
+    resolveAlias: {
+      //"@repo/typescript-config":"../packages/typescript-config",
+      "@energyvision/shared":"../packages/energyvision/*"
+    }
+  },*/
   //cacheComponents: true,
   images: {
     remotePatterns: [
@@ -107,13 +114,15 @@ const nextConfig: NextConfig = withNextIntl({
   env: {
     SC_DISABLE_SPEEDY: 'false',
   },
+
+  outputFileTracingRoot: path.join(__dirname, '../'),
   experimental: {
     optimizePackageImports: [
       '@equinor/eds-core-react',
       '@equinor/eds-icons',
       'video.js',
     ],
-    browserDebugInfoInTerminal: true,
+    //externalDir: true,
   },
 })
 

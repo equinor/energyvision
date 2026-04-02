@@ -1,3 +1,4 @@
+import { newsSlug } from '@energyvision/shared/satelliteConfig'
 import { algoliasearch } from 'algoliasearch'
 import type { Metadata } from 'next'
 import { unstable_cache } from 'next/cache'
@@ -10,7 +11,6 @@ import { routeSanityFetch } from '@/sanity/lib/live'
 import { PageWrapper } from '@/sanity/pages/PageWrapper'
 import { constructSanityMetadata, getPage } from '@/sanity/pages/utils'
 import { newsroomMetaQuery } from '@/sanity/queries/metaData'
-import { newsSlug } from '@/sitesConfig'
 import NewsRoomTemplate from '@/templates/newsroom/Newsroom'
 
 export async function generateStaticParams() {
@@ -73,7 +73,7 @@ export default async function NewsroomPage({
 }) {
   const { locale, slug } = await params
 
-  if (!Flags.HAS_NEWSROOM || locale!=="en-GB") {
+  if (!Flags.HAS_NEWSROOM || locale !== 'en-GB') {
     notFound()
   }
 

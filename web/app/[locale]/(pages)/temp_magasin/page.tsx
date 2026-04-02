@@ -1,3 +1,4 @@
+import { magazineSlug } from '@energyvision/shared/satelliteConfig'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { setRequestLocale } from 'next-intl/server'
@@ -15,7 +16,6 @@ import {
   getMagazineArticlesByTag,
 } from '@/sanity/queries/magazine'
 import { magazineroomMetaQuery } from '@/sanity/queries/metaData'
-import { magazineSlug } from '@/sitesConfig'
 import MagazineRoom from '@/templates/magazine/Magazineroom'
 
 export function generateStaticParams() {

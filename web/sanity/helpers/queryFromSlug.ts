@@ -1,10 +1,14 @@
+import {
+  localNewsTags,
+  magazineSlug,
+  newsSlug,
+} from '@energyvision/shared/satelliteConfig'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { homePageQuery } from '@/sanity/queries/homePage'
 import { localNewsQuery } from '@/sanity/queries/localNews'
 import { magazineIndexQuery, magazineQuery } from '@/sanity/queries/magazine'
 import { newsQuery } from '@/sanity/queries/news'
 import { routeQuery } from '@/sanity/queries/routes'
-import { localNewsTags, magazineSlug, newsSlug } from '@/sitesConfig'
 import { newsroomQuery } from '../queries/newsroom'
 import { getNameFromIso } from './localization'
 

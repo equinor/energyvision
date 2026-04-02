@@ -1,13 +1,14 @@
 export { FeatureFlags } from './configs/featureFlags'
 export {
+  type Dataset,
+  type DatasetsKeys,
   defaultWebLanguage,
   getAllDomainUrls,
   getDomain,
   getLanguages,
   getMetaTitleSuffix,
+  type Language,
+  localNewsTags,
   magazineSlug,
   newsSlug,
-  type Dataset,
-  type DatasetsKeys,
-  type Language,
 } from './configs/satelliteConfig'

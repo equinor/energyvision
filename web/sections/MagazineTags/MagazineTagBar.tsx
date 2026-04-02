@@ -1,4 +1,5 @@
 'use client'
+import { magazineSlug } from '@energyvision/shared/satelliteConfig'
 import { filter_alt } from '@equinor/eds-icons'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
@@ -10,7 +11,6 @@ import {
 } from 'react'
 import Link from '@/core/Link/Link'
 import { twMerge } from '@/lib/twMerge/twMerge'
-import { magazineSlug } from '@/sitesConfig'
 import { TransformableIcon } from '../../icons/TransformableIcon'
 
 export type TagLink = {

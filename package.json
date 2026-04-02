@@ -4,6 +4,12 @@
   "engines": {
     "pnpm": ">=10"
   },
+  "workspaces": [
+    "packages/*",
+    "search/*",
+    "studio/*",
+    "web/*"
+  ],
   "type": "module",
   "scripts": {
     "setup-project": "pnpm m i",

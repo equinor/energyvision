@@ -1,6 +1,6 @@
+import { newsSlug } from '@energyvision/shared/satelliteConfig'
 import { file } from '@equinor/eds-icons'
 import type { PortableTextBlock, Rule, ValidationContext } from 'sanity'
-import { newsSlug } from '@/sitesConfig'
 import blocksToText from '../../helpers/blocksToText'
 import { filterByRoute } from '../../helpers/referenceFilters'
 import { EdsIcon } from '../../icons'

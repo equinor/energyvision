@@ -1,3 +1,4 @@
+import { magazineSlug, newsSlug } from '@energyvision/shared/satelliteConfig'
 import type { Metadata } from 'next'
 import dynamic from 'next/dynamic'
 import { notFound } from 'next/navigation'
@@ -10,7 +11,6 @@ import {
   magazineroomMetaQuery,
   pageMetaQuery,
 } from '@/sanity/queries/metaData'
-import { magazineSlug, newsSlug } from '@/sitesConfig'
 
 type Props = {
   params: Promise<{ slug: string[]; locale: string }>

@@ -1,3 +1,4 @@
+import { newsSlug } from '@energyvision/shared/satelliteConfig'
 import { file_description } from '@equinor/eds-icons'
 import slugify from '@sindresorhus/slugify'
 import type {
@@ -9,7 +10,6 @@ import type {
   SlugSchemaType,
   SlugSourceContext,
 } from 'sanity'
-import { newsSlug } from '@/sitesConfig'
 import { formatDate } from '../../helpers/formatDate'
 import { EdsIcon } from '../../icons'
 import { defaultLanguage } from '../../languages'
