@@ -12,16 +12,27 @@ FROM core-os AS base
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
+RUN pnpm -g turbo
 
+# Add lockfile and package.json's of isolated subworkspace
+RUN turbo prune web --docker
 
 # -------------------------------------------------------- #
 # 4. Build application
 # -------------------------------------------------------- #
 FROM base AS build
 
-WORKDIR /app
-COPY . .
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm web install --frozen-lockfile 
+# First install the dependencies (as they change less often)
+COPY --from=prepare /app/out/json/ .
+RUN pnpm install
+
+#WORKDIR /app
+#COPY . .
+#RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm web install --frozen-lockfile 
+
+# Build the project
+COPY --from=prepare /app/out/full/ .
+
 ARG ARG_SANITY_DATASET
 ARG ARG_SANITY_PROJECT_ID
 ARG ARG_ALGOLIA_APP_ID
@@ -39,7 +50,8 @@ ENV NEXT_PUBLIC_FRIENDLY_CAPTCHA_SITEKEY=${ARG_FRIENDLY_CAPTCHA_SITEKEY}
 ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN --mount=type=secret,id=SANITY_API_TOKEN,env=SANITY_API_TOKEN \
-    pnpm web build
+    pnpm turbo build 
+    #pnpm web build
 
 
 # -------------------------------------------------------- #
