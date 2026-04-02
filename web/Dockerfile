@@ -63,7 +63,7 @@ ENV NEXT_PUBLIC_FRIENDLY_CAPTCHA_SITEKEY=${ARG_FRIENDLY_CAPTCHA_SITEKEY}
 ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN --mount=type=secret,id=SANITY_API_TOKEN,env=SANITY_API_TOKEN \
-    turbo build --filter=energy-vision-web
+    turbo build --filter=energy-vision-web --framework-inference=false
     #pnpm web build
 
 
