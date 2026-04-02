@@ -59,7 +59,7 @@ const languages = [
 /**
  * @type {Record<string, string>}
  */
-export const newsSlug = {
+export const newsSlug: Record<string, string> = {
   en_GB: 'news',
   nb_NO: 'nyheter',
   pt_BR: 'noticias',
@@ -73,7 +73,7 @@ export const newsSlug = {
 /**
  * @type {Record<string, string>}
  */
-export const magazineSlug = {
+export const magazineSlug: Record<string, string> = {
   en_GB: 'magazine',
   nb_NO: 'magasin',
 }

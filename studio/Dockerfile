@@ -15,7 +15,6 @@ RUN npm install dotenv fs
 COPY ./package.json ./
 COPY ./pnpm-lock.yaml ./
 COPY ./packages ./packages
-COPY ./tsconfig.json ./
 COPY ./studio ./studio
 
 ARG ARG_SANITY_PROJECT_ID
