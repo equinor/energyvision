@@ -42,7 +42,7 @@ ENV SANITY_STUDIO_FOTOWARE_REDIRECT_URI=${ARG_FOTOWARE_REDIRECT_URI}
 ENV SANITY_STUDIO_SCREEN9_ACCOUNT_ID=${ARG_SCREEN9_ACCOUNT_ID}
 ENV SANITY_STUDIO_PREVIEW_URL=${ARG_SANITY_STUDIO_PREVIEW_URL}
 
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm studio add @energyvision/shared install --frozen-lockfile
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm studio add @energyvision/shared
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm studio install --frozen-lockfile 
 RUN --mount=type=secret,id=SANITY_STUDIO_PREVIEW_SECRET,env=SANITY_STUDIO_PREVIEW_SECRET \
     --mount=type=secret,id=FOTOWARE_AF_EXPORT_KEY,env=SANITY_STUDIO_FOTOWARE_AF_EXPORT_KEY \
