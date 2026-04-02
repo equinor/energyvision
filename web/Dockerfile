@@ -35,7 +35,7 @@ RUN turbo prune energy-vision-web --docker
 # -------------------------------------------------------- #
 # 4. Build application
 # -------------------------------------------------------- #
-FROM base AS build
+FROM prepare AS build
 
 # First install the dependencies (as they change less often)
 COPY --from=prepare /app/out/json/ .
