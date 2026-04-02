@@ -104,6 +104,7 @@ export const HeroBlock = ({
   const heroTypesThatHaveBreadcrumbsBelow = [
     HeroTypes.FIFTY_FIFTY,
     HeroTypes.DEFAULT,
+    HeroTypes.BACKGROUND_IMAGE,
   ]
 
   const heroProps = {
