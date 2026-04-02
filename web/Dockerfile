@@ -27,10 +27,6 @@ RUN turbo prune energy-vision-web --docker
 #ENV PNPM_HOME="/pnpm"
 #ENV PATH="$PNPM_HOME:$PATH"
 #RUN corepack enable
-#RUN pnpm -g turbo
-
-# Add lockfile and package.json's of isolated subworkspace
-#RUN turbo prune web --docker
 
 # -------------------------------------------------------- #
 # 4. Build application
@@ -38,8 +34,10 @@ RUN turbo prune energy-vision-web --docker
 FROM prepare AS build
 
 # First install the dependencies (as they change less often)
+COPY --from=pruner /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
+COPY --from=pruner /app/out/pnpm-workspace.yaml ./pnpm-workspace.yaml
 COPY --from=prepare /app/out/json/ .
-RUN pnpm install
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm web install --frozen-lockfile
 
 #WORKDIR /app
 #COPY . .
@@ -65,7 +63,7 @@ ENV NEXT_PUBLIC_FRIENDLY_CAPTCHA_SITEKEY=${ARG_FRIENDLY_CAPTCHA_SITEKEY}
 ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN --mount=type=secret,id=SANITY_API_TOKEN,env=SANITY_API_TOKEN \
-    pnpm turbo build 
+    pnpm turbo build --filter=energy-vision-web
     #pnpm web build
 
 
