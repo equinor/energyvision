@@ -16,6 +16,7 @@ COPY ./package.json ./
 COPY ./pnpm-lock.yaml ./
 COPY ./packages ./packages
 COPY ./studio ./studio
+COPY ./pnpm-workspace.yaml ./pnpm-workspace.yaml
 
 ARG ARG_SANITY_PROJECT_ID
 ARG ARG_SANITY_DATASET
