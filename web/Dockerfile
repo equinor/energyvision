@@ -4,6 +4,7 @@
 FROM node:22-alpine AS core-os
 RUN apk update
 RUN apk add --no-cache libc6-compat curl
+FROM core-os AS base
 
 # Set working directory
 WORKDIR /app
