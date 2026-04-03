@@ -32,7 +32,8 @@
     "@biomejs/biome": "2.3.6",
     "typescript": "^5.9.3",
     "husky": "^9.1.7",
-    "lint-staged": "16.2.6"
+    "lint-staged": "16.2.6",
+    "turbo": "^2.8.17"
   },
   "lint-staged": {
     "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}": [
