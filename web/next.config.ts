@@ -47,6 +47,7 @@ const nextConfig: NextConfig = withNextIntl({
     'friendly-challenge',
     'require-in-the-middle',
     'import-in-the-middle',
+    'next-seo',
   ],
   logging: {
     fetches: {
