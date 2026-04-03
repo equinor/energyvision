@@ -41,7 +41,7 @@
     "@sanity/image-url": "^2.0.3",
     "@sanity/preview-url-secret": "^4.0.3",
     "@sanity/webhook": "^4.0.4",
-    "@sentry/nextjs": "10.42.0",
+    "@sentry/nextjs": "10.47.0",
     "@sindresorhus/slugify": "^3.0.0",
     "algoliasearch": "^5.30.0",
     "axios": "^1.13.5",
