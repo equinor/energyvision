@@ -96,7 +96,7 @@ export const PromotionBlockV2 = forwardRef<HTMLDivElement, PromotionBlockProps>(
             blockClassName={'px-layout-sm lg:px-layout-lg'}
           />
         )}
-        <div className='flex flex-col gap-6 pb-page-content'>
+        <div className='flex flex-col gap-6'>
           {ingress && (
             <Blocks
               variant='ingress'
