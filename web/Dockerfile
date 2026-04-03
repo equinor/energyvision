@@ -66,7 +66,7 @@ RUN --mount=type=secret,id=SANITY_API_TOKEN,env=SANITY_API_TOKEN \
     turbo build --filter=energy-vision-web 
     #pnpm web build
 
-
+RUN ls
 # -------------------------------------------------------- #
 # 6. Runtime container
 # -------------------------------------------------------- #
