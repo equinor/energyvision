@@ -39,7 +39,7 @@ COPY --from=prepare /app/out/pnpm-workspace.yaml ./pnpm-workspace.yaml
 COPY --from=prepare /app/out/json/ .
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 
-#WORKDIR /app
+WORKDIR /app
 #COPY . .
 #RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm web install --frozen-lockfile 
 
