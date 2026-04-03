@@ -63,7 +63,7 @@ ENV NEXT_PUBLIC_FRIENDLY_CAPTCHA_SITEKEY=${ARG_FRIENDLY_CAPTCHA_SITEKEY}
 ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN --mount=type=secret,id=SANITY_API_TOKEN,env=SANITY_API_TOKEN \
-    turbo build --filter=energy-vision-web --framework-inference=false
+    turbo build --filter=energy-vision-web 
     #pnpm web build
 
 
@@ -98,8 +98,10 @@ COPY --from=build /app/web/public ./public
 COPY --from=build  --chown="$USER":"$USER" /app/web/.next/standalone ./
 COPY --from=build  --chown="$USER":"$USER" /app/web/.next/static ./.next/static
 
+RUN ls -R
+
 USER "$UID"
 EXPOSE 3000
 
 ENTRYPOINT ["/sbin/tini", "--"]
-CMD node apps/web/server.js
+CMD ["node", "server.js"]
