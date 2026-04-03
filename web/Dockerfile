@@ -96,7 +96,6 @@ RUN addgroup -S "$USER" && adduser -S --uid "$UID" "$USER" && apk add --no-cache
 COPY --from=build /app/web/public ./public
 COPY --from=build  --chown="$USER":"$USER" /app/web/.next/standalone/web ./
 COPY --from=build  --chown="$USER":"$USER" /app/web/.next/static ./.next/static
-COPY --from=build  --chown="$USER":"$USER" /app/web/.next/node_modules ./.next/node_modules
 
 USER "$UID"
 EXPOSE 3000
