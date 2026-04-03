@@ -43,7 +43,12 @@ export type ConfigRedirect = {
 
 const nextConfig: NextConfig = withNextIntl({
   output: 'standalone',
-  transpilePackages: ['friendly-challenge', 'require-in-the-middle'],
+  transpilePackages: ['friendly-challenge'],
+  serverExternalPackages: [
+    'import-in-the-middle',
+    'require-in-the-middle',
+    'next-seo',
+  ],
   logging: {
     fetches: {
       fullUrl: true, // shows logs only when using fetch
