@@ -66,7 +66,6 @@ RUN --mount=type=secret,id=SANITY_API_TOKEN,env=SANITY_API_TOKEN \
     turbo build --filter=energy-vision-web 
     #pnpm web build
 
-RUN ls -R /app/web/.next
 # -------------------------------------------------------- #
 # 6. Runtime container
 # -------------------------------------------------------- #
@@ -97,8 +96,7 @@ RUN addgroup -S "$USER" && adduser -S --uid "$UID" "$USER" && apk add --no-cache
 COPY --from=build /app/web/public ./public
 COPY --from=build  --chown="$USER":"$USER" /app/web/.next/standalone/web ./
 COPY --from=build  --chown="$USER":"$USER" /app/web/.next/static ./.next/static
-
-RUN ls 
+COPY --from=build  --chown="$USER":"$USER" /app/web/.next/node_modules ./.next/node_modules
 
 USER "$UID"
 EXPOSE 3000
