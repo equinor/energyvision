@@ -98,7 +98,7 @@ COPY --from=build /app/web/public ./public
 COPY --from=build  --chown="$USER":"$USER" /app/web/.next/standalone ./
 COPY --from=build  --chown="$USER":"$USER" /app/web/.next/static ./.next/static
 
-RUN ls 
+RUN ls -R /app/web/.next
 
 USER "$UID"
 EXPOSE 3000
