@@ -12,12 +12,11 @@ export const languages = getLanguages(dataset)
 
 //@ts-ignore: configuration files set with lang
 export const getValidLanguagesLocales = () =>
-  getLanguages(dataset).map(lang => lang!.iso)
+  getLanguages(dataset).map(lang => lang.iso)
 
 export const defaultLanguage =
   languages.find(lang => {
-    console.log('Language ', lang!.id, defaultWebLanguage[dataset])
-    return lang!.id === defaultWebLanguage[dataset]
+    return lang.id === defaultWebLanguage[dataset]
   }) ?? languages[0]
 
 export const domain = getDomain(dataset)

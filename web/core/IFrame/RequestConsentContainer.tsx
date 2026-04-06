@@ -61,7 +61,7 @@ const RequestConsentContainer = ({
     })
   }
   return (
-    <div className='flex w-fit flex-col rounded-md'>
+    <div className='flex w-full flex-col rounded-md'>
       <div className='dark w-full rounded-t-md border border-slate-blue-95 bg-slate-blue-95 px-6 py-4'>
         <Typography variant='lg' as={hasSectionTitle ? 'h3' : 'h2'}>
           {intl('cookie_consent_header')}

@@ -21,10 +21,13 @@
   --color-slate-blue-90: hsl(207, 14%, 37%);
   --color-slate-80: rgba(61, 61, 61, 1);
   --color-mist-blue-100: hsl(199, 58%, 90%);
-  --color-spruce-wood-100: hsl(25, 100%, 92%);
+  --color-spruce-wood-20: #fef8f4;
   --color-spruce-wood-90: hsl(25, 100%, 94%);
-  --color-green-50: #c3e4ce;
+  --color-spruce-wood-100: hsl(25, 100%, 92%);
+  --color-green-50: #c3e4ce
+  --color-yellow-20: #010101;
   --color-yellow-50: #fff5b8;
+  --color-blue-20: #f2f9fc;
   --color-blue-50: #49709c;
   --color-orange-50: #f8d1af;
   --color-north-sea-90: #051b33;
@@ -32,44 +35,45 @@
   --color-north-sea-50: #a8c3db;
   --color-norwegian-woods-100: #007079;
   --color-norwegian-woods-70: #aad5bb;
+  --color-norwegian-woods-50: #d6f0de;
   --color-norwegian-woods-60: #c3e4ce;
   --color-norwegian-woods-40: #e6faec;
   --color-sand-and-summer-50: #ffe7d6;
   --color-autumn-storm-60: #86a7ac;
   --color-autumn-storm-40: #c2d4d6;
+  --color-gray-20: #f8f8f8;
+  --color-grey-10: hsl(0,0%,97%);
   --color-grey-20: hsl(0, 0%, 92%);
   --color-grey-50: hsl(0, 0%, 55%);
   --color-grey-60: hsl(0, 0%, 44%);
   --color-white-100: hsl(0, 0%, 100%);
 
   --text-2xs: clamp(calc(11.11 / 16 * 1rem), 0.19vw + 0.65rem, calc(14.08 / 16 * 1rem));
+  --text-2xs--line-height: calc(1 / 0.75);
   --text-xs: clamp(calc(13.33 / 16 * 1rem), 0.28vw + 0.77rem, calc(17.6 / 16 * 1rem));
+  --text-xs--line-height: calc(1 / 0.75);
   --text-sm: clamp(calc(14.61 / 16 * 1rem), 0.33vw + 0.84rem, calc(19.68 / 16 * 1rem));
+  --text-sm--line-height: calc(1.25 / 0.875);
   --text-base: clamp(calc(16 / 16 * 1rem), 0.39vw + 0.91rem, calc(22 / 16 * 1rem));
+  --text-base--line-height: calc(1.5 / 1);
   --text-md: clamp(calc(19.2 / 16 * 1rem), 0.54vw + 1.07rem, calc(27.5 / 16 * 1rem));
+  --text-md--line-height: calc(1.5 / 1);
   --text-lg: clamp(calc(23.04 / 16 * 1rem), 0.73vw + 1.27rem, calc(34.38 / 16 * 1rem));
+  --text-lg--line-height: calc(1.75 / 1.125);
   --text-xl: clamp(calc(27.65 / 16 * 1rem), 0.99vw + 1.5rem, calc(42.97 / 16 * 1rem));
+  --text-xl--line-height: calc(1.75 / 1.25);
   --text-2xl: clamp(calc(33.73 / 16 * 1rem), 1.38vw + 1.785rem, calc(55.055 / 16 * 1rem));
+  --text-2xl--line-height: calc(2 / 1.5);
   --text-3xl: clamp(calc(39.81 / 16 * 1rem), 1.77vw + 2.07rem, calc(67.14 / 16 * 1rem));
+  --text-3xl--line-height: calc(2.25 / 1.875);
   --text-4xl: clamp(calc(45.89 / 16 * 1rem), 2.16vw + 2.355rem, calc(79.225 / 16 * 1rem));
+  --text-4xl--line-height: calc(2.5 / 2.25);
   --text-5xl: clamp(calc(51.97 / 16 * 1rem), 2.55vw + 2.64rem, calc(91.31 / 16 * 1rem));
+  --text-5xl--line-height: 1;
   --text-6xl: clamp(calc(58.05 / 16 * 1rem), 2.94vw + 2.925rem, calc(103.39 / 16 * 1rem));
+  --text-6xl--line-height: 1;
   --text-8xl: clamp(calc(59.19 / 16 * 1rem), 3.72vw + 3.495rem, calc(115.47 / 16 * 1rem));
-
-  --spacing-single-carousel-card-w-sm: 350px; /*275px;*/
-  --spacing-single-carousel-card-w-md: 692px;
-  --spacing-single-carousel-card-w-lg: 980px;
-  --spacing-single-carousel-card-h-sm: 400px;
-  --spacing-single-carousel-card-h-md: 430px;
-  --spacing-single-carousel-card-h-lg: 516px;
-  --spacing-event-carousel-card-w: 383px;
-  --spacing-arrow-right: 1.58rem;
-  --spacing-envis-prose: 75ch; /* recommended 66ch, can we go 80ch*/
-  --spacing-text: clamp(75ch, 1200px);
-
-  --font-weight-semibolder: 650;
-
-  --radius-2xs: 0.1rem;
+  --text-8xl--line-height: 1;
 
   --leading-text: 2.3rem;
   --leading-inherit: inherit;
@@ -79,7 +83,32 @@
   --leading-cloudy: 1.4; /*68.3071px h1 larger screen */
   --leading-planetary: 1.5;
 
+  --tracking-display: -3px;
+
+  --spacing-layout-sm: clamp(16px, calc(-38.3689px + 15.4984vw), 13dvw);
+  --spacing-layout-md: clamp(16px, calc(-69.4369px + 23.7832vw), 18.8dvw);
+  --spacing-layout-lg: clamp(16px, calc(-101.4757px + 32.3269vw), 23.3dvw);
+  --spacing-text-end: clamp(16px, calc(-150px + 38vw), 26dvw);
+
+  --spacing-single-carousel-card-w-sm: 350px; /*275px;*/
+  --spacing-single-carousel-card-w-md: 692px;
+  --spacing-single-carousel-card-w-lg: 980px;
+  --spacing-single-carousel-card-h-sm: 400px;
+  --spacing-single-carousel-card-h-md: 430px;
+  --spacing-single-carousel-card-h-lg: 516px;
+  --spacing-event-carousel-card-w: 383px;
+  --spacing-arrow-right: 1.58rem;
+  --spacing-text: 70rem;
+  --spacing-topbar: 85px;
+  --spacing-news-banner-vertical: clamp(40px, calc(14.3125px + 11.0032vw), 210px);
+
+  --font-weight-semibolder: 650;
+
+  --radius-2xs: 0.1rem;
+
   --scale-99: 0.99;
+
+  --radius-card: 13px;
 
   --shadow-card: rgba(0, 0, 0, 0.08) 0px 1px 3px, 1px -1px 2px 0px rgba(0, 0, 0, 0.07), rgba(0, 0, 0, 0.2) 0px 1px 2px;
   --shadow-card-interact: rgba(0, 0, 0, 0.14) 0px 1px 3px, rgba(0, 0, 0, 0.36) 0px 1px 2px;
