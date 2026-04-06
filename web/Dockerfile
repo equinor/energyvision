@@ -9,24 +9,21 @@ FROM core-os AS base
 # Set working directory
 WORKDIR /app
 
-# ---
+# -------------------------------------------------------- #
+# 2. Core tooling setup (PNPM, etc.)
+# -------------------------------------------------------- #
 FROM base AS prepare
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
 RUN pnpm add turbo -g 
 COPY . .
-# Add lockfile and package.json's of isolated subworkspace
+
+# -------------------------------------------------------- #
+# 3. Add lockfile and package.json's of isolated subworkspace
+# -------------------------------------------------------- #
 RUN turbo prune energy-vision-web --docker
 
-
-# -------------------------------------------------------- #
-# 2. Core tooling setup (PNPM, etc.)
-# -------------------------------------------------------- #
-#FROM core-os AS base
-#ENV PNPM_HOME="/pnpm"
-#ENV PATH="$PNPM_HOME:$PATH"
-#RUN corepack enable
 
 # -------------------------------------------------------- #
 # 4. Build application
@@ -40,8 +37,6 @@ COPY --from=prepare /app/out/json/ .
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 
 WORKDIR /app
-#COPY . .
-#RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm web install --frozen-lockfile 
 
 # Build the project
 COPY --from=prepare /app/out/full/ .
@@ -64,8 +59,7 @@ ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN --mount=type=secret,id=SANITY_API_TOKEN,env=SANITY_API_TOKEN \
     turbo build --filter=energy-vision-web 
-    #pnpm web build
-
+    
 # -------------------------------------------------------- #
 # 6. Runtime container
 # -------------------------------------------------------- #

@@ -1,22 +1,45 @@
-FROM node:lts-alpine AS builder
+FROM node:lts-alpine AS base
 RUN apk update
 RUN apk add --no-cache libc6-compat curl
 
+WORKDIR /app
+
+FROM base as prepare
 ENV NODE_OPTIONS="--max_old_space_size=8192"
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
+RUN pnpm add turbo -g
+COPY . .
 
-WORKDIR /opt/app
-RUN ls
+RUN turbo prune energy-vision-studio --docker
+
+
+#WORKDIR /opt/app
+#RUN ls
 #In use?
-RUN npm install dotenv fs
+#RUN npm install dotenv fs
 
-COPY ./package.json ./
-COPY ./pnpm-lock.yaml ./
-COPY ./packages ./packages
-COPY ./studio ./studio
-COPY ./pnpm-workspace.yaml ./pnpm-workspace.yaml
+
+
+#COPY ./pnpm-lock.yaml ./
+#COPY ./packages ./packages
+#COPY ./studio ./studio
+#COPY ./pnpm-workspace.yaml ./pnpm-workspace.yaml
+
+FROM prepare AS builder
+
+# First install the dependencies (as they change less often)
+COPY --from=prepare /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
+COPY --from=prepare /app/out/pnpm-workspace.yaml ./pnpm-workspace.yaml
+COPY --from=prepare /app/out/json/ .
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+
+WORKDIR /app
+
+# Build the project
+COPY --from=prepare /app/out/full/ .
+
 
 ARG ARG_SANITY_PROJECT_ID
 ARG ARG_SANITY_DATASET
@@ -42,12 +65,12 @@ ENV SANITY_STUDIO_FOTOWARE_REDIRECT_URI=${ARG_FOTOWARE_REDIRECT_URI}
 ENV SANITY_STUDIO_SCREEN9_ACCOUNT_ID=${ARG_SCREEN9_ACCOUNT_ID}
 ENV SANITY_STUDIO_PREVIEW_URL=${ARG_SANITY_STUDIO_PREVIEW_URL}
 
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm studio add @repo/typescript-config @energyvision/shared
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm studio install --frozen-lockfile 
+#RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm studio add @repo/typescript-config @energyvision/shared
+#RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm studio install --frozen-lockfile 
 RUN --mount=type=secret,id=SANITY_STUDIO_PREVIEW_SECRET,env=SANITY_STUDIO_PREVIEW_SECRET \
     --mount=type=secret,id=FOTOWARE_AF_EXPORT_KEY,env=SANITY_STUDIO_FOTOWARE_AF_EXPORT_KEY \
     --mount=type=secret,id=SCREEN9_TOKEN,env=SANITY_STUDIO_SCREEN9_TOKEN \
-    pnpm studio build
+    turbo build --filter=energy-vision-studio 
 
 # Run
 FROM node:lts-alpine AS runner
@@ -75,8 +98,8 @@ USER "$UID"
 
 RUN mkdir dist
 
-COPY --from=builder ./opt/app/studio/dist ./dist
-COPY --from=builder ./opt/app/studio/server.js .
+COPY --from=builder /app/studio/dist ./dist
+COPY --from=builder /app/studio/server.js .
 
 RUN npm install express@5.1.0 express-history-api-fallback@2.2.1
 
