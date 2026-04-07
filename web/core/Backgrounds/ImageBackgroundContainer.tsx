@@ -1,16 +1,10 @@
 'use client'
-import {
-  motion,
-  useMotionValueEvent,
-  useScroll,
-  useTransform,
-} from 'framer-motion'
+
 import {
   type CSSProperties,
   type ElementType,
   type HTMLAttributes,
   useRef,
-  useState,
 } from 'react'
 import { twMerge } from 'tailwind-merge'
 import type { Image, ImageRatioKeys } from '@/core/Image/Image'
@@ -45,7 +39,7 @@ export const ImageBackgroundContainer = ({
   useLight = false,
   useNoGradient = false,
   useGlass = false,
-  contentAlignment = 'center',
+  contentAlignment = 'left',
   children,
   className = '',
   scrimClassName = '',
@@ -61,13 +55,6 @@ export const ImageBackgroundContainer = ({
     isLargerDisplays,
   })
   const Component = as ?? 'section'
-
-  /*   const fadedFilter = `
-    before:content-['']
-    before:absolute
-    before:inset-0
-    ${useLight ? `before:bg-white-100 before:opacity-[35%]` : `before:bg-black-100 before:opacity-[25%]`}
-    ` */
 
   const backgroundClassNames = `
       [container:inline-size]
@@ -90,8 +77,8 @@ export const ImageBackgroundContainer = ({
   }
   const darkGradientForContentAlignment = {
     center: '',
-    right: 'xl:black-right-gradient',
-    left: 'xl:black-left-gradient',
+    right: 'xl:black-to-right-gradient',
+    left: 'xl:black-to-left-gradient',
     'bottom-left': 'black-to-top-gradient',
     'bottom-center': 'black-to-top-gradient',
   }
@@ -103,20 +90,6 @@ export const ImageBackgroundContainer = ({
       : `black-center-gradient ${darkGradientForContentAlignment[contentAlignment]}`
   }
   const ref = useRef(null)
-  const [opacity, setOpacity] = useState(0)
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start center', 'end center'],
-  })
-
-  const opacityTransformed = useTransform(
-    scrollYProgress,
-    [0, 0.18, 0.85, 1],
-    [0, 1, 1, 0],
-  )
-  useMotionValueEvent(opacityTransformed, 'change', latest => {
-    setOpacity(latest)
-  })
 
   const contentElement = useGlass ? (
     <div className={twMerge('', className)}>
@@ -151,17 +124,14 @@ export const ImageBackgroundContainer = ({
         {...props}
       >
         {/** Scrim */}
-        <motion.div
-          style={{
-            opacity: opacity,
-          }}
+        <div
           className={twMerge(
-            `py-40 lg:py-[25dvh] ${animatedScrimGradient} relative`,
+            `py-40 lg:py-[25dvh] ${animatedScrimGradient} relative animate-timeline`,
             scrimClassName,
           )}
         >
           {contentElement}
-        </motion.div>
+        </div>
       </Component>
     )
   }

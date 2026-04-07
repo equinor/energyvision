@@ -50,7 +50,7 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
   let backgroundImageContentClassNames = `justify-center py-14`
 
   const contentAlignment =
-    designOptions?.background?.backgroundImage?.contentAlignment
+    designOptions?.background?.backgroundImage?.contentAlignment ?? 'left'
 
   if (contentAlignment) {
     backgroundImageContentClassNames = twMerge(

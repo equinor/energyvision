@@ -134,4 +134,16 @@
         fr: '1 1 1',
       },
   */
+
+  --animate-fadeInOut: fade linear both;
+
+  @keyframes fade {
+    0%,
+    100% {
+      opacity: 0;
+    }
+    30%,60% {
+      opacity: 1;
+    }
+  }
 }
