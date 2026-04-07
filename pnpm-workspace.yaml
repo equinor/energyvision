@@ -5,3 +5,5 @@ packages:
   - 'shared'
   - 'packages/*'
 minimumReleaseAge: 2880
+trustPolicy: "no-downgrade"
+blockExoticSubdeps: true 
