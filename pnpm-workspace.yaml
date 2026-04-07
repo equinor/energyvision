@@ -5,3 +5,5 @@ packages:
   - 'search'
 overrides:
   'tar-fs': '^3.0.9'
+
+minimumReleaseAge: 1440

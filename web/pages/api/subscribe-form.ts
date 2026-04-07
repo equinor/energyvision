@@ -1,8 +1,8 @@
-import { signUp as signUpWithMake } from './subscriptionNew'
-import { signUp } from './subscription'
-import { NextApiRequest, NextApiResponse } from 'next'
-import { validateFormRequest } from './forms/validateFormRequest'
+import type { NextApiRequest, NextApiResponse } from 'next'
 import { Flags } from '../../common/helpers/datasetHelpers'
+import { validateFormRequest } from './forms/validateFormRequest'
+import { signUp } from './subscription'
+import { signUp as signUpWithMake } from './subscriptionNew'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const result = await validateFormRequest(req, 'subscribe form')
