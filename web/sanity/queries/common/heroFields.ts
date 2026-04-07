@@ -1,8 +1,5 @@
 import linkSelectorFields from './actions/linkSelectorFields'
 import markDefs from './blockEditorMarks'
-export const heroTitle = /* groq */ `
-"title": content->title
-`
 
 export const heroFields = /* groq */ `{
     "type": coalesce(heroType, 'default'),
@@ -35,7 +32,7 @@ export const heroFields = /* groq */ `{
       "ratio": heroLoopingVideoRatio,
       containVideo,
     },
-      heroMobileImage,
+    heroMobileImage,
     "link": heroLink[0]{
       ${linkSelectorFields}
     },

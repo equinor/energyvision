@@ -1,26 +1,27 @@
 'use client'
-import { type PortableTextBlock, toPlainText } from 'next-sanity'
-import type { HTMLAttributes, ReactNode } from 'react'
+import { toPlainText } from 'next-sanity'
+import type { HTMLAttributes } from 'react'
 import { Breadcrumbs } from '@/core/Breadcrumbs/Breadcrumbs'
+
 import {
-  type ColorKeys,
   colorKeyToUtilityMap,
   getBgAndDarkFromBackground,
 } from '@/styles/colorKeyToUtilityMap'
-import type {
-  BackgroundColours,
-  DesignOptions,
-  ImageWithCaptionData,
-  LinkData,
-} from '@/types'
-import type { MagazineTag } from '../MagazineTags/MagazineTagBar'
-import { FiftyFiftyHero } from './FiftyFiftyHero'
+import type { DesignOptions } from '@/types'
+import { DefaultHero, type DefaultHeroProps } from './DefaultHero'
+import { FiftyFiftyHero, type FiftyFiftyHeroProps } from './FiftyFiftyHero'
 import {
   FullWidthImageHero,
-  type FullWidthImageHeroVariant,
+  type FullWidthImageHeroProps,
 } from './FullWidthImageHero'
-import { type LoopingVideoData, LoopingVideoHero } from './LoopingVideoHero'
-import { TextOnBackgroundImageHero } from './TextOnBackgroundImageHero'
+import {
+  LoopingVideoHero,
+  type LoopingVideoHeroProps,
+} from './LoopingVideoHero'
+import {
+  TextOnBackgroundImageHero,
+  type TextOnBackgroundImageHeroProps,
+} from './TextOnBackgroundImageHero'
 
 export enum HeroTypes {
   DEFAULT = 'default',
@@ -31,16 +32,11 @@ export enum HeroTypes {
   BACKGROUND_IMAGE = 'backgroundImage',
 }
 
-export type HeroData = {
-  figure?: ImageWithCaptionData
-  /**Page title */
+/* export type HeroData = {
+  figure?: Figure
   title?: PortableTextBlock[]
-  /* For new or magazine published information */
   subTitle?: ReactNode
-  /** 50/50 Text/image */
-  /* Magazine */
   tags?: string[]
-  /* Magazine promoted tagline */
   magazineTags?: MagazineTag[]
   heroTitle?: PortableTextBlock[] | string
   ingress?: PortableTextBlock[]
@@ -53,8 +49,15 @@ export type HeroData = {
   hideImageCaption?: boolean
   captionBg?: BackgroundColours
   backgroundGradient?: string
-  backgroundBlur?: boolean
-}
+} */
+
+export type HeroData = {
+  type?: HeroTypes
+} & TextOnBackgroundImageHeroProps &
+  LoopingVideoHeroProps &
+  FullWidthImageHeroProps &
+  FiftyFiftyHeroProps &
+  DefaultHeroProps
 
 export type HeroBlockProps = {
   nextSectionDesignOptions?: DesignOptions
@@ -62,30 +65,33 @@ export type HeroBlockProps = {
   isMagazineRoom?: boolean
   //To add custom styling to the outer container of the hero type
   className?: string
-} & HeroData &
-  HTMLAttributes<HTMLElement>
+  heroData: HeroData
+} & HTMLAttributes<HTMLElement>
 
 export const HeroBlock = ({
-  title,
-  heroTitle,
-  subTitle,
-  ingress,
-  figure,
-  ratio,
-  background,
-  type = HeroTypes.DEFAULT,
-  tags,
-  magazineTags,
-  link,
-  heroLink,
-  loopingVideo,
+  heroData,
   nextSectionDesignOptions,
   breadcrumbs,
-  backgroundGradient,
-  backgroundBlur,
   isMagazineRoom = false,
   className = '',
 }: HeroBlockProps) => {
+  const {
+    type = HeroTypes.DEFAULT,
+    title,
+    subTitle,
+    ingress,
+    figure,
+    ratio,
+    background,
+    magazineTags,
+    link,
+    heroLink,
+    video,
+    backgroundGradient,
+    useBrandTheme,
+    useBlurCenter,
+    displayTextVariant,
+  } = heroData
   const { bg: nextCompBg, dark: nextCompDark } = getBgAndDarkFromBackground(
     nextSectionDesignOptions,
   )
@@ -107,30 +113,17 @@ export const HeroBlock = ({
     HeroTypes.BACKGROUND_IMAGE,
   ]
 
-  const heroProps = {
+  const commonProps = {
     figure,
     title,
-    subTitle,
-    heroTitle,
     ingress,
     //@ts-ignore
     background: colorKeyToUtilityMap[background]?.background,
     nextSectionDesignOptions: nextSectionDesignOptions,
-    ...(tags && { tags }),
     ...(magazineTags && { magazineTags }),
     ...((link || (heroLink && type === HeroTypes.FIFTY_FIFTY)) && {
       link: heroLink ?? link,
     }),
-    ...(type === HeroTypes.LOOPING_VIDEO && {
-      video: loopingVideo,
-    }),
-    //figCaptionClassName: 'lg:px-layout-lg',
-    backgroundGradient,
-    backgroundBlur,
-    ...(HeroTypes.FULL_WIDTH_IMAGE &&
-      breadcrumbs?.enableBreadcrumbs && {
-        breadcrumbsComponent: breadcrumbsElement,
-      }),
     className,
   }
 
@@ -139,23 +132,33 @@ export const HeroBlock = ({
       case HeroTypes.FULL_WIDTH_IMAGE:
         return (
           <FullWidthImageHero
-            {...heroProps}
+            {...commonProps}
+            displayTextVariant={displayTextVariant}
+            subTitle={subTitle}
+            {...(breadcrumbs?.enableBreadcrumbs && {
+              breadcrumbsComponent: breadcrumbsElement,
+            })}
             // reduce pb when breadscrumbs
             className={`${breadcrumbs?.enableBreadcrumbs ? 'pb-2' : ''}`}
-            variant={(ratio as FullWidthImageHeroVariant) ?? 'narrow'}
+            variant={ratio ?? 'narrow'}
           />
         )
       case HeroTypes.FIFTY_FIFTY:
         return (
           <FiftyFiftyHero
-            {...heroProps}
+            {...commonProps}
+            displayTextVariant={displayTextVariant}
             className={`${breadcrumbs?.enableBreadcrumbs ? 'mb-2' : 'mb-4 lg:mb-6'}`}
           />
         )
       case HeroTypes.BACKGROUND_IMAGE:
         return (
           <TextOnBackgroundImageHero
-            {...heroProps}
+            {...commonProps}
+            displayTextVariant={displayTextVariant}
+            backgroundGradient={backgroundGradient}
+            useBlurCenter={useBlurCenter}
+            useBrandTheme={useBrandTheme}
             isMagazineRoom={isMagazineRoom}
           />
         )
@@ -163,12 +166,21 @@ export const HeroBlock = ({
         return (
           //@ts-ignore
           <LoopingVideoHero
-            {...heroProps}
+            {...commonProps}
+            video={video}
             // reduce pb when breadscrumbs
             className={`${breadcrumbs?.enableBreadcrumbs ? 'pb-2' : ''}`}
           />
         )
       default:
+        return (
+          <DefaultHero
+            {...commonProps}
+            subTitle={subTitle}
+            // reduce pb when breadscrumbs
+            className={`${breadcrumbs?.enableBreadcrumbs ? 'pb-2' : ''}`}
+          />
+        )
     }
   }
 

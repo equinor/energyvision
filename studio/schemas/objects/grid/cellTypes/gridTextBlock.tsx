@@ -23,9 +23,11 @@ import {
 
 const blockContentType = configureBlockContent({ variant: 'extendedBlock' })
 const themedTitleContentType = configureBlockContent({
-  variant: 'richTitleH2',
+  variant: 'titleWithDisplay',
 })
-const titleContentType = configureBlockContent({ variant: 'titleH2' })
+const titleContentType = configureBlockContent({
+  variant: 'titleWithDisplay',
+})
 
 const contentAlignmentOptions = [
   { value: 'left', icon: ContentLeftImage },

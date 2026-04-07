@@ -1,33 +1,40 @@
 'use client'
+import type { PortableTextBlock } from 'next-sanity'
 import type { HTMLAttributes } from 'react'
-import { mapSanityImageRatio } from '@/core/Image/Image'
+import {
+  type Figure,
+  type Image,
+  mapSanityImageRatio,
+} from '@/core/Image/Image'
 import type { TypographyVariants } from '@/core/Typography'
 import { getLayoutPx } from '@/lib/helpers/getCommonUtilities'
 import { useMediaQuery } from '@/lib/hooks/useMediaQuery'
 import { twMerge } from '@/lib/twMerge/twMerge'
 import Blocks from '@/portableText/Blocks'
 import { resolveImage } from '@/sanity/lib/utils'
-import type { ImageWithAlt } from '@/types'
-import type { HeroData } from './HeroBlock'
 
-type TextOnBackgroundImageHeroProps = {
-  background?: string
+export type TextOnBackgroundImageHeroProps = {
+  figure?: Figure
+  ingress?: PortableTextBlock[]
   isMagazineRoom?: boolean
   useBrandTheme?: boolean
   useBlurCenter?: boolean
-  heroMobileImage?: ImageWithAlt
+  heroMobileImage?: Image
   backgroundGradient?: 'none' | 'light' | 'dark'
   displayTextVariant?: 'none' | 'base' | 'lg' | 'xl'
   layoutGrid?: 'sm' | 'md' | 'lg'
-} & HeroData &
-  HTMLAttributes<HTMLElement>
+  alignContentY?: 'top' | 'center' | 'bottom'
+} & HTMLAttributes<HTMLElement>
 
+/**
+ * Hero type to show either a background image or white background
+ * with text over it
+ */
 export const TextOnBackgroundImageHero = ({
   figure,
   title,
   ingress,
   backgroundGradient,
-  backgroundBlur = false,
   isMagazineRoom = false,
   className = '',
   useBrandTheme = false,
@@ -56,8 +63,6 @@ export const TextOnBackgroundImageHero = ({
   })
   const isMobile = useMediaQuery(`(max-width: 800px)`)
   const url = isMobile && mobileImageUrl ? mobileImageUrl : imageUrl
-
-  console.log('backgroundBlur', backgroundBlur)
 
   const typographyVariant = {
     base: 'h2_base',
@@ -96,9 +101,11 @@ export const TextOnBackgroundImageHero = ({
         } ${figure && imageUrl ? 'bg-center bg-cover bg-no-repeat' : ''} ${px}`,
         className,
       )}
-      style={{
-        backgroundImage: `url(${url})`,
-      }}
+      {...(url && {
+        style: {
+          backgroundImage: `url(${url})`,
+        },
+      })}
     >
       <div
         className={`flex max-w-text flex-col ${useBrandTheme ? '*:text-energy-red-100' : ''}`}

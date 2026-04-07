@@ -1,5 +1,6 @@
-import { ImageWithAlt, CardData } from './index'
-import { PortableTextBlock } from '@portabletext/types'
+import type { PortableTextBlock } from '@portabletext/types'
+import type { Image } from '@/core/Image/Image'
+import type { CardData } from './index'
 
 export type MenuLinkData = {
   label: string
@@ -12,7 +13,7 @@ export type MenuLinkData = {
 }
 
 export type SubMenuGroupLinkData = MenuLinkData & {
-  image: ImageWithAlt
+  image: Image
 }
 
 export type SubMenuGroupData = {

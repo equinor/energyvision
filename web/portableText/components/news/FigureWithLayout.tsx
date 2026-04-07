@@ -3,7 +3,6 @@ import Zoom from 'react-medium-image-zoom'
 import { twMerge } from 'tailwind-merge'
 import { FigureCaption } from '@/core/FigureCaption/FigureCaption'
 import { type GridType, Image, type ImageRatioKeys } from '@/core/Image/Image'
-import type { ImageWithAlt } from '../../../types/index'
 
 type Layout = 'full' | 'left' | 'right' | 'center'
 
@@ -12,7 +11,7 @@ type FigureNode = {
   _type: 'imageWithAltAndCaption'
   attribution?: string
   caption?: string
-  image: ImageWithAlt
+  image: Image
   layout: Layout
   enableImageZoom?: boolean
   imageOrientation?: 'portrait' | 'landscape' | 'square'

@@ -1,5 +1,6 @@
 import { getImageDimensions } from '@sanity/asset-utils'
 import { createImageUrlBuilder } from '@sanity/image-url'
+import { he } from 'date-fns/locale'
 import { type CreateDataAttributeProps, createDataAttribute } from 'next-sanity'
 import type { GridType } from '@/core/Image/Image'
 import { dataset, projectId, studioUrl } from '@/sanity/lib/api'
@@ -70,6 +71,13 @@ export const resolveImage = (props: ResolveImageProps) => {
     isLargerDisplays = false,
     keepRatioOnMobile = false,
   } = props
+  if (!image?.asset) {
+    return {
+      url: undefined,
+      width: undefined,
+      height: undefined,
+    }
+  }
 
   const { width: imageWidth, height: imageHeight } = getImageDimensions(image)
 

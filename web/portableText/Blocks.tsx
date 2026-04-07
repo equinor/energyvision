@@ -61,6 +61,7 @@ const getBlockComponents = ({
   group,
   variant,
   id,
+  useDisplay = false,
 }: {
   as?: ElementType
   className?: string
@@ -68,6 +69,7 @@ const getBlockComponents = ({
   variant?: TypographyVariants
   //If blocks length is just 1, like a single h1 then have to pass id if its an anchor reference
   id?: string
+  useDisplay?: boolean
 }) => {
   return {
     normal: ({ children }: TypeProps) => {
@@ -90,33 +92,12 @@ const getBlockComponents = ({
         {children}
       </Block>
     ),
-    display_h1_base: ({ children }: TypeProps) => (
-      <Block
-        group='display'
-        variant='h1_base'
-        className={className}
-        {...(id && { id: id })}
-      >
-        {/**@ts-ignore:todo */}
-        {children}
-      </Block>
-    ),
-    display_h1_lg: ({ children }: TypeProps) => (
-      <Block
-        group='display'
-        variant='h1_lg'
-        className={className}
-        {...(id && { id: id })}
-      >
-        {/**@ts-ignore:todo */}
-        {children}
-      </Block>
-    ),
-    display_h1_xl: ({ children }: TypeProps) => {
+    displayText: ({ children }: PortableTextBlock) => {
       return (
         <Block
+          as={as}
           group='display'
-          variant='h1_xl'
+          variant='h2_base'
           className={className}
           {...(id && { id: id })}
         >
@@ -125,31 +106,24 @@ const getBlockComponents = ({
         </Block>
       )
     },
-    display_h2_base: ({ children }: TypeProps) => (
-      <Block
-        group='display'
-        variant='h2_base'
-        className={className}
-        {...(id && { id: id })}
-      >
-        {/**@ts-ignore:todo */}
-        {children}
-      </Block>
-    ),
-    display_h2_lg: ({ children }: TypeProps) => (
-      <Block
-        group='display'
-        variant='h2_lg'
-        className={className}
-        {...(id && { id: id })}
-      >
-        {/**@ts-ignore:todo */}
-        {children}
-      </Block>
-    ),
-    display_h2_xl: ({ children }: TypeProps) => {
+    largeText: ({ children }: PortableTextBlock) => {
       return (
         <Block
+          as={as}
+          group={useDisplay ? 'display' : 'heading'}
+          variant={useDisplay ? 'h2_lg' : '2xl'}
+          className={className}
+          {...(id && { id: id })}
+        >
+          {/**@ts-ignore:todo */}
+          {children}
+        </Block>
+      )
+    },
+    extraLargeText: ({ children }: PortableTextBlock) => {
+      return (
+        <Block
+          as={as}
           group='display'
           variant='h2_xl'
           className={className}
@@ -321,6 +295,7 @@ export type BlocksProps = {
   clampLines?: 3 | 4 | 5
   includeFootnotes?: boolean
   noInvert?: boolean
+  useDisplay?: boolean
 } & TypographyProps
 
 const inlineBlockTypes = [
@@ -348,6 +323,7 @@ export default function Blocks({
   id,
   clampLines,
   includeFootnotes = false,
+  useDisplay = false,
   as,
 }: BlocksProps) {
   let div: PortableTextBlock[] = []
@@ -376,6 +352,7 @@ export default function Blocks({
               ...getBlockComponents({
                 group: blocksGroup,
                 variant: blocksVariant,
+                useDisplay,
                 as,
                 className: twMerge(
                   clampLines && twLineClampUtility[clampLines],

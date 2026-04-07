@@ -1,10 +1,13 @@
 'use client'
-import type { SanityImageObject } from '@sanity/image-url'
+import type {
+  SanityImageCrop,
+  SanityImageHotspot,
+  SanityImageObject,
+} from '@sanity/image-url'
 import NextImage, { type ImageProps as NextImageProps } from 'next/image'
 import { useMediaQuery } from '@/lib/hooks/useMediaQuery'
 import { twMerge } from '@/lib/twMerge/twMerge'
 import { resolveImage } from '@/sanity/lib/utils'
-import type { ImageWithAlt, ImageWithCaptionData } from '@/types'
 import { FigureCaption } from '../FigureCaption/FigureCaption'
 
 export const ImageRatios = {
@@ -151,12 +154,25 @@ export const getTwAspectRatioUtilityOnRatio = (ratio: ImageRatioKeys) => {
   }[ratio]
 }
 
+export type Image = {
+  alt?: string
+  asset: SanityImageObject
+  crop?: SanityImageCrop
+  hotspot?: SanityImageHotspot
+}
+
+export type Figure = {
+  image: Image
+  attribution?: string
+  caption?: string
+}
+
 type ImageProps = Omit<NextImageProps, 'src' | 'alt' | 'sizes'> & {
   /** Wraps image in div with relative or none,but then relative needs to be set on a parent
    * @default simple
    */
   wrapperVariant?: 'simple' | 'none'
-  image: ImageWithAlt | ImageWithCaptionData | SanityImageObject
+  image?: Image
   /** Grid column the image is contained within on larger displays.
    * Determines the sizes param on Next image and width for sanity fetch.
    * Tests for mobile and uses smallest sizes automically
@@ -192,7 +208,12 @@ type ImageProps = Omit<NextImageProps, 'src' | 'alt' | 'sizes'> & {
   hasImageZoom?: boolean
 }
 
-//Double check crop and hotspot information comes to sanity fetch image
+/**
+ * Use Image to render <figure> element with caption/attribution or simple <img> element with alt
+ *
+ * @example
+ * <Image image={image} grid="full" aspectRatio="10:3" />
+ */
 export const Image = ({
   image,
   wrapperVariant = 'simple',
@@ -216,7 +237,7 @@ export const Image = ({
 }: ImageProps) => {
   const isLargerDisplays = useMediaQuery(`(min-width: 800px)`)
 
-  if (!image?.asset) return null
+  if (!image || !image?.asset) return null
 
   const { url, width, height } = resolveImage({
     image,

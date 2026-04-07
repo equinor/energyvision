@@ -2,7 +2,7 @@
 import { Image } from '../../core/Image/Image'
 import { QuoteSymbol } from '../../icons'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
-import type { DesignOptions, ImageWithAlt } from '../../types/index'
+import type { DesignOptions } from '../../types/index'
 
 const textBoldLimit = 160
 const textSizeLimit = 50
@@ -13,7 +13,7 @@ type QuoteData = {
   author: string
   authorTitle?: string
   quote: string
-  image?: ImageWithAlt
+  image?: Image
   designOptions: DesignOptions & { imagePosition?: 'left' | 'right' }
 }
 

@@ -21,9 +21,10 @@ export const BackgroundContainer = ({
   scrimClassName = '',
   id,
   dontSplit = false,
-  as = 'section',
+  as,
 }: BackgroundContainerProps) => {
-  const ContainerElement = as ?? (`section` as ElementType)
+  const Component = as ?? 'section'
+
   const isColor =
     !background ||
     background?.type !== 'backgroundImage' ||
@@ -50,7 +51,7 @@ export const BackgroundContainer = ({
           {children}
         </ImageBackgroundContainer>
       ) : (
-        <ContainerElement
+        <Component
           id={id}
           className={twMerge(
             commonClassNames,
@@ -59,7 +60,7 @@ export const BackgroundContainer = ({
           )}
         >
           {children}
-        </ContainerElement>
+        </Component>
       )}
     </>
   )

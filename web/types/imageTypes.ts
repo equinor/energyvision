@@ -1,47 +1,11 @@
 import type { PortableTextBlock } from '@portabletext/types'
-import type {
-  SanityImageCrop,
-  SanityImageHotspot,
-  SanityImageObject,
-} from '@sanity/image-url'
-import type { ContentAlignmentTypes, LinkData } from './index'
-
-export type CaptionData = {
-  attribution?: string
-  caption?: string
-}
-
-export type ImageWithAlt = {
-  isDecorative: boolean
-  alt?: string
-  asset: SanityImageObject
-  crop?: SanityImageCrop
-  hotspot?: SanityImageHotspot
-  _type: 'imageWithAlt'
-  extension?: string
-  useLight?: boolean
-  backgroundGradient?: string
-}
-
-export type ImageWithCaptionData = {
-  _type: 'imageWithAltAndCaption'
-  type: 'imageWithAltAndCaption'
-  _key?: string
-  image: ImageWithAlt
-  asset: SanityImageObject
-} & CaptionData
-
-export type ImageBackground = {
-  image: ImageWithAlt | SanityImageObject
-  useAnimation?: boolean
-  useLight?: boolean
-  contentAlignment?: ContentAlignmentTypes
-}
+import type { Image } from '@/core/Image/Image'
+import type { LinkData } from './index'
 
 export type ImageWithLinkOrOverlay = {
   id: string
   type: 'imageWithLinkOrOverlay'
-  image: SanityImageObject
+  image: Image
   action?: LinkData
   captionTitle?: PortableTextBlock[]
   captionText?: PortableTextBlock[]

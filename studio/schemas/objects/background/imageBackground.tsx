@@ -7,7 +7,7 @@ import {
   ContentRightImage,
 } from '../../../icons'
 import { RadioIconSelector } from '../../components'
-import { backdropStyle } from '../commonFields/commonFields'
+import { glassEffect } from '../commonFields/commonFields'
 
 export type ColorType = {
   title: string
@@ -48,10 +48,15 @@ export default defineType({
       title: 'Apply light gradient',
       name: 'useLight',
       type: 'boolean',
-      description:
-        'Applies a white gradient over semi transparent background image.',
+      description: 'Applies semi transparent white gradient over',
     }),
-    backdropStyle(),
+    defineField({
+      title: 'Apply no gradient',
+      description: 'Ensure enough contrast between text and background then',
+      name: 'useNoGradient',
+      type: 'boolean',
+    }),
+    glassEffect(),
     defineField({
       name: 'contentAlignment',
       title: 'Content Alignment',

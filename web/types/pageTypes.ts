@@ -1,7 +1,7 @@
 import type { SanityImageSource } from '@sanity/asset-utils'
 import type { Templates } from 'instantsearch.js'
 import type { BreadcrumbData } from '@/core/Breadcrumbs/Breadcrumbs'
-import type { HeroData } from '@/sections/Hero/HeroBlock'
+import type { HeroBlockProps } from '@/sections/Hero/HeroBlock'
 import type { ContentType, SeoData } from './index'
 
 export type PortableTextBlock = any // Adjust as per actual definition
@@ -19,13 +19,12 @@ export type PageSchema = {
   title: PortableTextBlock[]
   titleStyle: string
   firstPublishedAt?: string
-  hero: HeroData
+  hero: HeroBlockProps
   template: Templates
   seoAndSome: SeoData
   content?: ContentType[]
   id: string
   type: string
-  isCampaign?: boolean
   breadcrumbs: BreadcrumbData
 }
 

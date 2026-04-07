@@ -13,7 +13,6 @@ import {
   type ColorKeys,
   colorKeyToUtilityMap,
 } from '@/styles/colorKeyToUtilityMap'
-import type { ImageWithAlt } from '../../types'
 import BaseLink, { type BaseLinkProps } from '../Link/BaseLink'
 import { LogoPrimary } from '../Logo/Logo'
 
@@ -36,7 +35,7 @@ export type PromotionProps = {
    * @default gray-20
    */
   background?: ColorKeys
-  image?: ImageWithAlt
+  image?: Image
   /** Rendered as plain but accepts portable */
   title: string | PortableTextBlock[]
   /** Rendered as plain but accepts portable.

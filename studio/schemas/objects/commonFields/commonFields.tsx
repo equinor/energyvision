@@ -141,15 +141,22 @@ export const layoutDirection = {
   initialValue: 'col',
 }
 
-export const backdropStyle = (hiddenCallBack?: any, fieldset?: string) => {
+export const glassEffect = (hiddenCallBack?: any, fieldset?: string) => {
   return {
-    title: 'Backdrop glass effect',
-    name: 'backdropStyle',
+    title: 'Apply glass effect behind text',
+    name: 'useGlass',
     type: 'boolean',
     description:
       'Applies a glass blur backdrop style behind text with padding and rounded corners',
     initialValue: false,
     ...(fieldset && { fieldset }),
-    ...(hiddenCallBack && { hidden: hiddenCallBack }),
+    hidden: (props: any) => {
+      const { currentUser } = props || {}
+      const allowedRoles = ['designer', 'administrator', 'developer']
+      const isAllowed = currentUser?.roles?.some(role =>
+        allowedRoles?.includes(role?.name),
+      )
+      return !isAllowed
+    },
   }
 }

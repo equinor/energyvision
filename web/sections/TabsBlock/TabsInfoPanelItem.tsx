@@ -11,12 +11,12 @@ import ResourceLink from '@/core/Link/ResourceLink'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import Blocks from '@/portableText/Blocks'
 import { getLocaleFromName } from '@/sanity/helpers/localization'
-import type { ImageWithAlt, LinkData } from '../../types'
+import type { LinkData } from '../../types'
 import type { InfoPanelImageVariant, InfoPanelKeyInfo } from './TabsBlock.types'
 
 type TabsInfoPanelItemProps = {
   theme?: number
-  image?: ImageWithAlt
+  image?: Image
   imageVariant?: InfoPanelImageVariant
   title?: PortableTextBlock[]
   text?: PortableTextBlock[]

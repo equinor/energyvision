@@ -5,19 +5,14 @@ import type { PortableTextBlock } from 'next-sanity'
 import { ArticleJsonLd } from 'next-seo'
 import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
 import { IFrame } from '@/core/IFrame/IFrame'
+import type { Figure, Image } from '@/core/Image/Image'
 import TransformableIcon from '@/icons/TransformableIcon'
 import { isDateAfter } from '@/lib/helpers/dateUtilities'
 import { getFullUrl } from '@/lib/helpers/getFullUrl'
 import { resolveOpenGraphImage } from '@/sanity/lib/utils'
 import { DefaultHero } from '@/sections/Hero/DefaultHero'
 import LatestNews from '@/sections/LatestNews/LatestNews'
-import type {
-  CardData,
-  IFrameData,
-  ImageWithAlt,
-  ImageWithCaptionData,
-  RelatedLinksData,
-} from '@/types'
+import type { CardData, IFrameData, RelatedLinksData } from '@/types'
 import Blocks from '../../portableText/Blocks'
 import Footnotes from '../../portableText/components/Footnotes'
 import RelatedContent from '../../sections/RelatedContent/RelatedContent'
@@ -27,11 +22,11 @@ export type NewsPageProps = {
   title: string
   documentTitle?: string
   metaDescription?: string
-  openGraphImage?: ImageWithAlt
+  openGraphImage?: Image
   id: string
   updatedAt: string
   publishDateTime: string
-  heroImage: ImageWithCaptionData
+  heroImage: Figure
   ingress: PortableTextBlock[]
   content: PortableTextBlock[]
   relatedLinks: RelatedLinksData

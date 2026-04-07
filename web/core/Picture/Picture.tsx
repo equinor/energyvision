@@ -1,15 +1,13 @@
 'use client'
-import type { SanityImageObject } from '@sanity/image-url'
 import type { ImageProps } from 'next/image'
 import { forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { resolveImage } from '@/sanity/lib/utils'
-import type { ImageWithAlt, ImageWithCaptionData } from '@/types'
 import { FigureCaption } from '../FigureCaption/FigureCaption'
 import { Image, type ImageRatioKeys, mapSanityImageRatio } from '../Image/Image'
 
 type PictureProps = {
-  image: ImageWithAlt | ImageWithCaptionData | SanityImageObject
+  image: Image
   caption?: string
   attribution?: string
   /** Aspect ratio for desktop. Should either be 10:3, 21:9
@@ -26,7 +24,8 @@ type PictureProps = {
    * @default true
    */
   withLayoutPx?: boolean
-} & Omit<ImageProps, 'src' | 'alt'>
+  className?: string
+}
 
 export const Picture = forwardRef<HTMLElement, PictureProps>(function Picture(
   {

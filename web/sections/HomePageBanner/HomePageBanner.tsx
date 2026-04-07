@@ -16,7 +16,7 @@ import {
   type ColorKeys,
   colorKeyToUtilityMap,
 } from '@/styles/colorKeyToUtilityMap'
-import type { ImageWithAlt, LinkData } from '@/types'
+import type { LinkData } from '@/types'
 
 export type HomePageBannerThemeColors = {
   background?: string
@@ -51,7 +51,7 @@ export const getColorForHomepageBannerTheme = (
 
 type HomePageBannerProps = {
   title?: PortableTextBlock[]
-  image: ImageWithAlt
+  image: Image
   ctaCards: {
     id: string
     overline?: string

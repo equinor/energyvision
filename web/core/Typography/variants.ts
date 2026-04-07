@@ -1,3 +1,18 @@
+/**
+ * DEVELOPMENT:
+ * For y-axis spacing use margin
+ *
+ * because CSS Margin Collapsing; where the top/bottom margins of a child element "leak" out
+ * of the parent container if there is no border or padding separating them. As a result,
+ * the parent does not include that margin space in its total height.
+ *
+ * With text blocks it works nicely when there are previous with margin bottom and
+ * the next with margin top, these two will then be collapsed and not doubled.
+ *
+ * If you need the parent to take the margin into consideration e.g. for color background,
+ *  use overflow-hidden. Adding overflow: hidden (or auto) to the parent container forces it to create
+ * a new Block Formatting Context (BFC). This forces the parent to contain its children's margins.
+ */
 const variants = {
   heading: {
     unstyled: '',

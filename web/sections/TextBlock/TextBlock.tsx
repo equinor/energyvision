@@ -1,3 +1,4 @@
+import { toPlainText } from 'next-sanity'
 import { twMerge } from 'tailwind-merge'
 import { BackgroundContainer } from '@/core/Backgrounds'
 import { Image } from '@/core/Image/Image'
@@ -34,11 +35,12 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
   )
     return null
 
+  const isLongTitle = title && toPlainText(title).length > 30
+
   const contentAlignmentClassNames = {
     center: 'items-start text-start px-layout-lg',
-    right:
-      'items-start text-start px-layout-lg xl:items-end xl:text-end xl:max-w-[45dvw] xl:ml-auto xl:pr-layout-sm xl:pl-0 ',
-    left: 'items-start text-start px-layout-lg xl:items-start xl:max-w-[45dvw] xl:mr-auto xl:pl-layout-sm xl:pr-0',
+    right: `items-start text-start px-layout-lg xl:items-end xl:text-end ${isLongTitle ? 'xl:max-w-[52dvw]' : 'xl:max-w-[45dvw]'} xl:ml-auto xl:pr-layout-sm xl:pl-0`,
+    left: `items-start text-start px-layout-lg xl:items-start ${isLongTitle ? 'xl:max-w-[52dvw]' : 'xl:max-w-[45dvw]'}  xl:mr-auto xl:pl-layout-sm xl:pr-0`,
     'bottom-left':
       'items-start text-start px-layout-lg xl:mr-auto xl:pl-layout-sm xl:pr-0',
     'bottom-center':
@@ -46,8 +48,10 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
   }
 
   let backgroundImageContentClassNames = `justify-center py-14`
+
   const contentAlignment =
     designOptions?.background?.backgroundImage?.contentAlignment
+
   if (contentAlignment) {
     backgroundImageContentClassNames = twMerge(
       backgroundImageContentClassNames,
@@ -56,6 +60,7 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
   }
 
   let bgContainerOptions = designOptions
+
   if (useBrandTheme) {
     bgContainerOptions = {
       background: {
@@ -103,11 +108,25 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
         >
           <Typography variant='overline'>{overline}</Typography>
           {title && (
-            <Blocks value={title} as='h2' group='heading' variant='h2' />
+            <Blocks
+              value={title}
+              as='h2'
+              group='heading'
+              variant='h2'
+              useDisplay={true}
+            />
           )}
         </hgroup>
       ) : (
-        title && <Blocks value={title} as='h2' group='heading' variant='h2' />
+        title && (
+          <Blocks
+            value={title}
+            as='h2'
+            group='heading'
+            variant='h2'
+            useDisplay={true}
+          />
+        )
       )}
       {(ingress || text || callToActions) &&
         (contentAlignment === 'right' ? (

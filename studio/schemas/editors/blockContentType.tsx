@@ -1,5 +1,4 @@
 import { attach_file, format_color_text, star_filled } from '@equinor/eds-icons'
-import type { ElementType } from 'react'
 import { MdOutlineAnchor } from 'react-icons/md'
 import type { BlockDefinition, BlockStyleDefinition } from 'sanity'
 import type { Level2Keys } from '@/helpers/Level2KeyTypes'
@@ -43,15 +42,15 @@ export type BlockContentProps = {
    * withH2SimpleBlock - only h2 and normal text
    * extendedBlock - h2,h3,normal,lists,links, small, display h2
    * fullBlock - all headings,lists,links,attachment.
-   * title - just normal text(as h1 in web)
-   * richTitle - normal text(as h1 in web) and display h1
+   * titleH1 - just normal text(as h1 in web). Display variants is a separate select on herofields
+   * titleH2 - normal text(as h2 in web)
+   * titleWithDisplay - normal text and display variants
    * ingress  - normal and small text
    */
   variant?:
     | 'titleH1'
-    | 'richTitleH1'
     | 'titleH2'
-    | 'richTitleH2'
+    | 'titleWithDisplay'
     | 'ingress'
     | 'simpleBlock'
     | 'withH2SimpleBlock'
@@ -68,8 +67,8 @@ export type BlockContentProps = {
   attachment?: boolean
   lists?: boolean
   smallText?: boolean
-  displayH1?: boolean
-  displayH2?: boolean
+  largeText?: boolean
+  extraLargeText?: boolean
   highlight?: boolean
   extendedStyles?: BlockStyleDefinition[]
   onlySubSupScriptDecorators?: boolean
@@ -83,15 +82,6 @@ const titleH1VariantOptions: BlockContentProps = {
   externalLink: false,
   lists: false,
 }
-const richTitleH1VariantOptions: BlockContentProps = {
-  h2: false,
-  h3: false,
-  displayH1: true,
-  internalLink: false,
-  externalLink: false,
-  lists: false,
-}
-
 const titleH2VariantOptions: BlockContentProps = {
   h2: true,
   h3: false,
@@ -99,17 +89,19 @@ const titleH2VariantOptions: BlockContentProps = {
   externalLink: false,
   lists: false,
 }
-const richTitleH2VariantOptions: BlockContentProps = {
+const titleWithDisplayVariantOptions: BlockContentProps = {
   h2: false,
   h3: false,
-  displayH2: true,
+  largeText: true,
+  extraLargeText: true,
   internalLink: false,
   externalLink: false,
   lists: false,
 }
 const extendedBlockStylesOptions: BlockContentProps = {
   h2: true,
-  displayH2: true,
+  largeText: true,
+  extraLargeText: true,
   //smallText: true,
 }
 const ingressStylesOptions: BlockContentProps = {
@@ -141,7 +133,8 @@ const withH2SimpleBlockStylesOptions: BlockContentProps = {
 const fullBlockStylesOptions: BlockContentProps = {
   h2: true,
   h4: true,
-  displayH2: true,
+  largeText: true,
+  extraLargeText: true,
   attachment: true,
   smallText: true,
 }
@@ -170,12 +163,16 @@ export const BlockTypography = {
 export type BlockTypographyGroups = keyof typeof BlockTypography
 export type BlockTypographyVariants = Level2Keys<typeof BlockTypography>
 
-export const TextRenderer = (
-  props: any,
-  group?: BlockTypographyGroups,
-  level?: BlockTypographyVariants,
-) => {
-  const { children } = props
+export const TextRenderer = ({
+  blockProps,
+  group,
+  level,
+}: {
+  blockProps: any
+  group?: BlockTypographyGroups
+  level?: BlockTypographyVariants
+}) => {
+  const { children } = blockProps
   //@ts-ignore: wont accept the types
   const classNames = BlockTypography[group ?? 'normal'][level ?? 'h2'] ?? ''
 
@@ -201,8 +198,8 @@ export const configureBlockContent = (
     h2: false,
     h4: false,
     attachment: false,
-    displayH1: false,
-    displayH2: false,
+    largeText: false,
+    extraLargeText: false,
     smallText: false,
     highlight: false,
     //Big title seems to have large 42 and extra large 56px options
@@ -230,14 +227,7 @@ export const configureBlockContent = (
       options,
     )
   }
-  //with display font variants
-  if (options?.variant === 'richTitleH1') {
-    defaultConfigOptions = Object.assign(
-      defaultConfigOptions,
-      richTitleH1VariantOptions,
-      options,
-    )
-  }
+
   if (options?.variant === 'titleH2') {
     defaultConfigOptions = Object.assign(
       defaultConfigOptions,
@@ -245,11 +235,11 @@ export const configureBlockContent = (
       options,
     )
   }
-  //with display font variants
-  if (options?.variant === 'richTitleH2') {
+
+  if (options?.variant === 'titleWithDisplay') {
     defaultConfigOptions = Object.assign(
       defaultConfigOptions,
-      richTitleH2VariantOptions,
+      titleWithDisplayVariantOptions,
       options,
     )
   }
@@ -298,8 +288,8 @@ export const configureBlockContent = (
     externalLink,
     group,
     attachment,
-    displayH1,
-    displayH2,
+    largeText,
+    extraLargeText,
     smallText,
     highlight,
     footnote,
@@ -330,54 +320,73 @@ export const configureBlockContent = (
   const h2Config = {
     title: 'Heading 2',
     value: 'h2',
-    component: (props: any) => TextRenderer(props, 'h2', group, 'h2'),
+    component: (props: any) =>
+      TextRenderer({
+        blockProps: props,
+        group,
+        level: 'h2',
+      }),
   }
   const h3Config = {
     title: 'Heading 3',
     value: 'h3',
-    component: (props: any) => TextRenderer(props, 'h3', group, 'h3'),
+    component: (props: any) =>
+      TextRenderer({
+        blockProps: props,
+        group,
+        level: 'h3',
+      }),
   }
   const h4Config = {
     title: 'Heading 4',
     value: 'h4',
-    component: (props: any) => TextRenderer(props, 'h4', group, 'h4'),
-  }
-  const displayH1BaseConfig = {
-    title: 'Display base',
-    value: 'display_h1_base',
     component: (props: any) =>
-      TextRenderer(props, 'span', 'display', 'h1_base'),
+      TextRenderer({
+        blockProps: props,
+        group,
+        level: 'h4',
+      }),
   }
-  const displayH1LgConfig = {
-    title: 'Display large',
-    value: 'display_h1_lg',
-    component: (props: any) => TextRenderer(props, 'span', 'display', 'h1_lg'),
+  const displayTextConfig = {
+    title: 'Display text',
+    value: 'displayText',
+    component: (props: any) =>
+      TextRenderer({
+        blockProps: props,
+        group: 'display',
+        level: 'h2_base',
+      }),
   }
-  const displayH1XlConfig = {
-    title: 'Display extra large',
-    value: 'display_h1_xl',
-    component: (props: any) => TextRenderer(props, 'span', 'display', 'h1_xl'),
+  const largeTextConfig = {
+    title: 'Large text',
+    value: 'largeText',
+    component: (props: any) =>
+      TextRenderer({
+        blockProps: props,
+        group: 'display',
+        level: 'h2_lg',
+      }),
   }
-  const displayH2BaseConfig = {
-    title: 'Display H2 base',
-    value: 'display_h2_base',
-    component: (props: any) => TextRenderer(props, 'h2', 'display', 'h2_base'),
-  }
-  const displayH2LgConfig = {
-    title: 'Display h2 large',
-    value: 'display_h2_lg',
-    component: (props: any) => TextRenderer(props, 'h2', 'display', 'h2_lg'),
-  }
-  const displayH2XlConfig = {
-    title: 'Display h2 extra large',
-    value: 'display_h2_xl',
-    component: (props: any) => TextRenderer(props, 'h2', 'display', 'h2_xl'),
+  const extraLargeTextConfig = {
+    title: 'Extra large text',
+    value: 'extraLargeText',
+    component: (props: any) =>
+      TextRenderer({
+        blockProps: props,
+        group: 'display',
+        level: 'h2_xl',
+      }),
   }
 
   const smallTextConfig = {
     title: 'Small text',
     value: 'smallText',
-    component: (props: any) => TextRenderer(props, 'span', group, 'sm'),
+    component: (props: any) =>
+      TextRenderer({
+        blockProps: props,
+        group,
+        level: 'sm',
+      }),
   }
 
   const internalLinkConfig = (linkConfig: any) => {
@@ -490,20 +499,14 @@ export const configureBlockContent = (
   if (smallText) {
     config?.styles?.push(smallTextConfig)
   }
-  if (displayH1) {
-    config?.styles?.push(
-      displayH1BaseConfig,
-      displayH1LgConfig,
-      displayH1XlConfig,
-    )
+  if (largeText) {
+    config?.styles?.push(displayTextConfig)
+    config?.styles?.push(largeTextConfig)
   }
-  if (displayH2) {
-    config?.styles?.push(
-      displayH2BaseConfig,
-      displayH2LgConfig,
-      displayH2XlConfig,
-    )
+  if (extraLargeText) {
+    config?.styles?.push(extraLargeTextConfig)
   }
+
   if (externalLink) {
     //@ts-ignore
     config?.marks?.annotations?.push(externalLinkConfig)

@@ -8,11 +8,7 @@ import Blocks from '@/portableText/Blocks'
 import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
 import { getObjectPositionForImage, Image } from '../../../core/Image/Image'
 import { getLocaleFromName } from '../../../sanity/helpers/localization'
-import type {
-  DesignOptions,
-  ImageWithAlt,
-  LinkData,
-} from '../../../types/index'
+import type { DesignOptions, LinkData } from '../../../types/index'
 
 export type TeaserData = {
   type: string
@@ -20,7 +16,7 @@ export type TeaserData = {
   title: PortableTextBlock[]
   content: PortableTextBlock[]
   overline?: string
-  image: ImageWithAlt
+  image: Image
   actions?: LinkData[]
   designOptions: DesignOptions & {
     imagePosition?: 'left' | 'right'

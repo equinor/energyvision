@@ -7,13 +7,12 @@ import Blocks from '@/portableText/Blocks'
 import { type AspectRatioVariants, type Variants, Video } from './Video'
 import 'video.js/dist/video-js.css'
 import { resolveImage } from '@/sanity/lib/utils'
-import type { ImageWithAlt } from '@/types'
-import { mapSanityImageRatio } from '../Image/Image'
+import { type Image, mapSanityImageRatio } from '../Image/Image'
 
 export type VideoType = {
   title: string
   src: string
-  poster: ImageWithAlt
+  poster: Image
 }
 
 export type VideoControlsType = {
@@ -37,7 +36,7 @@ export type VideoPlayerProps = Omit<
   useBrandTheme?: boolean
   /** Sets id on return element for anchors */
   id?: string
-  poster?: ImageWithAlt
+  poster?: Image
   /** For the aspect ratios that apply object cover, override to contain */
   containVideo?: boolean
 }

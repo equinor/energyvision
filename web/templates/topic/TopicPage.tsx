@@ -1,8 +1,26 @@
-import { HeroBlock, type HeroBlockProps } from '@/sections/Hero/HeroBlock'
-import type { TopicPageSchema } from '../../types/index'
+import type { PortableTextBlock } from 'next-sanity'
+import type { BreadcrumbData } from '@/core/Breadcrumbs/Breadcrumbs'
+import {
+  HeroBlock,
+  type HeroBlockProps,
+  type HeroData,
+} from '@/sections/Hero/HeroBlock'
+import type { ContentType, SeoData, Templates } from '../../types/index'
 import { PageContent } from '../shared/SharedPageContent'
 
-type TopicPageProps = TopicPageSchema
+export type TopicPageProps = {
+  slug: string
+  title: PortableTextBlock[]
+  titleStyle: string
+  firstPublishedAt?: string
+  hero: HeroData
+  template: Templates
+  seoAndSome: SeoData
+  content?: ContentType[]
+  id: string
+  type: string
+  breadcrumbs: BreadcrumbData
+}
 
 const TopicPage = ({
   breadcrumbs,
@@ -12,9 +30,10 @@ const TopicPage = ({
   ...restData
 }: TopicPageProps) => {
   const heroProps: HeroBlockProps = {
-    //@ts-ignore
-    title: title,
-    ...hero,
+    heroData: {
+      title,
+      ...hero,
+    },
     breadcrumbs: {
       currentSlug: slug,
       ...breadcrumbs,

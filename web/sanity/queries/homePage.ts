@@ -26,7 +26,6 @@ export const homePageQuery = /* groq */ `
     ${stickyMenuOutSideContent},
     "hero": @->${heroFields},
     "template": @->_type,
-    "isCampaign":@->isCampaign,
     "breadcrumbs": {
       ${breadcrumbsQuery}
     },

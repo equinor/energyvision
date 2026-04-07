@@ -29,14 +29,14 @@ const getElementType = (variant: string, link: boolean): ElementType => {
     case 'h6':
       return variant
     case 'highlight':
+      return 'span'
+    case 'div':
     case 'h1_base':
     case 'h1_lg':
     case 'h1_xl':
     case 'h2_base':
     case 'h2_lg':
     case 'h2_xl':
-      return 'span'
-    case 'div':
       return 'div'
     default:
       return 'p'

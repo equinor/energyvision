@@ -1,13 +1,15 @@
-import { ImageWithAlt, BackgroundColours, LinkData, IFrameData, ImageBackground } from './index'
-import { PortableTextBlock } from '@portabletext/types'
-import { RowType } from '@/sections/Grid/mapGridContent'
-import { FigureData } from '../sections/Figure/Figure'
-import { VideoPlayerBlockProps } from '@/sections/VideoPlayerBlock/VideoPlayerBlock'
+import type { PortableTextBlock } from '@portabletext/types'
+import type { ImageBackground } from '@/core/Backgrounds/ImageBackgroundContainer'
+import type { Image } from '@/core/Image/Image'
+import type { RowType } from '@/sections/Grid/mapGridContent'
+import type { VideoPlayerBlockProps } from '@/sections/VideoPlayerBlock/VideoPlayerBlock'
+import type { FigureData } from '../sections/Figure/Figure'
+import type { BackgroundColours, IFrameData, LinkData } from './index'
 
 export type GridTeaserData = {
   type: 'gridTeaser'
   id: string
-  image: ImageWithAlt
+  image: Image
   rowType?: RowType
   useExtendedThemes?: boolean
   content?: PortableTextBlock[]
@@ -30,9 +32,19 @@ export type GridData = {
   gridRows?: GridRowType[]
 }
 
-export type GridContentType = FigureData | IFrameData | VideoPlayerBlockProps | GridTextBlockData | GridTeaserData
+export type GridContentType =
+  | FigureData
+  | IFrameData
+  | VideoPlayerBlockProps
+  | GridTextBlockData
+  | GridTeaserData
 
-type GridTextBlockContentAlignment = 'left' | 'right' | 'center' | 'bottom-left' | 'bottom-center'
+type GridTextBlockContentAlignment =
+  | 'left'
+  | 'right'
+  | 'center'
+  | 'bottom-left'
+  | 'bottom-center'
 
 export type Span3 = {
   type: 'span3'

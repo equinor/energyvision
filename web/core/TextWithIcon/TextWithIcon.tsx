@@ -5,14 +5,13 @@ import { twMerge } from 'tailwind-merge'
 import { Typography } from '@/core/Typography'
 import { TransformableIcon } from '../../icons/TransformableIcon'
 import Blocks from '../../portableText/Blocks'
-import type { ImageWithAlt } from '../../types'
 import { Image } from '../Image/Image'
 
 export type TextWithIconProps = {
   title?: string
   content?: PortableTextBlock[]
   iconData?: IconData
-  image?: ImageWithAlt
+  image?: Image
   /** Icondata or imageUrl styling */
   iconClassName?: string
 } & HTMLAttributes<HTMLDivElement>

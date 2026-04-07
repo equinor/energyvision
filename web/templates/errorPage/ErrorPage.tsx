@@ -18,7 +18,6 @@ export default function ErrorPage({
 }: ErrorPageProps) {
   const intl = useTranslations()
   const { errorImage } = usePage()
-  console.log('Error page variant', variant)
 
   return (
     <div className='grid min-h-[70vh] grid-cols-[44%_56%]'>

@@ -1,35 +1,48 @@
 'use client'
+import type { PortableTextBlock } from 'next-sanity'
 import type { HTMLAttributes, ReactNode } from 'react'
 import { twMerge } from 'tailwind-merge'
-import type { ImageRatioKeys } from '@/core/Image/Image'
+import type { Figure, ImageRatioKeys } from '@/core/Image/Image'
 import { Picture } from '@/core/Picture/Picture'
+import type { TypographyVariants } from '@/core/Typography'
 import Blocks from '@/portableText/Blocks'
 import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
 import type { DesignOptions } from '@/types'
-import MagazineTagBar from '../MagazineTags/MagazineTagBar'
-import type { HeroData } from './HeroBlock'
+import MagazineTagBar, {
+  type MagazineTag,
+} from '../MagazineTags/MagazineTagBar'
 
 export type FullWidthImageHeroVariant = 'default' | 'tall' | 'narrow'
+/** For heroData */
+export type heroRatio = 'tall' | 'narrow'
 
-type FullWidthImageHeroProps = {
+export type FullWidthImageHeroProps = {
+  figure?: Figure
+  title?: PortableTextBlock[]
+  /* For new or magazine published information */
+  subTitle?: ReactNode
+  displayTextVariant?: 'none' | 'base' | 'lg' | 'xl'
+  /** sanity hero prop, but used to set variant below in heroBlock */
+  ratio?: heroRatio
+  /* Magazine promoted tagline */
+  magazineTags?: MagazineTag[]
   variant?: FullWidthImageHeroVariant
   breadcrumbsComponent?: ReactNode
   nextSectionDesignOptions?: DesignOptions
-} & HeroData &
-  HTMLAttributes<HTMLElement>
+} & HTMLAttributes<HTMLElement>
 
 //Magazine hides caption?
 export const FullWidthImageHero = ({
   variant = 'default',
   figure,
   title,
+  displayTextVariant = 'none',
   magazineTags,
   subTitle,
   nextSectionDesignOptions,
   breadcrumbsComponent,
   className = '',
 }: FullWidthImageHeroProps) => {
-  console.log('FullWidthImageHero classname', className)
   const { bg: nextCompBg, dark: nextCompDark } = getBgAndDarkFromBackground(
     nextSectionDesignOptions,
   )
@@ -46,10 +59,14 @@ export const FullWidthImageHero = ({
     default: ``,
   }
 
+  const typographyVariant = {
+    base: 'h2_base',
+    lg: 'h2_lg',
+    xl: 'h2_xl',
+  }
+
   return (
-    <div
-      className={`overflow-hidden ${nextCompBg} ${nextCompDark ? nextCompDark : ''}`}
-    >
+    <div className={`${nextCompBg} ${nextCompDark ? nextCompDark : ''}`}>
       {figure?.image && (
         <Picture
           image={figure.image}
@@ -69,11 +86,15 @@ export const FullWidthImageHero = ({
         value={title}
         id='mainTitle'
         as='h1'
-        group='heading'
-        variant='h1'
-        blockClassName='pb-0'
-        className={twMerge(
-          `mt-8 px-layout-sm lg:mt-10 lg:px-layout-lg`,
+        group={displayTextVariant !== 'none' ? 'display' : `heading`}
+        variant={
+          displayTextVariant !== 'none'
+            ? (typographyVariant[displayTextVariant] as TypographyVariants)
+            : `h1`
+        }
+        /*         blockClassName='pb-0' */
+        blockClassName={twMerge(
+          `w-full mt-8 px-layout-sm lg:mt-10 lg:px-layout-lg`,
           className,
         )}
       />

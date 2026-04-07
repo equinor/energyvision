@@ -1,11 +1,7 @@
 import type { PortableTextBlock } from '@portabletext/types'
+import type { Figure, Image } from '@/core/Image/Image'
 import type { HeroData, HeroTypes } from '@/sections/Hero/HeroBlock'
-import type {
-  DesignOptions,
-  ImageWithAlt,
-  ImageWithCaptionData,
-  LinkData,
-} from './index'
+import type { DesignOptions, LinkData } from './index'
 
 export type CardTypes = 'news' | 'topics' | 'people' | 'events'
 
@@ -15,8 +11,8 @@ export type CardData = {
   slug: string
   title: string | PortableTextBlock[]
   publishDateTime?: string
-  heroImage: ImageWithCaptionData
-  openGraphImage?: ImageWithAlt
+  heroImage: Figure
+  openGraphImage?: Image
   ingress?: PortableTextBlock[]
   heroType?: HeroTypes
 }
@@ -33,7 +29,7 @@ export type MagazineCardData = {
 export type PeopleCardData = {
   type?: 'people'
   id: string
-  image?: ImageWithAlt
+  image?: Image
   name: string
   title?: string
   department?: string

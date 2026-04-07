@@ -1,6 +1,6 @@
+import type { ImageBackground } from '@/core/Backgrounds/ImageBackgroundContainer'
 import type { ObjectPositions } from '@/core/Image/Image'
 import type { ColorKeyTokens } from '../styles/colorKeyToUtilityMap'
-import type { ImageBackground } from './imageTypes'
 
 export type BackgroundColours =
   | 'White'

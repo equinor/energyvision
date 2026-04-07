@@ -1,6 +1,5 @@
 'use client'
 import type { PortableTextBlock } from '@portabletext/types'
-import type { SanityImageObject } from '@sanity/image-url'
 import { useTranslations } from 'next-intl'
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { forwardRef, type HTMLAttributes, useId, useState } from 'react'
@@ -8,13 +7,22 @@ import { twMerge } from 'tailwind-merge'
 import type { DisplayModes } from '@/core/Carousel/Carousel'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import Blocks from '../../portableText/Blocks'
-import type { ImageWithAlt, LinkData } from '../../types'
+import type { LinkData } from '../../types'
 import { Image } from '../Image/Image'
 import ResourceLink from '../Link/ResourceLink'
 import { Typography } from '../Typography'
 
+export type ImageWithLinkOrOverlay = {
+  id: string
+  type: 'imageWithLinkOrOverlay'
+  image: Image
+  action?: LinkData
+  captionTitle?: PortableTextBlock[]
+  captionText?: PortableTextBlock[]
+}
+
 export type ImageWithOverlayProps = {
-  image?: SanityImageObject
+  image?: Image
   className?: string
   teaserTitle?: string
   title?: PortableTextBlock[] | string
@@ -72,7 +80,7 @@ export const ImageWithOverlay = forwardRef<
     >
       <Image
         grid='sm'
-        image={image as ImageWithAlt}
+        image={image}
         fill
         className='absolute'
         imageClassName={`aspect-4/3 rounded-md md:aspect-video`}
@@ -113,7 +121,11 @@ export const ImageWithOverlay = forwardRef<
           >
             <div className={`pb-1 lg:pb-6`}>
               {title && (
-                <Typography as='h2' variant='h4' className='text-md lg:text-lg text-white-100'>
+                <Typography
+                  as='h2'
+                  variant='h4'
+                  className='text-md text-white-100 lg:text-lg'
+                >
                   {plainText}
                 </Typography>
               )}

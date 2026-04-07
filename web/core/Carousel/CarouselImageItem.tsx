@@ -1,7 +1,6 @@
 'use client'
 import { mergeRefs } from '@equinor/eds-utils'
 import type { PortableTextBlock } from '@portabletext/types'
-import type { SanityImageObject } from '@sanity/image-url'
 import {
   forwardRef,
   type HTMLAttributes,
@@ -10,27 +9,25 @@ import {
   useRef,
 } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { ImageWithOverlay } from '@/core/ImageWithOverlay/ImageWithOverlay'
+import {
+  type ImageWithLinkOrOverlay,
+  ImageWithOverlay,
+} from '@/core/ImageWithOverlay/ImageWithOverlay'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
-import type {
-  ImageWithAlt,
-  ImageWithCaptionData,
-  ImageWithLinkOrOverlay,
-  LinkData,
-} from '@/types/index'
+import type { LinkData } from '@/types/index'
 import { ArrowRight } from '../../icons'
 import Blocks from '../../portableText/Blocks'
 import { getLocaleFromName } from '../../sanity/helpers/localization'
-import { Image } from '../Image/Image'
+import { type Figure, Image } from '../Image/Image'
 import BaseLink from '../Link/BaseLink'
 import ResourceLink from '../Link/ResourceLink'
 import type { DisplayModes } from './Carousel'
 
-export type ImageCarouselItem = ImageWithCaptionData | ImageWithLinkOrOverlay
+export type ImageCarouselItem = Figure | ImageWithLinkOrOverlay
 
 type CarouselImageItemProps = {
   type: string
-  image?: ImageWithAlt | ImageWithCaptionData | SanityImageObject
+  image?: Image
   displayMode?: DisplayModes
   className?: string
   caption?: PortableTextBlock[] | string

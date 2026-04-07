@@ -13,10 +13,19 @@ import {
   useState,
 } from 'react'
 import { twMerge } from 'tailwind-merge'
-import type { ImageRatioKeys } from '@/core/Image/Image'
+import type { Image, ImageRatioKeys } from '@/core/Image/Image'
 import { resolveImage } from '@/sanity/lib/utils'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
-import type { ImageBackground } from '../../types/index'
+import type { ContentAlignmentTypes } from '../../types/index'
+
+export type ImageBackground = {
+  image: Image
+  useAnimation?: boolean
+  useLight?: boolean
+  useNoGradient?: boolean
+  useGlass?: boolean
+  contentAlignment?: ContentAlignmentTypes
+}
 
 type ImageBackgroundContainerProps = {
   scrimClassName?: string
@@ -34,13 +43,15 @@ export const ImageBackgroundContainer = ({
   image,
   useAnimation = false,
   useLight = false,
+  useNoGradient = false,
+  useGlass = false,
   contentAlignment = 'center',
   children,
   className = '',
   scrimClassName = '',
   overrideGradient = false,
   dontSplit = false,
-  as = 'section',
+  as,
 }: ImageBackgroundContainerProps) => {
   const isLargerDisplays = useMediaQuery(`(min-width: 800px)`)
 
@@ -49,22 +60,22 @@ export const ImageBackgroundContainer = ({
     grid: 'full',
     isLargerDisplays,
   })
-  const ReturnElement = as
+  const Component = as ?? 'section'
 
-  const fadedFilter = `
+  /*   const fadedFilter = `
     before:content-['']
     before:absolute
     before:inset-0
     ${useLight ? `before:bg-white-100 before:opacity-[35%]` : `before:bg-black-100 before:opacity-[25%]`}
-    `
+    ` */
 
   const backgroundClassNames = `
       [container:inline-size]
       relative
-      ${useLight ? '' : 'dark'}
+      ${useLight || useNoGradient ? '' : 'dark'}
       w-full
       h-full
-      ${(useAnimation && isLargerDisplays) ? `bg-fixed ${fadedFilter}` : 'bg-local'}
+      ${useAnimation && isLargerDisplays ? `bg-fixed` : 'bg-local'}
       bg-center
       bg-no-repeat
       bg-cover
@@ -86,7 +97,7 @@ export const ImageBackgroundContainer = ({
   }
 
   let animatedScrimGradient = ''
-  if (!overrideGradient) {
+  if (!overrideGradient && !useNoGradient) {
     animatedScrimGradient = useLight
       ? `${lightGradientForContentAlignment[contentAlignment]}`
       : `black-center-gradient ${darkGradientForContentAlignment[contentAlignment]}`
@@ -107,12 +118,30 @@ export const ImageBackgroundContainer = ({
     setOpacity(latest)
   })
 
+  const contentElement = useGlass ? (
+    <div className={twMerge('', className)}>
+      <div className='relative flex h-fit w-fit justify-end rounded-card'>
+        <div className='backdrop-glass z-0 h-full w-full' />
+        <div
+          className={
+            'z-1 rounded-[inherit] px-6 py-4 *:relative *:z-1 lg:px-8 lg:py-6'
+          }
+        >
+          {children}
+        </div>
+      </div>
+    </div>
+  ) : (
+    <div className={className}>{children}</div>
+  )
+
   const props = {
     ref,
   }
+
   if (useAnimation && isLargerDisplays) {
     return (
-      <ReturnElement
+      <Component
         className={backgroundClassNames}
         style={
           {
@@ -131,26 +160,26 @@ export const ImageBackgroundContainer = ({
             scrimClassName,
           )}
         >
-          <div className={className}>{children}</div>
+          {contentElement}
         </motion.div>
-      </ReturnElement>
+      </Component>
     )
   }
   if (!isLargerDisplays && !dontSplit) {
     return (
-      <ReturnElement {...props}>
+      <Component {...props}>
         <div
           className={twMerge(`aspect-4/3`, backgroundClassNames)}
           style={{
             backgroundImage: `url(${url})`,
           }}
         />
-        <div className={className}>{children}</div>
-      </ReturnElement>
+        {contentElement}
+      </Component>
     )
   }
   return (
-    <ReturnElement
+    <Component
       className={`${backgroundClassNames} `}
       style={{
         backgroundImage: `url(${url})`,
@@ -164,8 +193,8 @@ export const ImageBackgroundContainer = ({
           scrimClassName,
         )}
       >
-        <div className={className}>{children}</div>
+        {contentElement}
       </div>
-    </ReturnElement>
+    </Component>
   )
 }

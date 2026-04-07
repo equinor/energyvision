@@ -1,16 +1,17 @@
 'use client'
 import type { PortableTextBlock } from 'next-sanity'
+import type { Image } from '@/core/Image/Image'
 import { VideoPlayer } from '@/core/VideoJsPlayer/VideoPlayer'
 import { twMerge } from '@/lib/twMerge/twMerge'
 import Blocks from '@/portableText/Blocks'
 import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
-import type { DesignOptions, ImageWithAlt } from '@/types'
+import type { DesignOptions } from '@/types'
 
 export type LoopingVideoRatio = '1:2' | 'narrow' // Typo in Sanity value, should be 2:1
 
 export type LoopingVideoData = {
   title: string
-  poster: ImageWithAlt
+  poster: Image
   src: string
   ratio: LoopingVideoRatio
   containVideo?: boolean

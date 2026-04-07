@@ -2,7 +2,6 @@ import { forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 import BaseLink, { type BaseLinkProps } from '@/core/Link/BaseLink'
 import { Image, type ImageRatioKeys } from '../../../core/Image/Image'
-import type { ImageWithAlt } from '../../../types/index'
 
 export type Variants = 'primary' | 'secondary' | 'compact' | 'single'
 export type CardProps = {
@@ -10,8 +9,7 @@ export type CardProps = {
    * @default primary
    */
   variant?: Variants
-  /** image */
-  image?: ImageWithAlt
+  image?: Image
   /** Override background image styling */
   imageClassName?: string
   imageWrapperClassName?: string

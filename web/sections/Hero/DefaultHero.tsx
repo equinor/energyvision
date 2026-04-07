@@ -1,16 +1,16 @@
 'use client'
 import type { PortableTextBlock } from '@portabletext/types'
 import type { HTMLAttributes, ReactNode } from 'react'
-import type { ImageRatioKeys } from '@/core/Image/Image'
+import type { Figure, ImageRatioKeys } from '@/core/Image/Image'
 import { Picture } from '@/core/Picture/Picture'
 import { Typography } from '@/core/Typography'
 import { twMerge } from '@/lib/twMerge/twMerge'
 import Blocks from '@/portableText/Blocks'
-import type { ImageWithCaptionData } from '../../types/index'
-import MagazineTagBar from '../MagazineTags/MagazineTagBar'
-import type { HeroData } from './HeroBlock'
+import MagazineTagBar, {
+  type MagazineTag,
+} from '../MagazineTags/MagazineTagBar'
 
-type DefaultHeroProps = {
+export type DefaultHeroProps = {
   title?: PortableTextBlock[] | string
   /**Override title wrapper classnames */
   titleClassName?: string
@@ -24,14 +24,15 @@ type DefaultHeroProps = {
   imageClassName?: string
   /* For news published information */
   subTitle?: ReactNode
-  figure?: ImageWithCaptionData
+  figure?: Figure
   isBigTitle?: boolean
   /**bg-<colorkey> */
   background?: string
   bigTitle?: PortableTextBlock[]
   ratio?: ImageRatioKeys
-} & Omit<HeroData, 'background'> &
-  HTMLAttributes<HTMLElement>
+  /* Magazine promoted tagline */
+  magazineTags?: MagazineTag[]
+} & HTMLAttributes<HTMLElement>
 
 export const DefaultHero = ({
   title,
@@ -71,7 +72,7 @@ export const DefaultHero = ({
               <div>
                 <Blocks
                   id='mainTitle'
-                  value={title}
+                  value={title as PortableTextBlock[]}
                   group='heading'
                   variant='h1'
                 />

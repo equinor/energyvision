@@ -33,7 +33,7 @@ const title = {
   components: {
     input: CompactBlockEditor,
   },
-  of: [configureBlockContent({ variant: 'richTitleH1' })],
+  of: [configureBlockContent({ variant: 'titleH1' })],
   validation: (Rule: Rule) =>
     Rule.custom((value: string, ctx: ValidationContext) => {
       return value ? true : 'Required'
@@ -86,7 +86,6 @@ const heroRatio = {
   options: {
     list: [
       { title: 'Tall', value: 'tall' },
-      { title: '2:1(deprecated)', value: '0.5' },
       { title: 'Narrow', value: 'narrow' },
     ],
   },
@@ -119,7 +118,7 @@ const heroIngress = {
 
 const backgroundGradient = {
   title: 'Background Gradient',
-  name: 'backgroundGradient',
+  name: 'heroBackgroundGradient',
   type: 'string',
   fieldset: 'hero',
   description:
@@ -264,18 +263,24 @@ const useCenterBlur = {
   title: 'Blur center',
   name: 'useBlurCenter',
   type: 'boolean',
-  fieldset: 'header',
+  fieldset: 'hero',
   description: 'Will blur center background behind text',
   hidden: ({ parent }: DocumentType) => {
     return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE
   },
 }
 
+const herosWithDisplayTextTitle = [
+  HeroTypes.BACKGROUND_IMAGE,
+  HeroTypes.FIFTY_FIFTY,
+  HeroTypes.FULL_WIDTH_IMAGE,
+]
+
 const applyDisplayText = {
   title: 'Apply display text variant',
   name: 'displayTextVariant',
   type: 'string',
-  fieldset: 'header',
+  fieldset: 'hero',
   description: 'Sets a display variant on title',
   initialValue: 'none', // default
   options: {
@@ -287,7 +292,8 @@ const applyDisplayText = {
     ],
   },
   hidden: ({ parent }: DocumentType) => {
-    return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE
+    //@ts-ignore: typing
+    return !herosWithDisplayTextTitle.includes(parent?.heroType)
   },
 }
 
@@ -304,7 +310,7 @@ const layoutGrid = {
     ],
   },
   initialValue: 'lg',
-  fieldset: 'header',
+  fieldset: 'hero',
   hidden: ({ parent }: DocumentType) => {
     return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE
   },
@@ -313,7 +319,7 @@ const alignContentY = {
   title: 'Vertical content alignment',
   name: 'alignContentY',
   type: 'string',
-  fieldset: 'header',
+  fieldset: 'hero',
   description: 'Align content vertical',
   initialValue: 'center', // default
   options: {
@@ -332,7 +338,7 @@ const useBrandTheme = {
   title: 'Apply red brand text color',
   name: 'heroUseBrandTheme',
   type: 'boolean',
-  fieldset: 'header',
+  fieldset: 'hero',
   description:
     'Ensure enough contrast between text and image.If no hero image set,background will be white',
   hidden: ({ parent }: DocumentType) => {
@@ -359,20 +365,20 @@ const containVideo = {
 export default [
   title,
   heroType,
+  applyDisplayText,
+  useBrandTheme,
   heroRatio,
   heroIngress,
   heroLink,
   heroLinkV2,
   background,
   heroImage,
+  heroMobileImage,
+  backgroundGradient,
+  useCenterBlur,
+  layoutGrid,
+  alignContentY,
   heroLoopingVideo,
   heroLoopingVideoRatio,
   containVideo,
-  backgroundGradient,
-  useCenterBlur,
-  applyDisplayText,
-  useBrandTheme,
-  layoutGrid,
-  alignContentY,
-  heroMobileImage,
 ]

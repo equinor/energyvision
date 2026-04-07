@@ -1,5 +1,6 @@
 import type { PortableTextBlock } from '@portabletext/types'
 import type { SanityImageObject } from '@sanity/image-url'
+import type { Image } from '@/core/Image/Image'
 import type { EventDateType } from '@/sections/cards/EventCard/EventCard'
 import type { FullWidthVideoProps } from '@/sections/FullWidthVideo/FullWidthVideo'
 import type { StockValuesProps } from '@/sections/StockValues/StockValues'
@@ -12,7 +13,6 @@ import type {
   CardData,
   DesignOptions,
   GridData,
-  ImageWithAlt,
   LinkData,
   LinkType,
 } from './index'
@@ -26,7 +26,7 @@ export type IntlData = {
 export type SeoData = {
   documentTitle?: string
   metaDescription?: string
-  openGraphImage?: ImageWithAlt
+  openGraphImage?: Image
 }
 
 export type FeaturedContentData = {
@@ -70,7 +70,7 @@ export type TextBlockData = {
   type: string
   id: string
   title: PortableTextBlock[]
-  image?: ImageWithAlt
+  image?: Image
   overline?: string
   text: PortableTextBlock[]
   isBigText?: boolean
@@ -132,7 +132,7 @@ export type TableData = {
 
 export type TextWithIconItem = {
   id: string
-  icon: ImageWithAlt
+  icon: Image
   text: PortableTextBlock[]
   title: string
 }
@@ -152,7 +152,7 @@ export type QuoteData = {
   author: string
   authorTitle?: string
   quote: string
-  image?: ImageWithAlt
+  image?: Image
   designOptions: DesignOptions & { imagePosition?: 'left' | 'right' }
 }
 
@@ -167,7 +167,7 @@ export type AccordionListData = {
 export type AccordionData = {
   type: string
   id: string
-  image?: ImageWithAlt
+  image?: Image
   title: PortableTextBlock[]
   ingress: PortableTextBlock[]
   accordion: AccordionListData[]
@@ -178,7 +178,7 @@ export type AccordionData = {
 export type PromoTileData = {
   id: string
   title: PortableTextBlock[]
-  image: ImageWithAlt
+  image: Image
   action: LinkData
   designOptions: DesignOptions
   linkLabelAsTitle?: boolean
@@ -381,14 +381,14 @@ export type PodcastTeaserData = {
   linkTitle?: string
   podcastName?: PortableTextBlock[]
   podcastEpisode?: PortableTextBlock[]
-  image: ImageWithAlt
+  image: Image
   designOptions: DesignOptions
 }
 
 export type ImageForTextData = {
   type: 'imageForText'
   id: string
-  image: ImageWithAlt
+  image: Image
   content?: PortableTextBlock[]
   aspectRatio?: '16:9' | 'fullWidth'
 }

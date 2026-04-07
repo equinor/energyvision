@@ -35,7 +35,7 @@ export default {
       components: {
         input: CompactBlockEditor,
       },
-      of: [configureBlockContent({ variant: 'richTitleH1' })],
+      of: [configureBlockContent({ variant: 'titleWithDisplay' })],
       validation: (Rule: Rule) => Rule.required(),
     },
     {

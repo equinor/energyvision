@@ -6,7 +6,6 @@ import { twMerge } from 'tailwind-merge'
 import { Typography } from '@/core/Typography'
 import Blocks from '../../portableText/Blocks'
 import type { ColorKeyTokens } from '../../styles/colorKeyToUtilityMap'
-import type { ImageWithAlt } from '../../types'
 import { Image } from '../Image/Image'
 import BaseLink from '../Link/BaseLink'
 import ResourceLink from '../Link/ResourceLink'
@@ -18,7 +17,7 @@ export type BannerProps = {
   title?: PortableTextBlock[] | string
   ingress?: PortableTextBlock[]
   content?: PortableTextBlock[]
-  image?: ImageWithAlt
+  image?: Image
   ctaLabel?: string
   ctaLink?: string
   className?: string
