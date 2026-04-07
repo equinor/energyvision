@@ -4,3 +4,4 @@ packages:
   - 'search'
   - 'shared'
   - 'packages/*'
+minimumReleaseAge: 2880
