@@ -4,6 +4,6 @@ packages:
   - 'search'
   - 'shared'
   - 'packages/*'
-minimumReleaseAge: 2880
+minimumReleaseAge: 10080
 trustPolicy: "no-downgrade"
 blockExoticSubdeps: true 
