@@ -26,7 +26,10 @@ import type { DisplayModes } from './Carousel'
 export type ImageCarouselItem = Figure | ImageWithLinkOrOverlay
 
 type CarouselImageItemProps = {
-  type: string
+  type:
+    | 'imageWithAltAndCaption'
+    | 'imageWithRichTextBelow'
+    | 'imageWithLinkAndOrOverlay'
   image?: Image
   displayMode?: DisplayModes
   className?: string

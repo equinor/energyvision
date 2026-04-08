@@ -6,7 +6,6 @@ import {
   type ElementType,
   forwardRef,
   type HTMLAttributes,
-  type ReactNode,
   useCallback,
   useEffect,
   useId,
@@ -406,6 +405,8 @@ const [scrollPosition, setScrollPosition] = useState<'start' | 'middle' | 'end'>
                 `image_carousel_${sliderRef.current}_item_${i}`
               }
               {...(item as ImageCarouselItem)}
+              //@ts-ignore: todo
+              type={item.type ?? 'imageWithAltAndCaption'}
               displayMode={displayMode}
               aria-label={getTranslatedItemCountLabel(i + 1)}
               active={i === currentIndex}
