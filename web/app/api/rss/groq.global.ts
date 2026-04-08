@@ -1,9 +1,9 @@
 import type { PortableTextBlock } from '@portabletext/types'
+import type { Figure } from '@/core/Image/Image'
 import markDefs from '@/sanity/queries/common/blockEditorMarks'
 import { functions } from '@/sanity/queries/common/functions'
 import { sameLang } from '@/sanity/queries/common/langAndDrafts'
 import { publishDateTimeQuery } from '@/sanity/queries/common/publishDateTime'
-import type { ImageWithCaptionData } from '../../../types'
 
 export type LatestNewsType = {
   _id: string
@@ -11,7 +11,7 @@ export type LatestNewsType = {
   slug: string
   title: string | PortableTextBlock[]
   publishDateTime: string
-  hero: ImageWithCaptionData
+  hero: Figure
   ingress: PortableTextBlock
   subscriptionType: string
   lang: string
