@@ -391,7 +391,7 @@ export const configureBlockContent = (
 
   const internalLinkConfig = (linkConfig: any) => {
     const linkType: LinkType = linkConfig.name
-    const linkSelectorSchema = linkSelector([linkType])
+    const linkSelectorSchema = linkSelector([linkType], false, false)
     return {
       icon: linkConfig.icon,
       ...linkSelectorSchema,

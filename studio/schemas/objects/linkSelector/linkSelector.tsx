@@ -31,11 +31,15 @@ function LinkPreview(props: PreviewProps) {
 const linkSelector = (
   linkTypes?: LinkType[],
   hidden = false,
-  includeLabels = true,
+  /**
+   *  Will show the label field when true
+   */
+  includeLabel = true,
+  /**
+   * Label is considered optional
+   */
+  labelIsOptional = false,
 ) => {
-  /*   console.log('link selector method linkTypes', linkTypes)
-  console.log('link selector method hidden', hidden)
-  console.log('link selector method includeLabel', includeLabels) */
   return {
     name: 'linkSelector',
     title: 'Link',
@@ -65,17 +69,22 @@ const linkSelector = (
         name: 'label',
         title: 'Label',
         description:
-          'Optional, if you want to overwrite the title from the referenced page',
+          includeLabel && !labelIsOptional
+            ? 'Visible link for the label'
+            : 'Optional, if you want to overwrite the title from the referenced page',
         type: 'string',
         validation: (Rule: Rule) =>
           Rule.custom((value: string, context: any) => {
             const { parent } = context
-            if (parent?.link?.[0]?._type === 'link') {
+            if (
+              (parent?.link?.[0]?._type === 'link' && !includeLabel) ||
+              (includeLabel && !labelIsOptional)
+            ) {
               return value ? true : 'You must add a label'
             }
             return true
           }),
-        hidden: !includeLabels,
+        hidden: !includeLabel,
       },
       anchorReference,
     ].filter(e => e),
