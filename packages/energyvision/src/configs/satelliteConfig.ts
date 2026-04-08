@@ -20,7 +20,7 @@ const languages = [
     title: 'English (UK)',
     iso: 'en-GB',
     name: 'en_GB',
-    locale: 'en-GB',
+    locale: 'en',
   },
   {
     id: 'norwegian',
@@ -106,7 +106,7 @@ const datasets = {
   sponsorship: ['norwegian', 'english'],
   // Test datasets
   'global-development': ['english', 'norwegian', 'japanese'],
-  'global-test': ['english', 'norwegian', 'japanese'],
+  // 'global-test': ['english', 'norwegian', 'japanese'],
 }
 export type DatasetsKeys = keyof typeof datasets
 
