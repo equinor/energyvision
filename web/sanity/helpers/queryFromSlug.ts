@@ -27,7 +27,7 @@ const getQuery = async (
   if (!firstPiece || typeof firstPiece === 'undefined' || firstPiece === '') {
     return homePageQuery
   }
-  if (Flags.HAS_NEWS && newsSlug[lang] === firstPiece) {
+  if (Flags.HAS_NEWSROOM && newsSlug[lang] === firstPiece) {
     if (
       !secondPiece ||
       typeof secondPiece === 'undefined' ||
