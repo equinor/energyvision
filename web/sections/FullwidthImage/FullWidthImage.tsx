@@ -1,12 +1,12 @@
 'use client'
 import { FigureCaption } from '@/core/FigureCaption/FigureCaption'
-import { Image, type ImageRatioKeys } from '../../core/Image/Image'
-import type { DesignOptions, ImageWithCaptionData } from '../../types/index'
+import { type Figure, Image, type ImageRatioKeys } from '../../core/Image/Image'
+import type { DesignOptions } from '../../types/index'
 
 export type FullWidthImageData = {
   type: string
   id: string
-  image: ImageWithCaptionData
+  image: Figure
   designOptions: DesignOptions & {
     aspectRatio: ImageRatioKeys
   }

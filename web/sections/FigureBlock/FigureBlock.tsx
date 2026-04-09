@@ -1,13 +1,13 @@
 import { twMerge } from 'tailwind-merge'
 import { FigureCaption } from '@/core/FigureCaption/FigureCaption'
 import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
-import { Image, type ImageRatioKeys } from '../../core/Image/Image'
-import type { DesignOptions, ImageWithCaptionData } from '../../types/index'
+import { type Figure, Image, type ImageRatioKeys } from '../../core/Image/Image'
+import type { DesignOptions } from '../../types/index'
 
 export type FigureData = {
   type: string
   id: string
-  figure: ImageWithCaptionData
+  figure: Figure
   alignWithText?: boolean
   useContain?: boolean
   designOptions: DesignOptions & {
@@ -15,13 +15,13 @@ export type FigureData = {
   }
 }
 
-type FigureProps = {
+type FigureBlockProps = {
   data: FigureData
   anchor?: string
   className?: string
 }
 
-const Figure = ({ data, anchor, className = '' }: FigureProps) => {
+const FigureBlock = ({ data, anchor, className = '' }: FigureBlockProps) => {
   const { figure, alignWithText, useContain, designOptions } = data
   const { aspectRatio = '16:9' } = designOptions
 
@@ -61,4 +61,4 @@ const Figure = ({ data, anchor, className = '' }: FigureProps) => {
   )
 }
 
-export default Figure
+export default FigureBlock

@@ -1,7 +1,7 @@
 'use client'
 import { VideoPlayer } from '@/core/VideoJsPlayer/VideoPlayer'
 import type { IFrameData } from '../../types/index'
-import type { FigureData } from '../Figure/Figure'
+import type { FigureData } from '../FigureBlock/FigureBlock'
 import IFrame from '../IFrameBlock/IFrameBlock'
 import type { VideoPlayerBlockProps } from '../VideoPlayerBlock/VideoPlayerBlock'
 import GridFigure from './GridFigure'

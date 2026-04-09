@@ -92,6 +92,7 @@ export const HeroBlock = ({
     useBlurCenter,
     displayTextVariant,
   } = heroData
+
   const { bg: nextCompBg, dark: nextCompDark } = getBgAndDarkFromBackground(
     nextSectionDesignOptions,
   )
@@ -196,7 +197,7 @@ export const HeroBlock = ({
             useCustomBreadcrumbs={breadcrumbs?.useCustomBreadcrumbs}
             defaultBreadcrumbs={breadcrumbs?.defaultBreadcrumbs}
             customBreadcrumbs={breadcrumbs?.customBreadcrumbs}
-            className={`${nextCompDark ? nextCompDark : ''} ${type === HeroTypes.DEFAULT && (heroProps?.figure?.caption || heroProps?.figure?.attribution) ? 'pt-2' : ''}`}
+            className={`${nextCompDark ? nextCompDark : ''} ${type === HeroTypes.DEFAULT && (figure?.caption || figure?.attribution) ? 'pt-2' : ''}`}
           />
         )}
     </section>

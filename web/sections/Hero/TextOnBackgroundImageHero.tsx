@@ -14,6 +14,7 @@ import Blocks from '@/portableText/Blocks'
 import { resolveImage } from '@/sanity/lib/utils'
 
 export type TextOnBackgroundImageHeroProps = {
+  title?: PortableTextBlock[]
   figure?: Figure
   ingress?: PortableTextBlock[]
   isMagazineRoom?: boolean

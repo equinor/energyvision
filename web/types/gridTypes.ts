@@ -3,7 +3,7 @@ import type { ImageBackground } from '@/core/Backgrounds/ImageBackgroundContaine
 import type { Image } from '@/core/Image/Image'
 import type { RowType } from '@/sections/Grid/mapGridContent'
 import type { VideoPlayerBlockProps } from '@/sections/VideoPlayerBlock/VideoPlayerBlock'
-import type { FigureData } from '../sections/Figure/Figure'
+import type { FigureData } from '../sections/FigureBlock/FigureBlock'
 import type { BackgroundColours, IFrameData, LinkData } from './index'
 
 export type GridTeaserData = {

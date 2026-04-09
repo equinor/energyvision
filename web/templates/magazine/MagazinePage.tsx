@@ -1,15 +1,17 @@
 'use client'
 import { calendar } from '@equinor/eds-icons'
+import type { PortableTextBlock } from 'next-sanity'
 import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
 import TransformableIcon from '@/icons/TransformableIcon'
 import {
   HeroBlock,
   type HeroBlockProps,
+  type HeroData,
   HeroTypes,
 } from '@/sections/Hero/HeroBlock'
 import type { MagazineTag } from '@/sections/MagazineTags/MagazineTagBar'
 import Teaser, { type TeaserData } from '@/sections/teasers/Teaser/Teaser'
-import type { PageSchema } from '@/types/index'
+import type { ContentType } from '@/types/index'
 import { PageContent } from '../shared/SharedPageContent'
 
 type MagazinePageProps = {
@@ -18,22 +20,23 @@ type MagazinePageProps = {
   footerComponent?: {
     data?: TeaserData
   }
+  title: PortableTextBlock[]
+  content?: ContentType[]
+  hero: HeroData
+  firstPublishedAt?: string
   hideFooterComponent?: boolean
-} & PageSchema
+}
 
 const MagazinePage = ({
   hideFooterComponent,
   footerComponent,
   hero,
   title,
-  titleStyle = 'normal',
   firstPublishedAt,
   tags,
   magazineTags,
   content,
 }: MagazinePageProps) => {
-  console.log('titleStyle', titleStyle)
-
   const subTitle = (
     <>
       <div className='flex flex-col gap-6 px-layout-sm pb-6 lg:px-layout-lg'>
@@ -62,11 +65,9 @@ const MagazinePage = ({
     </>
   )
 
-  console.log('')
   const heroProps: HeroBlockProps = {
     //@ts-ignore
     title,
-    titleStyle,
     ...hero,
     subTitle: subTitle,
     //@ts-ignore

@@ -31,6 +31,7 @@ const TopicPage = ({
 }: TopicPageProps) => {
   const heroProps: HeroBlockProps = {
     heroData: {
+      //@ts-ignore: todo
       title,
       ...hero,
     },

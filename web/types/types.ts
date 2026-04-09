@@ -1,5 +1,4 @@
 import type { PortableTextBlock } from '@portabletext/types'
-import type { SanityImageObject } from '@sanity/image-url'
 import type { Image } from '@/core/Image/Image'
 import type { EventDateType } from '@/sections/cards/EventCard/EventCard'
 import type { FullWidthVideoProps } from '@/sections/FullWidthVideo/FullWidthVideo'
@@ -7,7 +6,7 @@ import type { StockValuesProps } from '@/sections/StockValues/StockValues'
 import type { TeaserData } from '@/sections/teasers/Teaser/Teaser'
 import type { VideoPlayerBlockProps } from '@/sections/VideoPlayerBlock/VideoPlayerBlock'
 import type { VideoPlayerCarouselData } from '@/sections/VideoPlayerCarousel/VideoPlayerCarousel'
-import type { FigureData } from '../sections/Figure/Figure'
+import type { FigureData } from '../sections/FigureBlock/FigureBlock'
 import type { FullWidthImageData } from '../sections/FullwidthImage/FullWidthImage'
 import type {
   CardData,
@@ -159,7 +158,7 @@ export type QuoteData = {
 export type AccordionListData = {
   id: string
   title: string
-  image?: SanityImageObject
+  image?: Image
   content: PortableTextBlock[]
   links: LinkData[]
 }

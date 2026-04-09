@@ -2,9 +2,9 @@ import type { PortableTextBlock } from '@portabletext/types'
 import type { SanityImageObject } from '@sanity/image-url'
 import type { SearchResponse } from 'instantsearch.js'
 import type { InstantSearchServerState } from 'react-instantsearch'
+import type { Figure } from '@/core/Image/Image'
 import type {
   FooterColumns,
-  ImageWithCaptionData,
   IntlData,
   LinkData,
   MenuData,
@@ -29,7 +29,7 @@ export type NewsRoomNewsItem = {
   title: string
   publishDateTime?: string
   firstPublishedAt?: string
-  heroImage: ImageWithCaptionData
+  heroImage: Figure
   thumbnailUrl?: string
   ingress?: string
 }

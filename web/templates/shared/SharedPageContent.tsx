@@ -17,7 +17,9 @@ import BarChartBlock, {
 import { CampaignBanner } from '@/sections/CampaignBanner'
 import CookieDeclaration from '@/sections/CookieDeclaration/CookieDeclaration'
 import CardsList from '@/sections/cards/CardsList/CardsList'
-import Figure, { type FigureData } from '@/sections/Figure/Figure'
+import FigureBlock, {
+  type FigureData,
+} from '@/sections/FigureBlock/FigureBlock'
 import FullWidthVideo, {
   type FullWidthVideoProps,
 } from '@/sections/FullWidthVideo/FullWidthVideo'
@@ -346,7 +348,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
         )
       case 'figure':
         return (
-          <Figure
+          <FigureBlock
             key={c.id}
             {...commonProps}
             data={c as FigureData}

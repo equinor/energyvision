@@ -34,6 +34,7 @@ const HomePage = ({
 }: HomePageProps) => {
   const heroProps: HeroBlockProps = {
     heroData: {
+      //@ts-ignore
       title,
       ...hero,
     },
