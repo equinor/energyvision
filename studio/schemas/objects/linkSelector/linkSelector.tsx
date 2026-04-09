@@ -77,11 +77,9 @@ const linkSelector = (
           Rule.custom((value: string, context: any) => {
             const { parent } = context
             if (
-              // Do not warn for external link with hidden label) or (internal link with optional url )
-              (parent?.link?.[0]?._type === 'link' && !includeLabel) ||
-              (includeLabel &&
-                labelIsOptional &&
-                parent?.link?.[0]?._type !== 'link')
+              // Do not warn for hidden label or internal link with optional label
+              !includeLabel ||
+              (labelIsOptional && parent?.link?.[0]?._type !== 'link')
             ) {
               return true
             }
