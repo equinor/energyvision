@@ -71,18 +71,21 @@ const linkSelector = (
         description:
           includeLabel && !labelIsOptional
             ? 'Visible link for the label'
-            : 'Optional, if you want to overwrite the title from the referenced page',
+            : 'Optional (not for external urls), if you want to overwrite the title from the referenced page',
         type: 'string',
         validation: (Rule: Rule) =>
           Rule.custom((value: string, context: any) => {
             const { parent } = context
             if (
+              // Do not warn for external link with hidden label) or (internal link with optional url )
               (parent?.link?.[0]?._type === 'link' && !includeLabel) ||
-              (includeLabel && !labelIsOptional)
+              (includeLabel &&
+                labelIsOptional &&
+                parent?.link?.[0]?._type !== 'link')
             ) {
-              return value ? true : 'You must add a label'
+              return true
             }
-            return true
+            return value ? true : 'You must add a label'
           }),
         hidden: !includeLabel,
       },
