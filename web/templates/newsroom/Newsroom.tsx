@@ -187,7 +187,7 @@ const NewsRoomTemplate = forwardRef<HTMLDivElement, NewsRoomTemplateProps>(
               facetFilters={['type:news', 'topicTags:-Crude Oil Assays']}
             />
 
-            <div className='flex flex-col gap-8 lg:gap-12'>
+            <div className='flex flex-col gap-8 pt-topbar lg:gap-12'>
               <div className='dark bg-slate-blue-95 py-24'>
                 <div className='mx-auto flex grid-rows-2 flex-col gap-4 px-layout-sm'>
                   {title && <Blocks value={title} as='h1' variant='h2' />}
