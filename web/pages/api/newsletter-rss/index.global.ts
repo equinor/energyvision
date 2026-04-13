@@ -1,13 +1,12 @@
-import { sanityClient } from '../../../lib/sanity.server'
-import { LatestNewsType, latestMagazine, latestNews } from './groq.global'
-
-import { urlFor } from '../../../common/helpers/urlFor'
-import type { NextApiRequest, NextApiResponse } from 'next'
+import { tz } from '@date-fns/tz'
+import { type PortableTextBlock, toPlainText } from '@portabletext/react'
 import { format } from 'date-fns'
-import { TZDate } from '@date-fns/tz'
 import { enGB, nb } from 'date-fns/locale'
+import type { NextApiRequest, NextApiResponse } from 'next'
+import { urlFor } from '../../../common/helpers/urlFor'
+import { sanityClient } from '../../../lib/sanity.server'
 import { mapCategoryToId } from '../subscriptionNew'
-import { PortableTextBlock, toPlainText } from '@portabletext/react'
+import { type LatestNewsType, latestMagazine, latestNews } from './groq.global'
 
 const generateRssFeed = async (locale: 'en_GB' | 'nb_NO') => {
   try {
@@ -45,23 +44,21 @@ const generateRssFeed = async (locale: 'en_GB' | 'nb_NO') => {
       const bannerImageUrl = hero?.image?.asset ? urlFor(hero.image).size(560, 280).auto('format').toString() : ''
       const encodedUrl = bannerImageUrl.replace(/&/g, '&amp;')
 
-      const publishDate = new Date(article.publishDateTime).toUTCString()
-      const dateFormat = article.lang === 'nb_NO' ? 'd. MMMM yyyy hh:mm' : 'd MMMM yyyy hh:mm'
+      const publishDate = new Date(article.publishDateTime)
+      const dateFormat = article.lang === 'nb_NO' ? 'd. MMMM yyyy HH:mm' : 'd MMMM yyyy HH:mm'
 
-      const getTimezoneAbbreviation = (date: Date, timeZone: string) => {
-        const parts = new Intl.DateTimeFormat('en-GB', {
-          timeZone,
+      const tzName =
+        new Intl.DateTimeFormat('en-GB', {
+          timeZone: 'Europe/Oslo',
           timeZoneName: 'short',
-        }).formatToParts(date)
+        })
+          .formatToParts(publishDate)
+          .find((p) => p.type === 'timeZoneName')?.value ?? ''
 
-        const tzPart = parts.find((p) => p.type === 'timeZoneName')
-
-        // TS-safe: fallback in case it's undefined
-        return tzPart?.value ?? ''
-      }
-
-      // Format the main pubDate
-      //const formattedPubDate =  //format(new TZDate(publishDate, 'Europe/Oslo'), 'EEE, dd MMM yyyy HH:mm:ss xxxx')
+      const formattedPubDate = `${format(publishDate, dateFormat, {
+        in: tz('Europe/Oslo'),
+        locale: article.lang === 'nb_NO' ? nb : enGB,
+      })} (${tzName})`
 
       const categoryTag = article.type === 'magazine' ? 'magazineStories' : article.subscriptionType
       const title = article.type === 'magazine' ? toPlainText(article.title as PortableTextBlock[]) : article.title
@@ -69,19 +66,20 @@ const generateRssFeed = async (locale: 'en_GB' | 'nb_NO') => {
       rss += `
         <item>
           <title>${title}</title>
-          <link><![CDATA[https://www.equinor.com${langPath}${article.slug}?utm_source=newssubscription&utm_medium=email]]></link>
-          <guid><![CDATA[https://www.equinor.com${langPath}${article.slug}?utm_source=newssubscription&utm_medium=email]]></guid>
+          <link><![CDATA[https://www.equinor.com${langPath}${
+        article.slug
+      }?utm_source=newssubscription&utm_medium=email]]></link>
+          <guid><![CDATA[https://www.equinor.com${langPath}${
+        article.slug
+      }?utm_source=newssubscription&utm_medium=email]]></guid>
           <pubDate>${publishDate}</pubDate>
           <description><![CDATA[${toPlainText(article.ingress)}]]></description>
-          ${categoryTag ? `<category>${mapCategoryToId(categoryTag, locale === 'nb_NO' ? 'no' : 'en')}</category>` : '<category />'}
-          <nl:extra1>${
-            format(new TZDate(publishDate, 'Europe/Oslo'), dateFormat, {
-              locale: article.lang === 'nb_NO' ? nb : enGB,
-            }) +
-            ' (' +
-            getTimezoneAbbreviation(new TZDate(publishDate, 'Europe/Oslo'), 'Europe/Oslo') +
-            ')'
-          }</nl:extra1>
+          ${
+            categoryTag
+              ? `<category>${mapCategoryToId(categoryTag, locale === 'nb_NO' ? 'no' : 'en')}</category>`
+              : '<category />'
+          }
+          <nl:extra1>${formattedPubDate}</nl:extra1>
           ${
             hero?.image?.asset
               ? `<media:content medium="image" type="image/jpeg" url="${encodedUrl}">
