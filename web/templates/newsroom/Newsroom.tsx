@@ -219,7 +219,7 @@ const NewsRoomTemplate = forwardRef<HTMLDivElement, NewsRoomTemplateProps>(
                           <ResourceLink
                             href={`${getUrlFromAction(subscriptionLink)}`}
                           >
-                            {subscriptionLinkTitle} {locale}
+                            {subscriptionLinkTitle}
                           </ResourceLink>
                         )}
                       </List.Item>
@@ -236,7 +236,7 @@ const NewsRoomTemplate = forwardRef<HTMLDivElement, NewsRoomTemplateProps>(
                                 type={localNewsPage.type}
                                 href={url}
                               >
-                                {localNewsPage?.label} {locale}
+                                {localNewsPage?.label}
                               </ResourceLink>
                             </List.Item>
                           ) : null
