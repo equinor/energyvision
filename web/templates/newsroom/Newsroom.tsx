@@ -190,7 +190,14 @@ const NewsRoomTemplate = forwardRef<HTMLDivElement, NewsRoomTemplateProps>(
             <div className='flex flex-col gap-8 pt-topbar lg:gap-12'>
               <div className='dark bg-slate-blue-95 py-24'>
                 <div className='mx-auto flex grid-rows-2 flex-col gap-4 px-layout-sm'>
-                  {title && <Blocks value={title} as='h1' variant='h2' />}
+                  {title && (
+                    <Blocks
+                      value={title}
+                      as='h1'
+                      variant='2xl'
+                      group='heading'
+                    />
+                  )}
                   {ingress && (
                     <Blocks
                       value={ingress}
