@@ -15,6 +15,7 @@ import {
 import { ResourceLink } from '@/core/Link/ResourceLink'
 import { List } from '@/core/List'
 import { defaultLanguage } from '@/languageConfig'
+import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { Pagination } from '@/sections/searchBlocks/pagination/Pagination'
 import { PaginationContextProvider } from '../../contexts/PaginationContext'
@@ -216,15 +217,16 @@ const NewsRoomTemplate = forwardRef<HTMLDivElement, NewsRoomTemplateProps>(
                       <List.Item className='w-full'>
                         {subscriptionLink?.link?.slug && (
                           <ResourceLink
-                            href={`${locale !== defaultLanguage.locale ? `/${locale}` : ''}${subscriptionLink.link.slug}`}
+                            href={`${getUrlFromAction(subscriptionLink)}`}
                           >
-                            {subscriptionLinkTitle}
+                            {subscriptionLinkTitle} {locale}
                           </ResourceLink>
                         )}
                       </List.Item>
                       {localNewsPages &&
                         localNewsPages?.length > 0 &&
                         localNewsPages?.map(localNewsPage => {
+                          const url = getUrlFromAction(localNewsPage)
                           return localNewsPage?.link?.slug ? (
                             <List.Item
                               key={localNewsPage.id}
@@ -232,9 +234,9 @@ const NewsRoomTemplate = forwardRef<HTMLDivElement, NewsRoomTemplateProps>(
                             >
                               <ResourceLink
                                 type={localNewsPage.type}
-                                href={`${locale !== defaultLanguage.locale ? `/${locale}` : ''}${localNewsPage?.link?.slug}`}
+                                href={url}
                               >
-                                {localNewsPage?.label}
+                                {localNewsPage?.label} {locale}
                               </ResourceLink>
                             </List.Item>
                           ) : null
