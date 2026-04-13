@@ -45,7 +45,7 @@
     "algoliasearch": "^4.16.0",
     "axios": "^1.7.9",
     "date-fns": "^4.1.0",
-    "@date-fns/tz": "^1.2.0",
+    "@date-fns/tz": "^1.4.1",
     "easy-soap-request": "^5.4.0",
     "framer-motion": "^11.2.12",
     "@friendlycaptcha/sdk": "^0.1.32",
