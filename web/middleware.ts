@@ -9,7 +9,8 @@ const PERMANENT_REDIRECT = 301
 //const TEMPORARY_REDIRECT = 302
 const PUBLIC_FILE = /\.(.*)$/
 const DOT_HTML = '.html'
-const IS_ARCHIVED_NEWS_DOWNLOADS = /(.*)\/news\/archive\/[0-9]{4}\/[0-9]{2}\/[0-9]{2}\/downloads\/(.*)\.(.*)$/
+const IS_ARCHIVED_NEWS_DOWNLOADS =
+  /(en|no)?\/news\/archive\/[0-9]{4}\/[0-9]{2}\/[0-9]{2}\/downloads\/[^/]+\.[a-z]{2,4}$/
 const wwwExcludedDomains = [
   'localhost:3000',
   process.env.RADIX_PUBLIC_DOMAIN_NAME,
