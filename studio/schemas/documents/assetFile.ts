@@ -1,14 +1,14 @@
-import { EdsIcon } from '../../icons'
 import {
-  microsoft_excel,
-  microsoft_word,
-  microsoft_powerpoint,
-  library_pdf,
-  file,
-  calendar_event,
   attach_file,
+  calendar_event,
+  file,
+  library_pdf,
+  microsoft_excel,
+  microsoft_powerpoint,
+  microsoft_word,
 } from '@equinor/eds-icons'
 import type { Rule } from 'sanity'
+import { EdsIcon } from '../../icons'
 
 export const fileIcon = (extension: string) => {
   switch (extension) {
@@ -72,7 +72,8 @@ export default {
       title: 'Tags',
       name: 'tagReference',
       type: 'array',
-      description: 'Adds tags to asset file. These tags are used for internal filtering only.',
+      description:
+        'Adds tags to asset file. These tags are used for internal filtering only.',
       of: [
         {
           type: 'reference',
@@ -90,7 +91,9 @@ export default {
     },
     prepare(selection: { title: string; extension: string; filename: any }) {
       const { title, extension, filename } = selection
-      const subtitle = extension ? `${extension} | ${filename}` : 'File attachment missing'
+      const subtitle = extension
+        ? `${extension} | ${filename}`
+        : 'File attachment missing'
 
       return {
         title: title,

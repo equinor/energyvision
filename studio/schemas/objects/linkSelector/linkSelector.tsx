@@ -1,7 +1,10 @@
-import { Box, Flex } from '@sanity/ui'
-import type { PreviewProps, Rule } from 'sanity'
+import { link } from '@equinor/eds-icons'
+import { MdOutlineAnchor } from 'react-icons/md'
+import type { Rule } from 'sanity'
 import blocksToText from '@/helpers/blocksToText'
 import { capitalizeFirstLetter } from '@/helpers/formatters'
+import { EdsBlockEditorIcon } from '@/icons'
+import { apiVersion } from '@/sanity.client'
 import singleItemArray from '../singleItemArray'
 import {
   anchorReference,
@@ -10,6 +13,7 @@ import {
   internalReference,
   internalReferenceOtherLanguage,
   type LinkType,
+  pageAnchor,
   socialMediaLink,
 } from './common'
 
@@ -18,15 +22,8 @@ const defaultLinks = [
   'reference',
   'referenceToOtherLanguage',
   'homePageLink',
+  'pageAnchor',
 ] as LinkType[]
-
-function LinkPreview(props: PreviewProps) {
-  return (
-    <Flex align='center'>
-      <Box flex={1}>{props.renderDefault(props)}</Box>
-    </Flex>
-  )
-}
 
 const linkSelector = (
   linkTypes?: LinkType[],
@@ -56,6 +53,7 @@ const linkSelector = (
             internalReferenceOtherLanguage,
             homepageLink,
             socialMediaLink,
+            pageAnchor,
           ].filter(it => {
             const types = linkTypes
               ? linkTypes.includes(it.name as LinkType)
@@ -69,17 +67,36 @@ const linkSelector = (
         name: 'label',
         title: 'Label',
         description:
-          includeLabel && !labelIsOptional
-            ? 'Visible link for the label'
-            : 'Optional (not for external urls), if you want to overwrite the title from the referenced page',
+          'Required for external urls and homepage links. Optional on internal links if referenced item has a title',
         type: 'string',
         validation: (Rule: Rule) =>
-          Rule.custom((value: string, context: any) => {
+          Rule.custom(async (value: string, context: any) => {
             const { parent } = context
+            let hasReferenceTitle = false
+
+            if (
+              parent?.link?.[0]?._type === 'referenceToOtherLanguage' ||
+              parent?.link?.[0]?._type === 'reference'
+            ) {
+              //If internal link get title to make label optional if reference has this
+              const referencedTitle = await context
+                .getClient({ apiVersion: apiVersion })
+                .fetch(
+                  /* groq */ `*[_id == $id][0]{"title": coalesce(content->title, title)}.title`,
+                  {
+                    id: parent?.link?.[0]._ref,
+                  },
+                )
+              hasReferenceTitle = !!referencedTitle
+            }
+
             if (
               // Do not warn for hidden label or internal link with optional label
               !includeLabel ||
-              (labelIsOptional && parent?.link?.[0]?._type !== 'link')
+              (labelIsOptional && parent?.link?.[0]?._type !== 'link') ||
+              ((parent?.link?.[0]?._type === 'referenceToOtherLanguage' ||
+                parent?.link?.[0]?._type === 'reference') &&
+                hasReferenceTitle)
             ) {
               return true
             }
@@ -103,6 +120,7 @@ const linkSelector = (
         referenceTopicMedia: 'link.0.content.heroFigure.image',
         slug: 'link.0.slug.current',
         href: 'link.0.href',
+        anchorId: 'link.0.anchorId',
       },
       prepare({
         slug,
@@ -115,6 +133,7 @@ const linkSelector = (
         referenceMagMedia,
         referenceTopicTitle,
         referenceTopicMedia,
+        anchorId,
       }: any) {
         let title = label ?? 'Missing title'
         if (!label && (referenceTopicTitle || referenceNewsMagTitle)) {
@@ -125,6 +144,11 @@ const linkSelector = (
         }
 
         let linkType = type ?? 'not set'
+        let media =
+          referenceTopicMedia ??
+          referenceNewsMedia ??
+          referenceMagMedia ??
+          EdsBlockEditorIcon(link)
 
         if (type?.includes('route')) {
           linkType = 'internal route'
@@ -138,12 +162,17 @@ const linkSelector = (
         if (type === 'link') {
           linkType = 'external link'
         }
-        const subtitle = slug ?? href ?? `${capitalizeFirstLetter(linkType)}`
+        let subtitle = slug ?? href ?? `${capitalizeFirstLetter(linkType)}`
+
+        if (anchorId) {
+          subtitle = `#${anchorId}`
+          media = <MdOutlineAnchor />
+        }
 
         return {
           title: title,
           subtitle: subtitle,
-          media: referenceTopicMedia ?? referenceNewsMedia ?? referenceMagMedia,
+          media,
         }
       },
     },

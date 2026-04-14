@@ -29,7 +29,7 @@ export const StickyMenu = forwardRef<HTMLElement, StickyMenuProps>(
         ref={ref}
         aria-label={intl('local')}
         className={twMerge(
-          `sticky inset-e-0 inset-s-0 duration-300 ease-in-out [transition-property:top] ${twBg} z-10 w-full py-4 shadow-md`,
+          `sticky inset-e-0 inset-s-0 h-topbar-sticky duration-500 ease-in-out [transition-property:top] ${twBg} z-10 w-full py-4 shadow-md`,
           className,
         )}
       >

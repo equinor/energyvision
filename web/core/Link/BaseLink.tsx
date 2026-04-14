@@ -23,11 +23,11 @@ export const BaseLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(
       children,
       type = 'internalUrl',
       className = '',
-      href = '',
+      href,
       skipInternalStyle = false,
       prefetch = false,
       locale,
-      ...rest
+      hrefLang,
     },
     ref,
   ) {
@@ -46,6 +46,10 @@ export const BaseLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(
           className,
         )
 
+    if (!href) {
+      return null
+    }
+
     const getLinkElement = () => {
       switch (type) {
         case 'externalUrl':
@@ -62,14 +66,13 @@ export const BaseLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(
               target='_blank'
               rel='noopener'
               referrerPolicy='strict-origin-when-cross-origin'
-              {...rest}
             >
               {children}
             </a>
           )
         case 'icsLink':
           return (
-            <a className={classNames} ref={ref} href={href} {...rest}>
+            <a className={classNames} ref={ref} href={href}>
               {children}
             </a>
           )
@@ -81,7 +84,8 @@ export const BaseLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(
               href={href}
               className={classNames}
               prefetch={prefetch}
-              {...rest}
+              hrefLang={hrefLang}
+              locale={locale}
             >
               {children}
             </NextLink>

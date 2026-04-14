@@ -1,6 +1,6 @@
 import { defaultLanguage } from '@/languageConfig'
 import { getLocaleFromName } from '@/sanity/helpers/localization'
-import type { LinkData, MenuLinkData } from '../../types/index'
+import type { LinkData } from '../../types/index'
 
 export const getUrlFromAction = ({
   link,

@@ -16,9 +16,9 @@ import {
   internalReference,
   internalReferenceOtherLanguage,
   type LinkType,
+  PageAnchorInput,
 } from '../objects/linkSelector/common'
 import linkSelector from '../objects/linkSelector/linkSelector'
-import { PageAnchorInput } from './annotations/PageAnchorInput'
 
 const externalLinkConfig = {
   ...externalLink,
@@ -60,7 +60,7 @@ export type BlockContentProps = {
   /** Used to render the typography similar to TypographyGroups in Typography in web
    * use group article for news to get headings 2,3,4
    */
-  group?: TypographyGroups
+  group?: BlockTypographyGroups
   internalLink?: boolean
   externalLink?: boolean
   footnote?: boolean
@@ -517,6 +517,7 @@ export const configureBlockContent = (
       internalLinkConfig(internalReferenceOtherLanguage),
     )
     config?.marks?.annotations?.push(internalLinkConfig(homepageLink))
+    //@ts-ignore: todo
     config?.marks?.annotations?.push(anchorLinkConfig)
   }
   if (attachment) {

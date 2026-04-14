@@ -36,20 +36,22 @@ export default async function LocaleLayout({
 
   return (
     <>
-    <head>
-      <link rel="stylesheet" href="/legacy/styles/legacy.spacing.css" />
-      <link rel="stylesheet" href="/legacy/styles/legacy.minified.css"/>
-    </head>
-    <div className={`pt-topbar text-slate-80 peer-data-[sticky=true]:pt-0`}>
-      <PageWrapper
-        headerData={{
-          slugs,
-        }}
+      <head>
+        <link rel='stylesheet' href='/legacy/styles/legacy.spacing.css' />
+        <link rel='stylesheet' href='/legacy/styles/legacy.minified.css' />
+      </head>
+      <div
+        className={`pt-topbar text-slate-80 peer-data-[sticky=true]:pt-topbar-and-sticky`}
       >
-        {children}
-      </PageWrapper>
-      <div className='clear-both'></div>
-    </div>
+        <PageWrapper
+          headerData={{
+            slugs,
+          }}
+        >
+          {children}
+        </PageWrapper>
+        <div className='clear-both'></div>
+      </div>
     </>
   )
 }

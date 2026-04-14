@@ -68,7 +68,6 @@ export const locations: DocumentLocationResolver = (params, context) => {
           console.log('return no locations')
           return null
         }
-        console.log('doc', doc)
 
         let locs = []
         if (routePages?.includes(params.type)) {
@@ -131,7 +130,7 @@ export const locations: DocumentLocationResolver = (params, context) => {
             },
           ]
         }
-        console.log('locs', locs)
+
         return {
           locations: locs ?? [],
         }

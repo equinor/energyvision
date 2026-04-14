@@ -1,6 +1,10 @@
 import { external_link, facebook, home, link } from '@equinor/eds-icons'
 import { LinkIcon } from '@sanity/icons'
+import { Card, Flex, Select } from '@sanity/ui'
+import { useCallback, useMemo } from 'react'
+import { MdOutlineAnchor } from 'react-icons/md'
 import type { Reference, Rule, ValidationContext } from 'sanity'
+import { set, useFormValue } from 'sanity'
 import {
   filterByPages,
   filterByPagesInOtherLanguages,
@@ -13,7 +17,44 @@ import { Flags } from '../../../src/lib/datasetHelpers'
 import { ExternalLinkRenderer } from '../../components'
 import routes from '../../routes'
 import { warnHttpOrNotValidSlugExternal } from '../../validations/validateSlug'
-import { AnchorLinkDescription } from '../anchorReferenceField'
+
+export const PageAnchorInput = (props: any) => {
+  const { onChange, value = '' } = props
+  const document = useFormValue([])
+
+  const anchorLinkComponentReferences = useMemo(() => {
+    return document
+      ? document?.content
+          .filter((item: any) => item?.anchor || item?.anchorReference)
+          .map((item: any) => item.anchor || item.anchorReference)
+      : []
+  }, [document])
+
+  const handleChange = useCallback(
+    (event: any) => {
+      const nextValue = event.currentTarget.value
+      onChange(set(nextValue))
+    },
+    [onChange],
+  )
+
+  return (
+    <Card padding={3}>
+      <Flex direction='column' justify='center'>
+        <label htmlFor='anchorReferenceList' className='text-base'>
+          Select from Anchor Link components in this document
+        </label>
+        <Select id='anchorReferenceList' value={value} onChange={handleChange}>
+          {anchorLinkComponentReferences.map((referenceString: any) => (
+            <option key={referenceString} value={referenceString}>
+              {referenceString}
+            </option>
+          ))}
+        </Select>
+      </Flex>
+    </Card>
+  )
+}
 
 export type LinkType =
   | 'link'
@@ -21,6 +62,7 @@ export type LinkType =
   | 'homePageLink'
   | 'referenceToOtherLanguage'
   | 'socialMediaLink'
+  | 'pageAnchor'
 export type ReferenceTarget = {
   type: string
 }
@@ -114,16 +156,6 @@ export const externalLink = {
       }
     },
   },
-}
-
-function InternalLinkPreview(props: PreviewProps) {
-  console.log('LinkPreview props', props)
-
-  return (
-    <Flex align='center'>
-      <Box flex={1}>{props.renderDefault(props)}</Box>
-    </Flex>
-  )
 }
 
 export const internalReference = {
@@ -238,4 +270,32 @@ export const anchorReference = {
       Deprecated - use optional direct page anchor type.
     </span>
   ),
+}
+
+export const pageAnchor = {
+  name: 'pageAnchor',
+  type: 'object',
+  title: 'Page anchor',
+  icon: () => <MdOutlineAnchor />,
+  fields: [
+    {
+      name: 'anchorId',
+      type: 'string',
+      components: {
+        input: PageAnchorInput,
+      },
+    },
+  ],
+  preview: {
+    select: {
+      anchorId: 'anchorId',
+    },
+    prepare({ anchorId }: { anchorId: string }) {
+      return {
+        title: `#${anchorId}`,
+        subTitle: 'Page anchor',
+        media: MdOutlineAnchor,
+      }
+    },
+  },
 }

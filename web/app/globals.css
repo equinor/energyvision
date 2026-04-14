@@ -5,6 +5,12 @@
 @source '../styles/components/cookiebot.css';
 @source 'video.js/dist/video-js.css';
 
+/* Custom theme for web, not common brand */
+@theme {
+  --spacing-topbar: 85px;
+  --spacing-topbar-sticky: 64px;
+  --spacing-topbar-and-sticky: 149px;
+}
 @utility grid-overlay {
   grid: [overlay] 1fr / [overlay] 1fr;
 }

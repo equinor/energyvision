@@ -269,7 +269,7 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(
         {isHuman && type !== 'stickyMenu' && downloadable}
         {isHuman && type === 'stickyMenu' && (
           <Link
-            className='text-sm'
+            className='text-sm no-underline hover:text-slate-80 hover:underline dark:hover:text-grey-20'
             type={linkType}
             href={linkType === 'downloadableFile' ? fileUrl : url}
             {...(extension &&

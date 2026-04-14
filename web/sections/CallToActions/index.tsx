@@ -1,3 +1,4 @@
+import { toPlainText } from 'next-sanity'
 import { twMerge } from 'tailwind-merge'
 import ResourceLink from '@/core/Link/ResourceLink'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
@@ -21,6 +22,7 @@ const CallToActions = ({
 
   const getSingleAction = () => {
     const { label, type, link, file } = callToActions[0]
+    const plainLabel = Array.isArray(label) ? toPlainText(label) : label
     const url = getUrlFromAction(callToActions[0])
     if (
       !url &&
@@ -36,14 +38,14 @@ const CallToActions = ({
       <ResourceLink
         file={{
           ...file,
-          label,
+          label: plainLabel,
         }}
         {...(link?.lang && { hrefLang: getLocaleFromName(link?.lang) })}
         href={url}
         type={type}
         variant='fit'
       >
-        {label}
+        {plainLabel}
       </ResourceLink>
     )
   }
@@ -61,13 +63,16 @@ const CallToActions = ({
           {callToActions.map((callToAction: LinkData) => {
             const url = getUrlFromAction(callToAction)
             const { id, label, type, link, file } = callToAction
+            const plainLabel = Array.isArray(label) ? toPlainText(label) : label
+
+            console.log('call to action file', file)
             return url ? (
               <li key={id}>
                 {/*  If the URL is a static AEM page it should behave as an internal link in the web */}
                 <ResourceLink
                   file={{
                     ...file,
-                    label,
+                    label: plainLabel,
                   }}
                   {...(link?.lang && {
                     hrefLang: getLocaleFromName(link?.lang),
@@ -76,7 +81,7 @@ const CallToActions = ({
                   type={type}
                   variant={linkVariant ? linkVariant : 'default'}
                 >
-                  {`${label}`}
+                  {`${plainLabel}`}
                 </ResourceLink>
               </li>
             ) : null

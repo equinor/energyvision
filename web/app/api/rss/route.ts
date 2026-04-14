@@ -1,4 +1,4 @@
-import { TZDate } from '@date-fns/tz'
+import { tz } from '@date-fns/tz'
 import { format } from 'date-fns'
 import { enGB, nb } from 'date-fns/locale'
 import { NextResponse } from 'next/server'
@@ -7,7 +7,6 @@ import { client } from '@/sanity/lib/client'
 import { urlForImage } from '@/sanity/lib/utils'
 import {
   type newsletterCategoryKeys,
-  type newsletterCategoryLocale,
   newsletterCategoryMap,
 } from '@/types/newsLetterTypes'
 import { type LatestNewsType, latestMagazine, latestNews } from './groq.global'
@@ -66,24 +65,22 @@ const generateRssFeed = async (locale: 'en_GB' | 'nb_NO') => {
         : ''
       const encodedUrl = bannerImageUrl.replace(/&/g, '&amp;')
 
-      const publishDate = new Date(article.publishDateTime).toUTCString()
+      const publishDate = new Date(article.publishDateTime)
       const dateFormat =
-        article.lang === 'nb_NO' ? 'd. MMMM yyyy hh:mm' : 'd MMMM yyyy hh:mm'
+        article.lang === 'nb_NO' ? 'd. MMMM yyyy HH:mm' : 'd MMMM yyyy HH:mm'
 
-      const getTimezoneAbbreviation = (date: Date, timeZone: string) => {
-        const parts = new Intl.DateTimeFormat('en-GB', {
-          timeZone,
+      const tzName =
+        new Intl.DateTimeFormat('en-GB', {
+          timeZone: 'Europe/Oslo',
           timeZoneName: 'short',
-        }).formatToParts(date)
+        })
+          .formatToParts(publishDate)
+          .find(p => p.type === 'timeZoneName')?.value ?? ''
 
-        const tzPart = parts.find(p => p.type === 'timeZoneName')
-
-        // TS-safe: fallback in case it's undefined
-        return tzPart?.value ?? ''
-      }
-
-      // Format the main pubDate
-      //const formattedPubDate =  //format(new TZDate(publishDate, 'Europe/Oslo'), 'EEE, dd MMM yyyy HH:mm:ss xxxx')
+      const formattedPubDate = `${format(publishDate, dateFormat, {
+        in: tz('Europe/Oslo'),
+        locale: article.lang === 'nb_NO' ? nb : enGB,
+      })} (${tzName})`
 
       const categoryTag = (
         article.type === 'magazine'
@@ -104,17 +101,7 @@ const generateRssFeed = async (locale: 'en_GB' | 'nb_NO') => {
           <pubDate>${publishDate}</pubDate>
           <description><![CDATA[${toPlainText(article.ingress)}]]></description>
           ${categoryTag ? `<category>${newsletterCategoryMap[locale === 'nb_NO' ? 'no' : 'en'][categoryTag]}</category>` : '<category />'}
-          <nl:extra1>${
-            format(new TZDate(publishDate, 'Europe/Oslo'), dateFormat, {
-              locale: article.lang === 'nb_NO' ? nb : enGB,
-            }) +
-            ' (' +
-            getTimezoneAbbreviation(
-              new TZDate(publishDate, 'Europe/Oslo'),
-              'Europe/Oslo',
-            ) +
-            ')'
-          }</nl:extra1>
+          <nl:extra1>${formattedPubDate}</nl:extra1>
           ${
             hero?.image?.asset
               ? `<media:content medium="image" type="image/jpeg" url="${encodedUrl}">
