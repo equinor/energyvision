@@ -107,7 +107,6 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(
       href = '',
       hrefLang,
       file,
-      onClick,
     },
     ref,
   ) {
@@ -183,15 +182,9 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(
           )
       }
     }
+
     return href ? (
-      <BaseLink
-        className={classNames}
-        type={type}
-        ref={ref}
-        href={href}
-        hrefLang={hrefLang}
-        {...(onClick && onClick)}
-      >
+      <BaseLink className={classNames} type={type} ref={ref} href={href} hrefLang={hrefLang}>
         <div
           className={twMerge(
             `flex h-full w-inherit items-center justify-start gap-x-2 ${contentVariantClassName[variant]}`,
