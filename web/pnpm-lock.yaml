@@ -11,7 +11,7 @@ dependencies:
     specifier: ^4.22.1
     version: 4.26.0
   '@date-fns/tz':
-    specifier: ^1.2.0
+    specifier: ^1.4.1
     version: 1.4.1
   '@equinor/eds-core-react':
     specifier: 0.39.0
