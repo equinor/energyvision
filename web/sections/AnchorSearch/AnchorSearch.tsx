@@ -85,7 +85,7 @@ const AnchorSearch = forwardRef<HTMLDivElement, AnchorSearchProps>(
     }, [letter, availableLetters])
 
     return (
-      <div ref={ref} id={anchor} className={`mb-12 px-layout-md`}>
+      <div ref={ref} id={anchor} className={`mt-6 mb-12 px-layout-md`}>
         <Collapsible.Root
           className='CollapsibleRoot'
           open={open}

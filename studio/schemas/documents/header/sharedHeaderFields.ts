@@ -67,7 +67,7 @@ const heroType = {
         value: HeroTypes.NO_HERO,
       },
       {
-        title: 'Background image with title/ingress over',
+        title: 'Background image/color with title over',
         value: HeroTypes.BACKGROUND_IMAGE,
       },
     ].filter(e => e),

@@ -52,7 +52,7 @@ const TopicPage = ({
       : hero?.background
 
   return (
-    <main className='flex flex-col peer-data-[sticky=false]:pt-topbar'>
+    <main className='flex flex-col pt-topbar peer-data-[sticky=true]:pt-topbar-and-sticky'>
       <HeroBlock {...heroProps} />
       <PageContent
         data={restData}

@@ -43,7 +43,7 @@ export const StickyMenu = forwardRef<HTMLElement, StickyMenuProps>(
                 <Link
                   key={link?.id}
                   href={`#${link?.anchorReference}`}
-                  className={`text-sm`}
+                  className='text-sm no-underline hover:text-slate-80 hover:underline dark:hover:text-grey-20'
                 >
                   {title}
                 </Link>

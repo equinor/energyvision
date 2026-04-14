@@ -148,24 +148,46 @@ export default {
       ingress: 'ingress',
       text: 'text',
       anchor: 'anchorReference',
+      designOptions: 'designOptions',
+      backgroundImage: 'designOptions.background.0.image',
     },
     prepare({
       title,
       ingress,
       text,
       anchor,
+      designOptions,
+      backgroundImage,
     }: {
       title: PortableTextBlock[]
       ingress: PortableTextBlock[]
       text: PortableTextBlock[]
       anchor: string
+      designOptions: any
+      backgroundImage: any
     }) {
+      console.log('designOptions', designOptions)
+      console.log('backgroundImage', backgroundImage)
+
       const plainTitle = blocksToText(title ?? ingress ?? text)
+      let subTitle = 'Text block'
+      if (anchor) {
+        subTitle = subTitle + ` | #${anchor}`
+      }
+      if (designOptions?.background?.[0]?._type === 'backgroundColor') {
+        subTitle = subTitle + ` | ${designOptions?.background?.[0]?.title}`
+      }
+      if (designOptions?.background?.[0]?._type === 'backgroundImage') {
+        subTitle = subTitle + ` | Background image`
+      }
 
       return {
         title: plainTitle || 'Missing title/content',
-        subtitle: `Text block${anchor ? ` | #${anchor}` : ''}`,
-        media: EdsIcon(text_field),
+        subtitle: subTitle,
+        media:
+          designOptions?.background?.[0]?._type === 'backgroundImage'
+            ? backgroundImage
+            : EdsIcon(text_field),
       }
     },
   },
