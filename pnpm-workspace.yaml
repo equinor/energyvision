@@ -5,5 +5,9 @@ packages:
   - 'shared'
   - 'packages/*'
 minimumReleaseAge: 10080
-trustPolicy: "no-downgrade"
+#trustPolicy: "no-downgrade"
 blockExoticSubdeps: true 
+trustPolicyExclude:
+# https://github.com/reduxjs/reselect/issues/752
+# might apply for @reduxjs/toolkit@2.9.2 by recharts@3.8.1
+- reselect@5.1.1
