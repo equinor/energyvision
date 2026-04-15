@@ -27,6 +27,7 @@ import {
   internalReference,
   internalReferenceOtherLanguage,
 } from '../linkSelector/common'
+import linkSelector from '../linkSelector/linkSelector'
 
 type PromotionLayoutInputProps = {
   options: any[]
@@ -132,50 +133,25 @@ export default {
           name: 'promotedItem',
           title: 'Promoted item',
           fields: [
-            {
-              name: 'link',
-              type: 'array',
-              of: [
-                externalLink,
-                internalReference,
-                internalReferenceOtherLanguage,
-                homepageLink,
-                anchorLinkReference,
-              ],
-              validation: (Rule: Rule) => Rule.length(1).required(),
-            },
-            {
-              name: 'label',
-              title: 'Link label',
-              description:
-                'Required when external, leave empty if you want to use referenced title',
-              type: 'string',
-              validation: (Rule: Rule) =>
-                Rule.custom((value: string, ctx: ValidationContext) => {
-                  //@ts-ignore: todo
-                  if (ctx.parent?.link?.[0]?._type === 'link') {
-                    return value ? true : 'You must add a label'
-                  }
-                  return true
-                }),
-            },
+            linkSelector(),
             {
               name: 'image',
               title: 'Image',
               type: 'imageWithAlt',
               hidden: ({ parent }: any) => {
                 return (
-                  parent?.link?.[0]?._type !== 'link' &&
-                  parent?.link?.[0]?._type !== 'anchorLinkReference'
+                  parent?.linkSelector?.link[0]?._type !== 'link' &&
+                  parent?.linkSelector?.link[0]?._type !== 'anchorLinkReference'
                 )
               },
               validation: (Rule: Rule) =>
                 Rule.custom((value: string, ctx: ValidationContext) => {
                   if (
                     //@ts-ignore: todo
-                    ctx.parent?.link?.[0]?._type === 'link' ||
+                    ctx.parent?.linkSelector?.link[0]?._type === 'link' ||
                     //@ts-ignore: todo
-                    ctx.parent?.link?.[0]?._type === 'anchorLinkReference'
+                    ctx.parent?.linkSelector?.link[0]?._type ===
+                      'anchorLinkReference'
                   ) {
                     return value ? true : 'You must add an image'
                   }
@@ -185,15 +161,16 @@ export default {
           ],
           preview: {
             select: {
-              referenceNewsMagTitle: 'link.0.title',
-              referenceNewsMedia: 'link.0.heroImage.image',
-              referenceMagMedia: 'link.0.heroFigure.image',
-              referenceTopicTitle: 'link.0.content.title',
-              referenceTopicMedia: 'link.0.content.heroFigure.image',
+              referenceNewsMagTitle: 'linkSelector.link.0.title',
+              referenceNewsMedia: 'linkSelector.link.0.heroImage.image',
+              referenceMagMedia: 'linkSelector.link.0.heroFigure.image',
+              referenceTopicTitle: 'linkSelector.link.0.content.title',
+              referenceTopicMedia:
+                'linkSelector.link.0.content.heroFigure.image',
               customImage: 'image',
               link: 'link',
               label: 'label',
-              type: 'link.0._type',
+              type: 'linkSelector.link.0._type',
             },
             prepare({
               referenceNewsMagTitle,
@@ -218,7 +195,7 @@ export default {
             }) {
               let promoType = type ?? 'not set'
 
-              if (type?.includes('route')) {
+              if (type?.includes('internalReference')) {
                 promoType = 'internal route'
               }
               if (type?.includes('anchorLinkReference')) {

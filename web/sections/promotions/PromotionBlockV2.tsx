@@ -12,6 +12,7 @@ import {
   getLayoutPx,
   type LayoutPxVariant,
 } from '@/lib/helpers/getCommonUtilities'
+import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import Blocks from '@/portableText/Blocks'
 import {
   type ColorKeys,
@@ -66,7 +67,6 @@ export const PromotionBlockV2 = forwardRef<HTMLDivElement, PromotionBlockProps>(
     const { backgroundUtility } = background || {}
 
     const px = getLayoutPx(layoutGrid ?? 'lg')
-
     let templateColumns =
       promoteList?.length < 3 ? promoteList?.length.toString() : gridColumns
 
@@ -107,6 +107,7 @@ export const PromotionBlockV2 = forwardRef<HTMLDivElement, PromotionBlockProps>(
           <ul className={`${px} grid ${cols} auto-rows-fr gap-4`}>
             {promoteList.map((promotion: any) => {
               const variant = getVariantOnType(promotion?.type)
+              const href = getUrlFromAction(promotion)
               return (
                 <li key={promotion.id}>
                   <Promotion
@@ -115,7 +116,7 @@ export const PromotionBlockV2 = forwardRef<HTMLDivElement, PromotionBlockProps>(
                     background={foreground}
                     title={promotion.label}
                     image={promotion.image}
-                    href={promotion.href}
+                    href={href || ''}
                     layoutDirection={layoutDirection}
                     hasSectionTitle={!!title}
                   />

@@ -19,23 +19,20 @@ export const promotionsV2 = /* groq */ `
 ${commonPromotionFields},
 "promoteList": promoteList[]{
     "id": _key,
-    "type": link[0]._type,
-    "href": coalesce(
-        link[0].href,
-        link[0].anchorReference,
-        link[0]->slug.current,
-    ),
-    "image": coalesce(
-    link[0]->content->heroFigure.image,
-    link[0]->heroImage.image, 
-    link[0]->heroFigure.image,
-    image),
+    ...links::getLinkFields(linkSelector.link[0]),
     "label": coalesce(
-    label,
-    link[0]->content->title,
-    link[0]->title,
-    link[0].title,
-    )
+        linkSelector.label,
+        select(
+        linkSelector.link[0]._type =="reference" || linkSelector.link[0]._type =="referenceToOtherLanguage" => 
+            coalesce(linkSelector.link[0]->content->title, linkSelector.link[0]->title),
+            "",
+        ),
+        ),
+    "image": coalesce(
+    linkSelector.link[0]->content->heroFigure.image,
+    linkSelector.link[0]->heroImage.image, 
+    linkSelector.link[0]->heroFigure.image,
+    image),
 }
 `
 
