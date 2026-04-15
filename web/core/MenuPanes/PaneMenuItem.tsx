@@ -1,8 +1,9 @@
 'use client'
 import { usePathname } from 'next/navigation'
-import { useTranslations } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 import { forwardRef, useEffect, useId, useRef, useState } from 'react'
 import { GoChevronRight } from 'react-icons/go'
+import { getMenuLink } from '@/lib/helpers/getUrlFromAction'
 import type { SimpleGroupData } from '../../types/index'
 import Link from '../Link/Link'
 import ResourceLink from '../Link/ResourceLink'
@@ -22,6 +23,7 @@ export const PaneMenuItem = forwardRef<HTMLLIElement, PaneMenuItemProps>(
   ) {
     const { type, label, links = [], readMoreLink } = item
     const pathname = usePathname()
+    const iso = useLocale()
     const id = useId()
     const secondPaneId = useId()
     const firstPaneRef = useRef<HTMLDivElement>(null)
@@ -56,7 +58,7 @@ export const PaneMenuItem = forwardRef<HTMLLIElement, PaneMenuItemProps>(
           {type === 'simpleMenuLink' ? (
             <Link
               className={`relative w-full ${ariaCurrentStyling}aria-current:before:bg-north-sea-50 text-lg no-underline underline-offset-2 hover:underline dark:hover:text-north-sea-50`}
-              href={item.link?.slug || '/'}
+              href={getMenuLink(item, iso)}
               aria-current={pathname === item?.link?.slug ? 'page' : 'false'}
               {...(linkCallback && {
                 onClick: linkCallback,
@@ -100,7 +102,7 @@ export const PaneMenuItem = forwardRef<HTMLLIElement, PaneMenuItemProps>(
           >
             {!!readMoreLink?.link?.slug && (
               <ResourceLink
-                href={readMoreLink.link?.slug}
+                href={getMenuLink(readMoreLink, iso)}
                 className={`
               ${ariaCurrentStyling}w-fit pt-0 hover:text-north-sea-50`}
                 aria-current={
@@ -116,8 +118,8 @@ export const PaneMenuItem = forwardRef<HTMLLIElement, PaneMenuItemProps>(
             {links?.map((link: any) => (
               <li key={link.id} className='relative'>
                 <Link
-                  className={`${ariaCurrentStyling}no-underline decoration-2 underline-offset-2 hover:underline dark:hover:text-north-sea-50`}
-                  href={link?.link?.slug || '/'}
+                  className={`${ariaCurrentStyling} no-underline decoration-2 underline-offset-2 hover:underline dark:hover:text-north-sea-50`}
+                  href={getMenuLink(link, iso)}
                   aria-current={
                     pathname === link?.link?.slug ? 'page' : 'false'
                   }

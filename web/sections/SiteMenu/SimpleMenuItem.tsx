@@ -1,10 +1,14 @@
 import { usePathname } from 'next/navigation'
+import { useLocale } from 'next-intl'
 import { useId } from 'react'
 import { twMerge } from 'tailwind-merge'
 import Link from '@/core/Link/Link'
 import ResourceLink from '@/core/Link/ResourceLink'
 import { Menu } from '@/core/MenuAccordion'
-import type { SimpleGroupData } from '../../types/index'
+import { defaultLanguage } from '@/languageConfig'
+import { getMenuLink } from '@/lib/helpers/getUrlFromAction'
+import { getLocaleFromIso } from '@/sanity/helpers/localization'
+import type { SimpleGroupData, SimpleMenuLink } from '../../types/index'
 
 const { MenuItem, MenuHeader, MenuContent } = Menu
 
@@ -25,6 +29,7 @@ export const SimpleMenuItem = ({
   const { type, label, links = [], readMoreLink } = item
   const pathname = usePathname()
   const id = useId()
+  const iso = useLocale()
 
   if (item?.type === 'simpleMenuLink' && item.link && !item.link.slug) {
     console.warn('Missing slug for simple menu link')
@@ -87,22 +92,25 @@ export const SimpleMenuItem = ({
               )}
             </div>
             <ul aria-labelledby={id} className={`flex flex-col flex-wrap`}>
-              {links?.map((link: any) => (
-                <li key={link.id}>
-                  <Link
-                    className={`relative ${ariaCurrentStyling} py-4 text-base no-underline underline-offset-2 hover:underline dark:hover:text-north-sea-50`}
-                    href={link?.link?.slug || '/'}
-                    aria-current={
-                      pathname === link?.link?.slug ? 'page' : 'false'
-                    }
-                    {...(linkCallback && {
-                      onClick: linkCallback,
-                    })}
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
+              {links?.map((link: any) => {
+                const href = getMenuLink(link, iso) || '/'
+                return (
+                  <li key={link.id}>
+                    <Link
+                      className={`relative ${ariaCurrentStyling} py-4 text-base no-underline underline-offset-2 hover:underline dark:hover:text-north-sea-50`}
+                      href={href}
+                      aria-current={
+                        pathname === link?.link?.slug ? 'page' : 'false'
+                      }
+                      {...(linkCallback && {
+                        onClick: linkCallback,
+                      })}
+                    >
+                      {link.label} {href}
+                    </Link>
+                  </li>
+                )
+              })}
             </ul>
           </MenuContent>
         </MenuItem>

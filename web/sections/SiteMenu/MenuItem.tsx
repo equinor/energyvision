@@ -5,8 +5,7 @@ import Link from '@/core/Link/Link'
 import ResourceLink from '@/core/Link/ResourceLink'
 import { Menu } from '@/core/MenuAccordion'
 import { Typography } from '@/core/Typography'
-import { defaultLanguage } from '@/languageConfig'
-import { getLocaleFromIso } from '@/sanity/helpers/localization'
+import { getMenuLink } from '@/lib/helpers/getUrlFromAction'
 import Blocks from '../../portableText/Blocks'
 import type {
   MenuLinkData,
@@ -16,16 +15,6 @@ import type {
 import FeaturedContent from './FeaturedContent'
 
 const { MenuItem: _MenuItem, MenuHeader, MenuContent } = Menu
-
-function getLink(menuLinkData: MenuLinkData, iso: string) {
-  // Fallback to home page, if this happens it is an error somewhere
-  // Sanity should take care of the validation here, and this is temp. until
-  // the static pages are migrated
-  if (!menuLinkData) return 'something-wrong'
-  // manually setting lang here.. as menu links only allow same language links..
-  const locale = iso !== defaultLanguage.iso ? `/${getLocaleFromIso(iso)}` : ''
-  return locale + menuLinkData.link?.slug || ''
-}
 
 type MenuGroupType = {
   item: SubMenuData
@@ -45,7 +34,7 @@ export const MenuItem = ({ item, index, linkCallback }: MenuGroupType) => {
   } = item
 
   const iso = useLocale()
-  const menuItemHref = getLink(topLevelLink, iso)
+  const menuItemHref = getMenuLink(topLevelLink, iso)
 
   const pathname = usePathname()
 
@@ -98,7 +87,7 @@ export const MenuItem = ({ item, index, linkCallback }: MenuGroupType) => {
                           <li key={link.id}>
                             <Link
                               className={`relative py-2 text-sm no-underline underline-offset-2 hover:underline ${ariaCurrentStyling} `}
-                              href={getLink(link, iso) || '/'}
+                              href={getMenuLink(link, iso) || '/'}
                               aria-current={
                                 pathname === link?.link?.slug ? 'page' : 'false'
                               }
