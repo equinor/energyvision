@@ -1,9 +1,9 @@
+import type { PortableTextBlock } from '@portabletext/types'
 import { functions } from '../../../lib/queries/common/functions'
+import { noDrafts, sameLang } from '../../../lib/queries/common/langAndDrafts'
 import { ingressForNewsQuery } from '../../../lib/queries/common/newsSubqueries'
 import { publishDateTimeQuery } from '../../../lib/queries/common/publishDateTime'
-import { sameLang, noDrafts } from '../../../lib/queries/common/langAndDrafts'
 import type { ImageWithCaptionData } from '../../../types'
-import type { PortableTextBlock } from '@portabletext/types'
 
 export type LatestNewsType = {
   _id: string
