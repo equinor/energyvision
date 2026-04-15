@@ -12,8 +12,8 @@ import { Misc } from './items/Misc'
 import { News as NewsStructure } from './items/News'
 import { Routes } from './items/Routes'
 import { Settings } from './items/Settings'
-import { TopicContent } from './items/TopicContent'
 import { singletonListItem } from './items/SingletonItem'
+import { TopicContent } from './items/TopicContent'
 
 const News = (S) => Flags.HAS_NEWS && NewsStructure(S)
 const Magazine = (S) => Flags.HAS_MAGAZINE && MagazineStructure(S)
