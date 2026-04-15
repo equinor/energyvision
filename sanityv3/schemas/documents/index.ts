@@ -20,6 +20,7 @@ import page from './page'
 import redirect from './redirect'
 import route from './route'
 import routeHomepage from './routeHomepage'
+import { settings } from './settings'
 import simpleMenu from './simpleMenu'
 import siteMenu from './siteMenu'
 import subMenu from './subMenu'
@@ -55,4 +56,5 @@ export default {
   magazineTag,
   route,
   subMenu,
+  settings,
 }
