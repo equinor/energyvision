@@ -98,7 +98,7 @@ const generateRssFeed = async (locale: 'en_GB' | 'nb_NO') => {
           ${
             settings?.logo?.asset
               ? `
-          <enclosure type="image/jpeg" url="${encodedLogoUrl}"></enclosure>`
+          <nl:extra2>${encodedLogoUrl}</nl:extra2>`
               : ''
           }
         </item>`
