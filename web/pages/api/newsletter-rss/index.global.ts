@@ -98,7 +98,7 @@ const generateRssFeed = async (locale: 'en_GB' | 'nb_NO') => {
           ${
             settings?.logo?.asset
               ? `
-          <nl:extra2>${encodedLogoUrl}</nl:extra2>`
+          <nl:extra2><![CDATA[<img src="${encodedLogoUrl}" alt="Equinor logo" />]]></nl:extra2>`
               : ''
           }
         </item>`
