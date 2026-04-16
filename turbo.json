@@ -6,7 +6,7 @@
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "outputs": [".next/**", "!.next/cache/**"],
-      "passThroughEnv": ["SANITY_API_TOKEN"]
+      "passThroughEnv": ["SANITY_API_TOKEN", "SANITY_STUDIO_API_PROJECT_ID"]
     },
     "lint": {
       "dependsOn": ["^lint"]
