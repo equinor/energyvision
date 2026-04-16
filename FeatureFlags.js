@@ -83,5 +83,5 @@ export default (dataset) => ({
   IS_DEV: GLOBAL_DEV.includes(dataset),
   IS_SATELLITE: SATELLITES.includes(dataset),
   HAS_CAMPAIGN_BLOCKS: CAMPAIGN.includes(dataset),
-  ENABLE_MAKE_NEWS_SUBSCRIPTION: false,
+  ENABLE_MAKE_NEWS_SUBSCRIPTION: true,
 })
