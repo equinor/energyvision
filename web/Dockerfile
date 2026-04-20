@@ -6,7 +6,7 @@ ENV NODE_OPTIONS="--max_old_space_size=8192"
 RUN corepack enable && corepack prepare pnpm@8.5.1 --activate
 WORKDIR /app
 
-# ---------- DEPS LAYER ----------
+# ---------- DEPENDENCIES LAYER ----------
 FROM base AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app/web
