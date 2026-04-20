@@ -59,10 +59,12 @@
     "glob": {
       "minimatch": "10.0.1",
       "brace-expansion": "^2.0.2"
-    }
+    },
+    "form-data": "4.0.4"
   },
   "resolutions": {
     "minimatch": "10.0.1",
-    "brace-expansion": "^2.0.2"
+    "brace-expansion": "^2.0.2",
+    "form-data": "4.0.4"
   }
 }

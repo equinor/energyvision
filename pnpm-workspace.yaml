@@ -5,6 +5,7 @@ packages:
   - 'search'
 overrides:
   'tar-fs': '^3.0.9'
+  'form-data': '4.0.4'
 minimumReleaseAge: 10080
 minimumReleaseAgeExclude:
   - axios@1.15.1 # Fix axios CVE-2026-40175, checked release is built and signed with provenance
