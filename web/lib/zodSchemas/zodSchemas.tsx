@@ -5,6 +5,7 @@ import {
   englishTextRegex,
   nameRegex,
   phoneRegex,
+  questionsRegex,
   urlRegex,
 } from '@/templates/forms/validations'
 
@@ -66,7 +67,7 @@ export const careerFairFormSchema = (t: any) =>
       .string()
       .nonempty(t('career_fair_form_event_description_validation'))
       .length(3400)
-    .regex(contentRegex, t('not_valid_input')),
+      .regex(contentRegex, t('not_valid_input')),
     website: z
       .string()
       .optional()
@@ -124,7 +125,7 @@ export const careersContactFormSchema = (t: any) =>
     questions: z
       .string()
       .nonempty(t('careers_contact_form_questions_validation'))
-      .regex(contentRegex, t('not_valid_input')),
+      .regex(questionsRegex, t('not_valid_input')),
     positionId: z
       .string()
       .optional()
