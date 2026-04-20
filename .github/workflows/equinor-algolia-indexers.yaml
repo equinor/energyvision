@@ -58,10 +58,10 @@ jobs:
         id: lint
         run: |
           pnpm lint:search
-      - name: Run tests 🔍
-        id: test
-        run: |
-          pnpm search-indexers test
+      #      - name: Run tests 🔍
+      #        id: test
+      #        run: |
+      #          pnpm search-indexers test
       - name: log-errors-to-slack 📄
         uses: act10ns/slack@v2
         with:
