@@ -90,7 +90,7 @@ jobs:
 
       - name: Upload backup.tar.gz
         id: upload-backup
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: backup-tarball-${{ matrix.dataset}}
           path: ${{ env.BUILD_ARTIFACT_PATH }}/${{ matrix.dataset }}.tar.gz
