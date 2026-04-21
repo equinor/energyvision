@@ -40,7 +40,7 @@
     "date-fns": "^4.1.0",
     "@date-fns/tz": "^1.4.1",
     "framer-motion": "^11.2.12",
-    "@friendlycaptcha/sdk": "^0.1.32",
+    "@friendlycaptcha/sdk": "^1.0.0",
     "html-entities": "^2.3.2",
     "http-proxy": "^1.18.1",
     "ics": "^3.1.0",
