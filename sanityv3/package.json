@@ -31,7 +31,7 @@
     "@sanity/icons": "^2.11.8",
     "@sanity/ui": "^2.8.23",
     "@sanity/uuid": "^3.0.2",
-    "@sanity/vision": "^3.37.2",
+    "@sanity/vision": "^5.20.0",
     "buffer": "^6.0.3",
     "blob-util": "^2.0.2",
     "date-fns": "^4.1.0",
