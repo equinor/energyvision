@@ -64,7 +64,6 @@ const SiteMenu = ({ variant = 'default' }: MenuProps) => {
   }, [siteMenuData, variant])
 
   const handleLinkClick = () => {
-    console.log('Click handled')
     setIsOpen(false)
   }
 
