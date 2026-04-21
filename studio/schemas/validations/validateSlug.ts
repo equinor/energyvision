@@ -59,14 +59,19 @@ export const warnHttpOrNotValidSlugExternal = (slug: string) => {
   const isHttp = httpRegex.test(slug)
   const validSlug = stringIsSlug.test(slug)
   const slugWithOutQueryParam = slug.split('?')[0]
+  const isPotentialArchivedNewsUrl = isEquinorUrl(slug) && Flags.HAS_ARCHIVED_NEWS && slug?.includes("/news")
   const isInvalidEquinorUrl = slugWithOutQueryParam !== slugWithOutQueryParam.toLowerCase() && isEquinorUrl(slug)
 
   let message = ''
   if (isHttp) {
-    message = 'Use https in url. '
+    message = 'Use https in url.'
   }
   if (!validSlug) {
     message = message.concat(`Not a valid url.`)
+  }
+
+  if(isPotentialArchivedNewsUrl){
+    return true
   }
 
   if (isInvalidEquinorUrl) {
