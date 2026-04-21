@@ -28,6 +28,7 @@ export const BaseLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(
       prefetch = false,
       locale,
       hrefLang,
+      onClick,
     },
     ref,
   ) {
@@ -66,6 +67,7 @@ export const BaseLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(
               target='_blank'
               rel='noopener'
               referrerPolicy='strict-origin-when-cross-origin'
+              onClick={onClick}
             >
               {children}
             </a>
@@ -86,6 +88,7 @@ export const BaseLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(
               prefetch={prefetch}
               hrefLang={hrefLang}
               locale={locale}
+              onClick={onClick}
             >
               {children}
             </NextLink>
