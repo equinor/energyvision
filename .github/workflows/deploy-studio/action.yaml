@@ -90,8 +90,8 @@ runs:
       shell: bash
       env:
         SANITY_API_TOKEN: ${{ inputs.sanityApiToken }}
-        FOTOWARE_AF_EXPORT_KEY: ${{ inputs.fotowareAfExportKey }}
-        SCREEN9_TOKEN: ${{ inputs.screen9token }}
+        SANITY_STUDIO_FOTOWARE_AF_EXPORT_KEY: ${{ inputs.fotowareAfExportKey }}
+        SANITY_STUDIO_SCREEN9_TOKEN: ${{ inputs.screen9token }}
         SANITY_STUDIO_PREVIEW_SECRET: ${{ inputs.sanityPreviewToken }}
       run: |
         docker build . \
@@ -106,9 +106,9 @@ runs:
           --build-arg ARG_FOTOWARE_REDIRECT_ORIGIN="${{ inputs.fotowareRedirectOrigin }}" \
           --build-arg ARG_FOTOWARE_REDIRECT_URI="${{ inputs.fotowareRedirectUri }}" \
           --build-arg ARG_FOTOWARE_AF_EXPORT_URL="${{ inputs.fotowareAfExportUrl }}" \
-          --secret id=FOTOWARE_AF_EXPORT_KEY \
+          --secret id=SANITY_STUDIO_FOTOWARE_AF_EXPORT_KEY \
           --build-arg ARG_SCREEN9_ACCOUNT_ID="${{ inputs.screen9accountId }}" \
-          --secret id=SCREEN9_TOKEN \
+          --secret id=SANITY_STUDIO_SCREEN9_TOKEN \
           --build-arg ARG_SANITY_STUDIO_PREVIEW_URL="${{ inputs.previewUrl }}" \
           --file studio/Dockerfile \
           --tag ${{ inputs.imageName }}:${{ env.IMAGE_TAG }} \
