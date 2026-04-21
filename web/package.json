@@ -56,7 +56,7 @@
     "ics": "^3.11.0",
     "instantsearch.js": "^4.93.0",
     "radix-ui": "^1.4.3",
-    "next": "16.2.1",
+    "next": "16.2.3",
     "next-intl": "4.9.0",
     "next-sanity": "12.2.1",
     "next-sanity-image": "^6.2.0",
