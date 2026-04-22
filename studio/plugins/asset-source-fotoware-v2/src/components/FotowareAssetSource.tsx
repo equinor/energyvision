@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-
 import { Card, Dialog, Flex, Spinner, Text } from '@sanity/ui'
 import { uuid } from '@sanity/uuid'
 import { arrayBufferToBlob } from 'blob-util'
@@ -21,7 +19,6 @@ import {
   getAuthURL,
   getSelectionWidgetURL,
   HAS_ENV_VARS,
-  storeAccessToken,
 } from '../utils'
 import { Button } from './Button'
 import { Iframe } from './Iframe'
@@ -41,18 +38,18 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   const [showSelectionIframe, setShowSelectionIframe] = useState(false)
   const [loadingText, setLoadingText] = useState('')
   const [hasError, setHasError] = useState(!HAS_ENV_VARS)
-  const [errorText, setErrorText] = useState(
-    !HAS_ENV_VARS
-      ? 'One or more required enviroment variables are not defined. Please contact support.'
-      : '',
-  )
+  const errorText = useMemo(() => {
+    if (!HAS_ENV_VARS) {
+      return 'One or more required enviroment variables are not defined. Please contact support.'
+    }
+    return 'Ops, something went wrong. Please contact developer support.'
+  }, [])
+
   const newWindow = useRef<Window | null>(null)
 
   const selectionIframeUrl = useMemo(() => {
     if (selectionToken) {
-      console.log('selection token', selectionToken)
       const url = getSelectionWidgetURL(selectionToken)
-      console.log('has token, get selection widget url', url)
       return url
     }
     return null
@@ -73,13 +70,11 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
         }
         try {
           const response = await fetch(serviceUrl, options)
-          console.log('getAsset response', response)
           const arrayBuffer = await response.arrayBuffer()
           setIsLoading(false)
           return arrayBuffer
         } catch (error) {
           console.error('Error fetching rendition:', error)
-          setErrorText('Error downloading image')
           setHasError(true)
           return null
         }
@@ -95,30 +90,21 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
         if (event.data?.error) {
           const { error, error_description } = event.data
           setHasError(true)
-          setErrorText(`Error: ${error} - description: ${error_description}`)
-          return false
-        }
-
-        if (!event?.data?.access_token) {
-          setHasError(true)
-          setErrorText(
-            'Missing access token. Make sure you have permission to access Fotoware and try again.',
-          )
+          console.warn(`Error: ${error} - description: ${error_description}`)
           return false
         }
 
         if (!checkAuthData(event.data)) {
           setHasError(true)
-          setErrorText('Invalid event data.')
+          console.warn('Invalid event data')
           return false
         }
 
         if (event.data.state !== requestState) {
           setHasError(true)
-          setErrorText('Redirect state did not match request state')
+          console.warn("Redirect state did not match request state'")
           return false
         }
-        console.log('selection widget auth event validated')
         return true
       }
 
@@ -127,7 +113,6 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
       if (event.data) {
         const validateEvent = validateAuthEvent()
         if (validateEvent) {
-          storeAccessToken('SelectionFotowareToken', event.data)
           setSelectionToken(event.data.access_token)
           setIsLogin(false)
           setShowSelectionIframe(true)
@@ -234,10 +219,9 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
     const authURL = await getAuthURL(requestState)
     if (!authURL) {
       setHasError(true)
-      setErrorText('Something went wrong when retrieving auth url')
+      console.warn('Failed to retrieve auth URL')
     }
     if (authURL && container) {
-      console.log('open auth url in window', authURL)
       newWindow.current = window.open(
         authURL,
         'Fotoware',
@@ -304,13 +288,12 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
           </Card>
         )}
         {!selectionToken && (
-          <Flex direction='column' align={'center'} gap={6}>
+          <Flex direction='column' align={'center'} gap={4}>
             {!isLogin && (
               <>
                 <Text align='center' size={[2, 2, 3, 3]}>
-                  We could not find an access token for Fotoware,
-                  <br />
-                  please log in below and a new window will open to log you in.
+                  Your session with Fotoware has expired or you are not logged
+                  in.
                 </Text>
                 <Button
                   onClick={() => {
