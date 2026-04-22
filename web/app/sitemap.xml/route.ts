@@ -4,6 +4,7 @@ import archivedNews from '@/lib/archive/archivedNewsPaths.json'
 import { crawlableDomains } from '@/lib/helpers/domainHelpers'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import {
+  getHomePagePaths,
   getLocalNewsPaths,
   getMagazineIndexPaths,
   getMagazinePaths,
@@ -16,7 +17,6 @@ import {
 const formatPath = ({ slug, locale: urlLocale }: PathType) => {
   const locale = urlLocale === defaultLanguage.locale ? '' : urlLocale
   const path = Array.isArray(slug) ? '/' + slug.join('/') : slug
-
   if (path === '/') return locale ? `/${locale}` : ''
   return locale ? `/${locale}${path}` : path
 }
@@ -58,7 +58,7 @@ export async function GET(request: Request) {
   let domain = host
 
   if (!crawlableDomains.includes(domain) && !Flags.IS_DEV) {
-    return new NextResponse('Not Found', { status: 404 })
+    return new NextResponse('Not found', { status: 404 })
   }
 
   domain = domain.startsWith('www') ? `https://${domain}` : domain
@@ -68,6 +68,7 @@ export async function GET(request: Request) {
 
   //remember to fetch the slug for newsroom and maazinIndex page from the templates itself now, on slug and translations slug
 
+  const homePageSlugs = await getHomePagePaths()
   const routeSlugs = await getRoutePaths(locales)
   const newsSlugs = Flags.HAS_NEWS ? await getNewsPaths(locales) : []
   const newsroomSlugs = Flags.HAS_NEWSROOM ? await getNewsroomPaths() : []
@@ -84,7 +85,10 @@ export async function GET(request: Request) {
     ? (archivedNews as PathType[])
     : []
 
+  console.log(homePageSlugs)
+
   const allSlugs = [
+    ...homePageSlugs,
     ...routeSlugs,
     ...newsSlugs,
     ...newsroomSlugs,
@@ -94,7 +98,7 @@ export async function GET(request: Request) {
     ...archivedNewsSlugs,
   ]
 
-  locale = searchParams.get('lang') ?? defaultLanguage.locale
+  locale = searchParams.get('lang') ?? ''
   const shouldFetchUrls = !isMultilanguage || locales.includes(locale)
 
   const headers = { 'Content-Type': 'text/xml' }
@@ -103,7 +107,7 @@ export async function GET(request: Request) {
     const indexXml = getSitemapIndex(domain, locales)
     return new NextResponse(indexXml, { headers })
   }
-
+  console.log(allSlugs)
   const paths = allSlugs.filter(route => route.locale === locale)
   const sitemapXml = getSitemapUrls(domain, paths)
   return new NextResponse(sitemapXml, { headers })

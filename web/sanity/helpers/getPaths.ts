@@ -1,9 +1,23 @@
+import { language } from '@equinor/eds-icons'
 import { groq } from 'next-sanity'
+import { defaultLanguage, languages } from '@/languageConfig'
 import { client } from '@/sanity/lib/client'
 import { sanityFetch } from '../lib/live'
 import { sameLang } from '../queries/common/langAndDrafts'
 import { publishDateTimeQuery } from '../queries/common/publishDateTime'
 import { getNameFromLocale } from './localization'
+
+const getHomePages = async () => {
+  const data: { lang: string; _updatedAt: string }[] = await client.fetch(
+    groq`*[_type=="route_homepage"][0]{
+  "data":*[_type == "translation.metadata" && references(^.content._ref)].translations[].value->{
+    lang,
+    _updatedAt
+  }
+    }.data`,
+  )
+  return data
+}
 
 const getTopicRoutesForLocale = async (locale: string) => {
   const lang = getNameFromLocale(locale)
@@ -85,6 +99,14 @@ export const getStaticBuildRoutePaths = async (
   return (await Promise.all(fetchPaths)).flat()
 }
 
+export const getHomePagePaths = async (): Promise<PathType[]> => {
+  const pages = await getHomePages()
+  return pages.map(it => ({
+    locale: languages.find(language => language.name === it.lang)?.locale || '',
+    updatedAt: it._updatedAt,
+    slug: '/',
+  }))
+}
 export const getRoutePaths = async (locales: string[]): Promise<PathType[]> => {
   const fetchPaths = locales.map(async locale => {
     const pages = await getTopicRoutesForLocale(locale)
