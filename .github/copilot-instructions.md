@@ -70,6 +70,11 @@ Related files: `package.json`, `eslint.config.js`, `biome.json`, `tsconfig.json`
 - Use existing route conventions and file organization; don’t mix `app/` and `pages/` in the same hierarchy.
 - For Tailwind, prefer the shared preset in brand/tailwind in package `@energyvision/shared` and follow website `tailwind.config.js` patterns.
 
+## Building and deployment
+- Never use ARG or ENV for sensitive data or secrets, as they are easily extractable via docker history.
+- Exclude Docker secret files, env.local and env.development from version control by adding them to .gitignore.
+- Limit secret size: Docker imposes a 500 KB limit on individual secret files
+
 ## Code reviews (for Copilot)
 
 - Summarize the pull-request on maximum two sentences

@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1
 FROM node:lts-alpine AS base
 RUN apk update
 RUN apk add --no-cache libc6-compat curl
@@ -68,9 +69,11 @@ ENV SANITY_STUDIO_PREVIEW_URL=${ARG_SANITY_STUDIO_PREVIEW_URL}
 #RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm studio add @repo/typescript-config @energyvision/shared
 #RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm studio install --frozen-lockfile 
 RUN --mount=type=secret,id=SANITY_STUDIO_PREVIEW_SECRET,env=SANITY_STUDIO_PREVIEW_SECRET \
-    --mount=type=secret,id=SANITY_STUDIO_FOTOWARE_AF_EXPORT_KEY,env=SANITY_STUDIO_FOTOWARE_AF_EXPORT_KEY \
+    --mount=type=secret,id=SANITY_STUDIO_FOTOWARE_AF_EXPORT_KEY \
+    SANITY_STUDIO_FOTOWARE_AF_EXPORT_KEY=$(cat /run/secrets/SANITY_STUDIO_FOTOWARE_AF_EXPORT_KEY) \
     --mount=type=secret,id=SANITY_STUDIO_SCREEN9_TOKEN,env=SANITY_STUDIO_SANITY_STUDIO_SCREEN9_TOKEN \
     turbo build --filter=energy-vision-studio 
+
 
 # Run
 FROM node:lts-alpine AS runner
