@@ -36,7 +36,6 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   const [isLoading, setIsLoading] = useState(false)
   const [isLogin, setIsLogin] = useState(false)
   const [showSelectionIframe, setShowSelectionIframe] = useState(false)
-  const [loadingText, setLoadingText] = useState('')
   const [hasError, setHasError] = useState(!HAS_ENV_VARS)
   const errorText = useMemo(() => {
     if (!HAS_ENV_VARS) {
@@ -174,9 +173,6 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
 
         setShowSelectionIframe(false)
         setIsLoading(true)
-        setLoadingText(
-          `Downloading ${assetFilename} from Fotoware... Please hold`,
-        )
         const assetMimeType =
           mime.getType(assetFilename) || 'application/octet-stream'
         const arrayBuffer = await getAsset(renditionUrl, assetMimeType)
@@ -319,9 +315,9 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
                 />
               </div>
             )}
-            <div className='mt-3 flex gap-2'>
-              <Spinner muted />
-              <div className='text-md'>{loadingText}</div>
+            <div className='mt-3 flex justify-center gap-4'>
+              <Spinner muted style={{ transform: 'translateY(0.7rem)' }} />
+              <div className='text-md'>{`Downloading ${asset?.filename ?? 'media'}...`}</div>
             </div>
           </div>
         )}
