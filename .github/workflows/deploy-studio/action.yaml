@@ -16,12 +16,6 @@ inputs:
   sanityPreviewToken:
     description: 'Sanity Preview token'
     required: true
-  brandmasterUrl:
-    description: 'Sanity Studio Brandmaster Url'
-    required: true
-  brandmasterPluginSource:
-    description: 'Sanity Studio Brandmaster Plugin Source'
-    required: true
   fotowareClientId:
     description: 'Client ID for Fotoware integration'
     required: true
@@ -118,8 +112,6 @@ runs:
           sanity_api_token=${{ inputs.sanityApiToken }}
         build-args: |
           ARG_SANITY_DATASET=${{ inputs.datasetName }}
-          ARG_BRANDMASTER_URL=${{ inputs.brandmasterUrl }}
-          ARG_BRANDMASTER_PLUGIN=${{ inputs.brandmasterPluginSource }}
           ARG_FOTOWARE_CLIENT_ID=${{ inputs.fotowareClientId }}
           ARG_FOTOWARE_TENANT_URL=${{ inputs.fotowareTenantUrl }}
           ARG_FOTOWARE_REDIRECT_ORIGIN=${{ inputs.fotowareRedirectOrigin }}

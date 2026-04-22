@@ -28,8 +28,6 @@ import { DeleteTranslationAction } from './actions/customDelete/DeleteTranslatio
 import deskStructure, { defaultDocumentNodeResolver } from './deskStructure'
 import { initialValueTemplates } from './initialValueTemplates'
 import { defaultLanguage } from './languages'
-import { BrandmasterAssetSource } from './plugins/asset-source-brandmaster'
-//import { FotowareAssetSource } from './plugins/asset-source-fotoware'
 import { FotowareAssetSource } from './plugins/asset-source-fotoware-v2'
 import { dataset, projectId } from './sanity.client'
 import { schemaTypes } from './schemas'
@@ -144,7 +142,6 @@ const getConfig = (
     }),
     datasetParam === 'global-development' && visionTool(),
     FotowareAssetSource(),
-    BrandmasterAssetSource(),
     isSecret &&
       crossDatasetDuplicator({
         tool: true,
