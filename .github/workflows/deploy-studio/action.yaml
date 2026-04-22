@@ -106,10 +106,10 @@ runs:
         cache-from: type=registry,ref=${{ inputs.imageName }}:${{ env.IMAGE_TAG }}
         cache-to: type=inline
         secrets: |
-          SANITY_STUDIO_PREVIEW_SECRET=${{ inputs.sanityPreviewToken }}
-          SANITY_STUDIO_FOTOWARE_AF_EXPORT_KEY=${{ inputs.fotowareAfExportKey }}
-          SANITY_STUDIO_SCREEN9_TOKEN=${{ inputs.screen9token }}
-          SANITY_STUDIO_API_TOKEN=${{ inputs.sanityApiToken }}
+          sanity_studio_preview_secret=${{ inputs.sanityPreviewToken }}
+          fotoware_af_export_key=${{ inputs.fotowareAfExportKey }}
+          screen9_token=${{ inputs.screen9token }}
+          sanity_api_token=${{ inputs.sanityApiToken }}
         build-args: |
           ARG_SANITY_DATASET=${{ inputs.datasetName }}
           ARG_BRANDMASTER_URL=${{ inputs.brandmasterUrl }}
