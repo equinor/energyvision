@@ -85,8 +85,6 @@ export async function GET(request: Request) {
     ? (archivedNews as PathType[])
     : []
 
-  console.log(homePageSlugs)
-
   const allSlugs = [
     ...homePageSlugs,
     ...routeSlugs,
@@ -107,7 +105,6 @@ export async function GET(request: Request) {
     const indexXml = getSitemapIndex(domain, locales)
     return new NextResponse(indexXml, { headers })
   }
-  console.log(allSlugs)
   const paths = allSlugs.filter(route => route.locale === locale)
   const sitemapXml = getSitemapUrls(domain, paths)
   return new NextResponse(sitemapXml, { headers })
