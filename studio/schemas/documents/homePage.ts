@@ -84,8 +84,8 @@ export default {
         { type: 'promotePeople', title: 'People promotion' },
         { type: 'promoteTopics', title: 'Topic page promotion' },
         Flags.HAS_NEWS && { type: 'promoteNews', title: 'News promotions' },
-        { type: 'promoteExternalLinkV2' },
-        { type: 'promoteTopicsV2' },
+        /*         { type: 'promoteExternalLinkV2' },
+        { type: 'promoteTopicsV2' }, */
         { type: 'promotionsV2' },
       ].filter(e => e),
       components: {
@@ -110,7 +110,7 @@ export default {
             {
               name: 'promotionsV2',
               title: 'Promotions(v2)',
-              of: ['promotionsV2', 'promoteExternalLinkV2', 'promoteTopicsV2'],
+              of: ['promotionsV2'],
             },
             {
               name: 'carousels',

@@ -70,8 +70,6 @@ export const content = {
     { type: 'pieChartBlock', title: 'Pie chart' },
     { type: 'lineChartBlock', title: 'Line chart' },
     { type: 'barChartBlock', title: 'Bar chart' },
-    { type: 'promoteExternalLinkV2' },
-    { type: 'promoteTopicsV2' },
     { type: 'promotionsV2' },
     { type: 'anchorSearch' },
   ].filter(e => e),
@@ -97,7 +95,7 @@ export const content = {
         {
           name: 'promotionsV2',
           title: 'Promotions(v2)',
-          of: ['promotionsV2', 'promoteExternalLinkV2', 'promoteTopicsV2'],
+          of: ['promotionsV2'],
         },
         {
           name: 'carousels',

@@ -13,7 +13,6 @@ import {
 } from 'sanity'
 import { capitalizeFirstLetter } from '@/helpers/formatters'
 import blocksToText from '../../../helpers/blocksToText'
-import anchorLinkReference from '../anchorLinkList/anchorLinkReference'
 import {
   hideTitle,
   ingress,
@@ -21,12 +20,6 @@ import {
   theme,
   title,
 } from '../commonFields/commonFields'
-import {
-  externalLink,
-  homepageLink,
-  internalReference,
-  internalReferenceOtherLanguage,
-} from '../linkSelector/common'
 import linkSelector from '../linkSelector/linkSelector'
 
 type PromotionLayoutInputProps = {
@@ -141,7 +134,9 @@ export default {
               hidden: ({ parent }: any) => {
                 return (
                   parent?.linkSelector?.link[0]?._type !== 'link' &&
-                  parent?.linkSelector?.link[0]?._type !== 'anchorLinkReference'
+                  parent?.linkSelector?.link[0]?._type !==
+                    'anchorLinkReference' &&
+                  parent?.linkSelector?.link[0]?._type !== 'homePageLink'
                 )
               },
               validation: (Rule: Rule) =>
@@ -310,7 +305,7 @@ export default {
       theme?: any
     }) {
       const plainTitle = title ? blocksToText(title) : 'Untitled'
-      const subTitle = `Promote ${promoteList && promoteList?.length > 0 ? promoteList.length : ''} topics`
+      const subTitle = `${promoteList && promoteList?.length > 0 ? promoteList.length : ''} promotions (v2) `
       return {
         title: plainTitle,
         subtitle: subTitle,
