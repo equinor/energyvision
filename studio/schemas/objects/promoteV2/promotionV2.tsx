@@ -169,7 +169,7 @@ export default {
                 'linkSelector.link.0.content.heroFigure.image',
               customImage: 'image',
               link: 'link',
-              label: 'label',
+              label: 'linkSelector.label',
               type: 'linkSelector.link.0._type',
             },
             prepare({
@@ -194,15 +194,12 @@ export default {
               type?: string
             }) {
               let promoType = type ?? 'not set'
-
-              if (type?.includes('internalReference')) {
-                promoType = 'internal route'
-              }
-              if (type?.includes('anchorLinkReference')) {
+              if (type === 'pageAnchor') {
                 promoType = 'anchor link'
-              }
-              if (type === 'link') {
+              } else if (type === 'link') {
                 promoType = 'external link'
+              } else if (type) {
+                promoType = 'internal link '
               }
               const referenceTitle =
                 referenceTopicTitle ?? referenceNewsMagTitle
@@ -219,7 +216,7 @@ export default {
                 typeof label === 'undefined' &&
                 referenceTitle
               ) {
-                title = blocksToText(referenceTitle) ?? 'Missing title'
+                title = blocksToText(referenceTitle) ?? label ?? 'Missing title'
               }
 
               return {
