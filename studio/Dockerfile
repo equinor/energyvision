@@ -68,10 +68,10 @@ ENV SANITY_STUDIO_PREVIEW_URL=${ARG_SANITY_STUDIO_PREVIEW_URL}
 
 #RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm studio add @repo/typescript-config @energyvision/shared
 #RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm studio install --frozen-lockfile 
-RUN --mount=type=secret,id=sanity_studio_preview_secret,env=SANITY_STUDIO_PREVIEW_SECRET,target=.env \
-    --mount=type=secret,id=fotoware_af_export_key,env=SANITY_STUDIO_FOTOWARE_AF_EXPORT_KEY,target=.env \
-    --mount=type=secret,id=screen9_token,env=SANITY_STUDIO_SCREEN9_TOKEN,target=.env \
-    --mount=type=secret,id=sanity_api_token,env=SANITY_STUDIO_API_TOKEN,target=.env \
+RUN --mount=type=secret,id=sanity_studio_preview_secret,env=SANITY_STUDIO_PREVIEW_SECRET \
+    --mount=type=secret,id=fotoware_af_export_key,env=SANITY_STUDIO_FOTOWARE_AF_EXPORT_KEY \
+    --mount=type=secret,id=screen9_token,env=SANITY_STUDIO_SCREEN9_TOKEN \
+    --mount=type=secret,id=sanity_api_token,env=SANITY_STUDIO_API_TOKEN \
     pnpm turbo run build --filter=energy-vision-studio 
 
 

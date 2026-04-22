@@ -2,11 +2,30 @@
   "$schema": "https://turborepo.dev/schema.json",
   "ui": "tui",
   "tasks": {
-    "build": {
-      "dependsOn": ["^build"],
+    "energy-vision-web#build": {
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "outputs": [".next/**", "!.next/cache/**"],
       "passThroughEnv": ["SANITY_API_TOKEN", "SANITY_STUDIO_API_PROJECT_ID"]
+    },
+    "energy-vision-studio#build": {
+      "outputs": ["dist/**", ".sanity/**"],
+      "passThroughEnv": [
+        "SANITY_STUDIO_API_PROJECT_ID",
+        "SANITY_STUDIO_API_DATASET",
+        "SANITY_STUDIO_API_TOKEN",
+        "SANITY_STUDIO_FOTOWARE_AF_EXPORT_KEY",
+        "SANITY_STUDIO_FOTOWARE_AF_EXPORT_URL",
+        "SANITY_STUDIO_FOTOWARE_CLIENT_ID",
+        "SANITY_STUDIO_FOTOWARE_TENANT_URL",
+        "SANITY_STUDIO_FOTOWARE_REDIRECT_ORIGIN",
+        "SANITY_STUDIO_FOTOWARE_REDIRECT_URI",
+        "SANITY_STUDIO_SCREEN9_ACCOUNT_ID",
+        "SANITY_STUDIO_SCREEN9_TOKEN",
+        "SANITY_STUDIO_PREVIEW_URL",
+        "SANITY_STUDIO_PREVIEW_SECRET",
+        "SANITY_STUDIO_BRANDMASTER_URL",
+        "SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE"
+      ]
     },
     "lint": {
       "dependsOn": ["^lint"]
