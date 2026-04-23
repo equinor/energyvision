@@ -7,7 +7,7 @@ import { languages } from 'languages'
 
 const getHomePages = async () => {
   const data: { lang: string; _updatedAt: string }[] = await getClient(false).fetch(
-    groq`*[_type=="route_homepage"][0]{
+    groq`*[_type=="route_homepage" && ${noDrafts}][0]{
   "data":*[_type == "translation.metadata" && references(^.content._ref)].translations[].value->{
     lang,
     _updatedAt
