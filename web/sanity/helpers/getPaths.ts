@@ -15,6 +15,10 @@ const getHomePages = async () => {
     _updatedAt
   }
     }.data`,
+    undefined,
+    {
+      perspective: 'published',
+    },
   )
   return data
 }
