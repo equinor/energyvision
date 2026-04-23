@@ -97,11 +97,11 @@ runs:
         cache-to: type=inline
         secrets: |
           sanity_api_token=${{ inputs.sanityApiToken }}
+          next_public_algolia_search_api_key=${{ inputs.algoliaApiKey }}
         build-args: |
           ARG_SANITY_PROJECT_ID=${{ inputs.projectId }}
           ARG_SANITY_DATASET=${{ inputs.datasetName }}
           ARG_ALGOLIA_APP_ID=${{ inputs.algoliaAppId }}
-          ARG_ALGOLIA_SEARCH_API_KEY=${{ inputs.algoliaApiKey }}
           ARG_ENV=${{ inputs.environment }}
           ARG_NODE_ENV=${{ inputs.nodeEnvironment }}
           ARG_ARCHIVE_CONTENT_LINK=${{ inputs.archiveContentLink }}
