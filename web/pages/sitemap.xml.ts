@@ -95,6 +95,8 @@ export const getServerSideProps: GetServerSideProps = async ({ query, req, res }
 
   if (isMultilanguage) {
     locale = String(query?.lang)
+    console.log(homePageSlugs)
+    console.log(locale)
     paths = allSlugs.filter((route) => route.locale === locale)
   } else {
     locale = defaultLanguage.locale
