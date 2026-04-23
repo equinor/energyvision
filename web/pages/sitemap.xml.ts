@@ -8,6 +8,7 @@ import {
   getNewsroomPaths,
   getMagazineIndexPaths,
   getMagazinePaths,
+  getHomePagePaths,
 } from '../common/helpers/getPaths'
 import { Flags } from '../common/helpers/datasetHelpers'
 import archivedNews from '../lib/archive/archivedNewsPaths.json'
@@ -72,6 +73,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query, req, res }
 
   const isMultilanguage = locales.length > 1
 
+  const homePageSlugs = await getHomePagePaths()
   const routeSlugs = await getRoutePaths(locales)
   const newsSlugs = Flags.HAS_NEWS ? await getNewsPaths(locales) : []
   const newsroomSlugs = Flags.HAS_NEWSROOM ? await getNewsroomPaths() : []
@@ -81,6 +83,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query, req, res }
   const archivedNewsSlugs = Flags.HAS_ARCHIVED_NEWS ? archivedNews : []
 
   const allSlugs = [
+    ...homePageSlugs,
     ...routeSlugs,
     ...newsSlugs,
     ...newsroomSlugs,
