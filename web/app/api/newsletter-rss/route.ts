@@ -3,7 +3,7 @@ import { format } from 'date-fns'
 import { enGB, nb } from 'date-fns/locale'
 import { NextResponse } from 'next/server'
 import { toPlainText } from 'next-sanity'
-import { client } from '@/sanity/lib/client'
+import { noCdnClient } from '@/sanity/lib/client'
 import { urlForImage } from '@/sanity/lib/utils'
 import {
   type newsletterCategoryKeys,
@@ -11,6 +11,7 @@ import {
 } from '@/types/newsLetterTypes'
 import { type LatestNewsType, latestMagazine, latestNews } from './groq.global'
 
+const client = noCdnClient()
 const generateRssFeed = async (locale: 'en_GB' | 'nb_NO') => {
   try {
     // Fetch both English and Norwegian articles from news and magazine
