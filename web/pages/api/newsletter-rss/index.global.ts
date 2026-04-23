@@ -4,7 +4,7 @@ import { format } from 'date-fns'
 import { enGB, nb } from 'date-fns/locale'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { urlFor } from '../../../common/helpers/urlFor'
-import { sanityClient } from '../../../lib/sanity.server'
+import { previewClient } from '../../../lib/sanity.server'
 import { mapCategoryToId } from '../subscriptionNew'
 import { type LatestNewsType, latestMagazine, latestNews } from './groq.global'
 
@@ -12,9 +12,9 @@ const generateRssFeed = async (locale: 'en_GB' | 'nb_NO') => {
   try {
     // Fetch both English and Norwegian articles from news and magazine
     const [newsArticles, magazineArticles, settings] = await Promise.all([
-      sanityClient.fetch(latestNews, { lang: locale }),
-      sanityClient.fetch(latestMagazine, { lang: locale }),
-      sanityClient.fetch(/* groq */ `*[_type == "settings"][0]{logo}`),
+      previewClient.fetch(latestNews, { lang: locale }),
+      previewClient.fetch(latestMagazine, { lang: locale }),
+      previewClient.fetch(/* groq */ `*[_type == "settings"][0]{logo}`),
     ])
 
     // Merge the articles and sort by publish date (newest first)
@@ -70,11 +70,11 @@ const generateRssFeed = async (locale: 'en_GB' | 'nb_NO') => {
         <item>
           <title>${title}</title>
           <link><![CDATA[https://www.equinor.com${langPath}${
-        article.slug
-      }?utm_source=newssubscription&utm_medium=email]]></link>
+            article.slug
+          }?utm_source=newssubscription&utm_medium=email]]></link>
           <guid><![CDATA[https://www.equinor.com${langPath}${
-        article.slug
-      }?utm_source=newssubscription&utm_medium=email]]></guid>
+            article.slug
+          }?utm_source=newssubscription&utm_medium=email]]></guid>
           <pubDate>${publishDate}</pubDate>
           <description><![CDATA[${toPlainText(article.ingress)}]]></description>
           ${
