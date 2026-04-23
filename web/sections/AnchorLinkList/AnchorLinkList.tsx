@@ -1,6 +1,7 @@
 import { forwardRef, type HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
-import ButtonLink from '@/core/Link/ButtonLink'
+import { ArrowRight } from '@/icons'
+import { getLayoutPx } from '@/lib/helpers/getCommonUtilities'
 import { Typography } from '../../core/Typography'
 import type { AnchorLinkReference } from '../../types'
 
@@ -9,6 +10,9 @@ export type AnchorLinkListData = {
   type: 'anchorLinkList'
   title?: string
   columns?: string
+  hideTitle?: boolean
+  layoutGrid?: 'sm' | 'md' | 'lg'
+  makeSticky?: boolean
   anchorList?: AnchorLinkReference[]
 }
 
@@ -19,11 +23,18 @@ export type AnchorLinkListProps = {
 } & HTMLAttributes<HTMLElement>
 
 const AnchorLinkList = forwardRef<HTMLElement, AnchorLinkListProps>(
-  function AnchorLinkList({ data, anchor, className = '', ...rest }, ref) {
-    const { title, anchorList = [], columns } = data
+  function AnchorLinkList({ data, anchor, className = '' }, ref) {
+    const { title, anchorList = [], columns, layoutGrid, hideTitle } = data
 
     const getFlow = () => {
-      const commonGridStyling = 'grid lg:place-items-start grid-cols-3'
+      const commonGridStyling = 'grid lg:place-items-center grid-cols-3'
+
+      const pxVariant = {
+        lg: `grid-cols-[repeat(auto-fit,_minmax(100px,_1fr))]`,
+        md: `grid-cols-[repeat(auto-fit,_minmax(150px,_1fr))]`,
+        sm: `grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))]`,
+      }
+
       switch (columns) {
         case '3':
           return `${commonGridStyling} lg:grid-cols-3`
@@ -34,28 +45,32 @@ const AnchorLinkList = forwardRef<HTMLElement, AnchorLinkListProps>(
         case '6':
           return `${commonGridStyling} lg:grid-cols-6`
         default:
-          return 'grid grid-cols-[repeat(auto-fill, minmax(80px,1fr))] justify-start'
+          return `grid ${pxVariant[layoutGrid ?? 'lg']} place-content-center`
       }
     }
+
+    const px = getLayoutPx(layoutGrid ?? 'lg')
+
     return (
       <section
         ref={ref}
         className={twMerge(
-          `mx-auto flex flex-col items-center px-layout-md pb-page-content`,
+          `flex flex-col items-center ${px} pb-page-content`,
           className,
         )}
         id={anchor}
-        {...rest}
       >
         <div className='w-full border-moss-green-50 border-y py-6'>
           {title && (
-            <Typography variant='h5' as='h2' className='pb-4 text-center'>
+            <Typography
+              variant='h5'
+              as='h2'
+              className={`${hideTitle ? 'sr-only' : 'pb-4 text-center'} `}
+            >
               {title}
             </Typography>
           )}
-          <ul
-            className={`w-full ${getFlow()} gap-x-4 gap-y-2 lg:gap-x-6 lg:gap-y-4`}
-          >
+          <ul className={`${getFlow()} gap-x-4 gap-y-2 lg:gap-x-6 lg:gap-y-4`}>
             {anchorList?.map(
               (anchorLink: {
                 id: string
@@ -68,15 +83,15 @@ const AnchorLinkList = forwardRef<HTMLElement, AnchorLinkListProps>(
                 return (
                   <li
                     key={`anchor_link_${anchorLink?.id}`}
-                    className='flex w-full justify-start'
+                    className='flex w-fill justify-start'
                   >
-                    <ButtonLink
-                      variant='ghost'
+                    <a
                       href={anchor}
-                      className='w-max text-moss-green-100'
+                      className='group flex w-fill items-center justify-center gap-1 whitespace-nowrap text-base text-moss-green-100 hover:underline'
                     >
+                      <ArrowRight className='-mt-1 invisible size-6 rotate-90 text-autumn-storm-60 group-hover:visible' />
                       {anchorLink?.title}
-                    </ButtonLink>
+                    </a>
                   </li>
                 )
               },

@@ -37,7 +37,7 @@ export const TopbarWrapper = ({ children }: TopbarWrapperProps) => {
           (currentScrollPos === 0 && prevScrollPos === 0),
       )
 
-      if (!stickyMenuData) {
+      if (!showSticky) {
         // Why so complicated? To attempt to limit the amount of calls to setHasDropShadow
         if (currentScrollPos < 50) {
           if (hasDropShadow) {
@@ -62,7 +62,7 @@ export const TopbarWrapper = ({ children }: TopbarWrapperProps) => {
     return () => {
       window.removeEventListener('scroll', handleScroll)
     }
-  }, [prevScrollPos, height, hasDropShadow, stickyMenuData])
+  }, [prevScrollPos, height, hasDropShadow, showSticky])
 
   useEffect(() => {
     if (topbarRef?.current) {

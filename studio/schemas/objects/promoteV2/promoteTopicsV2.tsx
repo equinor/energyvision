@@ -160,7 +160,7 @@ export default {
       validation: (Rule: Rule) => Rule.unique(),
     },
     theme,
-    layoutGrid,
+    layoutGrid(),
     {
       title: 'Number of grid columns',
       name: 'gridColumns',
@@ -186,9 +186,11 @@ export default {
           if (Number(ctx.parent?.promoteList?.length) < Number(value)) {
             return 'Fewer promotions than grid columns. Please select lower grid columns'
           }
-          //@ts-ignore:todo
+
           if (
+            //@ts-ignore:todo
             ctx.parent?.layoutDirection === 'row' &&
+            //@ts-ignore:todo
             ctx.parent?.layoutGrid !== 'sm'
           ) {
             if (value === '4') {

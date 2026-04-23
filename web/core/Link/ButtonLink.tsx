@@ -1,8 +1,8 @@
 import { forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { BaseLink, BaseLinkProps } from './BaseLink'
-import { LinkType } from '../../types/index'
-import { ButtonProps, commonButtonStyling, getVariant } from '../Button'
+import type { LinkType } from '../../types/index'
+import { type ButtonProps, commonButtonStyling, getVariant } from '../Button'
+import { BaseLink, type BaseLinkProps } from './BaseLink'
 
 export type ButtonLinkProps = {
   /** What kind of content is it  */
@@ -11,17 +11,36 @@ export type ButtonLinkProps = {
   Omit<BaseLinkProps, 'type'>
 
 /** Read more link style */
-export const ButtonLink = forwardRef<HTMLAnchorElement, ButtonLinkProps>(function ButtonLink(
-  { children, type = 'internalUrl', variant = 'contained', className = '', href = '', ...rest },
-  ref,
-) {
-  const classNames = twMerge(commonButtonStyling, getVariant(variant), className)
+export const ButtonLink = forwardRef<HTMLAnchorElement, ButtonLinkProps>(
+  function ButtonLink(
+    {
+      children,
+      type = 'internalUrl',
+      variant = 'contained',
+      className = '',
+      href = '',
+      onClick,
+    },
+    ref,
+  ) {
+    const classNames = twMerge(
+      commonButtonStyling,
+      getVariant(variant),
+      className,
+    )
 
-  // What is files link external? Should not be nextlink?
-  return (
-    <BaseLink className={classNames} skipInternalStyle ref={ref} type={type} href={href} {...rest}>
-      {children}
-    </BaseLink>
-  )
-})
+    return (
+      <BaseLink
+        className={classNames}
+        skipInternalStyle
+        ref={ref}
+        type={type}
+        href={href}
+        onClick={onClick}
+      >
+        {children}
+      </BaseLink>
+    )
+  },
+)
 export default ButtonLink

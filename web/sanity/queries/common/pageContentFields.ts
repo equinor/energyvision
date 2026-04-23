@@ -594,7 +594,9 @@ _type == "keyNumbers" =>{
     "type": _type,
     "id": _key,
     title,
+    hideTitle,
     columns,
+    layoutGrid,
     "anchorList":anchorList[]{
      ${anchorLinkReferenceFields}
     }

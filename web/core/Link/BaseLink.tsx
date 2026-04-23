@@ -35,15 +35,13 @@ export const BaseLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(
     const classNames = skipInternalStyle
       ? className
       : twMerge(
-          `
-    text-slate-80
-    focus:outline-hidden
-    focus-visible:envis-outline
-    active:scale-99
-    dark:text-white-100
-    dark:focus-visible:envis-outline-invert
-    dark:active:envis-outline-invert
-  `,
+          `text-slate-80
+          focus:outline-hidden
+          focus-visible:envis-outline
+          active:scale-99
+          dark:text-white-100
+          dark:focus-visible:envis-outline-invert
+          dark:active:envis-outline-invert`,
           className,
         )
 

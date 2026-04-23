@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { format_line_spacing } from '@equinor/eds-icons'
+import type { Rule } from 'sanity'
 import { EdsIcon } from '../../../icons'
+import { layoutGrid } from '../commonFields/commonFields'
 
 export type AnchorLinkList = {
   _type: 'anchorLinkList'
@@ -15,11 +17,21 @@ export default {
     {
       name: 'title',
       type: 'string',
+      validation: (rule: Rule) => rule.required(),
     },
+    {
+      name: 'hideTitle',
+      type: 'boolean',
+      title: 'Hide title',
+      description:
+        'Hides title, but is available for screen readers and gives an meaningful heading for the list',
+    },
+    layoutGrid(),
     {
       name: 'columns',
       type: 'string',
-      description: 'Manually set number of columns. Defaults to even flow with set space between',
+      description:
+        'Manually set number of columns. Defaults to even flow with set space between',
       options: {
         list: [
           { title: 'Even flow', value: 'flex' },

@@ -92,21 +92,25 @@ export const theme = {
   type: 'themeSelector',
   fieldset: 'design',
 }
-export const layoutGrid = {
-  title: 'Layout grid',
-  name: 'layoutGrid',
-  type: 'string',
-  description: 'Select content grid column',
-  options: {
-    list: [
-      { title: 'Third outer', value: 'sm' },
-      { title: 'Second outer', value: 'md' },
-      { title: 'Innermost', value: 'lg' },
-    ],
-  },
-  initialValue: 'lg',
-  fieldset: 'design',
+export const layoutGrid = (hiddenCallBack?: any, fieldset?: string) => {
+  return {
+    title: 'Layout grid',
+    name: 'layoutGrid',
+    type: 'string',
+    description: 'Select content grid column',
+    options: {
+      list: [
+        { title: 'Third outer', value: 'sm' },
+        { title: 'Second outer', value: 'md' },
+        { title: 'Innermost', value: 'lg' },
+      ],
+    },
+    initialValue: 'lg',
+    ...(fieldset && { fieldset }), //fieldset: 'design',
+    ...(hiddenCallBack && { hidden: hiddenCallBack }),
+  }
 }
+
 export const gridColumns = {
   title: 'Number of grid columns',
   name: 'gridColumns',

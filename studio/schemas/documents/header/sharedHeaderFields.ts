@@ -5,6 +5,7 @@ import type {
   ValidationContext,
 } from 'sanity'
 import { isAllowed } from '@/helpers/isAllowed'
+import { layoutGrid as _layoutGrid } from '@/schemas/objects/commonFields/commonFields'
 import { CompactBlockEditor } from '../../components/CompactBlockEditor'
 import { configureBlockContent } from '../../editors'
 import type { ImageWithAltAndCaption } from '../../objects/imageWithAltAndCaption'
@@ -297,24 +298,28 @@ const applyDisplayText = {
   },
 }
 
-const layoutGrid = {
-  title: 'Layout grid',
-  name: 'layoutGrid',
-  type: 'string',
-  description: 'Select content grid column',
-  options: {
-    list: [
-      { title: 'Third outer', value: 'sm' },
-      { title: 'Second outer', value: 'md' },
-      { title: 'Innermost', value: 'lg' },
-    ],
-  },
-  initialValue: 'lg',
-  fieldset: 'hero',
-  hidden: ({ parent }: DocumentType) => {
-    return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE
-  },
-}
+const layoutGrid = _layoutGrid(({ parent }: DocumentType) => {
+  return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE
+}, 'hero')
+/*   {
+    title: 'Layout grid',
+    name: 'layoutGrid',
+    type: 'string',
+    description: 'Select content grid column',
+    options: {
+      list: [
+        { title: 'Third outer', value: 'sm' },
+        { title: 'Second outer', value: 'md' },
+        { title: 'Innermost', value: 'lg' },
+      ],
+    },
+    initialValue: 'lg',
+    fieldset: 'hero',
+    hidden: ({ parent }: DocumentType) => {
+      return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE
+    },
+  } */
+
 const alignContentY = {
   title: 'Vertical content alignment',
   name: 'alignContentY',

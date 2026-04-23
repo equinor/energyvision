@@ -231,7 +231,7 @@ export default {
       validation: (Rule: Rule) => Rule.unique(),
     },
     theme,
-    layoutGrid,
+    layoutGrid(),
     {
       title: 'Number of grid columns',
       name: 'gridColumns',
