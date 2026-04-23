@@ -3,6 +3,19 @@ import { getNameFromLocale } from '../../lib/localization'
 import { publishDateTimeQuery } from '../../lib/queries/common/publishDateTime'
 import { getClient } from '../../lib/sanity.server'
 import { noDrafts, sameLang } from './../../lib/queries/common/langAndDrafts'
+import { languages } from 'languages'
+
+const getHomePages = async () => {
+  const data: { lang: string; _updatedAt: string }[] = await getClient(false).fetch(
+    groq`*[_type=="route_homepage"][0]{
+  "data":*[_type == "translation.metadata" && references(^.content._ref)].translations[].value->{
+    lang,
+    _updatedAt
+  }
+    }.data`,
+  )
+  return data
+}
 
 const getTopicRoutesForLocale = async (locale: string) => {
   const lang = getNameFromLocale(locale)
@@ -45,6 +58,15 @@ const getDocumentsForLocale = async (type: 'news' | 'localNews' | 'magazine', lo
     },
   )
   return data
+}
+
+export const getHomePagePaths = async (): Promise<PathType[]> => {
+  const pages = await getHomePages()
+  return pages.map((it) => ({
+    locale: languages.find((language) => language.name === it.lang)?.locale || '',
+    updatedAt: it._updatedAt,
+    slug: '/',
+  }))
 }
 
 // Get a Sanity document by given slug
