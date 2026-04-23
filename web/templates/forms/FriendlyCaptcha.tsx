@@ -1,12 +1,9 @@
 'use client'
-import type {
-  StartMode,
-  WidgetHandle,
-} from '@friendlycaptcha/sdk'
+import type { StartMode, WidgetHandle } from '@friendlycaptcha/sdk'
 import { useLocale } from 'next-intl'
-import {  useContext, useEffect, useRef } from 'react'
-import { friendlyCaptcha } from '../../lib/config'
+import { useContext, useEffect, useRef } from 'react'
 import { FriendlyCaptchaContext } from '@/contexts/FriendlyCaptchaContext'
+import { friendlyCaptcha } from '../../lib/config'
 
 const FriendlyCaptcha = ({
   doneCallback,
@@ -53,9 +50,7 @@ const FriendlyCaptcha = ({
     ;() => {
       widget.current?.destroy()
     }
-  }, [doneCallback, errorCallback, locale, startMode])
-
-
+  }, [doneCallback, errorCallback, locale, startMode, fRCContext?.sdk])
 
   return <div ref={container} />
 }

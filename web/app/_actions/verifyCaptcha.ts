@@ -9,7 +9,7 @@ async function validateCaptcha(captchaSolution: string, acceptErrors = false) {
     method: 'POST',
     body: JSON.stringify({
       response: captchaSolution,
-      sitekey: process.env.NEXT_PUBLIC_FRIENDLY_CAPTCHA_SITEKEY,
+      sitekey: process.env.FRIENDLY_CAPTCHA_SITEKEY,
     }),
     headers: {
       'Content-Type': 'application/json',

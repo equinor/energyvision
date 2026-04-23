@@ -16,7 +16,7 @@
     "module": "preserve",
     "isolatedModules": true,
     "jsx": "preserve",
-    "incremental": true,
-    "include": ["src/**/*", "tests/**/*", "my-problem-file.ts"]
-  }
+    "incremental": true
+  },
+  "include": ["src/**/*", "tests/**/*", "my-problem-file.ts"]
 }
