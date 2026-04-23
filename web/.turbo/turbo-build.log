@@ -1,0 +1,18 @@
+
+
+> energy-vision-web@0.1.0 build /Users/BOSE/Dev/energyvision/web
+> next build
+
+[1m[38;2;173;127;168m▲ Next.js 16.2.1[39m[22m (Turbopack)
+- Environments: .env.local, .env
+- Experiments (use with caution):
+  · clientTraceMetadata
+  · optimizePackageImports
+
+[37m[1m [22m[39m Creating an optimized production build ...
+[32m[1m✓[22m[39m Compiled successfully in 6.0s
+[?25l[37m[1m [22m[39m Running next.config.js provided runAfterProductionCompile  [36m.[39m[2K[1G[1A[2K[1G[37m[1m [22m[39m Running next.config.js provided runAfterProductionCompile  [36m..[39m[2K[1G[1A[2K[1G[?25h[32m[1m✓[22m[39m Completed runAfterProductionCompile in 228ms
+[?25l [36m.[39m [2K[1G[?25h[?25l[37m[1m [22m[39m Running TypeScript  [36m.[39m../packages/typescript-config/nextjs.json(20,5): error TS5023: Unknown compiler option 'include'.
+
+[2K[1G[?25hNext.js build worker exited with code: 1 and signal: null
+[?25l [36m.[39m [?25h[41m[30m ELIFECYCLE [39m[49m [31mCommand failed with exit code 1.[39m

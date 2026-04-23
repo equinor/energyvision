@@ -28,7 +28,7 @@ jobs:
       name: ${{ github.event.inputs.environment }}
     steps:
       - name: Checkout fotoware redirect code🛎️
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: 'equinor/energyvision-fotoware-redirect'
           ssh-key: '${{ secrets.DEPLOY_FUNCTION_KEY }}'
@@ -39,7 +39,7 @@ jobs:
         with:
           version: '8.5.1'
       - name: Cache pnpm modules 💾
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 18
           # cache: 'npm'

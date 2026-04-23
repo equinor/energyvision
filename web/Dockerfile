@@ -1,5 +1,5 @@
 # ---------- BASE IMAGE ----------
-FROM node:18-alpine AS base
+FROM node:lts-alpine AS base
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 ENV NODE_OPTIONS="--max_old_space_size=8192"
