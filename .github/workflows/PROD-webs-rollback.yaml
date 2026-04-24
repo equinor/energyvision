@@ -28,7 +28,7 @@ jobs:
       - name: Skip or fail if invalid 🛂
         id: validate-input
         if: ${{ steps.regex-match.outputs.match == '' }}
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           script: |
             core.setFailed('Commit SHA is not valid. Please use the 12 characters format.')
