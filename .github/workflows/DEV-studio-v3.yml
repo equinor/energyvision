@@ -25,7 +25,7 @@ jobs:
           ref: staging
       - name: Install pnpm 📦
         id: install-pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
         with:
           version: '8.5.1'
       - name: Cache pnpm modules 💾
