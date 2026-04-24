@@ -3,7 +3,7 @@ import { format } from 'date-fns'
 import { enGB, nb } from 'date-fns/locale'
 import { NextResponse } from 'next/server'
 import { toPlainText } from 'next-sanity'
-import { noCdnClient } from '@/sanity/lib/client'
+import { noCdnClient as client } from '@/sanity/lib/client'
 import { urlForImage } from '@/sanity/lib/utils'
 import {
   type newsletterCategoryKeys,
@@ -11,7 +11,6 @@ import {
 } from '@/types/newsLetterTypes'
 import { type LatestNewsType, latestMagazine, latestNews } from './groq.global'
 
-const client = noCdnClient()
 const generateRssFeed = async (locale: 'en_GB' | 'nb_NO') => {
   try {
     // Fetch both English and Norwegian articles from news and magazine
@@ -97,11 +96,19 @@ const generateRssFeed = async (locale: 'en_GB' | 'nb_NO') => {
       rss += `
         <item>
           <title>${title}</title>
-          <link><![CDATA[https://equinor.com${langPath}${article.slug}?utm_source=newssubscription&utm_medium=email]]></link>
-          <guid><![CDATA[https://equinor.com${langPath}${article.slug}?utm_source=newssubscription&utm_medium=email]]></guid>
+          <link><![CDATA[https://www.equinor.com${langPath}${
+            article.slug
+          }?utm_source=newssubscription&utm_medium=email]]></link>
+          <guid><![CDATA[https://www.equinor.com${langPath}${
+            article.slug
+          }?utm_source=newssubscription&utm_medium=email]]></guid>
           <pubDate>${publishDate}</pubDate>
           <description><![CDATA[${toPlainText(article.ingress)}]]></description>
-          ${categoryTag ? `<category>${newsletterCategoryMap[locale === 'nb_NO' ? 'no' : 'en'][categoryTag]}</category>` : '<category />'}
+          ${
+            categoryTag
+              ? `<category>${newsletterCategoryMap[locale === 'nb_NO' ? 'no' : 'en'][categoryTag]}</category>`
+              : '<category />'
+          }
           <nl:extra1>${formattedPubDate}</nl:extra1>
           ${
             hero?.image?.asset

@@ -39,8 +39,8 @@ export const notSecuredTokenClient = createClient({
   token: process.env.SANITY_API_TOKEN,
 })
 
-export const noCdnClient = () =>
-  createClient({
-    ...sanityConfig,
-    useCdn: false,
-  })
+export const noCdnClient = createClient({
+  ...sanityConfig,
+  useCdn: false,
+  token: process.env.SANITY_API_TOKEN,
+})

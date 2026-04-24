@@ -16,12 +16,14 @@ export type LatestNewsType = {
   subscriptionType: string
   lang: string
 }
-
-//add groq to collect only ones with category
+const publishedSinceYesterday = /* groq */ `
+dateTime(${publishDateTimeQuery}) > dateTime(now()) - 86400
+`
+//add groq to collect only ones with category that has been published since yesterday
 
 export const latestNews = /* groq */ `
 ${functions}
-  *[_type == "news" && ((defined(subscriptionType) && ${sameLang}) || subscriptionType == "Crude")] | order(${publishDateTimeQuery} desc)[0...5] {
+  *[_type == "news" &&  ${publishedSinceYesterday} &&  ((defined(subscriptionType) && ${sameLang}) || subscriptionType == "Crude")] | order(${publishDateTimeQuery} desc)[0...5] {
     _id,
     "type":_type,
     "slug": slug.current,
@@ -38,7 +40,7 @@ ${functions}
 `
 export const latestMagazine = /* groq */ `
 ${functions}
-  *[_type == "magazine" && shouldDistributeMagazine && ${sameLang}] | order(${publishDateTimeQuery} desc)[0...5] {
+  *[_type == "magazine" && shouldDistributeMagazine && ${sameLang} && ${publishedSinceYesterday}] | order(${publishDateTimeQuery} desc)[0...5] {
     _id,
     "type":_type,
     "slug": slug.current,
