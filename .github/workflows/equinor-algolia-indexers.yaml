@@ -103,7 +103,7 @@ jobs:
           popd
       - name: Package Azure Function release build
         id: package-artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ vars.AZ_ALGOLIA_FUNC_APP_NAME }}
           path: ${{ env.BUILD_ARTIFACT_PATH }}
