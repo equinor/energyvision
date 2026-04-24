@@ -28,7 +28,7 @@ jobs:
       - name: Skip or fail if invalid 🛂
         id: validate-input
         if: ${{ steps.regex-match.outputs.match == '' }}
-        uses: actions/github-script@v3
+        uses: actions/github-script@v7
         with:
           script: |
             core.setFailed('Commit SHA is not valid. Please use the 12 characters format.')
@@ -68,7 +68,7 @@ jobs:
     steps:
       - name: Checkout internal 🛎️
         id: checkout-internal
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: 'equinor/energyvision-internal'
           ref: main
@@ -107,7 +107,7 @@ jobs:
       DOCKER_BUILDKIT: 1
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # MAIN PRODUCTION CLUSTER
       - name: Deploy to Radix 🚀

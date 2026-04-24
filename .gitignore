@@ -3,6 +3,11 @@
 # dependencies
 node_modules
 
+#because switching between upgrade and main
+.turbo
+web/.turbo
+studio/.turbo
+
 # next.js
 .next/
 out/
