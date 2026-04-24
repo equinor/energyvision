@@ -1,6 +1,5 @@
 import { forwardRef, type HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { ArrowRight } from '@/icons'
 import { getLayoutPx } from '@/lib/helpers/getCommonUtilities'
 import { Typography } from '../../core/Typography'
 import type { AnchorLinkReference } from '../../types'
@@ -89,7 +88,6 @@ const AnchorLinkList = forwardRef<HTMLElement, AnchorLinkListProps>(
                       href={anchor}
                       className='group flex w-fill items-center justify-center gap-1 whitespace-nowrap text-base text-moss-green-100 hover:underline'
                     >
-                      <ArrowRight className='-mt-1 invisible size-6 rotate-90 text-autumn-storm-60 group-hover:visible' />
                       {anchorLink?.title}
                     </a>
                   </li>
