@@ -11,10 +11,9 @@ import { type LatestNewsType, latestMagazine, latestNews } from './groq.global'
 const generateRssFeed = async (locale: 'en_GB' | 'nb_NO') => {
   try {
     // Fetch both English and Norwegian articles from news and magazine
-    const [newsArticles, magazineArticles, settings] = await Promise.all([
+    const [newsArticles, magazineArticles] = await Promise.all([
       previewClient.fetch(latestNews, { lang: locale }),
       previewClient.fetch(latestMagazine, { lang: locale }),
-      previewClient.fetch(/* groq */ `*[_type == "settings"][0]{logo}`),
     ])
 
     // Merge the articles and sort by publish date (newest first)
@@ -43,9 +42,7 @@ const generateRssFeed = async (locale: 'en_GB' | 'nb_NO') => {
 
       const hero = article.hero
       const bannerImageUrl = hero?.image?.asset ? urlFor(hero.image).size(560, 280).auto('format').toString() : ''
-      const logoImageUrl = settings?.logo?.asset ? urlFor(settings.logo).size(402, 160).auto('format').toString() : ''
       const encodedUrl = bannerImageUrl.replace(/&/g, '&amp;')
-      const encodedLogoUrl = logoImageUrl.replace(/&/g, '&amp;')
 
       const publishDate = new Date(article.publishDateTime)
       const dateFormat = article.lang === 'nb_NO' ? 'd. MMMM yyyy HH:mm' : 'd MMMM yyyy HH:mm'
@@ -93,12 +90,6 @@ const generateRssFeed = async (locale: 'en_GB' | 'nb_NO') => {
             }
             ${article.hero?.image?.alt ? `<media:title>${article.hero?.image?.alt}</media:title>` : '<media:title />'}
           </media:content>`
-              : ''
-          }
-          ${
-            settings?.logo?.asset
-              ? `
-          <nl:extra2><![CDATA[<img src="${encodedLogoUrl}" alt="Equinor logo" />]]></nl:extra2>`
               : ''
           }
         </item>`
