@@ -16,12 +16,6 @@ export const settings = defineType({
         hotspot: true,
       },
     },
-    {
-      title: 'Equinor logo',
-      description: 'Will be used for rss feed',
-      name: 'logo',
-      type: 'image',
-    },
   ],
   preview: {
     prepare() {
