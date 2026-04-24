@@ -1,6 +1,4 @@
 name: Fotoware redirect workflow
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
 on:
   workflow_dispatch:
     inputs:
@@ -21,7 +19,7 @@ env:
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
   BUILD_PACKAGE_NAME: fotoware.zip
   BUILD_ARTIFACT_PATH: ${{ github.workspace }}/build_artifacts
-
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
 jobs:
   build-function-application:
     runs-on: ubuntu-latest

@@ -1,6 +1,4 @@
 name: Backup Routine
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
 on:
   workflow_dispatch:
     inputs:
@@ -21,6 +19,7 @@ permissions:
   contents: read
 env:
   BUILD_ARTIFACT_PATH: ${{ github.workspace }}/backups
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
 jobs:
   read-satellites:
     runs-on: energyvision_runner
