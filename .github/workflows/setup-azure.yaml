@@ -1,4 +1,6 @@
 name: Set up Azure environment
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
 on:
   workflow_dispatch:
     inputs:
@@ -25,7 +27,7 @@ jobs:
       # Checkout internal repository where the bicep files are located
       - name: Checout internal
         id: checkout-internal
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: 'equinor/energyvision-internal'
           ref: main

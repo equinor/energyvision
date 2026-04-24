@@ -1,4 +1,6 @@
 name: Fotoware redirect workflow
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
 on:
   workflow_dispatch:
     inputs:
@@ -27,7 +29,7 @@ jobs:
       name: ${{ github.event.inputs.environment }}
     steps:
       - name: Checkout fotoware redirect code🛎️
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
         with:
           repository: 'equinor/energyvision-fotoware-redirect'
           token: ${{ secrets.PADMS_PAT }}
@@ -39,9 +41,9 @@ jobs:
         with:
           version: '8.5.1'
       - name: Cache pnpm modules 💾
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 24
           # cache: 'npm'
       - name: Install dependencies 🔧
         id: install-dependencies

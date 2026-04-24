@@ -15,6 +15,10 @@ inputs:
 runs:
   using: 'composite'
   steps:
+    - name: Force JS Actions Node 24
+      shell: bash
+      run: |
+        echo "FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true" >> $GITHUB_ENV
     - name: Get project data
       id: get-project-data
       shell: 'bash'

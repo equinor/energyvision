@@ -1,4 +1,6 @@
 name: PROD - Deploy all webs
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
 on:
   workflow_dispatch:
 permissions:
@@ -11,7 +13,7 @@ jobs:
     steps:
       - name: Checkout internal 🛎️
         id: checkout-internal
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: 'equinor/energyvision-internal'
           ref: main
@@ -52,7 +54,7 @@ jobs:
       DOCKER_BUILDKIT: 1
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       # MAIN CLUSTER PLATFORM2
       - name: Deploy to Radix 🚀
@@ -80,7 +82,7 @@ jobs:
     steps:
       - name: Checkout internal 🛎️
         id: checkout-internal
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: 'equinor/energyvision-internal'
           ref: main
@@ -88,7 +90,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20' # Or any version you prefer
+          node-version: '24' # Or any version you prefer
 
       # Check if this can be removed
       - name: Install dependencies
@@ -114,7 +116,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: 'Move cards and create discussion and post it to channel'
         id: 'get-list'

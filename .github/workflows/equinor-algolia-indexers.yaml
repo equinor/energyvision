@@ -1,4 +1,6 @@
 name: Equinor Algolia indexers workflow
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
 on:
   workflow_dispatch:
     inputs:
@@ -34,14 +36,14 @@ jobs:
       DOCKER_BUILDKIT: 1
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
       - name: Install pnpm 📦
         id: install-pnpm
         uses: pnpm/action-setup@v4
         with:
           version: '10.24.0'
       - name: Cache pnpm modules 💾
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 24
           # cache: 'npm'
@@ -69,14 +71,14 @@ jobs:
       name: ${{ github.event.inputs.environment || (github.ref == 'refs/heads/main' && 'production') || 'development'}}
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
       - name: Install pnpm 📦
         id: install-pnpm
         uses: pnpm/action-setup@v4
         with:
           version: '10.24.0'
       - name: Cache pnpm modules 💾
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 24
           # cache: 'npm'

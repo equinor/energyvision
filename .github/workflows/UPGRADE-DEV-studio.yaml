@@ -1,4 +1,6 @@
 name: UPGRADE DEV - Build & deploy studio
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
 on:
   workflow_dispatch:
   push:
@@ -27,7 +29,7 @@ jobs:
       DOCKER_BUILDKIT: 1
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - id: deploy-satellite
         uses: ./.github/workflows/deploy-studio/
         with:

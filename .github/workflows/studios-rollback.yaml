@@ -1,4 +1,6 @@
 name: Rollback studio to a previous version
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
 on:
   workflow_dispatch:
     inputs:
@@ -84,7 +86,7 @@ jobs:
     steps:
       - name: Checkout 🛎️
         id: checkout-main
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: 'equinor/energyvision'
           fetch-depth: 0
@@ -95,7 +97,7 @@ jobs:
           echo "sha=$(git rev-parse ${{ github.event.inputs.image-sha }})" >> $GITHUB_OUTPUT
       - name: Checkout 🛎️
         id: checkout-specific-branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: 'equinor/energyvision'
           fetch-depth: 0
@@ -106,7 +108,7 @@ jobs:
       - name: Cache pnpm modules 💾
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
           cache: 'pnpm'
       - name: Install dependencies 🔧
         id: install-dependencies
@@ -149,7 +151,7 @@ jobs:
     steps:
       - name: Checkout 🛎️
         id: checkout-main
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: 'equinor/energyvision'
           fetch-depth: 0
@@ -161,7 +163,7 @@ jobs:
           echo "sha=$(git rev-parse ${{ github.event.inputs.image-sha }})" >> $GITHUB_OUTPUT
       - name: Checkout 🛎️
         id: checkout-specific-branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: 'equinor/energyvision'
           fetch-depth: 0
@@ -172,7 +174,7 @@ jobs:
       - name: Cache pnpm modules 💾
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
           cache: 'pnpm'
       - name: Install dependencies 🔧
         id: install-dependencies
@@ -203,7 +205,7 @@ jobs:
     steps:
       - name: Checkout internal 🛎️
         id: checkout-internal
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: 'equinor/energyvision-internal'
           ref: main
@@ -240,7 +242,7 @@ jobs:
       DOCKER_BUILDKIT: 1
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       # MAIN PRODUCTION CLUSTER
       - name: Deploy to Radix  🚀

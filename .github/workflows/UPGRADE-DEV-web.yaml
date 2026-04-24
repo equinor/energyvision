@@ -1,4 +1,6 @@
 name: UPGRADE DEV - Build & Deploy equinor.com
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
 on:
   workflow_dispatch:
   push:
@@ -32,7 +34,7 @@ jobs:
       DOCKER_BUILDKIT: 1
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - id: deploy-global-development
         uses: ./.github/workflows/deploy-web/
         with:
