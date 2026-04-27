@@ -1,4 +1,8 @@
-import { magazineSlug, newsSlug } from '@energyvision/shared/satelliteConfig'
+import {
+  localNewsTags,
+  magazineSlug,
+  newsSlug,
+} from '@energyvision/shared/satelliteConfig'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { sanityFetch } from '@/sanity/lib/live'
 import { homePageQuery } from '@/sanity/queries/homePage'
@@ -40,17 +44,9 @@ const getQuery = async (
 ) => {
   if (firstPiece === '') return homePageQuery
   if (Flags.HAS_NEWS && newsSlug[lang] === firstPiece && secondPiece) {
-    // is news
-    const { data: localNewsTagsData } = await sanityFetch({
-      query: `*[_type == 'localNewsTag']{${lang}}`,
-    })
-    const localNewsTags = localNewsTagsData
-      .map((e: any) => Object.values(e))
-      //@ts-ignore:todo
-      .flatMap(([e]) => e.toLowerCase().replace(' ', '-'))
     if (
       Flags.HAS_LOCAL_NEWS &&
-      localNewsTags.includes(secondPiece.toLowerCase())
+      localNewsTags[lang]?.includes(secondPiece.toLowerCase())
     ) {
       // is local news
       return localNewsQuery
