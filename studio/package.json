@@ -47,7 +47,7 @@
     "sanity-plugin-media": "^4.1.1",
     "sanity-plugin-utils": "^1.8.0",
     "styled-components": "^6.3.11",
-    "vite-plugin-svgr": "^4.5.0",
+    "vite-plugin-svgr": "^5.2.0",
     "@energyvision/shared": "workspace:*"
   },
   "devDependencies": {
