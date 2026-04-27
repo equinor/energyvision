@@ -27,7 +27,7 @@ jobs:
       DOCKER_BUILDKIT: 1
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - id: deploy-satellite
         uses: ./.github/workflows/deploy-studio/
         with:

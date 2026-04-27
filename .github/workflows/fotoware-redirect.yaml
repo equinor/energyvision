@@ -28,7 +28,7 @@ jobs:
       name: ${{ github.event.inputs.environment }}
     steps:
       - name: Checkout fotoware redirect code🛎️
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: 'equinor/energyvision-fotoware-redirect'
           ssh-key: '${{ secrets.DEPLOY_FUNCTION_KEY }}'
