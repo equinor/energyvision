@@ -39,5 +39,5 @@ export const localNewsQuery = /* groq */ `
     "template": _type,
     openGraphImage,
     ${localNewsFields}
-  }
+  }[0]
 `
