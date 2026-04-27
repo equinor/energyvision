@@ -18,6 +18,7 @@ export type BackgroundColours =
 export type BackgroundTypes = 'backgroundColor' | 'backgroundImage'
 
 export type ContentAlignmentTypes = 'left' | 'right' | 'center'
+export type LayoutGrid = 'sm' | 'md' | 'lg'
 
 export type Background = {
   type?: BackgroundTypes

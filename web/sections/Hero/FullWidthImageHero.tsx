@@ -5,6 +5,7 @@ import { twMerge } from 'tailwind-merge'
 import type { Figure, ImageRatioKeys } from '@/core/Image/Image'
 import { Picture } from '@/core/Picture/Picture'
 import type { TypographyVariants } from '@/core/Typography'
+import { getDisplayTextVariant } from '@/core/Typography/Typography'
 import Blocks from '@/portableText/Blocks'
 import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
 import type { DesignOptions } from '@/types'
@@ -59,11 +60,10 @@ export const FullWidthImageHero = ({
     default: ``,
   }
 
-  const typographyVariant = {
-    base: 'h2_base',
-    lg: 'h2_lg',
-    xl: 'h2_xl',
-  }
+  const titleVariant =
+    displayTextVariant !== 'none'
+      ? getDisplayTextVariant(displayTextVariant)
+      : `h1`
 
   return (
     <div className={`${nextCompBg} ${nextCompDark ? nextCompDark : ''}`}>
@@ -87,11 +87,7 @@ export const FullWidthImageHero = ({
         id='mainTitle'
         as='h1'
         group={displayTextVariant !== 'none' ? 'display' : `heading`}
-        variant={
-          displayTextVariant !== 'none'
-            ? (typographyVariant[displayTextVariant] as TypographyVariants)
-            : `h1`
-        }
+        variant={titleVariant}
         /*         blockClassName='pb-0' */
         blockClassName={twMerge(
           `w-full mt-8 px-layout-sm lg:mt-10 lg:px-layout-lg`,

@@ -1,7 +1,7 @@
 import type { PortableTextBlock } from '@portabletext/types'
 import type { Figure, Image } from '@/core/Image/Image'
 import type { HeroData, HeroTypes } from '@/sections/Hero/HeroBlock'
-import type { DesignOptions, LinkData } from './index'
+import type { LinkData } from './index'
 
 export type CardTypes = 'news' | 'topics' | 'people' | 'events'
 
@@ -38,19 +38,4 @@ export type PeopleCardData = {
   isLink: boolean
   cv?: LinkData
   enableStructuredMarkup?: boolean
-}
-
-export type CardsListData = {
-  type: 'cardsList'
-  id: string
-  title?: PortableTextBlock[]
-  cards?: CardListItemData[]
-  designOptions: DesignOptions
-}
-
-export type CardListItemData = {
-  id: string
-  type: 'card'
-  title?: string
-  content?: PortableTextBlock[]
 }

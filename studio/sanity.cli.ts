@@ -11,7 +11,6 @@ export default defineCliConfig({
     dataset,
   },
   vite: async viteConfig => {
-    const { default: tailwindcss } = await import('@tailwindcss/vite')
     return {
       ...viteConfig,
       resolve: {
@@ -20,7 +19,7 @@ export default defineCliConfig({
         },
       },
       //@ts-ignore : testing getting tailwind css
-      plugins: [...viteConfig.plugins, tsconfigPaths(), svgr(), tailwindcss()],
+      plugins: [...viteConfig.plugins, tsconfigPaths(), svgr()],
     }
   },
 })

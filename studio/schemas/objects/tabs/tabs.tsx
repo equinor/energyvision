@@ -70,7 +70,7 @@ export default defineType({
       components: {
         input: CompactBlockEditor,
       },
-      of: [configureBlockContent({ variant: 'titleH2' })],
+      of: [configureBlockContent({ variant: 'title' })],
       validation: (Rule: Rule) =>
         Rule.required().warning('Should we warn for missing title'),
     }),

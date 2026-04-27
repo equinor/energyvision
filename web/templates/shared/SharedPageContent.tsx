@@ -555,7 +555,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
           <CardsList
             key={c.id}
             {...commonProps}
-            data={c as CardsListData}
+            {...c}
             className={spacingClassName}
           />
         )

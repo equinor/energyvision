@@ -43,6 +43,20 @@ const getElementType = (variant: string, link: boolean): ElementType => {
   }
 }
 
+//For the displayTextVariant field in studio
+export const getDisplayTextVariant = (
+  displayTextVariant: string | undefined,
+): TypographyVariants => {
+  switch (displayTextVariant) {
+    case 'lg':
+      return 'h2_lg'
+    case 'xl':
+      return 'h2_xl'
+    default:
+      return 'h2_base'
+  }
+}
+
 const findTypography = (
   variantName: TypographyVariants,
   group?: TypographyGroups,

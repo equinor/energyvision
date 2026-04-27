@@ -23,7 +23,7 @@ const variants = {
     // isBigText set to common pattern 2xl now with classname mb-2 leading-cloudy
     h2: `text-xl leading-earthy lg:leading-misty mb-4 lg:mb-8 `,
     h3: `text-lg leading-lofty mt-4 mb-8`, //needs pt and pb?
-    h4: 'text-md',
+    h4: 'text-md mt-2 mb-4',
     h5: 'text-md',
     h6: 'text-base',
     h7: 'text-xs leading-earthy',

@@ -3,6 +3,7 @@ import { filterByRoute } from '../../../helpers/referenceFilters'
 import { CompactBlockEditor } from '../../components/CompactBlockEditor'
 import { configureBlockContent } from '../../editors'
 import routes from '../../routes'
+import { createColorListInitialValue } from '../colorList'
 
 export const title = {
   title: 'Title',
@@ -54,6 +55,7 @@ export const background = {
   description: 'Pick a colour for the background. Default is white.',
   name: 'background',
   type: 'colorlist',
+  initialValue: createColorListInitialValue(),
   fieldset: 'design',
 }
 
@@ -146,6 +148,8 @@ export const layoutDirection = {
 }
 
 export const glassEffect = (hiddenCallBack?: any, fieldset?: string) => {
+  void hiddenCallBack
+
   return {
     title: 'Apply glass effect behind text',
     name: 'useGlass',
@@ -157,7 +161,7 @@ export const glassEffect = (hiddenCallBack?: any, fieldset?: string) => {
     hidden: (props: any) => {
       const { currentUser } = props || {}
       const allowedRoles = ['designer', 'administrator', 'developer']
-      const isAllowed = currentUser?.roles?.some(role =>
+      const isAllowed = currentUser?.roles?.some((role: any) =>
         allowedRoles?.includes(role?.name),
       )
       return !isAllowed

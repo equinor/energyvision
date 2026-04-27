@@ -157,7 +157,6 @@ const PromotionsBlock = ({
   }, [promotions, eventsCount])
 
   const onColorBg = designOptions?.background?.backgroundColor !== 'White'
-  console.log('onColorBg', onColorBg)
   const paddingClassName = `px-layout-sm lg:px-layout-lg`
 
   return (

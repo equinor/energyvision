@@ -34,7 +34,7 @@ const title = {
   components: {
     input: CompactBlockEditor,
   },
-  of: [configureBlockContent({ variant: 'titleH1' })],
+  of: [configureBlockContent({ variant: 'title' })],
   validation: (Rule: Rule) =>
     Rule.custom((value: string, ctx: ValidationContext) => {
       return value ? true : 'Required'
@@ -276,7 +276,6 @@ const herosWithDisplayTextTitle = [
   HeroTypes.FIFTY_FIFTY,
   HeroTypes.FULL_WIDTH_IMAGE,
 ]
-
 const applyDisplayText = {
   title: 'Apply display text variant',
   name: 'displayTextVariant',

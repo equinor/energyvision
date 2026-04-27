@@ -526,6 +526,7 @@ _type == "keyNumbers" =>{
     "type": _type,
     "id": _key,
     title,
+    hideTitle,
     "cards": cards[]{
         "type": _type,
         "id": _key,
@@ -534,7 +535,9 @@ _type == "keyNumbers" =>{
         ...,
       },
     "designOptions": {
-      ${background},
+      layoutGrid,
+      "displayTextVariant": coalesce(displayTextVariant, 'none'),
+      "cardBackground": coalesce(cardBackground, 'blue-50'),
     },
   },
   _type == "grid" => {

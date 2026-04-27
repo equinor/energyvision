@@ -176,7 +176,7 @@ export default {
       components: {
         input: CompactBlockEditor,
       },
-      of: [configureBlockContent({ variant: 'titleH2' })],
+      of: [configureBlockContent({ variant: 'title' })],
     },
     {
       title: ' ',

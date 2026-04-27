@@ -10,6 +10,7 @@
   font-display: fallback;
 }
 :root {
+  --font-xs: clamp(calc(13.33 / 16 * 1rem), 0.28vw + 0.77rem, calc(17.6 / 16 * 1rem));
   --font-sm: clamp(calc(14.61 / 16 * 1rem), 0.33vw + 0.84rem, calc(19.68 / 16 * 1rem));
   --font-base: clamp(calc(16 / 16 * 1rem), 0.39vw + 0.91rem, calc(22 / 16 * 1rem));
   --font-md: clamp(calc(19.2 / 16 * 1rem), 0.54vw + 1.07rem, calc(27.5 / 16 * 1rem));
@@ -26,8 +27,8 @@
   --font-weight-normal: 400;
   --font-weight-md: 500;
   --font-weight-semibold: 600;
-  
-  --spacing:0.25rem;
+
+  --spacing: 0.25rem;
   --spacing-2: 0.5rem;
   --spacing-4: 0.5rem;
   --spacing-8: 2rem;
@@ -79,7 +80,9 @@
   But with out pre-wrap the space doesnt show in editor... */
 }
 .pt-editable .text-sm *:where([data-slate-leaf='true']) {
-  font-size: var(--font-sm);
+  /* should be --font-sm but in editor it didnt look small, it was larger than 18px 
+  so trying xs in editor but -sm in web*/
+  font-size: var(--font-xs);
 }
 .pt-editable .text-base *:where([data-slate-leaf='true']) {
   font-size: var(--font-base);

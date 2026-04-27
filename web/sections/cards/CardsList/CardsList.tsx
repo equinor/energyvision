@@ -1,23 +1,35 @@
+import type { PortableTextBlock } from 'next-sanity'
 import { forwardRef, type HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { getLayoutPx } from '@/lib/helpers/getCommonUtilities'
 import Blocks from '@/portableText/Blocks'
-import { colorKeyToUtilityMap } from '../../../styles/colorKeyToUtilityMap'
-import type { CardsListData } from '../../../types/index'
-import CardItem from './CardItem'
+import type { LayoutGrid } from '@/types'
+import {
+  type ColorKeys,
+  colorKeyToUtilityMap,
+} from '../../../styles/colorKeyToUtilityMap'
+import CardItem, { type CardItemProps } from './CardItem'
 
 export type CardsListProps = {
-  data: CardsListData
+  id: string
+  title?: PortableTextBlock[]
+  hideTitle?: boolean
+  cards?: CardItemProps[]
+  designOptions: {
+    layoutGrid?: LayoutGrid
+    //  color utility key e.g. 'blue-50'
+    cardBackground?: ColorKeys
+    displayTextVariant?: 'none' | 'base' | 'lg' | 'xl'
+  }
   anchor?: string
   className?: string
 } & HTMLAttributes<HTMLElement>
 
 const CardsList = forwardRef<HTMLElement, CardsListProps>(function CardsList(
-  { data, anchor, className = '', ...rest },
+  { title, hideTitle, cards = [], designOptions, anchor, className = '' },
   ref,
 ) {
-  const { title, cards = [], designOptions } = data
-  const { background } = designOptions || {}
-  const { backgroundUtility } = background || {}
+  const { layoutGrid, cardBackground, displayTextVariant } = designOptions || {}
 
   // For 2 or 4 cards
   let gridColumns = 'grid-cols-1 lg:grid-cols-2'
@@ -26,27 +38,33 @@ const CardsList = forwardRef<HTMLElement, CardsListProps>(function CardsList(
     // 2 in width for mobile, but 3 for wider screens
     gridColumns = 'grid-cols-1 lg:grid-cols-3'
   }
-  const cardBackground = backgroundUtility
-    ? colorKeyToUtilityMap[backgroundUtility]
-    : { background: 'bg-blue-50', dark: true }
+
+  const bg = colorKeyToUtilityMap[cardBackground ?? 'blue-50']
+  console.log('cardBackground', cardBackground)
+  const px = getLayoutPx(layoutGrid ?? 'md')
 
   return (
     <section
       ref={ref}
-      className={twMerge(`px-layout-md pb-page-content`, className)}
+      className={twMerge(`pb-page-content`, className)}
       id={anchor}
-      {...rest}
     >
       {title && (
-        <Blocks value={title} variant='h3' as='h2' blockClassName='pb-10' />
+        <Blocks
+          value={title}
+          variant='h2'
+          blockClassName={hideTitle ? 'sr-only' : 'px-layout-lg pb-10'}
+        />
       )}
-      <ul className={`grid ${gridColumns} gap-4`}>
+      <ul className={`${px} grid ${gridColumns} gap-4`}>
         {cards?.map(card => {
           return (
             <CardItem
               key={`card_item_${card?.id}`}
-              data={card}
-              className={`${cardBackground.dark ? 'dark' : ''} ${cardBackground?.background}`}
+              {...card}
+              background={bg?.background}
+              dark={bg?.dark}
+              displayTextVariant={displayTextVariant}
             />
           )
         })}

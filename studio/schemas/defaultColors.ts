@@ -7,6 +7,28 @@ export type Color = {
   onlyTextColor?: boolean
 }
 
+export const getDefaultColorByTitle = (title: string) => {
+  const color = defaultColors.find(color => color.title === title)
+  if (!color) {
+    console.log(`Color with title "${title}" not found in default colors.`)
+  }
+  return color
+}
+export const getDefaultColorByValue = (value: string) => {
+  const color = defaultColors.find(color => color.value === value)
+  if (!color) {
+    console.log(`Color with value "${value}" not found in default colors.`)
+  }
+  return color
+}
+export const getDefaultColorByKey = (key: string) => {
+  const color = defaultColors.find(color => color.key === key)
+  if (!color) {
+    console.log(`Color with key "${key}" not found in default colors.`)
+  }
+  return color
+}
+
 export const defaultColors: Color[] = [
   //0
   {

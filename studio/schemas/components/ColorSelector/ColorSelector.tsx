@@ -1,9 +1,9 @@
-import { Box, Card, Flex, Stack, Tooltip, Text } from '@sanity/ui'
+import { Box, Button, Card, Flex, Stack, Text, Tooltip } from '@sanity/ui'
 import { useCallback } from 'react'
-import { set } from 'sanity'
 import type { ObjectInputProps } from 'sanity'
-import { defaultBackgroundColors } from '../../defaultColors'
+import { set } from 'sanity'
 import styled from 'styled-components'
+import { defaultBackgroundColors } from '../../defaultColors'
 
 const Circle = styled.div<{ $active: boolean }>`
   display: inline-block;
@@ -11,6 +11,10 @@ const Circle = styled.div<{ $active: boolean }>`
   border-radius: 50%;
   padding: 4px;
   cursor: pointer;
+
+  &:hover {
+    border-color: var(--card-focus-ring-color);
+  }
 `
 
 const InnerCircle = styled.div<{ color: string }>`
@@ -45,7 +49,7 @@ const ColorCircle = ({ color, active, onClickHandler }: ColorCircleProps) => (
         </Box>
       }
       fallbackPlacements={['right', 'left']}
-      placement="top"
+      placement='top'
       portal
     >
       <Circle $active={active} onClick={() => onClickHandler(color)}>
@@ -57,9 +61,14 @@ const ColorCircle = ({ color, active, onClickHandler }: ColorCircleProps) => (
 
 type ColorSelectorProps = ObjectInputProps
 
-export const ColorSelector = ({ value, onChange, schemaType }: ColorSelectorProps) => {
+export const ColorSelector = ({
+  value,
+  onChange,
+  schemaType,
+}: ColorSelectorProps) => {
   const { options } = schemaType
-  const colors = (options?.colors as ColorSelectorValue[]) || defaultBackgroundColors
+  const colors =
+    (options?.colors as ColorSelectorValue[]) || defaultBackgroundColors
 
   const handleSelect = useCallback(
     (selected: ColorSelectorValue) => {
@@ -73,13 +82,22 @@ export const ColorSelector = ({ value, onChange, schemaType }: ColorSelectorProp
     [onChange, value],
   )
 
+  const handleUnset = useCallback(() => {
+    onChange(set(undefined, ['title']))
+    onChange(set(undefined, ['value']))
+    onChange(set(undefined, ['dark']))
+    onChange(set(undefined, ['key']))
+  }, [onChange])
+
   return (
     <Stack space={3}>
       {colors && (
         <Card>
           <Flex direction={'row'} wrap={'wrap'}>
             {colors
-              .filter((colorItem: ColorSelectorValue) => !colorItem?.onlyTextColor)
+              .filter(
+                (colorItem: ColorSelectorValue) => !colorItem?.onlyTextColor,
+              )
               .map((colorItem: ColorSelectorValue) => {
                 return (
                   <ColorCircle
@@ -90,6 +108,17 @@ export const ColorSelector = ({ value, onChange, schemaType }: ColorSelectorProp
                   />
                 )
               })}
+            <Button
+              onClick={handleUnset}
+              mode='ghost'
+              fontSize={1}
+              paddingY={1}
+              paddingX={1}
+              text='Unset'
+              style={{
+                marginLeft: '6px',
+              }}
+            />
           </Flex>
         </Card>
       )}

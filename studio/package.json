@@ -28,7 +28,6 @@
     "@sanity/ui": "^3.1.13",
     "@sanity/uuid": "^3.0.2",
     "@sanity/vision": "5.12.0",
-    "@tailwindcss/vite": "^4.2.1",
     "@portabletext/react": "^5.0.0",
     "blob-util": "^2.0.2",
     "buffer": "^6.0.3",
@@ -49,7 +48,6 @@
     "sanity-plugin-utils": "^1.8.0",
     "styled-components": "^6.3.11",
     "vite-plugin-svgr": "^4.5.0",
-    "tailwindcss": "^4.2.1",
     "@energyvision/shared": "workspace:*"
   },
   "devDependencies": {

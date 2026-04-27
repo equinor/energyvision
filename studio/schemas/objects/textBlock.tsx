@@ -94,10 +94,10 @@ export default {
     },
     {
       name: 'anchorReference',
-      type: 'anchorReferenceField',
+      type: 'string',
       title: 'Anchor reference',
       description:
-        'enter anchor id for this component, title will be used when compiling list of anchors on page together',
+        '# is not needed. Title will be used when compiling list of anchors on page together.',
       validation: (Rule: Rule) =>
         // @ts-ignore
         Rule.custom((value: string, context: any) =>
@@ -166,9 +166,6 @@ export default {
       designOptions: any
       backgroundImage: any
     }) {
-      console.log('designOptions', designOptions)
-      console.log('backgroundImage', backgroundImage)
-
       const plainTitle = blocksToText(title ?? ingress ?? text)
       let subTitle = 'Text block'
       if (anchor) {

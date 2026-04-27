@@ -42,14 +42,12 @@ export type BlockContentProps = {
    * withH2SimpleBlock - only h2 and normal text
    * extendedBlock - h2,h3,normal,lists,links, small, display h2
    * fullBlock - all headings,lists,links,attachment.
-   * titleH1 - just normal text(as h1 in web). Display variants is a separate select on herofields
-   * titleH2 - normal text(as h2 in web)
+   * title - normal block style but must be assigen correct heading level in in web. Display variants is a separate select on herofields
    * titleWithDisplay - normal text and display variants
    * ingress  - normal and small text
    */
   variant?:
-    | 'titleH1'
-    | 'titleH2'
+    | 'title'
     | 'titleWithDisplay'
     | 'ingress'
     | 'simpleBlock'
@@ -74,21 +72,17 @@ export type BlockContentProps = {
   onlySubSupScriptDecorators?: boolean
 }
 
-// Only need to override the default true
-const titleH1VariantOptions: BlockContentProps = {
+// Use this when it should not have a dropdown for title variants
+// Web components then need to assign correct heading level
+
+const titleVariantOptions: BlockContentProps = {
   h2: false,
   h3: false,
   internalLink: false,
   externalLink: false,
   lists: false,
 }
-const titleH2VariantOptions: BlockContentProps = {
-  h2: true,
-  h3: false,
-  internalLink: false,
-  externalLink: false,
-  lists: false,
-}
+
 const titleWithDisplayVariantOptions: BlockContentProps = {
   h2: false,
   h3: false,
@@ -98,6 +92,7 @@ const titleWithDisplayVariantOptions: BlockContentProps = {
   externalLink: false,
   lists: false,
 }
+
 const extendedBlockStylesOptions: BlockContentProps = {
   h2: true,
   largeText: true,
@@ -122,6 +117,7 @@ const simpleBlockStylesOptions: BlockContentProps = {
   h4: false,
   internalLink: false,
   externalLink: false,
+  smallText: true,
 }
 const withH2SimpleBlockStylesOptions: BlockContentProps = {
   h2: true,
@@ -202,11 +198,6 @@ export const configureBlockContent = (
     extraLargeText: false,
     smallText: false,
     highlight: false,
-    //Big title seems to have large 42 and extra large 56px options
-    //fiftyFiftyBigTitleStyle, '42px' heroBigTitleFiftyFifty
-    //defaultBannerBigTitletStyle '56px' heroBigTitleDefault
-    //blockContentTypeForBigText teaser '42px'
-    // text block is big titile 42px
     footnote: false,
     onlySubSupScriptDecorators: false,
   }
@@ -220,18 +211,10 @@ export const configureBlockContent = (
     )
   }
 
-  if (options?.variant === 'titleH1') {
+  if (options?.variant === 'title') {
     defaultConfigOptions = Object.assign(
       defaultConfigOptions,
-      titleH1VariantOptions,
-      options,
-    )
-  }
-
-  if (options?.variant === 'titleH2') {
-    defaultConfigOptions = Object.assign(
-      defaultConfigOptions,
-      titleH2VariantOptions,
+      titleVariantOptions,
       options,
     )
   }
@@ -307,7 +290,20 @@ export const configureBlockContent = (
         ]
       : [],
     marks: {
-      decorators: [],
+      decorators: [
+        {
+          title: 'Sub',
+          value: 'sub',
+          icon: IconSubScript,
+          component: SubScriptRenderer,
+        },
+        {
+          title: 'Super',
+          value: 'sup',
+          icon: IconSuperScript,
+          component: SuperScriptRenderer,
+        },
+      ],
       annotations: [],
     },
   }

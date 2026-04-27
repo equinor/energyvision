@@ -18,7 +18,7 @@ export const heroFields = /* groq */ `{
     "background": coalesce(heroBackground.key, 'white-100'),
     "backgroundGradient": heroBackgroundGradient,
     "useBrandTheme":heroUseBrandTheme,
-    displayTextVariant,
+    "displayTextVariant": coalesce(displayTextVariant, 'none'),
     layoutGrid,
     useBlurCenter,
     alignContentY,
