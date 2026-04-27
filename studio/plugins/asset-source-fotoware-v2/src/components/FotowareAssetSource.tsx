@@ -1,4 +1,4 @@
-import { Card, Dialog, Flex, Spinner, Text } from '@sanity/ui'
+import { Dialog, Flex, Spinner, Text } from '@sanity/ui'
 import { uuid } from '@sanity/uuid'
 import { arrayBufferToBlob } from 'blob-util'
 import mime from 'mime'
@@ -36,13 +36,11 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   const [isLoading, setIsLoading] = useState(false)
   const [isLogin, setIsLogin] = useState(false)
   const [showSelectionIframe, setShowSelectionIframe] = useState(false)
-  const [hasError, setHasError] = useState(!HAS_ENV_VARS)
-  const errorText = useMemo(() => {
-    if (!HAS_ENV_VARS) {
-      return 'One or more required enviroment variables are not defined. Please contact support.'
-    }
-    return 'Ops, something went wrong. Please contact developer support.'
-  }, [])
+  if (!HAS_ENV_VARS) {
+    console.warn(
+      'One or more required enviroment variables are not defined. Please contact support.',
+    )
+  }
 
   const newWindow = useRef<Window | null>(null)
 
@@ -86,21 +84,18 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   const handleAuthEvent = useCallback(
     (event: any) => {
       const validateAuthEvent = () => {
-        if (event.data?.error) {
+        if (event?.data?.error) {
           const { error, error_description } = event.data
-          setHasError(true)
           console.warn(`Error: ${error} - description: ${error_description}`)
           return false
         }
 
-        if (!checkAuthData(event.data)) {
-          setHasError(true)
+        if (event?.data?.access_token && !checkAuthData(event.data)) {
           console.warn('Invalid event data')
           return false
         }
 
-        if (event.data.state !== requestState) {
-          setHasError(true)
+        if (String(event?.data?.state) !== String(requestState)) {
           console.warn("Redirect state did not match request state'")
           return false
         }
@@ -109,7 +104,7 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
 
       if (!newWindow.current || !event || !event.data) return false
 
-      if (event.data) {
+      if (event?.data) {
         const validateEvent = validateAuthEvent()
         if (validateEvent) {
           setSelectionToken(event.data.access_token)
@@ -131,9 +126,8 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
     async (event: any) => {
       if (isLogin) return false
       if (!event || !event.data) return false
-
       if (event.origin !== TENANT_URL) {
-        console.log('Fotoware: invalid event origin', event.origin)
+        console.warn('Fotoware: invalid event origin', event.origin)
         return false
       }
       const { data } = event
@@ -144,7 +138,6 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
 
       if (data.event === 'assetSelected' && data.asset) {
         const selectedAsset = data.asset
-        console.log('selectedAsset', selectedAsset)
         setAsset(selectedAsset)
         const assetTitle = selectedAsset?.builtinFields.find(
           (item: FWAttributeField) => item.field === 'title',
@@ -214,7 +207,6 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
   const getAuthLink = async () => {
     const authURL = await getAuthURL(requestState)
     if (!authURL) {
-      setHasError(true)
       console.warn('Failed to retrieve auth URL')
     }
     if (authURL && container) {
@@ -270,58 +262,58 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
       header='Import image from Fotoware'
       onClose={onClose}
       open
-      width={selectionToken ? 4 : 1}
-      height={800}
+      width='auto'
       ref={ref}
       zOffset={9999}
+      style={{
+        padding: '1rem',
+        overflow: 'hidden',
+      }}
     >
-      <div className='px-4 py-2'>
-        {hasError && (
+      {/*         {hasError && (
           <Card padding={[3, 3, 4]} radius={2} shadow={1}>
             <Text align='center' size={[2, 2, 3, 4]}>
               {errorText}
             </Text>
           </Card>
-        )}
-        {!selectionToken && (
-          <Flex direction='column' align={'center'} gap={4}>
-            {!isLogin && (
-              <>
-                <Text align='center' size={[2, 2, 3, 3]}>
-                  Your session with Fotoware has expired or you are not logged
-                  in.
-                </Text>
-                <Button
-                  onClick={() => {
-                    login()
-                  }}
-                >
-                  Log in
-                </Button>
-              </>
-            )}
+        )} */}
+      {!selectionToken && (
+        <Flex direction='column' align={'center'} gap={4}>
+          {!isLogin && (
+            <>
+              <Text align='center' size={[2, 2, 3, 3]}>
+                Your session with Fotoware has expired or you are not logged in.
+              </Text>
+              <Button
+                onClick={() => {
+                  login()
+                }}
+              >
+                Log in
+              </Button>
+            </>
+          )}
 
-            {container && createPortal(props.children, container)}
-          </Flex>
-        )}
-        {isLoading && (
-          <div className=''>
-            {asset?.previews && (
-              <div className='aspect-video'>
-                <img
-                  alt=''
-                  className='h-full w-full object-cover'
-                  src={`${TENANT_URL}${asset.previews[0]?.href}`}
-                />
-              </div>
-            )}
-            <div className='mt-3 flex justify-center gap-4'>
-              <Spinner muted style={{ transform: 'translateY(0.7rem)' }} />
-              <div className='text-md'>{`Downloading ${asset?.filename ?? 'media'}...`}</div>
+          {container && createPortal(props.children, container)}
+        </Flex>
+      )}
+      {isLoading && (
+        <div className=''>
+          {asset?.previews && (
+            <div className='aspect-video'>
+              <img
+                alt=''
+                className='h-full w-full object-cover'
+                src={`${TENANT_URL}${asset.previews[0]?.href}`}
+              />
             </div>
+          )}
+          <div className='mt-3 flex justify-center gap-4'>
+            <Spinner muted style={{ transform: 'translateY(0.7rem)' }} />
+            <div className='text-md'>{`Downloading ${asset?.filename ?? 'media'}...`}</div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
       {selectionToken && selectionIframeUrl && showSelectionIframe && (
         <div ref={selectionContainerRef} id={`selectionIframe-${requestState}`}>
           <Iframe

@@ -13,7 +13,8 @@ export const Iframe = forwardRef<
         display: 'block',
         width: '100%',
         height: '100%',
-        minHeight: '80vh',
+        minHeight: '65vh',
+        maxHeight: '75vh',
         border: 'none',
       }}
     />

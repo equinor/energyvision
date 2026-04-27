@@ -65,3 +65,5 @@ search/AzuriteConfig
 
 # Turbo
 .turbo
+web/.turbo
+studio/.turbo
