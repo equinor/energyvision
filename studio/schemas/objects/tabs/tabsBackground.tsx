@@ -1,8 +1,11 @@
-import { defineField, defineType } from 'sanity'
-import { getColorForTabTheme, tabsThemeColors } from './tabsThemes'
-import { PreviewProps } from 'sanity'
+import { defineField, type PreviewProps } from 'sanity'
+import {
+  CardTheme,
+  ThemeSelector,
+  type ThemeSelectorValue,
+} from '../../components/ThemeSelector'
 import singleItemArray from '../singleItemArray'
-import { CardTheme, ThemeSelector, ThemeSelectorValue } from '../../components/ThemeSelector'
+import { getColorForTabTheme, tabsThemeColors } from './tabsThemes'
 
 export function ThemePreview(props: PreviewProps) {
   //@ts-ignore: todo
@@ -12,9 +15,11 @@ export function ThemePreview(props: PreviewProps) {
     value: parseInt(value, 10),
   }
   return (
-    <>
-      <CardTheme color={color} getColorForThemeHandler={getColorForTabTheme} preview />
-    </>
+    <CardTheme
+      color={color}
+      getColorForThemeHandler={getColorForTabTheme}
+      preview
+    />
   )
 }
 
@@ -43,10 +48,10 @@ export default {
             }),
           ],
           components: {
-            input: (props) => {
+            input: props => {
               return (
                 <ThemeSelector
-                  variant="cards"
+                  variant='cards'
                   themeColors={tabsThemeColors}
                   getColorForThemeHandler={getColorForTabTheme}
                   {...props}
@@ -62,7 +67,7 @@ export default {
             },
           },
         }),
-      ].filter((e) => e),
+      ].filter(e => e),
       options: { sortable: false },
     }),
   ],

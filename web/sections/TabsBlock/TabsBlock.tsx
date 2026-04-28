@@ -15,9 +15,7 @@ export type TabsBlockProps = {
   title: PortableTextBlock[]
   ingress: PortableTextBlock[]
   designOptions: {
-    theme: {
-      value?: number
-    }
+    theme: number
   }
   tabList: TabItem[]
   id?: string
@@ -39,7 +37,8 @@ const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
   },
   ref,
 ) {
-  const theme = getColorForTabsTheme(designOptions?.theme?.value ?? 0)
+  console.log('designOptions?.theme', designOptions?.theme)
+  const theme = getColorForTabsTheme(designOptions?.theme ?? 0)
   const headingId = useId()
   const tabsListRef = useRef<HTMLDivElement>(null)
 
@@ -62,93 +61,102 @@ const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
       <div
         className={`flex flex-col pb-page-content ${
           tabPanelVariant === 'tabsKeyNumbers'
-            ? `gap-6 px-layout-sm lg:px-layout-md`
+            ? `gap-6`
             : `px-layout-sm lg:mx-layout-sm lg:px-20 ${theme?.backgroundUtility} rounded-md`
-        } `}
+        }`}
       >
         <div
           className={`${
-            tabPanelVariant === 'tabsInfoPanel' && !hideTitle ? `lg:pt-14` : ``
+            tabPanelVariant === 'tabsInfoPanel' && !hideTitle
+              ? `lg:pt-14`
+              : `px-layout-sm lg:px-layout-lg`
           }`}
         >
           {title && (
             <Blocks
               id={headingId}
               value={title}
-              as='h2'
-              variant='h3'
+              variant='h2'
               className={`${hideTitle ? 'sr-only' : ''}`}
             />
           )}
           {ingress && <Blocks variant='ingress' value={ingress} />}
         </div>
-        {tabList && tabList?.length > 0 && (
-          <Tabs
-            defaultValue={tabList[0]?.id}
-            {...(hideTitle && { 'aria-labelledby': headingId })}
-            className={`flex w-full flex-col items-center`}
-          >
-            <TabList ref={tabsListRef}>
-              {tabList?.map((tab: TabItem, i: number) => {
+        <div
+          className={`${
+            tabPanelVariant === 'tabsKeyNumbers'
+              ? `px-layout-sm lg:px-layout-md`
+              : ``
+          }`}
+        >
+          {tabList && tabList?.length > 0 && (
+            <Tabs
+              defaultValue={tabList[0]?.id}
+              {...(hideTitle && { 'aria-labelledby': headingId })}
+              className={`flex w-full flex-col items-center`}
+            >
+              <TabList ref={tabsListRef}>
+                {tabList?.map((tab: TabItem, i: number) => {
+                  return (
+                    // eslint-disable-next-line react/no-array-index-key
+                    <Tab key={`${tab.id}_index_${i}`} value={tab.id}>
+                      {tab.title}
+                    </Tab>
+                  )
+                })}
+              </TabList>
+              {tabList?.map((tabItem: TabItem, i: number) => {
                 return (
-                  // eslint-disable-next-line react/no-array-index-key
-                  <Tab key={`${tab.id}_index_${i}`} value={tab.id}>
-                    {tab.title}
-                  </Tab>
-                )
-              })}
-            </TabList>
-            {tabList?.map((tabItem: TabItem, i: number) => {
-              return (
-                <TabPanel
-                  // eslint-disable-next-line react/no-array-index-key
-                  key={`${tabItem.panel.id}_index_${i}`}
-                  value={tabItem.id}
-                  className={`${
-                    tabPanelVariant === 'tabsKeyNumbers'
-                      ? 'w-full py-14 max-lg:px-layout-sm'
-                      : 'h-full w-full overflow-hidden rounded-md'
-                  }`}
-                >
-                  {tabItem.panel?.type === 'tabsKeyNumbers' &&
-                    tabItem.panel?.items && (
-                      <ul
-                        {...(title &&
-                          hideTitle && { 'aria-labelledby': headingId })}
-                        className={`flex flex-col md:grid md:grid-cols-2 ${tabItem.panel?.items?.length < 4 ? '3xl:auto-cols-fr 3xl:grid-flow-col' : ''} gap-6`}
-                      >
-                        {tabItem.panel?.items?.map((tabsKeyNumber: any) => {
-                          return (
-                            <li key={tabsKeyNumber.id}>
-                              <TabsKeyNumberItem
-                                theme={designOptions.theme?.value}
-                                keyNumber={tabsKeyNumber?.keyNumber}
-                                unit={tabsKeyNumber?.unit}
-                                description={tabsKeyNumber?.description}
-                              />
-                            </li>
-                          )
-                        })}
-                      </ul>
-                    )}
-                  {tabItem.panel?.type === 'tabsInfoPanel' && (
-                    <TabsInfoPanelItem
-                      theme={designOptions.theme?.value}
-                      {...tabItem.panel}
-                    />
-                  )}
-                  {tabItem.panel?.type === 'tabsKeyNumbers' &&
-                    tabItem?.panel?.disclaimer && (
-                      <Blocks
-                        value={tabItem?.panel?.disclaimer}
-                        className='mt-6 text-sm italic'
+                  <TabPanel
+                    // eslint-disable-next-line react/no-array-index-key
+                    key={`${tabItem.panel.id}_index_${i}`}
+                    value={tabItem.id}
+                    className={`${
+                      tabPanelVariant === 'tabsKeyNumbers'
+                        ? 'w-full py-14 max-lg:px-layout-sm'
+                        : 'h-full w-full overflow-hidden rounded-md'
+                    }`}
+                  >
+                    {tabItem.panel?.type === 'tabsKeyNumbers' &&
+                      tabItem.panel?.items && (
+                        <ul
+                          {...(title &&
+                            hideTitle && { 'aria-labelledby': headingId })}
+                          className={`flex flex-col md:grid md:grid-cols-2 ${tabItem.panel?.items?.length < 4 ? '3xl:auto-cols-fr 3xl:grid-flow-col' : ''} gap-6`}
+                        >
+                          {tabItem.panel?.items?.map((tabsKeyNumber: any) => {
+                            return (
+                              <li key={tabsKeyNumber.id}>
+                                <TabsKeyNumberItem
+                                  theme={designOptions.theme}
+                                  keyNumber={tabsKeyNumber?.keyNumber}
+                                  unit={tabsKeyNumber?.unit}
+                                  description={tabsKeyNumber?.description}
+                                />
+                              </li>
+                            )
+                          })}
+                        </ul>
+                      )}
+                    {tabItem.panel?.type === 'tabsInfoPanel' && (
+                      <TabsInfoPanelItem
+                        theme={designOptions.theme}
+                        {...tabItem.panel}
                       />
                     )}
-                </TabPanel>
-              )
-            })}
-          </Tabs>
-        )}
+                    {tabItem.panel?.type === 'tabsKeyNumbers' &&
+                      tabItem?.panel?.disclaimer && (
+                        <Blocks
+                          value={tabItem?.panel?.disclaimer}
+                          className='mt-6 text-sm italic'
+                        />
+                      )}
+                  </TabPanel>
+                )
+              })}
+            </Tabs>
+          )}
+        </div>
       </div>
     </div>
   )

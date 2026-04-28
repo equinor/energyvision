@@ -1,5 +1,8 @@
+import type {
+  ThemeSelectorColor,
+  ThemeSelectorValue,
+} from '../../components/ThemeSelector'
 import { defaultColors } from '../../defaultColors'
-import { ThemeSelectorColor, ThemeSelectorValue } from '../../components/ThemeSelector'
 
 export const tabsThemeColors = [
   { title: 'Mist Blue', value: 0 },
@@ -8,7 +11,9 @@ export const tabsThemeColors = [
 ]
 
 //Keep in sync with web/sections/TabBlock/tabsThemes
-export const getColorForTabTheme = (color: ThemeSelectorValue): ThemeSelectorColor => {
+export const getColorForTabTheme = (
+  color: ThemeSelectorValue,
+): ThemeSelectorColor => {
   switch (color.value) {
     case 1:
       return {

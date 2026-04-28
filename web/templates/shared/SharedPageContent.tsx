@@ -152,7 +152,10 @@ const getBackgroundObject = (component: Component) => {
   }
 
   if (component?.type === 'tabs') {
-    return getColorForTabsTheme(component?.designOptions?.theme?.value)
+    return {
+      backgroundUtility: getColorForTabsTheme(component?.designOptions?.theme)
+        .key,
+    }
   }
 
   return (
@@ -226,15 +229,15 @@ const applyPaddingTopIfApplicable = (
   }
   /*   console.log(
     `Current: ${currentComponent?.type}:${Array.isArray(currentComponent?.title) ? toPlainText(currentComponent?.title) : currentComponent?.title}`,
-  )*/
-  /*   console.log(
+  )
+  console.log(
     `Previous component ${prevComponent?.type}:${Array.isArray(prevComponent?.title) ? toPlainText(prevComponent?.title) : prevComponent?.title}`,
   ) */
 
   const currentBackgroundObject = getBackgroundObject(currentComponent)
   const previousBackgroundObject = getBackgroundObject(prevComponent)
   /*   console.log('currentBackgroundObject', currentBackgroundObject)
-  console.log('previousBackgroundObject', previousCompreviousBackgroundObjectponentsDO) */
+  console.log('previousBackgroundObject', previousBackgroundObject) */
 
   /**
    * List of components that require current section to have pt-20
@@ -259,9 +262,9 @@ const applyPaddingTopIfApplicable = (
     previousBackgroundObject,
     prevComponent,
   )
-  /* 
-  console.log('currentIsWhiteColorBackground', currentIsWhiteColorBackground)
-  console.log('previousIsWhiteColorBackground', previousIsWhiteColorBackground)*/
+
+  /*   console.log('currentIsWhiteColorBackground', currentIsWhiteColorBackground)
+  console.log('previousIsWhiteColorBackground', previousIsWhiteColorBackground) */
 
   const previousComponentIsASpecialCaseAndNeedPT =
     specialCases.includes(prevComponent?.type) ||

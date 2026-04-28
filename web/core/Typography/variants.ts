@@ -55,7 +55,7 @@ const variants = {
     ingress: 'text-md mt-5 mb-5 first:mt-0 last:mb-10',
     eyebrow: 'text-xs font-medium uppercase',
     body: 'my-5 first:mt-0 last:mb-0 [:where(h2+*,h3+*)]:mt-0 text-base',
-    small: 'text-sm',
+    small: 'text-sm my-5 first:mt-0 last:mb-0 [:where(h2+*,h3+*)]:mt-0',
     simple: 'text-base',
   },
   card: {

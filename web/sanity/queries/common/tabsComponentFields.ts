@@ -10,7 +10,7 @@ export const tabsComponentFields = /*groq*/ `
     hideTitle,
     ingress[]{..., ${markDefs}},
     "designOptions":{
-        "theme":tabsBackground.background[0]{...},
+        "theme":coalesce(tabsBackground.background[0]{value}.value, 0),
     },
     tabList[]{
       "id": _key,

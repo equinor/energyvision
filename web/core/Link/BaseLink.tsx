@@ -26,7 +26,6 @@ export const BaseLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(
       href,
       skipInternalStyle = false,
       prefetch = false,
-      locale,
       hrefLang,
       onClick,
     },
@@ -85,7 +84,6 @@ export const BaseLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(
               className={classNames}
               prefetch={prefetch}
               hrefLang={hrefLang}
-              locale={locale}
               onClick={onClick}
             >
               {children}

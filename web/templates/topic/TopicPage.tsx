@@ -5,7 +5,12 @@ import {
   type HeroBlockProps,
   type HeroData,
 } from '@/sections/Hero/HeroBlock'
-import type { ContentType, SeoData, Templates } from '../../types/index'
+import type {
+  Background,
+  ContentType,
+  SeoData,
+  Templates,
+} from '../../types/index'
 import { PageContent } from '../shared/SharedPageContent'
 
 export type TopicPageProps = {
@@ -43,13 +48,19 @@ const TopicPage = ({
     nextSectionDesignOptions: restData?.content?.[0]?.designOptions,
   }
 
-  const heroBackground =
+  const heroBackground: Background =
     hero?.type === 'backgroundImage'
       ? {
           type: 'backgroundImage',
           backgroundImage: hero.figure,
         }
-      : hero?.background
+      : {
+          type: 'backgroundColor',
+          backgroundUtility: hero?.background,
+        }
+
+  console.log('topicpage hero', hero)
+  console.log('topicpage herobackground', heroBackground)
 
   return (
     <main className='flex flex-col pt-topbar peer-data-[sticky=true]:pt-topbar-and-sticky'>
@@ -57,10 +68,10 @@ const TopicPage = ({
       <PageContent
         data={restData}
         heroBackground={
-          hero?.type !== 'default' && hero?.type !== 'backgroundImage'
+          /*hero?.type !== 'default' && hero?.type !== 'backgroundImage'
             ? //@ts-ignore
-              restData?.content?.[0]?.designOptions?.background
-            : heroBackground
+              restData?.content?.[0]?.designOptions?.background :*/
+          heroBackground
         }
       />
     </main>
