@@ -146,7 +146,9 @@ const getConfig = (datasetParam: string, projectIdParam: string, isSecret = fals
         .map((originalAction) => {
           switch (originalAction.action) {
             case 'publish':
-              return ['news', 'localNews'].includes(context.schemaType) ? SetAndPublishAction : originalAction
+              return ['news', 'localNews', 'magazine'].includes(context.schemaType)
+                ? SetAndPublishAction
+                : originalAction
             case 'duplicate':
               return createCustomDuplicateAction(originalAction)
             default:
