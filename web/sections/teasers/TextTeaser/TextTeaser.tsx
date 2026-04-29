@@ -20,6 +20,7 @@ const TextTeaser = ({ data, anchor, className }: TextTeaserProps) => {
 
   const titleElement = (
     <Blocks
+      className='basis-1/2 p-16'
       blockClassName={`${highlight}`}
       value={title}
       as='h2'
@@ -32,14 +33,14 @@ const TextTeaser = ({ data, anchor, className }: TextTeaserProps) => {
     <article
       id={anchor}
       className={twMerge(
-        `min-h-[400px] ${backgroundUtility} flex flex-col gap-x-12 gap-y-6 px-layout-md py-6 md:flex-row ${
+        `${backgroundUtility} p-layout-md flex  flex-col gap-x-12 gap-y-6 py-6 md:flex-row lg:grid lg:grid-cols-2 ${
           dark ? 'dark' : ''
         } `,
         className,
       )}
     >
       {titlePosition === 'left' && titleElement}
-      <div className=''>
+      <div className='basis-1/2 md:p-12 lg:p-16'>
         {text && (
           <div className='pb-8 last:pb-0'>
             <Blocks variant='ingress' value={text} />
