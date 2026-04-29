@@ -33,7 +33,7 @@ const TextTeaser = ({ data, anchor, className }: TextTeaserProps) => {
     <article
       id={anchor}
       className={twMerge(
-        `${backgroundUtility} p-layout-md flex  flex-col gap-x-12 gap-y-6 py-6 md:flex-row lg:grid lg:grid-cols-2 ${
+        `${backgroundUtility} p-layout-sm flex  flex-col gap-x-12 gap-y-12 py-6 md:flex-row lg:grid lg:grid-cols-2 ${
           dark ? 'dark' : ''
         } `,
         className,
