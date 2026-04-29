@@ -208,7 +208,9 @@ const getConfig = (
         .map(originalAction => {
           switch (originalAction.action) {
             case 'publish':
-              return ['news', 'localNews'].includes(context.schemaType)
+              return ['news', 'localNews', 'magazine'].includes(
+                context.schemaType,
+              )
                 ? SetAndPublishAction
                 : originalAction
             case 'duplicate':
