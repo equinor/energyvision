@@ -9,11 +9,10 @@ import {
   defaultBackgroundColors,
   defaultColors,
   getDefaultColorByKey,
-  getDefaultColorByValue,
 } from '../defaultColors'
 import { configureBlockContent } from '../editors'
 import type { Card } from './card'
-import { createColorStringSelectField } from './colorList'
+import { createColorSelectField } from './colorList'
 import { layoutGrid } from './commonFields/commonFields'
 
 export type CardsList = {
@@ -57,7 +56,7 @@ export default {
           .min(1)
           .error('At least one card with a valid title is required.'),
     },
-    createColorStringSelectField({
+    createColorSelectField({
       name: 'cardBackground',
       title: 'Card background color',
       colors: [

@@ -23,8 +23,14 @@ export function TabsPreview(props: TabsPreviewProps) {
 
   //@ts-ignore:todo
   const plainTitle = title ? blocksToText(title) : undefined
+  const panelType =
+    tabList?.[0]?.tabPanel?.panelType ??
+    tabList?.[0]?.tabPanel?.keyNumbersPanel?._type ??
+    tabList?.[0]?.tabPanel?.infoPanel?._type ??
+    tabList?.[0]?.tabPanel?.panel?.[0]?._type ??
+    ''
   const subTitle = `Tabs component | ${tabList?.length} tabs | Panel type: ${capitalizeFirstLetter(
-    tabList?.[0]?.tabPanel?.panel?.[0]?._type ?? '',
+    panelType,
   )}`
 
   const color: ThemeSelectorValue = {

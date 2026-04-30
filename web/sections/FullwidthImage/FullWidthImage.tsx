@@ -30,7 +30,7 @@ const FullWidthImage = ({ data, anchor }: FullWidthImageProps) => {
         image={image}
         grid='full'
         aspectRatio={aspectRatio}
-        className='max-w-[1800px]'
+        className=''
       />
       {image.asset && (caption || attribution) && (
         <div className='mx-auto max-w-viewport px-layout-sm'>

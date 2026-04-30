@@ -1,19 +1,9 @@
 {
   "recommendations": [
-    "unifiedjs.vscode-mdx",
-    "techer.open-in-browser",
-    "ionutvmi.path-autocomplete",
-    "jock.svg",
-    "naumovs.color-highlight",
-    "aaron-bond.better-comments",
-    "vivaxy.vscode-conventional-commits",
     "bierner.color-info",
-    "formulahendry.auto-rename-tag",
-    "formulahendry.auto-close-tag",
-    "usernamehw.errorlens",
-    "phoenisx.cssvar",
-    "editorconfig.editorconfig",
+    "sanity-io.vscode-sanity",
     "biomejs.biome",
-    "bradlc.vscode-tailwindcss"
+    "bradlc.vscode-tailwindcss",
+    "rangav.vscode-thunder-client"
   ]
 }

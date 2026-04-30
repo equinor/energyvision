@@ -16,7 +16,41 @@ export const tabsComponentFields = /*groq*/ `
       "id": _key,
       "type": _type,
       title,
-      "panel":tabPanel.panel[0]{
+      "panel":select(
+        tabPanel.panelType == "tabsKeyNumbers" => tabPanel.keyNumbersPanel{
+          "id": _key,
+          "type": _type,
+          "items": keyNumberItems[]{
+            "id": _key,
+            keyNumber,
+            unit,
+            description,
+          },
+          disclaimer[]{..., ${markDefs}},
+        },
+        tabPanel.panelType == "tabsInfoPanel" => tabPanel.infoPanel{
+          "id": _key,
+          "type": _type,
+          image,
+          imageVariant,
+          backgroundPosition,
+          title[]{..., ${markDefs}},
+          text[]{..., ${markDefs}},
+          keyInfoTitle,
+          keyInfo[]{
+            "id": _key,
+            "type": _type,
+            title,
+            keyFigure,
+            explanation,
+          },
+          "action": action[0]{
+            ${linkSelectorFields},
+            ${downloadableFileFields},
+            ${downloadableImageFields},
+          },
+        },
+        tabPanel.panel[0]{
           "id": _key,
           "type": _type,
           _type == "tabsKeyNumbers" => {
@@ -48,6 +82,7 @@ export const tabsComponentFields = /*groq*/ `
               ${downloadableImageFields},
             },
           },
-      },
+        }
+      ),
     },
    `

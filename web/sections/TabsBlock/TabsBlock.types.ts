@@ -36,6 +36,7 @@ export type TabsInfoPanel = {
   keyInfo?: InfoPanelKeyInfo[]
   action?: LinkData
 }
+
 export type TabItem = {
   id: string
   type?: string

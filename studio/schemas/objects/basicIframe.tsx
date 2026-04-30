@@ -74,7 +74,7 @@ export default {
             : true
         }),
     },
-    cookiePolicy,
+    cookiePolicy('iframe'),
     {
       name: 'aspectRatio',
       type: 'string',

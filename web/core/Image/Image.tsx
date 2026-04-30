@@ -39,6 +39,12 @@ export const mapSanityImageRatio = (ratio: string) => {
   const ratioHeight = parseInt(ratioParts[1], 10)
   return ratioWidth / ratioHeight
 }
+export const getPaddingBottom = (ratio: string) => {
+  const ratioParts = ratio.trim().split(':')
+  const ratioWidth = parseInt(ratioParts[0], 10)
+  const ratioHeight = parseInt(ratioParts[1], 10)
+  return (ratioHeight / ratioWidth) * 100
+}
 
 /** Use when image is smaller than px-layout-lg
  * eg the side image on textblock, 50/50 teaser image, promotiles image, card images
@@ -258,6 +264,9 @@ export const Image = ({
   if (caption && 'alt' in image && !image?.alt) {
     altText = caption
   }
+  const aspectRatioClass = getTwAspectRatioUtilityOnRatio(
+    isLargerDisplays ? aspectRatio : '4:3',
+  )
 
   const nextImage = url ? (
     <NextImage
@@ -278,7 +287,13 @@ export const Image = ({
 
   const imageElement =
     wrapperVariant === 'simple' ? (
-      <div className={twMerge(`relative h-full w-full`, className)}>
+      <div
+        className={twMerge(
+          `relative h-full max-h-full w-full max-w-full`,
+          fill && aspectRatioClass,
+          className,
+        )}
+      >
         {nextImage}
       </div>
     ) : (

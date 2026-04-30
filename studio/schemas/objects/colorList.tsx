@@ -1,12 +1,12 @@
 import { Flex, Text } from '@sanity/ui'
 import { defineField, defineType, type PreviewProps } from 'sanity'
-import { ColorSelector } from '../components/ColorSelector'
 import {
-  ColorStringSelect,
-  type ColorStringValueField,
-  getColorStringOptionValue,
+  ColorSelect,
+  type ColorValueField,
+  getColorOptionValue,
   getSelectableColors,
-} from '../components/ColorStringSelect/ColorStringSelect'
+} from '../components/ColorSelect/ColorSelect'
+import { ColorSelector } from '../components/ColorSelector'
 import type { Color } from '../defaultColors'
 import { defaultBackgroundColors } from '../defaultColors'
 
@@ -33,20 +33,20 @@ export const createColorListInitialValue = (
   dark: color.dark,
 })
 
-type CreateColorStringSelectFieldConfig = {
+type CreateColorSelectFieldConfig = {
   name: string
   title: string
   colors?: Color[]
-  valueField?: ColorStringValueField
+  valueField?: ColorValueField
   initialValue?: string
 } & Record<string, unknown>
 
-export const createColorStringSelectField = ({
+export const createColorSelectField = ({
   colors = defaultBackgroundColors,
   valueField = 'key',
   initialValue,
   ...field
-}: CreateColorStringSelectFieldConfig) => {
+}: CreateColorSelectFieldConfig) => {
   const selectableColors = getSelectableColors(colors)
   const fallbackColor = selectableColors[0] ?? defaultBackgroundColors[0]
 
@@ -54,18 +54,18 @@ export const createColorStringSelectField = ({
     ...field,
     type: 'string',
     initialValue:
-      initialValue ?? getColorStringOptionValue(fallbackColor, valueField),
+      initialValue ?? getColorOptionValue(fallbackColor, valueField),
     options: {
       layout: 'dropdown',
       list: selectableColors.map(color => ({
         title: color.title,
-        value: getColorStringOptionValue(color, valueField),
+        value: getColorOptionValue(color, valueField),
       })),
       colors: selectableColors,
       colorValueField: valueField,
     } as any,
     components: {
-      input: ColorStringSelect,
+      input: ColorSelect,
     },
   })
 }

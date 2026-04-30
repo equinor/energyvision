@@ -6,16 +6,16 @@ import styled from 'styled-components'
 import type { Color } from '../../defaultColors'
 import { defaultBackgroundColors } from '../../defaultColors'
 
-export type ColorStringValueField = 'key' | 'title' | 'value'
+export type ColorValueField = 'key' | 'title' | 'value'
 
-type ColorStringSelectOptions = {
+type ColorSelectOptions = {
   colors?: Color[]
-  colorValueField?: ColorStringValueField
+  colorValueField?: ColorValueField
 }
 
-type ColorStringSelectProps = StringInputProps & {
+type ColorSelectProps = StringInputProps & {
   schemaType: StringInputProps['schemaType'] & {
-    options?: ColorStringSelectOptions
+    options?: ColorSelectOptions
   }
 }
 
@@ -32,26 +32,25 @@ const InnerSquare = styled.div<{ $color: string }>`
   border-radius: 0.25rem;
 `
 
-export const getColorStringOptionValue = (
+export const getColorOptionValue = (
   color: Color,
-  valueField: ColorStringValueField = 'key',
+  valueField: ColorValueField = 'key',
 ) => color[valueField]
 
 export const getSelectableColors = (
   colors: Color[] = defaultBackgroundColors,
 ) => colors.filter(color => !color.onlyTextColor)
 
-export const ColorStringSelect = ({
+export const ColorSelect = ({
   value,
   onChange,
   schemaType,
-}: ColorStringSelectProps) => {
+}: ColorSelectProps) => {
   const colors = getSelectableColors(schemaType.options?.colors)
   const valueField = schemaType.options?.colorValueField ?? 'key'
   const selectedColor =
-    colors.find(
-      color => getColorStringOptionValue(color, valueField) === value,
-    ) ?? colors[0]
+    colors.find(color => getColorOptionValue(color, valueField) === value) ??
+    colors[0]
 
   const handleSelect = useCallback(
     (event: any) => {
@@ -77,10 +76,10 @@ export const ColorStringSelect = ({
             <Select
               aria-label={schemaType.title ?? 'Select color'}
               onChange={handleSelect}
-              value={value ?? getColorStringOptionValue(colors[0], valueField)}
+              value={value ?? getColorOptionValue(colors[0], valueField)}
             >
               {colors.map(color => {
-                const optionValue = getColorStringOptionValue(color, valueField)
+                const optionValue = getColorOptionValue(color, valueField)
 
                 return (
                   <option key={optionValue} value={optionValue}>

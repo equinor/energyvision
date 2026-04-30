@@ -1,19 +1,28 @@
-import { EdsIcon } from '../../icons'
 import { library_image } from '@equinor/eds-icons'
-import blocksToText from '../../helpers/blocksToText'
 import type { Rule } from 'sanity'
+import blocksToText from '../../helpers/blocksToText'
+import { EdsIcon } from '../../icons'
 import {
+  action,
+  aspectRatio,
+  cookiePolicy,
+  description,
+  frameTitle,
+  height,
+  title,
+  url,
+} from './iframe/sharedIframeFields'
+
+const carouselItemFields = [
   title,
   frameTitle,
   description,
-  cookiePolicy,
+  cookiePolicy('iframe'),
   aspectRatio,
   url,
   height,
   action,
-} from './iframe/sharedIframeFields'
-
-const carouselItemFields = [title, frameTitle, description, cookiePolicy, aspectRatio, url, height, action]
+]
 
 export default {
   name: 'iframeCarousel',
@@ -36,7 +45,8 @@ export default {
       type: 'boolean',
       name: 'hideTitle',
       title: 'Hide title',
-      description: 'Hides the title, but screen readers will read title of carousel',
+      description:
+        'Hides the title, but screen readers will read title of carousel',
     },
     {
       type: 'array',
@@ -89,7 +99,9 @@ export default {
       const length = items ? items.length : 0
 
       return {
-        title: title ? blocksToText(title) : 'Untitled horizontal scroll iframe',
+        title: title
+          ? blocksToText(title)
+          : 'Untitled horizontal scroll iframe',
         subtitle: `Horizontal scroll iframe carousel with ${length} items`,
         media: EdsIcon(library_image),
       }

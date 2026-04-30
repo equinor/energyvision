@@ -111,10 +111,9 @@ export const resolveImage = (props: ResolveImageProps) => {
     url = urlForImage(image)?.width(width).height(height).fit('max').url()
   }
   if (useContain) {
-    //Fit the image within the box you specify, but never scaling the image up.
+    //The image is resized to fit within the bounds you specified without cropping or distorting the image.
     url = urlForImage(image)?.width(width).height(height).fit('clip').url()
   }
-  //needs fit('crop')?
   url = urlForImage(image)?.width(width).height(height).url()
 
   return { url, width, height }

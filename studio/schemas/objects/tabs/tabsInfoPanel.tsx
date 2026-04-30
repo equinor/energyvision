@@ -10,6 +10,7 @@ import {
   set,
   useCurrentUser,
 } from 'sanity'
+import { RoleFilteredSelect } from '@/schemas/components/RoleFilteredSelect/RoleFilteredSelect'
 import { CompactBlockEditor } from '../../components/CompactBlockEditor'
 import { configureBlockContent } from '../../editors'
 import { backgroundPosition } from '../commonFields/commonFields'
@@ -88,13 +89,13 @@ export default {
       },
       initialValue: 'sideImage',
       components: {
-        input: ImageVariantInput,
+        input: props => RoleFilteredSelect(props, ['backgroundImage']),
       },
     }),
     defineField({
       name: 'image',
       title: 'Image',
-      type: 'image',
+      type: 'imageWithAlt',
       options: {
         hotspot: true,
       },

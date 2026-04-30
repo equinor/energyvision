@@ -3,20 +3,20 @@
 
 import { code } from '@equinor/eds-icons'
 import type { PortableTextBlock } from 'sanity'
-import type { ColorSelectorValue } from '../components/ColorSelector'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
+import type { ColorSelectorValue } from '../components/ColorSelector'
 import { configureBlockContent } from '../editors'
 import {
-  title,
-  frameTitle,
-  description,
-  cookiePolicy,
-  aspectRatio,
-  url,
-  height,
   action,
+  aspectRatio,
+  cookiePolicy,
+  description,
+  frameTitle,
+  height,
+  title,
   transcript,
+  url,
 } from './iframe/sharedIframeFields'
 
 const ingressContentType = configureBlockContent({
@@ -70,7 +70,7 @@ export default {
     },
     frameTitle,
     url,
-    cookiePolicy,
+    cookiePolicy('iframe'),
     aspectRatio,
     height,
     description,
@@ -89,7 +89,13 @@ export default {
       title: 'title',
       frameTitle: 'frameTitle',
     },
-    prepare({ title, frameTitle }: { title: PortableTextBlock[]; frameTitle: string }) {
+    prepare({
+      title,
+      frameTitle,
+    }: {
+      title: PortableTextBlock[]
+      frameTitle: string
+    }) {
       const plainTitle = title ? blocksToText(title) : undefined
 
       return {

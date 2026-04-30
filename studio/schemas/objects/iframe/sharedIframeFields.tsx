@@ -44,29 +44,31 @@ export const url = {
     }),
 }
 
-export const cookiePolicy = {
-  name: 'cookiePolicy',
-  type: 'array',
-  title: 'Cookie policy',
-  description: 'Select which cookie policy applies to this iframe.',
-  fieldset: 'iframe',
-  of: [{ type: 'string' }],
-  options: {
-    list: [
-      { title: 'None', value: 'none' },
-      { title: 'Preferences', value: 'preferences' },
-      { title: 'Statistics', value: 'statistics' },
-      { title: 'Marketing', value: 'marketing' },
-    ],
-  },
-  initialValue: ['none'],
-  validation: (Rule: Rule) =>
-    Rule.custom((value: any) => {
-      if (value === undefined || value?.length === 0) return 'Required'
-      if (value.length > 1 && value.includes('none'))
-        return `Cannot select ${value.toString()} together`
-      return true
-    }),
+export const cookiePolicy = (fieldset?: string) => {
+  return {
+    name: 'cookiePolicy',
+    type: 'array',
+    title: 'Cookie policy',
+    description: 'Select which cookie policy applies to this iframe.',
+    ...(fieldset && { fieldset }),
+    of: [{ type: 'string' }],
+    options: {
+      list: [
+        { title: 'None', value: 'none' },
+        { title: 'Preferences', value: 'preferences' },
+        { title: 'Statistics', value: 'statistics' },
+        { title: 'Marketing', value: 'marketing' },
+      ],
+    },
+    initialValue: ['none'],
+    validation: (Rule: Rule) =>
+      Rule.custom((value: any) => {
+        if (value === undefined || value?.length === 0) return 'Required'
+        if (value.length > 1 && value.includes('none'))
+          return `Cannot select ${value.toString()} together`
+        return true
+      }),
+  }
 }
 
 export const aspectRatio = {

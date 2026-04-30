@@ -37,7 +37,6 @@ const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
   },
   ref,
 ) {
-  console.log('designOptions?.theme', designOptions?.theme)
   const theme = getColorForTabsTheme(designOptions?.theme ?? 0)
   const headingId = useId()
   const tabsListRef = useRef<HTMLDivElement>(null)
@@ -45,32 +44,47 @@ const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
   //Select first items panel type and use for rest. Editors advised to use same type in studio
   const tabPanelVariant = tabList?.[0]?.panel?.type
 
+  //Tabslist needs to span full width if one of these
+  const hasFullWidthImage = tabList.some((tabItem: any) => {
+    return (
+      tabItem.panel?.type === 'tabsInfoPanel' &&
+      (tabItem.panel?.imageVariant === 'backgroundImage' ||
+        tabItem.panel?.imageVariant === 'bannerImage')
+    )
+  })
+
   return (
     <div
       ref={ref}
       id={anchor}
       className={twMerge(
-        `${id ? 'scroll-mt-topbar' : ''} ${
-          tabPanelVariant === 'tabsKeyNumbers'
-            ? theme?.backgroundUtility
-            : `${theme?.backgroundUtility} lg:bg-white-100`
-        }`,
+        id && 'scroll-mt-topbar',
+        tabPanelVariant === 'tabsKeyNumbers' && theme?.backgroundUtility,
+        tabPanelVariant !== 'tabsKeyNumbers' &&
+          `${theme?.backgroundUtility} mb-page-content lg:bg-white-100`,
         className,
       )}
     >
       <div
-        className={`flex flex-col pb-page-content ${
-          tabPanelVariant === 'tabsKeyNumbers'
-            ? `gap-6`
-            : `px-layout-sm lg:mx-layout-sm lg:px-20 ${theme?.backgroundUtility} rounded-md`
-        }`}
+        className={twMerge(
+          `flex flex-col`,
+          tabPanelVariant === 'tabsKeyNumbers' && `gap-6`,
+          tabPanelVariant !== 'tabsKeyNumbers' &&
+            `lg:mx-layout-sm ${theme?.backgroundUtility} rounded-md`,
+          tabPanelVariant !== 'tabsKeyNumbers' &&
+            !hasFullWidthImage &&
+            'px-layout-sm lg:px-20',
+        )}
       >
         <div
-          className={`${
-            tabPanelVariant === 'tabsInfoPanel' && !hideTitle
-              ? `lg:pt-14`
-              : `px-layout-sm lg:px-layout-lg`
-          }`}
+          className={twMerge(
+            tabPanelVariant === 'tabsInfoPanel' &&
+              !hideTitle &&
+              `px-layout-sm lg:px-20 lg:pt-14`,
+            tabPanelVariant !== 'tabsInfoPanel' &&
+              !hideTitle &&
+              `px-layout-sm lg:px-layout-lg`,
+          )}
         >
           {title && (
             <Blocks
@@ -95,7 +109,10 @@ const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
               {...(hideTitle && { 'aria-labelledby': headingId })}
               className={`flex w-full flex-col items-center`}
             >
-              <TabList ref={tabsListRef}>
+              <TabList
+                ref={tabsListRef}
+                className={`${hasFullWidthImage ? '' : 'px-layout-sm lg:px-10'}`}
+              >
                 {tabList?.map((tab: TabItem, i: number) => {
                   return (
                     // eslint-disable-next-line react/no-array-index-key
@@ -109,48 +126,54 @@ const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
                 return (
                   <TabPanel
                     // eslint-disable-next-line react/no-array-index-key
-                    key={`${tabItem.panel.id}_index_${i}`}
+                    key={`${tabItem?.id}_index_${i}`}
                     value={tabItem.id}
-                    className={`${
-                      tabPanelVariant === 'tabsKeyNumbers'
-                        ? 'w-full py-14 max-lg:px-layout-sm'
-                        : 'h-full w-full overflow-hidden rounded-md'
-                    }`}
+                    className={twMerge(
+                      'h-full w-full',
+                      tabPanelVariant === 'tabsKeyNumbers' &&
+                        'pt-14 pb-page-content max-lg:px-layout-sm',
+                    )}
                   >
-                    {tabItem.panel?.type === 'tabsKeyNumbers' &&
-                      tabItem.panel?.items && (
-                        <ul
-                          {...(title &&
-                            hideTitle && { 'aria-labelledby': headingId })}
-                          className={`flex flex-col md:grid md:grid-cols-2 ${tabItem.panel?.items?.length < 4 ? '3xl:auto-cols-fr 3xl:grid-flow-col' : ''} gap-6`}
-                        >
-                          {tabItem.panel?.items?.map((tabsKeyNumber: any) => {
-                            return (
-                              <li key={tabsKeyNumber.id}>
-                                <TabsKeyNumberItem
-                                  theme={designOptions.theme}
-                                  keyNumber={tabsKeyNumber?.keyNumber}
-                                  unit={tabsKeyNumber?.unit}
-                                  description={tabsKeyNumber?.description}
-                                />
-                              </li>
-                            )
-                          })}
-                        </ul>
-                      )}
+                    {tabItem.panel?.type === 'tabsKeyNumbers' && (
+                      <>
+                        {tabItem.panel?.items && (
+                          <ul
+                            {...(title &&
+                              hideTitle && { 'aria-labelledby': headingId })}
+                            className={twMerge(
+                              'flex flex-col gap-6 md:grid md:grid-cols-2',
+                              tabItem.panel?.items?.length < 4 &&
+                                '3xl:auto-cols-fr 3xl:grid-flow-col',
+                            )}
+                          >
+                            {tabItem.panel?.items?.map((tabsKeyNumber: any) => {
+                              return (
+                                <li key={tabsKeyNumber.id}>
+                                  <TabsKeyNumberItem
+                                    theme={designOptions.theme}
+                                    keyNumber={tabsKeyNumber?.keyNumber}
+                                    unit={tabsKeyNumber?.unit}
+                                    description={tabsKeyNumber?.description}
+                                  />
+                                </li>
+                              )
+                            })}
+                          </ul>
+                        )}
+                        {tabItem?.panel?.disclaimer && (
+                          <Blocks
+                            value={tabItem?.panel?.disclaimer}
+                            className='px-layout-sm text-sm italic lg:px-10'
+                          />
+                        )}
+                      </>
+                    )}
                     {tabItem.panel?.type === 'tabsInfoPanel' && (
                       <TabsInfoPanelItem
                         theme={designOptions.theme}
                         {...tabItem.panel}
                       />
                     )}
-                    {tabItem.panel?.type === 'tabsKeyNumbers' &&
-                      tabItem?.panel?.disclaimer && (
-                        <Blocks
-                          value={tabItem?.panel?.disclaimer}
-                          className='mt-6 text-sm italic'
-                        />
-                      )}
                   </TabPanel>
                 )
               })}
