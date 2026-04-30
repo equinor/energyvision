@@ -42,6 +42,7 @@ data-ui="checked active" class="data-checked:underline">
 @custom-variant data-expanded (&[data-expanded~='true']);
 @custom-variant data-overflowing (&[data-overflowing~='true']);
 @custom-variant aria-current (&[aria-current~='page']);
+@custom-variant highlight (& > [data-highlight='true']);
 
 @custom-variant sticky-menu {
   &:where([data-sticky-menu='true'] *) {
@@ -52,12 +53,6 @@ data-ui="checked active" class="data-checked:underline">
 /* old darkMode: ['variant', [':is(.dark &):not(.light &)']],*/
 /* @custom-variant dark (&:where(.dark, .dark *)); */
 @custom-variant dark (&:is(.dark &):not(.light &));
-
-/*
-Test highlight on Text teaser and (Text block?)
-and not use important in textteaser theme
-*/
-@custom-variant highlight (&:where([data-highlight], [data-highlight] *));
 
 @utility envis-outline {
   @apply outline-2 outline-offset-3 outline-norwegian-woods-100 outline-dashed;
