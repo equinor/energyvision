@@ -183,6 +183,14 @@ export default {
               cells: 'cells',
             },
             prepare({ cells }: { cells: any[] }) {
+
+              if (!cells || cells.length === 0) {
+                return {
+                  title: 'Empty Row',
+                  subtitle: 'Row with 0 cells',
+                }
+              }
+
               const [cellOne, cellTwo, cellThree, cellFour] = cells
               const numberOfCells = cells.length
 
