@@ -57,7 +57,7 @@ data-ui="checked active" class="data-checked:underline">
 Test highlight on Text teaser and (Text block?)
 and not use important in textteaser theme
 */
-/* @custom-variant highlight (&:where([data-highlight], [data-highlight] *)) */
+@custom-variant highlight (&:where([data-highlight], [data-highlight] *));
 
 @utility envis-outline {
   @apply outline-2 outline-offset-3 outline-norwegian-woods-100 outline-dashed;

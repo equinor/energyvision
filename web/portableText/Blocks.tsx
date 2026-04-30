@@ -57,7 +57,7 @@ type TWLineClamps = {
 // News Content has normal, small text and heading 2 and 3 -> Heading group article
 const getBlockComponents = ({
   as,
-  className = '',
+  className = 'highlight:text-energy-red-100 dark:highlight:text-spruce-wood-100',
   group,
   variant,
   id,
@@ -208,10 +208,7 @@ const markSerializers: MarkType = {
   //@ts-ignore:todo
   highlight: ({ children }: TypeProps) => {
     return (
-      <span
-        data-highlight
-        className={'text-energy-red-100 dark:text-spruce-wood-100'}
-      >
+      <span data-highlight>
         {/*@ts-ignore:todo*/}
         {children}
       </span>
