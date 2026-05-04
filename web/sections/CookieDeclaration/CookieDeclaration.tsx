@@ -31,11 +31,11 @@ const CookieDeclaration = ({
     script.setAttribute('data-culture', language)
     if (!placeholderRef.current?.hasChildNodes()) {
       placeholderRef.current?.appendChild(script)
-    } else {
-      placeholderRef.current?.replaceChild(
-        placeholderRef!.current!.firstChild!,
-        script,
-      )
+    }
+    ;() => {
+      if (placeholderRef.current) {
+        placeholderRef.current.innerHTML = ''
+      }
     }
   }, [language])
   return (
