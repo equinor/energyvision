@@ -19,9 +19,8 @@ const CookieDeclaration = ({
   const title = data.title
   const placeholderRef = useRef<HTMLDivElement>(null)
   const locale = useLocale()
-
+  const language = locale === 'nb_NO' ? 'nb' : locale ? locale : 'en'
   useEffect(() => {
-    const language = locale === 'nb_NO' ? 'nb' : locale ? locale : 'en'
     if (!placeholderRef.current?.hasChildNodes()) {
       const script = document.createElement('script')
       script.setAttribute('id', 'CookieDeclaration')
@@ -33,7 +32,7 @@ const CookieDeclaration = ({
       script.setAttribute('data-culture', language)
       placeholderRef.current?.appendChild(script)
     }
-  }, [locale])
+  }, [language])
   return (
     <section
       id={anchor}
