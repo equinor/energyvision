@@ -21,7 +21,7 @@ const headerCellContentType = configureBlockContent({
 })
 
 const cellContentType = configureBlockContent({
-  variant: 'simpleBlock',
+  variant: 'fullBlock',
   lists: false,
   attachment: true,
 })
