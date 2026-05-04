@@ -21,21 +21,21 @@ const CookieDeclaration = ({
   const locale = useLocale()
   const language = locale === 'nb_NO' ? 'nb' : locale ? locale : 'en'
   useEffect(() => {
-    if (
-      !placeholderRef.current?.hasChildNodes() ||
-      placeholderRef.current?.firstElementChild?.getAttribute(
-        'data-culture',
-      ) !== language
-    ) {
-      const script = document.createElement('script')
-      script.setAttribute('id', 'CookieDeclaration')
-      script.setAttribute(
-        'src',
-        'https://consent.cookiebot.com/f1327b03-7951-45da-a2fd-9181babc783f/cd.js',
-      )
-      script.setAttribute('async', 'true')
-      script.setAttribute('data-culture', language)
+    const script = document.createElement('script')
+    script.setAttribute('id', 'CookieDeclaration')
+    script.setAttribute(
+      'src',
+      'https://consent.cookiebot.com/f1327b03-7951-45da-a2fd-9181babc783f/cd.js',
+    )
+    script.setAttribute('async', 'true')
+    script.setAttribute('data-culture', language)
+    if (!placeholderRef.current?.hasChildNodes()) {
       placeholderRef.current?.appendChild(script)
+    } else {
+      placeholderRef.current?.replaceChild(
+        placeholderRef!.current!.firstChild!,
+        script,
+      )
     }
   }, [language])
   return (
