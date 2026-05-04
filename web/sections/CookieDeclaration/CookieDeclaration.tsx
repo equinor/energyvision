@@ -21,7 +21,12 @@ const CookieDeclaration = ({
   const locale = useLocale()
   const language = locale === 'nb_NO' ? 'nb' : locale ? locale : 'en'
   useEffect(() => {
-    if (!placeholderRef.current?.hasChildNodes()) {
+    if (
+      !placeholderRef.current?.hasChildNodes() ||
+      placeholderRef.current?.firstElementChild?.getAttribute(
+        'data-culture',
+      ) !== language
+    ) {
       const script = document.createElement('script')
       script.setAttribute('id', 'CookieDeclaration')
       script.setAttribute(
