@@ -3,6 +3,7 @@ import { useLocale } from 'next-intl'
 import { useEffect, useRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 import Blocks from '@/portableText/Blocks'
+import { getLocaleFromIso } from '@/sanity/helpers/localization'
 import { CookieDeclarationData } from '../../types/index'
 
 type CookieDeclarationProps = {
@@ -19,7 +20,7 @@ const CookieDeclaration = ({
   const title = data.title
   const placeholderRef = useRef<HTMLDivElement>(null)
   const locale = useLocale()
-  const language = locale === 'nb_NO' ? 'nb' : locale ? locale : 'en'
+  const language = getLocaleFromIso(locale)
   useEffect(() => {
     const script = document.createElement('script')
     script.setAttribute('id', 'CookieDeclaration')
