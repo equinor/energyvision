@@ -20,7 +20,7 @@ const CookieDeclaration = ({
   const title = data.title
   const placeholderRef = useRef<HTMLDivElement>(null)
   const locale = useLocale()
-  const language = getLocaleFromIso(locale)
+  const language = locale === 'nb-NO' ? 'nb' : getLocaleFromIso(locale)
   useEffect(() => {
     const script = document.createElement('script')
     script.setAttribute('id', 'CookieDeclaration')
