@@ -436,7 +436,8 @@ export const configureBlockContent = (
       {
         name: 'reference',
         type: 'reference',
-        to: [{ type: 'downloadableFile' }],
+        to: [{ type: 'assetFile' }],
+        options: { disableNew: true },
       },
     ],
   }
