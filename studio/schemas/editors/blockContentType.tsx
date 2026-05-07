@@ -100,7 +100,7 @@ const extendedBlockStylesOptions: BlockContentProps = {
   //smallText: true,
 }
 const ingressStylesOptions: BlockContentProps = {
-  lists: false,
+  lists: true,
   h2: false,
   h3: false,
   h4: false,
