@@ -79,7 +79,6 @@ const GridTextBlock = forwardRef<HTMLDivElement, GridTextBlockProps>(function Gr
     const { backgroundUtility: commonBgUtility, textUtility: commonTextUtility } = getColorForTheme(
       theme ?? contentTheme,
     )
-    console.log('commonTextUtility', commonTextUtility)
     if (commonTextUtility) {
       titleTextColor = commonTextUtility
       contentTextColor = commonTextUtility
