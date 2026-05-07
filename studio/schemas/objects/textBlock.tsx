@@ -114,7 +114,7 @@ export default {
       name: 'text',
       title: 'Text content',
       type: 'array',
-      of: [configureBlockContent()],
+      of: [configureBlockContent({ smallText: true })],
     },
     {
       name: 'action',
