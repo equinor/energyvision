@@ -70,15 +70,12 @@ export const ImageBackgroundContainer = forwardRef<HTMLDivElement, ImageBackgrou
       'bottom-center': 'black-to-top-gradient',
     }
 
-    console.log('darkGradientForContentAlignment[contentAlignment]', darkGradientForContentAlignment[contentAlignment])
-
     let animatedScrimGradient = ''
     if (!overrideGradient && !useNoGradient) {
       animatedScrimGradient = useLight
         ? `${lightGradientForContentAlignment[contentAlignment]}`
         : `black-center-gradient ${darkGradientForContentAlignment[contentAlignment]}`
     }
-    console.log('animatedScrimGradient', animatedScrimGradient)
 
     const contentElement = useGlass ? (
       <div className={twMerge('', className)}>
