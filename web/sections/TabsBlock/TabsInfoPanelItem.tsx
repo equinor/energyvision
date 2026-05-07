@@ -67,31 +67,39 @@ const TabsInfoPanelItem = forwardRef<HTMLDivElement, TabsInfoPanelItemProps>(
             'px-layout-sm',
           imageVariant === 'bannerImage' &&
             'col-span-1 row-start-2 row-end-2 max-lg:px-layout-sm',
-          imageVariant === 'sideImage' && 'order-2 lg:order-1 lg:pt-14',
+          imageVariant === 'sideImage' &&
+            'order-2 w-full max-w-full lg:order-1 lg:pt-14',
         )}
       >
         <div className='sr-only'>
           {keyInfoTitle ? keyInfoTitle : intl('keyFigures')}
         </div>
-        <div className={`flex flex-wrap gap-x-10 gap-y-6 max-lg:mt-6`}>
+        <ul className={`flex flex-wrap gap-x-10 gap-y-6 max-lg:mt-6`}>
           {keyInfo?.map(item => {
             return (
-              <div key={item?.id} className='text-balance'>
+              <li key={item?.id} className='text-balance'>
                 <div className='font-semibold text-md'>{item?.title}</div>
                 <div className='font-semibold text-lg'>{item?.keyFigure}</div>
                 <div className='text-base'>{item?.explanation}</div>
-              </div>
+              </li>
             )
           })}
-        </div>
+        </ul>
       </div>
     )
+
+    const getGridTemplateColumns = () => {
+      if (imageVariant === 'sideImage') {
+        return 'w-full max-w-full lg:grid-cols-[60%_40%] lg:grid-rows-[auto_auto]'
+      }
+      return 'lg:grid-cols-2 lg:grid-rows-[auto_auto]'
+    }
 
     return (
       <div
         ref={ref}
         className={twMerge(
-          `relative flex h-full w-full flex-col gap-x-12 gap-y-2 pb-page-content lg:grid lg:grid-cols-[60%_40%] lg:grid-rows-[auto_auto]`,
+          `relative gap-x-12 gap-y-6 pb-page-content lg:grid ${getGridTemplateColumns()} l`,
           imageVariant === 'sideImage' &&
             `items-start gap-12 px-layout-sm lg:px-20`,
           imageVariant === 'backgroundImage' && 'h-full bg-cover',
@@ -118,18 +126,24 @@ const TabsInfoPanelItem = forwardRef<HTMLDivElement, TabsInfoPanelItemProps>(
               caption={caption}
               fill
               aspectRatio={imageVariant === 'sideImage' ? '2:1' : '10:3'}
+              {...(caption &&
+                imageVariant === 'bannerImage' && {
+                  figureClassName:
+                    'flex flex-col h-auto col-span-2 row-span-1 min-w-0',
+                })}
               className={twMerge(
                 'relative h-full w-full',
-                (imageVariant === 'bannerImage' ||
+                ((!caption && imageVariant === 'bannerImage') ||
                   imageVariant === 'backgroundImage') &&
                   'col-span-2 row-span-1 min-w-0',
-                imageVariant === 'sideImage' && 'mt-10',
+                imageVariant === 'sideImage' && 'mt-10 aspect-auto',
               )}
               imageClassName={twMerge(
                 imageVariant === 'sideImage' && 'rounded-md',
                 backgroundPosition &&
                   getObjectPositionForImage(backgroundPosition),
               )}
+              figCaptionClassName='px-layout-sm lg:px-20'
             />
           )}
         {imageVariant === 'sideImage' &&

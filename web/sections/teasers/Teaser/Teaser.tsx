@@ -46,6 +46,7 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
   if ([title, overline, content, image?.asset, actions].every(i => !i)) {
     return null
   }
+  console.log('image', image)
 
   // Svg can be "pictures"/illustrations and small svgs...
   const imageElement = (

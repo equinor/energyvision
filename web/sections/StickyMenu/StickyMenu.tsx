@@ -29,12 +29,12 @@ export const StickyMenu = forwardRef<HTMLElement, StickyMenuProps>(
         ref={ref}
         aria-label={intl('local')}
         className={twMerge(
-          `-mt-1 sticky inset-e-0 inset-s-0 flex h-topbar-sticky w-full max-w-full px-layout-sm duration-500 ease-in-out [transition-property:top] ${twBg} z-10 w-inherit py-4`,
+          `-mt-1 sticky inset-e-0 inset-s-0 flex h-topbar-sticky w-full max-w-full px-layout-sm duration-500 ease-in-out [transition-property:top] ${twBg} z-10 w-full py-4`,
           className,
         )}
       >
         <div
-          className={`flex w-inherit flex-col gap-y-3 lg:flex-row lg:justify-between`}
+          className={`flex w-full flex-col gap-y-3 lg:flex-row lg:justify-between`}
         >
           <div className={`text-start font-medium text-base`}>{title}</div>
           <div className='flex items-center gap-10'>

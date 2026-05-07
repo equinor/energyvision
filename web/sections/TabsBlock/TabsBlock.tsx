@@ -58,11 +58,11 @@ const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
       ref={ref}
       id={anchor}
       className={twMerge(
-        'mx-auto w-full max-w-content',
+        'mx-auto max-w-content',
         id && 'scroll-mt-topbar',
         tabPanelVariant === 'tabsKeyNumbers' && theme?.backgroundUtility,
         tabPanelVariant !== 'tabsKeyNumbers' &&
-          `${theme?.backgroundUtility} mb-page-content lg:bg-white-100`,
+          `6xl:mx-auto lg:mx-layout-sm ${theme?.backgroundUtility} mb-page-content lg:bg-white-100`,
         className,
       )}
     >
@@ -71,7 +71,7 @@ const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
           `flex w-full flex-col`,
           tabPanelVariant === 'tabsKeyNumbers' && `gap-6`,
           tabPanelVariant !== 'tabsKeyNumbers' &&
-            `lg:mx-layout-sm ${theme?.backgroundUtility} rounded-md`,
+            `${theme?.backgroundUtility} rounded-md`,
           tabPanelVariant !== 'tabsKeyNumbers' &&
             !hasFullWidthImage &&
             'px-layout-sm lg:px-20',
@@ -130,7 +130,7 @@ const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
                     key={`${tabItem?.id}_index_${i}`}
                     value={tabItem.id}
                     className={twMerge(
-                      'h-full w-full',
+                      '',
                       tabPanelVariant === 'tabsKeyNumbers' &&
                         'pt-14 pb-page-content max-lg:px-layout-sm',
                     )}

@@ -1,5 +1,5 @@
 import { forwardRef, type HTMLAttributes } from 'react'
-import { twMerge } from 'tailwind-merge'
+import { twMerge } from '@/lib/twMerge/twMerge'
 import { Typography } from '../Typography'
 
 export type FigureCaptionProps = {
@@ -31,9 +31,9 @@ export const FigureCaption = forwardRef<HTMLElement, FigureCaptionProps>(
       <figcaption
         ref={ref}
         className={twMerge(
-          `pt-2 pb-4 leading-misty dark:text-white-100 ${textSize === 'xs' ? 'text-xs' : 'text-base'}
-          ${withLayoutPx ? 'px-layout-sm lg:px-layout-lg' : ''}
-          `,
+          `pt-2 pb-4 leading-misty dark:text-white-100`,
+          textSize === 'xs' ? 'text-xs' : 'text-base',
+          withLayoutPx && 'px-layout-sm lg:px-layout-lg',
           className,
         )}
       >
