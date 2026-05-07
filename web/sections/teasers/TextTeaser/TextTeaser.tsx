@@ -33,36 +33,36 @@ const TextTeaser = ({ data, anchor, className }: TextTeaserProps) => {
     <article
       id={anchor}
       className={twMerge(
-        `${backgroundUtility} p-layout-sm flex  flex-col gap-x-12 gap-y-12 py-6 md:flex-row lg:grid lg:grid-cols-2 ${
-          dark ? 'dark' : ''
-        } `,
+        `mx-auto w-full max-w-fullwidth ${backgroundUtility} ${dark ? 'dark' : ''} `,
         className,
       )}
     >
-      {titlePosition === 'left' && titleElement}
-      <div className='basis-1/2 md:p-12 lg:p-16'>
-        {text && (
-          <div className='pb-8 last:pb-0'>
-            <Blocks variant='ingress' value={text} />
-          </div>
-        )}
-        {action && (
-          <ResourceLink
-            href={url as string}
-            file={{
-              ...action?.file,
-              label: action?.label,
-            }}
-            {...(action.link?.lang && {
-              hrefLang: getLocaleFromName(action.link?.lang),
-            })}
-            type={action.type}
-          >
-            {action.label}
-          </ResourceLink>
-        )}
+      <div className='flex flex-col gap-x-12 gap-y-12 p-layout-sm py-6 md:flex-row lg:grid lg:grid-cols-2'>
+        {titlePosition === 'left' && titleElement}
+        <div className='basis-1/2 md:p-12 lg:p-16'>
+          {text && (
+            <div className='pb-8 last:pb-0'>
+              <Blocks variant='ingress' value={text} />
+            </div>
+          )}
+          {action && (
+            <ResourceLink
+              href={url as string}
+              file={{
+                ...action?.file,
+                label: action?.label,
+              }}
+              {...(action.link?.lang && {
+                hrefLang: getLocaleFromName(action.link?.lang),
+              })}
+              type={action.type}
+            >
+              {action.label}
+            </ResourceLink>
+          )}
+        </div>
+        {titlePosition === 'right' && titleElement}
       </div>
-      {titlePosition === 'right' && titleElement}
     </article>
   )
 }

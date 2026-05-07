@@ -1,8 +1,8 @@
 'use client'
+import type { PortableTextBlock } from 'next-sanity'
 import { twMerge } from 'tailwind-merge'
-import { PortableTextBlock } from 'next-sanity'
+import { LineChart, type LineChartProps } from '@/core/LineChart/LineChart'
 import Blocks from '@/portableText/Blocks'
-import { LineChart, LineChartProps } from '@/core/LineChart/LineChart'
 
 export type LineChartBlockProps = {
   type: string
@@ -28,14 +28,28 @@ const LineChartBlock = ({
   return (
     <section
       className={twMerge(
-        `px-layout-sm ${useLayoutMd && !useTextWidth ? 'lg:px-layout-md' : 'lg:px-layout-lg'} ${useTextWidth ? 'max-w-text' : ''} pb-page-content`,
+        `${useTextWidth ? 'max-w-text' : 'max-w-content'} mx-auto pb-page-content`,
         className,
       )}
       id={anchor}
     >
-      {title && <Blocks variant="h2" value={title} className={`${hideTitle ? 'sr-only' : ''}`} />}
-      <div className="flex">
-        {charts && charts?.length > 0 && charts?.map((chart: LineChartProps) => <LineChart key={chart.id} {...chart} />)}
+      <div className='px-layout-sm lg:px-layout-lg'>
+        {title && (
+          <Blocks
+            variant='h2'
+            value={title}
+            className={`${hideTitle ? 'sr-only' : ''}`}
+          />
+        )}
+      </div>
+      <div
+        className={`flex px-layout-sm ${useLayoutMd && !useTextWidth ? 'lg:px-layout-md' : 'lg:px-layout-lg'}`}
+      >
+        {charts &&
+          charts?.length > 0 &&
+          charts?.map((chart: LineChartProps) => (
+            <LineChart key={chart.id} {...chart} />
+          ))}
       </div>
     </section>
   )

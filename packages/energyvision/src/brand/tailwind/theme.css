@@ -88,22 +88,6 @@
 
   --tracking-display: -3px;
 
-  --spacing-layout-sm: clamp(16px, calc(-38.3689px + 15.4984vw), 13dvw);
-  --spacing-layout-md: clamp(16px, calc(-69.4369px + 23.7832vw), 18.8dvw);
-  --spacing-layout-lg: clamp(16px, calc(-101.4757px + 32.3269vw), 23.3dvw);
-  --spacing-text-end: clamp(16px, calc(-150px + 38vw), 26dvw);
-
-  --spacing-single-carousel-card-w-sm: 350px; /*275px;*/
-  --spacing-single-carousel-card-w-md: 692px;
-  --spacing-single-carousel-card-w-lg: 980px;
-  --spacing-single-carousel-card-h-sm: 400px;
-  --spacing-single-carousel-card-h-md: 430px;
-  --spacing-single-carousel-card-h-lg: 516px;
-  --spacing-event-carousel-card-w: 383px;
-  --spacing-arrow-right: 1.58rem;
-  --spacing-text: 80ch;
-  --spacing-news-banner-vertical: clamp(40px, calc(14.3125px + 11.0032vw), 210px);
-
   --font-weight-semibolder: 650;
 
   --radius-2xs: 0.1rem;
@@ -130,12 +114,6 @@
 
   /*just --card ? grid-cols-(--my-grid-cols) */
   --grid-cols-card: repeat(auto-fill, minmax(min(100%, 220px), 400px));
-
-  /* Implement in code and check
-        flex: {
-        fr: '1 1 1',
-      },
-  */
 
   --animate-fadeInOut: fade linear both;
 

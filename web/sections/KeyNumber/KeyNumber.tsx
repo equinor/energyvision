@@ -38,7 +38,7 @@ const KeyNumber = ({ data, anchor, className }: KeyNumbersProps) => {
       )}
       id={anchor}
     >
-      <div className='px-layout-sm lg:px-layout-md'>
+      <div className='mx-auto mb-8 max-w-content px-layout-sm lg:px-layout-lg'>
         {title && (
           <Blocks
             value={title}
@@ -48,8 +48,25 @@ const KeyNumber = ({ data, anchor, className }: KeyNumbersProps) => {
           />
         )}
         {ingress && <Blocks variant='ingress' value={ingress} />}
+        {action && (
+          <ResourceLink
+            variant='fit'
+            file={{
+              ...action?.file,
+              label: action?.label,
+            }}
+            href={url as string}
+            {...(action.link?.lang && {
+              hrefLang: getLocaleFromName(action.link?.lang),
+            })}
+            type={action.type}
+            className='mt-2'
+          >
+            {`${action.label}`}
+          </ResourceLink>
+        )}
       </div>
-      <div className='px-layout-sm lg:px-layout-md'>
+      <div className='mx-auto max-w-content px-layout-sm lg:px-layout-md'>
         {useHorizontalScroll && (
           <Carousel
             items={items}
@@ -66,29 +83,15 @@ const KeyNumber = ({ data, anchor, className }: KeyNumbersProps) => {
             ))}
           </ul>
         )}
-
+      </div>
+      <div className='mx-auto flex max-w-content flex-col gap-4 px-layout-sm pt-6 lg:px-layout-lg'>
         {disclaimer && (
           <Blocks
             group='paragraph'
             variant='small'
             value={disclaimer}
-            blockClassName='pb-lg max-w-text'
+            blockClassName='pb-lg max-w-text italic'
           />
-        )}
-        {action && (
-          <ResourceLink
-            file={{
-              ...action?.file,
-              label: action?.label,
-            }}
-            href={url as string}
-            {...(action.link?.lang && {
-              hrefLang: getLocaleFromName(action.link?.lang),
-            })}
-            type={action.type}
-          >
-            {`${action.label}`}
-          </ResourceLink>
         )}
       </div>
     </section>

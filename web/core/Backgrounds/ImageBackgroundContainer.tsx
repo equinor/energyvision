@@ -57,6 +57,8 @@ export const ImageBackgroundContainer = ({
   const Component = as ?? 'section'
 
   const backgroundClassNames = `
+      max-w-fullwidth
+      mx-auto
       [container:inline-size]
       relative
       ${useLight || useNoGradient ? '' : 'dark'}

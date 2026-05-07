@@ -58,6 +58,7 @@ const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
       ref={ref}
       id={anchor}
       className={twMerge(
+        'mx-auto w-full max-w-content',
         id && 'scroll-mt-topbar',
         tabPanelVariant === 'tabsKeyNumbers' && theme?.backgroundUtility,
         tabPanelVariant !== 'tabsKeyNumbers' &&
@@ -67,7 +68,7 @@ const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
     >
       <div
         className={twMerge(
-          `flex flex-col`,
+          `flex w-full flex-col`,
           tabPanelVariant === 'tabsKeyNumbers' && `gap-6`,
           tabPanelVariant !== 'tabsKeyNumbers' &&
             `lg:mx-layout-sm ${theme?.backgroundUtility} rounded-md`,
@@ -163,7 +164,7 @@ const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
                         {tabItem?.panel?.disclaimer && (
                           <Blocks
                             value={tabItem?.panel?.disclaimer}
-                            className='px-layout-sm text-sm italic lg:px-10'
+                            className='px-layout-sm pt-4 text-sm italic lg:px-10'
                           />
                         )}
                       </>

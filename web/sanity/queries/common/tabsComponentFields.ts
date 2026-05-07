@@ -32,6 +32,7 @@ export const tabsComponentFields = /*groq*/ `
           "id": _key,
           "type": _type,
           image,
+          caption,
           imageVariant,
           backgroundPosition,
           title[]{..., ${markDefs}},
@@ -44,7 +45,7 @@ export const tabsComponentFields = /*groq*/ `
             keyFigure,
             explanation,
           },
-          "action": action[0]{
+          "actions": action[]{
             ${linkSelectorFields},
             ${downloadableFileFields},
             ${downloadableImageFields},
@@ -64,6 +65,7 @@ export const tabsComponentFields = /*groq*/ `
           },
           _type == "tabsInfoPanel" => {
             image,
+            caption,
             imageVariant,
             backgroundPosition,
             title[]{..., ${markDefs}},
@@ -76,7 +78,7 @@ export const tabsComponentFields = /*groq*/ `
               keyFigure,
               explanation,
             },
-            "action": action[0]{
+            "actions": action[]{
               ${linkSelectorFields},
               ${downloadableFileFields},
               ${downloadableImageFields},

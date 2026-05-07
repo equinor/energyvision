@@ -137,7 +137,7 @@ export const Typography: OverridableComponent<TypographyProps, HTMLElement> =
         //clsx news template merging?
         className={twMerge(
           typography,
-          'wrap-break-word text-pretty text-slate-80 dark:text-white-100',
+          'wrap-break-word max-w-text text-pretty text-slate-80 dark:text-white-100',
           className,
         )}
       >

@@ -1,8 +1,8 @@
-import type { TextWithIconArrayData, TextWithIconItem } from '../../types/index'
 import { twMerge } from 'tailwind-merge'
 import { TextWithIcon } from '@/core/TextWithIcon/TextWithIcon'
 import Blocks from '@/portableText/Blocks'
 import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
+import type { TextWithIconArrayData, TextWithIconItem } from '../../types/index'
 
 type TextWithIconArrayProps = {
   data: TextWithIconArrayData
@@ -11,7 +11,12 @@ type TextWithIconArrayProps = {
   listClassName?: string
 }
 
-const TextWithIconArray = ({ data, anchor, className = '', listClassName = '' }: TextWithIconArrayProps) => {
+const TextWithIconArray = ({
+  data,
+  anchor,
+  className = '',
+  listClassName = '',
+}: TextWithIconArrayProps) => {
   const { designOptions, group, title, hideTitle } = data
 
   if (!group) return null
@@ -24,19 +29,38 @@ const TextWithIconArray = ({ data, anchor, className = '', listClassName = '' }:
   }
 
   return (
-    <section id={anchor} className={twMerge(`${bg} ${dark ? 'dark' : ''} flex flex-col gap-6`, className)}>
-      {title && <Blocks value={title} variant="h2" blockClassName={`${hideTitle ? 'sr-only' : 'px-layout-lg'}`} />}
-      <ul className={twMerge(`flex w-full flex-col gap-12 px-layout-sm lg:grid ${gridCols}`, listClassName)}>
-        {group.map((item: TextWithIconItem) => {
-          const { icon, title, text, id } = item
-          return (
-            <li key={id}>
-              {/*@ts-ignore: TODO check why  content?: PortableTextBlock[] does not match text: PortableTextBlock[]  */}
-              <TextWithIcon image={icon} title={title} content={text} />
-            </li>
-          )
-        })}
-      </ul>
+    <section
+      id={anchor}
+      className={twMerge(
+        `${bg} ${dark ? 'dark' : ''} flex flex-col gap-6`,
+        className,
+      )}
+    >
+      <div className='mx-auto max-w-content'>
+        {title && (
+          <Blocks
+            value={title}
+            variant='h2'
+            blockClassName={`${hideTitle ? 'sr-only' : 'px-layout-lg'}`}
+          />
+        )}
+        <ul
+          className={twMerge(
+            `flex w-full flex-col gap-12 px-layout-sm lg:grid ${gridCols}`,
+            listClassName,
+          )}
+        >
+          {group.map((item: TextWithIconItem) => {
+            const { icon, title, text, id } = item
+            return (
+              <li key={id}>
+                {/*@ts-ignore: TODO check why  content?: PortableTextBlock[] does not match text: PortableTextBlock[]  */}
+                <TextWithIcon image={icon} title={title} content={text} />
+              </li>
+            )
+          })}
+        </ul>
+      </div>
     </section>
   )
 }

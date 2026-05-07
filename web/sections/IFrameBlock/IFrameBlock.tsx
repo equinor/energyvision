@@ -37,45 +37,44 @@ const IFrameBlock = ({
   if (!url) return null
   return (
     <section
-      className={twMerge(
-        `${bg} ${dark ? 'dark' : ''} px-layout-lg pb-page-content`,
-        className,
-      )}
+      className={twMerge(`${bg} ${dark ? 'dark' : ''} `, className)}
       id={anchor}
     >
-      {title && <Blocks variant='h2' id={headingId} value={title} />}
-      <div className='flex flex-col'>
-        {ingress && <Blocks variant='ingress' value={ingress} />}
-        <IFrame
-          frameTitle={frameTitle}
-          url={url}
-          cookiePolicy={cookiePolicy}
-          aspectRatio={aspectRatio}
-          height={height}
-          labelledBy={headingId}
-          {...(description && {
-            description,
-          })}
-          hasSectionTitle={!!title}
-          transcript={transcript}
-        />
-        {action?.label && actionUrl && (
-          <ResourceLink
-            href={actionUrl}
-            variant='fit'
-            hrefLang={
-              action?.type === 'internalUrl'
-                ? getLocaleFromName(action?.link?.lang)
-                : undefined
-            }
-            file={{
-              ...action?.file,
-              label: action?.label,
-            }}
-          >
-            {action.label}
-          </ResourceLink>
-        )}
+      <div className='mx-auto max-w-content px-layout-lg pb-page-content'>
+        {title && <Blocks variant='h2' id={headingId} value={title} />}
+        <div className='flex flex-col'>
+          {ingress && <Blocks variant='ingress' value={ingress} />}
+          <IFrame
+            frameTitle={frameTitle}
+            url={url}
+            cookiePolicy={cookiePolicy}
+            aspectRatio={aspectRatio}
+            height={height}
+            labelledBy={headingId}
+            {...(description && {
+              description,
+            })}
+            hasSectionTitle={!!title}
+            transcript={transcript}
+          />
+          {action?.label && actionUrl && (
+            <ResourceLink
+              href={actionUrl}
+              variant='fit'
+              hrefLang={
+                action?.type === 'internalUrl'
+                  ? getLocaleFromName(action?.link?.lang)
+                  : undefined
+              }
+              file={{
+                ...action?.file,
+                label: action?.label,
+              }}
+            >
+              {action.label}
+            </ResourceLink>
+          )}
+        </div>
       </div>
     </section>
   )

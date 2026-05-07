@@ -88,26 +88,42 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
       className={twMerge(
         designOptions?.background?.type === 'backgroundImage' &&
           backgroundImageContentClassNames,
-        designOptions?.background?.type !== 'backgroundImage' &&
-          `px-layout-sm lg:px-layout-lg`,
         className,
       )}
     >
-      {image?.asset && (
-        <Image
-          image={image}
-          grid='xs'
-          aspectRatio='4:3'
-          imageClassName='object-contain object-left'
-          className='mb-8 aspect-4/3 w-1/2 lg:mb-16 lg:w-1/3'
-        />
-      )}
-      {overline ? (
-        <hgroup
-          className={`mb-1 ${useBrandTheme ? 'text-energy-red-100' : ''}`}
-        >
-          <Typography variant='overline'>{overline}</Typography>
-          {title && (
+      <div
+        className={`${
+          designOptions?.background?.type !== 'backgroundImage'
+            ? 'mx-auto max-w-content px-layout-sm lg:px-layout-lg'
+            : ''
+        }`}
+      >
+        {image?.asset && (
+          <Image
+            image={image}
+            grid='xs'
+            aspectRatio='4:3'
+            imageClassName='object-contain object-left'
+            className='mb-8 aspect-4/3 w-1/2 lg:mb-16 lg:w-1/3'
+          />
+        )}
+        {overline ? (
+          <hgroup
+            className={`mb-1 ${useBrandTheme ? 'text-energy-red-100' : ''}`}
+          >
+            <Typography variant='overline'>{overline}</Typography>
+            {title && (
+              <Blocks
+                value={title}
+                as='h2'
+                group='heading'
+                variant='h2'
+                useDisplay={true}
+              />
+            )}
+          </hgroup>
+        ) : (
+          title && (
             <Blocks
               value={title}
               as='h2'
@@ -115,31 +131,21 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
               variant='h2'
               useDisplay={true}
             />
-          )}
-        </hgroup>
-      ) : (
-        title && (
-          <Blocks
-            value={title}
-            as='h2'
-            group='heading'
-            variant='h2'
-            useDisplay={true}
-          />
-        )
-      )}
-      {(ingress || text || callToActions) &&
-        (contentAlignment === 'right' ? (
-          <div
-            className={`flex flex-col ${
-              contentAlignment === 'right' ? 'items-end' : ''
-            }`}
-          >
-            {contentElements}
-          </div>
-        ) : (
-          contentElements
-        ))}
+          )
+        )}
+        {(ingress || text || callToActions) &&
+          (contentAlignment === 'right' ? (
+            <div
+              className={`flex flex-col ${
+                contentAlignment === 'right' ? 'items-end' : ''
+              }`}
+            >
+              {contentElements}
+            </div>
+          ) : (
+            contentElements
+          ))}
+      </div>
     </BackgroundContainer>
   )
 }

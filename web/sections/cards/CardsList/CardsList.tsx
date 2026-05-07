@@ -42,18 +42,19 @@ const CardsList = forwardRef<HTMLElement, CardsListProps>(function CardsList(
   const bg = colorKeyToUtilityMap[cardBackground ?? 'blue-50']
   console.log('cardBackground', cardBackground)
   const px = getLayoutPx(layoutGrid ?? 'md')
-
+  console.log('title', title)
   return (
     <section
       ref={ref}
-      className={twMerge(`pb-page-content`, className)}
+      className={twMerge(`mx-auto max-w-content`, className)}
       id={anchor}
     >
       {title && (
         <Blocks
           value={title}
           variant='h2'
-          blockClassName={hideTitle ? 'sr-only' : 'px-layout-lg pb-10'}
+          className='px-layout-lg'
+          blockClassName={hideTitle ? 'sr-only' : 'pb-10'}
         />
       )}
       <ul className={`${px} grid ${gridColumns} gap-4`}>

@@ -1,9 +1,8 @@
 'use client'
-import { VideoPlayer, VideoType } from '@/core/VideoJsPlayer/VideoPlayer'
-import { DesignOptions, LinkData } from '../../types/index'
-import { PortableTextBlock } from 'next-sanity'
-import { AspectRatioVariants } from '@/core/VideoJsPlayer/Video'
-import { useMediaQuery } from '@/lib/hooks/useMediaQuery'
+import type { PortableTextBlock } from 'next-sanity'
+import type { AspectRatioVariants } from '@/core/VideoJsPlayer/Video'
+import { VideoPlayer, type VideoType } from '@/core/VideoJsPlayer/VideoPlayer'
+import type { DesignOptions, LinkData } from '../../types/index'
 
 export type FullWidthVideoRatio = 'fullScreen' | 'narrow' | '2:1'
 
@@ -20,7 +19,11 @@ export type FullWidthVideoProps = {
   anchor?: string
 }
 
-const FullWidthVideo = ({ anchor, video, designOptions }: FullWidthVideoProps) => {
+const FullWidthVideo = ({
+  anchor,
+  video,
+  designOptions,
+}: FullWidthVideoProps) => {
   const { aspectRatio = 'fullScreen', containVideo } = designOptions
   const aspect: Record<string, AspectRatioVariants> = {
     narrow: '10:3',
@@ -32,7 +35,7 @@ const FullWidthVideo = ({ anchor, video, designOptions }: FullWidthVideoProps) =
     //@ts-ignore: TODO
     <VideoPlayer
       id={anchor}
-      variant="fullwidth"
+      variant='fullwidth'
       containVideo={containVideo}
       aspectRatio={aspect[aspectRatio ?? 'fullScreen']}
       {...video}

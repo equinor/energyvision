@@ -73,6 +73,8 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
     },
     ref,
   ) {
+    console.log('layoutDirection', layoutDirection)
+    console.log('type', type)
     const plainText = Array.isArray(title)
       ? title
           .map(block => block.children.map(span => span.text).join(''))
@@ -99,6 +101,7 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
 
     const showArrow = true //type !== 'extended'
     const _layoutDirection = type === 'extended' ? 'col' : layoutDirection
+    console.log('_layoutDirection', _layoutDirection)
 
     const paddingOnTypes: Record<PromotionType, string> = {
       compact: _layoutDirection === 'col' ? 'px-6 pt-6 pb-8' : 'py-4 pr-3 pl-4',
@@ -106,11 +109,10 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
     }
     const layoutOnTypes: Record<PromotionType, string> = {
       compact:
-        _layoutDirection === 'col'
-          ? 'grid-cols-1 grid-rows-[31vw_auto] md:grid-rows-[20vw_auto] lg:grid-rows-[13vw_auto] 5xl:lg:grid-rows-[10vw_auto]'
-          : `min-h-[120px] grid-cols-[23vw_auto] md:grid-cols-[15vw_auto] lg:grid-cols-[10vw_auto] grid-rows-1`,
-      extended:
-        'grid-cols-1 grid-rows-[31vw_auto] md:grid-rows-[20vw_auto] lg:grid-rows-[13vw_auto] 5xl:lg:grid-rows-[10vw_auto]',
+        String(_layoutDirection) === String('col')
+          ? 'grid-cols-1 grid-rows-[53%_auto]'
+          : `min-h-[120px] grid-cols-[31%_auto] grid-rows-1`,
+      extended: 'grid-cols-1 grid-rows-[31%_auto]',
     }
     const lineClampOnTypes: Record<PromotionType, string> = {
       compact: layoutDirection === 'col' ? 'line-clamp-2' : 'line-clamp-3',
@@ -152,7 +154,7 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
           </div>
         )}
         <div
-          className={`h-full min-h-[8vh] w-full ${paddingOnTypes[type]} flex ${
+          className={`h-full min-h-25 w-full ${paddingOnTypes[type]} flex ${
             type === 'extended' ? 'items-start' : 'items-center'
           } `}
         >

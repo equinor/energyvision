@@ -70,42 +70,42 @@ const variants = {
     my-6
     :not-only-child:first:mt-0 
     :not-only-child:last:mb-0
-    pe-layout-sm
-    lg:pe-layout-lg
-    ps-layout-sm
-    lg:ps-layout-lg`,
+    me-layout-sm
+    lg:me-layout-lg
+    ms-layout-sm
+    lg:ms-layout-lg`,
     body: `
     my-5 
      :not-only-child:first:mt-0 
      :not-only-child:last:mb-0 
-    pe-layout-sm
-    lg:pe-layout-lg
-    ps-layout-sm
-    lg:ps-layout-lg
+    me-layout-sm
+    lg:me-layout-lg
+    ms-layout-sm
+    lg:ms-layout-lg
     [:where(h2+*,h3+*)]:mt-0
     text-base`,
     sm: `
     my-5 
      :not-only-child:first:mt-0 
      :not-only-child:last:mb-0 
-    pe-layout-sm
-    lg:pe-layout-lg
-    ps-layout-sm
-    lg:ps-layout-lg
+    me-layout-sm
+    lg:me-layout-lg
+    ms-layout-sm
+    lg:ms-layout-lg
     [:where(h2+*,h3+*)]:mt-0
     text-sm`,
-    h2: `pe-layout-sm
-    lg:pe-layout-lg
-    ps-layout-sm
-    lg:ps-layout-lg mt-2 mb-2 text-lg`,
-    h3: `pe-layout-sm
-    lg:pe-layout-lg
-    ps-layout-sm
-    lg:ps-layout-lg mt-2 text-md `,
-    h4: `pe-layout-sm
-    lg:pe-layout-lg
-    ps-layout-sm
-    lg:ps-layout-lg mt-2 text-base font-medium`,
+    h2: `me-layout-sm
+    lg:me-layout-lg
+    ms-layout-sm
+    lg:ms-layout-lg mt-2 mb-2 text-lg`,
+    h3: `me-layout-sm
+    lg:me-layout-lg
+    ms-layout-sm
+    lg:ms-layout-lg mt-2 text-md `,
+    h4: `me-layout-sm
+    lg:me-layout-lg
+    ms-layout-sm
+    lg:ms-layout-lg mt-2 text-base font-medium`,
   },
   marks: {
     highlight: 'text-energy-red-100 dark:text-spruce-wood-100',

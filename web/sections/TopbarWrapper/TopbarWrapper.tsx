@@ -83,21 +83,24 @@ export const TopbarWrapper = ({ children }: TopbarWrapperProps) => {
   const globalNav = (
     <nav
       aria-label={t('global') ?? 'Global'}
-      className={`h-topbar w-full animate-height overflow-hidden bg-white-100 duration-500 ease-in-out [transition-property:margin-top] ${isVisible ? 'mt-0' : '-mt-topbar'} ${hasDropShadow && !showSticky ? 'shadow-md' : ''} `}
+      className={`h-topbar w-full max-w-full animate-height overflow-hidden bg-white-100 px-layout-sm duration-500 ease-in-out [transition-property:margin-top] ${isVisible ? 'mt-0' : '-mt-topbar'} `}
       ref={topbarRef}
     >
-      <div className='mx-auto flex items-center justify-between px-layout-sm py-4'>
-        {children}
-      </div>
+      <div className='flex items-center justify-between py-4'>{children}</div>
     </nav>
   )
   //${isVisible ? 'top-topbar pt-2' : 'top-0'}
   return (
-    <header className='peer fixed z-40 w-full' data-sticky={showSticky}>
-      {globalNav}
-      {showSticky && stickyMenuData && (
-        <StickyMenu {...stickyMenuData} className={`top-0`} />
-      )}
+    <header
+      className={`peer fixed right-0 left-0 z-40 mx-auto w-full max-w-fullwidth ${hasDropShadow || showSticky ? 'shadow-md' : ''}`}
+      data-sticky={showSticky}
+    >
+      <div className='mx-auto w-full max-w-content'>
+        {globalNav}
+        {showSticky && stickyMenuData && (
+          <StickyMenu {...stickyMenuData} className={`top-0`} />
+        )}
+      </div>
     </header>
   )
 }

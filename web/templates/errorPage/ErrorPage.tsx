@@ -20,7 +20,7 @@ export default function ErrorPage({
   const { errorImage } = usePage()
 
   return (
-    <div className='grid min-h-[70vh] grid-cols-[44%_56%]'>
+    <div className='grid min-h-[70vh] w-full grid-cols-[44%_56%]'>
       <div className='max-w-text ps-layout-sm pe-32 pt-40 pb-10'>
         <Typography as='h1' variant='h2' className='pb-10'>
           <div className='pb-6 text-9xl text-energy-red-100'>

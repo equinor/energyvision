@@ -45,26 +45,25 @@ const NewsList = ({
   return (
     <div
       id={anchor}
-      className={twMerge(
-        `${bg} 3xl:px-layout-md px-layout-sm pb-page-content`,
-        className,
-      )}
+      className={twMerge(`w-full ${bg} pb-page-content`, className)}
     >
-      {title && <Blocks value={title} variant='h2' />}
-      <div className='grid auto-rows-fr gap-x-6 gap-y-8 sm:grid-cols-2 xl:grid-cols-3'>
-        {pagedArticles.map(article => (
-          <PromotionCard
-            background={foreground}
-            key={article.id}
-            data={article}
-            hasSectionTitle={!!title}
-          />
-        ))}
+      <div className='mx-auto max-w-content 3xl:px-layout-md px-layout-sm'>
+        {title && <Blocks value={title} variant='h2' />}
+        <div className='grid auto-rows-fr gap-x-6 gap-y-8 sm:grid-cols-2 xl:grid-cols-3'>
+          {pagedArticles.map(article => (
+            <PromotionCard
+              background={foreground}
+              key={article.id}
+              data={article}
+              hasSectionTitle={!!title}
+            />
+          ))}
+        </div>
+        <Pagination
+          totalPages={totalPages}
+          onPageChange={(pageNumber: number) => handlePageChange(pageNumber)}
+        />
       </div>
-      <Pagination
-        totalPages={totalPages}
-        onPageChange={(pageNumber: number) => handlePageChange(pageNumber)}
-      />
     </div>
   )
 }

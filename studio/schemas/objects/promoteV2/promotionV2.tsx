@@ -133,19 +133,19 @@ export default {
               type: 'imageWithAlt',
               hidden: ({ parent }: any) => {
                 return (
-                  parent?.linkSelector?.link[0]?._type !== 'link' &&
-                  parent?.linkSelector?.link[0]?._type !==
+                  parent?.linkSelector?.lin?.[0]?._type !== 'link' &&
+                  parent?.linkSelector?.link?.[0]?._type !==
                     'anchorLinkReference' &&
-                  parent?.linkSelector?.link[0]?._type !== 'homePageLink'
+                  parent?.linkSelector?.link?.[0]?._type !== 'homePageLink'
                 )
               },
               validation: (Rule: Rule) =>
                 Rule.custom((value: string, ctx: ValidationContext) => {
                   if (
                     //@ts-ignore: todo
-                    ctx.parent?.linkSelector?.link[0]?._type === 'link' ||
+                    ctx.parent?.linkSelector?.link?.[0]?._type === 'link' ||
                     //@ts-ignore: todo
-                    ctx.parent?.linkSelector?.link[0]?._type ===
+                    ctx.parent?.linkSelector?.link?.[0]?._type ===
                       'anchorLinkReference'
                   ) {
                     return value ? true : 'You must add an image'

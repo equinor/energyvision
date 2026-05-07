@@ -85,58 +85,24 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
             className={`flex flex-col items-start justify-center ${bg} ${dark ? 'dark' : ''} px-layout-lg lg:min-h-[28vh]`}
           >
             {title && <Blocks as='h1' variant='3xl' value={title} />}
-            <div className='mt-6 flex flex-col gap-2'>
+            <div className='mt-6 flex flex-col gap-2 *:text-sm *:leading-0'>
               {!startDayTime && (start || eventDate?.date) && (
-                <div className=''>
-                  <FormattedDateTime
-                    variant='date'
-                    dateIcon={true}
-                    datetime={start ?? eventDate?.date}
-                    className='text-sm'
-                    timeClassName='leading-none'
-                  />
-                </div>
+                <FormattedDateTime
+                  variant='date'
+                  dateIcon
+                  datetime={start ?? eventDate?.date}
+                />
               )}
-              {(startDayTime || endDayTime) && (
-                <div className='flex items-end gap-2 text-base'>
-                  <time
-                    dateTime={startDayTime.toLocaleString()}
-                    className='leading-none'
-                  >
-                    {`${
-                      endDayTime
-                        ? formatter
-                            .dateTime(new Date(startDayTime), {
-                              year: 'numeric',
-                              month: 'short',
-                              day: '2-digit',
-                            })
-                            .split(' ')
-                            .slice(0, 2)
-                            .join(' ')
-                        : formatter.dateTime(new Date(startDayTime), {
-                            year: 'numeric',
-                            month: 'long',
-                            day: '2-digit',
-                          })
-                    }`}
-                  </time>
-                  {endDayTime && (
-                    <>
-                      <span className='leading-none'>-</span>
-                      <time
-                        dateTime={endDayTime.toLocaleString()}
-                        className='leading-none'
-                      >
-                        {formatter.dateTime(new Date(endDayTime), {
-                          year: 'numeric',
-                          month: 'short',
-                          day: '2-digit',
-                        })}
-                      </time>
-                    </>
-                  )}
-                </div>
+              {startDayTime && !endDayTime && (
+                <FormattedDateTime datetime={startDayTime} dateIcon />
+              )}
+              {startDayTime && endDayTime && (
+                <FormattedDateTime
+                  variant='period'
+                  datetime={startDayTime}
+                  endDatetime={endDayTime}
+                  dateIcon
+                />
               )}
               {startDayTime && startTimeLabel !== '-' && (
                 <div className='flex items-end gap-2 text-base'>
@@ -158,6 +124,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
                     variant='time'
                     timeIcon={false}
                     datetime={start}
+                    showTimezone={false}
                     className='text-sm'
                     timeClassName='leading-none'
                   />
@@ -165,43 +132,20 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
                   <FormattedDateTime
                     variant='time'
                     datetime={end}
-                    showTimezone
                     className='text-sm'
                     timeClassName='leading-none'
                   />
                 </div>
               )}
-              {/*             {start && (
-              <span className='mt-7 mb-5 inline-block text-xl'>
-                <time suppressHydrationWarning dateTime={start.toISOString()}>
-                  {format.dateTime(start, { dateStyle: 'long' })}
-                </time>
-              </span>
-            )}
-            <div className='mb-2 flex flex-center gap-1'>
-              {start && end ? (
-                <div className={`flex h-full items-center gap-1 py-2`}>
-                  <FormattedDateTime variant='time' datetime={start} />
-                  <span>-</span>
-                  <FormattedDateTime
-                    variant='time'
-                    datetime={end}
-                    showTimezone
-                  />
-                </div>
-              ) : (
-                <span>{t('tba')}</span>
-              )}
-            </div> */}
-              {location && <p className='text-base'>{location}</p>}
-              <AddToCalendar
-                eventDate={eventDate}
-                startDateTime={startDayAndTime?.dayTime}
-                endDateTime={endDayAndTime?.dayTime}
-                location={location}
-                title={plainTitle}
-              />
             </div>
+            {location && <p className='my-2 text-base'>{location}</p>}
+            <AddToCalendar
+              eventDate={eventDate}
+              startDateTime={startDayAndTime?.dayTime}
+              endDateTime={endDayAndTime?.dayTime}
+              location={location}
+              title={plainTitle}
+            />
           </div>
           {(ingress || content) && (
             <div className={`mt-14`}>

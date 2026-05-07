@@ -77,7 +77,6 @@ import type {
   Background,
   CallToActionData,
   CampaignBannerData,
-  CardsListData,
   CookieDeclarationData,
   DesignOptions,
   FormData,
@@ -305,12 +304,14 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
     c: any,
     anchorReference: string,
     topSpacingClassName: string,
-    spacingClassName: string,
+    bottomSpacingClassName: string,
+    commonSpacingClassName: string,
   ) => {
     const anchorId = anchorReference
     const commonProps = {
       anchor: anchorId,
     }
+    const allSpacings = `${topSpacingClassName} ${bottomSpacingClassName}`
 
     switch (c.type) {
       case 'teaser':
@@ -321,7 +322,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
             key={c.id}
             {...commonProps}
             data={c as TextTeaserData}
-            className={spacingClassName}
+            className={allSpacings}
           />
         )
       case 'textBlock':
@@ -330,7 +331,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
             key={c.id}
             {...commonProps}
             data={c as TextBlockData}
-            className={spacingClassName}
+            className={allSpacings}
           />
         )
       case 'fullWidthImage':
@@ -355,7 +356,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
             key={c.id}
             {...commonProps}
             data={c as FigureData}
-            className={spacingClassName}
+            className={allSpacings}
           />
         )
       case 'textWithIconArray':
@@ -364,7 +365,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
             key={c.id}
             {...commonProps}
             data={c as TextWithIconArrayData}
-            className={spacingClassName}
+            className={allSpacings}
           />
         )
       case 'pullQuote':
@@ -373,7 +374,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
             key={c.id}
             {...commonProps}
             data={c as QuoteData}
-            className={spacingClassName}
+            className={allSpacings}
           />
         )
       case 'accordion':
@@ -382,7 +383,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
             key={c.id}
             {...commonProps}
             data={c as AccordionData}
-            className={spacingClassName}
+            className={allSpacings}
           />
         )
       case 'promoTileArray':
@@ -391,7 +392,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
             key={c.id}
             {...commonProps}
             data={c as PromoTileArrayData}
-            className={spacingClassName}
+            className={allSpacings}
           />
         )
       case 'iframe':
@@ -400,7 +401,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
             key={c.id}
             {...commonProps}
             data={c as IFrameData}
-            className={spacingClassName}
+            className={allSpacings}
           />
         )
       case 'promotion': {
@@ -415,7 +416,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
                 ...restPromo,
               } as PromotionsBlockData
             }
-            className={spacingClassName}
+            className={allSpacings}
           />
         )
       }
@@ -426,7 +427,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
             {...commonProps}
             variant='promoteEvents'
             data={c as PromotionsBlockData}
-            className={spacingClassName}
+            className={allSpacings}
           />
         )
       case 'promoteNews':
@@ -436,7 +437,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
             {...commonProps}
             variant='promoteNews'
             data={c as PromotionsBlockData}
-            className={spacingClassName}
+            className={allSpacings}
           />
         )
       //spread!
@@ -447,7 +448,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
             {...commonProps}
             variant='promotePeople'
             data={c as PromotionsBlockData}
-            className={spacingClassName}
+            className={allSpacings}
           />
         )
       case 'promoteMagazine':
@@ -457,7 +458,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
             {...commonProps}
             variant='promoteMagazine'
             data={c as PromotionsBlockData}
-            className={spacingClassName}
+            className={allSpacings}
           />
         )
       case 'promoteTopics':
@@ -467,7 +468,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
             {...commonProps}
             variant='promoteTopics'
             data={c as PromotionsBlockData}
-            className={spacingClassName}
+            className={allSpacings}
           />
         )
       case 'form':
@@ -476,7 +477,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
             key={c.id}
             {...commonProps}
             data={c as FormData}
-            className={spacingClassName}
+            className={allSpacings}
           />
         )
       case 'table':
@@ -487,7 +488,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
             key={c.id}
             {...commonProps}
             data={c as CookieDeclarationData}
-            className={spacingClassName}
+            className={allSpacings}
           />
         )
       case 'newsList':
@@ -496,7 +497,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
             key={c.id}
             {...commonProps}
             data={c as unknown as NewsListData}
-            className={spacingClassName}
+            className={allSpacings}
           />
         )
       case 'stockValuesApi':
@@ -505,7 +506,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
             key={c.id}
             {...commonProps}
             {...(c as StockValuesProps)}
-            className={spacingClassName}
+            className={allSpacings}
           />
         )
       case 'imageCarousel':
@@ -514,7 +515,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
             key={c.id}
             {...commonProps}
             data={c as ImageCarouselData}
-            className={spacingClassName}
+            className={allSpacings}
           />
         )
       case 'iframeCarousel':
@@ -523,7 +524,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
             key={c.id}
             {...commonProps}
             data={c as IframeCarouselData}
-            className={spacingClassName}
+            className={allSpacings}
           />
         )
       case 'videoPlayer':
@@ -532,7 +533,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
             key={c.id}
             {...commonProps}
             {...(c as VideoPlayerBlockProps)}
-            className={spacingClassName}
+            className={allSpacings}
           />
         )
       case 'videoPlayerCarousel':
@@ -541,7 +542,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
             key={c.id}
             {...commonProps}
             data={c as VideoPlayerCarouselData}
-            className={spacingClassName}
+            className={allSpacings}
           />
         )
       case 'keyNumbers':
@@ -550,7 +551,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
             key={c.id}
             {...commonProps}
             data={c as KeyNumbersData}
-            className={spacingClassName}
+            className={allSpacings}
           />
         )
       case 'cardsList':
@@ -559,7 +560,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
             key={c.id}
             {...commonProps}
             {...c}
-            className={spacingClassName}
+            className={allSpacings}
           />
         )
       case 'grid':
@@ -568,7 +569,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
             key={c.id}
             {...commonProps}
             data={c as GridData}
-            className={spacingClassName}
+            className={allSpacings}
           />
         )
       case 'campaignBanner':
@@ -585,7 +586,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
             key={c.id}
             {...commonProps}
             data={c as AnchorLinkListData}
-            className={spacingClassName}
+            className={allSpacings}
           />
         )
       case 'imageForText':
@@ -626,7 +627,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
             variant='default'
             {...commonProps}
             {...(c as any)}
-            className={spacingClassName}
+            className={allSpacings}
           />
         )
       case 'importTable':
@@ -636,7 +637,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
             variant='import'
             {...commonProps}
             {...(c as any)}
-            className={spacingClassName}
+            className={allSpacings}
           />
         )
       case 'pieChartBlock':
@@ -645,7 +646,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
             key={c.id}
             {...commonProps}
             {...(c as PieChartBlockProps)}
-            className={spacingClassName}
+            className={allSpacings}
           />
         )
       case 'barChartBlock':
@@ -654,7 +655,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
             key={c.id}
             {...commonProps}
             {...(c as BarChartBlockProps)}
-            className={spacingClassName}
+            className={allSpacings}
           />
         )
       case 'lineChartBlock':
@@ -663,7 +664,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
             key={c.id}
             {...commonProps}
             {...(c as LineChartBlockProps)}
-            className={spacingClassName}
+            className={allSpacings}
           />
         )
       case 'promoteExternalLinkV2':
@@ -674,7 +675,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
             key={c.id}
             {...commonProps}
             {...(c as any)}
-            className={spacingClassName}
+            className={allSpacings}
           />
         )
       case 'anchorSearch':
@@ -684,7 +685,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
             {...commonProps}
             anchors={findAllAnchors(data?.content)}
             {...(c as any)}
-            className={spacingClassName}
+            className={allSpacings}
           />
         )
       default:
@@ -740,7 +741,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
     /*     console.log(
       `Applying top spacing: ${topSpacingClassName} to ${c?.type} with title ${Array.isArray(c?.title) ? toPlainText(c?.title) : c?.title}`,
     ) */
-    const spacingClassName = `${topSpacingClassName} ${bottomSpacingClassName}`
+    const commonSpacingClassName = ` max-w-container`
 
     return (
       <ErrorBoundary
@@ -775,7 +776,8 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
           c,
           anchorReference,
           topSpacingClassName,
-          spacingClassName,
+          bottomSpacingClassName,
+          commonSpacingClassName,
         )}
       </ErrorBoundary>
     )

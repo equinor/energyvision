@@ -1,6 +1,5 @@
 import { getImageDimensions } from '@sanity/asset-utils'
 import { createImageUrlBuilder } from '@sanity/image-url'
-import { he } from 'date-fns/locale'
 import { type CreateDataAttributeProps, createDataAttribute } from 'next-sanity'
 import type { GridType } from '@/core/Image/Image'
 import { dataset, projectId, studioUrl } from '@/sanity/lib/api'

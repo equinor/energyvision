@@ -36,49 +36,51 @@ const Footer = (_props: FooterProps) => {
   return (
     <footer
       className={twMerge(
-        `dark min-h-12 bg-slate-blue-95 px-0 py-4 *:text-white-100`,
+        `dark mx-auto min-h-12 w-full max-w-fullwidth bg-slate-blue-95 px-0 py-6 *:text-white-100`,
       )}
     >
-      <div className='mx-auto my-0 flex max-w-screen-2xl flex-row flex-wrap justify-between px-layout-sm pb-2 max-md:flex-col'>
-        {footerColumns?.map(({ header, linkList }) => (
-          <section
-            className='flex flex-col max-md:w-4/5 max-md:py-4'
-            key={header}
-          >
-            <h2 className='px-0 py-2 font-medium text-md leading-planetary'>
-              {header}
-            </h2>
-            <div className='md:grid-y-0 grid grid-cols-2 items-start gap-x-8 gap-y-2 md:flex md:flex-col'>
-              {linkList?.map((footerLink: FooterLinkData) => {
-                const { id, type, someType, label, href, link } = footerLink
-                const icon =
-                  type === 'externalUrl' && someType
-                    ? getSomeSvg(someType)
-                    : null
-                const linkLocale = getLocaleFromName(link?.lang)
-                return (
-                  <FooterLink
-                    locale={linkLocale}
-                    key={id}
-                    href={href || getUrlFromAction(footerLink) || '/'}
-                    type={type}
-                    icon={icon}
-                  >
-                    {label}
-                  </FooterLink>
-                )
-              })}
-            </div>
+      <div className='mx-auto max-w-content px-layout-sm'>
+        <div className='flex flex-row flex-wrap justify-between pb-2 max-md:flex-col'>
+          {footerColumns?.map(({ header, linkList }) => (
+            <section
+              className='flex flex-col max-md:w-4/5 max-md:py-4'
+              key={header}
+            >
+              <h2 className='px-0 py-2 font-medium text-md leading-planetary'>
+                {header}
+              </h2>
+              <div className='md:grid-y-0 grid grid-cols-2 items-start gap-x-8 gap-y-2 md:flex md:flex-col'>
+                {linkList?.map((footerLink: FooterLinkData) => {
+                  const { id, type, someType, label, href, link } = footerLink
+                  const icon =
+                    type === 'externalUrl' && someType
+                      ? getSomeSvg(someType)
+                      : null
+                  const linkLocale = getLocaleFromName(link?.lang)
+                  return (
+                    <FooterLink
+                      locale={linkLocale}
+                      key={id}
+                      href={href || getUrlFromAction(footerLink) || '/'}
+                      type={type}
+                      icon={icon}
+                    >
+                      {label}
+                    </FooterLink>
+                  )
+                })}
+              </div>
+            </section>
+          ))}
+          <section className='flex flex-col max-md:w-4/5 max-md:py-4'>
+            <LinkButton variant='toTop'>{t('footer_to_top_button')}</LinkButton>
           </section>
-        ))}
-        <section className='flex flex-col max-md:w-4/5 max-md:py-4'>
-          <LinkButton variant='toTop'>{t('footer_to_top_button')}</LinkButton>
-        </section>
-      </div>
-      <div className='flex justify-start pt-12 pb-3 pl-4 md:justify-center'>
-        <span className='text-2xs'>
-          Copyright {new Date().getFullYear()} Equinor ASA
-        </span>
+        </div>
+        <div className='flex justify-start pt-12 pb-3 pl-4 md:justify-center'>
+          <span className='text-2xs'>
+            Copyright {new Date().getFullYear()} Equinor ASA
+          </span>
+        </div>
       </div>
     </footer>
   )

@@ -14,7 +14,6 @@ import {
 } from 'react-instantsearch-nextjs'
 import { ResourceLink } from '@/core/Link/ResourceLink'
 import { List } from '@/core/List'
-import { defaultLanguage } from '@/languageConfig'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { Pagination } from '@/sections/searchBlocks/pagination/Pagination'
@@ -188,7 +187,7 @@ const NewsRoomTemplate = forwardRef<HTMLDivElement, NewsRoomTemplateProps>(
               facetFilters={['type:news', 'topicTags:-Crude Oil Assays']}
             />
 
-            <div className='flex flex-col gap-8 pt-topbar lg:gap-12'>
+            <div className='flex w-full flex-col gap-8 pt-topbar lg:gap-12'>
               <div className='dark bg-slate-blue-95 py-24'>
                 <div className='mx-auto flex grid-rows-2 flex-col gap-4 px-layout-sm'>
                   {title && (

@@ -89,41 +89,43 @@ export const PromotionBlockV2 = forwardRef<HTMLDivElement, PromotionBlockProps>(
         id={anchor}
         className={twMerge(`${id ? 'scroll-mt-topbar' : ''} ${bg}`, className)}
       >
-        {title && (
-          <Blocks
-            variant='h2'
-            value={title}
-            blockClassName={'px-layout-sm lg:px-layout-lg'}
-          />
-        )}
-        <div className='flex flex-col gap-6'>
-          {ingress && (
+        <div className='mx-auto max-w-content'>
+          {title && (
             <Blocks
-              variant='ingress'
-              value={ingress}
-              className={'px-layout-sm lg:px-layout-lg'}
+              variant='h2'
+              value={title}
+              className='px-layout-sm lg:px-layout-lg'
             />
           )}
-          <ul className={`${px} grid ${cols} auto-rows-fr gap-4`}>
-            {promoteList.map((promotion: any) => {
-              const variant = getVariantOnType(promotion?.type)
-              const href = getUrlFromAction(promotion)
-              return (
-                <li key={promotion.id}>
-                  <Promotion
-                    variant={variant}
-                    gridColumns={gridColumns}
-                    background={foreground}
-                    title={promotion.label}
-                    image={promotion.image}
-                    href={href || ''}
-                    layoutDirection={layoutDirection}
-                    hasSectionTitle={!!title}
-                  />
-                </li>
-              )
-            })}
-          </ul>
+          <div className='flex flex-col gap-6'>
+            {ingress && (
+              <Blocks
+                variant='ingress'
+                value={ingress}
+                className={'px-layout-sm lg:px-layout-lg'}
+              />
+            )}
+            <ul className={`${px} grid ${cols} auto-rows-fr gap-4`}>
+              {promoteList.map((promotion: any) => {
+                const variant = getVariantOnType(promotion?.type)
+                const href = getUrlFromAction(promotion)
+                return (
+                  <li key={promotion.id}>
+                    <Promotion
+                      variant={variant}
+                      gridColumns={gridColumns}
+                      background={foreground}
+                      title={promotion.label}
+                      image={promotion.image}
+                      href={href || ''}
+                      layoutDirection={layoutDirection}
+                      hasSectionTitle={!!title}
+                    />
+                  </li>
+                )
+              })}
+            </ul>
+          </div>
         </div>
       </section>
     )

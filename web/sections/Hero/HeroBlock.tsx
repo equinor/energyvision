@@ -75,8 +75,9 @@ export const HeroBlock = ({
   isMagazineRoom = false,
   className = '',
 }: HeroBlockProps) => {
+  console.log('herodata', heroData)
   const {
-    type = HeroTypes.DEFAULT,
+    type = HeroTypes?.DEFAULT,
     title,
     subTitle,
     ingress,
@@ -100,18 +101,18 @@ export const HeroBlock = ({
   const breadcrumbsElement = (
     <Breadcrumbs
       //@ts-ignore
-      background={type !== HeroTypes.DEFAULT ? nextCompBg : undefined}
+      background={type !== HeroTypes?.DEFAULT ? nextCompBg : undefined}
       currentSlug={breadcrumbs?.currentSlug}
       useCustomBreadcrumbs={breadcrumbs?.useCustomBreadcrumbs}
       defaultBreadcrumbs={breadcrumbs?.defaultBreadcrumbs}
       customBreadcrumbs={breadcrumbs?.customBreadcrumbs}
-      className={`${nextCompDark ? nextCompDark : ''} ${type === HeroTypes.DEFAULT && (figure?.caption || figure?.attribution) ? 'pt-2' : ''}`}
+      className={`${nextCompDark ? nextCompDark : ''} ${type === HeroTypes?.DEFAULT && (figure?.caption || figure?.attribution) ? 'pt-2' : ''}`}
     />
   )
   const heroTypesThatHaveBreadcrumbsBelow = [
-    HeroTypes.FIFTY_FIFTY,
-    HeroTypes.DEFAULT,
-    HeroTypes.BACKGROUND_IMAGE,
+    HeroTypes?.FIFTY_FIFTY,
+    HeroTypes?.DEFAULT,
+    HeroTypes?.BACKGROUND_IMAGE,
   ]
 
   const commonProps = {
@@ -122,7 +123,7 @@ export const HeroBlock = ({
     background: colorKeyToUtilityMap[background]?.background,
     nextSectionDesignOptions: nextSectionDesignOptions,
     ...(magazineTags && { magazineTags }),
-    ...((link || (heroLink && type === HeroTypes.FIFTY_FIFTY)) && {
+    ...((link || (heroLink && type === HeroTypes?.FIFTY_FIFTY)) && {
       link: heroLink ?? link,
     }),
     className,
@@ -185,19 +186,19 @@ export const HeroBlock = ({
     }
   }
 
-  return type !== HeroTypes.NO_HERO ? (
+  return type !== HeroTypes?.NO_HERO ? (
     <section className='h-full w-full'>
       {getHero()}
       {breadcrumbs?.enableBreadcrumbs &&
         heroTypesThatHaveBreadcrumbsBelow.includes(type) && (
           <Breadcrumbs
             //@ts-ignore
-            background={type !== HeroTypes.DEFAULT ? nextCompBg : undefined}
+            background={type !== HeroTypes?.DEFAULT ? nextCompBg : undefined}
             currentSlug={breadcrumbs.currentSlug}
             useCustomBreadcrumbs={breadcrumbs?.useCustomBreadcrumbs}
             defaultBreadcrumbs={breadcrumbs?.defaultBreadcrumbs}
             customBreadcrumbs={breadcrumbs?.customBreadcrumbs}
-            className={`${nextCompDark ? nextCompDark : ''} ${type === HeroTypes.DEFAULT && (figure?.caption || figure?.attribution) ? 'pt-2' : ''}`}
+            className={`${nextCompDark ? nextCompDark : ''} ${type === HeroTypes?.DEFAULT && (figure?.caption || figure?.attribution) ? 'pt-2' : ''}`}
           />
         )}
     </section>

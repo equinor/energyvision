@@ -100,6 +100,11 @@ export default {
         hotspot: true,
       },
     }),
+    defineField({
+      name: 'caption',
+      title: 'Image caption',
+      type: 'string',
+    }),
     backgroundPosition(),
     defineField({
       name: 'title',
@@ -128,7 +133,7 @@ export default {
         { type: 'downloadableImage', title: 'Call to action: Download image' },
         { type: 'downloadableFile', title: 'Call to action: Download file' },
       ],
-      validation: (Rule: Rule) => Rule.max(1).error('Only 1'),
+      validation: (Rule: Rule) => Rule.max(2).error('Max 2'),
     }),
     {
       name: 'keyInfoTitle',

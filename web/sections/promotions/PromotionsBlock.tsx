@@ -164,106 +164,110 @@ const PromotionsBlock = ({
       className={twMerge(`relative ${bg} ${dark ? 'dark' : ''}`, className)}
       id={anchor}
     >
-      {(title || ingress || viewAllLink?.link?.slug) && (
-        <div
-          className={`flex flex-col ${promotionVariant === 'promoteEvents' && backgroundImage ? 'dark relative z-10 pt-30' : ''} ${paddingClassName}`}
-        >
-          {/*@ts-ignore:todo */}
-          <Blocks variant='h2' id={sectionTitleId} value={title} />
-          {ingress && (
-            <Blocks group='paragraph' variant='overline' value={ingress} />
-          )}
-          {viewAllLink?.link?.slug && (
-            <ResourceLink
-              type='internalUrl'
-              variant='fit'
-              href={viewAllLink?.link?.slug}
-            >
-              {viewAllLink?.label}
-            </ResourceLink>
-          )}
-        </div>
-      )}
-      {promotionVariant === 'promoteEvents' ? (
-        <EventPromotions
-          promotions={promotionList as EventCardData[]}
-          hasSectionTitle={!!title}
-          promotePastEvents={promotePastEvents}
-          onColorBg={onColorBg}
-          hasBackgroundImage={!!backgroundImage?.asset}
-        />
-      ) : (
-        <ul
-          className={`pt-6 ${
-            promotionList?.length === 1
-              ? 'mx-layout-sm md:mx-layout-lg'
-              : `3xl:mx-layout-md mx-layout-sm grid auto-rows-fr grid-cols-1 ${
-                  promotionList?.length === 3
-                    ? 'md:grid-cols-3'
-                    : 'md:grid-cols-2 2xl:grid-cols-3'
-                } gap-x-4 gap-y-3`
-          }
-              `}
-        >
-          {promotionList?.map((promotion: any) => {
-            return (
-              <li key={promotion?.id}>
-                {variant === 'promotePeople' && (
-                  <PeopleCard
-                    data={promotion as PeopleCardData}
-                    hasSectionTitle={!!title}
-                    variant={promotionList?.length === 1 ? 'single' : 'default'}
-                  />
-                )}
-                {variant !== 'promotePeople' && (
-                  <Promotion
-                    variant='default'
-                    type='extended'
-                    //@ts-ignore:todo
-                    title={promotion?.title}
-                    ingress={promotion?.ingress}
-                    {...(onColorBg && {
-                      background: 'white-100',
-                    })}
-                    {...(promotion?.publishDateTime && {
-                      eyebrow: (
-                        <FormattedDateTime
-                          variant='date'
-                          datetime={promotion?.publishDateTime}
-                          uppercase
-                          className='pb-2 text-sm'
-                        />
-                      ),
-                    })}
-                    image={promotion?.heroImage?.image}
-                    href={promotion?.slug}
-                    hasSectionTitle={!!title}
-                  />
-                )}
-              </li>
-            )
-          })}
-        </ul>
-      )}
-      {promotionVariant === 'promoteEvents' && backgroundImage && (
-        <div
-          className={`absolute inset-0 z-0 bg-cover bg-no-repeat ${
-            backgroundPosition
-              ? getObjectPositionForImage(backgroundPosition)
-              : ''
-          } `}
-          style={{
-            //@ts-ignore:todo
-            backgroundImage: `url(${imageUrl})`,
-          }}
-        >
-          <div className='h-full w-full bg-black/20 px-50 py-20'>
-            <div
-              className={`h-full w-full rounded-card border border-white-100/40 bg-black-100/10 backdrop-blur-lg`}
-            />
+      <div className='mx-auto max-w-content'>
+        {(title || ingress || viewAllLink?.link?.slug) && (
+          <div
+            className={`flex flex-col pb-6 ${promotionVariant === 'promoteEvents' && backgroundImage ? 'dark relative z-10 pt-30' : ''} ${paddingClassName}`}
+          >
+            {/*@ts-ignore:todo */}
+            <Blocks variant='h2' id={sectionTitleId} value={title} />
+            {ingress && (
+              <Blocks group='paragraph' variant='overline' value={ingress} />
+            )}
+            {viewAllLink?.link?.slug && (
+              <ResourceLink
+                type='internalUrl'
+                variant='fit'
+                href={viewAllLink?.link?.slug}
+              >
+                {viewAllLink?.label}
+              </ResourceLink>
+            )}
           </div>
-        </div>
-      )}
+        )}
+        {promotionVariant === 'promoteEvents' ? (
+          <EventPromotions
+            promotions={promotionList as EventCardData[]}
+            hasSectionTitle={!!title}
+            promotePastEvents={promotePastEvents}
+            onColorBg={onColorBg}
+            hasBackgroundImage={!!backgroundImage?.asset}
+          />
+        ) : (
+          <ul
+            className={`pt-6 ${
+              promotionList?.length === 1
+                ? 'mx-layout-sm md:mx-layout-lg'
+                : `3xl:mx-layout-md mx-layout-sm grid auto-rows-fr grid-cols-1 ${
+                    promotionList?.length === 3
+                      ? 'md:grid-cols-3'
+                      : 'md:grid-cols-2 2xl:grid-cols-3'
+                  } gap-x-4 gap-y-3`
+            }
+              `}
+          >
+            {promotionList?.map((promotion: any) => {
+              return (
+                <li key={promotion?.id}>
+                  {variant === 'promotePeople' && (
+                    <PeopleCard
+                      data={promotion as PeopleCardData}
+                      hasSectionTitle={!!title}
+                      variant={
+                        promotionList?.length === 1 ? 'single' : 'default'
+                      }
+                    />
+                  )}
+                  {variant !== 'promotePeople' && (
+                    <Promotion
+                      variant='default'
+                      type='extended'
+                      //@ts-ignore:todo
+                      title={promotion?.title}
+                      ingress={promotion?.ingress}
+                      {...(onColorBg && {
+                        background: 'white-100',
+                      })}
+                      {...(promotion?.publishDateTime && {
+                        eyebrow: (
+                          <FormattedDateTime
+                            variant='date'
+                            datetime={promotion?.publishDateTime}
+                            uppercase
+                            className='pb-2 text-sm'
+                          />
+                        ),
+                      })}
+                      image={promotion?.heroImage?.image}
+                      href={promotion?.slug}
+                      hasSectionTitle={!!title}
+                    />
+                  )}
+                </li>
+              )
+            })}
+          </ul>
+        )}
+        {promotionVariant === 'promoteEvents' && backgroundImage && (
+          <div
+            className={`absolute inset-0 z-0 bg-cover bg-no-repeat ${
+              backgroundPosition
+                ? getObjectPositionForImage(backgroundPosition)
+                : ''
+            } `}
+            style={{
+              //@ts-ignore:todo
+              backgroundImage: `url(${imageUrl})`,
+            }}
+          >
+            <div className='h-full w-full bg-black/20 px-50 py-20'>
+              <div
+                className={`h-full w-full rounded-card border border-white-100/40 bg-black-100/10 backdrop-blur-lg`}
+              />
+            </div>
+          </div>
+        )}
+      </div>
     </section>
   )
 }

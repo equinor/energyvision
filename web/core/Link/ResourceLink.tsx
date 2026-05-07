@@ -1,5 +1,6 @@
 'use client'
 import { add, calendar } from '@equinor/eds-icons'
+import { type PortableTextBlock, toPlainText } from 'next-sanity'
 import { forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { ArrowRight } from '../../icons'
@@ -22,7 +23,7 @@ export type ResourceLinkProps = {
   showExtensionIcon?: boolean
   /** not provided with downloads */
   href?: string | undefined
-  label?: string
+  label?: string | PortableTextBlock[]
   file?: any
 } & Omit<BaseLinkProps, 'href'>
 
@@ -108,6 +109,7 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(
       hrefLang,
       file,
       onClick,
+      label,
     },
     ref,
   ) {
@@ -124,6 +126,16 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(
         </DownloadableLink>
       )
     }
+
+    let _label = children
+    if (label) {
+      if (Array.isArray(label)) {
+        _label = toPlainText(label)
+      } else {
+        _label = label as string
+      }
+    }
+
     const variantClassName: Partial<Record<Variants, string>> = {
       default: 'w-full pt-3',
       fit: 'w-fit pt-3',
@@ -167,7 +179,7 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(
                   'aria-hidden': true,
                 })}
               >
-                {children}
+                {_label}
               </span>
             </>
           )
@@ -179,7 +191,7 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(
                 'aria-hidden': true,
               })}
             >
-              {children}
+              {_label}
             </span>
           )
       }

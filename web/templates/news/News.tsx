@@ -80,7 +80,10 @@ const NewsPage = async ({
                 <div className='mr-2 hidden lg:flex'>|</div>
                 {intl('last_modified') ?? 'Last modified'}
                 <span className='w-1' />
-                <FormattedDateTime datetime={modifiedDate} />
+                <FormattedDateTime
+                  datetime={modifiedDate}
+                  showTimezone={false}
+                />
               </>
             )
           }
@@ -91,8 +94,8 @@ const NewsPage = async ({
 
   return (
     <>
-      <main className='pt-topbar'>
-        <article className='flex flex-col items-center pb-28'>
+      <main className='mx-auto flex w-full max-w-content pt-topbar'>
+        <article className='w-full flex-col items-center pb-28'>
           <DefaultHero
             figure={heroImage}
             background='bg-slate-blue-95'

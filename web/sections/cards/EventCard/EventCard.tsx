@@ -95,7 +95,7 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
     <div
       ref={ref}
       className={twMerge(
-        `has-[:focus-visible]:envis-outline dark:has-[:focus-visible]:envis-outline-invert flex h-full flex-col rounded-card px-6 py-8 text-slate-80 focus:outline-hidden dark:text-white-100 ${colorKeyToUtilityMap[background ?? 'gray-20'].background} ${variantClassName[variant]} `,
+        `has-focus-visible:envis-outline dark:has-focus-visible:envis-outline-invert flex h-full flex-col rounded-card px-6 py-8 text-slate-80 focus:outline-hidden dark:text-white-100 ${colorKeyToUtilityMap[background ?? 'gray-20'].background} ${variantClassName[variant]} `,
         className,
       )}
     >
@@ -112,57 +112,24 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
         className={`flex w-fit grow flex-col justify-end divide-y divide-autumn-storm-60 *:pt-2 *:pr-8 *:pb-2 *:first:pt-0 *:last:pb-0`}
       >
         {!startDayTime && (start || eventDate?.date) && (
-          <div className=''>
-            <FormattedDateTime
-              variant='date'
-              dateIcon={true}
-              datetime={start ?? eventDate?.date}
-              className='text-sm'
-              timeClassName='leading-none'
-            />
-          </div>
+          <FormattedDateTime
+            variant='date'
+            dateIcon={true}
+            datetime={start ?? eventDate?.date}
+            className='text-sm'
+            timeClassName='leading-none'
+          />
         )}
-        {(startDayTime || endDayTime) && (
-          <div className='flex items-end gap-2 text-sm'>
-            <DateIcon />
-            <time
-              dateTime={startDayTime.toLocaleString()}
-              className='leading-none'
-            >
-              {`${
-                endDayTime
-                  ? formatter
-                      .dateTime(new Date(startDayTime), {
-                        year: 'numeric',
-                        month: 'short',
-                        day: '2-digit',
-                      })
-                      .split(' ')
-                      .slice(0, 2)
-                      .join(' ')
-                  : formatter.dateTime(new Date(startDayTime), {
-                      year: 'numeric',
-                      month: 'long',
-                      day: '2-digit',
-                    })
-              }`}
-            </time>
-            {endDayTime && (
-              <>
-                <span className='leading-none'>-</span>
-                <time
-                  dateTime={endDayTime.toLocaleString()}
-                  className='leading-none'
-                >
-                  {formatter.dateTime(new Date(endDayTime), {
-                    year: 'numeric',
-                    month: 'short',
-                    day: '2-digit',
-                  })}
-                </time>
-              </>
-            )}
-          </div>
+        {startDayTime && !endDayTime && (
+          <FormattedDateTime datetime={startDayTime} dateIcon />
+        )}
+        {startDayTime && endDayTime && (
+          <FormattedDateTime
+            variant='period'
+            datetime={startDayTime}
+            endDatetime={endDayTime}
+            dateIcon
+          />
         )}
         {startDayTime && startTimeLabel !== '-' && (
           <div className='flex items-end gap-2 text-sm'>

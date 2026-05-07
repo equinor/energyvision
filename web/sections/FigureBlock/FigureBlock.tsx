@@ -33,30 +33,29 @@ const FigureBlock = ({ data, anchor, className = '' }: FigureBlockProps) => {
   return (
     <figure
       id={anchor}
-      className={twMerge(
-        `relative ${bg} ${dark ? 'dark' : ''} px-layout-sm lg:px-layout-lg`,
-        className,
-      )}
+      className={twMerge(`${bg} ${dark ? 'dark' : ''} `, className)}
     >
-      <Image
-        image={image}
-        aspectRatio={aspectRatio}
-        grid='lg'
-        className={`${alignWithText ? 'max-w-envis-text' : ''}`}
-        {...(useFitMax && {
-          useFitMax: true,
-        })}
-        {...(useContain && {
-          useContain: true,
-        })}
-      />
-      {(caption || attribution) && (
-        <FigureCaption
-          caption={caption}
-          attribution={attribution}
-          withLayoutPx={false}
+      <div className='mx-auto max-w-content px-layout-sm lg:px-layout-lg'>
+        <Image
+          image={image}
+          aspectRatio={aspectRatio}
+          grid='lg'
+          className={`${alignWithText ? 'max-w-envis-text' : ''}`}
+          {...(useFitMax && {
+            useFitMax: true,
+          })}
+          {...(useContain && {
+            useContain: true,
+          })}
         />
-      )}
+        {(caption || attribution) && (
+          <FigureCaption
+            caption={caption}
+            attribution={attribution}
+            withLayoutPx={false}
+          />
+        )}
+      </div>
     </figure>
   )
 }

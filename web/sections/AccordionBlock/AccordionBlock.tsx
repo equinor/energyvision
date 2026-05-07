@@ -39,38 +39,37 @@ const AccordionBlock = ({ data, anchor, className }: AccordionBlockProps) => {
     <>
       <section
         id={anchor}
-        className={twMerge(
-          `${bg} ${dark ? 'dark' : ''} px-layout-lg pb-page-content`,
-          className,
-        )}
+        className={twMerge(`${bg} ${dark ? 'dark' : ''}`, className)}
       >
-        {image?.asset && (
-          <div className='w-1/4'>
-            <Image
-              image={image}
-              grid='xs'
-              aspectRatio={'1:1'}
-              className='mb-4'
-              imageClassName='aspect-square rounded-full'
-            />
-          </div>
-        )}
-        {title &&
-          (Array.isArray(title) ? (
-            <Blocks value={title} variant='h2' />
-          ) : (
-            <Typography variant='h2'>{title}</Typography>
-          ))}
-        <div className='flex flex-col'>
-          {ingress && <Blocks variant='ingress' value={ingress} />}
-          {accordion && accordion.length > 0 && (
-            <Accordion
-              data={accordion}
-              id={id}
-              hasSectionTitle={!!title}
-              queryParamName={id}
-            />
+        <div className='mx-auto max-w-content px-layout-lg pb-page-content'>
+          {image?.asset && (
+            <div className='w-1/4'>
+              <Image
+                image={image}
+                grid='xs'
+                aspectRatio={'1:1'}
+                className='mb-4'
+                imageClassName='aspect-square rounded-full'
+              />
+            </div>
           )}
+          {title &&
+            (Array.isArray(title) ? (
+              <Blocks value={title} variant='h2' />
+            ) : (
+              <Typography variant='h2'>{title}</Typography>
+            ))}
+          <div className='flex flex-col'>
+            {ingress && <Blocks variant='ingress' value={ingress} />}
+            {accordion && accordion.length > 0 && (
+              <Accordion
+                data={accordion}
+                id={id}
+                hasSectionTitle={!!title}
+                queryParamName={id}
+              />
+            )}
+          </div>
         </div>
       </section>
       {enableStructuredMarkup && accordion && (

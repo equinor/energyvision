@@ -51,17 +51,19 @@ export const LoopingVideoHero = ({
         muted
         loop
       />
-      <Blocks
-        //@ts-ignore
-        value={title}
-        id='mainTitle'
-        as='h1'
-        variant='h1'
-        blockClassName={twMerge(
-          `pt-4 lg:pt-6 px-layout-sm lg:px-layout-lg ${nextCompBg} ${nextCompDark ? nextCompDark : ''}`,
-          className,
-        )}
-      />
+      <div className='mx-auto max-w-content'>
+        <Blocks
+          //@ts-ignore
+          value={title}
+          id='mainTitle'
+          as='h1'
+          variant='h1'
+          blockClassName={twMerge(
+            `pt-4 lg:pt-6 px-layout-sm lg:px-layout-lg ${nextCompBg} ${nextCompDark ? nextCompDark : ''}`,
+            className,
+          )}
+        />
+      </div>
     </>
   )
 }

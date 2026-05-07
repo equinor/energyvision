@@ -286,6 +286,8 @@ export type BlocksProps = {
   components?:
     | PortableTextReactComponents
     | Partial<PortableTextReactComponents>
+  /** dont wrap inline blocks in a div. Merges classname and blockclassname, sends id directly to block */
+  noWrapper?: boolean
   className?: string
   /** Extended or overrides to the block serializers  */
   blockClassName?: string
@@ -324,6 +326,7 @@ export default function Blocks({
   clampLines,
   includeFootnotes = false,
   useDisplay = false,
+  noWrapper = false,
   as,
 }: BlocksProps) {
   let div: PortableTextBlock[] = []
@@ -356,10 +359,10 @@ export default function Blocks({
                 as,
                 className: twMerge(
                   clampLines && twLineClampUtility[clampLines],
-                  blocks?.length === 1 && className,
+                  noWrapper && className,
                   blockClassName,
                 ),
-                ...(blocks?.length === 1 && { id }),
+                ...(noWrapper && { id }),
               }),
               ...blocksComponents,
             },
@@ -379,7 +382,7 @@ export default function Blocks({
             },
           }
 
-          if (blocks?.length === 1) {
+          if (noWrapper) {
             return (
               <PortableText
                 key={block._key}
@@ -421,7 +424,7 @@ export default function Blocks({
           return (
             <div
               key={block._key}
-              className={`${blocks?.length > 1 ? className : ''}`}
+              className={`${!noWrapper ? className : ''}`}
               id={id}
             >
               <PortableText
@@ -449,7 +452,6 @@ export default function Blocks({
           if (blocks[i - 1]?._type === 'factbox') {
             marginOverride = 'mt-0'
           }
-
           return (
             <PortableText
               key={block._key}

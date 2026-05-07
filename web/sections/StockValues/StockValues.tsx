@@ -1,4 +1,5 @@
 'use client'
+import { useTranslations } from 'next-intl'
 import type { PortableTextBlock } from 'next-sanity'
 import useSWR from 'swr'
 import { twMerge } from 'tailwind-merge'
@@ -53,7 +54,7 @@ export type StockValuesProps = {
   anchor?: string
   className?: string
 }
-// @TODO: use correct datetime & formatting
+
 const StockValues = ({
   title,
   hideTitle,
@@ -64,6 +65,8 @@ const StockValues = ({
   const { data, error } = useSWR(ENDPOINT, fetchData, {
     refreshInterval: 60000,
   })
+  const t = useTranslations()
+
   if (error) {
     console.error('An error occured while fetching stock values: ', error)
     return null
@@ -94,7 +97,13 @@ const StockValues = ({
         </h2>
         {/*           {data && format(new Date(date), 'd LLLL yyyy hh:mm (z)')} */}
         {data && (
-          <FormattedDateTime datetime={date} showTimezone className='text-sm' />
+          <FormattedDateTime
+            variant='date'
+            datetime={date}
+            showTimezone
+            noTimeZoneParanthesis
+            className='text-sm'
+          />
         )}
       </div>
     )
@@ -120,7 +129,19 @@ const StockValues = ({
         </h2>
         {/*           {isLoading || error || !data ? '' : format(new Date(date), 'd LLLL yyyy hh:mm (z)')} */}
         {data && (
-          <FormattedDateTime datetime={date} showTimezone className='text-sm' />
+          <>
+            <FormattedDateTime
+              variant='date'
+              datetime={date}
+              showTimezone
+              noTimeZoneParanthesis
+              className='text-sm'
+            />
+            <span className='text-xs italic'>
+              {t('stock_nyse_time_delay_message') ??
+                'at least 20 minutes delayed'}
+            </span>
+          </>
         )}
       </div>
     )
@@ -143,7 +164,7 @@ const StockValues = ({
           blockClassName={`${hideTitle ? 'sr-only' : ''}`}
         />
       )}
-      <div className='flex w-full justify-center gap-22 px-20'>
+      <div className='flex w-full flex-wrap justify-center gap-x-22 gap-y-8 px-20'>
         {getOSETemplate(
           data?.OSE?.Quote,
           data?.OSE?.currency,

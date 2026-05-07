@@ -16,11 +16,13 @@ const QuoteBlock = ({
   const { background } = designOptions
   return (
     <BackgroundContainer
-      className={twMerge(`pr-layout-lg pl-layout-md`, className)}
+      className={twMerge(``, className)}
       background={background}
       id={anchor}
     >
-      <Quote data={data} />
+      <div className='mx-auto max-w-content px-layout-sm lg:pr-layout-lg lg:pl-layout-md'>
+        <Quote data={data} />
+      </div>
     </BackgroundContainer>
   )
 }

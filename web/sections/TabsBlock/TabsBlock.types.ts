@@ -34,7 +34,7 @@ export type TabsInfoPanel = {
   title: PortableTextBlock[]
   text: PortableTextBlock[]
   keyInfo?: InfoPanelKeyInfo[]
-  action?: LinkData
+  actions?: LinkData[]
 }
 
 export type TabItem = {

@@ -44,7 +44,7 @@ const HomePage = ({
 
   return (
     <PageWrapper headerData={headerData}>
-      <main className='flex flex-col pt-topbar peer-data-[sticky=true]:pt-topbar-and-sticky'>
+      <main className='flex w-full flex-col pt-topbar peer-data-[sticky=true]:pt-topbar-and-sticky'>
         <HeroBlock {...heroProps} />
         <PageContent
           data={restData}

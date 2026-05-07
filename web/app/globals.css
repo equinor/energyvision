@@ -7,6 +7,27 @@
 
 /* Custom theme for web, not common brand */
 @theme {
+  /*   --spacing-layout-sm: clamp(16px, calc(-38.3689px + 14.4984vw), 250px);
+  --spacing-layout-md: clamp(16px, calc(-69.4369px + 22.7832vw), 368px); 
+  --spacing-layout-lg: clamp(16px, calc(-101.4757px + 31.3269vw), 500px);  */
+  --spacing-layout-sm: clamp(16px, calc(-38.3689px + 14.4984cqw), 250px); /*calc(-38.3689px + 15.4984vw), 13dvw*/
+  --spacing-layout-md: clamp(16px, calc(-69.4369px + 22.7832cqw), 368px); /*calc(-69.4369px + 22.7832vw), 17.8dvw*/
+  --spacing-layout-lg: clamp(16px, calc(-101.4757px + 31.3269cqw), 500px); /*calc(-101.4757px + 32.3269vw), 23.3dvw*/
+  --spacing-text-end: clamp(16px, calc(-150px + 38vw), 26dvw);
+  --spacing-content: 1920px;
+  --spacing-fullwidth: 2560px;
+
+  --spacing-single-carousel-card-w-sm: 350px; /*275px;*/
+  --spacing-single-carousel-card-w-md: 692px;
+  --spacing-single-carousel-card-w-lg: 980px;
+  --spacing-single-carousel-card-h-sm: 400px;
+  --spacing-single-carousel-card-h-md: 430px;
+  --spacing-single-carousel-card-h-lg: 516px;
+  --spacing-event-carousel-card-w: 383px;
+  --spacing-arrow-right: 1.58rem;
+  --spacing-text: 800px;
+  --spacing-news-banner-vertical: clamp(40px, calc(14.3125px + 11.0032vw), 210px);
+
   --spacing-topbar: 85px;
   --spacing-topbar-sticky: 64px;
   --spacing-topbar-and-sticky: 149px;
@@ -202,6 +223,9 @@ data-ui="checked active" class="data-checked:underline">
 }
 
 @layer components {
+  .full-bleed {
+    @apply w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw];
+  }
   .clickbound-area {
     @apply before:absolute before:top-1/2 before:left-1/2 before:aspect-square before:w-[48px] before:translate-x-[-50%] before:translate-y-[-50%] before:cursor-pointer before:rounded-[100%] before:content-[''];
   }

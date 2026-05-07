@@ -71,58 +71,62 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
   return (
     <article
       id={anchor}
-      className={`${bg} ${
-        dark ? 'dark' : ''
-      } flex flex-col lg:grid lg:grid-cols-2`}
+      className={`w-full ${bg} flex justify-center ${dark ? 'dark' : ''}`}
     >
-      {(imagePosition === 'left' || useFlexCol) && imageElement}
-      <div
-        className={`max-w-text pt-8 pb-10 lg:pt-18 lg:pb-22 ${
-          imagePosition === 'left' ? 'pr-8 pl-8 lg:pr-44' : 'pr-8 pl-8 lg:pl-44'
-        }`}
-      >
-        {overline ? (
-          <hgroup className='mb-1'>
-            <Typography variant='overline'>{overline}</Typography>
-            {title && (
+      <div className='flex max-w-content flex-col lg:grid lg:grid-cols-2'>
+        {(imagePosition === 'left' || useFlexCol) && imageElement}
+        <div
+          className={`max-w-text pt-8 pb-10 lg:pt-18 lg:pb-22 ${
+            imagePosition === 'left'
+              ? 'pr-8 pl-8 lg:pr-44'
+              : 'pr-8 pl-8 lg:pl-44'
+          }`}
+        >
+          {overline ? (
+            <hgroup className='mb-1'>
+              <Typography variant='overline'>{overline}</Typography>
+              {title && (
+                <Blocks value={title} as='h2' group='heading' variant='h2' />
+              )}
+            </hgroup>
+          ) : (
+            title && (
               <Blocks value={title} as='h2' group='heading' variant='h2' />
-            )}
-          </hgroup>
-        ) : (
-          title && <Blocks value={title} as='h2' group='heading' variant='h2' />
-        )}
-        {content && (
-          <Blocks
-            variant={toPlainText(content)?.length > 240 ? 'body' : 'ingress'}
-            value={content}
-          />
-        )}
-        {actions && (
-          <div className='mt-8 flex flex-col gap-x-8 gap-y-6'>
-            {actions?.map((action, idx) => {
-              const url = action && getUrlFromAction(action)
-              return (
-                <ResourceLink
-                  href={url as string}
-                  {...(action.link?.lang && {
-                    hrefLang: getLocaleFromName(action.link?.lang),
-                  })}
-                  type={action.type}
-                  key={action.id || idx}
-                  variant='fit'
-                  file={{
-                    ...action?.file,
-                    label: action?.label,
-                  }}
-                >
-                  {`${action.label}`}
-                </ResourceLink>
-              )
-            })}
-          </div>
-        )}
+            )
+          )}
+          {content && (
+            <Blocks
+              variant={toPlainText(content)?.length > 240 ? 'body' : 'ingress'}
+              value={content}
+            />
+          )}
+          {actions && (
+            <div className='mt-8 flex flex-col gap-x-8 gap-y-6'>
+              {actions?.map((action, idx) => {
+                const url = action && getUrlFromAction(action)
+                return (
+                  <ResourceLink
+                    href={url as string}
+                    {...(action.link?.lang && {
+                      hrefLang: getLocaleFromName(action.link?.lang),
+                    })}
+                    type={action.type}
+                    key={action.id || idx}
+                    variant='fit'
+                    file={{
+                      ...action?.file,
+                      label: action?.label,
+                    }}
+                  >
+                    {`${action.label}`}
+                  </ResourceLink>
+                )
+              })}
+            </div>
+          )}
+        </div>
+        {imagePosition === 'right' && !useFlexCol && imageElement}
       </div>
-      {imagePosition === 'right' && !useFlexCol && imageElement}
     </article>
   )
 }

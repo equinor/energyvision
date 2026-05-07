@@ -54,7 +54,12 @@ export const DefaultHero = ({
   const isColorBg = background && background !== 'bg-white-100'
 
   return (
-    <div className={twMerge(className, `relative h-full w-full pb-4 lg:pb-6`)}>
+    <div
+      className={twMerge(
+        className,
+        `relative w-full max-w-content pb-4 lg:pb-6`,
+      )}
+    >
       <div>
         <div
           className={twMerge(
@@ -69,14 +74,12 @@ export const DefaultHero = ({
                 {title}
               </Typography>
             ) : (
-              <div>
-                <Blocks
-                  id='mainTitle'
-                  value={title as PortableTextBlock[]}
-                  group='heading'
-                  variant='h1'
-                />
-              </div>
+              <Blocks
+                id='mainTitle'
+                value={title as PortableTextBlock[]}
+                group='heading'
+                variant='h1'
+              />
             ))}
           {subTitle && subTitle}
         </div>

@@ -20,12 +20,13 @@ import type { InfoPanelImageVariant, InfoPanelKeyInfo } from './TabsBlock.types'
 type TabsInfoPanelItemProps = {
   theme?: number
   image?: Image
+  caption?: string
   imageVariant?: InfoPanelImageVariant
   title?: PortableTextBlock[]
   text?: PortableTextBlock[]
   keyInfo?: InfoPanelKeyInfo[]
   backgroundPosition?: ObjectPositions
-  action?: LinkData
+  actions?: LinkData[]
   className?: string
   keyInfoTitle?: string
 }
@@ -34,18 +35,18 @@ const TabsInfoPanelItem = forwardRef<HTMLDivElement, TabsInfoPanelItemProps>(
   function TabsInfoPanelItem(
     {
       image,
+      caption,
       imageVariant,
       backgroundPosition,
       title,
       text,
       keyInfo,
-      action,
+      actions,
       keyInfoTitle,
       className = '',
     },
     ref,
   ) {
-    const url = action ? getUrlFromAction(action) : undefined
     const intl = useTranslations()
     const isLargerDisplays = useMediaQuery(`(min-width: 800px)`)
 
@@ -64,20 +65,15 @@ const TabsInfoPanelItem = forwardRef<HTMLDivElement, TabsInfoPanelItemProps>(
           imageVariant === 'backgroundImage' &&
             !isLargerDisplays &&
             'px-layout-sm',
-          imageVariant === 'bannerImage' && 'col-span-1 row-start-2 row-end-2',
+          imageVariant === 'bannerImage' &&
+            'col-span-1 row-start-2 row-end-2 max-lg:px-layout-sm',
           imageVariant === 'sideImage' && 'order-2 lg:order-1 lg:pt-14',
         )}
       >
         <div className='sr-only'>
           {keyInfoTitle ? keyInfoTitle : intl('keyFigures')}
         </div>
-        <div
-          className={`gap-x-10 gap-y-6 ${
-            imageVariant !== 'backgroundImage'
-              ? `grid auto-rows-min ${keyInfo && keyInfo?.length % 2 ? 'grid-cols-1' : 'grid-cols-2'}`
-              : 'flex flex-wrap'
-          }`}
-        >
+        <div className={`flex flex-wrap gap-x-10 gap-y-6 max-lg:mt-6`}>
           {keyInfo?.map(item => {
             return (
               <div key={item?.id} className='text-balance'>
@@ -95,7 +91,7 @@ const TabsInfoPanelItem = forwardRef<HTMLDivElement, TabsInfoPanelItemProps>(
       <div
         ref={ref}
         className={twMerge(
-          `relative flex h-full w-full flex-col gap-12 pb-page-content lg:grid lg:grid-cols-[60%_40%] lg:grid-rows-[auto_auto]`,
+          `relative flex h-full w-full flex-col gap-x-12 gap-y-2 pb-page-content lg:grid lg:grid-cols-[60%_40%] lg:grid-rows-[auto_auto]`,
           imageVariant === 'sideImage' &&
             `items-start gap-12 px-layout-sm lg:px-20`,
           imageVariant === 'backgroundImage' && 'h-full bg-cover',
@@ -119,6 +115,7 @@ const TabsInfoPanelItem = forwardRef<HTMLDivElement, TabsInfoPanelItemProps>(
               grid='sm'
               aria-hidden
               image={image}
+              caption={caption}
               fill
               aspectRatio={imageVariant === 'sideImage' ? '2:1' : '10:3'}
               className={twMerge(
@@ -164,23 +161,28 @@ const TabsInfoPanelItem = forwardRef<HTMLDivElement, TabsInfoPanelItemProps>(
             />
           )}
           {text && <Blocks group='paragraph' variant='small' value={text} />}
-          {action && url && (
-            <ResourceLink
-              href={url}
-              {...(action.link?.lang && {
-                hrefLang: getLocaleFromName(action.link?.lang),
-              })}
-              file={{
-                ...action?.file,
-                label: action?.label,
-              }}
-              type={action.type}
-              variant='fit'
-              className='mt-2'
-            >
-              {`${action?.label}`}
-            </ResourceLink>
-          )}
+          {actions &&
+            actions.length > 0 &&
+            actions.map(action => {
+              const url = getUrlFromAction(action)
+              return (
+                <ResourceLink
+                  key={action.id}
+                  href={url}
+                  {...(action.link?.lang && {
+                    hrefLang: getLocaleFromName(action.link?.lang),
+                  })}
+                  file={{
+                    ...action?.file,
+                    label: action?.label,
+                  }}
+                  type={action.type}
+                  variant='fit'
+                  className='mt-2'
+                  label={action?.label}
+                />
+              )
+            })}
         </div>
         {imageVariant !== 'sideImage' &&
           keyInfo &&

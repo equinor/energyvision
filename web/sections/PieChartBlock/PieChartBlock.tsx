@@ -1,7 +1,7 @@
 'use client'
+import type { PortableTextBlock } from 'next-sanity'
 import { twMerge } from 'tailwind-merge'
-import { PieChart, PieChartProps } from '@/core/PieChart/PieChart'
-import { PortableTextBlock } from 'next-sanity'
+import { PieChart, type PieChartProps } from '@/core/PieChart/PieChart'
 import Blocks from '@/portableText/Blocks'
 
 export type PieChartBlockProps = {
@@ -17,10 +17,16 @@ export type PieChartBlockProps = {
   } & PieChartProps
 }
 
-const PieChartBlock = ({ anchor, className, chartData, title, hideTitle }: PieChartBlockProps) => {
+const PieChartBlock = ({
+  anchor,
+  className,
+  chartData,
+  title,
+  hideTitle,
+}: PieChartBlockProps) => {
   const { data, labelPostfix, labelPrefix } = chartData || {}
 
-  const formattedData = data?.map((dataItem) => {
+  const formattedData = data?.map(dataItem => {
     return {
       ...dataItem,
       value: Number(dataItem.value),
@@ -30,9 +36,23 @@ const PieChartBlock = ({ anchor, className, chartData, title, hideTitle }: PieCh
   })
 
   return (
-    <section className={twMerge(`px-layout-lg pb-page-content`, className)} id={anchor}>
-      {title && <Blocks variant="h2" value={title} className={`${hideTitle ? 'sr-only' : ''}`} />}
-      {formattedData && formattedData?.length > 0 && <PieChart data={formattedData} />}
+    <section
+      className={twMerge(
+        `mx-auto max-w-content px-layout-sm pb-page-content lg:px-layout-lg`,
+        className,
+      )}
+      id={anchor}
+    >
+      {title && (
+        <Blocks
+          variant='h2'
+          value={title}
+          className={`${hideTitle ? 'sr-only' : ''}`}
+        />
+      )}
+      {formattedData && formattedData?.length > 0 && (
+        <PieChart data={formattedData} />
+      )}
     </section>
   )
 }

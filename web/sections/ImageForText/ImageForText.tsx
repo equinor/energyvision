@@ -15,7 +15,7 @@ const ImageForText = forwardRef<HTMLDivElement, ImageForTextProps>(
       <div
         ref={ref}
         id={anchor}
-        className={`${aspectRatio === 'fullWidth' ? 'w-full' : 'px-layout-lg'}`}
+        className={`mx-auto max-w-content ${aspectRatio === 'fullWidth' ? 'w-full' : 'px-layout-sm lg:px-layout-lg'}`}
       >
         <div className=''>
           <Image

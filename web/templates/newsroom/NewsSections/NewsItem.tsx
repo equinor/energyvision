@@ -1,14 +1,14 @@
 import type { SanityImageObject } from '@sanity/image-url'
 import NextImage from 'next/image'
+import { useLocale } from 'next-intl'
 import { forwardRef, type HTMLAttributes } from 'react'
 import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
 import { getSmallerThanPxLgSizes, Image } from '@/core/Image/Image'
 import { BaseLink } from '@/core/Link/BaseLink'
 import { Typography } from '@/core/Typography'
-import type { NewsRoomNewsItem } from '@/types/algoliaIndexPage'
-import { useLocale } from 'next-intl'
-import { getLocaleFromIso } from '@/sanity/helpers/localization'
 import { defaultLanguage } from '@/languageConfig'
+import { getLocaleFromIso } from '@/sanity/helpers/localization'
+import type { NewsRoomNewsItem } from '@/types/algoliaIndexPage'
 
 export type NewsListItemProps = {
   data: NewsRoomNewsItem
@@ -21,15 +21,15 @@ const NewsItem = forwardRef<HTMLLIElement, NewsListItemProps>(function NewsItem(
   ref,
 ) {
   const { slug, title, publishDateTime, heroImage, thumbnailUrl } = data || {}
-  if (!slug) return null
-
   const lang = useLocale()
   const locale = getLocaleFromIso(lang)
-  
+
+  if (!slug) return null
+
   return (
     <section ref={ref} className={className}>
       <BaseLink
-        href={`${locale!=defaultLanguage.locale? `/${locale}`: ""}${slug}`}
+        href={`${locale !== defaultLanguage.locale ? `/${locale}` : ''}${slug}`}
         className='group flex justify-between gap-4 lg:gap-6'
       >
         <div className='max-w-[65%]'>
@@ -41,9 +41,7 @@ const NewsItem = forwardRef<HTMLLIElement, NewsListItemProps>(function NewsItem(
                 uppercase
                 className='pb-1 font-normal text-2xs leading-normal'
               />
-              <span className='mx-2 font-normal leading-normal'>
-                |
-              </span>
+              <span className='mx-2 font-normal leading-normal'>|</span>
               <FormattedDateTime
                 variant='time'
                 datetime={publishDateTime}

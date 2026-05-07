@@ -19,32 +19,31 @@ const PromoTileArray = ({
   return (
     <section
       id={anchor}
-      className={twMerge(
-        `flex flex-col justify-center gap-6 px-layout-md pb-page-content xl:px-layout-lg`,
-        className,
-      )}
+      className={twMerge(`flex flex-col justify-center gap-6`, className)}
     >
-      {title && (
-        <Blocks
-          value={title}
-          variant='h2'
-          className={hideTitle ? 'sr-only' : ''}
-        />
-      )}
-      {ingress && <Blocks variant='ingress' value={ingress} />}
-      <ul
-        className={` ${
-          title && !hideTitle ? 'pt-6' : ''
-        } flex w-full flex-col content-center items-center justify-center gap-6 md:grid md:auto-rows-fr md:grid-cols-2`}
-      >
-        {group?.map((tile: PromoTileData) => {
-          return (
-            <li key={tile.id} className='h-fit w-full'>
-              <PromoTile {...tile} hasSectionTitle={!!title} />
-            </li>
-          )
-        })}
-      </ul>
+      <div className='mx-auto max-w-content px-layout-md pb-page-content xl:px-layout-lg'>
+        {title && (
+          <Blocks
+            value={title}
+            variant='h2'
+            className={hideTitle ? 'sr-only' : ''}
+          />
+        )}
+        {ingress && <Blocks variant='ingress' value={ingress} />}
+        <ul
+          className={` ${
+            title && !hideTitle ? 'pt-6' : ''
+          } flex w-full flex-col content-center items-center justify-center gap-6 md:grid md:auto-rows-fr md:grid-cols-2`}
+        >
+          {group?.map((tile: PromoTileData) => {
+            return (
+              <li key={tile.id} className='h-fit w-full'>
+                <PromoTile {...tile} hasSectionTitle={!!title} />
+              </li>
+            )
+          })}
+        </ul>
+      </div>
     </section>
   )
 }

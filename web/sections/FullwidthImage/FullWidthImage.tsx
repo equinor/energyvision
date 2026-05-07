@@ -24,7 +24,10 @@ const FullWidthImage = ({ data, anchor }: FullWidthImageProps) => {
   if (!image) return null
 
   return (
-    <section className='w-full justify-center'>
+    <section
+      className='mx-auto w-full max-w-fullwidth justify-center'
+      id={anchor}
+    >
       <Image
         id={anchor}
         image={image}
@@ -33,7 +36,7 @@ const FullWidthImage = ({ data, anchor }: FullWidthImageProps) => {
         className=''
       />
       {image.asset && (caption || attribution) && (
-        <div className='mx-auto max-w-viewport px-layout-sm'>
+        <div className='mx-auto max-w-content px-layout-sm'>
           <FigureCaption
             className={'mt-2 pt-0 pb-8'}
             caption={caption}

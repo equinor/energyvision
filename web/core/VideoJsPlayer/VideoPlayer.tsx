@@ -138,7 +138,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
 
   const variantClassName: Record<Variants, string> = {
     default: `w-full`,
-    fullwidth: `w-screen`,
+    fullwidth: `w-screen max-w-fullwidth`,
   }
 
   const handlePlayerReady = (player: Player) => {

@@ -81,7 +81,7 @@ const MagazinePage = ({
   }
 
   return (
-    <main className='flex flex-col pt-topbar'>
+    <main className='flex w-full flex-col pt-topbar'>
       <HeroBlock {...heroProps} />
       <PageContent
         data={{
