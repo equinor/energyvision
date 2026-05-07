@@ -68,7 +68,7 @@ const MagazinePage = ({
   const heroProps: HeroBlockProps = {
     //@ts-ignore
     title,
-    ...hero,
+    heroData: hero,
     subTitle: subTitle,
     //@ts-ignore
     magazineTags,
