@@ -14,6 +14,7 @@ WORKDIR /app
 # 2. Core tooling setup (PNPM, etc.)
 # -------------------------------------------------------- #
 FROM base AS prepare
+COPY package.json pnpm-lock.yaml ./
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
