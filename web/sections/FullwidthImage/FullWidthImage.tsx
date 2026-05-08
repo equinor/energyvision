@@ -41,6 +41,7 @@ const FullWidthImage = ({ data, anchor }: FullWidthImageProps) => {
             className={'mt-2 pt-0 pb-8'}
             caption={caption}
             attribution={attribution}
+            withLayoutPx={false}
           />
         </div>
       )}
