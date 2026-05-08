@@ -174,7 +174,7 @@ const NewsRoomTemplate = forwardRef<HTMLDivElement, NewsRoomTemplateProps>(
 
     return (
       <PaginationContextProvider defaultRef={resultsRef}>
-        <div ref={ref}>
+        <main ref={ref} className='mx-auto flex w-full max-w-fullwidth'>
           <InstantSearchNext
             searchClient={queriedSearchClient}
             future={{ preserveSharedStateOnUnmount: false }}
@@ -187,7 +187,7 @@ const NewsRoomTemplate = forwardRef<HTMLDivElement, NewsRoomTemplateProps>(
               facetFilters={['type:news', 'topicTags:-Crude Oil Assays']}
             />
 
-            <div className='flex w-full flex-col gap-8 pt-topbar lg:gap-12'>
+            <div className='mx-auto flex w-full max-w-content flex-col gap-8 pt-topbar lg:gap-12'>
               <div className='dark bg-slate-blue-95 py-24'>
                 <div className='mx-auto flex grid-rows-2 flex-col gap-4 px-layout-sm'>
                   {title && (
@@ -261,7 +261,7 @@ const NewsRoomTemplate = forwardRef<HTMLDivElement, NewsRoomTemplateProps>(
               </div>
             </div>
           </InstantSearchNext>
-        </div>
+        </main>
       </PaginationContextProvider>
     )
   },

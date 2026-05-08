@@ -99,7 +99,7 @@ const TabsInfoPanelItem = forwardRef<HTMLDivElement, TabsInfoPanelItemProps>(
       <div
         ref={ref}
         className={twMerge(
-          `relative gap-x-12 gap-y-6 pb-page-content lg:grid ${getGridTemplateColumns()} l`,
+          `relative flex flex-col gap-x-12 gap-y-6 pb-page-content lg:grid ${getGridTemplateColumns()} l`,
           imageVariant === 'sideImage' &&
             `items-start gap-12 px-layout-sm lg:px-20`,
           imageVariant === 'backgroundImage' && 'h-full bg-cover',
@@ -136,7 +136,7 @@ const TabsInfoPanelItem = forwardRef<HTMLDivElement, TabsInfoPanelItemProps>(
                 ((!caption && imageVariant === 'bannerImage') ||
                   imageVariant === 'backgroundImage') &&
                   'col-span-2 row-span-1 min-w-0',
-                imageVariant === 'sideImage' && 'mt-10 aspect-auto',
+                imageVariant === 'sideImage' && 'mt-10 lg:aspect-auto',
               )}
               imageClassName={twMerge(
                 imageVariant === 'sideImage' && 'rounded-md',

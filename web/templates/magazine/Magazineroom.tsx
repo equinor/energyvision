@@ -66,7 +66,7 @@ const MagazineRoom = ({
   }
 
   return (
-    <main className='flex w-full flex-col pt-topbar'>
+    <main className='mx-auto flex w-full max-w-fullwidth flex-col pt-topbar'>
       {/*@ts-ignore*/}
       <HeroBlock {...heroProps} />
       {!(type === HeroTypes.BACKGROUND_IMAGE) && ingress && (

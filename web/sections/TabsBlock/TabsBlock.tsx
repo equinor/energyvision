@@ -4,6 +4,7 @@ import { forwardRef, useId, useRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { Tabs } from '@/core/Tabs'
 import Blocks from '@/portableText/Blocks'
+import type { LayoutGrid } from '@/types'
 import type { TabItem } from './TabsBlock.types'
 import TabsInfoPanelItem from './TabsInfoPanelItem'
 import TabsKeyNumberItem from './TabsKeyNumberItem'
@@ -22,6 +23,7 @@ export type TabsBlockProps = {
   hideTitle?: boolean
   anchor?: string
   className?: string
+  layoutGrid?: LayoutGrid
 }
 
 const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
@@ -34,6 +36,7 @@ const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
     hideTitle = false,
     anchor,
     className = '',
+    layoutGrid = 'md',
   },
   ref,
 ) {
@@ -52,39 +55,60 @@ const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
         tabItem.panel?.imageVariant === 'bannerImage')
     )
   })
+  const getPaddingInfoPanel = () => {
+    switch (layoutGrid) {
+      case 'lg':
+        return `lg:mx-layout-lg`
+      case 'md':
+        return `lg:mx-layout-md`
+      default:
+        return `lg:mx-layout-sm`
+    }
+  }
+  const getPaddingKeyNumbers = () => {
+    switch (layoutGrid) {
+      case 'sm':
+        return `lg:px-layout-sm`
+      case 'lg':
+        return `lg:px-layout-lg`
+      default:
+        return `lg:px-layout-md`
+    }
+  }
 
   return (
     <div
       ref={ref}
       id={anchor}
       className={twMerge(
-        'mx-auto max-w-content',
+        '',
         id && 'scroll-mt-topbar',
         tabPanelVariant === 'tabsKeyNumbers' && theme?.backgroundUtility,
-        tabPanelVariant !== 'tabsKeyNumbers' &&
-          `6xl:mx-auto lg:mx-layout-sm ${theme?.backgroundUtility} mb-page-content lg:bg-white-100`,
+        tabPanelVariant === 'tabsInfoPanel' &&
+          `max-w-content ${getPaddingInfoPanel()} ${theme?.backgroundUtility} mb-page-content lg:bg-white-100`,
         className,
       )}
     >
       <div
         className={twMerge(
           `flex w-full flex-col`,
-          tabPanelVariant === 'tabsKeyNumbers' && `gap-6`,
-          tabPanelVariant !== 'tabsKeyNumbers' &&
+          tabPanelVariant === 'tabsKeyNumbers' && `mx-auto max-w-content gap-6`,
+          tabPanelVariant === 'tabsInfoPanel' &&
             `${theme?.backgroundUtility} rounded-md`,
-          tabPanelVariant !== 'tabsKeyNumbers' &&
+          tabPanelVariant === 'tabsInfoPanel' &&
             !hasFullWidthImage &&
             'px-layout-sm lg:px-20',
         )}
       >
         <div
           className={twMerge(
+            'px-layout-sm',
             tabPanelVariant === 'tabsInfoPanel' &&
               !hideTitle &&
-              `px-layout-sm lg:px-20 lg:pt-14`,
-            tabPanelVariant !== 'tabsInfoPanel' &&
+              `lg:px-20 lg:pt-14`,
+            tabPanelVariant === 'tabsKeyNumbers' &&
               !hideTitle &&
-              `px-layout-sm lg:px-layout-lg`,
+              `lg:px-layout-lg`,
           )}
         >
           {title && (
@@ -98,11 +122,10 @@ const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
           {ingress && <Blocks variant='ingress' value={ingress} />}
         </div>
         <div
-          className={`${
-            tabPanelVariant === 'tabsKeyNumbers'
-              ? `px-layout-sm lg:px-layout-md`
-              : ``
-          }`}
+          className={twMerge(
+            tabPanelVariant === 'tabsKeyNumbers' &&
+              `px-layout-sm ${getPaddingKeyNumbers()}`,
+          )}
         >
           {tabList && tabList?.length > 0 && (
             <Tabs
@@ -130,7 +153,6 @@ const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
                     key={`${tabItem?.id}_index_${i}`}
                     value={tabItem.id}
                     className={twMerge(
-                      '',
                       tabPanelVariant === 'tabsKeyNumbers' &&
                         'pt-14 pb-page-content max-lg:px-layout-sm',
                     )}
@@ -164,7 +186,7 @@ const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
                         {tabItem?.panel?.disclaimer && (
                           <Blocks
                             value={tabItem?.panel?.disclaimer}
-                            className='px-layout-sm pt-4 text-sm italic lg:px-10'
+                            className='pt-4 text-sm italic lg:px-10'
                           />
                         )}
                       </>

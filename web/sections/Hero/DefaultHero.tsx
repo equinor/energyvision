@@ -54,20 +54,14 @@ export const DefaultHero = ({
   const isColorBg = background && background !== 'bg-white-100'
 
   return (
-    <div
-      className={twMerge(
-        className,
-        `relative w-full max-w-content pb-4 lg:pb-6`,
-      )}
-    >
-      <div>
-        <div
-          className={twMerge(
-            `pt-10 lg:pt-16 ${isColorBg ? `${background} pb-news-banner-vertical` : ''}`,
-            px,
-            titleClassName,
-          )}
-        >
+    <div className={twMerge(className, `pb-4 lg:pb-6`)}>
+      <div
+        className={twMerge(
+          `pt-10 lg:pt-16 ${isColorBg ? `${background} pb-news-banner-vertical` : ''}`,
+          titleClassName,
+        )}
+      >
+        <div className={twMerge('mx-auto max-w-content', px)}>
           {title &&
             (isPlainTitle ? (
               <Typography group='heading' variant='h1' id='mainTitle'>
@@ -84,6 +78,7 @@ export const DefaultHero = ({
           {subTitle && subTitle}
         </div>
       </div>
+
       {figure && (
         <div
           className={`${isColorBg ? 'lg:-mt-news-banner-vertical' : ''} lg:px-layout-md`}

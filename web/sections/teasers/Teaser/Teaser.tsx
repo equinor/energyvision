@@ -42,11 +42,11 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
   const { backgroundPosition } = background || {}
   const useFlexCol = useMediaQuery(`(max-width: 1023px)`)
   const { bg, dark } = getBgAndDarkFromBackground(designOptions)
+  const isLargerDisplays = useMediaQuery(`(min-width: 1650px)`)
 
   if ([title, overline, content, image?.asset, actions].every(i => !i)) {
     return null
   }
-  console.log('image', image)
 
   // Svg can be "pictures"/illustrations and small svgs...
   const imageElement = (
@@ -62,6 +62,8 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
         fill
         wrapperVariant='none'
         grid='lg'
+        keepRatioOnMobile
+        aspectRatio={isLargerDisplays ? '16:9' : '4:3'}
         imageClassName={`${
           containImage ? 'object-contain' : ''
         } ${getObjectPositionForImage(backgroundPosition ?? 'center_center')}`}

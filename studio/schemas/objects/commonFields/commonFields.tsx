@@ -94,12 +94,18 @@ export const theme = {
   type: 'themeSelector',
   fieldset: 'design',
 }
-export const layoutGrid = (hiddenCallBack?: any, fieldset?: string) => {
+export const layoutGrid = (
+  hiddenCallBack?: any,
+  fieldset?: string | undefined,
+  initialValue?: string | undefined,
+  description?: string | undefined,
+) => {
   return {
     title: 'Layout grid',
     name: 'layoutGrid',
     type: 'string',
-    description: 'Select content grid column',
+    description:
+      description || 'Optional. Select content column. Default is innermost.',
     options: {
       list: [
         { title: 'Third outer', value: 'sm' },
@@ -107,7 +113,7 @@ export const layoutGrid = (hiddenCallBack?: any, fieldset?: string) => {
         { title: 'Innermost', value: 'lg' },
       ],
     },
-    initialValue: 'lg',
+    initialValue: initialValue || 'lg',
     ...(fieldset && { fieldset }), //fieldset: 'design',
     ...(hiddenCallBack && { hidden: hiddenCallBack }),
   }

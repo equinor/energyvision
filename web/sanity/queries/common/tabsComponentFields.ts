@@ -12,6 +12,7 @@ export const tabsComponentFields = /*groq*/ `
     "designOptions":{
         "theme":coalesce(tabsBackground.background[0]{value}.value, 0),
     },
+    layoutGrid,
     tabList[]{
       "id": _key,
       "type": _type,

@@ -11,6 +11,7 @@ import {
   type ThemeSelectorValue,
 } from '../../components/ThemeSelector'
 import { configureBlockContent } from '../../editors/blockContentType'
+import { layoutGrid } from '../commonFields/commonFields'
 import { getColorForTabTheme } from './tabsThemes'
 
 type TabsPreviewProps = {
@@ -104,6 +105,12 @@ export default defineType({
       name: 'tabsBackground',
       type: 'tabsBackground',
     }),
+    layoutGrid(
+      undefined,
+      undefined,
+      'md',
+      'Optional. Select content column. Default is second outer.',
+    ),
   ].filter(e => e),
   components: {
     preview: TabsPreview,

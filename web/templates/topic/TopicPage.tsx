@@ -59,9 +59,6 @@ const TopicPage = ({
           backgroundUtility: hero?.background,
         }
 
-  console.log('topicpage hero', hero)
-  console.log('topicpage herobackground', heroBackground)
-
   return (
     <main className='mx-auto flex w-full max-w-fullwidth flex-col pt-topbar peer-data-[sticky=true]:pt-topbar-and-sticky'>
       <HeroBlock {...heroProps} />
