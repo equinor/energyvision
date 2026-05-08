@@ -6,6 +6,8 @@ RUN apk add --no-cache libc6-compat curl
 WORKDIR /app
 
 FROM base as prepare
+# copy the package json to know pnpm version
+COPY package.json ./
 ENV NODE_OPTIONS="--max_old_space_size=8192"
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
