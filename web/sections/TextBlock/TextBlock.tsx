@@ -61,6 +61,8 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
 
   let bgContainerOptions = designOptions
 
+  const textColor = `${useBrandTheme ? 'text-energy-red-100' : ''} text-balance`
+
   if (useBrandTheme) {
     bgContainerOptions = {
       background: {
@@ -130,6 +132,7 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
               group='heading'
               variant='h2'
               useDisplay={true}
+              blockClassName={textColor}
             />
           )
         )}
