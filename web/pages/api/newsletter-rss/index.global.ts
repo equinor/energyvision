@@ -99,6 +99,11 @@ const generateRssFeed = async (locale: 'en_GB' | 'nb_NO') => {
       </channel>
     </rss>`
 
+    if (articles.length > 0)
+      console.log(`${new Date().toString()} RSS returned with latest content - ${articles[0].title}`)
+    else {
+      console.log(`${new Date().toString()} No RSS items returned.`)
+    }
     return rss
   } catch (error) {
     console.error('Error generating RSS feed:', error)
