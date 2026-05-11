@@ -13,7 +13,7 @@ import { inlineSlugsQuery, singletonsSlugsQuery } from './metaData'
 
 const footerComponentFields = /* groq */ `
   title,
-  text[]{
+  "content": text[]{
     ...,
     ${markDefs},
   },
