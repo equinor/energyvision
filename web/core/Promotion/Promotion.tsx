@@ -137,7 +137,7 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
       >
         {image ? (
           <Image
-            grid='lg'
+            grid='xs'
             image={image}
             fill
             className={`${layoutDirectionImageClassNames[_layoutDirection]}`}
