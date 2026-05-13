@@ -116,17 +116,7 @@ export default {
       name: 'text',
       title: 'Text content',
       type: 'array',
-      of: [
-        configureBlockContent({
-          variant: 'fullBlock',
-          h2: false,
-          h4: false,
-          largeText: false,
-          extraLargeText: false,
-          attachment: false,
-          highlight: true,
-        }),
-      ],
+      of: [configureBlockContent({ variant: 'textBlock' })],
     },
     {
       name: 'action',

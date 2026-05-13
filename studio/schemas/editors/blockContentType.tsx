@@ -55,6 +55,8 @@ export type BlockContentProps = {
     | 'block'
     | 'extendedBlock'
     | 'fullBlock'
+    | 'textBlock'
+
   /** Used to render the typography similar to TypographyGroups in Typography in web
    * use group article for news to get headings 2,3,4
    */
@@ -111,6 +113,10 @@ const articleStylesOptions: BlockContentProps = {
   h4: true,
   smallText: true,
 }
+const textBlockStylesOptions: BlockContentProps = {
+  highlight: true,
+}
+
 const simpleBlockStylesOptions: BlockContentProps = {
   h2: false,
   h3: false,
@@ -223,6 +229,13 @@ export const configureBlockContent = (
     defaultConfigOptions = Object.assign(
       defaultConfigOptions,
       titleWithDisplayVariantOptions,
+      options,
+    )
+  }
+  if (options?.variant === 'textBlock') {
+    defaultConfigOptions = Object.assign(
+      defaultConfigOptions,
+      textBlockStylesOptions,
       options,
     )
   }
