@@ -78,7 +78,7 @@ const NewsItem = forwardRef<HTMLLIElement, NewsListItemProps>(function NewsItem(
                       heroImage?.image?.asset ? heroImage?.image : fallbackImage
                     }
                     aria-hidden
-                    grid='lg'
+                    grid='xs'
                     fill
                     className='rounded-2xs'
                   />
