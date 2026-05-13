@@ -82,7 +82,7 @@ export const BaseLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(
               ref={ref}
               href={href}
               className={classNames}
-              prefetch={prefetch}
+              prefetch={true} //{prefetch}
               hrefLang={hrefLang}
               onClick={onClick}
             >
