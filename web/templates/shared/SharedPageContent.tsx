@@ -306,7 +306,6 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
     anchorReference: string,
     topSpacingClassName: string,
     bottomSpacingClassName: string,
-    commonSpacingClassName: string,
   ) => {
     const anchorId = anchorReference
     const commonProps = {

@@ -1,4 +1,5 @@
 'use client'
+import { useTranslations } from 'next-intl'
 import { toPlainText } from 'next-sanity'
 import { ErrorBoundary } from 'react-error-boundary'
 import { TbFaceIdError } from 'react-icons/tb'
@@ -12,6 +13,8 @@ export const ErrorBoundaryClient = ({
   component: any
   children: any
 }) => {
+  const t = useTranslations()
+
   return (
     <ErrorBoundary
       fallbackRender={({ error }) => {
@@ -28,11 +31,10 @@ export const ErrorBoundaryClient = ({
           >
             <TbFaceIdError size={64} />
             <Typography as='h2' variant='h3' className='text-center'>
-              {dataset === 'global'
-                ? ` error in component ${c.type}: ${
-                    c?.title ? toPlainText(c.title) : ''
-                  }`
-                : ` this section could not be shown`}
+              {dataset === 'global-development'
+                ? `Error in component ${c.type}: ${c?.title ? toPlainText(c.title) : ''}`
+                : (t('sectionRenderError') ??
+                  `This section could not be shown`)}
             </Typography>
           </div>
         )

@@ -955,6 +955,11 @@ const snippets: textSnippet = {
       'But this page could not be found, please navigate back to our frontpage',
     group: groups.error,
   },
+  sectionRenderError: {
+    title: 'Section render error',
+    defaultValue: 'This section could not be rendered',
+    group: groups.error,
+  },
   goToTop: {
     title: 'Scroll to top',
     defaultValue: 'Scroll to top',

@@ -39,6 +39,7 @@ export type BlockContentProps = {
   h4?: boolean
   /** Preconfigured options variants
    * simbleBlock - lists and normal text
+   * textBlock - all defaults plus highlight
    * withH2SimpleBlock - only h2 and normal text
    * extendedBlock - h2,h3,normal,lists,links, small, display h2
    * fullBlock - all headings,lists,links,attachment.
