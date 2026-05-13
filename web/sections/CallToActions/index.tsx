@@ -65,7 +65,6 @@ const CallToActions = ({
             const { id, label, type, link, file } = callToAction
             const plainLabel = Array.isArray(label) ? toPlainText(label) : label
 
-            console.log('call to action file', file)
             return url ? (
               <li key={id}>
                 {/*  If the URL is a static AEM page it should behave as an internal link in the web */}

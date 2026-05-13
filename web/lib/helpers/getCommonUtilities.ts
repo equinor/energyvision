@@ -1,4 +1,5 @@
 export type LayoutPxVariant = 'sm' | 'md' | 'lg'
+
 export const getLayoutPx = (variant: LayoutPxVariant) => {
   switch (variant) {
     case 'sm':

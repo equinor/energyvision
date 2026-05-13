@@ -1,13 +1,23 @@
 import { FaRegImage } from 'react-icons/fa6'
-import { defineField, defineType, type ObjectInputProps } from 'sanity'
+import {
+  type BooleanInputProps,
+  defineField,
+  defineType,
+  type StringInputProps,
+} from 'sanity'
+import { OptionButtons } from '@/schemas/components/OptionButtons/OptionButtons'
+import { Toggle } from '@/schemas/components/Toggle/Toggle'
 import { capitalizeFirstLetter } from '../../../helpers/formatters'
 import {
   ContentCenterImage,
   ContentLeftImage,
   ContentRightImage,
 } from '../../../icons'
-import { RadioIconSelector } from '../../components'
-import { glassEffect } from '../commonFields/commonFields'
+import {
+  backgroundGradient,
+  glassEffect,
+  layoutGrid,
+} from '../commonFields/commonFields'
 
 export type ColorType = {
   title: string
@@ -31,56 +41,69 @@ export default defineType({
       type: 'image',
       options: {
         hotspot: true,
-        collapsed: false,
       },
       validation: Rule => Rule.required(),
     }),
-    defineField({
+    {
       title: 'Apply scroll animation',
       name: 'useAnimation',
       type: 'boolean',
       description: 'Animates content over the background image.',
-      hidden: () => {
-        return false
+      components: {
+        input: (props: BooleanInputProps) => Toggle(props),
       },
-    }),
-    defineField({
+    },
+    {
       title: 'Apply light gradient',
       name: 'useLight',
+      deprecated: true,
       type: 'boolean',
       description: 'Applies semi transparent white gradient over',
-    }),
-    defineField({
+      hidden: ({ value }: DocumentType) => {
+        return !value
+      },
+      components: {
+        input: (props: BooleanInputProps) => Toggle(props),
+      },
+    },
+    {
+      deprecated: true,
       title: 'Apply no gradient',
       description: 'Ensure enough contrast between text and background then',
       name: 'useNoGradient',
       type: 'boolean',
-    }),
+      hidden: ({ value }: DocumentType) => {
+        return !value
+      },
+      components: {
+        input: (props: BooleanInputProps) => Toggle(props),
+      },
+    },
     glassEffect(),
-    defineField({
+    backgroundGradient(),
+    layoutGrid(
+      undefined,
+      undefined,
+      'md',
+      'Select layout grid for the content over the background image.',
+    ),
+    {
       name: 'contentAlignment',
       title: 'Content Alignment',
-      description:
-        'Select the content alignment on larger screens. Bottom alignments can be kept on mobile',
+      description: 'Select the content alignment on larger screens',
       type: 'string',
       initialValue: 'left',
-      components: {
-        //@ts-ignore
-        input: function (props: ObjectInputProps) {
-          const { value, onChange, schemaType } = props
-          const { initialValue } = schemaType
-          return (
-            <RadioIconSelector
-              name='imageAlignmentSelector'
-              options={contentAlignmentOptions}
-              defaultValue={String(initialValue) ?? 'left'}
-              currentValue={String(value)}
-              onChange={onChange}
-            />
-          )
-        },
+      options: {
+        list: contentAlignmentOptions.map(option => ({
+          title: capitalizeFirstLetter(option.value),
+          value: option.value,
+        })),
       },
-    }),
+      components: {
+        input: (props: StringInputProps) =>
+          OptionButtons(props, contentAlignmentOptions),
+      },
+    },
   ],
 
   preview: {

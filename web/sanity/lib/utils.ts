@@ -82,12 +82,14 @@ export const resolveImage = (props: ResolveImageProps) => {
 
   // 4:3 for mobile images and serverside. Default 16:9 on larger
   let ratio = isLargerDisplays ? aspectRatio : 1.33
+
   if (keepRatioOnMobile) {
     ratio = aspectRatio
   }
   if (aspectRatio <= 0) {
     ratio = imageWidth / imageHeight
   }
+  console.log('ratio', ratio)
 
   let width = customWidth
     ? customWidth
@@ -97,6 +99,7 @@ export const resolveImage = (props: ResolveImageProps) => {
           getMaxWidth(grid, keepRatioOnMobile ? true : isLargerDisplays),
         ),
       )
+  console.log('width', width)
   let height = Math.round(width / ratio)
 
   // If portrait and one wants to control height and keep aspect

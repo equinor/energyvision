@@ -22,27 +22,25 @@ const ImageCarousel = forwardRef<HTMLUListElement, ImageCarouselProps>(
         id={anchor}
         className={twMerge(`${bg} ${dark ? 'dark' : ''}`, className)}
       >
-        <div className='mx-auto max-w-content'>
-          {((title && !hideTitle) || ingress) && (
-            <div className='flex w-full flex-col px-layout-sm pb-8 lg:px-layout-lg'>
-              {title && !hideTitle && (
-                <Blocks variant='h2' id={headingId} value={title} />
-              )}
-              {ingress && <Blocks variant='ingress' value={ingress} />}
-            </div>
-          )}
-          <Carousel
-            ref={ref}
-            items={items}
-            displayMode='single'
-            variant='image'
-            hasSectionTitle={title && !hideTitle}
-            labelledbyId={title && !hideTitle ? headingId : undefined}
-            title={title}
-            autoRotation={options?.autoplay}
-            sectionTitle={title}
-          />
-        </div>
+        {((title && !hideTitle) || ingress) && (
+          <div className='mx-auto flex w-full max-w-content flex-col px-layout-sm pb-8 lg:px-layout-lg'>
+            {title && !hideTitle && (
+              <Blocks variant='h2' id={headingId} value={title} />
+            )}
+            {ingress && <Blocks variant='ingress' value={ingress} />}
+          </div>
+        )}
+        <Carousel
+          ref={ref}
+          items={items}
+          displayMode='single'
+          variant='image'
+          hasSectionTitle={title && !hideTitle}
+          labelledbyId={title && !hideTitle ? headingId : undefined}
+          title={title}
+          autoRotation={options?.autoplay}
+          sectionTitle={title}
+        />
       </section>
     )
   },

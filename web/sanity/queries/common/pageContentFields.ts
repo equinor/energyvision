@@ -94,7 +94,36 @@ _type == "keyNumbers" =>{
     },
     splitList,
     "designOptions": {
-      ${background},
+      "background": select(
+        defined(backgroundType) => select(
+          backgroundType == 'color' => {
+            "type": "backgroundColor",
+            "backgroundColor": coalesce(backgroundColor.title, 'White'),
+            "dark": coalesce(backgroundColor.dark, false),
+            "backgroundUtility":coalesce(backgroundColor.key, ""),
+          },
+          backgroundType == 'backgroundImage' => {
+            "type": "backgroundImage",
+            "backgroundImage": coalesce(backgroundImage,""),
+            "dark": coalesce(backgroundImage.dark, false),
+            "backgroundPosition": coalesce(designOptions.backgroundPosition, 'center_center'),
+          },
+          {
+            "type": "backgroundColor",
+            "backgroundColor": 'White',
+            "dark": coalesce(backgroundColor.dark, false),
+            "backgroundUtility": "white-100",
+          }
+        ),
+        {
+        "type": coalesce(designOptions.background[0]._type, "backgroundColor"),
+        "backgroundColor": coalesce(designOptions.background[0].title, background.title, 'White'),
+        "backgroundUtility":coalesce(designOptions.background[0].key, background.key, ""),
+        "backgroundImage": coalesce(designOptions.background[0],""),
+        "dark": coalesce(designOptions.background[0].dark, background.dark, false),
+        "backgroundPosition": coalesce(designOptions.backgroundPosition, 'center_center'),
+        },
+      ),
     },
   },
   _type == "fullWidthImage"=>{

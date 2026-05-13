@@ -65,21 +65,6 @@ export type ContentType =
   | GridData
   | CampaignBannerData
 
-export type TextBlockData = {
-  type: string
-  id: string
-  title: PortableTextBlock[]
-  image?: Image
-  overline?: string
-  text: PortableTextBlock[]
-  isBigText?: boolean
-  useBrandTheme?: boolean
-  ingress: PortableTextBlock[]
-  callToActions?: LinkData[]
-  splitList?: boolean
-  designOptions: DesignOptions
-}
-
 // This type is deprecated
 export type CallToActionData = {
   type: string

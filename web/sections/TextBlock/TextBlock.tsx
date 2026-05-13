@@ -1,11 +1,29 @@
 import { toPlainText } from 'next-sanity'
 import { twMerge } from 'tailwind-merge'
-import { BackgroundContainer } from '@/core/Backgrounds'
+import { ImageBackground } from '@/core/Backgrounds/ImageBackground'
 import { Image } from '@/core/Image/Image'
 import { Typography } from '@/core/Typography'
 import Blocks from '@/portableText/Blocks'
-import type { TextBlockData } from '@/types/index'
+import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
+import type { DesignOptions, LinkData, PortableTextBlock } from '@/types/index'
 import CallToActions from '../CallToActions'
+
+type TextBlockBackgroundType = 'backgroundColor' | 'backgroundImage'
+
+export type TextBlockData = {
+  type: string
+  id: string
+  title: PortableTextBlock[]
+  image?: Image
+  overline?: string
+  text: PortableTextBlock[]
+  useBrandTheme?: boolean
+  ingress: PortableTextBlock[]
+  callToActions?: LinkData[]
+  splitList?: boolean
+  backgroundType?: TextBlockBackgroundType
+  designOptions: DesignOptions
+}
 
 type TextBlockProps = {
   data: TextBlockData
@@ -37,28 +55,6 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
 
   const isLongTitle = title && toPlainText(title).length > 30
 
-  const contentAlignmentClassNames = {
-    center: 'items-start text-start px-layout-lg',
-    right: `items-start text-start px-layout-lg xl:items-end xl:text-end ${isLongTitle ? 'xl:max-w-[52dvw]' : 'xl:max-w-[45dvw]'} xl:ml-auto xl:pr-layout-sm xl:pl-0`,
-    left: `items-start text-start px-layout-lg xl:items-start ${isLongTitle ? 'xl:max-w-[52dvw]' : 'xl:max-w-[45dvw]'}  xl:mr-auto xl:pl-layout-sm xl:pr-0`,
-    'bottom-left':
-      'items-start text-start px-layout-lg xl:mr-auto xl:pl-layout-sm xl:pr-0',
-    'bottom-center':
-      'items-start text-start px-layout-lg xl:pl-layout-sm xl:pr-0',
-  }
-
-  let backgroundImageContentClassNames = `justify-center py-14`
-
-  const contentAlignment =
-    designOptions?.background?.backgroundImage?.contentAlignment ?? 'left'
-
-  if (contentAlignment) {
-    backgroundImageContentClassNames = twMerge(
-      backgroundImageContentClassNames,
-      `${contentAlignmentClassNames[contentAlignment]}`,
-    )
-  }
-
   let bgContainerOptions = designOptions
 
   const textColor = `${useBrandTheme ? 'text-energy-red-100' : ''} text-balance`
@@ -72,6 +68,11 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
       },
     }
   }
+  const backgroundType = bgContainerOptions?.background?.type
+  console.log('backgroundType', backgroundType)
+  console.log('className', className)
+  console.log('bg image', bgContainerOptions?.background?.backgroundImage)
+  const { bg, dark } = getBgAndDarkFromBackground(bgContainerOptions)
 
   const contentElements = (
     <>
@@ -83,49 +84,24 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
     </>
   )
 
-  return (
-    <BackgroundContainer
-      {...bgContainerOptions}
-      id={anchor}
-      className={twMerge(
-        designOptions?.background?.type === 'backgroundImage' &&
-          backgroundImageContentClassNames,
-        className,
+  const titleElements = (
+    <>
+      {/** Thumbnail  */}
+      {image?.asset && (
+        <Image
+          image={image}
+          grid='xs'
+          aspectRatio='4:3'
+          imageClassName='object-contain object-left'
+          className='mb-8 aspect-4/3 w-1/2 lg:mb-16 lg:w-1/3'
+        />
       )}
-    >
-      <div
-        className={`${
-          designOptions?.background?.type !== 'backgroundImage'
-            ? 'mx-auto max-w-content px-layout-sm lg:px-layout-lg'
-            : ''
-        }`}
-      >
-        {image?.asset && (
-          <Image
-            image={image}
-            grid='xs'
-            aspectRatio='4:3'
-            imageClassName='object-contain object-left'
-            className='mb-8 aspect-4/3 w-1/2 lg:mb-16 lg:w-1/3'
-          />
-        )}
-        {overline ? (
-          <hgroup
-            className={`mb-1 ${useBrandTheme ? 'text-energy-red-100' : ''}`}
-          >
-            <Typography variant='overline'>{overline}</Typography>
-            {title && (
-              <Blocks
-                value={title}
-                as='h2'
-                group='heading'
-                variant='h2'
-                useDisplay={true}
-              />
-            )}
-          </hgroup>
-        ) : (
-          title && (
+      {overline ? (
+        <hgroup
+          className={`mb-1 ${useBrandTheme ? 'text-energy-red-100' : ''}`}
+        >
+          <Typography variant='overline'>{overline}</Typography>
+          {title && (
             <Blocks
               value={title}
               as='h2'
@@ -134,22 +110,42 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
               useDisplay={true}
               blockClassName={textColor}
             />
-          )
-        )}
-        {(ingress || text || callToActions) &&
-          (contentAlignment === 'right' ? (
-            <div
-              className={`flex flex-col ${
-                contentAlignment === 'right' ? 'items-end' : ''
-              }`}
-            >
-              {contentElements}
-            </div>
-          ) : (
-            contentElements
-          ))}
+          )}
+        </hgroup>
+      ) : (
+        title && (
+          <Blocks
+            value={title}
+            as='h2'
+            group='heading'
+            variant='h2'
+            useDisplay={true}
+          />
+        )
+      )}
+    </>
+  )
+
+  return backgroundType === 'backgroundImage' &&
+    bgContainerOptions?.background?.backgroundImage ? (
+    <ImageBackground
+      id={anchor}
+      isLongTitle={isLongTitle}
+      {...bgContainerOptions.background.backgroundImage}
+    >
+      {titleElements}
+      {contentElements}
+    </ImageBackground>
+  ) : (
+    <div
+      id={anchor}
+      className={twMerge(bg && bg, dark ? 'dark' : '', className)}
+    >
+      <div className='mx-auto max-w-content px-layout-sm lg:px-layout-lg'>
+        {titleElements}
+        {contentElements}
       </div>
-    </BackgroundContainer>
+    </div>
   )
 }
 

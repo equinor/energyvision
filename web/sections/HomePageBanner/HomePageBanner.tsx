@@ -121,72 +121,74 @@ export const HomePageBanner = forwardRef<HTMLDivElement, HomePageBannerProps>(
     )
 
     return (
-      <div ref={ref} id={anchor} className={`${!useImage ? background : ''}`}>
-        <div className='relative mx-auto max-w-content'>
-          {useImage && (
-            <picture
-              className={`flex h-auto w-full max-lg:aspect-21/9 lg:absolute lg:inset-0`}
-            >
-              {useGradient && (
-                <div
-                  className={`absolute inset-0 z-1 ${useGradient ? gradient : ''}`}
-                />
-              )}
-              <Image
-                grid='full'
-                loading='eager'
-                image={image}
-                fill
-                imageClassName={`${getObjectPositionForImage(backgroundPosition ?? 'center_center')}`}
-              />
-            </picture>
-          )}
-          <div
-            className={`mx-auto grid grid-cols-1 grid-rows-[max-content_min-content] gap-4 pl-sm lg:gap-12 lg:px-layout-sm ${useImage ? `-mt-12 lg:pt-40 ${title && isMobile ? nextCompBgUtility : ''}` : 'pt-16'} pb-2 lg:pt-32 lg:pb-14`}
+      <div
+        ref={ref}
+        id={anchor}
+        className={`relative ${!useImage ? background : ''}`}
+      >
+        {useImage && (
+          <picture
+            className={`flex h-auto w-full max-lg:aspect-21/9 lg:absolute lg:inset-0`}
           >
-            {title && ((useImage && !isMobile) || !useImage) && headingElement}
-            {ctaCards?.length && (
-              <ul
-                className={`relative flex w-full snap-x gap-4 overflow-x-auto ${useImage ? 'z-10' : ''}`}
-              >
-                {ctaCards?.map(ctaCard => {
-                  const { id, link, overline } = ctaCard
-                  if (!link) return null
-                  const url = getUrlFromAction(link)
-                  if (!url) return null
-                  return (
-                    <li key={id} className='m-1'>
-                      <BaseLink
-                        className={`min-w-[260px] max-w-[400px] ${foreground} group flex h-full flex-col gap-2 rounded-md px-4 py-6 shadow-card active:shadow-card-interact`}
-                        type={link?.type}
-                        href={url}
-                      >
-                        {overline && (
-                          <Typography
-                            variant='eyebrow'
-                            className='mb-1 h-max normal-case'
-                          >
-                            {overline}
-                          </Typography>
-                        )}
-                        <div className='mb-2 h-max w-4/5 text-md group-hover:underline'>
-                          {link.label}
-                        </div>
-                        <div className='mt-auto flex justify-start'>
-                          {getArrowElement(
-                            link.type ?? 'internalUrl',
-                            '',
-                            'ml-0 xl:ml-0',
-                          )}
-                        </div>
-                      </BaseLink>
-                    </li>
-                  )
-                })}
-              </ul>
+            {useGradient && (
+              <div
+                className={`absolute inset-0 z-1 ${useGradient ? gradient : ''}`}
+              />
             )}
-            {title && useImage && isMobile && headingElement}
-          </div>
+            <Image
+              grid='full'
+              loading='eager'
+              image={image}
+              fill
+              imageClassName={`${getObjectPositionForImage(backgroundPosition ?? 'center_center')}`}
+            />
+          </picture>
+        )}
+        <div
+          className={`mx-auto grid max-w-content grid-cols-1 grid-rows-[max-content_min-content] gap-4 pl-sm lg:gap-12 lg:px-layout-sm ${useImage ? `-mt-12 lg:pt-40 ${title && isMobile ? nextCompBgUtility : ''}` : 'pt-16'} pb-2 lg:pt-32 lg:pb-14`}
+        >
+          {title && ((useImage && !isMobile) || !useImage) && headingElement}
+          {ctaCards?.length && (
+            <ul
+              className={`relative flex w-full snap-x gap-4 overflow-x-auto ${useImage ? 'z-10' : ''}`}
+            >
+              {ctaCards?.map(ctaCard => {
+                const { id, link, overline } = ctaCard
+                if (!link) return null
+                const url = getUrlFromAction(link)
+                if (!url) return null
+                return (
+                  <li key={id} className='m-1'>
+                    <BaseLink
+                      className={`min-w-[260px] max-w-[400px] ${foreground} group flex h-full flex-col gap-2 rounded-md px-4 py-6 shadow-card active:shadow-card-interact`}
+                      type={link?.type}
+                      href={url}
+                    >
+                      {overline && (
+                        <Typography
+                          variant='eyebrow'
+                          className='mb-1 h-max normal-case'
+                        >
+                          {overline}
+                        </Typography>
+                      )}
+                      <div className='mb-2 h-max w-4/5 text-md group-hover:underline'>
+                        {link.label}
+                      </div>
+                      <div className='mt-auto flex justify-start'>
+                        {getArrowElement(
+                          link.type ?? 'internalUrl',
+                          '',
+                          'ml-0 xl:ml-0',
+                        )}
+                      </div>
+                    </BaseLink>
+                  </li>
+                )
+              })}
+            </ul>
+          )}
+          {title && useImage && isMobile && headingElement}
         </div>
       </div>
     )

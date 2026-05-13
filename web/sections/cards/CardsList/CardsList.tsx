@@ -40,9 +40,8 @@ const CardsList = forwardRef<HTMLElement, CardsListProps>(function CardsList(
   }
 
   const bg = colorKeyToUtilityMap[cardBackground ?? 'blue-50']
-  console.log('cardBackground', cardBackground)
   const px = getLayoutPx(layoutGrid ?? 'md')
-  console.log('title', title)
+
   return (
     <section
       ref={ref}

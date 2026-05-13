@@ -78,26 +78,27 @@ export const DefaultHero = ({
           {subTitle && subTitle}
         </div>
       </div>
-
-      {figure && (
-        <div
-          className={`${isColorBg ? 'lg:-mt-news-banner-vertical' : ''} lg:px-layout-md`}
-        >
-          <Picture
-            image={figure.image}
-            desktopAspectRatio={ratio}
-            figCaptionClassName={figCaptionClassName}
-            caption={figure?.caption}
-            attribution={figure?.attribution}
-            figureClassName={twMerge(`w-full`, imageWrapperClassName)}
-            className={imageClassName}
-            withLayoutPx={false}
-          />
-        </div>
-      )}
-      {magazineTags && magazineTags?.length > 0 && (
-        <MagazineTagBar tags={magazineTags} />
-      )}
+      <div className='mx-auto max-w-content'>
+        {figure && (
+          <div
+            className={`${isColorBg ? 'lg:-mt-news-banner-vertical' : ''} lg:px-layout-md`}
+          >
+            <Picture
+              image={figure.image}
+              desktopAspectRatio={ratio}
+              figCaptionClassName={figCaptionClassName}
+              caption={figure?.caption}
+              attribution={figure?.attribution}
+              figureClassName={twMerge(`w-full`, imageWrapperClassName)}
+              className={imageClassName}
+              withLayoutPx={false}
+            />
+          </div>
+        )}
+        {magazineTags && magazineTags?.length > 0 && (
+          <MagazineTagBar tags={magazineTags} />
+        )}
+      </div>
     </div>
   )
 }

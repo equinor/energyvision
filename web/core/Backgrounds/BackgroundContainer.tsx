@@ -2,13 +2,13 @@ import type { ElementType, HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { getBgAndDarkFromBackground } from '../../styles/colorKeyToUtilityMap'
 import type { Background } from '../../types/index'
-import { ImageBackgroundContainer } from './ImageBackgroundContainer'
+import { ImageBackground } from './ImageBackground'
 
 export type BackgroundContainerProps = {
   background?: Background
   /** Extended  styling when background image */
   scrimClassName?: string
-  /* On mobile dont split background image and content */
+  /* On mobile dont split background image and content to stack  */
   dontSplit?: boolean
   /** Set return element as given */
   as?: ElementType
@@ -40,7 +40,7 @@ export const BackgroundContainer = ({
   return (
     <>
       {!isColor && backgroundImage ? (
-        <ImageBackgroundContainer
+        <ImageBackground
           as={as}
           id={id}
           className={twMerge(commonClassNames, className)}
@@ -49,7 +49,7 @@ export const BackgroundContainer = ({
           {...backgroundImage}
         >
           {children}
-        </ImageBackgroundContainer>
+        </ImageBackground>
       ) : (
         <Component
           id={id}

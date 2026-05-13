@@ -1,4 +1,13 @@
-import { defineField, type Rule } from 'sanity'
+import {
+  type BooleanInputProps,
+  type BooleanSchemaType,
+  defineField,
+  type Rule,
+  type StringInputProps,
+  type StringSchemaType,
+} from 'sanity'
+import { Select } from '@/schemas/components/Select/Select'
+import { Toggle } from '@/schemas/components/Toggle/Toggle'
 import { filterByRoute } from '../../../helpers/referenceFilters'
 import { CompactBlockEditor } from '../../components/CompactBlockEditor'
 import { configureBlockContent } from '../../editors'
@@ -172,5 +181,30 @@ export const glassEffect = (hiddenCallBack?: any, fieldset?: string) => {
       )
       return !isAllowed
     },
+    components: {
+      input: (props: BooleanInputProps<BooleanSchemaType>) => Toggle(props),
+    },
+  }
+}
+
+export const backgroundGradient = (hiddenCallBack?: any, fieldset?: string) => {
+  return {
+    title: 'Background Gradient',
+    name: 'backgroundGradient',
+    type: 'string',
+    description: 'Optional gradient over background image.',
+    initialValue: 'none', // default
+    options: {
+      list: [
+        { title: 'None', value: 'none' },
+        { title: 'Dark', value: 'dark' },
+        { title: 'Light', value: 'light' },
+      ],
+    },
+    components: {
+      input: (props: StringInputProps<StringSchemaType>) => Select(props),
+    },
+    ...(fieldset && { fieldset }),
+    ...(hiddenCallBack && { hidden: hiddenCallBack }),
   }
 }

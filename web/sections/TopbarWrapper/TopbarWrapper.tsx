@@ -83,7 +83,7 @@ export const TopbarWrapper = ({ children }: TopbarWrapperProps) => {
   const globalNav = (
     <nav
       aria-label={t('global') ?? 'Global'}
-      className={`h-topbar w-full max-w-full animate-height overflow-hidden bg-white-100 px-layout-sm duration-500 ease-in-out [transition-property:margin-top] ${isVisible ? 'mt-0' : '-mt-topbar'} `}
+      className={`h-topbar w-full max-w-full animate-height overflow-hidden px-layout-sm duration-500 ease-in-out [transition-property:margin-top] ${isVisible ? 'mt-0' : '-mt-topbar'} `}
       ref={topbarRef}
     >
       <div className='flex items-center justify-between py-4'>{children}</div>
@@ -92,7 +92,7 @@ export const TopbarWrapper = ({ children }: TopbarWrapperProps) => {
   //${isVisible ? 'top-topbar pt-2' : 'top-0'}
   return (
     <header
-      className={`peer fixed right-0 left-0 z-40 mx-auto w-full max-w-fullwidth ${hasDropShadow || showSticky ? 'shadow-md' : ''}`}
+      className={`peer fixed right-0 left-0 z-40 mx-auto w-full max-w-fullwidth bg-white-100 ${hasDropShadow || showSticky ? 'shadow-md' : ''}`}
       data-sticky={showSticky}
     >
       <div className='mx-auto w-full max-w-content'>

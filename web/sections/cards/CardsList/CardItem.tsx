@@ -27,9 +27,6 @@ const CardItem = forwardRef<HTMLLIElement, CardItemProps>(function CardItem(
   },
   ref,
 ) {
-  console.log('CardItem background', background)
-  console.log('CardItem dark', dark)
-
   const titleVariant =
     displayTextVariant !== 'none'
       ? getDisplayTextVariant(displayTextVariant)

@@ -106,48 +106,50 @@ const NewsPage = async ({
             subTitle={publishedInformation}
             figCaptionClassName='light'
           />
-          {ingress && ingress.length > 0 && (
-            <Blocks
-              group='article'
-              variant='ingress'
-              value={ingress}
-              includeFootnotes
-              className='my-6'
-            />
-          )}
-          {content && content.length > 0 && (
-            <Blocks
-              group='article'
-              variant='body'
-              value={formattedContent}
-              includeFootnotes
-            />
-          )}
-          <div className='w-full px-layout-sm lg:px-layout-lg'>
-            <div className='mt-8 mb-2'>
-              <Footnotes blocks={[...ingress, ...content]} />
-            </div>
-
-            {iframe && (
-              <IFrame
-                //@ts-ignore:TODO type match for portabletext
-                title={iframe?.title}
-                showTitleAbove={true}
-                frameTitle={iframe?.frameTitle}
-                url={iframe?.url}
-                cookiePolicy={iframe?.cookiePolicy}
-                aspectRatio={iframe?.designOptions?.aspectRatio}
-                description={iframe?.description}
+          <div className='mx-auto max-w-content'>
+            {ingress && ingress.length > 0 && (
+              <Blocks
+                group='article'
+                variant='ingress'
+                value={ingress}
+                includeFootnotes
+                className='my-6'
               />
             )}
+            {content && content.length > 0 && (
+              <Blocks
+                group='article'
+                variant='body'
+                value={formattedContent}
+                includeFootnotes
+              />
+            )}
+            <div className='w-full px-layout-sm lg:px-layout-lg'>
+              <div className='mt-8 mb-2'>
+                <Footnotes blocks={[...ingress, ...content]} />
+              </div>
 
-            {relatedLinks?.links && relatedLinks.links.length > 0 && (
-              <RelatedContent data={relatedLinks} className={`my-3xl`} />
+              {iframe && (
+                <IFrame
+                  //@ts-ignore:TODO type match for portabletext
+                  title={iframe?.title}
+                  showTitleAbove={true}
+                  frameTitle={iframe?.frameTitle}
+                  url={iframe?.url}
+                  cookiePolicy={iframe?.cookiePolicy}
+                  aspectRatio={iframe?.designOptions?.aspectRatio}
+                  description={iframe?.description}
+                />
+              )}
+
+              {relatedLinks?.links && relatedLinks.links.length > 0 && (
+                <RelatedContent data={relatedLinks} className={`my-3xl`} />
+              )}
+            </div>
+            {latestNews && latestNews.length > 0 && (
+              <LatestNews data={latestNews} />
             )}
           </div>
-          {latestNews && latestNews.length > 0 && (
-            <LatestNews data={latestNews} />
-          )}
         </article>
       </main>
       <ArticleJsonLd

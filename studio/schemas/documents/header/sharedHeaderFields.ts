@@ -2,15 +2,22 @@ import type {
   ConditionalPropertyCallbackContext,
   CurrentUser,
   Rule,
+  StringInputProps,
+  StringSchemaType,
   ValidationContext,
 } from 'sanity'
 import { isAllowed } from '@/helpers/isAllowed'
-import { layoutGrid as _layoutGrid } from '@/schemas/objects/commonFields/commonFields'
+import { RoleFilteredSelect } from '@/schemas/components/RoleFilteredSelect/RoleFilteredSelect'
+import { Select } from '@/schemas/components/Select/Select'
+import {
+  backgroundGradient as _backgroundGradient,
+  backgroundPosition as _backgroundPosition,
+  layoutGrid as _layoutGrid,
+} from '@/schemas/objects/commonFields/commonFields'
 import { CompactBlockEditor } from '../../components/CompactBlockEditor'
 import { configureBlockContent } from '../../editors'
 import type { ImageWithAltAndCaption } from '../../objects/imageWithAltAndCaption'
 import singleItemArray from '../../objects/singleItemArray'
-import HeroTypeInput from './HeroTypeInput'
 
 export enum HeroTypes {
   DEFAULT = 'default',
@@ -48,23 +55,23 @@ const heroType = {
   options: {
     list: [
       {
-        title: 'Image(default centered)',
+        title: 'Image (default centered)',
         value: HeroTypes.DEFAULT,
       },
       {
-        title: 'Image(fullwidth)',
+        title: 'Image (fullwidth)',
         value: HeroTypes.FULL_WIDTH_IMAGE,
       },
       {
-        title: '50/50 text/image(fullwidth)',
+        title: '50/50 image/text (fullwidth)',
         value: HeroTypes.FIFTY_FIFTY,
       },
       {
-        title: 'Looping video(fullwidth)',
+        title: 'Looping video (fullwidth)',
         value: HeroTypes.LOOPING_VIDEO,
       },
       {
-        title: 'No hero(title+image hidden,first page section as top)',
+        title: 'No hero (title+image hidden,first page section as top)',
         value: HeroTypes.NO_HERO,
       },
       {
@@ -74,7 +81,8 @@ const heroType = {
     ].filter(e => e),
   },
   components: {
-    input: HeroTypeInput,
+    input: (props: StringInputProps) =>
+      RoleFilteredSelect(props, ['loopingVideo', 'noHero', 'backgroundImage']),
   },
   initialValue: 'default',
 }
@@ -121,10 +129,9 @@ const backgroundGradient = {
   title: 'Background Gradient',
   name: 'heroBackgroundGradient',
   type: 'string',
-  fieldset: 'hero',
-  description:
-    'Optional dark or light semi-transparent gradient over background image.',
+  description: 'Optional gradient over background image.',
   initialValue: 'none', // default
+  fieldset: 'hero',
   options: {
     list: [
       { title: 'None', value: 'none' },
@@ -132,10 +139,17 @@ const backgroundGradient = {
       { title: 'Light', value: 'light' },
     ],
   },
+  components: {
+    input: (props: StringInputProps<StringSchemaType>) => Select(props),
+  },
   hidden: ({ parent }: DocumentType) => {
     return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE
   },
 }
+
+const backgroudPosition = _backgroundPosition(({ parent }: DocumentType) => {
+  return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE
+}, 'hero')
 
 const heroLink = singleItemArray({
   name: 'heroLink',
@@ -300,24 +314,6 @@ const applyDisplayText = {
 const layoutGrid = _layoutGrid(({ parent }: DocumentType) => {
   return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE
 }, 'hero')
-/*   {
-    title: 'Layout grid',
-    name: 'layoutGrid',
-    type: 'string',
-    description: 'Select content grid column',
-    options: {
-      list: [
-        { title: 'Third outer', value: 'sm' },
-        { title: 'Second outer', value: 'md' },
-        { title: 'Innermost', value: 'lg' },
-      ],
-    },
-    initialValue: 'lg',
-    fieldset: 'hero',
-    hidden: ({ parent }: DocumentType) => {
-      return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE
-    },
-  } */
 
 const alignContentY = {
   title: 'Vertical content alignment',
@@ -377,6 +373,7 @@ export default [
   heroLinkV2,
   background,
   heroImage,
+  backgroudPosition,
   heroMobileImage,
   backgroundGradient,
   useCenterBlur,

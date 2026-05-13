@@ -1,4 +1,4 @@
-import type { ImageBackground } from '@/core/Backgrounds/ImageBackgroundContainer'
+import type { ImageBackground } from '@/core/Backgrounds/ImageBackground'
 import type { ObjectPositions } from '@/core/Image/Image'
 import type { ColorKeyTokens } from '../styles/colorKeyToUtilityMap'
 
@@ -16,9 +16,8 @@ export type BackgroundColours =
   | 'Slate Blue 95'
 
 export type BackgroundTypes = 'backgroundColor' | 'backgroundImage'
-
-export type ContentAlignmentTypes = 'left' | 'right' | 'center'
 export type LayoutGrid = 'sm' | 'md' | 'lg'
+export type BackgroundGradient = 'none' | 'light' | 'dark'
 
 export type Background = {
   type?: BackgroundTypes

@@ -26,26 +26,24 @@ const IframeCarousel = ({
       className={twMerge(`${bg} ${dark ? 'dark' : ''}`, className)}
       id={anchor}
     >
-      <div className='mx-auto max-w-content'>
-        {title && (
-          <div className='px-layout-lg'>
-            <Blocks
-              value={title}
-              variant='h2'
-              id={headingId}
-              blockClassName={` ${hideTitle ? 'sr-only' : ''}`}
-            />
-          </div>
-        )}
-        <Carousel
-          items={items}
-          displayMode='single'
-          variant='iframe'
-          autoRotation={false}
-          hasSectionTitle={title && !hideTitle}
-          labelledbyId={title && !hideTitle ? headingId : undefined}
-        />
-      </div>
+      {title && (
+        <div className='mx-auto max-w-content px-layout-lg'>
+          <Blocks
+            value={title}
+            variant='h2'
+            id={headingId}
+            blockClassName={` ${hideTitle ? 'sr-only' : ''}`}
+          />
+        </div>
+      )}
+      <Carousel
+        items={items}
+        displayMode='single'
+        variant='iframe'
+        autoRotation={false}
+        hasSectionTitle={title && !hideTitle}
+        labelledbyId={title && !hideTitle ? headingId : undefined}
+      />
     </section>
   )
 }

@@ -1,0 +1,60 @@
+.container {
+  display: grid;
+  grid-auto-columns: minmax(0, 60px);
+  grid-auto-flow: column;
+  gap: 8px;
+  grid-template-rows: repeat(1, minmax(0, min-content));
+}
+
+.radio {
+  opacity: 0;
+  position: absolute;
+}
+
+.radio:focus + .label {
+  outline: #2276fc auto 1px;
+  border-radius: 0;
+}
+
+.radio:checked + .label .iconWrapper {
+  background-color: rgba(34, 118, 252, 0.15);
+}
+
+.radio:hover + .label .iconWrapper {
+  outline-color: #2276fc;
+}
+
+.label {
+  cursor: pointer;
+}
+
+.label:hover .iconWrapper {
+  background-color: rgba(34, 118, 252, 0.08);
+}
+
+.iconWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  justify-content: center;
+  height: fit-content;
+  align-items: center;
+  outline: 1px solid #cad1dc;
+  border-radius: 0.1875rem;
+  aspect-ratio: 1;
+}
+
+.iconBox {
+  max-width: 24px;
+  max-height: 24px;
+}
+
+.text {
+  margin: 0;
+  text-align: center;
+  color: var(--card-fg-color);
+  font-weight: 500;
+  font-size: 0.8125rem;
+  line-height: calc(1.46154);
+  padding: 0;
+}

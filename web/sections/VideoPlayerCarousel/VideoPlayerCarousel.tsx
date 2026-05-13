@@ -50,34 +50,32 @@ const VideoPlayerCarousel = forwardRef<
       id={anchor}
       className={twMerge(`${bg} ${dark ? 'dark' : ''}`, className)}
     >
-      <div className='mx-auto max-w-content'>
-        <div className='flex w-full flex-col px-layout-sm pb-8 lg:px-layout-lg'>
-          {title && (
-            <Blocks
-              id={headingId}
-              variant='h2'
-              value={title}
-              className={hideTitle ? 'sr-only' : `${ingress ? 'pb-6' : ''}`}
-            />
-          )}
-          {ingress && <Blocks variant='ingress' value={ingress} />}
-        </div>
-        <Carousel
-          ref={ref}
-          items={items.map((item: VideoPlayerCarouselItem) => {
-            return {
-              ...item,
-              aspectRatio: aspectRatio,
-            }
-          })}
-          displayMode={scrollMode && scrollMode ? 'scroll' : 'single'}
-          hasSectionTitle={!!title}
-          variant='video'
-          labelledbyId={title ? headingId : undefined}
-          autoRotation={false}
-          containerClassName={`${scrollMode ? 'px-layout-sm lg:px-layout-md' : ''}`}
-        />
+      <div className='mx-auto flex w-full max-w-content flex-col px-layout-sm pb-8 lg:px-layout-lg'>
+        {title && (
+          <Blocks
+            id={headingId}
+            variant='h2'
+            value={title}
+            className={hideTitle ? 'sr-only' : `${ingress ? 'pb-6' : ''}`}
+          />
+        )}
+        {ingress && <Blocks variant='ingress' value={ingress} />}
       </div>
+      <Carousel
+        ref={ref}
+        items={items.map((item: VideoPlayerCarouselItem) => {
+          return {
+            ...item,
+            aspectRatio: aspectRatio,
+          }
+        })}
+        displayMode={scrollMode && scrollMode ? 'scroll' : 'single'}
+        hasSectionTitle={!!title}
+        variant='video'
+        labelledbyId={title ? headingId : undefined}
+        autoRotation={false}
+        containerClassName={`${scrollMode ? 'px-layout-sm lg:px-layout-md' : ''}`}
+      />
     </section>
   )
 })
