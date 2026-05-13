@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic'
 import { notFound } from 'next/navigation'
 import { languages } from '@/languageConfig'
 import { getNameFromIso } from '@/sanity/helpers/localization'
+import { client } from '@/sanity/lib/client'
 import { routeSanityFetch } from '@/sanity/lib/live'
 import { PageWrapper } from '@/sanity/pages/PageWrapper'
 import { constructSanityMetadata, getPage } from '@/sanity/pages/utils'
@@ -13,6 +14,7 @@ import {
   pageMetaQuery,
 } from '@/sanity/queries/metaData'
 import { getRoutePaths } from '@/sanity/queries/paths/getPaths'
+import { topicRoutesForLocale } from '@/sanity/queries/paths/pathQueries'
 
 type Props = {
   params: Promise<{ slug: string[]; locale: string }>
@@ -23,10 +25,6 @@ const EventPage = dynamic(() => import('@/templates/event/Event'))
 const NewsPage = dynamic(() => import('@/templates/news/News'))
 const TopicPage = dynamic(() => import('@/templates/topic/TopicPage'))
 const MagazineRoom = dynamic(() => import('@/templates/magazine/Magazineroom'))
-
-export async function generateStaticParams() {
-  return []
-}
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   //array, separated by /. e.g. [news, last slug]
