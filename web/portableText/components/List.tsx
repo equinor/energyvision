@@ -1,6 +1,7 @@
 'use client'
 import { type ElementType, forwardRef, type HTMLAttributes } from 'react'
 import type { TypographyGroups } from '@/core/Typography/variants'
+import { twMerge } from '@/lib/twMerge/twMerge'
 
 export type ListProps = {
   /**
@@ -21,7 +22,14 @@ export const List = forwardRef<HTMLParagraphElement, ListProps>(function List(
 
   return (
     <ListTag
-      className={`max-w-text text-base dark:text-white-100 ${ListTag === 'ul' ? 'list-disc' : 'list-decimal'} my-5 pl-6 *:my-2 *:ml-2 *:pl-1.5 *:first:mt-0 *:last:mb-0 [:where(h2+*,h3+*)]:mt-0 ${group && group === 'article' ? '[:not(li_>_ul)]:mx-layout-lg' : ''} [:where(li_>_ul):not(li_>_ul_>_li_>_ul)]:list-[lower-alpha] [:where(li_>_ul_>_li_>_ul)]:list-[lower-roman]`}
+      className={twMerge(
+        `my-5 max-w-text pl-6 text-base *:my-2 *:ml-2 *:pl-1.5 *:first:mt-0 *:last:mb-0 dark:text-white-100 [:where(h2+*,h3+*)]:mt-0 [:where(li_>_ul):not(li_>_ul_>_li_>_ul)]:list-[lower-alpha] [:where(li_>_ul_>_li_>_ul)]:list-[lower-roman]`,
+        ListTag === 'ul' && 'list-disc',
+        ListTag === 'ol' && 'list-decimal',
+        group &&
+          group === 'article' &&
+          '[:not(li_>_ul)]:mx-layout-sm lg:[:not(li_>_ul)]:mx-layout-lg',
+      )}
       ref={ref}
     >
       {children}

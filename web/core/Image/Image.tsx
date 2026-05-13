@@ -113,7 +113,9 @@ const getSizes = (paddingGrid?: GridType, isLargerDisplays = false) => {
   }
 }
 
+// Can also be used for background position.
 export type ObjectPositions =
+  | 'none'
   | 'center_left'
   | 'center_center'
   | 'center_right'
@@ -126,6 +128,7 @@ export type ObjectPositions =
 
 export const getObjectPositionForImage = (position: ObjectPositions) => {
   return {
+    none: '',
     center_center: 'object-center',
     center_left: 'object-left',
     center_right: 'object-right',
@@ -135,6 +138,20 @@ export const getObjectPositionForImage = (position: ObjectPositions) => {
     bottom_left: 'object-bottom-left',
     bottom_center: 'object-bottom',
     bottom_right: 'object-bottom-right',
+  }[position]
+}
+export const getBackgroundPositionForImage = (position: ObjectPositions) => {
+  return {
+    none: '',
+    center_center: 'bg-center',
+    center_left: 'bg-left',
+    center_right: 'bg-right',
+    top_left: 'bg-top-left',
+    top_center: 'bg-top',
+    top_right: 'bg-top-right',
+    bottom_left: 'bg-bottom-left',
+    bottom_center: 'bg-bottom',
+    bottom_right: 'bg-bottom-right',
   }[position]
 }
 

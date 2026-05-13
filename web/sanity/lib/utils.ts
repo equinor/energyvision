@@ -29,7 +29,7 @@ export const urlForImage = (source: any) => {
     return undefined
   }
 
-  return imageBuilder?.image(source).auto('format')
+  return imageBuilder?.image(source).auto('format').crop('focalpoint') // Respects editor's hot spot
 }
 
 export type ResolveImageProps = {
@@ -89,7 +89,6 @@ export const resolveImage = (props: ResolveImageProps) => {
   if (aspectRatio <= 0) {
     ratio = imageWidth / imageHeight
   }
-  console.log('ratio', ratio)
 
   let width = customWidth
     ? customWidth
@@ -99,7 +98,7 @@ export const resolveImage = (props: ResolveImageProps) => {
           getMaxWidth(grid, keepRatioOnMobile ? true : isLargerDisplays),
         ),
       )
-  console.log('width', width)
+
   let height = Math.round(width / ratio)
 
   // If portrait and one wants to control height and keep aspect
@@ -116,7 +115,8 @@ export const resolveImage = (props: ResolveImageProps) => {
     //The image is resized to fit within the bounds you specified without cropping or distorting the image.
     url = urlForImage(image)?.width(width).height(height).fit('clip').url()
   }
-  url = urlForImage(image)?.width(width).height(height).url()
+  //Crops the image to fill the specified width (w) and height (h).
+  url = urlForImage(image)?.width(width).height(height).fit('crop').url()
 
   return { url, width, height }
 }

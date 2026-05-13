@@ -77,6 +77,7 @@ export const backgroundPosition = (hiddenCallBack?: any, fieldset?: string) => {
     type: 'string',
     options: {
       list: [
+        { title: 'None', value: 'none' },
         { title: 'Center Left', value: 'center_left' },
         { title: 'Center Center', value: 'center_center' },
         { title: 'Center Right', value: 'center_right' },
@@ -89,7 +90,7 @@ export const backgroundPosition = (hiddenCallBack?: any, fieldset?: string) => {
       ],
       layout: 'dropdown',
     },
-    initialValue: 'center_center',
+    initialValue: 'none',
     ...(fieldset && { fieldset }),
     ...(hiddenCallBack && { hidden: hiddenCallBack }),
   })

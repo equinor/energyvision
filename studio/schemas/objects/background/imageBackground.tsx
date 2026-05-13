@@ -15,6 +15,7 @@ import {
 } from '../../../icons'
 import {
   backgroundGradient,
+  backgroundPosition,
   glassEffect,
   layoutGrid,
 } from '../commonFields/commonFields'
@@ -81,6 +82,7 @@ export default defineType({
     },
     glassEffect(),
     backgroundGradient(),
+    backgroundPosition(),
     layoutGrid(
       undefined,
       undefined,

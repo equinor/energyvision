@@ -1,12 +1,17 @@
 'use client'
-
 import {
   type CSSProperties,
   type ElementType,
   type HTMLAttributes,
   useRef,
 } from 'react'
-import type { Image, ImageRatioKeys } from '@/core/Image/Image'
+import {
+  getBackgroundPositionForImage,
+  type Image,
+  type ImageRatioKeys,
+  ImageRatios,
+  type ObjectPositions,
+} from '@/core/Image/Image'
 import { getLayoutPx } from '@/lib/helpers/getCommonUtilities'
 import { twMerge } from '@/lib/twMerge/twMerge'
 import { resolveImage } from '@/sanity/lib/utils'
@@ -23,6 +28,7 @@ export type ImageBackground = {
   useGlass?: boolean
   contentAlignment?: ContentAlignment
   backgroundGradient?: BackgroundGradient
+  backgroundPosition?: ObjectPositions
   /* Deprecated:  Replaced with backgroundGradient dropdown 
   TODO: Remove */
   useLight?: boolean
@@ -53,9 +59,9 @@ export const ImageBackground = ({
   scrimClassName = '',
   overrideGradient = false,
   dontSplit = false,
-  isLongTitle = false,
   as,
   backgroundGradient = 'none',
+  backgroundPosition,
   layoutGrid = 'md',
   //Deprecated - TODO: Remove useLight and useNoGradient after time of transition where both options are available
   useLight,
@@ -79,19 +85,6 @@ export const ImageBackground = ({
   const _darkGradient =
     !_lightGradient && !_noGradient && backgroundGradient === 'dark'
 
-  const backgroundClassNames = `
-      @container-size
-      [container:inline-size]
-      relative
-      w-full
-      h-full
-      bg-center
-      bg-no-repeat
-      bg-cover
-      ${useAnimation && isLargerDisplays ? `bg-fixed` : 'bg-local'}
-      ${_darkGradient ? 'dark' : ''}
-    `
-
   const lightGradientForContentAlignment = {
     center: 'white-center-gradient',
     right: 'white-center-gradient xl:white-right-gradient',
@@ -114,39 +107,26 @@ export const ImageBackground = ({
       : `black-center-gradient ${darkGradientForContentAlignment[contentAlignment]}`
   }
 
-  const contentAlignmentClassNames = {
-    center: 'items-start text-start px-layout-lg',
-    right: `items-start text-start px-layout-lg xl:items-end xl:text-end ${isLongTitle ? 'xl:max-w-[52cqw]' : 'xl:max-w-[45cqw]'} xl:ml-auto xl:pr-layout-sm xl:pl-0`,
-    left: `items-start text-start px-layout-lg xl:items-start ${isLongTitle ? 'xl:max-w-[52cqw]' : 'xl:max-w-[45cqw]'}  xl:mr-auto xl:pl-layout-sm xl:pr-0`,
-    'bottom-left':
-      'items-start text-start px-layout-lg xl:mr-auto xl:pl-layout-sm xl:pr-0',
-    'bottom-center':
-      'items-start text-start px-layout-lg xl:pl-layout-sm xl:pr-0',
-  }
-
-  const backgroundImageContentClassNames = `justify-center py-14`
-
-  /*     if (contentAlignment) {
-      backgroundImageContentClassNames = twMerge(
-        backgroundImageContentClassNames,
-        `${contentAlignmentClassNames[contentAlignment]}`,
-      )
-    } */
-
   const contentPx = getLayoutPx(layoutGrid)
   const contentAlignmentUtility = {
     left: 'text-start **:text-start *:flex *:justify-start',
     center: 'text-center **:text-center *:flex *:justify-center',
     right: 'text-end **:text-end *:flex *:justify-end',
   }
-  //<div className='mx-auto max-w-content px-layout-sm lg:px-layout-lg'></div>
+  const contentClassNames = `mx-auto max-w-content ${contentAlignmentUtility[contentAlignment]}`
+
   const contentElement = useGlass ? (
     <div className={twMerge('', className)}>
-      <div className='relative flex h-fit w-fit justify-end rounded-card'>
+      <div
+        className={twMerge(
+          `relative flex h-fit w-fit justify-end rounded-card`,
+          contentClassNames,
+        )}
+      >
         <div className='backdrop-glass z-0 h-full w-full' />
         <div
           className={twMerge(
-            `z-1 rounded-[inherit] px-6 py-4 *:relative *:z-1 lg:px-8 lg:py-6 ${contentAlignmentUtility[contentAlignment]}`,
+            `z-1 rounded-[inherit] px-6 py-4 *:relative *:z-1 lg:px-8 lg:py-6`,
           )}
         >
           {children}
@@ -154,12 +134,7 @@ export const ImageBackground = ({
       </div>
     </div>
   ) : (
-    <div
-      className={twMerge(
-        `mx-auto max-w-content ${contentPx} ${contentAlignmentUtility[contentAlignment]}`,
-        className,
-      )}
-    >
+    <div className={twMerge(`${contentPx}`, contentClassNames, className)}>
       {children}
     </div>
   )
@@ -168,17 +143,30 @@ export const ImageBackground = ({
     <Component
       className={twMerge(
         `@container-size relative h-full w-full bg-center bg-cover bg-no-repeat [container:inline-size]`,
+        backgroundPosition &&
+          `${getBackgroundPositionForImage(backgroundPosition)}`,
         useAnimation && isLargerDisplays ? `bg-fixed` : 'bg-local',
         _darkGradient && 'dark',
         className,
       )}
-      style={{ backgroundImage: `url(${url})` } as CSSProperties}
+      {...(((!dontSplit && isLargerDisplays) || dontSplit) && {
+        style: {
+          backgroundImage: `url(${url})`,
+        } as CSSProperties,
+      })}
       ref={ref}
     >
+      {!dontSplit && !isLargerDisplays && (
+        <div
+          className='aspect-4/3 h-auto w-full bg-center bg-cover bg-local bg-no-repeat'
+          style={{ backgroundImage: `url(${url})` } as CSSProperties}
+        />
+      )}
       <div
         className={twMerge(
-          `py-[25cqb] ${animatedScrimGradient} `,
+          `py-6 lg:py-72 ${animatedScrimGradient} `,
           useAnimation && 'animate-timeline',
+          dontSplit && 'py-40',
           scrimClassName,
         )}
       >

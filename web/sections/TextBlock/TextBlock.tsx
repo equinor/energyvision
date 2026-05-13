@@ -1,4 +1,3 @@
-import { toPlainText } from 'next-sanity'
 import { twMerge } from 'tailwind-merge'
 import { ImageBackground } from '@/core/Backgrounds/ImageBackground'
 import { Image } from '@/core/Image/Image'
@@ -53,8 +52,6 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
   )
     return null
 
-  const isLongTitle = title && toPlainText(title).length > 30
-
   let bgContainerOptions = designOptions
 
   const textColor = `${useBrandTheme ? 'text-energy-red-100' : ''} text-balance`
@@ -69,9 +66,6 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
     }
   }
   const backgroundType = bgContainerOptions?.background?.type
-  console.log('backgroundType', backgroundType)
-  console.log('className', className)
-  console.log('bg image', bgContainerOptions?.background?.backgroundImage)
   const { bg, dark } = getBgAndDarkFromBackground(bgContainerOptions)
 
   const contentElements = (
@@ -130,7 +124,6 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
     bgContainerOptions?.background?.backgroundImage ? (
     <ImageBackground
       id={anchor}
-      isLongTitle={isLongTitle}
       {...bgContainerOptions.background.backgroundImage}
     >
       {titleElements}

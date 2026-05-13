@@ -4,7 +4,7 @@ import { twMerge } from 'tailwind-merge'
 import { FigureCaption } from '@/core/FigureCaption/FigureCaption'
 import { type GridType, Image, type ImageRatioKeys } from '@/core/Image/Image'
 
-type Layout = 'full' | 'left' | 'right' | 'center'
+type LayoutAlignment = 'full' | 'left' | 'right' | 'center'
 
 type FigureNode = {
   _key: string
@@ -12,7 +12,7 @@ type FigureNode = {
   attribution?: string
   caption?: string
   image: Image
-  layout: Layout
+  layout: LayoutAlignment
   enableImageZoom?: boolean
   imageOrientation?: 'portrait' | 'landscape' | 'square'
   centerImageLayout?: 'left' | 'right'
@@ -50,11 +50,10 @@ export const FigureWithLayout = (block: BlockProps) => {
     imageRatio = 'original'
   }
 
-  const layoutVariantClassName = {
+  const layoutAlignmentClassName = {
     full: 'lg:ps-layout-md lg:pe-layout-md',
-    //md:ps-8
-    right: `${imageOrientation !== 'landscape' ? 'md:w-[40vw]' : 'md:w-[46vw]'} lg:pe-layout-md md:float-end md:ps-6`,
-    left: `${imageOrientation !== 'landscape' ? 'md:w-[40vw]' : 'md:w-[46vw]'} lg:ps-layout-md md:float-start md:pe-6`,
+    right: `lg:pe-layout-md md:float-end md:ps-6`,
+    left: `lg:ps-layout-md md:float-start md:pe-6`,
     center: `w-full lg:ps-layout-lg lg:pe-layout-lg md:grid ${centerImageLayout === 'left' ? 'md:grid-cols-[auto_45%]' : 'md:grid-cols-[45%_auto]'} items-start md:gap-4`,
   }
   let imageGrid = 'xs' as GridType
@@ -66,7 +65,7 @@ export const FigureWithLayout = (block: BlockProps) => {
   }
 
   const figureClassName = twMerge(
-    `ps-layout-sm pe-layout-sm ${layoutVariantClassName[layout]} ${layout === 'center' ? `${centerImageLayout === 'right' ? '' : ''}` : ''} my-12`,
+    `ps-layout-sm pe-layout-sm ${layoutAlignmentClassName[layout]} ${layout === 'center' ? `${centerImageLayout === 'right' ? '' : ''}` : ''} my-12`,
   )
   const centerImageCaptionClassName = {
     top: 'flex h-full items-start',
