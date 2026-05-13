@@ -53,8 +53,8 @@ export default {
             return true
           },
         ),
-      hidden: ({ parent }: { parent: ImageWithAlt }) =>
-        parent?.isDecorative === true,
+      // hidden: ({ parent }: { parent: ImageWithAlt }) =>
+      //   parent?.isDecorative === true,
     },
   ],
 }
