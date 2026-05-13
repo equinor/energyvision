@@ -1,6 +1,11 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-nocheck
 
+/** Do not make this a client component.
+ *  To reduce the size of your client JavaScript bundles,
+ *  add 'use client' to specific interactive components instead of
+ *  marking large parts of your UI as Client Components.
+ */
 import AccordionBlock from '@/sections/AccordionBlock/AccordionBlock'
 import { AnchorLinkList } from '@/sections/AnchorLinkList'
 import AnchorSearch, {
