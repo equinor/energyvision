@@ -1,3 +1,4 @@
+'use client'
 import { useId } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { Carousel } from '@/core/Carousel/Carousel'

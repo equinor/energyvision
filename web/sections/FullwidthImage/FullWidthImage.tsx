@@ -1,4 +1,3 @@
-'use client'
 import { FigureCaption } from '@/core/FigureCaption/FigureCaption'
 import { type Figure, Image, type ImageRatioKeys } from '../../core/Image/Image'
 import type { DesignOptions } from '../../types/index'

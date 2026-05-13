@@ -1,3 +1,4 @@
+'use client'
 import { forwardRef, useId } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { Carousel } from '@/core/Carousel/Carousel'

@@ -1,4 +1,3 @@
-'use client'
 import type { PortableTextBlock } from '@portabletext/types'
 import ResourceLink from '@/core/Link/ResourceLink'
 import type { AspectRatioVariants } from '@/core/VideoJsPlayer/Video'

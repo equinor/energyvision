@@ -1,3 +1,4 @@
+'use client'
 import { toPlainText } from '@portabletext/react'
 import { Collapsible } from 'radix-ui'
 import { forwardRef, useMemo, useState } from 'react'

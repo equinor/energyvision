@@ -1,3 +1,4 @@
+'use client'
 import type { PortableTextBlock } from 'next-sanity'
 import { forwardRef, useId } from 'react'
 import { twMerge } from 'tailwind-merge'

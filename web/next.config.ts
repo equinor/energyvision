@@ -126,8 +126,6 @@ const nextConfig: NextConfig = withNextIntl({
       '@equinor/eds-core-react',
       '@equinor/eds-icons',
       'video.js',
-      'next-sanity',
-      'next-sanity-image',
     ],
     //externalDir: true,
   },

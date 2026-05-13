@@ -1,3 +1,4 @@
+'use client'
 import { useId } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { IFrame } from '@/core/IFrame/IFrame'

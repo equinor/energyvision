@@ -6,7 +6,7 @@ import {
   getArrowAnimation,
   getArrowElement,
   iconRotation,
-} from '@/core/Link/ResourceLink'
+} from '@/core/Link/linkCommon'
 import { Typography } from '@/core/Typography'
 import type { GridColumnVariant } from '@/lib/helpers/getCommonUtilities'
 import {
@@ -73,8 +73,6 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
     },
     ref,
   ) {
-    console.log('layoutDirection', layoutDirection)
-    console.log('type', type)
     const plainText = Array.isArray(title)
       ? title
           .map(block => block.children.map(span => span.text).join(''))
@@ -101,7 +99,6 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
 
     const showArrow = true //type !== 'extended'
     const _layoutDirection = type === 'extended' ? 'col' : layoutDirection
-    console.log('_layoutDirection', _layoutDirection)
 
     const paddingOnTypes: Record<PromotionType, string> = {
       compact: _layoutDirection === 'col' ? 'px-6 pt-6 pb-8' : 'py-4 pr-3 pl-4',

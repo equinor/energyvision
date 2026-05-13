@@ -7,7 +7,7 @@ import {
   type ObjectPositions,
 } from '@/core/Image/Image'
 import BaseLink from '@/core/Link/BaseLink'
-import { getArrowElement } from '@/core/Link/ResourceLink'
+import { getArrowElement } from '@/core/Link/linkCommon'
 import { Typography } from '@/core/Typography'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import { useMediaQuery } from '@/lib/hooks/useMediaQuery'

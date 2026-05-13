@@ -1,4 +1,3 @@
-'use client'
 import type { PortableTextBlock } from 'next-sanity'
 import type { AspectRatioVariants } from '@/core/VideoJsPlayer/Video'
 import { VideoPlayer, type VideoType } from '@/core/VideoJsPlayer/VideoPlayer'

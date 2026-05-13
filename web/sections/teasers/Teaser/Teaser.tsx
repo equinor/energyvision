@@ -1,3 +1,4 @@
+'use client'
 import type { PortableTextBlock } from '@portabletext/types'
 import { toPlainText } from 'next-sanity'
 import ResourceLink from '@/core/Link/ResourceLink'

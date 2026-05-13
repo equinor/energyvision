@@ -1,11 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-nocheck
-'use client'
-import { toPlainText } from 'next-sanity'
-import { ErrorBoundary } from 'react-error-boundary'
-import { TbFaceIdError } from 'react-icons/tb'
-import { Typography } from '@/core/Typography'
-import { dataset } from '@/languageConfig'
+
 import AccordionBlock from '@/sections/AccordionBlock/AccordionBlock'
 import { AnchorLinkList } from '@/sections/AnchorLinkList'
 import AnchorSearch, {
@@ -97,6 +92,7 @@ import type {
   TextWithIconArrayData,
   TopicPageSchema,
 } from '@/types'
+import { ErrorBoundaryClient } from './ErrorBoundaryClient'
 
 // How could we do this for several different component types?
 export type ComponentSections =
@@ -744,33 +740,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
     const commonSpacingClassName = ` max-w-container`
 
     return (
-      <ErrorBoundary
-        key={c.id}
-        fallbackRender={({ error }) => {
-          console.error(
-            `Error in component ${c.type}: ${
-              c?.title ? toPlainText(c.title) : ''
-            }`,
-            error,
-          )
-          return (
-            <div
-              role='alert'
-              className={`mx-layout-sm mb-page-content flex flex-col items-center gap-8 rounded-card bg-gray-20 px-6 py-8 lg:mx-layout-lg`}
-            >
-              <TbFaceIdError size={64} />
-              <Typography as='h2' variant='h3' className='text-center'>
-                Sorry,
-                {dataset === 'global-development'
-                  ? ` error in component ${c.type}: ${
-                      c?.title ? toPlainText(c.title) : ''
-                    }`
-                  : ` this section could not be shown`}
-              </Typography>
-            </div>
-          )
-        }}
-      >
+      <ErrorBoundaryClient key={c.id} component={c}>
         {mapSection(
           index,
           c,
@@ -779,7 +749,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
           bottomSpacingClassName,
           commonSpacingClassName,
         )}
-      </ErrorBoundary>
+      </ErrorBoundaryClient>
     )
   })
 
