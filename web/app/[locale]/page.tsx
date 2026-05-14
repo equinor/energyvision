@@ -17,9 +17,9 @@ type Props = {
   searchParams: Promise<{ [key: string]: string[] | undefined }>
 }
 
-export async function generateStaticParams() {
+/*export async function generateStaticParams() {
   return languages.map(language => ({ locale: language.iso }))
-}
+}*/
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params
