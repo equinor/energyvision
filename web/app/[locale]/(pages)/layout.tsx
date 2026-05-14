@@ -8,6 +8,8 @@ import { FriendlyCaptchaSdkWrapper } from '../FriendlyCaptchaWrapper'
 
 type Params = Promise<{ locale: string }>
 
+export const dynamic = 'force-static'
+
 export default async function PagesLayout({
   children,
   params,
