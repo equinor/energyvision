@@ -1,4 +1,3 @@
-'use client'
 import { Icon } from '@equinor/eds-core-react'
 import { search } from '@equinor/eds-icons'
 import type { HTMLAttributes } from 'react'
