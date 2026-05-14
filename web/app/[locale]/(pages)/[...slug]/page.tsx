@@ -2,6 +2,7 @@ import { magazineSlug, newsSlug } from '@energyvision/shared/satelliteConfig'
 import type { Metadata } from 'next'
 import dynamic from 'next/dynamic'
 import { notFound } from 'next/navigation'
+import { setRequestLocale } from 'next-intl/server'
 import { getNameFromIso } from '@/sanity/helpers/localization'
 import { routeSanityFetch } from '@/sanity/lib/live'
 import { PageWrapper } from '@/sanity/pages/PageWrapper'
@@ -61,6 +62,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function Page({ params, searchParams }: Props) {
   const { slug, locale } = await params
   const search = await searchParams
+  setRequestLocale(locale) // enable static rendering
 
   const { headerData, pageData } = await getPage({
     slug,

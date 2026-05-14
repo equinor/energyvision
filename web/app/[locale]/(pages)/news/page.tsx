@@ -72,13 +72,12 @@ export default async function NewsroomPage({
   params: Promise<{ slug: string; locale: string }>
 }) {
   const { locale, slug } = await params
+  // Enable static rendering
+  setRequestLocale(locale)
 
   if (!Flags.HAS_NEWSROOM || locale !== 'en-GB') {
     notFound()
   }
-
-  // Enable static rendering
-  setRequestLocale(locale)
 
   const { headerData, pageData } = await getPage({
     slug: slug ?? newsSlug[getNameFromIso(locale)],

@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation'
 import { hasLocale } from 'next-intl'
+import { setRequestLocale } from 'next-intl/server'
 import { routing } from '@/i18n/routing'
 import Footer from '@/sections/Footer/Footer'
 import Header from '@/sections/Header/HeaderBar'
@@ -15,6 +16,8 @@ export default async function PagesLayout({
   params: Params
 }) {
   const { locale } = await params
+  // Enable static rendering
+  setRequestLocale(locale)
 
   if (!hasLocale(routing.locales, locale)) {
     notFound()

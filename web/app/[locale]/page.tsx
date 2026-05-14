@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import { setRequestLocale } from 'next-intl/server'
 import { OrganizationJsonLd } from 'next-seo'
 import { languages } from '@/languageConfig'
 import { getNameFromIso } from '@/sanity/helpers/localization'
@@ -36,6 +37,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function Home({ params }: Props) {
   const { locale, slug } = await params
+  // Enable static rendering
+  setRequestLocale(locale)
 
   if (!languages.map(it => it.iso).includes(locale)) notFound()
 

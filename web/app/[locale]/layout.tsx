@@ -4,6 +4,7 @@ import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
 import Script from 'next/script'
 import { hasLocale, NextIntlClientProvider } from 'next-intl'
+import { setRequestLocale } from 'next-intl/server'
 import { VisualEditing } from 'next-sanity/visual-editing'
 import { PageProvider } from '@/contexts/pageContext'
 import { dataset } from '@/languageConfig'
@@ -39,6 +40,9 @@ export default async function LocaleLayout({
   params: Params
 }) {
   const { locale } = await params
+
+  // Enable static rendering
+  setRequestLocale(locale)
 
   if (!hasLocale(routing.locales, locale)) {
     notFound()

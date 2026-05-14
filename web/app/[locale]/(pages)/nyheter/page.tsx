@@ -76,6 +76,8 @@ export default async function NewsroomPage({
   params: Promise<{ slug: string; locale: string }>
 }) {
   const { slug, locale } = await params
+  // Enable static rendering
+  setRequestLocale(locale)
 
   // For the time being, let's just give 404 for satellites
   // We will also return 404 if the locale is not Norwegian.
@@ -83,12 +85,9 @@ export default async function NewsroomPage({
   // See https://github.com/vercel/next.js/discussions/18485
   // Only build when newsroom allowed, satellites has norwegian
 
-  if (!Flags.HAS_NEWSROOM || locale !== "nb-NO") {
+  if (!Flags.HAS_NEWSROOM || locale !== 'nb-NO') {
     notFound()
   }
-
-  // Enable static rendering
-  setRequestLocale(locale)
 
   const { headerData, pageData } = await getPage({
     slug: slug ?? newsSlug[getNameFromIso(locale)],
