@@ -27,11 +27,10 @@ const getQuery = async (
   if (!firstPiece || typeof firstPiece === 'undefined' || firstPiece === '') {
     return homePageQuery
   }
-  if (Flags.HAS_NEWSROOM && newsSlug[lang] === firstPiece) {
+  if (newsSlug[lang] === firstPiece) {
     if (
-      !secondPiece ||
-      typeof secondPiece === 'undefined' ||
-      secondPiece === ''
+      Flags.HAS_NEWSROOM &&
+      (!secondPiece || typeof secondPiece === 'undefined' || secondPiece === '')
     ) {
       return newsroomQuery
     }
