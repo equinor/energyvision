@@ -1,3 +1,4 @@
+'use client'
 import { useTranslations } from 'next-intl'
 import { forwardRef, useCallback, useContext, useState } from 'react'
 //BsFiletypeDoc, BsFiletypeMov,

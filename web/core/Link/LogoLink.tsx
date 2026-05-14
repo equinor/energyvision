@@ -1,17 +1,16 @@
-'use client'
+import { useTranslations } from 'next-intl'
 import { AnchorHTMLAttributes } from 'react'
-import NextLink from 'next/link'
 import { twMerge } from 'tailwind-merge'
 import { LogoSecondary } from '@/core/Logo/Logo'
-import { useTranslations } from 'next-intl'
+import { Link } from '@/i18n/navigation'
 
 export type LogoLinkProps = AnchorHTMLAttributes<HTMLAnchorElement>
 
 export const LogoLink = ({ className, ...rest }: LogoLinkProps) => {
   const intl = useTranslations()
   return (
-    <NextLink
-      href="/"
+    <Link
+      href='/'
       aria-label={intl('logolink_title')}
       {...rest}
       className={twMerge(
@@ -20,7 +19,7 @@ export const LogoLink = ({ className, ...rest }: LogoLinkProps) => {
       )}
       prefetch={false}
     >
-      <LogoSecondary className="-mt-[5%]" />
-    </NextLink>
+      <LogoSecondary className='-mt-[5%]' />
+    </Link>
   )
 }

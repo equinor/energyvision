@@ -1,6 +1,7 @@
-import NextLink, { type LinkProps } from 'next/link'
-import { type AnchorHTMLAttributes, forwardRef } from 'react'
+import { type LinkProps } from 'next/link'
+import { type AnchorHTMLAttributes, forwardRef, Ref } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { Link } from '@/i18n/navigation'
 import type { LinkType } from '../../types/index'
 
 export type BaseLinkProps = {
@@ -10,6 +11,7 @@ export type BaseLinkProps = {
   hrefLang?: string
   /** Skip internal link styling, because incoming button styling */
   skipInternalStyle?: boolean
+  ref?: Ref<HTMLAnchorElement> // Add ref to your props interface
 } & AnchorHTMLAttributes<HTMLAnchorElement> &
   LinkProps
 
@@ -78,7 +80,7 @@ export const BaseLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(
 
         default:
           return (
-            <NextLink
+            <Link
               ref={ref}
               href={href}
               className={classNames}
@@ -87,7 +89,7 @@ export const BaseLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(
               onClick={onClick}
             >
               {children}
-            </NextLink>
+            </Link>
           )
       }
     }
