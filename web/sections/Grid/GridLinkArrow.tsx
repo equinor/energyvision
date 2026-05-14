@@ -20,7 +20,6 @@ const GridLinkArrow = forwardRef<HTMLDivElement, GridLinkArrowProps>(
     { action, className = '', bgColor, variant = 'square' },
     ref,
   ) {
-    console.log('GridLinkArrow bgColor', bgColor)
     const url = action && getUrlFromAction(action)
 
     const bgClassName = () => {

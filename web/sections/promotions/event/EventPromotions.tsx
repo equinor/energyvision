@@ -50,7 +50,6 @@ const EventPromotions = ({
                   className={`light grid auto-rows-auto grid-cols-1 content-center justify-center gap-x-4 gap-y-3 md:grid-cols-2 2xl:grid-cols-3`}
                 >
                   {promotions.map(item => {
-                    console.log('mapping onColorBG', onColorBg)
                     return (
                       <li key={item.id}>
                         <EventCard

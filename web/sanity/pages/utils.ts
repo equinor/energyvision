@@ -214,7 +214,6 @@ export async function getPage(params: Params) {
 
   let magazineArticles = null
   if (pageData?.template === 'magazineIndex') {
-    console.log('template is magazine room fetch magazine articles')
     const { data: articles } = await routeSanityFetch({
       query:
         tag && tag !== 'all'

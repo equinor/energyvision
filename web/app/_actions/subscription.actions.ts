@@ -1,5 +1,6 @@
 'use server'
 import axios from 'axios'
+import { getTranslations } from 'next-intl/server'
 import type z from 'zod'
 import { subscribeSchema } from '@/lib/zodSchemas/zodSchemas'
 import {
@@ -7,7 +8,6 @@ import {
   newsletterCategoryMap,
 } from '@/types/newsLetterTypes'
 import verifyCaptcha from './verifyCaptcha'
-import { getTranslations } from 'next-intl/server'
 
 const MAKE_SUBSCRIBER_API_BASE_URL = process.env.MAKE_SUBSCRIBER_API_BASE_URL
 const MAKE_API_KEY = process.env.MAKE_API_KEY || ''
@@ -26,7 +26,7 @@ const subscriberApi = axios.create({
 type SubscribeProps = {
   locale: newsletterCategoryLocale
   frcCaptchaSolution: any
-  formData:z.infer<ReturnType<typeof subscribeSchema>>
+  formData: z.infer<ReturnType<typeof subscribeSchema>>
 }
 
 export async function subscribe({
@@ -42,7 +42,7 @@ export async function subscribe({
     }
   }
 
-  const t = await getTranslations();
+  const t = await getTranslations()
   const validatedData = subscribeSchema(t).safeParse(formData)
 
   if (!validatedData.success) {
@@ -55,8 +55,6 @@ export async function subscribe({
     const tags = categories?.map(
       category => newsletterCategoryMap[locale][category],
     )
-    //Leave for testing period
-    console.log('newsletter tags', tags)
 
     const response = await subscriberApi.post(
       `/subscribers?subscriber_list_id=${
@@ -67,8 +65,6 @@ export async function subscribe({
         tags,
       },
     )
-    //Leave for testing period
-    console.log('Response from Make subscriber api', response)
 
     if (response?.status === 200) {
       return {

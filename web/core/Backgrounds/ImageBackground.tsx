@@ -67,12 +67,8 @@ export const ImageBackground = ({
   useLight,
   useNoGradient,
 }: ImageBackgroundProps) => {
-  console.log('backgroundGradient', backgroundGradient)
-  console.log('contentAlignment', contentAlignment)
   const isLargerDisplays = useMediaQuery(`(min-width: 800px)`)
   const ref = useRef(null)
-
-  console.log('ImageBackground isLargerDisplays', isLargerDisplays)
 
   const { url } = resolveImage({
     image,

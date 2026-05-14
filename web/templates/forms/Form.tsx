@@ -30,7 +30,6 @@ const Form = ({
   const { title, ingress, downloads } = data
 
   const renderForm = (variant: string | undefined) => {
-    console.log('renderForm variant', variant)
     switch (variant) {
       case 'subscribeForm':
         return <SubscribeForm />

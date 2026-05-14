@@ -11,7 +11,6 @@ type ThumbnailProps = {
 }
 
 export const Thumbnail = ({ value }: ThumbnailProps) => {
-  console.log('value', value)
   //@ts-expect-error
   const { image, text } = value
 

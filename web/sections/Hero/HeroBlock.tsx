@@ -75,7 +75,6 @@ export const HeroBlock = ({
   isMagazineRoom = false,
   className = '',
 }: HeroBlockProps) => {
-  console.log('herodata', heroData)
   const {
     type = HeroTypes?.DEFAULT,
     title,
