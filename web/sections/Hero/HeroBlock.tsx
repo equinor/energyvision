@@ -1,4 +1,3 @@
-'use client'
 import { toPlainText } from 'next-sanity'
 import type { HTMLAttributes } from 'react'
 import { Breadcrumbs } from '@/core/Breadcrumbs/Breadcrumbs'
