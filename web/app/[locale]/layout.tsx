@@ -30,8 +30,6 @@ const equinor = localFont({
 
 type Params = Promise<{ locale: string }>
 
-//export const dynamic = 'force-static'
-
 //the [locale] segment corresponds to the locale (iso format), not the prefix(/no).
 
 export default async function LocaleLayout({

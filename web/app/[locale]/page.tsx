@@ -35,8 +35,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return constructSanityMetadata('', locale, metaData)
 }
 
-export const dynamic = 'force-static'
-
 export default async function Home({ params }: Props) {
   const { locale, slug } = await params
   // Enable static rendering
