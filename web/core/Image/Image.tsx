@@ -26,7 +26,7 @@ const getSizes = (paddingGrid?: GridType, isLargerDisplays = false) => {
     case 'full':
       return isLargerDisplays ? getFullScreenSizes() : getPxLgSizes()
     default:
-      return isLargerDisplays ? getPxLgSizes() : getPxLgSizes()
+      return getPxLgSizes()
   }
 }
 

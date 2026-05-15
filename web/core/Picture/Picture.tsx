@@ -59,7 +59,7 @@ export const Picture = ({
         image={image}
         loading='eager'
         fetchPriority='high'
-        grid='xs'
+        grid='lg'
         aspectRatio={mobileAspectRatio}
         keepRatioOnMobile
       />
