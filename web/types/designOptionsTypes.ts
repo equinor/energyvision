@@ -1,5 +1,5 @@
 import type { ImageBackground } from '@/core/Backgrounds/ImageBackground'
-import type { ObjectPositions } from '@/core/Image/Image'
+import type { ObjectPositions } from '@/core/Image/imageUtilities'
 import type { ColorKeyTokens } from '../styles/colorKeyToUtilityMap'
 
 export type BackgroundColours =

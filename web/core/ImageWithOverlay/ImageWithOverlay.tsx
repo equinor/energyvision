@@ -9,20 +9,21 @@ import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import Blocks from '../../portableText/Blocks'
 import type { LinkData } from '../../types'
 import { Image } from '../Image/Image'
+import type { Image as ImageType } from '../Image/imageUtilities'
 import ResourceLink from '../Link/ResourceLink'
 import { Typography } from '../Typography'
 
 export type ImageWithLinkOrOverlay = {
   id: string
   type: 'imageWithLinkOrOverlay'
-  image: Image
+  image: ImageType
   action?: LinkData
   captionTitle?: PortableTextBlock[]
   captionText?: PortableTextBlock[]
 }
 
 export type ImageWithOverlayProps = {
-  image?: Image
+  image?: ImageType
   className?: string
   teaserTitle?: string
   title?: PortableTextBlock[] | string

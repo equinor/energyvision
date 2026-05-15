@@ -1,5 +1,5 @@
 import type { PortableTextBlock } from '@portabletext/types'
-import type { Figure, Image } from '@/core/Image/Image'
+import type { Figure, Image } from '@/core/Image/imageUtilities'
 import type { HeroData, HeroTypes } from '@/sections/Hero/HeroBlock'
 import type { LinkData } from './index'
 

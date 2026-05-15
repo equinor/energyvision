@@ -4,6 +4,7 @@ import { forwardRef, type HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { Typography } from '@/core/Typography'
 import { Image } from '../../core/Image/Image'
+import type { Image as ImageType } from '../../core/Image/imageUtilities'
 import Blocks from '../../portableText/Blocks'
 import {
   type ColorKeyTokens,
@@ -16,7 +17,7 @@ interface FactBox {
   title: string
   content: PortableTextBlock[]
   background: { title: string; value: string; key?: string; dark?: boolean }
-  image: Image
+  image: ImageType
   imagePosition: FactImagePosition
   dynamicHeight: boolean
   isSingleColumn?: boolean

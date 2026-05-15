@@ -1,5 +1,5 @@
 import type { PortableTextBlock } from '@portabletext/types'
-import type { Figure } from '@/core/Image/Image'
+import type { Figure } from '@/core/Image/imageUtilities'
 import markDefs from '@/sanity/queries/common/blockEditorMarks'
 import { functions } from '@/sanity/queries/common/functions'
 import { sameLang } from '@/sanity/queries/common/langAndDrafts'

@@ -1,6 +1,7 @@
 import { twMerge } from 'tailwind-merge'
 import { ImageBackground } from '@/core/Backgrounds/ImageBackground'
 import { Image } from '@/core/Image/Image'
+import type { Image as ImageType } from '@/core/Image/imageUtilities'
 import { Typography } from '@/core/Typography'
 import Blocks from '@/portableText/Blocks'
 import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
@@ -13,7 +14,7 @@ export type TextBlockData = {
   type: string
   id: string
   title: PortableTextBlock[]
-  image?: Image
+  image?: ImageType
   overline?: string
   text: PortableTextBlock[]
   useBrandTheme?: boolean

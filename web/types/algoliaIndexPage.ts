@@ -2,7 +2,7 @@ import type { PortableTextBlock } from '@portabletext/types'
 import type { SanityImageObject } from '@sanity/image-url'
 import type { SearchResponse } from 'instantsearch.js'
 import type { InstantSearchServerState } from 'react-instantsearch'
-import type { Figure } from '@/core/Image/Image'
+import type { Figure } from '@/core/Image/imageUtilities'
 import type {
   FooterColumns,
   IntlData,

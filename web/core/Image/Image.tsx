@@ -5,13 +5,13 @@ import { twMerge } from '@/lib/twMerge/twMerge'
 import { resolveImage } from '@/sanity/lib/utils'
 import { FigureCaption } from '../FigureCaption/FigureCaption'
 import {
-  GridType,
+  type GridType,
   getFullScreenSizes,
   getPxLgSizes,
   getPxSmSizes,
   getSmallerThanPxLgSizes,
   getTwAspectRatioUtilityOnRatio,
-  ImageProps,
+  type ImageProps,
   mapSanityImageRatio,
 } from './imageUtilities'
 

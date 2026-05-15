@@ -1,5 +1,7 @@
 import { FigureCaption } from '@/core/FigureCaption/FigureCaption'
-import { type Figure, Image, type ImageRatioKeys } from '../../core/Image/Image'
+import { Image } from '../../core/Image/Image'
+
+import type { Figure, ImageRatioKeys } from '../../core/Image/imageUtilities'
 import type { DesignOptions } from '../../types/index'
 
 export type FullWidthImageData = {

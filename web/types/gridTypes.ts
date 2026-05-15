@@ -1,6 +1,6 @@
 import type { PortableTextBlock } from '@portabletext/types'
 import type { ImageBackground } from '@/core/Backgrounds/ImageBackground'
-import type { Image } from '@/core/Image/Image'
+import type { Image } from '@/core/Image/imageUtilities'
 import type { RowType } from '@/sections/Grid/mapGridContent'
 import type { VideoPlayerBlockProps } from '@/sections/VideoPlayerBlock/VideoPlayerBlock'
 import type { FigureData } from '../sections/FigureBlock/FigureBlock'

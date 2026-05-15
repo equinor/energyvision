@@ -2,7 +2,12 @@ import type { PortableTextBlock } from '@portabletext/types'
 import Zoom from 'react-medium-image-zoom'
 import { twMerge } from 'tailwind-merge'
 import { FigureCaption } from '@/core/FigureCaption/FigureCaption'
-import { type GridType, Image, type ImageRatioKeys } from '@/core/Image/Image'
+import { Image } from '@/core/Image/Image'
+import type {
+  GridType,
+  ImageRatioKeys,
+  Image as ImageType,
+} from '@/core/Image/imageUtilities'
 
 type LayoutAlignment = 'full' | 'left' | 'right' | 'center'
 
@@ -11,7 +16,7 @@ type FigureNode = {
   _type: 'imageWithAltAndCaption'
   attribution?: string
   caption?: string
-  image: Image
+  image: ImageType
   layout: LayoutAlignment
   enableImageZoom?: boolean
   imageOrientation?: 'portrait' | 'landscape' | 'square'

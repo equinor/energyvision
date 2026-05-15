@@ -2,6 +2,7 @@ import type { PortableTextBlock } from '@portabletext/types'
 import { forwardRef, type ReactNode } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { Image } from '@/core/Image/Image'
+import type { Image as ImageType } from '@/core/Image/imageUtilities'
 import {
   getArrowAnimation,
   getArrowElement,
@@ -35,7 +36,7 @@ export type PromotionProps = {
    * @default gray-20
    */
   background?: ColorKeys
-  image?: Image
+  image?: ImageType
   /** Rendered as plain but accepts portable */
   title: string | PortableTextBlock[]
   /** Rendered as plain but accepts portable.

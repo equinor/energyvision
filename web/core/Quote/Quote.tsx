@@ -1,5 +1,6 @@
 'use client'
 import { Image } from '../../core/Image/Image'
+import type { Image as ImageType } from '../../core/Image/imageUtilities'
 import { QuoteSymbol } from '../../icons'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
 import type { DesignOptions } from '../../types/index'
@@ -13,7 +14,7 @@ type QuoteData = {
   author: string
   authorTitle?: string
   quote: string
-  image?: Image
+  image?: ImageType
   designOptions: DesignOptions & { imagePosition?: 'left' | 'right' }
 }
 

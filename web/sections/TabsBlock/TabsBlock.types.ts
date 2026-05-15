@@ -1,5 +1,5 @@
 import type { PortableTextBlock } from '@portabletext/types'
-import type { Image } from '@/core/Image/Image'
+import type { Image } from '@/core/Image/imageUtilities'
 import type { LinkData } from '../../types'
 
 export type TabsKeyNumber = {

@@ -6,12 +6,13 @@ import { Typography } from '@/core/Typography'
 import { TransformableIcon } from '../../icons/TransformableIcon'
 import Blocks from '../../portableText/Blocks'
 import { Image } from '../Image/Image'
+import type { Image as ImageType } from '../Image/imageUtilities'
 
 export type TextWithIconProps = {
   title?: string
   content?: PortableTextBlock[]
   iconData?: IconData
-  image?: Image
+  image?: ImageType
   /** Icondata or imageUrl styling */
   iconClassName?: string
 } & HTMLAttributes<HTMLDivElement>

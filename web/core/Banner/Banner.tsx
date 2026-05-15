@@ -7,6 +7,7 @@ import { Typography } from '@/core/Typography'
 import Blocks from '../../portableText/Blocks'
 import type { ColorKeyTokens } from '../../styles/colorKeyToUtilityMap'
 import { Image } from '../Image/Image'
+import { type Image as ImageType } from '../Image/imageUtilities'
 import BaseLink from '../Link/BaseLink'
 import ResourceLink from '../Link/ResourceLink'
 
@@ -17,7 +18,7 @@ export type BannerProps = {
   title?: PortableTextBlock[] | string
   ingress?: PortableTextBlock[]
   content?: PortableTextBlock[]
-  image?: Image
+  image?: ImageType
   ctaLabel?: string
   ctaLink?: string
   className?: string
