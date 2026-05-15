@@ -40,13 +40,14 @@ const MagazineRoom = ({
   )
 
   const [pageIdx, setPage] = useState(0)
+  const { type } = hero
 
-  const { figure, ratio, type } = hero
   const heroProps = {
-    title,
-    figure,
-    type,
-    ratio,
+    heroData: {
+      //@ts-ignore: todo
+      title,
+      ...hero,
+    },
     ...(type === HeroTypes.BACKGROUND_IMAGE && {
       isMagazineRoom: true,
       ingress,
