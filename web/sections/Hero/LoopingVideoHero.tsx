@@ -1,7 +1,6 @@
-'use client'
+import dynamic from 'next/dynamic'
 import type { PortableTextBlock } from 'next-sanity'
 import type { Image } from '@/core/Image/Image'
-import { VideoPlayer } from '@/core/VideoJsPlayer/VideoPlayer'
 import { twMerge } from '@/lib/twMerge/twMerge'
 import Blocks from '@/portableText/Blocks'
 import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
@@ -23,6 +22,8 @@ export type LoopingVideoHeroProps = {
   video: LoopingVideoData
   className?: string
 }
+
+const VideoPlayer = dynamic(() => import('@/core/VideoJsPlayer/VideoPlayer'))
 
 export const LoopingVideoHero = ({
   title,

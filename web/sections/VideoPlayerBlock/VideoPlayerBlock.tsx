@@ -1,9 +1,9 @@
 import type { PortableTextBlock } from '@portabletext/types'
+import dynamic from 'next/dynamic'
 import ResourceLink from '@/core/Link/ResourceLink'
 import type { AspectRatioVariants } from '@/core/VideoJsPlayer/Video'
 import {
   type VideoControlsType,
-  VideoPlayer,
   type VideoType,
 } from '@/core/VideoJsPlayer/VideoPlayer'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
@@ -34,6 +34,8 @@ export type VideoPlayerBlockProps = {
   anchor?: string
   className?: string
 }
+
+const VideoPlayer = dynamic(() => import('@/core/VideoJsPlayer/VideoPlayer'))
 
 const VideoPlayerBlock = ({
   title,

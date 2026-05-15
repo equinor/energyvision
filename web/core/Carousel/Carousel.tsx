@@ -1,6 +1,7 @@
 'use client'
 import { toPlainText } from '@portabletext/react'
 import type { PortableTextBlock } from '@portabletext/types'
+import dynamic from 'next/dynamic'
 import { useTranslations } from 'next-intl'
 import {
   type ElementType,
@@ -27,10 +28,7 @@ import type {
   IFrameCarouselItemData,
   KeyNumberItemData,
 } from '../../types/index'
-import {
-  VideoPlayer,
-  type VideoPlayerProps,
-} from '../VideoJsPlayer/VideoPlayer'
+import { type VideoPlayerProps } from '../VideoJsPlayer/VideoPlayer'
 import { CarouselImageItem, type ImageCarouselItem } from './CarouselImageItem'
 import { CarouselItem } from './CarouselItem'
 
@@ -75,6 +73,8 @@ type CarouselProps = {
 const TRANSLATE_X_AMOUNT_LG = 1000
 const TRANSLATE_X_AMOUNT_SM = 370 //old value 295
 const TRANSLATE_X_AMOUNT_MD = 712
+
+const VideoPlayer = dynamic(() => import('@/core/VideoJsPlayer/VideoPlayer'))
 
 export const Carousel = forwardRef<HTMLElement, CarouselProps>(
   function Carousel(

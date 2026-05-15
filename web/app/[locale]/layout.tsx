@@ -1,4 +1,5 @@
 import '../globals.css'
+import dynamic from 'next/dynamic'
 import localFont from 'next/font/local'
 import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
@@ -14,7 +15,6 @@ import { routeSanityFetch, SanityLive } from '@/sanity/lib/live'
 import { footerAndErrorImageQuery } from '@/sanity/queries/footer'
 import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu'
 import { simpleMenuQuery } from '@/sanity/queries/simpleMenu'
-import DraftModeToolbar from '@/sections/DraftMode/DraftModeToolbar'
 import GoToTopButton from '@/sections/GoToTopButton'
 import { routing } from '../../i18n/routing'
 import { GoogleTagManagerHead } from './GTMHead'
@@ -30,7 +30,7 @@ const equinor = localFont({
 
 type Params = Promise<{ locale: string }>
 
-export const dynamic = 'force-static'
+//export const dynamic = 'force-static'
 
 //the [locale] segment corresponds to the locale (iso format), not the prefix(/no).
 
@@ -70,6 +70,9 @@ export default async function LocaleLayout({
   ])
 
   const { errorImage, ...footerData } = footerAndErrorImageData.data || {}
+  const DraftModeToolbar = dynamic(
+    () => import('@/sections/DraftMode/DraftModeToolbar'),
+  )
 
   return (
     <html lang={locale} className={`${equinor.className} `}>

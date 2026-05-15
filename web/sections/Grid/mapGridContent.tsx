@@ -1,5 +1,5 @@
 'use client'
-import { VideoPlayer } from '@/core/VideoJsPlayer/VideoPlayer'
+import dynamic from 'next/dynamic'
 import type { IFrameData } from '../../types/index'
 import type { FigureData } from '../FigureBlock/FigureBlock'
 import IFrame from '../IFrameBlock/IFrameBlock'
@@ -9,6 +9,8 @@ import { GridTeaser } from './GridTeaser'
 import GridTextBlock from './GridTextBlock'
 
 export type RowType = 'span3' | 'span2and1' | 'threeColumns' | undefined
+
+const VideoPlayer = dynamic(() => import('@/core/VideoJsPlayer/VideoPlayer'))
 
 export const mapGridContent = (
   data: any,

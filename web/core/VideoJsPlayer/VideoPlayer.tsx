@@ -185,3 +185,5 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
     </figure>
   )
 }
+
+export default VideoPlayer

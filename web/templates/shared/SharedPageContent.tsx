@@ -6,6 +6,7 @@
  *  add 'use client' to specific interactive components instead of
  *  marking large parts of your UI as Client Components.
  */
+import dynamic from 'next/dynamic'
 import AccordionBlock from '@/sections/AccordionBlock/AccordionBlock'
 import { AnchorLinkList } from '@/sections/AnchorLinkList'
 import AnchorSearch, {
@@ -59,9 +60,7 @@ import TextWithIconArray from '@/sections/TextWithIconArray/TextWithIconArray'
 import Teaser from '@/sections/teasers/Teaser/Teaser'
 import TextTeaser from '@/sections/teasers/TextTeaser/TextTeaser'
 import { getColorForTheme } from '@/sections/teasers/TextTeaser/theme'
-import VideoPlayer, {
-  type VideoPlayerBlockProps,
-} from '@/sections/VideoPlayerBlock/VideoPlayerBlock'
+import { type VideoPlayerBlockProps } from '@/sections/VideoPlayerBlock/VideoPlayerBlock'
 import VideoPlayerCarousel, {
   type VideoPlayerCarouselData,
 } from '@/sections/VideoPlayerCarousel/VideoPlayerCarousel'
@@ -527,7 +526,11 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
             className={allSpacings}
           />
         )
-      case 'videoPlayer':
+      case 'videoPlayer': {
+        const VideoPlayer = dynamic(
+          () => import('@/core/VideoJsPlayer/VideoPlayer'),
+        )
+
         return (
           <VideoPlayer
             key={c.id}
@@ -536,6 +539,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
             className={allSpacings}
           />
         )
+      }
       case 'videoPlayerCarousel':
         return (
           <VideoPlayerCarousel
