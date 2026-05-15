@@ -95,7 +95,7 @@ const MagazineRoom = ({
             pagedList?.[pageIdx]?.map(article => {
               const locale =
                 iso !== defaultLanguage.iso ? `/${getLocaleFromIso(iso)}` : ''
-              const href = (article?.slug && +locale + article?.slug) || ''
+              const href = (article?.slug && locale + article?.slug) || ''
               return (
                 <li key={article.id}>
                   <Promotion
