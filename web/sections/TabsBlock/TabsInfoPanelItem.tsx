@@ -2,12 +2,11 @@ import type { PortableTextBlock } from '@portabletext/types'
 import { useTranslations } from 'next-intl'
 import { forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { Image } from '@/core/Image/Image'
 import {
   getObjectPositionForImage,
-  Image,
-  mapSanityImageRatio,
   type ObjectPositions,
-} from '@/core/Image/Image'
+} from '@/core/Image/imageUtilities'
 import ResourceLink from '@/core/Link/ResourceLink'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import { useMediaQuery } from '@/lib/hooks/useMediaQuery'

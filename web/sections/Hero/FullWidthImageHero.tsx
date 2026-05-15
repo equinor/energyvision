@@ -1,4 +1,3 @@
-'use client'
 import type { PortableTextBlock } from 'next-sanity'
 import type { HTMLAttributes, ReactNode } from 'react'
 import { twMerge } from 'tailwind-merge'

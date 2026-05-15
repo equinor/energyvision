@@ -1,4 +1,3 @@
-'use client'
 import type { PortableTextBlock } from '@portabletext/types'
 import type { HTMLAttributes, ReactNode } from 'react'
 import type { Figure, ImageRatioKeys } from '@/core/Image/Image'

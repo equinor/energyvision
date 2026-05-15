@@ -9,9 +9,8 @@ import {
   getBackgroundPositionForImage,
   type Image,
   type ImageRatioKeys,
-  ImageRatios,
   type ObjectPositions,
-} from '@/core/Image/Image'
+} from '@/core/Image/imageUtilities'
 import { getLayoutPx } from '@/lib/helpers/getCommonUtilities'
 import { twMerge } from '@/lib/twMerge/twMerge'
 import { resolveImage } from '@/sanity/lib/utils'

@@ -1,13 +1,16 @@
-'use client'
-import type { ImageProps } from 'next/image'
-import { forwardRef } from 'react'
+import { Ref } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { resolveImage } from '@/sanity/lib/utils'
 import { FigureCaption } from '../FigureCaption/FigureCaption'
-import { Image, type ImageRatioKeys, mapSanityImageRatio } from '../Image/Image'
+import { Image } from '../Image/Image'
+import {
+  type ImageRatioKeys,
+  type Image as ImageType,
+  mapSanityImageRatio,
+} from '../Image/imageUtilities'
 
 type PictureProps = {
-  image: Image
+  image: ImageType
   caption?: string
   attribution?: string
   /** Aspect ratio for desktop. Should either be 10:3, 21:9
@@ -25,22 +28,21 @@ type PictureProps = {
    */
   withLayoutPx?: boolean
   className?: string
+  ref?: Ref<HTMLElement>
 }
 
-export const Picture = forwardRef<HTMLElement, PictureProps>(function Picture(
-  {
-    image,
-    desktopAspectRatio = '10:3',
-    mobileAspectRatio = '4:3',
-    caption,
-    attribution,
-    className = '',
-    figureClassName = '',
-    figCaptionClassName = '',
-    withLayoutPx = true,
-  },
+export const Picture = ({
+  image,
+  desktopAspectRatio = '10:3',
+  mobileAspectRatio = '4:3',
+  caption,
+  attribution,
+  className = '',
+  figureClassName = '',
+  figCaptionClassName = '',
+  withLayoutPx = true,
   ref,
-) {
+}: PictureProps) => {
   const { url: desktopUrl } = resolveImage({
     image,
     grid: 'full',
@@ -77,4 +79,4 @@ export const Picture = forwardRef<HTMLElement, PictureProps>(function Picture(
   ) : (
     pictureElement
   )
-})
+}

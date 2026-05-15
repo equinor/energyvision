@@ -1,11 +1,7 @@
 'use client'
 import type { PortableTextBlock } from 'next-sanity'
 import type { HTMLAttributes } from 'react'
-import {
-  type Figure,
-  type Image,
-  mapSanityImageRatio,
-} from '@/core/Image/Image'
+import type { Figure, Image } from '@/core/Image/imageUtilities'
 import type { TypographyVariants } from '@/core/Typography'
 import { getLayoutPx } from '@/lib/helpers/getCommonUtilities'
 import { useMediaQuery } from '@/lib/hooks/useMediaQuery'

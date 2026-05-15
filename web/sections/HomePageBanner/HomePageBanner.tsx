@@ -1,11 +1,11 @@
 'use client'
 import type { PortableTextBlock } from '@portabletext/types'
 import { forwardRef } from 'react'
+import { Image } from '@/core/Image/Image'
 import {
   getObjectPositionForImage,
-  Image,
   type ObjectPositions,
-} from '@/core/Image/Image'
+} from '@/core/Image/imageUtilities'
 import BaseLink from '@/core/Link/BaseLink'
 import { getArrowElement } from '@/core/Link/linkCommon'
 import { Typography } from '@/core/Typography'

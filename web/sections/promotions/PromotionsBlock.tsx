@@ -6,7 +6,7 @@ import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
 import {
   getObjectPositionForImage,
   type ObjectPositions,
-} from '@/core/Image/Image'
+} from '@/core/Image/imageUtilities'
 import { ResourceLink } from '@/core/Link/ResourceLink'
 import { Promotion } from '@/core/Promotion/Promotion'
 import Blocks from '@/portableText/Blocks'
