@@ -1,6 +1,6 @@
 import type { PortableTextBlock } from '@portabletext/types'
 import type { HTMLAttributes, ReactNode } from 'react'
-import type { Figure, ImageRatioKeys } from '@/core/Image/Image'
+import type { Figure, ImageRatioKeys } from '@/core/Image/imageUtilities'
 import { Picture } from '@/core/Picture/Picture'
 import { Typography } from '@/core/Typography'
 import { twMerge } from '@/lib/twMerge/twMerge'

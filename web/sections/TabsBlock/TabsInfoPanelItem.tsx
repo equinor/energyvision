@@ -5,6 +5,8 @@ import { twMerge } from 'tailwind-merge'
 import { Image } from '@/core/Image/Image'
 import {
   getObjectPositionForImage,
+  type Image as ImageType,
+  mapSanityImageRatio,
   type ObjectPositions,
 } from '@/core/Image/imageUtilities'
 import ResourceLink from '@/core/Link/ResourceLink'
@@ -18,7 +20,7 @@ import type { InfoPanelImageVariant, InfoPanelKeyInfo } from './TabsBlock.types'
 
 type TabsInfoPanelItemProps = {
   theme?: number
-  image?: Image
+  image?: ImageType
   caption?: string
   imageVariant?: InfoPanelImageVariant
   title?: PortableTextBlock[]

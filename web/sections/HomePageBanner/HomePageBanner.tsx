@@ -4,6 +4,7 @@ import { forwardRef } from 'react'
 import { Image } from '@/core/Image/Image'
 import {
   getObjectPositionForImage,
+  type Image as ImageType,
   type ObjectPositions,
 } from '@/core/Image/imageUtilities'
 import BaseLink from '@/core/Link/BaseLink'
@@ -51,7 +52,7 @@ export const getColorForHomepageBannerTheme = (
 
 type HomePageBannerProps = {
   title?: PortableTextBlock[]
-  image: Image
+  image: ImageType
   ctaCards: {
     id: string
     overline?: string

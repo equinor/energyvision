@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic'
 import type { PortableTextBlock } from 'next-sanity'
-import type { Image } from '@/core/Image/Image'
+import type { Image } from '@/core/Image/imageUtilities'
 import { twMerge } from '@/lib/twMerge/twMerge'
 import Blocks from '@/portableText/Blocks'
 import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'

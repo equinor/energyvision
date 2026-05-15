@@ -2,7 +2,10 @@
 import type { PortableTextBlock } from '@portabletext/types'
 import { toPlainText } from 'next-sanity'
 import { Image } from '@/core/Image/Image'
-import { getObjectPositionForImage } from '@/core/Image/imageUtilities'
+import {
+  getObjectPositionForImage,
+  type Image as ImageType,
+} from '@/core/Image/imageUtilities'
 import ResourceLink from '@/core/Link/ResourceLink'
 import { Typography } from '@/core/Typography'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
@@ -18,7 +21,7 @@ export type TeaserData = {
   title: PortableTextBlock[]
   content: PortableTextBlock[]
   overline?: string
-  image: Image
+  image: ImageType
   actions?: LinkData[]
   designOptions: DesignOptions & {
     imagePosition?: 'left' | 'right'

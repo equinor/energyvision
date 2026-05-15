@@ -1,7 +1,7 @@
 import type { PortableTextBlock } from 'next-sanity'
 import type { HTMLAttributes, ReactNode } from 'react'
 import { twMerge } from 'tailwind-merge'
-import type { Figure, ImageRatioKeys } from '@/core/Image/Image'
+import type { Figure, ImageRatioKeys } from '@/core/Image/imageUtilities'
 import { Picture } from '@/core/Picture/Picture'
 import { getDisplayTextVariant } from '@/core/Typography/Typography'
 import Blocks from '@/portableText/Blocks'
