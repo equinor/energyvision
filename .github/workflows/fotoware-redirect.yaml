@@ -87,7 +87,7 @@ jobs:
       # Fetch published code
       - name: Download Azure function release build
         id: download-artifacts
-        uses: actions/download-artifact@v4.1.7
+        uses: actions/download-artifact@v8.0.1
         with:
           name: ${{ vars.AZ_FOTOWARE_FUNC_APP_NAME }}
           path: ${{ env.BUILD_ARTIFACT_PATH }}
