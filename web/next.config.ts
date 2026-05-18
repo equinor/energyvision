@@ -49,6 +49,7 @@ const nextConfig: NextConfig = withNextIntl({
     // 'import-in-the-middle',
     //'next-seo',
   ],
+  serverExternalPackages: ['require-in-the-middle', 'import-in-the-middle'],
 
   logging: {
     fetches: {
