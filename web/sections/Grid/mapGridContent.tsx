@@ -10,7 +10,9 @@ import GridTextBlock from './GridTextBlock'
 
 export type RowType = 'span3' | 'span2and1' | 'threeColumns' | undefined
 
-const VideoPlayer = dynamic(() => import('@/core/VideoJsPlayer/VideoPlayer'))
+const VideoPlayer = dynamic(() => import('@/core/VideoJsPlayer/VideoPlayer'), {
+  ssr: false,
+})
 
 export const mapGridContent = (
   data: any,

@@ -35,7 +35,9 @@ export type VideoPlayerBlockProps = {
   className?: string
 }
 
-const VideoPlayer = dynamic(() => import('@/core/VideoJsPlayer/VideoPlayer'))
+const VideoPlayer = dynamic(() => import('@/core/VideoJsPlayer/VideoPlayer'), {
+  ssr: false,
+})
 
 const VideoPlayerBlock = ({
   title,

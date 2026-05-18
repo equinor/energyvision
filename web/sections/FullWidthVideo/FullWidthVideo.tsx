@@ -19,7 +19,9 @@ export type FullWidthVideoProps = {
   anchor?: string
 }
 
-const VideoPlayer = dynamic(() => import('@/core/VideoJsPlayer/VideoPlayer'))
+const VideoPlayer = dynamic(() => import('@/core/VideoJsPlayer/VideoPlayer'), {
+  ssr: false,
+})
 
 const FullWidthVideo = ({
   anchor,
