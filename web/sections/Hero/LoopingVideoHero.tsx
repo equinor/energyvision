@@ -23,9 +23,7 @@ export type LoopingVideoHeroProps = {
   className?: string
 }
 
-const VideoPlayer = dynamic(() => import('@/core/VideoJsPlayer/VideoPlayer'), {
-  ssr: false,
-})
+const VideoPlayer = dynamic(() => import('@/core/VideoJsPlayer/VideoPlayer'))
 
 export const LoopingVideoHero = ({
   title,

@@ -74,9 +74,7 @@ const TRANSLATE_X_AMOUNT_LG = 1000
 const TRANSLATE_X_AMOUNT_SM = 370 //old value 295
 const TRANSLATE_X_AMOUNT_MD = 712
 
-const VideoPlayer = dynamic(() => import('@/core/VideoJsPlayer/VideoPlayer'), {
-  ssr: false,
-})
+const VideoPlayer = dynamic(() => import('@/core/VideoJsPlayer/VideoPlayer'))
 
 export const Carousel = forwardRef<HTMLElement, CarouselProps>(
   function Carousel(
