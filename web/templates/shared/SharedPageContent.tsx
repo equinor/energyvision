@@ -60,7 +60,9 @@ import TextWithIconArray from '@/sections/TextWithIconArray/TextWithIconArray'
 import Teaser from '@/sections/teasers/Teaser/Teaser'
 import TextTeaser from '@/sections/teasers/TextTeaser/TextTeaser'
 import { getColorForTheme } from '@/sections/teasers/TextTeaser/theme'
-import { type VideoPlayerBlockProps } from '@/sections/VideoPlayerBlock/VideoPlayerBlock'
+import VideoPlayerBlock, {
+  type VideoPlayerBlockProps,
+} from '@/sections/VideoPlayerBlock/VideoPlayerBlock'
 import VideoPlayerCarousel, {
   type VideoPlayerCarouselData,
 } from '@/sections/VideoPlayerCarousel/VideoPlayerCarousel'
@@ -527,12 +529,8 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
           />
         )
       case 'videoPlayer': {
-        const VideoPlayer = dynamic(
-          () => import('@/core/VideoJsPlayer/VideoPlayer'),
-        )
-
         return (
-          <VideoPlayer
+          <VideoPlayerBlock
             key={c.id}
             {...commonProps}
             {...(c as VideoPlayerBlockProps)}
