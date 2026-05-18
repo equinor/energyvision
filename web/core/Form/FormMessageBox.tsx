@@ -1,5 +1,3 @@
-'use client'
-
 import { check, error_outlined } from '@equinor/eds-icons'
 import { useTranslations } from 'next-intl'
 import { forwardRef, type HTMLAttributes } from 'react'
