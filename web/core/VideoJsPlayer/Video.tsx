@@ -1,7 +1,7 @@
 'use client'
-import { useEffect, HTMLProps, useRef } from 'react'
+import { HTMLProps, useEffect, useRef } from 'react'
 import videojs from 'video.js'
-//import 'video.js/dist/video-js.css';
+import 'video.js/dist/video-js.css'
 import Player from 'video.js/dist/types/player'
 import useVideojsAnalytics from './useVideojsAnalytics'
 
@@ -13,7 +13,13 @@ export enum VideoPlayerRatios {
   '4:3' = '4:3',
 }
 
-export type AspectRatioVariants = '16:9' | '9:16' | '2:1' | '10:3' | '4:3' | '21:9'
+export type AspectRatioVariants =
+  | '16:9'
+  | '9:16'
+  | '2:1'
+  | '10:3'
+  | '4:3'
+  | '21:9'
 
 export type Variants = 'default' | 'fullwidth'
 
@@ -58,7 +64,10 @@ export const Video: React.FC<VideoProps> = ({
       if (variant === 'fullwidth') {
         videoElement.classList.add('vjs-fullwidth')
       }
-      if (!containVideo && (fill || aspectRatio === '10:3' || aspectRatio === '21:9')) {
+      if (
+        !containVideo &&
+        (fill || aspectRatio === '10:3' || aspectRatio === '21:9')
+      ) {
         videoElement.classList.add('vjs-fill', 'lg:[&>video]:object-cover')
       }
       if (aspectRatio === '16:9') {
@@ -104,3 +113,5 @@ export const Video: React.FC<VideoProps> = ({
     </div>
   )
 }
+
+export default Video

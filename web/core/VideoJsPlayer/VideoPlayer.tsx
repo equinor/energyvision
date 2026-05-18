@@ -1,13 +1,13 @@
 'use client'
+import dynamic from 'next/dynamic'
 import type { PortableTextBlock } from 'next-sanity'
 import { type HTMLProps, useRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 import type Player from 'video.js/dist/types/player'
 import Blocks from '@/portableText/Blocks'
-import { type AspectRatioVariants, type Variants, Video } from './Video'
-import 'video.js/dist/video-js.css'
 import { resolveImage } from '@/sanity/lib/utils'
 import { type Image, mapSanityImageRatio } from '../Image/imageUtilities'
+import { type AspectRatioVariants, type Variants } from './Video'
 
 export type VideoType = {
   title: string
@@ -58,6 +58,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
   className,
   containVideo,
 }) => {
+  const Video = dynamic(() => import('./Video'), { ssr: false })
   const { url: posterUrl } = resolveImage({
     image: poster,
     grid: 'lg',
