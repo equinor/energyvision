@@ -29,7 +29,54 @@
 
   --spacing-topbar: 85px;
   --spacing-topbar-sticky: 64px;
-  --spacing-topbar-and-sticky: 149px;
+  --spacing-topbar-and-sticky: 145px;
+
+  /* or just --motion-safe? transition-(--my-properties) */
+  --transition-motion-safe: motion-safe;
+
+  --ease-scroll: cubic-bezier(0.645, 0.045, 0.355, 1);
+  --ease-ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+
+  /* Modal */
+  --modal-transition-duration: 0.4s;
+  --modal-transition-easing: cubic-bezier(0.45, 0, 0.55, 1);
+
+  /* or just --fr? flex-(--fr) */
+  --flex-fr: 1 1 1;
+
+  /*just --card ? grid-cols-(--my-grid-cols) */
+  --grid-cols-card: repeat(auto-fill, minmax(min(100%, 220px), 400px));
+
+  --animate-fadeInOut: fade linear both;
+  --animate-slideUp: slideUp 0.2s ease-out;
+  --animate-slideDown: slideDown 0.2s ease-out;
+
+  @keyframes fade {
+    0%,
+    100% {
+      opacity: 0;
+    }
+    30%,
+    60% {
+      opacity: 1;
+    }
+  }
+  @keyframes slideUp {
+    0% {
+      height: 0;
+    }
+    100% {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+  @keyframes slideDown {
+    0% {
+      height: var(--radix-accordion-content-height);
+    }
+    100% {
+      height: 0;
+    }
+  }
 }
 @utility grid-overlay {
   grid: [overlay] 1fr / [overlay] 1fr;

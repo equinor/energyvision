@@ -1,7 +1,11 @@
-import { Accordion as AccordionWrapper, AccordionSingleProps, AccordionMultipleProps } from './Accordion'
-import { Item, AccordionItemProps } from './Item'
-import { Content, AccordionContentProps } from './Content'
-import { Header, AccordionHeaderProps } from './Header'
+import {
+  type AccordionMultipleProps,
+  type AccordionSingleProps,
+  Accordion as AccordionWrapper,
+} from './Accordion'
+import { type AccordionContentProps, Content } from './Content'
+import { type AccordionHeaderProps, Header } from './Header'
+import { type AccordionItemProps, Item } from './Item'
 
 type AccordionCompoundProps = typeof AccordionWrapper & {
   Item: typeof Item

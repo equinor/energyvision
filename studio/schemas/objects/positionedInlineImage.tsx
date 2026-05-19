@@ -301,7 +301,7 @@ export default {
         input: LayoutInput,
       },
       hidden: ({ parent }: any) => {
-        //hide it since the web component will use center layout only for it. No need for editors to see
+        //When portrait, only aligned with text option is available and it doesn't make sense to show layout options
         return parent?.imageOrientation === 'portrait'
       },
     },
@@ -354,6 +354,7 @@ export default {
       name: 'enableImageZoom',
       title: 'Enable image zoom',
       type: 'boolean',
+      hidden: () => true, //hide it until upgrade is done then work more on this feature
     },
   ],
 

@@ -33,10 +33,13 @@ export const tableV2Fields = /* groq */ `
   },
   useBorder,
   theme,
+  layoutGrid,
+  widthAdjustment,
+  reducePaddingBottom,
+  noPaddingTop,
+  //Deprecated fields, to be removed in future, not used in frontend
   useFullContainerWidth,
   useInnerContentWidth,
-  reducePaddingBottom,
-  noPaddingTop
 `
 
 export const importTableFields = /* groq */ `

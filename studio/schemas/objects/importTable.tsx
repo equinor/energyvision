@@ -1,6 +1,7 @@
 import type { Rule } from 'sanity'
 import { CompactBlockEditor } from '../components/CompactBlockEditor'
 import { configureBlockContent } from '../editors'
+import { layoutGrid } from './commonFields/commonFields'
 import { TablePreview } from './tableV2'
 
 export default {
@@ -11,7 +12,6 @@ export default {
     {
       title: 'Design options',
       name: 'design',
-      description: 'Some options for design',
       options: {
         collapsible: true,
         collapsed: false,
@@ -51,14 +51,40 @@ export default {
     },
     {
       title: 'Theme',
-      description: 'Default is grey.',
       name: 'theme',
-      type: 'tableTheme',
+      type: 'string',
+      initialValue: 'grey',
+      options: {
+        list: [
+          { title: 'Grey', value: 'grey' },
+          { title: 'Blue', value: 'blue' },
+          { title: 'Green', value: 'green' },
+        ],
+      },
+      fieldset: 'design',
+    },
+    layoutGrid(undefined, 'design', 'lg'),
+    {
+      title: 'Width adjustment',
+      name: 'widthAdjustment',
+      type: 'string',
+      initialValue: 'fit',
+      description: 'Default is fit to content within selected layout grid.',
+      options: {
+        list: [
+          { title: 'Fit to content within selected layout grid', value: 'fit' },
+          {
+            title: 'Stretch to full width of selected layout grid',
+            value: 'full',
+          },
+        ],
+      },
       fieldset: 'design',
     },
     {
-      title: 'Use border row style',
-      description: 'Default is zebra rows',
+      title: 'Border bottom/no background color row style',
+      description:
+        'Default is zebra style with background color on every other row.',
       type: 'boolean',
       name: 'useBorder',
       fieldset: 'design',

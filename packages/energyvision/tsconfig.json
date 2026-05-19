@@ -7,5 +7,10 @@
     "src/**/*.ts",
     "src/**/*.tsx"
   ],
+  "compilerOptions": {
+    "paths": {
+      "./brand.css": ["./src/brand/tailwind/theme.css"]
+    }
+  },
   "exclude": ["node_modules", "dist"]
 }

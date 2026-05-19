@@ -76,7 +76,7 @@ export const Breadcrumbs = forwardRef<HTMLElement, BreadcrumbsProps>(
       <nav
         ref={ref}
         aria-label='Breadcrumbs'
-        className={`px-layout-sm lg:px-layout-lg ${background ?? ''}`}
+        className={`mx-auto max-w-content px-layout-sm lg:px-layout-lg ${background ?? ''}`}
       >
         <BreadcrumbsList className={twMerge(`py-2 lg:py-4`, className)}>
           {crumbs.map(item => {

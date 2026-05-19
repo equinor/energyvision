@@ -1,57 +1,64 @@
-import { Flex, Stack, Text } from '@sanity/ui'
+import { MdTableRows } from 'react-icons/md'
 import type { PortableTextBlock, PreviewProps, Rule } from 'sanity'
+import { capitalizeFirstLetter } from '@/helpers/formatters'
 import blocksToText from '../../../helpers/blocksToText'
 import type { ColorSelectorValue } from '../../components/ColorSelector'
 import { CompactBlockEditor } from '../../components/CompactBlockEditor'
 import { configureBlockContent } from '../../editors'
-import { TableTheme, type TableThemeSelectorValue } from './tableThemes'
+import { layoutGrid } from '../commonFields/commonFields'
 
 export type Table = {
   _type: 'table'
   title?: PortableTextBlock[]
   ingress?: PortableTextBlock[]
   background?: ColorSelectorValue
-  theme?: TableThemeSelectorValue
+  theme?: string
 }
 
-const headerCellContentType = configureBlockContent({
-  variant: 'simpleBlock',
-  lists: false,
-  onlySubSupScriptDecorators: true,
-})
-
-const cellContentType = configureBlockContent({
-  variant: 'fullBlock',
-  lists: false,
-  attachment: true,
-})
-
 type TablePreviewProps = {
-  theme?: TableThemeSelectorValue
+  theme?: string
   useBorder?: boolean
+  tableCaption?: string
+  title?: PortableTextBlock[]
 } & PreviewProps
 
 export function TablePreview(props: TablePreviewProps) {
   //@ts-ignore: find import for  _type
-  const { title, theme, caption, useBorder, _type } = props
+  const { title, theme, tableCaption, useBorder, _type, renderDefault } = props
 
   //@ts-ignore:todo
   const plainTitle = title ? blocksToText(title) : undefined
-  const subTitle = `${_type === 'tablev2' ? 'Import table' : 'Table'} component | ${
-    useBorder ? 'Border rows' : 'Zebra rows'
-  }`
+  const subTitle = `${_type === 'tablev2' ? 'Import table' : 'Table'} | ${
+    useBorder ? 'Border bottom rows' : 'Zebra rows'
+  }${theme ? ` | ${capitalizeFirstLetter(theme)} theme` : ''}`
+  let color = '#ebebeb'
+  if (theme === 'blue') {
+    color = '#a8c3db'
+  } else if (theme === 'green') {
+    color = '#c2d4d6'
+  }
 
-  return (
-    <Flex gap={2} padding={2} align={'center'}>
-      {theme && <TableTheme value={theme} preview thumbnail />}
-      <Stack space={2}>
-        <Text size={1}>{plainTitle ?? caption}</Text>
-        <Text muted size={1}>
-          {subTitle}
-        </Text>
-      </Stack>
-    </Flex>
+  const customMedia = (
+    <div
+      style={{
+        backgroundColor: color,
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
+    >
+      <MdTableRows size={24} color='gray' />
+    </div>
   )
+
+  return renderDefault({
+    ...props,
+    title: plainTitle ?? tableCaption ?? 'No title or table caption',
+    subtitle: subTitle,
+    media: customMedia,
+  })
 }
 
 export default {
@@ -78,7 +85,6 @@ export default {
     {
       title: 'Design options',
       name: 'design',
-      description: 'Some options for design',
       options: {
         collapsible: true,
         collapsed: false,
@@ -103,8 +109,6 @@ export default {
         input: CompactBlockEditor,
       },
       of: [configureBlockContent({ variant: 'title' })],
-      validation: (Rule: Rule) =>
-        Rule.required().warning('In most cases you should add a heading'),
       fieldset: 'textContent',
     },
     {
@@ -134,7 +138,11 @@ export default {
             {
               name: 'headerCell',
               type: 'array',
-              of: [headerCellContentType],
+              of: [
+                configureBlockContent({
+                  variant: 'onlySubSup',
+                }),
+              ],
             },
             {
               name: 'formatAsDate',
@@ -171,11 +179,22 @@ export default {
                       type: 'array',
                       description:
                         'If column header is set to format as date, remember to write date text as either dd/MM/yyyy or yyyy-MM-dd format.',
-                      of: [cellContentType],
+                      of: [
+                        configureBlockContent({
+                          variant: 'textDecorationAndLinks',
+                        }),
+                      ],
                     },
                   ],
                 },
               ],
+              validation: (Rule: Rule) =>
+                Rule.custom((value: any[]) => {
+                  if (!value || value?.length < 1) {
+                    return 'Must have at least 1 cell'
+                  }
+                  return true
+                }),
             },
           ],
           preview: {
@@ -222,38 +241,84 @@ export default {
           },
         },
       ],
+      validation: (Rule: Rule) =>
+        Rule.custom((value: { cells?: any[] }[]) => {
+          if (value?.length < 1) {
+            return 'Must have at least 1 row'
+          }
+          return true
+        }),
       fieldset: 'tableConfig',
     },
     {
       title: 'Theme',
-      description: 'Default is grey.',
       name: 'theme',
-      type: 'tableTheme',
+      type: 'string',
       initialValue: 'grey',
+      options: {
+        list: [
+          { title: 'Grey', value: 'grey' },
+          { title: 'Blue', value: 'blue' },
+          { title: 'Green', value: 'green' },
+        ],
+      },
+      fieldset: 'design',
+    },
+    layoutGrid(
+      undefined,
+      'design',
+      'md',
+      'Optional. Default is second outer content width',
+    ),
+    {
+      title: 'Width adjustment',
+      name: 'widthAdjustment',
+      type: 'string',
+      description: 'Default is fit to content within selected layout grid.',
+      initialValue: 'fit',
+      options: {
+        list: [
+          { title: 'Fit to content within selected layout grid', value: 'fit' },
+          {
+            title: 'Stretch to full width of selected layout grid',
+            value: 'full',
+          },
+        ],
+      },
       fieldset: 'design',
     },
     {
-      title: 'Use border row style',
-      description: 'Default is zebra rows',
+      title: 'Border bottom/no background color row style',
+      description:
+        'Default is zebra style with background color on every other row.',
       type: 'boolean',
       name: 'useBorder',
       fieldset: 'design',
     },
+    //Deprecated
     {
       title: 'Stretch to full container width',
+      deprecated: true,
       description: `Default Table is sized by its content, check this box to stretch it to the second outer content width. 
          If inner content width is checked below, the table will stretch to that container`,
       type: 'boolean',
       name: 'useFullContainerWidth',
       fieldset: 'design',
+      hidden: ({ value }: any) => {
+        return !value
+      },
     },
     {
       title: 'Align with text in the inner content width',
       description:
         'Default container is second outer content width. This option sets the table in the inner content width aligned with all the text content.',
+      deprecated: true,
       type: 'boolean',
       name: 'useInnerContentWidth',
       fieldset: 'design',
+      hidden: ({ value }: any) => {
+        return !value
+      },
     },
     {
       title: 'Reduced padding bottom',
@@ -278,7 +343,7 @@ export default {
   preview: {
     select: {
       title: 'title',
-      caption: 'tableCaption',
+      tableCaption: 'tableCaption',
       useBorder: 'useBorder',
       theme: 'theme',
     },

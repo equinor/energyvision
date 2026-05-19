@@ -12,6 +12,7 @@ import { useMediaQuery } from '@/lib/hooks/useMediaQuery'
 import { twMerge } from '@/lib/twMerge/twMerge'
 import Blocks from '@/portableText/Blocks'
 import { resolveImage } from '@/sanity/lib/utils'
+import type { LayoutGrid } from '@/types/designOptionsTypes'
 
 export type TextOnBackgroundImageHeroProps = {
   title?: PortableTextBlock[]
@@ -23,7 +24,7 @@ export type TextOnBackgroundImageHeroProps = {
   heroMobileImage?: Image
   backgroundGradient?: 'none' | 'light' | 'dark'
   displayTextVariant?: 'none' | 'base' | 'lg' | 'xl'
-  layoutGrid?: 'sm' | 'md' | 'lg'
+  layoutGrid?: LayoutGrid
   alignContentY?: 'top' | 'center' | 'bottom'
 } & HTMLAttributes<HTMLElement>
 

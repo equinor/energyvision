@@ -1,9 +1,9 @@
-import {
+import type {
   SanityImageCrop,
   SanityImageHotspot,
   SanityImageObject,
 } from '@sanity/image-url'
-import { type ImageProps as NextImageProps } from 'next/image'
+import type { ImageProps as NextImageProps } from 'next/image'
 
 export const ImageRatios = {
   original: 0,
@@ -28,7 +28,10 @@ export const ImageRatios = {
 export type ImageRatioKeys = keyof typeof ImageRatios
 export type ImageRatioValues = (typeof ImageRatios)[ImageRatioKeys]
 
-export const mapSanityImageRatio = (ratio: string) => {
+export const mapSanityImageRatio = (ratio: ImageRatioKeys) => {
+  if (ratio === 'original') {
+    return 0
+  }
   const ratioParts = ratio.trim().split(':')
   const ratioWidth = parseInt(ratioParts[0], 10)
   const ratioHeight = parseInt(ratioParts[1], 10)

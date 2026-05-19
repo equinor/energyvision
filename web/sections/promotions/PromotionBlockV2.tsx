@@ -10,7 +10,6 @@ import {
   type GridColumnVariant,
   getGridTemplateColumns,
   getLayoutPx,
-  type LayoutPxVariant,
 } from '@/lib/helpers/getCommonUtilities'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import Blocks from '@/portableText/Blocks'
@@ -18,6 +17,7 @@ import {
   type ColorKeys,
   colorKeyToUtilityMap,
 } from '@/styles/colorKeyToUtilityMap'
+import type { LayoutGrid } from '@/types/designOptionsTypes'
 
 export type PromotionBlockProps = {
   title: PortableTextBlock[]
@@ -27,7 +27,7 @@ export type PromotionBlockProps = {
       backgroundUtility?: ColorKeys
     }
     foreground?: ColorKeys
-    layoutGrid?: LayoutPxVariant
+    layoutGrid?: LayoutGrid
     gridColumns?: GridColumnVariant
     layoutDirection?: PromotionLayoutDirection
   }

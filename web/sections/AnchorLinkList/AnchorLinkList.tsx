@@ -2,7 +2,7 @@ import { forwardRef, type HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { getLayoutPx } from '@/lib/helpers/getCommonUtilities'
 import { Typography } from '../../core/Typography'
-import type { AnchorLinkReference } from '../../types'
+import type { AnchorLinkReference, LayoutGrid } from '../../types'
 
 export type AnchorLinkListData = {
   id: string
@@ -10,7 +10,7 @@ export type AnchorLinkListData = {
   title?: string
   columns?: string
   hideTitle?: boolean
-  layoutGrid?: 'sm' | 'md' | 'lg'
+  layoutGrid?: LayoutGrid
   makeSticky?: boolean
   anchorList?: AnchorLinkReference[]
 }

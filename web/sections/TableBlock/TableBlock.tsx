@@ -1,3 +1,4 @@
+'use client'
 import { toPlainText } from '@portabletext/react'
 import type { PortableTextBlock } from '@portabletext/types'
 import {
@@ -12,11 +13,9 @@ import { twMerge } from 'tailwind-merge'
 import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
 import { Table } from '@/core/Table'
 import type { ThemeVariants } from '@/core/Table/Table'
+import { getLayoutPx } from '@/lib/helpers/getCommonUtilities'
 import Blocks from '@/portableText/Blocks'
-
-export type TableTheme = {
-  title?: ThemeVariants
-}
+import type { LayoutGrid } from '@/types/designOptionsTypes'
 
 export type TableBlockProps = {
   variant?: 'default' | 'import'
@@ -25,14 +24,17 @@ export type TableBlockProps = {
   tableCaption?: string
   tableHeaders?: any[]
   rows: any
-  theme?: TableTheme
+  theme?: ThemeVariants
   useBorder?: boolean
-  useFullContainerWidth?: boolean
-  useInnerContentWidth?: boolean
   reducePaddingBottom?: boolean
   noPaddingTop?: boolean
   anchor?: string
   className?: string
+  layoutGrid?: LayoutGrid
+  widthAdjustment?: 'fit' | 'full'
+  //Deprecated props, to be removed in future, should not be used in new content
+  useFullContainerWidth?: boolean
+  useInnerContentWidth?: boolean
 }
 
 const TableBlock = forwardRef<HTMLDivElement, TableBlockProps>(
@@ -43,18 +45,26 @@ const TableBlock = forwardRef<HTMLDivElement, TableBlockProps>(
       ingress,
       tableCaption,
       tableHeaders,
-      theme,
+      theme = 'grey',
       useBorder = false,
       rows,
       anchor,
       className = '',
-      useFullContainerWidth = false,
-      useInnerContentWidth = false,
+      layoutGrid,
       reducePaddingBottom = false,
       noPaddingTop = false,
+      widthAdjustment = 'fit',
+      //Deprecated props, to be removed in future, should not be used in new content
+      useFullContainerWidth = false,
+      useInnerContentWidth = false,
     },
     ref,
   ) {
+    //TODO: remove backwards compatibility for deprecated useFullContainerWidth prop
+    // Studio will give error so will be adjusted to string going live with upgrade
+    //@ts-ignore
+    const _theme = typeof theme === 'string' ? theme : theme?.title
+
     const headerKeys = useMemo(() => {
       if (variant === 'import') {
         return rows?.[0]?.isHeader
@@ -92,7 +102,7 @@ const TableBlock = forwardRef<HTMLDivElement, TableBlockProps>(
         return Object.fromEntries(
           headerKeys?.map((key: any, index: number) => [
             key,
-            tableRow?.cells[index]?.content,
+            tableRow?.cells?.[index]?.content,
           ]),
         )
       })
@@ -163,6 +173,15 @@ const TableBlock = forwardRef<HTMLDivElement, TableBlockProps>(
       getCoreRowModel: getCoreRowModel(),
     })
 
+    //TODO: remove useInnerContentWidth when period of transition and set layoutGrid prop as = "md"
+    const px = getLayoutPx(layoutGrid ?? (useInnerContentWidth ? 'lg' : 'md'))
+    let tableWidth = widthAdjustment === 'full' ? 'w-full' : 'w-fit'
+
+    //TODO: remove when not in use anymore, use widthAdjustment directly
+    if (!widthAdjustment && useFullContainerWidth) {
+      tableWidth = 'w-full'
+    }
+
     return (
       <div
         ref={ref}
@@ -174,27 +193,23 @@ const TableBlock = forwardRef<HTMLDivElement, TableBlockProps>(
         )}
       >
         {title && (
-          <div className='px-layout-sm xl:px-layout-lg'>
+          <div className='px-layout-sm lg:px-layout-lg'>
             {title && <Blocks value={title} variant='h2' />}
             {ingress && <Blocks value={ingress} variant='ingress' />}
           </div>
         )}
-        <div
-          className={`w-full px-layout-sm ${
-            useInnerContentWidth ? 'xl:px-layout-lg' : 'xl:px-layout-md'
-          } flex justify-center`}
-        >
+        <div className={`w-full ${px} flex justify-center`}>
           <div
             className='w-full overflow-x-auto'
             // Scrollable, needs to be keyboard accessible
             // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
             tabIndex={0}
           >
-            <Table className={`${useFullContainerWidth ? 'w-full' : 'w-fit'}`}>
+            <Table className={tableWidth}>
               {tableCaption && <Table.Caption>{tableCaption}</Table.Caption>}
               <Table.Head
                 variant={useBorder ? 'border' : 'zebra'}
-                themeVariant={theme?.title}
+                themeVariant={_theme}
               >
                 {reactTable?.getHeaderGroups().map((headerGroup: any) => (
                   <Table.Row key={headerGroup.id}>
@@ -211,7 +226,7 @@ const TableBlock = forwardRef<HTMLDivElement, TableBlockProps>(
               </Table.Head>
               <Table.Body
                 variant={useBorder ? 'border' : 'zebra'}
-                themeVariant={theme?.title}
+                themeVariant={_theme}
               >
                 {reactTable?.getRowModel().rows.map((row: any) => (
                   <Table.Row key={row.id}>

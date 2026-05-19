@@ -1,7 +1,7 @@
 import { forwardRef, type HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { InnerContext } from './Inner.context'
-import { ThemeVariants, Variants } from './Table'
+import type { ThemeVariants, Variants } from './Table'
 import { getColorConfigForTableTheme } from './TableTheme'
 
 export type TableHeadProps = {

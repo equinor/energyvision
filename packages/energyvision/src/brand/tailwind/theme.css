@@ -45,10 +45,16 @@
   --color-autumn-storm-30: #d3dfde;
   --color-autumn-storm-20: #e3edea;
   --color-gray-20: #f8f8f8;
-  --color-grey-10: hsl(0,0%,97%);
+  --color-grey-10: hsl(0, 0%, 97%);
   --color-grey-20: hsl(0, 0%, 92%);
+  --color-grey-30: hsl(0, 0%, 86%);
+  --color-grey-40: hsl(0, 0%, 75%);
   --color-grey-50: hsl(0, 0%, 55%);
   --color-grey-60: hsl(0, 0%, 44%);
+  --color-grey-70: hsl(0, 0%, 40%);
+  --color-grey-80: hsl(0, 0%, 34%);
+  --color-grey-90: hsl(0, 0%, 24%);
+  --color-grey-100: hsl(0, 0%, 9%);
   --color-white-100: hsl(0, 0%, 100%);
 
   --text-2xs: clamp(calc(11.11 / 16 * 1rem), 0.19vw + 0.65rem, calc(14.08 / 16 * 1rem));
@@ -99,31 +105,4 @@
   --shadow-card: rgba(0, 0, 0, 0.08) 0px 1px 3px, 1px -1px 2px 0px rgba(0, 0, 0, 0.07), rgba(0, 0, 0, 0.2) 0px 1px 2px;
   --shadow-card-interact: rgba(0, 0, 0, 0.14) 0px 1px 3px, rgba(0, 0, 0, 0.36) 0px 1px 2px;
 
-  --ease-scroll: cubic-bezier(0.645, 0.045, 0.355, 1);
-  --ease-ease: cubic-bezier(0.25, 0.1, 0.25, 1);
-
-  /* Modal */
-  --modal-transition-duration: 0.4s;
-  --modal-transition-easing: cubic-bezier(0.45, 0, 0.55, 1);
-
-  /* or just --fr? flex-(--fr) */
-  --flex-fr: 1 1 1;
-
-  /* or just --motion-safe? transition-(--my-properties) */
-  --transition-motion-safe: motion-safe;
-
-  /*just --card ? grid-cols-(--my-grid-cols) */
-  --grid-cols-card: repeat(auto-fill, minmax(min(100%, 220px), 400px));
-
-  --animate-fadeInOut: fade linear both;
-
-  @keyframes fade {
-    0%,
-    100% {
-      opacity: 0;
-    }
-    30%,60% {
-      opacity: 1;
-    }
-  }
 }

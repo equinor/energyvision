@@ -57,7 +57,13 @@ export const Image = ({
   keepRatioOnMobile = false,
   hasImageZoom = false,
 }: ImageProps) => {
-  const isLargerDisplays = useMediaQuery(`(min-width: 800px)`)
+  let isLargerDisplays = useMediaQuery(`(min-width: 800px)`)
+
+  if (hasImageZoom) {
+    //Override max sizes for mobile since zoom
+    //grid is set to sm in FigureWithLayout when zoom is enabled.
+    isLargerDisplays = true
+  }
 
   if (!image || !image?.asset) return null
 
@@ -87,9 +93,7 @@ export const Image = ({
       src={url}
       loading={loading}
       fetchPriority={fetchPriority}
-      sizes={
-        hasImageZoom ? getSizes('sm', true) : getSizes(grid, isLargerDisplays)
-      }
+      sizes={getSizes(grid, isLargerDisplays)}
       alt={altText}
       className={twMerge(
         `${fill ? 'object-cover' : 'flex h-full w-full'}`,

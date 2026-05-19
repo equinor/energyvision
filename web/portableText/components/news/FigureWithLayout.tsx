@@ -1,5 +1,6 @@
 import type { PortableTextBlock } from '@portabletext/types'
-import Zoom from 'react-medium-image-zoom'
+//Add to packagejson later after upgrade
+//import Zoom from 'react-medium-image-zoom'
 import { twMerge } from 'tailwind-merge'
 import { FigureCaption } from '@/core/FigureCaption/FigureCaption'
 import { Image } from '@/core/Image/Image'
@@ -18,7 +19,8 @@ type FigureNode = {
   caption?: string
   image: ImageType
   layout: LayoutAlignment
-  enableImageZoom?: boolean
+  //Hold until upgrade is done
+  //enableImageZoom?: boolean
   imageOrientation?: 'portrait' | 'landscape' | 'square'
   centerImageLayout?: 'left' | 'right'
   centerCaptionAlignment?: 'top' | 'center' | 'bottom'
@@ -36,7 +38,7 @@ export const FigureWithLayout = (block: BlockProps) => {
     caption,
     attribution,
     layout = 'full',
-    enableImageZoom = false,
+    //enableImageZoom = false,
     imageOrientation = 'landscape',
     centerImageLayout = 'left',
     centerCaptionAlignment = 'bottom',
@@ -59,18 +61,26 @@ export const FigureWithLayout = (block: BlockProps) => {
     full: 'lg:ps-layout-md lg:pe-layout-md',
     right: `lg:pe-layout-md md:float-end md:ps-6`,
     left: `lg:ps-layout-md md:float-start md:pe-6`,
-    center: `w-full lg:ps-layout-lg lg:pe-layout-lg md:grid ${centerImageLayout === 'left' ? 'md:grid-cols-[auto_45%]' : 'md:grid-cols-[45%_auto]'} items-start md:gap-4`,
+    //aligned with text
+    center: `w-full lg:ps-layout-lg lg:pe-layout-lg items-start md:gap-4`,
   }
   let imageGrid = 'xs' as GridType
   if (layout === 'full') {
     imageGrid = 'md'
   }
-  if (enableImageZoom) {
-    imageGrid = 'sm'
+  if (layout === 'center') {
+    imageGrid = 'lg'
   }
 
   const figureClassName = twMerge(
-    `ps-layout-sm pe-layout-sm ${layoutAlignmentClassName[layout]} ${layout === 'center' ? `${centerImageLayout === 'right' ? '' : ''}` : ''} my-12`,
+    `ps-layout-sm pe-layout-sm my-12`,
+    imageOrientation !== 'portrait' && layoutAlignmentClassName[layout],
+    imageOrientation === 'portrait' &&
+      centerImageLayout === 'left' &&
+      'gap-6 md:grid md:grid-cols-[48%_35%] lg:ps-layout-lg lg:pe-layout-lg',
+    imageOrientation === 'portrait' &&
+      centerImageLayout === 'right' &&
+      'gap-6 md:grid md:grid-cols-[35%_48%] lg:ps-layout-lg lg:pe-layout-lg',
   )
   const centerImageCaptionClassName = {
     top: 'flex h-full items-start',
@@ -83,17 +93,11 @@ export const FigureWithLayout = (block: BlockProps) => {
       image={image}
       grid={imageGrid}
       aspectRatio={imageRatio}
-      hasImageZoom={enableImageZoom}
       {...(imageOrientation === 'portrait' && {
         keepRatioOnMobile: true,
         useFitMax: true,
       })}
     />
-  )
-  const imageWrapperElement = enableImageZoom ? (
-    <Zoom zoomMargin={25}>{imageElement}</Zoom>
-  ) : (
-    imageElement
   )
 
   const captionElement = (caption || attribution) && (
@@ -107,10 +111,12 @@ export const FigureWithLayout = (block: BlockProps) => {
 
   return (
     <figure className={figureClassName}>
-      {layout === 'center' && centerImageLayout === 'right' && captionElement}
-      {imageWrapperElement}
-      {(layout !== 'center' ||
-        (layout === 'center' && centerImageLayout !== 'right')) &&
+      {imageOrientation === 'portrait' &&
+        centerImageLayout === 'right' &&
+        captionElement}
+      {imageElement}
+      {(imageOrientation !== 'portrait' ||
+        (imageOrientation === 'portrait' && centerImageLayout !== 'right')) &&
         captionElement}
     </figure>
   )

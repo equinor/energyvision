@@ -1,10 +1,10 @@
 'use client'
-import { forwardRef } from 'react'
 import type { TableHTMLAttributes } from 'react'
+import { forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 export type Variants = 'zebra' | 'border'
-export type ThemeVariants = 'grey' | 'blue' | 'green' | 'orange'
+export type ThemeVariants = 'grey' | 'blue' | 'green'
 
 export type TableProps = TableHTMLAttributes<HTMLTableElement>
 
@@ -38,7 +38,11 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(function Table(
   ref,
 ) {
   return (
-    <table className={twMerge('w-full table-auto border-collapse', className)} ref={ref} {...rest}>
+    <table
+      className={twMerge('w-full table-auto border-collapse', className)}
+      ref={ref}
+      {...rest}
+    >
       {children}
     </table>
   )

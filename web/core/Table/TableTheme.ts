@@ -19,7 +19,6 @@ export const getColorConfigForTableTheme = (title: string) => {
         rowZebraBackground: 'even:bg-autumn-storm-20',
         rowZebraLastOdd: 'odd:last:border-autumn-storm-20',
       }
-    case 'grey':
     default:
       return {
         headerBackground: 'bg-grey-20',
@@ -27,7 +26,7 @@ export const getColorConfigForTableTheme = (title: string) => {
         headerBorder: 'border-grey-40',
         rowBorder: 'border-grey-20',
         rowZebraBackground: 'even:bg-grey-10',
-        rowZebraLastOdd: 'odd:last:border-bg-grey-10',
+        rowZebraLastOdd: 'odd:last:border-grey-10',
       }
   }
 }

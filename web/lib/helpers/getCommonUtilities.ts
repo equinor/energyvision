@@ -1,6 +1,6 @@
-export type LayoutPxVariant = 'sm' | 'md' | 'lg'
+import type { LayoutGrid } from '@/types'
 
-export const getLayoutPx = (variant: LayoutPxVariant) => {
+export const getLayoutPx = (variant: LayoutGrid) => {
   switch (variant) {
     case 'sm':
       return `px-layout-sm`

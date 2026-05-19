@@ -4,13 +4,6 @@ import CallToActions from '@/sections/CallToActions'
 import Blocks from '../../portableText/Blocks'
 import type { FormData } from '../../types/index'
 
-//import CareerFairForm from './CareerFairForm'
-//import CareersContactForm from './CareersContactForm'
-//import ContactEquinorForm from './ContactEquinorForm'
-//import OrderReportsForm from './OrderReportsForm'
-//import PensionForm from './PensionForm'
-//import SubscribeForm from './SubscribeForm'
-
 const ContactEquinorForm = dynamic(() => import('./ContactEquinorForm'))
 const CareersContactForm = dynamic(() => import('./CareersContactForm'))
 const CareerFairForm = dynamic(() => import('./CareerFairForm'))
@@ -61,18 +54,14 @@ const Form = ({
   }
 
   return (
-    <section
-      className={twMerge(
-        `px-layout-sm pb-page-content lg:px-layout-lg`,
-        className,
-      )}
-      id={anchor}
-    >
-      {title && <Blocks group='heading' variant='h2' value={title} />}
-      {ingress && (
-        <Blocks group='paragraph' variant='ingress' value={ingress} />
-      )}
-      {renderForm(data.form)}
+    <section className={twMerge(`pb-page-content`, className)} id={anchor}>
+      <div className='mx-auto max-w-content px-layout-sm lg:px-layout-lg'>
+        {title && <Blocks group='heading' variant='h2' value={title} />}
+        {ingress && (
+          <Blocks group='paragraph' variant='ingress' value={ingress} />
+        )}
+        {renderForm(data.form)}
+      </div>
     </section>
   )
 }

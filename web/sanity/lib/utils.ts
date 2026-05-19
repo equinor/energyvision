@@ -29,7 +29,7 @@ export const urlForImage = (source: any) => {
     return undefined
   }
 
-  return imageBuilder?.image(source).auto('format').crop('focalpoint') // Respects editor's hot spot
+  return imageBuilder?.image(source).auto('format')
 }
 
 export type ResolveImageProps = {
@@ -106,6 +106,7 @@ export const resolveImage = (props: ResolveImageProps) => {
     height = customHeight
     width = Math.round(aspectRatio * customHeight)
   }
+
   let url = null
   if (useFitMax) {
     //Fit the image within the box you specify, but never scaling the image up.

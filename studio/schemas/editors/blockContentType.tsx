@@ -57,6 +57,9 @@ export type BlockContentProps = {
     | 'extendedBlock'
     | 'fullBlock'
     | 'textBlock'
+    | 'onlySubSup'
+    | 'onlyTextDecorations'
+    | 'textDecorationAndLinks'
 
   /** Used to render the typography similar to TypographyGroups in Typography in web
    * use group article for news to get headings 2,3,4
@@ -114,10 +117,10 @@ const articleStylesOptions: BlockContentProps = {
   h4: true,
   smallText: true,
 }
+//h3, lists, links, text decorations and highlight
 const textBlockStylesOptions: BlockContentProps = {
   highlight: true,
 }
-
 const simpleBlockStylesOptions: BlockContentProps = {
   h2: false,
   h3: false,
@@ -140,6 +143,29 @@ const fullBlockStylesOptions: BlockContentProps = {
   extraLargeText: true,
   attachment: true,
   smallText: true,
+}
+//sub, sup
+const onlySubSupOptions: BlockContentProps = {
+  h3: false,
+  onlySubSupScriptDecorators: true,
+  lists: false,
+  internalLink: false,
+  externalLink: false,
+}
+//bold, italic,sub, sup
+const onlyTextDecorationsOptions: BlockContentProps = {
+  h3: false,
+  lists: false,
+  internalLink: false,
+  externalLink: false,
+}
+//bold, italic,sub, sup, links and attachments
+const textDecorationAndLinksOptions: BlockContentProps = {
+  h3: false,
+  lists: false,
+  internalLink: true,
+  externalLink: true,
+  attachment: true,
 }
 
 export const BlockTypography = {
@@ -272,6 +298,27 @@ export const configureBlockContent = (
     defaultConfigOptions = Object.assign(
       defaultConfigOptions,
       ingressStylesOptions,
+      options,
+    )
+  }
+  if (options?.variant === 'onlyTextDecorations') {
+    defaultConfigOptions = Object.assign(
+      defaultConfigOptions,
+      onlyTextDecorationsOptions,
+      options,
+    )
+  }
+  if (options?.variant === 'textDecorationAndLinks') {
+    defaultConfigOptions = Object.assign(
+      defaultConfigOptions,
+      textDecorationAndLinksOptions,
+      options,
+    )
+  }
+  if (options?.variant === 'onlySubSup') {
+    defaultConfigOptions = Object.assign(
+      defaultConfigOptions,
+      onlySubSupOptions,
       options,
     )
   }

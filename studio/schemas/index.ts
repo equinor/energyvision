@@ -83,7 +83,6 @@ import simpleMenuLink from './objects/simpleMenuLink'
 import stickyMenu from './objects/stickyMenu'
 import stockValuesApi from './objects/stockValuesApi'
 import tableV2 from './objects/tableV2'
-import tableTheme from './objects/tableV2/tableTheme'
 import tabs from './objects/tabs/tabs'
 import tabsBackground from './objects/tabs/tabsBackground'
 import tabsInfoPanel from './objects/tabs/tabsInfoPanel'
@@ -241,7 +240,6 @@ const RemainingSchemas = [
   imageWithRichText,
   homepageBanner,
   tableV2,
-  tableTheme,
   importTable,
   pieChart,
   pieChartBlock,
