@@ -4,7 +4,7 @@ import { Icon } from '@equinor/eds-core-react'
 import { calendar, time } from '@equinor/eds-icons'
 import { format } from 'date-fns'
 import { enGB, nb } from 'date-fns/locale'
-import { type DateTimeFormatOptions, useLocale } from 'next-intl'
+import type { DateTimeFormatOptions } from 'next-intl'
 import { forwardRef, type HTMLAttributes } from 'react'
 import { twMerge } from '@/lib/twMerge/twMerge'
 

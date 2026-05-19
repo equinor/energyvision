@@ -21,7 +21,7 @@ import { ArrowRight } from '../../icons'
 import { BaseLink } from './BaseLink'
 import Link from './Link'
 import { getArrowElement } from './linkCommon'
-import { type ResourceLinkProps } from './ResourceLink'
+import type { ResourceLinkProps } from './ResourceLink'
 
 type Variants = 'default' | 'fit'
 type Type = 'simple' | 'resource' | 'stickyMenu'

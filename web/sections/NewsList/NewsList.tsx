@@ -1,7 +1,12 @@
 'use client'
+import { useLocale, useTranslations } from 'next-intl'
 import { useState } from 'react'
 import { twMerge } from 'tailwind-merge'
+import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
+import { Promotion } from '@/core/Promotion/Promotion'
+import { defaultLanguage } from '@/languageConfig'
 import Blocks from '@/portableText/Blocks'
+import { getLocaleFromIso } from '@/sanity/helpers/localization'
 import PromotionCard from '@/sections/cards/PromotionCard/PromotionCard'
 import {
   type ColorKeys,
@@ -26,6 +31,7 @@ const NewsList = ({
   anchor?: string
   className?: string
 }) => {
+  const iso = useLocale()
   const { title, articles } = data
   const { background, foreground } = designOptions || {}
   const { backgroundUtility } = background || {}
@@ -47,17 +53,41 @@ const NewsList = ({
       id={anchor}
       className={twMerge(`w-full ${bg} pb-page-content`, className)}
     >
-      <div className='mx-auto max-w-content 3xl:px-layout-md px-layout-sm'>
-        {title && <Blocks value={title} variant='h2' />}
-        <div className='grid auto-rows-fr gap-x-6 gap-y-8 sm:grid-cols-2 xl:grid-cols-3'>
-          {pagedArticles.map(article => (
-            <PromotionCard
-              background={foreground}
-              key={article.id}
-              data={article}
-              hasSectionTitle={!!title}
-            />
-          ))}
+      <div className='mx-auto max-w-content'>
+        <div className='px-layout-sm lg:px-layout-lg'>
+          {title && <Blocks value={title} variant='h2' />}
+        </div>
+
+        <div className='grid auto-rows-fr gap-x-6 gap-y-8 3xl:px-layout-md px-layout-sm sm:grid-cols-2 xl:grid-cols-3'>
+          {pagedArticles.map(newsItem => {
+            const locale =
+              iso !== defaultLanguage.name ? getLocaleFromIso(iso) : ''
+            const href = (newsItem?.slug && '/' + locale + newsItem?.slug) || ''
+            return (
+              <li key={newsItem.id}>
+                <Promotion
+                  variant='default'
+                  type='extended'
+                  //@ts-ignore:todo
+                  title={newsItem?.title}
+                  ingress={newsItem?.ingress}
+                  {...(newsItem?.publishDateTime && {
+                    eyebrow: (
+                      <FormattedDateTime
+                        variant='date'
+                        datetime={newsItem?.publishDateTime}
+                        uppercase
+                        className='pb-2 text-sm'
+                      />
+                    ),
+                  })}
+                  image={newsItem?.heroImage?.image}
+                  href={href}
+                  hasSectionTitle={true}
+                />
+              </li>
+            )
+          })}
         </div>
         <Pagination
           totalPages={totalPages}

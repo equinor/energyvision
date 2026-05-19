@@ -148,6 +148,7 @@ _type == "keyNumbers" =>{
       attribution,
       caption
     },
+    layoutGrid,
     "alignWithText": coalesce(alignWithText, false),
     "useContain": coalesce(containImage, false),
     "designOptions": {

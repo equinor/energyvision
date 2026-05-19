@@ -46,7 +46,7 @@ export const FigureWithLayout = (block: BlockProps) => {
 
   if (!image) return null
 
-  let imageRatio = '21:9' as ImageRatioKeys
+  let imageRatio = '16:9' as ImageRatioKeys
   if (imageOrientation === 'square') {
     imageRatio = '1:1'
   }

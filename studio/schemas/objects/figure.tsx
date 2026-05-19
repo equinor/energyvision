@@ -1,5 +1,6 @@
 import type { Reference, Rule } from 'sanity'
 import type { ColorSelectorValue } from '../components/ColorSelector'
+//import { layoutGrid } from './commonFields/commonFields'
 import type { ImageWithAltAndCaption } from './imageWithAltAndCaption'
 
 export type Figure = {
@@ -22,6 +23,12 @@ export default {
   ],
   fields: [
     {
+      name: 'figure',
+      title: 'Image',
+      type: 'imageWithAltAndCaption',
+      validation: (Rule: Rule) => Rule.required(),
+    },
+    {
       name: 'aspectRatio',
       type: 'string',
       title: 'Aspect ratio',
@@ -38,12 +45,8 @@ export default {
       },
       initialValue: '16:9',
     },
-    {
-      name: 'figure',
-      title: 'Image',
-      type: 'imageWithAltAndCaption',
-      validation: (Rule: Rule) => Rule.required(),
-    },
+    //To be added after launch, web is set up
+    //layoutGrid(),
     {
       title: 'Align with text width',
       description:

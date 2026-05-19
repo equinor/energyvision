@@ -30,7 +30,7 @@ export function TablePreview(props: TablePreviewProps) {
   const plainTitle = title ? blocksToText(title) : undefined
   const subTitle = `${_type === 'tablev2' ? 'Import table' : 'Table'} | ${
     useBorder ? 'Border bottom rows' : 'Zebra rows'
-  }${theme ? ` | ${capitalizeFirstLetter(theme)} theme` : ''}`
+  }${theme ? ` | ${capitalizeFirstLetter(typeof theme === 'string' ? theme : (theme?.title ?? ''))} theme` : ''}`
   let color = '#ebebeb'
   if (theme === 'blue') {
     color = '#a8c3db'
