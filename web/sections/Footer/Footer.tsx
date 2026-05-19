@@ -1,7 +1,6 @@
 'use client'
 import { useTranslations } from 'next-intl'
 import type { HTMLAttributes } from 'react'
-import { twMerge } from 'tailwind-merge'
 import { usePage } from '@/contexts/pageContext'
 import { LinkButton } from '@/core/Button'
 import FooterLink from '@/core/Link/FooterLink'
@@ -35,9 +34,7 @@ const Footer = (_props: FooterProps) => {
 
   return (
     <footer
-      className={twMerge(
-        `dark mx-auto min-h-12 w-full max-w-fullwidth bg-slate-blue-95 px-0 py-6 *:text-white-100`,
-      )}
+      className={`dark mx-auto min-h-12 w-full max-w-fullwidth bg-slate-blue-95 px-0 py-6 *:text-white-100`}
     >
       <div className='mx-auto max-w-content px-layout-sm'>
         <div className='flex flex-row flex-wrap justify-between pb-2 max-md:flex-col'>
