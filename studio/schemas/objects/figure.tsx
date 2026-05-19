@@ -29,8 +29,8 @@ export default {
         list: [
           { title: 'original', value: 'original' },
           { title: '16:9', value: '16:9' },
-          { title: '10:3', value: '10:3' },
-          { title: '21:9', value: '21:9' },
+          // { title: '10:3', value: '10:3' },
+          // { title: '21:9', value: '21:9' },
           { title: '4:3', value: '4:3' },
           { title: '2:3', value: '2:3' },
           { title: '1:1', value: '1:1' },
