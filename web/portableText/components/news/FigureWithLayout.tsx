@@ -51,7 +51,7 @@ export const FigureWithLayout = (block: BlockProps) => {
     imageRatio = '1:1'
   }
   if (imageOrientation === 'landscape' && layout !== 'full') {
-    imageRatio = '3:2'
+    imageRatio = '3:2' //'3:2'
   }
   if (imageOrientation === 'portrait') {
     imageRatio = 'original'

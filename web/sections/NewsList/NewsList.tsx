@@ -7,7 +7,6 @@ import { Promotion } from '@/core/Promotion/Promotion'
 import { defaultLanguage } from '@/languageConfig'
 import Blocks from '@/portableText/Blocks'
 import { getLocaleFromIso } from '@/sanity/helpers/localization'
-import PromotionCard from '@/sections/cards/PromotionCard/PromotionCard'
 import {
   type ColorKeys,
   colorKeyToUtilityMap,
@@ -33,7 +32,7 @@ const NewsList = ({
 }) => {
   const iso = useLocale()
   const { title, articles } = data
-  const { background, foreground } = designOptions || {}
+  const { background } = designOptions || {}
   const { backgroundUtility } = background || {}
   const hitsPerPage = 16
   const totalPages = Math.ceil(articles.length / hitsPerPage)

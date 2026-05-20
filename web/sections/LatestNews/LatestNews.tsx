@@ -50,43 +50,6 @@ const LatestNews = ({ data }: LatestNewsProp) => {
                 hasSectionTitle={true}
               />
             </li>
-            /*             <li key={newsItem.id} className=''>
-              <Card
-                href={newsItem?.slug}
-                image={newsItem?.heroImage?.image}
-                variant={isMobile ? 'compact' : 'primary'}
-              >
-                <Card.Content variant={isMobile ? 'compact' : 'primary'}>
-                  <Card.Header
-                    {...(typeof newsItem?.title === 'string'
-                      ? {
-                          title: newsItem?.title,
-                        }
-                      : {
-                          titleBlock: newsItem?.title,
-                        })}
-                    {...(newsItem?.publishDateTime && {
-                      eyebrow: (
-                        <FormattedDateTime
-                          variant='date'
-                          datetime={newsItem?.publishDateTime}
-                          uppercase
-                        />
-                      ),
-                    })}
-                    variant={isMobile ? 'compact' : 'primary'}
-                  />
-                  {newsItem?.ingress && (
-                    <Typography
-                      group='paragraph'
-                      variant='simple'
-                      className='line-clamp-5 max-lg:hidden'
-                    >
-                      {plainIngress}
-                    </Typography>
-                  )}
-                </Card.Content>
-              </Card>           </li>*/
           )
         })}
       </ul>
