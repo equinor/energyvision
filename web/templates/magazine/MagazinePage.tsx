@@ -1,4 +1,3 @@
-'use client'
 import { calendar } from '@equinor/eds-icons'
 import type { PortableTextBlock } from 'next-sanity'
 import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'

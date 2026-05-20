@@ -1,4 +1,3 @@
-'use client'
 import { tz } from '@date-fns/tz'
 import { Icon } from '@equinor/eds-core-react'
 import { calendar, time } from '@equinor/eds-icons'

@@ -1,4 +1,3 @@
-'use client'
 import { type ElementType, forwardRef, type HTMLAttributes } from 'react'
 import type { TypographyGroups } from '@/core/Typography/variants'
 import { twMerge } from '@/lib/twMerge/twMerge'

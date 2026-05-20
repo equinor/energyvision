@@ -1,8 +1,7 @@
-'use client'
-import { twMerge } from 'tailwind-merge'
 import { PortableTextBlock } from 'next-sanity'
-import Blocks from '@/portableText/Blocks'
+import { twMerge } from 'tailwind-merge'
 import { BarChart, BarChartProps } from '@/core/BarChart/BarChart'
+import Blocks from '@/portableText/Blocks'
 
 export type BarChartBlockProps = {
   type: string
@@ -33,9 +32,19 @@ const BarChartBlock = ({
       )}
       id={anchor}
     >
-      {title && <Blocks variant="h2" value={title} className={`${hideTitle ? 'sr-only' : ''}`} />}
-      <div className="flex">
-        {charts && charts?.length > 0 && charts?.map((chart: BarChartProps) => <BarChart key={chart.id} {...chart} />)}
+      {title && (
+        <Blocks
+          variant='h2'
+          value={title}
+          className={`${hideTitle ? 'sr-only' : ''}`}
+        />
+      )}
+      <div className='flex'>
+        {charts &&
+          charts?.length > 0 &&
+          charts?.map((chart: BarChartProps) => (
+            <BarChart key={chart.id} {...chart} />
+          ))}
       </div>
     </section>
   )
