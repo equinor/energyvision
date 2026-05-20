@@ -3,7 +3,9 @@ import {
   type BooleanInputProps,
   defineField,
   defineType,
+  type Rule,
   type StringInputProps,
+  type ValidationContext,
 } from 'sanity'
 import { OptionButtons } from '@/schemas/components/OptionButtons/OptionButtons'
 import { Toggle } from '@/schemas/components/Toggle/Toggle'
@@ -43,7 +45,6 @@ export default defineType({
       options: {
         hotspot: true,
       },
-      validation: Rule => Rule.required(),
     }),
     {
       title: 'Apply scroll animation',

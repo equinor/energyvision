@@ -122,7 +122,7 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
   )
 
   return backgroundType === 'backgroundImage' &&
-    bgContainerOptions?.background?.backgroundImage ? (
+    bgContainerOptions?.background?.backgroundImage?.image?.asset ? (
     <ImageBackground
       id={anchor}
       {...bgContainerOptions.background.backgroundImage}
