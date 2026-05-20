@@ -11,8 +11,8 @@ import type {
   PortableTextBlock,
   PortableTextBlockStyle,
 } from '@portabletext/types'
+import dynamic from 'next/dynamic'
 import type { ElementType } from 'react'
-import { IFrame } from '@/core/IFrame/IFrame'
 import DownloadableLink from '@/core/Link/DownloadableLink'
 import { Link as CoreLink } from '@/core/Link/Link'
 import type { TypographyProps } from '@/core/Typography'
@@ -51,6 +51,8 @@ type TypeProps = {
 type TWLineClamps = {
   [key: number]: string
 }
+
+const IFrame = dynamic(() => import('@/core/IFrame/IFrame'))
 
 // Ingress only has normal and small text
 // Text Block Text Content has normal, small text and heading 3

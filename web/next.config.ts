@@ -44,10 +44,10 @@ export type ConfigRedirect = {
 const nextConfig: NextConfig = withNextIntl({
   output: 'standalone',
   transpilePackages: [
-    'friendly-challenge',
+    //'friendly-challenge',
     'require-in-the-middle',
     'import-in-the-middle',
-    'next-seo',
+    // 'next-seo',
   ],
   logging: {
     fetches: {

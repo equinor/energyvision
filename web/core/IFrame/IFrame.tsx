@@ -162,3 +162,5 @@ export const IFrame = forwardRef<HTMLDivElement, IFrameProps>(function IFrame(
     </section>
   )
 })
+
+export default IFrame

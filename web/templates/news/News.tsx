@@ -1,10 +1,10 @@
 import { calendar } from '@equinor/eds-icons'
 import { toPlainText } from '@portabletext/react'
+import dynamic from 'next/dynamic'
 import { getLocale, getTranslations } from 'next-intl/server'
 import type { PortableTextBlock } from 'next-sanity'
 import { ArticleJsonLd } from 'next-seo'
 import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
-import { IFrame } from '@/core/IFrame/IFrame'
 import type { Figure, Image } from '@/core/Image/imageUtilities'
 import TransformableIcon from '@/icons/TransformableIcon'
 import { isDateAfter } from '@/lib/helpers/dateUtilities'
@@ -61,7 +61,7 @@ const NewsPage = async ({
     ...block,
     markDefs: block.markDefs || [],
   }))
-
+  const IFrame = dynamic(() => import('@/core/IFrame/IFrame'))
   const publishedInformation = (
     <div className='grid grid-cols-[min-content_1fr] items-start gap-2 pb-12 text-base lg:flex lg:items-center dark:text-white-100'>
       <TransformableIcon iconData={calendar} className='md:-mt-1' />

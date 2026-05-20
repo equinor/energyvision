@@ -15,7 +15,6 @@ import {
   useState,
 } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { IFrame } from '@/core/IFrame/IFrame'
 import { MediaButton } from '@/core/MediaButton/MediaButton'
 import { EventCard } from '@/sections/cards/EventCard'
 import type { EventCardData } from '@/sections/cards/EventCard/EventCard'
@@ -75,7 +74,7 @@ const TRANSLATE_X_AMOUNT_SM = 370 //old value 295
 const TRANSLATE_X_AMOUNT_MD = 712
 
 const VideoPlayer = dynamic(() => import('@/core/VideoJsPlayer/VideoPlayer'))
-
+const IFrame = dynamic(() => import('@/core/IFrame/IFrame'))
 export const Carousel = forwardRef<HTMLElement, CarouselProps>(
   function Carousel(
     {

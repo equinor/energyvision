@@ -1,13 +1,15 @@
 'use client'
+import dynamic from 'next/dynamic'
 import { useId } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { IFrame } from '@/core/IFrame/IFrame'
 import ResourceLink from '@/core/Link/ResourceLink'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import Blocks from '@/portableText/Blocks'
 import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
 import { getLocaleFromName } from '../../sanity/helpers/localization'
 import type { IFrameData } from '../../types/index'
+
+const IFrame = dynamic(() => import('@/core/IFrame/IFrame'))
 
 const IFrameBlock = ({
   anchor,
