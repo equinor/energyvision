@@ -1,3 +1,4 @@
+'use client'
 import type { TableHTMLAttributes } from 'react'
 import { forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'

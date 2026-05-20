@@ -1,3 +1,4 @@
+'use client'
 import type { IconData } from '@equinor/eds-icons'
 import { type ButtonHTMLAttributes, forwardRef } from 'react'
 import { twMerge } from '@/lib/twMerge/twMerge'

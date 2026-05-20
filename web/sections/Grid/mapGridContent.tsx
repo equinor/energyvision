@@ -1,3 +1,4 @@
+'use client'
 import dynamic from 'next/dynamic'
 import type { IFrameData } from '../../types/index'
 import type { FigureData } from '../FigureBlock/FigureBlock'

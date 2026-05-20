@@ -1,3 +1,4 @@
+'use client'
 import type { PortableTextBlock } from '@portabletext/types'
 import { forwardRef } from 'react'
 import { Typography, type TypographyProps } from '@/core/Typography'

@@ -1,17 +1,18 @@
-import type { TableCellProps } from './Cell/TableCell'
-import { TableCell } from './Cell/TableCell'
-import type { TableProps } from './Table'
+'use client'
 import { Table as TableRoot } from './Table'
-import type { TableBodyProps } from './TableBody'
+import type { TableProps } from './Table'
 import { TableBody } from './TableBody'
-import type { TableCaptionProps } from './TableCaption'
-import { TableCaption } from './TableCaption'
-import type { TableFootProps } from './TableFoot'
+import type { TableBodyProps } from './TableBody'
+import { TableCell } from './Cell/TableCell'
+import type { TableCellProps } from './Cell/TableCell'
 import { TableFoot } from './TableFoot'
-import type { TableHeadProps } from './TableHead'
+import type { TableFootProps } from './TableFoot'
 import { TableHead } from './TableHead'
-import type { TableRowProps } from './TableRow'
+import type { TableHeadProps } from './TableHead'
+import { TableCaption } from './TableCaption'
+import type { TableCaptionProps } from './TableCaption'
 import { TableRow } from './TableRow'
+import type { TableRowProps } from './TableRow'
 
 /**
  * Table component, used to display tabular data. Renders a native HTML table element.
@@ -56,15 +57,7 @@ Table.Cell.displayName = 'Table.Cell'
 Table.Foot.displayName = 'Table.Foot'
 Table.Caption.displayName = 'Table.Caption'
 
-export {
-  Table,
-  TableHead,
-  TableBody,
-  TableRow,
-  TableCell,
-  TableFoot,
-  TableCaption,
-}
+export { Table, TableHead, TableBody, TableRow, TableCell, TableFoot, TableCaption }
 export type {
   TableProps,
   TableHeadProps,
