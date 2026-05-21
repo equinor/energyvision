@@ -19,7 +19,7 @@ export const tempSanityFetch: DefinedSanityFetchType = async ({
 }) => {
   'use cache: remote'
   const { data, syncTags } = await client.fetch(query, params, {
-    cacheMode: 'noStale',
+    ...(dataset === 'global-development' && { cacheMode: 'noStale' }),
     //cache: dataset === 'global-development' ? 'force-cache' : 'no-cache',
     /* next: {
       ...(tags.length > 0 && { tags }), // for tag-based revalidation
