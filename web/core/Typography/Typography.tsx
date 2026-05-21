@@ -8,7 +8,7 @@ import {
   forwardRef,
   type HTMLAttributes,
 } from 'react'
-import { twMerge } from 'tailwind-merge'
+import { twMerge } from '@/lib/twMerge/twMerge'
 import {
   quickVariants,
   type TypographyGroups,
@@ -129,15 +129,16 @@ export const Typography: OverridableComponent<TypographyProps, HTMLElement> =
       )
     }
     const TypographyTag = as ?? (`p` as React.ElementType)
-    // text color for regular and dark is applied in globals base body. is it necessary here?
+
+    console.log('typography', typography)
+    console.log('classNAme', className)
     return (
       <TypographyTag
         ref={ref}
         {...(id && { id: id })}
-        //clsx news template merging?
         className={twMerge(
-          typography,
           'wrap-break-word max-w-text text-pretty text-slate-80 dark:text-white-100',
+          typography,
           className,
         )}
       >

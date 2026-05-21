@@ -4,6 +4,7 @@ import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
 import { Promotion } from '@/core/Promotion/Promotion'
 import { Typography } from '@/core/Typography'
 import { defaultLanguage } from '@/languageConfig'
+import { useMediaQuery } from '@/lib/hooks/useMediaQuery'
 import { getLocaleFromIso } from '@/sanity/helpers/localization'
 import type { CardData } from '../../types/index'
 
@@ -14,6 +15,8 @@ type LatestNewsProp = {
 const LatestNews = ({ data }: LatestNewsProp) => {
   const t = useTranslations()
   const iso = useLocale()
+  const isMobile = useMediaQuery(`(max-width: 768px)`)
+
   return (
     <section className='flex w-full flex-col items-start py-20'>
       <div className='px-layout-sm lg:px-layout-lg'>
@@ -31,7 +34,9 @@ const LatestNews = ({ data }: LatestNewsProp) => {
             <li key={newsItem.id}>
               <Promotion
                 variant='default'
-                type='extended'
+                type={isMobile ? 'compact' : 'extended'}
+                //extented type will overwrite row to col but that is ok for larger screens
+                layoutDirection={`row`}
                 //@ts-ignore:todo
                 title={newsItem?.title}
                 ingress={newsItem?.ingress}

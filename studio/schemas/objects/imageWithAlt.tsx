@@ -24,16 +24,15 @@ export default {
     {
       name: 'isDecorative',
       type: 'boolean',
-      title: 'Image is decorative',
+      title: 'Image is only decorative',
       description:
-        'If this image is purely decorative you can disable the alt tag input here. Please note that this makes the image invisible for screen reader users.',
+        'Please note that this makes the image invisible for screen reader users.',
     },
     {
       name: 'alt',
       type: 'string',
       title: 'Alternative text for screen readers',
-      description:
-        'Recommended. Describe whats seen in the image. Leave empty if purely decorative.',
+      description: 'Recommended. Describe whats seen in the image.',
       validation: (Rule: Rule) =>
         Rule.custom(
           (

@@ -100,7 +100,7 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
         locale={locale}
         prefetch={false}
         className={twMerge(
-          `group/link grid h-fit w-full rounded-card`,
+          `group/link grid h-full w-full rounded-card`,
           colorKeyToUtilityMap[background ?? 'gray-20'].background,
           type === 'compact' &&
             _layoutDirection === 'col' &&
@@ -144,9 +144,8 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
         )}
         <div
           className={twMerge(
-            `flex h-fit w-full`,
-            type === 'extended' &&
-              'min-h-96 items-start px-6 pt-6 pb-6 md:pt-8',
+            `flex h-full w-full`,
+            type === 'extended' && 'items-start px-6 pt-6 pb-6 md:pt-8',
             type === 'compact' && 'min-h-25 items-center',
             type === 'compact' &&
               _layoutDirection === 'col' &&
@@ -157,7 +156,10 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
           )}
         >
           <div
-            className={`${type === 'extended' ? 'mb-12' : ''} max-w-prose grow`}
+            className={twMerge(
+              'max-w-prose grow',
+              type === 'extended' && 'mb-12',
+            )}
           >
             {eyebrow && eyebrow}
             {plainText && (
@@ -176,11 +178,11 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
                 className={twMerge(
                   type === 'compact' &&
                     _layoutDirection === 'col' &&
-                    'line-clamp-2',
+                    'lg:line-clamp-2',
                   type === 'compact' &&
                     _layoutDirection === 'row' &&
-                    'line-clamp-3',
-                  type === 'extended' && 'line-clamp-5',
+                    'lg:line-clamp-3',
+                  type === 'extended' && 'lg:line-clamp-5',
                 )}
               >
                 {plainIngress}

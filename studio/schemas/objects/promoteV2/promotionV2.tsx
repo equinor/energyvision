@@ -163,14 +163,8 @@ export default {
               name: 'image',
               title: 'Image',
               type: 'imageWithAlt',
-              hidden: ({ parent }: any) => {
-                return (
-                  parent?.linkSelector?.link?.[0]?._type !== 'link' &&
-                  parent?.linkSelector?.link?.[0]?._type !==
-                    'anchorLinkReference' &&
-                  parent?.linkSelector?.link?.[0]?._type !== 'homePageLink'
-                )
-              },
+              description:
+                'Required for external,anchor and homepage links, optional for others',
               validation: (Rule: Rule) =>
                 Rule.custom((value: string, ctx: ValidationContext) => {
                   if (
@@ -178,7 +172,9 @@ export default {
                     ctx.parent?.linkSelector?.link?.[0]?._type === 'link' ||
                     //@ts-ignore: todo
                     ctx.parent?.linkSelector?.link?.[0]?._type ===
-                      'anchorLinkReference'
+                      'anchorLinkReference' ||
+                    ctx.parent?.linkSelector?.link?.[0]?._type ===
+                      'homePageLink'
                   ) {
                     return value ? true : 'You must add an image'
                   }

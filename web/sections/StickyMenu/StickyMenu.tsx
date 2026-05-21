@@ -34,7 +34,7 @@ export const StickyMenu = forwardRef<HTMLElement, StickyMenuProps>(
         )}
       >
         <div
-          className={`flex w-full flex-col gap-y-3 lg:flex-row lg:justify-between`}
+          className={`flex w-full items-baseline justify-between gap-x-6 gap-y-3`}
         >
           <div className={`text-start font-medium text-base`}>{title}</div>
           <div className='flex items-center gap-10'>

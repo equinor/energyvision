@@ -102,7 +102,6 @@ const MagazineRoom = ({
                     href={href}
                     image={article?.hero?.figure?.image}
                     title={article?.title}
-                    ingress={article?.ingress}
                     type='extended'
                   />
                   {/* <MagazineCard data={article} /> */}
