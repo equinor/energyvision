@@ -1,5 +1,5 @@
 import NextLink, { type LinkProps } from 'next/link'
-import { type AnchorHTMLAttributes, forwardRef, Ref } from 'react'
+import { type AnchorHTMLAttributes, forwardRef, type Ref } from 'react'
 import { twMerge } from 'tailwind-merge'
 import type { LinkType } from '../../types/index'
 

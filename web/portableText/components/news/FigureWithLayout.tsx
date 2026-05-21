@@ -24,6 +24,7 @@ type FigureNode = {
   imageOrientation?: 'portrait' | 'landscape' | 'square'
   centerImageLayout?: 'left' | 'right'
   centerCaptionAlignment?: 'top' | 'center' | 'bottom'
+  landscapeRatio?: Extract<ImageRatioKeys, '21:9' | 'original' | '16:9'>
 }
 
 type BlockProps = {
@@ -37,11 +38,12 @@ export const FigureWithLayout = (block: BlockProps) => {
     image,
     caption,
     attribution,
-    layout = 'full',
+    layout = 'left',
     //enableImageZoom = false,
     imageOrientation = 'landscape',
     centerImageLayout = 'left',
     centerCaptionAlignment = 'bottom',
+    landscapeRatio = '16:9',
   } = value
 
   if (!image) return null
@@ -50,19 +52,25 @@ export const FigureWithLayout = (block: BlockProps) => {
   if (imageOrientation === 'square') {
     imageRatio = '1:1'
   }
-  if (imageOrientation === 'landscape' && layout !== 'full') {
-    imageRatio = '3:2' //'3:2'
+  if (imageOrientation === 'landscape') {
+    if (layout === 'center') {
+      imageRatio = landscapeRatio
+    } else if (layout === 'full') {
+      imageRatio = '16:9'
+    } else {
+      imageRatio = '4:3'
+    }
   }
   if (imageOrientation === 'portrait') {
     imageRatio = 'original'
   }
 
   const layoutAlignmentClassName = {
-    full: 'lg:ps-layout-md lg:pe-layout-md',
-    right: `lg:pe-layout-md md:float-end md:ps-6`,
-    left: `lg:ps-layout-md md:float-start md:pe-6`,
+    full: 'lg:px-layout-md',
+    right: `lg:pe-layout-md md:float-end md:ps-8`,
+    left: `lg:ps-layout-md md:float-start md:pe-8`,
     //aligned with text
-    center: `w-full lg:ps-layout-lg lg:pe-layout-lg items-start md:gap-4`,
+    center: `w-full lg:px-layout-lg items-start md:gap-4`,
   }
   let imageGrid = 'xs' as GridType
   if (layout === 'full') {
@@ -73,14 +81,14 @@ export const FigureWithLayout = (block: BlockProps) => {
   }
 
   const figureClassName = twMerge(
-    `ps-layout-sm pe-layout-sm my-12`,
+    `px-layout-sm my-12`,
     imageOrientation !== 'portrait' && layoutAlignmentClassName[layout],
     imageOrientation === 'portrait' &&
       centerImageLayout === 'left' &&
-      'gap-6 md:grid md:grid-cols-[48%_35%] lg:ps-layout-lg lg:pe-layout-lg',
+      'gap-6 md:grid md:grid-cols-[48%_35%] lg:px-layout-lg',
     imageOrientation === 'portrait' &&
       centerImageLayout === 'right' &&
-      'gap-6 md:grid md:grid-cols-[35%_48%] lg:ps-layout-lg lg:pe-layout-lg',
+      'gap-6 md:grid md:grid-cols-[35%_48%] lg:px-layout-lg',
   )
   const centerImageCaptionClassName = {
     top: 'flex h-full items-start',

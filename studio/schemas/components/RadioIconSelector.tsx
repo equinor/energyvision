@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { type JSX, useCallback, useState } from 'react'
 import { PatchEvent, set } from 'sanity'
 import styled from 'styled-components'
 

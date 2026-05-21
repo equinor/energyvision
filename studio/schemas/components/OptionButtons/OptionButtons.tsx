@@ -1,6 +1,12 @@
-import type { ReactNode } from 'react'
+import type { JSX, ReactNode } from 'react'
 import { useEffect } from 'react'
-import { type StringInputProps, set, unset } from 'sanity'
+import {
+  type PathSegment,
+  type StringInputProps,
+  set,
+  unset,
+  useFormValue,
+} from 'sanity'
 import { capitalizeFirstLetter } from '@/helpers/formatters'
 import styles from './OptionButtons.module.css'
 
@@ -8,7 +14,7 @@ import styles from './OptionButtons.module.css'
  * Requires field type string and and list like this:
  * const contentAlignmentOptions = [
  *   { value: 'left', icon: ContentLeftImage },
- *   { value: 'center', icon: ContentCenterImage },
+ *   { value: 'center', icon: <BsFileImageFill />  },
  *   { value: 'right', icon: ContentRightImage },
  * ]
  * in the schema like this:
@@ -26,12 +32,23 @@ export function OptionButtons(
   props: StringInputProps,
   icons: {
     value: string
-    icon: () => ReactNode
+    icon: ReactNode | (() => JSX.Element)
   }[],
+  // Configuration to disable options given a parent path used in form value hook
+  optionsConfig: Record<string, string[]> = {},
+  //The field to cross check the optionsConfig against
+  parentField?: string,
+  //Required when using optionsConfig
+  parentPath?: PathSegment[],
 ) {
   const { schemaType, value, onChange } = props
   const initialValue =
     typeof schemaType?.initialValue === 'string' ? schemaType.initialValue : ''
+
+  const parentConditionalField = useFormValue([
+    ...(parentPath ?? []),
+    ...(parentField ? [parentField] : []),
+  ])
 
   useEffect(() => {
     if (!value && initialValue) {
@@ -44,12 +61,32 @@ export function OptionButtons(
   return (
     <div className={styles.container}>
       {options?.list?.map((option: any) => {
+        let allowedValues: string[] = []
+        if (
+          optionsConfig &&
+          parentField &&
+          parentConditionalField &&
+          parentConditionalField !== undefined
+        ) {
+          //@ts-ignore
+          allowedValues = optionsConfig[parentConditionalField] ?? []
+        }
+
+        const disabled =
+          allowedValues.length > 0 && !allowedValues.includes(option.value)
+
+        const iconElement = icons?.find(
+          (icon: { value: string; icon: ReactNode | (() => JSX.Element) }) =>
+            icon.value === option.value,
+        )
+
         return (
           <div key={`container_${option.value}`}>
             <input
               id={`id_${option.value.replace(/ /g, '')}`}
               className={styles.radio}
               type='radio'
+              disabled={disabled}
               checked={value === option.value}
               onChange={event => {
                 const nextValue = event.currentTarget.value
@@ -58,21 +95,21 @@ export function OptionButtons(
               value={option.value}
             />
             <label
-              className={styles.label}
+              className={`${styles.label} ${disabled ? styles.disabled : ''}`}
+              data-disabled={disabled}
               htmlFor={`id_${option.value.replace(/ /g, '')}`}
             >
               <div className={styles.iconWrapper}>
-                <div className={styles.iconBox}>
-                  {icons
-                    ?.find(
-                      (icon: { value: string; icon: () => ReactNode }) =>
-                        icon.value === option.value,
-                    )
-                    ?.icon()}
+                <div className={styles.iconContainer}>
+                  <div className={styles.iconBox}>
+                    {typeof iconElement?.icon === 'function'
+                      ? iconElement.icon()
+                      : iconElement?.icon}
+                  </div>
                 </div>
-                <p className={styles.text}>
+                <div className={`${styles.text}`} data-disabled={disabled}>
                   {capitalizeFirstLetter(option.value)}
-                </p>
+                </div>
               </div>
             </label>
           </div>

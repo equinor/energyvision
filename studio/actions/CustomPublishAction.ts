@@ -1,11 +1,11 @@
 import { useState } from 'react'
-import { 
-  DocumentActionConfirmDialogProps, 
-  DocumentActionProps, 
-  useDocumentOperation, 
-  useValidationStatus, 
+import {
+  type DocumentActionConfirmDialogProps,
+  type DocumentActionProps,
   isValidationErrorMarker,
-  SanityDocument,
+  type SanityDocument,
+  useDocumentOperation,
+  useValidationStatus,
 } from 'sanity'
 
 const FIRST_PUBLISHED_AT_FIELD_NAME = 'firstPublishedAt'
@@ -17,10 +17,15 @@ export function SetAndPublishAction(props: DocumentActionProps) {
 
   // Check for validation errors
   const validationStatus = useValidationStatus(props.id, props.type)
-  const hasValidationErrors = validationStatus.validation.some(isValidationErrorMarker)
+  const hasValidationErrors = validationStatus.validation.some(
+    isValidationErrorMarker,
+  )
 
   // check if the document is already published (default publish action is disabled if it is)
-  const isDisabled = hasValidationErrors || publish.disabled === 'ALREADY_PUBLISHED' || dialogOpen
+  const isDisabled =
+    hasValidationErrors ||
+    publish.disabled === 'ALREADY_PUBLISHED' ||
+    dialogOpen
 
   return {
     disabled: isDisabled,
@@ -42,7 +47,11 @@ export function SetAndPublishAction(props: DocumentActionProps) {
           const currentTimeStamp = new Date().toISOString()
           patch.execute(
             [
-              { setIfMissing: { [FIRST_PUBLISHED_AT_FIELD_NAME]: currentTimeStamp } },
+              {
+                setIfMissing: {
+                  [FIRST_PUBLISHED_AT_FIELD_NAME]: currentTimeStamp,
+                },
+              },
               { set: { [LAST_MODIFIED_AT_FIELD_NAME]: currentTimeStamp } },
             ],
             props.published as SanityDocument | undefined,

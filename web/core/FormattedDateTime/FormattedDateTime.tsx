@@ -4,7 +4,7 @@ import { Icon } from '@equinor/eds-core-react'
 import { calendar, time } from '@equinor/eds-icons'
 import { format } from 'date-fns'
 import { enGB, nb } from 'date-fns/locale'
-import type { DateTimeFormatOptions } from 'next-intl'
+import { type DateTimeFormatOptions, useLocale } from 'next-intl'
 import { forwardRef, type HTMLAttributes } from 'react'
 import { twMerge } from '@/lib/twMerge/twMerge'
 
@@ -33,9 +33,9 @@ const getLocaleShortDayFormat = (locale: string) => {
   )
 }
 
-const getTimezoneName = (date: Date) => {
+const getTimezoneName = (date: Date, locale = 'en-GB') => {
   return (
-    new Intl.DateTimeFormat('en-GB', {
+    new Intl.DateTimeFormat(locale, {
       timeZone: 'Europe/Oslo',
       timeZoneName: 'short',
     })
@@ -88,9 +88,9 @@ const FormattedDateTime = forwardRef<HTMLDivElement, FormattedDateTimeProps>(
     },
     ref,
   ) => {
-    const locale = 'nb-NO' //useLocale()
+    const locale = useLocale()
     const _showTimezone = showTimezone ?? variant !== 'date'
-
+    console.log('datetime', datetime)
     if (!datetime) {
       return null
     }
@@ -109,7 +109,10 @@ const FormattedDateTime = forwardRef<HTMLDivElement, FormattedDateTimeProps>(
       endDate = endDatetime as Date
     }
 
-    const timezoneName = getTimezoneName(date)
+    const timezoneName = getTimezoneName(date, locale)
+    //const timezoneName = Intl.DateTimeFormat().resolvedOptions().timeZone
+
+    console.log('timezoneName', timezoneName)
     let dateFormat = getLocaleDateFormatting(locale)
 
     if (variant === 'time') {

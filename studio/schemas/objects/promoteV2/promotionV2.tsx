@@ -12,8 +12,10 @@ import {
   type ValidationContext,
 } from 'sanity'
 import { capitalizeFirstLetter } from '@/helpers/formatters'
+import { OptionButtons } from '@/schemas/components/OptionButtons/OptionButtons'
 import blocksToText from '../../../helpers/blocksToText'
 import {
+  gridColumns,
   hideTitle,
   ingress,
   layoutGrid,
@@ -90,6 +92,36 @@ export const PromotionLayoutInput = (props: PromotionLayoutInputProps) => {
   )
 }
 
+const layoutOptions = [
+  {
+    value: 'col',
+    icon: (
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        <MdImage size={20} />
+        <LuText size={20} />
+      </div>
+    ),
+  },
+  {
+    value: 'row',
+    icon: (
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+        }}
+      >
+        <MdImage size={20} />
+        <LuText size={20} />
+      </div>
+    ),
+  },
+]
 type PromotedTopicPage = {
   _key: string
   _type: 'topics'
@@ -133,7 +165,7 @@ export default {
               type: 'imageWithAlt',
               hidden: ({ parent }: any) => {
                 return (
-                  parent?.linkSelector?.lin?.[0]?._type !== 'link' &&
+                  parent?.linkSelector?.link?.[0]?._type !== 'link' &&
                   parent?.linkSelector?.link?.[0]?._type !==
                     'anchorLinkReference' &&
                   parent?.linkSelector?.link?.[0]?._type !== 'homePageLink'
@@ -232,25 +264,12 @@ export default {
     },
     theme,
     layoutGrid(),
-    {
-      title: 'Number of grid columns',
-      name: 'gridColumns',
-      type: 'string',
-      description:
-        'Select number of grid column. Mobile it will only be 1 column.',
-      options: {
-        list: [
-          { title: '2', value: '2' },
-          { title: '3', value: '3' },
-          { title: '4', value: '4' },
-        ],
-      },
-      initialValue: '3',
-      //@ts-ignore:todo
-      hidden: ({ parent }: DocumentType) => {
+    gridColumns({
+      hiddenCallBack: ({ parent }: DocumentType) => {
         return parent?.layoutGrid === 'lg'
       },
       fieldset: 'design',
+      initialValue: undefined,
       validation: (Rule: Rule) =>
         Rule.custom((value: string, ctx: ValidationContext) => {
           //@ts-ignore:todo
@@ -270,23 +289,22 @@ export default {
           }
           return true
         }),
-    },
+    }),
     {
       title: 'Layout variant',
       name: 'layoutDirection',
       type: 'string',
       description: 'Select  variant for image and content ',
       options: {
-        list: [
-          { title: 'Stacked', value: 'col' },
-          { title: 'Side by side', value: 'row' },
-        ],
-        layout: 'radio',
+        list: layoutOptions.map(option => ({
+          title: capitalizeFirstLetter(option.value),
+          value: option.value,
+        })),
       },
       fieldset: 'design',
       initialValue: 'col',
       components: {
-        input: PromotionLayoutInput,
+        input: props => OptionButtons(props, layoutOptions),
       },
     },
   ],

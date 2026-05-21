@@ -1,5 +1,6 @@
 import { calendar } from '@equinor/eds-icons'
 import { toPlainText } from '@portabletext/react'
+import { isAfter } from 'date-fns'
 import dynamic from 'next/dynamic'
 import { getLocale, getTranslations } from 'next-intl/server'
 import type { PortableTextBlock } from 'next-sanity'
@@ -7,7 +8,6 @@ import { ArticleJsonLd } from 'next-seo'
 import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
 import type { Figure, Image } from '@/core/Image/imageUtilities'
 import TransformableIcon from '@/icons/TransformableIcon'
-import { isDateAfter } from '@/lib/helpers/dateUtilities'
 import { getFullUrl } from '@/lib/helpers/getFullUrl'
 import { resolveOpenGraphImage } from '@/sanity/lib/utils'
 import { DefaultHero } from '@/sections/Hero/DefaultHero'
@@ -52,9 +52,20 @@ const NewsPage = async ({
 
   const fullUrl = getFullUrl(slug ?? '', locale)
 
-  const modifiedDate = isDateAfter(publishDateTime, updatedAt)
+  /*   const modifiedDate = isDateAfter(publishDateTime, updatedAt)
+    ? publishDateTime
+    : updatedAt */
+
+  //Is publishDateTime after updatedAt, then set modifiedDate to publishDateTime, else set to updatedAt
+  const modifiedDate = isAfter(new Date(publishDateTime), new Date(updatedAt))
     ? publishDateTime
     : updatedAt
+
+  const showModifiedDate = isAfter(
+    new Date(modifiedDate),
+    // publishDateTime + 5 minutes
+    new Date(new Date(publishDateTime).getTime() + 5 * 60000),
+  )
   const ogImage = resolveOpenGraphImage(openGraphImage ?? heroImage?.image)
 
   const formattedContent = content.map(block => ({
@@ -62,31 +73,22 @@ const NewsPage = async ({
     markDefs: block.markDefs || [],
   }))
   const IFrame = dynamic(() => import('@/core/IFrame/IFrame'))
+  console.log('publishDateTime', publishDateTime)
+
   const publishedInformation = (
-    <div className='grid grid-cols-[min-content_1fr] items-start gap-2 pb-12 text-base lg:flex lg:items-center dark:text-white-100'>
+    <div className='grid grid-cols-[min-content_1fr] items-start gap-2 text-base lg:flex lg:items-center lg:pb-12 dark:text-white-100'>
       <TransformableIcon iconData={calendar} className='md:-mt-1' />
       <div className='flex flex-col items-start gap-2 lg:flex-row lg:items-center'>
         <FormattedDateTime datetime={publishDateTime} />
         <div className='flex lg:items-center'>
-          {
-            // publishDateTime + 5 minutes
-            isDateAfter(
-              modifiedDate,
-              new Date(
-                new Date(publishDateTime).getTime() + 5 * 60000,
-              ).toISOString(),
-            ) && (
-              <>
-                <div className='mr-2 hidden lg:flex'>|</div>
-                {intl('last_modified') ?? 'Last modified'}
-                <span className='w-1' />
-                <FormattedDateTime
-                  datetime={modifiedDate}
-                  showTimezone={false}
-                />
-              </>
-            )
-          }
+          {showModifiedDate && (
+            <>
+              <div className='mr-2 hidden lg:flex'>|</div>
+              {intl('last_modified') ?? 'Last modified'}
+              <span className='w-1' />
+              <FormattedDateTime datetime={modifiedDate} showTimezone={false} />
+            </>
+          )}
         </div>
       </div>
     </div>

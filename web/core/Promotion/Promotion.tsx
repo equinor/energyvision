@@ -55,6 +55,17 @@ export type PromotionProps = {
   hasSectionTitle?: boolean
 } & Omit<BaseLinkProps, 'type'>
 
+const getPlainText = (text: string | PortableTextBlock[] | undefined) => {
+  if (typeof text === 'undefined') return text
+
+  return Array.isArray(text)
+    ? text
+        .map(block => block.children.map(span => span.text).join(''))
+        .join('\n')
+        .replace(/\n/g, ' ')
+    : text
+}
+
 export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
   function Promotion(
     {
@@ -74,48 +85,12 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
     },
     ref,
   ) {
-    const plainText = Array.isArray(title)
-      ? title
-          .map(block => block.children.map(span => span.text).join(''))
-          .join('\n')
-          .replace(/\n/g, ' ')
-      : title
+    const plainText = getPlainText(title)
 
-    const plainIngress = ingress
-      ?.map(block => block.children.map(span => span.text).join(''))
-      .join('\n')
-      .replace(/\n/g, ' ')
-
-    const layoutDirectionImageClassNames: Record<
-      PromotionLayoutDirection,
-      string
-    > = {
-      col: `aspect-video w-full h-full`,
-      row: `h-full w-full ${
-        gridColumns && gridColumns === '2'
-          ? '2xl:aspect-[1.08]'
-          : '2xl:aspect-4/5'
-      }`,
-    }
+    const plainIngress = getPlainText(ingress)
 
     const showArrow = true //type !== 'extended'
     const _layoutDirection = type === 'extended' ? 'col' : layoutDirection
-
-    const paddingOnTypes: Record<PromotionType, string> = {
-      compact: _layoutDirection === 'col' ? 'px-6 pt-6 pb-8' : 'py-4 pr-3 pl-4',
-      extended: 'pt-6 md:pt-8 pb-6 px-6',
-    }
-    const layoutOnTypes: Record<PromotionType, string> = {
-      compact:
-        String(_layoutDirection) === String('col')
-          ? 'grid-cols-1 grid-rows-[53%_auto]'
-          : `min-h-[120px] grid-cols-[31%_auto] grid-rows-1`,
-      extended: 'grid-cols-1 grid-rows-[31%_auto]',
-    }
-    const lineClampOnTypes: Record<PromotionType, string> = {
-      compact: layoutDirection === 'col' ? 'line-clamp-2' : 'line-clamp-3',
-      extended: 'line-clamp-5',
-    }
 
     return href ? (
       <BaseLink
@@ -125,11 +100,16 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
         locale={locale}
         prefetch={false}
         className={twMerge(
-          `group/link h-full w-full rounded-card ${
-            colorKeyToUtilityMap[background ?? 'gray-20'].background
-          } grid ${
-            layoutOnTypes[type]
-          } focus-visible:envis-outline dark:focus-visible:envis-outline-invert focus:outline-none`,
+          `group/link grid h-fit w-full rounded-card`,
+          colorKeyToUtilityMap[background ?? 'gray-20'].background,
+          type === 'compact' &&
+            _layoutDirection === 'col' &&
+            'grid-cols-1 grid-rows-[53%_auto]',
+          type === 'compact' &&
+            _layoutDirection === 'row' &&
+            'min-h-30 grid-cols-[31%_auto] grid-rows-1',
+          type === 'extended' &&
+            'grid-cols-1 grid-rows-[minmax(31%,200px)_1fr]',
           className,
         )}
       >
@@ -138,7 +118,13 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
             grid='xs'
             image={image}
             fill
-            className={`${layoutDirectionImageClassNames[_layoutDirection]}`}
+            className={twMerge(
+              _layoutDirection === 'col' && `aspect-video h-full w-full`,
+              _layoutDirection === 'row' && `h-full w-full`,
+              _layoutDirection === 'row' && gridColumns && gridColumns === '2'
+                ? '2xl:aspect-[1.08]'
+                : '2xl:aspect-4/5',
+            )}
             aspectRatio={_layoutDirection === 'col' ? '16:9' : '4:3'}
             imageClassName={`${
               _layoutDirection !== 'col' ? 'rounded-s-card' : 'rounded-t-card'
@@ -146,15 +132,29 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
           />
         ) : (
           <div
-            className={`flex h-full w-full items-center justify-center bg-autumn-storm-60 ${_layoutDirection === 'col' ? 'aspect-video rounded-t-card' : 'aspect-4/3 rounded-s-card'}`}
+            className={twMerge(
+              `flex h-full w-full items-center justify-center bg-autumn-storm-60`,
+              _layoutDirection === 'col'
+                ? 'aspect-video rounded-t-card'
+                : 'aspect-4/3 rounded-s-card',
+            )}
           >
             <LogoPrimary className='h-auto w-[20%] text-white-100' />
           </div>
         )}
         <div
-          className={`h-full min-h-25 w-full ${paddingOnTypes[type]} flex ${
-            type === 'extended' ? 'items-start' : 'items-center'
-          } `}
+          className={twMerge(
+            `flex h-fit w-full`,
+            type === 'extended' &&
+              'min-h-96 items-start px-6 pt-6 pb-6 md:pt-8',
+            type === 'compact' && 'min-h-25 items-center',
+            type === 'compact' &&
+              _layoutDirection === 'col' &&
+              'px-6 pt-6 pb-8',
+            type === 'compact' &&
+              _layoutDirection === 'row' &&
+              'py-4 pr-3 pl-4',
+          )}
         >
           <div
             className={`${type === 'extended' ? 'mb-12' : ''} max-w-prose grow`}
@@ -173,7 +173,15 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
               <Typography
                 group='card'
                 variant='ingress'
-                className={`${lineClampOnTypes[type]}`}
+                className={twMerge(
+                  type === 'compact' &&
+                    _layoutDirection === 'col' &&
+                    'line-clamp-2',
+                  type === 'compact' &&
+                    _layoutDirection === 'row' &&
+                    'line-clamp-3',
+                  type === 'extended' && 'line-clamp-5',
+                )}
               >
                 {plainIngress}
               </Typography>

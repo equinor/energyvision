@@ -157,8 +157,7 @@ const PromotionsBlock = ({
   }, [promotions, eventsCount])
 
   const onColorBg = designOptions?.background?.backgroundColor !== 'White'
-  const paddingClassName = `px-layout-sm lg:px-layout-lg`
-
+  console.log('promotionList', promotionList)
   return (
     <section
       className={twMerge(`relative ${bg} ${dark ? 'dark' : ''}`, className)}
@@ -167,7 +166,12 @@ const PromotionsBlock = ({
       <div className='mx-auto max-w-content'>
         {(title || ingress || viewAllLink?.link?.slug) && (
           <div
-            className={`flex flex-col pb-6 ${promotionVariant === 'promoteEvents' && backgroundImage ? 'dark relative z-10 pt-30' : ''} ${paddingClassName}`}
+            className={twMerge(
+              'flex flex-col px-layout-sm pb-6 lg:px-layout-lg',
+              promotionVariant === 'promoteEvents' &&
+                backgroundImage &&
+                'dark relative z-10 pt-30',
+            )}
           >
             {/*@ts-ignore:todo */}
             <Blocks variant='h2' id={sectionTitleId} value={title} />
@@ -195,16 +199,13 @@ const PromotionsBlock = ({
           />
         ) : (
           <ul
-            className={`pt-6 ${
-              promotionList?.length === 1
-                ? 'mx-layout-sm md:mx-layout-lg'
-                : `3xl:mx-layout-md mx-layout-sm grid auto-rows-fr grid-cols-1 ${
-                    promotionList?.length === 3
-                      ? 'md:grid-cols-3'
-                      : 'md:grid-cols-2 2xl:grid-cols-3'
-                  } gap-x-4 gap-y-3`
-            }
-              `}
+            className={twMerge(
+              'mx-layout-sm pt-6',
+              promotionList?.length === 1 && 'md:mx-layout-lg',
+              promotionList?.length > 1 &&
+                `3xl:mx-layout-md grid auto-rows-fr grid-cols-1 gap-x-4 gap-y-3 md:grid-cols-2 2xl:grid-cols-3`,
+              promotionList?.length === 3 && 'md:grid-cols-3',
+            )}
           >
             {promotionList?.map((promotion: any) => {
               return (

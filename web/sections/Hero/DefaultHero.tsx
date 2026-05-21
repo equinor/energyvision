@@ -1,4 +1,5 @@
 import type { PortableTextBlock } from '@portabletext/types'
+import { fi } from 'date-fns/locale'
 import type { HTMLAttributes, ReactNode } from 'react'
 import type { Figure, ImageRatioKeys } from '@/core/Image/imageUtilities'
 import { Picture } from '@/core/Picture/Picture'
@@ -80,22 +81,25 @@ export const DefaultHero = ({
       <div className='mx-auto max-w-content'>
         {figure && (
           <div
-            className={`${isColorBg ? 'lg:-mt-news-banner-vertical' : ''} lg:px-layout-md`}
+            className={`lg:px-layout-sm ${isColorBg ? 'lg:-mt-news-banner-vertical' : ''}`}
           >
             <Picture
               image={figure.image}
               desktopAspectRatio={ratio}
-              figCaptionClassName={figCaptionClassName}
+              figCaptionClassName={twMerge('px-layout-sm', figCaptionClassName)}
               caption={figure?.caption}
               attribution={figure?.attribution}
               figureClassName={twMerge(`w-full`, imageWrapperClassName)}
-              className={imageClassName}
+              className={twMerge('', imageClassName)}
               withLayoutPx={false}
             />
           </div>
         )}
         {magazineTags && magazineTags?.length > 0 && (
-          <MagazineTagBar tags={magazineTags} />
+          <MagazineTagBar
+            tags={magazineTags}
+            className='px-layout-sm lg:px-layout-lg'
+          />
         )}
       </div>
     </div>

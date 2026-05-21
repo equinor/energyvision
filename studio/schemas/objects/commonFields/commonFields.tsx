@@ -128,25 +128,45 @@ export const layoutGrid = (
     ...(hiddenCallBack && { hidden: hiddenCallBack }),
   }
 }
-
-export const gridColumns = {
-  title: 'Number of grid columns',
-  name: 'gridColumns',
-  type: 'string',
-  description: 'Select number of grid column. Mobile it will only be 1 column.',
-  options: {
-    list: [
-      { title: '2', value: '2' },
-      { title: '3', value: '3' },
-      { title: '4', value: '4' },
-    ],
-  },
-  initialValue: '3',
+export const gridColumns = ({
+  hiddenCallBack,
+  fieldset,
+  initialValue,
+  description,
+  validation,
+}: {
+  hiddenCallBack?: any
+  fieldset?: string | undefined
+  initialValue?: string | undefined
+  description?: string | undefined
+  validation?: any
+}) => {
+  return {
+    title: 'Number of grid columns',
+    name: 'gridColumns',
+    type: 'string',
+    description:
+      description ||
+      'Select number of grid column. Mobile it will only be 1 column.',
+    options: {
+      list: [
+        { title: '2', value: '2' },
+        { title: '3', value: '3' },
+        { title: '4', value: '4' },
+      ],
+    },
+    initialValue: initialValue || '3',
+    ...(fieldset && { fieldset }), //fieldset: 'design',
+    ...(hiddenCallBack && { hidden: hiddenCallBack }),
+    ...(validation && { validation }),
+  }
+}
+/*  initialValue: '3',
   hidden: ({ parent }: any) => {
     return parent?.layoutGrid === 'lg'
   },
-  fieldset: 'design',
-}
+  fieldset: 'design',*/
+
 export const layoutDirection = {
   title: 'Layout direction',
   name: 'layoutDirection',

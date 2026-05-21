@@ -1,7 +1,3 @@
-/* eslint-disable import/no-unresolved */
-
-import { Card, Flex, Radio, Text } from '@sanity/ui'
-import { useCallback } from 'react'
 import { BsFileImageFill } from 'react-icons/bs'
 import { FaImage } from 'react-icons/fa'
 import { LuText } from 'react-icons/lu'
@@ -13,230 +9,55 @@ import {
   RxTextAlignTop,
 } from 'react-icons/rx'
 import { TbFloatLeft, TbFloatRight } from 'react-icons/tb'
-import { type StringInputProps, set, useFormValue } from 'sanity'
+import type { StringInputProps } from 'sanity'
+import { capitalizeFirstLetter } from '@/helpers/formatters'
 import { InlineImageFullWidth } from '../../icons'
-import { RadioIconSelector } from '../components'
+import { OptionButtons } from '../components/OptionButtons/OptionButtons'
 import type { ImageWithAlt } from './imageWithAlt'
 
-const contentAlignmentOptions = [
-  { value: 'top', icon: <RxTextAlignTop size={24} /> },
-  { value: 'center', icon: <RxTextAlignCenter size={24} /> },
-  { value: 'bottom', icon: <RxTextAlignBottom size={24} /> },
+const textVerticalAlignmentOptions = [
+  { value: 'top', icon: <RxTextAlignTop /> },
+  { value: 'center', icon: <RxTextAlignCenter /> },
+  { value: 'bottom', icon: <RxTextAlignBottom /> },
 ]
 
-type LayoutInputProps = {
-  options: any[]
-} & StringInputProps
-
-export const OrientationInput = (props: LayoutInputProps) => {
-  const { onChange, schemaType, value = '' } = props
-
-  const getOrientationIcon = (orientation: string) => {
-    switch (orientation) {
-      case 'square':
-        return <MdImage size={33} />
-      case 'portrait':
-        return <BsFileImageFill size={33} />
-      default:
-        return <FaImage size={33} />
-    }
-  }
-
-  const handleChange = useCallback(
-    (event: any) => {
-      const nextValue = event.currentTarget.value
-      onChange(set(nextValue))
-    },
-    [onChange],
-  )
-
-  return (
-    <Flex gap={2}>
-      {schemaType?.options?.list?.map((option: any) => {
-        //@ts-ignore
-        return (
-          <Card
-            key={option.value}
-            paddingY={2}
-            paddingX={3}
-            radius={2}
-            shadow={1}
-            width='fit-content'
-          >
-            <Flex
-              direction='row'
-              align='center'
-              width='100%'
-              height='stretch'
-              gap={2}
-            >
-              <Radio
-                checked={value === option.value}
-                name={option.value}
-                id={option.value}
-                onChange={handleChange}
-                value={option.value}
-              />
-              <Flex gap={2} direction='column' align='center' width='100%'>
-                {getOrientationIcon(option?.value)}
-                <Text as='label' htmlFor={option.value} size={1}>
-                  {option.title}
-                </Text>
-              </Flex>
-            </Flex>
-          </Card>
-        )
-      })}
-    </Flex>
-  )
+const imageOrientationOptions = [
+  { value: 'landscape', icon: <FaImage /> },
+  { value: 'portrait', icon: <BsFileImageFill /> },
+  { value: 'square', icon: <MdImage /> },
+]
+const layoutOptions = [
+  { value: 'full', icon: <InlineImageFullWidth /> },
+  //align with text,inner column
+  { value: 'center', icon: <PiTextAlignJustifyBold /> },
+  { value: 'left', icon: <TbFloatLeft /> },
+  { value: 'right', icon: <TbFloatRight /> },
+]
+const layoutOptionsConfig = {
+  square: ['right', 'left'],
+  landscape: ['right', 'left', 'full', 'center'],
 }
 
-export const ImageCaptionLayoutInput = (props: LayoutInputProps) => {
-  const { onChange, schemaType, value = '' } = props
-
-  const handleChange = useCallback(
-    (event: any) => {
-      const nextValue = event.currentTarget.value
-      onChange(set(nextValue))
-    },
-    [onChange],
-  )
-
-  return (
-    <Flex gap={2}>
-      {schemaType?.options?.list?.map((option: any) => {
-        //@ts-ignore
-        return (
-          <Card
-            key={option.value}
-            paddingY={2}
-            paddingX={3}
-            radius={2}
-            shadow={1}
-            width='fit-content'
-          >
-            <Flex
-              direction='row'
-              align='center'
-              width='100%'
-              height='stretch'
-              gap={2}
-            >
-              <Radio
-                checked={value === option.value}
-                name={option.value}
-                id={option.value}
-                onChange={handleChange}
-                value={option.value}
-              />
-              <Flex gap={2} direction='column' align='center' width='100%'>
-                <div
-                  style={{
-                    display: 'flex',
-                    flexDirection:
-                      option?.value === 'left' ? 'row' : 'row-reverse',
-                  }}
-                >
-                  {/*@ts-ignore:todo*/}
-                  <MdImage size={20} />
-                  {/*@ts-ignore:todo*/}
-                  <LuText size={20} />
-                </div>
-                <Text as='label' htmlFor={option.value} size={1}>
-                  {option.title}
-                </Text>
-              </Flex>
-            </Flex>
-          </Card>
-        )
-      })}
-    </Flex>
-  )
-}
-
-export const LayoutInput = (props: LayoutInputProps) => {
-  const { onChange, schemaType, value = '', path } = props
-
-  const parentPath = path.slice(0, -1) // Remove the last segment to get parent path
-  const selectedImageOrientationField = useFormValue([
-    ...parentPath,
-    'imageOrientation',
-  ])
-  const validOptions = {
-    square: ['right', 'left'],
-    landscape: ['right', 'left', 'full', 'center'],
-  }
-
-  const getAlignmentIcon = (alignment: string) => {
-    switch (alignment) {
-      case 'full':
-        return <InlineImageFullWidth />
-      case 'center':
-        return <PiTextAlignJustifyBold size={33} />
-      case 'right':
-        return <TbFloatRight size={33} />
-      default:
-        return <TbFloatLeft size={33} />
-    }
-  }
-
-  const validList =
-    //@ts-ignore
-    validOptions[String(selectedImageOrientationField) ?? 'landscape']
-
-  const filteredOptions = schemaType?.options?.list?.filter(option =>
-    //@ts-ignore
-    validList.includes(option?.value),
-  )
-
-  const handleChange = useCallback(
-    (event: any) => {
-      const nextValue = event.currentTarget.value
-      onChange(set(nextValue))
-    },
-    [onChange],
-  )
-
-  return (
-    <Flex gap={2}>
-      {filteredOptions?.map((option: any) => {
-        //@ts-ignore
-        return (
-          <Card
-            key={option.value}
-            paddingY={2}
-            paddingX={3}
-            radius={2}
-            shadow={1}
-            width='fit-content'
-          >
-            <Flex
-              direction='row'
-              align='center'
-              width='100%'
-              height='stretch'
-              gap={2}
-            >
-              <Radio
-                checked={value === option.value}
-                name={option.value}
-                id={option.value}
-                onChange={handleChange}
-                value={option.value}
-              />
-              <Flex gap={2} direction='column' align='center' width='100%'>
-                {getAlignmentIcon(option?.value)}
-                <Text as='label' htmlFor={option.value} size={1}>
-                  {option.title}
-                </Text>
-              </Flex>
-            </Flex>
-          </Card>
-        )
-      })}
-    </Flex>
-  )
-}
+const portraitLayoutOptions = [
+  {
+    value: 'left',
+    icon: () => (
+      <div style={{ display: 'flex' }}>
+        <MdImage size={20} />
+        <LuText size={20} />
+      </div>
+    ),
+  },
+  {
+    value: 'right',
+    icon: () => (
+      <div style={{ display: 'flex' }}>
+        <LuText size={20} />
+        <MdImage size={20} />
+      </div>
+    ),
+  },
+]
 
 export type PositionedInlineImage = {
   _type: 'positionedInlineImage'
@@ -272,15 +93,17 @@ export default {
       type: 'string',
       options: {
         list: [
-          { title: 'Portrait', value: 'portrait' },
-          { title: 'Landscape', value: 'landscape' },
-          { title: 'Square', value: 'square' },
+          ...imageOrientationOptions.map(option => ({
+            title: capitalizeFirstLetter(option.value),
+            value: option.value,
+          })),
         ],
         layout: 'radio',
       },
       initialValue: 'landscape',
       components: {
-        input: OrientationInput,
+        input: (props: StringInputProps) =>
+          OptionButtons(props, imageOrientationOptions),
       },
     },
     {
@@ -289,20 +112,48 @@ export default {
       type: 'string',
       options: {
         list: [
-          { title: 'Full', value: 'full' },
-          { title: 'Aligned with text', value: 'center' },
-          { title: 'Left', value: 'left' },
-          { title: 'Right', value: 'right' },
+          ...layoutOptions.map(option => ({
+            title: capitalizeFirstLetter(option.value),
+            value: option.value,
+          })),
         ],
-        layout: 'radio',
       },
       initialValue: 'left',
       components: {
-        input: LayoutInput,
+        input: (props: StringInputProps) =>
+          OptionButtons(
+            props,
+            layoutOptions,
+            layoutOptionsConfig,
+            'imageOrientation',
+            props.path.slice(0, -1),
+          ),
       },
       hidden: ({ parent }: any) => {
         //When portrait, only aligned with text option is available and it doesn't make sense to show layout options
         return parent?.imageOrientation === 'portrait'
+      },
+    },
+    {
+      name: 'landscapeRatio',
+      title: 'Landscape image aspect ratio',
+      type: 'string',
+      options: {
+        list: [
+          { title: '16:9', value: '16:9' },
+          { title: '21:9', value: '21:9' },
+          { title: 'Original', value: 'original' },
+        ],
+      },
+      initialValue: '16:9',
+      hidden: ({ parent }: any) => {
+        if (parent?.imageOrientation !== 'landscape') {
+          return true
+        }
+        if (parent?.layout !== 'center') {
+          return true
+        }
+        return false
       },
     },
     {
@@ -311,14 +162,16 @@ export default {
       type: 'string',
       options: {
         list: [
-          { title: 'Left', value: 'left' },
-          { title: 'Right', value: 'right' },
+          ...portraitLayoutOptions.map(option => ({
+            title: capitalizeFirstLetter(option.value),
+            value: option.value,
+          })),
         ],
-        layout: 'radio',
       },
       initialValue: 'left',
       components: {
-        input: ImageCaptionLayoutInput,
+        input: (props: StringInputProps) =>
+          OptionButtons(props, portraitLayoutOptions),
       },
       hidden: ({ parent }: any) => {
         return parent?.imageOrientation !== 'portrait'
@@ -326,25 +179,21 @@ export default {
     },
     {
       name: 'centerCaptionAlignment',
-      title: 'Caption vertical alignment',
+      title: 'Vertical caption alignment',
       type: 'string',
-      initialValue: 'left',
+      initialValue: 'top',
+      options: {
+        list: [
+          ...textVerticalAlignmentOptions.map(option => ({
+            title: capitalizeFirstLetter(option.value),
+            value: option.value,
+          })),
+        ],
+        layout: 'radio',
+      },
       components: {
-        //@ts-ignore
-        input: function (props: ObjectInputProps) {
-          const { value, onChange, schemaType } = props
-          const { initialValue } = schemaType
-          return (
-            <RadioIconSelector
-              name='centerCaptionAlignment'
-              //@ts-ignore
-              options={contentAlignmentOptions}
-              defaultValue={String(initialValue) ?? 'left'}
-              currentValue={String(value)}
-              onChange={onChange}
-            />
-          )
-        },
+        input: (props: StringInputProps) =>
+          OptionButtons(props, textVerticalAlignmentOptions),
       },
       hidden: ({ parent }: any) => {
         return parent?.imageOrientation !== 'portrait'

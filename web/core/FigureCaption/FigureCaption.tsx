@@ -37,14 +37,21 @@ export const FigureCaption = forwardRef<HTMLElement, FigureCaptionProps>(
           className,
         )}
       >
-        {(caption || attribution) && (
+        {caption && (
           <Typography
             group='plain'
             variant='div'
             className='max-w-prose leading-normal'
           >
             {caption}
-            {`${caption && attribution ? '. ' : ''}`}
+          </Typography>
+        )}
+        {attribution && (
+          <Typography
+            group='plain'
+            variant='div'
+            className='max-w-prose leading-normal'
+          >
             {attribution}
           </Typography>
         )}
