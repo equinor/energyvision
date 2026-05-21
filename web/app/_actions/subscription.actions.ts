@@ -1,5 +1,4 @@
 'use server'
-import axios from 'axios'
 import { getTranslations } from 'next-intl/server'
 import type z from 'zod'
 import { subscribeSchema } from '@/lib/zodSchemas/zodSchemas'
@@ -14,14 +13,6 @@ const MAKE_API_KEY = process.env.MAKE_API_KEY || ''
 const SUBSCRIBER_LIST_ID_EN = process.env.MAKE_SUBSCRIBER_LIST_ID_EN
 const SUBSCRIBER_LIST_ID_NO = process.env.MAKE_SUBSCRIBER_LIST_ID_NO
 const MAKE_API_USER = process.env.MAKE_API_USERID || ''
-
-const subscriberApi = axios.create({
-  baseURL: MAKE_SUBSCRIBER_API_BASE_URL,
-  headers: {
-    'Content-Type': 'application/json',
-    Authorization: `Basic ${Buffer.from(`${MAKE_API_USER}:${MAKE_API_KEY}`).toString('base64')}`,
-  },
-})
 
 type SubscribeProps = {
   locale: newsletterCategoryLocale
@@ -56,13 +47,20 @@ export async function subscribe({
       category => newsletterCategoryMap[locale][category],
     )
 
-    const response = await subscriberApi.post(
-      `/subscribers?subscriber_list_id=${
+    const response = await fetch(
+      `${MAKE_SUBSCRIBER_API_BASE_URL}/subscribers?subscriber_list_id=${
         locale === 'no' ? SUBSCRIBER_LIST_ID_NO : SUBSCRIBER_LIST_ID_EN
       }&tag=merge`,
       {
-        email,
-        tags,
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Basic ${Buffer.from(`${MAKE_API_USER}:${MAKE_API_KEY}`).toString('base64')}`,
+        },
+        body: JSON.stringify({
+          email,
+          tags,
+        }),
       },
     )
 

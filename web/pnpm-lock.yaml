@@ -92,9 +92,6 @@ importers:
       algoliasearch:
         specifier: ^5.50.1
         version: 5.50.1
-      axios:
-        specifier: 1.13.5
-        version: 1.13.5
       clsx:
         specifier: ^2.1.1
         version: 2.1.1

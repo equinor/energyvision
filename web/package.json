@@ -46,7 +46,6 @@
     "@sentry/nextjs": "10.47.0",
     "@sindresorhus/slugify": "^3.0.0",
     "algoliasearch": "^5.50.1",
-    "axios": "1.13.5",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "easy-soap-request": "^5.9.0",
