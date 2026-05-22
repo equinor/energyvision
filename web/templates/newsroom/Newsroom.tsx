@@ -189,7 +189,7 @@ const NewsRoomTemplate = forwardRef<HTMLDivElement, NewsRoomTemplateProps>(
 
             <div className='mx-auto flex w-full max-w-fullwidth flex-col gap-8 pt-topbar lg:gap-12'>
               <div className='dark bg-slate-blue-95 py-24'>
-                <div className='mx-auto flex grid-rows-2 flex-col gap-4 px-layout-sm'>
+                <div className='mx-auto flex max-w-content grid-rows-2 flex-col gap-4 px-layout-sm'>
                   {title && (
                     <Blocks
                       value={title}
@@ -244,7 +244,7 @@ const NewsRoomTemplate = forwardRef<HTMLDivElement, NewsRoomTemplateProps>(
                   </div>
                 </div>
               </div>
-              <div className='mx-auto flex w-full flex-col gap-8 pb-12 lg:grid lg:grid-cols-[27%_1fr] lg:gap-12 lg:px-layout-sm'>
+              <div className='mx-auto flex w-full max-w-content flex-col gap-8 pb-12 lg:grid lg:grid-cols-[27%_1fr] lg:gap-12 lg:px-layout-sm'>
                 <aside className='flex flex-col gap-4 max-lg:px-layout-sm lg:sticky lg:top-6 lg:gap-6 lg:self-start'>
                   <NewsRoomFilters />
                 </aside>
