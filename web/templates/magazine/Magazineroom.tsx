@@ -84,7 +84,7 @@ const MagazineRoom = ({
       )}
       {magazineTags?.length > 0 && <MagazineTagBar tags={magazineTags} />}
       <PaginationContextProvider defaultRef={resultsRef}>
-        <ul className='mx-auto grid w-full scroll-mt-24 auto-rows-fr grid-cols-1 gap-8 px-layout-sm py-12 sm:grid-cols-2 xl:grid-cols-3'>
+        <ul className='mx-auto grid w-full max-w-content max-w-viewport scroll-mt-24 auto-rows-fr grid-cols-card content-center justify-center gap-8 px-layout-sm py-12'>
           {isLoading &&
             Array.from({ length: 5 }, (_v, i) => i).map(item => (
               <li key={item}>
