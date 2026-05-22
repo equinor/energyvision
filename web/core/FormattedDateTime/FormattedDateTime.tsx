@@ -38,14 +38,6 @@ const getTimezoneName = (
   locale = 'en-GB',
   browserTimeZone?: string,
 ) => {
-  console.log('browserTimeZone', browserTimeZone)
-  console.log(
-    'test',
-    Intl.DateTimeFormat(locale, {
-      timeZone: browserTimeZone || 'Europe/Oslo',
-      timeZoneName: 'short',
-    }),
-  )
   return (
     new Intl.DateTimeFormat(locale, {
       timeZone: browserTimeZone || 'Europe/Oslo',

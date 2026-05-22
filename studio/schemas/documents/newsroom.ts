@@ -48,7 +48,7 @@ export default {
         if (typeof value === 'undefined' || !value) {
           return false
         }
-        if (value?.current === newsSlug[document?.lang as string]) {
+        if (value?.current === `/${newsSlug[document?.lang as string]}`) {
           return true
         }
         return false

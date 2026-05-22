@@ -28,11 +28,11 @@ export const inlineSlugsQuery = /* groq */ `
 //newsroom, magazineIndex
 export const singletonsSlugsQuery = /* groq */ `
       "currentSlug": {
-        "slug": *[(_type match "route_" + $lang) && references(^._id)][0].slug.current,
+        "slug": slug.current,
         "lang":$lang,
       },
       "translationSlugs": *[_type == "translation.metadata" && references(^._id)].translations[].value->{
-      "slug" : *[_type match "route*" && references(^._id)][0].slug.current, 
+      "slug" :@.slug.current, 
       lang,
       }
 `
