@@ -15,14 +15,14 @@ const campaignTitleBlocks: MarkType = {
   ),
   //@ts-ignore
   largeText: ({ children }: PortableTextBlock) => (
-    <p className='block w-fit text-pretty rounded-xs bg-white-100 text-2xl leading-none'>
+    <p className='block w-fit text-balance rounded-xs bg-white-100 text-2xl leading-none'>
       {<>{children}</>}
     </p>
   ),
   //@ts-ignore
   extraLargeText: ({ children }: PortableTextBlock) => {
     return (
-      <p className='mt-4 block w-fit text-pretty rounded-xs bg-white-100 font-semibold text-4xl leading-none lg:text-8xl'>
+      <p className='mt-4 block w-fit text-balance rounded-xs bg-white-100 font-semibold text-4xl leading-none lg:text-8xl'>
         {<>{children}</>}
       </p>
     )

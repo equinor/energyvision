@@ -90,7 +90,7 @@ export const FactBox = forwardRef<HTMLElement, FactBoxProps>(function FactBox(
           {content && (
             <Blocks
               value={content}
-              blockClassName={`w-full text-pretty ${useTwoColumns ? 'lg:max-w-full lg:columns-2' : ''}`}
+              blockClassName={`w-full ${useTwoColumns ? 'lg:max-w-full lg:columns-2' : ''}`}
             />
           )}
         </div>

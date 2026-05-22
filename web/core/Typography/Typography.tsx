@@ -135,7 +135,7 @@ export const Typography: OverridableComponent<TypographyProps, HTMLElement> =
         ref={ref}
         {...(id && { id: id })}
         className={twMerge(
-          'wrap-break-word max-w-text text-pretty text-slate-80 dark:text-white-100',
+          'wrap-break-word max-w-text text-slate-80 dark:text-white-100',
           typography,
           className,
         )}

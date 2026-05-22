@@ -53,8 +53,6 @@ export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(
     const titleClassNames = twMerge(
       `group-hover/card:underline
     group-focus-visible/card:underline
-    max-w-prose
-    text-pretty
     dark:text-white-100
   `,
       titleClassName,
@@ -63,7 +61,7 @@ export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(
     return eyebrow ? (
       <hgroup
         ref={ref}
-        className={twMerge('flex w-full flex-col gap-2 text-pretty', className)}
+        className={twMerge('flex w-full flex-col gap-2', className)}
         {...rest}
       >
         <Typography variant='eyebrow' className={eyebrowClassName}>

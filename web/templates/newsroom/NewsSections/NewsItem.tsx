@@ -54,39 +54,36 @@ const NewsItem = forwardRef<HTMLLIElement, NewsListItemProps>(function NewsItem(
             <Typography
               as='h2'
               variant='base'
-              className='max-w-text text-pretty group-hover:underline'
+              className='group-hover:underline'
             >
               {title}
             </Typography>
           )}
         </div>
         <div className='relative aspect-5/4 w-[30%] lg:aspect-video lg:h-full'>
-          {(heroImage?.image?.asset || fallbackImage || thumbnailUrl) && (
-            <>
-              {thumbnailUrl ? (
-                <NextImage
-                  className='relative rounded-2xs object-cover'
-                  src={thumbnailUrl}
-                  alt=''
-                  sizes={getSmallerThanPxLgSizes()}
-                  role={'presentation'}
+          {(heroImage?.image?.asset || fallbackImage || thumbnailUrl) &&
+            (thumbnailUrl ? (
+              <NextImage
+                className='relative rounded-2xs object-cover'
+                src={thumbnailUrl}
+                alt=''
+                sizes={getSmallerThanPxLgSizes()}
+                role={'presentation'}
+              />
+            ) : (
+              (heroImage?.image?.asset || fallbackImage) && (
+                <Image
+                  //@ts-ignore: TODO Fix SanityImage to take SanityImageObject
+                  image={
+                    heroImage?.image?.asset ? heroImage?.image : fallbackImage
+                  }
+                  aria-hidden
+                  grid='xs'
+                  fill
+                  className='rounded-2xs'
                 />
-              ) : (
-                (heroImage?.image?.asset || fallbackImage) && (
-                  <Image
-                    //@ts-ignore: TODO Fix SanityImage to take SanityImageObject
-                    image={
-                      heroImage?.image?.asset ? heroImage?.image : fallbackImage
-                    }
-                    aria-hidden
-                    grid='xs'
-                    fill
-                    className='rounded-2xs'
-                  />
-                )
-              )}
-            </>
-          )}
+              )
+            ))}
         </div>
       </BaseLink>
     </section>

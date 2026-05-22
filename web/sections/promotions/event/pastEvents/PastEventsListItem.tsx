@@ -50,7 +50,7 @@ const PastEventsListItem = forwardRef<
           value={title}
           as={hasSectionTitle ? 'h3' : 'h2'}
           variant='h5'
-          blockClassName='max-w-text pb-4 text-base text-pretty group-hover:underline'
+          blockClassName='max-w-text pb-4 text-base group-hover:underline'
         />
         {location && (
           <div className='flex items-start gap-2'>
@@ -62,7 +62,7 @@ const PastEventsListItem = forwardRef<
             <Typography
               group='plain'
               variant='div'
-              className='max-w-text text-pretty text-sm'
+              className='max-w-text text-sm'
             >
               {location}
             </Typography>

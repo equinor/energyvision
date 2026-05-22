@@ -52,10 +52,6 @@ const NewsPage = async ({
 
   const fullUrl = getFullUrl(slug ?? '', locale)
 
-  /*   const modifiedDate = isDateAfter(publishDateTime, updatedAt)
-    ? publishDateTime
-    : updatedAt */
-
   //Is publishDateTime after updatedAt, then set modifiedDate to publishDateTime, else set to updatedAt
   const modifiedDate = isAfter(new Date(publishDateTime), new Date(updatedAt))
     ? publishDateTime
@@ -73,7 +69,6 @@ const NewsPage = async ({
     markDefs: block.markDefs || [],
   }))
   const IFrame = dynamic(() => import('@/core/IFrame/IFrame'))
-  console.log('publishDateTime', publishDateTime)
 
   const publishedInformation = (
     <div className='grid grid-cols-[min-content_1fr] items-start gap-2 text-base lg:flex lg:items-center lg:pb-12 dark:text-white-100'>
