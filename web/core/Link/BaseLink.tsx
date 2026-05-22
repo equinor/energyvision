@@ -26,7 +26,6 @@ export const BaseLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(
       className = '',
       href,
       skipInternalStyle = false,
-      prefetch = false,
       hrefLang,
       onClick,
     },

@@ -130,8 +130,6 @@ export const Typography: OverridableComponent<TypographyProps, HTMLElement> =
     }
     const TypographyTag = as ?? (`p` as React.ElementType)
 
-    console.log('typography', typography)
-    console.log('classNAme', className)
     return (
       <TypographyTag
         ref={ref}

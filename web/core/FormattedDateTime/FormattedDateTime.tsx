@@ -33,10 +33,22 @@ const getLocaleShortDayFormat = (locale: string) => {
   )
 }
 
-const getTimezoneName = (date: Date, locale = 'en-GB') => {
+const getTimezoneName = (
+  date: Date,
+  locale = 'en-GB',
+  browserTimeZone?: string,
+) => {
+  console.log('browserTimeZone', browserTimeZone)
+  console.log(
+    'test',
+    Intl.DateTimeFormat(locale, {
+      timeZone: browserTimeZone || 'Europe/Oslo',
+      timeZoneName: 'short',
+    }),
+  )
   return (
     new Intl.DateTimeFormat(locale, {
-      timeZone: 'Europe/Oslo',
+      timeZone: browserTimeZone || 'Europe/Oslo',
       timeZoneName: 'short',
     })
       .formatToParts(date)
@@ -90,7 +102,7 @@ const FormattedDateTime = forwardRef<HTMLDivElement, FormattedDateTimeProps>(
   ) => {
     const locale = useLocale()
     const _showTimezone = showTimezone ?? variant !== 'date'
-    console.log('datetime', datetime)
+
     if (!datetime) {
       return null
     }
@@ -109,10 +121,6 @@ const FormattedDateTime = forwardRef<HTMLDivElement, FormattedDateTimeProps>(
       endDate = endDatetime as Date
     }
 
-    const timezoneName = getTimezoneName(date, locale)
-    //const timezoneName = Intl.DateTimeFormat().resolvedOptions().timeZone
-
-    console.log('timezoneName', timezoneName)
     let dateFormat = getLocaleDateFormatting(locale)
 
     if (variant === 'time') {
@@ -122,8 +130,12 @@ const FormattedDateTime = forwardRef<HTMLDivElement, FormattedDateTimeProps>(
       dateFormat = `${dateFormat} HH:mm`
     }
 
+    // Get browser's timezone string automatically
+    const browserTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
+    const timezoneName = getTimezoneName(date, locale, browserTimeZone)
+
     const formattedDate = `${format(date, dateFormat, {
-      in: tz('Europe/Oslo'),
+      in: tz(browserTimeZone),
       locale: locale === 'nb-NO' ? nb : enGB,
     })}${_showTimezone ? `${noTimeZoneParanthesis ? ' ' : ' ('}${timezoneName}${noTimeZoneParanthesis ? '' : ')'}` : ''}`
 
@@ -138,7 +150,7 @@ const FormattedDateTime = forwardRef<HTMLDivElement, FormattedDateTimeProps>(
         {dateIcon && <DateIcon />}
         {timeIcon && <TimeIcon />}
         {variant !== 'period' ? (
-          <time suppressHydrationWarning dateTime={datetime?.toLocaleString()}>
+          <time suppressHydrationWarning dateTime={formattedDate}>
             {formattedDate}
           </time>
         ) : (
@@ -149,7 +161,7 @@ const FormattedDateTime = forwardRef<HTMLDivElement, FormattedDateTimeProps>(
               className='whitespace-nowrap'
             >
               {`${format(date, `${getLocaleShortDayFormat(locale)}`, {
-                in: tz('Europe/Oslo'),
+                in: tz(browserTimeZone),
                 locale: locale === 'nb-NO' ? nb : enGB,
               })}`}
             </time>
@@ -160,7 +172,7 @@ const FormattedDateTime = forwardRef<HTMLDivElement, FormattedDateTimeProps>(
               className='whitespace-nowrap'
             >
               {`${format(endDate, `${getLocaleShortDayFormat(locale)} yyyy`, {
-                in: tz('Europe/Oslo'),
+                in: tz(browserTimeZone),
                 locale: locale === 'nb-NO' ? nb : enGB,
               })}`}
             </time>

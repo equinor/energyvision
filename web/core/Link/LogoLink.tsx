@@ -1,5 +1,5 @@
 import { useTranslations } from 'next-intl'
-import { AnchorHTMLAttributes } from 'react'
+import type { AnchorHTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { LogoSecondary } from '@/core/Logo/Logo'
 import { Link } from '@/i18n/navigation'
