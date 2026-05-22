@@ -56,10 +56,12 @@ export default {
       validation: (Rule: Rule) =>
         Rule.custom((value: { current: string }, ctx: ValidationContext) => {
           if (value?.current) {
-            if (value?.current === newsSlug[ctx?.document?.lang as string]) {
+            if (
+              value?.current === `/${newsSlug[ctx?.document?.lang as string]}`
+            ) {
               return true
             }
-            return `Must be ${newsSlug[ctx?.document?.lang as string]}`
+            return `Must be /${newsSlug[ctx?.document?.lang as string]}`
           }
           return 'Required'
         }),

@@ -47,7 +47,7 @@ export default {
         if (typeof value === 'undefined' || !value) {
           return false
         }
-        if (value?.current === magazineSlug[document?.lang as string]) {
+        if (value?.current === `/${magazineSlug[document?.lang as string]}`) {
           return true
         }
         return false
@@ -56,11 +56,12 @@ export default {
         Rule.custom((value: { current: string }, ctx: ValidationContext) => {
           if (value?.current) {
             if (
-              value?.current === magazineSlug[ctx?.document?.lang as string]
+              value?.current ===
+              `/${magazineSlug[ctx?.document?.lang as string]}`
             ) {
               return true
             }
-            return `Must be ${magazineSlug[ctx?.document?.lang as string]}`
+            return `Must be /${magazineSlug[ctx?.document?.lang as string]}`
           }
           return 'Required'
         }),
