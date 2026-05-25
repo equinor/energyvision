@@ -6,7 +6,7 @@ import { notFound } from 'next/navigation'
 import Script from 'next/script'
 import { hasLocale, NextIntlClientProvider } from 'next-intl'
 import { setRequestLocale } from 'next-intl/server'
-import { VisualEditing } from 'next-sanity/visual-editing'
+
 import { PageProvider } from '@/contexts/pageContext'
 import { dataset } from '@/languageConfig'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
@@ -68,20 +68,29 @@ export default async function LocaleLayout({
   ])
 
   const { errorImage, ...footerData } = footerAndErrorImageData.data || {}
-  const DraftModeToolbar = dynamic(
-    () => import('@/sections/DraftMode/DraftModeToolbar'),
-  )
+
+  async function loadVisualEditing() {
+    if (dataset === 'global-development' && (await draftMode()).isEnabled) {
+      const DraftModeToolbar = dynamic(
+        () => import('@/sections/DraftMode/DraftModeToolbar'),
+      )
+      const VisualEditing = dynamic(() =>
+        import('next-sanity/visual-editing').then(mod => mod.VisualEditing),
+      )
+      return (
+        <>
+          <DraftModeToolbar />
+          <VisualEditing />
+        </>
+      )
+    }
+  }
 
   return (
     <html lang={locale} className={`${equinor.className} `}>
       <body className=''>
         <SanityLive />
-        {dataset === 'global-development' && (await draftMode()).isEnabled && (
-          <>
-            <DraftModeToolbar />
-            <VisualEditing />
-          </>
-        )}
+        {loadVisualEditing()}
         <NextIntlClientProvider>
           <PageProvider
             initialFooterData={footerData}
