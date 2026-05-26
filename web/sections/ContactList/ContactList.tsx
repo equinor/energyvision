@@ -12,7 +12,7 @@ const ContactList = ({ data, className = '' }: ContactListProps) => {
   return (
     <div
       className={twMerge(
-        `flex flex-col px-layout-sm py-20 sm:px-layout-lg"`,
+        `mx-auto my-12 flex max-w-content flex-col px-layout-lg`,
         className,
       )}
     >

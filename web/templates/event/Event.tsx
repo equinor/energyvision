@@ -69,6 +69,8 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
     background: { backgroundColor: 'Moss Green Light' },
   })
 
+  console.log('CONSOLIFIED', data)
+
   return (
     <>
       {eventDate?.date && start && end && (
@@ -172,7 +174,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
           {relatedLinks?.links && relatedLinks.links.length > 0 && (
             <RelatedContent
               data={relatedLinks}
-              className='px-layout-sm sm:px-layout-lg'
+              className='mx-auto max-w-content px-layout-lg'
             />
           )}
         </article>

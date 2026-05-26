@@ -135,7 +135,7 @@ const FormattedDateTime = forwardRef<HTMLDivElement, FormattedDateTimeProps>(
       <div
         ref={ref}
         className={twMerge(
-          `flex items-end gap-2 text-base ${uppercase ? 'uppercase' : ''}`,
+          `inline-flex items-center gap-2 space-x-2 text-base ${uppercase ? 'uppercase' : ''}`,
           className,
         )}
       >
