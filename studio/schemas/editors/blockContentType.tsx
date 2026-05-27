@@ -76,6 +76,7 @@ export type BlockContentProps = {
   highlight?: boolean
   extendedStyles?: BlockStyleDefinition[]
   onlySubSupScriptDecorators?: boolean
+  strikeThrough?: boolean
 }
 
 // Use this when it should not have a dropdown for title variants
@@ -87,6 +88,7 @@ const titleVariantOptions: BlockContentProps = {
   internalLink: false,
   externalLink: false,
   lists: false,
+  strikeThrough: true,
 }
 
 const titleWithDisplayVariantOptions: BlockContentProps = {
@@ -97,6 +99,7 @@ const titleWithDisplayVariantOptions: BlockContentProps = {
   internalLink: false,
   externalLink: false,
   lists: false,
+  strikeThrough: true,
 }
 
 const extendedBlockStylesOptions: BlockContentProps = {
@@ -233,6 +236,7 @@ export const configureBlockContent = (
     highlight: false,
     footnote: false,
     onlySubSupScriptDecorators: false,
+    strikeThrough: false,
   }
 
   //news template
@@ -338,6 +342,7 @@ export const configureBlockContent = (
     highlight,
     footnote,
     onlySubSupScriptDecorators,
+    strikeThrough,
   } = defaultConfigOptions
 
   const config: BlockDefinition = {
@@ -373,6 +378,11 @@ export const configureBlockContent = (
     { title: 'Strong', value: 'strong' },
     { title: 'Emphasis', value: 'em' },
   ]
+
+  const strikeThroughConfig = {
+    title: 'Strikethrough',
+    value: 'strike-through',
+  }
 
   const h2Config = {
     title: 'Heading 2',
@@ -543,6 +553,9 @@ export const configureBlockContent = (
   if (!onlySubSupScriptDecorators) {
     //@ts-ignore: why is it undefined when defined aboved
     config.marks.decorators.push(...StrongEmConfig)
+  }
+  if (strikeThrough) {
+    config.marks?.decorators?.push(strikeThroughConfig)
   }
 
   if (h2) {

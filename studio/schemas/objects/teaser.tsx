@@ -86,7 +86,7 @@ export default {
       components: {
         input: CompactBlockEditor,
       },
-      of: [configureBlockContent({ variant: 'richTitle' })],
+      of: [configureBlockContent({ variant: 'title' })],
     },
     {
       name: 'text',
