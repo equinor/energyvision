@@ -79,17 +79,11 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
   return (
     <article
       id={anchor}
-      className={`w-full ${bg} flex justify-center ${dark ? 'dark' : ''}`}
+      className={`max-w-fullwidth ${bg} ${dark ? 'dark' : ''}`}
     >
-      <div className='flex max-w-content flex-col lg:grid lg:grid-cols-2'>
+      <div className='mx-auto flex max-w-360 flex-col lg:grid lg:grid-cols-2'>
         {(imagePosition === 'left' || useFlexCol) && imageElement}
-        <div
-          className={`max-w-text pt-8 pb-10 lg:pt-18 lg:pb-22 ${
-            imagePosition === 'left'
-              ? 'pr-8 pl-8 lg:pr-44'
-              : 'pr-8 pl-8 lg:pl-44'
-          }`}
-        >
+        <div className={`max-w-text px-8 pt-8 pb-10 lg:pt-18 lg:pb-22`}>
           {overline ? (
             <hgroup className='mb-1'>
               <Typography variant='overline'>{overline}</Typography>

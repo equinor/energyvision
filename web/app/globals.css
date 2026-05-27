@@ -109,7 +109,7 @@ data-ui="checked active" class="data-checked:underline">
 @custom-variant data-expanded (&[data-expanded~='true']);
 @custom-variant data-overflowing (&[data-overflowing~='true']);
 @custom-variant aria-current (&[aria-current~='page']);
-@custom-variant highlight (& > [data-highlight='true']);
+@custom-variant highlight (& [data-highlight='true']);
 
 @custom-variant sticky-menu {
   &:where([data-sticky-menu='true'] *) {
