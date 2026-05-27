@@ -69,8 +69,6 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
     background: { backgroundColor: 'Moss Green Light' },
   })
 
-  console.log('CONSOLIFIED', data)
-
   return (
     <>
       {eventDate?.date && start && end && (
@@ -83,80 +81,87 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
       )}
       <main className='flex flex-col pt-topbar pb-page-content'>
         <article>
-          <div
-            className={`flex flex-col items-start justify-center ${bg} ${dark ? 'dark' : ''} px-layout-lg lg:min-h-[28vh]`}
-          >
-            {title && <Blocks as='h1' variant='3xl' value={title} />}
-            <div className='mt-6 flex flex-col gap-2 *:text-sm *:leading-0'>
-              {!startDayTime && (start || eventDate?.date) && (
-                <FormattedDateTime
-                  variant='date'
-                  dateIcon
-                  datetime={start ?? eventDate?.date}
-                />
-              )}
-              {startDayTime && !endDayTime && (
-                <FormattedDateTime datetime={startDayTime} dateIcon />
-              )}
-              {startDayTime && endDayTime && (
-                <FormattedDateTime
-                  variant='period'
-                  datetime={startDayTime}
-                  endDatetime={endDayTime}
-                  dateIcon
-                />
-              )}
-              {startDayTime && startTimeLabel !== '-' && (
-                <div className='flex items-end gap-2 text-base'>
-                  {startTimeLabel
-                    ? startTimeLabel
-                    : new Date(startDayTime).toTimeString()}
-                  {endDayTime && endTimeLabel && endTimeLabel !== '-' && (
-                    <>
-                      <span className=''>-</span>
-                      {endTimeLabel && endTimeLabel !== '-' && endTimeLabel}
-                      {!endTimeLabel && new Date(startDayTime).toTimeString()}
-                    </>
+          <div className='bg-moss-green-50'>
+            <div className='mx-auto max-w-content px-layout-md py-32'>
+              <div
+                className={`mx-auto max-w-content ${bg} ${dark ? 'dark' : ''}`}
+              >
+                {title && <Blocks as='h1' variant='3xl' value={title} />}
+                <div className='mt-6 flex flex-col gap-2 *:text-sm *:leading-0'>
+                  {!startDayTime && (start || eventDate?.date) && (
+                    <FormattedDateTime
+                      variant='date'
+                      dateIcon
+                      datetime={start ?? eventDate?.date}
+                    />
+                  )}
+                  {startDayTime && !endDayTime && (
+                    <FormattedDateTime datetime={startDayTime} dateIcon />
+                  )}
+                  {startDayTime && endDayTime && (
+                    <FormattedDateTime
+                      variant='period'
+                      datetime={startDayTime}
+                      endDatetime={endDayTime}
+                      dateIcon
+                    />
+                  )}
+                  {startDayTime && startTimeLabel !== '-' && (
+                    <div className='flex items-end gap-2 text-base'>
+                      {startTimeLabel
+                        ? startTimeLabel
+                        : new Date(startDayTime).toTimeString()}
+                      {endDayTime && endTimeLabel && endTimeLabel !== '-' && (
+                        <>
+                          <span className=''>-</span>
+                          {endTimeLabel && endTimeLabel !== '-' && endTimeLabel}
+                          {!endTimeLabel &&
+                            new Date(startDayTime).toTimeString()}
+                        </>
+                      )}
+                    </div>
+                  )}
+                  {!startDayAndTime && start && end && (
+                    <div className={`flex items-end gap-1 *:text-base`}>
+                      <FormattedDateTime
+                        variant='time'
+                        timeIcon={false}
+                        datetime={start}
+                        showTimezone={false}
+                        className='text-sm'
+                        timeClassName='leading-none'
+                      />
+                      <span>-</span>
+                      <FormattedDateTime
+                        variant='time'
+                        datetime={end}
+                        className='text-sm'
+                        timeClassName='leading-none'
+                      />
+                    </div>
                   )}
                 </div>
-              )}
-              {!startDayAndTime && start && end && (
-                <div className={`flex items-end gap-1 *:text-base`}>
-                  <FormattedDateTime
-                    variant='time'
-                    timeIcon={false}
-                    datetime={start}
-                    showTimezone={false}
-                    className='text-sm'
-                    timeClassName='leading-none'
-                  />
-                  <span>-</span>
-                  <FormattedDateTime
-                    variant='time'
-                    datetime={end}
-                    className='text-sm'
-                    timeClassName='leading-none'
-                  />
-                </div>
-              )}
+                {location && <p className='my-2 text-base'>{location}</p>}
+                <AddToCalendar
+                  eventDate={eventDate}
+                  startDateTime={startDayAndTime?.dayTime}
+                  endDateTime={endDayAndTime?.dayTime}
+                  location={location}
+                  title={plainTitle}
+                />
+              </div>
             </div>
-            {location && <p className='my-2 text-base'>{location}</p>}
-            <AddToCalendar
-              eventDate={eventDate}
-              startDateTime={startDayAndTime?.dayTime}
-              endDateTime={endDayAndTime?.dayTime}
-              location={location}
-              title={plainTitle}
-            />
           </div>
           {(ingress || content) && (
             <div className={`mt-14`}>
-              {ingress && (
-                <Blocks group='article' variant='ingress' value={ingress} />
-              )}
-              {content && (
-                <Blocks group='article' variant='body' value={content} />
-              )}
+              <div className='prose prose-md dark:prose-invert mx-auto max-w-content pb-16'>
+                {ingress && (
+                  <Blocks group='article' variant='ingress' value={ingress} />
+                )}
+                {content && (
+                  <Blocks group='article' variant='body' value={content} />
+                )}
+              </div>
             </div>
           )}
           {promotedPeople?.people && promotedPeople?.people.length > 0 && (
