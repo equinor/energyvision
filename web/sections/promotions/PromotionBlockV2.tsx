@@ -39,6 +39,8 @@ export type PromotionBlockProps = {
 
 const getVariantOnType = (type: string): PromotionVariant => {
   switch (type) {
+    case 'externalUrl':
+      return 'externalLink'
     case 'promoteExternalLinkV2':
     case 'externalLinkItem':
     case 'link':
