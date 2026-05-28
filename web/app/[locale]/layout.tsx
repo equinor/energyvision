@@ -106,9 +106,9 @@ export default async function LocaleLayout({
       <Script
         src='https://consent.cookiebot.com/uc.js'
         id='Cookiebot'
-        strategy='afterInteractive'
+        strategy='beforeInteractive'
         data-cbid='f1327b03-7951-45da-a2fd-9181babc783f'
-        //data-blockingmode='auto'
+        data-blockingmode='auto'
         data-culture={locale === 'nb_NO' ? 'nb' : locale}
       />
       <GoogleTagManagerHead />
