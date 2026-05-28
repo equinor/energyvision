@@ -20,7 +20,7 @@ const TextTeaser = ({ data, anchor, className }: TextTeaserProps) => {
 
   const titleElement = (
     <Blocks
-      className={`sm:p-12 lg:p-16 ${titlePosition === 'right' ? 'md:order-last' : ''}`}
+      className={`p-8 sm:p-12 lg:p-16 ${titlePosition === 'right' ? 'md:order-last' : ''}`}
       blockClassName={`${highlight}`}
       value={title}
       as='h2'
@@ -39,7 +39,7 @@ const TextTeaser = ({ data, anchor, className }: TextTeaserProps) => {
     >
       <div className='mx-auto w-full max-w-360 gap-y-12 md:grid md:grid-cols-2'>
         {titleElement}
-        <div className='sm:p-12 lg:p-16'>
+        <div className='p-8 sm:p-12 lg:p-16'>
           {text && (
             <div className='pb-8 last:pb-0'>
               <Blocks variant='ingress' value={text} />
