@@ -103,7 +103,7 @@ const generateAlternatesLinks = (
 export const constructSanityMetadata = (
   slug: string | string[],
   locale: string,
-  metaData?:{ title:string, seoData:SeoData, heroImage?: any, slugs:any, publishDateTime:any,updatedAt:any },
+  metaData?:{ title:string, seoAndSome:SeoData, heroImage?: any, slugs:any, publishDateTime:any,updatedAt:any },
 ):Metadata => {
   const relativeSlug = getRelativeWithPrefixSlug(slug, locale)
   const fullSlug = `${domain}${relativeSlug}`
