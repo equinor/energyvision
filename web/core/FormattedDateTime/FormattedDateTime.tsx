@@ -142,7 +142,11 @@ const FormattedDateTime = forwardRef<HTMLDivElement, FormattedDateTimeProps>(
         {dateIcon && <DateIcon />}
         {timeIcon && <TimeIcon />}
         {variant !== 'period' ? (
-          <time suppressHydrationWarning dateTime={formattedDate}>
+          <time
+            suppressHydrationWarning
+            dateTime={formattedDate}
+            className={timeClassName}
+          >
             {formattedDate}
           </time>
         ) : (
@@ -150,7 +154,7 @@ const FormattedDateTime = forwardRef<HTMLDivElement, FormattedDateTimeProps>(
             <time
               suppressHydrationWarning
               dateTime={datetime?.toLocaleString()}
-              className='whitespace-nowrap'
+              className={twMerge('whitespace-nowrap', timeClassName)}
             >
               {`${format(date, `${getLocaleShortDayFormat(locale)}`, {
                 in: tz(browserTimeZone),
@@ -161,7 +165,7 @@ const FormattedDateTime = forwardRef<HTMLDivElement, FormattedDateTimeProps>(
             <time
               suppressHydrationWarning
               dateTime={endDatetime?.toLocaleString()}
-              className='whitespace-nowrap'
+              className={twMerge('whitespace-nowrap', timeClassName)}
             >
               {`${format(endDate, `${getLocaleShortDayFormat(locale)} yyyy`, {
                 in: tz(browserTimeZone),

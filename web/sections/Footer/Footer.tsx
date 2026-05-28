@@ -1,82 +1,44 @@
-'use client'
-import { useTranslations } from 'next-intl'
 import type { HTMLAttributes } from 'react'
-import { usePage } from '@/contexts/pageContext'
-import { LinkButton } from '@/core/Button'
-import FooterLink from '@/core/Link/FooterLink'
-import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
-import { Facebook, Instagram, Linkedin, Twitter, Youtube } from '../../icons'
-import { getLocaleFromName } from '../../sanity/helpers/localization'
-import type { FooterLinkData, SomeType } from '../../types/index'
+import FooterLink, { type FooterLinkProps } from '@/core/Link/FooterLink'
+import { Typography } from '@/core/Typography'
 
-function getSomeSvg(someType: SomeType) {
-  const iconMap = {
-    facebook: <Facebook height={24} width={24} />,
-    instagram: <Instagram height={24} width={24} />,
-    linkedin: <Linkedin height={24} width={24} />,
-    twitter: <Twitter height={24} width={24} />,
-    youtube: <Youtube height={24} width={24} />,
-  }
+import type { FooterColumns } from '../../types/index'
 
-  if (!(someType in iconMap))
-    console.warn(
-      'Unable to get social icon for footer: Unknown SoMe type passed',
-    )
-  return iconMap[someType] || null
-}
+type FooterProps = {
+  footerColumns: FooterColumns[]
+} & HTMLAttributes<HTMLElement>
 
-type FooterProps = HTMLAttributes<HTMLElement>
-
-const Footer = (_props: FooterProps) => {
-  const { footerData } = usePage()
-  const { footerColumns } = footerData || {}
-  const t = useTranslations()
-
+const Footer = ({ footerColumns = [] }: FooterProps) => {
   return (
     <footer
-      className={`dark mx-auto min-h-12 w-full max-w-fullwidth bg-slate-blue-95 px-0 py-6 *:text-white-100`}
+      className={`dark mx-auto min-h-12 w-full max-w-fullwidth bg-slate-blue-95 px-0 py-6`}
     >
       <div className='mx-auto max-w-content px-layout-sm'>
-        <div className='flex flex-row flex-wrap justify-between pb-2 max-md:flex-col'>
+        <div className='flex flex-col justify-center gap-x-52 md:flex-row'>
           {footerColumns?.map(({ header, linkList }) => (
             <section
               className='flex flex-col max-md:w-4/5 max-md:py-4'
               key={header}
             >
-              <h2 className='px-0 py-2 font-medium text-md leading-planetary'>
+              <Typography
+                as='h2'
+                variant='md'
+                className='my-2 font-medium leading-planetary'
+              >
                 {header}
-              </h2>
+              </Typography>
               <div className='md:grid-y-0 grid grid-cols-2 items-start gap-x-8 gap-y-2 md:flex md:flex-col'>
-                {linkList?.map((footerLink: FooterLinkData) => {
-                  const { id, type, someType, label, href, link } = footerLink
-                  const icon =
-                    type === 'externalUrl' && someType
-                      ? getSomeSvg(someType)
-                      : null
-                  const linkLocale = getLocaleFromName(link?.lang)
-                  return (
-                    <FooterLink
-                      locale={linkLocale}
-                      key={id}
-                      href={href || getUrlFromAction(footerLink) || '/'}
-                      type={type}
-                      icon={icon}
-                    >
-                      {label}
-                    </FooterLink>
-                  )
+                {linkList?.map((footerLink: FooterLinkProps) => {
+                  return <FooterLink {...footerLink} key={footerLink?.id} />
                 })}
               </div>
             </section>
           ))}
-          <section className='flex flex-col max-md:w-4/5 max-md:py-4'>
-            <LinkButton variant='toTop'>{t('footer_to_top_button')}</LinkButton>
-          </section>
         </div>
         <div className='flex justify-start pt-12 pb-3 pl-4 md:justify-center'>
-          <span className='text-2xs'>
+          <Typography group='paragraph' variant='small' className='text-2xs'>
             Copyright {new Date().getFullYear()} Equinor ASA
-          </span>
+          </Typography>
         </div>
       </div>
     </footer>

@@ -1,3 +1,4 @@
+'use client'
 import type { PortableTextBlock } from '@portabletext/types'
 import { useTranslations } from 'next-intl'
 import { forwardRef } from 'react'

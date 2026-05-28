@@ -1,7 +1,6 @@
 'use client' // Error boundaries must be Client Components
 
 import { useEffect } from 'react'
-import Footer from '@/sections/Footer/Footer'
 import ClientHeader from '@/sections/Header/ClientHeader'
 import ErrorPage from '@/templates/errorPage/ErrorPage'
 
@@ -22,7 +21,6 @@ export default function Error({
     <main>
       <ClientHeader />
       <ErrorPage variant='500' />
-      <Footer />
     </main>
   )
 }

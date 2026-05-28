@@ -9,7 +9,7 @@ import {
   useState,
 } from 'react'
 import type { LocaleSlug } from '@/sanity/pages/utils'
-import type { FooterColumns, MenuData, SimpleMenuData } from '@/types'
+import type { MenuData, SimpleMenuData } from '@/types'
 import type { StickyMenuProps } from '../sections/StickyMenu/StickyMenu'
 
 export type HeaderData = {
@@ -20,11 +20,7 @@ export interface PageContextType {
   headerData: HeaderData | undefined
   siteMenuData: MenuData | SimpleMenuData
   errorImage: SanityImageObject
-  footerData: {
-    footerColumns: FooterColumns[]
-  }
   storeSiteMenuData: (siteMenuData: any) => void
-  storeFooterData: (footerData: any) => void
   updateHeaderData: (headerData: HeaderData) => void
 }
 
@@ -41,11 +37,9 @@ export const usePage = () => {
 export const PageProvider = ({
   children,
   initialSiteMenuData,
-  initialFooterData,
   initialErrorImage,
 }: PropsWithChildren<{
   initialSiteMenuData: PageContextType['siteMenuData']
-  initialFooterData: PageContextType['footerData']
   initialErrorImage: PageContextType['errorImage']
 }>) => {
   const [headerData, setHeaderData] = useState<HeaderData>()
@@ -53,7 +47,6 @@ export const PageProvider = ({
     initialSiteMenuData,
   )
   const [errorImage] = useState<any>(initialErrorImage)
-  const [footerData, setFooterData] = useState<any>(initialFooterData)
 
   // Memoize functions using useCallback
   const updateHeaderData = useCallback((headerData: HeaderData) => {
@@ -62,30 +55,17 @@ export const PageProvider = ({
   const storeSiteMenuData = useCallback((siteMenuData: any) => {
     setSiteMenuData(siteMenuData)
   }, [])
-  const storeFooterData = useCallback((footerData: any) => {
-    setFooterData(footerData)
-  }, [])
 
   // Memoize the value object using useMemo, depending on stable values
   const value = useMemo(
     () => ({
       headerData,
       siteMenuData,
-      footerData,
-      storeFooterData,
       storeSiteMenuData,
       updateHeaderData,
       errorImage,
     }),
-    [
-      headerData,
-      updateHeaderData,
-      footerData,
-      siteMenuData,
-      storeFooterData,
-      storeSiteMenuData,
-      errorImage,
-    ],
+    [headerData, updateHeaderData, siteMenuData, storeSiteMenuData, errorImage],
   )
 
   return <PageContext.Provider value={value}>{children}</PageContext.Provider>

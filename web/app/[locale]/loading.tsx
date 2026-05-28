@@ -34,16 +34,6 @@ export default function Loading() {
           </div>
         </div>
       </main>
-
-      {/* Footer skeleton */}
-      <div className='flex h-24 w-full flex-col items-center justify-center gap-3 bg-slate-80 px-6 dark:bg-slate-90'>
-        <div className='flex gap-6'>
-          <div className='h-3 w-20 rounded bg-slate-60' />
-          <div className='h-3 w-20 rounded bg-slate-60' />
-          <div className='h-3 w-20 rounded bg-slate-60' />
-        </div>
-        <div className='h-3 w-48 rounded bg-slate-60' />
-      </div>
     </div>
   )
 }

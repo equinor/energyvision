@@ -1,7 +1,6 @@
 'use client'
 import { Icon } from '@equinor/eds-core-react'
 import { close } from '@equinor/eds-icons'
-import { FloatingOverlay } from '@floating-ui/react'
 import { useRouter } from 'next/navigation'
 import { LogoLink } from '@/core/Link/LogoLink'
 import { NavTopbar } from '@/sections/SiteMenu/NavTopbar'
@@ -42,9 +41,9 @@ export default function Page() {
   const router = useRouter()
 
   return (
-    <div className='dark fixed inset-0 overflow-auto bg-slate-blue-95'>
-      <FloatingOverlay lockScroll>
-        <TopbarDropdown variant='dark'>
+    <div className='dark w-full overflow-auto bg-slate-blue-95'>
+      <div className='relative mx-auto min-h-[55vh] w-full max-w-fullwidth'>
+        <TopbarDropdown variant='dark' className='absolute'>
           <NavTopbar>
             <LogoLink />
             <button
@@ -62,7 +61,12 @@ export default function Page() {
 
           <Search />
         </TopbarDropdown>
-      </FloatingOverlay>
+      </div>
+      {/*       <div className='mx-auto max-w-content'>
+        <div className='px-layout-sm'>
+          <div className='border-white-100/20 border-b' />
+        </div>
+      </div> */}
     </div>
   )
 }

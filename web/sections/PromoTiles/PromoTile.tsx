@@ -1,3 +1,4 @@
+'use client'
 import { useLocale } from 'next-intl'
 import { forwardRef } from 'react'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'

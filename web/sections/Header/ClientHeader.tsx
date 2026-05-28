@@ -1,3 +1,5 @@
+'use client'
+
 import { useLocale, useTranslations } from 'next-intl'
 import type { HTMLAttributes } from 'react'
 import HeaderBar from './HeaderBar'

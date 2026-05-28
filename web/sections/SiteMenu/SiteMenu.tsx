@@ -162,7 +162,7 @@ const SiteMenu = ({ variant = 'default' }: MenuProps) => {
             lockScroll
             {...getFloatingProps()}
           >
-            <TopbarDropdown>
+            <TopbarDropdown className='z-50'>
               <nav
                 className={`${!Flags.HAS_FANCY_MENU ? 'dark h-full bg-north-sea-80' : ''} `}
               >

@@ -8,6 +8,7 @@ import {
   useSortBy,
 } from 'react-instantsearch'
 import { Tabs } from '@/core/Tabs'
+import { Typography } from '@/core/Typography'
 import Hits from './Hits'
 import TotalResultsStat from './TotalResultsStat'
 import UniversalHit from './UniversalHit'
@@ -67,7 +68,18 @@ const SearchResults = (props: SearchResultsProps) => {
   const activeTab = options.findIndex(it => it.value === currentRefinement)
   const hasQuery = results && results.query !== ''
   return (
-    <>
+    <div>
+      {!hasQuery && (
+        <div className='my-20 flex justify-start'>
+          <Typography
+            group='display'
+            variant='h2_base'
+            className='text-white-100 text-xl'
+          >
+            {intl('waitingForResults')}
+          </Typography>
+        </div>
+      )}
       {hasQuery && (
         <div ref={resultsRef} className='dark mt-10'>
           <Tabs
@@ -112,7 +124,7 @@ const SearchResults = (props: SearchResultsProps) => {
           </Tabs>
         </div>
       )}
-    </>
+    </div>
   )
 }
 

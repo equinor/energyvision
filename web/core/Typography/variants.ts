@@ -21,12 +21,8 @@ const variants = {
   heading: {
     unstyled: '',
     h1: 'text-3xl leading-earthy lg:leading-misty mb-6 lg:mb-12 text-balance',
-    //many places has gap-6 + mb-2 so pb-8
-    //Teaser isBigText was set to 2xl...
-    //TextBlock isBigText set to 3xl
-    // isBigText set to common pattern 2xl now with classname mb-2 leading-cloudy
     h2: `text-xl leading-earthy lg:leading-misty mb-4 lg:mb-8 text-balance`,
-    h3: `text-lg leading-lofty mt-4 mb-8 text-balance`, //needs pt and pb?
+    h3: `text-lg leading-lofty mt-4 mb-8 text-balance`,
     h4: 'text-md mt-2 mb-4 text-balance',
     h5: 'text-md text-balance',
     h6: 'text-base text-balance',
@@ -36,7 +32,6 @@ const variants = {
     base: 'text-base text-balance',
     md: 'text-md leading-lofty mb-2 text-balance',
     lg: 'text-lg leading-lofty mb-4 text-balance',
-    //why is xl for most sections/blocks? is h2 really text-xl and not 2xl?
     xl: 'text-xl leading-earthy mb-6 text-balance',
     '2xl': 'text-2xl leading-earthy mb-6 text-balance',
     '3xl': 'text-3xl leading-cloudy text-balance',

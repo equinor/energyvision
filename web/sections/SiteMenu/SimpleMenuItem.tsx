@@ -1,3 +1,4 @@
+'use client'
 import { usePathname } from 'next/navigation'
 import { useLocale } from 'next-intl'
 import { useId } from 'react'
@@ -5,10 +6,8 @@ import { twMerge } from 'tailwind-merge'
 import Link from '@/core/Link/Link'
 import ResourceLink from '@/core/Link/ResourceLink'
 import { Menu } from '@/core/MenuAccordion'
-import { defaultLanguage } from '@/languageConfig'
 import { getMenuLink } from '@/lib/helpers/getUrlFromAction'
-import { getLocaleFromIso } from '@/sanity/helpers/localization'
-import type { SimpleGroupData, SimpleMenuLink } from '../../types/index'
+import type { SimpleGroupData } from '../../types/index'
 
 const { MenuItem, MenuHeader, MenuContent } = Menu
 

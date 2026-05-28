@@ -1,3 +1,4 @@
+'use client'
 import { useTranslations } from 'next-intl'
 import type { AnchorHTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'

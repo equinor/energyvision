@@ -229,20 +229,6 @@ export type FooterColumns = {
   linkList?: FooterLinkData[]
 }
 
-export type SomeType =
-  | 'facebook'
-  | 'instagram'
-  | 'youtube'
-  | 'twitter'
-  | 'linkedin'
-
-export type FooterLinkData = {
-  id: string
-  type: 'externalUrl'
-  key: string
-  someType?: SomeType
-} & LinkData
-
 export type ContactListData = {
   title: string
   ingress: string

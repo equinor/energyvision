@@ -1,3 +1,4 @@
+'use client'
 import type { SanityImageObject } from '@sanity/image-url'
 import NextImage from 'next/image'
 import { useLocale } from 'next-intl'

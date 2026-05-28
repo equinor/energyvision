@@ -92,7 +92,7 @@ export const TopbarWrapper = ({ children }: TopbarWrapperProps) => {
   //${isVisible ? 'top-topbar pt-2' : 'top-0'}
   return (
     <header
-      className={`peer fixed right-0 left-0 z-40 mx-auto w-full max-w-fullwidth bg-white-100 ${hasDropShadow || showSticky ? 'shadow-md' : ''}`}
+      className={`peer fixed right-0 left-0 z-[1000] mx-auto w-full max-w-fullwidth bg-white-100 ${hasDropShadow || showSticky ? 'shadow-md' : ''}`}
       data-sticky={showSticky}
     >
       <div className='mx-auto w-full max-w-content'>

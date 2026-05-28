@@ -7,7 +7,6 @@ import { getNameFromIso } from '@/sanity/helpers/localization'
 import { routeSanityFetch } from '@/sanity/lib/live'
 import { constructSanityMetadata, getPage } from '@/sanity/pages/utils'
 import { homePageMetaQuery } from '@/sanity/queries/metaData'
-import Footer from '@/sections/Footer/Footer'
 import Header from '@/sections/Header/Header'
 import HomePage from '@/templates/homepage/HomePage'
 import { FriendlyCaptchaSdkWrapper } from './FriendlyCaptchaWrapper'
@@ -72,7 +71,6 @@ export default async function Home({ params }: Props) {
       />
 
       <HomePage headerData={headerData} {...pageData} />
-      <Footer />
     </FriendlyCaptchaSdkWrapper>
   )
 }

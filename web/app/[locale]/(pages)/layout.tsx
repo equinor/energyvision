@@ -2,7 +2,6 @@ import { notFound } from 'next/navigation'
 import { hasLocale } from 'next-intl'
 import { setRequestLocale } from 'next-intl/server'
 import { routing } from '@/i18n/routing'
-import Footer from '@/sections/Footer/Footer'
 import Header from '@/sections/Header/HeaderBar'
 import { FriendlyCaptchaSdkWrapper } from '../FriendlyCaptchaWrapper'
 
@@ -27,7 +26,6 @@ export default async function PagesLayout({
     <FriendlyCaptchaSdkWrapper>
       <Header />
       {children}
-      <Footer />
     </FriendlyCaptchaSdkWrapper>
   )
 }

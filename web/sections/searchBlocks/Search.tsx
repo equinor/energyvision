@@ -1,3 +1,4 @@
+'use client'
 import type { SearchClient } from 'instantsearch.js'
 import { useRouter } from 'next/navigation'
 import { useLocale, useTranslations } from 'next-intl'
@@ -162,7 +163,6 @@ export function Search() {
         <div className='max-w-[700px]'>
           <SearchBox variant='inverted' />
         </div>
-
         <SearchResults resultsRef={resultsRef} items={indices} />
         <PaginationContextProvider defaultRef={resultsRef}>
           <Pagination

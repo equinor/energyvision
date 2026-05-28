@@ -144,7 +144,7 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
         )}
         <div
           className={twMerge(
-            `flex h-full w-full`,
+            `flex h-full w-full flex-col`,
             type === 'extended' && 'items-start px-6 pt-6 pb-6 md:pt-8',
             type === 'compact' && 'min-h-25 items-center',
             type === 'compact' &&
@@ -155,39 +155,36 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
               'py-4 pr-3 pl-4',
           )}
         >
-          <div
-            className={twMerge(
-              'max-w-prose grow',
-              type === 'extended' && 'mb-12',
-            )}
-          >
+          <div className={twMerge('flex h-full max-w-prose grow flex-col')}>
             {eyebrow && eyebrow}
-            {plainText && (
-              <Typography
-                as={hasSectionTitle ? 'h3' : 'h2'}
-                variant={ingress ? 'h5' : 'h6'}
-                className={`leading-tight group-hover/link:underline`}
-              >
-                {plainText}
-              </Typography>
-            )}
-            {plainIngress && (
-              <Typography
-                group='card'
-                variant='ingress'
-                className={twMerge(
-                  type === 'compact' &&
-                    _layoutDirection === 'col' &&
-                    'lg:line-clamp-2',
-                  type === 'compact' &&
-                    _layoutDirection === 'row' &&
-                    'lg:line-clamp-3',
-                  type === 'extended' && 'lg:line-clamp-5',
-                )}
-              >
-                {plainIngress}
-              </Typography>
-            )}
+            <div className='flex flex-1 flex-col justify-start'>
+              {plainText && (
+                <Typography
+                  as={hasSectionTitle ? 'h3' : 'h2'}
+                  variant={ingress ? 'h5' : 'h6'}
+                  className={`leading-tight group-hover/link:underline`}
+                >
+                  {plainText}
+                </Typography>
+              )}
+              {plainIngress && (
+                <Typography
+                  group='card'
+                  variant='ingress'
+                  className={twMerge(
+                    type === 'compact' &&
+                      _layoutDirection === 'col' &&
+                      'lg:line-clamp-2',
+                    type === 'compact' &&
+                      _layoutDirection === 'row' &&
+                      'lg:line-clamp-3',
+                    type === 'extended' && 'lg:line-clamp-5',
+                  )}
+                >
+                  {plainIngress}
+                </Typography>
+              )}
+            </div>
           </div>
 
           {showArrow && (

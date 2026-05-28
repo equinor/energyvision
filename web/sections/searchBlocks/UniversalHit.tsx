@@ -1,3 +1,4 @@
+'use client'
 import type { Hit as AlgoliaHit } from '@algolia/client-search'
 import { useLocale } from 'next-intl'
 import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
@@ -5,9 +6,9 @@ import { BaseLink } from '@/core/Link/BaseLink'
 import { Typography } from '@/core/Typography'
 import { defaultLanguage } from '@/languageConfig'
 import { host } from '@/lib/config'
+import { getLocaleFromIso } from '@/sanity/helpers/localization'
 import { Highlight } from './Highlight'
 import DisplayLink from './hit/DisplayLink'
-import { getLocaleFromIso, getNameFromLocale } from '@/sanity/helpers/localization'
 
 export type HitData = {
   slug?: string

@@ -1,4 +1,3 @@
-import Footer from '@/sections/Footer/Footer'
 import Header from '@/sections/Header/HeaderBar'
 import ErrorPage from '@/templates/errorPage/ErrorPage'
 
@@ -9,7 +8,6 @@ export default async function NotFound() {
     <main>
       <Header />
       <ErrorPage variant='404' />
-      <Footer />
     </main>
   )
 }

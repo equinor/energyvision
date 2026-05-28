@@ -3,10 +3,8 @@ import dynamic from 'next/dynamic'
 import localFont from 'next/font/local'
 import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
-import Script from 'next/script'
 import { hasLocale, NextIntlClientProvider } from 'next-intl'
 import { setRequestLocale } from 'next-intl/server'
-
 import { PageProvider } from '@/contexts/pageContext'
 import { dataset } from '@/languageConfig'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
@@ -15,6 +13,7 @@ import { routeSanityFetch, SanityLive } from '@/sanity/lib/live'
 import { footerAndErrorImageQuery } from '@/sanity/queries/footer'
 import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu'
 import { simpleMenuQuery } from '@/sanity/queries/simpleMenu'
+import Footer from '@/sections/Footer/Footer'
 import GoToTopButton from '@/sections/GoToTopButton'
 import { routing } from '../../i18n/routing'
 import { GoogleTagManagerHead } from './GTMHead'
@@ -93,24 +92,24 @@ export default async function LocaleLayout({
         {loadVisualEditing()}
         <NextIntlClientProvider>
           <PageProvider
-            initialFooterData={footerData}
             initialErrorImage={errorImage}
             initialSiteMenuData={siteMenuData.data}
           >
             {children}
           </PageProvider>
+          <Footer {...footerData} />
           <GoToTopButton />
         </NextIntlClientProvider>
       </body>
       {/** TODO look into scripts */}
-      <Script
+      {/*       <Script
         src='https://consent.cookiebot.com/uc.js'
         id='Cookiebot'
         strategy='beforeInteractive'
         data-cbid='f1327b03-7951-45da-a2fd-9181babc783f'
         data-blockingmode='auto'
         data-culture={locale === 'nb_NO' ? 'nb' : locale}
-      />
+      /> */}
       <GoogleTagManagerHead />
       <SiteImprove />
     </html>

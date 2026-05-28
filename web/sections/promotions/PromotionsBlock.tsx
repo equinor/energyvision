@@ -1,3 +1,4 @@
+'use client'
 import type { SanityImageObject } from '@sanity/image-url'
 import type { PortableTextBlock } from 'next-sanity'
 import { useId, useMemo } from 'react'
@@ -157,7 +158,7 @@ const PromotionsBlock = ({
   }, [promotions, eventsCount])
 
   const onColorBg = designOptions?.background?.backgroundColor !== 'White'
-  console.log('promotionList', promotionList)
+
   return (
     <section
       className={twMerge(`relative ${bg} ${dark ? 'dark' : ''}`, className)}

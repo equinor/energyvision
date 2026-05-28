@@ -7,7 +7,6 @@ import { useFormatter, useLocale } from 'next-intl'
 import { forwardRef, type HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
 import FormattedDateTime, {
-  DateIcon,
   TimeIcon,
 } from '@/core/FormattedDateTime/FormattedDateTime'
 import { BaseLink } from '@/core/Link/BaseLink'
@@ -77,7 +76,6 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
   const locale = iso !== defaultLanguage.name ? getLocaleFromIso(iso) : ''
   const href = '/' + locale + slug || ''
 
-  const formatter = useFormatter()
   const { start, end } = getEventDates(eventDate)
   const { dayTime: startDayTime, overrideTimeLabel: startTimeLabel } =
     startDayAndTime || {}
@@ -155,8 +153,9 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
               datetime={start}
               className='text-sm'
               timeClassName='leading-none'
+              showTimezone={false}
             />
-            <span>-</span>
+            <span className='pb-0.5 leading-none'>-</span>
             <FormattedDateTime
               variant='time'
               datetime={end}

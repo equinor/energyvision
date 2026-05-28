@@ -1,6 +1,5 @@
 {
   "recommendations": [
-    "bierner.color-info",
     "sanity-io.vscode-sanity",
     "biomejs.biome",
     "bradlc.vscode-tailwindcss",
