@@ -91,13 +91,13 @@ const linkSelector = (
             }
 
             if (
-              // Do not warn for hidden label, label is not optional or internal link with optional label
+              // Do not warn for hidden label or internal link with optional label
               !includeLabel ||
-              !labelIsOptional ||
               (labelIsOptional && parent?.link?.[0]?._type !== 'link') ||
               ((parent?.link?.[0]?._type === 'referenceToOtherLanguage' ||
                 parent?.link?.[0]?._type === 'reference') &&
-                hasReferenceTitle)
+                hasReferenceTitle &&
+                labelIsOptional)
             ) {
               return true
             }
