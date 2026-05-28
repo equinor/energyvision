@@ -66,8 +66,7 @@ export async function generateMetadata({
 
   return constructSanityMetadata(
     newsSlug[getNameFromIso(locale)],
-    locale,
-    undefined,
+    locale
   )
 }
 export default async function NewsroomPage({

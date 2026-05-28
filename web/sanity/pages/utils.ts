@@ -21,6 +21,8 @@ import {
   allMagazineDocuments,
   getMagazineArticlesByTag,
 } from '../queries/magazine'
+import { Metadata } from 'next'
+import { SeoData } from '@/types'
 
 export type LocaleSlug = { lang: string; slug: string }
 /**
@@ -101,8 +103,8 @@ const generateAlternatesLinks = (
 export const constructSanityMetadata = (
   slug: string | string[],
   locale: string,
-  metaData: any,
-) => {
+  metaData?:{ title:string, seoData:SeoData, heroImage?: any, slugs:any, publishDateTime:any,updatedAt:any },
+):Metadata => {
   const relativeSlug = getRelativeWithPrefixSlug(slug, locale)
   const fullSlug = `${domain}${relativeSlug}`
 
@@ -127,10 +129,8 @@ export const constructSanityMetadata = (
   }
 
   const {
-    documentTitle,
     title,
-    metaDescription,
-    openGraphImage,
+    seoData,
     heroImage,
     publishDateTime,
     updatedAt,
@@ -138,7 +138,7 @@ export const constructSanityMetadata = (
   } = metaData
 
   const plainTitle = Array.isArray(title) ? toPlainText(title) : title
-  const ogImage = resolveOpenGraphImage(openGraphImage ?? heroImage?.image)
+  const ogImage = resolveOpenGraphImage(seoData?.openGraphImage ?? heroImage?.image)
   const slugs = formatToValidPrefixedIsoSlugs(slug, langSlugs)
   const alternates = generateAlternatesLinks(slug, locale, slugs)
   const modifiedDate = isDateAfter(publishDateTime, updatedAt)
@@ -146,18 +146,18 @@ export const constructSanityMetadata = (
     : updatedAt
 
   return {
-    title: `${documentTitle ?? plainTitle} - ${metaTitleSuffix}`,
-    description: metaDescription,
+    title: `${seoData?.documentTitle ?? plainTitle} - ${metaTitleSuffix}`,
+    description: seoData?.metaDescription,
     openGraph: {
       title: plainTitle,
-      description: metaDescription,
+      description: seoData?.metaDescription,
       url: fullSlug,
       locale,
       type: 'article',
       siteName: 'Equinor',
       publishedTime: publishDateTime,
       modifiedTime: modifiedDate,
-      image: ogImage,
+      images: ogImage,
     },
     alternates,
   }
