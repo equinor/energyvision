@@ -130,7 +130,7 @@ export const constructSanityMetadata = (
 
   const {
     title,
-    seoData,
+    seoAndSome,
     heroImage,
     publishDateTime,
     updatedAt,
@@ -138,7 +138,7 @@ export const constructSanityMetadata = (
   } = metaData
 
   const plainTitle = Array.isArray(title) ? toPlainText(title) : title
-  const ogImage = resolveOpenGraphImage(seoData?.openGraphImage ?? heroImage?.image)
+  const ogImage = resolveOpenGraphImage(seoAndSome?.openGraphImage ?? heroImage?.image)
   const slugs = formatToValidPrefixedIsoSlugs(slug, langSlugs)
   const alternates = generateAlternatesLinks(slug, locale, slugs)
   const modifiedDate = isDateAfter(publishDateTime, updatedAt)
@@ -146,11 +146,11 @@ export const constructSanityMetadata = (
     : updatedAt
 
   return {
-    title: `${seoData?.documentTitle ?? plainTitle} - ${metaTitleSuffix}`,
-    description: seoData?.metaDescription,
+    title: `${seoAndSome?.documentTitle ?? plainTitle} - ${metaTitleSuffix}`,
+    description: seoAndSome?.metaDescription,
     openGraph: {
       title: plainTitle,
-      description: seoData?.metaDescription,
+      description: seoAndSome?.metaDescription,
       url: fullSlug,
       locale,
       type: 'article',
