@@ -104,7 +104,7 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
           colorKeyToUtilityMap[background ?? 'gray-20'].background,
           type === 'compact' &&
             _layoutDirection === 'col' &&
-            'grid-cols-1 grid-rows-[53%_auto]',
+            'grid-cols-1 grid-rows-[65%_auto]',
           type === 'compact' &&
             _layoutDirection === 'row' &&
             'min-h-30 grid-cols-[31%_auto] grid-rows-1',
@@ -123,7 +123,7 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
               _layoutDirection === 'row' && `h-full w-full`,
               _layoutDirection === 'row' && gridColumns && gridColumns === '2'
                 ? '2xl:aspect-[1.08]'
-                : '2xl:aspect-4/5',
+                : '2xl:aspect-video',
             )}
             aspectRatio={_layoutDirection === 'col' ? '16:9' : '4:3'}
             imageClassName={`${
