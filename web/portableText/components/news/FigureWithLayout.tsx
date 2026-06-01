@@ -82,6 +82,7 @@ export const FigureWithLayout = (block: BlockProps) => {
 
   const figureClassName = twMerge(
     `px-layout-sm my-12`,
+    (layout === 'left' || layout === 'right') && 'md:w-1/2',
     imageOrientation !== 'portrait' && layoutAlignmentClassName[layout],
     imageOrientation === 'portrait' &&
       centerImageLayout === 'left' &&
@@ -91,9 +92,9 @@ export const FigureWithLayout = (block: BlockProps) => {
       'gap-6 md:grid md:grid-cols-[35%_48%] lg:px-layout-lg',
   )
   const centerImageCaptionClassName = {
-    top: 'flex h-full items-start',
-    center: 'flex h-full items-center',
-    bottom: 'flex h-full items-end',
+    top: 'flex flex-col h-full items-start',
+    center: 'flex flex-col h-full items-center',
+    bottom: 'flex flex-col h-full items-end',
   }
 
   const imageElement = (
@@ -110,7 +111,10 @@ export const FigureWithLayout = (block: BlockProps) => {
 
   const captionElement = (caption || attribution) && (
     <FigureCaption
-      className={centerImageCaptionClassName[centerCaptionAlignment]}
+      className={twMerge(
+        imageOrientation === 'portrait' &&
+          centerImageCaptionClassName[centerCaptionAlignment],
+      )}
       caption={caption}
       attribution={attribution}
       withLayoutPx={false}

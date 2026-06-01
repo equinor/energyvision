@@ -9,7 +9,6 @@ type FooterProps = {
 } & HTMLAttributes<HTMLElement>
 
 const Footer = ({ footerColumns = [] }: FooterProps) => {
-  console.log('footerColumns', footerColumns)
   return (
     <footer
       className={`dark mx-auto min-h-12 w-full max-w-fullwidth bg-slate-blue-95 px-0 py-6`}
