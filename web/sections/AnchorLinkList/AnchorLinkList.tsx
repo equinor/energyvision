@@ -27,12 +27,13 @@ const AnchorLinkList = forwardRef<HTMLElement, AnchorLinkListProps>(
     const { title, anchorList = [], columns, layoutGrid, hideTitle } = data
 
     const getFlow = () => {
-      const commonGridStyling = 'grid lg:place-items-center grid-cols-3'
+      const commonGridStyling =
+        'flex flex-wrap lg:grid lg:place-items-center lg:grid-cols-3'
 
       const pxVariant = {
-        lg: `grid-cols-[repeat(auto-fit,_minmax(100px,_1fr))]`,
-        md: `grid-cols-[repeat(auto-fit,_minmax(150px,_1fr))]`,
-        sm: `grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))]`,
+        lg: `lg:grid-cols-[repeat(auto-fit,_minmax(100px,_1fr))]`,
+        md: `lg:grid-cols-[repeat(auto-fit,_minmax(150px,_1fr))]`,
+        sm: `lg:grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))]`,
       }
 
       switch (columns) {
@@ -54,48 +55,51 @@ const AnchorLinkList = forwardRef<HTMLElement, AnchorLinkListProps>(
     return (
       <section
         ref={ref}
-        className={twMerge(
-          `flex flex-col items-center ${px} py-6 lg:pt-6 lg:pb-12`,
-          className,
-        )}
+        className={twMerge(`py-6 lg:pt-6 lg:pb-12`, className)}
         id={anchor}
       >
         <div className='w-full border-moss-green-50 border-y py-6'>
-          {title && (
-            <Typography
-              variant='h5'
-              as='h2'
-              className={`${hideTitle ? 'sr-only' : 'pb-4 text-center'} `}
-            >
-              {title}
-            </Typography>
-          )}
-          <ul className={`${getFlow()} gap-x-4 gap-y-2 lg:gap-x-6 lg:gap-y-4`}>
-            {anchorList?.map(
-              (anchorLink: {
-                id: string
-                title?: string
-                anchorReference?: string
-              }) => {
-                const anchor = anchorLink?.anchorReference
-                  ? `#${anchorLink?.anchorReference}`
-                  : ''
-                return (
-                  <li
-                    key={`anchor_link_${anchorLink?.id}`}
-                    className='flex w-fill justify-start'
-                  >
-                    <BaseLink
-                      href={anchor}
-                      className='group flex w-fill items-center justify-center gap-1 whitespace-nowrap text-base text-moss-green-100 hover:underline'
-                    >
-                      {anchorLink?.title}
-                    </BaseLink>
-                  </li>
-                )
-              },
+          <div className='px-layout-sm lg:px-layout-lg'>
+            {title && (
+              <Typography
+                variant='h5'
+                as='h2'
+                className={`${hideTitle ? 'sr-only' : 'pb-4 text-center'} `}
+              >
+                {title}
+              </Typography>
             )}
-          </ul>
+          </div>
+          <div className={twMerge(`flex flex-col items-center ${px}`)}>
+            <ul
+              className={`${getFlow()} gap-x-4 gap-y-2 lg:gap-x-6 lg:gap-y-4`}
+            >
+              {anchorList?.map(
+                (anchorLink: {
+                  id: string
+                  title?: string
+                  anchorReference?: string
+                }) => {
+                  const anchor = anchorLink?.anchorReference
+                    ? `#${anchorLink?.anchorReference}`
+                    : ''
+                  return (
+                    <li
+                      key={`anchor_link_${anchorLink?.id}`}
+                      className='flex w-fill justify-start'
+                    >
+                      <BaseLink
+                        href={anchor}
+                        className='group flex w-fill items-center justify-center gap-1 whitespace-nowrap text-base text-moss-green-100 hover:underline'
+                      >
+                        {anchorLink?.title}
+                      </BaseLink>
+                    </li>
+                  )
+                },
+              )}
+            </ul>
+          </div>
         </div>
       </section>
     )
