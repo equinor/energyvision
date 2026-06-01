@@ -1,4 +1,4 @@
-import { getTranslations } from 'next-intl/server'
+import { useTranslations } from 'next-intl'
 import { twMerge } from 'tailwind-merge'
 import { ArrowRight } from '../../icons'
 import { BaseLink, type BaseLinkProps } from './BaseLink'
@@ -6,7 +6,7 @@ import { BaseLink, type BaseLinkProps } from './BaseLink'
 export type LinkProps = BaseLinkProps
 
 /** Regular link style for use*/
-export const Link = async ({
+export const Link = ({
   ref,
   children,
   type = 'internalUrl',
@@ -15,7 +15,7 @@ export const Link = async ({
   hrefLang,
   onClick,
 }: LinkProps) => {
-  const t = await getTranslations()
+  const t = useTranslations()
 
   const classNames = twMerge(
     `text-slate-blue-95

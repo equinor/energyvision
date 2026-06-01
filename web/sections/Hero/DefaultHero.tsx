@@ -1,5 +1,4 @@
 import type { PortableTextBlock } from '@portabletext/types'
-import { fi } from 'date-fns/locale'
 import type { HTMLAttributes, ReactNode } from 'react'
 import type { Figure, ImageRatioKeys } from '@/core/Image/imageUtilities'
 import { Picture } from '@/core/Picture/Picture'
@@ -64,7 +63,12 @@ export const DefaultHero = ({
         <div className={twMerge('mx-auto max-w-content', px)}>
           {title &&
             (isPlainTitle ? (
-              <Typography group='heading' variant='h1' id='mainTitle'>
+              <Typography
+                group='heading'
+                variant='h1'
+                id='mainTitle'
+                tabIndex={-1}
+              >
                 {title}
               </Typography>
             ) : (
@@ -73,6 +77,7 @@ export const DefaultHero = ({
                 value={title as PortableTextBlock[]}
                 group='heading'
                 variant='h1'
+                tabIndex={-1}
               />
             ))}
           {subTitle && subTitle}

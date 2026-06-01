@@ -965,6 +965,11 @@ const snippets: textSnippet = {
     defaultValue: 'Waiting for results',
     group: groups.search,
   },
+  skipToContent: {
+    title: 'Skip to content',
+    defaultValue: 'Skip to content',
+    group: groups.common,
+  },
 }
 
 type textSnippetGroup = { title: string; hidden?: boolean }

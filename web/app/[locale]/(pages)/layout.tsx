@@ -2,7 +2,6 @@ import { notFound } from 'next/navigation'
 import { hasLocale } from 'next-intl'
 import { setRequestLocale } from 'next-intl/server'
 import { routing } from '@/i18n/routing'
-import Header from '@/sections/Header/HeaderBar'
 import { FriendlyCaptchaSdkWrapper } from '../FriendlyCaptchaWrapper'
 
 type Params = Promise<{ locale: string }>
@@ -15,17 +14,12 @@ export default async function PagesLayout({
   params: Params
 }) {
   const { locale } = await params
-  // Enable static rendering
+
   setRequestLocale(locale)
 
   if (!hasLocale(routing.locales, locale)) {
     notFound()
   }
 
-  return (
-    <FriendlyCaptchaSdkWrapper>
-      <Header />
-      {children}
-    </FriendlyCaptchaSdkWrapper>
-  )
+  return <FriendlyCaptchaSdkWrapper>{children}</FriendlyCaptchaSdkWrapper>
 }

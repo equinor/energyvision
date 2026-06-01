@@ -29,7 +29,6 @@
 
   --spacing-topbar: 85px;
   --spacing-topbar-sticky: 64px;
-  --spacing-topbar-and-sticky: 145px;
 
   /* or just --motion-safe? transition-(--my-properties) */
   --transition-motion-safe: motion-safe;
@@ -61,6 +60,7 @@
       opacity: 1;
     }
   }
+
   @keyframes slideUp {
     0% {
       height: 0;
@@ -110,12 +110,9 @@ data-ui="checked active" class="data-checked:underline">
 @custom-variant data-overflowing (&[data-overflowing~='true']);
 @custom-variant aria-current (&[aria-current~='page']);
 @custom-variant highlight (& [data-highlight='true']);
-
-@custom-variant sticky-menu {
-  &:where([data-sticky-menu='true'] *) {
-    @slot;
-  }
-}
+@custom-variant data-sticky (&[data-sticky~='true']);
+@custom-variant data-topbar-visible (&[data-topbar-visible~='true']);
+@custom-variant data-topbar-hidden (&[data-topbar-visible~='false']);
 
 /* old darkMode: ['variant', [':is(.dark &):not(.light &)']],*/
 /* @custom-variant dark (&:where(.dark, .dark *)); */

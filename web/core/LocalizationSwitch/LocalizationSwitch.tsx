@@ -1,16 +1,17 @@
 'use client'
 import { useLocale, useTranslations } from 'next-intl'
 import type { HTMLAttributes } from 'react'
-import { usePage } from '@/contexts/pageContext'
+import type { HeaderData } from '@/contexts/pageContext'
 import { defaultLanguage, languages } from '@/languageConfig'
 import ButtonLink from '../Link/ButtonLink'
 
-export type LocalizationSwitchProps = HTMLAttributes<HTMLUListElement>
+export type LocalizationSwitchProps = {
+  headerData: HeaderData | undefined
+} & HTMLAttributes<HTMLUListElement>
 
-export const LocalizationSwitch = (_props: LocalizationSwitchProps) => {
+export const LocalizationSwitch = ({ headerData }: LocalizationSwitchProps) => {
   const intl = useTranslations()
   const locale = useLocale()
-  const { headerData } = usePage()
   const { slugs } = headerData || { slugs: [] }
   const activeLocale = locale ?? defaultLanguage.iso
 

@@ -3,10 +3,13 @@ import { notFound } from 'next/navigation'
 import { setRequestLocale } from 'next-intl/server'
 import { OrganizationJsonLd } from 'next-seo'
 import { languages } from '@/languageConfig'
+import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { getNameFromIso } from '@/sanity/helpers/localization'
 import { routeSanityFetch } from '@/sanity/lib/live'
 import { constructSanityMetadata, getPage } from '@/sanity/pages/utils'
+import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu'
 import { homePageMetaQuery } from '@/sanity/queries/metaData'
+import { simpleMenuQuery } from '@/sanity/queries/simpleMenu'
 import Header from '@/sections/Header/Header'
 import HomePage from '@/templates/homepage/HomePage'
 import { FriendlyCaptchaSdkWrapper } from './FriendlyCaptchaWrapper'
@@ -41,11 +44,22 @@ export default async function Home({ params }: Props) {
 
   if (!languages.map(it => it.iso).includes(locale)) notFound()
 
-  const { headerData, pageData } = await getPage({
-    slug,
-    locale,
-    tags: ['homePage'],
-  })
+  const [siteMenuResult, homePageData] = await Promise.all([
+    routeSanityFetch({
+      query: Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery,
+      params: {
+        lang: getNameFromIso(locale) ?? 'en_GB',
+      },
+    }),
+    getPage({
+      slug,
+      locale,
+      tags: ['homePage'],
+    }),
+  ])
+
+  const { headerData, pageData } = homePageData
+  const { data: siteMenuData } = siteMenuResult || {}
 
   if (!pageData) notFound()
 
@@ -55,7 +69,7 @@ export default async function Home({ params }: Props) {
 
   return (
     <FriendlyCaptchaSdkWrapper>
-      <Header />
+      <Header siteMenuData={siteMenuData} headerData={headerData} />
       <OrganizationJsonLd
         name='Equinor ASA'
         url='https://www.equinor.com'
@@ -69,7 +83,6 @@ export default async function Home({ params }: Props) {
           'https://www.youtube.com/equinor',
         ]}
       />
-
       <HomePage headerData={headerData} {...pageData} />
     </FriendlyCaptchaSdkWrapper>
   )

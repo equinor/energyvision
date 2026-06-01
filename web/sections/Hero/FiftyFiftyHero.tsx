@@ -60,6 +60,7 @@ export const FiftyFiftyHero = ({
           {title && (
             <Blocks
               id='mainTitle'
+              tabIndex={-1}
               //@ts-ignore
               value={title}
               group={displayTextVariant !== 'none' ? 'display' : `heading`}

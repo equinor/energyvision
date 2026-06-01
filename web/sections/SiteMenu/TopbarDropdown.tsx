@@ -9,7 +9,7 @@ type TopbarDropdownProps = {
 
 export const TopbarDropdown = forwardRef<HTMLDivElement, TopbarDropdownProps>(
   function TopbarDropdown(
-    { children, variant = 'light', className = '', ...rest },
+    { children, variant = 'light', className = '' },
     ref,
   ) {
     return (
@@ -19,7 +19,6 @@ export const TopbarDropdown = forwardRef<HTMLDivElement, TopbarDropdownProps>(
           `${variant === 'dark' ? 'dark bg-slate-blue-95' : 'bg-white-100'} fixed inset-0 overflow-auto`,
           className,
         )}
-        {...rest}
       >
         {children}
       </div>

@@ -86,6 +86,7 @@ export const FullWidthImageHero = ({
           //@ts-ignore
           value={title}
           id='mainTitle'
+          tabIndex={-1}
           as='h1'
           group={displayTextVariant !== 'none' ? 'display' : `heading`}
           variant={titleVariant}

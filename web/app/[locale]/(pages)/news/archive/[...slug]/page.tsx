@@ -4,15 +4,19 @@ import { defaultLanguage, languages, metaTitleSuffix } from '@/languageConfig'
 import archivedNews from '@/lib/archive/archivedNewsPaths.json'
 import { host } from '@/lib/config'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
+import { getNameFromIso } from '@/sanity/helpers/localization'
+import { routeSanityFetch } from '@/sanity/lib/live'
+import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu'
 import type { PathType } from '@/sanity/queries/paths/getPaths'
+import { simpleMenuQuery } from '@/sanity/queries/simpleMenu'
+import Header from '@/sections/Header/Header'
 import ArchivedNews from '@/templates/archivedNews/ArchivedNews'
-
 
 type Params = Promise<{ locale: string; slug: string[] }>
 //TODO types
 async function getArchivedPageData(params: { locale: string; slug: string[] }) {
   const { locale: routeLocale, slug: pagePathArray } = params
-  const locale =(routeLocale === 'en-GB')? 'en' : 'no'
+  const locale = routeLocale === 'en-GB' ? 'en' : 'no'
   if (!Flags.HAS_ARCHIVED_NEWS) return { notFound: true }
 
   const pagePath = pagePathArray?.join('/')
@@ -159,8 +163,37 @@ const fallbackToAnotherLanguage = async (
   return { notFound: true }
 }
 
-export default async function ArchivedNewsPage( {params} : {params: Params}) {
+export default async function ArchivedNewsPage({ params }: { params: Params }) {
+  const { locale, slug } = await params
+
+  const pagePathArray = slug
+  const pagePath = pagePathArray.join('/')
+  const archivedItems = archivedNews.filter(
+    e => e.slug === `/news/archive/${pagePath}`,
+  )
+  const slugs =
+    archivedItems?.map((data: PathType) => ({
+      slug: `${data.locale === 'no' ? '/no' : ''}${data.slug as string}`,
+      lang: data.locale === 'en' ? 'en-GB' : 'nb-NO',
+    })) ?? []
+
+  const headerData = {
+    slugs,
+  }
+  const { data: siteMenuData } = await routeSanityFetch({
+    query: Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery,
+    params: {
+      lang: getNameFromIso(locale) ?? 'en_GB',
+    },
+  })
+
   const pageData = await getArchivedPageData(await params)
+
   if (!pageData) notFound()
-  return <ArchivedNews {...pageData} />
+  return (
+    <>
+      <Header siteMenuData={siteMenuData} headerData={headerData} />
+      <ArchivedNews {...pageData} />
+    </>
+  )
 }

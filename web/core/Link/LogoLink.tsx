@@ -12,7 +12,7 @@ export const LogoLink = ({ className, ...rest }: LogoLinkProps) => {
   return (
     <Link
       href='/'
-      aria-label={intl('logolink_title')}
+      aria-label={intl('logolink_title') ?? 'Go to homepage'}
       {...rest}
       className={twMerge(
         'focus-visible:envis-outline dark:focus-visible:envis-outline-invert flex h-full items-center justify-self-start text-energy-red-100 focus:outline-hidden dark:text-white-100',

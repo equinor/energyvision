@@ -1,5 +1,4 @@
-'use client'
-import { useTranslations } from 'next-intl'
+import { getTranslations } from 'next-intl/server'
 import { forwardRef, type HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
 import type { DownloadableLinkProps } from '@/core/Link/DownloadableLink'
@@ -14,51 +13,68 @@ import {
 export type StickyMenuLinkType = AnchorLinkReference | DownloadableLinkProps
 
 export type StickyMenuProps = {
-  title: string
-  links: StickyMenuLinkType[]
-  background: keyof ColorKeyTokens
+  title?: string
+  background?: keyof ColorKeyTokens
+  links?: StickyMenuLinkType[]
 } & HTMLAttributes<HTMLElement>
 
 export const StickyMenu = forwardRef<HTMLElement, StickyMenuProps>(
-  function StickyMenu({ background, title, links, className = '' }, ref) {
-    const intl = useTranslations()
-    const twBg = colorKeyToUtilityMap[background ?? 'white-100']?.background
+  async function StickyMenu(
+    { background, title, links = [], className = '' },
+    ref,
+  ) {
+    const intl = await getTranslations()
 
-    return (
+    console.log(
+      'links in sticky menu,is reliant on ...page and pageprovider',
+      links,
+    )
+
+    const twBg = colorKeyToUtilityMap[background ?? 'white-100']?.background
+    //Each page template has a reference to the data-sticky to add a padding-top as peer
+    return links?.length === 0 ? null : (
       <nav
         ref={ref}
         aria-label={intl('local')}
+        data-sticky={links?.length > 0}
         className={twMerge(
-          `-mt-1 sticky inset-e-0 inset-s-0 z-20 flex h-topbar-sticky w-full max-w-full px-layout-sm duration-500 ease-in-out [transition-property:top] ${twBg} w-full py-4`,
+          `peer sticky top-0 z-20 shadow-md duration-500 ease-in-out [transition-property:top] peer-data-topbar-visible:top-topbar`,
+          twBg,
           className,
         )}
       >
         <div
-          className={`flex w-full items-baseline justify-between gap-x-6 gap-y-3`}
+          className={`mx-auto flex h-topbar-sticky w-full max-w-content py-4`}
         >
-          <div className={`text-start font-medium text-base`}>{title}</div>
-          <div className='flex items-center gap-10'>
-            {links?.map(link => {
-              return link?.type === 'anchorLinkReference' ? (
-                <Link
-                  key={link?.id}
-                  href={`#${link?.anchorReference}`}
-                  className='text-sm no-underline hover:text-slate-80 hover:underline dark:hover:text-grey-20'
-                >
-                  {title}
-                </Link>
-              ) : (
-                <DownloadableLink
-                  key={link?.id}
-                  file={{
-                    ...link?.file,
-                    label: link?.label,
-                  }}
-                  linkType={link?.type as LinkType}
-                  type='stickyMenu'
-                />
-              )
-            })}
+          <div
+            className={`flex w-full items-baseline justify-between gap-x-6 gap-y-3 px-layout-sm`}
+          >
+            <div className={`text-start font-medium text-base`}>
+              {title ?? ''}
+            </div>
+            <div className='flex items-center gap-10'>
+              {links?.map(link => {
+                return link?.type === 'anchorLinkReference' ? (
+                  <Link
+                    key={link?.id}
+                    href={`#${link?.anchorReference}`}
+                    className='text-sm no-underline hover:text-slate-80 hover:underline dark:hover:text-grey-20'
+                  >
+                    {title ?? ''}
+                  </Link>
+                ) : (
+                  <DownloadableLink
+                    key={link?.id}
+                    file={{
+                      ...link?.file,
+                      label: link?.label,
+                    }}
+                    linkType={link?.type as LinkType}
+                    type='stickyMenu'
+                  />
+                )
+              })}
+            </div>
           </div>
         </div>
       </nav>

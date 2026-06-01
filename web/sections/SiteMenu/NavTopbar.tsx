@@ -6,7 +6,7 @@ type Props = {
 
 export const NavTopbar = ({ children }: Props) => {
   return (
-    <div className='m-auto flex h-topbar w-full items-center justify-between px-layout-sm py-4'>
+    <div className='m-auto flex h-topbar w-full max-w-content items-center justify-between px-layout-sm py-4'>
       {children}
     </div>
   )

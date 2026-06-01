@@ -3,15 +3,18 @@ import type { Metadata } from 'next'
 import dynamic from 'next/dynamic'
 import { notFound } from 'next/navigation'
 import { setRequestLocale } from 'next-intl/server'
+import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { getNameFromIso } from '@/sanity/helpers/localization'
 import { routeSanityFetch } from '@/sanity/lib/live'
-import { PageWrapper } from '@/sanity/pages/PageWrapper'
 import { constructSanityMetadata, getPage } from '@/sanity/pages/utils'
+import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu'
 import {
   docWithSlugMetaQuery,
   magazineroomMetaQuery,
   pageMetaQuery,
 } from '@/sanity/queries/metaData'
+import { simpleMenuQuery } from '@/sanity/queries/simpleMenu'
+import Header from '@/sections/Header/Header'
 
 type Props = {
   params: Promise<{ slug: string[]; locale: string }>
@@ -59,17 +62,27 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return constructSanityMetadata(slug, locale, metaData)
 }
 
-export default async function Page({ params, searchParams }: Props) {
+export default async function Page({ params }: Props) {
   const { slug, locale } = await params
-  const search = await searchParams
-  setRequestLocale(locale) // enable static rendering
 
-  const { headerData, pageData } = await getPage({
-    slug,
-    locale,
-    tags: ['page', 'event', 'magazine', 'magazineIndex', 'news', 'localNews'],
-    searchParams: search,
-  })
+  setRequestLocale(locale)
+
+  const [siteMenuResult, pageResults] = await Promise.all([
+    routeSanityFetch({
+      query: Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery,
+      params: {
+        lang: getNameFromIso(locale) ?? 'en_GB',
+      },
+    }),
+    getPage({
+      slug,
+      locale,
+    }),
+  ])
+
+  const { headerData, pageData } = pageResults
+  const { data: siteMenuData } = siteMenuResult || {}
+
   if (Object.keys(pageData).length === 0) notFound()
 
   const template = pageData?.template
@@ -91,5 +104,10 @@ export default async function Page({ params, searchParams }: Props) {
         return <TopicPage {...pageData} />
     }
   }
-  return <PageWrapper headerData={headerData}>{getTemplate()}</PageWrapper>
+  return (
+    <>
+      <Header siteMenuData={siteMenuData} headerData={headerData} />
+      {getTemplate()}
+    </>
+  )
 }

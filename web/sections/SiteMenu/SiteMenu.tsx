@@ -3,6 +3,7 @@ import {
   FloatingFocusManager,
   FloatingOverlay,
   type OpenChangeReason,
+  size,
   useDismiss,
   useFloating,
   useInteractions,
@@ -10,13 +11,13 @@ import {
 import { usePathname } from 'next/navigation'
 import { useLocale, useTranslations } from 'next-intl'
 import { useCallback, useMemo, useState } from 'react'
-import { usePage } from '@/contexts/pageContext'
 import BaseLink from '@/core/Link/BaseLink'
 import Link from '@/core/Link/Link'
 import { LogoLink } from '@/core/Link/LogoLink'
 import { Menu, MenuButton } from '@/core/MenuAccordion'
 import { MenuPanes } from '@/core/MenuPanes/MenuPanes'
 import { getAllSitesLink } from '@/lib/helpers/getAllSitesLink'
+import { twMerge } from '@/lib/twMerge/twMerge'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { ArrowRight } from '../../icons'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
@@ -33,12 +34,12 @@ import { TopbarDropdown } from './TopbarDropdown'
 
 export type Variants = 'default' | 'simple'
 
-export type MenuProps = {
+export type SiteMenuProps = {
   variant?: Variants
+  siteMenuData?: MenuData | SimpleMenuData
 }
 
-const SiteMenu = ({ variant = 'default' }: MenuProps) => {
-  const { siteMenuData } = usePage()
+const SiteMenu = ({ variant = 'default', siteMenuData }: SiteMenuProps) => {
   const pathname = usePathname()
   const locale = useLocale()
   const [isOpen, setIsOpen] = useState(false)
@@ -48,6 +49,17 @@ const SiteMenu = ({ variant = 'default' }: MenuProps) => {
     onOpenChange: (open: boolean, event?: Event, reason?: OpenChangeReason) => {
       setIsOpen(!isOpen)
     },
+    /*     middleware: [
+      size({
+        apply({ rects, availableWidth, elements }) {
+          // Force the floating element to be the exact same width as the reference element
+          Object.assign(elements.floating.style, {
+            width: `${rects.reference.width}px`,
+            maxWidth: `${availableWidth}px`, // Prevent it from exceeding the viewport
+          })
+        },
+      }),
+    ], */
   })
   const { getReferenceProps, getFloatingProps } = useInteractions([
     useDismiss(context),
@@ -145,7 +157,7 @@ const SiteMenu = ({ variant = 'default' }: MenuProps) => {
     )
   }
   return (
-    <div>
+    <>
       <MenuButton
         ref={refs.setReference}
         title={title}
@@ -162,9 +174,12 @@ const SiteMenu = ({ variant = 'default' }: MenuProps) => {
             lockScroll
             {...getFloatingProps()}
           >
-            <TopbarDropdown className='z-50'>
+            <TopbarDropdown className='z-9999'>
               <nav
-                className={`${!Flags.HAS_FANCY_MENU ? 'dark h-full bg-north-sea-80' : ''} `}
+                className={twMerge(
+                  Flags.HAS_FANCY_MENU && 'w-[calc(100%-15px)] max-w-fullwidth',
+                  !Flags.HAS_FANCY_MENU && 'dark h-full bg-north-sea-80',
+                )}
               >
                 <NavTopbar>
                   <LogoLink />
@@ -254,7 +269,7 @@ const SiteMenu = ({ variant = 'default' }: MenuProps) => {
           </FloatingOverlay>
         </FloatingFocusManager>
       )}
-    </div>
+    </>
   )
 }
 

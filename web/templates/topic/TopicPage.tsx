@@ -60,7 +60,7 @@ const TopicPage = ({
         }
 
   return (
-    <main className='mx-auto flex w-full max-w-fullwidth flex-col pt-topbar peer-data-[sticky=true]:pt-topbar-and-sticky'>
+    <main className='mx-auto flex w-full max-w-fullwidth flex-col'>
       <HeroBlock {...heroProps} />
       <PageContent
         data={restData}

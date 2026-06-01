@@ -8,9 +8,11 @@ import { algolia } from '@/lib/config'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { getNameFromIso } from '@/sanity/helpers/localization'
 import { routeSanityFetch } from '@/sanity/lib/live'
-import { PageWrapper } from '@/sanity/pages/PageWrapper'
 import { constructSanityMetadata, getPage } from '@/sanity/pages/utils'
+import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu'
 import { newsroomMetaQuery } from '@/sanity/queries/metaData'
+import { simpleMenuQuery } from '@/sanity/queries/simpleMenu'
+import Header from '@/sections/Header/Header'
 import NewsRoomTemplate from '@/templates/newsroom/Newsroom'
 
 export function generateStaticParams() {
@@ -88,21 +90,33 @@ export default async function NewsroomPage({
     notFound()
   }
 
-  const { headerData, pageData } = await getPage({
-    slug: slug ?? newsSlug[getNameFromIso(locale)],
-    locale,
-    tags: ['newsroom'],
-  })
+  const [siteMenuResult, pageResults] = await Promise.all([
+    routeSanityFetch({
+      query: Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery,
+      params: {
+        lang: getNameFromIso(locale) ?? 'en_GB',
+      },
+    }),
+    getPage({
+      slug: slug ?? newsSlug[getNameFromIso(locale)],
+      locale,
+      tags: ['newsroom'],
+    }),
+  ])
+
+  const { headerData, pageData } = pageResults
+  const { data: siteMenuData } = siteMenuResult || {}
 
   const response = await getInitialResponse(locale)
 
   return (
-    <PageWrapper headerData={headerData}>
+    <>
+      <Header siteMenuData={siteMenuData} headerData={headerData} />
       <NewsRoomTemplate
         locale={locale}
         pageData={pageData}
         initialSearchResponse={response}
       />
-    </PageWrapper>
+    </>
   )
 }

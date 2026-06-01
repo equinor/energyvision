@@ -1,7 +1,5 @@
 import type { PortableTextBlock } from 'next-sanity'
-import type { HeaderData } from '@/contexts/pageContext'
 import type { BreadcrumbData } from '@/core/Breadcrumbs/Breadcrumbs'
-import { PageWrapper } from '@/sanity/pages/PageWrapper'
 import {
   HeroBlock,
   type HeroBlockProps,
@@ -12,7 +10,6 @@ import { PageContent } from '@/templates/shared/SharedPageContent'
 import type { ContentType, SeoData, Templates } from '../../types/index'
 
 type HomePageProps = {
-  headerData?: HeaderData
   slug: string
   title: PortableTextBlock[]
   titleStyle: string
@@ -26,12 +23,7 @@ type HomePageProps = {
   breadcrumbs: BreadcrumbData
 }
 
-const HomePage = ({
-  headerData = { slugs: [] },
-  hero,
-  title,
-  ...restData
-}: HomePageProps) => {
+const HomePage = ({ hero, title, ...restData }: HomePageProps) => {
   const heroProps: HeroBlockProps = {
     heroData: {
       //@ts-ignore
@@ -43,20 +35,18 @@ const HomePage = ({
   }
 
   return (
-    <PageWrapper headerData={headerData}>
-      <main className='mx-auto flex w-full max-w-fullwidth flex-col pt-topbar peer-data-[sticky=true]:pt-topbar-and-sticky'>
-        <HeroBlock {...heroProps} />
-        <PageContent
-          data={restData}
-          heroBackground={
-            hero?.type !== HeroTypes.DEFAULT
-              ? //@ts-ignore
-                restData?.content?.[0]?.designOptions.background
-              : hero?.background
-          }
-        />
-      </main>
-    </PageWrapper>
+    <main className='mx-auto flex w-full max-w-fullwidth flex-col'>
+      <HeroBlock {...heroProps} />
+      <PageContent
+        data={restData}
+        heroBackground={
+          hero?.type !== HeroTypes.DEFAULT
+            ? //@ts-ignore
+              restData?.content?.[0]?.designOptions.background
+            : hero?.background
+        }
+      />
+    </main>
   )
 }
 

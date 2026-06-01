@@ -5,9 +5,9 @@ import type {
   QueryParams,
 } from 'next-sanity'
 import { defineLive } from 'next-sanity/live'
-import { dataset } from '@/languageConfig'
+//import { dataset } from '@/languageConfig'
 import { client } from './client'
-import { tempSanityFetch } from './tempSanityFetch'
+//import { tempSanityFetch } from './tempSanityFetch'
 import { token } from './token'
 
 export const { sanityFetch, SanityLive } = defineLive({

@@ -201,7 +201,7 @@ export const HeroBlock = ({
         )}
     </section>
   ) : (
-    <h1 id='mainTitle' className='sr-only'>
+    <h1 id='mainTitle' tabIndex={-1} className='sr-only'>
       {/** @ts-ignore */}
       {toPlainText(title)}
     </h1>

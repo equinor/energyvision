@@ -83,6 +83,7 @@ export const TextOnBackgroundImageHero = ({
     <Blocks
       value={title}
       id='mainTitle'
+      tabIndex={-1}
       group={displayTextVariant !== 'none' ? 'display' : `heading`}
       variant={
         displayTextVariant !== 'none'

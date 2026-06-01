@@ -57,6 +57,7 @@ export const LoopingVideoHero = ({
           //@ts-ignore
           value={title}
           id='mainTitle'
+          tabIndex={-1}
           as='h1'
           variant='h1'
           blockClassName={twMerge(

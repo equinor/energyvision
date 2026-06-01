@@ -2,17 +2,16 @@ import '../globals.css'
 import dynamic from 'next/dynamic'
 import localFont from 'next/font/local'
 import { draftMode } from 'next/headers'
+import NextLink from 'next/link'
 import { notFound } from 'next/navigation'
-import { hasLocale, NextIntlClientProvider } from 'next-intl'
-import { setRequestLocale } from 'next-intl/server'
+import { hasLocale, NextIntlClientProvider, useTranslations } from 'next-intl'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { PageProvider } from '@/contexts/pageContext'
+import ButtonLink from '@/core/Link/ButtonLink'
 import { dataset } from '@/languageConfig'
-import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { getNameFromIso } from '@/sanity/helpers/localization'
 import { routeSanityFetch, SanityLive } from '@/sanity/lib/live'
 import { footerAndErrorImageQuery } from '@/sanity/queries/footer'
-import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu'
-import { simpleMenuQuery } from '@/sanity/queries/simpleMenu'
 import Footer from '@/sections/Footer/Footer'
 import GoToTopButton from '@/sections/GoToTopButton'
 import { routing } from '../../i18n/routing'
@@ -40,8 +39,8 @@ export default async function LocaleLayout({
 }) {
   const { locale } = await params
 
-  // Enable static rendering
   setRequestLocale(locale)
+  const t = await getTranslations()
 
   if (!hasLocale(routing.locales, locale)) {
     notFound()
@@ -51,22 +50,12 @@ export default async function LocaleLayout({
     lang: getNameFromIso(locale) ?? 'en_GB',
   }
 
-  const [siteMenuData, footerAndErrorImageData] = await Promise.all([
-    routeSanityFetch({
-      query: Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery,
-      params: queryParams,
-      tags: ['siteMenu', 'subMenu'],
-      requestTag: 'menu',
-    }),
-    routeSanityFetch({
-      query: footerAndErrorImageQuery,
-      params: queryParams,
-      tags: ['footer', 'settings'],
-      requestTag: 'footer',
-    }),
-  ])
+  const { data: footerAndErrorImageData } = await routeSanityFetch({
+    query: footerAndErrorImageQuery,
+    params: queryParams,
+  })
 
-  const { errorImage, ...footerData } = footerAndErrorImageData.data || {}
+  const { errorImage, ...footerData } = footerAndErrorImageData || {}
 
   async function loadVisualEditing() {
     if (dataset === 'global-development' && (await draftMode()).isEnabled) {
@@ -87,16 +76,17 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} className={`${equinor.className} `}>
-      <body className=''>
+      <body className='has-data-no-sticky:pt-topbar'>
+        <NextLink
+          href='#mainTitle'
+          className='sr-only bg-moss-green-50 text-sm transition focus:not-sr-only focus:flex focus:w-full focus:items-center focus:justify-center focus:p-4 focus:underline'
+        >
+          {t('skipToContent') ?? 'Skip to main content'}
+        </NextLink>
         <SanityLive />
         {loadVisualEditing()}
         <NextIntlClientProvider>
-          <PageProvider
-            initialErrorImage={errorImage}
-            initialSiteMenuData={siteMenuData.data}
-          >
-            {children}
-          </PageProvider>
+          <PageProvider initialErrorImage={errorImage}>{children}</PageProvider>
           <Footer {...footerData} />
           <GoToTopButton />
         </NextIntlClientProvider>
