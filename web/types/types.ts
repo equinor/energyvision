@@ -226,7 +226,7 @@ export type Tag = {
 export type FooterColumns = {
   id: string
   header: string
-  linkList?: FooterLinkData[]
+  linkList?: any[]
 }
 
 export type ContactListData = {
