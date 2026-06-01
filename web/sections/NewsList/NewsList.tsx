@@ -76,7 +76,7 @@ const NewsList = ({
                         variant='date'
                         datetime={newsItem?.publishDateTime}
                         uppercase
-                        className='pb-2 text-sm'
+                        className='pb-2 text-xs font-medium'
                       />
                     ),
                   })}
