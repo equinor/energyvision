@@ -41,7 +41,10 @@ export default function Page() {
   const router = useRouter()
 
   return (
-    <div className='dark w-full overflow-auto bg-slate-blue-95'>
+    <div
+      data-search-page='true'
+      className='dark w-full overflow-auto bg-slate-blue-95'
+    >
       <div className='relative mx-auto min-h-[55vh] w-full max-w-fullwidth'>
         <TopbarDropdown variant='dark' className='absolute'>
           <NavTopbar>
@@ -62,11 +65,6 @@ export default function Page() {
           <Search />
         </TopbarDropdown>
       </div>
-      {/*       <div className='mx-auto max-w-content'>
-        <div className='px-layout-sm'>
-          <div className='border-white-100/20 border-b' />
-        </div>
-      </div> */}
     </div>
   )
 }
