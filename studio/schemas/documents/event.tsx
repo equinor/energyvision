@@ -85,51 +85,7 @@ export default {
       title: 'Date information',
       name: 'eventDate',
       type: 'eventDate',
-      hidden: ({ value }: any) => {
-        return !value
-      },
     },
-    defineField({
-      type: 'object',
-      name: 'startDayAndTime',
-      title: 'Event start',
-      fields: [
-        {
-          title: 'Date and optional time',
-          description: 'Set time label below to ignore time here',
-          name: 'dayTime',
-          type: 'datetime',
-        },
-        {
-          name: 'overrideTimeLabel',
-          title: 'Time label',
-          description:
-            'Override time with e.g. "To be announced" or "-" if you dont want to show time at all',
-          type: 'string',
-        },
-      ],
-    }),
-    defineField({
-      type: 'object',
-      name: 'endDayAndTime',
-      title: 'Event end',
-      description: 'Optional',
-      fields: [
-        {
-          title: 'Date and optional time',
-          description: 'Set time label below to ignore time here',
-          name: 'dayTime',
-          type: 'datetime',
-        },
-        {
-          name: 'overrideTimeLabel',
-          title: 'Time label',
-          description:
-            'Override time with e.g. "To be announced" or "-" if you dont want to show time at all',
-          type: 'string',
-        },
-      ],
-    }),
     {
       title: 'Event tags',
       name: 'eventTags',
