@@ -57,7 +57,7 @@ const NewsList = ({
           {title && <Blocks value={title} variant='h2' />}
         </div>
 
-        <div className='grid auto-rows-fr gap-x-6 gap-y-8 3xl:px-layout-md px-layout-sm sm:grid-cols-2 xl:grid-cols-3'>
+        <ul className='grid auto-rows-fr gap-x-6 gap-y-8 3xl:px-layout-md px-layout-sm sm:grid-cols-2 xl:grid-cols-3'>
           {pagedArticles.map(newsItem => {
             const locale =
               iso !== defaultLanguage.name ? getLocaleFromIso(iso) : ''
@@ -87,7 +87,7 @@ const NewsList = ({
               </li>
             )
           })}
-        </div>
+        </ul>
         <Pagination
           totalPages={totalPages}
           onPageChange={(pageNumber: number) => handlePageChange(pageNumber)}
