@@ -6,7 +6,6 @@
  *  add 'use client' to specific interactive components instead of
  *  marking large parts of your UI as Client Components.
  */
-import dynamic from 'next/dynamic'
 import AccordionBlock from '@/sections/AccordionBlock/AccordionBlock'
 import { AnchorLinkList } from '@/sections/AnchorLinkList'
 import AnchorSearch, {
@@ -588,7 +587,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
             key={c.id}
             {...commonProps}
             data={c as AnchorLinkListData}
-            className={allSpacings}
+            className={topSpacingClassName}
           />
         )
       case 'imageForText':

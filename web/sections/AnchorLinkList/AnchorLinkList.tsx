@@ -1,5 +1,6 @@
 import { forwardRef, type HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
+import BaseLink from '@/core/Link/BaseLink'
 import { getLayoutPx } from '@/lib/helpers/getCommonUtilities'
 import { Typography } from '../../core/Typography'
 import type { AnchorLinkReference, LayoutGrid } from '../../types'
@@ -48,13 +49,13 @@ const AnchorLinkList = forwardRef<HTMLElement, AnchorLinkListProps>(
       }
     }
 
-    const px = getLayoutPx(layoutGrid ?? 'lg')
+    const px = getLayoutPx(layoutGrid ?? 'md')
 
     return (
       <section
         ref={ref}
         className={twMerge(
-          `flex flex-col items-center ${px} pb-page-content`,
+          `flex flex-col items-center ${px} py-6 lg:pt-6 lg:pb-12`,
           className,
         )}
         id={anchor}
@@ -84,12 +85,12 @@ const AnchorLinkList = forwardRef<HTMLElement, AnchorLinkListProps>(
                     key={`anchor_link_${anchorLink?.id}`}
                     className='flex w-fill justify-start'
                   >
-                    <a
+                    <BaseLink
                       href={anchor}
                       className='group flex w-fill items-center justify-center gap-1 whitespace-nowrap text-base text-moss-green-100 hover:underline'
                     >
                       {anchorLink?.title}
-                    </a>
+                    </BaseLink>
                   </li>
                 )
               },

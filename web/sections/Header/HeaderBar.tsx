@@ -25,7 +25,6 @@ const HeaderBar = ({
   searchLabel = 'Search',
   headerData,
 }: HeaderBarProps) => {
-  console.log('HeaderBar siteMenuData', siteMenuData)
   const localization = {
     activeLocale: locale ?? defaultLanguage.iso,
   }
@@ -37,7 +36,6 @@ const HeaderBar = ({
       headerData.stickyMenuData?.links?.length > 0) ??
     false
 
-  //animate-height
   return (
     <>
       <TopbarWrapper hasSticky={showSticky}>
