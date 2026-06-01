@@ -91,7 +91,7 @@ const NewsPage = async ({
 
   return (
     <>
-      <main className='mx-auto flex w-full max-w-fullwidth pt-topbar'>
+      <main className='mx-auto flex w-full max-w-fullwidth'>
         <article className='w-full flex-col items-center pb-28'>
           <DefaultHero
             figure={heroImage}
