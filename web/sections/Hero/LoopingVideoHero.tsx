@@ -31,6 +31,7 @@ export const LoopingVideoHero = ({
   nextSectionDesignOptions,
   className = '',
 }: LoopingVideoHeroProps) => {
+  console.log('video', video)
   const { ratio } = video
   const { bg: nextCompBg, dark: nextCompDark } = getBgAndDarkFromBackground(
     nextSectionDesignOptions,
@@ -60,8 +61,8 @@ export const LoopingVideoHero = ({
           tabIndex={-1}
           as='h1'
           variant='h1'
-          blockClassName={twMerge(
-            `pt-4 lg:pt-6 px-layout-sm lg:px-layout-lg ${nextCompBg} ${nextCompDark ? nextCompDark : ''}`,
+          className={twMerge(
+            `px-layout-sm pt-4 lg:px-layout-lg lg:pt-6 ${nextCompBg} ${nextCompDark ? nextCompDark : ''}`,
             className,
           )}
         />

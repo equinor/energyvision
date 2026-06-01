@@ -85,12 +85,14 @@ export const HeroBlock = ({
     magazineTags,
     link,
     heroLink,
-    video,
     backgroundGradient,
     useBrandTheme,
     useBlurCenter,
     displayTextVariant,
   } = heroData
+
+  console.log('heroData', heroData)
+  console.log('heroData', heroData)
 
   const { bg: nextCompBg, dark: nextCompDark } = getBgAndDarkFromBackground(
     nextSectionDesignOptions,
@@ -167,7 +169,8 @@ export const HeroBlock = ({
           //@ts-ignore
           <LoopingVideoHero
             {...commonProps}
-            video={video}
+            //@ts-ignore: backwardscompatibility?
+            video={heroData?.video ?? heroData?.loopingVideo}
             // reduce pb when breadscrumbs
             className={`${breadcrumbs?.enableBreadcrumbs ? 'pb-2' : ''}`}
           />
