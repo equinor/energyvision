@@ -36,7 +36,7 @@ export const StickyMenu = forwardRef<HTMLElement, StickyMenuProps>(
       <nav
         ref={ref}
         aria-label={intl('local')}
-        data-sticky={links?.length > 0}
+        data-sticky={!links || links?.length > 0}
         className={twMerge(
           `peer sticky top-0 z-20 shadow-md duration-500 ease-in-out [transition-property:top] peer-data-topbar-visible:top-topbar`,
           twBg,
