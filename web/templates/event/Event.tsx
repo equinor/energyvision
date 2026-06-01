@@ -95,34 +95,11 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
                       datetime={start ?? eventDate?.date}
                     />
                   )}
-                  {startDayTime && !endDayTime && (
-                    <FormattedDateTime datetime={startDayTime} dateIcon />
-                  )}
-                  {startDayTime && endDayTime && (
-                    <FormattedDateTime
-                      variant='period'
-                      datetime={startDayTime}
-                      endDatetime={endDayTime}
-                      dateIcon
-                    />
-                  )}
-                  {startDayTime && startTimeLabel !== '-' && (
-                    <div className='flex items-end gap-2 text-base'>
-                      {startTimeLabel
-                        ? startTimeLabel
-                        : new Date(startDayTime).toTimeString()}
-                      {endDayTime && endTimeLabel && endTimeLabel !== '-' && (
-                        <>
-                          <span className=''>-</span>
-                          {endTimeLabel && endTimeLabel !== '-' && endTimeLabel}
-                          {!endTimeLabel &&
-                            new Date(startDayTime).toTimeString()}
-                        </>
-                      )}
-                    </div>
+                  {!(start && end) && (
+                    <p className='my-2 text-base'>To be announced</p>
                   )}
                   {!startDayAndTime && start && end && (
-                    <div className={`flex items-end gap-1 *:text-base`}>
+                    <div className={`flex gap-1 *:text-base`}>
                       <FormattedDateTime
                         variant='time'
                         timeIcon={false}
