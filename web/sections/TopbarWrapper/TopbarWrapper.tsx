@@ -1,6 +1,7 @@
 'use client'
 import { useTranslations } from 'next-intl'
 import { type HTMLAttributes, useEffect, useRef, useState } from 'react'
+import { twMerge } from '@/lib/twMerge/twMerge'
 
 export type TopbarWrapperProps = HTMLAttributes<HTMLDivElement>
 export type TopbarWrapperStickyProps = TopbarWrapperProps & {
@@ -68,7 +69,11 @@ export const TopbarWrapper = ({
   return (
     <header
       data-topbar-visible={isVisible}
-      className={`peer z-50 w-full bg-white-100 duration-400 ease-in-out [transition-property:top] ${hasSticky ? 'sticky' : 'fixed'} ${isVisible ? 'top-0' : '-top-topbar'}`}
+      className={twMerge(
+        'peer sticky z-50 w-full bg-white-100 duration-400 ease-in-out [transition-property:top]',
+        isVisible ? 'top-0' : '-top-topbar',
+        !hasSticky && 'shadow-md',
+      )}
     >
       <div className='mx-auto w-full max-w-fullwidth'>
         <nav

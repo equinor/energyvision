@@ -91,9 +91,6 @@ export const HeroBlock = ({
     displayTextVariant,
   } = heroData
 
-  console.log('heroData', heroData)
-  console.log('heroData', heroData)
-
   const { bg: nextCompBg, dark: nextCompDark } = getBgAndDarkFromBackground(
     nextSectionDesignOptions,
   )
