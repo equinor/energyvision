@@ -71,7 +71,7 @@ export const content = {
     { type: 'lineChartBlock', title: 'Line chart' },
     { type: 'barChartBlock', title: 'Bar chart' },
     { type: 'promotionsV2' },
-    { type: 'anchorSearch' },
+    //{ type: 'anchorSearch' }, to be worked on later
   ].filter(e => e),
   components: {
     input: RolesBasedArrayInput,

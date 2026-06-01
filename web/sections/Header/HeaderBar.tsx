@@ -34,7 +34,7 @@ const HeaderBar = ({
   //Sticky and LocalizationSwitch is reliant on [...page] to return page data with slugs for localization and sticky menu data.
   const showSticky =
     (headerData?.stickyMenuData &&
-      headerData.stickyMenuData.links.length > 0) ??
+      headerData.stickyMenuData?.links?.length > 0) ??
     false
 
   //animate-height
