@@ -339,7 +339,12 @@ _type == "keyNumbers" =>{
           title,
           heroImage,
           "publishDateTime": ${publishDateTimeQuery},
-          "slug": slug.current,
+          
+          "link":{
+            "slug": slug.current,
+            "type":"internalUrl",
+            "lang": lang,
+          },
           ingress[]{
             ...,
             ${markDefs},

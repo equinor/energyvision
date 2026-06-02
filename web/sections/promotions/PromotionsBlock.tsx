@@ -10,6 +10,7 @@ import {
 } from '@/core/Image/imageUtilities'
 import { ResourceLink } from '@/core/Link/ResourceLink'
 import { Promotion } from '@/core/Promotion/Promotion'
+import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import Blocks from '@/portableText/Blocks'
 import { resolveImage } from '@/sanity/lib/utils'
 import {
@@ -209,6 +210,10 @@ const PromotionsBlock = ({
             )}
           >
             {promotionList?.map((promotion: any) => {
+              const href = getUrlFromAction({
+                ...promotion,
+                type: 'internalUrl',
+              })
               return (
                 <li key={promotion?.id}>
                   {variant === 'promotePeople' && (
@@ -241,7 +246,7 @@ const PromotionsBlock = ({
                         ),
                       })}
                       image={promotion?.heroImage?.image}
-                      href={promotion?.slug}
+                      href={href}
                       hasSectionTitle={!!title}
                     />
                   )}
