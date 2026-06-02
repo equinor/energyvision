@@ -3,7 +3,18 @@ import { tz } from '@date-fns/tz'
 import { Icon } from '@equinor/eds-core-react'
 import { calendar, time } from '@equinor/eds-icons'
 import { format } from 'date-fns'
-import { enGB, nb } from 'date-fns/locale'
+import {
+  cy,
+  de,
+  enGB,
+  es,
+  ja,
+  ko,
+  type Locale,
+  nb,
+  pl,
+  ptBR,
+} from 'date-fns/locale'
 import { type DateTimeFormatOptions, useLocale } from 'next-intl'
 import { forwardRef, type HTMLAttributes } from 'react'
 import { twMerge } from '@/lib/twMerge/twMerge'
@@ -14,15 +25,6 @@ export const DateIcon = (): JSX.Element => (
 export const TimeIcon = (): JSX.Element => (
   <Icon data={time} className='text-norwegian-woods-100' />
 )
-
-const getLocaleDateFormatting = (locale: string) => {
-  return (
-    {
-      'en-GB': 'd MMMM yyyy',
-      'nb-NO': 'd. MMMM yyyy',
-    }[locale] || 'd MMMM yyyy'
-  )
-}
 
 const getLocaleShortDayFormat = (locale: string) => {
   return (
@@ -76,6 +78,29 @@ export type FormattedDateTimeProps = {
 } & HTMLAttributes<HTMLDivElement> &
   DateTimeFormatOptions
 
+const getLocale = (locale: string): Locale => {
+  switch (locale) {
+    case 'nb-NO':
+      return nb
+    case 'pt-BR':
+      return ptBR
+    case 'pl-PL':
+      return pl
+    case 'cy-CY':
+      return cy
+    case 'ja-JP':
+      return ja
+    case 'ko-KR':
+      return ko
+    case 'de-DE':
+      return de
+    case 'es-AR':
+      return es
+    default:
+      enGB
+  }
+  return enGB
+}
 const FormattedDateTime = forwardRef<HTMLDivElement, FormattedDateTimeProps>(
   (
     {
@@ -113,13 +138,13 @@ const FormattedDateTime = forwardRef<HTMLDivElement, FormattedDateTimeProps>(
       endDate = endDatetime as Date
     }
 
-    let dateFormat = getLocaleDateFormatting(locale)
+    let dateFormat = 'PPP'
 
     if (variant === 'time') {
-      dateFormat = 'HH:mm'
+      dateFormat = 'p'
     }
     if (variant === 'datetime') {
-      dateFormat = `${dateFormat} HH:mm`
+      dateFormat = `${dateFormat} p`
     }
 
     // Get browser's timezone string automatically
@@ -128,7 +153,7 @@ const FormattedDateTime = forwardRef<HTMLDivElement, FormattedDateTimeProps>(
 
     const formattedDate = `${format(date, dateFormat, {
       in: tz(browserTimeZone),
-      locale: locale === 'nb-NO' ? nb : enGB,
+      locale: getLocale(locale),
     })}${_showTimezone ? `${noTimeZoneParanthesis ? ' ' : ' ('}${timezoneName}${noTimeZoneParanthesis ? '' : ')'}` : ''}`
 
     return (
@@ -158,7 +183,7 @@ const FormattedDateTime = forwardRef<HTMLDivElement, FormattedDateTimeProps>(
             >
               {`${format(date, `${getLocaleShortDayFormat(locale)}`, {
                 in: tz(browserTimeZone),
-                locale: locale === 'nb-NO' ? nb : enGB,
+                locale: getLocale(locale),
               })}`}
             </time>
             <span>-</span>
@@ -169,7 +194,7 @@ const FormattedDateTime = forwardRef<HTMLDivElement, FormattedDateTimeProps>(
             >
               {`${format(endDate, `${getLocaleShortDayFormat(locale)} yyyy`, {
                 in: tz(browserTimeZone),
-                locale: locale === 'nb-NO' ? nb : enGB,
+                locale: getLocale(locale),
               })}`}
             </time>
           </>
