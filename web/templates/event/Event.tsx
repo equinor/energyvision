@@ -54,16 +54,10 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
     relatedLinks,
     contactList,
     eventDate,
-    startDayAndTime,
-    endDayAndTime,
   } = data.content
 
   const plainTitle = title ? toPlainText(title as PortableTextBlock[]) : ''
   const { start, end } = getEventDates(eventDate)
-  const { dayTime: startDayTime, overrideTimeLabel: startTimeLabel } =
-    startDayAndTime || {}
-  const { dayTime: endDayTime, overrideTimeLabel: endTimeLabel } =
-    endDayAndTime || {}
 
   const { bg, dark } = getBgAndDarkFromBackground({
     background: { backgroundColor: 'Moss Green Light' },
@@ -74,8 +68,8 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
       {eventDate?.date && start && end && (
         <EventJsonLd
           name={plainTitle}
-          startDate={start.toISOString()}
-          endDate={end.toISOString()}
+          startDate={start}
+          endDate={end}
           location={location || ''}
         />
       )}
@@ -88,17 +82,14 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
               >
                 {title && <Blocks as='h1' variant='3xl' value={title} />}
                 <div className='mt-6 flex flex-col gap-2 *:text-sm *:leading-0'>
-                  {!startDayTime && (start || eventDate?.date) && (
+                  {(start || eventDate?.date) && (
                     <FormattedDateTime
                       variant='date'
                       dateIcon
-                      datetime={start ?? eventDate?.date}
+                      datetime={start}
                     />
                   )}
-                  {!(start && end) && (
-                    <p className='my-2 text-base'>To be announced</p>
-                  )}
-                  {!startDayAndTime && start && end && (
+                  {(start && end) ? (
                     <div className={`flex gap-1 *:text-base`}>
                       <FormattedDateTime
                         variant='time'
@@ -116,13 +107,13 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
                         timeClassName='leading-none'
                       />
                     </div>
-                  )}
+                  ): <p className='my-2 text-base'>To be announced</p>}
                 </div>
                 {location && <p className='my-2 text-base'>{location}</p>}
                 <AddToCalendar
                   eventDate={eventDate}
-                  startDateTime={startDayAndTime?.dayTime}
-                  endDateTime={endDayAndTime?.dayTime}
+                  startDateTime={start}
+                  endDateTime={end}
                   location={location}
                   title={plainTitle}
                 />

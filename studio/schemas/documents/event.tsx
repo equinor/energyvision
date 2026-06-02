@@ -168,36 +168,22 @@ export default {
     {
       title: 'Start date ',
       name: 'startDateAsc',
-      by: [{ field: 'startDayAndTime.dayTime', direction: 'asc' }],
+      by: [{ field: 'eventDate', direction: 'asc' }],
     },
   ],
   preview: {
     select: {
       title: 'title',
       date: 'eventDate',
-      startDayAndTime: 'startDayAndTime',
-      endDayAndTime: 'endDayAndTime',
     },
     prepare({
       title,
       date,
-      startDayAndTime,
-      endDayAndTime,
     }: {
       title?: PortableTextBlock[]
       date?: EventDate
-      startDayAndTime?: EventDayAndTime
-      endDayAndTime?: EventDayAndTime
     }) {
       let eventDate = date?.date ? `${date.date}` : 'No date set'
-
-      if (startDayAndTime) {
-        if (endDayAndTime) {
-          eventDate = `${formatDate(startDayAndTime?.dayTime)} - ${formatDate(endDayAndTime?.dayTime)}`
-        } else {
-          eventDate = `${formatDate(startDayAndTime?.dayTime)}`
-        }
-      }
       return {
         title: title ? blocksToText(title) : 'Untitled event',
         subtitle: eventDate,
