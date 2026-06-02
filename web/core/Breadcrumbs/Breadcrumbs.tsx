@@ -78,9 +78,7 @@ export const Breadcrumbs = forwardRef<HTMLElement, BreadcrumbsProps>(
         aria-label='Breadcrumbs'
         className={`mx-auto max-w-content px-layout-sm lg:px-layout-lg ${background ?? ''}`}
       >
-        <BreadcrumbsList
-          className={twMerge(`pt-2 pb-6 lg:pt-4 lg:pb-8`, className)}
-        >
+        <BreadcrumbsList className={twMerge(`py-6 lg:py-8`, className)}>
           {crumbs.map(item => {
             const isActive = item.slug === currentSlug
             const label = item.label

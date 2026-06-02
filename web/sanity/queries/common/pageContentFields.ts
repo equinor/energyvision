@@ -572,7 +572,7 @@ _type == "keyNumbers" =>{
     "designOptions": {
       layoutGrid,
       "displayTextVariant": coalesce(displayTextVariant, 'none'),
-      "cardBackground": coalesce(cardBackground, 'blue-50'),
+      "cardBackground": coalesce(cardBackground,background.key, 'blue-50'),
     },
   },
   _type == "grid" => {

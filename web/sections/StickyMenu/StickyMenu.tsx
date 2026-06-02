@@ -52,15 +52,15 @@ export const StickyMenu = forwardRef<HTMLElement, StickyMenuProps>(
             <div className={`text-start font-medium text-base`}>
               {title ?? ''}
             </div>
-            <div className='flex items-center gap-10'>
+            <div className='flex gap-10'>
               {links?.map(link => {
                 return link?.type === 'anchorLinkReference' ? (
                   <Link
                     key={link?.id}
                     href={`#${link?.anchorReference}`}
-                    className='text-sm no-underline hover:text-slate-80 hover:underline dark:hover:text-grey-20'
+                    className='items-end text-sm leading-none no-underline hover:text-slate-80 hover:underline dark:hover:text-grey-20'
                   >
-                    {title ?? ''}
+                    {link?.title ?? ''}
                   </Link>
                 ) : (
                   <DownloadableLink

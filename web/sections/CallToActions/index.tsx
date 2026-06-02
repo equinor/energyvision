@@ -1,7 +1,7 @@
 import { toPlainText } from 'next-sanity'
-import { twMerge } from 'tailwind-merge'
 import ResourceLink from '@/core/Link/ResourceLink'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
+import { twMerge } from '@/lib/twMerge/twMerge'
 import { getLocaleFromName } from '../../sanity/helpers/localization'
 import type { LinkData } from '../../types/index'
 
@@ -16,7 +16,7 @@ const CallToActions = ({
   callToActions = [],
   splitList,
   linkVariant,
-  className = 'pt-8',
+  className,
 }: CallToActionsProps) => {
   if (!callToActions) return null
 
@@ -51,7 +51,7 @@ const CallToActions = ({
   }
 
   return (
-    <div className={className}>
+    <div className={twMerge('pt-8', className)}>
       {callToActions?.length === 1 ? (
         getSingleAction()
       ) : (

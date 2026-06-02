@@ -57,7 +57,7 @@ const variants = {
   paragraph: {
     caption: '',
     overline: 'text-md mb-2 text-pretty',
-    ingress: 'text-md mt-5 mb-5 first:mt-0 last:mb-10 text-pretty',
+    ingress: 'text-md mt-5 mb-5 first:mt-0 last:mb-6 text-pretty', //last:mb-10
     eyebrow: 'text-xs font-medium uppercase text-pretty',
     body: 'my-5 first:mt-0 last:mb-0 [:where(h2+*,h3+*)]:mt-0 text-base text-pretty',
     small:

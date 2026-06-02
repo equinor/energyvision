@@ -48,15 +48,17 @@ const TopicPage = ({
     nextSectionDesignOptions: restData?.content?.[0]?.designOptions,
   }
 
-  const heroBackground: Background =
+  const heroBackground: Background & { heroHasBreadcrumbs?: boolean } =
     hero?.type === 'backgroundImage'
       ? {
           type: 'backgroundImage',
           backgroundImage: hero.figure,
+          heroHasBreadcrumbs: breadcrumbs?.enableBreadcrumbs,
         }
       : {
           type: 'backgroundColor',
           backgroundUtility: hero?.background,
+          heroHasBreadcrumbs: breadcrumbs?.enableBreadcrumbs,
         }
 
   return (

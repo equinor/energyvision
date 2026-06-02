@@ -72,7 +72,13 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
       {ingress && <Blocks variant='ingress' value={ingress} />}
       {text && <Blocks value={text} variant='body' />}
       {callToActions && (
-        <CallToActions callToActions={callToActions} splitList={splitList} />
+        <CallToActions
+          callToActions={callToActions}
+          splitList={splitList}
+          className={
+            (title && !ingress && !text) || (ingress && !text) ? 'pt-0' : ''
+          }
+        />
       )}
     </>
   )

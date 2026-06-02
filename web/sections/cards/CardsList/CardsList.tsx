@@ -40,6 +40,7 @@ const CardsList = forwardRef<HTMLElement, CardsListProps>(function CardsList(
   }
 
   const bg = colorKeyToUtilityMap[cardBackground ?? 'blue-50']
+
   const px = getLayoutPx(layoutGrid ?? 'md')
 
   return (

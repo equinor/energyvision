@@ -92,7 +92,8 @@ export const FullWidthImageHero = ({
           variant={titleVariant}
           /*         blockClassName='pb-0' */
           className={twMerge(
-            `mt-8 w-full px-layout-sm lg:mt-10 lg:px-layout-lg`,
+            `w-full px-layout-sm lg:px-layout-lg`,
+            !breadcrumbsComponent && 'mt-8 lg:mt-10',
             className,
           )}
         />

@@ -94,26 +94,26 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(
       switch (extension?.toUpperCase()) {
         case 'PDF':
           return (
-            <BsFiletypePdf title='pdf' size={20} className={iconClassName} />
+            <BsFiletypePdf title='pdf' size={19} className={iconClassName} />
           )
         case 'XLSX':
           return (
-            <BsFiletypeXlsx title='xlsx' size={20} className={iconClassName} />
+            <BsFiletypeXlsx title='xlsx' size={19} className={iconClassName} />
           )
         case 'PNG':
           return (
-            <BsFiletypePng title='png' size={20} className={iconClassName} />
+            <BsFiletypePng title='png' size={19} className={iconClassName} />
           )
         case 'JPG':
           return (
-            <BsFiletypeJpg title='jpg' size={20} className={iconClassName} />
+            <BsFiletypeJpg title='jpg' size={19} className={iconClassName} />
           )
         case 'XLS':
           return (
-            <BsFiletypeXls title='xls' size={20} className={iconClassName} />
+            <BsFiletypeXls title='xls' size={19} className={iconClassName} />
           )
         case 'ZIP':
-          return <BsFileZip title='zip' size={20} className={iconClassName} />
+          return <BsFileZip title='zip' size={19} className={iconClassName} />
         default:
           return null
       }

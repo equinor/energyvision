@@ -132,7 +132,7 @@ type Component = {
 
 export type PageContentProps = {
   data: TopicPageSchema | MagazinePageSchema
-  heroBackground?: Background
+  heroBackground?: Background & { heroHasBreadcrumbs?: boolean }
 }
 
 /* eslint-disable @typescript-eslint/ban-ts-comment */
@@ -243,7 +243,7 @@ const applyPaddingTopIfApplicable = (
    * List of components that require current section to have pt-20
    * usually because the previous has a background image
    */
-  const specialCases = [
+  const paddingTopCases = [
     'teaser',
     'fullWidthImage',
     'fullWidthVideo',
@@ -267,8 +267,8 @@ const applyPaddingTopIfApplicable = (
   console.log('previousIsWhiteColorBackground', previousIsWhiteColorBackground) */
 
   const previousComponentIsASpecialCaseAndNeedPT =
-    specialCases.includes(prevComponent?.type) ||
-    specialCases.includes(previousBackgroundObject?.type)
+    paddingTopCases.includes(prevComponent?.type) ||
+    paddingTopCases.includes(previousBackgroundObject?.type)
 
   if (
     currentIsWhiteColorBackground &&
@@ -282,6 +282,14 @@ const applyPaddingTopIfApplicable = (
     return prevComponent?.designOptions?.backgroundType === '0'
       ? 'lg:pt-20'
       : 'pt-20'
+  }
+  //Hero has breadcrumbs which have enough padding bottom, the following component should not have pt-20
+  if (
+    prevComponent?.heroHasBreadcrumbs &&
+    (prevComponent?.type === 'pageTitle' ||
+      prevComponent?.type === 'backgroundImage')
+  ) {
+    return ''
   }
 
   const previousIsSameColorAsCurrent = isSameColorBackground(
@@ -311,6 +319,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
     const commonProps = {
       anchor: anchorId,
     }
+
     const allSpacings = `${topSpacingClassName} ${bottomSpacingClassName}`
 
     switch (c.type) {
@@ -722,6 +731,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
               data?.hero?.type === 'backgroundImage'
                 ? data?.hero?.type
                 : 'pageTitle',
+            heroHasBreadcrumbs: heroBackground?.heroHasBreadcrumbs,
             designOptions: { background: heroBackground },
           } as Component)
         : (data?.content?.[previousComponentIndex] as unknown as Component)
@@ -730,6 +740,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
       c,
       previousComponentToCompare,
     )
+
     let bottomSpacingClassName = 'pb-page-content'
 
     //If textblocks follow each other reduce the pb-page-content to tie text closer together
