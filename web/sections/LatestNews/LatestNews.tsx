@@ -46,7 +46,7 @@ const LatestNews = ({ data }: LatestNewsProp) => {
                       variant='date'
                       datetime={newsItem?.publishDateTime}
                       uppercase
-                      className='pb-2 text-sm'
+                      className='pb-2 font-medium text-xs'
                     />
                   ),
                 })}
