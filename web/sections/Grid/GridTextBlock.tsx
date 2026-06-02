@@ -1,11 +1,12 @@
 import { forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { BackgroundContainer } from '@/core/Backgrounds'
 import { Typography } from '@/core/Typography'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
+import { useMediaQuery } from '@/lib/hooks/useMediaQuery'
+import { resolveImage } from '@/sanity/lib/utils'
 import { getColorForTheme } from '@/sections/teasers/TextTeaser/theme'
 import Blocks from '../../portableText/Blocks'
-import type { BackgroundTypes, GridTextBlockData } from '../../types/index'
+import type { GridTextBlockData } from '../../types/index'
 import GridLinkArrow from './GridLinkArrow'
 import type { RowType } from './mapGridContent'
 
@@ -31,6 +32,12 @@ const GridTextBlock = forwardRef<HTMLDivElement, GridTextBlockProps>(
       imageBackground,
     } = data
     const url = action && getUrlFromAction(action)
+    const isLargerDisplays = useMediaQuery(`(min-width: 800px)`)
+    const { url: imageUrl } = resolveImage({
+      image: imageBackground?.image,
+      grid: 'lg',
+      isLargerDisplays,
+    })
 
     const contentAlignmentUtilities = {
       center: 'justify-center items-center',
@@ -47,13 +54,8 @@ const GridTextBlock = forwardRef<HTMLDivElement, GridTextBlockProps>(
       'bottom-center': 'text-center',
     }
 
-    const textClassNames = twMerge(
-      `${(title || themedTitle) && content ? 'text-sm' : 'text-md'}`,
-      className,
-    )
-
-    let titleTextColor = 'text-slate-80'
-    let contentTextColor = 'text-slate-80'
+    let titleTextColor = '**:text-slate-80'
+    let contentTextColor = '**:text-slate-80'
     let bgColor = 'bg-white-100'
 
     if (useThemedTitle) {
@@ -72,8 +74,8 @@ const GridTextBlock = forwardRef<HTMLDivElement, GridTextBlockProps>(
       if (contentBgUtility === titleBgUtility && contentTextUtility) {
         contentTextColor = contentTextUtility
       }
-      if (contentBgUtility !== titleBgUtility) {
-        contentTextColor = dark ? 'text-white-100' : 'text-slate-80'
+      if (contentBgUtility !== titleBgUtility && dark) {
+        contentTextColor = '**:text-white-100'
       }
       bgColor = titleBgUtility ?? contentBgUtility ?? 'bg-white-100'
     }
@@ -91,31 +93,10 @@ const GridTextBlock = forwardRef<HTMLDivElement, GridTextBlockProps>(
       }
     }
 
-    const imageBgOptions = {
-      background: {
-        type: 'backgroundImage' as BackgroundTypes,
-        backgroundImage: imageBackground,
-        dark: !!(
-          (((useThemedTitle && titleThemeFromLarger) || contentTheme) ??
-            theme) === 12 && !imageBackground?.useLight
-        ),
-      },
-    }
-
-    if (imageBackground?.image) {
-      titleTextColor = 'text-white-100'
-      if (imageBackground?.useLight) {
-        titleTextColor = 'text-slate-80'
-      }
-    }
-
-    if (imageBackground?.image) {
+    if (imageBackground?.image && !imageBackground?.useLight) {
+      titleTextColor = '**:text-white-100'
       bgColor = 'bg-slate-80'
-      contentTextColor = 'text-white-100'
-      if (imageBackground?.useLight) {
-        contentTextColor = 'text-slate-80'
-        bgColor = 'bg-white-100'
-      }
+      contentTextColor = '**:text-white-100'
     }
 
     const lightGradientForContentAlignment = {
@@ -156,53 +137,47 @@ const GridTextBlock = forwardRef<HTMLDivElement, GridTextBlockProps>(
       }
     }
 
-    // TODO check the serializers here
-    const serializerClassnames = `${titleTextColor}`
-    /*   {
-    largeText: `leading-tight text-balance ${titleTextColor}`,
-    normal: `text-2xl leading-snug text-balance ${titleTextColor}`,
-  } */
-
     const mainContent = (
       <>
         <div
           className={twMerge(
-            `h-fit ${
-              (title || (useThemedTitle && themedTitle)) && content
-                ? `flex flex-col text-balance ${getLayout()}`
-                : ``
-            }`,
+            `h-fit`,
+            (title || (useThemedTitle && themedTitle)) &&
+              content &&
+              `flex flex-col text-balance ${getLayout()}`,
           )}
         >
-          {overline ? (
-            <hgroup
-              className={`flex max-w-text flex-col gap-2 ${
-                textContentAlignmentUtilities[contentAlignment ?? 'left']
-              } ${titleTextColor}`}
-            >
-              <Typography variant='overline' className='text-sm'>
-                {overline}
-              </Typography>
-              {(title || (useThemedTitle && themedTitle)) && (
+          <div className={titleTextColor}>
+            {overline ? (
+              <hgroup
+                className={`flex max-w-text flex-col gap-2 ${
+                  textContentAlignmentUtilities[contentAlignment ?? 'left']
+                }`}
+              >
+                <Typography variant='overline' className='text-sm'>
+                  {overline}
+                </Typography>
+                {(title || (useThemedTitle && themedTitle)) && (
+                  <Blocks
+                    variant='h2'
+                    //@ts-ignore: todo
+                    value={useThemedTitle ? themedTitle : title}
+                    /*                   blockClassName={serializerClassnames} */
+                  />
+                )}
+              </hgroup>
+            ) : (
+              (title || (useThemedTitle && themedTitle)) && (
                 <Blocks
                   variant='h2'
                   //@ts-ignore: todo
                   value={useThemedTitle ? themedTitle : title}
-                  blockClassName={serializerClassnames}
+                  /*                 blockClassName={serializerClassnames} */
+                  className={`${textContentAlignmentUtilities[contentAlignment ?? 'left']}`}
                 />
-              )}
-            </hgroup>
-          ) : (
-            (title || (useThemedTitle && themedTitle)) && (
-              <Blocks
-                variant='h2'
-                //@ts-ignore: todo
-                value={useThemedTitle ? themedTitle : title}
-                blockClassName={serializerClassnames}
-                className={`${textContentAlignmentUtilities[contentAlignment ?? 'left']}`}
-              />
-            )
-          )}
+              )
+            )}
+          </div>
           {content && (
             <div
               className={`flex flex-col justify-end ${rowType === 'span3' ? 'lg:-translate-y-2.5' : ''}`}
@@ -210,9 +185,13 @@ const GridTextBlock = forwardRef<HTMLDivElement, GridTextBlockProps>(
               <Blocks
                 value={content}
                 blockClassName='my-0'
-                className={`flex flex-col gap-sm ${textClassNames} ${contentTextColor} ${
-                  textContentAlignmentUtilities[contentAlignment ?? 'left']
-                } text-balance`}
+                className={twMerge(
+                  'flex flex-col gap-sm text-balance',
+                  (title || themedTitle) && content ? 'text-sm' : 'text-md',
+                  contentTextColor,
+                  textContentAlignmentUtilities[contentAlignment ?? 'left'],
+                  className,
+                )}
               />
             </div>
           )}
@@ -222,30 +201,29 @@ const GridTextBlock = forwardRef<HTMLDivElement, GridTextBlockProps>(
     )
 
     return imageBackground?.image ? (
-      <BackgroundContainer
-        {...imageBgOptions}
-        className={`aspect-auto`}
-        dontSplit
-        scrimClassName={`
-        py-10
-        pl-8
-        pr-20 
-        lg:p-12 
-        flex
-        w-full
-        h-full
-        text-balance
-        max-lg:min-h-[420px]
-        ${contentAlignmentUtilities[contentAlignment ?? 'center']}
-        ${
-          imageBackground?.useLight
-            ? lightGradientForContentAlignment[contentAlignment ?? 'center']
-            : darkGradientForContentAlignment[contentAlignment ?? 'center']
-        }
-        `}
+      <div
+        style={{ backgroundImage: `url(${imageUrl})` }}
+        className={twMerge(
+          `relative h-full w-full bg-center bg-cover bg-local bg-no-repeat`,
+          !!(
+            (((useThemedTitle && titleThemeFromLarger) || contentTheme) ??
+              theme) === 12 && !imageBackground?.useLight
+          ) && 'dark',
+        )}
+        ref={ref}
       >
-        {mainContent}
-      </BackgroundContainer>
+        <div
+          className={twMerge(
+            'flex h-full w-full text-balance py-10 pr-20 pl-8 max-lg:min-h-[420px] lg:p-12',
+            contentAlignmentUtilities[contentAlignment ?? 'center'],
+            imageBackground?.useLight
+              ? lightGradientForContentAlignment[contentAlignment ?? 'center']
+              : darkGradientForContentAlignment[contentAlignment ?? 'center'],
+          )}
+        >
+          {mainContent}
+        </div>
+      </div>
     ) : (
       <div
         ref={ref}

@@ -9,10 +9,7 @@ const BackgroundImage = ({
 }: {
   backgroundImage: SanityImageSource
 }) => {
-  const imageProps = useNextSanityImage(
-    assetOnlyCdnClient,
-    backgroundImage,
-  )
+  const imageProps = useNextSanityImage(assetOnlyCdnClient, backgroundImage)
 
   // @TODO I don't quite understand how to fix these types
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -28,6 +25,7 @@ const BackgroundImage = ({
           src={src}
           loader={loader}
           fill
+          sizes='(max-width: 800px) 100vw,(max-width: 900px) 920px,1100px'
           style={{ objectFit: 'cover' }}
           alt=''
         />

@@ -55,8 +55,6 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
 
   let bgContainerOptions = designOptions
 
-  const textColor = `${useBrandTheme ? 'text-energy-red-100' : ''} text-balance`
-
   if (useBrandTheme) {
     bgContainerOptions = {
       background: {
@@ -93,7 +91,7 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
       )}
       {overline ? (
         <hgroup
-          className={`mb-1 ${useBrandTheme ? 'text-energy-red-100' : ''}`}
+          className={twMerge(`mb-1`, useBrandTheme && '**:text-energy-red-100')}
         >
           <Typography variant='overline'>{overline}</Typography>
           {title && (
@@ -103,7 +101,6 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
               group='heading'
               variant='h2'
               useDisplay={true}
-              blockClassName={textColor}
             />
           )}
         </hgroup>
@@ -115,6 +112,7 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
             group='heading'
             variant='h2'
             useDisplay={true}
+            className={useBrandTheme ? '**:text-energy-red-100' : ''}
           />
         )
       )}

@@ -9,22 +9,18 @@ export type Span3Props = {
 } & HTMLAttributes<HTMLDivElement>
 
 const Span3 = forwardRef<HTMLDivElement, Span3Props>(function Span3(
-  { data, className = '', ...rest },
+  { data, className = '' },
   ref,
 ) {
-  const minHeight =
-    data?.content?.type === 'videoPlayer'
-      ? ''
-      : 'min-h-[350px] lg:min-h-[600px]'
-
   return (
     <div
       ref={ref}
       className={twMerge(
-        `h-full w-full border border-moss-green-60 lg:col-span-3 ${minHeight} `,
+        `h-full w-full border border-moss-green-60 lg:col-span-3`,
+        data?.content?.type !== 'videoPlayer' &&
+          'min-h-[350px] lg:min-h-[600px]',
         className,
       )}
-      {...rest}
     >
       {mapGridContent(data?.content, 'span3')}
     </div>

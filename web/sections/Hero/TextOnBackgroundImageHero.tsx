@@ -111,18 +111,18 @@ export const TextOnBackgroundImageHero = ({
       })}
     >
       <div
-        className={`flex max-w-text flex-col ${useBrandTheme ? '*:text-energy-red-100' : ''}`}
+        className={`z-1 flex max-w-text flex-col ${useBrandTheme ? '*:text-energy-red-100' : ''}`}
       >
         {titleElement}
         {isMagazineRoom && ingressElement}
       </div>
-      {useBlurCenter && (
-        <div className={`centerBlur absolute inset-0 z-1`}></div>
-      )}
       {(backgroundGradient === 'dark' || backgroundGradient === 'light') && (
         <div
           className={`absolute inset-0 z-0 ${backgroundGradient === 'dark' ? 'bg-slate-80/20' : 'bg-white-100/20'}`}
         />
+      )}
+      {useBlurCenter && (
+        <div className={`centerBlur absolute inset-0 z-1`}></div>
       )}
     </div>
   )
