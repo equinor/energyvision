@@ -14,6 +14,8 @@ import type { Variants } from '../cards/Card/Card'
 type PromoTileProps = {
   hasSectionTitle?: boolean
   variant?: Variants
+  /* grey card background as long as not on colored background */
+  onColorBg?: boolean
 } & PromoTileData
 
 export const PromoTile = forwardRef<HTMLAnchorElement, PromoTileProps>(
@@ -27,6 +29,7 @@ export const PromoTile = forwardRef<HTMLAnchorElement, PromoTileProps>(
       linkLabelAsTitle,
       hasSectionTitle,
       variant = 'secondary',
+      onColorBg = false,
     },
     ref,
   ) {
@@ -63,11 +66,15 @@ export const PromoTile = forwardRef<HTMLAnchorElement, PromoTileProps>(
         variant={variant}
         className={`${theme?.dark || background?.dark ? 'dark' : ''} `}
       >
-        <Card.Content variant={variant} className={`${theme?.background}`}>
+        <Card.Content
+          variant={variant}
+          className={`${theme.background === 'bg-white-100' && !onColorBg ? '' : theme.background}`}
+        >
           <Card.Header
             titleLevel={hasSectionTitle ? 'h3' : 'h2'}
             {...(!linkLabelAsTitle && { titleBlock: title })}
             {...(linkLabelAsTitle && { title: action.label })}
+            titleClassName='text-md'
           />
         </Card.Content>
       </Card>

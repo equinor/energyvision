@@ -147,7 +147,7 @@ export const HeroBlock = ({
           <FiftyFiftyHero
             {...commonProps}
             displayTextVariant={displayTextVariant}
-            className={`${breadcrumbs?.enableBreadcrumbs ? 'mb-2' : 'mb-4 lg:mb-6'}`}
+            className={`mb-4 lg:mb-6`}
           />
         )
       case HeroTypes.BACKGROUND_IMAGE:

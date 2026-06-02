@@ -56,7 +56,7 @@ export const FiftyFiftyHero = ({
         )}
 
         {/* Content Section */}
-        <div className='flex flex-col justify-center gap-8 px-layout-sm py-16 md:min-h-[450px] md:justify-self-end md:px-12 xl:pr-4xl xl:pl-layout-sm'>
+        <div className='flex flex-col justify-center px-layout-sm py-8 md:min-h-[400px] md:justify-self-end lg:py-16 lg:pr-32'>
           {title && (
             <Blocks
               id='mainTitle'
@@ -73,14 +73,14 @@ export const FiftyFiftyHero = ({
               }
               as='h1'
               //same as variants h1
-              className={`pb-6 lg:pb-12`}
+              //className={`pb-6 lg:pb-12`}
             />
           )}
           {ingress && (
             <Blocks
               value={ingress}
               variant='ingress'
-              blockClassName='hidden md:block'
+              className='**:text-base'
             />
           )}
 
@@ -95,6 +95,7 @@ export const FiftyFiftyHero = ({
                 hrefLang: getLocaleFromName(action.link?.lang),
               })}
               type={action.type}
+              variant='fit'
               showExtensionIcon
             >
               {action.label}

@@ -56,6 +56,7 @@ const TextTeaser = ({ data, anchor, className }: TextTeaserProps) => {
                 hrefLang: getLocaleFromName(action.link?.lang),
               })}
               type={action.type}
+              variant='fit'
             >
               {action.label}
             </ResourceLink>
