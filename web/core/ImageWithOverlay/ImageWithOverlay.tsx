@@ -55,25 +55,6 @@ export const ImageWithOverlay = forwardRef<
   const url = action && getUrlFromAction(action)
   const intl = useTranslations()
 
-  const lineClassName = `
-    block
-    absolute
-    h-[2.5px]
-    w-full
-    rounded-[3px]
-    l-0
-    transition-all
-    duration-[250ms]
-    origin-center
-    `
-
-  const plainText = Array.isArray(title)
-    ? title
-        .map(block => block.children.map(span => span.text).join(''))
-        .join('\n')
-        .replace(/\n/g, ' ')
-    : title
-
   return (
     <figure
       ref={ref}
@@ -127,7 +108,14 @@ export const ImageWithOverlay = forwardRef<
                   variant='h4'
                   className='text-md text-white-100 lg:text-lg'
                 >
-                  {plainText}
+                  {Array.isArray(title)
+                    ? title
+                        .map(block =>
+                          block.children.map(span => span.text).join(''),
+                        )
+                        .join('\n')
+                        .replace(/\n/g, ' ')
+                    : title}
                 </Typography>
               )}
             </div>
@@ -179,14 +167,14 @@ export const ImageWithOverlay = forwardRef<
             >
               <span
                 className={twMerge(
-                  `${showOverlay ? 'rotate-45' : 'rotate-90'}`,
-                  lineClassName,
+                  showOverlay ? 'rotate-45' : 'rotate-90',
+                  `l-0 absolute block h-[2.5px] w-full origin-center rounded-[3px] transition-all duration-250`,
                 )}
               ></span>
               <span
                 className={twMerge(
-                  `${showOverlay ? '-rotate-45' : 'rotate-180'}`,
-                  lineClassName,
+                  showOverlay ? '-rotate-45' : 'rotate-180',
+                  `l-0 absolute block h-[2.5px] w-full origin-center rounded-[3px] transition-all duration-250`,
                 )}
               ></span>
             </span>

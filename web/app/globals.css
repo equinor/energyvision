@@ -16,7 +16,7 @@
   --spacing-content: 1920px;
   --spacing-fullwidth: 2560px;
 
-  --spacing-single-carousel-card-w-sm: 350px; /*275px;*/
+  --spacing-single-carousel-card-w-sm: 350px;
   --spacing-single-carousel-card-w-md: 692px;
   --spacing-single-carousel-card-w-lg: 980px;
   --spacing-single-carousel-card-h-sm: 400px;
@@ -24,31 +24,37 @@
   --spacing-single-carousel-card-h-lg: 516px;
   --spacing-event-carousel-card-w: 383px;
   --spacing-arrow-right: 1.58rem;
-  --spacing-text: 800px;
+  --spacing-text: 75em; /*800px;*/
   --spacing-news-banner-vertical: clamp(40px, calc(14.3125px + 11.0032vw), 210px);
 
   --spacing-topbar: 85px;
   --spacing-topbar-sticky: 64px;
 
-  /* or just --motion-safe? transition-(--my-properties) */
   --transition-motion-safe: motion-safe;
 
   --ease-scroll: cubic-bezier(0.645, 0.045, 0.355, 1);
   --ease-ease: cubic-bezier(0.25, 0.1, 0.25, 1);
 
-  /* Modal */
   --modal-transition-duration: 0.4s;
   --modal-transition-easing: cubic-bezier(0.45, 0, 0.55, 1);
 
-  /* or just --fr? flex-(--fr) */
   --flex-fr: 1 1 1;
 
-  /*just --card ? grid-cols-(--my-grid-cols) */
   --grid-cols-card: repeat(auto-fill, minmax(min(100%, 220px), 400px));
 
   --animate-fadeInOut: fade linear both;
   --animate-slideUp: slideUp 0.2s ease-out;
   --animate-slideDown: slideDown 0.2s ease-out;
+
+  --grid-template-columns-auto-1: repeat(1, auto);
+  --grid-template-columns-auto-2: repeat(2, auto);
+  --grid-template-columns-auto-3: repeat(3, auto);
+
+  /* Converted template literal strings to native CSS values */
+  --grid-template-columns-auto-fill-fr: repeat(auto-fill, minmax(80px, 1fr));
+
+  /* Extracted legacy card utility rules */
+  --grid-template-columns-card: repeat(auto-fill, minmax(min(100%, 220px), 400px));
 
   @keyframes fade {
     0%,

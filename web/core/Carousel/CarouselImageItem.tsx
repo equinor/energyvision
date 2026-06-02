@@ -8,12 +8,12 @@ import {
   useMemo,
   useRef,
 } from 'react'
-import { twMerge } from 'tailwind-merge'
 import {
   type ImageWithLinkOrOverlay,
   ImageWithOverlay,
 } from '@/core/ImageWithOverlay/ImageWithOverlay'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
+import { twMerge } from '@/lib/twMerge/twMerge'
 import type { LinkData } from '@/types/index'
 import { ArrowRight } from '../../icons'
 import Blocks from '../../portableText/Blocks'
@@ -85,9 +85,8 @@ export const CarouselImageItem = forwardRef<
     (!captionTitle || !captionText)
   const isImageWithOverlay =
     type === 'imageWithLinkAndOrOverlay' && (!!captionTitle || !!captionText)
-  const url = action && getUrlFromAction(action)
 
-  const singleHeights = `min-h-single-carousel-card-h-sm md:min-h-single-carousel-card-h-md lg:min-h-single-carousel-card-h-lg`
+  const url = action && getUrlFromAction(action)
 
   const getBody = () => {
     if (isJustImage && image) {
@@ -183,21 +182,20 @@ export const CarouselImageItem = forwardRef<
       )
     }
     if (isImageWithRichTextCaption && image) {
-      const singleClassname = `${active ? 'opacity-100' : 'opacity-50'}`
-      const scrollClassname = ``
       return (
         <figure className='flex h-full w-full flex-col'>
           <Image
             grid='sm'
             image={image}
             fill
-            className={`absolute w-full rounded-md ${singleHeights}`}
+            className={`min-h-single-carousel-card-h-sm w-full rounded-md md:min-h-single-carousel-card-h-md lg:min-h-single-carousel-card-h-lg`}
             imageClassName='aspect-4/3 rounded-md md:aspect-video'
           />
           <figcaption
-            className={`h-fit max-w-text p-4 lg:px-8 lg:py-6 ${
-              displayMode === 'single' ? singleClassname : scrollClassname
-            }`}
+            className={twMerge(
+              'h-fit max-w-text p-4 lg:px-8 lg:py-6',
+              displayMode === 'single' && active ? 'opacity-100' : 'opacity-50',
+            )}
           >
             {caption && (
               <Blocks
@@ -229,8 +227,6 @@ export const CarouselImageItem = forwardRef<
     }
   }
 
-  const scrollListItemWidthsClassNames = `w-[75vw] md:w-[70vw] lg:w-[62vw] max-w-[1030px]`
-
   useEffect(() => {
     if (displayMode === 'single') {
       if (active && itemRef?.current && wasUserPress) {
@@ -251,17 +247,12 @@ export const CarouselImageItem = forwardRef<
         tabIndex: 0,
       })}
       className={twMerge(
-        `relative mt-1 focus:outline-hidden focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-grey-50 focus-visible:outline-offset-2 dark:focus-visible:outline-white-100 ${
-          displayMode === 'single'
-            ? 'w-single-carousel-card-w-sm md:w-single-carousel-card-w-md lg:w-single-carousel-card-w-lg'
-            : scrollListItemWidthsClassNames
-        } ${
-          displayMode === 'single'
-            ? ` ${
-                !active ? 'opacity-30' : 'opacity-100'
-              } col-start-1 col-end-1 row-start-1 row-end-1 ms-2 me-2 transition-opacity duration-1000 ease-ease`
-            : `shrink-0 snap-mandatory snap-center`
-        } `,
+        `relative mt-1 focus:outline-hidden focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-grey-50 focus-visible:outline-offset-2 dark:focus-visible:outline-white-100`,
+        displayMode === 'single' &&
+          `col-start-1 col-end-1 row-start-1 row-end-1 ms-2 me-2 w-single-carousel-card-w-sm transition-opacity duration-1000 ease-ease md:w-single-carousel-card-w-md lg:w-single-carousel-card-w-lg`,
+        displayMode === 'single' && active ? 'opacity-100' : 'opacity-30',
+        displayMode === 'scroll' &&
+          `w-[75vw] max-w-257.5 shrink-0 snap-mandatory snap-center md:w-[70vw] lg:w-[62vw]`,
         className,
       )}
     >

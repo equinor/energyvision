@@ -22,12 +22,11 @@ import KeyNumberItem from '@/sections/KeyNumber/KeyNumberItem'
 import type { VideoPlayerCarouselItem } from '@/sections/VideoPlayerCarousel/VideoPlayerCarousel'
 import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
 import { usePrefersReducedMotion } from '../../lib/hooks/usePrefersReducedMotion'
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import type {
   IFrameCarouselItemData,
   KeyNumberItemData,
 } from '../../types/index'
-import { type VideoPlayerProps } from '../VideoJsPlayer/VideoPlayer'
+import type { VideoPlayerProps } from '../VideoJsPlayer/VideoPlayer'
 import { CarouselImageItem, type ImageCarouselItem } from './CarouselImageItem'
 import { CarouselItem } from './CarouselItem'
 
@@ -123,12 +122,8 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
     if (isLarge) {
       TRANSLATE_X_AMOUNT = TRANSLATE_X_AMOUNT_LG
     }
-    /* Remove?, didnt work well with scroll container   
-const [scrollPosition, setScrollPosition] = useState<'start' | 'middle' | 'end'>('start') */
 
     const initialPositions = useMemo(() => {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      //@ts-ignore
       return items?.map((_item, i) => {
         if (i === items.length - 1) {
           return -TRANSLATE_X_AMOUNT
@@ -140,8 +135,6 @@ const [scrollPosition, setScrollPosition] = useState<'start' | 'middle' | 'end'>
     const [currentListTranslateX, setCurrentListTranslateX] = useState(0)
     const [currentXPosition, setCurrentXPosition] = useState(0)
     const [itemsXPositions, setItemsXPositions] = useState<number[]>([])
-    const carouselGridTop = `col-start-1 col-end-1 row-start-1 row-end-1`
-    const carouselGridBottom = `col-start-1 col-end-1 row-start-2 row-end-2`
 
     const loopSlideNext = useCallback(() => {
       const isLast = currentIndex === items?.length - 1
@@ -220,6 +213,54 @@ const [scrollPosition, setScrollPosition] = useState<'start' | 'middle' | 'end'>
       }
     }
 
+    const scrollSlideNext = useCallback(() => {
+      if (!sliderRef.current) {
+        return
+      }
+
+      const scrollAmount = Math.max(sliderRef.current.clientWidth * 0.8, 320)
+      sliderRef.current.scrollBy({
+        left: scrollAmount,
+        behavior: prefersReducedMotion ? 'auto' : 'smooth',
+      })
+    }, [prefersReducedMotion])
+
+    const scrollSlidePrev = useCallback(() => {
+      if (!sliderRef.current) {
+        return
+      }
+
+      const scrollAmount = Math.max(sliderRef.current.clientWidth * 0.8, 320)
+      sliderRef.current.scrollBy({
+        left: -scrollAmount,
+        behavior: prefersReducedMotion ? 'auto' : 'smooth',
+      })
+    }, [prefersReducedMotion])
+
+    const handlePreviousClick = () => {
+      if (displayMode === 'scroll') {
+        scrollSlidePrev()
+        return
+      }
+
+      loopSlidePrev()
+      if (variant === 'image' && !pauseAutoRotation) {
+        setPauseAutoRotation(true)
+      }
+    }
+
+    const handleNextClick = () => {
+      if (displayMode === 'scroll') {
+        scrollSlideNext()
+        return
+      }
+
+      loopSlideNext()
+      if (variant === 'image' && !pauseAutoRotation) {
+        setPauseAutoRotation(true)
+      }
+    }
+
     useEffect(() => {
       if (internalAutoRotation && !pauseAutoRotation) {
         timeoutRef.current = setTimeout(() => loopSlideNext(), 6000) // + 1s from the play/pause button timer
@@ -247,27 +288,6 @@ const [scrollPosition, setScrollPosition] = useState<'start' | 'middle' | 'end'>
     }
     const cancelTimeout = () => {
       timeoutRef.current && clearTimeout(timeoutRef.current)
-    }
-
-    const getCarouselItemVariant = () => {
-      if (displayMode === 'single') {
-        if (variant === 'iframe') {
-          return 'richTextBelow'
-        }
-        //@ts-ignore: TODO type cast item
-        if (variant === 'video' && items.some(item => item.title)) {
-          return 'richTextBelow'
-        }
-
-        if (
-          variant === 'image' &&
-          items.some(item => item?.type === 'imageWithRichTextBelow')
-        ) {
-          return 'richTextBelow'
-        }
-      } else {
-        return 'default'
-      }
     }
 
     const getIframeVariantBody = (
@@ -429,37 +449,6 @@ const [scrollPosition, setScrollPosition] = useState<'start' | 'middle' | 'end'>
       }
     }
 
-    const customListVariantClassName = {
-      video: '',
-      image: '',
-      event: 'p-[2px]',
-      keyNumber: '',
-      iframe: '',
-    }
-
-    const commonScrollListContainerClassName = `
-    envis-scrollbar
-    grid
-    auto-cols-auto
-    grid-flow-col 
-    gap-3 
-    lg:gap-6 
-    h-fit 
-    overflow-x-auto
-    snap-x
-    pb-2`
-
-    const commonSingleListContainerClassName = `
-    grid 
-    transition-transform 
-    ease-scroll  
-    duration-[800ms]
-    ${
-      getCarouselItemVariant() === 'richTextBelow'
-        ? carouselGridBottom
-        : carouselGridTop
-    }
-    `
     let translatedPlayPauseAutoRotationTitle = ''
     if (internalAutoRotation && labelledbyId && sectionTitle) {
       translatedPlayPauseAutoRotationTitle = toPlainText(sectionTitle)
@@ -472,11 +461,8 @@ const [scrollPosition, setScrollPosition] = useState<'start' | 'middle' | 'end'>
       <CarouselTag
         ref={ref}
         className={twMerge(
-          `${
-            displayMode === 'single'
-              ? 'relative flex flex-col overflow-hidden'
-              : 'w-full'
-          }`,
+          displayMode === 'single' && `relative flex flex-col overflow-hidden`,
+          displayMode === 'scroll' && `w-full`,
           containerClassName,
         )}
       >
@@ -489,83 +475,11 @@ const [scrollPosition, setScrollPosition] = useState<'start' | 'middle' | 'end'>
               'aria-label': toPlainText(title),
             })}
           className={twMerge(
-            `${
-              displayMode === 'single'
-                ? `relative grid grid-flow-row justify-center`
-                : ''
-            }`,
+            displayMode === 'single' &&
+              `relative grid grid-flow-row justify-center`,
             className,
           )}
         >
-          {/* Controls - should be before slide in DOM but not necessarily visually
-           */}
-          {displayMode === 'single' && (
-            <fieldset
-              className={`flex pt-6 pb-2 ${
-                internalAutoRotation ? 'justify-between' : 'justify-end'
-              } ${`mx-auto w-single-carousel-card-w-sm md:w-single-carousel-card-w-md lg:w-single-carousel-card-w-lg`} ${
-                getCarouselItemVariant() === 'richTextBelow'
-                  ? carouselGridTop
-                  : carouselGridBottom
-              }`}
-            >
-              <legend className='sr-only'>{intl('carousel_controls')}</legend>
-              {/** Only image should have autoplay */}
-              {internalAutoRotation && variant === 'image' && (
-                <MediaButton
-                  key={`play_pause_button_${currentIndex}`}
-                  title={
-                    pauseAutoRotation
-                      ? intl('carouselPlay', {
-                          title: translatedPlayPauseAutoRotationTitle,
-                        })
-                      : intl('carouselPause', {
-                          title: translatedPlayPauseAutoRotationTitle,
-                        })
-                  }
-                  mode={pauseAutoRotation ? 'play' : 'pause'}
-                  onClick={() => {
-                    setPauseAutoRotation(!pauseAutoRotation)
-                  }}
-                  paused={pauseAutoRotation}
-                  useTimer
-                  className='[grid-area:left]'
-                />
-              )}
-              {/** From W3.org:
-               * Allow the user to maintain control of the keyboard focus.
-               * When the carousel advances automatically, users should not be
-               * drawn away from their current place in the page. Also, do not
-               * move keyboard focus when the previous or next buttons are
-               * used; moving the focus makes it harder for users to browse
-               * back and forth between the slides.
-               */}
-              <div className='flex items-center gap-3'>
-                <MediaButton
-                  title={intl('previous')}
-                  aria-controls={carouselItemsId}
-                  mode='previous'
-                  onClick={() => {
-                    loopSlidePrev()
-                    if (variant === 'image' && !pauseAutoRotation) {
-                      setPauseAutoRotation(true)
-                    }
-                  }}
-                />
-                <MediaButton
-                  title={intl('next')}
-                  mode='next'
-                  aria-controls={carouselItemsId}
-                  onClick={() => {
-                    loopSlideNext()
-                    if (variant === 'image' && !pauseAutoRotation) {
-                      setPauseAutoRotation(true)
-                    }
-                  }}
-                />
-              </div>
-            </fieldset>
-          )}
           <ul
             ref={sliderRef}
             id={carouselItemsId}
@@ -573,11 +487,12 @@ const [scrollPosition, setScrollPosition] = useState<'start' | 'middle' | 'end'>
               tabIndex: 0,
             })}
             className={twMerge(
-              `w-full focus:outline-dashed focus:outline-1 focus:outline-grey-60 ${
-                displayMode === 'single'
-                  ? commonSingleListContainerClassName
-                  : commonScrollListContainerClassName
-              } ${customListVariantClassName[variant]} `,
+              `w-full focus:outline-dashed focus:outline-1 focus:outline-grey-60`,
+              variant === 'event' && `p-0.5`,
+              displayMode === 'single' &&
+                `grid transition-transform duration-800 ease-scroll`,
+              displayMode === 'scroll' &&
+                `no-scrollbar grid h-fit snap-x auto-cols-auto grid-flow-col gap-3 overflow-x-auto pb-2 lg:gap-6`,
               listClassName,
             )}
             {...(displayMode === 'single' && {
@@ -591,6 +506,61 @@ const [scrollPosition, setScrollPosition] = useState<'start' | 'middle' | 'end'>
               return getCarouselItem(item, i)
             })}
           </ul>
+          <fieldset
+            className={twMerge(
+              `flex pt-6 pb-2`,
+              internalAutoRotation ? 'justify-between' : 'justify-end',
+              displayMode === 'single' &&
+                `mx-auto w-single-carousel-card-w-sm md:w-single-carousel-card-w-md lg:w-single-carousel-card-w-lg`,
+              displayMode === 'scroll' && `w-full`,
+            )}
+          >
+            <legend className='sr-only'>{intl('carousel_controls')}</legend>
+            {/** Only image should have autoplay */}
+            {internalAutoRotation && variant === 'image' && (
+              <MediaButton
+                key={`play_pause_button_${currentIndex}`}
+                title={
+                  pauseAutoRotation
+                    ? intl('carouselPlay', {
+                        title: translatedPlayPauseAutoRotationTitle,
+                      })
+                    : intl('carouselPause', {
+                        title: translatedPlayPauseAutoRotationTitle,
+                      })
+                }
+                mode={pauseAutoRotation ? 'play' : 'pause'}
+                onClick={() => {
+                  setPauseAutoRotation(!pauseAutoRotation)
+                }}
+                paused={pauseAutoRotation}
+                useTimer
+                className='[grid-area:left]'
+              />
+            )}
+            {/** From W3.org:
+             * Allow the user to maintain control of the keyboard focus.
+             * When the carousel advances automatically, users should not be
+             * drawn away from their current place in the page. Also, do not
+             * move keyboard focus when the previous or next buttons are
+             * used; moving the focus makes it harder for users to browse
+             * back and forth between the slides.
+             */}
+            <div className='flex items-center gap-3'>
+              <MediaButton
+                title={intl('previous')}
+                aria-controls={carouselItemsId}
+                mode='previous'
+                onClick={handlePreviousClick}
+              />
+              <MediaButton
+                title={intl('next')}
+                mode='next'
+                aria-controls={carouselItemsId}
+                onClick={handleNextClick}
+              />
+            </div>
+          </fieldset>
           {displayMode === 'single' && (
             <div
               aria-live={pauseAutoRotation ? 'polite' : 'off'}
