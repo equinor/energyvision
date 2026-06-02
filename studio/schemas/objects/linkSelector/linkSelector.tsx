@@ -66,8 +66,9 @@ const linkSelector = (
       {
         name: 'label',
         title: 'Label',
-        description:
-          'Required for external urls and homepage links. Optional on internal links if referenced item has a title',
+        description: labelIsOptional
+          ? 'Required for external urls and homepage links. Optional on internal links if referenced item has a title'
+          : 'Visible label for the link',
         type: 'string',
         validation: (Rule: Rule) =>
           Rule.custom(async (value: string, context: any) => {
