@@ -2,7 +2,7 @@ import { newsSlug } from '@energyvision/shared/satelliteConfig'
 import { algoliasearch } from 'algoliasearch'
 import type { Metadata } from 'next'
 import { unstable_cache } from 'next/cache'
-import { notFound } from 'next/navigation'
+import dynamic from 'next/dynamic'
 import { setRequestLocale } from 'next-intl/server'
 import { algolia } from '@/lib/config'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
@@ -14,6 +14,8 @@ import { newsroomMetaQuery } from '@/sanity/queries/metaData'
 import { simpleMenuQuery } from '@/sanity/queries/simpleMenu'
 import Header from '@/sections/Header/Header'
 import NewsRoomTemplate from '@/templates/newsroom/Newsroom'
+
+const TopicPage = dynamic(() => import('@/templates/topic/TopicPage'))
 
 export async function generateStaticParams() {
   if (Flags.HAS_NEWSROOM) {
@@ -77,10 +79,6 @@ export default async function NewsroomPage({
   // Enable static rendering
   setRequestLocale(locale)
 
-  if (!Flags.HAS_NEWSROOM || locale !== 'en-GB') {
-    notFound()
-  }
-
   const [siteMenuResult, pageResults] = await Promise.all([
     routeSanityFetch({
       query: Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery,
@@ -98,16 +96,23 @@ export default async function NewsroomPage({
   const { headerData, pageData } = pageResults
   const { data: siteMenuData } = siteMenuResult || {}
 
-  const response = await getInitialResponse(locale)
+  const response = Flags.HAS_NEWSROOM
+    ? await getInitialResponse(locale)
+    : undefined
 
   return (
     <>
       <Header siteMenuData={siteMenuData} headerData={headerData} />
-      <NewsRoomTemplate
-        locale={locale}
-        pageData={pageData}
-        initialSearchResponse={response}
-      />
+      {Flags.HAS_NEWSROOM && response ? (
+        <NewsRoomTemplate
+          locale={locale}
+          pageData={pageData}
+          initialSearchResponse={response}
+        />
+      ) : (
+        // allow '/news' page on other satellite sites
+        <TopicPage {...pageData} />
+      )}
     </>
   )
 }
