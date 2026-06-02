@@ -1,5 +1,6 @@
+'use client'
+import { Fragment, type HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { Fragment, HTMLAttributes } from 'react'
 import { mapGridContent } from './mapGridContent'
 
 export type Span2And1Props = {
@@ -20,13 +21,27 @@ const Span2And1 = ({ data, className = '' }: Span2And1Props) => {
           <div className={twMerge(commonStyling, borderStyling, className)}>
             {mapGridContent(singleColumn?.content, 'span2and1')}
           </div>
-          <div className={twMerge(`lg:col-span-2`, commonStyling, borderStyling, className)}>
+          <div
+            className={twMerge(
+              `lg:col-span-2`,
+              commonStyling,
+              borderStyling,
+              className,
+            )}
+          >
             {mapGridContent(span2?.content, 'span2and1')}
           </div>
         </>
       ) : (
         <>
-          <div className={twMerge(`lg:col-span-2`, commonStyling, borderStyling, className)}>
+          <div
+            className={twMerge(
+              `lg:col-span-2`,
+              commonStyling,
+              borderStyling,
+              className,
+            )}
+          >
             {mapGridContent(span2?.content, 'span2and1')}
           </div>
           <div className={twMerge(commonStyling, borderStyling, className)}>
