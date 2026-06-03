@@ -14,7 +14,6 @@ import { getDnsRedirect, getWWWRedirect } from './sanity/interface/redirects'
 
 const PERMANENT_REDIRECT = 301
 //const TEMPORARY_REDIRECT = 302
-const PUBLIC_FILE = /\.(.*)$/
 const DOT_HTML = '.html'
 const IS_ARCHIVED_NEWS_DOWNLOADS =
   /(en|no)?\/news\/archive\/[0-9]{4}\/[0-9]{2}\/[0-9]{2}\/downloads\/[^/]+\.[a-z]{2,4}$/
@@ -36,10 +35,6 @@ export async function proxy(request: NextRequest) {
   const { origin, locale } = request.nextUrl
   const pathname = decodeURI(request.nextUrl.pathname)
   const isDotHtml = pathname.slice(-5) === DOT_HTML
-  const isRobotsTxt = pathname.slice(-10) === 'robots.txt'
-  const isSitemapXml = pathname.slice(-11) === 'sitemap.xml'
-  const isSecurityTxt = pathname.slice(-12) === 'security.txt'
-
   // Rewrite the correct path for assets in download section of achived news (older than 2016)
   if (
     IS_ARCHIVED_NEWS_DOWNLOADS.test(pathname) &&
@@ -64,17 +59,6 @@ export async function proxy(request: NextRequest) {
     )
   }
 
-  // Check if pathname is irrelevant (.svg, .png, /api/, etcs)
-  if (
-    (PUBLIC_FILE.test(pathname) &&
-      !isDotHtml &&
-      !isRobotsTxt &&
-      !isSitemapXml &&
-      !isSecurityTxt) ||
-    pathname.includes('/api/')
-  ) {
-    return undefined
-  }
   // Check if it is a DNS redirect
   const host = String(request.headers.get('host'))
   const dnsRedirect = getDnsRedirect(host, pathname)

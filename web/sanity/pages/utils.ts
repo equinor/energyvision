@@ -218,7 +218,7 @@ export async function getPage(params: Params) {
       params: { ...pageQueryParams },
       requestTag: 'page-by-slug',
     })
-    console.log('getPAge data', data.slugs)
+    //console.log('getPAge data', data.slugs)
     pageData = data
   }
 
@@ -240,7 +240,7 @@ export async function getPage(params: Params) {
   }
 
   const { stickyMenu, slugs = [], ...restPageData } = pageData || {}
-  console.log('getPAge pageData slugs', pageData?.slugs)
+
   return {
     headerData: {
       slugs: formatToValidPrefixedIsoSlugs(
