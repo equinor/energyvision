@@ -59,7 +59,7 @@ export const ImageBackground = ({
   overrideGradient = false,
   dontSplit = false,
   as,
-  backgroundGradient = 'none',
+  backgroundGradient = 'dark',
   backgroundPosition,
   layoutGrid = 'md',
   //Deprecated - TODO: Remove useLight and useNoGradient after time of transition where both options are available
@@ -88,27 +88,33 @@ export const ImageBackground = ({
     'bottom-center': 'white-to-top-gradient',
   }
   const darkGradientForContentAlignment = {
-    center: '',
-    right: 'xl:black-to-right-gradient',
-    left: 'xl:black-to-left-gradient',
+    center: 'black-center-gradient',
+    right: 'black-center-gradient xl:black-to-right-gradient',
+    left: 'black-center-gradient xl:black-to-left-gradient',
     'bottom-left': 'black-to-top-gradient',
     'bottom-center': 'black-to-top-gradient',
   }
 
-  let animatedScrimGradient = ''
+  let imageGradient = ''
   if (!overrideGradient && !_noGradient) {
-    animatedScrimGradient = _lightGradient
+    imageGradient = _lightGradient
       ? `${lightGradientForContentAlignment[contentAlignment]}`
-      : `black-center-gradient ${darkGradientForContentAlignment[contentAlignment]}`
+      : `${darkGradientForContentAlignment[contentAlignment]}`
   }
 
   const contentPx = getLayoutPx(layoutGrid)
   const contentAlignmentUtility = {
-    left: 'text-start **:text-start *:flex *:justify-start',
+    left: 'xl:mr-auto xl:pl-layout-sm xl:pr-0 xl:max-w-[48dvw]', //nothing because lg aligns with mobile . why did i add these: **:text-start *:flex *:justify-start
     center: 'text-center **:text-center *:flex *:justify-center',
-    right: 'text-end **:text-end *:flex *:justify-end',
+    right:
+      'xl:items-end xl:text-end xl:ml-auto xl:pr-layout-sm xl:pl-0 xl:max-w-[48dvw]', //  why did i add these: **:text-end *:flex *:justify-end
+    'bottom-left': 'xl:mr-auto xl:pl-layout-sm xl:pr-0',
+    'bottom-center': 'xl:pl-layout-sm xl:pr-0',
   }
-  const contentClassNames = `mx-auto max-w-content ${contentAlignmentUtility[contentAlignment]}`
+  const contentClassNames = twMerge(
+    'items-start text-start',
+    contentAlignmentUtility[contentAlignment],
+  )
 
   const contentElement = useGlass ? (
     <div className={twMerge('', className)}>
@@ -159,7 +165,7 @@ export const ImageBackground = ({
       )}
       <div
         className={twMerge(
-          `py-6 lg:py-72 ${animatedScrimGradient} `,
+          `py-6 lg:py-72 ${imageGradient}`,
           useAnimation && 'animate-timeline',
           dontSplit && 'py-40',
           scrimClassName,

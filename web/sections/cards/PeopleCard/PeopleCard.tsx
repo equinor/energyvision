@@ -62,7 +62,7 @@ const PeopleCard = forwardRef<HTMLDivElement, PeopleCardProps>(
         <div
           ref={ref}
           className={twMerge(
-            `grid h-full items-center justify-center ${variantClassNames[variant]} focus-visible:envis-outline dark:focus-visible:envis-outline-invert rounded-sm bg-white-100 px-6 py-8 text-slate-80 shadow-card focus:outline-hidden dark:text-white-100`,
+            `grid h-full items-center justify-start ${variantClassNames[variant]} focus-visible:envis-outline dark:focus-visible:envis-outline-invert rounded-sm bg-white-100 px-6 py-8 text-slate-80 shadow-card focus:outline-hidden dark:text-white-100`,
             className,
           )}
         >

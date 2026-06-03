@@ -215,7 +215,7 @@ data-ui="checked active" class="data-checked:underline">
   background-image: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0.3) 100%);
 }
 @utility black-to-left-gradient {
-  background-image: linear-gradient(to left, transparent, rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0.3) 100%);
+  background-image: linear-gradient(to left, transparent, rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0.4) 100%);
 }
 
 @utility box-shadow-crisp {

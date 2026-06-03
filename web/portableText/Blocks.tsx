@@ -88,12 +88,16 @@ const getBlockComponents = ({
         </Block>
       )
     },
-    smallText: ({ children }: TypeProps) => (
-      <Block as={as} group={group} variant='sm' className={className}>
-        {/**@ts-ignore:todo */}
-        {children}
-      </Block>
-    ),
+    smallText: ({ children }: TypeProps) => {
+      console.log('smallText', children)
+      console.log('smallText group', group)
+      return (
+        <Block as={as} group={group} variant='small' className={className}>
+          {/**@ts-ignore:todo */}
+          {children}
+        </Block>
+      )
+    },
     displayText: ({ children }: PortableTextBlock) => {
       return (
         <Block

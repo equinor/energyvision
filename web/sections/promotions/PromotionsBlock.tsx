@@ -159,7 +159,7 @@ const PromotionsBlock = ({
   }, [promotions, eventsCount])
 
   const onColorBg = designOptions?.background?.backgroundColor !== 'White'
-
+  console.log()
   return (
     <section
       className={twMerge(`relative ${bg} ${dark ? 'dark' : ''}`, className)}
@@ -178,7 +178,7 @@ const PromotionsBlock = ({
             {/*@ts-ignore:todo */}
             <Blocks variant='h2' id={sectionTitleId} value={title} />
             {ingress && (
-              <Blocks group='paragraph' variant='overline' value={ingress} />
+              <Blocks group='paragraph' variant='ingress' value={ingress} />
             )}
             {viewAllLink?.link?.slug && (
               <ResourceLink
@@ -206,6 +206,7 @@ const PromotionsBlock = ({
               promotionList?.length === 1 && 'md:mx-layout-lg',
               promotionList?.length > 1 &&
                 `3xl:mx-layout-md grid auto-rows-fr grid-cols-1 gap-x-4 gap-y-3 md:grid-cols-2 2xl:grid-cols-3`,
+              promotionList?.length === 2 && '2xl:grid-cols-2',
               promotionList?.length === 3 && 'md:grid-cols-3',
             )}
           >
@@ -214,8 +215,7 @@ const PromotionsBlock = ({
                 ...promotion,
                 type: 'internalUrl',
               })
-              console.log('promotionsList map', promotion)
-              console.log('promotionsList test', promotion)
+
               return (
                 <li key={promotion?.id}>
                   {promotionVariant === 'promotePeople' ? (

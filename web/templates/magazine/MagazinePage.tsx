@@ -39,13 +39,13 @@ const MagazinePage = ({
 }: MagazinePageProps) => {
   const subTitle = (
     <>
-      <div className='flex flex-col gap-6 px-layout-sm pb-6 lg:px-layout-lg'>
+      <div className='flex flex-col gap-6 px-layout-sm pb-10 lg:px-layout-lg'>
         {firstPublishedAt && (
           <div className='flex items-center gap-2'>
             <TransformableIcon iconData={calendar} className='-mt-1' />
             <FormattedDateTime
               datetime={firstPublishedAt}
-              className='text-sm'
+              className='text-base'
             />
           </div>
         )}
@@ -70,18 +70,19 @@ const MagazinePage = ({
       //@ts-ignore: todo
       title,
       ...hero,
+      //@ts-ignore
+      magazineTags,
+      subTitle: subTitle,
     },
-    subTitle: subTitle,
     //@ts-ignore
-    magazineTags,
-    //@ts-ignore
-    tags,
+    //tags,
     //@ts-ignore
     nextSectionDesignOptions: content?.[0]?.designOptions,
   }
+  console.log('MagazinePage heroProps', heroProps)
 
   return (
-    <main className='mx-auto flex w-full max-w-fullwidth flex-col pt-topbar'>
+    <main className='mx-auto flex w-full max-w-fullwidth flex-col'>
       <HeroBlock {...heroProps} />
       <PageContent
         data={{
