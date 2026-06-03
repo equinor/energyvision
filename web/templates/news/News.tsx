@@ -99,7 +99,7 @@ const NewsPage = async ({
             className='dark'
             //@ts-ignore
             title={title}
-            ratio='21:9'
+            ratio='16:9'
             subTitle={publishedInformation}
             figCaptionClassName='light'
           />

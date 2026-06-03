@@ -38,7 +38,7 @@ export const FigureWithLayout = (block: BlockProps) => {
     image,
     caption,
     attribution,
-    layout = 'left',
+    layout = 'full',
     //enableImageZoom = false,
     imageOrientation = 'landscape',
     centerImageLayout = 'left',
