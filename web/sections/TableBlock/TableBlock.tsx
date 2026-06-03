@@ -53,7 +53,7 @@ const TableBlock = forwardRef<HTMLDivElement, TableBlockProps>(
       layoutGrid,
       reducePaddingBottom = false,
       noPaddingTop = false,
-      widthAdjustment = 'fit',
+      widthAdjustment,
       //Deprecated props, to be removed in future, should not be used in new content
       useFullContainerWidth = false,
       useInnerContentWidth = false,
@@ -175,21 +175,19 @@ const TableBlock = forwardRef<HTMLDivElement, TableBlockProps>(
 
     //TODO: remove useInnerContentWidth when period of transition and set layoutGrid prop as = "md"
     const px = getLayoutPx(layoutGrid ?? (useInnerContentWidth ? 'lg' : 'md'))
-    let tableWidth = widthAdjustment === 'full' ? 'w-full' : 'w-fit'
-
-    //TODO: remove when not in use anymore, use widthAdjustment directly
-    if (!widthAdjustment && useFullContainerWidth) {
-      tableWidth = 'w-full'
-    }
+    const tableStretch =
+      (widthAdjustment && widthAdjustment === 'full') ?? useFullContainerWidth
 
     return (
       <div
         ref={ref}
         id={anchor}
         className={twMerge(
-          `mx-auto max-w-content ${anchor ? 'scroll-mt-topbar' : ''}`,
+          `mx-auto max-w-content`,
+          anchor && 'scroll-mt-topbar',
           className,
-          `${noPaddingTop ? 'pt-0' : ''} ${reducePaddingBottom ? 'pb-12' : 'pb-page-content'} `,
+          noPaddingTop && 'pt-0',
+          reducePaddingBottom && 'pb-12',
         )}
       >
         {title && (
@@ -205,7 +203,9 @@ const TableBlock = forwardRef<HTMLDivElement, TableBlockProps>(
             // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
             tabIndex={0}
           >
-            <Table className={tableWidth}>
+            <Table
+              className={twMerge(tableStretch ? 'w-full table-fixed' : 'w-fit')}
+            >
               {tableCaption && <Table.Caption>{tableCaption}</Table.Caption>}
               <Table.Head
                 variant={useBorder ? 'border' : 'zebra'}

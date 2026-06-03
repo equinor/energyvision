@@ -34,6 +34,8 @@ const TopicPage = ({
   slug,
   ...restData
 }: TopicPageProps) => {
+  console.log('restData', restData)
+  console.log('restData.seoAndSome', restData.seoAndSome)
   const heroProps: HeroBlockProps = {
     heroData: {
       //@ts-ignore: todo

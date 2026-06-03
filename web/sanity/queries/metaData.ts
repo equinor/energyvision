@@ -15,6 +15,15 @@ export const contentRefSlugsQuery = /* groq */ `
       "slug" : *[_type match "route*" && references(^._id)][0].slug.current,
       lang
     }`
+/**
+ *
+ */
+
+/***[_type == "translation.metadata" && references(^.content._ref)].translations[].value->{
+    "slug":*[_type match "route*" && content._ref == ^._id][0].slug.current,
+    lang
+  } */
+
 export const inlineSlugsQuery = /* groq */ `
     "currentSlug": {
       "slug": slug.current,

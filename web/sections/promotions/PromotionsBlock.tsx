@@ -134,11 +134,12 @@ const PromotionsBlock = ({
     //@ts-ignore: how to spread union types
     promotePastEvents,
   } = data
-
+  console.log('PromotionsBlock data', data)
   const { backgroundImage, backgroundPosition } = designOptions || {}
 
   const promotionVariant =
     variant ?? mapOldPromoType(data.promotions?.[0]?.type) ?? 'promoteTopics'
+  console.log('PromotionsBlock promotionVariant', promotionVariant)
 
   const { bg, dark } = getBgAndDarkFromBackground(designOptions)
   let imageUrl: string
@@ -214,9 +215,11 @@ const PromotionsBlock = ({
                 ...promotion,
                 type: 'internalUrl',
               })
+              console.log('promotionsList map', promotion)
+              console.log('promotionsList test', promotion)
               return (
                 <li key={promotion?.id}>
-                  {variant === 'promotePeople' && (
+                  {promotionVariant === 'promotePeople' ? (
                     <PeopleCard
                       data={promotion as PeopleCardData}
                       hasSectionTitle={!!title}
@@ -224,8 +227,7 @@ const PromotionsBlock = ({
                         promotionList?.length === 1 ? 'single' : 'default'
                       }
                     />
-                  )}
-                  {variant !== 'promotePeople' && (
+                  ) : (
                     <Promotion
                       variant='default'
                       type='extended'

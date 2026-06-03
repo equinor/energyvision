@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { draftMode } from 'next/headers'
 import { type QueryParams, toPlainText } from 'next-sanity'
 import {
@@ -14,6 +15,7 @@ import {
 } from '@/sanity/helpers/localization'
 import { getQueryFromSlug } from '@/sanity/helpers/queryFromSlug'
 import { resolveOpenGraphImage } from '@/sanity/lib/utils'
+import type { SeoData } from '@/types'
 import { isDateAfter } from '../../lib/helpers/dateUtilities'
 import { routeSanityFetch } from '../lib/live'
 import { contentQueryById, pageInfoById } from '../queries/contentById'
@@ -21,8 +23,6 @@ import {
   allMagazineDocuments,
   getMagazineArticlesByTag,
 } from '../queries/magazine'
-import { Metadata } from 'next'
-import { SeoData } from '@/types'
 
 export type LocaleSlug = { lang: string; slug: string }
 /**
@@ -103,8 +103,15 @@ const generateAlternatesLinks = (
 export const constructSanityMetadata = (
   slug: string | string[],
   locale: string,
-  metaData?:{ title:string, seoAndSome:SeoData, heroImage?: any, slugs:any, publishDateTime:any,updatedAt:any },
-):Metadata => {
+  metaData?: {
+    title: string
+    seoAndSome: SeoData
+    heroImage?: any
+    slugs: any
+    publishDateTime: any
+    updatedAt: any
+  },
+): Metadata => {
   const relativeSlug = getRelativeWithPrefixSlug(slug, locale)
   const fullSlug = `${domain}${relativeSlug}`
 
@@ -138,7 +145,9 @@ export const constructSanityMetadata = (
   } = metaData
 
   const plainTitle = Array.isArray(title) ? toPlainText(title) : title
-  const ogImage = resolveOpenGraphImage(seoAndSome?.openGraphImage ?? heroImage?.image)
+  const ogImage = resolveOpenGraphImage(
+    seoAndSome?.openGraphImage ?? heroImage?.image,
+  )
   const slugs = formatToValidPrefixedIsoSlugs(slug, langSlugs)
   const alternates = generateAlternatesLinks(slug, locale, slugs)
   const modifiedDate = isDateAfter(publishDateTime, updatedAt)
@@ -209,6 +218,7 @@ export async function getPage(params: Params) {
       params: { ...pageQueryParams },
       requestTag: 'page-by-slug',
     })
+    console.log('getPAge data', data.slugs)
     pageData = data
   }
 
@@ -230,7 +240,7 @@ export async function getPage(params: Params) {
   }
 
   const { stickyMenu, slugs = [], ...restPageData } = pageData || {}
-
+  console.log('getPAge pageData slugs', pageData?.slugs)
   return {
     headerData: {
       slugs: formatToValidPrefixedIsoSlugs(

@@ -76,7 +76,11 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
           callToActions={callToActions}
           splitList={splitList}
           className={
-            (title && !ingress && !text) || (ingress && !text) ? 'pt-0' : ''
+            (!title && !ingress && !text) ||
+            (title && !ingress && !text) ||
+            (ingress && !text)
+              ? 'pt-0'
+              : ''
           }
         />
       )}

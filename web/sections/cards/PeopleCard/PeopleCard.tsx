@@ -6,17 +6,13 @@ import ResourceLink from '@/core/Link/ResourceLink'
 import { Typography } from '@/core/Typography'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import { urlForImage } from '@/sanity/lib/utils'
-import {
-  type ColorKeys,
-  colorKeyToUtilityMap,
-} from '@/styles/colorKeyToUtilityMap'
 import { Image } from '../../../core/Image/Image'
 import { getLocaleFromName } from '../../../sanity/helpers/localization'
 import type { PeopleCardData } from '../../../types/index'
 
 export type PeopleCardProps = {
   data: PeopleCardData
-  background?: ColorKeys
+  //background?: ColorKeys
   hasSectionTitle: boolean
   variant?: 'default' | 'single'
 } & HTMLAttributes<HTMLDivElement>
@@ -29,7 +25,7 @@ const PeopleCard = forwardRef<HTMLDivElement, PeopleCardProps>(
   function PeopleCard(
     {
       data,
-      background,
+      //background,
       className = '',
       variant = 'default',
       hasSectionTitle = true,
@@ -66,7 +62,7 @@ const PeopleCard = forwardRef<HTMLDivElement, PeopleCardProps>(
         <div
           ref={ref}
           className={twMerge(
-            `grid h-full items-center justify-center ${variantClassNames[variant]} focus-visible:envis-outline dark:focus-visible:envis-outline-invert rounded-card px-6 py-8 text-slate-80 focus:outline-hidden dark:text-white-100 ${colorKeyToUtilityMap[background ?? 'gray-20'].background}`,
+            `grid h-full items-center justify-center ${variantClassNames[variant]} focus-visible:envis-outline dark:focus-visible:envis-outline-invert rounded-sm bg-white-100 px-6 py-8 text-slate-80 shadow-card focus:outline-hidden dark:text-white-100`,
             className,
           )}
         >

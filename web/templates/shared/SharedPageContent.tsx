@@ -705,7 +705,6 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
 
   const content = (data?.content || []).map((c: Component, index) => {
     const prevComponent = data?.content?.[index - 1]
-    const nextComponent = data?.content?.[index + 1]
 
     // biome-ignore lint/complexity/noUselessUndefinedInitialization: complains either way
     let anchorReference = undefined
@@ -720,9 +719,6 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
     //Returns pt-20 when applicable or empty string
     const previousComponentIndex =
       prevComponent?.type === 'anchorLink' ? index - 2 : index - 1
-
-    const nextComponentIndex =
-      nextComponent?.type === 'anchorLink' ? index + 2 : index + 1
 
     const previousComponentToCompare =
       index === 0
@@ -741,15 +737,21 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
       previousComponentToCompare,
     )
 
-    let bottomSpacingClassName = 'pb-page-content'
+    const bottomSpacingClassName = 'pb-page-content'
 
     //If textblocks follow each other reduce the pb-page-content to tie text closer together
-    if (
+    // Consider after launch? or a setting on a sanity schema?
+    /*
+        const nextComponent = data?.content?.[index + 1]
+        const nextComponentIndex =
+      nextComponent?.type === 'anchorLink' ? index + 2 : index + 1    
+     if (
       c?.type === 'textBlock' &&
       data?.content?.[nextComponentIndex]?.type === 'textBlock'
     ) {
       bottomSpacingClassName = 'pb-12'
-    }
+    } */
+
     /*     console.log(
       `Applying top spacing: ${topSpacingClassName} to ${c?.type} with title ${Array.isArray(c?.title) ? toPlainText(c?.title) : c?.title}`,
     ) */
