@@ -7,7 +7,7 @@ import type Player from 'video.js/dist/types/player'
 import Blocks from '@/portableText/Blocks'
 import { resolveImage } from '@/sanity/lib/utils'
 import { type Image, mapSanityImageRatio } from '../Image/imageUtilities'
-import { type AspectRatioVariants, type Variants } from './Video'
+import type { AspectRatioVariants, Variants } from './Video'
 
 export type VideoType = {
   title: string

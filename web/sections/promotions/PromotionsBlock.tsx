@@ -134,12 +134,11 @@ const PromotionsBlock = ({
     //@ts-ignore: how to spread union types
     promotePastEvents,
   } = data
-  console.log('PromotionsBlock data', data)
+
   const { backgroundImage, backgroundPosition } = designOptions || {}
 
   const promotionVariant =
     variant ?? mapOldPromoType(data.promotions?.[0]?.type) ?? 'promoteTopics'
-  console.log('PromotionsBlock promotionVariant', promotionVariant)
 
   const { bg, dark } = getBgAndDarkFromBackground(designOptions)
   let imageUrl: string

@@ -230,7 +230,8 @@ const markSerializers: MarkType = {
         variant='fit'
         linkType='downloadableFile'
         file={{
-          ...attachment?.file,
+          ...(attachment?.file && attachment?.file),
+          ...(attachment && attachment),
           label: attachment?.label,
         }}
       >
@@ -343,6 +344,7 @@ export default function Blocks({
           const hasAttachment = block?.markDefs?.some(
             mark => mark?._type === 'attachment',
           )
+
           const blocksGroup = (
             hasAttachment ? 'plain' : group
           ) as TypographyGroups

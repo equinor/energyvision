@@ -168,6 +168,9 @@ export const HeroBlock = ({
             {...commonProps}
             //@ts-ignore: backwardscompatibility?
             video={heroData?.video ?? heroData?.loopingVideo}
+            {...(breadcrumbs?.enableBreadcrumbs && {
+              breadcrumbsComponent: breadcrumbsElement,
+            })}
             // reduce pb when breadscrumbs
             className={`${breadcrumbs?.enableBreadcrumbs ? 'pb-2' : ''}`}
           />

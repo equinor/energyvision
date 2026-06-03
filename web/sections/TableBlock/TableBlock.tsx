@@ -13,9 +13,20 @@ import { twMerge } from 'tailwind-merge'
 import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
 import { Table } from '@/core/Table'
 import type { ThemeVariants } from '@/core/Table/Table'
-import { getLayoutPx } from '@/lib/helpers/getCommonUtilities'
 import Blocks from '@/portableText/Blocks'
 import type { LayoutGrid } from '@/types/designOptionsTypes'
+
+//uses xl breakpoint for larger displays
+export const getTableLayoutPx = (variant: LayoutGrid) => {
+  switch (variant) {
+    case 'sm':
+      return `px-layout-sm`
+    case 'md':
+      return `px-layout-sm xl:px-layout-md`
+    default:
+      return `px-layout-sm xl:px-layout-lg`
+  }
+}
 
 export type TableBlockProps = {
   variant?: 'default' | 'import'
@@ -174,7 +185,9 @@ const TableBlock = forwardRef<HTMLDivElement, TableBlockProps>(
     })
 
     //TODO: remove useInnerContentWidth when period of transition and set layoutGrid prop as = "md"
-    const px = getLayoutPx(layoutGrid ?? (useInnerContentWidth ? 'lg' : 'md'))
+    const px = getTableLayoutPx(
+      layoutGrid ?? (useInnerContentWidth ? 'lg' : 'md'),
+    )
     const tableStretch =
       (widthAdjustment && widthAdjustment === 'full') ?? useFullContainerWidth
 
@@ -204,7 +217,9 @@ const TableBlock = forwardRef<HTMLDivElement, TableBlockProps>(
             tabIndex={0}
           >
             <Table
-              className={twMerge(tableStretch ? 'w-full table-fixed' : 'w-fit')}
+              className={twMerge(
+                tableStretch ? 'w-full self-stretch' : 'w-fit',
+              )}
             >
               {tableCaption && <Table.Caption>{tableCaption}</Table.Caption>}
               <Table.Head

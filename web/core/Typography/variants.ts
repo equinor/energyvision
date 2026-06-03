@@ -20,7 +20,7 @@
 const variants = {
   heading: {
     unstyled: '',
-    h1: 'text-3xl leading-earthy lg:leading-misty mb-6 lg:mb-12 text-balance',
+    h1: 'text-3xl leading-earthy lg:leading-misty pt-4 mb-6 lg:mb-12 text-balance',
     h2: `text-xl leading-earthy lg:leading-misty mb-4 lg:mb-8 text-balance`,
     h3: `text-lg leading-lofty mt-4 mb-8 text-balance`,
     h4: 'text-md mt-2 mb-4 text-balance',

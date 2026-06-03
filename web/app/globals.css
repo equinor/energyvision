@@ -24,7 +24,7 @@
   --spacing-single-carousel-card-h-lg: 516px;
   --spacing-event-carousel-card-w: 383px;
   --spacing-arrow-right: 1.58rem;
-  --spacing-text: 75em; /*800px;*/
+  --spacing-text: 80ch; /*75em;*/ /*800px;*/
   --spacing-news-banner-vertical: clamp(40px, calc(14.3125px + 11.0032vw), 210px);
 
   --spacing-topbar: 85px;
@@ -322,10 +322,10 @@ data-ui="checked active" class="data-checked:underline">
     @apply bg-transparent!;
   }
   .video-js.vjs-fill .vjs-play-control {
-    @apply bg-slate-blue-100!;
+    @apply bg-slate-blue-100/60!;
   }
   .video-js:not(.vjs-fill) .vjs-control-bar {
-    @apply bg-slate-blue-100!;
+    @apply bg-slate-blue-100/60!;
   }
 
   .video-js .vjs-big-play-button {
@@ -344,21 +344,24 @@ data-ui="checked active" class="data-checked:underline">
   .vjs-loading-spinner {
     border: 0.6em solid transparent !important;
   }
-  .vjs-fullwidth:not(.vjs-playing.vjs-has-started) .vjs-loading-spinner {
+  .vjs-fullwidth:not(.vjs-playing.vjs-has-started):not(.vjs-paused) .vjs-loading-spinner {
     @apply visible! flex!;
     animation: vjs-spinner-show 0s linear 0.3s forwards;
   }
-  .vjs-fullwidth:not(.vjs-playing.vjs-has-started) .vjs-loading-spinner:before,
-  .vjs-fullwidth:not(.vjs-playing.vjs-has-started) .vjs-loading-spinner:after {
+  .vjs-paused .vjs-loading-spinner {
+    @apply hidden!;
+  }
+  .vjs-fullwidth:not(.vjs-playing.vjs-has-started):not(.vjs-paused) .vjs-loading-spinner:before,
+  .vjs-fullwidth:not(.vjs-playing.vjs-has-started):not(.vjs-paused) .vjs-loading-spinner:after {
     animation:
       vjs-spinner-spin 1.1s cubic-bezier(0.6, 0.2, 0, 0.8) infinite,
       vjs-spinner-fade 1.1s linear infinite;
   }
-  .vjs-fullwidth:not(.vjs-playing.vjs-has-started) .vjs-loading-spinner:before {
+  .vjs-fullwidth:not(.vjs-playing.vjs-has-started):not(.vjs-paused) .vjs-loading-spinner:before {
     border-top-color: rgb(255, 255, 255);
   }
 
-  .vjs-fullwidth:not(.vjs-playing.vjs-has-started) .vjs-loading-spinner:after {
+  .vjs-fullwidth:not(.vjs-playing.vjs-has-started):not(.vjs-paused) .vjs-loading-spinner:after {
     border-top-color: rgb(255, 255, 255);
     animation-delay: 0.44s;
   }

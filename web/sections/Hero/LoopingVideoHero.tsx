@@ -1,5 +1,6 @@
 import dynamic from 'next/dynamic'
 import type { PortableTextBlock } from 'next-sanity'
+import type { ReactNode } from 'react'
 import type { Image } from '@/core/Image/imageUtilities'
 import { twMerge } from '@/lib/twMerge/twMerge'
 import Blocks from '@/portableText/Blocks'
@@ -21,6 +22,7 @@ export type LoopingVideoHeroProps = {
   nextSectionDesignOptions?: DesignOptions
   video: LoopingVideoData
   className?: string
+  breadcrumbsComponent?: ReactNode
 }
 
 const VideoPlayer = dynamic(() => import('@/core/VideoJsPlayer/VideoPlayer'))
@@ -30,6 +32,7 @@ export const LoopingVideoHero = ({
   video,
   nextSectionDesignOptions,
   className = '',
+  breadcrumbsComponent,
 }: LoopingVideoHeroProps) => {
   console.log('video', video)
   const { ratio } = video
@@ -54,6 +57,7 @@ export const LoopingVideoHero = ({
         loop
       />
       <div className='mx-auto max-w-content'>
+        {breadcrumbsComponent && breadcrumbsComponent}
         <Blocks
           //@ts-ignore
           value={title}
@@ -62,7 +66,10 @@ export const LoopingVideoHero = ({
           as='h1'
           variant='h1'
           className={twMerge(
-            `px-layout-sm pt-4 lg:px-layout-lg lg:pt-6 ${nextCompBg} ${nextCompDark ? nextCompDark : ''}`,
+            `px-layout-sm lg:px-layout-lg`,
+            !breadcrumbsComponent && 'pt-4 lg:pt-6',
+            nextCompBg,
+            nextCompDark && 'dark',
             className,
           )}
         />
