@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import dynamic from 'next/dynamic'
 import { notFound } from 'next/navigation'
 import { setRequestLocale } from 'next-intl/server'
+import { decodeSlugs } from '@/lib/helpers/getFullUrl'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { getNameFromIso } from '@/sanity/helpers/localization'
 import { routeSanityFetch } from '@/sanity/lib/live'
@@ -28,7 +29,9 @@ const MagazineRoom = dynamic(() => import('@/templates/magazine/Magazineroom'))
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   //array, separated by /. e.g. [news, last slug]
-  const { slug, locale } = await params
+  const { slug: encodedSlug, locale } = await params
+  const slug = decodeSlugs(encodedSlug) as string[]
+
   const sanityLang = getNameFromIso(locale)
   //news, magazinepage has slug in document
   const isNewsPage = slug[0] === newsSlug[sanityLang]
@@ -64,7 +67,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function Page({ params }: Props) {
   const { slug, locale } = await params
-
   setRequestLocale(locale)
 
   const [siteMenuResult, pageResults] = await Promise.all([
@@ -75,14 +77,13 @@ export default async function Page({ params }: Props) {
       },
     }),
     getPage({
-      slug,
+      slug: decodeSlugs(slug),
       locale,
     }),
   ])
 
   const { headerData, pageData } = pageResults
   const { data: siteMenuData } = siteMenuResult || {}
-
   if (Object.keys(pageData).length === 0) notFound()
 
   const template = pageData?.template
