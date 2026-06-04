@@ -81,35 +81,42 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
                 className={`mx-auto max-w-content ${bg} ${dark ? 'dark' : ''}`}
               >
                 {title && <Blocks as='h1' variant='3xl' value={title} />}
-                <div className='mt-6 flex flex-col gap-2 *:text-sm *:leading-0'>
+                <div className='mt-7 flex flex-col *:text-sm *:leading-0'>
                   {(start || eventDate?.date) && (
                     <FormattedDateTime
                       variant='date'
                       dateIcon
                       datetime={start}
+                      className='mb-5 text-norwegian-woods-100 *:text-xl'
                     />
                   )}
-                  {(start && end) ? (
-                    <div className={`flex gap-1 *:text-base`}>
-                      <FormattedDateTime
-                        variant='time'
-                        timeIcon={false}
-                        datetime={start}
-                        showTimezone={false}
-                        className='text-sm'
-                        timeClassName='leading-none'
-                      />
-                      <span>-</span>
-                      <FormattedDateTime
-                        variant='time'
-                        datetime={end}
-                        className='text-sm'
-                        timeClassName='leading-none'
-                      />
-                    </div>
-                  ): <p className='my-2 text-base'>To be announced</p>}
+                  <div className='mb-2 flex flex-center gap-1 text-norwegian-woods-100'>
+                    {start && end ? (
+                      <div className={`flex gap-1 *:text-base`}>
+                        <FormattedDateTime
+                          variant='time'
+                          timeIcon={false}
+                          datetime={start}
+                          showTimezone={false}
+                          timeClassName='leading-none'
+                        />
+                        <span>-</span>
+                        <FormattedDateTime
+                          variant='time'
+                          datetime={end}
+                          timeClassName='leading-none'
+                        />
+                      </div>
+                    ) : (
+                      <p className='my-2 *:text-base'>To be announced</p>
+                    )}
+                  </div>
                 </div>
-                {location && <p className='my-2 text-base'>{location}</p>}
+                {location && (
+                  <div className='mb-4 text-norwegian-woods-100 *:text-base'>
+                    {location}
+                  </div>
+                )}
                 <AddToCalendar
                   eventDate={eventDate}
                   startDateTime={start}
