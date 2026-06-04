@@ -73,7 +73,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
           location={location || ''}
         />
       )}
-      <main className='flex flex-col pt-topbar'>
+      <main className='flex flex-col'>
         <article>
           <div className='bg-moss-green-50'>
             <div className='mx-auto max-w-content px-layout-md py-32'>
