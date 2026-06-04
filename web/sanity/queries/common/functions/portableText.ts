@@ -6,9 +6,9 @@ fn portableText::markDefs($param) = $param[]{
         "attachment": {
           "id": _key,
           "type": _type,
-          "href": reference->asset.asset->url,
+          "url": reference->asset.asset->url,
           "extension": reference->asset.asset->extension,
-          "fileName": reference->asset.asset->originalFilename
+          "originalFilename": reference->asset.asset->originalFilename
         }
     }
 };

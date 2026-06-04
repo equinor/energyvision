@@ -17,7 +17,6 @@ import { Modal } from '@/sections/Modal'
 import FriendlyCaptcha from '@/templates/forms/FriendlyCaptcha'
 import type { LinkType } from '@/types'
 import verifyCaptcha from '../../app/_actions/verifyCaptcha'
-import { ArrowRight } from '../../icons'
 import { BaseLink } from './BaseLink'
 import Link from './Link'
 import { getArrowElement } from './linkCommon'
@@ -157,36 +156,39 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(
       </div>
     )
 
-    const downloadable = (
-      <BaseLink
-        className={twMerge(
-          `${commonResourceLinkWrapperClassName}`,
-          showModal && 'pt-20',
-        )}
-        type={linkType}
-        href={linkType === 'downloadableFile' ? fileUrl : url}
-        {...(extension &&
-          openInNewTab?.includes(extension.toLowerCase()) && {
-            target: '_blank',
-          })}
-      >
-        <span
-          className={`flex h-full w-inherit items-center justify-start gap-x-2 ${contentVariantClassName[variant]}`}
-        >
-          {linkElement}
-          {getArrowElement(
-            extension && openInNewTab?.includes(extension.toLowerCase())
-              ? 'externalUrl'
-              : linkType,
+    const downloadable = (showArrow: Boolean = true) => {
+      return (
+        <BaseLink
+          className={twMerge(
+            `${commonResourceLinkWrapperClassName}`,
+            showModal && 'pt-20',
           )}
-        </span>
+          type={linkType}
+          href={linkType === 'downloadableFile' ? fileUrl : url}
+          {...(extension &&
+            openInNewTab?.includes(extension.toLowerCase()) && {
+              target: '_blank',
+            })}
+        >
+          <span
+            className={`flex h-full w-inherit items-center justify-start gap-x-2 ${contentVariantClassName[variant]}`}
+          >
+            {linkElement}
+            {showArrow &&
+              getArrowElement(
+                extension && openInNewTab?.includes(extension.toLowerCase())
+                  ? 'externalUrl'
+                  : linkType,
+              )}
+          </span>
 
-        <div className='relative h-0.5'>
-          <div className='absolute inset-0 z-10 h-0.5 w-[0%] bg-grey-50 transition-all duration-300 group-hover/link:w-full dark:bg-white-100' />
-          <div className='absolute inset-0 z-0 h-px w-full bg-grey-50 dark:bg-white-100' />
-        </div>
-      </BaseLink>
-    )
+          <div className='relative h-0.5'>
+            <div className='absolute inset-0 z-10 h-0.5 w-[0%] bg-grey-50 transition-all duration-300 group-hover/link:w-full dark:bg-white-100' />
+            <div className='absolute inset-0 z-0 h-px w-full bg-grey-50 dark:bg-white-100' />
+          </div>
+        </BaseLink>
+      )
+    }
 
     return (
       <div ref={ref}>
@@ -215,14 +217,8 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(
               >
                 {linkElement}
               </div>
-              {!(type === 'stickyMenu' || type === 'simple') && (
-                <div className={`flex translate-y-px flex-col px-1`}>
-                  <ArrowRight
-                    className={`size-arrow-right min-h-arrow-right min-w-arrow-right rotate-90 justify-self-end text-energy-red-100 transition-all duration-300 group-hover:translate-y-0.5 dark:text-white-100`}
-                  />
-                  <div className='h-0.5 w-full bg-energy-red-100 dark:bg-white-100' />
-                </div>
-              )}
+              {!(type === 'stickyMenu' || type === 'simple') &&
+                getArrowElement(linkType)}
             </div>
             {type !== 'stickyMenu' && (
               <div className='relative h-0.5'>
@@ -265,10 +261,12 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(
                 {intl('not_human_message')}
               </Typography>
             )}
-            {isFriendlyChallengeDone && !notHuman && downloadable}
+            {isFriendlyChallengeDone && !notHuman && downloadable(true)}
           </Modal>
         )}
-        {isHuman && type !== 'stickyMenu' && downloadable}
+        {isHuman &&
+          type !== 'stickyMenu' &&
+          downloadable(file.type !== 'attachment')}
         {isHuman && type === 'stickyMenu' && (
           <Link
             className='text-sm no-underline hover:text-slate-80 hover:underline dark:hover:text-grey-20'
