@@ -9,6 +9,6 @@ export const getAllSitesLink = (
   if (type === 'external') return 'https://www.equinor.com/about-us/all-sites'
 
   return locale === 'nb-NO'
-    ? 'no/om-oss/alle-nettsteder'
+    ? '/no/om-oss/alle-nettsteder'
     : '/about-us/all-sites'
 }
