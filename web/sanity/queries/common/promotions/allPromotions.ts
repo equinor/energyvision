@@ -161,10 +161,8 @@ ${commonPromotionFields},
            "link": {
             "slug":  reference->slug.current,
             "type": "internalUrl",
-            "lang": reference-> lang
+            "lang": reference->content->lang
         },
-         
-
           reference->_type == 'route_' + $lang => {
             "title": reference->content->title,
             "heroImage": select(

@@ -362,7 +362,7 @@ _type == "keyNumbers" =>{
             "link": {
             "slug":  reference->slug.current,
             "type": "internalUrl",
-            "lang": reference-> lang
+            "lang": reference-> content->lang
         },
 
           reference->_type == 'route_' + $lang => {
