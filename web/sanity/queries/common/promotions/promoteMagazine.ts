@@ -1,7 +1,7 @@
-import { sameLang } from './../langAndDrafts'
-import markDefs from '../blockEditorMarks'
-import { publishDateTimeQuery } from '../publishDateTime'
 import { heroFields } from '../../common/heroFields'
+import markDefs from '../blockEditorMarks'
+import { sameLang } from './../langAndDrafts'
+import { publishDateTimeQuery } from '../publishDateTime'
 
 const promotedMagazineFields = /* groq */ `
   "id": _id,
@@ -10,7 +10,11 @@ const promotedMagazineFields = /* groq */ `
     ...,
     ${markDefs},
   },
-  "slug": slug.current,
+"link": {
+            "slug": slug.current,
+            "type": "internalUrl",
+            "lang": lang
+        },
   "title": title[]{
     ...,
     ${markDefs},

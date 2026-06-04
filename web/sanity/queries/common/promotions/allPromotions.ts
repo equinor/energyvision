@@ -109,7 +109,11 @@ ${commonPromotionFields},
         title,
         heroImage,
         "publishDateTime": ${publishDateTimeQuery},
-        "slug": slug.current,
+        "link": {
+            "slug": slug.current,
+            "type": "internalUrl",
+            "lang": lang
+        },
         ingress[]{
         ...,
         ${markDefs},
@@ -154,7 +158,12 @@ ${commonPromotionFields},
             ...,
             ${markDefs},
           },
-          "slug": reference->slug.current,
+           "link": {
+            "slug":  reference->slug.current,
+            "type": "internalUrl",
+            "lang": reference-> lang
+        },
+         
 
           reference->_type == 'route_' + $lang => {
             "title": reference->content->title,

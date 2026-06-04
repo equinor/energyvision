@@ -359,7 +359,11 @@ _type == "keyNumbers" =>{
             ...,
             ${markDefs},
           },
-          "slug": reference->slug.current,
+            "link": {
+            "slug":  reference->slug.current,
+            "type": "internalUrl",
+            "lang": reference-> lang
+        },
 
           reference->_type == 'route_' + $lang => {
             "title": reference->content->title,
