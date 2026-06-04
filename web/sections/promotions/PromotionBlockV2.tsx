@@ -109,7 +109,11 @@ export const PromotionBlockV2 = forwardRef<HTMLDivElement, PromotionBlockProps>(
             <ul className={`${px} grid ${cols} auto-rows-fr gap-4`}>
               {promoteList.map((promotion: any) => {
                 const variant = getVariantOnType(promotion?.type)
-                const href = getUrlFromAction(promotion)
+                const href = getUrlFromAction({
+                  ...promotion,
+                  type: variant === 'default' ? 'internalUrl' : variant,
+                })
+
                 return (
                   <li key={promotion.id}>
                     <Promotion

@@ -41,7 +41,11 @@ ${commonPromotionFields},
 "promoteList": promoteList[]{
     "id": _key,
     "type": _type,
-    "href": reference->slug.current,
+     "link": {
+            "slug":  reference->slug.current,
+            "type": "internalUrl",
+            "lang": reference->content-> lang
+        },
     reference->_type == 'route_' + $lang => {
     "label": reference->content->title,
     "image": select(reference->content->heroType == 'loopingVideo' => reference->content->heroLoopingVideo->thumbnail,
