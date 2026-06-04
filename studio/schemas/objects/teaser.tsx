@@ -60,7 +60,6 @@ export default {
         collapsible: true,
         collapsed: true,
       },
-      hidden: ({ parent }: TeaserDocument) => parent.isBigText,
     },
     {
       name: 'link',
@@ -86,7 +85,7 @@ export default {
       components: {
         input: CompactBlockEditor,
       },
-      of: [configureBlockContent({ variant: 'title' })],
+      of: [configureBlockContent({ variant: 'titleWithDisplay' })],
     },
     {
       name: 'text',
@@ -192,8 +191,6 @@ export default {
     select: {
       title: 'title',
       text: 'text',
-      isBigText: 'isBigText',
-      bigText: 'bigText',
       image: 'image.asset',
     },
     prepare({
