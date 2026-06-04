@@ -14,7 +14,8 @@ export const routing = defineRouting({
       'ja-JP': '/ja',
       'ko-KR': '/ko',
       'cy-CY': '/cy',
-      'pl-PL': '/pl'
+      'pl-PL': '/pl',
+      'de-DE': '/de',
     },
   },
   localeDetection: false,
