@@ -72,6 +72,7 @@ const MagazinePage = ({
       ...hero,
       //@ts-ignore
       magazineTags,
+      figCaptionClassName: 'hidden',
       subTitle: subTitle,
     },
     //@ts-ignore
@@ -79,7 +80,6 @@ const MagazinePage = ({
     //@ts-ignore
     nextSectionDesignOptions: content?.[0]?.designOptions,
   }
-  console.log('MagazinePage heroProps', heroProps)
 
   return (
     <main className='mx-auto flex w-full max-w-fullwidth flex-col'>

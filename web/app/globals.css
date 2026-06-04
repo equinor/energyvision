@@ -25,6 +25,7 @@
   --spacing-event-carousel-card-w: 383px;
   --spacing-arrow-right: 1.58rem;
   --spacing-text: 80ch; /*75em;*/ /*800px;*/
+  --spacing-card: 13px;
   --spacing-news-banner-vertical: clamp(40px, calc(14.3125px + 11.0032vw), 210px);
 
   --spacing-topbar: 85px;
@@ -170,7 +171,9 @@ data-ui="checked active" class="data-checked:underline">
     @apply bg-neutral-400;
   }
 }
-
+@utility transparent-gradient {
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0) 100%);
+}
 @utility white-right-gradient {
   background-image: linear-gradient(to right, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.3) 30%, rgba(255, 255, 255, 0.4) 100%);
 }

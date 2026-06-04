@@ -1,10 +1,10 @@
 import { ProfilePageJsonLd } from 'next-seo'
 import { forwardRef, type HTMLAttributes } from 'react'
-import { twMerge } from 'tailwind-merge'
 import BaseLink from '@/core/Link/BaseLink'
 import ResourceLink from '@/core/Link/ResourceLink'
 import { Typography } from '@/core/Typography'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
+import { twMerge } from '@/lib/twMerge/twMerge'
 import { urlForImage } from '@/sanity/lib/utils'
 import { Image } from '../../../core/Image/Image'
 import { getLocaleFromName } from '../../../sanity/helpers/localization'
@@ -48,13 +48,9 @@ const PeopleCard = forwardRef<HTMLDivElement, PeopleCardProps>(
     const linkClassNames =
       'text-norwegian-woods-100 no-underline hover:underline text-sm'
 
-    const variantClassNames = {
-      default: `w-full flex gap-4 lg:gap-8 lg:flex-col `,
-      single: `w-full lg:w-fit flex flex-col lg:flex-row gap-8 lg:gap-12`,
-    }
     const variantContentClassNames = {
-      default: `justify-center items-start lg:items-center *:text-center`,
-      single: `justify-center items-center lg:items-start`,
+      default: ``,
+      single: ``,
     }
 
     return (
@@ -62,24 +58,34 @@ const PeopleCard = forwardRef<HTMLDivElement, PeopleCardProps>(
         <div
           ref={ref}
           className={twMerge(
-            `grid h-full items-center justify-start ${variantClassNames[variant]} focus-visible:envis-outline dark:focus-visible:envis-outline-invert rounded-sm bg-white-100 px-6 py-8 text-slate-80 shadow-card focus:outline-hidden dark:text-white-100`,
+            `focus-visible:envis-outline dark:focus-visible:envis-outline-invert flex h-full w-full items-center justify-start rounded-sm bg-white-100 px-6 py-8 text-slate-80 shadow-card focus:outline-hidden dark:text-white-100`,
+            variant === 'default' && 'gap-4 lg:flex-col lg:gap-8',
+            variant === 'single' &&
+              'flex-col gap-8 lg:w-fit lg:flex-row lg:gap-12',
             className,
           )}
         >
           {image && (
             <Image
               image={image}
+              fill
               grid='xs'
               aspectRatio='1:1'
-              className={`${variant === 'single' ? 'size-64' : 'size-40'}`}
+              className={`${variant === 'single' ? 'size-40 lg:size-64' : 'size-32 lg:size-40'}`}
               imageClassName='rounded-full'
             />
           )}
-          <div className={`flex flex-col ${variantContentClassNames[variant]}`}>
+          <div
+            className={twMerge(
+              `flex flex-col items-start justify-center gap-3`,
+              variant === 'default' && 'lg:items-center lg:*:text-center',
+              variant === 'single' && 'lg:items-start',
+            )}
+          >
             <Typography
               as={hasSectionTitle ? 'h3' : 'h2'}
               variant={`${variant === 'single' ? 'md' : 'sm'}`}
-              className='mb-4 font-medium'
+              className='font-medium'
             >
               {name}
             </Typography>
@@ -89,7 +95,7 @@ const PeopleCard = forwardRef<HTMLDivElement, PeopleCardProps>(
               </div>
             )}
             {department && (
-              <div className='mt-2 text-balance text-slate-80 text-sm dark:text-white-100'>
+              <div className='text-balance text-slate-80 text-sm dark:text-white-100'>
                 {department}
               </div>
             )}
@@ -102,12 +108,18 @@ const PeopleCard = forwardRef<HTMLDivElement, PeopleCardProps>(
                     : undefined
                 }
                 variant='fit'
-                className='mt-4'
+                className='m-0 p-0'
               >
                 {cv?.label}
               </ResourceLink>
             ) : (
-              <div className='mt-4 flex flex-col items-center gap-1 text-center'>
+              <div
+                className={twMerge(
+                  `flex flex-col gap-1`,
+                  variant === 'default' && 'tems-start lg:lg:items-center',
+                  variant === 'single' && 'items-center',
+                )}
+              >
                 {email && (
                   <BaseLink href={`mailto:${email}`} className={linkClassNames}>
                     {email}

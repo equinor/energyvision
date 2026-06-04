@@ -1,5 +1,5 @@
 import { forwardRef, type HTMLAttributes } from 'react'
-import { twMerge } from 'tailwind-merge'
+import { twMerge } from '@/lib/twMerge/twMerge'
 import { ArrowRight } from '../../../icons'
 import type { Variants } from './Card'
 
@@ -47,7 +47,7 @@ export const CardContent = forwardRef<HTMLDivElement, CardContentProps>(
       <div
         ref={ref}
         className={twMerge(
-          `flex gap-4 md:gap-6 ${variantClassNames[variant]}`,
+          `flex gap-4 rounded-b-card md:gap-6 ${variantClassNames[variant]}`,
           className,
         )}
       >

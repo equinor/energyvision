@@ -62,6 +62,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     requestTag: 'page-meta',
   })
 
+  console.log('Meta data for', slug, metaData) // Debug log to check the fetched metadata
+
   return constructSanityMetadata(slug, locale, metaData)
 }
 

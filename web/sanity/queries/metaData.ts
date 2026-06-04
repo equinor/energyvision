@@ -61,7 +61,7 @@ export const homePageMetaQuery = /* groq */ `
 *[_type == "translation.metadata" && references(*[_id=="route_homepage"][0].content._ref)][0].translations[_key==$lang][0].value->{
     "title": title,
     "seoAndSome": ${seoAndSomeFields},
-    "heroImage": heroFigure,
+    "heroImage": coalesce(heroImage, heroFigure),
     "slugs": *[_type == "translation.metadata" && references(^._id)].translations[].value->{
       lang,
     }
@@ -80,7 +80,7 @@ export const docWithSlugMetaQuery = /* groq */ `
   *[_type == $type && ${sameLang} && slug.current == $slug] {
     _id, //used for data filtering
     title,
-    heroImage,
+    "heroImage": coalesce(heroImage, heroFigure),
     "slug": slug.current,
     "seoAndSome":{
         "documentTitle": seo.documentTitle,
@@ -98,7 +98,7 @@ export const magazineroomMetaQuery = /* groq */ `
   *[_type == "magazineIndex" && ${sameLang}] {
     _id, //used for data filtering
     "title": title,
-    "heroImage": heroFigure,
+    "heroImage": coalesce(heroImage, heroFigure),
     "seoAndSome": ${seoAndSomeFields},
     "template": _type,
     "allSlugs": {${singletonsSlugsQuery}}

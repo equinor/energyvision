@@ -66,7 +66,8 @@ export const ImageBackground = ({
   useLight,
   useNoGradient,
 }: ImageBackgroundProps) => {
-  const isLargerDisplays = useMediaQuery(`(min-width: 800px)`)
+  //Keep same min width as ts xl breakpoint as gradient and dontSplit are connected at this point
+  const isLargerDisplays = useMediaQuery(`(min-width: 80rem)`)
   const ref = useRef(null)
 
   const { url } = resolveImage({
@@ -81,18 +82,18 @@ export const ImageBackground = ({
     !_lightGradient && !_noGradient && backgroundGradient === 'dark'
 
   const lightGradientForContentAlignment = {
-    center: 'white-center-gradient',
-    right: 'white-center-gradient xl:white-right-gradient',
-    left: 'white-center-gradient xl:white-left-gradient',
-    'bottom-left': 'white-to-top-gradient',
-    'bottom-center': 'white-to-top-gradient',
+    center: `${dontSplit ? 'white-center-gradient' : 'xl:white-center-gradient'} `,
+    right: `${dontSplit ? 'white-right-gradient' : 'xl:white-right-gradient'}`,
+    left: `${dontSplit ? 'white-left-gradient' : 'xl:white-left-gradient'}`,
+    'bottom-left': `${dontSplit ? 'white-to-top-gradient' : 'xl:white-to-top-gradient'}`,
+    'bottom-center': `${dontSplit ? 'white-to-top-gradient' : 'xl:white-to-top-gradient'}`,
   }
   const darkGradientForContentAlignment = {
-    center: 'black-center-gradient',
-    right: 'black-center-gradient xl:black-to-right-gradient',
-    left: 'black-center-gradient xl:black-to-left-gradient',
-    'bottom-left': 'black-to-top-gradient',
-    'bottom-center': 'black-to-top-gradient',
+    center: `${dontSplit ? 'black-center-gradient' : 'xl:black-center-gradient'}`,
+    right: `${dontSplit ? 'black-to-right-gradient' : 'xl:black-to-right-gradient'}`,
+    left: `${dontSplit ? 'black-to-left-gradient' : 'xl:black-to-left-gradient'}`,
+    'bottom-left': `${dontSplit ? 'black-to-top-gradient' : 'xl:black-to-top-gradient'}`,
+    'bottom-center': `${dontSplit ? 'black-to-top-gradient' : 'xl:black-to-top-gradient'}`,
   }
 
   let imageGradient = ''
@@ -147,7 +148,8 @@ export const ImageBackground = ({
         backgroundPosition &&
           `${getBackgroundPositionForImage(backgroundPosition)}`,
         useAnimation && isLargerDisplays ? `bg-fixed` : 'bg-local',
-        _darkGradient && 'dark',
+        _darkGradient && dontSplit && 'dark',
+        _darkGradient && !dontSplit && isLargerDisplays && 'dark',
         className,
       )}
       {...(((!dontSplit && isLargerDisplays) || dontSplit) && {
@@ -165,8 +167,8 @@ export const ImageBackground = ({
       )}
       <div
         className={twMerge(
-          `py-6 lg:py-72 ${imageGradient}`,
-          useAnimation && 'animate-timeline',
+          `py-6 xl:py-72 ${imageGradient}`,
+          useAnimation && 'xl:animate-timeline',
           dontSplit && 'py-40',
           scrimClassName,
         )}

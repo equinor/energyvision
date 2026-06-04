@@ -74,7 +74,6 @@ export const HeroBlock = ({
   isMagazineRoom = false,
   className = '',
 }: HeroBlockProps) => {
-  console.log('HeroBlock heroData', heroData)
   const {
     type = HeroTypes?.DEFAULT,
     title,
@@ -90,6 +89,7 @@ export const HeroBlock = ({
     useBrandTheme,
     useBlurCenter,
     displayTextVariant,
+    figCaptionClassName,
   } = heroData
 
   const { bg: nextCompBg, dark: nextCompDark } = getBgAndDarkFromBackground(
@@ -125,6 +125,7 @@ export const HeroBlock = ({
       link: heroLink ?? link,
     }),
     className,
+    figCaptionClassName,
   }
 
   const getHero = () => {

@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import { draftMode } from 'next/headers'
 import { type QueryParams, toPlainText } from 'next-sanity'
 import {
   defaultLanguage,
@@ -144,6 +143,9 @@ export const constructSanityMetadata = (
     slugs: langSlugs,
   } = metaData
 
+  console.log('seoAndSome', seoAndSome)
+  console.log('heroImage', heroImage)
+
   const plainTitle = Array.isArray(title) ? toPlainText(title) : title
   const ogImage = resolveOpenGraphImage(
     seoAndSome?.openGraphImage ?? heroImage?.image,
@@ -166,7 +168,7 @@ export const constructSanityMetadata = (
       siteName: 'Equinor',
       publishedTime: publishDateTime,
       modifiedTime: modifiedDate,
-      images: ogImage,
+      images: ogImage ? [ogImage] : [],
     },
     alternates,
   }

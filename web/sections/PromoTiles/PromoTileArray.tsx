@@ -19,9 +19,12 @@ const PromoTileArray = ({
   return (
     <section
       id={anchor}
-      className={twMerge(`flex flex-col justify-center gap-6`, className)}
+      className={twMerge(
+        `flex max-w-content flex-col justify-center gap-6 lg:mx-auto`,
+        className,
+      )}
     >
-      <div className='mx-auto max-w-content px-layout-md pb-page-content xl:px-layout-lg'>
+      <div className='w-full px-layout-sm md:px-layout-md xl:px-layout-lg'>
         {title && (
           <Blocks
             value={title}
@@ -33,7 +36,7 @@ const PromoTileArray = ({
         <ul
           className={` ${
             title && !hideTitle ? 'pt-6' : ''
-          } flex w-full flex-col content-center items-center justify-center gap-6 md:grid md:auto-rows-fr md:grid-cols-2`}
+          } flex w-full flex-col gap-6 md:grid md:auto-rows-fr md:grid-cols-2 lg:content-center lg:items-center lg:justify-center`}
         >
           {group?.map((tile: PromoTileData) => {
             return (

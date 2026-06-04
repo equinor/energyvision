@@ -1,7 +1,7 @@
 @theme {
   --font-sans: 'Equinor', 'Open Sans', sans-serif;
-  --breakpoint-md: 43.75rem;
-  --breakpoint-xl: 81.25rem;
+/*   --breakpoint-md: 43.75rem;
+  --breakpoint-xl: 81.25rem; */
   --breakpoint-3xl: 100rem;
   --breakpoint-4xl: 120rem;
   --breakpoint-6xl: 140rem;

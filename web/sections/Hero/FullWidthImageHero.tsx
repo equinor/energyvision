@@ -28,6 +28,7 @@ export type FullWidthImageHeroProps = {
   variant?: FullWidthImageHeroVariant
   breadcrumbsComponent?: ReactNode
   nextSectionDesignOptions?: DesignOptions
+  figCaptionClassName?: string
 } & HTMLAttributes<HTMLElement>
 
 //Magazine hides caption?
@@ -40,6 +41,7 @@ export const FullWidthImageHero = ({
   subTitle,
   nextSectionDesignOptions,
   breadcrumbsComponent,
+  figCaptionClassName,
   className = '',
 }: FullWidthImageHeroProps) => {
   const { bg: nextCompBg, dark: nextCompDark } = getBgAndDarkFromBackground(
@@ -70,7 +72,10 @@ export const FullWidthImageHero = ({
           <Picture
             image={figure.image}
             desktopAspectRatio={ratioToVariant[variant]}
-            figCaptionClassName={`${nextCompBg ? nextCompBg : ''} ${nextCompDark ? nextCompDark : ''}`}
+            figCaptionClassName={twMerge(
+              `${nextCompBg ? nextCompBg : ''} ${nextCompDark ? nextCompDark : ''}`,
+              figCaptionClassName,
+            )}
             caption={figure?.caption}
             attribution={figure?.attribution}
             className={`${variantClassName[variant]}`}

@@ -1,13 +1,13 @@
 import '../globals.css'
+import type { Metadata } from 'next'
 import dynamic from 'next/dynamic'
 import localFont from 'next/font/local'
 import { draftMode } from 'next/headers'
 import NextLink from 'next/link'
 import { notFound } from 'next/navigation'
-import { hasLocale, NextIntlClientProvider, useTranslations } from 'next-intl'
+import { hasLocale, NextIntlClientProvider } from 'next-intl'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { PageProvider } from '@/contexts/pageContext'
-import ButtonLink from '@/core/Link/ButtonLink'
 import { dataset } from '@/languageConfig'
 import { getNameFromIso } from '@/sanity/helpers/localization'
 import { routeSanityFetch, SanityLive } from '@/sanity/lib/live'
@@ -27,6 +27,13 @@ const equinor = localFont({
 })
 
 type Params = Promise<{ locale: string }>
+
+export const metadata: Metadata = {
+  icons: {
+    icon: '/icon.svg',
+    shortcut: '/icon.svg',
+  },
+}
 
 //the [locale] segment corresponds to the locale (iso format), not the prefix(/no).
 

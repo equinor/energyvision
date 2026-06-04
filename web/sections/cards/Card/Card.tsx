@@ -53,23 +53,12 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
   `
 
   const variantClassNames: Record<Variants, string> = {
-    primary: `${commonStyling} grid-rows-[auto_1fr]`,
-    secondary: `${commonStyling} grid-rows-[auto_1fr]`,
+    primary: `${commonStyling} grid-rows-[1fr_auto] lg:grid-rows-[auto_1fr]`,
+    secondary: `${commonStyling} grid-rows-[1fr_auto] lg:grid-rows-[auto_1fr]`,
     compact: `w-full h-full rounded-card flex gap-4`,
     single: `grid grid-cols-[40%_auto] min-h-[450px] rounded-card`,
   }
-  const variantAspectRatio: Record<Variants, ImageRatioKeys> = {
-    primary: '16:9',
-    secondary: '4:3',
-    compact: '5:4',
-    single: '5:4',
-  }
-  const imageRatio: Record<Variants, string> = {
-    primary: 'aspect-video',
-    secondary: 'aspect-4/3',
-    compact: 'aspect-5/4',
-    single: '',
-  }
+
   const imageVariantClassNames: Record<Variants, string> = {
     primary: `rounded-t-card *:rounded-t-card`,
     secondary: `rounded-t-card *:rounded-t-card`,
@@ -83,7 +72,7 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
       href={href}
       prefetch={false}
       className={twMerge(
-        `group/card ${onColorBg ? 'bg-white-100' : 'bg-gray-20'} ${variantClassNames[variant]}`,
+        `group/card md:min-w-[300px] xl:min-w-[383px] ${onColorBg ? 'bg-white-100' : 'bg-gray-20'} ${variantClassNames[variant]}`,
         className,
       )}
     >
@@ -92,13 +81,13 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
           image={image}
           fill
           grid='xs'
-          aspectRatio={variantAspectRatio[variant]}
+          aspectRatio={'16:9'}
           className={twMerge(
-            `${imageVariantClassNames[variant]} ${imageRatio[variant]}`,
+            `${imageVariantClassNames[variant]}`,
             imageWrapperClassName,
           )}
           imageClassName={twMerge(
-            `w-full ${imageVariantClassNames[variant]} ${imageRatio[variant]} `,
+            `w-full ${imageVariantClassNames[variant]}`,
             imageClassName,
           )}
         />
