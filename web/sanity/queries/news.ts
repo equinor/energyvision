@@ -32,7 +32,7 @@ const latestNewsFields = /* groq */ `
 
 export const newsQuery = /* groq */ `
   ${functions}
-  *[_type == "news" && slug.current == $slug] | order(${publishDateTimeQuery} desc) {
+  *[_type == "news" && slug.current == $slug && ${sameLang}] | order(${publishDateTimeQuery} desc) {
     _id, //used for data filtering
     "id": _id,
     "updatedAt": ${lastUpdatedTimeQuery},
