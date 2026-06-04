@@ -73,7 +73,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
           location={location || ''}
         />
       )}
-      <main className='flex flex-col pt-topbar pb-page-content'>
+      <main className='flex flex-col pt-topbar'>
         <article>
           <div className='bg-moss-green-50'>
             <div className='mx-auto max-w-content px-layout-md py-32'>
@@ -85,7 +85,6 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
                   {(start || eventDate?.date) && (
                     <FormattedDateTime
                       variant='date'
-                      dateIcon
                       datetime={start}
                       className='mb-5 text-norwegian-woods-100 *:text-xl'
                     />
