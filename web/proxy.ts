@@ -140,5 +140,5 @@ export const config = {
   // - … if they start with `/api`, `/_next` or Next dev overlay routes
   // - … the ones containing a dot (e.g. `favicon.ico`)
   matcher:
-    '/((?!api|_next|favicon.ico|__nextjs|__nextjs_original-stack-frame|__nextjs_launch-editor|.well-known|legacy|sitemap.xml|robots.txt).*)',
+    '/((?!api|_next|favicon.ico|__nextjs|__nextjs_original-stack-frame|__nextjs_launch-editor|.well-known|legacy|content/dam/|etc.clientlibs/|sitemap.xml|robots.txt).*)',
 }
