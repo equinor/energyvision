@@ -141,11 +141,6 @@ data-ui="checked active" class="data-checked:underline">
   animation-timeline: view();
   animation-range: cover 18% cover 85%;
 }
-@utility animate-timeline {
-  @apply animate-fadeInOut;
-  animation-timeline: view();
-  animation-range: cover 18% cover 85%;
-}
 
 @utility animate-spin-slow {
   animation: spin 3s linear infinite;
@@ -462,76 +457,96 @@ data-ui="checked active" class="data-checked:underline">
     }
   }
 
-  @supports (backdrop-filter: blur(16px)) or (-webkit-backdrop-filter: blur(16px)) {
-    .centerBlur {
-      position: absolute;
-      inset: 0;
-      /* The element itself needs a semi-transparent background to see the effect */
-      background: linear-gradient(to right, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1));
-      /* Apply the mask to create the gradient effect for the blur */
-      mask-image: linear-gradient(to right, transparent 0%, black 31%, black 60%, transparent 100%);
+  .centerBlur {
+    position: absolute;
+    inset: 0;
+    /* The element itself needs a semi-transparent background to see the effect */
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1));
+    /* Apply the mask to create the gradient effect for the blur */
+    mask-image: linear-gradient(to right, transparent 0%, black 31%, black 60%, transparent 100%);
 
-      /* Apply the blur to the backdrop */
-      backdrop-filter: blur(10px); /* Adjust blur strength as needed */
-      /* Vendor prefix for Safari */
-      -webkit-backdrop-filter: blur(10px);
-    }
+    /* Apply the blur to the backdrop */
+    backdrop-filter: blur(10px); /* Adjust blur strength as needed */
+    /* Vendor prefix for Safari */
+    -webkit-backdrop-filter: blur(10px);
+  }
 
-    .backdrop-glass-light {
-      position: absolute;
-      inset: 0;
-      backdrop-filter: blur(5px);
-      background: linear-gradient(
-        to bottom,
-        hsl(from var(--color-white-100) h s l / 0.2),
-        hsl(from var(--color-white-100) h s l / 0.1) 50%
-        /*transparent 50%*/
-      );
-    }
+  .backdrop-glass-light {
+    position: absolute;
+    inset: 0;
+    backdrop-filter: blur(5px);
+    background: linear-gradient(
+      to bottom,
+      hsl(from var(--color-white-100) h s l / 0.2),
+      hsl(from var(--color-white-100) h s l / 0.1) 50%
+      /*transparent 50%*/
+    );
+  }
 
-    .backdrop-glass {
-      position: absolute;
-      inset: 0;
-      /*
-        These prefixed properties are usually
-        added automatically by tooling:
-      */
-      -webkit-backdrop-filter: blur(16px);
-      backdrop-filter: blur(16px); /*16px*/
-      background: linear-gradient(
-        to bottom,
-        hsl(from var(--color-white-100) h s l / 0.2),
-        hsl(from var(--color-white-100) h s l / 0.1) 50%
-        /*transparent 50%*/
-      );
-    }
+  .backdrop-glass:before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    border-radius: inherit;
+    background: linear-gradient(
+      to bottom,
+      hsl(from var(--color-white-100) h s l / 0.23),
+      hsl(from var(--color-white-100) h s l / 0.13) 50%
+      /*transparent 50%*/
+    );
+  }
+  /*   .backdrop-glass:before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    border: 1px solid transparent;
+    background: linear-gradient(hsl(from var(--color-white-100) h s l / 0.22), hsl(from var(--color-white-100) h s l / 0.2));
+    mask:
+      linear-gradient(black, black) border-box,
+      linear-gradient(black, black) padding-box;
+    mask-composite: subtract;
+  } */
 
-    .backdrop-glass:before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      z-index: -1;
-      border-radius: inherit;
-      border: 1px solid transparent;
-      background: linear-gradient(hsl(from var(--color-white-100) h s l / 0.5), hsl(from var(--color-white-100) h s l / 0.3));
-      mask:
-        linear-gradient(black, black) border-box,
-        linear-gradient(black, black) padding-box;
-      mask-composite: subtract;
-    }
+  .glass-effect:before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: var(--radius-card);
+    /* These prefixed properties are usually added automatically by tooling: */ -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    background: linear-gradient(to bottom, hsl(from var(--color-white-100) h s l / 0.23), hsl(from var(--color-white-100) h s l / 0.13) 50%);
+  }
+  .glass-border:before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: var(--radius-card);
+    border: 1px solid transparent;
+    background: linear-gradient(hsl(from var(--color-white-100) h s l / 0.22), hsl(from var(--color-white-100) h s l / 0.2));
+    mask:
+      linear-gradient(black, black) border-box,
+      linear-gradient(black, black) padding-box;
+    mask-composite: subtract;
+  }
 
-    .backdrop-edge {
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      height: var(--thickness);
-      background: hsl(0deg 0% 100% / 0.1);
-      -webkit-backdrop-filter: blur(12px) brightness(0.96);
-      backdrop-filter: blur(12px) brightness(0.96);
-      transform: translateY(100%);
-      pointer-events: none;
-    }
+  .backdrop-edge {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: var(--thickness);
+    background: hsl(0deg 0% 100% / 0.1);
+    -webkit-backdrop-filter: blur(12px) brightness(0.96);
+    backdrop-filter: blur(12px) brightness(0.96);
+    transform: translateY(100%);
+    pointer-events: none;
   }
 
   /*

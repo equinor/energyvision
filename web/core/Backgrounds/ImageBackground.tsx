@@ -118,20 +118,13 @@ export const ImageBackground = ({
   )
 
   const contentElement = useGlass ? (
-    <div className={twMerge('', className)}>
-      <div
-        className={twMerge(
-          `relative flex h-fit w-fit justify-end rounded-card`,
-          contentClassNames,
-        )}
-      >
-        <div className='backdrop-glass z-0 h-full w-full' />
-        <div
-          className={twMerge(
-            `z-1 rounded-[inherit] px-6 py-4 *:relative *:z-1 lg:px-8 lg:py-6`,
-          )}
-        >
-          {children}
+    <div className={twMerge('**:rounded-card', className)}>
+      <div className={twMerge('', contentClassNames)}>
+        <div className={twMerge(`glass-border relative`)}>
+          <div className='backdrop-glass' />
+          <div className='z-1 flex flex-col px-6 py-4 *:z-1 lg:px-8 lg:py-6'>
+            {children}
+          </div>
         </div>
       </div>
     </div>
@@ -168,7 +161,10 @@ export const ImageBackground = ({
       <div
         className={twMerge(
           `py-6 xl:py-72 ${imageGradient}`,
-          useAnimation && 'xl:animate-timeline',
+          //properties like transform or opacity alter the stacking context.
+          //This locks the child element out from "seeing" the canvas layout beneath
+          //the glass effect will not work together with animate-timeline that uses opacity.
+          useAnimation && !useGlass && 'xl:animate-timeline',
           dontSplit && 'py-40',
           scrimClassName,
         )}

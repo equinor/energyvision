@@ -10,7 +10,6 @@ import { isAllowed } from '@/helpers/isAllowed'
 import { RoleFilteredSelect } from '@/schemas/components/RoleFilteredSelect/RoleFilteredSelect'
 import { Select } from '@/schemas/components/Select/Select'
 import {
-  backgroundGradient as _backgroundGradient,
   backgroundPosition as _backgroundPosition,
   layoutGrid as _layoutGrid,
 } from '@/schemas/objects/commonFields/commonFields'
