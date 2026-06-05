@@ -150,9 +150,7 @@ const StockValues = ({
   return (
     <section
       className={twMerge(
-        `flex flex-col items-center px-layout-sm lg:px-layout-lg ${bg} ${
-          dark ? 'dark' : ''
-        }`,
+        `flex flex-col items-center px-layout-sm ${bg} ${dark ? 'dark' : ''}`,
         className,
       )}
       id={anchor}
