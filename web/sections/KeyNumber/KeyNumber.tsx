@@ -38,7 +38,7 @@ const KeyNumber = ({ data, anchor, className }: KeyNumbersProps) => {
       )}
       id={anchor}
     >
-      <div className='mx-auto mb-8 max-w-content px-layout-sm lg:px-layout-lg'>
+      <div className='mx-auto mb-8 max-w-content px-layout-sm'>
         {title && (
           <Blocks
             value={title}
@@ -66,7 +66,7 @@ const KeyNumber = ({ data, anchor, className }: KeyNumbersProps) => {
           </ResourceLink>
         )}
       </div>
-      <div className='mx-auto max-w-content px-layout-sm lg:px-layout-md'>
+      <div className='mx-auto max-w-content px-layout-sm'>
         {useHorizontalScroll && (
           <Carousel
             items={items}
@@ -84,7 +84,7 @@ const KeyNumber = ({ data, anchor, className }: KeyNumbersProps) => {
           </ul>
         )}
       </div>
-      <div className='mx-auto flex max-w-content flex-col gap-4 px-layout-sm pt-6 lg:px-layout-lg'>
+      <div className='mx-auto flex max-w-content flex-col gap-4 px-layout-sm pt-6'>
         {disclaimer && (
           <Blocks
             group='paragraph'
