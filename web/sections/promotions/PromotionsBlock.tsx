@@ -242,7 +242,7 @@ const PromotionsBlock = ({
                             variant='date'
                             datetime={promotion?.publishDateTime}
                             uppercase
-                            className='pb-2 text-sm'
+                            className='pb-2 font-medium text-xs'
                           />
                         ),
                       })}
