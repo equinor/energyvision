@@ -11,8 +11,8 @@ dependencies:
     specifier: ^4.22.1
     version: 4.26.0
   '@date-fns/tz':
-    specifier: ^1.4.1
-    version: 1.4.1
+    specifier: ^1.5.0
+    version: 1.5.0
   '@equinor/eds-core-react':
     specifier: 0.39.0
     version: 0.39.0(react-dom@18.3.1)(react@18.3.1)(styled-components@5.3.11)
@@ -74,8 +74,8 @@ dependencies:
     specifier: ^1.15.1
     version: 1.15.1
   date-fns:
-    specifier: ^4.1.0
-    version: 4.1.0
+    specifier: ^4.4.0
+    version: 4.4.0
   framer-motion:
     specifier: ^11.2.12
     version: 11.18.2(react-dom@18.3.1)(react@18.3.1)
@@ -1813,8 +1813,8 @@ packages:
     engines: {node: '>=20.19.0'}
     dev: false
 
-  /@date-fns/tz@1.4.1:
-    resolution: {integrity: sha512-P5LUNhtbj6YfI3iJjw5EL9eUAG6OitD0W3fWQcpQjDRc/QIsL0tRNuO1PcDvPccWL1fSTXXdE1ds+l95DV/OFA==}
+  /@date-fns/tz@1.5.0:
+    resolution: {integrity: sha512-lwYN/vDPeNRULcepoE/LO2Pgx+7/RV+S9ARfbc9lr2DtGkOD7pAiruHvbR1RX3Qyf6ja47EWJDMsNK5vK08DJg==}
     dev: false
 
   /@date-fns/utc@2.1.1:
@@ -5844,11 +5844,11 @@ packages:
     resolution: {integrity: sha512-+yuMi2nTZfyohlS4tFryYMTG9gkjw7aToMM3A3TrtfbQPGi+9ZVBPNeer2r/uaJFChPaxEC9hZV0gXZQpPiJ0w==}
     engines: {node: '>=18'}
     dependencies:
-      '@date-fns/tz': 1.4.1
+      '@date-fns/tz': 1.5.0
       '@date-fns/utc': 2.1.1
       '@sanity/client': 7.17.0(debug@4.4.3)
       '@sanity/types': 3.99.0(@types/react@18.3.28)(debug@4.4.3)
-      date-fns: 4.1.0
+      date-fns: 4.4.0
       get-random-values-esm: 1.0.2
       rxjs: 7.8.2
     transitivePeerDependencies:
@@ -6058,7 +6058,7 @@ packages:
     resolution: {integrity: sha512-Ke1lw2Ni1t/wMUoLtKFmSNCLozcTBd6vmMqFP4hRzXn6qzkNt97bPAX0x5Y/c15DP43kKvwW1ycStD5+43jVQA==}
     deprecated: This is a stub types definition. date-fns provides its own type definitions, so you do not need this installed.
     dependencies:
-      date-fns: 4.1.0
+      date-fns: 4.4.0
     dev: true
 
   /@types/dom-speech-recognition@0.0.1:
@@ -7544,8 +7544,8 @@ packages:
       '@babel/runtime': 7.28.6
     dev: false
 
-  /date-fns@4.1.0:
-    resolution: {integrity: sha512-Ukq0owbQXxa/U3EGtsdVBkR1w7KOQ5gIBqdH2hkvknzZPYvBxb/aa6E8L7tmjFtkwZBu3UXBbjIgPo/Ez4xaNg==}
+  /date-fns@4.4.0:
+    resolution: {integrity: sha512-+1UMbeh68lH1SegH83CGWwpb6OHHbpSgr3+s5Eww5M4CAgswBpoWS0AjTOfEJ33HiYKz1hdj/KTFprzXHmq/6w==}
 
   /debounce@1.2.1:
     resolution: {integrity: sha512-XRRe6Glud4rd/ZGQfiV1ruXSfbvfJedlV9Y6zOlP+2K04vBYiJEte6stfFkCP03aMnY5tsipamumUjL14fofug==}
@@ -12729,6 +12729,7 @@ packages:
 
   /uuid@8.3.2:
     resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
+    deprecated: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
     hasBin: true
     dev: false
 
