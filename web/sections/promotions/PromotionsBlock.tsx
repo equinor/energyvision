@@ -132,7 +132,7 @@ const PromotionsBlock = ({
     //@ts-ignore: how to spread union types
     eventsCount,
     //@ts-ignore: how to spread union types
-    promotePastEvents,
+    eventPromotionSettings,
   } = data
 
   const { backgroundImage, backgroundPosition } = designOptions || {}
@@ -195,7 +195,9 @@ const PromotionsBlock = ({
           <EventPromotions
             promotions={promotionList as EventCardData[]}
             hasSectionTitle={!!title}
-            promotePastEvents={promotePastEvents}
+            promotePastEvents={
+              eventPromotionSettings?.promotePastEvents || false
+            }
             onColorBg={onColorBg}
             hasBackgroundImage={!!backgroundImage?.asset}
           />

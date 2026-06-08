@@ -38,11 +38,21 @@ const PastEventsListItem = forwardRef<
     >
       <div className='flex h-full w-full items-start justify-center bg-norwegian-woods-100 px-2 pt-6 text-white-100'>
         {start && (
-          <span className='text-md'>
-            <time suppressHydrationWarning dateTime={eventDate?.date}>
-              {formatter.dateTime(start, { dateStyle: 'medium' })}
-            </time>
-          </span>
+          <time suppressHydrationWarning dateTime={eventDate?.date}>
+            <div className='flex flex-col items-center'>
+              <span className='text-md'>
+                {new Date(start).toLocaleDateString('en-GB', {
+                  day: '2-digit',
+                  month: 'short',
+                })}
+              </span>
+              <span className='text-md'>
+                {new Date(start).toLocaleDateString('en-GB', {
+                  year: 'numeric',
+                })}
+              </span>
+            </div>
+          </time>
         )}
       </div>
       <div className='px-6 py-6'>
