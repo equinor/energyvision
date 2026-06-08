@@ -1,5 +1,5 @@
 import { check, error_outlined } from '@equinor/eds-icons'
-import { getTranslations } from 'next-intl/server'
+import { useTranslations } from 'next-intl'
 import { forwardRef, type HTMLAttributes } from 'react'
 import { Button } from '@/core/Button'
 import { Typography } from '@/core/Typography'
@@ -13,16 +13,13 @@ type FormMessageBoxProps = {
 } & HTMLAttributes<HTMLDivElement>
 
 export const FormMessageBox = forwardRef<HTMLDivElement, FormMessageBoxProps>(
-  async function FormMessageBox(
-    { variant = 'success', onClick, ...rest },
-    ref,
-  ) {
+  function FormMessageBox({ variant = 'success', onClick, ...rest }, ref) {
     const variantClassName: Partial<Record<Variant, string>> = {
       success: 'border-norwegian-woods-100',
       error: 'border-energy-red-100',
     }
 
-    const t = await getTranslations()
+    const t = useTranslations()
     return (
       <div
         ref={ref}
