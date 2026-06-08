@@ -3,6 +3,7 @@ import { calendar } from '@equinor/eds-icons'
 import type { PortableTextBlock } from 'next-sanity'
 import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
 import TransformableIcon from '@/icons/TransformableIcon'
+import { twMerge } from '@/lib/twMerge/twMerge'
 import {
   HeroBlock,
   type HeroBlockProps,
@@ -39,7 +40,7 @@ const MagazinePage = ({
 }: MagazinePageProps) => {
   const subTitle = (
     <>
-      <div className='flex flex-col gap-6 px-layout-sm pb-10 lg:px-layout-lg'>
+      <div className={twMerge(`flex flex-col gap-6 px-layout-sm pb-10`)}>
         {firstPublishedAt && (
           <div className='flex items-center gap-2'>
             <TransformableIcon iconData={calendar} className='-mt-1' />

@@ -86,7 +86,10 @@ export const DefaultHero = ({
       <div className='mx-auto max-w-content'>
         {figure && (
           <div
-            className={`lg:px-layout-sm ${isColorBg ? 'lg:-mt-news-banner-vertical' : ''}`}
+            className={twMerge(
+              `lg:px-layout-sm`,
+              isColorBg && 'lg:-mt-news-banner-vertical',
+            )}
           >
             <Picture
               image={figure.image}

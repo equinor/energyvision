@@ -71,41 +71,42 @@ const MagazineTagBar = forwardRef<HTMLDivElement, MagazineTagBarProps>(
       <div
         ref={ref}
         className={twMerge(
-          `my-8 flex items-center gap-2 overflow-x-auto border-grey-20 border-y-[0.5px] p-8 xl:justify-center`,
+          `my-8 flex w-full justify-center border-grey-20 border-y-[0.5px]`,
           className,
         )}
       >
-        <h2 className='flex items-center gap-1 font-medium text-sm'>
-          <TransformableIcon
-            iconData={filter_alt}
-            className='-mt-1 size-5 text-grey-50'
-          />
-          {intl('magazine_tag_filter')}
-        </h2>
-        <ul
-          // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+        <div
+          className='flex w-full items-center justify-center gap-2 overflow-x-auto p-8' // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
           tabIndex={0}
-          className='flex items-center divide-x-2 divide-energy-red-100'
         >
-          <li>
-            <Link
-              href={parentSlug + '?' + createQueryString('tag', 'all')}
-              className={`${linkClassNames} ${isAllActive ? 'font-bold' : ''}`}
-            >
-              {intl('magazine_tag_filter_all')}
-            </Link>
-          </li>
-          {formattedTags.map((tag: TagLink) => (
-            <li key={tag.id}>
+          <h2 className='flex w-max items-center gap-1 font-medium text-sm'>
+            <TransformableIcon
+              iconData={filter_alt}
+              className='-mt-1 size-5 text-grey-50'
+            />
+            {intl('magazine_tag_filter')}
+          </h2>
+          <ul className='flex items-center divide-x-2 divide-energy-red-100'>
+            <li>
               <Link
-                className={`${linkClassNames} ${tag.active ? 'font-bold' : ''}`}
-                href={parentSlug + '?' + createQueryString('tag', tag.key)}
+                href={parentSlug + '?' + createQueryString('tag', 'all')}
+                className={`${linkClassNames} ${isAllActive ? 'font-bold' : ''}`}
               >
-                {tag.label}
+                {intl('magazine_tag_filter_all')}
               </Link>
             </li>
-          ))}
-        </ul>
+            {formattedTags.map((tag: TagLink) => (
+              <li key={tag.id}>
+                <Link
+                  className={`${linkClassNames} ${tag.active ? 'font-bold' : ''}`}
+                  href={parentSlug + '?' + createQueryString('tag', tag.key)}
+                >
+                  {tag.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     )
   },
