@@ -1,6 +1,6 @@
-import { getYear, getMonth, getDate, getHours, getMinutes, getSeconds } from 'date-fns'
-import { EventDateType } from '../../../web/types/index'
 import { TZDate } from '@date-fns/tz'
+import { getDate, getHours, getMinutes, getMonth, getSeconds, getYear } from 'date-fns'
+import type { EventDateType } from '../../../web/types/index'
 
 export const toDateParts = (datetime: Date): number[] => {
   return [
@@ -25,16 +25,24 @@ export const toUTCDateParts = (datetime: Date): number[] => {
 }
 
 export const getEventDates = (eventDate: EventDateType | undefined) => {
+  let start: string | null = null
+  let end: string | null = null
   if (!eventDate) {
-    console.warn('Missing eventDate object for event')
-    return { start: null, end: null }
+    return { start, end }
   }
-  const { date, startTime, endTime, timezone } = eventDate
-  if (!date) return { start: null, end: null }
+  const { date, startTime, endTime } = eventDate || {}
+  if (!date) return { start, end }
 
-  if (startTime && endTime) {
-    const start = new TZDate(new Date(`${date}T${startTime}`), timezone).toISOString() //zonedTimeToUtc(new Date(`${date}T${startTime}`), timezone).toISOString()
-    const end = new TZDate(new Date(`${date}T${endTime}`), timezone).toISOString() //zonedTimeToUtc(new Date(`${date}T${endTime}`), timezone).toISOString()
+  if (startTime) {
+    const startCET = new TZDate(new Date(`${date}T${startTime}`), 'Europe/Oslo')
+    const startDateTime = startCET.withTimeZone('UTC')
+    start = startDateTime.toISOString()
+
+    if (endTime) {
+      const endCET = new TZDate(new Date(`${date}T${endTime}`), 'Europe/Oslo')
+      const endDateTime = endCET.withTimeZone('UTC')
+      end = endDateTime.toISOString()
+    }
     return { start, end }
   } else {
     const [YYYY, MM, DD] = date.split('-').map(Number)
@@ -42,6 +50,6 @@ export const getEventDates = (eventDate: EventDateType | undefined) => {
     start.setFullYear(YYYY, MM - 1, DD)
     start.setHours(12, 0, 0, 0)
 
-    return { start: start.toISOString(), end: null }
+    return { start: start.toISOString(), end }
   }
 }
