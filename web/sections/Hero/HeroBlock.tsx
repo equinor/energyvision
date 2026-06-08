@@ -92,6 +92,7 @@ export const HeroBlock = ({
     figCaptionClassName,
   } = heroData
 
+  console.log('hero type', type)
   const { bg: nextCompBg, dark: nextCompDark } = getBgAndDarkFromBackground(
     nextSectionDesignOptions,
   )

@@ -38,9 +38,16 @@ const MagazinePage = ({
   magazineTags,
   content,
 }: MagazinePageProps) => {
+  const type = hero?.type || HeroTypes.DEFAULT
+  console.log('magazine hero type', type)
   const subTitle = (
     <>
-      <div className={twMerge(`flex flex-col gap-6 px-layout-sm pb-10`)}>
+      <div
+        className={twMerge(
+          `flex flex-col gap-6 pb-10`,
+          type === HeroTypes.FULL_WIDTH_IMAGE && 'px-layout-sm lg:px-layout-lg',
+        )}
+      >
         {firstPublishedAt && (
           <div className='flex items-center gap-2'>
             <TransformableIcon iconData={calendar} className='-mt-1' />

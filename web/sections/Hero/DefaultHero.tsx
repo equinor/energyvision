@@ -104,10 +104,7 @@ export const DefaultHero = ({
           </div>
         )}
         {magazineTags && magazineTags?.length > 0 && (
-          <MagazineTagBar
-            tags={magazineTags}
-            className='px-layout-sm lg:px-layout-lg'
-          />
+          <MagazineTagBar tags={magazineTags} />
         )}
       </div>
     </div>

@@ -34,8 +34,6 @@ const TopicPage = ({
   slug,
   ...restData
 }: TopicPageProps) => {
-  console.log('restData', restData)
-  console.log('restData.seoAndSome', restData.seoAndSome)
   const heroProps: HeroBlockProps = {
     heroData: {
       //@ts-ignore: todo
@@ -49,7 +47,7 @@ const TopicPage = ({
     //@ts-ignore
     nextSectionDesignOptions: restData?.content?.[0]?.designOptions,
   }
-
+  console.log('topic hero type', hero?.type)
   const heroBackground: Background & { heroHasBreadcrumbs?: boolean } =
     hero?.type === 'backgroundImage'
       ? {

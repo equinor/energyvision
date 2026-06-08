@@ -1,5 +1,4 @@
 import '../globals.css'
-import type { Metadata } from 'next'
 import dynamic from 'next/dynamic'
 import localFont from 'next/font/local'
 import { draftMode } from 'next/headers'
@@ -28,12 +27,12 @@ const equinor = localFont({
 
 type Params = Promise<{ locale: string }>
 
-export const metadata: Metadata = {
+/* export const metadata: Metadata = {
   icons: {
     icon: '/icon.svg',
     shortcut: '/icon.svg',
   },
-}
+} */
 
 //the [locale] segment corresponds to the locale (iso format), not the prefix(/no).
 
