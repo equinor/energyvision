@@ -66,7 +66,7 @@ export const careerFairFormSchema = (t: any) =>
     eventDescription: z
       .string()
       .nonempty(t('career_fair_form_event_description_validation'))
-      .length(3400)
+      .max(3400)
       .regex(contentRegex, t('not_valid_input')),
     website: z
       .string()
