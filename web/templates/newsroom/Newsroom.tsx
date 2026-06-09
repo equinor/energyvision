@@ -20,7 +20,6 @@ import { Pagination } from '@/sections/searchBlocks/pagination/Pagination'
 import { PaginationContextProvider } from '../../contexts/PaginationContext'
 import { searchClient as client } from '../../lib/algolia'
 import Blocks from '../../portableText/Blocks'
-import { getIsoFromLocale } from '../../sanity/helpers/localization'
 import type { NewsRoomPageType } from '../../types'
 import NewsRoomFilters from './Filters/NewsroomFilters'
 import NewsSections from './NewsSections/NewsSections'
@@ -54,8 +53,8 @@ const NewsRoomTemplate = forwardRef<HTMLDivElement, NewsRoomTemplateProps>(
 
     const t = useTranslations()
     const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
-    const isoCode = getIsoFromLocale(locale)
-    const indexName = `${envPrefix}_NEWS_${isoCode}`
+    const indexName = `${envPrefix}_NEWS_${locale}`
+  
     const resultsRef = useRef<HTMLDivElement>(null)
 
     const routing = {
@@ -167,7 +166,6 @@ const NewsRoomTemplate = forwardRef<HTMLDivElement, NewsRoomTemplateProps>(
             results: requests.map(() => initialSearchResponse),
           })
         }
-        console.log('Cache not hit for below request')
         return searchClient.search(requests)
       },
     }
