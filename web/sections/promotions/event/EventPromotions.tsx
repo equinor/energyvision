@@ -31,8 +31,6 @@ const EventPromotions = ({
   background,
   hasBackgroundImage = false,
 }: EventPromotionsProp) => {
-  console.log('EventPromotions background', background)
-
   const bg = colorKeyToUtilityMap[background ?? 'white-100'].background
 
   return (

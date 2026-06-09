@@ -136,10 +136,9 @@ const PromotionsBlock = ({
 
   const promotionVariant =
     variant ?? mapOldPromoType(data.promotions?.[0]?.type) ?? 'promoteTopics'
-  console.log('promotionsblock designOptions', designOptions)
-  console.log('promotionsblock promotions', promotions)
+
   const { bg, dark } = getBgAndDarkFromBackground(designOptions)
-  console.log('promotionsblock bg', bg)
+
   let imageUrl: string
   if (promotionVariant === 'promoteEvents' && backgroundImage) {
     const { url } = resolveImage({
@@ -180,17 +179,10 @@ const PromotionsBlock = ({
     </>
   )
 
-  const onColorBg =
-    designOptions?.background?.backgroundUtility !== 'white-100' ||
-    designOptions?.background?.backgroundColor !== 'White'
-
-  console.log(
-    'promotionsblock title',
-    toPlainText(title as PortableTextBlock[]),
+  const onColorBg = !(
+    designOptions?.background?.backgroundUtility === 'white-100' ||
+    designOptions?.background?.backgroundColor === 'White'
   )
-  console.log('promotionsblock onColorBg', onColorBg)
-  console.log('promotionsblock bg', bg)
-  console.log('promotionsblock foreground', foreground)
 
   return (
     <section
