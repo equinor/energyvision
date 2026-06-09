@@ -297,12 +297,17 @@ const CareerFairForm = () => {
             <Controller
               name='website'
               control={control}
-              render={({ field: { ref, ...props } }) => (
+              render={({
+                field: { ref, ...props },
+                fieldState: { invalid, error },
+              }) => (
                 <TextField
                   {...props}
                   id={`${props.name}_${formId}`}
                   label={intl('career_fair_form_website')}
+                  helperText={error?.message}
                   inputRef={ref}
+                  {...(invalid && { variant: 'error' })}
                 />
               )}
             />
