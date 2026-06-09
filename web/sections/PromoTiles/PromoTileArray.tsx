@@ -40,7 +40,7 @@ const PromoTileArray = ({
         >
           {group?.map((tile: PromoTileData) => {
             return (
-              <li key={tile.id} className='h-fit w-full'>
+              <li key={tile.id} className='h-full w-full'>
                 <PromoTile {...tile} hasSectionTitle={!!title} />
               </li>
             )
