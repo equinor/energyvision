@@ -34,12 +34,15 @@ export const getEventDates = (eventDate: EventDateType | undefined) => {
   if (!date) return { start, end }
 
   if (startTime) {
-    const startCET = new TZDate(new Date(`${date}T${startTime}`), 'Europe/Oslo')
+    const [year, month, day] = date.split('-').map(Number)
+    const [startHour, startMinute, startSecond = 0] = startTime.split(':').map(Number)
+    const startCET = new TZDate(year, month - 1, day, startHour, startMinute, startSecond, 0, 'Europe/Oslo')
     const startDateTime = startCET.withTimeZone('UTC')
     start = startDateTime.toISOString()
 
     if (endTime) {
-      const endCET = new TZDate(new Date(`${date}T${endTime}`), 'Europe/Oslo')
+      const [endHour, endMinute, endSecond = 0] = endTime.split(':').map(Number)
+      const endCET = new TZDate(year, month - 1, day, endHour, endMinute, endSecond, 0, 'Europe/Oslo')
       const endDateTime = endCET.withTimeZone('UTC')
       end = endDateTime.toISOString()
     }
