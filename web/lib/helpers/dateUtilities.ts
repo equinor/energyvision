@@ -54,7 +54,11 @@ export const getEventDates = (eventDate: EventDateType | undefined) => {
       0,
       'Europe/Oslo',
     )
-    const startDateTime = startCET.withTimeZone('UTC')
+
+    // Get browser's timezone string automatically
+    const browserTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
+    console.log('browserTimeZone', browserTimeZone)
+    const startDateTime = startCET.withTimeZone(browserTimeZone ?? 'UTC')
     start = startDateTime.toISOString()
 
     if (endTime) {
@@ -69,7 +73,7 @@ export const getEventDates = (eventDate: EventDateType | undefined) => {
         0,
         'Europe/Oslo',
       )
-      const endDateTime = endCET.withTimeZone('UTC')
+      const endDateTime = endCET.withTimeZone(browserTimeZone ?? 'UTC')
       end = endDateTime.toISOString()
     }
   }
