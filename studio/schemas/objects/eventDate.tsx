@@ -36,7 +36,7 @@ export default {
       components: {
         input: TimeInput,
       },
-      description: 'Default is "Europe, Oslo"',
+      description: 'CET/CEST timezone',
       validation: (Rule: Rule) =>
         Rule.custom((field: string | undefined, context: ValidationContext) => {
           const { parent } = context as { parent: EventDate }
@@ -59,7 +59,7 @@ export default {
       components: {
         input: TimeInput,
       },
-      description: 'Default is "Europe, Oslo"',
+      description: 'CET/CEST timezone',
       validation: (Rule: Rule) =>
         Rule.custom((field: string | undefined, context: ValidationContext) => {
           const { parent } = context as { parent: EventDate }

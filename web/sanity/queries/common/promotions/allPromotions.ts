@@ -33,6 +33,8 @@ const commonPromotionFields = /* groq */ `
         "foreground": designOptions.theme.theme.foreground.key,
         backgroundImage,
         backgroundPosition,
+        "dark": coalesce(designOptions.isDark, false),
+        useGlassEffect,
     }
 `
 export const eventPromotion = /* groq */ `

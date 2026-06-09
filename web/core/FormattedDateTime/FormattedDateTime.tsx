@@ -50,30 +50,56 @@ const getTimezoneName = (
   )
 }
 
-type Variant = 'datetime' | 'date' | 'time' | 'period'
+type Variant =
+  | 'datetime'
+  | 'date'
+  | 'pastDate'
+  | 'time'
+  | 'period'
+  | 'pastPeriod'
 
 export type FormattedDateTimeProps = {
-  /** Type of formatting to apply to the date.
+  /**
+   * Formatting variant used to render the value.
    * @default 'datetime'
    */
   variant?: Variant
-  /** Start datetime */
+  /**
+   * Start date/time value.
+   */
   datetime: string | Date
-  /** End datetime, used for period variant */
+  /**
+   * End date/time value used by period variants.
+   */
   endDatetime?: string | Date
-  /* Show a date icon
-   * @default false
+  /**
+   * Show the date icon.
+   * @default 'false'
    */
   dateIcon?: boolean
-  /* @default false */
+  /**
+   * Show the time icon.
+   * @default 'false'
+   */
   timeIcon?: boolean
-  /* Render date with uppercase */
-  /* @default false */
+  /**
+   * Render the output text in uppercase.
+   * @default 'false'
+   */
   uppercase?: boolean
-  /* Render time with timezone, will be rendered if variant includes time. Can be overriden by setting false */
+  /**
+   * Append timezone to the rendered value.
+   * @default true for all variants except 'date'
+   */
   showTimezone?: boolean
-  /** dont wrap timezone in parentheses */
+  /**
+   * Do not wrap timezone in parentheses.
+   * @default 'false'
+   */
   noTimeZoneParanthesis?: boolean
+  /**
+   * Extra class name for the inner time wrapper.
+   */
   timeClassName?: string
 } & HTMLAttributes<HTMLDivElement> &
   DateTimeFormatOptions
@@ -118,7 +144,8 @@ const FormattedDateTime = forwardRef<HTMLDivElement, FormattedDateTimeProps>(
     ref,
   ) => {
     const locale = useLocale()
-    const _showTimezone = showTimezone ?? variant !== 'date'
+    const _showTimezone =
+      showTimezone ?? (variant !== 'date' && variant !== 'pastDate')
 
     if (!datetime) {
       return null
@@ -138,9 +165,12 @@ const FormattedDateTime = forwardRef<HTMLDivElement, FormattedDateTimeProps>(
       endDate = endDatetime as Date
     }
 
+    //https://date-fns.org/v4.4.0/docs/format
+    //April 29th, 2025
     let dateFormat = 'PPP'
 
     if (variant === 'time') {
+      //12:00 AM
       dateFormat = 'p'
     }
     if (variant === 'datetime') {
@@ -160,45 +190,65 @@ const FormattedDateTime = forwardRef<HTMLDivElement, FormattedDateTimeProps>(
       <div
         ref={ref}
         className={twMerge(
-          `inline-flex items-center gap-2 space-x-2 text-base ${uppercase ? 'uppercase' : ''}`,
+          `inline-flex items-center gap-2 text-base **:leading-none ${uppercase ? 'uppercase' : ''}`,
+          variant !== 'period' && variant !== 'pastPeriod' ? 'space-x-2' : '',
           className,
         )}
       >
         {dateIcon && <DateIcon />}
         {timeIcon && <TimeIcon />}
-        {variant !== 'period' ? (
-          <time
-            suppressHydrationWarning
-            dateTime={formattedDate}
-            className={timeClassName}
-          >
-            {formattedDate}
-          </time>
-        ) : (
-          <>
+        <div className={twMerge('mt-1.5', timeClassName)}>
+          {variant !== 'period' && variant !== 'pastPeriod' ? (
             <time
               suppressHydrationWarning
-              dateTime={datetime?.toLocaleString()}
-              className={twMerge('whitespace-nowrap', timeClassName)}
+              dateTime={formattedDate}
+              className={timeClassName}
             >
-              {`${format(date, `${getLocaleShortDayFormat(locale)}`, {
-                in: tz(browserTimeZone),
-                locale: getLocale(locale),
-              })}`}
+              {variant !== 'pastDate' ? (
+                formattedDate
+              ) : (
+                <div className='flex flex-col items-center justify-start gap-4 text-center'>
+                  <div className='text-md'>{`${format(date, 'dd')} ${format(date, 'MMM')}`}</div>
+                  <div className='text-sm'>{format(date, 'yyyy')}</div>
+                </div>
+              )}
             </time>
-            <span>-</span>
-            <time
-              suppressHydrationWarning
-              dateTime={endDatetime?.toLocaleString()}
-              className={twMerge('whitespace-nowrap', timeClassName)}
-            >
-              {`${format(endDate, `${getLocaleShortDayFormat(locale)} yyyy`, {
-                in: tz(browserTimeZone),
-                locale: getLocale(locale),
-              })}`}
-            </time>
-          </>
-        )}
+          ) : variant !== 'pastPeriod' ? (
+            <>
+              <time
+                suppressHydrationWarning
+                dateTime={datetime?.toLocaleString()}
+                className={twMerge('whitespace-nowrap', timeClassName)}
+              >
+                {`${format(date, `${getLocaleShortDayFormat(locale)}`, {
+                  in: tz(browserTimeZone),
+                  locale: getLocale(locale),
+                })}`}
+              </time>
+              <span className='mx-1'>-</span>
+              <time
+                suppressHydrationWarning
+                dateTime={endDatetime?.toLocaleString()}
+                className={twMerge('whitespace-nowrap', timeClassName)}
+              >
+                {`${format(endDate, `${getLocaleShortDayFormat(locale)} yyyy`, {
+                  in: tz(browserTimeZone),
+                  locale: getLocale(locale),
+                })}`}
+              </time>
+            </>
+          ) : (
+            <div className='flex flex-col items-center justify-start gap-4 text-start'>
+              <div className='flex flex-wrap text-pretty text-base'>
+                {`${format(date, 'dd')} ${format(date, 'MMM')}`}
+                <span className='mx-1'>-</span>
+                {`${format(endDate, 'dd')} ${format(endDate, 'MMM')}`}
+              </div>
+              {/* assume same year for start and end date */}
+              <div className='text-sm'>{format(date, 'yyyy')}</div>
+            </div>
+          )}
+        </div>
       </div>
     )
   },

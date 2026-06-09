@@ -1,3 +1,4 @@
+import { TZDate } from '@date-fns/tz/date'
 import {
   getDate,
   getHours,
@@ -31,20 +32,46 @@ export const toUTCDateParts = (datetime: Date): number[] => {
 }
 
 export const getEventDates = (eventDate: EventDateType | undefined) => {
-  let start: any
-  let end: any
+  let start: string | null = null
+  let end: string | null = null
   if (!eventDate) {
     return { start, end }
   }
   const { date, startTime, endTime } = eventDate
   if (!date) return { start, end }
   if (startTime) {
-    const startDateTime = cestToUtcConverter(date, startTime)
-    start = startDateTime
-  }
-  if (endTime) {
-    const endDateTime = cestToUtcConverter(date, endTime)
-    end = endDateTime
+    const [year, month, day] = date.split('-').map(Number)
+    const [startHour, startMinute, startSecond = 0] = startTime
+      .split(':')
+      .map(Number)
+    const startCET = new TZDate(
+      year,
+      month - 1,
+      day,
+      startHour,
+      startMinute,
+      startSecond,
+      0,
+      'Europe/Oslo',
+    )
+    const startDateTime = startCET.withTimeZone('UTC')
+    start = startDateTime.toISOString()
+
+    if (endTime) {
+      const [endHour, endMinute, endSecond = 0] = endTime.split(':').map(Number)
+      const endCET = new TZDate(
+        year,
+        month - 1,
+        day,
+        endHour,
+        endMinute,
+        endSecond,
+        0,
+        'Europe/Oslo',
+      )
+      const endDateTime = endCET.withTimeZone('UTC')
+      end = endDateTime.toISOString()
+    }
   }
   return { start, end }
 }
@@ -56,7 +83,7 @@ export const isDateAfter = (a: string, b: string) => {
   return dtA > dtB
 }
 
-export const cestToUtcConverter = (date: string, time: string = '00:00') => {
+export const cestToUtcConverter = (date: string, time = '00:00') => {
   // 1. Combine into a clean local ISO format (YYYY-MM-DDTHH:mm:ss)
   const localIsoString = `${date}T${time.padEnd(5, ':00')}`
 

@@ -3,12 +3,10 @@ import { Icon } from '@equinor/eds-core-react'
 import { world } from '@equinor/eds-icons'
 import { toPlainText } from '@portabletext/react'
 import type { PortableTextBlock } from '@portabletext/types'
-import { useFormatter, useLocale } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 import { forwardRef, type HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
-import FormattedDateTime, {
-  TimeIcon,
-} from '@/core/FormattedDateTime/FormattedDateTime'
+import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
 import { BaseLink } from '@/core/Link/BaseLink'
 import { defaultLanguage } from '@/languageConfig'
 import { getEventDates } from '@/lib/helpers/dateUtilities'
@@ -73,27 +71,31 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
   } = data
 
   const iso = useLocale()
+  const t = useTranslations()
   const locale = iso !== defaultLanguage.name ? getLocaleFromIso(iso) : ''
   const href = '/' + locale + slug || ''
 
   const { start, end } = getEventDates(eventDate)
   const { dayTime: startDayTime, overrideTimeLabel: startTimeLabel } =
     startDayAndTime || {}
+
   const { dayTime: endDayTime, overrideTimeLabel: endTimeLabel } =
     endDayAndTime || {}
   const plainTitle = title ? toPlainText(title as PortableTextBlock[]) : ''
-
-  const variantClassName: Partial<Record<Variants, string>> = {
-    default: '',
-    single: 'max-w-prose',
-    carousel: 'w-[383px]',
-  }
+  const isMoreThanOneDay =
+    startDayTime && endDayTime
+      ? new Date(endDayTime).getTime() - new Date(startDayTime).getTime() >
+        24 * 60 * 60 * 1000
+      : false
 
   return (
     <div
       ref={ref}
       className={twMerge(
-        `has-focus-visible:envis-outline dark:has-focus-visible:envis-outline-invert flex h-full flex-col rounded-card px-6 py-8 text-slate-80 focus:outline-hidden dark:text-white-100 ${colorKeyToUtilityMap[background ?? 'gray-20'].background} ${variantClassName[variant]} `,
+        `has-focus-visible:envis-outline dark:has-focus-visible:envis-outline-invert flex h-full flex-col rounded-card px-6 py-8 text-slate-80 focus:outline-hidden dark:text-white-100`,
+        colorKeyToUtilityMap[background ?? 'gray-20'].background,
+        variant === 'carousel' && 'w-[383px]',
+        variant === 'single' && 'max-w-prose',
         className,
       )}
     >
@@ -105,64 +107,50 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
           blockClassName=''
         />
       </BaseLink>
-
       <div
         className={`flex w-fit grow flex-col justify-end divide-y divide-autumn-storm-60 *:pt-2 *:pr-8 *:pb-2 *:first:pt-0 *:last:pb-0`}
       >
-        {!startDayTime && (start || eventDate?.date) && (
-          <FormattedDateTime
-            variant='date'
-            dateIcon={true}
-            datetime={start ?? eventDate?.date}
-            className='text-sm'
-            timeClassName='leading-none'
-          />
-        )}
-        {startDayTime && !endDayTime && (
-          <FormattedDateTime datetime={startDayTime} dateIcon />
-        )}
-        {startDayTime && endDayTime && (
-          <FormattedDateTime
-            variant='period'
-            datetime={startDayTime}
-            endDatetime={endDayTime}
-            dateIcon
-          />
-        )}
-        {startDayTime && startTimeLabel !== '-' && (
-          <div className='flex items-end gap-2 text-sm'>
-            <TimeIcon />
-            {startTimeLabel
-              ? startTimeLabel
-              : new Date(startDayTime).toTimeString()}
-            {endDayTime && endTimeLabel && endTimeLabel !== '-' && (
+        {/* Date */}
+        <FormattedDateTime
+          datetime={startDayTime ?? start ?? eventDate?.date}
+          endDatetime={endDayTime}
+          variant={isMoreThanOneDay ? 'period' : 'date'}
+          dateIcon={true}
+          className='text-sm **:text-sm **:leading-none'
+        />
+        {/* Time - Dont show if label is '-' or if event is more than one day*/}
+        {startTimeLabel !== '-' && !isMoreThanOneDay && (
+          <div className='flex items-end gap-1 **:text-sm **:leading-none'>
+            {!startTimeLabel &&
+              !startDayTime &&
+              !start &&
+              (t('tba') ?? 'To be announced')}
+            {startTimeLabel ? (
+              startTimeLabel
+            ) : (
               <>
-                <span className=''>-</span>
-                {endTimeLabel && endTimeLabel !== '-' && endTimeLabel}
-                {!endTimeLabel && new Date(startDayTime).toTimeString()}
+                <FormattedDateTime
+                  variant='time'
+                  datetime={startDayTime ?? start ?? eventDate?.date}
+                  timeIcon={true}
+                  showTimezone={!(endDayTime ?? end)}
+                />
+
+                {endTimeLabel !== '-' &&
+                  (endTimeLabel ? (
+                    endTimeLabel
+                  ) : (
+                    <>
+                      <span className=''>-</span>
+                      <FormattedDateTime
+                        variant='time'
+                        datetime={endDayTime ?? end}
+                        timeIcon={false}
+                      />
+                    </>
+                  ))}
               </>
             )}
-          </div>
-        )}
-
-        {!startDayAndTime && start && end && (
-          <div className={`flex items-end gap-1`}>
-            <FormattedDateTime
-              variant='time'
-              timeIcon={true}
-              datetime={start}
-              className='text-sm'
-              timeClassName='leading-none'
-              showTimezone={false}
-            />
-            <span className='pb-0.5 leading-none'>-</span>
-            <FormattedDateTime
-              variant='time'
-              datetime={end}
-              showTimezone
-              className='text-sm'
-              timeClassName='leading-none'
-            />
           </div>
         )}
         {location && (
@@ -184,14 +172,16 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
           blockClassName='pt-6'
         />
       )}
-      <div className='mt-auto pt-8'>
-        <AddToCalendar
-          eventDate={eventDate}
-          startDateTime={startDayTime}
-          endDateTime={endDayTime}
-          location={location}
-          title={plainTitle}
-        />
+      <div className='mt-auto min-h-[83.3px] pt-8'>
+        {!isMoreThanOneDay && (
+          <AddToCalendar
+            eventDate={eventDate}
+            startDateTime={startDayTime}
+            endDateTime={endDayTime}
+            location={location}
+            title={plainTitle}
+          />
+        )}
       </div>
     </div>
   )

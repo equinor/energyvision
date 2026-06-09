@@ -7,6 +7,9 @@ import markDefs from './blockEditorMarks'
 export const eventContentFields = /* groq */ `
   location,
   eventDate,
+  startDayAndTime,
+  endDayAndTime,
+  title,
   ingress[]{
     ...,
     ${markDefs},

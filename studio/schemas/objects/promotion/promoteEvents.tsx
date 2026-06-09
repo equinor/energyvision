@@ -118,13 +118,75 @@ export default {
         hotspot: true,
         collapsed: false,
       },
-      hidden: ({ parent }: any) =>
-        parent?.promotionType !== 'manual' || parent?.eventsCount > 1,
+      hidden: (props: any) => {
+        const { parent, currentUser } = props || {}
+        const allowedRoles = ['designer', 'administrator', 'developer']
+        const isAllowed = currentUser?.roles?.some((role: any) =>
+          allowedRoles?.includes(role?.name),
+        )
+        if (!isAllowed) return true
+        if (
+          parent?.promotionType === 'manual' &&
+          parent?.promotedEvents?.length === 1
+        )
+          return false
+        return true
+      },
     },
-    backgroundPosition(
-      (parent: any) =>
-        parent?.promotionType !== 'manual' || parent?.eventsCount > 1,
-    ),
+    backgroundPosition((props: any) => {
+      const { parent, currentUser } = props || {}
+      const allowedRoles = ['designer', 'administrator', 'developer']
+      const isAllowed = currentUser?.roles?.some((role: any) =>
+        allowedRoles?.includes(role?.name),
+      )
+      if (!isAllowed) return true
+      if (
+        parent?.promotionType === 'manual' &&
+        parent?.promotedEvents?.length === 1
+      )
+        return false
+      return true
+    }),
+    {
+      title: 'Use white text',
+      description: 'Default is black text, set this if you want white.',
+      name: 'isDark',
+      type: 'boolean',
+      hidden: (props: any) => {
+        const { parent, currentUser } = props || {}
+        const allowedRoles = ['designer', 'administrator', 'developer']
+        const isAllowed = currentUser?.roles?.some((role: any) =>
+          allowedRoles?.includes(role?.name),
+        )
+        if (!isAllowed) return true
+        if (
+          parent?.promotionType === 'manual' &&
+          parent?.promotedEvents?.length === 1
+        )
+          return false
+        return true
+      },
+    },
+    {
+      title: 'Use glass effect behind text',
+      description: '',
+      name: 'useGlassEffect',
+      type: 'boolean',
+      hidden: (props: any) => {
+        const { parent, currentUser } = props || {}
+        const allowedRoles = ['designer', 'administrator', 'developer']
+        const isAllowed = currentUser?.roles?.some((role: any) =>
+          allowedRoles?.includes(role?.name),
+        )
+        if (!isAllowed) return true
+        if (
+          parent?.promotionType === 'manual' &&
+          parent?.promotedEvents?.length === 1
+        )
+          return false
+        return true
+      },
+    },
     viewAllLink,
     viewAllLinkLabel,
     theme,

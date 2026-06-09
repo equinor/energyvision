@@ -2,10 +2,12 @@
 export const formatDate = (isoDate: any): string => {
   const date = new Date(isoDate)
   const options = {
-    month: 'short',
+    month: 'numeric',
     day: 'numeric',
     year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
   } as const
-  const formattedDate = date.toLocaleDateString('en-UK', options) || ''
+  const formattedDate = date.toLocaleDateString('no-NB', options) || ''
   return formattedDate
 }

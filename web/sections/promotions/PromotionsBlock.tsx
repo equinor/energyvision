@@ -5,7 +5,7 @@ import { useId, useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
 import {
-  getObjectPositionForImage,
+  getBackgroundPositionForImage,
   type ObjectPositions,
 } from '@/core/Image/imageUtilities'
 import { ResourceLink } from '@/core/Link/ResourceLink'
@@ -46,8 +46,9 @@ type PromotionBlock = {
     foreground?: ColorKeys
     //event
     backgroundImage?: SanityImageObject
-    //event
+    dark?: boolean
     backgroundPosition?: ObjectPositions
+    useGlassEffect?: boolean
   } & DesignOptions
 }
 
@@ -135,7 +136,12 @@ const PromotionsBlock = ({
     eventPromotionSettings,
   } = data
 
-  const { backgroundImage, backgroundPosition } = designOptions || {}
+  const {
+    backgroundImage,
+    backgroundPosition,
+    dark: bgImageDark,
+    useGlassEffect,
+  } = designOptions || {}
 
   const promotionVariant =
     variant ?? mapOldPromoType(data.promotions?.[0]?.type) ?? 'promoteTopics'
@@ -158,6 +164,25 @@ const PromotionsBlock = ({
     return (eventsCount ? promotions?.slice(0, eventsCount) : promotions) ?? []
   }, [promotions, eventsCount])
 
+  const contentElements = (
+    <>
+      {/*@ts-ignore:todo */}
+      <Blocks variant='h2' id={sectionTitleId} value={title} />
+      {ingress && (
+        <Blocks group='paragraph' variant='ingress' value={ingress} />
+      )}
+      {viewAllLink?.link?.slug && (
+        <ResourceLink
+          type='internalUrl'
+          variant='fit'
+          href={viewAllLink?.link?.slug}
+        >
+          {viewAllLink?.label}
+        </ResourceLink>
+      )}
+    </>
+  )
+
   const onColorBg = designOptions?.background?.backgroundColor !== 'White'
   console.log()
   return (
@@ -172,22 +197,25 @@ const PromotionsBlock = ({
               'flex flex-col px-layout-sm pb-6 lg:px-layout-lg',
               promotionVariant === 'promoteEvents' &&
                 backgroundImage &&
-                'dark relative z-10 pt-30',
+                'relative z-10 pt-30',
+              backgroundImage && bgImageDark && 'dark',
             )}
           >
-            {/*@ts-ignore:todo */}
-            <Blocks variant='h2' id={sectionTitleId} value={title} />
-            {ingress && (
-              <Blocks group='paragraph' variant='ingress' value={ingress} />
-            )}
-            {viewAllLink?.link?.slug && (
-              <ResourceLink
-                type='internalUrl'
-                variant='fit'
-                href={viewAllLink?.link?.slug}
+            {promotionVariant === 'promoteEvents' &&
+            backgroundImage &&
+            useGlassEffect ? (
+              <div
+                className={twMerge(
+                  `glass-border relative w-fit rounded-card px-6 py-4 **:rounded-card before:z-2 lg:px-8 lg:py-6`,
+                )}
               >
-                {viewAllLink?.label}
-              </ResourceLink>
+                <div className='backdrop-glass before:z-1' />
+                <div className='z-1 flex w-fit flex-col *:z-1'>
+                  {contentElements}
+                </div>
+              </div>
+            ) : (
+              contentElements
             )}
           </div>
         )}
@@ -262,20 +290,14 @@ const PromotionsBlock = ({
           <div
             className={`absolute inset-0 z-0 bg-cover bg-no-repeat ${
               backgroundPosition
-                ? getObjectPositionForImage(backgroundPosition)
+                ? getBackgroundPositionForImage(backgroundPosition)
                 : ''
             } `}
             style={{
               //@ts-ignore:todo
               backgroundImage: `url(${imageUrl})`,
             }}
-          >
-            <div className='h-full w-full bg-black/20 px-50 py-20'>
-              <div
-                className={`h-full w-full rounded-card border border-white-100/40 bg-black-100/10 backdrop-blur-lg`}
-              />
-            </div>
-          </div>
+          ></div>
         )}
       </div>
     </section>

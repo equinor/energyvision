@@ -18,8 +18,8 @@ importers:
         specifier: ^4.26.0
         version: 4.26.0
       '@date-fns/tz':
-        specifier: ^1.4.1
-        version: 1.4.1
+        specifier: 1.5.0
+        version: 1.5.0
       '@energyvision/shared':
         specifier: workspace:*
         version: link:../packages/energyvision
@@ -96,8 +96,8 @@ importers:
         specifier: 2.1.1
         version: 2.1.1
       date-fns:
-        specifier: 4.1.0
-        version: 4.1.0
+        specifier: 4.4.0
+        version: 4.4.0
       easy-soap-request:
         specifier: ^5.9.0
         version: 5.11.0
@@ -1083,8 +1083,8 @@ packages:
     resolution: {integrity: sha512-Vd/9EVDiu6PPJt9yAh6roZP6El1xHrdvIVGjyBsHR0RYwNHgL7FJPyIIW4fANJNG6FtyZfvlRPpFI4ZM/lubvw==}
     engines: {node: '>=18'}
 
-  '@date-fns/tz@1.4.1':
-    resolution: {integrity: sha512-P5LUNhtbj6YfI3iJjw5EL9eUAG6OitD0W3fWQcpQjDRc/QIsL0tRNuO1PcDvPccWL1fSTXXdE1ds+l95DV/OFA==}
+  '@date-fns/tz@1.5.0':
+    resolution: {integrity: sha512-lwYN/vDPeNRULcepoE/LO2Pgx+7/RV+S9ARfbc9lr2DtGkOD7pAiruHvbR1RX3Qyf6ja47EWJDMsNK5vK08DJg==}
 
   '@date-fns/utc@2.1.1':
     resolution: {integrity: sha512-SlJDfG6RPeEX8wEVv6ZB3kak4MmbtyiI2qX/5zuKdordbrhB/iaJ58GVMZgJ6P1sJaM1gMgENFYYeg1JWrCFrA==}
@@ -5175,8 +5175,8 @@ packages:
     resolution: {integrity: sha512-fnULvOpxnC5/Vg3NCiWelDsLiUc9bRwAPs/+LfTLNvetFCtCTN+yQz15C/fs4AwX1R9K5GLtLfn8QW+dWisaAw==}
     engines: {node: '>=0.11'}
 
-  date-fns@4.1.0:
-    resolution: {integrity: sha512-Ukq0owbQXxa/U3EGtsdVBkR1w7KOQ5gIBqdH2hkvknzZPYvBxb/aa6E8L7tmjFtkwZBu3UXBbjIgPo/Ez4xaNg==}
+  date-fns@4.4.0:
+    resolution: {integrity: sha512-+1UMbeh68lH1SegH83CGWwpb6OHHbpSgr3+s5Eww5M4CAgswBpoWS0AjTOfEJ33HiYKz1hdj/KTFprzXHmq/6w==}
 
   debounce@1.2.1:
     resolution: {integrity: sha512-XRRe6Glud4rd/ZGQfiV1ruXSfbvfJedlV9Y6zOlP+2K04vBYiJEte6stfFkCP03aMnY5tsipamumUjL14fofug==}
@@ -9285,7 +9285,7 @@ snapshots:
 
   '@csstools/css-tokenizer@3.0.4': {}
 
-  '@date-fns/tz@1.4.1': {}
+  '@date-fns/tz@1.5.0': {}
 
   '@date-fns/utc@2.1.1': {}
 
@@ -12747,11 +12747,11 @@ snapshots:
 
   '@sanity/util@4.10.2(@types/react@19.2.14)(debug@4.4.3)':
     dependencies:
-      '@date-fns/tz': 1.4.1
+      '@date-fns/tz': 1.5.0
       '@date-fns/utc': 2.1.1
       '@sanity/client': 7.20.0(debug@4.4.3)
       '@sanity/types': 4.10.2(@types/react@19.2.14)(debug@4.4.3)
-      date-fns: 4.1.0
+      date-fns: 4.4.0
       get-random-values-esm: 1.0.2
       rxjs: 7.8.2
     transitivePeerDependencies:
@@ -13257,7 +13257,7 @@ snapshots:
 
   '@types/date-fns@2.6.3':
     dependencies:
-      date-fns: 4.1.0
+      date-fns: 4.4.0
 
   '@types/dom-speech-recognition@0.0.1': {}
 
@@ -14079,7 +14079,7 @@ snapshots:
     dependencies:
       '@babel/runtime': 7.29.2
 
-  date-fns@4.1.0: {}
+  date-fns@4.4.0: {}
 
   debounce@1.2.1: {}
 

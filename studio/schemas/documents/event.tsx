@@ -9,6 +9,7 @@ import { formatDate } from '@/helpers/formatDate'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
 import { CompactBlockEditor } from '../components/CompactBlockEditor'
+import { SyncEndDayTimeInput } from '../components/SyncEndDayTimeInput'
 import { configureBlockContent } from '../editors'
 import basicIframe from '../objects/basicIframe'
 import type { EventDate } from '../objects/eventDate'
@@ -73,7 +74,7 @@ export default {
       components: {
         input: CompactBlockEditor,
       },
-      of: [configureBlockContent({ variant: 'titleH1' })],
+      of: [configureBlockContent({ variant: 'title' })],
       validation: (Rule: Rule) => Rule.required(),
     },
     {
@@ -83,9 +84,59 @@ export default {
     },
     {
       title: 'Date information',
+      description:
+        'The date field is deprecated, and will eventually be removed. Please use the "Event start" and "Event end" fields instead.',
+      deprecated: true,
       name: 'eventDate',
       type: 'eventDate',
+      hidden: ({ value }: any) => {
+        return !value
+      },
     },
+    defineField({
+      type: 'object',
+      name: 'startDayAndTime',
+      title: 'Event start',
+      fields: [
+        {
+          title: 'Datetime',
+          description: 'See below to ignore or override time',
+          name: 'dayTime',
+          type: 'datetime',
+        },
+        {
+          name: 'overrideTimeLabel',
+          title: 'Time label',
+          description:
+            'Optional if you want to override the default "To be announced" when no date is set, or write "-" if you hide time completely',
+          type: 'string',
+        },
+      ],
+    }),
+    defineField({
+      type: 'object',
+      name: 'endDayAndTime',
+      title: 'Event end',
+      description: 'Optional. Will update with same date as start if set',
+      fields: [
+        {
+          title: 'Datetime',
+          description: 'See below to ignore or override time',
+          name: 'dayTime',
+          type: 'datetime',
+          components: {
+            input: SyncEndDayTimeInput,
+          },
+        },
+        {
+          name: 'overrideTimeLabel',
+          title: 'Time label',
+          description:
+            'Optional if you want to override the default "To be announced" when no date is set, or write "-" if you hide time completely',
+          type: 'string',
+        },
+      ],
+    }),
     {
       title: 'Event tags',
       name: 'eventTags',
@@ -164,26 +215,29 @@ export default {
       ],
     },
   ],
-  orderings: [
-    {
-      title: 'Start date ',
-      name: 'startDateAsc',
-      by: [{ field: 'eventDate', direction: 'asc' }],
-    },
-  ],
   preview: {
     select: {
       title: 'title',
       date: 'eventDate',
+      startDayTime: 'startDayAndTime.dayTime',
     },
     prepare({
       title,
       date,
+      startDayTime,
     }: {
       title?: PortableTextBlock[]
       date?: EventDate
+      startDayTime?: string
     }) {
-      let eventDate = date?.date ? `${date.date}` : 'No date set'
+      let eventDate = 'No date set'
+      if (startDayTime) {
+        eventDate = formatDate(startDayTime)
+      }
+      if (date?.date) {
+        eventDate = date.date
+      }
+
       return {
         title: title ? blocksToText(title) : 'Untitled event',
         subtitle: eventDate,
