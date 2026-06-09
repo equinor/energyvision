@@ -26,14 +26,14 @@ const commonPromotionFields = /* groq */ `
     "designOptions": {
         "background": {
             "backgroundUtility": 
-            coalesce(designOptions.theme.theme.background.key, designOptions.background[0].key, background.key, ""),    
+            coalesce(theme.theme.background.key,containerBackground, background.key, designOptions.background[0].key, ""),    
             "type": coalesce(designOptions.background[0]._type, "backgroundColor"),
-            "backgroundColor": coalesce(designOptions.background[0].title, background.title, 'White'),
+            "backgroundColor": coalesce(designOptions.background[0].title, background.title, ''),
         },
-        "foreground": designOptions.theme.theme.foreground.key,
+        "foreground": theme.theme.foreground.key,
         backgroundImage,
         backgroundPosition,
-        "dark": coalesce(designOptions.isDark, false),
+        "dark": coalesce(designOptions.isDark,isDark, false),
         useGlassEffect,
     }
 `

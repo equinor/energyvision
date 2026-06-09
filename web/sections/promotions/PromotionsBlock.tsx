@@ -1,6 +1,6 @@
 'use client'
 import type { SanityImageObject } from '@sanity/image-url'
-import type { PortableTextBlock } from 'next-sanity'
+import { type PortableTextBlock, toPlainText } from 'next-sanity'
 import { useId, useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
@@ -124,29 +124,22 @@ const PromotionsBlock = ({
   anchor,
   className,
 }: PromotionsBlockProps) => {
-  const {
-    title,
-    ingress,
-    viewAllLink,
-    designOptions,
-    promotions,
-    //@ts-ignore: how to spread union types
-    eventsCount,
-    //@ts-ignore: how to spread union types
-    eventPromotionSettings,
-  } = data
+  const { title, ingress, viewAllLink, designOptions, promotions } = data
 
   const {
     backgroundImage,
     backgroundPosition,
     dark: bgImageDark,
     useGlassEffect,
+    foreground,
   } = designOptions || {}
 
   const promotionVariant =
     variant ?? mapOldPromoType(data.promotions?.[0]?.type) ?? 'promoteTopics'
-
+  console.log('promotionsblock designOptions', designOptions)
+  console.log('promotionsblock promotions', promotions)
   const { bg, dark } = getBgAndDarkFromBackground(designOptions)
+  console.log('promotionsblock bg', bg)
   let imageUrl: string
   if (promotionVariant === 'promoteEvents' && backgroundImage) {
     const { url } = resolveImage({
@@ -161,8 +154,12 @@ const PromotionsBlock = ({
 
   const sectionTitleId = useId()
   const promotionList = useMemo(() => {
-    return (eventsCount ? promotions?.slice(0, eventsCount) : promotions) ?? []
-  }, [promotions, eventsCount])
+    return (
+      ((data as EventPromotion)?.eventsCount
+        ? promotions?.slice(0, (data as EventPromotion).eventsCount)
+        : promotions) ?? []
+    )
+  }, [promotions, data])
 
   const contentElements = (
     <>
@@ -183,8 +180,18 @@ const PromotionsBlock = ({
     </>
   )
 
-  const onColorBg = designOptions?.background?.backgroundColor !== 'White'
-  console.log()
+  const onColorBg =
+    designOptions?.background?.backgroundUtility !== 'white-100' ||
+    designOptions?.background?.backgroundColor !== 'White'
+
+  console.log(
+    'promotionsblock title',
+    toPlainText(title as PortableTextBlock[]),
+  )
+  console.log('promotionsblock onColorBg', onColorBg)
+  console.log('promotionsblock bg', bg)
+  console.log('promotionsblock foreground', foreground)
+
   return (
     <section
       className={twMerge(`relative ${bg} ${dark ? 'dark' : ''}`, className)}
@@ -224,9 +231,13 @@ const PromotionsBlock = ({
             promotions={promotionList as EventCardData[]}
             hasSectionTitle={!!title}
             promotePastEvents={
-              eventPromotionSettings?.promotePastEvents || false
+              (data as EventPromotion)?.promotePastEvents ??
+              // @ts-ignore: backwards compatibility to old events promotions?
+              (data as EventPromotion)?.eventPromotionSettings
+                ?.promotePastEvents ??
+              false
             }
-            onColorBg={onColorBg}
+            background={foreground ?? (onColorBg ? 'white-100' : undefined)}
             hasBackgroundImage={!!backgroundImage?.asset}
           />
         ) : (

@@ -1,6 +1,6 @@
-import { Flex, Stack } from '@sanity/ui'
-import { useCallback, useId } from 'react'
-import { type ObjectInputProps, set } from 'sanity'
+import { Button, Card, Flex, Select, Stack } from '@sanity/ui'
+import { useCallback } from 'react'
+import { type ObjectInputProps, set, unset } from 'sanity'
 import { capitalizeFirstLetter } from '../../../helpers/formatters'
 import { type Color, defaultColors } from '../../defaultColors'
 
@@ -52,31 +52,21 @@ export type ThemeSelectorValue = {
 
 export type ThemeComponentProps = {
   theme: Theme
-  active?: boolean
-  onClickHandler?: (val: Theme) => void
+  thumbnail?: boolean
 }
 
-export const ThemeComponent = ({
-  theme,
-  active,
-  onClickHandler,
-}: ThemeComponentProps) => {
+export const ThemeComponent = ({ theme, thumbnail }: ThemeComponentProps) => {
   return (
     <div
       style={{
-        width: '120px',
-        height: '100px',
+        width: thumbnail ? '2.0625rem' : '120px',
+        height: thumbnail ? '2.0625rem' : '100px',
         display: 'flex',
         flexDirection: 'column',
         border: '1px solid hsl(0, 0%, 86%)',
-        outline: active ? 'solid 2px var(--card-focus-ring-color)' : 'none',
-        outlineOffset: '2px',
         borderRadius: '3px',
-        margin: '2px',
+        overflow: 'hidden',
       }}
-      {...(onClickHandler && {
-        onClick: () => onClickHandler(theme),
-      })}
     >
       <div
         style={{
@@ -108,20 +98,6 @@ export const ThemeComponent = ({
           }}
         />
       </div>
-      <div
-        style={{
-          padding: '4px 2px',
-          maxWidth: '150px',
-          textWrap: 'pretty',
-          display: 'flex',
-          justifyContent: 'start',
-          width: 'fit-content',
-          height: 'fit-content',
-          fontSize: '0.8125rem',
-        }}
-      >
-        {capitalizeFirstLetter(theme?.title)}
-      </div>
     </div>
   )
 }
@@ -129,34 +105,69 @@ export const ThemeComponent = ({
 type ThemeSelectorProps = ObjectInputProps
 
 export const ThemeSelector = ({ value, onChange }: ThemeSelectorProps) => {
-  const theSelectorUniqueId = useId()
   const { theme } = value || {}
+  const selectedTheme = themes.find(
+    themeItem => themeItem.title === theme?.title,
+  )
 
   const handleSelect = useCallback(
-    (selected: Theme) => {
-      if (selected?.title === value?.title) return
+    (event: any) => {
+      const nextThemeTitle = event.currentTarget.value
+
+      if (!nextThemeTitle) {
+        onChange(unset(['theme']))
+        return
+      }
+
+      const selected = themes.find(
+        themeItem => themeItem.title === nextThemeTitle,
+      )
+
+      if (!selected) return
+      if (selected.title === value?.theme?.title) return
 
       onChange(set(selected, ['theme']))
     },
-    [onChange, value],
+    [onChange, value?.theme?.title],
   )
+
+  const handleClear = useCallback(() => {
+    if (!theme?.title) return
+
+    onChange(unset(['theme']))
+  }, [onChange, theme?.title])
 
   return (
     <Stack space={3}>
-      {themes && (
-        <Flex direction={'row'} wrap={'wrap'} gap={4}>
-          {themes.map((themeItem: Theme) => {
-            return (
-              <ThemeComponent
-                key={`${themeItem?.title?.toString()}_${theSelectorUniqueId}`}
-                theme={themeItem}
-                active={themeItem.title === theme?.title}
-                onClickHandler={handleSelect}
+      <Card padding={2}>
+        <Flex align={'center'} gap={3}>
+          <ThemeComponent theme={selectedTheme ?? themes[0]} thumbnail />
+          <Flex flex={1} direction={'column'} gap={2}>
+            <Flex align={'center'} gap={2}>
+              <Select
+                aria-label='Select theme'
+                onChange={handleSelect}
+                value={theme?.title ?? ''}
+              >
+                <option value=''>Select theme</option>
+                {themes.map(themeItem => {
+                  return (
+                    <option key={themeItem.title} value={themeItem.title}>
+                      {capitalizeFirstLetter(themeItem.title)}
+                    </option>
+                  )
+                })}
+              </Select>
+              <Button
+                mode='ghost'
+                text='Clear'
+                onClick={handleClear}
+                disabled={!theme?.title}
               />
-            )
-          })}
+            </Flex>
+          </Flex>
         </Flex>
-      )}
+      </Card>
     </Stack>
   )
 }

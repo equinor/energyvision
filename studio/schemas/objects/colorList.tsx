@@ -48,19 +48,23 @@ export const createColorSelectField = ({
   ...field
 }: CreateColorSelectFieldConfig) => {
   const selectableColors = getSelectableColors(colors)
-  const fallbackColor = selectableColors[0] ?? defaultBackgroundColors[0]
 
   return defineField({
     ...field,
     type: 'string',
-    initialValue:
-      initialValue ?? getColorOptionValue(fallbackColor, valueField),
+    initialValue: initialValue ?? '',
     options: {
       layout: 'dropdown',
-      list: selectableColors.map(color => ({
-        title: color.title,
-        value: getColorOptionValue(color, valueField),
-      })),
+      list: [
+        {
+          title: 'Select a color',
+          value: '',
+        },
+        ...selectableColors.map(color => ({
+          title: color.title,
+          value: getColorOptionValue(color, valueField),
+        })),
+      ],
       colors: selectableColors,
       colorValueField: valueField,
     } as any,

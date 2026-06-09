@@ -1,59 +1,7 @@
-import { text_field } from '@equinor/eds-icons'
-import { Box, Card, Flex, Stack, Text, Tooltip } from '@sanity/ui'
-import { useCallback, useId } from 'react'
+import { Box, Button, Card, Flex, Select, Stack, Text } from '@sanity/ui'
+import { useCallback } from 'react'
 import type { ObjectInputProps, PreviewProps } from 'sanity'
-import { set } from 'sanity'
-import styled from 'styled-components'
-import { EdsIcon } from '../../../icons'
-
-/** Variant circles */
-const Circle = styled.div<{ $active: boolean }>`
-  display: inline-block;
-  border: solid 2px ${({ $active }) => ($active ? 'var(--card-focus-ring-color)' : 'transparent')};
-  border-radius: 50%;
-  padding: 4px;
-  cursor: pointer;
-`
-
-const InnerCircle = styled.div<{ color: string; fillColor?: string }>`
-  display: flex;
-  background-color: ${({ color }) => color};
-  border: 1px solid var(--card-hairline-soft-color);
-  padding: 15px;
-  border-radius: 50%;
-  color: ${({ fillColor }) => fillColor || 'black'};
-`
-
-/** Variant cards */
-const Container = styled.div<{
-  $active?: boolean
-  color: string
-  $preview?: any
-  $isThumbnail?: any
-}>`
-  width: ${({ $isThumbnail }) => ($isThumbnail ? '2.0625rem' : 'fit-content')};
-  height: ${({ $isThumbnail }) => ($isThumbnail ? '2.0625rem' : 'fit-content')};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: ${({ $isThumbnail }) => ($isThumbnail ? '2px' : '4px')};
-  background-color: ${({ color }) => color};
-  outline: solid 2px
-    ${({ $preview, $active }) => ($active && !$preview ? 'var(--card-focus-ring-color)' : 'transparent')};
-  outline-offset: 2px;
-  border-radius: 5%;
-  border: 1px solid lightgrey;
-  padding: ${({ $isThumbnail }) => ($isThumbnail ? '0px' : '6px 12px')};
-  cursor: ${({ $isThumbnail }) => ($isThumbnail ? 'default' : 'pointer')};
-`
-
-const ThemeCard = styled.div<{ color: string; $isThumbnail?: any }>`
-  display: flex;
-  width: fit-content;
-  background-color: ${({ color }) => color};
-  padding: ${({ $isThumbnail }) => ($isThumbnail ? '0.25em' : '15px')};
-  border-radius: 5%;
-`
+import { set, unset } from 'sanity'
 
 export type ThemeSelectorColor = {
   background: {
@@ -71,45 +19,6 @@ export type ThemeSelectorValue = {
   title: string
   /** Used in studio selector to match in getColorForThemeHandler switch */
   value: number
-}
-
-/** Variant circles */
-type ColorCircleProps = {
-  color: ThemeSelectorValue
-  active: boolean
-  onClickHandler: (val: ThemeSelectorValue) => void
-  getColorForThemeHandler: (val: ThemeSelectorValue) => ThemeSelectorColor
-}
-
-const ColorCircle = ({
-  color,
-  active,
-  getColorForThemeHandler,
-  onClickHandler,
-}: ColorCircleProps) => {
-  const { background, foreground } = getColorForThemeHandler(color)
-  return (
-    <Card paddingY={1}>
-      <Tooltip
-        content={
-          <Box padding={2}>
-            <Text muted size={1}>
-              {color.title}
-            </Text>
-          </Box>
-        }
-        fallbackPlacements={['right', 'left']}
-        placement='top'
-        portal
-      >
-        <Circle $active={active} onClick={() => onClickHandler(color)}>
-          <InnerCircle color={background.value} fillColor={foreground.value}>
-            <EdsIcon {...text_field} />
-          </InnerCircle>
-        </Circle>
-      </Tooltip>
-    </Card>
-  )
 }
 
 /** Variant cards */
@@ -131,6 +40,8 @@ export const CardTheme = ({
   thumbnail,
 }: CardThemeProps) => {
   const { background, foreground } = getColorForThemeHandler(color)
+  const isClickable = Boolean(onClickHandler)
+
   return (
     <Flex
       direction={preview ? 'row' : 'column'}
@@ -139,18 +50,51 @@ export const CardTheme = ({
       gap={thumbnail ? 2 : 4}
       padding={0}
     >
-      <Container
-        $active={active}
-        {...(onClickHandler && {
-          onClick: () => onClickHandler(color),
+      <Box
+        as={isClickable ? 'button' : 'div'}
+        {...(isClickable && {
+          type: 'button',
+          onClick: () => onClickHandler?.(color),
         })}
-        color={background.value}
-        $isThumbnail={!!thumbnail}
-        $preview={!!preview}
+        style={{
+          width: thumbnail ? '2.0625rem' : 'fit-content',
+          height: thumbnail ? '2.0625rem' : 'fit-content',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: thumbnail ? '2px' : '4px',
+          backgroundColor: background.value,
+          outline:
+            active && !preview
+              ? 'solid 2px var(--card-focus-ring-color)'
+              : 'solid 2px transparent',
+          outlineOffset: '2px',
+          borderRadius: '5%',
+          border: '1px solid lightgrey',
+          padding: thumbnail ? '0px' : '6px 12px',
+          cursor: isClickable ? 'pointer' : 'default',
+          appearance: isClickable ? 'none' : undefined,
+        }}
       >
-        <ThemeCard $isThumbnail={!!thumbnail} color={foreground.value} />
-        <ThemeCard $isThumbnail={!!thumbnail} color={foreground.value} />
-      </Container>
+        <Box
+          style={{
+            display: 'flex',
+            width: 'fit-content',
+            backgroundColor: foreground.value,
+            padding: thumbnail ? '0.25em' : '15px',
+            borderRadius: '5%',
+          }}
+        />
+        <Box
+          style={{
+            display: 'flex',
+            width: 'fit-content',
+            backgroundColor: foreground.value,
+            padding: thumbnail ? '0.25em' : '15px',
+            borderRadius: '5%',
+          }}
+        />
+      </Box>
       {!thumbnail && (
         <Text muted size={1}>
           {color.title}
@@ -207,7 +151,7 @@ type ThemeSelectorProps = {
 See example of use in textTeaser, tabsBackground, homepageBanner
 */
 export const ThemeSelector = ({
-  variant = 'circles',
+  variant: _variant = 'circles',
   getColorForThemeHandler,
   themeColors,
   value,
@@ -216,45 +160,76 @@ export const ThemeSelector = ({
 }: ThemeSelectorProps) => {
   const { options } = schemaType
   const colorThemes = themeColors ?? options?.colors ?? undefined
-
-  const theSelectorUniqueId = useId()
+  const selectedTheme = colorThemes?.find(
+    (color: ThemeSelectorValue) => String(color.value) === String(value?.value),
+  )
 
   const handleSelect = useCallback(
-    (selected: ThemeSelectorValue) => {
-      if (selected === value) return
+    (event: any) => {
+      const nextValue = event.currentTarget.value
+
+      if (!nextValue) {
+        onChange(unset(['title']))
+        onChange(unset(['value']))
+        return
+      }
+
+      const selected = colorThemes?.find(
+        (color: ThemeSelectorValue) =>
+          String(color.value) === String(nextValue),
+      )
+
+      if (!selected) return
+      if (selected.value === value?.value) return
 
       onChange(set(selected.title, ['title']))
       onChange(set(selected.value, ['value']))
     },
-    [onChange, value],
+    [colorThemes, onChange, value?.value],
   )
+
+  const handleClear = useCallback(() => {
+    if (!value?.value && !value?.title) return
+
+    onChange(unset(['title']))
+    onChange(unset(['value']))
+  }, [onChange, value?.title, value?.value])
 
   return (
     <Stack space={3}>
-      {themeColors && themeColors?.length > 0 && (
-        <Card>
-          <Flex direction={'row'} wrap={'wrap'} gap={2}>
-            {colorThemes.map((colorItem: ThemeSelectorValue) => {
-              const { background, foreground } =
-                getColorForThemeHandler(colorItem)
-              return variant === 'circles' ? (
-                <ColorCircle
-                  key={`${theSelectorUniqueId}_${background.value}_${foreground.key}`}
-                  color={colorItem}
-                  active={colorItem.value === value?.value}
-                  onClickHandler={handleSelect}
-                  getColorForThemeHandler={getColorForThemeHandler}
+      {colorThemes && colorThemes.length > 0 && (
+        <Card padding={2}>
+          <Flex align={'center'} gap={3}>
+            <CardTheme
+              color={selectedTheme ?? colorThemes[0]}
+              thumbnail
+              preview
+              getColorForThemeHandler={getColorForThemeHandler}
+            />
+            <Flex flex={1} direction={'column'} gap={2}>
+              <Flex align={'center'} gap={2}>
+                <Select
+                  aria-label={schemaType.title ?? 'Select theme'}
+                  onChange={handleSelect}
+                  value={value?.value ?? ''}
+                >
+                  <option value=''>Select theme</option>
+                  {colorThemes.map((colorItem: ThemeSelectorValue) => {
+                    return (
+                      <option key={colorItem.value} value={colorItem.value}>
+                        {colorItem.title}
+                      </option>
+                    )
+                  })}
+                </Select>
+                <Button
+                  mode='ghost'
+                  text='Clear'
+                  onClick={handleClear}
+                  disabled={!value?.value && !value?.title}
                 />
-              ) : (
-                <CardTheme
-                  key={`${theSelectorUniqueId}_${background.value}_${foreground.key}`}
-                  color={colorItem}
-                  active={colorItem.value === value?.value}
-                  onClickHandler={handleSelect}
-                  getColorForThemeHandler={getColorForThemeHandler}
-                />
-              )
-            })}
+              </Flex>
+            </Flex>
           </Flex>
         </Card>
       )}

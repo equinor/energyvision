@@ -66,12 +66,15 @@ const AddToCalendar = ({
     const { start: startString, end: endString } = getEventDates(eventDate)
     if (!startString && !eventDate?.date && !startDateTime) return
 
-    const start = new Date(startDateTime ?? startString ?? eventDate?.date)
+    const startValue = startDateTime ?? startString ?? eventDate?.date
+    if (!startValue) return
+
+    const start = new Date(startValue)
 
     let end: Date
     if (!endString || !endDateTime) {
       /* If time is not specified add to calendar as a full day */
-      end = new Date(startDateTime ?? startString ?? eventDate?.date)
+      end = new Date(startValue)
       start.setHours(0, 0, 0)
       end.setHours(23, 59, 59)
     } else {

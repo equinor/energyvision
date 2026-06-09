@@ -1,7 +1,7 @@
 import { Box, Button, Card, Flex, Stack, Text, Tooltip } from '@sanity/ui'
 import { useCallback } from 'react'
 import type { ObjectInputProps } from 'sanity'
-import { set } from 'sanity'
+import { set, unset } from 'sanity'
 import styled from 'styled-components'
 import { defaultBackgroundColors } from '../../defaultColors'
 
@@ -82,11 +82,11 @@ export const ColorSelector = ({
     [onChange, value],
   )
 
-  const handleUnset = useCallback(() => {
-    onChange(set(undefined, ['title']))
-    onChange(set(undefined, ['value']))
-    onChange(set(undefined, ['dark']))
-    onChange(set(undefined, ['key']))
+  const handleClear = useCallback(() => {
+    onChange(unset(['title']))
+    onChange(unset(['value']))
+    onChange(unset(['dark']))
+    onChange(unset(['key']))
   }, [onChange])
 
   return (
@@ -109,12 +109,13 @@ export const ColorSelector = ({
                 )
               })}
             <Button
-              onClick={handleUnset}
+              onClick={handleClear}
               mode='ghost'
               fontSize={1}
               paddingY={1}
               paddingX={1}
-              text='Unset'
+              text='Clear'
+              disabled={!value?.value}
               style={{
                 marginLeft: '6px',
               }}

@@ -1,10 +1,12 @@
 import type { PortableTextBlock } from '@portabletext/react'
 import { RiCalendarEventFill } from 'react-icons/ri'
 import type { Reference, Rule, ValidationContext } from 'sanity'
+import { defaultBackgroundColors } from '@/schemas/defaultColors'
 import blocksToText from '../../../helpers/blocksToText'
 import { capitalizeFirstLetter } from '../../../helpers/formatters'
 import { filterByRouteEvents } from '../../../helpers/referenceFilters'
 import routes from '../../routes'
+import { createColorSelectField } from '../colorList'
 import {
   backgroundPosition,
   ingress,
@@ -189,6 +191,16 @@ export default {
     },
     viewAllLink,
     viewAllLinkLabel,
+    createColorSelectField({
+      name: 'containerBackground',
+      title: 'Background color',
+      fieldset: 'design',
+      description: 'Selected background with white cards',
+      colors: [
+        ...defaultBackgroundColors.filter(color => color.key !== 'white-100'),
+      ],
+      valueField: 'key',
+    }),
     theme,
   ].filter(e => e),
   /*   components: {
