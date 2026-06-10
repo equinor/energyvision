@@ -1,20 +1,20 @@
 import { BackgroundContainer } from '@core/Backgrounds'
 import { FormattedDate, FormattedTime } from '@core/FormattedDateTime'
+import { Typography } from '@core/Typography'
 import { toPlainText } from '@portabletext/react'
+import type { PortableTextBlock } from '@portabletext/types'
+import { EventJsonLd } from 'next-seo'
 import { FormattedMessage } from 'react-intl'
+import { twMerge } from 'tailwind-merge'
 import { getEventDates } from '../../common/helpers/dateUtilities'
+import Blocks from '../../pageComponents/shared/portableText/Blocks'
+import RelatedContent from '../../pageComponents/shared/RelatedContent'
+import Seo from '../../pageComponents/shared/Seo'
+import type { EventSchema } from '../../types/index'
 import ContactList from '../shared/ContactList'
 import IngressText from '../shared/portableText/IngressText'
 import AddToCalendar from '../topicPages/AddToCalendar'
 import Promotion from '../topicPages/Promotion'
-import type { PortableTextBlock } from '@portabletext/types'
-import Seo from '../../pageComponents/shared/Seo'
-import type { EventSchema } from '../../types/index'
-import { EventJsonLd } from 'next-seo'
-import Blocks from '../../pageComponents/shared/portableText/Blocks'
-import { twMerge } from 'tailwind-merge'
-import RelatedContent from '../../pageComponents/shared/RelatedContent'
-import { Typography } from '@core/Typography'
 
 export default function Event({ data }: { data: EventSchema }): JSX.Element {
   const { title } = data
@@ -58,7 +58,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
               </div>
 
               {location && <div className="text-norwegian-woods-100 mb-4">{location}</div>}
-              <AddToCalendar eventDate={eventDate} location={location} title={plainTitle} />
+              <AddToCalendar startDateTime={start} endDateTime={end} location={location} title={plainTitle} />
             </div>
           </BackgroundContainer>
           {(ingress || content) && (
@@ -81,7 +81,10 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
                 id: 'promotedPeople',
                 type: 'people',
                 title: promotedPeople.title,
-                content: { promotions: promotedPeople.people, type: 'promotePeople' },
+                content: {
+                  promotions: promotedPeople.people,
+                  type: 'promotePeople',
+                },
               }}
             />
           )}

@@ -25,25 +25,27 @@ export const toUTCDateParts = (datetime: Date): number[] => {
 }
 
 export const getEventDates = (eventDate: EventDateType | undefined) => {
-  let start: string | null = null
-  let end: string | null = null
+  let start: string | undefined
+  let end: string | undefined
   if (!eventDate) {
     return { start, end }
   }
   const { date, startTime, endTime } = eventDate || {}
   if (!date) return { start, end }
 
+  const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
+
   if (startTime) {
     const [year, month, day] = date.split('-').map(Number)
     const [startHour, startMinute, startSecond = 0] = startTime.split(':').map(Number)
     const startCET = new TZDate(year, month - 1, day, startHour, startMinute, startSecond, 0, 'Europe/Oslo')
-    const startDateTime = startCET.withTimeZone('UTC')
+    const startDateTime = startCET.withTimeZone(userTimeZone ?? 'UTC')
     start = startDateTime.toISOString()
 
     if (endTime) {
       const [endHour, endMinute, endSecond = 0] = endTime.split(':').map(Number)
       const endCET = new TZDate(year, month - 1, day, endHour, endMinute, endSecond, 0, 'Europe/Oslo')
-      const endDateTime = endCET.withTimeZone('UTC')
+      const endDateTime = endCET.withTimeZone(userTimeZone ?? 'UTC')
       end = endDateTime.toISOString()
     }
     return { start, end }

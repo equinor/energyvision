@@ -1,17 +1,17 @@
-import { Heading } from '@core/Typography'
-import { EventCardData } from '../../../types/index'
-import { forwardRef, HTMLAttributes } from 'react'
-import { twMerge } from 'tailwind-merge'
 import { FormattedDate, FormattedTime, TimeIcon } from '@core/FormattedDateTime/'
-import { world } from '@equinor/eds-icons'
-import { Icon } from '@equinor/eds-core-react'
-import { getEventDates } from '../../../common/helpers/dateUtilities'
-import { toPlainText } from '@portabletext/react'
-import { PortableTextBlock } from '@portabletext/types'
-import { FormattedMessage } from 'react-intl'
-import AddToCalendar from '../../../pageComponents/topicPages/AddToCalendar'
 import { BaseLink } from '@core/Link'
+import { Heading } from '@core/Typography'
+import { Icon } from '@equinor/eds-core-react'
+import { world } from '@equinor/eds-icons'
+import { toPlainText } from '@portabletext/react'
+import type { PortableTextBlock } from '@portabletext/types'
+import { forwardRef, type HTMLAttributes } from 'react'
+import { FormattedMessage } from 'react-intl'
+import { twMerge } from 'tailwind-merge'
+import { getEventDates } from '../../../common/helpers/dateUtilities'
 import Blocks from '../../../pageComponents/shared/portableText/Blocks'
+import AddToCalendar from '../../../pageComponents/topicPages/AddToCalendar'
+import type { EventCardData } from '../../../types/index'
 
 type Variants = 'default' | 'single' | 'carousel'
 export type EventCardProps = {
@@ -106,7 +106,7 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
       </div>
       {variant === 'single' && ingress && <Blocks value={ingress} className="mt-4 text-sm max-w-prose text-pretty" />}
       <div className="mt-4 lg:mt-8">
-        <AddToCalendar eventDate={eventDate} location={location} title={plainTitle} />
+        <AddToCalendar startDateTime={start} endDateTime={end} location={location} title={plainTitle} />
       </div>
     </div>
   )
