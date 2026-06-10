@@ -83,9 +83,9 @@ export const Image = ({
   if ('alt' in image && image?.alt) {
     altText = image.alt
   }
-  const aspectRatioClass = getTwAspectRatioUtilityOnRatio(
+  /*   const aspectRatioClass = getTwAspectRatioUtilityOnRatio(
     isLargerDisplays ? aspectRatio : '4:3',
-  )
+  ) */
 
   const nextImage = url ? (
     <NextImage
@@ -107,7 +107,7 @@ export const Image = ({
       <div
         className={twMerge(
           `relative h-full max-h-full w-full max-w-full`,
-          fill && aspectRatioClass,
+          //fill && aspectRatioClass - why did i, Borghild, add this?,
           className,
         )}
       >
