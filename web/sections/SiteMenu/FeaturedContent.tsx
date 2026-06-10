@@ -6,9 +6,8 @@ import { Typography } from '@/core/Typography'
 import { defaultLanguage } from '@/languageConfig'
 import { getLocaleFromIso } from '@/sanity/helpers/localization'
 import { EventCard } from '@/sections/cards/EventCard'
+import type { EventCardData } from '@/sections/cards/EventCard/EventCard'
 import type { FeaturedContentData } from '../../types/index'
-import type { EventCardData } from '../cards/EventCard/EventCard'
-
 
 type Props = {
   featuredContent: FeaturedContentData
@@ -32,7 +31,7 @@ const FeaturedContent = ({
   const { type, heroImage, title, ingress, slug } = featuredContent
 
   const locale = iso !== defaultLanguage.iso ? `/${getLocaleFromIso(iso)}` : ''
-  const href =  locale + slug || ''
+  const href = locale + slug || ''
 
   return (
     <div className=''>
@@ -45,12 +44,7 @@ const FeaturedContent = ({
       </Typography>
       {isEvent(featuredContent) ? (
         <EventCard
-          data={
-            {
-              type: 'events',
-              ...featuredContent,
-            } as EventCardData
-          }
+          data={featuredContent as unknown as EventCardData}
           hasSectionTitle={false}
           className='h-fit'
         />

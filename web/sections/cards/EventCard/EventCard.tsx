@@ -23,11 +23,11 @@ type Variants = 'default' | 'single' | 'carousel'
 
 type EventCardEventFields = Pick<
   EventProps['content'],
-  'location' | 'eventDate' | 'ingress' | 'startDayAndTime' | 'endDayAndTime'
+  'location' | 'eventDate' | 'ingress'
 >
 
 export type EventCardData = {
-  type: 'events'
+  type: 'event'
 } & Pick<EventProps, 'id' | 'title' | 'slug'> &
   EventCardEventFields
 
@@ -52,15 +52,7 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
   },
   ref,
 ) {
-  const {
-    title,
-    location,
-    eventDate,
-    slug,
-    ingress,
-    startDayAndTime,
-    endDayAndTime,
-  } = data
+  const { title, location, eventDate, slug, ingress } = data
 
   const iso = useLocale()
   const t = useTranslations()
@@ -68,17 +60,7 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
   const href = '/' + locale + slug || ''
 
   const { start, end } = getEventDates(eventDate)
-  const { dayTime: startDayTime, overrideTimeLabel: startTimeLabel } =
-    startDayAndTime || {}
-
-  const { dayTime: endDayTime, overrideTimeLabel: endTimeLabel } =
-    endDayAndTime || {}
   const plainTitle = title ? toPlainText(title as PortableTextBlock[]) : ''
-  const isMoreThanOneDay =
-    startDayTime && endDayTime
-      ? new Date(endDayTime).getTime() - new Date(startDayTime).getTime() >
-        24 * 60 * 60 * 1000
-      : false
 
   return (
     <div
@@ -104,47 +86,36 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
       >
         {/* Date */}
         <FormattedDateTime
-          datetime={startDayTime ?? start ?? eventDate?.date}
-          endDatetime={endDayTime}
-          variant={isMoreThanOneDay ? 'period' : 'date'}
+          datetime={start ?? eventDate?.date}
           dateIcon={true}
           className='text-sm **:text-sm **:leading-none'
         />
         {/* Time - Dont show if label is '-' or if event is more than one day*/}
-        {startTimeLabel !== '-' && !isMoreThanOneDay && (
-          <div className='flex items-end gap-1 **:text-sm **:leading-none'>
-            {!startTimeLabel &&
-              !startDayTime &&
-              !start &&
-              (t('tba') ?? 'To be announced')}
-            {startTimeLabel ? (
-              startTimeLabel
-            ) : (
-              <>
-                <FormattedDateTime
-                  variant='time'
-                  datetime={startDayTime ?? start ?? eventDate?.date}
-                  timeIcon={true}
-                  showTimezone={!(endDayTime ?? end)}
-                />
+        <div className='flex items-end gap-1 **:text-sm **:leading-none'>
+          {!start ? (
+            (t('tba') ?? 'To be announced')
+          ) : (
+            <>
+              <FormattedDateTime
+                variant='time'
+                datetime={start ?? eventDate?.date}
+                timeIcon={true}
+                showTimezone={!end}
+              />
 
-                {endTimeLabel !== '-' &&
-                  (endTimeLabel ? (
-                    endTimeLabel
-                  ) : (
-                    <>
-                      <span className=''>-</span>
-                      <FormattedDateTime
-                        variant='time'
-                        datetime={endDayTime ?? end}
-                        timeIcon={false}
-                      />
-                    </>
-                  ))}
-              </>
-            )}
-          </div>
-        )}
+              {end && (
+                <>
+                  <span className=''>-</span>
+                  <FormattedDateTime
+                    variant='time'
+                    datetime={end}
+                    timeIcon={false}
+                  />
+                </>
+              )}
+            </>
+          )}
+        </div>
         {location && (
           <div className={`flex items-start gap-2`}>
             <Icon
@@ -165,14 +136,12 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
         />
       )}
       <div className='mt-auto min-h-[83.3px] pt-8'>
-        {!isMoreThanOneDay && (
-          <AddToCalendar
-            startDateTime={startDayTime ?? start}
-            endDateTime={endDayTime ?? end}
-            location={location}
-            title={plainTitle}
-          />
-        )}
+        <AddToCalendar
+          startDateTime={start}
+          endDateTime={end}
+          location={location}
+          title={plainTitle}
+        />
       </div>
     </div>
   )
