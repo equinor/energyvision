@@ -1,6 +1,6 @@
-import { HTMLAttributes } from 'react'
-import { FormattedTime as ReactIntlTime } from 'react-intl'
 import { TimeIcon } from '@core/FormattedDateTime'
+import type { HTMLAttributes } from 'react'
+import { FormattedTime as ReactIntlTime } from 'react-intl'
 
 export type FormattedTimeProps = {
   datetime: string
