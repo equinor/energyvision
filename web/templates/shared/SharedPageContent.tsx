@@ -637,7 +637,6 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
             variant='default'
             {...commonProps}
             {...(c as any)}
-            className={allSpacings}
           />
         )
       case 'importTable':
