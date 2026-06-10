@@ -54,7 +54,7 @@ const NewsRoomTemplate = forwardRef<HTMLDivElement, NewsRoomTemplateProps>(
     const t = useTranslations()
     const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
     const indexName = `${envPrefix}_NEWS_${locale}`
-  
+
     const resultsRef = useRef<HTMLDivElement>(null)
 
     const routing = {
@@ -185,7 +185,7 @@ const NewsRoomTemplate = forwardRef<HTMLDivElement, NewsRoomTemplateProps>(
               facetFilters={['type:news', 'topicTags:-Crude Oil Assays']}
             />
 
-            <div className='mx-auto flex w-full max-w-fullwidth flex-col gap-8 pt-topbar lg:gap-12'>
+            <div className='mx-auto flex w-full max-w-fullwidth flex-col gap-8 lg:gap-12'>
               <div className='dark bg-slate-blue-95 py-24'>
                 <div className='mx-auto flex max-w-content grid-rows-2 flex-col gap-4 px-layout-sm'>
                   {title && (
