@@ -8,7 +8,6 @@ import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
 import { getEventDates } from '@/lib/helpers/dateUtilities'
 import Blocks from '@/portableText/Blocks'
 import ContactList from '@/sections/ContactList/ContactList'
-import type { EventDateType } from '@/sections/cards/EventCard/EventCard'
 import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
 import type {
   ContactListData,
@@ -20,14 +19,21 @@ import type {
 import Promotion from '../../sections/promotions/PromotionsBlock'
 import RelatedContent from '../../sections/RelatedContent/RelatedContent'
 
-export type EventSchema = {
+export type EventDate = {
+  date: string
+  startTime?: string
+  endTime?: string
+  timezone: string
+}
+
+export type EventProps = {
   id: string
   title: PortableTextBlock[]
   slug: string
   seoAndSome: SeoData
   content: {
     location?: string
-    eventDate: EventDateType
+    eventDate: EventDate
     startDayAndTime?: any
     endDayAndTime?: any
     ingress?: PortableTextBlock[]
@@ -42,7 +48,7 @@ export type EventSchema = {
   }
 }
 
-export default function Event({ data }: { data: EventSchema }): JSX.Element {
+export default function Event({ data }: { data: EventProps }): JSX.Element {
   const { title } = data
   const t = useTranslations()
 
@@ -69,6 +75,7 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
       ? new Date(endDayTime).getTime() - new Date(startDayTime).getTime() >
         24 * 60 * 60 * 1000
       : false
+
   const { start, end } = getEventDates(eventDate)
 
   const { bg, dark } = getBgAndDarkFromBackground({
@@ -146,7 +153,6 @@ export default function Event({ data }: { data: EventSchema }): JSX.Element {
                 )}
                 {!isMoreThanOneDay && (
                   <AddToCalendar
-                    eventDate={eventDate}
                     startDateTime={startDayTime ?? start}
                     endDateTime={endDayTime ?? end}
                     location={location}

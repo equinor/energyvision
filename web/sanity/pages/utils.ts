@@ -143,9 +143,6 @@ export const constructSanityMetadata = (
     slugs: langSlugs,
   } = metaData
 
-  console.log('seoAndSome', seoAndSome)
-  console.log('heroImage', heroImage)
-
   const plainTitle = Array.isArray(title) ? toPlainText(title) : title
   const ogImage = resolveOpenGraphImage(
     seoAndSome?.openGraphImage ?? heroImage?.image,

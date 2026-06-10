@@ -1,59 +1,27 @@
 'use client'
-import { isAfter } from 'date-fns'
 import { useTranslations } from 'next-intl'
 import { useEffect, useState } from 'react'
-import { getEventDates, toUTCDateParts } from '@/lib/helpers/dateUtilities'
-import type { EventDateType } from '@/sections/cards/EventCard/EventCard'
+import { createIcsFile, isUpcomingDate } from '@/lib/ics/ics'
 import ResourceLink from '../Link/ResourceLink'
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const ics = require('ics')
+type DateTimeInput = Date | string
 
 type AddToCalendarProps = {
-  eventDate?: EventDateType
-  startDateTime?: Date
-  endDateTime?: Date
+  // Accept local Date instance or local datetime iso string
+  startDateTime?: DateTimeInput
+  endDateTime?: DateTimeInput
   location?: string
   title: string
 }
 
-type ICSProps = {
-  start: number[]
-  startInputType: string
-  end: number[]
-  endInputType: string
-  title: string
-  location?: string
-}
+const toDate = (input?: DateTimeInput): Date | null => {
+  if (!input) return null
 
-// Because in 2021 we still have a zero-index month
-// which means Jan = 0, Dec = 11, etc
-const padMonth = (dateParts: number[]): number[] => {
-  dateParts[1] = dateParts[1] + 1
-  return dateParts
-}
-
-const isUpcoming = (eventDate: Date): boolean => {
-  if (isAfter(eventDate, new Date())) {
-    return true
-  }
-  return false
-}
-
-const createICS = (eventData: ICSProps): string | boolean => {
-  return ics.createEvent(eventData, (error: Error, value: string) => {
-    if (error) {
-      console.error('An error occurred while generating ICS file.', error)
-      return false
-    }
-
-    const file = new Blob([value], { type: 'text/calendar' })
-    return URL.createObjectURL(file)
-  })
+  const date = input instanceof Date ? new Date(input) : new Date(input)
+  return Number.isNaN(date.getTime()) ? null : date
 }
 
 const AddToCalendar = ({
-  eventDate,
   startDateTime,
   endDateTime,
   title,
@@ -63,40 +31,44 @@ const AddToCalendar = ({
   const [fileData, setFileData] = useState<string | boolean>(false)
 
   useEffect(() => {
-    const { start: startString, end: endString } = getEventDates(eventDate)
-    if (!startString && !eventDate?.date && !startDateTime) return
+    if (!startDateTime) {
+      setFileData(false)
+      return
+    }
 
-    const startValue = startDateTime ?? startString ?? eventDate?.date
-    if (!startValue) return
-
-    const start = new Date(startValue)
+    const start = toDate(startDateTime)
+    if (!start) {
+      setFileData(false)
+      return
+    }
 
     let end: Date
-    if (!endString || !endDateTime) {
+    if (!endDateTime) {
       /* If time is not specified add to calendar as a full day */
-      end = new Date(startValue)
+      end = new Date(start)
       start.setHours(0, 0, 0)
       end.setHours(23, 59, 59)
     } else {
-      end = new Date(endDateTime)
+      const parsedEnd = toDate(endDateTime)
+      if (!parsedEnd) {
+        setFileData(false)
+        return
+      }
+      end = parsedEnd
     }
 
-    if (isUpcoming(end)) {
-      const eventData = {
-        start: padMonth(toUTCDateParts(start)), // ICS lib expects start & end to be an array
-        startInputType: 'utc',
-        end: padMonth(toUTCDateParts(end)), // ICS lib expects start & end to be an array
-        endInputType: 'utc',
-        title: title,
-        location: location || '',
-      }
-      setFileData(createICS(eventData))
+    if (isUpcomingDate(end)) {
+      setFileData(createIcsFile({ start, end, title, location }))
+      return
     }
-  }, [eventDate, startDateTime, endDateTime, location, title])
+
+    setFileData(false)
+  }, [startDateTime, endDateTime, location, title])
 
   if (!fileData) return null
   const atc = intl('add_to_calendar_event')
   const atcAriaLabel = intl('add_to_calendar_aria_label', { eventTitle: title })
+
   return fileData ? (
     <ResourceLink
       href={fileData as string}

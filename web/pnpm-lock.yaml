@@ -111,8 +111,8 @@ importers:
         specifier: ^1.18.1
         version: 1.18.1
       ics:
-        specifier: ^3.11.0
-        version: 3.11.0
+        specifier: 3.12.0
+        version: 3.12.0
       instantsearch.js:
         specifier: ^4.93.0
         version: 4.93.0(algoliasearch@5.50.1)
@@ -5831,8 +5831,8 @@ packages:
     resolution: {integrity: sha512-cf6L2Ds3h57VVmkZe+Pn+5APsT7FpqJtEhhieDCvrE2MK5Qk9MyffgQyuxQTm6BChfeZNtcOLHp9IcWRVcIcBQ==}
     engines: {node: '>=0.10.0'}
 
-  ics@3.11.0:
-    resolution: {integrity: sha512-uDB3GEOYRSZL2BgxLZkHUDwcHqjC36gGuKBrFatl7BtMNQKzO2rXkCj0zTl/QyP9lfyAEp2WZU2XBZciaLJZZw==}
+  ics@3.12.0:
+    resolution: {integrity: sha512-BBPiZ/TbUyZrxui7SHKGOa/n2HUxaW9ucn7cw47NW9OSKe5tItYxIdN7Uczti5nKURmfwVvYi2aLigCJGH1+cA==}
 
   icu-minify@4.12.0:
     resolution: {integrity: sha512-zDmM05uav3t3+kxSfRrNlmyXOdj2b+uHA+p04CG32eJabtaHbugXujuL+YfRkwP9joAnf0Uh+RMGCKD5NLa5rQ==}
@@ -14753,7 +14753,7 @@ snapshots:
     dependencies:
       safer-buffer: 2.1.2
 
-  ics@3.11.0:
+  ics@3.12.0:
     dependencies:
       nanoid: 3.3.11
       runes2: 1.1.4

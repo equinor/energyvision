@@ -1,13 +1,16 @@
-import { Rule } from 'sanity'
-import { SchemaType } from '../../types'
+import type { Rule } from 'sanity'
+import type { SchemaType } from '../../types'
 import { CharCounterEditor } from '../components/CharCounterEditor'
+//import { SyncDocumentTitleInput } from '../components/SyncDocumentTitleInput'
 
 export default {
   title: 'Fields for title and description meta',
   name: 'titleAndMeta',
   type: 'object',
   validation: (Rule: Rule) => [
-    Rule.required().warning('It is recommended to complete the SEO fields for better search visibility'),
+    Rule.required().warning(
+      'It is recommended to complete the SEO fields for better search visibility',
+    ),
   ],
   fields: [
     {
@@ -18,8 +21,17 @@ export default {
       title that reads naturally and effectively communicates the topic of the page’s content. The frontend will use h1 as a fallback for missing document title.`,
       type: 'string',
 
+      /*
+      post launch consideration:
+      https://github.com/equinor/energyvision/issues/3690  
+      components: {
+        input: SyncDocumentTitleInput,
+      }, */
+
       validation: (Rule: SchemaType.ValidationRule) =>
-        Rule.required().warning('Ensure the document title is optimized for SEO'),
+        Rule.required().warning(
+          'Ensure the document title is optimized for SEO',
+        ),
     },
     {
       name: 'metaDescription',

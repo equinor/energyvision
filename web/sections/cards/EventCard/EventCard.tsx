@@ -15,29 +15,21 @@ import {
   type ColorKeys,
   colorKeyToUtilityMap,
 } from '@/styles/colorKeyToUtilityMap'
+import type { EventProps } from '@/templates/event/Event'
 import AddToCalendar from '../../../core/AddToCalendar/AddToCalendar'
 import Blocks from '../../../portableText/Blocks'
 
 type Variants = 'default' | 'single' | 'carousel'
 
-export type EventDateType = {
-  date: string
-  startTime?: string
-  endTime?: string
-  timezone: string
-}
+type EventCardEventFields = Pick<
+  EventProps['content'],
+  'location' | 'eventDate' | 'ingress' | 'startDayAndTime' | 'endDayAndTime'
+>
 
 export type EventCardData = {
-  id: string
   type: 'events'
-  title: PortableTextBlock[]
-  slug: string
-  location?: string
-  eventDate: EventDateType
-  ingress?: PortableTextBlock[]
-  startDayAndTime?: any
-  endDayAndTime?: any
-}
+} & Pick<EventProps, 'id' | 'title' | 'slug'> &
+  EventCardEventFields
 
 export type EventCardProps = {
   data: EventCardData
@@ -175,9 +167,8 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
       <div className='mt-auto min-h-[83.3px] pt-8'>
         {!isMoreThanOneDay && (
           <AddToCalendar
-            eventDate={eventDate}
-            startDateTime={startDayTime}
-            endDateTime={endDayTime}
+            startDateTime={startDayTime ?? start}
+            endDateTime={endDayTime ?? end}
             location={location}
             title={plainTitle}
           />

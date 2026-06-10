@@ -47,7 +47,7 @@ const TopicPage = ({
     //@ts-ignore
     nextSectionDesignOptions: restData?.content?.[0]?.designOptions,
   }
-  console.log('topic hero type', hero?.type)
+
   const heroBackground: Background & { heroHasBreadcrumbs?: boolean } =
     hero?.type === 'backgroundImage'
       ? {

@@ -103,6 +103,15 @@ export default {
           description: 'See below to ignore or override time',
           name: 'dayTime',
           type: 'datetime',
+          options: {
+            // Enforces a specific timezone in Sanity Studio
+            displayTimeZone: 'Europe/Oslo',
+            // Optional: Set to false to prevent users from switching back to local browser time
+            allowTimeZoneSwitch: false,
+            dateFormat: 'DD-MM-YYYY',
+            timeFormat: 'HH:mm',
+            timeStep: 15,
+          },
         },
         {
           name: 'overrideTimeLabel',
@@ -124,6 +133,15 @@ export default {
           description: 'See below to ignore or override time',
           name: 'dayTime',
           type: 'datetime',
+          options: {
+            // Enforces a specific timezone in Sanity Studio
+            displayTimeZone: 'Europe/Oslo',
+            // Optional: Set to false to prevent users from switching back to local browser time
+            allowTimeZoneSwitch: false,
+            dateFormat: 'DD-MM-YYYY',
+            timeFormat: 'HH:mm',
+            timeStep: 15,
+          },
           components: {
             input: SyncEndDayTimeInput,
           },

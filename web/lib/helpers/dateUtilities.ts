@@ -7,7 +7,8 @@ import {
   getSeconds,
   getYear,
 } from 'date-fns'
-import type { EventDateType } from '@/sections/cards/EventCard/EventCard'
+
+import type { EventDate } from '@/templates/event/Event'
 
 export const toDateParts = (datetime: Date): number[] => {
   return [
@@ -31,9 +32,10 @@ export const toUTCDateParts = (datetime: Date): number[] => {
   ]
 }
 
-export const getEventDates = (eventDate: EventDateType | undefined) => {
-  let start: string | null = null
-  let end: string | null = null
+export const getEventDates = (eventDate: EventDate | undefined) => {
+  let start: string | undefined
+  let end: string | undefined
+
   if (!eventDate) {
     return { start, end }
   }

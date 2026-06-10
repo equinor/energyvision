@@ -1,11 +1,11 @@
 import type { PortableTextBlock } from '@portabletext/types'
 import type { Image } from '@/core/Image/imageUtilities'
-import type { EventDateType } from '@/sections/cards/EventCard/EventCard'
 import type { FullWidthVideoProps } from '@/sections/FullWidthVideo/FullWidthVideo'
 import type { StockValuesProps } from '@/sections/StockValues/StockValues'
 import type { TeaserData } from '@/sections/teasers/Teaser/Teaser'
 import type { VideoPlayerBlockProps } from '@/sections/VideoPlayerBlock/VideoPlayerBlock'
 import type { VideoPlayerCarouselData } from '@/sections/VideoPlayerCarousel/VideoPlayerCarousel'
+import type { EventDate } from '@/templates/event/Event'
 import type { FigureData } from '../sections/FigureBlock/FigureBlock'
 import type { FullWidthImageData } from '../sections/FullwidthImage/FullWidthImage'
 import type {
@@ -32,7 +32,7 @@ export type FeaturedContentData = {
   type?: string // news, localNews, route_${locale}
   routeContentType?: 'page' | 'event'
   location?: string
-  eventDate?: EventDateType
+  eventDate?: EventDate
 } & CardData
 
 export type PortableTextChild = {
