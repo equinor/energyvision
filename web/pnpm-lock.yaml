@@ -92,8 +92,8 @@ dependencies:
     specifier: ^1.18.1
     version: 1.18.1
   ics:
-    specifier: ^3.1.0
-    version: 3.8.1
+    specifier: ^3.12.0
+    version: 3.12.0
   instantsearch.js:
     specifier: ^4.73.4
     version: 4.91.0(algoliasearch@4.27.0)
@@ -8956,8 +8956,8 @@ packages:
       safer-buffer: 2.1.2
     dev: false
 
-  /ics@3.8.1:
-    resolution: {integrity: sha512-UqQlfkajfhrS4pUGQfGIJMYz/Jsl/ob3LqcfEhUmLbwumg+ZNkU0/6S734Vsjq3/FYNpEcZVKodLBoe+zBM69g==}
+  /ics@3.12.0:
+    resolution: {integrity: sha512-BBPiZ/TbUyZrxui7SHKGOa/n2HUxaW9ucn7cw47NW9OSKe5tItYxIdN7Uczti5nKURmfwVvYi2aLigCJGH1+cA==}
     dependencies:
       nanoid: 3.3.11
       runes2: 1.1.4

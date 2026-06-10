@@ -50,7 +50,7 @@
     "@friendlycaptcha/sdk": "^0.1.32",
     "html-entities": "^2.3.2",
     "http-proxy": "^1.18.1",
-    "ics": "^3.1.0",
+    "ics": "^3.12.0",
     "instantsearch.js": "^4.73.4",
     "next": "14.2.35",
     "next-sanity": "4.3.3",
