@@ -19,6 +19,7 @@ import {
   getAuthURL,
   getSelectionWidgetURL,
   HAS_ENV_VARS,
+  storeAccessToken,
 } from '../utils'
 import { Button } from './Button'
 import { Iframe } from './Iframe'
@@ -72,7 +73,7 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
           return arrayBuffer
         } catch (error) {
           console.error('Error fetching rendition:', error)
-          setHasError(true)
+          setIsLoading(false)
           return null
         }
       }
@@ -107,6 +108,7 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
       if (event?.data) {
         const validateEvent = validateAuthEvent()
         if (validateEvent) {
+          storeAccessToken('SelectionFotowareToken', event.data)
           setSelectionToken(event.data.access_token)
           setIsLogin(false)
           setShowSelectionIframe(true)
