@@ -44,10 +44,10 @@ export const StickyMenu = forwardRef<HTMLElement, StickyMenuProps>(
         )}
       >
         <div
-          className={`mx-auto flex h-topbar-sticky w-full max-w-content py-4`}
+          className={`mx-auto flex h-topbar-sticky w-full max-w-content py-4 md:h-full`}
         >
           <div
-            className={`flex w-full items-baseline justify-between gap-x-6 gap-y-3 px-layout-sm`}
+            className={`flex w-full flex-col items-baseline justify-between gap-x-6 gap-y-3 px-layout-sm md:flex-row`}
           >
             <div className={`text-start font-medium text-base`}>
               {title ?? ''}
