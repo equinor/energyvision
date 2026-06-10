@@ -22,6 +22,10 @@ export const heroFields = /* groq */ `{
     layoutGrid,
     useBlurCenter,
     alignContentY,
+    "heroTitle": heroTitle,
+    heroType == 'fiftyFifty' && isBigTitle => {
+      "heroTitle" : heroBigTitleFiftyFifty,
+    },
     "figure":  select(
       heroType == 'loopingVideo' => { "image": heroLoopingVideo->thumbnail},
       heroFigure),

@@ -26,15 +26,6 @@ export const TimeIcon = (): JSX.Element => (
   <Icon data={time} className='text-norwegian-woods-100' />
 )
 
-const getLocaleShortDayFormat = (locale: string) => {
-  return (
-    {
-      'en-GB': 'd MMM',
-      'nb-NO': 'd. MMM',
-    }[locale] || 'd MMM'
-  )
-}
-
 const getTimezoneName = (
   date: Date,
   locale = 'en-GB',
@@ -50,18 +41,12 @@ const getTimezoneName = (
   )
 }
 
-type Variant =
-  | 'datetime'
-  | 'date'
-  | 'pastDate'
-  | 'time'
-  | 'period'
-  | 'pastPeriod'
+type Variant = 'datetime' | 'date' | 'pastDate' | 'time'
 
 export type FormattedDateTimeProps = {
   /**
    * Formatting variant used to render the value.
-   * @default 'datetime'
+   * @default 'date'
    */
   variant?: Variant
   /**
@@ -130,9 +115,8 @@ const getLocale = (locale: string): Locale => {
 const FormattedDateTime = forwardRef<HTMLDivElement, FormattedDateTimeProps>(
   (
     {
-      variant = 'datetime',
+      variant = 'date',
       datetime,
-      endDatetime,
       dateIcon = false,
       timeIcon = false,
       showTimezone,
@@ -156,13 +140,6 @@ const FormattedDateTime = forwardRef<HTMLDivElement, FormattedDateTimeProps>(
       date = new Date(datetime)
     } else {
       date = datetime as Date
-    }
-
-    let endDate: Date
-    if (typeof endDatetime === 'string') {
-      endDate = new Date(endDatetime)
-    } else {
-      endDate = endDatetime as Date
     }
 
     //https://date-fns.org/v4.4.0/docs/format
@@ -190,64 +167,27 @@ const FormattedDateTime = forwardRef<HTMLDivElement, FormattedDateTimeProps>(
       <div
         ref={ref}
         className={twMerge(
-          `inline-flex items-center gap-2 text-base **:leading-none ${uppercase ? 'uppercase' : ''}`,
-          variant !== 'period' && variant !== 'pastPeriod' ? 'space-x-2' : '',
+          `inline-flex items-center gap-2 space-x-2 text-base **:leading-none ${uppercase ? 'uppercase' : ''}`,
           className,
         )}
       >
         {dateIcon && <DateIcon />}
         {timeIcon && <TimeIcon />}
         <div className={twMerge('mt-1.5', timeClassName)}>
-          {variant !== 'period' && variant !== 'pastPeriod' ? (
-            <time
-              suppressHydrationWarning
-              dateTime={formattedDate}
-              className={timeClassName}
-            >
-              {variant !== 'pastDate' ? (
-                formattedDate
-              ) : (
-                <div className='flex flex-col items-center justify-start gap-4 text-center'>
-                  <div className='text-md'>{`${format(date, 'dd')} ${format(date, 'MMM')}`}</div>
-                  <div className='text-sm'>{format(date, 'yyyy')}</div>
-                </div>
-              )}
-            </time>
-          ) : variant !== 'pastPeriod' ? (
-            <>
-              <time
-                suppressHydrationWarning
-                dateTime={datetime?.toLocaleString()}
-                className={twMerge('whitespace-nowrap', timeClassName)}
-              >
-                {`${format(date, `${getLocaleShortDayFormat(locale)}`, {
-                  in: tz(browserTimeZone),
-                  locale: getLocale(locale),
-                })}`}
-              </time>
-              <span className='mx-1'>-</span>
-              <time
-                suppressHydrationWarning
-                dateTime={endDatetime?.toLocaleString()}
-                className={twMerge('whitespace-nowrap', timeClassName)}
-              >
-                {`${format(endDate, `${getLocaleShortDayFormat(locale)} yyyy`, {
-                  in: tz(browserTimeZone),
-                  locale: getLocale(locale),
-                })}`}
-              </time>
-            </>
-          ) : (
-            <div className='flex flex-col items-center justify-start gap-4 text-start'>
-              <div className='flex flex-wrap text-pretty text-base'>
-                {`${format(date, 'dd')} ${format(date, 'MMM')}`}
-                <span className='mx-1'>-</span>
-                {`${format(endDate, 'dd')} ${format(endDate, 'MMM')}`}
+          <time
+            suppressHydrationWarning
+            dateTime={formattedDate}
+            className={timeClassName}
+          >
+            {variant !== 'pastDate' ? (
+              formattedDate
+            ) : (
+              <div className='flex flex-col items-center justify-start gap-4 text-center'>
+                <div className='text-md'>{`${format(date, 'dd')} ${format(date, 'MMM')}`}</div>
+                <div className='text-sm'>{format(date, 'yyyy')}</div>
               </div>
-              {/* assume same year for start and end date */}
-              <div className='text-sm'>{format(date, 'yyyy')}</div>
-            </div>
-          )}
+            )}
+          </time>
         </div>
       </div>
     )

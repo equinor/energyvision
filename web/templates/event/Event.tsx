@@ -34,8 +34,6 @@ export type EventProps = {
   content: {
     location?: string
     eventDate: EventDate
-    startDayAndTime?: any
-    endDayAndTime?: any
     ingress?: PortableTextBlock[]
     content?: PortableTextBlock[]
     iframe?: IFrameData
@@ -60,21 +58,9 @@ export default function Event({ data }: { data: EventProps }): JSX.Element {
     relatedLinks,
     contactList,
     eventDate,
-    startDayAndTime,
-    endDayAndTime,
   } = data.content
 
   const plainTitle = title ? toPlainText(title as PortableTextBlock[]) : ''
-  const { dayTime: startDayTime, overrideTimeLabel: startTimeLabel } =
-    startDayAndTime || {}
-
-  const { dayTime: endDayTime, overrideTimeLabel: endTimeLabel } =
-    endDayAndTime || {}
-  const isMoreThanOneDay =
-    startDayTime && endDayTime
-      ? new Date(endDayTime).getTime() - new Date(startDayTime).getTime() >
-        24 * 60 * 60 * 1000
-      : false
 
   const { start, end } = getEventDates(eventDate)
 
@@ -84,11 +70,11 @@ export default function Event({ data }: { data: EventProps }): JSX.Element {
 
   return (
     <>
-      {((startDayTime && endDayTime) || (eventDate?.date && start && end)) && (
+      {eventDate?.date && start && end && (
         <EventJsonLd
           name={plainTitle}
-          startDate={startDayTime ?? start}
-          endDate={endDayTime ?? end}
+          startDate={start}
+          endDate={end}
           location={location || ''}
         />
       )}
@@ -103,62 +89,49 @@ export default function Event({ data }: { data: EventProps }): JSX.Element {
                 <div className='mt-7 mb-5 text-norwegian-woods-100 **:text-xl **:leading-none'>
                   {/* Date */}
                   <FormattedDateTime
-                    datetime={startDayTime ?? start ?? eventDate?.date}
-                    endDatetime={endDayTime}
-                    variant={isMoreThanOneDay ? 'period' : 'date'}
+                    datetime={start ?? eventDate?.date}
+                    endDatetime={end}
                     dateIcon={false}
                   />
                 </div>
                 <div className='mb-5 text-norwegian-woods-100 **:text-md'>
-                  {/* Time - Dont show if label is '-' or if event is more than one day*/}
-                  {startTimeLabel !== '-' && !isMoreThanOneDay && (
-                    <div className='flex items-center gap-2'>
-                      {!startTimeLabel &&
-                        !startDayTime &&
-                        !start &&
-                        (t('tba') ?? 'To be announced')}
-                      {startTimeLabel ? (
-                        startTimeLabel
-                      ) : (
-                        <>
-                          <FormattedDateTime
-                            variant='time'
-                            datetime={startDayTime ?? start ?? eventDate?.date}
-                            timeIcon={false}
-                            showTimezone={!(endDayTime ?? end)}
-                          />
-
-                          {endTimeLabel !== '-' &&
-                            (endTimeLabel ? (
-                              endTimeLabel
-                            ) : (
-                              <>
-                                <span className=''>-</span>
-                                <FormattedDateTime
-                                  variant='time'
-                                  datetime={endDayTime ?? end}
-                                  timeIcon={false}
-                                />
-                              </>
-                            ))}
-                        </>
-                      )}
-                    </div>
-                  )}
+                  {/* Time */}
+                  <div className='flex items-center gap-2'>
+                    {start ? (
+                      <>
+                        <FormattedDateTime
+                          variant='time'
+                          datetime={start ?? eventDate?.date}
+                          timeIcon={false}
+                          showTimezone={!end}
+                        />
+                        {end && (
+                          <>
+                            <span className=''>-</span>
+                            <FormattedDateTime
+                              variant='time'
+                              datetime={end}
+                              timeIcon={false}
+                            />
+                          </>
+                        )}
+                      </>
+                    ) : (
+                      (t('tba') ?? 'To be announced')
+                    )}
+                  </div>
                 </div>
                 {location && (
                   <div className='mb-4 text-base text-norwegian-woods-100'>
                     {location}
                   </div>
                 )}
-                {!isMoreThanOneDay && (
-                  <AddToCalendar
-                    startDateTime={startDayTime ?? start}
-                    endDateTime={endDayTime ?? end}
-                    location={location}
-                    title={plainTitle}
-                  />
-                )}
+                <AddToCalendar
+                  startDateTime={start}
+                  endDateTime={end}
+                  location={location}
+                  title={plainTitle}
+                />
               </div>
             </div>
           </div>

@@ -77,6 +77,7 @@ export const HeroBlock = ({
   const {
     type = HeroTypes?.DEFAULT,
     title,
+    heroTitle,
     subTitle,
     ingress,
     figure,
@@ -92,7 +93,6 @@ export const HeroBlock = ({
     figCaptionClassName,
   } = heroData
 
-  console.log('hero type', type)
   const { bg: nextCompBg, dark: nextCompDark } = getBgAndDarkFromBackground(
     nextSectionDesignOptions,
   )
@@ -109,7 +109,6 @@ export const HeroBlock = ({
     />
   )
   const heroTypesThatHaveBreadcrumbsBelow = [
-    HeroTypes?.FIFTY_FIFTY,
     HeroTypes?.DEFAULT,
     HeroTypes?.BACKGROUND_IMAGE,
   ]
@@ -149,8 +148,12 @@ export const HeroBlock = ({
         return (
           <FiftyFiftyHero
             {...commonProps}
+            heroTitle={heroTitle}
             displayTextVariant={displayTextVariant}
             className={`mb-4 lg:mb-6`}
+            {...(breadcrumbs?.enableBreadcrumbs && {
+              breadcrumbsComponent: breadcrumbsElement,
+            })}
           />
         )
       case HeroTypes.BACKGROUND_IMAGE:

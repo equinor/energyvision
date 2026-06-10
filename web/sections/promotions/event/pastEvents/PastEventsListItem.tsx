@@ -22,16 +22,7 @@ const PastEventsListItem = forwardRef<
   { event, className = '', hasSectionTitle = true },
   ref,
 ) {
-  const { title, eventDate, location, slug, startDayAndTime, endDayAndTime } =
-    event
-  const { dayTime: startDayTime } = startDayAndTime || {}
-  const { dayTime: endDayTime } = endDayAndTime || {}
-
-  const isMoreThanOneDay =
-    startDayTime && endDayTime
-      ? new Date(endDayTime).getTime() - new Date(startDayTime).getTime() >
-        24 * 60 * 60 * 1000
-      : false
+  const { title, eventDate, location, slug } = event
 
   const { start } = getEventDates(eventDate)
 
@@ -46,9 +37,8 @@ const PastEventsListItem = forwardRef<
     >
       <div className='flex h-full w-full items-start justify-center bg-norwegian-woods-100 px-2 py-2 pt-6 text-white-100'>
         <FormattedDateTime
-          datetime={startDayTime ?? start ?? eventDate?.date}
-          endDatetime={endDayTime}
-          variant={isMoreThanOneDay ? 'pastPeriod' : 'pastDate'}
+          datetime={start ?? eventDate?.date}
+          variant='pastDate'
         />
       </div>
       <div className='px-6 py-6'>

@@ -1,28 +1,9 @@
 import { Box, Button, Card, Flex, Stack, Text, Tooltip } from '@sanity/ui'
 import { useCallback } from 'react'
 import type { ObjectInputProps } from 'sanity'
-import { set, unset } from 'sanity'
-import styled from 'styled-components'
+import { set, unset, useCurrentUser } from 'sanity'
 import { defaultBackgroundColors } from '../../defaultColors'
-
-const Circle = styled.div<{ $active: boolean }>`
-  display: inline-block;
-  border: solid 2px ${({ $active }) => ($active ? 'var(--card-focus-ring-color)' : 'transparent')};
-  border-radius: 50%;
-  padding: 4px;
-  cursor: pointer;
-
-  &:hover {
-    border-color: var(--card-focus-ring-color);
-  }
-`
-
-const InnerCircle = styled.div<{ color: string }>`
-  background-color: ${({ color }) => color};
-  border: 1px solid var(--card-hairline-soft-color);
-  padding: 15px;
-  border-radius: 50%;
-`
+import styles from './ColorSelector.module.css'
 
 export type ColorSelectorValue = {
   title: string
@@ -52,9 +33,18 @@ const ColorCircle = ({ color, active, onClickHandler }: ColorCircleProps) => (
       placement='top'
       portal
     >
-      <Circle $active={active} onClick={() => onClickHandler(color)}>
-        <InnerCircle color={color.value} />
-      </Circle>
+      <button
+        type='button'
+        className={`${styles.circle}${active ? ` ${styles.circleActive}` : ''}`}
+        onClick={() => onClickHandler(color)}
+        aria-label={color.title}
+        aria-pressed={active}
+      >
+        <div
+          className={styles.innerCircle}
+          style={{ backgroundColor: color.value }}
+        />
+      </button>
     </Tooltip>
   </Card>
 )
@@ -89,6 +79,10 @@ export const ColorSelector = ({
     onChange(unset(['key']))
   }, [onChange])
 
+  const isDeveloper = useCurrentUser()?.roles.some(
+    role => role.name === 'Developer',
+  )
+
   return (
     <Stack space={3}>
       {colors && (
@@ -108,18 +102,20 @@ export const ColorSelector = ({
                   />
                 )
               })}
-            <Button
-              onClick={handleClear}
-              mode='ghost'
-              fontSize={1}
-              paddingY={1}
-              paddingX={1}
-              text='Clear'
-              disabled={!value?.value}
-              style={{
-                marginLeft: '6px',
-              }}
-            />
+            {isDeveloper && (
+              <Button
+                onClick={handleClear}
+                mode='ghost'
+                fontSize={1}
+                paddingY={1}
+                paddingX={1}
+                text='Clear'
+                disabled={!value?.value}
+                style={{
+                  marginLeft: '6px',
+                }}
+              />
+            )}
           </Flex>
         </Card>
       )}

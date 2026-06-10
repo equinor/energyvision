@@ -9,7 +9,7 @@ export function RoleFilteredSelect(
   restrictedValues: string[],
   allowedRoles = defaultAllowedRoles,
 ) {
-  const { schemaType, onChange, value /*, renderDefault */ } = props
+  const { schemaType, onChange, readOnly, value /*, renderDefault */ } = props
   //@ts-ignore: has this
   const currentUser = useCurrentUser()
 
@@ -19,15 +19,17 @@ export function RoleFilteredSelect(
     typeof schemaType?.initialValue === 'string' ? schemaType.initialValue : ''
 
   useEffect(() => {
-    if (!value && initialValue) {
+    if (!readOnly && !value && initialValue) {
       onChange(set(initialValue))
     }
-  }, [initialValue, onChange, value])
+  }, [initialValue, onChange, readOnly, value])
 
   return (
     <Select
       value={value}
+      disabled={readOnly}
       onChange={event => {
+        if (readOnly) return
         const nextValue = event.currentTarget.value
         onChange(nextValue ? set(nextValue) : unset())
       }}

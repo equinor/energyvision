@@ -86,6 +86,27 @@ const heroType = {
   initialValue: 'default',
 }
 
+const heroTitle = {
+  name: 'heroTitle',
+  type: 'array',
+  title: 'Hero Title',
+  components: {
+    input: CompactBlockEditor,
+  },
+  of: [configureBlockContent({ variant: 'title' })],
+  fieldset: 'hero',
+  hidden: ({ parent }: DocumentType) => {
+    return parent?.heroType !== HeroTypes.FIFTY_FIFTY
+  },
+  validation: (Rule: Rule) =>
+    Rule.custom((value: string, context: ValidationContext) => {
+      const { parent } = context as unknown as DocumentType
+      if (parent?.heroType === HeroTypes.FIFTY_FIFTY && !value)
+        return 'Field is required'
+      return true
+    }),
+}
+
 const heroRatio = {
   title: 'Hero image ratio',
   name: 'heroRatio',
@@ -364,6 +385,7 @@ const containVideo = {
 export default [
   title,
   heroType,
+  heroTitle,
   applyDisplayText,
   useBrandTheme,
   heroRatio,

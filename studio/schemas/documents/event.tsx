@@ -86,14 +86,10 @@ export default {
       title: 'Date information',
       description:
         'The date field is deprecated, and will eventually be removed. Please use the "Event start" and "Event end" fields instead.',
-      deprecated: true,
       name: 'eventDate',
       type: 'eventDate',
-      hidden: ({ value }: any) => {
-        return !value
-      },
     },
-    defineField({
+    /*     defineField({
       type: 'object',
       name: 'startDayAndTime',
       title: 'Event start',
@@ -154,7 +150,7 @@ export default {
           type: 'string',
         },
       ],
-    }),
+    }), */
     {
       title: 'Event tags',
       name: 'eventTags',
