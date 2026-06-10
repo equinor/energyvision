@@ -48,6 +48,9 @@ const TopicPage = ({
     nextSectionDesignOptions: restData?.content?.[0]?.designOptions,
   }
 
+  const componentAfterHeroNeedsNoPt =
+    hero?.type === 'fiftyFifty' || breadcrumbs?.enableBreadcrumbs
+
   const heroBackground: Background & { heroHasBreadcrumbs?: boolean } =
     hero?.type === 'backgroundImage'
       ? {
@@ -58,7 +61,7 @@ const TopicPage = ({
       : {
           type: 'backgroundColor',
           backgroundUtility: hero?.background,
-          heroHasBreadcrumbs: breadcrumbs?.enableBreadcrumbs,
+          heroHasBreadcrumbs: componentAfterHeroNeedsNoPt,
         }
 
   return (

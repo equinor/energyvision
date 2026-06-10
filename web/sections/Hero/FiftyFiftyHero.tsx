@@ -8,7 +8,10 @@ import type { TypographyVariants } from '@/core/Typography'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import Blocks from '@/portableText/Blocks'
 import { getLocaleFromName } from '@/sanity/helpers/localization'
-import type { ColorKeys } from '@/styles/colorKeyToUtilityMap'
+import {
+  type ColorKeys,
+  getBgAndDarkFromBackground,
+} from '@/styles/colorKeyToUtilityMap'
 import type { DesignOptions, LinkData } from '@/types'
 
 export type FiftyFiftyHeroProps = {
@@ -22,6 +25,7 @@ export type FiftyFiftyHeroProps = {
   figure?: Figure
   nextSectionDesignOptions?: DesignOptions
   breadcrumbsComponent?: ReactNode
+  designOptions?: DesignOptions
 } & HTMLAttributes<HTMLElement>
 
 export const FiftyFiftyHero = ({
@@ -35,7 +39,9 @@ export const FiftyFiftyHero = ({
   figure,
   className = '',
   breadcrumbsComponent,
+  designOptions,
 }: FiftyFiftyHeroProps) => {
+  const { bg, dark } = getBgAndDarkFromBackground(designOptions)
   const heroUrl = heroLink && getUrlFromAction(heroLink)
   const url = link && getUrlFromAction(link)
   const action = heroLink ?? link
@@ -48,8 +54,8 @@ export const FiftyFiftyHero = ({
 
   return (
     <section>
-      <div className={twMerge(`flex flex-col-reverse`, className)}>
-        <div className={`${background} grid min-h-[350px] md:grid-cols-2`}>
+      <div className={twMerge(`flex flex-col-reverse ${bg}`, className)}>
+        <div className={`grid min-h-[350px] md:grid-cols-2`}>
           {/* Image Section */}
           {figure && (
             <Image

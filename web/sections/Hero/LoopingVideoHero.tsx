@@ -34,7 +34,6 @@ export const LoopingVideoHero = ({
   className = '',
   breadcrumbsComponent,
 }: LoopingVideoHeroProps) => {
-  console.log('video', video)
   const { ratio } = video
   const { bg: nextCompBg, dark: nextCompDark } = getBgAndDarkFromBackground(
     nextSectionDesignOptions,

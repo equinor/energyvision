@@ -284,6 +284,7 @@ const applyPaddingTopIfApplicable = (
       : 'pt-20'
   }
   //Hero has breadcrumbs which have enough padding bottom, the following component should not have pt-20
+  //Can also be used if hero has title below like 50/50 and dont need pt-20 after hero
   if (
     prevComponent?.heroHasBreadcrumbs &&
     (prevComponent?.type === 'pageTitle' ||

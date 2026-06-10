@@ -148,6 +148,11 @@ export const HeroBlock = ({
         return (
           <FiftyFiftyHero
             {...commonProps}
+            designOptions={{
+              background: {
+                backgroundUtility: background,
+              },
+            }}
             heroTitle={heroTitle}
             displayTextVariant={displayTextVariant}
             className={`mb-4 lg:mb-6`}

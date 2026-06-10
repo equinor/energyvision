@@ -206,12 +206,9 @@ const background = {
   name: 'heroBackground',
   type: 'colorlist',
   fieldset: 'hero',
-  hidden: ({ parent, currentUser }: DocumentType) => {
-    return !(
-      (parent?.heroType === HeroTypes.DEFAULT &&
-        isAllowed(currentUser?.roles)) ||
-      parent?.heroType === HeroTypes.FIFTY_FIFTY
-    )
+  hidden: ({ parent }: DocumentType) => {
+    //was discussed at some point with po : parent?.heroType === HeroTypes.DEFAULT && isAllowed(currentUser?.roles))
+    return !(parent?.heroType === HeroTypes.FIFTY_FIFTY)
   },
 }
 
