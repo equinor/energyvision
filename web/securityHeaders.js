@@ -36,6 +36,7 @@ const iframeSrcs = [
   'https://h61q9gi9.api.sanity.io',
   'http://localhost:3333',
   'https://eu.frcapi.com/',
+  'https://edge.media-server.com/mmc/p/i2qawkz9',
 ]
   .filter((e) => e)
   .join(' ')
