@@ -72,7 +72,7 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
       href={href}
       prefetch={false}
       className={twMerge(
-        `group/card md:min-w-[300px] xl:min-w-[383px] ${onColorBg ? 'bg-white-100' : 'bg-gray-20'} ${variantClassNames[variant]}`,
+        `group/card max-w-full overflow-hidden md:min-w-[300px] xl:min-w-[383px] ${onColorBg ? 'bg-white-100' : 'bg-gray-20'} ${variantClassNames[variant]}`,
         className,
       )}
     >
@@ -83,7 +83,8 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
           grid='xs'
           aspectRatio={'16:9'}
           className={twMerge(
-            `${imageVariantClassNames[variant]}`,
+            'aspect-4/3 lg:aspect-video',
+            imageVariantClassNames[variant],
             imageWrapperClassName,
           )}
           imageClassName={twMerge(

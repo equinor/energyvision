@@ -15,7 +15,9 @@ export const heroFields = /* groq */ `{
         },
     },
     },
-    "background": coalesce(heroBackground.key, 'white-100'),
+    "background": coalesce(heroBackground.key, ''),
+    //Fallback old that doesnt have key on its colorlist
+    "heroBackground": heroBackground.title,
     "backgroundGradient": heroBackgroundGradient,
     "useBrandTheme":heroUseBrandTheme,
     "displayTextVariant": coalesce(displayTextVariant, 'none'),

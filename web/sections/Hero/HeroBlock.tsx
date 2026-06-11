@@ -52,6 +52,8 @@ export enum HeroTypes {
 
 export type HeroData = {
   type?: HeroTypes
+  //Fallback to old colorlist fields without key, takes title for color
+  heroBackground?: string
 } & TextOnBackgroundImageHeroProps &
   LoopingVideoHeroProps &
   FullWidthImageHeroProps &
@@ -83,6 +85,7 @@ export const HeroBlock = ({
     figure,
     ratio,
     background,
+    heroBackground,
     magazineTags,
     link,
     heroLink,
@@ -117,8 +120,6 @@ export const HeroBlock = ({
     figure,
     title,
     ingress,
-    //@ts-ignore
-    background: colorKeyToUtilityMap[background]?.background,
     nextSectionDesignOptions: nextSectionDesignOptions,
     ...(magazineTags && { magazineTags }),
     ...((link || (heroLink && type === HeroTypes?.FIFTY_FIFTY)) && {
@@ -150,7 +151,11 @@ export const HeroBlock = ({
             {...commonProps}
             designOptions={{
               background: {
-                backgroundUtility: background,
+                ...(background
+                  ? { backgroundUtility: background }
+                  : {
+                      backgroundColor: heroBackground,
+                    }),
               },
             }}
             heroTitle={heroTitle}

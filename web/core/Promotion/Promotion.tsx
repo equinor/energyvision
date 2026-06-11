@@ -100,7 +100,7 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
         locale={locale}
         prefetch={false}
         className={twMerge(
-          `group/link grid h-full w-full rounded-card`,
+          `group/link grid h-full w-full max-w-full overflow-hidden rounded-card`,
           colorKeyToUtilityMap[background ?? 'gray-20'].background,
           type === 'compact' &&
             _layoutDirection === 'col' &&
@@ -119,6 +119,7 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
             image={image}
             fill
             className={twMerge(
+              'aspect-4/3',
               _layoutDirection === 'col' && `aspect-video h-full w-full`,
               _layoutDirection === 'row' && `h-full w-full`,
               _layoutDirection === 'row' && gridColumns && gridColumns === '2'
@@ -144,20 +145,30 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
         )}
         <div
           className={twMerge(
-            `flex h-full w-full flex-col`,
-            type === 'extended' && 'items-start px-6 pt-6 pb-6 md:pt-8',
+            `relative flex h-full w-full flex-col`,
+            type === 'extended' && 'items-start',
             type === 'compact' && 'min-h-25 items-center',
-            type === 'compact' &&
-              _layoutDirection === 'col' &&
-              'px-6 pt-6 pb-8',
-            type === 'compact' &&
-              _layoutDirection === 'row' &&
-              'py-4 pr-3 pl-4',
           )}
         >
-          <div className={twMerge('flex h-full max-w-prose grow flex-col')}>
+          <div
+            className={twMerge(
+              'flex h-full w-full grow flex-col items-start justify-center ps-10 pt-6',
+              type === 'extended' && 'justify-start pe-10 pb-12',
+              type === 'compact' && 'pe-13 pb-8',
+              type === 'compact' &&
+                _layoutDirection === 'row' &&
+                'ps-6 pe-13 pb-6',
+              /*               type === 'extended' && 'pt-6 pb-6 md:pt-8',
+              type === 'compact' &&
+                _layoutDirection === 'col' &&
+                'ps-10 pe-13 pt-6 pb-8',
+              type === 'compact' &&
+                _layoutDirection === 'row' &&
+                'py-4 ps-4 pe-3', */
+            )}
+          >
             {eyebrow && eyebrow}
-            <div className='flex flex-1 flex-col justify-start'>
+            <div className='flex h-fit flex-col justify-start'>
               {plainText && (
                 <Typography
                   as={hasSectionTitle ? 'h3' : 'h2'}
@@ -188,7 +199,18 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
           </div>
 
           {showArrow && (
-            <div className={`flex items-end justify-end self-end p-1`}>
+            <div
+              className={twMerge(
+                `absolute inset-e-6.5 bottom-5 p-1`,
+                /*                 type === 'extended' && 'inset-e-6 bottom-6',
+                type === 'compact' &&
+                  _layoutDirection === 'col' &&
+                  'inset-e-6 bottom-8',
+                type === 'compact' &&
+                  _layoutDirection === 'row' &&
+                  'inset-e-3 bottom-4', */
+              )}
+            >
               {getArrowElement(
                 variant === 'externalLink' ? 'externalUrl' : 'internalUrl',
                 `${
