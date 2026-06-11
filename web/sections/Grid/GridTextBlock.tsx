@@ -129,9 +129,9 @@ const GridTextBlock = forwardRef<HTMLDivElement, GridTextBlockProps>(
     const getLayout = () => {
       switch (rowType) {
         case 'span3':
-          return 'lg:grid lg:grid-cols-[35%_60%] gap-x-10 gap-y-0'
+          return 'lg:grid lg:grid-cols-[35%_60%] gap-x-10 gap-y-3'
         case 'span2and1':
-          return '4xl:grid 4xl:grid-cols-[35%_60%] gap-x-10 gap-y-0'
+          return '4xl:grid 4xl:grid-cols-[35%_60%] gap-x-10 gap-y-3'
         default:
           return ''
       }
@@ -147,7 +147,9 @@ const GridTextBlock = forwardRef<HTMLDivElement, GridTextBlockProps>(
               `flex flex-col text-balance ${getLayout()}`,
           )}
         >
-          <div className={twMerge(`${titleTextColor}`, 'flex items-end')}>
+          <div
+            className={twMerge(`${titleTextColor}`, 'flex items-end **:mb-0')}
+          >
             {overline ? (
               <hgroup
                 className={`flex max-w-text flex-col gap-2 ${
@@ -162,6 +164,7 @@ const GridTextBlock = forwardRef<HTMLDivElement, GridTextBlockProps>(
                     variant='h2'
                     //@ts-ignore: todo
                     value={useThemedTitle ? themedTitle : title}
+                    className={`**:mb-0`}
                     /*                   blockClassName={serializerClassnames} */
                   />
                 )}
@@ -173,7 +176,7 @@ const GridTextBlock = forwardRef<HTMLDivElement, GridTextBlockProps>(
                   //@ts-ignore: todo
                   value={useThemedTitle ? themedTitle : title}
                   /*                 blockClassName={serializerClassnames} */
-                  className={`${textContentAlignmentUtilities[contentAlignment ?? 'left']}`}
+                  className={`**:mb-0 ${textContentAlignmentUtilities[contentAlignment ?? 'left']}`}
                 />
               )
             )}
