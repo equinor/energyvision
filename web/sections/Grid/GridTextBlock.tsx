@@ -129,9 +129,9 @@ const GridTextBlock = forwardRef<HTMLDivElement, GridTextBlockProps>(
     const getLayout = () => {
       switch (rowType) {
         case 'span3':
-          return 'lg:grid lg:grid-cols-[35%_60%] gap-10'
+          return 'lg:grid lg:grid-cols-[35%_60%] gap-x-10 gap-y-0'
         case 'span2and1':
-          return '4xl:grid 4xl:grid-cols-[35%_60%] gap-10'
+          return '4xl:grid 4xl:grid-cols-[35%_60%] gap-x-10 gap-y-0'
         default:
           return ''
       }
@@ -147,7 +147,7 @@ const GridTextBlock = forwardRef<HTMLDivElement, GridTextBlockProps>(
               `flex flex-col text-balance ${getLayout()}`,
           )}
         >
-          <div className={titleTextColor}>
+          <div className={twMerge(`${titleTextColor}`, 'flex items-end')}>
             {overline ? (
               <hgroup
                 className={`flex max-w-text flex-col gap-2 ${
@@ -180,7 +180,8 @@ const GridTextBlock = forwardRef<HTMLDivElement, GridTextBlockProps>(
           </div>
           {content && (
             <div
-              className={`flex flex-col justify-end ${rowType === 'span3' ? 'lg:-translate-y-2.5' : ''}`}
+              className={`flex flex-col justify-end`}
+              //doesnt seem to be needed: ? ${rowType === 'span3' ? 'lg:-translate-y-2.5' : ''}
             >
               <Blocks
                 value={content}
