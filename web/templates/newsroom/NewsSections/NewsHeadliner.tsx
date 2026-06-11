@@ -31,7 +31,7 @@ const NewsHeadliner = forwardRef<HTMLLIElement, NewsHeadlinerProps>(
     return (
       <section ref={ref} {...rest} className={twMerge('', className)}>
         <BaseLink
-          href={`${locale !== defaultLanguage.locale ? `/${locale}` : ''}${slug}`}
+          href={`${locale !== defaultLanguage.locale && !slug.startsWith('/no') ? `/${locale}` : ''}${slug}`}
           className='group flex flex-col gap-2 pb-6'
         >
           {(heroImage?.image?.asset || fallbackImage || thumbnailUrl) && (

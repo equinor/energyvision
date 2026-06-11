@@ -31,7 +31,7 @@ const NewsItem = forwardRef<HTMLLIElement, NewsListItemProps>(function NewsItem(
   return (
     <section ref={ref} className={className}>
       <BaseLink
-        href={`${locale !== defaultLanguage.locale ? `/${locale}` : ''}${slug}`}
+        href={`${locale !== defaultLanguage.locale && !slug.startsWith('/no') ? `/${locale}` : ''}${slug}`}
         className='group flex justify-between gap-4 lg:gap-6'
       >
         <div className='max-w-[65%]'>
