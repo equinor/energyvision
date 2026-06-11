@@ -56,7 +56,7 @@ export const FiftyFiftyHero = ({
           className,
         )}
       >
-        <div className={`grid min-h-[350px] md:grid-cols-2`}>
+        <div className={`grid min-h-[350px] md:grid-cols-2 2xl:min-h-[500px]`}>
           {/* Image Section */}
           {figure && (
             <Image
@@ -116,19 +116,21 @@ export const FiftyFiftyHero = ({
           </div>
         </div>
       </div>
-      {breadcrumbsComponent && breadcrumbsComponent}
-      <Blocks
-        //@ts-ignore
-        value={title}
-        id='mainTitle'
-        tabIndex={-1}
-        variant='h1'
-        className={twMerge(
-          `w-full px-layout-sm lg:px-layout-lg`,
-          !breadcrumbsComponent && 'mt-8 lg:mt-10',
-          className,
-        )}
-      />
+      <div className='mx-auto max-w-content'>
+        {breadcrumbsComponent && breadcrumbsComponent}
+        <Blocks
+          //@ts-ignore
+          value={title}
+          id='mainTitle'
+          tabIndex={-1}
+          variant='h1'
+          className={twMerge(
+            `w-full px-layout-sm lg:px-layout-lg`,
+            !breadcrumbsComponent && 'mt-8 lg:mt-10',
+            className,
+          )}
+        />
+      </div>
     </section>
   )
 }
