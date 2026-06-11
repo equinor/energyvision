@@ -27,7 +27,7 @@ type EventCardEventFields = Pick<
 >
 
 export type EventCardData = {
-  type: 'event'
+  type: 'events'
 } & Pick<EventProps, 'id' | 'title' | 'slug'> &
   EventCardEventFields
 
