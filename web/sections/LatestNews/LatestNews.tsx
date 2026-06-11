@@ -43,7 +43,6 @@ const LatestNews = ({ data }: LatestNewsProp) => {
                 {...(newsItem?.publishDateTime && {
                   eyebrow: (
                     <FormattedDateTime
-                      variant='date'
                       datetime={newsItem?.publishDateTime}
                       uppercase
                       className='pb-2 font-medium text-xs'

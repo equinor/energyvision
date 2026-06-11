@@ -65,7 +65,6 @@ const UniversalHit: React.FC<HitProps> = ({ hit }) => {
       <BaseLink href={slug} className='group'>
         {formattedDate && type !== 'magazine' && (
           <FormattedDateTime
-            variant='date'
             uppercase
             datetime={formattedDate}
             className={`pb-3 text-xs tracking-wide`}

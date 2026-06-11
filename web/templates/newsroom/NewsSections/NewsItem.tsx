@@ -38,7 +38,6 @@ const NewsItem = forwardRef<HTMLLIElement, NewsListItemProps>(function NewsItem(
           {publishDateTime && (
             <div className='flex align-center'>
               <FormattedDateTime
-                variant='date'
                 datetime={publishDateTime}
                 uppercase
                 className='pb-1 font-normal text-2xs leading-normal'

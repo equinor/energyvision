@@ -52,6 +52,7 @@ const MagazinePage = ({
           <div className='flex items-center gap-2'>
             <TransformableIcon iconData={calendar} className='-mt-1' />
             <FormattedDateTime
+              variant='datetime'
               datetime={firstPublishedAt}
               className='text-base'
             />

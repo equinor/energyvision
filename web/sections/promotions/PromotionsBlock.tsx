@@ -272,7 +272,6 @@ const PromotionsBlock = ({
                       {...(promotion?.publishDateTime && {
                         eyebrow: (
                           <FormattedDateTime
-                            variant='date'
                             datetime={promotion?.publishDateTime}
                             uppercase
                             className='pb-2 font-medium text-xs'

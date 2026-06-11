@@ -76,7 +76,6 @@ const PromotionCard = forwardRef<HTMLAnchorElement, PromotionCardProps>(
             {...(publishDateTime && {
               eyebrow: (
                 <FormattedDateTime
-                  variant='date'
                   datetime={publishDateTime}
                   uppercase
                   className='text-xs'

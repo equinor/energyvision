@@ -98,7 +98,6 @@ const StockValues = ({
         {/*           {data && format(new Date(date), 'd LLLL yyyy hh:mm (z)')} */}
         {data && (
           <FormattedDateTime
-            variant='date'
             datetime={date}
             showTimezone
             noTimeZoneParanthesis
@@ -131,7 +130,6 @@ const StockValues = ({
         {data && (
           <>
             <FormattedDateTime
-              variant='date'
               datetime={date}
               showTimezone
               noTimeZoneParanthesis

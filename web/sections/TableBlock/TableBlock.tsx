@@ -148,7 +148,6 @@ const TableBlock = forwardRef<HTMLDivElement, TableBlockProps>(
               if (isValid(dateObj)) {
                 return (
                   <FormattedDateTime
-                    variant='date'
                     datetime={dateObj.toDateString()}
                     day='numeric'
                     year='numeric'
@@ -159,7 +158,6 @@ const TableBlock = forwardRef<HTMLDivElement, TableBlockProps>(
               if (isValid(dateObjAlternative)) {
                 return (
                   <FormattedDateTime
-                    variant='date'
                     datetime={dateObjAlternative.toDateString()}
                     day='numeric'
                     year='numeric'
