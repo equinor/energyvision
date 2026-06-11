@@ -18,7 +18,7 @@ const Span3 = forwardRef<HTMLDivElement, Span3Props>(function Span3(
       className={twMerge(
         `h-full w-full border border-moss-green-60 lg:col-span-3`,
         data?.content?.type !== 'videoPlayer' &&
-          'min-h-[350px] lg:min-h-[600px]',
+          'min-h-[350px] lg:min-h-[420px]',
         className,
       )}
     >

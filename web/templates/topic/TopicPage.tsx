@@ -60,7 +60,13 @@ const TopicPage = ({
         }
       : {
           type: 'backgroundColor',
-          backgroundUtility: hero?.background,
+          ...(hero?.background
+            ? {
+                backgroundUtility: hero.background as NonNullable<
+                  Background['backgroundUtility']
+                >,
+              }
+            : {}),
           heroHasBreadcrumbs: componentAfterHeroNeedsNoPt,
         }
 
