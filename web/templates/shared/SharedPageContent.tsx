@@ -635,6 +635,7 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
         return (
           <TableBlock
             key={c.id}
+            className={bottomSpacingClassName}
             variant='default'
             {...commonProps}
             {...(c as any)}
