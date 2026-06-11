@@ -16,7 +16,7 @@ import {
   ptBR,
 } from 'date-fns/locale'
 import { type DateTimeFormatOptions, useLocale } from 'next-intl'
-import { forwardRef, type HTMLAttributes } from 'react'
+import { forwardRef, type HTMLAttributes, useEffect, useState } from 'react'
 import { twMerge } from '@/lib/twMerge/twMerge'
 
 export const DateIcon = (): JSX.Element => (
@@ -128,6 +128,12 @@ const FormattedDateTime = forwardRef<HTMLDivElement, FormattedDateTimeProps>(
     ref,
   ) => {
     const locale = useLocale()
+    const [isMounted, setIsMounted] = useState(false)
+
+    useEffect(() => {
+      setIsMounted(true)
+    }, [])
+
     const _showTimezone =
       showTimezone ?? (variant !== 'date' && variant !== 'pastDate')
 
@@ -154,8 +160,10 @@ const FormattedDateTime = forwardRef<HTMLDivElement, FormattedDateTimeProps>(
       dateFormat = `${dateFormat} p`
     }
 
-    // Get browser's timezone string automatically
-    const browserTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
+    // Keep the initial server/client render deterministic, then switch to browser timezone.
+    const browserTimeZone = isMounted
+      ? Intl.DateTimeFormat().resolvedOptions().timeZone
+      : 'Europe/Oslo'
     const timezoneName = getTimezoneName(date, locale, browserTimeZone)
 
     const formattedDate = `${format(date, dateFormat, {
@@ -174,11 +182,7 @@ const FormattedDateTime = forwardRef<HTMLDivElement, FormattedDateTimeProps>(
         {dateIcon && <DateIcon />}
         {timeIcon && <TimeIcon />}
         <div className={twMerge('mt-1.5', timeClassName)}>
-          <time
-            suppressHydrationWarning
-            dateTime={formattedDate}
-            className={timeClassName}
-          >
+          <time dateTime={formattedDate} className={timeClassName}>
             {variant !== 'pastDate' ? (
               formattedDate
             ) : (
