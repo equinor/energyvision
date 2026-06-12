@@ -1,4 +1,4 @@
-import { Ref } from 'react'
+import type { Ref } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { resolveImage } from '@/sanity/lib/utils'
 import { FigureCaption } from '../FigureCaption/FigureCaption'

@@ -10,6 +10,7 @@ import type { DesignOptions } from '@/types'
 import MagazineTagBar, {
   type MagazineTag,
 } from '../MagazineTags/MagazineTagBar'
+import { getColorForTabsTheme } from '../TabsBlock/tabThemes'
 
 export type FullWidthImageHeroVariant = 'default' | 'tall' | 'narrow'
 /** For heroData */
@@ -47,6 +48,14 @@ export const FullWidthImageHero = ({
   const { bg: nextCompBg, dark: nextCompDark } = getBgAndDarkFromBackground(
     nextSectionDesignOptions,
   )
+  let bg = nextCompBg ? nextCompBg : ''
+  let dark = nextCompDark ? 'dark' : ''
+  //@ts-ignore
+  if (nextSectionDesignOptions?.theme >= 0) {
+    //@ts-ignore
+    bg = getColorForTabsTheme(nextSectionDesignOptions?.theme).backgroundUtility
+    dark = ''
+  }
 
   const ratioToVariant: Record<FullWidthImageHeroVariant, ImageRatioKeys> = {
     narrow: '10:3',
@@ -66,16 +75,13 @@ export const FullWidthImageHero = ({
       : `h1`
 
   return (
-    <div className={`${nextCompBg} ${nextCompDark ? nextCompDark : ''}`}>
+    <div className={twMerge(bg, dark, className)}>
       <div className='mx-auto max-w-fullwidth'>
         {figure?.image && (
           <Picture
             image={figure.image}
             desktopAspectRatio={ratioToVariant[variant]}
-            figCaptionClassName={twMerge(
-              `${nextCompBg ? nextCompBg : ''} ${nextCompDark ? nextCompDark : ''}`,
-              figCaptionClassName,
-            )}
+            figCaptionClassName={twMerge(bg, dark, figCaptionClassName)}
             caption={figure?.caption}
             attribution={figure?.attribution}
             className={`${variantClassName[variant]}`}

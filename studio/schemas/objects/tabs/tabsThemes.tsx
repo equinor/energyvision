@@ -37,7 +37,6 @@ export const getColorForTabTheme = (
           key: defaultColors[7].key,
         },
       }
-    case 0:
     default:
       return {
         background: {

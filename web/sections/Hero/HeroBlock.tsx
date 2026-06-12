@@ -1,12 +1,9 @@
 import { toPlainText } from 'next-sanity'
 import type { HTMLAttributes } from 'react'
 import { Breadcrumbs } from '@/core/Breadcrumbs/Breadcrumbs'
-
-import {
-  colorKeyToUtilityMap,
-  getBgAndDarkFromBackground,
-} from '@/styles/colorKeyToUtilityMap'
+import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
 import type { DesignOptions } from '@/types'
+import { getColorForTabsTheme } from '../TabsBlock/tabThemes'
 import { DefaultHero, type DefaultHeroProps } from './DefaultHero'
 import { FiftyFiftyHero, type FiftyFiftyHeroProps } from './FiftyFiftyHero'
 import {
@@ -100,15 +97,24 @@ export const HeroBlock = ({
     nextSectionDesignOptions,
   )
 
+  let bg = nextCompBg ? nextCompBg : ''
+  let dark = nextCompDark ? 'dark' : ''
+  //@ts-ignore next section is tabs with theme
+  if (nextSectionDesignOptions?.theme >= 0) {
+    //@ts-ignore
+    bg = getColorForTabsTheme(nextSectionDesignOptions?.theme).backgroundUtility
+    dark = ''
+  }
+
   const breadcrumbsElement = (
     <Breadcrumbs
       //@ts-ignore
-      background={type !== HeroTypes?.DEFAULT ? nextCompBg : undefined}
+      background={type !== HeroTypes?.DEFAULT ? bg : undefined}
       currentSlug={breadcrumbs?.currentSlug}
       useCustomBreadcrumbs={breadcrumbs?.useCustomBreadcrumbs}
       defaultBreadcrumbs={breadcrumbs?.defaultBreadcrumbs}
       customBreadcrumbs={breadcrumbs?.customBreadcrumbs}
-      className={`${nextCompDark ? nextCompDark : ''} ${type === HeroTypes?.DEFAULT && (figure?.caption || figure?.attribution) ? 'pt-2' : ''}`}
+      className={`${dark ? dark : ''} ${type === HeroTypes?.DEFAULT && (figure?.caption || figure?.attribution) ? 'pt-2' : ''}`}
     />
   )
   const heroTypesThatHaveBreadcrumbsBelow = [
@@ -210,12 +216,12 @@ export const HeroBlock = ({
         heroTypesThatHaveBreadcrumbsBelow.includes(type) && (
           <Breadcrumbs
             //@ts-ignore
-            background={type !== HeroTypes?.DEFAULT ? nextCompBg : undefined}
+            background={type !== HeroTypes?.DEFAULT ? bg : undefined}
             currentSlug={breadcrumbs.currentSlug}
             useCustomBreadcrumbs={breadcrumbs?.useCustomBreadcrumbs}
             defaultBreadcrumbs={breadcrumbs?.defaultBreadcrumbs}
             customBreadcrumbs={breadcrumbs?.customBreadcrumbs}
-            className={`${nextCompDark ? nextCompDark : ''} ${type === HeroTypes?.DEFAULT && (figure?.caption || figure?.attribution) ? 'pt-2' : ''}`}
+            className={`${dark ? dark : ''} ${type === HeroTypes?.DEFAULT && (figure?.caption || figure?.attribution) ? 'pt-2' : ''}`}
           />
         )}
     </section>

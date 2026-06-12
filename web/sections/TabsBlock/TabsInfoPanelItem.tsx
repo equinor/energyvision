@@ -49,6 +49,18 @@ const TabsInfoPanelItem = forwardRef<HTMLDivElement, TabsInfoPanelItemProps>(
     },
     ref,
   ) {
+    console.log('rendering info panel item with props', {
+      image,
+      caption,
+      imageVariant,
+      backgroundPosition,
+      title,
+      text,
+      keyInfo,
+      actions,
+      keyInfoTitle,
+      className,
+    })
     const intl = useTranslations()
     const isLargerDisplays = useMediaQuery(`(min-width: 800px)`)
 
@@ -128,17 +140,20 @@ const TabsInfoPanelItem = forwardRef<HTMLDivElement, TabsInfoPanelItemProps>(
               caption={caption}
               fill
               aspectRatio={imageVariant === 'sideImage' ? '2:1' : '10:3'}
-              {...(caption &&
-                imageVariant === 'bannerImage' && {
-                  figureClassName:
-                    'flex flex-col h-auto col-span-2 row-span-1 min-w-0',
-                })}
+              figureClassName={twMerge(
+                caption &&
+                  imageVariant === 'bannerImage' &&
+                  'col-span-2 row-span-1 flex h-auto min-w-0 flex-col',
+              )}
               className={twMerge(
                 'relative h-full w-full',
                 ((!caption && imageVariant === 'bannerImage') ||
                   imageVariant === 'backgroundImage') &&
-                  'col-span-2 row-span-1 min-w-0',
-                imageVariant === 'sideImage' && 'mt-10 lg:aspect-auto',
+                  'min-w-0 lg:col-span-2 lg:row-span-1',
+                imageVariant === 'sideImage' &&
+                  'mt-10 aspect-4/3 lg:aspect-video',
+                imageVariant === 'bannerImage' && 'aspect-4/3 lg:aspect-10/3',
+                imageVariant === 'backgroundImage' && 'max-lg:aspect-4/3',
               )}
               imageClassName={twMerge(
                 imageVariant === 'sideImage' && 'rounded-md',
@@ -156,7 +171,7 @@ const TabsInfoPanelItem = forwardRef<HTMLDivElement, TabsInfoPanelItemProps>(
           className={twMerge(
             'flex max-w-text flex-col',
             imageVariant === 'backgroundImage' &&
-              'z-10 row-start-1 row-end-1 pt-14',
+              'z-10 row-start-1 row-end-1 pt-6 lg:pt-14',
             imageVariant !== 'backgroundImage' && 'row-start-2 row-end-2',
             imageVariant === 'sideImage' &&
               'order-1 col-span-full lg:order-2 lg:col-span-1',
