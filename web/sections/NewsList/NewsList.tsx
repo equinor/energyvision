@@ -34,7 +34,7 @@ const NewsList = ({
   const { title, articles } = data
   const { background } = designOptions || {}
   const { backgroundUtility } = background || {}
-  const hitsPerPage = 16
+  const hitsPerPage = 18 // keep in multiples of 6 so each page is filled except the last
   const totalPages = Math.ceil(articles.length / hitsPerPage)
   const [currentPage, setCurrentPage] = useState(0)
 
