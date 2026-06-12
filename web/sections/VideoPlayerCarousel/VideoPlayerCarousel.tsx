@@ -74,7 +74,7 @@ const VideoPlayerCarousel = forwardRef<
         variant='video'
         labelledbyId={title ? headingId : undefined}
         autoRotation={false}
-        containerClassName={`${scrollMode ? 'px-layout-sm lg:px-layout-md' : ''}`}
+        containerClassName={`${scrollMode ? 'px-layout-sm lg:px-layout-md max-w-content mx-auto' : ''}`}
       />
     </section>
   )
