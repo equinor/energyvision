@@ -906,7 +906,7 @@ const snippets: textSnippet = {
   last_modified: {
     title: 'Last modified',
     defaultValue: 'Last modified',
-    group: groups.newsroom,
+    group: groups.common,
   },
   not_valid_input: {
     title: 'Invalid characters found',
