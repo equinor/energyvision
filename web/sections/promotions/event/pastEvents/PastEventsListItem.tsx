@@ -53,7 +53,7 @@ const PastEventsListItem = forwardRef<
             <Icon
               data={world}
               color={'currentColor'}
-              className='text-2xs text-norwegian-woods-100'
+              className='shrink-0 text-2xs text-norwegian-woods-100'
             />
             <Typography
               group='plain'

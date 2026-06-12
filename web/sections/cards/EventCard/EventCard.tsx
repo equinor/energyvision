@@ -121,7 +121,7 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
             <Icon
               data={world}
               color={'currentColor'}
-              className='text-2xs text-norwegian-woods-100'
+              className='shrink-0 text-2xs text-norwegian-woods-100'
             />
             <div className='mt-1 flex text-sm leading-none'>{location}</div>
           </div>
