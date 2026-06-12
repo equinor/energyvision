@@ -41,7 +41,7 @@ export const TextOnBackgroundImageHero = ({
   className = '',
   useBrandTheme = false,
   displayTextVariant = 'none',
-  layoutGrid = 'lg',
+  layoutGrid = 'sm',
   useBlurCenter,
   heroMobileImage,
   alignContentY = 'center',
@@ -94,14 +94,14 @@ export const TextOnBackgroundImageHero = ({
     />
   )
 
-  const px = getLayoutPx(layoutGrid ?? 'lg')
+  const px = getLayoutPx(layoutGrid)
 
   return (
     <div
       className={twMerge(
-        `relative flex py-12 ${contentAligment[alignContentY ?? 'center']} lg:min-h-[clamp(350px,35vh,40vh)] ${
+        `relative flex w-full ${contentAligment[alignContentY ?? 'center']} lg:min-h-[clamp(350px,35vh,40vh)] ${
           backgroundGradient === 'dark' ? 'dark' : ''
-        } ${figure && imageUrl ? 'bg-center bg-cover bg-no-repeat' : ''} ${px}`,
+        } ${figure && imageUrl ? 'bg-center bg-cover bg-no-repeat' : ''}`,
         className,
       )}
       {...(url && {
@@ -110,11 +110,13 @@ export const TextOnBackgroundImageHero = ({
         },
       })}
     >
-      <div
-        className={`z-1 flex max-w-text flex-col ${useBrandTheme ? '*:text-energy-red-100' : ''}`}
-      >
-        {titleElement}
-        {isMagazineRoom && ingressElement}
+      <div className={twMerge(`z-1 mx-auto w-full max-w-content py-12`, px)}>
+        <div
+          className={`flex max-w-text flex-col ${useBrandTheme ? '*:text-energy-red-100' : ''}`}
+        >
+          {titleElement}
+          {isMagazineRoom && ingressElement}
+        </div>
       </div>
       {(backgroundGradient === 'dark' || backgroundGradient === 'light') && (
         <div

@@ -27,10 +27,10 @@ const AnchorLinkList = forwardRef<HTMLElement, AnchorLinkListProps>(
     const { title, anchorList = [], columns, layoutGrid, hideTitle } = data
 
     const getFlow = () => {
-      const commonGridStyling =
-        'flex flex-wrap lg:grid lg:place-items-center lg:grid-cols-3'
+      const commonGridStyling = 'flex flex-wrap lg:grid lg:place-items-center'
+      //lg:place-items-center
 
-      const pxVariant = {
+      const gridColsVariant = {
         lg: `lg:grid-cols-[repeat(auto-fit,_minmax(100px,_1fr))]`,
         md: `lg:grid-cols-[repeat(auto-fit,_minmax(150px,_1fr))]`,
         sm: `lg:grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))]`,
@@ -46,7 +46,7 @@ const AnchorLinkList = forwardRef<HTMLElement, AnchorLinkListProps>(
         case '6':
           return `${commonGridStyling} lg:grid-cols-6`
         default:
-          return `grid ${pxVariant[layoutGrid ?? 'lg']} place-content-center`
+          return `flex flex-wrap lg:grid ${gridColsVariant[layoutGrid ?? 'md']}`
       }
     }
 
@@ -58,21 +58,22 @@ const AnchorLinkList = forwardRef<HTMLElement, AnchorLinkListProps>(
         className={twMerge(`py-6 lg:pt-6 lg:pb-12`, className)}
         id={anchor}
       >
-        <div className='w-full border-moss-green-50 border-y py-6'>
-          <div className='px-layout-sm lg:px-layout-lg'>
+        <div className='mx-auto w-full max-w-content border-moss-green-50 border-y py-6'>
+          <div className={twMerge(`flex flex-col items-start ${px}`)}>
             {title && (
               <Typography
                 variant='h5'
                 as='h2'
-                className={`${hideTitle ? 'sr-only' : 'pb-4 text-center'} `}
+                className={`${hideTitle ? 'sr-only' : 'pb-4'} `}
               >
                 {title}
               </Typography>
             )}
-          </div>
-          <div className={twMerge(`flex flex-col items-center ${px}`)}>
             <ul
-              className={`${getFlow()} gap-x-4 gap-y-2 lg:gap-x-6 lg:gap-y-4`}
+              className={twMerge(
+                `gap-x-4 gap-y-2 lg:gap-x-6 lg:gap-y-4`,
+                getFlow(),
+              )}
             >
               {anchorList?.map(
                 (anchorLink: {

@@ -6,7 +6,6 @@ import type {
   StringSchemaType,
   ValidationContext,
 } from 'sanity'
-import { isAllowed } from '@/helpers/isAllowed'
 import { RoleFilteredSelect } from '@/schemas/components/RoleFilteredSelect/RoleFilteredSelect'
 import { Select } from '@/schemas/components/Select/Select'
 import {
@@ -328,9 +327,14 @@ const applyDisplayText = {
   },
 }
 
-const layoutGrid = _layoutGrid(({ parent }: DocumentType) => {
-  return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE
-}, 'hero')
+const layoutGrid = _layoutGrid(
+  ({ parent }: DocumentType) => {
+    return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE
+  },
+  'hero',
+  'sm',
+  'Optional. Select content column. Default is third outer.',
+)
 
 const alignContentY = {
   title: 'Vertical content alignment',

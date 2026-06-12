@@ -101,19 +101,21 @@ export const PaneMenuItem = forwardRef<HTMLLIElement, PaneMenuItemProps>(
             }}
           >
             {!!readMoreLink?.link?.slug && (
-              <ResourceLink
-                href={getMenuLink(readMoreLink, iso)}
-                className={`
+              <li>
+                <ResourceLink
+                  href={getMenuLink(readMoreLink, iso)}
+                  className={`
               ${ariaCurrentStyling}w-fit pt-0 hover:text-north-sea-50`}
-                aria-current={
-                  pathname === readMoreLink?.link?.slug ? 'page' : 'false'
-                }
-                {...(linkCallback && {
-                  onClick: linkCallback,
-                })}
-              >
-                {readMoreLink.label}
-              </ResourceLink>
+                  aria-current={
+                    pathname === readMoreLink?.link?.slug ? 'page' : 'false'
+                  }
+                  {...(linkCallback && {
+                    onClick: linkCallback,
+                  })}
+                >
+                  {readMoreLink.label}
+                </ResourceLink>
+              </li>
             )}
             {links?.map((link: any) => (
               <li key={link.id} className='relative'>
