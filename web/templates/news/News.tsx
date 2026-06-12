@@ -75,20 +75,20 @@ const NewsPage = async ({
       <TransformableIcon iconData={calendar} className='md:-mt-1' />
       <div className='flex flex-col items-start gap-2 lg:flex-row lg:items-center'>
         <FormattedDateTime variant='datetime' datetime={publishDateTime} />
-        <div className='flex lg:items-center'>
-          {showModifiedDate && (
-            <>
-              <div className='mr-2 hidden lg:flex'>|</div>
+
+        {showModifiedDate && (
+          <div className='flex lg:items-center'>
+            <span className='mt-1.5 lg:before:mr-4 lg:before:content-["|"]'>
               {intl('last_modified') ?? 'Last modified'}
-              <span className='w-1' />
-              <FormattedDateTime
-                variant='datetime'
-                datetime={modifiedDate}
-                showTimezone={false}
-              />
-            </>
-          )}
-        </div>
+            </span>
+            <span className='w-2' />
+            <FormattedDateTime
+              variant='datetime'
+              datetime={modifiedDate}
+              showTimezone={false}
+            />
+          </div>
+        )}
       </div>
     </div>
   )
