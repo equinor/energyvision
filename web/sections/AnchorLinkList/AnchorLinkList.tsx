@@ -27,8 +27,8 @@ const AnchorLinkList = forwardRef<HTMLElement, AnchorLinkListProps>(
     const { title, anchorList = [], columns, layoutGrid, hideTitle } = data
 
     const getFlow = () => {
-      const commonGridStyling = 'flex flex-wrap lg:grid lg:place-items-center'
-      //lg:place-items-center
+      const commonGridStyling = 'flex flex-wrap lg:grid'
+      //lg:place-items-center to be discussed
 
       const gridColsVariant = {
         lg: `lg:grid-cols-[repeat(auto-fit,_minmax(100px,_1fr))]`,
@@ -46,11 +46,14 @@ const AnchorLinkList = forwardRef<HTMLElement, AnchorLinkListProps>(
         case '6':
           return `${commonGridStyling} lg:grid-cols-6`
         default:
-          return `flex flex-wrap lg:grid ${gridColsVariant[layoutGrid ?? 'md']}`
+          return `flex flex-wrap lg:grid ${gridColsVariant[layoutGrid ?? 'lg']}`
       }
     }
 
-    const px = getLayoutPx(layoutGrid ?? 'md')
+    //discuss md or lg as fallback
+    //title align with rest of text headings or width the achor link list
+
+    const px = getLayoutPx(layoutGrid ?? 'lg')
 
     return (
       <section
