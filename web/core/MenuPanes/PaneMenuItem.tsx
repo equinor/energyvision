@@ -29,8 +29,6 @@ export const PaneMenuItem = forwardRef<HTMLLIElement, PaneMenuItemProps>(
     const firstPaneRef = useRef<HTMLDivElement>(null)
     const secondPaneRef = useRef<HTMLUListElement>(null)
     const [translateX, setTranslateX] = useState('100%')
-    const [secondPaneHeight, setSecondPaneHeight] = useState(0)
-    const [liOffsetTop, setLiOffsetTop] = useState(0)
     const t = useTranslations()
 
     if (item?.type === 'simpleMenuLink' && item.link && !item.link.slug) {
@@ -52,27 +50,11 @@ export const PaneMenuItem = forwardRef<HTMLLIElement, PaneMenuItemProps>(
     useEffect(() => {
       if (firstPaneRef?.current) {
         setTranslateX(firstPaneRef.current.clientWidth.toString())
-        const liEl = firstPaneRef.current.parentElement as HTMLElement | null
-        if (liEl) {
-          setLiOffsetTop(liEl.offsetTop)
-        }
-      }
-      if (secondPaneRef?.current) {
-        setSecondPaneHeight(secondPaneRef.current.scrollHeight)
       }
     }, [])
 
     return (
-      <li
-        ref={ref}
-        className='w-full'
-        style={{
-          minHeight:
-            showSecondPane && secondPaneHeight
-              ? secondPaneHeight - liOffsetTop
-              : undefined,
-        }}
-      >
+      <li ref={ref} className='w-full'>
         <div ref={firstPaneRef} className='group flex w-full text-white-100'>
           {type === 'simpleMenuLink' ? (
             <Link
@@ -114,7 +96,7 @@ export const PaneMenuItem = forwardRef<HTMLLIElement, PaneMenuItemProps>(
           ref={secondPaneRef}
           id={secondPaneId}
           aria-labelledby={id}
-          className={`absolute top-0 ml-14 flex w-inherit min-w-[40vw] flex-col gap-6 border-white-100 border-l px-12 ${showSecondPane ? 'visible' : 'invisible'}`}
+          className={`absolute top-0 ml-14 flex w-inherit min-w-[40vw] flex-col gap-6 border-white-100 border-l px-12 last:pb-12 ${showSecondPane ? 'visible' : 'invisible'}`}
           style={{
             transform: `translate(${translateX}px)`,
           }}

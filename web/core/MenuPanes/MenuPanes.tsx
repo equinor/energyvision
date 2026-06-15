@@ -1,5 +1,5 @@
 'use client'
-import { forwardRef, useState } from 'react'
+import { forwardRef, useEffect, useRef, useState } from 'react'
 import type { SimpleGroupData } from '../../types'
 import { PaneMenuItem } from './PaneMenuItem'
 
@@ -14,6 +14,8 @@ export const MenuPanes = forwardRef<HTMLDivElement, MenuPanesProps>(
     const [openPaneId, setOpenPaneId] = useState<number>(
       currentMenuItemIndex ? parseInt(currentMenuItemIndex, 10) : -1,
     )
+    const ulRef = useRef<HTMLUListElement>(null)
+    const [maxNestedHeight, setMaxNestedHeight] = useState(0)
 
     const handleOpen = (index: number) => {
       if (index === openPaneId) {
@@ -23,9 +25,27 @@ export const MenuPanes = forwardRef<HTMLDivElement, MenuPanesProps>(
       }
     }
 
+    useEffect(() => {
+      if (ulRef.current) {
+        const nestedUls = ulRef.current.querySelectorAll('li > ul')
+        let maxHeight = 0
+        nestedUls.forEach(ul => {
+          const height = (ul as HTMLUListElement).scrollHeight
+          if (height > maxHeight) {
+            maxHeight = height
+          }
+        })
+        setMaxNestedHeight(maxHeight)
+      }
+    }, [])
+
     return (
       <section ref={ref} className='h-full'>
-        <ul className='relative flex w-max max-w-[50vw] flex-col gap-6 pb-4'>
+        <ul
+          ref={ulRef}
+          className='relative flex w-max max-w-[50vw] flex-col gap-6 pb-4'
+          style={{ minHeight: maxNestedHeight || undefined }}
+        >
           {menuItems?.map((item, idx: number) => {
             return (
               <PaneMenuItem
