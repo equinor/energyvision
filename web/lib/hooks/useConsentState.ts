@@ -26,9 +26,11 @@ function useConsentState(
     const manageCookies = () => {
       changeConsent(checkCookieConsent(consentType))
     }
+    console.log('adding listeners')
     window?.addEventListener('CookiebotOnAccept', manageCookies)
     window?.addEventListener('CookiebotOnDecline', manageCookies)
     return () => {
+      console.log('removing listeners')
       window.removeEventListener('CookiebotOnAccept', manageCookies)
       window.removeEventListener('CookiebotOnDecline', manageCookies)
     }
