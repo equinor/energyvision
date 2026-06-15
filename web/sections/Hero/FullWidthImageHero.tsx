@@ -59,14 +59,8 @@ export const FullWidthImageHero = ({
 
   const ratioToVariant: Record<FullWidthImageHeroVariant, ImageRatioKeys> = {
     narrow: '10:3',
-    tall: '5:4',
+    tall: '16:9',
     default: '2:1',
-  }
-
-  const variantClassName: Record<FullWidthImageHeroVariant, string> = {
-    narrow: ``,
-    tall: `4xl:h-[67vh] h-auto w-full h-[43vh] md:h-[53vh] lg:h-[65vh]`,
-    default: ``,
   }
 
   const titleVariant =
@@ -84,7 +78,11 @@ export const FullWidthImageHero = ({
             figCaptionClassName={twMerge(bg, dark, figCaptionClassName)}
             caption={figure?.caption}
             attribution={figure?.attribution}
-            className={`${variantClassName[variant]}`}
+            className={twMerge(
+              'flex',
+              variant === 'tall' &&
+                `4xl:h-[67vh] h-[43vh] w-full md:h-[53vh] lg:h-[65vh]`,
+            )}
           />
         )}
       </div>
