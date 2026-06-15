@@ -4,6 +4,7 @@ import localFont from 'next/font/local'
 import { draftMode } from 'next/headers'
 import NextLink from 'next/link'
 import { notFound } from 'next/navigation'
+import Script from 'next/script'
 import { hasLocale, NextIntlClientProvider } from 'next-intl'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { PageProvider } from '@/contexts/pageContext'
@@ -98,14 +99,16 @@ export default async function LocaleLayout({
         </NextIntlClientProvider>
       </body>
       {/** TODO look into scripts */}
-      {/*       <Script
-        src='https://consent.cookiebot.com/uc.js'
-        id='Cookiebot'
-        strategy='beforeInteractive'
-        data-cbid='f1327b03-7951-45da-a2fd-9181babc783f'
-        data-blockingmode='auto'
-        data-culture={locale === 'nb_NO' ? 'nb' : locale}
-      /> */}
+      {
+        <Script
+          src='https://consent.cookiebot.com/uc.js'
+          id='Cookiebot'
+          strategy='beforeInteractive'
+          data-cbid='f1327b03-7951-45da-a2fd-9181babc783f'
+          data-blockingmode='auto'
+          data-culture={locale === 'nb_NO' ? 'nb' : locale}
+        />
+      }
       <GoogleTagManagerHead />
       <SiteImprove />
     </html>
