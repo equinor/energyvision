@@ -258,7 +258,7 @@ const SiteMenu = ({ variant = 'default', siteMenuData }: SiteMenuProps) => {
                     href={allSitesURL}
                     onClick={handleLinkClick}
                   >
-                    {intl('all_sites')}
+                    {intl('all_sites') ?? 'All sites'}
                     {!Flags.IS_GLOBAL_PROD && (
                       <ArrowRight className='-translate-y-0.5 ml-0.5 rotate-[-50deg] transform text-gray-500 group-hover:text-moss-green-90' />
                     )}

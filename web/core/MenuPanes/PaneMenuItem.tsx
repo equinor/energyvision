@@ -27,7 +27,10 @@ export const PaneMenuItem = forwardRef<HTMLLIElement, PaneMenuItemProps>(
     const id = useId()
     const secondPaneId = useId()
     const firstPaneRef = useRef<HTMLDivElement>(null)
+    const secondPaneRef = useRef<HTMLUListElement>(null)
     const [translateX, setTranslateX] = useState('100%')
+    const [secondPaneHeight, setSecondPaneHeight] = useState(0)
+    const [liOffsetTop, setLiOffsetTop] = useState(0)
     const t = useTranslations()
 
     if (item?.type === 'simpleMenuLink' && item.link && !item.link.slug) {
@@ -49,11 +52,27 @@ export const PaneMenuItem = forwardRef<HTMLLIElement, PaneMenuItemProps>(
     useEffect(() => {
       if (firstPaneRef?.current) {
         setTranslateX(firstPaneRef.current.clientWidth.toString())
+        const liEl = firstPaneRef.current.parentElement as HTMLElement | null
+        if (liEl) {
+          setLiOffsetTop(liEl.offsetTop)
+        }
+      }
+      if (secondPaneRef?.current) {
+        setSecondPaneHeight(secondPaneRef.current.scrollHeight)
       }
     }, [])
 
     return (
-      <li ref={ref} className='w-full'>
+      <li
+        ref={ref}
+        className='w-full'
+        style={{
+          minHeight:
+            showSecondPane && secondPaneHeight
+              ? secondPaneHeight - liOffsetTop
+              : undefined,
+        }}
+      >
         <div ref={firstPaneRef} className='group flex w-full text-white-100'>
           {type === 'simpleMenuLink' ? (
             <Link
@@ -91,50 +110,47 @@ export const PaneMenuItem = forwardRef<HTMLLIElement, PaneMenuItemProps>(
             </button>
           )}
         </div>
-        {showSecondPane && (
-          <ul
-            id={secondPaneId}
-            aria-labelledby={id}
-            className={`absolute top-0 ml-14 flex h-full w-inherit min-w-[40vw] flex-col gap-6 border-white-100 border-l px-12`}
-            style={{
-              transform: `translate(${translateX}px)`,
-            }}
-          >
-            {!!readMoreLink?.link?.slug && (
-              <li>
-                <ResourceLink
-                  href={getMenuLink(readMoreLink, iso)}
-                  className={`
+        <ul
+          ref={secondPaneRef}
+          id={secondPaneId}
+          aria-labelledby={id}
+          className={`absolute top-0 ml-14 flex w-inherit min-w-[40vw] flex-col gap-6 border-white-100 border-l px-12 ${showSecondPane ? 'visible' : 'invisible'}`}
+          style={{
+            transform: `translate(${translateX}px)`,
+          }}
+        >
+          {!!readMoreLink?.link?.slug && (
+            <li>
+              <ResourceLink
+                href={getMenuLink(readMoreLink, iso)}
+                className={`
               ${ariaCurrentStyling}w-fit pt-0 hover:text-north-sea-50`}
-                  aria-current={
-                    pathname === readMoreLink?.link?.slug ? 'page' : 'false'
-                  }
-                  {...(linkCallback && {
-                    onClick: linkCallback,
-                  })}
-                >
-                  {readMoreLink.label}
-                </ResourceLink>
-              </li>
-            )}
-            {links?.map((link: any) => (
-              <li key={link.id} className='relative'>
-                <Link
-                  className={`${ariaCurrentStyling} no-underline decoration-2 underline-offset-2 hover:underline dark:hover:text-north-sea-50`}
-                  href={getMenuLink(link, iso)}
-                  aria-current={
-                    pathname === link?.link?.slug ? 'page' : 'false'
-                  }
-                  {...(linkCallback && {
-                    onClick: linkCallback,
-                  })}
-                >
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        )}
+                aria-current={
+                  pathname === readMoreLink?.link?.slug ? 'page' : 'false'
+                }
+                {...(linkCallback && {
+                  onClick: linkCallback,
+                })}
+              >
+                {readMoreLink.label}
+              </ResourceLink>
+            </li>
+          )}
+          {links?.map((link: any) => (
+            <li key={link.id} className='relative'>
+              <Link
+                className={`h-full ${ariaCurrentStyling} no-underline decoration-2 underline-offset-2 hover:underline dark:hover:text-north-sea-50`}
+                href={getMenuLink(link, iso)}
+                aria-current={pathname === link?.link?.slug ? 'page' : 'false'}
+                {...(linkCallback && {
+                  onClick: linkCallback,
+                })}
+              >
+                {link.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
       </li>
     )
   },

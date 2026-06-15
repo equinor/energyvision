@@ -24,7 +24,7 @@ export const MenuPanes = forwardRef<HTMLDivElement, MenuPanesProps>(
     }
 
     return (
-      <section ref={ref}>
+      <section ref={ref} className='h-full'>
         <ul className='relative flex w-max max-w-[50vw] flex-col gap-6 pb-4'>
           {menuItems?.map((item, idx: number) => {
             return (
