@@ -217,7 +217,6 @@ export async function getPage(params: Params) {
       params: { ...pageQueryParams },
       requestTag: 'page-by-slug',
     })
-    //console.log('getPAge data', data.slugs)
     pageData = data
   }
 

@@ -24,18 +24,11 @@ function useConsentState(
 
   useEffect(() => {
     const manageCookies = () => {
-      console.log(
-        'manage cookie called for ',
-        consentType,
-        checkCookieConsent(consentType),
-      )
       changeConsent(checkCookieConsent(consentType))
     }
-    console.log('adding listeners')
     window?.addEventListener('CookiebotOnAccept', manageCookies)
     window?.addEventListener('CookiebotOnDecline', manageCookies)
     return () => {
-      console.log('removing listeners')
       window.removeEventListener('CookiebotOnAccept', manageCookies)
       window.removeEventListener('CookiebotOnDecline', manageCookies)
     }
@@ -43,10 +36,8 @@ function useConsentState(
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    console.log('use effect ', enableConsentLogic, consent)
     // Disable Radix.equinor.com due to SiteImprove (possibly) collecting wrong data
     if (enableConsentLogic && consent) {
-      console.log('callback')
       callback()
       return () => {
         if (cleanup) cleanup()

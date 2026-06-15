@@ -39,7 +39,7 @@ const MagazinePage = ({
   content,
 }: MagazinePageProps) => {
   const type = hero?.type || HeroTypes.DEFAULT
-  console.log('magazine hero type', type)
+
   const subTitle = (
     <>
       <div

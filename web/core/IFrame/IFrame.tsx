@@ -71,11 +71,9 @@ export const IFrame = forwardRef<HTMLDivElement, IFrameProps>(function IFrame(
   useConsentState(
     cookiePolicy,
     () => {
-      console.log('on cookie consent event accept')
       setConsented(true)
     },
     () => {
-      console.log('on cookie consent event cleanup')
       setConsented(false)
     },
   )

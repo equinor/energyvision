@@ -5,7 +5,7 @@ import { type HTMLProps, useRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 import type Player from 'video.js/dist/types/player'
 import Blocks from '@/portableText/Blocks'
-import { urlForImage, resolveImage } from '@/sanity/lib/utils'
+import { resolveImage, urlForImage } from '@/sanity/lib/utils'
 import { type Image, mapSanityImageRatio } from '../Image/imageUtilities'
 import type { AspectRatioVariants, Variants } from './Video'
 
@@ -146,10 +146,10 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
   const handlePlayerReady = (player: Player) => {
     playerRef.current = player
     // analytics here?
-    console.log('player is ready')
+    //console.log('player is ready')
     // You can handle player events here, for example:
     player.on('waiting', () => {
-      console.log('player is waiting')
+      // console.log('player is waiting')
     })
   }
 

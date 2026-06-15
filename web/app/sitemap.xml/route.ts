@@ -60,7 +60,7 @@ export async function GET(request: Request) {
   if (!crawlableDomains.includes(domain) && !Flags.IS_DEV) {
     return new NextResponse('Not found', { status: 404 })
   }
-  console.log('sitemap function')
+
   domain = domain.startsWith('www') ? `https://${domain}` : domain
 
   const locales = languages.map(lang => lang.locale)

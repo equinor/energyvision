@@ -14,7 +14,6 @@ export const LocalizationSwitch = ({ headerData }: LocalizationSwitchProps) => {
   const locale = useLocale()
   const { slugs } = headerData || { slugs: [] }
   const activeLocale = locale ?? defaultLanguage.iso
-  console.log('slugs', slugs)
   if (slugs.length < 1) return null
 
   return (
