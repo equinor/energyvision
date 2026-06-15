@@ -53,8 +53,7 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
     return null
   }
 
-  // look at it later to find the asset extension
-  const isSvg = image?.asset._ref.endsWith('svg') && imageSize === 'small'
+  const isSvg = image.extension === 'svg' && imageSize === 'small'
 
   // Svg can be "pictures"/illustrations and small svgs...
   const imageElement = (
