@@ -24,6 +24,11 @@ function useConsentState(
 
   useEffect(() => {
     const manageCookies = () => {
+      console.log(
+        'manage cookie called for ',
+        consentType,
+        checkCookieConsent(consentType),
+      )
       changeConsent(checkCookieConsent(consentType))
     }
     console.log('adding listeners')
