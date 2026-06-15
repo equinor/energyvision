@@ -19,22 +19,13 @@ export type TextWithIconProps = {
 
 export const TextWithIcon = forwardRef<HTMLDivElement, TextWithIconProps>(
   (
-    {
-      title,
-      content,
-      iconData,
-      className = '',
-      image,
-      iconClassName = '',
-      ...rest
-    },
+    { title, content, iconData, className = '', image, iconClassName = '' },
     ref,
   ) => {
     return (
       <div
         ref={ref}
         className={twMerge(`flex flex-col items-center gap-2`, className)}
-        {...rest}
       >
         {iconData && (
           <TransformableIcon iconData={iconData} className={iconClassName} />
@@ -42,8 +33,10 @@ export const TextWithIcon = forwardRef<HTMLDivElement, TextWithIconProps>(
         {image?.asset && (
           <Image
             image={image}
-            customHeight={150}
-            customWidth={150}
+            aspectRatio='original'
+            fill
+            /*             customHeight={150}
+            customWidth={150} */
             className={twMerge(
               `m-auto size-[150px] self-center`,
               iconClassName,
