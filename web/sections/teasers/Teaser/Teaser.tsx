@@ -53,18 +53,21 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
     return null
   }
 
+  // look at it later to find the asset extension
+  const isSvg = image?.asset._ref.endsWith('svg') && imageSize === 'small'
+
   // Svg can be "pictures"/illustrations and small svgs...
   const imageElement = (
     <div
       className={`relative ${
-        imageSize === 'small'
-          ? 'm-18 flex items-center justify-center'
+        isSvg
+          ? 'mx-18 flex h-auto items-center justify-center'
           : 'h-auto min-h-[25rem] w-full'
       }`}
     >
       <Image
         image={image}
-        fill
+        fill={!isSvg}
         wrapperVariant='none'
         grid='lg'
         keepRatioOnMobile
