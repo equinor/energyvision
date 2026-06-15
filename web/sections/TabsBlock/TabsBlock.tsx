@@ -135,12 +135,25 @@ const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
             >
               <TabList
                 ref={tabsListRef}
-                className={`${hasFullWidthImage ? '' : 'px-layout-sm lg:px-10'}`}
+                className={twMerge(
+                  tabPanelVariant === 'tabsInfoPanel' &&
+                    !hasFullWidthImage &&
+                    'px-layout-sm lg:px-10',
+                )}
               >
                 {tabList?.map((tab: TabItem, i: number) => {
                   return (
                     // eslint-disable-next-line react/no-array-index-key
-                    <Tab key={`${tab.id}_index_${i}`} value={tab.id}>
+                    <Tab
+                      key={`${tab.id}_index_${i}`}
+                      value={tab.id}
+                      className={twMerge(
+                        hasFullWidthImage && i === 0 && 'lg:pl-20',
+                        hasFullWidthImage &&
+                          i === tabList.length - 1 &&
+                          'lg:pr-20',
+                      )}
+                    >
                       {tab.title}
                     </Tab>
                   )
@@ -154,7 +167,7 @@ const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
                     value={tabItem.id}
                     className={twMerge(
                       tabPanelVariant === 'tabsKeyNumbers' &&
-                        'pt-14 pb-page-content max-lg:px-layout-sm',
+                        'w-full pt-14 pb-page-content max-lg:px-layout-sm',
                     )}
                   >
                     {tabItem.panel?.type === 'tabsKeyNumbers' && (
@@ -164,7 +177,7 @@ const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
                             {...(title &&
                               hideTitle && { 'aria-labelledby': headingId })}
                             className={twMerge(
-                              'flex flex-col gap-6 md:grid md:grid-cols-2',
+                              'flex w-full flex-col gap-6 md:grid md:grid-cols-2',
                               tabItem.panel?.items?.length < 4 &&
                                 '3xl:auto-cols-fr 3xl:grid-flow-col',
                             )}

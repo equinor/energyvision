@@ -1,7 +1,7 @@
-import { Tabs as TabsWrapper, TabsProps } from './Tabs'
-import { TabList, TabListProps } from './TabList'
-import { Tab, TabProps } from './Tab'
-import { TabPanel, TabPanelProps } from './TabPanel'
+import { Tab, type TabProps } from './Tab'
+import { TabList, type TabListProps } from './TabList'
+import { TabPanel, type TabPanelProps } from './TabPanel'
+import { type TabsProps, Tabs as TabsWrapper } from './Tabs'
 
 type TabsCompoundProps = typeof TabsWrapper & {
   TabList: typeof TabList
