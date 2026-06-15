@@ -150,8 +150,9 @@ const TabsInfoPanelItem = forwardRef<HTMLDivElement, TabsInfoPanelItemProps>(
                 ((!caption && imageVariant === 'bannerImage') ||
                   imageVariant === 'backgroundImage') &&
                   'min-w-0 lg:col-span-2 lg:row-span-1',
-                imageVariant === 'sideImage' &&
-                  'mt-10 aspect-4/3 lg:aspect-video',
+                imageVariant === 'sideImage' && 'mt-10 aspect-4/3',
+                imageVariant === 'sideImage' && keyInfo && 'lg:aspect-auto',
+                imageVariant === 'sideImage' && !keyInfo && 'lg:aspect-video',
                 imageVariant === 'bannerImage' && 'aspect-4/3 lg:aspect-10/3',
                 imageVariant === 'backgroundImage' && 'max-lg:aspect-4/3',
               )}
