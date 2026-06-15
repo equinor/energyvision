@@ -80,6 +80,7 @@ const MagazineRoom = ({
           //@ts-ignore
           value={ingress}
           group='article'
+          className='mx-auto max-w-content'
         />
       )}
       {magazineTags?.length > 0 && <MagazineTagBar tags={magazineTags} />}
