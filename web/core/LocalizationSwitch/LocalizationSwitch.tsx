@@ -18,7 +18,6 @@ export const LocalizationSwitch = ({ headerData }: LocalizationSwitchProps) => {
 
   if (slugs.length < 1 && !currentSlug) return null
 
-  console.log(currentSlug)
   function SwitchItem({
     obj,
     language,

@@ -15,14 +15,11 @@ export const FriendlyCaptchaSdkWrapper = ({
     if (!sdk) {
       setSdk(new FriendlyCaptchaSDK())
     }
-  }, [])
+  }, [sdk])
 
-  const setHumanState = useCallback(
-    (isHuman: boolean) => {
-      setIsHuman(isHuman)
-    },
-    [setIsHuman, isHuman],
-  )
+  const setHumanState = useCallback((isHuman: boolean) => {
+    setIsHuman(isHuman)
+  }, [])
 
   return (
     <FriendlyCaptchaContextProvider
