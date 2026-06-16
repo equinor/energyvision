@@ -179,6 +179,7 @@ export default async function ArchivedNewsPage({ params }: { params: Params }) {
 
   const headerData = {
     slugs,
+    currentSlug: slugs[0],
   }
   const { data: siteMenuData } = await routeSanityFetch({
     query: Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery,
