@@ -1,6 +1,6 @@
 'use client'
 import { FriendlyCaptchaSDK } from '@friendlycaptcha/sdk'
-import { type ReactNode, useCallback, useEffect, useState } from 'react'
+import { type ReactNode, useCallback, useState } from 'react'
 import { FriendlyCaptchaContextProvider } from '@/contexts/FriendlyCaptchaContext'
 
 export const FriendlyCaptchaSdkWrapper = ({
@@ -8,22 +8,13 @@ export const FriendlyCaptchaSdkWrapper = ({
 }: {
   children: ReactNode
 }) => {
-  const [sdk, setSdk] = useState<FriendlyCaptchaSDK | undefined>(undefined)
   const [isHuman, setIsHuman] = useState(false)
-
-  useEffect(() => {
-    if (!sdk) {
-      setSdk(new FriendlyCaptchaSDK())
-    }
-  }, [sdk])
-
   const setHumanState = useCallback((isHuman: boolean) => {
     setIsHuman(isHuman)
   }, [])
 
   return (
     <FriendlyCaptchaContextProvider
-      sdk={sdk}
       setIsHuman={setHumanState}
       isHuman={isHuman}
     >
