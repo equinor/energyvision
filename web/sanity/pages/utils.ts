@@ -180,7 +180,12 @@ type Params = {
   }
 }
 
-function languagePrefixedSlug(slug: LocaleSlug): LocaleSlug {
+function languagePrefixedSlug(
+  slug: LocaleSlug | undefined,
+): LocaleSlug | undefined {
+  if (!slug) {
+    return slug
+  }
   return {
     slug:
       slug.lang !== defaultLanguage.name
