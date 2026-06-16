@@ -4,6 +4,7 @@ import {
   HeroBlock,
   type HeroBlockProps,
   type HeroData,
+  HeroTypes,
 } from '@/sections/Hero/HeroBlock'
 import type {
   Background,
@@ -25,6 +26,8 @@ export type TopicPageProps = {
   id: string
   type: string
   breadcrumbs: BreadcrumbData
+  //To be removed after launch and studios is updated with NoHero type instead
+  isCampaign?: boolean
 }
 
 const TopicPage = ({
@@ -39,6 +42,7 @@ const TopicPage = ({
       //@ts-ignore: todo
       title,
       ...hero,
+      type: restData?.isCampaign ? HeroTypes.NO_HERO : hero?.type,
     },
     breadcrumbs: {
       currentSlug: slug,

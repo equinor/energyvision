@@ -21,14 +21,18 @@ type HomePageProps = {
   id: string
   type: string
   breadcrumbs: BreadcrumbData
+  //To be removed after launch and studios is updated with NoHero type instead
+  isCampaign?: boolean
 }
 
 const HomePage = ({ hero, title, ...restData }: HomePageProps) => {
+  console.log('isCampaign', restData?.isCampaign)
   const heroProps: HeroBlockProps = {
     heroData: {
       //@ts-ignore
       title,
       ...hero,
+      type: restData?.isCampaign ? HeroTypes.NO_HERO : hero?.type,
     },
     //@ts-ignore
     nextSectionDesignOptions: restData?.content?.[0]?.designOptions,
