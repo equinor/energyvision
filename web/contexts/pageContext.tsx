@@ -19,6 +19,7 @@ export type HeaderData = {
     background: keyof ColorKeyTokens
     links: StickyMenuLinkType[]
   }
+  currentSlug: LocaleSlug
 }
 export interface PageContextType {
   errorImage: SanityImageObject

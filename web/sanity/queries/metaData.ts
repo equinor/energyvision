@@ -5,7 +5,7 @@ import {
 } from './common/publishDateTime'
 import { seoAndSomeFields } from './common/seoAndSomeFields'
 
-//page, magazine,news, localnews, event
+//page, event
 export const contentRefSlugsQuery = /* groq */ `
     "currentSlug": {
       "slug": slug.current,
@@ -24,6 +24,7 @@ export const contentRefSlugsQuery = /* groq */ `
     lang
   } */
 
+// magazine,news, localnews, newsroom and magazine index
 export const inlineSlugsQuery = /* groq */ `
     "currentSlug": {
       "slug": slug.current,

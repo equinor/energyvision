@@ -180,6 +180,16 @@ type Params = {
   }
 }
 
+function languagePrefixedSlug(slug: LocaleSlug): LocaleSlug {
+  return {
+    slug:
+      slug.lang !== defaultLanguage.name
+        ? `/${getLocaleFromName(slug.lang)}/${slug.slug}`
+        : slug.slug,
+    lang: getIsoFromName(slug.lang),
+  }
+}
+
 export async function getPage(params: Params) {
   const { slug, locale, tags = [], searchParams } = params
   const { tag } = searchParams || {}
@@ -246,6 +256,7 @@ export async function getPage(params: Params) {
         slug,
         slugs?.translationSlugs,
       ),
+      currentSlug: languagePrefixedSlug(slugs.currentSlug),
       stickyMenuData: stickyMenu,
     },
     pageData: {
