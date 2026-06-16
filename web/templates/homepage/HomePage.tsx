@@ -26,7 +26,6 @@ type HomePageProps = {
 }
 
 const HomePage = ({ hero, title, ...restData }: HomePageProps) => {
-  console.log('isCampaign', restData?.isCampaign)
   const heroProps: HeroBlockProps = {
     heroData: {
       //@ts-ignore
