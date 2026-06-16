@@ -45,26 +45,24 @@ export default function Page() {
       data-search-page='true'
       className='dark w-full overflow-auto bg-slate-blue-95'
     >
-      <div className='relative mx-auto min-h-[55vh] w-full max-w-fullwidth'>
-        <TopbarDropdown variant='dark' className='absolute'>
-          <NavTopbar>
-            <LogoLink />
-            <button
-              type='button'
-              aria-expanded={true}
-              aria-label='Close search'
-              onClick={() => {
-                router.back()
-              }}
-              className={`focus-visible:envis-outline-invert rounded-full p-3 text-white-100 hover:bg-moss-green-50 hover:text-slate-blue-95 focus:outline-none active:scale-99 active:bg-white-100/20`}
-            >
-              <Icon size={24} data={close} />
-            </button>
-          </NavTopbar>
+      <TopbarDropdown variant='dark' className='relative'>
+        <NavTopbar>
+          <LogoLink />
+          <button
+            type='button'
+            aria-expanded={true}
+            aria-label='Close search'
+            onClick={() => {
+              router.back()
+            }}
+            className={`focus-visible:envis-outline-invert rounded-full p-3 text-white-100 hover:bg-moss-green-50 hover:text-slate-blue-95 focus:outline-none active:scale-99 active:bg-white-100/20`}
+          >
+            <Icon size={24} data={close} />
+          </button>
+        </NavTopbar>
+      </TopbarDropdown>
 
-          <Search />
-        </TopbarDropdown>
-      </div>
+      <Search />
     </div>
   )
 }
