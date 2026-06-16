@@ -3,13 +3,22 @@ import type { PortableTextBlock } from '@portabletext/types'
 //TODO check this
 // eslint-disable-next-line import/no-unresolved
 import { useIsPresentationTool } from 'next-sanity/hooks'
-import { forwardRef, type HTMLAttributes, useId, useState } from 'react'
+import {
+  forwardRef,
+  type HTMLAttributes,
+  useEffect,
+  useId,
+  useState,
+} from 'react'
 import { twMerge } from 'tailwind-merge'
 import Transcript from '@/sections/Transcript/Transcript'
+import { iframeSrcList } from '@/securityHeaders'
 import useConsent from '../../lib/hooks/useConsent'
 import useConsentState from '../../lib/hooks/useConsentState'
 import Blocks from '../../portableText/Blocks'
 import type { CookieType } from '../../types'
+import { LogoPrimary } from '../Logo/Logo'
+import { Typography } from '../Typography'
 import RequestConsentContainer from './RequestConsentContainer'
 
 const calculatePadding = (aspectRatio: string): string => {
@@ -17,6 +26,34 @@ const calculatePadding = (aspectRatio: string): string => {
   const percentage = (parseInt(ratio[1], 10) / parseInt(ratio[0], 10)) * 100
 
   return `${percentage}%`
+}
+
+const isIframeAllowedByCsp = (url: string) => {
+  try {
+    const parsedUrl = new URL(url)
+
+    return iframeSrcList.some(source => {
+      if (!source) return false
+
+      if (source.includes('*')) {
+        const parsedSource = new URL(source.replace('*.', 'placeholder.'))
+        const wildcardDomain = parsedSource.hostname.replace(
+          /^placeholder\./,
+          '',
+        )
+
+        return (
+          parsedUrl.protocol === parsedSource.protocol &&
+          (parsedUrl.hostname === wildcardDomain ||
+            parsedUrl.hostname.endsWith(`.${wildcardDomain}`))
+        )
+      }
+
+      return parsedUrl.origin === new URL(source).origin
+    })
+  } catch {
+    return false
+  }
 }
 
 type IFrameProps = {
@@ -77,7 +114,9 @@ export const IFrame = forwardRef<HTMLDivElement, IFrameProps>(function IFrame(
       setConsented(false)
     },
   )
+
   if (!url) return null
+  const isBlockedByCsp = !isIframeAllowedByCsp(url)
   const containerPadding = height
     ? `${height}px`
     : calculatePadding(aspectRatio)
@@ -98,22 +137,35 @@ export const IFrame = forwardRef<HTMLDivElement, IFrameProps>(function IFrame(
           paddingBottom: containerPadding,
         }}
       >
-        <iframe
-          className='absolute inset-0 h-full w-full border-0'
-          allowFullScreen
-          loading='lazy'
-          src={url}
-          title={frameTitle}
-          {...(!isPreview && {
-            'data-cookieconsent': cookiePolicy,
-          })}
-          {...(labelledById !== '' && {
-            'aria-labelledby': labelledById,
-          })}
-          {...(description && {
-            'aria-describedby': descriptionId,
-          })}
-        />
+        {isBlockedByCsp ? (
+          <div
+            className={twMerge(
+              'dark absolute inset-0 flex h-full w-full flex-col items-center justify-center gap-8 bg-autumn-storm-60 p-20',
+            )}
+          >
+            <LogoPrimary className='h-auto w-[20%] text-white-100' />
+            <Typography variant='h2' className='text-center'>
+              This embedded content cannot be displayed in your browser.
+            </Typography>
+          </div>
+        ) : (
+          <iframe
+            className='absolute inset-0 h-full w-full border-0'
+            allowFullScreen
+            loading='lazy'
+            src={url}
+            title={frameTitle}
+            {...(!isPreview && {
+              'data-cookieconsent': cookiePolicy,
+            })}
+            {...(labelledById !== '' && {
+              'aria-labelledby': labelledById,
+            })}
+            {...(description && {
+              'aria-describedby': descriptionId,
+            })}
+          />
+        )}
       </div>
       {transcript && (
         <Transcript transcript={transcript} ariaTitle={frameTitle} />
