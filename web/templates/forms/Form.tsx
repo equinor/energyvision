@@ -54,7 +54,7 @@ const Form = ({
   }
 
   return (
-    <section className={twMerge(`pb-page-content`, className)} id={anchor}>
+    <section className={twMerge(className)} id={anchor}>
       <div className='mx-auto max-w-content px-layout-sm lg:px-layout-lg'>
         {title && <Blocks group='heading' variant='h2' value={title} />}
         {ingress && (
