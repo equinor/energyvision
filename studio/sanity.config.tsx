@@ -154,10 +154,13 @@ const getConfig = (
           if (origin.includes('localhost')) {
             return 'http://localhost:3000'
           }
-          if (origin.includes('radix.equinor.com')) {
-            return origin.replace('studio', 'web')
+          if (
+            dataset === 'global-development' &&
+            !origin.includes('localhost')
+          ) {
+            return 'https://web-global-development-equinor-web-sites-dev.c2.radix.equinor.com'
           }
-          return `https://web-${dataset}-equinor-web-sites-prod.c2.radix.equinor.com`
+          return `https://web${dataset !== 'global' ? `-${dataset}` : ''}-equinor-web-sites-preprod.c2.radix.equinor.com`
         },
         previewMode: {
           enable: '/api/draft',
