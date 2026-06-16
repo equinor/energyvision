@@ -1,5 +1,3 @@
-//ContactEquinorForm
-
 'use client'
 import { Icon } from '@equinor/eds-core-react'
 import { error_filled } from '@equinor/eds-icons'
@@ -8,12 +6,12 @@ import { useLocale, useTranslations } from 'next-intl'
 import { type BaseSyntheticEvent, useId, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import type { z } from 'zod'
+import { FORM_CATALOG_NUMBERS } from '@/app/_actions/formCatalogNumbers'
 import { Button } from '@/core/Button'
 import { FormMessageBox } from '@/core/Form/FormMessageBox'
 import { Select } from '@/core/Select/Select'
 import { TextField } from '@/core/TextField/TextField'
 import { contactEquinorFormSchema } from '@/lib/zodSchemas/zodSchemas'
-// Import the server action
 import submitFormServerAction from '../../app/_actions/submitFormServerAction'
 import verifyCaptcha from '../../app/_actions/verifyCaptcha'
 import FriendlyCaptcha from './FriendlyCaptcha'
@@ -86,11 +84,9 @@ const ContactEquinorForm = () => {
         },
       }
 
-      // Call the server action directly
-      // CAT0012836 is CAT ID for Contact Equinor Form //
       const result = await submitFormServerAction(
         JSON.stringify(finalFormData),
-        'CAT0012836',
+        FORM_CATALOG_NUMBERS.contactEquinor,
       )
 
       setServerError(result.status !== 200)

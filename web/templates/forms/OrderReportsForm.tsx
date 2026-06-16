@@ -6,6 +6,7 @@ import { useLocale, useTranslations } from 'next-intl'
 import { type BaseSyntheticEvent, useId, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import type { z } from 'zod'
+import { FORM_CATALOG_NUMBERS } from '@/app/_actions/formCatalogNumbers'
 import submitFormServerAction from '@/app/_actions/submitFormServerAction'
 import verifyCaptcha from '@/app/_actions/verifyCaptcha'
 import { Button } from '@/core/Button'
@@ -116,11 +117,9 @@ const OrderReportsForm = () => {
         },
       }
 
-      // Call the server action directly
-      // CAT0012841 is CAT ID for Order Reports Form //
       const result = await submitFormServerAction(
         JSON.stringify(finalFormData),
-        'CAT0012841',
+        FORM_CATALOG_NUMBERS.orderReports,
       )
 
       setServerError(result.status !== 200)

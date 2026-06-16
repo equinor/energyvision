@@ -1,5 +1,4 @@
 'use client'
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Icon } from '@equinor/eds-core-react'
 import { error_filled } from '@equinor/eds-icons'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -7,6 +6,7 @@ import { useLocale, useTranslations } from 'next-intl'
 import { type BaseSyntheticEvent, useId, useMemo, useState } from 'react'
 import { Controller, useForm, useWatch } from 'react-hook-form'
 import type { z } from 'zod'
+import { FORM_CATALOG_NUMBERS } from '@/app/_actions/formCatalogNumbers'
 import submitFormServerAction from '@/app/_actions/submitFormServerAction'
 import verifyCaptcha from '@/app/_actions/verifyCaptcha'
 import { Button } from '@/core/Button'
@@ -128,7 +128,7 @@ const CareersContactForm = () => {
       // Call the server action directly
       const result = await submitFormServerAction(
         JSON.stringify(finalFormData),
-        'CAT0012840',
+        FORM_CATALOG_NUMBERS.careersContactUs,
       )
 
       setServerError(result.status !== 200)

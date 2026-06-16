@@ -6,6 +6,7 @@ import { useLocale, useTranslations } from 'next-intl'
 import { type BaseSyntheticEvent, useId, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import type { z } from 'zod'
+import { FORM_CATALOG_NUMBERS } from '@/app/_actions/formCatalogNumbers'
 import submitFormServerAction from '@/app/_actions/submitFormServerAction'
 import verifyCaptcha from '@/app/_actions/verifyCaptcha'
 import { Button } from '@/core/Button'
@@ -15,26 +16,6 @@ import { Select } from '@/core/Select/Select'
 import { TextField } from '@/core/TextField/TextField'
 import { careerFairFormSchema } from '@/lib/zodSchemas/zodSchemas'
 import FriendlyCaptcha from './FriendlyCaptcha'
-
-// import {
-//   contentRegex,
-//   emailRegex,
-//   nameRegex,
-//   phoneRegex,
-//   urlRegex,
-// } from './validations'
-
-// type FormValues = {
-//   organisation: string
-//   email: string
-//   contactPerson: string
-//   phone: string
-//   event: string
-//   eventDescription: string
-//   website: string
-//   supportingDocuments: string
-//   preferredLang: string
-// }
 
 type CareerFairFormData = z.infer<ReturnType<typeof careerFairFormSchema>>
 
@@ -108,11 +89,9 @@ const CareerFairForm = () => {
         },
       }
 
-      // Call the server action directly
-      // CAT0012839 is CAT ID for Career Fair Form //
       const result = await submitFormServerAction(
         JSON.stringify(finalFormData),
-        'CAT0012839',
+        FORM_CATALOG_NUMBERS.careerFairs,
       )
 
       setServerError(result.status !== 200)
