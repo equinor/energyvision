@@ -1,5 +1,6 @@
 'use client'
 import { forwardRef, useEffect, useRef, useState } from 'react'
+import { twMerge } from '@/lib/twMerge/twMerge'
 import type { SimpleGroupData } from '../../types'
 import { PaneMenuItem } from './PaneMenuItem'
 
@@ -16,6 +17,7 @@ export const MenuPanes = forwardRef<HTMLDivElement, MenuPanesProps>(
     )
     const ulRef = useRef<HTMLUListElement>(null)
     const [maxNestedHeight, setMaxNestedHeight] = useState(0)
+    const [ulWidth, setUlWidth] = useState(0)
 
     const handleOpen = (index: number) => {
       if (index === openPaneId) {
@@ -36,6 +38,8 @@ export const MenuPanes = forwardRef<HTMLDivElement, MenuPanesProps>(
           }
         })
         setMaxNestedHeight(maxHeight)
+        const widthWithRightPadding = ulRef.current.clientWidth + 56
+        setUlWidth(widthWithRightPadding)
       }
     }, [])
 
@@ -43,7 +47,10 @@ export const MenuPanes = forwardRef<HTMLDivElement, MenuPanesProps>(
       <section ref={ref} className='h-full'>
         <ul
           ref={ulRef}
-          className='relative flex w-max max-w-[50vw] flex-col gap-6 pb-4'
+          className={twMerge(
+            'relative flex w-max max-w-[50vw] flex-col gap-6 pb-4',
+            openPaneId !== -1 && 'border-white-100 border-e pr-14',
+          )}
           style={{ minHeight: maxNestedHeight || undefined }}
         >
           {menuItems?.map((item, idx: number) => {
@@ -55,6 +62,7 @@ export const MenuPanes = forwardRef<HTMLDivElement, MenuPanesProps>(
                 onOpen={handleOpen}
                 item={item as SimpleGroupData}
                 linkCallback={linkCallback}
+                ulWidth={ulWidth}
               />
             )
           })}

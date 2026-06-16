@@ -39,6 +39,7 @@ export const ResourceLink = ({
   file,
   onClick,
   label,
+  'aria-current': ariaCurrent,
 }: ResourceLinkProps) => {
   if (type === 'downloadableFile' || type === 'downloadableImage') {
     return (
@@ -132,6 +133,7 @@ export const ResourceLink = ({
       href={href}
       hrefLang={hrefLang}
       onClick={onClick}
+      {...(ariaCurrent && { 'aria-current': ariaCurrent })}
     >
       <div
         className={twMerge(

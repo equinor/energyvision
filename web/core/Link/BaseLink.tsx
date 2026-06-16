@@ -1,6 +1,6 @@
 import NextLink, { type LinkProps } from 'next/link'
 import { type AnchorHTMLAttributes, forwardRef, type Ref } from 'react'
-import { twMerge } from 'tailwind-merge'
+import { twMerge } from '@/lib/twMerge/twMerge'
 import type { LinkType } from '../../types/index'
 
 export type BaseLinkProps = {
@@ -28,6 +28,7 @@ export const BaseLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(
       skipInternalStyle = false,
       hrefLang,
       onClick,
+      'aria-current': ariaCurrent,
     },
     ref,
   ) {
@@ -65,13 +66,19 @@ export const BaseLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(
               rel='noopener'
               referrerPolicy='strict-origin-when-cross-origin'
               onClick={onClick}
+              {...(ariaCurrent && { 'aria-current': ariaCurrent })}
             >
               {children}
             </a>
           )
         case 'icsLink':
           return (
-            <a className={classNames} ref={ref} href={href}>
+            <a
+              className={classNames}
+              ref={ref}
+              href={href}
+              {...(ariaCurrent && { 'aria-current': ariaCurrent })}
+            >
               {children}
             </a>
           )
@@ -85,6 +92,7 @@ export const BaseLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(
               prefetch={true} //{prefetch}
               hrefLang={hrefLang}
               onClick={onClick}
+              {...(ariaCurrent && { 'aria-current': ariaCurrent })}
             >
               {children}
             </NextLink>

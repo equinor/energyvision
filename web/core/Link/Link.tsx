@@ -1,5 +1,5 @@
 import { useTranslations } from 'next-intl'
-import { twMerge } from 'tailwind-merge'
+import { twMerge } from '@/lib/twMerge/twMerge'
 import { ArrowRight } from '../../icons'
 import { BaseLink, type BaseLinkProps } from './BaseLink'
 
@@ -14,6 +14,7 @@ export const Link = ({
   href = '',
   hrefLang,
   onClick,
+  'aria-current': ariaCurrent,
 }: LinkProps) => {
   const t = useTranslations()
 
@@ -42,6 +43,7 @@ export const Link = ({
       href={href}
       hrefLang={hrefLang}
       onClick={onClick}
+      {...(ariaCurrent && { 'aria-current': ariaCurrent })}
     >
       {children}
       {showArrow && (
