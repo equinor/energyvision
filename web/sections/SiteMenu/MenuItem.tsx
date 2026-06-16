@@ -57,9 +57,9 @@ export const MenuItem = ({ item, index, linkCallback }: MenuGroupType) => {
             <ResourceLink
               href={menuItemHref}
               className={`relative w-fit ${ariaCurrentStyling}`}
-              aria-current={
-                pathname === topLevelLink?.link?.slug ? 'page' : 'false'
-              }
+              {...(pathname === topLevelLink?.link?.slug && {
+                'aria-current': 'page',
+              })}
               onClick={linkCallback}
             >
               {topLevelLink?.label}
@@ -89,9 +89,9 @@ export const MenuItem = ({ item, index, linkCallback }: MenuGroupType) => {
                             <Link
                               className={`relative py-2 text-sm no-underline underline-offset-2 hover:underline ${ariaCurrentStyling} `}
                               href={getMenuLink(link, iso) || '/'}
-                              aria-current={
-                                pathname === link?.link?.slug ? 'page' : 'false'
-                              }
+                              {...(pathname === link?.link?.slug && {
+                                'aria-current': 'page',
+                              })}
                               onClick={linkCallback}
                             >
                               {link.label}

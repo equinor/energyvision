@@ -79,9 +79,9 @@ export const SimpleMenuItem = ({
                 <ResourceLink
                   href={readMoreLink.link?.slug}
                   className={`mb-10 w-fit pt-0 ${ariaCurrentStyling}`}
-                  aria-current={
-                    pathname === readMoreLink?.link?.slug ? 'page' : 'false'
-                  }
+                  {...(pathname === readMoreLink?.link?.slug && {
+                    'aria-current': 'page',
+                  })}
                   {...(linkCallback && {
                     onClick: linkCallback,
                   })}
@@ -98,9 +98,9 @@ export const SimpleMenuItem = ({
                     <Link
                       className={`relative ${ariaCurrentStyling} py-4 text-base no-underline underline-offset-2 hover:underline dark:hover:text-north-sea-50`}
                       href={href}
-                      aria-current={
-                        pathname === link?.link?.slug ? 'page' : 'false'
-                      }
+                      {...(pathname === link?.link?.slug && {
+                        'aria-current': 'page',
+                      })}
                       {...(linkCallback && {
                         onClick: linkCallback,
                       })}
