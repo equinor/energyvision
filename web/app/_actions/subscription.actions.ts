@@ -8,15 +8,11 @@ import {
 } from '@/types/newsLetterTypes'
 import verifyCaptcha from './verifyCaptcha'
 
-const MAKE_SUBSCRIBER_API_BASE_URL = process.env.MAKE_SUBSCRIBER_API_BASE_URL
-const MAKE_API_KEY = process.env.MAKE_API_KEY || ''
-const SUBSCRIBER_LIST_ID_EN = process.env.MAKE_SUBSCRIBER_LIST_ID_EN
-const SUBSCRIBER_LIST_ID_NO = process.env.MAKE_SUBSCRIBER_LIST_ID_NO
-const MAKE_API_USER = process.env.MAKE_API_USERID || ''
+const REQUEST_TIMEOUT_MS = 10_000
 
 type SubscribeProps = {
   locale: newsletterCategoryLocale
-  frcCaptchaSolution: any
+  frcCaptchaSolution: unknown
   formData: z.infer<ReturnType<typeof subscribeSchema>>
 }
 
@@ -40,52 +36,97 @@ export async function subscribe({
     return { status: false, errors: validatedData.error }
   }
 
-  const { email, categories } = formData
+  const { email, categories } = validatedData.data
 
   try {
-    const tags = categories?.map(
-      category => newsletterCategoryMap[locale][category],
-    )
+    const baseUrl = process.env.MAKE_SUBSCRIBER_API_BASE_URL
+    const apiKey = process.env.MAKE_API_KEY
+    const apiUser = process.env.MAKE_API_USERID
+    const subscriberListIdEn = process.env.MAKE_SUBSCRIBER_LIST_ID_EN
+    const subscriberListIdNo = process.env.MAKE_SUBSCRIBER_LIST_ID_NO
 
-    const response = await fetch(
-      `${MAKE_SUBSCRIBER_API_BASE_URL}/subscribers?subscriber_list_id=${
-        locale === 'no' ? SUBSCRIBER_LIST_ID_NO : SUBSCRIBER_LIST_ID_EN
-      }&tag=merge`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Basic ${Buffer.from(`${MAKE_API_USER}:${MAKE_API_KEY}`).toString('base64')}`,
-        },
-        body: JSON.stringify({
-          email,
-          tags,
-        }),
+    if (
+      !baseUrl ||
+      !apiKey ||
+      !apiUser ||
+      !subscriberListIdEn ||
+      !subscriberListIdNo
+    ) {
+      console.error('Missing newsletter subscription configuration')
+      return {
+        status: false,
+        message: 'Error during subscription',
+      }
+    }
+
+    const parsedBaseUrl = new URL(baseUrl)
+
+    if (
+      parsedBaseUrl.protocol !== 'https:' ||
+      parsedBaseUrl.username ||
+      parsedBaseUrl.password ||
+      parsedBaseUrl.search ||
+      parsedBaseUrl.hash
+    ) {
+      console.error('Invalid newsletter subscription base URL configuration')
+      return {
+        status: false,
+        message: 'Error during subscription',
+      }
+    }
+
+    const subscriberListId =
+      locale === 'no' ? subscriberListIdNo : subscriberListIdEn
+    const endpoint = new URL('/subscribers', parsedBaseUrl)
+    endpoint.searchParams.set('subscriber_list_id', subscriberListId)
+    endpoint.searchParams.set('tag', 'merge')
+
+    const tags = categories
+      ?.map(category => newsletterCategoryMap[locale][category])
+      .filter((tag): tag is string => Boolean(tag))
+
+    if (!tags || tags.length === 0) {
+      return {
+        status: false,
+        message: 'Error during subscription',
+      }
+    }
+
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      cache: 'no-store',
+      redirect: 'error',
+      signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Basic ${Buffer.from(`${apiUser}:${apiKey}`).toString('base64')}`,
       },
-    )
+      body: JSON.stringify({
+        email,
+        tags,
+      }),
+    })
 
-    if (response?.status === 200) {
+    if (response.status === 200) {
       return {
         status: true,
         message: 'Successfully subscribed',
       }
     }
-    //Leave for testing period
-    console.log(
-      'Error occured while newsletter subscription',
-      response?.statusText,
+
+    console.error(
+      'Error occurred while newsletter subscription',
+      response.status,
     )
+
     return {
       status: false,
       message: 'Error during subscription',
     }
-  } catch (error: any) {
-    console.error('❌ Error in signUp:', {
-      message: error.message,
-      responseData: error.response?.data,
-      responseStatus: error.response?.status,
-      requestHeaders: error.config?.headers,
-    })
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'Unknown error'
+    console.error('Error in newsletter subscription action', message)
+
     return {
       status: false,
       message: 'Error during subscription',
