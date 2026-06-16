@@ -92,24 +92,67 @@ export async function generateMetadata({
   }
 }
 
+const ARCHIVE_REQUEST_TIMEOUT_MS = 10_000
+
+/** Allow-listed path segment pattern: only alphanumeric, hyphen, underscore. */
+const SAFE_PATH_SEGMENT_RE = /^[a-zA-Z0-9_-]+$/
+
+/** Allow-listed locales for archive fetch. */
+const ALLOWED_ARCHIVE_LOCALES = new Set(['en', 'no'])
+
 const fetchArchiveData = async (
   pagePathArray: string[],
   pagePath: string,
   locale: string,
 ): Promise<Response> => {
-  if (pagePath.includes('.')) return Promise.reject()
+  if (pagePath.includes('.')) return Promise.reject(new Error('Invalid path'))
 
-  const archiveSeverURL = process.env.NEXT_PUBLIC_ARCHIVE_CONTENT_LINK
-
-  if (pagePathArray.length > 1 && pagePathArray[0] !== 'crudeoilassays') {
-    /** Check if the required page is old archived AEM page or not
-     * because AEM also has archived pages which has 'archive' the page path */
-    return await fetch(
-      `${archiveSeverURL}/${locale}/news/archive/${pagePath}.json`,
-    )
+  if (!ALLOWED_ARCHIVE_LOCALES.has(locale)) {
+    return Promise.reject(new Error('Invalid locale'))
   }
 
-  return await fetch(`${archiveSeverURL}/${locale}/news/${pagePath}.json`)
+  if (!pagePathArray.every(segment => SAFE_PATH_SEGMENT_RE.test(segment))) {
+    return Promise.reject(new Error('Invalid path segment'))
+  }
+
+  const archiveServerURL = process.env.NEXT_PUBLIC_ARCHIVE_CONTENT_LINK
+
+  if (!archiveServerURL) {
+    return Promise.reject(new Error('Missing NEXT_PUBLIC_ARCHIVE_CONTENT_LINK'))
+  }
+
+  let parsedBase: URL
+  try {
+    parsedBase = new URL(archiveServerURL)
+  } catch {
+    return Promise.reject(new Error('Invalid NEXT_PUBLIC_ARCHIVE_CONTENT_LINK'))
+  }
+
+  if (
+    parsedBase.protocol !== 'https:' ||
+    parsedBase.username ||
+    parsedBase.password
+  ) {
+    return Promise.reject(new Error('Invalid NEXT_PUBLIC_ARCHIVE_CONTENT_LINK'))
+  }
+
+  const safePath =
+    pagePathArray.length > 1 && pagePathArray[0] !== 'crudeoilassays'
+      ? `${locale}/news/archive/${pagePath}.json`
+      : `${locale}/news/${pagePath}.json`
+
+  const endpoint = new URL(
+    safePath,
+    parsedBase.origin + parsedBase.pathname.replace(/\/$/, '') + '/',
+  )
+
+  /** Check if the required page is old archived AEM page or not
+   * because AEM also has archived pages which has 'archive' the page path */
+  return fetch(endpoint, {
+    cache: 'no-store',
+    redirect: 'error',
+    signal: AbortSignal.timeout(ARCHIVE_REQUEST_TIMEOUT_MS),
+  })
 }
 
 const parseResponse = async (response: Response) => {

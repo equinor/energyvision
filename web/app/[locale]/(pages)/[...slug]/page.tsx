@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import dynamic from 'next/dynamic'
 import { notFound } from 'next/navigation'
 import { setRequestLocale } from 'next-intl/server'
+import { getValidLanguagesLocales } from '@/languageConfig'
 import { decodeSlugs } from '@/lib/helpers/getFullUrl'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { getNameFromIso } from '@/sanity/helpers/localization'
@@ -30,6 +31,9 @@ const MagazineRoom = dynamic(() => import('@/templates/magazine/Magazineroom'))
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   //array, separated by /. e.g. [news, last slug]
   const { slug: encodedSlug, locale } = await params
+
+  if (!getValidLanguagesLocales().includes(locale)) notFound()
+
   const slug = decodeSlugs(encodedSlug) as string[]
 
   const sanityLang = getNameFromIso(locale)
@@ -62,13 +66,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     requestTag: 'page-meta',
   })
 
-  console.log('Meta data for', slug, metaData) // Debug log to check the fetched metadata
-
   return constructSanityMetadata(slug, locale, metaData)
 }
 
 export default async function Page({ params }: Props) {
   const { slug, locale } = await params
+
+  if (!getValidLanguagesLocales().includes(locale)) notFound()
+
   setRequestLocale(locale)
 
   const [siteMenuResult, pageResults] = await Promise.all([
