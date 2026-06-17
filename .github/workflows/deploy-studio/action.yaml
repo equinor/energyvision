@@ -13,9 +13,6 @@ inputs:
   githubToken:
     description: 'GitHub token'
     required: true
-  sanityPreviewToken:
-    description: 'Sanity Preview token'
-    required: true
   fotowareClientId:
     description: 'Client ID for Fotoware integration'
     required: true
@@ -37,17 +34,12 @@ inputs:
   environment:
     description: 'dev, preprod or prod'
     required: true
-  sanityApiToken:
-    description: 'Sanity API token'
-    required: true
   screen9accountId:
     description: 'Screen 9 Account Id'
     required: true
   screen9token:
     description: 'Screen9 API token'
     required: true
-  previewUrl:
-    description: 'Preview url for presentation'
   isUpgrade: ## To be removed later - post launch cleanup 
     description: 'Set to true if this for upgrade preprodv2'
     required: true
@@ -115,7 +107,7 @@ runs:
         secrets: |
           fotoware_af_export_key=${{ inputs.fotowareAfExportKey }}
           screen9_token=${{ inputs.screen9token }}
-          sanity_api_token=${{ inputs.sanityApiToken }}
+          
         build-args: |
           ARG_SANITY_DATASET=${{ inputs.datasetName }}
           ARG_FOTOWARE_CLIENT_ID=${{ inputs.fotowareClientId }}
@@ -123,9 +115,8 @@ runs:
           ARG_FOTOWARE_REDIRECT_ORIGIN=${{ inputs.fotowareRedirectOrigin }}
           ARG_FOTOWARE_REDIRECT_URI=${{ inputs.fotowareRedirectUri }}
           ARG_FOTOWARE_AF_EXPORT_URL=${{ inputs.fotowareAfExportUrl }}
-          ARG_FOTOWARE_AF_EXPORT_KEY=${{ inputs.fotowareAfExportKey }}
           ARG_SCREEN9_ACCOUNT_ID=${{ inputs.screen9accountId }}
-          ARG_SANITY_STUDIO_PREVIEW_URL=${{ inputs.previewUrl }}
+          
     - name: Get component name
       id: get-component-name
       shell: bash
