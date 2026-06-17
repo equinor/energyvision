@@ -1,9 +1,10 @@
 'use client'
-import { usePathname } from 'next/navigation'
+import { useLocale } from 'next-intl'
 import { BreadcrumbJsonLd } from 'next-seo'
 import { forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { domain } from '@/languageConfig'
+import { defaultLanguage, domain } from '@/languageConfig'
+import { getLocaleFromIso } from '@/sanity/helpers/localization'
 import type { ColorKeys } from '@/styles/colorKeyToUtilityMap'
 import BaseLink from '../Link/BaseLink'
 import { BreadcrumbsList } from './BreadcrumbList'
@@ -11,7 +12,10 @@ import { BreadcrumbsListItem } from './BreadcrumbListItem'
 
 export type Breadcrumb = {
   label: string
+  //without route locale
   slug: string
+  //with route locale for other than defaultLanguage
+  href: string
   type?: string
 }
 export type BreadcrumbData = {
@@ -21,26 +25,30 @@ export type BreadcrumbData = {
   customBreadcrumbs: Breadcrumb[]
 }
 
-const buildJsonLdElements = (
-  crumbs: Breadcrumb[],
-  pathname: ReturnType<typeof usePathname>,
-) => {
-  return crumbs.map((item, index) => ({
-    position: index + 1,
-    name: item.label,
-    item: `${domain}${item.slug}`,
-  }))
+const buildJsonLdElements = (crumbs: Breadcrumb[]) => {
+  return crumbs.map((item, index) => {
+    return {
+      position: index + 1,
+      name: item.label,
+      item: `${domain}${item.href}`,
+    }
+  })
 }
 
 const capitalize = (text: string): string =>
   text?.[0].toUpperCase() + text?.slice(1)
 
-const parseBreadcrumbs = (crumbs: Breadcrumb[]) => {
+const parseBreadcrumbs = (crumbs: Breadcrumb[], isoLang: string) => {
   return crumbs
     .filter(item => item?.slug && item?.label)
     .map(item => {
+      console.log('parseBreadcrumbs item', item)
       return {
         ...item,
+        href:
+          isoLang !== defaultLanguage.iso
+            ? `/${getLocaleFromIso(isoLang)}${item.slug}`
+            : item.slug,
         label: capitalize(item.label),
       }
     })
@@ -64,11 +72,11 @@ export const Breadcrumbs = forwardRef<HTMLElement, BreadcrumbsProps>(
     },
     ref,
   ) => {
-    const pathname = usePathname()
+    const isoLang = useLocale()
     const crumbs =
       useCustomBreadcrumbs && customBreadcrumbs.length >= 3
-        ? parseBreadcrumbs(customBreadcrumbs)
-        : parseBreadcrumbs(defaultBreadcrumbs)
+        ? parseBreadcrumbs(customBreadcrumbs, isoLang)
+        : parseBreadcrumbs(defaultBreadcrumbs, isoLang)
 
     if (crumbs.length < 2) return null
 
@@ -80,15 +88,17 @@ export const Breadcrumbs = forwardRef<HTMLElement, BreadcrumbsProps>(
       >
         <BreadcrumbsList className={twMerge(`py-6 lg:py-8`, className)}>
           {crumbs.map(item => {
+            // doesnt contain /locale/ in slug, add locale to href
             const isActive = item.slug === currentSlug
             const label = item.label
+
             return (
               <BreadcrumbsListItem key={item.slug} active={isActive}>
                 {isActive ? (
                   <span aria-current='page'>{label}</span>
                 ) : (
                   <BaseLink
-                    href={item.slug}
+                    href={item.href}
                     className='no-underline hover:underline'
                   >
                     {label}
@@ -98,7 +108,7 @@ export const Breadcrumbs = forwardRef<HTMLElement, BreadcrumbsProps>(
             )
           })}
         </BreadcrumbsList>
-        <BreadcrumbJsonLd items={buildJsonLdElements(crumbs, pathname)} />
+        <BreadcrumbJsonLd items={buildJsonLdElements(crumbs)} />
       </nav>
     )
   },
