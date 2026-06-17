@@ -10,14 +10,14 @@ on:
           - development
           - production
         default: development
-  push:
-    branches:
-      - main
-      - staging
-    paths:
-      - 'search/**'
-      - '!./README.md'
-      - '!./.env.template'
+  #push:
+  #  branches:
+  #    - main
+  #    - staging
+  #  paths:
+  #    - 'search/**'
+  #    - '!./README.md'
+  #    - '!./.env.template'
 
 env:
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}

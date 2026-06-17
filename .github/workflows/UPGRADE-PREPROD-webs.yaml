@@ -118,7 +118,8 @@ jobs:
           nodeEnvironment: production
           archiveContentLink: ${{ vars.ARCHIVE_CONTENT_LINK }}
           friendlyCaptchaSitekey: ${{ matrix.dataset == 'brazil' && vars.BRAZIL_FC_SITEKEY || vars.GLOBAL_FC_SITEKEY }}
-         
+          isUpgrade: true
+          
       - uses: act10ns/slack@v2
         with:
           status: ${{ job.status }}

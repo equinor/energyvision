@@ -107,7 +107,6 @@ jobs:
           datasetName: ${{ matrix.dataset }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           sanityApiToken: ${{ secrets.SANITY_API_TOKEN }}
-          sanityPreviewToken: ${{ secrets.SANITY_STUDIO_PREVIEW_SECRET }}
           brandmasterUrl: ${{ secrets.SANITY_STUDIO_BRANDMASTER_URL }}
           brandmasterPluginSource: ${{ secrets.SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE }}
           fotowareClientId: ${{ secrets.SANITY_STUDIO_FOTOWARE_CLIENT_ID }}
@@ -115,9 +114,13 @@ jobs:
           fotowareRedirectOrigin: ${{ secrets.SANITY_STUDIO_FOTOWARE_REDIRECT_ORIGIN }}
           fotowareAfExportUrl: ${{ secrets.SANITY_STUDIO_FOTOWARE_AF_EXPORT_URL }}
           fotowareAfExportKey: ${{ secrets.SANITY_STUDIO_FOTOWARE_AF_EXPORT_KEY }}
+          fotowareRedirectUri: ${{ secrets.SANITY_STUDIO_FOTOWARE_REDIRECT_URI}}
+          fotowareAfApiAccessKey: ${{ secrets.SANITY_STUDIO_FOTOWARE_AF_API_ACCESS_KEY }}
+          fotowareAfApiAccessUrl: ${{ secrets.SANITY_STUDIO_FOTOWARE_AF_API_ACCESS_URL }}
           screen9accountId: ${{ secrets.SANITY_STUDIO_SCREEN9_ACCOUNT_ID }}
           screen9token: ${{ secrets.SANITY_STUDIO_SCREEN9_TOKEN }}
-          environment: ${{ secrets.ENV }}
+          environment: ${{ vars.ENV }}
+          isUpgrade: false
       - uses: act10ns/slack@v2
         with:
           status: ${{ job.status }}
