@@ -1,4 +1,7 @@
 'use server'
+
+import { friendlyCaptcha } from '@/lib/config'
+
 const FRIENDLY_CAPTCHA_SITEVERIFY_API_URL =
   'https://eu.frcapi.com/api/v2/captcha/siteverify'
 
@@ -9,7 +12,7 @@ async function validateCaptcha(captchaSolution: string, acceptErrors = false) {
     method: 'POST',
     body: JSON.stringify({
       response: captchaSolution,
-      sitekey: process.env.FRIENDLY_CAPTCHA_SITEKEY,
+      sitekey: friendlyCaptcha.siteKey,
     }),
     headers: {
       'Content-Type': 'application/json',
