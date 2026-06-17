@@ -99,6 +99,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
     const intl = useTranslations()
     const sliderRef = useRef<HTMLUListElement>(null)
     const timeoutRef = useRef<NodeJS.Timeout | null>(null)
+    const positionUpdateTimeoutRef = useRef<NodeJS.Timeout | null>(null)
     //a prefers-reduced-motion user setting must always override autoplay
     const prefersReducedMotion = usePrefersReducedMotion()
     const internalAutoRotation = useMemo(() => {
@@ -137,6 +138,11 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
     const [itemsXPositions, setItemsXPositions] = useState<number[]>([])
 
     const loopSlideNext = useCallback(() => {
+      // Cancel any pending position update to avoid race condition
+      if (positionUpdateTimeoutRef.current) {
+        clearTimeout(positionUpdateTimeoutRef.current)
+      }
+
       const isLast = currentIndex === items?.length - 1
       const newIndex = isLast ? 0 : currentIndex + 1
       const newXPosition = currentXPosition + TRANSLATE_X_AMOUNT
@@ -156,7 +162,10 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
           }
           return position
         })
-        setTimeout(() => setItemsXPositions(newPositions), 400)
+        positionUpdateTimeoutRef.current = setTimeout(
+          () => setItemsXPositions(newPositions),
+          400,
+        )
       }
       setCurrentIndex(newIndex)
       setCurrentXPosition(newXPosition)
@@ -170,6 +179,11 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
     ])
 
     const loopSlidePrev = useCallback(() => {
+      // Cancel any pending position update to avoid race condition
+      if (positionUpdateTimeoutRef.current) {
+        clearTimeout(positionUpdateTimeoutRef.current)
+      }
+
       const isFirst = currentIndex === 0
       const newIndex = isFirst ? items?.length - 1 : currentIndex - 1
       const newXPosition = currentXPosition - TRANSLATE_X_AMOUNT
@@ -189,7 +203,10 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
           }
           return position
         })
-        setTimeout(() => setItemsXPositions(newPositions), 400)
+        positionUpdateTimeoutRef.current = setTimeout(
+          () => setItemsXPositions(newPositions),
+          400,
+        )
       }
       setCurrentIndex(newIndex)
       setCurrentXPosition(newXPosition)
@@ -272,6 +289,9 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
 
     useEffect(() => {
       const reset = () => {
+        if (positionUpdateTimeoutRef.current) {
+          clearTimeout(positionUpdateTimeoutRef.current)
+        }
         setCurrentIndex(0)
         setCurrentXPosition(0)
         setCurrentListTranslateX(0)
