@@ -5,9 +5,11 @@ import { type HTMLProps, useRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 import type Player from 'video.js/dist/types/player'
 import Blocks from '@/portableText/Blocks'
-import { resolveImage, urlForImage } from '@/sanity/lib/utils'
-import { type Image, mapSanityImageRatio } from '../Image/imageUtilities'
+import { urlForImage } from '@/sanity/lib/utils'
+import type { Image } from '../Image/imageUtilities'
 import type { AspectRatioVariants, Variants } from './Video'
+
+const Video = dynamic(() => import('./Video'), { ssr: false })
 
 export type VideoType = {
   title: string
@@ -58,7 +60,6 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
   className,
   containVideo,
 }) => {
-  const Video = dynamic(() => import('./Video'), { ssr: false })
   const posterUrl = poster ? urlForImage(poster)?.url() : undefined
   //  const { url: posterUrl } = resolveImage({
   //   image: poster,
