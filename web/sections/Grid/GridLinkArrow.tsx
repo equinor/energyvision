@@ -5,7 +5,7 @@ import { twMerge } from 'tailwind-merge'
 import BaseLink from '@/core/Link/BaseLink'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import { ArrowRight } from '../../icons'
-import { getLocaleFromName } from '../../sanity/helpers/localization'
+import { getIsoFromName } from '../../sanity/helpers/localization'
 import type { LinkData } from '../../types/index'
 
 type GridLinkArrowProps = {
@@ -60,7 +60,7 @@ const GridLinkArrow = forwardRef<HTMLDivElement, GridLinkArrowProps>(
             <BaseLink
               href={url as string}
               {...(action.link?.lang && {
-                hrefLang: getLocaleFromName(action.link?.lang),
+                hrefLang: getIsoFromName(action.link?.lang),
               })}
               type={action.type}
               className={twMerge(

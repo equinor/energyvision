@@ -2,7 +2,7 @@ import { toPlainText } from 'next-sanity'
 import ResourceLink from '@/core/Link/ResourceLink'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import { twMerge } from '@/lib/twMerge/twMerge'
-import { getLocaleFromName } from '../../sanity/helpers/localization'
+import { getIsoFromName } from '../../sanity/helpers/localization'
 import type { LinkData } from '../../types/index'
 
 type CallToActionsProps = {
@@ -40,7 +40,7 @@ const CallToActions = ({
           ...file,
           label: plainLabel,
         }}
-        {...(link?.lang && { hrefLang: getLocaleFromName(link?.lang) })}
+        {...(link?.lang && { hrefLang: getIsoFromName(link?.lang) })}
         href={url}
         type={type}
         variant='fit'
@@ -74,7 +74,7 @@ const CallToActions = ({
                     label: plainLabel,
                   }}
                   {...(link?.lang && {
-                    hrefLang: getLocaleFromName(link?.lang),
+                    hrefLang: getIsoFromName(link?.lang),
                   })}
                   href={url}
                   type={type}

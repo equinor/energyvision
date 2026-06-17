@@ -3,13 +3,7 @@ import type { PortableTextBlock } from '@portabletext/types'
 //TODO check this
 // eslint-disable-next-line import/no-unresolved
 import { useIsPresentationTool } from 'next-sanity/hooks'
-import {
-  forwardRef,
-  type HTMLAttributes,
-  useEffect,
-  useId,
-  useState,
-} from 'react'
+import { forwardRef, type HTMLAttributes, useId, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import Transcript from '@/sections/Transcript/Transcript'
 import { iframeSrcList } from '@/securityHeaders'

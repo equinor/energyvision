@@ -76,7 +76,7 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
       image,
       href,
       className = '',
-      locale,
+      hrefLang,
       variant = 'default',
       gridColumns,
       layoutDirection = 'col',
@@ -97,7 +97,7 @@ export const Promotion = forwardRef<HTMLAnchorElement, PromotionProps>(
         ref={ref}
         type={variant === 'externalLink' ? 'externalUrl' : 'internalUrl'}
         href={href}
-        locale={locale}
+        {...(hrefLang && { hrefLang })}
         prefetch={false}
         className={twMerge(
           `group/link grid h-full w-full max-w-full overflow-hidden rounded-card`,

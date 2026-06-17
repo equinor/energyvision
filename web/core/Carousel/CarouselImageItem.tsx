@@ -17,7 +17,7 @@ import { twMerge } from '@/lib/twMerge/twMerge'
 import type { LinkData } from '@/types/index'
 import { ArrowRight } from '../../icons'
 import Blocks from '../../portableText/Blocks'
-import { getLocaleFromName } from '../../sanity/helpers/localization'
+import { getIsoFromName } from '../../sanity/helpers/localization'
 import { Image } from '../Image/Image'
 import type { Figure, Image as ImageType } from '../Image/imageUtilities'
 import BaseLink from '../Link/BaseLink'
@@ -153,7 +153,7 @@ export const CarouselImageItem = forwardRef<
             <BaseLink
               href={url as string}
               {...(action.link?.lang && {
-                locale: getLocaleFromName(action.link?.lang),
+                hrefLang: getIsoFromName(action.link?.lang),
               })}
               type={action.type}
               className='group flex gap-2'
@@ -212,7 +212,7 @@ export const CarouselImageItem = forwardRef<
                 }}
                 showExtensionIcon={true}
                 {...(action?.link?.lang && {
-                  locale: getLocaleFromName(action?.link?.lang),
+                  hrefLang: getIsoFromName(action?.link?.lang),
                 })}
                 type={action?.type}
                 variant='fit'

@@ -70,7 +70,6 @@ export const Card = forwardRef<HTMLAnchorElement, CardProps>(function Card(
     <BaseLink
       ref={ref}
       href={href}
-      prefetch={false}
       className={twMerge(
         `group/card max-w-full overflow-hidden md:min-w-[300px] xl:min-w-[383px] ${onColorBg ? 'bg-white-100' : 'bg-gray-20'} ${variantClassNames[variant]}`,
         className,

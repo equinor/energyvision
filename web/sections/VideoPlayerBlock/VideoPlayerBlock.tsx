@@ -2,14 +2,14 @@ import type { PortableTextBlock } from '@portabletext/types'
 import dynamic from 'next/dynamic'
 import ResourceLink from '@/core/Link/ResourceLink'
 import type { AspectRatioVariants } from '@/core/VideoJsPlayer/Video'
-import {
-  type VideoControlsType,
-  type VideoType,
+import type {
+  VideoControlsType,
+  VideoType,
 } from '@/core/VideoJsPlayer/VideoPlayer'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import { twMerge } from '@/lib/twMerge/twMerge'
 import Blocks from '@/portableText/Blocks'
-import { getLocaleFromName } from '@/sanity/helpers/localization'
+import { getIsoFromName } from '@/sanity/helpers/localization'
 import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
 import type { DesignOptions, LinkData } from '@/types'
 import Transcript from '../Transcript/Transcript'
@@ -79,7 +79,7 @@ const VideoPlayerBlock = ({
           variant='fit'
           hrefLang={
             action?.type === 'internalUrl'
-              ? getLocaleFromName(action?.link?.lang)
+              ? getIsoFromName(action?.link?.lang)
               : undefined
           }
           className='mt-4 mb-8'

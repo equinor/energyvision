@@ -72,7 +72,6 @@ const AddToCalendar = ({
   return fileData ? (
     <ResourceLink
       href={fileData as string}
-      download={`${title.replace(/ /g, '_')}.ics`}
       type='icsLink'
       aria-label={atcAriaLabel}
       variant='fit'

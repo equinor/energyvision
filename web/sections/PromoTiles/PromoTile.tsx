@@ -8,7 +8,7 @@ import {
   colorKeyToUtilityMap,
 } from '@/styles/colorKeyToUtilityMap'
 import type { PromoTileData } from '@/types/index'
-import { getLocaleFromName } from '../../sanity/helpers/localization'
+import { getIsoFromName } from '../../sanity/helpers/localization'
 import type { Variants } from '../cards/Card/Card'
 
 type PromoTileProps = {
@@ -40,8 +40,8 @@ export const PromoTile = forwardRef<HTMLAnchorElement, PromoTileProps>(
     }
 
     const locale = action.link?.lang
-      ? getLocaleFromName(action.link?.lang)
-      : getLocaleFromName(intlLocale)
+      ? getIsoFromName(action.link?.lang)
+      : getIsoFromName(intlLocale)
     const { background } = designOptions
 
     const colorName =

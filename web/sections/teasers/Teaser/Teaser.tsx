@@ -12,7 +12,7 @@ import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import { useMediaQuery } from '@/lib/hooks/useMediaQuery'
 import Blocks from '@/portableText/Blocks'
 import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
-import { getLocaleFromName } from '../../../sanity/helpers/localization'
+import { getIsoFromName } from '../../../sanity/helpers/localization'
 import type { DesignOptions, LinkData } from '../../../types/index'
 
 export type TeaserData = {
@@ -112,7 +112,7 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
                   <ResourceLink
                     href={url as string}
                     {...(action.link?.lang && {
-                      hrefLang: getLocaleFromName(action.link?.lang),
+                      hrefLang: getIsoFromName(action.link?.lang),
                     })}
                     type={action.type}
                     key={action.id || idx}

@@ -2,7 +2,7 @@ import { twMerge } from 'tailwind-merge'
 import { ResourceLink } from '@/core/Link/ResourceLink'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import Blocks from '@/portableText/Blocks'
-import { getLocaleFromName } from '@/sanity/helpers/localization'
+import { getIsoFromName } from '@/sanity/helpers/localization'
 import type { TextTeaserData } from '../../../types/index'
 import { getColorForTheme } from './theme'
 
@@ -53,7 +53,7 @@ const TextTeaser = ({ data, anchor, className }: TextTeaserProps) => {
                 label: action?.label,
               }}
               {...(action.link?.lang && {
-                hrefLang: getLocaleFromName(action.link?.lang),
+                hrefLang: getIsoFromName(action.link?.lang),
               })}
               type={action.type}
               variant='fit'

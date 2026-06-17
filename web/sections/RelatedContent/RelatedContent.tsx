@@ -2,7 +2,7 @@ import type { HTMLAttributes } from 'react'
 import ResourceLink from '@/core/Link/ResourceLink'
 import { Typography } from '@/core/Typography'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
-import { getLocaleFromName } from '../../sanity/helpers/localization'
+import { getIsoFromName } from '../../sanity/helpers/localization'
 import type { LinkData, RelatedLinksData } from '../../types/index'
 
 type RelatedContentProps = {
@@ -24,7 +24,7 @@ const RelatedContent = ({ data, className = '' }: RelatedContentProps) => {
                 <ResourceLink
                   href={url as string}
                   {...(item.link?.lang && {
-                    hrefLang: getLocaleFromName(item.link?.lang),
+                    hrefLang: getIsoFromName(item.link?.lang),
                   })}
                   type={item.type}
                   file={{

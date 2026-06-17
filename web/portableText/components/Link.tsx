@@ -3,7 +3,10 @@ import {
   Link as CoreLink,
 } from '@/core/Link/Link'
 import { defaultLanguage } from '@/languageConfig'
-import { getLocaleFromName } from '@/sanity/helpers/localization'
+import {
+  getIsoFromName,
+  getLocaleFromName,
+} from '@/sanity/helpers/localization'
 
 type InternalLinkProps = {
   _key: string
@@ -42,13 +45,13 @@ export const Link = ({ value, children, type, className = '' }: LinkProps) => {
     if ('internalLink' in value && type === 'internalUrl') {
       const { id, lang } = value.internalLink
       const anchorReference = value.anchorReference
-      const linkLocale = getLocaleFromName(lang)
-      const locale = lang !== defaultLanguage.name ? `/${linkLocale}` : ''
+      const locale =
+        lang !== defaultLanguage.name ? `/${getLocaleFromName(lang)}` : ''
       props = {
         href: anchorReference
           ? `${locale}${id}#${anchorReference}`
           : `${locale}${id}`,
-        hrefLang: linkLocale,
+        hrefLang: getIsoFromName(lang),
       }
     }
     if ('href' in value && type === 'externalUrl') {

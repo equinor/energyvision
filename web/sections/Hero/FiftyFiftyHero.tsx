@@ -7,7 +7,7 @@ import ResourceLink from '@/core/Link/ResourceLink'
 import type { TypographyVariants } from '@/core/Typography'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import Blocks from '@/portableText/Blocks'
-import { getLocaleFromName } from '@/sanity/helpers/localization'
+import { getIsoFromName } from '@/sanity/helpers/localization'
 import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
 import type { DesignOptions, LinkData } from '@/types'
 
@@ -104,7 +104,7 @@ export const FiftyFiftyHero = ({
                 }}
                 href={heroUrl ?? url}
                 {...(action.link?.lang && {
-                  hrefLang: getLocaleFromName(action.link?.lang),
+                  hrefLang: getIsoFromName(action.link?.lang),
                 })}
                 type={action.type}
                 variant='fit'

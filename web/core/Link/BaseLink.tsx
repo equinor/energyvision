@@ -25,10 +25,14 @@ export const BaseLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(
       type = 'internalUrl',
       className = '',
       href,
+      prefetch = true,
       skipInternalStyle = false,
       hrefLang,
       onClick,
       'aria-current': ariaCurrent,
+      target,
+      role,
+      title,
     },
     ref,
   ) {
@@ -89,10 +93,13 @@ export const BaseLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(
               ref={ref}
               href={href}
               className={classNames}
-              prefetch={true} //{prefetch}
+              prefetch={prefetch}
               hrefLang={hrefLang}
               onClick={onClick}
               {...(ariaCurrent && { 'aria-current': ariaCurrent })}
+              {...(target && { target })}
+              {...(role && { role })}
+              {...(title && { title })}
             >
               {children}
             </NextLink>

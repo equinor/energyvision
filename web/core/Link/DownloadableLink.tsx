@@ -52,7 +52,7 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(
     },
     ref,
   ) {
-    const { label, originalFilename, url, extension } = file || {}
+    const { label, originalFilename, url, extension = '' } = file || {}
     const fileUrl = url
       ? `${url.replace('cdn.sanity.io', 'cdn.equinor.com')}?${originalFilename.replace(/ /g, '-')}`
       : null
@@ -64,6 +64,10 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(
       label ?? (Array.isArray(children) ? children?.[0] : originalFilename)
     const hasIcon = ['pdf', 'png', 'jpg', 'xlsx', 'xls', 'zip']
     const openInNewTab = ['pdf', 'png', 'jpg']
+    const shouldOpenInNewTab =
+      extension?.trim() &&
+      openInNewTab.includes(extension.toLowerCase().trim()) &&
+      (linkType !== 'downloadableFile' || fileUrl)
 
     const [notHuman, setNotHuman] = useState(false)
     const { isHuman, setIsHuman } = useContext(FriendlyCaptchaContext)
@@ -156,7 +160,7 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(
       </div>
     )
 
-    const downloadable = (showArrow: Boolean = true) => {
+    const downloadable = (showArrow = true) => {
       return (
         <BaseLink
           className={twMerge(
@@ -165,23 +169,15 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(
           )}
           type={linkType}
           href={linkType === 'downloadableFile' ? fileUrl : url}
-          {...(extension &&
-            openInNewTab?.includes(extension.toLowerCase()) && {
-              target: '_blank',
-            })}
+          {...(shouldOpenInNewTab && { target: '_blank' })}
         >
           <span
             className={`flex h-full w-inherit items-center justify-start gap-x-2 ${contentVariantClassName[variant]}`}
           >
             {linkElement}
             {showArrow &&
-              getArrowElement(
-                extension && openInNewTab?.includes(extension.toLowerCase())
-                  ? 'externalUrl'
-                  : linkType,
-              )}
+              getArrowElement(shouldOpenInNewTab ? 'externalUrl' : linkType)}
           </span>
-
           <div className='relative h-0.5'>
             <div className='absolute inset-0 z-10 h-0.5 w-[0%] bg-grey-50 transition-all duration-300 group-hover/link:w-full dark:bg-white-100' />
             <div className='absolute inset-0 z-0 h-px w-full bg-grey-50 dark:bg-white-100' />
@@ -272,10 +268,9 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(
             className='text-sm no-underline hover:text-slate-80 hover:underline dark:hover:text-grey-20'
             type={linkType}
             href={linkType === 'downloadableFile' ? fileUrl : url}
-            {...(extension &&
-              openInNewTab?.includes(extension.toLowerCase()) && {
-                target: '_blank',
-              })}
+            {...(shouldOpenInNewTab && {
+              target: '_blank',
+            })}
           >
             {linkElement}
           </Link>

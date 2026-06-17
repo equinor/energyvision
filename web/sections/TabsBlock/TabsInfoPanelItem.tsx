@@ -14,7 +14,7 @@ import ResourceLink from '@/core/Link/ResourceLink'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import { useMediaQuery } from '@/lib/hooks/useMediaQuery'
 import Blocks from '@/portableText/Blocks'
-import { getLocaleFromName } from '@/sanity/helpers/localization'
+import { getIsoFromName } from '@/sanity/helpers/localization'
 import { resolveImage } from '@/sanity/lib/utils'
 import type { LinkData } from '../../types'
 import type { InfoPanelImageVariant, InfoPanelKeyInfo } from './TabsBlock.types'
@@ -202,7 +202,7 @@ const TabsInfoPanelItem = forwardRef<HTMLDivElement, TabsInfoPanelItemProps>(
                   key={action.id}
                   href={url}
                   {...(action.link?.lang && {
-                    hrefLang: getLocaleFromName(action.link?.lang),
+                    hrefLang: getIsoFromName(action.link?.lang),
                   })}
                   file={{
                     ...action?.file,
