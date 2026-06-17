@@ -5,8 +5,8 @@ import { type HTMLProps, useRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 import type Player from 'video.js/dist/types/player'
 import Blocks from '@/portableText/Blocks'
-import { urlForImage } from '@/sanity/lib/utils'
-import type { Image } from '../Image/imageUtilities'
+import { resolveImage } from '@/sanity/lib/utils'
+import { type Image, mapSanityImageRatio } from '../Image/imageUtilities'
 import type { AspectRatioVariants, Variants } from './Video'
 
 const Video = dynamic(() => import('./Video'), { ssr: false })
@@ -60,12 +60,14 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
   className,
   containVideo,
 }) => {
-  const posterUrl = poster ? urlForImage(poster)?.url() : undefined
-  //  const { url: posterUrl } = resolveImage({
-  //   image: poster,
-  //   grid: 'lg',
-  //   aspectRatio: mapSanityImageRatio(aspectRatio === '9:16' ? '9:16' : '16:9'),
-  // })
+  const { url: posterUrl } = resolveImage({
+    image: poster,
+    grid: 'lg',
+    aspectRatio: mapSanityImageRatio(aspectRatio === '9:16' ? '9:16' : '16:9'),
+    keepRatioOnMobile: true,
+    useContain: true,
+    isLargerDisplays: true,
+  })
   const playerRef = useRef<Player>(null)
   const useFill =
     !containVideo &&
