@@ -81,7 +81,7 @@ jobs:
       - name: Checkout 🛎️
         uses: actions/checkout@v6
       - id: deploy-secret
-        uses: ./.github/workflows/deploy-websites/
+        uses: ./.github/workflows/deploy-web/
         with:
           imageName: ghcr.io/equinor/energyvision/web-secret
           projectId: w3b4om14
