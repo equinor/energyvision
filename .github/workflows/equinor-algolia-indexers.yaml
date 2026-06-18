@@ -31,8 +31,6 @@ permissions:
 
 jobs:
   check-code:
-    permissions:
-      contents: read
     runs-on: ubuntu-latest
     environment:
       name: ${{ github.event.inputs.environment || (github.ref == 'refs/heads/main' && 'production') || 'development'}}
@@ -69,9 +67,6 @@ jobs:
         if: failure()
 
   build-function-application:
-    permissions:
-      contents: read
-      actions: write
     needs: check-code
     runs-on: ubuntu-latest
     environment:
@@ -115,8 +110,6 @@ jobs:
         if: failure()
 
   deploy-function-application:
-    permissions:
-      actions: read
     environment:
       name: ${{ github.event.inputs.environment || (github.ref == 'refs/heads/main' && 'production') || 'development'}}
     needs: [build-function-application]

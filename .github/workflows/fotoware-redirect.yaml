@@ -26,8 +26,6 @@ permissions:
 
 jobs:
   build-function-application:
-    permissions:
-      actions: write
     runs-on: ubuntu-latest
     environment:
       name: ${{ github.event.inputs.environment }}
@@ -74,8 +72,6 @@ jobs:
         if: failure()
 
   deploy-function-application:
-    permissions:
-      actions: read
     environment:
       name: ${{ github.event.inputs.environment }}
     needs: [build-function-application]
