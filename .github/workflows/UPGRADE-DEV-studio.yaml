@@ -1,11 +1,11 @@
-name: UPGRADE DEV - Build & deploy studio
+name: DEV - Build & deploy studio
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
 on:
   workflow_dispatch:
   push:
     branches:
-      - upgrade-next-intl
+      - staging
     paths:
       - 'studio/**/*'
       - './FeatureFlags.js'
@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: development
-      url: https://studio-global-development-upgrade-energyvision-dev.radix.equinor.com/
+      url: https://studio-global-development-energyvision-dev.radix.equinor.com/
     strategy:
       matrix:
         dataset: [global-development]
@@ -33,7 +33,7 @@ jobs:
       - id: deploy-satellite
         uses: ./.github/workflows/deploy-studio/
         with:
-          imageName: ghcr.io/equinor/energyvision/studio-${{ matrix.dataset }}-upgrade
+          imageName: ghcr.io/equinor/energyvision/studio-${{ matrix.dataset }}
           datasetName: ${{ matrix.dataset }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           fotowareClientId: ${{ secrets.SANITY_STUDIO_FOTOWARE_CLIENT_ID }}
@@ -45,7 +45,7 @@ jobs:
           screen9accountId: ${{ secrets.SANITY_STUDIO_SCREEN9_ACCOUNT_ID }}
           screen9token: ${{ secrets.SANITY_STUDIO_SCREEN9_TOKEN }}
           environment: ${{ secrets.ENV }}
-          isUpgrade: true
+          isUpgrade: false
 
       - uses: act10ns/slack@v2
         with:

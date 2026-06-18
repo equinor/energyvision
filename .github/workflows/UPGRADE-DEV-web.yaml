@@ -1,11 +1,11 @@
-name: UPGRADE DEV - Build & Deploy equinor.com
+name: DEV - Build & Deploy equinor.com
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
 on:
   workflow_dispatch:
   push:
     branches:
-      - upgrade-next-intl
+      - staging
     paths:
       - 'web/**'
       - '!web/README.md'
@@ -49,7 +49,7 @@ jobs:
           friendlyCaptchaSitekey: ${{ matrix.dataset == 'brazil' && vars.BRAZIL_FC_SITEKEY || vars.GLOBAL_FC_SITEKEY }}
           environment: ${{ vars.ENV }}
           nodeEnvironment: development
-          isUpgrade: true
+          isUpgrade: false
 
       - uses: act10ns/slack@v2
         with:
