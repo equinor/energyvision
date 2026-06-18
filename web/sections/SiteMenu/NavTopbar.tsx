@@ -1,15 +1,12 @@
-import { ReactNode } from 'react'
+import type { ReactNode } from 'react'
 
 type Props = {
   children: ReactNode
 }
 
-export const NavTopbar = ({ children, ...rest }: Props) => {
+export const NavTopbar = ({ children }: Props) => {
   return (
-    <div
-      className="h-topbar w-full max-w-viewport m-auto py-4 px-layout-sm flex items-center justify-between"
-      {...rest}
-    >
+    <div className='m-auto flex h-topbar w-full max-w-content items-center justify-between px-layout-sm py-4'>
       {children}
     </div>
   )

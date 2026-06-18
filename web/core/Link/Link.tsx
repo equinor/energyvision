@@ -1,17 +1,22 @@
-import { forwardRef } from 'react'
-import { twMerge } from 'tailwind-merge'
-import { BaseLink, BaseLinkProps } from './BaseLink'
+import { useTranslations } from 'next-intl'
+import { twMerge } from '@/lib/twMerge/twMerge'
 import { ArrowRight } from '../../icons'
-import { useIntl } from 'react-intl'
+import { BaseLink, type BaseLinkProps } from './BaseLink'
 
 export type LinkProps = BaseLinkProps
 
 /** Regular link style for use*/
-export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
-  { children, type = 'internalUrl', className = '', href = '', ...rest },
+export const Link = ({
   ref,
-) {
-  const intl = useIntl()
+  children,
+  type = 'internalUrl',
+  className = '',
+  href = '',
+  hrefLang,
+  onClick,
+  'aria-current': ariaCurrent,
+}: LinkProps) => {
+  const t = useTranslations()
 
   const classNames = twMerge(
     `text-slate-blue-95
@@ -26,17 +31,30 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
     className,
   )
 
+  const isTel = href.includes('tel:')
+  const isMailTo = href.includes('mailto:')
+  const showArrow = type === 'externalUrl' && !isTel && !isMailTo
+
   return (
-    <BaseLink className={classNames} type={type} ref={ref} href={href} {...rest}>
+    <BaseLink
+      className={classNames}
+      type={type}
+      ref={ref}
+      href={href}
+      hrefLang={hrefLang}
+      onClick={onClick}
+      {...(ariaCurrent && { 'aria-current': ariaCurrent })}
+    >
       {children}
-      {type === 'externalUrl' && (
+      {showArrow && (
         <ArrowRight
-          aria-label={`, ${intl.formatMessage({ id: 'externalLink', defaultMessage: 'External link' })}`}
-          className="text-no inline-block pb-1 -rotate-45 origin-center"
+          aria-hidden='false'
+          aria-label={t('externalLink')}
+          className='-rotate-45 inline-block origin-center pb-1 text-no'
         />
       )}
     </BaseLink>
   )
-})
+}
 
 export default Link

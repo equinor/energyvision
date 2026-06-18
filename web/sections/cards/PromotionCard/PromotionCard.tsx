@@ -1,13 +1,16 @@
-import { FormattedDate } from '@core/FormattedDateTime'
-import Card from '@sections/cards/Card'
+'use client'
 import { forwardRef, type HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
+import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
+import { Typography } from '@/core/Typography'
+import Card from '@/sections/cards/Card'
+import type { ColorKeys } from '@/styles/colorKeyToUtilityMap'
 import { useMediaQuery } from '../../../lib/hooks/useMediaQuery'
-import Blocks from '../../../pageComponents/shared/portableText/Blocks'
 import type { CardData } from '../../../types/index'
 
 export type PromotionCardProps = {
   data: CardData
+  background?: ColorKeys
   hasSectionTitle: boolean
   variant?: 'default' | 'single'
   /** Override background image styling for card element */
@@ -23,66 +26,76 @@ export type PromotionCardProps = {
  * Event and people are solved in their own
  * Remember to wrap in ul and li if in a list.
  * */
-const PromotionCard = forwardRef<HTMLAnchorElement, PromotionCardProps>(function PromotionCard(
-  {
-    data,
-    className = '',
-    imageClassName = '',
-    titleClassName = '',
-    variant = 'default',
-    hasSectionTitle = true,
-    onColorBg = false,
-  },
-  ref,
-) {
-  const isMobile = useMediaQuery(`(max-width: 768px)`)
-  const { slug, title, ingress, publishDateTime, heroImage, id, type } = data
+const PromotionCard = forwardRef<HTMLAnchorElement, PromotionCardProps>(
+  function PromotionCard(
+    {
+      data,
+      className = '',
+      imageClassName = '',
+      titleClassName = '',
+      variant = 'default',
+      hasSectionTitle = true,
+      onColorBg = false,
+    },
+    ref,
+  ) {
+    const isMobile = useMediaQuery(`(max-width: 768px)`)
+    const { slug, title, ingress, publishDateTime, heroImage, id, type } = data
 
-  return (
-    <Card
-      ref={ref}
-      href={slug}
-      image={heroImage?.image}
-      variant={variant === 'single' && !isMobile ? 'single' : 'primary'}
-      className={twMerge(`w-full h-full`, className)}
-      imageClassName={imageClassName}
-      key={id}
-      onColorBg={onColorBg}
-    >
-      <Card.Content variant={variant === 'single' && !isMobile ? 'single' : 'primary'}>
-        <Card.Header
+    const plainIngress = Array.isArray(ingress)
+      ? ingress
+          .map(block => block.children.map((span: any) => span.text).join(''))
+          .join('\n')
+          .replace(/\n/g, ' ')
+      : ingress
+
+    return (
+      <Card
+        ref={ref}
+        href={slug}
+        onColorBg={onColorBg}
+        image={heroImage?.image}
+        variant={variant === 'single' && !isMobile ? 'single' : 'primary'}
+        className={twMerge(`h-full w-full`, className)}
+        imageClassName={imageClassName}
+        key={id}
+      >
+        <Card.Content
           variant={variant === 'single' && !isMobile ? 'single' : 'primary'}
-          {...(typeof title === 'string'
-            ? {
-                title: title,
-              }
-            : {
-                titleBlock: title,
-              })}
-          titleLevel={hasSectionTitle ? 'h3' : 'h2'}
-          {...(publishDateTime && {
-            eyebrow: <FormattedDate datetime={publishDateTime} uppercase />,
-          })}
-          titleClassName={titleClassName}
-        />
-        {ingress && (
-          <Blocks
-            noInvert
-            value={ingress}
-            className={`break-word max-w-prose grow ${
-              type !== 'news' && type !== 'localNews' ? '' : 'hidden lg:block'
-            }`}
-            {...(!(variant === 'single' && !isMobile) && {
-              clampLines: isMobile ? 3 : 5,
+        >
+          <Card.Header
+            variant={variant === 'single' && !isMobile ? 'single' : 'primary'}
+            {...(typeof title === 'string'
+              ? {
+                  title: title,
+                }
+              : {
+                  titleBlock: title,
+                })}
+            titleLevel={hasSectionTitle ? 'h3' : 'h2'}
+            {...(publishDateTime && {
+              eyebrow: (
+                <FormattedDateTime
+                  datetime={publishDateTime}
+                  uppercase
+                  className='text-xs'
+                />
+              ),
             })}
-            marks={{
-              em: ({ children }: { children?: React.ReactNode }) => <>{children}</>,
-              strong: ({ children }: { children?: React.ReactNode }) => <>{children}</>,
-            }}
+            titleClassName={titleClassName}
           />
-        )}
-      </Card.Content>
-    </Card>
-  )
-})
+          {ingress && (
+            <Typography
+              group='card'
+              variant='ingress'
+              className={`truncate ${type !== 'news' && type !== 'localNews' ? '' : 'max-lg:hidden'} line-clamp-3 lg:line-clamp-5`}
+            >
+              {plainIngress}
+            </Typography>
+          )}
+        </Card.Content>
+      </Card>
+    )
+  },
+)
 export default PromotionCard

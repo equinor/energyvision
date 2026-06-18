@@ -1,0 +1,25 @@
+import { notFound } from 'next/navigation'
+import { hasLocale } from 'next-intl'
+import { setRequestLocale } from 'next-intl/server'
+import { routing } from '@/i18n/routing'
+import { FriendlyCaptchaSdkWrapper } from '../FriendlyCaptchaWrapper'
+
+type Params = Promise<{ locale: string }>
+
+export default async function PagesLayout({
+  children,
+  params,
+}: {
+  children: React.ReactNode
+  params: Params
+}) {
+  const { locale } = await params
+
+  setRequestLocale(locale)
+
+  if (!hasLocale(routing.locales, locale)) {
+    notFound()
+  }
+
+  return <FriendlyCaptchaSdkWrapper>{children}</FriendlyCaptchaSdkWrapper>
+}

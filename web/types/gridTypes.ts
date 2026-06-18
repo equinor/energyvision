@@ -1,13 +1,15 @@
-import { ImageWithAlt, BackgroundColours, LinkData, IFrameData, VideoPlayerData, ImageBackground } from './index'
-import { TeaserImagePosition } from '@core/Teaser'
-import { PortableTextBlock } from '@portabletext/types'
-import { RowType } from '@sections/Grid/mapGridContent'
-import { FigureData } from '../pageComponents/topicPages/Figure'
+import type { PortableTextBlock } from '@portabletext/types'
+import type { ImageBackground } from '@/core/Backgrounds/ImageBackground'
+import type { Image } from '@/core/Image/imageUtilities'
+import type { RowType } from '@/sections/Grid/mapGridContent'
+import type { VideoPlayerBlockProps } from '@/sections/VideoPlayerBlock/VideoPlayerBlock'
+import type { FigureData } from '../sections/FigureBlock/FigureBlock'
+import type { BackgroundColours, IFrameData, LinkData } from './index'
 
 export type GridTeaserData = {
   type: 'gridTeaser'
   id: string
-  image: ImageWithAlt
+  image: Image
   rowType?: RowType
   useExtendedThemes?: boolean
   content?: PortableTextBlock[]
@@ -17,7 +19,7 @@ export type GridTeaserData = {
   author?: string
   authorTitle?: string
   background?: BackgroundColours
-  imagePosition?: TeaserImagePosition
+  imagePosition?: 'left' | 'right'
   action?: LinkData
   theme?: number
 }
@@ -30,9 +32,19 @@ export type GridData = {
   gridRows?: GridRowType[]
 }
 
-export type GridContentType = FigureData | IFrameData | VideoPlayerData | GridTextBlockData | GridTeaserData
+export type GridContentType =
+  | FigureData
+  | IFrameData
+  | VideoPlayerBlockProps
+  | GridTextBlockData
+  | GridTeaserData
 
-type GridTextBlockContentAlignment = 'left' | 'right' | 'center' | 'bottom-left' | 'bottom-center'
+type GridTextBlockContentAlignment =
+  | 'left'
+  | 'right'
+  | 'center'
+  | 'bottom-left'
+  | 'bottom-center'
 
 export type Span3 = {
   type: 'span3'

@@ -24,19 +24,19 @@ pnpm setup-project
 
 For compatibility reasons, the Sanity Studio uses the Yarn package manager, and the search indexer uses npm. The `pnpm setup-project` script will automatically install the dependencies for the Studio as well as the workspace packages listed in `pnpm-workspace.yaml`. See the [section on package managers](#package-managers) for more information.
 
-This project requires several environment variables to run. These environment variables should be added in `sanityv3/.env.development`, `web/.env.local`, and `search/.env` respectively.
+This project requires several environment variables to run. These environment variables should be added in `studio/.env.development`, `web/.env.local`, and `search/.env` respectively.
 
 ## Project overview
 
 This monorepo is organized into several folder. Please refer to README files inside each folder for more information.
 
-- `sanityv3` - [Sanity](https://www.sanity.io/) powered content platform.
+- `studio` - [Sanity](https://www.sanity.io/) powered content platform.
 - `web` - Web application using [Next.js](https://nextjs.org/) and React components.
 - `search` - Azure functions for maintaining search indexes at [Algolia](https://www.algolia.com/apps/24ZMKUY18Z/dashboard).
 
 ## Package managers
 
-This project uses the pnpm package manager. All commands should be run from root. There are filter aliases in the root `package.json` file that can be used to run commands in specific directories. E.g:
+This project uses the pnpm package manager. All commands should be run from root. There are filter aliases in the root `package.json` file that can be used to run commands in specific directories. For example:
 
 ```bash
 # Install dependencies
@@ -63,12 +63,12 @@ pnpm web add chalk -- --save-dev
 
 ```bash
 # Start studio in dev mode
-pnpm sanityv3 dev
+pnpm studio dev
 ```
 
 ### Search
 
-Due to compatibility issues, npm is used for the Search Indexers. The reason being that it was not possible (with pnpm v6 at least) to generate a package containing all dependencies from the search folder. So in order to work with dependencies for anything under `search`, use npm from within that folder. You can still use pnpm from the root folder to execute scripts.
+Due to compatibility issues, npm is used for the Search Indexers. The reason being that it was not possible (with pnpm v6 at least) to generate a package containing all dependencies from the search folder. So in order to work with dependencies for anything under `search`, use npm from within that folder. You can still use pnpm from the root folder to execute scripts however.
 
 ## Feature flags
 

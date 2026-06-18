@@ -1,13 +1,12 @@
-import { BackgroundContainer } from '@core/Backgrounds'
-import Accordion from './Accordion'
-import { FAQPageJsonLd } from 'next-seo'
-
-import type { AccordionData, AccordionListData } from '../../types/index'
 import { toPlainText } from '@portabletext/react'
-import { Heading, Typography } from '../../core/Typography'
+import { FAQJsonLd } from 'next-seo'
 import { twMerge } from 'tailwind-merge'
-import IngressText from '../../pageComponents/shared/portableText/IngressText'
-import Image, { getSmallerThanPxLgSizes } from '../../core/SanityImage/SanityImage'
+import { Image } from '@/core/Image/Image'
+import Blocks from '@/portableText/Blocks'
+import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
+import { Typography } from '../../core/Typography'
+import type { AccordionData, AccordionListData } from '../../types/index'
+import Accordion from './Accordion'
 
 type AccordionBlockProps = {
   data: AccordionData
@@ -16,53 +15,66 @@ type AccordionBlockProps = {
 }
 
 const buildJsonLdElements = (data: AccordionListData[]) => {
-  return data.map((item) => {
+  return data.map(item => {
     return {
-      questionName: item.title,
-      acceptedAnswerText: toPlainText(item.content),
+      question: item.title,
+      answer: toPlainText(item.content),
     }
   })
 }
 
 const AccordionBlock = ({ data, anchor, className }: AccordionBlockProps) => {
-  const { title, ingress, designOptions, accordion, id, image, enableStructuredMarkup } = data
-
+  const {
+    title,
+    ingress,
+    designOptions,
+    accordion,
+    id,
+    image,
+    enableStructuredMarkup,
+  } = data
+  const { bg, dark } = getBgAndDarkFromBackground(designOptions)
+  // check if section classname needs: [&_svg]:inline [&_svg]:align-baseline
   return (
     <>
-      <BackgroundContainer
-        {...designOptions}
+      <section
         id={anchor}
-        renderFragmentWhenPossible
-        className={twMerge(
-          `flex flex-col gap-6 max-w-viewport mx-auto pb-page-content px-layout-lg [&_svg]:inline [&_svg]:align-baseline`,
-          className,
-        )}
+        className={twMerge(`${bg} ${dark ? 'dark' : ''}`, className)}
       >
-        {image?.asset && (
-          <div className="w-1/4">
-            <Image
-              image={image}
-              maxWidth={570}
-              sizes={getSmallerThanPxLgSizes()}
-              aspectRatio={'1:1'}
-              className="rounded-full aspect-square"
-            />
+        <div className='mx-auto max-w-content px-layout-lg'>
+          {image?.asset && (
+            <div className='w-1/4'>
+              <Image
+                image={image}
+                grid='xs'
+                aspectRatio={'1:1'}
+                className='mb-4'
+                imageClassName='aspect-square rounded-full'
+              />
+            </div>
+          )}
+          {title &&
+            (Array.isArray(title) ? (
+              <Blocks value={title} variant='h2' />
+            ) : (
+              <Typography variant='h2'>{title}</Typography>
+            ))}
+          <div className='flex flex-col'>
+            {ingress && <Blocks variant='ingress' value={ingress} />}
+            {accordion && accordion.length > 0 && (
+              <Accordion
+                data={accordion}
+                id={id}
+                hasSectionTitle={!!title}
+                queryParamName={id}
+              />
+            )}
           </div>
-        )}
-        {title &&
-          (Array.isArray(title) ? (
-            <Heading value={title} as="h2" variant="xl" className="mb-2" />
-          ) : (
-            <Typography as="h2" variant="xl" className="mb-2">
-              {title}
-            </Typography>
-          ))}
-        {ingress && <IngressText value={ingress} />}
-        {accordion && accordion.length > 0 && (
-          <Accordion data={accordion} id={id} hasSectionTitle={!!title} queryParamName={id} />
-        )}
-      </BackgroundContainer>
-      {enableStructuredMarkup && accordion && <FAQPageJsonLd mainEntity={buildJsonLdElements(accordion)} />}
+        </div>
+      </section>
+      {enableStructuredMarkup && accordion && (
+        <FAQJsonLd questions={buildJsonLdElements(accordion)} />
+      )}
     </>
   )
 }

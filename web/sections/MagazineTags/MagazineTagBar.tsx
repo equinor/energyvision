@@ -1,15 +1,17 @@
-import { AnchorHTMLAttributes, forwardRef, useMemo } from 'react'
-import { Link } from '@core/Link'
-import { FormattedMessage, useIntl } from 'react-intl'
+'use client'
+import { magazineSlug } from '@energyvision/shared/satelliteConfig'
 import { filter_alt } from '@equinor/eds-icons'
+import { usePathname, useSearchParams } from 'next/navigation'
+import { useTranslations } from 'next-intl'
+import {
+  type AnchorHTMLAttributes,
+  forwardRef,
+  useCallback,
+  useMemo,
+} from 'react'
+import Link from '@/core/Link/Link'
+import { twMerge } from '@/lib/twMerge/twMerge'
 import { TransformableIcon } from '../../icons/TransformableIcon'
-import { useRouter } from 'next/router'
-
-export type MagazineTagBarProps = {
-  tags: { id: string; title: string; key: string }[]
-  href: string
-  onClick?: (value: string) => void
-}
 
 export type TagLink = {
   id: string
@@ -18,100 +20,92 @@ export type TagLink = {
   active: boolean
 } & AnchorHTMLAttributes<HTMLAnchorElement>
 
-const allTagLink = {
-  href: '#',
-  label: 'All',
-  active: false,
+export type MagazineTag = { id: string; title: string; key: string }
+
+export type MagazineTagBarProps = {
+  tags: MagazineTag[]
+  className?: string
 }
 
-const MagazineTagBar = forwardRef<HTMLDivElement, MagazineTagBarProps>(function MagazineTagBar(
-  { tags, onClick, href },
-  ref,
-) {
-  const router = useRouter()
-  const { query } = router
+const getPath = (pathname: string): string => {
+  const paths = pathname.split('/')
+  const isIndexPage =
+    paths[paths.length - 1] === magazineSlug.en_GB ||
+    paths[paths.length - 1] === magazineSlug.nb_NO
+  return isIndexPage ? pathname : paths.slice(0, paths.length - 1).join('/')
+}
 
-  const formattedTags = useMemo(() => {
-    return tags?.map((tag) => ({
-      id: tag.id,
-      label: tag.title,
-      key: tag.key,
-      active: query?.tag === tag.key,
-    }))
-  }, [tags, query])
+const MagazineTagBar = forwardRef<HTMLDivElement, MagazineTagBarProps>(
+  function MagazineTagBar({ tags = [], className = '' }, ref) {
+    const pathname = usePathname()
+    const searchParams = useSearchParams()
+    const parentSlug = getPath(pathname) || ''
+    const query = searchParams?.get('tag') ?? null
+    const isAllActive = !query || query === 'all'
 
-  const intl = useIntl()
-  allTagLink.label = intl.formatMessage({ id: 'magazine_tag_filter_all', defaultMessage: 'All categories' })
-  allTagLink.active = !query
-  const linkClassNames = `
-  inline-block 
-  text-base
-  mx-5 
-  lg:text-xs 
-  relative 
-  no-underline 
-  hover:underline 
-  hover:underline-offset-4
-  whitespace-nowrap`
+    // Modern query string creation
+    const createQueryString = useCallback(
+      (name: string, value: string) => {
+        const params = new URLSearchParams(searchParams?.toString() ?? '')
+        params.set(name, value)
+        return params.toString()
+      },
+      [searchParams],
+    )
 
-  return (
-    <div
-      ref={ref}
-      className="flex gap-2 overflow-x-auto mx-auto xl:justify-center p-8 border-y 
-      border-grey-3 items-center mb-8"
-    >
-      <h2 className="flex gap-1 font-medium text-sm items-center -mt-0.5">
-        <TransformableIcon iconData={filter_alt} className="text-grey-50 size-5 -mt-1" />
-        <FormattedMessage id="filter" defaultMessage="Filter" />
-      </h2>
-      <ul
-        // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+    const formattedTags = useMemo(() => {
+      return (tags || []).map(tag => ({
+        id: tag.id,
+        label: tag.title,
+        key: tag.key,
+        active: query === tag.key,
+      }))
+    }, [tags, query])
+
+    const intl = useTranslations()
+
+    const linkClassNames =
+      'inline-block text-base mx-5 lg:text-xs relative no-underline hover:underline hover:underline-offset-4 whitespace-nowrap'
+
+    return (
+      <div
+        ref={ref}
         tabIndex={0}
-        className="
-        flex
-        items-center 
-        divide-x-2
-      divide-energy-red-100"
+        className={twMerge(
+          `my-8 flex w-full justify-start gap-2 overflow-x-auto border-grey-30 border-y-[0.5px] p-8 lg:justify-center`,
+          className,
+        )}
       >
-        <li>
-          <Link
-            href={href}
-            className={`${allTagLink.active ? 'font-bold' : 'font-normal'} ${linkClassNames}`}
-            data-title={allTagLink.label}
-            onClick={(event) => {
-              if (onClick) {
-                event.preventDefault()
-                onClick('ALL')
-                allTagLink.active = true
-              }
-            }}
-          >
-            {allTagLink.label}
-          </Link>
-        </li>
-        {formattedTags.map((tag: TagLink) => {
-          return (
+        <h2 className='flex w-max items-center gap-1 font-medium text-sm'>
+          <TransformableIcon
+            iconData={filter_alt}
+            className='-mt-1 size-5 text-grey-50'
+          />
+          {intl('magazine_tag_filter')}
+        </h2>
+        <ul className='flex items-center divide-x-2 divide-energy-red-100'>
+          <li>
+            <Link
+              href={parentSlug + '?' + createQueryString('tag', 'all')}
+              className={`${linkClassNames} ${isAllActive ? 'font-bold' : ''}`}
+            >
+              {intl('magazine_tag_filter_all')}
+            </Link>
+          </li>
+          {formattedTags.map((tag: TagLink) => (
             <li key={tag.id}>
               <Link
-                className={`${tag.active ? 'font-bold' : 'font-normal'} ${linkClassNames}`}
-                href={`${href}${`?tag=${tag.key}`}`}
-                data-title={tag.label}
-                onClick={(event) => {
-                  if (onClick) {
-                    event.preventDefault()
-                    onClick(tag.key)
-                    allTagLink.active = false
-                  }
-                }}
+                className={`${linkClassNames} ${tag.active ? 'font-bold' : ''}`}
+                href={parentSlug + '?' + createQueryString('tag', tag.key)}
               >
                 {tag.label}
               </Link>
             </li>
-          )
-        })}
-      </ul>
-    </div>
-  )
-})
+          ))}
+        </ul>
+      </div>
+    )
+  },
+)
 
 export default MagazineTagBar

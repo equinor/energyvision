@@ -1,6 +1,5 @@
-import { IconType } from '@equinor/eds-core-react/dist/types/components/Icon/Icon.types'
-import { ButtonHTMLAttributes, forwardRef } from 'react'
-import envisTwMerge from '../../twMerge'
+import { type ButtonHTMLAttributes, forwardRef } from 'react'
+import { twMerge } from 'tailwind-merge'
 
 export const commonButtonStyling = `
 w-fit
@@ -8,17 +7,23 @@ text-sm
 px-4
 py-3
 rounded-md
-focus:outline-none
+focus:outline-hidden
 focus-visible:envis-outline
-dark:focus:outline-none
+dark:focus:outline-hidden
 dark:focus-visible:envis-outline-invert
 active:scale-99
+cursor-pointer
 flex
 items-center
 gap-3
 `
 
-export type Variants = 'contained' | 'outlined' | 'ghost' | 'contained-secondary' | 'outlined-secondary'
+export type Variants =
+  | 'contained'
+  | 'outlined'
+  | 'ghost'
+  | 'contained-secondary'
+  | 'outlined-secondary'
 
 /** Use for common button styling in Button,IconButton, Link/ButtonLink */
 export const getVariant = (variant: Variants): string => {
@@ -26,7 +31,7 @@ export const getVariant = (variant: Variants): string => {
     case 'ghost':
       return `
       hover:bg-moss-green-60
-      focus:outline-none
+      focus:outline-hidden
       focus-visible:envis-outline
       active:scale-99
       dark:text-white-100
@@ -40,7 +45,7 @@ export const getVariant = (variant: Variants): string => {
       hover:bg-autumn-storm-60
       hover:border-autumn-storm-60
       hover:text-white-100
-      focus:outline-none
+      focus:outline-hidden
       focus-visible:outline-slate-blue-95
       dark:text-white-100
       dark:border-white-100
@@ -60,7 +65,7 @@ export const getVariant = (variant: Variants): string => {
       hover:bg-autumn-storm-60
       hover:border-autumn-storm-60
       hover:text-white-100
-      focus:outline-none
+      focus:outline-hidden
       focus-visible:outline-slate-blue-95
       dark:text-white-100
       dark:border-white-100
@@ -77,15 +82,14 @@ export const getVariant = (variant: Variants): string => {
       text-white-100 
       hover:bg-slate-blue-100
       hover:text-white-100
-      focus:outline-none
+      focus:outline-hidden
       focus-visible:outline-slate-blue-95
     `
-    case 'contained':
     default:
       return `bg-norwegian-woods-100 
       text-white-100 
       hover:bg-moss-green-100
-      focus:outline-none
+      focus:outline-hidden
       focus-visible:outline-norwegian-woods-100
       dark:bg-white-100
       dark:hover:bg-norwegian-woods-40
@@ -102,24 +106,29 @@ export type ButtonProps = {
    * @default 'button'
    */
   type?: string
-  /** Should make our own Icon component ? */
-  icon?: IconType
 } & ButtonHTMLAttributes<HTMLButtonElement>
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ variant = 'contained', type = 'button', children, icon: Icon, className = '', ...rest }, ref) => {
+  (
+    {
+      variant = 'contained',
+      type = 'button',
+      children,
+      className = '',
+      ...rest
+    },
+    ref,
+  ) => {
     const variantClassNames = getVariant(variant)
 
-    const buttonClassNames = envisTwMerge(
+    const buttonClassNames = twMerge(
       commonButtonStyling,
       variantClassNames,
-      `${Icon ? 'flex gap-2' : ''}`,
       className,
     )
 
     return (
       <button ref={ref} type={type} className={buttonClassNames} {...rest}>
-        {Icon && <Icon />}
         {children}
       </button>
     )

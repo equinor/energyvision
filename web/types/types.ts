@@ -1,27 +1,19 @@
-import type { TeaserImagePosition, TeaserImageSize } from '@core/Teaser'
-import type { MediaPosition } from '@core/Teaser/Media'
 import type { PortableTextBlock } from '@portabletext/types'
-import type { SanityImageObject } from '@sanity/image-url/lib/types/types'
-import type { LoopingVideoData } from '@sections/Hero/LoopingVideo'
-import type { FigureData } from '../pageComponents/topicPages/Figure'
-import type { FullWidthImageData } from '../pageComponents/topicPages/FullWidthImage'
+import type { Image } from '@/core/Image/imageUtilities'
+import type { FullWidthVideoProps } from '@/sections/FullWidthVideo/FullWidthVideo'
+import type { StockValuesProps } from '@/sections/StockValues/StockValues'
+import type { TeaserData } from '@/sections/teasers/Teaser/Teaser'
+import type { VideoPlayerBlockProps } from '@/sections/VideoPlayerBlock/VideoPlayerBlock'
+import type { VideoPlayerCarouselData } from '@/sections/VideoPlayerCarousel/VideoPlayerCarousel'
+import type { EventDate } from '@/templates/event/Event'
+import type { FigureData } from '../sections/FigureBlock/FigureBlock'
+import type { FullWidthImageData } from '../sections/FullwidthImage/FullWidthImage'
 import type {
-  BackgroundColours,
   CardData,
   DesignOptions,
-  EventCardData,
-  EventDateType,
-  EventPromotionSettings,
-  FullWidthVideoData,
   GridData,
-  ImageWithAlt,
-  ImageWithCaptionData,
   LinkData,
   LinkType,
-  PeopleCardData,
-  StickyMenuLinkType,
-  VideoPlayerCarouselData,
-  VideoPlayerData,
 } from './index'
 
 export type IntlData = {
@@ -33,14 +25,14 @@ export type IntlData = {
 export type SeoData = {
   documentTitle?: string
   metaDescription?: string
-  openGraphImage?: ImageWithAlt
+  openGraphImage?: Image
 }
 
 export type FeaturedContentData = {
   type?: string // news, localNews, route_${locale}
   routeContentType?: 'page' | 'event'
   location?: string
-  eventDate?: EventDateType
+  eventDate?: EventDate
 } & CardData
 
 export type PortableTextChild = {
@@ -50,55 +42,26 @@ export type PortableTextChild = {
   text?: string
 }
 
-export type Templates = 'landingPage' | 'page' | 'news'
-
-export enum HeroTypes {
-  DEFAULT = 'default',
-  FIFTY_FIFTY = 'fiftyFifty',
-  FULL_WIDTH_IMAGE = 'fullWidthImage',
-  LOOPING_VIDEO = 'loopingVideo',
-  BACKGROUND_IMAGE = 'backgroundImage',
-}
-
-export type HeroType = {
-  figure?: ImageWithCaptionData
-  isBigTitle?: boolean
-  title?: PortableTextBlock[]
-  ingress?: PortableTextBlock[]
-  link?: LinkData
-  type?: HeroTypes
-  ratio?: string
-  background?: BackgroundColours
-  useBrandTheme?: boolean
-  useBlurCenter?: boolean
-  backgroundGradient?: 'none' | 'light' | 'dark'
-  displayTextVariant?: 'none' | 'base' | 'lg' | 'xl'
-  layoutGrid?: 'sm' | 'md' | 'lg'
-  loopingVideo?: LoopingVideoData
-  hideImageCaption?: boolean
-  captionBg?: BackgroundColours
-}
+export type Templates = 'page' | 'news'
 
 export type ContentType =
   | TeaserData
   | TextBlockData
   | FullWidthImageData
-  | FullWidthVideoData
+  | FullWidthVideoProps
   | FigureData
   | TextWithIconArrayData
   | QuoteData
   | AccordionData
   | PromoTileArrayData
   | IFrameData
-  | PromotionData
   | FormData
   | TableData
   | CookieDeclarationData
   | NewsListData
-  | StockValuesData
-  | TwitterEmbedData
-  | VideoPlayerData
+  | StockValuesProps
   | VideoPlayerCarouselData
+  | VideoPlayerBlockProps
   | GridData
   | CampaignBannerData
 
@@ -106,7 +69,7 @@ export type TextBlockData = {
   type: string
   id: string
   title: PortableTextBlock[]
-  image?: ImageWithAlt
+  image?: Image
   overline?: string
   text: PortableTextBlock[]
   isBigText?: boolean
@@ -122,21 +85,6 @@ export type CallToActionData = {
   type: string
   id: string
   action: LinkData
-}
-
-export type TeaserData = {
-  type: string
-  id: string
-  title: PortableTextBlock[]
-  text: PortableTextBlock[]
-  overline?: string
-  isBigText?: boolean
-  image: ImageWithAlt
-  actions?: LinkData[]
-  designOptions: DesignOptions & {
-    imagePosition?: MediaPosition
-    imageSize?: TeaserImageSize
-  }
 }
 
 export type TextTeaserData = {
@@ -183,7 +131,7 @@ export type TableData = {
 
 export type TextWithIconItem = {
   id: string
-  icon: ImageWithAlt
+  icon: Image
   text: PortableTextBlock[]
   title: string
 }
@@ -203,14 +151,14 @@ export type QuoteData = {
   author: string
   authorTitle?: string
   quote: string
-  image?: ImageWithAlt
-  designOptions: DesignOptions & { imagePosition?: TeaserImagePosition }
+  image?: Image
+  designOptions: DesignOptions & { imagePosition?: 'left' | 'right' }
 }
 
 export type AccordionListData = {
   id: string
   title: string
-  image?: SanityImageObject
+  image?: Image
   content: PortableTextBlock[]
   links: LinkData[]
 }
@@ -218,7 +166,7 @@ export type AccordionListData = {
 export type AccordionData = {
   type: string
   id: string
-  image?: ImageWithAlt
+  image?: Image
   title: PortableTextBlock[]
   ingress: PortableTextBlock[]
   accordion: AccordionListData[]
@@ -229,7 +177,7 @@ export type AccordionData = {
 export type PromoTileData = {
   id: string
   title: PortableTextBlock[]
-  image: ImageWithAlt
+  image: Image
   action: LinkData
   designOptions: DesignOptions
   linkLabelAsTitle?: boolean
@@ -275,41 +223,11 @@ export type Tag = {
   }
 }
 
-// Do we have a way to share types between studio and web?
-export type PromotionType = 'promoteTopics' | 'promoteNews' | 'promotePeople' | 'promoteEvents' | 'promoteMagazine'
-
-export type PromotionData = {
-  id: string
-  type: string
-  title?: PortableTextBlock[]
-  ingress?: PortableTextBlock[]
-  content: {
-    tags?: Tag[]
-    countryTags?: Tag[]
-    localNewsTags?: Tag[]
-    promotions: CardData[] | PeopleCardData[] | EventCardData[]
-    type: PromotionType
-    eventPromotionSettings?: EventPromotionSettings
-  }
-  viewAllLink?: LinkData
-  useHorizontalScroll?: boolean | undefined
-  designOptions?: DesignOptions
-}
-
 export type FooterColumns = {
   id: string
   header: string
-  linkList?: FooterLinkData[]
+  linkList?: any[]
 }
-
-export type SomeType = 'facebook' | 'instagram' | 'youtube' | 'twitter' | 'linkedin'
-
-export type FooterLinkData = {
-  id: string
-  type: 'externalUrl'
-  key: string
-  someType?: SomeType
-} & LinkData
 
 export type ContactListData = {
   title: string
@@ -373,22 +291,6 @@ export type NewsListData = {
   localNewsTags?: [id: string]
 }
 
-export type StockValuesData = {
-  id: string
-  type: string
-  designOptions: DesignOptions
-}
-
-export type TwitterEmbedData = {
-  id: string
-  type: string
-  title?: PortableTextBlock[]
-  ingress?: PortableTextBlock[]
-  embedType: string
-  embedValue: string
-  designOptions: DesignOptions
-}
-
 export type AnchorLinkData = {
   id: string
   type: string
@@ -425,7 +327,10 @@ export type CareersContactFormCatalogType =
   | 'onboarding'
   | 'emergingTalentsQueries'
   | 'others'
-export type PensionFormCatalogType = 'pension' | 'travelInsurance' | 'otherPensionInsuranceRelated'
+export type PensionFormCatalogType =
+  | 'pension'
+  | 'travelInsurance'
+  | 'otherPensionInsuranceRelated'
 export type KeyNumberItemData = {
   type: 'keyNumberItem'
   id: string
@@ -461,35 +366,14 @@ export type PodcastTeaserData = {
   linkTitle?: string
   podcastName?: PortableTextBlock[]
   podcastEpisode?: PortableTextBlock[]
-  image: ImageWithAlt
+  image: Image
   designOptions: DesignOptions
 }
 
-export type AnchorLinkReference = {
-  id: string
-  type: 'anchorLinkReference'
-  title?: string
-  anchorReference?: string
-}
-
-export type AnchorLinkListData = {
-  id: string
-  type: 'anchorLinkList'
-  title?: string
-  columns?: string
-  anchorList?: AnchorLinkReference[]
-}
 export type ImageForTextData = {
   type: 'imageForText'
   id: string
-  image: ImageWithAlt
+  image: Image
   content?: PortableTextBlock[]
   aspectRatio?: '16:9' | 'fullWidth'
-}
-
-export type StickyMenuData = {
-  type: 'stickyMenu'
-  title: string
-  links: StickyMenuLinkType[]
-  background: string
 }

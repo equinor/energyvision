@@ -1,0 +1,58 @@
+import downloadableFileFields from './actions/downloadableFileFields'
+import downloadableImageFields from './actions/downloadableImageFields'
+import linkSelectorFields from './actions/linkSelectorFields'
+import markDefs from './blockEditorMarks'
+
+export const iframeForNewsQuery = /* groq */ ` iframe{
+  title,
+  frameTitle,
+  url,
+  "designOptions": {
+    "aspectRatio": coalesce(aspectRatio, '16:9'),
+    height,
+  },
+  cookiePolicy
+}`
+
+export const contentForNewsQuery = /* groq */ `content[] {
+    ...,
+    _type == "factbox" => {
+      ...,
+      content[]{
+        ...,
+        ${markDefs},
+      },
+    },
+    _type == "pullQuote" => {
+      "type": _type,
+      "id": _key,
+      author,
+      authorTitle,
+      image,
+      quote,
+      "designOptions": {
+        "imagePosition": coalesce(imagePosition, 'right'),
+      }
+    },
+    _type == "positionedInlineImage" => {
+      ...,
+      image
+    },
+    ${markDefs},
+  }`
+
+export const relatedLinksForNewsQuery = /* groq */ `relatedLinks {
+    title,
+    heroImage,
+    "links": links[]{
+      ${linkSelectorFields},
+      ${downloadableFileFields},
+      ${downloadableImageFields},
+    }
+  }`
+
+export const ingressForNewsQuery = /* groq */ `ingress[]{
+    ...,
+    ${markDefs},
+  }
+`

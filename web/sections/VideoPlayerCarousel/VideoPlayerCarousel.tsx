@@ -1,8 +1,33 @@
-import { Heading, Paragraph } from '@core/Typography'
-import { VideoPlayerCarouselData } from '../../types/index'
-import { BackgroundContainer } from '@core/Backgrounds'
-import { Carousel } from '@core/Carousel/Carousel'
+'use client'
+import type { PortableTextBlock } from 'next-sanity'
 import { forwardRef, useId } from 'react'
+import { twMerge } from 'tailwind-merge'
+import { Carousel } from '@/core/Carousel/Carousel'
+import type { AspectRatioVariants } from '@/core/VideoJsPlayer/Video'
+import type { VideoType } from '@/core/VideoJsPlayer/VideoPlayer'
+import Blocks from '@/portableText/Blocks'
+import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
+import type { DesignOptions } from '../../types/index'
+
+export type VideoPlayerCarouselItem = {
+  id: string
+  video: VideoType
+  title?: PortableTextBlock[]
+  hideVideoTitle?: boolean
+  aspectRatio?: AspectRatioVariants
+}
+
+export type VideoPlayerCarouselData = {
+  id: string
+  type: string
+  items: VideoPlayerCarouselItem[]
+  designOptions: DesignOptions & {
+    aspectRatio: AspectRatioVariants
+  }
+  title?: PortableTextBlock[]
+  hideTitle?: boolean
+  ingress?: PortableTextBlock[]
+}
 
 type VideoPlayerCarouselProps = {
   data: VideoPlayerCarouselData
@@ -10,30 +35,35 @@ type VideoPlayerCarouselProps = {
   className?: string
 }
 
-const VideoPlayerCarousel = forwardRef<HTMLUListElement, VideoPlayerCarouselProps>(function VideoPlayerCarousel(
-  { anchor, data, className },
-  ref,
-) {
-  const { title, hideTitle, ingress, items, scrollMode, designOptions } = data
-  const { background, aspectRatio } = designOptions
+const VideoPlayerCarousel = forwardRef<
+  HTMLUListElement,
+  VideoPlayerCarouselProps
+>(function VideoPlayerCarousel({ anchor, data, className }, ref) {
+  const { title, hideTitle, ingress, items, designOptions } = data
+  const { aspectRatio } = designOptions
   const headingId = useId()
+  const { bg, dark } = getBgAndDarkFromBackground(designOptions)
+  const scrollMode = designOptions?.aspectRatio === '9:16'
 
   return (
-    <BackgroundContainer as="section" background={background} id={anchor} backgroundStyle="none" className={className}>
-      <div className="w-full flex flex-col px-layout-lg mx-auto max-w-viewport pb-8">
+    <section
+      id={anchor}
+      className={twMerge(`${bg} ${dark ? 'dark' : ''}`, className)}
+    >
+      <div className='mx-auto flex w-full max-w-content flex-col px-layout-sm pb-8 lg:px-layout-lg'>
         {title && (
-          <Heading
+          <Blocks
             id={headingId}
-            as="h2"
+            variant='h2'
             value={title}
-            className={hideTitle ? 'sr-only' : `${ingress ? 'pb-6' : ''} text-xl max-w-text text-pretty`}
+            className={hideTitle ? 'sr-only' : `${ingress ? 'pb-6' : ''}`}
           />
         )}
-        {ingress && <Paragraph value={ingress} className="max-w-text text-pretty" />}
+        {ingress && <Blocks variant='ingress' value={ingress} />}
       </div>
       <Carousel
         ref={ref}
-        items={items.map((item) => {
+        items={items.map((item: VideoPlayerCarouselItem) => {
           return {
             ...item,
             aspectRatio: aspectRatio,
@@ -41,11 +71,12 @@ const VideoPlayerCarousel = forwardRef<HTMLUListElement, VideoPlayerCarouselProp
         })}
         displayMode={scrollMode && scrollMode ? 'scroll' : 'single'}
         hasSectionTitle={!!title}
-        variant="video"
+        variant='video'
         labelledbyId={title ? headingId : undefined}
         autoRotation={false}
+        containerClassName={`${scrollMode ? 'px-layout-sm lg:px-layout-md max-w-content mx-auto' : ''}`}
       />
-    </BackgroundContainer>
+    </section>
   )
 })
 

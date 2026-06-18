@@ -1,4 +1,6 @@
 name: PROD - Deploy all webs and studios
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
 on:
   workflow_dispatch:
 permissions:
@@ -11,7 +13,7 @@ jobs:
     steps:
       - name: Checkout internal 🛎️
         id: checkout-internal
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: 'equinor/energyvision-internal'
           ref: main
@@ -53,7 +55,7 @@ jobs:
       DOCKER_BUILDKIT: 1
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Deploy to Radix 🚀
         id: deploy-main
@@ -83,10 +85,6 @@ jobs:
       url: https://equinor.sanity.studio
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-      SANITY_STUDIO_BRANDMASTER_URL: ${{ secrets.SANITY_STUDIO_BRANDMASTER_URL }}
-      SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE: ${{ secrets.SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE }}
-      SANITY_STUDIO_PREVIEW_SECRET: ${{ secrets.SANITY_STUDIO_PREVIEW_SECRET }}
-      SANITY_STUDIO_HISTORY_API_TOKEN: ${{ secrets.SANITY_STUDIO_HISTORY_API_TOKEN }}
       SANITY_STUDIO_API_DATASET: global
       SANITY_STUDIO_FOTOWARE_CLIENT_ID: ${{ secrets.SANITY_STUDIO_FOTOWARE_CLIENT_ID }}
       SANITY_STUDIO_FOTOWARE_TENANT_URL: ${{ secrets.SANITY_STUDIO_FOTOWARE_TENANT_URL }}
@@ -99,7 +97,7 @@ jobs:
     steps:
       - name: Checkout internal 🛎️
         id: checkout-internal
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: 'equinor/energyvision-internal'
           ref: main
@@ -112,7 +110,7 @@ jobs:
           echo "sha=$(python ci/returnComponentVersion.py preprod studio-global)" >> $GITHUB_OUTPUT
       - name: Checkout 🛎️
         id: checkout-main
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: 'equinor/energyvision'
           fetch-depth: 0
@@ -123,7 +121,7 @@ jobs:
           echo "sha=$(git rev-parse ${{ steps.get-preprod-sha.outputs.sha }})" >> $GITHUB_OUTPUT
       - name: Checkout 🛎️
         id: checkout-specific-branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: 'equinor/energyvision'
           fetch-depth: 0
@@ -131,21 +129,19 @@ jobs:
       - name: Install pnpm 📦
         id: install-pnpm
         uses: pnpm/action-setup@v4
-        with:
-          version: '8.5.1'
       - name: Cache pnpm modules 💾
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 24
           cache: 'pnpm'
       - name: Install dependencies 🔧
         id: install-dependencies
         run: |
           pnpm install
-          pnpm sanityv3 install
+          pnpm studio install
       - name: Deploy 🚀
         id: deploy
-        working-directory: ./sanityv3
+        working-directory: ./studio
         run: |
           pnpm run deploy
         env:
@@ -162,10 +158,6 @@ jobs:
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       SANITY_STUDIO_API_PROJECT_ID: w3b4om14
-      SANITY_STUDIO_MUTATION_TOKEN: ${{ secrets.SANITY_STUDIO_SECRET_MUTATION_TOKEN }}
-      SANITY_STUDIO_PREVIEW_SECRET: ${{ secrets.SANITY_STUDIO_SECRET_PREVIEW_SECRET }}
-      SANITY_STUDIO_BRANDMASTER_URL: ${{ secrets.SANITY_STUDIO_BRANDMASTER_URL }}
-      SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE: ${{ secrets.SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE }}
       SANITY_STUDIO_API_DATASET: secret
       SANITY_STUDIO_FOTOWARE_CLIENT_ID: ${{ secrets.SANITY_STUDIO_FOTOWARE_CLIENT_ID }}
       SANITY_STUDIO_FOTOWARE_TENANT_URL: ${{ secrets.SANITY_STUDIO_FOTOWARE_TENANT_URL }}
@@ -178,7 +170,7 @@ jobs:
     steps:
       - name: Checkout internal 🛎️
         id: checkout-internal
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: 'equinor/energyvision-internal'
           ref: main
@@ -192,7 +184,7 @@ jobs:
           echo "sha=$(python ci/returnGlobalStudioVersion.py preprod)" >> $GITHUB_OUTPUT
       - name: Checkout 🛎️
         id: checkout-main
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: 'equinor/energyvision'
           fetch-depth: 0
@@ -204,7 +196,7 @@ jobs:
           echo "sha=$(git rev-parse ${{ steps.get-preprod-sha.outputs.sha }})" >> $GITHUB_OUTPUT
       - name: Checkout 🛎️
         id: checkout-specific-branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: 'equinor/energyvision'
           fetch-depth: 0
@@ -212,21 +204,19 @@ jobs:
       - name: Install pnpm 📦
         id: install-pnpm
         uses: pnpm/action-setup@v4
-        with:
-          version: '8.5.1'
       - name: Cache pnpm modules 💾
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 24
           cache: 'pnpm'
       - name: Install dependencies 🔧
         id: install-dependencies
         run: |
           pnpm install
-          pnpm sanityv3 install
+          pnpm studio install
       - name: Deploy 🚀
         id: deploy
-        working-directory: ./sanityv3
+        working-directory: ./studio
         run: |
           pnpm run deploy
         env:
@@ -247,7 +237,7 @@ jobs:
       DOCKER_BUILDKIT: 1
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Deploy to Radix 🚀
         id: deploy
@@ -270,13 +260,10 @@ jobs:
   store-image-tags:
     needs: [deploy-webs, deploy-satellite-studios]
     runs-on: ubuntu-latest
-    outputs:
-      WEB_SHA: ${{ steps.save-and-get-image-tags.outputs.WEB_SHA }}
-      STUDIO_SHA: ${{ steps.save-and-get-image-tags.outputs.STUDIO_SHA }}
     steps:
       - name: Checkout internal 🛎️
         id: checkout-internal
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: 'equinor/energyvision-internal'
           ref: main
@@ -284,12 +271,11 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '14'
+          node-version: '24'
       - name: Install dependencies
         run: |
           npm install js-yaml
       - name: Run script for 'web' and 'studio'
-        id: save-and-get-image-tags
         run: |
           WEB_SHA=$(node ci/storeImageTags.js web)
           STUDIO_SHA=$(node ci/storeImageTags.js studio)
@@ -310,7 +296,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: 'Move cards and create discussion and post it to channel'
         id: 'get-list'

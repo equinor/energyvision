@@ -1,5 +1,5 @@
 name: 'Deploy studio'
-description: 'Steps needed to deploy a satellite studio to Radix'
+description: 'Steps needed to deploy a studio to Radix'
 inputs:
   imageName:
     description: 'The path to where the image is to be copied'
@@ -13,15 +13,6 @@ inputs:
   githubToken:
     description: 'GitHub token'
     required: true
-  sanityPreviewToken:
-    description: 'Sanity Preview token'
-    required: true
-  brandmasterUrl:
-    description: 'Sanity Studio Brandmaster Url'
-    required: true
-  brandmasterPluginSource:
-    description: 'Sanity Studio Brandmaster Plugin Source'
-    required: true
   fotowareClientId:
     description: 'Client ID for Fotoware integration'
     required: true
@@ -30,6 +21,9 @@ inputs:
     required: true
   fotowareRedirectOrigin:
     description: 'Redirect Origin for Fotoware auth'
+    required: true
+  fotowareRedirectUri:
+    description: 'Redirect URI for Fotoware auth'
     required: true
   fotowareAfExportUrl:
     description: 'Azure Function img export URL'
@@ -40,25 +34,26 @@ inputs:
   environment:
     description: 'dev, preprod or prod'
     required: true
-  sanityApiToken:
-    description: 'Sanity API token'
-    required: true
-  sanityHistoryApiToken:
-    description: 'Sanity History API token'
-    required: true
   screen9accountId:
     description: 'Screen 9 Account Id'
     required: true
   screen9token:
     description: 'Screen9 API token'
     required: true
-  previewUrl:
-    description: 'Preview url for presentation'
+  isUpgrade: ## To be removed later - post launch cleanup 
+    description: 'Set to true if this for upgrade preprodv2'
+    required: true
+
+
 runs:
   using: 'composite'
   steps:
+    - name: Force JS Actions Node 24
+      shell: bash
+      run: |
+        echo "FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true" >> $GITHUB_ENV
     - name: Checkout 🛎️
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         fetch-depth: 0
     - name: Get long sha ️🏷️
@@ -70,7 +65,7 @@ runs:
     - name: Checkout specific branch 🛎️
       if: "${{ inputs.commitSha != '' }}"
       id: checkout-specific-branch
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         repository: 'equinor/energyvision'
         fetch-depth: 0
@@ -89,42 +84,44 @@ runs:
       run: |
         echo "IMAGE_TAG=${{inputs.commitSha}}" >> $GITHUB_ENV
         echo "IMAGE_TAG_SHA=${{inputs.commitSha}}" >> $GITHUB_ENV
+    - name: Set up Docker Buildx 🔧
+      uses: docker/setup-buildx-action@v4
+    - name: Login to GHCR 🔐
+      uses: docker/login-action@v4
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ inputs.githubToken }}
     - name: Build sanity container ⚙️
       id: build
-      shell: bash
-      run: |
-        docker build . \
-          --cache-from ${{ inputs.imageName }}:${{ env.IMAGE_TAG }} \
-          --build-arg ARG_SANITY_DATASET=${{ inputs.datasetName }} \
-          --build-arg ARG_SANITY_PREVIEW=${{ inputs.sanityPreviewToken }} \
-          --build-arg ARG_SANITY_API_TOKEN=${{ inputs.sanityApiToken }} \
-          --build-arg ARG_SANITY_HISTORY_API_TOKEN=${{ inputs.sanityHistoryApiToken }} \
-          --build-arg ARG_BRANDMASTER_URL=${{ inputs.brandmasterUrl }} \
-          --build-arg ARG_BRANDMASTER_PLUGIN="${{ inputs.brandmasterPluginSource }}" \
-          --build-arg ARG_FOTOWARE_CLIENT_ID="${{ inputs.fotowareClientId }}" \
-          --build-arg ARG_FOTOWARE_TENANT_URL="${{ inputs.fotowareTenantUrl }}" \
-          --build-arg ARG_FOTOWARE_REDIRECT_ORIGIN="${{ inputs.fotowareRedirectOrigin }}" \
-          --build-arg ARG_FOTOWARE_REDIRECT_URI="${{ inputs.fotowareRedirectUri }}" \
-          --build-arg ARG_FOTOWARE_AF_EXPORT_URL="${{ inputs.fotowareAfExportUrl }}" \
-          --build-arg ARG_FOTOWARE_AF_EXPORT_KEY="${{ inputs.fotowareAfExportKey }}" \
-          --build-arg ARG_SCREEN9_ACCOUNT_ID="${{ inputs.screen9accountId }}" \
-          --build-arg ARG_SCREEN9_TOKEN="${{ inputs.screen9token }}" \
-          --build-arg ARG_SANITY_STUDIO_PREVIEW_URL="${{ inputs.previewUrl }}" \
-          --file studio/Dockerfile \
-          --tag ${{ inputs.imageName }}:${{ env.IMAGE_TAG }} \
-          --tag ${{ inputs.imageName }}:${{ env.IMAGE_TAG_SHA }} \
-          --build-arg BUILDKIT_INLINE_CACHE=1
-    - name: Push the image to GHCR ☁
-      id: push-to-ghcr
-      shell: bash
-      run: |
-        echo "${{ inputs.githubToken }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-        docker push ${{ inputs.imageName }} --all-tags
+      uses: docker/build-push-action@v7
+      with:
+        context: .
+        file: studio/Dockerfile
+        push: true
+        tags: |
+          ${{ inputs.imageName }}:${{ env.IMAGE_TAG }}
+          ${{ inputs.imageName }}:${{ env.IMAGE_TAG_SHA }}
+        cache-from: type=registry,ref=${{ inputs.imageName }}:${{ env.IMAGE_TAG }}
+        cache-to: type=inline
+        secrets: |
+          fotoware_af_export_key=${{ inputs.fotowareAfExportKey }}
+          screen9_token=${{ inputs.screen9token }}
+          
+        build-args: |
+          ARG_SANITY_DATASET=${{ inputs.datasetName }}
+          ARG_FOTOWARE_CLIENT_ID=${{ inputs.fotowareClientId }}
+          ARG_FOTOWARE_TENANT_URL=${{ inputs.fotowareTenantUrl }}
+          ARG_FOTOWARE_REDIRECT_ORIGIN=${{ inputs.fotowareRedirectOrigin }}
+          ARG_FOTOWARE_REDIRECT_URI=${{ inputs.fotowareRedirectUri }}
+          ARG_FOTOWARE_AF_EXPORT_URL=${{ inputs.fotowareAfExportUrl }}
+          ARG_SCREEN9_ACCOUNT_ID=${{ inputs.screen9accountId }}
+          
     - name: Get component name
       id: get-component-name
       shell: bash
       run: |
-        component=${{ inputs.datasetName == 'global-development' && 'studio-global-development'|| inputs.datasetName == 'global-test' && 'studio-global-test' || format('{0}{1}', 'studio-', inputs.datasetName) }}
+        component=${{ format('{0}{1}{2}', 'studio-', inputs.datasetName, inputs.isUpgrade && '-upgrade' || '') }}
         echo "Component name is $component"
         echo "COMPONENT_NAME=$component" >> $GITHUB_ENV
       # MAIN CLUSTER

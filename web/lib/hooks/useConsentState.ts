@@ -1,7 +1,8 @@
+'use client'
+import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
-import { CookieType } from '../../types'
-import { checkCookieConsent } from '../../common/helpers/checkCookieConsent'
+import type { CookieType } from '../../types'
+import { checkCookieConsent } from '../helpers/checkCookieConsent'
 import { useProd } from './useProd'
 
 //COOKIEBOT
@@ -12,9 +13,13 @@ declare global {
   }
 }
 
-function useConsentState(consentType: CookieType[], callback: () => void, cleanup?: () => void) {
+function useConsentState(
+  consentType: CookieType[],
+  callback: () => void,
+  cleanup?: () => void,
+) {
   const [consent, changeConsent] = useState<boolean>(false)
-  const router = useRouter()
+  const pathname = usePathname()
   const enableConsentLogic = useProd()
 
   useEffect(() => {
@@ -29,6 +34,7 @@ function useConsentState(consentType: CookieType[], callback: () => void, cleanu
     }
   }, [consentType])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     // Disable Radix.equinor.com due to SiteImprove (possibly) collecting wrong data
     if (enableConsentLogic && consent) {
@@ -37,6 +43,6 @@ function useConsentState(consentType: CookieType[], callback: () => void, cleanu
         if (cleanup) cleanup()
       }
     }
-  }, [router.asPath, consent, callback, cleanup, enableConsentLogic])
+  }, [pathname, consent, callback, cleanup, enableConsentLogic])
 }
 export default useConsentState

@@ -1,7 +1,7 @@
+import { forwardRef, type HTMLAttributes } from 'react'
+import { twMerge } from '@/lib/twMerge/twMerge'
 import { ArrowRight } from '../../../icons'
-import { forwardRef, HTMLAttributes } from 'react'
-import { twMerge } from 'tailwind-merge'
-import { Variants } from './Card'
+import type { Variants } from './Card'
 
 export type CardContentProps = {
   /** Variant to use
@@ -23,61 +23,50 @@ export type CardContentProps = {
  * @summary Card Content wrapper for structure
  * @example
  * */
-export const CardContent = forwardRef<HTMLDivElement, CardContentProps>(function CardContent(
-  { variant = 'primary', className = '', iconClassName = '', noArrow = false, children, ...rest },
-  ref,
-) {
-  const commonStyling = `pt-6 md:pt-8 pb-6 px-6`
-  const variantClassNames = {
-    primary: `${commonStyling} flex-col items-start`,
-    secondary: `${commonStyling} flex-col items-start`,
-    compact: `pb-4 pt-2`,
-    single: `${commonStyling} px-10 flex-col items-start`,
-  }
-  const variantLinkClassNames = {
-    primary: `self-end mt-auto max-lg:hidden`,
-    secondary: `self-end mt-auto max-lg:hidden`,
-    compact: `max-xl:hidden`,
-    single: 'self-end mt-auto max-lg:hidden',
-  }
-  const iconClassNames = twMerge(
-    `size-arrow-right
-    text-energy-red-100
-    dark:text-white-100
-    mr-2
-    group-hover/card:translate-x-2
-    transition-all
-    duration-300
-    ${variantLinkClassNames[variant]}
-  `,
-    iconClassName,
-  )
-  return (
-    <div
-      ref={ref}
-      className={twMerge(
-        `basis-0
-        grow
-        flex
-        gap-4
-        md:gap-6
-      ${variantClassNames[variant]}
-      `,
-        className,
-      )}
-      {...rest}
-    >
-      {variant === 'secondary' || variant === 'single' ? (
-        <>
-          <div className={`${variant === 'single' ? 'pr-12 flex flex-col gap-12' : ''}`}>{children}</div>
-          {!noArrow && <ArrowRight className={iconClassNames} />}
-        </>
-      ) : (
-        <>
-          {children}
-          {!noArrow && <ArrowRight className={iconClassNames} />}
-        </>
-      )}
-    </div>
-  )
-})
+export const CardContent = forwardRef<HTMLDivElement, CardContentProps>(
+  function CardContent(
+    {
+      variant = 'primary',
+      className = '',
+      iconClassName = '',
+      noArrow = false,
+      children,
+    },
+    ref,
+  ) {
+    const commonStyling = `pt-6 md:pt-8 pb-6 px-6`
+
+    const variantClassNames = {
+      primary: `${commonStyling} flex-col items-start`,
+      secondary: `${commonStyling} flex-col items-start`,
+      compact: `pb-4 pt-2 items-center`,
+      single: `${commonStyling} px-10 flex-col items-start`,
+    }
+
+    return (
+      <div
+        ref={ref}
+        className={twMerge(
+          `flex gap-4 rounded-b-card md:gap-6 ${variantClassNames[variant]}`,
+          className,
+        )}
+      >
+        <div className='max-w-prose grow overflow-hidden'>{children}</div>
+        {!noArrow && (
+          <div
+            className={`flex items-end justify-end self-end p-1 ${
+              variant === 'compact' ? 'max-xl:hidden' : ''
+            }`}
+          >
+            <ArrowRight
+              className={twMerge(
+                `mr-2 size-arrow-right text-energy-red-100 transition-all duration-300 group-hover/card:translate-x-2 dark:text-white-100`,
+                iconClassName,
+              )}
+            />
+          </div>
+        )}
+      </div>
+    )
+  },
+)

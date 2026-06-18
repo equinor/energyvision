@@ -1,19 +1,20 @@
-import { BackgroundContainer } from '@core/Backgrounds'
-import { IFrame } from '@core/IFrame/IFrame'
-import { ResourceLink } from '@core/Link'
-import { Heading } from '@core/Typography'
+'use client'
+import dynamic from 'next/dynamic'
 import { useId } from 'react'
-import { getUrlFromAction } from '../../common/helpers'
-import { getLocaleFromName } from '../../lib/localization'
-import IngressText from '../../pageComponents/shared/portableText/IngressText'
-import envisTwMerge from '../../twMerge'
+import { twMerge } from 'tailwind-merge'
+import ResourceLink from '@/core/Link/ResourceLink'
+import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
+import Blocks from '@/portableText/Blocks'
+import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
+import { getIsoFromName } from '../../sanity/helpers/localization'
 import type { IFrameData } from '../../types/index'
+
+const IFrame = dynamic(() => import('@/core/IFrame/IFrame'))
 
 const IFrameBlock = ({
   anchor,
   data,
   className,
-  ...rest
 }: {
   data: IFrameData
   anchor?: string
@@ -31,50 +32,54 @@ const IFrameBlock = ({
     transcript,
   } = data
 
-  const { height, aspectRatio, background } = designOptions
+  const { height, aspectRatio } = designOptions
+  const { bg, dark } = getBgAndDarkFromBackground(designOptions)
   const headingId = useId()
   const actionUrl = action ? getUrlFromAction(action) : ''
 
   if (!url) return null
   return (
-    <BackgroundContainer
-      {...background}
-      {...rest}
+    <section
+      className={twMerge(`${bg} ${dark ? 'dark' : ''} `, className)}
       id={anchor}
-      className={envisTwMerge('max-w-viewport mx-auto flex flex-col gap-6 pb-page-content', className)}
-      renderFragmentWhenPossible
     >
-      {title && <Heading variant="h3" as="h2" id={headingId} value={title} />}
-      {ingress && <IngressText value={ingress} />}
-      <IFrame
-        frameTitle={frameTitle}
-        url={url}
-        cookiePolicy={cookiePolicy}
-        aspectRatio={aspectRatio}
-        height={height}
-        labelledBy={headingId}
-        {...(description && {
-          description,
-        })}
-        hasSectionTitle={!!title}
-        transcript={transcript}
-      />
-      {action && action?.label && actionUrl && (
-        <ResourceLink
-          href={actionUrl || ''}
-          file={{
-            ...action?.file,
-            label: action?.label,
-          }}
-          showExtensionIcon={true}
-          variant="fit"
-          locale={action?.type === 'internalUrl' ? getLocaleFromName(action?.link?.lang) : undefined}
-          className=""
-        >
-          {action.label}
-        </ResourceLink>
-      )}
-    </BackgroundContainer>
+      <div className='mx-auto max-w-content px-layout-lg pb-page-content'>
+        {title && <Blocks variant='h2' id={headingId} value={title} />}
+        <div className='flex flex-col'>
+          {ingress && <Blocks variant='ingress' value={ingress} />}
+          <IFrame
+            frameTitle={frameTitle}
+            url={url}
+            cookiePolicy={cookiePolicy}
+            aspectRatio={aspectRatio}
+            height={height}
+            labelledBy={headingId}
+            {...(description && {
+              description,
+            })}
+            hasSectionTitle={!!title}
+            transcript={transcript}
+          />
+          {action?.label && actionUrl && (
+            <ResourceLink
+              href={actionUrl}
+              variant='fit'
+              hrefLang={
+                action?.type === 'internalUrl'
+                  ? getIsoFromName(action?.link?.lang)
+                  : undefined
+              }
+              file={{
+                ...action?.file,
+                label: action?.label,
+              }}
+            >
+              {action.label}
+            </ResourceLink>
+          )}
+        </div>
+      </div>
+    </section>
   )
 }
 

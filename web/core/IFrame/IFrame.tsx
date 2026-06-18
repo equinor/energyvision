@@ -1,19 +1,53 @@
-import { forwardRef, HTMLAttributes, useContext, useId, useState } from 'react'
-import { PreviewContext } from '../../lib/contexts/PreviewContext'
-import useConsentState from '../../lib/hooks/useConsentState'
-import { CookieType } from '../../types'
+'use client'
+import type { PortableTextBlock } from '@portabletext/types'
+//TODO check this
+// eslint-disable-next-line import/no-unresolved
+import { useIsPresentationTool } from 'next-sanity/hooks'
+import { forwardRef, type HTMLAttributes, useId, useState } from 'react'
+import { twMerge } from 'tailwind-merge'
+import Transcript from '@/sections/Transcript/Transcript'
+import { iframeSrcList } from '@/securityHeaders'
 import useConsent from '../../lib/hooks/useConsent'
-import envisTwMerge from '../../twMerge'
+import useConsentState from '../../lib/hooks/useConsentState'
+import Blocks from '../../portableText/Blocks'
+import type { CookieType } from '../../types'
+import { LogoPrimary } from '../Logo/Logo'
+import { Typography } from '../Typography'
 import RequestConsentContainer from './RequestConsentContainer'
-import { PortableTextBlock } from '@portabletext/types'
-import Blocks from '../../pageComponents/shared/portableText/Blocks'
-import Transcript from '@sections/Transcript/Transcript'
 
 const calculatePadding = (aspectRatio: string): string => {
   const ratio = aspectRatio.split(':')
-  const percentage = (parseInt(ratio[1]) / parseInt(ratio[0])) * 100
+  const percentage = (parseInt(ratio[1], 10) / parseInt(ratio[0], 10)) * 100
 
   return `${percentage}%`
+}
+
+const isIframeAllowedByCsp = (url: string) => {
+  try {
+    const parsedUrl = new URL(url)
+
+    return iframeSrcList.some(source => {
+      if (!source) return false
+
+      if (source.includes('*')) {
+        const parsedSource = new URL(source.replace('*.', 'placeholder.'))
+        const wildcardDomain = parsedSource.hostname.replace(
+          /^placeholder\./,
+          '',
+        )
+
+        return (
+          parsedUrl.protocol === parsedSource.protocol &&
+          (parsedUrl.hostname === wildcardDomain ||
+            parsedUrl.hostname.endsWith(`.${wildcardDomain}`))
+        )
+      }
+
+      return parsedUrl.origin === new URL(source).origin
+    })
+  } catch {
+    return false
+  }
 }
 
 type IFrameProps = {
@@ -40,7 +74,7 @@ type IFrameProps = {
   transcript?: any
 } & HTMLAttributes<HTMLElement>
 
-export const IFrame = forwardRef<HTMLElement, IFrameProps>(function IFrame(
+export const IFrame = forwardRef<HTMLDivElement, IFrameProps>(function IFrame(
   {
     hasSectionTitle = true,
     title,
@@ -59,7 +93,7 @@ export const IFrame = forwardRef<HTMLElement, IFrameProps>(function IFrame(
   },
   ref,
 ) {
-  const { isPreview } = useContext(PreviewContext)
+  const isPreview = useIsPresentationTool()
   const [consented, setConsented] = useState(useConsent(cookiePolicy))
   const titleId = useId()
   const descriptionId = useId()
@@ -74,50 +108,80 @@ export const IFrame = forwardRef<HTMLElement, IFrameProps>(function IFrame(
       setConsented(false)
     },
   )
+
   if (!url) return null
-  const containerPadding = height ? `${height}px` : calculatePadding(aspectRatio)
+  const isBlockedByCsp = !isIframeAllowedByCsp(url)
+  const containerPadding = height
+    ? `${height}px`
+    : calculatePadding(aspectRatio)
 
   const iframeElement = (
     <>
       {title && showTitleAbove && (
-        <Blocks value={title} id={titleId} className={envisTwMerge('text-xl pb-8', titleClassName)} />
+        <Blocks
+          value={title}
+          id={titleId}
+          as='h3'
+          className={twMerge('pb-8 text-xl', titleClassName)}
+        />
       )}
       <div
-        className="relative w-full overflow-hidden"
+        className='relative w-full overflow-hidden'
         style={{
           paddingBottom: containerPadding,
         }}
       >
-        <iframe
-          className="absolute inset-0 w-full h-full border-0"
-          allowFullScreen
-          loading="lazy"
-          src={url}
-          title={frameTitle}
-          {...(!isPreview && {
-            'data-cookieconsent': cookiePolicy,
-          })}
-          {...(labelledById !== '' && {
-            'aria-labelledby': labelledById,
-          })}
-          {...(description && {
-            'aria-describedby': descriptionId,
-          })}
-        />
+        {isBlockedByCsp ? (
+          <div
+            className={twMerge(
+              'dark absolute inset-0 flex h-full w-full flex-col items-center justify-center gap-8 bg-autumn-storm-60 p-20',
+            )}
+          >
+            <LogoPrimary className='h-auto w-[20%] text-white-100' />
+            <Typography variant='h2' className='text-center'>
+              This embedded content cannot be displayed in your browser.
+            </Typography>
+          </div>
+        ) : (
+          <iframe
+            className='absolute inset-0 h-full w-full border-0'
+            allowFullScreen
+            loading='lazy'
+            src={url}
+            title={frameTitle}
+            {...(!isPreview && {
+              'data-cookieconsent': cookiePolicy,
+            })}
+            {...(labelledById !== '' && {
+              'aria-labelledby': labelledById,
+            })}
+            {...(description && {
+              'aria-describedby': descriptionId,
+            })}
+          />
+        )}
       </div>
-      {transcript && <Transcript transcript={transcript} ariaTitle={frameTitle} />}
+      {transcript && (
+        <Transcript transcript={transcript} ariaTitle={frameTitle} />
+      )}
       {title && !showTitleAbove && (
         <Blocks
           value={title}
           id={titleId}
-          className={envisTwMerge('text-md pt-4', description ? 'pb-2' : '', titleClassName)}
+          as='h3'
+          className={twMerge(
+            'pt-4 text-md',
+            description ? 'pb-2' : '',
+            titleClassName,
+          )}
         />
       )}
       {description && (
         <Blocks
           value={description}
           id={descriptionId}
-          className={envisTwMerge(
+          variant='body'
+          className={twMerge(
             'text-base',
             !title || (!title && !showTitleAbove) ? 'pt-4' : '',
             descriptionClassName,
@@ -132,13 +196,17 @@ export const IFrame = forwardRef<HTMLElement, IFrameProps>(function IFrame(
   }
 
   return (
-    <section ref={ref} className={envisTwMerge('h-min my-20', className)}>
-    {consented ? (
-    iframeElement
-  ) : (
-    <RequestConsentContainer hasSectionTitle={hasSectionTitle} cookiePolicy={cookiePolicy} />
-  )
-  }
-  </section>
+    <section ref={ref} className={twMerge('my-20 h-min', className)}>
+      {consented ? (
+        iframeElement
+      ) : (
+        <RequestConsentContainer
+          hasSectionTitle={hasSectionTitle}
+          cookiePolicy={cookiePolicy}
+        />
+      )}
+    </section>
   )
 })
+
+export default IFrame

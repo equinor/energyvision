@@ -1,17 +1,31 @@
-import { Table } from '@core/Table'
-import type { ThemeVariants } from '@core/Table/Table'
+'use client'
 import { toPlainText } from '@portabletext/react'
 import type { PortableTextBlock } from '@portabletext/types'
-import { createColumnHelper, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
+import {
+  createColumnHelper,
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+} from '@tanstack/react-table'
 import { isValid, parse } from 'date-fns'
 import { forwardRef, useMemo } from 'react'
-import { FormattedDate } from 'react-intl'
 import { twMerge } from 'tailwind-merge'
-import { Heading, Paragraph } from '../../core/Typography'
-import Blocks from '../../pageComponents/shared/portableText/Blocks'
+import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
+import { Table } from '@/core/Table'
+import type { ThemeVariants } from '@/core/Table/Table'
+import Blocks from '@/portableText/Blocks'
+import type { LayoutGrid } from '@/types/designOptionsTypes'
 
-export type TableTheme = {
-  title?: ThemeVariants
+//uses xl breakpoint for larger displays
+export const getTableLayoutPx = (variant: LayoutGrid) => {
+  switch (variant) {
+    case 'sm':
+      return `px-layout-sm`
+    case 'md':
+      return `px-layout-sm xl:px-layout-md`
+    default:
+      return `px-layout-sm xl:px-layout-lg`
+  }
 }
 
 export type TableBlockProps = {
@@ -21,167 +35,231 @@ export type TableBlockProps = {
   tableCaption?: string
   tableHeaders?: any[]
   rows: any
-  theme?: TableTheme
+  theme?: ThemeVariants
   useBorder?: boolean
-  useFullContainerWidth?: boolean
-  useInnerContentWidth?: boolean
   reducePaddingBottom?: boolean
   noPaddingTop?: boolean
-  id?: string
   anchor?: string
   className?: string
+  layoutGrid?: LayoutGrid
+  widthAdjustment?: 'fit' | 'full'
+  //Deprecated props, to be removed in future, should not be used in new content
+  useFullContainerWidth?: boolean
+  useInnerContentWidth?: boolean
 }
 
-const TableBlock = forwardRef<HTMLDivElement, TableBlockProps>(function TableBlock(
-  {
-    variant = 'default',
-    title,
-    ingress,
-    tableCaption,
-    tableHeaders,
-    theme,
-    useBorder = false,
-    rows,
-    id,
-    anchor,
-    className = '',
-    useFullContainerWidth = false,
-    useInnerContentWidth = false,
-    reducePaddingBottom = false,
-    noPaddingTop = false,
-  },
-  ref,
-) {
-  const headerKeys = useMemo(() => {
-    if (variant === 'import') {
-      return rows?.[0]?.isHeader ? rows?.[0]?.cells.map((cell: any) => cell) : []
-    }
-    return Array.isArray(tableHeaders) ? tableHeaders.map((header) => toPlainText(header.headerCell)) : []
-  }, [variant, tableHeaders, rows])
+const TableBlock = forwardRef<HTMLDivElement, TableBlockProps>(
+  function TableBlock(
+    {
+      variant = 'default',
+      title,
+      ingress,
+      tableCaption,
+      tableHeaders,
+      theme = 'grey',
+      useBorder = false,
+      rows,
+      anchor,
+      className = '',
+      layoutGrid,
+      reducePaddingBottom = false,
+      noPaddingTop = false,
+      widthAdjustment,
+      //Deprecated props, to be removed in future, should not be used in new content
+      useFullContainerWidth = false,
+      useInnerContentWidth = false,
+    },
+    ref,
+  ) {
+    //TODO: remove backwards compatibility for deprecated useFullContainerWidth prop
+    // Studio will give error so will be adjusted to string going live with upgrade
+    //@ts-ignore
+    const _theme = typeof theme === 'string' ? theme : theme?.title
 
-  const columnData = useMemo(() => {
-    if (!Array.isArray(rows) || !Array.isArray(headerKeys) || headerKeys.length === 0) {
-      console.warn('TableBlock: rows or headerKeys missing or empty, returning empty columnData')
-      return []
-    }
-    if (variant === 'import') {
-      //First row of import table rows is header row
-      return rows?.slice(1)?.map((tableRow: any) => {
-        return Object.fromEntries(headerKeys?.map((key: any, index: number) => [key, tableRow?.cells[index]]))
-      })
-    }
-    return rows?.map((tableRow: any) => {
-      return Object.fromEntries(headerKeys?.map((key: any, index: number) => [key, tableRow?.cells[index]?.content]))
-    })
-  }, [variant, rows, headerKeys])
+    const headerKeys = useMemo(() => {
+      if (variant === 'import') {
+        return rows?.[0]?.isHeader
+          ? rows?.[0]?.cells.map((cell: any) => cell)
+          : []
+      }
+      return Array.isArray(tableHeaders)
+        ? tableHeaders.map(header => toPlainText(header.headerCell))
+        : []
+    }, [variant, tableHeaders, rows])
 
-  const columnHelper = createColumnHelper<any>()
-
-  const columns = useMemo(() => {
-    return headerKeys?.map((headerKey: any, index: number) => {
-      return columnHelper.accessor(headerKey, {
-        header: () => {
-          return variant === 'import' ? (
-            headerKey
-          ) : (
-            <Blocks value={tableHeaders?.[index].headerCell} className="prose-simple" />
+    const columnData = useMemo(() => {
+      if (
+        !Array.isArray(rows) ||
+        !Array.isArray(headerKeys) ||
+        headerKeys.length === 0
+      ) {
+        console.warn(
+          'TableBlock: rows or headerKeys missing or empty, returning empty columnData',
+        )
+        return []
+      }
+      if (variant === 'import') {
+        //First row of import table rows is header row
+        return rows?.slice(1)?.map((tableRow: any) => {
+          return Object.fromEntries(
+            headerKeys?.map((key: any, index: number) => [
+              key,
+              tableRow?.cells[index],
+            ]),
           )
-        },
-        id: `headercell_${index}_${headerKey}`,
-        cell: (info: any) => {
-          const value = info.getValue()
-          const isPortableText = Array.isArray(value)
-          if (variant === 'default' && tableHeaders?.[index]?.formatAsDate) {
-            const plainDateString = toPlainText(value)
-            const formatString = 'dd/MM/yyyy' // Define the format explicitly
-            const formatStringAlternative = 'yyyy-MM-dd'
-            const dateObj = parse(plainDateString, formatString, new Date()) // The third arg is a reference date
-            const dateObjAlternative = parse(plainDateString, formatStringAlternative, new Date()) // The third arg is a reference date
-            if (isValid(dateObj)) {
-              return (
-                <time suppressHydrationWarning dateTime={dateObj.toDateString()} className="text-base">
-                  <FormattedDate value={dateObj} day="numeric" year="numeric" month="short" />
-                </time>
-              )
-            }
-            if (isValid(dateObjAlternative)) {
-              return (
-                <time suppressHydrationWarning dateTime={dateObjAlternative.toDateString()} className="text-base">
-                  <FormattedDate value={dateObjAlternative} day="numeric" year="numeric" month="short" />
-                </time>
-              )
-            }
-            return <Blocks value={value} />
-          }
-          if (isPortableText) {
-            return <Blocks value={info.getValue()} />
-          }
-          return info.getValue()
-        },
+        })
+      }
+      return rows?.map((tableRow: any) => {
+        return Object.fromEntries(
+          headerKeys?.map((key: any, index: number) => [
+            key,
+            tableRow?.cells?.[index]?.content,
+          ]),
+        )
       })
+    }, [variant, rows, headerKeys])
+
+    const columnHelper = createColumnHelper<any>()
+
+    const columns = useMemo(() => {
+      return headerKeys?.map((headerKey: any, index: number) => {
+        return columnHelper.accessor(headerKey, {
+          header: () => {
+            return variant === 'import' ? (
+              headerKey
+            ) : (
+              <Blocks value={tableHeaders?.[index].headerCell} />
+            )
+          },
+          id: `headercell_${index}_${headerKey}`,
+          cell: (info: any) => {
+            const value = info.getValue()
+            const isPortableText = Array.isArray(value)
+            if (variant === 'default' && tableHeaders?.[index]?.formatAsDate) {
+              const plainDateString = toPlainText(value)
+              const formatString = 'dd/MM/yyyy' // Define the format explicitly
+              const formatStringAlternative = 'yyyy-MM-dd'
+              const dateObj = parse(plainDateString, formatString, new Date()) // The third arg is a reference date
+              const dateObjAlternative = parse(
+                plainDateString,
+                formatStringAlternative,
+                new Date(),
+              ) // The third arg is a reference date
+              if (isValid(dateObj)) {
+                return (
+                  <FormattedDateTime
+                    datetime={dateObj.toDateString()}
+                    day='numeric'
+                    year='numeric'
+                    month='short'
+                  />
+                )
+              }
+              if (isValid(dateObjAlternative)) {
+                return (
+                  <FormattedDateTime
+                    datetime={dateObjAlternative.toDateString()}
+                    day='numeric'
+                    year='numeric'
+                    month='short'
+                  />
+                )
+              }
+              return <Blocks value={value} variant='body' />
+            }
+            if (isPortableText) {
+              return <Blocks value={info.getValue()} variant='body' />
+            }
+            return info.getValue()
+          },
+        })
+      })
+    }, [columnHelper, headerKeys, tableHeaders, variant])
+
+    const reactTable = useReactTable({
+      data: columnData,
+      columns,
+      getCoreRowModel: getCoreRowModel(),
     })
-  }, [columnHelper, headerKeys, tableHeaders, variant])
 
-  const reactTable = useReactTable({
-    data: columnData,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-  })
+    //TODO: remove useInnerContentWidth when period of transition and set layoutGrid prop as = "md"
+    const px = getTableLayoutPx(
+      layoutGrid ?? (useInnerContentWidth ? 'lg' : 'md'),
+    )
+    const tableStretch =
+      (widthAdjustment && widthAdjustment === 'full') ?? useFullContainerWidth
 
-  return (
-    <div
-      ref={ref}
-      id={anchor}
-      className={twMerge(
-        `max-w-viewport mx-auto ${id ? 'scroll-mt-topbar' : ''}`,
-        className,
-        `${noPaddingTop ? 'pt-0' : ''} ${reducePaddingBottom ? 'pb-12' : 'pb-page-content'} `,
-      )}
-    >
-      {title && (
-        <div className="px-layout-sm xl:px-layout-lg">
-          {title && <Heading value={title} variant="h3" as="h2" className={'pb-lg'} />}
-          {ingress && <Paragraph value={ingress} className="max-w-text text-pretty pb-xl" />}
-        </div>
-      )}
+    return (
       <div
-        className={`w-full px-layout-sm ${
-          useInnerContentWidth ? 'xl:px-layout-lg' : 'xl:px-layout-md'
-        }  flex justify-center`}
+        ref={ref}
+        id={anchor}
+        className={twMerge(
+          `mx-auto w-full max-w-content`,
+          anchor && 'scroll-mt-topbar',
+          className,
+          noPaddingTop && 'pt-0',
+          reducePaddingBottom && 'pb-12',
+        )}
       >
-        <div
-          className="w-full overflow-x-auto"
-          // Scrollable, needs to be keyboard accessible
-          // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-          tabIndex={0}
-        >
-          <Table className={`${useFullContainerWidth ? 'w-full' : 'w-fit'}`}>
-            {tableCaption && <Table.Caption>{tableCaption}</Table.Caption>}
-            <Table.Head variant={useBorder ? 'border' : 'zebra'} themeVariant={theme?.title}>
-              {reactTable?.getHeaderGroups().map((headerGroup: any) => (
-                <Table.Row key={headerGroup.id}>
-                  {headerGroup.headers.map((header: any) => (
-                    <Table.Cell key={header.id}>
-                      {flexRender(header.column.columnDef.header, header.getContext())}
-                    </Table.Cell>
-                  ))}
-                </Table.Row>
-              ))}
-            </Table.Head>
-            <Table.Body variant={useBorder ? 'border' : 'zebra'} themeVariant={theme?.title}>
-              {reactTable?.getRowModel().rows.map((row: any) => (
-                <Table.Row key={row.id}>
-                  {row.getVisibleCells().map((cell: any) => (
-                    <Table.Cell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</Table.Cell>
-                  ))}
-                </Table.Row>
-              ))}
-            </Table.Body>
-          </Table>
+        {title && (
+          <div className='px-layout-sm lg:px-layout-lg'>
+            {title && <Blocks value={title} variant='h2' />}
+            {ingress && <Blocks value={ingress} variant='ingress' />}
+          </div>
+        )}
+        <div className={`w-full ${px} flex justify-center`}>
+          <div
+            className='w-full overflow-x-auto'
+            // Scrollable, needs to be keyboard accessible
+            // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+            tabIndex={0}
+          >
+            <Table
+              className={twMerge(
+                tableStretch ? 'w-full self-stretch' : 'w-fit',
+              )}
+            >
+              {tableCaption && <Table.Caption>{tableCaption}</Table.Caption>}
+              <Table.Head
+                variant={useBorder ? 'border' : 'zebra'}
+                themeVariant={_theme}
+              >
+                {reactTable?.getHeaderGroups().map((headerGroup: any) => (
+                  <Table.Row key={headerGroup.id}>
+                    {headerGroup.headers.map((header: any) => (
+                      <Table.Cell key={header.id}>
+                        {flexRender(
+                          header.column.columnDef.header,
+                          header.getContext(),
+                        )}
+                      </Table.Cell>
+                    ))}
+                  </Table.Row>
+                ))}
+              </Table.Head>
+              <Table.Body
+                variant={useBorder ? 'border' : 'zebra'}
+                themeVariant={_theme}
+              >
+                {reactTable?.getRowModel().rows.map((row: any) => (
+                  <Table.Row key={row.id}>
+                    {row.getVisibleCells().map((cell: any) => (
+                      <Table.Cell key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )}
+                      </Table.Cell>
+                    ))}
+                  </Table.Row>
+                ))}
+              </Table.Body>
+            </Table>
+          </div>
         </div>
       </div>
-    </div>
-  )
-})
+    )
+  },
+)
 
 export default TableBlock

@@ -1,0 +1,605 @@
+import { attach_file, format_color_text, star_filled } from '@equinor/eds-icons'
+import { MdOutlineAnchor } from 'react-icons/md'
+import type { BlockDefinition, BlockStyleDefinition } from 'sanity'
+import type { Level2Keys } from '@/helpers/Level2KeyTypes'
+import {
+  EdsBlockEditorIcon,
+  EdsIcon,
+  IconSubScript,
+  IconSuperScript,
+} from '../../icons'
+import { SubScriptRenderer, SuperScriptRenderer } from '../components'
+import { defaultColors } from '../defaultColors'
+import {
+  externalLink,
+  homepageLink,
+  internalReference,
+  internalReferenceOtherLanguage,
+  type LinkType,
+  PageAnchorInput,
+} from '../objects/linkSelector/common'
+import linkSelector from '../objects/linkSelector/linkSelector'
+
+const externalLinkConfig = {
+  ...externalLink,
+}
+
+export const textColorConfig = {
+  title: 'Highlight',
+  value: 'highlight',
+  icon: EdsBlockEditorIcon(format_color_text),
+  component: ({ children }: { children: React.ReactNode }) => {
+    return <span style={{ color: defaultColors[8].value }}>{children}</span>
+  },
+}
+
+export type BlockContentProps = {
+  h2?: boolean
+  h3?: boolean
+  h4?: boolean
+  /** Preconfigured options variants
+   * simbleBlock - lists and normal text
+   * textBlock - all defaults plus highlight
+   * withH2SimpleBlock - only h2 and normal text
+   * extendedBlock - h2,h3,normal,lists,links, small, display h2
+   * fullBlock - all headings,lists,links,attachment.
+   * title - normal block style but must be assigen correct heading level in in web. Display variants is a separate select on herofields
+   * titleWithDisplay - normal text and display variants
+   * ingress  - normal and small text
+   */
+  variant?:
+    | 'title'
+    | 'titleWithDisplay'
+    | 'ingress'
+    | 'simpleBlock'
+    | 'withH2SimpleBlock'
+    | 'block'
+    | 'extendedBlock'
+    | 'fullBlock'
+    | 'textBlock'
+    | 'onlySubSup'
+    | 'onlyTextDecorations'
+    | 'textDecorationAndLinks'
+
+  /** Used to render the typography similar to TypographyGroups in Typography in web
+   * use group article for news to get headings 2,3,4
+   */
+  group?: BlockTypographyGroups
+  internalLink?: boolean
+  externalLink?: boolean
+  footnote?: boolean
+  attachment?: boolean
+  lists?: boolean
+  smallText?: boolean
+  largeText?: boolean
+  extraLargeText?: boolean
+  highlight?: boolean
+  extendedStyles?: BlockStyleDefinition[]
+  onlySubSupScriptDecorators?: boolean
+  strikeThrough?: boolean
+}
+
+// Use this when it should not have a dropdown for title variants
+// Web components then need to assign correct heading level
+
+const titleVariantOptions: BlockContentProps = {
+  h2: false,
+  h3: false,
+  internalLink: false,
+  externalLink: false,
+  lists: false,
+  strikeThrough: true,
+}
+
+const titleWithDisplayVariantOptions: BlockContentProps = {
+  h2: false,
+  h3: false,
+  largeText: true,
+  extraLargeText: true,
+  internalLink: false,
+  externalLink: false,
+  lists: false,
+  strikeThrough: true,
+}
+
+const extendedBlockStylesOptions: BlockContentProps = {
+  h2: true,
+  largeText: true,
+  extraLargeText: true,
+  //smallText: true,
+}
+const ingressStylesOptions: BlockContentProps = {
+  lists: true,
+  h2: false,
+  h3: false,
+  h4: false,
+  smallText: true,
+}
+const articleStylesOptions: BlockContentProps = {
+  h2: true,
+  h4: true,
+  smallText: true,
+}
+//h3, lists, links, text decorations and highlight
+const textBlockStylesOptions: BlockContentProps = {
+  highlight: true,
+}
+const simpleBlockStylesOptions: BlockContentProps = {
+  h2: false,
+  h3: false,
+  h4: false,
+  internalLink: false,
+  externalLink: false,
+  smallText: true,
+}
+const withH2SimpleBlockStylesOptions: BlockContentProps = {
+  h2: true,
+  h3: false,
+  internalLink: false,
+  externalLink: false,
+  lists: false,
+}
+const fullBlockStylesOptions: BlockContentProps = {
+  h2: true,
+  h4: true,
+  largeText: true,
+  extraLargeText: true,
+  attachment: true,
+  smallText: true,
+}
+//sub, sup
+const onlySubSupOptions: BlockContentProps = {
+  h3: false,
+  onlySubSupScriptDecorators: true,
+  lists: false,
+  internalLink: false,
+  externalLink: false,
+}
+//bold, italic,sub, sup
+const onlyTextDecorationsOptions: BlockContentProps = {
+  h3: false,
+  lists: false,
+  internalLink: false,
+  externalLink: false,
+}
+//bold, italic,sub, sup, links and attachments
+const textDecorationAndLinksOptions: BlockContentProps = {
+  h3: false,
+  lists: false,
+  internalLink: true,
+  externalLink: true,
+  attachment: true,
+}
+
+export const BlockTypography = {
+  article: {
+    h2: 'text-lg font-normal py-2 m-0',
+    h3: 'text-md font-normal pt-2 m-0',
+    h4: 'text-md font-md m-0',
+  },
+  display: {
+    h1_base: 'text-4xl tracking-display font-normal m-0 ',
+    h1_lg: 'text-5xl leading-md tracking-display font-normal m-0 ',
+    h1_xl: 'text-6xl tracking-display font-normal m-0',
+    h2_base: 'text-3xl tracking-display font-normal m-0 ',
+    h2_lg: 'text-4xl leading-md tracking-display font-normal m-0 ',
+    h2_xl: 'text-5xl tracking-display font-normal m-0',
+  },
+  normal: {
+    h2: 'text-2xl pb-8 m-0',
+    h3: 'text-xl m-0',
+    h4: 'text-lg font-md m-0',
+    sm: 'text-sm',
+  },
+}
+export type BlockTypographyGroups = keyof typeof BlockTypography
+export type BlockTypographyVariants = Level2Keys<typeof BlockTypography>
+
+export const TextRenderer = ({
+  blockProps,
+  group,
+  level,
+}: {
+  blockProps: any
+  group?: BlockTypographyGroups
+  level?: BlockTypographyVariants
+}) => {
+  const { children } = blockProps
+  //@ts-ignore: wont accept the types
+  const classNames = BlockTypography[group ?? 'normal'][level ?? 'h2'] ?? ''
+
+  return (
+    <span className={classNames} data-group={group}>
+      {children}
+    </span>
+  )
+}
+
+// H1 not allowed in block content since it should be a document title.
+// Default configuration is for text block main block content
+export const configureBlockContent = (
+  options?: BlockContentProps,
+): BlockDefinition => {
+  let defaultConfigOptions: BlockContentProps = {
+    h3: true,
+    lists: true,
+    internalLink: true,
+    externalLink: true,
+    variant: 'block',
+    group: options?.group ?? 'normal',
+    h2: false,
+    h4: false,
+    attachment: false,
+    largeText: false,
+    extraLargeText: false,
+    smallText: false,
+    highlight: false,
+    footnote: false,
+    onlySubSupScriptDecorators: false,
+    strikeThrough: false,
+  }
+
+  //news template
+  if (options?.group === 'article') {
+    defaultConfigOptions = Object.assign(
+      defaultConfigOptions,
+      articleStylesOptions,
+      options,
+    )
+  }
+
+  if (options?.variant === 'title') {
+    defaultConfigOptions = Object.assign(
+      defaultConfigOptions,
+      titleVariantOptions,
+      options,
+    )
+  }
+
+  if (options?.variant === 'titleWithDisplay') {
+    defaultConfigOptions = Object.assign(
+      defaultConfigOptions,
+      titleWithDisplayVariantOptions,
+      options,
+    )
+  }
+  if (options?.variant === 'textBlock') {
+    defaultConfigOptions = Object.assign(
+      defaultConfigOptions,
+      textBlockStylesOptions,
+      options,
+    )
+  }
+  if (options?.variant === 'simpleBlock') {
+    defaultConfigOptions = Object.assign(
+      defaultConfigOptions,
+      simpleBlockStylesOptions,
+      options,
+    )
+  }
+  if (options?.variant === 'extendedBlock') {
+    defaultConfigOptions = Object.assign(
+      defaultConfigOptions,
+      extendedBlockStylesOptions,
+      options,
+    )
+  }
+  if (options?.variant === 'fullBlock') {
+    defaultConfigOptions = Object.assign(
+      defaultConfigOptions,
+      fullBlockStylesOptions,
+      options,
+    )
+  }
+  if (options?.variant === 'withH2SimpleBlock') {
+    defaultConfigOptions = Object.assign(
+      defaultConfigOptions,
+      withH2SimpleBlockStylesOptions,
+      options,
+    )
+  }
+  if (options?.variant === 'ingress') {
+    defaultConfigOptions = Object.assign(
+      defaultConfigOptions,
+      ingressStylesOptions,
+      options,
+    )
+  }
+  if (options?.variant === 'onlyTextDecorations') {
+    defaultConfigOptions = Object.assign(
+      defaultConfigOptions,
+      onlyTextDecorationsOptions,
+      options,
+    )
+  }
+  if (options?.variant === 'textDecorationAndLinks') {
+    defaultConfigOptions = Object.assign(
+      defaultConfigOptions,
+      textDecorationAndLinksOptions,
+      options,
+    )
+  }
+  if (options?.variant === 'onlySubSup') {
+    defaultConfigOptions = Object.assign(
+      defaultConfigOptions,
+      onlySubSupOptions,
+      options,
+    )
+  }
+
+  const {
+    h2,
+    h3,
+    h4,
+    lists,
+    internalLink,
+    externalLink,
+    group,
+    attachment,
+    largeText,
+    extraLargeText,
+    smallText,
+    highlight,
+    footnote,
+    onlySubSupScriptDecorators,
+    strikeThrough,
+  } = defaultConfigOptions
+
+  const config: BlockDefinition = {
+    type: 'block',
+    name: 'block',
+    styles: [],
+    lists: lists
+      ? [
+          { title: 'Numbered', value: 'number' },
+          { title: 'Bullet', value: 'bullet' },
+        ]
+      : [],
+    marks: {
+      decorators: [
+        {
+          title: 'Sub',
+          value: 'sub',
+          icon: IconSubScript,
+          component: SubScriptRenderer,
+        },
+        {
+          title: 'Super',
+          value: 'sup',
+          icon: IconSuperScript,
+          component: SuperScriptRenderer,
+        },
+      ],
+      annotations: [],
+    },
+  }
+
+  const StrongEmConfig = [
+    { title: 'Strong', value: 'strong' },
+    { title: 'Emphasis', value: 'em' },
+  ]
+
+  const strikeThroughConfig = {
+    title: 'Strikethrough',
+    value: 'strike-through',
+  }
+
+  const h2Config = {
+    title: 'Heading 2',
+    value: 'h2',
+    component: (props: any) =>
+      TextRenderer({
+        blockProps: props,
+        group,
+        level: 'h2',
+      }),
+  }
+  const h3Config = {
+    title: 'Heading 3',
+    value: 'h3',
+    component: (props: any) =>
+      TextRenderer({
+        blockProps: props,
+        group,
+        level: 'h3',
+      }),
+  }
+  const h4Config = {
+    title: 'Heading 4',
+    value: 'h4',
+    component: (props: any) =>
+      TextRenderer({
+        blockProps: props,
+        group,
+        level: 'h4',
+      }),
+  }
+  const displayTextConfig = {
+    title: 'Display text',
+    value: 'displayText',
+    component: (props: any) =>
+      TextRenderer({
+        blockProps: props,
+        group: 'display',
+        level: 'h2_base',
+      }),
+  }
+  const largeTextConfig = {
+    title: 'Large text',
+    value: 'largeText',
+    component: (props: any) =>
+      TextRenderer({
+        blockProps: props,
+        group: 'display',
+        level: 'h2_lg',
+      }),
+  }
+  const extraLargeTextConfig = {
+    title: 'Extra large text',
+    value: 'extraLargeText',
+    component: (props: any) =>
+      TextRenderer({
+        blockProps: props,
+        group: 'display',
+        level: 'h2_xl',
+      }),
+  }
+
+  const smallTextConfig = {
+    title: 'Small text',
+    value: 'smallText',
+    component: (props: any) =>
+      TextRenderer({
+        blockProps: props,
+        group,
+        level: 'sm',
+      }),
+  }
+
+  const internalLinkConfig = (linkConfig: any) => {
+    const linkType: LinkType = linkConfig.name
+    const linkSelectorSchema = linkSelector([linkType], false, false, true)
+    return {
+      icon: linkConfig.icon,
+      ...linkSelectorSchema,
+      name: linkType + '_block',
+      title: linkConfig.title,
+      initialValue: {
+        value: 'dummyValue', // need this to set the _type
+        link: [{ _type: linkType, _key: 'dummyKey' }],
+      },
+    }
+  }
+
+  const anchorLinkConfig = {
+    name: 'pageAnchor',
+    type: 'object',
+    title: 'Page anchor',
+    icon: () => <MdOutlineAnchor />,
+    fields: [
+      {
+        name: 'anchorId',
+        type: 'string',
+        components: {
+          input: PageAnchorInput,
+        },
+      },
+    ],
+    preview: {
+      select: {
+        anchorId: 'anchorId',
+      },
+      prepare({ anchorId }: { anchorId: string }) {
+        return {
+          title: `#${anchorId}`,
+          subTitle: 'Page anchor',
+          media: MdOutlineAnchor,
+        }
+      },
+    },
+  }
+  const attachmentConfig = {
+    name: 'attachment',
+    type: 'object',
+    title: 'Attachment',
+    icon: () => EdsBlockEditorIcon(attach_file),
+    fields: [
+      {
+        name: 'reference',
+        type: 'reference',
+        to: [{ type: 'assetFile' }],
+        options: { disableNew: true },
+      },
+    ],
+  }
+  const footnoteConfig = {
+    name: 'footnote',
+    type: 'object',
+    title: 'Footnote',
+    icon: EdsIcon(star_filled),
+    fields: [
+      {
+        name: 'text',
+        type: 'array',
+        of: [
+          {
+            type: 'block',
+            styles: [smallTextConfig],
+            lists: [],
+            marks: {
+              decorators: [
+                { title: 'Strong', value: 'strong' },
+                { title: 'Emphasis', value: 'em' },
+                {
+                  title: 'Sub',
+                  value: 'sub',
+                  icon: IconSubScript,
+                  component: SubScriptRenderer,
+                },
+                {
+                  title: 'Super',
+                  value: 'sup',
+                  icon: IconSuperScript,
+                  component: SuperScriptRenderer,
+                },
+              ],
+            },
+          },
+        ],
+      },
+    ],
+  }
+
+  if (!onlySubSupScriptDecorators) {
+    //@ts-ignore: why is it undefined when defined aboved
+    config.marks.decorators.push(...StrongEmConfig)
+  }
+  if (strikeThrough) {
+    config.marks?.decorators?.push(strikeThroughConfig)
+  }
+
+  if (h2) {
+    config?.styles?.push(h2Config)
+  }
+  if (h3) {
+    config?.styles?.push(h3Config)
+  }
+  if (h4) {
+    config?.styles?.push(h4Config)
+  }
+  if (smallText) {
+    config?.styles?.push(smallTextConfig)
+  }
+  if (largeText) {
+    config?.styles?.push(displayTextConfig)
+    config?.styles?.push(largeTextConfig)
+  }
+  if (extraLargeText) {
+    config?.styles?.push(extraLargeTextConfig)
+  }
+
+  if (externalLink) {
+    //@ts-ignore
+    config?.marks?.annotations?.push(externalLinkConfig)
+  }
+  if (internalLink) {
+    config?.marks?.annotations?.push(internalLinkConfig(internalReference))
+    config?.marks?.annotations?.push(
+      internalLinkConfig(internalReferenceOtherLanguage),
+    )
+    config?.marks?.annotations?.push(internalLinkConfig(homepageLink))
+    //@ts-ignore: todo
+    config?.marks?.annotations?.push(anchorLinkConfig)
+  }
+  if (attachment) {
+    config?.marks?.annotations?.push(attachmentConfig)
+  }
+  if (footnote) {
+    config?.marks?.annotations?.push(footnoteConfig)
+  }
+  if (highlight) {
+    config.marks?.decorators?.push(textColorConfig)
+  }
+
+  return config
+}

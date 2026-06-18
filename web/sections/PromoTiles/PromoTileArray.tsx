@@ -1,7 +1,7 @@
+import { twMerge } from 'tailwind-merge'
+import Blocks from '@/portableText/Blocks'
 import type { PromoTileArrayData, PromoTileData } from '../../types/index'
 import { PromoTile } from './PromoTile'
-import { twMerge } from 'tailwind-merge'
-import { Heading, Paragraph } from '@core/Typography'
 
 const PromoTileArray = ({
   data,
@@ -20,34 +20,33 @@ const PromoTileArray = ({
     <section
       id={anchor}
       className={twMerge(
-        `pb-page-content px-layout-md xl:px-layout-lg max-w-viewport mx-auto flex flex-col gap-6 justify-center`,
+        `flex max-w-content flex-col justify-center gap-6 lg:mx-auto`,
         className,
       )}
     >
-      {title && <Heading value={title} variant="h3" as="h2" className={hideTitle ? 'sr-only' : ''} />}
-      {ingress && <Paragraph value={ingress} className="max-w-text text-pretty pb-xl" />}
-      <ul
-        className={`
-          ${title && !hideTitle ? 'pt-6' : ''}
-          w-full
-          flex
-          flex-col
-          gap-6
-          justify-center
-          items-center
-          content-center
-          md:grid
-          md:grid-cols-2
-          md:auto-rows-fr`}
-      >
-        {group?.map((tile: PromoTileData) => {
-          return (
-            <li key={tile.id} className="h-full w-full">
-              <PromoTile {...tile} hasSectionTitle={!!title} />
-            </li>
-          )
-        })}
-      </ul>
+      <div className='w-full px-layout-sm md:px-layout-md xl:px-layout-lg'>
+        {title && (
+          <Blocks
+            value={title}
+            variant='h2'
+            className={hideTitle ? 'sr-only' : ''}
+          />
+        )}
+        {ingress && <Blocks variant='ingress' value={ingress} />}
+        <ul
+          className={` ${
+            title && !hideTitle ? 'pt-6' : ''
+          } flex w-full flex-col gap-6 md:grid md:auto-rows-fr md:grid-cols-2 lg:content-center lg:items-center lg:justify-center`}
+        >
+          {group?.map((tile: PromoTileData) => {
+            return (
+              <li key={tile.id} className='h-full w-full'>
+                <PromoTile {...tile} hasSectionTitle={!!title} />
+              </li>
+            )
+          })}
+        </ul>
+      </div>
     </section>
   )
 }

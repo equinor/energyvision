@@ -23,6 +23,8 @@ From the root of EnergyVision:
 
 To run locally, do the following changes to the root index.ts file, as ManagedIdentity is not working. Make sure you have the right env variables for dev.
 
+comment out loadEnv() to prevent fetching env from azure app config
+
 ```
 //  await loadEnv(logger)
 

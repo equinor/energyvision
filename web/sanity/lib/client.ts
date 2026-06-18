@@ -1,0 +1,46 @@
+/*import { ClientConfig, createClient } from '@sanity/client'*/
+import { type ClientConfig, createClient } from 'next-sanity'
+import { apiVersion, dataset, projectId, studioUrl } from '../lib/api'
+
+//import { token } from './token'
+
+//useCdn: true, // Set to false if statically generating pages, using ISR or tag-based revalidation
+
+const sanityConfig: ClientConfig = {
+  projectId,
+  dataset,
+  apiVersion,
+  perspective: dataset === 'global-development' ? 'drafts' : 'published',
+  useCdn: dataset !== 'global-development',
+  ignoreBrowserTokenWarning: dataset === 'global-development',
+  requestTagPrefix: 'website', // to track usage on web in sanity console
+  stega: {
+    studioUrl,
+    // Set logger to 'console' for more verbose logging
+    // logger: console,
+    filter: props => {
+      if (props.sourcePath.at(-1) === 'title') {
+        return true
+      }
+
+      return props.filterDefault(props)
+    },
+  },
+}
+
+export const client = createClient({
+  ...sanityConfig,
+  token: process.env.SANITY_API_TOKEN,
+})
+
+//only for next config
+export const notSecuredTokenClient = createClient({
+  ...sanityConfig,
+  token: process.env.SANITY_API_TOKEN,
+})
+
+export const noCdnClient = createClient({
+  ...sanityConfig,
+  useCdn: false,
+  token: process.env.SANITY_API_TOKEN,
+})

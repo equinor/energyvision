@@ -1,85 +1,108 @@
+'use client'
 import { Icon } from '@equinor/eds-core-react'
-import { useForm, Controller } from 'react-hook-form'
 import { error_filled } from '@equinor/eds-icons'
-import { FormattedMessage, useIntl } from 'react-intl'
-import { BaseSyntheticEvent, useState } from 'react'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useLocale, useTranslations } from 'next-intl'
+import { type BaseSyntheticEvent, useId, useState } from 'react'
+import { Controller, useForm } from 'react-hook-form'
+import type { z } from 'zod'
+import { FORM_CATALOG_NUMBERS } from '@/app/_actions/formCatalogNumbers'
+import submitFormServerAction from '@/app/_actions/submitFormServerAction'
+import verifyCaptcha from '@/app/_actions/verifyCaptcha'
+import { Button } from '@/core/Button'
+import { FormMessageBox } from '@/core/Form/FormMessageBox'
+import { Select } from '@/core/Select/Select'
+import { TextField } from '@/core/TextField/TextField'
+import { pensionFormSchema } from '@/lib/zodSchemas/zodSchemas'
+import type { PensionFormCatalogType } from '../../types'
 import FriendlyCaptcha from './FriendlyCaptcha'
-import { PensionFormCatalogType } from '../../types'
-import { Button } from '@core/Button'
-import { TextField } from '@core/TextField/TextField'
-import { Select } from '@core/Select/Select'
-import { FormMessageBox } from '@core/Form/FormMessageBox'
 
-type PensionFormValues = {
-  name: string
-  email: string
-  phone: string
-  pensionCategory: string
-  requests: string
+type PensionFormData = z.infer<ReturnType<typeof pensionFormSchema>>
+
+const getCatalogIdentifier = (catalogType: PensionFormCatalogType | string) => {
+  switch (catalogType) {
+    case 'travelInsurance':
+      return '1818180393ca2950eaf1f4527cba101d'
+    default:
+      return '6777904f938a2950eaf1f4527cba1048'
+  }
 }
 
 const PensionForm = () => {
-  const intl = useIntl()
+  const intl = useTranslations()
+  const locale = useLocale()
   const [isServerError, setServerError] = useState(false)
   const [isFriendlyChallengeDone, setIsFriendlyChallengeDone] = useState(false)
   const [isSuccessfullySubmitted, setSuccessfullySubmitted] = useState(false)
+  const formId = useId()
 
-  const onSubmit = async (data: PensionFormValues, event?: BaseSyntheticEvent) => {
+  const onSubmit = async (
+    data: PensionFormData,
+    event?: BaseSyntheticEvent,
+  ) => {
     if (isFriendlyChallengeDone) {
-      const res = await fetch('/api/forms/service-now-pension', {
-        body: JSON.stringify({
-          data,
-          frcCaptchaSolution: (event?.target as any)['frc-captcha-response'].value,
-          catalogType: getCatalog(data.pensionCategory),
-        }),
-        headers: {
-          'Content-Type': 'application/json',
+      const frcCaptchaSolution = (event?.target as any)['frc-captcha-response']
+        .value
+      const isCaptchaVerified = await verifyCaptcha(frcCaptchaSolution)
+
+      if (!isCaptchaVerified) {
+        return
+      }
+
+      let cid = '6777904f938a2950eaf1f4527cba1048'
+      if (data.pensionCategory) {
+        cid = getCatalogIdentifier(data.pensionCategory)
+      }
+
+      const isDataValidated = pensionFormSchema(intl).safeParse(data)
+
+      if (!isDataValidated.success) {
+        setServerError(true)
+        setSuccessfullySubmitted(false)
+        return
+      }
+
+      const finalFormData = {
+        variables: {
+          requested_for: 'equinordotcom',
+          external_emails: data.email,
+          copytoemail: data.email,
+          name: data.name,
+          category: data.pensionCategory,
+          howcanwehelp: data.requests,
+          tryingtoreach: 'whoever can assist',
+          cid: cid,
+          preferredlanguage: locale,
         },
-        method: 'POST',
-      })
-      setServerError(res.status != 200)
-      setSuccessfullySubmitted(res.status == 200)
+      }
+
+      const result = await submitFormServerAction(
+        JSON.stringify(finalFormData),
+        FORM_CATALOG_NUMBERS.contactEquinor,
+      )
+
+      setServerError(result.status !== 200)
+      setSuccessfullySubmitted(result.status === 200)
     } else {
       //@ts-ignore: TODO: types
       setError('root.notCompletedCaptcha', {
         type: 'custom',
-        message: intl.formatMessage({
-          id: 'form_antirobot_validation_required',
-          defaultMessage: 'Anti-Robot verification is required',
-        }),
+        message: intl('form_antirobot_validation_required'),
       })
     }
   }
 
-  const getCatalog = (category: string): PensionFormCatalogType | null => {
-    if (category.includes(intl.formatMessage({ id: 'pension_form_pension', defaultMessage: 'Pension' })))
-      return 'pension'
-    else if (
-      category.includes(intl.formatMessage({ id: 'pension_form_travel_insurance', defaultMessage: 'Travel Insurance' }))
-    )
-      return 'travelInsurance'
-    else if (
-      category.includes(
-        intl.formatMessage({
-          id: 'pension_form_other_pension_insurance_related',
-          defaultMessage: 'Other Pension/Insurance Related',
-        }),
-      )
-    )
-      return 'otherPensionInsuranceRelated'
-    else return null
-  }
   const {
     handleSubmit,
     control,
     reset,
     setError,
     formState: { errors, isSubmitted, isSubmitting },
-  } = useForm<PensionFormValues>({
+  } = useForm<PensionFormData>({
+    resolver: zodResolver(pensionFormSchema(intl)),
     defaultValues: {
       name: '',
       email: '',
-      phone: '',
       pensionCategory: '',
       requests: '',
     },
@@ -89,9 +112,8 @@ const PensionForm = () => {
     <>
       {!isSuccessfullySubmitted && (
         <>
-          <div className="pb-6 text-sm">
-            <FormattedMessage id="all_fields_mandatory" defaultMessage="All fields with *  are mandatory" />
-          </div>
+          <div className='pb-6 text-sm'>{intl('all_fields_mandatory')} </div>
+
           <form
             onSubmit={handleSubmit(onSubmit)}
             onReset={() => {
@@ -99,188 +121,174 @@ const PensionForm = () => {
               setIsFriendlyChallengeDone(false)
               setSuccessfullySubmitted(false)
             }}
-            className="flex flex-col gap-12"
+            className='flex flex-col gap-12'
           >
-            <Controller
-              name="name"
-              control={control}
-              rules={{
-                required: intl.formatMessage({
-                  id: 'name_validation',
-                  defaultMessage: 'Please fill out your name',
-                }),
-              }}
-              render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => {
-                const { name } = props
-                return (
-                  <TextField
-                    {...props}
-                    id={name}
-                    label={`${intl.formatMessage({
-                      id: 'name',
-                      defaultMessage: 'Name',
-                    })}*`}
-                    inputRef={ref}
-                    aria-required="true"
-                    inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
-                    helperText={error?.message}
-                    {...(invalid && { variant: 'error' })}
+            {!isSuccessfullySubmitted && !isServerError && (
+              <>
+                {/* Name field */}
+                <Controller
+                  name='name'
+                  control={control}
+                  render={({
+                    field: { ref, ...props },
+                    fieldState: { invalid, error },
+                  }) => {
+                    const { name } = props
+                    return (
+                      <TextField
+                        {...props}
+                        id={`${name}_${formId}`}
+                        label={`${intl('name')}*`}
+                        inputRef={ref}
+                        aria-required='true'
+                        inputIcon={
+                          invalid ? (
+                            <Icon data={error_filled} title='error' />
+                          ) : undefined
+                        }
+                        helperText={error?.message}
+                        {...(invalid && { variant: 'error' })}
+                      />
+                    )
+                  }}
+                />
+
+                {/* Email field */}
+                <Controller
+                  name='email'
+                  control={control}
+                  render={({
+                    field: { ref, ...props },
+                    fieldState: { invalid, error },
+                  }) => {
+                    const { name } = props
+                    return (
+                      <TextField
+                        {...props}
+                        id={`${name}_${formId}`}
+                        label={`${intl('email')}*`}
+                        inputRef={ref}
+                        inputIcon={
+                          invalid ? (
+                            <Icon data={error_filled} title='error' />
+                          ) : undefined
+                        }
+                        helperText={error?.message}
+                        aria-required='true'
+                        {...(invalid && { variant: 'error' })}
+                      />
+                    )
+                  }}
+                />
+                {/* Pension Category field */}
+                <Controller
+                  name='pensionCategory'
+                  control={control}
+                  render={({ field: { ref, ...props } }) => {
+                    const { name } = props
+                    return (
+                      <Select
+                        {...props}
+                        selectRef={ref}
+                        id={`${name}_${formId}`}
+                        label={intl('category')}
+                      >
+                        <option value=''>
+                          {intl('form_please_select_an_option')}
+                        </option>
+                        <option value='pension'>
+                          {intl('pension_form_category_pension')}
+                        </option>
+                        <option value='travelInsurance'>
+                          {intl('pension_form_category_travel_insurance')}
+                        </option>
+                        <option value='otherPensionInsuranceRelated'>
+                          {intl('pension_form_category_other')}
+                        </option>
+                      </Select>
+                    )
+                  }}
+                />
+
+                {/* requests field */}
+                <Controller
+                  name='requests'
+                  control={control}
+                  render={({
+                    field: { ref, ...props },
+                    fieldState: { invalid, error },
+                  }) => {
+                    const { name } = props
+                    return (
+                      <TextField
+                        {...props}
+                        id={`${name}_${formId}`}
+                        description={intl('dont_enter_personal_info')}
+                        label={`${intl('pension_form_what_is_your_request')}*`}
+                        inputRef={ref}
+                        multiline
+                        rowsMax={10}
+                        aria-required='true'
+                        inputIcon={
+                          invalid ? (
+                            <Icon data={error_filled} title='error' />
+                          ) : undefined
+                        }
+                        helperText={error?.message}
+                        {...(invalid && { variant: 'error' })}
+                      />
+                    )
+                  }}
+                />
+                <div className='flex flex-col gap-2'>
+                  <FriendlyCaptcha
+                    doneCallback={() => {
+                      setIsFriendlyChallengeDone(true)
+                    }}
+                    errorCallback={(error: any) => {
+                      console.error(
+                        'FriendlyCaptcha encountered an error',
+                        error,
+                      )
+                      setIsFriendlyChallengeDone(true)
+                    }}
                   />
-                )
-              }}
-            />
-            <Controller
-              name="email"
-              control={control}
-              rules={{
-                required: intl.formatMessage({
-                  id: 'email_validation',
-                  defaultMessage: 'Please fill out a valid email address',
-                }),
-                pattern: {
-                  value: /^[\w!#$%&'*+/=?`{|}~^-]+(?:\.[\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}$/g,
-                  message: intl.formatMessage({
-                    id: 'email_validation',
-                    defaultMessage: 'Please fill out a valid email address',
-                  }),
-                },
-              }}
-              render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => {
-                const { name } = props
-                return (
-                  <TextField
-                    {...props}
-                    id={name}
-                    label={`${intl.formatMessage({
-                      id: 'email',
-                      defaultMessage: 'Email',
-                    })}*`}
-                    inputRef={ref}
-                    inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
-                    helperText={error?.message}
-                    aria-required="true"
-                    {...(invalid && { variant: 'error' })}
-                  />
-                )
-              }}
-            />
-            <Controller
-              name="pensionCategory"
-              control={control}
-              render={({ field: { ref, ...props } }) => {
-                const { name } = props
-                return (
-                  <Select
-                    {...props}
-                    selectRef={ref}
-                    id={name}
-                    label={intl.formatMessage({
-                      id: 'category',
-                      defaultMessage: 'Category',
-                    })}
-                  >
-                    <option value="">
-                      {intl.formatMessage({
-                        id: 'form_please_select_an_option',
-                        defaultMessage: 'Please select an option',
-                      })}
-                    </option>
-                    <option value="pension">
-                      {intl.formatMessage({ id: 'pension_form_category_pension', defaultMessage: 'Pension' })}
-                    </option>
-                    <option value="travelInsurance">
-                      {intl.formatMessage({
-                        id: 'pension_form_category_travel_insurance',
-                        defaultMessage: 'Travel Insurance',
-                      })}
-                    </option>
-                    <option value="otherPensionInsuranceRelated">
-                      {intl.formatMessage({
-                        id: 'pension_form_category_other',
-                        defaultMessage: 'Other Pension/Insurance Related',
-                      })}
-                    </option>
-                  </Select>
-                )
-              }}
-            />
-            <Controller
-              name="requests"
-              control={control}
-              rules={{
-                required: intl.formatMessage({
-                  id: 'pension_form_what_is_your_request_validation',
-                  defaultMessage: 'Please let us know how we may help you',
-                }),
-              }}
-              render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => {
-                const { name } = props
-                return (
-                  <TextField
-                    {...props}
-                    id={name}
-                    description={intl.formatMessage({
-                      id: 'dont_enter_personal_info',
-                      defaultMessage: `Please don't enter any personal information`,
-                    })}
-                    label={`${intl.formatMessage({
-                      id: 'pension_form_what_is_your_request',
-                      defaultMessage: 'What is your request?',
-                    })}*`}
-                    inputRef={ref}
-                    multiline
-                    rowsMax={10}
-                    aria-required="true"
-                    inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
-                    helperText={error?.message}
-                    {...(invalid && { variant: 'error' })}
-                  />
-                )
-              }}
-            />
-            <div className="flex flex-col gap-2">
-              <FriendlyCaptcha
-                doneCallback={() => {
-                  setIsFriendlyChallengeDone(true)
-                }}
-                errorCallback={(error: any) => {
-                  console.error('FriendlyCaptcha encountered an error', error)
-                  setIsFriendlyChallengeDone(true)
-                }}
-              />
-              {/*@ts-ignore: TODO: types*/}
-              {errors?.root?.notCompletedCaptcha && (
-                <p
-                  role="alert"
-                  className="text-slate-80 border border-clear-red-100 px-6 py-4 flex gap-2 font-semibold"
-                >
                   {/*@ts-ignore: TODO: types*/}
-                  <span className="mt-1">{errors.root.notCompletedCaptcha.message}</span>
-                  <Icon data={error_filled} aria-label="Error Icon" />
-                </p>
-              )}
-            </div>
-            <Button type="submit">
-              {isSubmitting ? (
-                <FormattedMessage id="form_sending" defaultMessage={'Sending...'}></FormattedMessage>
-              ) : (
-                <FormattedMessage id="pension_form_submit" defaultMessage="Submit Form" />
-              )}
-            </Button>
+                  {errors?.root?.notCompletedCaptcha && (
+                    <p
+                      role='alert'
+                      className='flex gap-2 border border-clear-red-100 px-6 py-4 font-semibold text-slate-80'
+                    >
+                      {/*@ts-ignore: TODO: types*/}
+                      <span className='mt-1'>
+                        {errors.root.notCompletedCaptcha.message}
+                      </span>
+                      <Icon data={error_filled} aria-label='Error icon' />
+                    </p>
+                  )}
+                </div>
+
+                <Button type='submit'>
+                  {isSubmitting
+                    ? intl('form_sending')
+                    : intl('pension_form_submit')}
+                </Button>
+              </>
+            )}
           </form>
         </>
       )}
-      <div role="region" aria-live="assertive">
+      <div aria-live='assertive'>
+        {isSuccessfullySubmitted && <FormMessageBox variant='success' />}
         {isSubmitted && isServerError && (
           <FormMessageBox
-            variant="error"
+            variant='error'
             onClick={() => {
               reset(undefined, { keepValues: true })
               setServerError(false)
             }}
           />
         )}
-        {isSuccessfullySubmitted && <FormMessageBox variant="success" />}
       </div>
     </>
   )

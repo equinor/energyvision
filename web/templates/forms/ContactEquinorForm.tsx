@@ -1,47 +1,41 @@
+'use client'
 import { Icon } from '@equinor/eds-core-react'
-import { useForm, Controller } from 'react-hook-form'
 import { error_filled } from '@equinor/eds-icons'
-import { FormattedMessage, useIntl } from 'react-intl'
-import { BaseSyntheticEvent, useState } from 'react'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useLocale, useTranslations } from 'next-intl'
+import { type BaseSyntheticEvent, useId, useState } from 'react'
+import { Controller, useForm } from 'react-hook-form'
+import type { z } from 'zod'
+import { FORM_CATALOG_NUMBERS } from '@/app/_actions/formCatalogNumbers'
+import { Button } from '@/core/Button'
+import { FormMessageBox } from '@/core/Form/FormMessageBox'
+import { Select } from '@/core/Select/Select'
+import { TextField } from '@/core/TextField/TextField'
+import { contactEquinorFormSchema } from '@/lib/zodSchemas/zodSchemas'
+import submitFormServerAction from '../../app/_actions/submitFormServerAction'
+import verifyCaptcha from '../../app/_actions/verifyCaptcha'
 import FriendlyCaptcha from './FriendlyCaptcha'
-import { ContactFormCatalogType } from '../../types'
-import { Button } from '@core/Button'
-import { TextField } from '@core/TextField/TextField'
-import { Select } from '@core/Select/Select'
-import { FormMessageBox } from '@core/Form/FormMessageBox'
 
-type FormValues = {
-  name: string
-  email: string
-  category: string
-  message: string
-}
+type ContactEquinorFormData = z.infer<
+  ReturnType<typeof contactEquinorFormSchema>
+>
 
 const ContactEquinorForm = () => {
-  const intl = useIntl()
+  const intl = useTranslations()
   const [isServerError, setServerError] = useState(false)
   const [isFriendlyChallengeDone, setIsFriendlyChallengeDone] = useState(false)
   const [isSuccessfullySubmitted, setSuccessfullySubmitted] = useState(false)
+  const formId = useId()
+  const locale = useLocale()
 
-  const getCatalog = (category: string): ContactFormCatalogType | null => {
-    if (
-      category.includes(
-        intl.formatMessage({
-          id: 'contact_form_login_issues',
-          defaultMessage: 'Login Issues',
-        }),
-      )
-    )
-      return 'loginIssues'
-    else return null
-  }
   const {
     handleSubmit,
     control,
     reset,
     setError,
-    formState: { errors, isSubmitted, isSubmitting, isSubmitSuccessful },
-  } = useForm({
+    formState: { errors, isSubmitted, isSubmitting },
+  } = useForm<ContactEquinorFormData>({
+    resolver: zodResolver(contactEquinorFormSchema(intl)),
     defaultValues: {
       name: '',
       email: '',
@@ -50,40 +44,66 @@ const ContactEquinorForm = () => {
     },
   })
 
-  const onSubmit = async (data: FormValues, event?: BaseSyntheticEvent) => {
+  const onSubmit = async (
+    data: ContactEquinorFormData,
+    event?: BaseSyntheticEvent,
+  ) => {
     if (isFriendlyChallengeDone) {
-      const res = await fetch('/api/forms/service-now-contact-us', {
-        body: JSON.stringify({
-          data,
-          frcCaptchaSolution: (event?.target as any)['frc-captcha-response'].value,
-          catalogType: getCatalog(data.category),
-        }),
-        headers: {
-          'Content-Type': 'application/json',
+      const frcCaptchaSolution = (event?.target as any)['frc-captcha-response']
+        .value
+      const isCaptchaVerified = await verifyCaptcha(frcCaptchaSolution)
+
+      if (!isCaptchaVerified) {
+        return
+      }
+
+      const cid =
+        data.category?.toLowerCase() === 'login issues'
+          ? '49f29a93dbb2ac10f42b2208059619a7'
+          : '66f0ff89db2e2644ff6272dabf961945'
+
+      const isDataValidated = contactEquinorFormSchema(intl).safeParse(data)
+
+      if (!isDataValidated.success) {
+        setServerError(true)
+        setSuccessfullySubmitted(false)
+        return
+      }
+
+      const finalFormData = {
+        variables: {
+          requested_for: 'equinordotcom',
+          cid: cid,
+          copytoemail: data.email,
+          external_emails: data.email,
+          tryingtoreach: 'whoever can assist',
+          name: data.name,
+          category: data.category,
+          howcanwehelp: data.message,
+          preferredlanguage: locale,
         },
-        method: 'POST',
-      })
-      setServerError(res.status != 200)
-      setSuccessfullySubmitted(res.status == 200)
+      }
+
+      const result = await submitFormServerAction(
+        JSON.stringify(finalFormData),
+        FORM_CATALOG_NUMBERS.contactEquinor,
+      )
+
+      setServerError(result.status !== 200)
+      setSuccessfullySubmitted(result.status === 200)
     } else {
       //@ts-ignore: TODO: types
       setError('root.notCompletedCaptcha', {
         type: 'custom',
-        message: intl.formatMessage({
-          id: 'form_antirobot_validation_required',
-          defaultMessage: 'Anti-Robot verification is required',
-        }),
+        message: intl('form_antirobot_validation_required'),
       })
     }
   }
-
   return (
     <>
       {!isSuccessfullySubmitted && (
         <>
-          <div className="pb-6 text-sm">
-            <FormattedMessage id="all_fields_mandatory" defaultMessage="All fields with *  are mandatory" />
-          </div>
+          <div className='pb-6 text-sm'>{intl('all_fields_mandatory')} </div>
           <form
             onSubmit={handleSubmit(onSubmit)}
             onReset={() => {
@@ -91,198 +111,174 @@ const ContactEquinorForm = () => {
               setIsFriendlyChallengeDone(false)
               setSuccessfullySubmitted(false)
             }}
-            className="flex flex-col gap-12"
+            className='flex flex-col gap-12'
           >
-            <Controller
-              name="name"
-              control={control}
-              rules={{
-                required: intl.formatMessage({
-                  id: 'name_validation',
-                  defaultMessage: 'Please fill out your name',
-                }),
-              }}
-              render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => {
-                const { name } = props
-                return (
-                  <TextField
-                    {...props}
-                    id={name}
-                    label={`${intl.formatMessage({
-                      id: 'name',
-                      defaultMessage: 'Name',
-                    })}*`}
-                    inputRef={ref}
-                    aria-required="true"
-                    inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
-                    helperText={error?.message}
-                    {...(invalid && { variant: 'error' })}
-                  />
-                )
-              }}
-            />
-            <Controller
-              name="email"
-              control={control}
-              rules={{
-                required: intl.formatMessage({
-                  id: 'email_validation',
-                  defaultMessage: 'Please fill out a valid email address',
-                }),
-                pattern: {
-                  value: /^[\w!#$%&'*+/=?`{|}~^-]+(?:\.[\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}$/g,
-                  message: intl.formatMessage({
-                    id: 'email_validation',
-                    defaultMessage: 'Please fill out a valid email address',
-                  }),
-                },
-              }}
-              render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => {
-                const { name } = props
-                return (
-                  <TextField
-                    {...props}
-                    id={name}
-                    label={`${intl.formatMessage({
-                      id: 'email',
-                      defaultMessage: 'Email',
-                    })}*`}
-                    inputRef={ref}
-                    inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
-                    helperText={error?.message}
-                    aria-required="true"
-                    {...(invalid && { variant: 'error' })}
-                  />
-                )
-              }}
-            />
-            <Controller
-              name="category"
-              control={control}
-              render={({ field: { ref, ...props } }) => {
-                const { name } = props
-                return (
-                  <Select
-                    {...props}
-                    selectRef={ref}
-                    id={name}
-                    label={intl.formatMessage({ id: 'category', defaultMessage: 'Category' })}
-                  >
-                    <option value="">
-                      {intl.formatMessage({
-                        id: 'form_please_select_an_option',
-                        defaultMessage: 'Please select an option',
-                      })}
-                    </option>
-                    <option>
-                      {intl.formatMessage({
-                        id: 'contact_form_report_error',
-                        defaultMessage: 'Report an error on our website',
-                      })}
-                    </option>
-                    <option>
-                      {intl.formatMessage({
-                        id: 'contact_form_contact_department',
-                        defaultMessage: 'Contact a department or member of staff',
-                      })}
-                    </option>
-                    <option>
-                      {intl.formatMessage({
-                        id: 'contact_form_investor_relations',
-                        defaultMessage: 'Investor relations',
-                      })}
-                    </option>
-                    <option>
-                      {intl.formatMessage({
-                        id: 'contact_form_login_issues',
-                        defaultMessage: 'Login Issues',
-                      })}
-                    </option>
+            {!isSuccessfullySubmitted && !isServerError && (
+              <>
+                {/* Name Field */}
+                <Controller
+                  name='name'
+                  control={control}
+                  render={({
+                    field: { ref, ...props },
+                    fieldState: { invalid, error },
+                  }) => {
+                    const { name } = props
+                    return (
+                      <TextField
+                        {...props}
+                        id={`${name}_${formId}`}
+                        label={`${intl('name')}*`}
+                        inputRef={ref}
+                        aria-required='true'
+                        inputIcon={
+                          invalid ? (
+                            <Icon data={error_filled} title='error' />
+                          ) : undefined
+                        }
+                        helperText={error?.message}
+                        {...(invalid && { variant: 'error' })}
+                      />
+                    )
+                  }}
+                />
 
-                    <option>{intl.formatMessage({ id: 'contact_form_other', defaultMessage: 'Other' })}</option>
-                  </Select>
-                )
-              }}
-            />
+                {/* Email Field */}
+                <Controller
+                  name='email'
+                  control={control}
+                  render={({
+                    field: { ref, ...props },
+                    fieldState: { invalid, error },
+                  }) => {
+                    const { name } = props
+                    return (
+                      <TextField
+                        {...props}
+                        id={`${name}_${formId}`}
+                        label={`${intl('email')}*`}
+                        inputRef={ref}
+                        inputIcon={
+                          invalid ? (
+                            <Icon data={error_filled} title='error' />
+                          ) : undefined
+                        }
+                        helperText={error?.message}
+                        aria-required='true'
+                        {...(invalid && { variant: 'error' })}
+                      />
+                    )
+                  }}
+                />
 
-            <Controller
-              name="message"
-              control={control}
-              rules={{
-                required: intl.formatMessage({
-                  id: 'contact_form_how_to_help_validation',
-                  defaultMessage: 'Please let us know how we may help you',
-                }),
-              }}
-              render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => {
-                const { name } = props
-                return (
-                  <TextField
-                    {...props}
-                    id={name}
-                    description={intl.formatMessage({
-                      id: 'dont_enter_personal_info',
-                      defaultMessage: `Please don't enter any personal information`,
-                    })}
-                    label={`${intl.formatMessage({
-                      id: 'contact_form_how_to_help',
-                      defaultMessage: 'How can we help you?',
-                    })}*`}
-                    inputRef={ref}
-                    multiline
-                    rowsMax={10}
-                    aria-required="true"
-                    inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
-                    helperText={error?.message}
-                    {...(invalid && { variant: 'error' })}
+                {/* Category Select */}
+                <Controller
+                  name='category'
+                  control={control}
+                  render={({ field: { ref, ...props } }) => {
+                    const { name } = props
+                    return (
+                      <Select
+                        {...props}
+                        selectRef={ref}
+                        id={`${name}_${formId}`}
+                        label={intl('category')}
+                      >
+                        <option value=''>
+                          {intl('form_please_select_an_option')}
+                        </option>
+                        <option>{intl('contact_form_report_error')}</option>
+                        <option>
+                          {intl('contact_form_contact_department')}
+                        </option>
+                        <option>
+                          {intl('contact_form_investor_relations')}
+                        </option>
+                        <option>{intl('contact_form_login_issues')}</option>
+                        <option>{intl('contact_form_other')}</option>
+                      </Select>
+                    )
+                  }}
+                />
+
+                {/* Message Field */}
+                <Controller
+                  name='message'
+                  control={control}
+                  render={({
+                    field: { ref, ...props },
+                    fieldState: { invalid, error },
+                  }) => {
+                    const { name } = props
+                    return (
+                      <TextField
+                        {...props}
+                        id={`${name}_${formId}`}
+                        description={intl('dont_enter_personal_info')}
+                        label={`${intl('contact_form_how_to_help')}*`}
+                        inputRef={ref}
+                        multiline
+                        rowsMax={10}
+                        aria-required='true'
+                        inputIcon={
+                          invalid ? (
+                            <Icon data={error_filled} title='error' />
+                          ) : undefined
+                        }
+                        helperText={error?.message}
+                        {...(invalid && { variant: 'error' })}
+                      />
+                    )
+                  }}
+                />
+
+                {/* Captcha */}
+                <div className='flex flex-col gap-2'>
+                  <FriendlyCaptcha
+                    doneCallback={() => setIsFriendlyChallengeDone(true)}
+                    errorCallback={(error: any) => {
+                      console.error(
+                        'FriendlyCaptcha encountered an error',
+                        error,
+                      )
+                      setIsFriendlyChallengeDone(true)
+                    }}
                   />
-                )
-              }}
-            />
-            <div className="flex flex-col gap-2">
-              <FriendlyCaptcha
-                doneCallback={() => {
-                  setIsFriendlyChallengeDone(true)
-                }}
-                errorCallback={(error: any) => {
-                  console.error('FriendlyCaptcha encountered an error', error)
-                  setIsFriendlyChallengeDone(true)
-                }}
-              />
-              {/*@ts-ignore: TODO: types*/}
-              {errors?.root?.notCompletedCaptcha && (
-                <p
-                  role="alert"
-                  className="text-slate-80 border border-clear-red-100 px-6 py-4  flex gap-2 font-semibold"
-                >
-                  {/*@ts-ignore: TODO: types*/}
-                  <span className="mt-1">{errors.root.notCompletedCaptcha.message}</span>
-                  <Icon data={error_filled} aria-label="Error Icon" />
-                </p>
-              )}
-            </div>
-            <Button type="submit">
-              {isSubmitting ? (
-                <FormattedMessage id="form_sending" defaultMessage={'Sending...'}></FormattedMessage>
-              ) : (
-                <FormattedMessage id="contact_form_cta" defaultMessage="Submit Form" />
-              )}
-            </Button>
+                  {errors?.root?.notCompletedCaptcha && (
+                    <p
+                      role='alert'
+                      className='flex gap-2 border border-clear-red-100 px-6 py-4 font-semibold text-slate-80'
+                    >
+                      <span className='mt-1'>
+                        {errors.root.notCompletedCaptcha.message}
+                      </span>
+                      <Icon data={error_filled} aria-label='Error' />
+                    </p>
+                  )}
+                </div>
+
+                <Button type='submit'>
+                  {isSubmitting
+                    ? intl('form_sending')
+                    : intl('contact_form_cta')}
+                </Button>
+              </>
+            )}
           </form>
         </>
       )}
-      <div role="region" aria-live="assertive">
-        {isSubmitSuccessful && <FormMessageBox variant="success" />}
+      <section aria-live='assertive'>
+        {isSuccessfullySubmitted && <FormMessageBox variant='success' />}
         {isSubmitted && isServerError && (
           <FormMessageBox
-            variant="error"
+            variant='error'
             onClick={() => {
               reset(undefined, { keepValues: true })
               setServerError(false)
             }}
           />
         )}
-      </div>
+      </section>
     </>
   )
 }

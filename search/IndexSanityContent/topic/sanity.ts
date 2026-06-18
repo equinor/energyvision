@@ -6,7 +6,7 @@ import { Language } from '../../common'
 import { MappableAccordionType, MappableTextBlockType } from '../common/mappers'
 import { plainTextExcludingStrikeThrough } from '../../common/queryHelpers'
 
-export const query = /* groq */ `*[_type match "route_" + $lang + "*" && content->_type == "page" && !(_id in path("drafts.**")) && excludeFromSearch != true] {
+export const query = /* groq */ `*[_type match "route_" + $lang + "*" && content->_type == "page" && excludeFromSearch != true] {
   "slug": slug.current,
   _id,
   "title": ${plainTextExcludingStrikeThrough('content->title')},

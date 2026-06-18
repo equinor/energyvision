@@ -1,5 +1,6 @@
 import type { PortableTextBlock } from '@portabletext/types'
-import type { ImageWithAlt, LinkData } from '../../types'
+import type { Image } from '@/core/Image/imageUtilities'
+import type { LinkData } from '../../types'
 
 export type TabsKeyNumber = {
   id?: string
@@ -20,18 +21,22 @@ export type InfoPanelKeyInfo = {
   keyFigure?: string
   explanation?: string
 }
-export type InfoPanelImageVariant = 'sideImage' | 'backgroundImage' | 'bannerImage'
+export type InfoPanelImageVariant =
+  | 'sideImage'
+  | 'backgroundImage'
+  | 'bannerImage'
 
 export type TabsInfoPanel = {
   id?: string
   type?: 'tabsInfoPanel'
-  image?: ImageWithAlt
+  image?: Image
   imageVariant?: InfoPanelImageVariant
   title: PortableTextBlock[]
   text: PortableTextBlock[]
   keyInfo?: InfoPanelKeyInfo[]
-  action?: LinkData
+  actions?: LinkData[]
 }
+
 export type TabItem = {
   id: string
   type?: string

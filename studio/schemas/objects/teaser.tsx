@@ -1,0 +1,214 @@
+/* eslint-disable react/display-name */
+
+import type { PortableTextBlock, Reference, Rule } from 'sanity'
+import blocksToText from '../../helpers/blocksToText'
+import {
+  FullSizeImage,
+  LeftAlignedImage,
+  RightAlignedImage,
+  SmallSizeImage,
+} from '../../icons'
+import { RadioIconSelector } from '../components'
+import type { ColorSelectorValue } from '../components/ColorSelector'
+import { CompactBlockEditor } from '../components/CompactBlockEditor'
+import { configureBlockContent } from '../editors'
+import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
+import { backgroundPosition } from './commonFields/commonFields'
+import type { DownloadableImage } from './downloadableImage'
+import type { DownloadableFile } from './files'
+import type { ImageWithAlt } from './imageWithAlt'
+import type { LinkSelector } from './linkSelector'
+
+const imageSizeOptions = [
+  { value: 'full', icon: FullSizeImage },
+  { value: 'small', icon: SmallSizeImage },
+]
+
+const imageAlignmentOptions = [
+  { value: 'left', icon: LeftAlignedImage },
+  { value: 'right', icon: RightAlignedImage },
+]
+
+export type Teaser = {
+  _type: 'teaser'
+  overline?: string
+  title?: PortableTextBlock[]
+  text?: PortableTextBlock[]
+  action?: (LinkSelector | DownloadableFile | DownloadableImage)[]
+  image: ImageWithAlt
+  imagePosition?: string
+  imageSize?: string
+  background?: ColorSelectorValue
+}
+
+type TeaserDocument = {
+  parent: Teaser
+}
+
+export default {
+  name: 'teaser',
+  title: 'Teaser',
+  type: 'object',
+  localize: true,
+  fieldsets: [
+    {
+      title: 'Eyebrow headline',
+      name: 'eyebrow',
+      description:
+        'A descriptive keyword, category or phrase that appears over the main headline.',
+      options: {
+        collapsible: true,
+        collapsed: true,
+      },
+    },
+    {
+      name: 'link',
+      title: 'Link',
+      description: 'Select either an internal link or external URL.',
+    },
+    {
+      name: 'design',
+      title: 'Design options',
+    },
+  ],
+  fields: [
+    {
+      name: 'overline',
+      title: 'Eyebrow',
+      description: "Please don't use with display text",
+      type: 'string',
+      fieldset: 'eyebrow',
+    },
+    {
+      name: 'title',
+      type: 'array',
+      components: {
+        input: CompactBlockEditor,
+      },
+      of: [configureBlockContent({ variant: 'titleWithDisplay' })],
+    },
+    {
+      name: 'text',
+      title: 'Content',
+      type: 'array',
+      of: [configureBlockContent({ variant: 'simpleBlock' })],
+      validation: (Rule: Rule) =>
+        Rule.custom((value: PortableTextBlock[]) => {
+          return validateCharCounterEditor(value, 600, true)
+        }).warning(),
+    },
+    {
+      name: 'action',
+      title: 'Links/actions',
+      description: 'Select links or downloadable files for the teaser',
+      type: 'array',
+      of: [
+        { type: 'linkSelector', title: 'Link' },
+        { type: 'downloadableImage', title: 'Downloadable image' },
+        { type: 'downloadableFile', title: 'Downloadable file' },
+      ],
+      validation: (Rule: Rule) =>
+        Rule.max(2).error('Only two action is permitted'),
+    },
+    {
+      name: 'image',
+      title: 'Image',
+      type: 'imageWithAlt',
+      validation: (Rule: Rule) => Rule.required(),
+    },
+    {
+      name: 'imagePosition',
+      title: 'Image position',
+      description:
+        'Select which side of the teaser the image should be displayed at on larger screens.',
+      type: 'string',
+      fieldset: 'design',
+      components: {
+        input: function ({
+          onChange,
+          value,
+        }: {
+          onChange: any
+          value: string
+        }) {
+          return (
+            <RadioIconSelector
+              name='imageAlignmentSelector'
+              options={imageAlignmentOptions}
+              defaultValue='left'
+              currentValue={value}
+              onChange={onChange}
+            />
+          )
+        },
+      },
+    },
+    {
+      name: 'imageSize',
+      title: 'Image size',
+      description:
+        'Set if image/svg should be full container width or with padding around it',
+      type: 'string',
+      fieldset: 'design',
+      components: {
+        input: function ({
+          onChange,
+          value,
+        }: {
+          onChange: any
+          value: string
+        }) {
+          return (
+            <RadioIconSelector
+              name='imageSizeSelector'
+              options={imageSizeOptions}
+              defaultValue='full'
+              currentValue={value}
+              onChange={onChange}
+            />
+          )
+        },
+      },
+    },
+    backgroundPosition(undefined, 'design'),
+    {
+      title: 'Contain image/svg',
+      description:
+        'Maintain aspect ratio and fit within container. Dont clip if bad fit',
+      name: 'containImage',
+      type: 'boolean',
+      fieldset: 'design',
+    },
+    {
+      title: 'Background',
+      description: 'Pick a colour for the background. Default is white.',
+      name: 'background',
+      type: 'colorlist',
+      fieldset: 'design',
+    },
+  ],
+  preview: {
+    select: {
+      title: 'title',
+      text: 'text',
+      image: 'image.asset',
+    },
+    prepare({
+      title,
+      text,
+      image,
+    }: {
+      title: PortableTextBlock[]
+      text: PortableTextBlock[]
+      image: Reference
+    }) {
+      const plainTitle = blocksToText(title ?? text)
+
+      return {
+        title: plainTitle || 'Missing title/content',
+        subtitle: 'Teaser component',
+        media: image,
+      }
+    },
+  },
+}

@@ -1,8 +1,9 @@
-import { PortableTextBlock } from '@portabletext/types'
-import { Heading, Typography, TypographyVariants } from '@core/Typography'
-import { forwardRef, HTMLAttributes } from 'react'
-import { Variants } from './Card'
-import envisTwMerge from '../../../twMerge'
+import type { PortableTextBlock } from '@portabletext/types'
+import { forwardRef, type HTMLAttributes } from 'react'
+import { twMerge } from 'tailwind-merge'
+import { Typography, type TypographyVariants } from '@/core/Typography'
+import Blocks from '@/portableText/Blocks'
+import type { Variants } from './Card'
 
 export type CardHeaderProps = {
   /** Title string content */
@@ -33,75 +34,90 @@ export type CardHeaderProps = {
  * CardHeader component to be used inside CardContent Wrapper
  * @example
  */
-export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(function CardHeader(
-  {
-    title,
-    titleBlock,
-    titleLevel = 'h3',
-    titleVariant = 'md',
-    className = '',
-    titleClassName = '',
-    eyebrow,
-    eyebrowClassName = '',
-    variant = 'primary',
-    ...rest
-  },
-  ref,
-) {
-  const variantTitle = {
-    primary: `  max-md:text-lg`,
-    secondary: `  max-md:text-lg`,
-    compact: `max-md:text-md`,
-    single: `text-lg leading-planetary`,
-  }
-
-  const titleClassNames = envisTwMerge(
-    `group-hover/card:underline
+export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(
+  function CardHeader(
+    {
+      title,
+      titleBlock,
+      titleLevel = 'h3',
+      titleVariant,
+      className = '',
+      titleClassName = '',
+      eyebrow,
+      eyebrowClassName = '',
+      variant = 'primary',
+      ...rest
+    },
+    ref,
+  ) {
+    const titleClassNames = twMerge(
+      `group-hover/card:underline
     group-focus-visible/card:underline
-    ${variantTitle[variant]}
-    max-w-prose
-    text-pretty
     dark:text-white-100
   `,
-    titleClassName,
-  )
+      titleClassName,
+    )
 
-  return eyebrow ? (
-    <hgroup ref={ref} className={envisTwMerge('w-full text-pretty flex flex-col gap-2', className)} {...rest}>
-      <p className={envisTwMerge(`text-xs font-medium uppercase leading-normal`, eyebrowClassName)}>{eyebrow}</p>
-      {title && (
-        <Typography
-          {...(titleVariant && { as: titleLevel })}
-          {...(titleVariant ? { variant: titleVariant } : { variant: titleLevel })}
-          className={titleClassNames}
-        >
-          {title}
+    return eyebrow ? (
+      <hgroup
+        ref={ref}
+        className={twMerge('flex w-full flex-col gap-2', className)}
+        {...rest}
+      >
+        <Typography variant='eyebrow' className={eyebrowClassName}>
+          {eyebrow}
         </Typography>
-      )}
-      {titleBlock && <Heading as={titleLevel} variant={titleVariant} className={titleClassNames} value={titleBlock} />}
-    </hgroup>
-  ) : (
-    <>
-      {title && (
-        <Typography
-          ref={ref}
-          {...(titleVariant && { as: titleLevel })}
-          {...(titleVariant ? { variant: titleVariant } : { variant: titleLevel })}
-          className={titleClassNames}
-          {...rest}
-        >
-          {title}
-        </Typography>
-      )}
-      {titleBlock && (
-        <Heading
-          {...(titleVariant && { as: titleLevel })}
-          {...(titleVariant ? { variant: titleVariant } : { variant: titleLevel })}
-          className={titleClassNames}
-          value={titleBlock}
-          {...rest}
-        />
-      )}
-    </>
-  )
-})
+        {title && (
+          <Typography
+            group='card'
+            {...(titleVariant && { as: titleLevel })}
+            {...(titleVariant
+              ? { variant: titleVariant }
+              : { variant: titleLevel })}
+            className={titleClassNames}
+          >
+            {title}
+          </Typography>
+        )}
+        {titleBlock && (
+          <Blocks
+            group='card'
+            as={titleLevel}
+            variant={titleVariant}
+            blockClassName={titleClassNames}
+            value={titleBlock}
+          />
+        )}
+      </hgroup>
+    ) : (
+      <>
+        {title && (
+          <Typography
+            group='card'
+            ref={ref}
+            {...(titleVariant && { as: titleLevel })}
+            {...(titleVariant
+              ? { variant: titleVariant }
+              : { variant: titleLevel })}
+            className={titleClassNames}
+            {...rest}
+          >
+            {title}
+          </Typography>
+        )}
+        {titleBlock && (
+          <Blocks
+            group='card'
+            {...(titleVariant && { as: titleLevel })}
+            {...(titleVariant
+              ? { variant: titleVariant }
+              : { variant: titleLevel })}
+            blockClassName={titleClassNames}
+            value={titleBlock}
+            {...rest}
+          />
+        )}
+      </>
+    )
+  },
+)

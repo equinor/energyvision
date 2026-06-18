@@ -1,4 +1,4 @@
-import { Accordion, AccordionItemProps } from '@core/Accordion'
+import { Accordion, AccordionItemProps } from '@/core/Accordion'
 import { Variants } from './MenuAccordion'
 import { forwardRef } from 'react'
 

@@ -1,6 +1,7 @@
+'use client'
 import { forwardRef, SVGProps, useEffect, useState, CSSProperties } from 'react'
-import envisTwMerge from '../../twMerge'
-import { useIntl } from 'react-intl'
+import { useTranslations } from 'next-intl'
+import { twMerge } from 'tailwind-merge'
 
 export type CircularProgressProps = {
   /**  Use indeterminate when there is no progress value */
@@ -31,7 +32,7 @@ const CircularProgress = forwardRef<SVGSVGElement, CircularProgressProps>(functi
   },
   ref,
 ) {
-  const intl = useIntl()
+  const intl = useTranslations()
   const thickness = 2.5
   const progress = value ? Math.round(value) : 0
   const props = {
@@ -55,11 +56,11 @@ const CircularProgress = forwardRef<SVGSVGElement, CircularProgressProps>(functi
         props['aria-valuemax'] = 100
       }
     } else {
-    props['aria-valuenow'] = progress
-    if (value !== undefined) {
+      props['aria-valuenow'] = progress
+      if (value !== undefined) {
         props['aria-valuenow'] = progress
-      props['aria-valuemin'] = 0
-      props['aria-valuemax'] = 100
+        props['aria-valuemin'] = 0
+        props['aria-valuemax'] = 100
       }
     }
   }
@@ -95,7 +96,7 @@ const CircularProgress = forwardRef<SVGSVGElement, CircularProgressProps>(functi
   }, [progress, variant])
 
   const getProgressFormatted = () => {
-    return `${intl.formatMessage({ id: 'loading', defaultMessage: 'Loading' })} ${srProgress}%`
+    return `${intl('loading')} ${srProgress}%`
   }
 
   const progressStyle: CSSProperties =
@@ -106,10 +107,10 @@ const CircularProgress = forwardRef<SVGSVGElement, CircularProgressProps>(functi
             type === 'progress'
               ? `${(((100 - progress) / 100) * circumference).toFixed(3)}px`
               : internalDuration && duration
-              ? (circumference - (((duration - internalDuration) * (100 / duration)) / 100) * circumference).toFixed(
-                  3,
-                ) + 'px'
-              : '0px',
+                ? (circumference - (((duration - internalDuration) * (100 / duration)) / 100) * circumference).toFixed(
+                    3,
+                  ) + 'px'
+                : '0px',
           transition: 'stroke-dashoffset 0.5s ease-in-out',
         }
       : {}
@@ -128,7 +129,7 @@ const CircularProgress = forwardRef<SVGSVGElement, CircularProgressProps>(functi
         height={48}
         width={48}
         preserveAspectRatio="xMidYMid meet"
-        className={envisTwMerge(`${variant === 'indeterminate' ? 'animate-spin-slow' : ''}`, className)}
+        className={twMerge(`${variant === 'indeterminate' ? 'animate-spin-slow' : ''}`, className)}
       >
         <circle
           style={trackStyle}
@@ -138,7 +139,7 @@ const CircularProgress = forwardRef<SVGSVGElement, CircularProgressProps>(functi
           fill="none"
           strokeWidth={thickness}
           stroke="currentColor"
-          className={envisTwMerge('stroke-grey-30', trackClassName)}
+          className={twMerge('stroke-grey-30', trackClassName)}
         />
         <circle
           style={progressStyle}
@@ -149,7 +150,7 @@ const CircularProgress = forwardRef<SVGSVGElement, CircularProgressProps>(functi
           strokeLinecap="round"
           strokeWidth={thickness}
           stroke="currentColor"
-          className={envisTwMerge('stroke-grey-60', progressClassName)}
+          className={twMerge('stroke-grey-60', progressClassName)}
           opacity={paused ? 0 : 1}
         />
       </svg>

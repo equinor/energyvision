@@ -1,0 +1,16 @@
+{
+  "extends": "@repo/typescript-config/shared.json",
+  "include": [
+    "types.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/**/*.ts",
+    "src/**/*.tsx"
+  ],
+  "compilerOptions": {
+    "paths": {
+      "./brand.css": ["./src/brand/tailwind/theme.css"]
+    }
+  },
+  "exclude": ["node_modules", "dist"]
+}

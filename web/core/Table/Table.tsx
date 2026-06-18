@@ -1,9 +1,10 @@
-import { forwardRef } from 'react'
+'use client'
 import type { TableHTMLAttributes } from 'react'
-import envisTwMerge from '../../twMerge'
+import { forwardRef } from 'react'
+import { twMerge } from '@/lib/twMerge/twMerge'
 
 export type Variants = 'zebra' | 'border'
-export type ThemeVariants = 'grey' | 'blue' | 'green' | 'orange'
+export type ThemeVariants = 'grey' | 'blue' | 'green'
 
 export type TableProps = TableHTMLAttributes<HTMLTableElement>
 
@@ -37,7 +38,11 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(function Table(
   ref,
 ) {
   return (
-    <table className={envisTwMerge('table-auto w-full border-collapse', className)} ref={ref} {...rest}>
+    <table
+      className={twMerge('w-full table-auto border-collapse', className)}
+      ref={ref}
+      {...rest}
+    >
       {children}
     </table>
   )

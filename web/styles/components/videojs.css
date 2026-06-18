@@ -1,13 +1,18 @@
+@reference 'tailwindcss';
+
 /* Change all text and icon colors in the player. */
 .vjs-envis {
   @apply text-xs lg:text-2xs;
 }
-.vjs-envis .vjs-control-bar {
-  @apply bg-slate-blue-100;
+.video-js.vjs-fill .vjs-control-bar {
+  @apply !bg-transparent } .vjs-envis.video-js .vjs-control-bar { @apply !bg-slate-blue-100;
+}
+.video-js.vjs-fill > .vjs-control-bar {
+  @apply bg-transparent;
 }
 .vjs-envis button,
 [type='button'] {
-  @apply focus:outline-none focus-visible:envis-outline-invert;
+  @apply focus:outline-hidden focus-visible:envis-outline-invert;
 }
 .vjs-envis .vjs-big-play-button {
   @apply bg-slate-blue-100/70 border-none rounded-full w-[60px] h-[60px] lg:w-[80px] lg:h-[80px];

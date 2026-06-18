@@ -1,11 +1,29 @@
-import { BackgroundContainer } from '@core/Backgrounds'
-import { toPlainText } from '@portabletext/react'
-import Image, { getSmallerThanPxLgSizes } from '../../core/SanityImage/SanityImage'
-import { Heading, Typography } from '../../core/Typography'
-import Blocks from '../../pageComponents/shared/portableText/Blocks'
-import IngressText from '../../pageComponents/shared/portableText/IngressText'
-import type { TextBlockData } from '../../types/index'
+import { twMerge } from 'tailwind-merge'
+import { ImageBackground } from '@/core/Backgrounds/ImageBackground'
+import { Image } from '@/core/Image/Image'
+import type { Image as ImageType } from '@/core/Image/imageUtilities'
+import { Typography } from '@/core/Typography'
+import Blocks from '@/portableText/Blocks'
+import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
+import type { DesignOptions, LinkData, PortableTextBlock } from '@/types/index'
 import CallToActions from '../CallToActions'
+
+type TextBlockBackgroundType = 'backgroundColor' | 'backgroundImage'
+
+export type TextBlockData = {
+  type: string
+  id: string
+  title: PortableTextBlock[]
+  image?: ImageType
+  overline?: string
+  text: PortableTextBlock[]
+  useBrandTheme?: boolean
+  ingress: PortableTextBlock[]
+  callToActions?: LinkData[]
+  splitList?: boolean
+  backgroundType?: TextBlockBackgroundType
+  designOptions: DesignOptions
+}
 
 type TextBlockProps = {
   data: TextBlockData
@@ -23,37 +41,20 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
     designOptions,
     callToActions,
     splitList,
-    isBigText,
     useBrandTheme = false,
   } = data
-  /* Don't render the component if it only has an eyebrow */
-  if (!title && !ingress && !text && (!callToActions || callToActions.length === 0)) return null
-  const isLongTitle = title && toPlainText(title).length > 30
 
-  const contentAlignment = {
-    center: 'items-start text-start px-layout-lg',
-    right: `items-start 
-      text-start 
-      px-layout-lg 
-      xl:items-end 
-      xl:text-end 
-      ${isLongTitle ? 'xl:max-w-[52dvw]' : 'xl:max-w-[45dvw]'} 
-      xl:ml-auto 
-      xl:pr-layout-sm 
-      xl:pl-0`,
-    left: `items-start text-start px-layout-lg xl:items-start ${
-      isLongTitle ? 'xl:max-w-[52dvw]' : 'xl:max-w-[45dvw]'
-    } xl:mr-auto xl:pl-layout-sm xl:pr-0`,
-    'bottom-left': 'items-start text-start px-layout-lg xl:mr-auto xl:pl-layout-sm xl:pr-0',
-    'bottom-center': 'items-start text-start px-layout-lg xl:pl-layout-sm xl:pr-0',
-  }
-  const backgroundImageContentClassNames = `
-  justify-center
-  py-14
-  ${contentAlignment[designOptions?.background?.backgroundImage?.contentAlignment ?? 'left']}
-  `
+  /* Don't render the component if it only has an eyebrow */
+  if (
+    !title &&
+    !ingress &&
+    !text &&
+    (!callToActions || callToActions.length === 0)
+  )
+    return null
 
   let bgContainerOptions = designOptions
+
   if (useBrandTheme) {
     bgContainerOptions = {
       background: {
@@ -63,65 +64,90 @@ const TextBlock = ({ data, anchor, className = '' }: TextBlockProps) => {
       },
     }
   }
+  const backgroundType = bgContainerOptions?.background?.type
+  const { bg, dark } = getBgAndDarkFromBackground(bgContainerOptions)
 
-  const common = `${useBrandTheme ? 'text-energy-red-100' : ''} text-balance`
-
-  const serializerClassnames = {
-    largeText: common,
-    normal: common,
-    twoXLText: common,
-    extraLargeText: common,
-  }
-
-  return (
-    <BackgroundContainer
-      {...bgContainerOptions}
-      id={anchor}
-      renderFragmentWhenPossible
-      className={`flex flex-col gap-6 ${
-        designOptions?.background?.type === 'backgroundImage' ? backgroundImageContentClassNames : className
-      }`}
-    >
-      {isBigText && title && <Heading value={title} as="h2" variant="3xl" useDisplay={true} />}
-      {!isBigText && (
-        <>
-          {image?.asset && (
-            <div className="w-[300px]">
-              <Image
-                image={image}
-                maxWidth={300}
-                sizes={getSmallerThanPxLgSizes()}
-                aspectRatio={'9:16'}
-                className="object-cover"
-              />
-            </div>
-          )}
-          {overline ? (
-            <hgroup className={`flex flex-col gap-2 mb-1 ${useBrandTheme ? 'text-energy-red-100' : ''}`}>
-              <Typography as="div" className="text-md">
-                {overline}
-              </Typography>
-              {title && <Heading value={title} as="h2" variant="xl" serializerClassnames={serializerClassnames} />}
-            </hgroup>
-          ) : (
-            title && (
-              <Heading
-                value={title}
-                as="h2"
-                variant="xl"
-                serializerClassnames={serializerClassnames}
-                className={`mb-2`}
-                useDisplay={true}
-              />
-            )
-          )}
-          {ingress && <IngressText value={ingress} />}
-        </>
+  const contentElements = (
+    <>
+      {ingress && <Blocks variant='ingress' value={ingress} />}
+      {text && <Blocks value={text} variant='body' />}
+      {callToActions && (
+        <CallToActions
+          callToActions={callToActions}
+          splitList={splitList}
+          className={
+            (!title && !ingress && !text) ||
+            (title && !ingress && !text) ||
+            (ingress && !text)
+              ? 'pt-0'
+              : ''
+          }
+        />
       )}
-      {text && <Blocks value={text} className={`${callToActions ? 'mb-4' : ''}`} />}
+    </>
+  )
 
-      {callToActions && <CallToActions callToActions={callToActions} splitList={splitList} />}
-    </BackgroundContainer>
+  const titleElements = (
+    <>
+      {/** Thumbnail  */}
+      {image?.asset && (
+        <Image
+          image={image}
+          grid='xs'
+          aspectRatio='4:3'
+          imageClassName='object-contain object-left'
+          className='mb-8 aspect-4/3 w-1/2 lg:mb-16 lg:w-1/3'
+        />
+      )}
+      {overline ? (
+        <hgroup
+          className={twMerge(`mb-1`, useBrandTheme && '**:text-energy-red-100')}
+        >
+          <Typography variant='overline'>{overline}</Typography>
+          {title && (
+            <Blocks
+              value={title}
+              as='h2'
+              group='heading'
+              variant='h2'
+              useDisplay={true}
+            />
+          )}
+        </hgroup>
+      ) : (
+        title && (
+          <Blocks
+            value={title}
+            as='h2'
+            group='heading'
+            variant='h2'
+            useDisplay={true}
+            className={useBrandTheme ? '**:text-energy-red-100' : ''}
+          />
+        )
+      )}
+    </>
+  )
+
+  return backgroundType === 'backgroundImage' &&
+    bgContainerOptions?.background?.backgroundImage?.image?.asset ? (
+    <ImageBackground
+      id={anchor}
+      {...bgContainerOptions.background.backgroundImage}
+    >
+      {titleElements}
+      {contentElements}
+    </ImageBackground>
+  ) : (
+    <div
+      id={anchor}
+      className={twMerge(bg && bg, dark ? 'dark' : '', className)}
+    >
+      <div className='mx-auto max-w-content px-layout-sm lg:px-layout-lg'>
+        {titleElements}
+        {contentElements}
+      </div>
+    </div>
   )
 }
 

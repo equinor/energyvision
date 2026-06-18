@@ -15,6 +15,10 @@ inputs:
 runs:
   using: 'composite'
   steps:
+    - name: Force JS Actions Node 24
+      shell: bash
+      run: |
+        echo "FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true" >> $GITHUB_ENV
     - name: Get project data
       id: get-project-data
       shell: 'bash'
@@ -25,31 +29,30 @@ runs:
       # Uses [GitHub CLI](https://cli.github.com/manual/) to query the API for the ID of the project and return the name and ID of the first 20 fields in the project. `fields` returns a union and the query uses inline fragments (`... on`) to return information about any `ProjectV2Field` and `ProjectV2SingleSelectField` fields. The response is stored in a file called `project_data.json`.
       run: |
         gh api graphql -f query='
-            query($org: String!, $number: Int!, $repository:String!) {
-              organization(login: $org){
-                repository(name: $repository){
+            query($org: String!, $number: Int!, $repository: String!) {
+              organization(login: $org) {
+                repository(name: $repository) {
                   id
-                  discussionCategory(slug: "Announcements"){
+                  discussionCategory(slug: "Announcements") {
                     id
                   }
-                  issues(states:[CLOSED], first:50, orderBy:{
-                    field:UPDATED_AT, direction:DESC}){
-                       nodes{
-                         id
-                         projectItems(first:10, includeArchived:false){
-                          nodes{
-                            id
-                            content{
-                              ... on Issue{
-                                number
-                                title
-                              }
+                  issues(states: [CLOSED], first: 50, orderBy: { field: UPDATED_AT, direction: DESC }) {
+                    nodes {
+                      id
+                      projectItems(first: 10, includeArchived: false) {
+                        nodes {
+                          id
+                          content {
+                            ... on Issue {
+                              number
+                              title
                             }
-                          fieldValueByName( name: "Status") {
-             			          ... on ProjectV2ItemFieldSingleSelectValue {
-              			          status: name
-           						      }
-          		            }
+                          }
+                          fieldValueByName(name: "Status") {
+                            ... on ProjectV2ItemFieldSingleSelectValue {
+                              status: name
+                            }
+                          }
                         }
                       }
                     }
@@ -57,7 +60,7 @@ runs:
                 }
                 projectV2(number: $number) {
                   id
-                  fields(first:20) {
+                  fields(first: 20) {
                     nodes {
                       ... on ProjectV2Field {
                         id
@@ -76,7 +79,7 @@ runs:
                 }
               }
             }
-         }' -f org=$ORGANIZATION -F number=$PROJECT_NUMBER -f repository=${{ github.event.repository.name }}  > project_data.json
+          ' -f org=$ORGANIZATION -F number=$PROJECT_NUMBER -f repository=${{ github.event.repository.name }} > project_data.json
 
         echo "ORGANIZATION=${ORGANIZATION}" >> $GITHUB_ENV
         echo "PROJECT_NUMBER=${PROJECT_NUMBER}" >> $GITHUB_ENV
@@ -149,24 +152,26 @@ runs:
         BODY+="
         ## Commit SHA
         "
-        BODY+="${{ inputs.commitSHA }}"
+        BODY+=${{ inputs.commitSHA }}
 
         echo "$BODY"
 
-        gh api graphql -f query=' 
-        mutation($title: String!, $repositoryId: ID!, $categoryId: ID!, $body: String!){
-        createDiscussion(input: {
-          repositoryId:$repositoryId 
-          categoryId:$categoryId
-          body:$body
-          title:$title
-           }) {
-
-        # response type: CreateDiscussionPayload
-         discussion {
-           number
-        }
-        }}' -f title="$TITLE" -f repositoryId="$REPOSITORY_ID" -f categoryId="$DISCUSSION_CATEGORY_ID" -f body="$BODY" > discussion.json
+        gh api graphql -f query='
+          mutation($title: String!, $repositoryId: ID!, $categoryId: ID!, $body: String!) {
+            createDiscussion(
+              input: {
+                repositoryId: $repositoryId
+                categoryId: $categoryId
+                body: $body
+                title: $title
+              }
+            ) {
+              discussion {
+                number
+              }
+            }
+          }
+        ' -f title="$TITLE" -f repositoryId="$REPOSITORY_ID" -f categoryId="$DISCUSSION_CATEGORY_ID" -f body="$BODY" > discussion.json
 
         DISCUSSION_NUMBER=$(jq -r '.data.createDiscussion.discussion.number' discussion.json)
         echo "DISCUSSION_NUMBER=${DISCUSSION_NUMBER}" >> $GITHUB_ENV

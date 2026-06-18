@@ -1,6 +1,6 @@
-import { Settings } from '@algolia/client-search'
+import { IndexSettings } from 'algoliasearch'
 
-export const indexSettings: Settings = {
+export const indexSettings: IndexSettings = {
   searchableAttributes: ['pageTitle', 'title', 'ingress', 'text'],
   attributesToSnippet: ['ingress', 'text'],
   attributeForDistinct: 'slug',

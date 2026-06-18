@@ -1,13 +1,7 @@
-import type {
-  DesignOptions,
-  EventDateType,
-  HeroType,
-  HeroTypes,
-  ImageWithAlt,
-  ImageWithCaptionData,
-  LinkData,
-  PortableTextBlock,
-} from './index'
+import type { PortableTextBlock } from '@portabletext/types'
+import type { Figure, Image } from '@/core/Image/imageUtilities'
+import type { HeroData, HeroTypes } from '@/sections/Hero/HeroBlock'
+import type { LinkData } from './index'
 
 export type CardTypes = 'news' | 'topics' | 'people' | 'events'
 
@@ -17,8 +11,8 @@ export type CardData = {
   slug: string
   title: string | PortableTextBlock[]
   publishDateTime?: string
-  heroImage: ImageWithCaptionData
-  openGraphImage?: ImageWithAlt
+  heroImage: Figure
+  openGraphImage?: Image
   ingress?: PortableTextBlock[]
   heroType?: HeroTypes
 }
@@ -29,13 +23,13 @@ export type MagazineCardData = {
   title: string | PortableTextBlock[]
   firstPublishedAt?: string
   publishDateTime?: string
-  hero?: HeroType
+  hero?: HeroData
 }
 
 export type PeopleCardData = {
   type?: 'people'
   id: string
-  image?: ImageWithAlt
+  image?: Image
   name: string
   title?: string
   department?: string
@@ -44,30 +38,4 @@ export type PeopleCardData = {
   isLink: boolean
   cv?: LinkData
   enableStructuredMarkup?: boolean
-}
-
-export type EventCardData = {
-  id: string
-  type: 'events'
-  title: PortableTextBlock[]
-  slug: string
-  location?: string
-  eventDate: EventDateType
-  ingress?: PortableTextBlock[]
-}
-
-export type CardsListData = {
-  type: 'cardsList'
-  id: string
-  title?: PortableTextBlock[]
-  cards?: CardListItemData[]
-  designOptions: DesignOptions
-}
-
-export type CardListItemData = {
-  id: string
-  type: 'card'
-  thumbnail?: any
-  title?: string
-  content?: PortableTextBlock[]
 }

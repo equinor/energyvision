@@ -25,7 +25,6 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
   context.log('Language: ', req.body.language)
   const logger = context.log
   await loadEnv(logger)
-
   const language = pipe(languageFromIso(req.body.language), languageOrDefault)
 
   const indexName = flow(getEnvironment, E.map(generateIndexName(indexIdentifier)(language.isoCode)))

@@ -1,26 +1,27 @@
-import { BackgroundContainer, BackgroundContainerProps } from '@core/Backgrounds'
-import { ReactNode } from 'react'
-import envisTwMerge from '../../twMerge'
+import { forwardRef, type HTMLAttributes, type ReactNode } from 'react'
+import { twMerge } from 'tailwind-merge'
 
-type Props = {
+type TopbarDropdownProps = {
   variant?: 'light' | 'dark'
   right?: string
   children: ReactNode
-} & BackgroundContainerProps
+} & HTMLAttributes<HTMLDivElement>
 
-export const TopbarDropdown = ({ children, variant = 'light', className = '', ...rest }: Props) => {
-  return (
-    <BackgroundContainer
-      background={{
-        type: 'backgroundColor',
-        backgroundUtility: variant === 'dark' ? 'slate-blue-95' : 'white-100',
-        dark: variant === 'dark',
-      }}
-      backgroundStyle="none"
-      className={envisTwMerge(`fixed overflow-auto inset-0`, className)}
-      {...rest}
-    >
-      {children}
-    </BackgroundContainer>
-  )
-}
+export const TopbarDropdown = forwardRef<HTMLDivElement, TopbarDropdownProps>(
+  function TopbarDropdown(
+    { children, variant = 'light', className = '' },
+    ref,
+  ) {
+    return (
+      <div
+        ref={ref}
+        className={twMerge(
+          `${variant === 'dark' ? 'dark bg-slate-blue-95' : 'bg-white-100'} fixed inset-0 overflow-auto`,
+          className,
+        )}
+      >
+        {children}
+      </div>
+    )
+  },
+)

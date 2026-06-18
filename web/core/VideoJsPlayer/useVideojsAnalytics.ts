@@ -1,3 +1,4 @@
+'use client'
 import useConsent from '../../lib/hooks/useConsent'
 import { pushToDataLayer } from '../../lib/gtm'
 import { useEffect, useCallback, useState } from 'react'

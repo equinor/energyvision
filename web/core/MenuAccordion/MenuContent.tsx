@@ -1,6 +1,6 @@
 import { forwardRef } from 'react'
 import { Variants } from './MenuAccordion'
-import { Accordion, AccordionContentProps } from '@core/Accordion'
+import { Accordion, AccordionContentProps } from '@/core/Accordion'
 
 export type MenuContentProps = {
   variant?: Variants

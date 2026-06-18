@@ -1,7 +1,8 @@
-import { Typography } from '@core/Typography'
-import { Checkbox } from '@equinor/eds-core-react'
+'use client'
 import { useId } from 'react'
-import { useRefinementList, UseRefinementListProps } from 'react-instantsearch'
+import { UseRefinementListProps, useRefinementList } from 'react-instantsearch'
+import { Checkbox } from '@/core/Checkbox/Checkbox'
+import { Typography } from '@/core/Typography'
 
 export type RefinementListFilterProps = {
   /* id to the heading that labels the filter, required when variant is accordion */
@@ -12,7 +13,12 @@ export type RefinementListFilterProps = {
 } & React.ComponentProps<'div'> &
   UseRefinementListProps
 
-const RefinementListFilter = ({ variant = 'list', filterName, labelledBy, ...rest }: RefinementListFilterProps) => {
+const RefinementListFilter = ({
+  variant = 'list',
+  filterName,
+  labelledBy,
+  ...rest
+}: RefinementListFilterProps) => {
   const { items, refine } = useRefinementList(rest)
   const headingId = useId()
 
@@ -23,7 +29,7 @@ const RefinementListFilter = ({ variant = 'list', filterName, labelledBy, ...res
     <div
       className={`${
         variant === 'list'
-          ? 'border border-autumn-storm-60 rounded-sm p-4 flex flex-col overflow-auto focus:outline-none focus-visible:envis-outline envis-scrollbar'
+          ? 'focus-visible:envis-outline envis-scrollbar flex flex-col overflow-auto rounded-xs border border-autumn-storm-60 p-4 focus:outline-hidden'
           : ''
       }`}
       {...(variant === 'list' && {
@@ -35,16 +41,24 @@ const RefinementListFilter = ({ variant = 'list', filterName, labelledBy, ...res
       tabIndex={0}
     >
       {variant === 'list' && (
-        <Typography as="h3" variant="h7" className="font-semibold" id={headingId}>
+        <Typography
+          as='h3'
+          variant='h7'
+          className='font-semibold'
+          id={headingId}
+        >
           {filterName}
         </Typography>
       )}
-      <div role="group" aria-labelledby={variant === 'list' ? headingId : labelledBy}>
+      <div
+        role='group'
+        aria-labelledby={variant === 'list' ? headingId : labelledBy}
+      >
         <ul>
-          {items.map((item) => (
+          {items.map(item => (
             <li key={item.value}>
               <Checkbox
-                role="checkbox"
+                role='checkbox'
                 value={item.value}
                 label={`${item.label} (${item.count})`}
                 checked={item.isRefined}

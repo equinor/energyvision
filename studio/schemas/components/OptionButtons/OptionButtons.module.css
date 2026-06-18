@@ -1,0 +1,97 @@
+.container {
+  width: fit-content;
+  display: grid;
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
+  gap: 8px;
+  grid-template-rows: repeat(1, minmax(0, min-content));
+}
+
+.radio {
+  opacity: 0;
+  position: absolute;
+}
+
+.radio:focus + .label {
+  outline: #2276fc auto 1px;
+  border-radius: 0;
+}
+
+.radio:checked + .label {
+  background-color: rgba(34, 118, 252, 0.15);
+}
+
+.radio:hover + .label {
+  outline-color: #2276fc;
+}
+
+.disabled {
+  cursor: not-allowed;
+  background-color: #f8f8f8;
+  color: #cad1dc;
+  pointer-events: none;
+}
+.label {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  outline: 1px solid #cad1dc;
+  border-radius: 0.1875rem;
+}
+
+.label:hover {
+  background-color: rgba(34, 118, 252, 0.08);
+}
+
+.iconWrapper {
+  margin: auto 0;
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  gap: 2px;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  min-width: 60px;
+  align-items: center;
+}
+.iconContainer {
+  margin: auto 0;
+  height: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.15rem 0.5rem;
+  aspect-ratio: 1;
+}
+
+.iconBox {
+  width: min-content;
+  height: min-content;
+  min-height: 24px;
+  min-width: 24px;
+  max-width: 50px;
+  max-height: 50px;
+  & > svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.text {
+  padding: 0 0.5rem;
+  width: min-content;
+  height: min-content;
+  margin: 0;
+  text-align: center;
+  color: var(--card-fg-color);
+  font-weight: 500;
+  font-size: 0.8125rem;
+  line-height: calc(1.46154);
+  white-space: pre-wrap;
+}
+
+.label[data-disabled='true'] .text {
+  color: #cad1dc;
+}

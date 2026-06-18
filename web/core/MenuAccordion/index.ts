@@ -1,8 +1,11 @@
-import { MenuButton, MenuButtonProps } from './MenuButton'
-import { MenuAccordion as MenuWrapper, MenuAccordionProps } from './MenuAccordion'
-import { MenuItem, MenuItemProps } from './MenuItem'
-import { MenuHeader, MenuHeaderProps } from './MenuHeader'
-import { MenuContent, MenuContentProps } from './MenuContent'
+import {
+  type MenuAccordionProps,
+  MenuAccordion as MenuWrapper,
+} from './MenuAccordion'
+import { MenuButton, type MenuButtonProps } from './MenuButton'
+import { MenuContent, type MenuContentProps } from './MenuContent'
+import { MenuHeader, type MenuHeaderProps } from './MenuHeader'
+import { MenuItem, type MenuItemProps } from './MenuItem'
 
 type MenuCompoundProps = typeof MenuWrapper & {
   MenuItem: typeof MenuItem
@@ -16,4 +19,10 @@ Menu.MenuHeader = MenuHeader
 Menu.MenuContent = MenuContent
 
 export { MenuButton, Menu }
-export type { MenuButtonProps, MenuAccordionProps, MenuItemProps, MenuHeaderProps, MenuContentProps }
+export type {
+  MenuButtonProps,
+  MenuAccordionProps,
+  MenuItemProps,
+  MenuHeaderProps,
+  MenuContentProps,
+}

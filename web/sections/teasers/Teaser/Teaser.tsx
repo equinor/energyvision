@@ -1,105 +1,137 @@
-import { Teaser as TeaserLayout } from '@core/Teaser'
-import { Typography } from '@core/Typography'
-import { toPlainText } from '@portabletext/react'
-import { getUrlFromAction } from '../../../common/helpers'
-import { ResourceLink } from '../../../core/Link'
-import Image from '../../../core/SanityImage/SanityImage'
-import { Heading } from '../../../core/Typography'
-import { getLocaleFromName } from '../../../lib/localization'
-import Blocks from '../../../pageComponents/shared/portableText/Blocks'
-import IngressText from '../../../pageComponents/shared/portableText/IngressText'
-import type { ImageWithAlt, TeaserData } from '../../../types/index'
+'use client'
+import type { PortableTextBlock } from '@portabletext/types'
+import { toPlainText } from 'next-sanity'
+import { Image } from '@/core/Image/Image'
+import {
+  getObjectPositionForImage,
+  type Image as ImageType,
+} from '@/core/Image/imageUtilities'
+import ResourceLink from '@/core/Link/ResourceLink'
+import { Typography } from '@/core/Typography'
+import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
+import { useMediaQuery } from '@/lib/hooks/useMediaQuery'
+import Blocks from '@/portableText/Blocks'
+import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
+import { getIsoFromName } from '../../../sanity/helpers/localization'
+import type { DesignOptions, LinkData } from '../../../types/index'
 
-const { Content, Media } = TeaserLayout
+export type TeaserData = {
+  type: string
+  id: string
+  title: PortableTextBlock[]
+  content: PortableTextBlock[]
+  overline?: string
+  image: ImageType
+  actions?: LinkData[]
+  designOptions: DesignOptions & {
+    imagePosition?: 'left' | 'right'
+    imageSize?: 'full' | 'small'
+    containImage?: boolean
+  }
+}
 
 type TeaserProps = {
   data: TeaserData
   anchor?: string
 }
 
-const TeaserImage = ({ image }: { image: ImageWithAlt }) => {
-  const isSvg = image.extension?.toLowerCase() === 'svg'
-
-  if (!image?.asset) return null
-  const altTag = image?.isDecorative ? '' : image?.alt || ''
-
-  return (
-    <Image
-      image={image}
-      alt={altTag}
-      fill
-      maxWidth={isSvg ? 720 : 1100}
-      role={image?.isDecorative ? 'presentation' : undefined}
-    />
-  )
-}
-
 const Teaser = ({ data, anchor }: TeaserProps) => {
-  const { title, overline, text, image, actions, designOptions, isBigText } = data
-  const { imageSize, imagePosition, ...restOptions } = designOptions
+  const { title, overline, content, image, actions, designOptions } = data
+  const {
+    imageSize = 'full',
+    imagePosition,
+    containImage = false,
+    background,
+  } = designOptions
 
-  if ([title, overline, text, image?.asset, actions].every((i) => !i)) {
+  const { backgroundPosition } = background || {}
+  const useFlexCol = useMediaQuery(`(max-width: 1023px)`)
+  const { bg, dark } = getBgAndDarkFromBackground(designOptions)
+  const isLargerDisplays = useMediaQuery(`(min-width: 1650px)`)
+
+  if ([title, overline, content, image?.asset, actions].every(i => !i)) {
     return null
   }
 
-  const isSvg = image.extension?.toLowerCase() === 'svg'
+  const isSvg = image.extension === 'svg' && imageSize === 'small'
+
+  // Svg can be "pictures"/illustrations and small svgs...
+  const imageElement = (
+    <div
+      className={`relative ${
+        isSvg
+          ? 'mx-18 flex h-auto items-center justify-center'
+          : 'h-auto min-h-[25rem] w-full'
+      }`}
+    >
+      <Image
+        image={image}
+        fill={!isSvg}
+        wrapperVariant='none'
+        grid='lg'
+        keepRatioOnMobile
+        aspectRatio={isLargerDisplays ? '16:9' : '4:3'}
+        imageClassName={`${
+          containImage ? 'object-contain' : ''
+        } ${getObjectPositionForImage(backgroundPosition ?? 'center_center')}`}
+      />
+    </div>
+  )
 
   return (
-    <TeaserLayout className="text-sm" id={anchor} {...restOptions} renderFragmentWhenPossible>
-      <Media
-        size={isSvg && imageSize === 'small' ? 'small' : 'full'}
-        center={!!isSvg}
-        fixedHeight={!isSvg}
-        mediaPosition={imagePosition || 'left'}
-      >
-        {image?.asset && <TeaserImage image={image} />}
-      </Media>
-      <Content className={`grid auto-cols-auto gap-y-lg px-8 py-12`}>
-        {isBigText ? (
-          text && <Heading value={text} as="h2" variant="2xl" className="mb-2 leading-cloudy" />
-        ) : (
-          <>
-            {overline ? (
-              <hgroup className="mb-1 flex flex-col gap-2">
-                <Typography as="div" className="text-md">
-                  {overline}
-                </Typography>
-                {title && <Heading value={title} as="h2" variant="xl" />}
-              </hgroup>
-            ) : (
-              title && <Heading value={title} as="h2" variant="xl" className="mb-2" />
-            )}
-            {text && toPlainText(text)?.length > 240 ? <Blocks value={text} /> : <IngressText value={text} />}
-          </>
-        )}
-        {actions && (
-          <div className="flex flex-col gap-8">
-            {actions?.map((action, idx) => {
-              const url = action && getUrlFromAction(action)
-              const { id, label, type, link, file } = action
-              return (
-                <ResourceLink
-                  href={url as string}
-                  file={{
-                    ...file,
-                    label,
-                  }}
-                  {...(link?.lang && {
-                    locale: getLocaleFromName(link?.lang),
-                  })}
-                  type={type}
-                  key={id ?? idx}
-                  variant="fit"
-                  showExtensionIcon={true}
-                >
-                  {`${label}`}
-                </ResourceLink>
-              )
-            })}
-          </div>
-        )}
-      </Content>
-    </TeaserLayout>
+    <article
+      id={anchor}
+      className={`max-w-fullwidth ${bg} ${dark ? 'dark' : ''}`}
+    >
+      <div className='mx-auto flex max-w-360 flex-col lg:grid lg:grid-cols-2'>
+        {(imagePosition === 'left' || useFlexCol) && imageElement}
+        <div className={`max-w-text px-8 pt-8 pb-10 lg:pt-18 lg:pb-22`}>
+          {overline ? (
+            <hgroup className='mb-1'>
+              <Typography variant='overline'>{overline}</Typography>
+              {title && (
+                <Blocks value={title} as='h2' group='heading' variant='h2' />
+              )}
+            </hgroup>
+          ) : (
+            title && (
+              <Blocks value={title} as='h2' group='heading' variant='h2' />
+            )
+          )}
+          {content && (
+            <Blocks
+              variant={toPlainText(content)?.length > 240 ? 'body' : 'ingress'}
+              value={content}
+            />
+          )}
+          {actions && (
+            <div className='mt-8 flex flex-col gap-x-8 gap-y-6'>
+              {actions?.map((action, idx) => {
+                const url = action && getUrlFromAction(action)
+                return (
+                  <ResourceLink
+                    href={url as string}
+                    {...(action.link?.lang && {
+                      hrefLang: getIsoFromName(action.link?.lang),
+                    })}
+                    type={action.type}
+                    key={action.id || idx}
+                    variant='fit'
+                    file={{
+                      ...action?.file,
+                      label: action?.label,
+                    }}
+                  >
+                    {`${action.label}`}
+                  </ResourceLink>
+                )
+              })}
+            </div>
+          )}
+        </div>
+        {imagePosition === 'right' && !useFlexCol && imageElement}
+      </div>
+    </article>
   )
 }
 

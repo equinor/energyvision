@@ -1,11 +1,10 @@
-import { add, calendar } from '@equinor/eds-icons'
-import { forwardRef } from 'react'
-import { ArrowRight } from '../../icons'
+import { calendar } from '@equinor/eds-icons'
+import { type PortableTextBlock, toPlainText } from 'next-sanity'
+import { twMerge } from 'tailwind-merge'
 import { TransformableIcon } from '../../icons/TransformableIcon'
-import envisTwMerge from '../../twMerge'
-import type { LinkType } from '../../types/index'
 import { BaseLink, type BaseLinkProps } from './BaseLink'
 import DownloadableLink from './DownloadableLink'
+import { getArrowElement } from './linkCommon'
 
 export type Variants = 'default' | 'fit'
 
@@ -19,103 +18,51 @@ export type ResourceLinkProps = {
   ariaHideText?: boolean
   /** If type is of an extension type (PDF), show the extention as icon */
   showExtensionIcon?: boolean
-  /** Display as a regular link without the border bottom effect and reduced spacing */
-  useAsRegular?: boolean
   /** not provided with downloads */
   href?: string | undefined
-  /** Inline block attachment */
-  isAttachment?: boolean
-  label?: string
+  label?: string | PortableTextBlock[]
   file?: any
 } & Omit<BaseLinkProps, 'href'>
 
-export const iconRotation: Record<string, string> = {
-  externalUrl: '-rotate-45',
-  downloadableFile: 'rotate-90',
-  downloadableImage: 'rotate-90',
-  internalUrl: '',
-}
-
-export const getArrowAnimation = (type: LinkType) => {
-  switch (type) {
-    case 'downloadableFile':
-    case 'downloadableImage':
-      return 'group-hover:translate-y-0.5'
-    case 'anchorLink':
-      return 'translate-y-0.5 group-hover:translate-y-2'
-    case 'icsLink':
-      return 'translate-y-0.5'
-    case 'externalUrl':
-      return 'translate-y-0.5 group-hover:-translate-y-0.5'
-    default:
-      return 'translate-y-0.5 group-hover:translate-x-2'
-  }
-}
-
-export const getArrowElement = (type: LinkType, iconClassName?: string, marginClassName?: string) => {
-  const iconClassNames = envisTwMerge(
-    `size-arrow-right
-    text-energy-red-100
-    dark:text-white-100
-    justify-self-end
-    min-h-arrow-right
-    min-w-arrow-right
-    ${iconRotation[type]}
-    ${getArrowAnimation(type)}
-    transition-all
-    duration-300
-  `,
-    iconClassName,
-  )
-  const marginClassNames = envisTwMerge(`ml-6 xl:ml-8`, marginClassName)
-
-  switch (type) {
-    case 'downloadableFile':
-    case 'downloadableImage':
-      return (
-        <div className={`flex flex-col px-1 ${marginClassNames} translate-y-[1px]`}>
-          <ArrowRight className={iconClassNames} />
-          <div className="bg-energy-red-100 dark:bg-white-100 h-[2px] w-full" />
-        </div>
-      )
-    case 'icsLink':
-      return <TransformableIcon iconData={add} className={`${marginClassName} ${iconClassNames}`} />
-    default:
-      return <ArrowRight className={`${marginClassName} ${iconClassNames}`} />
-  }
-}
-
-export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(function ResourceLink(
-  {
-    variant = 'default',
-    children,
-    type = 'internalUrl',
-    className = '',
-    iconClassName = '',
-    textClassName = '',
-    showExtensionIcon = false,
-    ariaHideText = false,
-    useAsRegular = false,
-    href = '',
-    isAttachment = false,
-    file,
-    locale,
-  },
+export const ResourceLink = ({
   ref,
-) {
+  variant = 'default',
+  children,
+  type = 'internalUrl',
+  className = '',
+  iconClassName = '',
+  textClassName = '',
+  showExtensionIcon = true,
+  ariaHideText = false,
+  href,
+  hrefLang,
+  file,
+  onClick,
+  label,
+  'aria-current': ariaCurrent,
+  'aria-label': ariaLabel,
+}: ResourceLinkProps) => {
   if (type === 'downloadableFile' || type === 'downloadableImage') {
     return (
       <DownloadableLink
         file={file}
-        type={type}
+        linkType={type}
         variant={variant}
         showExtensionIcon={showExtensionIcon}
-        ariaHideText={ariaHideText}
-        isAttachment={isAttachment}
+        onClick={onClick}
       >
         {children}
       </DownloadableLink>
     )
+  }
+
+  let _label = children
+  if (label) {
+    if (Array.isArray(label)) {
+      _label = toPlainText(label)
+    } else {
+      _label = label as string
+    }
   }
 
   const variantClassName: Partial<Record<Variants, string>> = {
@@ -128,8 +75,8 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
     fit: 'pb-3 pr-2',
   }
 
-  const classNames = envisTwMerge(
-    `group
+  const classNames = twMerge(
+    `group/link
     text-base
     relative
     flex
@@ -138,32 +85,30 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
     gap-0
     text-slate-blue-95
     dark:text-white-100
-    ${
-      useAsRegular
-        ? `underline 
-        hover:text-norwegian-woods-100 
-        dark:hover:text-slate-blue-95`
-        : `border-b border-grey-50 dark:border-white-100 no-underline`
-    }
+    no-underline
     ${variantClassName[variant]}
   `,
     className,
   )
 
   const getContentElements = () => {
-    const textClassNames = envisTwMerge(`pt-1 grow leading-none`, textClassName)
+    const textClassNames = twMerge(`pt-1 grow leading-none`, textClassName)
     switch (type) {
       case 'icsLink':
         return (
           <>
-            <TransformableIcon title={`calendar`} iconData={calendar} className="mr-2" />
+            <TransformableIcon
+              title={`calendar`}
+              iconData={calendar}
+              className='mr-2'
+            />
             <span
               className={textClassNames}
               {...(ariaHideText && {
                 'aria-hidden': true,
               })}
             >
-              {children}
+              {_label}
             </span>
           </>
         )
@@ -175,31 +120,37 @@ export const ResourceLink = forwardRef<HTMLAnchorElement, ResourceLinkProps>(fun
               'aria-hidden': true,
             })}
           >
-            {children}
+            {_label}
           </span>
         )
     }
   }
 
   return href ? (
-    <BaseLink className={classNames} type={type} ref={ref} href={href} locale={locale}>
-      <span
-        className={envisTwMerge(
-          `h-full
-          w-inherit 
-          flex
-          justify-start
-          items-center
-          gap-x-2
-          ${contentVariantClassName[variant]}`,
+    <BaseLink
+      className={classNames}
+      type={type}
+      ref={ref}
+      href={href}
+      hrefLang={hrefLang}
+      onClick={onClick}
+      {...(ariaCurrent && { 'aria-current': ariaCurrent })}
+      {...(ariaLabel && { 'aria-label': ariaLabel })}
+    >
+      <div
+        className={twMerge(
+          `flex h-full w-inherit items-center justify-start gap-x-2 ${contentVariantClassName[variant]}`,
         )}
       >
         {getContentElements()}
-        {!useAsRegular && getArrowElement(type, iconClassName)}
-      </span>
-      {!useAsRegular && <span className="w-[0%] h-[1px] bg-grey-40 transition-all duration-300 group-hover:w-full" />}
+        {getArrowElement(type, iconClassName)}
+      </div>
+      <div className='relative h-0.5'>
+        <div className='absolute inset-0 z-10 h-0.5 w-[0%] bg-grey-50 transition-all duration-300 group-hover/link:w-full dark:bg-white-100' />
+        <div className='absolute inset-0 z-0 h-px w-full bg-grey-50 dark:bg-white-100' />
+      </div>
     </BaseLink>
   ) : null
-})
+}
 
 export default ResourceLink

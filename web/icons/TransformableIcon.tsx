@@ -1,5 +1,6 @@
 import type { IconData } from '@equinor/eds-icons'
 import { forwardRef, type Ref, type SVGProps } from 'react'
+import { twMerge } from 'tailwind-merge'
 
 /**
  *  Use this to transform an icon for example arrow right can be rotated to
@@ -17,8 +18,11 @@ export type TransformableIconProps = {
   ref?: Ref<SVGSVGElement>
 } & SVGProps<SVGSVGElement>
 
-export const TransformableIcon = forwardRef<SVGSVGElement, TransformableIconProps>(function ArrowRight(
-  { iconData, title, size = 24, className = '' },
+export const TransformableIcon = forwardRef<
+  SVGSVGElement,
+  TransformableIconProps
+>(function ArrowRight(
+  { title, iconData, size = 24, className = '', ...rest },
   ref,
 ) {
   let icon = iconData
@@ -29,20 +33,28 @@ export const TransformableIcon = forwardRef<SVGSVGElement, TransformableIconProp
   return (
     <svg
       ref={ref}
-      xmlns="http://www.w3.org/2000/svg"
+      xmlns='http://www.w3.org/2000/svg'
       width={size}
       height={size}
       viewBox={`0 0 ${size} ${size}`}
-      fill="currentColor"
-      className={className}
+      fill='currentColor'
+      className={twMerge('dark:text-white-100', className)}
+      {...rest}
     >
       <title>{title ?? ''}</title>
       {Array.isArray(icon.svgPathData) ? (
-        icon.svgPathData.map((pathData) => {
-          return <path key={pathData} fillRule="evenodd" clipRule="evenodd" d={pathData} />
+        icon.svgPathData.map(pathData => {
+          return (
+            <path
+              key={pathData}
+              fillRule='evenodd'
+              clipRule='evenodd'
+              d={pathData}
+            />
+          )
         })
       ) : (
-        <path fillRule="evenodd" clipRule="evenodd" d={icon.svgPathData} />
+        <path fillRule='evenodd' clipRule='evenodd' d={icon.svgPathData} />
       )}
     </svg>
   )

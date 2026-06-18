@@ -1,9 +1,10 @@
-import envisTwMerge from '../../twMerge'
-import { useIntl } from 'react-intl'
-import { MediaButton } from '@core/MediaButton/MediaButton'
+'use client'
+import { useTranslations } from 'next-intl'
 import { useContext } from 'react'
-import { PaginationContext } from '../../common/contexts/PaginationContext'
-import { usePrefersReducedMotion } from '../../common/hooks/usePrefersReducedMotion'
+import { twMerge } from 'tailwind-merge'
+import { MediaButton } from '@/core/MediaButton/MediaButton'
+import { PaginationContext } from '../../contexts/PaginationContext'
+import { usePrefersReducedMotion } from '../../lib/hooks/usePrefersReducedMotion'
 
 export type SimplePaginationProps = {
   className?: string
@@ -21,7 +22,7 @@ export const SimplePagination = ({
   isLastPage = false,
   ...rest
 }: SimplePaginationProps) => {
-  const intl = useIntl()
+  const intl = useTranslations()
   const { resultsRef } = useContext(PaginationContext)
   const prefersReducedMotion = usePrefersReducedMotion()
 
@@ -39,29 +40,26 @@ export const SimplePagination = ({
   }
 
   return (
-    <ul className={envisTwMerge(`max-w-viewport flex-wrap my-2 flex gap-3 items-center`, className)} {...rest}>
+    <ul
+      className={twMerge(`my-2 flex flex-wrap items-center gap-3`, className)}
+      {...rest}
+    >
       <li>
         <MediaButton
-          title={intl.formatMessage({
-            id: 'previous',
-            defaultMessage: 'Previous',
-          })}
-          mode="previous"
+          title={intl('previous')}
+          mode='previous'
           disabled={isFirstPage}
           onClick={handlePrevPagination}
-          className=""
+          className=''
         />
       </li>
       <li>
         <MediaButton
-          title={intl.formatMessage({
-            id: 'next',
-            defaultMessage: 'Next',
-          })}
-          mode="next"
+          title={intl('next')}
+          mode='next'
           disabled={isLastPage}
           onClick={handleNextPagination}
-          className=""
+          className=''
         />
       </li>
     </ul>

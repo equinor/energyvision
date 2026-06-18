@@ -1,71 +1,55 @@
-import { forwardRef } from 'react'
-import { Facebook, Instagram, Linkedin, Twitter, Youtube } from '../../icons'
-import type { FooterLinkData, SomeType, FooterColumns } from '../../types/index'
-import { useIntl } from 'react-intl'
-import { LinkButton } from '@core/Button'
-import FooterLink from '@core/Link/FooterLink'
-import { getLocaleFromName } from '../../lib/localization'
-import { getUrlFromAction } from '../../common/helpers'
-
-function getSomeSvg(someType: SomeType) {
-  const iconMap = {
-    facebook: <Facebook height={24} width={24} />,
-    instagram: <Instagram height={24} width={24} />,
-    linkedin: <Linkedin height={24} width={24} />,
-    twitter: <Twitter height={24} width={24} />,
-    youtube: <Youtube height={24} width={24} />,
-  }
-
-  if (!(someType in iconMap)) console.warn('Unable to get social icon for footer: Unknown SoMe type passed')
-  return iconMap[someType] || null
-}
+import type { HTMLAttributes } from 'react'
+import FooterLink, { type FooterLinkProps } from '@/core/Link/FooterLink'
+import { Typography } from '@/core/Typography'
+import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
+import type { FooterColumns } from '../../types/index'
 
 type FooterProps = {
-  footerData?: { footerColumns: FooterColumns[] }
-}
+  footerColumns: FooterColumns[]
+} & HTMLAttributes<HTMLElement>
 
-const Footer = forwardRef<HTMLDivElement, FooterProps>(function Footer({ footerData, ...rest }, ref) {
-  const intl = useIntl()
+const Footer = ({ footerColumns = [] }: FooterProps) => {
   return (
-    <footer className="dark min-h-12 clear-both text-white-100 bg-slate-blue-95 py-4 px-0" ref={ref} {...rest}>
-      <div className="flex flex-row flex-wrap my-0 mx-auto justify-between px-layout-sm pb-2 max-w-screen-2xl max-md:flex-col">
-        {footerData?.footerColumns?.map(({ header, linkList }) => (
-          <section className="flex flex-col max-md:py-4 max-md:w-4/5" key={header}>
-            <h2 className="text-md font-medium text-white-100 px-0 py-2 leading-planetary">{header}</h2>
-            <div className="grid grid-cols-2 gap-y-2 gap-x-8 items-start md:flex md:flex-col md:grid-y-0">
-              {linkList?.map((footerLink: FooterLinkData) => {
-                const { id, type, someType, label, href, link } = footerLink
-                const icon = type === 'externalUrl' && someType ? getSomeSvg(someType) : null
-                const linkLocale = getLocaleFromName(link?.lang)
-                return (
-                  <FooterLink
-                    locale={linkLocale}
-                    key={id}
-                    href={href || getUrlFromAction(footerLink) || '/'}
-                    type={type}
-                    icon={icon}
-                  >
-                    {label}
-                  </FooterLink>
-                )
-              })}
-            </div>
-          </section>
-        ))}
-        <section className="flex flex-col max-md:py-4 max-md:w-4/5">
-          <LinkButton
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className={`group text-sm px-0 py-2 text-white-100 underline underline-offset-8 hover:underline hover:text-moss-green-90`}
-          >
-            {intl.formatMessage({ id: 'footer_to_top_button', defaultMessage: 'To top' })}
-          </LinkButton>
-        </section>
-      </div>
-      <div className="flex md:justify-center justify-start pl-4 pt-12 pb-3">
-        <span className="text-2xs text-white-100">Copyright {new Date().getFullYear()} Equinor ASA</span>
+    <footer
+      className={`dark mx-auto min-h-12 w-full max-w-fullwidth bg-slate-blue-95 px-0 py-6`}
+    >
+      <div className='mx-auto max-w-content px-layout-sm'>
+        <div className='flex flex-col justify-center gap-x-52 md:flex-row'>
+          {footerColumns?.map(({ header, linkList }) => (
+            <section
+              className='flex flex-col max-md:w-4/5 max-md:py-4'
+              key={header}
+            >
+              <Typography
+                as='h2'
+                variant='md'
+                className='my-2 font-medium leading-planetary'
+              >
+                {header}
+              </Typography>
+              <div className='md:grid-y-0 grid grid-cols-2 items-start gap-x-8 gap-y-2 md:flex md:flex-col'>
+                {linkList?.map((footerLink: FooterLinkProps) => {
+                  const footerLinkProps = {
+                    ...footerLink,
+                    href:
+                      footerLink?.href ?? getUrlFromAction(footerLink) ?? '/',
+                  }
+                  return (
+                    <FooterLink {...footerLinkProps} key={footerLink?.id} />
+                  )
+                })}
+              </div>
+            </section>
+          ))}
+        </div>
+        <div className='flex justify-start pt-12 pb-3 pl-4 md:justify-center'>
+          <Typography group='paragraph' variant='small' className='text-2xs'>
+            Copyright {new Date().getFullYear()} Equinor ASA
+          </Typography>
+        </div>
       </div>
     </footer>
   )
-})
+}
 
 export default Footer

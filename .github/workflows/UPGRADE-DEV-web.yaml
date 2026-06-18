@@ -1,4 +1,6 @@
-name: UPGRADE DEV - Build & Deploy energyvision
+name: UPGRADE DEV - Build & Deploy equinor.com
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
 on:
   workflow_dispatch:
   push:
@@ -32,7 +34,7 @@ jobs:
       DOCKER_BUILDKIT: 1
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - id: deploy-global-development
         uses: ./.github/workflows/deploy-web/
         with:
@@ -41,12 +43,13 @@ jobs:
           datasetName: ${{ matrix.dataset }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           sanityApiToken: ${{ secrets.SANITY_API_TOKEN }}
-          sanityPreviewSecret: ${{ secrets.SANITY_STUDIO_PREVIEW_SECRET }}
-          algoliaAppId: ${{ secrets.ALGOLIA_APP_ID }}
-          algoliaApiKey: ${{ secrets.ALGOLIA_SEARCH_API_KEY }}
+          algoliaAppId: ${{ vars.ALGOLIA_APP_ID }}
+          algoliaApiKey: ${{ vars.ALGOLIA_SEARCH_API_KEY }}
           archiveContentLink: ${{ vars.ARCHIVE_CONTENT_LINK }}
           friendlyCaptchaSitekey: ${{ matrix.dataset == 'brazil' && vars.BRAZIL_FC_SITEKEY || vars.GLOBAL_FC_SITEKEY }}
-          environment: ${{ secrets.ENV }}
+          environment: ${{ vars.ENV }}
+          nodeEnvironment: development
+          isUpgrade: true
 
       - uses: act10ns/slack@v2
         with:

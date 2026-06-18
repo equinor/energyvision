@@ -1,15 +1,10 @@
-import { Teaser } from '@core/Teaser'
+import { twMerge } from 'tailwind-merge'
+import { ResourceLink } from '@/core/Link/ResourceLink'
+import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
+import Blocks from '@/portableText/Blocks'
+import { getIsoFromName } from '@/sanity/helpers/localization'
 import type { TextTeaserData } from '../../../types/index'
 import { getColorForTheme } from './theme'
-
-import { twMerge } from 'tailwind-merge'
-import { ResourceLink } from '@core/Link'
-import { getUrlFromAction } from '../../../common/helpers/getUrlFromAction'
-import { getLocaleFromName } from '../../../lib/localization'
-import { Heading } from '@core/Typography'
-import IngressText from '../../../pageComponents/shared/portableText/IngressText'
-
-const { Content, Media } = Teaser
 
 type TextTeaserProps = {
   data: TextTeaserData
@@ -20,35 +15,55 @@ type TextTeaserProps = {
 const TextTeaser = ({ data, anchor, className }: TextTeaserProps) => {
   const { title, text, action, designOptions } = data
   const { theme, titlePosition } = designOptions
-  const { background, highlight, dark } = getColorForTheme(theme)
+  const { backgroundUtility, highlight, dark } = getColorForTheme(theme)
   const url = action && getUrlFromAction(action)
 
+  const titleElement = (
+    <Blocks
+      className={`p-8 sm:p-12 lg:p-16 ${titlePosition === 'right' ? 'md:order-last' : ''}`}
+      blockClassName={`${highlight}`}
+      value={title}
+      as='h2'
+      group='heading'
+      variant='2xl'
+    />
+  )
+
   return (
-    <Teaser
-      background={{ backgroundColor: background }}
+    <article
       id={anchor}
-      className={twMerge(`${dark ? 'dark' : ''} `, className)}
+      className={twMerge(
+        `mx-auto flex w-full justify-center ${backgroundUtility} ${dark ? 'dark' : ''} `,
+        className,
+      )}
     >
-      <Media className="pt-12 pb-0 px-layout-lg sm:pt-12 sm:py-8 md:p-16 h-auto" mediaPosition={titlePosition}>
-        <Heading className={`pt-0 px-0 pb-12 sm:p-0 ${highlight}`} variant="2xl" as="h2" value={title} />
-      </Media>
-      <Content className="pt-0 px-layout-lg pb-16 sm:p-12 lg:p-16 ">
-        {text && (
-          <div className="pb-8 last:pb-0">
-            <IngressText value={text} />
-          </div>
-        )}
-        {action && (
-          <ResourceLink
-            href={url as string}
-            {...(action.link?.lang && { locale: getLocaleFromName(action.link?.lang) })}
-            type={action.type}
-          >
-            {`${action.label} ${action.extension ? `(${action.extension.toUpperCase()})` : ''}`}
-          </ResourceLink>
-        )}
-      </Content>
-    </Teaser>
+      <div className='mx-auto w-full max-w-360 gap-y-12 md:grid md:grid-cols-2'>
+        {titleElement}
+        <div className='p-8 sm:p-12 lg:p-16'>
+          {text && (
+            <div className='pb-8 last:pb-0'>
+              <Blocks variant='ingress' value={text} />
+            </div>
+          )}
+          {action && (
+            <ResourceLink
+              href={url as string}
+              file={{
+                ...action?.file,
+                label: action?.label,
+              }}
+              {...(action.link?.lang && {
+                hrefLang: getIsoFromName(action.link?.lang),
+              })}
+              type={action.type}
+              variant='fit'
+            >
+              {action.label}
+            </ResourceLink>
+          )}
+        </div>
+      </div>
+    </article>
   )
 }
 

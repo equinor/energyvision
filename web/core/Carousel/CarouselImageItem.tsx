@@ -1,21 +1,37 @@
-import { ImageWithOverlay } from '@core/Image/ImageWithOverlay'
-import { BaseLink, ResourceLink } from '@core/Link'
+'use client'
 import { mergeRefs } from '@equinor/eds-utils'
 import type { PortableTextBlock } from '@portabletext/types'
-import type { SanityImageObject } from '@sanity/image-url/lib/types/types'
-import { forwardRef, type HTMLAttributes, useEffect, useMemo, useRef } from 'react'
-import { getUrlFromAction } from '../../common/helpers'
+import {
+  forwardRef,
+  type HTMLAttributes,
+  useEffect,
+  useMemo,
+  useRef,
+} from 'react'
+import {
+  type ImageWithLinkOrOverlay,
+  ImageWithOverlay,
+} from '@/core/ImageWithOverlay/ImageWithOverlay'
+import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
+import { twMerge } from '@/lib/twMerge/twMerge'
+import type { LinkData } from '@/types/index'
 import { ArrowRight } from '../../icons'
-import { getLocaleFromName } from '../../lib/localization'
-import Blocks from '../../pageComponents/shared/portableText/Blocks'
-import envisTwMerge from '../../twMerge'
-import type { ImageWithAlt, LinkData } from '../../types/index'
-import Image, { getPxSmSizes } from '../SanityImage/SanityImage'
+import Blocks from '../../portableText/Blocks'
+import { getIsoFromName } from '../../sanity/helpers/localization'
+import { Image } from '../Image/Image'
+import type { Figure, Image as ImageType } from '../Image/imageUtilities'
+import BaseLink from '../Link/BaseLink'
+import ResourceLink from '../Link/ResourceLink'
 import type { DisplayModes } from './Carousel'
 
+export type ImageCarouselItem = Figure | ImageWithLinkOrOverlay
+
 type CarouselImageItemProps = {
-  type: string
-  image?: ImageWithAlt | SanityImageObject
+  type:
+    | 'imageWithAltAndCaption'
+    | 'imageWithRichTextBelow'
+    | 'imageWithLinkAndOrOverlay'
+  image?: ImageType
   displayMode?: DisplayModes
   className?: string
   caption?: PortableTextBlock[] | string
@@ -29,7 +45,10 @@ type CarouselImageItemProps = {
   wasUserPress?: boolean
 } & HTMLAttributes<HTMLLIElement>
 
-export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProps>(function CarouselImageItem(
+export const CarouselImageItem = forwardRef<
+  HTMLLIElement,
+  CarouselImageItemProps
+>(function CarouselImageItem(
   {
     type,
     active = false,
@@ -48,69 +67,101 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
   ref,
 ) {
   const itemRef = useRef<HTMLLIElement>(null)
-  const combinedItemRef = useMemo(() => mergeRefs<HTMLLIElement>(itemRef, ref), [itemRef, ref])
-  const isImageWithRichTextCaption = useMemo(() => type === 'imageWithRichTextBelow' && !!caption, [caption, type])
-  const isJustImage = type === 'imageWithAltAndCaption' && !caption && !attribution
-  const isImageWithSimpleCaption = type === 'imageWithAltAndCaption' && (!!caption || !!attribution)
-  const isImageWithJustLink = type === 'imageWithLinkAndOrOverlay' && action && (!captionTitle || !captionText)
-  const isImageWithOverlay = type === 'imageWithLinkAndOrOverlay' && (!!captionTitle || !!captionText)
+  const combinedItemRef = useMemo(
+    () => mergeRefs<HTMLLIElement>(itemRef, ref),
+    [ref],
+  )
+  const isImageWithRichTextCaption = useMemo(
+    () => type === 'imageWithRichTextBelow' && !!caption,
+    [caption, type],
+  )
+  const isJustImage =
+    type === 'imageWithAltAndCaption' && !caption && !attribution
+  const isImageWithSimpleCaption =
+    type === 'imageWithAltAndCaption' && (!!caption || !!attribution)
+  const isImageWithJustLink =
+    type === 'imageWithLinkAndOrOverlay' &&
+    action &&
+    (!captionTitle || !captionText)
+  const isImageWithOverlay =
+    type === 'imageWithLinkAndOrOverlay' && (!!captionTitle || !!captionText)
+
   const url = action && getUrlFromAction(action)
 
-  const singleHeights = `min-h-single-carousel-card-h-sm md:min-h-single-carousel-card-h-md lg:min-h-single-carousel-card-h-lg`
-
   const getBody = () => {
-    if (isJustImage) {
+    if (isJustImage && image) {
       return (
-        <div className={`relative w-full h-full rounded-md`}>
-          <Image maxWidth={1420} sizes={getPxSmSizes()} image={image as ImageWithAlt} fill className="rounded-md" />
-        </div>
+        <Image
+          grid='sm'
+          image={image}
+          fill
+          className={`relative aspect-4/3 h-full w-full rounded-md md:aspect-video`}
+          imageClassName='rounded-md'
+        />
       )
     }
-    if (isImageWithSimpleCaption) {
+    if (isImageWithSimpleCaption && image) {
       return (
-        <figure className="relative w-full h-full rounded-md flex items-end">
+        <figure className='flex aspect-4/3 h-full w-full items-end rounded-md md:aspect-video'>
           <Image
-            maxWidth={1420}
-            sizes={getPxSmSizes()}
-            image={image as ImageWithAlt}
+            grid='sm'
+            image={image}
             fill
-            className={`rounded-md ${singleHeights}`}
+            className='absolute'
+            imageClassName={`rounded-md`}
           />
           <figcaption
-            className={`w-full rounded-b-md z-[1] fade-in-black-gradient 
-            ${displayMode === 'single' ? (active ? 'opacity-100' : 'opacity-50') : ''}`}
+            className={`fade-in-black-gradient z-1 w-full rounded-b-md ${
+              displayMode === 'single'
+                ? active
+                  ? 'opacity-100'
+                  : 'opacity-50'
+                : ''
+            }`}
           >
-            <div className={`w-full h-fit pt-20 pb-6 px-8`}>
-              <span className="w-2/3 flex flex-col gap-1 ">
-                {caption && <span className={`text-white-100 text-left text-lg`}>{caption as string}</span>}
-                {attribution && <span className={`text-white-100 text-base`}>{attribution}</span>}
+            <div className={`h-fit w-full px-4 pt-20 pb-6 lg:px-8`}>
+              <span className='flex w-full flex-col gap-1 lg:w-2/3'>
+                {caption && (
+                  <span
+                    className={`text-left text-md text-white-100 lg:text-lg`}
+                  >
+                    {caption as string}
+                  </span>
+                )}
+                {attribution && (
+                  <span className={`text-base text-white-100`}>
+                    {attribution}
+                  </span>
+                )}
               </span>
             </div>
           </figcaption>
         </figure>
       )
     }
-    if (isImageWithJustLink) {
+    if (isImageWithJustLink && image) {
       return (
-        <figure className="relative w-full h-full">
+        <figure className='h-full w-full'>
           <Image
-            maxWidth={1420}
-            sizes={getPxSmSizes()}
-            image={image as ImageWithAlt}
+            grid='sm'
+            image={image}
             fill
-            className={`${singleHeights} rounded-md`}
+            className='absolute'
+            imageClassName={`aspect-4/3 rounded-md md:aspect-video`}
           />
-          <div className="h-full w-full fade-in-black-gradient pt-20 flex items-end rounded-b-md">
+          <div className='fade-in-black-gradient flex h-full w-full items-end rounded-b-md pt-10 lg:pt-20'>
             <BaseLink
               href={url as string}
               {...(action.link?.lang && {
-                locale: getLocaleFromName(action.link?.lang),
+                hrefLang: getIsoFromName(action.link?.lang),
               })}
               type={action.type}
-              className="group flex gap-2"
+              className='group flex gap-2'
             >
-              <span className="text-white-100 text-left text-lg">{action.label}</span>
-              <ArrowRight className={`group-hover:translate-y-2 size-10`} />
+              <span className='text-left text-md text-white-100 lg:text-lg'>
+                {action.label}
+              </span>
+              <ArrowRight className={`size-10 group-hover:translate-y-2`} />
             </BaseLink>
           </div>
         </figure>
@@ -119,8 +170,9 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
     if (isImageWithOverlay) {
       return (
         <ImageWithOverlay
+          className={`aspect-4/3 rounded-md md:aspect-video`}
           teaserTitle={captionTeaserTitle}
-          //@ts-expect-error:TODO
+          //@ts-ignore:TODO
           title={captionTitle as PortableTextBlock[]}
           text={captionText}
           image={image}
@@ -129,22 +181,25 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
         />
       )
     }
-    if (isImageWithRichTextCaption) {
-      const singleClassname = `${active ? 'opacity-100' : 'opacity-50'}`
-      const scrollClassname = ``
+    if (isImageWithRichTextCaption && image) {
       return (
-        <figure className="w-full h-full flex flex-col">
-          <div className={`relative w-full rounded-md ${singleHeights}`}>
-            <Image maxWidth={1420} sizes={getPxSmSizes()} image={image as ImageWithAlt} fill className="rounded-md" />
-          </div>
+        <figure className='flex h-full w-full flex-col'>
+          <Image
+            grid='sm'
+            image={image}
+            fill
+            className={`min-h-single-carousel-card-h-sm w-full rounded-md md:min-h-single-carousel-card-h-md lg:min-h-single-carousel-card-h-lg`}
+            imageClassName='aspect-4/3 rounded-md md:aspect-video'
+          />
           <figcaption
-            className={`h-fit max-w-text p-4 lg:py-6 lg:px-8 ${
-              displayMode === 'single' ? singleClassname : scrollClassname
-            }`}
+            className={twMerge(
+              'h-fit max-w-text p-4 lg:px-8 lg:py-6',
+              displayMode === 'single' && active ? 'opacity-100' : 'opacity-50',
+            )}
           >
             {caption && (
               <Blocks
-                //@ts-expect-error:TODO
+                //@ts-ignore:TODO
                 value={caption}
               />
             )}
@@ -157,11 +212,11 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
                 }}
                 showExtensionIcon={true}
                 {...(action?.link?.lang && {
-                  locale: getLocaleFromName(action?.link?.lang),
+                  hrefLang: getIsoFromName(action?.link?.lang),
                 })}
                 type={action?.type}
-                variant="fit"
-                className="mt-4"
+                variant='fit'
+                className='mt-4'
               >
                 {action?.label}
               </ResourceLink>
@@ -171,9 +226,6 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
       )
     }
   }
-
-  const scrollListItemWidthsClassNames = `w-[75vw] md:w-[70vw] lg:w-[62vw] max-w-[1030px]`
-  const singleListItemWidthsClassNames = `w-single-carousel-card-w-sm md:w-single-carousel-card-w-md lg:w-single-carousel-card-w-lg`
 
   useEffect(() => {
     if (displayMode === 'single') {
@@ -194,34 +246,13 @@ export const CarouselImageItem = forwardRef<HTMLLIElement, CarouselImageItemProp
       {...(displayMode === 'scroll' && {
         tabIndex: 0,
       })}
-      className={envisTwMerge(
-        `relative
-        mt-1
-        focus:outline-none
-        focus-visible:outline-dashed
-        focus-visible:outline-2
-        focus-visible:outline-grey-50
-        dark:focus-visible:outline-white-100
-        focus-visible:outline-offset-2
-        ${isImageWithRichTextCaption ? 'h-full' : singleHeights}
-        ${displayMode === 'single' ? singleListItemWidthsClassNames : scrollListItemWidthsClassNames}
-        ${
-          displayMode === 'single'
-            ? `
-            ${!active ? 'opacity-30' : 'opacity-100'}
-            transition-opacity
-            duration-1000
-            ease-ease
-            ms-2 
-            me-2 
-            col-start-1 
-            col-end-1 
-            row-start-1 
-            row-end-1
-        `
-            : `snap-center snap-mandatory shrink-0`
-        }
-        `,
+      className={twMerge(
+        `relative mt-1 focus:outline-hidden focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-grey-50 focus-visible:outline-offset-2 dark:focus-visible:outline-white-100`,
+        displayMode === 'single' &&
+          `col-start-1 col-end-1 row-start-1 row-end-1 ms-2 me-2 w-single-carousel-card-w-sm transition-opacity duration-1000 ease-ease md:w-single-carousel-card-w-md lg:w-single-carousel-card-w-lg`,
+        displayMode === 'single' && active ? 'opacity-100' : 'opacity-30',
+        displayMode === 'scroll' &&
+          `w-[75vw] max-w-257.5 shrink-0 snap-mandatory snap-center md:w-[70vw] lg:w-[62vw]`,
         className,
       )}
     >

@@ -13,6 +13,8 @@ export const loadEnv = async (logger: Logger) => {
     return
   }
   const credential = new DefaultAzureCredential()
+ 
+  try { 
   const settings = await load(
     connectionString, // Or endpoint and credential
     {
@@ -21,8 +23,8 @@ export const loadEnv = async (logger: Logger) => {
       },
     },
   )
-
-  const parsed = {
+  console.log("Settings ", settings.size)
+ const parsed = {
     SANITY_DATASET: settings.get('SANITY_DATASET'),
     ALGOLIA_API_KEY: settings.get('ALGOLIA_API_KEY'),
     ALGOLIA_APP_ID: settings.get('ALGOLIA_APP_ID'),
@@ -35,6 +37,12 @@ export const loadEnv = async (logger: Logger) => {
   } as DotenvPopulateInput
   populate(process.env as DotenvPopulateInput, parsed)
 }
+  catch(err){
+    console.log("Error loading app config", err)
+  }
+}
+
+ 
 export const getAzureConnectionString: GetProcessEnvType = () =>
   E.fromNullable('Unable to find Azure connection string')(process.env.AZ_CONNECTION_STRING)
 // TODO: Should this be in the env? Perhaps to generic.

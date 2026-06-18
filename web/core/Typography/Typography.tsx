@@ -1,9 +1,20 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 
 import type { OverridableComponent } from '@equinor/eds-utils'
-import { type AnchorHTMLAttributes, type ElementType, forwardRef, type HTMLAttributes } from 'react'
-import envisTwMerge from '../../twMerge'
-import { quickVariants, type TypographyGroups, type TypographyVariants, variants } from './variants'
+//import { clsx } from 'clsx'
+import {
+  type AnchorHTMLAttributes,
+  type ElementType,
+  forwardRef,
+  type HTMLAttributes,
+} from 'react'
+import { twMerge } from '@/lib/twMerge/twMerge'
+import {
+  quickVariants,
+  type TypographyGroups,
+  type TypographyVariants,
+  variants,
+} from './variants'
 
 const getElementType = (variant: string, link: boolean): ElementType => {
   if (link) {
@@ -17,21 +28,46 @@ const getElementType = (variant: string, link: boolean): ElementType => {
     case 'h5':
     case 'h6':
       return variant
+    case 'highlight':
+      return 'span'
     case 'div':
+    case 'h1_base':
+    case 'h1_lg':
+    case 'h1_xl':
+    case 'h2_base':
+    case 'h2_lg':
+    case 'h2_xl':
       return 'div'
     default:
       return 'p'
   }
 }
 
-const findTypography = (variantName: TypographyVariants, group?: TypographyGroups): string => {
+//For the displayTextVariant field in studio
+export const getDisplayTextVariant = (
+  displayTextVariant: string | undefined,
+): TypographyVariants => {
+  switch (displayTextVariant) {
+    case 'lg':
+      return 'h2_lg'
+    case 'xl':
+      return 'h2_xl'
+    default:
+      return 'h2_base'
+  }
+}
+
+const findTypography = (
+  variantName: TypographyVariants,
+  group?: TypographyGroups,
+): string => {
   // For quick use when using paragraphs and headings we can skip group
-  //@ts-expect-error
+  //@ts-ignore
   if (!group && quickVariants[variantName]) {
-    //@ts-expect-error
+    //@ts-ignore
     return quickVariants[variantName] as string
   }
-  //@ts-expect-errors
+  //@ts-ignores
   return (variants[group] as unknown)[variantName] as string
 }
 
@@ -62,30 +98,49 @@ export type TypographyProps = {
  * Typography used for common text styles
  * @example
  * ```jsx
- *     <Typography variant="h6" as="h2" className="text-green-moss-100">
+ *     <Typography variant="h6" as="h2" className="text-moss-green-100">
  *       I am a h2 heading with h6 styling with classname override
  *     </Typography>
  * ```
  */
-export const Typography: OverridableComponent<TypographyProps, HTMLElement> = forwardRef(function Typography(
-  { variant = 'body', group, children, as: providedAs, link = false, className, ...rest },
-  ref,
-) {
-  const as: ElementType = providedAs ? providedAs : getElementType(variant, link)
-  const typography = findTypography(variant, group)
+export const Typography: OverridableComponent<TypographyProps, HTMLElement> =
+  forwardRef(function Typography(
+    {
+      variant,
+      group,
+      children,
+      as: providedAs,
+      link = false,
+      className = '',
+      id,
+    },
+    ref,
+  ) {
+    const as: ElementType = providedAs
+      ? providedAs
+      : getElementType(variant, link)
+    const typography = findTypography(variant, group)
 
-  if (typeof typography === 'undefined') {
-    throw new Error(`Typography variant not found for variant "${variant}" ("${variant}") & group "${group || ''}"`)
-  }
-  const TypographyTag = as ?? (`p` as React.ElementType)
+    if (typeof typography === 'undefined') {
+      console.warn(
+        `Typography variant not found for variant "${variant}" ("${variant}") & group "${
+          group || ''
+        }"`,
+      )
+    }
+    const TypographyTag = as ?? (`p` as React.ElementType)
 
-  return (
-    <TypographyTag
-      {...rest}
-      ref={ref}
-      className={envisTwMerge('text-slate-80 dark:text-white-100', typography, className)}
-    >
-      {children}
-    </TypographyTag>
-  )
-})
+    return (
+      <TypographyTag
+        ref={ref}
+        {...(id && { id: id })}
+        className={twMerge(
+          'wrap-break-word max-w-text text-slate-80 dark:text-white-100',
+          typography,
+          className,
+        )}
+      >
+        {children}
+      </TypographyTag>
+    )
+  })

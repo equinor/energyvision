@@ -1,12 +1,13 @@
-import { useState } from 'react'
-import { PortableTextBlock } from '@portabletext/types'
-import Modal from '@sections/Modal/Modal'
+'use client'
 import { add_circle_filled, add_circle_outlined } from '@equinor/eds-icons'
+import type { PortableTextBlock } from '@portabletext/types'
+import { useTranslations } from 'next-intl'
+import { useState } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { Typography } from '@/core/Typography'
+import Modal from '@/sections/Modal/Modal'
 import { TransformableIcon } from '../../icons/TransformableIcon'
-import { useIntl } from 'react-intl'
-import Blocks from '../../pageComponents/shared/portableText/Blocks'
-import { Typography } from '@core/Typography'
+import Blocks from '../../portableText/Blocks'
 
 type TranscriptProps = {
   className?: string
@@ -15,8 +16,8 @@ type TranscriptProps = {
 }
 const Transcript = ({ transcript, className, ariaTitle }: TranscriptProps) => {
   const [isOpen, setIsOpen] = useState(false)
-  const intl = useIntl()
-  const readTranscript = intl.formatMessage({ id: 'read_transcript', defaultMessage: 'Read transcript' })
+  const intl = useTranslations()
+  const readTranscript = intl('read_transcript')
   const handleOpen = () => {
     setIsOpen(true)
   }
@@ -24,58 +25,31 @@ const Transcript = ({ transcript, className, ariaTitle }: TranscriptProps) => {
     setIsOpen(false)
   }
   return (
-    <div className={twMerge(`pt-3 pb-2 flex gap-2 `, className)}>
+    <div className={twMerge(`flex gap-2 pt-3 pb-2`, className)}>
       {transcript && (
         <>
           <button
             onClick={handleOpen}
-            aria-haspopup="dialog"
+            aria-haspopup='dialog'
             aria-label={`${readTranscript} ${ariaTitle}`}
-            className={`
-              w-fit 
-              flex 
-              gap-4 
-              pr-4
-              pb-2
-              group
-              focus:outline-none
-              focus-visible:envis-outline
-              dark:focus:outline-none
-              dark:focus-visible:envis-outline-invert
-              border-b border-grey-40 dark:border-white-100`}
+            className={`group focus-visible:envis-outline dark:focus-visible:envis-outline-invert flex w-fit items-center gap-4 border-grey-40 border-b pr-4 pb-2 focus:outline-hidden dark:border-white-100 dark:focus:outline-hidden`}
           >
             <span className={`grid`}>
               <TransformableIcon
                 size={24}
                 iconData={add_circle_outlined}
-                className="fill-slate-80 
-                dark:fill-white-100 
-                opacity-100
-                group-hover:opacity-0
-                group-data-open:opacity-0
-                transition-opacity
-                col-span-full
-                row-span-full"
+                className='col-span-full row-span-full fill-slate-80 opacity-100 transition-opacity group-hover:opacity-0 group-data-open:opacity-0 dark:fill-white-100'
               />
               <TransformableIcon
-                className={`fill-slate-80
-                  dark:fill-white-100
-                  opacity-0
-                  group-hover:opacity-100
-                  group-data-open:opacity-0
-                  transition-opacity
-                  col-span-full
-                  row-span-full`}
+                className={`col-span-full row-span-full fill-slate-80 opacity-0 transition-opacity group-hover:opacity-100 group-data-open:opacity-0 dark:fill-white-100`}
                 size={24}
                 iconData={add_circle_filled}
               />
             </span>
-            <Typography as="span" className="">
-              {readTranscript}
-            </Typography>
+            <Typography variant='simple'>{readTranscript}</Typography>
           </button>
           <Modal isOpen={isOpen} onClose={handleClose} title={ariaTitle}>
-            <Blocks value={transcript} />
+            <Blocks value={transcript} variant='body' />
           </Modal>
         </>
       )}

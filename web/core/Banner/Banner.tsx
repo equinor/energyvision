@@ -1,14 +1,15 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { forwardRef, HTMLAttributes } from 'react'
-import Blocks from '../../pageComponents/shared/portableText/Blocks'
-import { PortableTextBlock } from '@portabletext/types'
-import { ImageWithAlt } from '../../types'
-import { ColorKeyTokens } from '../../styles/colorKeyToUtilityMap'
-import { BaseLink, ResourceLink } from '@core/Link'
-import Image from '../SanityImage/SanityImage'
-import { Heading, Typography } from '@core/Typography'
-import envisTwMerge from '../../twMerge'
-import IngressText from '../../pageComponents/shared/portableText/IngressText'
+
+import type { PortableTextBlock } from '@portabletext/types'
+import { forwardRef, type HTMLAttributes } from 'react'
+import { twMerge } from 'tailwind-merge'
+import { Typography } from '@/core/Typography'
+import Blocks from '../../portableText/Blocks'
+import type { ColorKeyTokens } from '../../styles/colorKeyToUtilityMap'
+import { Image } from '../Image/Image'
+import { type Image as ImageType } from '../Image/imageUtilities'
+import BaseLink from '../Link/BaseLink'
+import ResourceLink from '../Link/ResourceLink'
 
 export type Variants = 'primary' | 'secondary'
 
@@ -17,18 +18,30 @@ export type BannerProps = {
   title?: PortableTextBlock[] | string
   ingress?: PortableTextBlock[]
   content?: PortableTextBlock[]
-  image?: ImageWithAlt
+  image?: ImageType
   ctaLabel?: string
   ctaLink?: string
   className?: string
   /* Override styling on typography element. */
   titleClassName?: string
   backgroundUtility?: keyof ColorKeyTokens
+  linkCallback?: () => void
 } & HTMLAttributes<HTMLDivElement>
 
 /** Generic Banner component */
 export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
-  { title, ingress, content, image, ctaLabel, ctaLink, className = '', variant = 'primary', titleClassName = '' },
+  {
+    title,
+    ingress,
+    content,
+    image,
+    ctaLabel,
+    ctaLink,
+    className = '',
+    variant = 'primary',
+    titleClassName = '',
+    linkCallback,
+  },
   ref,
 ) {
   const contentVariantClassName: Partial<Record<Variants, string>> = {
@@ -37,9 +50,9 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
   }
   const titleVariantClassName: Partial<Record<Variants, string>> = {
     primary: 'text-md',
-    secondary: 'text-base pb-4',
+    secondary: 'text-base',
   }
-  const titleClassNames = envisTwMerge(
+  const titleClassNames = twMerge(
     `${!ctaLabel ? 'group-hover:underline peer-hover:underline' : ''}
     ${titleVariantClassName[variant]}`,
     titleClassName,
@@ -48,40 +61,55 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
   const getTitleElement = () => {
     if (title && (title === 'string' || typeof title === 'string')) {
       return (
-        <Typography as="h2" variant="h4" className={titleClassNames}>
+        <Typography as='h2' variant='h4' className={titleClassNames}>
           {title}
         </Typography>
       )
     }
     if (title && Array.isArray(title)) {
-      return <Heading as="h2" variant="h4" className={titleClassNames} value={title} />
+      return (
+        <Blocks
+          as='h2'
+          variant='h4'
+          className={titleClassNames}
+          value={title}
+        />
+      )
     }
     return null
   }
 
   const contentElements = (
     <>
-      {ingress && <IngressText value={ingress} clampLines={3} className={`text-sm py-2`} />}
-      {content && variant !== 'secondary' && <Blocks value={content} />}
+      {ingress && (
+        <Blocks
+          variant='small'
+          value={ingress}
+          clampLines={3}
+          blockClassName={`pt-2`}
+        />
+      )}
+      {content && variant !== 'secondary' && (
+        <Blocks value={content} variant='body' />
+      )}
     </>
   )
   return (
     <div
       ref={ref}
-      className={envisTwMerge(
-        `flex flex-col xl:grid xl:grid-cols-[max-content_auto] xl:items-center gap-4 xl:gap-14 xl:py-6 xl:pr-6`,
+      className={twMerge(
+        `flex flex-col gap-4 xl:grid xl:grid-cols-[max-content_auto] xl:items-center xl:gap-14 xl:py-6 xl:pr-6`,
         className,
       )}
     >
-      <div className="relative w-full h-full xl:min-w-[320px] aspect-video max-w-[420px]">
+      <div className='relative aspect-video h-full w-full max-w-[420px] xl:min-w-[320px]'>
         {image && (
           <Image
             aria-hidden
-            sizes="(max-width: 800px) 100vw, 800px"
+            grid='xs'
             image={image}
             fill
-            aspectRatio={'16:9'}
-            className="rounded-md"
+            imageClassName='rounded-card'
           />
         )}
       </div>
@@ -91,13 +119,26 @@ export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
             <>
               {title && getTitleElement()}
               {contentElements}
-              <ResourceLink href={ctaLink} type="internalUrl" className="w-fit">
+              <ResourceLink
+                href={ctaLink}
+                {...(linkCallback && {
+                  onClick: linkCallback,
+                })}
+                type='internalUrl'
+                className='w-fit'
+              >
                 {ctaLabel}
               </ResourceLink>
             </>
           ) : (
             <>
-              <BaseLink href={ctaLink} type="internalUrl">
+              <BaseLink
+                {...(linkCallback && {
+                  onClick: linkCallback,
+                })}
+                href={ctaLink}
+                type='internalUrl'
+              >
                 {getTitleElement() ?? 'Missing title'}
               </BaseLink>
               {contentElements}

@@ -1,0 +1,219 @@
+import { magazineSlug } from '@energyvision/shared/satelliteConfig'
+import { bookmarks } from '@equinor/eds-icons'
+import slugify from '@sindresorhus/slugify'
+import type { Rule, SanityDocument } from 'sanity'
+import { formatDate } from '@/helpers/formatDate'
+import blocksToText from '../../helpers/blocksToText'
+import { EdsIcon } from '../../icons'
+import { defaultLanguage } from '../../languages'
+import { Flags } from '../../src/lib/datasetHelpers'
+import SlugInput from '../components/SlugInput'
+import { defaultColors } from '../defaultColors'
+import { configureBlockContent } from '../editors/blockContentType'
+import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
+import { withSlugValidation } from '../validations/validateSlug'
+import sharedHeaderFields from './header/sharedHeaderFields'
+import { lang } from './langField'
+
+const ingressBlockContentType = configureBlockContent({
+  h2: false,
+  h3: false,
+  h4: false,
+  internalLink: false,
+  externalLink: false,
+  attachment: false,
+  lists: false,
+})
+
+export default {
+  type: 'document',
+  name: 'magazine',
+  title: 'Magazine page',
+  icon: () => EdsIcon(bookmarks),
+  fieldsets: [
+    {
+      title: 'More page options',
+      description: 'SEO, meta and sticky menu',
+      options: {
+        collapsible: true,
+        collapsed: true,
+      },
+      name: 'other',
+    },
+    {
+      title: 'Hero configuration',
+      options: {
+        collapsible: true,
+        collapsed: true,
+      },
+      name: 'hero',
+    },
+    {
+      title: 'Slug',
+      name: 'slug',
+      description:
+        '⚠️ Changing the slug after publishing it has negative impacts in the SEO ⚠️',
+      options: {
+        collapsible: true,
+        collapsed: false,
+      },
+    },
+    {
+      title: 'Tags',
+      name: 'tagFieldset',
+      options: {
+        collapsible: true,
+        collapsed: false,
+      },
+    },
+  ],
+  fields: [
+    lang,
+    ...sharedHeaderFields,
+    {
+      // Set automatically in the custom action "ConfirmPublishWithi18n"
+      title: 'Date and time of when the document was first published at',
+      name: 'firstPublishedAt',
+      type: 'datetime',
+      readOnly: true,
+      hidden: true,
+    },
+
+    {
+      title: 'Magazine tags',
+      name: 'magazineTags',
+      type: 'array',
+      description: 'Add tags to describe the content of this magazine article',
+      of: [
+        {
+          type: 'reference',
+          to: [{ type: 'magazineTag' }],
+          options: { disableNew: true },
+        },
+      ],
+      fieldset: 'tagFieldset',
+    },
+    {
+      title: 'Meta information',
+      name: 'seo',
+      type: 'titleAndMeta',
+      fieldset: 'other',
+    },
+    {
+      title: 'Open Graph Image',
+      name: 'openGraphImage',
+      type: 'imageWithAlt',
+      description:
+        'You can override the hero image as the SoMe image by uploading another image here.',
+      fieldset: 'other',
+    },
+    {
+      name: 'ingress',
+      title: 'Description',
+      description: 'Shown in newsletters and promotions. Max 400 characters',
+      type: 'array',
+      of: [ingressBlockContentType],
+      validation: (Rule: Rule) =>
+        Rule.custom((value: any) => validateCharCounterEditor(value, 400)),
+    },
+    Flags.HAS_MAGAZINE_SUBSCRIPTION && {
+      title: 'Send to subscribers',
+      name: 'shouldDistributeMagazine',
+      description:
+        'Activate (change to green) to send to subscribers when you publish the magazine article.',
+      type: 'boolean',
+      initialValue: false,
+    },
+    {
+      name: 'magazineSlug',
+      title: 'Magazine slug',
+      type: 'string',
+      fieldset: 'slug',
+      placeholder: 'For example "Experienced professionals"',
+      description:
+        'The unique part of the URL for this magazine. Should probably be something like the page title.',
+    },
+    {
+      name: 'slug',
+      title: 'Slug',
+      type: 'slug',
+      fieldset: 'slug',
+      components: {
+        input: SlugInput,
+      },
+      options: withSlugValidation({
+        source: (doc: SanityDocument) => {
+          const translatedMagazine = doc.lang
+            ? magazineSlug[doc.lang as string]
+            : magazineSlug[defaultLanguage.name]
+          return doc.magazineSlug
+            ? `/${translatedMagazine}/${slugify(doc.magazineSlug as string)}`
+            : ''
+        },
+        slugify: (value: string) => value,
+      }),
+      description:
+        '⚠️ Double check for typos and get it right on the first time! ⚠️',
+      validation: (Rule: Rule) => Rule.required(),
+    },
+    {
+      name: 'content',
+      type: 'array',
+      title: 'Page sections',
+      of: [
+        { type: 'textBlock' },
+        { type: 'teaser' },
+        { type: 'textTeaser' },
+        { type: 'fullWidthImage' },
+        { type: 'fullWidthVideo' },
+        { type: 'figure' },
+        { type: 'textWithIconArray' },
+        { type: 'pullQuote', initialValue: { background: defaultColors[0] } },
+        { type: 'accordion' },
+        { type: 'promoTileArray' },
+        { type: 'promotion' },
+        { type: 'iframe' },
+        { type: 'imageCarousel' },
+        { type: 'iframeCarousel' },
+        { type: 'videoPlayer' },
+        { type: 'anchorLink' },
+      ],
+    },
+    {
+      type: 'excludeFromSearch',
+      name: 'excludeFromSearch',
+    },
+    {
+      title: 'Hide footer component',
+      description:
+        'Toggle this to hide the shared magazine footer component on this article',
+      type: 'boolean',
+      name: 'hideFooterComponent',
+      initialValue: false,
+    },
+  ].filter(e => e),
+  orderings: [
+    {
+      title: 'Title ',
+      name: 'titleAsc',
+      by: [{ field: 'title', direction: 'asc' }],
+    },
+  ],
+  preview: {
+    select: {
+      title: 'title',
+      media: 'heroFigure.image',
+      updated: '_updatedAt',
+    },
+    prepare(selection: Record<string, any>) {
+      const { title, media, updated } = selection
+      const plainTitle = title ? blocksToText(title) : ''
+
+      return {
+        title: plainTitle,
+        subtitle: `Updated ${formatDate(updated)}`,
+        media,
+      }
+    },
+  },
+}

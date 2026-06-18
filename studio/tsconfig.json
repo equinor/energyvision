@@ -1,0 +1,12 @@
+{
+  "extends": "@repo/typescript-config/studio.json",
+  "compilerOptions": {
+    "moduleDetection": "force",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"]
+    }
+  },
+  "include": ["**/*.ts", "**/*.tsx", "../shared/*"],
+  "exclude": ["node_modules"]
+}

@@ -1,4 +1,4 @@
-import { flow, pipe } from 'fp-ts/lib/function'
+import { flow, pipe, identity } from 'fp-ts/lib/function'
 import { flatten } from 'fp-ts/Array'
 import { ap } from 'fp-ts/lib/Identity'
 import * as E from 'fp-ts/lib/Either'
@@ -49,6 +49,8 @@ export const indexMagazine = (language: Language, logger: Logger) => (docId: str
     TE.chainW((pages) => TE.fromTask(() => removeAndMap(pages))),
     TE.chainW((data) => pipe(updateAlgolia(), E.ap(E.of(data)), TE.fromEither)),
     TE.flatten,
-    T.map(E.fold(logger.error, logger.info)),
+     T.map(E.fold((err) => { logger.error(err) 
+          return [-1] }, 
+          identity) ),
   )
 }

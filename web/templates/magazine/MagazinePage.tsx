@@ -1,92 +1,113 @@
-import MagazineTagBar from '@sections/MagazineTags/MagazineTagBar'
-import { useRouter } from 'next/router'
-import useSharedTitleStyles from '../../lib/hooks/useSharedTitleStyles'
-import { SharedBanner } from '../../pageComponents/pageTemplates/shared/SharedBanner'
-import { PageContent } from '../../pageComponents/pageTemplates/shared/SharedPageContent'
-import SharedTitle from '../../pageComponents/pageTemplates/shared/SharedTitle'
-import Seo from '../../pageComponents/shared/Seo'
-import Teaser from '../../sections/teasers/Teaser/Teaser'
-import { HeroTypes, type MagazinePageSchema } from '../../types/index'
-import MagazineDate from './MagazineDate'
+'use client'
+import { calendar } from '@equinor/eds-icons'
+import type { PortableTextBlock } from 'next-sanity'
+import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
+import TransformableIcon from '@/icons/TransformableIcon'
+import { twMerge } from '@/lib/twMerge/twMerge'
+import {
+  HeroBlock,
+  type HeroBlockProps,
+  type HeroData,
+  HeroTypes,
+} from '@/sections/Hero/HeroBlock'
+import type { MagazineTag } from '@/sections/MagazineTags/MagazineTagBar'
+import Teaser, { type TeaserData } from '@/sections/teasers/Teaser/Teaser'
+import type { ContentType } from '@/types/index'
+import { PageContent } from '../shared/SharedPageContent'
 
 type MagazinePageProps = {
-  data: MagazinePageSchema
+  magazineTags?: MagazineTag[]
+  tags?: string[]
+  footerComponent?: {
+    data?: TeaserData
+  }
+  title: PortableTextBlock[]
+  content?: ContentType[]
+  hero: HeroData
+  firstPublishedAt?: string
+  hideFooterComponent?: boolean
 }
 
-const MagazinePage = ({ data }: MagazinePageProps) => {
-  const router = useRouter()
-  const parentSlug =
-    (router.locale !== router.defaultLocale ? `/${router.locale}` : '') +
-    router.asPath.substring(router.asPath.indexOf('/'), router.asPath.lastIndexOf('/'))
+const MagazinePage = ({
+  hideFooterComponent,
+  footerComponent,
+  hero,
+  title,
+  firstPublishedAt,
+  tags,
+  magazineTags,
+  content,
+}: MagazinePageProps) => {
+  const type = hero?.type || HeroTypes.DEFAULT
 
-  const { hideFooterComponent, footerComponent, tags, firstPublishedAt } = data
+  const subTitle = (
+    <>
+      <div
+        className={twMerge(
+          `flex flex-col gap-6 pb-10`,
+          type === HeroTypes.FULL_WIDTH_IMAGE && 'px-layout-sm lg:px-layout-lg',
+        )}
+      >
+        {firstPublishedAt && (
+          <div className='flex items-center gap-2'>
+            <TransformableIcon iconData={calendar} className='-mt-1' />
+            <FormattedDateTime
+              variant='datetime'
+              datetime={firstPublishedAt}
+              className='text-base'
+            />
+          </div>
+        )}
+        {tags && tags?.filter(e => e).length > 0 && (
+          <ul className='flex flex-wrap gap-y-4 divide-x-2 divide-energy-red-100'>
+            {tags.map(tag => (
+              <li
+                key={`magazine_tag_key_${tag}`}
+                className='whitespace-nowrap px-3 font-medium text-sm first:pl-0 lg:text-xs'
+              >
+                {tag}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </>
+  )
 
-  const titleStyles = useSharedTitleStyles(data?.hero?.type, data?.content?.[0])
-
-  const handleClickTag = (tagValue: string) => {
-    if (tagValue === 'ALL') {
-      delete router.query.filter
-      router.push({
-        pathname: parentSlug,
-      })
-    } else {
-      router.push({
-        pathname: parentSlug,
-        query: {
-          tag: tagValue,
-        },
-      })
-    }
+  const heroProps: HeroBlockProps = {
+    heroData: {
+      //@ts-ignore: todo
+      title,
+      ...hero,
+      //@ts-ignore
+      magazineTags,
+      figCaptionClassName: 'hidden',
+      subTitle: subTitle,
+    },
+    //@ts-ignore
+    //tags,
+    //@ts-ignore
+    nextSectionDesignOptions: content?.[0]?.designOptions,
   }
 
   return (
-    <>
-      <Seo
-        seoAndSome={data?.seoAndSome}
-        slug={data?.slug}
-        heroImage={data?.hero?.figure?.image}
-        pageTitle={data?.title}
+    <main className='mx-auto flex w-full max-w-fullwidth flex-col'>
+      <HeroBlock {...heroProps} />
+      <PageContent
+        data={{
+          content,
+        }}
+        heroBackground={
+          hero.type !== HeroTypes.DEFAULT
+            ? //@ts-ignore
+              content?.[0]?.designOptions.background
+            : hero?.background
+        }
       />
-      <main>
-        <SharedBanner
-          title={data?.title}
-          publishedDate={firstPublishedAt}
-          hero={data?.hero}
-          hideImageCaption={true}
-          {...(data.hero.type === HeroTypes.DEFAULT && {
-            tags: tags,
-          })}
-        />
-
-        {data?.magazineTags && <MagazineTagBar tags={data?.magazineTags} href={parentSlug} onClick={handleClickTag} />}
-        {data.hero.type !== HeroTypes.DEFAULT && (
-          <>
-            <SharedTitle sharedTitle={data.title} background={titleStyles.background} />
-            <MagazineDate classname="max-w-viewport px-layout-lg mx-auto" firstPublishedAt={firstPublishedAt} />
-          </>
-        )}
-        {data.hero.type !== HeroTypes.DEFAULT && (
-          <div className="mx-auto max-w-viewport px-layout-lg pb-6">
-            {tags && tags?.length > 0 && (
-              <ul className="flex flex-wrap gap-y-4 divide-x-2 divide-energy-red-100">
-                {tags.map((tag: string) => {
-                  return (
-                    <li
-                      key={`magazine_tag_key_${tag}`}
-                      className="inline-block whitespace-nowrap pr-3 pl-3 font-medium text-sm first:pl-0 lg:text-xs"
-                    >
-                      {tag}
-                    </li>
-                  )
-                })}
-              </ul>
-            )}
-          </div>
-        )}
-        <PageContent data={data} />
-        {!hideFooterComponent && footerComponent?.data && <Teaser data={footerComponent.data} />}
-      </main>
-    </>
+      {!hideFooterComponent && footerComponent?.data && (
+        <Teaser data={footerComponent.data} />
+      )}
+    </main>
   )
 }
 

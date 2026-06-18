@@ -1,50 +1,59 @@
-import { Typography } from '@core/Typography'
 import type { IconData } from '@equinor/eds-icons'
 import type { PortableTextBlock } from '@portabletext/types'
-import Img from 'next/image'
 import { forwardRef, type HTMLAttributes } from 'react'
-import { urlFor } from '../../common/helpers'
+import { twMerge } from 'tailwind-merge'
+import { Typography } from '@/core/Typography'
 import { TransformableIcon } from '../../icons/TransformableIcon'
-import Blocks from '../../pageComponents/shared/portableText/Blocks'
-import envisTwMerge from '../../twMerge'
-import type { ImageWithAlt } from '../../types'
+import Blocks from '../../portableText/Blocks'
+import { Image } from '../Image/Image'
+import type { Image as ImageType } from '../Image/imageUtilities'
 
 export type TextWithIconProps = {
   title?: string
   content?: PortableTextBlock[]
   iconData?: IconData
-  image?: ImageWithAlt
+  image?: ImageType
   /** Icondata or imageUrl styling */
   iconClassName?: string
 } & HTMLAttributes<HTMLDivElement>
 
 export const TextWithIcon = forwardRef<HTMLDivElement, TextWithIconProps>(
-  ({ title, content, iconData, className = '', image, iconClassName = '', ...rest }, ref) => {
+  (
+    { title, content, iconData, className = '', image, iconClassName = '' },
+    ref,
+  ) => {
     return (
-      <div ref={ref} className={envisTwMerge(`flex flex-col gap-2 items-center`, className)} {...rest}>
-        {iconData && <TransformableIcon iconData={iconData} className={iconClassName} />}
+      <div
+        ref={ref}
+        className={twMerge(`flex flex-col items-center gap-2`, className)}
+      >
+        {iconData && (
+          <TransformableIcon iconData={iconData} className={iconClassName} />
+        )}
         {image?.asset && (
-          <Img
-            src={urlFor(image).size(150, 150).auto('format').toString()}
-            width="150"
-            height="150"
-            alt={image?.isDecorative ? '' : image?.alt || ''}
-            role={image?.isDecorative ? 'presentation' : undefined}
-            className={envisTwMerge(
-              `size-[150px]
-              m-auto
-              self-center
-              `,
+          <Image
+            image={image}
+            aspectRatio='original'
+            fill
+            /*             customHeight={150}
+            customWidth={150} */
+            className={twMerge(
+              `m-auto size-[150px] self-center`,
               iconClassName,
             )}
           />
         )}
         {title && (
-          <Typography as="h2" variant="h3" className="text-pretty text-center max-w-80">
+          <Typography as='h2' variant='h3' className='max-w-80 text-center'>
             {title}
           </Typography>
         )}
-        {content && <Blocks value={content} className={`text-base max-w-80 text-pretty text-center`} />}
+        {content && (
+          <Blocks
+            value={content}
+            className={`${!title ? 'text-md' : ''} max-w-80 text-center`}
+          />
+        )}
       </div>
     )
   },

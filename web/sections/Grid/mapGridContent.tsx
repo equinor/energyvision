@@ -1,24 +1,27 @@
-import HlsVideoPlayer, {
-  type AspectRatioVariants,
-  getThumbnailRatio,
-  type HlsVideoPlayerProps,
-} from '@core/HlsVideoPlayer/HlsVideoPlayer'
-import { urlFor } from '../../common/helpers'
-import type { ComponentProps } from '../../pageComponents/pageTemplates/shared/SharedPageContent'
-import type { FigureData } from '../../pageComponents/topicPages/Figure'
-import type { IFrameData, VideoPlayerData } from '../../types/index'
+'use client'
+import dynamic from 'next/dynamic'
+import type { IFrameData } from '../../types/index'
+import type { FigureData } from '../FigureBlock/FigureBlock'
 import IFrame from '../IFrameBlock/IFrameBlock'
+import type { VideoPlayerBlockProps } from '../VideoPlayerBlock/VideoPlayerBlock'
 import GridFigure from './GridFigure'
 import { GridTeaser } from './GridTeaser'
 import GridTextBlock from './GridTextBlock'
 
 export type RowType = 'span3' | 'span2and1' | 'threeColumns' | undefined
 
-export const mapGridContent = (data: ComponentProps, rowType?: RowType, isMobile?: boolean): React.ReactNode => {
+const VideoPlayer = dynamic(() => import('@/core/VideoJsPlayer/VideoPlayer'))
+
+export const mapGridContent = (
+  data: any,
+  rowType?: RowType,
+): React.ReactNode => {
   //@ts-ignore:so many types
-  switch (data?.type) {
+  switch (data.type) {
     case 'gridTextBlock':
-      return <GridTextBlock key={data.id} data={data as any} rowType={rowType} />
+      return (
+        <GridTextBlock key={data.id} data={data as any} rowType={rowType} />
+      )
     case 'gridTeaser':
       return <GridTeaser key={data.id} data={data as any} rowType={rowType} />
     case 'figure':
@@ -26,22 +29,9 @@ export const mapGridContent = (data: ComponentProps, rowType?: RowType, isMobile
     case 'iframe':
       return <IFrame key={data.id} data={data as IFrameData} />
     case 'videoPlayer': {
-      const { width: w, height: h } = getThumbnailRatio('21:9')
-      const videoData = data as VideoPlayerData
-      const posterUrl = videoData?.video?.thumbnail
-        ? urlFor(videoData?.video?.thumbnail).width(w).height(h)?.url()
-        : undefined
-
-      const videoProps: HlsVideoPlayerProps = {
-        src: videoData?.video?.url,
-        poster: posterUrl,
-        title: videoData?.video?.title,
-        aspectRatio: videoData?.designOptions?.aspectRatio as AspectRatioVariants,
-      }
       return (
-        <div className="relative w-full h-full aspect-[21/9]">
-          <HlsVideoPlayer key={data.id} {...videoProps} className={`${isMobile ? '' : 'h-full sm:w-full'}`} />
-        </div>
+        //@ts-ignore: TODO
+        <VideoPlayer key={data.id} {...(data as VideoPlayerBlockProps)} />
       )
     }
     default:

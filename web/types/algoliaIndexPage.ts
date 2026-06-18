@@ -1,19 +1,15 @@
-import { InstantSearchServerState } from 'react-instantsearch'
+import type { PortableTextBlock } from '@portabletext/types'
+import type { SanityImageObject } from '@sanity/image-url'
+import type { SearchResponse } from 'instantsearch.js'
+import type { InstantSearchServerState } from 'react-instantsearch'
+import type { Figure } from '@/core/Image/imageUtilities'
 import type {
   FooterColumns,
   IntlData,
-  TeaserData,
-  HeroType,
-  ImageWithCaptionData,
-  SeoData,
-  BackgroundColours,
-  MenuData,
   LinkData,
-  MagazineCardData,
+  MenuData,
+  SeoData,
 } from './index'
-import { PortableTextBlock } from '@portabletext/types'
-import { SanityImageObject } from '@sanity/image-url/lib/types/types'
-import { SearchResponse } from 'instantsearch.js'
 
 export type AlgoliaIndexPageType = {
   serverState?: InstantSearchServerState
@@ -21,7 +17,7 @@ export type AlgoliaIndexPageType = {
     menuData?: MenuData
     footerData?: { footerColumns: FooterColumns[] }
     intl: IntlData
-    pageData: MagazineIndexPageType | NewsRoomPageType
+    pageData: NewsRoomPageType
     slug?: string
     response: SearchResponse<any>
   }
@@ -33,7 +29,7 @@ export type NewsRoomNewsItem = {
   title: string
   publishDateTime?: string
   firstPublishedAt?: string
-  heroImage: ImageWithCaptionData
+  heroImage: Figure
   thumbnailUrl?: string
   ingress?: string
 }
@@ -46,20 +42,4 @@ export type NewsRoomPageType = {
   subscriptionLinkTitle?: string
   localNewsPages?: LinkData[]
   fallbackImages?: SanityImageObject[]
-}
-
-export type MagazineIndexPageType = {
-  seoAndSome: SeoData
-  title: PortableTextBlock[]
-  hero: HeroType
-  ingress: {
-    content: PortableTextBlock[]
-    background: BackgroundColours
-  }
-  query?: any
-  magazineArticles: MagazineCardData[]
-  heroImage: ImageWithCaptionData
-  footerComponent?: TeaserData
-  magazineTags: { id: string; title: string; key: string }[]
-  background: BackgroundColours
 }

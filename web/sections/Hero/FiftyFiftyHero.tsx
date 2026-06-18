@@ -1,55 +1,136 @@
-import { BackgroundContainer } from '@core/Backgrounds'
-import { ResourceLink } from '@core/Link'
-import { Heading } from '@core/Typography'
-import { getUrlFromAction } from '../../common/helpers'
-import Image, { getPxSmSizes } from '../../core/SanityImage/SanityImage'
-import { getLocaleFromName } from '../../lib/localization'
-import Blocks from '../../pageComponents/shared/portableText/Blocks'
-import type { HeroType } from '../../types/index'
+import type { PortableTextBlock } from 'next-sanity'
+import type { HTMLAttributes, ReactNode } from 'react'
+import { twMerge } from 'tailwind-merge'
+import { Image } from '@/core/Image/Image'
+import type { Figure } from '@/core/Image/imageUtilities'
+import ResourceLink from '@/core/Link/ResourceLink'
+import type { TypographyVariants } from '@/core/Typography'
+import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
+import Blocks from '@/portableText/Blocks'
+import { getIsoFromName } from '@/sanity/helpers/localization'
+import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
+import type { DesignOptions, LinkData } from '@/types'
 
-export const FiftyFiftyHero = ({ title, ingress, link: action, background, figure, isBigTitle }: HeroType) => {
-  const url = action && getUrlFromAction(action)
+export type FiftyFiftyHeroProps = {
+  title?: PortableTextBlock[]
+  heroTitle?: PortableTextBlock[]
+  ingress?: PortableTextBlock[]
+  displayTextVariant?: 'none' | 'base' | 'lg' | 'xl'
+  link?: LinkData
+  heroLink?: LinkData
+  figure?: Figure
+  nextSectionDesignOptions?: DesignOptions
+  breadcrumbsComponent?: ReactNode
+  designOptions?: DesignOptions
+} & HTMLAttributes<HTMLElement>
+
+export const FiftyFiftyHero = ({
+  title,
+  heroTitle,
+  displayTextVariant = 'none',
+  ingress,
+  link,
+  heroLink,
+  figure,
+  className = '',
+  breadcrumbsComponent,
+  designOptions,
+}: FiftyFiftyHeroProps) => {
+  const { bg, dark } = getBgAndDarkFromBackground(designOptions)
+  const heroUrl = heroLink && getUrlFromAction(heroLink)
+  const url = link && getUrlFromAction(link)
+  const action = heroLink ?? link
+
+  const typographyVariant = {
+    base: 'h2_base',
+    lg: 'h2_lg',
+    xl: 'h2_xl',
+  }
 
   return (
-    <BackgroundContainer background={{ backgroundColor: background }} backgroundStyle={'none'}>
-      <div className="mx-auto grid min-h-[350px] md:grid-cols-2">
-        {/* Image Section */}
-        {figure && (
-          <div className="relative min-h-[350px] md:order-2">
-            <Image sizes={getPxSmSizes()} image={figure.image} fill priority />
-          </div>
+    <section>
+      <div
+        className={twMerge(
+          `flex flex-col-reverse ${bg}`,
+          dark && `dark`,
+          className,
         )}
-
-        {/* Content Section */}
-        <div className="flex flex-col justify-center gap-8 max-w-full md:min-h-[450px] md:justify-self-end py-16 px-layout-sm md:px-12 xl:pl-layout-sm xl:pr-4xl">
-          {title && (
-            <Heading
-              value={title}
-              variant={isBigTitle ? '2xl' : 'xl'}
-              className={`max-w-[1186px] ${isBigTitle ? 'font-normal' : 'font-medium'}`}
+      >
+        <div className={`grid min-h-[350px] md:grid-cols-2 2xl:min-h-[500px]`}>
+          {/* Image Section */}
+          {figure && (
+            <Image
+              grid='sm'
+              image={figure.image}
+              fill
+              className='min-h-[350px] md:order-2'
             />
           )}
 
-          {ingress && !isBigTitle && <Blocks value={ingress} className="hidden md:block" />}
+          {/* Content Section */}
+          <div className='flex flex-col justify-center px-layout-sm py-8 md:min-h-[400px] md:justify-self-end lg:py-16 lg:pr-32'>
+            {heroTitle && (
+              <Blocks
+                id='mainTitle'
+                tabIndex={-1}
+                //@ts-ignore
+                value={heroTitle}
+                group={displayTextVariant !== 'none' ? 'display' : `heading`}
+                variant={
+                  displayTextVariant !== 'none'
+                    ? (typographyVariant[
+                        displayTextVariant
+                      ] as TypographyVariants)
+                    : `h2`
+                }
+                as='h1'
+                //same as variants h1
+                //className={`pb-6 lg:pb-12`}
+              />
+            )}
+            {ingress && (
+              <Blocks
+                value={ingress}
+                variant='ingress'
+                className='**:text-base'
+              />
+            )}
 
-          {action && !isBigTitle && (
-            <ResourceLink
-              href={url as string}
-              {...(action.link?.lang && {
-                locale: getLocaleFromName(action.link?.lang),
-              })}
-              type={action.type}
-              file={{
-                ...action?.file,
-                label: action?.label,
-              }}
-              showExtensionIcon
-            >
-              {action.label}
-            </ResourceLink>
-          )}
+            {action && (heroUrl || url) && (
+              <ResourceLink
+                file={{
+                  ...action?.file,
+                  label: action?.label,
+                }}
+                href={heroUrl ?? url}
+                {...(action.link?.lang && {
+                  hrefLang: getIsoFromName(action.link?.lang),
+                })}
+                type={action.type}
+                variant='fit'
+                showExtensionIcon
+              >
+                {action.label}
+              </ResourceLink>
+            )}
+          </div>
         </div>
       </div>
-    </BackgroundContainer>
+      <div className='mx-auto max-w-content'>
+        {breadcrumbsComponent && breadcrumbsComponent}
+        <Blocks
+          //@ts-ignore
+          value={title}
+          id='mainTitle'
+          tabIndex={-1}
+          variant='h1'
+          className={twMerge(
+            `w-full px-layout-sm lg:px-layout-lg`,
+            !breadcrumbsComponent && 'mt-8 lg:mt-10',
+            className,
+          )}
+        />
+      </div>
+    </section>
   )
 }

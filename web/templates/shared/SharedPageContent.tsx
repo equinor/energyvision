@@ -1,0 +1,776 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+//@ts-nocheck
+
+/** Do not make this a client component.
+ *  To reduce the size of your client JavaScript bundles,
+ *  add 'use client' to specific interactive components instead of
+ *  marking large parts of your UI as Client Components.
+ */
+import AccordionBlock from '@/sections/AccordionBlock/AccordionBlock'
+import { AnchorLinkList } from '@/sections/AnchorLinkList'
+import AnchorSearch, {
+  findAllAnchors,
+} from '@/sections/AnchorSearch/AnchorSearch'
+import BarChartBlock, {
+  type BarChartBlockProps,
+} from '@/sections/BarChartBlock/BarChartBlock'
+import { CampaignBanner } from '@/sections/CampaignBanner'
+import CookieDeclaration from '@/sections/CookieDeclaration/CookieDeclaration'
+import CardsList from '@/sections/cards/CardsList/CardsList'
+import FigureBlock, {
+  type FigureData,
+} from '@/sections/FigureBlock/FigureBlock'
+import FullWidthVideo, {
+  type FullWidthVideoProps,
+} from '@/sections/FullWidthVideo/FullWidthVideo'
+import FullWidthImage, {
+  type FullWidthImageData,
+} from '@/sections/FullwidthImage/FullWidthImage'
+import Grid from '@/sections/Grid/Grid'
+import { HomePageBanner } from '@/sections/HomePageBanner/HomePageBanner'
+import IFrameBlock from '@/sections/IFrameBlock/IFrameBlock'
+import IframeCarousel from '@/sections/IframeCarousel/IframeCarousel'
+import ImageCarousel from '@/sections/ImageCarousel/ImageCarousel'
+import ImageForText from '@/sections/ImageForText/ImageForText'
+import KeyNumbers from '@/sections/KeyNumber/KeyNumber'
+import LineChartBlock, {
+  type LineChartBlockProps,
+} from '@/sections/LineChartBlock/LineChartBlock'
+import NewsList from '@/sections/NewsList/NewsList'
+import PieChartBlock, {
+  type PieChartBlockProps,
+} from '@/sections/PieChartBlock/PieChartBlock'
+import PromoTileArray from '@/sections/PromoTiles/PromoTileArray'
+import { PromotionBlockV2 } from '@/sections/promotions/PromotionBlockV2'
+import PromotionsBlock, {
+  type PromotionsBlockData,
+} from '@/sections/promotions/PromotionsBlock'
+import QuoteBlock from '@/sections/QuoteBlock/QuoteBlock'
+import StockValues, {
+  type StockValuesProps,
+} from '@/sections/StockValues/StockValues'
+import TableBlock, {
+  type TableBlockProps,
+} from '@/sections/TableBlock/TableBlock'
+import TabsBlock, { type TabsBlockProps } from '@/sections/TabsBlock/TabsBlock'
+import { getColorForTabsTheme } from '@/sections/TabsBlock/tabThemes'
+import TextBlock from '@/sections/TextBlock/TextBlock'
+import TextWithIconArray from '@/sections/TextWithIconArray/TextWithIconArray'
+import Teaser from '@/sections/teasers/Teaser/Teaser'
+import TextTeaser from '@/sections/teasers/TextTeaser/TextTeaser'
+import { getColorForTheme } from '@/sections/teasers/TextTeaser/theme'
+import VideoPlayerBlock, {
+  type VideoPlayerBlockProps,
+} from '@/sections/VideoPlayerBlock/VideoPlayerBlock'
+import VideoPlayerCarousel, {
+  type VideoPlayerCarouselData,
+} from '@/sections/VideoPlayerCarousel/VideoPlayerCarousel'
+import {
+  type ColorKeyTokens,
+  colorKeyToUtilityMap,
+} from '@/styles/colorKeyToUtilityMap'
+import Form from '@/templates/forms/Form'
+import type {
+  AccordionData,
+  AnchorLinkData,
+  AnchorLinkListData,
+  Background,
+  CallToActionData,
+  CampaignBannerData,
+  CookieDeclarationData,
+  DesignOptions,
+  FormData,
+  GridData,
+  IFrameData,
+  IframeCarouselData,
+  ImageCarouselData,
+  ImageForTextData,
+  KeyNumbersData,
+  MagazinePageSchema,
+  NewsListData,
+  PromoTileArrayData,
+  QuoteData,
+  TableData,
+  TeaserData,
+  TextBlockData,
+  TextTeaserData,
+  TextWithIconArrayData,
+  TopicPageSchema,
+} from '@/types'
+import { ErrorBoundaryClient } from './ErrorBoundaryClient'
+
+// How could we do this for several different component types?
+export type ComponentSections =
+  | TeaserData
+  | TextBlockData
+  | FullWidthImageData
+  | FigureData
+  | TextWithIconArrayData
+  | CallToActionData
+  | QuoteData
+  | AccordionData
+  | PromoTileArrayData
+  | IFrameData
+  | PromotionsBlockData
+  | FormData
+  | TableData
+  | StockValuesData
+  | AnchorLinkData
+  | VideoPlayerCarouselData
+  | CookieDeclarationData
+  | TextTeaserData
+  | KeyNumbersData
+  | TabsBlockProps
+  | TableBlockProps
+
+//To be removed when all types are moved to relevant component and these common are in every section component
+type Component = {
+  id?: string
+  type?: string
+  designOptions?: DesignOptions
+} & ComponentSections
+
+export type PageContentProps = {
+  data: TopicPageSchema | MagazinePageSchema
+  heroBackground?: Background & { heroHasBreadcrumbs?: boolean }
+}
+
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+/**
+ * All pagecontent should only have padding/margin bottom and x axis
+ * If needed to apply top spacing do it here
+ * E.g. Colored background content need padding top
+ * Remember to think about the prev section of condition with top spacing
+ * E.g. 2 colored background of same color content, only first need but not second
+ */
+const getBackgroundObject = (component: Component) => {
+  if (!component?.designOptions || !Object.hasOwn(component, 'designOptions')) {
+    //white if no designOptions
+    return {
+      backgroundUtility: 'white-100',
+    }
+  }
+
+  if (component?.type === 'tabs') {
+    return {
+      backgroundUtility: getColorForTabsTheme(component?.designOptions?.theme)
+        .key,
+    }
+  }
+
+  return (
+    component?.designOptions?.background ||
+    getColorForTheme(component?.designOptions?.theme)
+  )
+}
+
+const cleanBgUtility = (value: string) => value?.replace('bg-', '')
+
+const isWhiteColorBackground = (componentsBO: any, component: Component) => {
+  const casesWhichHaveBackgroundButIsWhite = ['cardsList']
+  return (
+    cleanBgUtility(componentsBO?.backgroundUtility) === 'white-100' ||
+    componentsBO?.backgroundColor === 'White' ||
+    componentsBO?.background === 'White' ||
+    casesWhichHaveBackgroundButIsWhite.includes(component?.type) ||
+    !component?.designOptions
+  )
+}
+
+const isSameColorBackground = (
+  currentComponentsBO: any,
+  previousComponentsBO: any,
+) => {
+  if (
+    currentComponentsBO?.backgroundUtility &&
+    currentComponentsBO?.backgroundUtility !== '' &&
+    previousComponentsBO?.backgroundUtility &&
+    previousComponentsBO?.backgroundUtility !== ''
+  ) {
+    return (
+      cleanBgUtility(currentComponentsBO?.backgroundUtility) ===
+      cleanBgUtility(previousComponentsBO?.backgroundUtility)
+    )
+  }
+  if (
+    currentComponentsBO?.backgroundUtility &&
+    !previousComponentsBO?.backgroundUtility &&
+    previousComponentsBO?.backgroundColor
+  ) {
+    return (
+      colorKeyToUtilityMap[
+        currentComponentsBO?.backgroundUtility as keyof ColorKeyTokens
+      ]?.backgroundName === previousComponentsBO?.backgroundColor
+    )
+  }
+  if (
+    !currentComponentsBO?.backgroundUtility &&
+    currentComponentsBO?.backgroundColor &&
+    previousComponentsBO?.backgroundUtility
+  ) {
+    currentComponentsBO?.backgroundColor ===
+      colorKeyToUtilityMap[
+        previousComponentsBO?.backgroundUtility as keyof ColorKeyTokens
+      ]?.backgroundName
+  }
+
+  return (
+    currentComponentsBO?.backgroundColor ===
+    previousComponentsBO?.backgroundColor
+  )
+}
+
+const applyPaddingTopIfApplicable = (
+  currentComponent: Component,
+  prevComponent: Component,
+): string => {
+  if (currentComponent?.type === 'anchorLink') {
+    return
+  }
+  /*   console.log(
+    `Current: ${currentComponent?.type}:${Array.isArray(currentComponent?.title) ? toPlainText(currentComponent?.title) : currentComponent?.title}`,
+  )
+  console.log(
+    `Previous component ${prevComponent?.type}:${Array.isArray(prevComponent?.title) ? toPlainText(prevComponent?.title) : prevComponent?.title}`,
+  ) */
+
+  const currentBackgroundObject = getBackgroundObject(currentComponent)
+  const previousBackgroundObject = getBackgroundObject(prevComponent)
+  /*   console.log('currentBackgroundObject', currentBackgroundObject)
+  console.log('previousBackgroundObject', previousBackgroundObject) */
+
+  /**
+   * List of components that require current section to have pt-20
+   * usually because the previous has a background image
+   */
+  const paddingTopCases = [
+    'teaser',
+    'fullWidthImage',
+    'fullWidthVideo',
+    'backgroundImage',
+    'campaignBanner',
+    prevComponent?.type === 'promoteEvents' &&
+      prevComponent?.designOptions?.backgroundImage?.asset &&
+      'promoteEvents',
+  ]
+
+  const currentIsWhiteColorBackground = isWhiteColorBackground(
+    currentBackgroundObject,
+    currentComponent,
+  )
+  const previousIsWhiteColorBackground = isWhiteColorBackground(
+    previousBackgroundObject,
+    prevComponent,
+  )
+
+  /*   console.log('currentIsWhiteColorBackground', currentIsWhiteColorBackground)
+  console.log('previousIsWhiteColorBackground', previousIsWhiteColorBackground) */
+
+  const previousComponentIsASpecialCaseAndNeedPT =
+    paddingTopCases.includes(prevComponent?.type) ||
+    paddingTopCases.includes(previousBackgroundObject?.type)
+
+  if (
+    currentIsWhiteColorBackground &&
+    previousIsWhiteColorBackground &&
+    !previousComponentIsASpecialCaseAndNeedPT
+  ) {
+    return ''
+  }
+
+  if (prevComponent?.type === 'homepageBanner') {
+    return prevComponent?.designOptions?.backgroundType === '0'
+      ? 'lg:pt-20'
+      : 'pt-20'
+  }
+  //Hero has breadcrumbs which have enough padding bottom, the following component should not have pt-20
+  //Can also be used if hero has title below like 50/50 and dont need pt-20 after hero
+  if (
+    prevComponent?.heroHasBreadcrumbs &&
+    (prevComponent?.type === 'pageTitle' ||
+      prevComponent?.type === 'backgroundImage')
+  ) {
+    return ''
+  }
+
+  const previousIsSameColorAsCurrent = isSameColorBackground(
+    currentBackgroundObject,
+    previousBackgroundObject,
+  )
+  /*   console.log('previousIsSameColorAsCurrent', previousIsSameColorAsCurrent) */
+  if (
+    previousIsSameColorAsCurrent &&
+    !previousComponentIsASpecialCaseAndNeedPT
+  ) {
+    return ''
+  }
+
+  return 'pt-20'
+}
+
+export const PageContent = ({ data, heroBackground }: PageContentProps) => {
+  const mapSection = (
+    index: number,
+    c: any,
+    anchorReference: string,
+    topSpacingClassName: string,
+    bottomSpacingClassName: string,
+  ) => {
+    const anchorId = anchorReference
+    const commonProps = {
+      anchor: anchorId,
+    }
+
+    const allSpacings = `${topSpacingClassName} ${bottomSpacingClassName}`
+
+    switch (c.type) {
+      case 'teaser':
+        return <Teaser key={c.id} {...commonProps} data={c as TeaserData} />
+      case 'textTeaser':
+        return (
+          <TextTeaser
+            key={c.id}
+            {...commonProps}
+            data={c as TextTeaserData}
+            className={allSpacings}
+          />
+        )
+      case 'textBlock':
+        return (
+          <TextBlock
+            key={c.id}
+            {...commonProps}
+            data={c as TextBlockData}
+            className={allSpacings}
+          />
+        )
+      case 'fullWidthImage':
+        return (
+          <FullWidthImage
+            key={c.id}
+            {...commonProps}
+            data={c as FullWidthImageData}
+          />
+        )
+      case 'fullWidthVideo':
+        return (
+          <FullWidthVideo
+            key={c.id}
+            {...commonProps}
+            {...(c as FullWidthVideoProps)}
+          />
+        )
+      case 'figure':
+        return (
+          <FigureBlock
+            key={c.id}
+            {...commonProps}
+            data={c as FigureData}
+            className={allSpacings}
+          />
+        )
+      case 'textWithIconArray':
+        return (
+          <TextWithIconArray
+            key={c.id}
+            {...commonProps}
+            data={c as TextWithIconArrayData}
+            className={allSpacings}
+          />
+        )
+      case 'pullQuote':
+        return (
+          <QuoteBlock
+            key={c.id}
+            {...commonProps}
+            data={c as QuoteData}
+            className={allSpacings}
+          />
+        )
+      case 'accordion':
+        return (
+          <AccordionBlock
+            key={c.id}
+            {...commonProps}
+            data={c as AccordionData}
+            className={allSpacings}
+          />
+        )
+      case 'promoTileArray':
+        return (
+          <PromoTileArray
+            key={c.id}
+            {...commonProps}
+            data={c as PromoTileArrayData}
+            className={allSpacings}
+          />
+        )
+      case 'iframe':
+        return (
+          <IFrameBlock
+            key={c.id}
+            {...commonProps}
+            data={c as IFrameData}
+            className={allSpacings}
+          />
+        )
+      case 'promotion': {
+        const { promotion, ...restPromo } = c
+        return (
+          <PromotionsBlock
+            key={c.id}
+            {...commonProps}
+            data={
+              {
+                ...promotion,
+                ...restPromo,
+              } as PromotionsBlockData
+            }
+            className={allSpacings}
+          />
+        )
+      }
+      case 'promoteEvents':
+        return (
+          <PromotionsBlock
+            key={c.id}
+            {...commonProps}
+            variant='promoteEvents'
+            data={c as PromotionsBlockData}
+            className={allSpacings}
+          />
+        )
+      case 'promoteNews':
+        return (
+          <PromotionsBlock
+            key={c.id}
+            {...commonProps}
+            variant='promoteNews'
+            data={c as PromotionsBlockData}
+            className={allSpacings}
+          />
+        )
+      //spread!
+      case 'promotePeople':
+        return (
+          <PromotionsBlock
+            key={c.id}
+            {...commonProps}
+            variant='promotePeople'
+            data={c as PromotionsBlockData}
+            className={allSpacings}
+          />
+        )
+      case 'promoteMagazine':
+        return (
+          <PromotionsBlock
+            key={c.id}
+            {...commonProps}
+            variant='promoteMagazine'
+            data={c as PromotionsBlockData}
+            className={allSpacings}
+          />
+        )
+      case 'promoteTopics':
+        return (
+          <PromotionsBlock
+            key={c.id}
+            {...commonProps}
+            variant='promoteTopics'
+            data={c as PromotionsBlockData}
+            className={allSpacings}
+          />
+        )
+      case 'form':
+        return (
+          <Form
+            key={c.id}
+            {...commonProps}
+            data={c as FormData}
+            className={allSpacings}
+          />
+        )
+      case 'table':
+        return <>To be updated to new table</> //<Table key={c.id} data={c as TableData} anchor={anchorReference} className={spacingClassName} />
+      case 'cookieDeclaration':
+        return (
+          <CookieDeclaration
+            key={c.id}
+            {...commonProps}
+            data={c as CookieDeclarationData}
+            className={allSpacings}
+          />
+        )
+      case 'newsList':
+        return (
+          <NewsList
+            key={c.id}
+            {...commonProps}
+            data={c as unknown as NewsListData}
+            className={allSpacings}
+          />
+        )
+      case 'stockValuesApi':
+        return (
+          <StockValues
+            key={c.id}
+            {...commonProps}
+            {...(c as StockValuesProps)}
+            className={allSpacings}
+          />
+        )
+      case 'imageCarousel':
+        return (
+          <ImageCarousel
+            key={c.id}
+            {...commonProps}
+            data={c as ImageCarouselData}
+            className={allSpacings}
+          />
+        )
+      case 'iframeCarousel':
+        return (
+          <IframeCarousel
+            key={c.id}
+            {...commonProps}
+            data={c as IframeCarouselData}
+            className={allSpacings}
+          />
+        )
+      case 'videoPlayer': {
+        return (
+          <VideoPlayerBlock
+            key={c.id}
+            {...commonProps}
+            {...(c as VideoPlayerBlockProps)}
+            className={allSpacings}
+          />
+        )
+      }
+      case 'videoPlayerCarousel':
+        return (
+          <VideoPlayerCarousel
+            key={c.id}
+            {...commonProps}
+            data={c as VideoPlayerCarouselData}
+            className={allSpacings}
+          />
+        )
+      case 'keyNumbers':
+        return (
+          <KeyNumbers
+            key={c.id}
+            {...commonProps}
+            data={c as KeyNumbersData}
+            className={allSpacings}
+          />
+        )
+      case 'cardsList':
+        return (
+          <CardsList
+            key={c.id}
+            {...commonProps}
+            {...c}
+            className={allSpacings}
+          />
+        )
+      case 'grid':
+        return (
+          <Grid
+            key={c.id}
+            {...commonProps}
+            data={c as GridData}
+            className={allSpacings}
+          />
+        )
+      case 'campaignBanner':
+        return (
+          <CampaignBanner
+            key={c.id}
+            {...commonProps}
+            data={c as CampaignBannerData}
+          />
+        )
+      case 'anchorLinkList':
+        return (
+          <AnchorLinkList
+            key={c.id}
+            {...commonProps}
+            data={c as AnchorLinkListData}
+            className={topSpacingClassName}
+          />
+        )
+      case 'imageForText':
+        return (
+          <ImageForText
+            key={c.id}
+            {...commonProps}
+            data={c as ImageForTextData}
+          />
+        )
+      case 'tabs':
+        return (
+          <TabsBlock
+            key={c.id}
+            {...commonProps}
+            {...(c as any)}
+            //handling pb-page-content self
+            className={topSpacingClassName}
+          />
+        )
+      /* Remove from here and move to Homepage Template PageContent */
+      case 'homepageBanner':
+        return (
+          <HomePageBanner
+            key={c.id}
+            {...commonProps}
+            {...(c as any)}
+            nextCompBg={
+              data?.content?.[index + 1]?.designOptions?.background
+                ?.backgroundUtility
+            }
+          />
+        )
+      case 'tableV2':
+        return (
+          <TableBlock
+            key={c.id}
+            className={allSpacings}
+            variant='default'
+            {...commonProps}
+            {...(c as any)}
+          />
+        )
+      case 'importTable':
+        return (
+          <TableBlock
+            key={c.id}
+            variant='import'
+            {...commonProps}
+            {...(c as any)}
+            className={allSpacings}
+          />
+        )
+      case 'pieChartBlock':
+        return (
+          <PieChartBlock
+            key={c.id}
+            {...commonProps}
+            {...(c as PieChartBlockProps)}
+            className={allSpacings}
+          />
+        )
+      case 'barChartBlock':
+        return (
+          <BarChartBlock
+            key={c.id}
+            {...commonProps}
+            {...(c as BarChartBlockProps)}
+            className={allSpacings}
+          />
+        )
+      case 'lineChartBlock':
+        return (
+          <LineChartBlock
+            key={c.id}
+            {...commonProps}
+            {...(c as LineChartBlockProps)}
+            className={allSpacings}
+          />
+        )
+      case 'promoteExternalLinkV2':
+      case 'promoteTopicsV2':
+      case 'promotionsV2':
+        return (
+          <PromotionBlockV2
+            key={c.id}
+            {...commonProps}
+            {...(c as any)}
+            className={allSpacings}
+          />
+        )
+      case 'anchorSearch':
+        return (
+          <AnchorSearch
+            key={c.id}
+            {...commonProps}
+            anchors={findAllAnchors(data?.content)}
+            {...(c as any)}
+            className={allSpacings}
+          />
+        )
+      default:
+        return null
+    }
+  }
+
+  const content = (data?.content || []).map((c: Component, index) => {
+    const prevComponent = data?.content?.[index - 1]
+
+    // biome-ignore lint/complexity/noUselessUndefinedInitialization: complains either way
+    let anchorReference = undefined
+    if (prevComponent?.type === 'anchorLink') {
+      anchorReference = (prevComponent as unknown as AnchorLinkData)
+        ?.anchorReference
+    }
+    if (c?.type === 'textBlock' && c?.anchorReference) {
+      anchorReference = c?.anchorReference
+    }
+
+    //Returns pt-20 when applicable or empty string
+    const previousComponentIndex =
+      prevComponent?.type === 'anchorLink' ? index - 2 : index - 1
+
+    const previousComponentToCompare =
+      index === 0
+        ? ({
+            type:
+              data?.hero?.type === 'backgroundImage'
+                ? data?.hero?.type
+                : 'pageTitle',
+            heroHasBreadcrumbs: heroBackground?.heroHasBreadcrumbs,
+            designOptions: { background: heroBackground },
+          } as Component)
+        : (data?.content?.[previousComponentIndex] as unknown as Component)
+
+    const topSpacingClassName = applyPaddingTopIfApplicable(
+      c,
+      previousComponentToCompare,
+    )
+
+    const bottomSpacingClassName = 'pb-page-content'
+
+    //If textblocks follow each other reduce the pb-page-content to tie text closer together
+    // Consider after launch? or a setting on a sanity schema?
+    /*
+        const nextComponent = data?.content?.[index + 1]
+        const nextComponentIndex =
+      nextComponent?.type === 'anchorLink' ? index + 2 : index + 1    
+     if (
+      c?.type === 'textBlock' &&
+      data?.content?.[nextComponentIndex]?.type === 'textBlock'
+    ) {
+      bottomSpacingClassName = 'pb-12'
+    } */
+
+    /*     console.log(
+      `Applying top spacing: ${topSpacingClassName} to ${c?.type} with title ${Array.isArray(c?.title) ? toPlainText(c?.title) : c?.title}`,
+    ) */
+    const commonSpacingClassName = ` max-w-container`
+
+    return (
+      <ErrorBoundaryClient key={c.id} component={c}>
+        {mapSection(
+          index,
+          c,
+          anchorReference,
+          topSpacingClassName,
+          bottomSpacingClassName,
+          commonSpacingClassName,
+        )}
+      </ErrorBoundaryClient>
+    )
+  })
+
+  return content
+}

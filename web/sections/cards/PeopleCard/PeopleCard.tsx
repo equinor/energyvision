@@ -1,112 +1,125 @@
-import { Typography } from '@core/Typography'
-import { forwardRef, HTMLAttributes } from 'react'
-import { twMerge } from 'tailwind-merge'
-import { BaseLink, ResourceLink } from '@core/Link'
-import Image, { getSmallerThanPxLgSizes } from '../../../core/SanityImage/SanityImage'
-import { getLocaleFromName } from '../../../lib/localization'
-import { getUrlFromAction, urlFor } from '../../../common/helpers'
-import { PeopleCardData } from '../../../types/index'
-import { SocialProfileJsonLd } from 'next-seo'
+import { ProfilePageJsonLd } from 'next-seo'
+import { forwardRef, type HTMLAttributes } from 'react'
+import BaseLink from '@/core/Link/BaseLink'
+import ResourceLink from '@/core/Link/ResourceLink'
+import { Typography } from '@/core/Typography'
+import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
+import { twMerge } from '@/lib/twMerge/twMerge'
+import { urlForImage } from '@/sanity/lib/utils'
+import { Image } from '../../../core/Image/Image'
+import { getIsoFromName } from '../../../sanity/helpers/localization'
+import type { PeopleCardData } from '../../../types/index'
 
 export type PeopleCardProps = {
   data: PeopleCardData
+  //background?: ColorKeys
   hasSectionTitle: boolean
   variant?: 'default' | 'single'
 } & HTMLAttributes<HTMLDivElement>
 
 /**
- * Event Card component.
+ * People Card component.
  * Remember to wrap in ul and li if in a list.
  * */
-const PeopleCard = forwardRef<HTMLDivElement, PeopleCardProps>(function PeopleCard(
-  { data, className = '', variant = 'default', hasSectionTitle = true, ...rest },
-  ref,
-) {
-  const { name, image, title, department, isLink, phone, email, cv, enableStructuredMarkup } = data
-  const cvUrl = cv ? getUrlFromAction(cv) : ''
-  const linkClassNames = 'text-norwegian-woods-100 no-underline hover:underline text-sm'
+const PeopleCard = forwardRef<HTMLDivElement, PeopleCardProps>(
+  function PeopleCard(
+    {
+      data,
+      //background,
+      className = '',
+      variant = 'default',
+      hasSectionTitle = true,
+    },
+    ref,
+  ) {
+    const {
+      name,
+      image,
+      title,
+      department,
+      isLink,
+      phone,
+      email,
+      cv,
+      enableStructuredMarkup,
+    } = data
 
-  const variantClassNames = {
-    default: `grid-cols-1 grid-rows-[max-content_1fr] justify-items-center items-start gap-0`,
-    single: `grid-cols-[30%_60%] grid-rows-1 gap-4 lg:gap-8 items-start lg:items-center`,
-  }
+    const cvUrl = cv ? getUrlFromAction(cv) : ''
+    const linkClassNames =
+      'text-norwegian-woods-100 no-underline hover:underline text-sm'
 
-  return (
-    <>
-      <div
-        ref={ref}
-        className={twMerge(
-          `h-full
-        w-full
-        grid
-        ${variantClassNames[variant]}
-        shadow-card
-        rounded-sm
-        px-6
-        py-8
-        bg-white-100
-        text-slate-80
-        active:box-shadow-crisp-interact
-        active:shadow-white-100-interact
-        focus:outline-none
-        focus-visible:envis-outline
-        dark:text-white-100
-        dark:focus-visible:envis-outline-invert
-      `,
-          className,
-        )}
-        {...rest}
-      >
-        {image && (
-          <div
-            className={`relative ${variant === 'single' ? 'lg:p-4' : 'size-[150px]'} box-content ${
-              variant === 'single' ? '' : 'mb-10'
-            }`}
-          >
+    const variantContentClassNames = {
+      default: ``,
+      single: ``,
+    }
+
+    return (
+      <>
+        <div
+          ref={ref}
+          className={twMerge(
+            `focus-visible:envis-outline dark:focus-visible:envis-outline-invert flex h-full w-full items-center justify-start rounded-sm bg-white-100 px-6 py-8 text-slate-80 shadow-card focus:outline-hidden dark:text-white-100`,
+            variant === 'default' && 'gap-4 lg:flex-col lg:gap-8',
+            variant === 'single' &&
+              'flex-col gap-8 lg:w-fit lg:flex-row lg:gap-12',
+            className,
+          )}
+        >
+          {image && (
             <Image
               image={image}
-              maxWidth={400}
-              sizes={getSmallerThanPxLgSizes()}
-              aspectRatio="1:1"
-              quality={100}
-              className="rounded-full"
+              fill
+              grid='xs'
+              aspectRatio='1:1'
+              className={`${variant === 'single' ? 'size-40 lg:size-64' : 'size-32 lg:size-40'}`}
+              imageClassName='rounded-full'
             />
-          </div>
-        )}
-        <div className={`h-full grid grid-cols-1 grid-rows-[1fr_auto]`}>
+          )}
           <div
-            className={`flex flex-col ${
-              variant === 'single' ? 'items-start justify-center' : 'items-center justify-start text-center'
-            } max-w-prose`}
+            className={twMerge(
+              `flex flex-col items-start justify-center gap-3`,
+              variant === 'default' && 'lg:items-center lg:*:text-center',
+              variant === 'single' && 'lg:items-start',
+            )}
           >
             <Typography
               as={hasSectionTitle ? 'h3' : 'h2'}
               variant={`${variant === 'single' ? 'md' : 'sm'}`}
-              className="font-medium mb-4"
+              className='font-medium'
             >
               {name}
             </Typography>
-            {title && <div className="text-sm text-pretty text-slate-80 dark:text-white-100">{title}</div>}
-            {department && (
-              <div className="mt-2 text-sm text-pretty text-slate-80 dark:text-white-100">{department}</div>
+            {title && (
+              <div className='text-balance text-slate-80 text-sm dark:text-white-100'>
+                {title}
+              </div>
             )}
-          </div>
-
-          <div
-            className={`flex flex-col ${
-              variant === 'single' ? 'items-start justify-center' : 'items-center justify-start text-center'
-            }  gap-2 pt-6`}
-          >
+            {department && (
+              <div className='text-balance text-slate-80 text-sm dark:text-white-100'>
+                {department}
+              </div>
+            )}
             {isLink && cv && cvUrl ? (
               <ResourceLink
                 href={cvUrl}
-                locale={cv?.type === 'internalUrl' ? getLocaleFromName(cv?.link?.lang) : undefined}
-                variant="fit"
+                hrefLang={
+                  cv?.type === 'internalUrl'
+                    ? getIsoFromName(cv?.link?.lang)
+                    : undefined
+                }
+                variant='fit'
+                className='m-0 p-0'
               >
                 {cv?.label}
               </ResourceLink>
             ) : (
-              <>
+              <div
+                className={twMerge(
+                  `flex flex-col gap-1`,
+                  variant === 'default' && 'tems-start lg:lg:items-center',
+                  variant === 'single' && 'items-center',
+                )}
+              >
                 {email && (
                   <BaseLink href={`mailto:${email}`} className={linkClassNames}>
                     {email}
@@ -117,29 +130,20 @@ const PeopleCard = forwardRef<HTMLDivElement, PeopleCardProps>(function PeopleCa
                     {phone}
                   </BaseLink>
                 )}
-              </>
+              </div>
             )}
           </div>
         </div>
-      </div>
-      {enableStructuredMarkup && (
-        <SocialProfileJsonLd
-          type="Person"
-          name={name}
-          jobTitle={title}
-          url=""
-          sameAs={['']}
-          worksFor={{
-            type: 'Organization',
-            name: 'Equinor',
-            url: 'https://www.equinor.com',
-          }}
-          image={image ? urlFor(image).url : undefined}
-          telephone={phone}
-          email={email}
-        />
-      )}
-    </>
-  )
-})
+        {enableStructuredMarkup && (
+          <ProfilePageJsonLd
+            mainEntity={{
+              name: name,
+              ...(image && { image: urlForImage(image)?.toString() }),
+            }}
+          />
+        )}
+      </>
+    )
+  },
+)
 export default PeopleCard

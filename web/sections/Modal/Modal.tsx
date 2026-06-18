@@ -1,10 +1,11 @@
+'use client'
 import { close } from '@equinor/eds-icons'
-import { TransformableIcon } from '../../icons/TransformableIcon'
-import { forwardRef, useEffect, useMemo, useRef } from 'react'
-import { useIntl } from 'react-intl'
 import { mergeRefs } from '@equinor/eds-utils'
-import { Button } from '@core/Button'
-import envisTwMerge from '../../twMerge'
+import { useTranslations } from 'next-intl'
+import { forwardRef, useEffect, useMemo, useRef } from 'react'
+import { twMerge } from 'tailwind-merge'
+import { Button } from '@/core/Button'
+import { TransformableIcon } from '../../icons/TransformableIcon'
 
 export type ModalProps = {
   isOpen: boolean
@@ -20,8 +21,11 @@ const Modal = forwardRef<HTMLDialogElement, ModalProps>(function Modal(
   ref,
 ) {
   const modalRef = useRef<HTMLDialogElement>(null)
-  const combinedDialogRef = useMemo(() => mergeRefs<HTMLDialogElement>(modalRef, ref), [modalRef, ref])
-  const intl = useIntl()
+  const combinedDialogRef = useMemo(
+    () => mergeRefs<HTMLDialogElement>(modalRef, ref),
+    [ref],
+  )
+  const intl = useTranslations()
 
   useEffect(() => {
     if (isOpen) {
@@ -40,34 +44,16 @@ const Modal = forwardRef<HTMLDialogElement, ModalProps>(function Modal(
   return (
     <dialog
       ref={combinedDialogRef}
-      className={envisTwMerge(
-        `p-0
-        modal
-        bd-blurred
-        rounded-lg
-      `,
+      className={twMerge(
+        `m-auto rounded-lg p-0 opacity-0 backdrop:transition-all open:opacity-100 starting:open:opacity-0 open:transition-opacity open:backdrop:bg-north-sea-90/50 starting:open:backdrop:bg-transparent open:backdrop:backdrop-blur-sm-md starting:open:backdrop:backdrop-blur-sm-none`,
         dialogClassName,
       )}
       aria-label={title}
       onKeyDown={handleKeyDown}
     >
       <div
-        className={envisTwMerge(
-          `bg-white-100 
-          w-[90vw] 
-          lg:w-[997px] 
-          max-h-[90vh]
-          relative
-          flex 
-          flex-col 
-          items-start
-          py-4 
-          px-4 
-          overscroll-contain
-          overflow-y-auto
-          rounded-lg
-          md:shadow-lg
-          `,
+        className={twMerge(
+          `relative flex max-h-[90vh] w-[90vw] flex-col items-start overflow-y-auto overscroll-contain rounded-lg bg-white-100 px-4 py-4 md:shadow-lg lg:w-[997px]`,
           className,
         )}
         // Scrollable, needs to be keyboard accessible
@@ -75,14 +61,14 @@ const Modal = forwardRef<HTMLDialogElement, ModalProps>(function Modal(
         tabIndex={0}
       >
         <Button
-          variant="ghost"
-          className="ml-auto sticky top-0 p-3"
+          variant='ghost'
+          className='sticky top-0 ml-auto p-3'
           onClick={onClose}
-          aria-label={intl.formatMessage({ id: 'close', defaultMessage: 'Close' })}
+          aria-label={intl('close')}
         >
-          <TransformableIcon iconData={close} className="w-full h-auto" />
+          <TransformableIcon iconData={close} className='h-auto w-full' />
         </Button>
-        <div className="pl-2 pr-12 md:px-12 py-12">{children}</div>
+        <div className='py-12 pr-12 pl-2 md:px-12'>{children}</div>
       </div>
     </dialog>
   )

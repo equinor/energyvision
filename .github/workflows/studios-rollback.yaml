@@ -1,4 +1,6 @@
 name: Rollback studio to a previous version
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
 on:
   workflow_dispatch:
     inputs:
@@ -73,10 +75,7 @@ jobs:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       SANITY_STUDIO_BRANDMASTER_URL: ${{ secrets.SANITY_STUDIO_BRANDMASTER_URL }}
       SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE: ${{ secrets.SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE }}
-      SANITY_STUDIO_PREVIEW_SECRET: ${{ secrets.SANITY_STUDIO_PREVIEW_SECRET }}
       SANITY_STUDIO_API_DATASET: global
-      SANITY_STUDIO_API_TOKEN: ${{ secrets.SANITY_API_TOKEN }}
-      SANITY_STUDIO_HISTORY_API_TOKEN: ${{ secrets.SANITY_STUDIO_HISTORY_API_TOKEN }}
       SANITY_STUDIO_FOTOWARE_CLIENT_ID: ${{ secrets.SANITY_STUDIO_FOTOWARE_CLIENT_ID }}
       SANITY_STUDIO_FOTOWARE_TENANT_URL: ${{ secrets.SANITY_STUDIO_FOTOWARE_TENANT_URL }}
       SANITY_STUDIO_FOTOWARE_REDIRECT_ORIGIN: ${{ secrets.SANITY_STUDIO_FOTOWARE_REDIRECT_ORIGIN }}
@@ -86,7 +85,7 @@ jobs:
     steps:
       - name: Checkout 🛎️
         id: checkout-main
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: 'equinor/energyvision'
           fetch-depth: 0
@@ -97,7 +96,7 @@ jobs:
           echo "sha=$(git rev-parse ${{ github.event.inputs.image-sha }})" >> $GITHUB_OUTPUT
       - name: Checkout 🛎️
         id: checkout-specific-branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: 'equinor/energyvision'
           fetch-depth: 0
@@ -105,21 +104,19 @@ jobs:
       - name: Install pnpm 📦
         id: install-pnpm
         uses: pnpm/action-setup@v4
-        with:
-          version: '8.5.1'
       - name: Cache pnpm modules 💾
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 24
           cache: 'pnpm'
       - name: Install dependencies 🔧
         id: install-dependencies
         run: |
           pnpm install
-          pnpm sanityv3 install
+          pnpm studio install
       - name: Deploy 🚀
         id: deploy
-        working-directory: ./sanityv3
+        working-directory: ./studio
         run: |
           pnpm run deploy
         env:
@@ -139,12 +136,9 @@ jobs:
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       SANITY_STUDIO_API_PROJECT_ID: w3b4om14
-      SANITY_STUDIO_MUTATION_TOKEN: ${{ secrets.SANITY_STUDIO_SECRET_MUTATION_TOKEN }}
-      SANITY_STUDIO_PREVIEW_SECRET: ${{ secrets.SANITY_API_SECRET_TOKEN }}
       SANITY_STUDIO_BRANDMASTER_URL: ${{ secrets.SANITY_STUDIO_BRANDMASTER_URL }}
       SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE: ${{ secrets.SANITY_STUDIO_BRANDMASTER_PLUGIN_SOURCE }}
       SANITY_STUDIO_API_DATASET: secret
-      SANITY_STUDIO_API_TOKEN: ${{ secrets.SANITY_API_SECRET_TOKEN }}
       SANITY_STUDIO_FOTOWARE_CLIENT_ID: ${{ secrets.SANITY_STUDIO_FOTOWARE_CLIENT_ID }}
       SANITY_STUDIO_FOTOWARE_TENANT_URL: ${{ secrets.SANITY_STUDIO_FOTOWARE_TENANT_URL }}
       SANITY_STUDIO_FOTOWARE_REDIRECT_ORIGIN: ${{ secrets.SANITY_STUDIO_FOTOWARE_REDIRECT_ORIGIN }}
@@ -155,7 +149,7 @@ jobs:
     steps:
       - name: Checkout 🛎️
         id: checkout-main
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: 'equinor/energyvision'
           fetch-depth: 0
@@ -167,7 +161,7 @@ jobs:
           echo "sha=$(git rev-parse ${{ github.event.inputs.image-sha }})" >> $GITHUB_OUTPUT
       - name: Checkout 🛎️
         id: checkout-specific-branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: 'equinor/energyvision'
           fetch-depth: 0
@@ -175,21 +169,19 @@ jobs:
       - name: Install pnpm 📦
         id: install-pnpm
         uses: pnpm/action-setup@v4
-        with:
-          version: '8.5.1'
       - name: Cache pnpm modules 💾
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 24
           cache: 'pnpm'
       - name: Install dependencies 🔧
         id: install-dependencies
         run: |
           pnpm install
-          pnpm sanityv3 install
+          pnpm studio install
       - name: Deploy 🚀
         id: deploy
-        working-directory: ./sanityv3
+        working-directory: ./studio
         run: |
           pnpm run deploy
         env:
@@ -211,7 +203,7 @@ jobs:
     steps:
       - name: Checkout internal 🛎️
         id: checkout-internal
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: 'equinor/energyvision-internal'
           ref: main
@@ -248,7 +240,7 @@ jobs:
       DOCKER_BUILDKIT: 1
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       # MAIN PRODUCTION CLUSTER
       - name: Deploy to Radix  🚀

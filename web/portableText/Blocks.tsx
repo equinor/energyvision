@@ -1,0 +1,523 @@
+'use client'
+import {
+  PortableText,
+  type PortableTextBlockComponent,
+  type PortableTextListComponent,
+  type PortableTextMarkComponent,
+  type PortableTextReactComponents,
+  type PortableTextTypeComponent,
+} from '@portabletext/react'
+import type {
+  PortableTextBlock,
+  PortableTextBlockStyle,
+} from '@portabletext/types'
+import dynamic from 'next/dynamic'
+import type { ElementType } from 'react'
+import DownloadableLink from '@/core/Link/DownloadableLink'
+import { Link as CoreLink } from '@/core/Link/Link'
+import type { TypographyProps } from '@/core/Typography'
+import type {
+  TypographyGroups,
+  TypographyVariants,
+} from '@/core/Typography/variants'
+import { twMerge } from '@/lib/twMerge/twMerge'
+import { FactBox } from '@/sections/FactBox/FactBox'
+import { FigureWithLayout, Quote } from './components'
+import { Block } from './components/Block'
+import { Footnote } from './components/Footnote'
+import { Link } from './components/Link'
+import { List } from './components/List'
+import { Thumbnail } from './Thumbnail'
+
+export type BlockType = Record<
+  PortableTextBlockStyle,
+  PortableTextBlockComponent | undefined
+>
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type MarkType = Record<
+  string,
+  PortableTextMarkComponent<any> | undefined
+>
+export type TypesType = Record<
+  string,
+  PortableTextTypeComponent<any> | undefined
+>
+export type ListType = Record<'number' | 'bullet', PortableTextListComponent>
+
+type TypeProps = {
+  value?: any
+  children?: PortableTextBlock[]
+}
+type TWLineClamps = {
+  [key: number]: string
+}
+
+const IFrame = dynamic(() => import('@/core/IFrame/IFrame'))
+
+// Ingress only has normal and small text
+// Text Block Text Content has normal, small text and heading 3
+// News Content has normal, small text and heading 2 and 3 -> Heading group article
+const getBlockComponents = ({
+  as,
+  className = '',
+  group,
+  variant,
+  id,
+  useDisplay = false,
+}: {
+  as?: ElementType
+  className?: string
+  group?: TypographyGroups
+  variant?: TypographyVariants
+  //If blocks length is just 1, like a single h1 then have to pass id if its an anchor reference
+  id?: string
+  useDisplay?: boolean
+}) => {
+  return {
+    normal: ({ children }: TypeProps) => {
+      return (
+        <Block
+          as={as}
+          group={group}
+          variant={variant ?? 'body'}
+          className={className}
+          {...(id && { id: id })}
+        >
+          {/**@ts-ignore:todo */}
+          {children}
+        </Block>
+      )
+    },
+    smallText: ({ children }: TypeProps) => {
+      return (
+        <Block as={as} group={group} variant='small' className={className}>
+          {/**@ts-ignore:todo */}
+          {children}
+        </Block>
+      )
+    },
+    displayText: ({ children }: PortableTextBlock) => {
+      return (
+        <Block
+          as={as}
+          group='display'
+          variant='h2_base'
+          className={className}
+          {...(id && { id: id })}
+        >
+          {/**@ts-ignore:todo */}
+          {children}
+        </Block>
+      )
+    },
+    largeText: ({ children }: PortableTextBlock) => {
+      return (
+        <Block
+          as={as}
+          group={useDisplay ? 'display' : 'heading'}
+          variant={useDisplay ? 'h2_lg' : '2xl'}
+          className={className}
+          {...(id && { id: id })}
+        >
+          {/**@ts-ignore:todo */}
+          {children}
+        </Block>
+      )
+    },
+    extraLargeText: ({ children }: PortableTextBlock) => {
+      return (
+        <Block
+          as={as}
+          group='display'
+          variant='h2_xl'
+          className={className}
+          {...(id && { id: id })}
+        >
+          {/**@ts-ignore:todo */}
+          {children}
+        </Block>
+      )
+    },
+    h2: ({ children }: TypeProps) => {
+      //expect 'article' as group when news other can be undefined group and fall back to heading
+      return (
+        <Block
+          as={as}
+          group={group ?? 'heading'}
+          variant='h2'
+          className={className}
+          {...(id && { id: id })}
+        >
+          {/**@ts-ignore:todo */}
+          {children}
+        </Block>
+      )
+    },
+    h3: ({ children }: TypeProps) => (
+      <Block
+        as={as}
+        group={group ?? 'heading'}
+        variant='h3'
+        className={className}
+        {...(id && { id: id })}
+      >
+        {/**@ts-ignore:todo */}
+        {children}
+      </Block>
+    ),
+    h4: ({ children }: TypeProps) => (
+      <Block
+        as={as}
+        group={group ?? 'heading'}
+        variant='h4'
+        className={className}
+        {...(id && { id: id })}
+      >
+        {/**@ts-ignore:todo */}
+        {children}
+      </Block>
+    ),
+  }
+}
+
+const markSerializers: MarkType = {
+  //@ts-ignore:todo
+  sub: ({ children }: TypeProps) => <sub>{children}</sub>,
+  //@ts-ignore:todo
+  sup: ({ children }: TypeProps) => <sup>{children}</sup>,
+  //@ts-ignore:todo
+  s: ({ children }: TypeProps) => <s>{children}</s>,
+  link: ({ children, value }: any) => {
+    return (
+      <Link type='externalUrl' value={value}>
+        {children}
+      </Link>
+    )
+  },
+  internalLink: ({ children, value }: any) => {
+    return (
+      <Link type='internalUrl' value={value}>
+        {children}
+      </Link>
+    )
+  },
+  pageAnchor: ({ children, value }: any) => {
+    return (
+      <CoreLink type='internalUrl' href={`#${value?.anchorId}`}>
+        {children}
+      </CoreLink>
+    )
+  },
+  footnote: () => null,
+  //@ts-ignore:todo
+  highlight: ({ children }: TypeProps) => {
+    return (
+      <span
+        data-highlight
+        className={'text-energy-red-100 dark:text-spruce-wood-100'}
+      >
+        {/*@ts-ignore:todo*/}
+        {children}
+      </span>
+    )
+  },
+  strong: ({ children }: any) => (
+    <strong className='font-semibold'>{children}</strong>
+  ),
+  attachment: ({ children, value }: any) => {
+    const { attachment } = value
+    return (
+      <DownloadableLink
+        type='simple'
+        variant='fit'
+        linkType='downloadableFile'
+        file={{
+          ...(attachment?.file && attachment?.file),
+          ...(attachment && attachment),
+          label: attachment?.label,
+        }}
+      >
+        {children}
+      </DownloadableLink>
+    )
+  },
+}
+
+const getListComponents = ({
+  group,
+}: {
+  className?: string
+  group?: TypographyGroups
+  variant?: TypographyVariants
+}) => {
+  return {
+    bullet: ({ children }: TypeProps) => {
+      return (
+        <List as='ul' group={group}>
+          {/*@ts-ignore*/}
+          {children}
+        </List>
+      )
+    },
+    number: ({ children }: TypeProps) => (
+      <List as='ol' group={group}>
+        {/*@ts-ignore*/}
+        {children}
+      </List>
+    ),
+  }
+}
+
+const typesSerializers = {
+  positionedInlineImage: (props: any) => <FigureWithLayout {...props} />,
+  pullQuote: (props: any) => <Quote {...props} />,
+  thumbnail: (props: any) => <Thumbnail {...props} />,
+}
+
+const footnoteSerializer = {
+  footnote: (props: any) => {
+    return <Footnote {...props} />
+  },
+}
+
+export type BlocksProps = {
+  value: PortableTextBlock[]
+  blocksComponents?: Partial<PortableTextReactComponents>
+  marks?: MarkType
+  types?: TypesType
+  /**
+   * Extend components sent for non blocks
+   */
+  components?:
+    | PortableTextReactComponents
+    | Partial<PortableTextReactComponents>
+  /** dont wrap inline blocks in a div. Merges classname and blockclassname, sends id directly to block */
+  noWrapper?: boolean
+  className?: string
+  /** Extended or overrides to the block serializers  */
+  blockClassName?: string
+  /** If needed to connect with aria-describedby and such */
+  id?: string
+  /** Use to clamp lines on number */
+  clampLines?: 3 | 4 | 5
+  includeFootnotes?: boolean
+  noInvert?: boolean
+  useDisplay?: boolean
+} & TypographyProps
+
+const inlineBlockTypes = [
+  'block',
+  'positionedInlineImage',
+  'pullQuote',
+  'thumbnail',
+]
+
+const twLineClampUtility: TWLineClamps = {
+  3: 'line-clamp-3',
+  4: 'line-clamp-4',
+  5: 'line-clamp-5',
+}
+
+export default function Blocks({
+  group,
+  variant,
+  value,
+  blocksComponents,
+  marks: marksComponents,
+  components,
+  className = '',
+  blockClassName = '',
+  id,
+  clampLines,
+  includeFootnotes = false,
+  useDisplay = false,
+  noWrapper = false,
+  as,
+}: BlocksProps) {
+  let div: PortableTextBlock[] = []
+  if (!value) return
+
+  return (
+    //@ts-ignore:todo
+    value.map(
+      (block: PortableTextBlock, i: number, blocks: PortableTextBlock[]) => {
+        // Normal text blocks (p, h1, h2, etc.) — these are grouped so we can wrap them in a prose div
+        if (inlineBlockTypes.includes(block._type)) {
+          const hasAttachment = block?.markDefs?.some(
+            mark => mark?._type === 'attachment',
+          )
+
+          const blocksGroup = (
+            hasAttachment ? 'plain' : group
+          ) as TypographyGroups
+
+          const blocksVariant = (
+            hasAttachment ? 'div' : variant
+          ) as TypographyVariants
+
+          const componentsProps: Partial<PortableTextReactComponents> = {
+            //@ts-ignore:todo
+            block: {
+              ...getBlockComponents({
+                group: blocksGroup,
+                variant: blocksVariant,
+                useDisplay,
+                as,
+                className: twMerge(
+                  clampLines && twLineClampUtility[clampLines],
+                  noWrapper && className,
+                  blockClassName,
+                ),
+                ...(noWrapper && { id }),
+              }),
+              ...blocksComponents,
+            },
+            types: { ...typesSerializers },
+            marks: {
+              ...markSerializers,
+              ...marksComponents,
+              ...(includeFootnotes && footnoteSerializer),
+            },
+            //@ts-ignore:todo
+            list: {
+              ...getListComponents({
+                ...(group === 'article' && {
+                  group: 'article',
+                }),
+              }),
+            },
+          }
+
+          if (noWrapper) {
+            return (
+              <PortableText
+                key={block._key}
+                value={block}
+                components={componentsProps}
+                onMissingComponent={(message, options) => {
+                  console.warn(
+                    `${message},type:${options.type},nodeType:${options.nodeType}`,
+                  )
+                  return false
+                }}
+              />
+            )
+          }
+          div.push(block)
+          // If the next block is also text/pullQuote, group it with this one
+          if (inlineBlockTypes.includes(blocks[i + 1]?._type)) return null
+          // Otherwise, render the group of text blocks we have
+          const value = div
+          //const CustomElementType = as ?? (`div` as React.ElementType)
+          div = []
+
+          /*
+          Find out why i, borghild put asOneElementTYpe           
+          return asOneElementType && as ? (
+            <CustomElementType key={block._key} className={className} id={id}>
+              <PortableText
+                value={value}
+                components={componentsProps}
+                onMissingComponent={(message, options) => {
+                  console.warn(
+                    `${message},type:${options.type},nodeType:${options.nodeType}`,
+                  )
+                  return false
+                }}
+              />
+            </CustomElementType>
+          ) : ( */
+          return (
+            <div
+              key={block._key}
+              className={`${!noWrapper ? className : ''}`}
+              id={id}
+            >
+              <PortableText
+                value={value}
+                components={componentsProps}
+                onMissingComponent={(message, options) => {
+                  console.warn(
+                    `${message},type:${options.type},nodeType:${options.nodeType}`,
+                  )
+                  return false
+                }}
+              />
+            </div>
+          )
+          /*           ) */
+        }
+        /** Factbox block */
+        if (block._type === 'factbox') {
+          let marginOverride = ''
+          // If the next block is a factbox, remove margin bottom
+          if (blocks[i + 1]?._type === 'factbox') {
+            marginOverride = 'mb-0'
+          }
+          // If the previous block was a factbox, remove margin top
+          if (blocks[i - 1]?._type === 'factbox') {
+            marginOverride = 'mt-0'
+          }
+          return (
+            <PortableText
+              key={block._key}
+              value={block}
+              components={{
+                types: {
+                  factbox: props => (
+                    //@ts-ignore:todo
+                    <FactBox className={`${marginOverride}`} {...props} />
+                  ),
+                },
+              }}
+            />
+          )
+        }
+        /** Basic iframe block */
+        if (block._type === 'basicIframe') {
+          let marginOverride = ''
+          // If the next block is a basicIframe, remove margin bottom
+          if (blocks[i + 1]?._type === 'basicIframe') {
+            marginOverride = 'mb-0'
+          }
+          // If the previous block was a basicIframe, remove margin top
+          if (blocks[i - 1]?._type === 'basicIframe') {
+            marginOverride = 'mt-0'
+          }
+
+          return (
+            <PortableText
+              key={block._key}
+              value={block}
+              components={{
+                types: {
+                  //@ts-ignore:todo
+                  basicIframe: props => {
+                    const { value } = props
+                    return (
+                      <IFrame
+                        {...value}
+                        className={`px-layout-md ${marginOverride}`}
+                      />
+                    )
+                  },
+                },
+              }}
+            />
+          )
+        }
+        // Non-text blocks (modules, sections, etc.) — note that these can recursively render text
+        // blocks again
+        return (
+          <PortableText
+            key={block._key}
+            value={block}
+            components={{
+              ...components,
+            }}
+          />
+        )
+      },
+    )
+  )
+}

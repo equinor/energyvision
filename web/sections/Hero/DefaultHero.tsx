@@ -1,63 +1,112 @@
-import type { ImageWithCaptionData } from '../../types/index'
-import DefaulHeroImage from './DefaultHeroImage'
-import { PortableTextBlock } from '@portabletext/types'
-import { Heading } from '@core/Typography'
-import MagazineDate from '@templates/magazine/MagazineDate'
-import { Fragment } from 'react'
+import type { PortableTextBlock } from '@portabletext/types'
+import type { HTMLAttributes, ReactNode } from 'react'
+import type { Figure, ImageRatioKeys } from '@/core/Image/imageUtilities'
+import { Picture } from '@/core/Picture/Picture'
+import { Typography } from '@/core/Typography'
+import { twMerge } from '@/lib/twMerge/twMerge'
+import Blocks from '@/portableText/Blocks'
+import MagazineTagBar, {
+  type MagazineTag,
+} from '../MagazineTags/MagazineTagBar'
 
-type Props = {
-  title?: PortableTextBlock[]
-  image?: ImageWithCaptionData
+export type DefaultHeroProps = {
+  title?: PortableTextBlock[] | string
+  /**Override title wrapper classnames */
+  titleClassName?: string
+  /**Override figure classnames if caption/attribution */
+  figureClassName?: string
+  /**Override figcaption classnames */
+  figCaptionClassName?: string
+  /**Override image wrapper classnames */
+  imageWrapperClassName?: string
+  /**Override image classnames */
+  imageClassName?: string
+  /* For news published information */
+  subTitle?: ReactNode
+  figure?: Figure
   isBigTitle?: boolean
+  /**bg-<colorkey> */
+  background?: string
   bigTitle?: PortableTextBlock[]
-  /* Magazine */
-  tags?: string[]
-  publishedDate?: string
-}
+  ratio?: ImageRatioKeys
+  /* Magazine promoted tagline */
+  magazineTags?: MagazineTag[]
+} & HTMLAttributes<HTMLElement>
 
-export const DefaultHero = ({ title, image, isBigTitle, bigTitle, tags, publishedDate }: Props) => {
-  const spacingClassNames = isBigTitle ? 'mx-auto px-layout-sm max-w-viewport' : 'max-w-[1186px] mx-auto'
-  const Wrapper = isBigTitle ? Fragment : (`div` as React.ElementType)
+export const DefaultHero = ({
+  title,
+  subTitle,
+  titleClassName = '',
+  background,
+  figure,
+  className = '',
+  magazineTags,
+  imageWrapperClassName = '',
+  figCaptionClassName = '',
+  imageClassName = '',
+  ratio = '2:1',
+}: DefaultHeroProps) => {
+  //find variant in title
+  const px = 'px-layout-sm lg:px-layout-md'
+  const isPlainTitle =
+    title && (title === 'string' || typeof title === 'string')
+  const isColorBg = background && background !== 'bg-white-100'
+
   return (
-    <>
-      <Wrapper className={`${isBigTitle ? '' : 'py-10 px-layout-md'}`}>
-        {isBigTitle && (
-          <>
-            <div className={`pt-10 pr-16 pb-0 ${spacingClassNames}`}>
-              {title && <Heading value={title} as="h1" variant="xl" />}
-            </div>
-            <div className={`py-10 ${spacingClassNames}`}>
-              {bigTitle && <Heading value={bigTitle} as="h2" variant="3xl" />}
-            </div>
-          </>
+    <div className={twMerge(className, `pb-4 lg:pb-6`)}>
+      <div
+        className={twMerge(
+          `pt-10 lg:pt-16 ${isColorBg ? `${background} pb-news-banner-vertical` : ''}`,
+          titleClassName,
         )}
-
-        {!isBigTitle && (
-          <>{title && <Heading className={`${spacingClassNames} pb-10`} value={title} as="h1" variant="3xl" />}</>
-        )}
-
-        {publishedDate && <MagazineDate classname={spacingClassNames} firstPublishedAt={publishedDate} />}
-
-        {tags && tags?.length > 0 && (
-          <div className={`${spacingClassNames} pb-12`}>
-            {tags && tags?.length > 0 && (
-              <ul className="flex flex-wrap gap-y-4 divide-x-2 divide-energy-red-100">
-                {tags.map((tag: string) => {
-                  return (
-                    <li
-                      key={`magazine_tag_key_${tag}`}
-                      className="inline-block text-sm font-medium pl-3 pr-3 first:pl-0 lg:text-xs whitespace-nowrap"
-                    >
-                      {tag}
-                    </li>
-                  )
-                })}
-              </ul>
+      >
+        <div className={twMerge('mx-auto max-w-content', px)}>
+          {title &&
+            (isPlainTitle ? (
+              <Typography
+                group='heading'
+                variant='h1'
+                id='mainTitle'
+                tabIndex={-1}
+              >
+                {title}
+              </Typography>
+            ) : (
+              <Blocks
+                id='mainTitle'
+                value={title as PortableTextBlock[]}
+                group='heading'
+                variant='h1'
+                tabIndex={-1}
+              />
+            ))}
+          {subTitle && subTitle}
+        </div>
+      </div>
+      <div className='mx-auto max-w-content'>
+        {figure && (
+          <div
+            className={twMerge(
+              `lg:px-layout-sm`,
+              isColorBg && 'lg:-mt-news-banner-vertical',
             )}
+          >
+            <Picture
+              image={figure.image}
+              desktopAspectRatio={ratio}
+              figCaptionClassName={twMerge('px-layout-sm', figCaptionClassName)}
+              caption={figure?.caption}
+              attribution={figure?.attribution}
+              figureClassName={twMerge(`w-full`, imageWrapperClassName)}
+              className={twMerge('', imageClassName)}
+              withLayoutPx={false}
+            />
           </div>
         )}
-      </Wrapper>
-      {image && <DefaulHeroImage className="pt-0 px-layout-sm pb-16 max-w-viewport mx-auto" data={image} />}
-    </>
+        {magazineTags && magazineTags?.length > 0 && (
+          <MagazineTagBar tags={magazineTags} />
+        )}
+      </div>
+    </div>
   )
 }

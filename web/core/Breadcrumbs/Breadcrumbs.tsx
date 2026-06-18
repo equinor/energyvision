@@ -1,81 +1,115 @@
-import { BreadcrumbsList } from './index'
-import { BackgroundContainer, BackgroundContainerProps } from '@core/Backgrounds'
+'use client'
+import { useLocale } from 'next-intl'
 import { BreadcrumbJsonLd } from 'next-seo'
-import { useRouter } from 'next/router'
+import { forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
-import NextLink from 'next/link'
-import type { Breadcrumb } from '../../types'
+import { defaultLanguage, domain } from '@/languageConfig'
+import { getLocaleFromIso } from '@/sanity/helpers/localization'
+import type { ColorKeys } from '@/styles/colorKeyToUtilityMap'
+import BaseLink from '../Link/BaseLink'
+import { BreadcrumbsList } from './BreadcrumbList'
+import { BreadcrumbsListItem } from './BreadcrumbListItem'
 
-type BreadcrumbsProps = {
+export type Breadcrumb = {
+  label: string
+  //without route locale
   slug: string
+  //with route locale for other than defaultLanguage
+  href: string
+  type?: string
+}
+export type BreadcrumbData = {
+  enableBreadcrumbs: boolean
   useCustomBreadcrumbs: boolean
   defaultBreadcrumbs: Breadcrumb[]
   customBreadcrumbs: Breadcrumb[]
-  className?: string
-} & BackgroundContainerProps
-
-const buildJsonLdElements = (crumbs: Breadcrumb[], router: ReturnType<typeof useRouter>) => {
-  const { pathname, locale } = router
-
-  return crumbs.map((item, index) => ({
-    position: index + 1,
-    name: item.label,
-    item: `${pathname}/${item.slug}`,
-  }))
 }
 
-const capitalize = (text: string): string => text?.[0].toUpperCase() + text?.slice(1)
+const buildJsonLdElements = (crumbs: Breadcrumb[]) => {
+  return crumbs.map((item, index) => {
+    return {
+      position: index + 1,
+      name: item.label,
+      item: `${domain}${item.href}`,
+    }
+  })
+}
 
-const parseBreadcrumbs = (crumbs: Breadcrumb[]) => {
+const capitalize = (text: string): string =>
+  text?.[0].toUpperCase() + text?.slice(1)
+
+const parseBreadcrumbs = (crumbs: Breadcrumb[], isoLang: string) => {
   return crumbs
-    .filter((item) => item?.slug && item?.label)
-    .map((item) => {
+    .filter(item => item?.slug && item?.label)
+    .map(item => {
+      console.log('parseBreadcrumbs item', item)
       return {
         ...item,
+        href:
+          isoLang !== defaultLanguage.iso
+            ? `/${getLocaleFromIso(isoLang)}${item.slug}`
+            : item.slug,
         label: capitalize(item.label),
       }
     })
 }
 
-export const Breadcrumbs = ({
-  slug,
-  useCustomBreadcrumbs,
-  defaultBreadcrumbs,
-  customBreadcrumbs,
-  background,
-  className = '',
-}: BreadcrumbsProps) => {
-  const router = useRouter()
-  const crumbs =
-    useCustomBreadcrumbs && customBreadcrumbs.length >= 3
-      ? parseBreadcrumbs(customBreadcrumbs)
-      : parseBreadcrumbs(defaultBreadcrumbs)
+type BreadcrumbsProps = {
+  currentSlug?: string
+  className?: string
+  background?: ColorKeys
+} & Omit<BreadcrumbData, 'enableBreadcrumbs'>
 
-  if (crumbs.length < 2) return null
+export const Breadcrumbs = forwardRef<HTMLElement, BreadcrumbsProps>(
+  (
+    {
+      currentSlug,
+      useCustomBreadcrumbs,
+      defaultBreadcrumbs,
+      customBreadcrumbs,
+      background,
+      className = '',
+    },
+    ref,
+  ) => {
+    const isoLang = useLocale()
+    const crumbs =
+      useCustomBreadcrumbs && customBreadcrumbs.length >= 3
+        ? parseBreadcrumbs(customBreadcrumbs, isoLang)
+        : parseBreadcrumbs(defaultBreadcrumbs, isoLang)
 
-  return (
-    <BackgroundContainer as="nav" aria-label="Breadcrumbs" background={background} renderFragmentWhenPossible>
-      <BreadcrumbsList className={twMerge(`py-4 lg:py-8`, className)}>
-        {crumbs.map((item) => {
-          const isActive = item.slug === slug
-          const label = item.label
-          return (
-            <BreadcrumbsList.BreadcrumbsListItem key={item.slug} active={isActive}>
-              {isActive ? (
-                <span aria-current="page">{label}</span>
-              ) : (
-                <NextLink
-                  href={item.slug}
-                  className="hover:underline no-underline focus:outline-none focus-visible:envis-outline dark:focus-visible:envis-outline-invert"
-                >
-                  {label}
-                </NextLink>
-              )}
-            </BreadcrumbsList.BreadcrumbsListItem>
-          )
-        })}
-      </BreadcrumbsList>
-      <BreadcrumbJsonLd itemListElements={buildJsonLdElements(crumbs, router)} />
-    </BackgroundContainer>
-  )
-}
+    if (crumbs.length < 2) return null
+
+    return (
+      <nav
+        ref={ref}
+        aria-label='Breadcrumbs'
+        className={`mx-auto max-w-content px-layout-sm lg:px-layout-lg ${background ?? ''}`}
+      >
+        <BreadcrumbsList className={twMerge(`py-6 lg:py-8`, className)}>
+          {crumbs.map(item => {
+            // doesnt contain /locale/ in slug, add locale to href
+            const isActive = item.slug === currentSlug
+            const label = item.label
+
+            return (
+              <BreadcrumbsListItem key={item.slug} active={isActive}>
+                {isActive ? (
+                  <span aria-current='page'>{label}</span>
+                ) : (
+                  <BaseLink
+                    href={item.href}
+                    className='no-underline hover:underline'
+                  >
+                    {label}
+                  </BaseLink>
+                )}
+              </BreadcrumbsListItem>
+            )
+          })}
+        </BreadcrumbsList>
+        <BreadcrumbJsonLd items={buildJsonLdElements(crumbs)} />
+      </nav>
+    )
+  },
+)

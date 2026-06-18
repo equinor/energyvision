@@ -1,9 +1,10 @@
+'use client'
 import { useRef, useState, ChangeEvent, ComponentProps, useId } from 'react'
 import { useSearchBox, UseSearchBoxProps } from 'react-instantsearch'
 import { close, search } from '@equinor/eds-icons'
-import { useIntl } from 'react-intl'
 import { Icon } from '@equinor/eds-core-react'
-import envisTwMerge from '../../twMerge'
+import { useTranslations } from 'next-intl'
+import { twMerge } from 'tailwind-merge'
 
 type Variants = 'default' | 'inverted'
 export type SearchBoxProps = {
@@ -34,7 +35,7 @@ export function SearchBox({
   placeholder,
   ...rest
 }: SearchBoxProps) {
-  const intl = useIntl()
+  const intl = useTranslations()
   const { query, refine, clear } = useSearchBox({ ...rest, queryHook })
   const [value, setValue] = useState(query)
   const inputRef = useRef<HTMLInputElement>(null)
@@ -84,9 +85,8 @@ export function SearchBox({
       {label && (
         <label
           htmlFor={searchId}
-          className={envisTwMerge(
-            `col-span-2 row-start-1 row-end-1
-            text-slate-80 dark:text-white-100 text-base leading-inherit font-normal max-w-text py-4`,
+          className={twMerge(
+            `col-span-2 row-start-1 row-end-1 max-w-text py-4 text-base leading-inherit font-normal text-slate-80 dark:text-white-100`,
             labelClassName,
           )}
         >
@@ -96,46 +96,32 @@ export function SearchBox({
       <div className={`${label ? 'row-start-2 row-end-2' : ''} relative flex items-center`}>
         <input
           {...(!label && {
-            'aria-label': intl.formatMessage({ id: 'search', defaultMessage: 'Search' }),
+            'aria-label': intl('search'),
           })}
           ref={inputRef}
           id={searchId}
           autoComplete="off"
           autoCorrect="off"
           autoCapitalize="off"
-          placeholder={placeholder ?? intl.formatMessage({ id: 'search', defaultMessage: 'Search' })}
+          //It is the only element on the page
+          //eslint-disable-next-line jsx-a11y/no-autofocus
+          autoFocus={true}
+          placeholder={placeholder ?? intl('search')}
           spellCheck={false}
           maxLength={512}
           type="search"
           value={value}
           onChange={onChange}
-          className={envisTwMerge(
-            `flex-grow
-            rounded-s-xs
-            rounded-e-none
-            focus:outline-none
-            text-white-100
-            pl-6
-            pr-12
-            py-4
-            ${inputVariantClassName[variant]}
-            `,
+          className={twMerge(
+            `grow rounded-s-xs rounded-e-none bg-white-100 py-4 pr-12 pl-6 text-white-100 focus:outline-hidden ${inputVariantClassName[variant]} `,
             className,
           )}
         />
         <button
           type="reset"
-          aria-label={intl.formatMessage({ id: 'reset', defaultMessage: 'Reset' })}
-          className={envisTwMerge(
-            `${value.length === 0 ? 'hidden' : 'flex'} 
-            absolute 
-            right-2 
-            rounded-full 
-            size-8 
-            focus:outline-none 
-            justify-center
-            items-center
-            ${resetVariantClassName[variant]}`,
+          aria-label={intl('search_reset')}
+          className={twMerge(
+            `${value.length === 0 ? 'hidden' : 'flex'} absolute right-2 size-8 items-center justify-center rounded-full focus:outline-hidden ${resetVariantClassName[variant]}`,
             resetClassName,
           )}
         >
@@ -144,16 +130,9 @@ export function SearchBox({
       </div>
       <button
         type="submit"
-        aria-label={intl.formatMessage({ id: 'search_submit', defaultMessage: 'Submit search' })}
-        className={envisTwMerge(
-          `h-inherit 
-          rounded-e-xs
-          px-4
-          py-3
-          focus:outline-none
-          ${label ? 'row-start-2 row-end-2' : ''}
-          ${submitVariantClassName[variant]}
-          `,
+        aria-label={intl('search_submit')}
+        className={twMerge(
+          `h-inherit rounded-e-xs px-4 py-3 focus:outline-hidden ${label ? 'row-start-2 row-end-2' : ''} ${submitVariantClassName[variant]} `,
           submitClassName,
         )}
       >

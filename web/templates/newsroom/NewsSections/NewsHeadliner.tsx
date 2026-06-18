@@ -1,79 +1,100 @@
-import { FormattedDate, FormattedTime } from '@core/FormattedDateTime'
-import { forwardRef, HTMLAttributes } from 'react'
-import { BaseLink } from '@core/Link'
-import { Typography } from '@core/Typography'
-import Image, { getPxSmSizes, getSmallerThanPxLgSizes } from '../../../core/SanityImage/SanityImage'
+'use client'
+import type { SanityImageObject } from '@sanity/image-url'
 import NextImage from 'next/image'
-import envisTwMerge from '../../../twMerge'
-import { NewsRoomNewsItem } from '../../../types/algoliaIndexPage'
-import { SanityImageObject } from '@sanity/image-url/lib/types/types'
-import Blocks from '../../../pageComponents/shared/portableText/Blocks'
+import { useLocale } from 'next-intl'
+import { forwardRef, type HTMLAttributes } from 'react'
+import { twMerge } from 'tailwind-merge'
+import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
+import { getSmallerThanPxLgSizes } from '@/core/Image/imageUtilities'
+import { BaseLink } from '@/core/Link/BaseLink'
+import { Typography } from '@/core/Typography'
+import { defaultLanguage } from '@/languageConfig'
+import { getLocaleFromIso } from '@/sanity/helpers/localization'
+import { Image } from '../../../core/Image/Image'
+import Blocks from '../../../portableText/Blocks'
+import type { NewsRoomNewsItem } from '../../../types/algoliaIndexPage'
 
 export type NewsHeadlinerProps = {
   data: NewsRoomNewsItem
   fallbackImage?: SanityImageObject
 } & HTMLAttributes<HTMLLIElement>
 
-const NewsHeadliner = forwardRef<HTMLLIElement, NewsHeadlinerProps>(function NewsHeadliner(
-  { data, fallbackImage, className = '', ...rest },
-  ref,
-) {
-  const { slug, title, ingress, publishDateTime, heroImage, thumbnailUrl } = data
-
-  return (
-    <section ref={ref} {...rest} className={envisTwMerge('', className)}>
-      <BaseLink href={slug} className="group flex flex-col gap-2 pb-6">
-        {(heroImage?.image?.asset || fallbackImage || thumbnailUrl) && (
-          <div className="aspect-video relative max-h-[324px] mb-2">
-            {thumbnailUrl ? (
-              <NextImage
-                className="relative rounded-xs h-full w-full object-cover"
-                src={thumbnailUrl}
-                alt=""
-                sizes={getSmallerThanPxLgSizes()}
-                role={'presentation'}
-              />
-            ) : (
-              (heroImage?.image?.asset || fallbackImage) && (
-                <Image
-                  //@ts-ignore: TODO Fix SanityImage to take SanityImageObject
-                  image={heroImage?.image?.asset ? heroImage?.image : fallbackImage}
-                  aria-hidden
-                  aspectRatio="16:9"
-                  sizes={getPxSmSizes()}
-                  fill
-                  className="rounded-xs"
+const NewsHeadliner = forwardRef<HTMLLIElement, NewsHeadlinerProps>(
+  function NewsHeadliner(
+    { data, fallbackImage, className = '', ...rest },
+    ref,
+  ) {
+    const { slug, title, ingress, publishDateTime, heroImage, thumbnailUrl } =
+      data
+    const lang = useLocale()
+    const locale = getLocaleFromIso(lang)
+    return (
+      <section ref={ref} {...rest} className={twMerge('', className)}>
+        <BaseLink
+          href={`${locale !== defaultLanguage.locale && !slug.startsWith('/no') ? `/${locale}` : ''}${slug}`}
+          className='group flex flex-col gap-2 pb-6'
+        >
+          {(heroImage?.image?.asset || fallbackImage || thumbnailUrl) && (
+            <div className='relative mb-2 aspect-video max-h-[324px]'>
+              {thumbnailUrl ? (
+                <NextImage
+                  className='relative h-full w-full rounded-2xs object-cover'
+                  src={thumbnailUrl}
+                  alt=''
+                  sizes={getSmallerThanPxLgSizes()}
+                  role={'presentation'}
                 />
-              )
-            )}
-          </div>
-        )}
-        {publishDateTime && (
-          <div>
-            <FormattedDate datetime={publishDateTime} uppercase className="text-2xs font-normal leading-normal" />
-            <span className="mx-2 text-2xs font-normal leading-normal pb-1">|</span>
-            <FormattedTime
-              small
-              timezone
-              datetime={publishDateTime}
-              className="text-2xs font-normal leading-normal pb-1"
+              ) : (
+                (heroImage?.image?.asset || fallbackImage) && (
+                  <Image
+                    //@ts-ignore: TODO Fix SanityImage to take SanityImageObject
+                    image={
+                      heroImage?.image?.asset ? heroImage?.image : fallbackImage
+                    }
+                    aria-hidden
+                    grid='sm'
+                    fill
+                    className='rounded-2xs'
+                  />
+                )
+              )}
+            </div>
+          )}
+          {publishDateTime && (
+            <div className='flex align-center'>
+              <FormattedDateTime
+                datetime={publishDateTime}
+                uppercase
+                className='pb-1 font-normal text-2xs leading-normal'
+              />
+              <span className='mx-2 font-normal leading-normal'>|</span>
+              <FormattedDateTime
+                variant='time'
+                datetime={publishDateTime}
+                className='pb-1 font-normal text-2xs leading-normal'
+              />
+            </div>
+          )}
+          {title && (
+            <Typography as='h2' variant='md' className='group-hover:underline'>
+              {title}
+            </Typography>
+          )}
+          {Array.isArray(ingress) ? (
+            <Blocks
+              value={ingress}
+              variant='ingress'
+              group='paragraph'
+              className='max-w-prose text-sm'
             />
-          </div>
-        )}
-        {title && (
-          <Typography as="h2" variant="md" className="group-hover:underline">
-            {title}
-          </Typography>
-        )}
-        {Array.isArray(ingress) ? (
-          <Blocks value={ingress} className="text-sm max-w-prose" />
-        ) : (
-          <Typography variant="body" className="text-sm max-w-prose`">
-            {ingress}
-          </Typography>
-        )}
-      </BaseLink>
-    </section>
-  )
-})
+          ) : (
+            <Typography variant='body' className='max-w-prose` text-sm'>
+              {ingress}
+            </Typography>
+          )}
+        </BaseLink>
+      </section>
+    )
+  },
+)
 export default NewsHeadliner

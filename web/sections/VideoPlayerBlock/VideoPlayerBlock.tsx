@@ -1,0 +1,101 @@
+import type { PortableTextBlock } from '@portabletext/types'
+import dynamic from 'next/dynamic'
+import ResourceLink from '@/core/Link/ResourceLink'
+import type { AspectRatioVariants } from '@/core/VideoJsPlayer/Video'
+import type {
+  VideoControlsType,
+  VideoType,
+} from '@/core/VideoJsPlayer/VideoPlayer'
+import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
+import { twMerge } from '@/lib/twMerge/twMerge'
+import Blocks from '@/portableText/Blocks'
+import { getIsoFromName } from '@/sanity/helpers/localization'
+import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
+import type { DesignOptions, LinkData } from '@/types'
+import Transcript from '../Transcript/Transcript'
+
+export type VideoDesignOptionsType = {
+  aspectRatio: AspectRatioVariants
+  height?: number
+  width?: 'normal' | 'extraWide'
+  useBrandTheme?: boolean
+}
+
+export type VideoPlayerBlockProps = {
+  id: string
+  type: string
+  video: VideoType
+  videoControls: VideoControlsType
+  designOptions: DesignOptions & VideoDesignOptionsType
+  title?: PortableTextBlock[]
+  ingress?: PortableTextBlock[]
+  action?: LinkData
+  transcript?: PortableTextBlock[]
+  anchor?: string
+  className?: string
+}
+
+const VideoPlayer = dynamic(() => import('@/core/VideoJsPlayer/VideoPlayer'))
+
+const VideoPlayerBlock = ({
+  title,
+  ingress,
+  action,
+  video,
+  videoControls,
+  designOptions,
+  transcript,
+  anchor,
+  className,
+}: VideoPlayerBlockProps) => {
+  const { width = 'normal', ...videoPlayerDesignOptions } = designOptions
+  const actionUrl = action ? getUrlFromAction(action) : ''
+  const { bg, dark } = getBgAndDarkFromBackground(designOptions)
+
+  return (
+    <section
+      className={twMerge(
+        `${bg} ${dark ? 'dark' : ''} ${width === 'extraWide' ? 'px-layout-md' : 'px-layout-lg'}`,
+        className,
+      )}
+      id={anchor}
+    >
+      {/* classname mb-2 pb-2  or common heading 2 styling pb-8 and inheriting pt-20 if applicable */}
+      {title && <Blocks value={title} variant='h2' />}
+      {ingress && (
+        <Blocks
+          variant='ingress'
+          value={ingress}
+          blockClassName={`${action?.label && actionUrl ? 'mb-4' : 'mb-8'}`}
+        />
+      )}
+      {action?.label && actionUrl && (
+        <ResourceLink
+          href={actionUrl || ''}
+          file={{
+            ...action?.file,
+            label: action?.label,
+          }}
+          variant='fit'
+          hrefLang={
+            action?.type === 'internalUrl'
+              ? getIsoFromName(action?.link?.lang)
+              : undefined
+          }
+          className='mt-4 mb-8'
+        >
+          {action.label}
+        </ResourceLink>
+      )}
+      {/*@ts-ignore: TODO*/}
+      <VideoPlayer
+        {...video}
+        {...videoPlayerDesignOptions}
+        {...videoControls}
+      />
+      <Transcript transcript={transcript} ariaTitle={video.title} />
+    </section>
+  )
+}
+
+export default VideoPlayerBlock

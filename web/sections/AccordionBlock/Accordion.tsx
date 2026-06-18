@@ -1,8 +1,8 @@
-import { Accordion as EnvisAccordion } from '@core/Accordion'
-import type { AccordionListData } from '../../types/index'
-import Blocks from '../../pageComponents/shared/portableText/Blocks'
-import CallToActions from '@sections/CallToActions'
-import Image, { getSmallerThanPxLgSizes } from '../../core/SanityImage/SanityImage'
+import { Accordion as EnvisAccordion } from '@/core/Accordion'
+import { Image } from '@/core/Image/Image'
+import Blocks from '@/portableText/Blocks'
+import CallToActions from '@/sections/CallToActions'
+import type { AccordionListData } from '@/types'
 
 const { Item, Header, Content } = EnvisAccordion
 
@@ -15,25 +15,31 @@ type AccordionProps = {
 
 const Accordion = ({ data, id, hasSectionTitle = true }: AccordionProps) => {
   return (
-    <EnvisAccordion type="multiple" id={id}>
-      {data.map((item) => {
+    <EnvisAccordion type='multiple' id={id}>
+      {data.map(item => {
         const { id, title: itemTitle, links, content, image } = item
 
         return (
           <Item key={id} value={id}>
             <Header hasSectionTitle={hasSectionTitle}>{itemTitle}</Header>
             <Content>
-              {image && image?.asset && (
+              {image?.asset && (
                 <Image
-                  maxWidth={570}
-                  aspectRatio="16:9"
-                  sizes={getSmallerThanPxLgSizes()}
+                  grid='xs'
+                  aspectRatio='16:9'
                   image={image}
-                  className="aspect-video rounded-xs max-w-72"
+                  className='max-w-72'
+                  imageClassName='lg:aspect-video rounded-2xs'
                 />
               )}
-              {content && <Blocks value={content} />}
-              {links && <CallToActions overrideButtonStyle callToActions={links} />}
+              {content && <Blocks value={content} variant='simple' />}
+              {links && (
+                <CallToActions
+                  callToActions={links}
+                  linkVariant='fit'
+                  className='pt-0'
+                />
+              )}
             </Content>
           </Item>
         )

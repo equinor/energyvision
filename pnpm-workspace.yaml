@@ -1,13 +1,13 @@
 packages:
   - 'web'
-  - 'e2e'
-  - 'sanityv3'
+  - 'studio'
   - 'search'
-overrides:
-  'tar-fs': '^3.0.9'
-  'form-data': '4.0.4'
+  - 'shared'
+  - 'packages/*'
 minimumReleaseAge: 10080
-minimumReleaseAgeExclude:
-  - axios@1.15.1 # Fix axios CVE-2026-40175, checked release is built and signed with provenance
-#trustPolicy: 'no-downgrade'
-blockExoticSubdeps: true
+#trustPolicy: "no-downgrade"
+blockExoticSubdeps: true 
+trustPolicyExclude:
+# https://github.com/reduxjs/reselect/issues/752
+# might apply for @reduxjs/toolkit@2.9.2 by recharts@3.8.1
+- reselect@5.1.1

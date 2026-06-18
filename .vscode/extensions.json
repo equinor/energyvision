@@ -1,0 +1,8 @@
+{
+  "recommendations": [
+    "sanity-io.vscode-sanity",
+    "biomejs.biome",
+    "bradlc.vscode-tailwindcss",
+    "rangav.vscode-thunder-client"
+  ]
+}

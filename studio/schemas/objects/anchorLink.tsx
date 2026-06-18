@@ -1,0 +1,67 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+import { anchor } from '@equinor/eds-icons'
+import { Box, Heading, Text } from '@sanity/ui'
+import type { Rule } from 'sanity'
+import { EdsIcon } from '../../icons'
+import { validateComponentAnchor } from '../validations/validateAnchorReference'
+
+export type AnchorLink = {
+  _type: 'anchorLink'
+}
+
+const Description = () => {
+  return (
+    <Box>
+      <Heading size={2}>How to use</Heading>
+      <Text style={{ margin: '1em 0' }}>
+        Add this component before the component for which you want to have an
+        anchor reference. The anchor reference will be ignored when there is no
+        component following it.
+      </Text>
+    </Box>
+  )
+}
+
+export default {
+  title: 'Anchor Link',
+  name: 'anchorLink',
+  type: 'object',
+
+  fields: [
+    {
+      name: 'description',
+      type: 'string',
+      components: {
+        input: Description,
+      },
+    },
+    {
+      name: 'anchorReference',
+      type: 'anchorReferenceField',
+      title: 'Anchor reference',
+      validation: (Rule: Rule) =>
+        // @ts-ignore
+        Rule.custom((value: string, context: any) =>
+          validateComponentAnchor(value, context),
+        ),
+    },
+    {
+      name: 'anchorLabel',
+      type: 'string',
+      title: 'Anchor label',
+      description: 'Used when compiling list of anchors on page together',
+    },
+  ],
+  preview: {
+    select: {
+      anchorReference: 'anchorReference',
+    },
+    prepare({ anchorReference }: { anchorReference: string }) {
+      return {
+        title: anchorReference,
+        subtitle: `Anchor Link component`,
+        media: EdsIcon(anchor),
+      }
+    },
+  },
+}

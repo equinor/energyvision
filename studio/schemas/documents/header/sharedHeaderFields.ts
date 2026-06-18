@@ -1,0 +1,407 @@
+import type {
+  ConditionalPropertyCallbackContext,
+  CurrentUser,
+  Rule,
+  StringInputProps,
+  StringSchemaType,
+  ValidationContext,
+} from 'sanity'
+import { RoleFilteredSelect } from '@/schemas/components/RoleFilteredSelect/RoleFilteredSelect'
+import { Select } from '@/schemas/components/Select/Select'
+import {
+  backgroundPosition as _backgroundPosition,
+  layoutGrid as _layoutGrid,
+} from '@/schemas/objects/commonFields/commonFields'
+import { CompactBlockEditor } from '../../components/CompactBlockEditor'
+import { configureBlockContent } from '../../editors'
+import type { ImageWithAltAndCaption } from '../../objects/imageWithAltAndCaption'
+import singleItemArray from '../../objects/singleItemArray'
+
+export enum HeroTypes {
+  DEFAULT = 'default',
+  FIFTY_FIFTY = 'fiftyFifty',
+  FULL_WIDTH_IMAGE = 'fullWidthImage',
+  LOOPING_VIDEO = 'loopingVideo',
+  NO_HERO = 'noHero',
+  BACKGROUND_IMAGE = 'backgroundImage',
+}
+
+type DocumentType = { parent: Hero; currentUser: CurrentUser }
+type Hero = {
+  heroType?: HeroTypes
+  heroLoopingVideoRatio?: 'tall' | 'narrow' | '0.5'
+}
+
+const title = {
+  name: 'title',
+  type: 'array',
+  title: 'Title',
+  components: {
+    input: CompactBlockEditor,
+  },
+  of: [configureBlockContent({ variant: 'title' })],
+  validation: (Rule: Rule) =>
+    Rule.custom((value: string, ctx: ValidationContext) => {
+      return value ? true : 'Required'
+    }),
+}
+
+const heroType = {
+  title: 'Type of hero',
+  name: 'heroType',
+  type: 'string',
+  options: {
+    list: [
+      {
+        title: 'Image (default centered)',
+        value: HeroTypes.DEFAULT,
+      },
+      {
+        title: 'Image (fullwidth)',
+        value: HeroTypes.FULL_WIDTH_IMAGE,
+      },
+      {
+        title: '50/50 image/text (fullwidth)',
+        value: HeroTypes.FIFTY_FIFTY,
+      },
+      {
+        title: 'Looping video (fullwidth)',
+        value: HeroTypes.LOOPING_VIDEO,
+      },
+      {
+        title: 'No hero (title+image hidden,first page section as top)',
+        value: HeroTypes.NO_HERO,
+      },
+      {
+        title: 'Background image/color with title over',
+        value: HeroTypes.BACKGROUND_IMAGE,
+      },
+    ].filter(e => e),
+  },
+  components: {
+    input: (props: StringInputProps) =>
+      RoleFilteredSelect(props, ['loopingVideo', 'noHero', 'backgroundImage']),
+  },
+  initialValue: 'default',
+}
+
+const heroTitle = {
+  name: 'heroTitle',
+  type: 'array',
+  title: 'Hero Title',
+  components: {
+    input: CompactBlockEditor,
+  },
+  of: [configureBlockContent({ variant: 'title' })],
+  fieldset: 'hero',
+  hidden: ({ parent }: DocumentType) => {
+    return parent?.heroType !== HeroTypes.FIFTY_FIFTY
+  },
+  validation: (Rule: Rule) =>
+    Rule.custom((value: string, context: ValidationContext) => {
+      const { parent } = context as unknown as DocumentType
+      if (parent?.heroType === HeroTypes.FIFTY_FIFTY && !value)
+        return 'Field is required'
+      return true
+    }),
+}
+
+const heroRatio = {
+  title: 'Hero image ratio',
+  name: 'heroRatio',
+  type: 'string',
+  fieldset: 'hero',
+  options: {
+    list: [
+      { title: 'Tall', value: 'tall' },
+      { title: 'Narrow', value: 'narrow' },
+    ],
+  },
+  hidden: ({ parent }: DocumentType) => {
+    return parent?.heroType !== HeroTypes.FULL_WIDTH_IMAGE
+  },
+  validation: (Rule: Rule) =>
+    Rule.custom((value: string, context: ValidationContext) => {
+      const { parent } = context as unknown as DocumentType
+      if (parent?.heroType === HeroTypes.FULL_WIDTH_IMAGE && !value)
+        return 'Field is required'
+      return true
+    }),
+  initialValue: 'narrow',
+}
+
+const heroTypesWithIngress = [HeroTypes.FIFTY_FIFTY]
+
+const heroIngress = {
+  title: 'Hero ingress',
+  name: 'heroIngress',
+  type: 'array',
+  fieldset: 'hero',
+  of: [configureBlockContent({ variant: 'ingress' }), { type: 'thumbnail' }],
+  hidden: ({ parent }: DocumentType) => {
+    //@ts-expect-error: typing
+    return !heroTypesWithIngress.includes(parent?.heroType)
+  },
+}
+
+const backgroundGradient = {
+  title: 'Background Gradient',
+  name: 'heroBackgroundGradient',
+  type: 'string',
+  description: 'Optional gradient over background image.',
+  initialValue: 'none', // default
+  fieldset: 'hero',
+  options: {
+    list: [
+      { title: 'None', value: 'none' },
+      { title: 'Dark', value: 'dark' },
+      { title: 'Light', value: 'light' },
+    ],
+  },
+  components: {
+    input: (props: StringInputProps<StringSchemaType>) => Select(props),
+  },
+  hidden: ({ parent }: DocumentType) => {
+    return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE
+  },
+}
+
+const backgroudPosition = _backgroundPosition(({ parent }: DocumentType) => {
+  return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE
+}, 'hero')
+
+const heroLink = singleItemArray({
+  name: 'heroLink',
+  title: 'Hero link',
+  description: 'Select link to display in hero text',
+  type: 'array',
+  of: [{ type: 'linkSelector', title: 'Link' }],
+  hidden: ({ value, parent }: ConditionalPropertyCallbackContext) => {
+    return (
+      parent?.heroType !== HeroTypes.FIFTY_FIFTY ||
+      (parent?.heroType === HeroTypes.FIFTY_FIFTY && parent.isBigTitle) ||
+      (parent?.heroType === HeroTypes.FIFTY_FIFTY && !value)
+    )
+  },
+})
+
+const heroLinkV2 = {
+  name: 'heroLinkV2',
+  title: 'Hero link',
+  description: 'Select link to display in hero text',
+  type: 'linkSelector',
+  fieldset: 'hero',
+  hidden: ({ parent }: ConditionalPropertyCallbackContext) => {
+    return (
+      parent?.heroType !== HeroTypes.FIFTY_FIFTY ||
+      (parent?.heroType === HeroTypes.FIFTY_FIFTY && parent.isBigTitle)
+    )
+  },
+}
+
+const background = {
+  title: 'Hero background',
+  description: 'Pick a colour for the background. Default is white.',
+  name: 'heroBackground',
+  type: 'colorlist',
+  fieldset: 'hero',
+  hidden: ({ parent }: DocumentType) => {
+    //was discussed at some point with po : parent?.heroType === HeroTypes.DEFAULT && isAllowed(currentUser?.roles))
+    return !(parent?.heroType === HeroTypes.FIFTY_FIFTY)
+  },
+}
+
+const heroImage = {
+  title: 'Hero image',
+  name: 'heroFigure',
+  type: 'imageWithAltAndCaption',
+  fieldset: 'hero',
+  description:
+    'Only used for SEO if hero type is No hero. Caption and credit is not shown for 50/50 Text and image.',
+  validation: (Rule: Rule) =>
+    Rule.custom((value: ImageWithAltAndCaption, context: ValidationContext) => {
+      const { parent } = context as unknown as DocumentType
+      //@ts-ignore:add _type?
+      if (
+        (parent?.heroType === HeroTypes.FIFTY_FIFTY ||
+          //@ts-ignore:add _type?
+          (parent?._type !== 'homePage' &&
+            parent?.heroType === HeroTypes.FULL_WIDTH_IMAGE)) &&
+        !value.image.asset
+      )
+        return 'Field is required'
+      return true
+    }),
+  hidden: ({ parent }: DocumentType) => {
+    return parent?.heroType === HeroTypes.LOOPING_VIDEO
+  },
+}
+
+const heroMobileImage = {
+  title: 'Hero mobile image',
+  name: 'heroMobileImage',
+  type: 'imageWithAlt',
+  hidden: ({ parent }: DocumentType) => {
+    return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE
+  },
+  fieldset: 'hero',
+}
+
+const heroLoopingVideo = {
+  title: 'Video',
+  name: 'heroLoopingVideo',
+  type: 'reference',
+  fieldset: 'hero',
+  to: [{ type: 'videoFile' }],
+  validation: (Rule: Rule) =>
+    Rule.custom((value: string, context: ValidationContext) => {
+      const { parent } = context as unknown as DocumentType
+      if (parent?.heroType === HeroTypes.LOOPING_VIDEO && !value)
+        return 'Field is required'
+      return true
+    }),
+  hidden: ({ parent }: DocumentType) => {
+    return parent?.heroType !== HeroTypes.LOOPING_VIDEO
+  },
+}
+
+const heroLoopingVideoRatio = {
+  title: 'Video ratio',
+  name: 'heroLoopingVideoRatio',
+  type: 'string',
+  fieldset: 'hero',
+  options: {
+    list: [
+      { title: '2:1', value: '1:2' }, // should look if this value is in use to change it to 2:1
+      { title: 'Tall', value: 'tall' },
+      { title: 'Narrow', value: 'narrow' },
+    ],
+    initialValue: 'narrow',
+  },
+  hidden: ({ parent }: DocumentType) => {
+    return parent?.heroType !== HeroTypes.LOOPING_VIDEO
+  },
+  validation: (Rule: Rule) =>
+    Rule.custom((value: string, context: ValidationContext) => {
+      const { parent } = context as unknown as DocumentType
+      if (parent?.heroType === HeroTypes.LOOPING_VIDEO && !value)
+        return 'Field is required'
+      return true
+    }),
+}
+
+const useCenterBlur = {
+  title: 'Blur center',
+  name: 'useBlurCenter',
+  type: 'boolean',
+  fieldset: 'hero',
+  description: 'Will blur center background behind text',
+  hidden: ({ parent }: DocumentType) => {
+    return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE
+  },
+}
+
+const herosWithDisplayTextTitle = [
+  HeroTypes.BACKGROUND_IMAGE,
+  HeroTypes.FIFTY_FIFTY,
+  HeroTypes.FULL_WIDTH_IMAGE,
+]
+const applyDisplayText = {
+  title: 'Apply display text variant',
+  name: 'displayTextVariant',
+  type: 'string',
+  fieldset: 'hero',
+  description: 'Sets a display variant on title',
+  initialValue: 'none', // default
+  options: {
+    list: [
+      { title: 'None', value: 'none' },
+      { title: 'Base', value: 'base' },
+      { title: 'Large', value: 'lg' },
+      { title: 'Extra large', value: 'xl' },
+    ],
+  },
+  hidden: ({ parent }: DocumentType) => {
+    //@ts-ignore: typing
+    return !herosWithDisplayTextTitle.includes(parent?.heroType)
+  },
+}
+
+const layoutGrid = _layoutGrid(
+  ({ parent }: DocumentType) => {
+    return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE
+  },
+  'hero',
+  'sm',
+  'Optional. Select content column. Default is third outer.',
+)
+
+const alignContentY = {
+  title: 'Vertical content alignment',
+  name: 'alignContentY',
+  type: 'string',
+  fieldset: 'hero',
+  description: 'Align content vertical',
+  initialValue: 'center', // default
+  options: {
+    list: [
+      { title: 'Top', value: 'top' },
+      { title: 'Center', value: 'center' },
+      { title: 'Bottom', value: 'bottom' },
+    ],
+  },
+  hidden: ({ parent }: DocumentType) => {
+    return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE
+  },
+}
+
+const useBrandTheme = {
+  title: 'Apply red brand text color',
+  name: 'heroUseBrandTheme',
+  type: 'boolean',
+  fieldset: 'hero',
+  description:
+    'Ensure enough contrast between text and image.If no hero image set,background will be white',
+  hidden: ({ parent }: DocumentType) => {
+    return parent?.heroType !== HeroTypes.BACKGROUND_IMAGE
+  },
+}
+
+const containVideo = {
+  name: 'containVideo',
+  title: 'Contain video',
+  fieldset: 'hero',
+  description:
+    'Aspect ratios Tall and Narrow applies object cover, which might clip video content. This can problematic if the video has text.Set this to not clip content but black bars in the video might appear.',
+  type: 'boolean',
+  initialValue: false,
+  hidden: ({ parent }: DocumentType) => {
+    return (
+      parent?.heroType !== HeroTypes.LOOPING_VIDEO ||
+      parent?.heroLoopingVideoRatio === '0.5'
+    )
+  },
+}
+
+export default [
+  title,
+  heroType,
+  heroTitle,
+  applyDisplayText,
+  useBrandTheme,
+  heroRatio,
+  heroIngress,
+  heroLink,
+  heroLinkV2,
+  background,
+  heroImage,
+  backgroudPosition,
+  heroMobileImage,
+  backgroundGradient,
+  useCenterBlur,
+  layoutGrid,
+  alignContentY,
+  heroLoopingVideo,
+  heroLoopingVideoRatio,
+  containVideo,
+]

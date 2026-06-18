@@ -1,9 +1,10 @@
-import { BackgroundContainer } from '@core/Backgrounds'
-import { Heading } from '@core/Typography'
-import type { IframeCarouselData } from '../../types/index'
-import { twMerge } from 'tailwind-merge'
-import { Carousel } from '@core/Carousel/Carousel'
+'use client'
 import { useId } from 'react'
+import { twMerge } from 'tailwind-merge'
+import { Carousel } from '@/core/Carousel/Carousel'
+import Blocks from '@/portableText/Blocks'
+import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
+import type { IframeCarouselData } from '../../types/index'
 
 type IframeCarouselProps = {
   data: IframeCarouselData
@@ -11,38 +12,39 @@ type IframeCarouselProps = {
   className?: string
 }
 
-const IframeCarousel = ({ data, anchor, className, ...rest }: IframeCarouselProps) => {
+const IframeCarousel = ({
+  data,
+  anchor,
+  className = '',
+}: IframeCarouselProps) => {
   const { title, hideTitle, items, designOptions } = data
-  const { background } = designOptions
   const headingId = useId()
+  const { bg, dark } = getBgAndDarkFromBackground(designOptions)
 
   return (
-    <BackgroundContainer
-      as="section"
-      background={background}
-      backgroundStyle="none"
-      className={className}
-      {...rest}
+    <section
+      className={twMerge(`${bg} ${dark ? 'dark' : ''}`, className)}
       id={anchor}
     >
       {title && (
-        <Heading
-          value={title}
-          variant="h3"
-          as="h2"
-          id={headingId}
-          className={hideTitle ? 'sr-only' : 'pb-lg text-center  max-w-viewport mx-auto px-layout-sm'}
-        />
+        <div className='mx-auto max-w-content px-layout-lg'>
+          <Blocks
+            value={title}
+            variant='h2'
+            id={headingId}
+            blockClassName={` ${hideTitle ? 'sr-only' : ''}`}
+          />
+        </div>
       )}
       <Carousel
         items={items}
-        displayMode="single"
-        variant="iframe"
+        displayMode='single'
+        variant='iframe'
         autoRotation={false}
         hasSectionTitle={title && !hideTitle}
         labelledbyId={title && !hideTitle ? headingId : undefined}
       />
-    </BackgroundContainer>
+    </section>
   )
 }
 

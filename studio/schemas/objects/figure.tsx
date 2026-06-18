@@ -1,0 +1,102 @@
+import type { Reference, Rule } from 'sanity'
+import type { ColorSelectorValue } from '../components/ColorSelector'
+//import { layoutGrid } from './commonFields/commonFields'
+import type { ImageWithAltAndCaption } from './imageWithAltAndCaption'
+
+export type Figure = {
+  _type: 'figure'
+  figure: ImageWithAltAndCaption
+  background?: ColorSelectorValue
+}
+
+export default {
+  name: 'figure',
+  title: 'Image',
+  type: 'object',
+  description: 'Image with optional caption and credit.',
+
+  fieldsets: [
+    {
+      name: 'design',
+      title: 'Design options',
+    },
+  ],
+  fields: [
+    {
+      name: 'figure',
+      title: 'Image',
+      type: 'imageWithAltAndCaption',
+      validation: (Rule: Rule) => Rule.required(),
+    },
+    {
+      name: 'aspectRatio',
+      type: 'string',
+      title: 'Aspect ratio',
+      options: {
+        list: [
+          { title: 'original', value: 'original' },
+          { title: '16:9', value: '16:9' },
+          // { title: '10:3', value: '10:3' },
+          // { title: '21:9', value: '21:9' },
+          { title: '4:3', value: '4:3' },
+          { title: '2:3', value: '2:3' },
+          { title: '1:1', value: '1:1' },
+        ],
+      },
+      initialValue: '16:9',
+    },
+    //To be added after launch, web is set up
+    //layoutGrid(),
+    {
+      title: 'Align with text width',
+      description:
+        'Since text width (readability 810px) is smaller than the inner content grid, setting this will align image with the text width',
+      name: 'alignWithText',
+      type: 'boolean',
+    },
+    {
+      title: 'Contain image',
+      description: 'Dont crop the image if it overflows, but keep aspect ratio',
+      name: 'containImage',
+      type: 'boolean',
+    },
+    {
+      title: 'Background',
+      description: 'Pick a colour for the background. Default is white.',
+      name: 'background',
+      type: 'colorlist',
+      fieldset: 'design',
+    },
+  ],
+  preview: {
+    select: {
+      alt: 'figure.image.alt',
+      caption: 'figure.caption',
+      credit: 'figure.attribution',
+      image: 'figure.image.asset',
+      aspectRatio: 'aspectRatio',
+      background: 'background',
+    },
+    prepare({
+      alt,
+      image,
+      aspectRatio,
+      credit,
+      caption,
+      background,
+    }: {
+      alt: string
+      image: Reference
+      aspectRatio?: string
+      credit?: string
+      caption?: string
+      background?: string
+    }) {
+      return {
+        title: `${aspectRatio} image ${alt ? '| alt ' : ''}${credit ? '| credit ' : ''}${caption ? '| caption ' : ''} `,
+        subtitle: `Image component ${background ? `| ${background?.title}` : ''}`,
+        media: image,
+      }
+    },
+  },
+}

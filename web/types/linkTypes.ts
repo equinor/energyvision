@@ -1,6 +1,3 @@
-import type { ResourceLinkProps } from '@core/Link'
-import type { AnchorLinkReference } from '../types'
-
 export type LinkType =
   | 'internalUrl'
   | 'externalUrl'
@@ -17,12 +14,14 @@ export type LinkData = {
   type?: LinkType
   id?: string
   label: string
-  ariaLabel?: string
+  'aria-label'?: string
   link?: { slug: string; type: string; lang: string }
   href?: string
   extension?: string
   fileName?: string
   anchorReference?: string
+  filename?: string
+  someType?: any
   file?: any
 }
 
@@ -31,4 +30,9 @@ export type RelatedLinksData = {
   links: LinkData[]
 }
 
-export type StickyMenuLinkType = AnchorLinkReference | ResourceLinkProps
+export type AnchorLinkReference = {
+  id: string
+  type: 'anchorLinkReference'
+  title?: string
+  anchorReference?: string
+}

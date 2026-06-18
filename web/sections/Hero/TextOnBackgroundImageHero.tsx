@@ -1,47 +1,70 @@
 'use client'
-import { mapSanityImageRatio } from '@core/SanityImage/SanityImage'
-import { Heading, type TypographyVariants } from '@core/Typography'
-import type { PortableTextBlock } from '@portabletext/types'
-import { useMediaQuery } from '../../lib/hooks/useMediaQuery'
+import type { PortableTextBlock } from 'next-sanity'
 import type { HTMLAttributes } from 'react'
-import { twMerge } from 'tailwind-merge'
-import { getLayoutPx } from '../../common/helpers/getCommonUtillities'
-import { useSanityLoader } from '../../lib/hooks/useSanityLoader'
-import type { ImageWithAlt, ImageWithCaptionData } from '../../types'
+import {
+  type Figure,
+  type Image,
+  mapSanityImageRatio,
+} from '@/core/Image/imageUtilities'
+import type { TypographyVariants } from '@/core/Typography'
+import { getLayoutPx } from '@/lib/helpers/getCommonUtilities'
+import { useMediaQuery } from '@/lib/hooks/useMediaQuery'
+import { twMerge } from '@/lib/twMerge/twMerge'
+import Blocks from '@/portableText/Blocks'
+import { resolveImage } from '@/sanity/lib/utils'
+import type { LayoutGrid } from '@/types/designOptionsTypes'
 
-type TextOnBackgroundImageHeroProps = {
-  figure?: ImageWithCaptionData
-  heroMobileImage?: ImageWithAlt
-  title: PortableTextBlock[]
-  background?: string
-  backgroundGradient?: 'none' | 'dark' | 'light'
-  alignContentY?: 'top' | 'center' | 'bottom'
-  layoutGrid?: 'sm' | 'md' | 'lg'
+export type TextOnBackgroundImageHeroProps = {
+  title?: PortableTextBlock[]
+  figure?: Figure
+  ingress?: PortableTextBlock[]
+  isMagazineRoom?: boolean
   useBrandTheme?: boolean
   useBlurCenter?: boolean
+  heroMobileImage?: Image
+  backgroundGradient?: 'none' | 'light' | 'dark'
   displayTextVariant?: 'none' | 'base' | 'lg' | 'xl'
+  layoutGrid?: LayoutGrid
+  alignContentY?: 'top' | 'center' | 'bottom'
 } & HTMLAttributes<HTMLElement>
 
+/**
+ * Hero type to show either a background image or white background
+ * with text over it
+ */
 export const TextOnBackgroundImageHero = ({
   figure,
   title,
+  ingress,
   backgroundGradient,
+  isMagazineRoom = false,
   className = '',
   useBrandTheme = false,
   displayTextVariant = 'none',
-  layoutGrid = 'lg',
+  layoutGrid = 'sm',
   useBlurCenter,
   heroMobileImage,
   alignContentY = 'center',
 }: TextOnBackgroundImageHeroProps) => {
-  //@ts-ignore:todo
-  const imageProps = useSanityLoader(figure?.image, 2560, mapSanityImageRatio('10:3'))
-  //@ts-ignore:todo
-  const mobileImageProps = useSanityLoader(heroMobileImage, 2560, mapSanityImageRatio('10:3'))
-  const isMobile = useMediaQuery(`(max-width: 800px)`)
-  const url = isMobile && mobileImageProps?.src ? mobileImageProps?.src : imageProps?.src
+  const { image } = figure || {}
 
-  const px = getLayoutPx(layoutGrid ?? 'lg')
+  const isLargerDisplays = useMediaQuery(`(min-width: 800px)`)
+
+  const { url: imageUrl } = resolveImage({
+    image,
+    aspectRatio: mapSanityImageRatio('10:3'),
+    grid: 'full',
+    isLargerDisplays,
+    useFitMax: true,
+  })
+  const { url: mobileImageUrl } = resolveImage({
+    image: heroMobileImage,
+    aspectRatio: mapSanityImageRatio('10:3'),
+    grid: 'xs',
+    isLargerDisplays,
+  })
+  const isMobile = useMediaQuery(`(max-width: 800px)`)
+  const url = isMobile && mobileImageUrl ? mobileImageUrl : imageUrl
 
   const typographyVariant = {
     base: 'h2_base',
@@ -55,12 +78,30 @@ export const TextOnBackgroundImageHero = ({
     bottom: 'items-end',
   }
 
+  const ingressElement = ingress && <Blocks value={ingress} variant='body' />
+  const titleElement = title && (
+    <Blocks
+      value={title}
+      id='mainTitle'
+      tabIndex={-1}
+      group={displayTextVariant !== 'none' ? 'display' : `heading`}
+      variant={
+        displayTextVariant !== 'none'
+          ? (typographyVariant[displayTextVariant] as TypographyVariants)
+          : `h1`
+      }
+      blockClassName={`${isMagazineRoom && ingress ? '' : 'my-0 lg:my-0'}`}
+    />
+  )
+
+  const px = getLayoutPx(layoutGrid)
+
   return (
     <div
       className={twMerge(
-        `relative flex py-12 ${contentAligment[alignContentY ?? 'center']} lg:min-h-[clamp(350px,35vh,40vh)] ${
+        `relative flex w-full ${contentAligment[alignContentY ?? 'center']} lg:min-h-[clamp(350px,35vh,40vh)] ${
           backgroundGradient === 'dark' ? 'dark' : ''
-        } ${figure && imageProps?.src ? 'bg-center bg-cover bg-no-repeat' : ''} ${px}`,
+        } ${figure && imageUrl ? 'bg-center bg-cover bg-no-repeat' : ''}`,
         className,
       )}
       {...(url && {
@@ -69,21 +110,21 @@ export const TextOnBackgroundImageHero = ({
         },
       })}
     >
-      <div className={`flex max-w-text flex-col ${useBrandTheme ? '*:text-energy-red-100' : ''}`}>
-        <Heading
-          value={title}
-          id="mainTitle"
-          as="h1"
-          group={displayTextVariant !== 'none' ? 'display' : `heading`}
-          variant={displayTextVariant !== 'none' ? (typographyVariant[displayTextVariant] as TypographyVariants) : `h1`}
-          className={`z-10 w-fit max-w-prose pb-0 lg:pb-0`}
-        />
+      <div className={twMerge(`z-1 mx-auto w-full max-w-content py-12`, px)}>
+        <div
+          className={`flex max-w-text flex-col ${useBrandTheme ? '*:text-energy-red-100' : ''}`}
+        >
+          {titleElement}
+          {isMagazineRoom && ingressElement}
+        </div>
       </div>
-      {useBlurCenter && <div className={`centerBlur absolute inset-0 z-1`}></div>}
       {(backgroundGradient === 'dark' || backgroundGradient === 'light') && (
         <div
           className={`absolute inset-0 z-0 ${backgroundGradient === 'dark' ? 'bg-slate-80/20' : 'bg-white-100/20'}`}
         />
+      )}
+      {useBlurCenter && (
+        <div className={`centerBlur absolute inset-0 z-1`}></div>
       )}
     </div>
   )

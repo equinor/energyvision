@@ -1,20 +1,22 @@
 import { forwardRef } from 'react'
-import Image from '../../core/SanityImage/SanityImage'
-import { FigureData } from '../../pageComponents/topicPages/Figure'
+import { Image } from '../../core/Image/Image'
+import type { FigureData } from '../FigureBlock/FigureBlock'
 
 type GridFigureProps = {
   data: FigureData
   className?: string
 }
 
-const GridFigure = forwardRef<HTMLDivElement, GridFigureProps>(function GridFigure({ data }, ref) {
-  const { figure } = data
-  const { image } = figure
-  return (
-    <div ref={ref} className="relative w-full h-full">
-      <Image image={image} fill className="object-cover h-full w-auto" />
-    </div>
-  )
-})
+const GridFigure = forwardRef<HTMLDivElement, GridFigureProps>(
+  function GridFigure({ data }, ref) {
+    const { figure } = data
+    const { image } = figure
+    return (
+      <div ref={ref} className='relative h-full w-full'>
+        <Image image={image} fill className='h-full w-auto object-cover' />
+      </div>
+    )
+  },
+)
 
 export default GridFigure

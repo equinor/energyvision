@@ -1,24 +1,36 @@
-import { ResourceLink } from '@core/Link'
-import { getUrlFromAction } from '../../common/helpers'
-import { getLocaleFromName } from '../../lib/localization'
-import envisTwMerge from '../../twMerge'
+import { toPlainText } from 'next-sanity'
+import ResourceLink from '@/core/Link/ResourceLink'
+import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
+import { twMerge } from '@/lib/twMerge/twMerge'
+import { getIsoFromName } from '../../sanity/helpers/localization'
 import type { LinkData } from '../../types/index'
 
 type CallToActionsProps = {
   callToActions: LinkData[]
-  overrideButtonStyle?: boolean
   splitList?: boolean
   className?: string
+  linkVariant?: 'default' | 'fit'
 }
 
-const CallToActions = ({ callToActions = [], splitList, className }: CallToActionsProps) => {
+const CallToActions = ({
+  callToActions = [],
+  splitList,
+  linkVariant,
+  className,
+}: CallToActionsProps) => {
   if (!callToActions) return null
 
   const getSingleAction = () => {
     const { label, type, link, file } = callToActions[0]
+    const plainLabel = Array.isArray(label) ? toPlainText(label) : label
     const url = getUrlFromAction(callToActions[0])
-    if (!url && !(type === 'downloadableFile' || type === 'downloadableImage')) {
-      console.warn(`CallToActions: Missing URL on Call to action link with type: '${type}' and label: '${label}'`)
+    if (
+      !url &&
+      !(type === 'downloadableFile' || type === 'downloadableImage')
+    ) {
+      console.warn(
+        `CallToActions: Missing URL on Call to action link with type: '${type}' and label: '${label}'`,
+      )
       return null
     }
 
@@ -26,55 +38,56 @@ const CallToActions = ({ callToActions = [], splitList, className }: CallToActio
       <ResourceLink
         file={{
           ...file,
-          label,
+          label: plainLabel,
         }}
+        {...(link?.lang && { hrefLang: getIsoFromName(link?.lang) })}
         href={url}
-        showExtensionIcon={true}
-        {...(link?.lang && { locale: getLocaleFromName(link?.lang) })}
         type={type}
-        variant="fit"
+        variant='fit'
       >
-        {label}
+        {plainLabel}
       </ResourceLink>
     )
   }
 
-  return callToActions?.length === 1 ? (
-    getSingleAction()
-  ) : (
-    <ul
-      className={envisTwMerge(
-        `grid grid-cols-[fit-content] gap-x-8 gap-y-6 ${splitList ? 'md:grid md:grid-cols-2 items-end' : ''}
-     `,
-        className,
-      )}
-    >
-      {callToActions.map((callToAction: LinkData) => {
-        const url = getUrlFromAction(callToAction)
-        const { id, label, type, link, file } = callToAction
+  return (
+    <div className={twMerge('pt-8', className)}>
+      {callToActions?.length === 1 ? (
+        getSingleAction()
+      ) : (
+        <ul
+          className={twMerge(
+            `grid grid-cols-[fit-content] gap-x-8 gap-y-6 ${splitList ? 'items-end md:grid md:grid-cols-2' : ''} `,
+          )}
+        >
+          {callToActions.map((callToAction: LinkData) => {
+            const url = getUrlFromAction(callToAction)
+            const { id, label, type, link, file } = callToAction
+            const plainLabel = Array.isArray(label) ? toPlainText(label) : label
 
-        return url ? (
-          <li key={id}>
-            {/*  If the URL is a static AEM page it should behave as an internal link in the web */}
-            <ResourceLink
-              file={{
-                ...file,
-                label,
-              }}
-              type={type}
-              href={url}
-              {...(link?.lang && {
-                locale: getLocaleFromName(link?.lang),
-              })}
-              showExtensionIcon={true}
-              variant="default"
-            >
-              {`${label}`}
-            </ResourceLink>
-          </li>
-        ) : null
-      })}
-    </ul>
+            return url ? (
+              <li key={id}>
+                {/*  If the URL is a static AEM page it should behave as an internal link in the web */}
+                <ResourceLink
+                  file={{
+                    ...file,
+                    label: plainLabel,
+                  }}
+                  {...(link?.lang && {
+                    hrefLang: getIsoFromName(link?.lang),
+                  })}
+                  href={url}
+                  type={type}
+                  variant={linkVariant ? linkVariant : 'default'}
+                >
+                  {`${plainLabel}`}
+                </ResourceLink>
+              </li>
+            ) : null
+          })}
+        </ul>
+      )}
+    </div>
   )
 }
 

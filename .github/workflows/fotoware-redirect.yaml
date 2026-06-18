@@ -14,13 +14,12 @@ on:
         description: 'Enter the branch name in fotoware repository. Default is master'
         default: master
         type: string
-permissions:
-  contents: read
+
 env:
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
   BUILD_PACKAGE_NAME: fotoware.zip
   BUILD_ARTIFACT_PATH: ${{ github.workspace }}/build_artifacts
-
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
 jobs:
   build-function-application:
     runs-on: ubuntu-latest
@@ -28,11 +27,12 @@ jobs:
       name: ${{ github.event.inputs.environment }}
     steps:
       - name: Checkout fotoware redirect code🛎️
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: 'equinor/energyvision-fotoware-redirect'
-          ssh-key: '${{ secrets.DEPLOY_FUNCTION_KEY }}'
+          token: ${{ secrets.PADMS_PAT }}
           ref: ${{ github.event.inputs.branch }}
+
       - name: Install pnpm 📦
         id: install-pnpm
         uses: pnpm/action-setup@v4
@@ -41,7 +41,7 @@ jobs:
       - name: Cache pnpm modules 💾
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 24
           # cache: 'npm'
       - name: Install dependencies 🔧
         id: install-dependencies

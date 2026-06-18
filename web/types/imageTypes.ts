@@ -1,51 +1,17 @@
-import { ContentAlignmentTypes, DesignOptions, LinkData } from './index'
-import { SanityImageCrop, SanityImageHotspot, SanityImageObject } from '@sanity/image-url/lib/types/types'
-import { PortableTextBlock } from '@portabletext/types'
-
-export type CaptionData = {
-  attribution?: string
-  caption?: string
-}
-
-export type ImageWithAlt = {
-  isDecorative: boolean
-  alt?: string
-  asset: SanityImageObject
-  crop?: SanityImageCrop
-  hotspot?: SanityImageHotspot
-  _type: 'imageWithAlt'
-  extension?: string
-}
-
-export type ImageWithCaptionData = {
-  _type: 'imageWithAltAndCaption'
-  type: 'imageWithAltAndCaption'
-  _key?: string
-  image: ImageWithAlt
-  asset: SanityImageObject
-} & CaptionData
-
-export type ImageBackground = {
-  image: ImageWithAlt | SanityImageObject
-  useAnimation?: boolean
-  useLight?: boolean
-  useNoGradient?: boolean
-  useGlass?: boolean
-  contentAlignment?: ContentAlignmentTypes
-}
+import type { PortableTextBlock } from '@portabletext/types'
+import type { Image } from '@/core/Image/imageUtilities'
+import type { LinkData } from './index'
 
 export type ImageWithLinkOrOverlay = {
   id: string
   type: 'imageWithLinkOrOverlay'
-  image: SanityImageObject
+  image: Image
   action?: LinkData
   captionTitle?: PortableTextBlock[]
   captionText?: PortableTextBlock[]
 }
 
-export type ImageCarouselItem = ImageWithCaptionData | ImageWithLinkOrOverlay
-
-export type ImageCarouselData = {
+/* export type ImageCarouselData = {
   type: 'imageCarousel'
   id: string
   title?: PortableTextBlock[]
@@ -58,3 +24,4 @@ export type ImageCarouselData = {
   }
   designOptions: DesignOptions
 }
+ */

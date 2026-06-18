@@ -1,28 +1,28 @@
-import type { SubscribeFormParameters } from '../../types/index'
+'use client'
 import { Icon } from '@equinor/eds-core-react'
-import { useForm, Controller } from 'react-hook-form'
 import { error_filled } from '@equinor/eds-icons'
-import { useRouter } from 'next/router'
-import { FormattedMessage, useIntl } from 'react-intl'
-import { BaseSyntheticEvent, useState } from 'react'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useLocale, useTranslations } from 'next-intl'
+import { type BaseSyntheticEvent, useId, useState } from 'react'
+import { Controller, useForm } from 'react-hook-form'
+import type * as z from 'zod'
+import { subscribe } from '@/app/_actions/subscription.actions'
+import { Button } from '@/core/Button'
+import { Checkbox } from '@/core/Checkbox/Checkbox'
+import { FormMessageBox } from '@/core/Form/FormMessageBox'
+import { TextField } from '@/core/TextField/TextField'
+import { subscribeSchema } from '@/lib/zodSchemas/zodSchemas'
+import { getLocaleFromIso } from '@/sanity/helpers/localization'
+import { type newsletterCategoryLocale } from '@/types/newsLetterTypes'
 import FriendlyCaptcha from './FriendlyCaptcha'
-import { Button } from '@core/Button'
-import { Checkbox } from '@core/Checkbox/Checkbox'
-import { TextField } from '@core/TextField/TextField'
-import { FormMessageBox } from '@core/Form/FormMessageBox'
-
-type FormValues = {
-  firstName: string
-  email: string
-  categories: string[]
-}
 
 const SubscribeForm = () => {
-  const router = useRouter()
-  const intl = useIntl()
+  const locale = useLocale()
+  const intl = useTranslations()
   const [isFriendlyChallengeDone, setIsFriendlyChallengeDone] = useState(false)
   const [isServerError, setServerError] = useState(false)
   const [isSuccessfullySubmitted, setSuccessfullySubmitted] = useState(false)
+  const formId = useId()
 
   const {
     handleSubmit,
@@ -30,42 +30,45 @@ const SubscribeForm = () => {
     control,
     register,
     setError,
-    formState: { errors, isSubmitting, isSubmitted, isSubmitSuccessful },
-  } = useForm({ defaultValues: { firstName: '', email: '', categories: [] } })
+    formState: { errors, isSubmitting, isSubmitted },
+  } = useForm({
+    resolver: zodResolver(subscribeSchema(intl)),
+    defaultValues: { email: '', categories: [] },
+  })
 
-  const onSubmit = async (data: FormValues, event?: BaseSyntheticEvent) => {
+  const onSubmit = async (  formData: z.infer<ReturnType<typeof subscribeSchema>>,
+    event?: BaseSyntheticEvent,
+  ) => {
     if (isFriendlyChallengeDone) {
-      const allCategories = data.categories.includes('all')
-      const subscribeFormParamers: SubscribeFormParameters = {
-        firstName: data.firstName,
-        email: data.email,
-        crudeOilAssays: allCategories || data.categories.includes('crudeOilAssays'),
-        generalNews: allCategories || data.categories.includes('generalNews'),
-        stockMarketAnnouncements: allCategories || data.categories.includes('stockMarketAnnouncements'),
-        magazineStories: allCategories || data.categories.includes('magazineStories'),
-        languageCode: router.locale == 'en' ? 'en' : 'no',
-      }
+      const res = await subscribe({
+        locale: getLocaleFromIso(locale) as newsletterCategoryLocale,
+        frcCaptchaSolution: (event?.target as any)['frc-captcha-response']
+          .value,
+        formData,
+      })
 
-      const res = await fetch('/api/subscribe-form', {
+      /*       const res = await fetch('/api/newsletter/subscription', {
         body: JSON.stringify({
-          subscribeFormParamers,
-          frcCaptchaSolution: (event?.target as any)['frc-captcha-response'].value,
+          data,
+          languageCode: locale === 'en' ? 'en' : 'no',
+          frcCaptchaSolution: (event?.target as any)['frc-captcha-response']
+            .value,
         }),
         headers: {
           'Content-Type': 'application/json',
         },
         method: 'POST',
-      })
-      setServerError(res.status != 200)
-      setSuccessfullySubmitted(res.status == 200)
+      }) */
+      if (res?.status) {
+        setSuccessfullySubmitted(res.status)
+      } else {
+        setServerError(!res?.status)
+      }
     } else {
       //@ts-ignore: TODO: types
       setError('root.notCompletedCaptcha', {
         type: 'custom',
-        message: intl.formatMessage({
-          id: 'form_antirobot_validation_required',
-          defaultMessage: 'Anti-Robot verification is required',
-        }),
+        message: intl('form_antirobot_validation_required'),
       })
     }
   }
@@ -74,8 +77,8 @@ const SubscribeForm = () => {
     <>
       {!isSuccessfullySubmitted && (
         <>
-          <div className="pt-8 pb-6 text-sm">
-            <FormattedMessage id="all_fields_mandatory" defaultMessage="All fields with *  are mandatory" />
+          <div className='pt-8 pb-6 text-sm'>
+            {intl('all_fields_mandatory')}
           </div>
           <form
             onSubmit={handleSubmit(onSubmit)}
@@ -84,179 +87,140 @@ const SubscribeForm = () => {
               setIsFriendlyChallengeDone(false)
               setSuccessfullySubmitted(false)
             }}
-            className="flex flex-col gap-12"
+            className='flex flex-col gap-12'
           >
-            <fieldset className="p-0 pb-4">
-              {!errors.categories && (
-                <legend id="atleast-one-category-required" className="text-base font-semibold max-w-text">
-                  <FormattedMessage
-                    id="subscribe_form_choose"
-                    defaultMessage="Please choose one or more of the following"
-                  />
-                  *
-                </legend>
-              )}
-              {errors.categories && (
-                <div
-                  className="text-slate-80 border border-clear-red-100 px-6 py-4 text-sm font-semibold items-center flex gap-2"
-                  role="alert"
-                  id="atleast-one-category-required"
-                >
-                  <legend>
-                    <FormattedMessage
-                      id="subscribe_form_choose"
-                      defaultMessage="Please choose one or more of the following"
+            {!isSuccessfullySubmitted && !isServerError && (
+              <>
+                <fieldset className='p-0 pb-4'>
+                  {!errors.categories && (
+                    <legend
+                      id='atleast-one-category-required'
+                      className='max-w-text font-semibold text-base'
+                    >
+                      {intl('subscribe_form_choose')}*
+                    </legend>
+                  )}
+                  {errors.categories && (
+                    <div
+                      className='flex items-center gap-2 border border-clear-red-100 px-6 py-4 font-semibold text-slate-80 text-sm'
+                      role='alert'
+                      id='atleast-one-category-required'
+                    >
+                      <legend>{intl('subscribe_form_choose')}</legend>
+                      <Icon data={error_filled} aria-hidden='true' />
+                    </div>
+                  )}
+                  <ul>
+                    <li>
+                      <Checkbox
+                        label={intl('subscribe_form_general_news')}
+                        value='generalNews'
+                        aria-describedby='atleast-one-category-required'
+                        {...register('categories')}
+                        aria-invalid={errors.categories ? 'true' : 'false'}
+                      />
+                    </li>
+                    <li>
+                      <Checkbox
+                        label={intl('subscribe_form_magazine_stories')}
+                        aria-invalid={errors.categories ? 'true' : 'false'}
+                        aria-describedby='atleast-one-category-required'
+                        value='magazineStories'
+                        {...register('categories')}
+                      />
+                    </li>
+                    <li>
+                      <Checkbox
+                        label={intl('subscribe_form_stock_market')}
+                        value='stockMarketAnnouncements'
+                        aria-invalid={errors.categories ? 'true' : 'false'}
+                        aria-describedby='atleast-one-category-required'
+                        {...register('categories')}
+                      />
+                    </li>
+                    <li>
+                      <Checkbox
+                        label={intl('subscribe_form_cruide_oil')}
+                        aria-invalid={errors.categories ? 'true' : 'false'}
+                        aria-describedby='atleast-one-category-required'
+                        value='crudeOilAssays'
+                        {...register('categories')}
+                      />
+                    </li>
+                  </ul>
+                </fieldset>
+                <Controller
+                  name='email'
+                  control={control}
+                  render={({
+                    field: { ref, ...props },
+                    fieldState: { invalid, error },
+                  }) => (
+                    <TextField
+                      {...props}
+                      id={`${props.name}_${formId}`}
+                      label={`${intl('email')}*`}
+                      inputRef={ref}
+                      inputIcon={
+                        invalid ? (
+                          <Icon data={error_filled} title='error' />
+                        ) : undefined
+                      }
+                      helperText={error?.message}
+                      aria-required='true'
+                      {...(invalid && { variant: 'error' })}
                     />
-                  </legend>
-                  <Icon data={error_filled} aria-hidden="true" />
-                </div>
-              )}
-              <ul>
-                <li>
-                  <Checkbox
-                    label={intl.formatMessage({
-                      id: 'subscribe_form_general_news',
-                      defaultMessage: 'General News',
-                    })}
-                    value="generalNews"
-                    aria-describedby="atleast-one-category-required"
-                    {...register('categories', {
-                      validate: (values) => values.length > 0,
-                    })}
-                    aria-required
-                    aria-invalid={errors.categories ? 'true' : 'false'}
-                  />
-                </li>
-                <li>
-                  <Checkbox
-                    label={intl.formatMessage({
-                      id: 'subscribe_form_magazine_stories',
-                      defaultMessage: 'Magazine stories',
-                    })}
-                    aria-invalid={errors.categories ? 'true' : 'false'}
-                    aria-describedby="atleast-one-category-required"
-                    value="magazineStories"
-                    aria-required
-                    {...register('categories')}
-                  />
-                </li>
-                <li>
-                  <Checkbox
-                    label={intl.formatMessage({
-                      id: 'subscribe_form_stock_market',
-                      defaultMessage: 'Stock market announcements',
-                    })}
-                    value="stockMarketAnnouncements"
-                    aria-invalid={errors.categories ? 'true' : 'false'}
-                    aria-describedby="atleast-one-category-required"
-                    aria-required
-                    {...register('categories')}
-                  />
-                </li>
-                <li>
-                  <Checkbox
-                    label={intl.formatMessage({
-                      id: 'subscribe_form_cruide_oil',
-                      defaultMessage: 'Crude oil assays',
-                    })}
-                    aria-invalid={errors.categories ? 'true' : 'false'}
-                    aria-describedby="atleast-one-category-required"
-                    value="crudeOilAssays"
-                    aria-required
-                    {...register('categories')}
-                  />
-                </li>
-                <li>
-                  <Checkbox
-                    label={intl.formatMessage({
-                      id: 'subscribe_form_all',
-                      defaultMessage: 'All',
-                    })}
-                    aria-invalid={errors.categories ? 'true' : 'false'}
-                    aria-describedby="atleast-one-category-required"
-                    value="all"
-                    aria-required
-                    {...register('categories')}
-                  />
-                </li>
-              </ul>
-            </fieldset>
-            <Controller
-              name="email"
-              control={control}
-              rules={{
-                required: intl.formatMessage({
-                  id: 'email_validation',
-                  defaultMessage: 'Please fill out a valid email address',
-                }),
-                pattern: {
-                  value: /^[\w!#$%&'*+/=?`{|}~^-]+(?:\.[\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}$/g,
-                  message: intl.formatMessage({
-                    id: 'email_validation',
-                    defaultMessage: 'Please fill out a valid email address',
-                  }),
-                },
-              }}
-              render={({ field: { ref, ...props }, fieldState: { invalid, error } }) => (
-                <TextField
-                  {...props}
-                  id={props.name}
-                  label={`${intl.formatMessage({
-                    id: 'email',
-                    defaultMessage: 'Email',
-                  })}*`}
-                  inputRef={ref}
-                  inputIcon={invalid ? <Icon data={error_filled} title="error" /> : undefined}
-                  helperText={error?.message}
-                  aria-required="true"
-                  {...(invalid && { variant: 'error' })}
+                  )}
                 />
-              )}
-            />
-            <div className="flex flex-col gap-2">
-              <FriendlyCaptcha
-                doneCallback={() => {
-                  setIsFriendlyChallengeDone(true)
-                }}
-                errorCallback={(error: any) => {
-                  console.error('FriendlyCaptcha encountered an error', error)
-                  setIsFriendlyChallengeDone(true)
-                }}
-              />
-              {/*@ts-ignore: TODO: types*/}
-              {errors?.root?.notCompletedCaptcha && (
-                <p
-                  role="alert"
-                  className="text-slate-80 border border-clear-red-100 px-6 py-4 flex gap-2 font-semibold"
-                >
+                <div className='flex flex-col gap-2'>
+                  <FriendlyCaptcha
+                    doneCallback={() => {
+                      setIsFriendlyChallengeDone(true)
+                    }}
+                    errorCallback={(error: any) => {
+                      console.error(
+                        'FriendlyCaptcha encountered an error',
+                        error,
+                      )
+                      setIsFriendlyChallengeDone(true)
+                    }}
+                  />
                   {/*@ts-ignore: TODO: types*/}
-                  <span className="mt-1">{errors.root.notCompletedCaptcha.message}</span>
-                  <Icon data={error_filled} aria-label="Error Icon" />
-                </p>
-              )}
-            </div>
-            <Button type="submit">
-              {isSubmitting ? (
-                <FormattedMessage id="form_sending" defaultMessage={'Sending...'}></FormattedMessage>
-              ) : (
-                <FormattedMessage id="subscribe_form_cta" defaultMessage={'Subscribe'} />
-              )}
-            </Button>
+                  {errors?.root?.notCompletedCaptcha && (
+                    <p
+                      role='alert'
+                      className='flex gap-2 border border-clear-red-100 px-6 py-4 font-semibold text-slate-80'
+                    >
+                      {/*@ts-ignore: TODO: types*/}
+                      <span className='mt-1'>
+                        {errors.root.notCompletedCaptcha.message}
+                      </span>
+                      <Icon data={error_filled} aria-label='Error Icon' />
+                    </p>
+                  )}
+                </div>
+                <Button type='submit'>
+                  {isSubmitting
+                    ? intl('form_sending')
+                    : intl('subscribe_form_cta')}
+                </Button>
+              </>
+            )}
           </form>
         </>
       )}
-      <div role="region" aria-live="assertive">
+      <section aria-live='assertive'>
+        {isSuccessfullySubmitted && <FormMessageBox variant='success' />}
         {isSubmitted && isServerError && (
           <FormMessageBox
-            variant="error"
+            variant='error'
             onClick={() => {
               reset(undefined, { keepValues: true })
               setServerError(false)
             }}
           />
         )}
-        {isSuccessfullySubmitted && <FormMessageBox variant="success" />}
-      </div>
+      </section>
     </>
   )
 }

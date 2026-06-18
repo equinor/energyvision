@@ -1,5 +1,6 @@
-import { ColorKeyTokens } from '../styles/colorKeyToUtilityMap'
-import { ImageBackground } from './imageTypes'
+import type { ImageBackground } from '@/core/Backgrounds/ImageBackground'
+import type { ObjectPositions } from '@/core/Image/imageUtilities'
+import type { ColorKeyTokens } from '../styles/colorKeyToUtilityMap'
 
 export type BackgroundColours =
   | 'White'
@@ -15,15 +16,18 @@ export type BackgroundColours =
   | 'Slate Blue 95'
 
 export type BackgroundTypes = 'backgroundColor' | 'backgroundImage'
+export type LayoutGrid = 'sm' | 'md' | 'lg'
+export type BackgroundGradient = 'none' | 'light' | 'dark'
 
-export type ContentAlignmentTypes = 'left' | 'right' | 'center'
+export type Background = {
+  type?: BackgroundTypes
+  backgroundColor?: BackgroundColours
+  backgroundImage?: ImageBackground
+  backgroundUtility?: keyof ColorKeyTokens
+  backgroundPosition?: ObjectPositions
+  dark?: boolean
+}
 
 export type DesignOptions = {
-  background: {
-    type?: BackgroundTypes
-    backgroundColor?: BackgroundColours
-    backgroundImage?: ImageBackground
-    backgroundUtility?: keyof ColorKeyTokens
-    dark: boolean
-  }
+  background?: Background
 }

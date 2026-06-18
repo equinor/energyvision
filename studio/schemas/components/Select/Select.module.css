@@ -1,0 +1,23 @@
+.flexContainer {
+  display: inline-flex;
+  align-items: start;
+  gap: 0.5rem;
+}
+
+.label {
+  color: var(--card-fg-color);
+  font-weight: 500;
+  font-size: 0.8125rem;
+  line-height: calc(1.46154);
+  padding: 0;
+  margin: 0;
+}
+.description {
+  width: 100%;
+  color: var(--card-muted-fg-color);
+  font-size: 0.8125rem;
+  line-height: calc(1.46154);
+}
+.switch {
+  margin-top: 0.1rem;
+}
