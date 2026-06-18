@@ -98,8 +98,8 @@ runs:
         file: web/Dockerfile
         push: true
         tags: |
-          ghcr.io/equinor/energyvision/web-${{ inputs.datasetName }}${{ inputs.isUpgrade && '-upgrade'}}:${{ env.IMAGE_TAG }}
-          ghcr.io/equinor/energyvision/web-${{ inputs.datasetName }}${{ inputs.isUpgrade && '-upgrade'}}:${{ env.IMAGE_TAG_SHA }}
+          ghcr.io/equinor/energyvision/web-${{ inputs.datasetName }}${{ inputs.isUpgrade == 'true' && '-upgrade' || '' }}:${{ env.IMAGE_TAG }}
+          ghcr.io/equinor/energyvision/web-${{ inputs.datasetName }}${{ inputs.isUpgrade == 'true' && '-upgrade' || '' }}:${{ env.IMAGE_TAG_SHA }}
         cache-from: type=registry,ref=${{ inputs.imageName }}:${{ env.IMAGE_TAG }}
         #cache-from: type=registry,ref=ghcr.io/equinor/energyvision/web-${{ inputs.datasetName }}-upgrade:${{ env.IMAGE_TAG }}
         cache-to: type=inline
