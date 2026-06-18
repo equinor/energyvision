@@ -103,7 +103,7 @@ jobs:
           ref: '${{ steps.get-long-sha.outputs.sha }}'
       - name: Install pnpm 📦
         id: install-pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6.0.8
       - name: Cache pnpm modules 💾
         uses: actions/setup-node@v4
         with:
@@ -168,7 +168,7 @@ jobs:
           ref: '${{ steps.get-long-sha.outputs.sha }}'
       - name: Install pnpm 📦
         id: install-pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6.0.8
       - name: Cache pnpm modules 💾
         uses: actions/setup-node@v4
         with:
