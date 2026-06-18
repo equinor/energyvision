@@ -26,7 +26,8 @@ env:
   BUILD_ARTIFACT_PATH: ${{ github.workspace }}/build_artifacts
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: 'true'
 
-permissions: {}
+permissions:
+  contents: read
 
 jobs:
   check-code:
