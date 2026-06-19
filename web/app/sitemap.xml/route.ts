@@ -96,7 +96,8 @@ export async function GET(request: Request) {
     ...archivedNewsSlugs,
   ]
 
-  locale = searchParams.get('lang') ?? defaultLanguage.locale
+  locale =
+    (searchParams.get('lang') ?? !isMultilanguage) ? defaultLanguage.locale : ''
   const shouldFetchUrls = !isMultilanguage || locales.includes(locale)
 
   const headers = { 'Content-Type': 'text/xml' }
