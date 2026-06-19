@@ -120,8 +120,8 @@ runs:
       shell: bash
       run: |
         # 1. Define standard local bash variables
-        prodComponent="${{ inputs.datasetName == "global" && "web" || format('web-{0}', inputs.datasetName) }}"
-    
+        prodComponent: "${{ if(inputs.datasetName == 'global', 'web', format('web-{0}', inputs.datasetName)) }}"
+
         # 2. Use bash logic to handle the upgrade condition
         if [ "${{ inputs.isUpgrade }}" = "true" ]; then
           if [ "${{ inputs.datasetName }}" = "global" ]; then
