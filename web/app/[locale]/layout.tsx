@@ -9,7 +9,7 @@ import { hasLocale, NextIntlClientProvider } from 'next-intl'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { PageProvider } from '@/contexts/pageContext'
 import { dataset } from '@/languageConfig'
-import { getNameFromIso } from '@/sanity/helpers/localization'
+import { getLocaleFromIso, getNameFromIso } from '@/sanity/helpers/localization'
 import { routeSanityFetch, SanityLive } from '@/sanity/lib/live'
 import { footerAndErrorImageQuery } from '@/sanity/queries/footer'
 import Footer from '@/sections/Footer/Footer'
@@ -106,7 +106,7 @@ export default async function LocaleLayout({
           strategy='beforeInteractive'
           data-cbid='f1327b03-7951-45da-a2fd-9181babc783f'
           data-blockingmode='auto'
-          data-culture={locale === 'nb_NO' ? 'nb' : locale}
+          data-culture={locale === 'nb-NO' ? 'nb' : getLocaleFromIso(locale)}
         />
       }
       <GoogleTagManagerHead />
