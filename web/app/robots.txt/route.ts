@@ -20,6 +20,8 @@ Sitemap: ${domain.startsWith('www') ? `https://${domain}` : domain}/sitemap.xml
 export async function GET(request: Request) {
   const domain = new URL(request.url).host
 
+  console.log('Requested robots.txt for domain:', domain, crawlableDomains.includes(domain))
+
   if (!crawlableDomains.includes(domain) && !Flags.IS_DEV) {
     return new NextResponse('Not Found', { status: 404 })
   }
