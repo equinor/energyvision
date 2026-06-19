@@ -38,9 +38,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const sanityLang = getNameFromIso(locale)
   //news, magazinepage has slug in document
-  const isNewsPage = slug[0] === newsSlug[sanityLang]
+  const isNewsPage = slug[0] === newsSlug[sanityLang] && slug?.length > 1
   const isMagazineRoom =
     slug?.length === 1 && slug[0] === magazineSlug[sanityLang]
+  const isNewsRoom =
+    slug?.length === 1 && slug[0] === newsSlug[sanityLang] && Flags.HAS_NEWSROOM
+
   const isMagazinePage =
     slug?.length > 1 && slug[0] === magazineSlug[sanityLang]
   let type = 'news'
@@ -48,7 +51,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     type = isMagazineRoom ? 'magazineIndex' : 'magazine'
   }
   let query = pageMetaQuery
-  if ((isNewsPage && Flags.HAS_NEWSROOM) || isMagazinePage) {
+  if (isNewsPage || isMagazinePage || isNewsRoom) {
     query = docWithSlugMetaQuery
   }
   if (isMagazineRoom) {
