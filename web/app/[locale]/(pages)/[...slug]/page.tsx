@@ -48,7 +48,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     type = isMagazineRoom ? 'magazineIndex' : 'magazine'
   }
   let query = pageMetaQuery
-  if (isNewsPage || isMagazinePage) {
+  if ((isNewsPage && Flags.HAS_NEWSROOM) || isMagazinePage) {
     query = docWithSlugMetaQuery
   }
   if (isMagazineRoom) {

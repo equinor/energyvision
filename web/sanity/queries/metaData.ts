@@ -59,14 +59,19 @@ export const pageMetaQuery = /* groq */ `
   }[0]
 `
 export const homePageMetaQuery = /* groq */ `
-*[_type == "translation.metadata" && references(*[_id=="route_homepage"][0].content._ref)][0].translations[_key==$lang][0].value->{
+coalesce(*[_type == "translation.metadata" && references(*[_id=="route_homepage"][0].content._ref)][0].translations[_key==$lang][0].value->{
     "title": title,
     "seoAndSome": ${seoAndSomeFields},
     "heroImage": coalesce(heroImage, heroFigure),
     "slugs": *[_type == "translation.metadata" && references(^._id)].translations[].value->{
       lang,
     }
-}
+},*[_id=="route_homepage"][0].content->{
+  "title": title,
+    "seoAndSome": ${seoAndSomeFields},
+    "heroImage": coalesce(heroImage, heroFigure),
+    "slugs":[$lang]
+})
 `
 export const newsroomMetaQuery = /* groq */ `
   *[_type == "newsroom" && ${sameLang}] {
