@@ -53,9 +53,9 @@ ${locales
 </sitemapindex>`
 
 export async function GET(request: Request) {
-  const { searchParams, host } = new URL(request.url)
+  const { searchParams } = new URL(request.url)
   let locale = ''
-  let domain = host
+  let domain = String(request.headers.get('host'))
 
   if (!crawlableDomains.includes(domain) && !Flags.IS_DEV) {
     return new NextResponse('Not found', { status: 404 })

@@ -18,7 +18,7 @@ Disallow: /?*sortBy`
 Sitemap: ${domain.startsWith('www') ? `https://${domain}` : domain}/sitemap.xml
 `
 export async function GET(request: NextRequest) {
-  const domain = request.nextUrl.hostname
+  const domain = String(request.headers.get('host'))
 
   console.log(
     'Requested robots.txt for domain:',
