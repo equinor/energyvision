@@ -1,6 +1,6 @@
 import { crawlableDomains } from '@/lib/helpers/domainHelpers'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
-import { NextResponse } from 'next/server'
+import { NextResponse, NextRequest } from 'next/server'
 
 const generateRobotsTxt = (domain: string) => `User-agent: *
 ${crawlableDomains.includes(domain) ? 'Allow' : 'Disallow'}: /
@@ -17,7 +17,7 @@ Disallow: /?*sortBy`
 }
 Sitemap: ${domain.startsWith('www') ? `https://${domain}` : domain}/sitemap.xml
 `
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   const domain = new URL(request.url).host
 
   console.log('Requested robots.txt for domain:', domain, crawlableDomains.includes(domain))
