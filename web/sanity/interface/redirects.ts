@@ -133,10 +133,6 @@ export const getDnsRedirect = (host, pathname) => {
     return `https://www.equinor.co.kr${pathname}`
   }
 
-  if (dns === 'sponsorship.equinor.com') {
-    return `https://communicationtoolbox.equinor.com/point/en/sponsor/`
-  }
-
   const redirect =
     dnsRedirects.find(redirect => redirect.from === dns + pathname) ||
     dnsRedirects.find(redirect => redirect.from === dns)
@@ -209,8 +205,8 @@ const dnsRedirects = [
     from: 'morgendagenshelter.no',
     to: '/no/om-oss/sponsing-og-stotte',
   },
-   {
-    from: "data.equinor.com",
-    to:"/energy/data-sharing"
-  }
+  {
+    from: 'data.equinor.com',
+    to: '/energy/data-sharing',
+  },
 ]
