@@ -6,7 +6,9 @@ import { twMerge } from 'tailwind-merge'
 import Link from '@/core/Link/Link'
 import ResourceLink from '@/core/Link/ResourceLink'
 import { Menu } from '@/core/MenuAccordion'
+import { defaultLanguage } from '@/languageConfig'
 import { getMenuLink } from '@/lib/helpers/getUrlFromAction'
+import { getLocaleFromIso } from '@/sanity/helpers/localization'
 import type { SimpleGroupData } from '../../types/index'
 
 const { MenuItem, MenuHeader, MenuContent } = Menu
@@ -34,6 +36,9 @@ export const SimpleMenuItem = ({
     console.warn('Missing slug for simple menu link')
   }
 
+  const locale = iso !== defaultLanguage.iso ? `/${getLocaleFromIso(iso)}` : ''
+  const href = locale + item.link?.slug || ''
+
   const ariaCurrentStyling = `aria-current:before:content-['']
   aria-current:before:absolute
   aria-current:before:top-0
@@ -55,7 +60,7 @@ export const SimpleMenuItem = ({
             ariaCurrentStyling,
             `aria-current:before:-left-2`,
           )}
-          href={item.link?.slug || '/'}
+          href={href || '/'}
           {...(linkCallback && {
             onClick: linkCallback,
           })}
