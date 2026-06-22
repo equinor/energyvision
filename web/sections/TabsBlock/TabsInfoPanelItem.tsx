@@ -49,18 +49,6 @@ const TabsInfoPanelItem = forwardRef<HTMLDivElement, TabsInfoPanelItemProps>(
     },
     ref,
   ) {
-    console.log('rendering info panel item with props', {
-      image,
-      caption,
-      imageVariant,
-      backgroundPosition,
-      title,
-      text,
-      keyInfo,
-      actions,
-      keyInfoTitle,
-      className,
-    })
     const intl = useTranslations()
     const isLargerDisplays = useMediaQuery(`(min-width: 800px)`)
 

@@ -25,11 +25,6 @@ export const StickyMenu = forwardRef<HTMLElement, StickyMenuProps>(
   ) {
     const intl = await getTranslations()
 
-    console.log(
-      'links in sticky menu,is reliant on ...page and pageprovider',
-      links,
-    )
-
     const twBg = colorKeyToUtilityMap[background ?? 'white-100']?.background
     //Each page template has a reference to the data-sticky to add a padding-top as peer
     return links?.length === 0 ? null : (

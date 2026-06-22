@@ -75,7 +75,7 @@ jobs:
       - name: Install dependencies 🔧
         id: install-dependencies
         run: |
-          pnpm sanityv3 install
+          pnpm studio install
       - name: Check if today is the last Sunday
         id: last_sunday
         run: |
@@ -90,7 +90,7 @@ jobs:
 
       - name: Export Data with assets
         id: export-data-with-assets
-        working-directory: ./sanityv3
+        working-directory: ./studio
         env:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_BACKUP_TOKEN }}
         run: |
