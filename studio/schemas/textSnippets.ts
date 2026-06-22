@@ -970,6 +970,17 @@ const snippets: textSnippet = {
     defaultValue: 'Skip to content',
     group: groups.common,
   },
+  request_download_action_prefix: {
+    title: 'Download',
+    defaultValue: 'Download',
+    group: groups.common,
+  },
+  download_modal_ingress: {
+    title: 'Please confirm that you are human below and the link will appear.',
+    defaultValue:
+      'Please confirm that you are human below and the link will appear.',
+    group: groups.common,
+  },
 }
 
 type textSnippetGroup = { title: string; hidden?: boolean }
