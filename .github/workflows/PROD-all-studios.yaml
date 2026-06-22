@@ -27,7 +27,7 @@ jobs:
     steps:
       - name: Checkout internal 🛎️
         id: checkout-internal
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6.0.3
         with:
           repository: 'equinor/energyvision-internal'
           ref: main
@@ -41,7 +41,7 @@ jobs:
           echo "sha=$(python ci/returnComponentVersion.py preprod studio-global)" >> $GITHUB_OUTPUT
       - name: Checkout 🛎️
         id: checkout-main
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6.0.3
         with:
           repository: 'equinor/energyvision'
           fetch-depth: 0
@@ -53,7 +53,7 @@ jobs:
           echo "sha=$(git rev-parse ${{ steps.get-preprod-sha.outputs.sha }})" >> $GITHUB_OUTPUT
       - name: Checkout 🛎️
         id: checkout-specific-branch
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6.0.3
         with:
           repository: 'equinor/energyvision'
           fetch-depth: 0
@@ -103,7 +103,7 @@ jobs:
     steps:
       - name: Checkout internal 🛎️
         id: checkout-internal
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6.0.3
         with:
           repository: 'equinor/energyvision-internal'
           ref: main
@@ -117,7 +117,7 @@ jobs:
           echo "sha=$(python ci/returnGlobalStudioVersion.py preprod)" >> $GITHUB_OUTPUT
       - name: Checkout 🛎️
         id: checkout-main
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6.0.3
         with:
           repository: 'equinor/energyvision'
           fetch-depth: 0
@@ -129,7 +129,7 @@ jobs:
           echo "sha=$(git rev-parse ${{ steps.get-preprod-sha.outputs.sha }})" >> $GITHUB_OUTPUT
       - name: Checkout 🛎️
         id: checkout-specific-branch
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6.0.3
         with:
           repository: 'equinor/energyvision'
           fetch-depth: 0
@@ -167,7 +167,7 @@ jobs:
     steps:
       - name: Checkout internal 🛎️
         id: checkout-internal
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6.0.3
         with:
           repository: 'equinor/energyvision-internal'
           ref: main
@@ -207,7 +207,7 @@ jobs:
       DOCKER_BUILDKIT: 1
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6.0.3
 
       # PRODUCTION CLUSTERS
       - name: Deploy to Radix 🚀
@@ -236,7 +236,7 @@ jobs:
     steps:
       - name: Checkout internal 🛎️
         id: checkout-internal
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6.0.3
         with:
           repository: 'equinor/energyvision-internal'
           ref: main
@@ -269,7 +269,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6.0.3
 
       - name: 'Move cards and create discussion and post it to channel'
         id: 'get-list'

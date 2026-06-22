@@ -16,7 +16,7 @@ jobs:
     steps:
       - name: Checkout internal 🛎️
         id: checkout-internal
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6.0.3
         with:
           repository: 'equinor/energyvision-internal'
           ref: main

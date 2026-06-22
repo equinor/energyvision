@@ -85,7 +85,7 @@ jobs:
     steps:
       - name: Checkout 🛎️
         id: checkout-main
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6.0.3
         with:
           repository: 'equinor/energyvision'
           fetch-depth: 0
@@ -96,7 +96,7 @@ jobs:
           echo "sha=$(git rev-parse ${{ github.event.inputs.image-sha }})" >> $GITHUB_OUTPUT
       - name: Checkout 🛎️
         id: checkout-specific-branch
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6.0.3
         with:
           repository: 'equinor/energyvision'
           fetch-depth: 0
@@ -149,7 +149,7 @@ jobs:
     steps:
       - name: Checkout 🛎️
         id: checkout-main
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6.0.3
         with:
           repository: 'equinor/energyvision'
           fetch-depth: 0
@@ -161,7 +161,7 @@ jobs:
           echo "sha=$(git rev-parse ${{ github.event.inputs.image-sha }})" >> $GITHUB_OUTPUT
       - name: Checkout 🛎️
         id: checkout-specific-branch
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6.0.3
         with:
           repository: 'equinor/energyvision'
           fetch-depth: 0
@@ -203,7 +203,7 @@ jobs:
     steps:
       - name: Checkout internal 🛎️
         id: checkout-internal
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6.0.3
         with:
           repository: 'equinor/energyvision-internal'
           ref: main
@@ -240,7 +240,7 @@ jobs:
       DOCKER_BUILDKIT: 1
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6.0.3
 
       # MAIN PRODUCTION CLUSTER
       - name: Deploy to Radix  🚀
