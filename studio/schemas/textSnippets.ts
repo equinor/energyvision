@@ -981,6 +981,12 @@ const snippets: textSnippet = {
       'Please confirm that you are human below and the link will appear.',
     group: groups.common,
   },
+  not_human_message: {
+    title: 'Not human message',
+    defaultValue:
+      'We are sorry, but anti-robot protection failed and we cannot proceed',
+    group: groups.error,
+  },
 }
 
 type textSnippetGroup = { title: string; hidden?: boolean }
