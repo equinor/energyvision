@@ -105,11 +105,15 @@ export const getStaticBuildRoutePaths = async (
 
 export const getHomePagePaths = async (): Promise<PathType[]> => {
   const pages = await getHomePages()
-  return pages.map(it => ({
-    locale: languages.find(language => language.name === it.lang)?.locale || '',
-    updatedAt: it._updatedAt,
-    slug: '/',
-  }))
+  console.log(pages)
+  return pages
+    .filter(e => e)
+    .map(it => ({
+      locale:
+        languages.find(language => language.name === it.lang)?.locale || '',
+      updatedAt: it._updatedAt,
+      slug: '/',
+    }))
 }
 export const getRoutePaths = async (locales: string[]): Promise<PathType[]> => {
   const fetchPaths = locales.map(async locale => {
