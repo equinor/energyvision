@@ -1,6 +1,6 @@
+import { NextRequest, NextResponse } from 'next/server'
 import { crawlableDomains } from '@/lib/helpers/domainHelpers'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
-import { NextResponse } from 'next/server'
 
 const generateRobotsTxt = (domain: string) => `User-agent: *
 ${crawlableDomains.includes(domain) ? 'Allow' : 'Disallow'}: /
@@ -17,8 +17,8 @@ Disallow: /?*sortBy`
 }
 Sitemap: ${domain.startsWith('www') ? `https://${domain}` : domain}/sitemap.xml
 `
-export async function GET(request: Request) {
-  const domain = new URL(request.url).host
+export async function GET(request: NextRequest) {
+  const domain = String(request.headers.get('host'))
 
   if (!crawlableDomains.includes(domain) && !Flags.IS_DEV) {
     return new NextResponse('Not Found', { status: 404 })
