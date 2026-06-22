@@ -42,7 +42,6 @@ const parseBreadcrumbs = (crumbs: Breadcrumb[], isoLang: string) => {
   return crumbs
     .filter(item => item?.slug && item?.label)
     .map(item => {
-      console.log('parseBreadcrumbs item', item)
       return {
         ...item,
         href:

@@ -8,6 +8,6 @@
 
 4. Login into Sanity CLI using `sanity login --sso=equinor-sanity`
 
-5. Go to the script folders using `cd sanityv3/scripts`
+5. Go to the script folders using `cd studio/scripts`
 
 6. Run with `sanity exec run.js --with-user-token`;
