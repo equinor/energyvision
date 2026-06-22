@@ -97,7 +97,7 @@ export async function GET(request: Request) {
   ]
 
   locale =
-    (searchParams.get('lang') ?? !isMultilanguage) ? defaultLanguage.locale : ''
+    searchParams.get('lang') ?? (!isMultilanguage ? defaultLanguage.locale : '')
   const shouldFetchUrls = !isMultilanguage || locales.includes(locale)
 
   const headers = { 'Content-Type': 'text/xml' }
