@@ -130,7 +130,7 @@ jobs:
         id: install-pnpm
         uses: pnpm/action-setup@v4
       - name: Cache pnpm modules 💾
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 24
           cache: 'pnpm'
@@ -205,7 +205,7 @@ jobs:
         id: install-pnpm
         uses: pnpm/action-setup@v4
       - name: Cache pnpm modules 💾
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 24
           cache: 'pnpm'
@@ -269,7 +269,7 @@ jobs:
           ref: main
           token: ${{ secrets.PADMS_PAT }}
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: '24'
       - name: Install dependencies
