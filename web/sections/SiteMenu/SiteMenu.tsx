@@ -143,7 +143,8 @@ const SiteMenu = ({ variant = 'default', siteMenuData }: SiteMenuProps) => {
       'h-full mt-8 xl:bg-moss-green-50 xl:mx-8 xl:flex xl:justify-between items-center',
     simple: ` ${Flags.HAS_FANCY_MENU ? '' : 'bg-north-sea-80'} mt-6 xl:mt-8 xl:px-layout-sm flex flex-col mx-auto`,
   }
-  if (menuItems.length === 0) {
+
+  if (!menuItems || menuItems.length === 0) {
     // for sites with no menu
     return (
       <Link
