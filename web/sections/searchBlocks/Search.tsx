@@ -9,7 +9,6 @@ import { PaginationContextProvider } from '@/contexts/PaginationContext'
 import { SearchBox } from '@/core/AlgoliaSearchBox/SearchBox'
 import usePaginationPadding from '@/lib/hooks/usePaginationPadding'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
-import { getIsoFromLocale } from '@/sanity/helpers/localization'
 import { Pagination } from '@/sections/searchBlocks/pagination/Pagination'
 import SearchResults from '@/sections/searchBlocks/SearchResults'
 import { searchClient as client } from '../../lib/algolia'
@@ -126,7 +125,7 @@ export function Search() {
             return {
               ...(indexUiState.sortBy && {
                 tab: indexUiState.sortBy
-                  .replaceAll(isoCode, '')
+                  .replaceAll(locale, '')
                   .replaceAll(envPrefix, '')
                   .replaceAll('_', '')
                   .toLowerCase(),
@@ -141,7 +140,7 @@ export function Search() {
                 ...(routeState.query && { query: routeState.query }),
                 ...(routeState.page && { page: routeState.page as number }),
                 ...(routeState.tab && {
-                  sortBy: `${envPrefix}_${routeState.tab.toUpperCase()}_${isoCode}`,
+                  sortBy: `${envPrefix}_${routeState.tab.toUpperCase()}_${locale}`,
                 }),
               },
             }
