@@ -35,7 +35,7 @@ import { CharCounterEditor } from './schemas/components/CharCounterEditor'
 import { LangBadge } from './schemas/components/LangBadge'
 import { i18n } from './schemas/documentTranslation'
 import './styles/customStyles.css'
-import { getMetaTitleSuffix } from '@energyvision/shared/satelliteConfig'
+//import { getMetaTitleSuffix } from '@energyvision/shared/satelliteConfig'
 import { presentationTool } from 'sanity/presentation'
 import { copyAction } from './actions/fieldActions/CustomCopyFieldAction'
 //Table plugin
@@ -44,7 +44,7 @@ import { locations } from './presentation/locations'
 import CustomDocumentInternationalizationMenu from './schemas/components/CustomDocumentInternationalizationMenu'
 import { partialStudioTheme } from './studioTheme'
 import './styles/fonts.css'
-import EquinorLogo from './styles/icons/logo.svg?react'
+//import EquinorLogo from './styles/icons/logo.svg?react'
 import { fotowareWidget } from './widgets/ImportedFotowareAssetsWidget'
 
 export const customTheme = buildLegacyTheme(partialStudioTheme)
@@ -91,7 +91,7 @@ const getStudioTitle = (dataset: string) => {
       return 'Test'
     default:
       //@ts-ignore
-      return getMetaTitleSuffix(dataset)
+      return dataset //getMetaTitleSuffix(dataset) temp hot fix
   }
 }
 
@@ -102,7 +102,7 @@ const getConfig = (
 ) => ({
   name: 'equinor-' + datasetParam,
   title: `${getStudioTitle(datasetParam)} studio`,
-  icon: EquinorLogo,
+  //icon: EquinorLogo, // hot fix
   basePath: '/' + datasetParam,
   projectId: projectIdParam,
   dataset: datasetParam,
