@@ -38,7 +38,7 @@ jobs:
       DOCKER_BUILDKIT: 1
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6.0.3
       - name: Install pnpm 📦
         id: install-pnpm
         uses: pnpm/action-setup@v4
@@ -71,7 +71,7 @@ jobs:
       name: ${{ github.event.inputs.environment || (github.ref == 'refs/heads/main' && 'production') || 'development'}}
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v6
+        uses: actions/checkout@v6.0.3
       - name: Install pnpm 📦
         id: install-pnpm
         uses: pnpm/action-setup@v4
