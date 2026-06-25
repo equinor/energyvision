@@ -1,9 +1,10 @@
-import { defaultLanguage } from './languages'
+//import { defaultLanguage } from './languages'
 import { dataset } from './sanity.client'
-import { getLocaleFromName } from './src/lib/localization'
+
+//import { getLocaleFromName } from './src/lib/localization'
 
 // Any random string, must match SANITY_PREVIEW_SECRET in the Next.js .env.local file
-const previewSecret = import.meta.env.SANITY_STUDIO_PREVIEW_SECRET
+//const previewSecret = import.meta.env.SANITY_STUDIO_PREVIEW_SECRET
 
 const remoteUrl = () => {
   const env = window.location.hostname.includes('equinor-web-sites-preprod')
@@ -26,7 +27,7 @@ const localUrl = import.meta.env.SANITY_STUDIO_PROJECT_URL
 export const baseUrl =
   window.location.hostname === 'localhost' ? localUrl : remoteUrl()
 
-export default function resolveProductionUrl(doc) {
+/*export default function resolveProductionUrl(doc) {
   const previewUrl = new URL(baseUrl)
 
   previewUrl.pathname = '/api/preview'
@@ -50,4 +51,4 @@ export default function resolveProductionUrl(doc) {
 
   // console.log('Preview url', previewUrl.toString())
   return previewUrl.toString()
-}
+}*/
