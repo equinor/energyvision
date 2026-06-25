@@ -74,7 +74,7 @@ jobs:
         id: deploy
         working-directory: ./studio
         run: |
-          pnpm run deploy
+          pnpm run deploy --no-extract-manifest
         env:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_DEPLOY }}
       - uses: act10ns/slack@v2
@@ -151,7 +151,7 @@ jobs:
         id: deploy
         working-directory: ./studio
         run: |
-          pnpm run deploy
+          pnpm run deploy --no-extract-manifest
         env:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_SECRET_DEPLOY }}
       - uses: act10ns/slack@v2
