@@ -33,6 +33,14 @@ const buildDisplayURL = (slug: string, locale: string | undefined): string => {
     : `${host.url}${slug}`
 }
 
+const buildURL = (slug: string, locale: string | undefined): string => {
+  const startsWithLocale =
+    slug.startsWith(`${locale}/`) || slug.startsWith(`/${locale}/`)
+  return locale && locale !== defaultLanguage?.iso && !startsWithLocale
+    ? `/${getLocaleFromIso(locale)}/${slug.replace(/^\//, '')}`
+    : `${slug}`
+}
+
 const UniversalHit: React.FC<HitProps> = ({ hit }) => {
   const {
     slug = '',
@@ -62,7 +70,7 @@ const UniversalHit: React.FC<HitProps> = ({ hit }) => {
 
   return (
     <article className='border-white-100/20 border-b pt-6 pb-8'>
-      <BaseLink href={slug} className='group'>
+      <BaseLink href={buildURL(slug, locale)} className='group'>
         {formattedDate && type !== 'magazine' && (
           <FormattedDateTime
             uppercase
