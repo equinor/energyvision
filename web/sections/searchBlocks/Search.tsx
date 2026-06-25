@@ -43,29 +43,29 @@ export function Search() {
   const router = useRouter()
   const resultsRef = useRef<HTMLDivElement>(null)
   const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
-  const isoCode = getIsoFromLocale(locale)
+
   const padding = usePaginationPadding()
   const indices = [
     {
-      value: `${envPrefix}_TOPICS_${isoCode}`,
+      value: `${envPrefix}_TOPICS_${locale}`,
       label: intl('search_topics_tab'),
     },
     {
-      value: `${envPrefix}_EVENTS_${isoCode}`,
+      value: `${envPrefix}_EVENTS_${locale}`,
       label: intl('search_events_tab'),
     },
     {
-      value: `${envPrefix}_NEWS_${isoCode}`,
+      value: `${envPrefix}_NEWS_${locale}`,
       label: intl('search_news_tab'),
     },
     {
-      value: `${envPrefix}_MAGAZINE_${isoCode}`,
+      value: `${envPrefix}_MAGAZINE_${locale}`,
       label: intl('search_magazine_tab'),
     },
   ]
 
   // The main index will be "all" at some point
-  const mainIndex = `${envPrefix}_TOPICS_${isoCode}`
+  const mainIndex = `${envPrefix}_TOPICS_${locale}`
 
   // eslint-disable-next-line
   // @ts-ignore: @TODO: The types are not correct
