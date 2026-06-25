@@ -22,7 +22,7 @@ const remoteUrl = () => {
   }
 }
 
-const localUrl = import.meta.env.SANITY_STUDIO_PROJECT_URL
+const localUrl = 'http://localhost/3333' //import.meta.env.SANITY_STUDIO_PROJECT_URL
 
 export const baseUrl =
   window.location.hostname === 'localhost' ? localUrl : remoteUrl()
