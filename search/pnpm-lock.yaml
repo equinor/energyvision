@@ -15,8 +15,8 @@ importers:
         specifier: 4.13.0
         version: 4.13.0
       '@azure/storage-blob':
-        specifier: ^12.32.0
-        version: 12.32.0
+        specifier: 12.29.0
+        version: 12.29.0
       '@sanity/client':
         specifier: ^7.13.1
         version: 7.13.1
@@ -192,9 +192,10 @@ packages:
     resolution: {integrity: sha512-Ul7A4gwmaHzYWj2Z5xBDly/W8JSC1vnKgJ898zPMZr0oSf1ah0tiL15sytjycU/PMhDZAlkWtEL1+MzNMU6uww==}
     engines: {node: '>=16'}
 
-  '@azure/storage-blob@12.32.0':
-    resolution: {integrity: sha512-80LzSNnFQye2LCCBFghAJS6jJQJ7N4bfgZ6qDMgVGRtugZ7TLDKQZ2hczMigmZH3jAcMRdma/IygsC5+0gT7Tw==}
+  '@azure/storage-blob@12.29.0':
+    resolution: {integrity: sha512-LKiRWOo6Xy/2DqDu+HInKTR5gzJ2mboVvEXbWZ1YJF5LIoQAIty0mJkqaqal0VxjPkXEHJDbFbJ5LE58eEj3dg==}
     engines: {node: '>=20.0.0'}
+    deprecated: Unplanned Release
 
   '@azure/storage-common@12.4.0':
     resolution: {integrity: sha512-kNhJKMxQb374KOVt63CZnGIpDcrKNzJeyANLJymxE9mCJSdRGzb+Iv9oSIiCj6tNMLypr530b9ObOiA/5OvwOg==}
@@ -1857,7 +1858,7 @@ snapshots:
       jsonwebtoken: 9.0.2
       uuid: 8.3.2
 
-  '@azure/storage-blob@12.32.0':
+  '@azure/storage-blob@12.29.0':
     dependencies:
       '@azure/abort-controller': 2.1.2
       '@azure/core-auth': 1.10.1
