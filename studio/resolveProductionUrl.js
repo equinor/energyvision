@@ -15,14 +15,12 @@ const remoteUrl = () => {
       return `https://web-equinor-web-sites-${env}.c2.radix.equinor.com`
     case 'global-development':
       return 'https://web-global-development-equinor-web-sites-dev.c2.radix.equinor.com'
-    case 'global-test':
-      return 'https://web-global-test-equinor-web-sites-test.c2.radix.equinor.com'
     default:
       return `https://web-${dataset}-equinor-web-sites-${env}.c2.radix.equinor.com`
   }
 }
 
-const localUrl = 'http://localhost/3333' //import.meta.env.SANITY_STUDIO_PROJECT_URL
+const localUrl = 'http://localhost/3000' //import.meta.env.SANITY_STUDIO_PROJECT_URL
 
 export const baseUrl =
   window.location.hostname === 'localhost' ? localUrl : remoteUrl()
