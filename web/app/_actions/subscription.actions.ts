@@ -77,7 +77,7 @@ export async function subscribe({
 
     const subscriberListId =
       locale === 'no' ? subscriberListIdNo : subscriberListIdEn
-    const endpoint = new URL('/subscribers', parsedBaseUrl)
+    const endpoint = new URL('/api/public/v2/subscribers', parsedBaseUrl)
     endpoint.searchParams.set('subscriber_list_id[]', subscriberListId)
     endpoint.searchParams.set('tag', 'merge')
 
@@ -91,14 +91,6 @@ export async function subscribe({
         message: 'Error during subscription',
       }
     }
-    console.log(
-      'Subscriber url ',
-      endpoint,
-      JSON.stringify({
-        email,
-        tags,
-      }),
-    )
 
     const response = await fetch(endpoint, {
       method: 'POST',
