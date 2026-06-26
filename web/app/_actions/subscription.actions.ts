@@ -78,7 +78,7 @@ export async function subscribe({
     const subscriberListId =
       locale === 'no' ? subscriberListIdNo : subscriberListIdEn
     const endpoint = new URL('/subscribers', parsedBaseUrl)
-    endpoint.searchParams.set('subscriber_list_id', subscriberListId)
+    endpoint.searchParams.set('subscriber_list_id[]', subscriberListId)
     endpoint.searchParams.set('tag', 'merge')
 
     const tags = categories
