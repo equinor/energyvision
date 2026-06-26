@@ -91,6 +91,14 @@ export async function subscribe({
         message: 'Error during subscription',
       }
     }
+    console.log(
+      'Subscriber url ',
+      endpoint,
+      JSON.stringify({
+        email,
+        tags,
+      }),
+    )
 
     const response = await fetch(endpoint, {
       method: 'POST',
