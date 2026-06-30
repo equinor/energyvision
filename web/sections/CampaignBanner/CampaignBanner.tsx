@@ -2,42 +2,9 @@ import type { PortableTextBlock } from '@portabletext/types'
 import { forwardRef, type HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { urlForImage } from '@/sanity/lib/utils'
-import Blocks, { type MarkType } from '../../portableText/Blocks'
-import isEmpty from '../../portableText/helpers/isEmpty'
+import { CampaignBannerTitle } from './CampaignBannerTitle'
 import { colorKeyToUtilityMap } from '../../styles/colorKeyToUtilityMap'
 import type { CampaignBannerData } from '../../types/index'
-
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-const campaignTitleBlocks: MarkType = {
-  //@ts-ignore
-  smallText: ({ children }: PortableTextBlock) => (
-    <p className='text-sm'>{<>{children}</>}</p>
-  ),
-  //@ts-ignore
-  largeText: ({ children }: PortableTextBlock) => (
-    <p className='block w-fit text-balance rounded-xs bg-white-100 text-2xl leading-none'>
-      {<>{children}</>}
-    </p>
-  ),
-  //@ts-ignore
-  extraLargeText: ({ children }: PortableTextBlock) => {
-    return (
-      <p className='mt-4 block w-fit text-balance rounded-xs bg-white-100 font-semibold text-4xl leading-none lg:text-8xl'>
-        {<>{children}</>}
-      </p>
-    )
-  },
-  //@ts-ignore
-  normal: ({ children }: PortableTextBlock) => {
-    if (isEmpty(children)) return null
-    return (
-      <p>
-        <>{children}</>
-      </p>
-    )
-  },
-}
-/* eslint-enable @typescript-eslint/ban-ts-comment */
 
 export type CampaignBannerProps = {
   data: CampaignBannerData
@@ -89,10 +56,9 @@ const CampaignBanner = forwardRef<HTMLElement, CampaignBannerProps>(
         <div className={`mx-auto px-layout-md`}>
           <div className='flex justify-start'>
             <h2 className=''>
-              <Blocks
+              <CampaignBannerTitle
                 value={title}
                 blockClassName='my-0 text-energy-red-100'
-                blocksComponents={campaignTitleBlocks}
                 className='w-fit max-w-prose text-energy-red-100'
               />
             </h2>
