@@ -3,6 +3,7 @@ import { getDraftId } from 'sanity'
 import type { DocumentLocationResolver } from 'sanity/presentation'
 import blocksToText from '@/helpers/blocksToText'
 import { capitalizeFirstLetter } from '@/helpers/formatters'
+import { defaultLanguage } from '@/languages'
 import { getIdFromName, getLocaleFromName } from '../src/lib/localization'
 
 export const locations: DocumentLocationResolver = (params, context) => {
@@ -16,9 +17,30 @@ export const locations: DocumentLocationResolver = (params, context) => {
     'localNews',
   ]
 
-  if (routePages?.includes(params.type)) {
+  if (params.type === 'homePage') {
     query = {
       fetch: `*[_id==$id][0]{
+      lang,
+      "isActive": count(
+        *[_type match "route_homepage" && (
+          references(
+            *[_type == "translation.metadata" && references($id)][0]
+              .translations[_key == $defaultLang][0].value._ref
+          ) || references($id)
+        )]
+      ) > 0,
+      "translationSlugs": *[_type == "translation.metadata" && references(^._id)].translations[].value->{
+      lang,
+      },
+      ...
+      }
+      `,
+      listen: `*[_id in [$id,$draftId]]`,
+    }
+  } else if (routePages?.includes(params.type)) {
+    query = {
+      fetch: `*[_id==$id][0]{
+      lang,
       "slugs": *[_type match "route*" && references(^._id)].slug.current,
       "translationSlugs": *[_type == "translation.metadata" && references(^._id)].translations[].value->{
       "slug" : *[_type match "route*" && references(^._id)][0].slug.current, 
@@ -30,22 +52,11 @@ export const locations: DocumentLocationResolver = (params, context) => {
       `,
       listen: `*[_id in [$id,$draftId]]`,
     }
-  } else if (params.type === 'homePage') {
-    query = {
-      fetch: `*[_id==$id][0]{
-      "isActive": count(*[_type match "route_homepage" && references(^._id)]) > 0,
-      "translationSlugs": *[_type == "translation.metadata" && references(^._id)].translations[].value->{
-      lang,
-      },
-      ...
-      }
-      `,
-      listen: `*[_id in [$id,$draftId]]`,
-    }
   } else if (pagesWithSlugOnThem?.includes(params.type)) {
     //pages with slugs on them
     query = {
       fetch: `*[_id==$id][0]{
+      lang,
       "slugs": *[_type match "route*" && references(^._id)][0].slug.current,
     "translationSlugs": *[_type == "translation.metadata" && references(^._id)].translations[].value->{
       "slug": slug.current,
@@ -58,7 +69,12 @@ export const locations: DocumentLocationResolver = (params, context) => {
   }
 
   if (query) {
-    const pageParams = { id: params.id, draftId: getDraftId(params.id) }
+    const pageParams = {
+      id: params.id,
+      draftId: getDraftId(params.id),
+      publishedId: params.id.replace(/^drafts\./, ''),
+      defaultLang: defaultLanguage?.name,
+    }
 
     const doc$ = context.documentStore.listenQuery(
       query,
@@ -71,10 +87,8 @@ export const locations: DocumentLocationResolver = (params, context) => {
       map(doc => {
         // If the document doesn't exist or have a slug, return null
         if (!doc || (doc?._type === 'homePage' && !doc?.isActive)) {
-          console.log('return no locations')
           return null
         }
-
         let locs = []
         if (routePages?.includes(params.type)) {
           if (
@@ -91,7 +105,7 @@ export const locations: DocumentLocationResolver = (params, context) => {
                 const locale = getLocaleFromName(translation?.lang)
                 return {
                   title: `${blocksToText(translation?.title)}`,
-                  href: `${translation?.lang !== 'en_GB' ? `${locale}` : ''}${translation?.slug}`,
+                  href: `${translation?.lang !== defaultLanguage?.name ? `${locale}` : ''}${translation?.slug}`,
                 }
               })
           } else if (doc?.slugs?.filter((slug: string) => slug)?.length > 0) {
@@ -101,7 +115,7 @@ export const locations: DocumentLocationResolver = (params, context) => {
                 const locale = getLocaleFromName(doc?.lang)
                 return {
                   title: `${blocksToText(doc?.title)}`,
-                  href: `${doc?.lang !== 'en_GB' ? `${locale}` : ''}${slug}`,
+                  href: `${doc?.lang !== defaultLanguage?.name ? `${locale}` : ''}${slug}`,
                 }
               })
           } else {
@@ -113,17 +127,32 @@ export const locations: DocumentLocationResolver = (params, context) => {
             ]
           }
         } else if (doc?._type === 'homePage' && doc?.isActive) {
-          locs = doc?.translationSlugs?.map((item: any) => {
-            const itemLocale = getLocaleFromName(item?.lang)
-            const localeId = capitalizeFirstLetter(getIdFromName(item?.lang))
-
-            return {
-              title: `${localeId} homepage`,
-              href: `${item?.lang !== 'en_GB' ? `/${itemLocale}` : '/'}`,
-            }
-          })
+          if (!doc?.translationSlugs || doc?.translationSlugs?.length === 0) {
+            const localeId = capitalizeFirstLetter(
+              getIdFromName(defaultLanguage?.name),
+            )
+            locs = [
+              {
+                title: `${localeId} homepage`,
+                href: `/`,
+              },
+            ]
+          }
+          if (doc?.translationSlugs?.length > 0) {
+            locs = doc?.translationSlugs
+              ?.filter((item: any) => item?.lang === doc?.lang)
+              ?.map((item: any) => {
+                const itemLocale = getLocaleFromName(item?.lang)
+                const localeId = capitalizeFirstLetter(
+                  getIdFromName(item?.lang),
+                )
+                return {
+                  title: `${localeId} homepage`,
+                  href: `${item?.lang !== defaultLanguage?.name ? `/${itemLocale}` : '/'}`,
+                }
+              })
+          }
         } else if (pagesWithSlugOnThem?.includes(params.type)) {
-          console.log('pagesWithSlugOnThem')
           const locale = getLocaleFromName(doc?.lang)
           const plainTitle = Array.isArray(doc.title)
             ? blocksToText(doc.title)
@@ -132,7 +161,7 @@ export const locations: DocumentLocationResolver = (params, context) => {
           locs = [
             {
               title: doc.title ? plainTitle : 'Untitled',
-              href: `${doc?.lang !== 'en_GB' ? `${locale}/` : ''}${doc?.slug?.current}`,
+              href: `${doc?.lang !== defaultLanguage?.name ? `${locale}/` : ''}${doc?.slug?.current}`,
             },
           ]
         }

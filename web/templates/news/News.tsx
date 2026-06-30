@@ -139,6 +139,7 @@ const NewsPage = async ({
                   cookiePolicy={iframe?.cookiePolicy}
                   aspectRatio={iframe?.designOptions?.aspectRatio}
                   description={iframe?.description}
+                  className='my-20'
                 />
               )}
 

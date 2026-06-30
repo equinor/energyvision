@@ -1,6 +1,6 @@
 'use client'
 import type { SanityImageObject } from '@sanity/image-url'
-import { type PortableTextBlock, toPlainText } from 'next-sanity'
+import type { PortableTextBlock } from 'next-sanity'
 import { useId, useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
@@ -179,11 +179,26 @@ const PromotionsBlock = ({
     </>
   )
 
-  const onColorBg = !(
-    designOptions?.background?.backgroundUtility === 'white-100' ||
-    designOptions?.background?.backgroundColor === 'White'
-  )
+  const backgroundUtility = designOptions?.background?.backgroundUtility
+    ?.trim()
+    .toLowerCase()
+  const backgroundColor = designOptions?.background?.backgroundColor
+    ?.toLowerCase()
+    .trim()
 
+  const onColorBg = backgroundUtility
+    ? !['white', 'white-100'].includes(backgroundUtility)
+    : !!backgroundColor && backgroundColor !== 'white'
+
+  console.log(
+    ' designOptions?.background?.backgroundUtility',
+    designOptions?.background?.backgroundUtility,
+  )
+  console.log(
+    'designOptions?.background?.backgroundColor',
+    designOptions?.background?.backgroundColor,
+  )
+  console.log('onColorBg', onColorBg)
   return (
     <section
       className={twMerge(`relative ${bg} ${dark ? 'dark' : ''}`, className)}

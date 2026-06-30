@@ -323,6 +323,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
           aspectRatio={'16:9'}
           height={iframeData?.height}
           hasSectionTitle={!!title}
+          className='my-20'
         />
       )
 
