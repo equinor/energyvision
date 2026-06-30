@@ -329,8 +329,13 @@ data-ui="checked active" class="data-checked:underline">
   .video-js .vjs-big-play-button {
     @apply flex h-[2.3em]! w-[2.3em]! items-center justify-center rounded-full! border-none!;
   }
+  .video-js .vjs-big-play-button .vjs-icon-placeholder {
+    @apply flex h-full w-full items-center justify-center;
+  }
   .video-js .vjs-big-play-button .vjs-icon-placeholder::before {
-    @apply text-2xl! max-lg:mt-2.5;
+    @apply flex items-center justify-center text-2xl! leading-none;
+    /* Optical centering: the triangle glyph is geometrically left-heavy */
+    transform: translateX(0em);
   }
   .video-js .vjs-audio-button,
   .vjs-picture-in-picture-control {
