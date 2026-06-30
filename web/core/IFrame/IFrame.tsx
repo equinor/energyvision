@@ -2,7 +2,6 @@
 import type { PortableTextBlock } from '@portabletext/types'
 //TODO check this
 // eslint-disable-next-line import/no-unresolved
-import { draftMode } from 'next/headers'
 import { useIsPresentationTool } from 'next-sanity/hooks'
 import { forwardRef, type HTMLAttributes, useId, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
@@ -51,6 +50,10 @@ const isIframeAllowedByCsp = (url: string) => {
   }
 }
 
+const isDraftModeEnabled = () =>
+  typeof document !== 'undefined' &&
+  document.cookie.includes('__prerender_bypass=')
+
 type IFrameProps = {
   frameTitle: string
   url: string
@@ -75,139 +78,136 @@ type IFrameProps = {
   transcript?: any
 } & HTMLAttributes<HTMLElement>
 
-export const IFrame = forwardRef<HTMLDivElement, IFrameProps>(
-  async function IFrame(
-    {
-      hasSectionTitle = true,
-      title,
-      showTitleAbove = false,
-      frameTitle,
-      url,
-      cookiePolicy = ['none'],
-      aspectRatio,
-      height,
-      className = '',
-      titleClassName = '',
-      descriptionClassName = '',
-      labelledBy,
-      description,
-      transcript,
+export const IFrame = forwardRef<HTMLDivElement, IFrameProps>(function IFrame(
+  {
+    hasSectionTitle = true,
+    title,
+    showTitleAbove = false,
+    frameTitle,
+    url,
+    cookiePolicy = ['none'],
+    aspectRatio,
+    height,
+    className = '',
+    titleClassName = '',
+    descriptionClassName = '',
+    labelledBy,
+    description,
+    transcript,
+  },
+  ref,
+) {
+  const isPresentationTool = useIsPresentationTool()
+  const isPreview = isPresentationTool || isDraftModeEnabled()
+  const [consented, setConsented] = useState(useConsent(cookiePolicy))
+  const titleId = useId()
+  const descriptionId = useId()
+  const labelledById = title ? titleId : labelledBy
+
+  useConsentState(
+    cookiePolicy,
+    () => {
+      setConsented(true)
     },
-    ref,
-  ) {
-    const isPresentationTool = useIsPresentationTool()
-    const { isEnabled } = await draftMode()
-    const isPreview = isPresentationTool || isEnabled
-    const [consented, setConsented] = useState(useConsent(cookiePolicy))
-    const titleId = useId()
-    const descriptionId = useId()
-    const labelledById = title ? titleId : labelledBy
+    () => {
+      setConsented(false)
+    },
+  )
 
-    useConsentState(
-      cookiePolicy,
-      () => {
-        setConsented(true)
-      },
-      () => {
-        setConsented(false)
-      },
-    )
+  if (!url) return null
+  const isBlockedByCsp = !isIframeAllowedByCsp(url)
+  const containerPadding = height
+    ? `${height}px`
+    : calculatePadding(aspectRatio)
 
-    if (!url) return null
-    const isBlockedByCsp = !isIframeAllowedByCsp(url)
-    const containerPadding = height
-      ? `${height}px`
-      : calculatePadding(aspectRatio)
-
-    const iframeElement = (
-      <>
-        {title && showTitleAbove && (
-          <Blocks
-            value={title}
-            id={titleId}
-            as='h3'
-            className={twMerge('pb-8 text-xl', titleClassName)}
-          />
-        )}
-        <div
-          className='relative w-full overflow-hidden'
-          style={{
-            paddingBottom: containerPadding,
-          }}
-        >
-          {isBlockedByCsp ? (
-            <div
-              className={twMerge(
-                'dark absolute inset-0 flex h-full w-full flex-col items-center justify-center gap-8 bg-autumn-storm-60 p-20',
-              )}
-            >
-              <LogoPrimary className='h-auto w-[20%] text-white-100' />
-              <Typography variant='h2' className='text-center'>
-                This embedded content cannot be displayed in your browser.
-              </Typography>
-            </div>
-          ) : (
-            <iframe
-              className='absolute inset-0 h-full w-full border-0'
-              allowFullScreen
-              loading='lazy'
-              src={url}
-              title={frameTitle}
-              {...(!isPreview && {
-                'data-cookieconsent': cookiePolicy,
-              })}
-              {...(labelledById !== '' && {
-                'aria-labelledby': labelledById,
-              })}
-              {...(description && {
-                'aria-describedby': descriptionId,
-              })}
-            />
-          )}
-        </div>
-        {transcript && (
-          <Transcript transcript={transcript} ariaTitle={frameTitle} />
-        )}
-        {title && !showTitleAbove && (
-          <Blocks
-            value={title}
-            id={titleId}
-            as='h3'
+  const iframeElement = (
+    <>
+      {title && showTitleAbove && (
+        <Blocks
+          value={title}
+          id={titleId}
+          as='h3'
+          className={twMerge('pb-8 text-xl', titleClassName)}
+        />
+      )}
+      <div
+        className='relative w-full overflow-hidden'
+        style={{
+          paddingBottom: containerPadding,
+        }}
+      >
+        {isBlockedByCsp ? (
+          <div
             className={twMerge(
-              'pt-4 text-md',
-              description ? 'pb-2' : '',
-              titleClassName,
+              'dark absolute inset-0 flex h-full w-full flex-col items-center justify-center gap-8 bg-autumn-storm-60 p-20',
             )}
-          />
-        )}
-        {description && (
-          <Blocks
-            value={description}
-            id={descriptionId}
-            variant='body'
-            className={twMerge(
-              'text-base',
-              !title || (!title && !showTitleAbove) ? 'pt-4' : '',
-              descriptionClassName,
-            )}
-          />
-        )}
-      </>
-    )
-
-    return (
-      <div ref={ref} className={twMerge('h-min', className)}>
-        {consented || isPreview ? (
-          iframeElement
+          >
+            <LogoPrimary className='h-auto w-[20%] text-white-100' />
+            <Typography variant='h2' className='text-center'>
+              This embedded content cannot be displayed in your browser.
+            </Typography>
+          </div>
         ) : (
-          <RequestConsentContainer
-            hasSectionTitle={hasSectionTitle}
-            cookiePolicy={cookiePolicy}
+          <iframe
+            className='absolute inset-0 h-full w-full border-0'
+            allowFullScreen
+            loading='lazy'
+            src={url}
+            title={frameTitle}
+            {...(!isPreview && {
+              'data-cookieconsent': cookiePolicy,
+            })}
+            {...(labelledById !== '' && {
+              'aria-labelledby': labelledById,
+            })}
+            {...(description && {
+              'aria-describedby': descriptionId,
+            })}
           />
         )}
       </div>
-    )
-  },
-)
+      {transcript && (
+        <Transcript transcript={transcript} ariaTitle={frameTitle} />
+      )}
+      {title && !showTitleAbove && (
+        <Blocks
+          value={title}
+          id={titleId}
+          as='h3'
+          className={twMerge(
+            'pt-4 text-md',
+            description ? 'pb-2' : '',
+            titleClassName,
+          )}
+        />
+      )}
+      {description && (
+        <Blocks
+          value={description}
+          id={descriptionId}
+          variant='body'
+          className={twMerge(
+            'text-base',
+            !title || (!title && !showTitleAbove) ? 'pt-4' : '',
+            descriptionClassName,
+          )}
+        />
+      )}
+    </>
+  )
+
+  return (
+    <div ref={ref} className={twMerge('h-min', className)}>
+      {consented || isPreview ? (
+        iframeElement
+      ) : (
+        <RequestConsentContainer
+          hasSectionTitle={hasSectionTitle}
+          cookiePolicy={cookiePolicy}
+        />
+      )}
+    </div>
+  )
+})
 
 export default IFrame
