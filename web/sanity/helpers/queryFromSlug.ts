@@ -88,3 +88,67 @@ export const getQueryFromSlug = async (
     },
   }
 }
+
+const getTemplate = async (
+  firstPiece: string,
+  secondPiece: string | undefined,
+  lang: string,
+) => {
+  if (!firstPiece || typeof firstPiece === 'undefined' || firstPiece === '') {
+    return 'homePage'
+  }
+  if (newsSlug[lang] === firstPiece) {
+    if (
+      Flags.HAS_NEWSROOM &&
+      (!secondPiece || typeof secondPiece === 'undefined' || secondPiece === '')
+    ) {
+      return 'newsroom'
+    }
+    if (secondPiece) {
+      //Check for local news. For now it seems only path /news/... has local news
+      if (
+        Flags.HAS_LOCAL_NEWS &&
+        lang === 'en_GB' &&
+        secondPiece &&
+        localNewsTags[lang].includes(secondPiece.toLowerCase())
+      ) {
+        return 'localNews'
+      }
+      return 'news'
+    }
+  }
+  if (Flags.HAS_MAGAZINE && magazineSlug[lang] === firstPiece) {
+    if (
+      !secondPiece ||
+      typeof secondPiece === 'undefined' ||
+      secondPiece === ''
+    ) {
+      return 'magazineIndex'
+    }
+    if (secondPiece) {
+      return 'magazine'
+    }
+  }
+  return 'page'
+}
+
+export const getTemplateFromSlug = async (
+  slug: string | string[] | undefined,
+  locale = '',
+): Promise<{ template: string }> => {
+  let topLevelRoute = ''
+  let childRoute: string | undefined
+  if (slug && Array.isArray(slug)) {
+    const [firstPiece, secondPiece] = slug.filter(
+      (part: string) => part !== locale,
+    )
+    topLevelRoute = firstPiece
+    childRoute = secondPiece
+  } else if (slug) {
+    topLevelRoute = slug
+  }
+  const lang = getNameFromIso(locale) ?? 'en_GB'
+
+  const template = await getTemplate(topLevelRoute, childRoute, lang)
+  return { template }
+}

@@ -9,6 +9,17 @@ type WebhookPayload = {
   tags: string[]
 }
 
+/*
+ * tags to handle
+ * 'siteMenu','simpleMenu'
+ * 'footer'
+ * 'magazine'. tags: [`magazine:${slug}`],
+ * 'event' - is connected to page so not needed?
+ * page tags: ['page', `page:${slug}`],
+ * news tags: [`news:${slug}`, `localNews:${slug}`],
+ * newsroom tags: ['newsroom'],
+ */
+
 export async function POST(req: NextRequest) {
   try {
     if (!process.env.SANITY_API_TOKEN) {
