@@ -54,7 +54,6 @@ export default async function Home({ params }: Props) {
     getPage({
       slug,
       locale,
-      tags: ['homePage'],
     }),
   ])
 

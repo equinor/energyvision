@@ -12,7 +12,10 @@ import {
   getLocaleFromName,
   getNameFromIso,
 } from '@/sanity/helpers/localization'
-import { getQueryFromSlug } from '@/sanity/helpers/queryFromSlug'
+import {
+  getQueryFromSlug,
+  getTemplateFromSlug,
+} from '@/sanity/helpers/queryFromSlug'
 import { resolveOpenGraphImage } from '@/sanity/lib/utils'
 import type { SeoData } from '@/types'
 import { isDateAfter } from '../../lib/helpers/dateUtilities'
@@ -195,8 +198,33 @@ function languagePrefixedSlug(
   }
 }
 
+export const findTagOnTemplate = (template: string, slug: string) => {
+  switch (template) {
+    case 'magazineIndex':
+      return ['magazineIndex']
+    case 'homePage':
+      return ['homePage']
+    case 'newsroom':
+      return ['newsroom']
+    case 'news':
+      return [`news:${slug}`]
+    case 'localNews':
+      return [`localNews:${slug}`]
+    case 'magazine':
+      return [`magazine:${slug}`]
+    case 'menu':
+      return ['siteMenu', 'simpleMenu']
+    case 'footer':
+      return ['footer']
+    // handles topic pages and events(?)
+    // should we consider that page doesnt have path but route_* has path?
+    default:
+      return ['page']
+  }
+}
+
 export async function getPage(params: Params) {
-  const { slug, locale, tags = [], searchParams } = params
+  const { slug, locale, searchParams } = params
   const { tag } = searchParams || {}
   let pageData = null
   if (slug?.[0]?.includes('preview')) {
@@ -225,10 +253,14 @@ export async function getPage(params: Params) {
   } else {
     const { query: pageQuery, queryParams: pageQueryParams } =
       await getQueryFromSlug(slug, locale)
+    const { template: pageTemplate } = await getTemplateFromSlug(slug, locale)
+    //@ts-ignore
+    const tags = findTagOnTemplate(pageTemplate ?? 'page', slug)
+    console.log('tags for page fetch', tags, slug, pageTemplate)
 
     const { data } = await routeSanityFetch({
       query: pageQuery,
-      // tags: [...tags],
+      tags,
       params: { ...pageQueryParams },
       requestTag: 'page-by-slug',
     })
@@ -246,7 +278,7 @@ export async function getPage(params: Params) {
         lang: getNameFromIso(locale),
         ...(tag && tag !== 'all' && { tag }),
       } as QueryParams,
-      // tags: ['magazine'],
+      tags: ['magazine'],
       requestTag: 'magazine-room',
     })
     magazineArticles = articles

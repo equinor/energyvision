@@ -59,6 +59,7 @@ export default async function LocaleLayout({
   const { data: footerAndErrorImageData } = await routeSanityFetch({
     query: footerAndErrorImageQuery,
     params: queryParams,
+    tags: ['footer'],
   })
 
   const { errorImage, ...footerData } = footerAndErrorImageData || {}
