@@ -8,7 +8,6 @@ import Script from 'next/script'
 import { hasLocale, NextIntlClientProvider } from 'next-intl'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { PageProvider } from '@/contexts/pageContext'
-import { dataset } from '@/languageConfig'
 import { getLocaleFromIso, getNameFromIso } from '@/sanity/helpers/localization'
 import { routeSanityFetch, SanityLive } from '@/sanity/lib/live'
 import { footerAndErrorImageQuery } from '@/sanity/queries/footer'
@@ -66,7 +65,7 @@ export default async function LocaleLayout({
   const { errorImage, ...footerData } = footerAndErrorImageData || {}
 
   async function loadVisualEditing() {
-    if (dataset === 'global-development' && (await draftMode()).isEnabled) {
+    if ((await draftMode()).isEnabled) {
       const DraftModeToolbar = dynamic(
         () => import('@/sections/DraftMode/DraftModeToolbar'),
       )

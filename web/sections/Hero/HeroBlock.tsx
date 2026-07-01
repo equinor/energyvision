@@ -210,7 +210,8 @@ export const HeroBlock = ({
   }
 
   return type !== HeroTypes?.NO_HERO ? (
-    <section className='h-full w-full'>
+    //bg white here because presentation tools shows grey as a fallback, the hero with background color will lay over and override the white
+    <section className='h-full w-full bg-white-100'>
       {getHero()}
       {breadcrumbs?.enableBreadcrumbs &&
         heroTypesThatHaveBreadcrumbsBelow.includes(type) && (
