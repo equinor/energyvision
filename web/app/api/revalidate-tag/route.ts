@@ -1,13 +1,25 @@
 import { revalidateTag } from 'next/cache'
 import { type NextRequest, NextResponse } from 'next/server'
-import { groq } from 'next-sanity'
 import { parseBody } from 'next-sanity/webhook'
-import { client } from '@/sanity/lib/client'
 
 type WebhookPayload = {
   id: string
-  tags: string[]
+  _type: string
+  slug?: {
+    current: string
+  }
 }
+
+/*
+ * tags to handle
+ * 'siteMenu','simpleMenu'
+ * 'footer'
+ * 'magazine'. tags: [`magazine:${slug}`],
+ * 'event' - is connected to page so not needed?
+ * page tags: ['page', `page:${slug}`],
+ * news tags: [`news:${slug}`, `localNews:${slug}`],
+ * newsroom tags: ['newsroom'],
+ */
 
 export async function POST(req: NextRequest) {
   try {
@@ -29,45 +41,33 @@ export async function POST(req: NextRequest) {
         status: 401,
       })
     }
-    const docId = body?.id
-    const docType = body?.tags?.[0]
-
-    if (!Array.isArray(body?.tags) || !body.tags.length) {
-      const message = 'Bad Request'
-      return new Response(JSON.stringify({ message, body }), { status: 400 })
+    if (!body?._type) {
+      return NextResponse.json({ message: 'Bad request' }, { status: 400 })
     }
-    console.log('tagbased revalidation tags', body.tags)
 
-    const docsWithoutSlugCurrent = [
+    //const docId = body?.id
+
+    console.log('tagbased revalidation', body._type, body?.slug?.current)
+
+    /*     const docsWithoutSlugCurrent = [
       'page',
       'magazineIndex',
       'newsroom',
       'event',
       'homePage',
-    ]
+    ] */
     //@ts-ignore
-    if (docsWithoutSlugCurrent.includes(docType)) {
-      const routes = await client.fetch(
-        groq`*[_type match "route_*" && content._ref == $id]{"slug": slug.current}`,
-        {
-          id: docId,
-        },
-      )
 
-      routes.forEach((route: any) => {
-        const tag = `sanity:${docType}:${route.slug}`
-        revalidateTag(tag, 'max')
-        console.log(`revalidated tag: ${tag}`)
-      })
+    // Revalidate the specific document if it has a slug
+    if (body.slug?.current) {
+      revalidateTag(`${body._type}:${body.slug.current}`, 'max')
     } else {
-      body.tags.forEach(_tag => {
-        const tag = `sanity:${_tag}`
-        revalidateTag(tag, 'max')
-        console.log(`revalidated tag: ${tag}`)
-      })
+      // Revalidate the entire document type (e.g., newsroom)
+      revalidateTag(body._type, 'max') //(body._type)
     }
 
-    return NextResponse.json({ body })
+    //return NextResponse.json({ body })
+    return NextResponse.json({ revalidated: true, now: Date.now() })
   } catch (err) {
     console.error(err)
     return new Response((err as Error).message, { status: 500 })

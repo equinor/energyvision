@@ -85,6 +85,7 @@ export default async function Page({ params }: Props) {
       params: {
         lang: getNameFromIso(locale) ?? 'en_GB',
       },
+      tags: ['siteMenu', 'simpleMenu'],
     }),
     getPage({
       slug: decodeSlugs(slug),
