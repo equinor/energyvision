@@ -241,6 +241,7 @@ const PromotionsBlock = ({
                 `3xl:mx-layout-md grid auto-rows-fr grid-cols-1 gap-x-4 gap-y-3 md:grid-cols-2 2xl:grid-cols-3`,
               promotionList?.length === 2 && '2xl:grid-cols-2',
               promotionList?.length === 3 && 'md:grid-cols-3',
+              promotionVariant === 'promotePeople' && 'max-lg:auto-rows-auto',
             )}
           >
             {promotionList?.map((promotion: any) => {
