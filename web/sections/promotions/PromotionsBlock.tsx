@@ -190,15 +190,6 @@ const PromotionsBlock = ({
     ? !['white', 'white-100'].includes(backgroundUtility)
     : !!backgroundColor && backgroundColor !== 'white'
 
-  console.log(
-    ' designOptions?.background?.backgroundUtility',
-    designOptions?.background?.backgroundUtility,
-  )
-  console.log(
-    'designOptions?.background?.backgroundColor',
-    designOptions?.background?.backgroundColor,
-  )
-  console.log('onColorBg', onColorBg)
   return (
     <section
       className={twMerge(`relative ${bg} ${dark ? 'dark' : ''}`, className)}

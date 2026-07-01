@@ -78,6 +78,7 @@ export const locations: DocumentLocationResolver = (params, context) => {
 
     const doc$ = context.documentStore.listenQuery(
       query,
+      //@ts-ignore
       pageParams,
       { perspective: 'drafts' }, // returns a draft article if it exists
     )
@@ -89,7 +90,6 @@ export const locations: DocumentLocationResolver = (params, context) => {
         if (!doc || (doc?._type === 'homePage' && !doc?.isActive)) {
           return null
         }
-        console.log('defaultWebLang', defaultWebLang)
         let locs = []
         if (routePages?.includes(params.type)) {
           if (
