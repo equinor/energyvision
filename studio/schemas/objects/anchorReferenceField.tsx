@@ -1,61 +1,43 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-
-import { Card, Flex, Select } from '@sanity/ui'
-import { useCallback, useMemo } from 'react'
-import { type Rule, set, useFormValue } from 'sanity'
+import type { Rule } from 'sanity'
 import { validateAnchorReference } from '../validations/validateAnchorReference'
 
-export const AnchorReferenceFieldInput = (props: any) => {
-  const { onChange, value = '' } = props
-  const document = useFormValue([])
+export const AnchorComponentDescription = () => (
+  <>
+    <span style={{ display: 'block', marginTop: '4.8px' }}>
+      Add an optional anchor reference that can be used to link directly to this
+      component.
+    </span>
+    <span style={{ display: 'block', marginTop: '4.8px' }}>
+      Allowed characters are: letters, numbers, hyphens, and underscores. The #
+      symbol is not needed.
+    </span>
+  </>
+)
 
-  const anchorLinkComponentReferences = useMemo(() => {
-    return document
-      ? //@ts-ignore: typing
-        document?.content
-          .filter((item: any) => item?.anchor || item?.anchorReference)
-          .map((item: any) => item.anchor || item.anchorReference)
-      : []
-  }, [document])
-
-  const handleChange = useCallback(
-    (event: any) => {
-      const nextValue = event.currentTarget.value
-      onChange(set(nextValue))
-    },
-    [onChange],
-  )
-
-  return (
-    <Card padding={3}>
-      <Flex direction='column' justify='center'>
-        <label htmlFor='anchorReferenceList' className='text-base'>
-          Select from anchor links in this document
-        </label>
-        <Select id='anchorReferenceList' value={value} onChange={handleChange}>
-          <option key='' value=''>
-            Select an anchor link
-          </option>
-          {anchorLinkComponentReferences.map((referenceString: any) => (
-            <option key={referenceString} value={referenceString}>
-              {referenceString}
-            </option>
-          ))}
-        </Select>
-      </Flex>
-    </Card>
-  )
-}
-
+export const AnchorLinkDescription = () => (
+  <>
+    <span style={{ display: 'block', marginTop: '4.8px' }}>
+      Optional: add the anchor reference of the component/section you want to
+      link directly to.
+    </span>
+    <span style={{ display: 'block', marginTop: '4.8px' }}>
+      Results cannot be guaranteed for external URLs.
+    </span>
+  </>
+)
 export default {
   name: 'anchorReferenceField',
   title: 'Anchor reference',
   type: 'string',
-  components: {
-    input: AnchorReferenceFieldInput,
-  },
-  // @ts-ignore - possible error in sanity with CustomValidatorResult
+  description: AnchorComponentDescription(),
   validation: (Rule: Rule) =>
-    //@ts-ignore
-    Rule.custom((value: string) => validateAnchorReference(value)),
+    Rule.custom((value: string) => {
+      const result = validateAnchorReference(value)
+      if (result === true || (Array.isArray(result) && result.length === 0)) {
+        return true
+      }
+      return Array.isArray(result)
+        ? result.map(msg => ({ message: msg }))
+        : result
+    }),
 }

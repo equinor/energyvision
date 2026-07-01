@@ -24,7 +24,8 @@ export const PageAnchorInput = (props: any) => {
 
   const anchorLinkComponentReferences = useMemo(() => {
     return document
-      ? document?.content
+      ? //@ts-ignore
+        document?.content
           .filter((item: any) => item?.anchor || item?.anchorReference)
           .map((item: any) => item.anchor || item.anchorReference)
       : []
@@ -42,9 +43,10 @@ export const PageAnchorInput = (props: any) => {
     <Card padding={3}>
       <Flex direction='column' justify='center'>
         <label htmlFor='anchorReferenceList' className='text-base'>
-          Select from Anchor Link components in this document
+          Select from anchors references in this document
         </label>
         <Select id='anchorReferenceList' value={value} onChange={handleChange}>
+          <option value=''>Select an anchor reference</option>
           {anchorLinkComponentReferences.map((referenceString: any) => (
             <option key={referenceString} value={referenceString}>
               {referenceString}
