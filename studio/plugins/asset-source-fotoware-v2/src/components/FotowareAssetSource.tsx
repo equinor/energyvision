@@ -71,7 +71,10 @@ const FotowareAssetSource = forwardRef<HTMLDivElement>((props: any, ref) => {
           console.log('response from fw api', response)
           const arrayBuffer = await response.arrayBuffer()
           setIsLoading(false)
-          console.log('returning arrayBuffer from FW')
+          console.log('returning arrayBuffer from FW', {
+            byteLength: arrayBuffer.byteLength,
+            firstBytes: Array.from(new Uint8Array(arrayBuffer).slice(0, 10)),
+          })
           return arrayBuffer
         } catch (error) {
           console.error('Error fetching rendition:', error)
