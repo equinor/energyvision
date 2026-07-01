@@ -2,7 +2,7 @@ import { sanityFetch } from '@/sanity/lib/live'
 import { externalRedirects, redirects } from '@/sanity/queries/redirects'
 
 export const getRedirectUrl = async (slug: string, locale: string) => {
-  const { data } = await sanityFetch({
+  const { data }: { data: any } = await sanityFetch({
     query: redirects,
     params: {
       slug: slug,
@@ -13,7 +13,7 @@ export const getRedirectUrl = async (slug: string, locale: string) => {
 }
 
 export const getExternalRedirectUrl = async (slug: string, locale: string) => {
-  const { data } = await sanityFetch({
+  const { data }: { data: any } = await sanityFetch({
     query: externalRedirects,
     params: {
       slug: slug,

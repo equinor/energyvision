@@ -58,7 +58,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     query = magazineroomMetaQuery
   }
 
-  const { data: metaData } = await routeSanityFetch({
+  const { data: metaData }: { data: any } = await routeSanityFetch({
     query,
     params: {
       lang: sanityLang,
