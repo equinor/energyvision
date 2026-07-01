@@ -10,6 +10,7 @@ import ResourceLink from '@/core/Link/ResourceLink'
 import { Typography } from '@/core/Typography'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import { useMediaQuery } from '@/lib/hooks/useMediaQuery'
+import { twMerge } from '@/lib/twMerge/twMerge'
 import Blocks from '@/portableText/Blocks'
 import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
 import { getIsoFromName } from '../../../sanity/helpers/localization'
@@ -39,13 +40,12 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
   const { title, overline, content, image, actions, designOptions } = data
   const {
     imageSize = 'full',
-    imagePosition,
+    imagePosition = 'right',
     containImage = false,
     background,
   } = designOptions
 
   const { backgroundPosition } = background || {}
-  const useFlexCol = useMediaQuery(`(max-width: 1023px)`)
   const { bg, dark } = getBgAndDarkFromBackground(designOptions)
   const isLargerDisplays = useMediaQuery(`(min-width: 1650px)`)
 
@@ -58,11 +58,14 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
   // Svg can be "pictures"/illustrations and small svgs...
   const imageElement = (
     <div
-      className={`relative ${
-        isSvg
-          ? 'mx-18 flex h-auto items-center justify-center'
-          : 'h-auto min-h-[25rem] w-full'
-      }`}
+      className={twMerge(
+        `relative ${
+          isSvg
+            ? 'mx-18 flex h-auto items-center justify-center'
+            : 'h-auto min-h-[25rem] w-full'
+        }`,
+        imagePosition === 'right' && 'lg:order-last',
+      )}
     >
       <Image
         image={image}
@@ -83,9 +86,18 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
       id={anchor}
       className={`max-w-fullwidth ${bg} ${dark ? 'dark' : ''}`}
     >
-      <div className='mx-auto flex max-w-360 flex-col lg:grid lg:grid-cols-2'>
-        {(imagePosition === 'left' || useFlexCol) && imageElement}
-        <div className={`max-w-text px-8 pt-8 pb-10 lg:pt-18 lg:pb-22`}>
+      <div
+        className={twMerge(
+          'mx-auto flex max-w-360 flex-col lg:grid lg:grid-cols-2',
+        )}
+      >
+        {imageElement}
+        <div
+          className={twMerge(
+            `max-w-text px-8 pt-8 pb-10 lg:pt-18 lg:pb-22`,
+            imagePosition === 'right' && 'lg:order-first',
+          )}
+        >
           {overline ? (
             <hgroup className='mb-1'>
               <Typography variant='overline'>{overline}</Typography>
@@ -129,7 +141,7 @@ const Teaser = ({ data, anchor }: TeaserProps) => {
             </div>
           )}
         </div>
-        {imagePosition === 'right' && !useFlexCol && imageElement}
+        {/*         {imagePosition === 'right' && !useFlexCol && imageElement} */}
       </div>
     </article>
   )

@@ -475,7 +475,7 @@ export default function Blocks({
         }
         /** Basic iframe block */
         if (block._type === 'basicIframe') {
-          let marginOverride = ''
+          let marginOverride = 'my-20'
           // If the next block is a basicIframe, remove margin bottom
           if (blocks[i + 1]?._type === 'basicIframe') {
             marginOverride = 'mb-0'

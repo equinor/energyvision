@@ -43,7 +43,7 @@ const IFrameBlock = ({
       className={twMerge(`${bg} ${dark ? 'dark' : ''} `, className)}
       id={anchor}
     >
-      <div className='mx-auto max-w-content px-layout-lg pb-page-content'>
+      <div className='mx-auto max-w-content px-layout-lg'>
         {title && <Blocks variant='h2' id={headingId} value={title} />}
         <div className='flex flex-col'>
           {ingress && <Blocks variant='ingress' value={ingress} />}

@@ -48,7 +48,7 @@ export const FiftyFiftyHero = ({
   }
 
   return (
-    <section>
+    <>
       <div
         className={twMerge(
           `flex flex-col-reverse ${bg}`,
@@ -131,6 +131,6 @@ export const FiftyFiftyHero = ({
           )}
         />
       </div>
-    </section>
+    </>
   )
 }

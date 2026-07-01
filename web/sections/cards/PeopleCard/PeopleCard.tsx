@@ -48,37 +48,37 @@ const PeopleCard = forwardRef<HTMLDivElement, PeopleCardProps>(
     const linkClassNames =
       'text-norwegian-woods-100 no-underline hover:underline text-sm'
 
-    const variantContentClassNames = {
-      default: ``,
-      single: ``,
-    }
-
     return (
       <>
         <div
           ref={ref}
           className={twMerge(
             `focus-visible:envis-outline dark:focus-visible:envis-outline-invert flex h-full w-full items-center justify-start rounded-sm bg-white-100 px-6 py-8 text-slate-80 shadow-card focus:outline-hidden dark:text-white-100`,
-            variant === 'default' && 'gap-4 lg:flex-col lg:gap-8',
+            variant === 'default' &&
+              'items-start gap-4 lg:flex-col lg:items-center lg:gap-8',
             variant === 'single' &&
               'flex-col gap-8 lg:w-fit lg:flex-row lg:gap-12',
             className,
           )}
         >
           {image && (
-            <Image
-              image={image}
-              fill
-              grid='xs'
-              aspectRatio='1:1'
-              className={`${variant === 'single' ? 'size-40 lg:size-64' : 'size-32 lg:size-40'}`}
-              imageClassName='rounded-full'
-            />
+            <div className='aspect-square w-24 shrink-0 self-start overflow-hidden rounded-full sm:w-28 lg:w-32 lg:self-center'>
+              <Image
+                image={image}
+                fill
+                grid='xs'
+                aspectRatio='1:1'
+                keepRatioOnMobile
+                className='h-full w-full'
+                imageClassName='h-full w-full object-cover'
+              />
+            </div>
           )}
           <div
             className={twMerge(
               `flex flex-col items-start justify-center gap-3`,
-              variant === 'default' && 'lg:items-center lg:*:text-center',
+              variant === 'default' &&
+                'lg:items-center lg:justify-center lg:*:text-center',
               variant === 'single' && 'lg:items-start',
             )}
           >
@@ -108,7 +108,7 @@ const PeopleCard = forwardRef<HTMLDivElement, PeopleCardProps>(
                     : undefined
                 }
                 variant='fit'
-                className='m-0 p-0'
+                className='m-0 mt-2 p-0'
               >
                 {cv?.label}
               </ResourceLink>
