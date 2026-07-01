@@ -25,7 +25,7 @@ export const { sanityFetch, SanityLive } = defineLive({
  * Examples: https://github.com/sanity-io/lcapi-examples/blob/main/next-16/src/sanity/fetch.ts
  */
 
-/*export type DefinedSanityFetchType = <
+export type DefinedSanityFetchType = <
   const QueryString extends string,
 >(options: {
   query: QueryString
@@ -35,25 +35,25 @@ export const { sanityFetch, SanityLive } = defineLive({
    * @see https://nextjs.org/docs/app/api-reference/functions/fetch#optionsnexttags
    * This can be used in conjunction with custom fallback revalidation strategies, as well as with custom Server Actions that mutate data and want to render with fresh data right away (faster than the Live Event latency).
    * @defaultValue `['sanity']`
-   
+   */
   tags?: string[]
   perspective?: Exclude<ClientPerspective, 'raw'>
   stega?: boolean
   /**
    * @deprecated use `requestTag` instead
-   
+   */
   tag?: never
   /**
    * This request tag is used to identify the request when viewing request logs from your Sanity Content Lake.
    * @see https://www.sanity.io/docs/reference-api-request-tags
    * @defaultValue 'next-loader.fetch'
-   
+   */
   requestTag?: string
 }) => Promise<{
   data: ClientReturn<QueryString>
   sourceMap: ContentSourceMap | null
   tags: string[]
-}>*/
+}>
 
 export const routeSanityFetch: DefinedFetchType = async query => {
   //const { tags, ...restQuery } = query
