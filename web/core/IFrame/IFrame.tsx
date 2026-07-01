@@ -50,6 +50,10 @@ const isIframeAllowedByCsp = (url: string) => {
   }
 }
 
+const isDraftModeEnabled = () =>
+  typeof document !== 'undefined' &&
+  document.cookie.includes('__prerender_bypass=')
+
 type IFrameProps = {
   frameTitle: string
   url: string
@@ -93,7 +97,8 @@ export const IFrame = forwardRef<HTMLDivElement, IFrameProps>(function IFrame(
   },
   ref,
 ) {
-  const isPreview = useIsPresentationTool()
+  const isPresentationTool = useIsPresentationTool()
+  const isPreview = isPresentationTool || isDraftModeEnabled()
   const [consented, setConsented] = useState(useConsent(cookiePolicy))
   const titleId = useId()
   const descriptionId = useId()
@@ -191,13 +196,9 @@ export const IFrame = forwardRef<HTMLDivElement, IFrameProps>(function IFrame(
     </>
   )
 
-  if (isPreview) {
-    return iframeElement
-  }
-
   return (
-    <section ref={ref} className={twMerge('my-20 h-min', className)}>
-      {consented ? (
+    <div ref={ref} className={twMerge('h-min', className)}>
+      {consented || isPreview ? (
         iframeElement
       ) : (
         <RequestConsentContainer
@@ -205,7 +206,7 @@ export const IFrame = forwardRef<HTMLDivElement, IFrameProps>(function IFrame(
           cookiePolicy={cookiePolicy}
         />
       )}
-    </section>
+    </div>
   )
 })
 

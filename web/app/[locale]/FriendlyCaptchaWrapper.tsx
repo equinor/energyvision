@@ -1,5 +1,4 @@
 'use client'
-import { FriendlyCaptchaSDK } from '@friendlycaptcha/sdk'
 import { type ReactNode, useCallback, useState } from 'react'
 import { FriendlyCaptchaContextProvider } from '@/contexts/FriendlyCaptchaContext'
 
