@@ -84,7 +84,7 @@
     "@algolia/client-search": "^4.16.0",
     "@biomejs/biome": "^2.4.5",
     "@babel/core": "^7.21.4",
-    "@portabletext/types": "^2.0.13",
+    "@portabletext/types": "^4.0.2",
     "@tailwindcss/postcss": "4.2.2",
     "@types/date-fns": "^2.6.3",
     "@types/easy-soap-request": "^5.6.0",
