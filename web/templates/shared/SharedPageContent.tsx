@@ -8,9 +8,8 @@
  */
 import AccordionBlock from '@/sections/AccordionBlock/AccordionBlock'
 import { AnchorLinkList } from '@/sections/AnchorLinkList'
-import AnchorSearch, {
-  findAllAnchors,
-} from '@/sections/AnchorSearch/AnchorSearch'
+import AnchorSearch from '@/sections/AnchorSearch/AnchorSearch'
+import { findAllAnchors } from '@/sections/AnchorSearch/findAllAnchors'
 import BarChartBlock, {
   type BarChartBlockProps,
 } from '@/sections/BarChartBlock/BarChartBlock'
@@ -132,7 +131,11 @@ type Component = {
 
 export type PageContentProps = {
   data: TopicPageSchema | MagazinePageSchema
-  heroBackground?: Background & { heroHasBreadcrumbs?: boolean }
+  heroProps?: {
+    background?: Background
+    heroType?: string
+    heroHasBreadcrumbs?: boolean
+  }
 }
 
 /* eslint-disable @typescript-eslint/ban-ts-comment */
@@ -223,9 +226,16 @@ const isSameColorBackground = (
 const applyPaddingTopIfApplicable = (
   currentComponent: Component,
   prevComponent: Component,
+  index: number,
+  heroProps?: any,
 ): string => {
   if (currentComponent?.type === 'anchorLink') {
-    return
+    return ''
+  }
+  //the first section after hero does not need pt-20, as heroBlock types adds this
+  //unless its background image hero
+  if (index === 0 && heroProps?.heroType !== 'backgroundImage') {
+    return ''
   }
   /*   console.log(
     `Current: ${currentComponent?.type}:${Array.isArray(currentComponent?.title) ? toPlainText(currentComponent?.title) : currentComponent?.title}`,
@@ -283,13 +293,9 @@ const applyPaddingTopIfApplicable = (
       ? 'lg:pt-20'
       : 'pt-20'
   }
-  //Hero has breadcrumbs which have enough padding bottom, the following component should not have pt-20
-  //Can also be used if hero has title below like 50/50 and dont need pt-20 after hero
-  if (
-    prevComponent?.heroHasBreadcrumbs &&
-    (prevComponent?.type === 'pageTitle' ||
-      prevComponent?.type === 'backgroundImage')
-  ) {
+
+  //Background image hero has breadcrumbs which have enough padding bottom, the following component should not have pt-20
+  if (heroProps?.heroHasBreadcrumbs) {
     return ''
   }
 
@@ -308,7 +314,7 @@ const applyPaddingTopIfApplicable = (
   return 'pt-20'
 }
 
-export const PageContent = ({ data, heroBackground }: PageContentProps) => {
+export const PageContent = ({ data, heroProps }: PageContentProps) => {
   const mapSection = (
     index: number,
     c: any,
@@ -725,17 +731,19 @@ export const PageContent = ({ data, heroBackground }: PageContentProps) => {
       index === 0
         ? ({
             type:
-              data?.hero?.type === 'backgroundImage'
-                ? data?.hero?.type
+              heroProps?.heroType === 'backgroundImage'
+                ? heroProps?.heroType
                 : 'pageTitle',
-            heroHasBreadcrumbs: heroBackground?.heroHasBreadcrumbs,
-            designOptions: { background: heroBackground },
+            heroHasBreadcrumbs: heroProps?.heroHasBreadcrumbs,
+            designOptions: { background: heroProps?.background },
           } as Component)
         : (data?.content?.[previousComponentIndex] as unknown as Component)
 
     const topSpacingClassName = applyPaddingTopIfApplicable(
       c,
       previousComponentToCompare,
+      index,
+      heroProps,
     )
 
     const bottomSpacingClassName = 'pb-page-content'

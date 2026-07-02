@@ -1,5 +1,4 @@
 'use client'
-import { toPlainText } from '@portabletext/react'
 import { Collapsible } from 'radix-ui'
 import { forwardRef, useMemo, useState } from 'react'
 import { GoDash, GoPlus } from 'react-icons/go'
@@ -8,31 +7,6 @@ import { Typography } from '@/core/Typography'
 import { chunkArray } from '@/lib/helpers/chunkArray'
 import Blocks from '@/portableText/Blocks'
 
-export const findAllAnchors = (content = []) => {
-  return content
-    ?.filter((block: any) => {
-      return (
-        (block?.type === 'anchorLink' && block?.anchorReference) ||
-        (block?.type === 'textBlock' && block?.anchorReference)
-      )
-    })
-    ?.map((block: any) => {
-      let label =
-        block?.anchorLabel ??
-        block?.anchorReference.charAt(0).toUpperCase() +
-          block?.anchorReference.slice(1)
-      if (block?.type === 'textBlock') {
-        label = Array.isArray(block?.title)
-          ? toPlainText(block?.title)
-          : block?.title
-      }
-      return {
-        anchorReference: block?.anchorReference,
-        //anchorLabel when AnchorLink comp, title when Textblock component
-        label,
-      }
-    })
-}
 const alphabet = [
   'A',
   'B',
@@ -107,7 +81,7 @@ const AnchorSearch = forwardRef<HTMLDivElement, AnchorSearchProps>(
               <Typography
                 as='h2'
                 variant='h4'
-                className='group-hover:underline'
+                className='m-0 group-hover:underline'
               >
                 {label}
               </Typography>

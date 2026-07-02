@@ -74,7 +74,7 @@ const AnchorLinkList = forwardRef<HTMLElement, AnchorLinkListProps>(
             )}
             <ul
               className={twMerge(
-                `gap-x-4 gap-y-2 lg:gap-x-6 lg:gap-y-4`,
+                `w-full gap-x-4 gap-y-2 lg:gap-x-6 lg:gap-y-4`,
                 getFlow(),
               )}
             >
