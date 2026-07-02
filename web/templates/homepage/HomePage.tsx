@@ -26,7 +26,7 @@ type HomePageProps = {
 }
 
 const HomePage = ({ hero, title, ...restData }: HomePageProps) => {
-  const heroProps: HeroBlockProps = {
+  const heroBlockProps: HeroBlockProps = {
     heroData: {
       //@ts-ignore
       title,
@@ -37,18 +37,20 @@ const HomePage = ({ hero, title, ...restData }: HomePageProps) => {
     nextSectionDesignOptions: restData?.content?.[0]?.designOptions,
   }
 
+  const heroProps = {
+    background:
+      hero?.type !== HeroTypes.DEFAULT
+        ? //@ts-ignore
+          restData?.content?.[0]?.designOptions.background
+        : hero?.background,
+    heroType: hero?.type,
+    heroHasBreadcrumbs: false,
+  }
+
   return (
     <main className='mx-auto flex w-full max-w-fullwidth flex-col'>
-      <HeroBlock {...heroProps} />
-      <PageContent
-        data={restData}
-        heroBackground={
-          hero?.type !== HeroTypes.DEFAULT
-            ? //@ts-ignore
-              restData?.content?.[0]?.designOptions.background
-            : hero?.background
-        }
-      />
+      <HeroBlock {...heroBlockProps} />
+      <PageContent data={restData} heroProps={heroProps} />
     </main>
   )
 }

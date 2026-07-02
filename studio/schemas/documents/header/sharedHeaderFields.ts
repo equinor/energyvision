@@ -123,8 +123,11 @@ const heroRatio = {
   validation: (Rule: Rule) =>
     Rule.custom((value: string, context: ValidationContext) => {
       const { parent } = context as unknown as DocumentType
-      if (parent?.heroType === HeroTypes.FULL_WIDTH_IMAGE && !value)
-        return 'Field is required'
+      if (parent?.heroType === HeroTypes.FULL_WIDTH_IMAGE) {
+        if (!value) {
+          return 'Field is required'
+        }
+      }
       return true
     }),
   initialValue: 'narrow',
