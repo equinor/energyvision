@@ -44,7 +44,7 @@ export default {
       name: 'actions',
       options: {
         collapsible: true,
-        collapsed: true,
+        collapsed: false,
       },
     },
     {
@@ -138,6 +138,8 @@ export default {
       description:
         'You can also display links/downloads as two columns if there are a lot of links. Ensure that titles are short enough to do this.',
     },
+    /*  Will introduce this new field while also doing a proper clean up of the deprecated fields. 
+    The usage on the deprecated fields are huge.  
     defineField({
       name: 'backgroundType',
       title: 'Select background type',
@@ -173,14 +175,26 @@ export default {
       title: 'Background image',
       hidden: ({ parent }: { parent?: { backgroundType?: string } }) =>
         parent?.backgroundType !== 'backgroundImage',
-    },
+    },*/
     {
       name: 'designOptions',
       type: 'backgroundOptions',
-      deprecated: true,
+      //deprecated: true,
       readOnly: ({ parent }: { parent: TextBlock }) => parent?.useBrandTheme,
-      hidden: ({ value }: { value: any }) => !value,
+      //hidden: ({ value }: { value: any }) => !value,
     },
+    defineField({
+      deprecated: {
+        reason:
+          'This field was used in a legacy system and is no longer to be used.',
+      },
+      title: 'Background (Deprecated)',
+      description: 'Default is white',
+      name: 'background',
+      readOnly: true,
+      type: 'colorlist',
+      hidden: ({ value }: { value: any }) => !value,
+    }),
   ].filter(e => e),
   preview: {
     select: {
