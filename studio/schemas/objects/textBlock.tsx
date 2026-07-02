@@ -181,7 +181,7 @@ export default {
       type: 'backgroundOptions',
       //deprecated: true,
       readOnly: ({ parent }: { parent: TextBlock }) => parent?.useBrandTheme,
-      hidden: ({ value }: { value: any }) => !value,
+      //hidden: ({ value }: { value: any }) => !value,
     },
     defineField({
       deprecated: {
