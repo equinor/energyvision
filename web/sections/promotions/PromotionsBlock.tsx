@@ -171,7 +171,7 @@ const PromotionsBlock = ({
         <ResourceLink
           type='internalUrl'
           variant='fit'
-          href={viewAllLink?.link?.slug}
+          href={getUrlFromAction(viewAllLink)}
         >
           {viewAllLink?.label}
         </ResourceLink>
