@@ -25,7 +25,7 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params
-  const { data: metaData } = await routeSanityFetch({
+  const { data: metaData } : { data: any }= await routeSanityFetch({
     query: homePageMetaQuery,
     params: {
       lang: getNameFromIso(locale),

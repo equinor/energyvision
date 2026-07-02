@@ -32,7 +32,7 @@ export async function generateMetadata({
   const { locale } = await params
   const pageSlug = newsSlug[getNameFromIso(locale)]
   if (Flags.HAS_NEWSROOM) {
-    const { data: metaData } = await routeSanityFetch({
+    const { data: metaData } : { data: any }= await routeSanityFetch({
       query: newsroomMetaQuery,
       params: {
         lang: getNameFromIso(locale),
