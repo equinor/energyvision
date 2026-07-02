@@ -1,10 +1,12 @@
 import { text_field } from '@equinor/eds-icons'
 import {
+  defineArrayMember,
   defineField,
   type PortableTextBlock,
   type Reference,
   type Rule,
 } from 'sanity'
+import { Flags } from '@/src/lib/datasetHelpers'
 import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
 import type { ColorSelectorValue } from '../components/ColorSelector'
@@ -116,7 +118,15 @@ export default {
       name: 'text',
       title: 'Text content',
       type: 'array',
-      of: [configureBlockContent({ variant: 'textBlock' })],
+      of: [
+        configureBlockContent({ variant: 'textBlock' }),
+        // This enables the image upload/paste block
+        Flags.IS_DEV &&
+          defineArrayMember({
+            type: 'image',
+            options: { hotspot: true },
+          }),
+      ],
     },
     {
       name: 'action',

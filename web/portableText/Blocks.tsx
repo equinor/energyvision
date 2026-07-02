@@ -13,6 +13,7 @@ import type {
 } from '@portabletext/types'
 import dynamic from 'next/dynamic'
 import type { ElementType } from 'react'
+import { Image } from '@/core/Image/Image'
 import DownloadableLink from '@/core/Link/DownloadableLink'
 import { Link as CoreLink } from '@/core/Link/Link'
 import type { TypographyProps } from '@/core/Typography'
@@ -513,6 +514,18 @@ export default function Blocks({
             key={block._key}
             value={block}
             components={{
+              types: {
+                image: ({ value }) => {
+                  return (
+                    <Image
+                      aspectRatio='original'
+                      image={value}
+                      useFitMax={true}
+                      className='my-8 drop-shadow-md'
+                    />
+                  )
+                },
+              },
               ...components,
             }}
           />

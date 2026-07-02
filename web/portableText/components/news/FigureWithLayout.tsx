@@ -28,7 +28,6 @@ type FigureNode = {
 }
 
 type BlockProps = {
-  isInline: boolean
   value: FigureNode
 } & PortableTextBlock
 

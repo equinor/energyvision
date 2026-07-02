@@ -124,7 +124,7 @@ const AnchorSearch = forwardRef<HTMLDivElement, AnchorSearchProps>(
             </ul>
             <div
               tabIndex={0}
-              className='flex max-h-[50vh] flex-col overflow-auto border-neutral-400 border-y'
+              className='flex max-h-[50vh] flex-col gap-4 overflow-auto border-neutral-400 border-y py-4'
             >
               {letters?.map(contentLetter => {
                 const content = anchors?.filter(
@@ -133,19 +133,12 @@ const AnchorSearch = forwardRef<HTMLDivElement, AnchorSearchProps>(
                     contentLetter,
                 )
                 const chunks = chunkArray(content ?? [], 5)
-
+                console.log('contentLetter', contentLetter, 'chunks', chunks)
                 return (
                   <div
                     key={contentLetter as string}
-                    className='grid auto-cols-min grid-flow-col border-neutral-400 border-b py-8 last:border-none'
+                    className='grid auto-cols-min grid-flow-col gap-4'
                   >
-                    <Typography
-                      group='plain'
-                      variant='div'
-                      className='w-fit ps-4 pe-20 font-semibold text-2xl'
-                    >
-                      {contentLetter as string}
-                    </Typography>
                     <div className='grid auto-cols-[500px] grid-flow-col'>
                       {chunks?.map((chunk: any) => {
                         return (
@@ -162,6 +155,7 @@ const AnchorSearch = forwardRef<HTMLDivElement, AnchorSearchProps>(
                                   className='text-base hover:underline'
                                   onClick={() => setOpen(false)}
                                 >
+                                  {`#`}
                                   {Array.isArray(anchor?.label) ? (
                                     <Blocks value={anchor?.label} />
                                   ) : (

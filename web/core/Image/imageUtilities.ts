@@ -163,7 +163,7 @@ export const getTwAspectRatioUtilityOnRatio = (ratio: ImageRatioKeys) => {
 export type Image = {
   alt?: string
   asset: SanityImageObject
-  extension: string
+  extension?: string
 }
 
 export type Figure = {
