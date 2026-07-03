@@ -137,10 +137,6 @@ const PromotionsBlock = ({
   const promotionVariant =
     variant ?? mapOldPromoType(data.promotions?.[0]?.type) ?? 'promoteTopics'
 
-  console.log('data', data)
-  console.log('promotionVariant', promotionVariant)
-  console.log('promotions', promotions)
-
   const { bg, dark } = getBgAndDarkFromBackground(designOptions)
 
   let imageUrl: string
