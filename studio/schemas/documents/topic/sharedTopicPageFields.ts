@@ -72,6 +72,8 @@ export const content = {
     { type: 'barChartBlock', title: 'Bar chart' },
     { type: 'promotionsV2' },
     Flags.IS_DEV && { type: 'anchorSearch' },
+    { type: 'promoteTopicsV2' },
+    { type: 'promoteExternalLinkV2' },
   ].filter(e => e),
   components: {
     input: RolesBasedArrayInput,
