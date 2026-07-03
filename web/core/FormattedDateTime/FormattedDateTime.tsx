@@ -148,6 +148,10 @@ const FormattedDateTime = forwardRef<HTMLDivElement, FormattedDateTimeProps>(
       date = datetime as Date
     }
 
+    if (Number.isNaN(date.getTime())) {
+      return null
+    }
+
     //https://date-fns.org/v4.4.0/docs/format
     //April 29th, 2025
     let dateFormat = 'PPP'
