@@ -40,9 +40,6 @@ inputs:
   screen9token:
     description: 'Screen9 API token'
     required: true
-  isUpgrade: ## To be removed later - post launch cleanup 
-    description: 'Set to true if this for upgrade preprodv2'
-    required: true
 
 
 runs:
@@ -121,7 +118,7 @@ runs:
       id: get-component-name
       shell: bash
       run: |
-        component=${{ format('{0}{1}{2}', 'studio-', inputs.datasetName, inputs.isUpgrade == 'true' && '-upgrade' || '') }}
+        component=${{ format('{0}{1}', 'studio-', inputs.datasetName) }}
         echo "Component name is $component"
         echo "COMPONENT_NAME=$component" >> $GITHUB_ENV
       # MAIN CLUSTER
