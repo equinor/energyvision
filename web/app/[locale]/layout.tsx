@@ -56,7 +56,7 @@ export default async function LocaleLayout({
     lang: getNameFromIso(locale) ?? 'en_GB',
   }
 
-  const { data: footerAndErrorImageData } = await routeSanityFetch({
+  const { data: footerAndErrorImageData } : { data: any }= await routeSanityFetch({
     query: footerAndErrorImageQuery,
     params: queryParams,
   })

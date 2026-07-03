@@ -1,4 +1,4 @@
-import { revalidateTag } from 'next/cache'
+import { revalidatePath, revalidateTag } from 'next/cache'
 import { type NextRequest, NextResponse } from 'next/server'
 import { groq } from 'next-sanity'
 import { parseBody } from 'next-sanity/webhook'
@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
         status: 401,
       })
     }
-    const docId = body?.id
+    /*const docId = body?.id
     const docType = body?.tags?.[0]
 
     if (!Array.isArray(body?.tags) || !body.tags.length) {
@@ -65,7 +65,11 @@ export async function POST(req: NextRequest) {
         revalidateTag(tag, 'max')
         console.log(`revalidated tag: ${tag}`)
       })
-    }
+    }*/
+
+    // revalidate the news pages for clearing algolia cache. 
+    revalidatePath('/news', 'page')
+    revalidatePath('/no/nyheter', 'page')
 
     return NextResponse.json({ body })
   } catch (err) {
