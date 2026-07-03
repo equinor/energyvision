@@ -117,7 +117,7 @@ runs:
       id: get-component-name
       shell: bash
       run: |
-        component = ${{ inputs.datasetName == 'global' && 'web' || format('web-{0}', inputs.datasetName) }}
+        component = "${{ inputs.datasetName == 'global' && 'web' || format('web-{0}', inputs.datasetName) }}"
         echo "Component name is $component"
         echo "COMPONENT_NAME=$component" >> $GITHUB_ENV
    # MAIN CLUSTER
