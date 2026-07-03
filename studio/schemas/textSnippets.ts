@@ -88,7 +88,7 @@ const snippets: textSnippet = {
     group: groups.eventPromotion,
   },
   add_to_calendar_aria_label: {
-    title: 'Add event to calendar',
+    title: 'Add {eventTitle} to calendar',
     defaultValue: `Add {eventTitle} to calendar`,
     group: groups.eventPromotion,
   },
@@ -133,8 +133,8 @@ const snippets: textSnippet = {
     group: groups.search,
   },
   search_showing_results_number: {
-    title: 'Showing X of Y results',
-    defaultValue: '{currentlyShowing} of {nbHits} results',
+    title: 'Showing {currentlyShowing} of {nbHits} results',
+    defaultValue: 'Showing {currentlyShowing} of {nbHits} results',
     group: groups.search,
   },
   search_no_results_generic: {
@@ -236,7 +236,7 @@ const snippets: textSnippet = {
   cookie_consent: {
     title: 'Information text',
     defaultValue:
-      'Want the full picture? We’d love to share this content with you, but first you must accept {typeOfCookie} cookies by enabling them in our cookie settings.',
+      'Want the full picture? We’d love to share this content with you, but first you must accept {typeOfCookies} cookies by enabling them in our cookie settings.',
     group: groups.cookie,
   },
   cookie_consent_two: {
@@ -536,7 +536,7 @@ const snippets: textSnippet = {
   },
   careers_contact_form_position: {
     title: 'Position Id/ Name',
-    defaultValue: 'Position ID/name',
+    defaultValue: 'Position Id/ Name',
     group: groups.careerContactForm,
   },
   careers_contact_form_cta: {
@@ -647,7 +647,7 @@ const snippets: textSnippet = {
     group: groups.form,
   },
   form_validation_maxChars: {
-    title: 'Max X chars',
+    title: 'Max {maxChars} characters',
     defaultValue: 'Max {maxChars} characters',
     group: groups.form,
   },
@@ -729,7 +729,7 @@ const snippets: textSnippet = {
   },
   magazine_tag_filter_all: {
     title: 'All',
-    defaultValue: 'ALL',
+    defaultValue: 'All',
     group: groups.magazine,
   },
   stock_nyse_time_delay_message: {
@@ -864,12 +864,12 @@ const snippets: textSnippet = {
     group: groups.common,
   },
   carouselPlay: {
-    title: 'Play {titleOfCarousel} gallery',
+    title: 'Play {title} gallery',
     defaultValue: 'Play {title} gallery',
     group: groups.common,
   },
   carouselPause: {
-    title: 'Pause {titleOfCarousel} gallery',
+    title: 'Pause {title} gallery',
     defaultValue: 'Pause {title} gallery',
     group: groups.common,
   },
@@ -900,7 +900,7 @@ const snippets: textSnippet = {
   },
   search_page_title: {
     title: 'Search page title',
-    defaultValue: 'Search',
+    defaultValue: 'Search page title',
     group: groups.search,
   },
   last_modified: {
@@ -920,7 +920,7 @@ const snippets: textSnippet = {
   },
   serverErrorTitle: {
     title: 'Server error title',
-    defaultValue: 'Something has happened',
+    defaultValue: 'Some error occurred',
     group: groups.error,
   },
   serverErrorSubtitle: {
