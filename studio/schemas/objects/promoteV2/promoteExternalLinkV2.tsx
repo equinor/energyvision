@@ -11,7 +11,7 @@ export type promoteExternal = {
 }
 
 export default {
-  title: 'Promotion v2 external links',
+  title: 'Promotion v2 external links (deprecated)',
   name: 'promoteExternalLinkV2',
   type: 'object',
   deprecated: {
