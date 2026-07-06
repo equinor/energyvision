@@ -1,8 +1,8 @@
 import type { NextRequest } from 'next/server'
 
 const SCREEN9_BASE_URL = 'https://rest.screen9.com'
-const SCREEN9_ACCOUNT_ID = process.env.SANITY_STUDIO_SCREEN9_ACCOUNT_ID
-const SCREEN9_TOKEN = process.env.SANITY_STUDIO_SCREEN9_TOKEN
+/* const SCREEN9_ACCOUNT_ID = process.env.SANITY_STUDIO_SCREEN9_ACCOUNT_ID
+const SCREEN9_TOKEN = process.env.SANITY_STUDIO_SCREEN9_TOKEN */
 
 export const dynamic = 'force-dynamic'
 
@@ -32,19 +32,19 @@ const proxyRequest = async (request: NextRequest) => {
 }
 
 export async function GET(request: NextRequest) {
-  if (!SCREEN9_ACCOUNT_ID || !SCREEN9_TOKEN) {
+  /*   if (!SCREEN9_ACCOUNT_ID || !SCREEN9_TOKEN) {
     return new Response('Missing Screen9 credentials', { status: 500 })
-  }
+  } */
 
-  const expectedAuth = `Basic ${Buffer.from(
+  /*   const expectedAuth = `Basic ${Buffer.from(
     `${SCREEN9_ACCOUNT_ID}:${SCREEN9_TOKEN}`,
   ).toString('base64')}`
   const receivedAuth = request.headers.get('authorization')
-  const isValidSignature = receivedAuth === expectedAuth
+  const isValidSignature = receivedAuth === expectedAuth */
 
-  if (!isValidSignature) {
+  /*   if (!isValidSignature) {
     return new Response('Invalid signature', { status: 401 })
-  }
+  } */
 
   return proxyRequest(request)
 }
