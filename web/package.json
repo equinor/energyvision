@@ -81,7 +81,7 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "@algolia/client-search": "^4.16.0",
+    "@algolia/client-search": "^5.54.0",
     "@biomejs/biome": "^2.4.5",
     "@babel/core": "^7.21.4",
     "@portabletext/types": "^2.0.13",
