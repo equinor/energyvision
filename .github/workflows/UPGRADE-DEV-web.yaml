@@ -49,7 +49,7 @@ jobs:
           friendlyCaptchaSitekey: ${{ matrix.dataset == 'brazil' && vars.BRAZIL_FC_SITEKEY || vars.GLOBAL_FC_SITEKEY }}
           environment: ${{ vars.ENV }}
           nodeEnvironment: development
-          isUpgrade: false
+          serverActionsEncryptionKey: ${{ secrets.SERVER_ACTIONS_ENCRYPTION_KEY }}
 
       - uses: act10ns/slack@v2
         with:
