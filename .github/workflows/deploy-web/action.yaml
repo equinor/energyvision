@@ -37,9 +37,6 @@ inputs:
   friendlyCaptchaSitekey:
     description: 'Friendly captcha site key'
     required: true
-  isUpgrade: ## To be removed later - post launch cleanup 
-    description: 'Set to true if this for upgrade preprodv2'
-    required: true
 
 
 runs:
@@ -98,8 +95,8 @@ runs:
         file: web/Dockerfile
         push: true
         tags: |
-          ghcr.io/equinor/energyvision/web-${{ inputs.datasetName }}${{ inputs.isUpgrade == 'true' && '-upgrade' || '' }}:${{ env.IMAGE_TAG }}
-          ghcr.io/equinor/energyvision/web-${{ inputs.datasetName }}${{ inputs.isUpgrade == 'true' && '-upgrade' || '' }}:${{ env.IMAGE_TAG_SHA }}
+          ghcr.io/equinor/energyvision/web-${{ inputs.datasetName }}:${{ env.IMAGE_TAG }}
+          ghcr.io/equinor/energyvision/web-${{ inputs.datasetName }}:${{ env.IMAGE_TAG_SHA }}
         cache-from: type=registry,ref=${{ inputs.imageName }}:${{ env.IMAGE_TAG }}
         #cache-from: type=registry,ref=ghcr.io/equinor/energyvision/web-${{ inputs.datasetName }}-upgrade:${{ env.IMAGE_TAG }}
         cache-to: type=inline
@@ -114,28 +111,13 @@ runs:
           ARG_NODE_ENV=${{ inputs.nodeEnvironment }}
           ARG_ARCHIVE_CONTENT_LINK=${{ inputs.archiveContentLink }}
           ARG_FRIENDLY_CAPTCHA_SITEKEY=${{ inputs.friendlyCaptchaSitekey }}
+          ARG_DEPLOYMENT_ID=${{ env.IMAGE_TAG_SHA }}
    
     - name: Get component name
       id: get-component-name
       shell: bash
       run: |
-        # 1. Define standard local bash variables
-          if [ "${{ inputs.datasetName }}" = "global" ]; then
-            prodComponent="web"
-          else
-            prodComponent="web-${{ inputs.datasetName }}"
-          fi
-        # 2. Use bash logic to handle the upgrade condition
-        if [ "${{ inputs.isUpgrade }}" = "true" ]; then
-          if [ "${{ inputs.datasetName }}" = "global" ]; then
-            upgradeComponent="web-upgrade"
-          else
-            upgradeComponent="web-${{ inputs.datasetName }}-upgrade"
-          fi
-          component="$upgradeComponent"
-        else
-          component="$prodComponent"
-        fi
+        component="${{ inputs.datasetName == 'global' && 'web' || format('web-{0}', inputs.datasetName) }}"
         echo "Component name is $component"
         echo "COMPONENT_NAME=$component" >> $GITHUB_ENV
    # MAIN CLUSTER
