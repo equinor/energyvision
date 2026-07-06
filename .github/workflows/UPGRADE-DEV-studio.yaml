@@ -45,7 +45,7 @@ jobs:
           screen9accountId: ${{ secrets.SANITY_STUDIO_SCREEN9_ACCOUNT_ID }}
           screen9token: ${{ secrets.SANITY_STUDIO_SCREEN9_TOKEN }}
           environment: ${{ secrets.ENV }}
-          isUpgrade: false
+
 
       - uses: act10ns/slack@v2
         with:
