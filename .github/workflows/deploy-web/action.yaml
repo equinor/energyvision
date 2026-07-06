@@ -37,6 +37,9 @@ inputs:
   friendlyCaptchaSitekey:
     description: 'Friendly captcha site key'
     required: true
+  serverActionsEncryptionKey:
+    description: 'Server actions encryption key'
+    required: true
 
 
 runs:
