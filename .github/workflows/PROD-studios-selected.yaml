@@ -103,7 +103,7 @@ jobs:
           ref: main
           token: ${{ secrets.PADMS_PAT }}
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: '24' # Or any version you prefer
 
