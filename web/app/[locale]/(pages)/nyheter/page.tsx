@@ -40,6 +40,10 @@ const getInitialResponse = unstable_cache(
     })
     return response
   },
+  undefined,
+  {
+    tags: [`newsroom_nb-NO`],
+  },
 )
 
 export async function generateMetadata({
@@ -66,10 +70,7 @@ export async function generateMetadata({
     )
   }
 
-  return constructSanityMetadata(
-    newsSlug[getNameFromIso(locale)],
-    locale
-  )
+  return constructSanityMetadata(newsSlug[getNameFromIso(locale)], locale)
 }
 export default async function NewsroomPage({
   params,
