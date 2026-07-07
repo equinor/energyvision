@@ -74,6 +74,7 @@ const getInitialResponse = unstable_cache(
     })
     return response
   },
+  ['newsroom'],
 )
 
 export default async function NewsroomPage({
