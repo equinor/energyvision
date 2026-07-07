@@ -76,7 +76,7 @@ const getInitialResponse = unstable_cache(
   },
   undefined,
   {
-    tags: ['newsroom'],
+    tags: [`newsroom_en-GB`],
   },
 )
 
