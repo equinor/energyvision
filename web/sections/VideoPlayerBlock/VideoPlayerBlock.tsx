@@ -19,6 +19,7 @@ export type VideoDesignOptionsType = {
   height?: number
   width?: 'normal' | 'extraWide'
   useBrandTheme?: boolean
+  clipRoundedCornersPortrait?: boolean
 }
 
 export type VideoPlayerBlockProps = {
@@ -57,6 +58,7 @@ const VideoPlayerBlock = ({
       className={twMerge(
         `${bg} ${dark ? 'dark' : ''} ${width === 'extraWide' ? 'px-layout-md' : 'px-layout-lg'}`,
         className,
+        !title && !ingress && !actionUrl && 'flex items-center justify-center',
       )}
       id={anchor}
     >
@@ -88,11 +90,18 @@ const VideoPlayerBlock = ({
         </ResourceLink>
       )}
       {/*@ts-ignore: TODO*/}
-      <VideoPlayer
-        {...video}
-        {...videoPlayerDesignOptions}
-        {...videoControls}
-      />
+      <div
+        className={twMerge(
+          videoPlayerDesignOptions?.aspectRatio === '9:16' &&
+            'aspect-9/16 w-101.5 overflow-hidden rounded-card',
+        )}
+      >
+        <VideoPlayer
+          {...video}
+          {...videoPlayerDesignOptions}
+          {...videoControls}
+        />
+      </div>
       <Transcript transcript={transcript} ariaTitle={video.title} />
     </section>
   )
