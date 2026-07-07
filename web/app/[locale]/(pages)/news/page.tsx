@@ -74,7 +74,10 @@ const getInitialResponse = unstable_cache(
     })
     return response
   },
-  ['newsroom'],
+  undefined,
+  {
+    tags: ['newsroom'],
+  },
 )
 
 export default async function NewsroomPage({
