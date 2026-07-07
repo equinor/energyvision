@@ -44,36 +44,18 @@ export async function POST(req: NextRequest) {
 
   const data = JSON.parse(body)
 
-  const revalidateNewsroomPages = async () => {
-    console.log(new Date(), 'Revalidating: /news')
-    revalidateTag('newsroom', 'max')
-    //revalidatePath('/news')
-    //revalidatePath('/no/nyheter')
-  }
-
   if (data._type === 'news') {
     // wait for news index and revalidate...
     const response = await updateAlgoliaIndex(body)
     if (Number(response.status) === 200) {
       const algoliaTaskIds = await response.json()
       console.log('Algolia Indexing Success', algoliaTaskIds)
-      // wait for a second revalidate newsroom pages
-      /* const sleep = (delay: number) =>
-        new Promise(resolve => setTimeout(resolve, delay))
-      await sleep(1000) // wait for a second to let algolia index temporary fix as we dont know the status yet
-      */
-      // Extract and wait for all tasks in parallel
-      /*const tasks = algoliaTaskIds.map((taskID: number) => {
-        const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
-        const indexName = `${envPrefix}_NEWS_${data.language}`
-        return algoliaClient.waitForTask({
-          indexName: indexName,
-          taskID: taskID,
-        })
-      })
-      const statuses = await Promise.all(tasks)
-      console.log('Algolia Indexing Statuses:', statuses)*/
-      await revalidateNewsroomPages()
+      console.log(
+        new Date(),
+        'Revalidating by tag ',
+        `newsroom_${data.language}`,
+      )
+      revalidateTag(`newsroom_${data.language}`, 'max')
       return new Response(
         JSON.stringify({ message: 'Index updated and newsroom revalidated' }),
         { status: 200 },
