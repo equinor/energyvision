@@ -46,8 +46,14 @@ export default (isoCode: string, title: string) => {
           {
             type: 'page',
           },
+          Flags.HAS_NEWSROOM && {
+            type: 'newsroom',
+          },
           Flags.HAS_EVENT && {
             type: 'event',
+          },
+          Flags.HAS_MAGAZINE && {
+            type: 'magazine',
           },
         ].filter(e => e),
         options: {
