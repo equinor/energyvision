@@ -1,5 +1,5 @@
 import { isValidSignature, SIGNATURE_HEADER_NAME } from '@sanity/webhook'
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, revalidateTag } from 'next/cache'
 import type { NextRequest } from 'next/server'
 import { groq } from 'next-sanity'
 import { algoliaClient } from '@/lib/algolia'
@@ -46,8 +46,9 @@ export async function POST(req: NextRequest) {
 
   const revalidateNewsroomPages = async () => {
     console.log(new Date(), 'Revalidating: /news')
-    revalidatePath('/news')
-    revalidatePath('/no/nyheter')
+    revalidateTag('newsroom', 'max')
+    //revalidatePath('/news')
+    //revalidatePath('/no/nyheter')
   }
 
   if (data._type === 'news') {
