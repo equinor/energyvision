@@ -1,9 +1,7 @@
 import { isValidSignature, SIGNATURE_HEADER_NAME } from '@sanity/webhook'
-import { revalidatePath, revalidateTag } from 'next/cache'
+import { revalidateTag } from 'next/cache'
 import type { NextRequest } from 'next/server'
 import { groq } from 'next-sanity'
-import { algoliaClient } from '@/lib/algolia'
-import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { client } from '@/sanity/lib/client'
 
 const SANITY_API_TOKEN = process.env.SANITY_API_TOKEN || ''
