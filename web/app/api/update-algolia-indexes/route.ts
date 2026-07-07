@@ -2,6 +2,8 @@ import { isValidSignature, SIGNATURE_HEADER_NAME } from '@sanity/webhook'
 import { revalidatePath } from 'next/cache'
 import type { NextRequest } from 'next/server'
 import { groq } from 'next-sanity'
+import { algoliaClient } from '@/lib/algolia'
+import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { client } from '@/sanity/lib/client'
 
 const SANITY_API_TOKEN = process.env.SANITY_API_TOKEN || ''
@@ -53,11 +55,26 @@ export async function POST(req: NextRequest) {
     const response = await updateAlgoliaIndex(body)
     if (Number(response.status) === 200) {
       const algoliaTaskIds = await response.json()
-      console.log('Algolia Indexing Success , Revalidating newsroom', algoliaTaskIds)
+      console.log(
+        'Algolia Indexing Success, waiting for indexing to complete',
+        algoliaTaskIds,
+      )
       // wait for a second revalidate newsroom pages
-      const sleep = (delay: number) =>
+      /* const sleep = (delay: number) =>
         new Promise(resolve => setTimeout(resolve, delay))
       await sleep(1000) // wait for a second to let algolia index temporary fix as we dont know the status yet
+      */
+      // Extract and wait for all tasks in parallel
+      const tasks = algoliaTaskIds.map((taskID: number) => {
+        const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
+        const indexName = `${envPrefix}_NEWS_${data.language}`
+        return algoliaClient.waitForTask({
+          indexName: indexName,
+          taskID: taskID,
+        })
+      })
+      const statuses = await Promise.all(tasks)
+      console.log('Algolia Indexing Statuses:', statuses)
       await revalidateNewsroomPages()
       return new Response(
         JSON.stringify({ message: 'Index updated and newsroom revalidated' }),
