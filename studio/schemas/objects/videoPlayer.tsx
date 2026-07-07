@@ -91,7 +91,7 @@ export default {
         list: [
           { title: 'Normal', value: 'normal' },
           { title: 'Extra wide', value: 'extraWide' },
-          { title: 'narrow', value: 'narrow' },
+          { title: 'Narrow', value: 'narrow' },
         ],
         layout: 'dropdown',
       },
