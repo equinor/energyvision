@@ -41,7 +41,7 @@
     "react-is": "^19.2.4",
     "recharts": "^3.3.0",
     "rxjs": "^7.8.0",
-    "sanity": "5.12.0",
+    "sanity": "6.1.0",
     "sanity-plugin-documents-pane": "^3.0.2",
     "sanity-plugin-iframe-pane": "^5.0.6",
     "sanity-plugin-media": "^4.1.1",
