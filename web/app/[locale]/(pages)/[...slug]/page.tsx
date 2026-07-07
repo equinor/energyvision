@@ -1,12 +1,15 @@
 import { magazineSlug, newsSlug } from '@energyvision/shared/satelliteConfig'
+import { stegaClean } from '@sanity/client/stega'
 import type { Metadata } from 'next'
 import dynamic from 'next/dynamic'
+import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
 import { setRequestLocale } from 'next-intl/server'
 import { getValidLanguagesLocales } from '@/languageConfig'
 import { decodeSlugs } from '@/lib/helpers/getFullUrl'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { getNameFromIso } from '@/sanity/helpers/localization'
+import { isInPresentationTool } from '@/sanity/lib/isInPresentationTool'
 import { routeSanityFetch } from '@/sanity/lib/live'
 import { constructSanityMetadata, getPage } from '@/sanity/pages/utils'
 import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu'
@@ -72,13 +75,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return constructSanityMetadata(slug, locale, metaData)
 }
 
-export default async function Page({ params }: Props) {
+export default async function Page({ params, searchParams }: Props) {
   const { slug, locale } = await params
+  const currentSearchParams = await searchParams
+  const isInPresentationToolContext =
+    await isInPresentationTool(currentSearchParams)
+  const { isEnabled } = await draftMode()
 
   if (!getValidLanguagesLocales().includes(locale)) notFound()
 
   setRequestLocale(locale)
-
+  let pageContent = null
   const [siteMenuResult, pageResults] = await Promise.all([
     routeSanityFetch({
       query: Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery,
@@ -91,8 +98,16 @@ export default async function Page({ params }: Props) {
       locale,
     }),
   ])
+  pageContent = pageResults
 
-  const { headerData, pageData } = pageResults
+  if (isEnabled && !isInPresentationToolContext) {
+    console.log(
+      'Draft mode enabled but not in presentation tool, cleaning page content for stega',
+    )
+    pageContent = stegaClean(pageResults)
+  }
+
+  const { headerData, pageData } = pageContent
   const { data: siteMenuData } = siteMenuResult || {}
   if (Object.keys(pageData).length === 0) notFound()
 

@@ -7,6 +7,7 @@ import { commonButtonStyling } from '@/core/Button'
 export default function DraftModeToolbar() {
   const [pending, startTransition] = useTransition()
   const isPresentationTool = useIsPresentationTool()
+  console.log('isPresentationTool', isPresentationTool)
 
   const isInsideTool = useMemo(() => {
     return isPresentationTool

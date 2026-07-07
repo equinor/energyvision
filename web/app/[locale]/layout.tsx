@@ -14,6 +14,7 @@ import { footerAndErrorImageQuery } from '@/sanity/queries/footer'
 import Footer from '@/sections/Footer/Footer'
 import GoToTopButton from '@/sections/GoToTopButton'
 import { routing } from '../../i18n/routing'
+import { ConditionalVisualEditing } from './ConditionalVisualEditing'
 import { GoogleTagManagerHead } from './GTMHead'
 import { SiteImprove } from './SiteImprove'
 
@@ -56,10 +57,11 @@ export default async function LocaleLayout({
     lang: getNameFromIso(locale) ?? 'en_GB',
   }
 
-  const { data: footerAndErrorImageData } : { data: any }= await routeSanityFetch({
-    query: footerAndErrorImageQuery,
-    params: queryParams,
-  })
+  const { data: footerAndErrorImageData }: { data: any } =
+    await routeSanityFetch({
+      query: footerAndErrorImageQuery,
+      params: queryParams,
+    })
 
   const { errorImage, ...footerData } = footerAndErrorImageData || {}
 
@@ -68,13 +70,10 @@ export default async function LocaleLayout({
       const DraftModeToolbar = dynamic(
         () => import('@/sections/DraftMode/DraftModeToolbar'),
       )
-      const VisualEditing = dynamic(() =>
-        import('next-sanity/visual-editing').then(mod => mod.VisualEditing),
-      )
       return (
         <>
           <DraftModeToolbar />
-          <VisualEditing />
+          <ConditionalVisualEditing />
         </>
       )
     }

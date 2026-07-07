@@ -1,10 +1,13 @@
+import { stegaClean } from '@sanity/client/stega'
 import type { Metadata } from 'next'
+import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
 import { setRequestLocale } from 'next-intl/server'
 import { OrganizationJsonLd } from 'next-seo'
 import { languages } from '@/languageConfig'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { getNameFromIso } from '@/sanity/helpers/localization'
+import { isInPresentationTool } from '@/sanity/lib/isInPresentationTool'
 import { routeSanityFetch } from '@/sanity/lib/live'
 import { constructSanityMetadata, getPage } from '@/sanity/pages/utils'
 import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu'
@@ -25,7 +28,7 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params
-  const { data: metaData } : { data: any }= await routeSanityFetch({
+  const { data: metaData }: { data: any } = await routeSanityFetch({
     query: homePageMetaQuery,
     params: {
       lang: getNameFromIso(locale),
@@ -37,13 +40,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return constructSanityMetadata('', locale, metaData)
 }
 
-export default async function Home({ params }: Props) {
+export default async function Home({ params, searchParams }: Props) {
   const { locale, slug } = await params
   // Enable static rendering
   setRequestLocale(locale)
+  const currentSearchParams = await searchParams
+  const isInPresentationToolContext =
+    await isInPresentationTool(currentSearchParams)
+  const { isEnabled } = await draftMode()
 
   if (!languages.map(it => it.iso).includes(locale)) notFound()
-
+  let pageContent = null
   const [siteMenuResult, homePageData] = await Promise.all([
     routeSanityFetch({
       query: Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery,
@@ -57,8 +64,15 @@ export default async function Home({ params }: Props) {
       tags: ['homePage'],
     }),
   ])
+  pageContent = homePageData
+  if (isEnabled && !isInPresentationToolContext) {
+    console.log(
+      'Draft mode enabled but not in presentation tool, cleaning page content for stega',
+    )
+    pageContent = stegaClean(homePageData)
+  }
 
-  const { headerData, pageData } = homePageData
+  const { headerData, pageData } = pageContent
   const { data: siteMenuData } = siteMenuResult || {}
 
   if (!pageData) notFound()
