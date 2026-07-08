@@ -139,6 +139,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
     '9:16': 'aspect-9/16',
     '2:1': 'aspect-2/1',
     '4:3': 'aspect-4/3',
+    '1:1': 'aspect-square',
   }
 
   const variantClassName: Record<Variants, string> = {

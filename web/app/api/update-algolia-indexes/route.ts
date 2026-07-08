@@ -1,5 +1,5 @@
 import { isValidSignature, SIGNATURE_HEADER_NAME } from '@sanity/webhook'
-import { revalidatePath } from 'next/cache'
+import { revalidateTag } from 'next/cache'
 import type { NextRequest } from 'next/server'
 import { groq } from 'next-sanity'
 import { client } from '@/sanity/lib/client'
@@ -42,23 +42,18 @@ export async function POST(req: NextRequest) {
 
   const data = JSON.parse(body)
 
-  const revalidateNewsroomPages = async () => {
-    console.log(new Date(), 'Revalidating: /news')
-    revalidatePath('/news')
-    revalidatePath('/no/nyheter')
-  }
-
   if (data._type === 'news') {
     // wait for news index and revalidate...
     const response = await updateAlgoliaIndex(body)
     if (Number(response.status) === 200) {
       const algoliaTaskIds = await response.json()
-      console.log('Algolia Indexing Success , Revalidating newsroom', algoliaTaskIds)
-      // wait for a second revalidate newsroom pages
-      const sleep = (delay: number) =>
-        new Promise(resolve => setTimeout(resolve, delay))
-      await sleep(1000) // wait for a second to let algolia index temporary fix as we dont know the status yet
-      await revalidateNewsroomPages()
+      console.log('Algolia Indexing Success', algoliaTaskIds)
+      console.log(
+        new Date(),
+        'Revalidating by tag ',
+        `newsroom_${data.language}`,
+      )
+      revalidateTag(`newsroom_${data.language}`, 'max')
       return new Response(
         JSON.stringify({ message: 'Index updated and newsroom revalidated' }),
         { status: 200 },
