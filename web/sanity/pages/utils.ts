@@ -196,13 +196,13 @@ function languagePrefixedSlug(
 }
 
 export async function getPage(params: Params) {
-  const { slug, locale, tags = [], searchParams } = params
+  const { slug, locale, searchParams } = params
   const { tag } = searchParams || {}
   let pageData = null
   if (slug?.[0]?.includes('preview')) {
     const id = slug[1]
     if (id) {
-      const { data: draftInfo } = await routeSanityFetch({
+      const { data: draftInfo }: { data: any } = await routeSanityFetch({
         query: pageInfoById,
         params: {
           id,
@@ -226,7 +226,7 @@ export async function getPage(params: Params) {
     const { query: pageQuery, queryParams: pageQueryParams } =
       await getQueryFromSlug(slug, locale)
 
-    const { data } = await routeSanityFetch({
+    const { data }: { data: any } = await routeSanityFetch({
       query: pageQuery,
       // tags: [...tags],
       params: { ...pageQueryParams },

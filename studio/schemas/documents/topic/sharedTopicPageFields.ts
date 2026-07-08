@@ -71,6 +71,8 @@ export const content = {
     { type: 'lineChartBlock', title: 'Line chart' },
     { type: 'barChartBlock', title: 'Bar chart' },
     { type: 'promotionsV2' },
+    { type: 'promoteTopicsV2' },
+    { type: 'promoteExternalLinkV2' },
     Flags.IS_DEV && { type: 'anchorSearch' },
   ].filter(e => e),
   components: {

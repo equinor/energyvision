@@ -29,7 +29,6 @@ import {
 import { createPortal } from 'react-dom'
 import type { ObjectInputProps } from 'sanity'
 import { MemberField, set, unset } from 'sanity'
-import { baseUrl } from '../../resolveProductionUrl'
 import HLSPlayer from './HLSPlayer'
 import { getObjectMemberField } from './utils/getObjectMemberField'
 
@@ -52,6 +51,7 @@ const MEDIABANK_IMPORT_TYPE = 'dam:assets-imported'
 
 const SCREEN9_ACCOUNT_ID = process.env.SANITY_STUDIO_SCREEN9_ACCOUNT_ID
 const SCREEN9_TOKEN = process.env.SANITY_STUDIO_SCREEN9_TOKEN
+const SCREEN9_BASE_URL = 'https://rest.screen9.com'
 const SCREEN9_AUTH = Buffer.from(
   `${SCREEN9_ACCOUNT_ID}:${SCREEN9_TOKEN}`,
 ).toString('base64')
@@ -93,7 +93,7 @@ const VideoSelector = forwardRef(function VideoSelector(
 
         if (file.viewer === 'VIDEO_VIEWER' && file.screen9Connected) {
           const videoId = file.flvVideoRef
-          const endpoint = `${baseUrl}/api/screen9/${SCREEN9_ACCOUNT_ID}/videos/${videoId}/streams?ssl=true`
+          const endpoint = `${SCREEN9_BASE_URL}/${SCREEN9_ACCOUNT_ID}/videos/${videoId}/streams?ssl=true`
 
           const data = await fetch(endpoint, {
             headers: {

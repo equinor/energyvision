@@ -32,7 +32,7 @@ export async function generateMetadata({
   const { locale } = await params
   const pageSlug = newsSlug[getNameFromIso(locale)]
   if (Flags.HAS_NEWSROOM) {
-    const { data: metaData } = await routeSanityFetch({
+    const { data: metaData }: { data: any } = await routeSanityFetch({
       query: newsroomMetaQuery,
       params: {
         lang: getNameFromIso(locale),
@@ -53,6 +53,12 @@ const getInitialResponse = unstable_cache(
     const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
     const indexName = `${envPrefix}_NEWS_${locale}`
 
+    console.log(
+      new Date(),
+      'Fetching initial response for',
+      indexName,
+      'after revalidation',
+    )
     const searchClient = algoliasearch(
       algolia.applicationId,
       algolia.searchApiKey,
@@ -67,6 +73,10 @@ const getInitialResponse = unstable_cache(
       },
     })
     return response
+  },
+  undefined,
+  {
+    tags: [`newsroom_en-GB`],
   },
 )
 

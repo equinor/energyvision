@@ -20,6 +20,7 @@ export type AspectRatioVariants =
   | '10:3'
   | '4:3'
   | '21:9'
+  | '1:1'
 
 export type Variants = 'default' | 'fullwidth'
 

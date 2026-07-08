@@ -6,7 +6,9 @@ import type { PortableTextBlock } from '@portabletext/types'
 import { useLocale, useTranslations } from 'next-intl'
 import { forwardRef, type HTMLAttributes } from 'react'
 import { twMerge } from 'tailwind-merge'
-import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
+import FormattedDateTime, {
+  TimeIcon,
+} from '@/core/FormattedDateTime/FormattedDateTime'
 import { BaseLink } from '@/core/Link/BaseLink'
 import { defaultLanguage } from '@/languageConfig'
 import { getEventDates } from '@/lib/helpers/dateUtilities'
@@ -93,7 +95,12 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
         {/* Time - Dont show if label is '-' or if event is more than one day*/}
         <div className='flex items-end gap-1 **:text-sm **:leading-none'>
           {!start ? (
-            (t('tba') ?? 'To be announced')
+            <div className={`flex items-center gap-2`}>
+              <TimeIcon />
+              <div className='mt-1 flex text-sm leading-none'>
+                {t('tba') ?? 'To be announced'}
+              </div>
+            </div>
           ) : (
             <>
               <FormattedDateTime

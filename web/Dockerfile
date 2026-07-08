@@ -49,6 +49,7 @@ ARG ARG_SANITY_PROJECT_ID
 ARG ARG_ALGOLIA_APP_ID
 ARG ARG_ARCHIVE_CONTENT_LINK
 ARG ARG_FRIENDLY_CAPTCHA_SITEKEY
+ARG ARG_DEPLOYMENT_ID
 
 ENV NEXT_PUBLIC_SANITY_DATASET=${ARG_SANITY_DATASET}
 ENV NEXT_PUBLIC_SANITY_PROJECT_ID=${ARG_SANITY_PROJECT_ID}
@@ -56,11 +57,13 @@ ENV NEXT_PUBLIC_ALGOLIA_APP_ID=${ARG_ALGOLIA_APP_ID}
 ENV NEXT_PUBLIC_ARCHIVE_CONTENT_LINK=${ARG_ARCHIVE_CONTENT_LINK}
 ENV NEXT_PUBLIC_FRIENDLY_CAPTCHA_SITEKEY=${ARG_FRIENDLY_CAPTCHA_SITEKEY}
 ENV NEXT_TELEMETRY_DISABLED=1
+ENV NEXT_DEPLOYMENT_ID=${ARG_DEPLOYMENT_ID}
 
 RUN --mount=type=secret,id=sanity_api_token \
     --mount=type=secret,id=next_public_algolia_search_api_key \
-    sh -ec 'SANITY_API_TOKEN="$(cat /run/secrets/sanity_api_token)" NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY="$(cat /run/secrets/next_public_algolia_search_api_key)" turbo build --filter=energy-vision-web'
-    
+    --mount=type=secret,id=next_server_actions_encryption_key \
+    sh -ec 'SANITY_API_TOKEN="$(cat /run/secrets/sanity_api_token)" NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY="$(cat /run/secrets/next_public_algolia_search_api_key)" NEXT_SERVER_ACTIONS_ENCRYPTION_KEY="$(cat /run/secrets/next_server_actions_encryption_key)" turbo build --filter=energy-vision-web'
+
 # -------------------------------------------------------- #
 # 6. Runtime container
 # -------------------------------------------------------- #

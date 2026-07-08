@@ -40,6 +40,10 @@ const getInitialResponse = unstable_cache(
     })
     return response
   },
+  undefined,
+  {
+    tags: [`newsroom_nb-NO`],
+  },
 )
 
 export async function generateMetadata({
@@ -50,7 +54,7 @@ export async function generateMetadata({
   const { locale } = await params
 
   if (Flags.HAS_NEWSROOM) {
-    const { data: metaData } = await routeSanityFetch({
+    const { data: metaData }: { data: any } = await routeSanityFetch({
       query: newsroomMetaQuery,
       params: {
         lang: getNameFromIso(locale),
@@ -66,10 +70,7 @@ export async function generateMetadata({
     )
   }
 
-  return constructSanityMetadata(
-    newsSlug[getNameFromIso(locale)],
-    locale
-  )
+  return constructSanityMetadata(newsSlug[getNameFromIso(locale)], locale)
 }
 export default async function NewsroomPage({
   params,
