@@ -2,6 +2,7 @@
 import { Icon } from '@equinor/eds-core-react'
 import { close } from '@equinor/eds-icons'
 import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
 import { LogoLink } from '@/core/Link/LogoLink'
 import { NavTopbar } from '@/sections/SiteMenu/NavTopbar'
 import { TopbarDropdown } from '@/sections/SiteMenu/TopbarDropdown'
@@ -39,6 +40,16 @@ import { Search } from '@/sections/searchBlocks/Search'
 
 export default function Page() {
   const router = useRouter()
+
+  useEffect(() => {
+    document.body.classList.add('search-page-bg')
+    document.documentElement.classList.add('search-page-bg')
+
+    return () => {
+      document.body.classList.remove('search-page-bg')
+      document.documentElement.classList.remove('search-page-bg')
+    }
+  }, [])
 
   return (
     <div
