@@ -122,6 +122,11 @@ data-ui="checked active" class="data-checked:underline">
 @custom-variant data-topbar-visible (&[data-topbar-visible~='true']);
 @custom-variant data-topbar-hidden (&[data-topbar-visible~='false']);
 
+html.search-page-bg,
+body.search-page-bg {
+  background-color: var(--color-slate-blue-95);
+}
+
 /* old darkMode: ['variant', [':is(.dark &):not(.light &)']],*/
 /* @custom-variant dark (&:where(.dark, .dark *)); */
 @custom-variant dark (&:is(.dark &):not(.light &));
