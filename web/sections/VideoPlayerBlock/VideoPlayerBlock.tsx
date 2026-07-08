@@ -52,6 +52,8 @@ const VideoPlayerBlock = ({
   const { width = 'normal', ...videoPlayerDesignOptions } = designOptions
   const actionUrl = action ? getUrlFromAction(action) : ''
   const { bg, dark } = getBgAndDarkFromBackground(designOptions)
+  const isNarrowFeature =
+    width === 'narrow' || videoPlayerDesignOptions?.aspectRatio === '9:16'
 
   return (
     <section
@@ -61,45 +63,47 @@ const VideoPlayerBlock = ({
       )}
       id={anchor}
     >
-      <div className={twMerge((title || ingress || action?.label) && 'pb-6')}>
-        {title && <Blocks value={title} variant='h2' />}
-        {ingress && (
-          <Blocks
-            variant='ingress'
-            value={ingress}
-            blockClassName={`${action?.label && actionUrl ? 'mb-4' : 'mb-8'}`}
-          />
-        )}
-        {action?.label && actionUrl && (
-          <ResourceLink
-            href={actionUrl || ''}
-            file={{
-              ...action?.file,
-              label: action?.label,
-            }}
-            variant='fit'
-            hrefLang={
-              action?.type === 'internalUrl'
-                ? getIsoFromName(action?.link?.lang)
-                : undefined
-            }
-            className='mt-4 mb-8'
-          >
-            {action.label}
-          </ResourceLink>
-        )}
-      </div>
+      {(title || ingress || action?.label) && (
+        <div className='pb-6'>
+          {title && <Blocks value={title} variant='h2' />}
+          {ingress && (
+            <Blocks
+              variant='ingress'
+              value={ingress}
+              blockClassName={`${action?.label && actionUrl ? 'mb-4' : 'mb-8'}`}
+            />
+          )}
+          {action?.label && actionUrl && (
+            <ResourceLink
+              href={actionUrl || ''}
+              file={{
+                ...action?.file,
+                label: action?.label,
+              }}
+              variant='fit'
+              hrefLang={
+                action?.type === 'internalUrl'
+                  ? getIsoFromName(action?.link?.lang)
+                  : undefined
+              }
+              className='mt-4 mb-8'
+            >
+              {action.label}
+            </ResourceLink>
+          )}
+        </div>
+      )}
       {/*@ts-ignore: TODO*/}
       <div
         className={twMerge(
-          width === 'narrow' && 'mx-auto',
-          width === 'narrow' &&
+          isNarrowFeature && 'mx-auto',
+          isNarrowFeature &&
             videoPlayerDesignOptions?.aspectRatio === '9:16' &&
             'aspect-9/16 w-101.5 overflow-hidden rounded-card',
-          width === 'narrow' &&
+          isNarrowFeature &&
             videoPlayerDesignOptions?.aspectRatio === '16:9' &&
             'aspect-video w-200 overflow-hidden rounded-card',
-          width === 'narrow' &&
+          isNarrowFeature &&
             videoPlayerDesignOptions?.aspectRatio === '1:1' &&
             'aspect-square w-150 overflow-hidden rounded-card',
         )}
