@@ -74,7 +74,7 @@ const MagazinePage = ({
     </>
   )
 
-  const heroProps: HeroBlockProps = {
+  const heroBlockProps: HeroBlockProps = {
     heroData: {
       //@ts-ignore: todo
       title,
@@ -90,19 +90,24 @@ const MagazinePage = ({
     nextSectionDesignOptions: content?.[0]?.designOptions,
   }
 
+  const heroProps = {
+    background:
+      hero.type !== HeroTypes.DEFAULT
+        ? //@ts-ignore
+          content?.[0]?.designOptions.background
+        : hero?.background,
+    heroType: hero?.type,
+    heroHasBreadcrumbs: false,
+  }
+
   return (
     <main className='mx-auto flex w-full max-w-fullwidth flex-col'>
-      <HeroBlock {...heroProps} />
+      <HeroBlock {...heroBlockProps} />
       <PageContent
         data={{
           content,
         }}
-        heroBackground={
-          hero.type !== HeroTypes.DEFAULT
-            ? //@ts-ignore
-              content?.[0]?.designOptions.background
-            : hero?.background
-        }
+        heroProps={heroProps}
       />
       {!hideFooterComponent && footerComponent?.data && (
         <Teaser data={footerComponent.data} />
