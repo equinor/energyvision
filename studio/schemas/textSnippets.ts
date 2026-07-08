@@ -900,7 +900,7 @@ const snippets: textSnippet = {
   },
   search_page_title: {
     title: 'Search page title',
-    defaultValue: 'Search page title',
+    defaultValue: 'Search',
     group: groups.search,
   },
   last_modified: {
@@ -920,7 +920,7 @@ const snippets: textSnippet = {
   },
   serverErrorTitle: {
     title: 'Server error title',
-    defaultValue: 'Some error occurred',
+    defaultValue: 'Something has happened',
     group: groups.error,
   },
   serverErrorSubtitle: {
