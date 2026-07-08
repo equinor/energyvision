@@ -9,7 +9,7 @@ import { dataset } from './languageConfig'
 
 const isProduction = process.env.NODE_ENV === 'production'
 
-const envs = ['preprod', 'prod', 'preprodv2']
+const envs = ['dev', 'preprod', 'prod', 'preprodv2']
 const localUrl =
   process.env.NODE_ENV === 'development' ? 'http://localhost:3333' : ''
 const globalUrl = dataset === 'global' ? 'https://equinor.sanity.studio' : ''
