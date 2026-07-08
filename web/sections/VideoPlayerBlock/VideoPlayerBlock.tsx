@@ -52,7 +52,7 @@ const VideoPlayerBlock = ({
   const { width = 'normal', ...videoPlayerDesignOptions } = designOptions
   const actionUrl = action ? getUrlFromAction(action) : ''
   const { bg, dark } = getBgAndDarkFromBackground(designOptions)
-  const useIsNarrow =
+  const isNarrowFeature =
     width === 'narrow' || videoPlayerDesignOptions?.aspectRatio === '9:16'
 
   return (
@@ -96,14 +96,14 @@ const VideoPlayerBlock = ({
       {/*@ts-ignore: TODO*/}
       <div
         className={twMerge(
-          useIsNarrow && 'mx-auto',
-          useIsNarrow &&
+          isNarrowFeature && 'mx-auto',
+          isNarrowFeature &&
             videoPlayerDesignOptions?.aspectRatio === '9:16' &&
             'aspect-9/16 w-101.5 overflow-hidden rounded-card',
-          useIsNarrow &&
+          isNarrowFeature &&
             videoPlayerDesignOptions?.aspectRatio === '16:9' &&
             'aspect-video w-200 overflow-hidden rounded-card',
-          useIsNarrow &&
+          isNarrowFeature &&
             videoPlayerDesignOptions?.aspectRatio === '1:1' &&
             'aspect-square w-150 overflow-hidden rounded-card',
         )}
