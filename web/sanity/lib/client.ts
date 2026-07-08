@@ -10,8 +10,9 @@ const sanityConfig: ClientConfig = {
   projectId,
   dataset,
   apiVersion,
-  perspective: dataset === 'global-development' ? 'drafts' : 'published',
-  useCdn: dataset !== 'global-development',
+  //handled by definelive?
+  //perspective: dataset === 'global-development' ? 'drafts' : 'published',
+  useCdn: true,
   ignoreBrowserTokenWarning: dataset === 'global-development',
   requestTagPrefix: 'website', // to track usage on web in sanity console
   stega: {

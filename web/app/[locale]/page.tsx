@@ -1,4 +1,6 @@
+import { stegaClean } from '@sanity/client/stega'
 import type { Metadata } from 'next'
+import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
 import { setRequestLocale } from 'next-intl/server'
 import { OrganizationJsonLd } from 'next-seo'
@@ -16,12 +18,8 @@ import { FriendlyCaptchaSdkWrapper } from './FriendlyCaptchaWrapper'
 
 type Props = {
   params: Promise<{ slug: string; locale: string }>
-  searchParams: Promise<{ [key: string]: string[] | undefined }>
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }
-
-/*export async function generateStaticParams() {
-  return languages.map(language => ({ locale: language.iso }))
-}*/
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params
@@ -39,11 +37,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function Home({ params }: Props) {
   const { locale, slug } = await params
+  //const isInPresentationToolContext =
+  //  (await cookies()).get('preview-fetch-dest')?.value === 'iframe'
   // Enable static rendering
   setRequestLocale(locale)
+  const { isEnabled: isDraftMode } = await draftMode()
 
   if (!languages.map(it => it.iso).includes(locale)) notFound()
-
+  let pageContent = null
   const [siteMenuResult, homePageData] = await Promise.all([
     routeSanityFetch({
       query: Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery,
@@ -57,8 +58,13 @@ export default async function Home({ params }: Props) {
       tags: ['homePage'],
     }),
   ])
+  pageContent = homePageData
+  if (isDraftMode) {
+    //Later when inside presentation tool, cant clean as it doesnt work with visual editing, must filter props together with visual editing,
+    pageContent = stegaClean(homePageData)
+  }
 
-  const { headerData, pageData } = homePageData
+  const { headerData, pageData } = pageContent
   const { data: siteMenuData } = siteMenuResult || {}
 
   if (!pageData) notFound()

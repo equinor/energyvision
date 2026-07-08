@@ -19,15 +19,11 @@ const studioUrls = envs.map(
   env =>
     `https://studio-${dataset}${env === 'preprodv2' ? `-upgrade` : ''}-equinor-web-sites-${env}.c2.radix.equinor.com`,
 )
-const studioV3Urls = [
-  'http://studiov3-global-development-equinor-web-sites-dev.c2.radix.equinor.com',
-  'http://studiov3-global-development-upgrade-equinor-web-sites-dev.c2.radix.equinor.com',
-  'https://studio-global-development-upgrade-equinor-web-sites-dev.c2.radix.equinor.com/',
-]
+const localStudioUrl = ['http://localhost:3333']
 const xFrameUrls = [
   localUrl,
   ...studioUrls,
-  ...studioV3Urls,
+  ...localStudioUrl,
   globalUrl,
   secretUrl,
 ]

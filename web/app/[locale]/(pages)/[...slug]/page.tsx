@@ -1,6 +1,8 @@
 import { magazineSlug, newsSlug } from '@energyvision/shared/satelliteConfig'
+import { stegaClean } from '@sanity/client/stega'
 import type { Metadata } from 'next'
 import dynamic from 'next/dynamic'
+import { cookies, draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
 import { setRequestLocale } from 'next-intl/server'
 import { getValidLanguagesLocales } from '@/languageConfig'
@@ -20,7 +22,7 @@ import Header from '@/sections/Header/Header'
 
 type Props = {
   params: Promise<{ slug: string[]; locale: string }>
-  searchParams: Promise<{ [key: string]: string[] | undefined }>
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }
 const MagazinePage = dynamic(() => import('@/templates/magazine/MagazinePage'))
 const EventPage = dynamic(() => import('@/templates/event/Event'))
@@ -74,11 +76,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function Page({ params }: Props) {
   const { slug, locale } = await params
+  /*   const isInPresentationToolContext =
+    (await cookies()).get('preview-fetch-dest')?.value === 'iframe' */
+  const { isEnabled: isDraftMode } = await draftMode()
 
   if (!getValidLanguagesLocales().includes(locale)) notFound()
 
   setRequestLocale(locale)
-
+  let pageContent = null
   const [siteMenuResult, pageResults] = await Promise.all([
     routeSanityFetch({
       query: Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery,
@@ -91,8 +96,15 @@ export default async function Page({ params }: Props) {
       locale,
     }),
   ])
+  pageContent = pageResults
 
-  const { headerData, pageData } = pageResults
+  if (isDraftMode) {
+    //Later when inside presentation tool, cant clean as it doesnt work with visual editing, must filter props together with visual editing,
+    console.log('Clean page data for stega')
+    pageContent = stegaClean(pageResults)
+  }
+
+  const { headerData, pageData } = pageContent
   const { data: siteMenuData } = siteMenuResult || {}
   if (Object.keys(pageData).length === 0) notFound()
 
