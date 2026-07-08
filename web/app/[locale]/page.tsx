@@ -7,7 +7,6 @@ import { OrganizationJsonLd } from 'next-seo'
 import { languages } from '@/languageConfig'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { getNameFromIso } from '@/sanity/helpers/localization'
-import { isInPresentationTool } from '@/sanity/lib/isInPresentationTool'
 import { routeSanityFetch } from '@/sanity/lib/live'
 import { constructSanityMetadata, getPage } from '@/sanity/pages/utils'
 import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu'
@@ -19,12 +18,8 @@ import { FriendlyCaptchaSdkWrapper } from './FriendlyCaptchaWrapper'
 
 type Props = {
   params: Promise<{ slug: string; locale: string }>
-  searchParams: Promise<{ [key: string]: string[] | undefined }>
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }
-
-/*export async function generateStaticParams() {
-  return languages.map(language => ({ locale: language.iso }))
-}*/
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params
@@ -40,14 +35,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return constructSanityMetadata('', locale, metaData)
 }
 
-export default async function Home({ params, searchParams }: Props) {
+export default async function Home({ params }: Props) {
   const { locale, slug } = await params
+  //const isInPresentationToolContext =
+  //  (await cookies()).get('preview-fetch-dest')?.value === 'iframe'
   // Enable static rendering
   setRequestLocale(locale)
-  const currentSearchParams = await searchParams
-  const isInPresentationToolContext =
-    await isInPresentationTool(currentSearchParams)
-  const { isEnabled } = await draftMode()
+  const { isEnabled: isDraftMode } = await draftMode()
 
   if (!languages.map(it => it.iso).includes(locale)) notFound()
   let pageContent = null
@@ -65,10 +59,8 @@ export default async function Home({ params, searchParams }: Props) {
     }),
   ])
   pageContent = homePageData
-  if (isEnabled && !isInPresentationToolContext) {
-    console.log(
-      'Draft mode enabled but not in presentation tool, cleaning page content for stega',
-    )
+  if (isDraftMode) {
+    //Later when inside presentation tool, cant clean as it doesnt work with visual editing, must filter props together with visual editing,
     pageContent = stegaClean(homePageData)
   }
 

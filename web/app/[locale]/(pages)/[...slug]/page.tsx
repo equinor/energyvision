@@ -2,14 +2,13 @@ import { magazineSlug, newsSlug } from '@energyvision/shared/satelliteConfig'
 import { stegaClean } from '@sanity/client/stega'
 import type { Metadata } from 'next'
 import dynamic from 'next/dynamic'
-import { draftMode } from 'next/headers'
+import { cookies, draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
 import { setRequestLocale } from 'next-intl/server'
 import { getValidLanguagesLocales } from '@/languageConfig'
 import { decodeSlugs } from '@/lib/helpers/getFullUrl'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { getNameFromIso } from '@/sanity/helpers/localization'
-import { isInPresentationTool } from '@/sanity/lib/isInPresentationTool'
 import { routeSanityFetch } from '@/sanity/lib/live'
 import { constructSanityMetadata, getPage } from '@/sanity/pages/utils'
 import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu'
@@ -23,7 +22,7 @@ import Header from '@/sections/Header/Header'
 
 type Props = {
   params: Promise<{ slug: string[]; locale: string }>
-  searchParams: Promise<{ [key: string]: string[] | undefined }>
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }
 const MagazinePage = dynamic(() => import('@/templates/magazine/MagazinePage'))
 const EventPage = dynamic(() => import('@/templates/event/Event'))
@@ -75,12 +74,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return constructSanityMetadata(slug, locale, metaData)
 }
 
-export default async function Page({ params, searchParams }: Props) {
+export default async function Page({ params }: Props) {
   const { slug, locale } = await params
-  const currentSearchParams = await searchParams
-  const isInPresentationToolContext =
-    await isInPresentationTool(currentSearchParams)
-  const { isEnabled } = await draftMode()
+  /*   const isInPresentationToolContext =
+    (await cookies()).get('preview-fetch-dest')?.value === 'iframe' */
+  const { isEnabled: isDraftMode } = await draftMode()
 
   if (!getValidLanguagesLocales().includes(locale)) notFound()
 
@@ -100,10 +98,9 @@ export default async function Page({ params, searchParams }: Props) {
   ])
   pageContent = pageResults
 
-  if (isEnabled && !isInPresentationToolContext) {
-    console.log(
-      'Draft mode enabled but not in presentation tool, cleaning page content for stega',
-    )
+  if (isDraftMode) {
+    //Later when inside presentation tool, cant clean as it doesnt work with visual editing, must filter props together with visual editing,
+    console.log('Clean page data for stega')
     pageContent = stegaClean(pageResults)
   }
 
