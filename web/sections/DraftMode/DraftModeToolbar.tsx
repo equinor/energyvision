@@ -1,16 +1,15 @@
 'use client'
-import { useIsPresentationTool } from 'next-sanity/hooks'
-import { useMemo, useTransition } from 'react'
+import { useEffect, useState, useTransition } from 'react'
 import { disableDraftMode } from '@/app/_actions/disableDraftMode'
 import { commonButtonStyling } from '@/core/Button'
 
 export default function DraftModeToolbar() {
   const [pending, startTransition] = useTransition()
-  const isPresentationTool = useIsPresentationTool()
+  const [isInsideTool, setIsInsideTool] = useState(false)
 
-  const isInsideTool = useMemo(() => {
-    return isPresentationTool
-  }, [isPresentationTool])
+  useEffect(() => {
+    setIsInsideTool(window.self !== window.top)
+  }, [])
   // Only show the disable draft mode button when outside of Presentation Tool
 
   const disable = () => startTransition(() => disableDraftMode())

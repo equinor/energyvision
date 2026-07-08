@@ -9,6 +9,7 @@ import { hasLocale, NextIntlClientProvider } from 'next-intl'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { PageProvider } from '@/contexts/pageContext'
 import { getLocaleFromIso, getNameFromIso } from '@/sanity/helpers/localization'
+import { dataset } from '@/sanity/lib/api'
 import { routeSanityFetch, SanityLive } from '@/sanity/lib/live'
 import { footerAndErrorImageQuery } from '@/sanity/queries/footer'
 import Footer from '@/sections/Footer/Footer'
@@ -24,6 +25,10 @@ const equinor = localFont({
     { path: '../fonts/equinor/EquinorVariable-VF.woff2' },
   ],
 })
+
+const DraftModeToolbar = dynamic(
+  () => import('@/sections/DraftMode/DraftModeToolbar'),
+)
 
 type Params = Promise<{ locale: string }>
 
@@ -63,23 +68,7 @@ export default async function LocaleLayout({
     })
 
   const { errorImage, ...footerData } = footerAndErrorImageData || {}
-
-  async function loadVisualEditing() {
-    if ((await draftMode()).isEnabled) {
-      const DraftModeToolbar = dynamic(
-        () => import('@/sections/DraftMode/DraftModeToolbar'),
-      )
-      const VisualEditing = dynamic(() =>
-        import('next-sanity/visual-editing').then(mod => mod.VisualEditing),
-      )
-      return (
-        <>
-          <DraftModeToolbar />
-          <VisualEditing />
-        </>
-      )
-    }
-  }
+  const isPreview = (await draftMode()).isEnabled
 
   return (
     <html lang={locale} className={`${equinor.className} `}>
@@ -91,7 +80,13 @@ export default async function LocaleLayout({
           {t('skipToContent') ?? 'Skip to main content'}
         </NextLink>
         <SanityLive />
-        {loadVisualEditing()}
+        {isPreview && (
+          <>
+            <DraftModeToolbar />
+            {/*          Must first filter all conditional rendering props in the page content, otherwise the visual editing will not work correctly inside presentation tool. This is a big job and will be done later. For now, we will not render the visual editing inside the presentation tool.   
+            <ConditionalVisualEditing /> */}
+          </>
+        )}
         <NextIntlClientProvider>
           <PageProvider initialErrorImage={errorImage}>{children}</PageProvider>
           <Footer {...footerData} />
@@ -99,7 +94,7 @@ export default async function LocaleLayout({
         </NextIntlClientProvider>
       </body>
       {/** TODO look into scripts */}
-      {
+      {!(isPreview || dataset === 'global-development') && (
         <Script
           src='https://consent.cookiebot.com/uc.js'
           id='Cookiebot'
@@ -108,7 +103,7 @@ export default async function LocaleLayout({
           data-blockingmode='auto'
           data-culture={locale === 'nb-NO' ? 'nb' : getLocaleFromIso(locale)}
         />
-      }
+      )}
       <GoogleTagManagerHead />
       <SiteImprove />
     </html>
