@@ -5,26 +5,21 @@ import type { NextRequest } from 'next/server'
 import { client } from '@/sanity/lib/client'
 
 export async function GET(request: NextRequest, _context: any) {
-  const secFetchDest = request.headers.get('sec-fetch-dest')
-  const referer = request.headers.get('referer')
-  console.info('Draft route headers', {
-    secFetchDest,
-    referer,
-  })
-  console.log(' request.url', request.url)
+  //const secFetchDest = request.headers.get('sec-fetch-dest')
+  //const referer = request.headers.get('referer')
   const { isValid, redirectTo = '/' } = await validatePreviewUrl(
     client,
     request.url,
   )
 
+  if (!isValid) {
+    return new Response('Missing or invalid token', { status: 401 })
+  }
+
   let previewUrl = redirectTo
   if (redirectTo?.includes('/api/draft')) {
     const urlParts = redirectTo.split('/')
     previewUrl = `/${urlParts.at(-2)}/${urlParts.at(-1)}`
-  }
-
-  if (!isValid) {
-    return new Response('Missing or invalid token', { status: 401 })
   }
 
   const draft = await draftMode()
@@ -47,5 +42,4 @@ export async function GET(request: NextRequest, _context: any) {
   } */
 
   redirect(previewUrl)
-  //redirect(`/preview/${id}`)
 }
