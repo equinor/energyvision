@@ -74,6 +74,7 @@ export const content = {
     Flags.IS_DEV && { type: 'anchorSearch' },
     { type: 'promoteTopicsV2' },
     { type: 'promoteExternalLinkV2' },
+    Flags.IS_DEV && { type: 'anchorSearch' },
   ].filter(e => e),
   components: {
     input: RolesBasedArrayInput,

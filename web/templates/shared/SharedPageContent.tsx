@@ -237,6 +237,14 @@ const applyPaddingTopIfApplicable = (
   if (index === 0 && heroProps?.heroType !== 'backgroundImage') {
     return ''
   }
+  //Background image hero has breadcrumbs which have enough padding bottom, the following component should not have pt-20
+  if (
+    index === 0 &&
+    heroProps?.heroType === 'backgroundImage' &&
+    heroProps?.heroHasBreadcrumbs
+  ) {
+    return ''
+  }
   /*   console.log(
     `Current: ${currentComponent?.type}:${Array.isArray(currentComponent?.title) ? toPlainText(currentComponent?.title) : currentComponent?.title}`,
   )
@@ -292,11 +300,6 @@ const applyPaddingTopIfApplicable = (
     return prevComponent?.designOptions?.backgroundType === '0'
       ? 'lg:pt-20'
       : 'pt-20'
-  }
-
-  //Background image hero has breadcrumbs which have enough padding bottom, the following component should not have pt-20
-  if (heroProps?.heroHasBreadcrumbs) {
-    return ''
   }
 
   const previousIsSameColorAsCurrent = isSameColorBackground(

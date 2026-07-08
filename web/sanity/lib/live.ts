@@ -4,7 +4,7 @@ import type {
   ContentSourceMap,
   QueryParams,
 } from 'next-sanity'
-import { DefinedFetchType, defineLive } from 'next-sanity/live'
+import { type DefinedFetchType, defineLive } from 'next-sanity/live'
 //import { dataset } from '@/languageConfig'
 import { client } from './client'
 //import { tempSanityFetch } from './tempSanityFetch'
