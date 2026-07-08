@@ -127,6 +127,32 @@ body.search-page-bg {
   background-color: var(--color-slate-blue-95);
 }
 
+body.search-page-bg {
+  display: flex;
+  min-height: 100dvh;
+  flex-direction: column;
+}
+
+body.search-page-bg [data-search-page='true'] {
+  min-height: 100dvh;
+  padding-bottom: 56px;
+}
+
+body.search-page-bg footer {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  min-height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+body.search-page-bg footer > div > div:last-child {
+  padding-top: 0;
+  padding-bottom: 12px;
+}
+
 /* old darkMode: ['variant', [':is(.dark &):not(.light &)']],*/
 /* @custom-variant dark (&:where(.dark, .dark *)); */
 @custom-variant dark (&:is(.dark &):not(.light &));
