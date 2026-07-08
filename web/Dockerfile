@@ -61,8 +61,9 @@ ENV NEXT_DEPLOYMENT_ID=${ARG_DEPLOYMENT_ID}
 
 RUN --mount=type=secret,id=sanity_api_token \
     --mount=type=secret,id=next_public_algolia_search_api_key \
-    sh -ec 'SANITY_API_TOKEN="$(cat /run/secrets/sanity_api_token)" NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY="$(cat /run/secrets/next_public_algolia_search_api_key)" turbo build --filter=energy-vision-web'
-    
+    --mount=type=secret,id=next_server_actions_encryption_key \
+    sh -ec 'SANITY_API_TOKEN="$(cat /run/secrets/sanity_api_token)" NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY="$(cat /run/secrets/next_public_algolia_search_api_key)" NEXT_SERVER_ACTIONS_ENCRYPTION_KEY="$(cat /run/secrets/next_server_actions_encryption_key)" turbo build --filter=energy-vision-web'
+
 # -------------------------------------------------------- #
 # 6. Runtime container
 # -------------------------------------------------------- #

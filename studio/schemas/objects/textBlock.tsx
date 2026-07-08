@@ -9,10 +9,8 @@ import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon } from '../../icons'
 import type { ColorSelectorValue } from '../components/ColorSelector'
 import { CompactBlockEditor } from '../components/CompactBlockEditor'
-import { defaultBackgroundColors, defaultColors } from '../defaultColors'
 import { configureBlockContent } from '../editors'
 import { validateComponentAnchor } from '../validations/validateAnchorReference'
-import { createColorSelectField } from './colorList'
 
 type TextBlock = {
   overline?: string

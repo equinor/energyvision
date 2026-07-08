@@ -55,7 +55,7 @@ export const LoopingVideoHero = ({
         muted
         loop
       />
-      <div className='mx-auto max-w-content'>
+      <div className={twMerge(nextCompBg, nextCompDark && 'dark')}>
         {breadcrumbsComponent && breadcrumbsComponent}
         <Blocks
           //@ts-ignore
@@ -65,10 +65,8 @@ export const LoopingVideoHero = ({
           as='h1'
           variant='h1'
           className={twMerge(
-            `px-layout-sm lg:px-layout-lg`,
+            `mx-auto max-w-content px-layout-sm lg:px-layout-lg`,
             !breadcrumbsComponent && 'pt-4 lg:pt-6',
-            nextCompBg,
-            nextCompDark && 'dark',
             className,
           )}
         />

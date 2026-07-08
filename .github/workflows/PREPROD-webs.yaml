@@ -94,7 +94,7 @@ jobs:
           nodeEnvironment: production
           archiveContentLink: ${{ vars.ARCHIVE_CONTENT_LINK }}
           friendlyCaptchaSitekey: ${{ vars.GLOBAL_FC_SITEKEY }}
-          isUpgrade: false
+          serverActionsEncryptionKey: ${{ secrets.SERVER_ACTIONS_ENCRYPTION_KEY }}
 
       - uses: act10ns/slack@v2
         with:
@@ -151,8 +151,7 @@ jobs:
           nodeEnvironment: production
           archiveContentLink: ${{ vars.ARCHIVE_CONTENT_LINK }}
           friendlyCaptchaSitekey: ${{ matrix.dataset == 'brazil' && vars.BRAZIL_FC_SITEKEY || vars.GLOBAL_FC_SITEKEY }}
-          isUpgrade: false
-         
+          serverActionsEncryptionKey: ${{ secrets.SERVER_ACTIONS_ENCRYPTION_KEY }}
       - uses: act10ns/slack@v2
         with:
           status: ${{ job.status }}

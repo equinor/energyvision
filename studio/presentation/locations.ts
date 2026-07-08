@@ -3,7 +3,7 @@ import { getDraftId } from 'sanity'
 import type { DocumentLocationResolver } from 'sanity/presentation'
 import blocksToText from '@/helpers/blocksToText'
 import { capitalizeFirstLetter } from '@/helpers/formatters'
-import { defaultWebLang } from '@/languages'
+import { defaultLanguage, defaultWebLang } from '@/languages'
 import { getIdFromName, getLocaleFromName } from '../src/lib/localization'
 
 export const locations: DocumentLocationResolver = (params, context) => {
@@ -73,7 +73,8 @@ export const locations: DocumentLocationResolver = (params, context) => {
       id: params.id,
       draftId: getDraftId(params.id),
       publishedId: params.id.replace(/^drafts\./, ''),
-      defaultLang: defaultWebLang?.name,
+      //default language here because we want the language setup for studio, not web
+      defaultLang: defaultLanguage?.name,
     }
 
     const doc$ = context.documentStore.listenQuery(

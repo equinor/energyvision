@@ -37,7 +37,7 @@ const TopicPage = ({
   slug,
   ...restData
 }: TopicPageProps) => {
-  const heroProps: HeroBlockProps = {
+  const heroBlockProps: HeroBlockProps = {
     heroData: {
       //@ts-ignore: todo
       title,
@@ -55,12 +55,16 @@ const TopicPage = ({
   const componentAfterHeroNeedsNoPt =
     hero?.type === 'fiftyFifty' || breadcrumbs?.enableBreadcrumbs
 
-  const heroBackground: Background & { heroHasBreadcrumbs?: boolean } =
+  const heroHasBreadcrumbs =
+    hero?.type === 'backgroundImage'
+      ? breadcrumbs?.enableBreadcrumbs
+      : componentAfterHeroNeedsNoPt
+
+  const heroBackground: Background =
     hero?.type === 'backgroundImage'
       ? {
           type: 'backgroundImage',
           backgroundImage: hero.figure,
-          heroHasBreadcrumbs: breadcrumbs?.enableBreadcrumbs,
         }
       : {
           type: 'backgroundColor',
@@ -71,21 +75,18 @@ const TopicPage = ({
                 >,
               }
             : {}),
-          heroHasBreadcrumbs: componentAfterHeroNeedsNoPt,
         }
+
+  const heroProps = {
+    background: heroBackground,
+    heroType: hero?.type,
+    heroHasBreadcrumbs,
+  }
 
   return (
     <main className='mx-auto flex w-full max-w-fullwidth flex-col'>
-      <HeroBlock {...heroProps} />
-      <PageContent
-        data={restData}
-        heroBackground={
-          /*hero?.type !== 'default' && hero?.type !== 'backgroundImage'
-            ? //@ts-ignore
-              restData?.content?.[0]?.designOptions?.background :*/
-          heroBackground
-        }
-      />
+      <HeroBlock {...heroBlockProps} />
+      <PageContent data={restData} heroProps={heroProps} />
     </main>
   )
 }

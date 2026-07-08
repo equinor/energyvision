@@ -37,6 +37,9 @@ inputs:
   friendlyCaptchaSitekey:
     description: 'Friendly captcha site key'
     required: true
+  serverActionsEncryptionKey:
+    description: 'Server actions encryption key'
+    required: true
 
 
 runs:
@@ -103,6 +106,7 @@ runs:
         secrets: |
           sanity_api_token=${{ inputs.sanityApiToken }}
           next_public_algolia_search_api_key=${{ inputs.algoliaApiKey }}
+          next_server_actions_encryption_key=${{ inputs.serverActionsEncryptionKey }}
         build-args: |
           ARG_SANITY_PROJECT_ID=${{ inputs.projectId }}
           ARG_SANITY_DATASET=${{ inputs.datasetName }}

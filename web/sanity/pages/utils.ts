@@ -196,7 +196,7 @@ function languagePrefixedSlug(
 }
 
 export async function getPage(params: Params) {
-  const { slug, locale, tags = [], searchParams } = params
+  const { slug, locale, searchParams } = params
   const { tag } = searchParams || {}
   let pageData = null
   if (slug?.[0]?.includes('preview')) {
