@@ -52,13 +52,14 @@ const VideoPlayerBlock = ({
   const { width = 'normal', ...videoPlayerDesignOptions } = designOptions
   const actionUrl = action ? getUrlFromAction(action) : ''
   const { bg, dark } = getBgAndDarkFromBackground(designOptions)
+
   const isNarrowFeature =
     width === 'narrow' || videoPlayerDesignOptions?.aspectRatio === '9:16'
 
   return (
     <section
       className={twMerge(
-        `mx-auto max-w-content ${bg} ${dark ? 'dark' : ''} ${width === 'extraWide' ? 'px-layout-md' : 'px-layout-lg'}`,
+        `mx-auto h-auto w-full max-w-content ${bg} ${dark ? 'dark' : ''} px-layout-sm ${width === 'extraWide' ? 'lg:px-layout-md' : 'lg:px-layout-lg'}`,
         className,
       )}
       id={anchor}
@@ -94,18 +95,20 @@ const VideoPlayerBlock = ({
         </div>
       )}
       {/*@ts-ignore: TODO*/}
+
       <div
         className={twMerge(
+          'h-auto w-full overflow-hidden rounded-card',
           isNarrowFeature && 'mx-auto',
           isNarrowFeature &&
             videoPlayerDesignOptions?.aspectRatio === '9:16' &&
-            'aspect-9/16 w-101.5 overflow-hidden rounded-card',
+            'w-101.5',
           isNarrowFeature &&
             videoPlayerDesignOptions?.aspectRatio === '16:9' &&
-            'aspect-video w-200 overflow-hidden rounded-card',
+            'w-200',
           isNarrowFeature &&
             videoPlayerDesignOptions?.aspectRatio === '1:1' &&
-            'aspect-square w-150 overflow-hidden rounded-card',
+            'w-150',
         )}
       >
         <VideoPlayer

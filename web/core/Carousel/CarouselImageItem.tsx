@@ -95,23 +95,23 @@ export const CarouselImageItem = forwardRef<
           grid='sm'
           image={image}
           fill
-          className={`relative aspect-4/3 h-full w-full rounded-md md:aspect-video`}
-          imageClassName='rounded-md'
+          className={`relative aspect-4/3 h-full w-full rounded-card md:aspect-video`}
+          imageClassName='rounded-card'
         />
       )
     }
     if (isImageWithSimpleCaption && image) {
       return (
-        <figure className='flex aspect-4/3 h-full w-full items-end rounded-md md:aspect-video'>
+        <figure className='flex aspect-4/3 h-full w-full items-end rounded-card md:aspect-video'>
           <Image
             grid='sm'
             image={image}
             fill
             className='absolute'
-            imageClassName={`rounded-md`}
+            imageClassName={`rounded-card`}
           />
           <figcaption
-            className={`fade-in-black-gradient z-1 w-full rounded-b-md ${
+            className={`fade-in-black-gradient z-1 w-full rounded-b-card ${
               displayMode === 'single'
                 ? active
                   ? 'opacity-100'
@@ -147,9 +147,9 @@ export const CarouselImageItem = forwardRef<
             image={image}
             fill
             className='absolute'
-            imageClassName={`aspect-4/3 rounded-md md:aspect-video`}
+            imageClassName={`aspect-4/3 rounded-card md:aspect-video`}
           />
-          <div className='fade-in-black-gradient flex h-full w-full items-end rounded-b-md pt-10 lg:pt-20'>
+          <div className='fade-in-black-gradient flex h-full w-full items-end rounded-b-card pt-10 lg:pt-20'>
             <BaseLink
               href={url as string}
               {...(action.link?.lang && {
@@ -170,7 +170,7 @@ export const CarouselImageItem = forwardRef<
     if (isImageWithOverlay) {
       return (
         <ImageWithOverlay
-          className={`aspect-4/3 rounded-md md:aspect-video`}
+          className={`aspect-4/3 rounded-card md:aspect-video`}
           teaserTitle={captionTeaserTitle}
           //@ts-ignore:TODO
           title={captionTitle as PortableTextBlock[]}
@@ -188,8 +188,8 @@ export const CarouselImageItem = forwardRef<
             grid='sm'
             image={image}
             fill
-            className={`min-h-single-carousel-card-h-sm w-full rounded-md md:min-h-single-carousel-card-h-md lg:min-h-single-carousel-card-h-lg`}
-            imageClassName='aspect-4/3 rounded-md md:aspect-video'
+            className={`min-h-single-carousel-card-h-sm w-full rounded-card md:min-h-single-carousel-card-h-md lg:min-h-single-carousel-card-h-lg`}
+            imageClassName='aspect-4/3 rounded-card md:aspect-video'
           />
           <figcaption
             className={twMerge(

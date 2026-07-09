@@ -360,7 +360,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
         src: video?.src,
         aspectRatio: displayMode === 'scroll' ? '9:16' : '16:9',
         figureCaption: title,
-        className: 'min-w-[24rem] h-full',
+        className: 'min-w-[24rem] h-full overflow-hidden rounded-card',
       }
       //@ts-ignore: TODO
       const element = <VideoPlayer {...props} />
@@ -371,7 +371,6 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
           aria-label={getTranslatedItemCountLabel(index + 1)}
           displayMode={displayMode}
           active={index === currentIndex}
-          /*         className={`${displayMode === 'scroll' ? 'h-full w-[260px] md:w-[372px] lg:w-[405px]' : ''}`} */
           {...(displayMode === 'single' && {
             style: {
               transform: `translate3d(${itemsXPositions[index]}px, 0px, 0px)`,
