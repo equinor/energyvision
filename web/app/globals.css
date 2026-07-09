@@ -1,7 +1,6 @@
 @import "tailwindcss" source("../");
 @import '@energyvision/shared/brand.css';
 /* @source '../styles/components/imagezoom.css'; */
-@source '../styles/components/videojs.css';
 @source '../styles/components/cookiebot.css';
 
 /* Custom theme for web, not common brand */
@@ -316,6 +315,7 @@ data-ui="checked active" class="data-checked:underline">
   }
 
   /************** Video js **********/
+
   .video-js.vjs-fill .vjs-control-bar {
     @apply bg-transparent!;
   }

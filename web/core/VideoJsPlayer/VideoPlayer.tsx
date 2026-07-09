@@ -31,6 +31,7 @@ export type VideoPlayerProps = Omit<
   src: string
   figureCaption?: string | PortableTextBlock[]
   captionClassName?: string
+  figureClassName?: string
   /* setting this will sett fluid mode to video player */
   aspectRatio?: AspectRatioVariants | undefined
   /** Ignores aspect ratio to enable fill mode */
@@ -48,6 +49,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
   loop = false,
   figureCaption,
   captionClassName = '',
+  figureClassName = '',
   autoPlay = false,
   title,
   src,
@@ -135,7 +137,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
   const aspectRatioClassName: Record<AspectRatioVariants, string> = {
     '10:3': 'aspect-16/9 md:aspect-10/3',
     '16:9': 'aspect-video',
-    '21:9': 'aspect-16/9 md: aspect-21/9',
+    '21:9': 'aspect-16/9 md:aspect-21/9',
     '9:16': 'aspect-9/16',
     '2:1': 'aspect-2/1',
     '4:3': 'aspect-4/3',
@@ -162,19 +164,18 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
       {...(id && { id })}
       className={twMerge(
         `relative flex flex-col ${variantClassName[variant]}`,
-        className,
+        figureClassName,
       )}
     >
-      <div className={`${aspectRatioClassName[aspectRatio]}`}>
-        <Video
-          //@ts-ignore: TODO
-          options={videoJsOptions}
-          onReady={handlePlayerReady}
-          useBrandTheme={useBrandTheme}
-          containVideo={containVideo}
-          variant={variant}
-        />
-      </div>
+      <Video
+        //@ts-ignore: TODO
+        options={videoJsOptions}
+        onReady={handlePlayerReady}
+        useBrandTheme={useBrandTheme}
+        containVideo={containVideo}
+        variant={variant}
+        className={twMerge(aspectRatioClassName[aspectRatio], className)}
+      />
       {figureCaption && (
         <figcaption
           className={twMerge(
