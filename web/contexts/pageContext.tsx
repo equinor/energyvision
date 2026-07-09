@@ -1,5 +1,5 @@
 'use client'
-import type { SanityImageObject } from '@sanity/image-url'
+
 import {
   createContext,
   type PropsWithChildren,
@@ -7,9 +7,9 @@ import {
   useMemo,
   useState,
 } from 'react'
+import type { Image } from '@/core/Image/imageUtilities'
 import type { LocaleSlug } from '@/sanity/pages/utils'
 import type { ColorKeyTokens } from '@/styles/colorKeyToUtilityMap'
-
 import type { StickyMenuLinkType } from '../sections/StickyMenu/StickyMenu'
 
 export type HeaderData = {
@@ -22,7 +22,7 @@ export type HeaderData = {
   currentSlug: LocaleSlug | undefined
 }
 export interface PageContextType {
-  errorImage: SanityImageObject
+  errorImage: Image
 }
 
 const PageContext = createContext<PageContextType>({} as PageContextType)
