@@ -3,13 +3,15 @@
 import { useTranslations } from 'next-intl'
 import type { ReactNode } from 'react'
 import { usePage } from '@/contexts/pageContext'
+import { Image } from '@/core/Image/Image'
+import type { Image as ImageType } from '@/core/Image/imageUtilities'
 import { ResourceLink } from '@/core/Link/ResourceLink'
 import { Typography } from '@/core/Typography'
-import BackgroundImage from '@/sections/errorPages/BackgroundImage'
 
 export type ErrorPageProps = {
   variant?: '404' | '500'
   children?: ReactNode
+  image: ImageType
 }
 
 export default function ErrorPage({
@@ -20,7 +22,7 @@ export default function ErrorPage({
   const { errorImage } = usePage()
 
   return (
-    <div className='grid min-h-[70vh] w-full md:grid-cols-[44%_56%]'>
+    <div className='grid min-h-[70vh] w-full lg:grid-cols-[44%_56%]'>
       <div className='max-w-text ps-layout-sm pe-32 pt-10 pb-10 md:pt-40'>
         <Typography as='h1' variant='h2' className='pb-10'>
           <div className='pb-6 text-9xl text-energy-red-100'>
@@ -45,8 +47,8 @@ export default function ErrorPage({
         </ResourceLink>
         {children}
       </div>
-      <div className='relative order-first h-[30vh] md:order-last md:h-full'>
-        {errorImage && <BackgroundImage backgroundImage={errorImage} />}
+      <div className='relative order-first h-[30vh] lg:order-last lg:h-full'>
+        {errorImage && <Image image={errorImage} grid='lg' />}
       </div>
     </div>
   )
