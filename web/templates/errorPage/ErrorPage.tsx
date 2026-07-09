@@ -11,7 +11,6 @@ import { Typography } from '@/core/Typography'
 export type ErrorPageProps = {
   variant?: '404' | '500'
   children?: ReactNode
-  image: ImageType
 }
 
 export default function ErrorPage({
