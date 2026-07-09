@@ -55,6 +55,9 @@ export default (isoCode: string, title: string) => {
           Flags.HAS_MAGAZINE && {
             type: 'magazine',
           },
+          Flags.HAS_MAGAZINE && {
+            type: 'magazineIndex',
+          },
         ].filter(e => e),
         options: {
           filter: 'lang == $lang',
