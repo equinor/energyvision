@@ -58,14 +58,14 @@ export const ImageWithOverlay = forwardRef<
   return (
     <figure
       ref={ref}
-      className={twMerge(`h-full w-full rounded-md`, className)}
+      className={twMerge(`h-full w-full rounded-card`, className)}
     >
       <Image
         grid='sm'
         image={image}
         fill
         className='absolute'
-        imageClassName={`aspect-4/3 rounded-md md:aspect-video`}
+        imageClassName={`aspect-4/3 rounded-card md:aspect-video`}
       />
       <figcaption
         className={twMerge(
@@ -74,12 +74,12 @@ export const ImageWithOverlay = forwardRef<
         )}
       >
         <div
-          className={`absolute inset-0 z-1 rounded-md transition-colors duration-250 ${
+          className={`absolute inset-0 z-1 rounded-card transition-colors duration-250 ${
             showOverlay ? 'bg-slate-blue-95' : ''
-          } flex flex-col-reverse rounded-b-md`}
+          } flex flex-col-reverse rounded-b-card`}
         >
           <div
-            className={`h-fit rounded-b-md ${
+            className={`h-fit rounded-b-card ${
               showOverlay
                 ? 'justify-end'
                 : 'fade-in-black-gradient justify-between'

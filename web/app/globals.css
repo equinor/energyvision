@@ -1,7 +1,6 @@
 @import "tailwindcss" source("../");
 @import '@energyvision/shared/brand.css';
 /* @source '../styles/components/imagezoom.css'; */
-@source '../styles/components/videojs.css';
 @source '../styles/components/cookiebot.css';
 
 /* Custom theme for web, not common brand */
@@ -347,6 +346,7 @@ body.search-page-bg footer > div > div:last-child {
   }
 
   /************** Video js **********/
+
   .video-js.vjs-fill .vjs-control-bar {
     @apply bg-transparent!;
   }

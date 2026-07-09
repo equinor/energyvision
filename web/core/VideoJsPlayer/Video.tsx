@@ -1,8 +1,9 @@
 'use client'
-import { type HTMLProps, useEffect, useRef, useState } from 'react'
+import { type HTMLProps, useEffect, useRef } from 'react'
 import videojs from 'video.js'
 import 'video.js/dist/video-js.css'
 import type Player from 'video.js/dist/types/player'
+import { twMerge } from '@/lib/twMerge/twMerge'
 import useVideojsAnalytics from './useVideojsAnalytics'
 
 //Needed?
@@ -46,15 +47,15 @@ export const Video: React.FC<VideoProps> = ({
   options,
   onReady,
   useBrandTheme = false,
-  containVideo = false,
+  // containVideo = false,
+  className = '',
 }) => {
   const videoRef = useRef<HTMLDivElement>(null)
   const playerRef = useRef<Player>(null)
   const videoElementRef = useRef<HTMLElement | null>(null)
   const onReadyRef = useRef<VideoProps['onReady']>(onReady)
   const sourceKeyRef = useRef('')
-  const [isReady, setIsReady] = useState(false)
-  const { src, title, autoplay = false, fill, aspectRatio } = options
+  const { src, title, autoplay = false } = options
 
   const getSourceKey = (source: unknown): string => {
     if (typeof source === 'string') {
@@ -107,29 +108,24 @@ export const Video: React.FC<VideoProps> = ({
       videoElement.classList.add('vjs-envis-brand')
     }
     if (variant === 'fullwidth') {
-      videoElement.classList.add('vjs-fullwidth')
-    }
-    if (
-      !containVideo &&
-      (fill || aspectRatio === '10:3' || aspectRatio === '21:9')
-    ) {
-      videoElement.classList.add('vjs-fill', 'lg:[&>video]:object-cover')
-    }
-    if (aspectRatio === '16:9') {
-      videoElement.classList.add('vjs-16-9')
-    }
-    if (aspectRatio === '4:3') {
-      videoElement.classList.add('vjs-4-3')
-    }
-    if (aspectRatio === '9:16') {
-      videoElement.classList.add('vjs-9-16')
+      videoElement.classList.add(
+        'vjs-fullwidth',
+        'vjs-fill',
+        'lg:[&>video]:object-cover',
+      )
+    } else {
+      videoElement.classList.add(
+        'pt-0!',
+        'w-full!',
+        'h-full!',
+        '[&>video]:object-contain',
+        '[&>video]:relative!',
+      )
     }
 
     videoRef.current?.appendChild(videoElement)
-    setIsReady(false)
 
     const markReady = () => {
-      setIsReady(true)
       videoElement.classList.add('vjs-ready')
     }
 
@@ -150,17 +146,7 @@ export const Video: React.FC<VideoProps> = ({
     return () => {
       window.clearTimeout(readyTimeout)
     }
-  }, [
-    aspectRatio,
-    autoplay,
-    containVideo,
-    fill,
-    options,
-    sourceKey,
-    src,
-    useBrandTheme,
-    variant,
-  ])
+  }, [autoplay, options, sourceKey, src, useBrandTheme, variant])
 
   useEffect(() => {
     const player = playerRef.current
@@ -171,11 +157,9 @@ export const Video: React.FC<VideoProps> = ({
     player.autoplay(autoplay)
 
     if (sourceKey && sourceKeyRef.current !== sourceKey) {
-      setIsReady(false)
       videoElementRef.current?.classList.remove('vjs-ready')
 
       const markReady = () => {
-        setIsReady(true)
         videoElementRef.current?.classList.add('vjs-ready')
       }
       const readyTimeout = window.setTimeout(markReady, 350)
@@ -202,14 +186,7 @@ export const Video: React.FC<VideoProps> = ({
     }
   }, [])
 
-  return (
-    <div
-      className={`video-player h-full w-full transition-opacity duration-300 ${isReady ? 'video-player--ready opacity-100' : 'opacity-0'}`}
-      data-vjs-player
-    >
-      <div ref={videoRef} className={`h-full w-full`} />
-    </div>
-  )
+  return <div ref={videoRef} className={twMerge(`h-full w-full`, className)} />
 }
 
 export default Video
