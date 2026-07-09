@@ -99,8 +99,8 @@ export default async function Page({ params }: Props) {
   pageContent = pageResults
 
   if (isDraftMode) {
-    //Later when inside presentation tool, cant clean as it doesnt work with visual editing, must filter props together with visual editing,
-    console.log('Clean page data for stega')
+    //Later when inside presentation tool, cant clea globally as it doesnt work with visual editing,
+    // must filter props together with visual editing,but is a big job.
     pageContent = stegaClean(pageResults)
   }
 
