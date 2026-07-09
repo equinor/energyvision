@@ -4,7 +4,6 @@ import { useTranslations } from 'next-intl'
 import type { ReactNode } from 'react'
 import { usePage } from '@/contexts/pageContext'
 import { Image } from '@/core/Image/Image'
-import type { Image as ImageType } from '@/core/Image/imageUtilities'
 import { ResourceLink } from '@/core/Link/ResourceLink'
 import { Typography } from '@/core/Typography'
 
