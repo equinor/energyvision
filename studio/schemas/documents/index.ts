@@ -1,5 +1,4 @@
-import pageNotFound from './404'
-import internalServerError from './500'
+
 import assetFile from './assetFile'
 import assetTag from './assetTag'
 import countryTag from './countryTag'
@@ -26,10 +25,6 @@ import subMenu from './subMenu'
 import tag from './tag'
 
 export const documentsWithI18n = {
-  //To be remove after upgrade
-  pageNotFound,
-  //To be remove after upgrade
-  internalServerError,
   event,
   localNews,
   magazine,

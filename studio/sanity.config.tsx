@@ -68,10 +68,6 @@ export const singletonTemplates = [
   'newsroom',
   'magazineIndex',
   'settings',
-  //To be remove after upgrade
-  'pageNotFound',
-  //To be remove after upgrade
-  'internalServerError',
 ]
 
 const handleInputComponents = (inputProps: InputProps) => {
