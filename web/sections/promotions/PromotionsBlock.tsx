@@ -255,10 +255,13 @@ const PromotionsBlock = ({
             )}
           >
             {promotionList?.map((promotion: any) => {
-              const href = getUrlFromAction({
-                ...promotion,
-                type: 'internalUrl',
-              })
+              let href: string | undefined
+              if (promotionVariant !== 'promotePeople') {
+                href = getUrlFromAction({
+                  ...promotion,
+                  type: 'internalUrl',
+                })
+              }
 
               return (
                 <li key={promotion?.id}>
