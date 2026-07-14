@@ -105,8 +105,6 @@ import videoPlayer from './objects/videoPlayer'
 import videoPlayerCarousel from './objects/videoPlayerCarousel'
 
 const {
-  pageNotFound,
-  internalServerError,
   assetFile,
   assetTag,
   countryTag,
@@ -156,8 +154,6 @@ const RemainingSchemas = [
   homePage,
   ...routeSchemas,
   routeHomepage,
-  pageNotFound,
-  internalServerError,
   settings,
   imageWithAlt,
   imageWithAltAndCaption,
