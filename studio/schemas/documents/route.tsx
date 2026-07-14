@@ -48,7 +48,7 @@ export default (isoCode: string, title: string) => {
           },
           Flags.HAS_EVENT && {
             type: 'event',
-          },
+          }
         ].filter(e => e),
         options: {
           filter: 'lang == $lang',
