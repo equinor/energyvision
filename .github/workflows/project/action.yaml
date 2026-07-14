@@ -1,5 +1,8 @@
-# This workflow runs whenever a pull request in the repository is marked as "ready for review".
-name: Move issue/PR to ✅  Done status
+# This composite action updates Project V2 statuses after release work is closed.
+# Closed issues in status "Release" are moved to "Done".
+# Closed pull requests in status "PRs" are moved to "Closed".
+# It also creates a release discussion and posts the link to Slack.
+name: Move issue to Done status
 description: 'Move issue'
 inputs:
   token:
@@ -26,7 +29,11 @@ runs:
         GH_TOKEN: ${{ inputs.token }}
         ORGANIZATION: 'equinor'
         PROJECT_NUMBER: 965
-      # Uses [GitHub CLI](https://cli.github.com/manual/) to query the API for the ID of the project and return the name and ID of the first 20 fields in the project. `fields` returns a union and the query uses inline fragments (`... on`) to return information about any `ProjectV2Field` and `ProjectV2SingleSelectField` fields. The response is stored in a file called `project_data.json`.
+      # Uses [GitHub CLI](https://cli.github.com/manual/) to fetch:
+      # - closed issues and closed pull requests with their project item status
+      # - Project V2 field metadata and status option IDs
+      # - repository IDs needed for discussion creation
+      # The response is stored in `project_data.json`.
       run: |
         gh api graphql -f query='
             query($org: String!, $number: Int!, $repository: String!) {
@@ -44,6 +51,12 @@ runs:
                           id
                           content {
                             ... on Issue {
+                              __typename
+                              number
+                              title
+                            }
+                            ... on PullRequest {
+                              __typename
                               number
                               title
                             }
@@ -52,6 +65,33 @@ runs:
                             ... on ProjectV2ItemFieldSingleSelectValue {
                               status: name
                             }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+                pullRequests(states: [CLOSED], first: 50, orderBy: { field: UPDATED_AT, direction: DESC }) {
+                  nodes {
+                    id
+                    projectItems(first: 10, includeArchived: false) {
+                      nodes {
+                        id
+                        content {
+                          ... on Issue {
+                            __typename
+                            number
+                            title
+                          }
+                          ... on PullRequest {
+                            __typename
+                            number
+                            title
+                          }
+                        }
+                        fieldValueByName(name: "Status") {
+                          ... on ProjectV2ItemFieldSingleSelectValue {
+                            status: name
                           }
                         }
                       }
@@ -91,8 +131,11 @@ runs:
         echo "STATUS_FIELD_ID=${STATUS_FIELD_ID}" >> $GITHUB_ENV
 
 
-        DONE_OPTION_ID=$(jq -r '.data.organization.projectV2.fields.nodes[] | select(.name=="Status") | .options[] | select(.name=="✅  Done") |.id' project_data.json)
+        DONE_OPTION_ID=$(jq -r '.data.organization.projectV2.fields.nodes[] | select(.name=="Status") | .options[] | select(.name=="Done") |.id' project_data.json)
         echo "DONE_OPTION_ID=${DONE_OPTION_ID}" >> $GITHUB_ENV
+
+          CLOSED_OPTION_ID=$(jq -r '.data.organization.projectV2.fields.nodes[] | select(.name=="Status") | .options[] | select(.name=="Closed") |.id' project_data.json)
+          echo "CLOSED_OPTION_ID=${CLOSED_OPTION_ID}" >> $GITHUB_ENV
 
 
         DISCUSSION_CATEGORY_ID=$(jq -r '.data.organization.repository.discussionCategory.id' project_data.json)
@@ -101,18 +144,18 @@ runs:
         REPOSITORY_ID=$(jq -r '.data.organization.repository.id' project_data.json)
         echo "REPOSITORY_ID=${REPOSITORY_ID}" >> $GITHUB_ENV
 
-    # #Sets environment variables for this step. Replace `YOUR_TOKEN` with the name of the secret that contains your personal access token.
+    # Updates project item statuses based on content type and current status.
     - name: Set fields
       shell: bash
       env:
         GH_TOKEN: ${{ inputs.token }}
 
-      # Sets the value of the `Status` field to `✅  Done`.
+      # Sets the value of the `Status` field to `Done` for issues and `Closed` for pull requests.
       run: |
-        ITEMS_IDS=$(jq '.data.organization.repository.issues.nodes[].projectItems.nodes[] | select(.fieldValueByName.status =="🚀 Release") | .id' project_data.json)
-        echo $ITEMS_IDS
-        for id in $ITEMS_IDS; do
-         echo "Moving $id $DONE_OPTION_ID"
+        ISSUE_ITEM_IDS=$(jq '.data.organization.repository.issues.nodes[].projectItems.nodes[] | select(.fieldValueByName.status =="Release" and .content.__typename == "Issue") | .id' project_data.json)
+        echo "$ISSUE_ITEM_IDS"
+        for id in $ISSUE_ITEM_IDS; do
+         echo "Moving issue $id to Done ($DONE_OPTION_ID)"
          gh api graphql -f query='
            mutation (
              $project: ID!
@@ -133,16 +176,43 @@ runs:
                  }
              }
            }' -f project=$PROJECT_ID -f item=$id -f status_field=$STATUS_FIELD_ID -f status_value=$DONE_OPTION_ID --silent
-           done
+        done
+
+        PR_ITEM_IDS=$(jq '.data.organization.repository.pullRequests.nodes[].projectItems.nodes[] | select(.fieldValueByName.status =="PRs" and .content.__typename == "PullRequest") | .id' project_data.json)
+        echo "$PR_ITEM_IDS"
+        for id in $PR_ITEM_IDS; do
+         echo "Moving pull request $id to Closed ($CLOSED_OPTION_ID)"
+         gh api graphql -f query='
+           mutation (
+             $project: ID!
+             $item: ID!
+             $status_field: ID!
+             $status_value: String!
+           ) {
+             set_status: updateProjectV2ItemFieldValue(input: {
+               projectId: $project
+               itemId: $item
+               fieldId: $status_field
+               value: {
+                 singleSelectOptionId: $status_value
+                 }
+             }) {
+               projectV2Item {
+                 id
+                 }
+             }
+           }' -f project=$PROJECT_ID -f item=$id -f status_field=$STATUS_FIELD_ID -f status_value=$CLOSED_OPTION_ID --silent
+        done
     - name: Create discussion
       shell: bash
       env:
         GH_TOKEN: ${{ inputs.token }}
+      # Creates a release discussion containing only closed issues from "Release" status.
       run: |
         TITLE="Release "
         DATE=$(date +'%d-%m-%Y')
         TITLE+=$DATE
-        ITEMS=$(jq -r '.data.organization.repository.issues.nodes[].projectItems.nodes[] | select(.fieldValueByName.status =="🚀 Release") | "- \(.content.title) #\(.content.number)"' project_data.json)
+        ITEMS=$(jq -r '.data.organization.repository.issues.nodes[].projectItems.nodes[] | select(.fieldValueByName.status =="Release" and .content.__typename == "Issue") | "- \(.content.title) #\(.content.number)"' project_data.json)
         echo "$TITLE"
         echo "$ITEMS" 
         BODY="# Release Log 
