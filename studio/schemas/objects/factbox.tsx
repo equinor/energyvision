@@ -2,9 +2,9 @@ import { info_circle } from '@equinor/eds-icons'
 import { PortableTextBlock } from 'sanity'
 import { EdsIcon, LeftAlignedImage, RightAlignedImage } from '../../icons'
 import { RadioIconSelector } from '../components'
+import type { ColorSelectorValue } from '../components/ColorSelector'
 import { configureBlockContent } from '../editors/blockContentType'
 import type { ImageWithAlt } from './imageWithAlt'
-import type { ColorSelectorValue } from '../components/ColorSelector'
 
 const imageAlignmentOptions = [
   { value: 'left', icon: LeftAlignedImage },
@@ -55,12 +55,6 @@ export default {
       of: [blockContentType],
     },
     {
-      name: 'isSingleColumn',
-      type: 'boolean',
-      title: 'Single column layout',
-      description: 'Toggle to use a single-column layout instead of the default two-column layout. This will have no effect if image is selected',
-     },
-    {
       name: 'image',
       title: 'Image',
       type: 'imageWithAlt',
@@ -75,16 +69,23 @@ export default {
     {
       name: 'imagePosition',
       title: 'Image position',
-      description: 'Select which side of the factbox the image should be displayed at on larger screens.',
+      description:
+        'Select which side of the factbox the image should be displayed at on larger screens.',
       type: 'string',
       fieldset: 'design',
       components: {
-        input: function ImagePosition({ onChange, value }: { onChange: any; value: string }) {
+        input: function ImagePosition({
+          onChange,
+          value,
+        }: {
+          onChange: any
+          value: string
+        }) {
           return (
             <RadioIconSelector
-              name="imageAlignmentSelector"
+              name='imageAlignmentSelector'
               options={imageAlignmentOptions}
-              defaultValue="left"
+              defaultValue='left'
               currentValue={value}
               onChange={onChange}
             />
@@ -110,7 +111,11 @@ export default {
       return {
         title: title,
         subtitle: 'Factbox',
-        media: imageUrl ? <img src={imageUrl} alt="" style={{ height: '100%' }} /> : EdsIcon(info_circle),
+        media: imageUrl ? (
+          <img src={imageUrl} alt='' style={{ height: '100%' }} />
+        ) : (
+          EdsIcon(info_circle)
+        ),
       }
     },
   },
