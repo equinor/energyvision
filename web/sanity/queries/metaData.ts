@@ -59,7 +59,7 @@ export const pageMetaQuery = /* groq */ `
   }[0]
 `
 export const homePageMetaQuery = /* groq */ `
-coalesce(*[_type == "translation.metadata" && references(*[_id=="route_homepage"][0].content._ref)][0].translations[_key==$lang][0].value->{
+coalesce(*[_type == "translation.metadata" && references(*[_id=="route_homepage"][0].content._ref)][0].translations[language == $lang || _key==$lang][0].value->{
     "title": title,
     "seoAndSome": ${seoAndSomeFields},
     "heroImage": coalesce(heroImage, heroFigure),

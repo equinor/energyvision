@@ -35,7 +35,7 @@ export const homePageQuery = /* groq */ `
       },
   };
 {
- "data": select(count(*[ _type =="translation.metadata"])>0 =>*[_type == "translation.metadata" && references(*[_id=="route_homepage" || _id=="drafts.route_homepage"][0].content._ref)][0].translations[_key==$lang][0] 
+ "data": select(count(*[ _type =="translation.metadata"])>0 =>*[_type == "translation.metadata" && references(*[_id=="route_homepage" || _id=="drafts.route_homepage"][0].content._ref)][0].translations[language == $lang || _key==$lang][0] 
  {
    "pageData":ex::content(value)
   }, {

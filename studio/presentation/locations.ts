@@ -25,7 +25,7 @@ export const locations: DocumentLocationResolver = (params, context) => {
         *[_type match "route_homepage" && (
           references(
             *[_type == "translation.metadata" && references($id)][0]
-              .translations[_key == $defaultLang][0].value._ref
+              .translations[language == $defaultLang || _key == $defaultLang][0].value._ref
           ) || references($id)
         )]
       ) > 0,
