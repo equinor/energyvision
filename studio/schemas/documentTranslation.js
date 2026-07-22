@@ -14,7 +14,7 @@ const datasetSpecificSchemas = [
 export const i18n = {
   supportedLanguages: languages.map(it => {
     return {
-      id: it.name,
+      id: it.iso,
       title: it.title,
     }
   }),

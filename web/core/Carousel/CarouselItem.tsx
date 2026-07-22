@@ -14,7 +14,6 @@ import { twMerge } from 'tailwind-merge'
 import { Typography } from '@/core/Typography'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import Blocks from '../../portableText/Blocks'
-import { getIsoFromName } from '../../sanity/helpers/localization'
 import type { LinkData } from '../../types'
 import ResourceLink from '../Link/ResourceLink'
 import type { DisplayModes } from './Carousel'
@@ -164,7 +163,7 @@ export const CarouselItem = forwardRef<HTMLLIElement, CarouselItemProps>(
                       className='mt-auto'
                       hrefLang={
                         action?.type === 'internalUrl'
-                          ? getIsoFromName(action?.link?.lang)
+                          ? action?.link?.lang
                           : undefined
                       }
                     >

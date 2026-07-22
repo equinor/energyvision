@@ -7,7 +7,6 @@ import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import { twMerge } from '@/lib/twMerge/twMerge'
 import { urlForImage } from '@/sanity/lib/utils'
 import { Image } from '../../../core/Image/Image'
-import { getIsoFromName } from '../../../sanity/helpers/localization'
 import type { PeopleCardData } from '../../../types/index'
 
 export type PeopleCardProps = {
@@ -104,7 +103,7 @@ const PeopleCard = forwardRef<HTMLDivElement, PeopleCardProps>(
                 href={cvUrl}
                 hrefLang={
                   cv?.type === 'internalUrl'
-                    ? getIsoFromName(cv?.link?.lang)
+                    ? link?.lang
                     : undefined
                 }
                 variant='fit'

@@ -30,8 +30,8 @@ export type MagazineTagBarProps = {
 const getPath = (pathname: string): string => {
   const paths = pathname.split('/')
   const isIndexPage =
-    paths[paths.length - 1] === magazineSlug.en_GB ||
-    paths[paths.length - 1] === magazineSlug.nb_NO
+    paths[paths.length - 1] === magazineSlug['en-GB'] ||
+    paths[paths.length - 1] === magazineSlug['nb-NO']
   return isIndexPage ? pathname : paths.slice(0, paths.length - 1).join('/')
 }
 

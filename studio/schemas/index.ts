@@ -1,4 +1,4 @@
-import { languages } from '../languages'
+import { isoToSchemaName, languages } from '../languages'
 // Objects
 import { Flags } from '../src/lib/datasetHelpers'
 // Document types
@@ -130,8 +130,8 @@ const {
   settings,
 } = documentSchemaTypes
 
-const routeSchemas = languages.map(({ name, title }) => {
-  return route(name, title)
+const routeSchemas = languages.map(({ iso, title }) => {
+  return route(isoToSchemaName(iso), title)
 })
 
 const MenuSchemas = Flags.HAS_FANCY_MENU

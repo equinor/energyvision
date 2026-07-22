@@ -7,8 +7,8 @@ export type Language = {
   isoCode: string
 }
 
-const english = { internalCode: 'en_GB', isoCode: 'en-GB' }
-const norwegian = { internalCode: 'nb_NO', isoCode: 'nb-NO' }
+const english = { internalCode: 'en-GB', isoCode: 'en-GB' }
+const norwegian = { internalCode: 'nb-NO', isoCode: 'nb-NO' }
 
 type LanguageMappingsType = Language[]
 const languageMappings: LanguageMappingsType = [english, norwegian]

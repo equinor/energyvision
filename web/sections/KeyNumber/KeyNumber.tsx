@@ -6,7 +6,6 @@ import ResourceLink from '@/core/Link/ResourceLink'
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
 import Blocks from '@/portableText/Blocks'
 import { getBgAndDarkFromBackground } from '@/styles/colorKeyToUtilityMap'
-import { getIsoFromName } from '../../sanity/helpers/localization'
 import type { KeyNumbersData } from '../../types'
 import KeyNumberItem from './KeyNumberItem'
 
@@ -57,7 +56,7 @@ const KeyNumber = ({ data, anchor, className }: KeyNumbersProps) => {
             }}
             href={url as string}
             {...(action.link?.lang && {
-              hrefLang: getIsoFromName(action.link?.lang),
+              hrefLang: action.link?.lang,
             })}
             type={action.type}
             className='mt-2'

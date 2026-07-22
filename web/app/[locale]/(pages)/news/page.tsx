@@ -6,7 +6,6 @@ import dynamic from 'next/dynamic'
 import { setRequestLocale } from 'next-intl/server'
 import { algolia } from '@/lib/config'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
-import { getNameFromIso } from '@/sanity/helpers/localization'
 import { routeSanityFetch } from '@/sanity/lib/live'
 import { constructSanityMetadata, getPage } from '@/sanity/pages/utils'
 import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu'
@@ -30,12 +29,12 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>
 }): Promise<Metadata> {
   const { locale } = await params
-  const pageSlug = newsSlug[getNameFromIso(locale)]
+  const pageSlug = newsSlug[locale]
   if (Flags.HAS_NEWSROOM) {
     const { data: metaData }: { data: any } = await routeSanityFetch({
       query: newsroomMetaQuery,
       params: {
-        lang: getNameFromIso(locale),
+        lang: locale,
       },
       stega: false,
       requestTag: 'meta-news',
@@ -93,11 +92,11 @@ export default async function NewsroomPage({
     routeSanityFetch({
       query: Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery,
       params: {
-        lang: getNameFromIso(locale) ?? 'en_GB',
+        lang: locale ?? 'en-GB',
       },
     }),
     getPage({
-      slug: slug ?? newsSlug[getNameFromIso(locale)],
+      slug: slug ?? newsSlug[locale],
       locale,
       tags: ['newsroom'],
     }),

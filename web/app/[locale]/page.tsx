@@ -6,7 +6,6 @@ import { setRequestLocale } from 'next-intl/server'
 import { OrganizationJsonLd } from 'next-seo'
 import { languages } from '@/languageConfig'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
-import { getNameFromIso } from '@/sanity/helpers/localization'
 import { routeSanityFetch } from '@/sanity/lib/live'
 import { constructSanityMetadata, getPage } from '@/sanity/pages/utils'
 import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu'
@@ -26,7 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { data: metaData }: { data: any } = await routeSanityFetch({
     query: homePageMetaQuery,
     params: {
-      lang: getNameFromIso(locale),
+      lang: locale,
     },
     requestTag: 'meta-home',
     stega: false,
@@ -49,7 +48,7 @@ export default async function Home({ params }: Props) {
     routeSanityFetch({
       query: Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery,
       params: {
-        lang: getNameFromIso(locale) ?? 'en_GB',
+        lang: locale ?? 'en-GB',
       },
     }),
     getPage({

@@ -74,7 +74,7 @@ export const locations: DocumentLocationResolver = (params, context) => {
       draftId: getDraftId(params.id),
       publishedId: params.id.replace(/^drafts\./, ''),
       //default language here because we want the language setup for studio, not web
-      defaultLang: defaultLanguage?.name,
+      defaultLang: defaultLanguage?.iso,
     }
 
     const doc$ = context.documentStore.listenQuery(
