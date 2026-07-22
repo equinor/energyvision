@@ -3,9 +3,8 @@ import { useLocale, useTranslations } from 'next-intl'
 import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
 import { Promotion } from '@/core/Promotion/Promotion'
 import { Typography } from '@/core/Typography'
-import { defaultLanguage } from '@/languageConfig'
+import { getLocalizedHref } from '@/lib/helpers/getLocalizedHref'
 import { useMediaQuery } from '@/lib/hooks/useMediaQuery'
-import { getLocaleFromIso } from '@/sanity/helpers/localization'
 import type { CardData } from '../../types/index'
 
 type LatestNewsProp = {
@@ -27,9 +26,7 @@ const LatestNews = ({ data }: LatestNewsProp) => {
       {/*grid auto-rows-fr grid-cols-1 gap-x-6 gap-y-3 max-lg:w-full md:auto-cols-fr md:grid-flow-col*/}
       <ul className='flex w-full flex-col gap-6 3xl:px-layout-md px-layout-sm lg:grid lg:grid-cols-3'>
         {data.map((newsItem: CardData) => {
-          const locale =
-            iso !== defaultLanguage.name ? getLocaleFromIso(iso) : ''
-          const href = (newsItem?.slug && '/' + locale + newsItem?.slug) || ''
+          const href = getLocalizedHref(newsItem?.slug, iso)
           return (
             <li key={newsItem.id}>
               <Promotion
