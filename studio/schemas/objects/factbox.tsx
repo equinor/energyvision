@@ -1,5 +1,6 @@
 import { info_circle } from '@equinor/eds-icons'
 import { PortableTextBlock } from 'sanity'
+import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon, LeftAlignedImage, RightAlignedImage } from '../../icons'
 import { RadioIconSelector } from '../components'
 import type { ColorSelectorValue } from '../components/ColorSelector'
@@ -65,6 +66,22 @@ export default {
       name: 'background',
       type: 'colorlist',
       fieldset: 'design',
+    },
+    {
+      name: 'isSingleColumn',
+      type: 'boolean',
+      title: 'Single column layout',
+      description:
+        'Toggle to use a single-column layout instead of the default two-column layout. Becomes editable once the content reaches 800 characters. This will have no effect if image is selected',
+      initialValue: true,
+      readOnly: ({ parent }: { parent: any }) => {
+        const content = parent?.content
+        if (!content || !Array.isArray(content)) {
+          return true
+        }
+        const text = blocksToText(content) || ''
+        return text.length < 800
+      },
     },
     {
       name: 'imagePosition',
