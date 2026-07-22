@@ -3,7 +3,7 @@ import { usePathname } from 'next/navigation'
 import { useLocale, useTranslations } from 'next-intl'
 import { forwardRef, useEffect, useId, useRef, useState } from 'react'
 import { GoChevronRight } from 'react-icons/go'
-import { getMenuLink } from '@/lib/helpers/getUrlFromAction'
+import { getLocalizedHref } from '@/lib/helpers/getLocalizedHref'
 import { twMerge } from '@/lib/twMerge/twMerge'
 import type { SimpleGroupData } from '../../types/index'
 import Link from '../Link/Link'
@@ -64,7 +64,7 @@ export const PaneMenuItem = forwardRef<HTMLLIElement, PaneMenuItemProps>(
               className={twMerge(
                 `relative w-full ${ariaCurrentStyling} text-lg no-underline underline-offset-2 hover:underline aria-current:before:bg-north-sea-50 dark:hover:text-north-sea-50`,
               )}
-              href={getMenuLink(item, iso)}
+              href={getLocalizedHref(item.link?.slug, iso) || '/'}
               {...(pathname === item?.link?.slug && {
                 'aria-current': 'page',
               })}
@@ -114,7 +114,7 @@ export const PaneMenuItem = forwardRef<HTMLLIElement, PaneMenuItemProps>(
           {!!readMoreLink?.link?.slug && (
             <li>
               <ResourceLink
-                href={getMenuLink(readMoreLink, iso)}
+                href={getLocalizedHref(readMoreLink.link?.slug, iso) || '/'}
                 className={`**:transition-none ${ariaCurrentStyling} w-fit pt-0 hover:text-north-sea-50`}
                 {...(pathname === readMoreLink?.link?.slug && {
                   'aria-current': 'page',
@@ -131,7 +131,7 @@ export const PaneMenuItem = forwardRef<HTMLLIElement, PaneMenuItemProps>(
             <li key={link.id} className='relative'>
               <Link
                 className={`h-full ${ariaCurrentStyling} no-underline decoration-2 underline-offset-2 hover:underline dark:hover:text-north-sea-50`}
-                href={getMenuLink(link, iso)}
+                href={getLocalizedHref(link?.link?.slug, iso) || '/'}
                 {...(pathname === link?.link?.slug && {
                   'aria-current': 'page',
                 })}

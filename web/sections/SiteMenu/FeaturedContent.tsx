@@ -3,8 +3,7 @@ import type { PortableTextBlock } from '@portabletext/types'
 import { useLocale, useTranslations } from 'next-intl'
 import { Banner } from '@/core/Banner/Banner'
 import { Typography } from '@/core/Typography'
-import { defaultLanguage } from '@/languageConfig'
-import { getLocaleFromIso } from '@/sanity/helpers/localization'
+import { getLocalizedHref } from '@/lib/helpers/getLocalizedHref'
 import { EventCard } from '@/sections/cards/EventCard'
 import type { EventCardData } from '@/sections/cards/EventCard/EventCard'
 import type { FeaturedContentData } from '../../types/index'
@@ -30,8 +29,7 @@ const FeaturedContent = ({
     data?.routeContentType === 'event'
   const { type, heroImage, title, ingress, slug } = featuredContent
 
-  const locale = iso !== defaultLanguage.iso ? `/${getLocaleFromIso(iso)}` : ''
-  const href = locale + slug || ''
+  const href = getLocalizedHref(slug, iso)
 
   return (
     <div className=''>

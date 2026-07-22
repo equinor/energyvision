@@ -1,6 +1,7 @@
 'use client'
 import type { SanityImageObject } from '@sanity/image-url'
 import type { PortableTextBlock } from 'next-sanity'
+import { useLocale } from 'next-intl'
 import { useId, useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
@@ -10,8 +11,9 @@ import {
 } from '@/core/Image/imageUtilities'
 import { ResourceLink } from '@/core/Link/ResourceLink'
 import { Promotion } from '@/core/Promotion/Promotion'
-import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
+import { getLocalizedHref } from '@/lib/helpers/getLocalizedHref'
 import Blocks from '@/portableText/Blocks'
+import { getIsoFromName } from '@/sanity/helpers/localization'
 import { resolveImage } from '@/sanity/lib/utils'
 import {
   type ColorKeys,
@@ -124,6 +126,7 @@ const PromotionsBlock = ({
   anchor,
   className,
 }: PromotionsBlockProps) => {
+  const locale = useLocale()
   const { title, ingress, viewAllLink, designOptions, promotions } = data
 
   const {
@@ -175,7 +178,12 @@ const PromotionsBlock = ({
         <ResourceLink
           type='internalUrl'
           variant='fit'
-          href={getUrlFromAction(viewAllLink)}
+          href={getLocalizedHref(
+            viewAllLink.link.slug,
+            viewAllLink.link.lang
+              ? getIsoFromName(viewAllLink.link.lang)
+              : locale,
+          )}
         >
           {viewAllLink?.label}
         </ResourceLink>
@@ -257,10 +265,10 @@ const PromotionsBlock = ({
             {promotionList?.map((promotion: any) => {
               let href: string | undefined
               if (promotionVariant !== 'promotePeople') {
-                href = getUrlFromAction({
-                  ...promotion,
-                  type: 'internalUrl',
-                })
+                const promotionIso = promotion?.link?.lang
+                  ? getIsoFromName(promotion.link.lang)
+                  : locale
+                href = getLocalizedHref(promotion?.link?.slug, promotionIso)
               }
 
               return (
