@@ -25,7 +25,7 @@ export const locations: DocumentLocationResolver = (params, context) => {
         *[_type match "route_homepage" && (
           references(
             *[_type == "translation.metadata" && references($id)][0]
-              .translations[_key == $defaultLang][0].value._ref
+              .translations[language == $defaultLang || _key == $defaultLang][0].value._ref
           ) || references($id)
         )]
       ) > 0,
@@ -74,7 +74,7 @@ export const locations: DocumentLocationResolver = (params, context) => {
       draftId: getDraftId(params.id),
       publishedId: params.id.replace(/^drafts\./, ''),
       //default language here because we want the language setup for studio, not web
-      defaultLang: defaultLanguage?.name,
+      defaultLang: defaultLanguage?.iso,
     }
 
     const doc$ = context.documentStore.listenQuery(

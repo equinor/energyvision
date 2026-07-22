@@ -15,7 +15,7 @@ export const DeveloperContent = S =>
         .filter(
           '_type == "page" && (!defined(lang) || lang == $baseLang) && (_id == "bf4743a9-fbdb-48dd-9323-74c12b76e412" || _id == "ac2db606-1b57-492b-8c52-e0e292176d56")',
         )
-        .params({ baseLang: defaultLanguage.name })
+        .params({ baseLang: defaultLanguage.iso })
         .canHandleIntent((_name, params) => {
           // Assume we can handle all intents (actions) regarding post documents
           return params.type === 'page'

@@ -63,7 +63,7 @@ export default function DeleteTranslationDialog(props: DeleteTranslationDialogPr
 
   return (
     <Stack space={4}>
-      {translations && translations.length > 0 && doc.lang === defaultLanguage.name ? (
+      {translations && translations.length > 0 && doc.lang === defaultLanguage.iso ? (
         <>
           <Text>Delete this document and its translations?</Text>
           {translatedDocs.length > 0 &&

@@ -58,7 +58,7 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
 
   const iso = useLocale()
   const t = useTranslations()
-  const locale = iso !== defaultLanguage.name ? getLocaleFromIso(iso) : ''
+  const locale = iso !== defaultLanguage.iso ? getLocaleFromIso(iso) : ''
   const href = '/' + locale + slug || ''
 
   const { start, end } = getEventDates(eventDate)

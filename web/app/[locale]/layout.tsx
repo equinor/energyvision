@@ -8,7 +8,6 @@ import Script from 'next/script'
 import { hasLocale, NextIntlClientProvider } from 'next-intl'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { PageProvider } from '@/contexts/pageContext'
-import { getLocaleFromIso, getNameFromIso } from '@/sanity/helpers/localization'
 import { dataset } from '@/sanity/lib/api'
 import { routeSanityFetch, SanityLive } from '@/sanity/lib/live'
 import { footerAndErrorImageQuery } from '@/sanity/queries/footer'
@@ -58,7 +57,7 @@ export default async function LocaleLayout({
   }
 
   const queryParams = {
-    lang: getNameFromIso(locale) ?? 'en_GB',
+    lang: locale ?? 'en-GB',
   }
 
   const { data: footerAndErrorImageData }: { data: any } =

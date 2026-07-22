@@ -2,16 +2,14 @@
   {
     id: The key for this language
     title: The title as it will be labeled in Sanity studio
-    iso: Iso version of the language, used by Next.js localisation and react-intl
-    name: Name as used in the Sanity localisation feature (this one is hard to explain :sweat_smile:)
-    locale: The actual locale name as used by Next.js and locale folders/structure ([site]/locale)
+    iso: ISO locale code (e.g., "en-GB"), used for document lang field and Next.js routing
+    locale: Two-letter locale code (e.g., "en"), used for URL routing and next-intl config
   }
 */
 export type Language = {
   id: string
   title: string
   iso: string
-  name: string
   locale: string
 }
 const languages = [
@@ -19,63 +17,58 @@ const languages = [
     id: 'english',
     title: 'English (UK)',
     iso: 'en-GB',
-    name: 'en_GB',
     locale: 'en',
   },
   {
     id: 'norwegian',
     title: 'Norwegian',
     iso: 'nb-NO',
-    name: 'nb_NO',
     locale: 'no',
   },
   {
     id: 'portuguese',
     title: 'Portuguese (BR)',
     iso: 'pt-BR',
-    name: 'pt_BR',
     locale: 'pt',
   },
-  { id: 'german', title: 'German', iso: 'de-DE', name: 'de_DE', locale: 'de' },
+  { id: 'german', title: 'German', iso: 'de-DE', locale: 'de' },
   {
     id: 'spanish-ar',
     title: 'Spanish',
     iso: 'es-AR',
-    name: 'es_AR',
     locale: 'es',
   },
-  { id: 'polish', title: 'Polish', iso: 'pl-PL', name: 'pl_PL', locale: 'pl' },
+  { id: 'polish', title: 'Polish', iso: 'pl-PL', locale: 'pl' },
   {
     id: 'japanese',
     title: 'Japanese',
     iso: 'ja-JP',
-    name: 'ja_JP',
     locale: 'ja',
   },
-  { id: 'korean', title: 'Korean', iso: 'ko-KR', name: 'ko_KR', locale: 'ko' },
-  { id: 'welsh', title: 'Welsh', iso: 'cy-CY', name: 'cy_CY', locale: 'cy' },
+  { id: 'korean', title: 'Korean', iso: 'ko-KR', locale: 'ko' },
+  { id: 'welsh', title: 'Welsh', iso: 'cy-CY', locale: 'cy' },
 ]
 
 /**
  * @type {Record<string, string>}
  */
 export const newsSlug: Record<string, string> = {
-  en_GB: 'news',
-  nb_NO: 'nyheter',
-  pt_BR: 'noticias',
-  pl_PL: 'aktualnosci',
-  de_DE: 'aktuelles',
-  ja_JP: 'news',
-  ko_KR: 'news',
-  cy_CY: 'newyddion',
+  'en-GB': 'news',
+  'nb-NO': 'nyheter',
+  'pt-BR': 'noticias',
+  'pl-PL': 'aktualnosci',
+  'de-DE': 'aktuelles',
+  'ja-JP': 'news',
+  'ko-KR': 'news',
+  'cy-CY': 'newyddion',
 }
 
 /**
  * @type {Record<string, string>}
  */
 export const magazineSlug: Record<string, string> = {
-  en_GB: 'magazine',
-  nb_NO: 'magasin',
+  'en-GB': 'magazine',
+  'nb-NO': 'magasin',
 }
 
 /*
@@ -187,9 +180,7 @@ const websiteDomains: Partial<
 /**
  * @returns {{
  *  id: string
- *  title: string
  *  iso: string
- *  name: string
  *  locale: string
  * }[]}
  */
@@ -206,7 +197,7 @@ const logAndFallback = (dataset: DatasetsKeys) => {
 }
 
 export const localNewsTags: Record<string, string[]> = {
-  en_GB: ['ev', 'uk', 'us'],
+  'en-GB': ['ev', 'uk', 'us'],
 }
 
 /**
@@ -234,3 +225,9 @@ export const getAllDomainUrls = () => {
   return Object.values(websiteDomains).map(dataset => dataset.url)
   //return Object.keys(datasets).map((dataset) => websiteDomains[dataset]?.url)
 }
+
+/**
+ * Converts ISO locale code to Sanity schema field name format
+ * Example: "en-GB" → "en_GB", "nb-NO" → "nb_NO"
+ */
+export const isoToSchemaName = (iso: string): string => iso.replace('-', '_')

@@ -21,7 +21,7 @@ export function createCustomDuplicateAction(originalAction: DocumentActionCompon
           return null
         }
 
-        if (lang == defaultLanguage.name) {
+        if (lang == defaultLanguage.iso) {
           // allow duplicate action only on base language
           originalResult.onHandle && originalResult.onHandle()
         } else {

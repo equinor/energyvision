@@ -8,7 +8,7 @@ import { routing } from './i18n/routing'
 /* import { getDocumentBySlug } from './sanity/queries/paths/getPaths' */
 import archivedNews from './lib/archive/archivedNewsPaths.json'
 import { Flags } from './sanity/helpers/datasetHelpers'
-import { getLocaleFromName } from './sanity/helpers/localization'
+import { getLocaleFromIso } from './sanity/helpers/localization'
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { getDnsRedirect, getWWWRedirect } from './sanity/interface/redirects'
 
@@ -115,7 +115,7 @@ export async function proxy(request: NextRequest) {
   // Check if an internal redirect exists in sanity
   const redirect = await getRedirectUrl(pathname, request.nextUrl.locale)
   if (redirect) {
-    const locale = getLocaleFromName(redirect.lang)
+    const locale = getLocaleFromIso(redirect.lang)
     return NextResponse.redirect(
       `${origin}/${locale}${redirect.to !== '/' ? redirect.to : ''}`,
       PERMANENT_REDIRECT,
