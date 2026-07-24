@@ -260,6 +260,9 @@ jobs:
   store-image-tags:
     needs: [deploy-webs, deploy-satellite-studios]
     runs-on: ubuntu-latest
+    outputs:
+      WEB_SHA: ${{ steps.capture-shas.outputs.WEB_SHA }}
+      STUDIO_SHA: ${{ steps.capture-shas.outputs.STUDIO_SHA }}
     steps:
       - name: Checkout internal 🛎️
         id: checkout-internal
@@ -276,11 +279,12 @@ jobs:
         run: |
           npm install js-yaml
       - name: Run script for 'web' and 'studio'
+        id: capture-shas
         run: |
           WEB_SHA=$(node ci/storeImageTags.js web)
           STUDIO_SHA=$(node ci/storeImageTags.js studio)
-          echo "WEB_SHA=$(WEB_SHA)" >> $GITHUB_OUTPUT
-          echo "STUDIO_SHA=$(STUDIO_SHA)" >> $GITHUB_OUTPUT
+          echo "WEB_SHA=$WEB_SHA" >> $GITHUB_OUTPUT
+          echo "STUDIO_SHA=$STUDIO_SHA" >> $GITHUB_OUTPUT
 
       - name: Commit and push changes
         run: |
@@ -301,7 +305,7 @@ jobs:
       - name: 'Move cards and create discussion and post it to channel'
         id: 'get-list'
         with:
-          token: ${{ secrets.PADMS_PAT_READ_PACKAGE }}
-          commitSHA: 'Web : ${{ needs.store-image-tags.outputs.WEB_SHA }} Studio: ${{ needs.store-image-tags.outputs.WEB_SHA }}'
+          token: ${{ secrets.PADMS_PAT }}
+          commitSHA: 'Web : ${{ needs.store-image-tags.outputs.WEB_SHA }} Studio: ${{ needs.store-image-tags.outputs.STUDIO_SHA }}'
           slackWebhook: ${{ secrets.SLACK_WEBHOOK_RELEASE_ANNOUNCEMENT}}
         uses: ./.github/workflows/project/

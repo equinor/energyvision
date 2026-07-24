@@ -79,6 +79,8 @@ jobs:
   store-image-tags:
     needs: deploy
     runs-on: ubuntu-latest
+    outputs:
+      WEB_SHA: ${{ steps.capture-web-sha.outputs.WEB_SHA }}
     steps:
       - name: Checkout internal 🛎️
         id: checkout-internal
@@ -98,6 +100,7 @@ jobs:
           npm install js-yaml
 
       - name: Run script for 'web'
+        id: capture-web-sha
         run: |
           WEB_SHA=$(node ci/storeImageTags.js web)
           echo "WEB_SHA=$WEB_SHA" >> $GITHUB_OUTPUT
@@ -121,7 +124,7 @@ jobs:
       - name: 'Move cards and create discussion and post it to channel'
         id: 'get-list'
         with:
-          token: ${{ secrets.PADMS_PAT_READ_PACKAGE }}
+          token: ${{ secrets.PADMS_PAT }}
           commitSHA: 'Web : ${{ needs.store-image-tags.outputs.WEB_SHA }}'
           slackWebhook: ${{ secrets.SLACK_WEBHOOK_RELEASE_ANNOUNCEMENT}}
         uses: ./.github/workflows/project/
