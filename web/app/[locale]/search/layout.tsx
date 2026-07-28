@@ -2,7 +2,7 @@
 
 import { Icon } from '@equinor/eds-core-react'
 import { close } from '@equinor/eds-icons'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { LogoLink } from '@/core/Link/LogoLink'
 import { NavTopbar } from '@/sections/SiteMenu/NavTopbar'
@@ -10,7 +10,11 @@ import { TopbarDropdown } from '@/sections/SiteMenu/TopbarDropdown'
 
 export const dynamic = 'force-static'
 
-export function SearchLayout({ children }: { children: React.ReactNode }) {
+export default function SearchLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   const router = useRouter()
 
   useEffect(() => {
