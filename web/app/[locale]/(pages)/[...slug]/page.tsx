@@ -2,7 +2,7 @@ import { magazineSlug, newsSlug } from '@energyvision/shared/satelliteConfig'
 import { stegaClean } from '@sanity/client/stega'
 import type { Metadata } from 'next'
 import dynamic from 'next/dynamic'
-import { cookies, draftMode } from 'next/headers'
+import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
 import { setRequestLocale } from 'next-intl/server'
 import { getValidLanguagesLocales } from '@/languageConfig'
@@ -74,8 +74,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return constructSanityMetadata(slug, locale, metaData)
 }
 
-export default async function Page({ params }: Props) {
+export default async function Page({ params, searchParams }: Props) {
   const { slug, locale } = await params
+  const resolvedSearchParams = await searchParams
   /*   const isInPresentationToolContext =
     (await cookies()).get('preview-fetch-dest')?.value === 'iframe' */
   const { isEnabled: isDraftMode } = await draftMode()
@@ -94,6 +95,7 @@ export default async function Page({ params }: Props) {
     getPage({
       slug: decodeSlugs(slug),
       locale,
+      searchParams: resolvedSearchParams,
     }),
   ])
   pageContent = pageResults
