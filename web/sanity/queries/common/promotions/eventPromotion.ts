@@ -18,7 +18,7 @@ const tagFilter = /* groq */ `
 export const pastEventsQuery = (withTags = true): string => /* groq */ `
     *[_type match "route_" + $lang + "*"
     && content->_type == "event"
-    && (content->eventDate.date) + 'T00:00:00Z' < now()
+    && (content->eventDate.date)  < now()[0..9]
    // && coalesce(content->startDayAndTime.dayTime, (content->eventDate.date) + 'T00:00:00Z') < now()
     ${withTags ? tagFilter : ''} ]
     | order(coalesce(content->startDayAndTime.dayTime, (content->eventDate.date) + 'T00:00:00Z') desc)[0...50]
@@ -27,7 +27,8 @@ export const pastEventsQuery = (withTags = true): string => /* groq */ `
 export const futureEventsQuery = (withTags = true): string => /* groq */ `
   *[_type match "route_" + $lang + "*"
     && content->_type == "event"
-    && coalesce(content->startDayAndTime.dayTime, (content->eventDate.date) + 'T00:00:00Z') >= now()
+    && content-> eventDate.date >= now()[0..9]
+    //&& coalesce(content->startDayAndTime.dayTime, (content->eventDate.date) + 'T00:00:00Z') >= now()
     ${withTags ? tagFilter : ''}
   ] | order( coalesce(content->startDayAndTime.dayTime, ((content->eventDate.date) + 'T00:00:00Z')) asc)
 `
