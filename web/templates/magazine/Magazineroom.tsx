@@ -93,7 +93,9 @@ const MagazineRoom = ({
               </li>
             ))}
           {!isLoading &&
-            pagedList?.[pageIdx]?.map(article => {
+            pagedList?.[
+              Math.min(pageIdx, Math.max(pagedList.length - 1, 0))
+            ]?.map(article => {
               const locale =
                 iso !== defaultLanguage.iso ? `/${getLocaleFromIso(iso)}` : ''
               const href = (article?.slug && locale + article?.slug) || ''
