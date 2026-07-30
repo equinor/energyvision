@@ -3,7 +3,9 @@ import type { Figure } from '@/core/Image/imageUtilities'
 import markDefs from '@/sanity/queries/common/blockEditorMarks'
 import { functions } from '@/sanity/queries/common/functions'
 import { sameLang } from '@/sanity/queries/common/langAndDrafts'
+import { ingressForNewsQuery } from '@/sanity/queries/common/newsSubqueries'
 import { publishDateTimeQuery } from '@/sanity/queries/common/publishDateTime'
+import { excludeCrudeOilAssays } from '@/sanity/queries/news'
 
 export type LatestNewsType = {
   _id: string
@@ -20,6 +22,18 @@ const publishedSinceYesterday = /* groq */ `
 dateTime(${publishDateTimeQuery}) > dateTime(now()) - 86400
 `
 //add groq to collect only ones with category that has been published since yesterday
+
+export const latestNewsRss = /* groq */ `
+${functions}
+  *[_type == "news" && ${excludeCrudeOilAssays} ${sameLang}] | order(${publishDateTimeQuery} desc)[0...20] {
+    _id,
+    "slug": slug.current,
+    title,
+    "hero": heroImage,
+    "publishDateTime": ${publishDateTimeQuery},
+    ${ingressForNewsQuery},
+  }
+`
 
 export const latestNews = /* groq */ `
 ${functions}
