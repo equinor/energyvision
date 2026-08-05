@@ -307,7 +307,7 @@ jobs:
       - name: 'Move cards and create discussion and post it to channel'
         id: 'get-list'
         with:
-          token: ${{ secrets.PADMS_PAT }}
+          token: ${{ secrets.PADMS_PAT_READ_PACKAGE }}
           commitSHA: 'Web : ${{ needs.store-image-tags.outputs.WEB_SHA }} Studio: ${{ needs.store-image-tags.outputs.STUDIO_SHA }}'
           slackWebhook: ${{ secrets.SLACK_WEBHOOK_RELEASE_ANNOUNCEMENT}}
         uses: ./.github/workflows/project/
