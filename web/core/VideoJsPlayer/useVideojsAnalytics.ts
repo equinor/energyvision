@@ -1,15 +1,19 @@
 'use client'
+import { sendGTMEvent } from '@next/third-parties/google'
+import { useCallback, useEffect, useState } from 'react'
+import type Player from 'video.js/dist/types/player'
 import useConsent from '../../lib/hooks/useConsent'
-import { pushToDataLayer } from '../../lib/gtm'
-import { useEffect, useCallback, useState } from 'react'
-import Player from 'video.js/dist/types/player'
 
 const GTM_PLAY_EVENT = 'video_play'
 const GTM_PAUSE_EVENT = 'video_pause'
 const GTM_COMPLETION_EVENT = 'video_completion'
 const GTM_PROGRESS_MILESTONES = [25, 50, 75, 90] // Percentages
 
-type EventType = typeof GTM_PLAY_EVENT | typeof GTM_PAUSE_EVENT | typeof GTM_COMPLETION_EVENT | string
+type EventType =
+  | typeof GTM_PLAY_EVENT
+  | typeof GTM_PAUSE_EVENT
+  | typeof GTM_COMPLETION_EVENT
+  | string
 
 type EventData = {
   eventType: EventType
@@ -20,7 +24,12 @@ type EventData = {
 }
 
 // Video Analytics Hook
-const useVideojsAnalytics = (player: Player | null, src: string, title?: string, autoPlay?: boolean): void => {
+const useVideojsAnalytics = (
+  player: Player | null,
+  src: string,
+  title?: string,
+  autoPlay?: boolean,
+): void => {
   const allowAnalytics = useConsent(['statistics']) || false
 
   const pushEventToDataLayer = useCallback(
@@ -33,7 +42,7 @@ const useVideojsAnalytics = (player: Player | null, src: string, title?: string,
           currentTime: player.currentTime() || 0,
           src,
         }
-        pushToDataLayer('video_event', eventData)
+        sendGTMEvent({ event: 'video_event', ...eventData })
       }
     },
     [title, src, autoPlay],
@@ -120,10 +129,10 @@ const useVideoProgressEvent = (
       const currentTime = player.currentTime()
       if (currentTime && duration) {
         const progress = (currentTime / duration) * 100
-        GTM_PROGRESS_MILESTONES.forEach((milestone) => {
+        GTM_PROGRESS_MILESTONES.forEach(milestone => {
           if (progress >= milestone && !trackedMilestones.includes(milestone)) {
             pushEvent(`video_progress_${milestone}`, player)
-            setTrackedMilestones((prev) => [...prev, milestone])
+            setTrackedMilestones(prev => [...prev, milestone])
           }
         })
       }

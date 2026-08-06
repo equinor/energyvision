@@ -1,5 +1,5 @@
 import '../globals.css'
-import dynamic from 'next/dynamic'
+import { GoogleTagManager } from '@next/third-parties/google'
 import localFont from 'next/font/local'
 import { draftMode } from 'next/headers'
 import NextLink from 'next/link'
@@ -15,7 +15,6 @@ import { footerAndErrorImageQuery } from '@/sanity/queries/footer'
 import Footer from '@/sections/Footer/Footer'
 import GoToTopButton from '@/sections/GoToTopButton'
 import { routing } from '../../i18n/routing'
-import { GoogleTagManagerHead } from './GTMHead'
 import { SiteImprove } from './SiteImprove'
 
 const equinor = localFont({
@@ -25,10 +24,6 @@ const equinor = localFont({
     { path: '../fonts/equinor/EquinorVariable-VF.woff2' },
   ],
 })
-
-const DraftModeToolbar = dynamic(
-  () => import('@/sections/DraftMode/DraftModeToolbar'),
-)
 
 type Params = Promise<{ locale: string }>
 
@@ -97,17 +92,24 @@ export default async function LocaleLayout({
       </body>
       {/** TODO look into scripts */}
       {!(isPreview || dataset === 'global-development') && (
-        <Script
-          src='https://consent.cookiebot.com/uc.js'
-          id='Cookiebot'
-          strategy='beforeInteractive'
-          data-cbid='f1327b03-7951-45da-a2fd-9181babc783f'
-          data-blockingmode='auto'
-          data-culture={locale === 'nb-NO' ? 'nb' : getLocaleFromIso(locale)}
-        />
+        <>
+          <Script
+            src='https://consent.cookiebot.com/uc.js'
+            id='Cookiebot'
+            strategy='beforeInteractive'
+            data-cbid='f1327b03-7951-45da-a2fd-9181babc783f'
+            data-blockingmode='auto'
+            data-culture={locale === 'nb-NO' ? 'nb' : getLocaleFromIso(locale)}
+          />
+          {process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID && (
+            //https://nextjs.org/docs/app/guides/third-party-libraries#google-third-parties
+            <GoogleTagManager
+              gtmId={process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID}
+            />
+          )}
+          <SiteImprove />
+        </>
       )}
-      <GoogleTagManagerHead />
-      <SiteImprove />
     </html>
   )
 }
