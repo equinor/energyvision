@@ -73,10 +73,21 @@ const findTypography = (
 
 export type TypographyProps = {
   /** Typography variants, specifies which variant to use.
+   *
+   * Quick variants can be used without providing `group`.
+   * These are the variants merged into `quickVariants` from the `heading`,
+   * `paragraph`, `marks`, and `plain` groups in `variants.ts`.
+   *
+   * Variants that only exist in grouped collections, such as `display` or `card`,
+   * should be paired with the matching `group` prop so the class lookup resolves correctly.
    * @default body
    */
   variant?: TypographyVariants
-  /** Typography groups, specifies which group to use. */
+  /** Typography groups, specifies which group to use.
+   *
+   * Optional when `variant` is a quick variant.
+   * Required in practice for grouped-only variants such as `h1_base`, `h2_lg`, or card-specific styles.
+   */
   group?: TypographyGroups
   /** Override the element type */
   as?: ElementType
@@ -96,10 +107,29 @@ export type TypographyProps = {
 
 /**
  * Typography used for common text styles
+ *
+ * When `group` is omitted, the component first resolves `variant` against the shared
+ * quick variant map. That supports the common heading, paragraph, marks, and plain variants
+ * without extra configuration.
+ *
+ * Use `group` when selecting a variant that belongs to a specific collection such as
+ * `display`, `card`, or `article`.
+ *
  * @example
  * ```jsx
  *     <Typography variant="h6" as="h2" className="text-moss-green-100">
  *       I am a h2 heading with h6 styling with classname override
+ *     </Typography>
+ * ```
+ *
+ * @example
+ * ```jsx
+ *     <Typography variant="body">
+ *       Quick variants like body resolve without a group.
+ *     </Typography>
+ *
+ *     <Typography variant="h2_base" group="display">
+ *       Display variants should be used with their group.
  *     </Typography>
  * ```
  */
@@ -123,9 +153,7 @@ export const Typography: OverridableComponent<TypographyProps, HTMLElement> =
 
     if (typeof typography === 'undefined') {
       console.warn(
-        `Typography variant not found for variant "${variant}" ("${variant}") & group "${
-          group || ''
-        }"`,
+        `Typography variant not found for variant "${variant}" & group "${group ?? ''}"`,
       )
     }
     const TypographyTag = as ?? (`p` as React.ElementType)
