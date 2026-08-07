@@ -19,7 +19,7 @@ export const ErrorBoundaryClient = ({
     <ErrorBoundary
       fallbackRender={({ error }) => {
         console.error(
-          `Error in component ${c.type}: ${
+          `Error in component ${c.type} with title: ${
             c?.title ? toPlainText(c.title) : ''
           }`,
           error,
@@ -27,15 +27,25 @@ export const ErrorBoundaryClient = ({
         return (
           <div
             role='alert'
-            className={`mx-layout-sm mb-page-content flex flex-col items-center gap-8 rounded-card bg-gray-20 px-6 py-8 lg:mx-layout-lg`}
+            className={`mx-layout-sm mb-page-content flex flex-col items-center rounded-card bg-gray-20 px-6 py-8 lg:mx-layout-lg`}
           >
             <TbFaceIdError size={64} />
-            <Typography as='h2' variant='h3' className='text-center'>
+            <Typography as='h2' variant='h4' className='text-center'>
               {dataset === 'global-development'
-                ? `Error in component ${c.type}: ${c?.title ? toPlainText(c.title) : ''}`
+                ? `Error in ${c.type}`
                 : (t('sectionRenderError') ??
                   `This section could not be shown`)}
             </Typography>
+            {dataset === 'global-development' && (
+              <>
+                <Typography as='h3' variant='h5' className='text-center'>
+                  {`Title: ${c?.title ? toPlainText(c.title) : ''}`}
+                </Typography>
+                <Typography variant='body' className='pt-2 text-center'>
+                  {error?.toString() ?? ``}
+                </Typography>
+              </>
+            )}
           </div>
         )
       }}
