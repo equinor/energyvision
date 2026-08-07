@@ -10,7 +10,6 @@ import {
   getPxLgSizes,
   getPxSmSizes,
   getSmallerThanPxLgSizes,
-  getTwAspectRatioUtilityOnRatio,
   type ImageProps,
   mapSanityImageRatio,
 } from './imageUtilities'
@@ -55,15 +54,8 @@ export const Image = ({
   attribution,
   figCaptionClassName = '',
   keepRatioOnMobile = false,
-  hasImageZoom = false,
 }: ImageProps) => {
-  let isLargerDisplays = useMediaQuery(`(min-width: 800px)`)
-
-  if (hasImageZoom) {
-    //Override max sizes for mobile since zoom
-    //grid is set to sm in FigureWithLayout when zoom is enabled.
-    isLargerDisplays = true
-  }
+  const isLargerDisplays = useMediaQuery(`(min-width: 800px)`)
 
   if (!image || !image?.asset) return null
 
@@ -83,9 +75,6 @@ export const Image = ({
   if ('alt' in image && image?.alt) {
     altText = image.alt
   }
-  /*   const aspectRatioClass = getTwAspectRatioUtilityOnRatio(
-    isLargerDisplays ? aspectRatio : '4:3',
-  ) */
 
   const nextImage = url ? (
     <NextImage
@@ -107,7 +96,6 @@ export const Image = ({
       <div
         className={twMerge(
           `relative h-full max-h-full w-full max-w-full`,
-          //fill && aspectRatioClass - why did i, Borghild, add this?,
           className,
         )}
       >
