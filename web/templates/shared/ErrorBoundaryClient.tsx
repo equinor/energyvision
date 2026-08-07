@@ -42,7 +42,7 @@ export const ErrorBoundaryClient = ({
                   {`Title: ${c?.title ? toPlainText(c.title) : ''}`}
                 </Typography>
                 <Typography variant='body' className='pt-2 text-center'>
-                  {error.message}
+                  {error?.toString() ?? ``}
                 </Typography>
               </>
             )}
