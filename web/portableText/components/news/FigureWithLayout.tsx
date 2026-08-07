@@ -1,6 +1,4 @@
 import type { PortableTextBlock } from '@portabletext/types'
-//Add to packagejson later after upgrade
-//import Zoom from 'react-medium-image-zoom'
 import { twMerge } from 'tailwind-merge'
 import { FigureCaption } from '@/core/FigureCaption/FigureCaption'
 import { Image } from '@/core/Image/Image'
@@ -19,8 +17,6 @@ type FigureNode = {
   caption?: string
   image: ImageType
   layout: LayoutAlignment
-  //Hold until upgrade is done
-  //enableImageZoom?: boolean
   imageOrientation?: 'portrait' | 'landscape' | 'square'
   centerImageLayout?: 'left' | 'right'
   centerCaptionAlignment?: 'top' | 'center' | 'bottom'
@@ -28,7 +24,6 @@ type FigureNode = {
 }
 
 type BlockProps = {
-  isInline: boolean
   value: FigureNode
 } & PortableTextBlock
 
@@ -39,7 +34,6 @@ export const FigureWithLayout = (block: BlockProps) => {
     caption,
     attribution,
     layout = 'full',
-    //enableImageZoom = false,
     imageOrientation = 'landscape',
     centerImageLayout = 'left',
     centerCaptionAlignment = 'bottom',

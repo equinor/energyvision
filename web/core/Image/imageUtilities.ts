@@ -1,8 +1,4 @@
-import type {
-  SanityImageCrop,
-  SanityImageHotspot,
-  SanityImageObject,
-} from '@sanity/image-url'
+import type { SanityImageObject } from '@sanity/image-url'
 import type { ImageProps as NextImageProps } from 'next/image'
 
 export const ImageRatios = {
@@ -163,7 +159,7 @@ export const getTwAspectRatioUtilityOnRatio = (ratio: ImageRatioKeys) => {
 export type Image = {
   alt?: string
   asset: SanityImageObject
-  extension: string
+  extension?: string
 }
 
 export type Figure = {
@@ -209,6 +205,4 @@ export type ImageProps = Omit<NextImageProps, 'src' | 'alt' | 'sizes'> & {
   figCaptionClassName?: string
   /** Ignores 4:3 ratio on mobile */
   keepRatioOnMobile?: boolean
-  /** Enables image zoom functionality on image */
-  hasImageZoom?: boolean
 }
