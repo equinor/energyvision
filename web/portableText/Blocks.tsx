@@ -273,6 +273,17 @@ const typesSerializers = {
   positionedInlineImage: (props: any) => <FigureWithLayout {...props} />,
   pullQuote: (props: any) => <Quote {...props} />,
   thumbnail: (props: any) => <Thumbnail {...props} />,
+  image: ({ value }: any) => {
+    //@ts-ignore
+    return (
+      <Image
+        aspectRatio='original'
+        image={value}
+        useFitMax={true}
+        className='my-8 border border-gray-50 drop-shadow-md'
+      />
+    )
+  },
 }
 
 const footnoteSerializer = {
