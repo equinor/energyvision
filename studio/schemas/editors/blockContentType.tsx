@@ -186,9 +186,9 @@ export const BlockTypography = {
     h2_xl: 'text-5xl tracking-display font-normal m-0',
   },
   normal: {
-    h2: 'text-2xl pb-8 m-0',
-    h3: 'text-xl m-0',
-    h4: 'text-lg font-md m-0',
+    h2: 'text-xl leading-lofty mb-8',
+    h3: 'text-lg leading-lofty mt-10 mb-4',
+    h4: 'text-md mt-4 mb-2',
     sm: 'text-sm',
   },
 }

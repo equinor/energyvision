@@ -232,6 +232,15 @@ const applyPaddingTopIfApplicable = (
   if (currentComponent?.type === 'anchorLink') {
     return ''
   }
+
+  //If no hero and the first section after is textblock add pt-20
+  if (
+    index === 0 &&
+    heroProps?.heroType === 'noHero' &&
+    currentComponent?.type === 'textBlock'
+  ) {
+    return 'pt-20'
+  }
   //the first section after hero does not need pt-20, as heroBlock types adds this
   //unless its background image hero
   if (index === 0 && heroProps?.heroType !== 'backgroundImage') {

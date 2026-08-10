@@ -1,16 +1,10 @@
-/*import { ClientConfig, createClient } from '@sanity/client'*/
 import { type ClientConfig, createClient } from 'next-sanity'
 import { apiVersion, dataset, projectId, studioUrl } from '../lib/api'
-
-//import { token } from './token'
-
-//useCdn: true, // Set to false if statically generating pages, using ISR or tag-based revalidation
 
 const sanityConfig: ClientConfig = {
   projectId,
   dataset,
   apiVersion,
-  //handled by definelive?
   //perspective: dataset === 'global-development' ? 'drafts' : 'published',
   useCdn: true,
   ignoreBrowserTokenWarning: dataset === 'global-development',
