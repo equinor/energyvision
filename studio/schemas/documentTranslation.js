@@ -18,7 +18,7 @@ export const i18n = {
       title: it.title,
     }
   }),
-  referenceBehavior: 'weak',
+  weakReferences: true,
   languageField: 'lang',
   allowCreateMetaDoc: true,
   schemaTypes: Object.keys(documentsWithI18n)
