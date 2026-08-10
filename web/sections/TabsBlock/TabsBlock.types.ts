@@ -1,6 +1,6 @@
 import type { PortableTextBlock } from '@portabletext/types'
 import type { Image } from '@/core/Image/imageUtilities'
-import type { LinkData } from '../../types'
+import type { CookieType, LinkData } from '../../types'
 
 export type TabsKeyNumber = {
   id?: string
@@ -37,9 +37,22 @@ export type TabsInfoPanel = {
   actions?: LinkData[]
 }
 
+export type TabsEmbeddedVideoItem = {
+  id?: string
+  title?: PortableTextBlock[]
+  videoId?: string
+}
+
+export type TabsEmbeddedVideosPanel = {
+  id?: string
+  type?: 'tabsEmbeddedVideosPanel'
+  cookiePolicy?: CookieType[]
+  items?: TabsEmbeddedVideoItem[]
+}
+
 export type TabItem = {
   id: string
   type?: string
   title: string
-  panel: TabsKeyNumbers | TabsInfoPanel
+  panel: TabsKeyNumbers | TabsInfoPanel | TabsEmbeddedVideosPanel
 }

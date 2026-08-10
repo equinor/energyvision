@@ -1,5 +1,6 @@
 import type { PortableTextBlock } from '@portabletext/types'
 import type { Image } from '@/core/Image/imageUtilities'
+import type { EmbeddedVideoListData } from '@/sections/EmbeddedVideoList/EmbeddedVideoList'
 import type { FullWidthVideoProps } from '@/sections/FullWidthVideo/FullWidthVideo'
 import type { StockValuesProps } from '@/sections/StockValues/StockValues'
 import type { TeaserData } from '@/sections/teasers/Teaser/Teaser'
@@ -60,6 +61,7 @@ export type ContentType =
   | CookieDeclarationData
   | NewsListData
   | StockValuesProps
+  | EmbeddedVideoListData
   | VideoPlayerCarouselData
   | VideoPlayerBlockProps
   | GridData
