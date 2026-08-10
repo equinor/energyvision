@@ -1,13 +1,12 @@
-/** biome-ignore-all assist/source/organizeImports: <explanation> */
 const archiveServerHostname = process.env.NEXT_PUBLIC_ARCHIVE_CONTENT_LINK
 
-import path, { join } from 'node:path'
+import path from 'node:path'
+import { withSentryConfig } from '@sentry/nextjs'
 /* import { withSentryConfig } from '@sentry/nextjs' */
 import type { NextConfig } from 'next'
 import createNextIntlPlugin from 'next-intl/plugin'
-//import { getAllRedirects } from './sanity/interface/redirects'
+import redirects from './sanity/interface/redirects.json'
 import securityHeaders from './securityHeaders'
-import { withSentryConfig } from '@sentry/nextjs'
 
 const withNextIntl = createNextIntlPlugin()
 
@@ -112,9 +111,9 @@ const nextConfig: NextConfig = withNextIntl({
       },
     ].filter(e => e)
   },
-  // async redirects() {
-  //   return await getAllRedirects()
-  // },
+  async redirects() {
+    return redirects as ConfigRedirect[]
+  },
   env: {
     SC_DISABLE_SPEEDY: 'false',
   },
