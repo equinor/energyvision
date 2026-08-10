@@ -16,7 +16,7 @@ export const DeleteTranslationAction: DocumentActionComponent = (props) => {
 
   const doc = props.draft || props.published
   const documentLanguage = doc ? doc[languageField] : null
-  const isDefaultLanguageDocument = defaultLanguage.name === documentLanguage
+  const isDefaultLanguageDocument = defaultLanguage.iso === documentLanguage
 
   const { id: documentId } = props
   const [isDialogOpen, setDialogOpen] = useState(false)

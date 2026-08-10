@@ -1,6 +1,6 @@
 import { getTranslations } from 'next-intl/server'
 import { forwardRef } from 'react'
-import { getIsoFromName } from '@/sanity/helpers/localization'
+import { getLocaleFromIso } from '@/sanity/helpers/localization'
 import type { LinkData } from '@/types'
 import {
   ArrowRight,
@@ -44,7 +44,7 @@ export type FooterLinkProps = {
 
 const FooterLink = forwardRef<HTMLAnchorElement, FooterLinkProps>(
   async ({ type, someType, label, link, href }, ref) => {
-    const linkLocale = getIsoFromName(link?.lang)
+    const linkLocale = link?.lang
     const isExternal =
       type === 'externalUrl' ||
       href?.startsWith('http') ||

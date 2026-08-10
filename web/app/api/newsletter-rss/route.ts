@@ -11,7 +11,7 @@ import {
 } from '@/types/newsLetterTypes'
 import { type LatestNewsType, latestMagazine, latestNews } from './groq.global'
 
-const generateRssFeed = async (locale: 'en_GB' | 'nb_NO') => {
+const generateRssFeed = async (locale: 'en-GB' | 'nb-NO') => {
   try {
     // Fetch both English and Norwegian articles from news and magazine
     const [newsArticles, magazineArticles] = await Promise.all([
@@ -29,11 +29,11 @@ const generateRssFeed = async (locale: 'en_GB' | 'nb_NO') => {
         new Date(a.publishDateTime).getTime(),
     )
     const newsLink =
-      locale === 'en_GB'
+      locale === 'en-GB'
         ? 'https://www.equinor.com/news/'
         : 'https://www.equinor.com/no/nyheter/'
     const newsRSSLink =
-      locale === 'en_GB'
+      locale === 'en-GB'
         ? 'https://www.equinor.com/api/rss?lang=en'
         : 'https://www.equinor.com/api/rss?lang=no'
 
@@ -41,13 +41,13 @@ const generateRssFeed = async (locale: 'en_GB' | 'nb_NO') => {
     <rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:media="http://search.yahoo.com/mrss/" xmlns:nl="http://www.w3.org" version="2.0">
       <channel>
         <title>${
-          locale === 'en_GB'
+          locale === 'en-GB'
             ? 'Latest news and magazine stories - Equinor'
             : 'Siste nyheter og magasinsaker - Equinor'
         }</title>
         <link>${newsLink}</link>
         <description />
-        <language>${locale === 'en_GB' ? 'en-gb' : 'no'}</language>
+        <language>${locale === 'en-GB' ? 'en-gb' : 'no'}</language>
         <atom:link href="${newsLink}" type="text/html" rel="alternate"/>
         <atom:link href="${newsRSSLink}" type="application/rss+xml" rel="self"/>
     `
@@ -139,7 +139,7 @@ const generateRssFeed = async (locale: 'en_GB' | 'nb_NO') => {
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url)
   const lang = searchParams.get('lang')
-  const locale = lang === 'no' ? 'nb_NO' : 'en_GB'
+  const locale = lang === 'no' ? 'nb-NO' : 'en-GB'
   const rss = await generateRssFeed(locale)
 
   return new NextResponse(rss, {

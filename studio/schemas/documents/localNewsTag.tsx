@@ -1,4 +1,4 @@
-import { languages } from '../../languages'
+import { isoToSchemaName, languages } from '../../languages'
 import type { CurrentUser } from 'sanity'
 import { EdsIcon } from '../../icons'
 import { tag_more } from '@equinor/eds-icons'
@@ -20,7 +20,7 @@ const LocalNewsTagDescription = () => (
 
 const fields = languages.map((lang) => ({
   title: `${lang.title} value`,
-  name: lang.name,
+  name: isoToSchemaName(lang.iso),
   description: `The ${lang.id} translation`,
   type: 'string',
   fieldset: 'tagName',

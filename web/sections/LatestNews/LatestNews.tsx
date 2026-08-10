@@ -28,7 +28,7 @@ const LatestNews = ({ data }: LatestNewsProp) => {
       <ul className='flex w-full flex-col gap-6 3xl:px-layout-md px-layout-sm lg:grid lg:grid-cols-3'>
         {data.map((newsItem: CardData) => {
           const locale =
-            iso !== defaultLanguage.name ? getLocaleFromIso(iso) : ''
+            iso !== defaultLanguage.iso ? getLocaleFromIso(iso) : ''
           const href = (newsItem?.slug && '/' + locale + newsItem?.slug) || ''
           return (
             <li key={newsItem.id}>

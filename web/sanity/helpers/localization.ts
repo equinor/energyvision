@@ -2,31 +2,18 @@
 //@ts-nocheck
 import { defaultLanguage, languages } from '../../languageConfig'
 
-export const getNameFromLocale = (locale: string | undefined): string => {
-  return (
-    languages.find(lang => lang.locale === locale)?.name || defaultLanguage.name
-  )
-}
+/**
+ * Converts ISO locale code (e.g., "en-GB") to Sanity schema field name format (e.g., "en_GB")
+ * Used for GROQ queries that reference schema types like `route_en_GB`
+ */
+export const isoToSchemaName = (iso: string): string => iso.replace('-', '_')
 
-export const getIsoFromLocale = (locale: string | undefined): string => {
-  return (
-    languages.find(lang => lang.locale === locale)?.iso || defaultLanguage.iso
-  )
-}
-
-export const getLocaleFromName = (name: string | undefined): string => {
-  return (
-    languages.find(lang => lang.name === name)?.locale || defaultLanguage.locale
-  )
-}
+/**
+ * Converts ISO locale code (e.g., "en-GB") to locale code (e.g., "en")
+ * Falls back to default language if not found
+ */
 export const getLocaleFromIso = (iso: string | undefined): string => {
   return (
     languages.find(lang => lang.iso === iso)?.locale || defaultLanguage.locale
   )
-}
-export const getIsoFromName = (name: string | undefined): string => {
-  return languages.find(lang => lang.name === name)?.iso || defaultLanguage.iso
-}
-export const getNameFromIso = (iso: string | undefined): string => {
-  return languages.find(lang => lang.iso === iso)?.name || defaultLanguage.name
 }

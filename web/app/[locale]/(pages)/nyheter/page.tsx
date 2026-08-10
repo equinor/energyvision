@@ -6,7 +6,6 @@ import { notFound } from 'next/navigation'
 import { setRequestLocale } from 'next-intl/server'
 import { algolia } from '@/lib/config'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
-import { getNameFromIso } from '@/sanity/helpers/localization'
 import { routeSanityFetch } from '@/sanity/lib/live'
 import { constructSanityMetadata, getPage } from '@/sanity/pages/utils'
 import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu'
@@ -57,20 +56,20 @@ export async function generateMetadata({
     const { data: metaData }: { data: any } = await routeSanityFetch({
       query: newsroomMetaQuery,
       params: {
-        lang: getNameFromIso(locale),
+        lang: locale,
       },
       stega: false,
       requestTag: 'meta-nyheter',
     })
 
     return constructSanityMetadata(
-      newsSlug[getNameFromIso(locale)],
+      newsSlug[locale],
       locale,
       metaData,
     )
   }
 
-  return constructSanityMetadata(newsSlug[getNameFromIso(locale)], locale)
+  return constructSanityMetadata(newsSlug[locale], locale)
 }
 export default async function NewsroomPage({
   params,
@@ -95,11 +94,11 @@ export default async function NewsroomPage({
     routeSanityFetch({
       query: Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery,
       params: {
-        lang: getNameFromIso(locale) ?? 'en_GB',
+        lang: locale ?? 'en-GB',
       },
     }),
     getPage({
-      slug: slug ?? newsSlug[getNameFromIso(locale)],
+      slug: slug ?? newsSlug[locale],
       locale,
       tags: ['newsroom'],
     }),

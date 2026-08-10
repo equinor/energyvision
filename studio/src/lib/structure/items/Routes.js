@@ -26,12 +26,12 @@ const topicRoutes = (S, context) =>
     S.listItem()
       .title(`${lang.title} routes`)
       .icon(flags[lang.id])
-      .child(routeStructure(S, context, lang.name)),
+      .child(routeStructure(S, context, lang.iso)),
   )
 
 function routeStructure(S, context, isoCode) {
   const { documentStore } = context
-  const documentName = `${schema}_${isoCode}`
+  const documentName = `${schema}_${isoCode.replace('-', '_')}`
   const categoryParents = `_type == "${documentName}" && !defined(parent) && !(_id in path("drafts.**"))`
   const categoryParentsWithDrafts = `_type == "${documentName}" && !defined(parent)`
 

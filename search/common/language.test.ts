@@ -6,7 +6,7 @@ describe('Language function tests', () => {
     const sut = languageFromIso
 
     describe('With english iso code', () => {
-      const english = { internalCode: 'en_GB', isoCode: 'en-GB' }
+      const english = { internalCode: 'en-GB', isoCode: 'en-GB' }
       const res = sut('en-GB')
       it('english language object is returned', () => {
         E.foldW(

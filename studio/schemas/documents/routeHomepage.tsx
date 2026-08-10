@@ -46,7 +46,7 @@ export default {
       ],
       options: {
         filter: 'lang == $lang',
-        filterParams: { lang: defaultLanguage.name },
+        filterParams: { lang: defaultLanguage.iso },
         disableNew: true,
       },
     },

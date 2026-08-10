@@ -145,7 +145,7 @@ export default {
         source: (doc: SanityDocument) => {
           const translatedMagazine = doc.lang
             ? magazineSlug[doc.lang as string]
-            : magazineSlug[defaultLanguage.name]
+            : magazineSlug[defaultLanguage.iso]
           return doc.magazineSlug
             ? `/${translatedMagazine}/${slugify(doc.magazineSlug as string)}`
             : ''

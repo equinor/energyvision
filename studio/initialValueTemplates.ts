@@ -1,14 +1,13 @@
 import type { Template } from 'sanity'
-import { defaultLanguage, languages } from './languages'
+import { defaultLanguage, isoToSchemaName, languages } from './languages'
 import textSnippets from './schemas/textSnippets'
-import { magazineSlug, newsSlug } from './sitesConfig'
 import { Flags } from './src/lib/datasetHelpers'
 
 const ParentRoutesTemplates: Template<any, any>[] = languages.map(
-  ({ name, title }) => ({
-    id: `parent-route-${name}`,
+  ({ iso, title }) => ({
+    id: `parent-route-${iso}`,
     title: `Parent route - ${title}`,
-    schemaType: `route_${name}`,
+    schemaType: `route_${isoToSchemaName(iso)}`,
     parameters: [{ name: 'parentId', type: 'string' }],
     value: (params: Record<string, unknown>) => ({
       parent: { _type: 'reference', _ref: params.parentId },
@@ -24,8 +23,8 @@ const TextSnippetsTemplates: Template<any, any>[] = Object.keys(
   schemaType: `textSnippet`,
   parameters: [{ name: 'defaultValue', type: 'string' }],
   value: (params: Record<string, unknown>) => {
-    const fields = languages.map(({ name }) => ({
-      [name]: params.defaultValue,
+    const fields = languages.map(({ iso }) => ({
+      [isoToSchemaName(iso)]: params.defaultValue,
     }))
     return Object.assign({}, ...fields)
   },
@@ -94,7 +93,7 @@ const localNewsWithTagTemplate: Template<any, any> = {
   ],
   value: (params: Record<string, unknown>) => ({
     localNewsTag: params.localNewsTag,
-    lang: params.lang || defaultLanguage.name,
+    lang: params.lang || defaultLanguage.iso,
   }),
 }
 

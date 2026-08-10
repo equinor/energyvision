@@ -19,7 +19,7 @@ const getMenuListItems = (S, lang) => {
     icon: MenuIcon,
     child: () =>
       S.documentWithInitialValueTemplate(Flags.HAS_FANCY_MENU ? 'menu-with-locale' : 'simple-menu-with-locale', {
-        isoCode: `${lang.name}`,
+        isoCode: `${lang.iso}`,
       })
         .id(menuId(lang))
         .title(`${lang.title} site menu`),
@@ -32,8 +32,8 @@ const getMenuListItems = (S, lang) => {
       S.documentTypeList('subMenu')
         .title('Sub menu')
         .filter('_type == "subMenu" && lang == $baseLang')
-        .params({ baseLang: lang.name })
-        .initialValueTemplates([S.initialValueTemplateItem('submenu-with-locale', { isoCode: `${lang.name}` })]),
+        .params({ baseLang: lang.iso })
+        .initialValueTemplates([S.initialValueTemplateItem('submenu-with-locale', { isoCode: `${lang.iso}` })]),
   })
 
   return Flags.HAS_FANCY_MENU ? [mainMenu, subMenu] : [mainMenu]

@@ -1,10 +1,10 @@
 import { text_field } from '@equinor/eds-icons'
 import { EdsIcon } from '../../icons'
-import { languages } from '../../languages'
+import { isoToSchemaName, languages } from '../../languages'
 
 const fields = languages.map((lang) => ({
   title: `${lang.title} value`,
-  name: lang.name,
+  name: isoToSchemaName(lang.iso),
   description: `The ${lang.id} translation`,
   type: 'string',
 }))

@@ -5,7 +5,7 @@ import { client } from '@/sanity/lib/client'
 import { sanityFetch } from '../lib/live'
 import { sameLang } from '../queries/common/langAndDrafts'
 import { publishDateTimeQuery } from '../queries/common/publishDateTime'
-import { getNameFromLocale } from './localization'
+import { isoToSchemaName } from './localization'
 
 const getHomePages = async () => {
   const data: { lang: string; _updatedAt: string }[] = await client.fetch(
@@ -24,7 +24,7 @@ const getHomePages = async () => {
 }
 
 const getTopicRoutesForLocale = async (locale: string) => {
-  const lang = getNameFromLocale(locale)
+  const lang = isoToSchemaName(locale)
 
   const data: { slug: string; _updatedAt: string }[] = await client.fetch(
     groq`*[_type match "route_" + $lang && defined(slug.current)][] {
@@ -38,7 +38,7 @@ const getTopicRoutesForLocale = async (locale: string) => {
   return data
 }
 const getTopicRoutesForLocaleToStaticallyBuild = async (locale: string) => {
-  const lang = getNameFromLocale(locale)
+  const lang = isoToSchemaName(locale)
   const data: { slug: string; _updatedAt: string }[] = await client.fetch(
     groq`*[_type match "route_" + $lang  && includeInBuild && defined(slug.current)][] {
       _updatedAt,
@@ -55,7 +55,6 @@ const getDocumentsForLocale = async (
   type: 'news' | 'localNews' | 'magazine',
   locale: string,
 ) => {
-  const lang = getNameFromLocale(locale)
   const data: { slug: string; _updatedAt: string }[] = await client.fetch(
     groq`*[_type == $type && defined(slug.current) && ${sameLang} ][] {
       _updatedAt,
@@ -63,7 +62,7 @@ const getDocumentsForLocale = async (
     }`,
     {
       type,
-      lang,
+      lang: locale,
     },
   )
   return data
@@ -174,7 +173,7 @@ export const getLocalNewsPaths = async (
 export const getNewsroomPaths = async (): Promise<PathType[]> => {
   // Use last published news as updatedAt field for newsroom
   const getUpdatedAt = async (
-    lang: 'en_GB' | 'nb_NO',
+    lang: 'en-GB' | 'nb-NO',
   ): Promise<{ _updatedAt: string }> =>
     await client.fetch(
       groq`*[_type == 'news' && ${sameLang}] | order(${publishDateTimeQuery} desc)[0] {
@@ -185,8 +184,8 @@ export const getNewsroomPaths = async (): Promise<PathType[]> => {
       },
     )
 
-  const { _updatedAt: englishUpdatedAt } = await getUpdatedAt('en_GB')
-  const { _updatedAt: norwegianUpdatedAt } = await getUpdatedAt('nb_NO')
+  const { _updatedAt: englishUpdatedAt } = await getUpdatedAt('en-GB')
+  const { _updatedAt: norwegianUpdatedAt } = await getUpdatedAt('nb-NO')
 
   return [
     {
@@ -205,7 +204,7 @@ export const getNewsroomPaths = async (): Promise<PathType[]> => {
 export const getMagazineIndexPaths = async (): Promise<PathType[]> => {
   // Use last published news as updatedAt field for newsroom
   const getUpdatedAt = async (
-    lang: 'en_GB' | 'nb_NO',
+    lang: 'en-GB' | 'nb-NO',
   ): Promise<{ _updatedAt: string }> =>
     await client.fetch(
       groq`*[_type == 'magazine' && ${sameLang}] | order(_createdAt desc)[0] {
@@ -216,8 +215,8 @@ export const getMagazineIndexPaths = async (): Promise<PathType[]> => {
       },
     )
 
-  const { _updatedAt: englishUpdatedAt } = await getUpdatedAt('en_GB')
-  const { _updatedAt: norwegianUpdatedAt } = await getUpdatedAt('nb_NO')
+  const { _updatedAt: englishUpdatedAt } = await getUpdatedAt('en-GB')
+  const { _updatedAt: norwegianUpdatedAt } = await getUpdatedAt('nb-NO')
 
   return [
     {

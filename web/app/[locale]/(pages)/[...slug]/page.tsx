@@ -8,7 +8,6 @@ import { setRequestLocale } from 'next-intl/server'
 import { getValidLanguagesLocales } from '@/languageConfig'
 import { decodeSlugs } from '@/lib/helpers/getFullUrl'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
-import { getNameFromIso } from '@/sanity/helpers/localization'
 import { routeSanityFetch } from '@/sanity/lib/live'
 import { constructSanityMetadata, getPage } from '@/sanity/pages/utils'
 import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu'
@@ -38,7 +37,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const slug = decodeSlugs(encodedSlug) as string[]
 
-  const sanityLang = getNameFromIso(locale)
+  const sanityLang = locale
   //news, magazinepage has slug in document
   const isNewsPage = slug[0] === newsSlug[sanityLang] && slug?.length > 1
   const isMagazineRoom =
@@ -88,7 +87,7 @@ export default async function Page({ params }: Props) {
     routeSanityFetch({
       query: Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery,
       params: {
-        lang: getNameFromIso(locale) ?? 'en_GB',
+        lang: locale ?? 'en-GB',
       },
     }),
     getPage({
