@@ -197,7 +197,13 @@ function languagePrefixedSlug(
 
 export async function getPage(params: Params) {
   const { slug, locale, searchParams } = params
-  const { tag } = searchParams || {}
+  const tagParam = searchParams?.tag
+  const tag =
+    typeof tagParam === 'string'
+      ? tagParam
+      : Array.isArray(tagParam)
+        ? tagParam[0]
+        : undefined
   let pageData = null
   if (slug?.[0]?.includes('preview')) {
     const id = slug[1]
