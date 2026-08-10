@@ -1,0 +1,14 @@
+[
+  {
+    "source": "/",
+    "has": [
+      {
+        "type": "header",
+        "key": "user-agent",
+        "value": ".*(MSIE|Trident).*"
+      }
+    ],
+    "permanent": true,
+    "destination": "/not-supported.html"
+  }
+]

@@ -1,45 +1,21 @@
-/* import { getTranslations } from '../sanity/interface/interface'
 import fs from 'node:fs'
 import dotenv from 'dotenv'
-
+import { getAllRedirects } from '../sanity/interface/redirects'
 
 dotenv.config({ path: '.env.local' })
 
-const token = process.env.SANITY_API_TOKEN
-
-if (!token) {
-  console.error('Missing SANITY_API_TOKEN')
-  process.exit(1)
+const generateRedirects = async () => {
+  try {
+    const redirects = await getAllRedirects()
+    fs.writeFileSync(
+      './sanity/interface/redirects.json',
+      JSON.stringify(redirects, null, 2),
+    )
+  } catch (error) {
+    console.error('Failed generating redirects')
+    console.error(error)
+    process.exit(1)
+  }
 }
 
-
-getTranslations(token)
-  .then((translations) =>
-  {
-    const jsonFile = JSON.stringify(
-        translations?.data?.map((translation: any) => {
-          const key = translation["_id"].replace('text_snippet_', '')
-          let translationsOnKey = {}
-          Object.entries(translation).forEach(([key, value]) => {
-            if(!key.startsWith('_')){
-              return Object.assign(translationsOnKey, {
-                ...translationsOnKey,
-                [key]: value
-              }) 
-            }
-          })
-          const putTogether = {
-            [key]: translationsOnKey
-          }
-          return putTogether
-        }),
-      )
-    return fs.writeFileSync(
-      './sanity/interface/translations.json',jsonFile,
-    )
-  }
-  )
-  .catch((e) => {
-    console.error('Failed generating translations')
-    console.error(e)
-  }) */
+generateRedirects()
