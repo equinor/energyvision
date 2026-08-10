@@ -4,9 +4,8 @@ import { useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
 import { Promotion } from '@/core/Promotion/Promotion'
-import { defaultLanguage } from '@/languageConfig'
+import { getLocalizedHref } from '@/lib/helpers/getLocalizedHref'
 import Blocks from '@/portableText/Blocks'
-import { getLocaleFromIso } from '@/sanity/helpers/localization'
 import {
   type ColorKeys,
   colorKeyToUtilityMap,
@@ -59,9 +58,7 @@ const NewsList = ({
 
         <ul className='grid auto-rows-fr gap-x-6 gap-y-8 3xl:px-layout-md px-layout-sm sm:grid-cols-2 xl:grid-cols-3'>
           {pagedArticles.map(newsItem => {
-            const locale =
-              iso !== defaultLanguage.name ? getLocaleFromIso(iso) : ''
-            const href = (newsItem?.slug && '/' + locale + newsItem?.slug) || ''
+            const href = getLocalizedHref(newsItem?.slug, iso)
             return (
               <li key={newsItem.id}>
                 <Promotion

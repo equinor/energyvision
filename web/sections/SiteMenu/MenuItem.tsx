@@ -6,7 +6,7 @@ import Link from '@/core/Link/Link'
 import ResourceLink from '@/core/Link/ResourceLink'
 import { Menu } from '@/core/MenuAccordion'
 import { Typography } from '@/core/Typography'
-import { getMenuLink } from '@/lib/helpers/getUrlFromAction'
+import { getLocalizedHref } from '@/lib/helpers/getLocalizedHref'
 import Blocks from '../../portableText/Blocks'
 import type {
   MenuLinkData,
@@ -35,7 +35,7 @@ export const MenuItem = ({ item, index, linkCallback }: MenuGroupType) => {
   } = item
 
   const iso = useLocale()
-  const menuItemHref = getMenuLink(topLevelLink, iso)
+  const menuItemHref = getLocalizedHref(topLevelLink?.link?.slug, iso)
 
   const pathname = usePathname()
 
@@ -88,7 +88,7 @@ export const MenuItem = ({ item, index, linkCallback }: MenuGroupType) => {
                           <li key={link.id}>
                             <Link
                               className={`relative py-2 text-sm no-underline underline-offset-2 hover:underline ${ariaCurrentStyling} `}
-                              href={getMenuLink(link, iso) || '/'}
+                              href={getLocalizedHref(link?.link?.slug, iso) || '/'}
                               {...(pathname === link?.link?.slug && {
                                 'aria-current': 'page',
                               })}
