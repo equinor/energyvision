@@ -5,14 +5,30 @@ import { EdsIcon } from '../../icons'
 import { CompactBlockEditor } from '../components/CompactBlockEditor'
 import { configureBlockContent } from '../editors'
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
-import { cookiePolicy, title } from './iframe/sharedIframeFields'
+import { cookiePolicy } from './iframe/sharedIframeFields'
 
 export default {
   name: 'embeddedVideoList',
   title: 'Embedded video list',
   type: 'object',
   fields: [
-    title,
+    {
+      name: 'title',
+      type: 'array',
+      components: {
+        input: CompactBlockEditor,
+      },
+      of: [configureBlockContent({ variant: 'title' })],
+      title: 'Title',
+      validation: (Rule: Rule) => Rule.required(),
+    },
+    {
+      type: 'boolean',
+      name: 'hideTitle',
+      title: 'Hide title',
+      description:
+        'Hides the title, but screen readers will read title of carousel',
+    },
     {
       name: 'ingress',
       title: 'Ingress',

@@ -19,6 +19,7 @@ export type EmbeddedVideoListData = {
   id: string
   type: 'embeddedVideoList'
   title?: PortableTextBlock[]
+  hideTitle?: boolean
   ingress?: PortableTextBlock[]
   cookiePolicy?: CookieType[]
   items: EmbeddedVideoListItem[]
@@ -64,23 +65,29 @@ const EmbeddedVideoList = forwardRef<HTMLDivElement, EmbeddedVideoListProps>(
         id={anchor}
         className={twMerge('mx-auto w-full max-w-content', className)}
       >
-        {(data.title || data.ingress) && (
+        {(data?.title || data?.ingress) && (
           <div className='px-layout-sm pb-8 lg:px-layout-lg'>
-            {data.title && <Blocks variant='h2' value={data.title} />}
+            {data.title && (
+              <Blocks
+                variant='h2'
+                value={data.title}
+                className={twMerge(data?.hideTitle && 'sr-only')}
+              />
+            )}
             {data.ingress && <Blocks variant='ingress' value={data.ingress} />}
           </div>
         )}
 
-        {featuredItem && getYoutubeEmbedUrl(featuredItem.videoId) && (
+        {featuredItem && getYoutubeEmbedUrl(featuredItem?.videoId) && (
           <div className='px-layout-sm pb-8 lg:px-layout-lg'>
-            <div className='overflow-hidden rounded-card'>
+            <div className='overflow-hidden rounded-base'>
               <IFrame
                 frameTitle={
                   featuredItem.title && featuredItem.title.length > 0
                     ? toPlainText(featuredItem.title)
                     : 'Featured embedded YouTube video'
                 }
-                url={getYoutubeEmbedUrl(featuredItem.videoId) || ''}
+                url={getYoutubeEmbedUrl(featuredItem?.videoId) || ''}
                 cookiePolicy={cookiePolicy}
                 aspectRatio='16:9'
                 hasSectionTitle={false}
@@ -108,9 +115,9 @@ const EmbeddedVideoList = forwardRef<HTMLDivElement, EmbeddedVideoListProps>(
               return (
                 <li
                   key={videoItem.id}
-                  className='basis-full sm:basis-[calc(50%-0.75rem)] lg:basis-[calc(33.333%-1rem)]'
+                  className='basis-full sm:basis-[calc(50%-0.75rem)] lg:basis-[calc(33.333%-1.5rem)]'
                 >
-                  <div className='overflow-hidden rounded-card'>
+                  <div className='overflow-hidden rounded-base'>
                     <IFrame
                       frameTitle={frameTitle}
                       url={embedUrl}
@@ -119,7 +126,7 @@ const EmbeddedVideoList = forwardRef<HTMLDivElement, EmbeddedVideoListProps>(
                       hasSectionTitle={false}
                     />
                   </div>
-                  {videoItem.title && (
+                  {videoItem?.title && (
                     <Blocks value={videoItem.title} className='pt-3 text-sm' />
                   )}
                 </li>
