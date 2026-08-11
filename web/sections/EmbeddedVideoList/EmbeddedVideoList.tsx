@@ -22,6 +22,7 @@ export type EmbeddedVideoListData = {
   hideTitle?: boolean
   ingress?: PortableTextBlock[]
   cookiePolicy?: CookieType[]
+  gridColumns?: '2' | '3' | '4'
   items: EmbeddedVideoListItem[]
 }
 
@@ -58,6 +59,12 @@ const EmbeddedVideoList = forwardRef<HTMLDivElement, EmbeddedVideoListProps>(
     const featuredItemId = featuredItem?.id
     const regularItems = orderedItems.filter(item => item.id !== featuredItemId)
     const cookiePolicy = data.cookiePolicy || ['none']
+    const columns = data.gridColumns ?? '3'
+    const itemBasisClass = {
+      '2': 'sm:basis-[calc(50%-0.75rem)]',
+      '3': 'sm:basis-[calc(50%-0.75rem)] lg:basis-[calc(33.333%-1rem)]',
+      '4': 'sm:basis-[calc(50%-0.75rem)] lg:basis-[calc(25%-1.125rem)]',
+    }[columns]
 
     return (
       <section
@@ -115,7 +122,10 @@ const EmbeddedVideoList = forwardRef<HTMLDivElement, EmbeddedVideoListProps>(
               return (
                 <li
                   key={videoItem.id}
-                  className='basis-full sm:basis-[calc(50%-0.75rem)] lg:basis-[calc(33.333%-1.5rem)]'
+                  className={twMerge(
+                    'has-focus-visible:envis-outline dark:has-focus-visible:envis-outline-invert basis-full',
+                    itemBasisClass,
+                  )}
                 >
                   <div className='overflow-hidden rounded-base'>
                     <IFrame

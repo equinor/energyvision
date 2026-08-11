@@ -5,6 +5,7 @@ import { EdsIcon } from '../../icons'
 import { CompactBlockEditor } from '../components/CompactBlockEditor'
 import { configureBlockContent } from '../editors'
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
+import { gridColumns } from './commonFields/commonFields'
 import { cookiePolicy } from './iframe/sharedIframeFields'
 
 export default {
@@ -41,6 +42,7 @@ export default {
         ),
     },
     cookiePolicy(),
+    gridColumns({}),
     {
       type: 'array',
       name: 'items',
