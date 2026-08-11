@@ -1,4 +1,3 @@
-
 import assetFile from './assetFile'
 import assetTag from './assetTag'
 import countryTag from './countryTag'
@@ -15,6 +14,7 @@ import magazineTag from './magazineTag'
 import news from './news'
 import newsroom from './newsroom'
 import page from './page'
+import person from './person'
 import redirect from './redirect'
 import route from './route'
 import routeHomepage from './routeHomepage'
@@ -38,6 +38,7 @@ export default {
   ...documentsWithI18n,
   assetFile,
   assetTag,
+  person,
   countryTag,
   eventTag,
   redirect,

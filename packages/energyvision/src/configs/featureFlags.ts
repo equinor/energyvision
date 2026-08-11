@@ -49,6 +49,7 @@ const MAGAZINE = [...GLOBAL_PROD, ...GLOBAL_DEV]
 /* Allows same slug for different languages */
 const SAME_SLUG = [...GLOBAL_DEV, 'japan', 'southkorea']
 const CAMPAIGN = [...GLOBAL_PROD, ...GLOBAL_DEV]
+const PEOPLE = [...GLOBAL_PROD, ...GLOBAL_DEV]
 
 /**
  * @param {string} dataset
@@ -85,4 +86,5 @@ export const FeatureFlags = (dataset: DatasetsKeys) => ({
   IS_DEV: GLOBAL_DEV.includes(dataset),
   IS_SATELLITE: SATELLITES.includes(dataset),
   HAS_CAMPAIGN_BLOCKS: CAMPAIGN.includes(dataset),
+  HAS_PEOPLE: PEOPLE.includes(dataset),
 })
