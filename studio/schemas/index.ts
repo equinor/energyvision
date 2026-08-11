@@ -4,6 +4,7 @@ import { Flags } from '../src/lib/datasetHelpers'
 // Document types
 import documentSchemaTypes from './documents'
 import homePage from './documents/homePage'
+import person from './documents/person'
 import textSnippet from './documents/textSnippet'
 import anchorSearch from './objects/AnchorSearch'
 import accordion from './objects/accordion'
@@ -149,6 +150,8 @@ const FormSchemas = Flags.HAS_FORMS ? [form] : []
 const MagazineSchemas = Flags.HAS_MAGAZINE
   ? [magazine, magazineIndex, magazineTag, promoteMagazine].filter(e => e)
   : []
+const PersonSchemas = Flags.HAS_PEOPLE ? [person] : []
+
 const RemainingSchemas = [
   page,
   homePage,
@@ -260,5 +263,6 @@ export const schemaTypes = [
   ...FormSchemas,
   ...NewsSchemas,
   ...NewsRoomSchema,
+  ...PersonSchemas,
   ...RemainingSchemas,
 ]

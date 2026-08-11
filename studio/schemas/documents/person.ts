@@ -32,6 +32,11 @@ export default {
       type: 'string',
     },
     {
+      title: 'Date of employment',
+      name: 'employmentDate',
+      type: 'string',
+    },
+    {
       title: 'Image',
       name: 'image',
       type: 'imageWithAlt',

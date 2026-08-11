@@ -33,12 +33,12 @@ export const documentsWithI18n = {
   newsroom,
   page,
   homePage,
+  person,
 }
 export default {
   ...documentsWithI18n,
   assetFile,
   assetTag,
-  person,
   countryTag,
   eventTag,
   redirect,
