@@ -105,7 +105,7 @@ export const getStaticBuildRoutePaths = async (
 
 export const getHomePagePaths = async (): Promise<PathType[]> => {
   const pages = await getHomePages()
-  console.log(pages)
+
   return pages
     .filter(e => e)
     .map(it => ({
