@@ -3,11 +3,18 @@ import type { PortableTextBlock, Rule } from 'sanity'
 import blocksToText from '../../helpers/blocksToText'
 import { CompactBlockEditor } from '../components/CompactBlockEditor'
 import { configureBlockContent } from '../editors'
+import { theme } from './commonFields/commonFields'
 
 export default {
   name: 'personList',
   title: 'Person list',
   type: 'object',
+  fieldsets: [
+    {
+      name: 'design',
+      title: 'Design options',
+    },
+  ],
   fields: [
     {
       name: 'title',
@@ -46,18 +53,13 @@ export default {
       validation: (Rule: Rule) => Rule.required().min(1),
     },
     {
-      name: 'theme',
-      title: 'Theme color',
-      type: 'string',
-      options: {
-        list: [
-          { title: 'Grey', value: 'grey' },
-          { title: 'Green', value: 'green' },
-        ],
-        layout: 'radio',
-      },
-      initialValue: 'grey',
+      type: 'boolean',
+      name: 'asDiagram',
+      title: 'Display as diagram',
+      description:
+        'Displays the people as an organization diagram where org level and connection lines is added to web component',
     },
+    theme,
   ],
   preview: {
     select: {

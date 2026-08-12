@@ -528,6 +528,38 @@ _type == "keyNumbers" =>{
     }
   },
 
+  _type == "personList" => {
+    "type": _type,
+    "id": _key,
+    title[]{
+      ...,
+      ${markDefs},
+    },
+    hideTitle,
+    ingress[]{
+      ...,
+      ${markDefs},
+    },
+    "designOptions": {
+      "background": {
+        "backgroundUtility": theme.theme.background.key,
+      },
+    },
+    asDiagram,
+    "items": items[]->{
+      "id": _id,
+      name,
+      title,
+      image,
+      bio[]{
+        ...,
+        ${markDefs},
+      },
+      hierarchyLevel,
+      "slug": slug.current,
+    },
+  },
+
   _type == "stockValuesApi"=>{
     "type": _type,
     "id": _key,

@@ -32,20 +32,6 @@ export default {
       type: 'string',
     },
     {
-      title: 'Organization hierarchy level',
-      name: 'hierarchyLevel',
-      type: 'string',
-      options: {
-        list: [
-          { title: 'Level 1', value: '1' },
-          { title: 'Level 2', value: '2' },
-          { title: 'Level 3', value: '3' },
-        ],
-        layout: 'dropdown',
-      },
-      description: 'Position in organization hierarchy diagram',
-    },
-    {
       title: 'Date of employment',
       name: 'employmentDate',
       type: 'string',
@@ -63,6 +49,20 @@ export default {
         input: CompactBlockEditor,
       },
       of: [configureBlockContent({ variant: 'ingress' })],
+    },
+    {
+      title: 'Organization level',
+      name: 'hierarchyLevel',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Level 1', value: '1' },
+          { title: 'Level 2', value: '2' },
+          { title: 'Level 3', value: '3' },
+        ],
+        layout: 'dropdown',
+      },
+      description: 'Position in organization diagram',
     },
     {
       name: 'enableStructuredMarkup',
