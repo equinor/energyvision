@@ -2,9 +2,8 @@ import { stegaClean } from '@sanity/client/stega'
 import type { Metadata } from 'next'
 import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
-import { setRequestLocale } from 'next-intl/server'
+import { locale as rootLocale } from 'next/root-params'
 import { OrganizationJsonLd } from 'next-seo'
-import { languages } from '@/languageConfig'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { getNameFromIso } from '@/sanity/helpers/localization'
 import { routeSanityFetch } from '@/sanity/lib/live'
@@ -16,13 +15,8 @@ import Header from '@/sections/Header/Header'
 import HomePage from '@/templates/homepage/HomePage'
 import { FriendlyCaptchaSdkWrapper } from './FriendlyCaptchaWrapper'
 
-type Props = {
-  params: Promise<{ slug: string; locale: string }>
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
-}
-
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { locale } = await params
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await rootLocale()
   const { data: metaData }: { data: any } = await routeSanityFetch({
     query: homePageMetaQuery,
     params: {
@@ -35,15 +29,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return constructSanityMetadata('', locale, metaData)
 }
 
-export default async function Home({ params }: Props) {
-  const { locale, slug } = await params
+export default async function Home(_: PageProps<'/[locale]'>) {
   //const isInPresentationToolContext =
   //  (await cookies()).get('preview-fetch-dest')?.value === 'iframe'
-  // Enable static rendering
-  setRequestLocale(locale)
   const { isEnabled: isDraftMode } = await draftMode()
+  const locale = await rootLocale()
 
-  if (!languages.map(it => it.iso).includes(locale)) notFound()
   let pageContent = null
   const [siteMenuResult, homePageData] = await Promise.all([
     routeSanityFetch({
@@ -53,7 +44,7 @@ export default async function Home({ params }: Props) {
       },
     }),
     getPage({
-      slug,
+      slug: '',
       locale,
       tags: ['homePage'],
     }),

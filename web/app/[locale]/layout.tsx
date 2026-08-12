@@ -3,10 +3,10 @@ import { GoogleTagManager } from '@next/third-parties/google'
 import localFont from 'next/font/local'
 import { draftMode } from 'next/headers'
 import NextLink from 'next/link'
-import { notFound } from 'next/navigation'
+import { locale as rootLocale } from 'next/root-params'
 import Script from 'next/script'
-import { hasLocale, NextIntlClientProvider } from 'next-intl'
-import { getTranslations, setRequestLocale } from 'next-intl/server'
+import { NextIntlClientProvider } from 'next-intl'
+import { getTranslations } from 'next-intl/server'
 import { PageProvider } from '@/contexts/pageContext'
 import { getLocaleFromIso, getNameFromIso } from '@/sanity/helpers/localization'
 import { dataset } from '@/sanity/lib/api'
@@ -14,7 +14,6 @@ import { routeSanityFetch, SanityLive } from '@/sanity/lib/live'
 import { footerAndErrorImageQuery } from '@/sanity/queries/footer'
 import Footer from '@/sections/Footer/Footer'
 import GoToTopButton from '@/sections/GoToTopButton'
-import { routing } from '../../i18n/routing'
 import { SiteImprove } from './SiteImprove'
 
 const equinor = localFont({
@@ -24,8 +23,6 @@ const equinor = localFont({
     { path: '../fonts/equinor/EquinorVariable-VF.woff2' },
   ],
 })
-
-type Params = Promise<{ locale: string }>
 
 /* export const metadata: Metadata = {
   icons: {
@@ -38,19 +35,9 @@ type Params = Promise<{ locale: string }>
 
 export default async function LocaleLayout({
   children,
-  params,
-}: {
-  children: React.ReactNode
-  params: Params
-}) {
-  const { locale } = await params
-
-  setRequestLocale(locale)
+}: LayoutProps<'/[locale]'>) {
   const t = await getTranslations()
-
-  if (!hasLocale(routing.locales, locale)) {
-    notFound()
-  }
+  const locale = await rootLocale()
 
   const queryParams = {
     lang: getNameFromIso(locale) ?? 'en_GB',

@@ -4,7 +4,7 @@ import type { Metadata } from 'next'
 import dynamic from 'next/dynamic'
 import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
-import { setRequestLocale } from 'next-intl/server'
+import { locale as rootLocale } from 'next/root-params'
 import { getValidLanguagesLocales } from '@/languageConfig'
 import { decodeSlugs } from '@/lib/helpers/getFullUrl'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
@@ -30,12 +30,12 @@ const NewsPage = dynamic(() => import('@/templates/news/News'))
 const TopicPage = dynamic(() => import('@/templates/topic/TopicPage'))
 const MagazineRoom = dynamic(() => import('@/templates/magazine/Magazineroom'))
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PageProps<'/[locale]/[...slug]'>): Promise<Metadata> {
   //array, separated by /. e.g. [news, last slug]
-  const { slug: encodedSlug, locale } = await params
-
-  if (!getValidLanguagesLocales().includes(locale)) notFound()
-
+  const { slug: encodedSlug } = await params
+  const locale = await rootLocale()
   const slug = decodeSlugs(encodedSlug) as string[]
 
   const sanityLang = getNameFromIso(locale)
@@ -80,10 +80,6 @@ export default async function Page({ params, searchParams }: Props) {
   /*   const isInPresentationToolContext =
     (await cookies()).get('preview-fetch-dest')?.value === 'iframe' */
   const { isEnabled: isDraftMode } = await draftMode()
-
-  if (!getValidLanguagesLocales().includes(locale)) notFound()
-
-  setRequestLocale(locale)
   let pageContent = null
   const [siteMenuResult, pageResults] = await Promise.all([
     routeSanityFetch({

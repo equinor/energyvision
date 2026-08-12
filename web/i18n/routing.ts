@@ -18,6 +18,12 @@ export const routing = defineRouting({
       'de-DE': '/de',
     },
   },
+  pathnames: {
+    '/news': {
+      'nb-NO': '/nyheter',
+      'en-GB': '/news',
+    },
+  },
   localeDetection: false,
   // Used when no locale matches
   defaultLocale: defaultLanguage.iso,
