@@ -19,6 +19,7 @@ export const routing = defineRouting({
     },
   },
   pathnames: {
+    '/': '/',
     '/news': {
       'nb-NO': '/nyheter',
       'en-GB': '/news',
