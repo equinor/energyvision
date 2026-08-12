@@ -32,17 +32,9 @@ type EmbeddedVideoListProps = {
   className?: string
 }
 
-const YOUTUBE_EMBED_BASE_URL = 'https://www.youtube.com/embed/'
-
-const getYoutubeEmbedUrl = (videoId?: string) => {
-  if (!videoId) return null
-
-  const normalizedVideoId = videoId.trim()
-  const isValidYoutubeId = /^[A-Za-z0-9_-]{11}$/.test(normalizedVideoId)
-
-  if (!isValidYoutubeId) return null
-
-  return `${YOUTUBE_EMBED_BASE_URL}${normalizedVideoId}`
+const getEmbedUrl = (embedUrl?: string) => {
+  if (!embedUrl) return null
+  return embedUrl.trim()
 }
 
 const EmbeddedVideoList = forwardRef<HTMLDivElement, EmbeddedVideoListProps>(
@@ -85,16 +77,16 @@ const EmbeddedVideoList = forwardRef<HTMLDivElement, EmbeddedVideoListProps>(
           </div>
         )}
 
-        {featuredItem && getYoutubeEmbedUrl(featuredItem?.videoId) && (
+        {featuredItem && getEmbedUrl(featuredItem?.videoId) && (
           <div className='px-layout-sm pb-8 lg:px-layout-lg'>
             <div className='overflow-hidden rounded-base'>
               <IFrame
                 frameTitle={
                   featuredItem.title && featuredItem.title.length > 0
                     ? toPlainText(featuredItem.title)
-                    : 'Featured embedded YouTube video'
+                    : 'Featured embedded video'
                 }
-                url={getYoutubeEmbedUrl(featuredItem?.videoId) || ''}
+                url={getEmbedUrl(featuredItem?.videoId) || ''}
                 cookiePolicy={cookiePolicy}
                 aspectRatio='16:9'
                 hasSectionTitle={false}
@@ -108,16 +100,16 @@ const EmbeddedVideoList = forwardRef<HTMLDivElement, EmbeddedVideoListProps>(
 
         <ul className='flex flex-wrap gap-x-6 gap-y-12 px-layout-sm'>
           {regularItems
-            .filter(item => getYoutubeEmbedUrl(item.videoId))
+            .filter(item => getEmbedUrl(item.videoId))
             .map((videoItem, videoIndex) => {
-              const embedUrl = getYoutubeEmbedUrl(videoItem.videoId)
+              const embedUrl = getEmbedUrl(videoItem.videoId)
 
               if (!embedUrl) return null
 
               const frameTitle =
                 videoItem.title && videoItem.title.length > 0
                   ? toPlainText(videoItem.title)
-                  : `Embedded YouTube video ${videoIndex + 1}`
+                  : `Embedded video ${videoIndex + 1}`
 
               return (
                 <li

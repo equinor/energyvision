@@ -42,7 +42,7 @@ export default {
         ),
     },
     cookiePolicy(),
-    gridColumns({}),
+    gridColumns(),
     {
       type: 'array',
       name: 'items',
@@ -56,20 +56,9 @@ export default {
             {
               name: 'videoId',
               type: 'string',
-              title: 'YouTube video ID',
-              description: 'Paste only the video ID, not the full URL.',
-              validation: (Rule: Rule) =>
-                Rule.required().custom((value?: string) => {
-                  if (!value) return true
-
-                  const isValidYoutubeId = /^[A-Za-z0-9_-]{11}$/.test(value)
-
-                  if (!isValidYoutubeId) {
-                    return 'Enter a valid YouTube video ID (11 characters).'
-                  }
-
-                  return true
-                }),
+              title: 'Embed URL',
+              description:
+                'Paste the full embed URL (YouTube or Vimeo iframe src).',
             },
             {
               name: 'highlighted',
