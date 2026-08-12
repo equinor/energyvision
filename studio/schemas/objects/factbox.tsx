@@ -1,10 +1,13 @@
 import { info_circle } from '@equinor/eds-icons'
-import { PortableTextBlock } from 'sanity'
+import { useEffect } from 'react'
+import type { PortableTextBlock } from 'sanity'
+import { type BooleanInputProps, set, useFormValue } from 'sanity'
+import blocksToText from '../../helpers/blocksToText'
 import { EdsIcon, LeftAlignedImage, RightAlignedImage } from '../../icons'
 import { RadioIconSelector } from '../components'
+import type { ColorSelectorValue } from '../components/ColorSelector'
 import { configureBlockContent } from '../editors/blockContentType'
 import type { ImageWithAlt } from './imageWithAlt'
-import type { ColorSelectorValue } from '../components/ColorSelector'
 
 const imageAlignmentOptions = [
   { value: 'left', icon: LeftAlignedImage },
@@ -21,12 +24,32 @@ const blockContentType = configureBlockContent({
   smallText: false,
 })
 
+function SingleColumnLayoutInput(props: BooleanInputProps) {
+  const { onChange, path, value } = props
+  const parentPath = path.slice(0, -1)
+  const content = useFormValue([...parentPath, 'content']) as
+    | PortableTextBlock[]
+    | undefined
+
+  const text = Array.isArray(content) ? blocksToText(content) || '' : ''
+  const isReadOnly = text.length < 800
+
+  useEffect(() => {
+    if (isReadOnly && value === false) {
+      onChange(set(true))
+    }
+  }, [isReadOnly, onChange, value])
+
+  return props.renderDefault(props)
+}
+
 export type Factbox = {
   _type: 'factbox'
   title?: string
   content?: PortableTextBlock[]
   image?: ImageWithAlt
   background?: ColorSelectorValue
+  isSingleColumn?: boolean
   imagePosition?: string
   dynamicHeight?: boolean
 }
@@ -35,6 +58,9 @@ export default {
   title: 'Factbox',
   name: 'factbox',
   type: 'object',
+  initialValue: {
+    isSingleColumn: true,
+  },
   fieldsets: [
     {
       title: 'Design options',
@@ -55,12 +81,6 @@ export default {
       of: [blockContentType],
     },
     {
-      name: 'isSingleColumn',
-      type: 'boolean',
-      title: 'Single column layout',
-      description: 'Toggle to use a single-column layout instead of the default two-column layout. This will have no effect if image is selected',
-     },
-    {
       name: 'image',
       title: 'Image',
       type: 'imageWithAlt',
@@ -73,18 +93,44 @@ export default {
       fieldset: 'design',
     },
     {
+      name: 'isSingleColumn',
+      type: 'boolean',
+      title: 'Single column layout',
+      description:
+        'Enabled by default. You can turn this off once content reaches 800 characters. This will have no effect if image is selected',
+      initialValue: true,
+      components: {
+        input: SingleColumnLayoutInput,
+      },
+      readOnly: ({ parent }: { parent: any }) => {
+        const content = parent?.content
+        if (!content || !Array.isArray(content)) {
+          return true
+        }
+        const text = blocksToText(content) || ''
+        return text.length < 800
+      },
+    },
+    {
       name: 'imagePosition',
       title: 'Image position',
-      description: 'Select which side of the factbox the image should be displayed at on larger screens.',
+      description:
+        'Select which side of the factbox the image should be displayed at on larger screens.',
       type: 'string',
       fieldset: 'design',
       components: {
-        input: function ImagePosition({ onChange, value }: { onChange: any; value: string }) {
+        input: function ImagePosition({
+          onChange,
+          value,
+        }: {
+          onChange: any
+          value: string
+        }) {
           return (
             <RadioIconSelector
-              name="imageAlignmentSelector"
+              name='imageAlignmentSelector'
               options={imageAlignmentOptions}
-              defaultValue="left"
+              defaultValue='left'
               currentValue={value}
               onChange={onChange}
             />
@@ -110,7 +156,11 @@ export default {
       return {
         title: title,
         subtitle: 'Factbox',
-        media: imageUrl ? <img src={imageUrl} alt="" style={{ height: '100%' }} /> : EdsIcon(info_circle),
+        media: imageUrl ? (
+          <img src={imageUrl} alt='' style={{ height: '100%' }} />
+        ) : (
+          EdsIcon(info_circle)
+        ),
       }
     },
   },
