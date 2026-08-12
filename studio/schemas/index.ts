@@ -77,6 +77,7 @@ import promoteNews from './objects/promotion/promoteNews'
 import promotePeople from './objects/promotion/promotePeople'
 import promoteTopics from './objects/promotion/promoteTopic'
 import promotion from './objects/promotion/promotion'
+import personList from './objects/personList'
 import pullQuote from './objects/pullQuote'
 import relatedLinks from './objects/relatedLinks'
 import simpleMenuGroup from './objects/simpleMenuGroup'
@@ -188,6 +189,7 @@ const RemainingSchemas = [
   promotion,
   promoteTopics,
   promotePeople,
+  personList,
   contactList,
   assetFile,
   assetTag,
