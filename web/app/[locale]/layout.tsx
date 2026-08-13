@@ -3,19 +3,21 @@ import { GoogleTagManager } from '@next/third-parties/google'
 import localFont from 'next/font/local'
 import { draftMode } from 'next/headers'
 import NextLink from 'next/link'
-import { notFound } from 'next/navigation'
+import { locale as rootLocale } from 'next/root-params'
 import Script from 'next/script'
-import { hasLocale, NextIntlClientProvider } from 'next-intl'
-import { getTranslations, setRequestLocale } from 'next-intl/server'
+import { NextIntlClientProvider } from 'next-intl'
+import { getTranslations } from 'next-intl/server'
 import { PageProvider } from '@/contexts/pageContext'
+import { languages } from '@/languageConfig'
 import { getLocaleFromIso, getNameFromIso } from '@/sanity/helpers/localization'
 import { dataset } from '@/sanity/lib/api'
 import { routeSanityFetch, SanityLive } from '@/sanity/lib/live'
 import { footerAndErrorImageQuery } from '@/sanity/queries/footer'
 import Footer from '@/sections/Footer/Footer'
 import GoToTopButton from '@/sections/GoToTopButton'
-import { routing } from '../../i18n/routing'
 import { SiteImprove } from './SiteImprove'
+
+export const dynamic = 'force-static'
 
 const equinor = localFont({
   src: [
@@ -24,8 +26,6 @@ const equinor = localFont({
     { path: '../fonts/equinor/EquinorVariable-VF.woff2' },
   ],
 })
-
-type Params = Promise<{ locale: string }>
 
 /* export const metadata: Metadata = {
   icons: {
@@ -36,21 +36,15 @@ type Params = Promise<{ locale: string }>
 
 //the [locale] segment corresponds to the locale (iso format), not the prefix(/no).
 
+export function generateStaticParams() {
+  return languages.map(language => ({ locale: language.iso }))
+}
+
 export default async function LocaleLayout({
   children,
-  params,
-}: {
-  children: React.ReactNode
-  params: Params
-}) {
-  const { locale } = await params
-
-  setRequestLocale(locale)
+}: LayoutProps<'/[locale]'>) {
   const t = await getTranslations()
-
-  if (!hasLocale(routing.locales, locale)) {
-    notFound()
-  }
+  const locale = await rootLocale()
 
   const queryParams = {
     lang: getNameFromIso(locale) ?? 'en_GB',
@@ -68,6 +62,18 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} className={`${equinor.className} `}>
       <body className='has-data-no-sticky:pt-topbar'>
+        {!isPreview && (
+          // cookiebot script must strictly be inside body.
+          <Script
+            src='https://consent.cookiebot.com/uc.js'
+            id='Cookiebot'
+            strategy='beforeInteractive'
+            data-cbid='f1327b03-7951-45da-a2fd-9181babc783f'
+            data-blockingmode='auto'
+            data-culture={locale === 'nb-NO' ? 'nb' : getLocaleFromIso(locale)}
+          />
+        )}
+
         <NextLink
           href='#mainTitle'
           className='sr-only bg-moss-green-50 text-sm transition focus:not-sr-only focus:flex focus:w-full focus:items-center focus:justify-center focus:p-4 focus:underline'
@@ -93,14 +99,6 @@ export default async function LocaleLayout({
       {/** TODO look into scripts */}
       {!(isPreview || dataset === 'global-development') && (
         <>
-          <Script
-            src='https://consent.cookiebot.com/uc.js'
-            id='Cookiebot'
-            strategy='beforeInteractive'
-            data-cbid='f1327b03-7951-45da-a2fd-9181babc783f'
-            data-blockingmode='auto'
-            data-culture={locale === 'nb-NO' ? 'nb' : getLocaleFromIso(locale)}
-          />
           {process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID && (
             //https://nextjs.org/docs/app/guides/third-party-libraries#google-third-parties
             <GoogleTagManager
