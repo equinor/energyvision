@@ -4,8 +4,7 @@ import type { Metadata } from 'next'
 import dynamic from 'next/dynamic'
 import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
-import { locale as rootLocale } from 'next/root-params'
-import { getValidLanguagesLocales } from '@/languageConfig'
+import { getLocale } from 'next-intl/server'
 import { decodeSlugs } from '@/lib/helpers/getFullUrl'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { getNameFromIso } from '@/sanity/helpers/localization'
@@ -35,7 +34,7 @@ export async function generateMetadata({
 }: PageProps<'/[locale]/[...slug]'>): Promise<Metadata> {
   //array, separated by /. e.g. [news, last slug]
   const { slug: encodedSlug } = await params
-  const locale = await rootLocale()
+  const locale = await getLocale()
   const slug = decodeSlugs(encodedSlug) as string[]
 
   const sanityLang = getNameFromIso(locale)
