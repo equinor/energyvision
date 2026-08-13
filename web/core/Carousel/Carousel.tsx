@@ -304,7 +304,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
       return intl('carouselItemCountLabel', {
         x: item,
         carouselLength: items.length,
-      })
+      }).toString()
     }
     const cancelTimeout = () => {
       timeoutRef.current && clearTimeout(timeoutRef.current)
