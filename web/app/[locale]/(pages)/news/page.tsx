@@ -36,42 +36,41 @@ export async function generateMetadata(): Promise<Metadata> {
   return constructSanityMetadata(pageSlug, locale, undefined)
 }
 
+const getInitialResponse = unstable_cache(
+  // this gets revalidated by path
+  async locale => {
+    const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
+    const indexName = `${envPrefix}_NEWS_${locale}`
+
+    console.log(
+      new Date(),
+      'Fetching initial response for',
+      indexName,
+      'after revalidation',
+    )
+    const searchClient = algoliasearch(
+      algolia.applicationId,
+      algolia.searchApiKey,
+    )
+    const response = await searchClient.searchSingleIndex({
+      indexName: indexName,
+      searchParams: {
+        hitsPerPage: 50,
+        facetFilters: ['type:news', 'topicTags:-Crude Oil Assays'],
+        facetingAfterDistinct: true,
+        facets: ['countryTags', 'topicTags', 'year'],
+      },
+    })
+    return response
+  },
+  undefined,
+  {
+    tags: [`newsroom`],
+  },
+)
+
 export default async function NewsroomPage(_: PageProps<'/[locale]/news'>) {
   const locale = await getLocale()
-
-  const getInitialResponse = unstable_cache(
-    // this gets revalidated by path
-    async () => {
-      const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
-      const indexName = `${envPrefix}_NEWS_${locale}`
-
-      console.log(
-        new Date(),
-        'Fetching initial response for',
-        indexName,
-        'after revalidation',
-      )
-      const searchClient = algoliasearch(
-        algolia.applicationId,
-        algolia.searchApiKey,
-      )
-      const response = await searchClient.searchSingleIndex({
-        indexName: indexName,
-        searchParams: {
-          hitsPerPage: 50,
-          facetFilters: ['type:news', 'topicTags:-Crude Oil Assays'],
-          facetingAfterDistinct: true,
-          facets: ['countryTags', 'topicTags', 'year'],
-        },
-      })
-      return response
-    },
-    undefined,
-    {
-      tags: [`newsroom`, await locale],
-    },
-  )
-
   const [siteMenuResult, pageResults] = await Promise.all([
     routeSanityFetch({
       query: Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery,
@@ -90,8 +89,8 @@ export default async function NewsroomPage(_: PageProps<'/[locale]/news'>) {
   const { data: siteMenuData } = siteMenuResult || {}
 
   const response =
-    Flags.HAS_NEWSROOM && locale in ['en-GB', 'nb-NO']
-      ? await getInitialResponse()
+    Flags.HAS_NEWSROOM && ['en-GB', 'nb-NO'].includes(locale)
+      ? await getInitialResponse(locale)
       : undefined
 
   return (
