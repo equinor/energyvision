@@ -3,8 +3,7 @@ import { algoliasearch } from 'algoliasearch'
 import type { Metadata } from 'next'
 import { unstable_cache } from 'next/cache'
 import dynamic from 'next/dynamic'
-import { notFound } from 'next/navigation'
-import { locale as rootLocale } from 'next/root-params'
+import { getLocale } from 'next-intl/server'
 import { algolia } from '@/lib/config'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { getNameFromIso } from '@/sanity/helpers/localization'
@@ -19,7 +18,7 @@ import NewsRoomTemplate from '@/templates/newsroom/Newsroom'
 const TopicPage = dynamic(() => import('@/templates/topic/TopicPage'))
 
 export async function generateMetadata(): Promise<Metadata> {
-  const locale = await rootLocale()
+  const locale = await getLocale()
   const pageSlug = newsSlug[getNameFromIso(locale)]
   if (Flags.HAS_NEWSROOM) {
     const { data: metaData }: { data: any } = await routeSanityFetch({
@@ -38,7 +37,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function NewsroomPage(_: PageProps<'/[locale]/news'>) {
-  const locale = await rootLocale()
+  const locale = await getLocale()
 
   const getInitialResponse = unstable_cache(
     // this gets revalidated by path
@@ -72,6 +71,7 @@ export default async function NewsroomPage(_: PageProps<'/[locale]/news'>) {
       tags: [`newsroom`, await locale],
     },
   )
+
   const [siteMenuResult, pageResults] = await Promise.all([
     routeSanityFetch({
       query: Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery,

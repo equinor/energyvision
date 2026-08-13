@@ -2,7 +2,7 @@ import { stegaClean } from '@sanity/client/stega'
 import type { Metadata } from 'next'
 import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
-import { locale as rootLocale } from 'next/root-params'
+import { getLocale } from 'next-intl/server'
 import { OrganizationJsonLd } from 'next-seo'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { getNameFromIso } from '@/sanity/helpers/localization'
@@ -16,7 +16,7 @@ import HomePage from '@/templates/homepage/HomePage'
 import { FriendlyCaptchaSdkWrapper } from './FriendlyCaptchaWrapper'
 
 export async function generateMetadata(): Promise<Metadata> {
-  const locale = await rootLocale()
+  const locale = await getLocale()
   const { data: metaData }: { data: any } = await routeSanityFetch({
     query: homePageMetaQuery,
     params: {
@@ -33,7 +33,7 @@ export default async function Home(_: PageProps<'/[locale]'>) {
   //const isInPresentationToolContext =
   //  (await cookies()).get('preview-fetch-dest')?.value === 'iframe'
   const { isEnabled: isDraftMode } = await draftMode()
-  const locale = await rootLocale()
+  const locale = await getLocale()
 
   let pageContent = null
   const [siteMenuResult, homePageData] = await Promise.all([
