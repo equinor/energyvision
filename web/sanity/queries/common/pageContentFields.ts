@@ -544,6 +544,7 @@ _type == "keyNumbers" =>{
       "background": {
         "backgroundUtility": theme.theme.background.key,
       },
+      "foreground": theme.theme.foreground.key,
     },
     asDiagram,
     "items": items[]->{

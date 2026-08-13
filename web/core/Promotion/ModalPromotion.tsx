@@ -2,7 +2,7 @@
 
 import { add_circle_filled, add_circle_outlined } from '@equinor/eds-icons'
 import type { PortableTextBlock } from '@portabletext/types'
-import { forwardRef, type ReactNode, useState } from 'react'
+import { forwardRef, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { Image } from '@/core/Image/Image'
 import type { Image as ImageType } from '@/core/Image/imageUtilities'
@@ -20,12 +20,10 @@ export type ModalPromotionProps = {
   image?: ImageType
   title: string | PortableTextBlock[]
   ingress?: string | PortableTextBlock[]
-  /** about title element */
-  eyebrow?: ReactNode
   /** h2 or h3 if section title in parent block component */
   hasSectionTitle?: boolean
   modalTitle?: string
-  modalContent?: ReactNode
+  modalContent?: React.ReactNode
   className?: string
 }
 
@@ -49,7 +47,6 @@ export const ModalPromotion = forwardRef<HTMLDivElement, ModalPromotionProps>(
       image,
       className = '',
       hasSectionTitle = false,
-      eyebrow,
       modalTitle,
       modalContent,
     },
@@ -63,7 +60,7 @@ export const ModalPromotion = forwardRef<HTMLDivElement, ModalPromotionProps>(
       e.preventDefault()
       const searchParams = new URLSearchParams()
       if (plainText) {
-        searchParams.set('hashtag', encodeURIComponent(plainText))
+        searchParams.set('#', encodeURIComponent(plainText))
       }
       window.history.pushState({}, '', `?${searchParams.toString()}`)
       setIsModalOpen(true)
@@ -74,7 +71,7 @@ export const ModalPromotion = forwardRef<HTMLDivElement, ModalPromotionProps>(
         <div
           ref={ref}
           className={twMerge(
-            `grid w-full max-w-full grid-cols-1 grid-rows-[minmax(31%,200px)_1fr] overflow-hidden rounded-card`,
+            `grid min-h-75 w-full min-w-75 max-w-full grid-cols-1 grid-rows-[minmax(31%,200px)_1fr] overflow-hidden rounded-card`,
             colorKeyToUtilityMap[background ?? 'gray-20']?.background,
             className,
           )}
@@ -100,7 +97,6 @@ export const ModalPromotion = forwardRef<HTMLDivElement, ModalPromotionProps>(
             className='group/btn relative flex w-full cursor-pointer flex-col items-start text-start'
           >
             <div className='flex w-full grow flex-col items-start justify-start ps-10 pe-10 pt-6 pb-12'>
-              {eyebrow && eyebrow}
               <div className='flex h-fit flex-col justify-start'>
                 {plainText && (
                   <Typography
