@@ -200,11 +200,12 @@ export default {
               name: 'tabsInfoPanel',
               type: 'tabsInfoPanel',
             },
-            {
+            //Some more work is needed, will continue in new branch for this.
+            /*             {
               name: 'tabsEmbeddedVideosPanel',
               type: 'tabsEmbeddedVideosPanel',
               title: 'Embedded videos panel',
-            },
+            }, */
           ],
           options: { sortable: false },
           hidden: ({
