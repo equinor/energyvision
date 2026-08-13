@@ -89,7 +89,10 @@ export default async function NewsroomPage(_: PageProps<'/[locale]/news'>) {
   const { headerData, pageData } = pageResults
   const { data: siteMenuData } = siteMenuResult || {}
 
-  const response = Flags.HAS_NEWSROOM ? await getInitialResponse() : undefined
+  const response =
+    Flags.HAS_NEWSROOM && locale in ['en-GB', 'nb-NO']
+      ? await getInitialResponse()
+      : undefined
 
   return (
     <>
