@@ -17,8 +17,6 @@ import Footer from '@/sections/Footer/Footer'
 import GoToTopButton from '@/sections/GoToTopButton'
 import { SiteImprove } from './SiteImprove'
 
-export const dynamic = 'force-static'
-
 const equinor = localFont({
   src: [
     { path: '../fonts/equinor/Equinor-Regular.woff' },
@@ -35,10 +33,6 @@ const equinor = localFont({
 } */
 
 //the [locale] segment corresponds to the locale (iso format), not the prefix(/no).
-
-export function generateStaticParams() {
-  return languages.map(language => ({ locale: language.iso }))
-}
 
 export default async function LocaleLayout({
   children,
