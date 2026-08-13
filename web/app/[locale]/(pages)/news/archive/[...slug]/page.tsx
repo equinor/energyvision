@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { notFound } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 import { defaultLanguage, languages, metaTitleSuffix } from '@/languageConfig'
 import archivedNews from '@/lib/archive/archivedNewsPaths.json'
 import { host } from '@/lib/config'
@@ -13,7 +13,12 @@ import Header from '@/sections/Header/Header'
 import ArchivedNews from '@/templates/archivedNews/ArchivedNews'
 
 type Params = Promise<{ locale: string; slug: string[] }>
-//TODO types
+
+type ArchivedContentType = {
+  title: string
+  description: string
+  content: string
+}
 async function getArchivedPageData(params: { locale: string; slug: string[] }) {
   const { locale: routeLocale, slug: pagePathArray } = params
   const locale = routeLocale === 'en-GB' ? 'en' : 'no'
@@ -24,13 +29,16 @@ async function getArchivedPageData(params: { locale: string; slug: string[] }) {
     e => e.slug === `/news/archive/${pagePath}`,
   )
   if (archivedItems.length === 0) return notFound()
+  if (archivedItems.length === 1 && archivedItems[0].locale !== locale) {
+    // fallback to another language if the requested locale does not exist for the archived page
+    return fallbackToAnotherLanguage(pagePathArray, pagePath, locale)
+  }
 
   const response = await fetchArchiveData(pagePathArray, pagePath, locale)
-
-  if (response.status === 404)
-    return fallbackToAnotherLanguage(pagePathArray, pagePath, locale)
-
-  const pageData = await parseResponse(response)
+  if (response.status === 404) {
+    notFound()
+  }
+  const pageData: ArchivedContentType = await parseResponse(response)
   return pageData
 }
 
@@ -52,7 +60,7 @@ export async function generateMetadata({
   const fullUrl = `${host.url}${slugs.find(it => it.lang === (locale === 'en' ? 'en_GB' : 'nb_NO'))?.slug}`
 
   const pageData = await getArchivedPageData({ locale, slug: pagePathArray })
-  if (!pageData) {
+  if ('redirect' in pageData || 'notFound' in pageData) {
     return {
       title: metaTitleSuffix,
       openGraph: {
@@ -233,7 +241,10 @@ export default async function ArchivedNewsPage({ params }: { params: Params }) {
 
   const pageData = await getArchivedPageData(await params)
 
-  if (!pageData) notFound()
+  if (!pageData || 'notFound' in pageData) notFound()
+  if ('redirect' in pageData) {
+    redirect(pageData.redirect.destination, 'replace')
+  }
   return (
     <>
       <Header siteMenuData={siteMenuData} headerData={headerData} />
