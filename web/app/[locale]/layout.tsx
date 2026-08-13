@@ -99,14 +99,6 @@ export default async function LocaleLayout({
       {/** TODO look into scripts */}
       {!(isPreview || dataset === 'global-development') && (
         <>
-          <Script
-            src='https://consent.cookiebot.com/uc.js'
-            id='Cookiebot'
-            strategy='beforeInteractive'
-            data-cbid='f1327b03-7951-45da-a2fd-9181babc783f'
-            data-blockingmode='auto'
-            data-culture={locale === 'nb-NO' ? 'nb' : getLocaleFromIso(locale)}
-          />
           {process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID && (
             //https://nextjs.org/docs/app/guides/third-party-libraries#google-third-parties
             <GoogleTagManager
