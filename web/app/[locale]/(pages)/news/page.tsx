@@ -3,7 +3,8 @@ import { algoliasearch } from 'algoliasearch'
 import type { Metadata } from 'next'
 import { unstable_cache } from 'next/cache'
 import dynamic from 'next/dynamic'
-import { setRequestLocale } from 'next-intl/server'
+import { notFound } from 'next/navigation'
+import { locale as rootLocale } from 'next/root-params'
 import { algolia } from '@/lib/config'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { getNameFromIso } from '@/sanity/helpers/localization'
@@ -17,19 +18,8 @@ import NewsRoomTemplate from '@/templates/newsroom/Newsroom'
 
 const TopicPage = dynamic(() => import('@/templates/topic/TopicPage'))
 
-export async function generateStaticParams() {
-  if (Flags.HAS_NEWSROOM) {
-    return [{ locale: 'en-GB' }]
-  }
-  return []
-}
-
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ locale: string }>
-}): Promise<Metadata> {
-  const { locale } = await params
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await rootLocale()
   const pageSlug = newsSlug[getNameFromIso(locale)]
   if (Flags.HAS_NEWSROOM) {
     const { data: metaData }: { data: any } = await routeSanityFetch({
@@ -47,48 +37,41 @@ export async function generateMetadata({
   return constructSanityMetadata(pageSlug, locale, undefined)
 }
 
-const getInitialResponse = unstable_cache(
-  // this gets revalidated by path
-  async (locale: string) => {
-    const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
-    const indexName = `${envPrefix}_NEWS_${locale}`
+export default async function NewsroomPage(_: PageProps<'/[locale]/news'>) {
+  const locale = await rootLocale()
 
-    console.log(
-      new Date(),
-      'Fetching initial response for',
-      indexName,
-      'after revalidation',
-    )
-    const searchClient = algoliasearch(
-      algolia.applicationId,
-      algolia.searchApiKey,
-    )
-    const response = await searchClient.searchSingleIndex({
-      indexName: indexName,
-      searchParams: {
-        hitsPerPage: 50,
-        facetFilters: ['type:news', 'topicTags:-Crude Oil Assays'],
-        facetingAfterDistinct: true,
-        facets: ['countryTags', 'topicTags', 'year'],
-      },
-    })
-    return response
-  },
-  undefined,
-  {
-    tags: [`newsroom_en-GB`],
-  },
-)
+  const getInitialResponse = unstable_cache(
+    // this gets revalidated by path
+    async () => {
+      const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
+      const indexName = `${envPrefix}_NEWS_${locale}`
 
-export default async function NewsroomPage({
-  params,
-}: {
-  params: Promise<{ slug: string; locale: string }>
-}) {
-  const { locale, slug } = await params
-  // Enable static rendering
-  setRequestLocale(locale)
-
+      console.log(
+        new Date(),
+        'Fetching initial response for',
+        indexName,
+        'after revalidation',
+      )
+      const searchClient = algoliasearch(
+        algolia.applicationId,
+        algolia.searchApiKey,
+      )
+      const response = await searchClient.searchSingleIndex({
+        indexName: indexName,
+        searchParams: {
+          hitsPerPage: 50,
+          facetFilters: ['type:news', 'topicTags:-Crude Oil Assays'],
+          facetingAfterDistinct: true,
+          facets: ['countryTags', 'topicTags', 'year'],
+        },
+      })
+      return response
+    },
+    undefined,
+    {
+      tags: [`newsroom`, await locale],
+    },
+  )
   const [siteMenuResult, pageResults] = await Promise.all([
     routeSanityFetch({
       query: Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery,
@@ -97,7 +80,7 @@ export default async function NewsroomPage({
       },
     }),
     getPage({
-      slug: slug ?? newsSlug[getNameFromIso(locale)],
+      slug: newsSlug[getNameFromIso(locale)],
       locale,
       tags: ['newsroom'],
     }),
@@ -106,9 +89,10 @@ export default async function NewsroomPage({
   const { headerData, pageData } = pageResults
   const { data: siteMenuData } = siteMenuResult || {}
 
-  const response = Flags.HAS_NEWSROOM
-    ? await getInitialResponse(locale)
-    : undefined
+  const response =
+    Flags.HAS_NEWSROOM && locale in ['en-GB', 'nb-NO']
+      ? await getInitialResponse()
+      : undefined
 
   return (
     <>
