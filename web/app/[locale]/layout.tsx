@@ -8,6 +8,7 @@ import Script from 'next/script'
 import { NextIntlClientProvider } from 'next-intl'
 import { getTranslations } from 'next-intl/server'
 import { PageProvider } from '@/contexts/pageContext'
+import { languages } from '@/languageConfig'
 import { getLocaleFromIso, getNameFromIso } from '@/sanity/helpers/localization'
 import { dataset } from '@/sanity/lib/api'
 import { routeSanityFetch, SanityLive } from '@/sanity/lib/live'
@@ -36,7 +37,7 @@ const equinor = localFont({
 //the [locale] segment corresponds to the locale (iso format), not the prefix(/no).
 
 export function generateStaticParams() {
-  return [{ locale: 'en-GB' }, { locale: 'nb-NO' }]
+  return languages.map(language => ({ locale: language.iso }))
 }
 
 export default async function LocaleLayout({
