@@ -16,6 +16,8 @@ import Footer from '@/sections/Footer/Footer'
 import GoToTopButton from '@/sections/GoToTopButton'
 import { SiteImprove } from './SiteImprove'
 
+export const dynamic = 'force-static'
+
 const equinor = localFont({
   src: [
     { path: '../fonts/equinor/Equinor-Regular.woff' },
@@ -32,6 +34,10 @@ const equinor = localFont({
 } */
 
 //the [locale] segment corresponds to the locale (iso format), not the prefix(/no).
+
+export function generateStaticParams() {
+  return [{ locale: 'en-GB' }, { locale: 'nb-NO' }]
+}
 
 export default async function LocaleLayout({
   children,
@@ -55,6 +61,18 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} className={`${equinor.className} `}>
       <body className='has-data-no-sticky:pt-topbar'>
+        {!isPreview && (
+          // cookiebot script must strictly be inside body.
+          <Script
+            src='https://consent.cookiebot.com/uc.js'
+            id='Cookiebot'
+            strategy='beforeInteractive'
+            data-cbid='f1327b03-7951-45da-a2fd-9181babc783f'
+            data-blockingmode='auto'
+            data-culture={locale === 'nb-NO' ? 'nb' : getLocaleFromIso(locale)}
+          />
+        )}
+
         <NextLink
           href='#mainTitle'
           className='sr-only bg-moss-green-50 text-sm transition focus:not-sr-only focus:flex focus:w-full focus:items-center focus:justify-center focus:p-4 focus:underline'
