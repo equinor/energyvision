@@ -1,3 +1,4 @@
+import { embeddedVideoListFields } from '../embeddedVideoListFields'
 import gridContentFields from '../gridContentFields'
 import { iframeCarouselFields } from '../iframeCarouselFields'
 import { importTableFields, tableV2Fields } from '../table'
@@ -554,6 +555,9 @@ _type == "keyNumbers" =>{
   },
   _type == "videoPlayerCarousel" => {
     ${videoPlayerCarouselFields}
+  },
+  _type == "embeddedVideoList" => {
+    ${embeddedVideoListFields}
   },
     _type == "tableV2" => {
     ${tableV2Fields}

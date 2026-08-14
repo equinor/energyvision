@@ -16,6 +16,9 @@ import BarChartBlock, {
 import { CampaignBanner } from '@/sections/CampaignBanner'
 import CookieDeclaration from '@/sections/CookieDeclaration/CookieDeclaration'
 import CardsList from '@/sections/cards/CardsList/CardsList'
+import EmbeddedVideoList, {
+  type EmbeddedVideoListData,
+} from '@/sections/EmbeddedVideoList/EmbeddedVideoList'
 import FigureBlock, {
   type FigureData,
 } from '@/sections/FigureBlock/FigureBlock'
@@ -116,6 +119,7 @@ export type ComponentSections =
   | StockValuesData
   | AnchorLinkData
   | VideoPlayerCarouselData
+  | EmbeddedVideoListData
   | CookieDeclarationData
   | TextTeaserData
   | KeyNumbersData
@@ -571,6 +575,15 @@ export const PageContent = ({ data, heroProps }: PageContentProps) => {
             key={c.id}
             {...commonProps}
             data={c as VideoPlayerCarouselData}
+            className={allSpacings}
+          />
+        )
+      case 'embeddedVideoList':
+        return (
+          <EmbeddedVideoList
+            key={c.id}
+            {...commonProps}
+            data={c as EmbeddedVideoListData}
             className={allSpacings}
           />
         )
