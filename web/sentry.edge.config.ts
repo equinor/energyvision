@@ -10,8 +10,7 @@ Sentry.init({
   environment: process.env.NEXT_PUBLIC_SANITY_DATASET || 'global-development',
   // Define how likely traces are sampled. Adjust this value in production, or use tracesSampler for greater control.
   tracesSampleRate: 1,
-  //Investigate, but silence the flooding of errors
-  ignoreErrors: [/Can't find variable: _sz/],
+
   // Setting this option to true will print useful information to the console while you're setting up Sentry.
   debug: false,
 })
