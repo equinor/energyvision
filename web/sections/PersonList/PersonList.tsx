@@ -230,8 +230,8 @@ const PersonList = forwardRef<HTMLDivElement, PersonListProps>(
                           />
                         </div>
                       )}
-                      <div className='flex flex-col justify-center gap-1'>
-                        <Typography variant='h4'>
+                      <div className='flex flex-col justify-center'>
+                        <Typography as='h2' variant='h3'>
                           {item.person?.name}
                         </Typography>
                         {item.person?.title && (
