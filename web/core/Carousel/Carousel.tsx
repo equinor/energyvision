@@ -438,7 +438,6 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
       )
     }
     const getCarouselItem = (item: CarouselItemTypes, i: number) => {
-      console.log('getCarouselItem', item, i)
       switch (variant) {
         case 'video':
           return getVideoVariantBody(item as VideoPlayerCarouselItem, i)
