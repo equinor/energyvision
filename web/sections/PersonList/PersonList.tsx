@@ -14,13 +14,17 @@ import {
 } from '@/styles/colorKeyToUtilityMap'
 
 export type PersonListItem = {
-  _id: string
-  name: string
-  title?: string
-  image?: ImageType
-  bio?: PortableTextBlock[]
-  hierarchyLevel?: '1' | '2' | '3'
-  slug?: { current: string }
+  id: string
+  highlighted?: boolean
+  person: {
+    id: string
+    name: string
+    title?: string
+    image?: ImageType
+    bio?: PortableTextBlock[]
+    hierarchyLevel?: '1' | '2' | '3'
+    slug?: string
+  }
 }
 
 export type PersonListData = {
@@ -58,9 +62,10 @@ const PersonList = forwardRef<HTMLDivElement, PersonListProps>(
         '2': [],
         '3': [],
       }
-      data.items.forEach(person => {
-        const level = person.hierarchyLevel || '1'
-        groups[level].push(person)
+      data.items.forEach(item => {
+        if (!item.person) return
+        const level = item.person.hierarchyLevel || '1'
+        groups[level].push(item)
       })
       return groups
     }, [data.items, data.asDiagram])
@@ -90,7 +95,7 @@ const PersonList = forwardRef<HTMLDivElement, PersonListProps>(
         )}
 
         {data.asDiagram && groupedByLevel ? (
-          <div className='px-layout-sm lg:px-layout-lg'>
+          <div className='px-layout-sm'>
             {/* Organizational levels */}
             <div className='relative isolate space-y-16 pt-8'>
               {/* SVG scoped to levels container */}
@@ -149,44 +154,49 @@ const PersonList = forwardRef<HTMLDivElement, PersonListProps>(
                 return (
                   <div key={`level-group-${level}`}>
                     <ul className='m-0 grid list-none grid-cols-[repeat(auto-fit,minmax(18.75rem,18.75rem))] justify-center gap-x-10 gap-y-6 p-0'>
-                      {people.map(person => (
-                        <li key={person._id}>
-                          <ModalPromotion
-                            title={person.name}
-                            image={person.image}
-                            ingress={person.title}
-                            background={foreground}
-                            modalTitle={person.name}
-                            modalContent={
-                              <div className='flex flex-col gap-12'>
-                                <div className='flex items-center gap-8'>
-                                  {person.image && (
-                                    <div className='w-[30%] shrink-0'>
-                                      <Image
-                                        image={person.image}
-                                        aspectRatio='1:1'
-                                        imageClassName='rounded-full'
-                                        className='w-full'
-                                      />
+                      {people.map(
+                        item =>
+                          item.person && (
+                            <li key={item.id}>
+                              <ModalPromotion
+                                title={item.person.name}
+                                image={item.person.image}
+                                ingress={item.person.title}
+                                background={foreground}
+                                modalTitle={item.person.name}
+                                modalContent={
+                                  <div className='flex flex-col gap-12'>
+                                    <div className='flex items-center gap-8'>
+                                      {item.person.image && (
+                                        <div className='w-[30%] shrink-0'>
+                                          <Image
+                                            image={item.person.image}
+                                            aspectRatio='1:1'
+                                            imageClassName='rounded-full'
+                                            className='w-full'
+                                          />
+                                        </div>
+                                      )}
+                                      <div className='flex flex-col justify-center gap-1'>
+                                        <Typography variant='h4'>
+                                          {item.person.name}
+                                        </Typography>
+                                        {item.person.title && (
+                                          <Typography variant='base'>
+                                            {item.person.title}
+                                          </Typography>
+                                        )}
+                                      </div>
                                     </div>
-                                  )}
-                                  <div className='flex flex-col justify-center gap-1'>
-                                    <Typography variant='h4'>
-                                      {person.name}
-                                    </Typography>
-                                    {person.title && (
-                                      <Typography variant='base'>
-                                        {person.title}
-                                      </Typography>
+                                    {item.person.bio && (
+                                      <Blocks value={item.person.bio} />
                                     )}
                                   </div>
-                                </div>
-                                {person.bio && <Blocks value={person.bio} />}
-                              </div>
-                            }
-                          />
-                        </li>
-                      ))}
+                                }
+                              />
+                            </li>
+                          ),
+                      )}
                     </ul>
                   </div>
                 )
@@ -194,44 +204,70 @@ const PersonList = forwardRef<HTMLDivElement, PersonListProps>(
             </div>
           </div>
         ) : (
-          <ul className='m-0 grid list-none grid-cols-[repeat(auto-fill,minmax(min(18.75rem,100%),1fr))] gap-6 p-0 px-layout-sm lg:px-layout-lg'>
-            {data.items.map(person => (
-              <li key={person._id}>
-                <ModalPromotion
-                  title={person.name}
-                  image={person.image}
-                  ingress={person.title}
-                  background={foreground}
-                  modalTitle={person.name}
-                  modalContent={
-                    <div className='flex flex-col gap-6'>
-                      <div className='flex items-center gap-6'>
-                        {person.image && (
-                          <div className='w-[30%] shrink-0'>
-                            <Image
-                              image={person.image}
-                              aspectRatio='1:1'
-                              imageClassName='rounded-full'
-                              className='w-full'
-                            />
-                          </div>
-                        )}
-                        <div className='flex flex-col justify-center gap-1'>
-                          <Typography variant='h4'>{person.name}</Typography>
-                          {person.title && (
-                            <Typography variant='body'>
-                              {person.title}
-                            </Typography>
-                          )}
+          (() => {
+            const validItems = data.items.filter(item => item.person)
+            const highlighted = validItems.find(item => item.highlighted)
+            const rest = validItems.filter(item => !item.highlighted)
+
+            const renderCard = (item: PersonListItem) => (
+              <ModalPromotion
+                className='h-full'
+                title={item.person?.name}
+                image={item.person?.image}
+                ingress={item.person?.title}
+                background={foreground}
+                modalTitle={item.person?.name}
+                modalContent={
+                  <div className='flex flex-col gap-6'>
+                    <div className='flex items-center gap-6'>
+                      {item.person?.image && (
+                        <div className='w-[30%] shrink-0'>
+                          <Image
+                            image={item.person.image}
+                            aspectRatio='1:1'
+                            imageClassName='rounded-full'
+                            className='w-full'
+                          />
                         </div>
+                      )}
+                      <div className='flex flex-col justify-center gap-1'>
+                        <Typography variant='h4'>
+                          {item.person?.name}
+                        </Typography>
+                        {item.person?.title && (
+                          <Typography variant='body'>
+                            {item.person.title}
+                          </Typography>
+                        )}
                       </div>
-                      {person.bio && <Blocks value={person.bio} />}
                     </div>
-                  }
-                />
-              </li>
-            ))}
-          </ul>
+                    {item.person?.bio && <Blocks value={item.person.bio} />}
+                  </div>
+                }
+              />
+            )
+
+            return (
+              <div className='flex flex-col gap-6 px-layout-sm'>
+                {highlighted && (
+                  <ul className='m-0 grid list-none grid-cols-[minmax(min(18.75rem,100%),1fr)] justify-center p-0 sm:grid-cols-[18.75rem] lg:grid-cols-[22rem]'>
+                    <li key={highlighted.id} className='flex'>
+                      {renderCard(highlighted)}
+                    </li>
+                  </ul>
+                )}
+                {rest.length > 0 && (
+                  <ul className='m-0 grid list-none grid-cols-[repeat(auto-fill,minmax(min(18.75rem,100%),1fr))] items-stretch gap-6 p-0'>
+                    {rest.map(item => (
+                      <li key={item.id} className='flex'>
+                        {renderCard(item)}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            )
+          })()
         )}
       </section>
     )

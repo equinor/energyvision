@@ -46,19 +46,50 @@ export default {
       type: 'array',
       of: [
         {
-          type: 'reference',
-          to: [{ type: 'person' }],
+          type: 'object',
+          name: 'personListItem',
+          title: 'Person',
+          fields: [
+            {
+              name: 'person',
+              title: 'Person',
+              type: 'reference',
+              to: [{ type: 'person' }],
+              validation: (Rule: Rule) => Rule.required(),
+            },
+            {
+              name: 'highlighted',
+              title: 'Highlight',
+              type: 'boolean',
+              initialValue: false,
+            },
+          ],
+          preview: {
+            select: {
+              name: 'person.name',
+              title: 'person.title',
+              media: 'person.image',
+              highlighted: 'highlighted',
+            },
+            prepare({ name, title, media, highlighted }: any) {
+              return {
+                title: name ?? 'Unknown person',
+                subtitle: `${title ?? ''}${highlighted ? ' ★ Highlighted' : ''}`,
+                media,
+              }
+            },
+          },
         },
       ],
       validation: (Rule: Rule) => Rule.required().min(1),
     },
-    {
+    /*     {
       type: 'boolean',
       name: 'asDiagram',
       title: 'Display as diagram',
       description:
         'Displays the people as an organization diagram where org level and connection lines is added to web component',
-    },
+    }, */
     theme,
   ],
   preview: {

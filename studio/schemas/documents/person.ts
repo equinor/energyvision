@@ -50,7 +50,7 @@ export default {
       },
       of: [configureBlockContent({ variant: 'ingress' })],
     },
-    {
+    /*     {
       title: 'Organization level',
       name: 'hierarchyLevel',
       type: 'string',
@@ -63,14 +63,14 @@ export default {
         layout: 'dropdown',
       },
       description: 'Position in organization diagram',
-    },
-    {
+    }, */
+    /*     {
       name: 'enableStructuredMarkup',
       type: 'boolean',
       title: 'Show the person card content as rich results',
       description: 'Enable this only if its about a person',
       fieldset: 'seo',
-    },
+    }, */
   ],
   preview: {
     select: {

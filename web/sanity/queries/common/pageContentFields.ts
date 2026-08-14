@@ -548,17 +548,21 @@ _type == "keyNumbers" =>{
       "foreground": theme.theme.foreground.key,
     },
     asDiagram,
-    "items": items[]->{
-      "id": _id,
-      name,
-      title,
-      image,
-      bio[]{
-        ...,
-        ${markDefs},
+    "items": items[]{
+      "id": _key,
+      highlighted,
+      "person": person->{
+        "id": _id,
+        name,
+        title,
+        image,
+        bio[]{
+          ...,
+          ${markDefs},
+        },
+        hierarchyLevel,
+        "slug": slug.current,
       },
-      hierarchyLevel,
-      "slug": slug.current,
     },
   },
 
