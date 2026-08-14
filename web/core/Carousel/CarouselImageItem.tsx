@@ -68,15 +68,10 @@ export const CarouselImageItem = forwardRef<
   },
   ref,
 ) {
-  console.log('CarouselImageItem image', image)
   const itemRef = useRef<HTMLLIElement>(null)
   const combinedItemRef = useMemo(
     () => mergeRefs<HTMLLIElement>(itemRef, ref),
     [ref],
-  )
-  const isImageWithRichTextCaption = useMemo(
-    () => type === 'imageWithRichTextBelow' && !!caption,
-    [caption, type],
   )
   const isJustImage =
     type === 'imageWithAltAndCaption' && !caption && !attribution
@@ -184,17 +179,18 @@ export const CarouselImageItem = forwardRef<
         />
       )
     }
-    if (isImageWithRichTextCaption && image) {
-      console.log('isImageWithRichTextCaption')
+    if (type === 'imageWithRichTextBelow' && image) {
       return (
         <figure className='flex h-full w-full flex-col'>
-          <Image
-            grid='sm'
-            image={image}
-            fill
-            className={`min-h-single-carousel-card-h-sm w-full rounded-card md:min-h-single-carousel-card-h-md lg:min-h-single-carousel-card-h-lg`}
-            imageClassName='aspect-4/3 rounded-card md:aspect-video'
-          />
+          <div className='relative aspect-video w-full shrink-0'>
+            <Image
+              grid='sm'
+              image={image}
+              fill
+              className='absolute inset-0'
+              imageClassName='rounded-t-card object-cover'
+            />
+          </div>
           <figcaption
             className={twMerge(
               'h-fit max-w-text p-4 lg:px-8 lg:py-6',

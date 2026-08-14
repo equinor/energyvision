@@ -56,7 +56,6 @@ export const Image = ({
   keepRatioOnMobile = false,
 }: ImageProps) => {
   const isLargerDisplays = useMediaQuery(`(min-width: 800px)`)
-  console.log('Image image', image)
 
   if (!image || !image?.asset) return null
 
