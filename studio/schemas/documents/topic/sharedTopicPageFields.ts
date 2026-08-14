@@ -48,6 +48,7 @@ export const content = {
     { type: 'iframeCarousel' },
     { type: 'videoPlayer' },
     { type: 'videoPlayerCarousel' },
+    { type: 'embeddedVideoList' },
     { type: 'tableV2' },
     { type: 'imageForText' },
     Flags.HAS_CAMPAIGN_BLOCKS && { type: 'grid' },

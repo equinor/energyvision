@@ -52,6 +52,16 @@ export const tabsComponentFields = /*groq*/ `
             ${downloadableImageFields},
           },
         },
+        tabPanel.panelType == "tabsEmbeddedVideosPanel" => tabPanel.videoPanel{
+          "id": _key,
+          "type": _type,
+          cookiePolicy,
+          "items": items[]{
+            "id": _key,
+            title[]{..., ${markDefs}},
+            videoId,
+          },
+        },
         tabPanel.panel[0]{
           "id": _key,
           "type": _type,
@@ -83,6 +93,14 @@ export const tabsComponentFields = /*groq*/ `
               ${linkSelectorFields},
               ${downloadableFileFields},
               ${downloadableImageFields},
+            },
+          },
+          _type == "tabsEmbeddedVideosPanel" => {
+            cookiePolicy,
+            "items": items[]{
+              "id": _key,
+              title[]{..., ${markDefs}},
+              videoId,
             },
           },
         }
