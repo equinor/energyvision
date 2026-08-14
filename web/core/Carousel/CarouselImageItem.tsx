@@ -62,10 +62,13 @@ export const CarouselImageItem = forwardRef<
     className = '',
     action,
     wasUserPress = false,
-    ...rest
+    ['aria-label']: ariaLabel,
+    style,
+    onFocus,
   },
   ref,
 ) {
+  console.log('CarouselImageItem image', image)
   const itemRef = useRef<HTMLLIElement>(null)
   const combinedItemRef = useMemo(
     () => mergeRefs<HTMLLIElement>(itemRef, ref),
@@ -182,6 +185,7 @@ export const CarouselImageItem = forwardRef<
       )
     }
     if (isImageWithRichTextCaption && image) {
+      console.log('isImageWithRichTextCaption')
       return (
         <figure className='flex h-full w-full flex-col'>
           <Image
@@ -237,8 +241,8 @@ export const CarouselImageItem = forwardRef<
 
   return (
     <li
-      {...rest}
       ref={combinedItemRef}
+      aria-label={ariaLabel}
       {...(displayMode === 'single' && {
         'aria-current': active,
         tabIndex: active ? 0 : -1,
@@ -246,6 +250,8 @@ export const CarouselImageItem = forwardRef<
       {...(displayMode === 'scroll' && {
         tabIndex: 0,
       })}
+      style={style}
+      onFocus={onFocus}
       className={twMerge(
         `relative mt-1 focus:outline-hidden focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-grey-50 focus-visible:outline-offset-2 dark:focus-visible:outline-white-100`,
         displayMode === 'single' &&

@@ -3,10 +3,9 @@ import { GoogleTagManager } from '@next/third-parties/google'
 import localFont from 'next/font/local'
 import { draftMode } from 'next/headers'
 import NextLink from 'next/link'
-import { locale as rootLocale } from 'next/root-params'
 import Script from 'next/script'
 import { NextIntlClientProvider } from 'next-intl'
-import { getTranslations } from 'next-intl/server'
+import { getLocale, getTranslations } from 'next-intl/server'
 import { PageProvider } from '@/contexts/pageContext'
 import { languages } from '@/languageConfig'
 import { getLocaleFromIso, getNameFromIso } from '@/sanity/helpers/localization'
@@ -44,7 +43,7 @@ export default async function LocaleLayout({
   children,
 }: LayoutProps<'/[locale]'>) {
   const t = await getTranslations()
-  const locale = await rootLocale()
+  const locale = await getLocale()
 
   const queryParams = {
     lang: getNameFromIso(locale) ?? 'en_GB',
