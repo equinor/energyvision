@@ -1,7 +1,7 @@
 'use client'
 import type { SanityImageObject } from '@sanity/image-url'
-import type { PortableTextBlock } from 'next-sanity'
 import { useLocale } from 'next-intl'
+import type { PortableTextBlock } from 'next-sanity'
 import { useId, useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'

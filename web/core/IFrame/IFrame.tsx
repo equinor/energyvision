@@ -5,6 +5,7 @@ import type { PortableTextBlock } from '@portabletext/types'
 import { useIsPresentationTool } from 'next-sanity/hooks'
 import { forwardRef, type HTMLAttributes, useId, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
+import { dataset } from '@/languageConfig'
 import Transcript from '@/sections/Transcript/Transcript'
 import { iframeSrcList } from '@/securityHeaders'
 import useConsent from '../../lib/hooks/useConsent'
@@ -98,7 +99,10 @@ export const IFrame = forwardRef<HTMLDivElement, IFrameProps>(function IFrame(
   ref,
 ) {
   const isPresentationTool = useIsPresentationTool()
-  const isPreview = isPresentationTool || isDraftModeEnabled()
+  const isPreview =
+    isPresentationTool ||
+    isDraftModeEnabled() ||
+    dataset === 'global-development'
   const [consented, setConsented] = useState(useConsent(cookiePolicy))
   const titleId = useId()
   const descriptionId = useId()
