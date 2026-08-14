@@ -118,7 +118,7 @@ export const resolveImage = (props: ResolveImageProps) => {
   }
   //Crops the image to fill the specified width (w) and height (h).
   url = urlForImage(image)?.width(width).height(height).fit('crop').url()
-  console.log('resolveImage url', url)
+
   return { url, width, height }
 }
 
