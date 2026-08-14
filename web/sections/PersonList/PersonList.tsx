@@ -1,6 +1,7 @@
 'use client'
 
 import type { PortableTextBlock } from '@portabletext/types'
+import { useSearchParams } from 'next/navigation'
 import { forwardRef, useMemo } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { Image } from '@/core/Image/Image'
@@ -53,6 +54,11 @@ const PersonList = forwardRef<HTMLDivElement, PersonListProps>(
   function PersonList({ anchor, data, className }, ref) {
     const backgroundUtility = data.designOptions?.background?.backgroundUtility
     const foreground = data.designOptions?.foreground
+    const searchParams = useSearchParams()
+    // URL hashtag param is set by ModalPromotion as encodeURIComponent(name)
+    const activePersonName = searchParams.get('person')
+      ? decodeURIComponent(searchParams.get('person') ?? '')
+      : null
 
     const groupedByLevel = useMemo(() => {
       if (!data.asDiagram) return null
@@ -217,6 +223,9 @@ const PersonList = forwardRef<HTMLDivElement, PersonListProps>(
                 ingress={item.person?.title}
                 background={foreground}
                 modalTitle={item.person?.name}
+                initialOpen={
+                  !!activePersonName && item.person?.name === activePersonName
+                }
                 modalContent={
                   <div className='flex flex-col gap-6'>
                     <div className='flex items-center gap-6'>

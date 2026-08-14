@@ -2,7 +2,7 @@
 
 import { add_circle_filled, add_circle_outlined } from '@equinor/eds-icons'
 import type { PortableTextBlock } from '@portabletext/types'
-import { forwardRef, useState } from 'react'
+import { forwardRef, useEffect, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { Image } from '@/core/Image/Image'
 import type { Image as ImageType } from '@/core/Image/imageUtilities'
@@ -24,6 +24,7 @@ export type ModalPromotionProps = {
   hasSectionTitle?: boolean
   modalTitle?: string
   modalContent?: React.ReactNode
+  initialOpen?: boolean
   className?: string
 }
 
@@ -49,18 +50,23 @@ export const ModalPromotion = forwardRef<HTMLDivElement, ModalPromotionProps>(
       hasSectionTitle = false,
       modalTitle,
       modalContent,
+      initialOpen = false,
     },
     ref,
   ) {
-    const [isModalOpen, setIsModalOpen] = useState(false)
+    const [isModalOpen, setIsModalOpen] = useState(initialOpen)
     const plainText = getPlainText(title)
     const plainIngress = getPlainText(ingress)
+
+    useEffect(() => {
+      if (initialOpen) setIsModalOpen(true)
+    }, [initialOpen])
 
     const handleOpenModal = (e: React.MouseEvent) => {
       e.preventDefault()
       const searchParams = new URLSearchParams()
       if (plainText) {
-        searchParams.set('#', encodeURIComponent(plainText))
+        searchParams.set('person', encodeURIComponent(plainText))
       }
       window.history.pushState({}, '', `?${searchParams.toString()}`)
       setIsModalOpen(true)
