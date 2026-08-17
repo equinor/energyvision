@@ -147,6 +147,7 @@ export const getDnsRedirect = (host, pathname) => {
   return redirect && `https://www.equinor.com${redirect.to}`
 }
 
+// List of redirects for old domains to the new domain. This is used in the getDnsRedirect function above.
 const dnsRedirects = [
   {
     from: 'equinor.co.uk/mariner',
