@@ -5,7 +5,7 @@ import { routing } from './i18n/routing'
 import archivedNews from './lib/archive/archivedNewsPaths.json'
 import { Flags } from './sanity/helpers/datasetHelpers'
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { getDnsRedirect, getWWWRedirect } from './sanity/interface/redirects'
+import { getWWWRedirect } from './sanity/interface/redirects'
 
 const PERMANENT_REDIRECT = 301
 //const TEMPORARY_REDIRECT = 302
@@ -42,24 +42,7 @@ export async function proxy(request: NextRequest) {
     return NextResponse.rewrite(`${origin}${rewrite}`)
   }
 
-  // Redirect statoil enrollment pdf
-  if (
-    pathname.includes(
-      '/content/dam/statoil/documents/supply-chain/statoil-deposit-enrollment-form.pdf',
-    )
-  ) {
-    return NextResponse.redirect(
-      `${origin}/where-we-are/us-owner-relations`,
-      PERMANENT_REDIRECT,
-    )
-  }
-
-  // Check if it is a DNS redirect
   const host = String(request.headers.get('host'))
-  const dnsRedirect = getDnsRedirect(host, pathname)
-  if (dnsRedirect) {
-    return NextResponse.redirect(dnsRedirect, PERMANENT_REDIRECT)
-  }
 
   // Skip WWW redirect for Radix URLs and localhost
   if (!wwwExcludedDomains.includes(host)) {
