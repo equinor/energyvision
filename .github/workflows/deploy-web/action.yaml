@@ -111,6 +111,7 @@ runs:
     - name: Generate redirects 🔀
       shell: bash
       env:
+        CI: true
         NEXT_PUBLIC_SANITY_DATASET: ${{ inputs.datasetName }}
         NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ inputs.projectId }}
         SANITY_API_TOKEN: ${{ inputs.sanityApiToken }}
