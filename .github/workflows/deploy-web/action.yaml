@@ -90,6 +90,11 @@ runs:
         username: ${{ github.actor }}
         password: ${{ inputs.githubToken }}
 
+    - name: Set up pnpm 🔧
+      uses: pnpm/action-setup@v4
+      with:
+        version: 10.24.0
+
     - name: Set up Node.js 🔧
       uses: actions/setup-node@v6
       with:
@@ -103,7 +108,6 @@ runs:
         NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ inputs.projectId }}
         SANITY_API_TOKEN: ${{ inputs.sanityApiToken }}
       run: |
-        corepack enable
         pnpm install --frozen-lockfile --filter ./web...
         pnpm web generate-redirects
     
