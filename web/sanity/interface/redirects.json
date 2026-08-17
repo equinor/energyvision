@@ -10,5 +10,25 @@
     ],
     "permanent": true,
     "destination": "/not-supported.html"
+  },
+  {
+    "source": "/test/external-redirect",
+    "permanent": true,
+    "destination": "https://equinor.com"
+  },
+  {
+    "source": "/no/test/redirect-til-en",
+    "destination": "/docs",
+    "permanent": true
+  },
+  {
+    "source": "/test/redirect-to-frontpage",
+    "destination": "/",
+    "permanent": true
+  },
+  {
+    "source": "/test/redirect-fra",
+    "destination": "/no/test",
+    "permanent": true
   }
 ]

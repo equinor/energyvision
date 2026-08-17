@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: development
-      url: https://web-global-development-upgrade-equinor-web-sites-dev.c2.radix.equinor.com/
+      url: https://web-global-development-equinor-web-sites-dev.c2.radix.equinor.com/
     strategy:
       # The matrix approach is needed to re-use code created for satellites
       matrix:
@@ -38,7 +38,7 @@ jobs:
       - id: deploy-global-development
         uses: ./.github/workflows/deploy-web/
         with:
-          imageName: ghcr.io/equinor/energyvision/web-${{ matrix.dataset }}-upgrade
+          imageName: ghcr.io/equinor/energyvision/web-${{ matrix.dataset }}
           projectId: h61q9gi9
           datasetName: ${{ matrix.dataset }}
           githubToken: ${{ secrets.GITHUB_TOKEN }}

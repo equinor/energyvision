@@ -4,7 +4,7 @@
 //import { ConfigRedirect } from '@/next.config'
 import { dataset } from '../../languageConfig'
 import { getLocaleFromName } from '../helpers/localization'
-import { notSecuredTokenClient } from '../lib/client'
+import { noCdnClient } from '../lib/client'
 
 /* export const getAllRedirects = async () => {
   try {
@@ -29,7 +29,7 @@ import { notSecuredTokenClient } from '../lib/client'
 } */
 
 const getExternalRedirects = async () => {
-  const result = await notSecuredTokenClient.fetch(
+  const result = await noCdnClient.fetch(
     `*[_type == "externalRedirect"]{from,to}`,
   )
   const externalRedirects = result
@@ -79,17 +79,22 @@ const getExternalRedirects = async () => {
 }
 
 export const getInternalRedirects = async () => {
-  const result = await notSecuredTokenClient.fetch(`*[_type == "redirect"]{
+  console.log('Fetching internal redirects from Sanity')
+  const result = await noCdnClient.fetch(`*[_type == "redirect"]{
   lang,
   from,
-  "to": to->slug.current
+  "to": select(to->_type == "route_homepage" => "/", to->slug.current)
 }`)
   const redirects = result
     .filter(e => e)
     .map(redirect => {
       const to = redirect.to === '/' ? '' : redirect.to
       const locale = getLocaleFromName(redirect.lang)
-      const des = `${locale !== 'en' ? `/${locale}` : ''}${to}`
+      const des = to
+        ? `${locale !== 'en' ? `/${locale}` : ''}${to}`
+        : locale !== 'en'
+          ? `/${locale}`
+          : '/'
 
       const nextRedirect = {
         source: redirect.from,
@@ -100,6 +105,7 @@ export const getInternalRedirects = async () => {
         ? { ...nextRedirect, locale: false }
         : nextRedirect
     })
+  console.log('Internal redirects fetched from Sanity', redirects)
   return [...redirects]
 }
 
