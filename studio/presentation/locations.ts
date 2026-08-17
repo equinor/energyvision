@@ -163,7 +163,7 @@ export const locations: DocumentLocationResolver = (params, context) => {
           locs = [
             {
               title: doc.title ? plainTitle : 'Untitled',
-              href: `${doc?.lang !== defaultWebLang?.name ? `${locale}/` : ''}${doc?.slug?.current}`,
+              href: `${doc?.lang !== defaultWebLang?.name ? `${locale}` : ''}${doc?.slug?.current}`,
             },
           ]
         }
