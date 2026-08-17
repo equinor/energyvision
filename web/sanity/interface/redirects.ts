@@ -118,6 +118,7 @@ export const getAllRedirects = async () => {
   return result.flat()
 }
 
+//Get the redirect for www. If the host does not include www, it will return the redirect URL with www. Otherwise, it will return undefined.
 export const getWWWRedirect = (requestLocale, host, pathname) => {
   if (!host.includes('www')) {
     return `https://www.${host}/${requestLocale}${pathname}`
