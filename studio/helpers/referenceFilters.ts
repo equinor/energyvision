@@ -27,7 +27,7 @@ export const filterByPages = ({ document }: { document: SanityDocument }) => {
   const lang = langOrDefault(document.lang);
 
   return {
-    filter: /* groq */ `_type match $routeLang || _type in ['news', 'newsroom', 'localNews', 'magazine', 'magazineIndex'] && lang == $lang`,
+    filter: /* groq */ `_type == 'route_homepage' || _type match $routeLang || _type in ['news', 'newsroom', 'localNews', 'magazine', 'magazineIndex'] && lang == $lang`,
     params: {
       routeLang: `route_${lang}*`,
       lang: lang,

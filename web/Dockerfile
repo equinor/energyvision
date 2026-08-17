@@ -86,6 +86,7 @@ COPY --from=builder  --chown="$USER":"$USER" /app/web/.next/standalone ./
 COPY --from=builder  --chown="$USER":"$USER" /app/web/.next/static ./web/.next/static
 # Copy the complete node_modules structure from your installer stage to preserve symlinks
 COPY --from=builder /app/node_modules ./node_modules
+COPY --from=build --chown="$USER":"$USER" /app/web/sanity/interface/redirects.json ./sanity/interface/redirects.json
 
 USER "$UID"
 EXPOSE 3000

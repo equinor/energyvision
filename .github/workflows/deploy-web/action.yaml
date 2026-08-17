@@ -96,6 +96,23 @@ runs:
         registry: ghcr.io
         username: ${{ github.actor }}
         password: ${{ inputs.githubToken }}
+
+    - name: Set up Node.js 🔧
+      uses: actions/setup-node@v6
+      with:
+        node-version: 22
+        cache: pnpm
+
+    - name: Generate redirects 🔀
+      shell: bash
+      env:
+        NEXT_PUBLIC_SANITY_DATASET: ${{ inputs.datasetName }}
+        NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ inputs.projectId }}
+        SANITY_API_TOKEN: ${{ inputs.sanityApiToken }}
+      run: |
+        corepack enable
+        pnpm install --frozen-lockfile --filter ./web...
+        pnpm web generate-redirects
     
     - name: Build web component ⚙️
       id: build

@@ -10,7 +10,7 @@ export type ExternalRedirectsType = {
 export const redirects = /* groq */ `
   *[_type == "redirect" && (from == $slug || from == $slugWithLocale)][0]{
     "lang": lang,
-    "to": to->slug.current
+    "to": select(to->_type == "route_homepage" => "/", to->slug.current)
   }
 `
 
