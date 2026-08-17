@@ -125,6 +125,7 @@ export const getWWWRedirect = (requestLocale, host, pathname) => {
   return undefined
 }
 
+// This function is used to redirect old domains to the new domain. It checks the host and pathname and returns the new URL if a redirect is needed.
 export const getDnsRedirect = (host, pathname) => {
   const dns = host
     .replace('http://', '')
