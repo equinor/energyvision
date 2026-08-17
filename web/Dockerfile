@@ -32,6 +32,7 @@ RUN turbo prune energy-vision-web --docker
 # 4. Build application
 # -------------------------------------------------------- #
 FROM prepare AS build
+ENV CI=true
 
 # First install the dependencies (as they change less often)
 COPY --from=prepare /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
@@ -62,7 +63,7 @@ ENV NEXT_DEPLOYMENT_ID=${ARG_DEPLOYMENT_ID}
 RUN --mount=type=secret,id=sanity_api_token \
     --mount=type=secret,id=next_public_algolia_search_api_key \
     --mount=type=secret,id=next_server_actions_encryption_key \
-    sh -ec 'SANITY_API_TOKEN="$(cat /run/secrets/sanity_api_token)" NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY="$(cat /run/secrets/next_public_algolia_search_api_key)" NEXT_SERVER_ACTIONS_ENCRYPTION_KEY="$(cat /run/secrets/next_server_actions_encryption_key)" turbo build --filter=energy-vision-web'
+    sh -ec 'SANITY_API_TOKEN="$(cat /run/secrets/sanity_api_token)" pnpm web generate-redirects && SANITY_API_TOKEN="$(cat /run/secrets/sanity_api_token)" NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY="$(cat /run/secrets/next_public_algolia_search_api_key)" NEXT_SERVER_ACTIONS_ENCRYPTION_KEY="$(cat /run/secrets/next_server_actions_encryption_key)" turbo build --filter=energy-vision-web'
 
 # -------------------------------------------------------- #
 # 6. Runtime container
