@@ -73,10 +73,44 @@ const getExternalRedirects = async () => {
         permanent: true,
       },
     ]
-    redirects.concat(fiftySiteRedirects)
+    redirects.push(...fiftySiteRedirects)
   }
-  return redirects.filter(e => e)
+  return [...redirects, ...getStaticRedirects()].filter(e => e)
 }
+
+const getStaticRedirects = () => [
+  {
+    source:
+      '/content/dam/statoil/documents/supply-chain/statoil-deposit-enrollment-form.pdf',
+    destination: '/where-we-are/us-owner-relations',
+    permanent: true,
+  },
+  {
+    source: '/:path*',
+    has: [{ type: 'host', value: 'statoil.com' }],
+    destination: 'https://www.equinor.com/:path*',
+    permanent: true,
+  },
+  {
+    source: '/:path*',
+    has: [{ type: 'host', value: 'equinor.kr' }],
+    destination: 'https://www.equinor.co.kr/:path*',
+    permanent: true,
+  },
+  ...dnsRedirects.map(redirect => {
+    const separator = redirect.from.indexOf('/')
+    const host =
+      separator === -1 ? redirect.from : redirect.from.slice(0, separator)
+    const source = separator === -1 ? '/:path*' : redirect.from.slice(separator)
+
+    return {
+      source,
+      has: [{ type: 'host', value: host }],
+      destination: `https://www.equinor.com${redirect.to}`,
+      permanent: true,
+    }
+  }),
+]
 
 export const getInternalRedirects = async () => {
   console.log('Fetching internal redirects from Sanity')

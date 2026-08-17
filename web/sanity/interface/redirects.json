@@ -17,6 +17,230 @@
     "destination": "https://equinor.com"
   },
   {
+    "source": "/50/en/:slug*",
+    "destination": "/magazine",
+    "permanent": true
+  },
+  {
+    "source": "/50/:slug*",
+    "destination": "/no/magasin",
+    "permanent": true
+  },
+  {
+    "source": "/content/dam/statoil/documents/supply-chain/statoil-deposit-enrollment-form.pdf",
+    "destination": "/where-we-are/us-owner-relations",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "statoil.com"
+      }
+    ],
+    "destination": "https://www.equinor.com/:path*",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "equinor.kr"
+      }
+    ],
+    "destination": "https://www.equinor.co.kr/:path*",
+    "permanent": true
+  },
+  {
+    "source": "/mariner",
+    "has": [
+      {
+        "type": "host",
+        "value": "equinor.co.uk"
+      }
+    ],
+    "destination": "https://www.equinor.com/en/energy/mariner",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "equinor.co.uk"
+      }
+    ],
+    "destination": "https://www.equinor.com/en/where-we-are/united-kingdom",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "equinorpensjon.no"
+      }
+    ],
+    "destination": "https://www.equinor.com/no/om-oss/equinor-pensjon",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "statoilpensjon.no"
+      }
+    ],
+    "destination": "https://www.equinor.com/no/om-oss/equinor-pensjon",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "equinor.co.tz"
+      }
+    ],
+    "destination": "https://www.equinor.com/en/where-we-are/tanzania",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "statoil.co.tz"
+      }
+    ],
+    "destination": "https://www.equinor.com/en/where-we-are/tanzania",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "equinor.no"
+      }
+    ],
+    "destination": "https://www.equinor.com/no",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "equinorventures.com"
+      }
+    ],
+    "destination": "https://www.equinor.com/en/energy/ventures",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "h2hsaltend.co.uk"
+      }
+    ],
+    "destination": "https://www.equinor.com/en/energy/h2h-saltend",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "equinor.ca"
+      }
+    ],
+    "destination": "https://www.equinor.com/en/where-we-are/canada",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "techstars.equinor.com"
+      }
+    ],
+    "destination": "https://www.equinor.com/en/energy/techstars",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "equinor.com.au"
+      }
+    ],
+    "destination": "https://www.equinor.com/en/where-we-are/australia",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "digitalfieldworker.equinor.com"
+      }
+    ],
+    "destination": "https://www.equinor.com/energy/digitalfieldworker",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "eu2nsea.com"
+      }
+    ],
+    "destination": "https://www.equinor.com/energy/eu2nsea",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "eu2nsea.eu"
+      }
+    ],
+    "destination": "https://www.equinor.com/energy/eu2nsea",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "morgendagenshelter.no"
+      }
+    ],
+    "destination": "https://www.equinor.com/no/om-oss/sponsing-og-stotte",
+    "permanent": true
+  },
+  {
+    "source": "/:path*",
+    "has": [
+      {
+        "type": "host",
+        "value": "data.equinor.com"
+      }
+    ],
+    "destination": "https://www.equinor.com/energy/data-sharing",
+    "permanent": true
+  },
+  {
     "source": "/no/test/redirect-til-en",
     "destination": "/docs",
     "permanent": true
