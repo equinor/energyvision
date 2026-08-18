@@ -4,6 +4,10 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  tar: 7.5.19
+  vite: 7.3.5
+
 importers:
 
   .: {}
