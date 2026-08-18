@@ -16,7 +16,7 @@ import { getQueryFromSlug } from '@/sanity/helpers/queryFromSlug'
 import { resolveOpenGraphImage } from '@/sanity/lib/utils'
 import type { SeoData } from '@/types'
 import { isDateAfter } from '../../lib/helpers/dateUtilities'
-import { routeSanityFetch } from '../lib/live'
+import { routeSanityFetch } from '../lib/fetch'
 import { contentQueryById, pageInfoById } from '../queries/contentById'
 import {
   allMagazineDocuments,
