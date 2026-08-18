@@ -8,7 +8,7 @@ import {
   SANITY_CACHE_TAG,
 } from '@/sanity/lib/fetch'
 
-const REVALIDATE_SECRET = process.env.SANITY_REVALIDATE_SECRET || ''
+const REVALIDATE_SECRET = process.env.SANITY_API_TOKEN || ''
 
 /**
  * Replaces Sanity Live when the optimized fetch is enabled.
