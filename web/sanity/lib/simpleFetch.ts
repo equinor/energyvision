@@ -1,4 +1,3 @@
-'use cache'
 import { cacheTag } from 'next/cache'
 import type { DefinedFetchType } from 'next-sanity/live'
 import { client as simpleClient } from './simpleClient'
@@ -10,6 +9,7 @@ export const optimizedFetch: DefinedFetchType = async ({
   perspective = 'published',
   requestTag = 'optimized-fetch',
 }) => {
+  'use cache'
   console.log('Fetching with optimized fetch:', {
     tags,
     perspective,

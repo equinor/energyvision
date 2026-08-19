@@ -8,8 +8,7 @@ import { getLocale } from 'next-intl/server'
 import { decodeSlugs } from '@/lib/helpers/getFullUrl'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { getNameFromIso } from '@/sanity/helpers/localization'
-import { IS_FETCH_OPTIMIZED, routeSanityFetch } from '@/sanity/lib/fetch'
-import { optimizedFetch } from '@/sanity/lib/simpleFetch'
+import { routeSanityFetch } from '@/sanity/lib/fetch'
 import { constructSanityMetadata, getPage } from '@/sanity/pages/utils'
 import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu'
 import {
@@ -31,16 +30,11 @@ const NewsPage = dynamic(() => import('@/templates/news/News'))
 const TopicPage = dynamic(() => import('@/templates/topic/TopicPage'))
 const MagazineRoom = dynamic(() => import('@/templates/magazine/Magazineroom'))
 
-const getSanityFetch = (isDraftMode: boolean) =>
-  isDraftMode || !IS_FETCH_OPTIMIZED ? routeSanityFetch : optimizedFetch
-
 export async function generateMetadata({
   params,
 }: PageProps<'/[locale]/[...slug]'>): Promise<Metadata> {
   //array, separated by /. e.g. [news, last slug]
   const { slug: encodedSlug, locale } = await params
-  const { isEnabled: isDraftMode } = await draftMode()
-  const sanityFetch = getSanityFetch(isDraftMode)
   const slug = decodeSlugs(encodedSlug) as string[]
 
   const sanityLang = getNameFromIso(locale)
@@ -65,7 +59,7 @@ export async function generateMetadata({
     query = magazineroomMetaQuery
   }
 
-  const { data: metaData }: { data: any } = await sanityFetch({
+  const { data: metaData }: { data: any } = await routeSanityFetch({
     query,
     params: {
       lang: sanityLang,
@@ -87,10 +81,9 @@ export default async function Page({ params, searchParams }: Props) {
   /*   const isInPresentationToolContext =
     (await cookies()).get('preview-fetch-dest')?.value === 'iframe' */
   const { isEnabled: isDraftMode } = await draftMode()
-  const sanityFetch = getSanityFetch(isDraftMode)
   let pageContent = null
   const [siteMenuResult, pageResults] = await Promise.all([
-    sanityFetch({
+    routeSanityFetch({
       query: Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery,
       params: {
         lang: getNameFromIso(locale) ?? 'en_GB',
@@ -101,7 +94,7 @@ export default async function Page({ params, searchParams }: Props) {
       slug: decodeSlugs(slug),
       locale,
       searchParams: resolvedSearchParams,
-      fetch: sanityFetch,
+      fetch: routeSanityFetch,
     }),
   ])
   pageContent = pageResults
