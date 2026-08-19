@@ -20,7 +20,7 @@ jobs:
     steps:
       - name: Login to azure
         id: login-to-azure
-        uses: azure/login@v1
+        uses: azure/login@v3
         with:
           creds: ${{ secrets.ENVIS_ACTIONS_SERVICE_PRINCIPAL }}
           allow-no-subscriptions: true
