@@ -14,13 +14,20 @@ import { optimizedFetch } from './simpleFetch'
 export const IS_FETCH_OPTIMIZED =
   process.env.NEXT_PUBLIC_OPTIMIZED_SANITY_FETCH === 'true'
 
+const cachedSanityFetch: DefinedFetchType = async options => {
+  'use cache'
+  return sanityFetch(options)
+}
+
 export const routeSanityFetch: DefinedFetchType = async options => {
-  if (!IS_FETCH_OPTIMIZED) {
+  // Drafts must stay uncached and keep stega/visual editing support.
+  const { isEnabled: isDraft } = await draftMode()
+
+  if (isDraft) {
     return sanityFetch(options)
   }
 
-  // drafts must stay uncached and keep stega/visual editing support
-  const { isEnabled: isDraft } = await draftMode()
-
-  return isDraft ? sanityFetch(options) : optimizedFetch(options)
+  return IS_FETCH_OPTIMIZED
+    ? optimizedFetch(options)
+    : cachedSanityFetch(options)
 }
