@@ -8,7 +8,8 @@ import { getLocale } from 'next-intl/server'
 import { decodeSlugs } from '@/lib/helpers/getFullUrl'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { getNameFromIso } from '@/sanity/helpers/localization'
-import { routeSanityFetch } from '@/sanity/lib/fetch'
+import { IS_FETCH_OPTIMIZED, routeSanityFetch } from '@/sanity/lib/fetch'
+import { optimizedFetch } from '@/sanity/lib/simpleFetch'
 import { constructSanityMetadata, getPage } from '@/sanity/pages/utils'
 import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu'
 import {
@@ -23,18 +24,23 @@ type Props = {
   params: Promise<{ slug: string[]; locale: string }>
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }
+
 const MagazinePage = dynamic(() => import('@/templates/magazine/MagazinePage'))
 const EventPage = dynamic(() => import('@/templates/event/Event'))
 const NewsPage = dynamic(() => import('@/templates/news/News'))
 const TopicPage = dynamic(() => import('@/templates/topic/TopicPage'))
 const MagazineRoom = dynamic(() => import('@/templates/magazine/Magazineroom'))
 
+const getSanityFetch = (isDraftMode: boolean) =>
+  isDraftMode || !IS_FETCH_OPTIMIZED ? routeSanityFetch : optimizedFetch
+
 export async function generateMetadata({
   params,
 }: PageProps<'/[locale]/[...slug]'>): Promise<Metadata> {
   //array, separated by /. e.g. [news, last slug]
-  const { slug: encodedSlug } = await params
-  const locale = await getLocale()
+  const { slug: encodedSlug, locale } = await params
+  const { isEnabled: isDraftMode } = await draftMode()
+  const sanityFetch = getSanityFetch(isDraftMode)
   const slug = decodeSlugs(encodedSlug) as string[]
 
   const sanityLang = getNameFromIso(locale)
@@ -59,7 +65,7 @@ export async function generateMetadata({
     query = magazineroomMetaQuery
   }
 
-  const { data: metaData }: { data: any } = await routeSanityFetch({
+  const { data: metaData }: { data: any } = await sanityFetch({
     query,
     params: {
       lang: sanityLang,
@@ -75,14 +81,16 @@ export async function generateMetadata({
 }
 
 export default async function Page({ params, searchParams }: Props) {
-  const { slug, locale } = await params
+  const { slug } = await params
+  const locale = await getLocale()
   const resolvedSearchParams = await searchParams
   /*   const isInPresentationToolContext =
     (await cookies()).get('preview-fetch-dest')?.value === 'iframe' */
   const { isEnabled: isDraftMode } = await draftMode()
+  const sanityFetch = getSanityFetch(isDraftMode)
   let pageContent = null
   const [siteMenuResult, pageResults] = await Promise.all([
-    routeSanityFetch({
+    sanityFetch({
       query: Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery,
       params: {
         lang: getNameFromIso(locale) ?? 'en_GB',
@@ -93,6 +101,7 @@ export default async function Page({ params, searchParams }: Props) {
       slug: decodeSlugs(slug),
       locale,
       searchParams: resolvedSearchParams,
+      fetch: sanityFetch,
     }),
   ])
   pageContent = pageResults

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { type QueryParams, toPlainText } from 'next-sanity'
+import type { DefinedFetchType } from 'next-sanity/live'
 import {
   defaultLanguage,
   domain,
@@ -175,6 +176,7 @@ type Params = {
   slug?: string | string[]
   locale: string
   tags?: string[]
+  fetch?: DefinedFetchType
   searchParams?: {
     [key: string]: string[] | string | undefined
   }
@@ -196,7 +198,7 @@ function languagePrefixedSlug(
 }
 
 export async function getPage(params: Params) {
-  const { slug, locale, searchParams } = params
+  const { slug, locale, searchParams, fetch = routeSanityFetch } = params
   const tagParam = searchParams?.tag
   const tag =
     typeof tagParam === 'string'
@@ -208,7 +210,7 @@ export async function getPage(params: Params) {
   if (slug?.[0]?.includes('preview')) {
     const id = slug[1]
     if (id) {
-      const { data: draftInfo }: { data: any } = await routeSanityFetch({
+      const { data: draftInfo }: { data: any } = await fetch({
         query: pageInfoById,
         params: {
           id,
@@ -217,7 +219,7 @@ export async function getPage(params: Params) {
       })
 
       if (draftInfo?.lang) {
-        const { data } = await routeSanityFetch({
+        const { data } = await fetch({
           query: contentQueryById,
           params: {
             id,
@@ -232,7 +234,7 @@ export async function getPage(params: Params) {
     const { query: pageQuery, queryParams: pageQueryParams } =
       await getQueryFromSlug(slug, locale)
 
-    const { data }: { data: any } = await routeSanityFetch({
+    const { data }: { data: any } = await fetch({
       query: pageQuery,
       tags: [`sanity:page:${Array.isArray(slug) ? slug?.join('/') : slug}`],
       params: { ...pageQueryParams },
@@ -243,7 +245,7 @@ export async function getPage(params: Params) {
 
   let magazineArticles = null
   if (pageData?.template === 'magazineIndex') {
-    const { data: articles } = await routeSanityFetch({
+    const { data: articles } = await fetch({
       query:
         tag && tag !== 'all'
           ? getMagazineArticlesByTag(false, false)
