@@ -7,8 +7,6 @@ import { LogoLink } from '@/core/Link/LogoLink'
 import { NavTopbar } from '@/sections/SiteMenu/NavTopbar'
 import { TopbarDropdown } from '@/sections/SiteMenu/TopbarDropdown'
 
-export const dynamic = 'force-static'
-
 export default function SearchLayout({
   children,
 }: {
