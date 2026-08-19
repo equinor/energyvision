@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
     const docLang = body?.lang
     const docSlug = body?.slug
 
-    if (!docType || !docId || !docSlug || !docLang) {
+    if (!docType && !docSlug && !docLang) {
       const message = 'Bad Request'
       return new Response(JSON.stringify({ message, body }), { status: 400 })
     }
