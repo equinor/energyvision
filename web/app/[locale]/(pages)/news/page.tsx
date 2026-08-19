@@ -17,6 +17,10 @@ import NewsRoomTemplate from '@/templates/newsroom/Newsroom'
 
 const TopicPage = dynamic(() => import('@/templates/topic/TopicPage'))
 
+export async function generateStaticParams() {
+  return Flags.HAS_NEWSROOM ? [{ locale: 'nb-NO' }, { locale: 'en-GB' }] : []
+}
+
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale()
   const pageSlug = newsSlug[getNameFromIso(locale)]
