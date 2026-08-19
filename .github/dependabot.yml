@@ -3,30 +3,14 @@ updates:
   - package-ecosystem: 'npm'
     directory: '/'
     schedule:
-      interval: 'daily'
+      interval: 'weekly'
     target-branch: 'main'
     cooldown:
       default-days: 7
     open-pull-requests-limit: 5
-  - package-ecosystem: 'npm'
+  - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
-      interval: 'weekly'
-    target-branch: 'staging'
-    cooldown:
-      default-days: 7
-    open-pull-requests-limit: 5
-  - package-ecosystem: 'npm'
-    directory: '/'
-    schedule:
-      interval: 'daily'
-    target-branch: 'upgrade-next-intl'
-    cooldown:
-      default-days: 7
-    open-pull-requests-limit: 5
-  - package-ecosystem: github-actions
-    directory: /
-    schedule:
-      interval: weekly
+      interval: 'monthly'
     cooldown:
       default-days: 7
