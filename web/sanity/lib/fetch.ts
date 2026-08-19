@@ -23,8 +23,6 @@ const optimizedFetch: DefinedFetchType = async ({
   requestTag = 'optimized-fetch',
 }) => {
   console.log('Fetching with optimized fetch:', {
-    query,
-    params,
     tags,
     stega,
     perspective,

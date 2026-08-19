@@ -87,6 +87,7 @@ export default async function Page({ params, searchParams }: Props) {
       params: {
         lang: getNameFromIso(locale) ?? 'en_GB',
       },
+      tags: [`sanity:siteMenu:${locale}`],
     }),
     getPage({
       slug: decodeSlugs(slug),
