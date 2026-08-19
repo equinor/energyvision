@@ -8,9 +8,30 @@ updates:
     cooldown:
       default-days: 7
     open-pull-requests-limit: 5
+    versioning-strategy: 'increase-if-necessary'
+    groups:
+      # bundle all patch/minor bumps into one PR per run, majors stay separate for review
+      minor-and-patch:
+        update-types:
+          - 'minor'
+          - 'patch'
+    ignore:
+      # high-churn/high-risk deps: require manual major version bumps
+      # These tasks are handled in annual review manually.
+      - dependency-name: 'next'
+        update-types: ['version-update:semver-major']
+      - dependency-name: 'react'
+        update-types: ['version-update:semver-major']
+      - dependency-name: 'react-dom'
+        update-types: ['version-update:semver-major']
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
       interval: 'monthly'
     cooldown:
       default-days: 7
+    groups:
+      actions-minor-and-patch:
+        update-types:
+          - 'minor'
+          - 'patch'
