@@ -4,9 +4,11 @@ import localFont from 'next/font/local'
 import { draftMode } from 'next/headers'
 import NextLink from 'next/link'
 import Script from 'next/script'
+import { Suspense } from 'react'
 import { NextIntlClientProvider } from 'next-intl'
 import { getLocale, getTranslations } from 'next-intl/server'
 import { PageProvider } from '@/contexts/pageContext'
+import { routing } from '@/i18n/routing'
 import { getLocaleFromIso, getNameFromIso } from '@/sanity/helpers/localization'
 import { dataset } from '@/sanity/lib/api'
 import { routeSanityFetch, SanityLive } from '@/sanity/lib/live'
@@ -14,6 +16,10 @@ import { footerAndErrorImageQuery } from '@/sanity/queries/footer'
 import Footer from '@/sections/Footer/Footer'
 import GoToTopButton from '@/sections/GoToTopButton'
 import { SiteImprove } from './SiteImprove'
+
+export function generateStaticParams() {
+  return routing.locales.map(locale => ({ locale }))
+}
 
 const equinor = localFont({
   src: [
@@ -32,7 +38,15 @@ const equinor = localFont({
 
 //the [locale] segment corresponds to the locale (iso format), not the prefix(/no).
 
-export default async function LocaleLayout({
+export default function LocaleLayout(props: LayoutProps<'/[locale]'>) {
+  return (
+    <Suspense fallback={null}>
+      <LocaleLayoutContent {...props} />
+    </Suspense>
+  )
+}
+
+async function LocaleLayoutContent({
   children,
 }: LayoutProps<'/[locale]'>) {
   const t = await getTranslations()

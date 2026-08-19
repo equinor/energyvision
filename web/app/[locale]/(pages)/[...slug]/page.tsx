@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic'
 import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
 import { getLocale } from 'next-intl/server'
+import { Suspense } from 'react'
 import { decodeSlugs } from '@/lib/helpers/getFullUrl'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { getNameFromIso } from '@/sanity/helpers/localization'
@@ -23,6 +24,9 @@ type Props = {
   params: Promise<{ slug: string[]; locale: string }>
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }
+
+export const instant = false
+
 const MagazinePage = dynamic(() => import('@/templates/magazine/MagazinePage'))
 const EventPage = dynamic(() => import('@/templates/event/Event'))
 const NewsPage = dynamic(() => import('@/templates/news/News'))
@@ -73,8 +77,17 @@ export async function generateMetadata({
   return constructSanityMetadata(slug, locale, metaData)
 }
 
-export default async function Page({ params, searchParams }: Props) {
-  const { slug, locale } = await params
+export default function Page({ params, searchParams }: Props) {
+  return (
+    <Suspense fallback={null}>
+      <PageContent params={params} searchParams={searchParams} />
+    </Suspense>
+  )
+}
+
+async function PageContent({ params, searchParams }: Props) {
+  const { slug } = await params
+  const locale = await getLocale()
   const resolvedSearchParams = await searchParams
   /*   const isInPresentationToolContext =
     (await cookies()).get('preview-fetch-dest')?.value === 'iframe' */

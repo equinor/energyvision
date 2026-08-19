@@ -1,8 +1,6 @@
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { Search } from '@/sections/searchBlocks/Search'
 
-export const dynamic = 'force-static'
-
 export function generateStaticParams() {
   return Flags.HAS_SEARCH ? [{ locale: 'nb-NO' }, { locale: 'en-GB' }] : []
 }
@@ -37,6 +35,6 @@ export function generateStaticParams() {
   }
 } */
 
-export default function Page() {
+export default async function Page() {
   return <Search />
 }

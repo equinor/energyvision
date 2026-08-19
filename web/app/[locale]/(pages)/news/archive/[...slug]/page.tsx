@@ -14,6 +14,8 @@ import ArchivedNews from '@/templates/archivedNews/ArchivedNews'
 
 type Params = Promise<{ locale: string; slug: string[] }>
 
+export const instant = false
+
 type ArchivedContentType = {
   title: string
   description: string

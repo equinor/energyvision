@@ -4,6 +4,7 @@ import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
 import { getLocale } from 'next-intl/server'
 import { OrganizationJsonLd } from 'next-seo'
+import { Suspense } from 'react'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { getNameFromIso } from '@/sanity/helpers/localization'
 import { routeSanityFetch } from '@/sanity/lib/live'
@@ -29,7 +30,15 @@ export async function generateMetadata(): Promise<Metadata> {
   return constructSanityMetadata('', locale, metaData)
 }
 
-export default async function Home(_: PageProps<'/[locale]'>) {
+export default function Home() {
+  return (
+    <Suspense fallback={null}>
+      <HomeContent />
+    </Suspense>
+  )
+}
+
+async function HomeContent() {
   //const isInPresentationToolContext =
   //  (await cookies()).get('preview-fetch-dest')?.value === 'iframe'
   const { isEnabled: isDraftMode } = await draftMode()

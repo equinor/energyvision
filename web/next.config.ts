@@ -1,7 +1,6 @@
 /** biome-ignore-all assist/source/organizeImports: <explanation> */
 const archiveServerHostname = process.env.NEXT_PUBLIC_ARCHIVE_CONTENT_LINK
-
-import path, { join } from 'node:path'
+import path from 'node:path'
 /* import { withSentryConfig } from '@sentry/nextjs' */
 import type { NextConfig } from 'next'
 import createNextIntlPlugin from 'next-intl/plugin'
@@ -63,7 +62,8 @@ const nextConfig: NextConfig = withNextIntl({
       "@energyvision/shared":"../packages/energyvision/*"
     }
   },*/
-  //cacheComponents: true,
+  cacheComponents: true,
+  partialPrefetching: true,
   images: {
     remotePatterns: [
       {
