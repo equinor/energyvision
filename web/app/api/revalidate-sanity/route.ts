@@ -6,7 +6,9 @@ import { client } from '@/sanity/lib/client'
 
 type WebhookPayload = {
   id: string
-  tags: string[]
+  _type: string
+  slug: string
+  lang: string
 }
 
 /*
@@ -41,13 +43,14 @@ export async function POST(req: NextRequest) {
       })
     }
     const docId = body?.id
-    const docType = body?.tags?.[0]
+    const docType = body?._type
+    const docLang = body?.lang
+    const docSlug = body?.slug
 
-    if (!Array.isArray(body?.tags) || !body.tags.length) {
+    if (!docType || !docId || !docSlug || !docLang) {
       const message = 'Bad Request'
       return new Response(JSON.stringify({ message, body }), { status: 400 })
     }
-    console.log('tagbased revalidation tags', body.tags)
 
     const docsWithoutSlugCurrent = [
       'page',
@@ -71,11 +74,14 @@ export async function POST(req: NextRequest) {
         console.log(`revalidated tag: ${tag}`)
       })
     } else {
-      body.tags.forEach(_tag => {
+      /*body.tags.forEach(_tag => {
         const tag = `sanity:${_tag}`
         revalidateTag(tag, 'max')
         console.log(`revalidated tag: ${tag}`)
-      })
+      })*/
+      const tag = `sanity:${docType}:${docSlug ?? docLang}`
+      revalidateTag(tag, 'max')
+      console.log(`revalidated tag: ${tag}`)
     }
 
     return NextResponse.json({ body })
@@ -151,5 +157,3 @@ export async function POST(req: NextRequest) {
   return Response.json({ success: true, tags })
 }
 */
-
-web / app / api / revalidate - tag / route.ts
