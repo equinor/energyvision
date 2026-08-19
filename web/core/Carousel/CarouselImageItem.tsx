@@ -62,7 +62,9 @@ export const CarouselImageItem = forwardRef<
     className = '',
     action,
     wasUserPress = false,
-    ...rest
+    ['aria-label']: ariaLabel,
+    style,
+    onFocus,
   },
   ref,
 ) {
@@ -70,10 +72,6 @@ export const CarouselImageItem = forwardRef<
   const combinedItemRef = useMemo(
     () => mergeRefs<HTMLLIElement>(itemRef, ref),
     [ref],
-  )
-  const isImageWithRichTextCaption = useMemo(
-    () => type === 'imageWithRichTextBelow' && !!caption,
-    [caption, type],
   )
   const isJustImage =
     type === 'imageWithAltAndCaption' && !caption && !attribution
@@ -181,16 +179,18 @@ export const CarouselImageItem = forwardRef<
         />
       )
     }
-    if (isImageWithRichTextCaption && image) {
+    if (type === 'imageWithRichTextBelow' && image) {
       return (
         <figure className='flex h-full w-full flex-col'>
-          <Image
-            grid='sm'
-            image={image}
-            fill
-            className={`min-h-single-carousel-card-h-sm w-full rounded-card md:min-h-single-carousel-card-h-md lg:min-h-single-carousel-card-h-lg`}
-            imageClassName='aspect-4/3 rounded-card md:aspect-video'
-          />
+          <div className='relative aspect-video w-full shrink-0'>
+            <Image
+              grid='sm'
+              image={image}
+              fill
+              className='absolute inset-0'
+              imageClassName='rounded-t-card object-cover'
+            />
+          </div>
           <figcaption
             className={twMerge(
               'h-fit max-w-text p-4 lg:px-8 lg:py-6',
@@ -237,8 +237,8 @@ export const CarouselImageItem = forwardRef<
 
   return (
     <li
-      {...rest}
       ref={combinedItemRef}
+      aria-label={ariaLabel}
       {...(displayMode === 'single' && {
         'aria-current': active,
         tabIndex: active ? 0 : -1,
@@ -246,6 +246,8 @@ export const CarouselImageItem = forwardRef<
       {...(displayMode === 'scroll' && {
         tabIndex: 0,
       })}
+      style={style}
+      onFocus={onFocus}
       className={twMerge(
         `relative mt-1 focus:outline-hidden focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-grey-50 focus-visible:outline-offset-2 dark:focus-visible:outline-white-100`,
         displayMode === 'single' &&

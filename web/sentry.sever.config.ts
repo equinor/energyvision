@@ -10,7 +10,25 @@ Sentry.init({
 
   // Define how likely traces are sampled. Adjust this value in production, or use tracesSampler for greater control.
   tracesSampleRate: 1,
-
   // Setting this option to true will print useful information to the console while you're setting up Sentry.
   debug: false,
+  ignoreErrors: [
+    "Can't find variable: _sz",
+    '_sz is not defined', // Discards the specific ReferenceError
+    /_sz/i, // Alternative regex approach
+  ],
+  denyUrls: [
+    /gtm\.js/, // Blocks any error coming from the GTM script
+    /app:\/\/\/gtm\.js/, // Matches the exact path pattern from your stack trace
+  ],
+  beforeSend(event, hint) {
+    const message = event?.message || event.exception?.values?.[0]?.value || ''
+
+    // Drop the event if it mentions the missing _sz variable
+    if (message.includes('_sz')) {
+      return null
+    }
+
+    return event
+  },
 })
