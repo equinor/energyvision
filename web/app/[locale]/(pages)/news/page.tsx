@@ -28,6 +28,7 @@ export async function generateMetadata(): Promise<Metadata> {
       },
       stega: false,
       requestTag: 'meta-news',
+      tags: [`sanity:newsroom:${locale}`],
     })
 
     return constructSanityMetadata(pageSlug, locale, metaData)

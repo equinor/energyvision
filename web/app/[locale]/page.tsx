@@ -42,6 +42,7 @@ export default async function Home(_: PageProps<'/[locale]'>) {
       params: {
         lang: getNameFromIso(locale) ?? 'en_GB',
       },
+      tags: [`sanity:siteMenu:${locale}`],
     }),
     getPage({
       slug: '',

@@ -1,7 +1,7 @@
 import { draftMode } from 'next/headers'
 import type { DefinedFetchType } from 'next-sanity/live'
-import { client } from './client'
 import { sanityFetch } from './live'
+import { optimizedFetch } from './simpleFetch'
 
 /**
  * Feature flag for the optimized fetch.
@@ -13,36 +13,6 @@ import { sanityFetch } from './live'
  */
 export const IS_FETCH_OPTIMIZED =
   process.env.NEXT_PUBLIC_OPTIMIZED_SANITY_FETCH === 'true'
-
-const optimizedFetch: DefinedFetchType = async ({
-  query,
-  params = {},
-  tags = [],
-  stega = false,
-  perspective = 'published',
-  requestTag = 'optimized-fetch',
-}) => {
-  console.log('Fetching with optimized fetch:', {
-    tags,
-    stega,
-    perspective,
-    requestTag,
-  })
-  const { result, resultSourceMap } = await client.fetch(query, await params, {
-    filterResponse: false,
-    perspective,
-    stega,
-    useCdn: true,
-    tag: requestTag,
-    next: {
-      // only revalidated on demand through the Sanity webhook
-      revalidate: false,
-      tags: tags,
-    },
-  })
-
-  return { data: result, sourceMap: resultSourceMap ?? null, tags: tags }
-}
 
 export const routeSanityFetch: DefinedFetchType = async options => {
   if (!IS_FETCH_OPTIMIZED) {
