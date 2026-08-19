@@ -67,6 +67,7 @@ export async function generateMetadata({
       ...((isNewsPage || isMagazineRoom || isMagazinePage) && { type }),
     },
     stega: false,
+    tags: [`page:${slug.join('/')}`],
     requestTag: 'page-meta',
   })
 
