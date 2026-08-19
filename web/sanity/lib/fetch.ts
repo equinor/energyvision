@@ -14,12 +14,6 @@ import { sanityFetch } from './live'
 export const IS_FETCH_OPTIMIZED =
   process.env.NEXT_PUBLIC_OPTIMIZED_SANITY_FETCH === 'true'
 
-/** Tag applied to every optimized fetch, used by the revalidation webhook. */
-export const SANITY_CACHE_TAG = 'sanity'
-
-export const documentCacheTag = (id: string) => `sanity:id:${id}`
-export const documentTypeCacheTag = (type: string) => `sanity:type:${type}`
-
 const optimizedFetch: DefinedFetchType = async ({
   query,
   params = {},
@@ -28,8 +22,14 @@ const optimizedFetch: DefinedFetchType = async ({
   perspective = 'published',
   requestTag = 'optimized-fetch',
 }) => {
-  const cacheTags = [SANITY_CACHE_TAG, ...tags]
-
+  console.log('Fetching with optimized fetch:', {
+    query,
+    params,
+    tags,
+    stega,
+    perspective,
+    requestTag,
+  })
   const { result, resultSourceMap } = await client.fetch(query, await params, {
     filterResponse: false,
     perspective,
@@ -39,11 +39,11 @@ const optimizedFetch: DefinedFetchType = async ({
     next: {
       // only revalidated on demand through the Sanity webhook
       revalidate: false,
-      tags: cacheTags,
+      tags: tags,
     },
   })
 
-  return { data: result, sourceMap: resultSourceMap ?? null, tags: cacheTags }
+  return { data: result, sourceMap: resultSourceMap ?? null, tags: tags }
 }
 
 export const routeSanityFetch: DefinedFetchType = async options => {
