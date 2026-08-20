@@ -82,12 +82,10 @@ export async function subscribe({
     endpoint.searchParams.set('subscriber_list_id', subscriberListId)
     endpoint.searchParams.set('tag', 'merge')
 
-    console.log('Newsletter categories:', categories)
     const tags = categories
       ?.map(category => newsletterCategoryMap[locale][category])
       .filter((tag): tag is string => Boolean(tag))
 
-    console.log('Newsletter tags:', tags)
     if (!tags || tags.length === 0) {
       return {
         status: false,
