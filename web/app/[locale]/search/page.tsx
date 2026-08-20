@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import { Search } from '@/sections/searchBlocks/Search'
 
 /* export async function generateMetadata({
@@ -31,5 +32,9 @@ import { Search } from '@/sections/searchBlocks/Search'
 } */
 
 export default function Page() {
-  return <Search />
+  return (
+    <Suspense fallback={<div>Loading Search Engine...</div>}>
+      <Search />
+    </Suspense>
+  )
 }
