@@ -2,6 +2,7 @@
 import { getTranslations } from 'next-intl/server'
 import type z from 'zod'
 import { subscribeSchema } from '@/lib/zodSchemas/zodSchemas'
+import { getIsoFromLocale } from '@/sanity/helpers/localization'
 import {
   type newsletterCategoryLocale,
   newsletterCategoryMap,
@@ -29,7 +30,7 @@ export async function subscribe({
     }
   }
 
-  const t = await getTranslations()
+  const t = await getTranslations({ locale: getIsoFromLocale(locale) })
   const validatedData = subscribeSchema(t).safeParse(formData)
 
   if (!validatedData.success) {
@@ -81,10 +82,12 @@ export async function subscribe({
     endpoint.searchParams.set('subscriber_list_id', subscriberListId)
     endpoint.searchParams.set('tag', 'merge')
 
+    console.log('Newsletter categories:', categories)
     const tags = categories
       ?.map(category => newsletterCategoryMap[locale][category])
       .filter((tag): tag is string => Boolean(tag))
 
+    console.log('Newsletter tags:', tags)
     if (!tags || tags.length === 0) {
       return {
         status: false,
