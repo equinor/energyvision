@@ -1,5 +1,12 @@
 /** biome-ignore-all assist/source/organizeImports: <explanation> */
-const archiveServerHostname = process.env.NEXT_PUBLIC_ARCHIVE_CONTENT_LINK
+// 1. Fetch the environment variable
+let archiveServerHostname = process.env.NEXT_PUBLIC_ARCHIVE_CONTENT_LINK
+
+// 2. SAFETY CHECK: If the variable is missing or evaluates to the literal string "undefined",
+// fall back to an empty string so Next.js doesn't crash on local development startup.
+if (!archiveServerHostname || archiveServerHostname === 'undefined') {
+  archiveServerHostname = ''
+}
 
 import path, { join } from 'node:path'
 /* import { withSentryConfig } from '@sentry/nextjs' */
