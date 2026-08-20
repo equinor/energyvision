@@ -99,7 +99,8 @@ export function Search() {
     return {
       ...(query && { query: query }),
       ...(page && { page: page as number }),
-      ...(tab && { tab: tab }),
+      ...(tab &&
+        ['topics', 'events', 'news', 'magazine'].includes(tab) && { tab: tab }),
     }
   }
 
