@@ -93,6 +93,7 @@ export default async function LocaleLayout({
         <>
           {process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID && (
             //https://nextjs.org/docs/app/guides/third-party-libraries#google-third-parties
+            //strategy='afterInteractive' is default
             <GoogleTagManager
               gtmId={process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID}
             />

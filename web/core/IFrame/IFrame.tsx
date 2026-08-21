@@ -3,13 +3,18 @@ import type { PortableTextBlock } from '@portabletext/types'
 //TODO check this
 // eslint-disable-next-line import/no-unresolved
 import { useIsPresentationTool } from 'next-sanity/hooks'
-import { forwardRef, type HTMLAttributes, useId, useState } from 'react'
+import {
+  forwardRef,
+  type HTMLAttributes,
+  useEffect,
+  useId,
+  useState,
+} from 'react'
 import { twMerge } from 'tailwind-merge'
 import { dataset } from '@/languageConfig'
 import Transcript from '@/sections/Transcript/Transcript'
-import { iframeSrcList } from '@/securityHeaders'
+import { iframePolicies } from '@/securityHeaders'
 import useConsent from '../../lib/hooks/useConsent'
-import useConsentState from '../../lib/hooks/useConsentState'
 import Blocks from '../../portableText/Blocks'
 import type { CookieType } from '../../types'
 import { LogoPrimary } from '../Logo/Logo'
@@ -23,13 +28,19 @@ const calculatePadding = (aspectRatio: string): string => {
   return `${percentage}%`
 }
 
-const isIframeAllowedByCsp = (url: string) => {
+const getIframePolicy = (url: string) => {
   try {
     const parsedUrl = new URL(url)
 
-    return iframeSrcList.some(source => {
-      if (!source) return false
+    if (
+      !['http:', 'https:'].includes(parsedUrl.protocol) ||
+      parsedUrl.username ||
+      parsedUrl.password
+    ) {
+      return undefined
+    }
 
+    return iframePolicies.find(({ source }) => {
       if (source.includes('*')) {
         const parsedSource = new URL(source.replace('*.', 'placeholder.'))
         const wildcardDomain = parsedSource.hostname.replace(
@@ -47,7 +58,7 @@ const isIframeAllowedByCsp = (url: string) => {
       return parsedUrl.origin === new URL(source).origin
     })
   } catch {
-    return false
+    return undefined
   }
 }
 
@@ -99,27 +110,23 @@ export const IFrame = forwardRef<HTMLDivElement, IFrameProps>(function IFrame(
   ref,
 ) {
   const isPresentationTool = useIsPresentationTool()
+  const [isMounted, setIsMounted] = useState(false)
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
   const isPreview =
-    isPresentationTool ||
-    isDraftModeEnabled() ||
+    (isMounted && (isPresentationTool || isDraftModeEnabled())) ||
     dataset === 'global-development'
-  const [consented, setConsented] = useState(useConsent(cookiePolicy))
+  const consented = useConsent(cookiePolicy)
   const titleId = useId()
   const descriptionId = useId()
   const labelledById = title ? titleId : labelledBy
 
-  useConsentState(
-    cookiePolicy,
-    () => {
-      setConsented(true)
-    },
-    () => {
-      setConsented(false)
-    },
-  )
-
   if (!url) return null
-  const isBlockedByCsp = !isIframeAllowedByCsp(url)
+  const iframePolicy = getIframePolicy(url)
+  const isBlockedByCsp = !iframePolicy
   const containerPadding = height
     ? `${height}px`
     : calculatePadding(aspectRatio)
@@ -156,6 +163,7 @@ export const IFrame = forwardRef<HTMLDivElement, IFrameProps>(function IFrame(
             className='absolute inset-0 h-full w-full border-0'
             allowFullScreen
             loading='lazy'
+            sandbox={iframePolicy?.sandbox ?? 'allow-scripts allow-same-origin'}
             src={url}
             title={frameTitle}
             {...(!isPreview && {
