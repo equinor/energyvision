@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 import { unstable_cache } from 'next/cache'
 import dynamic from 'next/dynamic'
 import { getLocale } from 'next-intl/server'
+import { Suspense } from 'react'
 import { algolia } from '@/lib/config'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { getNameFromIso } from '@/sanity/helpers/localization'
@@ -18,7 +19,7 @@ import NewsRoomTemplate from '@/templates/newsroom/Newsroom'
 const TopicPage = dynamic(() => import('@/templates/topic/TopicPage'))
 
 export async function generateStaticParams() {
-  return Flags.HAS_NEWSROOM ? [{ locale: 'nb-NO' }, { locale: 'en-GB' }] : []
+  return Flags.HAS_NEWSROOM ? [{ locale: 'en-GB' }] : []
 }
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -101,16 +102,18 @@ export default async function NewsroomPage(_: PageProps<'/[locale]/news'>) {
   return (
     <>
       <Header siteMenuData={siteMenuData} headerData={headerData} />
-      {Flags.HAS_NEWSROOM && response ? (
-        <NewsRoomTemplate
-          locale={locale}
-          pageData={pageData}
-          initialSearchResponse={response}
-        />
-      ) : (
-        // allow '/news' page on other satellite sites
-        <TopicPage {...pageData} />
-      )}
+      <Suspense fallback={<div>Loading...</div>}>
+        {Flags.HAS_NEWSROOM && response ? (
+          <NewsRoomTemplate
+            locale={locale}
+            pageData={pageData}
+            initialSearchResponse={response}
+          />
+        ) : (
+          // allow '/news' page on other satellite sites
+          <TopicPage {...pageData} />
+        )}
+      </Suspense>
     </>
   )
 }

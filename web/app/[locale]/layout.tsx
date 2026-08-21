@@ -34,8 +34,6 @@ const equinor = localFont({
 
 //the [locale] segment corresponds to the locale (iso format), not the prefix(/no).
 
-export const instant = false
-
 export function generateStaticParams() {
   return getValidLanguagesLocales().map(locale => ({ locale }))
 }
