@@ -62,7 +62,8 @@
   },
   "pnpm": {
     "overrides": {
-      "vite": "7.3.5"
+      "vite": "7.3.5",
+      "basic-ftp": "5.3.1"
     }
   }
 }
