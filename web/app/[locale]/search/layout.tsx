@@ -1,13 +1,11 @@
 'use client'
 import { Icon } from '@equinor/eds-core-react'
 import { close } from '@equinor/eds-icons'
-
 import { useRouter } from 'next/navigation'
 import { Suspense } from 'react'
 import { LogoLink } from '@/core/Link/LogoLink'
 import { NavTopbar } from '@/sections/SiteMenu/NavTopbar'
 import { TopbarDropdown } from '@/sections/SiteMenu/TopbarDropdown'
-import CloseButton from './CloseButton'
 
 export default function SearchLayout({
   children,
