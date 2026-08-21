@@ -16,12 +16,16 @@ export default function ({
   unit,
 }: KeyNumberItemProps) {
   const KeyNumberItemTag = as
+  // Long unit labels don't fit next to the number on card variant, so wrap them onto their own line
+  const isLongUnitOnCard = variant === 'card' && (unit?.length ?? 0) > 7
 
   return (
     <KeyNumberItemTag
-      className={`${variant === 'card' ? 'flex h-full min-w-[400px] flex-col gap-2 rounded-md px-6 py-8 shadow-card active:shadow-card-interact' : ''}`}
+      className={`${variant === 'card' ? 'flex h-full min-w-[80vw] flex-col gap-2 rounded-md px-6 py-8 shadow-card active:shadow-card-interact lg:min-w-[400px]' : ''}`}
     >
-      <div className='flex items-baseline gap-2'>
+      <div
+        className={`flex gap-2 ${isLongUnitOnCard ? 'flex-col' : 'items-baseline'}`}
+      >
         <Typography
           group='plain'
           variant='div'
