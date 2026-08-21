@@ -17,7 +17,7 @@ export default function ({
 }: KeyNumberItemProps) {
   const KeyNumberItemTag = as
   // Long unit labels don't fit next to the number on card variant, so wrap them onto their own line
-  const isLongUnitOnCard = variant === 'card' && (unit?.length ?? 0) > 7
+  const isLongUnitOnCard = variant === 'card' && (unit?.length ?? 0) > 9
 
   return (
     <KeyNumberItemTag
