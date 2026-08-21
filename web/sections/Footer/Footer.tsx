@@ -1,3 +1,4 @@
+import { cacheLife } from 'next/cache'
 import type { HTMLAttributes } from 'react'
 import FooterLink, { type FooterLinkProps } from '@/core/Link/FooterLink'
 import { Typography } from '@/core/Typography'
@@ -8,7 +9,13 @@ type FooterProps = {
   footerColumns: FooterColumns[]
 } & HTMLAttributes<HTMLElement>
 
-const Footer = ({ footerColumns = [] }: FooterProps) => {
+async function getYear() {
+  'use cache'
+  cacheLife('max')
+  return new Date().getFullYear()
+}
+
+const Footer = async ({ footerColumns = [] }: FooterProps) => {
   return (
     <footer
       className={`dark mx-auto min-h-12 w-full max-w-fullwidth bg-slate-blue-95 px-0 py-6`}
@@ -44,7 +51,7 @@ const Footer = ({ footerColumns = [] }: FooterProps) => {
         </div>
         <div className='flex justify-start pt-12 pb-3 pl-4 md:justify-center'>
           <Typography group='paragraph' variant='small' className='text-2xs'>
-            Copyright {new Date().getFullYear()} Equinor ASA
+            Copyright {await getYear()} Equinor ASA
           </Typography>
         </div>
       </div>
