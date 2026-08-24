@@ -90,7 +90,7 @@
     "@repo/typescript-config": "workspace:*"
   },
   "engines": {
-    "node": ">=22.0.0"
+    "node": ">=24.0.0"
   },
   "pnpm": {
     "overrides": {
@@ -99,5 +99,6 @@
       "@xmldom/xmldom": "0.8.15",
       "@sanity/types": "6.7.0"
     }
-  }
+  },
+  "packageManager": "pnpm@11.23.0"
 }
