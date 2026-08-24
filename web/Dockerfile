@@ -12,8 +12,10 @@ FROM core-os AS base
 WORKDIR /app
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
+ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
+
 # Corepack manages the pinned pnpm version dynamically
-RUN corepack enable && corepack prepare pnpm@11.0.0 --activate
+RUN corepack enable && corepack prepare pnpm --activate
 RUN pnpm add -g turbo
 
 
