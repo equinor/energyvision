@@ -92,14 +92,12 @@ ENV UID=12345
 
 RUN addgroup -S "$USER" && adduser -S --uid "$UID" "$USER" && apk add --no-cache tini
 
-COPY --from=builder /app/web/public ./public
-COPY --from=builder  --chown="$USER":"$USER" /app/web/.next/standalone/web ./
-COPY --from=builder  --chown="$USER":"$USER" /app/web/.next/static ./.next/static
-# /app/apps/web path?
+COPY --from=builder --chown="$USER":"$USER" /app/web/.next/standalone/ ./
+COPY --from=builder --chown="$USER":"$USER" /app/web/public ./web/public
+COPY --from=builder --chown="$USER":"$USER" /app/web/.next/static ./web/.next/static
 
 USER "$UID"
 EXPOSE 3000
 
 ENTRYPOINT ["/sbin/tini", "--"]
-#CMD ["node", "apps/web/server.js"] P
-CMD ["node", "server.js"]
+CMD ["node", "web/server.js"]
