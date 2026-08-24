@@ -24,7 +24,7 @@ RUN pnpm add -g turbo
 FROM base AS pruner
 WORKDIR /app
 COPY . .
-RUN turbo prune --scope=energy-vision-web --docker
+RUN turbo prune energy-vision-web --docker
 
 
 # --- STAGE 2: Install dependencies ---
