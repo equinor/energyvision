@@ -24,6 +24,7 @@ RUN pnpm add -g turbo
 FROM base AS pruner
 WORKDIR /app
 COPY . .
+RUN ls -la
 RUN turbo prune energy-vision-web --docker
 
 
