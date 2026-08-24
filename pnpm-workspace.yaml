@@ -12,7 +12,6 @@ trustPolicyExclude:
   # might apply for @reduxjs/toolkit@2.9.2 by recharts@3.8.1
   - reselect@5.1.1
 allowBuilds:
-  # https://nextjs.org/docs/messages/failed-loading-swc
   '@parcel/watcher': true
   '@sentry/cli': true
   '@swc/core': true
