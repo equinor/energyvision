@@ -1,10 +1,11 @@
 'use client'
 import type { SearchClient } from 'instantsearch.js'
+import { history } from 'instantsearch.js/es/lib/routers'
+import type { UiState } from 'instantsearch.js/es/types'
 import { useRouter } from 'next/navigation'
 import { useLocale, useTranslations } from 'next-intl'
-import { useRef } from 'react'
-import { Configure, Index } from 'react-instantsearch'
-import { InstantSearchNext } from 'react-instantsearch-nextjs'
+import { useEffect, useRef, useState } from 'react'
+import { Configure, Index, InstantSearch } from 'react-instantsearch'
 import { PaginationContextProvider } from '@/contexts/PaginationContext'
 import { SearchBox } from '@/core/AlgoliaSearchBox/SearchBox'
 import usePaginationPadding from '@/lib/hooks/usePaginationPadding'
@@ -13,34 +14,50 @@ import { Pagination } from '@/sections/searchBlocks/pagination/Pagination'
 import SearchResults from '@/sections/searchBlocks/SearchResults'
 import { searchClient as client } from '../../lib/algolia'
 
-const searchClient = client()
-const queriedSearchClient: SearchClient = {
-  ...searchClient,
-  search(requests: any) {
-    if (requests.every(({ params }: any) => !params.query)) {
-      return Promise.resolve({
-        results: requests.map(() => ({
-          hits: [],
-          nbHits: 0,
-          nbPages: 0,
-          page: 0,
-          processingTimeMS: 0,
-          hitsPerPage: 0,
-          exhaustiveNbHits: false,
-          query: '',
-          params: '',
-        })),
-      })
-    }
-
-    return searchClient.search(requests)
-  },
+type SearchRouteState = {
+  page?: number
+  query?: string
+  tab?: string
 }
+
+const createSearchClient = (): SearchClient => {
+  const searchClient = client()
+
+  return {
+    ...searchClient,
+    search(requests: any) {
+      const hasQuery = requests.some(
+        ({ params }: any) => String(params?.query ?? '').trim().length > 0,
+      )
+
+      if (!hasQuery) {
+        return Promise.resolve({
+          results: requests.map(() => ({
+            hits: [],
+            nbHits: 0,
+            nbPages: 0,
+            page: 0,
+            processingTimeMS: 0,
+            hitsPerPage: 0,
+            exhaustiveNbHits: false,
+            query: '',
+            params: '',
+          })),
+        })
+      }
+
+      return searchClient.search(requests)
+    },
+  }
+}
+
 export function Search() {
   const intl = useTranslations()
   const locale = useLocale()
   const router = useRouter()
   const resultsRef = useRef<HTMLDivElement>(null)
+  const searchClientRef = useRef<SearchClient | null>(null)
+  const [isMounted, setIsMounted] = useState(false)
   const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
 
   const padding = usePaginationPadding()
@@ -66,9 +83,23 @@ export function Search() {
   // The main index will be "all" at some point
   const mainIndex = `${envPrefix}_TOPICS_${locale}`
 
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
+  if (!isMounted) {
+    return (
+      <div className='mx-auto p-8 px-layout-sm lg:px-layout-lg'>
+        <h1 className='sr-only'>{intl('search_page_title')}</h1>
+      </div>
+    )
+  }
+
+  searchClientRef.current ??= createSearchClient()
+
   // eslint-disable-next-line
   // @ts-ignore: @TODO: The types are not correct
-  const createURL = ({ qsModule, routeState, location }) => {
+  const createURL = ({ qsModule, routeState, location }: any) => {
     const queryParameters: any = {}
     if (routeState.query) {
       queryParameters.query = routeState.query
@@ -90,7 +121,7 @@ export function Search() {
 
   // eslint-disable-next-line
   // @ts-ignore: @TODO: The types are not correct
-  const parseURL = ({ qsModule, location }) => {
+  const parseURL = ({ qsModule, location }: any): SearchRouteState => {
     const {
       query = '',
       page,
@@ -104,11 +135,11 @@ export function Search() {
   }
 
   return (
-    <InstantSearchNext
+    <InstantSearch<UiState, SearchRouteState>
       indexName={mainIndex}
-      searchClient={queriedSearchClient}
+      searchClient={searchClientRef.current}
       routing={{
-        router: {
+        router: history<SearchRouteState>({
           cleanUrlOnDispose: false,
           createURL: createURL,
           parseURL: parseURL,
@@ -118,9 +149,9 @@ export function Search() {
               router.replace(url)
             }
           },
-        },
+        }),
         stateMapping: {
-          stateToRoute(uiState) {
+          stateToRoute(uiState: UiState): SearchRouteState {
             const indexUiState = uiState[mainIndex]
             return {
               ...(indexUiState.sortBy && {
@@ -134,7 +165,7 @@ export function Search() {
               ...(indexUiState?.page && { page: indexUiState?.page }),
             }
           },
-          routeToState(routeState: any) {
+          routeToState(routeState: SearchRouteState): UiState {
             return {
               [mainIndex]: {
                 ...(routeState.query && { query: routeState.query }),
@@ -171,6 +202,6 @@ export function Search() {
           />
         </PaginationContextProvider>
       </div>
-    </InstantSearchNext>
+    </InstantSearch>
   )
 }

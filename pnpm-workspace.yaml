@@ -6,8 +6,14 @@ packages:
   - 'packages/*'
 minimumReleaseAge: 10080
 #trustPolicy: "no-downgrade"
-blockExoticSubdeps: true 
+blockExoticSubdeps: true
 trustPolicyExclude:
-# https://github.com/reduxjs/reselect/issues/752
-# might apply for @reduxjs/toolkit@2.9.2 by recharts@3.8.1
-- reselect@5.1.1
+  # https://github.com/reduxjs/reselect/issues/752
+  # might apply for @reduxjs/toolkit@2.9.2 by recharts@3.8.1
+  - reselect@5.1.1
+allowBuilds:
+  # https://nextjs.org/docs/messages/failed-loading-swc
+  '@parcel/watcher': true
+  '@sentry/cli': true
+  '@swc/core': true
+  esbuild: true
