@@ -75,6 +75,8 @@ RUN --mount=type=secret,id=sanity_api_token \
 # -------------------------------------------------------- #
 FROM core-os AS runner
 
+WORKDIR /app
+
 ARG ARG_ENV
 ARG ARG_NODE_ENV
 ARG ARG_SANITY_DATASET
