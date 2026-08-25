@@ -178,7 +178,7 @@ importers:
         version: 6.5.3(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       vite-plugin-svgr:
         specifier: ^4.5.0
-        version: 4.5.0(rollup@4.62.4)(supports-color@8.1.1)(typescript@5.9.3)(vite@8.2.1(@types/node@24.13.3)(esbuild@0.27.3)(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.12)(yaml@2.9.0))
+        version: 4.5.0(rollup@4.62.4)(supports-color@8.1.1)(typescript@5.9.3)(vite@7.3.6(@types/node@24.13.3)(jiti@2.7.0)(lightningcss@1.33.0)(terser@5.50.0)(tsx@4.23.12)(yaml@2.9.0))
     devDependencies:
       '@repo/typescript-config':
         specifier: workspace:*
@@ -203,7 +203,7 @@ importers:
         version: 5.9.3
       vite-tsconfig-paths:
         specifier: ^5.1.4
-        version: 5.1.4(supports-color@8.1.1)(typescript@5.9.3)(vite@8.2.1(@types/node@24.13.3)(esbuild@0.27.3)(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.12)(yaml@2.9.0))
+        version: 5.1.4(supports-color@8.1.1)(typescript@5.9.3)(vite@7.3.6(@types/node@24.13.3)(jiti@2.7.0)(lightningcss@1.33.0)(terser@5.50.0)(tsx@4.23.12)(yaml@2.9.0))
 
   web:
     dependencies:
@@ -272,11 +272,7 @@ importers:
         version: 4.0.4
       '@sentry/nextjs':
         specifier: 10.47.0
-<<<<<<< HEAD
         version: 10.47.0(@opentelemetry/context-async-hooks@2.10.0(@opentelemetry/api@1.9.1))(@opentelemetry/core@2.10.0(@opentelemetry/api@1.9.1))(@opentelemetry/sdk-trace-base@2.10.0(@opentelemetry/api@1.9.1))(next@16.3.1(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.9.1)(@types/node@22.20.1)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)(supports-color@8.1.1)(webpack@5.109.2(@swc/core@1.16.0(@swc/helpers@0.5.23))(esbuild@0.28.2)(lightningcss@1.33.0)(postcss@8.5.23)(uglify-js@3.19.3))
-=======
-        version: 10.47.0(@opentelemetry/context-async-hooks@2.10.0(@opentelemetry/api@1.9.1))(@opentelemetry/core@2.10.0(@opentelemetry/api@1.9.1))(@opentelemetry/sdk-trace-base@2.10.0(@opentelemetry/api@1.9.1))(next@16.3.0(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.9.1)(@types/node@22.20.1)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)(supports-color@8.1.1)(webpack@5.109.2(@swc/core@1.16.0(@swc/helpers@0.5.23))(esbuild@0.28.2)(lightningcss@1.33.0)(postcss@8.5.23)(uglify-js@3.19.3))
->>>>>>> bose/3929
       '@tanstack/react-table':
         specifier: 8.21.3
         version: 8.21.3(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -315,11 +311,7 @@ importers:
         version: 6.2.0(@sanity/client@7.20.0)(next@16.3.1(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.9.1)(@types/node@22.20.1)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)
       next-seo:
         specifier: ^7.2.0
-<<<<<<< HEAD
         version: 7.3.0(next@16.3.1(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.9.1)(@types/node@22.20.1)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)
-=======
-        version: 7.3.0(next@16.3.0(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.9.1)(@types/node@22.20.1)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)
->>>>>>> bose/3929
       radix-ui:
         specifier: 1.4.3
         version: 1.4.3(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -342,13 +334,8 @@ importers:
         specifier: 7.44.0
         version: 7.44.0(algoliasearch@5.56.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       react-instantsearch-nextjs:
-<<<<<<< HEAD
         specifier: 1.4.2
         version: 1.4.2(next@16.3.1(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.9.1)(@types/node@22.20.1)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-instantsearch@7.44.0(algoliasearch@5.56.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))
-=======
-        specifier: 1.0.5
-        version: 1.0.5(next@16.3.0(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.9.1)(@types/node@22.20.1)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-instantsearch@7.44.1(algoliasearch@5.56.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))
->>>>>>> bose/3929
       recharts:
         specifier: ^3.3.0
         version: 3.10.1(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react-is@19.2.8)(react@19.2.4)(redux@5.0.1)
@@ -2864,19 +2851,11 @@ packages:
     os: [linux]
     libc: [glibc]
 
-<<<<<<< HEAD
   '@next/env@16.3.1':
     resolution: {integrity: sha512-35G3xwkQUb2oETSDjFXGrVugknoayLFBh7vSE+yAcl9IP2zT9wyGwq7297AYHR11kJld807t5f8AJBs6WBzXsQ==}
 
   '@next/swc-darwin-arm64@16.3.1':
     resolution: {integrity: sha512-ABMIu2zQ7cnNIHm5ivKGwZwUrm0pAai3yiJ/gK/rF1c1VP9UOnj7XECbMKFdVKp9I9eMYq9NoDs1WXOoowxzJw==}
-=======
-  '@next/env@16.3.0':
-    resolution: {integrity: sha512-o9r1S0BNiNreHP9Vs+Qnqd9kviDkJh8xIACY7UFZSmiGbbQRzPBBosvHzAU4TULHOIuOj/18RSsyz2qrREmIFw==}
-
-  '@next/swc-darwin-arm64@16.3.0':
-    resolution: {integrity: sha512-55hpqq18bEVAlxedlTt3tFqZmKg2nUXT1kn1G/BGEy0R13h3LwtwHPVzzjG6P4LLeOHE32PFDQUVaJEWvBEZBw==}
->>>>>>> bose/3929
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [darwin]
@@ -6324,14 +6303,11 @@ packages:
   ajv@8.20.0:
     resolution: {integrity: sha512-Thbli+OlOj+iMPYFBVBfJ3OmCAnaSyNn4M1vz9T6Gka5Jt9ba/HIR56joy65tY6kx/FCF5VXNB819Y7/GUrBGA==}
 
-<<<<<<< HEAD
   algoliasearch-helper@3.29.2:
     resolution: {integrity: sha512-SaV+rZM3drExb0punEYYjT+sNcH74YFwN8ocjya7IDOyQvKWeQpEaSMVG3+IGTVos+feuatj7ljQ4BXlXdUp3w==}
     peerDependencies:
       algoliasearch: '>= 3.1 < 6'
 
-=======
->>>>>>> bose/3929
   algoliasearch-helper@3.29.3:
     resolution: {integrity: sha512-gVOMbbPVrCO3Xs+B+BLAIGFqIQow6qHMTYCEeBqLQB9m4ZmKUqMwkEumlal2iyyezHEd4Y0FvFTLbCRutCutIQ==}
     peerDependencies:
@@ -8102,30 +8078,22 @@ packages:
     resolution: {integrity: sha512-+N0ngpO3e7cRUWOJAS7qw0IZIVc6XPrW4MlFBdD066F2L4k1L6ker3hLqSq7iXxU5tgS4WGkIUElWn5vogAEnw==}
     engines: {node: ^18.17.0 || >=20.5.0}
 
-<<<<<<< HEAD
   instantsearch-ui-components@0.33.2:
     resolution: {integrity: sha512-q8WdUd2BmAEg6iXs8h3nc2FDZvwdVmLYpyp/psDK0ELP7rQiQKOCZjnH1rQZn/mVNM6CxNfcGVDc0i6mKb1K/g==}
 
   instantsearch-ui-components@0.35.0:
     resolution: {integrity: sha512-8TYRzaUdI6UE060YkQyUFCHAF/cDcKhGpyJNlpTKH3/rrp43yIkdO+N781raRUDqKAwI1NuFeosmRQ8ViWFQmg==}
-=======
-  instantsearch-ui-components@0.35.1:
-    resolution: {integrity: sha512-n8sCod1pOeaMMZzzqoK3MNFYqyw3IjWXP97zwXyjPFhbx+B7SEN+pmFmALdOagm2K2qzTcFF08ZlA13Xm8I6rg==}
->>>>>>> bose/3929
 
   instantsearch.js@4.108.0:
     resolution: {integrity: sha512-KGFRvujVi55kFqu+LDSoeeHfpKP/k8IvEec9Q2oLLh9/PghMPkO9hKPk1pa02h/85cZJSv5l4Wa4p4HkFfIZ7A==}
     peerDependencies:
       algoliasearch: '>= 3.1 < 6'
 
-<<<<<<< HEAD
   instantsearch.js@4.111.0:
     resolution: {integrity: sha512-Iez4Ab8ID5IJkO6GztoENGX06v+4gWwpeHvRs4PIP6yS76Se0WEjqQahWUyY8tn87YpJX3Bg96kJC7vb3CmZig==}
     peerDependencies:
       algoliasearch: '>= 3.1 < 6'
 
-=======
->>>>>>> bose/3929
   internal-slot@1.1.0:
     resolution: {integrity: sha512-4gd7VpWNQNB4UKKCFFVcp1AVv+FMOgs9NKzjHKusc8jTMhd5eL1NqQqOpE0KzMds804/yHlglp3uxgluOqAPLw==}
     engines: {node: '>= 0.4'}
@@ -9984,35 +9952,20 @@ packages:
     peerDependencies:
       react: '*'
 
-<<<<<<< HEAD
   react-instantsearch-core@7.44.0:
     resolution: {integrity: sha512-MhFLja8pDEP/k+A24aNjbamm+RxcZllT+1yVcHpmJ6CbRXWp1O3GMo45kSnAab3AeYOvQbbPKKhr2TgpLHxsKg==}
-=======
-  react-instantsearch-core@7.44.1:
-    resolution: {integrity: sha512-2pb73h7TqNzHDtcLAPcvxUOiG9Wt0hayNCiJJ+yCUs9Vw5S1n2PxdDnEaU/CvkkqT/RLcimnVQDmyf6yfNiMsA==}
->>>>>>> bose/3929
     peerDependencies:
       algoliasearch: '>= 3.1 < 6'
       react: '>= 16.8.0 < 20'
 
-<<<<<<< HEAD
   react-instantsearch-nextjs@1.4.2:
     resolution: {integrity: sha512-1MT0IQ6sD/aEPfPVVwGFXKEES4G+fArfOY78RCKiCOYffuHubHWI1fzGw8XkkfWo8KpK/J6eqnbyHZ6f6bI2lQ==}
-=======
-  react-instantsearch-nextjs@1.0.5:
-    resolution: {integrity: sha512-YYD+lsKuEt08UAOXDKMGzYFvHEJxto152Auczindfojv4X8WWhb+vub+lxp98NgeudRHe9PkNJVeM/BJ54JzbA==}
->>>>>>> bose/3929
     peerDependencies:
       next: '>= 13.4 < 17'
       react-instantsearch: '>= 7.1.0 < 8'
 
-<<<<<<< HEAD
   react-instantsearch@7.44.0:
     resolution: {integrity: sha512-v7QRQvW6dvijbifb+ei7nba1oOWXpkIMjWwmCSMAFgmL+pSkVgL0G4TU7npn0fjKX8LsBLwxV6m7d6fTQViQwA==}
-=======
-  react-instantsearch@7.44.1:
-    resolution: {integrity: sha512-nS5ko45HwzSbSCdL2MLrzui9YkBps+6r1DECjmIPx3BHiOicv0JpFnuxc4azXJKEuDig8p1QXc8JvqexUzpOXA==}
->>>>>>> bose/3929
     peerDependencies:
       algoliasearch: '>= 3.1 < 6'
       react: '>= 16.8.0 < 20'
@@ -14451,7 +14404,6 @@ snapshots:
   '@napi-rs/lzma-linux-x64-gnu@1.5.1':
     optional: true
 
-<<<<<<< HEAD
   '@next/env@16.3.1': {}
 
   '@next/swc-darwin-arm64@16.3.1':
@@ -14481,37 +14433,6 @@ snapshots:
   '@next/third-parties@16.3.0(next@16.3.1(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.9.1)(@types/node@22.20.1)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)':
     dependencies:
       next: 16.3.1(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.9.1)(@types/node@22.20.1)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
-=======
-  '@next/env@16.3.0': {}
-
-  '@next/swc-darwin-arm64@16.3.0':
-    optional: true
-
-  '@next/swc-darwin-x64@16.3.0':
-    optional: true
-
-  '@next/swc-linux-arm64-gnu@16.3.0':
-    optional: true
-
-  '@next/swc-linux-arm64-musl@16.3.0':
-    optional: true
-
-  '@next/swc-linux-x64-gnu@16.3.0':
-    optional: true
-
-  '@next/swc-linux-x64-musl@16.3.0':
-    optional: true
-
-  '@next/swc-win32-arm64-msvc@16.3.0':
-    optional: true
-
-  '@next/swc-win32-x64-msvc@16.3.0':
-    optional: true
-
-  '@next/third-parties@16.3.0(next@16.3.0(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.9.1)(@types/node@22.20.1)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)':
-    dependencies:
-      next: 16.3.0(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.9.1)(@types/node@22.20.1)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
->>>>>>> bose/3929
       react: 19.2.4
       third-party-capital: 1.0.20
 
@@ -18848,14 +18769,11 @@ snapshots:
       json-schema-traverse: 1.0.0
       require-from-string: 2.0.2
 
-<<<<<<< HEAD
   algoliasearch-helper@3.29.2(algoliasearch@5.56.0):
     dependencies:
       '@algolia/events': 4.0.1
       algoliasearch: 5.56.0
 
-=======
->>>>>>> bose/3929
   algoliasearch-helper@3.29.3(algoliasearch@5.56.0):
     dependencies:
       '@algolia/events': 4.0.1
@@ -20847,11 +20765,7 @@ snapshots:
 
   ini@5.0.0: {}
 
-<<<<<<< HEAD
   instantsearch-ui-components@0.33.2(react@19.2.4):
-=======
-  instantsearch-ui-components@0.35.1(react@19.2.4):
->>>>>>> bose/3929
     dependencies:
       '@swc/helpers': 0.5.18
       markdown-to-jsx: 7.7.17(react@19.2.4)
@@ -22227,13 +22141,8 @@ snapshots:
 
   next@16.3.1(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.9.1)(@types/node@22.20.1)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4):
     dependencies:
-<<<<<<< HEAD
       '@next/env': 16.3.1
       '@swc/helpers': 0.5.23
-=======
-      '@next/env': 16.3.0
-      '@swc/helpers': 0.5.15
->>>>>>> bose/3929
       baseline-browser-mapping: 2.11.15
       caniuse-lite: 1.0.30001809
       postcss: 8.5.23
@@ -22929,11 +22838,7 @@ snapshots:
     dependencies:
       react: 19.2.4
 
-<<<<<<< HEAD
   react-instantsearch-core@7.44.0(algoliasearch@5.56.0)(react@19.2.4):
-=======
-  react-instantsearch-core@7.44.1(algoliasearch@5.56.0)(react@19.2.4):
->>>>>>> bose/3929
     dependencies:
       '@swc/helpers': 0.5.18
       algoliasearch: 5.56.0
@@ -22950,11 +22855,7 @@ snapshots:
       next: 16.3.1(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.9.1)(@types/node@22.20.1)(babel-plugin-macros@3.1.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       react-instantsearch: 7.44.0(algoliasearch@5.56.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
 
-<<<<<<< HEAD
   react-instantsearch@7.44.0(algoliasearch@5.56.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4):
-=======
-  react-instantsearch@7.44.1(algoliasearch@5.56.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4):
->>>>>>> bose/3929
     dependencies:
       '@swc/helpers': 0.5.18
       algoliasearch: 5.56.0
@@ -24747,24 +24648,24 @@ snapshots:
       - tsx
       - yaml
 
-  vite-plugin-svgr@4.5.0(rollup@4.62.4)(supports-color@8.1.1)(typescript@5.9.3)(vite@8.2.1(@types/node@24.13.3)(esbuild@0.27.3)(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.12)(yaml@2.9.0)):
+  vite-plugin-svgr@4.5.0(rollup@4.62.4)(supports-color@8.1.1)(typescript@5.9.3)(vite@7.3.6(@types/node@24.13.3)(jiti@2.7.0)(lightningcss@1.33.0)(terser@5.50.0)(tsx@4.23.12)(yaml@2.9.0)):
     dependencies:
       '@rollup/pluginutils': 5.4.0(rollup@4.62.4)
       '@svgr/core': 8.1.0(supports-color@8.1.1)(typescript@5.9.3)
       '@svgr/plugin-jsx': 8.1.0(@svgr/core@8.1.0(supports-color@8.1.1)(typescript@5.9.3))(supports-color@8.1.1)
-      vite: 8.2.1(@types/node@24.13.3)(esbuild@0.27.3)(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.12)(yaml@2.9.0)
+      vite: 7.3.6(@types/node@24.13.3)(jiti@2.7.0)(lightningcss@1.33.0)(terser@5.50.0)(tsx@4.23.12)(yaml@2.9.0)
     transitivePeerDependencies:
       - rollup
       - supports-color
       - typescript
 
-  vite-tsconfig-paths@5.1.4(supports-color@8.1.1)(typescript@5.9.3)(vite@8.2.1(@types/node@24.13.3)(esbuild@0.27.3)(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.12)(yaml@2.9.0)):
+  vite-tsconfig-paths@5.1.4(supports-color@8.1.1)(typescript@5.9.3)(vite@7.3.6(@types/node@24.13.3)(jiti@2.7.0)(lightningcss@1.33.0)(terser@5.50.0)(tsx@4.23.12)(yaml@2.9.0)):
     dependencies:
       debug: 4.4.3(supports-color@8.1.1)
       globrex: 0.1.2
       tsconfck: 3.1.6(typescript@5.9.3)
     optionalDependencies:
-      vite: 8.2.1(@types/node@24.13.3)(esbuild@0.27.3)(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.12)(yaml@2.9.0)
+      vite: 7.3.6(@types/node@24.13.3)(jiti@2.7.0)(lightningcss@1.33.0)(terser@5.50.0)(tsx@4.23.12)(yaml@2.9.0)
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -24806,22 +24707,6 @@ snapshots:
     optionalDependencies:
       '@types/node': 22.20.1
       esbuild: 0.28.2
-      fsevents: 2.3.3
-      jiti: 2.7.0
-      terser: 5.50.0
-      tsx: 4.23.12
-      yaml: 2.9.0
-
-  vite@8.2.1(@types/node@24.13.3)(esbuild@0.27.3)(jiti@2.7.0)(terser@5.50.0)(tsx@4.23.12)(yaml@2.9.0):
-    dependencies:
-      lightningcss: 1.33.0
-      picomatch: 4.0.5
-      postcss: 8.5.26
-      rolldown: 1.2.4
-      tinyglobby: 0.2.17
-    optionalDependencies:
-      '@types/node': 24.13.3
-      esbuild: 0.27.3
       fsevents: 2.3.3
       jiti: 2.7.0
       terser: 5.50.0
