@@ -35,6 +35,7 @@ WORKDIR /app
 COPY --from=pruner /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
 COPY --from=pruner /app/out/pnpm-workspace.yaml ./pnpm-workspace.yaml
 COPY --from=pruner /app/out/json/ .
+RUN ls -la
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 
 
@@ -44,8 +45,7 @@ FROM base AS builder
 WORKDIR /app   
 
 # Copy node_modules from installer
-#COPY --from=installer /app/node_modules ./node_modules
-COPY --from=installer /app/ .
+COPY --from=installer /app/node_modules ./node_modules
 # Copy pruned source
 COPY --from=pruner /app/out/full/ .
 
@@ -70,7 +70,6 @@ RUN --mount=type=secret,id=sanity_api_token \
     --mount=type=secret,id=next_public_algolia_search_api_key \
     --mount=type=secret,id=next_server_actions_encryption_key \
     sh -ec 'SANITY_API_TOKEN="$(cat /run/secrets/sanity_api_token)" NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY="$(cat /run/secrets/next_public_algolia_search_api_key)" NEXT_SERVER_ACTIONS_ENCRYPTION_KEY="$(cat /run/secrets/next_server_actions_encryption_key)" NEXT_PUBLIC_SENTRY_DSN="${ARG_SENTRY_DSN}" turbo build --filter=energy-vision-web'
-RUN ls -la
 
 # -------------------------------------------------------- #
 # 6. Runtime container
