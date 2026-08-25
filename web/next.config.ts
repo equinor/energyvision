@@ -1,7 +1,7 @@
 /** biome-ignore-all assist/source/organizeImports: <explanation> */
 const archiveServerHostname = process.env.NEXT_PUBLIC_ARCHIVE_CONTENT_LINK
 
-import path, { join } from 'node:path'
+import path from 'node:path'
 /* import { withSentryConfig } from '@sentry/nextjs' */
 import type { NextConfig } from 'next'
 import createNextIntlPlugin from 'next-intl/plugin'
@@ -11,15 +11,12 @@ import { withSentryConfig } from '@sentry/nextjs'
 
 const withNextIntl = createNextIntlPlugin()
 
-const isProd = process.env.NODE_ENV === 'production'
 const sentryConfig = {
   org: 'equinor',
   project: 'equinor-com',
   silent: true,
   //disableLogger: true,
-  widenClientFileUpload: true,
-  disableClientWebpackPlugin: !isProd,
-  disableServerWebpackPlugin: !isProd,
+  hideSourceMaps: true,
 }
 
 //TODO: Find the Redirect type from config that is not in /dist.
@@ -130,4 +127,7 @@ const nextConfig: NextConfig = withNextIntl({
   },
 })
 
-export default withSentryConfig(nextConfig, sentryConfig)
+// Only wrap with Sentry if we are building for production
+export default process.env.NODE_ENV === 'production'
+  ? withSentryConfig(nextConfig, sentryConfig)
+  : nextConfig
