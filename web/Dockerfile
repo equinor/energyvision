@@ -97,7 +97,7 @@ ENV NEXT_TELEMETRY_DISABLED=1
 ENV TURBO_TELEMETRY_DISABLED=1
 ENV USER=nextjs
 ENV UID=12345
-
+RUN ls -la
 RUN addgroup -S "$USER" && adduser -S --uid "$UID" "$USER" && apk add --no-cache tini
 COPY --from=builder --chown="$USER":"$USER" /app/web/.next/standalone ./
 COPY --from=builder --chown="$USER":"$USER" /app/web/public ./public
