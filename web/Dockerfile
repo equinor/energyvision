@@ -95,14 +95,15 @@ ENV NEXT_PUBLIC_OPTIMIZED_SANITY_FETCH=${ARG_OPTIMIZED_SANITY_FETCH}
 ENV NEXT_PUBLIC_SENTRY_DSN=${ARG_SENTRY_DSN}
 
 ENV NEXT_TELEMETRY_DISABLED=1
+ENV TURBO_TELEMETRY_DISABLED=1
 ENV USER=nextjs
 ENV UID=12345
 
 RUN addgroup -S "$USER" && adduser -S --uid "$UID" "$USER" && apk add --no-cache tini
-RUN ls -la
 COPY --from=builder --chown="$USER":"$USER" /app/web/.next/standalone/ ./
 COPY --from=builder --chown="$USER":"$USER" /app/web/public ./web/public
 COPY --from=builder --chown="$USER":"$USER" /app/web/.next/static ./web/.next/static
+RUN ls -la
 
 USER "$UID"
 EXPOSE 3000
