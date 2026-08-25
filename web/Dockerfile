@@ -66,6 +66,7 @@ RUN --mount=type=secret,id=sanity_api_token \
     --mount=type=secret,id=next_public_algolia_search_api_key \
     --mount=type=secret,id=next_server_actions_encryption_key \
     sh -ec 'SANITY_API_TOKEN="$(cat /run/secrets/sanity_api_token)" NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY="$(cat /run/secrets/next_public_algolia_search_api_key)" NEXT_SERVER_ACTIONS_ENCRYPTION_KEY="$(cat /run/secrets/next_server_actions_encryption_key)" NEXT_PUBLIC_SENTRY_DSN="${ARG_SENTRY_DSN}" turbo build --filter=energy-vision-web'
+RUN ls -la
 
 # -------------------------------------------------------- #
 # 6. Runtime container
@@ -93,15 +94,16 @@ ENV NEXT_TELEMETRY_DISABLED=1
 ENV TURBO_TELEMETRY_DISABLED=1
 ENV USER=nextjs
 ENV UID=12345
-RUN ls -la
+
 RUN addgroup -S "$USER" && adduser -S --uid "$UID" "$USER" && apk add --no-cache tini
+RUN ls -la
 COPY --from=builder --chown="$USER":"$USER" /app/web/.next/standalone ./
-COPY --from=builder --chown="$USER":"$USER" /app/web/public ./public
-COPY --from=builder --chown="$USER":"$USER" /app/web/.next/static ./.next/static
+COPY --from=builder --chown="$USER":"$USER" /app/web/public ./web/public
+COPY --from=builder --chown="$USER":"$USER" /app/web/.next/static ./web/.next/static
 RUN ls -la
 
 USER "$UID"
 EXPOSE 3000
 
 ENTRYPOINT ["/sbin/tini", "--"]
-CMD ["node", "server.js"]
+CMD ["node", "web/server.js"]
