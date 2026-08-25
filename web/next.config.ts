@@ -115,7 +115,6 @@ const nextConfig: NextConfig = withNextIntl({
   env: {
     SC_DISABLE_SPEEDY: 'false',
   },
-
   outputFileTracingRoot: path.join(__dirname, '../'),
   experimental: {
     optimizePackageImports: [
