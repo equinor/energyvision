@@ -5080,8 +5080,8 @@ packages:
     engines: {node: '>=20.19'}
     hasBin: true
 
-  '@sanity/runtime-cli@17.7.0':
-    resolution: {integrity: sha512-5g3PUv5oYrBqu43S4mEWTx/mnbXD97Y6VrXvrPngIQIFRVqjLQ6EhtY7FjD76YCKhS/KHIYaGiYW3z94UUujkg==}
+  '@sanity/runtime-cli@17.7.1':
+    resolution: {integrity: sha512-n70HEMVBblvjrHaA8PJanrrvQ1FKpcfElpHwxMWwJI8LPfQyK9wYFNyoQFXNx2HD0IM8uI/hQjEcqxz4exgEdw==}
     engines: {node: '>=22.12'}
     hasBin: true
 
@@ -16535,7 +16535,7 @@ snapshots:
       '@sanity/id-utils': 1.0.0
       '@sanity/import': 6.0.3(@sanity/client@7.26.2)(@types/react@19.2.14)(supports-color@8.1.1)
       '@sanity/migrate': 8.0.2(@types/react@19.2.14)(supports-color@8.1.1)(xstate@5.32.5)
-      '@sanity/runtime-cli': 17.7.0(@babel/core@7.29.7(supports-color@8.1.1))(@babel/runtime@7.29.7)(@noble/hashes@2.3.0)(@types/node@22.20.1)(@types/react@19.2.14)(babel-plugin-react-compiler@1.0.0)(esbuild@0.28.2)(rolldown@1.2.4)(terser@5.50.0)(tsx@4.23.12)(typescript@5.9.3)(yaml@2.9.0)
+      '@sanity/runtime-cli': 17.7.1(@babel/core@7.29.7(supports-color@8.1.1))(@babel/runtime@7.29.7)(@noble/hashes@2.3.0)(@types/node@22.20.1)(@types/react@19.2.14)(babel-plugin-react-compiler@1.0.0)(esbuild@0.28.2)(rolldown@1.2.4)(terser@5.50.0)(tsx@4.23.12)(typescript@5.9.3)(yaml@2.9.0)
       '@sanity/schema': 6.9.2(@types/react@19.2.14)
       '@sanity/telemetry': 1.1.0(react@19.2.8)
       '@sanity/template-validator': 3.1.0
@@ -17172,7 +17172,7 @@ snapshots:
       - utf-8-validate
       - yaml
 
-  '@sanity/runtime-cli@17.7.0(@babel/core@7.29.7(supports-color@8.1.1))(@babel/runtime@7.29.7)(@noble/hashes@2.3.0)(@types/node@22.20.1)(@types/react@19.2.14)(babel-plugin-react-compiler@1.0.0)(esbuild@0.28.2)(rolldown@1.2.4)(terser@5.50.0)(tsx@4.23.12)(typescript@5.9.3)(yaml@2.9.0)':
+  '@sanity/runtime-cli@17.7.1(@babel/core@7.29.7(supports-color@8.1.1))(@babel/runtime@7.29.7)(@noble/hashes@2.3.0)(@types/node@22.20.1)(@types/react@19.2.14)(babel-plugin-react-compiler@1.0.0)(esbuild@0.28.2)(rolldown@1.2.4)(terser@5.50.0)(tsx@4.23.12)(typescript@5.9.3)(yaml@2.9.0)':
     dependencies:
       '@architect/hydrate': 6.0.2
       '@architect/inventory': 6.1.0
