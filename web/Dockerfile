@@ -104,10 +104,10 @@ RUN ls -la
 COPY --from=builder --chown="$USER":"$USER" /app/web/.next/standalone ./
 COPY --from=builder --chown="$USER":"$USER" /app/web/public ./public
 COPY --from=builder --chown="$USER":"$USER" /app/web/.next/static ./.next/static
-RUN ls -la
+RUN find . -name "server.js"
 
 USER "$UID"
 EXPOSE 3000
 
 ENTRYPOINT ["/sbin/tini", "--"]
-CMD ["node", "server.js"]
+CMD ["node", "./web/server.js"]
