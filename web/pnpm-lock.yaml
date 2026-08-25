@@ -80,6 +80,7 @@ importers:
       '@sentry/nextjs':
         specifier: 10.47.0
 <<<<<<< HEAD
+<<<<<<< HEAD
         version: 10.47.0(@opentelemetry/context-async-hooks@2.6.1(@opentelemetry/api@1.9.1))(@opentelemetry/core@2.6.1(@opentelemetry/api@1.9.1))(@opentelemetry/sdk-trace-base@2.6.1(@opentelemetry/api@1.9.1))(next@16.3.1(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@22.18.11)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)(webpack@5.104.1(esbuild@0.25.10)(lightningcss@1.32.0)(postcss@8.5.23))
       '@sindresorhus/slugify':
         specifier: ^3.0.0
@@ -87,6 +88,9 @@ importers:
 =======
         version: 10.47.0(@opentelemetry/context-async-hooks@2.6.1(@opentelemetry/api@1.9.1))(@opentelemetry/core@2.6.1(@opentelemetry/api@1.9.1))(@opentelemetry/sdk-trace-base@2.6.1(@opentelemetry/api@1.9.1))(next@16.3.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@22.18.11)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)(webpack@5.104.1(esbuild@0.25.10)(lightningcss@1.32.0)(postcss@8.5.23))
 >>>>>>> bose/3865
+=======
+        version: 10.47.0(@opentelemetry/context-async-hooks@2.6.1(@opentelemetry/api@1.9.1))(@opentelemetry/core@2.6.1(@opentelemetry/api@1.9.1))(@opentelemetry/sdk-trace-base@2.6.1(@opentelemetry/api@1.9.1))(next@16.3.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@22.18.11)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)(webpack@5.104.1(esbuild@0.25.10)(lightningcss@1.32.0)(postcss@8.5.23))
+>>>>>>> bose/3932
       '@tanstack/react-table':
         specifier: 8.21.3
         version: 8.21.3(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -121,6 +125,7 @@ importers:
         specifier: 13.1.1
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         version: 13.1.1(@emotion/is-prop-valid@1.2.2)(@sanity/client@7.20.0)(@sanity/types@6.7.0(@types/react@19.2.14))(next@16.3.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@22.18.11)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react-is@19.2.8)(react@19.2.4)(sanity@4.10.2(@emotion/is-prop-valid@1.2.2)(@noble/hashes@2.0.1)(@portabletext/sanity-bridge@1.2.14(@types/react@19.2.14))(@types/node@22.18.11)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(immer@10.2.0)(jiti@2.7.0)(lightningcss@1.32.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(styled-components@6.1.19(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(terser@5.50.0)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.9.0))(styled-components@6.1.19(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(typescript@5.9.3)
 =======
         version: 13.1.1(@emotion/is-prop-valid@1.2.2)(@sanity/client@7.20.0)(@sanity/types@6.7.0(@types/react@19.2.14))(next@16.3.1(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@22.18.11)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react-is@19.2.8)(react@19.2.4)(sanity@4.10.2(@emotion/is-prop-valid@1.2.2)(@noble/hashes@2.0.1)(@portabletext/sanity-bridge@1.2.14(@types/react@19.2.14))(@types/node@22.18.11)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(immer@10.2.0)(jiti@2.7.0)(lightningcss@1.32.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(styled-components@6.1.19(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(terser@5.50.0)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.9.0))(styled-components@6.1.19(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(typescript@5.9.3)
@@ -128,11 +133,15 @@ importers:
 =======
         version: 13.1.1(@emotion/is-prop-valid@1.2.2)(@sanity/client@7.20.0)(@sanity/types@6.7.0(@types/react@19.2.14))(next@16.3.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@22.18.11)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react-is@19.2.8)(react@19.2.4)(sanity@4.10.2(@emotion/is-prop-valid@1.2.2)(@noble/hashes@2.0.1)(@portabletext/sanity-bridge@1.2.14(@types/react@19.2.14))(@types/node@22.18.11)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(immer@10.2.0)(jiti@2.7.0)(lightningcss@1.32.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(styled-components@6.1.19(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(terser@5.50.0)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.9.0))(styled-components@6.1.19(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(typescript@5.9.3)
 >>>>>>> bose/3865
+=======
+        version: 13.1.1(@emotion/is-prop-valid@1.2.2)(@sanity/client@7.20.0)(@sanity/types@6.7.0(@types/react@19.2.14))(next@16.3.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@22.18.11)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react-is@19.2.8)(react@19.2.4)(sanity@4.10.2(@emotion/is-prop-valid@1.2.2)(@noble/hashes@2.0.1)(@portabletext/sanity-bridge@1.2.14(@types/react@19.2.14))(@types/node@22.18.11)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(immer@10.2.0)(jiti@2.7.0)(lightningcss@1.32.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(styled-components@6.1.19(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(terser@5.50.0)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.9.0))(styled-components@6.1.19(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(typescript@5.9.3)
+>>>>>>> bose/3932
       next-sanity-image:
         specifier: ^6.2.0
         version: 6.2.0(@sanity/client@7.20.0)(next@16.3.1(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@22.18.11)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)
       next-seo:
         specifier: ^7.2.0
+<<<<<<< HEAD
 <<<<<<< HEAD
         version: 7.2.0(next@16.3.1(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@22.18.11)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)
       qs:
@@ -144,6 +153,9 @@ importers:
 =======
         version: 7.2.0(next@16.3.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@22.18.11)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)
 >>>>>>> bose/3865
+=======
+        version: 7.2.0(next@16.3.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@22.18.11)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)
+>>>>>>> bose/3932
       radix-ui:
         specifier: 1.4.3
         version: 1.4.3(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -175,6 +187,7 @@ importers:
 =======
         specifier: 1.0.5
 <<<<<<< HEAD
+<<<<<<< HEAD
         version: 1.0.5(next@16.3.1(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@22.18.11)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-instantsearch@7.19.0(algoliasearch@5.50.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))
       react-instantsearch-router-nextjs:
         specifier: 7.19.0
@@ -183,6 +196,9 @@ importers:
 =======
         version: 1.0.5(next@16.3.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@22.18.11)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-instantsearch@7.19.0(algoliasearch@5.50.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))
 >>>>>>> bose/3865
+=======
+        version: 1.0.5(next@16.3.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@22.18.11)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-instantsearch@7.19.0(algoliasearch@5.50.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))
+>>>>>>> bose/3932
       recharts:
         specifier: ^3.3.0
         version: 3.3.0(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react-is@19.2.8)(react@19.2.4)(redux@5.0.1)
@@ -1971,12 +1987,15 @@ packages:
     resolution: {integrity: sha512-AsMV0LMwJm9T1ig6BBYSddeMlkzz+2RGcd6dkOgYk+L5Hx477ovbTxJZJ/vTW+rZjNWHcG3BvgNbSLgiubyZhw==}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   '@next/bundle-analyzer@16.3.0':
     resolution: {integrity: sha512-o8OiXKIATcSC6kHm5BIEmaDEDTFUDhpy9POQIbzAQTlb8NWwFhEQheTLFSbyQXxH2ywhjZ/e8EUlbOjj2k22Yg==}
 
   '@next/env@16.3.1':
     resolution: {integrity: sha512-35G3xwkQUb2oETSDjFXGrVugknoayLFBh7vSE+yAcl9IP2zT9wyGwq7297AYHR11kJld807t5f8AJBs6WBzXsQ==}
 =======
+=======
+>>>>>>> bose/3932
   '@next/env@16.3.0':
     resolution: {integrity: sha512-o9r1S0BNiNreHP9Vs+Qnqd9kviDkJh8xIACY7UFZSmiGbbQRzPBBosvHzAU4TULHOIuOj/18RSsyz2qrREmIFw==}
 >>>>>>> bose/3865
@@ -7167,6 +7186,7 @@ packages:
     engines: {node: '>=0.6'}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   query-string@9.3.1:
     resolution: {integrity: sha512-5fBfMOcDi5SA9qj5jZhWAcTtDfKF5WFdd2uD9nVNlbxVv1baq65aALy6qofpNEGELHvisjjasxQp7BlM9gvMzw==}
     engines: {node: '>=18'}
@@ -7175,6 +7195,11 @@ packages:
     resolution: {integrity: sha512-IhMFgUmuNpyRfxA90umL7ByLlgRXu6tIfKPpF5TmcfRLlLCckfP/g3IQmju6jjpu+Hh8rA+2p6A27ZSPOOHdKw==}
     engines: {node: '>=0.6'}
 >>>>>>> bose/3865
+=======
+  qs@6.9.7:
+    resolution: {integrity: sha512-IhMFgUmuNpyRfxA90umL7ByLlgRXu6tIfKPpF5TmcfRLlLCckfP/g3IQmju6jjpu+Hh8rA+2p6A27ZSPOOHdKw==}
+    engines: {node: '>=0.6'}
+>>>>>>> bose/3932
 
   querystringify@2.2.0:
     resolution: {integrity: sha512-FIqgj2EUvTa7R50u0rGsyTftzjYmv/a3hO345bZNrqabNqjtgiDMgmo4mkUjd+nzU5oF3dClKqFIPUKybUyqoQ==}
@@ -7289,6 +7314,7 @@ packages:
       react-instantsearch: '>= 7.1.0 < 8'
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   react-instantsearch-router-nextjs@7.44.0:
     resolution: {integrity: sha512-cncAioHrWAKXIfYL0izU2l4ydJCaVjaZEOYs8FIW8v3Db/5fzBP1cpcpgUsifLFq7glga7muJA/G/cmVvzBsYQ==}
     peerDependencies:
@@ -7297,6 +7323,8 @@ packages:
   react-instantsearch@7.44.0:
     resolution: {integrity: sha512-v7QRQvW6dvijbifb+ei7nba1oOWXpkIMjWwmCSMAFgmL+pSkVgL0G4TU7npn0fjKX8LsBLwxV6m7d6fTQViQwA==}
 =======
+=======
+>>>>>>> bose/3932
   react-instantsearch@7.19.0:
     resolution: {integrity: sha512-AAR7JP9pyzk+ORR/XXG1joImrRMb2d3D36uo7zCc1Z8dbcbKPnulZWm9lMz/5D+I8sKfVvhrytV/hf+N0J8PjQ==}
 >>>>>>> bose/3865
@@ -10267,6 +10295,7 @@ snapshots:
       mux-embed: 5.18.1
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   '@next/bundle-analyzer@16.3.0':
     dependencies:
       webpack-bundle-analyzer: 4.10.1
@@ -10276,6 +10305,8 @@ snapshots:
 
   '@next/env@16.3.1': {}
 =======
+=======
+>>>>>>> bose/3932
   '@next/env@16.3.0': {}
 >>>>>>> bose/3865
 
@@ -13261,6 +13292,7 @@ snapshots:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   '@sanity/visual-editing@5.4.4(@emotion/is-prop-valid@1.2.2)(@sanity/client@7.20.0)(@sanity/types@6.7.0(@types/react@19.2.14))(next@16.3.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@22.18.11)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react-is@19.2.8)(react@19.2.4)(styled-components@6.1.19(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(typescript@5.9.3)':
 =======
   '@sanity/visual-editing@5.4.4(@emotion/is-prop-valid@1.2.2)(@sanity/client@7.20.0)(@sanity/types@6.7.0(@types/react@19.2.14))(next@16.3.1(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@22.18.11)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react-is@19.2.8)(react@19.2.4)(styled-components@6.1.19(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(typescript@5.9.3)':
@@ -13268,6 +13300,9 @@ snapshots:
 =======
   '@sanity/visual-editing@5.4.4(@emotion/is-prop-valid@1.2.2)(@sanity/client@7.20.0)(@sanity/types@6.7.0(@types/react@19.2.14))(next@16.3.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@22.18.11)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react-is@19.2.8)(react@19.2.4)(styled-components@6.1.19(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(typescript@5.9.3)':
 >>>>>>> bose/3865
+=======
+  '@sanity/visual-editing@5.4.4(@emotion/is-prop-valid@1.2.2)(@sanity/client@7.20.0)(@sanity/types@6.7.0(@types/react@19.2.14))(next@16.3.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@22.18.11)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react-is@19.2.8)(react@19.2.4)(styled-components@6.1.19(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(typescript@5.9.3)':
+>>>>>>> bose/3932
     dependencies:
       '@sanity/comlink': 4.0.1
       '@sanity/icons': 3.7.4(react@19.2.4)
@@ -15950,6 +15985,7 @@ snapshots:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   next-sanity@13.1.1(@emotion/is-prop-valid@1.2.2)(@sanity/client@7.20.0)(@sanity/types@6.7.0(@types/react@19.2.14))(next@16.3.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@22.18.11)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react-is@19.2.8)(react@19.2.4)(sanity@4.10.2(@emotion/is-prop-valid@1.2.2)(@noble/hashes@2.0.1)(@portabletext/sanity-bridge@1.2.14(@types/react@19.2.14))(@types/node@22.18.11)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(immer@10.2.0)(jiti@2.7.0)(lightningcss@1.32.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(styled-components@6.1.19(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(terser@5.50.0)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.9.0))(styled-components@6.1.19(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(typescript@5.9.3):
 =======
   next-sanity@13.1.1(@emotion/is-prop-valid@1.2.2)(@sanity/client@7.20.0)(@sanity/types@6.7.0(@types/react@19.2.14))(next@16.3.1(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@22.18.11)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react-is@19.2.8)(react@19.2.4)(sanity@4.10.2(@emotion/is-prop-valid@1.2.2)(@noble/hashes@2.0.1)(@portabletext/sanity-bridge@1.2.14(@types/react@19.2.14))(@types/node@22.18.11)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(immer@10.2.0)(jiti@2.7.0)(lightningcss@1.32.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(styled-components@6.1.19(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(terser@5.50.0)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.9.0))(styled-components@6.1.19(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(typescript@5.9.3):
@@ -15957,11 +15993,15 @@ snapshots:
 =======
   next-sanity@13.1.1(@emotion/is-prop-valid@1.2.2)(@sanity/client@7.20.0)(@sanity/types@6.7.0(@types/react@19.2.14))(next@16.3.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@22.18.11)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react-is@19.2.8)(react@19.2.4)(sanity@4.10.2(@emotion/is-prop-valid@1.2.2)(@noble/hashes@2.0.1)(@portabletext/sanity-bridge@1.2.14(@types/react@19.2.14))(@types/node@22.18.11)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(immer@10.2.0)(jiti@2.7.0)(lightningcss@1.32.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(styled-components@6.1.19(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(terser@5.50.0)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.9.0))(styled-components@6.1.19(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(typescript@5.9.3):
 >>>>>>> bose/3865
+=======
+  next-sanity@13.1.1(@emotion/is-prop-valid@1.2.2)(@sanity/client@7.20.0)(@sanity/types@6.7.0(@types/react@19.2.14))(next@16.3.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@22.18.11)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react-is@19.2.8)(react@19.2.4)(sanity@4.10.2(@emotion/is-prop-valid@1.2.2)(@noble/hashes@2.0.1)(@portabletext/sanity-bridge@1.2.14(@types/react@19.2.14))(@types/node@22.18.11)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(immer@10.2.0)(jiti@2.7.0)(lightningcss@1.32.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(styled-components@6.1.19(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(terser@5.50.0)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.9.0))(styled-components@6.1.19(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(typescript@5.9.3):
+>>>>>>> bose/3932
     dependencies:
       '@portabletext/react': 6.2.0(react@19.2.4)
       '@sanity/client': 7.20.0(debug@4.4.3)
       '@sanity/generate-help-url': 4.0.0
       '@sanity/preview-url-secret': 4.0.7(@sanity/client@7.20.0)
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       '@sanity/visual-editing': 5.4.4(@emotion/is-prop-valid@1.2.2)(@sanity/client@7.20.0)(@sanity/types@6.7.0(@types/react@19.2.14))(next@16.3.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@22.18.11)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react-is@19.2.8)(react@19.2.4)(styled-components@6.1.19(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(typescript@5.9.3)
@@ -15971,6 +16011,9 @@ snapshots:
 =======
       '@sanity/visual-editing': 5.4.4(@emotion/is-prop-valid@1.2.2)(@sanity/client@7.20.0)(@sanity/types@6.7.0(@types/react@19.2.14))(next@16.3.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@22.18.11)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react-is@19.2.8)(react@19.2.4)(styled-components@6.1.19(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(typescript@5.9.3)
 >>>>>>> bose/3865
+=======
+      '@sanity/visual-editing': 5.4.4(@emotion/is-prop-valid@1.2.2)(@sanity/client@7.20.0)(@sanity/types@6.7.0(@types/react@19.2.14))(next@16.3.0(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@22.18.11)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react-is@19.2.8)(react@19.2.4)(styled-components@6.1.19(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(typescript@5.9.3)
+>>>>>>> bose/3932
       '@sanity/webhook': 4.0.4
       groq: 6.1.0
       history: 5.3.0
@@ -16365,6 +16408,7 @@ snapshots:
       side-channel: 1.1.0
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   query-string@9.3.1:
     dependencies:
       decode-uri-component: 0.4.1
@@ -16373,6 +16417,9 @@ snapshots:
 =======
   qs@6.9.7: {}
 >>>>>>> bose/3865
+=======
+  qs@6.9.7: {}
+>>>>>>> bose/3932
 
   querystringify@2.2.0: {}
 
@@ -16584,6 +16631,7 @@ snapshots:
       react-instantsearch: 7.19.0(algoliasearch@5.50.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   react-instantsearch-router-nextjs@7.19.0(algoliasearch@5.50.1)(next@16.3.1(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@types/node@22.18.11)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4):
     dependencies:
       instantsearch.js: 4.83.0(algoliasearch@5.50.1)
@@ -16596,6 +16644,8 @@ snapshots:
 
   react-instantsearch@7.44.0(algoliasearch@5.50.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4):
 =======
+=======
+>>>>>>> bose/3932
   react-instantsearch@7.19.0(algoliasearch@5.50.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4):
 >>>>>>> bose/3865
     dependencies:

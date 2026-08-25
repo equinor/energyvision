@@ -81,7 +81,7 @@ export const BarChart = forwardRef<HTMLDivElement, BarChartProps>(
     const chartData = data?.map((dataItem: any) => dataItem.data)
     const COLORS = themes[theme]
 
-    const renderLegendText = (value: string) => {
+    const renderLegendText = (value: string, entry: any) => {
       return (
         <span className='text-slate-80'>
           {String(value).replaceAll('_', ' ')}

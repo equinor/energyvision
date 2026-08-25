@@ -108,6 +108,7 @@ export const LineChart = forwardRef<HTMLDivElement, LineChartProps>(
     const COLORS = themes[theme]
 
     const renderLegendText = (value: string, entry: any) => {
+      const { color } = entry
       const headerName = headerNames?.find(
         (item: any) => item.value === value,
       ).title
