@@ -17,7 +17,7 @@ ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
 
 # Corepack manages the pinned pnpm version dynamically
 RUN corepack enable && corepack prepare pnpm@11.23.0 --activate
-RUN pnpm add -g turbo
+RUN pnpm add -g turbo@2.10.10
 
 
 # --- STAGE 1: Prune the monorepo workspace ---
