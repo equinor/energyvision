@@ -2,8 +2,8 @@ packages:
   - 'web'
   - 'studio'
   - 'search'
-  - 'shared'
-  - 'packages/*'
+  - 'packages/energyvision'
+  - 'packages/typescript-config'
 minimumReleaseAge: 10080
 #trustPolicy: "no-downgrade"
 blockExoticSubdeps: true
