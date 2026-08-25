@@ -4,6 +4,10 @@ packages:
   - 'search'
   - 'shared'
   - 'packages/*'
+sharedWorkspaceLockfile: false
+publicHoistPattern:
+  - '*import-in-the-middle*'
+  - '*require-in-the-middle*'
 minimumReleaseAge: 10080
 #trustPolicy: "no-downgrade"
 blockExoticSubdeps: true

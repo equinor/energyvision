@@ -83,6 +83,10 @@ const nextConfig: NextConfig = withNextIntl({
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
   async rewrites() {
+    if (!archiveServerHostname) {
+      return []
+    }
+
     return [
       // Archive_Rule: This rule load the archived images from dam
       {
