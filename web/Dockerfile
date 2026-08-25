@@ -31,7 +31,7 @@ FROM base AS builder
 COPY --from=pruner /app/out/json/ .
 COPY --from=pruner /app/out/pnpm-workspace.yaml ./pnpm-workspace.yaml
 COPY --from=pruner /app/out/pnpm-lock.yaml ./pnpm-lock.yaml 
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 WORKDIR /app
 RUN ls -la
 
