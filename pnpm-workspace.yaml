@@ -2,9 +2,8 @@ packages:
   - 'web'
   - 'studio'
   - 'search'
-  - 'shared'
-  - 'packages/*'
-sharedWorkspaceLockfile: false
+  - 'packages/energyvision'
+  - 'packages/typescript-config'
 publicHoistPattern:
   - '*import-in-the-middle*'
   - '*require-in-the-middle*'
