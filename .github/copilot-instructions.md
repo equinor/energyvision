@@ -44,7 +44,7 @@ This file tells Copilot how to work inside the Energyvision monorepo. Prefer exi
 Energyvision is a pnpm workspaces monorepo
 
 - Languages: TypeScript, CSS, React, Next.js
-- Package manager: PNPM (packageManager: `pnpm@11.23.0`)
+- Package manager: PNPM (packageManager: `pnpm@10.34.5`)
 - Build orchestration: Turborepo (tasks defined in `turbo.json`)
 - Build: Per-package builds orchestrated via Turborepo
 
