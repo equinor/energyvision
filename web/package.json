@@ -92,13 +92,5 @@
   "engines": {
     "node": ">=24.0.0"
   },
-  "pnpm": {
-    "overrides": {
-      "tar": "7.5.19",
-      "vite": "7.3.5",
-      "@xmldom/xmldom": "0.8.13",
-      "@sanity/types": "6.7.0"
-    }
-  },
   "packageManager": "pnpm@11.23.0"
 }
