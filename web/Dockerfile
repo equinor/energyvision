@@ -24,7 +24,6 @@ RUN pnpm add -g turbo
 FROM base AS pruner
 WORKDIR /app
 COPY . .
-RUN ls -la
 RUN turbo prune energy-vision-web --docker
 
 
@@ -93,7 +92,7 @@ ENV USER=nextjs
 ENV UID=12345
 
 RUN addgroup -S "$USER" && adduser -S --uid "$UID" "$USER" && apk add --no-cache tini
-
+RUN ls -la
 COPY --from=builder --chown="$USER":"$USER" /app/web/.next/standalone/ ./
 COPY --from=builder --chown="$USER":"$USER" /app/web/public ./web/public
 COPY --from=builder --chown="$USER":"$USER" /app/web/.next/static ./web/.next/static
