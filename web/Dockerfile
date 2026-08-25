@@ -17,7 +17,7 @@ FROM base AS prepare
 # copy the package json to know pnpm version
 COPY package.json ./ 
 ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME/bin:$PATH"
+ENV PATH="$PNPM_HOME:$PATH"
 ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
 RUN corepack enable && corepack prepare pnpm@10.34.5 --activate
 RUN pnpm add -g turbo@2.10.10
