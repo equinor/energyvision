@@ -4,7 +4,7 @@
   "tasks": {
     "energy-vision-web#build": {
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": [".next/**", "!.next/cache/**"],
+      "outputs": [".next/**", "!.next/cache/**", "!.next/dev/**"],
       "passThroughEnv": [
         "SANITY_API_TOKEN",
         "NEXT_PUBLIC_SANITY_PROJECT_ID",
