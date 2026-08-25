@@ -43,6 +43,10 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 FROM base AS builder
 WORKDIR /app   
 
+# Copy node_modules from installer
+#COPY --from=installer /app/node_modules ./node_modules
+COPY --from=installer /app/ .
+# Copy pruned source
 COPY --from=pruner /app/out/full/ .
 
 ARG ARG_SANITY_DATASET
@@ -102,9 +106,10 @@ ENV UID=12345
 RUN addgroup -S "$USER" && adduser -S --uid "$UID" "$USER" && apk add --no-cache tini
 RUN ls -la
 COPY --from=builder --chown="$USER":"$USER" /app/web/.next/standalone ./
-COPY --from=builder --chown="$USER":"$USER" /app/web/public ./public
-COPY --from=builder --chown="$USER":"$USER" /app/web/.next/static ./.next/static
+COPY --from=builder --chown="$USER":"$USER" /app/web/public ./web/public
+COPY --from=builder --chown="$USER":"$USER" /app/web/.next/static ./web/.next/static
 RUN find . -name "server.js"
+RUN ls -la
 
 USER "$UID"
 EXPOSE 3000
