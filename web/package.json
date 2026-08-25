@@ -99,5 +99,6 @@
       "@xmldom/xmldom": "0.8.13",
       "@sanity/types": "6.7.0"
     }
-  }
+  },
+  "packageManager": "pnpm@11.23.0"
 }
