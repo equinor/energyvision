@@ -7,11 +7,9 @@ import Script from 'next/script'
 import { NextIntlClientProvider } from 'next-intl'
 import { getLocale, getTranslations } from 'next-intl/server'
 import { PageProvider } from '@/contexts/pageContext'
-import { getValidLanguagesLocales } from '@/languageConfig'
 import { getLocaleFromIso, getNameFromIso } from '@/sanity/helpers/localization'
 import { dataset } from '@/sanity/lib/api'
-import { IS_FETCH_OPTIMIZED, routeSanityFetch } from '@/sanity/lib/fetch'
-import { SanityLive } from '@/sanity/lib/live'
+import { routeSanityFetch, SanityLive } from '@/sanity/lib/live'
 import { footerAndErrorImageQuery } from '@/sanity/queries/footer'
 import Footer from '@/sections/Footer/Footer'
 import GoToTopButton from '@/sections/GoToTopButton'
@@ -34,10 +32,6 @@ const equinor = localFont({
 
 //the [locale] segment corresponds to the locale (iso format), not the prefix(/no).
 
-export function generateStaticParams() {
-  return getValidLanguagesLocales().map(locale => ({ locale }))
-}
-
 export default async function LocaleLayout({
   children,
 }: LayoutProps<'/[locale]'>) {
@@ -52,7 +46,6 @@ export default async function LocaleLayout({
     await routeSanityFetch({
       query: footerAndErrorImageQuery,
       params: queryParams,
-      tags: [`sanity:footer:${locale}`],
     })
 
   const { errorImage, ...footerData } = footerAndErrorImageData || {}
@@ -79,7 +72,7 @@ export default async function LocaleLayout({
         >
           {t('skipToContent') ?? 'Skip to main content'}
         </NextLink>
-        {!IS_FETCH_OPTIMIZED && <SanityLive />}
+        <SanityLive />
         {/* Preview link is sent to stakeholders dont show draft toolbar, only use if needed in local development
         Must first filter all conditional rendering props in the page content, otherwise the visual editing will not work correctly inside presentation tool. This is a big job and will be done later. For now, we will not render the visual editing inside the presentation tool. 
         */}
@@ -100,7 +93,6 @@ export default async function LocaleLayout({
         <>
           {process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID && (
             //https://nextjs.org/docs/app/guides/third-party-libraries#google-third-parties
-            //strategy='afterInteractive' is default
             <GoogleTagManager
               gtmId={process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID}
             />

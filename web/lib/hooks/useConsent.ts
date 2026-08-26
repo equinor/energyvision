@@ -1,5 +1,6 @@
 'use client'
-import { useCallback, useSyncExternalStore } from 'react'
+import { usePathname } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
 import type { CookieType } from '../../types'
 import { checkCookieConsent } from '../helpers/checkCookieConsent'
@@ -12,25 +13,13 @@ import { checkCookieConsent } from '../helpers/checkCookieConsent'
 export default function useConsent(
   consentType: CookieType[],
 ): boolean | undefined {
-  const hasNoConsentRequirement =
-    consentType.length === 1 && consentType[0] === 'none'
-  const subscribe = useCallback((onStoreChange: () => void) => {
-    window.addEventListener('CookiebotOnAccept', onStoreChange)
-    window.addEventListener('CookiebotOnDecline', onStoreChange)
-
-    return () => {
-      window.removeEventListener('CookiebotOnAccept', onStoreChange)
-      window.removeEventListener('CookiebotOnDecline', onStoreChange)
-    }
-  }, [])
-  const getSnapshot = useCallback(
-    () => checkCookieConsent(consentType),
-    [consentType],
+  const [consent, setConsent] = useState<boolean>(
+    checkCookieConsent(consentType),
   )
-  const getServerSnapshot = useCallback(
-    () => hasNoConsentRequirement,
-    [hasNoConsentRequirement],
-  )
-
-  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)
+  const pathname = usePathname()
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    setConsent(checkCookieConsent(consentType))
+  }, [consentType, pathname])
+  return consent
 }

@@ -9,7 +9,6 @@ export const SiteImprove = () => {
       src='https://siteimproveanalytics.com/js/siteanalyze_6003171.js'
       id='siteimprove'
       async
-      strategy='afterInteractive'
     />
   ) : null
 }

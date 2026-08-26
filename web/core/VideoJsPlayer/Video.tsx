@@ -96,8 +96,6 @@ export const Video: React.FC<VideoProps> = ({
   //Here or in the VideoPlayer?
   useVideojsAnalytics(playerRef.current, src, title, autoplay)
 
-  // Player is created once on mount; prop updates are applied via the effects below instead of recreating the DOM node.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: intentional mount-only effect, see comment above
   useEffect(() => {
     if (playerRef.current) {
       return
@@ -125,13 +123,7 @@ export const Video: React.FC<VideoProps> = ({
       )
     }
 
-    if (!videoRef.current) {
-      return
-    }
-
-    if (!videoRef.current.contains(videoElement)) {
-      videoRef.current.appendChild(videoElement)
-    }
+    videoRef.current?.appendChild(videoElement)
 
     const markReady = () => {
       videoElement.classList.add('vjs-ready')
@@ -154,7 +146,7 @@ export const Video: React.FC<VideoProps> = ({
     return () => {
       window.clearTimeout(readyTimeout)
     }
-  }, [])
+  }, [autoplay, options, sourceKey, src, useBrandTheme, variant])
 
   useEffect(() => {
     const player = playerRef.current
@@ -188,11 +180,7 @@ export const Video: React.FC<VideoProps> = ({
     // Clean up function to dispose the player after the component unmounts
     return () => {
       if (player && !player.isDisposed()) {
-        try {
-          player.dispose()
-        } catch {
-          // video-js element may already be detached from the DOM by a parent unmount
-        }
+        player.dispose()
         playerRef.current = null
       }
     }

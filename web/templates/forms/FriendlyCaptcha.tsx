@@ -48,9 +48,8 @@ const FriendlyCaptcha = ({
         errorCallback(event.detail.response)
       })
     }
-    return () => {
+    ;() => {
       widget.current?.destroy()
-      widget.current = null
     }
   }, [doneCallback, errorCallback, locale, startMode])
 
