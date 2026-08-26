@@ -4,7 +4,7 @@ import type {
   ContentSourceMap,
   QueryParams,
 } from 'next-sanity'
-import { type DefinedFetchType, defineLive } from 'next-sanity/live'
+import { defineLive } from 'next-sanity/live'
 import { client } from './client'
 import { token } from './token'
 
@@ -52,7 +52,3 @@ export type DefinedSanityFetchType = <
   sourceMap: ContentSourceMap | null
   tags: string[]
 }>
-
-export const routeSanityFetch: DefinedFetchType = async query => {
-  return sanityFetch(query)
-}
