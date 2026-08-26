@@ -38,7 +38,7 @@ FROM prepare AS build
 COPY --from=prepare /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
 COPY --from=prepare /app/out/pnpm-workspace.yaml ./pnpm-workspace.yaml
 COPY --from=prepare /app/out/json/ .
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --force --frozen-lockfile
 
 WORKDIR /app
 
