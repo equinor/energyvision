@@ -1,48 +1,27 @@
 # syntax=docker/dockerfile:1
-# -------------------------------------------------------- #
-# 1. Base system environment
-# -------------------------------------------------------- #
-FROM node:lts-alpine AS core-os
-RUN apk update
-RUN apk add --no-cache libc6-compat curl
-FROM core-os AS base
-
-# Set working directory
+# 1. Set up prune and build environment
+FROM ghcr.io/pnpm/pnpm:11 AS base
+RUN pnpm runtime set node 24 -g
+COPY . /app
 WORKDIR /app
-
-# -------------------------------------------------------- #
-# 2. Core tooling setup (PNPM, etc.)
-# -------------------------------------------------------- #
-FROM base AS prepare
-# copy the package json to know pnpm version
-COPY package.json ./ 
-ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
-ENV COREPACK_ENABLE_DOWNLOAD_PROMPT=0
-RUN corepack enable && corepack prepare pnpm@11.24.0 --activate
 RUN pnpm add -g turbo@2.10.10
-COPY . .
 
-# -------------------------------------------------------- #
-# 3. Add lockfile and package.json's of isolated subworkspace
-# -------------------------------------------------------- #
+# 2. Prune stage
+FROM base AS prepare
 RUN turbo prune energy-vision-web --docker
 
-
-# -------------------------------------------------------- #
-# 4. Build application
-# -------------------------------------------------------- #
-FROM prepare AS build
-
-# First install the dependencies (as they change less often)
+# 1. Build stage
+FROM base AS builder
+# Copy the pruned lockfile and workspace config from the root of /out
 COPY --from=prepare /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
 COPY --from=prepare /app/out/pnpm-workspace.yaml ./pnpm-workspace.yaml
+# Copy all the isolated package.json files
 COPY --from=prepare /app/out/json/ .
+
+# This will now safely run using the shared, pruned lockfile
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --force --frozen-lockfile
 
-WORKDIR /app
-
-# Build the project
+# Copy source code and build
 COPY --from=prepare /app/out/full/ .
 
 ARG ARG_SANITY_DATASET
@@ -69,10 +48,10 @@ RUN --mount=type=secret,id=sanity_api_token \
     --mount=type=secret,id=next_server_actions_encryption_key \
     sh -ec 'SANITY_API_TOKEN="$(cat /run/secrets/sanity_api_token)" NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY="$(cat /run/secrets/next_public_algolia_search_api_key)" NEXT_SERVER_ACTIONS_ENCRYPTION_KEY="$(cat /run/secrets/next_server_actions_encryption_key)" NEXT_PUBLIC_SENTRY_DSN="${ARG_SENTRY_DSN}" turbo build --filter=energy-vision-web'
 
-# -------------------------------------------------------- #
-# 6. Runtime container
-# -------------------------------------------------------- #
-FROM core-os AS runner
+# 1. Run time environment
+FROM node:lts-alpine AS runner
+RUN apk update
+RUN apk add --no-cache libc6-compat curl
 
 ARG ARG_ENV
 ARG ARG_NODE_ENV
@@ -98,9 +77,9 @@ ENV UID=12345
 
 RUN addgroup -S "$USER" && adduser -S --uid "$UID" "$USER" && apk add --no-cache tini
 
-COPY --from=build /app/web/public ./public
-COPY --from=build  --chown="$USER":"$USER" /app/web/.next/standalone/web ./
-COPY --from=build  --chown="$USER":"$USER" /app/web/.next/static ./.next/static
+COPY --from=builder /app/web/public ./public
+COPY --from=builder  --chown="$USER":"$USER" /app/web/.next/standalone/web ./
+COPY --from=builder  --chown="$USER":"$USER" /app/web/.next/static ./.next/static
 
 USER "$UID"
 EXPOSE 3000
