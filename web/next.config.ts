@@ -1,5 +1,12 @@
 /** biome-ignore-all assist/source/organizeImports: <explanation> */
-const archiveServerHostname = process.env.NEXT_PUBLIC_ARCHIVE_CONTENT_LINK
+// 1. Fetch the environment variable
+let archiveServerHostname = process.env.NEXT_PUBLIC_ARCHIVE_CONTENT_LINK
+
+// 2. SAFETY CHECK: If the variable is missing or evaluates to the literal string "undefined",
+// fall back to an empty string so Next.js doesn't crash on local development startup.
+if (!archiveServerHostname || archiveServerHostname === 'undefined') {
+  archiveServerHostname = ''
+}
 
 import path from 'node:path'
 /* import { withSentryConfig } from '@sentry/nextjs' */
@@ -40,6 +47,7 @@ export type ConfigRedirect = {
 
 const nextConfig: NextConfig = withNextIntl({
   output: 'standalone',
+  cacheComponents: true,
   transpilePackages: [
     'require-in-the-middle',
     'import-in-the-middle',
@@ -75,6 +83,10 @@ const nextConfig: NextConfig = withNextIntl({
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
   async rewrites() {
+    if (!archiveServerHostname) {
+      return []
+    }
+
     return [
       // Archive_Rule: This rule load the archived images from dam
       {

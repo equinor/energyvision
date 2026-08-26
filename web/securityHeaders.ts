@@ -30,33 +30,76 @@ const xFrameUrls = [
   .filter(e => e)
   .join(' ')
 const edsCdnUrl = 'https://cdn.eds.equinor.com'
-const iframeSrcs = [
-  'https://consentcdn.cookiebot.com',
-  'https://lt.morningstar.com',
-  'https://www.youtube.com',
-  'https://vimeo.com',
-  'https://player.vimeo.com',
-  'https://sds-maintenance.com',
-  'https://tools.eurolandir.com',
-  'https://platform.twitter.com',
-  'https://syndication.twitter.com',
-  'https://vds.issgovernance.com',
-  'https://*.plaii.no',
-  'https://livestream.com',
-  'https://*.castr.com',
-  'https://pixel.as',
-  'https://www.youtube-nocookie.com',
-  dataset === 'global-development' && 'https://api.screen9.com',
-  dataset === 'global-development' &&
-    'https://equinor-gms1.wd3.myworkdayjobs-impl.com',
-  dataset === 'global-development' && 'https://careers.peopleclick.eu.com',
-  'https://h61q9gi9.api.sanity.io',
-  'http://localhost:3333',
-  'https://eu.frcapi.com/',
-  'https://edge.media-server.com/mmc/p/i2qawkz9',
-]
-  .filter(e => e)
-  .join(' ')
+const iframeSandboxBase = 'allow-scripts allow-same-origin'
+
+export const iframePolicies = [
+  { source: 'https://consentcdn.cookiebot.com' },
+  {
+    source: 'https://lt.morningstar.com',
+    sandbox: `${iframeSandboxBase} allow-forms`,
+  },
+  {
+    source: 'https://www.youtube.com',
+    sandbox: `${iframeSandboxBase} allow-presentation`,
+  },
+  {
+    source: 'https://vimeo.com',
+    sandbox: `${iframeSandboxBase} allow-presentation`,
+  },
+  {
+    source: 'https://player.vimeo.com',
+    sandbox: `${iframeSandboxBase} allow-presentation`,
+  },
+  { source: 'https://sds-maintenance.com' },
+  {
+    source: 'https://tools.eurolandir.com',
+    sandbox: `${iframeSandboxBase} allow-forms`,
+  },
+  {
+    source: 'https://platform.twitter.com',
+    sandbox: `${iframeSandboxBase} `,
+  },
+  {
+    source: 'https://syndication.twitter.com',
+    sandbox: `${iframeSandboxBase}`,
+  },
+  {
+    source: 'https://vds.issgovernance.com',
+    sandbox: `${iframeSandboxBase} allow-forms`,
+  },
+  { source: 'https://*.plaii.no' },
+  {
+    source: 'https://livestream.com',
+    sandbox: `${iframeSandboxBase} allow-presentation`,
+  },
+  {
+    source: 'https://*.castr.com',
+    sandbox: `${iframeSandboxBase} allow-presentation`,
+  },
+  { source: 'https://pixel.as' },
+  {
+    source: 'https://www.youtube-nocookie.com',
+    sandbox: `${iframeSandboxBase} allow-presentation`,
+  },
+  dataset === 'global-development' && { source: 'https://api.screen9.com' },
+  dataset === 'global-development' && {
+    source: 'https://equinor-gms1.wd3.myworkdayjobs-impl.com',
+  },
+  dataset === 'global-development' && {
+    source: 'https://careers.peopleclick.eu.com',
+  },
+  { source: 'https://h61q9gi9.api.sanity.io' },
+  { source: 'http://localhost:3333' },
+  {
+    source: 'https://eu.frcapi.com/',
+    sandbox: iframeSandboxBase,
+  },
+  { source: 'https://edge.media-server.com/mmc/p/i2qawkz9' },
+].filter((policy): policy is { source: string; sandbox?: string } =>
+  Boolean(policy),
+)
+
+const iframeSrcs = iframePolicies.map(({ source }) => source).join(' ')
 
 export const iframeSrcList = iframeSrcs.split(' ')
 

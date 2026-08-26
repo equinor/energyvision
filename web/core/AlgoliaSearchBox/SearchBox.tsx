@@ -1,9 +1,15 @@
 'use client'
-import { useRef, useState, ChangeEvent, ComponentProps, useId } from 'react'
-import { useSearchBox, UseSearchBoxProps } from 'react-instantsearch'
-import { close, search } from '@equinor/eds-icons'
 import { Icon } from '@equinor/eds-core-react'
+import { close, search } from '@equinor/eds-icons'
 import { useTranslations } from 'next-intl'
+import {
+  type ChangeEvent,
+  type ComponentProps,
+  useId,
+  useRef,
+  useState,
+} from 'react'
+import { type UseSearchBoxProps, useSearchBox } from 'react-instantsearch'
 import { twMerge } from 'tailwind-merge'
 
 type Variants = 'default' | 'inverted'
@@ -19,8 +25,10 @@ export type SearchBoxProps = {
   UseSearchBoxProps
 
 const queryHook: UseSearchBoxProps['queryHook'] = (query, search) => {
-  if (query !== '') {
-    search(query)
+  const trimmedQuery = query.trim()
+
+  if (trimmedQuery) {
+    search(trimmedQuery)
   }
 }
 
@@ -49,7 +57,17 @@ export function SearchBox({
   function onSubmit(event: React.FormEvent) {
     event.preventDefault()
     event.stopPropagation()
-    refine(value)
+
+    const trimmedValue = value.trim()
+
+    if (!trimmedValue) {
+      setValue('')
+      clear()
+      return
+    }
+
+    setValue(trimmedValue)
+    refine(trimmedValue)
   }
 
   function onChange(event: ChangeEvent<HTMLInputElement>) {
@@ -57,12 +75,15 @@ export function SearchBox({
   }
 
   const inputVariantClassName = {
-    default: 'text-slate-80 focus-visible:envis-outline dark:focus-visible:envis-outline-invert',
-    inverted: 'text-white-100 border-y border-l border-white-100 bg-slate-blue-95 focus-visible:envis-outline-invert',
+    default:
+      'text-slate-80 focus-visible:envis-outline dark:focus-visible:envis-outline-invert',
+    inverted:
+      'text-white-100 border-y border-l border-white-100 bg-slate-blue-95 focus-visible:envis-outline-invert',
   }
   const resetVariantClassName = {
     default: 'text-slate-80 hover:bg-grey-20 focus-visible:envis-outline',
-    inverted: 'text-white-100 hover:bg-white-100 hover:text-slate-blue-95 focus-visible:envis-outline-invert',
+    inverted:
+      'text-white-100 hover:bg-white-100 hover:text-slate-blue-95 focus-visible:envis-outline-invert',
   }
   const submitVariantClassName = {
     default:
@@ -72,72 +93,76 @@ export function SearchBox({
   }
 
   return (
-    <form
-      action=""
-      role="search"
-      noValidate
-      onSubmit={onSubmit}
-      onReset={handleReset}
-      className={`grid grid-cols-[1fr_min-content] ${
-        label ? 'grid grid-cols-[1fr_min-content] grid-rows-[auto_auto]' : 'grid-rows-1'
-      }`}
-    >
-      {label && (
-        <label
-          htmlFor={searchId}
-          className={twMerge(
-            `col-span-2 row-start-1 row-end-1 max-w-text py-4 text-base leading-inherit font-normal text-slate-80 dark:text-white-100`,
-            labelClassName,
-          )}
-        >
-          {label}
-        </label>
-      )}
-      <div className={`${label ? 'row-start-2 row-end-2' : ''} relative flex items-center`}>
-        <input
-          {...(!label && {
-            'aria-label': intl('search'),
-          })}
-          ref={inputRef}
-          id={searchId}
-          autoComplete="off"
-          autoCorrect="off"
-          autoCapitalize="off"
-          //It is the only element on the page
-          //eslint-disable-next-line jsx-a11y/no-autofocus
-          autoFocus={true}
-          placeholder={placeholder ?? intl('search')}
-          spellCheck={false}
-          maxLength={512}
-          type="search"
-          value={value}
-          onChange={onChange}
-          className={twMerge(
-            `grow rounded-s-xs rounded-e-none bg-white-100 py-4 pr-12 pl-6 text-white-100 focus:outline-hidden ${inputVariantClassName[variant]} `,
-            className,
-          )}
-        />
-        <button
-          type="reset"
-          aria-label={intl('search_reset')}
-          className={twMerge(
-            `${value.length === 0 ? 'hidden' : 'flex'} absolute right-2 size-8 items-center justify-center rounded-full focus:outline-hidden ${resetVariantClassName[variant]}`,
-            resetClassName,
-          )}
-        >
-          <Icon size={24} data={close} />
-        </button>
-      </div>
-      <button
-        type="submit"
-        aria-label={intl('search_submit')}
-        className={twMerge(
-          `h-inherit rounded-e-xs px-4 py-3 focus:outline-hidden ${label ? 'row-start-2 row-end-2' : ''} ${submitVariantClassName[variant]} `,
-          submitClassName,
-        )}
+    <search>
+      <form
+        action=''
+        noValidate
+        onSubmit={onSubmit}
+        onReset={handleReset}
+        className={`grid grid-cols-[1fr_min-content] ${
+          label
+            ? 'grid grid-cols-[1fr_min-content] grid-rows-[auto_auto]'
+            : 'grid-rows-1'
+        }`}
       >
-        <Icon size={24} data={search} />
-      </button>
-    </form>
+        {label && (
+          <label
+            htmlFor={searchId}
+            className={twMerge(
+              `col-span-2 row-start-1 row-end-1 max-w-text py-4 font-normal text-base text-slate-80 leading-inherit dark:text-white-100`,
+              labelClassName,
+            )}
+          >
+            {label}
+          </label>
+        )}
+        <div
+          className={`${label ? 'row-start-2 row-end-2' : ''} relative flex items-center`}
+        >
+          <input
+            {...(!label && {
+              'aria-label': intl('search'),
+            })}
+            ref={inputRef}
+            id={searchId}
+            autoComplete='off'
+            autoCorrect='off'
+            autoCapitalize='off'
+            // biome-ignore lint/a11y/noAutofocus: The search box is the only interactive control on this dedicated search page.
+            autoFocus={true}
+            placeholder={placeholder ?? intl('search')}
+            spellCheck={false}
+            maxLength={512}
+            type='search'
+            value={value}
+            onChange={onChange}
+            className={twMerge(
+              `grow rounded-s-xs rounded-e-none bg-white-100 py-4 pr-12 pl-6 text-white-100 focus:outline-hidden ${inputVariantClassName[variant]} `,
+              className,
+            )}
+          />
+          <button
+            type='reset'
+            aria-label={intl('search_reset')}
+            className={twMerge(
+              `${value.length === 0 ? 'hidden' : 'flex'} absolute right-2 size-8 items-center justify-center rounded-full focus:outline-hidden ${resetVariantClassName[variant]}`,
+              resetClassName,
+            )}
+          >
+            <Icon size={24} data={close} />
+          </button>
+        </div>
+        <button
+          type='submit'
+          aria-label={intl('search_submit')}
+          className={twMerge(
+            `h-inherit rounded-e-xs px-4 py-3 focus:outline-hidden ${label ? 'row-start-2 row-end-2' : ''} ${submitVariantClassName[variant]} `,
+            submitClassName,
+          )}
+        >
+          <Icon size={24} data={search} />
+        </button>
+      </form>
+    </search>
   )
 }
