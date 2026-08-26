@@ -79,12 +79,13 @@ ENV UID=12345
 RUN groupadd --system --gid "$UID" "$USER" \
     && useradd --system --uid "$UID" --gid "$USER" --no-create-home "$USER"
 
-COPY --from=builder /app/web/public ./public
-COPY --from=builder  --chown="$USER":"$USER" /app/web/.next/standalone/web ./
-COPY --from=builder  --chown="$USER":"$USER" /app/web/.next/static ./.next/static
+COPY --from=builder /app/web/public ./web/public
+COPY --from=builder  --chown="$USER":"$USER" /app/web/.next/standalone ./
+COPY --from=builder  --chown="$USER":"$USER" /app/web/.next/static ./web/.next/static
+RUN find . -name "server.js"
 
 USER "$UID"
 EXPOSE 3000
 
 ENTRYPOINT ["/usr/bin/tini", "--"]
-CMD ["node", "server.js"]
+CMD ["node", "./web/server.js"]
