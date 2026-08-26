@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import { type QueryParams, toPlainText } from 'next-sanity'
-import type { DefinedFetchType } from 'next-sanity/live'
 import {
   defaultLanguage,
   domain,
@@ -17,7 +16,7 @@ import { getQueryFromSlug } from '@/sanity/helpers/queryFromSlug'
 import { resolveOpenGraphImage } from '@/sanity/lib/utils'
 import type { SeoData } from '@/types'
 import { isDateAfter } from '../../lib/helpers/dateUtilities'
-import { routeSanityFetch } from '../lib/fetch'
+import { routeSanityFetch } from '../lib/live'
 import { contentQueryById, pageInfoById } from '../queries/contentById'
 import {
   allMagazineDocuments,
@@ -176,7 +175,6 @@ type Params = {
   slug?: string | string[]
   locale: string
   tags?: string[]
-  fetch?: DefinedFetchType
   searchParams?: {
     [key: string]: string[] | string | undefined
   }
@@ -198,7 +196,7 @@ function languagePrefixedSlug(
 }
 
 export async function getPage(params: Params) {
-  const { slug, locale, searchParams, fetch = routeSanityFetch } = params
+  const { slug, locale, searchParams } = params
   const tagParam = searchParams?.tag
   const tag =
     typeof tagParam === 'string'
@@ -210,7 +208,7 @@ export async function getPage(params: Params) {
   if (slug?.[0]?.includes('preview')) {
     const id = slug[1]
     if (id) {
-      const { data: draftInfo }: { data: any } = await fetch({
+      const { data: draftInfo }: { data: any } = await routeSanityFetch({
         query: pageInfoById,
         params: {
           id,
@@ -219,7 +217,7 @@ export async function getPage(params: Params) {
       })
 
       if (draftInfo?.lang) {
-        const { data } = await fetch({
+        const { data } = await routeSanityFetch({
           query: contentQueryById,
           params: {
             id,
@@ -234,9 +232,9 @@ export async function getPage(params: Params) {
     const { query: pageQuery, queryParams: pageQueryParams } =
       await getQueryFromSlug(slug, locale)
 
-    const { data }: { data: any } = await fetch({
+    const { data }: { data: any } = await routeSanityFetch({
       query: pageQuery,
-      tags: [`sanity:page:${Array.isArray(slug) ? slug?.join('/') : slug}`],
+      // tags: [...tags],
       params: { ...pageQueryParams },
       requestTag: 'page-by-slug',
     })
@@ -245,7 +243,7 @@ export async function getPage(params: Params) {
 
   let magazineArticles = null
   if (pageData?.template === 'magazineIndex') {
-    const { data: articles } = await fetch({
+    const { data: articles } = await routeSanityFetch({
       query:
         tag && tag !== 'all'
           ? getMagazineArticlesByTag(false, false)
@@ -254,7 +252,7 @@ export async function getPage(params: Params) {
         lang: getNameFromIso(locale),
         ...(tag && tag !== 'all' && { tag }),
       } as QueryParams,
-      tags: [`sanity:magazineIndex:${locale}`],
+      // tags: ['magazine'],
       requestTag: 'magazine-room',
     })
     magazineArticles = articles

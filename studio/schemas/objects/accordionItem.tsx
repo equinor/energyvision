@@ -10,7 +10,10 @@ export type AccordionItem = {
 }
 
 const contentType = configureBlockContent({
-  variant: 'accordionBlockContent'
+  h2: false,
+  h3: false,
+  h4: false,
+  attachment: false,
 })
 
 export default {

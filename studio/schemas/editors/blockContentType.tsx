@@ -60,7 +60,6 @@ export type BlockContentProps = {
     | 'onlySubSup'
     | 'onlyTextDecorations'
     | 'textDecorationAndLinks'
-    | 'accordionBlockContent'
 
   /** Used to render the typography similar to TypographyGroups in Typography in web
    * use group article for news to get headings 2,3,4
@@ -169,11 +168,6 @@ const textDecorationAndLinksOptions: BlockContentProps = {
   lists: false,
   internalLink: true,
   externalLink: true,
-  attachment: true,
-}
-
-const accordionBlockContentOptions: BlockContentProps = {
-  h3: true,
   attachment: true,
 }
 
@@ -322,13 +316,6 @@ export const configureBlockContent = (
     defaultConfigOptions = Object.assign(
       defaultConfigOptions,
       textDecorationAndLinksOptions,
-      options,
-    )
-  }
-  if (options?.variant === 'accordionBlockContent') {
-    defaultConfigOptions = Object.assign(
-      defaultConfigOptions,
-      accordionBlockContentOptions,
       options,
     )
   }

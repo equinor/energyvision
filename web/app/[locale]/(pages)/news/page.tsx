@@ -4,11 +4,10 @@ import type { Metadata } from 'next'
 import { unstable_cache } from 'next/cache'
 import dynamic from 'next/dynamic'
 import { getLocale } from 'next-intl/server'
-import { Suspense } from 'react'
 import { algolia } from '@/lib/config'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { getNameFromIso } from '@/sanity/helpers/localization'
-import { routeSanityFetch } from '@/sanity/lib/fetch'
+import { routeSanityFetch } from '@/sanity/lib/live'
 import { constructSanityMetadata, getPage } from '@/sanity/pages/utils'
 import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu'
 import { newsroomMetaQuery } from '@/sanity/queries/metaData'
@@ -17,10 +16,6 @@ import Header from '@/sections/Header/Header'
 import NewsRoomTemplate from '@/templates/newsroom/Newsroom'
 
 const TopicPage = dynamic(() => import('@/templates/topic/TopicPage'))
-
-export async function generateStaticParams() {
-  return Flags.HAS_NEWSROOM ? [{ locale: 'en-GB' }] : []
-}
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale()
@@ -33,7 +28,6 @@ export async function generateMetadata(): Promise<Metadata> {
       },
       stega: false,
       requestTag: 'meta-news',
-      tags: [`sanity:newsroom:${locale}`],
     })
 
     return constructSanityMetadata(pageSlug, locale, metaData)
@@ -102,18 +96,16 @@ export default async function NewsroomPage(_: PageProps<'/[locale]/news'>) {
   return (
     <>
       <Header siteMenuData={siteMenuData} headerData={headerData} />
-      <Suspense fallback={<div>Loading...</div>}>
-        {Flags.HAS_NEWSROOM && response ? (
-          <NewsRoomTemplate
-            locale={locale}
-            pageData={pageData}
-            initialSearchResponse={response}
-          />
-        ) : (
-          // allow '/news' page on other satellite sites
-          <TopicPage {...pageData} />
-        )}
-      </Suspense>
+      {Flags.HAS_NEWSROOM && response ? (
+        <NewsRoomTemplate
+          locale={locale}
+          pageData={pageData}
+          initialSearchResponse={response}
+        />
+      ) : (
+        // allow '/news' page on other satellite sites
+        <TopicPage {...pageData} />
+      )}
     </>
   )
 }
