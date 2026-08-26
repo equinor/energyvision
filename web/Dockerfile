@@ -19,7 +19,7 @@ COPY --from=prepare /app/out/pnpm-workspace.yaml ./pnpm-workspace.yaml
 COPY --from=prepare /app/out/json/ .
 
 # This will now safely run using the shared, pruned lockfile
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --force --frozen-lockfile
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 
 # Copy source code and build
 COPY --from=prepare /app/out/full/ .
