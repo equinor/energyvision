@@ -47,7 +47,6 @@ RUN --mount=type=secret,id=sanity_api_token \
 
 # 1. Run time environment
 FROM node:24-bookworm-slim AS runner
-WORKDIR /app
 RUN apt-get update \
     && apt-get install -y --no-install-recommends tini \
     && rm -rf /var/lib/apt/lists/*
@@ -75,10 +74,13 @@ ENV UID=12345
 RUN groupadd --system --gid "$UID" "$USER" \
     && useradd --system --uid "$UID" --gid "$USER" --no-create-home "$USER"
 
+WORKDIR /app
+RUN ls -la
 COPY --from=builder /app/web/public ./web/public
 COPY --from=builder  --chown="$USER":"$USER" /app/web/.next/standalone ./
 COPY --from=builder  --chown="$USER":"$USER" /app/web/.next/static ./web/.next/static
-RUN find . -name "server.js"
+# Copy the complete node_modules structure from your installer stage to preserve symlinks
+COPY --from=builder /app/node_modules ./node_modules
 
 USER "$UID"
 EXPOSE 3000
