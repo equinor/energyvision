@@ -86,5 +86,5 @@ COPY --from=builder  --chown="$USER":"$USER" /app/web/.next/static ./.next/stati
 USER "$UID"
 EXPOSE 3000
 
-ENTRYPOINT ["/sbin/tini", "--"]
+ENTRYPOINT ["/usr/bin/tini", "--"]
 CMD ["node", "server.js"]
