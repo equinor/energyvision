@@ -1,7 +1,7 @@
 'use client'
 import dynamic from 'next/dynamic'
 import type { PortableTextBlock } from 'next-sanity'
-import { type HTMLProps, useMemo, useRef } from 'react'
+import { type HTMLProps, useRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 import type Player from 'video.js/dist/types/player'
 import Blocks from '@/portableText/Blocks'
@@ -75,79 +75,64 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({
     !containVideo &&
     (useFillMode || aspectRatio === '10:3' || aspectRatio === '21:9')
 
-  const videoJsOptions = useMemo(
-    () => ({
-      src: [
-        {
-          src: src,
-          type: 'application/x-mpegURL',
-        },
-      ],
-      muted: muted ? 'muted' : false,
-      playsinline: playsInline,
-      loop: loop,
-      autoplay: autoPlay,
-      preload: autoPlay ? 'auto' : 'none',
-      controls: true,
-      responsive: true,
-      disablePictureInPicture: true,
-      ...(useFill
-        ? { fill: true }
-        : {
-            fluid: true,
-            aspectRatio,
-          }),
-      bigPlayButton: !autoPlay,
-      controlbar: true,
-      audioTrack: false,
-      loadingSpinner: true,
-      controlBar: {
-        pictureInPictureToggle: false,
-        pictureInPictureControl: false,
-        chaptersButton: false,
-        audioTrackButton: false,
-        playbackRateMenuButton: false,
-        fullscreenToggle: variant !== 'fullwidth',
-        ...(variant === 'fullwidth' && {
-          progressControl: {
-            seekBar: false,
-          },
-          captionsButton: false,
-          subtitlesButton: false,
-          remainingTimeDisplay: false,
-          volumePanel: false,
-        }),
+  const videoJsOptions = {
+    src: [
+      {
+        src: src,
+        type: 'application/x-mpegURL',
       },
-      html5: {
+    ],
+    muted: muted ? 'muted' : false,
+    playsinline: playsInline,
+    loop: loop,
+    autoplay: autoPlay,
+    preload: autoPlay ? 'auto' : 'none',
+    controls: true,
+    responsive: true,
+    disablePictureInPicture: true,
+    ...(useFill
+      ? { fill: true }
+      : {
+          fluid: true,
+          aspectRatio,
+        }),
+    bigPlayButton: !autoPlay,
+    controlbar: true,
+    audioTrack: false,
+    loadingSpinner: true,
+    controlBar: {
+      pictureInPictureToggle: false,
+      pictureInPictureControl: false,
+      chaptersButton: false,
+      audioTrackButton: false,
+      playbackRateMenuButton: false,
+      fullscreenToggle: variant !== 'fullwidth',
+      ...(variant === 'fullwidth' && {
+        progressControl: {
+          seekBar: false,
+        },
+        captionsButton: false,
+        subtitlesButton: false,
+        remainingTimeDisplay: false,
+        volumePanel: false,
+      }),
+    },
+    html5: {
+      useDevicePixelRatio: true,
+      limitRenditionByPlayerDimensions: false,
+      hls: {
         useDevicePixelRatio: true,
         limitRenditionByPlayerDimensions: false,
-        hls: {
-          useDevicePixelRatio: true,
-          limitRenditionByPlayerDimensions: false,
-        },
       },
-      ...(poster &&
-        posterUrl && {
-          poster: posterUrl,
-        }),
-      ...(title && {
-        title: title,
+    },
+    ...(poster &&
+      posterUrl && {
+        poster: posterUrl,
       }),
+    ...(title && {
+      title: title,
     }),
-    [
-      src,
-      muted,
-      playsInline,
-      loop,
-      autoPlay,
-      useFill,
-      aspectRatio,
-      variant,
-      poster,
-      posterUrl,
-      title,
-    ],
-  )
+  }
 
   const aspectRatioClassName: Record<AspectRatioVariants, string> = {
     '10:3': 'aspect-16/9 md:aspect-10/3',

@@ -1,4 +1,3 @@
-import { Suspense } from 'react'
 import { FriendlyCaptchaSdkWrapper } from '../FriendlyCaptchaWrapper'
 
 export default function PagesLayout({
@@ -6,9 +5,5 @@ export default function PagesLayout({
 }: {
   children: React.ReactNode
 }) {
-  return (
-    <Suspense>
-      <FriendlyCaptchaSdkWrapper>{children}</FriendlyCaptchaSdkWrapper>
-    </Suspense>
-  )
+  return <FriendlyCaptchaSdkWrapper>{children}</FriendlyCaptchaSdkWrapper>
 }

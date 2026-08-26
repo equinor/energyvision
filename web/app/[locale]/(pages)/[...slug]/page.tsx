@@ -8,7 +8,7 @@ import { getLocale } from 'next-intl/server'
 import { decodeSlugs } from '@/lib/helpers/getFullUrl'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { getNameFromIso } from '@/sanity/helpers/localization'
-import { routeSanityFetch } from '@/sanity/lib/fetch'
+import { routeSanityFetch } from '@/sanity/lib/live'
 import { constructSanityMetadata, getPage } from '@/sanity/pages/utils'
 import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu'
 import {
@@ -23,7 +23,6 @@ type Props = {
   params: Promise<{ slug: string[]; locale: string }>
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }
-
 const MagazinePage = dynamic(() => import('@/templates/magazine/MagazinePage'))
 const EventPage = dynamic(() => import('@/templates/event/Event'))
 const NewsPage = dynamic(() => import('@/templates/news/News'))
@@ -34,7 +33,8 @@ export async function generateMetadata({
   params,
 }: PageProps<'/[locale]/[...slug]'>): Promise<Metadata> {
   //array, separated by /. e.g. [news, last slug]
-  const { slug: encodedSlug, locale } = await params
+  const { slug: encodedSlug } = await params
+  const locale = await getLocale()
   const slug = decodeSlugs(encodedSlug) as string[]
 
   const sanityLang = getNameFromIso(locale)
@@ -67,7 +67,6 @@ export async function generateMetadata({
       ...((isNewsPage || isMagazineRoom || isMagazinePage) && { type }),
     },
     stega: false,
-    tags: [`page:/${slug.join('/')}`],
     requestTag: 'page-meta',
   })
 
@@ -75,8 +74,7 @@ export async function generateMetadata({
 }
 
 export default async function Page({ params, searchParams }: Props) {
-  const { slug } = await params
-  const locale = await getLocale()
+  const { slug, locale } = await params
   const resolvedSearchParams = await searchParams
   /*   const isInPresentationToolContext =
     (await cookies()).get('preview-fetch-dest')?.value === 'iframe' */
@@ -88,13 +86,11 @@ export default async function Page({ params, searchParams }: Props) {
       params: {
         lang: getNameFromIso(locale) ?? 'en_GB',
       },
-      tags: [`sanity:siteMenu:${locale}`],
     }),
     getPage({
       slug: decodeSlugs(slug),
       locale,
       searchParams: resolvedSearchParams,
-      fetch: routeSanityFetch,
     }),
   ])
   pageContent = pageResults

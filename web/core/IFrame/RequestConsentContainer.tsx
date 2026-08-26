@@ -1,6 +1,5 @@
 'use client'
 import { useLocale, useTranslations } from 'next-intl'
-import { useRef } from 'react'
 import { Button } from '@/core/Button'
 import { Typography } from '@/core/Typography'
 import { defaultLanguage } from '@/languageConfig'
@@ -18,14 +17,8 @@ type RequestConsentContainerProps = {
   cookiePolicy: CookieType[]
 }
 
-const handleCookiebotRenew = (
-  locale: string | undefined,
-  isRenewingRef: React.MutableRefObject<boolean>,
-) => {
-  // Cookiebot only exposes `consent` once its own dialog markup has finished initializing
-  // and re-entering renew() while a previous dialog is still tearing down can throw internally
-  if (window?.Cookiebot?.consent && !isRenewingRef.current) {
-    isRenewingRef.current = true
+const handleCookiebotRenew = (locale?: string) => {
+  if (window?.Cookiebot) {
     try {
       window.document
         .getElementById('Cookiebot')
@@ -39,8 +32,6 @@ const handleCookiebotRenew = (
         'An error occured while trying to run the Cookiebot script: ',
         error,
       )
-    } finally {
-      isRenewingRef.current = false
     }
   }
 }
@@ -51,7 +42,6 @@ const RequestConsentContainer = ({
 }: RequestConsentContainerProps) => {
   const locale = useLocale()
   const intl = useTranslations()
-  const isRenewingRef = useRef(false)
   const getCookieInformationText = (cookiePolicy: CookieType[]) => {
     if (cookiePolicy.length === 1) {
       return intl('cookie_consent', {
@@ -125,7 +115,7 @@ const RequestConsentContainer = ({
             {getCookieInformationText(cookiePolicy)}
           </Typography>
           <Button
-            onClick={() => handleCookiebotRenew(locale, isRenewingRef)}
+            onClick={() => handleCookiebotRenew(locale)}
             variant='outlined'
             className='text-left'
           >
