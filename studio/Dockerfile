@@ -2,7 +2,7 @@
 # 1. Set up prune and build environment
 FROM node:24-slim AS base
 WORKDIR /app
-RUN npm install --global pnpm@11.24.0 turbo@2.10.11
+RUN npm install --global pnpm@11.24.0 turbo@2.10.10
 
 # 2. Prune the monorepo for Studio
 FROM base AS prepare
@@ -58,7 +58,8 @@ RUN groupadd --system --gid "$GID" "$USER" \
 
 COPY --from=builder --chown="$USER":"$USER" /app/studio/dist ./dist
 COPY --from=builder --chown="$USER":"$USER" /app/studio/server.js ./server.js
-RUN npm install --no-save express@5.1.0 express-history-api-fallback@2.2.1
+RUN npm install --no-save express@5.1.0 express-history-api-fallback@2.2.1 \
+    && chown -R "$USER":"$USER" /opt/app
 
 USER "$UID"
 EXPOSE "$PORT"
