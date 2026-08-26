@@ -2,12 +2,12 @@
 # 1. Set up prune and build environment
 FROM ghcr.io/pnpm/pnpm:11 AS base
 RUN pnpm runtime set node 24 -g
-COPY . /app
 WORKDIR /app
 RUN pnpm add -g turbo@2.10.10
 
 # 2. Prune stage
 FROM base AS prepare
+COPY . .
 RUN turbo prune energy-vision-web --docker
 
 # 1. Build stage
