@@ -1,47 +1,26 @@
 # syntax=docker/dockerfile:1
-# -------------------------------------------------------- #
-# 1. Base system environment
-# -------------------------------------------------------- #
-FROM node:lts-alpine AS core-os
-RUN apk update
-RUN apk add --no-cache libc6-compat curl
-FROM core-os AS base
-
-# Set working directory
+# 1. Set up prune and build environment
+FROM node:24-bookworm-slim AS base
 WORKDIR /app
+RUN npm install --global pnpm@11.24.0 turbo@2.10.10
 
-# -------------------------------------------------------- #
-# 2. Core tooling setup (PNPM, etc.)
-# -------------------------------------------------------- #
+# 2. Prune stage
 FROM base AS prepare
-# copy the package json to know pnpm version
-COPY package.json ./ 
-ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
-RUN corepack enable
-RUN pnpm add turbo -g 
 COPY . .
-
-# -------------------------------------------------------- #
-# 3. Add lockfile and package.json's of isolated subworkspace
-# -------------------------------------------------------- #
 RUN turbo prune energy-vision-web --docker
 
-
-# -------------------------------------------------------- #
-# 4. Build application
-# -------------------------------------------------------- #
-FROM prepare AS build
-
-# First install the dependencies (as they change less often)
+# 1. Build stage
+FROM base AS builder
+# Copy the pruned lockfile and workspace config from the root of /out
 COPY --from=prepare /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
 COPY --from=prepare /app/out/pnpm-workspace.yaml ./pnpm-workspace.yaml
+# Copy all the isolated package.json files
 COPY --from=prepare /app/out/json/ .
+
+# This will now safely run using the shared, pruned lockfile
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 
-WORKDIR /app
-
-# Build the project
+# Copy source code and build
 COPY --from=prepare /app/out/full/ .
 
 ARG ARG_SANITY_DATASET
@@ -58,6 +37,7 @@ ENV NEXT_PUBLIC_ALGOLIA_APP_ID=${ARG_ALGOLIA_APP_ID}
 ENV NEXT_PUBLIC_ARCHIVE_CONTENT_LINK=${ARG_ARCHIVE_CONTENT_LINK}
 ENV NEXT_PUBLIC_FRIENDLY_CAPTCHA_SITEKEY=${ARG_FRIENDLY_CAPTCHA_SITEKEY}
 ENV NEXT_TELEMETRY_DISABLED=1
+ENV TURBO_TELEMETRY_DISABLED=1
 ENV NEXT_DEPLOYMENT_ID=${ARG_DEPLOYMENT_ID}
 
 RUN --mount=type=secret,id=sanity_api_token \
@@ -65,10 +45,11 @@ RUN --mount=type=secret,id=sanity_api_token \
     --mount=type=secret,id=next_server_actions_encryption_key \
     sh -ec 'SANITY_API_TOKEN="$(cat /run/secrets/sanity_api_token)" NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY="$(cat /run/secrets/next_public_algolia_search_api_key)" NEXT_SERVER_ACTIONS_ENCRYPTION_KEY="$(cat /run/secrets/next_server_actions_encryption_key)" NEXT_PUBLIC_SENTRY_DSN="${ARG_SENTRY_DSN}" turbo build --filter=energy-vision-web'
 
-# -------------------------------------------------------- #
-# 6. Runtime container
-# -------------------------------------------------------- #
-FROM core-os AS runner
+# 1. Run time environment
+FROM node:24-bookworm-slim AS runner
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends tini \
+    && rm -rf /var/lib/apt/lists/*
 
 ARG ARG_ENV
 ARG ARG_NODE_ENV
@@ -86,17 +67,23 @@ ENV NEXT_PUBLIC_FRIENDLY_CAPTCHA_SITEKEY=${ARG_FRIENDLY_CAPTCHA_SITEKEY}
 ENV NEXT_PUBLIC_SENTRY_DSN=${ARG_SENTRY_DSN}
 
 ENV NEXT_TELEMETRY_DISABLED=1
+ENV TURBO_TELEMETRY_DISABLED=1
 ENV USER=nextjs
 ENV UID=12345
 
-RUN addgroup -S "$USER" && adduser -S --uid "$UID" "$USER" && apk add --no-cache tini
+RUN groupadd --system --gid "$UID" "$USER" \
+    && useradd --system --uid "$UID" --gid "$USER" --no-create-home "$USER"
 
-COPY --from=build /app/web/public ./public
-COPY --from=build  --chown="$USER":"$USER" /app/web/.next/standalone/web ./
-COPY --from=build  --chown="$USER":"$USER" /app/web/.next/static ./.next/static
+WORKDIR /app
+RUN ls -la
+COPY --from=builder /app/web/public ./web/public
+COPY --from=builder  --chown="$USER":"$USER" /app/web/.next/standalone ./
+COPY --from=builder  --chown="$USER":"$USER" /app/web/.next/static ./web/.next/static
+# Copy the complete node_modules structure from your installer stage to preserve symlinks
+COPY --from=builder /app/node_modules ./node_modules
 
 USER "$UID"
 EXPOSE 3000
 
-ENTRYPOINT ["/sbin/tini", "--"]
-CMD ["node", "server.js"]
+ENTRYPOINT ["/usr/bin/tini", "--"]
+CMD ["node", "./web/server.js"]
