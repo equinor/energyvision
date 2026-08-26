@@ -32,21 +32,13 @@
     "@biomejs/biome": "2.3.6",
     "husky": "^9.1.7",
     "lint-staged": "16.2.6",
-    "turbo": "2.10.10"
+    "turbo": "2.10.11",
+    "typescript": "^5.9.3"
   },
   "lint-staged": {
     "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}": [
       "biome check --files-ignore-unknown=true --no-errors-on-unmatched"
     ]
   },
-  "pnpm": {
-    "overrides": {
-      "tar": "7.5.19",
-      "vite": "7.3.5",
-      "basic-ftp": "5.3.1",
-      "@xmldom/xmldom": "0.8.13",
-      "@sanity/types": "6.7.0"
-    }
-  },
-  "packageManager": "pnpm@10.34.5"
+  "packageManager": "pnpm@11.24.0"
 }

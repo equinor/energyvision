@@ -4,11 +4,9 @@ packages:
   - 'search'
   - 'packages/energyvision'
   - 'packages/typescript-config'
-publicHoistPattern:
-  - '*import-in-the-middle*'
-  - '*require-in-the-middle*'
 minimumReleaseAge: 10080
-#trustPolicy: "no-downgrade"
+# Ignore trust policy assuming they are safe due to their age
+trustPolicyIgnoreAfter: 10080
 blockExoticSubdeps: true
 trustPolicyExclude:
   # https://github.com/reduxjs/reselect/issues/752
@@ -18,4 +16,13 @@ allowBuilds:
   '@parcel/watcher': true
   '@sentry/cli': true
   '@swc/core': true
-  esbuild: true
+  esbuild: false
+overrides:
+  tar: 7.5.19
+  vite: 7.3.5
+  basic-ftp: 5.3.1
+  '@xmldom/xmldom': 0.8.13
+  '@sanity/types': 6.7.0
+publicHoistPattern:
+  - '*import-in-the-middle*'
+  - '*require-in-the-middle*'
