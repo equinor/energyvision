@@ -212,8 +212,8 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
       vite-tsconfig-paths:
-        specifier: ^5.1.4
-        version: 5.1.4(supports-color@8.1.1)(typescript@5.9.3)(vite@7.3.5(@types/node@24.13.3)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.50.0)(tsx@4.23.12)(yaml@2.9.0))
+        specifier: ^6.1.1
+        version: 6.1.1(supports-color@8.1.1)(typescript@5.9.3)(vite@7.3.5(@types/node@24.13.3)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.50.0)(tsx@4.23.12)(yaml@2.9.0))
 
   web:
     dependencies:
@@ -11211,14 +11211,6 @@ packages:
     resolution: {integrity: sha512-W+uoSpmVkSmNOGPSsDCWVW/DDAyv+9fap9AZXBvWiQqrboJ08j2vh0tFxTD/LjwqwAd3yYSVJgm54S/1GhbdnA==}
     peerDependencies:
       vite: 7.3.5
-
-  vite-tsconfig-paths@5.1.4:
-    resolution: {integrity: sha512-cYj0LRuLV2c2sMqhqhGpaO3LretdtMn/BVX4cPLanIZuwwrkVl+lK84E/miEXkCHWXuq65rhNN4rXsBcOB3S4w==}
-    peerDependencies:
-      vite: 7.3.5
-    peerDependenciesMeta:
-      vite:
-        optional: true
 
   vite-tsconfig-paths@6.1.1:
     resolution: {integrity: sha512-2cihq7zliibCCZ8P9cKJrQBkfgdvcFkOOc3Y02o3GWUDLgqjWsZudaoiuOwO/gzTzy17cS5F7ZPo4bsnS4DGkg==}
@@ -24406,17 +24398,6 @@ snapshots:
       vite: 7.3.5(@types/node@24.13.3)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.50.0)(tsx@4.23.12)(yaml@2.9.0)
     transitivePeerDependencies:
       - rollup
-      - supports-color
-      - typescript
-
-  vite-tsconfig-paths@5.1.4(supports-color@8.1.1)(typescript@5.9.3)(vite@7.3.5(@types/node@24.13.3)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.50.0)(tsx@4.23.12)(yaml@2.9.0)):
-    dependencies:
-      debug: 4.4.3(supports-color@8.1.1)
-      globrex: 0.1.2
-      tsconfck: 3.1.6(typescript@5.9.3)
-    optionalDependencies:
-      vite: 7.3.5(@types/node@24.13.3)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.50.0)(tsx@4.23.12)(yaml@2.9.0)
-    transitivePeerDependencies:
       - supports-color
       - typescript
 
