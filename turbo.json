@@ -4,7 +4,7 @@
   "tasks": {
     "energy-vision-web#build": {
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": [".next/**", "!.next/cache/**"],
+      "outputs": [".next/**", "!.next/cache/**", "!.next/dev/**"],
       "passThroughEnv": [
         "SANITY_API_TOKEN",
         "NEXT_PUBLIC_SANITY_PROJECT_ID",
@@ -13,7 +13,8 @@
         "NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY",
         "NEXT_PUBLIC_ARCHIVE_CONTENT_LINK",
         "NEXT_PUBLIC_FRIENDLY_CAPTCHA_SITEKEY",
-        "NEXT_PUBLIC_OPTIMIZED_SANITY_FETCH"
+        "NEXT_PUBLIC_OPTIMIZED_SANITY_FETCH",
+        "NEXT_PUBLIC_SENTRY_DSN"
       ]
     },
     "energy-vision-studio#build": {
