@@ -3,6 +3,7 @@
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/
 
 import * as Sentry from '@sentry/nextjs'
+import { dataset } from './languageConfig'
 import {
   allowUrlPattern,
   sentryBeforeSend,
@@ -10,7 +11,7 @@ import {
   sentryIgnoreErrors,
 } from './sentry.shared'
 
-const isProd = process.env.NODE_ENV === 'production'
+const isProd = process.env.NODE_ENV === 'production' && dataset === 'global'
 
 Sentry.init({
   dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
