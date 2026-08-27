@@ -22,7 +22,7 @@ export const sentryDenyUrls: Array<string | RegExp> = [
   /app:\/\/\/gtm\.js/, // Matches the exact path pattern from your stack trace
 ]
 
-export const sentryBeforeSend = (event: any, hint?: any) => {
+export const sentryBeforeSend = (event: any) => {
   const message = event?.message || event.exception?.values?.[0]?.value || ''
 
   // Drop the event if it mentions the missing _sz variable
