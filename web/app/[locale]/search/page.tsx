@@ -1,7 +1,7 @@
+import { connection } from 'next/server'
+import { Suspense } from 'react'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { Search } from '@/sections/searchBlocks/Search'
-
-export const dynamic = 'force-static'
 
 export function generateStaticParams() {
   return Flags.HAS_SEARCH ? [{ locale: 'nb-NO' }, { locale: 'en-GB' }] : []
@@ -37,6 +37,17 @@ export function generateStaticParams() {
   }
 } */
 
-export default function Page() {
+async function SearchContent() {
+  // TODO: Cache Components adoption. Added to unblock the build: remove this connection() to re-trigger the error and review the fix options.
+  await connection()
+
   return <Search />
+}
+
+export default function Page() {
+  return (
+    <Suspense fallback={null}>
+      <SearchContent />
+    </Suspense>
+  )
 }

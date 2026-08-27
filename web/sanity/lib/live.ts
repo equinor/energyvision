@@ -54,5 +54,6 @@ export type DefinedSanityFetchType = <
 }>
 
 export const routeSanityFetch: DefinedFetchType = async query => {
+  'use cache: remote'
   return sanityFetch(query)
 }

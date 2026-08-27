@@ -4,6 +4,7 @@ import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
 import { getLocale } from 'next-intl/server'
 import { OrganizationJsonLd } from 'next-seo'
+import { Suspense } from 'react'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { getNameFromIso } from '@/sanity/helpers/localization'
 import { routeSanityFetch } from '@/sanity/lib/live'
@@ -51,7 +52,7 @@ export default async function Home(_: PageProps<'/[locale]'>) {
   ])
   pageContent = homePageData
   if (isDraftMode) {
-    //Later when inside presentation tool, cant clean as it doesnt work with visual editing, must filter props together with visual editing,
+    //Later when inside presentation tool, cant clean globally as it doesnt work with visual editing, must filter props together with visual editing, pageContent = stegaClean(homePageData)
     pageContent = stegaClean(homePageData)
   }
 
@@ -65,22 +66,24 @@ export default async function Home(_: PageProps<'/[locale]'>) {
   if (!template) console.warn('Missing homepage template', pageData?.slug)
 
   return (
-    <FriendlyCaptchaSdkWrapper>
-      <Header siteMenuData={siteMenuData} headerData={headerData} />
-      <OrganizationJsonLd
-        name='Equinor ASA'
-        url='https://www.equinor.com'
-        logo='https://cdn.eds.equinor.com/logo/equinor-logo-horizontal.svg#red'
-        description={pageData?.seoAndSome?.metaDescription}
-        sameAs={[
-          'https://twitter.com/Equinor',
-          'https://facebook.com/Equinor',
-          'https://linkedin.com/company/equinor',
-          'https://www.instagram.com/equinor/',
-          'https://www.youtube.com/equinor',
-        ]}
-      />
-      <HomePage headerData={headerData} {...pageData} />
-    </FriendlyCaptchaSdkWrapper>
+    <Suspense fallback={null}>
+      <FriendlyCaptchaSdkWrapper>
+        <Header siteMenuData={siteMenuData} headerData={headerData} />
+        <OrganizationJsonLd
+          name='Equinor ASA'
+          url='https://www.equinor.com'
+          logo='https://cdn.eds.equinor.com/logo/equinor-logo-horizontal.svg#red'
+          description={pageData?.seoAndSome?.metaDescription}
+          sameAs={[
+            'https://twitter.com/Equinor',
+            'https://facebook.com/Equinor',
+            'https://linkedin.com/company/Equinor',
+            'https://www.instagram.com/equinor/',
+            'https://www.youtube.com/equinor',
+          ]}
+        />
+        <HomePage headerData={headerData} {...pageData} />
+      </FriendlyCaptchaSdkWrapper>
+    </Suspense>
   )
 }

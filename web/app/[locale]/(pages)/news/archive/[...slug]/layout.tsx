@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
+
 export default async function LocaleLayout({
   children,
 }: LayoutProps<'/[locale]/news/archive/[...slug]'>) {

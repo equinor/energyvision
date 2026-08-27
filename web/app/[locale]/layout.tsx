@@ -7,6 +7,7 @@ import Script from 'next/script'
 import { NextIntlClientProvider } from 'next-intl'
 import { getLocale, getTranslations } from 'next-intl/server'
 import { PageProvider } from '@/contexts/pageContext'
+import { languages } from '@/languageConfig'
 import { getLocaleFromIso, getNameFromIso } from '@/sanity/helpers/localization'
 import { dataset } from '@/sanity/lib/api'
 import { routeSanityFetch, SanityLive } from '@/sanity/lib/live'
@@ -14,6 +15,10 @@ import { footerAndErrorImageQuery } from '@/sanity/queries/footer'
 import Footer from '@/sections/Footer/Footer'
 import GoToTopButton from '@/sections/GoToTopButton'
 import { SiteImprove } from './SiteImprove'
+
+export function generateStaticParams() {
+  return languages.map(({ iso }) => ({ locale: iso }))
+}
 
 const equinor = localFont({
   src: [

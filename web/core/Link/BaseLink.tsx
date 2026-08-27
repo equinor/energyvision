@@ -43,6 +43,7 @@ export const BaseLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(
           focus:outline-hidden
           focus-visible:envis-outline
           active:scale-99
+          active:outline-hidden
           dark:text-white-100
           dark:focus-visible:envis-outline-invert
           dark:active:envis-outline-invert`,

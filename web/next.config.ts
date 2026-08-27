@@ -60,7 +60,8 @@ const nextConfig: NextConfig = withNextIntl({
       "@energyvision/shared":"../packages/energyvision/*"
     }
   },*/
-  //cacheComponents: true,
+  cacheComponents: true,
+  partialPrefetching: true,
   images: {
     remotePatterns: [
       {

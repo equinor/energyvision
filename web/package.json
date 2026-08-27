@@ -85,7 +85,7 @@
     "@types/xml2js": "^0.4.11",
     "dotenv": "^17.2.3",
     "postcss": "8.5.23",
-    "tailwindcss": "4.2.2",
+    "tailwindcss": "4.3.3",
     "tsx": "^4.20.6",
     "typescript": "^5.9.3"
   },

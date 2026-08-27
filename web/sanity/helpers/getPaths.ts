@@ -2,7 +2,7 @@ import { language } from '@equinor/eds-icons'
 import { groq } from 'next-sanity'
 import { defaultLanguage, languages } from '@/languageConfig'
 import { client } from '@/sanity/lib/client'
-import { sanityFetch } from '../lib/live'
+import { routeSanityFetch } from '../lib/live'
 import { sameLang } from '../queries/common/langAndDrafts'
 import { publishDateTimeQuery } from '../queries/common/publishDateTime'
 import { getNameFromLocale } from './localization'
@@ -72,7 +72,7 @@ const getDocumentsForLocale = async (
 // Get a Sanity document by given slug
 // Only include drafts if preview mode is enabled
 export const getDocumentBySlug = async (slug: string) => {
-  const { data } = await sanityFetch({
+  const { data } = await routeSanityFetch({
     query: `*[defined(slug.current) && slug.current == $slug][0] {
       _updatedAt,
       "slug": slug.current,

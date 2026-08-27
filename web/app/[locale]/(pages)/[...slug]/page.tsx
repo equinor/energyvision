@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic'
 import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
 import { getLocale } from 'next-intl/server'
+import { Suspense } from 'react'
 import { decodeSlugs } from '@/lib/helpers/getFullUrl'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { getNameFromIso } from '@/sanity/helpers/localization'
@@ -73,7 +74,7 @@ export async function generateMetadata({
   return constructSanityMetadata(slug, locale, metaData)
 }
 
-export default async function Page({ params, searchParams }: Props) {
+async function PageContent({ params, searchParams }: Props) {
   const { slug, locale } = await params
   const resolvedSearchParams = await searchParams
   /*   const isInPresentationToolContext =
@@ -129,5 +130,13 @@ export default async function Page({ params, searchParams }: Props) {
       <Header siteMenuData={siteMenuData} headerData={headerData} />
       {getTemplate()}
     </>
+  )
+}
+
+export default function Page(props: Props) {
+  return (
+    <Suspense fallback={null}>
+      <PageContent {...props} />
+    </Suspense>
   )
 }

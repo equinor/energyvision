@@ -2,7 +2,7 @@
 import { tz } from '@date-fns/tz'
 import { Icon } from '@equinor/eds-core-react'
 import { calendar, time } from '@equinor/eds-icons'
-import { format } from 'date-fns'
+import { format, parseISO } from 'date-fns'
 import {
   cy,
   de,
@@ -143,7 +143,7 @@ const FormattedDateTime = forwardRef<HTMLDivElement, FormattedDateTimeProps>(
 
     let date: Date
     if (typeof datetime === 'string') {
-      date = new Date(datetime)
+      date = parseISO(datetime)
     } else {
       date = datetime as Date
     }
