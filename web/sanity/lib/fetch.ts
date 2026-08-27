@@ -15,7 +15,8 @@ export const IS_FETCH_OPTIMIZED =
   process.env.NEXT_PUBLIC_OPTIMIZED_SANITY_FETCH === 'true'
 
 const cachedSanityFetch: DefinedFetchType = async options => {
-  'use cache'
+  console.log('Using cached sanityFetch for', options.requestTag)
+  ;('use cache')
   return sanityFetch(options)
 }
 
@@ -24,6 +25,10 @@ export const routeSanityFetch: DefinedFetchType = async options => {
   const { isEnabled: isDraft } = await draftMode()
 
   if (isDraft) {
+    console.log(
+      'Draft mode enabled, using uncached sanityFetch for',
+      options.requestTag,
+    )
     return sanityFetch(options)
   }
 
