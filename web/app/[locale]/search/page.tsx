@@ -39,7 +39,7 @@ export async function generateStaticParams() {
 export default function Page() {
   return (
     <Suspense fallback={<div>Loading Search Engine...</div>}>
-      {/*<Search /> */}
+      <Search />
     </Suspense>
   )
 }
