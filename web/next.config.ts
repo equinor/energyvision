@@ -24,6 +24,7 @@ const sentryConfig = {
   silent: true,
   //disableLogger: true,
   hideSourceMaps: true,
+  tunnelRoute: '/sentry-tunnel',
 }
 
 //TODO: Find the Redirect type from config that is not in /dist.
