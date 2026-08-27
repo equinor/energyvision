@@ -34,3 +34,5 @@ Sentry.init({
   },
   beforeSend: sentryBeforeSend,
 })
+
+export const onRouterTransitionStart = Sentry.captureRouterTransitionStart
