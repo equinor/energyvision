@@ -15,8 +15,8 @@ export const IS_FETCH_OPTIMIZED =
   process.env.NEXT_PUBLIC_OPTIMIZED_SANITY_FETCH === 'true'
 
 const cachedSanityFetch: DefinedFetchType = async options => {
+  'use cache'
   console.log('Using cached sanityFetch for', options.requestTag)
-  ;('use cache')
   return sanityFetch(options)
 }
 
