@@ -24,6 +24,12 @@ importers:
       lint-staged:
         specifier: 16.2.6
         version: 16.2.6
+      lodash:
+        specifier: ^4.18.1
+        version: 4.18.1
+      lodash-es:
+        specifier: ^4.18.1
+        version: 4.18.1
       turbo:
         specifier: 2.10.11
         version: 2.10.11
