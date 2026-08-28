@@ -73,7 +73,6 @@
   },
   "devDependencies": {
     "@algolia/client-search": "^4.16.0",
-    "@babel/core": "^7.29.6",
     "@biomejs/biome": "^2.4.5",
     "@portabletext/types": "^2.0.13",
     "@repo/typescript-config": "workspace:*",
