@@ -8,6 +8,7 @@ export const sentryIgnoreErrors: Array<string | RegExp> = [
   'Non-Error promise rejection captured',
   /Sloppy third-party script error/i,
   'Non-Error exception captured',
+  /The destination stream closed early/i,
 ]
 
 const normalizedDomain = domain.replace(/^https?:\/\//, '').replace(/\/$/, '')
