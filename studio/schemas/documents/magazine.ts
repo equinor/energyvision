@@ -178,6 +178,7 @@ export default {
         { type: 'videoPlayer' },
         { type: 'embeddedVideoList' },
         { type: 'anchorLink' },
+        { type: 'tabs' },
       ],
     },
     {
