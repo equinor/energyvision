@@ -104,6 +104,7 @@ const datasets = {
   southkorea: ['english', 'korean'],
   celticsea: ['english', 'welsh'],
   sponsorship: ['norwegian', 'english'],
+  stemgapet: ['norwegian', 'english'],
   // Test datasets
   'global-development': ['english', 'norwegian', 'japanese'],
   // 'global-test': ['english', 'norwegian', 'japanese'],
@@ -124,6 +125,7 @@ export const defaultWebLanguage: Partial<Record<DatasetsKeys, string>> = {
   southkorea: 'korean',
   japan: 'japanese',
   sponsorship: 'norwegian',
+  stemgapet: 'norwegian',
 }
 
 /**
@@ -181,6 +183,10 @@ const websiteDomains: Partial<
   sponsorship: {
     url: 'https://www.sponsorship.equinor.com',
     meta: 'Sponsorship',
+  },
+  stemgapet: {
+    url: 'https://www.stemgapet.equinor.com',
+    meta: 'Stemgapet',
   },
 }
 
