@@ -91,4 +91,4 @@ USER "$UID"
 EXPOSE 3000
 
 ENTRYPOINT ["/sbin/tini", "--"]
-CMD ["node", "./web/server.js"]
+CMD ["node", "--trace-warnings", "./web/server.js"]
