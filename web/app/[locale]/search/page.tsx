@@ -1,10 +1,10 @@
+'use client'
 import { Suspense } from 'react'
-import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { Search } from '@/sections/searchBlocks/Search'
 
-export async function generateStaticParams() {
+/*export async function generateStaticParams() {
   return Flags.HAS_SEARCH ? [{ locale: 'nb-NO' }, { locale: 'en-GB' }] : []
-}
+}*/
 
 /* export async function generateMetadata({
   params,
