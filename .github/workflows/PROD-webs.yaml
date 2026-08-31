@@ -21,6 +21,7 @@ on:
           - southkorea
           - celticsea
           - sponsorship
+          - stemgapet
 permissions:
   id-token: write
 jobs:

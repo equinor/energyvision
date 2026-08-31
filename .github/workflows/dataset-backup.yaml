@@ -18,6 +18,7 @@ on:
           - "['storage']"
           - "['argentina']"
           - "['brazil']"
+          - "['stemgapet']"
           - 'all'
         required: true
         default: "['global-development']"
