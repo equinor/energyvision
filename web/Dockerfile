@@ -1,6 +1,10 @@
 # syntax=docker/dockerfile:1
 # 1. Set up prune and build environment
-FROM node:24-bookworm-slim AS base
+FROM node:24-alpine AS core-os
+RUN apk update
+RUN apk add --no-cache libc6-compat curl
+
+FROM core-os AS base
 WORKDIR /app
 RUN npm install --global pnpm@11.24.0 turbo@2.10.10
 
@@ -48,10 +52,8 @@ RUN --mount=type=secret,id=sanity_api_token \
     sh -ec 'SANITY_API_TOKEN="$(cat /run/secrets/sanity_api_token)" NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY="$(cat /run/secrets/next_public_algolia_search_api_key)" NEXT_SERVER_ACTIONS_ENCRYPTION_KEY="$(cat /run/secrets/next_server_actions_encryption_key)" NEXT_PUBLIC_SENTRY_DSN="${ARG_SENTRY_DSN}" turbo build --filter=energy-vision-web'
 
 # 1. Run time environment
-FROM node:24-bookworm-slim AS runner
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends tini \
-    && rm -rf /var/lib/apt/lists/*
+FROM core-os AS runner
+RUN apk add --no-cache tini
 
 ARG ARG_ENV
 ARG ARG_NODE_ENV
@@ -77,8 +79,8 @@ ENV TURBO_TELEMETRY_DISABLED=1
 ENV USER=nextjs
 ENV UID=12345
 
-RUN groupadd --system --gid "$UID" "$USER" \
-    && useradd --system --uid "$UID" --gid "$USER" --no-create-home "$USER"
+RUN addgroup -S "$USER" && adduser -S --uid "$UID" "$USER" && apk add --no-cache tini
+
 
 WORKDIR /app
 RUN ls -la
@@ -91,5 +93,5 @@ COPY --from=builder /app/node_modules ./node_modules
 USER "$UID"
 EXPOSE 3000
 
-ENTRYPOINT ["/usr/bin/tini", "--"]
-CMD ["node", "./web/server.js"]
+ENTRYPOINT ["/sbin/tini", "--"]
+CMD ["node", "--trace-warnings", "./web/server.js"]

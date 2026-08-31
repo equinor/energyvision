@@ -8,6 +8,7 @@ export const sentryIgnoreErrors: Array<string | RegExp> = [
   'Non-Error promise rejection captured',
   /Sloppy third-party script error/i,
   'Non-Error exception captured',
+  /The destination stream closed early/i,
 ]
 
 const normalizedDomain = domain.replace(/^https?:\/\//, '').replace(/\/$/, '')
@@ -22,7 +23,7 @@ export const sentryDenyUrls: Array<string | RegExp> = [
   /app:\/\/\/gtm\.js/, // Matches the exact path pattern from your stack trace
 ]
 
-export const sentryBeforeSend = (event: any, hint?: any) => {
+export const sentryBeforeSend = (event: any) => {
   const message = event?.message || event.exception?.values?.[0]?.value || ''
 
   // Drop the event if it mentions the missing _sz variable

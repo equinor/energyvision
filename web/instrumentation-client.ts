@@ -3,6 +3,7 @@
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/
 
 import * as Sentry from '@sentry/nextjs'
+import { dataset } from './languageConfig'
 import {
   allowUrlPattern,
   sentryBeforeSend,
@@ -10,27 +11,29 @@ import {
   sentryIgnoreErrors,
 } from './sentry.shared'
 
-const isProd = process.env.NODE_ENV === 'production'
+const isProd = process.env.NODE_ENV === 'production' && dataset === 'global'
 
-isProd &&
-  Sentry.init({
-    dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
-    // Enable logs to be sent to Sentry
-    enableLogs: true,
-    enabled: isProd,
-    debug: false,
-    tracesSampleRate: 0.01,
-    profilesSampleRate: 0.1, // Sample 10% of profiles
-    // Session Replay (Game changer for debugging)
-    replaysSessionSampleRate: 0.1,
-    replaysOnErrorSampleRate: 1.0,
-    ignoreErrors: sentryIgnoreErrors,
-    allowUrls: [allowUrlPattern],
-    denyUrls: sentryDenyUrls,
-    beforeBreadcrumb(breadcrumb) {
-      return breadcrumb.category === 'ui.click' ? null : breadcrumb
-    },
-    beforeSend: sentryBeforeSend,
-  })
+Sentry.init({
+  dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
+  enableLogs: false,
+  includeLocalVariables: false,
+  enabled: isProd,
+  debug: false,
+  tracesSampleRate: 0.01,
+  profilesSampleRate: 0,
+  replaysSessionSampleRate: 0,
+  replaysOnErrorSampleRate: 0,
+  dataCollection: {
+    userInfo: false,
+    httpBodies: [],
+  },
+  ignoreErrors: sentryIgnoreErrors,
+  allowUrls: [allowUrlPattern],
+  denyUrls: sentryDenyUrls,
+  beforeBreadcrumb(breadcrumb) {
+    return breadcrumb.category === 'ui.click' ? null : breadcrumb
+  },
+  beforeSend: sentryBeforeSend,
+})
 
 export const onRouterTransitionStart = Sentry.captureRouterTransitionStart

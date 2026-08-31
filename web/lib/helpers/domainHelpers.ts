@@ -10,4 +10,5 @@ export const crawlableDomains = [
   'www.equinor.co.kr',
   'www.equinorcelticsea.co.uk',
   'www.sponsorship.equinor.com',
+  'www.stemgapet.equinor.com',
 ]
