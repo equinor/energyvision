@@ -2,6 +2,7 @@ import { search } from '@algolia/client-search'
 import { magazineSlug, newsSlug } from '@energyvision/shared/satelliteConfig'
 import { stegaClean } from '@sanity/client/stega'
 import type { Metadata } from 'next'
+import { cacheLife } from 'next/cache'
 import dynamic from 'next/dynamic'
 import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
@@ -9,8 +10,8 @@ import { getLocale } from 'next-intl/server'
 import { decodeSlugs } from '@/lib/helpers/getFullUrl'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { getNameFromIso } from '@/sanity/helpers/localization'
-import { routeSanityFetch } from '@/sanity/lib/fetch'
-import { getDynamicFetchOptions, sanityFetch } from '@/sanity/lib/live'
+import { routeSanityFetch, sanityFetchMetadata } from '@/sanity/lib/fetch'
+import { getDynamicFetchOptions } from '@/sanity/lib/live'
 import { constructSanityMetadata, getPage } from '@/sanity/pages/utils'
 import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu'
 import {
@@ -61,7 +62,15 @@ export async function generateMetadata({
     query = magazineroomMetaQuery
   }
 
-  const { data: metaData }: { data: any } = await routeSanityFetch({
+  const { data: metaData }: { data: any } = await sanityFetchMetadata({
+    query,
+    params: {
+      lang: sanityLang,
+      slug: `/${slug.join('/')}`,
+      ...((isNewsPage || isMagazineRoom || isMagazinePage) && { type }),
+    },
+    perspective: 'published',
+  }) /*await routeSanityFetch({
     query,
     params: {
       lang: sanityLang,
@@ -71,33 +80,27 @@ export async function generateMetadata({
     stega: false,
     tags: [`page:/${slug.join('/')}`],
     requestTag: 'page-meta',
-  })
+  })*/
 
   return constructSanityMetadata(slug, locale, metaData)
 }
 
 export default async function Page({ params, searchParams }: Props) {
-  return (
-    <>
-      {/*getTemplate()*/}
-      <DynamicWrapper params={params} searchParams={searchParams} />
-    </>
-  )
-}
-
-// Dynamic (resolves request-time data)
-async function DynamicWrapper({ params, searchParams }: Props) {
   const dynamic = await getDynamicFetchOptions()
   const { slug } = await params
   const resolvedSearchParams = await searchParams
   return (
-    <CachedContent
-      slug={slug}
-      searchParams={resolvedSearchParams}
-      dynamic={dynamic}
-    />
+    <>
+      {/*getTemplate()*/}
+      <CachedContent
+        slug={slug}
+        searchParams={resolvedSearchParams}
+        dynamic={dynamic}
+      />
+    </>
   )
 }
+
 // Cached (performs sanityFetch)
 async function CachedContent({
   slug,
@@ -108,6 +111,8 @@ async function CachedContent({
   dynamic: Awaited<ReturnType<typeof getDynamicFetchOptions>>
   searchParams: { [key: string]: string[] | string | undefined }
 }) {
+  'use cache'
+  cacheLife('max')
   const locale = await getLocale()
   /*   const isInPresentationToolContext =
     (await cookies()).get('preview-fetch-dest')?.value === 'iframe' */
@@ -120,6 +125,7 @@ async function CachedContent({
         lang: getNameFromIso(locale) ?? 'en_GB',
       },
       tags: [`sanity:siteMenu:${locale}`],
+      requestTag: 'site-menu',
       ...dynamic,
     }),
     getPage({
