@@ -12,7 +12,7 @@
     "dev": "next dev",
     "info": "next info",
     "build": "next build",
-    "start": "next start",
+    "start": "NODE_OPTIONS=--trace-warnings next start",
     "type-check": "tsc --project tsconfig.json --pretty",
     "check-types": "tsc",
     "generate-translations": "pnpm tsx --env-file-if-exists=.env ./scripts/generate-translations.ts",
@@ -73,7 +73,6 @@
   },
   "devDependencies": {
     "@algolia/client-search": "^4.16.0",
-    "@babel/core": "^7.29.6",
     "@biomejs/biome": "^2.4.5",
     "@portabletext/types": "^2.0.13",
     "@repo/typescript-config": "workspace:*",
