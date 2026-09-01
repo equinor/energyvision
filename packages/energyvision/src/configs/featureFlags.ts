@@ -18,6 +18,7 @@ const SATELLITES = [
   'southkorea',
   'storage',
   'sponsorship',
+  'stemgapet',
 ]
 const NEWS = [
   ...GLOBAL_DEV,
@@ -35,7 +36,7 @@ const MAGAZINE_SUBSCRIPTION = [...GLOBAL_DEV, ...GLOBAL_PROD]
 const NEWSROOM = [...GLOBAL_PROD, ...GLOBAL_DEV]
 const LOCAL_NEWS = [...GLOBAL_PROD, ...GLOBAL_DEV]
 const SEARCH = [...GLOBAL_PROD, ...GLOBAL_DEV]
-const EVENT = [...GLOBAL_PROD, ...GLOBAL_DEV]
+const EVENT = [...GLOBAL_PROD, ...GLOBAL_DEV, 'stemgapet']
 
 const SUBSCRIBE_FORM = [...GLOBAL_PROD, ...GLOBAL_DEV]
 const CAREERS_CONTACT_FORM = [...GLOBAL_PROD, ...GLOBAL_DEV]
@@ -45,7 +46,7 @@ const CAREER_FAIR_AND_VISITS_FORM = [...GLOBAL_PROD, ...GLOBAL_DEV, 'brazil']
 const PENSION_FORM = [...GLOBAL_PROD, ...GLOBAL_DEV]
 
 const FANCY_MENU = [...GLOBAL_PROD, ...GLOBAL_DEV]
-const MAGAZINE = [...GLOBAL_PROD, ...GLOBAL_DEV]
+const MAGAZINE = [...GLOBAL_PROD, ...GLOBAL_DEV, 'stemgapet']
 /* Allows same slug for different languages */
 const SAME_SLUG = [...GLOBAL_DEV, 'japan', 'southkorea']
 const CAMPAIGN = [...GLOBAL_PROD, ...GLOBAL_DEV]
