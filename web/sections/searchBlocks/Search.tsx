@@ -54,12 +54,12 @@ const createSearchClient = (): SearchClient => {
 export function Search() {
   const intl = useTranslations()
   const locale = useLocale()
-  const router = useRouter()
   const resultsRef = useRef<HTMLDivElement>(null)
   const searchClientRef = useRef<SearchClient | null>(null)
   const [isMounted, setIsMounted] = useState(false)
   const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
 
+  const router = useRouter()
   const padding = usePaginationPadding()
   const indices = [
     {

@@ -1,3 +1,4 @@
+import { search } from '@algolia/client-search'
 import { magazineSlug, newsSlug } from '@energyvision/shared/satelliteConfig'
 import { stegaClean } from '@sanity/client/stega'
 import type { Metadata } from 'next'
@@ -9,6 +10,7 @@ import { decodeSlugs } from '@/lib/helpers/getFullUrl'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { getNameFromIso } from '@/sanity/helpers/localization'
 import { routeSanityFetch } from '@/sanity/lib/fetch'
+import { getDynamicFetchOptions, sanityFetch } from '@/sanity/lib/live'
 import { constructSanityMetadata, getPage } from '@/sanity/pages/utils'
 import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu'
 import {
@@ -75,9 +77,38 @@ export async function generateMetadata({
 }
 
 export default async function Page({ params, searchParams }: Props) {
+  return (
+    <>
+      {/*getTemplate()*/}
+      <DynamicWrapper params={params} searchParams={searchParams} />
+    </>
+  )
+}
+
+// Dynamic (resolves request-time data)
+async function DynamicWrapper({ params, searchParams }: Props) {
+  const dynamic = await getDynamicFetchOptions()
   const { slug } = await params
-  const locale = await getLocale()
   const resolvedSearchParams = await searchParams
+  return (
+    <CachedContent
+      slug={slug}
+      searchParams={resolvedSearchParams}
+      dynamic={dynamic}
+    />
+  )
+}
+// Cached (performs sanityFetch)
+async function CachedContent({
+  slug,
+  searchParams,
+  dynamic,
+}: {
+  slug: string | string[]
+  dynamic: Awaited<ReturnType<typeof getDynamicFetchOptions>>
+  searchParams: { [key: string]: string[] | string | undefined }
+}) {
+  const locale = await getLocale()
   /*   const isInPresentationToolContext =
     (await cookies()).get('preview-fetch-dest')?.value === 'iframe' */
   const { isEnabled: isDraftMode } = await draftMode()
@@ -89,11 +120,12 @@ export default async function Page({ params, searchParams }: Props) {
         lang: getNameFromIso(locale) ?? 'en_GB',
       },
       tags: [`sanity:siteMenu:${locale}`],
+      ...dynamic,
     }),
     getPage({
       slug: decodeSlugs(slug),
       locale,
-      searchParams: resolvedSearchParams,
+      searchParams: searchParams,
       fetch: routeSanityFetch,
     }),
   ])
@@ -131,7 +163,7 @@ export default async function Page({ params, searchParams }: Props) {
   return (
     <>
       <Header siteMenuData={siteMenuData} headerData={headerData} />
-      {getTemplate()}
+      <article>{getTemplate()}</article>
     </>
   )
 }
