@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { type QueryParams, toPlainText } from 'next-sanity'
-import type { DefinedFetchType } from 'next-sanity/live'
+import type { DefinedFetchType, LivePerspective } from 'next-sanity/live'
 import {
   defaultLanguage,
   domain,
@@ -180,6 +180,8 @@ type Params = {
   searchParams?: {
     [key: string]: string[] | string | undefined
   }
+  perspective?: LivePerspective
+  stega?: boolean
 }
 
 function languagePrefixedSlug(
@@ -198,7 +200,14 @@ function languagePrefixedSlug(
 }
 
 export async function getPage(params: Params) {
-  const { slug, locale, searchParams, fetch = routeSanityFetch } = params
+  const {
+    slug,
+    locale,
+    searchParams,
+    fetch = routeSanityFetch,
+    perspective,
+    stega,
+  } = params
   const tagParam = searchParams?.tag
   const tag =
     typeof tagParam === 'string'
@@ -209,6 +218,7 @@ export async function getPage(params: Params) {
   let pageData = null
   if (slug?.[0]?.includes('preview')) {
     const id = slug[1]
+
     if (id) {
       const { data: draftInfo }: { data: any } = await fetch({
         query: pageInfoById,
@@ -217,7 +227,6 @@ export async function getPage(params: Params) {
         },
         requestTag: 'preview',
       })
-
       if (draftInfo?.lang) {
         const { data } = await fetch({
           query: contentQueryById,
@@ -226,7 +235,10 @@ export async function getPage(params: Params) {
             lang: draftInfo?.lang,
           },
           requestTag: 'preview',
+          perspective,
+          stega,
         })
+
         pageData = data
       }
     }
@@ -239,6 +251,8 @@ export async function getPage(params: Params) {
       tags: [`sanity:page:${Array.isArray(slug) ? slug?.join('/') : slug}`],
       params: { ...pageQueryParams },
       requestTag: 'page-by-slug',
+      perspective,
+      stega,
     })
     pageData = data
   }

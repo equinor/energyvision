@@ -10,6 +10,7 @@ import { getValidLanguagesLocales } from '@/languageConfig'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { getNameFromIso } from '@/sanity/helpers/localization'
 import { routeSanityFetch, sanityFetchMetadata } from '@/sanity/lib/fetch'
+import { getDynamicFetchOptions } from '@/sanity/lib/live'
 import { constructSanityMetadata, getPage } from '@/sanity/pages/utils'
 import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu'
 import { homePageMetaQuery } from '@/sanity/queries/metaData'
@@ -53,11 +54,18 @@ export default async function Home(_: PageProps<'/[locale]'>) {
 
 // Layer 2: only reached in draft mode, marks the fetch below as uncached/stega-aware.
 async function DynamicHome() {
-  return <CachedHome isDraftMode />
+  const dynamic = await getDynamicFetchOptions()
+  return <CachedHome isDraftMode dynamic={dynamic} />
 }
 
 // Layer 3: fetches through the existing draft-aware/cached `routeSanityFetch`/`getPage`.
-async function CachedHome({ isDraftMode = false }: { isDraftMode?: boolean }) {
+async function CachedHome({
+  isDraftMode = false,
+  dynamic,
+}: {
+  isDraftMode?: boolean
+  dynamic?: Awaited<ReturnType<typeof getDynamicFetchOptions>>
+}) {
   'use cache'
   cacheLife('max')
   const locale = await getLocale()
@@ -70,11 +78,13 @@ async function CachedHome({ isDraftMode = false }: { isDraftMode?: boolean }) {
       },
       tags: [`sanity:siteMenu:${locale}`],
       requestTag: 'site-menu',
+      ...dynamic,
     }),
     getPage({
       slug: '',
       locale,
       tags: ['homePage'],
+      ...dynamic,
     }),
   ])
 

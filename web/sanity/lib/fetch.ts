@@ -19,7 +19,6 @@ export const IS_FETCH_OPTIMIZED =
 const cachedSanityFetch: DefinedFetchType = async options => {
   'use cache'
   cacheLife('max')
-  console.log('Using cached sanityFetch for', options.requestTag)
   if (!options.requestTag) {
     console.log(options.query)
   }
@@ -58,14 +57,10 @@ export const routeSanityFetch: DefinedFetchType = async options => {
   const { isEnabled: isDraft } = await draftMode()
 
   if (isDraft) {
-    console.log(
-      'Draft mode enabled, using uncached sanityFetch for',
-      options.requestTag,
-    )
     if (!options.requestTag) {
       console.log(options.query)
     }
-    return sanityFetch(options)
+    return sanityFetch({ ...options })
   }
 
   return IS_FETCH_OPTIMIZED

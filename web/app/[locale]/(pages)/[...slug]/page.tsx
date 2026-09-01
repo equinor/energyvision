@@ -87,6 +87,7 @@ export async function generateMetadata({
 
 export default async function Page({ params, searchParams }: Props) {
   const dynamic = await getDynamicFetchOptions()
+
   const { slug } = await params
   const resolvedSearchParams = await searchParams
   return (
@@ -133,6 +134,7 @@ async function CachedContent({
       locale,
       searchParams: searchParams,
       fetch: routeSanityFetch,
+      ...dynamic,
     }),
   ])
   pageContent = pageResults
