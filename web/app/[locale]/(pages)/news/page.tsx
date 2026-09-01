@@ -1,14 +1,15 @@
 import { newsSlug } from '@energyvision/shared/satelliteConfig'
 import { algoliasearch } from 'algoliasearch'
 import type { Metadata } from 'next'
-import { unstable_cache } from 'next/cache'
+import { cacheLife, cacheTag } from 'next/cache'
 import dynamic from 'next/dynamic'
 import { getLocale } from 'next-intl/server'
 import { Suspense } from 'react'
 import { algolia } from '@/lib/config'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { getNameFromIso } from '@/sanity/helpers/localization'
-import { routeSanityFetch } from '@/sanity/lib/fetch'
+import { routeSanityFetch, sanityFetchMetadata } from '@/sanity/lib/fetch'
+import { getDynamicFetchOptions } from '@/sanity/lib/live'
 import { constructSanityMetadata, getPage } from '@/sanity/pages/utils'
 import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu'
 import { newsroomMetaQuery } from '@/sanity/queries/metaData'
@@ -26,7 +27,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale()
   const pageSlug = newsSlug[getNameFromIso(locale)]
   if (Flags.HAS_NEWSROOM) {
-    const { data: metaData }: { data: any } = await routeSanityFetch({
+    const { data: metaData }: { data: any } = await sanityFetchMetadata({
       query: newsroomMetaQuery,
       params: {
         lang: getNameFromIso(locale),
@@ -42,9 +43,12 @@ export async function generateMetadata(): Promise<Metadata> {
   return constructSanityMetadata(pageSlug, locale, undefined)
 }
 
-const getInitialResponse = unstable_cache(
+const getInitialResponse =
   // this gets revalidated by path
-  async locale => {
+  async (locale: string) => {
+    'use cache'
+    cacheLife('max')
+    cacheTag('newsrooms')
     const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
     const indexName = `${envPrefix}_NEWS_${locale}`
 
@@ -68,16 +72,26 @@ const getInitialResponse = unstable_cache(
       },
     })
     return response
-  },
-  undefined,
-  {
-    tags: [`newsroom`],
-  },
-)
+  }
 
 export default async function NewsroomPage(_: PageProps<'/[locale]/news'>) {
-  const locale = await getLocale()
-  const [siteMenuResult, pageResults] = await Promise.all([
+  const dynamic = await getDynamicFetchOptions()
+  return <CachedNewsroomPage dynamic={dynamic} />
+ 
+}
+
+async function CachedNewsroomPage({
+
+  dynamic}: {
+
+  dynamic?: Awaited<ReturnType<typeof getDynamicFetchOptions>>
+}) {
+  'use cache'
+  cacheLife('max')
+  cacheTag('newsroom')
+
+   const locale = await getLocale()
+   const [siteMenuResult, pageResults] = await Promise.all([
     routeSanityFetch({
       query: Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery,
       params: {
