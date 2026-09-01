@@ -1,24 +1,24 @@
-'use client'
-import type { StartMode, WidgetHandle } from '@friendlycaptcha/sdk'
-import { useLocale } from 'next-intl'
-import { useContext, useEffect, useRef } from 'react'
-import { globalCaptchaSDK } from '@/contexts/captchaSdk'
-import { FriendlyCaptchaContext } from '@/contexts/FriendlyCaptchaContext'
-import { friendlyCaptcha } from '../../lib/config'
+'use client';
+import type { StartMode, WidgetHandle } from '@friendlycaptcha/sdk';
+import { useLocale } from 'next-intl';
+import { useEffect, useEffectEvent, useRef } from 'react';
+import { globalCaptchaSDK } from '@/contexts/captchaSdk';
+import { friendlyCaptcha } from '../../lib/config';
 
 const FriendlyCaptcha = ({
   doneCallback,
   errorCallback,
   startMode = 'focus',
 }: {
-  doneCallback: (event: any) => void
-  errorCallback: (error: string) => void
-  startMode?: StartMode
+  doneCallback: (event: any) => void;
+  errorCallback: (error: string) => void;
+  startMode?: StartMode;
 }) => {
-  const container = useRef(null)
-  const widget = useRef<WidgetHandle>(null)
-  //const fRCContext = useContext(FriendlyCaptchaContext)
-  const locale = useLocale()
+  const container = useRef(null);
+  const widget = useRef<WidgetHandle>(null);
+  const locale = useLocale();
+  const onComplete = useEffectEvent(doneCallback);
+  const onError = useEffectEvent(errorCallback);
 
   useEffect(() => {
     if (!widget.current && container.current && globalCaptchaSDK) {
@@ -28,33 +28,33 @@ const FriendlyCaptcha = ({
         startMode: startMode,
         language: locale === 'no' ? 'nb' : locale,
         apiEndpoint: 'https://eu.frcapi.com/api/v2/captcha',
-      })
+      });
 
-      widget.current.addEventListener('frc:widget.complete', doneCallback)
+      widget.current.addEventListener('frc:widget.complete', onComplete);
 
-      widget.current.addEventListener('frc:widget.error', event => {
-        const detail = event.detail
-        errorCallback(detail.error.detail)
+      widget.current.addEventListener('frc:widget.error', (event) => {
+        const detail = event.detail;
+        onError(detail.error.detail);
         console.error(
           'Something went wrong in solving the captcha: ',
           detail.error,
-        )
-      })
+        );
+      });
 
-      widget.current.addEventListener('frc:widget.expire', event => {
+      widget.current.addEventListener('frc:widget.expire', (event) => {
         console.warn(
           'The captcha solution is no longer valid, the user waited too long.',
-        )
-        errorCallback(event.detail.response)
-      })
+        );
+        onError(event.detail.response);
+      });
     }
     return () => {
-      widget.current?.destroy()
-      widget.current = null
-    }
-  }, [doneCallback, errorCallback, locale, startMode])
+      widget.current?.destroy();
+      widget.current = null;
+    };
+  }, [locale, startMode]);
 
-  return <div ref={container} />
-}
+  return <div ref={container} />;
+};
 
-export default FriendlyCaptcha
+export default FriendlyCaptcha;
