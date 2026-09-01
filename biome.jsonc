@@ -25,15 +25,11 @@
       "!**/build"
     ]
   },
-  "formatter": {
-    "enabled": true,
-    "indentStyle": "space",
-    "indentWidth": 2,
-  },
+  "formatter": { "enabled": true, "indentStyle": "space", "indentWidth": 2 },
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true,
+      "preset": "recommended",
       "nursery": {
         "useSortedClasses": {
           "level": "error",
@@ -85,37 +81,24 @@
     },
     "includes": ["**", "**/*", "!**/node_modules", "!**/.next", "!**/dist"]
   },
-/*   "javascript": {
-    "globals": ["React", "JSX"],
-    "formatter": {
-      "enabled": true,
-      "jsxQuoteStyle": "single",
-      "quoteProperties": "asNeeded",
-      "trailingCommas": "all",
-      "quoteStyle": "single",
-      "arrowParentheses": "asNeeded",
-      "semicolons": "asNeeded"
+  "json": { "formatter": { "enabled": true } },
+  "overrides": [
+    {
+      "includes": ["satellites.json"],
+      "json": {
+        "formatter": {
+          "expand": "never",
+          "trailingCommas": "none",
+          "lineWidth": 320
+        }
+      }
     }
-  }, */
-  "json": {
-    "formatter": {
-      "enabled": true,
-      "trailingCommas": "none",
-      "lineWidth": 320
-    }
-  },
+  ],
   "css": {
-    "formatter": {
-      "enabled": true,
-      "lineWidth": 160,
-    },
-    "parser": {
-      "cssModules": true,
-      "tailwindDirectives": true
-    }
+    "parser": { "cssModules": true, "tailwindDirectives": true }
   },
   "assist": {
     "enabled": true,
     "actions": { "source": { "organizeImports": "on" } }
-  },
+  }
 }
