@@ -1,5 +1,6 @@
 import { stegaClean } from '@sanity/client/stega'
 import type { Metadata } from 'next'
+import { cacheLife } from 'next/cache'
 import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
 import { getLocale } from 'next-intl/server'
@@ -8,7 +9,7 @@ import { Suspense } from 'react'
 import { getValidLanguagesLocales } from '@/languageConfig'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { getNameFromIso } from '@/sanity/helpers/localization'
-import { routeSanityFetch } from '@/sanity/lib/fetch'
+import { routeSanityFetch, sanityFetchMetadata } from '@/sanity/lib/fetch'
 import { constructSanityMetadata, getPage } from '@/sanity/pages/utils'
 import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu'
 import { homePageMetaQuery } from '@/sanity/queries/metaData'
@@ -23,13 +24,12 @@ export function generateStaticParams() {
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale()
-  const { data: metaData }: { data: any } = await routeSanityFetch({
+  const { data: metaData }: { data: any } = await sanityFetchMetadata({
     query: homePageMetaQuery,
     params: {
       lang: getNameFromIso(locale),
     },
-    requestTag: 'meta-home',
-    stega: false,
+    perspective: 'published',
   })
 
   return constructSanityMetadata('', locale, metaData)
@@ -58,6 +58,8 @@ async function DynamicHome() {
 
 // Layer 3: fetches through the existing draft-aware/cached `routeSanityFetch`/`getPage`.
 async function CachedHome({ isDraftMode = false }: { isDraftMode?: boolean }) {
+  'use cache'
+  cacheLife('max')
   const locale = await getLocale()
 
   const [siteMenuResult, homePageData] = await Promise.all([
@@ -67,6 +69,7 @@ async function CachedHome({ isDraftMode = false }: { isDraftMode?: boolean }) {
         lang: getNameFromIso(locale) ?? 'en_GB',
       },
       tags: [`sanity:siteMenu:${locale}`],
+      requestTag: 'site-menu',
     }),
     getPage({
       slug: '',

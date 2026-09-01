@@ -1,5 +1,6 @@
 import '../globals.css'
 import { GoogleTagManager } from '@next/third-parties/google'
+import { cacheLife } from 'next/cache'
 import localFont from 'next/font/local'
 import { draftMode } from 'next/headers'
 import NextLink from 'next/link'
@@ -11,7 +12,7 @@ import { getValidLanguagesLocales } from '@/languageConfig'
 import { getLocaleFromIso, getNameFromIso } from '@/sanity/helpers/localization'
 import { dataset } from '@/sanity/lib/api'
 import { IS_FETCH_OPTIMIZED, routeSanityFetch } from '@/sanity/lib/fetch'
-import { SanityLive } from '@/sanity/lib/live'
+import { getDynamicFetchOptions, SanityLive } from '@/sanity/lib/live'
 import { footerAndErrorImageQuery } from '@/sanity/queries/footer'
 import Footer from '@/sections/Footer/Footer'
 import GoToTopButton from '@/sections/GoToTopButton'
@@ -44,19 +45,8 @@ export default async function LocaleLayout({
   const t = await getTranslations()
   const locale = await getLocale()
 
-  const queryParams = {
-    lang: getNameFromIso(locale) ?? 'en_GB',
-  }
-
-  const { data: footerAndErrorImageData }: { data: any } =
-    await routeSanityFetch({
-      query: footerAndErrorImageQuery,
-      params: queryParams,
-      tags: [`sanity:footer:${locale}`],
-    })
-
-  const { errorImage, ...footerData } = footerAndErrorImageData || {}
   const isPreview = (await draftMode()).isEnabled
+  const dynamic = await getDynamicFetchOptions()
 
   return (
     <html lang={locale} className={`${equinor.className} `}>
@@ -90,9 +80,10 @@ export default async function LocaleLayout({
           </>
         )} */}
         <NextIntlClientProvider>
-          <PageProvider initialErrorImage={errorImage}>{children}</PageProvider>
+          <CachedContent dynamic={dynamic}>{children}</CachedContent>
+          {/* } <PageProvider initialErrorImage={errorImage}>{children}</PageProvider>
           <Footer {...footerData} />
-          <GoToTopButton />
+          <GoToTopButton /> */}
         </NextIntlClientProvider>
       </body>
       {/** TODO look into scripts */}
@@ -109,5 +100,38 @@ export default async function LocaleLayout({
         </>
       )}
     </html>
+  )
+}
+
+async function CachedContent({
+  dynamic,
+  children,
+}: {
+  dynamic: Awaited<ReturnType<typeof getDynamicFetchOptions>>
+  children: React.ReactNode
+}) {
+  'use cache'
+  cacheLife('max')
+  const locale = await getLocale()
+  const queryParams = {
+    lang: getNameFromIso(locale) ?? 'en_GB',
+  }
+
+  const { data: footerAndErrorImageData }: { data: any } =
+    await routeSanityFetch({
+      query: footerAndErrorImageQuery,
+      params: queryParams,
+      tags: [`sanity:footer:${locale}`],
+      requestTag: 'footer-and-error-image',
+      ...dynamic,
+    })
+
+  const { errorImage, ...footerData } = footerAndErrorImageData || {}
+  return (
+    <>
+      <PageProvider initialErrorImage={errorImage}>{children}</PageProvider>
+      <Footer {...footerData} />
+      <GoToTopButton />
+    </>
   )
 }

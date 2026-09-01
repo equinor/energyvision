@@ -1,7 +1,9 @@
+import { cacheLife } from 'next/cache'
 import { draftMode } from 'next/headers'
-import type { DefinedFetchType } from 'next-sanity/live'
+import { QueryParams } from 'next-sanity'
+import type { DefinedFetchType, LivePerspective } from 'next-sanity/live'
 import { sanityFetch } from './live'
-import { optimizedFetch } from './simpleFetch'
+import { optimizedFetch, optimizedMetadataFetch } from './simpleFetch'
 
 /**
  * Feature flag for the optimized fetch.
@@ -16,8 +18,39 @@ export const IS_FETCH_OPTIMIZED =
 
 const cachedSanityFetch: DefinedFetchType = async options => {
   'use cache'
+  cacheLife('max')
   console.log('Using cached sanityFetch for', options.requestTag)
+  if (!options.requestTag) {
+    console.log(options.query)
+  }
   return sanityFetch(options)
+}
+
+// For usage within generateMetadata and generateViewport
+async function nextSanityFetch<const QueryString extends string>({
+  query,
+  params = {},
+  perspective,
+}: {
+  query: QueryString
+  params?: QueryParams
+  perspective: LivePerspective
+}) {
+  'use cache'
+  cacheLife('max')
+  const { data } = await sanityFetch({
+    query,
+    params,
+    perspective,
+    stega: false,
+  })
+  return { data }
+}
+
+export const sanityFetchMetadata = (options: any) => {
+  return IS_FETCH_OPTIMIZED
+    ? optimizedMetadataFetch(options)
+    : nextSanityFetch(options)
 }
 
 export const routeSanityFetch: DefinedFetchType = async options => {
@@ -29,6 +62,9 @@ export const routeSanityFetch: DefinedFetchType = async options => {
       'Draft mode enabled, using uncached sanityFetch for',
       options.requestTag,
     )
+    if (!options.requestTag) {
+      console.log(options.query)
+    }
     return sanityFetch(options)
   }
 

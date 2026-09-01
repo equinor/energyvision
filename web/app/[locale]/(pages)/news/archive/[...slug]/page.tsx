@@ -238,6 +238,7 @@ export default async function ArchivedNewsPage({ params }: { params: Params }) {
       lang: getNameFromIso(locale) ?? 'en_GB',
     },
     tags: [`sanity:siteMenu:${locale}`],
+    requestTag: 'site-menu',
   })
 
   const pageData = await getArchivedPageData(await params)

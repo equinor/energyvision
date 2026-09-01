@@ -83,6 +83,7 @@ export default async function NewsroomPage(_: PageProps<'/[locale]/news'>) {
       params: {
         lang: getNameFromIso(locale) ?? 'en_GB',
       },
+      requestTag: 'site-menu',
     }),
     getPage({
       slug: newsSlug[getNameFromIso(locale)],
