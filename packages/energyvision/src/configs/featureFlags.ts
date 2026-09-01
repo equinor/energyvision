@@ -52,6 +52,7 @@ const SAME_SLUG = [...GLOBAL_DEV, 'japan', 'southkorea']
 const CAMPAIGN = [...GLOBAL_PROD, ...GLOBAL_DEV]
 
 const FETCH_OPTIMIZED = [...GLOBAL_PROD, ...SATELLITES, ...GLOBAL_DEV]
+const PEOPLE = [...GLOBAL_PROD, ...GLOBAL_DEV]
 
 /**
  * @param {string} dataset
@@ -89,4 +90,5 @@ export const FeatureFlags = (dataset: DatasetsKeys) => ({
   IS_SATELLITE: SATELLITES.includes(dataset),
   HAS_CAMPAIGN_BLOCKS: CAMPAIGN.includes(dataset),
   IS_FETCH_OPTIMIZED: FETCH_OPTIMIZED.includes(dataset),
+  HAS_PEOPLE: PEOPLE.includes(dataset),
 })
