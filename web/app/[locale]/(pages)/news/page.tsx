@@ -48,7 +48,7 @@ const getInitialResponse =
   async (locale: string) => {
     'use cache'
     cacheLife('max')
-    cacheTag('newsrooms')
+    cacheTag('newsroom')
     const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
     const indexName = `${envPrefix}_NEWS_${locale}`
 
@@ -100,11 +100,13 @@ async function CachedNewsroomPage({
       requestTag: 'site-menu',
       stega: false,
       tags: [`sanity:siteMenu:${locale}`],
+      ...dynamic,
     }),
     getPage({
       slug: newsSlug[getNameFromIso(locale)],
       locale,
       tags: ['newsroom'],
+      ...dynamic,
     }),
   ])
 
