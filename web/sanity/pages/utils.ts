@@ -218,7 +218,6 @@ export async function getPage(params: Params) {
   let pageData = null
   if (slug?.[0]?.includes('preview')) {
     const id = slug[1]
-
     if (id) {
       const { data: draftInfo }: { data: any } = await fetch({
         query: pageInfoById,
@@ -226,6 +225,7 @@ export async function getPage(params: Params) {
           id,
         },
         requestTag: 'preview',
+        perspective,
       })
       if (draftInfo?.lang) {
         const { data } = await fetch({
