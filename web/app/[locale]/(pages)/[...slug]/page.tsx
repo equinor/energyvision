@@ -70,17 +70,10 @@ export async function generateMetadata({
       ...((isNewsPage || isMagazineRoom || isMagazinePage) && { type }),
     },
     perspective: 'published',
-  }) /*await routeSanityFetch({
-    query,
-    params: {
-      lang: sanityLang,
-      slug: `/${slug.join('/')}`,
-      ...((isNewsPage || isMagazineRoom || isMagazinePage) && { type }),
-    },
     stega: false,
     tags: [`page:/${slug.join('/')}`],
     requestTag: 'page-meta',
-  })*/
+  })
 
   return constructSanityMetadata(slug, locale, metaData)
 }
@@ -135,6 +128,8 @@ async function CachedContent({
       searchParams: searchParams,
       fetch: routeSanityFetch,
       ...dynamic,
+      stega: false,
+      tags: [`page:/${Array.isArray(slug) ? slug.join('/') : slug}`],
     }),
   ])
   pageContent = pageResults

@@ -84,6 +84,8 @@ export default async function NewsroomPage(_: PageProps<'/[locale]/news'>) {
         lang: getNameFromIso(locale) ?? 'en_GB',
       },
       requestTag: 'site-menu',
+      stega: false,
+      tags: [`sanity:siteMenu:${locale}`],
     }),
     getPage({
       slug: newsSlug[getNameFromIso(locale)],
