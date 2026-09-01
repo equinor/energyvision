@@ -81,6 +81,11 @@
     },
     "includes": ["**", "**/*", "!**/node_modules", "!**/.next", "!**/dist"]
   },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single"
+    }
+  },
   "json": { "formatter": { "enabled": true } },
   "overrides": [
     {
