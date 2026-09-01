@@ -19,10 +19,9 @@ allowBuilds:
   esbuild: false
 overrides:
   tar: 7.5.19
-  vite: 7.3.5
   basic-ftp: 5.3.1
   '@xmldom/xmldom': 0.8.13
-  '@sanity/types': 6.7.0
+  '@sanity/types': 6.11.0
 publicHoistPattern:
   - '*import-in-the-middle*'
   - '*require-in-the-middle*'
@@ -37,3 +36,29 @@ minimumReleaseAgeExclude:
   - '@next/swc-win32-arm64-msvc@16.3.3'
   - '@next/swc-win32-x64-msvc@16.3.3'
   - next@16.3.3
+  - '@portabletext/editor@8.0.2'
+  - '@portabletext/html@2.0.0'
+  - '@portabletext/keyboard-shortcuts@3.0.0'
+  - '@portabletext/patches@3.0.0'
+  - '@portabletext/plugin-character-pair-decorator@9.0.2'
+  - '@portabletext/plugin-dnd@2.0.2'
+  - '@portabletext/plugin-input-rule@7.0.2'
+  - '@portabletext/plugin-list-index@2.0.2'
+  - '@portabletext/plugin-markdown-shortcuts@9.0.2'
+  - '@portabletext/plugin-one-line@8.0.2'
+  - '@portabletext/plugin-paste-link@5.0.2'
+  - '@portabletext/plugin-table@2.0.2'
+  - '@portabletext/plugin-typography@9.0.2'
+  - '@portabletext/sanity-bridge@4.0.0'
+  - '@portabletext/schema@3.0.0'
+  - '@sanity/access-ui@6.11.0'
+  - '@sanity/diff@6.11.0'
+  - '@sanity/document-internationalization@6.2.34'
+  - '@sanity/mutator@6.11.0'
+  - '@sanity/schema@6.11.0'
+  - '@sanity/types@6.11.0'
+  - '@sanity/util@6.11.0'
+  - '@sanity/vision@6.11.0'
+  - sanity-plugin-internationalized-array@5.2.3
+  - sanity-plugin-media@6.1.7
+  - sanity@6.11.0
