@@ -20,7 +20,6 @@ export const IS_FETCH_OPTIMIZED =
   process.env.NEXT_PUBLIC_OPTIMIZED_SANITY_FETCH === 'true'
 
 const cachedNextSanityFetch: DefinedFetchType = async options => {
-  'use cache'
   cacheLife('max')
   if (!options.requestTag) {
     console.log(options.query)
@@ -38,7 +37,6 @@ async function nextSanityMetadataFetch<const QueryString extends string>({
   params?: QueryParams
   perspective: LivePerspective
 }) {
-  'use cache'
   cacheLife('max')
   const { data } = await nextSanityFetch({
     query,
@@ -57,8 +55,8 @@ export const sanityFetchMetadata = (options: any) => {
 
 export const routeSanityFetch: DefinedFetchType = async options => {
   // Drafts must stay uncached and keep stega/visual editing support.
-  const { isEnabled: isDraft } = await draftMode()
 
+  const { isEnabled: isDraft } = await draftMode()
   if (isDraft) {
     if (!options.requestTag) {
       console.log(options.query)

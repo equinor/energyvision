@@ -106,7 +106,6 @@ async function CachedContent({
   searchParams: { [key: string]: string[] | string | undefined }
 }) {
   'use cache'
-  cacheLife('max')
   const locale = await getLocale()
   /*   const isInPresentationToolContext =
     (await cookies()).get('preview-fetch-dest')?.value === 'iframe' */

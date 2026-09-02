@@ -110,7 +110,6 @@ async function CachedContent({
   children: React.ReactNode
 }) {
   'use cache'
-  cacheLife('max')
   const locale = await getLocale()
   const queryParams = {
     lang: getNameFromIso(locale) ?? 'en_GB',

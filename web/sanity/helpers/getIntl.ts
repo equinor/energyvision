@@ -8,7 +8,6 @@ import { getNameFromIso } from './localization'
 
 export default async (locale: string) => {
   'use cache'
-  cacheLife('max')
   const { data: textSnippetsArray } = await routeSanityFetch({
     query: `*[_type == "textSnippet"]`,
     tags: ['textSnippet'],
