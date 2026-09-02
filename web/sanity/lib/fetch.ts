@@ -37,6 +37,7 @@ async function nextSanityMetadataFetch<const QueryString extends string>({
   params?: QueryParams
   perspective: LivePerspective
 }) {
+  "use cache"
   cacheLife('max')
   const { data } = await nextSanityFetch({
     query,
