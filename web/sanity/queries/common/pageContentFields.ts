@@ -1,39 +1,39 @@
-import { embeddedVideoListFields } from '../embeddedVideoListFields'
-import gridContentFields from '../gridContentFields'
-import { iframeCarouselFields } from '../iframeCarouselFields'
-import { importTableFields, tableV2Fields } from '../table'
-import { videoPlayerCarouselFields } from '../videoPlayerCarouselFields'
-import { videoPlayerFields } from '../videoPlayerFields'
-import downloadableFileFields from './actions/downloadableFileFields'
-import downloadableImageFields from './actions/downloadableImageFields'
-import linkSelectorFields from './actions/linkSelectorFields'
-import { anchorLinkReferenceFields } from './anchorLinkReferenceFields'
-import background from './background'
-import markDefs from './blockEditorMarks'
-import homepageContentFields from './homepageContentFields'
-import { imageCarouselFields } from './imageCarouselFields'
-import { keyNumbersFields } from './keyNumbersFields'
-import { sameLang } from './langAndDrafts'
+import { embeddedVideoListFields } from '../embeddedVideoListFields';
+import gridContentFields from '../gridContentFields';
+import { iframeCarouselFields } from '../iframeCarouselFields';
+import { importTableFields, tableV2Fields } from '../table';
+import { videoPlayerCarouselFields } from '../videoPlayerCarouselFields';
+import { videoPlayerFields } from '../videoPlayerFields';
+import downloadableFileFields from './actions/downloadableFileFields';
+import downloadableImageFields from './actions/downloadableImageFields';
+import linkSelectorFields from './actions/linkSelectorFields';
+import { anchorLinkReferenceFields } from './anchorLinkReferenceFields';
+import background from './background';
+import markDefs from './blockEditorMarks';
+import homepageContentFields from './homepageContentFields';
+import { imageCarouselFields } from './imageCarouselFields';
+import { keyNumbersFields } from './keyNumbersFields';
+import { sameLang } from './langAndDrafts';
 import {
   eventPromotion,
   magazinePromotion,
   newsPromotion,
   peoplePromotion,
   topicsPromotion,
-} from './promotions/allPromotions'
+} from './promotions/allPromotions';
 import {
   eventPromotionFields,
   futureEventsQuery,
   pastEventsQuery,
-} from './promotions/eventPromotion'
-import promoteMagazine from './promotions/promoteMagazine'
+} from './promotions/eventPromotion';
+import promoteMagazine from './promotions/promoteMagazine';
 import {
   externalLinksPromotionV2,
   promotionsV2,
   topicsPromotionV2,
-} from './promotions/v2/promotionsV2'
-import { lastUpdatedTimeQuery, publishDateTimeQuery } from './publishDateTime'
-import { tabsComponentFields } from './tabsComponentFields'
+} from './promotions/v2/promotionsV2';
+import { lastUpdatedTimeQuery, publishDateTimeQuery } from './publishDateTime';
+import { tabsComponentFields } from './tabsComponentFields';
 
 const pageContentFields = /* groq */ `
 _type == "keyNumbers" =>{
@@ -547,20 +547,22 @@ _type == "keyNumbers" =>{
       },
       "foreground": theme.theme.foreground.key,
     },
-    asDiagram,
-    "items": items[]{
+    "items": items[person->lang == $lang]{
       "id": _key,
       highlighted,
       "person": person->{
         "id": _id,
         name,
         title,
+        linkedinProfileUrl,
         image,
         bio[]{
           ...,
           ${markDefs},
         },
-        hierarchyLevel,
+        callToActions[]{
+          ${linkSelectorFields},
+        },
         "slug": slug.current,
       },
     },
@@ -740,6 +742,6 @@ _type == "keyNumbers" =>{
     "id": _key,
   },
 
-`
+`;
 
-export default pageContentFields
+export default pageContentFields;

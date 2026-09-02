@@ -1,11 +1,11 @@
-import { link } from '@equinor/eds-icons'
-import { MdOutlineAnchor } from 'react-icons/md'
-import type { Rule } from 'sanity'
-import blocksToText from '@/helpers/blocksToText'
-import { capitalizeFirstLetter } from '@/helpers/formatters'
-import { EdsBlockEditorIcon } from '@/icons'
-import { apiVersion } from '@/sanity.client'
-import singleItemArray from '../singleItemArray'
+import { link } from '@equinor/eds-icons';
+import { MdOutlineAnchor } from 'react-icons/md';
+import type { ArrayDefinition, Rule } from 'sanity';
+import blocksToText from '@/helpers/blocksToText';
+import { capitalizeFirstLetter } from '@/helpers/formatters';
+import { EdsBlockEditorIcon } from '@/icons';
+import { apiVersion } from '@/sanity.client';
+import singleItemArray from '../singleItemArray';
 import {
   anchorReference,
   externalLink,
@@ -14,16 +14,18 @@ import {
   internalReferenceOtherLanguage,
   type LinkType,
   pageAnchor,
+  personListUrlReference,
   socialMediaLink,
-} from './common'
+} from './common';
 
 const defaultLinks = [
   'link',
   'reference',
   'referenceToOtherLanguage',
+  'personListUrl',
   'homePageLink',
   'pageAnchor',
-] as LinkType[]
+] as LinkType[];
 
 const linkSelector = (
   linkTypes?: LinkType[],
@@ -51,15 +53,16 @@ const linkSelector = (
             externalLink,
             internalReference,
             internalReferenceOtherLanguage,
+            personListUrlReference,
             homepageLink,
             socialMediaLink,
             pageAnchor,
-          ].filter(it => {
+          ].filter((it) => {
             const types = linkTypes
               ? linkTypes.includes(it.name as LinkType)
-              : defaultLinks.includes(it.name as LinkType)
-            return types
-          }),
+              : defaultLinks.includes(it.name as LinkType);
+            return types;
+          }) as ArrayDefinition['of'],
         },
         true,
       ),
@@ -72,23 +75,24 @@ const linkSelector = (
         type: 'string',
         validation: (Rule: Rule) =>
           Rule.custom(async (value: string, context: any) => {
-            const { parent } = context
-            let hasReferenceTitle = false
+            const { parent } = context;
+            let hasReferenceTitle = false;
 
             if (
               parent?.link?.[0]?._type === 'referenceToOtherLanguage' ||
-              parent?.link?.[0]?._type === 'reference'
+              parent?.link?.[0]?._type === 'reference' ||
+              parent?.link?.[0]?._type === 'personListUrl'
             ) {
               //If internal link get title to make label optional if reference has this
               const referencedTitle = await context
                 .getClient({ apiVersion: apiVersion })
                 .fetch(
-                  /* groq */ `*[_id == $id][0]{"title": coalesce(content->title, title)}.title`,
+                  /* groq */ `*[_id == $id][0]{"title": coalesce(content->title, name, title)}.title`,
                   {
                     id: parent?.link?.[0]._ref,
                   },
-                )
-              hasReferenceTitle = !!referencedTitle
+                );
+              hasReferenceTitle = !!referencedTitle;
             }
 
             if (
@@ -96,18 +100,19 @@ const linkSelector = (
               !includeLabel ||
               (labelIsOptional && parent?.link?.[0]?._type !== 'link') ||
               ((parent?.link?.[0]?._type === 'referenceToOtherLanguage' ||
-                parent?.link?.[0]?._type === 'reference') &&
+                parent?.link?.[0]?._type === 'reference' ||
+                parent?.link?.[0]?._type === 'personListUrl') &&
                 hasReferenceTitle &&
                 labelIsOptional)
             ) {
-              return true
+              return true;
             }
-            return value ? true : 'You must add a label'
+            return value ? true : 'You must add a label';
           }),
         hidden: !includeLabel,
       },
       anchorReference,
-    ].filter(e => e),
+    ].filter((e) => e),
     preview: {
       select: {
         link: 'link.0.content.title',
@@ -120,6 +125,8 @@ const linkSelector = (
         referenceMagMedia: 'link.0.heroFigure.image',
         referenceTopicTitle: 'link.0.content.title',
         referenceTopicMedia: 'link.0.content.heroFigure.image',
+        referencePersonName: 'link.0.name',
+        personListUrl: 'link.0.personListUrl',
         slug: 'link.0.slug.current',
         href: 'link.0.href',
         anchorId: 'link.0.anchorId',
@@ -135,50 +142,58 @@ const linkSelector = (
         referenceMagMedia,
         referenceTopicTitle,
         referenceTopicMedia,
+        referencePersonName,
+        personListUrl,
         anchorId,
       }: any) {
-        let title = label ?? 'Missing title'
-        if (!label && (referenceTopicTitle || referenceNewsMagTitle)) {
-          title = blocksToText(referenceTopicTitle ?? referenceNewsMagTitle)
+        let title = label ?? 'Missing title';
+        if (
+          !label &&
+          (referenceTopicTitle || referenceNewsMagTitle || referencePersonName)
+        ) {
+          title =
+            referencePersonName ??
+            blocksToText(referenceTopicTitle ?? referenceNewsMagTitle);
         }
         if (!label && anchorReference) {
-          title = anchorReference
+          title = anchorReference;
         }
 
-        let linkType = type ?? 'not set'
+        let linkType = type ?? 'not set';
         let media =
           referenceTopicMedia ??
           referenceNewsMedia ??
           referenceMagMedia ??
-          EdsBlockEditorIcon(link)
+          EdsBlockEditorIcon(link);
 
         if (type?.includes('route')) {
-          linkType = 'internal route'
+          linkType = 'internal route';
         }
         if (type?.includes('news') || type?.includes('magazine')) {
-          linkType = `${type} route`
+          linkType = `${type} route`;
         }
         if (anchorReference || type?.includes('anchorLinkReference')) {
-          linkType = 'anchor link'
+          linkType = 'anchor link';
         }
         if (type === 'link') {
-          linkType = 'external link'
+          linkType = 'external link';
         }
-        let subtitle = slug ?? href ?? `${capitalizeFirstLetter(linkType)}`
+        let subtitle =
+          personListUrl ?? slug ?? href ?? `${capitalizeFirstLetter(linkType)}`;
 
         if (anchorId) {
-          subtitle = `#${anchorId}`
-          media = <MdOutlineAnchor />
+          subtitle = `#${anchorId}`;
+          media = <MdOutlineAnchor />;
         }
 
         return {
           title: title,
           subtitle: subtitle,
           media,
-        }
+        };
       },
     },
-  }
-}
+  };
+};
 
-export default linkSelector
+export default linkSelector;

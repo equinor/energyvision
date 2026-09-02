@@ -1,4 +1,4 @@
-import { Flags } from '../src/lib/datasetHelpers'
+import { Flags } from '../src/lib/datasetHelpers';
 
 export const groups = {
   newsroom: { title: 'Newsroom', hidden: !Flags.HAS_NEWSROOM },
@@ -29,7 +29,7 @@ export const groups = {
   others: { title: 'Others' },
   common: { title: 'Common' },
   error: { title: 'Error' },
-}
+};
 const snippets: textSnippet = {
   country_code_format: {
     title: 'Enter country code with phone number',
@@ -49,6 +49,11 @@ const snippets: textSnippet = {
   read_transcript: {
     title: 'Read Transcript',
     defaultValue: 'Read transcript',
+    group: groups.others,
+  },
+  read_more_about: {
+    title: 'Read more about {title}',
+    defaultValue: 'Read more about {title}',
     group: groups.others,
   },
   menu: {
@@ -987,25 +992,25 @@ const snippets: textSnippet = {
       'We are sorry, but anti-robot protection failed and we cannot proceed',
     group: groups.error,
   },
-}
+};
 
-type textSnippetGroup = { title: string; hidden?: boolean }
+type textSnippetGroup = { title: string; hidden?: boolean };
 type textSnippet = Record<
   string,
   {
-    title: string
-    defaultValue: string
-    hidden?: boolean
-    group: textSnippetGroup
+    title: string;
+    defaultValue: string;
+    hidden?: boolean;
+    group: textSnippetGroup;
   }
->
+>;
 
 const sortedTextSnippets = Object.keys(snippets)
-  .filter(key => !snippets[key].hidden)
+  .filter((key) => !snippets[key].hidden)
   .sort()
   .reduce((obj: textSnippet, key) => {
-    obj[key] = snippets[key]
-    return obj
-  }, {})
+    obj[key] = snippets[key];
+    return obj;
+  }, {});
 
-export default sortedTextSnippets
+export default sortedTextSnippets;

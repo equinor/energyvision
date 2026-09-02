@@ -1,26 +1,28 @@
-import { external_link, facebook, home, link } from '@equinor/eds-icons'
-import { LinkIcon } from '@sanity/icons'
-import { Card, Flex, Select } from '@sanity/ui'
-import { useCallback, useMemo } from 'react'
-import { MdOutlineAnchor } from 'react-icons/md'
-import type { Reference, Rule, ValidationContext } from 'sanity'
-import { set, useFormValue } from 'sanity'
+import { external_link, facebook, home, link } from '@equinor/eds-icons';
+import { LinkIcon } from '@sanity/icons';
+import { Card, Flex, Select } from '@sanity/ui';
+import { useCallback, useMemo } from 'react';
+import { BsPersonFillDown } from 'react-icons/bs';
+import { MdAppShortcut, MdOutlineAnchor } from 'react-icons/md';
+import type { Reference, Rule, ValidationContext } from 'sanity';
+import { set, useFormValue } from 'sanity';
 import {
+  filterByLang,
   filterByPages,
   filterByPagesInOtherLanguages,
-} from '../../../helpers/referenceFilters'
-import { EdsBlockEditorIcon } from '../../../icons'
+} from '../../../helpers/referenceFilters';
+import { EdsBlockEditorIcon } from '../../../icons';
 // eslint-disable-next-line import/no-unresolved
-import { defaultLanguage, languages } from '../../../languages'
-import { apiVersion } from '../../../sanity.client'
-import { Flags } from '../../../src/lib/datasetHelpers'
-import { ExternalLinkRenderer } from '../../components'
-import routes from '../../routes'
-import { warnHttpOrNotValidSlugExternal } from '../../validations/validateSlug'
+import { defaultLanguage, languages } from '../../../languages';
+import { apiVersion } from '../../../sanity.client';
+import { Flags } from '../../../src/lib/datasetHelpers';
+import { ExternalLinkRenderer } from '../../components';
+import routes from '../../routes';
+import { warnHttpOrNotValidSlugExternal } from '../../validations/validateSlug';
 
 export const PageAnchorInput = (props: any) => {
-  const { onChange, value = '' } = props
-  const document = useFormValue([])
+  const { onChange, value = '' } = props;
+  const document = useFormValue([]);
 
   const anchorLinkComponentReferences = useMemo(() => {
     return document
@@ -28,25 +30,25 @@ export const PageAnchorInput = (props: any) => {
         document?.content
           .filter((item: any) => item?.anchor || item?.anchorReference)
           .map((item: any) => item.anchor || item.anchorReference)
-      : []
-  }, [document])
+      : [];
+  }, [document]);
 
   const handleChange = useCallback(
     (event: any) => {
-      const nextValue = event.currentTarget.value
-      onChange(set(nextValue))
+      const nextValue = event.currentTarget.value;
+      onChange(set(nextValue));
     },
     [onChange],
-  )
+  );
 
   return (
     <Card padding={3}>
-      <Flex direction='column' justify='center'>
-        <label htmlFor='anchorReferenceList' className='text-base'>
+      <Flex direction="column" justify="center">
+        <label htmlFor="anchorReferenceList" className="text-base">
           Select from anchors references in this document
         </label>
-        <Select id='anchorReferenceList' value={value} onChange={handleChange}>
-          <option value=''>Select an anchor reference</option>
+        <Select id="anchorReferenceList" value={value} onChange={handleChange}>
+          <option value="">Select an anchor reference</option>
           {anchorLinkComponentReferences.map((referenceString: any) => (
             <option key={referenceString} value={referenceString}>
               {referenceString}
@@ -55,26 +57,27 @@ export const PageAnchorInput = (props: any) => {
         </Select>
       </Flex>
     </Card>
-  )
-}
+  );
+};
 
 export type LinkType =
   | 'link'
   | 'reference'
   | 'homePageLink'
   | 'referenceToOtherLanguage'
+  | 'personListUrl'
   | 'socialMediaLink'
-  | 'pageAnchor'
+  | 'pageAnchor';
 export type ReferenceTarget = {
-  type: string
-}
+  type: string;
+};
 
 export type LinkSelector = {
-  _type: 'linkSelector'
-  reference?: Reference
-  label?: string
-  ariaLabel?: string
-} & Record<string, boolean> // Hack for flags
+  _type: 'linkSelector';
+  reference?: Reference;
+  label?: string;
+  ariaLabel?: string;
+} & Record<string, boolean>; // Hack for flags
 
 const types = [
   Flags.HAS_NEWS && {
@@ -92,22 +95,22 @@ const types = [
   Flags.HAS_MAGAZINE && {
     type: 'magazineIndex',
   },
-].filter(e => e)
+].filter((e) => e);
 
 const defaultReferenceTargets: ReferenceTarget[] = [
   ...(types as ReferenceTarget[]),
   ...routes,
-]
+];
 
 const validation =
   (linkToAnotherLanguage = false) =>
   (Rule: Rule) =>
     Rule.custom(async (value: any, context: ValidationContext) => {
-      if (value?._ref && linkToAnotherLanguage) return true
+      if (value?._ref && linkToAnotherLanguage) return true;
       const { document } = context as {
-        parent: LinkSelector
-        document: { lang?: string }
-      }
+        parent: LinkSelector;
+        document: { lang?: string };
+      };
       if (value?._ref) {
         const referenceLang = await context
           .getClient({ apiVersion: apiVersion })
@@ -116,17 +119,17 @@ const validation =
             {
               id: value._ref,
             },
-          )
+          );
         if (
           document.lang
             ? document.lang !== referenceLang
             : defaultLanguage.name !== referenceLang
         )
-          return 'Reference must have the same language as the document'
-        return true
+          return 'Reference must have the same language as the document';
+        return true;
       }
-      return 'Required'
-    })
+      return 'Required';
+    });
 
 export const externalLink = {
   name: 'link',
@@ -141,7 +144,7 @@ export const externalLink = {
       validation: (Rule: any) =>
         Rule.uri({ scheme: ['http', 'https', 'tel', 'mailto'] })
           .custom((value: any) => {
-            return warnHttpOrNotValidSlugExternal(value)
+            return warnHttpOrNotValidSlugExternal(value);
           })
           .required()
           .error(),
@@ -155,10 +158,10 @@ export const externalLink = {
       return {
         title: href || 'Add external link',
         media: EdsBlockEditorIcon(external_link),
-      }
+      };
     },
   },
-}
+};
 
 export const internalReference = {
   name: 'reference',
@@ -175,7 +178,22 @@ export const internalReference = {
   /*   components: {
     preview: InternalLinkPreview,
   }, */
-}
+};
+
+export const personListUrlReference = {
+  name: 'personListUrl',
+  title: 'Internal link to person',
+  description:
+    'Link to the selected person in the person list on their CV main route.',
+  type: 'reference',
+  validation: validation(),
+  icon: () => <BsPersonFillDown />,
+  to: [{ type: 'person' }],
+  options: {
+    filter: filterByLang,
+    disableNew: true,
+  },
+};
 
 export const homepageLink = {
   name: 'homePageLink',
@@ -189,7 +207,7 @@ export const homepageLink = {
       type: 'string',
       validation: (Rule: Rule) => Rule.required(),
       options: {
-        list: languages.map(it => ({ title: it.title, value: it.name })),
+        list: languages.map((it) => ({ title: it.title, value: it.name })),
       },
       initialValue: defaultLanguage.name,
     },
@@ -201,12 +219,12 @@ export const homepageLink = {
     prepare({ title }: { title: string }) {
       return {
         title: title
-          ? `Linking to ${languages.find(it => it.name === title)?.title} home page`
+          ? `Linking to ${languages.find((it) => it.name === title)?.title} home page`
           : 'Select language of the home page',
-      }
+      };
     },
   },
-}
+};
 
 export const internalReferenceOtherLanguage = {
   name: 'referenceToOtherLanguage',
@@ -221,14 +239,14 @@ export const internalReferenceOtherLanguage = {
     filter: filterByPagesInOtherLanguages,
     disableNew: true,
   },
-}
+};
 
 export const socialMediaLink = {
   name: 'socialMediaLink',
   title: 'Social Media link',
   description: 'Use this field to add social media links ',
   type: 'object',
-  icon: EdsBlockEditorIcon(facebook),
+  icon: () => <MdAppShortcut />,
   fields: [
     {
       name: 'href',
@@ -238,7 +256,7 @@ export const socialMediaLink = {
 
       validation: (Rule: Rule) =>
         Rule.uri({ scheme: ['https'] }).custom((value: any) => {
-          return warnHttpOrNotValidSlugExternal(value)
+          return warnHttpOrNotValidSlugExternal(value);
         }),
     },
     {
@@ -258,21 +276,21 @@ export const socialMediaLink = {
       validation: (Rule: Rule) => Rule.required(),
     },
   ],
-}
+};
 
 export const anchorReference = {
   name: 'anchorReference',
   title: 'Anchor reference',
   type: 'anchorReferenceField',
   hidden: ({ value }: any) => {
-    return !value
+    return !value;
   },
   description: () => (
     <span style={{ display: 'block', wordWrap: 'break-word' }}>
       Deprecated - use optional direct page anchor type.
     </span>
   ),
-}
+};
 
 export const pageAnchor = {
   name: 'pageAnchor',
@@ -297,7 +315,7 @@ export const pageAnchor = {
         title: `#${anchorId}`,
         subTitle: 'Page anchor',
         media: MdOutlineAnchor,
-      }
+      };
     },
   },
-}
+};
