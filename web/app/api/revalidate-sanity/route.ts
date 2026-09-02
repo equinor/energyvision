@@ -69,7 +69,7 @@ export async function POST(req: NextRequest) {
       )
 
       routes.forEach((route: any) => {
-        const tag = `sanity:${docType}:${route.slug}`
+        const tag = `${docType}:${route.slug}`
         revalidateTag(tag, 'max')
         console.log(`revalidated tag: ${tag}`)
       })
@@ -79,7 +79,7 @@ export async function POST(req: NextRequest) {
         revalidateTag(tag, 'max')
         console.log(`revalidated tag: ${tag}`)
       })*/
-      const tag = `sanity:${docType}:${docSlug ?? docLang}`
+      const tag = `${docType}:${docSlug ?? docLang}`
       revalidateTag(tag, 'max')
       console.log(`revalidated tag: ${tag}`)
     }

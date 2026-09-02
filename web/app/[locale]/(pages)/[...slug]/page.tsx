@@ -118,7 +118,7 @@ async function CachedContent({
       params: {
         lang: getNameFromIso(locale) ?? 'en_GB',
       },
-      tags: [`sanity:siteMenu:${locale}`],
+      tags: [`siteMenu:${locale}`],
       requestTag: 'site-menu',
       ...dynamic,
     }),

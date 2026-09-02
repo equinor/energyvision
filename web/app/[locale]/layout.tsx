@@ -121,7 +121,7 @@ async function CachedContent({
     await routeSanityFetch({
       query: footerAndErrorImageQuery,
       params: queryParams,
-      tags: [`sanity:footer:${locale}`],
+      tags: [`footer:${locale}`],
       requestTag: 'footer-and-error-image',
       ...dynamic,
     })

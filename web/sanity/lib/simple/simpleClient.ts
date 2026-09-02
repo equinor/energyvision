@@ -1,5 +1,5 @@
 import { type ClientConfig, createClient } from '@sanity/client'
-import { apiVersion, dataset, projectId, studioUrl } from '../lib/api'
+import { apiVersion, dataset, projectId, studioUrl } from '../api'
 
 const sanityConfig: ClientConfig = {
   projectId,

@@ -1,9 +1,12 @@
 import { cacheLife } from 'next/cache'
 import { draftMode } from 'next/headers'
-import { QueryParams } from 'next-sanity'
+import type { QueryParams } from 'next-sanity'
 import type { DefinedFetchType, LivePerspective } from 'next-sanity/live'
-import { sanityFetch } from './live'
-import { optimizedFetch, optimizedMetadataFetch } from './simpleFetch'
+import { sanityFetch as nextSanityFetch } from './live'
+import {
+  simpleClientFetch,
+  simpleClientMetadataFetch,
+} from './simple/simpleFetch'
 
 /**
  * Feature flag for the optimized fetch.
@@ -16,17 +19,17 @@ import { optimizedFetch, optimizedMetadataFetch } from './simpleFetch'
 export const IS_FETCH_OPTIMIZED =
   process.env.NEXT_PUBLIC_OPTIMIZED_SANITY_FETCH === 'true'
 
-const cachedSanityFetch: DefinedFetchType = async options => {
+const cachedNextSanityFetch: DefinedFetchType = async options => {
   'use cache'
   cacheLife('max')
   if (!options.requestTag) {
     console.log(options.query)
   }
-  return sanityFetch(options)
+  return nextSanityFetch(options)
 }
 
 // For usage within generateMetadata and generateViewport
-async function nextSanityFetch<const QueryString extends string>({
+async function nextSanityMetadataFetch<const QueryString extends string>({
   query,
   params = {},
   perspective,
@@ -37,7 +40,7 @@ async function nextSanityFetch<const QueryString extends string>({
 }) {
   'use cache'
   cacheLife('max')
-  const { data } = await sanityFetch({
+  const { data } = await nextSanityFetch({
     query,
     params,
     perspective,
@@ -48,8 +51,8 @@ async function nextSanityFetch<const QueryString extends string>({
 
 export const sanityFetchMetadata = (options: any) => {
   return IS_FETCH_OPTIMIZED
-    ? optimizedMetadataFetch(options)
-    : nextSanityFetch(options)
+    ? simpleClientMetadataFetch(options)
+    : nextSanityMetadataFetch(options)
 }
 
 export const routeSanityFetch: DefinedFetchType = async options => {
@@ -60,10 +63,10 @@ export const routeSanityFetch: DefinedFetchType = async options => {
     if (!options.requestTag) {
       console.log(options.query)
     }
-    return sanityFetch({ ...options })
+    return nextSanityFetch({ ...options })
   }
 
   return IS_FETCH_OPTIMIZED
-    ? optimizedFetch(options)
-    : cachedSanityFetch(options)
+    ? simpleClientFetch(options)
+    : cachedNextSanityFetch(options)
 }
