@@ -248,7 +248,7 @@ export async function getPage(params: Params) {
 
     const { data }: { data: any } = await fetch({
       query: pageQuery,
-      tags: [`page:${Array.isArray(slug) ? slug?.join('/') : slug}`],
+      tags: [slug? `page:/${Array.isArray(slug) ? slug?.join('/') : slug}`:`homePage:${locale}`],
       params: { ...pageQueryParams },
       requestTag: 'page-by-slug',
       perspective,
