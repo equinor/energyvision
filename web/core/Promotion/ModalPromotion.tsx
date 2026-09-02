@@ -27,6 +27,7 @@ export type ModalPromotionProps = {
   modalContent?: React.ReactNode;
   initialOpen?: boolean;
   className?: string;
+  imageClassName?: string;
 };
 
 const getPlainText = (text: string | PortableTextBlock[] | undefined) => {
@@ -52,6 +53,7 @@ export const ModalPromotion = forwardRef<HTMLDivElement, ModalPromotionProps>(
       modalTitle,
       modalContent,
       initialOpen = false,
+      imageClassName,
     },
     ref,
   ) {
@@ -79,7 +81,7 @@ export const ModalPromotion = forwardRef<HTMLDivElement, ModalPromotionProps>(
         <div
           ref={ref}
           className={twMerge(
-            `focus-within:envis-outline dark:focus-within:envis-outline-invert grid min-h-75 w-full min-w-75 max-w-full grid-cols-1 grid-rows-[minmax(31%,200px)_1fr] overflow-hidden rounded-card`,
+            `focus-within:envis-outline dark:focus-within:envis-outline-invert grid min-h-75 w-full min-w-75 max-w-full grid-cols-1 grid-rows-[minmax(42%,266.667px)_1fr] overflow-hidden rounded-card md:grid-rows-[minmax(31%,200px)_1fr]`,
             colorKeyToUtilityMap[background ?? 'gray-20']?.background,
             className,
           )}
@@ -89,8 +91,7 @@ export const ModalPromotion = forwardRef<HTMLDivElement, ModalPromotionProps>(
               grid="xs"
               image={image}
               fill
-              className="aspect-video h-full w-full"
-              aspectRatio="16:9"
+              className={twMerge('', imageClassName)}
               imageClassName="rounded-t-card"
             />
           ) : (
@@ -119,7 +120,7 @@ export const ModalPromotion = forwardRef<HTMLDivElement, ModalPromotionProps>(
                   <Typography
                     group="card"
                     variant="ingress"
-                    className="lg:line-clamp-5"
+                    className="block lg:line-clamp-5"
                   >
                     {plainIngress}
                   </Typography>
