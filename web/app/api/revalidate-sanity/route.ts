@@ -52,13 +52,7 @@ export async function POST(req: NextRequest) {
       return new Response(JSON.stringify({ message, body }), { status: 400 })
     }
 
-    const docsWithoutSlugCurrent = [
-      'page',
-      'magazineIndex',
-      'newsroom',
-      'event',
-      'homePage',
-    ]
+    const docsWithoutSlugCurrent = ['page', 'event']
     //@ts-ignore
     if (docsWithoutSlugCurrent.includes(docType)) {
       const routes = await client.fetch(
@@ -69,7 +63,7 @@ export async function POST(req: NextRequest) {
       )
 
       routes.forEach((route: any) => {
-        const tag = `${docType}:${route.slug}`
+        const tag = `page:${route.slug}`
         revalidateTag(tag, 'max')
         console.log(`revalidated tag: ${tag}`)
       })
@@ -79,7 +73,12 @@ export async function POST(req: NextRequest) {
         revalidateTag(tag, 'max')
         console.log(`revalidated tag: ${tag}`)
       })*/
-      const tag = `${docType}:${docSlug ?? docLang}`
+      const prefix =
+        docType?.startsWith('route') ||
+        ['news', 'localNews', 'magazine'].includes(docType || '')
+          ? 'page'
+          : docType
+      const tag = `${prefix}:${prefix === 'page' ? docSlug : docLang}`
       revalidateTag(tag, 'max')
       console.log(`revalidated tag: ${tag}`)
     }
