@@ -67,7 +67,6 @@ async function CachedHome({
   dynamic?: Awaited<ReturnType<typeof getDynamicFetchOptions>>
 }) {
   'use cache'
-  cacheLife('max')
   const locale = await getLocale()
 
   const [siteMenuResult, homePageData] = await Promise.all([
@@ -101,24 +100,22 @@ async function CachedHome({
   if (!template) console.warn('Missing homepage template', pageData?.slug)
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <FriendlyCaptchaSdkWrapper>
-        <Header siteMenuData={siteMenuData} headerData={headerData} />
-        <OrganizationJsonLd
-          name='Equinor ASA'
-          url='https://www.equinor.com'
-          logo='https://cdn.eds.equinor.com/logo/equinor-logo-horizontal.svg#red'
-          description={pageData?.seoAndSome?.metaDescription}
-          sameAs={[
-            'https://twitter.com/Equinor',
-            'https://facebook.com/Equinor',
-            'https://linkedin.com/company/equinor',
-            'https://www.instagram.com/equinor/',
-            'https://www.youtube.com/equinor',
-          ]}
-        />
-        <HomePage headerData={headerData} {...pageData} />
-      </FriendlyCaptchaSdkWrapper>
-    </Suspense>
+    <FriendlyCaptchaSdkWrapper>
+      <Header siteMenuData={siteMenuData} headerData={headerData} />
+      <OrganizationJsonLd
+        name='Equinor ASA'
+        url='https://www.equinor.com'
+        logo='https://cdn.eds.equinor.com/logo/equinor-logo-horizontal.svg#red'
+        description={pageData?.seoAndSome?.metaDescription}
+        sameAs={[
+          'https://twitter.com/Equinor',
+          'https://facebook.com/Equinor',
+          'https://linkedin.com/company/equinor',
+          'https://www.instagram.com/equinor/',
+          'https://www.youtube.com/equinor',
+        ]}
+      />
+      <HomePage headerData={headerData} {...pageData} />
+    </FriendlyCaptchaSdkWrapper>
   )
 }

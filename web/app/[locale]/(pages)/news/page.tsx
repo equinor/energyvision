@@ -85,8 +85,6 @@ async function CachedNewsroomPage({
   dynamic?: Awaited<ReturnType<typeof getDynamicFetchOptions>>
 }) {
   'use cache'
-  cacheLife('max')
-  cacheTag('newsroom')
 
   const locale = await getLocale()
   const [siteMenuResult, pageResults] = await Promise.all([
