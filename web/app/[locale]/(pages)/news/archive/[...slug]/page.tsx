@@ -237,7 +237,7 @@ export default async function ArchivedNewsPage({ params }: { params: Params }) {
     params: {
       lang: getNameFromIso(locale) ?? 'en_GB',
     },
-    tags: [`sanity:siteMenu:${locale}`],
+    tags: [`siteMenu:${locale}`],
     requestTag: 'site-menu',
   })
 

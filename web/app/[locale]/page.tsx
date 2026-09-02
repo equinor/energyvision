@@ -76,14 +76,14 @@ async function CachedHome({
       params: {
         lang: getNameFromIso(locale) ?? 'en_GB',
       },
-      tags: [`sanity:siteMenu:${locale}`],
+      tags: [`siteMenu:${locale}`],
       requestTag: 'site-menu',
       ...dynamic,
     }),
     getPage({
       slug: '',
       locale,
-      tags: ['homePage'],
+      tags: [`homePage:${locale}`],
       ...dynamic,
     }),
   ])

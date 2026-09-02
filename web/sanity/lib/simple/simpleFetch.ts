@@ -2,7 +2,7 @@ import { cacheLife, cacheTag } from 'next/cache'
 import type { DefinedFetchType } from 'next-sanity/live'
 import { client as simpleClient } from './simpleClient'
 
-export const optimizedFetch: DefinedFetchType = async ({
+export const simpleClientFetch: DefinedFetchType = async ({
   query,
   params = {},
   tags = [],
@@ -11,11 +11,7 @@ export const optimizedFetch: DefinedFetchType = async ({
 }) => {
   'use cache'
   cacheLife('max')
-  console.log('Fetching with optimized fetch:', {
-    tags,
-    perspective,
-    requestTag,
-  })
+  console.log('Fetching with optimized fetch:', tags)
   cacheTag(...tags)
   const { result, resultSourceMap } = await simpleClient.fetch(
     query,
@@ -31,7 +27,7 @@ export const optimizedFetch: DefinedFetchType = async ({
   return { data: result, sourceMap: resultSourceMap ?? null, tags: tags }
 }
 
-export const optimizedMetadataFetch: DefinedFetchType = async ({
+export const simpleClientMetadataFetch: DefinedFetchType = async ({
   query,
   params = {},
   tags = [],
@@ -40,11 +36,7 @@ export const optimizedMetadataFetch: DefinedFetchType = async ({
 }) => {
   'use cache'
   cacheLife('max')
-  console.log('Fetching with optimized fetch:', {
-    tags,
-    perspective,
-    requestTag,
-  })
+  console.log('Fetching with optimized fetch:', tags)
   cacheTag(...tags)
   const { result, resultSourceMap } = await simpleClient.fetch(
     query,
