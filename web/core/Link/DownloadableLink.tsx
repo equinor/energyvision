@@ -1,6 +1,7 @@
-'use client'
-import { useTranslations } from 'next-intl'
-import { forwardRef, useCallback, useContext, useState } from 'react'
+'use client';
+import type { FRCWidgetCompleteEvent } from '@friendlycaptcha/sdk';
+import { useTranslations } from 'next-intl';
+import { forwardRef, useCallback, useContext, useState } from 'react';
 //BsFiletypeDoc, BsFiletypeMov,
 import {
   BsFiletypeJpg,
@@ -9,36 +10,36 @@ import {
   BsFiletypeXls,
   BsFiletypeXlsx,
   BsFileZip,
-} from 'react-icons/bs'
-import { FriendlyCaptchaContext } from '@/contexts/FriendlyCaptchaContext'
-import { Typography } from '@/core/Typography'
-import { twMerge } from '@/lib/twMerge/twMerge'
-import { Modal } from '@/sections/Modal'
-import FriendlyCaptcha from '@/templates/forms/FriendlyCaptcha'
-import type { LinkType } from '@/types'
-import verifyCaptcha from '../../app/_actions/verifyCaptcha'
-import { BaseLink } from './BaseLink'
-import Link from './Link'
-import { getArrowElement } from './linkCommon'
-import type { ResourceLinkProps } from './ResourceLink'
+} from 'react-icons/bs';
+import { FriendlyCaptchaContext } from '@/contexts/FriendlyCaptchaContext';
+import { Typography } from '@/core/Typography';
+import { twMerge } from '@/lib/twMerge/twMerge';
+import { Modal } from '@/sections/Modal';
+import { FriendlyCaptcha } from '@/templates/forms/FriendlyCaptcha';
+import type { LinkType } from '@/types';
+import verifyCaptcha from '../../app/_actions/verifyCaptcha';
+import { BaseLink } from './BaseLink';
+import Link from './Link';
+import { getArrowElement } from './linkCommon';
+import type { ResourceLinkProps } from './ResourceLink';
 
-type Variants = 'default' | 'fit'
-type Type = 'simple' | 'resource' | 'stickyMenu'
+type Variants = 'default' | 'fit';
+type Type = 'simple' | 'resource' | 'stickyMenu';
 
 export type DownloadableLinkProps = {
   /** Type of downloadable link
    * @default resource */
-  type?: Type
+  type?: Type;
   /** File or image
    * @default downloadableFile */
-  linkType: LinkType
+  linkType: LinkType;
   /** Full width or fitted width on link
    * @default fit */
-  variant?: Variants
+  variant?: Variants;
   /** If type is of an extension type (PDF), show the extention as icon
    * @default true */
-  showExtensionIcon?: boolean
-} & Omit<ResourceLinkProps, 'variant' | 'type' | 'showExtensionIcon'>
+  showExtensionIcon?: boolean;
+} & Omit<ResourceLinkProps, 'variant' | 'type' | 'showExtensionIcon'>;
 
 const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(
   function DownloadableLink(
@@ -52,86 +53,86 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(
     },
     ref,
   ) {
-    const { label, originalFilename, url, extension = '' } = file || {}
+    const { label, originalFilename, url, extension = '' } = file || {};
     const fileUrl = url
       ? `${url.replace('cdn.sanity.io', 'cdn.equinor.com')}?${originalFilename.replace(/ /g, '-')}`
-      : null
-    const intl = useTranslations()
-    const [showModal, setShowModal] = useState(false)
+      : null;
+    const intl = useTranslations();
+    const [showModal, setShowModal] = useState(false);
     const [isFriendlyChallengeDone, setIsFriendlyChallengeDone] =
-      useState(false)
+      useState(false);
     const assetLabel =
-      label ?? (Array.isArray(children) ? children?.[0] : originalFilename)
-    const hasIcon = ['pdf', 'png', 'jpg', 'xlsx', 'xls', 'zip']
-    const openInNewTab = ['pdf', 'png', 'jpg']
+      label ?? (Array.isArray(children) ? children?.[0] : originalFilename);
+    const hasIcon = ['pdf', 'png', 'jpg', 'xlsx', 'xls', 'zip'];
+    const openInNewTab = ['pdf', 'png', 'jpg'];
     const shouldOpenInNewTab =
       extension?.trim() &&
       openInNewTab.includes(extension.toLowerCase().trim()) &&
-      (linkType !== 'downloadableFile' || fileUrl)
+      (linkType !== 'downloadableFile' || fileUrl);
 
-    const [notHuman, setNotHuman] = useState(false)
-    const { isHuman, setIsHuman } = useContext(FriendlyCaptchaContext)
+    const [notHuman, setNotHuman] = useState(false);
+    const { isHuman, setIsHuman } = useContext(FriendlyCaptchaContext);
 
     const variantClassName: Partial<Record<string, string>> = {
       default: 'w-full',
       fit: 'w-fit',
       stickyMenu: 'w-fit',
-    }
+    };
 
     const contentVariantClassName: Partial<Record<string, string>> = {
       default: 'pb-3 pr-2',
       stickyMenu: 'pb-3 pr-2',
       fit: 'pb-3 pr-2',
-    }
+    };
 
     const handleRequestFile = () => {
-      setShowModal(!showModal)
-    }
+      setShowModal(!showModal);
+    };
 
     const handleClose = () => {
-      setShowModal(false)
-    }
+      setShowModal(false);
+    };
 
     const getExtensionIcon = () => {
-      const iconClassName = 'min-w-5'
+      const iconClassName = 'min-w-5';
       switch (extension?.toUpperCase()) {
         case 'PDF':
           return (
-            <BsFiletypePdf title='pdf' size={19} className={iconClassName} />
-          )
+            <BsFiletypePdf title="pdf" size={19} className={iconClassName} />
+          );
         case 'XLSX':
           return (
-            <BsFiletypeXlsx title='xlsx' size={19} className={iconClassName} />
-          )
+            <BsFiletypeXlsx title="xlsx" size={19} className={iconClassName} />
+          );
         case 'PNG':
           return (
-            <BsFiletypePng title='png' size={19} className={iconClassName} />
-          )
+            <BsFiletypePng title="png" size={19} className={iconClassName} />
+          );
         case 'JPG':
           return (
-            <BsFiletypeJpg title='jpg' size={19} className={iconClassName} />
-          )
+            <BsFiletypeJpg title="jpg" size={19} className={iconClassName} />
+          );
         case 'XLS':
           return (
-            <BsFiletypeXls title='xls' size={19} className={iconClassName} />
-          )
+            <BsFiletypeXls title="xls" size={19} className={iconClassName} />
+          );
         case 'ZIP':
-          return <BsFileZip title='zip' size={19} className={iconClassName} />
+          return <BsFileZip title="zip" size={19} className={iconClassName} />;
         default:
-          return null
+          return null;
       }
-    }
+    };
 
     const handleSuccessfullFriendlyChallenge = useCallback(
-      async (event: any) => {
-        const solution = event.detail.response
-        setIsFriendlyChallengeDone(true)
-        const result = await verifyCaptcha(solution)
-        setNotHuman(result !== true)
-        setIsHuman(result === true)
+      async (event: FRCWidgetCompleteEvent) => {
+        const solution = event.detail.response;
+        setIsFriendlyChallengeDone(true);
+        const result = await verifyCaptcha(solution);
+        setNotHuman(result !== true);
+        setIsHuman(result === true);
       },
       [setIsHuman],
-    )
+    );
 
     const commonResourceLinkWrapperClassName = `
     group
@@ -146,19 +147,19 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(
     dark:text-white-100
     pt-3
     no-underline
-    ${variantClassName[variant]}`
+    ${variantClassName[variant]}`;
 
     const linkElement = (
       <div className={`flex items-baseline gap-1 ${isHuman && 'grow'}`}>
         {showExtensionIcon && getExtensionIcon()}
-        <div className='pt-1 leading-none'>
+        <div className="pt-1 leading-none">
           {assetLabel}
           {extension && (!showExtensionIcon || !hasIcon.includes(extension)) ? (
             <span>{`(${extension.toLowerCase()})`}</span>
           ) : null}
         </div>
       </div>
-    )
+    );
 
     const downloadable = (showArrow = true) => {
       return (
@@ -178,19 +179,19 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(
             {showArrow &&
               getArrowElement(shouldOpenInNewTab ? 'externalUrl' : linkType)}
           </span>
-          <div className='relative h-0.5'>
-            <div className='absolute inset-0 z-10 h-0.5 w-[0%] bg-grey-50 transition-all duration-300 group-hover/link:w-full dark:bg-white-100' />
-            <div className='absolute inset-0 z-0 h-px w-full bg-grey-50 dark:bg-white-100' />
+          <div className="relative h-0.5">
+            <div className="absolute inset-0 z-10 h-0.5 w-[0%] bg-grey-50 transition-all duration-300 group-hover/link:w-full dark:bg-white-100" />
+            <div className="absolute inset-0 z-0 h-px w-full bg-grey-50 dark:bg-white-100" />
           </div>
         </BaseLink>
-      )
-    }
+      );
+    };
 
     return (
       <div ref={ref}>
         {!isHuman && (
           <button
-            type='button'
+            type="button"
             onClick={handleRequestFile}
             className={
               type !== 'stickyMenu'
@@ -198,7 +199,7 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(
                 : `group relative flex w-fit cursor-pointer items-end justify-center text-slate-80 text-sm underline-offset-2`
             }
             title={`${assetLabel}`}
-            aria-haspopup='dialog'
+            aria-haspopup="dialog"
           >
             <div
               className={`flex h-full w-inherit items-center justify-start gap-x-2 ${type !== 'stickyMenu' ? 'pr-2 pb-3' : ''}
@@ -217,9 +218,9 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(
                 getArrowElement(linkType)}
             </div>
             {type !== 'stickyMenu' && (
-              <div className='relative h-0.5'>
-                <div className='absolute inset-0 z-10 h-0.5 w-[0%] bg-grey-50 transition-all duration-300 group-hover:w-full dark:bg-white-100' />
-                <div className='absolute inset-0 z-0 h-px w-full bg-grey-50 dark:bg-white-100' />
+              <div className="relative h-0.5">
+                <div className="absolute inset-0 z-10 h-0.5 w-[0%] bg-grey-50 transition-all duration-300 group-hover:w-full dark:bg-white-100" />
+                <div className="absolute inset-0 z-0 h-px w-full bg-grey-50 dark:bg-white-100" />
               </div>
             )}
           </button>
@@ -228,31 +229,28 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(
           <Modal
             isOpen={showModal}
             onClose={handleClose}
-            title='Request file download'
+            title="Request file download"
           >
-            <Typography as='h2' variant='h5' className='mb-4'>
+            <Typography as="h2" variant="h5" className="mb-4">
               {intl('request_download_action_prefix')}
               {` ${assetLabel}`}
             </Typography>
-            <Typography group='plain' variant='div' className='mb-10'>
+            <Typography group="plain" variant="div" className="mb-10">
               {intl('download_modal_ingress')}
             </Typography>
             <FriendlyCaptcha
-              startMode='auto'
-              doneCallback={(event: any) => {
-                handleSuccessfullFriendlyChallenge(event)
-              }}
-              errorCallback={(error: any) => {
-                console.error('FriendlyCaptcha encountered an error', error)
-                setNotHuman(true)
-                setIsFriendlyChallengeDone(false)
+              startMode="auto"
+              doneCallback={handleSuccessfullFriendlyChallenge}
+              errorCallback={() => {
+                setNotHuman(true);
+                setIsFriendlyChallengeDone(false);
               }}
             />
             {notHuman && (
               <Typography
-                variant='body'
-                role='alert'
-                className='py-6 text-base text-slate-80'
+                variant="body"
+                role="alert"
+                className="py-6 text-base text-slate-80"
               >
                 {intl('not_human_message')}
               </Typography>
@@ -265,7 +263,7 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(
           downloadable(file.type !== 'attachment')}
         {isHuman && type === 'stickyMenu' && (
           <Link
-            className='text-sm no-underline hover:text-slate-80 hover:underline dark:hover:text-grey-20'
+            className="text-sm no-underline hover:text-slate-80 hover:underline dark:hover:text-grey-20"
             type={linkType}
             href={linkType === 'downloadableFile' ? fileUrl : url}
             {...(shouldOpenInNewTab && {
@@ -276,8 +274,8 @@ const DownloadableLink = forwardRef<HTMLDivElement, DownloadableLinkProps>(
           </Link>
         )}
       </div>
-    )
+    );
   },
-)
+);
 
-export default DownloadableLink
+export default DownloadableLink;

@@ -1,60 +1,91 @@
-'use client';
-import type { StartMode, WidgetHandle } from '@friendlycaptcha/sdk';
+/**
+ * Because "use client" makes this file a public Server-to-Client boundary. Next.js therefore requires exported component props to be serializable, but doneCallback and errorCallback are functions.
+
+ * All current callers are client components, so the clean fix is removing "use client" from FriendlyCaptcha.tsx. It remains client code through its importing client components.
+ */
+import type {
+  FRCWidgetCompleteEvent,
+  FRCWidgetWidgetErrorEvent,
+  FRCWidgetWidgetExpireEvent,
+  StartMode,
+  WidgetHandle,
+} from '@friendlycaptcha/sdk';
 import { useLocale } from 'next-intl';
 import { useEffect, useEffectEvent, useRef } from 'react';
 import { globalCaptchaSDK } from '@/contexts/captchaSdk';
 import { friendlyCaptcha } from '../../lib/config';
 
-const FriendlyCaptcha = ({
+export const getFriendlyCaptchaSolution = (event?: { target: unknown }) => {
+  if (!(event?.target instanceof HTMLFormElement)) return null;
+
+  const responseInput = event.target.elements.namedItem('frc-captcha-response');
+
+  return responseInput instanceof HTMLInputElement && responseInput.value
+    ? responseInput.value
+    : null;
+};
+
+export const FriendlyCaptcha = ({
   doneCallback,
   errorCallback,
   startMode = 'focus',
 }: {
-  doneCallback: (event: any) => void;
+  doneCallback: (event: FRCWidgetCompleteEvent) => void;
   errorCallback: (error: string) => void;
   startMode?: StartMode;
 }) => {
-  const container = useRef(null);
-  const widget = useRef<WidgetHandle>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const widgetRef = useRef<WidgetHandle | undefined>(undefined);
   const locale = useLocale();
   const onComplete = useEffectEvent(doneCallback);
   const onError = useEffectEvent(errorCallback);
 
   useEffect(() => {
-    if (!widget.current && container.current && globalCaptchaSDK) {
-      widget.current = globalCaptchaSDK?.createWidget({
-        element: container.current,
-        sitekey: friendlyCaptcha.siteKey,
-        startMode: startMode,
-        language: locale === 'no' ? 'nb' : locale,
-        apiEndpoint: 'https://eu.frcapi.com/api/v2/captcha',
-      });
+    if (
+      !containerRef.current ||
+      widgetRef.current ||
+      !globalCaptchaSDK ||
+      !friendlyCaptcha.siteKey
+    )
+      return;
 
-      widget.current.addEventListener('frc:widget.complete', onComplete);
+    const widget = globalCaptchaSDK.createWidget({
+      element: containerRef.current,
+      sitekey: friendlyCaptcha.siteKey,
+      startMode: startMode,
+      language: locale === 'nb-NO' ? 'nb' : locale,
+      apiEndpoint: 'https://eu.frcapi.com/api/v2/captcha',
+    });
+    widgetRef.current = widget;
 
-      widget.current.addEventListener('frc:widget.error', (event) => {
-        const detail = event.detail;
-        onError(detail.error.detail);
-        console.error(
-          'Something went wrong in solving the captcha: ',
-          detail.error,
-        );
-      });
+    const element = containerRef.current;
+    const handleWidgetComplete: EventListener = (event) => {
+      onComplete(event as FRCWidgetCompleteEvent);
+    };
 
-      widget.current.addEventListener('frc:widget.expire', (event) => {
-        console.warn(
-          'The captcha solution is no longer valid, the user waited too long.',
-        );
-        onError(event.detail.response);
-      });
-    }
+    const handleWidgetError: EventListener = (event) => {
+      const detail = (event as FRCWidgetWidgetErrorEvent).detail;
+      onError(detail.error.detail);
+    };
+    const handleWidgetExpire: EventListener = (event) => {
+      onError((event as FRCWidgetWidgetExpireEvent).detail.response);
+    };
+
+    element.addEventListener('frc:widget.complete', handleWidgetComplete);
+    element.addEventListener('frc:widget.error', handleWidgetError);
+    element.addEventListener('frc:widget.expire', handleWidgetExpire);
+
+    // Clean up on component unmount to prevent memory leaks
     return () => {
-      widget.current?.destroy();
-      widget.current = null;
+      element.removeEventListener('frc:widget.complete', handleWidgetComplete);
+      element.removeEventListener('frc:widget.error', handleWidgetError);
+      element.removeEventListener('frc:widget.expire', handleWidgetExpire);
+      widget.destroy();
+      if (widgetRef.current === widget) {
+        widgetRef.current = undefined;
+      }
     };
   }, [locale, startMode]);
 
-  return <div ref={container} />;
+  return <div ref={containerRef} />;
 };
-
-export default FriendlyCaptcha;

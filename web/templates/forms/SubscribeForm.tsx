@@ -1,20 +1,20 @@
-"use client";
-import { Icon } from "@equinor/eds-core-react";
-import { error_filled } from "@equinor/eds-icons";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useLocale, useTranslations } from "next-intl";
-import { type BaseSyntheticEvent, useId, useState } from "react";
-import { Controller, useForm } from "react-hook-form";
-import type * as z from "zod";
-import { subscribe } from "@/app/_actions/subscription.actions";
-import { Button } from "@/core/Button";
-import { Checkbox } from "@/core/Checkbox/Checkbox";
-import { FormMessageBox } from "@/core/Form/FormMessageBox";
-import { TextField } from "@/core/TextField/TextField";
-import { subscribeSchema } from "@/lib/zodSchemas/zodSchemas";
-import { getLocaleFromIso } from "@/sanity/helpers/localization";
-import type { newsletterCategoryLocale } from "@/types/newsLetterTypes";
-import FriendlyCaptcha from "./FriendlyCaptcha";
+'use client';
+import { Icon } from '@equinor/eds-core-react';
+import { error_filled } from '@equinor/eds-icons';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useLocale, useTranslations } from 'next-intl';
+import { type BaseSyntheticEvent, useId, useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import type * as z from 'zod';
+import { subscribe } from '@/app/_actions/subscription.actions';
+import { Button } from '@/core/Button';
+import { Checkbox } from '@/core/Checkbox/Checkbox';
+import { FormMessageBox } from '@/core/Form/FormMessageBox';
+import { TextField } from '@/core/TextField/TextField';
+import { subscribeSchema } from '@/lib/zodSchemas/zodSchemas';
+import { getLocaleFromIso } from '@/sanity/helpers/localization';
+import type { newsletterCategoryLocale } from '@/types/newsLetterTypes';
+import { FriendlyCaptcha, getFriendlyCaptchaSolution } from './FriendlyCaptcha';
 
 const SubscribeForm = () => {
   const locale = useLocale();
@@ -33,7 +33,7 @@ const SubscribeForm = () => {
     formState: { errors, isSubmitting, isSubmitted },
   } = useForm({
     resolver: zodResolver(subscribeSchema(intl)),
-    defaultValues: { email: "", categories: [] },
+    defaultValues: { email: '', categories: [] },
   });
 
   const onSubmit = async (
@@ -41,36 +41,29 @@ const SubscribeForm = () => {
     event?: BaseSyntheticEvent,
   ) => {
     if (isFriendlyChallengeDone) {
+      const frcCaptchaSolution = getFriendlyCaptchaSolution(event);
+      if (!frcCaptchaSolution) {
+        setIsFriendlyChallengeDone(false);
+        return;
+      }
+
       const res = await subscribe({
         locale: getLocaleFromIso(locale) as newsletterCategoryLocale,
-        frcCaptchaSolution: (event?.target as any)["frc-captcha-response"]
-          .value,
+        frcCaptchaSolution,
         formData,
       });
 
-      /*       const res = await fetch('/api/newsletter/subscription', {
-        body: JSON.stringify({
-          data,
-          languageCode: locale === 'en' ? 'en' : 'no',
-          frcCaptchaSolution: (event?.target as any)['frc-captcha-response']
-            .value,
-        }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        method: 'POST',
-      }) */
       if (res?.status) {
         setSuccessfullySubmitted(res.status);
       } else {
-        console.error("Error submitting form", res);
+        console.error('Error submitting form', res);
         setServerError(!res?.status);
       }
     } else {
       //@ts-ignore: TODO: types
-      setError("root.notCompletedCaptcha", {
-        type: "custom",
-        message: intl("form_antirobot_validation_required"),
+      setError('root.notCompletedCaptcha', {
+        type: 'custom',
+        message: intl('form_antirobot_validation_required'),
       });
     }
   };
@@ -80,7 +73,7 @@ const SubscribeForm = () => {
       {!isSuccessfullySubmitted && (
         <>
           <div className="pt-8 pb-6 text-sm">
-            {intl("all_fields_mandatory")}
+            {intl('all_fields_mandatory')}
           </div>
           <form
             onSubmit={handleSubmit(onSubmit)}
@@ -99,7 +92,7 @@ const SubscribeForm = () => {
                       id="atleast-one-category-required"
                       className="max-w-text font-semibold text-base"
                     >
-                      {intl("subscribe_form_choose")}*
+                      {intl('subscribe_form_choose')}*
                     </legend>
                   )}
                   {errors.categories && (
@@ -108,45 +101,45 @@ const SubscribeForm = () => {
                       role="alert"
                       id="atleast-one-category-required"
                     >
-                      <legend>{intl("subscribe_form_choose")}</legend>
+                      <legend>{intl('subscribe_form_choose')}</legend>
                       <Icon data={error_filled} aria-hidden="true" />
                     </div>
                   )}
                   <ul>
                     <li>
                       <Checkbox
-                        label={intl("subscribe_form_general_news")}
+                        label={intl('subscribe_form_general_news')}
                         value="generalNews"
                         aria-describedby="atleast-one-category-required"
-                        {...register("categories")}
-                        aria-invalid={errors.categories ? "true" : "false"}
+                        {...register('categories')}
+                        aria-invalid={errors.categories ? 'true' : 'false'}
                       />
                     </li>
                     <li>
                       <Checkbox
-                        label={intl("subscribe_form_magazine_stories")}
-                        aria-invalid={errors.categories ? "true" : "false"}
+                        label={intl('subscribe_form_magazine_stories')}
+                        aria-invalid={errors.categories ? 'true' : 'false'}
                         aria-describedby="atleast-one-category-required"
                         value="magazineStories"
-                        {...register("categories")}
+                        {...register('categories')}
                       />
                     </li>
                     <li>
                       <Checkbox
-                        label={intl("subscribe_form_stock_market")}
+                        label={intl('subscribe_form_stock_market')}
                         value="stockMarketAnnouncements"
-                        aria-invalid={errors.categories ? "true" : "false"}
+                        aria-invalid={errors.categories ? 'true' : 'false'}
                         aria-describedby="atleast-one-category-required"
-                        {...register("categories")}
+                        {...register('categories')}
                       />
                     </li>
                     <li>
                       <Checkbox
-                        label={intl("subscribe_form_cruide_oil")}
-                        aria-invalid={errors.categories ? "true" : "false"}
+                        label={intl('subscribe_form_cruide_oil')}
+                        aria-invalid={errors.categories ? 'true' : 'false'}
                         aria-describedby="atleast-one-category-required"
                         value="crudeOilAssays"
-                        {...register("categories")}
+                        {...register('categories')}
                       />
                     </li>
                   </ul>
@@ -161,7 +154,7 @@ const SubscribeForm = () => {
                     <TextField
                       {...props}
                       id={`${props.name}_${formId}`}
-                      label={`${intl("email")}*`}
+                      label={`${intl('email')}*`}
                       inputRef={ref}
                       inputIcon={
                         invalid ? (
@@ -170,7 +163,7 @@ const SubscribeForm = () => {
                       }
                       helperText={error?.message}
                       aria-required="true"
-                      {...(invalid && { variant: "error" })}
+                      {...(invalid && { variant: 'error' })}
                     />
                   )}
                 />
@@ -179,11 +172,7 @@ const SubscribeForm = () => {
                     doneCallback={() => {
                       setIsFriendlyChallengeDone(true);
                     }}
-                    errorCallback={(error: any) => {
-                      console.error(
-                        "FriendlyCaptcha encountered an error",
-                        error,
-                      );
+                    errorCallback={() => {
                       setIsFriendlyChallengeDone(false);
                     }}
                   />
@@ -203,8 +192,8 @@ const SubscribeForm = () => {
                 </div>
                 <Button type="submit">
                   {isSubmitting
-                    ? intl("form_sending")
-                    : intl("subscribe_form_cta")}
+                    ? intl('form_sending')
+                    : intl('subscribe_form_cta')}
                 </Button>
               </>
             )}
