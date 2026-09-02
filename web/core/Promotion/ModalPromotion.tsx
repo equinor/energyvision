@@ -3,7 +3,7 @@
 import { add_circle_filled, add_circle_outlined } from '@equinor/eds-icons';
 import type { PortableTextBlock } from '@portabletext/types';
 import { useTranslations } from 'next-intl';
-import { forwardRef, useEffect, useState } from 'react';
+import { forwardRef, useEffect, useRef, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { Image } from '@/core/Image/Image';
 import type { Image as ImageType } from '@/core/Image/imageUtilities';
@@ -59,12 +59,21 @@ export const ModalPromotion = forwardRef<HTMLDivElement, ModalPromotionProps>(
   ) {
     const intl = useTranslations();
     const [isModalOpen, setIsModalOpen] = useState(initialOpen);
+    const triggerRef = useRef<HTMLButtonElement>(null);
+    const shouldRestoreFocus = useRef(false);
     const plainText = getPlainText(title);
     const plainIngress = getPlainText(ingress);
 
     useEffect(() => {
       if (initialOpen) setIsModalOpen(true);
     }, [initialOpen]);
+
+    useEffect(() => {
+      if (!isModalOpen && shouldRestoreFocus.current) {
+        triggerRef.current?.focus();
+        shouldRestoreFocus.current = false;
+      }
+    }, [isModalOpen]);
 
     const handleOpenModal = (e: React.MouseEvent) => {
       e.preventDefault();
@@ -100,9 +109,12 @@ export const ModalPromotion = forwardRef<HTMLDivElement, ModalPromotionProps>(
             </div>
           )}
           <button
+            ref={triggerRef}
             type="button"
             onClick={handleOpenModal}
             aria-label={intl('read_more_about', { title: plainText ?? '' })}
+            aria-haspopup="dialog"
+            aria-expanded={isModalOpen}
             className="group/btn relative flex w-full cursor-pointer flex-col items-start text-start focus-visible:outline-none"
           >
             <div className="flex w-full grow flex-col items-start justify-start ps-10 pe-10 pt-6 pb-12">
@@ -144,6 +156,7 @@ export const ModalPromotion = forwardRef<HTMLDivElement, ModalPromotionProps>(
           <Modal
             isOpen={isModalOpen}
             onClose={() => {
+              shouldRestoreFocus.current = true;
               setIsModalOpen(false);
               window.history.pushState({}, '', window.location.pathname);
             }}
