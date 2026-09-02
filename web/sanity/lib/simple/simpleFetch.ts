@@ -36,7 +36,7 @@ export const simpleClientMetadataFetch: DefinedFetchType = async ({
 }) => {
   'use cache'
   cacheLife('max')
-  console.log('Fetching with optimized fetch:', tags)
+  console.log('Fetching Meta with optimized fetch:', tags)
   cacheTag(...tags)
   const { result, resultSourceMap } = await simpleClient.fetch(
     query,

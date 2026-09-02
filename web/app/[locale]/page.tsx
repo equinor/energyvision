@@ -101,7 +101,6 @@ async function CachedHome({
   if (!template) console.warn('Missing homepage template', pageData?.slug)
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
       <FriendlyCaptchaSdkWrapper>
         <Header siteMenuData={siteMenuData} headerData={headerData} />
         <OrganizationJsonLd
@@ -119,6 +118,5 @@ async function CachedHome({
         />
         <HomePage headerData={headerData} {...pageData} />
       </FriendlyCaptchaSdkWrapper>
-    </Suspense>
   )
 }
