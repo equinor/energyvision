@@ -1,4 +1,4 @@
-import { external_link, facebook, home, link } from '@equinor/eds-icons'
+import { external_link, home, link } from '@equinor/eds-icons'
 import { LinkIcon } from '@sanity/icons'
 import { Card, Flex, Select } from '@sanity/ui'
 import { useCallback, useMemo } from 'react'

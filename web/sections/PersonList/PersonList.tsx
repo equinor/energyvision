@@ -163,6 +163,7 @@ const PersonList = forwardRef<HTMLDivElement, PersonListProps>(
                 image={item.person?.image}
                 ingress={item.person?.title}
                 background={foreground}
+                imageClassName=''
                 modalTitle={item.person?.name}
                 initialOpen={
                   !!activePersonName && item.person?.name === activePersonName
@@ -211,16 +212,16 @@ const PersonList = forwardRef<HTMLDivElement, PersonListProps>(
             return (
               <div className='flex flex-col gap-6 px-layout-sm'>
                 {highlighted && (
-                  <ul className='m-0 grid list-none grid-cols-[minmax(min(18.75rem,100%),1fr)] justify-center p-0 sm:grid-cols-[18.75rem] lg:grid-cols-[22rem]'>
+                  <ul className='m-0 grid list-none grid-cols-[minmax(min(18.75rem,100%),1fr)] justify-center p-0 md:grid-cols-[22rem]'>
                     <li key={highlighted.id} className='flex'>
                       {renderCard(highlighted)}
                     </li>
                   </ul>
                 )}
                 {rest.length > 0 && (
-                  <ul className='m-0 grid list-none grid-cols-[repeat(auto-fill,minmax(min(18.75rem,100%),1fr))] items-stretch gap-6 p-0'>
+                  <ul className='m-0 flex list-none flex-wrap justify-center gap-6 p-0'>
                     {rest.map(item => (
-                      <li key={item.id} className='flex'>
+                      <li key={item.id} className='flex w-full md:w-75'>
                         {renderCard(item)}
                       </li>
                     ))}
