@@ -52,13 +52,7 @@ export async function POST(req: NextRequest) {
       return new Response(JSON.stringify({ message, body }), { status: 400 })
     }
 
-    const docsWithoutSlugCurrent = [
-      'page',
-      'magazineIndex',
-      'newsroom',
-      'event',
-      'homePage',
-    ]
+    const docsWithoutSlugCurrent = ['page', 'event', 'homePage']
     //@ts-ignore
     if (docsWithoutSlugCurrent.includes(docType)) {
       const routes = await client.fetch(
@@ -69,7 +63,7 @@ export async function POST(req: NextRequest) {
       )
 
       routes.forEach((route: any) => {
-        const tag = `${docType}:${route.slug}`
+        const tag = `page:${route.slug}`
         revalidateTag(tag, 'max')
         console.log(`revalidated tag: ${tag}`)
       })

@@ -248,7 +248,7 @@ export async function getPage(params: Params) {
 
     const { data }: { data: any } = await fetch({
       query: pageQuery,
-      tags: [`sanity:page:${Array.isArray(slug) ? slug?.join('/') : slug}`],
+      tags: [`page:${Array.isArray(slug) ? slug?.join('/') : slug}`],
       params: { ...pageQueryParams },
       requestTag: 'page-by-slug',
       perspective,
@@ -268,7 +268,7 @@ export async function getPage(params: Params) {
         lang: getNameFromIso(locale),
         ...(tag && tag !== 'all' && { tag }),
       } as QueryParams,
-      tags: [`sanity:magazineIndex:${locale}`],
+      tags: [`magazineIndex:${locale}`],
       requestTag: 'magazine-room',
     })
     magazineArticles = articles
