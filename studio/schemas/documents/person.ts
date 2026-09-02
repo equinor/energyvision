@@ -1,7 +1,11 @@
 import { MdOutlinePerson } from 'react-icons/md'
 import type { Rule } from 'sanity'
+import { filterByRouteWithPersonList } from '../../helpers/referenceFilters'
 import { CompactBlockEditor } from '../components/CompactBlockEditor'
+import { GeneratedPersonUrlInput } from '../components/GeneratedPersonUrlInput'
 import { configureBlockContent } from '../editors'
+import singleItemArray from '../objects/singleItemArray'
+import routes from '../routes'
 import { lang } from './langField'
 
 export default {
@@ -15,6 +19,14 @@ export default {
       title: 'SEO',
       description:
         'Enable structured markup to show rich results on Google search',
+    },
+    {
+      name: 'someLinks',
+      title: 'SoMe links',
+      options: {
+        collapsible: true,
+        collapsed: true,
+      },
     },
   ],
   fields: [
@@ -50,20 +62,57 @@ export default {
       },
       of: [configureBlockContent({ variant: 'ingress' })],
     },
-    /*     {
-      title: 'Organization level',
-      name: 'hierarchyLevel',
-      type: 'string',
+    singleItemArray({
+      name: 'callToActions',
+      title: 'Call to action link',
+      type: 'array',
+      of: [{ type: 'linkSelector', title: 'Link' }],
+    }),
+    {
+      title: 'CV main route',
+      name: 'personListRoute',
+      description:
+        'The main route where this person is listed. This route together with searchparams for this person will be possible to use in an internal link.',
+      type: 'reference',
+      to: routes,
       options: {
-        list: [
-          { title: 'Level 1', value: '1' },
-          { title: 'Level 2', value: '2' },
-          { title: 'Level 3', value: '3' },
-        ],
-        layout: 'dropdown',
+        filter: filterByRouteWithPersonList,
+        disableNew: true,
       },
-      description: 'Position in organization diagram',
-    }, */
+    },
+    {
+      title: 'CV URL',
+      name: 'personListUrl',
+      description:
+        'Generated from the CV main route and person name. This field cannot be edited.',
+      type: 'string',
+      readOnly: true,
+      components: {
+        input: GeneratedPersonUrlInput,
+      },
+    },
+    {
+      title: 'LinkedIn profile URL',
+      name: 'linkedinProfileUrl',
+      description: "The person's public LinkedIn profile URL.",
+      type: 'url',
+      fieldset: 'someLinks',
+      validation: (Rule: Rule) =>
+        Rule.uri({ scheme: ['https'] }).custom(value => {
+          if (!value) return true
+
+          try {
+            const hostname = new URL(value).hostname.toLowerCase()
+            return hostname === 'linkedin.com' ||
+              hostname.endsWith('.linkedin.com')
+              ? true
+              : 'Please enter a valid LinkedIn URL'
+          } catch {
+            return 'Please enter a valid LinkedIn URL'
+          }
+        }),
+    },
+
     /*     {
       name: 'enableStructuredMarkup',
       type: 'boolean',

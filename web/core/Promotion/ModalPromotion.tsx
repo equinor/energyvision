@@ -2,6 +2,7 @@
 
 import { add_circle_filled, add_circle_outlined } from '@equinor/eds-icons'
 import type { PortableTextBlock } from '@portabletext/types'
+import { useTranslations } from 'next-intl'
 import { forwardRef, useEffect, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 import { Image } from '@/core/Image/Image'
@@ -54,6 +55,7 @@ export const ModalPromotion = forwardRef<HTMLDivElement, ModalPromotionProps>(
     },
     ref,
   ) {
+    const intl = useTranslations()
     const [isModalOpen, setIsModalOpen] = useState(initialOpen)
     const plainText = getPlainText(title)
     const plainIngress = getPlainText(ingress)
@@ -77,7 +79,7 @@ export const ModalPromotion = forwardRef<HTMLDivElement, ModalPromotionProps>(
         <div
           ref={ref}
           className={twMerge(
-            `grid min-h-75 w-full min-w-75 max-w-full grid-cols-1 grid-rows-[minmax(31%,200px)_1fr] overflow-hidden rounded-card`,
+            `focus-within:envis-outline dark:focus-within:envis-outline-invert grid min-h-75 w-full min-w-75 max-w-full grid-cols-1 grid-rows-[minmax(31%,200px)_1fr] overflow-hidden rounded-card`,
             colorKeyToUtilityMap[background ?? 'gray-20']?.background,
             className,
           )}
@@ -99,8 +101,8 @@ export const ModalPromotion = forwardRef<HTMLDivElement, ModalPromotionProps>(
           <button
             type='button'
             onClick={handleOpenModal}
-            aria-label={`View ${plainText} details`}
-            className='group/btn relative flex w-full cursor-pointer flex-col items-start text-start'
+            aria-label={intl('read_more_about', { title: plainText ?? '' })}
+            className='group/btn relative flex w-full cursor-pointer flex-col items-start text-start focus-visible:outline-none'
           >
             <div className='flex w-full grow flex-col items-start justify-start ps-10 pe-10 pt-6 pb-12'>
               <div className='flex h-fit flex-col justify-start'>
@@ -137,7 +139,6 @@ export const ModalPromotion = forwardRef<HTMLDivElement, ModalPromotionProps>(
             </span>
           </button>
         </div>
-
         {isModalOpen && (
           <Modal
             isOpen={isModalOpen}

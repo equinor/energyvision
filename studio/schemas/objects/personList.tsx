@@ -1,6 +1,7 @@
 import { MdOutlinePeopleAlt } from 'react-icons/md'
 import type { PortableTextBlock, Rule } from 'sanity'
 import blocksToText from '../../helpers/blocksToText'
+import { filterByLang } from '../../helpers/referenceFilters'
 import { CompactBlockEditor } from '../components/CompactBlockEditor'
 import { configureBlockContent } from '../editors'
 import { theme } from './commonFields/commonFields'
@@ -55,6 +56,10 @@ export default {
               title: 'Person',
               type: 'reference',
               to: [{ type: 'person' }],
+              options: {
+                filter: filterByLang,
+                disableNew: true,
+              },
               validation: (Rule: Rule) => Rule.required(),
             },
             {
@@ -83,13 +88,6 @@ export default {
       ],
       validation: (Rule: Rule) => Rule.required().min(1),
     },
-    /*     {
-      type: 'boolean',
-      name: 'asDiagram',
-      title: 'Display as diagram',
-      description:
-        'Displays the people as an organization diagram where org level and connection lines is added to web component',
-    }, */
     theme,
   ],
   preview: {

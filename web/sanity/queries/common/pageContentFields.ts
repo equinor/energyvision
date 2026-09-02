@@ -547,20 +547,22 @@ _type == "keyNumbers" =>{
       },
       "foreground": theme.theme.foreground.key,
     },
-    asDiagram,
-    "items": items[]{
+    "items": items[person->lang == $lang]{
       "id": _key,
       highlighted,
       "person": person->{
         "id": _id,
         name,
         title,
+        linkedinProfileUrl,
         image,
         bio[]{
           ...,
           ${markDefs},
         },
-        hierarchyLevel,
+        callToActions[]{
+          ${linkSelectorFields},
+        },
         "slug": slug.current,
       },
     },

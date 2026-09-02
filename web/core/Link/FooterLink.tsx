@@ -1,24 +1,24 @@
 import { getTranslations } from 'next-intl/server'
 import { forwardRef } from 'react'
+import {
+  FaFacebookSquare,
+  FaInstagramSquare,
+  FaLinkedin,
+  FaYoutube,
+} from 'react-icons/fa'
+import { SiX } from 'react-icons/si'
 import { getIsoFromName } from '@/sanity/helpers/localization'
 import type { LinkData } from '@/types'
-import {
-  ArrowRight,
-  Facebook,
-  Instagram,
-  Linkedin,
-  Twitter,
-  Youtube,
-} from '../../icons'
+import { ArrowRight } from '../../icons'
 import { BaseLink } from './BaseLink'
 
 function getSomeSvg(someType: SomeType) {
   const iconMap = {
-    facebook: <Facebook height={24} width={24} />,
-    instagram: <Instagram height={24} width={24} />,
-    linkedin: <Linkedin height={24} width={24} />,
-    twitter: <Twitter height={24} width={24} />,
-    youtube: <Youtube height={24} width={24} />,
+    facebook: <FaFacebookSquare size={24} className='text-current' />, //<Facebook height={24} width={24} />,
+    instagram: <FaInstagramSquare size={24} className='text-current' />, //<Instagram height={24} width={24} />,
+    linkedin: <FaLinkedin size={24} className='text-current' />, //<Linkedin height={24} width={24} />,
+    twitter: <SiX size={24} className='text-current' />, //<Twitter height={24} width={24} />,
+    youtube: <FaYoutube size={24} className='text-current' />, //<Youtube height={24} width={24} />,
   }
 
   if (!(someType in iconMap))
@@ -66,7 +66,7 @@ const FooterLink = forwardRef<HTMLAnchorElement, FooterLinkProps>(
       >
         {icon && (
           <span
-            className='mr-1.5 size-6 fill-white-100 leading-none group-hover:fill-moss-green-90'
+            className='mr-1.5 size-6 text-white-100 leading-none dark:hover:text-white-100'
             aria-hidden={true}
           >
             {icon}

@@ -17,6 +17,7 @@ import {
   internalReferenceOtherLanguage,
   type LinkType,
   PageAnchorInput,
+  personListUrlReference,
 } from '../objects/linkSelector/common'
 import linkSelector from '../objects/linkSelector/linkSelector'
 
@@ -587,6 +588,7 @@ export const configureBlockContent = (
     config?.marks?.annotations?.push(
       internalLinkConfig(internalReferenceOtherLanguage),
     )
+    config?.marks?.annotations?.push(internalLinkConfig(personListUrlReference))
     config?.marks?.annotations?.push(internalLinkConfig(homepageLink))
     //@ts-ignore: todo
     config?.marks?.annotations?.push(anchorLinkConfig)
