@@ -1,30 +1,30 @@
-'use client'
-import { Icon } from '@equinor/eds-core-react'
-import { error_filled } from '@equinor/eds-icons'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useLocale, useTranslations } from 'next-intl'
-import { type BaseSyntheticEvent, useId, useState } from 'react'
-import { Controller, useForm } from 'react-hook-form'
-import type { z } from 'zod'
-import { FORM_CATALOG_NUMBERS } from '@/app/_actions/formCatalogNumbers'
-import submitFormServerAction from '@/app/_actions/submitFormServerAction'
-import verifyCaptcha from '@/app/_actions/verifyCaptcha'
-import { Button } from '@/core/Button'
-import { Checkbox } from '@/core/Checkbox/Checkbox'
-import { FormMessageBox } from '@/core/Form/FormMessageBox'
-import { TextField } from '@/core/TextField/TextField'
-import { orderReportsFormSchema } from '@/lib/zodSchemas/zodSchemas'
-import FriendlyCaptcha from './FriendlyCaptcha'
+'use client';
+import { Icon } from '@equinor/eds-core-react';
+import { error_filled } from '@equinor/eds-icons';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useLocale, useTranslations } from 'next-intl';
+import { type BaseSyntheticEvent, useId, useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import type { z } from 'zod';
+import { FORM_CATALOG_NUMBERS } from '@/app/_actions/formCatalogNumbers';
+import submitFormServerAction from '@/app/_actions/submitFormServerAction';
+import verifyCaptcha from '@/app/_actions/verifyCaptcha';
+import { Button } from '@/core/Button';
+import { Checkbox } from '@/core/Checkbox/Checkbox';
+import { FormMessageBox } from '@/core/Form/FormMessageBox';
+import { TextField } from '@/core/TextField/TextField';
+import { orderReportsFormSchema } from '@/lib/zodSchemas/zodSchemas';
+import { FriendlyCaptcha, getFriendlyCaptchaSolution } from './FriendlyCaptcha';
 
-type OrderReportFormData = z.infer<ReturnType<typeof orderReportsFormSchema>>
+type OrderReportFormData = z.infer<ReturnType<typeof orderReportsFormSchema>>;
 
 const OrderReportsForm = () => {
-  const intl = useTranslations()
-  const [isFriendlyChallengeDone, setIsFriendlyChallengeDone] = useState(false)
-  const [isServerError, setServerError] = useState(false)
-  const [isSuccessfullySubmitted, setSuccessfullySubmitted] = useState(false)
-  const formId = useId()
-  const locale = useLocale()
+  const intl = useTranslations();
+  const [isFriendlyChallengeDone, setIsFriendlyChallengeDone] = useState(false);
+  const [isServerError, setServerError] = useState(false);
+  const [isSuccessfullySubmitted, setSuccessfullySubmitted] = useState(false);
+  const formId = useId();
+  const locale = useLocale();
 
   const Checkboxes = () => {
     return (
@@ -32,12 +32,12 @@ const OrderReportsForm = () => {
         <li>
           <Checkbox
             label={intl('order_reports_checkbox_option_annualReport_label')}
-            value='annualReport'
+            value="annualReport"
             aria-invalid={errors.reports ? 'true' : 'false'}
-            aria-describedby='atleast-one-report-required'
+            aria-describedby="atleast-one-report-required"
             {...register('reports')}
             {...register('reports', {
-              validate: values => values.length > 0,
+              validate: (values) => values.length > 0,
             })}
           />
         </li>
@@ -46,15 +46,15 @@ const OrderReportsForm = () => {
             label={intl(
               'order_reports_checkbox_option_annualReportNorwegian_label',
             )}
-            value='annualReportNorwegian'
+            value="annualReportNorwegian"
             aria-invalid={errors.reports ? 'true' : 'false'}
-            aria-describedby='atleast-one-report-required'
+            aria-describedby="atleast-one-report-required"
             {...register('reports')}
           />
         </li>
       </>
-    )
-  }
+    );
+  };
 
   const {
     handleSubmit,
@@ -75,27 +75,30 @@ const OrderReportsForm = () => {
       reports: [],
       country: '',
     },
-  })
+  });
 
   const onSubmit = async (
     data: OrderReportFormData,
     event?: BaseSyntheticEvent,
   ) => {
     if (isFriendlyChallengeDone) {
-      const frcCaptchaSolution = (event?.target as any)['frc-captcha-response']
-        .value
-      const isCaptchaVerified = await verifyCaptcha(frcCaptchaSolution)
+      const frcCaptchaSolution = getFriendlyCaptchaSolution(event);
+      if (!frcCaptchaSolution) {
+        setIsFriendlyChallengeDone(false);
+        return;
+      }
+      const isCaptchaVerified = await verifyCaptcha(frcCaptchaSolution);
 
       if (!isCaptchaVerified) {
-        return
+        return;
       }
 
-      const isDataValidated = orderReportsFormSchema(intl).safeParse(data)
+      const isDataValidated = orderReportsFormSchema(intl).safeParse(data);
 
       if (!isDataValidated.success) {
-        setServerError(true)
-        setSuccessfullySubmitted(false)
-        return
+        setServerError(true);
+        setSuccessfullySubmitted(false);
+        return;
       }
 
       const finalFormData = {
@@ -115,50 +118,50 @@ const OrderReportsForm = () => {
             ? 'Yes'
             : 'No',
         },
-      }
+      };
 
       const result = await submitFormServerAction(
         JSON.stringify(finalFormData),
         FORM_CATALOG_NUMBERS.orderReports,
-      )
+      );
 
-      setServerError(result.status !== 200)
-      setSuccessfullySubmitted(result.status === 200)
+      setServerError(result.status !== 200);
+      setSuccessfullySubmitted(result.status === 200);
     } else {
       //@ts-ignore: TODO: types
       setError('root.notCompletedCaptcha', {
         type: 'custom',
         message: intl('form_antirobot_validation_required'),
-      })
+      });
     }
-  }
+  };
 
   return (
     <>
       {!isSuccessfullySubmitted && (
         <>
-          <div className='pb-6 text-sm'>{intl('all_fields_mandatory')} </div>
+          <div className="pb-6 text-sm">{intl('all_fields_mandatory')} </div>
           <form
             onSubmit={handleSubmit(onSubmit)}
             onReset={() => {
-              reset()
-              setIsFriendlyChallengeDone(false)
-              setSuccessfullySubmitted(false)
+              reset();
+              setIsFriendlyChallengeDone(false);
+              setSuccessfullySubmitted(false);
             }}
-            className='flex flex-col gap-12'
+            className="flex flex-col gap-12"
           >
-            <fieldset className='p-0 pb-4'>
+            <fieldset className="p-0 pb-4">
               {!errors.reports && (
-                <legend className='max-w-text font-semibold text-base'>{`${intl('order_reports_form_choose')}*`}</legend>
+                <legend className="max-w-text font-semibold text-base">{`${intl('order_reports_form_choose')}*`}</legend>
               )}
               {errors.reports && (
                 <div
-                  className='flex items-center gap-2 border border-clear-red-100 px-6 py-4 font-semibold text-slate-80 text-sm'
-                  role='alert'
-                  id='atleast-one-report-required'
+                  className="flex items-center gap-2 border border-clear-red-100 px-6 py-4 font-semibold text-slate-80 text-sm"
+                  role="alert"
+                  id="atleast-one-report-required"
                 >
-                  <Icon data={error_filled} aria-label='Error icon' />
-                  <legend className='mt-1 leading-none'>{`${intl('order_reports_form_choose')}*`}</legend>
+                  <Icon data={error_filled} aria-label="Error icon" />
+                  <legend className="mt-1 leading-none">{`${intl('order_reports_form_choose')}*`}</legend>
                 </div>
               )}
               <ul>
@@ -166,7 +169,7 @@ const OrderReportsForm = () => {
               </ul>
             </fieldset>
             <Controller
-              name='name'
+              name="name"
               control={control}
               render={({
                 field: { ref, ...props },
@@ -177,10 +180,10 @@ const OrderReportsForm = () => {
                   id={`${props.name}_${formId}`}
                   label={`${intl('name')}*`}
                   inputRef={ref}
-                  aria-required='true'
+                  aria-required="true"
                   inputIcon={
                     invalid ? (
-                      <Icon data={error_filled} title='error' />
+                      <Icon data={error_filled} title="error" />
                     ) : undefined
                   }
                   helperText={error?.message}
@@ -189,7 +192,7 @@ const OrderReportsForm = () => {
               )}
             />
             <Controller
-              name='email'
+              name="email"
               control={control}
               render={({
                 field: { ref, ...props },
@@ -202,17 +205,17 @@ const OrderReportsForm = () => {
                   inputRef={ref}
                   inputIcon={
                     invalid ? (
-                      <Icon data={error_filled} title='error' />
+                      <Icon data={error_filled} title="error" />
                     ) : undefined
                   }
                   helperText={error?.message}
-                  aria-required='true'
+                  aria-required="true"
                   {...(invalid && { variant: 'error' })}
                 />
               )}
             />
             <Controller
-              name='company'
+              name="company"
               control={control}
               render={({
                 field: { ref, ...props },
@@ -223,10 +226,10 @@ const OrderReportsForm = () => {
                   id={`${props.name}_${formId}`}
                   label={`${intl('order_reports_form_company')}*`}
                   inputRef={ref}
-                  aria-required='true'
+                  aria-required="true"
                   inputIcon={
                     invalid ? (
-                      <Icon data={error_filled} title='error' />
+                      <Icon data={error_filled} title="error" />
                     ) : undefined
                   }
                   helperText={error?.message}
@@ -235,7 +238,7 @@ const OrderReportsForm = () => {
               )}
             />
             <Controller
-              name='address'
+              name="address"
               control={control}
               render={({
                 field: { ref, ...props },
@@ -248,18 +251,18 @@ const OrderReportsForm = () => {
                   inputRef={ref}
                   inputIcon={
                     invalid ? (
-                      <Icon data={error_filled} title='error' />
+                      <Icon data={error_filled} title="error" />
                     ) : undefined
                   }
                   helperText={error?.message}
-                  aria-required='true'
+                  aria-required="true"
                   {...(invalid && { variant: 'error' })}
                 />
               )}
             />
 
             <Controller
-              name='zipcode'
+              name="zipcode"
               control={control}
               render={({
                 field: { ref, ...props },
@@ -272,18 +275,18 @@ const OrderReportsForm = () => {
                   inputRef={ref}
                   inputIcon={
                     invalid ? (
-                      <Icon data={error_filled} title='error' />
+                      <Icon data={error_filled} title="error" />
                     ) : undefined
                   }
                   helperText={error?.message}
-                  aria-required='true'
+                  aria-required="true"
                   {...(invalid && { variant: 'error' })}
                 />
               )}
             />
 
             <Controller
-              name='city'
+              name="city"
               control={control}
               render={({
                 field: { ref, ...props },
@@ -292,11 +295,11 @@ const OrderReportsForm = () => {
                 <TextField
                   {...props}
                   id={`${props.name}_${formId}`}
-                  aria-required='true'
+                  aria-required="true"
                   label={`${intl('order_reports_form_city')}*`}
                   inputIcon={
                     invalid ? (
-                      <Icon data={error_filled} title='error' />
+                      <Icon data={error_filled} title="error" />
                     ) : undefined
                   }
                   helperText={error?.message}
@@ -306,7 +309,7 @@ const OrderReportsForm = () => {
               )}
             />
             <Controller
-              name='country'
+              name="country"
               control={control}
               render={({
                 field: { ref, ...props },
@@ -316,11 +319,11 @@ const OrderReportsForm = () => {
                   {...props}
                   id={`${props.name}_${formId}`}
                   label={`${intl('order_reports_form_country')}*`}
-                  aria-required='true'
+                  aria-required="true"
                   inputRef={ref}
                   inputIcon={
                     invalid ? (
-                      <Icon data={error_filled} title='error' />
+                      <Icon data={error_filled} title="error" />
                     ) : undefined
                   }
                   helperText={error?.message}
@@ -328,31 +331,30 @@ const OrderReportsForm = () => {
                 />
               )}
             />
-            <div className='flex flex-col gap-2'>
+            <div className="flex flex-col gap-2">
               <FriendlyCaptcha
                 doneCallback={() => {
-                  setIsFriendlyChallengeDone(true)
+                  setIsFriendlyChallengeDone(true);
                 }}
-                errorCallback={(error: any) => {
-                  console.error('FriendlyCaptcha encountered an error', error)
-                  setIsFriendlyChallengeDone(true)
+                errorCallback={() => {
+                  setIsFriendlyChallengeDone(false);
                 }}
               />
               {/*@ts-ignore: TODO: types*/}
               {errors?.root?.notCompletedCaptcha && (
                 <p
-                  role='alert'
-                  className='flex gap-2 border border-clear-red-100 px-6 py-4 font-semibold text-slate-80'
+                  role="alert"
+                  className="flex gap-2 border border-clear-red-100 px-6 py-4 font-semibold text-slate-80"
                 >
                   {/*@ts-ignore: TODO: types*/}
-                  <span className='mt-1'>
+                  <span className="mt-1">
                     {errors.root.notCompletedCaptcha.message}
                   </span>
-                  <Icon data={error_filled} aria-label='Error icon' />
+                  <Icon data={error_filled} aria-label="Error icon" />
                 </p>
               )}
             </div>
-            <Button type='submit'>
+            <Button type="submit">
               {isSubmitting
                 ? intl('form_sending')
                 : intl('order_reports_form_cta')}
@@ -360,20 +362,20 @@ const OrderReportsForm = () => {
           </form>
         </>
       )}
-      <section aria-live='assertive'>
-        {isSuccessfullySubmitted && <FormMessageBox variant='success' />}
+      <section aria-live="assertive">
+        {isSuccessfullySubmitted && <FormMessageBox variant="success" />}
         {isSubmitted && isServerError && (
           <FormMessageBox
-            variant='error'
+            variant="error"
             onClick={() => {
-              reset(undefined, { keepValues: true })
-              setServerError(false)
+              reset(undefined, { keepValues: true });
+              setServerError(false);
             }}
           />
         )}
       </section>
     </>
-  )
-}
+  );
+};
 
-export default OrderReportsForm
+export default OrderReportsForm;
