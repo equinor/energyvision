@@ -45,11 +45,12 @@ ENV NEXT_PUBLIC_OPTIMIZED_SANITY_FETCH=${ARG_OPTIMIZED_SANITY_FETCH}
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV TURBO_TELEMETRY_DISABLED=1
 ENV NEXT_DEPLOYMENT_ID=${ARG_DEPLOYMENT_ID}
+ENV CI=true
 
 RUN --mount=type=secret,id=sanity_api_token \
     --mount=type=secret,id=next_public_algolia_search_api_key \
     --mount=type=secret,id=next_server_actions_encryption_key \
-    sh -ec 'SANITY_API_TOKEN="$(cat /run/secrets/sanity_api_token)" NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY="$(cat /run/secrets/next_public_algolia_search_api_key)" NEXT_SERVER_ACTIONS_ENCRYPTION_KEY="$(cat /run/secrets/next_server_actions_encryption_key)" NEXT_PUBLIC_SENTRY_DSN="${ARG_SENTRY_DSN}" turbo build --filter=energy-vision-web'
+    sh -ec 'SANITY_API_TOKEN="$(cat /run/secrets/sanity_api_token)" NEXT_PUBLIC_ALGOLIA_SEARCH_API_KEY="$(cat /run/secrets/next_public_algolia_search_api_key)" NEXT_SERVER_ACTIONS_ENCRYPTION_KEY="$(cat /run/secrets/next_server_actions_encryption_key)" NEXT_PUBLIC_SENTRY_DSN="${ARG_SENTRY_DSN}" pnpm web generate-redirects && turbo build --filter=energy-vision-web'
 
 # 1. Run time environment
 FROM core-os AS runner
@@ -84,6 +85,8 @@ RUN ls -la
 COPY --from=builder /app/web/public ./web/public
 COPY --from=builder  --chown="$USER":"$USER" /app/web/.next/standalone ./
 COPY --from=builder  --chown="$USER":"$USER" /app/web/.next/static ./web/.next/static
+COPY --from=builder --chown="$USER":"$USER" /app/web/sanity/interface/redirects.json ./sanity/interface/redirects.json
+
 # Copy the complete node_modules structure from your installer stage to preserve symlinks
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=build --chown="$USER":"$USER" /app/web/sanity/interface/redirects.json ./sanity/interface/redirects.json

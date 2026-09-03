@@ -9,11 +9,11 @@ if (!archiveServerHostname || archiveServerHostname === 'undefined') {
 }
 
 import path from 'node:path';
-/* import { withSentryConfig } from '@sentry/nextjs' */
 import type { NextConfig } from 'next';
 import createNextIntlPlugin from 'next-intl/plugin';
 import redirects from './sanity/interface/redirects.json';
 import securityHeaders from './securityHeaders';
+import { withSentryConfig } from '@sentry/nextjs';
 
 const withNextIntl = createNextIntlPlugin();
 
@@ -23,7 +23,6 @@ const sentryConfig = {
   silent: true,
   //disableLogger: true,
   hideSourceMaps: true,
-  tunnelRoute: '/sentry-tunnel',
 };
 
 //TODO: Find the Redirect type from config that is not in /dist.
