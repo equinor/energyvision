@@ -3,6 +3,7 @@ import { algoliasearch } from 'algoliasearch'
 import type { Metadata } from 'next'
 import { cacheLife, cacheTag } from 'next/cache'
 import dynamic from 'next/dynamic'
+import { notFound } from 'next/navigation'
 import { getLocale } from 'next-intl/server'
 import { Suspense } from 'react'
 import { algolia } from '@/lib/config'
@@ -20,11 +21,15 @@ import NewsRoomTemplate from '@/templates/newsroom/Newsroom'
 const TopicPage = dynamic(() => import('@/templates/topic/TopicPage'))
 
 export async function generateStaticParams() {
-  return Flags.HAS_NEWSROOM ? [{ locale: 'en-GB' }] : []
+  // See: https://nextjs.org/docs/messages/empty-generate-static-params
+  return Flags.HAS_NEWSROOM ? [{ locale: 'en-GB' }] : [{locale: '__placeholder__'}]
 }
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale()
+
+  if(locale === "__placeholder__") return notFound()
+
   const pageSlug = newsSlug[getNameFromIso(locale)]
   if (Flags.HAS_NEWSROOM) {
     const { data: metaData }: { data: any } = await sanityFetchMetadata({
@@ -89,6 +94,9 @@ async function CachedNewsroomPage({
   'use cache'
 
   const locale = await getLocale()
+
+  if(locale === "__placeholder__") return notFound()
+    
   const [siteMenuResult, pageResults] = await Promise.all([
     routeSanityFetch({
       query: Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery,
