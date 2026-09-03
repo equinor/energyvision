@@ -1,47 +1,38 @@
-import { getTranslations } from '../sanity/interface/interface'
-import fs from 'node:fs'
-import dotenv from 'dotenv'
+import fs from 'node:fs';
+import dotenv from 'dotenv';
+import { getTranslations } from '../sanity/interface/interface';
 
+dotenv.config({ path: '.env.local' });
 
-dotenv.config({ path: '.env.local' })
-
-const token = process.env.SANITY_API_TOKEN
+const token = process.env.SANITY_API_TOKEN;
 
 if (!token) {
-  console.error('Missing SANITY_API_TOKEN')
-  process.exit(1)
+  console.error('Missing SANITY_API_TOKEN');
+  process.exit(1);
 }
 
 /**
  * Generate a list of translations
  */
 getTranslations(token)
-  .then((translations) =>
-  {
+  .then((translations) => {
     const jsonFile = JSON.stringify(
-        translations?.data?.map((translation: any) => {
-          const key = translation["_id"].replace('text_snippet_', '')
-          let translationsOnKey = {}
-          Object.entries(translation).forEach(([key, value]) => {
-            if(!key.startsWith('_')){
-              return Object.assign(translationsOnKey, {
-                ...translationsOnKey,
-                [key]: value
-              }) 
-            }
-          })
-          const putTogether = {
-            [key]: translationsOnKey
-          }
-          return putTogether
-        }),
-      )
-    return fs.writeFileSync(
-      './sanity/interface/translations.json',jsonFile,
-    )
-  }
-  )
-  .catch((e) => {
-    console.error('Failed generating translations')
-    console.error(e)
+      translations?.data?.map((translation: any) => {
+        const key = translation['_id'].replace('text_snippet_', '');
+        const translationsOnKey = Object.fromEntries(
+          Object.entries(translation).filter(
+            ([fieldName]) => !fieldName.startsWith('_'),
+          ),
+        );
+        const putTogether = {
+          [key]: translationsOnKey,
+        };
+        return putTogether;
+      }),
+    );
+    return fs.writeFileSync('./sanity/interface/translations.json', jsonFile);
   })
+  .catch((e) => {
+    console.error('Failed generating translations');
+    console.error(e);
+  });

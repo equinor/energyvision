@@ -1,11 +1,11 @@
+import { directions } from '@equinor/eds-icons'
 import type { Rule, ValidationContext } from 'sanity'
 import blocksToText from '../../helpers/blocksToText'
 import { filterByPages } from '../../helpers/referenceFilters'
+import { EdsIcon } from '../../icons'
+import { apiVersion } from '../../sanity.client'
 import { Flags } from '../../src/lib/datasetHelpers'
 import routes from '../routes'
-import { EdsIcon } from '../../icons'
-import { directions } from '@equinor/eds-icons'
-import { apiVersion } from '../../sanity.client'
 import { lang } from './langField'
 
 export default {
@@ -27,13 +27,17 @@ export default {
           const query = /* groq */ `*[_type == 'redirect' && from == $value && _id != $documentId && !(_id in path('drafts.**'))]`
 
           const params = { value, documentId }
-          const redirects = await context.getClient({ apiVersion: apiVersion }).fetch(query, params)
+          const redirects = await context
+            .getClient({ apiVersion: apiVersion })
+            .fetch(query, params)
 
           if (!value) {
             return 'Slug is required'
-          } else if (value.charAt(0) !== '/') {
+          }
+          if (value.charAt(0) !== '/') {
             return "Slug must begin with '/'. Do not add https://www.equinor.etc"
-          } else if (redirects.length > 0) {
+          }
+          if (redirects.length > 0) {
             return 'Another redirect from this path already exists'
           }
 
@@ -55,7 +59,7 @@ export default {
           type: 'news',
         },
         ...routes,
-      ].filter((e) => e),
+      ].filter(e => e),
       validation: (Rule: Rule) => Rule.required(),
       options: {
         filter: filterByPages,
@@ -76,9 +80,19 @@ export default {
       oldSlug: 'from',
     },
     prepare(selection: Record<string, any>) {
-      const { type, newsTitle, newsMedia, magazineTitle, magazineMedia, routeMedia, routeTitle, newSlug, oldSlug } =
-        selection
-      let title, media
+      const {
+        type,
+        newsTitle,
+        newsMedia,
+        magazineTitle,
+        magazineMedia,
+        routeMedia,
+        routeTitle,
+        newSlug,
+        oldSlug,
+      } = selection
+      let title: string | undefined = ''
+      let media: any
       if (type === 'news' || type === 'localNews') {
         title = newsTitle
         media = newsMedia

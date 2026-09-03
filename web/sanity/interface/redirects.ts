@@ -2,9 +2,9 @@
 //@ts-nocheck
 
 //import { ConfigRedirect } from '@/next.config'
-import { dataset } from '../../languageConfig'
-import { getLocaleFromName } from '../helpers/localization'
-import { notSecuredTokenClient } from '../lib/client'
+import { dataset } from '../../languageConfig';
+import { getLocaleFromName } from '../helpers/localization';
+import { noCdnClient } from '../lib/client';
 
 /* export const getAllRedirects = async () => {
   try {
@@ -29,18 +29,18 @@ import { notSecuredTokenClient } from '../lib/client'
 } */
 
 const getExternalRedirects = async () => {
-  const result = await notSecuredTokenClient.fetch(
+  const result = await noCdnClient.fetch(
     `*[_type == "externalRedirect"]{from,to}`,
-  )
+  );
   const externalRedirects = result
-    .filter(e => e)
-    .map(externalRedirect => {
+    .filter((e) => e)
+    .map((externalRedirect) => {
       return {
         source: externalRedirect.from,
         permanent: true,
         destination: externalRedirect.to,
-      }
-    })
+      };
+    });
   const redirects = [
     // Redirect IE users to not-supported page
     {
@@ -56,7 +56,7 @@ const getExternalRedirects = async () => {
       destination: '/not-supported.html',
     },
     ...externalRedirects,
-  ]
+  ];
   if (
     dataset &&
     ['global', 'global-development', 'global-test'].includes(dataset)
@@ -72,74 +72,118 @@ const getExternalRedirects = async () => {
         destination: '/no/magasin',
         permanent: true,
       },
-    ]
-    redirects.concat(fiftySiteRedirects)
+    ];
+    redirects.push(...fiftySiteRedirects);
   }
-  return redirects.filter(e => e)
-}
+  return [...redirects, ...getStaticRedirects()].filter((e) => e);
+};
+
+const getStaticRedirects = () => [
+  {
+    source:
+      '/content/dam/statoil/documents/supply-chain/statoil-deposit-enrollment-form.pdf',
+    destination: '/where-we-are/us-owner-relations',
+    permanent: true,
+  },
+  {
+    source: '/:path*',
+    has: [{ type: 'host', value: 'statoil.com' }],
+    destination: 'https://www.equinor.com/:path*',
+    permanent: true,
+  },
+  {
+    source: '/:path*',
+    has: [{ type: 'host', value: 'equinor.kr' }],
+    destination: 'https://www.equinor.co.kr/:path*',
+    permanent: true,
+  },
+  ...dnsRedirects.map((redirect) => {
+    const separator = redirect.from.indexOf('/');
+    const host =
+      separator === -1 ? redirect.from : redirect.from.slice(0, separator);
+    const source =
+      separator === -1 ? '/:path*' : redirect.from.slice(separator);
+
+    return {
+      source,
+      has: [{ type: 'host', value: host }],
+      destination: `https://www.equinor.com${redirect.to}`,
+      permanent: true,
+    };
+  }),
+];
 
 export const getInternalRedirects = async () => {
-  const result = await notSecuredTokenClient.fetch(`*[_type == "redirect"]{
+  console.log('Fetching internal redirects from Sanity');
+  const result = await noCdnClient.fetch(`*[_type == "redirect"]{
   lang,
   from,
-  "to": to->slug.current
-}`)
+  "to": select(to->_type == "route_homepage" => "/", to->slug.current)
+}`);
   const redirects = result
-    .filter(e => e)
-    .map(redirect => {
-      const to = redirect.to === '/' ? '' : redirect.to
-      const locale = getLocaleFromName(redirect.lang)
-      const des = `${locale !== 'en' ? `/${locale}` : ''}${to}`
+    .filter((e) => e)
+    .map((redirect) => {
+      const to = redirect.to === '/' ? '' : redirect.to;
+      const locale = getLocaleFromName(redirect.lang);
+      const des = to
+        ? `${locale !== 'en' ? `/${locale}` : ''}${to}`
+        : locale !== 'en'
+          ? `/${locale}`
+          : '/';
 
       const nextRedirect = {
         source: redirect.from,
         destination: des,
         permanent: true,
-      }
+      };
       return redirect.from.startsWith(locale)
         ? { ...nextRedirect, locale: false }
-        : nextRedirect
-    })
-  return [...redirects]
-}
+        : nextRedirect;
+    });
+  console.log('Internal redirects fetched from Sanity', redirects);
+  return [...redirects];
+};
 
 export const getAllRedirects = async () => {
   const result = await Promise.all([
     getExternalRedirects(),
     getInternalRedirects(),
-  ])
+  ]);
 
-  return result.flat()
-}
+  return result.flat();
+};
 
+//Get the redirect for www. If the host does not include www, it will return the redirect URL with www. Otherwise, it will return undefined.
 export const getWWWRedirect = (requestLocale, host, pathname) => {
   if (!host.includes('www')) {
-    return `https://www.${host}/${requestLocale}${pathname}`
+    return `https://www.${host}/${requestLocale}${pathname}`;
   }
-  return undefined
-}
+  return undefined;
+};
 
+// This function is used to redirect old domains to the new domain. It checks the host and pathname and returns the new URL if a redirect is needed.
 export const getDnsRedirect = (host, pathname) => {
   const dns = host
     .replace('http://', '')
     .replace('https://', '')
-    .replace('www.', '')
+    .replace('www.', '');
 
   if (dns === 'statoil.com') {
-    return `https://www.equinor.com${pathname}`
+    return `https://www.equinor.com${pathname}`;
   }
 
   if (dns === 'equinor.kr') {
-    return `https://www.equinor.co.kr${pathname}`
+    return `https://www.equinor.co.kr${pathname}`;
   }
 
   const redirect =
-    dnsRedirects.find(redirect => redirect.from === dns + pathname) ||
-    dnsRedirects.find(redirect => redirect.from === dns)
+    dnsRedirects.find((redirect) => redirect.from === dns + pathname) ||
+    dnsRedirects.find((redirect) => redirect.from === dns);
 
-  return redirect && `https://www.equinor.com${redirect.to}`
-}
+  return redirect && `https://www.equinor.com${redirect.to}`;
+};
 
+// List of redirects for old domains to the new domain.
 const dnsRedirects = [
   {
     from: 'equinor.co.uk/mariner',
@@ -209,4 +253,4 @@ const dnsRedirects = [
     from: 'data.equinor.com',
     to: '/energy/data-sharing',
   },
-]
+];

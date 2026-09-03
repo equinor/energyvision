@@ -1,22 +1,21 @@
 /** biome-ignore-all assist/source/organizeImports: <explanation> */
 // 1. Fetch the environment variable
-let archiveServerHostname = process.env.NEXT_PUBLIC_ARCHIVE_CONTENT_LINK
+let archiveServerHostname = process.env.NEXT_PUBLIC_ARCHIVE_CONTENT_LINK;
 
 // 2. SAFETY CHECK: If the variable is missing or evaluates to the literal string "undefined",
 // fall back to an empty string so Next.js doesn't crash on local development startup.
 if (!archiveServerHostname || archiveServerHostname === 'undefined') {
-  archiveServerHostname = ''
+  archiveServerHostname = '';
 }
 
-import path from 'node:path'
-/* import { withSentryConfig } from '@sentry/nextjs' */
-import type { NextConfig } from 'next'
-import createNextIntlPlugin from 'next-intl/plugin'
-//import { getAllRedirects } from './sanity/interface/redirects'
-import securityHeaders from './securityHeaders'
-import { withSentryConfig } from '@sentry/nextjs'
+import path from 'node:path';
+import type { NextConfig } from 'next';
+import createNextIntlPlugin from 'next-intl/plugin';
+import redirects from './sanity/interface/redirects.json';
+import securityHeaders from './securityHeaders';
+import { withSentryConfig } from '@sentry/nextjs';
 
-const withNextIntl = createNextIntlPlugin()
+const withNextIntl = createNextIntlPlugin();
 
 const sentryConfig = {
   org: 'equinor',
@@ -24,26 +23,26 @@ const sentryConfig = {
   silent: true,
   //disableLogger: true,
   hideSourceMaps: true,
-}
+};
 
 //TODO: Find the Redirect type from config that is not in /dist.
 export type ConfigRedirect = {
-  source: string
-  destination: string
-  basePath?: false | undefined
-  locale?: false | undefined
-  has?: any[] | undefined
-  missing?: any[]
+  source: string;
+  destination: string;
+  basePath?: false | undefined;
+  locale?: false | undefined;
+  has?: any[] | undefined;
+  missing?: any[];
 } & (
   | {
-      statusCode?: never
-      permanent: boolean
+      statusCode?: never;
+      permanent: boolean;
     }
   | {
-      statusCode: number
-      permanent?: never
+      statusCode: number;
+      permanent?: never;
     }
-)
+);
 
 const nextConfig: NextConfig = withNextIntl({
   output: 'standalone',
@@ -97,7 +96,7 @@ const nextConfig: NextConfig = withNextIntl({
         source: '/legacy/:slug*',
         destination: `${archiveServerHostname}/:slug*`,
       },
-    ].filter(e => e)
+    ].filter((e) => e);
   },
   async headers() {
     return [
@@ -114,11 +113,11 @@ const nextConfig: NextConfig = withNextIntl({
           },
         ],
       },
-    ].filter(e => e)
+    ].filter((e) => e);
   },
-  // async redirects() {
-  //   return await getAllRedirects()
-  // },
+  async redirects() {
+    return redirects as ConfigRedirect[];
+  },
   env: {
     SC_DISABLE_SPEEDY: 'false',
   },
@@ -131,9 +130,9 @@ const nextConfig: NextConfig = withNextIntl({
     ],
     //externalDir: true,
   },
-})
+});
 
 // Only wrap with Sentry if we are building for production
 export default process.env.NODE_ENV === 'production'
   ? withSentryConfig(nextConfig, sentryConfig)
-  : nextConfig
+  : nextConfig;

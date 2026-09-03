@@ -92,7 +92,7 @@ runs:
         registry: ghcr.io
         username: ${{ github.actor }}
         password: ${{ inputs.githubToken }}
-    
+
     - name: Build web component ⚙️
       id: build
       uses: docker/build-push-action@v7
