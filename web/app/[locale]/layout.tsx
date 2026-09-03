@@ -1,6 +1,5 @@
 import '../globals.css'
 import { GoogleTagManager } from '@next/third-parties/google'
-import { cacheLife } from 'next/cache'
 import localFont from 'next/font/local'
 import { draftMode } from 'next/headers'
 import NextLink from 'next/link'

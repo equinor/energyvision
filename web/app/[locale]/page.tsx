@@ -1,6 +1,5 @@
 import { stegaClean } from '@sanity/client/stega'
 import type { Metadata } from 'next'
-import { cacheLife } from 'next/cache'
 import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
 import { getLocale } from 'next-intl/server'

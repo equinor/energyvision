@@ -23,6 +23,14 @@ type WebhookPayload = {
  */
 
 export async function POST(req: NextRequest) {
+  // do not revalidate when optimized fetch is disabled as this unnecessary and cause additional usage.
+  if (process.env.NEXT_PUBLIC_OPTIMIZED_SANITY_FETCH === 'false') {
+    return new Response(
+      'Optimized fetch is disabled. So revalidation is not relevant.',
+      { status: 200 },
+    )
+  }
+
   try {
     if (!process.env.SANITY_API_TOKEN) {
       return new Response('Missing environment variable SANITY_API_TOKEN', {
@@ -64,7 +72,7 @@ export async function POST(req: NextRequest) {
 
       routes.forEach((route: any) => {
         const tag = `page:${route.slug}`
-        revalidateTag(tag, 'max')
+        revalidateTag(tag, { expire: 0 })
         console.log(`revalidated tag: ${tag}`)
       })
     } else {
@@ -79,7 +87,7 @@ export async function POST(req: NextRequest) {
           ? 'page'
           : docType
       const tag = `${prefix}:${prefix === 'page' ? docSlug : docLang}`
-      revalidateTag(tag, 'max')
+      revalidateTag(tag, { expire: 0 })
       console.log(`revalidated tag: ${tag}`)
     }
 

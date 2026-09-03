@@ -1,6 +1,5 @@
 //import translations from '../interface/translations.json'
 
-import { cacheLife } from 'next/cache'
 import { defaultLanguage } from '@/languageConfig'
 import { routeSanityFetch } from '@/sanity/lib/fetch'
 import formatTextSnippets from './formatTextSnippets'
