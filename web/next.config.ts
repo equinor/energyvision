@@ -1,24 +1,28 @@
-const archiveServerHostname = process.env.NEXT_PUBLIC_ARCHIVE_CONTENT_LINK
+/** biome-ignore-all assist/source/organizeImports: <explanation> */
+// 1. Fetch the environment variable
+let archiveServerHostname = process.env.NEXT_PUBLIC_ARCHIVE_CONTENT_LINK
+
+// 2. SAFETY CHECK: If the variable is missing or evaluates to the literal string "undefined",
+// fall back to an empty string so Next.js doesn't crash on local development startup.
+if (!archiveServerHostname || archiveServerHostname === 'undefined') {
+  archiveServerHostname = ''
+}
 
 import path from 'node:path'
-import { withSentryConfig } from '@sentry/nextjs'
-/* import { withSentryConfig } from '@sentry/nextjs' */
 import type { NextConfig } from 'next'
 import createNextIntlPlugin from 'next-intl/plugin'
 import redirects from './sanity/interface/redirects.json'
 import securityHeaders from './securityHeaders'
+import { withSentryConfig } from '@sentry/nextjs'
 
 const withNextIntl = createNextIntlPlugin()
 
-const isProd = process.env.NODE_ENV === 'production'
 const sentryConfig = {
   org: 'equinor',
   project: 'equinor-com',
   silent: true,
   //disableLogger: true,
-  widenClientFileUpload: true,
-  disableClientWebpackPlugin: !isProd,
-  disableServerWebpackPlugin: !isProd,
+  hideSourceMaps: true,
 }
 
 //TODO: Find the Redirect type from config that is not in /dist.
@@ -117,7 +121,6 @@ const nextConfig: NextConfig = withNextIntl({
   env: {
     SC_DISABLE_SPEEDY: 'false',
   },
-
   outputFileTracingRoot: path.join(__dirname, '../'),
   experimental: {
     optimizePackageImports: [
@@ -129,4 +132,7 @@ const nextConfig: NextConfig = withNextIntl({
   },
 })
 
-export default withSentryConfig(nextConfig, sentryConfig)
+// Only wrap with Sentry if we are building for production
+export default process.env.NODE_ENV === 'production'
+  ? withSentryConfig(nextConfig, sentryConfig)
+  : nextConfig

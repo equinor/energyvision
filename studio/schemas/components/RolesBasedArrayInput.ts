@@ -3,6 +3,7 @@ import { type Role, useCurrentUser } from 'sanity'
 const restrictedComponents = [
   'videoPlayer',
   'videoPlayerCarousel',
+  'embeddedVideoList',
   'fullWidthVideo',
   'promoteExternalLinkV2',
   'grid',

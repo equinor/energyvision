@@ -40,6 +40,9 @@ inputs:
   serverActionsEncryptionKey:
     description: 'Server actions encryption key'
     required: true
+  sentryDsn:
+    description: 'Sentry DSN'
+    required: false
 
 
 runs:
@@ -108,6 +111,7 @@ runs:
           next_public_algolia_search_api_key=${{ inputs.algoliaApiKey }}
           next_server_actions_encryption_key=${{ inputs.serverActionsEncryptionKey }}
         build-args: |
+          ARG_SENTRY_DSN=${{ inputs.sentryDsn }}
           ARG_SANITY_PROJECT_ID=${{ inputs.projectId }}
           ARG_SANITY_DATASET=${{ inputs.datasetName }}
           ARG_ALGOLIA_APP_ID=${{ inputs.algoliaAppId }}

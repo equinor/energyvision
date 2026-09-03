@@ -1,4 +1,5 @@
 import type { PortableTextBlock } from '@portabletext/types'
+import { useLocale } from 'next-intl'
 import { forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 import {
@@ -11,8 +12,9 @@ import {
   getGridTemplateColumns,
   getLayoutPx,
 } from '@/lib/helpers/getCommonUtilities'
-import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
+import { getLocalizedHref } from '@/lib/helpers/getLocalizedHref'
 import Blocks from '@/portableText/Blocks'
+import { getIsoFromName } from '@/sanity/helpers/localization'
 import {
   type ColorKeys,
   colorKeyToUtilityMap,
@@ -62,6 +64,7 @@ export const PromotionBlockV2 = forwardRef<HTMLDivElement, PromotionBlockProps>(
     },
     ref,
   ) {
+    const iso = useLocale()
     const { background, foreground, layoutGrid, gridColumns, layoutDirection } =
       designOptions
 
@@ -109,10 +112,13 @@ export const PromotionBlockV2 = forwardRef<HTMLDivElement, PromotionBlockProps>(
             <ul className={`${px} grid ${cols} auto-rows-fr gap-4`}>
               {promoteList.map((promotion: any) => {
                 const variant = getVariantOnType(promotion?.type)
-                const href = getUrlFromAction({
-                  ...promotion,
-                  type: variant === 'default' ? 'internalUrl' : variant,
-                })
+                const promotionIso = promotion?.link?.lang
+                  ? getIsoFromName(promotion.link.lang)
+                  : iso
+                const href =
+                  variant === 'default'
+                    ? getLocalizedHref(promotion?.link?.slug, promotionIso)
+                    : promotion?.href
 
                 return (
                   <li key={promotion.id}>

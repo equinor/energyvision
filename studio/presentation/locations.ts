@@ -124,7 +124,7 @@ export const locations: DocumentLocationResolver = (params, context) => {
             locs = [
               {
                 title: `${doc?.title ? blocksToText(doc?.title) : 'Untitled'}`,
-                href: `/api/draft/preview/${doc?._id}`,
+                href: `/preview/${doc?._id}`,
               },
             ]
           }
@@ -163,7 +163,7 @@ export const locations: DocumentLocationResolver = (params, context) => {
           locs = [
             {
               title: doc.title ? plainTitle : 'Untitled',
-              href: `${doc?.lang !== defaultWebLang?.name ? `${locale}/` : ''}${doc?.slug?.current}`,
+              href: `${doc?.lang !== defaultWebLang?.name ? `${locale}` : ''}${doc?.slug?.current}`,
             },
           ]
         }

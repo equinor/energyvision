@@ -26,6 +26,7 @@ import colorList from './objects/colorList'
 import contactList from './objects/contactList'
 import cookieDeclaration from './objects/cookieDeclaration'
 import downloadableImage from './objects/downloadableImage'
+import embeddedVideoList from './objects/embeddedVideoList'
 import eventDate from './objects/eventDate'
 import excludeFromSearch from './objects/excludeFromSearch'
 import factbox from './objects/factbox'
@@ -85,6 +86,7 @@ import stockValuesApi from './objects/stockValuesApi'
 import tableV2 from './objects/tableV2'
 import tabs from './objects/tabs/tabs'
 import tabsBackground from './objects/tabs/tabsBackground'
+import tabsEmbeddedVideosPanel from './objects/tabs/tabsEmbeddedVideosPanel'
 import tabsInfoPanel from './objects/tabs/tabsInfoPanel'
 import tabsItem from './objects/tabs/tabsItem'
 import tabsKeyNumberItem from './objects/tabs/tabsKeyNumberItem'
@@ -165,6 +167,7 @@ const RemainingSchemas = [
   titleAndMeta,
   downloadableFile,
   downloadableImage,
+  embeddedVideoList,
   teaser,
   textTeaser,
   textBlock,
@@ -229,6 +232,7 @@ const RemainingSchemas = [
   tabs,
   tabsItem,
   tabsBackground,
+  tabsEmbeddedVideosPanel,
   tabsInfoPanel,
   tabsKeyNumbers,
   tabsKeyNumberItem,

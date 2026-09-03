@@ -119,12 +119,14 @@ export default {
       of: [
         configureBlockContent({ variant: 'textBlock' }),
         // This enables the image upload/paste block
-        Flags.IS_DEV
-          ? defineArrayMember({
-              type: 'image',
-              options: { hotspot: true },
-            })
-          : false,
+        ...(Flags.IS_DEV
+          ? [
+              {
+                type: 'image',
+                options: { hotspot: true },
+              },
+            ]
+          : []),
       ],
     },
     {

@@ -13,7 +13,7 @@ import { FormMessageBox } from '@/core/Form/FormMessageBox'
 import { TextField } from '@/core/TextField/TextField'
 import { subscribeSchema } from '@/lib/zodSchemas/zodSchemas'
 import { getLocaleFromIso } from '@/sanity/helpers/localization'
-import { type newsletterCategoryLocale } from '@/types/newsLetterTypes'
+import type { newsletterCategoryLocale } from '@/types/newsLetterTypes'
 import FriendlyCaptcha from './FriendlyCaptcha'
 
 const SubscribeForm = () => {
@@ -36,7 +36,8 @@ const SubscribeForm = () => {
     defaultValues: { email: '', categories: [] },
   })
 
-  const onSubmit = async (  formData: z.infer<ReturnType<typeof subscribeSchema>>,
+  const onSubmit = async (
+    formData: z.infer<ReturnType<typeof subscribeSchema>>,
     event?: BaseSyntheticEvent,
   ) => {
     if (isFriendlyChallengeDone) {
@@ -62,6 +63,7 @@ const SubscribeForm = () => {
       if (res?.status) {
         setSuccessfullySubmitted(res.status)
       } else {
+        console.error('Error submitting form', res)
         setServerError(!res?.status)
       }
     } else {

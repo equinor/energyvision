@@ -176,7 +176,9 @@ export default {
         { type: 'imageCarousel' },
         { type: 'iframeCarousel' },
         { type: 'videoPlayer' },
+        { type: 'embeddedVideoList' },
         { type: 'anchorLink' },
+        { type: 'tabs' },
       ],
     },
     {

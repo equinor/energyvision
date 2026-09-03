@@ -10,9 +10,8 @@ import FormattedDateTime, {
   TimeIcon,
 } from '@/core/FormattedDateTime/FormattedDateTime'
 import { BaseLink } from '@/core/Link/BaseLink'
-import { defaultLanguage } from '@/languageConfig'
 import { getEventDates } from '@/lib/helpers/dateUtilities'
-import { getLocaleFromIso } from '@/sanity/helpers/localization'
+import { getLocalizedHref } from '@/lib/helpers/getLocalizedHref'
 import {
   type ColorKeys,
   colorKeyToUtilityMap,
@@ -58,8 +57,7 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
 
   const iso = useLocale()
   const t = useTranslations()
-  const locale = iso !== defaultLanguage.name ? getLocaleFromIso(iso) : ''
-  const href = '/' + locale + slug || ''
+  const href = getLocalizedHref(slug, iso)
 
   const { start, end } = getEventDates(eventDate)
   const plainTitle = title ? toPlainText(title as PortableTextBlock[]) : ''
@@ -70,7 +68,7 @@ const EventCard = forwardRef<HTMLDivElement, EventCardProps>(function EventCard(
       className={twMerge(
         `has-focus-visible:envis-outline dark:has-focus-visible:envis-outline-invert flex h-full flex-col rounded-card px-6 py-8 text-slate-80 focus:outline-hidden dark:text-white-100`,
         colorKeyToUtilityMap[background ?? 'gray-20'].background,
-        variant === 'carousel' && 'w-[383px]',
+        variant === 'carousel' && 'w-event-carousel-card-w',
         variant === 'single' && 'max-w-prose',
         className,
       )}

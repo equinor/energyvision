@@ -4,8 +4,7 @@ import type { Metadata } from 'next'
 import dynamic from 'next/dynamic'
 import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
-import { setRequestLocale } from 'next-intl/server'
-import { getValidLanguagesLocales } from '@/languageConfig'
+import { getLocale } from 'next-intl/server'
 import { decodeSlugs } from '@/lib/helpers/getFullUrl'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { getNameFromIso } from '@/sanity/helpers/localization'
@@ -30,12 +29,12 @@ const NewsPage = dynamic(() => import('@/templates/news/News'))
 const TopicPage = dynamic(() => import('@/templates/topic/TopicPage'))
 const MagazineRoom = dynamic(() => import('@/templates/magazine/Magazineroom'))
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PageProps<'/[locale]/[...slug]'>): Promise<Metadata> {
   //array, separated by /. e.g. [news, last slug]
-  const { slug: encodedSlug, locale } = await params
-
-  if (!getValidLanguagesLocales().includes(locale)) notFound()
-
+  const { slug: encodedSlug } = await params
+  const locale = await getLocale()
   const slug = decodeSlugs(encodedSlug) as string[]
 
   const sanityLang = getNameFromIso(locale)
@@ -74,15 +73,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return constructSanityMetadata(slug, locale, metaData)
 }
 
-export default async function Page({ params }: Props) {
+export default async function Page({ params, searchParams }: Props) {
   const { slug, locale } = await params
+  const resolvedSearchParams = await searchParams
   /*   const isInPresentationToolContext =
     (await cookies()).get('preview-fetch-dest')?.value === 'iframe' */
   const { isEnabled: isDraftMode } = await draftMode()
-
-  if (!getValidLanguagesLocales().includes(locale)) notFound()
-
-  setRequestLocale(locale)
   let pageContent = null
   const [siteMenuResult, pageResults] = await Promise.all([
     routeSanityFetch({
@@ -94,6 +90,7 @@ export default async function Page({ params }: Props) {
     getPage({
       slug: decodeSlugs(slug),
       locale,
+      searchParams: resolvedSearchParams,
     }),
   ])
   pageContent = pageResults
