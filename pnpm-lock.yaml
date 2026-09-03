@@ -18,8 +18,8 @@ importers:
   .:
     devDependencies:
       '@biomejs/biome':
-        specifier: 2.3.6
-        version: 2.3.6
+        specifier: 2.5.10
+        version: 2.5.10
       husky:
         specifier: ^9.1.7
         version: 9.1.7
@@ -308,7 +308,7 @@ importers:
         version: 3.12.0
       instantsearch.js:
         specifier: ^4.93.0
-        version: 4.113.0(algoliasearch@5.57.0)
+        version: 4.111.0(algoliasearch@5.57.0)
       next:
         specifier: 16.3.3
         version: 16.3.3(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.9.1)(@types/node@22.20.1)(babel-plugin-macros@3.1.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -344,10 +344,10 @@ importers:
         version: 5.5.0(react@19.2.4)
       react-instantsearch:
         specifier: ^7.19.0
-        version: 7.46.0(algoliasearch@5.57.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+        version: 7.44.0(algoliasearch@5.57.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       react-instantsearch-nextjs:
         specifier: 1.0.5
-        version: 1.0.5(next@16.3.3(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.9.1)(@types/node@22.20.1)(babel-plugin-macros@3.1.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-instantsearch@7.46.0(algoliasearch@5.57.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))
+        version: 1.0.5(next@16.3.3(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.9.1)(@types/node@22.20.1)(babel-plugin-macros@3.1.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-instantsearch@7.44.0(algoliasearch@5.57.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))
       recharts:
         specifier: ^3.3.0
         version: 3.10.1(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react-is@19.2.8)(react@19.2.4)(redux@5.0.1)
@@ -378,7 +378,7 @@ importers:
         version: 4.27.0
       '@biomejs/biome':
         specifier: ^2.4.5
-        version: 2.5.11
+        version: 2.5.10
       '@portabletext/types':
         specifier: ^2.0.13
         version: 2.0.15
@@ -1344,116 +1344,59 @@ packages:
   '@bcoe/v8-coverage@0.2.3':
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
 
-  '@biomejs/biome@2.3.6':
-    resolution: {integrity: sha512-oqUhWyU6tae0MFsr/7iLe++QWRg+6jtUhlx9/0GmCWDYFFrK366sBLamNM7D9Y+c7YSynUFKr8lpEp1r6Sk7eA==}
+  '@biomejs/biome@2.5.10':
+    resolution: {integrity: sha512-WRKXARA3kTuiV5sxqTpobJ/I0MVd4vk3pOL6wnp5az4LntFIhWTj1RWZq3DI9PCEN3lXcqy7p5aqUHzvq8AXyQ==}
     engines: {node: '>=14.21.3'}
     hasBin: true
 
-  '@biomejs/biome@2.5.11':
-    resolution: {integrity: sha512-Tj0dnkLPdW0ASjHfj2D/ZkkvPU2wrFmnE1jWTD2xzV1ycapV1DutbYXk4NDnR3rYTi1ZCbNFD4G2gRMEY65WaA==}
-    engines: {node: '>=14.21.3'}
-    hasBin: true
-
-  '@biomejs/cli-darwin-arm64@2.3.6':
-    resolution: {integrity: sha512-P4JWE5d8UayBxYe197QJwyW4ZHp0B+zvRIGCusOm1WbxmlhpAQA1zEqQuunHgSIzvyEEp4TVxiKGXNFZPg7r9Q==}
+  '@biomejs/cli-darwin-arm64@2.5.10':
+    resolution: {integrity: sha512-ItCrxKK6SXVT6flYs0qIuBd4AA3TTTl4d66Re6YI2FuGZnN85NmuYNzkiTJUyYw8qBLv69L5zTUB6uyWd++h3Q==}
     engines: {node: '>=14.21.3'}
     cpu: [arm64]
     os: [darwin]
 
-  '@biomejs/cli-darwin-arm64@2.5.11':
-    resolution: {integrity: sha512-6SGZxoKbXvUjMn1t6A98HqWISPnGNbYs0R/Rt2JarmXBSev+lva4QxUMWEBX9lX1Wo1XTJ78uk5xVDtG58SRZg==}
-    engines: {node: '>=14.21.3'}
-    cpu: [arm64]
-    os: [darwin]
-
-  '@biomejs/cli-darwin-x64@2.3.6':
-    resolution: {integrity: sha512-I4rTebj+F/L9K93IU7yTFs8nQ6EhaCOivxduRha4w4WEZK80yoZ8OAdR1F33m4yJ/NfUuTUbP/Wjs+vKjlCoWA==}
+  '@biomejs/cli-darwin-x64@2.5.10':
+    resolution: {integrity: sha512-yLsPU9pAmtChXDu8vhKAzErqe+LeeYuwuUB2FZMkRitsmdodxsYRa9KHrFispsUHzzOu+9HB3nP/TQxyia+Sjw==}
     engines: {node: '>=14.21.3'}
     cpu: [x64]
     os: [darwin]
 
-  '@biomejs/cli-darwin-x64@2.5.11':
-    resolution: {integrity: sha512-nYkXY7tLBEgnGbYapDKAyKzgt44ZEyG+AKalvTXtCWKYgepI9dw327q+cVgedxm+Udi1ZzHKUyZrIusHi/KQbw==}
-    engines: {node: '>=14.21.3'}
-    cpu: [x64]
-    os: [darwin]
-
-  '@biomejs/cli-linux-arm64-musl@2.3.6':
-    resolution: {integrity: sha512-oK1NpIXIixbJ/4Tcx40cwiieqah6rRUtMGOHDeK2ToT7yUFVEvXUGRKqH0O4hqZ9tW8TcXNZKfgRH6xrsjVtGg==}
+  '@biomejs/cli-linux-arm64-musl@2.5.10':
+    resolution: {integrity: sha512-t1QAKZwQJRB4dvgJSgFiQ4BNfNPChg69BNonz854qLVxnjT3UvDzQg9mbkTJRu35ZqU0Rw10A73J8Urgbg2RPw==}
     engines: {node: '>=14.21.3'}
     cpu: [arm64]
     os: [linux]
     libc: [musl]
 
-  '@biomejs/cli-linux-arm64-musl@2.5.11':
-    resolution: {integrity: sha512-qhyZUMyCbWYFV2bAwRNVvfMVZ+hv7WYl6mossGrxC+uiQQXhvsuWWU8zz6jYX0mChZd9MgQZbm4vozTmG/5iGw==}
-    engines: {node: '>=14.21.3'}
-    cpu: [arm64]
-    os: [linux]
-    libc: [musl]
-
-  '@biomejs/cli-linux-arm64@2.3.6':
-    resolution: {integrity: sha512-JjYy83eVBnvuINZiqyFO7xx72v8Srh4hsgaacSBCjC22DwM6+ZvnX1/fj8/SBiLuUOfZ8YhU2pfq2Dzakeyg1A==}
+  '@biomejs/cli-linux-arm64@2.5.10':
+    resolution: {integrity: sha512-VG8uQW/86a1roLaIFvtIbEigxIdzdJ190oGyg1tV7VYeQtOS+x10sflk7WbuXgw91EtZX5DlIIIej1YqkNLlcg==}
     engines: {node: '>=14.21.3'}
     cpu: [arm64]
     os: [linux]
     libc: [glibc]
 
-  '@biomejs/cli-linux-arm64@2.5.11':
-    resolution: {integrity: sha512-3PVLSTD9RR73rvVPt5G3T1gc+ycggWEGfTD7RvzzbtcDPD27NxgxBbAFfpm7DXJKW6VLHWE1lLMGvFt2Qxjcow==}
-    engines: {node: '>=14.21.3'}
-    cpu: [arm64]
-    os: [linux]
-    libc: [glibc]
-
-  '@biomejs/cli-linux-x64-musl@2.3.6':
-    resolution: {integrity: sha512-QvxB8GHQeaO4FCtwJpJjCgJkbHBbWxRHUxQlod+xeaYE6gtJdSkYkuxdKAQUZEOIsec+PeaDAhW9xjzYbwmOFA==}
+  '@biomejs/cli-linux-x64-musl@2.5.10':
+    resolution: {integrity: sha512-pgDDqp9JybHm2I0KRgzN6i4+lt8xu4iqxUwLzglUMmOmyRTU1AYBGKzh9sNMOtIjah7xoWvKHlLVetvyifzoiQ==}
     engines: {node: '>=14.21.3'}
     cpu: [x64]
     os: [linux]
     libc: [musl]
 
-  '@biomejs/cli-linux-x64-musl@2.5.11':
-    resolution: {integrity: sha512-oRRlrchG5EfrEL/EmtT1qUjSNHk3/5LGeZhQqADBBAJF1b1ET6964xEKe7aGlGARzDfza8H/seEsFJl7S6Ql9w==}
-    engines: {node: '>=14.21.3'}
-    cpu: [x64]
-    os: [linux]
-    libc: [musl]
-
-  '@biomejs/cli-linux-x64@2.3.6':
-    resolution: {integrity: sha512-ZjPXzy5yN9wusIoX+8Zp4p6cL8r0NzJCXg/4r1KLVveIPXd2jKVlqZ6ZyzEq385WwU3OX5KOwQYLQsOc788waQ==}
+  '@biomejs/cli-linux-x64@2.5.10':
+    resolution: {integrity: sha512-4O6T0eq2heoHZN0a9UX+rWQoxXEBaKf+lRi2hbsGlHneUz9BWXM76nEWMK7Eeq8gzMxR1khQB6BFpAASpeXqGg==}
     engines: {node: '>=14.21.3'}
     cpu: [x64]
     os: [linux]
     libc: [glibc]
 
-  '@biomejs/cli-linux-x64@2.5.11':
-    resolution: {integrity: sha512-JOytptlsgM33B2MMFUg8iBrb4IKpbD5JnJrSeYiaFEeAj4vuXx0iQSQZ4qK7sqyMtfjZxxPdNdMZZVL4y/mFyA==}
-    engines: {node: '>=14.21.3'}
-    cpu: [x64]
-    os: [linux]
-    libc: [glibc]
-
-  '@biomejs/cli-win32-arm64@2.3.6':
-    resolution: {integrity: sha512-YM7hLHpwjdt8R7+O2zS1Vo2cKgqEeptiXB1tWW1rgjN5LlpZovBVKtg7zfwfRrFx3i08aNZThYpTcowpTlczug==}
+  '@biomejs/cli-win32-arm64@2.5.10':
+    resolution: {integrity: sha512-pxAbxduPO4xq/Cvgaa2lOrs9BB0hEXmmDqfMNP4ZOffGOkUrD1/QGw9UAMpFQpX2P8MqTIIRuQKcmetum4Oa6A==}
     engines: {node: '>=14.21.3'}
     cpu: [arm64]
     os: [win32]
 
-  '@biomejs/cli-win32-arm64@2.5.11':
-    resolution: {integrity: sha512-e49E6K9hzH/ohJNx8Y26mY8HaV4I4ZViIeoqhKsmoXLKHhQnMeBAVqCgsGf2Wa3lXlS7RkporDXMHHWkzvZzFw==}
-    engines: {node: '>=14.21.3'}
-    cpu: [arm64]
-    os: [win32]
-
-  '@biomejs/cli-win32-x64@2.3.6':
-    resolution: {integrity: sha512-psgNEYgMAobY5h+QHRBVR9xvg2KocFuBKm6axZWB/aD12NWhQjiVFQUjV6wMXhlH4iT0Q9c3yK5JFRiDC/rzHA==}
-    engines: {node: '>=14.21.3'}
-    cpu: [x64]
-    os: [win32]
-
-  '@biomejs/cli-win32-x64@2.5.11':
-    resolution: {integrity: sha512-QSQr/KjOgXA7OzXJUWS+oguKyAZ3Q0l/lnlDGbu397eKo83atuWUjBPJrsqbKNF6CARGw8XXJLGzpHC8Ryhd4Q==}
+  '@biomejs/cli-win32-x64@2.5.10':
+    resolution: {integrity: sha512-M+2dgBsl3lXRiTfgPVc2p3anS4Tocojke4rzFLScZ2Y/wmF+36dRb1iHCLiyGqOzQGyTplZH1HnEYviiAqi3nA==}
     engines: {node: '>=14.21.3'}
     cpu: [x64]
     os: [win32]
@@ -4569,6 +4512,10 @@ packages:
     engines: {node: '>=22.12'}
     hasBin: true
 
+  '@sanity/schema@6.11.0':
+    resolution: {integrity: sha512-HCqZOPjr9e7sNPYh7TH8ggQr4IpbFHsp1DSkp88umRPpDnq5fAaQZC8QyHjG0L8oXmAN2oS0ck/zAqU8xPyyPQ==}
+    engines: {node: '>=22.12'}
+
   '@sanity/schema@6.12.0':
     resolution: {integrity: sha512-QE6fnsMKSTG5J3qsZQOkBAVj8yKO2uxJm4fp2poNB4/y4QAaWzL46lMM1zulGvNwwsvgfJmBDowsWobcOXK9Eg==}
     engines: {node: '>=22.12'}
@@ -6504,8 +6451,8 @@ packages:
     resolution: {integrity: sha512-j6vWzfrGVfyXxge+O0x5sh6cvxAog0a/4Rdd2K36zCMV5eJ+/+tOAngRO8cODMNWbVRdVlmGZQL2YS3yR8bIUA==}
     engines: {node: '>= 0.4'}
 
-  es-toolkit@1.51.0:
-    resolution: {integrity: sha512-zC2lQGkM7QX+Gm6iM3+WIdZJzthsEd14LvRNJneSO2hzyz/zNBENR8+YXWo1cKxgPBtV6ksPYHELbcwBRzmdCw==}
+  es-toolkit@1.52.0:
+    resolution: {integrity: sha512-XTNEJQh1tY1ZJVcf6ayP/2n4ZPyaHlW2FWs7xvw5ddPuhUVjLD3olQVQS7kf58JbAB48iL0uL/jerTrjtV3lDA==}
 
   esbuild@0.28.2:
     resolution: {integrity: sha512-HKVLS8dvII+xoKW9kmqxbRKrnWEXfJJr/FZhhJmiqIB0e053QNYFqOBouTMO/k5sID4MvCiUCvv8b9M4h32wIA==}
@@ -7147,11 +7094,11 @@ packages:
     resolution: {integrity: sha512-+N0ngpO3e7cRUWOJAS7qw0IZIVc6XPrW4MlFBdD066F2L4k1L6ker3hLqSq7iXxU5tgS4WGkIUElWn5vogAEnw==}
     engines: {node: ^18.17.0 || >=20.5.0}
 
-  instantsearch-ui-components@0.37.0:
-    resolution: {integrity: sha512-HKsTAy8ckxfUXQzp/wLkwHAelsiuwss+at0+zq++iUWj+cMoBmiGlY1DeHAKkZ7kURV/PfXBock2M2KH6dzTxg==}
+  instantsearch-ui-components@0.35.0:
+    resolution: {integrity: sha512-8TYRzaUdI6UE060YkQyUFCHAF/cDcKhGpyJNlpTKH3/rrp43yIkdO+N781raRUDqKAwI1NuFeosmRQ8ViWFQmg==}
 
-  instantsearch.js@4.113.0:
-    resolution: {integrity: sha512-AzRh95GdtLpslQjWkOWJnvaVCjCDjYidLnQuOL/EOJ9jvEQFH2lzHjRAyKxDqYuZj9bJ6uLKxRhoJQji1ouZHw==}
+  instantsearch.js@4.111.0:
+    resolution: {integrity: sha512-Iez4Ab8ID5IJkO6GztoENGX06v+4gWwpeHvRs4PIP6yS76Se0WEjqQahWUyY8tn87YpJX3Bg96kJC7vb3CmZig==}
     peerDependencies:
       algoliasearch: '>= 3.1 < 6'
 
@@ -8773,8 +8720,8 @@ packages:
     peerDependencies:
       react: '*'
 
-  react-instantsearch-core@7.46.0:
-    resolution: {integrity: sha512-I1z2mPu/Cy7KIUCaoO9DLJ1ql+Jng3Shmy7pdWDBj3HddHaCJad5PEN/adi98daSHfBhJI3UsVNZOon9fO7DLg==}
+  react-instantsearch-core@7.44.0:
+    resolution: {integrity: sha512-MhFLja8pDEP/k+A24aNjbamm+RxcZllT+1yVcHpmJ6CbRXWp1O3GMo45kSnAab3AeYOvQbbPKKhr2TgpLHxsKg==}
     peerDependencies:
       algoliasearch: '>= 3.1 < 6'
       react: '>= 16.8.0 < 20'
@@ -8785,8 +8732,8 @@ packages:
       next: '>= 13.4 < 17'
       react-instantsearch: '>= 7.1.0 < 8'
 
-  react-instantsearch@7.46.0:
-    resolution: {integrity: sha512-VaPoaQtDEmaTq9NxKLnPR1Qu5H0xeq+NnqI7fHs8LFQ/Q4Nml134tsn61ePMwYhq7KjSpsXSLVabmOb9D46P7A==}
+  react-instantsearch@7.44.0:
+    resolution: {integrity: sha512-v7QRQvW6dvijbifb+ei7nba1oOWXpkIMjWwmCSMAFgmL+pSkVgL0G4TU7npn0fjKX8LsBLwxV6m7d6fTQViQwA==}
     peerDependencies:
       algoliasearch: '>= 3.1 < 6'
       react: '>= 16.8.0 < 20'
@@ -11397,74 +11344,39 @@ snapshots:
 
   '@bcoe/v8-coverage@0.2.3': {}
 
-  '@biomejs/biome@2.3.6':
+  '@biomejs/biome@2.5.10':
     optionalDependencies:
-      '@biomejs/cli-darwin-arm64': 2.3.6
-      '@biomejs/cli-darwin-x64': 2.3.6
-      '@biomejs/cli-linux-arm64': 2.3.6
-      '@biomejs/cli-linux-arm64-musl': 2.3.6
-      '@biomejs/cli-linux-x64': 2.3.6
-      '@biomejs/cli-linux-x64-musl': 2.3.6
-      '@biomejs/cli-win32-arm64': 2.3.6
-      '@biomejs/cli-win32-x64': 2.3.6
+      '@biomejs/cli-darwin-arm64': 2.5.10
+      '@biomejs/cli-darwin-x64': 2.5.10
+      '@biomejs/cli-linux-arm64': 2.5.10
+      '@biomejs/cli-linux-arm64-musl': 2.5.10
+      '@biomejs/cli-linux-x64': 2.5.10
+      '@biomejs/cli-linux-x64-musl': 2.5.10
+      '@biomejs/cli-win32-arm64': 2.5.10
+      '@biomejs/cli-win32-x64': 2.5.10
 
-  '@biomejs/biome@2.5.11':
-    optionalDependencies:
-      '@biomejs/cli-darwin-arm64': 2.5.11
-      '@biomejs/cli-darwin-x64': 2.5.11
-      '@biomejs/cli-linux-arm64': 2.5.11
-      '@biomejs/cli-linux-arm64-musl': 2.5.11
-      '@biomejs/cli-linux-x64': 2.5.11
-      '@biomejs/cli-linux-x64-musl': 2.5.11
-      '@biomejs/cli-win32-arm64': 2.5.11
-      '@biomejs/cli-win32-x64': 2.5.11
-
-  '@biomejs/cli-darwin-arm64@2.3.6':
+  '@biomejs/cli-darwin-arm64@2.5.10':
     optional: true
 
-  '@biomejs/cli-darwin-arm64@2.5.11':
+  '@biomejs/cli-darwin-x64@2.5.10':
     optional: true
 
-  '@biomejs/cli-darwin-x64@2.3.6':
+  '@biomejs/cli-linux-arm64-musl@2.5.10':
     optional: true
 
-  '@biomejs/cli-darwin-x64@2.5.11':
+  '@biomejs/cli-linux-arm64@2.5.10':
     optional: true
 
-  '@biomejs/cli-linux-arm64-musl@2.3.6':
+  '@biomejs/cli-linux-x64-musl@2.5.10':
     optional: true
 
-  '@biomejs/cli-linux-arm64-musl@2.5.11':
+  '@biomejs/cli-linux-x64@2.5.10':
     optional: true
 
-  '@biomejs/cli-linux-arm64@2.3.6':
+  '@biomejs/cli-win32-arm64@2.5.10':
     optional: true
 
-  '@biomejs/cli-linux-arm64@2.5.11':
-    optional: true
-
-  '@biomejs/cli-linux-x64-musl@2.3.6':
-    optional: true
-
-  '@biomejs/cli-linux-x64-musl@2.5.11':
-    optional: true
-
-  '@biomejs/cli-linux-x64@2.3.6':
-    optional: true
-
-  '@biomejs/cli-linux-x64@2.5.11':
-    optional: true
-
-  '@biomejs/cli-win32-arm64@2.3.6':
-    optional: true
-
-  '@biomejs/cli-win32-arm64@2.5.11':
-    optional: true
-
-  '@biomejs/cli-win32-x64@2.3.6':
-    optional: true
-
-  '@biomejs/cli-win32-x64@2.5.11':
+  '@biomejs/cli-win32-x64@2.5.10':
     optional: true
 
   '@bramus/specificity@2.4.2':
@@ -13273,7 +13185,7 @@ snapshots:
   '@portabletext/sanity-bridge@4.0.0(@types/react@19.2.14)':
     dependencies:
       '@portabletext/schema': 3.0.0
-      '@sanity/schema': 6.12.0(@types/react@19.2.14)
+      '@sanity/schema': 6.11.0(@types/react@19.2.14)
       '@sanity/types': 6.7.0(@types/react@19.2.14)
     transitivePeerDependencies:
       - '@types/react'
@@ -14488,7 +14400,7 @@ snapshots:
       '@rolldown/plugin-babel': 0.2.3(@babel/core@7.29.7(supports-color@8.1.1))(@babel/runtime@7.29.7)(rolldown@1.2.6)(vite@8.2.2(@types/node@22.20.1)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.12)(yaml@2.9.0))
       '@sanity/cli-core': 3.6.0(@noble/hashes@2.4.0)(@types/node@22.20.1)(esbuild@0.28.2)(terser@5.51.2)(yaml@2.9.0)
       '@sanity/generate-help-url': 4.0.0
-      '@sanity/schema': 6.12.0(@types/react@19.2.14)
+      '@sanity/schema': 6.11.0(@types/react@19.2.14)
       '@sanity/telemetry': 1.1.0(react@19.2.8)
       '@sanity/types': 6.7.0(@types/react@19.2.14)
       '@sanity/workbench-cli': 2.3.0(@noble/hashes@2.4.0)(@rolldown/plugin-babel@0.2.3(@babel/core@7.29.7(supports-color@8.1.1))(@babel/runtime@7.29.7)(rolldown@1.2.6)(vite@8.2.2(@types/node@22.20.1)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.12)(yaml@2.9.0)))(@types/node@22.20.1)(@types/react@19.2.14)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.12)(typescript@5.9.3)(yaml@2.9.0)
@@ -14539,7 +14451,7 @@ snapshots:
       '@rolldown/plugin-babel': 0.2.3(@babel/core@7.29.7(supports-color@8.1.1))(@babel/runtime@7.29.7)(rolldown@1.2.6)(vite@8.2.2(@types/node@24.13.3)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.12)(yaml@2.9.0))
       '@sanity/cli-core': 3.6.0(@noble/hashes@2.4.0)(@types/node@24.13.3)(esbuild@0.28.2)(terser@5.51.2)(yaml@2.9.0)
       '@sanity/generate-help-url': 4.0.0
-      '@sanity/schema': 6.12.0(@types/react@19.2.14)
+      '@sanity/schema': 6.11.0(@types/react@19.2.14)
       '@sanity/telemetry': 1.1.0(react@19.2.8)
       '@sanity/types': 6.7.0(@types/react@19.2.14)
       '@sanity/workbench-cli': 2.3.0(@noble/hashes@2.4.0)(@rolldown/plugin-babel@0.2.3(@babel/core@7.29.7(supports-color@8.1.1))(@babel/runtime@7.29.7)(rolldown@1.2.6)(vite@8.2.2(@types/node@24.13.3)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.12)(yaml@2.9.0)))(@types/node@24.13.3)(@types/react@19.2.14)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.12)(typescript@5.9.3)(yaml@2.9.0)
@@ -14590,7 +14502,7 @@ snapshots:
       '@rolldown/plugin-babel': 0.2.3(@babel/core@7.29.7(supports-color@8.1.1))(@babel/runtime@7.29.7)(rolldown@1.2.6)(vite@8.2.2(@types/node@24.13.3)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.12)(yaml@2.9.0))
       '@sanity/cli-core': 3.6.0(@noble/hashes@2.4.0)(@types/node@24.13.3)(esbuild@0.28.2)(terser@5.51.2)(yaml@2.9.0)
       '@sanity/generate-help-url': 4.0.0
-      '@sanity/schema': 6.12.0(@types/react@19.2.14)
+      '@sanity/schema': 6.11.0(@types/react@19.2.14)
       '@sanity/telemetry': 1.1.0(react@19.2.8)
       '@sanity/types': 6.7.0(@types/react@19.2.14)
       '@sanity/workbench-cli': 2.3.0(@noble/hashes@2.4.0)(@rolldown/plugin-babel@0.2.3(@babel/core@7.29.7(supports-color@8.1.1))(@babel/runtime@7.29.7)(rolldown@1.2.6)(vite@8.2.2(@types/node@24.13.3)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.12)(yaml@2.9.0)))(@types/node@24.13.3)(@types/react@19.2.14)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.12)(typescript@5.9.3)(yaml@2.9.0)
@@ -14646,7 +14558,7 @@ snapshots:
       '@rolldown/plugin-babel': 0.2.3(@babel/core@7.29.7(supports-color@8.1.1))(@babel/runtime@7.29.7)(rolldown@1.2.6)(vite@8.2.2(@types/node@22.20.1)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.12)(yaml@2.9.0))
       '@sanity/cli-core': 3.6.0(@noble/hashes@2.4.0)(@types/node@22.20.1)(esbuild@0.28.2)(terser@5.51.2)(yaml@2.9.0)
       '@sanity/generate-help-url': 4.0.0
-      '@sanity/schema': 6.12.0(@types/react@19.2.14)
+      '@sanity/schema': 6.11.0(@types/react@19.2.14)
       '@sanity/telemetry': 1.1.0(react@19.2.8)
       '@sanity/types': 6.7.0(@types/react@19.2.14)
       '@sanity/workbench-cli': 2.3.0(@noble/hashes@2.4.0)(@rolldown/plugin-babel@0.2.3(@babel/core@7.29.7(supports-color@8.1.1))(@babel/runtime@7.29.7)(rolldown@1.2.6)(vite@8.2.2(@types/node@22.20.1)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.12)(yaml@2.9.0)))(@types/node@22.20.1)(@types/react@19.2.14)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.12)(typescript@5.9.3)(yaml@2.9.0)
@@ -14860,7 +14772,7 @@ snapshots:
       '@sanity/import': 6.0.4(@sanity/client@8.5.0)(@types/react@19.2.14)(supports-color@8.1.1)
       '@sanity/migrate': 8.0.2(@types/react@19.2.14)(supports-color@8.1.1)(xstate@5.32.6)
       '@sanity/runtime-cli': 17.11.0(@babel/core@7.29.7(supports-color@8.1.1))(@babel/runtime@7.29.7)(@noble/hashes@2.4.0)(@types/node@22.20.1)(@types/react@19.2.14)(esbuild@0.28.2)(rolldown@1.2.6)(terser@5.51.2)(tsx@4.23.12)(typescript@5.9.3)(yaml@2.9.0)
-      '@sanity/schema': 6.12.0(@types/react@19.2.14)
+      '@sanity/schema': 6.11.0(@types/react@19.2.14)
       '@sanity/telemetry': 1.1.0(react@19.2.8)
       '@sanity/template-validator': 3.1.0
       '@sanity/types': 6.7.0(@types/react@19.2.14)
@@ -14959,7 +14871,7 @@ snapshots:
       '@sanity/import': 6.0.4(@sanity/client@8.5.0)(@types/react@19.2.14)(supports-color@8.1.1)
       '@sanity/migrate': 8.0.2(@types/react@19.2.14)(supports-color@8.1.1)(xstate@5.32.6)
       '@sanity/runtime-cli': 17.11.0(@babel/core@7.29.7(supports-color@8.1.1))(@babel/runtime@7.29.7)(@noble/hashes@2.4.0)(@types/node@24.13.3)(@types/react@19.2.14)(esbuild@0.28.2)(rolldown@1.2.6)(terser@5.51.2)(tsx@4.23.12)(typescript@5.9.3)(yaml@2.9.0)
-      '@sanity/schema': 6.12.0(@types/react@19.2.14)
+      '@sanity/schema': 6.11.0(@types/react@19.2.14)
       '@sanity/telemetry': 1.1.0(react@19.2.8)
       '@sanity/template-validator': 3.1.0
       '@sanity/types': 6.7.0(@types/react@19.2.14)
@@ -15453,6 +15365,22 @@ snapshots:
       - vue-tsc
       - yaml
 
+  '@sanity/schema@6.11.0(@types/react@19.2.14)':
+    dependencies:
+      '@sanity/descriptors': 1.3.0
+      '@sanity/generate-help-url': 4.0.0
+      '@sanity/types': 6.7.0(@types/react@19.2.14)
+      arrify: 3.0.0
+      get-it: 9.5.2
+      groq-js: 2.0.0
+      humanize-list: 1.0.1
+      leven: 4.1.0
+      lodash-es: 4.18.0
+      object-inspect: 1.13.4
+    transitivePeerDependencies:
+      - '@types/react'
+      - vitest
+
   '@sanity/schema@6.12.0(@types/react@19.2.14)':
     dependencies:
       '@sanity/descriptors': 1.3.0
@@ -15832,7 +15760,7 @@ snapshots:
       '@sanity/color': 3.0.8
       '@sanity/sdk': 3.0.0(@types/react@19.2.14)(immer@11.1.18)(react@19.2.4)(use-sync-external-store@1.6.0(react@19.2.4))(xstate@5.32.6)
       '@sanity/telemetry': 1.1.0(react@19.2.4)
-      es-toolkit: 1.51.0
+      es-toolkit: 1.52.0
       rxjs: 7.8.2
       verkit: 0.4.0
       xstate: 5.32.6
@@ -17704,7 +17632,7 @@ snapshots:
       has-tostringtag: 1.0.2
       hasown: 2.0.4
 
-  es-toolkit@1.51.0: {}
+  es-toolkit@1.52.0: {}
 
   esbuild@0.28.2:
     optionalDependencies:
@@ -18457,14 +18385,14 @@ snapshots:
 
   ini@5.0.0: {}
 
-  instantsearch-ui-components@0.37.0(react@19.2.4):
+  instantsearch-ui-components@0.35.0(react@19.2.4):
     dependencies:
       '@swc/helpers': 0.5.18
       markdown-to-jsx: 7.7.17(react@19.2.4)
     transitivePeerDependencies:
       - react
 
-  instantsearch.js@4.113.0(algoliasearch@5.57.0):
+  instantsearch.js@4.111.0(algoliasearch@5.57.0):
     dependencies:
       '@algolia/events': 4.0.1
       '@swc/helpers': 0.5.18
@@ -18476,7 +18404,7 @@ snapshots:
       algoliasearch-helper: 3.29.3(algoliasearch@5.57.0)
       hogan.js: 3.0.2
       htm: 3.1.1
-      instantsearch-ui-components: 0.37.0(react@19.2.4)
+      instantsearch-ui-components: 0.35.0(react@19.2.4)
       preact: 10.29.8
       qs: 6.15.3
       react: 19.2.4
@@ -20074,31 +20002,31 @@ snapshots:
     dependencies:
       react: 19.2.4
 
-  react-instantsearch-core@7.46.0(algoliasearch@5.57.0)(react@19.2.4):
+  react-instantsearch-core@7.44.0(algoliasearch@5.57.0)(react@19.2.4):
     dependencies:
       '@swc/helpers': 0.5.18
       algoliasearch: 5.57.0
       algoliasearch-helper: 3.29.3(algoliasearch@5.57.0)
-      instantsearch.js: 4.113.0(algoliasearch@5.57.0)
+      instantsearch.js: 4.111.0(algoliasearch@5.57.0)
       react: 19.2.4
       use-sync-external-store: 1.6.0(react@19.2.4)
     transitivePeerDependencies:
       - preact-render-to-string
 
-  react-instantsearch-nextjs@1.0.5(next@16.3.3(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.9.1)(@types/node@22.20.1)(babel-plugin-macros@3.1.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-instantsearch@7.46.0(algoliasearch@5.57.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)):
+  react-instantsearch-nextjs@1.0.5(next@16.3.3(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.9.1)(@types/node@22.20.1)(babel-plugin-macros@3.1.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-instantsearch@7.44.0(algoliasearch@5.57.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)):
     dependencies:
       next: 16.3.3(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.9.1)(@types/node@22.20.1)(babel-plugin-macros@3.1.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
-      react-instantsearch: 7.46.0(algoliasearch@5.57.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      react-instantsearch: 7.44.0(algoliasearch@5.57.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
 
-  react-instantsearch@7.46.0(algoliasearch@5.57.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4):
+  react-instantsearch@7.44.0(algoliasearch@5.57.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4):
     dependencies:
       '@swc/helpers': 0.5.18
       algoliasearch: 5.57.0
-      instantsearch-ui-components: 0.37.0(react@19.2.4)
-      instantsearch.js: 4.113.0(algoliasearch@5.57.0)
+      instantsearch-ui-components: 0.35.0(react@19.2.4)
+      instantsearch.js: 4.111.0(algoliasearch@5.57.0)
       react: 19.2.4
       react-dom: 19.2.4(react@19.2.4)
-      react-instantsearch-core: 7.46.0(algoliasearch@5.57.0)(react@19.2.4)
+      react-instantsearch-core: 7.44.0(algoliasearch@5.57.0)(react@19.2.4)
     transitivePeerDependencies:
       - preact-render-to-string
 
@@ -20239,7 +20167,7 @@ snapshots:
       '@reduxjs/toolkit': 2.12.0(react-redux@9.3.0(@types/react@19.2.14)(react@19.2.4)(redux@5.0.1))(react@19.2.4)
       clsx: 2.1.1
       decimal.js-light: 2.5.1
-      es-toolkit: 1.51.0
+      es-toolkit: 1.52.0
       eventemitter3: 5.0.4
       immer: 11.1.18
       react: 19.2.4
