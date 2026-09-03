@@ -37,24 +37,18 @@ export async function generateMetadata(): Promise<Metadata> {
 
 // Layer 1: branches on draft mode without awaiting any other dynamic API,
 // so the published route still prerenders into the static shell.
-export default async function Home(_: PageProps<'/[locale]'>) {
+export default async function Home({ searchParams }: PageProps<'/[locale]'>) {
   const { isEnabled: isDraftMode } = await draftMode()
-
+  const dynamic = await getDynamicFetchOptions(await searchParams)
   if (isDraftMode) {
     return (
       <Suspense fallback={<div>Loading...</div>}>
-        <DynamicHome />
+        <CachedHome isDraftMode dynamic={dynamic} />
       </Suspense>
     )
   }
 
   return <CachedHome />
-}
-
-// Layer 2: only reached in draft mode, marks the fetch below as uncached/stega-aware.
-async function DynamicHome() {
-  const dynamic = await getDynamicFetchOptions()
-  return <CachedHome isDraftMode dynamic={dynamic} />
 }
 
 // Layer 3: fetches through the existing draft-aware/cached `routeSanityFetch`/`getPage`.

@@ -218,6 +218,7 @@ export async function getPage(params: Params) {
   let pageData = null
   if (slug?.[0]?.includes('preview')) {
     const id = slug[1]
+
     if (id) {
       const { data: draftInfo }: { data: any } = await fetch({
         query: pageInfoById,
@@ -248,7 +249,11 @@ export async function getPage(params: Params) {
 
     const { data }: { data: any } = await fetch({
       query: pageQuery,
-      tags: [slug? `page:/${Array.isArray(slug) ? slug?.join('/') : slug}`:`homePage:${locale}`],
+      tags: [
+        slug
+          ? `page:/${Array.isArray(slug) ? slug?.join('/') : slug}`
+          : `homePage:${locale}`,
+      ],
       params: { ...pageQueryParams },
       requestTag: 'page-by-slug',
       perspective,

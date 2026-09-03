@@ -45,7 +45,7 @@ export default async function LocaleLayout({
   const locale = await getLocale()
 
   const isPreview = (await draftMode()).isEnabled
-  const dynamic = await getDynamicFetchOptions()
+  const dynamic = await getDynamicFetchOptions({}) // cannot read searchParams here, so footer will have draft version always in draft mode with published perspective
 
   return (
     <html lang={locale} className={`${equinor.className} `}>

@@ -74,8 +74,10 @@ const getInitialResponse =
     return response
   }
 
-export default async function NewsroomPage(_: PageProps<'/[locale]/news'>) {
-  const dynamic = await getDynamicFetchOptions()
+export default async function NewsroomPage({
+  searchParams,
+}: PageProps<'/[locale]/news'>) {
+  const dynamic = await getDynamicFetchOptions(await searchParams)
   return <CachedNewsroomPage dynamic={dynamic} />
 }
 
