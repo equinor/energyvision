@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
 import { getLocale } from 'next-intl/server'
+import type { LivePerspective } from 'next-sanity/live'
 import { OrganizationJsonLd } from 'next-seo'
 import { Suspense } from 'react'
 import { getValidLanguagesLocales } from '@/languageConfig'
@@ -39,21 +40,17 @@ export async function generateMetadata(): Promise<Metadata> {
 // so the published route still prerenders into the static shell.
 export default async function Home({ searchParams }: PageProps<'/[locale]'>) {
   const { isEnabled: isDraftMode } = await draftMode()
-  const dynamic = await getDynamicFetchOptions(await searchParams)
+  let dynamic = { perspective: 'published' as LivePerspective, stega: false }
   if (isDraftMode) {
-    return (
-      <Suspense fallback={<div>Loading...</div>}>
-        <DynamicHome dynamic={dynamic} />
-      </Suspense>
-    )
+    const resolvedSearchParams = await searchParams
+    dynamic = await getDynamicFetchOptions(resolvedSearchParams)
   }
 
-  return <CachedHome />
-}
-
-// Layer 2: only reached in draft mode, marks the fetch below as uncached/stega-aware.
-async function DynamicHome({ dynamic }: { dynamic: Awaited<ReturnType<typeof getDynamicFetchOptions>> }) {
-  return <CachedHome isDraftMode dynamic={dynamic} />
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <CachedHome isDraftMode={isDraftMode} dynamic={dynamic} />
+    </Suspense>
+  )
 }
 
 // Layer 3: fetches through the existing draft-aware/cached `routeSanityFetch`/`getPage`.
