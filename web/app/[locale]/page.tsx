@@ -43,12 +43,17 @@ export default async function Home({ searchParams }: PageProps<'/[locale]'>) {
   if (isDraftMode) {
     return (
       <Suspense fallback={<div>Loading...</div>}>
-        <CachedHome isDraftMode dynamic={dynamic} />
+        <DynamicHome dynamic={dynamic} />
       </Suspense>
     )
   }
 
   return <CachedHome />
+}
+
+// Layer 2: only reached in draft mode, marks the fetch below as uncached/stega-aware.
+async function DynamicHome({ dynamic }: { dynamic: Awaited<ReturnType<typeof getDynamicFetchOptions>> }) {
+  return <CachedHome isDraftMode dynamic={dynamic} />
 }
 
 // Layer 3: fetches through the existing draft-aware/cached `routeSanityFetch`/`getPage`.
