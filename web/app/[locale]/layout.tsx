@@ -7,9 +7,11 @@ import Script from 'next/script'
 import { NextIntlClientProvider } from 'next-intl'
 import { getLocale, getTranslations } from 'next-intl/server'
 import { PageProvider } from '@/contexts/pageContext'
+import { getValidLanguagesLocales } from '@/languageConfig'
 import { getLocaleFromIso, getNameFromIso } from '@/sanity/helpers/localization'
 import { dataset } from '@/sanity/lib/api'
-import { routeSanityFetch, SanityLive } from '@/sanity/lib/live'
+import { IS_FETCH_OPTIMIZED, routeSanityFetch } from '@/sanity/lib/fetch'
+import { getDynamicFetchOptions, SanityLive } from '@/sanity/lib/live'
 import { footerAndErrorImageQuery } from '@/sanity/queries/footer'
 import Footer from '@/sections/Footer/Footer'
 import GoToTopButton from '@/sections/GoToTopButton'
@@ -32,24 +34,18 @@ const equinor = localFont({
 
 //the [locale] segment corresponds to the locale (iso format), not the prefix(/no).
 
+export function generateStaticParams() {
+  return getValidLanguagesLocales().map(locale => ({ locale }))
+}
+
 export default async function LocaleLayout({
   children,
 }: LayoutProps<'/[locale]'>) {
   const t = await getTranslations()
   const locale = await getLocale()
 
-  const queryParams = {
-    lang: getNameFromIso(locale) ?? 'en_GB',
-  }
-
-  const { data: footerAndErrorImageData }: { data: any } =
-    await routeSanityFetch({
-      query: footerAndErrorImageQuery,
-      params: queryParams,
-    })
-
-  const { errorImage, ...footerData } = footerAndErrorImageData || {}
   const isPreview = (await draftMode()).isEnabled
+  const dynamic = await getDynamicFetchOptions({}) // cannot read searchParams here, so footer will have draft version always in draft mode with published perspective
 
   return (
     <html lang={locale} className={`${equinor.className} `}>
@@ -72,7 +68,7 @@ export default async function LocaleLayout({
         >
           {t('skipToContent') ?? 'Skip to main content'}
         </NextLink>
-        <SanityLive />
+        {!IS_FETCH_OPTIMIZED && <SanityLive />}
         {/* Preview link is sent to stakeholders dont show draft toolbar, only use if needed in local development
         Must first filter all conditional rendering props in the page content, otherwise the visual editing will not work correctly inside presentation tool. This is a big job and will be done later. For now, we will not render the visual editing inside the presentation tool. 
         */}
@@ -83,9 +79,10 @@ export default async function LocaleLayout({
           </>
         )} */}
         <NextIntlClientProvider>
-          <PageProvider initialErrorImage={errorImage}>{children}</PageProvider>
+          <CachedContent dynamic={dynamic}>{children}</CachedContent>
+          {/* } <PageProvider initialErrorImage={errorImage}>{children}</PageProvider>
           <Footer {...footerData} />
-          <GoToTopButton />
+          <GoToTopButton /> */}
         </NextIntlClientProvider>
       </body>
       {/** TODO look into scripts */}
@@ -101,5 +98,37 @@ export default async function LocaleLayout({
         </>
       )}
     </html>
+  )
+}
+
+async function CachedContent({
+  dynamic,
+  children,
+}: {
+  dynamic: Awaited<ReturnType<typeof getDynamicFetchOptions>>
+  children: React.ReactNode
+}) {
+  'use cache'
+  const locale = await getLocale()
+  const queryParams = {
+    lang: getNameFromIso(locale) ?? 'en_GB',
+  }
+
+  const { data: footerAndErrorImageData }: { data: any } =
+    await routeSanityFetch({
+      query: footerAndErrorImageQuery,
+      params: queryParams,
+      tags: [`footer:${locale}`],
+      requestTag: 'footer-and-error-image',
+      ...dynamic,
+    })
+
+  const { errorImage, ...footerData } = footerAndErrorImageData || {}
+  return (
+    <>
+      <PageProvider initialErrorImage={errorImage}>{children}</PageProvider>
+      <Footer {...footerData} />
+      <GoToTopButton />
+    </>
   )
 }

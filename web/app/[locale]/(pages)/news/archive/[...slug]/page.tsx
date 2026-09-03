@@ -5,7 +5,7 @@ import archivedNews from '@/lib/archive/archivedNewsPaths.json'
 import { host } from '@/lib/config'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { getNameFromIso } from '@/sanity/helpers/localization'
-import { routeSanityFetch } from '@/sanity/lib/live'
+import { routeSanityFetch } from '@/sanity/lib/fetch'
 import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu'
 import type { PathType } from '@/sanity/queries/paths/getPaths'
 import { simpleMenuQuery } from '@/sanity/queries/simpleMenu'
@@ -214,6 +214,18 @@ const fallbackToAnotherLanguage = async (
   return { notFound: true }
 }
 
+async function getSiteMenuData(locale: string) {
+  'use cache'
+  return routeSanityFetch({
+    query: Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery,
+    params: {
+      lang: getNameFromIso(locale) ?? 'en_GB',
+    },
+    tags: [`siteMenu:${locale}`],
+    requestTag: 'site-menu',
+  })
+}
+
 export default async function ArchivedNewsPage({ params }: { params: Params }) {
   const { locale, slug } = await params
 
@@ -232,12 +244,6 @@ export default async function ArchivedNewsPage({ params }: { params: Params }) {
     slugs,
     currentSlug: slugs[0],
   }
-  const { data: siteMenuData } = await routeSanityFetch({
-    query: Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery,
-    params: {
-      lang: getNameFromIso(locale) ?? 'en_GB',
-    },
-  })
 
   const pageData = await getArchivedPageData(await params)
 
@@ -247,7 +253,10 @@ export default async function ArchivedNewsPage({ params }: { params: Params }) {
   }
   return (
     <>
-      <Header siteMenuData={siteMenuData} headerData={headerData} />
+      <Header
+        siteMenuData={(await getSiteMenuData(locale)).data}
+        headerData={headerData}
+      />
       <ArchivedNews {...pageData} />
     </>
   )

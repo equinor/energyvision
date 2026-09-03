@@ -1,17 +1,21 @@
 'use client'
-import type { SearchClient } from 'instantsearch.js'
-import { useRouter } from 'next/navigation'
+import { history } from 'instantsearch.js/es/lib/routers'
+import type { SearchClient, UiState } from 'instantsearch.js'
 import { useLocale, useTranslations } from 'next-intl'
 import { useRef } from 'react'
-import { Configure, Index } from 'react-instantsearch'
-import { InstantSearchNext } from 'react-instantsearch-nextjs'
+import { Configure, Index, InstantSearch } from 'react-instantsearch'
 import { PaginationContextProvider } from '@/contexts/PaginationContext'
 import { SearchBox } from '@/core/AlgoliaSearchBox/SearchBox'
 import usePaginationPadding from '@/lib/hooks/usePaginationPadding'
-import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { Pagination } from '@/sections/searchBlocks/pagination/Pagination'
 import SearchResults from '@/sections/searchBlocks/SearchResults'
 import { searchClient as client } from '../../lib/algolia'
+
+type SearchRouteState = {
+  query?: string
+  page?: number
+  tab?: 'topics' | 'events' | 'news' | 'magazine'
+}
 
 const searchClient = client()
 const queriedSearchClient: SearchClient = {
@@ -39,9 +43,9 @@ const queriedSearchClient: SearchClient = {
 export function Search() {
   const intl = useTranslations()
   const locale = useLocale()
-  const router = useRouter()
   const resultsRef = useRef<HTMLDivElement>(null)
-  const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
+  const envPrefix =
+    process.env.NEXT_PUBLIC_SANITY_DATASET === 'global' ? 'prod' : 'dev'
 
   const padding = usePaginationPadding()
   const indices = [
@@ -66,87 +70,42 @@ export function Search() {
   // The main index will be "all" at some point
   const mainIndex = `${envPrefix}_TOPICS_${locale}`
 
-  // eslint-disable-next-line
-  // @ts-ignore: @TODO: The types are not correct
-  const createURL = ({ qsModule, routeState, location }) => {
-    const queryParameters: any = {}
-    if (routeState.query) {
-      queryParameters.query = routeState.query
-    }
-    if (routeState.page !== 1) {
-      queryParameters.page = routeState.page
-    }
-    if (routeState.tab) {
-      queryParameters.tab = routeState.tab
-    }
+  const routing = {
+    router: history<SearchRouteState>({ cleanUrlOnDispose: false }),
+    stateMapping: {
+      stateToRoute(uiState: UiState): SearchRouteState {
+        const indexUiState = uiState[mainIndex]
+        const tab = indexUiState.sortBy
+          ?.replaceAll(locale, '')
+          .replaceAll(envPrefix, '')
+          .replaceAll('_', '')
+          .toLowerCase() as SearchRouteState['tab']
 
-    const queryString = qsModule.stringify(queryParameters, {
-      addQueryPrefix: true,
-      arrayFormat: 'repeat',
-      format: 'RFC1738',
-    })
-    return `${location.pathname}${queryString}`
-  }
-
-  // eslint-disable-next-line
-  // @ts-ignore: @TODO: The types are not correct
-  const parseURL = ({ qsModule, location }) => {
-    const {
-      query = '',
-      page,
-      tab = '',
-    }: any = qsModule.parse(location.search.slice(1))
-    return {
-      ...(query && { query: query }),
-      ...(page && { page: page as number }),
-      ...(tab && { tab: tab }),
-    }
+        return {
+          ...(tab && { tab }),
+          ...(indexUiState?.query && { query: indexUiState.query }),
+          ...(indexUiState?.page && { page: indexUiState.page }),
+        }
+      },
+      routeToState(routeState: SearchRouteState): UiState {
+        return {
+          [mainIndex]: {
+            ...(routeState.query && { query: routeState.query }),
+            ...(routeState.page && { page: routeState.page }),
+            ...(routeState.tab && {
+              sortBy: `${envPrefix}_${routeState.tab.toUpperCase()}_${locale}`,
+            }),
+          },
+        }
+      },
+    },
   }
 
   return (
-    <InstantSearchNext
+    <InstantSearch<UiState, SearchRouteState>
       indexName={mainIndex}
       searchClient={queriedSearchClient}
-      routing={{
-        router: {
-          cleanUrlOnDispose: false,
-          createURL: createURL,
-          parseURL: parseURL,
-          push(url) {
-            if (url.split('?')[1]) {
-              // replace url only if it has query params
-              router.replace(url)
-            }
-          },
-        },
-        stateMapping: {
-          stateToRoute(uiState) {
-            const indexUiState = uiState[mainIndex]
-            return {
-              ...(indexUiState.sortBy && {
-                tab: indexUiState.sortBy
-                  .replaceAll(locale, '')
-                  .replaceAll(envPrefix, '')
-                  .replaceAll('_', '')
-                  .toLowerCase(),
-              }),
-              ...(indexUiState?.query && { query: indexUiState.query }),
-              ...(indexUiState?.page && { page: indexUiState?.page }),
-            }
-          },
-          routeToState(routeState: any) {
-            return {
-              [mainIndex]: {
-                ...(routeState.query && { query: routeState.query }),
-                ...(routeState.page && { page: routeState.page as number }),
-                ...(routeState.tab && {
-                  sortBy: `${envPrefix}_${routeState.tab.toUpperCase()}_${locale}`,
-                }),
-              },
-            }
-          },
-        },
-      }}
+      routing={routing}
     >
       <Configure hitsPerPage={5} snippetEllipsisText='...' />
       {indices.map(index => (
@@ -171,6 +130,6 @@ export function Search() {
           />
         </PaginationContextProvider>
       </div>
-    </InstantSearchNext>
+    </InstantSearch>
   )
 }

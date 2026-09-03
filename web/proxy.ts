@@ -141,5 +141,5 @@ export const config = {
   // - … the ones containing a dot (e.g. `favicon.ico`)
   // if any new api route is added, it should be added to the matcher below. All other nonexistent api url will go into i18n and give 404 error properly
   matcher:
-    '/((?!api/draft|api/newsletter-rss|api/rss|api/update-algolia-indexes|_next|favicon.ico|__nextjs|__nextjs_original-stack-frame|__nextjs_launch-editor|.well-known|legacy|content/dam/|etc.clientlibs/|sitemap.xml|robots.txt).*)',
+    '/((?!api/draft|api/newsletter-rss|api/revalidate-sanity|api/rss|api/update-algolia-indexes|_next|favicon.ico|__nextjs|__nextjs_original-stack-frame|__nextjs_launch-editor|.well-known|legacy|content/dam/|etc.clientlibs/|sitemap.xml|robots.txt).*)',
 }

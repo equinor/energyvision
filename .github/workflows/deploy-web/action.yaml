@@ -40,6 +40,10 @@ inputs:
   serverActionsEncryptionKey:
     description: 'Server actions encryption key'
     required: true
+  optimizedSanityFetch:
+    description: 'Fetch published content without Sanity Live, revalidated by the /api/revalidate-sanity webhook'
+    required: false
+    default: 'false'
   sentryDsn:
     description: 'Sentry DSN'
     required: false
@@ -119,6 +123,7 @@ runs:
           ARG_NODE_ENV=${{ inputs.nodeEnvironment }}
           ARG_ARCHIVE_CONTENT_LINK=${{ inputs.archiveContentLink }}
           ARG_FRIENDLY_CAPTCHA_SITEKEY=${{ inputs.friendlyCaptchaSitekey }}
+          ARG_OPTIMIZED_SANITY_FETCH=${{ inputs.optimizedSanityFetch }}
           ARG_DEPLOYMENT_ID=${{ env.IMAGE_TAG_SHA }}
    
     - name: Get component name
