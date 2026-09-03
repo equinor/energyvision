@@ -214,7 +214,7 @@ const fallbackToAnotherLanguage = async (
   return { notFound: true }
 }
 
-function getSiteMenuData(locale: string) {
+async function getSiteMenuData(locale: string) {
   'use cache'
   return routeSanityFetch({
     query: Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery,
