@@ -7,6 +7,7 @@ import dynamic from 'next/dynamic'
 import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
 import { getLocale } from 'next-intl/server'
+import { LivePerspective } from 'next-sanity/live'
 import { decodeSlugs } from '@/lib/helpers/getFullUrl'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { getNameFromIso } from '@/sanity/helpers/localization'
@@ -79,10 +80,10 @@ export async function generateMetadata({
 }
 
 export default async function Page({ params, searchParams }: Props) {
-  const dynamic = await getDynamicFetchOptions()
-
-  const { slug } = await params
   const resolvedSearchParams = await searchParams
+  const dynamic = await getDynamicFetchOptions(resolvedSearchParams)
+  const { slug } = await params
+
   return (
     <>
       {/*getTemplate()*/}
@@ -107,6 +108,7 @@ async function CachedContent({
 }) {
   'use cache'
   const locale = await getLocale()
+
   /*   const isInPresentationToolContext =
     (await cookies()).get('preview-fetch-dest')?.value === 'iframe' */
   const { isEnabled: isDraftMode } = await draftMode()

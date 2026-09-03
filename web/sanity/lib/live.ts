@@ -63,12 +63,16 @@ export interface DynamicFetchOptions {
   perspective: LivePerspective
   stega: boolean
 }
-export async function getDynamicFetchOptions(): Promise<DynamicFetchOptions> {
+export async function getDynamicFetchOptions(searchParams: {
+  [key: string]: string | string[] | undefined
+}): Promise<DynamicFetchOptions> {
   const { isEnabled: isDraftMode } = await draftMode()
   if (!isDraftMode) {
     return { perspective: 'published', stega: false }
   }
-  const jar = await cookies()
-  const perspective = await resolvePerspectiveFromCookies({ cookies: jar })
-  return { perspective: perspective ?? 'drafts', stega: true }
+  const studioPerspective = searchParams
+    ? (searchParams['sanity-preview-perspective'] as LivePerspective | 'drafts')
+    : 'drafts'
+  // if draft mode is enabled resolve the perspective from the url '
+  return { perspective: studioPerspective, stega: true }
 }
