@@ -155,6 +155,7 @@ jobs:
           serverActionsEncryptionKey: ${{ secrets.SERVER_ACTIONS_ENCRYPTION_KEY }}
           optimizedSanityFetch: ${{ vars.OPTIMIZED_SANITY_FETCH || 'false' }}
           sentryDsn: ${{ vars.SENTRY_DSN }}
+
       - uses: act10ns/slack@v2
         with:
           status: ${{ job.status }}

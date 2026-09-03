@@ -1,34 +1,36 @@
-'use client'
-import type { SearchClient } from 'instantsearch.js'
-import { history } from 'instantsearch.js/es/lib/routers'
-import type { UiState } from 'instantsearch.js/es/types'
-import { useRouter } from 'next/navigation'
-import { useLocale, useTranslations } from 'next-intl'
-import { useEffect, useRef, useState } from 'react'
-import { Configure, Index, InstantSearch } from 'react-instantsearch'
-import { PaginationContextProvider } from '@/contexts/PaginationContext'
-import { SearchBox } from '@/core/AlgoliaSearchBox/SearchBox'
-import usePaginationPadding from '@/lib/hooks/usePaginationPadding'
-import { Flags } from '@/sanity/helpers/datasetHelpers'
-import { Pagination } from '@/sections/searchBlocks/pagination/Pagination'
-import SearchResults from '@/sections/searchBlocks/SearchResults'
-import { searchClient as client } from '../../lib/algolia'
+'use client';
+
+import type { SearchClient } from 'instantsearch.js';
+import { history } from 'instantsearch.js/es/lib/routers';
+import type { UiState } from 'instantsearch.js/es/types';
+import { useRouter } from 'next/navigation';
+import { useLocale, useTranslations } from 'next-intl';
+import { useEffect, useRef, useState } from 'react';
+
+import { Configure, Index, InstantSearch } from 'react-instantsearch';
+import { PaginationContextProvider } from '@/contexts/PaginationContext';
+import { SearchBox } from '@/core/AlgoliaSearchBox/SearchBox';
+import usePaginationPadding from '@/lib/hooks/usePaginationPadding';
+import { Flags } from '@/sanity/helpers/datasetHelpers';
+import { Pagination } from '@/sections/searchBlocks/pagination/Pagination';
+import SearchResults from '@/sections/searchBlocks/SearchResults';
+import { searchClient as client } from '../../lib/algolia';
 
 type SearchRouteState = {
-  page?: number
-  query?: string
-  tab?: string
-}
+  page?: number;
+  query?: string;
+  tab?: string;
+};
 
 const createSearchClient = (): SearchClient => {
-  const searchClient = client()
+  const searchClient = client();
 
   return {
     ...searchClient,
     search(requests: any) {
       const hasQuery = requests.some(
         ({ params }: any) => String(params?.query ?? '').trim().length > 0,
-      )
+      );
 
       if (!hasQuery) {
         return Promise.resolve({
@@ -43,24 +45,24 @@ const createSearchClient = (): SearchClient => {
             query: '',
             params: '',
           })),
-        })
+        });
       }
 
-      return searchClient.search(requests)
+      return searchClient.search(requests);
     },
-  }
-}
+  };
+};
 
 export function Search() {
-  const intl = useTranslations()
-  const locale = useLocale()
-  const resultsRef = useRef<HTMLDivElement>(null)
-  const searchClientRef = useRef<SearchClient | null>(null)
-  const [isMounted, setIsMounted] = useState(false)
-  const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
+  const intl = useTranslations();
+  const locale = useLocale();
+  const resultsRef = useRef<HTMLDivElement>(null);
+  const searchClientRef = useRef<SearchClient | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
+  const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev';
 
-  const router = useRouter()
-  const padding = usePaginationPadding()
+  const router = useRouter();
+  const padding = usePaginationPadding();
   const indices = [
     {
       value: `${envPrefix}_TOPICS_${locale}`,
@@ -78,46 +80,45 @@ export function Search() {
       value: `${envPrefix}_MAGAZINE_${locale}`,
       label: intl('search_magazine_tab'),
     },
-  ]
+  ];
 
   // The main index will be "all" at some point
-  const mainIndex = `${envPrefix}_TOPICS_${locale}`
-
+  const mainIndex = `${envPrefix}_TOPICS_${locale}`;
   useEffect(() => {
-    setIsMounted(true)
-  }, [])
+    setIsMounted(true);
+  }, []);
 
   if (!isMounted) {
     return (
-      <div className='mx-auto p-8 px-layout-sm lg:px-layout-lg'>
-        <h1 className='sr-only'>{intl('search_page_title')}</h1>
+      <div className="mx-auto p-8 px-layout-sm lg:px-layout-lg">
+        <h1 className="sr-only">{intl('search_page_title')}</h1>
       </div>
-    )
+    );
   }
 
-  searchClientRef.current ??= createSearchClient()
+  searchClientRef.current ??= createSearchClient();
 
   // eslint-disable-next-line
   // @ts-ignore: @TODO: The types are not correct
   const createURL = ({ qsModule, routeState, location }: any) => {
-    const queryParameters: any = {}
+    const queryParameters: any = {};
     if (routeState.query) {
-      queryParameters.query = routeState.query
+      queryParameters.query = routeState.query;
     }
     if (routeState.page !== 1) {
-      queryParameters.page = routeState.page
+      queryParameters.page = routeState.page;
     }
     if (routeState.tab) {
-      queryParameters.tab = routeState.tab
+      queryParameters.tab = routeState.tab;
     }
 
     const queryString = qsModule.stringify(queryParameters, {
       addQueryPrefix: true,
       arrayFormat: 'repeat',
       format: 'RFC1738',
-    })
-    return `${location.pathname}${queryString}`
-  }
+    });
+    return `${location.pathname}${queryString}`;
+  };
 
   // eslint-disable-next-line
   // @ts-ignore: @TODO: The types are not correct
@@ -126,14 +127,14 @@ export function Search() {
       query = '',
       page,
       tab = '',
-    }: any = qsModule.parse(location.search.slice(1))
+    }: any = qsModule.parse(location.search.slice(1));
     return {
       ...(query && { query: query }),
       ...(page && { page: page as number }),
       ...(tab &&
         ['topics', 'events', 'news', 'magazine'].includes(tab) && { tab: tab }),
-    }
-  }
+    };
+  };
 
   return (
     <InstantSearch<UiState, SearchRouteState>
@@ -147,13 +148,13 @@ export function Search() {
           push(url) {
             if (url.split('?')[1]) {
               // replace url only if it has query params
-              router.replace(url)
+              router.replace(url);
             }
           },
         }),
         stateMapping: {
           stateToRoute(uiState: UiState): SearchRouteState {
-            const indexUiState = uiState[mainIndex]
+            const indexUiState = uiState[mainIndex];
             return {
               ...(indexUiState.sortBy && {
                 tab: indexUiState.sortBy
@@ -164,7 +165,7 @@ export function Search() {
               }),
               ...(indexUiState?.query && { query: indexUiState.query }),
               ...(indexUiState?.page && { page: indexUiState?.page }),
-            }
+            };
           },
           routeToState(routeState: SearchRouteState): UiState {
             return {
@@ -175,34 +176,34 @@ export function Search() {
                   sortBy: `${envPrefix}_${routeState.tab.toUpperCase()}_${locale}`,
                 }),
               },
-            }
+            };
           },
         },
       }}
     >
-      <Configure hitsPerPage={5} snippetEllipsisText='...' />
-      {indices.map(index => (
+      <Configure hitsPerPage={5} snippetEllipsisText="..." />
+      {indices.map((index) => (
         <Index
           indexName={index.value}
           key={index.label}
           indexId={index.value}
         />
       ))}
-      <div className='mx-auto p-8 px-layout-sm lg:px-layout-lg'>
-        <h1 className='sr-only'>{intl('search_page_title')}</h1>
+      <div className="mx-auto p-8 px-layout-sm lg:px-layout-lg">
+        <h1 className="sr-only">{intl('search_page_title')}</h1>
 
-        <div className='max-w-[700px]'>
-          <SearchBox variant='inverted' />
+        <div className="max-w-[700px]">
+          <SearchBox variant="inverted" />
         </div>
         <SearchResults resultsRef={resultsRef} items={indices} />
         <PaginationContextProvider defaultRef={resultsRef}>
           <Pagination
-            className='mt-12 justify-center'
+            className="mt-12 justify-center"
             padding={padding}
             hitsPerPage={5}
           />
         </PaginationContextProvider>
       </div>
     </InstantSearch>
-  )
+  );
 }

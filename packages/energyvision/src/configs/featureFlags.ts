@@ -1,12 +1,12 @@
-import type { DatasetsKeys } from './satelliteConfig'
+import type { DatasetsKeys } from './satelliteConfig';
 
 /**
  * Feature flags are used on a dataset-basis instead of per
  * environment basis. To add a feature to a specifc dataset,
  * simply add the dataset name to the feature array.
  */
-const GLOBAL_PROD = ['global', 'secret', 'global-test']
-const GLOBAL_DEV = ['global-development', 'global-test']
+const GLOBAL_PROD = ['global', 'secret', 'global-test'];
+const GLOBAL_DEV = ['global-development', 'global-test'];
 const SATELLITES = [
   'argentina',
   'brazil',
@@ -19,7 +19,7 @@ const SATELLITES = [
   'storage',
   'sponsorship',
   'stemgapet',
-]
+];
 const NEWS = [
   ...GLOBAL_DEV,
   ...GLOBAL_PROD,
@@ -29,30 +29,30 @@ const NEWS = [
   'germany',
   'southkorea',
   'celticsea',
-]
-const ARCHIVED_NEWS = [...GLOBAL_PROD, ...GLOBAL_DEV]
-const NEWS_SUBSCRIPTION = [...GLOBAL_PROD, ...GLOBAL_DEV]
-const MAGAZINE_SUBSCRIPTION = [...GLOBAL_DEV, ...GLOBAL_PROD]
-const NEWSROOM = [...GLOBAL_PROD, ...GLOBAL_DEV]
-const LOCAL_NEWS = [...GLOBAL_PROD, ...GLOBAL_DEV]
-const SEARCH = [...GLOBAL_PROD, ...GLOBAL_DEV]
-const EVENT = [...GLOBAL_PROD, ...GLOBAL_DEV, 'stemgapet']
+];
+const ARCHIVED_NEWS = [...GLOBAL_PROD, ...GLOBAL_DEV];
+const NEWS_SUBSCRIPTION = [...GLOBAL_PROD, ...GLOBAL_DEV];
+const MAGAZINE_SUBSCRIPTION = [...GLOBAL_DEV, ...GLOBAL_PROD];
+const NEWSROOM = [...GLOBAL_PROD, ...GLOBAL_DEV];
+const LOCAL_NEWS = [...GLOBAL_PROD, ...GLOBAL_DEV];
+const SEARCH = [...GLOBAL_PROD, ...GLOBAL_DEV];
+const EVENT = [...GLOBAL_PROD, ...GLOBAL_DEV, 'stemgapet'];
 
-const SUBSCRIBE_FORM = [...GLOBAL_PROD, ...GLOBAL_DEV]
-const CAREERS_CONTACT_FORM = [...GLOBAL_PROD, ...GLOBAL_DEV]
-const CONTACT_EQUINOR_FORM = [...GLOBAL_PROD, ...GLOBAL_DEV]
-const ORDER_REPORT_FORM = [...GLOBAL_PROD, ...GLOBAL_DEV]
-const CAREER_FAIR_AND_VISITS_FORM = [...GLOBAL_PROD, ...GLOBAL_DEV, 'brazil']
-const PENSION_FORM = [...GLOBAL_PROD, ...GLOBAL_DEV]
+const SUBSCRIBE_FORM = [...GLOBAL_PROD, ...GLOBAL_DEV];
+const CAREERS_CONTACT_FORM = [...GLOBAL_PROD, ...GLOBAL_DEV];
+const CONTACT_EQUINOR_FORM = [...GLOBAL_PROD, ...GLOBAL_DEV];
+const ORDER_REPORT_FORM = [...GLOBAL_PROD, ...GLOBAL_DEV];
+const CAREER_FAIR_AND_VISITS_FORM = [...GLOBAL_PROD, ...GLOBAL_DEV, 'brazil'];
+const PENSION_FORM = [...GLOBAL_PROD, ...GLOBAL_DEV];
 
-const FANCY_MENU = [...GLOBAL_PROD, ...GLOBAL_DEV]
-const MAGAZINE = [...GLOBAL_PROD, ...GLOBAL_DEV, 'stemgapet']
+const FANCY_MENU = [...GLOBAL_PROD, ...GLOBAL_DEV];
+const MAGAZINE = [...GLOBAL_PROD, ...GLOBAL_DEV, 'stemgapet'];
 /* Allows same slug for different languages */
-const SAME_SLUG = [...GLOBAL_DEV, 'japan', 'southkorea']
-const CAMPAIGN = [...GLOBAL_PROD, ...GLOBAL_DEV]
+const SAME_SLUG = [...GLOBAL_DEV, 'japan', 'southkorea'];
+const CAMPAIGN = [...GLOBAL_PROD, ...GLOBAL_DEV];
 
-const FETCH_OPTIMIZED = [...GLOBAL_PROD, ...SATELLITES, ...GLOBAL_DEV]
-const PEOPLE = [...GLOBAL_PROD, ...GLOBAL_DEV]
+const FETCH_OPTIMIZED = [...GLOBAL_PROD, ...SATELLITES, ...GLOBAL_DEV];
+const PEOPLE = [...GLOBAL_PROD, ...GLOBAL_DEV];
 
 /**
  * @param {string} dataset
@@ -91,4 +91,4 @@ export const FeatureFlags = (dataset: DatasetsKeys) => ({
   HAS_CAMPAIGN_BLOCKS: CAMPAIGN.includes(dataset),
   IS_FETCH_OPTIMIZED: FETCH_OPTIMIZED.includes(dataset),
   HAS_PEOPLE: PEOPLE.includes(dataset),
-})
+});
