@@ -76,7 +76,7 @@ const FooterLink = forwardRef<HTMLAnchorElement, FooterLinkProps>(
         {isExternal && (
           <ArrowRight
             aria-label={`${intl('externalLink')} arrow right icon`}
-            className='-translate-y-0.5 size-5 rotate-[-50deg] transform text-gray-500 group-hover:text-moss-green-90'
+            className='size-5 -translate-y-0.5 rotate-[-50deg] transform text-gray-500 group-hover:text-moss-green-90'
           />
         )}
       </BaseLink>

@@ -97,7 +97,7 @@ const types = [
   },
 ].filter(e => e)
 
-const defaultReferenceTargets: ReferenceTarget[] = [
+export const defaultReferenceTargets: ReferenceTarget[] = [
   ...(types as ReferenceTarget[]),
   ...routes,
 ]
