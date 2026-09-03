@@ -214,6 +214,18 @@ const fallbackToAnotherLanguage = async (
   return { notFound: true }
 }
 
+function getSiteMenuData(locale: string) {
+  'use cache'
+  return routeSanityFetch({
+    query: Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery,
+    params: {
+      lang: getNameFromIso(locale) ?? 'en_GB',
+    },
+    tags: [`siteMenu:${locale}`],
+    requestTag: 'site-menu',
+  })
+}
+
 export default async function ArchivedNewsPage({ params }: { params: Params }) {
   const { locale, slug } = await params
 
@@ -232,14 +244,6 @@ export default async function ArchivedNewsPage({ params }: { params: Params }) {
     slugs,
     currentSlug: slugs[0],
   }
-  const { data: siteMenuData } = await routeSanityFetch({
-    query: Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery,
-    params: {
-      lang: getNameFromIso(locale) ?? 'en_GB',
-    },
-    tags: [`siteMenu:${locale}`],
-    requestTag: 'site-menu',
-  })
 
   const pageData = await getArchivedPageData(await params)
 
@@ -249,7 +253,10 @@ export default async function ArchivedNewsPage({ params }: { params: Params }) {
   }
   return (
     <>
-      <Header siteMenuData={siteMenuData} headerData={headerData} />
+      <Header
+        siteMenuData={(await getSiteMenuData(locale)).data}
+        headerData={headerData}
+      />
       <ArchivedNews {...pageData} />
     </>
   )
