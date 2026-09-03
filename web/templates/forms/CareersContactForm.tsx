@@ -1,33 +1,33 @@
-'use client'
-import { Icon } from '@equinor/eds-core-react'
-import { error_filled } from '@equinor/eds-icons'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useLocale, useTranslations } from 'next-intl'
-import { type BaseSyntheticEvent, useId, useMemo, useState } from 'react'
-import { Controller, useForm, useWatch } from 'react-hook-form'
-import type { z } from 'zod'
-import { FORM_CATALOG_NUMBERS } from '@/app/_actions/formCatalogNumbers'
-import submitFormServerAction from '@/app/_actions/submitFormServerAction'
-import verifyCaptcha from '@/app/_actions/verifyCaptcha'
-import { Button } from '@/core/Button'
-import { Checkbox } from '@/core/Checkbox/Checkbox'
-import { FormMessageBox } from '@/core/Form/FormMessageBox'
-import { Select } from '@/core/Select/Select'
-import { TextField } from '@/core/TextField/TextField'
-import { careersContactFormSchema } from '@/lib/zodSchemas/zodSchemas'
-import FriendlyCaptcha from './FriendlyCaptcha'
+'use client';
+import { Icon } from '@equinor/eds-core-react';
+import { error_filled } from '@equinor/eds-icons';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useLocale, useTranslations } from 'next-intl';
+import { type BaseSyntheticEvent, useId, useMemo, useState } from 'react';
+import { Controller, useForm, useWatch } from 'react-hook-form';
+import type { z } from 'zod';
+import { FORM_CATALOG_NUMBERS } from '@/app/_actions/formCatalogNumbers';
+import submitFormServerAction from '@/app/_actions/submitFormServerAction';
+import verifyCaptcha from '@/app/_actions/verifyCaptcha';
+import { Button } from '@/core/Button';
+import { Checkbox } from '@/core/Checkbox/Checkbox';
+import { FormMessageBox } from '@/core/Form/FormMessageBox';
+import { Select } from '@/core/Select/Select';
+import { TextField } from '@/core/TextField/TextField';
+import { careersContactFormSchema } from '@/lib/zodSchemas/zodSchemas';
+import { FriendlyCaptcha, getFriendlyCaptchaSolution } from './FriendlyCaptcha';
 
 type CareerContactFormData = z.infer<
   ReturnType<typeof careersContactFormSchema>
->
+>;
 
 const CareersContactForm = () => {
-  const intl = useTranslations()
-  const locale = useLocale()
-  const [isFriendlyChallengeDone, setIsFriendlyChallengeDone] = useState(false)
-  const [isServerError, setServerError] = useState(false)
-  const [isSuccessfullySubmitted, setSuccessfullySubmitted] = useState(false)
-  const formId = useId()
+  const intl = useTranslations();
+  const locale = useLocale();
+  const [isFriendlyChallengeDone, setIsFriendlyChallengeDone] = useState(false);
+  const [isServerError, setServerError] = useState(false);
+  const [isSuccessfullySubmitted, setSuccessfullySubmitted] = useState(false);
+  const formId = useId();
 
   const {
     handleSubmit,
@@ -50,61 +50,64 @@ const CareersContactForm = () => {
       candidateType: '',
       supportingDocuments: '',
     },
-  })
+  });
   const suspectedRecruitmentScam =
     intl('careers_contact_form_suspected_recruitment_scam') ??
-    'Suspected recruitment scam'
-  const onboarding = intl('careers_contact_form_onboarding')
-  const graduates = intl('careers_contact_form_graduates')
-  const interns = intl('careers_contact_form_interns')
-  const apprentices = intl('careers_contact_form_apprentices')
+    'Suspected recruitment scam';
+  const onboarding = intl('careers_contact_form_onboarding');
+  const graduates = intl('careers_contact_form_graduates');
+  const interns = intl('careers_contact_form_interns');
+  const apprentices = intl('careers_contact_form_apprentices');
 
   const watchCategory = useWatch({
     name: 'category',
     control,
-  })
+  });
 
   const setPositionIdMandatory = useMemo(() => {
-    return watchCategory !== suspectedRecruitmentScam && watchCategory !== ''
-  }, [watchCategory, suspectedRecruitmentScam])
+    return watchCategory !== suspectedRecruitmentScam && watchCategory !== '';
+  }, [watchCategory, suspectedRecruitmentScam]);
 
   const getCatalogType = (
     category: string | undefined,
     candidateType: string | undefined,
   ) => {
     if (category?.includes(suspectedRecruitmentScam))
-      return 'b04a9748832d8610347af830feaad382'
+      return 'b04a9748832d8610347af830feaad382';
     if (
       candidateType?.includes(graduates) ||
       candidateType?.includes(interns) ||
       candidateType?.includes(apprentices)
     )
-      return '3971e24c375a3640615af01643990ebf'
-    return '59e02ac8375a3640615af01643990e7c'
-  }
+      return '3971e24c375a3640615af01643990ebf';
+    return '59e02ac8375a3640615af01643990e7c';
+  };
 
   const onSubmit = async (
     data: CareerContactFormData,
     event?: BaseSyntheticEvent,
   ) => {
-    data.preferredLang = locale
+    data.preferredLang = locale;
     if (isFriendlyChallengeDone) {
-      const frcCaptchaSolution = (event?.target as any)['frc-captcha-response']
-        .value
-      const isCaptchaVerified = await verifyCaptcha(frcCaptchaSolution)
+      const frcCaptchaSolution = getFriendlyCaptchaSolution(event);
+      if (!frcCaptchaSolution) {
+        setIsFriendlyChallengeDone(false);
+        return;
+      }
+      const isCaptchaVerified = await verifyCaptcha(frcCaptchaSolution);
 
-      const cid = getCatalogType(data.category, data.candidateType)
+      const cid = getCatalogType(data.category, data.candidateType);
 
       if (!isCaptchaVerified) {
-        return
+        return;
       }
 
-      const isDataValidated = careersContactFormSchema(intl).safeParse(data)
+      const isDataValidated = careersContactFormSchema(intl).safeParse(data);
 
       if (!isDataValidated.success) {
-        setServerError(true)
-        setSuccessfullySubmitted(false)
-        return
+        setServerError(true);
+        setSuccessfullySubmitted(false);
+        return;
       }
 
       const finalFormData = {
@@ -123,44 +126,44 @@ const CareersContactForm = () => {
           category: data.category,
           preferredlanguage: locale,
         },
-      }
+      };
 
       // Call the server action directly
       const result = await submitFormServerAction(
         JSON.stringify(finalFormData),
         FORM_CATALOG_NUMBERS.careersContactUs,
-      )
+      );
 
-      setServerError(result.status !== 200)
-      setSuccessfullySubmitted(result.status === 200)
+      setServerError(result.status !== 200);
+      setSuccessfullySubmitted(result.status === 200);
     } else {
       //@ts-ignore: TODO: types
       setError('root.notCompletedCaptcha', {
         type: 'custom',
         message: intl('form_antirobot_validation_required'),
-      })
+      });
     }
-  }
+  };
 
   return (
     <>
       {!isSuccessfullySubmitted && (
         <>
-          <div className='pb-6 text-sm'>{intl('all_fields_mandatory')} </div>
+          <div className="pb-6 text-sm">{intl('all_fields_mandatory')} </div>
 
           <form
             onSubmit={handleSubmit(onSubmit)}
             onReset={() => {
-              reset()
-              setIsFriendlyChallengeDone(false)
-              setSuccessfullySubmitted(false)
+              reset();
+              setIsFriendlyChallengeDone(false);
+              setSuccessfullySubmitted(false);
             }}
-            className='flex flex-col gap-12'
+            className="flex flex-col gap-12"
           >
             {!isSuccessfullySubmitted && !isServerError && (
               <>
                 <Controller
-                  name='name'
+                  name="name"
                   control={control}
                   render={({
                     field: { ref, ...props },
@@ -171,10 +174,10 @@ const CareersContactForm = () => {
                       id={`${props.name}_${formId}`}
                       label={`${intl('name')}*`}
                       inputRef={ref}
-                      aria-required='true'
+                      aria-required="true"
                       inputIcon={
                         invalid ? (
-                          <Icon data={error_filled} title='error' />
+                          <Icon data={error_filled} title="error" />
                         ) : undefined
                       }
                       helperText={error?.message}
@@ -183,7 +186,7 @@ const CareersContactForm = () => {
                   )}
                 />
                 <Controller
-                  name='phone'
+                  name="phone"
                   control={control}
                   render={({
                     field: { ref, ...props },
@@ -194,21 +197,21 @@ const CareersContactForm = () => {
                       id={`${props.name}_${formId}`}
                       label={`${intl('careers_contact_form_phone')}*`}
                       description={intl('country_code_format')}
-                      type='tel'
+                      type="tel"
                       inputRef={ref}
                       inputIcon={
                         invalid ? (
-                          <Icon data={error_filled} title='error' />
+                          <Icon data={error_filled} title="error" />
                         ) : undefined
                       }
                       helperText={error?.message}
-                      aria-required='true'
+                      aria-required="true"
                       {...(invalid && { variant: 'error' })}
                     />
                   )}
                 />
                 <Controller
-                  name='email'
+                  name="email"
                   control={control}
                   render={({
                     field: { ref, ...props },
@@ -221,17 +224,17 @@ const CareersContactForm = () => {
                       inputRef={ref}
                       inputIcon={
                         invalid ? (
-                          <Icon data={error_filled} title='error' />
+                          <Icon data={error_filled} title="error" />
                         ) : undefined
                       }
                       helperText={error?.message}
-                      aria-required='true'
+                      aria-required="true"
                       {...(invalid && { variant: 'error' })}
                     />
                   )}
                 />
                 <Controller
-                  name='category'
+                  name="category"
                   control={control}
                   render={({ field: { ref, ...props } }) => (
                     <Select
@@ -240,7 +243,7 @@ const CareersContactForm = () => {
                       id={`${props.name}_${formId}`}
                       label={intl('category')}
                     >
-                      <option value=''>
+                      <option value="">
                         {intl('form_please_select_an_option')}
                       </option>
                       <option>{onboarding}</option>
@@ -258,7 +261,7 @@ const CareersContactForm = () => {
                 />
 
                 <Controller
-                  name='positionId'
+                  name="positionId"
                   control={control}
                   render={({
                     field: { ref, ...props },
@@ -270,7 +273,7 @@ const CareersContactForm = () => {
                       label={`${intl('careers_contact_form_position')}${setPositionIdMandatory ? '*' : ''}`}
                       inputIcon={
                         invalid ? (
-                          <Icon data={error_filled} title='error' />
+                          <Icon data={error_filled} title="error" />
                         ) : undefined
                       }
                       helperText={error?.message}
@@ -284,7 +287,7 @@ const CareersContactForm = () => {
                 />
 
                 <Controller
-                  name='location'
+                  name="location"
                   control={control}
                   render={({
                     field: { ref, ...props },
@@ -300,18 +303,18 @@ const CareersContactForm = () => {
                       inputRef={ref}
                       inputIcon={
                         invalid ? (
-                          <Icon data={error_filled} title='error' />
+                          <Icon data={error_filled} title="error" />
                         ) : undefined
                       }
                       helperText={error?.message}
-                      aria-required='true'
+                      aria-required="true"
                       {...(invalid && { variant: 'error' })}
                     />
                   )}
                 />
 
                 <Controller
-                  name='candidateType'
+                  name="candidateType"
                   control={control}
                   render={({ field: { ref, ...props } }) => (
                     <Select
@@ -320,7 +323,7 @@ const CareersContactForm = () => {
                       id={`${props.name}_${formId}`}
                       label={intl('careers_contact_form_candidate_type')}
                     >
-                      <option value=''>
+                      <option value="">
                         {intl('form_please_select_an_option')}
                       </option>
                       <option>
@@ -335,7 +338,7 @@ const CareersContactForm = () => {
                 />
 
                 <Controller
-                  name='questions'
+                  name="questions"
                   control={control}
                   render={({
                     field: { ref, ...props },
@@ -348,10 +351,10 @@ const CareersContactForm = () => {
                       inputRef={ref}
                       multiline
                       rowsMax={10}
-                      aria-required='true'
+                      aria-required="true"
                       inputIcon={
                         invalid ? (
-                          <Icon data={error_filled} title='error' />
+                          <Icon data={error_filled} title="error" />
                         ) : undefined
                       }
                       helperText={error?.message}
@@ -360,40 +363,36 @@ const CareersContactForm = () => {
                   )}
                 />
                 <Checkbox
-                  className='pb-4'
+                  className="pb-4"
                   label={intl('careers_contact_form_supporting_documents')}
-                  value='Yes'
+                  value="Yes"
                   {...register('supportingDocuments')}
                 />
-                <div className='flex flex-col gap-2'>
+                <div className="flex flex-col gap-2">
                   <FriendlyCaptcha
                     doneCallback={() => {
-                      setIsFriendlyChallengeDone(true)
+                      setIsFriendlyChallengeDone(true);
                     }}
-                    errorCallback={(error: any) => {
-                      console.error(
-                        'FriendlyCaptcha encountered an error',
-                        error,
-                      )
-                      setIsFriendlyChallengeDone(true)
+                    errorCallback={() => {
+                      setIsFriendlyChallengeDone(false);
                     }}
                   />
                   {/*@ts-ignore: TODO: types*/}
                   {errors?.root?.notCompletedCaptcha && (
                     <p
-                      role='alert'
-                      className='flex gap-2 border border-clear-red-100 px-6 py-4 font-semibold text-slate-80'
+                      role="alert"
+                      className="flex gap-2 border border-clear-red-100 px-6 py-4 font-semibold text-slate-80"
                     >
                       {/*@ts-ignore: TODO: types*/}
-                      <span className='mt-1'>
+                      <span className="mt-1">
                         {errors.root.notCompletedCaptcha.message}
                       </span>
-                      <Icon data={error_filled} aria-hidden='true' />
+                      <Icon data={error_filled} aria-hidden="true" />
                     </p>
                   )}
                 </div>
 
-                <Button type='submit'>
+                <Button type="submit">
                   {isSubmitting
                     ? intl('form_sending')
                     : intl('careers_contact_form_cta')}
@@ -403,19 +402,19 @@ const CareersContactForm = () => {
           </form>
         </>
       )}
-      <section aria-live='assertive'>
-        {isSuccessfullySubmitted && <FormMessageBox variant='success' />}
+      <section aria-live="assertive">
+        {isSuccessfullySubmitted && <FormMessageBox variant="success" />}
         {isSubmitted && isServerError && (
           <FormMessageBox
-            variant='error'
+            variant="error"
             onClick={() => {
-              reset(undefined, { keepValues: true })
-              setServerError(false)
+              reset(undefined, { keepValues: true });
+              setServerError(false);
             }}
           />
         )}
       </section>
     </>
-  )
-}
-export default CareersContactForm
+  );
+};
+export default CareersContactForm;
