@@ -47,6 +47,7 @@ export type ConfigRedirect = {
 
 const nextConfig: NextConfig = withNextIntl({
   output: 'standalone',
+  cacheComponents: true,
   transpilePackages: [
     'require-in-the-middle',
     'import-in-the-middle',

@@ -1,10 +1,16 @@
+import { cookies } from 'next/dist/server/request/cookies'
+import { draftMode } from 'next/dist/server/request/draft-mode'
 import type {
   ClientPerspective,
   ClientReturn,
   ContentSourceMap,
   QueryParams,
 } from 'next-sanity'
-import { type DefinedFetchType, defineLive } from 'next-sanity/live'
+import {
+  defineLive,
+  type LivePerspective,
+  resolvePerspectiveFromCookies,
+} from 'next-sanity/live'
 import { client } from './client'
 import { token } from './token'
 
@@ -53,6 +59,20 @@ export type DefinedSanityFetchType = <
   tags: string[]
 }>
 
-export const routeSanityFetch: DefinedFetchType = async query => {
-  return sanityFetch(query)
+export interface DynamicFetchOptions {
+  perspective: LivePerspective
+  stega: boolean
+}
+export async function getDynamicFetchOptions(searchParams: {
+  [key: string]: string | string[] | undefined
+}): Promise<DynamicFetchOptions> {
+  const { isEnabled: isDraftMode } = await draftMode()
+  if (!isDraftMode) {
+    return { perspective: 'published', stega: false }
+  }
+  const studioPerspective = searchParams
+    ? (searchParams['sanity-preview-perspective'] as LivePerspective | 'drafts')
+    : 'drafts'
+  // if draft mode is enabled resolve the perspective from the url '
+  return { perspective: studioPerspective, stega: true }
 }

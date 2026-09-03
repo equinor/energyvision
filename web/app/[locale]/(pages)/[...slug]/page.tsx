@@ -8,7 +8,8 @@ import { getLocale } from 'next-intl/server'
 import { decodeSlugs } from '@/lib/helpers/getFullUrl'
 import { Flags } from '@/sanity/helpers/datasetHelpers'
 import { getNameFromIso } from '@/sanity/helpers/localization'
-import { routeSanityFetch } from '@/sanity/lib/live'
+import { routeSanityFetch, sanityFetchMetadata } from '@/sanity/lib/fetch'
+import { getDynamicFetchOptions } from '@/sanity/lib/live'
 import { constructSanityMetadata, getPage } from '@/sanity/pages/utils'
 import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu'
 import {
@@ -23,6 +24,7 @@ type Props = {
   params: Promise<{ slug: string[]; locale: string }>
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }
+
 const MagazinePage = dynamic(() => import('@/templates/magazine/MagazinePage'))
 const EventPage = dynamic(() => import('@/templates/event/Event'))
 const NewsPage = dynamic(() => import('@/templates/news/News'))
@@ -33,8 +35,7 @@ export async function generateMetadata({
   params,
 }: PageProps<'/[locale]/[...slug]'>): Promise<Metadata> {
   //array, separated by /. e.g. [news, last slug]
-  const { slug: encodedSlug } = await params
-  const locale = await getLocale()
+  const { slug: encodedSlug, locale } = await params
   const slug = decodeSlugs(encodedSlug) as string[]
 
   const sanityLang = getNameFromIso(locale)
@@ -59,14 +60,16 @@ export async function generateMetadata({
     query = magazineroomMetaQuery
   }
 
-  const { data: metaData }: { data: any } = await routeSanityFetch({
+  const { data: metaData }: { data: any } = await sanityFetchMetadata({
     query,
     params: {
       lang: sanityLang,
       slug: `/${slug.join('/')}`,
       ...((isNewsPage || isMagazineRoom || isMagazinePage) && { type }),
     },
+    perspective: 'published',
     stega: false,
+    tags: [`page:/${slug.join('/')}`],
     requestTag: 'page-meta',
   })
 
@@ -74,8 +77,35 @@ export async function generateMetadata({
 }
 
 export default async function Page({ params, searchParams }: Props) {
-  const { slug, locale } = await params
   const resolvedSearchParams = await searchParams
+  const dynamic = await getDynamicFetchOptions(resolvedSearchParams)
+  const { slug } = await params
+
+  return (
+    <>
+      {/*getTemplate()*/}
+      <CachedContent
+        slug={slug}
+        searchParams={resolvedSearchParams}
+        dynamic={dynamic}
+      />
+    </>
+  )
+}
+
+// Cached (performs sanityFetch)
+async function CachedContent({
+  slug,
+  searchParams,
+  dynamic,
+}: {
+  slug: string | string[]
+  dynamic: Awaited<ReturnType<typeof getDynamicFetchOptions>>
+  searchParams: { [key: string]: string[] | string | undefined }
+}) {
+  'use cache'
+  const locale = await getLocale()
+
   /*   const isInPresentationToolContext =
     (await cookies()).get('preview-fetch-dest')?.value === 'iframe' */
   const { isEnabled: isDraftMode } = await draftMode()
@@ -86,11 +116,18 @@ export default async function Page({ params, searchParams }: Props) {
       params: {
         lang: getNameFromIso(locale) ?? 'en_GB',
       },
+      tags: [`siteMenu:${locale}`],
+      requestTag: 'site-menu',
+      ...dynamic,
     }),
     getPage({
       slug: decodeSlugs(slug),
       locale,
-      searchParams: resolvedSearchParams,
+      searchParams: searchParams,
+      fetch: routeSanityFetch,
+      ...dynamic,
+      stega: false,
+      tags: [`page:/${Array.isArray(slug) ? slug.join('/') : slug}`],
     }),
   ])
   pageContent = pageResults
@@ -127,7 +164,7 @@ export default async function Page({ params, searchParams }: Props) {
   return (
     <>
       <Header siteMenuData={siteMenuData} headerData={headerData} />
-      {getTemplate()}
+      <article>{getTemplate()}</article>
     </>
   )
 }

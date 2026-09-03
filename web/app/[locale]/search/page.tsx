@@ -1,11 +1,10 @@
-import { Flags } from '@/sanity/helpers/datasetHelpers'
+'use client'
+import { Suspense } from 'react'
 import { Search } from '@/sections/searchBlocks/Search'
 
-export const dynamic = 'force-static'
-
-export function generateStaticParams() {
+/*export async function generateStaticParams() {
   return Flags.HAS_SEARCH ? [{ locale: 'nb-NO' }, { locale: 'en-GB' }] : []
-}
+}*/
 
 /* export async function generateMetadata({
   params,
@@ -38,5 +37,9 @@ export function generateStaticParams() {
 } */
 
 export default function Page() {
-  return <Search />
+  return (
+    <Suspense fallback={<div>Loading Search Engine...</div>}>
+      <Search />
+    </Suspense>
+  )
 }

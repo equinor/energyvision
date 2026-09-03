@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { type QueryParams, toPlainText } from 'next-sanity'
+import type { DefinedFetchType, LivePerspective } from 'next-sanity/live'
 import {
   defaultLanguage,
   domain,
@@ -16,7 +17,7 @@ import { getQueryFromSlug } from '@/sanity/helpers/queryFromSlug'
 import { resolveOpenGraphImage } from '@/sanity/lib/utils'
 import type { SeoData } from '@/types'
 import { isDateAfter } from '../../lib/helpers/dateUtilities'
-import { routeSanityFetch } from '../lib/live'
+import { routeSanityFetch } from '../lib/fetch'
 import { contentQueryById, pageInfoById } from '../queries/contentById'
 import {
   allMagazineDocuments,
@@ -175,9 +176,12 @@ type Params = {
   slug?: string | string[]
   locale: string
   tags?: string[]
+  fetch?: DefinedFetchType
   searchParams?: {
     [key: string]: string[] | string | undefined
   }
+  perspective?: LivePerspective
+  stega?: boolean
 }
 
 function languagePrefixedSlug(
@@ -196,7 +200,14 @@ function languagePrefixedSlug(
 }
 
 export async function getPage(params: Params) {
-  const { slug, locale, searchParams } = params
+  const {
+    slug,
+    locale,
+    searchParams,
+    fetch = routeSanityFetch,
+    perspective,
+    stega,
+  } = params
   const tagParam = searchParams?.tag
   const tag =
     typeof tagParam === 'string'
@@ -207,24 +218,28 @@ export async function getPage(params: Params) {
   let pageData = null
   if (slug?.[0]?.includes('preview')) {
     const id = slug[1]
+
     if (id) {
-      const { data: draftInfo }: { data: any } = await routeSanityFetch({
+      const { data: draftInfo }: { data: any } = await fetch({
         query: pageInfoById,
         params: {
           id,
         },
         requestTag: 'preview',
+        perspective,
       })
-
       if (draftInfo?.lang) {
-        const { data } = await routeSanityFetch({
+        const { data } = await fetch({
           query: contentQueryById,
           params: {
             id,
             lang: draftInfo?.lang,
           },
           requestTag: 'preview',
+          perspective,
+          stega,
         })
+
         pageData = data
       }
     }
@@ -232,18 +247,24 @@ export async function getPage(params: Params) {
     const { query: pageQuery, queryParams: pageQueryParams } =
       await getQueryFromSlug(slug, locale)
 
-    const { data }: { data: any } = await routeSanityFetch({
+    const { data }: { data: any } = await fetch({
       query: pageQuery,
-      // tags: [...tags],
+      tags: [
+        slug
+          ? `page:/${Array.isArray(slug) ? slug?.join('/') : slug}`
+          : `homePage:${locale}`,
+      ],
       params: { ...pageQueryParams },
       requestTag: 'page-by-slug',
+      perspective,
+      stega,
     })
     pageData = data
   }
 
   let magazineArticles = null
   if (pageData?.template === 'magazineIndex') {
-    const { data: articles } = await routeSanityFetch({
+    const { data: articles } = await fetch({
       query:
         tag && tag !== 'all'
           ? getMagazineArticlesByTag(false, false)
@@ -252,7 +273,7 @@ export async function getPage(params: Params) {
         lang: getNameFromIso(locale),
         ...(tag && tag !== 'all' && { tag }),
       } as QueryParams,
-      // tags: ['magazine'],
+      tags: [`magazineIndex:${locale}`],
       requestTag: 'magazine-room',
     })
     magazineArticles = articles
