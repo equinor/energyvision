@@ -51,6 +51,11 @@ const snippets: textSnippet = {
     defaultValue: 'Read transcript',
     group: groups.others,
   },
+  read_more_about: {
+    title: 'Read more about {title}',
+    defaultValue: 'Read more about {title}',
+    group: groups.others,
+  },
   menu: {
     title: 'Menu',
     defaultValue: 'Menu',

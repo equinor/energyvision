@@ -68,6 +68,7 @@ export const content = {
     { type: 'promotePeople', title: 'People promotion' },
     { type: 'promoteTopics', title: 'Topic page promotion' },
     Flags.HAS_NEWS && { type: 'promoteNews', title: 'News promotions' },
+    Flags.HAS_PEOPLE && { type: 'personList', title: 'Person list' },
     { type: 'pieChartBlock', title: 'Pie chart' },
     { type: 'lineChartBlock', title: 'Line chart' },
     { type: 'barChartBlock', title: 'Bar chart' },

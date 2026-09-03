@@ -1,11 +1,13 @@
-import { external_link, facebook, home, link } from '@equinor/eds-icons'
+import { external_link, home, link } from '@equinor/eds-icons'
 import { LinkIcon } from '@sanity/icons'
 import { Card, Flex, Select } from '@sanity/ui'
 import { useCallback, useMemo } from 'react'
-import { MdOutlineAnchor } from 'react-icons/md'
+import { BsPersonFillDown } from 'react-icons/bs'
+import { MdAppShortcut, MdOutlineAnchor } from 'react-icons/md'
 import type { Reference, Rule, ValidationContext } from 'sanity'
 import { set, useFormValue } from 'sanity'
 import {
+  filterByLang,
   filterByPages,
   filterByPagesInOtherLanguages,
 } from '../../../helpers/referenceFilters'
@@ -63,6 +65,7 @@ export type LinkType =
   | 'reference'
   | 'homePageLink'
   | 'referenceToOtherLanguage'
+  | 'personListUrl'
   | 'socialMediaLink'
   | 'pageAnchor'
 export type ReferenceTarget = {
@@ -94,7 +97,7 @@ const types = [
   },
 ].filter(e => e)
 
-const defaultReferenceTargets: ReferenceTarget[] = [
+export const defaultReferenceTargets: ReferenceTarget[] = [
   ...(types as ReferenceTarget[]),
   ...routes,
 ]
@@ -177,6 +180,21 @@ export const internalReference = {
   }, */
 }
 
+export const personListUrlReference = {
+  name: 'personListUrl',
+  title: 'Internal link to person',
+  description:
+    'Link to the selected person in the person list on their CV main route.',
+  type: 'reference',
+  validation: validation(),
+  icon: () => <BsPersonFillDown />,
+  to: [{ type: 'person' }],
+  options: {
+    filter: filterByLang,
+    disableNew: true,
+  },
+}
+
 export const homepageLink = {
   name: 'homePageLink',
   title: 'Link to Home page',
@@ -228,7 +246,7 @@ export const socialMediaLink = {
   title: 'Social Media link',
   description: 'Use this field to add social media links ',
   type: 'object',
-  icon: EdsBlockEditorIcon(facebook),
+  icon: () => <MdAppShortcut />,
   fields: [
     {
       name: 'href',

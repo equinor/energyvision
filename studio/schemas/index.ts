@@ -4,6 +4,7 @@ import { Flags } from '../src/lib/datasetHelpers'
 // Document types
 import documentSchemaTypes from './documents'
 import homePage from './documents/homePage'
+import person from './documents/person'
 import textSnippet from './documents/textSnippet'
 import anchorSearch from './objects/AnchorSearch'
 import accordion from './objects/accordion'
@@ -77,6 +78,7 @@ import promoteNews from './objects/promotion/promoteNews'
 import promotePeople from './objects/promotion/promotePeople'
 import promoteTopics from './objects/promotion/promoteTopic'
 import promotion from './objects/promotion/promotion'
+import personList from './objects/personList'
 import pullQuote from './objects/pullQuote'
 import relatedLinks from './objects/relatedLinks'
 import simpleMenuGroup from './objects/simpleMenuGroup'
@@ -151,6 +153,8 @@ const FormSchemas = Flags.HAS_FORMS ? [form] : []
 const MagazineSchemas = Flags.HAS_MAGAZINE
   ? [magazine, magazineIndex, magazineTag, promoteMagazine].filter(e => e)
   : []
+const PersonSchemas = Flags.HAS_PEOPLE ? [person] : []
+
 const RemainingSchemas = [
   page,
   homePage,
@@ -188,6 +192,7 @@ const RemainingSchemas = [
   promotion,
   promoteTopics,
   promotePeople,
+  personList,
   contactList,
   assetFile,
   assetTag,
@@ -264,5 +269,6 @@ export const schemaTypes = [
   ...FormSchemas,
   ...NewsSchemas,
   ...NewsRoomSchema,
+  ...PersonSchemas,
   ...RemainingSchemas,
 ]

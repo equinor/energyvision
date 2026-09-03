@@ -102,13 +102,13 @@ const VideoPlayerBlock = ({
           isNarrowFeature && 'mx-auto',
           isNarrowFeature &&
             videoPlayerDesignOptions?.aspectRatio === '9:16' &&
-            'w-101.5',
+            'aspect-9/16 lg:aspect-auto lg:w-101.5',
           isNarrowFeature &&
             videoPlayerDesignOptions?.aspectRatio === '16:9' &&
-            'w-200',
+            'lg:w-200',
           isNarrowFeature &&
             videoPlayerDesignOptions?.aspectRatio === '1:1' &&
-            'w-150',
+            'aspect-square lg:aspect-auto lg:w-150',
         )}
       >
         <VideoPlayer
