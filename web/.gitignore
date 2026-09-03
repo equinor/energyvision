@@ -6,3 +6,5 @@
 next-env.d.ts
 
 /sanityv3
+sanity/interface/redirects.json
+sanity/interface/translations.json
