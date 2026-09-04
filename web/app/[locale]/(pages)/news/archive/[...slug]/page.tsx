@@ -1,65 +1,66 @@
-import type { Metadata } from 'next'
-import { notFound, redirect } from 'next/navigation'
-import { defaultLanguage, languages, metaTitleSuffix } from '@/languageConfig'
-import archivedNews from '@/lib/archive/archivedNewsPaths.json'
-import { host } from '@/lib/config'
-import { Flags } from '@/sanity/helpers/datasetHelpers'
-import { getNameFromIso } from '@/sanity/helpers/localization'
-import { routeSanityFetch } from '@/sanity/lib/fetch'
-import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu'
-import type { PathType } from '@/sanity/queries/paths/getPaths'
-import { simpleMenuQuery } from '@/sanity/queries/simpleMenu'
-import Header from '@/sections/Header/Header'
-import ArchivedNews from '@/templates/archivedNews/ArchivedNews'
+import type { Metadata } from 'next';
+import { notFound, redirect } from 'next/navigation';
+import { defaultLanguage, languages, metaTitleSuffix } from '@/languageConfig';
+import archivedNews from '@/lib/archive/archivedNewsPaths.json';
+import { host } from '@/lib/config';
+import { Flags } from '@/sanity/helpers/datasetHelpers';
+import { getNameFromIso } from '@/sanity/helpers/localization';
+import { routeSanityFetch } from '@/sanity/lib/fetch';
+import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu';
+import type { PathType } from '@/sanity/queries/paths/getPaths';
+import { simpleMenuQuery } from '@/sanity/queries/simpleMenu';
+import Header from '@/sections/Header/Header';
+import ArchivedNews from '@/templates/archivedNews/ArchivedNews';
 
-type Params = Promise<{ locale: string; slug: string[] }>
+type Params = Promise<{ locale: string; slug: string[] }>;
 
 type ArchivedContentType = {
-  title: string
-  description: string
-  content: string
-}
+  title: string;
+  description: string;
+  content: string;
+};
 async function getArchivedPageData(params: { locale: string; slug: string[] }) {
-  const { locale: routeLocale, slug: pagePathArray } = params
-  const locale = routeLocale === 'en-GB' ? 'en' : 'no'
-  if (!Flags.HAS_ARCHIVED_NEWS) return { notFound: true }
+  const { locale: routeLocale, slug: pagePathArray } = params;
+  const locale = routeLocale === 'en-GB' ? 'en' : 'no';
+  if (!Flags.HAS_ARCHIVED_NEWS) return { notFound: true };
 
-  const pagePath = pagePathArray?.join('/')
+  const pagePath = pagePathArray?.join('/');
   const archivedItems = archivedNews.filter(
-    e => e.slug === `/news/archive/${pagePath}`,
-  )
-  if (archivedItems.length === 0) return notFound()
+    (e) => e.slug === `/news/archive/${pagePath}`,
+  );
+  if (archivedItems.length === 0) return notFound();
   if (archivedItems.length === 1 && archivedItems[0].locale !== locale) {
     // fallback to another language if the requested locale does not exist for the archived page
-    return fallbackToAnotherLanguage(pagePathArray, pagePath, locale)
+    return fallbackToAnotherLanguage(pagePathArray, pagePath, locale);
   }
 
-  const response = await fetchArchiveData(pagePathArray, pagePath, locale)
+  const response = await fetchArchiveData(pagePathArray, pagePath, locale);
   if (response.status === 404) {
-    notFound()
+    notFound();
   }
-  const pageData: ArchivedContentType = await parseResponse(response)
-  return pageData
+  const pageData: ArchivedContentType = await parseResponse(response);
+  return pageData;
 }
 
 export async function generateMetadata({
   params,
 }: {
-  params: Params
+  params: Params;
 }): Promise<Metadata> {
-  const { locale, slug: pagePathArray } = await params
+  if (!Flags.HAS_ARCHIVED_NEWS) return notFound();
+  const { locale, slug: pagePathArray } = await params;
   const archivedItems = archivedNews.filter(
-    e => e.slug === `/news/archive/${pagePathArray.join('/')}`,
-  )
+    (e) => e.slug === `/news/archive/${pagePathArray.join('/')}`,
+  );
   const slugs =
     archivedItems?.map((data: PathType) => ({
       slug: `${data.locale === 'no' ? '/no' : ''}${data.slug as string}`,
       lang: data.locale === 'en' ? 'en_GB' : 'nb_NO',
-    })) ?? []
+    })) ?? [];
 
-  const fullUrl = `${host.url}${slugs.find(it => it.lang === (locale === 'en' ? 'en_GB' : 'nb_NO'))?.slug}`
+  const fullUrl = `${host.url}${slugs.find((it) => it.lang === (locale === 'en' ? 'en_GB' : 'nb_NO'))?.slug}`;
 
-  const pageData = await getArchivedPageData({ locale, slug: pagePathArray })
+  const pageData = await getArchivedPageData({ locale, slug: pagePathArray });
   if ('redirect' in pageData || 'notFound' in pageData) {
     return {
       title: metaTitleSuffix,
@@ -74,9 +75,9 @@ export async function generateMetadata({
         ...(locale === defaultLanguage.iso && { canonical: fullUrl }),
         languages: {},
       },
-    }
+    };
   }
-  const { title, description } = pageData
+  const { title, description } = pageData;
 
   return {
     title,
@@ -93,47 +94,51 @@ export async function generateMetadata({
       canonical: fullUrl,
       languages: {
         en: fullUrl,
-        no: `${host.url}${slugs.find(it => it.lang === (locale === 'en' ? 'nb_NO' : 'en_GB'))?.slug}`,
+        no: `${host.url}${slugs.find((it) => it.lang === (locale === 'en' ? 'nb_NO' : 'en_GB'))?.slug}`,
         'x-default': fullUrl,
       },
     },
-  }
+  };
 }
 
-const ARCHIVE_REQUEST_TIMEOUT_MS = 10_000
+const ARCHIVE_REQUEST_TIMEOUT_MS = 10_000;
 
 /** Allow-listed path segment pattern: only alphanumeric, hyphen, underscore. */
-const SAFE_PATH_SEGMENT_RE = /^[a-zA-Z0-9_-]+$/
+const SAFE_PATH_SEGMENT_RE = /^[a-zA-Z0-9_-]+$/;
 
 /** Allow-listed locales for archive fetch. */
-const ALLOWED_ARCHIVE_LOCALES = new Set(['en', 'no'])
+const ALLOWED_ARCHIVE_LOCALES = new Set(['en', 'no']);
 
 const fetchArchiveData = async (
   pagePathArray: string[],
   pagePath: string,
   locale: string,
 ): Promise<Response> => {
-  if (pagePath.includes('.')) return Promise.reject(new Error('Invalid path'))
+  if (pagePath.includes('.')) return Promise.reject(new Error('Invalid path'));
 
   if (!ALLOWED_ARCHIVE_LOCALES.has(locale)) {
-    return Promise.reject(new Error('Invalid locale'))
+    return Promise.reject(new Error('Invalid locale'));
   }
 
-  if (!pagePathArray.every(segment => SAFE_PATH_SEGMENT_RE.test(segment))) {
-    return Promise.reject(new Error('Invalid path segment'))
+  if (!pagePathArray.every((segment) => SAFE_PATH_SEGMENT_RE.test(segment))) {
+    return Promise.reject(new Error('Invalid path segment'));
   }
 
-  const archiveServerURL = process.env.NEXT_PUBLIC_ARCHIVE_CONTENT_LINK
+  const archiveServerURL = process.env.NEXT_PUBLIC_ARCHIVE_CONTENT_LINK;
 
   if (!archiveServerURL) {
-    return Promise.reject(new Error('Missing NEXT_PUBLIC_ARCHIVE_CONTENT_LINK'))
+    return Promise.reject(
+      new Error('Missing NEXT_PUBLIC_ARCHIVE_CONTENT_LINK'),
+    );
   }
 
-  let parsedBase: URL
+  let parsedBase: URL;
   try {
-    parsedBase = new URL(archiveServerURL)
+    parsedBase = new URL(archiveServerURL);
   } catch {
-    return Promise.reject(new Error('Invalid NEXT_PUBLIC_ARCHIVE_CONTENT_LINK'))
+    return Promise.reject(
+      new Error('Invalid NEXT_PUBLIC_ARCHIVE_CONTENT_LINK'),
+    );
   }
 
   if (
@@ -141,18 +146,20 @@ const fetchArchiveData = async (
     parsedBase.username ||
     parsedBase.password
   ) {
-    return Promise.reject(new Error('Invalid NEXT_PUBLIC_ARCHIVE_CONTENT_LINK'))
+    return Promise.reject(
+      new Error('Invalid NEXT_PUBLIC_ARCHIVE_CONTENT_LINK'),
+    );
   }
 
   const safePath =
     pagePathArray.length > 1 && pagePathArray[0] !== 'crudeoilassays'
       ? `${locale}/news/archive/${pagePath}.json`
-      : `${locale}/news/${pagePath}.json`
+      : `${locale}/news/${pagePath}.json`;
 
   const endpoint = new URL(
     safePath,
     parsedBase.origin + parsedBase.pathname.replace(/\/$/, '') + '/',
-  )
+  );
 
   /** Check if the required page is old archived AEM page or not
    * because AEM also has archived pages which has 'archive' the page path */
@@ -160,62 +167,62 @@ const fetchArchiveData = async (
     cache: 'no-store',
     redirect: 'error',
     signal: AbortSignal.timeout(ARCHIVE_REQUEST_TIMEOUT_MS),
-  })
-}
+  });
+};
 
 const parseResponse = async (response: Response) => {
   try {
-    const data = await response.json()
-    return data
+    const data = await response.json();
+    return data;
   } catch (error) {
-    console.error('An error occured while parsing archive news data', error)
-    return null
+    console.error('An error occured while parsing archive news data', error);
+    return null;
   }
-}
+};
 
 type FallbackToAnotherLanguageType = Promise<
   | {
       redirect: {
-        permanent: boolean
-        destination: string
-      }
+        permanent: boolean;
+        destination: string;
+      };
     }
   | {
-      notFound: true
+      notFound: true;
     }
->
+>;
 
 const fallbackToAnotherLanguage = async (
   pagePathArray: string[],
   pagePath: string,
   locale: string,
 ): FallbackToAnotherLanguageType => {
-  const otherLanguages = languages.filter(lang => lang.locale !== locale)
-  const otherLocales = otherLanguages.map(lang => lang.locale)
+  const otherLanguages = languages.filter((lang) => lang.locale !== locale);
+  const otherLocales = otherLanguages.map((lang) => lang.locale);
   const responses = await Promise.all(
-    otherLocales.map(async locale => ({
+    otherLocales.map(async (locale) => ({
       locale: locale,
       res: await fetchArchiveData(pagePathArray, pagePath, locale),
     })),
-  )
-  const response = responses?.find(e => e.res.status === 200)
+  );
+  const response = responses?.find((e) => e.res.status === 200);
   if (response) {
-    console.log(`Archived page does not exist with request locale: ${locale}`)
+    console.log(`Archived page does not exist with request locale: ${locale}`);
     console.log(
       `Redirecting to existing path: /${response.locale}/news/archive/${pagePath}`,
-    )
+    );
     return {
       redirect: {
         permanent: true,
         destination: `/${response.locale}/news/archive/${pagePath}`,
       },
-    }
+    };
   }
-  return { notFound: true }
-}
+  return { notFound: true };
+};
 
 async function getSiteMenuData(locale: string) {
-  'use cache'
+  'use cache';
   return routeSanityFetch({
     query: Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery,
     params: {
@@ -223,33 +230,33 @@ async function getSiteMenuData(locale: string) {
     },
     tags: [`siteMenu:${locale}`],
     requestTag: 'site-menu',
-  })
+  });
 }
 
 export default async function ArchivedNewsPage({ params }: { params: Params }) {
-  const { locale, slug } = await params
+  const { locale, slug } = await params;
 
-  const pagePathArray = slug
-  const pagePath = pagePathArray.join('/')
+  const pagePathArray = slug;
+  const pagePath = pagePathArray.join('/');
   const archivedItems = archivedNews.filter(
-    e => e.slug === `/news/archive/${pagePath}`,
-  )
+    (e) => e.slug === `/news/archive/${pagePath}`,
+  );
   const slugs =
     archivedItems?.map((data: PathType) => ({
       slug: `${data.locale === 'no' ? '/no' : ''}${data.slug as string}`,
       lang: data.locale === 'en' ? 'en-GB' : 'nb-NO',
-    })) ?? []
+    })) ?? [];
 
   const headerData = {
     slugs,
     currentSlug: slugs[0],
-  }
+  };
 
-  const pageData = await getArchivedPageData(await params)
+  const pageData = await getArchivedPageData(await params);
 
-  if (!pageData || 'notFound' in pageData) notFound()
+  if (!pageData || 'notFound' in pageData) notFound();
   if ('redirect' in pageData) {
-    redirect(pageData.redirect.destination, 'replace')
+    redirect(pageData.redirect.destination, 'replace');
   }
   return (
     <>
@@ -259,5 +266,5 @@ export default async function ArchivedNewsPage({ params }: { params: Params }) {
       />
       <ArchivedNews {...pageData} />
     </>
-  )
+  );
 }
