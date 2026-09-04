@@ -1,7 +1,7 @@
-import { crossDatasetDuplicator } from '@sanity/cross-dataset-duplicator'
-import { dashboardTool } from '@sanity/dashboard'
-import { documentInternationalization } from '@sanity/document-internationalization'
-import { visionTool } from '@sanity/vision'
+import { crossDatasetDuplicator } from '@sanity/cross-dataset-duplicator';
+import { dashboardTool } from '@sanity/dashboard';
+import { documentInternationalization } from '@sanity/document-internationalization';
+import { visionTool } from '@sanity/vision';
 import type {
   ArrayOfObjectsInputProps,
   ArraySchemaType,
@@ -9,7 +9,7 @@ import type {
   DocumentFieldAction,
   InputProps,
   SchemaType,
-} from 'sanity'
+} from 'sanity';
 import {
   buildLegacyTheme,
   type ConfigContext,
@@ -19,48 +19,48 @@ import {
   type PluginOptions,
   type SchemaTypeDefinition,
   type Template,
-} from 'sanity'
-import { structureTool } from 'sanity/structure'
-import { media } from 'sanity-plugin-media'
-import { createCustomDuplicateAction } from './actions/CustomDuplicateAction'
-import { SetAndPublishAction } from './actions/CustomPublishAction'
-import { DeleteTranslationAction } from './actions/customDelete/DeleteTranslationAction'
-import deskStructure, { defaultDocumentNodeResolver } from './deskStructure'
-import { initialValueTemplates } from './initialValueTemplates'
-import { defaultLanguage } from './languages'
-import { FotowareAssetSource } from './plugins/asset-source-fotoware-v2'
-import { dataset, projectId } from './sanity.client'
-import { schemaTypes } from './schemas'
-import { CharCounterEditor } from './schemas/components/CharCounterEditor'
-import { LangBadge } from './schemas/components/LangBadge'
-import { i18n } from './schemas/documentTranslation'
-import './styles/customStyles.css'
+} from 'sanity';
+import { structureTool } from 'sanity/structure';
+import { media } from 'sanity-plugin-media';
+import { createCustomDuplicateAction } from './actions/CustomDuplicateAction';
+import { SetAndPublishAction } from './actions/CustomPublishAction';
+import { DeleteTranslationAction } from './actions/customDelete/DeleteTranslationAction';
+import deskStructure, { defaultDocumentNodeResolver } from './deskStructure';
+import { initialValueTemplates } from './initialValueTemplates';
+import { defaultLanguage } from './languages';
+import { FotowareAssetSource } from './plugins/asset-source-fotoware-v2';
+import { dataset, projectId } from './sanity.client';
+import { schemaTypes } from './schemas';
+import { CharCounterEditor } from './schemas/components/CharCounterEditor';
+import { LangBadge } from './schemas/components/LangBadge';
+import { i18n } from './schemas/documentTranslation';
+import './styles/customStyles.css';
 //import { getMetaTitleSuffix } from '@energyvision/shared/satelliteConfig'
-import { presentationTool } from 'sanity/presentation'
-import { copyAction } from './actions/fieldActions/CustomCopyFieldAction'
+import { presentationTool } from 'sanity/presentation';
+import { copyAction } from './actions/fieldActions/CustomCopyFieldAction';
 //Table plugin
-import { table } from './plugins/importTable'
-import { locations } from './presentation/locations'
-import CustomDocumentInternationalizationMenu from './schemas/components/CustomDocumentInternationalizationMenu'
-import { partialStudioTheme } from './studioTheme'
-import './styles/fonts.css'
+import { table } from './plugins/importTable';
+import { locations } from './presentation/locations';
+import CustomDocumentInternationalizationMenu from './schemas/components/CustomDocumentInternationalizationMenu';
+import { partialStudioTheme } from './studioTheme';
+import './styles/fonts.css';
 //import EquinorLogo from './styles/icons/logo.svg?react'
-import { fotowareWidget } from './widgets/ImportedFotowareAssetsWidget'
+import { fotowareWidget } from './widgets/ImportedFotowareAssetsWidget';
 
-export const customTheme = buildLegacyTheme(partialStudioTheme)
+export const customTheme = buildLegacyTheme(partialStudioTheme);
 
 // @TODO:
 // isArrayOfBlocksSchemaType helper function from Sanity is listed as @internal
 // refactor to use that once stable
 const isArraySchemaType = (schema: SchemaType): schema is ArraySchemaType =>
-  schema.name === 'array'
+  schema.name === 'array';
 const isPortableTextEditor = (schema: SchemaType) => {
-  if (!isArraySchemaType(schema)) return false
+  if (!isArraySchemaType(schema)) return false;
 
   return (
     schema?.of && Array.isArray(schema.of) && schema.of[0]?.name === 'block'
-  )
-}
+  );
+};
 
 // create the singleton docs before adding here...
 export const singletonTemplates = [
@@ -68,28 +68,28 @@ export const singletonTemplates = [
   'newsroom',
   'magazineIndex',
   'settings',
-]
+];
 
 const handleInputComponents = (inputProps: InputProps) => {
   if (isPortableTextEditor(inputProps.schemaType))
-    return <CharCounterEditor {...(inputProps as ArrayOfObjectsInputProps)} />
+    return <CharCounterEditor {...(inputProps as ArrayOfObjectsInputProps)} />;
 
-  return inputProps.renderDefault(inputProps)
-}
+  return inputProps.renderDefault(inputProps);
+};
 
 const getStudioTitle = (dataset: string) => {
   switch (dataset) {
     case 'global-development':
-      return 'Development'
+      return 'Development';
     case 'secret':
-      return 'Secret'
+      return 'Secret';
     case 'global-test':
-      return 'Test'
+      return 'Test';
     default:
       //@ts-ignore
-      return dataset //getMetaTitleSuffix(dataset) temp hot fix
+      return dataset; //getMetaTitleSuffix(dataset) temp hot fix
   }
-}
+};
 
 const getConfig = (
   datasetParam: string,
@@ -116,7 +116,7 @@ const getConfig = (
                 preset: 'all',
               },
             },
-          })
+          });
         },
       },
     },
@@ -125,7 +125,7 @@ const getConfig = (
     documentInternationalization(i18n),
     structureTool({
       structure: (S, context: ConfigContext) => {
-        return deskStructure(S, context)
+        return deskStructure(S, context);
       },
       defaultDocumentNode: defaultDocumentNodeResolver,
       name: 'desk',
@@ -148,15 +148,15 @@ const getConfig = (
       previewUrl: {
         initial: ({ origin }) => {
           if (origin.includes('localhost')) {
-            return 'http://localhost:3000'
+            return 'http://localhost:3000';
           }
           if (
             dataset === 'global-development' &&
             !origin.includes('localhost')
           ) {
-            return 'https://web-global-development-equinor-web-sites-dev.c2.radix.equinor.com'
+            return 'https://web-global-development-equinor-web-sites-dev.c2.radix.equinor.com';
           }
-          return `https://web${dataset !== 'global' ? `-${dataset}` : ''}-equinor-web-sites-preprod.c2.radix.equinor.com`
+          return `https://web${dataset !== 'global' ? `-${dataset}` : ''}-equinor-web-sites-preprod.c2.radix.equinor.com`;
         },
         previewMode: {
           enable: '/api/draft',
@@ -167,7 +167,7 @@ const getConfig = (
       },
     }),
     table(),
-  ].filter(e => e) as PluginOptions[],
+  ].filter((e) => e) as PluginOptions[],
   schema: {
     types: schemaTypes as SchemaTypeDefinition[],
     templates: (prev: Template<any, any>[]) => [
@@ -177,47 +177,49 @@ const getConfig = (
   },
   document: {
     unstable_languageFilter: (prev: DocumentActionComponent[], ctx: any) => {
-      const { schemaType, documentId } = ctx
-      return i18n.schemaTypes.map(it => it.name).includes(schemaType) &&
+      const { schemaType, documentId } = ctx;
+      return i18n.schemaTypes.map((it) => it.name).includes(schemaType) &&
         documentId
         ? [
             (props: any) => {
               return CustomDocumentInternationalizationMenu({
                 ...props,
                 documentId,
-              })
+              });
             },
           ]
-        : prev
+        : prev;
     },
     actions: (prev: DocumentActionComponent[], context: any) => {
       // do not allow delete or duplicate action on singletons
       if (singletonTemplates.includes(context.schemaType))
         //@ts-ignore
-        return prev.filter(it => !['delete', 'duplicate'].includes(it.action))
+        return prev.filter(
+          (it) => !['delete', 'duplicate'].includes(it.action),
+        );
 
       if (i18n.schemaTypes.includes(context.schemaType))
-        prev.push(DeleteTranslationAction)
+        prev.push(DeleteTranslationAction);
       return prev
         .filter(({ action }: DocumentActionComponent) => {
           return !(
             action === 'delete' && i18n.schemaTypes.includes(context.schemaType)
-          )
+          );
         })
-        .map(originalAction => {
+        .map((originalAction) => {
           switch (originalAction.action) {
             case 'publish':
               return ['news', 'localNews', 'magazine'].includes(
                 context.schemaType,
               )
                 ? SetAndPublishAction
-                : originalAction
+                : originalAction;
             case 'duplicate':
-              return createCustomDuplicateAction(originalAction)
+              return createCustomDuplicateAction(originalAction);
             default:
-              return originalAction
+              return originalAction;
           }
-        })
+        });
     },
     unstable_comments: {
       enabled: false,
@@ -225,10 +227,10 @@ const getConfig = (
     badges: (prev: DocumentBadgeComponent[], context: any) => {
       return i18n.schemaTypes.includes(context.schemaType)
         ? [LangBadge, ...prev]
-        : prev
+        : prev;
     },
     unstable_fieldActions: (previous: DocumentFieldAction[]) => {
-      return previous.map(it => (it.name === 'copyField' ? copyAction : it))
+      return previous.map((it) => (it.name === 'copyField' ? copyAction : it));
     },
     tasks: {
       enabled: false,
@@ -237,9 +239,9 @@ const getConfig = (
   auth: createAuthStore({
     projectId: projectIdParam,
     dataset: datasetParam,
-    mode: 'replace',
     redirectOnSingle: true,
-    providers: [
+    providers: (prev) => [
+      ...prev,
       {
         name: 'saml',
         title: 'Equinor SSO',
@@ -254,7 +256,7 @@ const getConfig = (
   scheduledPublishing: {
     enabled: true,
   },
-})
+});
 
 export default dataset === 'secret'
   ? defineConfig(
@@ -263,20 +265,20 @@ export default dataset === 'secret'
         { dataset: 'secret', projectId: projectId },
         { dataset: 'global-development', projectId: 'h61q9gi9' },
         { dataset: 'global', projectId: 'h61q9gi9' },
-      ].map(e => getConfig(e.dataset, e.projectId, true)),
+      ].map((e) => getConfig(e.dataset, e.projectId, true)),
     )
-  : getConfig(dataset, projectId)
+  : getConfig(dataset, projectId);
 
 const filterTemplates = (prev: Template<any, any>[]) => {
   const excludedTemplates = i18n.supportedLanguages
-    .filter(lang => lang.title !== defaultLanguage.title)
-    .flatMap(lang => i18n.schemaTypes.map(type => `${type}-${lang.id}`))
+    .filter((lang) => lang.title !== defaultLanguage.title)
+    .flatMap((lang) => i18n.schemaTypes.map((type) => `${type}-${lang.id}`));
   return prev.filter(
-    template =>
+    (template) =>
       !(
         i18n.schemaTypes.includes(template.id) ||
         excludedTemplates.includes(template.id) ||
         singletonTemplates.includes(template.id)
       ),
-  )
-}
+  );
+};
