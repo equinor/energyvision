@@ -1,31 +1,32 @@
-import { AddCircleIcon } from '@sanity/icons'
-import { Button, Flex, Radio, Text, Tooltip } from '@sanity/ui'
-import { customAlphabet } from 'nanoid'
-import { useCallback } from 'react'
-import { type ArrayOfObjectsInputProps, set } from 'sanity'
+import { AddCircleIcon } from '@sanity/icons';
+import { Button, Flex, Radio, Text } from '@sanity/ui';
+import { Tooltip } from '@sanity/ui/tooltip';
+import { customAlphabet } from 'nanoid';
+import { useCallback } from 'react';
+import { type ArrayOfObjectsInputProps, set } from 'sanity';
 
-const nanoid = customAlphabet('1234567890abcdef', 12)
+const nanoid = customAlphabet('1234567890abcdef', 12);
 
 type SingleItemSelectorProps = {
-  value?: [{ _key: string; _type: string }]
-} & ArrayOfObjectsInputProps
+  value?: [{ _key: string; _type: string }];
+} & ArrayOfObjectsInputProps;
 
 export const SingleItemSelectorInput = (props: SingleItemSelectorProps) => {
-  const { renderDefault, value, schemaType, onChange, members } = props
-  const objectTypes = schemaType.of
+  const { renderDefault, value, schemaType, onChange, members } = props;
+  const objectTypes = schemaType.of;
   const handleClick = useCallback(
     (it: any) => {
-      onChange(set([{ _type: it.name, _key: nanoid() }], []))
+      onChange(set([{ _type: it.name, _key: nanoid() }], []));
     },
     [onChange],
-  )
+  );
 
   return (
     <>
       {objectTypes.length > 1 ? (
-        <Flex align='center' wrap='wrap' gap={3}>
-          {objectTypes.map(it => {
-            const { icon: Icon } = it
+        <Flex align="center" wrap="wrap" gap={3}>
+          {objectTypes.map((it) => {
+            const { icon: Icon } = it;
             return Icon ? (
               <Tooltip
                 key={it.name}
@@ -36,7 +37,7 @@ export const SingleItemSelectorInput = (props: SingleItemSelectorProps) => {
                 }
                 animate
                 fallbackPlacements={['right', 'left']}
-                placement='bottom'
+                placement="bottom"
                 portal
               >
                 <Button
@@ -44,8 +45,8 @@ export const SingleItemSelectorInput = (props: SingleItemSelectorProps) => {
                   fontSize={[2, 2, 3]}
                   iconRight={Icon}
                   padding={[3, 3, 4]}
-                  mode='ghost'
-                  tone='default'
+                  mode="ghost"
+                  tone="default"
                   onClick={() => handleClick(it)}
                 />
               </Tooltip>
@@ -60,13 +61,13 @@ export const SingleItemSelectorInput = (props: SingleItemSelectorProps) => {
                 />
                 <label htmlFor={`id_${it.name}`}> {it.title} </label>
               </div>
-            )
+            );
           })}
         </Flex>
       ) : (
         members.length === 0 && (
           <Button
-            mode='ghost'
+            mode="ghost"
             padding={4}
             icon={AddCircleIcon}
             title={`Add ${objectTypes[0]?.title}`}
@@ -78,5 +79,5 @@ export const SingleItemSelectorInput = (props: SingleItemSelectorProps) => {
 
       {renderDefault(props)}
     </>
-  )
-}
+  );
+};
