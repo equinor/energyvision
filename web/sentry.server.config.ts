@@ -2,16 +2,19 @@
 // The config you add here will be used whenever the server handles a request.
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/
 
-import * as Sentry from '@sentry/nextjs'
-import { dataset } from './languageConfig'
+import * as Sentry from '@sentry/nextjs';
+import { dataset } from './languageConfig';
 import {
   allowUrlPattern,
   sentryBeforeSend,
   sentryDenyUrls,
   sentryIgnoreErrors,
-} from './sentry.shared'
+} from './sentry.shared';
 
-const isProd = process.env.NODE_ENV === 'production' && dataset === 'global'
+const isProd =
+  process.env.NODE_ENV === 'production' &&
+  dataset === 'global' &&
+  process.env.RADIX_PUBLIC_DOMAIN_NAME?.includes('preprod');
 
 Sentry.init({
   dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
@@ -28,7 +31,7 @@ Sentry.init({
   allowUrls: [allowUrlPattern],
   denyUrls: sentryDenyUrls,
   beforeBreadcrumb(breadcrumb, hint) {
-    return breadcrumb.category === 'ui.click' ? null : breadcrumb
+    return breadcrumb.category === 'ui.click' ? null : breadcrumb;
   },
   beforeSend: sentryBeforeSend,
-})
+});
