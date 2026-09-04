@@ -2,38 +2,42 @@
 // The added config here will be used whenever a users loads a page in their browser.
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/
 
-import * as Sentry from '@sentry/nextjs'
-import { dataset } from './languageConfig'
+import * as Sentry from '@sentry/nextjs';
+import { dataset } from './languageConfig';
 import {
   allowUrlPattern,
   sentryBeforeSend,
   sentryDenyUrls,
   sentryIgnoreErrors,
-} from './sentry.shared'
+} from './sentry.shared';
 
-const isProd = process.env.NODE_ENV === 'production' && dataset === 'global'
+const isProd =
+  process.env.NODE_ENV === 'production' &&
+  dataset === 'global' &&
+  !process.env.RADIX_PUBLIC_DOMAIN_NAME?.includes('preprod');
 
-Sentry.init({
-  dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
-  enableLogs: false,
-  includeLocalVariables: false,
-  enabled: isProd,
-  debug: false,
-  tracesSampleRate: 0.01,
-  profilesSampleRate: 0,
-  replaysSessionSampleRate: 0,
-  replaysOnErrorSampleRate: 0,
-  dataCollection: {
-    userInfo: false,
-    httpBodies: [],
-  },
-  ignoreErrors: sentryIgnoreErrors,
-  allowUrls: [allowUrlPattern],
-  denyUrls: sentryDenyUrls,
-  beforeBreadcrumb(breadcrumb) {
-    return breadcrumb.category === 'ui.click' ? null : breadcrumb
-  },
-  beforeSend: sentryBeforeSend,
-})
+isProd &&
+  Sentry.init({
+    dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
+    enableLogs: false,
+    includeLocalVariables: false,
+    enabled: isProd,
+    debug: false,
+    tracesSampleRate: 0.01,
+    profilesSampleRate: 0,
+    replaysSessionSampleRate: 0,
+    replaysOnErrorSampleRate: 0,
+    dataCollection: {
+      userInfo: false,
+      httpBodies: [],
+    },
+    ignoreErrors: sentryIgnoreErrors,
+    allowUrls: [allowUrlPattern],
+    denyUrls: sentryDenyUrls,
+    beforeBreadcrumb(breadcrumb) {
+      return breadcrumb.category === 'ui.click' ? null : breadcrumb;
+    },
+    beforeSend: sentryBeforeSend,
+  });
 
-export const onRouterTransitionStart = Sentry.captureRouterTransitionStart
+export const onRouterTransitionStart = Sentry.captureRouterTransitionStart;
