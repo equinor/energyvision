@@ -14,29 +14,30 @@ import {
 const isProd =
   process.env.NODE_ENV === 'production' &&
   dataset === 'global' &&
-  process.env.RADIX_PUBLIC_DOMAIN_NAME?.includes('preprod');
+  !process.env.RADIX_PUBLIC_DOMAIN_NAME?.includes('preprod');
 
-Sentry.init({
-  dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
-  enableLogs: false,
-  includeLocalVariables: false,
-  enabled: isProd,
-  debug: false,
-  tracesSampleRate: 0.01,
-  profilesSampleRate: 0,
-  replaysSessionSampleRate: 0,
-  replaysOnErrorSampleRate: 0,
-  dataCollection: {
-    userInfo: false,
-    httpBodies: [],
-  },
-  ignoreErrors: sentryIgnoreErrors,
-  allowUrls: [allowUrlPattern],
-  denyUrls: sentryDenyUrls,
-  beforeBreadcrumb(breadcrumb) {
-    return breadcrumb.category === 'ui.click' ? null : breadcrumb;
-  },
-  beforeSend: sentryBeforeSend,
-});
+isProd &&
+  Sentry.init({
+    dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
+    enableLogs: false,
+    includeLocalVariables: false,
+    enabled: isProd,
+    debug: false,
+    tracesSampleRate: 0.01,
+    profilesSampleRate: 0,
+    replaysSessionSampleRate: 0,
+    replaysOnErrorSampleRate: 0,
+    dataCollection: {
+      userInfo: false,
+      httpBodies: [],
+    },
+    ignoreErrors: sentryIgnoreErrors,
+    allowUrls: [allowUrlPattern],
+    denyUrls: sentryDenyUrls,
+    beforeBreadcrumb(breadcrumb) {
+      return breadcrumb.category === 'ui.click' ? null : breadcrumb;
+    },
+    beforeSend: sentryBeforeSend,
+  });
 
 export const onRouterTransitionStart = Sentry.captureRouterTransitionStart;
