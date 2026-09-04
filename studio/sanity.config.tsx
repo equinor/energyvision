@@ -44,6 +44,7 @@ import { locations } from './presentation/locations';
 import CustomDocumentInternationalizationMenu from './schemas/components/CustomDocumentInternationalizationMenu';
 import { partialStudioTheme } from './studioTheme';
 import './styles/fonts.css';
+import '@sanity/ui/styles.css';
 //import EquinorLogo from './styles/icons/logo.svg?react'
 import { fotowareWidget } from './widgets/ImportedFotowareAssetsWidget';
 
@@ -195,7 +196,7 @@ const getConfig = (
       if (singletonTemplates.includes(context.schemaType))
         //@ts-ignore
         return prev.filter(
-          (it) => !['delete', 'duplicate'].includes(it.action),
+          (it) => !it.action || !['delete', 'duplicate'].includes(it.action),
         );
 
       if (i18n.schemaTypes.includes(context.schemaType))

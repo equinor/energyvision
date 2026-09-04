@@ -1,26 +1,24 @@
-import { AddIcon, ControlsIcon, WarningOutlineIcon } from '@sanity/icons'
+import type { Any } from '@sanity/client/csm';
+import { AddIcon, ControlsIcon, WarningOutlineIcon } from '@sanity/icons';
 import {
   Box,
   Button,
   Card,
   Dialog,
   Inline,
-  Menu,
-  MenuButton,
-  MenuDivider,
-  MenuItem,
-  Placement,
+  type Placement,
   TextInput,
-} from '@sanity/ui'
-import { type FormEventHandler, useState } from 'react'
+} from '@sanity/ui';
+import { Menu, MenuButton, MenuDivider, MenuItem } from '@sanity/ui/menu';
+import { useState } from 'react';
 
 interface TableMenuProps {
-  addColumns: (count: number) => void
-  addColumnAt: (index: number) => void
-  addRows: (count: number) => void
-  addRowAt: (index: number) => void
-  remove: () => void
-  placement: Placement
+  addColumns: (count: number) => void;
+  addColumnAt: (index: number) => void;
+  addRows: (count: number) => void;
+  addRowAt: (index: number) => void;
+  remove: () => void;
+  placement: Placement;
 }
 
 export const TableMenu = (props: TableMenuProps) => {
@@ -31,51 +29,56 @@ export const TableMenu = (props: TableMenuProps) => {
     addColumns: _addColumns,
     addColumnAt: _addColumnAt,
     placement,
-  } = props
+  } = props;
   const [dialog, setDialog] = useState<{
-    type: string
-    callback: (count: number) => void
-  } | null>(null)
+    type: string;
+    callback: (count: number) => void;
+  } | null>(null);
 
-  const [count, setCount] = useState<string | undefined>('')
+  const [count, setCount] = useState<string | undefined>('');
 
-  const updateCount: FormEventHandler<HTMLInputElement> = (e) => {
-    setCount(e.currentTarget.value)
-  }
+  const updateCount: Any = (e: any) => {
+    setCount(e.currentTarget.value);
+  };
 
   const addRows = () => {
-    setDialog({ type: 'rows', callback: (c) => _addRows(c) })
-  }
+    setDialog({ type: 'rows', callback: (c) => _addRows(c) });
+  };
 
   const addRowAt = () => {
-    setDialog({ type: 'rows', callback: (index) => _addRowAt(index) })
-  }
+    setDialog({ type: 'rows', callback: (index) => _addRowAt(index) });
+  };
 
   const addColumns = () => {
     setDialog({
       type: 'columns',
       callback: (c) => _addColumns(c),
-    })
-  }
+    });
+  };
 
   const addColumnsAt = () => {
-    setDialog({ type: 'columns', callback: (index) => _addColumnAt(index) })
-  }
+    setDialog({ type: 'columns', callback: (index) => _addColumnAt(index) });
+  };
 
   const onConfirm = () => {
-    const parsedCount = parseInt(count ?? '0', 10)
+    const parsedCount = parseInt(count ?? '0', 10);
 
     if (parsedCount < 100) {
-      setDialog(null)
-      dialog?.callback(parsedCount)
-      setCount(undefined)
+      setDialog(null);
+      dialog?.callback(parsedCount);
+      setCount(undefined);
     }
-  }
+  };
 
   return (
     <>
       {dialog && (
-        <Dialog header={`Add ${dialog.type}`} id="dialog-add" onClose={() => setDialog(null)} zOffset={1000}>
+        <Dialog
+          header={`Add ${dialog.type}`}
+          id="dialog-add"
+          onClose={() => setDialog(null)}
+          zOffset={1000}
+        >
           <Card padding={4}>
             <TextInput
               style={{ textAlign: 'left' }}
@@ -86,8 +89,12 @@ export const TableMenu = (props: TableMenuProps) => {
               onChange={updateCount}
             />
             <Box marginTop={4}>
-              <Inline space={1} style={{ textAlign: 'right' }}>
-                <Button text="Cancel" mode="ghost" onClick={() => setDialog(null)} />
+              <Inline gap={1} style={{ textAlign: 'right' }}>
+                <Button
+                  text="Cancel"
+                  mode="ghost"
+                  onClick={() => setDialog(null)}
+                />
                 <Button text="Confirm" tone="critical" onClick={onConfirm} />
               </Inline>
             </Box>
@@ -95,20 +102,48 @@ export const TableMenu = (props: TableMenuProps) => {
         </Dialog>
       )}
       <MenuButton
-        button={<Button icon={ControlsIcon} fontSize={1} padding={2} mode="ghost" />}
+        button={
+          <Button icon={ControlsIcon} fontSize={1} padding={2} mode="ghost" />
+        }
         id="menu-button-example"
         menu={
           <Menu>
-            <MenuItem icon={AddIcon} fontSize={1} text="Add Row(s)" onClick={addRows} />
-            <MenuItem icon={AddIcon} fontSize={1} text="Add Row At Index" onClick={addRowAt} />
-            <MenuItem icon={AddIcon} fontSize={1} text="Add Column(s)" onClick={addColumns} />
-            <MenuItem icon={AddIcon} fontSize={1} text="Add Column At Index" onClick={addColumnsAt} />
+            <MenuItem
+              icon={AddIcon}
+              fontSize={1}
+              text="Add Row(s)"
+              onClick={addRows}
+            />
+            <MenuItem
+              icon={AddIcon}
+              fontSize={1}
+              text="Add Row At Index"
+              onClick={addRowAt}
+            />
+            <MenuItem
+              icon={AddIcon}
+              fontSize={1}
+              text="Add Column(s)"
+              onClick={addColumns}
+            />
+            <MenuItem
+              icon={AddIcon}
+              fontSize={1}
+              text="Add Column At Index"
+              onClick={addColumnsAt}
+            />
             <MenuDivider />
-            <MenuItem icon={WarningOutlineIcon} fontSize={1} text="Remove" tone="critical" onClick={handleRemove} />
+            <MenuItem
+              icon={WarningOutlineIcon}
+              fontSize={1}
+              text="Remove"
+              tone="critical"
+              onClick={handleRemove}
+            />
           </Menu>
         }
         popover={{ placement }}
       />
     </>
-  )
-}
+  );
+};
