@@ -41,13 +41,13 @@
     "react-is": "^19.2.4",
     "recharts": "^3.3.0",
     "rxjs": "^7.8.0",
-    "sanity": "5.12.0",
-    "sanity-plugin-documents-pane": "^3.0.2",
-    "sanity-plugin-iframe-pane": "^5.0.6",
-    "sanity-plugin-media": "^4.1.1",
-    "sanity-plugin-utils": "^1.8.0",
-    "styled-components": "^6.3.11",
-    "vite-plugin-svgr": "^4.5.0",
+    "sanity": "6.11.0",
+    "sanity-plugin-documents-pane": "^4.1.19",
+    "sanity-plugin-iframe-pane": "^5.0.35",
+    "sanity-plugin-media": "^6.1.7",
+    "sanity-plugin-utils": "^2.0.17",
+    "styled-components": "^6.5.3",
+    "vite-plugin-svgr": "^5.2.0",
     "@energyvision/shared": "workspace:*"
   },
   "devDependencies": {
@@ -57,7 +57,7 @@
     "@types/styled-components": "^5.1.34",
     "nanoid": "^5.1.16",
     "typescript": "^5.9.3",
-    "vite-tsconfig-paths": "^5.1.4",
+    "vite-tsconfig-paths": "^6.1.1",
     "@repo/typescript-config": "workspace:*"
   },
   "packageManager": "pnpm@11.23.0"
