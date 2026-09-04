@@ -1,5 +1,5 @@
 import { external_link, facebook, home, link } from '@equinor/eds-icons'
-import { LinkIcon } from '@sanity/icons'
+import { LinkIcon } from '@sanity/icons/Link'
 import { Card, Flex, Select } from '@sanity/ui'
 import { useCallback, useMemo } from 'react'
 import { MdOutlineAnchor } from 'react-icons/md'

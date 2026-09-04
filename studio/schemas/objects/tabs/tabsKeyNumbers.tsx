@@ -1,4 +1,4 @@
-import { NumberIcon } from '@sanity/icons'
+import { NumberIcon } from '@sanity/icons/Number'
 import type { Rule } from 'sanity'
 import { CompactBlockEditor } from '../../components/CompactBlockEditor'
 import { configureBlockContent } from '../../editors'

@@ -1,4 +1,4 @@
-import { useToast } from '@sanity/ui'
+import { useToast } from '@sanity/ui/toast'
 import { DocumentActionComponent, DocumentActionDescription, DocumentActionProps } from 'sanity'
 import { defaultLanguage } from '../languages'
 

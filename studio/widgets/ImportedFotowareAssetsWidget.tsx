@@ -4,7 +4,8 @@ import {
   DashboardWidgetContainer,
   type LayoutConfig,
 } from '@sanity/dashboard'
-import { WarningFilledIcon, WarningOutlineIcon } from '@sanity/icons'
+import { WarningFilledIcon } from '@sanity/icons/WarningFilled'
+import { WarningOutlineIcon } from '@sanity/icons/WarningOutline'
 import { Button, Flex, Select, Spinner } from '@sanity/ui'
 import { format, isAfter, isBefore, isDate, subDays } from 'date-fns'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'

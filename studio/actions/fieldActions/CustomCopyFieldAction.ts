@@ -1,9 +1,13 @@
-import { CopyIcon } from '@sanity/icons'
-import { useToast } from '@sanity/ui'
+import { CopyIcon } from '@sanity/icons/Copy'
+import { useToast } from '@sanity/ui/toast'
 import { useCallback } from 'react'
-
-import { defineDocumentFieldAction, useTranslation, useCopyPaste, useGetFormValue } from 'sanity'
-import { type FormDocumentValue } from 'sanity'
+import {
+  defineDocumentFieldAction,
+  type FormDocumentValue,
+  useCopyPaste,
+  useGetFormValue,
+  useTranslation,
+} from 'sanity'
 
 export const copyAction = defineDocumentFieldAction({
   name: 'copyField',
@@ -14,7 +18,9 @@ export const copyAction = defineDocumentFieldAction({
 
     const isDocument = path.length === 0
 
-    const documentTitle = t('copy-paste.field-action-copy-button.document.title')
+    const documentTitle = t(
+      'copy-paste.field-action-copy-button.document.title',
+    )
     const fieldTitle = t('copy-paste.field-action-copy-button.field.title')
     const title = isDocument ? documentTitle : fieldTitle
     const toast = useToast()
