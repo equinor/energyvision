@@ -1,4 +1,5 @@
-import { Box, Button, Card, Flex, Stack, Text, Tooltip } from '@sanity/ui'
+import { Box, Button, Card, Flex, Stack, Text } from '@sanity/ui'
+import { Tooltip } from '@sanity/ui/tooltip'
 import { useCallback } from 'react'
 import type { ObjectInputProps } from 'sanity'
 import { set, unset, useCurrentUser } from 'sanity'

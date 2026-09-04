@@ -1,4 +1,4 @@
-import { NumberIcon } from '@sanity/icons'
+import { NumberIcon } from '@sanity/icons/Number'
 import type { PortableTextBlock, Rule } from 'sanity'
 import blocksToText from '../../helpers/blocksToText'
 import { CompactBlockEditor } from '../components/CompactBlockEditor'

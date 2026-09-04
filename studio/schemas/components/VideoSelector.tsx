@@ -1,22 +1,9 @@
-import {
-  ComponentIcon,
-  EllipsisVerticalIcon,
-  ResetIcon,
-  UploadIcon,
-} from '@sanity/icons'
-import {
-  Box,
-  Button,
-  Card,
-  Dialog,
-  Label,
-  Menu,
-  MenuButton,
-  MenuDivider,
-  MenuItem,
-  Stack,
-  Text,
-} from '@sanity/ui'
+import { ComponentIcon } from '@sanity/icons/Component'
+import { EllipsisVerticalIcon } from '@sanity/icons/EllipsisVertical'
+import { ResetIcon } from '@sanity/icons/Reset'
+import { UploadIcon } from '@sanity/icons/Upload'
+import { Box, Button, Card, Dialog, Label, Stack, Text } from '@sanity/ui'
+import { Menu, MenuButton, MenuDivider, MenuItem } from '@sanity/ui/menu'
 import { Buffer } from 'buffer'
 import {
   forwardRef,

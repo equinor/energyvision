@@ -1,5 +1,5 @@
+import { NumberIcon } from '@sanity/icons/Number'
 import { Rule } from 'sanity'
-import { NumberIcon } from '@sanity/icons'
 
 export default {
   name: 'keyNumberItem',
@@ -15,7 +15,8 @@ export default {
     {
       name: 'unit',
       title: 'Unit',
-      description: 'A short abbreviated text describing the unit of the key number',
+      description:
+        'A short abbreviated text describing the unit of the key number',
       type: 'string',
     },
     {

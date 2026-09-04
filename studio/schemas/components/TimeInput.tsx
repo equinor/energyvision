@@ -1,8 +1,8 @@
-import { FormEvent, useCallback, useState } from 'react'
 import { useId } from '@reach/auto-id'
-import { ResetIcon } from '@sanity/icons'
+import { ResetIcon } from '@sanity/icons/Reset'
 import { Box, Button, Flex, Select, Text } from '@sanity/ui'
-import { set, unset, ObjectInputProps } from 'sanity'
+import { FormEvent, useCallback, useState } from 'react'
+import { ObjectInputProps, set, unset } from 'sanity'
 
 export interface TimeInput {
   hours: string
@@ -20,9 +20,13 @@ const range = (start: number, stop: number, step = 1) =>
 const TIMESTEP = 5
 const MINUTES = range(0, 60, TIMESTEP)
 const HOURS_24 = range(0, 24)
-const outgoingValue = ({ hours, minutes }: TimeType) => `${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}`
+const outgoingValue = ({ hours, minutes }: TimeType) =>
+  `${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}`
 const isValid = ({ hours, minutes }: TimeType) =>
-  hours && minutes && Number.isInteger(Number(hours)) && Number.isInteger(Number(minutes))
+  hours &&
+  minutes &&
+  Number.isInteger(Number(hours)) &&
+  Number.isInteger(Number(minutes))
 
 const formatTime = (value: string | undefined): TimeType => {
   const time = value && value.includes(':') ? value.split(':') : false
@@ -84,16 +88,16 @@ const TimeInput = (props: ObjectInputProps<string>) => {
   const id = useId()
 
   return (
-    <Flex align="center" flex={1}>
+    <Flex align='center' flex={1}>
       <Box>
         <Select
           {...elementProps}
           id={id}
-          aria-label="Select hour"
+          aria-label='Select hour'
           value={value?.split(':')[0] ?? 'Pad'}
           onChange={handleHoursChange}
         >
-          {[EMPTY, ...HOURS_24].map((h) => (
+          {[EMPTY, ...HOURS_24].map(h => (
             <option key={h} value={`${h}`.padStart(2, '0')}>
               {`${h}`.padStart(2, '0')}
             </option>
@@ -106,11 +110,11 @@ const TimeInput = (props: ObjectInputProps<string>) => {
       <Box>
         <Select
           {...elementProps}
-          aria-label="Select minutes"
+          aria-label='Select minutes'
           value={value?.split(':')[1] ?? EMPTY}
           onChange={handleMinutesChange}
         >
-          {[EMPTY, ...MINUTES].map((m) => (
+          {[EMPTY, ...MINUTES].map(m => (
             <option key={m} value={`${m}`.padStart(2, '0')}>
               {`${m}`.padStart(2, '0')}
             </option>
@@ -118,7 +122,7 @@ const TimeInput = (props: ObjectInputProps<string>) => {
         </Select>
       </Box>
       <Box paddingLeft={2}>
-        <Button icon={ResetIcon} text="Clear" onClick={handleReset} />
+        <Button icon={ResetIcon} text='Clear' onClick={handleReset} />
       </Box>
     </Flex>
   )

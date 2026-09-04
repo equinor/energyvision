@@ -1,5 +1,6 @@
-import { AddCircleIcon } from '@sanity/icons'
-import { Button, Flex, Radio, Text, Tooltip } from '@sanity/ui'
+import { AddCircleIcon } from '@sanity/icons/AddCircle'
+import { Button, Flex, Radio, Text } from '@sanity/ui'
+import { Tooltip } from '@sanity/ui/tooltip'
 import { customAlphabet } from 'nanoid'
 import { useCallback } from 'react'
 import { type ArrayOfObjectsInputProps, set } from 'sanity'
