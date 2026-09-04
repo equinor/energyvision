@@ -1,9 +1,9 @@
-import { validatePreviewUrl } from '@sanity/preview-url-secret'
-import { withoutSecretSearchParams } from '@sanity/preview-url-secret/without-secret-search-params'
-import { draftMode } from 'next/headers'
-import { redirect } from 'next/navigation'
-import type { NextRequest } from 'next/server'
-import { client } from '@/sanity/lib/client'
+import { validatePreviewUrl } from '@sanity/preview-url-secret';
+import { withoutSecretSearchParams } from '@sanity/preview-url-secret/without-secret-search-params';
+import { draftMode } from 'next/headers';
+import { redirect } from 'next/navigation';
+import type { NextRequest } from 'next/server';
+import { client } from '@/sanity/lib/client';
 
 export async function GET(request: NextRequest, _context: any) {
   //const secFetchDest = request.headers.get('sec-fetch-dest')
@@ -11,19 +11,25 @@ export async function GET(request: NextRequest, _context: any) {
   const { isValid, redirectTo = '/' } = await validatePreviewUrl(
     client,
     request.url,
-  )
+  );
 
   if (!isValid) {
-    return new Response('Missing or invalid token', { status: 401 })
+    return new Response('Missing or invalid token', { status: 401 });
+  }
+
+  let previewUrl = redirectTo;
+  if (redirectTo?.includes('/api/draft')) {
+    const urlParts = redirectTo.split('/');
+    previewUrl = `/${urlParts.at(-2)}/${urlParts.at(-1)}`;
   }
 
   // Build the redirect URL, stripping secret params for clean URLs
-  const previewUrl = redirectTo
+  /*const previewUrl = redirectTo
     ? withoutSecretSearchParams(new URL(redirectTo, request.url)).pathname
-    : '/'
+    : '/';*/
 
-  const draft = await draftMode()
-  draft.enable()
+  const draft = await draftMode();
+  draft.enable();
 
   /*   
   Must stega filter page content props used for conditional rendering in the presentation tool, otherwise the page will not render correctly in the presentation tool.
@@ -41,5 +47,5 @@ export async function GET(request: NextRequest, _context: any) {
     cookieStore.delete('preview-fetch-dest')
   } */
 
-  redirect(previewUrl)
+  redirect(previewUrl);
 }
