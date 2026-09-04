@@ -239,7 +239,6 @@ const getConfig = (
   auth: createAuthStore({
     projectId: projectIdParam,
     dataset: datasetParam,
-    mode: 'replace',
     redirectOnSingle: true,
     providers: (prev) => [
       ...prev,
