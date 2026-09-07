@@ -10,7 +10,7 @@ type FooterProps = {
 } & HTMLAttributes<HTMLElement>;
 
 async function getYear() {
-  'use cache:remote';
+  'use cache: remote';
   cacheLife('max');
   return new Date().getFullYear();
 }
