@@ -117,6 +117,7 @@ runs:
           sanity_api_token=${{ inputs.sanityApiToken }}
           next_public_algolia_search_api_key=${{ inputs.algoliaApiKey }}
           next_server_actions_encryption_key=${{ inputs.serverActionsEncryptionKey }}
+          redis_url=${{ inputs.redisUrl }}
         build-args: |
           ARG_SENTRY_DSN=${{ inputs.sentryDsn }}
           ARG_SANITY_PROJECT_ID=${{ inputs.projectId }}
