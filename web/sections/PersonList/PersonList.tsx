@@ -146,7 +146,11 @@ const PersonList = forwardRef<HTMLDivElement, PersonListProps>(
                 />
               )}
               {data.ingress && (
-                <Blocks variant='ingress' value={data.ingress} />
+                <Blocks
+                  variant='ingress'
+                  value={data.ingress}
+                  blockClassName='line-clamp-none'
+                />
               )}
             </div>
           )}

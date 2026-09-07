@@ -14,7 +14,6 @@ import {
   internalReferenceOtherLanguage,
   type LinkType,
   pageAnchor,
-  personListUrlReference,
   socialMediaLink,
 } from './common'
 
@@ -22,7 +21,6 @@ const defaultLinks = [
   'link',
   'reference',
   'referenceToOtherLanguage',
-  'personListUrl',
   'homePageLink',
   'pageAnchor',
 ] as LinkType[]
@@ -53,7 +51,6 @@ const linkSelector = (
             externalLink,
             internalReference,
             internalReferenceOtherLanguage,
-            personListUrlReference,
             homepageLink,
             socialMediaLink,
             pageAnchor,
@@ -80,8 +77,7 @@ const linkSelector = (
 
             if (
               parent?.link?.[0]?._type === 'referenceToOtherLanguage' ||
-              parent?.link?.[0]?._type === 'reference' ||
-              parent?.link?.[0]?._type === 'personListUrl'
+              parent?.link?.[0]?._type === 'reference'
             ) {
               //If internal link get title to make label optional if reference has this
               const referencedTitle = await context
@@ -100,8 +96,7 @@ const linkSelector = (
               !includeLabel ||
               (labelIsOptional && parent?.link?.[0]?._type !== 'link') ||
               ((parent?.link?.[0]?._type === 'referenceToOtherLanguage' ||
-                parent?.link?.[0]?._type === 'reference' ||
-                parent?.link?.[0]?._type === 'personListUrl') &&
+                parent?.link?.[0]?._type === 'reference') &&
                 hasReferenceTitle &&
                 labelIsOptional)
             ) {

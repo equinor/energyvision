@@ -1,11 +1,8 @@
 import { MdOutlinePerson } from 'react-icons/md'
 import type { Rule } from 'sanity'
-import { filterByRouteWithPersonList } from '../../helpers/referenceFilters'
 import { CompactBlockEditor } from '../components/CompactBlockEditor'
-import { GeneratedPersonUrlInput } from '../components/GeneratedPersonUrlInput'
 import { configureBlockContent } from '../editors'
 import singleItemArray from '../objects/singleItemArray'
-import routes from '../routes'
 import { lang } from './langField'
 
 export default {
@@ -68,7 +65,7 @@ export default {
       type: 'array',
       of: [{ type: 'linkSelector', title: 'Link' }],
     }),
-    {
+    /* {
       title: 'CV main route',
       name: 'personListRoute',
       description:
@@ -90,7 +87,7 @@ export default {
       components: {
         input: GeneratedPersonUrlInput,
       },
-    },
+    }, */
     {
       title: 'LinkedIn profile URL',
       name: 'linkedinProfileUrl',
