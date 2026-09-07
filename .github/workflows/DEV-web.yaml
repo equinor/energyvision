@@ -51,7 +51,7 @@ jobs:
           nodeEnvironment: development
           serverActionsEncryptionKey: ${{ secrets.SERVER_ACTIONS_ENCRYPTION_KEY }}
           optimizedSanityFetch: ${{ vars.OPTIMIZED_SANITY_FETCH || 'false' }}
-          redisUrl: ${{ secrets.REDIS_URL }}
+        
 
       - uses: act10ns/slack@v2
         with:
