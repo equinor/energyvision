@@ -47,6 +47,9 @@ inputs:
   sentryDsn:
     description: 'Sentry DSN'
     required: false
+  redisUrl:
+    description: 'URL for the Redis instance'
+    required: false
 
 
 runs:
