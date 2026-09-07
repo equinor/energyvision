@@ -50,7 +50,9 @@ function isExpired(entry, softTags = []) {
   if (now > entry.timestamp + entry.revalidate * 1000) return true;
 
   const tags = [...(entry.tags || []), ...softTags];
-  return tags.some((tag) => (localTagTimestamps.get(tag) || 0) > entry.timestamp);
+  return tags.some(
+    (tag) => (localTagTimestamps.get(tag) || 0) > entry.timestamp,
+  );
 }
 
 module.exports = {
@@ -138,6 +140,7 @@ module.exports = {
       const values = await redisClient.mGet(tags.map(getTagKey));
       for (let index = 0; index < tags.length; index++) {
         localTagTimestamps.set(tags[index], Number(values[index]) || 0);
+        console.log('Refreshing tag:', tags[index]);
       }
     } catch (error) {
       logRedisError(error);
@@ -161,6 +164,7 @@ module.exports = {
       pipeline.set(getTagKey(tag), String(now));
       pipeline.sAdd(REVALIDATED_TAGS_KEY, tag);
       localTagTimestamps.set(tag, now);
+      console.log('Revalidating tag:', tag);
     }
 
     try {
