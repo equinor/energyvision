@@ -9,6 +9,10 @@ export default defineCliConfig({
     projectId,
     dataset,
   },
+  deployment: {
+    appId: process.env.SANITY_STUDIO_APP_ID,
+    autoUpdates: false,
+  },
   vite: (viteConfig) => ({
     ...viteConfig,
     resolve: {
