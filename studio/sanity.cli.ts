@@ -11,7 +11,7 @@ export default defineCliConfig({
   },
   deployment: {
     appId: process.env.SANITY_STUDIO_APP_ID,
-    autoUpdates: true,
+    autoUpdates: false,
   },
   vite: (viteConfig) => ({
     ...viteConfig,
