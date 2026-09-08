@@ -62,7 +62,7 @@ async function CachedHome({
   isDraftMode?: boolean;
   dynamic?: Awaited<ReturnType<typeof getDynamicFetchOptions>>;
 }) {
-  'use cache';
+  'use cache: remote';
   const locale = await getLocale();
 
   const [siteMenuResult, homePageData] = await Promise.all([
