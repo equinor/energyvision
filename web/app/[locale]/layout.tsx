@@ -1,21 +1,24 @@
-import '../globals.css'
-import { GoogleTagManager } from '@next/third-parties/google'
-import localFont from 'next/font/local'
-import { draftMode } from 'next/headers'
-import NextLink from 'next/link'
-import Script from 'next/script'
-import { NextIntlClientProvider } from 'next-intl'
-import { getLocale, getTranslations } from 'next-intl/server'
-import { PageProvider } from '@/contexts/pageContext'
-import { getValidLanguagesLocales } from '@/languageConfig'
-import { getLocaleFromIso, getNameFromIso } from '@/sanity/helpers/localization'
-import { dataset } from '@/sanity/lib/api'
-import { IS_FETCH_OPTIMIZED, routeSanityFetch } from '@/sanity/lib/fetch'
-import { getDynamicFetchOptions, SanityLive } from '@/sanity/lib/live'
-import { footerAndErrorImageQuery } from '@/sanity/queries/footer'
-import Footer from '@/sections/Footer/Footer'
-import GoToTopButton from '@/sections/GoToTopButton'
-import { SiteImprove } from './SiteImprove'
+import '../globals.css';
+import { GoogleTagManager } from '@next/third-parties/google';
+import localFont from 'next/font/local';
+import { draftMode } from 'next/headers';
+import NextLink from 'next/link';
+import Script from 'next/script';
+import { NextIntlClientProvider } from 'next-intl';
+import { getLocale, getTranslations } from 'next-intl/server';
+import { PageProvider } from '@/contexts/pageContext';
+import { getValidLanguagesLocales } from '@/languageConfig';
+import {
+  getLocaleFromIso,
+  getNameFromIso,
+} from '@/sanity/helpers/localization';
+import { dataset } from '@/sanity/lib/api';
+import { IS_FETCH_OPTIMIZED, routeSanityFetch } from '@/sanity/lib/fetch';
+import { getDynamicFetchOptions, SanityLive } from '@/sanity/lib/live';
+import { footerAndErrorImageQuery } from '@/sanity/queries/footer';
+import Footer from '@/sections/Footer/Footer';
+import GoToTopButton from '@/sections/GoToTopButton';
+import { SiteImprove } from './SiteImprove';
 
 const equinor = localFont({
   src: [
@@ -23,7 +26,7 @@ const equinor = localFont({
     { path: '../fonts/equinor/EquinorVariable-VF.woff' },
     { path: '../fonts/equinor/EquinorVariable-VF.woff2' },
   ],
-})
+});
 
 /* export const metadata: Metadata = {
   icons: {
@@ -35,36 +38,36 @@ const equinor = localFont({
 //the [locale] segment corresponds to the locale (iso format), not the prefix(/no).
 
 export function generateStaticParams() {
-  return getValidLanguagesLocales().map(locale => ({ locale }))
+  return getValidLanguagesLocales().map((locale) => ({ locale }));
 }
 
 export default async function LocaleLayout({
   children,
 }: LayoutProps<'/[locale]'>) {
-  const t = await getTranslations()
-  const locale = await getLocale()
+  const t = await getTranslations();
+  const locale = await getLocale();
 
-  const isPreview = (await draftMode()).isEnabled
-  const dynamic = await getDynamicFetchOptions({}) // cannot read searchParams here, so footer will have draft version always in draft mode with published perspective
+  const isPreview = (await draftMode()).isEnabled;
+  const dynamic = await getDynamicFetchOptions({}); // cannot read searchParams here, so footer will have draft version always in draft mode with published perspective
 
   return (
     <html lang={locale} className={`${equinor.className} `}>
-      <body className='has-data-no-sticky:pt-topbar'>
+      <body className="min-h-screen has-data-no-sticky:pt-topbar">
         {!isPreview && (
           // cookiebot script must strictly be inside body.
           <Script
-            src='https://consent.cookiebot.com/uc.js'
-            id='Cookiebot'
-            strategy='beforeInteractive'
-            data-cbid='f1327b03-7951-45da-a2fd-9181babc783f'
-            data-blockingmode='auto'
+            src="https://consent.cookiebot.com/uc.js"
+            id="Cookiebot"
+            strategy="beforeInteractive"
+            data-cbid="f1327b03-7951-45da-a2fd-9181babc783f"
+            data-blockingmode="auto"
             data-culture={locale === 'nb-NO' ? 'nb' : getLocaleFromIso(locale)}
           />
         )}
 
         <NextLink
-          href='#mainTitle'
-          className='sr-only bg-moss-green-50 text-sm transition focus:not-sr-only focus:flex focus:w-full focus:items-center focus:justify-center focus:p-4 focus:underline'
+          href="#mainTitle"
+          className="sr-only bg-moss-green-50 text-sm transition focus:not-sr-only focus:flex focus:w-full focus:items-center focus:justify-center focus:p-4 focus:underline"
         >
           {t('skipToContent') ?? 'Skip to main content'}
         </NextLink>
@@ -98,21 +101,21 @@ export default async function LocaleLayout({
         </>
       )}
     </html>
-  )
+  );
 }
 
 async function CachedContent({
   dynamic,
   children,
 }: {
-  dynamic: Awaited<ReturnType<typeof getDynamicFetchOptions>>
-  children: React.ReactNode
+  dynamic: Awaited<ReturnType<typeof getDynamicFetchOptions>>;
+  children: React.ReactNode;
 }) {
-  'use cache'
-  const locale = await getLocale()
+  'use cache';
+  const locale = await getLocale();
   const queryParams = {
     lang: getNameFromIso(locale) ?? 'en_GB',
-  }
+  };
 
   const { data: footerAndErrorImageData }: { data: any } =
     await routeSanityFetch({
@@ -121,14 +124,14 @@ async function CachedContent({
       tags: [`footer:${locale}`],
       requestTag: 'footer-and-error-image',
       ...dynamic,
-    })
+    });
 
-  const { errorImage, ...footerData } = footerAndErrorImageData || {}
+  const { errorImage, ...footerData } = footerAndErrorImageData || {};
   return (
     <>
       <PageProvider initialErrorImage={errorImage}>{children}</PageProvider>
       <Footer {...footerData} />
       <GoToTopButton />
     </>
-  )
+  );
 }
