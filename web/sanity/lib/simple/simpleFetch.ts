@@ -1,6 +1,6 @@
-import { cacheLife, cacheTag } from 'next/cache'
-import type { DefinedFetchType } from 'next-sanity/live'
-import { client as simpleClient } from './simpleClient'
+import { cacheLife, cacheTag } from 'next/cache';
+import type { DefinedFetchType } from 'next-sanity/live';
+import { client as simpleClient } from './simpleClient';
 
 export const simpleClientFetch: DefinedFetchType = async ({
   query,
@@ -9,10 +9,10 @@ export const simpleClientFetch: DefinedFetchType = async ({
   perspective = 'published',
   requestTag = 'optimized-fetch',
 }) => {
-  'use cache'
-  cacheLife('max')
-  console.log('Fetching with optimized fetch:', tags)
-  cacheTag(...tags)
+  'use cache: remote';
+  cacheLife('max');
+  console.log('Fetching with optimized fetch:', tags);
+  cacheTag(...tags);
   const { result, resultSourceMap } = await simpleClient.fetch(
     query,
     await params,
@@ -22,10 +22,10 @@ export const simpleClientFetch: DefinedFetchType = async ({
       useCdn: true,
       tag: requestTag,
     },
-  )
+  );
 
-  return { data: result, sourceMap: resultSourceMap ?? null, tags: tags }
-}
+  return { data: result, sourceMap: resultSourceMap ?? null, tags: tags };
+};
 
 export const simpleClientMetadataFetch: DefinedFetchType = async ({
   query,
@@ -34,10 +34,10 @@ export const simpleClientMetadataFetch: DefinedFetchType = async ({
   perspective = 'published',
   requestTag = 'optimized-fetch',
 }) => {
-  'use cache'
-  cacheLife('max')
-  console.log('Fetching Meta with optimized fetch:', tags)
-  cacheTag(...tags)
+  'use cache: remote';
+  cacheLife('max');
+  console.log('Fetching Meta with optimized fetch:', tags);
+  cacheTag(...tags);
   const { result, resultSourceMap } = await simpleClient.fetch(
     query,
     await params,
@@ -47,7 +47,7 @@ export const simpleClientMetadataFetch: DefinedFetchType = async ({
       useCdn: true,
       tag: requestTag,
     },
-  )
+  );
 
-  return { data: result, sourceMap: resultSourceMap ?? null, tags: tags }
-}
+  return { data: result, sourceMap: resultSourceMap ?? null, tags: tags };
+};
