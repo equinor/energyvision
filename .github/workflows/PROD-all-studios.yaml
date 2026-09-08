@@ -22,6 +22,7 @@ jobs:
       SANITY_STUDIO_FOTOWARE_REDIRECT_URI: ${{ secrets.SANITY_STUDIO_FOTOWARE_REDIRECT_URI }}
       SANITY_STUDIO_SCREEN9_ACCOUNT_ID: ${{ secrets.SANITY_STUDIO_SCREEN9_ACCOUNT_ID }}
       SANITY_STUDIO_SCREEN9_TOKEN: ${{ secrets.SANITY_STUDIO_SCREEN9_TOKEN }}
+      SANITY_STUDIO_APP_ID: ${{ vars.SANITY_STUDIO_APP_ID }}
       DOCKER_BUILDKIT: 1
     steps:
       - name: Checkout internal 🛎️
@@ -77,6 +78,7 @@ jobs:
           pnpm run deploy
         env:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_DEPLOY }}
+          SANITY_STUDIO_APP_ID: ${{ vars.SANITY_STUDIO_APP_ID }}
       - uses: act10ns/slack@v2
         with:
           status: ${{ job.status }}
@@ -154,6 +156,7 @@ jobs:
           pnpm run deploy
         env:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_SECRET_DEPLOY }}
+          SANITY_STUDIO_APP_ID: ${{ vars.SANITY_STUDIO_APP_ID_SECRET }}
       - uses: act10ns/slack@v2
         with:
           status: ${{ job.status }}
