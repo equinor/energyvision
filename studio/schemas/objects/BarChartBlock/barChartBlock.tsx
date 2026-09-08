@@ -1,8 +1,8 @@
-import { AiOutlineBarChart } from 'react-icons/ai'
-import type { PortableTextBlock, Rule } from 'sanity'
-import blocksToText from '../../../helpers/blocksToText'
-import { CompactBlockEditor } from '../../components/CompactBlockEditor'
-import { configureBlockContent } from '../../editors'
+import { AiOutlineBarChart } from 'react-icons/ai';
+import type { PortableTextBlock, Rule } from 'sanity';
+import blocksToText from '../../../helpers/blocksToText';
+import { CompactBlockEditor } from '../../components/CompactBlockEditor';
+import { configureBlockContent } from '../../editors';
 
 export default {
   title: 'Bar chart block',
@@ -55,13 +55,13 @@ export default {
       title: 'title',
     },
     prepare({ title }: { title?: PortableTextBlock[] }) {
-      const plainTitle = title ? blocksToText(title) : 'Bar Chart Block'
+      const plainTitle = title ? blocksToText(title) : 'Bar Chart Block';
 
       return {
         title: plainTitle,
         subtitle: 'Bar chart block component',
         media: AiOutlineBarChart,
-      }
+      };
     },
   },
-}
+};
