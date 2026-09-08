@@ -87,7 +87,10 @@ export async function POST(req: NextRequest) {
         ['news', 'localNews', 'magazine'].includes(docType || '')
           ? 'page'
           : docType;
-      const tag = `${prefix}:${prefix === 'page' ? docSlug : getIsoFromName(docLang)}`;
+      const tag =
+        docType === 'textSnippet'
+          ? docType
+          : `${prefix}:${prefix === 'page' ? docSlug : getIsoFromName(docLang)}`;
       revalidateTag(tag, { expire: 0 });
       console.log(`revalidated tag: ${tag}`);
     }
