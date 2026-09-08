@@ -1,15 +1,16 @@
-import { revalidateTag } from 'next/cache'
-import { type NextRequest, NextResponse } from 'next/server'
-import { groq } from 'next-sanity'
-import { parseBody } from 'next-sanity/webhook'
-import { client } from '@/sanity/lib/client'
+import { revalidateTag } from 'next/cache';
+import { type NextRequest, NextResponse } from 'next/server';
+import { groq } from 'next-sanity';
+import { parseBody } from 'next-sanity/webhook';
+import { getIsoFromName } from '@/sanity/helpers/localization';
+import { client } from '@/sanity/lib/client';
 
 type WebhookPayload = {
-  id: string
-  _type: string
-  slug: string
-  lang: string
-}
+  id: string;
+  _type: string;
+  slug: string;
+  lang: string;
+};
 
 /*
  * tags to handle
@@ -28,39 +29,39 @@ export async function POST(req: NextRequest) {
     return new Response(
       'Optimized fetch is disabled. So revalidation is not relevant.',
       { status: 200 },
-    )
+    );
   }
 
   try {
     if (!process.env.SANITY_API_TOKEN) {
       return new Response('Missing environment variable SANITY_API_TOKEN', {
         status: 500,
-      })
+      });
     }
 
     const { isValidSignature, body } = await parseBody<WebhookPayload>(
       req,
       process.env.SANITY_API_TOKEN,
       true,
-    )
+    );
 
     if (!isValidSignature) {
-      const message = 'Invalid signature'
+      const message = 'Invalid signature';
       return new Response(JSON.stringify({ message, isValidSignature, body }), {
         status: 401,
-      })
+      });
     }
-    const docId = body?.id
-    const docType = body?._type
-    const docLang = body?.lang
-    const docSlug = body?.slug
+    const docId = body?.id;
+    const docType = body?._type;
+    const docLang = body?.lang;
+    const docSlug = body?.slug;
 
     if (!docType && !docSlug && !docLang) {
-      const message = 'Bad Request'
-      return new Response(JSON.stringify({ message, body }), { status: 400 })
+      const message = 'Bad Request';
+      return new Response(JSON.stringify({ message, body }), { status: 400 });
     }
 
-    const docsWithoutSlugCurrent = ['page', 'event']
+    const docsWithoutSlugCurrent = ['page', 'event'];
     //@ts-ignore
     if (docsWithoutSlugCurrent.includes(docType)) {
       const routes = await client.fetch(
@@ -68,13 +69,13 @@ export async function POST(req: NextRequest) {
         {
           id: docId,
         },
-      )
+      );
 
       routes.forEach((route: any) => {
-        const tag = `page:${route.slug}`
-        revalidateTag(tag, { expire: 0 })
-        console.log(`revalidated tag: ${tag}`)
-      })
+        const tag = `page:${route.slug}`;
+        revalidateTag(tag, { expire: 0 });
+        console.log(`revalidated tag: ${tag}`);
+      });
     } else {
       /*body.tags.forEach(_tag => {
         const tag = `sanity:${_tag}`
@@ -85,16 +86,16 @@ export async function POST(req: NextRequest) {
         docType?.startsWith('route') ||
         ['news', 'localNews', 'magazine'].includes(docType || '')
           ? 'page'
-          : docType
-      const tag = `${prefix}:${prefix === 'page' ? docSlug : docLang}`
-      revalidateTag(tag, { expire: 0 })
-      console.log(`revalidated tag: ${tag}`)
+          : docType;
+      const tag = `${prefix}:${prefix === 'page' ? docSlug : getIsoFromName(docLang)}`;
+      revalidateTag(tag, { expire: 0 });
+      console.log(`revalidated tag: ${tag}`);
     }
 
-    return NextResponse.json({ body })
+    return NextResponse.json({ body });
   } catch (err) {
-    console.error(err)
-    return new Response((err as Error).message, { status: 500 })
+    console.error(err);
+    return new Response((err as Error).message, { status: 500 });
   }
 }
 /*import { isValidSignature, SIGNATURE_HEADER_NAME } from '@sanity/webhook'
