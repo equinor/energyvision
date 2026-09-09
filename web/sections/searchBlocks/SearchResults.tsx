@@ -84,13 +84,12 @@ const SearchResults = (props: SearchResultsProps) => {
       {hasQuery && (
         <div ref={resultsRef} className="dark mt-10">
           <Tabs
-            value={options[activeTab].label || options[0].label}
+            value={options[activeTab]?.label ?? options[0]?.label ?? ''}
             activationMode="manual"
             onValueChange={handleTabChange}
           >
             <TabList aria-label={intl('categories')}>
               {options.map((item) => {
-                console.log('item', item);
                 return (
                   <Tab
                     id={`tab-trigger-${item.label}`}

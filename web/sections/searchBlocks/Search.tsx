@@ -65,7 +65,11 @@ export function Search() {
 
   return (
     <main className="min-h-[calc(100dvh-694px)] bg-slate-blue-95 md:min-h-[calc(100dvh-479px)]">
-      <InstantSearch indexName={mainIndex} searchClient={queriedSearchClient}>
+      <InstantSearch
+        key={mainIndex}
+        indexName={mainIndex}
+        searchClient={queriedSearchClient}
+      >
         <Configure hitsPerPage={5} snippetEllipsisText="..." />
         {indices.map((index) => (
           <Index
