@@ -1,8 +1,7 @@
-import type { Template } from 'sanity'
-import { defaultLanguage, languages } from './languages'
-import textSnippets from './schemas/textSnippets'
-import { magazineSlug, newsSlug } from './sitesConfig'
-import { Flags } from './src/lib/datasetHelpers'
+import type { Template } from 'sanity';
+import { defaultLanguage, languages } from './languages';
+import textSnippets from './schemas/textSnippets';
+import { Flags } from './src/lib/datasetHelpers';
 
 const ParentRoutesTemplates: Template<any, any>[] = languages.map(
   ({ name, title }) => ({
@@ -14,11 +13,11 @@ const ParentRoutesTemplates: Template<any, any>[] = languages.map(
       parent: { _type: 'reference', _ref: params.parentId },
     }),
   }),
-)
+);
 
 const TextSnippetsTemplates: Template<any, any>[] = Object.keys(
   textSnippets,
-).map(key => ({
+).map((key) => ({
   id: `text-snippet-${key}`,
   title: `Text Snippet - ${textSnippets[key].title}`,
   schemaType: `textSnippet`,
@@ -26,10 +25,10 @@ const TextSnippetsTemplates: Template<any, any>[] = Object.keys(
   value: (params: Record<string, unknown>) => {
     const fields = languages.map(({ name }) => ({
       [name]: params.defaultValue,
-    }))
-    return Object.assign({}, ...fields)
+    }));
+    return Object.assign({}, ...fields);
   },
-}))
+}));
 
 const MenuTemplates: Template<any, any>[] = Flags.HAS_FANCY_MENU
   ? [
@@ -62,7 +61,7 @@ const MenuTemplates: Template<any, any>[] = Flags.HAS_FANCY_MENU
           lang: params.isoCode,
         }),
       },
-    ]
+    ];
 
 const footerWithLocaleTemplate: Template<any, any> = {
   id: 'footer-with-locale',
@@ -72,7 +71,7 @@ const footerWithLocaleTemplate: Template<any, any> = {
   value: (params: Record<string, unknown>) => ({
     lang: params.isoCode,
   }),
-}
+};
 
 const redirectWithLocaleTemplate: Template<any, any> = {
   id: 'redirect-with-locale',
@@ -82,7 +81,7 @@ const redirectWithLocaleTemplate: Template<any, any> = {
   value: (params: Record<string, unknown>) => ({
     lang: params.isoCode,
   }),
-}
+};
 
 const localNewsWithTagTemplate: Template<any, any> = {
   id: 'localnews-with-tag',
@@ -96,7 +95,7 @@ const localNewsWithTagTemplate: Template<any, any> = {
     localNewsTag: params.localNewsTag,
     lang: params.lang || defaultLanguage.name,
   }),
-}
+};
 
 export const initialValueTemplates = [
   //promotedMagazineTagTemplate,
@@ -106,4 +105,4 @@ export const initialValueTemplates = [
   ...MenuTemplates,
   ...TextSnippetsTemplates,
   ...ParentRoutesTemplates,
-]
+];

@@ -1,9 +1,9 @@
-'use client'
-import NextImage from 'next/image'
-import { useMediaQuery } from '@/lib/hooks/useMediaQuery'
-import { twMerge } from '@/lib/twMerge/twMerge'
-import { resolveImage } from '@/sanity/lib/utils'
-import { FigureCaption } from '../FigureCaption/FigureCaption'
+'use client';
+import NextImage from 'next/image';
+import { useMediaQuery } from '@/lib/hooks/useMediaQuery';
+import { twMerge } from '@/lib/twMerge/twMerge';
+import { resolveImage } from '@/sanity/lib/utils';
+import { FigureCaption } from '../FigureCaption/FigureCaption';
 import {
   type GridType,
   getFullScreenSizes,
@@ -12,22 +12,22 @@ import {
   getSmallerThanPxLgSizes,
   type ImageProps,
   mapSanityImageRatio,
-} from './imageUtilities'
+} from './imageUtilities';
 
 const getSizes = (paddingGrid?: GridType, isLargerDisplays = false) => {
   switch (paddingGrid) {
     case 'sm':
-      return isLargerDisplays ? getPxSmSizes() : getPxLgSizes()
+      return isLargerDisplays ? getPxSmSizes() : getPxLgSizes();
     case 'md':
-      return isLargerDisplays ? getPxSmSizes() : getPxLgSizes()
+      return isLargerDisplays ? getPxSmSizes() : getPxLgSizes();
     case 'xs':
-      return isLargerDisplays ? getSmallerThanPxLgSizes() : getPxLgSizes()
+      return isLargerDisplays ? getSmallerThanPxLgSizes() : getPxLgSizes();
     case 'full':
-      return isLargerDisplays ? getFullScreenSizes() : getPxLgSizes()
+      return isLargerDisplays ? getFullScreenSizes() : getPxLgSizes();
     default:
-      return getPxLgSizes()
+      return getPxLgSizes();
   }
-}
+};
 
 /**
  * Use Image to render <figure> element with caption/attribution or simple <img> element with alt
@@ -55,9 +55,9 @@ export const Image = ({
   figCaptionClassName = '',
   keepRatioOnMobile = false,
 }: ImageProps) => {
-  const isLargerDisplays = useMediaQuery(`(min-width: 800px)`)
+  const isLargerDisplays = useMediaQuery(`(min-width: 800px)`);
 
-  if (!image || !image?.asset) return null
+  if (!image?.asset) return null;
 
   const { url, width, height } = resolveImage({
     image,
@@ -69,11 +69,11 @@ export const Image = ({
     customHeight,
     isLargerDisplays,
     keepRatioOnMobile,
-  })
+  });
 
-  let altText = ''
+  let altText = '';
   if ('alt' in image && image?.alt) {
-    altText = image.alt
+    altText = image.alt;
   }
 
   const nextImage = url ? (
@@ -89,7 +89,7 @@ export const Image = ({
         imageClassName,
       )}
     />
-  ) : null
+  ) : null;
 
   const imageElement =
     wrapperVariant === 'simple' ? (
@@ -103,7 +103,7 @@ export const Image = ({
       </div>
     ) : (
       nextImage
-    )
+    );
 
   return caption || attribution ? (
     <figure className={twMerge(``, figureClassName)}>
@@ -117,5 +117,5 @@ export const Image = ({
     </figure>
   ) : (
     imageElement
-  )
-}
+  );
+};

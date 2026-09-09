@@ -1,27 +1,28 @@
-import { format_line_spacing, playlist_add } from '@equinor/eds-icons'
-import type { Reference, Rule, ValidationContext } from 'sanity'
+import { format_line_spacing, playlist_add } from '@equinor/eds-icons';
+import type { Reference, Rule, ValidationContext } from 'sanity';
 import {
-  filterByRoute,
+  filterByPages,
   filterByRouteNewsMagazineAndTitle,
-} from '../../helpers/referenceFilters'
-import { EdsIcon } from '../../icons'
-import { Flags } from '../../src/lib/datasetHelpers'
-import { configureBlockContent } from '../editors/blockContentType'
-import routes from '../routes'
-import { validateCharCounterEditor } from '../validations/validateCharCounterEditor'
-import { validateInternalOrExternalUrl } from '../validations/validateInternalOrExternalUrl'
-import { lang } from './langField'
+} from '../../helpers/referenceFilters';
+import { EdsIcon } from '../../icons';
+import { Flags } from '../../src/lib/datasetHelpers';
+import { configureBlockContent } from '../editors/blockContentType';
+import { defaultReferenceTargets } from '../objects/linkSelector/common';
+import routes from '../routes';
+import { validateCharCounterEditor } from '../validations/validateCharCounterEditor';
+import { validateInternalOrExternalUrl } from '../validations/validateInternalOrExternalUrl';
+import { lang } from './langField';
 
 export type SubMenu = {
-  _type: 'subMenu'
-  label: string
-  isDisabled: boolean
-  intro: any
-  group?: any
-  url?: string
-  reference?: Reference
-  featuredContent?: Reference
-}
+  _type: 'subMenu';
+  label: string;
+  isDisabled: boolean;
+  intro: any;
+  group?: any;
+  url?: string;
+  reference?: Reference;
+  featuredContent?: Reference;
+};
 
 const introBlockContentType = configureBlockContent({
   h2: false,
@@ -31,7 +32,7 @@ const introBlockContentType = configureBlockContent({
   externalLink: false,
   attachment: false,
   lists: false,
-})
+});
 
 export default {
   type: 'document',
@@ -72,12 +73,12 @@ export default {
       fieldset: 'link',
       validation: (Rule: Rule) =>
         Rule.custom((value: any, context: ValidationContext) => {
-          const { parent } = context as { parent: SubMenu }
-          return validateInternalOrExternalUrl(value, parent.url)
+          const { parent } = context as { parent: SubMenu };
+          return validateInternalOrExternalUrl(value, parent.url);
         }),
-      to: routes,
+      to: defaultReferenceTargets,
       options: {
-        filter: filterByRoute,
+        filter: filterByPages,
         disableNew: true,
       },
     },
@@ -89,8 +90,8 @@ export default {
       fieldset: 'link',
       validation: (Rule: Rule) =>
         Rule.custom((value: any, context: ValidationContext) => {
-          const { parent } = context as { parent: SubMenu }
-          return validateInternalOrExternalUrl(value, parent.reference)
+          const { parent } = context as { parent: SubMenu };
+          return validateInternalOrExternalUrl(value, parent.reference);
         }),
     },
     {
@@ -112,7 +113,7 @@ export default {
         Flags.HAS_NEWS && { type: 'news' },
         Flags.HAS_MAGAZINE && { type: 'magazine' },
         ...routes,
-      ].filter(e => e),
+      ].filter((e) => e),
       options: {
         filter: filterByRouteNewsMagazineAndTitle,
         disableNew: true,
@@ -160,12 +161,12 @@ export default {
       url: 'url',
     },
     prepare(selection: any) {
-      const { label, group = [], url } = selection
+      const { label, group = [], url } = selection;
       return {
         title: label || 'No label added yet',
         subtitle: url || (group && `Menu groups: ${group.length}`) || '',
         media: EdsIcon(format_line_spacing),
-      }
+      };
     },
   },
-}
+};

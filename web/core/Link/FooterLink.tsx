@@ -1,31 +1,31 @@
-import { getTranslations } from 'next-intl/server'
-import { forwardRef } from 'react'
-import { getIsoFromName } from '@/sanity/helpers/localization'
-import type { LinkData } from '@/types'
+import { getTranslations } from 'next-intl/server';
+import { forwardRef } from 'react';
 import {
-  ArrowRight,
-  Facebook,
-  Instagram,
-  Linkedin,
-  Twitter,
-  Youtube,
-} from '../../icons'
-import { BaseLink } from './BaseLink'
+  FaFacebookSquare,
+  FaInstagramSquare,
+  FaLinkedin,
+  FaYoutube,
+} from 'react-icons/fa';
+import { SiX } from 'react-icons/si';
+import { getIsoFromName } from '@/sanity/helpers/localization';
+import type { LinkData } from '@/types';
+import { ArrowRight } from '../../icons';
+import { BaseLink } from './BaseLink';
 
 function getSomeSvg(someType: SomeType) {
   const iconMap = {
-    facebook: <Facebook height={24} width={24} />,
-    instagram: <Instagram height={24} width={24} />,
-    linkedin: <Linkedin height={24} width={24} />,
-    twitter: <Twitter height={24} width={24} />,
-    youtube: <Youtube height={24} width={24} />,
-  }
+    facebook: <FaFacebookSquare size={24} className="text-current" />, //<Facebook height={24} width={24} />,
+    instagram: <FaInstagramSquare size={24} className="text-current" />, //<Instagram height={24} width={24} />,
+    linkedin: <FaLinkedin size={24} className="text-current" />, //<Linkedin height={24} width={24} />,
+    twitter: <SiX size={24} className="text-current" />, //<Twitter height={24} width={24} />,
+    youtube: <FaYoutube size={24} className="text-current" />, //<Youtube height={24} width={24} />,
+  };
 
   if (!(someType in iconMap))
     console.warn(
       'Unable to get social icon for footer: Unknown SoMe type passed',
-    )
-  return iconMap[someType] || null
+    );
+  return iconMap[someType] || null;
 }
 
 export type SomeType =
@@ -33,27 +33,27 @@ export type SomeType =
   | 'instagram'
   | 'youtube'
   | 'twitter'
-  | 'linkedin'
+  | 'linkedin';
 
 export type FooterLinkProps = {
-  type: 'internalLink' | 'externalUrl'
-  someType?: SomeType
-  href: string
-  label: string
-} & LinkData
+  type: 'internalLink' | 'externalUrl';
+  someType?: SomeType;
+  href: string;
+  label: string;
+} & LinkData;
 
 const FooterLink = forwardRef<HTMLAnchorElement, FooterLinkProps>(
   async ({ type, someType, label, link, href }, ref) => {
-    const linkLocale = getIsoFromName(link?.lang)
+    const linkLocale = getIsoFromName(link?.lang);
     const isExternal =
       type === 'externalUrl' ||
       href?.startsWith('http') ||
-      href?.toLowerCase().includes('.pdf')
-    const target = isExternal ? '_blank' : undefined
-    const intl = await getTranslations()
+      href?.toLowerCase().includes('.pdf');
+    const target = isExternal ? '_blank' : undefined;
+    const intl = await getTranslations();
 
     const icon =
-      type === 'externalUrl' && someType ? getSomeSvg(someType) : null
+      type === 'externalUrl' && someType ? getSomeSvg(someType) : null;
 
     return (
       <BaseLink
@@ -66,22 +66,22 @@ const FooterLink = forwardRef<HTMLAnchorElement, FooterLinkProps>(
       >
         {icon && (
           <span
-            className='mr-1.5 size-6 fill-white-100 leading-none group-hover:fill-moss-green-90'
+            className="mr-1.5 size-6 text-white-100 leading-none dark:hover:text-white-100"
             aria-hidden={true}
           >
             {icon}
           </span>
         )}
-        <span className='flex leading-none'>{label}</span>
+        <span className="flex leading-none">{label}</span>
         {isExternal && (
           <ArrowRight
             aria-label={`${intl('externalLink')} arrow right icon`}
-            className='-translate-y-0.5 size-5 rotate-[-50deg] transform text-gray-500 group-hover:text-moss-green-90'
+            className="size-5 -translate-y-0.5 rotate-[-50deg] transform text-gray-500 group-hover:text-moss-green-90"
           />
         )}
       </BaseLink>
-    )
+    );
   },
-)
+);
 
-export default FooterLink
+export default FooterLink;

@@ -6,72 +6,73 @@
  *  add 'use client' to specific interactive components instead of
  *  marking large parts of your UI as Client Components.
  */
-import AccordionBlock from '@/sections/AccordionBlock/AccordionBlock'
-import { AnchorLinkList } from '@/sections/AnchorLinkList'
-import AnchorSearch from '@/sections/AnchorSearch/AnchorSearch'
-import { findAllAnchors } from '@/sections/AnchorSearch/findAllAnchors'
+import AccordionBlock from '@/sections/AccordionBlock/AccordionBlock';
+import { AnchorLinkList } from '@/sections/AnchorLinkList';
+import AnchorSearch from '@/sections/AnchorSearch/AnchorSearch';
+import { findAllAnchors } from '@/sections/AnchorSearch/findAllAnchors';
 import BarChartBlock, {
   type BarChartBlockProps,
-} from '@/sections/BarChartBlock/BarChartBlock'
-import { CampaignBanner } from '@/sections/CampaignBanner'
-import CookieDeclaration from '@/sections/CookieDeclaration/CookieDeclaration'
-import CardsList from '@/sections/cards/CardsList/CardsList'
+} from '@/sections/BarChartBlock/BarChartBlock';
+import { CampaignBanner } from '@/sections/CampaignBanner';
+import CookieDeclaration from '@/sections/CookieDeclaration/CookieDeclaration';
+import CardsList from '@/sections/cards/CardsList/CardsList';
 import EmbeddedVideoList, {
   type EmbeddedVideoListData,
-} from '@/sections/EmbeddedVideoList/EmbeddedVideoList'
+} from '@/sections/EmbeddedVideoList/EmbeddedVideoList';
 import FigureBlock, {
   type FigureData,
-} from '@/sections/FigureBlock/FigureBlock'
+} from '@/sections/FigureBlock/FigureBlock';
 import FullWidthVideo, {
   type FullWidthVideoProps,
-} from '@/sections/FullWidthVideo/FullWidthVideo'
+} from '@/sections/FullWidthVideo/FullWidthVideo';
 import FullWidthImage, {
   type FullWidthImageData,
-} from '@/sections/FullwidthImage/FullWidthImage'
-import Grid from '@/sections/Grid/Grid'
-import { HomePageBanner } from '@/sections/HomePageBanner/HomePageBanner'
-import IFrameBlock from '@/sections/IFrameBlock/IFrameBlock'
-import IframeCarousel from '@/sections/IframeCarousel/IframeCarousel'
-import ImageCarousel from '@/sections/ImageCarousel/ImageCarousel'
-import ImageForText from '@/sections/ImageForText/ImageForText'
-import KeyNumbers from '@/sections/KeyNumber/KeyNumber'
+} from '@/sections/FullwidthImage/FullWidthImage';
+import Grid from '@/sections/Grid/Grid';
+import { HomePageBanner } from '@/sections/HomePageBanner/HomePageBanner';
+import IFrameBlock from '@/sections/IFrameBlock/IFrameBlock';
+import IframeCarousel from '@/sections/IframeCarousel/IframeCarousel';
+import ImageCarousel from '@/sections/ImageCarousel/ImageCarousel';
+import ImageForText from '@/sections/ImageForText/ImageForText';
+import KeyNumbers from '@/sections/KeyNumber/KeyNumber';
 import LineChartBlock, {
   type LineChartBlockProps,
-} from '@/sections/LineChartBlock/LineChartBlock'
-import NewsList from '@/sections/NewsList/NewsList'
+} from '@/sections/LineChartBlock/LineChartBlock';
+import NewsList from '@/sections/NewsList/NewsList';
+import PersonList from '@/sections/PersonList/PersonList';
 import PieChartBlock, {
   type PieChartBlockProps,
-} from '@/sections/PieChartBlock/PieChartBlock'
-import PromoTileArray from '@/sections/PromoTiles/PromoTileArray'
-import { PromotionBlockV2 } from '@/sections/promotions/PromotionBlockV2'
+} from '@/sections/PieChartBlock/PieChartBlock';
+import PromoTileArray from '@/sections/PromoTiles/PromoTileArray';
+import { PromotionBlockV2 } from '@/sections/promotions/PromotionBlockV2';
 import PromotionsBlock, {
   type PromotionsBlockData,
-} from '@/sections/promotions/PromotionsBlock'
-import QuoteBlock from '@/sections/QuoteBlock/QuoteBlock'
+} from '@/sections/promotions/PromotionsBlock';
+import QuoteBlock from '@/sections/QuoteBlock/QuoteBlock';
 import StockValues, {
   type StockValuesProps,
-} from '@/sections/StockValues/StockValues'
+} from '@/sections/StockValues/StockValues';
 import TableBlock, {
   type TableBlockProps,
-} from '@/sections/TableBlock/TableBlock'
-import TabsBlock, { type TabsBlockProps } from '@/sections/TabsBlock/TabsBlock'
-import { getColorForTabsTheme } from '@/sections/TabsBlock/tabThemes'
-import TextBlock from '@/sections/TextBlock/TextBlock'
-import TextWithIconArray from '@/sections/TextWithIconArray/TextWithIconArray'
-import Teaser from '@/sections/teasers/Teaser/Teaser'
-import TextTeaser from '@/sections/teasers/TextTeaser/TextTeaser'
-import { getColorForTheme } from '@/sections/teasers/TextTeaser/theme'
+} from '@/sections/TableBlock/TableBlock';
+import TabsBlock, { type TabsBlockProps } from '@/sections/TabsBlock/TabsBlock';
+import { getColorForTabsTheme } from '@/sections/TabsBlock/tabThemes';
+import TextBlock from '@/sections/TextBlock/TextBlock';
+import TextWithIconArray from '@/sections/TextWithIconArray/TextWithIconArray';
+import Teaser from '@/sections/teasers/Teaser/Teaser';
+import TextTeaser from '@/sections/teasers/TextTeaser/TextTeaser';
+import { getColorForTheme } from '@/sections/teasers/TextTeaser/theme';
 import VideoPlayerBlock, {
   type VideoPlayerBlockProps,
-} from '@/sections/VideoPlayerBlock/VideoPlayerBlock'
+} from '@/sections/VideoPlayerBlock/VideoPlayerBlock';
 import VideoPlayerCarousel, {
   type VideoPlayerCarouselData,
-} from '@/sections/VideoPlayerCarousel/VideoPlayerCarousel'
+} from '@/sections/VideoPlayerCarousel/VideoPlayerCarousel';
 import {
   type ColorKeyTokens,
   colorKeyToUtilityMap,
-} from '@/styles/colorKeyToUtilityMap'
-import Form from '@/templates/forms/Form'
+} from '@/styles/colorKeyToUtilityMap';
+import Form from '@/templates/forms/Form';
 import type {
   AccordionData,
   AnchorLinkData,
@@ -98,8 +99,8 @@ import type {
   TextTeaserData,
   TextWithIconArrayData,
   TopicPageSchema,
-} from '@/types'
-import { ErrorBoundaryClient } from './ErrorBoundaryClient'
+} from '@/types';
+import { ErrorBoundaryClient } from './ErrorBoundaryClient';
 
 // How could we do this for several different component types?
 export type ComponentSections =
@@ -124,23 +125,23 @@ export type ComponentSections =
   | TextTeaserData
   | KeyNumbersData
   | TabsBlockProps
-  | TableBlockProps
+  | TableBlockProps;
 
 //To be removed when all types are moved to relevant component and these common are in every section component
 type Component = {
-  id?: string
-  type?: string
-  designOptions?: DesignOptions
-} & ComponentSections
+  id?: string;
+  type?: string;
+  designOptions?: DesignOptions;
+} & ComponentSections;
 
 export type PageContentProps = {
-  data: TopicPageSchema | MagazinePageSchema
+  data: TopicPageSchema | MagazinePageSchema;
   heroProps?: {
-    background?: Background
-    heroType?: string
-    heroHasBreadcrumbs?: boolean
-  }
-}
+    background?: Background;
+    heroType?: string;
+    heroHasBreadcrumbs?: boolean;
+  };
+};
 
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /**
@@ -155,34 +156,34 @@ const getBackgroundObject = (component: Component) => {
     //white if no designOptions
     return {
       backgroundUtility: 'white-100',
-    }
+    };
   }
 
   if (component?.type === 'tabs') {
     return {
       backgroundUtility: getColorForTabsTheme(component?.designOptions?.theme)
         .key,
-    }
+    };
   }
 
   return (
     component?.designOptions?.background ||
     getColorForTheme(component?.designOptions?.theme)
-  )
-}
+  );
+};
 
-const cleanBgUtility = (value: string) => value?.replace('bg-', '')
+const cleanBgUtility = (value: string) => value?.replace('bg-', '');
 
 const isWhiteColorBackground = (componentsBO: any, component: Component) => {
-  const casesWhichHaveBackgroundButIsWhite = ['cardsList']
+  const casesWhichHaveBackgroundButIsWhite = ['cardsList'];
   return (
     cleanBgUtility(componentsBO?.backgroundUtility) === 'white-100' ||
     componentsBO?.backgroundColor === 'White' ||
     componentsBO?.background === 'White' ||
     casesWhichHaveBackgroundButIsWhite.includes(component?.type) ||
     !component?.designOptions
-  )
-}
+  );
+};
 
 const isSameColorBackground = (
   currentComponentsBO: any,
@@ -197,7 +198,7 @@ const isSameColorBackground = (
     return (
       cleanBgUtility(currentComponentsBO?.backgroundUtility) ===
       cleanBgUtility(previousComponentsBO?.backgroundUtility)
-    )
+    );
   }
   if (
     currentComponentsBO?.backgroundUtility &&
@@ -208,7 +209,7 @@ const isSameColorBackground = (
       colorKeyToUtilityMap[
         currentComponentsBO?.backgroundUtility as keyof ColorKeyTokens
       ]?.backgroundName === previousComponentsBO?.backgroundColor
-    )
+    );
   }
   if (
     !currentComponentsBO?.backgroundUtility &&
@@ -218,14 +219,14 @@ const isSameColorBackground = (
     currentComponentsBO?.backgroundColor ===
       colorKeyToUtilityMap[
         previousComponentsBO?.backgroundUtility as keyof ColorKeyTokens
-      ]?.backgroundName
+      ]?.backgroundName;
   }
 
   return (
     currentComponentsBO?.backgroundColor ===
     previousComponentsBO?.backgroundColor
-  )
-}
+  );
+};
 
 const applyPaddingTopIfApplicable = (
   currentComponent: Component,
@@ -234,7 +235,7 @@ const applyPaddingTopIfApplicable = (
   heroProps?: any,
 ): string => {
   if (currentComponent?.type === 'anchorLink') {
-    return ''
+    return '';
   }
 
   //If no hero and the first section after is textblock add pt-20
@@ -243,12 +244,12 @@ const applyPaddingTopIfApplicable = (
     heroProps?.heroType === 'noHero' &&
     currentComponent?.type === 'textBlock'
   ) {
-    return 'pt-20'
+    return 'pt-20';
   }
   //the first section after hero does not need pt-20, as heroBlock types adds this
   //unless its background image hero
   if (index === 0 && heroProps?.heroType !== 'backgroundImage') {
-    return ''
+    return '';
   }
   //Background image hero has breadcrumbs which have enough padding bottom, the following component should not have pt-20
   if (
@@ -256,7 +257,7 @@ const applyPaddingTopIfApplicable = (
     heroProps?.heroType === 'backgroundImage' &&
     heroProps?.heroHasBreadcrumbs
   ) {
-    return ''
+    return '';
   }
   /*   console.log(
     `Current: ${currentComponent?.type}:${Array.isArray(currentComponent?.title) ? toPlainText(currentComponent?.title) : currentComponent?.title}`,
@@ -265,8 +266,8 @@ const applyPaddingTopIfApplicable = (
     `Previous component ${prevComponent?.type}:${Array.isArray(prevComponent?.title) ? toPlainText(prevComponent?.title) : prevComponent?.title}`,
   ) */
 
-  const currentBackgroundObject = getBackgroundObject(currentComponent)
-  const previousBackgroundObject = getBackgroundObject(prevComponent)
+  const currentBackgroundObject = getBackgroundObject(currentComponent);
+  const previousBackgroundObject = getBackgroundObject(prevComponent);
   /*   console.log('currentBackgroundObject', currentBackgroundObject)
   console.log('previousBackgroundObject', previousBackgroundObject) */
 
@@ -283,52 +284,52 @@ const applyPaddingTopIfApplicable = (
     prevComponent?.type === 'promoteEvents' &&
       prevComponent?.designOptions?.backgroundImage?.asset &&
       'promoteEvents',
-  ]
+  ];
 
   const currentIsWhiteColorBackground = isWhiteColorBackground(
     currentBackgroundObject,
     currentComponent,
-  )
+  );
   const previousIsWhiteColorBackground = isWhiteColorBackground(
     previousBackgroundObject,
     prevComponent,
-  )
+  );
 
   /*   console.log('currentIsWhiteColorBackground', currentIsWhiteColorBackground)
   console.log('previousIsWhiteColorBackground', previousIsWhiteColorBackground) */
 
   const previousComponentIsASpecialCaseAndNeedPT =
     paddingTopCases.includes(prevComponent?.type) ||
-    paddingTopCases.includes(previousBackgroundObject?.type)
+    paddingTopCases.includes(previousBackgroundObject?.type);
 
   if (
     currentIsWhiteColorBackground &&
     previousIsWhiteColorBackground &&
     !previousComponentIsASpecialCaseAndNeedPT
   ) {
-    return ''
+    return '';
   }
 
   if (prevComponent?.type === 'homepageBanner') {
     return prevComponent?.designOptions?.backgroundType === '0'
       ? 'lg:pt-20'
-      : 'pt-20'
+      : 'pt-20';
   }
 
   const previousIsSameColorAsCurrent = isSameColorBackground(
     currentBackgroundObject,
     previousBackgroundObject,
-  )
+  );
   /*   console.log('previousIsSameColorAsCurrent', previousIsSameColorAsCurrent) */
   if (
     previousIsSameColorAsCurrent &&
     !previousComponentIsASpecialCaseAndNeedPT
   ) {
-    return ''
+    return '';
   }
 
-  return 'pt-20'
-}
+  return 'pt-20';
+};
 
 export const PageContent = ({ data, heroProps }: PageContentProps) => {
   const mapSection = (
@@ -338,16 +339,16 @@ export const PageContent = ({ data, heroProps }: PageContentProps) => {
     topSpacingClassName: string,
     bottomSpacingClassName: string,
   ) => {
-    const anchorId = anchorReference
+    const anchorId = anchorReference;
     const commonProps = {
       anchor: anchorId,
-    }
+    };
 
-    const allSpacings = `${topSpacingClassName} ${bottomSpacingClassName}`
+    const allSpacings = `${topSpacingClassName} ${bottomSpacingClassName}`;
 
     switch (c.type) {
       case 'teaser':
-        return <Teaser key={c.id} {...commonProps} data={c as TeaserData} />
+        return <Teaser key={c.id} {...commonProps} data={c as TeaserData} />;
       case 'textTeaser':
         return (
           <TextTeaser
@@ -356,7 +357,7 @@ export const PageContent = ({ data, heroProps }: PageContentProps) => {
             data={c as TextTeaserData}
             className={allSpacings}
           />
-        )
+        );
       case 'textBlock':
         return (
           <TextBlock
@@ -365,7 +366,7 @@ export const PageContent = ({ data, heroProps }: PageContentProps) => {
             data={c as TextBlockData}
             className={allSpacings}
           />
-        )
+        );
       case 'fullWidthImage':
         return (
           <FullWidthImage
@@ -373,7 +374,7 @@ export const PageContent = ({ data, heroProps }: PageContentProps) => {
             {...commonProps}
             data={c as FullWidthImageData}
           />
-        )
+        );
       case 'fullWidthVideo':
         return (
           <FullWidthVideo
@@ -381,7 +382,7 @@ export const PageContent = ({ data, heroProps }: PageContentProps) => {
             {...commonProps}
             {...(c as FullWidthVideoProps)}
           />
-        )
+        );
       case 'figure':
         return (
           <FigureBlock
@@ -390,7 +391,7 @@ export const PageContent = ({ data, heroProps }: PageContentProps) => {
             data={c as FigureData}
             className={allSpacings}
           />
-        )
+        );
       case 'textWithIconArray':
         return (
           <TextWithIconArray
@@ -399,7 +400,7 @@ export const PageContent = ({ data, heroProps }: PageContentProps) => {
             data={c as TextWithIconArrayData}
             className={allSpacings}
           />
-        )
+        );
       case 'pullQuote':
         return (
           <QuoteBlock
@@ -408,7 +409,7 @@ export const PageContent = ({ data, heroProps }: PageContentProps) => {
             data={c as QuoteData}
             className={allSpacings}
           />
-        )
+        );
       case 'accordion':
         return (
           <AccordionBlock
@@ -417,7 +418,7 @@ export const PageContent = ({ data, heroProps }: PageContentProps) => {
             data={c as AccordionData}
             className={allSpacings}
           />
-        )
+        );
       case 'promoTileArray':
         return (
           <PromoTileArray
@@ -426,7 +427,7 @@ export const PageContent = ({ data, heroProps }: PageContentProps) => {
             data={c as PromoTileArrayData}
             className={allSpacings}
           />
-        )
+        );
       case 'iframe':
         return (
           <IFrameBlock
@@ -435,9 +436,9 @@ export const PageContent = ({ data, heroProps }: PageContentProps) => {
             data={c as IFrameData}
             className={allSpacings}
           />
-        )
+        );
       case 'promotion': {
-        const { promotion, ...restPromo } = c
+        const { promotion, ...restPromo } = c;
         return (
           <PromotionsBlock
             key={c.id}
@@ -450,59 +451,59 @@ export const PageContent = ({ data, heroProps }: PageContentProps) => {
             }
             className={allSpacings}
           />
-        )
+        );
       }
       case 'promoteEvents':
         return (
           <PromotionsBlock
             key={c.id}
             {...commonProps}
-            variant='promoteEvents'
+            variant="promoteEvents"
             data={c as PromotionsBlockData}
             className={allSpacings}
           />
-        )
+        );
       case 'promoteNews':
         return (
           <PromotionsBlock
             key={c.id}
             {...commonProps}
-            variant='promoteNews'
+            variant="promoteNews"
             data={c as PromotionsBlockData}
             className={allSpacings}
           />
-        )
+        );
       //spread!
       case 'promotePeople':
         return (
           <PromotionsBlock
             key={c.id}
             {...commonProps}
-            variant='promotePeople'
+            variant="promotePeople"
             data={c as PromotionsBlockData}
             className={allSpacings}
           />
-        )
+        );
       case 'promoteMagazine':
         return (
           <PromotionsBlock
             key={c.id}
             {...commonProps}
-            variant='promoteMagazine'
+            variant="promoteMagazine"
             data={c as PromotionsBlockData}
             className={allSpacings}
           />
-        )
+        );
       case 'promoteTopics':
         return (
           <PromotionsBlock
             key={c.id}
             {...commonProps}
-            variant='promoteTopics'
+            variant="promoteTopics"
             data={c as PromotionsBlockData}
             className={allSpacings}
           />
-        )
+        );
       case 'form':
         return (
           <Form
@@ -511,9 +512,9 @@ export const PageContent = ({ data, heroProps }: PageContentProps) => {
             data={c as FormData}
             className={allSpacings}
           />
-        )
+        );
       case 'table':
-        return <>To be updated to new table</> //<Table key={c.id} data={c as TableData} anchor={anchorReference} className={spacingClassName} />
+        return <>To be updated to new table</>; //<Table key={c.id} data={c as TableData} anchor={anchorReference} className={spacingClassName} />
       case 'cookieDeclaration':
         return (
           <CookieDeclaration
@@ -522,7 +523,7 @@ export const PageContent = ({ data, heroProps }: PageContentProps) => {
             data={c as CookieDeclarationData}
             className={allSpacings}
           />
-        )
+        );
       case 'newsList':
         return (
           <NewsList
@@ -531,7 +532,16 @@ export const PageContent = ({ data, heroProps }: PageContentProps) => {
             data={c as unknown as NewsListData}
             className={allSpacings}
           />
-        )
+        );
+      case 'personList':
+        return (
+          <PersonList
+            key={c.id}
+            {...commonProps}
+            data={c as any}
+            className={allSpacings}
+          />
+        );
       case 'stockValuesApi':
         return (
           <StockValues
@@ -540,7 +550,7 @@ export const PageContent = ({ data, heroProps }: PageContentProps) => {
             {...(c as StockValuesProps)}
             className={allSpacings}
           />
-        )
+        );
       case 'imageCarousel':
         return (
           <ImageCarousel
@@ -549,7 +559,7 @@ export const PageContent = ({ data, heroProps }: PageContentProps) => {
             data={c as ImageCarouselData}
             className={allSpacings}
           />
-        )
+        );
       case 'iframeCarousel':
         return (
           <IframeCarousel
@@ -558,7 +568,7 @@ export const PageContent = ({ data, heroProps }: PageContentProps) => {
             data={c as IframeCarouselData}
             className={allSpacings}
           />
-        )
+        );
       case 'videoPlayer': {
         return (
           <VideoPlayerBlock
@@ -567,7 +577,7 @@ export const PageContent = ({ data, heroProps }: PageContentProps) => {
             {...(c as VideoPlayerBlockProps)}
             className={allSpacings}
           />
-        )
+        );
       }
       case 'videoPlayerCarousel':
         return (
@@ -577,7 +587,7 @@ export const PageContent = ({ data, heroProps }: PageContentProps) => {
             data={c as VideoPlayerCarouselData}
             className={allSpacings}
           />
-        )
+        );
       case 'embeddedVideoList':
         return (
           <EmbeddedVideoList
@@ -586,7 +596,7 @@ export const PageContent = ({ data, heroProps }: PageContentProps) => {
             data={c as EmbeddedVideoListData}
             className={allSpacings}
           />
-        )
+        );
       case 'keyNumbers':
         return (
           <KeyNumbers
@@ -595,7 +605,7 @@ export const PageContent = ({ data, heroProps }: PageContentProps) => {
             data={c as KeyNumbersData}
             className={allSpacings}
           />
-        )
+        );
       case 'cardsList':
         return (
           <CardsList
@@ -604,7 +614,7 @@ export const PageContent = ({ data, heroProps }: PageContentProps) => {
             {...c}
             className={allSpacings}
           />
-        )
+        );
       case 'grid':
         return (
           <Grid
@@ -613,7 +623,7 @@ export const PageContent = ({ data, heroProps }: PageContentProps) => {
             data={c as GridData}
             className={allSpacings}
           />
-        )
+        );
       case 'campaignBanner':
         return (
           <CampaignBanner
@@ -621,7 +631,7 @@ export const PageContent = ({ data, heroProps }: PageContentProps) => {
             {...commonProps}
             data={c as CampaignBannerData}
           />
-        )
+        );
       case 'anchorLinkList':
         return (
           <AnchorLinkList
@@ -630,7 +640,7 @@ export const PageContent = ({ data, heroProps }: PageContentProps) => {
             data={c as AnchorLinkListData}
             className={topSpacingClassName}
           />
-        )
+        );
       case 'imageForText':
         return (
           <ImageForText
@@ -638,7 +648,7 @@ export const PageContent = ({ data, heroProps }: PageContentProps) => {
             {...commonProps}
             data={c as ImageForTextData}
           />
-        )
+        );
       case 'tabs':
         return (
           <TabsBlock
@@ -648,7 +658,7 @@ export const PageContent = ({ data, heroProps }: PageContentProps) => {
             //handling pb-page-content self
             className={topSpacingClassName}
           />
-        )
+        );
       /* Remove from here and move to Homepage Template PageContent */
       case 'homepageBanner':
         return (
@@ -661,27 +671,27 @@ export const PageContent = ({ data, heroProps }: PageContentProps) => {
                 ?.backgroundUtility
             }
           />
-        )
+        );
       case 'tableV2':
         return (
           <TableBlock
             key={c.id}
             className={allSpacings}
-            variant='default'
+            variant="default"
             {...commonProps}
             {...(c as any)}
           />
-        )
+        );
       case 'importTable':
         return (
           <TableBlock
             key={c.id}
-            variant='import'
+            variant="import"
             {...commonProps}
             {...(c as any)}
             className={allSpacings}
           />
-        )
+        );
       case 'pieChartBlock':
         return (
           <PieChartBlock
@@ -690,7 +700,7 @@ export const PageContent = ({ data, heroProps }: PageContentProps) => {
             {...(c as PieChartBlockProps)}
             className={allSpacings}
           />
-        )
+        );
       case 'barChartBlock':
         return (
           <BarChartBlock
@@ -699,7 +709,7 @@ export const PageContent = ({ data, heroProps }: PageContentProps) => {
             {...(c as BarChartBlockProps)}
             className={allSpacings}
           />
-        )
+        );
       case 'lineChartBlock':
         return (
           <LineChartBlock
@@ -708,7 +718,7 @@ export const PageContent = ({ data, heroProps }: PageContentProps) => {
             {...(c as LineChartBlockProps)}
             className={allSpacings}
           />
-        )
+        );
       case 'promoteExternalLinkV2':
       case 'promoteTopicsV2':
       case 'promotionsV2':
@@ -719,7 +729,7 @@ export const PageContent = ({ data, heroProps }: PageContentProps) => {
             {...(c as any)}
             className={allSpacings}
           />
-        )
+        );
       case 'anchorSearch':
         return (
           <AnchorSearch
@@ -729,28 +739,28 @@ export const PageContent = ({ data, heroProps }: PageContentProps) => {
             {...(c as any)}
             className={allSpacings}
           />
-        )
+        );
       default:
-        return null
+        return null;
     }
-  }
+  };
 
   const content = (data?.content || []).map((c: Component, index) => {
-    const prevComponent = data?.content?.[index - 1]
+    const prevComponent = data?.content?.[index - 1];
 
     // biome-ignore lint/complexity/noUselessUndefinedInitialization: complains either way
-    let anchorReference = undefined
+    let anchorReference = undefined;
     if (prevComponent?.type === 'anchorLink') {
       anchorReference = (prevComponent as unknown as AnchorLinkData)
-        ?.anchorReference
+        ?.anchorReference;
     }
     if (c?.type === 'textBlock' && c?.anchorReference) {
-      anchorReference = c?.anchorReference
+      anchorReference = c?.anchorReference;
     }
 
     //Returns pt-20 when applicable or empty string
     const previousComponentIndex =
-      prevComponent?.type === 'anchorLink' ? index - 2 : index - 1
+      prevComponent?.type === 'anchorLink' ? index - 2 : index - 1;
 
     const previousComponentToCompare =
       index === 0
@@ -762,16 +772,16 @@ export const PageContent = ({ data, heroProps }: PageContentProps) => {
             heroHasBreadcrumbs: heroProps?.heroHasBreadcrumbs,
             designOptions: { background: heroProps?.background },
           } as Component)
-        : (data?.content?.[previousComponentIndex] as unknown as Component)
+        : (data?.content?.[previousComponentIndex] as unknown as Component);
 
     const topSpacingClassName = applyPaddingTopIfApplicable(
       c,
       previousComponentToCompare,
       index,
       heroProps,
-    )
+    );
 
-    const bottomSpacingClassName = 'pb-page-content'
+    const bottomSpacingClassName = 'pb-page-content';
 
     //If textblocks follow each other reduce the pb-page-content to tie text closer together
     // Consider after launch? or a setting on a sanity schema?
@@ -789,7 +799,7 @@ export const PageContent = ({ data, heroProps }: PageContentProps) => {
     /*     console.log(
       `Applying top spacing: ${topSpacingClassName} to ${c?.type} with title ${Array.isArray(c?.title) ? toPlainText(c?.title) : c?.title}`,
     ) */
-    const commonSpacingClassName = ` max-w-container`
+    const commonSpacingClassName = ` max-w-container`;
 
     return (
       <ErrorBoundaryClient key={c.id} component={c}>
@@ -802,8 +812,8 @@ export const PageContent = ({ data, heroProps }: PageContentProps) => {
           commonSpacingClassName,
         )}
       </ErrorBoundaryClient>
-    )
-  })
+    );
+  });
 
-  return content
-}
+  return content;
+};

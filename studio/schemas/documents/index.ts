@@ -1,28 +1,28 @@
-
-import assetFile from './assetFile'
-import assetTag from './assetTag'
-import countryTag from './countryTag'
-import event from './event'
-import eventTag from './eventTag'
-import externalRedirect from './externalRedirect'
-import footer from './footer'
-import homePage from './homePage'
-import localNews from './localNews'
-import localNewsTag from './localNewsTag'
-import magazine from './magazine'
-import magazineIndex from './magazineIndexPage'
-import magazineTag from './magazineTag'
-import news from './news'
-import newsroom from './newsroom'
-import page from './page'
-import redirect from './redirect'
-import route from './route'
-import routeHomepage from './routeHomepage'
-import { settings } from './settings'
-import simpleMenu from './simpleMenu'
-import siteMenu from './siteMenu'
-import subMenu from './subMenu'
-import tag from './tag'
+import assetFile from './assetFile';
+import assetTag from './assetTag';
+import countryTag from './countryTag';
+import event from './event';
+import eventTag from './eventTag';
+import externalRedirect from './externalRedirect';
+import footer from './footer';
+import homePage from './homePage';
+import localNews from './localNews';
+import localNewsTag from './localNewsTag';
+import magazine from './magazine';
+import magazineIndex from './magazineIndexPage';
+import magazineTag from './magazineTag';
+import news from './news';
+import newsroom from './newsroom';
+import page from './page';
+import person from './person';
+import redirect from './redirect';
+import route from './route';
+import routeHomepage from './routeHomepage';
+import { settings } from './settings';
+import simpleMenu from './simpleMenu';
+import siteMenu from './siteMenu';
+import subMenu from './subMenu';
+import tag from './tag';
 
 export const documentsWithI18n = {
   event,
@@ -33,7 +33,8 @@ export const documentsWithI18n = {
   newsroom,
   page,
   homePage,
-}
+  person,
+};
 export default {
   ...documentsWithI18n,
   assetFile,
@@ -52,4 +53,4 @@ export default {
   route,
   subMenu,
   settings,
-}
+};

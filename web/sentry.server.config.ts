@@ -30,7 +30,7 @@ isProd &&
     ignoreErrors: sentryIgnoreErrors,
     allowUrls: [allowUrlPattern],
     denyUrls: sentryDenyUrls,
-    beforeBreadcrumb(breadcrumb, hint) {
+    beforeBreadcrumb(breadcrumb) {
       return breadcrumb.category === 'ui.click' ? null : breadcrumb;
     },
     beforeSend: sentryBeforeSend,

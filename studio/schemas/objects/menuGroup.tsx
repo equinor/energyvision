@@ -1,13 +1,13 @@
-import { list } from '@equinor/eds-icons'
-import { EdsIcon } from '../../icons'
-import type { Rule } from 'sanity'
-import type { MenuLink } from './menuLink'
+import { list } from '@equinor/eds-icons';
+import type { Rule } from 'sanity';
+import { EdsIcon } from '../../icons';
+import type { MenuLink } from './menuLink';
 
 export type MenuGroup = {
-  _type: 'menuGroup'
-  label?: string
-  links?: MenuLink[]
-}
+  _type: 'menuGroup';
+  label?: string;
+  links?: MenuLink[];
+};
 
 export default {
   title: 'Menu group',
@@ -39,12 +39,12 @@ export default {
       links: 'links',
     },
     prepare(selection: { label: string; links: MenuLink[] }) {
-      const { label = 'Unlabeled group', links = [] } = selection
+      const { label = 'Unlabeled group', links = [] } = selection;
       return {
         title: label,
         subtitle: `Links: ${links.length}`,
         media: EdsIcon(list),
-      }
+      };
     },
   },
-}
+};

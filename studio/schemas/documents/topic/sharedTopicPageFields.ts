@@ -1,13 +1,13 @@
-import { Flags } from '../../../src/lib/datasetHelpers'
-import { RolesBasedArrayInput } from '../../components/RolesBasedArrayInput'
-import { defaultColors } from '../../defaultColors'
+import { Flags } from '../../../src/lib/datasetHelpers';
+import { RolesBasedArrayInput } from '../../components/RolesBasedArrayInput';
+import { defaultColors } from '../../defaultColors';
 
 export const seo = {
   title: 'Meta information',
   name: 'seo',
   type: 'titleAndMeta',
   fieldset: 'other',
-}
+};
 export const openGraphImage = {
   title: 'Open Graph Image',
   name: 'openGraphImage',
@@ -15,14 +15,14 @@ export const openGraphImage = {
   description:
     'You can override the hero image as the SoMe image by uploading another image here.',
   fieldset: 'other',
-}
+};
 
 export const stickyMenu = {
   name: 'stickyMenu',
   title: 'Sticky Menu',
   type: 'stickyMenu',
   fieldset: 'other',
-}
+};
 
 export const content = {
   name: 'content',
@@ -68,6 +68,7 @@ export const content = {
     { type: 'promotePeople', title: 'People promotion' },
     { type: 'promoteTopics', title: 'Topic page promotion' },
     Flags.HAS_NEWS && { type: 'promoteNews', title: 'News promotions' },
+    Flags.HAS_PEOPLE && { type: 'personList', title: 'Person list' },
     { type: 'pieChartBlock', title: 'Pie chart' },
     { type: 'lineChartBlock', title: 'Line chart' },
     { type: 'barChartBlock', title: 'Bar chart' },
@@ -75,7 +76,7 @@ export const content = {
     { type: 'promoteTopicsV2' },
     { type: 'promoteExternalLinkV2' },
     Flags.IS_DEV && { type: 'anchorSearch' },
-  ].filter(e => e),
+  ].filter((e) => e),
   components: {
     input: RolesBasedArrayInput,
   },
@@ -113,4 +114,4 @@ export const content = {
       ],
     },
   },
-}
+};

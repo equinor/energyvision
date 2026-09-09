@@ -1,30 +1,30 @@
-import type { Metadata } from 'next'
-import { type QueryParams, toPlainText } from 'next-sanity'
-import type { DefinedFetchType, LivePerspective } from 'next-sanity/live'
+import type { Metadata } from 'next';
+import { type QueryParams, toPlainText } from 'next-sanity';
+import type { DefinedFetchType, LivePerspective } from 'next-sanity/live';
 import {
   defaultLanguage,
   domain,
   languages,
   metaTitleSuffix,
-} from '@/languageConfig'
+} from '@/languageConfig';
 import {
   getIsoFromName,
   getLocaleFromIso,
   getLocaleFromName,
   getNameFromIso,
-} from '@/sanity/helpers/localization'
-import { getQueryFromSlug } from '@/sanity/helpers/queryFromSlug'
-import { resolveOpenGraphImage } from '@/sanity/lib/utils'
-import type { SeoData } from '@/types'
-import { isDateAfter } from '../../lib/helpers/dateUtilities'
-import { routeSanityFetch } from '../lib/fetch'
-import { contentQueryById, pageInfoById } from '../queries/contentById'
+} from '@/sanity/helpers/localization';
+import { getQueryFromSlug } from '@/sanity/helpers/queryFromSlug';
+import { resolveOpenGraphImage } from '@/sanity/lib/utils';
+import type { SeoData } from '@/types';
+import { isDateAfter } from '../../lib/helpers/dateUtilities';
+import { routeSanityFetch } from '../lib/fetch';
+import { contentQueryById, pageInfoById } from '../queries/contentById';
 import {
   allMagazineDocuments,
   getMagazineArticlesByTag,
-} from '../queries/magazine'
+} from '../queries/magazine';
 
-export type LocaleSlug = { lang: string; slug: string }
+export type LocaleSlug = { lang: string; slug: string };
 /**
  * Return translated sanity slugs to iso lang and prefixed joined slug
  */
@@ -32,11 +32,11 @@ const formatToValidPrefixedIsoSlugs = (
   slug: string | string[],
   slugs: LocaleSlug[] = [],
 ) => {
-  const validLanguages = languages.map(lang => lang.name)
+  const validLanguages = languages.map((lang) => lang.name);
 
   return (
     slugs
-      ?.filter(e => e)
+      ?.filter((e) => e)
       .reduce(function (result: LocaleSlug[], metaSlug: LocaleSlug) {
         if (validLanguages.includes(metaSlug.lang)) {
           result.push({
@@ -48,26 +48,26 @@ const formatToValidPrefixedIsoSlugs = (
                 : metaSlug.slug
                   ? metaSlug.slug
                   : '/',
-          })
+          });
         }
-        return result
+        return result;
       }, []) ?? [Array.isArray(slug) ? slug.join('/') : (slug ?? '/')]
-  )
-}
+  );
+};
 
 const getRelativeWithPrefixSlug = (slug: string | string[], locale: string) => {
-  const prefixLocale = getLocaleFromIso(locale)
+  const prefixLocale = getLocaleFromIso(locale);
   if (typeof slug === 'undefined' || slug === '') {
-    return `/${locale !== defaultLanguage.iso ? prefixLocale : ''}`
+    return `/${locale !== defaultLanguage.iso ? prefixLocale : ''}`;
   }
 
   // Catch all segment
   if (Array.isArray(slug)) {
-    return `/${locale !== defaultLanguage.iso ? `${prefixLocale}/` : ''}${slug.join('/')}`
+    return `/${locale !== defaultLanguage.iso ? `${prefixLocale}/` : ''}${slug.join('/')}`;
   }
   // next path folders
-  return `/${locale !== defaultLanguage.iso ? `${prefixLocale}/` : ''}${slug}`
-}
+  return `/${locale !== defaultLanguage.iso ? `${prefixLocale}/` : ''}${slug}`;
+};
 
 const generateAlternatesLinks = (
   // next slug string or string array
@@ -77,19 +77,19 @@ const generateAlternatesLinks = (
   //translations slugs formatted to lang iso, prefixed slug
   slugs: LocaleSlug[],
 ) => {
-  const canonicalSlug = `${domain}${getRelativeWithPrefixSlug(slug, locale)}`
-  let xDefaultSlug = canonicalSlug
+  const canonicalSlug = `${domain}${getRelativeWithPrefixSlug(slug, locale)}`;
+  let xDefaultSlug = canonicalSlug;
 
-  const alternateLinks: Record<string, string> = {}
-  slugs.forEach(translationSlug => {
+  const alternateLinks: Record<string, string> = {};
+  slugs.forEach((translationSlug) => {
     if (translationSlug.lang === defaultLanguage.iso) {
-      xDefaultSlug = `${domain}${translationSlug.slug}`
+      xDefaultSlug = `${domain}${translationSlug.slug}`;
     }
 
     Object.assign(alternateLinks, {
       [translationSlug.lang]: `${domain}${translationSlug.slug}`,
-    })
-  })
+    });
+  });
 
   return {
     canonical: canonicalSlug,
@@ -97,27 +97,27 @@ const generateAlternatesLinks = (
       ...alternateLinks,
       'x-default': xDefaultSlug,
     },
-  }
-}
+  };
+};
 
 export const constructSanityMetadata = (
   slug: string | string[],
   locale: string,
   metaData?: {
-    title: string
-    seoAndSome: SeoData
-    heroImage?: any
-    slugs: any
-    publishDateTime: any
-    updatedAt: any
+    title: string;
+    seoAndSome: SeoData;
+    heroImage?: any;
+    slugs: any;
+    publishDateTime: any;
+    updatedAt: any;
   },
 ): Metadata => {
-  const relativeSlug = getRelativeWithPrefixSlug(slug, locale)
-  const fullSlug = `${domain}${relativeSlug}`
+  const relativeSlug = getRelativeWithPrefixSlug(slug, locale);
+  const fullSlug = `${domain}${relativeSlug}`;
 
   if (!metaData) {
     if (process.env.NODE_ENV !== 'production') {
-      console.warn('[generateMetadata] metaData is null', { slug, locale })
+      console.warn('[generateMetadata] metaData is null', { slug, locale });
     }
     return {
       title: metaTitleSuffix,
@@ -132,7 +132,7 @@ export const constructSanityMetadata = (
         ...(locale === defaultLanguage.iso && { canonical: fullSlug }),
         languages: {},
       },
-    }
+    };
   }
 
   const {
@@ -142,17 +142,17 @@ export const constructSanityMetadata = (
     publishDateTime,
     updatedAt,
     slugs: langSlugs,
-  } = metaData
+  } = metaData;
 
-  const plainTitle = Array.isArray(title) ? toPlainText(title) : title
+  const plainTitle = Array.isArray(title) ? toPlainText(title) : title;
   const ogImage = resolveOpenGraphImage(
     seoAndSome?.openGraphImage ?? heroImage?.image,
-  )
-  const slugs = formatToValidPrefixedIsoSlugs(slug, langSlugs)
-  const alternates = generateAlternatesLinks(slug, locale, slugs)
+  );
+  const slugs = formatToValidPrefixedIsoSlugs(slug, langSlugs);
+  const alternates = generateAlternatesLinks(slug, locale, slugs);
   const modifiedDate = isDateAfter(publishDateTime, updatedAt)
     ? publishDateTime
-    : updatedAt
+    : updatedAt;
 
   return {
     title: `${seoAndSome?.documentTitle ?? plainTitle} - ${metaTitleSuffix}`,
@@ -169,26 +169,26 @@ export const constructSanityMetadata = (
       images: ogImage ? [ogImage] : [],
     },
     alternates,
-  }
-}
+  };
+};
 
 type Params = {
-  slug?: string | string[]
-  locale: string
-  tags?: string[]
-  fetch?: DefinedFetchType
+  slug?: string | string[];
+  locale: string;
+  tags?: string[];
+  fetch?: DefinedFetchType;
   searchParams?: {
-    [key: string]: string[] | string | undefined
-  }
-  perspective?: LivePerspective
-  stega?: boolean
-}
+    [key: string]: string[] | string | undefined;
+  };
+  perspective?: LivePerspective;
+  stega?: boolean;
+};
 
 function languagePrefixedSlug(
   slug: LocaleSlug | undefined,
 ): LocaleSlug | undefined {
   if (!slug) {
-    return slug
+    return slug;
   }
   return {
     slug:
@@ -196,7 +196,7 @@ function languagePrefixedSlug(
         ? `/${getLocaleFromName(slug.lang)}/${slug.slug}`
         : slug.slug,
     lang: getIsoFromName(slug.lang),
-  }
+  };
 }
 
 export async function getPage(params: Params) {
@@ -207,17 +207,17 @@ export async function getPage(params: Params) {
     fetch = routeSanityFetch,
     perspective,
     stega,
-  } = params
-  const tagParam = searchParams?.tag
+  } = params;
+  const tagParam = searchParams?.tag;
   const tag =
     typeof tagParam === 'string'
       ? tagParam
       : Array.isArray(tagParam)
         ? tagParam[0]
-        : undefined
-  let pageData = null
+        : undefined;
+  let pageData = null;
   if (slug?.[0]?.includes('preview')) {
-    const id = slug[1]
+    const id = slug[1];
 
     if (id) {
       const { data: draftInfo }: { data: any } = await fetch({
@@ -227,7 +227,7 @@ export async function getPage(params: Params) {
         },
         requestTag: 'preview',
         perspective,
-      })
+      });
       if (draftInfo?.lang) {
         const { data } = await fetch({
           query: contentQueryById,
@@ -238,14 +238,14 @@ export async function getPage(params: Params) {
           requestTag: 'preview',
           perspective,
           stega,
-        })
+        });
 
-        pageData = data
+        pageData = data;
       }
     }
   } else {
     const { query: pageQuery, queryParams: pageQueryParams } =
-      await getQueryFromSlug(slug, locale)
+      await getQueryFromSlug(slug, locale);
 
     const { data }: { data: any } = await fetch({
       query: pageQuery,
@@ -258,11 +258,11 @@ export async function getPage(params: Params) {
       requestTag: 'page-by-slug',
       perspective,
       stega,
-    })
-    pageData = data
+    });
+    pageData = data;
   }
 
-  let magazineArticles = null
+  let magazineArticles = null;
   if (pageData?.template === 'magazineIndex') {
     const { data: articles } = await fetch({
       query:
@@ -275,11 +275,11 @@ export async function getPage(params: Params) {
       } as QueryParams,
       tags: [`magazineIndex:${locale}`],
       requestTag: 'magazine-room',
-    })
-    magazineArticles = articles
+    });
+    magazineArticles = articles;
   }
 
-  const { stickyMenu, slugs = [], ...restPageData } = pageData || {}
+  const { stickyMenu, slugs = [], ...restPageData } = pageData || {};
 
   return {
     headerData: {
@@ -297,5 +297,5 @@ export async function getPage(params: Params) {
       }),
       ...restPageData,
     },
-  }
+  };
 }
