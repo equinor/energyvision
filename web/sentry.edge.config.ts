@@ -15,7 +15,7 @@ import {
 const isProd =
   process.env.NODE_ENV === 'production' &&
   dataset === 'global' &&
-  !process.env.RADIX_PUBLIC_DOMAIN_NAME?.includes('preprod');
+  process.env.RADIX_ENVIRONMENT !== 'preprod';
 
 isProd &&
   Sentry.init({
@@ -36,4 +36,6 @@ isProd &&
       return breadcrumb.category === 'ui.click' ? null : breadcrumb;
     },
     beforeSend: sentryBeforeSend,
+    // try to turn off max event listeners gzip error
+    skipOpenTelemetrySetup: true,
   });
