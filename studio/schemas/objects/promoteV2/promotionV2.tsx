@@ -40,7 +40,11 @@ export const PromotionLayoutInput = (props: PromotionLayoutInputProps) => {
   );
 
   return (
-    <Grid columns={schemaType?.options?.list?.length} rows={1} gap={2}>
+    <Grid
+      gridTemplateColumns={schemaType?.options?.list?.length}
+      gridTemplateRows={1}
+      gap={2}
+    >
       {schemaType?.options?.list?.map((option: any) => {
         return (
           <Card

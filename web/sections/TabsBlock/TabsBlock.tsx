@@ -1,45 +1,37 @@
-'use client'
-import { toPlainText } from '@portabletext/react'
-import type { PortableTextBlock } from '@portabletext/types'
-import { forwardRef, useId, useRef } from 'react'
-import { twMerge } from 'tailwind-merge'
-import { IFrame } from '@/core/IFrame/IFrame'
-import { Tabs } from '@/core/Tabs'
-import Blocks from '@/portableText/Blocks'
-import type { LayoutGrid } from '@/types'
-import type { TabItem, TabsEmbeddedVideosPanel } from './TabsBlock.types'
-import TabsInfoPanelItem from './TabsInfoPanelItem'
-import TabsKeyNumberItem from './TabsKeyNumberItem'
-import { getColorForTabsTheme } from './tabThemes'
+'use client';
+import { toPlainText } from '@portabletext/react';
+import type { PortableTextBlock } from '@portabletext/types';
+import { forwardRef, useId, useRef } from 'react';
+import { twMerge } from 'tailwind-merge';
+import { IFrame } from '@/core/IFrame/IFrame';
+import { Tabs } from '@/core/Tabs';
+import Blocks from '@/portableText/Blocks';
+import type { LayoutGrid } from '@/types';
+import type { TabItem, TabsEmbeddedVideosPanel } from './TabsBlock.types';
+import TabsInfoPanelItem from './TabsInfoPanelItem';
+import TabsKeyNumberItem from './TabsKeyNumberItem';
+import { getColorForTabsTheme } from './tabThemes';
 
-const { TabList, Tab, TabPanel } = Tabs
+const { TabList, Tab, TabPanel } = Tabs;
 
-const YOUTUBE_EMBED_BASE_URL = 'https://www.youtube.com/embed/'
-
-const getYoutubeEmbedUrl = (videoId?: string) => {
-  if (!videoId) return null
-
-  const normalizedVideoId = videoId.trim()
-  const isValidYoutubeId = /^[A-Za-z0-9_-]{11}$/.test(normalizedVideoId)
-
-  if (!isValidYoutubeId) return null
-
-  return `${YOUTUBE_EMBED_BASE_URL}${normalizedVideoId}`
-}
+const getEmbedUrl = (embedUrl?: string) => {
+  if (!embedUrl) return null;
+  return embedUrl.trim();
+};
 
 export type TabsBlockProps = {
-  title: PortableTextBlock[]
-  ingress: PortableTextBlock[]
+  title: PortableTextBlock[];
+  ingress: PortableTextBlock[];
   designOptions: {
-    theme: number
-  }
-  tabList: TabItem[]
-  id?: string
-  hideTitle?: boolean
-  anchor?: string
-  className?: string
-  layoutGrid?: LayoutGrid
-}
+    theme: number;
+  };
+  tabList: TabItem[];
+  id?: string;
+  hideTitle?: boolean;
+  anchor?: string;
+  className?: string;
+  layoutGrid?: LayoutGrid;
+};
 
 const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
   {
@@ -55,12 +47,12 @@ const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
   },
   ref,
 ) {
-  const theme = getColorForTabsTheme(designOptions?.theme ?? 0)
-  const headingId = useId()
-  const tabsListRef = useRef<HTMLDivElement>(null)
+  const theme = getColorForTabsTheme(designOptions?.theme ?? 0);
+  const headingId = useId();
+  const tabsListRef = useRef<HTMLDivElement>(null);
 
   //Select first items panel type and use for rest. Editors advised to use same type in studio
-  const tabPanelVariant = tabList?.[0]?.panel?.type
+  const tabPanelVariant = tabList?.[0]?.panel?.type;
 
   //Tabslist needs to span full width if one of these
   const hasFullWidthImage = tabList.some((tabItem: any) => {
@@ -68,28 +60,28 @@ const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
       tabItem.panel?.type === 'tabsInfoPanel' &&
       (tabItem.panel?.imageVariant === 'backgroundImage' ||
         tabItem.panel?.imageVariant === 'bannerImage')
-    )
-  })
+    );
+  });
   const getPaddingInfoPanel = () => {
     switch (layoutGrid) {
       case 'lg':
-        return `lg:mx-layout-lg`
+        return `lg:mx-layout-lg`;
       case 'md':
-        return `lg:mx-layout-md`
+        return `lg:mx-layout-md`;
       default:
-        return `lg:mx-layout-sm`
+        return `lg:mx-layout-sm`;
     }
-  }
+  };
   const getPaddingKeyNumbers = () => {
     switch (layoutGrid) {
       case 'sm':
-        return `lg:px-layout-sm`
+        return `lg:px-layout-sm`;
       case 'lg':
-        return `lg:px-layout-lg`
+        return `lg:px-layout-lg`;
       default:
-        return `lg:px-layout-md`
+        return `lg:px-layout-md`;
     }
-  }
+  };
 
   return (
     <div
@@ -125,7 +117,8 @@ const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
             tabPanelVariant === 'tabsInfoPanel' &&
               !hideTitle &&
               `lg:px-20 lg:pt-14`,
-            tabPanelVariant === 'tabsKeyNumbers' &&
+            (tabPanelVariant === 'tabsKeyNumbers' ||
+              tabPanelVariant === 'tabsEmbeddedVideosPanel') &&
               !hideTitle &&
               `lg:px-layout-lg`,
           )}
@@ -134,15 +127,16 @@ const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
             <Blocks
               id={headingId}
               value={title}
-              variant='h2'
+              variant="h2"
               className={`${hideTitle ? 'sr-only' : ''}`}
             />
           )}
-          {ingress && <Blocks variant='ingress' value={ingress} />}
+          {ingress && <Blocks variant="ingress" value={ingress} />}
         </div>
         <div
           className={twMerge(
-            tabPanelVariant === 'tabsKeyNumbers' &&
+            (tabPanelVariant === 'tabsKeyNumbers' ||
+              tabPanelVariant === 'tabsEmbeddedVideosPanel') &&
               `px-layout-sm ${getPaddingKeyNumbers()}`,
           )}
         >
@@ -175,7 +169,7 @@ const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
                     >
                       {tab.title}
                     </Tab>
-                  )
+                  );
                 })}
               </TabList>
               {tabList?.map((tabItem: TabItem, i: number) => {
@@ -188,7 +182,7 @@ const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
                       tabPanelVariant === 'tabsKeyNumbers' &&
                         'w-full pt-14 pb-page-content max-lg:px-layout-sm',
                       tabPanelVariant === 'tabsEmbeddedVideosPanel' &&
-                        'w-full pt-10 pb-page-content max-lg:px-layout-sm',
+                        'w-full pt-10 pb-page-content',
                     )}
                   >
                     {tabItem.panel?.type === 'tabsKeyNumbers' && (
@@ -213,14 +207,14 @@ const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
                                     description={tabsKeyNumber?.description}
                                   />
                                 </li>
-                              )
+                              );
                             })}
                           </ul>
                         )}
                         {tabItem?.panel?.disclaimer && (
                           <Blocks
                             value={tabItem?.panel?.disclaimer}
-                            className='pt-4 text-sm italic lg:px-10'
+                            className="pt-4 text-sm italic lg:px-10"
                           />
                         )}
                       </>
@@ -232,27 +226,25 @@ const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
                       />
                     )}
                     {tabItem.panel?.type === 'tabsEmbeddedVideosPanel' && (
-                      <ul className='flex flex-wrap gap-6 px-layout-md'>
+                      <ul className="flex flex-wrap gap-6">
                         {(tabItem.panel as TabsEmbeddedVideosPanel)?.items
-                          ?.filter(item => getYoutubeEmbedUrl(item?.videoId))
+                          ?.filter((item) => getEmbedUrl(item?.videoId))
                           .map((videoItem, videoIndex) => {
-                            const embedUrl = getYoutubeEmbedUrl(
-                              videoItem.videoId,
-                            )
+                            const embedUrl = getEmbedUrl(videoItem.videoId);
 
-                            if (!embedUrl) return null
+                            if (!embedUrl) return null;
 
                             const frameTitle =
                               videoItem.title && videoItem.title.length > 0
                                 ? toPlainText(videoItem.title)
-                                : `Embedded YouTube video ${videoIndex + 1}`
+                                : `Embedded video ${videoIndex + 1}`;
 
                             return (
                               <li
                                 key={videoItem.id}
-                                className='basis-full sm:basis-[calc(50%-0.75rem)] lg:basis-[calc(33.333%-1rem)]'
+                                className="basis-full sm:basis-[calc(50%-0.75rem)] lg:basis-[calc(33.333%-1rem)]"
                               >
-                                <div className='overflow-hidden rounded-card'>
+                                <div className="overflow-hidden rounded-card">
                                   <IFrame
                                     frameTitle={frameTitle}
                                     url={embedUrl}
@@ -260,30 +252,30 @@ const TabsBlock = forwardRef<HTMLDivElement, TabsBlockProps>(function TabsBlock(
                                       (tabItem.panel as TabsEmbeddedVideosPanel)
                                         ?.cookiePolicy || ['none']
                                     }
-                                    aspectRatio='16:9'
+                                    aspectRatio="16:9"
                                     hasSectionTitle={false}
                                   />
                                 </div>
                                 {videoItem.title && (
                                   <Blocks
                                     value={videoItem.title}
-                                    className='pt-3 text-sm'
+                                    className="pt-3 text-sm"
                                   />
                                 )}
                               </li>
-                            )
+                            );
                           })}
                       </ul>
                     )}
                   </TabPanel>
-                )
+                );
               })}
             </Tabs>
           )}
         </div>
       </div>
     </div>
-  )
-})
+  );
+});
 
-export default TabsBlock
+export default TabsBlock;

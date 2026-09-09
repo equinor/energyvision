@@ -1,10 +1,10 @@
-import { play_circle } from '@equinor/eds-icons'
-import type { PortableTextBlock, Rule } from 'sanity'
-import blocksToText from '../../../helpers/blocksToText'
-import { EdsIcon } from '../../../icons'
-import { CompactBlockEditor } from '../../components/CompactBlockEditor'
-import { configureBlockContent } from '../../editors'
-import { cookiePolicy } from '../iframe/sharedIframeFields'
+import { play_circle } from '@equinor/eds-icons';
+import type { PortableTextBlock, Rule } from 'sanity';
+import blocksToText from '../../../helpers/blocksToText';
+import { EdsIcon } from '../../../icons';
+import { CompactBlockEditor } from '../../components/CompactBlockEditor';
+import { configureBlockContent } from '../../editors';
+import { cookiePolicy } from '../iframe/sharedIframeFields';
 
 export default {
   name: 'tabsEmbeddedVideosPanel',
@@ -25,20 +25,9 @@ export default {
             {
               name: 'videoId',
               type: 'string',
-              title: 'YouTube video ID',
-              description: 'Paste only the video ID, not the full URL.',
-              validation: (Rule: Rule) =>
-                Rule.required().custom((value?: string) => {
-                  if (!value) return true
-
-                  const isValidYoutubeId = /^[A-Za-z0-9_-]{11}$/.test(value)
-
-                  if (!isValidYoutubeId) {
-                    return 'Enter a valid YouTube video ID (11 characters).'
-                  }
-
-                  return true
-                }),
+              title: 'Embed URL',
+              description:
+                'Paste the full embed URL (YouTube or Vimeo iframe src).',
             },
             {
               name: 'title',
@@ -58,13 +47,13 @@ export default {
               title = [],
               subtitle,
             }: {
-              title: PortableTextBlock[]
-              subtitle: string
+              title: PortableTextBlock[];
+              subtitle: string;
             }) {
               return {
                 title: blocksToText(title),
                 subtitle,
-              }
+              };
             },
           },
         },
@@ -81,7 +70,7 @@ export default {
         title: 'Embedded videos',
         subtitle: `${items.length} video${items.length === 1 ? '' : 's'}`,
         media: EdsIcon(play_circle),
-      }
+      };
     },
   },
-}
+};
