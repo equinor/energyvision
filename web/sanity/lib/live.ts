@@ -1,12 +1,13 @@
+import { draftMode } from 'next/dist/server/request/draft-mode';
 import type {
   ClientPerspective,
   ClientReturn,
   ContentSourceMap,
   QueryParams,
-} from 'next-sanity'
-import { type DefinedFetchType, defineLive } from 'next-sanity/live'
-import { client } from './client'
-import { token } from './token'
+} from 'next-sanity';
+import { defineLive, type LivePerspective } from 'next-sanity/live';
+import { client } from './client';
+import { token } from './token';
 
 export const { sanityFetch, SanityLive } = defineLive({
   client,
@@ -14,7 +15,7 @@ export const { sanityFetch, SanityLive } = defineLive({
   serverToken: token,
   // Required for stand-alone live previews, the token is only shared to the browser if it's a valid Next.js Draft Mode session
   browserToken: token,
-})
+});
 
 /**
  * To be removed when issue fixed
@@ -26,33 +27,47 @@ export const { sanityFetch, SanityLive } = defineLive({
 export type DefinedSanityFetchType = <
   const QueryString extends string,
 >(options: {
-  query: QueryString
-  params?: QueryParams | Promise<QueryParams>
+  query: QueryString;
+  params?: QueryParams | Promise<QueryParams>;
   /**
    * Add custom `next.tags` to the underlying fetch request.
    * @see https://nextjs.org/docs/app/api-reference/functions/fetch#optionsnexttags
    * This can be used in conjunction with custom fallback revalidation strategies, as well as with custom Server Actions that mutate data and want to render with fresh data right away (faster than the Live Event latency).
    * @defaultValue `['sanity']`
    */
-  tags?: string[]
-  perspective?: Exclude<ClientPerspective, 'raw'>
-  stega?: boolean
+  tags?: string[];
+  perspective?: Exclude<ClientPerspective, 'raw'>;
+  stega?: boolean;
   /**
    * @deprecated use `requestTag` instead
    */
-  tag?: never
+  tag?: never;
   /**
    * This request tag is used to identify the request when viewing request logs from your Sanity Content Lake.
    * @see https://www.sanity.io/docs/reference-api-request-tags
    * @defaultValue 'next-loader.fetch'
    */
-  requestTag?: string
+  requestTag?: string;
 }) => Promise<{
-  data: ClientReturn<QueryString>
-  sourceMap: ContentSourceMap | null
-  tags: string[]
-}>
+  data: ClientReturn<QueryString>;
+  sourceMap: ContentSourceMap | null;
+  tags: string[];
+}>;
 
-export const routeSanityFetch: DefinedFetchType = async query => {
-  return sanityFetch(query)
+export interface DynamicFetchOptions {
+  perspective: LivePerspective;
+  stega: boolean;
+}
+export async function getDynamicFetchOptions(searchParams: {
+  [key: string]: string | string[] | undefined;
+}): Promise<DynamicFetchOptions> {
+  const { isEnabled: isDraftMode } = await draftMode();
+  if (!isDraftMode) {
+    return { perspective: 'published', stega: false };
+  }
+  const studioPerspective = searchParams
+    ? (searchParams['sanity-preview-perspective'] as LivePerspective | 'drafts')
+    : 'drafts';
+  // if draft mode is enabled resolve the perspective from the url '
+  return { perspective: studioPerspective, stega: true };
 }

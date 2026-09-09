@@ -1,94 +1,115 @@
-import { TrashIcon } from '@sanity/icons'
-import { type ButtonTone, useToast } from '@sanity/ui'
-import { useCallback, useState } from 'react'
-import { type DocumentActionComponent, type SanityDocument, useClient } from 'sanity'
-import DeleteTranslationDialog from './components/DeleteTranslationDialog'
-import DeleteTranslationFooter from './components/DeleteTranslationFooter'
-import { useDocumentInternationalizationContext } from '@sanity/document-internationalization'
-import { apiVersion } from '../../sanity.client'
-import { defaultLanguage } from '../../languages'
-// eslint-disable-next-line import/namespace
-import { Patch, Transaction } from '@sanity/client'
+import { useDocumentInternationalizationContext } from '@sanity/document-internationalization';
+import { TrashIcon } from '@sanity/icons';
+import type { ButtonTone } from '@sanity/ui';
+import { useToast } from '@sanity/ui/toast';
+import { useCallback, useState } from 'react';
+import {
+  type DocumentActionComponent,
+  type SanityDocument,
+  useClient,
+} from 'sanity';
+import { defaultLanguage } from '../../languages';
+import { apiVersion } from '../../sanity.client';
+import DeleteTranslationDialog from './components/DeleteTranslationDialog';
+import DeleteTranslationFooter from './components/DeleteTranslationFooter';
 
-const TRANSLATIONS_ARRAY_NAME = 'translations'
+const TRANSLATIONS_ARRAY_NAME = 'translations';
 export const DeleteTranslationAction: DocumentActionComponent = (props) => {
-  const { languageField } = useDocumentInternationalizationContext()
+  const { languageField } = useDocumentInternationalizationContext();
 
-  const doc = props.draft || props.published
-  const documentLanguage = doc ? doc[languageField] : null
-  const isDefaultLanguageDocument = defaultLanguage.name === documentLanguage
+  const doc = props.draft || props.published;
+  const documentLanguage = doc ? doc[languageField] : null;
+  const isDefaultLanguageDocument = defaultLanguage.name === documentLanguage;
 
-  const { id: documentId } = props
-  const [isDialogOpen, setDialogOpen] = useState(false)
-  const [translations, setTranslations] = useState<SanityDocument[]>([])
-  const [hasOtherReferences, setHasOtherReferences] = useState<boolean>(false)
-  const onClose = useCallback(() => setDialogOpen(false), [])
+  const { id: documentId } = props;
+  const [isDialogOpen, setDialogOpen] = useState(false);
+  const [translations, setTranslations] = useState<SanityDocument[]>([]);
+  const [hasOtherReferences, setHasOtherReferences] = useState<boolean>(false);
+  const onClose = useCallback(() => setDialogOpen(false), []);
 
-  const toast = useToast()
-  const client = useClient({ apiVersion: apiVersion })
+  const toast = useToast();
+  const client = useClient({ apiVersion: apiVersion });
+  type ClientTransaction = ReturnType<typeof client.transaction>;
 
-  const unsetAndDeleteCurrentTranslation = (tx: Transaction) => {
-    //unset current translation reference from metadata
-    translations.forEach((translation) => {
-      tx.patch(translation._id, (patch: Patch) =>
-        patch.unset([`${TRANSLATIONS_ARRAY_NAME}[_key == "${documentLanguage}"]`]),
-      )
-    })
+  const unsetAndDeleteCurrentTranslation = useCallback(
+    (tx: ClientTransaction) => {
+      //unset current translation reference from metadata
+      translations.forEach((translation) => {
+        tx.patch(translation._id, (patch) =>
+          patch.unset([
+            `${TRANSLATIONS_ARRAY_NAME}[_key == "${documentLanguage}"]`,
+          ]),
+        );
+      });
 
-    // delete the current document
-    tx.delete(documentId)
-    tx.delete(`drafts.${documentId}`)
-  }
+      // delete the current document
+      tx.delete(documentId);
+      tx.delete(`drafts.${documentId}`);
+    },
+    [documentLanguage, documentId, translations],
+  );
 
-  const unsetAndDeleteDefaultWithMetaData = (tx: Transaction) => {
-    //unset translation references array in metadata
-    translations.forEach((translation) => {
-      tx.patch(translation._id, (patch) => patch.unset([TRANSLATIONS_ARRAY_NAME]))
-    })
+  const unsetAndDeleteDefaultWithMetaData = useCallback(
+    (tx: ClientTransaction) => {
+      //unset translation references array in metadata
+      translations.forEach((translation) => {
+        tx.patch(translation._id, (patch) =>
+          patch.unset([TRANSLATIONS_ARRAY_NAME]),
+        );
+      });
 
-    // delete each of the translations and delete metadata
-    if (translations.length > 0) {
-      translations.forEach((translation: any) => {
-        translation.translations.forEach((it: any) => {
-          tx.delete(it.id)
-          tx.delete(`drafts.${it.id}`)
-        })
-        tx.delete(translation._id)
-        // Shouldn't exist as this document type is in liveEdit
-        tx.delete(`drafts.${translation._id}`)
-      })
-    } else {
-      //simply a doc without metadata.. so delete it.
+      // delete each of the translations and delete metadata
+      if (translations.length > 0) {
+        translations.forEach((translation: any) => {
+          translation.translations.forEach((it: any) => {
+            tx.delete(it.id);
+            tx.delete(`drafts.${it.id}`);
+          });
+          tx.delete(translation._id);
+          // Shouldn't exist as this document type is in liveEdit
+          tx.delete(`drafts.${translation._id}`);
+        });
+      } else {
+        //simply a doc without metadata.. so delete it.
 
-      tx.delete(documentId)
-      tx.delete(`drafts.${documentId}`)
-    }
-  }
+        tx.delete(documentId);
+        tx.delete(`drafts.${documentId}`);
+      }
+    },
+    [documentId, translations],
+  );
   // Remove translation reference and delete document in one transaction
   const onProceed = useCallback(() => {
-    const tx = client.transaction()
+    const tx = client.transaction();
     if (isDefaultLanguageDocument) {
-      unsetAndDeleteDefaultWithMetaData(tx)
+      unsetAndDeleteDefaultWithMetaData(tx);
     } else {
-      unsetAndDeleteCurrentTranslation(tx)
+      unsetAndDeleteCurrentTranslation(tx);
     }
 
     tx.commit()
       .then(() => {
-        onClose()
+        onClose();
         toast.push({
           status: 'success',
           title: 'Deleted document and translations',
-        })
+        });
       })
       .catch((err) => {
         toast.push({
           status: 'error',
           title: 'Failed to delete document and translations',
           description: err.message,
-        })
-      })
-  }, [client, onClose, toast, isDefaultLanguageDocument])
+        });
+      });
+  }, [
+    client,
+    isDefaultLanguageDocument,
+    onClose,
+    toast,
+    unsetAndDeleteCurrentTranslation,
+    unsetAndDeleteDefaultWithMetaData,
+  ]);
 
   return {
     label: `Delete translation...`,
@@ -96,7 +117,7 @@ export const DeleteTranslationAction: DocumentActionComponent = (props) => {
     icon: TrashIcon,
     tone: 'critical' as ButtonTone,
     onHandle: () => {
-      setDialogOpen(true)
+      setDialogOpen(true);
     },
     dialog: isDialogOpen && {
       type: 'dialog',
@@ -119,5 +140,5 @@ export const DeleteTranslationAction: DocumentActionComponent = (props) => {
         />
       ),
     },
-  }
-}
+  };
+};

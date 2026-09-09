@@ -1,20 +1,24 @@
 //import translations from '../interface/translations.json'
-import { defaultLanguage } from '@/languageConfig'
-import { sanityFetch } from '@/sanity/lib/live'
-import formatTextSnippets from './formatTextSnippets'
-import { getNameFromIso } from './localization'
+
+import { defaultLanguage } from '@/languageConfig';
+import { routeSanityFetch } from '@/sanity/lib/fetch';
+import formatTextSnippets from './formatTextSnippets';
+import { getNameFromIso } from './localization';
 
 export default async (locale: string) => {
-  const { data: textSnippetsArray } = await sanityFetch({
+  'use cache';
+  const { data: textSnippetsArray } = await routeSanityFetch({
     query: `*[_type == "textSnippet"]`,
-  })
-  const textSnippetsData = formatTextSnippets(textSnippetsArray ?? [])
-  const lang = getNameFromIso(locale)
+    tags: ['textSnippet'],
+    requestTag: 'text-snippets',
+  });
+  const textSnippetsData = formatTextSnippets(textSnippetsArray ?? []);
+  const lang = getNameFromIso(locale);
 
   return {
     locale: locale,
     //@ts-ignore:config file, dunno why undefined possible
     defaultLocale: defaultLanguage.locale,
     messages: textSnippetsData[lang],
-  }
-}
+  };
+};

@@ -1,5 +1,5 @@
-import type { PortableTextInputProps } from 'sanity'
-import styled from 'styled-components'
+import type { PortableTextInputProps } from 'sanity';
+import styled from 'styled-components';
 
 export const CompactBlockEditor = (props: PortableTextInputProps) => {
   // check if validations exist
@@ -24,11 +24,11 @@ export const CompactBlockEditor = (props: PortableTextInputProps) => {
         initialActive: true,
       })}
     </Container>
-  )
-}
+  );
+};
 // add a specific height to the PTE without losing the ability to resize it
 const Container = styled.div`
   [data-testid="pt-editor"][data-fullscreen="false"] {
     height: 150px;
   }
-`
+`;

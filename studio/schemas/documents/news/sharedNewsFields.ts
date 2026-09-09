@@ -1,18 +1,18 @@
-import type { Rule, ValidationContext } from 'sanity'
-import { configureBlockContent } from '../../editors/blockContentType'
-import { validateCharCounterEditor } from '../../validations/validateCharCounterEditor'
+import type { Rule, ValidationContext } from 'sanity';
+import { configureBlockContent } from '../../editors/blockContentType';
+import { validateCharCounterEditor } from '../../validations/validateCharCounterEditor';
 
 const validateRelatedLinksTitle = (value: any, context: any) => {
-  const links = context.document.relatedLinks.links
+  const links = context.document.relatedLinks.links;
 
-  if (!links) return true
+  if (!links) return true;
 
   if (!value && links.length > 0) {
-    return 'A title for this component is required if links have been selected.'
+    return 'A title for this component is required if links have been selected.';
   }
 
-  return true
-}
+  return true;
+};
 
 export const isLive = {
   name: 'live',
@@ -22,13 +22,13 @@ export const isLive = {
   readOnly: true,
   description: `This can only be changed by clicking "Make Public" on a Published article`,
   hidden: true,
-}
+};
 
 export const seo = {
   name: 'seo',
   type: 'titleAndMeta',
   title: 'Meta information',
-}
+};
 
 export const openGraphImage = {
   name: 'openGraphImage',
@@ -36,7 +36,7 @@ export const openGraphImage = {
   title: 'Open Graph Image',
   description:
     'You can override the hero image as the SoMe image by uploading another image here.',
-}
+};
 
 export const title = {
   name: 'title',
@@ -46,12 +46,38 @@ export const title = {
     Rule.required(),
     Rule.max(100).warning('Title should be max 100 characters'),
   ],
-}
+};
 
-type PublishDateTimeType = {
-  customPublicationDate: boolean
-  publishDateTime: string
-}
+type PublishDateTimeParent = {
+  customPublicationDate?: boolean;
+};
+
+export const validatePublishDateTime = (
+  value: string | undefined,
+  customPublicationDate?: boolean,
+) => {
+  if (!customPublicationDate) return true;
+  if (!value) return 'Field is required';
+
+  const publishedDate = new Date(value);
+  if (Number.isNaN(publishedDate.getTime())) return 'Invalid date';
+
+  const today = new Date();
+  const publishedDateNoTime = new Date(
+    publishedDate.getFullYear(),
+    publishedDate.getMonth(),
+    publishedDate.getDate(),
+  );
+  const todayNoTime = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate(),
+  );
+
+  return publishedDateNoTime <= todayNoTime
+    ? true
+    : 'The date can’t be in the future';
+};
 
 export const publishDateTime = [
   {
@@ -70,42 +96,12 @@ export const publishDateTime = [
       timeStep: 1,
       calendarTodayLabel: 'Today',
     },
-    hidden: ({ parent }: { parent: PublishDateTimeType }) =>
-      !parent.customPublicationDate,
+    hidden: ({ parent }: { parent: PublishDateTimeParent }) =>
+      !parent?.customPublicationDate,
     validation: (Rule: Rule) =>
-      Rule.custom((value: PublishDateTimeType, context: ValidationContext) => {
-        const { parent } = context as { parent: PublishDateTimeType }
-        // If customPublicationDate is false, skip validation
-        if (!parent.customPublicationDate) {
-          return true
-        }
-
-        // If customPublicationDate is true and no value is provided, return an error
-        if (!value) {
-          return 'Field is required'
-        }
-
-        // Parse the selected publish date and today's date
-        const publishedDate = new Date(value.toString())
-        const today = new Date()
-
-        // Set time to 00:00:00 for both dates, so only the date part is compared
-        const publishedDateNoTime = new Date(
-          publishedDate.getFullYear(),
-          publishedDate.getMonth(),
-          publishedDate.getDate(),
-        )
-        const todayNoTime = new Date(
-          today.getFullYear(),
-          today.getMonth(),
-          today.getDate(),
-        )
-
-        // Allow publication if the selected date is today or in the past
-        if (publishedDateNoTime <= todayNoTime) {
-          return true // Valid date
-        }
-        return 'The date can’t be in the future'
+      Rule.custom((value: string | undefined, context: ValidationContext) => {
+        const { parent } = context as { parent: PublishDateTimeParent };
+        return validatePublishDateTime(value, parent?.customPublicationDate);
       }),
   },
   {
@@ -124,7 +120,7 @@ export const publishDateTime = [
     readOnly: true,
     hidden: true,
   },
-]
+];
 
 export const tags = {
   title: 'Topic tags',
@@ -138,7 +134,7 @@ export const tags = {
       options: { disableNew: true },
     },
   ],
-}
+};
 
 export const countryTags = {
   title: 'Country tags',
@@ -153,7 +149,7 @@ export const countryTags = {
       options: { disableNew: true },
     },
   ],
-}
+};
 
 export const subscriptionType = {
   title: 'News Subscription Type',
@@ -169,7 +165,7 @@ export const subscriptionType = {
     ],
     layout: 'dropdown',
   },
-}
+};
 
 export const newsSlugField = {
   name: 'newsSlug',
@@ -179,14 +175,14 @@ export const newsSlugField = {
   description:
     'The unique part of the URL for this topic page. Should probably be something like the page title.',
   // validation: (Rule) => Rule.max(200),
-}
+};
 
 export const heroImage = {
   name: 'heroImage',
   title: 'Hero image',
   type: 'imageWithAltAndCaption',
   validation: (Rule: Rule) => Rule.required(),
-}
+};
 
 export const ingress = {
   name: 'ingress',
@@ -197,7 +193,7 @@ export const ingress = {
   of: [configureBlockContent({ variant: 'ingress' })],
   validation: (Rule: Rule) =>
     Rule.custom((value: any) => validateCharCounterEditor(value, 400)),
-}
+};
 
 export const content = {
   name: 'content',
@@ -212,11 +208,11 @@ export const content = {
   validation: (Rule: Rule) =>
     Rule.custom((value: any) => {
       if (!value || value.length === 0) {
-        return 'Required'
+        return 'Required';
       }
-      return true
+      return true;
     }),
-}
+};
 
 export const iframe = {
   title: 'IFrame',
@@ -228,7 +224,7 @@ export const iframe = {
     collapsible: true,
     collapsed: true,
   },
-}
+};
 
 export const relatedLinks = {
   name: 'relatedLinks',
@@ -251,9 +247,9 @@ export const relatedLinks = {
       type: 'relatedLinks',
     },
   ],
-}
+};
 
 export const excludeFromSearch = {
   type: 'excludeFromSearch',
   name: 'excludeFromSearch',
-}
+};

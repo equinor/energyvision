@@ -1,15 +1,15 @@
-import { MenuIcon } from '../../../../icons'
+import { MenuIcon } from '../../../../icons';
 // eslint-disable-next-line import/no-unresolved
-import flags from '../../../../icons/countries'
-import { languages } from '../../../../languages'
-import { Flags } from '../../datasetHelpers'
+import flags from '../../../../icons/countries';
+import { languages } from '../../../../languages';
+import { Flags } from '../../datasetHelpers';
 
-const menuId = lang => {
+const menuId = (lang) => {
   if (Flags.HAS_FANCY_MENU) {
-    return lang.id + '-menu'
+    return lang.id + '-menu';
   }
-  return lang.id + '-simple-menu'
-}
+  return lang.id + '-simple-menu';
+};
 
 const getMenuListItems = (S, lang) => {
   const mainMenu = S.listItem({
@@ -23,9 +23,9 @@ const getMenuListItems = (S, lang) => {
           isoCode: `${lang.name}`,
         },
       )
-        .documentId(menuId(lang))
+        .id(menuId(lang))
         .title(`${lang.title} site menu`),
-  })
+  });
 
   const subMenu = S.listItem({
     title: 'Sub menus',
@@ -40,13 +40,13 @@ const getMenuListItems = (S, lang) => {
             isoCode: `${lang.name}`,
           }),
         ]),
-  })
+  });
 
-  return Flags.HAS_FANCY_MENU ? [mainMenu, subMenu] : [mainMenu]
-}
+  return Flags.HAS_FANCY_MENU ? [mainMenu, subMenu] : [mainMenu];
+};
 
-const menus = S =>
-  languages.map(lang =>
+const menus = (S) =>
+  languages.map((lang) =>
     S.listItem({
       title: `${lang.title} menu`,
       id: `menu-${lang.id}`,
@@ -57,10 +57,10 @@ const menus = S =>
           items: getMenuListItems(S, lang),
         }),
     }),
-  )
+  );
 
-export const Menu = S =>
+export const Menu = (S) =>
   S.listItem()
     .title('Menu')
     .icon(MenuIcon)
-    .child(S.list('menu').id('menu').title('Menus').items(menus(S)))
+    .child(S.list('menu').id('menu').title('Menus').items(menus(S)));

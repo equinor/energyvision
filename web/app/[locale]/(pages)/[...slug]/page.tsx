@@ -1,133 +1,172 @@
-import { magazineSlug, newsSlug } from '@energyvision/shared/satelliteConfig'
-import { stegaClean } from '@sanity/client/stega'
-import type { Metadata } from 'next'
-import dynamic from 'next/dynamic'
-import { draftMode } from 'next/headers'
-import { notFound } from 'next/navigation'
-import { getLocale } from 'next-intl/server'
-import { decodeSlugs } from '@/lib/helpers/getFullUrl'
-import { Flags } from '@/sanity/helpers/datasetHelpers'
-import { getNameFromIso } from '@/sanity/helpers/localization'
-import { routeSanityFetch } from '@/sanity/lib/live'
-import { constructSanityMetadata, getPage } from '@/sanity/pages/utils'
-import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu'
+import { magazineSlug, newsSlug } from '@energyvision/shared/satelliteConfig';
+import { stegaClean } from '@sanity/client/stega';
+import type { Metadata } from 'next';
+import dynamic from 'next/dynamic';
+import { draftMode } from 'next/headers';
+import { notFound } from 'next/navigation';
+import { getLocale } from 'next-intl/server';
+import { decodeSlugs } from '@/lib/helpers/getFullUrl';
+import { Flags } from '@/sanity/helpers/datasetHelpers';
+import { getNameFromIso } from '@/sanity/helpers/localization';
+import { routeSanityFetch, sanityFetchMetadata } from '@/sanity/lib/fetch';
+import { getDynamicFetchOptions } from '@/sanity/lib/live';
+import { constructSanityMetadata, getPage } from '@/sanity/pages/utils';
+import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu';
 import {
   docWithSlugMetaQuery,
   magazineroomMetaQuery,
   pageMetaQuery,
-} from '@/sanity/queries/metaData'
-import { simpleMenuQuery } from '@/sanity/queries/simpleMenu'
-import Header from '@/sections/Header/Header'
+} from '@/sanity/queries/metaData';
+import { simpleMenuQuery } from '@/sanity/queries/simpleMenu';
+import Header from '@/sections/Header/Header';
 
 type Props = {
-  params: Promise<{ slug: string[]; locale: string }>
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
-}
-const MagazinePage = dynamic(() => import('@/templates/magazine/MagazinePage'))
-const EventPage = dynamic(() => import('@/templates/event/Event'))
-const NewsPage = dynamic(() => import('@/templates/news/News'))
-const TopicPage = dynamic(() => import('@/templates/topic/TopicPage'))
-const MagazineRoom = dynamic(() => import('@/templates/magazine/Magazineroom'))
+  params: Promise<{ slug: string[]; locale: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+};
+
+const MagazinePage = dynamic(() => import('@/templates/magazine/MagazinePage'));
+const EventPage = dynamic(() => import('@/templates/event/Event'));
+const NewsPage = dynamic(() => import('@/templates/news/News'));
+const TopicPage = dynamic(() => import('@/templates/topic/TopicPage'));
+const MagazineRoom = dynamic(() => import('@/templates/magazine/Magazineroom'));
 
 export async function generateMetadata({
   params,
 }: PageProps<'/[locale]/[...slug]'>): Promise<Metadata> {
   //array, separated by /. e.g. [news, last slug]
-  const { slug: encodedSlug } = await params
-  const locale = await getLocale()
-  const slug = decodeSlugs(encodedSlug) as string[]
+  const { slug: encodedSlug, locale } = await params;
+  const slug = decodeSlugs(encodedSlug) as string[];
 
-  const sanityLang = getNameFromIso(locale)
+  const sanityLang = getNameFromIso(locale);
   //news, magazinepage has slug in document
-  const isNewsPage = slug[0] === newsSlug[sanityLang] && slug?.length > 1
+  const isNewsPage = slug[0] === newsSlug[sanityLang] && slug?.length > 1;
   const isMagazineRoom =
-    slug?.length === 1 && slug[0] === magazineSlug[sanityLang]
+    slug?.length === 1 && slug[0] === magazineSlug[sanityLang];
   const isNewsRoom =
-    slug?.length === 1 && slug[0] === newsSlug[sanityLang] && Flags.HAS_NEWSROOM
+    slug?.length === 1 &&
+    slug[0] === newsSlug[sanityLang] &&
+    Flags.HAS_NEWSROOM;
 
   const isMagazinePage =
-    slug?.length > 1 && slug[0] === magazineSlug[sanityLang]
-  let type = 'news'
+    slug?.length > 1 && slug[0] === magazineSlug[sanityLang];
+  let type = 'news';
   if (isMagazineRoom || isMagazinePage) {
-    type = isMagazineRoom ? 'magazineIndex' : 'magazine'
+    type = isMagazineRoom ? 'magazineIndex' : 'magazine';
   }
-  let query = pageMetaQuery
+  let query = pageMetaQuery;
   if (isNewsPage || isMagazinePage || isNewsRoom) {
-    query = docWithSlugMetaQuery
+    query = docWithSlugMetaQuery;
   }
   if (isMagazineRoom) {
-    query = magazineroomMetaQuery
+    query = magazineroomMetaQuery;
   }
 
-  const { data: metaData }: { data: any } = await routeSanityFetch({
+  const { data: metaData }: { data: any } = await sanityFetchMetadata({
     query,
     params: {
       lang: sanityLang,
       slug: `/${slug.join('/')}`,
       ...((isNewsPage || isMagazineRoom || isMagazinePage) && { type }),
     },
+    perspective: 'published',
     stega: false,
+    tags: [`page:/${slug.join('/')}`],
     requestTag: 'page-meta',
-  })
+  });
 
-  return constructSanityMetadata(slug, locale, metaData)
+  return constructSanityMetadata(slug, locale, metaData);
 }
 
 export default async function Page({ params, searchParams }: Props) {
-  const { slug, locale } = await params
-  const resolvedSearchParams = await searchParams
+  const resolvedSearchParams = await searchParams;
+  const dynamic = await getDynamicFetchOptions(resolvedSearchParams);
+  const { slug } = await params;
+
+  return (
+    <>
+      {/*getTemplate()*/}
+      <CachedContent
+        slug={slug}
+        searchParams={resolvedSearchParams}
+        dynamic={dynamic}
+      />
+    </>
+  );
+}
+
+// Cached (performs sanityFetch)
+async function CachedContent({
+  slug,
+  searchParams,
+  dynamic,
+}: {
+  slug: string | string[];
+  dynamic: Awaited<ReturnType<typeof getDynamicFetchOptions>>;
+  searchParams: { [key: string]: string[] | string | undefined };
+}) {
+  'use cache';
+  const locale = await getLocale();
+
   /*   const isInPresentationToolContext =
     (await cookies()).get('preview-fetch-dest')?.value === 'iframe' */
-  const { isEnabled: isDraftMode } = await draftMode()
-  let pageContent = null
+  const { isEnabled: isDraftMode } = await draftMode();
+  let pageContent = null;
   const [siteMenuResult, pageResults] = await Promise.all([
     routeSanityFetch({
       query: Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery,
       params: {
         lang: getNameFromIso(locale) ?? 'en_GB',
       },
+      tags: [`siteMenu:${locale}`],
+      requestTag: 'site-menu',
+      ...dynamic,
     }),
     getPage({
       slug: decodeSlugs(slug),
       locale,
-      searchParams: resolvedSearchParams,
+      searchParams: searchParams,
+      fetch: routeSanityFetch,
+      ...dynamic,
+      stega: false,
+      tags: [`page:/${Array.isArray(slug) ? slug.join('/') : slug}`],
     }),
-  ])
-  pageContent = pageResults
+  ]);
+  pageContent = pageResults;
 
   if (isDraftMode) {
     //Later when inside presentation tool, cant clea globally as it doesnt work with visual editing,
     // must filter props together with visual editing,but is a big job.
-    pageContent = stegaClean(pageResults)
+    pageContent = stegaClean(pageResults);
   }
 
-  const { headerData, pageData } = pageContent
-  const { data: siteMenuData } = siteMenuResult || {}
-  if (Object.keys(pageData).length === 0) notFound()
+  const { headerData, pageData } = pageContent;
+  const { data: siteMenuData } = siteMenuResult || {};
+  if (Object.keys(pageData).length === 0) notFound();
 
-  const template = pageData?.template
+  const template = pageData?.template;
   if (!template || typeof template === 'undefined')
-    console.warn('Missing template for', pageData?.slug)
+    console.warn('Missing template for', pageData?.slug);
 
   const getTemplate = () => {
     switch (template) {
       case 'event':
-        return <EventPage data={pageData} />
+        return <EventPage data={pageData} />;
       case 'news':
       case 'localNews':
-        return <NewsPage {...pageData} />
+        return <NewsPage {...pageData} />;
       case 'magazine':
-        return <MagazinePage {...pageData} />
+        return <MagazinePage {...pageData} />;
       case 'magazineIndex':
-        return <MagazineRoom {...pageData} />
+        return <MagazineRoom {...pageData} />;
       default:
-        return <TopicPage {...pageData} />
+        return <TopicPage {...pageData} />;
     }
-  }
+  };
   return (
     <>
       <Header siteMenuData={siteMenuData} headerData={headerData} />
-      {getTemplate()}
+      <article>{getTemplate()}</article>
     </>
-  )
+  );
 }
