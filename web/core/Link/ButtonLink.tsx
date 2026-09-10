@@ -17,6 +17,7 @@ export const ButtonLink = ({
   variant = 'contained',
   className = '',
   href = '',
+  prefetch,
   onClick,
   'aria-label': ariaLabel,
   'aria-expanded': ariaExpanded,
@@ -35,6 +36,7 @@ export const ButtonLink = ({
       ref={ref}
       type={type}
       href={href}
+      prefetch={prefetch}
       onClick={onClick}
       aria-label={ariaLabel}
       aria-expanded={ariaExpanded}
