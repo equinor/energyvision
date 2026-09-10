@@ -1,6 +1,4 @@
-'use client'
-import { Suspense } from 'react'
-import { Search } from '@/sections/searchBlocks/Search'
+import { Search } from '@/sections/searchBlocks/Search';
 
 /*export async function generateStaticParams() {
   return Flags.HAS_SEARCH ? [{ locale: 'nb-NO' }, { locale: 'en-GB' }] : []
@@ -37,9 +35,5 @@ import { Search } from '@/sections/searchBlocks/Search'
 } */
 
 export default function Page() {
-  return (
-    <Suspense fallback={<div>Loading Search Engine...</div>}>
-      <Search />
-    </Suspense>
-  )
+  return <Search />;
 }
