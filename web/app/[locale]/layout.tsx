@@ -111,7 +111,7 @@ async function CachedContent({
   dynamic: Awaited<ReturnType<typeof getDynamicFetchOptions>>;
   children: React.ReactNode;
 }) {
-  'use cache';
+  'use cache: remote';
   const locale = await getLocale();
   const queryParams = {
     lang: getNameFromIso(locale) ?? 'en_GB',

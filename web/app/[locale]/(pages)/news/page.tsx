@@ -54,7 +54,7 @@ export async function generateMetadata(): Promise<Metadata> {
 const getInitialResponse =
   // this gets revalidated by path
   async (locale: string) => {
-    'use cache';
+    'use cache: remote';
     cacheLife('max');
     cacheTag('newsroom');
     const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev';
@@ -94,7 +94,7 @@ async function CachedNewsroomPage({
 }: {
   dynamic?: Awaited<ReturnType<typeof getDynamicFetchOptions>>;
 }) {
-  'use cache';
+  'use cache: remote';
 
   const locale = await getLocale();
 
