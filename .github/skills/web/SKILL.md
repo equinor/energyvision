@@ -66,3 +66,20 @@ You are an expert coding assistant tasked with integrating, maintaining, and deb
   - **Secrets Management:** Treat the Friendly Captcha API secret key as highly sensitive. Reject any code generations that attempt to commit raw keys to git.
 - **Content Security Policy (CSP):** Ensure any suggested CSP headers explicitly allow connectivity and script execution for `*.friendlycaptcha.com`.
 - **EU Data Isolation:** If the project configuration flags strict EU compliance, route all widget and server validation requests through the dedicated EU endpoint (`*.frcaptcha.com`).
+
+
+## Flag These Patterns
+
+If found in manually written code, inform the user and suggest refactor:
+- `useEffect` used for derived state.
+- `any` types.
+- `@ts-ignore` / `@ts-expect-error` without justification.
+- Mirroring props into state without explicit reason.
+- Duplicate state representing the same domain data in multiple places.
+- Missing cleanup in subscription/fetch Effects.
+- State updates during render without guards.
+- Oversized god-components that should be split.
+- `unknown` used where a concrete type is known or derivable.
+- `Record<string, unknown>` used instead of a proper type definition.
+- Type assertions (`as`) used without a preceding runtime check.
+- Components exceeding ~200 lines without clear justification.
