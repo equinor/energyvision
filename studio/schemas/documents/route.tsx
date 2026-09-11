@@ -1,21 +1,22 @@
-import { library_books } from '@equinor/eds-icons'
+import { library_books } from '@equinor/eds-icons';
 // eslint-disable-next-line import/namespace
-import type { SanityClient, SanityDocument } from '@sanity/client'
-import slugify from '@sindresorhus/slugify'
-import { CiRoute, CiWarning } from 'react-icons/ci'
-import { MdOutlineEvent } from 'react-icons/md'
-import type {
-  Reference,
-  Rule,
-  SlugParent,
-  SlugSchemaType,
-  SlugSourceContext,
-} from 'sanity'
-import blocksToText from '@/helpers/blocksToText'
-import { EdsIcon } from '../../icons'
-import { Flags } from '../../src/lib/datasetHelpers'
-import SlugInput from '../components/SlugInput'
-import { withSlugValidation } from '../validations/validateSlug'
+import type { SanityClient, SanityDocument } from '@sanity/client';
+import slugify from '@sindresorhus/slugify';
+import { CiRoute, CiWarning } from 'react-icons/ci';
+import { MdOutlineEvent } from 'react-icons/md';
+import {
+  defineField,
+  type Reference,
+  type Rule,
+  type SlugParent,
+  type SlugSchemaType,
+  type SlugSourceContext,
+} from 'sanity';
+import blocksToText from '@/helpers/blocksToText';
+import { EdsIcon } from '../../icons';
+import { Flags } from '../../src/lib/datasetHelpers';
+import SlugInput from '../components/SlugInput';
+import { withSlugValidation } from '../validations/validateSlug';
 
 export default (isoCode: string, title: string) => {
   return {
@@ -48,8 +49,8 @@ export default (isoCode: string, title: string) => {
           },
           Flags.HAS_EVENT && {
             type: 'event',
-          }
-        ].filter(e => e),
+          },
+        ].filter((e) => e),
         options: {
           filter: 'lang == $lang',
           filterParams: { lang: `${isoCode}` },
@@ -73,18 +74,18 @@ export default (isoCode: string, title: string) => {
           sort: [{ direction: 'desc', field: '_updatedAt' }],
         },
       },
-      {
+      defineField({
         name: 'topicSlug',
         title: 'Topic slug',
         type: 'string',
-
         placeholder: 'For example "Experienced professionals"',
         description:
           'The unique part of the URL for this page. Should probably be something like the page title.',
         // validation: (Rule) => Rule.max(200),
         fieldset: 'slug',
-      },
-      {
+        options: { search: { weight: 10 } },
+      }),
+      defineField({
         title: 'Complete URL for this page',
         name: 'slug',
         type: 'slug',
@@ -94,27 +95,30 @@ export default (isoCode: string, title: string) => {
         },
         options: withSlugValidation({
           source: (doc: SanityDocument) => slugify(doc.topicSlug),
+          search: { weight: 5 },
           slugify: async (
             input: string,
             _schemaType: SlugSchemaType,
             context: SlugSourceContext & { client: SanityClient },
           ) => {
-            const { client, parent } = context
-            const document = parent as SlugParent & { parent: Reference }
-            const refId = document.parent?._ref
+            const { client, parent } = context;
+            const document = parent as SlugParent & { parent: Reference };
+            const refId = document.parent?._ref;
 
             if (refId) {
               return client
                 .fetch(/* groq */ `*[_id == $refId][0].slug.current`, {
                   refId: refId,
                 })
-                .then((parentSlug: string) => `${parentSlug}/${slugify(input)}`)
+                .then(
+                  (parentSlug: string) => `${parentSlug}/${slugify(input)}`,
+                );
             }
-            return `/${slugify(input)}`
+            return `/${slugify(input)}`;
           },
         }),
         validation: (Rule: Rule) => Rule.required(),
-      },
+      }),
       {
         name: 'breadcrumbs',
         type: 'breadcrumbs',
@@ -153,28 +157,28 @@ export default (isoCode: string, title: string) => {
         type: 'content._type',
       },
       prepare(selection: any) {
-        const { slug, media, eventDate, title: contentTitle, type } = selection
+        const { slug, media, eventDate, title: contentTitle, type } = selection;
 
         const title =
-          (contentTitle && blocksToText(contentTitle)) ?? 'Missing content'
+          (contentTitle && blocksToText(contentTitle)) ?? 'Missing content';
 
-        const withoutParent = slug ? slug.split('/').at(-1) : ''
-        let subTitle = 'Missing route'
+        const withoutParent = slug ? slug.split('/').at(-1) : '';
+        let subTitle = 'Missing route';
         if (slug) {
-          subTitle = withoutParent
+          subTitle = withoutParent;
         }
         const thumbnail = media
           ? media
           : eventDate || type === 'event'
             ? MdOutlineEvent
-            : CiRoute
+            : CiRoute;
 
         return {
           title: title,
           subtitle: '/' + subTitle,
           media: !slug ? CiWarning : thumbnail,
-        }
+        };
       },
     },
-  }
-}
+  };
+};
