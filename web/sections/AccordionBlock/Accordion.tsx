@@ -22,7 +22,7 @@ const Accordion = ({ data, id, hasSectionTitle = true }: AccordionProps) => {
         return (
           <Item key={id} value={id}>
             <Header hasSectionTitle={hasSectionTitle}>{itemTitle}</Header>
-            <Content>
+            <Content forceMount>
               {image?.asset && (
                 <Image
                   grid='xs'
