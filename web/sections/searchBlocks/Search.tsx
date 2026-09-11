@@ -33,6 +33,7 @@ const queriedSearchClient: SearchClient = {
     return searchClient.search(requests);
   },
 };
+
 export function Search() {
   const intl = useTranslations();
   const locale = useLocale();

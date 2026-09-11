@@ -5,12 +5,15 @@ import { useTranslations } from 'next-intl';
 import {
   type ChangeEvent,
   type ComponentProps,
+  useEffect,
   useId,
   useRef,
   useState,
 } from 'react';
 import { type UseSearchBoxProps, useSearchBox } from 'react-instantsearch';
 import { twMerge } from 'tailwind-merge';
+
+const SEARCH_DEBOUNCE_MS = 300;
 
 type Variants = 'default' | 'inverted';
 export type SearchBoxProps = {
@@ -45,9 +48,15 @@ export function SearchBox({
   const { query, refine, clear } = useSearchBox({ ...rest, queryHook });
   const [value, setValue] = useState(query);
   const inputRef = useRef<HTMLInputElement>(null);
+  const debounceTimeoutRef = useRef<ReturnType<typeof setTimeout>>(undefined);
   const searchId = useId();
 
+  useEffect(() => {
+    return () => clearTimeout(debounceTimeoutRef.current);
+  }, []);
+
   function handleReset() {
+    clearTimeout(debounceTimeoutRef.current);
     setValue('');
     clear();
   }
@@ -55,6 +64,7 @@ export function SearchBox({
   function onSubmit(event: React.FormEvent) {
     event.preventDefault();
     event.stopPropagation();
+    clearTimeout(debounceTimeoutRef.current);
     const trimmedValue = value.trim();
     if (!trimmedValue) {
       clear();
@@ -64,7 +74,19 @@ export function SearchBox({
   }
 
   function onChange(event: ChangeEvent<HTMLInputElement>) {
-    setValue(event.currentTarget.value);
+    const nextValue = event.currentTarget.value;
+    setValue(nextValue);
+    clearTimeout(debounceTimeoutRef.current);
+
+    const trimmedValue = nextValue.trim();
+    if (!trimmedValue) {
+      clear();
+      return;
+    }
+    // Only query Algolia once the user pauses typing a non-empty value
+    debounceTimeoutRef.current = setTimeout(() => {
+      refine(trimmedValue);
+    }, SEARCH_DEBOUNCE_MS);
   }
 
   const inputVariantClassName = {
