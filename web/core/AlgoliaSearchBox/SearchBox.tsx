@@ -90,10 +90,9 @@ export function SearchBox({
   }
 
   const inputVariantClassName = {
-    default:
-      'text-slate-80 focus-visible:envis-outline dark:focus-visible:envis-outline-invert',
+    default: 'text-slate-80',
     inverted:
-      'text-white-100 border-y border-l border-white-100 bg-slate-blue-95 focus-visible:envis-outline-invert',
+      'text-white-100 border-y border-l border-white-100 bg-slate-blue-95',
   };
   const resetVariantClassName = {
     default: 'text-slate-80 hover:bg-grey-20 focus-visible:envis-outline',
@@ -101,10 +100,15 @@ export function SearchBox({
       'text-white-100 hover:bg-white-100 hover:text-slate-blue-95 focus-visible:envis-outline-invert',
   };
   const submitVariantClassName = {
-    default:
-      'bg-norwegian-woods-70 text-slate-80 hover:bg-norwegian-woods-60 focus-visible:envis-outline dark:focus-visible:envis-outline-invert',
+    default: 'bg-norwegian-woods-70 text-slate-80 hover:bg-norwegian-woods-60',
     inverted:
-      'bg-white-100 text-slate-blue-95 hover:bg-white-100/40 hover:text-white-100 focus-visible:envis-outline-invert',
+      'bg-white-100 text-slate-blue-95 hover:bg-white-100/40 hover:text-white-100',
+  };
+  const searchWrapperVariantClassName = {
+    default:
+      '[&:has(input:focus-visible):not(:has(:active))]:envis-outline [&:has(button[type=submit]:focus-visible):not(:has(:active))]:envis-outline dark:[&:has(input:focus-visible):not(:has(:active))]:envis-outline-invert dark:[&:has(button[type=submit]:focus-visible):not(:has(:active))]:envis-outline-invert',
+    inverted:
+      '[&:has(input:focus-visible):not(:has(:active))]:envis-outline-invert [&:has(button[type=submit]:focus-visible):not(:has(:active))]:envis-outline-invert',
   };
 
   return (
@@ -132,52 +136,57 @@ export function SearchBox({
         </label>
       )}
       <div
-        className={`${label ? 'row-start-2 row-end-2' : ''} relative flex items-center`}
-      >
-        <input
-          {...(!label && {
-            'aria-label': intl('search'),
-          })}
-          ref={inputRef}
-          id={searchId}
-          autoComplete="off"
-          autoCorrect="off"
-          autoCapitalize="off"
-          //eslint-disable-next-line jsx-a11y/no-autofocus
-          // biome-ignore lint/a11y/noAutofocus: the search input is the only interactive element on the search page
-          autoFocus={true}
-          placeholder={placeholder ?? intl('search')}
-          spellCheck={false}
-          maxLength={512}
-          type="search"
-          value={value}
-          onChange={onChange}
-          className={twMerge(
-            `grow rounded-s-xs rounded-e-none bg-white-100 py-4 pr-12 pl-6 text-white-100 focus:outline-hidden ${inputVariantClassName[variant]} `,
-            className,
-          )}
-        />
-        <button
-          type="reset"
-          aria-label={intl('search_reset')}
-          className={twMerge(
-            `${value.length === 0 ? 'hidden' : 'flex'} absolute right-2 size-8 items-center justify-center rounded-full focus:outline-hidden ${resetVariantClassName[variant]}`,
-            resetClassName,
-          )}
-        >
-          <Icon size={24} data={close} />
-        </button>
-      </div>
-      <button
-        type="submit"
-        aria-label={intl('search_submit')}
         className={twMerge(
-          `h-inherit rounded-e-xs px-4 py-3 focus:outline-hidden ${label ? 'row-start-2 row-end-2' : ''} ${submitVariantClassName[variant]} `,
-          submitClassName,
+          `col-span-2 grid grid-cols-[1fr_min-content] rounded-xs ${label ? 'row-start-2 row-end-2' : ''}`,
+          searchWrapperVariantClassName[variant],
         )}
       >
-        <Icon size={24} data={search} />
-      </button>
+        <div className="relative flex items-center">
+          <input
+            {...(!label && {
+              'aria-label': intl('search'),
+            })}
+            ref={inputRef}
+            id={searchId}
+            autoComplete="off"
+            autoCorrect="off"
+            autoCapitalize="off"
+            //eslint-disable-next-line jsx-a11y/no-autofocus
+            // biome-ignore lint/a11y/noAutofocus: the search input is the only interactive element on the search page
+            autoFocus={true}
+            placeholder={placeholder ?? intl('search')}
+            spellCheck={false}
+            maxLength={512}
+            type="search"
+            value={value}
+            onChange={onChange}
+            className={twMerge(
+              `grow rounded-s-xs rounded-e-none bg-white-100 py-4 pr-12 pl-6 text-white-100 focus:outline-hidden ${inputVariantClassName[variant]} `,
+              className,
+            )}
+          />
+          <button
+            type="reset"
+            aria-label={intl('search_reset')}
+            className={twMerge(
+              `${value.length === 0 ? 'hidden' : 'flex'} absolute right-2 size-8 items-center justify-center rounded-full focus:outline-hidden ${resetVariantClassName[variant]}`,
+              resetClassName,
+            )}
+          >
+            <Icon size={24} data={close} />
+          </button>
+        </div>
+        <button
+          type="submit"
+          aria-label={intl('search_submit')}
+          className={twMerge(
+            `h-inherit rounded-e-xs px-4 py-3 focus:outline-hidden ${submitVariantClassName[variant]} `,
+            submitClassName,
+          )}
+        >
+          <Icon size={24} data={search} />
+        </button>
+      </div>
     </form>
   );
 }
