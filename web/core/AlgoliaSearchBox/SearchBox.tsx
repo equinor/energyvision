@@ -1,28 +1,34 @@
-'use client'
-import { useRef, useState, ChangeEvent, ComponentProps, useId } from 'react'
-import { useSearchBox, UseSearchBoxProps } from 'react-instantsearch'
-import { close, search } from '@equinor/eds-icons'
-import { Icon } from '@equinor/eds-core-react'
-import { useTranslations } from 'next-intl'
-import { twMerge } from 'tailwind-merge'
+'use client';
+import { Icon } from '@equinor/eds-core-react';
+import { close, search } from '@equinor/eds-icons';
+import { useTranslations } from 'next-intl';
+import {
+  type ChangeEvent,
+  type ComponentProps,
+  useId,
+  useRef,
+  useState,
+} from 'react';
+import { type UseSearchBoxProps, useSearchBox } from 'react-instantsearch';
+import { twMerge } from 'tailwind-merge';
 
-type Variants = 'default' | 'inverted'
+type Variants = 'default' | 'inverted';
 export type SearchBoxProps = {
-  variant?: Variants
-  className?: string
-  resetClassName?: string
-  submitClassName?: string
-  labelClassName?: string
-  label?: string
-  placeholder?: string
+  variant?: Variants;
+  className?: string;
+  resetClassName?: string;
+  submitClassName?: string;
+  labelClassName?: string;
+  label?: string;
+  placeholder?: string;
 } & ComponentProps<'div'> &
-  UseSearchBoxProps
+  UseSearchBoxProps;
 
 const queryHook: UseSearchBoxProps['queryHook'] = (query, search) => {
   if (query !== '') {
-    search(query)
+    search(query);
   }
-}
+};
 
 /** Requires Algolia Instant Search Provider higher up */
 export function SearchBox({
@@ -35,41 +41,49 @@ export function SearchBox({
   placeholder,
   ...rest
 }: SearchBoxProps) {
-  const intl = useTranslations()
-  const { query, refine, clear } = useSearchBox({ ...rest, queryHook })
-  const [value, setValue] = useState(query)
-  const inputRef = useRef<HTMLInputElement>(null)
-  const searchId = useId()
+  const intl = useTranslations();
+  const { query, refine, clear } = useSearchBox({ ...rest, queryHook });
+  const [value, setValue] = useState(query);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const searchId = useId();
 
   function handleReset() {
-    setValue('')
-    clear()
+    setValue('');
+    clear();
   }
 
   function onSubmit(event: React.FormEvent) {
-    event.preventDefault()
-    event.stopPropagation()
-    refine(value)
+    event.preventDefault();
+    event.stopPropagation();
+    const trimmedValue = value.trim();
+    if (!trimmedValue) {
+      clear();
+      return;
+    }
+    refine(trimmedValue);
   }
 
   function onChange(event: ChangeEvent<HTMLInputElement>) {
-    setValue(event.currentTarget.value)
+    setValue(event.currentTarget.value);
   }
 
   const inputVariantClassName = {
-    default: 'text-slate-80 focus-visible:envis-outline dark:focus-visible:envis-outline-invert',
-    inverted: 'text-white-100 border-y border-l border-white-100 bg-slate-blue-95 focus-visible:envis-outline-invert',
-  }
+    default:
+      'text-slate-80 focus-visible:envis-outline dark:focus-visible:envis-outline-invert',
+    inverted:
+      'text-white-100 border-y border-l border-white-100 bg-slate-blue-95 focus-visible:envis-outline-invert',
+  };
   const resetVariantClassName = {
     default: 'text-slate-80 hover:bg-grey-20 focus-visible:envis-outline',
-    inverted: 'text-white-100 hover:bg-white-100 hover:text-slate-blue-95 focus-visible:envis-outline-invert',
-  }
+    inverted:
+      'text-white-100 hover:bg-white-100 hover:text-slate-blue-95 focus-visible:envis-outline-invert',
+  };
   const submitVariantClassName = {
     default:
       'bg-norwegian-woods-70 text-slate-80 hover:bg-norwegian-woods-60 focus-visible:envis-outline dark:focus-visible:envis-outline-invert',
     inverted:
       'bg-white-100 text-slate-blue-95 hover:bg-white-100/40 hover:text-white-100 focus-visible:envis-outline-invert',
-  }
+  };
 
   return (
     <form
@@ -79,21 +93,25 @@ export function SearchBox({
       onSubmit={onSubmit}
       onReset={handleReset}
       className={`grid grid-cols-[1fr_min-content] ${
-        label ? 'grid grid-cols-[1fr_min-content] grid-rows-[auto_auto]' : 'grid-rows-1'
+        label
+          ? 'grid grid-cols-[1fr_min-content] grid-rows-[auto_auto]'
+          : 'grid-rows-1'
       }`}
     >
       {label && (
         <label
           htmlFor={searchId}
           className={twMerge(
-            `col-span-2 row-start-1 row-end-1 max-w-text py-4 text-base leading-inherit font-normal text-slate-80 dark:text-white-100`,
+            `col-span-2 row-start-1 row-end-1 max-w-text py-4 font-normal text-base text-slate-80 leading-inherit dark:text-white-100`,
             labelClassName,
           )}
         >
           {label}
         </label>
       )}
-      <div className={`${label ? 'row-start-2 row-end-2' : ''} relative flex items-center`}>
+      <div
+        className={`${label ? 'row-start-2 row-end-2' : ''} relative flex items-center`}
+      >
         <input
           {...(!label && {
             'aria-label': intl('search'),
@@ -103,8 +121,8 @@ export function SearchBox({
           autoComplete="off"
           autoCorrect="off"
           autoCapitalize="off"
-          //It is the only element on the page
           //eslint-disable-next-line jsx-a11y/no-autofocus
+          // biome-ignore lint/a11y/noAutofocus: the search input is the only interactive element on the search page
           autoFocus={true}
           placeholder={placeholder ?? intl('search')}
           spellCheck={false}
@@ -139,5 +157,5 @@ export function SearchBox({
         <Icon size={24} data={search} />
       </button>
     </form>
-  )
+  );
 }

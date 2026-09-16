@@ -9,7 +9,7 @@ export const simpleClientFetch: DefinedFetchType = async ({
   perspective = 'published',
   requestTag = 'optimized-fetch',
 }) => {
-  'use cache';
+  'use cache: remote';
   cacheLife('max');
   console.log('Fetching with optimized fetch:', tags);
   cacheTag(...tags);
@@ -34,7 +34,7 @@ export const simpleClientMetadataFetch: DefinedFetchType = async ({
   perspective = 'published',
   requestTag = 'optimized-fetch',
 }) => {
-  'use cache';
+  'use cache: remote';
   cacheLife('max');
   console.log('Fetching Meta with optimized fetch:', tags);
   cacheTag(...tags);

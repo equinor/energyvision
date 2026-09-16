@@ -105,7 +105,7 @@ async function CachedContent({
   dynamic: Awaited<ReturnType<typeof getDynamicFetchOptions>>;
   searchParams: { [key: string]: string[] | string | undefined };
 }) {
-  'use cache';
+  'use cache: remote';
   const locale = await getLocale();
 
   /*   const isInPresentationToolContext =

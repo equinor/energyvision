@@ -59,6 +59,9 @@ const nextConfig: NextConfig = withNextIntl({
     },
     browserToTerminal: true,
   },
+  cacheHandlers: {
+    remote: require.resolve('./cache-handlers/remote-handler.cjs'),
+  },
 
   /*turbopack: {
      root: join(__dirname),

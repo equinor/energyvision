@@ -222,7 +222,7 @@ const fallbackToAnotherLanguage = async (
 };
 
 async function getSiteMenuData(locale: string) {
-  'use cache';
+  'use cache: remote';
   return routeSanityFetch({
     query: Flags.HAS_FANCY_MENU ? globalMenuQuery : simpleMenuQuery,
     params: {

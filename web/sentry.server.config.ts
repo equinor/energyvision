@@ -14,7 +14,7 @@ import {
 const isProd =
   process.env.NODE_ENV === 'production' &&
   dataset === 'global' &&
-  !process.env.RADIX_PUBLIC_DOMAIN_NAME?.includes('preprod');
+  process.env.RADIX_ENVIRONMENT !== 'preprod';
 isProd &&
   Sentry.init({
     dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
@@ -24,6 +24,8 @@ isProd &&
     profilesSampleRate: 0,
     replaysSessionSampleRate: 0,
     replaysOnErrorSampleRate: 0,
+    // try to turn off max event listeners gzip error
+    skipOpenTelemetrySetup: true,
     // Setting this option to true will print useful information to the console while you're setting up Sentry.
     debug: false,
     includeLocalVariables: false,

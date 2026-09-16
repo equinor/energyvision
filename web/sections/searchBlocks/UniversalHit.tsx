@@ -1,45 +1,45 @@
-'use client'
-import type { Hit as AlgoliaHit } from '@algolia/client-search'
-import { useLocale } from 'next-intl'
-import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime'
-import { BaseLink } from '@/core/Link/BaseLink'
-import { Typography } from '@/core/Typography'
-import { defaultLanguage } from '@/languageConfig'
-import { host } from '@/lib/config'
-import { getLocaleFromIso } from '@/sanity/helpers/localization'
-import { Highlight } from './Highlight'
-import DisplayLink from './hit/DisplayLink'
+'use client';
+import type { Hit as AlgoliaHit } from '@algolia/client-search';
+import { useLocale } from 'next-intl';
+import FormattedDateTime from '@/core/FormattedDateTime/FormattedDateTime';
+import { BaseLink } from '@/core/Link/BaseLink';
+import { Typography } from '@/core/Typography';
+import { defaultLanguage } from '@/languageConfig';
+import { host } from '@/lib/config';
+import { getLocaleFromIso } from '@/sanity/helpers/localization';
+import { Highlight } from './Highlight';
+import DisplayLink from './hit/DisplayLink';
 
 export type HitData = {
-  slug?: string
-  type?: string
-  pageTitle?: string
-  ingress?: string
-  text?: string
-  publishDateTime?: string
-  eventDescription?: string
-  eventDate?: string
-  title?: string
-}
+  slug?: string;
+  type?: string;
+  pageTitle?: string;
+  ingress?: string;
+  text?: string;
+  publishDateTime?: string;
+  eventDescription?: string;
+  eventDate?: string;
+  title?: string;
+};
 
-export type UniversalHitType = AlgoliaHit<HitData>
-export type HitProps = { hit: UniversalHitType }
+export type UniversalHitType = AlgoliaHit<HitData>;
+export type HitProps = { hit: UniversalHitType };
 
 const buildDisplayURL = (slug: string, locale: string | undefined): string => {
   const startsWithLocale =
-    slug.startsWith(`${locale}/`) || slug.startsWith(`/${locale}/`)
+    slug.startsWith(`${locale}/`) || slug.startsWith(`/${locale}/`);
   return locale && locale !== defaultLanguage?.iso && !startsWithLocale
     ? `${host.url}/${getLocaleFromIso(locale)}/${slug.replace(/^\//, '')}`
-    : `${host.url}${slug}`
-}
+    : `${host.url}${slug}`;
+};
 
 const buildURL = (slug: string, locale: string | undefined): string => {
   const startsWithLocale =
-    slug.startsWith(`${locale}/`) || slug.startsWith(`/${locale}/`)
+    slug.startsWith(`${locale}/`) || slug.startsWith(`/${locale}/`);
   return locale && locale !== defaultLanguage?.iso && !startsWithLocale
     ? `/${getLocaleFromIso(locale)}/${slug.replace(/^\//, '')}`
-    : `${slug}`
-}
+    : `${slug}`;
+};
 
 const UniversalHit: React.FC<HitProps> = ({ hit }) => {
   const {
@@ -52,10 +52,10 @@ const UniversalHit: React.FC<HitProps> = ({ hit }) => {
     publishDateTime,
     pageTitle,
     type,
-  } = hit
-  const locale = useLocale()
-  const fullUrl = buildDisplayURL(slug, locale)
-  const formattedDate = eventDate || publishDateTime
+  } = hit;
+  const locale = useLocale();
+  const fullUrl = buildDisplayURL(slug, locale);
+  const formattedDate = eventDate || publishDateTime;
 
   const commonLinkClassName = `
     text-base
@@ -66,11 +66,15 @@ const UniversalHit: React.FC<HitProps> = ({ hit }) => {
     group-active:scale-99
     dark:text-white-100
     dark:group-focus-visible:envis-outline-invert
-    dark:group-active:envis-outline-invert`
+    dark:group-active:envis-outline-invert`;
 
   return (
-    <article className='border-white-100/20 border-b pt-6 pb-8'>
-      <BaseLink href={buildURL(slug, locale)} className='group'>
+    <article className="border-white-100/20 border-b pt-6 pb-8">
+      <BaseLink
+        href={buildURL(slug, locale)}
+        prefetch={false}
+        className="group"
+      >
         {formattedDate && type !== 'magazine' && (
           <FormattedDateTime
             uppercase
@@ -79,15 +83,15 @@ const UniversalHit: React.FC<HitProps> = ({ hit }) => {
           />
         )}
         {pageTitle && (
-          <Typography as='h2' variant='h6' className={`${commonLinkClassName}`}>
-            <Highlight hit={hit} attribute='pageTitle' />
+          <Typography as="h2" variant="h6" className={`${commonLinkClassName}`}>
+            <Highlight hit={hit} attribute="pageTitle" />
           </Typography>
         )}
         {title && (
           <div
             className={`${title && pageTitle ? 'text-sm' : ''} ${!pageTitle ? commonLinkClassName : ''}`}
           >
-            <Highlight hit={hit} attribute='title' />
+            <Highlight hit={hit} attribute="title" />
           </div>
         )}
 
@@ -107,7 +111,7 @@ const UniversalHit: React.FC<HitProps> = ({ hit }) => {
         <DisplayLink>{fullUrl}</DisplayLink>
       </BaseLink>
     </article>
-  )
-}
+  );
+};
 
-export default UniversalHit
+export default UniversalHit;

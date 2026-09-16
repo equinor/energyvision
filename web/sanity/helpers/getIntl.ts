@@ -6,7 +6,7 @@ import formatTextSnippets from './formatTextSnippets';
 import { getNameFromIso } from './localization';
 
 export default async (locale: string) => {
-  'use cache';
+  'use cache: remote';
   const { data: textSnippetsArray } = await routeSanityFetch({
     query: `*[_type == "textSnippet"]`,
     tags: ['textSnippet'],
