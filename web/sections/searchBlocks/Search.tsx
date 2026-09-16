@@ -17,7 +17,7 @@ import { Pagination } from '@/sections/searchBlocks/pagination/Pagination';
 import SearchResults from '@/sections/searchBlocks/SearchResults';
 import { searchClient as client } from '../../lib/algolia';
 
-const MINIMUM_QUERY_LENGTH = 6;
+const MINIMUM_QUERY_LENGTH = 3;
 const SEARCH_DEBOUNCE_MS = 400;
 
 type PendingSearch = {
