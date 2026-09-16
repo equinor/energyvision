@@ -2,7 +2,7 @@
 import { Icon } from '@equinor/eds-core-react';
 import { close } from '@equinor/eds-icons';
 import { useRouter } from 'next/navigation';
-import { Suspense } from 'react';
+import { Suspense, useEffect, useRef } from 'react';
 import { LogoLink } from '@/core/Link/LogoLink';
 import { NavTopbar } from '@/sections/SiteMenu/NavTopbar';
 import { TopbarDropdown } from '@/sections/SiteMenu/TopbarDropdown';
@@ -13,8 +13,15 @@ export default function SearchLayout({
   children: React.ReactNode;
 }) {
   const router = useRouter();
+  const searchPageRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    searchPageRef.current?.scrollTo({ top: 0 });
+  }, []);
+
   return (
     <div
+      ref={searchPageRef}
       data-search-page="true"
       className="dark w-full overflow-auto bg-slate-blue-95"
     >
