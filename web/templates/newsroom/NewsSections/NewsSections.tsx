@@ -1,6 +1,6 @@
 'use client';
 import type { SanityImageObject } from '@sanity/image-url';
-//import { useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 import { forwardRef } from 'react';
 import { useHits, useInstantSearch } from 'react-instantsearch';
 import { twMerge } from 'tailwind-merge';
@@ -15,11 +15,11 @@ type NewsSectionsProps = {
 const NewsSections = forwardRef<HTMLDivElement, NewsSectionsProps>(
   function NewsSections({ fallbackImages, className = '' }, ref) {
     const { items } = useHits();
-    const { /*indexUiState, results,*/ status } = useInstantSearch();
-    /*const t = useTranslations();
+    const { indexUiState, results, status } = useInstantSearch();
+    const t = useTranslations();
 
     const query = indexUiState.query?.trim();
-const fallbackResultSummary = `${results.nbHits} hits for "${query ?? ''}" with selected filters.`;
+    const fallbackResultSummary = `${results.nbHits} hits for "${query ?? ''}" with selected filters.`;
     const resultSummary = t.has('newsroom_search_results_summary')
       ? t('newsroom_search_results_summary', {
           numberOfHits: results.nbHits,
@@ -29,15 +29,15 @@ const fallbackResultSummary = `${results.nbHits} hits for "${query ?? ''}" with 
 
     if (!items || items.length === 0) {
       return t('newsroom_no_hits');
-    } */
+    }
 
     return status !== 'loading' && status !== 'stalled' ? (
       <div ref={ref} className={twMerge(`flex flex-col gap-4`, className)}>
-        {/*         {query && (
+        {query && (
           <p aria-live="polite" className="text-slate-80 text-sm">
             {resultSummary}
           </p>
-        )} */}
+        )}
         {items.map((hit, index) => {
           return index === 0 ? (
             <NewsHeadliner
