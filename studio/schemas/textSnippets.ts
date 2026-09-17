@@ -702,6 +702,12 @@ const snippets: textSnippet = {
     defaultValue: 'News',
     group: groups.newsroom,
   },
+  newsroom_search_results_summary: {
+    title: '{numberOfHits} hits for "{searchQuery}" with selected filters',
+    defaultValue:
+      '{numberOfHits} hits for "{searchQuery}" with selected filters.',
+    group: groups.newsroom,
+  },
   newsroom_no_relevant_filters: {
     title: 'No options for a filter',
     defaultValue: 'No relevant content for this filter',
