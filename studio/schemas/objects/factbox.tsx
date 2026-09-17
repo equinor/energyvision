@@ -1,18 +1,19 @@
-import { info_circle } from '@equinor/eds-icons'
-import { useEffect } from 'react'
-import type { PortableTextBlock } from 'sanity'
-import { type BooleanInputProps, set, useFormValue } from 'sanity'
-import blocksToText from '../../helpers/blocksToText'
-import { EdsIcon, LeftAlignedImage, RightAlignedImage } from '../../icons'
-import { RadioIconSelector } from '../components'
-import type { ColorSelectorValue } from '../components/ColorSelector'
-import { configureBlockContent } from '../editors/blockContentType'
-import type { ImageWithAlt } from './imageWithAlt'
+import { info_circle } from '@equinor/eds-icons';
+import { Box } from '@sanity/ui';
+import { useEffect } from 'react';
+import type { PortableTextBlock } from 'sanity';
+import { type BooleanInputProps, set, useFormValue } from 'sanity';
+import blocksToText from '../../helpers/blocksToText';
+import { EdsIcon, LeftAlignedImage, RightAlignedImage } from '../../icons';
+import { RadioIconSelector } from '../components';
+import type { ColorSelectorValue } from '../components/ColorSelector';
+import { configureBlockContent } from '../editors/blockContentType';
+import type { ImageWithAlt } from './imageWithAlt';
 
 const imageAlignmentOptions = [
   { value: 'left', icon: LeftAlignedImage },
   { value: 'right', icon: RightAlignedImage },
-]
+];
 
 const blockContentType = configureBlockContent({
   h2: false,
@@ -22,37 +23,37 @@ const blockContentType = configureBlockContent({
   externalLink: true,
   attachment: false,
   smallText: false,
-})
+});
 
 function SingleColumnLayoutInput(props: BooleanInputProps) {
-  const { onChange, path, value } = props
-  const parentPath = path.slice(0, -1)
+  const { onChange, path, value } = props;
+  const parentPath = path.slice(0, -1);
   const content = useFormValue([...parentPath, 'content']) as
     | PortableTextBlock[]
-    | undefined
+    | undefined;
 
-  const text = Array.isArray(content) ? blocksToText(content) || '' : ''
-  const isReadOnly = text.length < 800
+  const text = Array.isArray(content) ? blocksToText(content) || '' : '';
+  const isReadOnly = text.length < 800;
 
   useEffect(() => {
     if (isReadOnly && value === false) {
-      onChange(set(true))
+      onChange(set(true));
     }
-  }, [isReadOnly, onChange, value])
+  }, [isReadOnly, onChange, value]);
 
-  return props.renderDefault(props)
+  return <Box paddingBottom={4}>{props.renderDefault(props)}</Box>;
 }
 
 export type Factbox = {
-  _type: 'factbox'
-  title?: string
-  content?: PortableTextBlock[]
-  image?: ImageWithAlt
-  background?: ColorSelectorValue
-  isSingleColumn?: boolean
-  imagePosition?: string
-  dynamicHeight?: boolean
-}
+  _type: 'factbox';
+  title?: string;
+  content?: PortableTextBlock[];
+  image?: ImageWithAlt;
+  background?: ColorSelectorValue;
+  isSingleColumn?: boolean;
+  imagePosition?: string;
+  dynamicHeight?: boolean;
+};
 
 export default {
   title: 'Factbox',
@@ -103,12 +104,12 @@ export default {
         input: SingleColumnLayoutInput,
       },
       readOnly: ({ parent }: { parent: any }) => {
-        const content = parent?.content
+        const content = parent?.content;
         if (!content || !Array.isArray(content)) {
-          return true
+          return true;
         }
-        const text = blocksToText(content) || ''
-        return text.length < 800
+        const text = blocksToText(content) || '';
+        return text.length < 800;
       },
     },
     {
@@ -123,18 +124,18 @@ export default {
           onChange,
           value,
         }: {
-          onChange: any
-          value: string
+          onChange: any;
+          value: string;
         }) {
           return (
             <RadioIconSelector
-              name='imageAlignmentSelector'
+              name="imageAlignmentSelector"
               options={imageAlignmentOptions}
-              defaultValue='left'
+              defaultValue="left"
               currentValue={value}
               onChange={onChange}
             />
-          )
+          );
         },
       },
     },
@@ -157,11 +158,11 @@ export default {
         title: title,
         subtitle: 'Factbox',
         media: imageUrl ? (
-          <img src={imageUrl} alt='' style={{ height: '100%' }} />
+          <img src={imageUrl} alt="" style={{ height: '100%' }} />
         ) : (
           EdsIcon(info_circle)
         ),
-      }
+      };
     },
   },
-}
+};
