@@ -36,18 +36,15 @@ Use this skill to choose the right current Algolia UI library and docs path. Do 
 ## Workflow
 
 1. Read `references/ui-library-selector.md` before choosing or changing a library.
-2. Identify the app platform and framework: vanilla JS, React, Next.js, Vue, Angular, Android, iOS, Flutter, React Native, Laravel/Vue, or documentation search.
+2. Identify the app platform and framework: vanilla JS, React, Next.js, or documentation search.
 3. Choose the UI library by experience shape:
    - Full search or browse results: InstantSearch family.
    - Typeahead, query suggestions, recent searches, or federated suggestions: Autocomplete.
    - Documentation/site search: DocSearch-style Autocomplete only if that matches the product.
-   - Native/mobile search: InstantSearch Android, iOS, or Flutter Helper.
 4. Verify the current official docs before install, imports, SSR, routing, event, or upgrade changes.
 5. Route to the implementation skill:
    - `$algolia-instantsearch-ui` for full results/search/browse UI.
    - `$algolia-autocomplete` for typeahead and suggestion experiences.
-   - `$algolia-events-insights` for click/conversion attribution.
-   - `$algolia-release-qa` before launch.
 
 ## Questions To Ask
 
@@ -72,11 +69,3 @@ Use this skill to choose the right current Algolia UI library and docs path. Do 
 - Mixing Autocomplete and InstantSearch responsibilities without a clear handoff contract.
 - Treating mobile/native apps as web InstantSearch ports when native libraries are available.
 - Recommending SSR, routing, or secured-key patterns from memory.
-
-## Academy And Customer Education Alignment
-
-When source-backed guidance is needed, search public Academy sources for UI library learning objectives and public Algolia docs for current docs paths, package guidance, framework patterns, and implementation prerequisites. Do not freeze package versions or copy large docs into the answer. Map the request to maturity level and use case before recommending a library or upgrade path.
-
-## Output Contract
-
-Return the selected library, why it fits, official docs to use, install/upgrade assumptions, implementation plan, event/routing/security notes, and QA checklist. Call out any docs that must be verified live before the agent touches code.

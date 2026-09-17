@@ -30,16 +30,7 @@ Official docs:
 - InstantSearch.js overview: https://www.algolia.com/doc/guides/building-search-ui/what-is-instantsearch/js
 - InstantSearch.js install: https://www.algolia.com/doc/guides/building-search-ui/installation/js
 - React InstantSearch install: https://www.algolia.com/doc/guides/building-search-ui/installation/react
-- Vue InstantSearch install: https://www.algolia.com/doc/guides/building-search-ui/installation/vue
-- Angular getting started (InstantSearch.js in Angular): https://www.algolia.com/doc/guides/building-search-ui/getting-started/angular
 
-Angular note: `angular-instantsearch` is formally **deprecated** by Algolia — the npm
-package carries a deprecation notice, its docs moved under `/doc/deprecated/`, and Algolia
-has said it will not ship an Angular replacement. There is no successor package. For
-Angular apps, use InstantSearch.js with connectors inside Angular services and components,
-per the Angular getting-started guide above. Treat existing Angular InstantSearch code as a
-migration candidate, not a target for new work. Migration guide:
-https://www.algolia.com/blog/algolia/migrating-from-angular-instantsearch/
 
 Caution when checking status: Algolia's marketing pages under `/developers` and `/products`
 still present Angular as an available, maintained flavor. Confirm library status from npm
@@ -50,7 +41,6 @@ deprecated in favour of `react-instantsearch`; npm redirects them and they stopp
 receiving releases.
 - InstantSearch events: https://www.algolia.com/doc/guides/building-search-ui/events/js
 - React InstantSearch events: https://www.algolia.com/doc/guides/building-search-ui/events/react
-- Vue InstantSearch events: https://www.algolia.com/doc/guides/building-search-ui/events/vue
 
 ### React And Next.js
 

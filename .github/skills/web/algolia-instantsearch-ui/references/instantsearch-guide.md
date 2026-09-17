@@ -8,7 +8,7 @@ This skill owns the customer-readiness layer around that official skill:
 
 | Concern | Use official `instantsearch` for | Use this skill for |
 | --- | --- | --- |
-| Framework/API | Current React InstantSearch, Vue InstantSearch, and InstantSearch.js APIs | Whether the chosen UI pattern fits the customer journey |
+| Framework/API | Current React InstantSearch and InstantSearch.js APIs | Whether the chosen UI pattern fits the customer journey |
 | Source of truth | Installed types, live docs, CSS class names, widget props, SSR/middleware details | Readiness checks, business explanation, UX QA, and launch handoff |
 | Search results page | React search results page features, styling, anti-patterns, custom widgets | Facet usefulness, mobile filters, empty states, routing expectations, event readiness |
 | Autocomplete | Official autocomplete pattern references | Whether autocomplete should hand off to a results page or stay separate |
@@ -24,7 +24,7 @@ Recommended sequence:
 
 Before coding, identify:
 
-- Package: `react-instantsearch`, `vue-instantsearch`, `instantsearch.js`, or another integration. Angular InstantSearch is deprecated; for Angular projects use `instantsearch.js` directly and treat existing `angular-instantsearch` code as migration work. The official skill currently centers React, Vue, and InstantSearch.js.
+- Package: `react-instantsearch`, `instantsearch.js`, or another integration. The official skill currently centers React, and InstantSearch.js.
 - Index and replicas used by the page.
 - Query source: search box, route param, category page, static filter, or autocomplete handoff.
 - Refinements: user-visible widgets and silent filters.
@@ -34,58 +34,6 @@ Before coding, identify:
 - Server-side rendering requirements.
 - Mobile filter and sort pattern.
 - Detail-page navigation and return-to-results behavior.
-- Whether the page is public, authenticated, B2B permissioned, or internal.
-
-## Customer Journey Frames
-
-Use one of these frames before choosing widgets:
-
-| Frame | User intent | UI emphasis | Common risks |
-| --- | --- | --- | --- |
-| Search results page | User has a query and wants the best matches | Search box, hits, stats, filters, sort when useful, pagination or infinite hits | Query state not preserved, filters feel arbitrary, no recovery path |
-| Browse/category page | User starts from a category, collection, or merchandising context | Silent category filter, visible refinements, current category context, sort, product/content cards | Invisible filters confuse users, category route and UI state drift |
-| Marketplace or catalog | User compares many entities with constraints | Dense cards or rows, strong filters, active refinements, saved/shareable state | Client-side filtering breaks counts, permissions or seller filters are hidden |
-| Support or docs search | User wants an answer quickly | Query clarity, content type filters, snippets, empty-state suggestions, feedback path | Facets distract from answer-finding, no no-results recovery |
-| Internal lookup | User needs speed and precision | Compact layout, keyboard flow, exact filters, persistent state | Marketing-style layouts reduce scan speed |
-
-For each frame, answer:
-
-- What tells the user where they are?
-- What tells them why results changed?
-- How do they recover from a bad query or too many filters?
-- What action do they take after finding a result?
-- Which event proves the UI helped?
-
-## Academy Mental Model
-
-Use this distinction when guiding customers:
-
-- Autocomplete helps users decide what to search for before they commit.
-- InstantSearch helps users explore, refine, recover, and act on the results after they search.
-- Algolia Search returns matching records.
-- InstantSearch widgets turn records, refinements, routing, and events into a usable search results experience.
-
-A useful results page should answer:
-
-- What am I seeing?
-- How can I narrow this?
-- What is currently selected?
-- How do I recover if the results are wrong?
-- What action can I take next?
-
-## Data Contract Checks
-
-Before implementation or review, confirm the UI has what it needs from the index:
-
-| UI need | Data/index requirement | Failure mode |
-| --- | --- | --- |
-| Result title, image, URL, and summary | Display attributes exist and are consistently populated | Hit cards look empty, inconsistent, or untrustworthy |
-| Filters/facets | Attributes are configured for faceting and have useful value distributions | Filter widgets are empty, noisy, or misleading |
-| Range filters | Numeric values are normalized and facetable/range-ready | Sliders/ranges are inaccurate or absent |
-| Sort options | Replicas or supported sorting strategy exists | Sort control appears but does not match Algolia ranking behavior |
-| Category/browse pages | Category or collection filters are stable and route-compatible | Route says one thing while results show another |
-| Event attribution | Hits preserve `objectID`, `index`, `queryID`, and position | Insights events arrive but cannot be attributed |
-| Permissions/B2B | Secured filters or permission attributes are designed outside UI-only filtering | Users see forbidden records or counts leak inaccessible data |
 
 ## Widget And Connector Guidance
 
