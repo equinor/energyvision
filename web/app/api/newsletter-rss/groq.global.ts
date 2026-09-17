@@ -1,26 +1,26 @@
-import type { PortableTextBlock } from '@portabletext/types'
-import type { Figure } from '@/core/Image/imageUtilities'
-import markDefs from '@/sanity/queries/common/blockEditorMarks'
-import { functions } from '@/sanity/queries/common/functions'
-import { sameLang } from '@/sanity/queries/common/langAndDrafts'
-import { ingressForNewsQuery } from '@/sanity/queries/common/newsSubqueries'
-import { publishDateTimeQuery } from '@/sanity/queries/common/publishDateTime'
-import { excludeCrudeOilAssays } from '@/sanity/queries/news'
+import type { PortableTextBlock } from '@portabletext/types';
+import type { Figure } from '@/core/Image/imageUtilities';
+import markDefs from '@/sanity/queries/common/blockEditorMarks';
+import { functions } from '@/sanity/queries/common/functions';
+import { sameLang } from '@/sanity/queries/common/langAndDrafts';
+import { ingressForNewsQuery } from '@/sanity/queries/common/newsSubqueries';
+import { publishDateTimeQuery } from '@/sanity/queries/common/publishDateTime';
+import { excludeCrudeOilAssays } from '@/sanity/queries/news';
 
 export type LatestNewsType = {
-  _id: string
-  type: string
-  slug: string
-  title: string | PortableTextBlock[]
-  publishDateTime: string
-  hero: Figure
-  ingress: PortableTextBlock
-  subscriptionType: string
-  lang: string
-}
+  _id: string;
+  type: string;
+  slug: string;
+  title: string | PortableTextBlock[];
+  publishDateTime: string;
+  hero: Figure;
+  ingress: PortableTextBlock;
+  subscriptionType: string;
+  lang: string;
+};
 const publishedSinceYesterday = /* groq */ `
 dateTime(${publishDateTimeQuery}) > dateTime(now()) - 86400
-`
+`;
 //add groq to collect only ones with category that has been published since yesterday
 
 export const latestNewsRss = /* groq */ `
@@ -29,11 +29,14 @@ ${functions}
     _id,
     "slug": slug.current,
     title,
-    "hero": heroImage,
+    "hero": select(
+      heroType == "loopingVideo" => { "image": heroLoopingVideo->thumbnail },
+      heroImage,
+    ),
     "publishDateTime": ${publishDateTimeQuery},
     ${ingressForNewsQuery},
   }
-`
+`;
 
 export const latestNews = /* groq */ `
 ${functions}
@@ -42,7 +45,10 @@ ${functions}
     "type":_type,
     "slug": slug.current,
     title,
-    "hero": heroImage,
+    "hero": select(
+      heroType == "loopingVideo" => { "image": heroLoopingVideo->thumbnail },
+      heroImage,
+    ),
     subscriptionType,
     "publishDateTime": ${publishDateTimeQuery},
     ingress[]{
@@ -51,7 +57,7 @@ ${functions}
     },
     lang
   }
-`
+`;
 export const latestMagazine = /* groq */ `
 ${functions}
   *[_type == "magazine" && shouldDistributeMagazine && ${sameLang} && ${publishedSinceYesterday}] | order(${publishDateTimeQuery} desc)[0...5] {
@@ -59,7 +65,10 @@ ${functions}
     "type":_type,
     "slug": slug.current,
     title,
-    "hero": heroFigure,
+    "hero": select(
+      heroType == "loopingVideo" => { "image": heroLoopingVideo->thumbnail },
+      heroFigure,
+    ),
     "publishDateTime": ${publishDateTimeQuery},
     ingress[]{
     ...,
@@ -67,4 +76,4 @@ ${functions}
     },
     lang
   }
-`
+`;
