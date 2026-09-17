@@ -78,75 +78,6 @@ Use the Academy ranges as a starting point, then validate with real content and 
 
 Keep the input-clear action separate from closing a mobile overlay. They solve different user intentions.
 
-## Academy Mental Model
-
-Use this distinction when explaining or reviewing autocomplete:
-
-- Query Suggestion: "Here is something useful to search for."
-- Product or content result: "Here is a record you may want to open."
-- Recent search: "Here is something you already started."
-- Autocomplete: the full search-box experience that can combine those sources.
-
-A good autocomplete experience reduces effort before the user commits to a results page. It should help the user ask a better question, resume a prior search, or jump directly to a useful record without overwhelming them.
-
-## Query Suggestions Readiness
-
-Before connecting Query Suggestions to Autocomplete, verify:
-
-- The source index is the index users actually search.
-- The Query Suggestions index exists and is not confused with the source index.
-- Suggestions are generated from useful search behavior, approved external suggestions, or facet values.
-- Minimum letters and minimum hits are configured to avoid vague or low-value suggestions.
-- Banned words or exclusions remove offensive, internal, test, stale, or irrelevant terms.
-- Sample suggestions are clear, useful, searchable, clean, and likely to return worthwhile results.
-
-If suggestions are noisy, fix the Query Suggestions configuration before polishing the UI.
-
-### Category-Bearing Suggestions
-
-Categories are useful only when their role is unambiguous. Choose one:
-
-- Scope: carry the selected category into the results-page filter or InstantSearch state.
-- Destination: route to a category landing page with the selected query.
-- Context only: show the category as a label and do not imply filtering.
-
-Do not show a category merely because it is available in the source data. Test the URL or state handoff with a real category-bearing suggestion and confirm that keyboard selection behaves exactly like pointer selection.
-
-For a compact category-scope experience, show only one or two strong scopes, distinguish them from ordinary query suggestions, and phrase them as a scope, such as “in Women's Running.” Avoid repeating the typed query as a separate category item.
-
-## Selection Behavior
-
-For each source, define what selection does:
-
-- Submit a query.
-- Navigate to a search results page.
-- Update InstantSearch UI state.
-- Navigate directly to a record.
-- Apply a category/filter.
-- Execute an action.
-
-Do not leave selection behavior implicit; this is where many autocomplete implementations feel broken.
-
-Suggested defaults:
-
-- Query Suggestions usually submit or navigate to a search query.
-- Product/content results usually navigate directly to a record.
-- Category suggestions usually apply a scope/filter or navigate to a category page.
-- Recent searches usually resubmit the prior query.
-- Federated support/content results should use labels and destinations that make their source obvious.
-
-Different sources can have different selection behavior, but the visual design must make the difference clear.
-
-## Focus, Empty, And Failure States
-
-The zero-query panel is part of the experience, not leftover space. Choose one intentional behavior:
-
-- Keep the panel closed until the user types.
-- Open with recent searches when resumption is valuable and storage is appropriate.
-- Open with approved popular searches, categories, or shortcuts when they help discovery.
-
-For every visible group, decide what happens when it is empty, slow, or unavailable. Hide empty groups cleanly, use an approved fallback where it preserves user value, and avoid blank headings or stale items. A stalled indicator should acknowledge delay without preventing users from continuing to type or submit.
-
 ### No-Result Guidance
 
 Autocomplete should prevent dead ends where it can. When a query has weak product intent or is likely to fail, prefer a better suggested query, a useful category, an approved non-product result, or an explicit route to all search results. Keep the guidance truthful: do not turn an unavailable product query into an unrelated direct-result list.
@@ -163,13 +94,7 @@ Autocomplete should prevent dead ends where it can. When a query has weak produc
 - Prefer the library's accessible generated input and item URL behavior unless the official implementation guidance calls for a custom renderer.
 - Keep the source contract in code comments or implementation notes so a later source change does not silently change routing or attribution.
 
-## Event And Analytics Notes
 
-- Track suggestion clicks and direct-result clicks according to the downstream analytics needs.
-- Preserve userToken across autocomplete and the search/results page.
-- If a suggestion leads to a search results page, ensure the resulting search can still generate queryID-attributed events.
-- If a direct product result is clicked from autocomplete, choose the event method that accurately reflects whether the item came from an Algolia query.
-- Do not infer queryID attribution for a static, recent, redirect, or otherwise non-search source. Preserve the source type so the event plan stays honest.
 
 ## Integration Handoff
 
