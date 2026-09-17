@@ -168,6 +168,7 @@ const PersonList = forwardRef<HTMLDivElement, PersonListProps>(
                 ingress={item.person?.title}
                 background={foreground}
                 imageClassName=""
+                ingressClassName="lg:line-clamp-none"
                 modalTitle={item.person?.name}
                 initialOpen={
                   !!activePersonName && item.person?.name === activePersonName

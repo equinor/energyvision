@@ -28,6 +28,7 @@ export type ModalPromotionProps = {
   initialOpen?: boolean;
   className?: string;
   imageClassName?: string;
+  ingressClassName?: string;
 };
 
 const getPlainText = (text: string | PortableTextBlock[] | undefined) => {
@@ -54,6 +55,7 @@ export const ModalPromotion = forwardRef<HTMLDivElement, ModalPromotionProps>(
       modalContent,
       initialOpen = false,
       imageClassName,
+      ingressClassName,
     },
     ref,
   ) {
@@ -132,7 +134,10 @@ export const ModalPromotion = forwardRef<HTMLDivElement, ModalPromotionProps>(
                   <Typography
                     group="card"
                     variant="ingress"
-                    className="block lg:line-clamp-5"
+                    className={twMerge(
+                      'block lg:line-clamp-5',
+                      ingressClassName,
+                    )}
                   >
                     {plainIngress}
                   </Typography>
