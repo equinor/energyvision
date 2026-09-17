@@ -1,98 +1,115 @@
 'use client';
+
 import { Icon } from '@equinor/eds-core-react';
 import { close, search } from '@equinor/eds-icons';
 import { useTranslations } from 'next-intl';
+import { useEffect, useId, useRef } from 'react';
 import {
-  type ChangeEvent,
-  type ComponentProps,
-  useEffect,
-  useId,
-  useRef,
-  useState,
-} from 'react';
-import { type UseSearchBoxProps, useSearchBox } from 'react-instantsearch';
+  SearchBox as InstantSearchSearchBox,
+  type SearchBoxProps as InstantSearchSearchBoxProps,
+} from 'react-instantsearch';
 import { twMerge } from 'tailwind-merge';
 
-const SEARCH_DEBOUNCE_MS = 300;
+export const MINIMUM_DEBOUNCED_QUERY_LENGTH = 3;
+export const MINIMUM_SUBMITTED_QUERY_LENGTH = 2;
+const SEARCH_DEBOUNCE_MS = 400;
 
-type Variants = 'default' | 'inverted';
-export type SearchBoxProps = {
-  variant?: Variants;
-  className?: string;
-  resetClassName?: string;
-  submitClassName?: string;
-  labelClassName?: string;
-  label?: string;
-  placeholder?: string;
-} & ComponentProps<'div'> &
-  UseSearchBoxProps;
-
-const queryHook: UseSearchBoxProps['queryHook'] = (query, search) => {
-  if (query !== '') {
-    search(query);
-  }
+type PendingSearch = {
+  query: string;
+  search: (query: string) => void;
 };
 
-/** Requires Algolia Instant Search Provider higher up */
+type Variant = 'default' | 'inverted';
+
+export type SearchBoxProps = Omit<
+  InstantSearchSearchBoxProps,
+  | 'classNames'
+  | 'queryHook'
+  | 'onSubmit'
+  | 'resetIconComponent'
+  | 'submitIconComponent'
+  | 'translations'
+> & {
+  variant?: Variant;
+  className?: string;
+  inputClassName?: string;
+  label?: string;
+  labelClassName?: string;
+};
+
+function ResetIcon() {
+  return <Icon size={24} data={close} />;
+}
+
+function SubmitIcon() {
+  return <Icon size={24} data={search} />;
+}
+
+/** Requires an Algolia InstantSearch provider higher in the component tree. */
 export function SearchBox({
   variant = 'default',
-  className = '',
-  resetClassName = '',
-  submitClassName = '',
-  labelClassName = '',
+  className,
+  inputClassName,
   label,
+  labelClassName,
   placeholder,
-  ...rest
+  searchAsYouType = true,
+  ...props
 }: SearchBoxProps) {
   const intl = useTranslations();
-  const { query, refine, clear } = useSearchBox({ ...rest, queryHook });
-  const [value, setValue] = useState(query);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputId = useId();
   const debounceTimeoutRef = useRef<ReturnType<typeof setTimeout>>(undefined);
-  const searchId = useId();
+  const pendingSearchRef = useRef<PendingSearch>(null);
 
   useEffect(() => {
     return () => clearTimeout(debounceTimeoutRef.current);
   }, []);
 
-  function handleReset() {
+  const queryHook: InstantSearchSearchBoxProps['queryHook'] = (
+    query,
+    refine,
+  ) => {
     clearTimeout(debounceTimeoutRef.current);
-    setValue('');
-    clear();
-  }
+    const trimmedQuery = query.trim();
+    pendingSearchRef.current = { query: trimmedQuery, search: refine };
 
-  function onSubmit(event: React.FormEvent) {
-    event.preventDefault();
-    event.stopPropagation();
-    clearTimeout(debounceTimeoutRef.current);
-    const trimmedValue = value.trim();
-    if (!trimmedValue) {
-      clear();
+    if (!searchAsYouType) {
+      refine(
+        trimmedQuery.length >= MINIMUM_SUBMITTED_QUERY_LENGTH
+          ? trimmedQuery
+          : '',
+      );
       return;
     }
-    refine(trimmedValue);
-  }
 
-  function onChange(event: ChangeEvent<HTMLInputElement>) {
-    const nextValue = event.currentTarget.value;
-    setValue(nextValue);
-    clearTimeout(debounceTimeoutRef.current);
-
-    const trimmedValue = nextValue.trim();
-    if (!trimmedValue) {
-      clear();
+    if (trimmedQuery.length < MINIMUM_DEBOUNCED_QUERY_LENGTH) {
+      refine('');
       return;
     }
-    // Only query Algolia once the user pauses typing a non-empty value
+
     debounceTimeoutRef.current = setTimeout(() => {
-      refine(trimmedValue);
+      refine(trimmedQuery);
     }, SEARCH_DEBOUNCE_MS);
+  };
+
+  function handleSubmit() {
+    clearTimeout(debounceTimeoutRef.current);
+    const pendingSearch = pendingSearchRef.current;
+
+    if (
+      !pendingSearch ||
+      pendingSearch.query.length < MINIMUM_SUBMITTED_QUERY_LENGTH
+    ) {
+      return;
+    }
+
+    pendingSearch.search(pendingSearch.query);
   }
 
   const inputVariantClassName = {
-    default: 'text-slate-80',
+    default: 'bg-white-100 text-slate-80',
     inverted:
-      'text-white-100 border-y border-l border-white-100 bg-slate-blue-95',
+      'border-y border-l border-white-100 bg-slate-blue-95 text-white-100',
   };
   const resetVariantClassName = {
     default: 'text-slate-80 hover:bg-grey-20 focus-visible:envis-outline',
@@ -104,7 +121,7 @@ export function SearchBox({
     inverted:
       'bg-white-100 text-slate-blue-95 hover:bg-white-100/40 hover:text-white-100',
   };
-  const searchWrapperVariantClassName = {
+  const formVariantClassName = {
     default:
       '[&:has(input:focus-visible):not(:has(:active))]:envis-outline [&:has(button[type=submit]:focus-visible):not(:has(:active))]:envis-outline dark:[&:has(input:focus-visible):not(:has(:active))]:envis-outline-invert dark:[&:has(button[type=submit]:focus-visible):not(:has(:active))]:envis-outline-invert',
     inverted:
@@ -112,81 +129,53 @@ export function SearchBox({
   };
 
   return (
-    <form
-      action=""
-      role="search"
-      noValidate
-      onSubmit={onSubmit}
-      onReset={handleReset}
-      className={`grid grid-cols-[1fr_min-content] ${
-        label
-          ? 'grid grid-cols-[1fr_min-content] grid-rows-[auto_auto]'
-          : 'grid-rows-1'
-      }`}
-    >
+    <div className={className}>
       {label && (
         <label
-          htmlFor={searchId}
+          htmlFor={inputId}
           className={twMerge(
-            `col-span-2 row-start-1 row-end-1 max-w-text py-4 font-normal text-base text-slate-80 leading-inherit dark:text-white-100`,
+            'block max-w-text py-4 font-normal text-base text-slate-80 leading-inherit dark:text-white-100',
             labelClassName,
           )}
         >
           {label}
         </label>
       )}
-      <div
-        className={twMerge(
-          `col-span-2 grid grid-cols-[1fr_min-content] rounded-xs ${label ? 'row-start-2 row-end-2' : ''}`,
-          searchWrapperVariantClassName[variant],
-        )}
-      >
-        <div className="relative flex items-center">
-          <input
-            {...(!label && {
-              'aria-label': intl('search'),
-            })}
-            ref={inputRef}
-            id={searchId}
-            autoComplete="off"
-            autoCorrect="off"
-            autoCapitalize="off"
-            //eslint-disable-next-line jsx-a11y/no-autofocus
-            // biome-ignore lint/a11y/noAutofocus: the search input is the only interactive element on the search page
-            autoFocus={true}
-            placeholder={placeholder ?? intl('search')}
-            spellCheck={false}
-            maxLength={512}
-            type="search"
-            value={value}
-            onChange={onChange}
-            className={twMerge(
-              `grow rounded-s-xs rounded-e-none bg-white-100 py-4 pr-12 pl-6 text-white-100 focus:outline-hidden ${inputVariantClassName[variant]} `,
-              className,
-            )}
-          />
-          <button
-            type="reset"
-            aria-label={intl('search_reset')}
-            className={twMerge(
-              `${value.length === 0 ? 'hidden' : 'flex'} absolute right-2 size-8 items-center justify-center rounded-full focus:outline-hidden ${resetVariantClassName[variant]}`,
-              resetClassName,
-            )}
-          >
-            <Icon size={24} data={close} />
-          </button>
-        </div>
-        <button
-          type="submit"
-          aria-label={intl('search_submit')}
-          className={twMerge(
-            `h-inherit rounded-e-xs px-4 py-3 focus:outline-hidden ${submitVariantClassName[variant]} `,
-            submitClassName,
-          )}
-        >
-          <Icon size={24} data={search} />
-        </button>
-      </div>
-    </form>
+      <InstantSearchSearchBox
+        {...props}
+        queryHook={queryHook}
+        searchAsYouType={searchAsYouType}
+        onSubmit={searchAsYouType ? handleSubmit : undefined}
+        placeholder={placeholder ?? intl('search')}
+        inputProps={{ id: inputId }}
+        resetIconComponent={ResetIcon}
+        submitIconComponent={SubmitIcon}
+        translations={{
+          resetButtonTitle: intl('search_reset'),
+          submitButtonTitle: intl('search_submit'),
+        }}
+        classNames={{
+          form: twMerge(
+            'relative grid grid-cols-[1fr_min-content] rounded-xs',
+            formVariantClassName[variant],
+          ),
+          input: twMerge(
+            'col-start-1 row-start-1 grow rounded-s-xs rounded-e-none py-4 pr-12 pl-6 focus:outline-hidden',
+            inputVariantClassName[variant],
+            inputClassName,
+          ),
+          reset: twMerge(
+            'absolute top-1/2 right-16 not-[hidden]:flex size-8 -translate-y-1/2 items-center justify-center rounded-full focus:outline-hidden',
+            resetVariantClassName[variant],
+          ),
+          submit: twMerge(
+            'col-start-2 row-start-1 h-full rounded-e-xs px-4 py-3 focus:outline-hidden',
+            submitVariantClassName[variant],
+          ),
+          loadingIndicator:
+            'absolute top-1/2 right-16 size-8 -translate-y-1/2 items-center justify-center text-white-100 not-[hidden]:flex',
+        }}
+      />
+    </div>
   );
 }

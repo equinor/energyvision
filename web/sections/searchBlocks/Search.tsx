@@ -1,37 +1,17 @@
 'use client';
-import { Icon } from '@equinor/eds-core-react';
-import { close, search } from '@equinor/eds-icons';
 import type { SearchClient } from 'instantsearch.js';
 import { useLocale, useTranslations } from 'next-intl';
-import { useEffect, useRef } from 'react';
-import {
-  Configure,
-  Index,
-  InstantSearch,
-  SearchBox,
-  type SearchBoxProps,
-} from 'react-instantsearch';
+import { useRef } from 'react';
+import { Configure, Index, InstantSearch } from 'react-instantsearch';
 import { PaginationContextProvider } from '@/contexts/PaginationContext';
+import {
+  MINIMUM_SUBMITTED_QUERY_LENGTH,
+  SearchBox,
+} from '@/core/AlgoliaSearchBox/SearchBox';
 import usePaginationPadding from '@/lib/hooks/usePaginationPadding';
 import { Pagination } from '@/sections/searchBlocks/pagination/Pagination';
 import SearchResults from '@/sections/searchBlocks/SearchResults';
 import { searchClient as client } from '../../lib/algolia';
-
-const MINIMUM_QUERY_LENGTH = 3;
-const SEARCH_DEBOUNCE_MS = 400;
-
-type PendingSearch = {
-  query: string;
-  search: (query: string) => void;
-};
-
-function ResetIcon() {
-  return <Icon size={24} data={close} />;
-}
-
-function SubmitIcon() {
-  return <Icon size={24} data={search} />;
-}
 
 const searchClient = client();
 const queriedSearchClient: SearchClient = {
@@ -41,7 +21,7 @@ const queriedSearchClient: SearchClient = {
       requests.some(
         ({ params }) =>
           typeof params?.query !== 'string' ||
-          params.query.trim().length < MINIMUM_QUERY_LENGTH,
+          params.query.trim().length < MINIMUM_SUBMITTED_QUERY_LENGTH,
       )
     ) {
       return Promise.resolve({
@@ -67,40 +47,8 @@ export function Search() {
   const intl = useTranslations();
   const locale = useLocale();
   const resultsRef = useRef<HTMLDivElement>(null);
-  const debounceTimeoutRef = useRef<ReturnType<typeof setTimeout>>(undefined);
-  const pendingSearchRef = useRef<PendingSearch>(null);
   const envPrefix =
     process.env.NEXT_PUBLIC_SANITY_DATASET === 'global' ? 'prod' : 'dev';
-
-  useEffect(() => {
-    return () => clearTimeout(debounceTimeoutRef.current);
-  }, []);
-
-  const queryHook: SearchBoxProps['queryHook'] = (query, search) => {
-    clearTimeout(debounceTimeoutRef.current);
-    const trimmedQuery = query.trim();
-    pendingSearchRef.current = { query: trimmedQuery, search };
-
-    if (trimmedQuery.length < MINIMUM_QUERY_LENGTH) {
-      search('');
-      return;
-    }
-
-    debounceTimeoutRef.current = setTimeout(() => {
-      search(trimmedQuery);
-    }, SEARCH_DEBOUNCE_MS);
-  };
-
-  function handleSearchSubmit() {
-    clearTimeout(debounceTimeoutRef.current);
-    const pendingSearch = pendingSearchRef.current;
-
-    if (!pendingSearch || pendingSearch.query.length < MINIMUM_QUERY_LENGTH) {
-      return;
-    }
-
-    pendingSearch.search(pendingSearch.query);
-  }
 
   const padding = usePaginationPadding();
   const indices = [
@@ -145,27 +93,9 @@ export function Search() {
 
           <div className="max-w-175">
             <SearchBox
-              queryHook={queryHook}
-              onSubmit={handleSearchSubmit}
+              variant="inverted"
               autoFocus={true}
               placeholder={intl('search')}
-              resetIconComponent={ResetIcon}
-              submitIconComponent={SubmitIcon}
-              translations={{
-                resetButtonTitle: intl('search_reset'),
-                submitButtonTitle: intl('search_submit'),
-              }}
-              classNames={{
-                form: 'relative grid grid-cols-[1fr_min-content] rounded-xs [&:has(input:focus-visible):not(:has(:active))]:envis-outline-invert [&:has(button[type=submit]:focus-visible):not(:has(:active))]:envis-outline-invert',
-                input:
-                  'col-start-1 row-start-1 grow rounded-s-xs rounded-e-none border-y border-l border-white-100 bg-slate-blue-95 py-4 pr-12 pl-6 text-white-100 focus:outline-hidden',
-                reset:
-                  'absolute top-1/2 right-16 size-8 -translate-y-1/2 items-center justify-center rounded-full text-white-100 not-[hidden]:flex hover:bg-white-100 hover:text-slate-blue-95 focus:outline-hidden focus-visible:envis-outline-invert',
-                submit:
-                  'col-start-2 row-start-1 h-full rounded-e-xs bg-white-100 px-4 py-3 text-slate-blue-95 hover:bg-white-100/40 hover:text-white-100 focus:outline-hidden',
-                loadingIndicator:
-                  'absolute top-1/2 right-16 size-8 -translate-y-1/2 items-center justify-center text-white-100 not-[hidden]:flex',
-              }}
             />
           </div>
           <SearchResults resultsRef={resultsRef} items={indices} />
