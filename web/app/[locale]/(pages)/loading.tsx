@@ -1,5 +1,5 @@
-import { NewsroomLoadingPage } from '@/sections/LoadingPage/NewsroomLoadingPage';
+import LoadingPage from '@/sections/LoadingPage/LoadingPage';
 
 export default function Loading() {
-  return <NewsroomLoadingPage />;
+  return <LoadingPage />;
 }
