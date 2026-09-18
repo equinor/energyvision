@@ -4,7 +4,10 @@ import { useLocale, useTranslations } from 'next-intl';
 import { useRef } from 'react';
 import { Configure, Index, InstantSearch } from 'react-instantsearch';
 import { PaginationContextProvider } from '@/contexts/PaginationContext';
-import { SearchBox } from '@/core/AlgoliaSearchBox/SearchBox';
+import {
+  MINIMUM_SUBMITTED_QUERY_LENGTH,
+  SearchBox,
+} from '@/core/AlgoliaSearchBox/SearchBox';
 import usePaginationPadding from '@/lib/hooks/usePaginationPadding';
 import { Pagination } from '@/sections/searchBlocks/pagination/Pagination';
 import SearchResults from '@/sections/searchBlocks/SearchResults';
@@ -13,8 +16,14 @@ import { searchClient as client } from '../../lib/algolia';
 const searchClient = client();
 const queriedSearchClient: SearchClient = {
   ...searchClient,
-  search(requests: any) {
-    if (requests.every(({ params }: any) => !params.query)) {
+  search(requests) {
+    if (
+      requests.some(
+        ({ params }) =>
+          typeof params?.query !== 'string' ||
+          params.query.trim().length < MINIMUM_SUBMITTED_QUERY_LENGTH,
+      )
+    ) {
       return Promise.resolve({
         results: requests.map(() => ({
           hits: [],
@@ -33,6 +42,7 @@ const queriedSearchClient: SearchClient = {
     return searchClient.search(requests);
   },
 };
+
 export function Search() {
   const intl = useTranslations();
   const locale = useLocale();
@@ -81,8 +91,12 @@ export function Search() {
         <div className="mx-auto p-8 px-layout-sm lg:px-layout-lg">
           <h1 className="sr-only">{intl('search_page_title')}</h1>
 
-          <div className="max-w-[700px]">
-            <SearchBox variant="inverted" />
+          <div className="max-w-175">
+            <SearchBox
+              variant="inverted"
+              autoFocus={true}
+              placeholder={intl('search')}
+            />
           </div>
           <SearchResults resultsRef={resultsRef} items={indices} />
           <PaginationContextProvider defaultRef={resultsRef}>
