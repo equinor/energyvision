@@ -163,7 +163,7 @@ export const ModalPromotion = forwardRef<HTMLDivElement, ModalPromotionProps>(
             onClose={() => {
               shouldRestoreFocus.current = true;
               setIsModalOpen(false);
-              window.history.pushState({}, '', window.location.pathname);
+              window.history.replaceState({}, '', window.location.pathname);
             }}
             title={modalTitle || plainText || 'Details'}
           >
