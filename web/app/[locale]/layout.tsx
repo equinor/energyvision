@@ -52,7 +52,7 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} className={`${equinor.className} `}>
-      <body className="has-data-no-sticky:pt-topbar">
+      <body className="min-h-screen has-data-no-sticky:pt-topbar">
         {!isPreview && (
           // cookiebot script must strictly be inside body.
           <Script

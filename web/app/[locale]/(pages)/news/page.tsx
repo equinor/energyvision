@@ -16,6 +16,7 @@ import { menuQuery as globalMenuQuery } from '@/sanity/queries/menu';
 import { newsroomMetaQuery } from '@/sanity/queries/metaData';
 import { simpleMenuQuery } from '@/sanity/queries/simpleMenu';
 import Header from '@/sections/Header/Header';
+import { NewsroomLoadingPage } from '@/sections/LoadingPage/NewsroomLoadingPage';
 import NewsRoomTemplate from '@/templates/newsroom/Newsroom';
 
 const TopicPage = dynamic(() => import('@/templates/topic/TopicPage'));
@@ -129,7 +130,7 @@ async function CachedNewsroomPage({
   return (
     <>
       <Header siteMenuData={siteMenuData} headerData={headerData} />
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<NewsroomLoadingPage />}>
         {Flags.HAS_NEWSROOM && response ? (
           <NewsRoomTemplate
             locale={locale}

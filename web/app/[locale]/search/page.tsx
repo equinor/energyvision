@@ -1,6 +1,15 @@
-'use client'
-import { Suspense } from 'react'
-import { Search } from '@/sections/searchBlocks/Search'
+'use client';
+
+import dynamic from 'next/dynamic';
+import { useEffect } from 'react';
+
+const Search = dynamic(
+  () =>
+    import('@/sections/searchBlocks/Search').then(
+      (searchModule) => searchModule.Search,
+    ),
+  { ssr: false },
+);
 
 /*export async function generateStaticParams() {
   return Flags.HAS_SEARCH ? [{ locale: 'nb-NO' }, { locale: 'en-GB' }] : []
@@ -37,9 +46,11 @@ import { Search } from '@/sections/searchBlocks/Search'
 } */
 
 export default function Page() {
-  return (
-    <Suspense fallback={<div>Loading Search Engine...</div>}>
-      <Search />
-    </Suspense>
-  )
+  useEffect(() => {
+    if (window.location.search) {
+      window.history.replaceState(null, '', window.location.pathname);
+    }
+  }, []);
+
+  return <Search />;
 }
