@@ -11,6 +11,7 @@ import { MagazineRoom, Magazine as MagazineStructure } from './items/Magazine'
 import { Menu } from './items/Menu'
 import { Misc } from './items/Misc'
 import { NewsRoom, News as NewsStructure } from './items/News'
+import { Organization } from './items/Organization'
 import { HomePageRoute, Routes } from './items/Routes'
 import { Settings } from './items/Settings'
 import { TopicContent } from './items/TopicContent'
@@ -38,6 +39,8 @@ const ADMIN_ITEMS = (S, context) =>
     S.divider().title('Layout components'),
     Menu(S),
     Footer(S),
+    S.divider().title('Organization'),
+    Organization(S),
     S.divider().title('Other'),
     AssetLibrary(S, context),
     Settings(S),

@@ -57,7 +57,7 @@ export const Image = ({
 }: ImageProps) => {
   const isLargerDisplays = useMediaQuery(`(min-width: 800px)`)
 
-  if (!image || !image?.asset) return null
+  if (!image?.asset) return null
 
   const { url, width, height } = resolveImage({
     image,

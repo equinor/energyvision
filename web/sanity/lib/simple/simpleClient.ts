@@ -1,5 +1,5 @@
-import { type ClientConfig, createClient } from '@sanity/client'
-import { apiVersion, dataset, projectId, studioUrl } from '../api'
+import { type ClientConfig, createClient } from '@sanity/client';
+import { apiVersion, dataset, projectId, studioUrl } from '../api';
 
 const sanityConfig: ClientConfig = {
   projectId,
@@ -13,29 +13,29 @@ const sanityConfig: ClientConfig = {
     studioUrl,
     // Set logger to 'console' for more verbose logging
     // logger: console,
-    filter: props => {
+    filter: (props) => {
       if (props.sourcePath.at(-1) === 'title') {
-        return true
+        return true;
       }
 
-      return props.filterDefault(props)
+      return props.filterDefault(props);
     },
   },
-}
+};
 
 export const client = createClient({
   ...sanityConfig,
   token: process.env.SANITY_API_TOKEN,
-})
+});
 
 //only for next config
 export const notSecuredTokenClient = createClient({
   ...sanityConfig,
   token: process.env.SANITY_API_TOKEN,
-})
+});
 
 export const noCdnClient = createClient({
   ...sanityConfig,
   useCdn: false,
   token: process.env.SANITY_API_TOKEN,
-})
+});

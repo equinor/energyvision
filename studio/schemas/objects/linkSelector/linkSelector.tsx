@@ -1,6 +1,6 @@
 import { link } from '@equinor/eds-icons'
 import { MdOutlineAnchor } from 'react-icons/md'
-import type { Rule } from 'sanity'
+import type { ArrayDefinition, Rule } from 'sanity'
 import blocksToText from '@/helpers/blocksToText'
 import { capitalizeFirstLetter } from '@/helpers/formatters'
 import { EdsBlockEditorIcon } from '@/icons'
@@ -59,7 +59,7 @@ const linkSelector = (
               ? linkTypes.includes(it.name as LinkType)
               : defaultLinks.includes(it.name as LinkType)
             return types
-          }),
+          }) as ArrayDefinition['of'],
         },
         true,
       ),
@@ -83,7 +83,7 @@ const linkSelector = (
               const referencedTitle = await context
                 .getClient({ apiVersion: apiVersion })
                 .fetch(
-                  /* groq */ `*[_id == $id][0]{"title": coalesce(content->title, title)}.title`,
+                  /* groq */ `*[_id == $id][0]{"title": coalesce(content->title, name, title)}.title`,
                   {
                     id: parent?.link?.[0]._ref,
                   },
@@ -120,6 +120,8 @@ const linkSelector = (
         referenceMagMedia: 'link.0.heroFigure.image',
         referenceTopicTitle: 'link.0.content.title',
         referenceTopicMedia: 'link.0.content.heroFigure.image',
+        referencePersonName: 'link.0.name',
+        personListUrl: 'link.0.personListUrl',
         slug: 'link.0.slug.current',
         href: 'link.0.href',
         anchorId: 'link.0.anchorId',
@@ -135,11 +137,18 @@ const linkSelector = (
         referenceMagMedia,
         referenceTopicTitle,
         referenceTopicMedia,
+        referencePersonName,
+        personListUrl,
         anchorId,
       }: any) {
         let title = label ?? 'Missing title'
-        if (!label && (referenceTopicTitle || referenceNewsMagTitle)) {
-          title = blocksToText(referenceTopicTitle ?? referenceNewsMagTitle)
+        if (
+          !label &&
+          (referenceTopicTitle || referenceNewsMagTitle || referencePersonName)
+        ) {
+          title =
+            referencePersonName ??
+            blocksToText(referenceTopicTitle ?? referenceNewsMagTitle)
         }
         if (!label && anchorReference) {
           title = anchorReference
@@ -164,7 +173,8 @@ const linkSelector = (
         if (type === 'link') {
           linkType = 'external link'
         }
-        let subtitle = slug ?? href ?? `${capitalizeFirstLetter(linkType)}`
+        let subtitle =
+          personListUrl ?? slug ?? href ?? `${capitalizeFirstLetter(linkType)}`
 
         if (anchorId) {
           subtitle = `#${anchorId}`

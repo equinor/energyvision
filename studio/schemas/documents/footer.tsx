@@ -1,8 +1,8 @@
-import type { Rule, Reference } from 'sanity'
-import { EdsIcon } from '../../icons'
 import { format_color_text } from '@equinor/eds-icons'
-import { lang } from './langField'
+import type { Reference, Rule } from 'sanity'
+import { EdsIcon } from '../../icons'
 import linkSelector from '../objects/linkSelector/linkSelector'
+import { lang } from './langField'
 
 export type ColumnLink = {
   _type: 'link'
@@ -40,7 +40,16 @@ export default {
               type: 'array',
               name: 'columnLinks',
               title: 'Links',
-              of: [linkSelector(['link', 'homePageLink', 'reference', 'socialMediaLink'])],
+              of: [
+                linkSelector([
+                  'link',
+                  'reference',
+                  'referenceToOtherLanguage',
+                  'homePageLink',
+                  'pageAnchor',
+                  'socialMediaLink',
+                ]),
+              ],
             },
           ],
         },

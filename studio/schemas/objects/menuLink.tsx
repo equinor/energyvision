@@ -1,8 +1,8 @@
 import { link } from '@equinor/eds-icons'
+import type { Reference, Rule } from 'sanity'
+import { filterByPages } from '../../helpers/referenceFilters'
 import { EdsIcon } from '../../icons'
-import type { Rule, Reference } from 'sanity'
-import routes from '../routes'
-import { filterByRoute } from '../../helpers/referenceFilters'
+import { defaultReferenceTargets } from '../objects/linkSelector/common'
 
 export type MenuLink = {
   _type: 'menuLink'
@@ -25,11 +25,12 @@ export default {
     {
       title: 'Route',
       name: 'route',
-      description: 'The content you want to appear at this path. Remember that it needs to be published first.',
+      description:
+        'The content you want to appear at this path. Remember that it needs to be published first.',
       type: 'reference',
-      to: routes,
+      to: defaultReferenceTargets,
       options: {
-        filter: filterByRoute,
+        filter: filterByPages,
         disableNew: true,
       },
       validation: (Rule: Rule) => Rule.required(),
