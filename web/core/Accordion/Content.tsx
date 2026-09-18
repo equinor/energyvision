@@ -25,16 +25,18 @@ export const Content = forwardRef<HTMLDivElement, AccordionContentProps>(
   ) {
     const useComplex = useMediaQuery(`(min-width: 1300px)`)
 
-    const commonSlideUpDown = `overflow-hidden motion-safe:data-closed:animate-slideDown motion-safe:data-open:animate-slideUp`
+    const commonSlideUpDown = `overflow-hidden data-closed:h-0 motion-safe:data-closed:animate-slideDown motion-safe:data-open:animate-slideUp`
 
     const variantClassName: Partial<Record<Variants, string>> = {
       primary: `${commonSlideUpDown}`,
       menu: `max-xl:overflow-hidden
+    max-xl:data-closed:h-0
     max-xl:motion-safe:data-closed:animate-slideDown
     max-xl:motion-safe:data-open:animate-slideUp
 
     `,
       simpleMenu: `max-xl:overflow-hidden
+    max-xl:data-closed:h-0
     max-xl:motion-safe:data-closed:animate-slideDown
     max-xl:motion-safe:data-open:animate-slideUp`,
     }
