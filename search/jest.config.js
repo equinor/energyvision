@@ -3,4 +3,7 @@ module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
   testPathIgnorePatterns: ['./dist'],
-}
+  moduleNameMapper: {
+    '^@sanity/client$': '<rootDir>/test/mocks/sanity-client.ts',
+  },
+};

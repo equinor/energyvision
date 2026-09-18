@@ -11,8 +11,8 @@
     "watch": "tsc -w",
     "azurite": "azurite",
     "start": "func start",
-    "lint": "eslint ./**/*.ts",
-    "lint:fix": "eslint --fix ./**/*.ts",
+    "lint": "pnpm exec biome check .",
+    "lint:fix": "pnpm exec biome check --write .",
     "test": "jest"
   },
   "keywords": [
