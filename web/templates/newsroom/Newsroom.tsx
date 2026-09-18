@@ -1,44 +1,44 @@
-'use client'
+'use client';
 import type {
   SearchClient,
   SearchOptions,
   SearchResponse,
   UiState,
-} from 'instantsearch.js'
-import { useTranslations } from 'next-intl'
-import { forwardRef, useRef } from 'react'
-import { Configure } from 'react-instantsearch'
+} from 'instantsearch.js';
+import { useTranslations } from 'next-intl';
+import { forwardRef, useRef } from 'react';
+import { Configure } from 'react-instantsearch';
 import {
   InstantSearchNext,
   type InstantSearchNextRouting,
-} from 'react-instantsearch-nextjs'
-import { ResourceLink } from '@/core/Link/ResourceLink'
-import { List } from '@/core/List'
-import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
-import { Flags } from '@/sanity/helpers/datasetHelpers'
-import { Pagination } from '@/sections/searchBlocks/pagination/Pagination'
-import { PaginationContextProvider } from '../../contexts/PaginationContext'
-import { searchClient as client } from '../../lib/algolia'
-import Blocks from '../../portableText/Blocks'
-import type { NewsRoomPageType } from '../../types'
-import NewsRoomFilters from './Filters/NewsroomFilters'
-import NewsSections from './NewsSections/NewsSections'
-import QuickSearch from './QuickSearch/QuickSearch'
+} from 'react-instantsearch-nextjs';
+import { SearchBox } from '@/core/AlgoliaSearchBox/SearchBox';
+import { ResourceLink } from '@/core/Link/ResourceLink';
+import { List } from '@/core/List';
+import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction';
+import { Flags } from '@/sanity/helpers/datasetHelpers';
+import { Pagination } from '@/sections/searchBlocks/pagination/Pagination';
+import { PaginationContextProvider } from '../../contexts/PaginationContext';
+import { searchClient as client } from '../../lib/algolia';
+import Blocks from '../../portableText/Blocks';
+import type { NewsRoomPageType } from '../../types';
+import NewsRoomFilters from './Filters/NewsroomFilters';
+import NewsSections from './NewsSections/NewsSections';
 
 type NewsRouteState = {
-  query?: string
-  page?: number
-  topics?: string[]
-  years?: string[]
-  countries?: string[]
-}
+  query?: string;
+  page?: number;
+  topics?: string[];
+  years?: string[];
+  countries?: string[];
+};
 
 type NewsRoomTemplateProps = {
-  locale?: string
-  pageData?: NewsRoomPageType | undefined
-  slug?: string
-  initialSearchResponse: SearchResponse<any>
-}
+  locale?: string;
+  pageData?: NewsRoomPageType | undefined;
+  slug?: string;
+  initialSearchResponse: SearchResponse<any>;
+};
 
 const NewsRoomTemplate = forwardRef<HTMLDivElement, NewsRoomTemplateProps>(
   function NewsRoomTemplate({ locale, pageData, initialSearchResponse }, ref) {
@@ -49,34 +49,34 @@ const NewsRoomTemplate = forwardRef<HTMLDivElement, NewsRoomTemplateProps>(
       subscriptionLinkTitle,
       localNewsPages,
       fallbackImages,
-    } = pageData || {}
+    } = pageData || {};
 
-    const t = useTranslations()
-    const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev'
-    const indexName = `${envPrefix}_NEWS_${locale}`
+    const t = useTranslations();
+    const envPrefix = Flags.IS_GLOBAL_PROD ? 'prod' : 'dev';
+    const indexName = `${envPrefix}_NEWS_${locale}`;
 
-    const resultsRef = useRef<HTMLDivElement>(null)
+    const resultsRef = useRef<HTMLDivElement>(null);
 
     const routing = {
       router: {
         createURL: ({ qsModule, routeState, location }) => {
-          const queryParameters: any = {}
+          const queryParameters: any = {};
 
           if (routeState.query) {
-            queryParameters.query = encodeURIComponent(routeState.query)
+            queryParameters.query = encodeURIComponent(routeState.query);
           }
           if (routeState.page !== 1) {
-            queryParameters.page = routeState.page
+            queryParameters.page = routeState.page;
           }
           if (routeState.topics) {
-            queryParameters.topics = routeState.topics.map(encodeURIComponent)
+            queryParameters.topics = routeState.topics.map(encodeURIComponent);
           }
           if (routeState.years) {
-            queryParameters.years = routeState.years
+            queryParameters.years = routeState.years;
           }
           if (routeState.countries) {
             queryParameters.countries =
-              routeState.countries.map(encodeURIComponent)
+              routeState.countries.map(encodeURIComponent);
           }
 
           const queryString = qsModule.stringify(queryParameters, {
@@ -84,8 +84,8 @@ const NewsRoomTemplate = forwardRef<HTMLDivElement, NewsRoomTemplateProps>(
             arrayFormat: 'repeat',
             format: 'RFC1738',
             encode: false,
-          })
-          return `${location.pathname}${queryString}`
+          });
+          return `${location.pathname}${queryString}`;
         },
         parseURL: ({ qsModule, location }) => {
           const {
@@ -94,24 +94,24 @@ const NewsRoomTemplate = forwardRef<HTMLDivElement, NewsRoomTemplateProps>(
             topics = [],
             years = [],
             countries = [],
-          }: NewsRouteState = qsModule.parse(location.search.slice(1))
+          }: NewsRouteState = qsModule.parse(location.search.slice(1));
 
           const allTopics = Array.isArray(topics)
             ? topics
-            : [topics].filter(Boolean)
+            : [topics].filter(Boolean);
           const allYears = Array.isArray(years)
             ? years
-            : [years].filter(Boolean)
+            : [years].filter(Boolean);
           const allCountries = Array.isArray(countries)
             ? countries
-            : [countries].filter(Boolean)
+            : [countries].filter(Boolean);
           return {
             query: decodeURIComponent(query),
             page,
             topics: allTopics.map(decodeURIComponent),
             years: allYears,
             countries: allCountries.map(decodeURIComponent),
-          } as NewsRouteState
+          } as NewsRouteState;
         },
         /* push(url) {
         if (singletonRouter.asPath.split('?')[1] !== url.split('?')[1]) {
@@ -123,14 +123,14 @@ const NewsRoomTemplate = forwardRef<HTMLDivElement, NewsRoomTemplateProps>(
       },
       stateMapping: {
         stateToRoute(uiState: UiState) {
-          const indexUiState = uiState[indexName] || {}
+          const indexUiState = uiState[indexName] || {};
           return {
             query: indexUiState.query,
             years: indexUiState.refinementList?.year,
             topics: indexUiState.refinementList?.topicTags,
             countries: indexUiState.refinementList?.countryTags,
             page: indexUiState?.page,
-          } as NewsRouteState
+          } as NewsRouteState;
         },
         routeToState(routeState: NewsRouteState) {
           return {
@@ -143,36 +143,36 @@ const NewsRoomTemplate = forwardRef<HTMLDivElement, NewsRoomTemplateProps>(
               },
               page: routeState.page,
             },
-          } as UiState
+          } as UiState;
         },
       },
-    } as InstantSearchNextRouting<UiState, NewsRouteState>
-    const searchClient = client()
+    } as InstantSearchNextRouting<UiState, NewsRouteState>;
+    const searchClient = client();
 
     const queriedSearchClient: SearchClient = {
       ...searchClient,
       search(requests: Array<{ indexName: string; params: SearchOptions }>) {
         const facetFilterSet = new Set(
-          requests.map(it => it.params.facetFilters).flat(2),
-        )
+          requests.map((it) => it.params.facetFilters).flat(2),
+        );
         const hasEmptyQueryOrFirstPage = requests.every(
           ({ params }: { indexName: string; params: SearchOptions }) =>
             !params.query && params.page === 0,
-        )
+        );
 
         if (hasEmptyQueryOrFirstPage && facetFilterSet.size === 2) {
           // console.log('Server cache hit')
           return Promise.resolve({
             results: requests.map(() => initialSearchResponse),
-          })
+          });
         }
-        return searchClient.search(requests)
+        return searchClient.search(requests);
       },
-    }
+    };
 
     return (
       <PaginationContextProvider defaultRef={resultsRef}>
-        <main ref={ref} className='mx-auto flex w-full max-w-fullwidth'>
+        <main ref={ref} className="mx-auto flex w-full max-w-fullwidth">
           <InstantSearchNext
             searchClient={queriedSearchClient}
             future={{ preserveSharedStateOnUnmount: false }}
@@ -185,33 +185,39 @@ const NewsRoomTemplate = forwardRef<HTMLDivElement, NewsRoomTemplateProps>(
               facetFilters={['type:news', 'topicTags:-Crude Oil Assays']}
             />
 
-            <div className='mx-auto flex w-full max-w-fullwidth flex-col gap-8 lg:gap-12'>
-              <div className='dark bg-slate-blue-95 py-24'>
-                <div className='mx-auto flex max-w-content grid-rows-2 flex-col gap-4 px-layout-sm'>
+            <div className="mx-auto flex w-full max-w-fullwidth flex-col gap-8 lg:gap-12">
+              <div className="dark bg-slate-blue-95 py-24">
+                <div className="mx-auto flex max-w-content grid-rows-2 flex-col gap-4 px-layout-sm">
                   {title && (
                     <Blocks
                       value={title}
-                      as='h1'
-                      variant='2xl'
-                      group='heading'
+                      as="h1"
+                      variant="2xl"
+                      group="heading"
                     />
                   )}
                   {ingress && (
                     <Blocks
                       value={ingress}
-                      group='paragraph'
-                      variant='ingress'
+                      group="paragraph"
+                      variant="ingress"
                     />
                   )}
-                  <div className='flex w-full flex-col items-center gap-8 lg:flex-row lg:justify-between'>
-                    <QuickSearch />
+                  <div className="flex w-full flex-col items-center gap-8 lg:flex-row lg:justify-between">
+                    <SearchBox
+                      className="w-full lg:w-fit"
+                      label={t('search_quick_search_label')}
+                      placeholder={t('search_quick_search')}
+                      autoFocus={true}
+                      searchAsYouType={false}
+                    />
                     <List
-                      role='navigation'
-                      className='max-lg:w-full'
+                      role="navigation"
+                      className="max-lg:w-full"
                       listClassName={'list-none'}
                       aria-label={t('newsroom_related_links')}
                     >
-                      <List.Item className='w-full'>
+                      <List.Item className="w-full">
                         {subscriptionLink?.link?.slug && (
                           <ResourceLink
                             href={`${getUrlFromAction(subscriptionLink)}`}
@@ -222,12 +228,12 @@ const NewsRoomTemplate = forwardRef<HTMLDivElement, NewsRoomTemplateProps>(
                       </List.Item>
                       {localNewsPages &&
                         localNewsPages?.length > 0 &&
-                        localNewsPages?.map(localNewsPage => {
-                          const url = getUrlFromAction(localNewsPage)
+                        localNewsPages?.map((localNewsPage) => {
+                          const url = getUrlFromAction(localNewsPage);
                           return localNewsPage?.link?.slug ? (
                             <List.Item
                               key={localNewsPage.id}
-                              className='w-full'
+                              className="w-full"
                             >
                               <ResourceLink
                                 type={localNewsPage.type}
@@ -236,24 +242,24 @@ const NewsRoomTemplate = forwardRef<HTMLDivElement, NewsRoomTemplateProps>(
                                 {localNewsPage?.label}
                               </ResourceLink>
                             </List.Item>
-                          ) : null
+                          ) : null;
                         })}
                     </List>
                   </div>
                 </div>
               </div>
-              <div className='mx-auto flex w-full max-w-content flex-col gap-8 pb-12 lg:grid lg:grid-cols-[27%_1fr] lg:gap-12 lg:px-layout-sm'>
-                <aside className='flex flex-col gap-4 max-lg:px-layout-sm lg:sticky lg:top-6 lg:gap-6 lg:self-start'>
+              <div className="mx-auto flex w-full max-w-content flex-col gap-8 pb-12 lg:grid lg:grid-cols-[27%_1fr] lg:gap-12 lg:px-layout-sm">
+                <aside className="flex flex-col gap-4 max-lg:px-layout-sm lg:sticky lg:top-6 lg:gap-6 lg:self-start">
                   <NewsRoomFilters />
                 </aside>
-                <div className='flex flex-col max-lg:px-4'>
-                  <h2 id='newsroom_news' className='sr-only'>
+                <div className="flex flex-col max-lg:px-4">
+                  <h2 id="newsroom_news" className="sr-only">
                     {t('newsroom_newslist_header')}
                   </h2>
                   <NewsSections fallbackImages={fallbackImages} />
                   <Pagination
                     hitsPerPage={20}
-                    className='w-full justify-center py-12'
+                    className="w-full justify-center py-12"
                   />
                 </div>
               </div>
@@ -261,8 +267,8 @@ const NewsRoomTemplate = forwardRef<HTMLDivElement, NewsRoomTemplateProps>(
           </InstantSearchNext>
         </main>
       </PaginationContextProvider>
-    )
+    );
   },
-)
+);
 
-export default NewsRoomTemplate
+export default NewsRoomTemplate;
