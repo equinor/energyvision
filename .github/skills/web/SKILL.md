@@ -34,6 +34,10 @@ Before any Next.js work, find and read the relevant doc in node_modules/next/dis
 - `next-cache-components-adoption`: Enable or migrate to Next.js Cache Components and resolve resulting blocking routes.
 - `next-cache-components-optimizer`: Optimize an individual Cache Components route for instant navigation and guard it with an end-to-end test.
 - `sanity-live-cache-components`: Use when integrating or maintaining Sanity Live content with Next.js Cache Components.
+- `algolia-search-implementation`: Use as the implementation checklist for new Algolia search experiences.
+- `algolia-instantsearch-ui`: Use for Algolia search results, filters, routing, pagination, and InstantSearch UI work.
+- `algolia-autocomplete`: Use for Algolia typeahead, query suggestions, and autocomplete experiences.
+- `algolia-ui-libraries`: Use when selecting, installing, upgrading, or auditing Algolia frontend libraries.
 
 ## Sentry configuration
 - Shared Sentry config is in `web/sentry.shared.ts` and exports:
