@@ -29,10 +29,7 @@ ${functions}
     _id,
     "slug": slug.current,
     title,
-    "hero": select(
-      heroType == "loopingVideo" => { "image": heroLoopingVideo->thumbnail },
-      heroImage,
-    ),
+    "hero": heroImage,
     "publishDateTime": ${publishDateTimeQuery},
     ${ingressForNewsQuery},
   }
@@ -45,10 +42,7 @@ ${functions}
     "type":_type,
     "slug": slug.current,
     title,
-    "hero": select(
-      heroType == "loopingVideo" => { "image": heroLoopingVideo->thumbnail },
-      heroImage,
-    ),
+    "hero": heroImage,
     subscriptionType,
     "publishDateTime": ${publishDateTimeQuery},
     ingress[]{
