@@ -1,14 +1,13 @@
-import { link } from '@equinor/eds-icons'
-import { EdsIcon } from '../../icons'
-import type { Rule, Reference } from 'sanity'
-import routes from '../routes'
-import { filterByRoute } from '../../helpers/referenceFilters'
+import { link } from '@equinor/eds-icons';
+import type { Reference, Rule } from 'sanity';
+import { EdsIcon } from '../../icons';
+import { internalReference } from './linkSelector/common';
 
 export type MenuLink = {
-  _type: 'menuLink'
-  label: string
-  route?: Reference
-}
+  _type: 'menuLink';
+  label: string;
+  route?: Reference;
+};
 
 export default {
   title: 'Menu link',
@@ -22,18 +21,7 @@ export default {
       type: 'string',
       validation: (Rule: Rule) => Rule.required(),
     },
-    {
-      title: 'Route',
-      name: 'route',
-      description: 'The content you want to appear at this path. Remember that it needs to be published first.',
-      type: 'reference',
-      to: routes,
-      options: {
-        filter: filterByRoute,
-        disableNew: true,
-      },
-      validation: (Rule: Rule) => Rule.required(),
-    },
+    { ...internalReference, name: 'route' },
   ],
   preview: {
     select: {
@@ -41,12 +29,12 @@ export default {
       route: 'route.slug',
     },
     prepare(selection: any) {
-      const { label, route } = selection
+      const { label, route } = selection;
       return {
         title: label || 'No label added yet',
         subtitle: route?.current || 'No route selected yet',
         media: EdsIcon(link),
-      }
+      };
     },
   },
-}
+};
