@@ -1,5 +1,6 @@
 import { format_line_spacing, playlist_add } from '@equinor/eds-icons';
 import type { Reference, Rule, ValidationContext } from 'sanity';
+
 import {
   filterByPages,
   filterByRouteNewsMagazineAndTitle,
@@ -7,7 +8,11 @@ import {
 import { EdsIcon } from '../../icons';
 import { Flags } from '../../src/lib/datasetHelpers';
 import { configureBlockContent } from '../editors/blockContentType';
-import { defaultReferenceTargets } from '../objects/linkSelector/common';
+import {
+  externalLink,
+  internalReference,
+} from '../objects/linkSelector/common';
+
 import routes from '../routes';
 import { validateCharCounterEditor } from '../validations/validateCharCounterEditor';
 import { validateInternalOrExternalUrl } from '../validations/validateInternalOrExternalUrl';
@@ -66,33 +71,23 @@ export default {
       type: 'string',
     },
     {
-      name: 'reference',
-      title: 'Internal link',
-      description: 'Use this field to reference an internal page.',
-      type: 'reference',
+      ...internalReference,
       fieldset: 'link',
       validation: (Rule: Rule) =>
         Rule.custom((value: any, context: ValidationContext) => {
           const { parent } = context as { parent: SubMenu };
           return validateInternalOrExternalUrl(value, parent.url);
         }),
-      to: defaultReferenceTargets,
-      options: {
-        filter: filterByPages,
-        disableNew: true,
-      },
     },
     {
-      name: 'url',
-      title: 'External URL',
-      description: 'Use this field to link to an external site.',
-      type: 'url',
-      fieldset: 'link',
       validation: (Rule: Rule) =>
         Rule.custom((value: any, context: ValidationContext) => {
           const { parent } = context as { parent: SubMenu };
           return validateInternalOrExternalUrl(value, parent.reference);
         }),
+      ...externalLink,
+      name: 'url',
+      fieldset: 'link',
     },
     {
       title: 'Menu groups',

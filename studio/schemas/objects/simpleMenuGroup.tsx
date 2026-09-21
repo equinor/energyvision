@@ -1,22 +1,20 @@
-import { list } from '@equinor/eds-icons'
-import { EdsIcon } from '../../icons'
-
-import type { SimpleMenuLink } from './simpleMenuLink'
-import type { Rule, Reference, ValidationContext } from 'sanity'
-import routes from '../routes'
-import { filterByRoute } from '../../helpers/referenceFilters'
+import { list } from '@equinor/eds-icons';
+import type { Reference, Rule } from 'sanity';
+import { EdsIcon } from '../../icons';
+import { internalReference } from './linkSelector/common';
+import type { SimpleMenuLink } from './simpleMenuLink';
 
 export type MenuGroup = {
-  _type: 'simpleMenuGroup'
-  label?: string
-  links?: SimpleMenuLink[]
-  readMoreLink?: ReadMoreLink
-}
+  _type: 'simpleMenuGroup';
+  label?: string;
+  links?: SimpleMenuLink[];
+  readMoreLink?: ReadMoreLink;
+};
 export type ReadMoreLink = {
-  _type: 'readMoreLink'
-  label: string
-  route: Reference
-}
+  _type: 'readMoreLink';
+  label: string;
+  route: Reference;
+};
 
 export default {
   title: 'Menu group',
@@ -41,27 +39,7 @@ export default {
           description: 'The visible label of the link.',
           type: 'string',
         },
-
-        {
-          title: 'Route',
-          name: 'route',
-          description: 'The content you want to appear at this path. Remember that it needs to be published first.',
-          type: 'reference',
-          to: routes,
-          options: {
-            filter: filterByRoute,
-            disableNew: true,
-          },
-          validation: (Rule: Rule) =>
-            Rule.custom((value: Reference, context: ValidationContext) => {
-              const { parent } = context as { parent: { label: string } }
-
-              if (parent?.label && !value)
-                return 'The read more link requires a valid route for it to appear on the web'
-
-              return true
-            }).warning(),
-        },
+        { ...internalReference, name: 'route' },
       ],
     },
     {
@@ -83,12 +61,12 @@ export default {
       links: 'links',
     },
     prepare(selection: { label: string; links: SimpleMenuLink[] }) {
-      const { label = 'Unlabeled group', links = [] } = selection
+      const { label = 'Unlabeled group', links = [] } = selection;
       return {
         title: label,
         subtitle: `Links: ${links.length}`,
         media: EdsIcon(list),
-      }
+      };
     },
   },
-}
+};

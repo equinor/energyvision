@@ -1,5 +1,5 @@
-import { sameLang } from './common/langAndDrafts'
-import { publishDateTimeQuery } from './common/publishDateTime'
+import { sameLang } from './common/langAndDrafts';
+import { publishDateTimeQuery } from './common/publishDateTime';
 
 export const menuQuery = /* groq */ `
   *[_type == "siteMenu" && ${sameLang}] {
@@ -12,7 +12,7 @@ export const menuQuery = /* groq */ `
         "type": _type,
         "slug": slug.current,
       },
-      "href": url,
+      "href": url.href,
     },
     "groups": group[]{
       "id": _key,
@@ -52,4 +52,4 @@ export const menuQuery = /* groq */ `
     featuredCTALabel,
 	}
 }[0]
-`
+`;

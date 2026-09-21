@@ -3,6 +3,7 @@ import type { Reference, Rule } from 'sanity';
 import { filterByPages } from '../../helpers/referenceFilters';
 import { EdsIcon } from '../../icons';
 import { defaultReferenceTargets } from '../objects/linkSelector/common';
+import { internalReference } from './linkSelector/common';
 
 export type MenuLink = {
   _type: 'menuLink';
@@ -22,19 +23,7 @@ export default {
       type: 'string',
       validation: (Rule: Rule) => Rule.required(),
     },
-    {
-      title: 'Route',
-      name: 'route',
-      description:
-        'The content you want to appear at this path. Remember that it needs to be published first.',
-      type: 'reference',
-      to: defaultReferenceTargets,
-      options: {
-        filter: filterByPages,
-        disableNew: true,
-      },
-      validation: (Rule: Rule) => Rule.required(),
-    },
+    { ...internalReference, name: 'route' },
   ],
   preview: {
     select: {

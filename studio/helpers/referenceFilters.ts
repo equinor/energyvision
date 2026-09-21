@@ -4,16 +4,25 @@ import { defaultLanguage } from '../languages';
 export const langOrDefault = (lang: string | unknown) =>
   lang || defaultLanguage.name;
 
+/**
+ *  Use this filter strictly to create references of documents matching the language of the current document.
+ * @param param0 The object containing the current document.
+ * @returns An object containing the GROQ filter and parameters for the current document's language.
+ */
 export const filterByLang = ({ document }: { document: SanityDocument }) => ({
   filter: `lang == $lang`,
   params: { lang: langOrDefault(document.lang) },
 });
 
+/**
+ *  Use this filter strictly to create references of routes matching the language of the current document.
+ * @param param0 The object containing the current document.
+ * @returns An object containing the GROQ filter for routes by the current document's language.
+ */
 export const filterByRoute = ({ document }: { document: SanityDocument }) => ({
   filter: `_type match $routeLang`,
   params: { routeLang: `route_${langOrDefault(document.lang)}*` },
 });
-
 export const filterByRouteWithPersonList = ({
   document,
 }: {
@@ -22,7 +31,13 @@ export const filterByRouteWithPersonList = ({
   filter: `_type match $routeLang && count(content->content[_type == "personList"]) > 0`,
   params: { routeLang: `route_${langOrDefault(document.lang)}*` },
 });
-//{ document }: { document: SanityDocument }
+
+/**
+ *  Use this filter to create references of any document having a slug that is matching the language of the current document.
+ * @param param0 The object containing the current document.
+ * @returns An object containing the GROQ filter and parameters for the current document's language.
+ */
+
 export const filterByPages = (props: any) => {
   const { document } = props;
   const lang = langOrDefault(document.lang);
@@ -35,6 +50,11 @@ export const filterByPages = (props: any) => {
   };
 };
 
+/**
+ *  Use this filter to create references of any document having a slug that is NOT matching the language of the current document.
+ * @param param0 The object containing the current document.
+ * @returns An object containing the GROQ filter and parameters for the current document's language.
+ */
 export const filterByPagesInOtherLanguages = ({
   document,
 }: {
