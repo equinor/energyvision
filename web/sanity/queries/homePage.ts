@@ -5,6 +5,7 @@ import pageContentFields from './common/pageContentFields'
 import { seoAndSomeFields } from './common/seoAndSomeFields'
 import { stickyMenuOutSideContent } from './common/stickyMenu'
 
+//test
 const homepageSlugsQuery = /* groq */ `
     "currentSlug": {
       "slug": "/",
