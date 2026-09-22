@@ -42,8 +42,9 @@ export async function proxy(request: NextRequest) {
   ) {
     const rewrite = pathname.replace(
       pathname,
-      `/content/dam/archive-assets/${locale}${pathname}`,
+      `/content/dam/archive-assets/${locale || 'en'}${pathname}`,
     );
+
     return NextResponse.rewrite(`${origin}${rewrite}`);
   }
 
