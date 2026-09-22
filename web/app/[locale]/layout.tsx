@@ -49,6 +49,7 @@ export default async function LocaleLayout({
 
   const isPreview = (await draftMode()).isEnabled;
   const dynamic = await getDynamicFetchOptions({}); // cannot read searchParams here, so footer will have draft version always in draft mode with published perspective
+  const googleTagManagerId = process.env['NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID'];
 
   return (
     <html lang={locale} className={`${equinor.className} `}>
@@ -91,11 +92,9 @@ export default async function LocaleLayout({
       {/** TODO look into scripts */}
       {!(isPreview || dataset === 'global-development') && (
         <>
-          {process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID && (
+          {googleTagManagerId && (
             //https://nextjs.org/docs/app/guides/third-party-libraries#google-third-parties
-            <GoogleTagManager
-              gtmId={process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID}
-            />
+            <GoogleTagManager gtmId={googleTagManagerId} />
           )}
           <SiteImprove />
         </>
