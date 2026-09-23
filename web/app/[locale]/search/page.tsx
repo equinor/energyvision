@@ -3,12 +3,22 @@
 import dynamic from 'next/dynamic';
 import { useEffect } from 'react';
 
+function SearchInputPlaceholder() {
+  return (
+    <main className="min-h-[calc(100dvh-694px)] bg-slate-blue-95 md:min-h-[calc(100dvh-479px)]">
+      <div className="mx-auto p-8 px-layout-sm lg:px-layout-lg">
+        <div className="h-14 max-w-175" />
+      </div>
+    </main>
+  );
+}
+
 const Search = dynamic(
   () =>
     import('@/sections/searchBlocks/Search').then(
       (searchModule) => searchModule.Search,
     ),
-  { ssr: false },
+  { loading: () => <SearchInputPlaceholder />, ssr: false },
 );
 
 /*export async function generateStaticParams() {
