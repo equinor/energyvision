@@ -34,7 +34,7 @@
     "@sanity/client": "^8.5.0",
     "algoliasearch": "^5.57.0",
     "@azure/app-configuration-provider": "2.6.0",
-    "@azure/identity": "4.13.2",
+    "@azure/identity": "4.13.3",
     "fp-ts": "^2.16.11",
     "dotenv": "17.4.2"
   }
