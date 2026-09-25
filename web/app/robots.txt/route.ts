@@ -1,6 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { crawlableDomains } from '@/lib/helpers/domainHelpers'
-import { Flags } from '@/sanity/helpers/datasetHelpers'
+import { type NextRequest, NextResponse } from 'next/server';
+import { crawlableDomains } from '@/lib/helpers/domainHelpers';
+import { Flags } from '@/sanity/helpers/datasetHelpers';
 
 const generateRobotsTxt = (domain: string) => `User-agent: *
 ${crawlableDomains.includes(domain) ? 'Allow' : 'Disallow'}: /
@@ -16,19 +16,19 @@ Disallow: /?*sortBy`
     : ''
 }
 Sitemap: ${domain.startsWith('www') ? `https://${domain}` : domain}/sitemap.xml
-`
+`;
 export async function GET(request: NextRequest) {
-  const domain = String(request.headers.get('host'))
+  const domain = String(request.headers.get('host'));
 
   if (!crawlableDomains.includes(domain) && !Flags.IS_DEV) {
-    return new NextResponse('Not Found', { status: 404 })
+    return new NextResponse('Not Found', { status: 404 });
   }
 
-  const content = generateRobotsTxt(domain)
+  const content = generateRobotsTxt(domain);
 
   return new NextResponse(content, {
     headers: {
       'Content-Type': 'text/plain',
     },
-  })
+  });
 }
