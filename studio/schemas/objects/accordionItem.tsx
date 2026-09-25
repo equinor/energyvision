@@ -1,20 +1,17 @@
-import { text_field } from '@equinor/eds-icons'
-import type { PortableTextBlock, Rule } from 'sanity'
-import { EdsIcon } from '../../icons'
-import { configureBlockContent } from '../editors/blockContentType'
+import { text_field } from '@equinor/eds-icons';
+import type { PortableTextBlock, Rule } from 'sanity';
+import { EdsIcon } from '../../icons';
+import { configureBlockContent } from '../editors/blockContentType';
 
 export type AccordionItem = {
-  _type: 'accordionItem'
-  title?: string
-  content?: PortableTextBlock[]
-}
+  _type: 'accordionItem';
+  title?: string;
+  content?: PortableTextBlock[];
+};
 
 const contentType = configureBlockContent({
-  h2: false,
-  h3: false,
-  h4: false,
-  attachment: false,
-})
+  variant: 'textBlockWithoutHeadings',
+});
 
 export default {
   title: 'Accordion item',
@@ -55,8 +52,16 @@ export default {
       title: 'title',
       content: 'content',
     },
-    prepare({ title = '', content }: { title: string; content: PortableTextBlock[] }) {
-      const contentBlock = content?.find((contentBlock: PortableTextBlock) => contentBlock._type === 'block')
+    prepare({
+      title = '',
+      content,
+    }: {
+      title: string;
+      content: PortableTextBlock[];
+    }) {
+      const contentBlock = content?.find(
+        (contentBlock: PortableTextBlock) => contentBlock._type === 'block',
+      );
       return {
         title: title || 'Missing title',
         subtitle:
@@ -67,7 +72,7 @@ export default {
               .join('')) ||
           'Missing content',
         media: EdsIcon(text_field),
-      }
+      };
     },
   },
-}
+};
