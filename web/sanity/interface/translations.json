@@ -810,5 +810,6 @@
     }
   },
   { "switch_to": { "en_GB": "Switch to", "nb_NO": "Bytt til" } },
+  { "choose_language": { "en_GB": "Choose language", "nb_NO": "Velg språk" } },
   { "tba": { "en_GB": "To be announced", "nb_NO": "Kommer" } }
 ]
