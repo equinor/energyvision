@@ -1,5 +1,4 @@
 import type { PortableTextInputProps } from 'sanity';
-import styled from 'styled-components';
 
 export const CompactBlockEditor = (props: PortableTextInputProps) => {
   // check if validations exist
@@ -12,23 +11,12 @@ export const CompactBlockEditor = (props: PortableTextInputProps) => {
     .map((rule: any) => rule.constraint)[0] */
 
   return (
-    <Container
-      id={'PTE-height-container'}
-      /*       style={{
-        height: '100px',
-      }} */
-    >
+    <div id={'PTE-height-container'}>
       {props.renderDefault({
         ...props,
         // remove the need to activate the PTE
         initialActive: true,
       })}
-    </Container>
+    </div>
   );
 };
-// add a specific height to the PTE without losing the ability to resize it
-const Container = styled.div`
-  [data-testid="pt-editor"][data-fullscreen="false"] {
-    height: 150px;
-  }
-`;
