@@ -1,10 +1,10 @@
-import { MdOutlinePeopleAlt } from 'react-icons/md'
-import type { PortableTextBlock, Rule } from 'sanity'
-import blocksToText from '../../helpers/blocksToText'
-import { filterByLang } from '../../helpers/referenceFilters'
-import { CompactBlockEditor } from '../components/CompactBlockEditor'
-import { configureBlockContent } from '../editors'
-import { theme } from './commonFields/commonFields'
+import { MdOutlinePeopleAlt } from 'react-icons/md';
+import type { PortableTextBlock, Rule } from 'sanity';
+import blocksToText from '../../helpers/blocksToText';
+import { filterByLang } from '../../helpers/referenceFilters';
+import { CompactBlockEditor } from '../components/CompactBlockEditor';
+import { configureBlockContent } from '../editors';
+import { theme } from './commonFields/commonFields';
 
 export default {
   name: 'personList',
@@ -81,12 +81,22 @@ export default {
                 title: name ?? 'Unknown person',
                 subtitle: `${title ?? ''}${highlighted ? ' ★ Highlighted' : ''}`,
                 media,
-              }
+              };
             },
           },
         },
       ],
-      validation: (Rule: Rule) => Rule.required().min(1),
+      validation: (Rule: Rule) =>
+        Rule.required()
+          .min(1)
+          .custom((items: { highlighted?: boolean }[] | undefined) => {
+            const highlightedCount =
+              items?.filter((item) => item.highlighted).length ?? 0;
+
+            return highlightedCount <= 1
+              ? true
+              : 'Only one person can be highlighted';
+          }),
     },
     theme,
   ],
@@ -100,7 +110,7 @@ export default {
         title: blocksToText(title) || 'Person list',
         subtitle: `Person list | ${items?.length ?? 0} people`,
         media: MdOutlinePeopleAlt,
-      }
+      };
     },
   },
-}
+};
