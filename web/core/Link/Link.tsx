@@ -1,9 +1,9 @@
-import { useTranslations } from 'next-intl'
-import { twMerge } from '@/lib/twMerge/twMerge'
-import { ArrowRight } from '../../icons'
-import { BaseLink, type BaseLinkProps } from './BaseLink'
+import { useTranslations } from 'next-intl';
+import { twMerge } from '@/lib/twMerge/twMerge';
+import { ArrowRight } from '../../icons';
+import { BaseLink, type BaseLinkProps } from './BaseLink';
 
-export type LinkProps = BaseLinkProps
+export type LinkProps = BaseLinkProps;
 
 /** Regular link style for use*/
 export const Link = ({
@@ -16,7 +16,7 @@ export const Link = ({
   onClick,
   'aria-current': ariaCurrent,
 }: LinkProps) => {
-  const t = useTranslations()
+  const t = useTranslations();
 
   const classNames = twMerge(
     `text-slate-blue-95
@@ -29,11 +29,11 @@ export const Link = ({
     dark:hover:text-slate-blue-95
   `,
     className,
-  )
+  );
 
-  const isTel = href.includes('tel:')
-  const isMailTo = href.includes('mailto:')
-  const showArrow = type === 'externalUrl' && !isTel && !isMailTo
+  const isTel = href.includes('tel:');
+  const isMailTo = href.includes('mailto:');
+  const showArrow = type === 'externalUrl' && !isTel && !isMailTo;
 
   return (
     <BaseLink
@@ -48,13 +48,13 @@ export const Link = ({
       {children}
       {showArrow && (
         <ArrowRight
-          aria-hidden='false'
+          aria-hidden="false"
           aria-label={t('externalLink')}
-          className='-rotate-45 inline-block origin-center pb-1 text-no'
+          className="inline-block origin-center -rotate-45 pb-1 text-no"
         />
       )}
     </BaseLink>
-  )
-}
+  );
+};
 
-export default Link
+export default Link;

@@ -1,18 +1,18 @@
-import NextLink, { type LinkProps } from 'next/link'
-import { type AnchorHTMLAttributes, forwardRef, type Ref } from 'react'
-import { twMerge } from '@/lib/twMerge/twMerge'
-import type { LinkType } from '../../types/index'
+import NextLink, { type LinkProps } from 'next/link';
+import { type AnchorHTMLAttributes, forwardRef, type Ref } from 'react';
+import { twMerge } from '@/lib/twMerge/twMerge';
+import type { LinkType } from '../../types/index';
 
 export type BaseLinkProps = {
   /** What kind of content is it  */
-  type?: LinkType
+  type?: LinkType;
   /** The locale for the link, required for internal URLs */
-  hrefLang?: string
+  hrefLang?: string;
   /** Skip internal link styling, because incoming button styling */
-  skipInternalStyle?: boolean
-  ref?: Ref<HTMLAnchorElement> // Add ref to your props interface
+  skipInternalStyle?: boolean;
+  ref?: Ref<HTMLAnchorElement>; // Add ref to your props interface
 } & AnchorHTMLAttributes<HTMLAnchorElement> &
-  LinkProps
+  LinkProps;
 
 /** Base link style for use
  * Contains the common focus and active styling
@@ -30,6 +30,8 @@ export const BaseLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(
       hrefLang,
       onClick,
       'aria-current': ariaCurrent,
+      'aria-label': ariaLabel,
+      'aria-expanded': ariaExpanded,
       target,
       role,
       title,
@@ -47,11 +49,21 @@ export const BaseLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(
           dark:focus-visible:envis-outline-invert
           dark:active:envis-outline-invert`,
           className,
-        )
+        );
 
     if (!href) {
-      return null
+      return null;
     }
+
+    const commonProps = {
+      className: classNames,
+      ref,
+      role,
+      title,
+      ...(ariaCurrent && { 'aria-current': ariaCurrent }),
+      ...(ariaLabel && { 'aria-label': ariaLabel }),
+      ...(ariaExpanded !== undefined && { 'aria-expanded': ariaExpanded }),
+    };
 
     const getLinkElement = () => {
       switch (type) {
@@ -63,51 +75,40 @@ export const BaseLink = forwardRef<HTMLAnchorElement, BaseLinkProps>(
             // for SEO
             // eslint-disable-next-line react/jsx-no-target-blank
             <a
-              className={classNames}
-              ref={ref}
+              {...commonProps}
               href={href}
-              target='_blank'
-              rel='noopener'
-              referrerPolicy='strict-origin-when-cross-origin'
+              target="_blank"
+              rel="noopener"
+              referrerPolicy="strict-origin-when-cross-origin"
               onClick={onClick}
-              {...(ariaCurrent && { 'aria-current': ariaCurrent })}
             >
               {children}
             </a>
-          )
+          );
         case 'icsLink':
           return (
-            <a
-              className={classNames}
-              ref={ref}
-              href={href}
-              {...(ariaCurrent && { 'aria-current': ariaCurrent })}
-            >
+            <a {...commonProps} href={href}>
               {children}
             </a>
-          )
+          );
 
         default:
           return (
             <NextLink
-              ref={ref}
+              {...commonProps}
               href={href}
-              className={classNames}
               prefetch={prefetch}
               hrefLang={hrefLang}
               onClick={onClick}
-              {...(ariaCurrent && { 'aria-current': ariaCurrent })}
               {...(target && { target })}
-              {...(role && { role })}
-              {...(title && { title })}
             >
               {children}
             </NextLink>
-          )
+          );
       }
-    }
+    };
 
-    return getLinkElement()
+    return getLinkElement();
   },
-)
-export default BaseLink
+);
+export default BaseLink;

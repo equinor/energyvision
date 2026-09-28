@@ -114,6 +114,7 @@ const PersonList = forwardRef<HTMLDivElement, PersonListProps>(
   function PersonList({ anchor, data, className }, ref) {
     const backgroundUtility = data.designOptions?.background?.backgroundUtility;
     const foreground = data.designOptions?.foreground;
+    console.log('data.designOptions:', data.designOptions);
     const searchParams = useSearchParams();
     // URL hashtag param is set by ModalPromotion as encodeURIComponent(name)
     const activePersonName = searchParams.get('person')
@@ -130,111 +131,113 @@ const PersonList = forwardRef<HTMLDivElement, PersonListProps>(
           ref={ref}
           id={anchor}
           className={twMerge(
-            'mx-auto w-full max-w-content',
+            'w-full',
             backgroundUtility &&
               colorKeyToUtilityMap[backgroundUtility]?.background,
             className,
           )}
         >
-          {(data?.title || data?.ingress) && (
-            <div className="px-layout-sm pb-8 lg:px-layout-lg">
-              {data.title && (
-                <Blocks
-                  variant="h2"
-                  value={data.title}
-                  className={twMerge(data?.hideTitle && 'sr-only')}
-                />
-              )}
-              {data.ingress && (
-                <Blocks
-                  variant="ingress"
-                  value={data.ingress}
-                  blockClassName="line-clamp-none"
-                />
-              )}
-            </div>
-          )}
-
-          {(() => {
-            const validItems = data.items.filter((item) => item.person);
-            const highlighted = validItems.find((item) => item.highlighted);
-            const rest = validItems.filter((item) => !item.highlighted);
-
-            const renderCard = (item: PersonListItem) => (
-              <ModalPromotion
-                className="h-full"
-                title={item.person?.name}
-                image={item.person?.image}
-                ingress={item.person?.title}
-                background={foreground}
-                imageClassName=""
-                ingressClassName="lg:line-clamp-none"
-                modalTitle={item.person?.name}
-                initialOpen={
-                  !!activePersonName && item.person?.name === activePersonName
-                }
-                modalContent={
-                  <div className="flex flex-col gap-6">
-                    <div className="flex items-center gap-6">
-                      {item.person?.image && (
-                        <div className="w-[30%] shrink-0">
-                          <Image
-                            image={item.person.image}
-                            aspectRatio="1:1"
-                            imageClassName="rounded-full"
-                            className="w-full"
-                          />
-                        </div>
-                      )}
-                      <div className="flex flex-col justify-center">
-                        <Typography as="h2" variant="h3">
-                          {item.person?.name}
-                        </Typography>
-                        {item.person?.title && (
-                          <Typography
-                            variant="body"
-                            className={
-                              item.person?.linkedinProfileUrl && 'mb-1'
-                            }
-                          >
-                            {item.person.title}
-                          </Typography>
-                        )}
-                        <PersonSocialLinks person={item.person} />
-                      </div>
-                    </div>
-                    {item.person?.bio && <Blocks value={item.person.bio} />}
-                    {item.person?.callToActions && (
-                      <CallToActions
-                        callToActions={item.person.callToActions}
-                      />
-                    )}
-                  </div>
-                }
-              />
-            );
-
-            return (
-              <div className="flex flex-col gap-6 px-layout-sm">
-                {highlighted && (
-                  <ul className="m-0 grid list-none grid-cols-[minmax(min(18.75rem,100%),1fr)] justify-center p-0 md:grid-cols-[22rem]">
-                    <li key={highlighted.id} className="flex">
-                      {renderCard(highlighted)}
-                    </li>
-                  </ul>
+          <div className="mx-auto w-full max-w-content">
+            {(data?.title || data?.ingress) && (
+              <div className="px-layout-sm pb-8 lg:px-layout-lg">
+                {data.title && (
+                  <Blocks
+                    variant="h2"
+                    value={data.title}
+                    className={twMerge(data?.hideTitle && 'sr-only')}
+                  />
                 )}
-                {rest.length > 0 && (
-                  <ul className="m-0 flex list-none flex-wrap justify-center gap-6 p-0">
-                    {rest.map((item) => (
-                      <li key={item.id} className="flex w-full md:w-75">
-                        {renderCard(item)}
-                      </li>
-                    ))}
-                  </ul>
+                {data.ingress && (
+                  <Blocks
+                    variant="ingress"
+                    value={data.ingress}
+                    blockClassName="line-clamp-none"
+                  />
                 )}
               </div>
-            );
-          })()}
+            )}
+
+            {(() => {
+              const validItems = data.items.filter((item) => item.person);
+              const highlighted = validItems.find((item) => item.highlighted);
+              const rest = validItems.filter((item) => !item.highlighted);
+
+              const renderCard = (item: PersonListItem) => (
+                <ModalPromotion
+                  className="h-full"
+                  title={item.person?.name}
+                  image={item.person?.image}
+                  ingress={item.person?.title}
+                  background={foreground}
+                  imageClassName=""
+                  ingressClassName="lg:line-clamp-none"
+                  modalTitle={item.person?.name}
+                  initialOpen={
+                    !!activePersonName && item.person?.name === activePersonName
+                  }
+                  modalContent={
+                    <div className="flex flex-col gap-6">
+                      <div className="flex items-center gap-6">
+                        {item.person?.image && (
+                          <div className="w-[30%] shrink-0">
+                            <Image
+                              image={item.person.image}
+                              aspectRatio="1:1"
+                              imageClassName="rounded-full"
+                              className="w-full"
+                            />
+                          </div>
+                        )}
+                        <div className="flex flex-col justify-center">
+                          <Typography as="h2" variant="h3">
+                            {item.person?.name}
+                          </Typography>
+                          {item.person?.title && (
+                            <Typography
+                              variant="body"
+                              className={
+                                item.person?.linkedinProfileUrl && 'mb-1'
+                              }
+                            >
+                              {item.person.title}
+                            </Typography>
+                          )}
+                          <PersonSocialLinks person={item.person} />
+                        </div>
+                      </div>
+                      {item.person?.bio && <Blocks value={item.person.bio} />}
+                      {item.person?.callToActions && (
+                        <CallToActions
+                          callToActions={item.person.callToActions}
+                        />
+                      )}
+                    </div>
+                  }
+                />
+              );
+
+              return (
+                <div className="flex flex-col gap-6 px-layout-sm">
+                  {highlighted && (
+                    <ul className="m-0 grid list-none grid-cols-[minmax(min(18.75rem,100%),1fr)] justify-center p-0 md:grid-cols-[22rem]">
+                      <li key={highlighted.id} className="flex">
+                        {renderCard(highlighted)}
+                      </li>
+                    </ul>
+                  )}
+                  {rest.length > 0 && (
+                    <ul className="m-0 flex list-none flex-wrap justify-center gap-6 p-0">
+                      {rest.map((item) => (
+                        <li key={item.id} className="flex w-full md:w-75">
+                          {renderCard(item)}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              );
+            })()}
+          </div>
         </section>
       </>
     );

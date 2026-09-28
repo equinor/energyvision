@@ -22,9 +22,7 @@ export const filterByRouteWithPersonList = ({
   filter: `_type match $routeLang && count(content->content[_type == "personList"]) > 0`,
   params: { routeLang: `route_${langOrDefault(document.lang)}*` },
 });
-//{ document }: { document: SanityDocument }
-export const filterByPages = (props: any) => {
-  const { document } = props;
+export const filterByPages = ({ document }: { document: SanityDocument }) => {
   const lang = langOrDefault(document.lang);
   return {
     filter: /* groq */ `_type match $routeLang || _type in ['news', 'newsroom', 'localNews', 'magazine', 'magazineIndex'] && lang == $lang`,

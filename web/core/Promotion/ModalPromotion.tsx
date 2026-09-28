@@ -67,7 +67,7 @@ export const ModalPromotion = forwardRef<HTMLDivElement, ModalPromotionProps>(
     const plainIngress = getPlainText(ingress);
 
     useEffect(() => {
-      if (initialOpen) setIsModalOpen(true);
+      setIsModalOpen(initialOpen);
     }, [initialOpen]);
 
     useEffect(() => {
@@ -85,6 +85,12 @@ export const ModalPromotion = forwardRef<HTMLDivElement, ModalPromotionProps>(
       }
       window.history.pushState({}, '', `?${searchParams.toString()}`);
       setIsModalOpen(true);
+    };
+
+    const handleOnClose = () => {
+      shouldRestoreFocus.current = true;
+      setIsModalOpen(false);
+      window.history.replaceState({}, '', window.location.pathname);
     };
 
     return (
@@ -160,11 +166,7 @@ export const ModalPromotion = forwardRef<HTMLDivElement, ModalPromotionProps>(
         {isModalOpen && (
           <Modal
             isOpen={isModalOpen}
-            onClose={() => {
-              shouldRestoreFocus.current = true;
-              setIsModalOpen(false);
-              window.history.replaceState({}, '', window.location.pathname);
-            }}
+            onClose={handleOnClose}
             title={modalTitle || plainText || 'Details'}
           >
             {modalContent}

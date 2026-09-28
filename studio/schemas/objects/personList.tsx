@@ -79,7 +79,7 @@ export default {
             prepare({ name, title, media, highlighted }: any) {
               return {
                 title: name ?? 'Unknown person',
-                subtitle: `${title ?? ''}${highlighted ? ' ★ Highlighted' : ''}`,
+                subtitle: `${highlighted ? '★ ' : ''}${title ?? ''}`,
                 media,
               };
             },
