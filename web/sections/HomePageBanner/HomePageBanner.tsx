@@ -1,29 +1,29 @@
-'use client'
-import type { PortableTextBlock } from '@portabletext/types'
-import { forwardRef } from 'react'
-import { Image } from '@/core/Image/Image'
+'use client';
+import type { PortableTextBlock } from '@portabletext/types';
+import { forwardRef } from 'react';
+import { Image } from '@/core/Image/Image';
 import {
   getObjectPositionForImage,
   type Image as ImageType,
   type ObjectPositions,
-} from '@/core/Image/imageUtilities'
-import BaseLink from '@/core/Link/BaseLink'
-import { getArrowElement } from '@/core/Link/linkCommon'
-import { Typography } from '@/core/Typography'
-import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction'
-import { useMediaQuery } from '@/lib/hooks/useMediaQuery'
-import Blocks from '@/portableText/Blocks'
+} from '@/core/Image/imageUtilities';
+import BaseLink from '@/core/Link/BaseLink';
+import { getArrowElement } from '@/core/Link/linkCommon';
+import { Typography } from '@/core/Typography';
+import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction';
+import { useMediaQuery } from '@/lib/hooks/useMediaQuery';
+import Blocks from '@/portableText/Blocks';
 import {
   type ColorKeys,
   colorKeyToUtilityMap,
-} from '@/styles/colorKeyToUtilityMap'
-import type { LinkData } from '@/types'
+} from '@/styles/colorKeyToUtilityMap';
+import type { LinkData } from '@/types';
 
 export type HomePageBannerThemeColors = {
-  background?: string
-  foreground?: string
-  dark?: boolean
-}
+  background?: string;
+  foreground?: string;
+  dark?: boolean;
+};
 //Keep in sync with studio/schemas/objects/homepageBanner/getColorForHomePageBannerTheme
 export const getColorForHomepageBannerTheme = (
   pattern?: number,
@@ -34,45 +34,45 @@ export const getColorForHomepageBannerTheme = (
       return {
         background: 'bg-white-100',
         foreground: 'bg-moss-green-60',
-      }
+      };
     //Blue
     case 2:
       return {
         background: 'bg-mist-blue-100',
         foreground: 'bg-white-100',
-      }
+      };
     //Green
     default:
       return {
         background: 'bg-moss-green-60',
         foreground: 'bg-white-100',
-      }
+      };
   }
-}
+};
 
 type HomePageBannerProps = {
-  title?: PortableTextBlock[]
-  image: ImageType
+  title?: PortableTextBlock[];
+  image: ImageType;
   ctaCards: {
-    id: string
-    overline?: string
-    link?: LinkData
-  }[]
-  rightAlignTitle?: boolean
-  useWhiteTitle?: boolean
+    id: string;
+    overline?: string;
+    link?: LinkData;
+  }[];
+  rightAlignTitle?: boolean;
+  useWhiteTitle?: boolean;
   designOptions: {
-    useGradient?: boolean
-    backgroundPosition?: ObjectPositions
+    useGradient?: boolean;
+    backgroundPosition?: ObjectPositions;
     theme?: {
-      title: string
-      value: number
-    }
-    backgroundType?: number
-  }
-  anchor?: string
+      title: string;
+      value: number;
+    };
+    backgroundType?: number;
+  };
+  anchor?: string;
   /* if next comp is colored the mobile version should have colored bg for title */
-  nextCompBg?: ColorKeys
-}
+  nextCompBg?: ColorKeys;
+};
 
 export const HomePageBanner = forwardRef<HTMLDivElement, HomePageBannerProps>(
   function HomePageBanner(
@@ -93,33 +93,33 @@ export const HomePageBanner = forwardRef<HTMLDivElement, HomePageBannerProps>(
       theme,
       useGradient = false,
       backgroundPosition,
-    } = designOptions
+    } = designOptions;
 
     const { foreground, background } = getColorForHomepageBannerTheme(
       theme?.value ?? 0,
-    )
+    );
     const nextCompBgUtility =
-      nextCompBg && colorKeyToUtilityMap[nextCompBg]?.background
-    const useImage = String(backgroundType) === String(0)
+      nextCompBg && colorKeyToUtilityMap[nextCompBg]?.background;
+    const useImage = String(backgroundType) === String(0);
 
-    const isMobile = useMediaQuery(`(max-width: 1024px)`)
+    const isMobile = useMediaQuery(`(max-width: 1024px)`);
     let gradient = rightAlignTitle
       ? 'lg:homepage-banner-white-right-gradient'
-      : 'lg:homepage-banner-white-left-gradient'
+      : 'lg:homepage-banner-white-left-gradient';
     if (useWhiteTitle) {
       gradient = rightAlignTitle
         ? 'lg:homepage-banner-black-right-gradient'
-        : 'lg:homepage-banner-black-left-gradient'
+        : 'lg:homepage-banner-black-left-gradient';
     }
 
     const headingElement = (
       <Blocks
-        variant='h2'
+        variant="h2"
         //@ts-ignore:todo
         value={title}
-        blockClassName={`h-fit w-full px-layout-sm lg:px-layout-md text-3xl tracking-tighter backdrop-blur-[1.1px] max-lg:pt-6 lg:px-0 lg:text-4xl ${rightAlignTitle ? 'lg:mr-20 lg:ml-auto' : 'lg:mr-auto lg:ml-20'} ${useWhiteTitle ? 'text-white-100' : ''} ${useImage ? 'lg:z-10' : ''} max-w-[760px]`}
+        blockClassName={`h-fit w-full px-layout-sm lg:px-layout-md text-3xl tracking-tighter backdrop-blur-[1.1px] max-lg:pt-6 lg:px-0 lg:text-4xl ${rightAlignTitle ? 'lg:mr-20 lg:ml-auto' : 'lg:mr-auto lg:ml-20'} ${useWhiteTitle ? 'lg:text-white-100' : ''} ${useImage ? 'lg:z-10' : ''} max-w-[760px]`}
       />
-    )
+    );
 
     return (
       <div
@@ -137,8 +137,8 @@ export const HomePageBanner = forwardRef<HTMLDivElement, HomePageBannerProps>(
               />
             )}
             <Image
-              grid='full'
-              loading='eager'
+              grid="full"
+              loading="eager"
               image={image}
               fill
               imageClassName={`${getObjectPositionForImage(backgroundPosition ?? 'center_center')}`}
@@ -153,13 +153,13 @@ export const HomePageBanner = forwardRef<HTMLDivElement, HomePageBannerProps>(
             <ul
               className={`relative flex w-full snap-x gap-4 overflow-x-auto ${useImage ? 'z-10' : ''}`}
             >
-              {ctaCards?.map(ctaCard => {
-                const { id, link, overline } = ctaCard
-                if (!link) return null
-                const url = getUrlFromAction(link)
-                if (!url) return null
+              {ctaCards?.map((ctaCard) => {
+                const { id, link, overline } = ctaCard;
+                if (!link) return null;
+                const url = getUrlFromAction(link);
+                if (!url) return null;
                 return (
-                  <li key={id} className='m-1'>
+                  <li key={id} className="m-1">
                     <BaseLink
                       className={`min-w-[260px] max-w-[400px] ${foreground} group flex h-full flex-col gap-2 rounded-md px-4 py-6 shadow-card active:shadow-card-interact`}
                       type={link?.type}
@@ -167,16 +167,16 @@ export const HomePageBanner = forwardRef<HTMLDivElement, HomePageBannerProps>(
                     >
                       {overline && (
                         <Typography
-                          variant='eyebrow'
-                          className='mb-1 h-max normal-case'
+                          variant="eyebrow"
+                          className="mb-1 h-max normal-case"
                         >
                           {overline}
                         </Typography>
                       )}
-                      <div className='mb-2 h-max w-4/5 text-md group-hover:underline'>
+                      <div className="mb-2 h-max w-4/5 text-md group-hover:underline">
                         {link.label}
                       </div>
-                      <div className='mt-auto flex justify-start'>
+                      <div className="mt-auto flex justify-start">
                         {getArrowElement(
                           link.type ?? 'internalUrl',
                           '',
@@ -185,13 +185,13 @@ export const HomePageBanner = forwardRef<HTMLDivElement, HomePageBannerProps>(
                       </div>
                     </BaseLink>
                   </li>
-                )
+                );
               })}
             </ul>
           )}
           {title && useImage && isMobile && headingElement}
         </div>
       </div>
-    )
+    );
   },
-)
+);
