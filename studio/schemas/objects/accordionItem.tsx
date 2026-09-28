@@ -10,7 +10,7 @@ export type AccordionItem = {
 };
 
 const contentType = configureBlockContent({
-  variant: 'textBlockWithoutHeadings',
+  variant: 'textBlock',
 });
 
 export default {
