@@ -5,10 +5,11 @@ export const embeddedVideoListFields = /* groq */ `
   hideTitle,
   ingress,
   cookiePolicy,
+  gridColumns,
   items[] {
     "id": _key,
     title,
     videoId,
     highlighted,
   },
-`
+`;
