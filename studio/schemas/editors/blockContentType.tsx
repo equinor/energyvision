@@ -43,8 +43,8 @@ export const textColorConfig = {
  * Options are merged in this order: base defaults → `group` preset → `variant`
  * preset → the options passed in, so any single flag can be overridden.
  *
- * Base defaults: h3, lists, internal and external links, strong, emphasis, sub
- * and sup. Everything else is off.
+ * Base defaults: h3, lists, internal and external links, small text, strong,
+ * emphasis, sub and sup. Everything else is off.
  */
 export type BlockContentProps = {
   h2?: boolean;
@@ -53,19 +53,19 @@ export type BlockContentProps = {
   /**
    * Preconfigured presets, each described as the result after merging with the base defaults.
    *
-   * - `block` (default) — h3, lists, links, strong/em/sub/sup.
+   * - `block` (default) — h3, lists, links, small text, strong/em/sub/sup.
    * - `textBlock` — `block` plus the highlight color decorator.
-   * - `textBlockWithoutHeadings` — `block` without headings, plus small text.
-   * - `textBlockWithHeadings` — h2, h3, lists, links plus small text.
+   * - `textBlockWithoutHeadings` — `block` without headings.
+   * - `textBlockWithHeadings` — h2, h3, lists, links and small text.
    * - `simpleBlock` — normal and small text with lists. No headings, no links.
-   * - `withH2SimpleBlock` — h2 and normal text only. No lists, no links.
+   * - `withH2SimpleBlock` — h2 and normal text only. No lists, links or small text.
    * - `ingress` — normal and small text with lists and links. No headings.
-   * - `extendedBlock` — h2, h3, lists, links plus display, large and extra large text.
+   * - `extendedBlock` — h2, h3, lists, links plus display, large and extra large text. No small text.
    * - `fullBlock` — h2, h3, h4, lists, links, attachments plus small, display, large and extra large text.
-   * - `title` — normal text with strikethrough. No headings, lists or links; web assigns the heading level.
+   * - `title` — normal text with strikethrough. No headings, lists, links or small text; web assigns the heading level.
    * - `titleWithDisplay` — `title` plus the display, large and extra large text styles.
-   * - `onlySubSup` — sub and sup only, without strong and emphasis. No headings, lists or links.
-   * - `onlyTextDecorations` — strong, emphasis, sub and sup. No headings, lists or links.
+   * - `onlySubSup` — sub and sup only, without strong and emphasis. No headings, lists, links or small text.
+   * - `onlyTextDecorations` — strong, emphasis, sub and sup. No headings, lists, links or small text.
    * - `textDecorationAndLinks` — `onlyTextDecorations` plus links and attachments.
    */
   variant?:
@@ -111,6 +111,7 @@ const titleVariantOptions: BlockContentProps = {
   internalLink: false,
   externalLink: false,
   lists: false,
+  smallText: false,
   strikeThrough: true,
 };
 
@@ -122,6 +123,7 @@ const titleWithDisplayVariantOptions: BlockContentProps = {
   internalLink: false,
   externalLink: false,
   lists: false,
+  smallText: false,
   strikeThrough: true,
 };
 
@@ -129,19 +131,16 @@ const extendedBlockStylesOptions: BlockContentProps = {
   h2: true,
   largeText: true,
   extraLargeText: true,
-  //smallText: true,
 };
 const ingressStylesOptions: BlockContentProps = {
   lists: true,
   h2: false,
   h3: false,
   h4: false,
-  smallText: true,
 };
 const articleStylesOptions: BlockContentProps = {
   h2: true,
   h4: true,
-  smallText: true,
 };
 //h3, lists, links, text decorations and highlight
 const textBlockStylesOptions: BlockContentProps = {
@@ -150,13 +149,11 @@ const textBlockStylesOptions: BlockContentProps = {
 //lists, links, text decorations, highlight and small text, no headings
 const textBlockWithoutHeadingsStylesOptions: BlockContentProps = {
   h3: false,
-  smallText: true,
 };
 //h2, h3, lists, links, text decorations and small text
 const textBlockWithHeadingsStylesOptions: BlockContentProps = {
   h2: true,
   h3: true,
-  smallText: true,
 };
 const simpleBlockStylesOptions: BlockContentProps = {
   h2: false,
@@ -164,7 +161,6 @@ const simpleBlockStylesOptions: BlockContentProps = {
   h4: false,
   internalLink: false,
   externalLink: false,
-  smallText: true,
 };
 const withH2SimpleBlockStylesOptions: BlockContentProps = {
   h2: true,
@@ -179,7 +175,6 @@ const fullBlockStylesOptions: BlockContentProps = {
   largeText: true,
   extraLargeText: true,
   attachment: true,
-  smallText: true,
 };
 //sub, sup
 const onlySubSupOptions: BlockContentProps = {
@@ -188,6 +183,7 @@ const onlySubSupOptions: BlockContentProps = {
   lists: false,
   internalLink: false,
   externalLink: false,
+  smallText: false,
 };
 //bold, italic,sub, sup
 const onlyTextDecorationsOptions: BlockContentProps = {
@@ -195,6 +191,7 @@ const onlyTextDecorationsOptions: BlockContentProps = {
   lists: false,
   internalLink: false,
   externalLink: false,
+  smallText: false,
 };
 //bold, italic,sub, sup, links and attachments
 const textDecorationAndLinksOptions: BlockContentProps = {
@@ -203,6 +200,7 @@ const textDecorationAndLinksOptions: BlockContentProps = {
   internalLink: true,
   externalLink: true,
   attachment: true,
+  smallText: false,
 };
 
 const baseStylesOptions: BlockContentProps = {
@@ -210,13 +208,13 @@ const baseStylesOptions: BlockContentProps = {
   lists: true,
   internalLink: true,
   externalLink: true,
+  smallText: true,
   variant: 'block',
   h2: false,
   h4: false,
   attachment: false,
   largeText: false,
   extraLargeText: false,
-  smallText: false,
   highlight: false,
   footnote: false,
   onlySubSupScriptDecorators: false,
@@ -261,6 +259,7 @@ export const BlockTypography = {
     h2: 'text-xl leading-lofty mb-8',
     h3: 'text-lg leading-lofty mt-10 mb-4',
     h4: 'text-md mt-4 mb-2',
+    base: 'text-base',
     sm: 'text-sm',
   },
 };
@@ -278,10 +277,10 @@ export const TextRenderer = ({
 }) => {
   const { children } = blockProps;
   //@ts-ignore: wont accept the types
-  const classNames = BlockTypography[group ?? 'normal'][level ?? 'h2'] ?? '';
+  const classNames = BlockTypography[group ?? 'normal'][level ?? 'base'] ?? '';
 
   return (
-    <span className={classNames} data-group={group}>
+    <span className={classNames} data-group={group} data-prose="true">
       {children}
     </span>
   );
@@ -356,6 +355,15 @@ export const configureBlockContent = (
   const strikeThroughConfig = {
     title: 'Strikethrough',
     value: 'strike-through',
+  };
+
+  const normalConfig = {
+    title: 'Normal',
+    value: 'normal',
+    component: (props: any) =>
+      TextRenderer({
+        blockProps: props,
+      }),
   };
 
   const h2Config = {
@@ -531,6 +539,8 @@ export const configureBlockContent = (
   if (strikeThrough) {
     config.marks?.decorators?.push(strikeThroughConfig);
   }
+
+  config?.styles?.push(normalConfig);
 
   if (h2) {
     config?.styles?.push(h2Config);
