@@ -39,6 +39,7 @@ import LineChartBlock, {
   type LineChartBlockProps,
 } from '@/sections/LineChartBlock/LineChartBlock'
 import NewsList from '@/sections/NewsList/NewsList'
+import PersonList from '@/sections/PersonList/PersonList'
 import PieChartBlock, {
   type PieChartBlockProps,
 } from '@/sections/PieChartBlock/PieChartBlock'
@@ -529,6 +530,15 @@ export const PageContent = ({ data, heroProps }: PageContentProps) => {
             key={c.id}
             {...commonProps}
             data={c as unknown as NewsListData}
+            className={allSpacings}
+          />
+        )
+      case 'personList':
+        return (
+          <PersonList
+            key={c.id}
+            {...commonProps}
+            data={c as any}
             className={allSpacings}
           />
         )

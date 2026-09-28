@@ -1,7 +1,6 @@
 import type { Template } from 'sanity'
 import { defaultLanguage, languages } from './languages'
 import textSnippets from './schemas/textSnippets'
-import { magazineSlug, newsSlug } from './sitesConfig'
 import { Flags } from './src/lib/datasetHelpers'
 
 const ParentRoutesTemplates: Template<any, any>[] = languages.map(

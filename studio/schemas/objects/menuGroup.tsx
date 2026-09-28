@@ -1,6 +1,6 @@
 import { list } from '@equinor/eds-icons'
-import { EdsIcon } from '../../icons'
 import type { Rule } from 'sanity'
+import { EdsIcon } from '../../icons'
 import type { MenuLink } from './menuLink'
 
 export type MenuGroup = {

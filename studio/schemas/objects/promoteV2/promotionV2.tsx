@@ -1,7 +1,7 @@
-import { Card, Flex, Grid, Radio, Text } from '@sanity/ui'
-import { useCallback } from 'react'
-import { LuPanelBottom, LuText } from 'react-icons/lu'
-import { MdImage } from 'react-icons/md'
+import { Card, Flex, Grid, Radio, Text } from '@sanity/ui';
+import { useCallback } from 'react';
+import { LuPanelBottom, LuText } from 'react-icons/lu';
+import { MdImage } from 'react-icons/md';
 import {
   type Image,
   type PortableTextBlock,
@@ -10,10 +10,10 @@ import {
   type StringInputProps,
   set,
   type ValidationContext,
-} from 'sanity'
-import { capitalizeFirstLetter } from '@/helpers/formatters'
-import { OptionButtons } from '@/schemas/components/OptionButtons/OptionButtons'
-import blocksToText from '../../../helpers/blocksToText'
+} from 'sanity';
+import { capitalizeFirstLetter } from '@/helpers/formatters';
+import { OptionButtons } from '@/schemas/components/OptionButtons/OptionButtons';
+import blocksToText from '../../../helpers/blocksToText';
 import {
   gridColumns,
   hideTitle,
@@ -21,26 +21,30 @@ import {
   layoutGrid,
   theme,
   title,
-} from '../commonFields/commonFields'
-import linkSelector from '../linkSelector/linkSelector'
+} from '../commonFields/commonFields';
+import linkSelector from '../linkSelector/linkSelector';
 
 type PromotionLayoutInputProps = {
-  options: any[]
-} & StringInputProps
+  options: any[];
+} & StringInputProps;
 
 export const PromotionLayoutInput = (props: PromotionLayoutInputProps) => {
-  const { onChange, schemaType, value = '' } = props
+  const { onChange, schemaType, value = '' } = props;
 
   const handleChange = useCallback(
     (event: any) => {
-      const nextValue = event.currentTarget.value
-      onChange(set(nextValue))
+      const nextValue = event.currentTarget.value;
+      onChange(set(nextValue));
     },
     [onChange],
-  )
+  );
 
   return (
-    <Grid columns={schemaType?.options?.list?.length} rows={1} gap={2}>
+    <Grid
+      gridTemplateColumns={schemaType?.options?.list?.length}
+      gridTemplateRows={1}
+      gap={2}
+    >
       {schemaType?.options?.list?.map((option: any) => {
         return (
           <Card
@@ -51,11 +55,11 @@ export const PromotionLayoutInput = (props: PromotionLayoutInputProps) => {
             shadow={1}
           >
             <Flex
-              direction='row'
-              align='center'
-              width='100%'
-              height='stretch'
+              direction="row"
+              align="center"
+              height="stretch"
               gap={2}
+              style={{ width: '100%' }}
             >
               <Radio
                 checked={value === option.value}
@@ -64,8 +68,8 @@ export const PromotionLayoutInput = (props: PromotionLayoutInputProps) => {
                 onChange={handleChange}
                 value={option.value}
               />
-              <Flex gap={2} align='center' width='100%'>
-                <Text as='label' htmlFor={option.value}>
+              <Flex gap={2} align="center" style={{ width: '100%' }}>
+                <Text as="label" htmlFor={option.value}>
                   {option.title}
                 </Text>
                 <div
@@ -86,11 +90,11 @@ export const PromotionLayoutInput = (props: PromotionLayoutInputProps) => {
               </Flex>
             </Flex>
           </Card>
-        )
+        );
       })}
     </Grid>
-  )
-}
+  );
+};
 
 const layoutOptions = [
   {
@@ -121,18 +125,18 @@ const layoutOptions = [
       </div>
     ),
   },
-]
+];
 type PromotedTopicPage = {
-  _key: string
-  _type: 'topics'
-  ingress: PortableTextBlock[]
-  reference: Reference
-}
+  _key: string;
+  _type: 'topics';
+  ingress: PortableTextBlock[];
+  reference: Reference;
+};
 
 export type promotionV2 = {
-  _type: 'promotionV2'
-  references: PromotedTopicPage[]
-}
+  _type: 'promotionV2';
+  references: PromotedTopicPage[];
+};
 
 export default {
   title: 'Promotions (v2)',
@@ -167,18 +171,22 @@ export default {
                 'Required for external,anchor and homepage links, optional for others',
               validation: (Rule: Rule) =>
                 Rule.custom((value: string, ctx: ValidationContext) => {
+                  const parent = ctx.parent as
+                    | {
+                        linkSelector?: {
+                          link?: { _type?: string }[];
+                        };
+                      }
+                    | undefined;
                   if (
-                    //@ts-ignore: todo
-                    ctx.parent?.linkSelector?.link?.[0]?._type === 'link' ||
-                    //@ts-ignore: todo
-                    ctx.parent?.linkSelector?.link?.[0]?._type ===
+                    parent?.linkSelector?.link?.[0]?._type === 'link' ||
+                    parent?.linkSelector?.link?.[0]?._type ===
                       'anchorLinkReference' ||
-                    ctx.parent?.linkSelector?.link?.[0]?._type ===
-                      'homePageLink'
+                    parent?.linkSelector?.link?.[0]?._type === 'homePageLink'
                   ) {
-                    return value ? true : 'You must add an image'
+                    return value ? true : 'You must add an image';
                   }
-                  return true
+                  return true;
                 }),
             },
           ],
@@ -206,32 +214,32 @@ export default {
               label,
               type,
             }: {
-              referenceNewsMagTitle?: PortableTextBlock[]
-              referenceNewsMedia?: Image
-              referenceMagMedia?: Image
-              referenceTopicTitle?: PortableTextBlock[]
-              referenceTopicMedia?: Image
-              customImage?: Image
-              link?: any
-              label?: string
-              type?: string
+              referenceNewsMagTitle?: PortableTextBlock[];
+              referenceNewsMedia?: Image;
+              referenceMagMedia?: Image;
+              referenceTopicTitle?: PortableTextBlock[];
+              referenceTopicMedia?: Image;
+              customImage?: Image;
+              link?: any;
+              label?: string;
+              type?: string;
             }) {
-              let promoType = type ?? 'not set'
+              let promoType = type ?? 'not set';
               if (type === 'pageAnchor') {
-                promoType = 'anchor link'
+                promoType = 'anchor link';
               } else if (type === 'link') {
-                promoType = 'external link'
+                promoType = 'external link';
               } else if (type) {
-                promoType = 'internal link '
+                promoType = 'internal link ';
               }
               const referenceTitle =
-                referenceTopicTitle ?? referenceNewsMagTitle
-              let title = label ?? 'Missing title'
+                referenceTopicTitle ?? referenceNewsMagTitle;
+              let title = label ?? 'Missing title';
               if (
                 link?.[0]?._type === 'anchorLinkReference' &&
                 typeof label === 'undefined'
               ) {
-                title = link?.[0]?.title
+                title = link?.[0]?.title;
               }
               if (
                 link?.[0]?._type !== 'link' &&
@@ -239,7 +247,8 @@ export default {
                 typeof label === 'undefined' &&
                 referenceTitle
               ) {
-                title = blocksToText(referenceTitle) ?? label ?? 'Missing title'
+                title =
+                  blocksToText(referenceTitle) ?? label ?? 'Missing title';
               }
 
               return {
@@ -251,7 +260,7 @@ export default {
                   referenceNewsMedia ??
                   referenceMagMedia ??
                   LuPanelBottom,
-              }
+              };
             },
           },
         },
@@ -261,29 +270,36 @@ export default {
     theme,
     layoutGrid(),
     gridColumns({
-      hiddenCallBack: ({ parent }: DocumentType) => {
-        return parent?.layoutGrid === 'lg'
+      hiddenCallBack: ({ parent }: { parent?: { layoutGrid?: string } }) => {
+        return parent?.layoutGrid === 'lg';
       },
       fieldset: 'design',
       initialValue: undefined,
       validation: (Rule: Rule) =>
         Rule.custom((value: string, ctx: ValidationContext) => {
-          //@ts-ignore:todo
-          if (Number(ctx.parent?.promoteList?.length) < Number(value)) {
-            return 'Fewer promotions than grid columns. Please select lower grid columns'
+          const parent = ctx.parent as
+            | {
+                layoutGrid?: string;
+                layoutDirection?: string;
+                promoteList?: unknown[];
+              }
+            | undefined;
+
+          if (parent?.layoutGrid === 'lg') return true;
+
+          if (Number(parent?.promoteList?.length) < Number(value)) {
+            return 'Fewer promotions than grid columns. Please select lower grid columns';
           }
 
           if (
-            //@ts-ignore:todo
-            ctx.parent?.layoutDirection === 'row' &&
-            //@ts-ignore:todo
-            ctx.parent?.layoutGrid !== 'sm'
+            parent?.layoutDirection === 'row' &&
+            parent?.layoutGrid !== 'sm'
           ) {
             if (value === '4') {
-              return 'Please use only 2 or 3 cols when using the smaller layout grids with side by side promotions'
+              return 'Please use only 2 or 3 cols when using the smaller layout grids with side by side promotions';
             }
           }
-          return true
+          return true;
         }),
     }),
     {
@@ -292,7 +308,7 @@ export default {
       type: 'string',
       description: 'Select  variant for image and content ',
       options: {
-        list: layoutOptions.map(option => ({
+        list: layoutOptions.map((option) => ({
           title: capitalizeFirstLetter(option.value),
           value: option.value,
         })),
@@ -300,7 +316,7 @@ export default {
       fieldset: 'design',
       initialValue: 'col',
       components: {
-        input: props => OptionButtons(props, layoutOptions),
+        input: (props: StringInputProps) => OptionButtons(props, layoutOptions),
       },
     },
   ],
@@ -314,17 +330,17 @@ export default {
       title,
       promoteList,
     }: {
-      title?: PortableTextBlock[]
-      promoteList: any[]
-      theme?: any
+      title?: PortableTextBlock[];
+      promoteList: any[];
+      theme?: any;
     }) {
-      const plainTitle = title ? blocksToText(title) : 'Untitled'
-      const subTitle = `${promoteList && promoteList?.length > 0 ? promoteList.length : ''} promotions (v2) `
+      const plainTitle = title ? blocksToText(title) : 'Untitled';
+      const subTitle = `${promoteList && promoteList?.length > 0 ? promoteList.length : ''} promotions (v2) `;
       return {
         title: plainTitle,
         subtitle: subTitle,
         media: LuPanelBottom,
-      }
+      };
     },
   },
-}
+};

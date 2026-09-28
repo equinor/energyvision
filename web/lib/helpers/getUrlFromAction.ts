@@ -13,7 +13,7 @@ export const getUrlFromAction = ({
 
   const anchor = anchorReference ? `#${anchorReference}` : ''
   const locale =
-    link?.lang !== defaultLanguage.name
+    link?.lang && link.lang !== defaultLanguage.name
       ? `/${getLocaleFromName(link?.lang)}`
       : ''
 
