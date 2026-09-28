@@ -1,44 +1,44 @@
-import { calendar_event, image } from '@equinor/eds-icons'
+import { calendar_event, image } from '@equinor/eds-icons';
 import {
   defineField,
   type PortableTextBlock,
   type Rule,
   type ValidationContext,
-} from 'sanity'
-import { formatDate } from '@/helpers/formatDate'
-import blocksToText from '../../helpers/blocksToText'
-import { EdsIcon } from '../../icons'
-import { CompactBlockEditor } from '../components/CompactBlockEditor'
-import { SyncEndDayTimeInput } from '../components/SyncEndDayTimeInput'
-import { configureBlockContent } from '../editors'
-import basicIframe from '../objects/basicIframe'
-import type { EventDate } from '../objects/eventDate'
-import type { RelatedLinksArray } from '../objects/relatedLinks'
-import { lang } from './langField'
+} from 'sanity';
+import { formatDate } from '@/helpers/formatDate';
+import blocksToText from '../../helpers/blocksToText';
+import { EdsIcon } from '../../icons';
+import { CompactBlockEditor } from '../components/CompactBlockEditor';
+import { SyncEndDayTimeInput } from '../components/SyncEndDayTimeInput';
+import { configureBlockContent } from '../editors';
+import basicIframe from '../objects/basicIframe';
+import type { EventDate } from '../objects/eventDate';
+import type { RelatedLinksArray } from '../objects/relatedLinks';
+import { lang } from './langField';
 
 const validateRelatedLinksTitle = (
   value: string,
   context: ValidationContext,
 ) => {
   const { parent } = context as {
-    parent: { title: string; links: RelatedLinksArray }
-  }
-  const links = parent.links
+    parent: { title: string; links: RelatedLinksArray };
+  };
+  const links = parent.links;
 
-  if (!links) return true
+  if (!links) return true;
 
   if (!value && links.length > 0) {
-    return 'A title for this component is required if links have been selected.'
+    return 'A title for this component is required if links have been selected.';
   }
 
-  return true
-}
+  return true;
+};
 
 export type EventDayAndTime = {
-  _type: 'eventDayAndTime'
-  dayTime: Date
-  overrideTimeLabel?: string
-}
+  _type: 'eventDayAndTime';
+  dayTime: Date;
+  overrideTimeLabel?: string;
+};
 
 export default {
   type: 'document',
@@ -183,11 +183,15 @@ export default {
       type: 'array',
       of: [configureBlockContent({ variant: 'ingress' })],
     },
+    //allowed h2,h3,links,lists,smallText
     {
       name: 'content',
       title: 'Content',
       type: 'array',
-      of: [configureBlockContent(), basicIframe],
+      of: [
+        configureBlockContent({ variant: 'textBlockWithHeadings' }),
+        basicIframe,
+      ],
     },
     {
       title: 'Title',
@@ -240,23 +244,23 @@ export default {
       date,
       startDayTime,
     }: {
-      title?: PortableTextBlock[]
-      date?: EventDate
-      startDayTime?: string
+      title?: PortableTextBlock[];
+      date?: EventDate;
+      startDayTime?: string;
     }) {
-      let eventDate = 'No date set'
+      let eventDate = 'No date set';
       if (startDayTime) {
-        eventDate = formatDate(startDayTime)
+        eventDate = formatDate(startDayTime);
       }
       if (date?.date) {
-        eventDate = date.date
+        eventDate = date.date;
       }
 
       return {
         title: title ? blocksToText(title) : 'Untitled event',
         subtitle: eventDate,
         media: EdsIcon(calendar_event),
-      }
+      };
     },
   },
-}
+};

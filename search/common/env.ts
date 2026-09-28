@@ -1,18 +1,18 @@
-import { load } from '@azure/app-configuration-provider'
-import { Logger } from '@azure/functions'
-import { DefaultAzureCredential } from '@azure/identity'
-import { configDotenv, DotenvPopulateInput, populate } from 'dotenv'
-import * as E from 'fp-ts/lib/Either'
-import { GetProcessEnvType } from './types'
+import { load } from '@azure/app-configuration-provider';
+import type { Logger } from '@azure/functions';
+import { DefaultAzureCredential } from '@azure/identity';
+import { configDotenv, type DotenvPopulateInput, populate } from 'dotenv';
+import * as E from 'fp-ts/lib/Either';
+import type { GetProcessEnvType } from './types';
 
 export const loadEnv = async (logger: Logger) => {
-  configDotenv()
-  const connectionString = process.env.AZURE_APP_CONFIG_CONNECTION_STRING
+  configDotenv();
+  const connectionString = process.env.AZURE_APP_CONFIG_CONNECTION_STRING;
   if (!connectionString) {
-    logger.error('App config connection string not provided ')
-    return
+    logger.error('App config connection string not provided ');
+    return;
   }
-  const credential = new DefaultAzureCredential()
+  const credential = new DefaultAzureCredential();
 
   try {
     const settings = await load(
@@ -22,8 +22,8 @@ export const loadEnv = async (logger: Logger) => {
           credential: credential, // Provide credential for Key Vault access
         },
       },
-    )
-    logger.info('Settings ', settings.size)
+    );
+    logger.info('Settings ', settings.size);
     const parsed = {
       SANITY_DATASET: settings.get('SANITY_DATASET'),
       ALGOLIA_API_KEY: settings.get('ALGOLIA_API_KEY'),
@@ -34,33 +34,33 @@ export const loadEnv = async (logger: Logger) => {
       SANITY_PROJECT_ID: settings.get('SANITY_PROJECT_ID'),
       STORAGE_ACCOUNT: settings.get('STORAGE_ACCOUNT'),
       AZ_CONNECTION_STRING: settings.get('AZ_CONNECTION_STRING'),
-    } as DotenvPopulateInput
-    populate(process.env as DotenvPopulateInput, parsed)
+    } as DotenvPopulateInput;
+    populate(process.env as DotenvPopulateInput, parsed);
   } catch (err) {
-    logger.error('Error loading app config', err)
+    logger.error('Error loading app config', err);
   }
-}
+};
 
 export const getAzureConnectionString: GetProcessEnvType = () =>
   E.fromNullable('Unable to find Azure connection string')(
     process.env.AZ_CONNECTION_STRING,
-  )
+  );
 // TODO: Should this be in the env? Perhaps to generic.
 export const getContainerName: GetProcessEnvType = () =>
-  E.fromNullable('Unable to find container name')(process.env.CONTAINER)
+  E.fromNullable('Unable to find container name')(process.env.CONTAINER);
 export const getAlgoliaAppId: GetProcessEnvType = () =>
-  E.fromNullable('Unable to find app id')(process.env.ALGOLIA_APP_ID)
+  E.fromNullable('Unable to find app id')(process.env.ALGOLIA_APP_ID);
 export const getAlgoliaApiKey: GetProcessEnvType = () =>
-  E.fromNullable('Unable to find API key')(process.env.ALGOLIA_API_KEY)
+  E.fromNullable('Unable to find API key')(process.env.ALGOLIA_API_KEY);
 export const getEnvironment: GetProcessEnvType = () =>
-  E.fromNullable('Unable to find environment')(process.env.ENV)
+  E.fromNullable('Unable to find environment')(process.env.ENV);
 export const getSanityDataset: GetProcessEnvType = () =>
-  E.fromNullable('Unable to find Sanity dataset')(process.env.SANITY_DATASET)
+  E.fromNullable('Unable to find Sanity dataset')(process.env.SANITY_DATASET);
 export const getSanityProjectId: GetProcessEnvType = () =>
   E.fromNullable('Unable to find Sainty Project ID')(
     process.env.SANITY_PROJECT_ID,
-  )
+  );
 export const getSanityApiToken: GetProcessEnvType = () =>
   E.fromNullable('Unable to find Sanity API token')(
     process.env.SANITY_API_TOKEN,
-  )
+  );
