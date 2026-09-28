@@ -150,11 +150,10 @@ const NewsSchemas = Flags.HAS_NEWS
   : [];
 const NewsRoomSchema = Flags.HAS_NEWSROOM ? [newsroom] : [];
 const FormSchemas = Flags.HAS_FORMS ? [form] : [];
-const PeopleSchemas = Flags.HAS_PEOPLE ? [personList] : [];
 const MagazineSchemas = Flags.HAS_MAGAZINE
   ? [magazine, magazineIndex, magazineTag, promoteMagazine].filter((e) => e)
   : [];
-const PersonSchemas = Flags.HAS_PEOPLE ? [person] : [];
+const PersonSchemas = Flags.HAS_PEOPLE ? [person, personList] : [];
 
 const RemainingSchemas = [
   page,
@@ -270,6 +269,5 @@ export const schemaTypes = [
   ...NewsSchemas,
   ...NewsRoomSchema,
   ...PersonSchemas,
-  ...PeopleSchemas,
   ...RemainingSchemas,
 ];
