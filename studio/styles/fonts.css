@@ -14,94 +14,94 @@
 :root {
   /* Copied from packages/energyvision/src/brand/tailwind/theme.css */
   --text-2xs: clamp(
-    calc(11.11 / 16 * 1rem),
-    0.19vw +
-    0.65rem,
-    calc(14.08 / 16 * 1rem)
+    calc(8.888 / 16 * 1rem),
+    0.152vw +
+    0.52rem,
+    calc(11.264 / 16 * 1rem)
   );
   --text-2xs--line-height: calc(1 / 0.75);
   --text-xs: clamp(
-    calc(13.33 / 16 * 1rem),
-    0.28vw +
-    0.77rem,
-    calc(17.6 / 16 * 1rem)
+    calc(10.664 / 16 * 1rem),
+    0.224vw +
+    0.616rem,
+    calc(14.08 / 16 * 1rem)
   );
   --text-xs--line-height: calc(1 / 0.75);
   --text-sm: clamp(
-    calc(14.61 / 16 * 1rem),
-    0.33vw +
-    0.84rem,
-    calc(19.68 / 16 * 1rem)
+    calc(11.688 / 16 * 1rem),
+    0.264vw +
+    0.672rem,
+    calc(15.744 / 16 * 1rem)
   );
   --text-sm--line-height: calc(1.25 / 0.875);
   --text-base: clamp(
-    calc(16 / 16 * 1rem),
-    0.39vw +
-    0.91rem,
-    calc(22 / 16 * 1rem)
+    calc(12.8 / 16 * 1rem),
+    0.312vw +
+    0.728rem,
+    calc(17.6 / 16 * 1rem)
   );
   --text-base--line-height: calc(1.5 / 1);
   --text-md: clamp(
-    calc(19.2 / 16 * 1rem),
-    0.54vw +
-    1.07rem,
-    calc(27.5 / 16 * 1rem)
+    calc(15.36 / 16 * 1rem),
+    0.432vw +
+    0.856rem,
+    calc(22 / 16 * 1rem)
   );
   --text-md--line-height: calc(1.5 / 1);
   --text-lg: clamp(
-    calc(23.04 / 16 * 1rem),
-    0.73vw +
-    1.27rem,
-    calc(34.38 / 16 * 1rem)
+    calc(18.432 / 16 * 1rem),
+    0.584vw +
+    1.016rem,
+    calc(27.504 / 16 * 1rem)
   );
   --text-lg--line-height: calc(1.75 / 1.125);
   --text-xl: clamp(
-    calc(27.65 / 16 * 1rem),
-    0.99vw +
-    1.5rem,
-    calc(42.97 / 16 * 1rem)
+    calc(22.12 / 16 * 1rem),
+    0.792vw +
+    1.2rem,
+    calc(34.376 / 16 * 1rem)
   );
   --text-xl--line-height: calc(1.75 / 1.25);
   --text-2xl: clamp(
-    calc(33.73 / 16 * 1rem),
-    1.38vw +
-    1.785rem,
-    calc(55.055 / 16 * 1rem)
+    calc(26.984 / 16 * 1rem),
+    1.104vw +
+    1.428rem,
+    calc(44.044 / 16 * 1rem)
   );
   --text-2xl--line-height: calc(2 / 1.5);
   --text-3xl: clamp(
-    calc(39.81 / 16 * 1rem),
-    1.77vw +
-    2.07rem,
-    calc(67.14 / 16 * 1rem)
+    calc(31.848 / 16 * 1rem),
+    1.416vw +
+    1.656rem,
+    calc(53.712 / 16 * 1rem)
   );
   --text-3xl--line-height: calc(2.25 / 1.875);
   --text-4xl: clamp(
-    calc(45.89 / 16 * 1rem),
-    2.16vw +
-    2.355rem,
-    calc(79.225 / 16 * 1rem)
+    calc(36.712 / 16 * 1rem),
+    1.728vw +
+    1.884rem,
+    calc(63.38 / 16 * 1rem)
   );
   --text-4xl--line-height: calc(2.5 / 2.25);
   --text-5xl: clamp(
-    calc(51.97 / 16 * 1rem),
-    2.55vw +
-    2.64rem,
-    calc(91.31 / 16 * 1rem)
+    calc(41.576 / 16 * 1rem),
+    2.04vw +
+    2.112rem,
+    calc(73.048 / 16 * 1rem)
   );
   --text-5xl--line-height: 1;
   --text-6xl: clamp(
-    calc(58.05 / 16 * 1rem),
-    2.94vw +
-    2.925rem,
-    calc(103.39 / 16 * 1rem)
+    calc(46.44 / 16 * 1rem),
+    2.352vw +
+    2.34rem,
+    calc(82.712 / 16 * 1rem)
   );
   --text-6xl--line-height: 1;
   --text-8xl: clamp(
-    calc(59.19 / 16 * 1rem),
-    3.72vw +
-    3.495rem,
-    calc(115.47 / 16 * 1rem)
+    calc(47.352 / 16 * 1rem),
+    2.976vw +
+    2.796rem,
+    calc(92.376 / 16 * 1rem)
   );
   --text-8xl--line-height: 1;
 
@@ -148,10 +148,8 @@
   margin: 0;
 }
 .text-sm {
-  /* should be --text-sm but in editor it didnt look small, it was larger than 18px 
-  so trying xs in editor but -sm in web*/
-  font-size: var(--text-xs);
-  line-height: var(--text-xs--line-height);
+  font-size: var(--text-sm);
+  line-height: var(--text-sm--line-height);
 }
 .text-base {
   font-size: var(--text-base);
