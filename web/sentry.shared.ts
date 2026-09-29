@@ -1,3 +1,4 @@
+import type { ErrorEvent, EventHint } from '@sentry/nextjs';
 import { domain } from './languageConfig';
 
 export const sentryIgnoreErrors: Array<string | RegExp> = [
@@ -40,23 +41,19 @@ export const sentryDenyUrls: Array<string | RegExp> = [
   /^moz-extension:\/\//i,
 ];
 
-export const sentryBeforeSend = (event, hint) => {
+export const sentryBeforeSend = (event: ErrorEvent, hint?: EventHint) => {
   const message = event?.message || event.exception?.values?.[0]?.value || '';
   const errorFromEvent = event?.exception?.values?.[0];
-  const error = hint.originalException;
-  if (error?.message?.includes('Failed to fetch')) {
+  // 1. Drop a specific error based on the original exception type/message
+  const originalException = hint?.originalException;
+  if (
+    originalException instanceof Error &&
+    originalException?.message?.includes('Failed to fetch')
+  ) {
     return null; // Discard the event
   }
-  const failedSanityApiFetch = event?.breadcrumbs?.some(
-    (breadcrumb: any) =>
-      breadcrumb.category === 'fetch' &&
-      breadcrumb.data?.url?.includes('api.sanity.io'),
-  );
 
-  if (
-    errorFromEvent?.value?.includes('Failed to fetch') &&
-    failedSanityApiFetch
-  ) {
+  if (errorFromEvent?.value?.includes('Failed to fetch')) {
     return null;
   }
 
