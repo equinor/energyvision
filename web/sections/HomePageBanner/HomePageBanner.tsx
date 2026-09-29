@@ -12,6 +12,7 @@ import { getArrowElement } from '@/core/Link/linkCommon';
 import { Typography } from '@/core/Typography';
 import { getUrlFromAction } from '@/lib/helpers/getUrlFromAction';
 import { useMediaQuery } from '@/lib/hooks/useMediaQuery';
+import { twMerge } from '@/lib/twMerge/twMerge';
 import Blocks from '@/portableText/Blocks';
 import {
   type ColorKeys,
@@ -161,7 +162,10 @@ export const HomePageBanner = forwardRef<HTMLDivElement, HomePageBannerProps>(
                 return (
                   <li key={id} className="m-1">
                     <BaseLink
-                      className={`min-w-[260px] max-w-[400px] ${foreground} group flex h-full flex-col gap-2 rounded-md px-4 py-6 shadow-card active:shadow-card-interact`}
+                      className={twMerge(
+                        `min-w-65 max-w-[400px] ${foreground} group flex h-full flex-col gap-2 rounded-md px-4 py-6 shadow-card active:shadow-card-interact`,
+                        useWhiteTitle && 'focus-visible:outline-white-100',
+                      )}
                       type={link?.type}
                       href={url}
                     >
@@ -173,7 +177,7 @@ export const HomePageBanner = forwardRef<HTMLDivElement, HomePageBannerProps>(
                           {overline}
                         </Typography>
                       )}
-                      <div className="mb-2 h-max w-4/5 text-md group-hover:underline">
+                      <div className="mb-2 h-max w-4/5 text-md group-hover:underline group-focus-visible:underline">
                         {link.label}
                       </div>
                       <div className="mt-auto flex justify-start">
