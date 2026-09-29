@@ -3,6 +3,7 @@
 import { useTranslations } from 'next-intl';
 import { useCallback, useEffect, useState } from 'react';
 import ArrowUp from '@/icons/ArrowUp';
+import { twMerge } from '@/lib/twMerge/twMerge';
 
 export default function GoToTopButton() {
   const [isVisible, setIsVisible] = useState(false);
@@ -35,17 +36,15 @@ export default function GoToTopButton() {
   }, [toggleVisibility]);
 
   return (
-    // biome-ignore lint/a11y/useSemanticElements: not use footer
-    <div role="contentinfo">
-      {isVisible && (
-        <button
-          onClick={scrollToTop}
-          aria-label={t('goToTop') ?? 'Go to top'}
-          className="fixed right-8 bottom-8 z-40 cursor-pointer rounded-full bg-slate-blue-95 p-3 text-white outline-autumn-storm-60 transition-all duration-300 hover:-translate-y-1 hover:shadow-sm/40 hover:shadow-white-100/70 focus:outline-none focus-visible:outline-dotted focus-visible:outline-2 focus-visible:outline-offset-2"
-        >
-          <ArrowUp size={24} />
-        </button>
+    <button
+      onClick={scrollToTop}
+      aria-label={t('goToTop') ?? 'Go to top'}
+      className={twMerge(
+        'fixed right-8 bottom-8 z-40 cursor-pointer rounded-full bg-slate-blue-95 p-3 text-white outline-autumn-storm-60 transition-all duration-300 hover:-translate-y-1 hover:shadow-sm/40 hover:shadow-white-100/70 focus:outline-none focus-visible:outline-dotted focus-visible:outline-2 focus-visible:outline-offset-2',
+        isVisible ? 'block' : 'hidden',
       )}
-    </div>
+    >
+      <ArrowUp size={24} />
+    </button>
   );
 }
