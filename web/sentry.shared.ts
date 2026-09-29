@@ -22,6 +22,8 @@ export const sentryIgnoreErrors: Array<string | RegExp> = [
   'TypeError: Failed to fetch',
   'TypeError: NetworkError when attempting to fetch resource',
   'Load failed',
+  /Failed to find Server Action/i,
+  'This request might be from an older or newer deployment',
 ];
 
 const normalizedDomain = domain.replace(/^https?:\/\//, '').replace(/\/$/, '');
