@@ -50,7 +50,7 @@ export const Link = ({
         <ArrowRight
           aria-hidden="false"
           aria-label={t('externalLink')}
-          className="inline-block origin-center -rotate-45 pb-1 text-no"
+          className="inline-block size-4 origin-center -translate-y-[0.460rem] -rotate-38"
         />
       )}
     </BaseLink>
