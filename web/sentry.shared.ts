@@ -1,4 +1,4 @@
-import { domain } from './languageConfig'
+import { domain } from './languageConfig';
 
 export const sentryIgnoreErrors: Array<string | RegExp> = [
   "Can't find variable: _sz",
@@ -6,39 +6,73 @@ export const sentryIgnoreErrors: Array<string | RegExp> = [
   /_sz/i,
   'ResizeObserver loop limit exceeded',
   'Non-Error promise rejection captured',
+  'Non-Error promise rejection',
+  // Matches exact messages or dynamic patterns via regex
+  /^Script error\.?$/,
+  /^NetworkError\.?$/,
+  /^The operation was aborted due to timeout\.?$/,
+  /.*Failed to fetch.*/,
+  /.*Error: GET-request to.*/,
+  /Non-critical error message/i,
   /Sloppy third-party script error/i,
   'Non-Error exception captured',
   /The destination stream closed early/i,
-]
+  /Can't find variable: $RS/i,
+  'TypeError: Failed to fetch',
+  'TypeError: NetworkError when attempting to fetch resource',
+  'Load failed',
+];
 
-const normalizedDomain = domain.replace(/^https?:\/\//, '').replace(/\/$/, '')
-const escapedDomain = normalizedDomain.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+const normalizedDomain = domain.replace(/^https?:\/\//, '').replace(/\/$/, '');
+const escapedDomain = normalizedDomain.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 export const allowUrlPattern = new RegExp(
   `^https?:\\/\\/${escapedDomain}(?::\\d+)?(?:\\/|$)`,
-)
+);
 
 export const sentryDenyUrls: Array<string | RegExp> = [
   /gtm\.js/, // Blocks any error coming from the GTM script
   /app:\/\/\/gtm\.js/, // Matches the exact path pattern from your stack trace
-]
+  /uc\.js/i,
+  /\/news\/archive\//,
+  /extensions\//i,
+  /^chrome-extension:\/\//i,
+  /^moz-extension:\/\//i,
+];
 
-export const sentryBeforeSend = (event: any) => {
-  const message = event?.message || event.exception?.values?.[0]?.value || ''
+export const sentryBeforeSend = (event, hint) => {
+  const message = event?.message || event.exception?.values?.[0]?.value || '';
+  const errorFromEvent = event?.exception?.values?.[0];
+  const error = hint.originalException;
+  if (error?.message?.includes('Failed to fetch')) {
+    return null; // Discard the event
+  }
+  const failedSanityApiFetch = event?.breadcrumbs?.some(
+    (breadcrumb: any) =>
+      breadcrumb.category === 'fetch' &&
+      breadcrumb.data?.url?.includes('api.sanity.io'),
+  );
+
+  if (
+    errorFromEvent?.value?.includes('Failed to fetch') &&
+    failedSanityApiFetch
+  ) {
+    return null;
+  }
 
   // Drop the event if it mentions the missing _sz variable
   if (message.includes('_sz')) {
-    return null
+    return null;
   }
 
   // Ignore specific error types
   if (event.message?.includes('ChunkLoadError')) {
-    return null
+    return null;
   }
   // Add custom fingerprinting for grouping
   if (event.exception?.values?.[0]?.value?.includes('NetworkError')) {
-    event.fingerprint = ['network-error']
+    event.fingerprint = ['network-error'];
   }
 
-  return event
-}
+  return event;
+};
