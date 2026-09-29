@@ -18,10 +18,12 @@ export const sentryIgnoreErrors: Array<string | RegExp> = [
   /Sloppy third-party script error/i,
   'Non-Error exception captured',
   /The destination stream closed early/i,
-  /Can't find variable: $RS/i,
+  /Can't find variable: \$RS/i,
   'TypeError: Failed to fetch',
   'TypeError: NetworkError when attempting to fetch resource',
   'Load failed',
+  /Failed to find Server Action/i,
+  'This request might be from an older or newer deployment',
 ];
 
 const normalizedDomain = domain.replace(/^https?:\/\//, '').replace(/\/$/, '');
