@@ -21,6 +21,7 @@ export const ButtonLink = ({
   onClick,
   'aria-label': ariaLabel,
   'aria-expanded': ariaExpanded,
+  'aria-current': ariaCurrent,
   hrefLang,
 }: ButtonLinkProps) => {
   const classNames = twMerge(
@@ -40,6 +41,7 @@ export const ButtonLink = ({
       onClick={onClick}
       aria-label={ariaLabel}
       aria-expanded={ariaExpanded}
+      aria-current={ariaCurrent}
       hrefLang={hrefLang}
     >
       {children}

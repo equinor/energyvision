@@ -909,6 +909,11 @@ const snippets: textSnippet = {
     defaultValue: 'Download document',
     group: groups.common,
   },
+  choose_language: {
+    title: 'Choose language',
+    defaultValue: 'Choose language',
+    group: groups.common,
+  },
   search_page_title: {
     title: 'Search page title',
     defaultValue: 'Search',
