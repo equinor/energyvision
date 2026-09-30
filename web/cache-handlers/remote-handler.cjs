@@ -109,8 +109,6 @@ module.exports = {
         return undefined;
       }
 
-      logCacheEvent('hit', cacheKey);
-
       return {
         value: new ReadableStream({
           start(controller) {
